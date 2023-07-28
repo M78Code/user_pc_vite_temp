@@ -1,0 +1,8 @@
+{
+    "category":"entries",
+    "directory-name":"self-use-version",
+    "description":"自用版本项目",
+    "type":"项目",
+    "remark":"常规开发 ，生产自用项目打包 入口",
+    "difference":"默认组件，支持配置合并，<br />不支持同功能性组件其他版本切换"
+}
