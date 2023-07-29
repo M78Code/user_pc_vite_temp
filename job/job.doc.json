@@ -27,17 +27,17 @@
       {
         "filename": "create-version.js",
         "type": "job",
-        "descriptions": ["创建 本次打包的 客户端版本 号"]
+        "descriptions": ["创建 本次构建打包的 客户端版本 号"]
       },
       {
         "filename": "remove-dist.js",
         "type": "job",
-        "descriptions": ["删除 服务器上可能的历史版本输出缓存，确保不出错"]
+        "descriptions": ["删除 服务器上可能的历史版本构建输出的缓存，确保不出错"]
       },
       {
         "filename": "output-env-config.js",
         "type": "job",
-        "descriptions": ["输出最终的 环境配置 ，用于验证,也用于初始化生成"]
+        "descriptions": ["输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"]
       },
       {
         "filename": "final-config.js",
