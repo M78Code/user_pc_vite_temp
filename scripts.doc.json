@@ -1,0 +1,68 @@
+[
+  {
+    "category": "scripts",
+    "script": "dev-suv",
+    "descriptions": [
+      "常规开发 ， 自用项目本地开发 启动命令",
+      "当前项目日常开发，最常用命令"
+    ]
+  },
+  {
+    "category": "scripts",
+    "script": "build-suv-inner",
+    "descriptions": ["常规开发 ， 自用项目生产构建打包的 核心内部命令"]
+  },
+  {
+    "category": "scripts",
+    "script": "copy-oss",
+    "descriptions": ["拉取线上的OSS文件到本地代码内 public/oss 目录内"]
+  },
+  {
+    "category": "scripts",
+    "script": "copy-oss-2",
+    "descriptions": ["拉取线上的OSS文件到 打包后的 文件 版本目录外层 的 OSS   目录内"]
+  },
+  {
+    "category": "scripts",
+    "script": "build-in-oss",
+    "descriptions": ["当前 目标 环境的 OSS 文件内容写入 html 头部"]
+  },
+  {
+    "category": "scripts",
+    "script": "remove-dist",
+    "descriptions": ["删除 服务器上可能的历史版本构建输出的缓存，确保不出错"]
+  },
+  {
+    "category": "scripts",
+    "script": "create-version",
+    "descriptions": ["创建 本次构建打包的 客户端版本 号"]
+  },
+  {
+    "category": "scripts",
+    "script": "copy-html",
+    "descriptions": ["复制打包后的 html 文件到外层目录"]
+  },
+  {
+    "category": "scripts",
+    "script": "build-suv",
+    "descriptions": ["常规开发 ， 自用项目生产构建打包的 入口命令"]
+  },
+  {
+    "category": "scripts",
+    "script": "output-env-config",
+    "descriptions": ["输出最终的各个环境的基础项目配置"]
+  },
+  {
+    "category": "scripts",
+    "script": "dev",
+    "descriptions": ["占位警告 ，无其他用处"]
+  },
+  {
+    "category": "scripts",
+    "script": "build",
+    "descriptions": ["占位警告 ，无其他用处"]
+  }
+
+
+
+]

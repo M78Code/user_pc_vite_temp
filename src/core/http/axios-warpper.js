@@ -4,12 +4,14 @@
  * @Description: 公共axios操作类http定义
  */
 import axios from "axios";
-import { uid } from "../uuid/index";
+import { getUUID } from "../uuid/index";
 import axios_debounce_cache from "./axios-debounce-cache.js";
 import pako_pb from "../pb-decode/index";
 import { endsWith, get, isBoolean } from "lodash-es";
 import STANDARD_KEY from "app/standard-key.js";
+import wslog from "../ws/ws-log";
 // import userCtr from "src/public/utils/user/userCtr.js";
+import HttpLog from "./http-log";
 function SendMsg(msg) {
   //等 ws
   console.info(msg);
@@ -116,7 +118,7 @@ function compute_request_config_by_config(url, config, request_config, params) {
       }
       let hash_code = instance.hash_code(params);
       instance.last_request_info.send_time = new Date().getTime();
-      let uuid = uid();
+      let uuid = getUUID();
       instance.last_request_info.hash_code = hash_code;
       instance.last_request_info.uuid = uuid;
       instance.last_request_info.state = "going";
@@ -315,10 +317,19 @@ class AxiosHttp {
   DOCUMENT_HIDDEN_HTTP_CLOSE_TIME = 5 * 60 * 1000;
   // 页面 失去 焦点后  WS 断开时间
   DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
-  constructor() {
-    this.init();
+  constructor(opts) {
+    this.init(opts);
   }
-
+  getDefaultHeaders() {
+    // 系统类型缩写： iphone=4 android=3 PC = 2 H5=1
+    // panda-bss-info传参规则： panda-bss-info:"source:4"  内嵌webview panda-bss-info:"source:4,1"
+    // 设置系统类型缩写
+    return {
+      "request-code": JSON.stringify({
+        "panda-bss-source": "2",
+      }),
+    };
+  }
   /**
    * @Description:初始化网络配置信息
    * @Author success
@@ -326,8 +337,10 @@ class AxiosHttp {
    * @return:
    * @Date 2020/08/29 20:43:22
    */
-  init() {
-    this.axios_instance = axios.create();
+  init(opts = {}) {
+    this.axios_instance = axios.create({
+      headers: this.getDefaultHeaders(),
+    });
     clearInterval(this.request_count_timer);
     this.request_count_timer = setInterval(() => {
       console.log("this.request_count=" + this.request_count);
@@ -365,12 +378,10 @@ class AxiosHttp {
         } else if (config.type == 3) {
           config.headers["Content-Type"] = "multipart/form-data";
         }
-
         config.headers["requestId"] =
           sessionStorage.getItem(STANDARD_KEY.token) || "";
         // 头信息传参对象集合
         let request_code_obj = {};
-
         // 系统类型缩写： iphone=4 android=3 PC = 2 H5=1
         // panda-bss-info传参规则： panda-bss-info:"source:4"  内嵌webview panda-bss-info:"source:4,1"
         // 设置系统类型缩写
@@ -394,7 +405,7 @@ class AxiosHttp {
           "pc-" +
           config.headers["requestId"] +
           "-" +
-          uid().replace(/-/g, "") +
+          getUUID().replace(/-/g, "") +
           "-" +
           server_time;
         // window.wslog.sendMsg('HTTP-S:', config);
@@ -426,10 +437,8 @@ class AxiosHttp {
     this.axios_instance.interceptors.response.use(
       (res) => {
         // console.error('请求错误问题定位---------------------1'  , res.config.url  );
-
         console.log("res.config.url------", res.config.url);
         let url_temp = get(res, "config.url");
-
         // 解析url
         let jiexi_result = jie_xi_url(url_temp);
         // 后面非常规业务逻辑 所用axios 需要和常规的分开
@@ -503,15 +512,11 @@ class AxiosHttp {
             }
           }
         }
-
         // 访问成功后清除之前的URL错误计数器
         if (this.err_count[url_temp]) {
           this.err_count[url_temp] = 0;
         }
-        if (window.httplog) {
-          window.httplog.push({ url: url_temp });
-        }
-
+        httplog.push({ url: url_temp });
         return res;
       },
 
@@ -533,10 +538,9 @@ class AxiosHttp {
         if (jiexi_result.is_other_api) {
           return Promise.reject(error);
         }
-
         //打印日志
-        if (window.httplog && error.config) {
-          window.httplog.push({ url: error_url });
+        if (error.config) {
+          HttpLog.push({ url: error_url });
         }
         // console.error('请求错误问题定位---------------------2'  , error.config.url
         // ,error);

@@ -1,7 +1,14 @@
 import { get } from "lodash-es";
 
 // const {config} =useGlobelConfig();
-const { zhuge_config, platform } = config || {};
+const {
+  zhuge_config = {
+    js_url: "https://updata.yaohuakuo.com/zhuge.js?v=",
+    mid: [],
+    app_key: "",
+  },
+  platform,
+} = config || {};
 //platform 看怎么存吧
 /**
  * @description: zhuge埋点identify方法
@@ -130,7 +137,7 @@ export function zhuge_load_sdk_js(mid = 0) {
       a.type = "text/javascript";
       a.id = "zhuge-js";
       a.async = !0;
-      a.src = "https://updata.yaohuakuo.com/zhuge.js?v=" + verStr;
+      a.src = zhuge_config.js_url + verStr;
       a.onerror = function () {
         window.zhuge.identify = window.zhuge.track = function (
           ename,
