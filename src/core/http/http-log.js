@@ -6,7 +6,7 @@
  * // httpLog.push({url:'xxxx'})
  */
 // import {sessionStorage,localStorage}=userStoreHook()
-// import { getUrlParams} from '../utils/'
+import { DateForMat } from "../formart/";
 class HttpLog {
   /**
    * @description: 构造函数
@@ -87,24 +87,12 @@ class HttpLog {
     return y + "-" + m + "-" + d;
   }
 
-  // 对Date的扩展，将 Date 转化为指定格式的String
-  // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-  // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-  // 例子：
-  // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-  // (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
-  timerFormat() {
-    if (!Date.prototype.Format) {
-      
-    }
-  }
-
   /**
    * @description: 获取日期时间对象
    * @return Object 日期时间对象
    */
   get_date_obj() {
-    let date = new Date().Format(`{"R":"yyyy-M-d","X":h,"F":m}`);
+    let date = DateForMat(Date.now(), `{"R":"yyyy-M-d","X":h,"F":m}`);
     let obj = JSON.parse(date);
     let x = obj.X < 10 ? "0" + obj.X : "" + obj.X;
     if (obj.F < 30) {
