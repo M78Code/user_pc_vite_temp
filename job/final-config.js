@@ -8,7 +8,7 @@
 
 const compute_final_config=(current_env)=>{
 
-
+// MERCHANT-CONFIG-VERSION
 
 
   let compute_build_in_oss_by_current_env = require("./build-in-oss.js")

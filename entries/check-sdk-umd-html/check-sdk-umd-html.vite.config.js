@@ -25,12 +25,12 @@ export default defineConfig({
     //   fileName: (format) => `TY_JSSDK.${format}.js`,
     // },
     // transpileDependencies: ["quasar"],
-    outDir: "dist/self-use-version",
+    outDir: "dist/check-sdk-umd-html",
  
     rollupOptions: {
       // external: ["vue"],
       input:{
-        // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
+   
         index: path.resolve(__dirname,'index.html')
       },
       output: {
@@ -59,7 +59,7 @@ export default defineConfig({
   },
   server:{
     port:28300,
-    open: 'entries/self-use-version/index.html',
+    open: 'entries/check-sdk-umd-html/index.html',
     hmr:true
   }
 
