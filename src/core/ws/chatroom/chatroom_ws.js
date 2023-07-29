@@ -1,8 +1,8 @@
 /*
  * @Description:
  */
-import ChatroomEventcenter from 'src/ws/chatroom/chatroom_eventcenter';
-import MsgType from 'src/ws/chatroom/chatroom_msgtype';
+import ChatroomEventcenter from 'src/core/ws/chatroom/chatroom_eventcenter';
+import MsgType from 'src/core/ws/chatroom/chatroom_msgtype';
 export default class ChatroomWs {
   // ws实例
   ws;
