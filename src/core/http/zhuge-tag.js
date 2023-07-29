@@ -1,5 +1,4 @@
 import { get } from "lodash-es";
-
 // const {config} =useGlobelConfig();
 const {
   zhuge_config = {
@@ -9,7 +8,7 @@ const {
   },
   platform,
 } = config || {};
-//platform 看怎么存吧
+//config platform 看怎么存吧
 /**
  * @description: zhuge埋点identify方法
  * @param {*} user_id
@@ -163,7 +162,7 @@ export function zhuge_load_sdk_js(mid = 0) {
   };
   // 测试环境的key    c41f8b7cb97640838d90a73a0f077a43
   // 生产环境的key    5a0301efe0244733acb0488763592a6b
-  window.zhuge.load(get_zhuge_config_obj().app_key, {
+  window.zhuge.load(zhuge_config.app_key, {
     //配置应用的AppKey-----替换为生产环境的Key
     superProperty: {
       //全局的事件属性(选填)
