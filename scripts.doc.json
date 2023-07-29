@@ -49,7 +49,7 @@
   },
   {
     "category": "scripts",
-    "script": "output-env-config",
+    "script": "export-env-config",
     "descriptions": ["输出最终的各个环境的基础项目配置"]
   },
   {

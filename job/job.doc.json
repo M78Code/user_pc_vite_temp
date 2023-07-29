@@ -35,7 +35,7 @@
         "descriptions": ["删除 服务器上可能的历史版本构建输出的缓存，确保不出错"]
       },
       {
-        "filename": "output-env-config.js",
+        "filename": "export-env-config.js",
         "type": "job",
         "descriptions": ["输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"]
       },
@@ -46,12 +46,38 @@
           "根据环境 计算当前的 环境相关的项目配置，项目打包的外层植入层",
           "需要留意目前不需要以前的一些冗余的项目信息，只需要环境"
         ]
+      },
+      {
+        "filename": "extract-doc.js",
+        "type": "job",
+        "descriptions": [
+          "提取代码内的 *.doc.json 文件生成 单一 全量 json",
+          "写入 job/output/doc/ 目录 以提供给其他地方使用，这里有版本概念 有新旧差分"
+        ]
+      },
+      {
+        "filename": "export-merchant-config.js",
+        "type": "job",
+        "descriptions": [
+          "合并输出商户配置",
+          "从对接后台获取 当前需要构建的版本号的详细配置，写入 job/output/merchant/ 目录 ",
+          "此文件输出的配置文件：主要在 商户打包 非全量 离线zip 或者  非全量 离线sdk 使用，此种情况商户维护 ",
+          "商户打包 非全量 离线zip ：参考 entries : custom-version ",
+          "商户打包 非全量 离线sdk ：参考 entries : custom-sdk ",
+          "此文件输出的配置文件：也会在生产全量版本打包，拉取商户配置到 版本资源外层目录内（类似OSS） 使用,此种情况我们维护",
+          "我们生产全量版本打包 全量在线项目 ：参考 entries : full-version",
+          "此文件输出的配置文件：也会用来模拟商户场景下的全量SDK 使用",
+          "模拟商户场景下的全量SDK 使用：参考 entries : full-sdk "
+        ]
       }
+
+
+
     ]
   },
   {
-    "category": "output-env-config",
-    "directory-name": "job/output",
+    "category": "export-env-config",
+    "directory-name": "job/output/env",
     "description": "环境配置文件",
     "type": "env-config-output",
     "remark": " ",

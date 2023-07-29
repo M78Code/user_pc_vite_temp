@@ -13,7 +13,7 @@
     "create-version": "node ./job/create-version.js",
     "copy-html": "node ./job/copy-html.js",
     "build-suv": "run-s remove-dist create-version  copy-oss build-in-oss suv-build-inner  copy-html copy-oss-2",
-    "output-env-config": "node ./job/output-env-config.js",
+    "export-env-config": "node ./job/export-env-config.js",
     "dev": "echo \" 此命令无用，查看并选择其他合适命令执行启动 。\" && exit 0" ,
     "build": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0" 
  

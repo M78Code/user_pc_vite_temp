@@ -55,7 +55,7 @@ const fs = require("fs");
 
 env_arr.map(x=>{
 
-  let full_path = `./job/output/${x}.js`;
+  let full_path = `./job/output/env/${x}.js`;
   let str=  `export default  `+ JSON.stringify(obj[x])
 
   fs.writeFileSync(full_path,str );
