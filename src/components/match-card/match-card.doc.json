@@ -1,0 +1,9 @@
+{
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "赛事卡片组件"
+    }
+  }
+}
