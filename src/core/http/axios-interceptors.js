@@ -3,6 +3,7 @@ import HttpLog from "./http-log";
 import pako_pb from "../pb-decode/index";
 import { endsWith, get } from "lodash-es";
 import axios_debounce_cache from "./debounce-module/index";
+import { get_sava_domain_api } from "../domain";
 // import {$emit} from "../mitt" //全局触发对象 断开 ws
 const FNANI_STATUS = {
   // token api接口连续失效次数
