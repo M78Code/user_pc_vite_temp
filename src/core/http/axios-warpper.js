@@ -15,15 +15,7 @@ import axiosiInterceptors, { jie_xi_url } from "./axios-interceptors"; //拦截�
 import { get_sava_domain_api, getDomains } from "../domain";
 //其他非  缓存、限频、节流  相关的 一些常规接口的 cancel 逻辑
 const axios_cancel_other = {};
-window.axios_cancel_other = axios_cancel_other;
-// 计算  error_max 的值
-function compute_error_max() {
-  let len = get_sava_domain_api().length;
-  if (len == 0) {
-    len = 10;
-  }
-  return len;
-}
+
 /**
  * 根据参数    取消请求 逻辑  计算流程
  * @param {*} url
@@ -90,8 +82,7 @@ class AxiosHttp {
   // 用户配置收集接口
   HTTP_PRO_INFO_API =
     "https://sdjfgsijmdkdhsa.gzxxty168.com/api/client/statistics";
-  // 数据上报
-  HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
+    
   // 最近的错误数组，用于分析上报
   HTTP_ERROR_API_ERR_DATA = [];
 
