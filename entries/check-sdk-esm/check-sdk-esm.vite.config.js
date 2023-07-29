@@ -57,10 +57,5 @@ export default defineConfig({
       // ),
     },
   },
-  server:{
-    port:28300,
-    open: 'entries/self-use-version/index.html',
-    hmr:true
-  }
 
 })

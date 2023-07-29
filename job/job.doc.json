@@ -48,7 +48,7 @@
         ]
       },
       {
-        "filename": "extract-doc.js",
+        "filename": "export-full-doc.js",
         "type": "job",
         "descriptions": [
           "提取代码内的 *.doc.json 文件生成 单一 全量 json",
