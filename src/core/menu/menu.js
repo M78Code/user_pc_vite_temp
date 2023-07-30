@@ -2,7 +2,7 @@
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-30 13:16:32
  * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-30 13:42:33
+ * @LastEditTime   : 2023-07-30 20:39:11
  * @FilePath       : \user-pc-vite\src\core\menu\menu.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -49,9 +49,29 @@ export const useMenu = () =>{
     };
     return obj[mi];
   }
+  /**
+   * 解析  新的菜单到旧的菜单的映射关系
+   *  t：模板ID，s：玩法ID p：旧的菜单ID p 是pc  h 是h5 ；
+   *  目前改动只针对PC玩法菜单，包含：今日、早盘、串关；H5没有玩法菜单
+   *
+   */
+ const resolve_mi_euid_map_res = ( mi_euid_map_res = [] ) => {
+    let obj = {};
+    for (let i in mi_euid_map_res) {
+      let item = mi_euid_map_res[i];
+      obj[`mi_${i}`] = {
+        euid: item.p || "", // 旧的菜单ID 
+        orpt: ''+item.t , // 模板ID
+        pids: item.s || "", // 玩法ID
+      };
+    }
+    return obj;
+  }
+
 
   return {
     menu_list,
-    compute_sport_id
+    compute_sport_id,
+    resolve_mi_euid_map_res,
   }
 }
