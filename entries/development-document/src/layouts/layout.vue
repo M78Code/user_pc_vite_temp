@@ -1,10 +1,10 @@
 <template>
-    <div class="q-pa-md">
-      <q-layout view="hHh Lpr lff" container style="height: 300px" class="shadow-2 rounded-borders">
+    <div class=" ">
+      <q-layout view="hHh Lpr lff" container style="height: 100vh" class="shadow-2 rounded-borders ">
         <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
           <q-toolbar>
             <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
-            <q-toolbar-title>Header</q-toolbar-title>
+            <q-toolbar-title>项目内部开发文档</q-toolbar-title>
             <q-btn flat @click="drawerRight = !drawerRight" round dense icon="menu" />
           </q-toolbar>
         </q-header>
@@ -12,55 +12,70 @@
         <q-drawer
           v-model="drawerLeft"
           show-if-above
-          :width="200"
+          :width="400"
           :breakpoint="700"
           elevated
           class="bg-primary text-white"
         >
           <q-scroll-area class="fit">
-            <div class="q-pa-sm">
-              <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
-            </div>
+
+
+            <!-- <div class="q-pa-sm">
+              <div v-for="n in file_path_keys" :key="n">  {{ n }}  </div>
+            </div> -->
+
+            <q-list bordered separator>
+      
+
+      <q-item clickable v-ripple  v-for="n in file_path_keys" :key="n" @click="current_menu=n">
+        <q-item-section>
+          <q-item-label> {{ n }}</q-item-label>
+          <!-- <q-item-label caption>Caption</q-item-label> -->
+        </q-item-section>
+      </q-item>
+
+    
+    </q-list>
+
+
           </q-scroll-area>
         </q-drawer>
   
-        <q-drawer
-          side="right"
-          v-model="drawerRight"
-          show-if-above
-          bordered
-          :width="200"
-          :breakpoint="500"
-          :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
-        >
-          <q-scroll-area class="fit">
-            <div class="q-pa-sm">
-              <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
-            </div>
-          </q-scroll-area>
-        </q-drawer>
+     
   
         <q-page-container>
           <q-page padding>
-            <p v-for="n in 15" :key="n">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
-            </p>
+
+        <!-- {{     file_path_base_obj[current_menu] }} -->
+           
+
+        <json-viewer
+        style="max-height: calc(100vh - 100px);overflow: scroll;"  
+  :value=" file_path_base_obj[current_menu] "
+  :expand-depth=5
+  expanded
+  copyable
+ 
+  sort></json-viewer>
+
           </q-page>
         </q-page-container>
       </q-layout>
     </div>
   </template>
   
-  <script>
+  <script setup>
   import { ref } from 'vue'
+
+  import  file_path_keys from "app/job/output/doc/key.json" ;
+  import  file_path_base_obj from "app/job/output/doc/obj.json" ;
+  import JsonViewer from 'vue-json-viewer'
+
+  console.log( "file_path_keys-----",file_path_keys);
   
-  export default {
-    setup () {
-      return {
-        drawerLeft: ref(false),
-        drawerRight: ref(false)
-      }
-    }
-  }
+      const  drawerLeft= ref(false) 
+      const  current_menu = ref(file_path_keys[0])
+  
+ 
   </script>
   

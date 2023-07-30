@@ -1,12 +1,15 @@
 <template>
   <div>
 
-     <h1>客户端模块化+SDK版本</h1>
+ 
+     <Layout/>
 
   </div>
 </template>
 
 <script setup>
+
+import Layout from "./src/layouts/layout.vue"
 
 </script>
 
