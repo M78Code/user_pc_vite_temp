@@ -1,0 +1,5 @@
+{
+  "TestComponent": {
+    "use_component": "TestComponent_2"
+  }
+}
