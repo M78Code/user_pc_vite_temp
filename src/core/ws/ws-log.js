@@ -2,7 +2,10 @@
  * @Author: hanamr
  * @Description: ws通信日志功能类
  */
+import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
+// import {config } from 'xx'
+import { ss } from "../utils/web-storage";
 class WsLog {
   /**
    * @Description:构造函数
@@ -15,13 +18,9 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (
-      location.href.indexOf("wsl=9999") != -1 ||
-      sessionStorage.getItem("wsl") == "9999" ||
-      this.ws_run
-    ) {
+    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
-      sessionStorage.setItem("wsl", "9999");
+      ss.set("wsl", "9999");
     }
     if (this.ws_run) {
       // WS操作对象
@@ -33,12 +32,16 @@ class WsLog {
       this.init();
     }
   }
+  setWsUrl(url, isReconnect) {
+    this.url = url;
+    isReconnect && this.reconnect();
+  }
   /**
    * @Description:发送日志到日志接收服务器
    * @param: flg 标识
    * @param: msg 消息体
    */
-  send_msg(flg, msg) {
+  sendMsg(flg, msg) {
     if (this.ws_run && this.ws) {
       try {
         if (msg && typeof msg == "object") {
@@ -77,34 +80,24 @@ class WsLog {
     // 发送日志到日志接收服务器
     // WS服务重新连接
     this.reconnect();
-    this.interval = setInterval(() => {
-      try {
-        if (this.ws) {
-          // 发送心跳包
-          this.send_heartbeat();
-        } else {
-          // 发送心跳包
-          this.reconnect();
-        }
-      } catch (error) {
-        // 无意义,无需打印
-      }
-    }, 10000);
   }
 
   /**
    * @Description:WS服务重新连接
+   * 应该新销毁之前的避免浪费内存
+   * @param {string} url  新的链接
    */
-  reconnect() {
+  reconnect(url) {
+    url && (this.url = url);
     if (this.ws) {
-      return;
+      this.destroyed();
+      // return;
     }
     //连接校验
     try {
       this.ws = new WebSocket(this.url);
       this.ws.onopen = (e) => {
         this.connect(e);
-        // console.log('onopen=>%o', e);
       };
       this.ws.onclose = (e) => {
         this.close(e);
@@ -137,8 +130,24 @@ class WsLog {
   }
   /**
    * @Description:连接成功函数
+   * 链接成功才发送心跳包
    */
-  connect(e) {}
+  connect(e) {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      try {
+        if (this.ws) {
+          // 发送心跳包
+          this.send_heartbeat();
+        } else {
+          // 发送心跳包
+          this.reconnect();
+        }
+      } catch (error) {
+        // 无意义,无需打印
+      }
+    }, 10000);
+  }
 
   /**
    * @Description:接收消息函数
@@ -167,4 +176,6 @@ class WsLog {
     this.ws = null;
   }
 }
-export default  new WsLog();
+// 初始化启动日志系统--开发模式时日志打开
+// window.wslog = new WsLog(window.env.NODE_ENV === 'development');
+export default new WsLog("PC", config.LOG);

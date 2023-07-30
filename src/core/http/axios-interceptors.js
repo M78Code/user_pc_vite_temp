@@ -6,6 +6,7 @@ import axios_debounce_cache from "./debounce-module/index";
 import { GetSavaDomainApi } from "../domain";
 import { ss } from "../utils/web-storage";
 // import {$emit} from "../mitt" //全局触发对象 断开 ws
+import userCtr from "../user-config/user-ctr";
 const FNANI_STATUS = {
   // token api接口连续失效次数
   token_invalid_api_count: 0,
@@ -100,7 +101,7 @@ const responseHook = {
     }
 
     // 用户相关 控制类  统计 用户 token 失效相关 流程
-    // userCtr.record_token_if_expired(res);
+    userCtr.record_token_if_expired(res);
 
     // 常规的业务 的 url 是不带 http 前缀的 不是完整域名 ，其他的都是完整域名
     // 单独的 外层的一些逻辑 并不走这个 axios 实例，比如外层的OSS 内的 api 逻辑
