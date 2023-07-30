@@ -5,6 +5,71 @@
  * @Description:
  */
 import _ from "lodash";
+import { resolve } from "path";
+
+/**
+ * 初始化数据
+ */
+const init = async () => {
+  await get_category(); // 获取玩法集
+  await get_detail(); // 获取赛事详情数据
+  await get_detail_lists(); // 获取玩法列表
+};
+
+/**
+ * 获取赛玩法集数据
+ * @param {*} mid 赛事id,sportId 球种id
+ */
+const get_category = async (sportId,mid) => {
+  try {
+    const params = {
+      sportId,
+      mid,
+      t: new Date().getTime(),
+    };
+    const res = await get_detail_category(params);
+    category_list.value = res.data.data || [];
+    const list = res.data.data.filter((i) => i.marketName);
+    tabList.value = list.map((item) => ({
+      label: item.marketName,
+      value: item.orderNo,
+    }));
+  } catch (error) {}
+};
+
+  /**
+   * 获取赛事玩法列表数据
+   * @param {*} mid 赛事id
+   */
+  const get_detail_lists = async (mid) => {
+    return new Promise(async (resolve)=>{
+      const params = {
+        mcid: 0,
+        cuid: userInfo.userId,
+        mid,
+        newUser: 0,
+        t: new Date().getTime(),
+      };
+      const res = await get_detail_list(params);
+      resolve(res.data.data || [])
+    }).catch(err=>{})
+  };
+
+   /**
+   * 获取赛事详情数据
+   * @param {*} mid 赛事id
+   */
+   const get_detail = async (mid) => {
+    return new Promise(async (resolve)=>{
+      const params = {
+        mid,
+        cuid: userInfo.userId,
+        t: new Date().getTime(),
+      };
+      const res = await get_detail_data(params);
+      resolve(res.data.data || [])
+    }).catch(err=>{})
+  };
 
 /**
  *
@@ -146,9 +211,25 @@ const format_mst_data = (mst) => {
   return `${m}:${s}`;
 };
 
+/**
+ * @是否显示赛事分析统计版块
+ * @param {Object} match_infoData 赛事详情数据
+ * @return {boolean} 筛选后的玩法数据
+ * @Description:get_global_switch 全局开关，到时候修改为状态管理引入
+ */
+const show_wrap_total = (match_infoData) => {
+  return (
+    match_infoData.mcg == 1 &&
+    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(+_.get(match_infoData, "csid")) &&
+    get_global_switch.statistics_switch &&
+    match_infoData.cds !== "RC"
+  );
+};
+
 export default {
   build_msc,
   check_plays,
   getDetaillist,
   use_polling_mst,
+  show_wrap_total,
 };

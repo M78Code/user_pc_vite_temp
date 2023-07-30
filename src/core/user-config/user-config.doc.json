@@ -1,0 +1,11 @@
+[
+    {
+      "category": "user-config",
+      "directory-name": "user-config",
+      "descriptions": ["用户配置"],
+      "type": "js",
+      "remark": "用户配置",
+      "items": []
+    }
+  ]
+  

@@ -1,0 +1,11 @@
+[
+    {
+      "category": "sdk-config",
+      "directory-name": "sdk-config",
+      "descriptions": ["sdk模块化配置"],
+      "type": "js",
+      "remark": "sdk模块化配置",
+      "items": []
+    }
+  ]
+  

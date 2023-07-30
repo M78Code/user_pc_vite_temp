@@ -25,7 +25,7 @@ export default defineConfig({
     //   fileName: (format) => `TY_JSSDK.${format}.js`,
     // },
     // transpileDependencies: ["quasar"],
-    outDir: "dist/self-use-version",
+    outDir: "dist/development-document",
  
     rollupOptions: {
       // external: ["vue"],
@@ -57,5 +57,11 @@ export default defineConfig({
       // ),
     },
   },
+  server:{
+    port:28400,
+    open: 'entries/development-document/index.html',
+    hmr:true
+  }
+
 
 })

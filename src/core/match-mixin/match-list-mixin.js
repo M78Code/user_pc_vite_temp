@@ -1,19 +1,9 @@
 /*
  * @Description: 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
  */
-import {mapGetters, mapMutations} from "vuex";
 import utils from "src/public/utils/utils.js";
 export default{
-  computed:{
-    ...mapGetters(['get_lang', 'get_conventional_ball_collapse', 'get_ball_current_csid_object', 'get_sport_all_selected'])
-  },
   methods:{
-    ...mapMutations([
-      'set_last_ball_csid', // 上一次选中的球种  csid
-      'set_conventional_item_number',
-      'set_conventional_ball_collapse',
-      'set_ball_current_csid_object',
-    ]),
     /**
      * @description:斯诺克7局显示处理
      * @param {Object} {mct局数 mmp赛事阶段 ms赛事状态}
