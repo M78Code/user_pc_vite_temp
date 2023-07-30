@@ -1,9 +1,10 @@
 import pako_pb from "../pb-decode/index";
 import HttpLog from "./http-log";
-import pako_pb from "../pb-decode/index";
 import { endsWith, get } from "lodash-es";
+import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
-import { get_sava_domain_api } from "../domain";
+import { GetSavaDomainApi } from "../domain";
+import { ss } from "../utils/web-storage";
 // import {$emit} from "../mitt" //全局触发对象 断开 ws
 const FNANI_STATUS = {
   // token api接口连续失效次数
@@ -42,7 +43,7 @@ const requestHook = {
         break;
     }
     //请求token
-    const requestId = sessionStorage.getItem(STANDARD_KEY.token) || "";
+    const requestId = ss.get(STANDARD_KEY.token) || "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "en"; // 语言调整
@@ -51,7 +52,7 @@ const requestHook = {
       ""
     )}-${Date.now()}`;
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
-    if (sessionStorage.getItem(STANDARD_KEY.pb)) {
+    if (ss.get(STANDARD_KEY.pb)) {
       if (endsWith(config.url, "PB")) {
         config.url = config.url.substring(0, config.url.length - 2);
       } else {
@@ -75,7 +76,7 @@ const responseHook = {
     console.log("res.config.url------", res.config.url);
     let url_temp = get(res, "config.url");
     // 解析url
-    let jiexi_result = jie_xi_url(url_temp);
+    let jiexi_result = ParseUrl(url_temp);
     // 后面非常规业务逻辑 所用axios 需要和常规的分开
     if (jiexi_result.is_other_api) {
       return res;
@@ -231,12 +232,12 @@ function handle_count_error(error) {
     console.log(
       "发送EMIT_API_DOMAIN_UPD_CMD >>http>>> " + JSON.stringify(error)
     );
-    // 接受ws断开命令
-    $emit("EMIT_API_DOMAIN_UPD_CMD", {
-      type: "http",
-      data: JSON.stringify(error),
-    });
 
+    // 接受ws断开命令
+    // $emit("EMIT_API_DOMAIN_UPD_CMD", {
+    //   type: "http",
+    //   data: JSON.stringify(error),
+    // });
     FNANI_STATUS.err_count = {};
   }
 }
@@ -331,7 +332,7 @@ function match_fix_mst(match, http_data) {
 
 // 计算  error_max 的值
 function compute_error_max() {
-  let len = get_sava_domain_api().length;
+  let len = GetSavaDomainApi().length;
   if (len == 0) {
     len = 10;
   }
@@ -339,7 +340,7 @@ function compute_error_max() {
 }
 // 解析判定 url
 
-export function jie_xi_url(url_temp = "") {
+export function ParseUrl(url_temp = "") {
   //  截取 ?
   url_temp = url_temp.split("?")[0];
   //去除 ://
@@ -410,7 +411,7 @@ function handle_res_when_axios_debounce_cache_when_done_ok(res) {
           // 是  mids
         } else {
           // PB 接口才会缓存 ，不然不处理
-          let is_pb = jie_xi_url(res.config.url)["is_pb"];
+          let is_pb = ParseUrl(res.config.url)["is_pb"];
           if (is_pb) {
             instance.last_done_ok_request_info.res_data = {
               ...res.data,
@@ -467,6 +468,6 @@ function handle_res_when_axios_debounce_cache_when_error(res) {
 }
 
 export default {
-  request: [requestHook], //拦截器是可以有多个的
-  response: [responseHook], //拦截器是可以有多个的
+  requestHook: [requestHook], //拦截器是可以有多个的
+  responseHook: [responseHook], //拦截器是可以有多个的
 };
