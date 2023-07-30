@@ -1,11 +1,17 @@
-/*
- * @Author: Cable
- * @Date: 2021-09-07 12:45:16
- * @Description: 列表数据仓库，列表页所有数据的仓库
- */
 
-import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, handicap_highlight_paly_id, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from 'src/public/utils/dataClassCtr/conifg/index.js'
+import{ 
+  sport_match_count as sport_match_count_template, 
+  match_list_play_config, 
+  history_score_dict, 
+  match_state_convert_score_dict, 
+  handicap_highlight_paly_id, 
+  other_play_name_to_playid, 
+  let_ball_play_tpl, 
+  has_cur_handicap_tpl_ids 
+} from 'src/core/utils/data-class-config/index.js'
 import utils from "src/core/utils/match-list-utils.js"
+
+
 export default class MatchListDataClass {
   /**
    * @Description 构造函数
