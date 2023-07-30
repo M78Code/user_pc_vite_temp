@@ -7,7 +7,6 @@ import {
 } from "src/project/api/module/common/index.js";
 import utils from "src/public/utils/utils.js";
 import match_list_public_mixins from 'src/project/mixins/match_list/match_list_public_mixin.js'   // 赛事列表公共minxins
-import {mapMutations} from 'vuex';
 import axios_debounce_cache from "src/public/utils/http/axios_debounce_cache.js"
 import { uid } from "quasar";
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
@@ -33,7 +32,6 @@ export default{
     this.update_match_by_mids_timer = 0;
   },
   methods:{
-    ...mapMutations(['set_foot_ball_screen_changing', 'set_champion_game_collapse']),
     /**
      * 添加赛事对象前端使用字段 : 让球方
      * @param {Array} match_list

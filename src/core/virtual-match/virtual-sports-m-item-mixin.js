@@ -3,12 +3,10 @@
  * @Date: 2021-01-05 21:38:34
  * @Description:
  */
-import { mapGetters, mapMutations} from "vuex";
 import VSport from "src/public/utils/vsport/vsport.js"
 
 export default {
   methods:{
-    ...mapMutations(['set_video_process_loaded']),
     /**
      * 获取赛事比分
      * @param {Object} match 赛事
