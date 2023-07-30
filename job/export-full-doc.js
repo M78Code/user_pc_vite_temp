@@ -63,6 +63,10 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
   // }
   let key = cerate_key(add_obj);
   file_path_arr.push(add_obj.file_path);
+
+  if(! all_doc_obj[key]){
+    all_doc_obj[key]=[]
+  }
   if (Array.isArray(obj)) {
     obj.map((x) => {
       let new_obj = {
@@ -70,7 +74,7 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
         ...x,
       };
       all_doc_arr.push(new_obj);
-      all_doc_obj[key] = new_obj;
+      all_doc_obj[key].push(new_obj);
     });
   } else {
     let new_obj = {
@@ -78,7 +82,9 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
       ...obj,
     };
     all_doc_arr.push(new_obj);
-    all_doc_obj[key] = new_obj;
+ 
+
+    all_doc_obj[key].push(new_obj);
   }
 };
 /**
@@ -115,12 +121,30 @@ statistics ={
   len: file_path_arr.length
 }
 let version = Date.now();
-let write_folder = "./job/output/doc/";
-// 创建文件夹
-fs.mkdir(write_folder, { recursive: true }, (err) => {
-  if (err){  console.log("创建文件夹 出错 ", err);}
-  console.log('创建文件夹 写入 完成');
-});
+let write_folder = "./job/output/doc";
+ 
+
+/**
+ * 确保配置 输出目录存在
+ */
+const ensure_write_folder_exist = () => {
+  let is_exist = fs.existsSync(write_folder)
+      if (is_exist) {
+        console.log( `${write_folder}-----文件夹已存在----  ` );    
+      }else{
+            // 创建文件夹
+        fs.mkdir(write_folder, { recursive: true }, (err) => {
+          if (err) {
+            console.log("创建文件夹 出错 ", err);
+          }
+          console.log("创建文件夹   完成");
+        });
+      }
+  };
+//确保配置 输出目录存在 
+ensure_write_folder_exist()
+
+
 
 setTimeout(() => {
   console.log(" ");

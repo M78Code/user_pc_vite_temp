@@ -2,7 +2,11 @@
  * @Author: hanamr
  * @Description: ws通信日志功能类
  */
-export default class WsLog {
+import { GetUrlParams } from "../utils";
+import { DateForMat } from "../formart";
+// import {config } from 'xx'
+import { ss } from "../utils/web-storage";
+class WsLog {
   /**
    * @Description:构造函数
    * @param:name 项目名称
@@ -14,13 +18,9 @@ export default class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (
-      location.href.indexOf("wsl=9999") != -1 ||
-      sessionStorage.getItem("wsl") == "9999" ||
-      this.ws_run
-    ) {
+    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
-      sessionStorage.setItem("wsl", "9999");
+      ss.set("wsl", "9999");
     }
     if (this.ws_run) {
       // WS操作对象
@@ -32,12 +32,16 @@ export default class WsLog {
       this.init();
     }
   }
+  setWsUrl(url, isReconnect) {
+    this.url = url;
+    isReconnect && this.reconnect();
+  }
   /**
    * @Description:发送日志到日志接收服务器
    * @param: flg 标识
    * @param: msg 消息体
    */
-  send_msg(flg, msg) {
+  sendMsg(flg, msg) {
     if (this.ws_run && this.ws) {
       try {
         if (msg && typeof msg == "object") {
@@ -55,7 +59,7 @@ export default class WsLog {
         }
         if (this.ws) {
           this.ws.send(
-            new Date().Format("yyyy-MM-dd hh:mm:ss.S") +
+            DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss") +
               "&" +
               this.name +
               "-" +
@@ -74,37 +78,26 @@ export default class WsLog {
    */
   init() {
     // 发送日志到日志接收服务器
-    this.timer_format();
     // WS服务重新连接
     this.reconnect();
-    this.interval = setInterval(() => {
-      try {
-        if (this.ws) {
-          // 发送心跳包
-          this.send_heartbeat();
-        } else {
-          // 发送心跳包
-          this.reconnect();
-        }
-      } catch (error) {
-        // 无意义,无需打印
-      }
-    }, 10000);
   }
 
   /**
    * @Description:WS服务重新连接
+   * 应该新销毁之前的避免浪费内存
+   * @param {string} url  新的链接
    */
-  reconnect() {
+  reconnect(url) {
+    url && (this.url = url);
     if (this.ws) {
-      return;
+      this.destroyed();
+      // return;
     }
     //连接校验
     try {
       this.ws = new WebSocket(this.url);
       this.ws.onopen = (e) => {
         this.connect(e);
-        // console.log('onopen=>%o', e);
       };
       this.ws.onclose = (e) => {
         this.close(e);
@@ -137,8 +130,24 @@ export default class WsLog {
   }
   /**
    * @Description:连接成功函数
+   * 链接成功才发送心跳包
    */
-  connect(e) {}
+  connect(e) {
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      try {
+        if (this.ws) {
+          // 发送心跳包
+          this.send_heartbeat();
+        } else {
+          // 发送心跳包
+          this.reconnect();
+        }
+      } catch (error) {
+        // 无意义,无需打印
+      }
+    }, 10000);
+  }
 
   /**
    * @Description:接收消息函数
@@ -166,46 +175,7 @@ export default class WsLog {
     }
     this.ws = null;
   }
-
-  // 对Date的扩展，将 Date 转化为指定格式的String
-  // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-  // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-  // 例子：
-  // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-  // (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
-  timer_format() {
-    Date.prototype.Format = function (fmt) {
-      let S = this.getMilliseconds();
-      if (S < 10) {
-        S = "00" + S;
-      } else if (S < 100) {
-        S = "0" + S;
-      }
-      var o = {
-        "M+": this.getMonth() + 1, // 月份
-        "d+": this.getDate(), // 日
-        "h+": this.getHours(), // 小时
-        "m+": this.getMinutes(), // 分
-        "s+": this.getSeconds(), // 秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-        S: S, // 毫秒
-      };
-      if (/(y+)/.test(fmt))
-        fmt = fmt.replace(
-          RegExp.$1,
-          (this.getFullYear() + "").substr(4 - RegExp.$1.length)
-        );
-      for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)) {
-          fmt = fmt.replace(
-            RegExp.$1,
-            RegExp.$1.length == 1
-              ? o[k]
-              : ("00" + o[k]).substr(("" + o[k]).length)
-          );
-        }
-      }
-      return fmt;
-    };
-  }
 }
+// 初始化启动日志系统--开发模式时日志打开
+// window.wslog = new WsLog(window.env.NODE_ENV === 'development');
+export default new WsLog("PC", config.LOG);

@@ -1,4 +1,5 @@
-import { get } from "lodash-es";
+import { get } from "lodash";
+import { DateForMat } from "../formart/";
 // const {config} =useGlobelConfig();
 const {
   zhuge_config = {
@@ -60,7 +61,7 @@ export function send_zhuge_event(eventLabel, eventPropsObj = {}) {
   };
   let _obj = {
     [objKey.eventLabel]: eventLabel,
-    [objKey.clickTime]: new Date().Format("yyyy-MM-dd hh:mm:ss"),
+    [objKey.clickTime]: DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss"),
     [objKey.userName]: get(vx_get_user, "userName"),
     [objKey.userId]: get(vx_get_user, "userId"),
     [objKey.merchantId]: get(vx_get_user, "mId"),
