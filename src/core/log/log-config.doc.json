@@ -1,0 +1,9 @@
+[
+    {
+      "category": "log-config",
+      "directory-name": "log-config",
+      "descriptions": [
+        "通信日志功能"
+      ]
+    }
+  ]
