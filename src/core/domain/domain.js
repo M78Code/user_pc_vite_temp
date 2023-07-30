@@ -2,7 +2,7 @@
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-28 14:25:33
  * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-30 14:28:06
+ * @LastEditTime   : 2023-07-30 15:54:38
  * @FilePath       : \user-pc-vite\src\core\domain\domain.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -72,6 +72,7 @@
 
 
 import axios from "axios";
+// import userCtr from 'src/public/utils/user/userCtr.js';
 
 const axios_instance = axios.create()
 const   DOMAIN_API = "domain_api01"
