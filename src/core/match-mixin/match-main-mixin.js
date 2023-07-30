@@ -10,7 +10,6 @@ import {
   get_virtual_result
 } from "src/project/api/module/common/index.js";
 
-import {mapMutations} from 'vuex';
 import { get_result_match_care_list, get_match_home_page_handpick, get_champion_match_result_api } from "src/project/api/module/result/index.js";  // 赛果相关接口
 import * as template_config from 'src/public/config/template_config.js'   // 菜单对应的赛事dom高度配置
 export default {
@@ -39,13 +38,6 @@ export default {
     this.screen_changing_timer = 0;
   },
   methods: {
-    ...mapMutations([
-      // 足球正在切换第一屏与第二屏
-      'set_foot_ball_screen_changing',
-      // 容器滚动的值
-      'set_list_scroll_top',
-      'set_standard_odd_status',  // 更新当前列表基本玩法集 状态
-    ]),
     /**
      * 生成折叠状态键(暂时只返回tid)
      */
