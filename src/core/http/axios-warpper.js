@@ -5,73 +5,22 @@
  */
 import axios from "axios";
 import { get } from "lodash";
-import { UUID } from "../uuid/index";
 import wslog from "../ws/ws-log";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
-import axios_debounce_cache from "./debounce-module/";
+import { compute_request_config_by_config } from "./debounce-module/";
+import { GetHttpDomain } from "../domain";
+
 // import STANDARD_KEY from "app/standard-key.js";
 // import userCtr from "src/public/utils/user/userCtr.js";
 //应该在doamins里
-import { get_sava_domain_api, get_http_domain } from "../domain";
 //其他非  缓存、限频、节流  相关的 一些常规接口的 cancel 逻辑
-const axios_cancel_other = {};
 /**
  * 根据参数    取消请求 逻辑  计算流程
  * @param {*} url
  * @param {*} config
  * @param {*} params
  */
-// config 的 两种情况 参数
-//1.  {axios_debounce_cache_key:'menu_init'}
-//2.  {cancel_other:'1'}
-function compute_request_config_by_config(url, config, params) {
-  // 请求单行 ，下次请求发起 ，则取消上次请求
-  if (config.axios_debounce_cache_key) {
-    // 走  接口  缓存、限频、节流
-    let instance = axios_debounce_cache[config.axios_debounce_cache_key];
-    if (instance && instance["ENABLED"]) {
-      // 如果这个接口配置了 缓存、限频、节流 策略 并且开启了
-      //当开启 缓存并检查接口参数的 菜单ID
-      if (instance.euid_cache_and_check && params.euid) {
-        instance.euid_cache_and_check_last_euid = params.euid;
-      }
-      let hash_code = instance.hash_code(params);
-      instance.last_request_info.send_time = new Date().getTime();
-      let uuid = UUID();
-      instance.last_request_info.hash_code = hash_code;
-      instance.last_request_info.uuid = uuid;
-      instance.last_request_info.state = "going";
-      let controller = new AbortController();
-      // https://www.npmjs.com/package/axios#cancellation
-      instance.last_request_info.controller = controller;
-      // controller.abort()
-      // 正常情况下 代码内 在请求之前 就要发起  axios_debounce_cache 检查
-      // 然后才发起 ，然后才能走到这里 ，所以这里不做 最后一次请求的 cancel 逻辑
-      // 特别是 次要玩法 tab mids 接口 会出异常
-      return {
-        signal: controller.signal,
-        uuid: uuid,
-      };
-    }
-    return {};
-  } else if (config.cancel_other) {
-    // 取消其他常规接口的请求
-    let url_temp = ParseUrl(url)["new_url_temp"];
-    let old_controller = axios_cancel_other[url_temp];
-    if (old_controller) {
-      old_controller.abort && old_controller.abort();
-    }
-    let controller = new AbortController();
-    axios_cancel_other[url_temp] = controller;
-    request_config.signal = controller.signal;
-    // controller.abort()
-    // 返回api请求取消标识，供特定操作判断
-    return {
-      api_status: "api_cancel",
-    };
-  }
-  return {};
-}
+
 class AxiosHttp {
   // api访问数量(每分钟)
   request_count = 0;
@@ -154,7 +103,7 @@ class AxiosHttp {
    */
   set_root_domain() {
     //force_current_api_flow_use_oss_file_api_reload 这个逻辑应该在 domain里面
-    const api_domain = getDomains(); // 这个逻辑应该在 domain里面
+    const api_domain = GetHttpDomain(); // 这个逻辑应该在 domain里面
     this.axios_instance.defaults.baseURL = api_domain;
     this.axios_instance.prototype.HTTP_ROOT_DOMAIN = api_domain;
     this.HTTP_ROOT_DOMAIN = api_domain;
@@ -259,7 +208,7 @@ class AxiosHttp {
     const params = get(request_config, "params", {});
     // 根据参数 取消请求 逻辑  计算流程
     const compute_config = compute_request_config_by_config(
-      request_config.url,
+      ParseUrl(request_config.url),
       config,
       request_config.params
     );
@@ -278,7 +227,7 @@ class AxiosHttp {
         }
         break;
       case "post":
-        request_config.url += `?t=${Date.now()}`;
+        request_config.params = { t: Date.now() };
         request_config.data = params;
         request_config.type = request_config.type || 2;
         break;

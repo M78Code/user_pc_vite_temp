@@ -1,5 +1,5 @@
 import pako_pb from "../pb-decode/index";
-import HttpLog from "./http-log";
+import httpLog from "./http-log";
 import { endsWith, get } from "lodash-es";
 import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
@@ -167,7 +167,7 @@ const responseHook = {
     }
     //打印日志
     if (error.config) {
-      HttpLog.push({ url: error_url });
+      httpLog.push({ url: error_url });
     }
     // console.error('请求错误问题定位---------------------2'  , error.config.url
     // ,error);
