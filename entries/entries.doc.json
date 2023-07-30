@@ -86,6 +86,9 @@
         "category": "entries",
         "directory-name": "development-document",
         "type": "项目",
+        "scripts":[
+            "npm run  dev-development-document"
+        ],
         "descriptions": [
             "项目内部开发文档",
             "根据组件配置自动生成内部文档",

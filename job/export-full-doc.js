@@ -63,6 +63,10 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
   // }
   let key = cerate_key(add_obj);
   file_path_arr.push(add_obj.file_path);
+
+  if(! all_doc_obj[key]){
+    all_doc_obj[key]=[]
+  }
   if (Array.isArray(obj)) {
     obj.map((x) => {
       let new_obj = {
@@ -70,7 +74,7 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
         ...x,
       };
       all_doc_arr.push(new_obj);
-      all_doc_obj[key] = new_obj;
+      all_doc_obj[key].push(new_obj);
     });
   } else {
     let new_obj = {
@@ -78,7 +82,9 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
       ...obj,
     };
     all_doc_arr.push(new_obj);
-    all_doc_obj[key] = new_obj;
+ 
+
+    all_doc_obj[key].push(new_obj);
   }
 };
 /**
