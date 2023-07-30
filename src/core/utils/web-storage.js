@@ -1,11 +1,16 @@
+/**
+ * @Author: jiffy
+ * @Date: 2023-07-30 17:13:55
+ * @Description: 本地存储方法
+ */
 import { isNull, isUndefined } from "lodash";
 /**
  * 创建一个 web Storage
  * @param {*}
- * prefixKey 存储前戳 storage
- * storage localStorage||sessionStorage
- * timeout 超时时间秒
- * hasEncrypt 是否加密 加密暂时没有 写
+ * prefixKey 存储前戳 ;
+ * storage localStorage||sessionStorage;
+ * timeout 超时时间 秒;
+ * hasEncrypt 是否加密 加密暂时没有 写 AES加密
  */
 export const createStorage = ({
   prefixKey = "",
@@ -60,7 +65,7 @@ export const createStorage = ({
       const stringifyValue = this.hasEncrypt
         ? this.encryption.encryptByAES(stringData)
         : stringData;
-      this.storage.setItem(this.getKey(key), stringData);
+      this.storage.setItem(this.getKey(key), stringifyValue);
     }
 
     /**
@@ -72,17 +77,21 @@ export const createStorage = ({
     get(key, def) {
       const val = this.storage.getItem(this.getKey(key));
       if (!val) return def;
-
       try {
         const decVal = this.hasEncrypt
           ? this.encryption.decryptByAES(val)
           : val;
         const data = JSON.parse(decVal);
         const { value, expire } = data;
-        if (isNullOrUnDef(expire) || expire >= new Date().getTime()) {
+        if (
+          isNull(expire) ||
+          isUndefined(expire) ||
+          expire >= new Date().getTime()
+        ) {
           return value;
         }
         this.remove(key);
+        return def;
       } catch (e) {
         return def;
       }
@@ -106,11 +115,23 @@ export const createStorage = ({
   };
   return new WebStorage();
 };
-export const LocalStorage = createStorage({
+/**
+ * localStorage
+ */
+const LocalStorage = createStorage({
   storage: localStorage,
   prefixKey: "__",
 });
-export const SessionStorage = createStorage({
+/**
+ * sessionStorage
+ */
+const SessionStorage = createStorage({
   storage: sessionStorage,
   prefixKey: "__",
 });
+export {
+  SessionStorage,
+  LocalStorage,
+  LocalStorage as ls,
+  SessionStorage as ss,
+};

@@ -4,23 +4,22 @@
  * @Description: 公共axios操作类http定义
  */
 import axios from "axios";
-import { getUUID } from "../uuid/index";
-import axios_debounce_cache from "./debounce-module/";
-import { get } from "lodash-es";
-// import STANDARD_KEY from "app/standard-key.js";
+import { get } from "lodash";
+import { UUID } from "../uuid/index";
 import wslog from "../ws/ws-log";
+import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
+import axios_debounce_cache from "./debounce-module/";
+// import STANDARD_KEY from "app/standard-key.js";
 // import userCtr from "src/public/utils/user/userCtr.js";
-import axiosiInterceptors, { jie_xi_url } from "./axios-interceptors"; //拦截器
 //应该在doamins里
-import { get_sava_domain_api, getDomains } from "../domain";
+import { get_sava_domain_api, get_http_domain } from "../domain";
 //其他非  缓存、限频、节流  相关的 一些常规接口的 cancel 逻辑
 const axios_cancel_other = {};
-
 /**
  * 根据参数    取消请求 逻辑  计算流程
  * @param {*} url
  * @param {*} config
- * @param {*} request_config
+ * @param {*} params
  */
 // config 的 两种情况 参数
 //1.  {axios_debounce_cache_key:'menu_init'}
@@ -38,7 +37,7 @@ function compute_request_config_by_config(url, config, params) {
       }
       let hash_code = instance.hash_code(params);
       instance.last_request_info.send_time = new Date().getTime();
-      let uuid = getUUID();
+      let uuid = UUID();
       instance.last_request_info.hash_code = hash_code;
       instance.last_request_info.uuid = uuid;
       instance.last_request_info.state = "going";
@@ -57,7 +56,7 @@ function compute_request_config_by_config(url, config, params) {
     return {};
   } else if (config.cancel_other) {
     // 取消其他常规接口的请求
-    let url_temp = jie_xi_url(url)["new_url_temp"];
+    let url_temp = ParseUrl(url)["new_url_temp"];
     let old_controller = axios_cancel_other[url_temp];
     if (old_controller) {
       old_controller.abort && old_controller.abort();
@@ -76,16 +75,13 @@ function compute_request_config_by_config(url, config, params) {
 class AxiosHttp {
   // api访问数量(每分钟)
   request_count = 0;
-
   // api错误信息收集接口
   HTTP_ERROR_API = "https://sdjfgsijmdkdhsa.gzxxty168.com/api/client/adderror";
   // 用户配置收集接口
   HTTP_PRO_INFO_API =
     "https://sdjfgsijmdkdhsa.gzxxty168.com/api/client/statistics";
-    
   // 最近的错误数组，用于分析上报
   HTTP_ERROR_API_ERR_DATA = [];
-
   // http root domain
   HTTP_ROOT_DOMAIN = "";
   // axios 实例
@@ -137,18 +133,20 @@ class AxiosHttp {
    * 设置拦截器
    */
   interceptorsHook() {
+    //自身拦截器
     this.axios_instance.interceptors.request.use((config) => {
       this.request_count++;
       return config;
     });
-    const [request, response] = axiosiInterceptors;
+    //业务拦截器
+    const { requestHook, responseHook } = AxiosiInterceptors;
     // http请求拦截器
-    request.forEach(({ resolve, reject }) => {
+    requestHook.forEach(({ resolve, reject }) => {
       this.axios_instance.interceptors.request.use(resolve, reject);
     });
     // http响应拦截器
-    response.forEach(({ resolve, reject }) => {
-      this.axios_instance.interceptors.request.use(resolve, reject);
+    responseHook.forEach(({ resolve, reject }) => {
+      this.axios_instance.interceptors.response.use(resolve, reject);
     });
   }
   /**
@@ -244,7 +242,7 @@ class AxiosHttp {
   }
   /**
    * request方法，对应全部的请求 兼容以前的方法
-   * @param {String} request_config [axios配置项]
+   * @param {Object} request_config [axios配置项]
    * @param {Object} config [axios配置项]
    */
   async request(request_config, config) {
