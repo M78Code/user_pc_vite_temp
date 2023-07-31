@@ -1,6 +1,8 @@
 import merchant_config from "./config.json";
+
+import full_version_config from "../version/full-version-config.js"
 // 是否是全量版本 
-const is_full_version =true
+const  {is_full_version =false} = full_version_config
 /**
  * 获取使用的 组件
  * @param {*} params

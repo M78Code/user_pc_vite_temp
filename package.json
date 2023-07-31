@@ -10,9 +10,9 @@
     "copy-oss-2": "node ./job/copy-oss.js dist",
     "build-in-oss": "node ./job/build-in-oss.js",
     "remove-dist": "node ./job/remove-dist.js",
-    "create-version": "node ./job/create-version.js",
+    "export-build-version": "node ./job/export-build-version.js",
     "copy-html": "node ./job/copy-html.js",
-    "build-self-use-version": "run-s remove-dist create-version  copy-oss build-in-oss build-self-use-version-inner  copy-html copy-oss-2",
+    "build-self-use-version": "run-s remove-dist export-build-version  copy-oss build-in-oss build-self-use-version-inner  copy-html copy-oss-2",
     "export-env-config": "node ./job/export-env-config.js",
     "export-full-doc": "node ./job/export-full-doc.js",
     "export-merchant-config": "node ./job/export-merchant-config.js",
@@ -33,12 +33,14 @@
     "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
     "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
+    "export-full-version-config": "node ./job/export-full-version-config.js",
     
     "dev": "npm run dev-self-use-version",
     "build": "npm run build-self-use-version",
     "emc": "npm run export-merchant-config",
     "ddd": "npm run dev-development-document",
     "dfv": "npm run dev-full-version",
+    "efvc": "npm run export-full-version-config",
     "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
   },
   "dependencies": {

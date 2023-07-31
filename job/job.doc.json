@@ -25,7 +25,7 @@
         "descriptions": ["复制OSS 到本地指定目录"]
       },
       {
-        "filename": "create-version.js",
+        "filename": "export-build-version.js",
         "type": "job",
         "descriptions": ["创建 本次构建打包的 客户端版本 号"]
       },
@@ -80,7 +80,28 @@
           "合并 ，覆盖 输入进来的配置 ，以及本地配置"
       
         ]
+      },
+
+      {
+        "filename": "export-full-version-config.js",
+        "type": "job",
+        "descriptions": [
+          "全量版本配置",
+          "全局开关，默认false" 
+      
+        ]
+      },
+
+      {
+        "filename": "write-folder.js",
+        "type": "job",
+        "descriptions": [
+          "目录生成",
+          "其他脚本通用内部 脚本" 
+      
+        ]
       }
+
 
     ]
   },
