@@ -3,6 +3,12 @@
         "category": "entries",
         "directory-name": "self-use-version",
         "type": "项目",
+        "scripts":[
+            "npm run  dev",
+            "npm run  dev-self-use-version",
+            "npm run  build",
+            "npm run  build-self-use-version"
+        ],
         "descriptions": [
             "自用版本项目",
             "常规开发 ，生产自用项目打包 入口",
@@ -87,6 +93,7 @@
         "directory-name": "development-document",
         "type": "项目",
         "scripts":[
+            "npm run  ddd",
             "npm run  dev-development-document"
         ],
         "descriptions": [

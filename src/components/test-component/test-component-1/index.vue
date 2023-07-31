@@ -1,6 +1,8 @@
 <template>
     <div class="q-pa-md">
       <div class="text-h4">测试组件-版本1  regist_props_helper ------- {{ tableClass_computed }}</div>
+
+      <div  class="q-my-md"> <q-btn  color="primary"  label="测试事件透传 测试组件-版本1"  @click="handle_test_emit" /> </div>
     
       <q-table
         title="测试组件-版本1"
@@ -30,6 +32,19 @@ const props = defineProps({
 const tableClass_computed = useComputed.tableClass_computed(props)
 
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
+
+
+
+
+
+
+const emit = defineEmits(['test-emit' ])
+const   handle_test_emit=()=>{
+  console.log('emit 事件发出 ');
+  emit('test-emit',{
+    aa:'xxxxxxxxxxxxxxxxxxxxxxxxx-------测试组件-版本    1---------x'
+  })
+}
 
   const columns = [ 
     {

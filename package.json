@@ -33,9 +33,12 @@
     "dev-check-sdk-umd": "vite    --config  ./entries/check-sdk-umd/check-sdk-umd.vite.config.js",
     "dev-check-sdk-umd-html": "vite    --config  ./entries/check-sdk-umd-html/check-sdk-umd-html.vite.config.js",
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
+    
     "dev": "npm run dev-self-use-version",
     "build": "npm run build-self-use-version",
     "emc": "npm run export-merchant-config",
+    "ddd": "npm run dev-development-document",
+    "dfv": "npm run dev-full-version",
     "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
   },
   "dependencies": {

@@ -191,6 +191,16 @@
   },
   {
     "category": "scripts",
+    "script": "emc",
+    "descriptions": ["命令别名：同 export-merchant-config "]
+  },
+  {
+    "category": "scripts",
+    "script": "ddd",
+    "descriptions": ["命令别名：同 dev-development-document "]
+  },
+  {
+    "category": "scripts",
     "script": "echo",
     "descriptions": ["占位警告 ，无其他用处"]
   }
