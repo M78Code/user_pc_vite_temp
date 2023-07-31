@@ -1,7 +1,7 @@
 /**
  * @Author: jiffy
  * @Date: 2023-07-30 17:13:55
- * @Description: 本地存储方法
+ * @Description: 本地存储方法 提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法
  */
 import { isNull, isUndefined } from "lodash";
 /**

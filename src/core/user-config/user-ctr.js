@@ -5,16 +5,20 @@
  *  主题色相关
  *  商户相关
  */
-// 等后续get_file_path、infoUpload和pako_pb公共模块开发后再替换
+// #TODO 等后续get_file_path、infoUpload和pako_pb公共模块开发后再替换
 import {get_file_path} from "src/public/utils/get_file_path.js"
 import pako_pb from "src/public/utils/custom_pb_pako.js";
 import infoUpload from 'src/public/utils/http/information_upload.js';
 
-// 使用axios，等正式开发组件时候 npm install axios
+// #TODO 接口统一管理的文件，后续替换
+import { api_details } from "src/public/api/index";
+
+// #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 const axios_instance = axios.create()
 
-// 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
+
+// #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 
 
 
@@ -138,7 +142,7 @@ class userCtr {
   * @param {*} res 请求 返回 拦截器内的 全部 res 实体
   */
  record_token_if_expired(res) {
-   // 不纳入统计的接口，这些接口无关紧要 或者 不验证token
+   // #TODO 不纳入统计的接口，这些接口无关紧要 或者 不验证token
    let whitelist = ["/yewu11/v1/getSystemTime/currentTimeMillis"];
    // 统一规则计算后的 url
    let jiexi_result = this.jie_xi_url(res.config.url);
@@ -154,6 +158,7 @@ class userCtr {
    //   url_temp.includes("user/getUserInfo"))
    // token失效
    if (res.data.code == "0401013") {
+    // #TODO 接口链接
      if (url_temp.includes("user/getUserInfo")) {
        //最后一次 调用 getuserinfo 接口 返回用户 token 失效
        this.last_getuserinfo_expired = true;
@@ -172,7 +177,7 @@ class userCtr {
        clearTimeout(this.token_expired_max_process_timer);
        this.token_expired_max_process_timer=null
      }
-     //调用 getuserinfo 接口返回值  数据备份
+     //#TODO 调用 getuserinfo 接口返回值  数据备份
      if (url_temp.includes("user/getUserInfo")) {
         let data_temp = pako_pb.unzip_data(_.get(res, 'data.data'));
         data_temp && (res.data.data = data_temp);
@@ -181,6 +186,20 @@ class userCtr {
 
    }
  }
+ /**
+  * @Description:判断用户是否登录
+  * @Author Cable
+  * @param {function} callback  回调函数
+  */
+ async check_login(callback) {
+  try {
+    // #TODO 接口
+    let res = await api_details.post_check_login()
+    callback(_.get(res, "data.data.isLogin", false), _.get(res, "data.code") == '0401038')
+  } catch (error) {
+    callback(false, true)
+  }
+}
  /**
   * 检查 token 失效 是否 上限 流程
   *
@@ -205,7 +224,7 @@ class userCtr {
 
 
 
-        
+        // #TODO
         // window.vue.$store.commit("set_is_invalid", true);
 
 
@@ -285,8 +304,8 @@ class userCtr {
 
        if(window.env.config.gr != gr){
 
-
-         let url_search = new URLSearchParams(location.search);
+        // #TODO
+        let url_search = new URLSearchParams(location.search);
        //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
        url_search.set("rdm", new Date().getTime());
        // 删除  api
@@ -419,6 +438,7 @@ class userCtr {
 
 compute_set_web_meta_config(){
    // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
+  //  #TODO
    let json = sessionStorage.getItem('merchant_config_json')
    let config =  _.get(window.env,'config.html_info') || {}
    if(json ){
