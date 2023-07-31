@@ -219,7 +219,9 @@ function handle_count_error(error) {
 
   // 总报错次数
   let err_count = Object.values(FNANI_STATUS.err_count).reduce((a, b) => a + b);
-  let error_max = compute_error_max() + 2;
+  let error_max = GetSavaDomainApi().length;
+  error_max = error_max == 0 ? 10 : error_max;
+  error_max += 2;
   console.log("http --错误 -----1----", error_max, err_count);
   //  错误 超过最大错误次数
   if (err_count > error_max) {
@@ -327,17 +329,14 @@ function match_fix_mst(match, http_data) {
     }
   }
 }
-
-// 计算  error_max 的值
-function compute_error_max() {
-  let len = GetSavaDomainApi().length;
-  if (len == 0) {
-    len = 10;
-  }
-  return len;
-}
-// 解析判定 url
-
+/**
+ *  解析判定 url
+ * @param {string} [url=""] 
+ * @returns{ is_full_url,
+    is_other_api,
+    new_url_temp,
+    is_pb,}
+ * */
 export function ParseUrl(url_temp = "") {
   //  截取 ?
   url_temp = url_temp.split("?")[0];
