@@ -159,7 +159,7 @@ const responseHook = {
     }
     let error_url = error.config.url;
     // 解析url
-    let jiexi_result = jie_xi_url(error_url);
+    let jiexi_result = ParseUrl(error_url);
     //统一规则计算后 url 片段
     error_url = jiexi_result.new_url_temp;
     // 后面非常规业务逻辑 所用axios 需要和常规的分开
@@ -179,14 +179,11 @@ const responseHook = {
     return Promise.reject(error);
   },
 };
-/**
- *
- * 接口错误 统计 相关逻辑
- */
+
 function handle_count_error(error) {
   let error_url = error.config.url;
   // 解析url
-  let jiexi_result = jie_xi_url(error_url);
+  let jiexi_result = ParseUrl(error_url);
   //统一规则计算后 url 片段
   error_url = jiexi_result.new_url_temp;
   // axios 超时的请求  AxiosError   code   "ETIMEDOUT"
@@ -450,7 +447,6 @@ function handle_res_when_axios_debounce_cache_when_done_limit(res) {
  * 返回结果 限频等 逻辑处理  error
  *
  */
-
 function handle_res_when_axios_debounce_cache_when_error(res) {
   //  我们这里不考虑  后发出的请求先回来的事情 ，此逻辑下默认 取消上个请求
   //  对于列表 mids 接口 ， 也一样必须取消上个请求 ，默认  强求单行 ，不会并行

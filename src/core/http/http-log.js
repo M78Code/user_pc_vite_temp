@@ -1,12 +1,14 @@
 /*
- * @Author: hanamr
+ * @Author: jiffy pmtyjiffy@itcom888.com
+ * @Date: 2023-07-29 10:25:32
+ * @LastEditors: jiffy
+ * @LastEditTime: 2023-07-31 14:56:48
+ * @FilePath: \user-pc-vite\src\core\http\http-log.js
  * @Description: http方法次数统计
- *
- * // let httpLog =new HttpLog({throttle}?);
- * // httpLog.push({url:'xxxx'})
  */
-// import {sessionStorage,localStorage}=userStoreHook()
+import { ss, ls } from "../utils/web-storage";
 import { DateForMat } from "../formart/";
+import { throttle, isFunction } from "lodash";
 class HttpLog {
   /**
    * @description: 构造函数
@@ -17,9 +19,9 @@ class HttpLog {
     this.run = false;
     // 检测是否有httpLog开关
     if (location.href.indexOf("httplog=1") != -1) {
-      sessionStorage.setItem("httplog", "1");
+      ss.set("httplog", "1");
     }
-    if (sessionStorage.getItem("httplog")) {
+    if (ss.get("httplog")) {
       this.run = true;
     }
     // 初始化数据
@@ -33,6 +35,11 @@ class HttpLog {
     this.run = false;
     this.debounce_throttle_cancel(this.set_local_log_obj);
   }
+  debounce_throttle_cancel(fun) {
+    if (fun && fun.cancel && typeof fun.cancel == "function") {
+      fun.cancel();
+    }
+  }
   /**
    * @description: 数据初始化
    */
@@ -43,13 +50,10 @@ class HttpLog {
     //   this.log_obj = {"data":{"2021-4-16":{"time":{"17:30":{"xxxx2":2,"xxxyy":1}},"total":{"xxxx":2,"xxxyy":1}}}}
     this.log_obj = this.get_local_log_obj();
     this.set7day_data();
-    if (this.view) {
-      this.set_local_log_obj = this.view.throttle(
-        this.set_local_log_obj,
-        5000,
-        { leading: true, trailing: true }
-      );
-    }
+    this.set_local_log_obj = throttle(this.set_local_log_obj, 5000, {
+      leading: true,
+      trailing: true,
+    });
   }
   /**
    * @description: 设置只保存近7天的数据
@@ -155,16 +159,7 @@ class HttpLog {
    * @return {object} 日志对象
    */
   get_local_log_obj() {
-    let ret = { data: {} };
-    let log = localStorage.getItem("http_log");
-    if (log) {
-      try {
-        ret = JSON.parse(log);
-      } catch (error) {
-        // 无意义容错,无需打印异常
-      }
-    }
-    return ret;
+    return ls.get("http_log", { data: {} });
   }
 
   /**
@@ -172,8 +167,7 @@ class HttpLog {
    */
   set_local_log_obj() {
     if (this.log_obj) {
-      let log = JSON.stringify(this.log_obj);
-      localStorage.setItem("http_log", log);
+      ls.set("http_log", this.log_obj);
     }
   }
 }
