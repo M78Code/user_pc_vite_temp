@@ -27,7 +27,7 @@ let set_key_and_default_value_single_one = (params = {}) => {
   let { key, value, definition } = params;
   set_key_symbol(key);
   set_default_value(value);
-  key_definition = definition;
+  set_key_definition(definition);
   let value_computed_fn = (props) => {
     return computed(() => {
       let config_value = input_config[key_symbol.value];
@@ -40,11 +40,9 @@ let set_key_and_default_value_single_one = (params = {}) => {
       }
     });
   };
-  let value_prop = {
-    [key_symbol.value]: key_definition,
-  };
+ 
   let useProps_single = {
-    ...value_prop,
+    [key_symbol.value]: key_definition,
   };
   let useComputed_single = {
     [`${key_symbol.value}_computed`]: value_computed_fn,
