@@ -3,8 +3,48 @@
  * @Date: 2023-07-30 15:13:55
  * @Description: postmessage 接收配置sdk 配置
  */
+import { set, merge } from "lodash";
 import { onMounted, onUnmounted } from "vue";
-export function use_get_sdk_config() {
+//一般来说 项目的config是初始化就配置设定好的
+// 如果要更改 也是通过方法来改 暂时静态的 一般来说SDK打包 配置就固定了
+const config = {
+  platform: {
+    name: "PC", //平台名称
+    isPc: true,
+    isMobile: false,
+  }, // 用UA来判断运行平台或者配置
+  zhuge_config: {
+    //诸葛埋点相关
+    enable: false,
+    js_url:
+      "https://updata.yaohuakuo.com/zhuge.js?v=" +
+      new Date().toJSONString().slice(0, 10),
+    mid: [], //环境的商户id
+    app_key: "c41f8b7cb97640838d90a73a0f077a43", //生产环境的key
+    config:{} //SDK配置项
+  },
+  axios: {
+    //通用请求axios配置
+    timeout: 15000,
+  },
+};
+/**
+ * 更改CONFIG的方法
+ * @param {*} key 键
+ * @param {*} value  值
+ */
+function update_config(key, value) {
+  console.log("update config:", key, value);
+  set(config, key, value);
+}
+/**
+ *合并新的 config
+ */
+function merge_config(newConfig) {
+  merge(config, newConfig);
+  return config;
+}
+function use_get_sdk_config() {
   onMounted(() => {
     listener_message();
   });
@@ -87,4 +127,8 @@ export function use_get_sdk_config() {
   };
 
   onUnmounted(() => {});
+  return () => {
+    window.removeEventListener("message", listener_message);
+  };
 }
+export { config, update_config, merge_config, use_get_sdk_config };

@@ -4,6 +4,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import randomstring from "randomstring";
+import {ensure_write_folder_exist} from "./write-folder.js"
 import scripts_doc from "../scripts.doc.json" assert { type: "json" };
 import job_doc from "./job.doc.json" assert { type: "json" };
 import entries_doc from "../entries/entries.doc.json" assert { type: "json" };
@@ -124,25 +125,9 @@ let version = Date.now();
 let write_folder = "./job/output/doc";
  
 
-/**
- * 确保配置 输出目录存在
- */
-const ensure_write_folder_exist = () => {
-  let is_exist = fs.existsSync(write_folder)
-      if (is_exist) {
-        console.log( `${write_folder}-----文件夹已存在----  ` );    
-      }else{
-            // 创建文件夹
-        fs.mkdir(write_folder, { recursive: true }, (err) => {
-          if (err) {
-            console.log("创建文件夹 出错 ", err);
-          }
-          console.log("创建文件夹   完成");
-        });
-      }
-  };
+ 
 //确保配置 输出目录存在 
-ensure_write_folder_exist()
+ensure_write_folder_exist(write_folder)
 
 
 

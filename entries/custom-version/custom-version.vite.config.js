@@ -1,5 +1,4 @@
 // FILE: vite.config.js
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
@@ -10,7 +9,6 @@ export default defineConfig({
     vue({
       template: { transformAssetUrls }
     }),
-
     quasar({
       sassVariables: 'src/css/quasar-variables.scss'
     })
@@ -25,12 +23,10 @@ export default defineConfig({
     //   fileName: (format) => `TY_JSSDK.${format}.js`,
     // },
     // transpileDependencies: ["quasar"],
-    outDir: "dist/self-use-version",
- 
+    outDir: "dist/custom-version",
     rollupOptions: {
       // external: ["vue"],
       input:{
-        // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
         index: path.resolve(__dirname,'index.html')
       },
       output: {
@@ -44,18 +40,20 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-   
       src: "./src",
       app: "./",
       dist: "./dist",
       node_modules: "./node_modules",
       public: "./public",
       // project_path: path.join(   
-     
       //   __dirname,
       //   `./src/${final_config.project_path}`
       // ),
     },
   },
-
+  server:{
+    port:28600,
+    open: 'entries/custom-version/index.html',
+    hmr:true
+  }
 })

@@ -2,9 +2,12 @@
  * 输出最终的 环境配置 ，用于验证 ,也用于初始化生成
  */
 
-const compute_final_config = require("./final-config")
+ 
 
+import {compute_final_config} from "./final-config"
 
+import * as fs from "node:fs";
+import {ensure_write_folder_exist} from "./write-folder.js"
 
 
 //  个人   开发环境
@@ -49,13 +52,19 @@ env_arr.map(x=>{
 })
 
 
-const fs = require("fs");
+ 
 
 
+// 输出目录
+let write_folder = "./job/output/env";
+ 
+
+  //确保配置 输出目录存在
+ensure_write_folder_exist(write_folder);
 
 env_arr.map(x=>{
 
-  let full_path = `./job/output/env/${x}.js`;
+  let full_path = `${write_folder}/${x}.js`;
   let str=  `export default  `+ JSON.stringify(obj[x])
 
   fs.writeFileSync(full_path,str );

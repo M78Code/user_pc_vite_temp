@@ -14,10 +14,7 @@
       {
         "filename": "global-filters",
         "type": "js",
-        "descriptions": [
-          "日期转换 金额转换",
-          "赛事比分阶段性差异"
-        ]
+        "descriptions": ["日期转换 金额转换", "赛事比分阶段性差异"]
       },
       {
         "filename": "match-list-utils",
@@ -32,7 +29,9 @@
         "filename": "web-storage",
         "type": "js",
         "descriptions": [
-          ""
+          "共有的 web storage 操作方法",
+          "导出 LocalStorage | ls, SessionStorage | ss ",
+          "提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法"
         ]
       }
     ]

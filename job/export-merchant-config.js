@@ -4,6 +4,7 @@
 import * as fs from "node:fs";
 import axios from "axios";
 import { merge_merchant_config } from "./merge-merchant-config.js";
+import {ensure_write_folder_exist} from "./write-folder.js"
 console.log("export-merchant-config----------合并输出商户配置-");
 console.log("process.argv----------------------0---");
 console.log(process.argv);
@@ -27,28 +28,12 @@ let MERCHANT_CONFIG_INFO = {};
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 // let file_path = `${write_folder}/v_${MERCHANT_CONFIG_VERSION}.json`;
-let file_path = `${write_folder}/config-ouzhou.json`;
+let file_path = `${write_folder}/config.json`;
 //开启 ，关闭本地测试  ,这个 上线必须设置false
 let ENABLE_TEST = true;
-/**
- * 确保配置 输出目录存在
- */
-const ensure_write_folder_exist = () => {
-let is_exist = fs.existsSync(write_folder)
-    if (is_exist) {
-        console.log( `${write_folder}-----文件夹已存在----  ` );  
-    }else{
-          // 创建文件夹
-      fs.mkdir(write_folder, { recursive: true }, (err) => {
-        if (err) {
-          console.log("创建文件夹 出错 ", err);
-        }
-        console.log("创建文件夹   完成");
-      });
-    }
-};
+ 
 //确保配置 输出目录存在
-ensure_write_folder_exist();
+ensure_write_folder_exist(write_folder);
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
@@ -73,6 +58,9 @@ const merge_and_output_final_config = (scg) => {
     
     }
   );
+ 
+
+
 };
 /**
  * 获取 服务器上 当前商户的 版本配置

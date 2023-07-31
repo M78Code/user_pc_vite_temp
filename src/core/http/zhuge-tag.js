@@ -1,183 +1,170 @@
 import { get } from "lodash";
 import { DateForMat } from "../formart/";
+import { deepMerge, GetUrlParams } from "../utils";
 // const {config} =useGlobelConfig();
-const {
-  zhuge_config = {
+class ZhuGe {
+  config = {
+    enable: false,
     js_url: "https://updata.yaohuakuo.com/zhuge.js?v=",
     mid: [],
     app_key: "",
-  },
-  platform,
-} = config || {};
-//config platform 看怎么存吧
-/**
- * @description: zhuge埋点identify方法
- * @param {*} user_id
- * @param {*} obj
- * @return {*}
- */
-export function zhuge_identify(user_id, obj = {}) {
-  if (window.zhuge_run && window.zhuge && user_id) {
-    // 自定义属性
-    // 增加设备标识
-
-    //platform 看怎么存吧
-    obj.type = platform == "pc" ? "pc" : "mobild";
-    // 识别用户
-    window.zhuge.identify(user_id, obj);
-  } else if (!user_id) {
-    // 阻止zhuge埋点事件发送
-    window.zhuge_run = 0;
-  }
-}
-
-/**
- * @description: zhuge埋点track方法
- * @param {*} eventLabel
- * @param {*} obj
- * @return {*}
- */
-export function zhuge_track(eventLabel, obj = {}) {
-  if (window.zhuge_run && window.zhuge) {
-    // 自定义事件
-    window.zhuge.track(eventLabel, obj);
-  }
-}
-/**
- * @Description 发送诸葛埋点事件----添加新的事件用这个方法
- * @param {string} eventLabel 事件标签名称
- * @param {undefined} eventPropsObj 要加的参数
- */
-export function send_zhuge_event(eventLabel, eventPropsObj = {}) {
-  let vx_get_user = store.getters.get_user;
-  let objKey = {
-    clickTime: "点击时间",
-    userName: "用户名",
-    userId: "用户ID",
-    merchantId: "商户ID",
-    languageVersion: "语言版本",
-    terminal: "访问终端",
-    eventLabel: "事件标签",
-  };
-  let _obj = {
-    [objKey.eventLabel]: eventLabel,
-    [objKey.clickTime]: DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss"),
-    [objKey.userName]: get(vx_get_user, "userName"),
-    [objKey.userId]: get(vx_get_user, "userId"),
-    [objKey.merchantId]: get(vx_get_user, "mId"),
-    [objKey.languageVersion]: get(vx_get_user, "languageName"),
-    [objKey.terminal]: "PC",
-  };
-  Object.assign(_obj, eventPropsObj);
-  console.log(eventLabel, _obj);
-  zhuge_track(eventLabel, _obj);
-}
-/**
- * @description: zhuge埋点setSuperProperty方法(设置事件通用属性)
- * @param {*} obj 通用属性
- * @return {*}
- */
-export function zhuge_setSuperProperty(obj = {}) {
-  if (window.zhuge_run && window.zhuge) {
-    // 设置事件通用属性
-    window.zhuge.setSuperProperty(obj);
-  }
-}
-
-/**
- * @description: 加载诸葛sdk JS
- * @param {*} mid 商户id
- * @return {*}
- */
-export function zhuge_load_sdk_js(mid = 0) {
-  // 设置默认启动参数
-  window.zhuge_run = mid && zhuge_config.mid.includes(mid);
-  try {
-    let url_search = new URLSearchParams(location.search);
-    // 获取诸葛埋点开关
-    let zhuge = url_search.get("zhuge");
-    if (zhuge) {
-      // 设置诸葛埋点开关
-      window.zhuge_run = 1;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  // 诸葛埋点开关关闭时,直接终止
-  if (!window.zhuge_run) {
-    return;
-  }
-  if (window.zhuge) return;
-  window.zhuge = [];
-  window.zhuge.methods =
-    "_init identify track trackRevenue getDid getSid getKey setSuperProperty setUserProperties setWxProperties setPlatform".split(
-      " "
-    );
-  window.zhuge.factory = function (b) {
-    return function () {
-      var a = Array.prototype.slice.call(arguments);
-      a.unshift(b);
-      window.zhuge.push(a);
-      return window.zhuge;
-    };
-  };
-  for (var i = 0; i < window.zhuge.methods.length; i++) {
-    var key = window.zhuge.methods[i];
-    window.zhuge[key] = window.zhuge.factory(key);
-  }
-  window.zhuge.load = function (b, x) {
-    if (!document.getElementById("zhuge-js")) {
-      var a = document.createElement("script");
-      var verDate = new Date();
-      var verStr =
-        verDate.getFullYear().toString() +
-        verDate.getMonth().toString() +
-        verDate.getDate().toString();
-
-      a.type = "text/javascript";
-      a.id = "zhuge-js";
-      a.async = !0;
-      a.src = zhuge_config.js_url + verStr;
-      a.onerror = function () {
-        window.zhuge.identify = window.zhuge.track = function (
-          ename,
-          props,
-          callback
-        ) {
-          if (
-            callback &&
-            Object.prototype.toString.call(callback) === "[object Function]"
-          ) {
-            callback();
-          } else if (
-            Object.prototype.toString.call(props) === "[object Function]"
-          ) {
-            props();
-          }
-        };
-      };
-      var c = document.getElementsByTagName("script")[0];
-      c.parentNode.insertBefore(a, c);
-      window.zhuge._init(b, x);
-    }
-  };
-  // 测试环境的key    c41f8b7cb97640838d90a73a0f077a43
-  // 生产环境的key    5a0301efe0244733acb0488763592a6b
-  window.zhuge.load(zhuge_config.app_key, {
-    //配置应用的AppKey-----替换为生产环境的Key
-    superProperty: {
-      //全局的事件属性(选填)
-      应用名称: "paDataTest",
+    config: {
+      //配置应用的AppKey-----替换为生产环境的Key
+      superProperty: {
+        //全局的事件属性(选填)
+        应用名称: "paDataTest",
+      },
+      // debug: true,
+      adTrack: false, //广告监测开关，默认为false
+      zgsee: false, //视屏采集开关，默认为false
+      autoTrack: true, //启用全埋点采集（选填，默认false）
+      singlePage: true, //是否是单页面应用（SPA），启用autoTrack后生效（选填，默认false）,
+      duration: false, //页面停留时长采集开关，默认为false
     },
-    // debug: true,
-    adTrack: false, //广告监测开关，默认为false
-    zgsee: false, //视屏采集开关，默认为false
-    autoTrack: true, //启用全埋点采集（选填，默认false）
-    singlePage: true, //是否是单页面应用（SPA），启用autoTrack后生效（选填，默认false）,
-    duration: false, //页面停留时长采集开关，默认为false
-  });
+  };
+  constructor(confg = {}) {
+    const _this = this;
+    this.config = deepMerge(this.config, confg);
+    for (var i = 0; i < _this.length; i++) {
+      var key = _this.methods[i];
+      this[key] = this.factory(key);
+    }
+    try {
+      // 获取诸葛埋点开关
+      this.config.enable =
+        GetUrlParams("zhuge") || this.config.mid.includes(mid);
+    } catch (error) {}
+    // 诸葛埋点开关关闭时,直接终止
+    if (!this.config.enable) {
+      return;
+    }
+    this.load(this.app_key, this.config.config);
+  }
+  load(app_key, config) {
+    const _this = this;
+    window.zhuge = [];
+    window.zhuge.methods =
+      "_init identify track trackRevenue getDid getSid getKey setSuperProperty setUserProperties setWxProperties setPlatform".split(
+        " "
+      );
+    window.zhuge.factory = function (b) {
+      return function () {
+        var a = Array.prototype.slice.call(arguments);
+        a.unshift(b);
+        window.zhuge.push(a);
+        return window.zhuge;
+      };
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+      var key = window.zhuge.methods[i];
+      window.zhuge[key] = window.zhuge.factory(key);
+    }
+    window.zhuge.load = function (b, x) {
+      if (!document.getElementById("zhuge-js")) {
+        var a = document.createElement("script");
+        a.type = "text/javascript";
+        a.id = "zhuge-js";
+        a.async = !0;
+        a.src = _this.config.js_url;
+        a.onerror = function () {
+          window.zhuge.identify = window.zhuge.track = function (
+            ename,
+            props,
+            callback
+          ) {
+            if (
+              callback &&
+              Object.prototype.toString.call(callback) === "[object Function]"
+            ) {
+              callback();
+            } else if (
+              Object.prototype.toString.call(props) === "[object Function]"
+            ) {
+              props();
+            }
+          };
+        };
+        var c = document.getElementsByTagName("script")[0];
+        c.parentNode.insertBefore(a, c);
+        window.zhuge._init(b, x);
+      }
+    };
+    // 测试环境的key    c41f8b7cb97640838d90a73a0f077a43
+    // 生产环境的key    5a0301efe0244733acb0488763592a6b
+    window.zhuge.load(app_key, config);
+  }
+  /**
+   * @description: zhuge埋点identify方法
+   * @param {*} user_id
+   * @param {*} obj
+   * @return {*}
+   */
+  zhuge_identify(user_id, obj = {}) {
+    if (this.config.enable && user_id) {
+      // 自定义属性
+      // 增加设备标识
+      //platform 看怎么存吧
+      obj.type = platform == "pc" ? "pc" : "mobild";
+      // 识别用户
+      window.zhuge.identify(user_id, obj);
+    } else if (!user_id) {
+      // 阻止zhuge埋点事件发送
+      this.config.enable = false;
+    }
+  }
+  /**
+   * @description: zhuge埋点track方法
+   * @param {*} eventLabel
+   * @param {*} obj
+   * @return {*}
+   */
+  zhuge_track(eventLabel, obj = {}) {
+    if (this.config.enable) {
+      // 自定义事件
+      window.zhuge.track(eventLabel, obj);
+    }
+  }
+  /**
+   * @Description 发送诸葛埋点事件----添加新的事件用这个方法
+   * @param {string} eventLabel 事件标签名称
+   * @param {undefined} eventPropsObj 要加的参数
+   */
+  send_zhuge_event(eventLabel, eventPropsObj = {}) {
+    let vx_get_user = store.getters.get_user;
+    let objKey = {
+      clickTime: "点击时间",
+      userName: "用户名",
+      userId: "用户ID",
+      merchantId: "商户ID",
+      languageVersion: "语言版本",
+      terminal: "访问终端",
+      eventLabel: "事件标签",
+    };
+    let _obj = {
+      [objKey.eventLabel]: eventLabel,
+      [objKey.clickTime]: DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss"),
+      [objKey.userName]: get(vx_get_user, "userName"),
+      [objKey.userId]: get(vx_get_user, "userId"),
+      [objKey.merchantId]: get(vx_get_user, "mId"),
+      [objKey.languageVersion]: get(vx_get_user, "languageName"),
+      [objKey.terminal]: "PC",
+    };
+    Object.assign(_obj, eventPropsObj);
+    console.log(eventLabel, _obj);
+    this.zhuge_track(eventLabel, _obj);
+  }
+  /**
+   * @description: zhuge埋点setSuperProperty方法(设置事件通用属性)
+   * @param {*} obj 通用属性
+   * @return {*}
+   */
+  zhuge_setSuperProperty(obj = {}) {
+    if (this.config.enable) {
+      // 设置事件通用属性
+      window.zhuge.setSuperProperty(obj);
+    }
+  }
 }
-
 // // 获取不同环境的商户id
 // export function get_zhuge_config_obj() {
 //   let zhuge_obj = { app_key: "", mid: "" };
@@ -228,10 +215,4 @@ export function zhuge_load_sdk_js(mid = 0) {
 //   return zhuge_obj;
 // }
 
-export default {
-  zhuge_identify,
-  zhuge_track,
-  send_zhuge_event,
-  zhuge_setSuperProperty,
-  zhuge_load_sdk_js,
-};
+export default new ZhuGe(zhuge_config);

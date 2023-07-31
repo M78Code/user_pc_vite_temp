@@ -36,7 +36,7 @@
   },
   {
     "category": "scripts",
-    "script": "create-version",
+    "script": "export-build-version",
     "descriptions": ["创建 本次构建打包的 客户端版本 号"]
   },
   {
@@ -181,6 +181,13 @@
   },
   {
     "category": "scripts",
+    "script": "export-full-version-config",
+    "descriptions": ["输出全量版本开启/关闭配置"]
+  },
+
+
+  {
+    "category": "scripts",
     "script": "dev",
     "descriptions": ["命令别名：同 dev-self-use-version"]
   },
@@ -188,6 +195,31 @@
     "category": "scripts",
     "script": "build",
     "descriptions": ["命令别名：同 build-self-use-version "]
+  },
+  {
+    "category": "scripts",
+    "script": "emc",
+    "descriptions": ["命令别名：同 export-merchant-config "]
+  },
+  {
+    "category": "scripts",
+    "script": "ddd",
+    "descriptions": ["命令别名：同 dev-development-document "]
+  },
+  {
+    "category": "scripts",
+    "script": "dfv",
+    "descriptions": ["命令别名：同 dev-full-version "]
+  },
+
+  {
+    "category": "scripts",
+    "script": "efvc",
+    "descriptions": [
+      "命令别名：同 export-full-version-config ",
+      "全量配置：npm run  efvc full ",
+      "非全量版本：npm run  efvc "
+    ]
   },
   {
     "category": "scripts",

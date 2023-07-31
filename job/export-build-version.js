@@ -1,10 +1,11 @@
  /**
   * 创建 本次打包的 客户端版本
   */
-const fs = require('fs')
+
+ import * as fs from "node:fs";
 
 
-
+ import {ensure_write_folder_exist} from "./write-folder.js"
 
 
 function format_date(value) {
@@ -23,8 +24,19 @@ function format_date(value) {
 
 const BUILD_VERSION =   format_date(new Date().getTime())
 
-let str = `module.exports= {"BUILD_VERSION": '${BUILD_VERSION}'  } `
+let str = `export default {"BUILD_VERSION": '${BUILD_VERSION}'  } `
 
-let full_path = `./version.js`;
 
+
+
+
+// 输出目录
+let write_folder = "./job/output/version";
+ 
+
+  //确保配置 输出目录存在
+ensure_write_folder_exist(write_folder);
+
+
+let full_path = `${write_folder}/build-version.js`;
 fs.writeFileSync(full_path, str);
