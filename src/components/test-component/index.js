@@ -1,6 +1,6 @@
 
 
-  import TestComponentFullVersionWapper from "./full-version-wapper/index.vue";
+import TestComponentFullVersionWapper from "./full-version-wapper/index.vue";
 
 
 

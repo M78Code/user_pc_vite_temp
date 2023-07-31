@@ -1,1 +1,14 @@
-{"TestComponent":{"use_component":"TestComponent_1","params":{"tableClass":"bg-deep-purple-14"}},"MERCHANT_CONFIG_VERSION":"123456","project":"ouzhou","write_file_date":1690726534686}
+{
+  "TestComponent": {
+    "use_component": "TestComponent_1",
+    "params": {
+        
+        "tableClass": "bg-red-10",
+        "title": "bg-red-10-----及格"
+    
+    }
+  },
+  "MERCHANT_CONFIG_VERSION": "123456",
+  "project": "ouzhou",
+  "write_file_date": 1690726534686
+}

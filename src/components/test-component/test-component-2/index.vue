@@ -14,26 +14,13 @@
   </template>
   
   <script setup>
-
- 
- 
-
-
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import  { regist_props_helper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
-const  component_symbol = 'TestComponent'
-const need_register_props = {
-  tableClass: {
-    type: String,
-    default: "bg-teal",
-  },
-}
-regist_props_helper(component_symbol, need_register_props)
-const props = defineProps({
-  ...useProps
-})
+import  { useRegistPropsHelper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
-
+const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const emit = defineEmits(['test-emit' ])

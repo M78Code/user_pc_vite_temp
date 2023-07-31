@@ -1,11 +1,9 @@
 <template>
     <div class="q-pa-md">
-      <div class="text-h4">测试组件-版本1  regist_props_helper ------- {{ tableClass_computed }}</div>
-
+      <div class="text-h4">测试组件-版本1  useRegistPropsHelper ------- {{ tableClass_computed }}</div>
       <div  class="q-my-md"> <q-btn  color="primary"  label="测试事件透传 测试组件-版本1"  @click="handle_test_emit" /> </div>
-    
       <q-table
-        title="测试组件-版本1"
+        :title="title_computed"
         :table-class="tableClass_computed"
         :rows="rows"
         :columns="columns"
@@ -13,31 +11,15 @@
       />
     </div>
   </template>
-  
   <script setup>
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
- 
-import  { regist_props_helper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
-const  component_symbol = 'TestComponent'
-const need_register_props = {
-  tableClass: {
-    type: String,
-    default: "bg-red",
-  },
-}
-regist_props_helper(component_symbol, need_register_props)
-const props = defineProps({
-  ...useProps
-})
+import  { useRegistPropsHelper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
-
+const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
-
-
-
-
-
 const emit = defineEmits(['test-emit' ])
 const   handle_test_emit=()=>{
   console.log('emit 事件发出 ');
@@ -45,7 +27,6 @@ const   handle_test_emit=()=>{
     aa:'xxxxxxxxxxxxxxxxxxxxxxxxx-------测试组件-版本    1---------x'
   })
 }
-
   const columns = [ 
     {
       name: 'name',
@@ -64,7 +45,6 @@ const   handle_test_emit=()=>{
     { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
     { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
   ]
-  
   const rows = [
     {
       name: 'Frozen Yogurt',
@@ -167,7 +147,4 @@ const   handle_test_emit=()=>{
       iron: '6%'
     }
   ]
-  
- 
   </script>
-  
