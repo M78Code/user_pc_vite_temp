@@ -35,6 +35,7 @@
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
     "dev": "npm run dev-self-use-version",
     "build": "npm run build-self-use-version",
+    "emc": "npm run export-merchant-config",
     "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
   },
   "dependencies": {

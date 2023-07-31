@@ -27,7 +27,7 @@ let MERCHANT_CONFIG_INFO = {};
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 // let file_path = `${write_folder}/v_${MERCHANT_CONFIG_VERSION}.json`;
-let file_path = `${write_folder}/config-ouzhou.json`;
+let file_path = `${write_folder}/config.json`;
 //开启 ，关闭本地测试  ,这个 上线必须设置false
 let ENABLE_TEST = true;
 /**
@@ -73,6 +73,9 @@ const merge_and_output_final_config = (scg) => {
     
     }
   );
+ 
+
+
 };
 /**
  * 获取 服务器上 当前商户的 版本配置

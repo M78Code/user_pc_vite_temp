@@ -1,7 +1,9 @@
 <template>
     <div class="q-pa-md">
+      <div class="text-h4">测试组件-版本2  tableClass_computed------- {{ tableClass_computed }}</div>
       <q-table
         title="测试组件-版本2"
+        :table-class="tableClass_computed"
         :rows="rows"
         :columns="columns"
         row-key="name"
@@ -9,7 +11,33 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
+
+ 
+ 
+
+
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import  { regist_props_helper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
+const  component_symbol = 'TestComponent'
+const need_register_props = {
+  tableClass: {
+    type: String,
+    default: "bg-teal",
+  },
+}
+regist_props_helper(component_symbol, need_register_props)
+const props = defineProps({
+  ...useProps
+})
+const tableClass_computed = useComputed.tableClass_computed(props)
+
+//-------------------- 对接参数 prop 注册  结束  -------------------- 
+
+
+
+
+
   const columns = [
     {
       name: 'name',
@@ -132,13 +160,6 @@
     }
   ]
   
-  export default {
-    setup () {
-      return {
-        columns,
-        rows
-      }
-    }
-  }
+ 
   </script>
   
