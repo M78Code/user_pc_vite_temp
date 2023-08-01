@@ -1,5 +1,6 @@
 /*
- * @Author: hanamr
+ * @Author: jiffy
+ * @LastEditors: jiffy
  * @Description: ws通信日志功能类
  */
 import { GetUrlParams } from "../utils";
@@ -41,7 +42,7 @@ class WsLog {
    * @param: flg 标识
    * @param: msg 消息体
    */
-  sendMsg(flg, msg) {
+  send_msg(flg, msg) {
     if (this.ws_run && this.ws) {
       try {
         if (msg && typeof msg == "object") {
@@ -173,6 +174,7 @@ class WsLog {
       clearInterval(this.interval);
       this.interval = null;
     }
+    this.ws && this.ws.close();
     this.ws = null;
   }
 }

@@ -76,6 +76,11 @@
         "descriptions": ["http日志类"]
       },
       {
+        "filename": "axios-loop.js",
+        "type": "js",
+        "descriptions": ["http请求循环类"]
+      },
+      {
         "filename": "gtag-tag.js",
         "type": "js",
         "descriptions": ["Google gtag类"]

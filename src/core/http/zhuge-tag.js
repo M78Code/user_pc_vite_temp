@@ -1,7 +1,15 @@
+/*
+ * @Author: jiffy
+ * @Date: 2023-07-28 19:55:25
+ * @LastEditTime: 2023-08-01 11:53:06
+ * @LastEditors: jiffy
+ * @Description: 说明
+ *  
+ */
 import { get } from "lodash";
 import { DateForMat } from "../formart/";
 import { deepMerge, GetUrlParams } from "../utils";
-// const {config} =useGlobelConfig();
+import { config } from "../sdk-config";
 class ZhuGe {
   config = {
     enable: false,
@@ -215,4 +223,4 @@ class ZhuGe {
 //   return zhuge_obj;
 // }
 
-export default new ZhuGe(zhuge_config);
+export default new ZhuGe(config.zhuge_config);

@@ -7,7 +7,9 @@ import { set, merge } from "lodash";
 import { onMounted, onUnmounted } from "vue";
 //一般来说 项目的config是初始化就配置设定好的
 // 如果要更改 也是通过方法来改 暂时静态的 一般来说SDK打包 配置就固定了
+//动态的话 和 lang 一起放那边
 const config = {
+  LOG: true,
   platform: {
     name: "PC", //平台名称
     isPc: true,
@@ -21,7 +23,7 @@ const config = {
       new Date().toJSONString().slice(0, 10),
     mid: [], //环境的商户id
     app_key: "c41f8b7cb97640838d90a73a0f077a43", //生产环境的key
-    config:{} //SDK配置项
+    config: {}, //诸葛 SDK配置项
   },
   axios: {
     //通用请求axios配置

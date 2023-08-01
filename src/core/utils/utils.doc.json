@@ -33,6 +33,11 @@
           "导出 LocalStorage | ls, SessionStorage | ss ",
           "提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法"
         ]
+      },
+      {
+        "filename": "dom-hook",
+        "type": "js",
+        "descriptions": ["针对原始dom元素进行操作"]
       }
     ]
   }
