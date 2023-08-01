@@ -10,7 +10,7 @@
     "copy-oss": "node ./job/copy-oss.js",
     "copy-oss-2": "node ./job/copy-oss.js dist",
     "build-in-oss": "node ./job/build-in-oss.js",
-    "remove-dist": "node ./job/remove-dist.js",
+    "remove-dist": "node ./job/remove-dist.js self-use-version",
     "export-build-version": "node ./job/export-build-version.js",
     "copy-html": "node ./job/copy-html.js",
     "build-self-use-version": "run-s remove-dist export-build-version  copy-oss build-in-oss build-self-use-version-inner  copy-html copy-oss-2",
@@ -46,6 +46,8 @@
     "dcv": "npm run dev-custom-version",
     "efvo": "npm run export-full-version-open",
     "efvc": "npm run export-full-version-close",
+    "eeca": "npm run  export-env-config all",
+    "eec": "npm run  export-env-config",
     "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
   },
   "dependencies": {

@@ -259,6 +259,24 @@
       "命令别名：同 export-full-version-close " 
     ]
   },
+
+  {
+    "category": "scripts",
+    "script": "eec",
+    "descriptions": [
+      "命令别名：同 export-env-config " 
+    ]
+  },
+  {
+    "category": "scripts",
+    "script": "eeca",
+    "descriptions": [
+      "命令别名：同 export-env-config  携带 all 参数" 
+    ]
+  },
+
+
+  
   {
     "category": "scripts",
     "script": "echo",

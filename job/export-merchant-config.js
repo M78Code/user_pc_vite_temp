@@ -4,7 +4,7 @@
 import * as fs from "node:fs";
 import axios from "axios";
 import { merge_merchant_config } from "./merge-merchant-config.js";
-import {ensure_write_folder_exist} from "./write-folder.js"
+import {ensure_write_folder_exist} from "./write-folder-file.js"
 console.log("export-merchant-config----------合并输出商户配置-");
 console.log("process.argv----------------------0---");
 console.log(process.argv);
@@ -16,7 +16,7 @@ console.log(
 // console.log('MERCHANT-CONFIG-VERSION  2:  ', process.env);
 console.log("process.argv----------------------3---");
 // 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
-let demo_version = "123456";
+let demo_version = "yazhou-h5-shiwan-123459-555555";
 //命令行参数 配置的   商户版本号    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程
 let argv_version = ( process.argv[2] || "" ).trim();
 //env 变量  配置的   商户版本号    , 一般是运维那边 配置打包使用的

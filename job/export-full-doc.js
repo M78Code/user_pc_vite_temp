@@ -4,7 +4,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import randomstring from "randomstring";
-import {ensure_write_folder_exist} from "./write-folder.js"
+import {ensure_write_folder_exist} from "./write-folder-file.js"
 import scripts_doc from "../scripts.doc.json" assert { type: "json" };
 import job_doc from "./job.doc.json" assert { type: "json" };
 import entries_doc from "../entries/entries.doc.json" assert { type: "json" };
