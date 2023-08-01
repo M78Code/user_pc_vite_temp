@@ -6,6 +6,12 @@
  */
 
 
+import BUILD_VERSION_CONFIG from  "./output/version/build-version.js"
+let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
+
+import final_merchant_config from "./output/merchant/config.json"  assert { type: "json" };
+
+
 const compute_final_config=(current_env)=>{
 
 // MERCHANT-CONFIG-VERSION
@@ -13,7 +19,7 @@ const compute_final_config=(current_env)=>{
 
   let compute_build_in_oss_by_current_env = require("./build-in-oss.js")
   let current_env_build_in_oss=''
-  let BUILD_VERSION = require('./version.js').BUILD_VERSION;
+ 
   // 模块化打包 构建 zip 版本参数
   let MODULE_SDK_VERSION =   ( process.env.SHIWAN_MODULE_SDK_VERSION|| "").trim()   ;
 

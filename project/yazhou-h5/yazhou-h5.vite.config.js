@@ -16,23 +16,23 @@ export default defineConfig({
     })
   ],
   build: {
-    lib: {
-      entry: path.resolve(
-        __dirname,
-        "./full-sdk.install.js"
-      ),
-      name: "TY_JSSDK",
-      fileName: (format) => `TY_JSSDK.${format}.js`,
-    },
+    // lib: {
+    //   entry: path.resolve(
+    //     __dirname,
+    //     "./build/build-jssdk/build-jssdk.install.js"
+    //   ),
+    //   name: "TY_JSSDK",
+    //   fileName: (format) => `TY_JSSDK.${format}.js`,
+    // },
     // transpileDependencies: ["quasar"],
-    outDir: "dist/full-sdk",
+    outDir: "dist/self-use-version",
  
     rollupOptions: {
       // external: ["vue"],
-      // input:{
-    
-      //   index: path.resolve(__dirname,'index.html')
-      // },
+      input:{
+        // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
+        index: path.resolve(__dirname,'index.html')
+      },
       output: {
         // Provide global variables to use in the UMD build
         // Add external deps here
