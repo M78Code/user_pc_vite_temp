@@ -1,5 +1,10 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事列表"
+  },
+  "props": {
     "category": "match-list",
     "directory-name": "match-list",
     "descriptions": [
@@ -42,4 +47,4 @@
       }
     ]
   }
-]
+}

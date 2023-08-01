@@ -1,5 +1,10 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 1,
+    "menuName": "客户端PC",
+    "sonName": "utils-工具方法"
+  },
+  "props": {
     "category": "utils",
     "directory-name": "utils",
     "descriptions": [
@@ -41,4 +46,4 @@
       }
     ]
   }
-]
+}

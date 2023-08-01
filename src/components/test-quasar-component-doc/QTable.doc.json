@@ -1,4 +1,9 @@
 {
+  "leftmenu": {
+    "level": 2,
+    "menuName": "Quasar",
+    "sonName": "Quasar-Table"
+  },
   "mixins": [ "composables/private/use-fullscreen" ],
 
   "meta": {

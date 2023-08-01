@@ -36,6 +36,10 @@ let all_doc_arr = [];
 let all_doc_obj = {};
 let file_path_arr = [];
 let statistics =  {};
+// 左侧菜单
+let left_menu = [];
+// 路径文件数据
+let menu_data = [];
 /**
  * 生成键
  */
@@ -51,6 +55,73 @@ const cerate_key = (add_obj = {}) => {
   }
   return key;
 };
+
+/**
+ * 右侧菜单生成
+ * @param {*} lists 
+ * @param {*} suns 
+ * @returns 
+ */
+function deep_left_menu(lists, suns) {
+  // 数组为空 || 等级为1 新增一条数据
+  if (!lists.length || suns.level == 1) {
+    let obj1 = {
+      menuName: suns.menuName?.trim(),
+      level: suns.level,
+      children: [suns],
+    }
+    lists.push(obj1)
+  } else {
+    // 遍历当前数据
+    lists.map((item, idx) => {
+      if (item.menuName?.trim() == suns.menuName?.trim()) {
+        item.children?.push(suns)
+      }else {
+        // 子菜单和菜单相等
+        if (item.sonName?.trim() == suns.menuName?.trim()) {
+          let obj2 = {
+            menuName: suns.menuName?.trim(),
+            level: suns.level,
+            children: [suns],
+          }
+          lists.push(obj2)
+        } else {
+          // 有子节点递归
+          if(item.children?.length) {
+            deep_left_menu(item.children, suns)
+          }
+        }
+      }
+    });
+  }
+  return lists;
+}
+
+/**
+ * 生成菜单
+ * @param {*} menu 每个.doc.js文件数据
+ * @param {*} path 文件路径
+ */
+const add_left_menu = (menu, path) =>{
+  // 去leftmenu值
+  if(menu.leftmenu){
+    // leftmenu添加path路径
+    menu_data.push({...menu.leftmenu, path})
+  }
+  setTimeout(()=>{
+  console.log('------logs-menu_data---', menu_data);
+    left_menu = menu_data.reduce((prve, cur) => {
+      if (!cur.sonName) {
+        prve.push(cur)
+      } else {
+        // 处理菜单数据
+        deep_left_menu(prve, cur)
+      }
+      return prve;
+    }, [])
+  // console.log('--右侧菜单数据--left_menu-',  left_menu);
+  }, 5000)
+}
 /**
  * 增补到 所有 文档
  * 兼容 数组和对象
@@ -63,6 +134,7 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
   //   obj = obj.replaceAll('\r\n')
   // }
   let key = cerate_key(add_obj);
+  add_left_menu(obj, key)
   file_path_arr.push(add_obj.file_path);
 
   if(! all_doc_obj[key]){
@@ -93,6 +165,7 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
  */
 const extract_doc = (dir) => {
   // let all_doc_paths = getAllFile(path.join(__dirname, dir));
+  // 所有文件路径
   let all_doc_paths = getAllFile(path.join("./", dir));
   all_doc_paths.map((file_path) => {
     fs.readFile(file_path, "utf8", (err, data) => {
@@ -149,7 +222,7 @@ setTimeout(() => {
   );
   fs.writeFile(
     write_folder + "/obj.json",
-    JSON.stringify(all_doc_obj),
+    JSON.stringify(all_doc_obj, null, 4),
     "utf8",
     (err) => {
       if (err) { console.log("obj 写入出错", err)};
@@ -167,7 +240,7 @@ setTimeout(() => {
   );
   fs.writeFile(
     write_folder + "/file_path_arr.json",
-    JSON.stringify(file_path_arr),
+    JSON.stringify(file_path_arr, null, 4),
     "utf8",
     (err) => {
       if (err){  console.log("file_path 写入出错", err)};
@@ -181,6 +254,15 @@ setTimeout(() => {
     (err) => {
       if (err){  console.log("statistics 写入出错", err)};
       console.log('statistics 写入 完成');
+    }
+  );
+  fs.writeFile(
+    write_folder + "/left_menu.json",
+    JSON.stringify(left_menu, null, 4),
+    "utf8",
+    (err) => {
+      if (err){  console.log("left_menu 写入出错", err)};
+      console.log('left_menu 写入 完成');
     }
   );
 }, 7000);

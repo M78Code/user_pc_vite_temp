@@ -11,7 +11,7 @@
       <template v-if="menu.children && menu.children.length > 0">
         <q-expansion-item
           :icon="menu.icon"
-          :label="menu.fatherName"
+          :label="menu.menuName"
           :content-inset-level="0.5"
         >
           <!-- 如果有子节点递归当前组件 -->
@@ -26,7 +26,7 @@
         <q-expansion-item
           @click="change_menu(menu.path)"
           :icon="menu.icon"
-          :label="menu.menuName"
+          :label="menu.sonName"
           hide-expand-icon
           expand-separator
         />

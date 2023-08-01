@@ -1,4 +1,9 @@
 {
+  "leftmenu": {
+    "level": 2,
+    "menuName": "Quasar",
+    "sonName": "Quasar-Card-Actions"
+  },
   "meta": {
     "docsUrl": "https://v2.quasar.dev/vue-components/card"
   },
