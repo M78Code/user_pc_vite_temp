@@ -32,15 +32,19 @@
       {
         "filename": "remove-dist.js",
         "type": "job",
-        "descriptions": ["删除 服务器上可能的历史版本构建输出的缓存，确保不出错"]
+        "descriptions": [
+          "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
+        ]
       },
       {
         "filename": "export-env-config.js",
         "type": "job",
-        "descriptions": ["输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"]
+        "descriptions": [
+          "输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"
+        ]
       },
       {
-        "filename": "final-config.js",
+        "filename": "build-in-config.js",
         "type": "function",
         "descriptions": [
           "根据环境 计算当前的 环境相关的项目配置，项目打包的外层植入层",
@@ -78,31 +82,36 @@
           "合并商户配置",
           "这个插件 在代码内 一些节点会单独使用",
           "合并 ，覆盖 输入进来的配置 ，以及本地配置"
-      
         ]
       },
 
       {
         "filename": "export-full-version-config.js",
         "type": "job",
-        "descriptions": [
-          "全量版本配置",
-          "全局开关，默认false" 
-      
-        ]
+        "descriptions": ["全量版本配置", "全局开关，默认false"]
+      },
+      {
+        "filename": "html-variables.js",
+        "type": "job",
+        "descriptions": ["HTML 植入的变量"]
+      },
+      {
+        "filename": "write-env-file.js",
+        "type": "job",
+        "descriptions": ["写 env 文件脚本"]
       },
 
       {
-        "filename": "write-folder.js",
+        "filename": "read-env-file.js",
         "type": "job",
-        "descriptions": [
-          "目录生成",
-          "其他脚本通用内部 脚本" 
-      
-        ]
+        "descriptions": ["读 env 文件脚本"]
+      },
+
+      {
+        "filename": "write-folder-file.js",
+        "type": "job",
+        "descriptions": ["目录生成", "其他脚本通用内部 脚本"]
       }
-
-
     ]
   },
   {
@@ -115,58 +124,42 @@
       {
         "filename": "local_local.js",
         "type": "env-config-output",
-        "descriptions": [
-          "个人   开发环境" 
-        ]
+        "descriptions": ["个人   开发环境"]
       },
       {
         "filename": "local_dev.js",
         "type": "env-config-output",
-        "descriptions": [
-          "局域网  开发环境" 
-        ]
+        "descriptions": ["局域网  开发环境"]
       },
       {
         "filename": "local_test.js",
         "type": "env-config-output",
-        "descriptions": [
-          "局域网  测试环境" 
-        ]
+        "descriptions": ["局域网  测试环境"]
       },
       {
         "filename": "idc_lspre.js",
         "type": "env-config-output",
-        "descriptions": [
-          "IDC  隔离预发布" 
-        ]
+        "descriptions": ["IDC  隔离预发布"]
       },
       {
         "filename": "idc_pre.js",
         "type": "env-config-output",
-        "descriptions": [
-          "IDC  预发布/试玩" 
-        ]
+        "descriptions": ["IDC  预发布/试玩"]
       },
       {
         "filename": "idc_sandbox.js",
         "type": "env-config-output",
-        "descriptions": [
-          "IDC  预发布/试玩" 
-        ]
+        "descriptions": ["IDC  预发布/试玩"]
       },
       {
         "filename": "idc_ylcs.js",
         "type": "env-config-output",
-        "descriptions": [
-          "IDC 微型压力测试环境" 
-        ]
+        "descriptions": ["IDC 微型压力测试环境"]
       },
       {
         "filename": "idc_online.js",
         "type": "env-config-output",
-        "descriptions": [
-          "IDC  生产环境" 
-        ]
+        "descriptions": ["IDC  生产环境"]
       }
     ]
   },
@@ -181,16 +174,12 @@
       {
         "filename": "arr.json",
         "type": "export-full-doc",
-        "descriptions": [
-          "计算后的文档内容 数组版本" 
-        ]
+        "descriptions": ["计算后的文档内容 数组版本"]
       },
       {
         "filename": "obj.json",
         "type": "export-full-doc",
-        "descriptions": [
-          "计算后的文档内容 对象版本" 
-        ]
+        "descriptions": ["计算后的文档内容 对象版本"]
       }
     ]
   },
@@ -204,9 +193,7 @@
       {
         "filename": "config-ouzhou.json",
         "type": "export-merchant-config",
-        "descriptions": [
-          "计算后的商户配置欧洲版" 
-        ]
+        "descriptions": ["计算后的商户配置欧洲版"]
       }
     ]
   },
@@ -221,12 +208,10 @@
         "filename": "merchant-config-ouzhou.json",
         "type": "export-merchant-config",
         "descriptions": [
-          "默认的商户配置欧洲版" ,
+          "默认的商户配置欧洲版",
           "欧洲版 商户 默认配置  用于 自用打包"
         ]
       }
     ]
   }
-
-
 ]

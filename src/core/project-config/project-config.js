@@ -6,7 +6,7 @@
  */
 
 
-const compute_final_config=(current_env)=>{
+const compute_build_in_config=(current_env)=>{
 
     // MERCHANT-CONFIG-VERSION
     
@@ -148,7 +148,7 @@ const compute_final_config=(current_env)=>{
         night_logo: `${html_info.night_logo}`,
         compatible_logo: `${html_info.compatible_logo}`,
         default_theme: `${html_info.default_theme}`,
-        prodect_env: process.env.NODE_ENV,
+        project_env: process.env.NODE_ENV,
         current_env_build_in_oss:   encodeURIComponent(JSON.stringify(current_env_build_in_oss))  ,
     
     
@@ -166,10 +166,10 @@ const compute_final_config=(current_env)=>{
     
     
     
-     module.exports= compute_final_config
+     module.exports= compute_build_in_config
     
     
-    // export default compute_final_config
+    // export default compute_build_in_config
     
     
     
