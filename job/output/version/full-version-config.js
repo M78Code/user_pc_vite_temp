@@ -1,1 +1,1 @@
-export default  {"is_full_version":false}
+export default  {"is_full_version":true}

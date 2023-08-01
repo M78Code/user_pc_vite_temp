@@ -9,6 +9,14 @@
   },
   {
     "category": "scripts",
+    "script": "dev-self-use-version-inner",
+    "descriptions": [
+      "常规开发 ， 自用项目本地开发 内部命令",
+      "当前项目日常开发，最常用命令"
+    ]
+  },
+  {
+    "category": "scripts",
     "script": "build-self-use-version-inner",
     "descriptions": ["常规开发 ， 自用项目生产构建打包的 核心内部命令"]
   },
@@ -145,6 +153,11 @@
   },
   {
     "category": "scripts",
+    "script": "dev-full-version-inner",
+    "descriptions": ["本地开发全量版本项目-内部命令"]
+  },
+  {
+    "category": "scripts",
     "script": "build-full-version",
     "descriptions": ["生产打包全量版本项目"]
   },
@@ -181,9 +194,22 @@
   },
   {
     "category": "scripts",
-    "script": "export-full-version-config",
-    "descriptions": ["输出全量版本开启/关闭配置"]
+    "script": "export-full-version-open",
+    "descriptions": ["输出全量版本: 开启"]
   },
+  {
+    "category": "scripts",
+    "script": "export-full-version-close",
+    "descriptions": ["输出全量版本: 关闭"]
+  },
+
+  {
+    "category": "scripts",
+    "script": "divider-line",
+    "descriptions": ["占位警告：json 内部注释性 代码 占位"]
+  },
+
+
 
 
   {
@@ -211,14 +237,26 @@
     "script": "dfv",
     "descriptions": ["命令别名：同 dev-full-version "]
   },
-
+  {
+    "category": "scripts",
+    "script": "dcv",
+    "descriptions": [
+      "命令别名：同 dev-custom-version " 
+    
+    ]
+  },
+  {
+    "category": "scripts",
+    "script": "efvo",
+    "descriptions": [
+      "命令别名：同 export-full-version-open " 
+    ]
+  },
   {
     "category": "scripts",
     "script": "efvc",
     "descriptions": [
-      "命令别名：同 export-full-version-config ",
-      "全量配置：npm run  efvc full ",
-      "非全量版本：npm run  efvc "
+      "命令别名：同 export-full-version-close " 
     ]
   },
   {
