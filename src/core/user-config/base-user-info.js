@@ -1,5 +1,4 @@
-import { setLocalItem,getLocalItem } from 'src/public/utils/storage'
-// 用户配置
+// 用户基本配置
 export default class BaseUserInfo
 {
   /**
@@ -17,7 +16,7 @@ export default class BaseUserInfo
    * @return {Object} 用户基础信息
    */  
   static get(){
-    let str = getLocalItem(BaseUserInfo.local_storage_key);
+    let str = localStorage.getItem(BaseUserInfo.local_storage_key);
     let data = null;
     if(str){
       try {
@@ -41,7 +40,7 @@ export default class BaseUserInfo
           // 设置主题类型
           data.theme = ""; // 后期需要改为从保存主题类型的缓存里面获取 window.vue.$store.getters.get_theme
         }
-        setLocalItem(BaseUserInfo.local_storage_key,data);
+        localStorage.setItem(BaseUserInfo.local_storage_key,JSON.stringify(data));
       } catch (error) {
         console.error('BaseUserInfo set() 错误:',error);
       }
