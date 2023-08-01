@@ -1,29 +1,34 @@
-import { setLocalItem,getSessionItem } from 'src/public/utils/storage'
+import { ls } from "src/public/utils/web-storage";
 export function initData() {
   try {
     //解析URL参数
     let qsInfo = new URLSearchParams(location.search);
     //计算token
-    let token =
-      qsInfo.get("token") || getSessionItem("TOKEN") || "";
+    let token = qsInfo.get("token") || ls.get("TOKEN") || "";
     if (token) {
-      setLocalItem("TOKEN", token);
+      ls.set("TOKEN", token);
     }
     // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求
-    let pb = getSessionItem("pb") || qsInfo.get("pb") || "";
+    let pb = ls.get("pb") || qsInfo.get("pb") || "";
     if (pb) {
-      setLocalItem("pb", "1");
+      ls.set("pb", "1");
     }
     // 设置商户分组信息
     let gr = (
-      getSessionItem("gr") ||
+      ls.get("gr") ||
       qsInfo.get("gr") ||
       "COMMON"
     ).toLocaleUpperCase();
     if (gr) {
-      setLocalItem("gr", gr);
+      ls.set("gr", gr);
     }
   } catch (error) {
     console.error(error);
   }
+}
+export function getInitData() {
+  return {
+    token: ls.get("TOKEN"),
+    gr: ls.get("gr").toLocaleUpperCase(),
+  };
 }
