@@ -1,40 +1,35 @@
-<!--
- * @Author: success
- * @Date: 2020-08-04 17:13:55
- * @Description: 项目入口html页面
--->
 <!DOCTYPE html>
 <html>
   <head>
     <!-- <link rel="icon" type="image/png" href="/yabo/icons/favicon.ico"> -->
     <meta charset="utf-8" />
-    <meta name="description" content="<%= productDescription %>" />
-    <meta name="product-name" content="<%= productName%>" />
-    <meta name="version" content="<%= version%>" />
-    <meta name="version-name" content="<%= versionName%>" />
-    <meta name="version-date" content="<%= versionDate%>" />
-    <meta name="version-branch" content="<%= BRANCH%>" />
-    <meta name="version-tag" content="<%= TAG%>" />
-    <meta name="version-build_tag" content="<%= BUILD_TAG%>" />
-    <meta name="version-BUILD_VERSION" content="<%= BUILD_VERSION %>" />
+    <meta name="description" content="%VITE_APP_productDescription%" />
+    <meta name="product-name" content="%VITE_APP_productName%" />
+    <meta name="version" content="%VITE_APP_version%" />
+    <meta name="version-name" content="%VITE_APP_versionName%" />
+    <meta name="version-date" content="%VITE_APP_versionDate%" />
+    <meta name="version-branch" content="%VITE_APP_BRANCH%" />
+    <meta name="version-tag" content="%VITE_APP_TAG%" />
+    <meta name="version-build_tag" content="%VITE_APP_BUILD_TAG%" />
+    <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="hid-api" content="<%= hidApi%>" />
+    <meta name="hid-api" content="%VITE_APP_hidApi%" />
     <!-- 禁止谷歌翻译 自动翻译 -->
     <meta name="google" content="notranslate" />
     <meta
       name="viewport"
-      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) {%, viewport-fit=cover<% }%"
     />
 
     <link
       rel="icon"
       id="link_icon"
       type="image/png"
-      href="<%= BUILD_VERSION %>/image/common/favicon.ico"
+      href="%VITE_APP_BUILD_VERSION%/image/common/favicon.ico"
     />
-    <link rel="stylesheet" href="<%= BUILD_VERSION %>/lib/font/font-roboto.min.css">
-    <script src="<%= BUILD_VERSION %>/lib/js/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="%VITE_APP_BUILD_VERSION%/lib/font/font-roboto.min.css">
+    <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
     <style>
       /* 取消默认选中样式 */
       body {
@@ -426,12 +421,12 @@
         }
       }
     </style>
-    <script async type="text/javascript" src="<%= hidApi%>"></script>
+    <script async type="text/javascript" src="%VITE_APP_hidApi%"></script>
 
     <script  >
 
 
-      window.CURRENT_ENV_BUILD_IN_OSS =  "<%= current_env_build_in_oss  %>"
+      window.CURRENT_ENV_BUILD_IN_OSS =  "%VITE_APP_current_env_build_in_oss%"
     </script>
 
     <script>
@@ -446,10 +441,10 @@
           var chrome_version = parseInt(chrome_agent[0].split("/")[1]);
           // 谷歌版本小于56
           if (chrome_version < 56) {
-            location.href = "<%= BUILD_VERSION %>/page/tips.html";
+            location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
           }
         } else if (ie_agent && ie_agent[0]) {
-          location.href = "<%= BUILD_VERSION %>/page/tips.html";
+          location.href = "%VITE_APP_BUILD_VERSION%/page/tips.html";
         }
       })();
 
@@ -495,9 +490,9 @@
 
   </head>
 
-  <body class="custom-format-<%=com%>">
+  <body class="custom-format-<%=com%">
     <!-- DO NOT touch the following DIV -->
-    <div id="q-app"></div>
+    <div id="ty-app"></div>
     <!--loading 动画-->
     <div id="loading-root-ele" class="loading">
       <div id="loading-root-main" class="la-line-scale loading-line">

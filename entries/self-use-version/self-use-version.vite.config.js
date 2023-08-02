@@ -20,6 +20,8 @@ console.log("-------------__dirname---------",__dirname);
   console.error('目标项目必须设定 ----------');
   console.error('进程结束');
   
+ }else{
+  console.log("-------------project---------",project);
  }
 
 // https://vitejs.dev/config/
@@ -30,26 +32,21 @@ export default defineConfig({
     }),
 
     quasar({
-      sassVariables: 'src/css/quasar-variables.scss'
+       sassVariables: `app/project/${project}/src/css/quasar-variables.scss`
     })
   ],
   build: {
-    // lib: {
-    //   entry: path.resolve(
-    //     __dirname,
-    //     "./build/build-jssdk/build-jssdk.install.js"
-    //   ),
-    //   name: "TY_JSSDK",
-    //   fileName: (format) => `TY_JSSDK.${format}.js`,
-    // },
-    // transpileDependencies: ["quasar"],
+ 
     outDir: "dist/self-use-version",
  
     rollupOptions: {
       // external: ["vue"],
       input:{
         // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
-        index: path.resolve(__dirname,'index.html')
+        // index: `../../project/${project}/index.html`
+          index: path.resolve(__dirname, `../../project/${project}/index.html`)
+          // index: path.resolve(__dirname, "../../project/yazhou-pc/index.html")
+        //  index:  "../../project/yazhou-pc/index.html"
       },
       output: {
         // Provide global variables to use in the UMD build
@@ -62,7 +59,6 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-   
       src: "./src",
       app: "./",
       dist: "./dist",
@@ -73,7 +69,8 @@ export default defineConfig({
   },
   server:{
     port:28300,
-    open: 'entries/self-use-version/index.html',
+    open:    `../../project/${project}/index.html` ,
+    // open:    "../../project/yazhou-pc/index.html" ,
     hmr:true
   }
 
