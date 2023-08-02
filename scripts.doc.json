@@ -32,11 +32,7 @@
       "拉取线上的OSS文件到 打包后的 文件 版本目录外层 的 OSS   目录内"
     ]
   },
-  {
-    "category": "scripts",
-    "script": "build-in-oss",
-    "descriptions": ["当前 目标 环境的 OSS 文件内容写入 html 头部"]
-  },
+ 
   {
     "category": "scripts",
     "script": "remove-dist",

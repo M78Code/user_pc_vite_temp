@@ -4,7 +4,8 @@
 import * as fs from "node:fs";
 import axios from "axios";
 import { merge_merchant_config } from "./merge-merchant-config.js";
-import {ensure_write_folder_exist} from "./write-folder-file.js"
+import {ensure_write_folder_exist ,  write_file,
+  remove_file,} from "./write-folder-file.js"
 console.log("export-merchant-config----------合并输出商户配置-");
 console.log("process.argv----------------------0---");
 console.log(process.argv);
@@ -45,21 +46,7 @@ const merge_and_output_final_config = (scg) => {
         write_file_date: Date.now()
     }
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg,add_obj);
-  fs.writeFile(
-    file_path,
-    JSON.stringify(MERCHANT_CONFIG_INFO),
-    "utf8",
-    (err) => {
-      if (err) {
-        console.log("MERCHANT_CONFIG_INFO 写入出错", err);
-      }else{
-        console.log("MERCHANT_CONFIG_INFO 写入 完成");
-      }
-    
-    }
-  );
- 
-
+  write_file(full_path,  JSON.stringify(MERCHANT_CONFIG_INFO));
 
 };
 /**
