@@ -6,11 +6,9 @@
  *  商户相关
  */
 // #TODO 等后续get_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import {get_file_path} from "src/public/utils/get_file_path.js"
-import pako_pb from "src/public/utils/custom_pb_pako.js";
-import infoUpload from 'src/public/utils/http/information_upload.js';
-import http from "src/public/utils/http/axios_warpper";
-http.init_window_env();
+import {get_file_path} from "src/core/file-path/file-path.js"
+import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
+import infoUpload from 'src/core/http/information_upload.js';
 
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/public/api/index";
@@ -21,8 +19,6 @@ const axios_instance = axios.create()
 
 
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
-
-
 
 class userCtr {
  constructor() {
@@ -672,79 +668,10 @@ set_league_logo_url(url){
      sessionStorage.setItem("theme",session_theme.replace('_y0',''))
    }
  }
-
-  /**
-  * @description: 发送用户配置收集信息到服务器
-  */
- send_user_pro_info(){
-    // #TODO
-    // if(process.env.NODE_ENV == "development")
-    // {
-    //   // 是开发环境时直接返回
-    //   return;
-    // }
-    // // 获取用户上次发消息的时间
-    // let time = localStorage.getItem('s_user_info_time')
-    // // 24小时内只发送一次消息,到服务器
-    // if(time && (new Date().getTime() - time*1 < 1*24*60*60*1000)){
-    //   return;
-    // }
-    // // 定义需要提交参数的变量
-    // let lang = '';
-    // let accessToken = '';
-    // let userInfo = null;
-    // if(window.vue){
-    //   // 获取语种
-    //   if(window.vue.lang){
-    //     lang = window.vue.lang;
-    //   }
-    //   // 获取token
-    //   try {
-    //     accessToken = window.vue.$store.getters.get_user_token.token
-    //   } catch (e) {
-    //     console.error(e)
-    //   }
-    //   if (!accessToken) accessToken = '';
-    //   // 获取用户信息
-    //   try {
-    //     userInfo = window.vue.$store.getters.get_user
-    //   } catch (e) {
-    //     console.error(e)
-    //   }
-    //   if (!userInfo) userInfo = null;
-    // }
-    let project_name = '';
-    // // 获取项目信息
-    // if(window.env.config.FINAL_TARGET_PROJECT_NAME == 'yabo'){
-    //   project_name = 'pc-zhuanye';
-    // }
-    // 拼装需要提交的数据
-    let data = {
-      // config:window.env.config,// 所有配置信息
-      // env:window.env.config.current_env,  // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
-      projectHref: location.href , // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
-      projectInfo: { "final_type":project_name}, // 项目信息对象内 必须有一个字段 final_type :  取值范围 ： [  'pc-zhuanye',  'h5-xinban', 'h5-jiuban' ]
-      // userInfo: userInfo, // 用户信息 对象   user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-      userToken: sessionStorage.getItem('pc_token'), // 用户的token
-      // tag: window.env.config.TAG, // 项目的tag版本号
-      // lang: lang, // 当前用户的选择的页面展示语言
-      description: "", // 描述自己附加的描述信息,便于分析问题
-      projectType: "pc", //项目类型  小写  h5 ,pc
-      isInIframe:(top.location != location), // 是否 处于内嵌 ，pc  专用
-      isInApp: false, //是否 是 包网 app 内 webview  ，能确定就传 ，不能就不传
-      other: {} // 扩展字段  对象
-    }
-    // 发送数据到服务器
-    axios_instance.post(http.HTTP_PRO_INFO_API, data)
-      .then(res => {
-        // 更新本次次发消息的时间
-        localStorage.setItem('s_user_info_time', new Date().getTime())
-        console.log('发送成功');
-      })
-  }
-
 }
 
 
 const instance =new userCtr()
-export default instance;
+export {
+  instance
+};
