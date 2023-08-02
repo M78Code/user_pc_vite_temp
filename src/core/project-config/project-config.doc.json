@@ -1,8 +1,12 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "project-config"
+  },
+  "props": {
     "category": "project-config",
     "directory-name": "project-config",
-    "descriptions": [
-    ]
+    "descriptions": []
   }
-]
+}

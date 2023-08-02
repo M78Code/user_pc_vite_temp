@@ -50,6 +50,8 @@ export default defineConfig({
       dist: "./dist",
       node_modules: "./node_modules",
       public: "./public",
+      entries: "./entries",
+      basesrc: "./entries/development-document/src",
       // project_path: path.join(   
      
       //   __dirname,

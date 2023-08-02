@@ -1,5 +1,10 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事详情-detail"
+  },
+  "props": {
     "category": "match-detail",
     "directory-name": "match-detail",
     "descriptions": [
@@ -14,4 +19,4 @@
       }
     ]
   }
-]
+}

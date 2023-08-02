@@ -1,5 +1,10 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "基础HTTP请求类"
+  },
+  "props": {
     "category": "http",
     "directory-name": "http",
     "descriptions": ["axios htpp请求类"],
@@ -92,4 +97,4 @@
       }
     ]
   }
-]
+}

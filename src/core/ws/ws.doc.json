@@ -1,8 +1,15 @@
-[
-  {
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "websocket推送管理"
+  },
+  "props": {
     "category": "ws",
     "directory-name": "ws",
-    "descriptions": ["websocket推送管理"],
+    "descriptions": [
+      "websocket推送管理"
+    ],
     "type": "js",
     "remark": " ",
     "items": [
@@ -53,7 +60,9 @@
       {
         "category": "chatroom",
         "directory-name": "chatroom",
-        "descriptions": ["聊天室管理"],
+        "descriptions": [
+          "聊天室管理"
+        ],
         "type": "js",
         "item": [
           {
@@ -81,4 +90,4 @@
       }
     ]
   }
-]
+}
