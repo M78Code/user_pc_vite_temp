@@ -8,6 +8,8 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
+
+import  {DEV_TARGET_ENV ,ALL_ENV_ARR} from "../dev-target-env.js";
 console.log("----process.argv---", process.argv);
 // 输出所有环境
 let all_env = false;
@@ -19,42 +21,15 @@ if (argv_version) {
     all_env = true;
   }
 }
-// 常规随环境的   jenkins  部署  参数
-const FRONT_WEB_ENV = (process.env.FRONT_WEB_ENV || "").trim();
-// 模块化打包  构建 zip 版本参数
-const MODULE_SDK_VERSION = (process.env.SHIWAN_MODULE_SDK_VERSION || "").trim();
-//  个人   开发环境
-// current_env= 'local_local'
-// 局域网  开发环境
-// current_env= 'local_dev'
-// 局域网  压力测试环境
-// current_env = "local_ylcs";
-// 局域网  测试环境
-// current_env = "local_test";
-// IDC  预发布
-// current_env = 'idc_pre'
-// IDC 试玩环境
-// current_env = "idc_sandbox";
-// IDC  隔离预发布
-// current_env = 'idc_lspre'
-// IDC  生产环境
-// current_env = 'idc_online'
-// IDC 微型测试环境
-// current_env = 'idc_ylcs'
-let all_env_arr = [
-  "local_local",
-  "local_dev",
-  "local_test",
-  "idc_lspre",
-  "idc_pre",
-  "idc_sandbox",
-  "idc_ylcs",
-  "idc_online",
-];
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 // 商户版本号
 const { MERCHANT_CONFIG_VERSION } = final_merchant_config;
+// 常规随环境的   jenkins  部署  参数
+const FRONT_WEB_ENV = (process.env.FRONT_WEB_ENV || "").trim();
+// 模块化打包  构建 zip 版本参数
+const MODULE_SDK_VERSION = (process.env.SHIWAN_MODULE_SDK_VERSION || "").trim();
+
  
 /**
  * 重新计算  current_env 当   模块化打包  构建 zip
@@ -104,7 +79,7 @@ const export_env_config = (env) => {
   ensure_write_folder_exist(write_folder);
   let final_env_arr = [];
   if (env == "all") {
-    final_env_arr = [...all_env_arr];
+    final_env_arr = [...ALL_ENV_ARR];
     console.log(
       `当前最终计算结果：构建目标环境 ：  所有环境 ，将不会生成  final 文件 ，现有final 文件已自动删除`
     );
@@ -133,11 +108,13 @@ console.log(
 );
 console.log(`将自动删除 final 配置文件,  文件路径 :${final_file_path}`);
 remove_file(final_file_path);
+
+// 根据当前 相关参数  执行 计算 
 if (all_env) {
   export_env_config("all");
 } else {
   // 命令行参数
-  if (all_env_arr.includes(argv_version)) {
+  if (ALL_ENV_ARR.includes(argv_version)) {
     export_env_config(argv_version);
   } else if (MODULE_SDK_VERSION) {
     //模块化打包  构建 zip
@@ -149,6 +126,8 @@ if (all_env) {
     let   current_env= recompute_current_env_when_FRONT_WEB_ENV()
     export_env_config(current_env);
   } else {
-    console.error("当前未指定目标构建环境 ：  必须指定 ！ 修复后再试！");
+    //  开发人员本地开发 
+    export_env_config(DEV_TARGET_ENV);
+ 
   }
 }
