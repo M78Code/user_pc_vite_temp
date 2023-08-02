@@ -13,8 +13,8 @@
     "remove-dist": "node ./job/remove-dist.js self-use-version",
     "export-build-version": "node ./job/export-build-version.js",
     "copy-html": "node ./job/copy-html.js",
-    "build-self-use-version": "run-s remove-dist export-build-version  copy-oss build-in-oss build-self-use-version-inner  copy-html copy-oss-2",
-    "export-env-config": "node ./job/export-env-config.js",
+    "build-self-use-version": "run-s remove-dist export-build-version  copy-oss build-in-oss  build-self-use-version-inner  copy-html copy-oss-2",
+    "export-build-in-config": "node ./job/export-build-in-config.js",
     "export-full-doc": "node ./job/export-full-doc.js",
     "export-merchant-config": "node ./job/export-merchant-config.js",
     "dev-development-document-inner": "vite    --config  ./entries/development-document/development-document.vite.config.js",
@@ -46,8 +46,8 @@
     "dcv": "npm run dev-custom-version",
     "efvo": "npm run export-full-version-open",
     "efvc": "npm run export-full-version-close",
-    "eeca": "npm run  export-env-config all",
-    "eec": "npm run  export-env-config",
+    "eeca": "npm run  export-build-in-config all",
+    "eec": "npm run  export-build-in-config",
     "echo": "echo \" 此命令无用，查看并选择其他合适命令执行构建 。\" && exit 0"
   },
   "dependencies": {

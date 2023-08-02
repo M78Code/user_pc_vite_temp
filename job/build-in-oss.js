@@ -9,6 +9,34 @@ import oss_lspre from "./output/oss/lspre.json"  assert { type: "json" };
 import oss_play from "./output/oss/play.json"  assert { type: "json" };
 import oss_mini from "./output/oss/mini.json"  assert { type: "json" };
 import oss_prod from "./output/oss/prod.json"  assert { type: "json" };
+
+
+
+
+
+//添加进 oss 计算 最终域名结果的内容 ,本地开发专用 额外添加
+// 生产 不能启用这个配置
+
+const add_to_oss={
+
+  "idc_online":{
+    "GACOMMON": {
+      "api": [
+        "https://api.sportxxx1zx.com",
+        "KJcWEYjAKau2fUtyBxQPNsff4SqJxHADuvAGZlkyOYQ="
+      
+      ]
+    }
+
+  }
+ 
+}
+
+
+
+
+
+
 export const compute_build_in_oss_by_current_env = (current_env) => {
   let obj = "";
   switch (current_env) {

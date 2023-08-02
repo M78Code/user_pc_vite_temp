@@ -59,7 +59,7 @@
   },
   {
     "category": "scripts",
-    "script": "export-env-config",
+    "script": "export-build-in-config",
     "descriptions": ["输出最终的各个环境的基础项目配置"]
   },
   {
@@ -264,14 +264,14 @@
     "category": "scripts",
     "script": "eec",
     "descriptions": [
-      "命令别名：同 export-env-config " 
+      "命令别名：同 export-build-in-config " 
     ]
   },
   {
     "category": "scripts",
     "script": "eeca",
     "descriptions": [
-      "命令别名：同 export-env-config  携带 all 参数" 
+      "命令别名：同 export-build-in-config  携带 all 参数" 
     ]
   },
 

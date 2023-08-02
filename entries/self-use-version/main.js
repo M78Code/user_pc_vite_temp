@@ -16,6 +16,15 @@ import App from './App.vue'
 
 const myApp = createApp(App)
 
+
+
+// 引入 当前 计算出的植入配置 
+
+import BUILDIN_CONFIG from "app/job/output/env/final.js"
+window.BUILDIN_CONFIG = BUILDIN_CONFIG
+
+
+
 myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 })
