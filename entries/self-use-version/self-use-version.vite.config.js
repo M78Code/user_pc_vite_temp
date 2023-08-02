@@ -4,6 +4,24 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import path from "path"
+
+
+console.log("-------------__dirname---------",__dirname);
+
+
+ import FINAL_MERCHANT_CONFIG from "../../job/output/merchant/config.json"  
+
+
+
+ let {project} = FINAL_MERCHANT_CONFIG
+
+ if(!project){
+
+  console.error('目标项目必须设定 ----------');
+  console.error('进程结束');
+  
+ }
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -50,11 +68,7 @@ export default defineConfig({
       dist: "./dist",
       node_modules: "./node_modules",
       public: "./public",
-      // project_path: path.join(   
-     
-      //   __dirname,
-      //   `./src/${final_config.project_path}`
-      // ),
+      project_path: `../${project}`,
     },
   },
   server:{

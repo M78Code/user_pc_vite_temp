@@ -6,7 +6,10 @@
 
 // 默认的 需要组合进去的配置  ,
 
-import default_merchant_config_ouzhou from "./default-config/merchant-config-ouzhou.json"  assert { type: "json" };
+import default_merchant_config_ouzhou_h5 from "./default-config/merchant-config-ouzhou-h5.json"  assert { type: "json" };
+import default_merchant_config_ouzhou_pc from "./default-config/merchant-config-ouzhou-pc.json"  assert { type: "json" };
+import default_merchant_config_yazhou_h5 from "./default-config/merchant-config-yazhou-h5.json"  assert { type: "json" };
+import default_merchant_config_yazhou_pc from "./default-config/merchant-config-yazhou-pc.json"  assert { type: "json" };
 
 //商户配置的详细信息
 
@@ -24,8 +27,14 @@ const merge_merchant_config_inner = (scg, add_obj) => {
 
   let { project } = add_obj;
 
-  if (project == "ouzhou") {
-    config = Object.assign({}, default_merchant_config_ouzhou, scg, add_obj);
+  if (project == "yazhou-h5") {
+    config = Object.assign({}, default_merchant_config_yazhou_h5, scg, add_obj);
+  }else   if (project == "yazhou-pc") {
+    config = Object.assign({}, default_merchant_config_yazhou_pc, scg, add_obj);
+  }
+
+  if(!project){
+    console.error('当前未设置目标项目名字 ，必须设置 。');
   }
 
   return config;

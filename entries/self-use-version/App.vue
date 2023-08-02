@@ -17,6 +17,30 @@
 <script setup>
 import { TestComponent} from "src/components/test-component/index.js"
 
+
+import { onMounted} from "vue"
+
+
+
+/**
+ *  onMounted 后页面渲染 初始化之后
+ */
+const init_page_process=()=>{
+
+  //  API 域名初始化 
+  
+
+
+}
+
+
+onMounted(() => {
+  
+  init_page_process()
+  
+})
+
+
 </script>
 
 <style lang="scss" scoped>
