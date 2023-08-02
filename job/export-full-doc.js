@@ -64,11 +64,11 @@ const cerate_key = (add_obj = {}) => {
  */
 function deep_left_menu(lists, suns) {
   // 数组为空 || 等级为1 新增一条数据
-  if (!lists.length || suns.level == 1) {
+  if (suns.level == 1) {
     let obj1 = {
       menuName: suns.menuName?.trim(),
       level: suns.level,
-      children: [suns],
+      children: [Object.assign(suns, { level: 2 })],
     }
     lists.push(obj1)
   } else {
@@ -81,7 +81,7 @@ function deep_left_menu(lists, suns) {
         if (item.sonName?.trim() == suns.menuName?.trim()) {
           let obj2 = {
             menuName: suns.menuName?.trim(),
-            level: suns.level,
+            level: Number(suns.level) - 1,
             children: [suns],
           }
           lists.push(obj2)
@@ -102,15 +102,9 @@ function deep_left_menu(lists, suns) {
  * @param {*} menu 每个.doc.js文件数据
  * @param {*} path 文件路径
  */
-const add_left_menu = (menu, path) =>{
-  // 去leftmenu值
-  if(menu.leftmenu){
-    // leftmenu添加path路径
-    menu_data.push({...menu.leftmenu, path})
-  }
-  setTimeout(()=>{
-  console.log('------logs-menu_data---', menu_data);
-    left_menu = menu_data.reduce((prve, cur) => {
+const add_left_menu = () =>{
+    const sortdata = menu_data.sort((a, b)=>a.level-b.level)
+    left_menu = sortdata.reduce((prve, cur) => {
       if (!cur.sonName) {
         prve.push(cur)
       } else {
@@ -119,8 +113,6 @@ const add_left_menu = (menu, path) =>{
       }
       return prve;
     }, [])
-  // console.log('--右侧菜单数据--left_menu-',  left_menu);
-  }, 5000)
 }
 /**
  * 增补到 所有 文档
@@ -134,7 +126,10 @@ const add_to_all_doc_arr = (obj, add_obj = {}) => {
   //   obj = obj.replaceAll('\r\n')
   // }
   let key = cerate_key(add_obj);
-  add_left_menu(obj, key)
+  if(obj.leftmenu){
+    // leftmenu添加path路径
+    menu_data.push({...obj.leftmenu, path: key})
+  }
   file_path_arr.push(add_obj.file_path);
 
   if(! all_doc_obj[key]){
@@ -187,6 +182,9 @@ add_to_all_doc_arr(job_doc, { file_path: "job.doc.json" });
 add_to_all_doc_arr(entries_doc, { file_path: "entries/entries.doc.json" });
 // 提取 src 目录内的 doc 文件
 extract_doc("src");
+setTimeout(()=>{
+  add_left_menu()
+}, 5000)
 // 转换提取  category
 const extract_category = () => {
   all_doc_arr.map((x) => {});
@@ -213,7 +211,7 @@ setTimeout(() => {
   console.log(" ");
   fs.writeFile(
     write_folder + "/arr.json",
-    JSON.stringify(all_doc_arr),
+    JSON.stringify(all_doc_arr, null, 4),
     "utf8",
     (err) => {
       if (err) {  console.log("arr 写入出错 ", err) };
@@ -231,7 +229,7 @@ setTimeout(() => {
   );
   fs.writeFile(
     write_folder + "/key.json",
-    JSON.stringify(Object.keys(all_doc_obj)),
+    JSON.stringify(Object.keys(all_doc_obj), null, 4),
     "utf8",
     (err) => {
       if (err){  console.log("key 写入出错", err)};
@@ -249,7 +247,7 @@ setTimeout(() => {
   );
   fs.writeFile(
     write_folder + "/statistics.json",
-    JSON.stringify(statistics),
+    JSON.stringify(statistics, null, 4),
     "utf8",
     (err) => {
       if (err){  console.log("statistics 写入出错", err)};

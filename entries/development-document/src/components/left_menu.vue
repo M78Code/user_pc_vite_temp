@@ -26,7 +26,7 @@
         <q-expansion-item
           @click="change_menu(menu.path)"
           :icon="menu.icon"
-          :label="menu.sonName"
+          :label="menu.sonName || menu.menuName"
           hide-expand-icon
           expand-separator
         />

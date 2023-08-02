@@ -1,4 +1,9 @@
 {
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "PC-测试组件"
+      },
     "category": "component",
     "component-name": "TestComponent",
     "support-customization":"1",

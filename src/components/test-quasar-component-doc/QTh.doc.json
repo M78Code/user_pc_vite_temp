@@ -1,8 +1,8 @@
 {
   "leftmenu": {
-    "level": 3,
-    "menuName": "Quasar-Td-1",
-    "sonName": "Quasar-Td-th-3"
+    "level": 2,
+    "menuName": "Quasar",
+    "sonName": "Quasar-Td-th"
   },
   "meta": {
     "docsUrl": "https://v2.quasar.dev/vue-components/table"

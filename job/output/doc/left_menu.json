@@ -1,82 +1,25 @@
 [
     {
-        "menuName": "Quasar",
         "level": 1,
-        "children": [
-            {
-                "level": 1,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Card",
-                "path": "src_components_test-quasar-component-doc_QCard_doc_json"
-            },
-            {
-                "level": 2,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Card-Actions",
-                "path": "src_components_test-quasar-component-doc_QCardActions_doc_json"
-            },
-            {
-                "level": 2,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Tabs",
-                "path": "src_components_test-quasar-component-doc_QTabs_doc_json"
-            },
-            {
-                "level": 2,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Td-1",
-                "path": "src_components_test-quasar-component-doc_QTd_doc_json"
-            },
-            {
-                "level": 2,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Table",
-                "path": "src_components_test-quasar-component-doc_QTable_doc_json"
-            },
-            {
-                "menuName": "Quasar-Td-1",
-                "level": 3,
-                "children": [
-                    {
-                        "level": 3,
-                        "menuName": "Quasar-Td-1",
-                        "sonName": "Quasar-Td-tr-3",
-                        "path": "src_components_test-quasar-component-doc_QTr_doc_json"
-                    },
-                    {
-                        "level": 3,
-                        "menuName": "Quasar-Td-1",
-                        "sonName": "Quasar-Td-th-3",
-                        "path": "src_components_test-quasar-component-doc_QTh_doc_json"
-                    }
-                ]
-            },
-            {
-                "menuName": "Quasar-Td-1",
-                "level": 3,
-                "children": [
-                    {
-                        "level": 3,
-                        "menuName": "Quasar-Td-1",
-                        "sonName": "Quasar-Td-th-3",
-                        "path": "src_components_test-quasar-component-doc_QTh_doc_json"
-                    }
-                ]
-            },
-            {
-                "level": 2,
-                "menuName": "Quasar",
-                "sonName": "Quasar-Card-Sction",
-                "path": "src_components_test-quasar-component-doc_QCardSection_doc_json"
-            }
-        ]
+        "menuName": "项目说明",
+        "path": "scripts_doc_json"
+    },
+    {
+        "level": 1,
+        "menuName": "项目内脚本文件",
+        "path": "job_doc_json"
+    },
+    {
+        "level": 1,
+        "menuName": "项目版本",
+        "path": "entries_entries_doc_json"
     },
     {
         "menuName": "客户端PC",
         "level": 1,
         "children": [
             {
-                "level": 1,
+                "level": 2,
                 "menuName": "客户端PC",
                 "sonName": "utils-工具方法",
                 "path": "src_core_utils_utils_doc_json"
@@ -84,8 +27,20 @@
             {
                 "level": 2,
                 "menuName": "客户端PC",
-                "sonName": "websocket推送管理",
-                "path": "src_core_ws_ws_doc_json"
+                "sonName": "PC-测试组件",
+                "path": "src_components_test-component_test-component_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
+                "sonName": "赛事卡片组件",
+                "path": "src_components_match-card_match-card_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
+                "sonName": "赛事详情-detail",
+                "path": "src_core_match-detail_match-detail_doc_json"
             },
             {
                 "level": 2,
@@ -96,8 +51,8 @@
             {
                 "level": 2,
                 "menuName": "客户端PC",
-                "sonName": "z-index",
-                "path": "src_core_z-index_z-index_doc_json"
+                "sonName": "project-config",
+                "path": "src_core_project-config_project-config_doc_json"
             },
             {
                 "level": 2,
@@ -108,8 +63,86 @@
             {
                 "level": 2,
                 "menuName": "客户端PC",
+                "sonName": "通信日志功能",
+                "path": "src_core_log_log-config_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
                 "sonName": "用户配置",
                 "path": "src_core_user-config_user-config_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
+                "sonName": "z-index",
+                "path": "src_core_z-index_z-index_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
+                "sonName": "sdk模块化配置",
+                "path": "src_core_sdk-config_sdk-config_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "客户端PC",
+                "sonName": "websocket推送管理",
+                "path": "src_core_ws_ws_doc_json"
+            }
+        ]
+    },
+    {
+        "menuName": "Quasar",
+        "level": 1,
+        "children": [
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Card",
+                "path": "src_components_test-quasar-component-doc_QCard_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Td",
+                "path": "src_components_test-quasar-component-doc_QTd_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Td-tr",
+                "path": "src_components_test-quasar-component-doc_QTr_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Tabs",
+                "path": "src_components_test-quasar-component-doc_QTabs_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Td-th",
+                "path": "src_components_test-quasar-component-doc_QTh_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Card-Actions",
+                "path": "src_components_test-quasar-component-doc_QCardActions_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Card-Sction",
+                "path": "src_components_test-quasar-component-doc_QCardSection_doc_json"
+            },
+            {
+                "level": 2,
+                "menuName": "Quasar",
+                "sonName": "Quasar-Table",
+                "path": "src_components_test-quasar-component-doc_QTable_doc_json"
             }
         ]
     }
