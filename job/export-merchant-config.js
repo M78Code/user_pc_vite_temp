@@ -1,11 +1,10 @@
 /**
  * 合并输出商户配置
  */
-import * as fs from "node:fs";
 import axios from "axios";
 import { merge_merchant_config } from "./merge-merchant-config.js";
 import {ensure_write_folder_exist ,  write_file,
-  remove_file,} from "./write-folder-file.js"
+  } from "./write-folder-file.js"
 console.log("export-merchant-config----------合并输出商户配置-");
 console.log("process.argv----------------------0---");
 console.log(process.argv);

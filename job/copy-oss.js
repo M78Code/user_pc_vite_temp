@@ -6,8 +6,8 @@
  *
  */
 //  console.log(process.argv);
-import * as fs from "node:fs";
-import { ensure_write_folder_exist } from "./write-folder-file.js";
+ 
+import { ensure_write_folder_exist,  write_file, remove_file } from "./write-folder-file.js";
 import axios from "axios";
 // 本次打包的 客户端版本
 import BUILD_VERSION_CONFIG from "./output/version/build-version.js";
@@ -15,18 +15,9 @@ let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
 // is_dist  是 true 则 则 目录在 dist/spa 下生成oss 目录
 const is_dist = ("" + process.argv[2]).trim() == "dist";
 if (is_dist) {
-  fs.stat("./dist/self-use-version", (err, stats) => {
-    //  console.log('stats-----',stats);
-    if (stats) {
-      fs.rm(
-        `./dist/self-use-version/${BUILD_VERSION}/oss`,
-        { recursive: true, force: true },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
-  });
+
+  remove_file(`./dist/self-use-version/${BUILD_VERSION}/oss`)
+ 
 }
 // return  false
 // OSS--开发---- https://api-json.sportxxx25o1bmw.com/dev.json
@@ -87,7 +78,9 @@ for (let i = 0; i < oss_arr.length; i++) {
 }
 const write_file = (file_name, data) => {
   let full_path = `${check_dir}/${file_name}`;
-  fs.writeFileSync(full_path, JSON.stringify(data));
+ 
+  write_file(full_path, JSON.stringify(data))
+
   console.log(`文件写入成功-------${full_path}-------------------`);
 };
 setTimeout(function () {

@@ -1,6 +1,5 @@
 // # .env.production
 // VITE_APP_TITLE=My App
-import * as fs from "node:fs";
 const model = process.env.NODE_ENV || "development";
 
 import { write_file } from "./write-folder-file.js";
