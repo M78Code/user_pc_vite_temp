@@ -110,13 +110,14 @@ const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 //当前目标环境
 const {CURRENT_ENV ,NODE_ENV ,OSS_FILE_ARR ,OSS_FILE_NAME} = BUILDIN_CONFIG
 
-BUILDIN_CONFIG.DOMAIN_RESULT =DOMAIN_RESULT
+
  
 import lodash from "lodash"
 
 import { useMittOn, MITT_TYPES} from "src/core/mitt/index.js"
 class AllDomain {
   constructor() {
+    BUILDIN_CONFIG.DOMAIN_RESULT =DOMAIN_RESULT
     this.init_base_config();
   }
   /**
@@ -947,7 +948,7 @@ class AllDomain {
           // 失败 页面  没网 之类的 错误页面
      
 
-          useMittOn(MITT_TYPES.domain_error_alert)
+          useMittOn(MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT)
           }else{
       //如果 是检查 域名分组 正确性 并纠错
       if(check_group){
@@ -1020,7 +1021,7 @@ class AllDomain {
    * @param {*} err_domain 错误的域名
    * @return {*}
    */
-  auto_set_domain_event(err_domain) {
+  auto_set_domain_event() {
     // 计算当前的 域名池子
     this.compute_current_local_api_pool();
     // 开始 本地域名池子 新一轮找 最快的

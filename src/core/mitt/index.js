@@ -8,7 +8,15 @@
  */
 
 import mitt from "mitt";
-import MITT_TYPES from "./mitt-keys.js";
+import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
+
+import  * as MITT_TYPES_DEFAULT from "./mitt-keys"
+
+const MITT_TYPES= Object.assign({}, MITT_TYPES_DEFAULT ,MITT_TYPES_PROJECT)
+
+
+
+
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
