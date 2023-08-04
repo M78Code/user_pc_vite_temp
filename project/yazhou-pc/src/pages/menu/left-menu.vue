@@ -3,18 +3,18 @@
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
-        {{ $root.$t('common.menu_title') }}
+        <!-- {{ $root.$t('common.menu_title') }} --> 体育菜单
         <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
         <div class="item yb-flex-center" :class="jinri_zaopan == 2 ? 'active' : ''" @click="handle_click_jinri_zaopan(2)">
-          <!--  今日 -->
-          {{ $root.$t("menu.match_today") }}
+           今日
+          <!-- {{ $root.$t("menu.match_today") }} -->
         </div>
         <div class="item yb-flex-center" :class="jinri_zaopan == 3 ? 'active' : ''" @click="handle_click_jinri_zaopan(3)">
-          <!--  早盘  -->
-          {{ $root.$t("menu.match_early") }}
+           早盘 
+          <!-- {{ $root.$t("menu.match_early") }} -->
         </div>
       </div>
     </div>
@@ -98,41 +98,13 @@
       <!--  电竞    子菜单  开始    -->
       <div v-if="item1 == 2000" class="menu-fold2-wrap" :data-id="show_menu"
         :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
-        <template v-for="item2 in compute_item1_sublist_mi_2000(item1)">
-          <div @click="lv_2_click_wapper_3({ lv1_mi: item1, lv2_mi: item2.mi })"
-            :key="`${jinri_zaopan}_${item1}_${item2.mi}_2000`" :class="current_lv_2_mi == item2.mi ? 'active' : ''"
-            class="menu-item menu-fold2">
-            <div class="row items-center relative-position">
-              <span class="menu-point"></span>
-              <span class="menu-text ellipsis">
-                {{ base_data.menus_i18n_map[`${item2.mi}`] || "" }}
-              </span>
-            </div>
-            <div class="col-right relative-position" style="min-width: 40px">
-              <span class="match-count yb-family-odds"> </span>
-            </div>
-          </div>
-        </template>
+          <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  电竞    子菜单   结束     -->
       <!--  VR    子菜单   开始     -->
       <div v-if="item1 == 300" class="menu-fold2-wrap" :data-id="show_menu"
         :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
-        <template v-for="item2 in compute_item1_sublist_mi_300(item1)">
-          <div @click="lv_2_click_wapper_4({ lv1_mi: item1, lv2_mi: item2.menuId })"
-            :key="`${jinri_zaopan}_${item1}_${item2.menuId}_300`" :class="current_lv_2_mi == item2.menuId ? 'active' : ''"
-            class="menu-item menu-fold2">
-            <div class="row items-center relative-position">
-              <span class="menu-point"></span>
-              <span class="menu-text ellipsis">
-                {{ item2.name || "" }}
-              </span>
-            </div>
-            <div class="col-right relative-position" style="min-width: 40px">
-              <span class="match-count yb-family-odds"> </span>
-            </div>
-          </div>
-        </template>
+        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  VR    子菜单   结束     -->
       <!--  子菜单  ，  结束     -->
@@ -140,7 +112,11 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue"
+import { ref,onMounted } from "vue"
+import { api_base_data } from "src/api/index.js";
+
+import MenuItem from './menu-item.vue'
+
 // 今日  2 早盘   3
 const jinri_zaopan_ = ref(2)
 // 当前的一级菜单ID
@@ -163,6 +139,72 @@ const props = defineProps({
     default: () => { },
   }
 })
+
+onMounted(()=>{
+  init_mew_menu_list()
+})
+
+/**
+ * @description: 菜单列表
+ * @return {*}
+ */
+ const init_mew_menu_list = async () => {
+  let res = await api_base_data.get_base_data_menu_init({});
+  let menu_info = set_ses_wapper(res, []);
+  const left_menu = []
+  const in_play = []
+  // 左侧菜单id
+  menu_info.forEach(item => {
+    // vr300 冠军400 2000 电竞 500热门
+    if (Number(item.mi) < 300) {
+      let count = (item.sl || []).reduce((total,cur) => {
+        if(cur.mi == item.mi + '4'){
+          return total
+        }
+        return total + Number(cur.ct)
+      },0)
+
+      // 赛种下面有赛事
+      if( count > 0){
+        left_menu.push(Number(item.mi))
+
+        // 有滚球赛事
+        let obj = (item["sl"] || []).find((y) => y.mi == `${item.mi}1` && y.ct > 0 ) || {};
+      
+        if(obj.mi){
+          in_play.push({mi:item.mi,count:obj.ct})
+        }
+      }
+    }
+  })
+  // let esports_obj = menu_info.find(page => [2100, 2101, 2102, 2103].includes(Number(page.mi))) || {}
+  // if (esports_obj.mi) {
+  //   left_menu.splice(3, 0, 2000)
+  // }
+
+  // 获取 top events 的 赛种
+  let mi_5000 = menu_info.find(item=> item.mi == 5000) || {}
+  // - 5000 得到 csid  + 100 得到 菜单id 
+  let top_events = ( mi_5000.sl || [] ).map(item => (Number(item.mi) - 5000 + 100) ) || []
+
+
+  // let state = store.getState()
+  // // 获取最新的 数据
+  // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+
+  // redux_menu.in_play = in_play
+  // redux_menu.top_events = top_events
+  // redux_menu.menu_list = left_menu
+
+  // 设置 左侧菜单
+	// store.dispatch({
+  //   type: "SETREDUXMENU",
+  //   data: redux_menu,
+  // });
+
+  // 设置新菜单 
+  return left_menu;
+}
 
 /**
    * @description: 今日 早盘 紧急开关
