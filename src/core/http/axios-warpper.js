@@ -13,15 +13,8 @@ import { GetHttpDomain } from "../domain";
 class AxiosHttp {
   // api访问数量(每分钟)
   request_count = 0;
-  // api错误信息收集接口
-  HTTP_ERROR_API = "https://sdjfgsijmdkdhsa.gzxxty168.com/api/client/adderror";
-  // 用户配置收集接口
-  HTTP_PRO_INFO_API =
-    "https://sdjfgsijmdkdhsa.gzxxty168.com/api/client/statistics";
-  // 最近的错误数组，用于分析上报
-  HTTP_ERROR_API_ERR_DATA = [];
   // http root domain
-  HTTP_ROOT_DOMAIN = "";
+  HTTP_ROOT_DOMAIN = GetHttpDomain();
   // axios 实例
   axios_instance = null;
   // 页面 失去 焦点后  HTTP 断开时间

@@ -78,10 +78,6 @@ const responseHook = {
     let url_temp = get(res, "config.url");
     // 解析url
     let jiexi_result = ParseUrl(url_temp);
-    // 后面非常规业务逻辑 所用axios 需要和常规的分开
-    if (jiexi_result.is_other_api) {
-      return res;
-    }
     url_temp = jiexi_result.new_url_temp;
     // 非核心业务不走 token 失效流程 不走 code 码转换等 流程 直接返回
     if (url_temp.includes("livechat-api")) {
@@ -347,16 +343,11 @@ export function ParseUrl(url_temp = "") {
   // 是完整的链接
   let is_full_url =
     url_temp.startsWith("http://") || url_temp.startsWith("https://");
-  // 非常规业务逻辑 ，指定的完整url ，不走 baseurl
-  let is_other_api =
-    is_full_url &&
-    (url_temp.includes("sdjfgsijmdkdhsa.gzxxty168.com") ||
-      url_temp.includes("information-api.sportxxxwo8.com"));
   // 为了兼容可能的错误  url_temp 带 http 开头 或者 不带   需要截取 纯粹的 pathname
   // 新的 url 片段
   let new_url_temp = url_temp;
   // 是完整的链接 并且 是常规的业务逻辑
-  if (is_full_url && !is_other_api) {
+  if (is_full_url) {
     new_url_temp = new URL(url_temp)["pathname"];
   }
 
@@ -365,7 +356,6 @@ export function ParseUrl(url_temp = "") {
   let is_pb = new_url_temp.endsWith("PB");
   return {
     is_full_url,
-    is_other_api,
     new_url_temp,
     is_pb,
   };
