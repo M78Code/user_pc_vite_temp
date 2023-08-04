@@ -3,7 +3,7 @@
  * 菜单接口  缓存、限频、节流
  */
 
- import AxiosDebounceCache from "./AxiosDebounceCache"
+ import AxiosDebounceCache from "./axios-debounce-cache.js"
 
 
 

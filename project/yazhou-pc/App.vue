@@ -1,11 +1,3 @@
-<!--
- * @Author: jiffy
- * @Date: 2023-08-01 18:37:50
- * @LastEditTime: 2023-08-04 10:41:02
- * @LastEditors: jiffy
- * @Description: 说明
- *  
--->
 <template>
   <div id="ty-app">
     <h1>客户端模块化+SDK版本</h1>
@@ -15,8 +7,9 @@
 
 <script setup>
 import { onMounted } from "vue";
-
+import { http } from "src/core/http/index";
 onMounted(() => {
+  console.log(http);
   document.querySelector("#loading-root-ele").style.display = "none";
 });
 </script>
