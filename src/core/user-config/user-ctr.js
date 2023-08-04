@@ -17,12 +17,15 @@ import BUILDIN_CONFIG from "app/job/output/env/final.js"
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/public/api/index";
 
+
+// #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
+import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 const axios_instance = axios.create()
 
 
-// #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
+
 
 class userCtr {
  constructor() {
@@ -61,22 +64,22 @@ class userCtr {
  set_getuserinfo_res(res) {
 
    if(!res.data){ return false }
-   if(_.get(res,'data.code')!="0000000"){ return false }
-   if(!_.get(res,'data.data.userId')){ return false }
+   if(lodash.get(res,'data.code')!="0000000"){ return false }
+   if(!lodash.get(res,'data.data.userId')){ return false }
    // 数据规整容错
 
    // getUserInfo 原始数据备份 备份数据
     this.getuserinfo_res_backup =     JSON.stringify(res.data) ;
 
     //设置 商户层级的 配置的界面 相关的设置
-    this.set_merchant_config(_.get(res,'data.data.configVO'))
+    this.set_merchant_config(lodash.get(res,'data.data.configVO'))
 
        //  调用用户接口，更新 域名流程
-   let oss = _.get(res,'data.data.oss',{});
-   oss.gr = _.get(res, "data.data.gr","").toUpperCase();
+   let oss = lodash.get(res,'data.data.oss',{});
+   oss.gr = lodash.get(res, "data.data.gr","").toUpperCase();
    window.vue.$root.$emit('set_getuserinfo_oss_api', oss);
    //上传数据
-   infoUpload.upload_data(_.get(res,'data.data',{}))
+   infoUpload.upload_data(lodash.get(res,'data.data',{}))
   }
 
 
@@ -181,7 +184,7 @@ class userCtr {
      }
      //#TODO 调用 getuserinfo 接口返回值  数据备份
      if (url_temp.includes("user/getUserInfo")) {
-        let data_temp = pako_pb.unzip_data(_.get(res, 'data.data'));
+        let data_temp = pako_pb.unzip_data(lodash.get(res, 'data.data'));
         data_temp && (res.data.data = data_temp);
         this. set_getuserinfo_res(res)
      }
@@ -197,7 +200,7 @@ class userCtr {
   try {
     // #TODO 接口
     let res = await api_details.post_check_login()
-    callback(_.get(res, "data.data.isLogin", false), _.get(res, "data.code") == '0401038')
+    callback(lodash.get(res, "data.data.isLogin", false), lodash.get(res, "data.code") == '0401038')
   } catch (error) {
     callback(false, true)
   }
@@ -261,18 +264,18 @@ class userCtr {
   compute_video_no_handle_time(res){
 
          // 长时间未操作暂停视频开关   1开启; 0关闭
-         let center_video_time = _.get(res,'data.videoManageVo.closedWithoutOperation', 0);
+         let center_video_time = lodash.get(res,'data.videoManageVo.closedWithoutOperation', 0);
          // 观看时间设置 0默认时间 1自定义时间
-         let close_video_time_settings = _.get(res,'data.videoManageVo.videoSettings', 0);
+         let close_video_time_settings = lodash.get(res,'data.videoManageVo.videoSettings', 0);
          // 长时间未操作暂停视频时间(自定义时间)
-         let close_video_time_custom = _.get(res,'data.videoManageVo.customViewTime', 0);
+         let close_video_time_custom = lodash.get(res,'data.videoManageVo.customViewTime', 0);
          // 长时间未操作暂停视频时间(默认时间)
-         let close_video_time = _.get(res,'data.videoManageVo.viewingTime', 0)
+         let close_video_time = lodash.get(res,'data.videoManageVo.viewingTime', 0)
          let setting_no_handle_time = (close_video_time_settings ? close_video_time_custom : close_video_time) * 1000 * 60
          // 商户级别视频流量管控开关 1开启、0关闭
-         let config_video_switch = _.get(res, 'data.videoManageVo.videoSwitch', 0);
+         let config_video_switch = lodash.get(res, 'data.videoManageVo.videoSwitch', 0);
          // 系统级别视频流量管控总开关   '1'开启、'0'关闭
-         let config_video_time = _.get(res, 'data.videoManageVo.configValue', 0);
+         let config_video_time = lodash.get(res, 'data.videoManageVo.configValue', 0);
          // 检查暂停视频开关是否开启 与 用户是否长时间未操作
          if(1*config_video_time != 0 && config_video_switch != 0 && center_video_time != 0 && setting_no_handle_time != 0){
           return  setting_no_handle_time
@@ -296,7 +299,7 @@ class userCtr {
 
    let   reload_flg = false;
      // 获取用户分组信息
-     let gr = _.get(res,'data.gr');
+     let gr = lodash.get(res,'data.gr');
      if(gr) {
 
 
@@ -389,8 +392,8 @@ class userCtr {
        timeout:10000,
 
      })
-     let data = _.get(res,'data.data')
-     if ( _.isPlainObject(data) ) {
+     let data = lodash.get(res,'data.data')
+     if ( lodash.isPlainObject(data) ) {
        this.set_merchant_config(data)
      }else{
        this.set_web_meta_by_config()
@@ -412,7 +415,7 @@ class userCtr {
 
   set_merchant_config(merchant_config){
 
-   if(_.isPlainObject(merchant_config)){
+   if(lodash.isPlainObject(merchant_config)){
 
      sessionStorage.setItem('merchant_config_json', JSON.stringify(merchant_config))
    }
@@ -425,7 +428,7 @@ class userCtr {
   */
  get_banner_url_first_page(){
    let merchant_config_json = JSON.parse(sessionStorage.getItem("merchant_config_json"))
-   let url = _.get(merchant_config_json,'bannerUrl')
+   let url = lodash.get(merchant_config_json,'bannerUrl')
 
    return  url
 
@@ -443,8 +446,8 @@ compute_set_web_meta_config(){
    // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
   //  #TODO
    let json = sessionStorage.getItem('merchant_config_json')
-  //  let config =  _.get(window.env,'config.html_info') || {}
-   let config =  _.get(BUILDIN_CONFIG,'htmlVariables') || {}
+  //  let config =  lodash.get(window.env,'config.html_info') || {}
+   let config =  lodash.get(BUILDIN_CONFIG,'htmlVariables') || {}
    if(json ){
     // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
 
@@ -460,11 +463,11 @@ compute_set_web_meta_config(){
       config.max_width = merchant_config.inlineWidth
     }
     // 主logo白色
-    if(_.get(merchant_config,'configMap.1')){
+    if(lodash.get(merchant_config,'configMap.1')){
       config.day_logo = get_file_path(merchant_config.configMap[1])
     }
     // 主logo黑色
-    if(_.get(merchant_config,'configMap.2')){
+    if(lodash.get(merchant_config,'configMap.2')){
       config.night_logo = get_file_path(merchant_config.configMap[2])
     }
     // 兼容页logo
@@ -579,7 +582,7 @@ set_league_logo_url(url){
     let style_el = document.createElement('style')
     // 获取商户样式_y0
     const user_data_info = this.get_getuserinfo_data()
-    const _data = _.get(user_data_info,'data', {})
+    const _data = lodash.get(user_data_info,'data', {})
     let merchant_style = _data.stm === 'blue' ? '_y0' : ''
     // let style_html = `
     //   body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
@@ -644,13 +647,13 @@ set_league_logo_url(url){
   * @param {undefined} undefined
  */
  get_web_title(lang){
-  // let title = _.get(window.env,`config.html_info.title.${lang}`) || ''
-  let title = _.get(BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
+  // let title = lodash.get(window.env,`config.html_info.title.${lang}`) || ''
+  let title = lodash.get(BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
   let json = sessionStorage.getItem('merchant_config_json')
   if(json){
     let merchant_config = JSON.parse(json)
-    if(_.get(merchant_config,`titleMap.${lang}`)){
-      title = _.get(merchant_config,`titleMap.${lang}`)
+    if(lodash.get(merchant_config,`titleMap.${lang}`)){
+      title = lodash.get(merchant_config,`titleMap.${lang}`)
     }
   }
   return title
