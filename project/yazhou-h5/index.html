@@ -15,11 +15,10 @@
   <meta name="version-date" content="%VITE_APP_versionDate%">
   <meta name="version-branch" content="%VITE_APP_BRANCH%">
   <meta name="version-tag" content="%VITE_APP_TAG%">
-  <!-- <meta name="version-build_tag" content="%VITE_APP_BUILD_TAG%"></meta> -->
-  <!-- <meta name="version-BUILD_VERSION" content="%VITE_APP_BUILD_VERSION%" /> -->
+
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
-  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, viewport-fit=cover,minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) {%, viewport-fit=cover<% }%">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, viewport-fit=cover,minimum-scale=1, width=device-width">
   <meta name="msapplication-tap-highlight" content="no">
 
   <meta name="apple-mobile-web-app-capable" content="no" />
@@ -406,7 +405,7 @@
     window.CURRENT_ENV_BUILD_IN_OSS =  "%VITE_APP_current_env_build_in_oss %"
   </script>
 </head>
-<body class="custom-format-<%=com%">
+<body class="custom-format-">
   <!--loading 动画-->
   <!-- <div class="loading" id="loading-root-ele">
     <div id="loading-root-main" class="la-line-scale">
