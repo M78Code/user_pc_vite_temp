@@ -20,7 +20,9 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 // websocket Log文件
-import WsLog from "src/public/utils/log/wsLog.js";
+ 
+import {WsLog_H5 as WsLog} from  "src/core/log/log-config.js"
+window.wslog = WsLog;
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
@@ -52,7 +54,7 @@ export default {
 
     // 初始化启动日志系统--开发模式时日志打开
     // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-    window.wslog = new WsLog("H5", window.env.config.LOG);
+
     if (window.wslog.wsRun) {
       this.timer = setInterval(() => {
         this.time_str = new Date().Format("yyyy-MM-dd hh:mm:ss.S");
