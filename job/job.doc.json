@@ -3,15 +3,7 @@
     "level": 1,
     "menuName": "项目内脚本文件"
   },
-  "project": {
-    "category": "job",
-    "directory-name": "job",
-    "descriptions": [
-      "项目内脚本文件"
-    ],
-    "type": "job",
-    "remark": " ",
-    "config": [
+  "project": [
       {
         "category": "job",
         "directory-name": "job",
@@ -265,5 +257,4 @@
         ]
       }
     ]
-  }
 }
