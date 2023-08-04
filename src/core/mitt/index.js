@@ -1,7 +1,7 @@
 /*
  * @Author: jiffy
  * @Date: 2023-08-02 16:35:21
- * @LastEditTime: 2023-08-02 16:35:37
+ * @LastEditTime: 2023-08-02 17:04:46
  * @LastEditors: jiffy
  * @Description: 说明
  *
@@ -12,17 +12,18 @@ import TYPES from "../mitt-keys.js";
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
- *
+ * @returns {off,emit(data)}
  */
 function useMittOn(...args) {
-  osnt[key] = args;
+  const [key] = args;
   if (!TYPES[key]) {
-    console.error("key is not register");
+    console.error("mitt key is not register");
     return;
   }
   emitter.on.apply(emitter, args);
   return {
-    remove: () => emitter.off(key),
+    off: () => emitter.off(key),
+    emit: (data) => useMittEmit(key, data),
   };
 }
 /**

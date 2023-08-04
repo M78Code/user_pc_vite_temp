@@ -5,13 +5,16 @@
  */
 import axios from "axios";
 import device from "current-device";
+import { ss } from "../utils/web-storage";
+HTTP_ERROR_API_ERR_DATA = [];
 class infoUpload {
-  constructor(on_off = true) {
+  HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
+  enable = false;
+  axios_instance = null;
+  constructor(enable = true) {
     // 上报数据开关
-    this.on_off = on_off;
+    this.enable = enable;
     // 数据上报
-    this.HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
-    this.axios_instance = null;
     this.init();
   }
   init() {
@@ -78,8 +81,8 @@ class infoUpload {
    * @return:
    */
   upload_data(data) {
-    if (!data || !this.on_off) return;
-    let original_url = window.sessionStorage.getItem("original_url") || "";
+    if (!data || !this.enable) return;
+    let original_url = ss.get("original_url", "");
     let { mId = -1, userId = -1, loginUrl = "" } = data;
     const { current_env } = window.env.config;
     // url中包含token时再调用URL上报接口(刷新页面不进行上报URL)
@@ -106,7 +109,7 @@ class infoUpload {
         }, 10000);
       }
     }
-    window.sessionStorage.removeItem("original_url");
+    ss.remove("original_url");
   }
 }
 const info_upload = new infoUpload(true);
