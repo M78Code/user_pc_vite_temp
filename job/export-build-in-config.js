@@ -9,7 +9,7 @@ import {
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
 
-import  {DEV_TARGET_ENV ,ALL_ENV_ARR} from "../dev-target-env.js";
+import { DEV_TARGET_ENV, ALL_ENV_ARR } from "../dev-target-env.js";
 console.log("----process.argv---", process.argv);
 // 输出所有环境
 let all_env = false;
@@ -30,12 +30,11 @@ const FRONT_WEB_ENV = (process.env.FRONT_WEB_ENV || "").trim();
 // 模块化打包  构建 zip 版本参数
 const MODULE_SDK_VERSION = (process.env.SHIWAN_MODULE_SDK_VERSION || "").trim();
 
- 
 /**
  * 重新计算  current_env 当   模块化打包  构建 zip
  */
 const recompute_current_env_when_MODULE_SDK_VERSION = () => {
-  let current_env=''
+  let current_env = "";
   //模块化 打包目标环境代码 定向 指定环境
   console.log(
     "当前 已指定 试玩环境SDK打包 专用版本号 ， MODULE_SDK_VERSION : " +
@@ -57,7 +56,7 @@ const recompute_current_env_when_MODULE_SDK_VERSION = () => {
  * 重新计算  current_env  当   常规随环境的   jenkins  部署
  */
 const recompute_current_env_when_FRONT_WEB_ENV = () => {
-  let current_env=''
+  let current_env = "";
   //模块化 打包目标环境代码 定向 指定环境
   console.log(`当前环境已设置 FRONT_WEB_ENV ：  ${FRONT_WEB_ENV}`);
   console.log(
@@ -95,7 +94,8 @@ const export_env_config = (env) => {
     let { htmlVariables = {} } = final_config;
     // 写入文件
     write_env_file(htmlVariables);
-    let str = `export default  ` + JSON.stringify(final_config);
+    let str = `window.BUILDIN_CONFIG =  ` + JSON.stringify(final_config) + ";";
+    str += `export default  window.BUILDIN_CONFIG;`;
     write_file(full_path, str);
     if (!all_env) {
       write_file(final_file_path, str);
@@ -109,7 +109,7 @@ console.log(
 console.log(`将自动删除 final 配置文件,  文件路径 :${final_file_path}`);
 remove_file(final_file_path);
 
-// 根据当前 相关参数  执行 计算 
+// 根据当前 相关参数  执行 计算
 if (all_env) {
   export_env_config("all");
 } else {
@@ -118,16 +118,14 @@ if (all_env) {
     export_env_config(argv_version);
   } else if (MODULE_SDK_VERSION) {
     //模块化打包  构建 zip
-    let   current_env= recompute_current_env_when_MODULE_SDK_VERSION()
+    let current_env = recompute_current_env_when_MODULE_SDK_VERSION();
     export_env_config(current_env);
   } else if (FRONT_WEB_ENV) {
-
     //jenkins 参数
-    let   current_env= recompute_current_env_when_FRONT_WEB_ENV()
+    let current_env = recompute_current_env_when_FRONT_WEB_ENV();
     export_env_config(current_env);
   } else {
-    //  开发人员本地开发 
+    //  开发人员本地开发
     export_env_config(DEV_TARGET_ENV);
- 
   }
 }

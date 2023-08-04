@@ -5,19 +5,6 @@
  */
  
 const namespace = "TY_SDK";
-
-let KEY_ARR = [
-  // domain API 存储
-  "domain_api_key",
-  //最优API
-  "best_api",
-  // gr 用户分组
-  "gr",
-  //token
-  "token",
-  "pb",
-];
-
 let STANDARD_KEY = {
   KEY_ARR:[],
   get(key) {

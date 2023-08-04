@@ -2,7 +2,7 @@
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-28 14:25:33
  * @LastEditors: pmtymalick pmtymalick
- * @LastEditTime: 2023-08-04 14:50:48
+ * @LastEditTime: 2023-08-04 15:55:34
  * @FilePath       : \user-pc-vite\src\core\domain\domain.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -76,12 +76,20 @@ const axios_instance = axios.create()
 
 // 域名计算结果
  const  DOMAIN_RESULT={
+    //gr  
+    gr:"COMMON",
     //最优 API 
-    first_one: ref(''),
+    first_one: '',
     //可用 的 api 数组
-    useable_apis: ref([]),
+    useable_apis: [],
+    //全量API 数组
+    full_apis:[],
     // 用户信息接口返回
-    getuserinfo_res:null  
+    getuserinfo_res:null  ,
+    //live_domains 视频页面地址
+    live_domains:[],
+    // 图片域名
+    img_domains:[]
 
 
 }
@@ -95,11 +103,15 @@ import STANDARD_KEY from "../standard-key/index.js"
 
 // 域名计算  本地存错 挂载键 
 const   DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01") 
-
-
+// 引入 当前 计算出的植入配置 
+import BUILDIN_CONFIG from "app/job/output/env/final.js"
+//当前目标环境
  
-const   DOMAIN_API = "domain_api01"
-const win_env = {} // 以前挂载在window的
+const {CURRENT_ENV ,NODE_ENV ,OSS_FILE_ARR ,OSS_FILE_NAME} = BUILDIN_CONFIG
+ 
+import lodash from "lodash"
+
+import { useMittOn, MITT_TYPES} from "src/core/mitt/index.js"
 class AllDomain {
   constructor() {
     this.init_base_config();
@@ -108,8 +120,9 @@ class AllDomain {
    * 初始化 最基础配置
    */
   init_base_config() {
-
+    //域名计算结果
     this.DOMAIN_RESULT=DOMAIN_RESULT,
+    // 域名计算  本地存错 挂载键 
     this.DOMAIN_API_STORAGE_KEY= DOMAIN_API_STORAGE_KEY;
     // getuserinfo接口 内的 oss  配置 内的 oss
     this.GETUSERINFO_OSS = {};
@@ -284,7 +297,7 @@ class AllDomain {
       .then((res) => {
         // 只要有一个   请求成功
         console.log(" // 只要有一个   请求成功----", res);
-        if( _.get(res, "data.code") == "0000000"){
+        if( lodash.get(res, "data.code") == "0000000"){
          //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
         this.begin_process_when_use_url_api_after_process(res);
         //保存 用户数据
@@ -370,10 +383,10 @@ class AllDomain {
    */
   begin_process_when_use_url_api_after_process(res) {
     // 确保分组信息 赋值
-    let gr = (_.get(res, "data.data.gr") || "").toUpperCase();
-    win_env.config.gr = gr;
+    let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
+   this.DOMAIN_RESULT.gr =gr
     //OSS 对象
-    let ossobj = _.get(res, "data.data.oss");
+    let ossobj = lodash.get(res, "data.data.oss");
     console.log("ossobj--------", ossobj);
     // 如果 有 api 但是拿不到 ossobj    ， 强制 走 oss 文件逻辑
     if (!ossobj) {
@@ -400,8 +413,9 @@ class AllDomain {
     //   ossobj.api.push(use_api)
     // }
     ossobj.api = [...ossobj.api, ...this.url_api];
-    // 同步最新域名到环境变量中
-    win_env.config.domain[win_env.config.current_env] = [...ossobj.api,...win_env.config.domain[win_env.config.current_env]];
+    // 同步最新域名到  全量API 数组
+  
+    this.DOMAIN_RESULT.full_apis =  lodash.uniq([...ossobj.api, ... this.DOMAIN_RESULT.full_apis ]  )
     // 第二步 设置   set_getuserinfo_oss
     this.set_getuserinfo_oss(ossobj);
     // 发现可用的域名的逻辑处理
@@ -429,18 +443,16 @@ class AllDomain {
     // loginUrl: "http://test-user-pc-bw4.sportxxxifbdxm2.com/?token=5cc56f7830e569fe3a815b6ffa50634cf32af09a&gr=common&tm=1&lg=zh&mk=EU&stm=blue"
     // loginUrlArr: [,…]
     //解密 img
-    let img = _.get(oss_data, "img");
+    let img = lodash.get(oss_data, "img");
     // //解密 static
-    // let static_src = _.get(oss_data, "static",[]);
+    // let static_src = lodash.get(oss_data, "static",[]);
     //解密 live_domains
     let live_domains = oss_data[this.live_domains_oss_path_api];
-    // 设置static_serve
-    // if (static_src && static_src.length) {
-    //   win_env.config.static_serve = static_src;
-    // }
+ 
+ 
     // 设置live_domains
     if (live_domains) {
-      win_env.config.live_domains = [live_domains];
+        this.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -456,17 +468,13 @@ class AllDomain {
   begin_process_when_use_oss_file_api() {
     // 当前 oss  完整 地址
     let oss_url =
-      this.oss_urls[0] +
-      _.get(
-        window,
-        `env.config.oss_url_obj[${win_env.config.current_env}].url`
-      );
+      this.oss_urls[0] ;
     // 获取网络数据
     axios_instance
       .get(oss_url, { params: { t: new Date().getTime() },timeout:5000 })
       .then((res) => {
         //此处 因为  oss 文件在前端代码内部 ，所以 只要域名能访问 ，这个文件必定能访问
-        if (  _.isPlainObject(res.data) ) {
+        if (  lodash.isPlainObject(res.data) ) {
           // 成功获取到oss文件数据
           let obj = res.data ;
         if(obj){
@@ -475,7 +483,7 @@ class AllDomain {
           this.jixi_build_in_current_env_build_in_oss()
         }
         }else{
-          console.error('解析oss数据失败：_.isPlainObject(res.data)');
+          console.error('解析oss数据失败：lodash.isPlainObject(res.data)');
           this.jixi_build_in_current_env_build_in_oss()
         }
       })
@@ -582,7 +590,7 @@ class AllDomain {
     let oss_file_api = this.oss_file_api;
     // 认为新进来的数据
     // let new_get_api = [...getuserinfo_oss_api, ...oss_file_api];
-    // new_get_api = _.uniq(new_get_api);
+    // new_get_api = lodash.uniq(new_get_api);
     // 变形后 放入的数组
     let new_get_api_obj_arr = [];
     // 变形
@@ -596,7 +604,7 @@ class AllDomain {
     oss_file_api.map((x) => {
       new_get_api_obj_arr.push(this.formart_api_to_obj(x));
     })
-    new_get_api_obj_arr = _.uniqBy(new_get_api_obj_arr,'api');
+    new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr,'api');
     //   前端本地旧的   api配置  删除新的 认为新进来的数据
     console.log("getuserinfo_oss_api-----", getuserinfo_oss_api);
     console.log("oss_file_api-----", oss_file_api);
@@ -604,7 +612,7 @@ class AllDomain {
     console.log("new_get_api_obj_arr---------", new_get_api_obj_arr);
     //把认为新进来的 里面的  事实上本地已存在的 删除掉，留下真正新增的
     let real_new_api =
-      _.pullAllBy(new_get_api_obj_arr, old_local_api, "api") || [];
+      lodash.pullAllBy(new_get_api_obj_arr, old_local_api, "api") || [];
     console.log("real_new_api----------", real_new_api);
     // 最终的 api 数组
     let final_api_pool = [...real_new_api, ...old_local_api];
@@ -628,11 +636,11 @@ class AllDomain {
     // 排序，按照更新时间 从大到小排列 ，新的在前，旧的在后
     local_api_pool.sort((a, b) => b.update_time - a.update_time);
     console.log("local_api_pool---------", local_api_pool);
-
+      let cgr = this.DOMAIN_RESULT.gr
       // 当前分组的 api
-      let  local_api_pool_cg = local_api_pool.filter(x=>x.group ==win_env.config.gr)
+      let  local_api_pool_cg = local_api_pool.filter(x=>x.group ==cgr)
       //非当前分组的 api
-      let  local_api_pool_not_cg = local_api_pool.filter(x=>x.group !=win_env.config.gr)
+      let  local_api_pool_not_cg = local_api_pool.filter(x=>x.group !=cgr)
 
     // 截取 最大的 本地域名池子数量上限
     if (local_api_pool_cg.length > this.LOCAL_API_POOL_MAX) {
@@ -645,7 +653,7 @@ class AllDomain {
     local_api_pool=  this.add_neibu_domain(local_api_pool)
 
     // 赋值
-    this.local_api_pool = _.uniqBy(local_api_pool,'api') ;
+    this.local_api_pool = lodash.uniqBy(local_api_pool,'api') ;
     //保存数据到本地
     this.set_sava_json_key(this.local_api_pool);
   }
@@ -654,12 +662,12 @@ class AllDomain {
     //是否需要添加 维护域名
     let need_add =false
     //本地开发
-    if (win_env.NODE_ENV == "development") {
+    if (NODE_ENV == "development") {
       need_add =true
     }else{
         //线上环境
        //非生产环境不用处理
-       if(win_env.config.current_env!="idc_online"){
+       if(CURRENT_ENV!="idc_online"){
         need_add =false
       }else{
         // 线上生产环境
@@ -678,7 +686,6 @@ class AllDomain {
     }
 
    // 生产环境 附加内部测试域名
-    // win_env.config.gr = "COMMON";
    let obj={
     COMMON:'https://api-c.sportxxx1zx.com',
     Y:'https://api-y.sportxxx1zx.com',
@@ -687,7 +694,7 @@ class AllDomain {
    }
   //过滤掉 内测 域名
   let arr= local_api_pool.filter(x=> !x.api.includes('.sportxxx1zx.com') )
-  if(win_env.config.current_env=="idc_online"){
+  if(CURRENT_ENV=="idc_online"){
     for(let gr in obj){
       console.log(gr)
       // 增加内测域名
@@ -739,12 +746,12 @@ class AllDomain {
    * @return {*}
    */
   get_oss_decrypt_obj(obj) {
-    if (_.isArray(obj)) {
+    if (lodash.isArray(obj)) {
       for (let i = 0; i < obj.length; i++) {
         // 解密数据,重新设置数据
         obj[i] = this.get_oss_decrypt_str(obj[i]);
       }
-    } else if (_.isObject(obj)) {
+    } else if (lodash.isObject(obj)) {
       for (const key in obj) {
         if (Object.hasOwnProperty.call(obj, key)) {
           // 解密数据,重新设置数据
@@ -761,40 +768,38 @@ class AllDomain {
    get_decrypt_oss_data(data) {
     if (data) {
       //解密 img ,  正确结构：["xsxsax"]
-      let img = _.get(data, "img")
-      if(_.isArray(img)&&img[0]&&_.isString( img[0])) { this.get_oss_decrypt_obj(img);}else{
+      let img = lodash.get(data, "img")
+      if(lodash.isArray(img)&&img[0]&&lodash.isString( img[0])) { this.get_oss_decrypt_obj(img);}else{
         data["img"]=[]
       }
 
       //解密 static , 正确结构：["xsxsax"]
 
-      let stc = _.get(data, "static")
-      if(_.isArray(stc)&&stc[0]&&_.isString( stc[0])) { this.get_oss_decrypt_obj(stc);}else{
+      let stc = lodash.get(data, "static")
+      if(lodash.isArray(stc)&&stc[0]&&lodash.isString( stc[0])) { this.get_oss_decrypt_obj(stc);}else{
         data["static"]=[]
       }
 
       //解密 live_domains ,  正确结构：{pc:'xsaxsax'}
 
-      let lds = _.get(data, "live_domains")
-      if(_.isPlainObject(lds)&&lds) { this.get_oss_decrypt_obj(lds);}else{
+      let lds = lodash.get(data, "live_domains")
+      if(lodash.isPlainObject(lds)&&lds) { this.get_oss_decrypt_obj(lds);}else{
         data["live_domains"]={}
       }
 
 
       for (const key_ in data) {
-        if (key_ && key_.indexOf("GA") == 0) {
+        if (key_ && keylodash.indexOf("GA") == 0) {
           //解密 GA*.api   ,  正确结构：["xsxsax"]
-          let api =  _.get(data, key_ + ".api")
-          if(_.isArray(api)&&api[0]&&_.isString( api[0]))  { this.get_oss_decrypt_obj(api);}else{
-            _.set(data,key_ + ".api",[])
+          let api =  lodash.get(data, key_ + ".api")
+          if(lodash.isArray(api)&&api[0]&&lodash.isString( api[0]))  { this.get_oss_decrypt_obj(api);}else{
+            lodash.set(data,key_ + ".api",[])
           }
         }
       }
 
     }
-    // console.log('api用户分组信息:',win_env.config.gr);
-    console.log("最优oss url文件信息:", JSON.stringify(data));
-    win_env.config.oss_json = data;
+ 
   }
   /**
    * @description: 设置oss文件中的数据到全局配置文件中
@@ -803,18 +808,15 @@ class AllDomain {
    */
   set_all_config_from_oss_file_data_2(oss_data) {
     //解密 img
-    let img = _.get(oss_data, "img");
+    let img = lodash.get(oss_data, "img");
     //解密 static
-    let static_src = _.get(oss_data, "static");
+    let static_src = lodash.get(oss_data, "static");
     //解密 live_domains
-    let live_domains = _.get(oss_data, this.live_domains_oss_path_file);
-    // 设置static_serve
-    if (static_src && static_src.length) {
-      win_env.config.static_serve = static_src;
-    }
+    let live_domains = lodash.get(oss_data, this.live_domains_oss_path_file);
+ 
     // 设置live_domains
     if (live_domains) {
-      win_env.config.live_domains = [live_domains];
+     this.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -833,21 +835,19 @@ class AllDomain {
 
     let api =  [];
     // 设置商户分组api ，当前分组的 api
-    let api_x = _.get(oss_data, "GA" + win_env.config.gr + ".api");
+    let api_x = lodash.get(oss_data, "GA" +   this.DOMAIN_RESULT.gr + ".api");
     console.log("api:" + JSON.stringify(api));
     console.log("api_x:" + JSON.stringify(api_x));
     console.log(
-      "win_env.config.current_env:" + win_env.config.current_env
+      "CURRENT_ENV:" + CURRENT_ENV
     );
-    console.log(
-      "可用域名---前:" +
-        JSON.stringify(win_env.config.domain[win_env.config.current_env])
-    );
+ 
     // 因为存在 对接接口 历史遗留 ，用户 进入界面可能无 gr 参数  但是  时间戳接口可以混合调用，getuserinfo 也一样能 混合调用
     if (!api_x) {
-      win_env.config.gr = "COMMON";
-      sessionStorage.setItem("gr", win_env.config.gr);
-      api_x = _.get(oss_data, "GA" + win_env.config.gr + ".api") || [];
+      let cgr =   "COMMON"
+      this.DOMAIN_RESULT.gr = cgr;
+      sessionStorage.setItem("gr", cgr);
+      api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
       console.log(
         "分组信息错误,分组强制设置为COMMON组 api_x:" + JSON.stringify(api_x)
       );
@@ -872,7 +872,7 @@ class AllDomain {
    */
   async compute_api_domain_firstone_by_currentTimeMillis(check_group=false) {
    //当前分组的 api 域名
-    let api = this.local_api_pool.filter(x=>x.group==win_env.config.gr);
+    let api = this.local_api_pool.filter(x=>x.group==this.DOMAIN_RESULT.gr);
     let check_ok = Array.isArray(api)&& api.length>0
     console.log("compute_api_domain_firstone_by_currentTimeMillis--", JSON.stringify(api) );
     if(!check_ok){
@@ -943,21 +943,24 @@ class AllDomain {
         //全部错误
         if(rejected_num ==  api.length){
           // 失败 页面  没网 之类的 错误页面
-          window.vue.$root.$emit('domain_error_alert')
+     
+
+          useMittOn(MITT_TYPES.domain_error_alert)
           }else{
       //如果 是检查 域名分组 正确性 并纠错
       if(check_group){
          //  当前  使用的 api
-         let  capi =  (win_env.config.domain[win_env.config.current_env] ||[])[0] ||'' ;
+ 
+         let  capi =    this.DOMAIN_RESULT.first_one ||'' ;
          // 当前  使用的 api 的 host
          let capi_str = capi.split('://')[1]
           //  当前  使用的 api  的分组
         let  capi_group =  (this.local_api_pool.find(x=>x.api.includes(capi_str))||{})['group']
 
           //  如果 当前在用的域名的分组和用户的分组  不相同
-          if(capi_group!=win_env.config.gr){
+          if(capi_group!=this.DOMAIN_RESULT.gr){
             //如果 新的最快API 的 分组和  用户的分组 相同
-            if(fastest_api_obj.group ==win_env.config.gr){
+            if(fastest_api_obj.group ==this.DOMAIN_RESULT.gr){
                // 设置  可用的域名
               this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
             }else{
@@ -1002,7 +1005,7 @@ class AllDomain {
   formart_api_to_obj(api,group) {
     let obj = {
       api, //域名
-      group: group? group: win_env.config.gr  , //域名分组信息    "COMMON"     "GA" + win_env.config.gr
+      group: group? group: this.DOMAIN_RESULT.gr  , //域名分组信息    "COMMON"     "GA" +  .gr
       update_time: new Date().getTime(),
     };
 
@@ -1041,7 +1044,7 @@ check_and_correct_local_api_pool_group(){
     // 写入可用api
     sessionStorage.setItem('best_api', api);
     // 挂载当前 环境能使用的 api 数组
-    win_env.config.domain[win_env.config.current_env] = [api];
+    this.DOMAIN_RESULT.first_one = api;
     if (this.callback) {
       this.callback();
     }
@@ -1064,16 +1067,15 @@ check_and_correct_local_api_pool_group(){
   get_oss_urls() {
     // 获取本地的oss_url_obj路径
     let domains =
-      _.get(
-        window,
-        `env.config.oss_url_obj[${win_env.config.current_env}].domain`
-      ) || [];
-
-    //  console.error('get_oss_urls----------0--', JSON.stringify(domains));
-    // 获取当前的域名地址的/oss/dev.json路径
-    let local_domain = `${window.location.origin}/oss`;
-    // 增加本地的oss url
-    domains.push(local_domain);
+    OSS_FILE_ARR || [];
+  if(OSS_FILE_NAME){
+  //  console.error('get_oss_urls----------0--', JSON.stringify(domains));
+      // 获取当前的域名地址的/oss/dev.json路径
+      let local_domain = `${window.location.origin}/oss/${OSS_FILE_NAME}`;
+      // 增加本地的oss url
+      domains.push(local_domain);
+  }
+      
 
     // console.error('get_oss_urls----------1--', JSON.stringify(domains));
     return domains;
@@ -1085,7 +1087,7 @@ check_and_correct_local_api_pool_group(){
   check_img_domain(oss_img_domains) {
     let path = "";
     try {
-      switch (win_env.config.current_env) {
+      switch (CURRENT_ENV) {
         case "local_dev": // 开发
           path = "/group1/M00/25/A0/rBKywGEM5heAAqPFAAABDoCvoS8100.png";
           break;
@@ -1136,14 +1138,13 @@ check_and_correct_local_api_pool_group(){
       img.onload = function () {
         // 加载图片
         if (this.complete == true) {
-          if (!win_env.config.oss_img_domains[0]) {
-            // 设置oss的图片域名
-            win_env.config.oss_img_domains[0] = domain;
-            console.log(
-              "最新oss_img_domains :",
-              win_env.config.oss_img_domains
-            );
-          }
+         
+            this.DOMAIN_RESULT.img_domains = lodash.uniq([
+              domain,
+              ...this.DOMAIN_RESULT.img_domains
+            ])
+         
+           
           resolve(true);
           img = null;
         }

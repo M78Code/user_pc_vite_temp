@@ -1,14 +1,14 @@
 /*
  * @Author: jiffy
  * @Date: 2023-08-02 16:35:21
- * @LastEditTime: 2023-08-02 17:04:46
- * @LastEditors: jiffy
+ * @LastEditTime: 2023-08-04 15:52:52
+ * @LastEditors: pmtymalick pmtymalick
  * @Description: 说明
  *
  */
 
 import mitt from "mitt";
-import TYPES from "./mitt-keys.js";
+import * as  MITT_TYPES from "./mitt-keys.js";
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
@@ -16,7 +16,7 @@ const emitter = new mitt();
  */
 function useMittOn(...args) {
   const [key] = args;
-  if (!TYPES[key]) {
+  if (!MITT_TYPES[key]) {
     console.error("mitt key is not register");
     return;
   }
@@ -34,4 +34,4 @@ function useMittEmit(key, data) {
   console.log("useMittEmit", key, data);
   emitter.emit(key, data);
 }
-export { useMittOn, useMittEmit, TYPES };
+export { useMittOn, useMittEmit, MITT_TYPES };

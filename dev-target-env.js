@@ -17,7 +17,7 @@ let DEV_TARGET_ENV = "local_test";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境
-// DEV_TARGET_ENV = 'idc_online'
+DEV_TARGET_ENV = 'idc_online'
 // IDC 微型测试环境
 // DEV_TARGET_ENV = 'idc_ylcs'
 
@@ -26,10 +26,10 @@ let DEV_TARGET_ENV = "local_test";
 
   // 代码内 配置的   商户版本号       ，一般是  本地开发 或者  本地测试 打包指定版本用
 // 指定打包/运行 某个版本 ： 亚洲 H5   
-// let DEV_TARGET_MERCHANT_VERSION =   "yazhou-h5"
+let DEV_TARGET_MERCHANT_VERSION =   "yazhou-h5"
 
 // 指定打包/运行 某个版本 ： 亚洲 PC
-let DEV_TARGET_MERCHANT_VERSION =  "yazhou-pc"
+// let DEV_TARGET_MERCHANT_VERSION =  "yazhou-pc"
 
 // --------------------------------
 // 所有  目标环境标识
