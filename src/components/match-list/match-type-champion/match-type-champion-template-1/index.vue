@@ -42,24 +42,24 @@
 <script>
 // import { mapGetters } from "vuex";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-export default {
-  // components:{
-  //   sportIcon
-  // },
-  // inject:['match_list_card'],
+// export default {
+//   components:{
+//     sportIcon
+//   },
+//   inject:['match_list_card'],
 
-  // computed: {
-  //   ...mapGetters({
-  //     //当前路由信息
-  //     vx_cur_menu_type: "get_cur_menu_type",
-  //       // 获取项目主题
-  //       get_theme: 'get_theme',
-  //       //全局开关
-  //      get_global_switch:'get_global_switch'
+//   computed: {
+//     ...mapGetters({
+//       //当前路由信息
+//       vx_cur_menu_type: "get_cur_menu_type",
+//         // 获取项目主题
+//         get_theme: 'get_theme',
+//         //全局开关
+//        get_global_switch:'get_global_switch'
 
-  //   }),
-  // },
-};
+//     }),
+//   },
+// };
 </script>
 <style lang="scss" scoped>
 .c-match-league {
