@@ -19,16 +19,17 @@ let KEY_ARR = [
 ];
 
 let STANDARD_KEY = {
-  get() {},
+  KEY_ARR:[],
+  get(key) {
+    console.log('key--',key)
+    if(!this.KEY_ARR.includes(key)){
+      this.KEY_ARR.push(key)
+    }
+    return  (namespace+  key ).toUpperCase()
+  },
 };
-
-KEY_ARR.map((x) => {
-  let key = `${namespace}_${constantCase(x)}`;
-
-  STANDARD_KEY[x] = key;
-});
-
 console.log("STANDARD_KEY---------", STANDARD_KEY);
-
+// 用法：
 // import STANDARD_KEY from  "app/standard-key.js"
+STANDARD_KEY.get("domain_api_key") 
 export default STANDARD_KEY;

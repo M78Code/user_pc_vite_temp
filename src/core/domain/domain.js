@@ -68,14 +68,36 @@
  *
  */
 
-
-
-
+import { ref } from "vue"
 import axios from "axios";
-// import userCtr from 'src/public/utils/user/userCtr.js';
-
+// 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create()
-const   DOMAIN_API = "domain_api01"
+ 
+// 域名计算结果
+ const  DOMAIN_RESULT={
+    //最优 API 
+    first_one: ref(''),
+    //可用 的 api 数组
+    useable_apis: ref([]),
+    // 用户信息接口返回
+    getuserinfo_res:null  
+
+
+}
+
+
+
+
+
+
+
+
+
+// 域名计算  本地存错 挂载键 
+const   DOMAIN_API_STORAGE_KEY = "domain_api01"
+
+
+ 
 class AllDomain {
   constructor() {
     this.init_base_config();
@@ -85,7 +107,8 @@ class AllDomain {
    */
   init_base_config() {
 
-    this.DOMAIN_API= DOMAIN_API;
+    this.DOMAIN_RESULT=DOMAIN_RESULT,
+    this.DOMAIN_API_STORAGE_KEY= DOMAIN_API_STORAGE_KEY;
     // getuserinfo接口 内的 oss  配置 内的 oss
     this.GETUSERINFO_OSS = {};
     // 合并 oss 文件内的 api配置 到 最终的 前端 本地 域名池子  开关
@@ -262,8 +285,8 @@ class AllDomain {
         if( _.get(res, "data.code") == "0000000"){
          //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
         this.begin_process_when_use_url_api_after_process(res);
-        // 用户 控制类 保存 用户数据
-        // userCtr.set_getuserinfo_res(res)
+        //保存 用户数据
+        this.DOMAIN_RESULT.getuserinfo_res = res 
         }else{
             // 强制 走 oss 文件逻辑
         this.force_current_api_flow_to_use_oss_file_api();
@@ -380,7 +403,7 @@ class AllDomain {
     // 第二步 设置   set_getuserinfo_oss
     this.set_getuserinfo_oss(ossobj);
     // 发现可用的域名的逻辑处理
-    this.find_use_apis_event_first_one(objapi, DOMAIN_API);
+    this.find_use_apis_event_first_one(objapi, DOMAIN_API_STORAGE_KEY);
     // 图片 以及 静态域名 分流处理
     this.begin_process_when_use_url_api_after_process_handle_other_domain(
       ossobj
@@ -513,8 +536,8 @@ class AllDomain {
  * @return {object} 返回Json类型数据
  */
     get_save_domain_api() {
-      let key = this.DOMAIN_API;
-      console.log("key = this.DOMAIN_API--", key);
+      let key = this.DOMAIN_API_STORAGE_KEY;
+      console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
       let gr = sessionStorage.getItem("gr");
       console.log('sessionStorage.getItem("gr")---', gr);
       // 返回默认值
@@ -882,7 +905,7 @@ class AllDomain {
       if(!check_group){
      //如果  不是检查 域名分组 正确性 并纠错
 
-     this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API);
+     this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
       }
     } catch (error) {
       // 所有  全部请求失败
@@ -934,7 +957,7 @@ class AllDomain {
             //如果 新的最快API 的 分组和  用户的分组 相同
             if(fastest_api_obj.group ==window.env.config.gr){
                // 设置  可用的域名
-              this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API);
+              this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
             }else{
             //如果 分组不相同   利用新的域名池 重新  排序
             this.compute_api_domain_firstone_by_currentTimeMillis()
@@ -1028,7 +1051,7 @@ check_and_correct_local_api_pool_group(){
    * @param {string} key localStorage key值
    */
   set_sava_json_key(val) {
-    let key = DOMAIN_API;
+    let key = DOMAIN_API_STORAGE_KEY;
     let str = JSON.stringify(val);
     // 设置持久化字符串
     localStorage.setItem(key, str);
