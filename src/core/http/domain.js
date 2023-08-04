@@ -75,7 +75,7 @@ const axios_instance = axios.create()
  
 
 // 域名计算结果
- const  DOMAIN_RESULT={
+ let   DOMAIN_RESULT={
     //gr  
     gr:"COMMON",
     //最优 API 
@@ -104,10 +104,13 @@ import STANDARD_KEY from "../standard-key/index.js"
 // 域名计算  本地存错 挂载键 
 const   DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01") 
 // 引入 当前 计算出的植入配置 
-import BUILDIN_CONFIG from "app/job/output/env/final.js"
-//当前目标环境
  
+
+const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
+//当前目标环境
 const {CURRENT_ENV ,NODE_ENV ,OSS_FILE_ARR ,OSS_FILE_NAME} = BUILDIN_CONFIG
+
+BUILDIN_CONFIG.DOMAIN_RESULT =DOMAIN_RESULT
  
 import lodash from "lodash"
 
@@ -120,8 +123,7 @@ class AllDomain {
    * 初始化 最基础配置
    */
   init_base_config() {
-    //域名计算结果
-    this.DOMAIN_RESULT=DOMAIN_RESULT,
+
     // 域名计算  本地存错 挂载键 
     this.DOMAIN_API_STORAGE_KEY= DOMAIN_API_STORAGE_KEY;
     // getuserinfo接口 内的 oss  配置 内的 oss
@@ -301,7 +303,7 @@ class AllDomain {
          //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
         this.begin_process_when_use_url_api_after_process(res);
         //保存 用户数据
-        this.DOMAIN_RESULT.getuserinfo_res = res 
+        BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res 
         }else{
             // 强制 走 oss 文件逻辑
         this.force_current_api_flow_to_use_oss_file_api();
@@ -384,7 +386,7 @@ class AllDomain {
   begin_process_when_use_url_api_after_process(res) {
     // 确保分组信息 赋值
     let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
-   this.DOMAIN_RESULT.gr =gr
+   BUILDIN_CONFIG.DOMAIN_RESULT.gr =gr
     //OSS 对象
     let ossobj = lodash.get(res, "data.data.oss");
     console.log("ossobj--------", ossobj);
@@ -415,7 +417,7 @@ class AllDomain {
     ossobj.api = [...ossobj.api, ...this.url_api];
     // 同步最新域名到  全量API 数组
   
-    this.DOMAIN_RESULT.full_apis =  lodash.uniq([...ossobj.api, ... this.DOMAIN_RESULT.full_apis ]  )
+    BUILDIN_CONFIG.DOMAIN_RESULT.full_apis =  lodash.uniq([...ossobj.api, ... BUILDIN_CONFIG.DOMAIN_RESULT.full_apis ]  )
     // 第二步 设置   set_getuserinfo_oss
     this.set_getuserinfo_oss(ossobj);
     // 发现可用的域名的逻辑处理
@@ -452,7 +454,7 @@ class AllDomain {
  
     // 设置live_domains
     if (live_domains) {
-        this.DOMAIN_RESULT.live_domains = [live_domains];
+        BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -636,7 +638,7 @@ class AllDomain {
     // 排序，按照更新时间 从大到小排列 ，新的在前，旧的在后
     local_api_pool.sort((a, b) => b.update_time - a.update_time);
     console.log("local_api_pool---------", local_api_pool);
-      let cgr = this.DOMAIN_RESULT.gr
+      let cgr = BUILDIN_CONFIG.DOMAIN_RESULT.gr
       // 当前分组的 api
       let  local_api_pool_cg = local_api_pool.filter(x=>x.group ==cgr)
       //非当前分组的 api
@@ -817,7 +819,7 @@ class AllDomain {
  
     // 设置live_domains
     if (live_domains) {
-     this.DOMAIN_RESULT.live_domains = [live_domains];
+     BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -836,7 +838,7 @@ class AllDomain {
 
     let api =  [];
     // 设置商户分组api ，当前分组的 api
-    let api_x = lodash.get(oss_data, "GA" +   this.DOMAIN_RESULT.gr + ".api");
+    let api_x = lodash.get(oss_data, "GA" +   BUILDIN_CONFIG.DOMAIN_RESULT.gr + ".api");
     console.log("api:" + JSON.stringify(api));
     console.log("api_x:" + JSON.stringify(api_x));
     console.log(
@@ -846,7 +848,7 @@ class AllDomain {
     // 因为存在 对接接口 历史遗留 ，用户 进入界面可能无 gr 参数  但是  时间戳接口可以混合调用，getuserinfo 也一样能 混合调用
     if (!api_x) {
       let cgr =   "COMMON"
-      this.DOMAIN_RESULT.gr = cgr;
+      BUILDIN_CONFIG.DOMAIN_RESULT.gr = cgr;
       sessionStorage.setItem("gr", cgr);
       api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
       console.log(
@@ -873,7 +875,7 @@ class AllDomain {
    */
   async compute_api_domain_firstone_by_currentTimeMillis(check_group=false) {
    //当前分组的 api 域名
-    let api = this.local_api_pool.filter(x=>x.group==this.DOMAIN_RESULT.gr);
+    let api = this.local_api_pool.filter(x=>x.group==BUILDIN_CONFIG.DOMAIN_RESULT.gr);
     let check_ok = Array.isArray(api)&& api.length>0
     console.log("compute_api_domain_firstone_by_currentTimeMillis--", JSON.stringify(api) );
     if(!check_ok){
@@ -952,16 +954,16 @@ class AllDomain {
       if(check_group){
          //  当前  使用的 api
  
-         let  capi =    this.DOMAIN_RESULT.first_one ||'' ;
+         let  capi =    BUILDIN_CONFIG.DOMAIN_RESULT.first_one ||'' ;
          // 当前  使用的 api 的 host
          let capi_str = capi.split('://')[1]
           //  当前  使用的 api  的分组
         let  capi_group =  (this.local_api_pool.find(x=>x.api.includes(capi_str))||{})['group']
 
           //  如果 当前在用的域名的分组和用户的分组  不相同
-          if(capi_group!=this.DOMAIN_RESULT.gr){
+          if(capi_group!=BUILDIN_CONFIG.DOMAIN_RESULT.gr){
             //如果 新的最快API 的 分组和  用户的分组 相同
-            if(fastest_api_obj.group ==this.DOMAIN_RESULT.gr){
+            if(fastest_api_obj.group ==BUILDIN_CONFIG.DOMAIN_RESULT.gr){
                // 设置  可用的域名
               this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
             }else{
@@ -1006,7 +1008,7 @@ class AllDomain {
   formart_api_to_obj(api,group) {
     let obj = {
       api, //域名
-      group: group? group: this.DOMAIN_RESULT.gr  , //域名分组信息    "COMMON"     "GA" +  .gr
+      group: group? group: BUILDIN_CONFIG.DOMAIN_RESULT.gr  , //域名分组信息    "COMMON"     "GA" +  .gr
       update_time: new Date().getTime(),
     };
 
@@ -1045,7 +1047,7 @@ check_and_correct_local_api_pool_group(){
     // 写入可用api
     sessionStorage.setItem('best_api', api);
     // 挂载当前 环境能使用的 api 数组
-    this.DOMAIN_RESULT.first_one = api;
+    BUILDIN_CONFIG.DOMAIN_RESULT.first_one = api;
     if (this.callback) {
       this.callback();
     }
@@ -1140,9 +1142,9 @@ check_and_correct_local_api_pool_group(){
         // 加载图片
         if (this.complete == true) {
          
-            this.DOMAIN_RESULT.img_domains = lodash.uniq([
+            BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = lodash.uniq([
               domain,
-              ...this.DOMAIN_RESULT.img_domains
+              ...BUILDIN_CONFIG.DOMAIN_RESULT.img_domains
             ])
          
            

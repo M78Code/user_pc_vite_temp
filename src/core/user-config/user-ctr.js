@@ -11,9 +11,8 @@ import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import infoUpload from 'src/core/http/information_upload.js';
 
 
-// 引入 当前 计算出的植入配置 
-import BUILDIN_CONFIG from "app/job/output/env/final.js"
-
+// 引入 当前  植入配置 
+const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/public/api/index";
 
