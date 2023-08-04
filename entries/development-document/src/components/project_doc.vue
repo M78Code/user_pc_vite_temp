@@ -6,10 +6,13 @@
 
 <template>
   <div class="project-doc">
-    <div v-for="(item, idx) in docData" :key="`project-${idx}`" class="row">
-      <div class="col-2">{{ item.category }}</div>
-      <div class="col-6">{{ item.script }}</div>
-      <div class="col-4">{{ item.descriptions }}</div>
+    <div class="row project-doc-header">
+      <div class="col-3">命令</div>
+      <div class="col-9">说明</div>
+    </div>
+    <div v-for="(item, idx) in docData" :key="`project-${idx}`" class="project-doc-table row">
+      <div class="col-3">{{ item.script }}</div>
+      <div class="col-9">{{ item.descriptions?.join("") }}</div>
     </div>
   </div>
 </template>
@@ -25,5 +28,22 @@ const props = defineProps({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped >
+.project-doc {
+  font-size: 15px;
+  padding: 15px;
+
+  &-header {
+      padding: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 1px solid #000;
+  }
+
+  &-table {
+      padding: 5px;
+      border: 1px solid #000;
+      border-top: 0;
+  }
+}
 </style>
