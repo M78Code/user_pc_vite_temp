@@ -1,4 +1,4 @@
- 
+
 
 import { createApp } from 'vue'
 import { Quasar } from 'quasar'
@@ -13,6 +13,7 @@ import 'quasar/src/css/index.sass'
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 import App from './App.vue'
+import router from "./src/router/index.js"
 
 const myApp = createApp(App)
 
@@ -28,6 +29,7 @@ console.log( 'BUILDIN_CONFIG-----------pc---',BUILDIN_CONFIG );
 
 window.BUILDIN_CONFIG =BUILDIN_CONFIG
 
+const app = createApp(App)
+app.use(router)
+app.mount('#ty-app')
 
-
-createApp(App).mount('#ty-app')
