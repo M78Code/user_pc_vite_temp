@@ -97,6 +97,7 @@ export const compute_build_in_config = (current_env) => {
     TARGET_PROJECT_NAME,
     OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
     OSS_FILE_NAME: current_env_build_in_oss.file,
+    CURRENT_ENV_NAME: current_env_build_in_oss.file,
     htmlVariables:  {
       ...htmlVariables,
       ...other_htmlVariables,
