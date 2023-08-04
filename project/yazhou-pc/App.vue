@@ -8,6 +8,7 @@
 -->
 <template>
   <div id="ty-app">
+    <MainLayOut />
     <h1>客户端模块化+SDK版本</h1>
     <img src="images/tes.png" alt="" />
   </div>
@@ -15,6 +16,7 @@
 
 <script setup>
 import { onMounted } from "vue";
+import MainLayOut from "./src/pages/main_layout.vue";
 
 onMounted(() => {
   document.querySelector("#loading-root-ele").style.display = "none";
