@@ -407,12 +407,13 @@ export default class VsportCtr {
     this.video_load_time = new Date() * 1
     this.video_time = 0
     // 如果js文件没加载成功 延迟200再次尝试
-    if(!window.Hls || !window.DPlayer){
-      this.player_timeout_id = setTimeout(() => {
-        this.play_video()
-      },200)
-      return
-    }
+    // #TODO 替换window
+    // if(!window.Hls || !window.DPlayer){
+    //   this.player_timeout_id = setTimeout(() => {
+    //     this.play_video()
+    //   },200)
+    //   return
+    // }
     this.player = new DPlayer({
       container: document.getElementById('dplayer'),
       live: true,

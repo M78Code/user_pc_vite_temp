@@ -106,12 +106,13 @@
        * @description: 实时同步最新时间
        */  
       upd_current_time(){
-        if(this.sport_data && window.vue){
-          let mgt = Number(this.sport_data.mgt);
-          let remote_time = window.vue.vx_get_timestamp.remote_time;
-          let local_time = window.vue.vx_get_timestamp.local_time;
-          this.current_time = (remote_time+(new Date().getTime()-local_time)-mgt);
-        }
+        // #TODO 替换window.vue
+        // if(this.sport_data && window.vue){
+        //   let mgt = Number(this.sport_data.mgt);
+        //   let remote_time = window.vue.vx_get_timestamp.remote_time;
+        //   let local_time = window.vue.vx_get_timestamp.local_time;
+        //   this.current_time = (remote_time+(new Date().getTime()-local_time)-mgt);
+        // }
       }
     
     
