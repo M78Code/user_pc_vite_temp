@@ -41,12 +41,45 @@
   </template>
 
   <script>
-    import { defineComponent } from "vue"
+    import { defineComponent, ref } from "vue"
     let unsettle =  defineComponent({
         name: '',
         components: {},
         setup() {
-            return {}
+          //是否在加载中
+          let is_loading = ref(false)
+          //列表数据
+          let list_data = ref([])
+          //是否没有数据
+          let no_data = ref(true)
+          // 提前结算图标是否选中
+          let is_early = ref(false)
+          // 是否存在下一页
+          let is_hasnext = ref(false)
+          //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
+          let is_all_early_flag = ref(false)
+          // 接口是否返回错误码为0401038限频
+          let is_limit = ref(false)
+          //需要查绚提前结算金额的订单集合
+          let orderNumberItemList = ref([])
+          //错误码为0401038拉取接口次数
+          let count = ref(0)
+          //服务器返回错误为0401038拉取接口次数
+          let count2 = ref(0)
+
+          
+          return {
+            is_loading,
+            list_data,
+            no_data,
+            is_early,
+            is_hasnext,
+            is_all_early_flag,
+            is_limit,
+            orderNumberItemList,
+            count,
+            count2,
+          }
         }
     })
     export { unsettle }
