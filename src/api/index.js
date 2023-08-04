@@ -1,20 +1,67 @@
 /*
- * @Author: lockie
- * @Date: 2023-06-26 15:33:13
- * @FilePath: \user-pc-vue3\src\api\index.js
- * @Description: 页面请求API抛出
+ * @Author: Amor
+ * @Date: 2020-08-04 17:13:55
+ * @Description: API 共通入口
  */
-
-import * as api_match from  "./module/match.api"
-import * as api_betting from  "./module/betting/index.js"
-import * as api_base_data from "./module/base_data/base_data.js";
-import * as api_match_list from  "./module/matches_list/index.js"
+import * as api_common from "src/public/api/module/common/common_api.js"; //bruce
+import * as api_match from "src/public/api/module/match/match_api.js"; //masterj
+import * as api_betting from "src/public/api/module/betting/index.js"; //ronney
+import * as api_search from "src/public/api/module/search/index.js"; //masterj
+import * as api_details from "src/public/api/module/details/index.js"; //masterj
+import * as api_filter from "src/public/api/module/filter/filter_api.js"; //masterj
+import * as api_account from "src/public/api/module/account/account_api.js"; //bruce
+import * as api_announce from "src/public/api/module/announce/index.js"; //bruce
+import * as api_results from "src/public/api/module/results/results.js"; //bruce
+import * as api_virtual from "src/public/api/module/virtual/index.js"; //bruce
+import * as api_analysis from "src/public/api/module/analysis/analysis.js"; //bruce
+import * as api_chatroom from "src/public/api/module/chatroom/index.js"; //bruce
+import * as api_admin from "src/project/api/module/admin/index.js"    // router
+import * as api_common from "src/project/api/module/common/index.js"   // router
+import * as api_home from "src/project/api/module/home/home.js"        // router
+import * as api_global from "src/project/api/module/global/index.js"    // router
+ 
+import * as api_search from "src/project/api/module/search/search_api.js" //hellojay
+ 
+import * as api_result from "src/project/api/module/result/index.js"     //hellojay
+import * as api_v_sports from "src/project/api/module/virtual_sports/virtual_sports"  //hanmar
+ 
 
 
 export {
-    api_match,
-    api_betting,
-    api_match_list,
-    api_base_data,
-}
-
+  // 公共API接口定义
+  api_common,
+  // 赛事相关模块API定义
+  api_match,
+  // 押注API接口定义
+  api_betting,
+  // 搜索相关API接口定义
+  api_search,
+  // 赛事详情模块API接口定义
+  api_details,
+  // 赛事详情模块API接口定义
+  api_filter,
+  // 用户模块相关api定义
+  api_account,
+  // 公告模块相关api定义
+  api_announce,
+  // 赛果模块相关API定义
+  api_results,
+  // 虚拟体育相关
+  api_virtual,
+  // 赛事分析相关
+  api_analysis,
+  // 聊天室相关
+  api_chatroom,
+  // 用户操作api接口定义
+  api_admin,
+  // 全局使用接口定义
+  api_global,
+  // 联赛筛选api接口定义
+  api_filter,
+  // 首页api接口定义
+  api_home,
+  // 赛果api接口
+  api_result,
+  // 虚拟体育接口定义
+  api_v_sports,
+};
