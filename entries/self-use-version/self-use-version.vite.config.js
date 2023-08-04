@@ -44,11 +44,9 @@ export default defineConfig({
     rollupOptions: {
       // external: ["vue"],
       input: {
-      //   // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
-      //   // index: `../../project/${project}/index.html`
+
       index: path.resolve(__dirname, `../../project/${project}/index.html`),
-        // index: path.resolve(__dirname, "../../project/yazhou-pc/index.html")
-        //  index:  "../../project/yazhou-pc/index.html"
+     
       },
       output: {
         // Provide global variables to use in the UMD build
@@ -70,7 +68,7 @@ export default defineConfig({
   },
   server: {
     port: 28300,
-    // open: `../../project/${project}/index.html`,
+     open: `../../project/${project}/index.html`,
     // open:    "../../project/yazhou-pc/index.html" ,
     hmr: true,
   },
