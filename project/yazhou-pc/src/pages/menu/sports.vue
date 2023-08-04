@@ -76,10 +76,7 @@
         <div :key="`${jinri_zaopan}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
           v-if="base_data.commn_sport_guanjun_obj[`mi_${item1}`]"
           v-show="base_data.commn_sport_guanjun_obj[`mi_${item1}`]['ct']" :class="current_lv_2_mi ==
-              base_data.commn_sport_guanjun_obj[`mi_${item1}`]['mi']
-              ? 'active'
-              : ''
-            " class="menu-item menu-fold2">
+              base_data.commn_sport_guanjun_obj[`mi_${item1}`]['mi'] ? 'active' : ''" class="menu-item menu-fold2">
           <div class="row items-center relative-position">
             <span class="menu-point"></span>
             <span class="menu-text ellipsis">
