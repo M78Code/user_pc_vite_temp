@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, getCurrentInstance } from 'vue'
+import { defineComponent, ref, getCurrentInstance, watch,  } from 'vue'
 import { api_betting } from "src/project/api/index.js";
 import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
 import cancleConfirmPop from 'src/project/pages/cathectic/cancle_confirm_pop.vue';  // 合并投注项提示弹框
@@ -65,6 +65,7 @@ export default defineComponent({
         const myScroll = ref(null)
         // 定时器
         let timer_2 = ref(null)
+        let timer_1 = ref (null)
         // 确认取消弹框
         let cancle_confirm_pop_visible = ref(false)
         //要取消的队名
@@ -148,7 +149,7 @@ export default defineComponent({
                 // TODO 从vuex取待改造
                 // this.set_toast({ 'txt': this.$root.$t('pre_record.canceled'), hide_time: 3000 });
                 cancle_confirm_pop_visible.value = false
-                timer_2 = setTimeout(()=>{ change_pre_status([{
+                timer_2.value = setTimeout(()=>{ change_pre_status([{
                 orderNo: orderNumber.value
                 }])},1000)
                 init_data(true)
@@ -264,6 +265,60 @@ export default defineComponent({
             val.open = !val.open
             instance.proxy.$forceUpdate()
         }
+        watch(() => {}, 
+            /**
+             *@description 初次切换到预约时加载数据
+            *@return {Undefined} undefined
+            */
+            get_main_item = (newVal) => {
+                if (newVal == 2) {
+                    lodash.isEmpty(list_data.value) && init_data()
+                }
+            },
+        
+        )
+        watch(() => {}, list_data = {
+            //监听预约记录数据，是否有预约中的订单，并轮询获取
+            handler(newVal){
+                if(lodash.isEmpty(newVal))return
+                let orderNumber = []
+                lodash.forIn(newVal,(item,key)=>{
+                const tempOrderList = lodash.filter(item.data,(o)=>{
+                    return o.preOrderStatus === 0
+                })
+                orderNumber = lodash.concat(orderNumber,tempOrderList);
+                })
+                if(orderNumber.length>0){
+                const orderList = []
+                orderNumber.map((item)=>{
+                    orderList.push(item.orderNo)
+                })
+                clearTimeout(this.timer_1)
+                timer_1.value = setTimeout(()=>{
+                    if(get_main_item.value == 2 && document.visibilityState == 'visible'){
+                    change_pre_status(orderList)
+                    }
+                    },5000)
+                }else{
+                clearTimeout(timer_1)
+                }
+            },
+            immediate:true,
+            deep:true
+            })
+        onUnmounted(() => {
+            clearTimeout(timer_1)
+            timer_1.value = null
+
+            clearTimeout(timer_2)
+            timer_2.value = null
+
+            // this.$root.$off(this.emit_cmd.EMIT_GET_ORDER_LIST, this.refreshOrderList)
+            // this.$root.$off(this.emit_cmd.EMIT_SHOW_CANCLE_POP, this.show_cancle_pop)
+            // for (const key in this.$data) {
+            // this.$data[key] = null
+            // }
+        })
 
         return {
             cancle_confirm_pop_visible,
@@ -275,6 +330,7 @@ export default defineComponent({
             is_hasnext,
             orderNumberItemList,
             selected_expired,
+            timer_1,
             timer_2,
             myScroll,
             refreshOrderList,
@@ -290,83 +346,10 @@ export default defineComponent({
             toggle_show,
         }
     },
-    computed: {
-        // ...mapGetters(['get_user', 'get_main_item'])
-    },
-    watch: {
-        /**
-         *@description 初次切换到预约时加载数据
-        *@return {Undefined} undefined
-        */
-        get_main_item(newVal) {
-        if (newVal == 2) {
-            lodash.isEmpty(this.list_data) && this.init_data()
-        }
-        },
-        list_data:{
-        //监听预约记录数据，是否有预约中的订单，并轮询获取
-        handler(newVal){
-            if(lodash.isEmpty(newVal))return
-            let orderNumber = []
-            lodash.forIn(newVal,(item,key)=>{
-            const tempOrderList = lodash.filter(item.data,(o)=>{
-                return o.preOrderStatus === 0
-            })
-            orderNumber = lodash.concat(orderNumber,tempOrderList);
-            })
-            if(orderNumber.length>0){
-            const orderList = []
-            orderNumber.map((item)=>{
-                orderList.push(item.orderNo)
-            })
-            clearTimeout(this.timer_1)
-            this.timer_1 = setTimeout(()=>{
-                if(this.get_main_item == 2 && document.visibilityState == 'visible'){
-                this.change_pre_status(orderList)
-                }
-                },5000)
-            }else{
-            clearTimeout(this.timer_1)
-            }
-        },
-        immediate:true,
-        deep:true
-        }
-    },
-    components: {
-        commonCathecticItem,
-        settleVoid,
-        scroll,
-        SRecord,
-        noData,
-        cancleConfirmPop
-    },
-    mounted(){
-    },
-    created() {
-        // 延时器
-        this.timer_1 = null
-        this.timer_2 = null
-        // 绑定取消预约弹层，订单号，队名
-        this.$root.$on(this.emit_cmd.EMIT_SHOW_CANCLE_POP,this.show_cancle_pop);
-    },
-    methods: {
-        // ...mapMutations(['set_early_moey_data','set_toast']),
-        
-    },
-    destroyed() {
-        clearTimeout(this.timer_1)
-        this.timer_1 = null
-
-        clearTimeout(this.timer_2)
-        this.timer_2 = null
-
-        this.$root.$off(this.emit_cmd.EMIT_GET_ORDER_LIST, this.refreshOrderList)
-        this.$root.$off(this.emit_cmd.EMIT_SHOW_CANCLE_POP, this.show_cancle_pop)
-        for (const key in this.$data) {
-        this.$data[key] = null
-        }
-    },
+    // computed: {
+    //     // ...mapGetters(['get_user', 'get_main_item'])
+    // },
+   
 })
 </script>
 
