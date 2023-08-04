@@ -11,65 +11,25 @@ import oss_mini from "./output/oss/mini.json"  assert { type: "json" };
 import oss_prod from "./output/oss/prod.json"  assert { type: "json" };
 
 
-
-
-
-//添加进 oss 计算 最终域名结果的内容 ,本地开发专用 额外添加
-// 生产 不能启用这个配置
-
-const add_to_oss={
-
-  "idc_online":{
-    "GACOMMON": {
-      "api": [
-        "https://api.sportxxx1zx.com",
-        "KJcWEYjAKau2fUtyBxQPNsff4SqJxHADuvAGZlkyOYQ="
-      
-      ]
-    }
-
-  }
- 
+const ENV_OSS_OBJ={
+  "local_local": { file:"dev.json",data: oss_dev},
+  "local_dev":{ file:"dev.json",data: oss_dev},
+  "local_test":{ file:"test.json",data: oss_test},
+  "local_ylcs":{ file:"test.json",data: oss_test},
+  "idc_lspre":{ file:"lspre.json",data: oss_lspre},
+  "idc_pre":{ file:"play.json",data: oss_play},
+  "idc_sandbox":{ file:"play.json",data: oss_play},
+  "idc_ylcs":{ file:"mini.json",data: oss_mini},
+  "idc_online":{ file:"prod.json",data: oss_prod}
 }
 
 
-
-
-
-
 export const compute_build_in_oss_by_current_env = (current_env) => {
-  let obj = "";
-  switch (current_env) {
-    case "local_local":
-      obj = oss_test;
-      break;
-    case "local_dev":
-      obj = oss_dev;
-      break;
-    case "local_ylcs":
-      obj = oss_test;
-      break;
-    case "local_test":
-      obj = oss_test;
-      break;
-    case "idc_lspre":
-      obj = oss_lspre;
-      break;
-    case "idc_pre":
-      obj = oss_play;
-      break;
-    case "idc_sandbox":
-      obj = oss_play;
-      break;
-    case "idc_ylcs":
-      obj = oss_mini;
-      break;
-    case "idc_online":
-      obj = oss_prod;
-      break;
-    default:
-      obj = oss_prod;
-      break;
-  }
-  return obj;
-};
+ 
+
+  return ENV_OSS_OBJ[current_env] ||{}
+}
+ 
+
+
+ 

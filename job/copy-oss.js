@@ -28,17 +28,50 @@ if (is_dist) {
 // OSS--生产---- https://aukukktsxfauannt.zyakxf.com/prod.json
 // OSS--生产---- https://xbnhjktbwggfvyok.chinazjyh.com/prod.json
 // OSS--生产---- https://xbnhjktbwggfvyok.lcjzgt.com/prod.json
-const oss_arr = [
-  "https://api-json.sportxxx25o1bmw.com/dev.json",
-  "https://api-json.sportxxx25o1bmw.com/test.json",
-  "https://api-json.sportxxx25o1bmw.com/lspre.json",
-  "https://api-json.sportxxx25o1bmw.com/play.json",
-  "https://api-json.sportxxx25o1bmw.com/mini.json",
-  "https://xbnhjktbwggfvyok.ybgjhb.com/prod.json",
-  "https://aukukktsxfauannt.zyakxf.com/prod.json",
-  "https://xbnhjktbwggfvyok.chinazjyh.com/prod.json",
-  "https://xbnhjktbwggfvyok.lcjzgt.com/prod.json",
+
+
+  const ENV_OSS_OBJ={
+  "local_local":["https://api-json.sportxxx25o1bmw.com/dev.json"],
+  "local_dev":[ "https://api-json.sportxxx25o1bmw.com/dev.json"],
+  "local_test":[  "https://api-json.sportxxx25o1bmw.com/test.json"],
+  "local_ylcs":[  "https://api-json.sportxxx25o1bmw.com/test.json"],
+  "idc_lspre":[ "https://api-json.sportxxx25o1bmw.com/lspre.json"],
+  "idc_pre":[ "https://api-json.sportxxx25o1bmw.com/play.json"],
+  "idc_sandbox":[ "https://api-json.sportxxx25o1bmw.com/play.json"],
+  "idc_ylcs":[
+    "https://api-json.sportxxx25o1bmw.com/mini.json"
+  ],
+  "idc_online":[
+    "https://xbnhjktbwggfvyok.ybgjhb.com/prod.json",
+    "https://aukukktsxfauannt.zyakxf.com/prod.json",
+    "https://xbnhjktbwggfvyok.chinazjyh.com/prod.json",
+    "https://xbnhjktbwggfvyok.lcjzgt.com/prod.json"
+  ],
+}
+
+
+export const  compute_oss_file_path_arr=(current_env)=>{
+
+  return ENV_OSS_OBJ[ENV_OSS_OBJ] ||[]
+
+}
+
+let oss_arr = [
 ];
+
+
+for(let i in ENV_OSS_OBJ){
+
+  oss_arr=[
+    ...oss_arr,
+    ...ENV_OSS_OBJ[i]
+  ]
+
+}
+
+
+
+
 let file_key_arr = [];
 oss_arr.map((str1) => {
   let name = str1.substring(str1.lastIndexOf("/") + 1, str1.lastIndexOf("."));
@@ -76,15 +109,15 @@ for (let i = 0; i < oss_arr.length; i++) {
       }
     });
 }
-const write_file = (file_name, data) => {
+const write_file_fn = (file_name, data) => {
   let full_path = `${check_dir}/${file_name}`;
  
   write_file(full_path, JSON.stringify(data))
 
-  console.log(`文件写入成功-------${full_path}-------------------`);
+ 
 };
 setTimeout(function () {
   for (let key in oss_data_obj) {
-    write_file(key, oss_data_obj[key]);
+    write_file_fn(key, oss_data_obj[key]);
   }
 }, 5000);

@@ -6,9 +6,14 @@
  * @Description: 说明
  *
  */
-const TYPES = {
+
+
+const MITT_TYPES = {
   show_bet: "show_bet",
   init_load: "init_load",
+   // 域名错误页面  没网 之类的 错误页面
+  domain_error_alert:'domain_error_alert'
+
 };
 
-export default TYPES;
+export default MITT_TYPES;

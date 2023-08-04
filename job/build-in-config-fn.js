@@ -14,8 +14,10 @@ const { MERCHANT_CONFIG_VERSION } = final_merchant_config;
 // 模块化打包 构建 zip 版本参数
 let MODULE_SDK_VERSION =   ( process.env.SHIWAN_MODULE_SDK_VERSION|| "").trim()   ;
 
-import { compute_build_in_oss_by_current_env } from "./build-in-oss.js";
+import { compute_build_in_oss_by_current_env  } from "./build-in-oss.js";
 import { htmlVariables } from "./html-variables.js";
+
+import {compute_oss_file_path_arr} from "./copy-oss.js"
 // 代理映射设置key
 const API_PREFIX = {
   "API_PREFIX_API": "yewu7",
@@ -36,8 +38,8 @@ export const compute_build_in_config = (current_env) => {
   let current_env_build_in_oss = "";
   console.log("--------------------------开始构建--------------------------");
   // console.log(process.argv );
-  console.log("process.env.NODE_ENV-", process.env.NODE_ENV);
-
+ //本地直接运行脚本不存在 NODE_ENV ， 正常脚手架启动命令下 都是 development  生产构建全是production
+ const NODE_ENV = process.env.NODE_ENV ||'development'
   // 当前环境代码内内置 写入的兜底 oss
   current_env_build_in_oss = compute_build_in_oss_by_current_env(current_env);
   //  项目名称   yazhou-h5 yazhou-pc
@@ -77,14 +79,15 @@ export const compute_build_in_config = (current_env) => {
     // 当前环境
     current_env,
     BUILD_VERSION,
-    NODE_ENV: process.env.NODE_ENV,
+    NODE_ENV ,
     current_env_build_in_oss: encodeURIComponent(
-      JSON.stringify(current_env_build_in_oss)
+      JSON.stringify(current_env_build_in_oss.data)
     ),
   };
   // 合并 所有内容
   final_config = {
-    current_env,
+    CURRENT_ENV: current_env,
+    NODE_ENV ,
     FUNCTION_SWITCH,
     API_PREFIX,
     FRONT_WEB_ENV: process.env.FRONT_WEB_ENV,
@@ -92,6 +95,8 @@ export const compute_build_in_config = (current_env) => {
     MERCHANT_CONFIG_VERSION,
     MODULE_SDK_VERSION,
     TARGET_PROJECT_NAME,
+    OSS_FILE_ARR:compute_oss_file_path_arr(current_env),
+    OSS_FILE_NAME: current_env_build_in_oss.file,
     htmlVariables:  {
       ...htmlVariables,
       ...other_htmlVariables,
