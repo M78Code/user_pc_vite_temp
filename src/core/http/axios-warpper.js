@@ -8,13 +8,13 @@ import { get } from "lodash";
 import wslog from "../ws/ws-log";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
-import { GetHttpDomain } from "../domain";
+import AllDomain from "../domain/domain";
 // import {GET_DOCUMENT_HIDDEN} from 'xxx'
 class AxiosHttp {
   // api访问数量(每分钟)
   request_count = 0;
   // http root domain
-  HTTP_ROOT_DOMAIN = GetHttpDomain();
+  HTTP_ROOT_DOMAIN = AllDomain.DOMAIN_RESULT.first_one;
   // axios 实例
   axios_instance = null;
   // 页面 失去 焦点后  HTTP 断开时间
@@ -90,7 +90,7 @@ class AxiosHttp {
    */
   setApiDomain() {
     // 设置   ROOT_DOMAIN
-    const api_domain = GetHttpDomain(); // 这个逻辑应该在 domain里面
+    const api_domain = AllDomain.DOMAIN_RESULT.first_one; // 这个逻辑应该在 domain里面
     this.axios_instance.defaults.baseURL = api_domain;
     this.axios_instance.prototype.HTTP_ROOT_DOMAIN = api_domain;
     this.HTTP_ROOT_DOMAIN = api_domain;

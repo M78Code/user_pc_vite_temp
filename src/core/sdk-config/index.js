@@ -3,7 +3,8 @@
  * @Date: 2023-07-30 15:13:55
  * @Description: postmessage 接收配置sdk 配置
  */
-import { set, cloneDeep } from "lodash";
+import { set, cloneDeep, merge } from "lodash";
+import { deepMerge } from "../utils/";
 import { onMounted, onUnmounted, effectScope, ref, unref, watch } from "vue";
 
 /**
@@ -23,12 +24,16 @@ function createGlobalState(stateFactory) {
   };
 }
 /**
- * config使用 就是以前的window.env.xxx
+ * config 使用 就是以前的 window.env.xxx
+ * 加上SDK自己的配置扩展
  * @returns [ref(config),setConfig]
  */
-const useGlobelConfig = createGlobalState(() => {
-  console.log(window.BUILDIN_CONFIG,"window.BUILDIN_CONFIG")
-  const config = ref(cloneDeep(window.BUILDIN_CONFIG || {}));
+const useSdkConfig = createGlobalState(() => {
+  console.log("window.BUILDIN_CONFIG", window.BUILDIN_CONFIG);
+  const _c = deepMerge(window.BUILDIN_CONFIG || {}, {
+    // 这里可以写一些 sdk的  config配置
+  });
+  const config = ref(_c);
   watch(config, (v, o) => {
     console.log("config update", o);
     // window.BUILDIN_CONFIG = unref(v);
@@ -128,4 +133,4 @@ function use_get_sdk_config() {
     window.removeEventListener("message", listener_message);
   };
 }
-export { use_get_sdk_config, createGlobalState, useGlobelConfig };
+export { use_get_sdk_config, createGlobalState, useSdkConfig };
