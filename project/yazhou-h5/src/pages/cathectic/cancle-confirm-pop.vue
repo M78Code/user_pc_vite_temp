@@ -34,11 +34,6 @@ export default defineComponent({
 
     emits: ['confirmHandle', 'cancleHandle'],
     setup(props, evnet) {
-        // computed({
-        //     name() {
-        //         return this.data
-        //     }
-        // })
         // 确定方法
         confirm_handle = () => {
             emit('confirmHandle')
