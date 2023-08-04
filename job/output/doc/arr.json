@@ -5,332 +5,330 @@
             "level": 1,
             "menuName": "项目说明"
         },
-        "project": {
-            "config": [
-                {
-                    "category": "scripts",
-                    "script": "dev-self-use-version",
-                    "descriptions": [
-                        "常规开发 ， 自用项目本地开发 启动命令",
-                        "当前项目日常开发，最常用命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-self-use-version-inner",
-                    "descriptions": [
-                        "常规开发 ， 自用项目本地开发 内部命令",
-                        "当前项目日常开发，最常用命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-self-use-version-inner",
-                    "descriptions": [
-                        "常规开发 ， 自用项目生产构建打包的 核心内部命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "copy-oss",
-                    "descriptions": [
-                        "拉取线上的OSS文件到本地代码内 public/oss 目录内"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "copy-oss-2",
-                    "descriptions": [
-                        "拉取线上的OSS文件到 打包后的 文件 版本目录外层 的 OSS   目录内"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "remove-dist",
-                    "descriptions": [
-                        "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-build-version",
-                    "descriptions": [
-                        "创建 本次构建打包的 客户端版本 号"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "copy-html",
-                    "descriptions": [
-                        "复制打包后的 html 文件到外层目录"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-self-use-version",
-                    "descriptions": [
-                        "常规开发 ， 自用项目生产构建打包的 入口命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-build-in-config",
-                    "descriptions": [
-                        "输出最终的各个环境的基础项目配置"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-full-doc",
-                    "descriptions": [
-                        "提取代码内的 *.doc.json 文件生成 单一 全量 json"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-merchant-config",
-                    "descriptions": [
-                        "合并输出商户配置",
-                        "单独使用的时候需要后面跟上 -MERCHANT-CONFIG-VERSION=指定的商户配置版本号"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-development-document-inner",
-                    "descriptions": [
-                        "项目内部开发文档-内部命令",
-                        "需要前置执行生成全量文档json 命令 : export-full-doc,确保代码内有最新文档"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-development-document-alert",
-                    "descriptions": [
-                        "项目内部开发文档-警告信息"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-development-document",
-                    "descriptions": [
-                        "项目内部开发文档",
-                        "项目目标解释、架构、规范、技术选型、组件对接文档"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-custom-version-inner",
-                    "descriptions": [
-                        "本地开发自定义版本项目-内部命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "custom-merchant-config-version-alert",
-                    "descriptions": [
-                        "本地开发自定义版本项目-警告信息"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-custom-version",
-                    "descriptions": [
-                        "本地开发自定义版本项目",
-                        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-custom-version-inner",
-                    "descriptions": [
-                        "生产打包自定义版本项目-内部命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-custom-version",
-                    "descriptions": [
-                        "生产打包自定义版本项目",
-                        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
-                        "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后  npm run build-custom-version",
-                        "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
-                        "linux jenkins  生产构建  ：运行示例：  npm run build-custom-version"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-custom-sdk-inner",
-                    "descriptions": [
-                        "生产打包自定义版本SDK-内部命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-custom-sdk",
-                    "descriptions": [
-                        "生产打包自定义版本SDK",
-                        "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
-                        "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后    npm run build-custom-sdk",
-                        "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
-                        "linux jenkins  生产构建  ：运行示例：  npm run build-custom-sdk"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-full-version",
-                    "descriptions": [
-                        "本地开发全量版本项目"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-full-version-inner",
-                    "descriptions": [
-                        "本地开发全量版本项目-内部命令"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-full-version",
-                    "descriptions": [
-                        "生产打包全量版本项目"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build-full-sdk",
-                    "descriptions": [
-                        "生产打包全量版本SDK"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-check-sdk-esm",
-                    "descriptions": [
-                        "本地开发检查验证打包后的  SDK ： es 版本 的项目 ,vite cli 项目 "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-check-sdk-umd",
-                    "descriptions": [
-                        "本地开发检查验证打包后的  SDK ： umd 版本 的项目 ,vite cli项目"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-check-sdk-umd-html",
-                    "descriptions": [
-                        "本地开发检查验证打包后的  SDK ： umd 版本 的项目，原生 html 项目"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev-postmessage-test",
-                    "descriptions": [
-                        "本地开发检查 消息通讯，在线调试工具的自测版本"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-full-version-open",
-                    "descriptions": [
-                        "输出全量版本: 开启"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "export-full-version-close",
-                    "descriptions": [
-                        "输出全量版本: 关闭"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "divider-line",
-                    "descriptions": [
-                        "占位警告：json 内部注释性 代码 占位"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dev",
-                    "descriptions": [
-                        "命令别名：同 dev-self-use-version"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "build",
-                    "descriptions": [
-                        "命令别名：同 build-self-use-version "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "emc",
-                    "descriptions": [
-                        "命令别名：同 export-merchant-config "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "ddd",
-                    "descriptions": [
-                        "命令别名：同 dev-development-document "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dfv",
-                    "descriptions": [
-                        "命令别名：同 dev-full-version "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "dcv",
-                    "descriptions": [
-                        "命令别名：同 dev-custom-version "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "efvo",
-                    "descriptions": [
-                        "命令别名：同 export-full-version-open "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "efvc",
-                    "descriptions": [
-                        "命令别名：同 export-full-version-close "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "eec",
-                    "descriptions": [
-                        "命令别名：同 export-build-in-config "
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "eeca",
-                    "descriptions": [
-                        "命令别名：同 export-build-in-config  携带 all 参数"
-                    ]
-                },
-                {
-                    "category": "scripts",
-                    "script": "echo",
-                    "descriptions": [
-                        "占位警告 ，无其他用处"
-                    ]
-                }
-            ]
-        }
+        "project": [
+            {
+                "category": "scripts",
+                "script": "dev-self-use-version",
+                "descriptions": [
+                    "常规开发 ， 自用项目本地开发 启动命令",
+                    "当前项目日常开发，最常用命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-self-use-version-inner",
+                "descriptions": [
+                    "常规开发 ， 自用项目本地开发 内部命令",
+                    "当前项目日常开发，最常用命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-self-use-version-inner",
+                "descriptions": [
+                    "常规开发 ， 自用项目生产构建打包的 核心内部命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "copy-oss",
+                "descriptions": [
+                    "拉取线上的OSS文件到本地代码内 public/oss 目录内"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "copy-oss-2",
+                "descriptions": [
+                    "拉取线上的OSS文件到 打包后的 文件 版本目录外层 的 OSS   目录内"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "remove-dist",
+                "descriptions": [
+                    "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-build-version",
+                "descriptions": [
+                    "创建 本次构建打包的 客户端版本 号"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "copy-html",
+                "descriptions": [
+                    "复制打包后的 html 文件到外层目录"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-self-use-version",
+                "descriptions": [
+                    "常规开发 ， 自用项目生产构建打包的 入口命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-build-in-config",
+                "descriptions": [
+                    "输出最终的各个环境的基础项目配置"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-full-doc",
+                "descriptions": [
+                    "提取代码内的 *.doc.json 文件生成 单一 全量 json"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-merchant-config",
+                "descriptions": [
+                    "合并输出商户配置",
+                    "单独使用的时候需要后面跟上 -MERCHANT-CONFIG-VERSION=指定的商户配置版本号"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-development-document-inner",
+                "descriptions": [
+                    "项目内部开发文档-内部命令",
+                    "需要前置执行生成全量文档json 命令 : export-full-doc,确保代码内有最新文档"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-development-document-alert",
+                "descriptions": [
+                    "项目内部开发文档-警告信息"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-development-document",
+                "descriptions": [
+                    "项目内部开发文档",
+                    "项目目标解释、架构、规范、技术选型、组件对接文档"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-custom-version-inner",
+                "descriptions": [
+                    "本地开发自定义版本项目-内部命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "custom-merchant-config-version-alert",
+                "descriptions": [
+                    "本地开发自定义版本项目-警告信息"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-custom-version",
+                "descriptions": [
+                    "本地开发自定义版本项目",
+                    "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-custom-version-inner",
+                "descriptions": [
+                    "生产打包自定义版本项目-内部命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-custom-version",
+                "descriptions": [
+                    "生产打包自定义版本项目",
+                    "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
+                    "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后  npm run build-custom-version",
+                    "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
+                    "linux jenkins  生产构建  ：运行示例：  npm run build-custom-version"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-custom-sdk-inner",
+                "descriptions": [
+                    "生产打包自定义版本SDK-内部命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-custom-sdk",
+                "descriptions": [
+                    "生产打包自定义版本SDK",
+                    "这个命令需要配合 设置  MERCHANT-CONFIG-VERSION 后使用 ",
+                    "本地 模拟构建  : 先设置  MERCHANT-CONFIG-VERSION 的值 然后    npm run build-custom-sdk",
+                    "linux jenkins  生产构建  ：需要设置   MERCHANT-CONFIG-VERSION 的值 各种方式都行，看具体设置 。如： export MERCHANT-CONFIG-VERSION=${MERCHANT-CONFIG-VERSION}",
+                    "linux jenkins  生产构建  ：运行示例：  npm run build-custom-sdk"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-full-version",
+                "descriptions": [
+                    "本地开发全量版本项目"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-full-version-inner",
+                "descriptions": [
+                    "本地开发全量版本项目-内部命令"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-full-version",
+                "descriptions": [
+                    "生产打包全量版本项目"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build-full-sdk",
+                "descriptions": [
+                    "生产打包全量版本SDK"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-check-sdk-esm",
+                "descriptions": [
+                    "本地开发检查验证打包后的  SDK ： es 版本 的项目 ,vite cli 项目 "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-check-sdk-umd",
+                "descriptions": [
+                    "本地开发检查验证打包后的  SDK ： umd 版本 的项目 ,vite cli项目"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-check-sdk-umd-html",
+                "descriptions": [
+                    "本地开发检查验证打包后的  SDK ： umd 版本 的项目，原生 html 项目"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev-postmessage-test",
+                "descriptions": [
+                    "本地开发检查 消息通讯，在线调试工具的自测版本"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-full-version-open",
+                "descriptions": [
+                    "输出全量版本: 开启"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "export-full-version-close",
+                "descriptions": [
+                    "输出全量版本: 关闭"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "divider-line",
+                "descriptions": [
+                    "占位警告：json 内部注释性 代码 占位"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dev",
+                "descriptions": [
+                    "命令别名：同 dev-self-use-version"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "build",
+                "descriptions": [
+                    "命令别名：同 build-self-use-version "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "emc",
+                "descriptions": [
+                    "命令别名：同 export-merchant-config "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "ddd",
+                "descriptions": [
+                    "命令别名：同 dev-development-document "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dfv",
+                "descriptions": [
+                    "命令别名：同 dev-full-version "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "dcv",
+                "descriptions": [
+                    "命令别名：同 dev-custom-version "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "efvo",
+                "descriptions": [
+                    "命令别名：同 export-full-version-open "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "efvc",
+                "descriptions": [
+                    "命令别名：同 export-full-version-close "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "eec",
+                "descriptions": [
+                    "命令别名：同 export-build-in-config "
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "eeca",
+                "descriptions": [
+                    "命令别名：同 export-build-in-config  携带 all 参数"
+                ]
+            },
+            {
+                "category": "scripts",
+                "script": "echo",
+                "descriptions": [
+                    "占位警告 ，无其他用处"
+                ]
+            }
+        ]
     },
     {
         "file_path": "job.doc.json",
@@ -338,269 +336,260 @@
             "level": 1,
             "menuName": "项目内脚本文件"
         },
-        "project": {
-            "category": "job",
-            "directory-name": "job",
-            "descriptions": [
-                "项目内脚本文件"
-            ],
-            "type": "job",
-            "remark": " ",
-            "config": [
-                {
-                    "category": "job",
-                    "directory-name": "job",
-                    "descriptions": [
-                        "项目内脚本文件"
-                    ],
-                    "type": "job",
-                    "remark": " ",
-                    "items": [
-                        {
-                            "filename": "build-in-oss.js",
-                            "type": "job",
-                            "descriptions": [
-                                "当前 环境的OSS 文件写入 html 头部",
-                                "防止 源站OSS 文件被攻击用户进不来"
-                            ]
-                        },
-                        {
-                            "filename": "copy-html.js",
-                            "type": "job",
-                            "descriptions": [
-                                "复制打包后的 html 文件到外层目录"
-                            ]
-                        },
-                        {
-                            "filename": "copy-oss.js",
-                            "type": "job",
-                            "descriptions": [
-                                "复制OSS 到本地指定目录"
-                            ]
-                        },
-                        {
-                            "filename": "export-build-version.js",
-                            "type": "job",
-                            "descriptions": [
-                                "创建 本次构建打包的 客户端版本 号"
-                            ]
-                        },
-                        {
-                            "filename": "remove-dist.js",
-                            "type": "job",
-                            "descriptions": [
-                                "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
-                            ]
-                        },
-                        {
-                            "filename": "export-build-in-config.js",
-                            "type": "job",
-                            "descriptions": [
-                                "输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"
-                            ]
-                        },
-                        {
-                            "filename": "build-in-config.js",
-                            "type": "function",
-                            "descriptions": [
-                                "根据环境 计算当前的 环境相关的项目配置，项目打包的外层植入层",
-                                "需要留意目前不需要以前的一些冗余的项目信息，只需要环境"
-                            ]
-                        },
-                        {
-                            "filename": "export-full-doc.js",
-                            "type": "job",
-                            "descriptions": [
-                                "提取代码内的 *.doc.json 文件生成 单一 全量 json",
-                                "写入 job/output/doc/ 目录 以提供给其他地方使用，这里有版本概念 有新旧差分"
-                            ]
-                        },
-                        {
-                            "filename": "export-merchant-config.js",
-                            "type": "job",
-                            "descriptions": [
-                                "合并输出商户配置",
-                                "从对接后台获取 当前需要构建的版本号的详细配置，写入 job/output/merchant/ 目录 ",
-                                "此文件输出的配置文件：主要在 商户打包 非全量 离线zip 或者  非全量 离线sdk 使用，此种情况商户维护 ",
-                                "商户打包 非全量 离线zip ：参考 entries : custom-version ",
-                                "商户打包 非全量 离线sdk ：参考 entries : custom-sdk ",
-                                "此文件输出的配置文件：也会在生产全量版本打包，拉取商户配置到 版本资源外层目录内（类似OSS） 使用,此种情况我们维护",
-                                "我们生产全量版本打包 全量在线项目 ：参考 entries : full-version",
-                                "此文件输出的配置文件：也会用来模拟商户场景下的全量SDK 使用",
-                                "模拟商户场景下的全量SDK 使用：参考 entries : full-sdk "
-                            ]
-                        },
-                        {
-                            "filename": "merge-merchant-config.js",
-                            "type": "job",
-                            "descriptions": [
-                                "合并商户配置",
-                                "这个插件 在代码内 一些节点会单独使用",
-                                "合并 ，覆盖 输入进来的配置 ，以及本地配置"
-                            ]
-                        },
-                        {
-                            "filename": "export-full-version-config.js",
-                            "type": "job",
-                            "descriptions": [
-                                "全量版本配置",
-                                "全局开关，默认false"
-                            ]
-                        },
-                        {
-                            "filename": "html-variables.js",
-                            "type": "job",
-                            "descriptions": [
-                                "HTML 植入的变量"
-                            ]
-                        },
-                        {
-                            "filename": "write-env-file.js",
-                            "type": "job",
-                            "descriptions": [
-                                "写 env 文件脚本"
-                            ]
-                        },
-                        {
-                            "filename": "read-env-file.js",
-                            "type": "job",
-                            "descriptions": [
-                                "读 env 文件脚本"
-                            ]
-                        },
-                        {
-                            "filename": "write-folder-file.js",
-                            "type": "job",
-                            "descriptions": [
-                                "目录生成",
-                                "其他脚本通用内部 脚本"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "category": "export-build-in-config",
-                    "directory-name": "job/output/env",
-                    "description": "环境配置文件",
-                    "type": "env-config-output",
-                    "remark": " ",
-                    "items": [
-                        {
-                            "filename": "local_local.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "个人   开发环境"
-                            ]
-                        },
-                        {
-                            "filename": "local_dev.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "局域网  开发环境"
-                            ]
-                        },
-                        {
-                            "filename": "local_test.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "局域网  测试环境"
-                            ]
-                        },
-                        {
-                            "filename": "idc_lspre.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "IDC  隔离预发布"
-                            ]
-                        },
-                        {
-                            "filename": "idc_pre.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "IDC  预发布/试玩"
-                            ]
-                        },
-                        {
-                            "filename": "idc_sandbox.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "IDC  预发布/试玩"
-                            ]
-                        },
-                        {
-                            "filename": "idc_ylcs.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "IDC 微型压力测试环境"
-                            ]
-                        },
-                        {
-                            "filename": "idc_online.js",
-                            "type": "env-config-output",
-                            "descriptions": [
-                                "IDC  生产环境"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "category": "export-full-doc",
-                    "directory-name": "job/output/doc",
-                    "description": "内部文档相关集合文件",
-                    "type": "doc-config-output",
-                    "remark": " ",
-                    "items": [
-                        {
-                            "filename": "arr.json",
-                            "type": "export-full-doc",
-                            "descriptions": [
-                                "计算后的文档内容 数组版本"
-                            ]
-                        },
-                        {
-                            "filename": "obj.json",
-                            "type": "export-full-doc",
-                            "descriptions": [
-                                "计算后的文档内容 对象版本"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "category": "export-merchant-config",
-                    "directory-name": "job/output/merchant",
-                    "description": "商户定制化配置集合文件",
-                    "type": "merchant-config-output",
-                    "remark": " ",
-                    "items": [
-                        {
-                            "filename": "config-ouzhou.json",
-                            "type": "export-merchant-config",
-                            "descriptions": [
-                                "计算后的商户配置欧洲版"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "category": "export-merchant-config",
-                    "directory-name": "job/default-config",
-                    "description": "商户定制化配置集合文件",
-                    "type": "merchant-config-output",
-                    "remark": " ",
-                    "items": [
-                        {
-                            "filename": "merchant-config-ouzhou.json",
-                            "type": "export-merchant-config",
-                            "descriptions": [
-                                "默认的商户配置欧洲版",
-                                "欧洲版 商户 默认配置  用于 自用打包"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
+        "project": [
+            {
+                "category": "job",
+                "directory-name": "job",
+                "descriptions": [
+                    "项目内脚本文件"
+                ],
+                "type": "job",
+                "remark": " ",
+                "items": [
+                    {
+                        "filename": "build-in-oss.js",
+                        "type": "job",
+                        "descriptions": [
+                            "当前 环境的OSS 文件写入 html 头部",
+                            "防止 源站OSS 文件被攻击用户进不来"
+                        ]
+                    },
+                    {
+                        "filename": "copy-html.js",
+                        "type": "job",
+                        "descriptions": [
+                            "复制打包后的 html 文件到外层目录"
+                        ]
+                    },
+                    {
+                        "filename": "copy-oss.js",
+                        "type": "job",
+                        "descriptions": [
+                            "复制OSS 到本地指定目录"
+                        ]
+                    },
+                    {
+                        "filename": "export-build-version.js",
+                        "type": "job",
+                        "descriptions": [
+                            "创建 本次构建打包的 客户端版本 号"
+                        ]
+                    },
+                    {
+                        "filename": "remove-dist.js",
+                        "type": "job",
+                        "descriptions": [
+                            "删除 服务器上可能的历史版本构建输出的缓存，确保不出错"
+                        ]
+                    },
+                    {
+                        "filename": "export-build-in-config.js",
+                        "type": "job",
+                        "descriptions": [
+                            "输出最终的各个环境的基础项目配置 ，用于验证,也用于初始化生成"
+                        ]
+                    },
+                    {
+                        "filename": "build-in-config.js",
+                        "type": "function",
+                        "descriptions": [
+                            "根据环境 计算当前的 环境相关的项目配置，项目打包的外层植入层",
+                            "需要留意目前不需要以前的一些冗余的项目信息，只需要环境"
+                        ]
+                    },
+                    {
+                        "filename": "export-full-doc.js",
+                        "type": "job",
+                        "descriptions": [
+                            "提取代码内的 *.doc.json 文件生成 单一 全量 json",
+                            "写入 job/output/doc/ 目录 以提供给其他地方使用，这里有版本概念 有新旧差分"
+                        ]
+                    },
+                    {
+                        "filename": "export-merchant-config.js",
+                        "type": "job",
+                        "descriptions": [
+                            "合并输出商户配置",
+                            "从对接后台获取 当前需要构建的版本号的详细配置，写入 job/output/merchant/ 目录 ",
+                            "此文件输出的配置文件：主要在 商户打包 非全量 离线zip 或者  非全量 离线sdk 使用，此种情况商户维护 ",
+                            "商户打包 非全量 离线zip ：参考 entries : custom-version ",
+                            "商户打包 非全量 离线sdk ：参考 entries : custom-sdk ",
+                            "此文件输出的配置文件：也会在生产全量版本打包，拉取商户配置到 版本资源外层目录内（类似OSS） 使用,此种情况我们维护",
+                            "我们生产全量版本打包 全量在线项目 ：参考 entries : full-version",
+                            "此文件输出的配置文件：也会用来模拟商户场景下的全量SDK 使用",
+                            "模拟商户场景下的全量SDK 使用：参考 entries : full-sdk "
+                        ]
+                    },
+                    {
+                        "filename": "merge-merchant-config.js",
+                        "type": "job",
+                        "descriptions": [
+                            "合并商户配置",
+                            "这个插件 在代码内 一些节点会单独使用",
+                            "合并 ，覆盖 输入进来的配置 ，以及本地配置"
+                        ]
+                    },
+                    {
+                        "filename": "export-full-version-config.js",
+                        "type": "job",
+                        "descriptions": [
+                            "全量版本配置",
+                            "全局开关，默认false"
+                        ]
+                    },
+                    {
+                        "filename": "html-variables.js",
+                        "type": "job",
+                        "descriptions": [
+                            "HTML 植入的变量"
+                        ]
+                    },
+                    {
+                        "filename": "write-env-file.js",
+                        "type": "job",
+                        "descriptions": [
+                            "写 env 文件脚本"
+                        ]
+                    },
+                    {
+                        "filename": "read-env-file.js",
+                        "type": "job",
+                        "descriptions": [
+                            "读 env 文件脚本"
+                        ]
+                    },
+                    {
+                        "filename": "write-folder-file.js",
+                        "type": "job",
+                        "descriptions": [
+                            "目录生成",
+                            "其他脚本通用内部 脚本"
+                        ]
+                    }
+                ]
+            },
+            {
+                "category": "export-build-in-config",
+                "directory-name": "job/output/env",
+                "description": "环境配置文件",
+                "type": "env-config-output",
+                "remark": " ",
+                "items": [
+                    {
+                        "filename": "local_local.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "个人   开发环境"
+                        ]
+                    },
+                    {
+                        "filename": "local_dev.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "局域网  开发环境"
+                        ]
+                    },
+                    {
+                        "filename": "local_test.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "局域网  测试环境"
+                        ]
+                    },
+                    {
+                        "filename": "idc_lspre.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "IDC  隔离预发布"
+                        ]
+                    },
+                    {
+                        "filename": "idc_pre.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "IDC  预发布/试玩"
+                        ]
+                    },
+                    {
+                        "filename": "idc_sandbox.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "IDC  预发布/试玩"
+                        ]
+                    },
+                    {
+                        "filename": "idc_ylcs.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "IDC 微型压力测试环境"
+                        ]
+                    },
+                    {
+                        "filename": "idc_online.js",
+                        "type": "env-config-output",
+                        "descriptions": [
+                            "IDC  生产环境"
+                        ]
+                    }
+                ]
+            },
+            {
+                "category": "export-full-doc",
+                "directory-name": "job/output/doc",
+                "description": "内部文档相关集合文件",
+                "type": "doc-config-output",
+                "remark": " ",
+                "items": [
+                    {
+                        "filename": "arr.json",
+                        "type": "export-full-doc",
+                        "descriptions": [
+                            "计算后的文档内容 数组版本"
+                        ]
+                    },
+                    {
+                        "filename": "obj.json",
+                        "type": "export-full-doc",
+                        "descriptions": [
+                            "计算后的文档内容 对象版本"
+                        ]
+                    }
+                ]
+            },
+            {
+                "category": "export-merchant-config",
+                "directory-name": "job/output/merchant",
+                "description": "商户定制化配置集合文件",
+                "type": "merchant-config-output",
+                "remark": " ",
+                "items": [
+                    {
+                        "filename": "config-ouzhou.json",
+                        "type": "export-merchant-config",
+                        "descriptions": [
+                            "计算后的商户配置欧洲版"
+                        ]
+                    }
+                ]
+            },
+            {
+                "category": "export-merchant-config",
+                "directory-name": "job/default-config",
+                "description": "商户定制化配置集合文件",
+                "type": "merchant-config-output",
+                "remark": " ",
+                "items": [
+                    {
+                        "filename": "merchant-config-ouzhou.json",
+                        "type": "export-merchant-config",
+                        "descriptions": [
+                            "默认的商户配置欧洲版",
+                            "欧洲版 商户 默认配置  用于 自用打包"
+                        ]
+                    }
+                ]
+            }
+        ]
     },
     {
         "file_path": "entries/entries.doc.json",
@@ -608,160 +597,158 @@
             "level": 1,
             "menuName": "项目版本"
         },
-        "project": {
-            "config": [
-                {
-                    "category": "entries",
-                    "directory-name": "self-use-version",
-                    "type": "项目",
-                    "scripts": [
-                        "npm run  dev",
-                        "npm run  dev-self-use-version",
-                        "npm run  build",
-                        "npm run  build-self-use-version"
-                    ],
-                    "descriptions": [
-                        "自用版本项目",
-                        "常规开发 ，生产自用项目打包 入口",
-                        "默认组件，支持配置合并， 不支持同功能性组件其他版本切换",
-                        "可能会有一写内部专用的功能不能给出去使用的，特色内容"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "custom-version",
-                    "type": "项目",
-                    "descriptions": [
-                        "定制化版本项目",
-                        "商户定制化",
-                        "支持根据选择的组件定制化输出 zip",
-                        "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "custom-sdk",
-                    "type": "脚本",
-                    "descriptions": [
-                        "定制化版本 打包sdk",
-                        "构建出 es 和 umd 版本的 sdk",
-                        "全量版本：用于对接文档内调 试 定制版本：用于商户引入使用",
-                        "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "full-version",
-                    "type": "项目",
-                    "descriptions": [
-                        "全量组件 项目",
-                        "全量组件 ",
-                        "在线合并配置 "
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "full-sdk",
-                    "type": "脚本",
-                    "descriptions": [
-                        "全量组件 打包 sdk",
-                        "全量组件 ",
-                        "在线合并配置，对接文档在线调试"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "check-sdk-esm",
-                    "type": "项目",
-                    "descriptions": [
-                        "自测检查sdk es 版本",
-                        "需要适配： 全量/定制化 （cli）",
-                        "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "check-sdk-umd",
-                    "type": "项目",
-                    "descriptions": [
-                        "自测检查sdk umd 版本",
-                        "需要适配： 全量/定制化（cli）",
-                        "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "check-sdk-umd-html",
-                    "type": "项目",
-                    "descriptions": [
-                        "自测检查sdk umd 版本 html",
-                        "需要适配： 全量/定制化(html)",
-                        "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "development-document",
-                    "type": "项目",
-                    "scripts": [
-                        "npm run  ddd",
-                        "npm run  dev-development-document"
-                    ],
-                    "descriptions": [
-                        "项目内部开发文档",
-                        "根据组件配置自动生成内部文档",
-                        "需要支持对比线上旧版差异 需要支持配置字段上报对接文档",
-                        "一些规范定义，和文档参照指引",
-                        "项目目标解释、架构、规范、技术选型"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "postmessage-test",
-                    "type": "项目",
-                    "descriptions": [
-                        "在线调试，消息通讯自测",
-                        "在线调试工具的自测版本",
-                        "消息通讯自测验证辅助 工具 定义消息通讯规范格式和主题"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "config-middleware",
-                    "type": "脚本",
-                    "descriptions": [
-                        "配置中间件",
-                        "配置集散",
-                        "商户配置，环境配置，上报配置"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "full-version",
-                    "type": "项目",
-                    "descriptions": [
-                        "全量组件",
-                        "我们自己的全量组件页面，进入页面后，在线合并配置",
-                        "对接文档植入试玩环境全量页面在线调试",
-                        "注意全量版本项目：需要给定预留挂载字段",
-                        "注意全量版本项目：需要两次拷贝商户配置文件,类似OSS文件策略",
-                        "注意全量版本项目：使用时需要读取url参数,加载商户配置文件,读取挂载到预留字段"
-                    ]
-                },
-                {
-                    "category": "entries",
-                    "directory-name": "full-sdk",
-                    "type": "脚本",
-                    "descriptions": [
-                        "全量组件",
-                        "SDK版本，商户在自己开发的页面内在线合并配置，切换配置",
-                        "对接文档植入SDK在线调试",
-                        "注意全量版本SDK：需要给定预留挂载字段",
-                        "注意全量版本SDK：使用时需要引入商户配置文件,读取挂载到预留字段"
-                    ]
-                }
-            ]
-        }
+        "project": [
+            {
+                "category": "entries",
+                "directory-name": "self-use-version",
+                "type": "项目",
+                "scripts": [
+                    "npm run  dev",
+                    "npm run  dev-self-use-version",
+                    "npm run  build",
+                    "npm run  build-self-use-version"
+                ],
+                "descriptions": [
+                    "自用版本项目",
+                    "常规开发 ，生产自用项目打包 入口",
+                    "默认组件，支持配置合并， 不支持同功能性组件其他版本切换",
+                    "可能会有一写内部专用的功能不能给出去使用的，特色内容"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "custom-version",
+                "type": "项目",
+                "descriptions": [
+                    "定制化版本项目",
+                    "商户定制化",
+                    "支持根据选择的组件定制化输出 zip",
+                    "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "custom-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "定制化版本 打包sdk",
+                    "构建出 es 和 umd 版本的 sdk",
+                    "全量版本：用于对接文档内调 试 定制版本：用于商户引入使用",
+                    "理论上会有一些特色功能，不支持定制，也不支持对外，只能自己独家"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-version",
+                "type": "项目",
+                "descriptions": [
+                    "全量组件 项目",
+                    "全量组件 ",
+                    "在线合并配置 "
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "全量组件 打包 sdk",
+                    "全量组件 ",
+                    "在线合并配置，对接文档在线调试"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-esm",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk es 版本",
+                    "需要适配： 全量/定制化 （cli）",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-umd",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk umd 版本",
+                    "需要适配： 全量/定制化（cli）",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "check-sdk-umd-html",
+                "type": "项目",
+                "descriptions": [
+                    "自测检查sdk umd 版本 html",
+                    "需要适配： 全量/定制化(html)",
+                    "全量版本：自测+对接文档内用 定制版本：用于商户对接demo演示"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "development-document",
+                "type": "项目",
+                "scripts": [
+                    "npm run  ddd",
+                    "npm run  dev-development-document"
+                ],
+                "descriptions": [
+                    "项目内部开发文档",
+                    "根据组件配置自动生成内部文档",
+                    "需要支持对比线上旧版差异 需要支持配置字段上报对接文档",
+                    "一些规范定义，和文档参照指引",
+                    "项目目标解释、架构、规范、技术选型"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "postmessage-test",
+                "type": "项目",
+                "descriptions": [
+                    "在线调试，消息通讯自测",
+                    "在线调试工具的自测版本",
+                    "消息通讯自测验证辅助 工具 定义消息通讯规范格式和主题"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "config-middleware",
+                "type": "脚本",
+                "descriptions": [
+                    "配置中间件",
+                    "配置集散",
+                    "商户配置，环境配置，上报配置"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-version",
+                "type": "项目",
+                "descriptions": [
+                    "全量组件",
+                    "我们自己的全量组件页面，进入页面后，在线合并配置",
+                    "对接文档植入试玩环境全量页面在线调试",
+                    "注意全量版本项目：需要给定预留挂载字段",
+                    "注意全量版本项目：需要两次拷贝商户配置文件,类似OSS文件策略",
+                    "注意全量版本项目：使用时需要读取url参数,加载商户配置文件,读取挂载到预留字段"
+                ]
+            },
+            {
+                "category": "entries",
+                "directory-name": "full-sdk",
+                "type": "脚本",
+                "descriptions": [
+                    "全量组件",
+                    "SDK版本，商户在自己开发的页面内在线合并配置，切换配置",
+                    "对接文档植入SDK在线调试",
+                    "注意全量版本SDK：需要给定预留挂载字段",
+                    "注意全量版本SDK：使用时需要引入商户配置文件,读取挂载到预留字段"
+                ]
+            }
+        ]
     },
     {
         "file_path": "src/components/test-component/test-component.doc.json",
@@ -792,20 +779,109 @@
         ]
     },
     {
-        "file_path": "src/components/match-card/match-card.doc.json",
+        "file_path": "src/components/test-quasar-component-doc/QCard.doc.json",
         "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "赛事卡片组件"
+            "level": 1,
+            "menuName": "Quasar",
+            "sonName": "Quasar-Card"
+        },
+        "meta": {
+            "docsUrl": "https://v2.quasar.dev/vue-components/card"
         },
         "props": {
-            "match-data": {
-                "type": [
-                    "Object",
-                    "Array"
+            "dark": {
+                "extends": "dark"
+            },
+            "square": {
+                "extends": "square"
+            },
+            "flat": {
+                "extends": "flat"
+            },
+            "bordered": {
+                "extends": "bordered"
+            },
+            "tag": {
+                "extends": "tag",
+                "default": "div",
+                "examples": [
+                    "div",
+                    "form"
+                ]
+            }
+        },
+        "slots": {
+            "default": {
+                "extends": "default"
+            }
+        }
+    },
+    {
+        "file_path": "src/components/test-quasar-component-doc/QTh.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "Quasar",
+            "sonName": "Quasar-Td-th"
+        },
+        "meta": {
+            "docsUrl": "https://v2.quasar.dev/vue-components/table"
+        },
+        "props": {
+            "props": {
+                "type": "Object",
+                "desc": "QTable's header column scoped slot property",
+                "examples": [
+                    ":props=\"props\""
                 ],
-                "default": [],
-                "description": "赛事卡片组件"
+                "category": "general"
+            },
+            "auto-width": {
+                "type": "Boolean",
+                "desc": "Tries to shrink header column width size; Useful for columns with a checkbox/radio/toggle",
+                "category": "content"
+            }
+        },
+        "slots": {
+            "default": {
+                "extends": "default"
+            }
+        }
+    },
+    {
+        "file_path": "src/components/test-quasar-component-doc/QCardActions.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "Quasar",
+            "sonName": "Quasar-Card-Actions"
+        },
+        "meta": {
+            "docsUrl": "https://v2.quasar.dev/vue-components/card"
+        },
+        "props": {
+            "align": {
+                "type": "String",
+                "desc": "Specify how to align the actions",
+                "default": "left (for horizontal mode) / stretch (for vertical mode)",
+                "values": [
+                    "left",
+                    "center",
+                    "right",
+                    "between",
+                    "around",
+                    "evenly",
+                    "stretch"
+                ],
+                "category": "content"
+            },
+            "vertical": {
+                "type": "Boolean",
+                "desc": "Display actions one below the other",
+                "category": "content"
+            }
+        },
+        "slots": {
+            "default": {
+                "desc": "Suggestions: QBtn"
             }
         }
     },
@@ -846,34 +922,140 @@
         }
     },
     {
-        "file_path": "src/components/test-quasar-component-doc/QTr.doc.json",
+        "file_path": "src/components/match-card/match-card.doc.json",
         "leftmenu": {
             "level": 2,
-            "menuName": "Quasar",
-            "sonName": "Quasar-Td-tr"
-        },
-        "meta": {
-            "docsUrl": "https://v2.quasar.dev/vue-components/table"
+            "menuName": "客户端PC",
+            "sonName": "赛事卡片组件"
         },
         "props": {
-            "props": {
-                "type": "Object",
-                "desc": "QTable's row scoped slot property",
-                "examples": [
-                    ":props=\"props\""
+            "match-data": {
+                "type": [
+                    "Object",
+                    "Array"
                 ],
-                "category": "general"
-            },
-            "no-hover": {
-                "type": "Boolean",
-                "desc": "Disable hover effect",
-                "category": "style"
+                "default": [],
+                "description": "赛事卡片组件"
             }
+        }
+    },
+    {
+        "file_path": "src/core/http/http.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "客户端PC",
+            "sonName": "基础HTTP请求类"
         },
-        "slots": {
-            "default": {
-                "extends": "default"
-            }
+        "props": {
+            "category": "http",
+            "directory-name": "http",
+            "descriptions": [
+                "axios htpp请求类"
+            ],
+            "type": "js",
+            "remark": "基础HTTP请求类",
+            "items": [
+                {
+                    "filename": "axios-warpper.js",
+                    "type": "js",
+                    "descriptions": [
+                        "基础axios请求类"
+                    ],
+                    "export": {
+                        "default": {}
+                    },
+                    "methods": {
+                        "POST": {
+                            "url": {
+                                "type": "string",
+                                "descriptions": "请求的url"
+                            },
+                            "params": {
+                                "type": "object",
+                                "descriptions": "请求接口要传递的参数"
+                            },
+                            "config": {
+                                "type": "object",
+                                "descriptions": "axios 配置类"
+                            }
+                        },
+                        "GET": {
+                            "url": {
+                                "type": "string",
+                                "descriptions": "请求的url"
+                            },
+                            "params": {
+                                "type": "object",
+                                "descriptions": "请求传参会带在url上"
+                            },
+                            "config": {
+                                "type": "object",
+                                "descriptions": "axios 配置类"
+                            }
+                        }
+                    }
+                },
+                {
+                    "filename": "axios-interceptors.js",
+                    "type": "js",
+                    "descriptions": [
+                        "axios 拦截器 包括分流"
+                    ]
+                },
+                {
+                    "filename": "debounce-module",
+                    "directory-name": "debounce-module",
+                    "type": "js",
+                    "descriptions": [
+                        "接口 缓存、限频、节流   相关的 类",
+                        " 在 http 单个接口请求的时候 延迟 封装"
+                    ],
+                    "items": [
+                        {
+                            "filename": "index.js",
+                            "type": "js",
+                            "descriptions": [
+                                "导出所有要  缓存、限频、节流的相关类"
+                            ]
+                        },
+                        {
+                            "filename": "axios-debounce-cache.js",
+                            "type": "js",
+                            "descriptions": [
+                                "debounce基础类"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "filename": "http-log.js",
+                    "type": "js",
+                    "descriptions": [
+                        "http日志类"
+                    ]
+                },
+                {
+                    "filename": "axios-loop.js",
+                    "type": "js",
+                    "descriptions": [
+                        "http请求循环类"
+                    ]
+                },
+                {
+                    "filename": "gtag-tag.js",
+                    "type": "js",
+                    "descriptions": [
+                        "Google gtag类"
+                    ]
+                },
+                {
+                    "filename": "zhuge-tag.js",
+                    "type": "js",
+                    "descriptions": [
+                        "诸葛埋点 tag类"
+                    ]
+                }
+            ]
         }
     },
     {
@@ -1031,72 +1213,34 @@
         }
     },
     {
-        "file_path": "src/components/test-quasar-component-doc/QTh.doc.json",
+        "file_path": "src/core/sdk-config/sdk-config.doc.json",
         "leftmenu": {
             "level": 2,
-            "menuName": "Quasar",
-            "sonName": "Quasar-Td-th"
-        },
-        "meta": {
-            "docsUrl": "https://v2.quasar.dev/vue-components/table"
+            "menuName": "客户端PC",
+            "sonName": "sdk模块化配置"
         },
         "props": {
-            "props": {
-                "type": "Object",
-                "desc": "QTable's header column scoped slot property",
-                "examples": [
-                    ":props=\"props\""
-                ],
-                "category": "general"
-            },
-            "auto-width": {
-                "type": "Boolean",
-                "desc": "Tries to shrink header column width size; Useful for columns with a checkbox/radio/toggle",
-                "category": "content"
-            }
-        },
-        "slots": {
-            "default": {
-                "extends": "default"
-            }
+            "category": "sdk-config",
+            "directory-name": "sdk-config",
+            "descriptions": [
+                "sdk模块化配置"
+            ],
+            "type": "js",
+            "remark": "sdk模块化配置",
+            "items": []
         }
     },
     {
-        "file_path": "src/components/test-quasar-component-doc/QCardActions.doc.json",
+        "file_path": "src/core/project-config/project-config.doc.json",
         "leftmenu": {
             "level": 2,
-            "menuName": "Quasar",
-            "sonName": "Quasar-Card-Actions"
-        },
-        "meta": {
-            "docsUrl": "https://v2.quasar.dev/vue-components/card"
+            "menuName": "客户端PC",
+            "sonName": "project-config"
         },
         "props": {
-            "align": {
-                "type": "String",
-                "desc": "Specify how to align the actions",
-                "default": "left (for horizontal mode) / stretch (for vertical mode)",
-                "values": [
-                    "left",
-                    "center",
-                    "right",
-                    "between",
-                    "around",
-                    "evenly",
-                    "stretch"
-                ],
-                "category": "content"
-            },
-            "vertical": {
-                "type": "Boolean",
-                "desc": "Display actions one below the other",
-                "category": "content"
-            }
-        },
-        "slots": {
-            "default": {
-                "desc": "Suggestions: QBtn"
-            }
+            "category": "project-config",
+            "directory-name": "project-config",
+            "descriptions": []
         }
     },
     {
@@ -3618,29 +3762,6 @@
         }
     },
     {
-        "file_path": "src/core/match-detail/match-detail.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "赛事详情-detail"
-        },
-        "props": {
-            "category": "match-detail",
-            "directory-name": "match-detail",
-            "descriptions": [
-                "赛事详情页通用逻辑",
-                "玩法集， 玩法过滤，玩法模板，数据分析，比分榜，动画等"
-            ],
-            "type": "js",
-            "remark": "",
-            "item": [
-                {
-                    "filename": ""
-                }
-            ]
-        }
-    },
-    {
         "file_path": "src/core/match-list/match-list.doc.json",
         "leftmenu": {
             "level": 2,
@@ -3687,6 +3808,29 @@
                         "赛事列表滚动逻辑",
                         "滚动拉取数据及限制"
                     ]
+                }
+            ]
+        }
+    },
+    {
+        "file_path": "src/core/match-detail/match-detail.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "客户端PC",
+            "sonName": "赛事详情-detail"
+        },
+        "props": {
+            "category": "match-detail",
+            "directory-name": "match-detail",
+            "descriptions": [
+                "赛事详情页通用逻辑",
+                "玩法集， 玩法过滤，玩法模板，数据分析，比分榜，动画等"
+            ],
+            "type": "js",
+            "remark": "",
+            "item": [
+                {
+                    "filename": ""
                 }
             ]
         }
@@ -3747,176 +3891,6 @@
         }
     },
     {
-        "file_path": "src/core/project-config/project-config.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "project-config"
-        },
-        "props": {
-            "category": "project-config",
-            "directory-name": "project-config",
-            "descriptions": []
-        }
-    },
-    {
-        "file_path": "src/core/http/http.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "基础HTTP请求类"
-        },
-        "props": {
-            "category": "http",
-            "directory-name": "http",
-            "descriptions": [
-                "axios htpp请求类"
-            ],
-            "type": "js",
-            "remark": "基础HTTP请求类",
-            "items": [
-                {
-                    "filename": "axios-warpper.js",
-                    "type": "js",
-                    "descriptions": [
-                        "基础axios请求类"
-                    ],
-                    "export": {
-                        "default": {}
-                    },
-                    "methods": {
-                        "POST": {
-                            "url": {
-                                "type": "string",
-                                "descriptions": "请求的url"
-                            },
-                            "params": {
-                                "type": "object",
-                                "descriptions": "请求接口要传递的参数"
-                            },
-                            "config": {
-                                "type": "object",
-                                "descriptions": "axios 配置类"
-                            }
-                        },
-                        "GET": {
-                            "url": {
-                                "type": "string",
-                                "descriptions": "请求的url"
-                            },
-                            "params": {
-                                "type": "object",
-                                "descriptions": "请求传参会带在url上"
-                            },
-                            "config": {
-                                "type": "object",
-                                "descriptions": "axios 配置类"
-                            }
-                        }
-                    }
-                },
-                {
-                    "filename": "axios-interceptors.js",
-                    "type": "js",
-                    "descriptions": [
-                        "axios 拦截器 包括分流"
-                    ]
-                },
-                {
-                    "filename": "debounce-module",
-                    "directory-name": "debounce-module",
-                    "type": "js",
-                    "descriptions": [
-                        "接口 缓存、限频、节流   相关的 类",
-                        " 在 http 单个接口请求的时候 延迟 封装"
-                    ],
-                    "items": [
-                        {
-                            "filename": "index.js",
-                            "type": "js",
-                            "descriptions": [
-                                "导出所有要  缓存、限频、节流的相关类"
-                            ]
-                        },
-                        {
-                            "filename": "axios-debounce-cache.js",
-                            "type": "js",
-                            "descriptions": [
-                                "debounce基础类"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "filename": "http-log.js",
-                    "type": "js",
-                    "descriptions": [
-                        "http日志类"
-                    ]
-                },
-                {
-                    "filename": "axios-loop.js",
-                    "type": "js",
-                    "descriptions": [
-                        "http请求循环类"
-                    ]
-                },
-                {
-                    "filename": "gtag-tag.js",
-                    "type": "js",
-                    "descriptions": [
-                        "Google gtag类"
-                    ]
-                },
-                {
-                    "filename": "zhuge-tag.js",
-                    "type": "js",
-                    "descriptions": [
-                        "诸葛埋点 tag类"
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "file_path": "src/components/test-quasar-component-doc/QCard.doc.json",
-        "leftmenu": {
-            "level": 1,
-            "menuName": "Quasar",
-            "sonName": "Quasar-Card"
-        },
-        "meta": {
-            "docsUrl": "https://v2.quasar.dev/vue-components/card"
-        },
-        "props": {
-            "dark": {
-                "extends": "dark"
-            },
-            "square": {
-                "extends": "square"
-            },
-            "flat": {
-                "extends": "flat"
-            },
-            "bordered": {
-                "extends": "bordered"
-            },
-            "tag": {
-                "extends": "tag",
-                "default": "div",
-                "examples": [
-                    "div",
-                    "form"
-                ]
-            }
-        },
-        "slots": {
-            "default": {
-                "extends": "default"
-            }
-        }
-    },
-    {
         "file_path": "src/core/log/log-config.doc.json",
         "leftmenu": {
             "level": 2,
@@ -3929,141 +3903,6 @@
             "descriptions": [
                 "通信日志功能"
             ]
-        }
-    },
-    {
-        "file_path": "src/core/user-config/user-config.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "用户配置"
-        },
-        "props": {
-            "category": "user-config",
-            "directory-name": "user-config",
-            "descriptions": [
-                "用户配置"
-            ],
-            "type": "js",
-            "remark": "用户配置",
-            "items": [
-                {
-                    "filename": "index",
-                    "type": "js",
-                    "descriptions": [
-                        "用户配置吗默认引入文件"
-                    ]
-                },
-                {
-                    "filename": "base-user-info",
-                    "type": "js",
-                    "descriptions": [
-                        "用户信息配置类"
-                    ]
-                },
-                {
-                    "filename": "user-ctr",
-                    "type": "js",
-                    "descriptions": [
-                        "用户相关的控制类 实体对象 单个实例",
-                        "全局接口相关的配置",
-                        "主题色相关",
-                        "商户相关"
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "file_path": "src/core/z-index/z-index.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "z-index"
-        },
-        "props": {
-            "category": "z-index",
-            "scope": "global",
-            "descriptions": [
-                "-1到-10为隐藏层",
-                "1501-2000为显示层级"
-            ],
-            "child": [
-                {
-                    "scope": "global",
-                    "className": "tip-message",
-                    "descriptions": [
-                        "全局提示信息设置最高层级2000"
-                    ]
-                },
-                {
-                    "scope": "global",
-                    "className": "loading",
-                    "descriptions": [
-                        "全局loading的层级1999"
-                    ]
-                },
-                {
-                    "scope": "global",
-                    "script": "global-popup",
-                    "descriptions": [
-                        "全局弹窗层级1998"
-                    ]
-                },
-                {
-                    "scope": "global",
-                    "script": "global-mask",
-                    "descriptions": [
-                        "全局弹窗或者loading遮罩层级1997"
-                    ]
-                },
-                {
-                    "category": "z-index",
-                    "scope": "home-page",
-                    "descriptions": [
-                        "1401-1500为显示层级"
-                    ]
-                },
-                {
-                    "category": "z-index",
-                    "scope": "result-page",
-                    "descriptions": [
-                        "1301-1400为显示层级"
-                    ]
-                },
-                {
-                    "category": "z-index",
-                    "scope": "details-page",
-                    "descriptions": [
-                        "1201-1300为显示层级"
-                    ]
-                },
-                {
-                    "category": "z-index",
-                    "scope": "(bet-page",
-                    "descriptions": [
-                        "1101-1200为显示层级"
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "file_path": "src/core/sdk-config/sdk-config.doc.json",
-        "leftmenu": {
-            "level": 2,
-            "menuName": "客户端PC",
-            "sonName": "sdk模块化配置"
-        },
-        "props": {
-            "category": "sdk-config",
-            "directory-name": "sdk-config",
-            "descriptions": [
-                "sdk模块化配置"
-            ],
-            "type": "js",
-            "remark": "sdk模块化配置",
-            "items": []
         }
     },
     {
@@ -4155,6 +3994,154 @@
                                 "聊天室管理类"
                             ]
                         }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "file_path": "src/core/z-index/z-index.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "客户端PC",
+            "sonName": "z-index"
+        },
+        "props": {
+            "category": "z-index",
+            "scope": "global",
+            "descriptions": [
+                "-1到-10为隐藏层",
+                "1501-2000为显示层级"
+            ],
+            "child": [
+                {
+                    "scope": "global",
+                    "className": "tip-message",
+                    "descriptions": [
+                        "全局提示信息设置最高层级2000"
+                    ]
+                },
+                {
+                    "scope": "global",
+                    "className": "loading",
+                    "descriptions": [
+                        "全局loading的层级1999"
+                    ]
+                },
+                {
+                    "scope": "global",
+                    "script": "global-popup",
+                    "descriptions": [
+                        "全局弹窗层级1998"
+                    ]
+                },
+                {
+                    "scope": "global",
+                    "script": "global-mask",
+                    "descriptions": [
+                        "全局弹窗或者loading遮罩层级1997"
+                    ]
+                },
+                {
+                    "category": "z-index",
+                    "scope": "home-page",
+                    "descriptions": [
+                        "1401-1500为显示层级"
+                    ]
+                },
+                {
+                    "category": "z-index",
+                    "scope": "result-page",
+                    "descriptions": [
+                        "1301-1400为显示层级"
+                    ]
+                },
+                {
+                    "category": "z-index",
+                    "scope": "details-page",
+                    "descriptions": [
+                        "1201-1300为显示层级"
+                    ]
+                },
+                {
+                    "category": "z-index",
+                    "scope": "(bet-page",
+                    "descriptions": [
+                        "1101-1200为显示层级"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "file_path": "src/components/test-quasar-component-doc/QTr.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "Quasar",
+            "sonName": "Quasar-Td-tr"
+        },
+        "meta": {
+            "docsUrl": "https://v2.quasar.dev/vue-components/table"
+        },
+        "props": {
+            "props": {
+                "type": "Object",
+                "desc": "QTable's row scoped slot property",
+                "examples": [
+                    ":props=\"props\""
+                ],
+                "category": "general"
+            },
+            "no-hover": {
+                "type": "Boolean",
+                "desc": "Disable hover effect",
+                "category": "style"
+            }
+        },
+        "slots": {
+            "default": {
+                "extends": "default"
+            }
+        }
+    },
+    {
+        "file_path": "src/core/user-config/user-config.doc.json",
+        "leftmenu": {
+            "level": 2,
+            "menuName": "客户端PC",
+            "sonName": "用户配置"
+        },
+        "props": {
+            "category": "user-config",
+            "directory-name": "user-config",
+            "descriptions": [
+                "用户配置"
+            ],
+            "type": "js",
+            "remark": "用户配置",
+            "items": [
+                {
+                    "filename": "index",
+                    "type": "js",
+                    "descriptions": [
+                        "用户配置吗默认引入文件"
+                    ]
+                },
+                {
+                    "filename": "base-user-info",
+                    "type": "js",
+                    "descriptions": [
+                        "用户信息配置类"
+                    ]
+                },
+                {
+                    "filename": "user-ctr",
+                    "type": "js",
+                    "descriptions": [
+                        "用户相关的控制类 实体对象 单个实例",
+                        "全局接口相关的配置",
+                        "主题色相关",
+                        "商户相关"
                     ]
                 }
             ]

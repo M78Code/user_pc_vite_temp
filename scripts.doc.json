@@ -4,8 +4,8 @@
     "level": 1,
     "menuName": "项目说明"
   },
-  "project": {
-    "config": [  {
+  "project": [
+    {
       "category": "scripts",
       "script": "dev-self-use-version",
       "descriptions": [
@@ -280,6 +280,6 @@
       "category": "scripts",
       "script": "echo",
       "descriptions": ["占位警告 ，无其他用处"]
-    }]
-  }
+    }
+  ]
 }

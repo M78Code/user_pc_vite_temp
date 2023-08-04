@@ -1,8 +1,8 @@
 /*
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-28 14:25:33
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-30 15:54:38
+ * @LastEditors: pmtymalick pmtymalick
+ * @LastEditTime: 2023-08-04 15:55:34
  * @FilePath       : \user-pc-vite\src\core\domain\domain.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -688,7 +688,6 @@ class AllDomain {
     }
 
    // 生产环境 附加内部测试域名
-
    let obj={
     COMMON:'https://api-c.sportxxx1zx.com',
     Y:'https://api-y.sportxxx1zx.com',

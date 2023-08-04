@@ -3,8 +3,7 @@
         "level": 1,
         "menuName": "项目版本"
     },
-    "project": {
-        "config": [
+    "project": [
             {
                 "category": "entries",
                 "directory-name": "self-use-version",
@@ -156,5 +155,4 @@
                 ]
             }
         ]
-    }
 }
