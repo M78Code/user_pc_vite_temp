@@ -1,9 +1,9 @@
 /***/
 //  应有引入的方法
 import { ss } from "../utils/web-storage";
-import { useGlobelConfig } from "../sdk-config";
+import { useSdkConfig } from "../sdk-config";
 function gtag_config_send(user_id) {
-  const [config] = useGlobelConfig();
+  const [config] = useSdkConfig();
   // 设置默认启动参数
   // GA 埋点开关开启---照常统计，和生产环境保持一致
   window.gtag_run = 1;

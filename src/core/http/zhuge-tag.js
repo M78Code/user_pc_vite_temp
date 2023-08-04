@@ -9,8 +9,8 @@
 import { get } from "lodash";
 import { DateForMat } from "../formart/";
 import { deepMerge, GetUrlParams } from "../utils";
-import { useGlobelConfig } from "../sdk-config";
-const [globelconfig] = useGlobelConfig();
+import { useSdkConfig } from "../sdk-config";
+const [globelconfig] = useSdkConfig();
 console.log("globelconfig", globelconfig.value);
 class ZhuGe {
   config = {

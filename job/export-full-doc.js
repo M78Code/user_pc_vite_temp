@@ -79,12 +79,16 @@ function deep_left_menu(lists, suns) {
       }else {
         // 子菜单和菜单相等
         if (item.sonName?.trim() == suns.menuName?.trim()) {
-          let obj2 = {
-            menuName: suns.menuName?.trim(),
-            level: Number(suns.level) - 1,
-            children: [suns],
+          // 有相同等级
+          const isAdd = lists.some((o) => o.menuName?.trim() == suns.menuName?.trim());
+          if(!isAdd){
+            let obj2 = {
+              menuName: suns.menuName?.trim(),
+              level: Number(suns.level) - 1,
+              children: [suns],
+            }
+            lists.push(obj2)
           }
-          lists.push(obj2)
         } else {
           // 有子节点递归
           if(item.children?.length) {

@@ -6,8 +6,8 @@
 import axios from "axios";
 import device from "current-device";
 import { ss } from "../utils/web-storage";
-import { useGlobelConfig } from "../sdk-config";
-const [config] = useGlobelConfig();
+import { useSdkConfig } from "../sdk-config";
+const [config] = useSdkConfig();
 class infoUpload {
   HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
   enable = false;

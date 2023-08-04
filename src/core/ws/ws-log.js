@@ -5,8 +5,8 @@
  */
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
-import { useGlobelConfig } from "../sdk-config";
-const [config] = useGlobelConfig();
+import { useSdkConfig } from "../sdk-config";
+const [config] = useSdkConfig();
 import { ss } from "../utils/web-storage";
 class WsLog {
   /**
