@@ -27,8 +27,9 @@ myApp.use(Quasar, {
 import BUILDIN_CONFIG from "app/job/output/env/final.js"
 
 
-console.log( 'BUILDIN_CONFIG--------------',BUILDIN_CONFIG );
+console.log( 'BUILDIN_CONFIG-----------h5---',BUILDIN_CONFIG );
 
+window.BUILDIN_CONFIG =BUILDIN_CONFIG
 
 
 
