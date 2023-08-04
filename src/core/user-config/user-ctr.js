@@ -10,6 +10,10 @@ import {get_file_path} from "src/core/file-path/file-path.js"
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import infoUpload from 'src/core/http/information_upload.js';
 
+
+// 引入 当前 计算出的植入配置 
+import BUILDIN_CONFIG from "app/job/output/env/final.js"
+
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/public/api/index";
 
@@ -300,7 +304,8 @@ class userCtr {
        // localStorage持久化用户分组信息
        sessionStorage.setItem('gr',gr)
 
-       if(window.env.config.gr != gr){
+      //  if(window.env.config.gr != gr){
+      if(BUILDIN_CONFIG.gr != gr){
 
         // #TODO
         let url_search = new URLSearchParams(location.search);
@@ -373,8 +378,8 @@ class userCtr {
      return Promise.resolve(1)
    }
 
-
-   let api_domains = window.env.config.domain[window.env.config.current_env];
+  //  let api_domains = window.env.config.domain[window.env.config.current_env];
+   let api_domains = BUILDIN_CONFIG.domain[BUILDIN_CONFIG.current_env];
    let api_domain = api_domains[0];
 
 
@@ -438,7 +443,8 @@ compute_set_web_meta_config(){
    // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
   //  #TODO
    let json = sessionStorage.getItem('merchant_config_json')
-   let config =  _.get(window.env,'config.html_info') || {}
+  //  let config =  _.get(window.env,'config.html_info') || {}
+   let config =  _.get(BUILDIN_CONFIG,'htmlVariables') || {}
    if(json ){
     // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
 
@@ -505,12 +511,15 @@ set_league_logo_url(url){
       // 图片加载成功
       let style_el = document.createElement('style');
       // dom元素设置
+      // style_el.innerHTML = `
+      // .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
+      // .theme01 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
+      // .theme02 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
+      // .theme01_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
+      // .theme02_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
+      // `
       style_el.innerHTML = `
       .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
-      .theme01 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
-      .theme02 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
-      .theme01_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
-      .theme02_y0 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
       `
       document.head.appendChild(style_el)
     }
@@ -572,13 +581,16 @@ set_league_logo_url(url){
     const user_data_info = this.get_getuserinfo_data()
     const _data = _.get(user_data_info,'data', {})
     let merchant_style = _data.stm === 'blue' ? '_y0' : ''
+    // let style_html = `
+    //   body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
+    //   body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
+    //   .c-max-width{max-width:${config.max_width}px  !important;}
+    //   .theme01${merchant_style} .custom-format-img-logo-01{background-image: url("${config.day_logo}")!important;}
+    //   .custom-format-img-logo-01-theme01{background-image: url("${config.day_logo}") !important;}
+    //   .theme02${merchant_style} .custom-format-img-logo-01{background-image: url("${config.night_logo}") !important;}
+    //   .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
+    // `
     let style_html = `
-      body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
-      body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
-      .c-max-width{max-width:${config.max_width}px  !important;}
-      .theme01${merchant_style} .custom-format-img-logo-01{background-image: url("${config.day_logo}")!important;}
-      .custom-format-img-logo-01-theme01{background-image: url("${config.day_logo}") !important;}
-      .theme02${merchant_style} .custom-format-img-logo-01{background-image: url("${config.night_logo}") !important;}
       .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
     `
     // loading图片
@@ -632,15 +644,16 @@ set_league_logo_url(url){
   * @param {undefined} undefined
  */
  get_web_title(lang){
-   let title = _.get(window.env,`config.html_info.title.${lang}`) || ''
-   let json = sessionStorage.getItem('merchant_config_json')
-   if(json){
-     let merchant_config = JSON.parse(json)
-     if(_.get(merchant_config,`titleMap.${lang}`)){
-       title = _.get(merchant_config,`titleMap.${lang}`)
-     }
-   }
-   return title
+  // let title = _.get(window.env,`config.html_info.title.${lang}`) || ''
+  let title = _.get(BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
+  let json = sessionStorage.getItem('merchant_config_json')
+  if(json){
+    let merchant_config = JSON.parse(json)
+    if(_.get(merchant_config,`titleMap.${lang}`)){
+      title = _.get(merchant_config,`titleMap.${lang}`)
+    }
+  }
+  return title
  }
 
  /**
