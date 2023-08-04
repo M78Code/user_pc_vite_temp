@@ -19,7 +19,7 @@
  */
 
 
-import AxiosDebounceCache from  "./AxiosDebounceCache"
+import AxiosDebounceCache from  "./axios-debounce-cache.js"
 
 
 // 实例化

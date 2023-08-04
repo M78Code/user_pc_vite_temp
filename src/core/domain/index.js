@@ -34,7 +34,7 @@ function force_current_api_flow_use_oss_file_api_reload() {
   let new_url = location.origin + "?" + new_search + new_hash;
   console.log("new_url-", new_url);
   // 这里因为版本不一致 ，无论如何都重定向 刷新
-  location.replace(new_url);
+  // location.replace(new_url);
 }
 /**
  * 获取最新的http domain
@@ -42,7 +42,7 @@ function force_current_api_flow_use_oss_file_api_reload() {
  */
 export function GetHttpDomain(oss) {
   // 新逻辑这里只会有一个
-  let api_domains = config.domain;
+  let api_domains = config.domains;
   let api_domain = api_domains[0];
   // if (window.env.NODE_ENV != "development") {
   //   this.axios_instance.defaults.baseURL = api_domain;

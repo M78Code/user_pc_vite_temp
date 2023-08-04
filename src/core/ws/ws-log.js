@@ -5,7 +5,8 @@
  */
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
-// import {config } from 'xx'
+import { useGlobelConfig } from "../sdk-config";
+const [config] = useGlobelConfig();
 import { ss } from "../utils/web-storage";
 class WsLog {
   /**
@@ -180,4 +181,4 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export default new WsLog("PC", config.LOG);
+export default new WsLog("PC", config.value.LOG);

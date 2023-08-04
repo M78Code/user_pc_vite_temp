@@ -39,7 +39,7 @@ class AxiosHttp {
     //每分钟上报 请求次数
     this.request_count_timer = setInterval(() => {
       console.log("this.request_count=" + this.request_count);
-      wslog.sendMsg("HTTP-S:", { request_count: this.request_count });
+      wslog.send_msg("HTTP-S:", { request_count: this.request_count });
       this.request_count = 0;
     }, 60 * 1000);
     //明确声明超时错误
@@ -198,13 +198,13 @@ class AxiosHttp {
     }
     // 删除内部参数
     try {
-      wslog.sendMsg("HTTP-S:", { url: request_config.url, params });
+      wslog.send_msg("HTTP-S:", { url: request_config.url, params });
       const res = await this.instance.request(request_config);
       //接口的全局跟踪 检查UID gcuuid   嫁接
       if (request_config.gcuuid) {
         res.data.gcuuid = request_config.gcuuid;
       }
-      wslog.sendMsg("HTTP-R:", res);
+      wslog.send_msg("HTTP-R:", res);
       return Promise.resolve(res);
     } catch (err) {
       // console.error('请求错误问题定位---------------------3' , err?.config?.url,err);
@@ -215,7 +215,7 @@ class AxiosHttp {
       // "ECONNABORTED"   远程主机拒绝网络连接 这种错误  code 码 200 ，不会走axios 后置错误拦截
       // 会被 内部抛出异常 走到这里  ，这种错误 不处理
       // console.error(err);
-      wslog.sendMsg("HTTP-R:", err);
+      wslog.send_msg("HTTP-R:", err);
       // 取消请求则返回api_cancel标识
       if (
         err.code === "ERR_CANCELED" &&

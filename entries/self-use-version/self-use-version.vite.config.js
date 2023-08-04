@@ -28,7 +28,7 @@ export default defineConfig({
       sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
     }),
   ],
-  root: path.resolve(__dirname,`../../project/${project}/`),
+  root: path.resolve(__dirname, `../../project/${project}/`),
   build: {
     outDir: "dist/self-use-version",
     rollupOptions: {
@@ -36,7 +36,7 @@ export default defineConfig({
       // input: {
       //   // index: path.resolve(__dirname,'/entries/self-use-version/index.html')
       //   // index: `../../project/${project}/index.html`
-      //   index: path.resolve(__dirname, `../../project/${project}/index.html`),
+      // index: path.resolve(__dirname, `../../project/${project}/index.html`),
       //   // index: path.resolve(__dirname, "../../project/yazhou-pc/index.html")
       //   //  index:  "../../project/yazhou-pc/index.html"
       // },
@@ -51,12 +51,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      src: "./src",
-      app: "./",
-      dist: "./dist",
-      node_modules: "./node_modules",
-      public: "./public",
-      project_path: `../${project}`,
+      src: path.resolve(process.cwd(), "./src"),
+      app: path.resolve(process.cwd(), "./"),
+      dist: path.resolve(process.cwd(), "./dist"),
+      node_modules: path.resolve(process.cwd(), "./node_modules"),
+      project_path: path.resolve(process.cwd(), `./project/${project}`),
     },
   },
   server: {

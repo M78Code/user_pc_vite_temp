@@ -1,8 +1,9 @@
 /***/
 //  应有引入的方法
-// const {SessionStorage}= useStorege();
-// const {gtag_run} =useGlobelConfig();
-export function gtag_config_send(user_id) {
+import { ss } from "../utils/web-storage";
+import { useGlobelConfig } from "../sdk-config";
+function gtag_config_send(user_id) {
+  const [config] = useGlobelConfig();
   // 设置默认启动参数
   // GA 埋点开关开启---照常统计，和生产环境保持一致
   window.gtag_run = 1;
@@ -23,10 +24,10 @@ export function gtag_config_send(user_id) {
   }
   if (user_id) {
     // 设置用户ID持久化
-    sessionStorage.setItem("user_id", user_id);
+    ss.set("user_id", user_id);
   } else {
     // user_id无效时情况上次的缓存
-    sessionStorage.setItem("user_id", "");
+    ss.set("user_id", "");
     return;
   }
   if (!window.INIT_GTAG && window.gtag_run) {
@@ -40,7 +41,7 @@ export function gtag_config_send(user_id) {
     };
     window.gtag("js", new Date());
     // 配置埋点信息
-    window.gtag("config", window.env.config.GA_TRACKING_ID, { user_id });
+    window.gtag("config", config.value.GA_TRACKING_ID, { user_id });
     // 设置埋点是否已经配置过
     window.INIT_GTAG = true;
   }
@@ -53,7 +54,7 @@ export function gtag_config_send(user_id) {
  * @return {*}
  */
 function gtag_view_send(title, path) {
-  let user_id = sessionStorage.getItem("user_id");
+  let user_id = ss.get("user_id");
   if (user_id && window.gtag_run) {
     // 初始化埋点Google Analytics GA_TRACKING_ID config配置
     if (!window.INIT_GTAG) {
@@ -63,7 +64,7 @@ function gtag_view_send(title, path) {
     //   return;
     // }
     // 埋点发送网页跟踪信息
-    window.gtag("config", window.env.config.GA_TRACKING_ID, {
+    window.gtag("config", config.value.GA_TRACKING_ID, {
       page_title: title, // 'homepage',
       page_path: path, // '/home'
       user_id, // 用户信息
@@ -78,8 +79,8 @@ function gtag_view_send(title, path) {
  * @param {*} value 显示为事件价值的非负整数
  * @return {*}
  */
-export function gtag_event_send(action, category, label, value) {
-  let user_id = sessionStorage.getItem("user_id");
+function gtag_event_send(action, category, label, value) {
+  let user_id = ss.get("user_id");
   if (user_id && window.gtag_run) {
     // 初始化埋点Google Analytics GA_TRACKING_ID config配置
     if (!window.INIT_GTAG) {

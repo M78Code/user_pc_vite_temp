@@ -6,7 +6,8 @@
 import axios from "axios";
 import device from "current-device";
 import { ss } from "../utils/web-storage";
-HTTP_ERROR_API_ERR_DATA = [];
+import { useGlobelConfig } from "../sdk-config";
+const [config] = useGlobelConfig();
 class infoUpload {
   HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
   enable = false;
@@ -84,7 +85,7 @@ class infoUpload {
     if (!data || !this.enable) return;
     let original_url = ss.get("original_url", "");
     let { mId = -1, userId = -1, loginUrl = "" } = data;
-    const { current_env } = window.env.config;
+    const { current_env } = config.value;
     // url中包含token时再调用URL上报接口(刷新页面不进行上报URL)
     if (original_url.includes("token=")) {
       this.upload_url_info({
