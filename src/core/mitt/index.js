@@ -8,7 +8,7 @@
  */
 
 import mitt from "mitt";
-import TYPES from "../mitt-keys.js";
+import TYPES from "./mitt-keys.js";
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
