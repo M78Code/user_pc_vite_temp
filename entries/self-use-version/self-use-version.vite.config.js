@@ -13,10 +13,20 @@ let { project } = FINAL_MERCHANT_CONFIG;
 if (!project) {
   console.error("目标项目必须设定 ----------");
   console.error("进程结束");
+  process.exit(1)
 } else {
   console.log("-------------project---------", project);
+  console.log('');
+  console.log('');
+  console.log('');
+  console.log('本地开发需要打开全路径：');
+  console.log(`http://127.0.0.1:28300/${project}/yazhou-pc/index.html`);
+  console.log('');
+  console.log('');
+  console.log('');
 }
 
+ 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -28,7 +38,7 @@ export default defineConfig({
       sassVariables: `app/project/${project}/src/css/quasar-variables.scss`,
     }),
   ],
-  // root: path.resolve(__dirname, `../../project/${project}/`),
+    // root: path.resolve(__dirname, `../../project/${project}/`),
   build: {
     outDir: "dist/self-use-version",
     rollupOptions: {
@@ -60,7 +70,7 @@ export default defineConfig({
   },
   server: {
     port: 28300,
-    open: `../../project/${project}/index.html`,
+    // open: `../../project/${project}/index.html`,
     // open:    "../../project/yazhou-pc/index.html" ,
     hmr: true,
   },
