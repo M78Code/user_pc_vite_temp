@@ -8,7 +8,7 @@
  */
 import { ss, ls } from "../utils/web-storage";
 import { DateForMat } from "../formart/";
-import { throttle, isFunction } from "lodash";
+import { throttle } from "lodash";
 class HttpLog {
   /**
    * @description: 构造函数

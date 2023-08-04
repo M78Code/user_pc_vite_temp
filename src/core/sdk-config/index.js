@@ -6,9 +6,13 @@
 import { set, cloneDeep } from "lodash";
 import { onMounted, onUnmounted, effectScope, ref, unref, watch } from "vue";
 
+/**
+ * 创建一个公共的Globalstate函数工厂
+ */
+
 function createGlobalState(stateFactory) {
   let state;
-  let initialized = false
+  let initialized = false;
   const scope = effectScope(true);
   return (...args) => {
     if (!initialized) {
@@ -23,6 +27,7 @@ function createGlobalState(stateFactory) {
  * @returns [ref(config),setConfig]
  */
 const useGlobelConfig = createGlobalState(() => {
+  console.log(window.BUILDIN_CONFIG,"window.BUILDIN_CONFIG")
   const config = ref(cloneDeep(window.BUILDIN_CONFIG || {}));
   watch(config, (v, o) => {
     console.log("config update", o);

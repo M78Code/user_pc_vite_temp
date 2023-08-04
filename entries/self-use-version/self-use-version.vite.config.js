@@ -55,7 +55,7 @@ export default defineConfig({
       app: path.resolve(process.cwd(), "./"),
       dist: path.resolve(process.cwd(), "./dist"),
       node_modules: path.resolve(process.cwd(), "./node_modules"),
-      project_path: `./project/${project}`,
+      project_path: path.resolve(process.cwd(), `./project/${project}`),
     },
   },
   server: {
