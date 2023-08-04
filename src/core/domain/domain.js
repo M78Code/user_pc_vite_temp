@@ -73,6 +73,7 @@ import axios from "axios";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create()
  
+
 // 域名计算结果
  const  DOMAIN_RESULT={
     //最优 API 
@@ -89,12 +90,11 @@ const axios_instance = axios.create()
 
 
 
-
-
+import STANDARD_KEY from "../standard-key/index.js"
 
 
 // 域名计算  本地存错 挂载键 
-const   DOMAIN_API_STORAGE_KEY = "domain_api01"
+const   DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01") 
 
 
  

@@ -3,7 +3,7 @@
  * @Date: 2023-07-30 13:52:55
  * @Description: 标准建
  */
-import { constantCase } from "change-case";
+ 
 const namespace = "TY_SDK";
 
 let KEY_ARR = [
@@ -31,5 +31,5 @@ let STANDARD_KEY = {
 console.log("STANDARD_KEY---------", STANDARD_KEY);
 // 用法：
 // import STANDARD_KEY from  "app/standard-key.js"
-STANDARD_KEY.get("domain_api_key") 
+// STANDARD_KEY.get("domain_api_key") 
 export default STANDARD_KEY;
