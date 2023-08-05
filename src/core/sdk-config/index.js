@@ -3,7 +3,7 @@
  * @Date: 2023-07-30 15:13:55
  * @Description: postmessage 接收配置sdk 配置
  */
-import utils from "vue";
+import { onMounted, onUnmounted } from "vue";
 
 function use_get_sdk_config() {
   onMounted(() => {

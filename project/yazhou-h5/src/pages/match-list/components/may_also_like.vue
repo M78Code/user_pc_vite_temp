@@ -1,8 +1,7 @@
 <!--
- * @Author: ladron
- * @Date: 2021-07-01 20:34:53
  * @Description: 列表页猜你喜欢
 -->
+
 <template>
   <div class="may_also_like" v-if="slide_list.length">
     <div class="title">
@@ -83,8 +82,9 @@
     </div>
   </div>
 </template>
-
-<script>
+ 
+<script setup>
+import { computed, onBeforeMount, onMounted, ref, watch } from "vue"
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";  // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 import skt_may_like from "src/public/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
 import counting_down from "src/project/components/common/counting-down";  // 赛事进行中每秒变化的计时器
@@ -94,154 +94,143 @@ import betting from "src/project/mixins/betting/betting.js";    // 押注动作�
 import {mapMutations, mapGetters} from "vuex";
 import {api_home} from "src/project/api";
 
-export default {
-  name: "may_also_like.vue",
-  mixins:[match_list_mixin, skt_may_like, odd_convert, betting],
-  components: {
-    "counting-down": counting_down,
-    "team-img": team_img,
+const props = defineProps({
+  from_where: {
+    type: Number | String,
+    default: null,
   },
-  props: {
-    from_where: {
-      type: Number | String,
-      default: null,
-    },
-    show_:{
-      type:Boolean,
-      default:true
-    }
-  },
-  data() {
-    return {
-      slide: 1,
-      // 轮播数据
-      slide_list: [],
-    }
-  },
-  created() {
-    this.get_list()
-  },
-  watch: {
-    show_(newVal) {
-      //没有轮播图和没有赛事时触发事件
-      if (!newVal && !this.slide_list.length) {
-        this.$root.$emit(this.emit_cmd.EMIT_MAY_ALSO_LIKE_CHANGE)
-      }
-    }
-  },
-  computed: {
-    ...mapGetters(['get_bet_list']),
-    //是否选中
-    selected_(){
-      return function (item, index) {
-        try {
-          if (!item.hps[0].hl[0]) return
-          let hl_ = item.hps[0].hl[0]
-          if(!Object.keys(hl_).length) return
-          let id_ = hl_.hn? `${item.mid}_${item.hps[0].chpid || item.hps[0].hpid}_${hl_.ol[index].ot}_${hl_.hn}`:hl_.ol[index].oid
-          return this.get_bet_list.includes(id_)
-        } catch (error) {
-          console.error(error)
-        }
-      }
-    },
-    //投注项状态是否正常
-    normal_(){
-      return function (item,index) {
-        try {
-          let mhs_ = item.mhs == 0 || item.mhs == 11
-          let hs_ = _.get(item,'hps[0].hl[0].hs') == 0 || _.get(item,'hps[0].hl[0].hs') == 11
-          let os_ = _.get(item,`hps[0].hl[0].ol[${index}].os`) == 1
-          return mhs_ && hs_ && os_
-        } catch (error) {
-          return false
-        }
-      }
-    }
-  },
-  methods:{
-    ...mapMutations([
-      // 设置去详情的赛事id
-      'set_goto_detail_matchid',
-      // 设置默认的选中的玩法id:0
-      'set_details_item',
-      // 轮播请求的更新时间
-      'updateHotReqTime',
-    ]),
-    // 赛事状态  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断
-    /**
-     * @description: 进行中的赛事显示累加计时|倒计时
-     * @param {Object} match 赛事对象
-     * @return {Boolean}
-     */
-    show_counting_down(match) {
-      return [1,2,10].includes(match.ms * 1)
-    },
-    async get_list() {
-      try {
-        let res = await api_home.hot_ulike_recommendation({isHot: this.from_where})
-        if (_.get(res,'code') == 200 && _.get(res,'data.length') > 0) {
-          this.slide_list = _.get(res,'data');
-          this.updateHotReqTime(Date.now())
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    goto_detail_video(match) {
-      if ( !match || !match.mid ) return;
-      // 设置去详情的赛事id
-      this.set_goto_detail_matchid(match.mid);
-      // 设置默认的选中的玩法id:0
-      this.set_details_item(0);
-      this.$router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
-    },
-    // 盘口内容
-    handicap_on(item, index){
-      try {
-        if(item.hps && item.hps[0].hl[0]){
-          return item.hps[0].hl[0].ol[index].on
-        }
-      }catch (e){
-        console.error(e);
-      }
-    },
-    // 赔率内容
-    handicap_ov(item, index){
-      try {
-        if(item.hps && item.hps[0].hl[0]&& item.hps[0].hl[0].ol){
-          let val = item.hps[0].hl[0].ol[index].ov / 100000, hsw = item.hps[0].hsw;
-          return this.compute_value_by_cur_odd_type(val, null, hsw,null,item.ciid) ? this.compute_value_by_cur_odd_type(val, null, hsw,null,item.csid) : '';
-        }
-      }catch (e){
-        console.error(e);
-        return ''
-      }
-    },
-    /**
-     *@description 投注逻辑
-     *@param {Object} match 赛事数据
-     *@param {Number} index ol层的下标
-     *@param {Boolean} flag 投注项是否正常
-     *@return {Undefined} undefined
-     */
-    bet_click_(match, index, flag){
-      if (!(match.hps && match.hps[0].hl[0]&& match.hps[0].hl[0].ol && flag)) return
-      let ol_item = match.hps[0].hl[0].ol[index]
-      if (ol_item.os == 2 || !ol_item.ov || ol_item.ov < 101000) return
-      this.bet_click(match, match.hps[0], ol_item);
-      //应对猜你喜欢模块的赔率盘口跟新不及时
-      this.get_list()
-    },
-  },
-  destroyed () {
-    this.slide_list = []
-  },
-}
-</script>
+  show_:{
+    type:Boolean,
+    default:true
+  }
+})
 
-<style lang="scss" scoped>
-.may_also_like {
+const slide_list = ref([])
+
+onMounted(() => {
+  get_list()
+})
+
+// TODO 其他模块得 store  待添加
+// ...mapGetters(['get_bet_list']),
+// ...mapMutations([
+//       // 设置去详情的赛事id
+//       'set_goto_detail_matchid',
+//       // 设置默认的选中的玩法id:0
+//       'set_details_item',
+//       // 轮播请求的更新时间
+//       'updateHotReqTime',
+//     ]),
+
+watch(() => props.show_, () => {
+  //没有轮播图和没有赛事时触发事件
+  if (!newVal && !slide_list.value.length) {
+    this.$root.$emit(this.emit_cmd.EMIT_MAY_ALSO_LIKE_CHANGE)
+  }
+})
+
+const selected_ = computed(() => {
+  return function (item, index) {
+    try {
+      if (!item.hps[0].hl[0]) return
+      let hl_ = item.hps[0].hl[0]
+      if(!Object.keys(hl_).length) return
+      let id_ = hl_.hn? `${item.mid}_${item.hps[0].chpid || item.hps[0].hpid}_${hl_.ol[index].ot}_${hl_.hn}`:hl_.ol[index].oid
+      return this.get_bet_list.includes(id_)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+})
+
+// 投注项状态是否正常
+const normal_ = computed(() => {
+  return function (item,index) {
+    try {
+      let mhs_ = item.mhs == 0 || item.mhs == 11
+      let hs_ = _.get(item,'hps[0].hl[0].hs') == 0 || _.get(item,'hps[0].hl[0].hs') == 11
+      let os_ = _.get(item,`hps[0].hl[0].ol[${index}].os`) == 1
+      return mhs_ && hs_ && os_
+    } catch (error) {
+      return false
+    }
+  }
+})
+
+  // 赛事状态  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断
+  /**
+   * @description: 进行中的赛事显示累加计时|倒计时
+   * @param {Object} match 赛事对象
+   * @return {Boolean}
+   */
+  const show_counting_down = (match) => {
+    return [1,2,10].includes(match.ms * 1)
+  }
+  const  get_list = async() => {
+    try {
+      let res = await api_home.hot_ulike_recommendation({isHot: this.from_where})
+      if (_.get(res,'code') == 200 && _.get(res,'data.length') > 0) {
+        slide_list.value = _.get(res,'data');
+        this.updateHotReqTime(Date.now())
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const goto_detail_video = (match) => {
+    if ( !match || !match.mid ) return;
+    // 设置去详情的赛事id
+    this.set_goto_detail_matchid(match.mid);
+    // 设置默认的选中的玩法id:0
+    this.set_details_item(0);
+    this.$router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
+  }
+  // 盘口内容
+  const handicap_on = (item, index) => {
+    try {
+      if(item.hps && item.hps[0].hl[0]){
+        return item.hps[0].hl[0].ol[index].on
+      }
+    }catch (e){
+      console.error(e);
+    }
+  }
+  // 赔率内容
+  const handicap_ov = (item, index) => {
+    try {
+      if(item.hps && item.hps[0].hl[0]&& item.hps[0].hl[0].ol){
+        let val = item.hps[0].hl[0].ol[index].ov / 100000, hsw = item.hps[0].hsw;
+        return this.compute_value_by_cur_odd_type(val, null, hsw,null,item.ciid) ? this.compute_value_by_cur_odd_type(val, null, hsw,null,item.csid) : '';
+      }
+    }catch (e){
+      console.error(e);
+      return ''
+    }
+  }
+  /**
+   *@description 投注逻辑
+    *@param {Object} match 赛事数据
+    *@param {Number} index ol层的下标
+    *@param {Boolean} flag 投注项是否正常
+    *@return {Undefined} undefined
+    */
+  const bet_click_ = (match, index, flag) => {
+    if (!(match.hps && match.hps[0].hl[0]&& match.hps[0].hl[0].ol && flag)) return
+    let ol_item = match.hps[0].hl[0].ol[index]
+    if (ol_item.os == 2 || !ol_item.ov || ol_item.ov < 101000) return
+    this.bet_click(match, match.hps[0], ol_item);
+    //应对猜你喜欢模块的赔率盘口跟新不及时
+    this.get_list()
+  }
+
+  onBeforeMount(() => {
+    slide_list.value = []
+  })
+ 
+</script>
+ 
+<style scoped lang="scss">
+ .may_also_like {
   padding-bottom: 0.06rem;
   > .title {
     height: 0.4rem;

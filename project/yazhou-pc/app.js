@@ -96,6 +96,26 @@ const init_domain = async (config) => {
     AllDomain.create(() => {
       // 首次进入,发现最快的域名
       console.log(" init_domain -- 回调执行:");
+      //  SDK
+      if (config) {
+        let { token, tryPlay } = config;
+
+        if (config.token) {
+          ss.set(token_key, token);
+        } else {
+          // 调用接口，获取token
+          handle_user_tryPlay();
+        }
+        if (config.call_back) {
+          if (typeof config.call_back == "function") {
+            config.call_back();
+          }
+        }
+      } else {
+        handle_user_tryPlay();
+      }
+      // http初始化方法 会调用 setApiDomain
+      http.init();
       if (!init_load.value) {
           // http初始化方法 会调用 setApiDomain
           http.init();

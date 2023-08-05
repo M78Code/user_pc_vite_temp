@@ -1,6 +1,4 @@
 <!--
- * @Author: Cronus
- * @Date: 2020-10-20 17:23:47
  * @Description: 冠军赛事投注项组件
 -->
 <template>
@@ -30,71 +28,53 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted } from "vue";
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
-import {mapGetters} from 'vuex'
-export default {
-  name: "odd_item_champion",
-  mixins:[odd_convert],
-  props:{
-    ol_item:Object,
-    hs:Number,        // 0:开, 1:封, 2:关, 11:锁
-    csid:String|Number,
-  },
-  data(){
-    return{
-      //红升绿降状态
-      red_green_status:0,
-    }
-  },
-  created () {
-    //红升绿降timeout
-    this.timer_=0;
-    // 设置是否显示投注项dom的id属性值
-    this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
-  },
-  mounted(){},
-  methods:{
-    get_odds_value(ol_item,hsw){
-      let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
-      let csid = this.csid;
-      let r1 = this.compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
-      return r1 || 0;
-    },
-  },
-  watch:{
-    /**
-     * @description: 监听赔率变化实现红升绿降
-     * @param v1 新值
-     * @param v0 旧值
-     * @return undefined
-     */
-    'ol_item.ov'(v1,v0){
-      let curr = Number(v1);
-      let old = Number(v0);
 
-      clearTimeout(this.timer_);
-      if(curr > old){
-        this.red_green_status = 1;
-      }else if(curr < old){
-        this.red_green_status = -1;
-      }
-      this.timer_ = setTimeout(() => {
-        this.red_green_status = 0;
-      },3000);
-    },
-  },
-  computed:{
-    ...mapGetters(['get_menu_type','get_theme']),
-    /**
-     * @description: 盘口状态 1.开盘，2封盘，3关盘 ，4 锁盘
-     * @return number 1开盘 4锁盘正常显示  2 封盘显示锁,  3关盘显示短横线
-     */
-    odd_status(){
-      if(!this.ol_item) return 3;
-      return this.$common.odds.get_odds_active(this.ol_item.ms,this.hs,this.ol_item.os);
-    },
+const props = defineProps({
+  ol_item:Object,
+  hs:Number,        // 0:开, 1:封, 2:关, 11:锁
+  csid:String|Number,
+})
+
+const timer_ = ref(null)
+const red_green_status = ref(0)
+
+// TODO 其他模块得 store  待添加
+// mixins:[odd_convert],
+// ...mapGetters(['get_menu_type','get_theme']),
+
+onMounted(() => {
+  // 设置是否显示投注项dom的id属性值
+  DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+})
+
+watch(() => ol_item.ov, () => {
+  let curr = Number(v1);
+  let old = Number(v0);
+
+  clearTimeout(timer_.value);
+  if(curr > old){
+    red_green_status.value = 1;
+  }else if(curr < old){
+    red_green_status.value = -1;
   }
+ timer_.value = setTimeout(() => {
+    red_green_status.value = 0;
+  },3000);
+})
+
+const odd_status = computed(() => {
+  if(!ol_item) return 3;
+  return $common.odds.get_odds_active(ol_item.ms,hs,ol_item.os);
+})
+
+const get_odds_value = (ol_item,hsw) => {
+  let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
+  let csid = csid;
+  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
+  return r1 || 0;
 }
 </script>
 

@@ -3,7 +3,7 @@
  * @LastEditors: jiffy
  * @Description: ws通信日志功能类
  */
-import utils from "../utils";
+import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
 import { ss } from "../utils/web-storage";
 const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
@@ -19,7 +19,7 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (utils.GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
+    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
       ss.set("wsl", "9999");
     }

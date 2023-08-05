@@ -1,7 +1,7 @@
 /*
  * @Description: 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
  */
-import utils from "src/core/utils/index.js";
+import utils from "src/public/utils/utils.js";
 
 const useMatchUtils = () => {
   /**

@@ -8,7 +8,7 @@
  */
 import { get } from "lodash";
 import { DateForMat } from "../formart/";
-import utils from "../utils";
+import { deepMerge, GetUrlParams } from "../utils";
 const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 
 class ZhuGe {
@@ -33,7 +33,7 @@ class ZhuGe {
   };
   constructor(confg = {}) {
     const _this = this;
-    this.config = utils.deepMerge(this.config, confg);
+    this.config = deepMerge(this.config, confg);
     for (var i = 0; i < _this.length; i++) {
       var key = _this.methods[i];
       this[key] = this.factory(key);
@@ -41,7 +41,7 @@ class ZhuGe {
     try {
       // 获取诸葛埋点开关
       this.config.enable =
-      utils.GetUrlParams("zhuge") || this.config.mid.includes(mid);
+        GetUrlParams("zhuge") || this.config.mid.includes(mid);
     } catch (error) {}
     // 诸葛埋点开关关闭时,直接终止
     if (!this.config.enable) {

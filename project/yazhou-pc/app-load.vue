@@ -76,15 +76,15 @@ timeCheck();
 function global_click() {}
 function copyToken(is_key_down) {
   // if (this.get_user && this.get_user.token) {
-    if (is_key_down) {
-      copyToClipboard(`?ignore_iframe_pc=1&token=${this.get_user.token}`);
-    } else {
-      copyToClipboard(
-        `?wsl=9999&ignore_iframe_pc=1&token=${this.get_user.token}`
-      );
-    }
-  // }
+  if (is_key_down) {
+    copyToClipboard(`?ignore_iframe_pc=1&token=${this.get_user.token}`);
+  } else {
+    copyToClipboard(
+      `?wsl=9999&ignore_iframe_pc=1&token=${this.get_user.token}`
+    );
   }
+  // }
+}
 /**
  * @description: 检查内嵌版的逻辑处理动作
  */

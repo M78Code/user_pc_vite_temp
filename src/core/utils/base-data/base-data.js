@@ -137,7 +137,6 @@ class BaseData {
     // console.warn("BaseData.init()--------");
     //获取 新旧菜单ID对应
     this.init_mi_euid_map();
-
     // 获取 菜单-联赛-赛事
     this.init_mi_tid_mids();
     // 获取 元数据接口
