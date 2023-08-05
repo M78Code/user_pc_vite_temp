@@ -57,7 +57,6 @@ function force_current_api_flow_use_oss_file_api_reload() {
   // 这里因为版本不一致 ，无论如何都重定向 刷新
   location.replace(new_url);
 }
-// import {GET_DOCUMENT_HIDDEN} from 'xxx'
 class AxiosHttp {
   constructor() {
     // api访问数量(每分钟)
