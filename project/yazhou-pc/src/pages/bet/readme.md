@@ -1,6 +1,4 @@
 <!--
- * @Author: sword
- * @Date: 2021-08-28 14:11:57
  * @Description: 投注模板文件
 -->
 
