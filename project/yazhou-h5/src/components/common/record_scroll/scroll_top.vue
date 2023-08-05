@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import utils from 'src/public/utils/utils.js';
+import utils from 'src/core/utils/index.js';
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
 

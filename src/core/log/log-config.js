@@ -10,7 +10,7 @@
  * @Author:
  * @Description: ws通信日志功能类
  */
-import { GetUrlParams } from "../utils";
+import utils from "../utils";
 import { DateForMat } from "../formart";
 import { config } from "../sdk-config";
 import { ss } from "../utils/web-storage";
@@ -26,7 +26,7 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
+    if (utils.GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
       ss.set("wsl", "9999");
     }
