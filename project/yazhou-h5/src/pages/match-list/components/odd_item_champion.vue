@@ -54,13 +54,13 @@ watch(() => ol_item.ov, () => {
   let curr = Number(v1);
   let old = Number(v0);
 
-  clearTimeout(timer.value_);
+  clearTimeout(timer_.value);
   if(curr > old){
     red_green_status.value = 1;
   }else if(curr < old){
     red_green_status.value = -1;
   }
-  timer.value_ = setTimeout(() => {
+ timer_.value = setTimeout(() => {
     red_green_status.value = 0;
   },3000);
 })
@@ -76,7 +76,6 @@ const get_odds_value = (ol_item,hsw) => {
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
   return r1 || 0;
 }
-
 </script>
 
 <style lang="scss" scoped>

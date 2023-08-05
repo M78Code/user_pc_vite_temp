@@ -6,20 +6,18 @@
  *  商户相关
  */
 // #TODO 等后续get_file_path、http、infoUpload和pako_pb公共模块开发后再替换
-import {get_file_path} from "src/core/file-path/file-path.js"
+import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
-import infoUpload from 'src/core/http/information_upload.js';
+import { infoUpload } from "src/core/http/";
 
 // #TODO 接口统一管理的文件，后续替换
-import { api_details } from "src/public/api/index";
-
+import { api_details } from "src/api/index";
 
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
-const axios_instance = axios.create()
-
+const axios_instance = axios.create();
 
 class userCtr {
  constructor() {
@@ -42,8 +40,6 @@ class userCtr {
    this.token_expired_max_process_delay_time = 15000;
    // getUserInfo 原始数据备份 备份数据
    this.getuserinfo_res_backup= null;
-
-
  }
  /**
   *   调用 getuserinfo 接口返回值  数据备份
@@ -56,26 +52,30 @@ class userCtr {
   *
   */
  set_getuserinfo_res(res) {
-
-   if(!res.data){ return false }
-   if(lodash.get(res,'data.code')!="0000000"){ return false }
-   if(!lodash.get(res,'data.data.userId')){ return false }
+    if (!res.data) {
+      return false;
+    }
+    if (lodash.get(res, "data.code") != "0000000") {
+      return false;
+    }
+    if (!lodash.get(res, "data.data.userId")) {
+      return false;
+    }
    // 数据规整容错
 
    // getUserInfo 原始数据备份 备份数据
     this.getuserinfo_res_backup =     JSON.stringify(res.data) ;
 
     //设置 商户层级的 配置的界面 相关的设置
-    this.set_merchant_config(lodash.get(res,'data.data.configVO'))
+    this.set_merchant_config(lodash.get(res, "data.data.configVO"));
 
        //  调用用户接口，更新 域名流程
-   let oss = lodash.get(res,'data.data.oss',{});
+    let oss = lodash.get(res, "data.data.oss", {});
    oss.gr = lodash.get(res, "data.data.gr","").toUpperCase();
-   window.vue.$root.$emit('set_getuserinfo_oss_api', oss);
+    window.vue.$root.$emit("set_getuserinfo_oss_api", oss);
    //上传数据
-   infoUpload.upload_data(lodash.get(res,'data.data',{}))
+    infoUpload.upload_data(lodash.get(res, "data.data", {}));
   }
-
 
  /**
   * 获取  和 调用 getuserinfo 接口 data 实体 数据
@@ -85,13 +85,12 @@ class userCtr {
   */
  get_getuserinfo_data() {
    if(!this.getuserinfo_res_backup){
-     return null
+      return null;
    }else{
-    let obj =  JSON.parse( this.getuserinfo_res_backup)
-    obj.code = 200
-    return obj
+      let obj = JSON.parse(this.getuserinfo_res_backup);
+      obj.code = 200;
+      return obj;
    }
-
   }
  /**
   * 检查 token 是否过期
@@ -174,15 +173,14 @@ class userCtr {
      // 如果有  token 过期 累加达到 上限 的 流程的定时器 就清除
      if (this.token_expired_max_process_timer) {
        clearTimeout(this.token_expired_max_process_timer);
-       this.token_expired_max_process_timer=null
+        this.token_expired_max_process_timer = null;
      }
      //#TODO 调用 getuserinfo 接口返回值  数据备份
      if (url_temp.includes("user/getUserInfo")) {
-        let data_temp = pako_pb.unzip_data(lodash.get(res, 'data.data'));
+        let data_temp = pako_pb.unzip_data(lodash.get(res, "data.data"));
         data_temp && (res.data.data = data_temp);
-        this. set_getuserinfo_res(res)
+        this.set_getuserinfo_res(res);
      }
-
    }
  }
  /**
@@ -193,10 +191,13 @@ class userCtr {
  async check_login(callback) {
   try {
     // #TODO 接口
-    let res = await api_details.post_check_login()
-    callback(lodash.get(res, "data.data.isLogin", false), lodash.get(res, "data.code") == '0401038')
+      let res = await api_details.post_check_login();
+      callback(
+        lodash.get(res, "data.data.isLogin", false),
+        lodash.get(res, "data.code") == "0401038"
+      );
   } catch (error) {
-    callback(false, true)
+      callback(false, true);
   }
 }
  /**
@@ -221,16 +222,8 @@ class userCtr {
      if (this.all_expired_count >= this.all_expired_count_max) {
         // 设置登录无效
 
-
-
         // #TODO
         // window.vue.$store.commit("set_is_invalid", true);
-
-
-
-
-
-
 
        //显示登录失效弹窗
        setTimeout(() => {
@@ -245,71 +238,86 @@ class userCtr {
        //如果不超限 //清除定时器
        if (this.token_expired_max_process_timer) {
          clearTimeout(this.token_expired_max_process_timer);
-         this.token_expired_max_process_timer=null
+          this.token_expired_max_process_timer = null;
        }
      }
    }, this.token_expired_max_process_delay_time);
  }
 
-
  /**
   *  用户信息的  内的 视频多久 无操作 时间判定
   */
   compute_video_no_handle_time(res){
-
          // 长时间未操作暂停视频开关   1开启; 0关闭
-         let center_video_time = lodash.get(res,'data.videoManageVo.closedWithoutOperation', 0);
+    let center_video_time = lodash.get(
+      res,
+      "data.videoManageVo.closedWithoutOperation",
+      0
+    );
          // 观看时间设置 0默认时间 1自定义时间
-         let close_video_time_settings = lodash.get(res,'data.videoManageVo.videoSettings', 0);
+    let close_video_time_settings = lodash.get(
+      res,
+      "data.videoManageVo.videoSettings",
+      0
+    );
          // 长时间未操作暂停视频时间(自定义时间)
-         let close_video_time_custom = lodash.get(res,'data.videoManageVo.customViewTime', 0);
+    let close_video_time_custom = lodash.get(
+      res,
+      "data.videoManageVo.customViewTime",
+      0
+    );
          // 长时间未操作暂停视频时间(默认时间)
-         let close_video_time = lodash.get(res,'data.videoManageVo.viewingTime', 0)
-         let setting_no_handle_time = (close_video_time_settings ? close_video_time_custom : close_video_time) * 1000 * 60
+    let close_video_time = lodash.get(res, "data.videoManageVo.viewingTime", 0);
+    let setting_no_handle_time =
+      (close_video_time_settings ? close_video_time_custom : close_video_time) *
+      1000 *
+      60;
          // 商户级别视频流量管控开关 1开启、0关闭
-         let config_video_switch = lodash.get(res, 'data.videoManageVo.videoSwitch', 0);
+    let config_video_switch = lodash.get(
+      res,
+      "data.videoManageVo.videoSwitch",
+      0
+    );
          // 系统级别视频流量管控总开关   '1'开启、'0'关闭
-         let config_video_time = lodash.get(res, 'data.videoManageVo.configValue', 0);
+    let config_video_time = lodash.get(
+      res,
+      "data.videoManageVo.configValue",
+      0
+    );
          // 检查暂停视频开关是否开启 与 用户是否长时间未操作
-         if(1*config_video_time != 0 && config_video_switch != 0 && center_video_time != 0 && setting_no_handle_time != 0){
-          return  setting_no_handle_time
-
+    if (
+      1 * config_video_time != 0 &&
+      config_video_switch != 0 &&
+      center_video_time != 0 &&
+      setting_no_handle_time != 0
+    ) {
+      return setting_no_handle_time;
          }else{
-           return  0
+      return 0;
          }
-
-
-
   }
-
-
-
 
  /**
   *  用户信息的 gr 分组参数 判定 流程
   */
 
  check_getuserinfo_gr(res){
-
    let   reload_flg = false;
      // 获取用户分组信息
-     let gr = lodash.get(res,'data.gr');
+    let gr = lodash.get(res, "data.gr");
      if(gr) {
-
-
        gr = gr.toLocaleUpperCase();
        // localStorage持久化用户分组信息
-       sessionStorage.setItem('gr',gr)
+      sessionStorage.setItem("gr", gr);
 
       //  if(window.env.config.gr != gr){
       if(window.BUILDIN_CONFIG.gr != gr){
-
         // #TODO
         let url_search = new URLSearchParams(location.search);
        //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
        url_search.set("rdm", new Date().getTime());
        // 删除  api
-       url_search.delete('api')
+        url_search.delete("api");
        // 增加GR 参数
        url_search.set("gr", gr);
 
@@ -339,26 +347,19 @@ class userCtr {
              // location.reload();
             reload_flg = true;
        }
-
-
-
      } else {
-
-       sessionStorage.setItem('gr','')
+      sessionStorage.setItem("gr", "");
      }
 
-  return reload_flg
-
+    return reload_flg;
  }
-
-
 
 /**
 * 商户 设置 预览 ，这个时候无 token
 */
 
  async handle_merchant_setup_preview(){
-   let params, partnerId
+    let params, partnerId;
    if(location.href.indexOf("?")!=-1){
      let res=location.href.match(/partnerId=([a-zA-Z0-9]*)/);
      if(res&&res.length>1){
@@ -367,40 +368,37 @@ class userCtr {
    }
    if(partnerId){
      params={
-       merchantCode:partnerId
-     }
-
+        merchantCode: partnerId,
+      };
    }else{
-     this.set_web_meta_by_config()
-     return Promise.resolve(1)
+      this.set_web_meta_by_config();
+      return Promise.resolve(1);
    }
 
   //  let api_domains = window.env.config.domain[window.env.config.current_env];
-   let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
+    let api_domains =
+      window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
    let api_domain = api_domains[0];
 
-
    try {
-     let res = await  axios_instance.get(`${api_domain}/yewu12/user/getConfig`, {
+      let res = await axios_instance.get(
+        `${api_domain}/yewu12/user/getConfig`,
+        {
        params ,
        timeout:10000,
-
-     })
-     let data = lodash.get(res,'data.data')
+        }
+      );
+      let data = lodash.get(res, "data.data");
      if ( lodash.isPlainObject(data) ) {
-       this.set_merchant_config(data)
+        this.set_merchant_config(data);
      }else{
-       this.set_web_meta_by_config()
+        this.set_web_meta_by_config();
      }
-
-
    } catch (error) {
-     this.set_web_meta_by_config()
-
+      this.set_web_meta_by_config();
    }
   // 留着给 其他地方异步去处理 后续逻辑
-  return Promise.resolve(1)
-
+    return Promise.resolve(1);
  }
 
  /**
@@ -408,29 +406,24 @@ class userCtr {
   */
 
   set_merchant_config(merchant_config){
-
    if(lodash.isPlainObject(merchant_config)){
-
-     sessionStorage.setItem('merchant_config_json', JSON.stringify(merchant_config))
+      sessionStorage.setItem(
+        "merchant_config_json",
+        JSON.stringify(merchant_config)
+      );
    }
-
-
-
  }
  /**
   * 获取首页 的 默认的  banner 的 地址
   */
  get_banner_url_first_page(){
-   let merchant_config_json = JSON.parse(sessionStorage.getItem("merchant_config_json"))
-   let url = lodash.get(merchant_config_json,'bannerUrl')
+    let merchant_config_json = JSON.parse(
+      sessionStorage.getItem("merchant_config_json")
+    );
+    let url = lodash.get(merchant_config_json, "bannerUrl");
 
-   return  url
-
+    return url;
  }
-
-
-
-
 
 /**
 * 计算设置 网页 基础信息的 最终配置
@@ -439,61 +432,56 @@ class userCtr {
 compute_set_web_meta_config(){
    // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
   //  #TODO
-   let json = sessionStorage.getItem('merchant_config_json')
+    let json = sessionStorage.getItem("merchant_config_json");
   //  let config =  lodash.get(window.env,'config.html_info') || {}
-   let config =  lodash.get(window.BUILDIN_CONFIG,'htmlVariables') || {}
+    let config = lodash.get(window.BUILDIN_CONFIG, "htmlVariables") || {};
    if(json ){
     // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
 
-
-    let merchant_config = JSON.parse(json)
+      let merchant_config = JSON.parse(json);
 
     // 浏览器icon
     if(merchant_config.pcLogoUrl){
-      config.icon = get_file_path(merchant_config.pcLogoUrl)
+        config.icon = get_file_path(merchant_config.pcLogoUrl);
     }
     // 最大宽度
     if(merchant_config.inlineWidth){
-      config.max_width = merchant_config.inlineWidth
+        config.max_width = merchant_config.inlineWidth;
     }
     // 主logo白色
-    if(lodash.get(merchant_config,'configMap.1')){
-      config.day_logo = get_file_path(merchant_config.configMap[1])
+      if (lodash.get(merchant_config, "configMap.1")) {
+        config.day_logo = get_file_path(merchant_config.configMap[1]);
     }
     // 主logo黑色
-    if(lodash.get(merchant_config,'configMap.2')){
-      config.night_logo = get_file_path(merchant_config.configMap[2])
+      if (lodash.get(merchant_config, "configMap.2")) {
+        config.night_logo = get_file_path(merchant_config.configMap[2]);
     }
     // 兼容页logo
     if(merchant_config.compatLogoUrl){
-      config.compatible_logo = get_file_path(merchant_config.compatLogoUrl)
+        config.compatible_logo = get_file_path(merchant_config.compatLogoUrl);
     }
     // loading图片
     if(merchant_config.loadLogoUrl){
-      config.loadLogoUrl = get_file_path(merchant_config.loadLogoUrl)
+        config.loadLogoUrl = get_file_path(merchant_config.loadLogoUrl);
     }
     // 视频异常
     if(merchant_config.videoLogoUrl){
-      config.videoLogoUrl = get_file_path(merchant_config.videoLogoUrl)
+        config.videoLogoUrl = get_file_path(merchant_config.videoLogoUrl);
     }
     // 默认联赛logo
     if(merchant_config.leagueLogoUrl){
-      this.set_league_logo_url(merchant_config.leagueLogoUrl)
+        this.set_league_logo_url(merchant_config.leagueLogoUrl);
       // config.leagueLogoUrl = get_file_path(merchant_config.leagueLogoUrl)
     }
     // 专业版默认主题色
     if(merchant_config.profesTag){
-      config.default_theme.yabo = merchant_config.profesTag
+        config.default_theme.yabo = merchant_config.profesTag;
     }
-
-
    }else{
     // 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
   }
 
-
-  return  config
-
+    return config;
 }
 
 /**
@@ -501,12 +489,12 @@ compute_set_web_meta_config(){
 * @param {undefined} undefined
 */
 set_league_logo_url(url){
-  url = get_file_path(url)
+    url = get_file_path(url);
   let img = new Image();
   img.onload = function () {
     if (this.complete == true) {
       // 图片加载成功
-      let style_el = document.createElement('style');
+        let style_el = document.createElement("style");
       // dom元素设置
       // style_el.innerHTML = `
       // .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
@@ -517,11 +505,11 @@ set_league_logo_url(url){
       // `
       style_el.innerHTML = `
       .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
-      `
-      document.head.appendChild(style_el)
+      `;
+        document.head.appendChild(style_el);
     }
-  }
-  img.src = url
+    };
+    img.src = url;
 }
 /**
 * 预览配置 接口出错 后 按照前端默认的配置来设置 整个网页 基础信息
@@ -533,51 +521,41 @@ set_league_logo_url(url){
 */
  set_web_meta_by_config(){
     //计算 后的  设置 网页 基础信息的 最终配置
-   let config = this.compute_set_web_meta_config()
+    let config = this.compute_set_web_meta_config();
    // 设置标题
-   let title_el = document.createElement('title');
-
-
-
-
-
-
+    let title_el = document.createElement("title");
 
    let lang = "";//获取语言 window.vue.$store.getters.get_lang
 
-
-
-
-
-
-
-   
    let title_str = this.get_web_title(lang);
 
    title_el.innerHTML = title_str;
 
-   let metas = document.getElementsByTagName('meta');
+    let metas = document.getElementsByTagName("meta");
    for (let i = 0; i < metas.length; i++) {
-     if (metas[i].getAttribute('name') =='description' || metas[i].getAttribute('name') =='product-name') {
-       metas[i].setAttribute('content',title_str);
+      if (
+        metas[i].getAttribute("name") == "description" ||
+        metas[i].getAttribute("name") == "product-name"
+      ) {
+        metas[i].setAttribute("content", title_str);
      }
    }
 
     // 修改网站icon
-    let icon_el = document.getElementById('link_icon')
+    let icon_el = document.getElementById("link_icon");
     if(icon_el){
-      icon_el.setAttribute('rel','icon')
-      icon_el.setAttribute('type','image/x-icon')
-      if(sessionStorage.getItem('hide_logo_icon') === '0'){
-        icon_el.setAttribute('href',config.icon);
+      icon_el.setAttribute("rel", "icon");
+      icon_el.setAttribute("type", "image/x-icon");
+      if (sessionStorage.getItem("hide_logo_icon") === "0") {
+        icon_el.setAttribute("href", config.icon);
       }
     }
     // 设置样式
-    let style_el = document.createElement('style')
+    let style_el = document.createElement("style");
     // 获取商户样式_y0
-    const user_data_info = this.get_getuserinfo_data()
-    const _data = lodash.get(user_data_info,'data', {})
-    let merchant_style = _data.stm === 'blue' ? '_y0' : ''
+    const user_data_info = this.get_getuserinfo_data();
+    const _data = lodash.get(user_data_info, "data", {});
+    let merchant_style = _data.stm === "blue" ? "_y0" : "";
     // let style_html = `
     //   body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
     //   body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
@@ -589,14 +567,14 @@ set_league_logo_url(url){
     // `
     let style_html = `
       .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
-    `
+    `;
     // loading图片
     if(config.loadLogoUrl){
-      style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`
+      style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`;
     }
     // 视频异常
     if(config.videoLogoUrl){
-      style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`
+      style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`;
     }
     // 默认联赛logo
     // if(config.leagueLogoUrl){
@@ -606,9 +584,9 @@ set_league_logo_url(url){
     //   .theme02 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
     //   `
     // }
-    style_el.innerHTML = style_html
-    document.head.appendChild(title_el)
-    document.head.appendChild(style_el)
+    style_el.innerHTML = style_html;
+    document.head.appendChild(title_el);
+    document.head.appendChild(style_el);
 
    // 设置主题色
    // if(!window.vue.$store.getters.get_theme){
@@ -617,21 +595,20 @@ set_league_logo_url(url){
    // }
    // window.vue.$store.dispatch('init_loading_theme')
   //  window.vue.$root.$emit(window.vue.emit_cmd.EMIT_MX_COLLECT_COUNT2_CMD);
-
-
-
-
  }
  /**
   * @Description 设置网站标题
   * @param {undefined} undefined
  */
   set_web_title(lang){
-   document.title = this.get_web_title(lang)
-   let metas = document.getElementsByTagName('meta');
+    document.title = this.get_web_title(lang);
+    let metas = document.getElementsByTagName("meta");
    for (let i = 0; i < metas.length; i++) {
-     if (metas[i].getAttribute('name') =='description' || metas[i].getAttribute('name') =='product-name') {
-       metas[i].setAttribute('content',document.title);
+      if (
+        metas[i].getAttribute("name") == "description" ||
+        metas[i].getAttribute("name") == "product-name"
+      ) {
+        metas[i].setAttribute("content", document.title);
      }
    }
  }
@@ -642,15 +619,16 @@ set_league_logo_url(url){
  */
  get_web_title(lang){
   // let title = lodash.get(window.env,`config.html_info.title.${lang}`) || ''
-  let title = lodash.get(window.BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
-  let json = sessionStorage.getItem('merchant_config_json')
+    let title =
+      lodash.get(window.BUILDIN_CONFIG, `htmlVariables.title.${lang}`) || "";
+    let json = sessionStorage.getItem("merchant_config_json");
   if(json){
-    let merchant_config = JSON.parse(json)
+      let merchant_config = JSON.parse(json);
     if(lodash.get(merchant_config,`titleMap.${lang}`)){
-      title = lodash.get(merchant_config,`titleMap.${lang}`)
+        title = lodash.get(merchant_config, `titleMap.${lang}`);
     }
   }
-  return title
+    return title;
  }
 
  /**
@@ -661,27 +639,24 @@ set_league_logo_url(url){
    if(!user_data){
      return;
    }
-   if(user_data.stm=='blue'){
+    if (user_data.stm == "blue") {
      //同步 商户主题色系
-     localStorage.setItem('merchant_style', 'y0');
+      localStorage.setItem("merchant_style", "y0");
      // 修正session主题
      let session_theme =  sessionStorage.getItem("theme");
      if(session_theme){
-       session_theme = session_theme.replace('_y0','')
-       sessionStorage.setItem("theme",session_theme+'_y0')
+        session_theme = session_theme.replace("_y0", "");
+        sessionStorage.setItem("theme", session_theme + "_y0");
      }
    } else {
      //同步 商户主题色系
-     localStorage.setItem('merchant_style', 'common');
+      localStorage.setItem("merchant_style", "common");
      // 修正session主题
-     let session_theme =  sessionStorage.getItem("theme") ||''
-     sessionStorage.setItem("theme",session_theme.replace('_y0',''))
+      let session_theme = sessionStorage.getItem("theme") || "";
+      sessionStorage.setItem("theme", session_theme.replace("_y0", ""));
    }
  }
 }
 
-
-const instance =new userCtr()
-export {
-  instance
-};
+const instance = new userCtr();
+export { instance };

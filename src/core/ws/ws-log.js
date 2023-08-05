@@ -3,11 +3,10 @@
  * @LastEditors: jiffy
  * @Description: ws通信日志功能类
  */
-import utils from "../utils";
+import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
-import { useSdkConfig } from "../sdk-config";
-const [config] = useSdkConfig();
 import { ss } from "../utils/web-storage";
+const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
    * @Description:构造函数
@@ -20,7 +19,7 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (utils.GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
+    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
       ss.set("wsl", "9999");
     }
@@ -181,4 +180,4 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export default new WsLog("PC", config.value.LOG);
+export default new WsLog("PC", FUNCTION_SWITCH.LOG);

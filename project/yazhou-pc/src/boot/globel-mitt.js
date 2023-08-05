@@ -4,6 +4,10 @@ import { ls, ss } from "src/core/utils/web-storage";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
+
+const token_key = STANDARD_KEY.get("token");
+// import store from "src/store-redux-vuex/index.js";
+// let state = store.getState();
 let api_cmd_data;
 /** 抖动处理 触发切网络api域名动作 重新设置api域名函数
  * @description:
@@ -14,9 +18,10 @@ const resetApiDemo = throttle(
   (data) => {
     // 如果用户失效,ws停止请求
     //vx_get_is_invalid
-    // if (data&&vx_get_is_invalid) {
-    //   return;
-    // }
+    //let token = ss.get(token_key);
+    if (data && !ss.get(token_key)) {
+      return;
+    }
     console.log("触发切网络api域名动作", data);
     // 错误上报相关
     if (data && (data.type == "http" || data.type == "ws")) {
@@ -193,14 +198,14 @@ const send_api_error_data = throttle(
   }
 );
 // 接受ws断开命令
-const ws_mitt = useMittOn(MITT_TYPES["EMIT_API_DOMAIN_UPD_CMD"], resetApiDemo);
+const ws_mitt = useMittOn(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, resetApiDemo);
 // 发送用户基本信息到服务命令
 const user_mitt = useMittOn(
-  MITT_TYPES["EMIT_API_USER_PRO_INFO_CMD"],
+  MITT_TYPES.EMIT_API_USER_PRO_INFO_CMD,
   send_user_pro_info
 );
 // 调用用户接口，更新 域名流程
-const api_mitt = useMittOn(MITT_TYPES["set_getuserinfo_oss_api"], (oss_) => {
+const api_mitt = useMittOn(MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API, (oss_) => {
   AllDomain.set_getuserinfo_oss(oss_);
 });
 

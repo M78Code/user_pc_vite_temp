@@ -121,7 +121,6 @@
     </div>
   </div>
 </template>
- 
 <script setup>
 import { computed, onBeforeUnmount, onMounted } from "vue"
 import formartmixin from 'src/project/mixins/module/formartmixin.js';
@@ -129,7 +128,6 @@ import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
 
 const props = defineProps({
-  // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
   // 赛事处于列表中的下标
   i: Number,
