@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC玩法集 Tab 选项"
+  },
+  "category": "tabsBar",
+  "component-name": "TabsBar",
+  "support-customization": "1",
+  "descriptions": ["玩法集 Tab 选项"],
+  "optional-component": [
+    {
+      "component-name": "TabsBar_1",
+      "descriptions": ["Tab 选项-版本1"]
+    }
+  ]
+}

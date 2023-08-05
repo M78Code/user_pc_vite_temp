@@ -2,7 +2,7 @@
  * @Author: cooper cooper@123.com
  * @Date: 2023-08-04 16:24:27
  * @LastEditors: cooper cooper@123.com
- * @LastEditTime: 2023-08-04 17:50:42
+ * @LastEditTime: 2023-08-04 17:56:48
  * @FilePath: \user-pc-vite\src\components\pagination\pagination-1\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -160,3 +160,107 @@ const goToPage = (val) => {
 }
 
 </script>
+
+
+<style  lang="scss" scoped>
+.table-footer-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 20px;
+  height: 36px;
+  font-size: 14px;
+
+  span {
+    margin-left: 20px;
+    .footer-text {
+      margin: 0;
+      font-weight: 500;
+    }
+  }
+}
+.pagination-wrap {
+  display: flex;
+  justify-content: center;
+  height: 60px;
+  font-size: 12px;
+  .pagination-select {
+    display: flex;
+    align-items: center;
+    margin: 0 30px 0 18px;
+    ::v-deep .q-field--focused .q-field__control:after {
+      transform: scale3d(0, 1, 1);
+    }
+    .select {
+      margin-right: 5px;
+      padding: 0;
+      width: 60px;
+      height: 24px;
+      border-radius: 2px;
+    }
+  }
+  .pagination-link {
+    display: flex;
+    align-items: center;
+
+    input {
+      margin: 0 6px;
+      padding: 0 5px;
+      width: 32px;
+      height: 24px;
+      border-radius: 2px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 12px;
+      outline: medium;
+    }
+  }
+  ::v-deep .q-field--auto-height {
+    .q-field__control {
+      padding: 0;
+      min-height: 0px;
+      height: 24px;
+      &:before {
+        border-radius: 2px;
+      }
+      .q-field__native {
+        padding: 0;
+        min-height: 0px;
+      }
+      .q-field__marginal {
+        margin-right: 6px;
+        padding: 2px 0 0 0;
+        height: auto;
+        &.q-anchor--skip {
+          display: none;
+        }
+      }
+    }
+  }
+  ::v-deep .q-field--auto-height .q-field__native span {
+    margin: 0 auto;
+    font-weight: 500;
+    font-size: 12px;
+  }
+}
+.q-pagination {
+  ::v-deep .q-btn {
+    margin: 0 3px;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    .q-btn__wrapper {
+      min-height: 0px;
+      &:before {
+        box-shadow: none;
+      }
+    }
+  }
+}
+.select-item {
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+  cursor: pointer;
+}
+</style>
