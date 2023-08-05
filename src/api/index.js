@@ -1,19 +1,19 @@
 
-import * as api_match from "src/public/api/module/match/match_api.js"; //masterj
-import * as api_betting from "src/public/api/module/betting/index.js"; //ronney
-import * as api_search from "src/public/api/module/search/index.js"; //masterj
-import * as api_details from "src/public/api/module/details/index.js"; //masterj
-import * as api_filter from "src/public/api/module/filter/filter_api.js"; //masterj
-import * as api_account from "src/public/api/module/account/account_api.js"; //bruce
-import * as api_announce from "src/public/api/module/announce/index.js"; //bruce
-import * as api_virtual from "src/public/api/module/virtual/index.js"; //bruce
-import * as api_analysis from "src/public/api/module/analysis/analysis.js"; //bruce
-import * as api_chatroom from "src/public/api/module/chatroom/index.js"; //bruce
-import * as api_admin from "src/project/api/module/admin/index.js"    // router
-import * as api_common from "src/project/api/module/common/index.js"   // router
-import * as api_home from "src/project/api/module/home/home.js"        // router
-import * as api_global from "src/project/api/module/global/index.js"    // router
-import * as api_result from "src/project/api/module/result/index.js"     //hellojay
+import * as api_match from "./match/match_api.js"; //masterj
+import * as api_betting from "./betting/index.js"; //ronney
+import * as api_search from "./search/index.js"; //masterj
+import * as api_details from "./details/index.js"; //masterj
+import * as api_filter from "./filter/filter_api.js"; //masterj
+import * as api_account from "./account/account_api.js"; //bruce
+import * as api_announce from "./announce/index.js"; //bruce
+import * as api_virtual from "./virtual/index.js"; //bruce
+import * as api_analysis from "./analysis/analysis.js"; //bruce
+import * as api_chatroom from "./chatroom/index.js"; //bruce
+import * as api_admin from "./module/admin/index.js"    // router
+import * as api_common from "./module/common/index.js"   // router
+import * as api_home from "./module/home/home.js"        // router
+import * as api_global from "./module/global/index.js"    // router
+import * as api_result from "./module/result/index.js"     //hellojay
 
 
 export {
@@ -44,8 +44,8 @@ export {
   api_admin,
   // 全局使用接口定义
   api_global,
-  // 联赛筛选api接口定义
-  api_filter,
+  // // 联赛筛选api接口定义
+  // api_filter,
   // 首页api接口定义
   api_home,
   // 赛果api接口

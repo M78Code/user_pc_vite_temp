@@ -1,21 +1,9 @@
-/*
- * @Author: jiffy
- * @Date: 2023-08-02 16:35:21
- * @LastEditTime: 2023-08-04 15:52:52
- * @LastEditors: pmtymalick pmtymalick
- * @Description: 说明
- *
- */
-
 import mitt from "mitt";
-import * as  MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
+import * as MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
 
-import  * as MITT_TYPES_DEFAULT from "./mitt-keys"
+import * as MITT_TYPES_DEFAULT from "./mitt-keys";
 
-const MITT_TYPES= Object.assign({}, MITT_TYPES_DEFAULT ,MITT_TYPES_PROJECT)
-
-
-
+const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
 
 const emitter = new mitt();
 /**
@@ -23,14 +11,14 @@ const emitter = new mitt();
  * @returns {off,emit(data)}
  */
 function useMittOn(...args) {
-  const [key] = args;
+  const [key, fun] = args;
   if (!MITT_TYPES[key]) {
     console.error("mitt key is not register");
     return;
   }
   emitter.on.apply(emitter, args);
   return {
-    off: () => emitter.off(key),
+    off: () => emitter.off(key, fun),
     emit: (data) => useMittEmit(key, data),
   };
 }
