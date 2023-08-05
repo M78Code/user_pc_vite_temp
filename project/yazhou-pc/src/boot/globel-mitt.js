@@ -1,11 +1,10 @@
 import { http, AllDomain } from "src/core/http/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { ls } from "src/core/utils/web-storage";
-
+import { ls, ss } from "src/core/utils/web-storage";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
-const { NODE_ENV, TAG } = window.BUILDIN_CONFIG;
-const api_cmd_data = {};
+const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
+let api_cmd_data;
 /** 抖动处理 触发切网络api域名动作 重新设置api域名函数
  * @description:
  * @param {undefined}  data 消息体
@@ -80,13 +79,13 @@ const send_user_pro_info = () => {
   }
   let project_name = "";
   // 获取项目信息
-  if (window.env.config.FINAL_TARGET_PROJECT_NAME == "yabo") {
+  if (INAL_TARGET_PROJECT_NAME == "yabo") {
     project_name = "pc-zhuanye";
   }
   // 拼装需要提交的数据
   let data = {
-    config: window.env.config, // 所有配置信息
-    env: window.env.config.current_env, // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
+    config: window.BUILDIN_CONFIGg, // 所有配置信息
+    env: CURRENT_ENV, // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
     projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
     projectInfo: { final_type: project_name }, // 项目信息对象内 必须有一个字段 final_type :  取值范围 ： [  'pc-zhuanye',  'h5-xinban', 'h5-jiuban' ]
     userInfo: userInfo, // 用户信息 对象   user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
@@ -118,7 +117,7 @@ const send_api_error_data = throttle(
       // 是开发环境时直接返回
       return;
     }
-    if (this.api_cmd_data && this.api_cmd_data.data.type == "ws") {
+    if (api_cmd_data && api_cmd_data.data.type == "ws") {
       // ws断开推送消息的直接返回
       return;
     }
@@ -151,37 +150,27 @@ const send_api_error_data = throttle(
       if (!userInfo) userInfo = null;
 
       // 获取提交的错误信息
-      if (this.api_cmd_data) {
-        if (new Date().getTime() - this.api_cmd_data.time < 25 * 1000) {
-          console.log("this.api_cmd_data.data==", this.api_cmd_data.data);
-          if (this.api_cmd_data.data) {
-            errorApi = this.api_cmd_data.data;
+      if (api_cmd_data) {
+        if (new Date().getTime() - api_cmd_data.time < 25 * 1000) {
+          console.log("api_cmd_data.data==", api_cmd_data.data);
+          if (api_cmd_data.data) {
+            errorApi = api_cmd_data.data;
           }
         }
       }
 
       // 获取api域名信息
-      try {
-        if (object) {
-          apiStatus = object;
-        } else {
-          let str = localStorage.getItem(AllDomain.DOMAIN_API);
-          if (str) {
-            // 字符串转json对象数据
-            apiStatus = JSON.parse(str);
-          }
-        }
-      } catch (error) {}
+      apiStatus = object || ls.get(AllDomain.DOMAIN_API);
     }
     // 拼装需要提交的数据
     let data = {
-      env: window.env.config.current_env, // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
-      tag: window.env.config.TAG, // git tag
+      env: CURRENT_ENV, // 环境信息 ，  可选值： local_dev  ，local_test，local_ylcs，idc_pre，idc_sandbox，idc_lspre，idc_online
+      tag: TAG, // git tag
       projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
-      projectInfo: window.env.config.pro_arr, // 项目信息 对象
-      config: window.env.config, // 所有配置信息
+      projectInfo: PRO_ARR, // 项目信息 对象
+      config: window.BUILDIN_CONFIG, // 所有配置信息
       userInfo: userInfo, // 用户信息 对象  ，  //  user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-      userToken: sessionStorage.getItem("pc_token"), //用户 的  token
+      userToken: ss.get("pc_token"), //用户 的  token
       apiStatus: apiStatus, // 目前页面上 允许的请求 域对象  以及   各自目前的  状态 延迟信息
       lang: lang, // 当前用户的 选择 的 页面展示语言
       description: "", // 描述  ，自己 附加的  描述信息 ，便于分析问题
