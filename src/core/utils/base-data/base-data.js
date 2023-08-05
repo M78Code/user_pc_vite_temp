@@ -12,12 +12,12 @@
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import userCtr from 'src/public/utils/user/userCtr.js';
+import { instance as userCtr } from "src/core/user-config/user-ctr.js";
 
-// indexeDb 
+// indexeDb
 import { db } from "src/core/utils/base-data/config/indexedPB.js";
 
-import { api_base_data, api_common } from "src/public/api/index.js";
+import { api_base_data, api_common } from "src/api/index.js";
 
 // import VrMiConfig from "./config/vr-mi.js";
 
@@ -94,36 +94,33 @@ class BaseData {
     this.is_mi_300_open = false;
     // 电竞是否开放 对外输出
     this.is_mi_2000_open = false;
-    // 虚拟体育是否开放 内部判断 
-    this.is_mi_300_open_int = false
-    // 电竞是否开放 内部判断 
+    // 虚拟体育是否开放 内部判断
+    this.is_mi_300_open_int = false;
+    // 电竞是否开放 内部判断
     this.is_mi_2000_open_int = false;
 
     // 滚球赛事 赛种id
-    this.mi_gunqiu = []
+    this.mi_gunqiu = [];
 
     // c菜单定时器
-    this.menu_init_time_close = {}
+    this.menu_init_time_close = {};
 
     // 重置菜单定时器
-    this.reset_menu_init_time = {}
+    this.reset_menu_init_time = {};
 
     //左侧菜单队列 默认
     this.left_menu_base_mi_arr = [
       101, 102, 2000, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115,
       114, 104, 106, 118, 400, 300,
-    ]
+    ];
 
     // 电子竞技
-    this.sports_mi = [
-      2100, 2101, 2103, 2102
-    ]
+    this.sports_mi = [2100, 2101, 2103, 2102];
     // 显示冠军
-    this.is_show_guanjin = true
+    this.is_show_guanjin = true;
 
     // 电竞更新
-    this.esport_menu_version = '1111'
-
+    this.esport_menu_version = "1111";
   }
   /**
    * 初始化数据
@@ -140,62 +137,61 @@ class BaseData {
     // console.warn("BaseData.init()--------");
     //获取 新旧菜单ID对应
     this.init_mi_euid_map();
- 
+
     // 获取 菜单-联赛-赛事
     this.init_mi_tid_mids();
     // 获取 元数据接口
     this.init_base_data();
     // 获取 菜单的国际化
-    this.init_base_menu_il8n()
+    this.init_base_menu_il8n();
 
     // 获取 用户信息
     this.init_user_info();
 
     // 获取 虚拟体育 的 数据对象
-    this.set_vr_mi_config()
+    this.set_vr_mi_config();
 
     // 获取 菜单数量统计
     this.init_mew_menu_list();
 
     // 定时请求菜单接口
-    this.set_menu_init_time(1500)
+    this.set_menu_init_time(1500);
 
-    this.reset_menu_init_time = setTimeout(()=>{
-      this.clear_menu_init_time()
+    this.reset_menu_init_time = setTimeout(() => {
+      this.clear_menu_init_time();
       // 5分钟一次
-      this.set_menu_init_time(300000)
-    },2000)
+      this.set_menu_init_time(300000);
+    }, 2000);
   }
 
   // 模拟数据推送 左侧菜单和顶部菜单 修改
-  set_ws_send_new_menu_init(){
+  set_ws_send_new_menu_init() {
     // console.warn('开始模拟推送菜单数据-----')
-    this.set_left_menu_init(menu_list_default.data)
+    this.set_left_menu_init(menu_list_default.data);
   }
 
   // 模拟数据推送 用户信息
-  set_ws_send_new_user_info_init(){
+  set_ws_send_new_user_info_init() {
     // console.warn('开始模拟推送用户数据-----')
-    this.resolve_getUserInfo_res(ws_user_info)
+    this.resolve_getUserInfo_res(ws_user_info);
   }
   // 模拟数据推送 vr 修改
-  set_ws_send_new_vr_menu_init(){
+  set_ws_send_new_vr_menu_init() {
     // console.warn('开始模拟推送菜单数据-----')
-    this.vr_mi_config = vr_menu_info
-    this.base_data_version = Date.now(); 
+    this.vr_mi_config = vr_menu_info;
+    this.base_data_version = Date.now();
   }
 
   // 菜单初始化 因为菜单是去轮询的 so
-  set_menu_init_time(number){
-
-    this.clear_menu_init_time()
+  set_menu_init_time(number) {
+    this.clear_menu_init_time();
 
     this.menu_init_time_close = setInterval(() => {
       // 获取 用户信息
       this.init_user_info();
 
       // 获取 虚拟体育 的 数据对象
-      this.set_vr_mi_config()
+      this.set_vr_mi_config();
 
       // 获取 菜单数量统计
       this.init_mew_menu_list();
@@ -206,26 +202,26 @@ class BaseData {
   }
 
   // 清除 定时器
-  clear_menu_init_time(){
-    clearInterval(this.menu_init_time_close)
+  clear_menu_init_time() {
+    clearInterval(this.menu_init_time_close);
   }
 
   // 清除 重置定时器
-  clear_reset_init_time(){
-    clearInterval(this.reset_menu_init_time)
+  clear_reset_init_time() {
+    clearInterval(this.reset_menu_init_time);
   }
   /**
    * 轮询 获取用户信息
-  */
-  async init_user_info(){
+   */
+  async init_user_info() {
     // let token = store.getters.get_user_token || ''
     // let res = await api_account.get_user_info({token})
 
     // console.warn("init_user_info",res.data)
     // let user_info = _.get(res,'data.data',{})
     // let user_info = _.get(res,'data.data',{})
-    let user_info = _.get(userCtr.get_getuserinfo_data(),'data') 
-    if(user_info && Object.keys(user_info).length){
+    let user_info = _.get(userCtr.get_getuserinfo_data(), "data");
+    if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)
 
@@ -233,9 +229,8 @@ class BaseData {
       // if(old_user != new_user && new_user){
       //   store.dispatch("set_user_assign",user_info);
       // }
-      this.resolve_getUserInfo_res( user_info );
+      this.resolve_getUserInfo_res(user_info);
     }
-
   }
   /**
    * 用默认数据 初始化
@@ -245,7 +240,7 @@ class BaseData {
 
     this.resolve_mi_euid_map_res();
 
-    if(!this.mew_menu_list_res.length){
+    if (!this.mew_menu_list_res.length) {
       this.mew_menu_list_res = menu_list_default.data;
     }
     // ==================
@@ -264,36 +259,36 @@ class BaseData {
   /**
    * 国际化菜单
    */
-  async init_base_menu_il8n(){
+  async init_base_menu_il8n() {
     let res = await api_base_data.post_base_data_menu_i18n({});
 
     let menu_i18n = this.set_ses_wapper(res, {});
 
     this.resolve_menus(menu_i18n);
-  } 
-
+  }
 
   // 获取数据缓存 ，用于刷新
-  get_new_data(){
+  get_new_data() {
     // 获取菜单数据缓存
-    let session_info = localStorage.getItem('is_session_base_data') 
-    if(!session_info){
-      return
+    let session_info = localStorage.getItem("is_session_base_data");
+    if (!session_info) {
+      return;
     }
     const session_base_data = JSON.parse(session_info);
 
-    if(Object.keys(session_base_data).length){
-      const {mi_euid_map_res,mew_menu_list_res,menu_i18n_default} = session_base_data
-      this.mi_euid_map_res = mi_euid_map_res
-      this.mew_menu_list_res = mew_menu_list_res
+    if (Object.keys(session_base_data).length) {
+      const { mi_euid_map_res, mew_menu_list_res, menu_i18n_default } =
+        session_base_data;
+      this.mi_euid_map_res = mi_euid_map_res;
+      this.mew_menu_list_res = mew_menu_list_res;
 
       // this.resolve_menus(menu_i18n_default)
     }
   }
   /**
    * 滚球赛事的赛种id
-  */
-  set_mi_gunqiu(){
+   */
+  set_mi_gunqiu() {
     //过滤常规球类
     let mi_100_arr = [];
     let mi_2000_arr = [];
@@ -323,26 +318,25 @@ class BaseData {
         item.mif = mif;
         mi_2000_arr.push(item);
       }
-    })
+    });
 
+    let mi_100_gunqiu = this.set_mi_gunqiu_sports(mi_100_arr);
+    let mi_2000_gunqiu = this.set_mi_gunqiu_sports(mi_2000_arr) || [];
 
-    let mi_100_gunqiu = this.set_mi_gunqiu_sports(mi_100_arr)
-    let mi_2000_gunqiu = this.set_mi_gunqiu_sports(mi_2000_arr) || []
-
-    this.mi_gunqiu = [...mi_100_gunqiu,mi_2000_gunqiu.length?2000:'']
+    this.mi_gunqiu = [...mi_100_gunqiu, mi_2000_gunqiu.length ? 2000 : ""];
   }
 
   /**
    * 获取 滚球赛事 赛种id
    */
-  set_mi_gunqiu_sports(res){
-    let gunqiu = []
-    res.forEach(item => {
-      if(item.ct){
-        gunqiu.push(item.mif)
+  set_mi_gunqiu_sports(res) {
+    let gunqiu = [];
+    res.forEach((item) => {
+      if (item.ct) {
+        gunqiu.push(item.mif);
       }
     });
-    return gunqiu
+    return gunqiu;
   }
 
   /**
@@ -359,8 +353,8 @@ class BaseData {
   set_mi_euid_map_res(res) {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
     this.mi_euid_map_res = this.set_ses_wapper(res, {});
-    
-    localStorage.setItem('is_session_base_data',JSON.stringify(this));
+
+    localStorage.setItem("is_session_base_data", JSON.stringify(this));
     this.resolve_mi_euid_map_res();
   }
   /**
@@ -373,11 +367,11 @@ class BaseData {
 
     // console.warn('menu_info',menu_info)
 
-    // 设置新菜单 
-    this.set_left_menu_init(menu_info)
-  
+    // 设置新菜单
+    this.set_left_menu_init(menu_info);
+
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
-       // 计算虚拟体育 的 数据对象
+    // 计算虚拟体育 的 数据对象
     // this.set_vr_mi_config()
     this.set_commn_sport_guanjun_obj();
 
@@ -386,89 +380,88 @@ class BaseData {
   }
 
   /**
-  * 计算 左侧菜单数据 
-  */
-  set_left_menu_init(menu_info){
-     // 有数据才去对比 替换
-     if(menu_info.length){
-   
-      const left_menu = [],esport_menu = [],sports_mi = []
+   * 计算 左侧菜单数据
+   */
+  set_left_menu_init(menu_info) {
+    // 有数据才去对比 替换
+    if (menu_info.length) {
+      const left_menu = [],
+        esport_menu = [],
+        sports_mi = [];
       // 左侧菜单id
-      menu_info.forEach(item=>{
+      menu_info.forEach((item) => {
         // vr300 冠军400 2000 电竞 500热门
-        if( Number(item.mi) < 500 ){
+        if (Number(item.mi) < 500) {
           // 过滤 商户 屏蔽的赛种数据
-          if(!this.filterSport_arr.includes(item.mi)){
-            left_menu.push(Number(item.mi))
+          if (!this.filterSport_arr.includes(item.mi)) {
+            left_menu.push(Number(item.mi));
           }
         }
 
         // 设置电竞竞技的菜单
-        let obj = dianjing_sublist.find(page=> page.mi == item.mi ) || {}
+        let obj = dianjing_sublist.find((page) => page.mi == item.mi) || {};
 
-        if(obj.mi){
+        if (obj.mi) {
           // mid
-          sports_mi.push(Number(obj.mi))
+          sports_mi.push(Number(obj.mi));
           // 电子竞技 菜单数据
-          esport_menu.push(obj) 
+          esport_menu.push(obj);
         }
-      })
+      });
 
       // 重置默认数据
-      this.left_menu_base_mi_arr = left_menu
+      this.left_menu_base_mi_arr = left_menu;
 
-      this.sports_mi = sports_mi
+      this.sports_mi = sports_mi;
 
       // 是否有冠军
-      if(menu_info.findIndex( page=> page.mi == 400 ) > -1){
-        this.is_show_guanjin = true
-      }else{
-        this.is_show_guanjin = false
+      if (menu_info.findIndex((page) => page.mi == 400) > -1) {
+        this.is_show_guanjin = true;
+      } else {
+        this.is_show_guanjin = false;
       }
 
-      // 有电竞竞技则插入 电竞2000 
+      // 有电竞竞技则插入 电竞2000
       // 并且 商户有开启 电子竞技
-      if(esport_menu.length && this.is_mi_2000_open_int){
-        let esports_number = 2000
-        left_menu.splice(2,0,esports_number)
+      if (esport_menu.length && this.is_mi_2000_open_int) {
+        let esports_number = 2000;
+        left_menu.splice(2, 0, esports_number);
         // 替换默认数据 使用接口数据
-        this.dianjing_sublist = [...esport_menu]
+        this.dianjing_sublist = [...esport_menu];
         // 电竞版本 用于页面更新
-        this.esport_menu_version = Date.now(); 
+        this.esport_menu_version = Date.now();
         // 统一对外输出
-        this.is_mi_2000_open = true
-        
-      }else{
-        this.is_mi_2000_open = false
+        this.is_mi_2000_open = true;
+      } else {
+        this.is_mi_2000_open = false;
       }
-      
-      // 判断有没有 vr数据 
-      // vr数据菜单（紧急开关） vr商户开关
-      if(!this.vr_mi_config.length || !this.is_mi_300_open_int){
-       let index = left_menu.findIndex(item=> item == 300)
-       if(index){
-        // 没有vr 数据 头部也不显示
-        left_menu.splice(index,1)
-        // 统一对外输出
-        this.is_mi_300_open = false
-       }
-      }else{
 
-        this.is_mi_300_open = true
+      // 判断有没有 vr数据
+      // vr数据菜单（紧急开关） vr商户开关
+      if (!this.vr_mi_config.length || !this.is_mi_300_open_int) {
+        let index = left_menu.findIndex((item) => item == 300);
+        if (index) {
+          // 没有vr 数据 头部也不显示
+          left_menu.splice(index, 1);
+          // 统一对外输出
+          this.is_mi_300_open = false;
+        }
+      } else {
+        this.is_mi_300_open = true;
       }
 
       // console.warn('left_menu',left_menu)
       // console.warn('菜单数据处理完成-----')
       // 数据对比替换
-      let old_menu = JSON.stringify(this.mew_menu_list_res)
-      let new_menu = JSON.stringify(menu_info)
+      let old_menu = JSON.stringify(this.mew_menu_list_res);
+      let new_menu = JSON.stringify(menu_info);
 
-      if(old_menu != new_menu){
-        this.mew_menu_list_res = menu_info
+      if (old_menu != new_menu) {
+        this.mew_menu_list_res = menu_info;
 
-        localStorage.setItem('is_session_base_data',JSON.stringify(this));
+        localStorage.setItem("is_session_base_data", JSON.stringify(this));
         // 计算 live
-        this.set_mi_gunqiu()
+        this.set_mi_gunqiu();
       }
 
       // 更新版本
@@ -476,38 +469,34 @@ class BaseData {
     }
   }
 
+  /**
+   * 计算虚拟体育 的 数据对象
+   */
+  async set_vr_mi_config() {
+    let res = await api_common.get_virtual_menu({});
+    // VR 体育的 配置
 
-/**
- * 计算虚拟体育 的 数据对象
- */
-async set_vr_mi_config(){
-  let res = await api_common.get_virtual_menu({});
-  // VR 体育的 配置
+    let mi_300_obj = this.set_ses_wapper(res, []);
 
-  let mi_300_obj = this.set_ses_wapper(res, []);
+    // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
+    this.vr_mi_config = mi_300_obj.map((item) => {
+      item.mi = item.menuId + "1" + item.menuId;
+      return item;
+    });
 
-  // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
-  this.vr_mi_config = mi_300_obj.map(item =>{
-    item.mi = item.menuId+'1'+item.menuId
-    return item
-  })
-    
-  //   let mi_300_obj =  this.mew_menu_list_res.find(x=>x.mi==300)
-  // let sl= mi_300_obj['sl']||[]
+    //   let mi_300_obj =  this.mew_menu_list_res.find(x=>x.mi==300)
+    // let sl= mi_300_obj['sl']||[]
 
-  // let res_obj ={}
-  //     sl.map(x=>{
-  //       let xmi= x.mi
+    // let res_obj ={}
+    //     sl.map(x=>{
+    //       let xmi= x.mi
 
-  //       x.csid=  xmi.substring(1)
+    //       x.csid=  xmi.substring(1)
 
-  //       res_obj[`mi_${xmi}`]=x
-  //     })
-  //     console.error("set_vr_mi_config----------", res_obj);
-
-
-}
-
+    //       res_obj[`mi_${xmi}`]=x
+    //     })
+    //     console.error("set_vr_mi_config----------", res_obj);
+  }
 
   // 计算   冠军 数据  对象形式
 
@@ -554,7 +543,7 @@ async set_vr_mi_config(){
   set_ses_wapper(res, default_value) {
     let result = default_value;
 
-    let data = ( res || {} ).data;
+    let data = (res || {}).data;
     // console.error(" set_ses_wapper(res.data---------", res.data);
     if (data && (data.code == "0000000" || data.code == "200")) {
       result = data.data;
@@ -566,17 +555,17 @@ async set_vr_mi_config(){
   set_base_data_res(res) {
     this.base_data_res = this.set_ses_wapper(res, {});
     let mids_info = [],
-    menus_i18n = [],
-    sp_list = []
-    let data = this.base_data_res
+      menus_i18n = [],
+      sp_list = [];
+    let data = this.base_data_res;
 
     // 赛事信息 mid 对应
-    data.matchsList.forEach(item=>{
+    data.matchsList.forEach((item) => {
       mids_info.push({
         mid: item.mid,
         mid_info: item,
       });
-    })
+    });
 
     // 国际化信息 csid对应
     _.each(Object.keys(data.menus), (item) => {
@@ -584,7 +573,7 @@ async set_vr_mi_config(){
         play_id: item,
         play_name: data.menus[item],
       });
-    })
+    });
     // _.each(Object.keys(data.matchsList), (item) => {
     //   tids_obj.push({
     //     mi: item,
@@ -595,10 +584,10 @@ async set_vr_mi_config(){
     //     value: data[item],
     //   });
     // });
-    console.warn('menus_i18n',menus_i18n)
-    db.mids_info.bulkAdd(mids_info,'mid')
+    console.warn("menus_i18n", menus_i18n);
+    db.mids_info.bulkAdd(mids_info, "mid");
 
-    db.menus_i18n.bulkAdd(menus_i18n,'play_id')
+    db.menus_i18n.bulkAdd(menus_i18n, "play_id");
 
     // db.sp_list.bulkAdd(sp_list,'mi')
 
@@ -616,7 +605,7 @@ async set_vr_mi_config(){
       matchsList = [],
       menus = {},
     } = this.base_data_res;
-   //  console.warn('this.base_data_res',this.base_data_res)
+    //  console.warn('this.base_data_res',this.base_data_res)
     this.resolve_csids(spList);
     this.resolve_tids(tids_obj);
     this.resolve_mids(matchsList);
@@ -647,8 +636,6 @@ async set_vr_mi_config(){
     this.tids_arr = arr;
     //联赛基础数据   map
     this.tids_map = obj;
-
-
   }
   /**
    * 解析  基础数据
@@ -667,13 +654,12 @@ async set_vr_mi_config(){
    * 解析  菜单 国际化
    */
   resolve_menus(res) {
-   
     // 获取语言类型
-    let locale = window.vue.$i18n.locale || 'zh'
+    let locale = window.vue.$i18n.locale || "zh";
     // 设置 语言变量
-    let esports = window.vue.$i18n._vm.messages[locale].common.e_sports
+    let esports = window.vue.$i18n._vm.messages[locale].common.e_sports;
 
-     // 菜单 国际化 数据  map
+    // 菜单 国际化 数据  map
     res["2000"] = esports;
     this.menus_i18n_map = res;
   }
@@ -685,15 +671,14 @@ async set_vr_mi_config(){
    */
 
   resolve_mi_euid_map_res() {
-    
     let mi_euid_map_res = this.mi_euid_map_res;
     let obj = {};
     for (let i in mi_euid_map_res) {
       let item = mi_euid_map_res[i];
-    
+
       obj[`mi_${i}`] = {
         euid: item.p || "", // 旧的菜单ID
-        orpt: ''+item.t , // 模板ID
+        orpt: "" + item.t, // 模板ID
         pids: item.s || "", // 玩法ID
       };
     }
@@ -710,7 +695,7 @@ async set_vr_mi_config(){
    */
   set_mi_tid_mids_res(res) {
     let data = this.set_ses_wapper(res, {});
-    this.mi_tid_mids_res = data
+    this.mi_tid_mids_res = data;
     let db_data = [];
     _.each(Object.keys(data), (item) => {
       db_data.push({
@@ -718,7 +703,7 @@ async set_vr_mi_config(){
         match_info: data[item],
       });
     });
-    console.warn('db_data',db_data)
+    console.warn("db_data", db_data);
     //mi作为主键
     db.match_info.bulkAdd(db_data, "mi");
   }
@@ -951,30 +936,30 @@ async set_vr_mi_config(){
    * @param {*} mi
    */
   compute_sport_id(mi) {
-  let obj = {
-    101: 1,
-    102: 2,
-    103: 3,
-    104: 4,
-    105: 5,
-    106: 6,
-    107: 7,
-    108: 8,
-    109: 9,
-    110: 10,
-    111: 11,
-    112: 12,
-    113: 13,
-    114: 14,
-    115: 15,
-    116: 16,
-    118: 18,
-    300: 10001,
-    400: 10002,
-    2000: 10003,
-  };
-  return obj[mi];
-}
+    let obj = {
+      101: 1,
+      102: 2,
+      103: 3,
+      104: 4,
+      105: 5,
+      106: 6,
+      107: 7,
+      108: 8,
+      109: 9,
+      110: 10,
+      111: 11,
+      112: 12,
+      113: 13,
+      114: 14,
+      115: 15,
+      116: 16,
+      118: 18,
+      300: 10001,
+      400: 10002,
+      2000: 10003,
+    };
+    return obj[mi];
+  }
   /**
    * 点击联赛展开的 方法
    *
@@ -986,9 +971,10 @@ async set_vr_mi_config(){
    * user/getUserInfo 接口 数据内的 联赛屏蔽和赛种屏蔽处理
    */
   resolve_getUserInfo_res(data = {}) {
-  
     let {
-      configVO: { filterLeague = "", filterSport = "" },openEsport,openVrSport
+      configVO: { filterLeague = "", filterSport = "" },
+      openEsport,
+      openVrSport,
     } = data;
     //联赛屏蔽
     this.filterLeague_arr = filterLeague.split(",").filter((x) => x);
@@ -997,9 +983,9 @@ async set_vr_mi_config(){
     // 需要 留意一点 ， 这个API 调用的时候 需要更新 菜单的版本
 
     //  电竞的四个球种  100, 101, 102, 103
-    this.is_mi_2000_open_int = !!openEsport
+    this.is_mi_2000_open_int = !!openEsport;
     // vr 虚拟体育
-    this.is_mi_300_open_int = !!openVrSport
+    this.is_mi_300_open_int = !!openVrSport;
     // let mi_2000_csid_list = [100, 101, 102, 103];
     // let res_1 = mi_2000_csid_list.map((x) => {
     //   return "" + this.filterSport_arr.includes(x);
@@ -1015,8 +1001,12 @@ async set_vr_mi_config(){
 
     // this.is_mi_300_open = res_2.includes("false");
 
-    this.base_data_version = Date.now(); 
-    console.warn('用户数据解析完成----------电竞--',this.is_mi_300_open_int,'--vr--'+this.is_mi_2000_open_int)
+    this.base_data_version = Date.now();
+    console.warn(
+      "用户数据解析完成----------电竞--",
+      this.is_mi_300_open_int,
+      "--vr--" + this.is_mi_2000_open_int
+    );
   }
 }
 
