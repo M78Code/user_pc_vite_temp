@@ -1,6 +1,4 @@
 <!--
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
  * @Description: 单住投注项信息组件 正常
 -->
 <template>
@@ -77,7 +75,7 @@
               'up-red': odds_change_up,
               'down-green': odds_change_down
             }"
-          ><span class="odds-value yb-number-bold"><span>@</span>{{single_record_obj.oddsValues | format_odds}}</span></div>
+          ><span class="odds-value yb-number-bold"><span>@</span>{{single_record_obj.oddsValues || format_odds}}</span></div>
         </div>
       </div>
 

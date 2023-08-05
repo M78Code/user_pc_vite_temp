@@ -1,6 +1,4 @@
 <!--
- * @Author: Amor
- * @Date: 2020-09-05 20:13:44
  * @Description: 左侧菜单 投注相关 尾部
 -->
 <template>

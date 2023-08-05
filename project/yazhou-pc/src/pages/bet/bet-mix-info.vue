@@ -1,6 +1,4 @@
 <!--
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
  * @Description: 串关信息
 -->
 <template>
