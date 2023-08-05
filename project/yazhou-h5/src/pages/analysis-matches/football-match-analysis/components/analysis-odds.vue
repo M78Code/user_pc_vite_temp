@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 2021-04-27
+ * @Date: 
  * @Description: 详情页足球赛事分析赔率页面
 -->
 <template>
@@ -93,88 +93,114 @@
 </template>
 
 <script>
+import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
-import { mapGetters } from "vuex";
+// TODO 后续修改调整
+// import { mapGetters } from "vuex";
 
-export default {
+export default defineComponent({
   name: "analysis_odds",
-  data() {
-    return {
-      tab_list: [
-        { name: this.$root.$t('footer_menu.rangqiu') },
-        { name: this.$root.$t('analysis_football_matches.European_Finger') },
-        { name: this.$root.$t('analysis_football_matches.size') },
-      ],
-      tabIndex: 0,
-      data_list: [], //详细赔率数据
-      is_done:false,  //数据加载完成
-    }
-  },
-  computed: {
-    ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
-    search_list_high() {
-      let rem_1 = window.innerWidth * 100 / 375;
-      return {height : window.innerHeight - rem_1 - 90 + 'px'}
-    },
-    // 赛事id
-    match_id() {
-      return this.$route.params.mid || this.get_detail_data.mid
-    },
-  },
-  created() {
-    // 添加监听 赛事分析刷新事件
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
 
-    this.get_list()
-  },
-  methods: {
+  setup(props, event) {
+    // 国际化后续修改调整
+    let tab_list = ref([
+        { name: $root.$t('footer_menu.rangqiu') },
+        { name: $root.$t('analysis_football_matches.European_Finger') },
+        { name: $root.$t('analysis_football_matches.size') },
+      ])
+    let tabIndex = ref(0)
+    //详细赔率数据
+    let data_list= ref([])
+    //数据加载完成
+    let is_done = ref(false)
+
+    // 添加监听 赛事分析刷新事件 TODO 后续修改调整 $root emit
+    $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+
+    get_list()
+
     /**
      *@description 按钮切换
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    radioButton(index) {
-      if(this.tabIndex == index) return
-      this.tabIndex = index
-      this.data_list = []
-      this.get_list()
+     radioButton = (index) => {
+      if(tabIndex.value == index) return
+      tabIndex.value = index
+      data_list.value = []
+      get_list()
     },
-    async get_list() {
+    get_list = async () => {
       try {
-        this.is_done = false
+        is_done.value = false
         let parameter = {
-          standardMatchId: this.match_id,
+          standardMatchId: match_id,
           parentMenuId: 5,  //父菜单类型:(2数据;3阵容4情报;5赔率)
-          sonMenuId: this.tabIndex + 1
+          sonMenuId: tabIndex.value + 1
         }
         let { code, data } = await api_result.get_match_analysise_data(parameter)
         if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
-          this.data_list = data.sThirdMatchHistoryOddsDTOList
+          data_list.value = data.sThirdMatchHistoryOddsDTOList
         }
-        this.is_done = true
+        is_done.value = true
       } catch (error) {
         console.error(error);
       }
     },
     // 刷新 当前赛事分析信息
-    refresh_match_analysis() {
-      const tabIndex = this.tabIndex
-      this.tabIndex = -1
+    refresh_match_analysis = () => {
+      const tabIndex = tabIndex.value
+      tabIndex.value = -1
 
-      this.$nextTick(() => {
-        this.radioButton(tabIndex)
+      nextTick(() => {
+        radio_button(tabIndex)
       })
     }
-  },
-  destroyed() {
-    // 移除监听 赛事分析刷新事件
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
 
-    for (const key in this.$data) {
-      this.$data[key] = null
+    computed(() => {
+      search_list_high = () => {
+      let rem_1 = window.innerWidth * 100 / 375;
+      return {height : window.innerHeight - rem_1 - 90 + 'px'}
+    },
+    // 赛事id
+    match_id = () => {
+      // get_detail_data.mid $route 后续修改调整
+      return $route.params.mid || get_detail_data.mid
     }
-  }
-}
+    })
+    onUnmounted(() => {
+      // 移除监听 赛事分析刷新事件 TODO $root emit 后续修改调整
+      $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      // 国际化后续修改调整
+     tab_list.value = ref([
+        { name: $root.$t('footer_menu.rangqiu') },
+        { name: $root.$t('analysis_football_matches.European_Finger') },
+        { name: $root.$t('analysis_football_matches.size') },
+      ])
+     tabIndex.value = ref(0)
+    //详细赔率数据
+     data_list.value = ref([])
+    //数据加载完成
+     is_done.value = ref(false)
+    })
+
+    return {
+      tab_list,
+      tabIndex,
+      data_list,
+      is_done,
+
+      radioButton,
+      get_list,
+      refresh_match_analysis,
+    }
+  },
+  // computed: {
+    //  TODO 后续修改调整
+  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
+  // },
+  
+})
 </script>
 
 <style lang="scss" scoped>

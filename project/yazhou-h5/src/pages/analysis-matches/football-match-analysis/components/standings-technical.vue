@@ -79,29 +79,40 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+// import {mapGetters} from "vuex";
+import { defineComponent, ref, } from 'vue'
 import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
 
-export default {
+export default defineComponent({
   name: "standings_technical",
   props: {
-    homeAwayGoal_and_coach_map: Object | Array
+    homeAwayGoal_and_coach_map: {
+      type: Object | Array,
+    }
   },
   components: {
     "team-img": team_img,
   },
-  computed: {
-    ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
-  },
-  methods:{
-    Calculate_age(day) {
+  setup(props, evnet) {
+    Calculate_age = (day) => {
       let birthday = new Date(day.replace(/-/g, "\/"));
       let d=new Date();
       let age = d.getFullYear()-birthday.getFullYear()-((d.getMonth()<birthday.getMonth()|| d.getMonth()==birthday.getMonth() && d.getDate()<birthday.getDate())?1:0);
       return age
     }
-  }
-}
+
+    return {
+      Calculate_age,
+    }
+  },
+  // TODO 后续修改调整 
+  // computed: {
+  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
+  // },
+  // methods:{
+    
+  // }
+})
 </script>
 
 <style lang="scss" scoped>

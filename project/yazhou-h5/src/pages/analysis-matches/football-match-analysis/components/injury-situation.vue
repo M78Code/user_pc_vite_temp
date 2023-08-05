@@ -4,8 +4,8 @@
       {{ $root.$t('analysis_football_matches.Injury_situation') }}
     </div>
 
-    <template v-for="(item, index) in injury_situation_data">
-      <div class="technical-home team-recent" :key="index">
+    <template v-for="(item, index) in injury_situation_data" :key="index">
+      <div class="technical-home team-recent" >
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
           <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
@@ -27,11 +27,13 @@
 </template>
 
 <script>
+import { defineComponent, ref } from 'vue'
 import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
 import injury_form from "src/project/pages/details/analysis-matches/components/injury_form"; // 伤停情况列表
-import {mapGetters} from "vuex";
+// TODO 后续修改调整
+// import {mapGetters} from "vuex";
 
-export default {
+export default defineComponent({
   name: "injury_situation",
   components: {
     "team-img": team_img,
@@ -44,10 +46,11 @@ export default {
       default: () => ({}),
     },
   },
-  computed: {
-    ...mapGetters(['get_detail_data'])
-  },
-}
+  // TODO 后续修改调整
+  // computed: {
+  //   ...mapGetters(['get_detail_data'])
+  // },
+})
 </script>
 
 <style lang="scss" scoped>

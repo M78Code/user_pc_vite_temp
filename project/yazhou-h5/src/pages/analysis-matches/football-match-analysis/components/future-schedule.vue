@@ -1,6 +1,6 @@
 <!--
- * @Author: ledron
- * @Date: 2020-02-16 18:18:18
+ * @Author: 
+ * @Date: 
  * @Description: 详情页 或者 赛果  足球
 -->
 <template>
@@ -9,8 +9,8 @@
       {{ $root.$t('analysis_football_matches.Future_schedule') }}
     </div>
 
-    <template v-for="(item, index) in future_schedule_data">
-      <div class="technical-home team-recent" :key="index">
+    <template v-for="(item, index) in future_schedule_data" :key="index">
+      <div class="technical-home team-recent" >
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
             <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
@@ -35,9 +35,13 @@
 </template>
 
 <script>
-import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
-import {mapGetters} from "vuex";
-import public_form from "src/project/pages/details/analysis-matches/components/public_form";  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
+import { defineComponent, ref } from 'vue'
+// 详情页蓝色背景上的大型字母图标
+import team_img from "src/project/components/details/team_img";   
+// TODO 后续修改调整
+// import {mapGetters} from "vuex";
+// 详情页  足球赛事分析 战绩 模块里边的 公共列表
+import public_form from "src/project/pages/details/analysis-matches/components/public_form";  
 
 export default {
   name: "future_schedule",
@@ -53,19 +57,17 @@ export default {
       require: true
     },
   },
+  setup(props,event) {
 
-  data(){
     return {
+
     }
   },
-  computed: {
-    ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
-  },
+  // TODO 后续修改调整
+  // computed: {
+  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
+  // },
 
-  created() {
-  },
-  methods:{
-  }
 }
 </script>
 

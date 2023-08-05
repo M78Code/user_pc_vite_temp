@@ -17,6 +17,7 @@
 <script setup>
 // 公共主题文件引入
 import { ref } from "vue"
+import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 
 const is_keydown = ref(false)
 
@@ -80,11 +81,11 @@ const props = defineProps({
  */
 const keypress_handle = (obj, e) => {
   //投注按钮是否失效事件
-  this.$root.$emit(this.emit_cmd.EMIT_BTN_CHANGE, false)
+  useMittEmit(MITT_TYPES.EMIT_BTN_CHANGE,false)
   // 如果是enter键按下则不执行
   if (e.qKeyEvent) {
     // 触发enter键执行
-    this.$root.$emit(this.emit_cmd.EMIT_ENTER_PRESS_EVENT, { keyCode: 13 });
+    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,{ keyCode: 13 })
     return;
   }
   if (!obj.disabled) {
@@ -95,10 +96,10 @@ const keypress_handle = (obj, e) => {
         number: parseFloat(num).toFixed(2)
       };
       // 触发键盘时间
-      this.$emit("keypress_handle", data);
+      useMittEmit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_HANDLE, data)
     } else {
       // 触发使输入框显示最大的金额
-      this.$emit("input_max_money");
+      useMittEmit(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY)
     }
   }
 }
