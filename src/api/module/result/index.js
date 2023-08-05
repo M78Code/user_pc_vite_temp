@@ -4,7 +4,7 @@
  * @Description: 赛果相关接口
  *
  */
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_JOB;
 
 
@@ -74,3 +74,20 @@ export const get_champion_match_result_api = (params, config={}, url = "/v1/m/ch
 export const get_replay_football = (params, config={}, url = "/v1/w/playbackVideoUrl") => {
   return http.post(`${prefix}${url}`, params, config);
 };
+
+
+
+//赛果获取球类
+export const get_sportType = (params, config={}, url  = "/v1/orderScoreResult/querySportType") => http.get(`${prefix}${url}`, params, config);
+
+//赛果联赛查询
+export const post_results_pournament = (params, config={}, url  = "/v1/orderScoreResult/queryTournament") => http.post(`${prefix}${url}`, params, config);
+
+//赛果联赛查询
+export const post_results_list = (params, config={}, url  = "/v1/orderScoreResult/queryTournamentScoreResult") => http.post(`${prefix}${url}`, params, config);
+
+//赛果联赛查询
+export const post_results_order = (params, config={}, url  = "/v1/orderScoreResult/queryMatchScoreResult") => http.post(`${prefix}${url}`, params, config);
+
+//赛果精彩回放查询
+export const post_playback_video_url = (params, config={}, url  = "/v1/w/playbackVideoUrl") => http.post(`${prefix}${url}`, params, config);

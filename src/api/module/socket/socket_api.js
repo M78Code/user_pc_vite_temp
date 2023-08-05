@@ -4,7 +4,7 @@
  * @Description: socket模块中需要用到的http请求api接口定义
  */
 
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_JOB;
 let project_name = window.env.config.FINAL_TARGET_PROJECT_NAME
 

@@ -4,7 +4,7 @@
  * @Description: 
  * @Author: 
  */
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_JOB;
 
 //数据、情报、赔率、对阵

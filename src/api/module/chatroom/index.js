@@ -3,7 +3,7 @@
  * @Date: 2022-08-31 17:08
  * @Description 聊天室相关api
  */
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 
 // 聊天室域名前缀
 let prefix =  '/livechat-api'

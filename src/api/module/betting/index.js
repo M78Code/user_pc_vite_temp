@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 押注API接口定义
  */
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_BAT;
 let prefix2 = window.env.config.api.API_PREFIX_USER;
 
