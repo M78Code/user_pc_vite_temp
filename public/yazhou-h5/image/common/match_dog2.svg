@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>矩形备份 11@2x</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="虚拟赛狗（与赛马图标不同）" transform="translate(-201.000000, -545.000000)">
+            <g id="编组" transform="translate(15.000000, 527.000000)">
+                <g transform="translate(186.000000, 18.000000)">
+                    <rect id="矩形备份-3" stroke-opacity="0.25" stroke="#000000" fill="#185CA9" x="0.5" y="0.5" width="19" height="19" rx="2"></rect>
+                    <path d="M12.888,15 L12.888,13.362 L9.038,13.362 L11.824,10.128 C12.51,9.33 12.888,8.812 12.888,7.846 C12.888,6.054 11.628,4.948 9.864,4.948 C8.156,4.948 6.826,6.04 6.826,7.86 L8.646,7.86 C8.646,6.894 9.262,6.586 9.864,6.586 C10.634,6.586 11.068,7.09 11.068,7.832 C11.068,8.294 10.914,8.602 10.55,9.036 L6.826,13.362 L6.826,15 L12.888,15 Z" id="2" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

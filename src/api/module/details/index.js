@@ -1,8 +1,3 @@
-/*
- * @Author: Yellow
- * @Date: 2020-08-04 17:13:55
- * @Description: 赛事详情模块API接口定义
- */
 import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_JOB;
 const prefix2 = window.env.config.api.API_PREFIX_ACTIVITY;

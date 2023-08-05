@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="6px" viewBox="0 0 10 6" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Common/Icon/Icon_ArrowTOp_Grey</title>
+    <desc>Created with Sketch.</desc>
+    <g id="专业版" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="投注区切图" transform="translate(-188.000000, -390.000000)" fill="#CBCED8" fill-rule="nonzero">
+            <g id="Common/Icon/Icon_ArrowTOp_Grey" transform="translate(188.000000, 390.000000)">
+                <g id="Common/Icon/Icon_ArrowDown_Grey" transform="translate(5.000000, 3.000000) scale(1, -1) translate(-5.000000, -3.000000) ">
+                    <path d="M3.81066017,3 L7.78033009,-0.780638013 C8.0732233,-1.05958394 8.0732233,-1.51184464 7.78033009,-1.79079056 C7.48743687,-2.06973648 7.01256313,-2.06973648 6.71966991,-1.79079056 L2.21966991,2.49492373 C1.9267767,2.77386965 1.9267767,3.22613035 2.21966991,3.50507627 L6.71966991,7.79079056 C7.01256313,8.06973648 7.48743687,8.06973648 7.78033009,7.79079056 C8.0732233,7.51184464 8.0732233,7.05958394 7.78033009,6.78063801 L3.81066017,3 Z" id="Path" transform="translate(5.000000, 3.000000) rotate(-90.000000) translate(-5.000000, -3.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
