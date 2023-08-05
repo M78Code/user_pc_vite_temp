@@ -1,15 +1,15 @@
 <template>
     <div class="rule-wrap" v-if="source.toLocaleUpperCase() == 'PC'">
-        <simple-header :source="source">
+        <simple-header-wapper :source="source">
             <span>{{ $root.$t("common.sports_betting_rules") }}</span>
-        </simple-header>
+        </simple-header-wapper>
         <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
     </div>
 
     <div class="description-main" v-if="source.toLocaleUpperCase() == 'H5'">
-        <simple-header :source="source">
+        <simple-header-wapper :source="source">
             {{ $root.$t('common.rule_description') }}
-        </simple-header>
+        </simple-header-wapper>
         <div class="description-content" v-if="true">
             <iframe style="width:100%;height: 100%" allow="autoplay" frameborder="0" scrolling="no" :src="more_lang"
                 v-if="more_lang.length > 0"></iframe>
@@ -24,7 +24,7 @@ import { component_symbol, need_register_props } from "src/components/rule/confi
 import { computed } from 'vue'
 // TODO: 待处理store
 // import { mapGetters, mapActions } from "vuex";
-import simpleHeader from "src/components/simple-header/simple-header-1/index.vue";
+import { SimpleHeaderWapper } from "src/components/simple-header";
 
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
