@@ -4,7 +4,7 @@
  * @Description: 用户模块相关api定义
  */
 
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 
 let prefix = window.env.config.api.API_PREFIX_API;
 let prefix_user = window.env.config.api.API_PREFIX_USER;

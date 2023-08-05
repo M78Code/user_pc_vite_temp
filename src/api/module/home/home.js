@@ -3,7 +3,7 @@
  * @Date: 2021-04-04 11:36:39
  * @Description:
  */
-import http from "src/public/utils/http/axios_warpper.js";
+import {http} from "src/core/http/index.js";
 let prefix = window.env.config.api.API_PREFIX_JOB;
 let prefix_12 = window.env.config.api.API_PREFIX_USER;
 

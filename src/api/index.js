@@ -1,9 +1,4 @@
-/*
- * @Author: Amor
- * @Date: 2020-08-04 17:13:55
- * @Description: API 共通入口
- */
-import * as api_common from "src/public/api/module/common/common_api.js"; //bruce
+
 import * as api_match from "src/public/api/module/match/match_api.js"; //masterj
 import * as api_betting from "src/public/api/module/betting/index.js"; //ronney
 import * as api_search from "src/public/api/module/search/index.js"; //masterj
@@ -11,7 +6,6 @@ import * as api_details from "src/public/api/module/details/index.js"; //masterj
 import * as api_filter from "src/public/api/module/filter/filter_api.js"; //masterj
 import * as api_account from "src/public/api/module/account/account_api.js"; //bruce
 import * as api_announce from "src/public/api/module/announce/index.js"; //bruce
-import * as api_results from "src/public/api/module/results/results.js"; //bruce
 import * as api_virtual from "src/public/api/module/virtual/index.js"; //bruce
 import * as api_analysis from "src/public/api/module/analysis/analysis.js"; //bruce
 import * as api_chatroom from "src/public/api/module/chatroom/index.js"; //bruce
@@ -19,12 +13,7 @@ import * as api_admin from "src/project/api/module/admin/index.js"    // router
 import * as api_common from "src/project/api/module/common/index.js"   // router
 import * as api_home from "src/project/api/module/home/home.js"        // router
 import * as api_global from "src/project/api/module/global/index.js"    // router
- 
-import * as api_search from "src/project/api/module/search/search_api.js" //hellojay
- 
 import * as api_result from "src/project/api/module/result/index.js"     //hellojay
-import * as api_v_sports from "src/project/api/module/virtual_sports/virtual_sports"  //hanmar
- 
 
 
 export {
@@ -44,8 +33,7 @@ export {
   api_account,
   // 公告模块相关api定义
   api_announce,
-  // 赛果模块相关API定义
-  api_results,
+
   // 虚拟体育相关
   api_virtual,
   // 赛事分析相关
@@ -62,6 +50,5 @@ export {
   api_home,
   // 赛果api接口
   api_result,
-  // 虚拟体育接口定义
-  api_v_sports,
+
 };
