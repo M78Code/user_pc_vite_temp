@@ -1,6 +1,6 @@
 <!--
- * @Author:Router
- * @Date: 2021-04-27
+ * @Author:
+ * @Date: 
  * @Description: 详情页足球赛事分析情报页面
 -->
 <template>
@@ -17,8 +17,8 @@
         <template v-if="item.label == 1">{{ $root.$t('analysis_football_matches.Favorable_information') }}</template>
         <template v-if="item.label == 2">{{ $root.$t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
-      <template v-for="(item2,index2) in item.msg">
-        <p class="item" :key="index2">{{item2}}</p>
+      <template v-for="(item2,index2) in item.msg" :key="index2">
+        <p class="item" >{{item2}}</p>
       </template>
     </div>
     <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ $root.$t('common.no_data') }}</div>
@@ -27,47 +27,54 @@
 
 <script>
 import { api_result } from "src/project/api";
-import { mapGetters } from "vuex";
+// TODO 后续修改调整
+// import { mapGetters } from "vuex";
+import { defineComponent, ref, nextTick } from 'vue'
 
-export default {
+export default defineComponent({
   name: "intelligence",
-  data() {
-    return {
-      radio_button_index: 0,  //按钮下标
-      tab_radio_button: ['曼联', '德联'], //主客队名称
-      data_list: [], //详细情报数据
-      is_done: false,  //数据加载完成
-    }
-  },
-  created() {
-    // 添加监听 赛事分析刷新事件
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
 
-    this.tab_radio_button = [this.get_detail_data.mhn, this.get_detail_data.man]
-    this.get_list()
+  setup(props, event) {
+    //按钮下标
+    let radio_button_index = ref(0)
+    //主客队名称
+    let tab_radio_button = ref(['曼联', '德联'])
+    //详细情报数据
+    let data_list = ref([])
+    //数据加载完成
+    let is_done = ref(false)
 
-  },
-  computed: {
-    ...mapGetters(['get_detail_data', 'get_goto_detail_matchid']),
-    // 赛事id
-    match_id() {
-      return this.$route.params.mid || this.get_detail_data.mid
+    // 添加监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
+    $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+
+    tab_radio_button.value = [get_detail_data.mhn, get_detail_data.man]
+    get_list()
+
+    computed(() => {
+      // 赛事id
+      match_id = () => {
+        // TODO get_detail_data.mid 后续修改调整
+        return $route.params.mid || get_detail_data.mid
+      }
+    })
+    onUnmounted(() => {
+      // 移除监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
+    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    })
+
+    radio_button = (index) => {
+      if(radio_button_index.value == index) return
+      radio_button_index.value = index
+      data_list.value = []
+      get_list()
     },
-  },
-  methods: {
-    radioButton(index) {
-      if(this.radio_button_index == index) return
-      this.radio_button_index = index
-      this.data_list = []
-      this.get_list()
-    },
-    async get_list() {
+    get_list = async () => {
       try {
-        this.is_done = false
+        is_done.value = false
         let parameter = {
-          standardMatchId: this.match_id,
+          standardMatchId: match_id,
           parentMenuId: 4,  //父菜单类型:(2数据;3阵容4情报;5赔率)
-          sonMenuId: this.radio_button_index + 1
+          sonMenuId: radio_button_index.value + 1
         }
         let { code, data } = await api_result.get_match_analysise_data(parameter)
         if (code == 200 && data.sThirdMatchInformationDTOList && data.sThirdMatchInformationDTOList.length) {
@@ -75,41 +82,51 @@ export default {
           data.sThirdMatchInformationDTOList.forEach(item => {
             if (item.benefit == 0 || item.benefit == 1) {
               msg0.msg.push(item.content) //中立情报
-            } else if (item.benefit == 2 && this.radio_button_index == 0 || item.benefit == 3 && this.radio_button_index == 1) {
+            } else if (item.benefit == 2 && radio_button_index.value == 0 || item.benefit == 3 && radio_button_index.value == 1) {
               msg1.msg.push(item.content) //有利情报
-            } else if (item.benefit == 4 && this.radio_button_index == 0 || item.benefit == 5 && this.radio_button_index == 1) {
+            } else if (item.benefit == 4 && radio_button_index.value == 0 || item.benefit == 5 && radio_button_index.value == 1) {
               msg2.msg.push(item.content) //不利情报
             }
           });
-          this.data_list.push(msg0, msg1, msg2)
-          this.data_list = this.data_list.filter(item => {
+          data_list.value.push(msg0, msg1, msg2)
+          data_list.value = data_list.value.filter(item => {
             return item.msg.length
           })
         }
-        this.is_done = true
+        is_done.value = true
       } catch (error) {
         console.error(error);
       }
     },
     // 刷新 当前赛事分析信息
-    refresh_match_analysis() {
-      const radio_button_index = this.radio_button_index
-      this.radio_button_index = -1
+    refresh_match_analysis = () => {
+      const radio_button_index = radio_button_index.value
+      radio_button_index.value = -1
 
-      this.$nextTick(() => {
-        this.radioButton(radio_button_index)
+      nextTick(() => {
+        radio_button(radio_button_index)
       })
     }
-  },
-  destroyed() {
-    // 移除监听 赛事分析刷新事件
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
+    return {
+      radio_button_index,
+      tab_radio_button,
+      data_list,
+      is_done,
 
-    for (const key in this.$data) {
-      this.$data[key] = null
+      radio_button,
+      get_list,
     }
-  }
-}
+  },
+  // computed: {
+    // TODO 后续修改调整
+  //   ...mapGetters(['get_detail_data', 'get_goto_detail_matchid']),
+  //   // 赛事id
+  //   match_id() {
+  //     return this.$route.params.mid || this.get_detail_data.mid
+  //   },
+  // },
+
+})
 </script>
 
 <style lang="scss" scoped>

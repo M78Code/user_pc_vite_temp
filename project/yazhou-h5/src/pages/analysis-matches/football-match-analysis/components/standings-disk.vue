@@ -82,37 +82,43 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+// TODO 后续修改调整
+// import {mapGetters} from "vuex";
+import { defineComponent, ref } from 'vue'
 import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
 
-export default {
+export default defineComponent({
   name: "standings_disk",
   props: {
     // 盘面的数据
-    matchHistory_battle_dto_map: Object | Array
+    matchHistory_battle_dto_map: {
+      type: Object | Array
+    }
   },
   components: {
     "team-img": team_img,
   },
-  computed: {
-    ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
-  },
-  methods:{
+  // TODO 后续修改调整
+  // computed: {
+  //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
+  // },
+  setup(props, event) {
+    // TODO 国际化后续修改调整
     // 赛事标题说明
     // handicapResultList 最近X 场输赢, 2平3输4赢
     // overunderResultList  最近X场大小, 2平3输4赢
-    title_calculation(main, name) {
+    title_calculation = (main, name) => {
       let arr_list = []
       if(main && main.handicapResultList && name == 'handicapResultList') {
         main.handicapResultList.forEach( (item, i, arr) => {
           if(item == 2){
-            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${this.$root.$t('analysis_football_matches.level')}</span>`)
+            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${$root.$t('analysis_football_matches.level')}</span>`)
           }
           if(item == 3){
-            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${this.$root.$t('analysis_football_matches.lose')}</span>`)
+            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${$root.$t('analysis_football_matches.lose')}</span>`)
           }
           if(item == 4){
-            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${this.$root.$t('analysis_football_matches.win')}</span>`)
+            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${$root.$t('analysis_football_matches.win')}</span>`)
           }
         })
         return arr_list
@@ -120,20 +126,27 @@ export default {
       if(main && main.overunderResultList && name == 'overunderResultList') {
         main.overunderResultList.forEach( (item, i, arr) => {
           if(item == 2){
-            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${this.$root.$t('analysis_football_matches.level')}</span>`)
+            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${$root.$t('analysis_football_matches.level')}</span>`)
           }
           if(item == 3){
-            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${this.$root.$t('analysis_football_matches.small')}</span>`)
+            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${$root.$t('analysis_football_matches.small')}</span>`)
           }
           if(item == 4){
-            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${this.$root.$t('analysis_football_matches.big')}</span>`)
+            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${$root.$t('analysis_football_matches.big')}</span>`)
           }
         })
         return arr_list
       }
-    },
+    }
+    return {
+      title_calculation,
+    }
+  },
+  methods:{
+    
+    
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
