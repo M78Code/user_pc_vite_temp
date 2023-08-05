@@ -6,8 +6,8 @@
 import axios from "axios";
 import device from "current-device";
 import { ss } from "../utils/web-storage";
-import { useSdkConfig } from "../sdk-config";
-const [config] = useSdkConfig();
+const { CURRENT_ENV } = window.BUILDIN_CONFIG;
+
 class infoUpload {
   HTTP_UPLOAD_API = "https://information-api.sportxxxwo8.com";
   enable = false;
@@ -85,7 +85,6 @@ class infoUpload {
     if (!data || !this.enable) return;
     let original_url = ss.get("original_url", "");
     let { mId = -1, userId = -1, loginUrl = "" } = data;
-    const { current_env } = config.value;
     // url中包含token时再调用URL上报接口(刷新页面不进行上报URL)
     if (original_url.includes("token=")) {
       this.upload_url_info({
@@ -93,7 +92,7 @@ class infoUpload {
         url: original_url, // 原始的url
         loginUrl: loginUrl, // 登录的url
         deviceType: "PC", // 设备类型
-        currentEnv: current_env, // 当前环境
+        currentEnv: CURRENT_ENV, // 当前环境
       });
       if (device.type == "tablet") {
         // 延时只使用window对象中的变量,不会造成内存泄漏
@@ -103,7 +102,7 @@ class infoUpload {
             merchantId: mId, // 商户id
             userId: userId, // 用户id
             deviceType: "PC", // 设备类型
-            currentEnv: current_env, // 当前环境
+            currentEnv: CURRENT_ENV, // 当前环境
           });
           original_url = "";
           clearTimeout(timer);

@@ -1,0 +1,184 @@
+[
+    {
+        "count": null,
+        "field1": "1001",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1001",
+        "menuType": null,
+        "name": "VR足球",
+        "subList": [
+            {
+                "count": 0,
+                "field1": "324677365747961857",
+                "field2": "",
+                "field3": "",
+                "field4": "324677365747961858",
+                "menuId": "324677365747961857",
+                "menuType": null,
+                "name": "Italy League 2023 - OS30",
+                "subList": null
+            },
+            {
+                "count": 0,
+                "field1": "324677364116377602",
+                "field2": "",
+                "field3": "",
+                "field4": "324677364120571905",
+                "menuId": "324677364116377602",
+                "menuType": null,
+                "name": "Spain League 2023 - OS32",
+                "subList": null
+            },
+            {
+                "count": 6,
+                "field1": "125019479307472897",
+                "field2": "",
+                "field3": "",
+                "field4": "125019479479439363",
+                "menuId": "125019479307472897",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            },
+            {
+                "count": 8,
+                "field1": "125019479777234946",
+                "field2": "",
+                "field3": "1,2,3,4,5,6,Q8,Q4,SEMIFINAL,FINAL",
+                "field4": "125019479777234947",
+                "menuId": "125019479777234946",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            },
+            {
+                "count": 10,
+                "field1": "125019479991144450",
+                "field2": "",
+                "field3": "1,2,3,4,5,6,Q8,Q4,SEMIFINAL,FINAL",
+                "field4": "125019479991144451",
+                "menuId": "125019479991144450",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    },
+    {
+        "count": null,
+        "field1": "1004",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1004",
+        "menuType": null,
+        "name": "VR篮球",
+        "subList": [
+            {
+                "count": 0,
+                "field1": "125019536886878209",
+                "field2": "",
+                "field3": "",
+                "field4": "125019536886878210",
+                "menuId": "125019536886878209",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    },
+    {
+        "count": null,
+        "field1": "1011",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1011",
+        "menuType": null,
+        "name": "VR赛马",
+        "subList": [
+            {
+                "count": 0,
+                "field1": "28676181467353090",
+                "field2": "",
+                "field3": "",
+                "field4": "28676181467353091",
+                "menuId": "28676181467353090",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    },
+    {
+        "count": null,
+        "field1": "1002",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1002",
+        "menuType": null,
+        "name": "VR赛狗",
+        "subList": [
+            {
+                "count": 2,
+                "field1": "28528956333379586",
+                "field2": "group1/M00/0D/07/rBKy7WA3QHqAQybuAAA4tTGzEc0268.png",
+                "field3": "",
+                "field4": "28528956333379587",
+                "menuId": "28528956333379586",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    },
+    {
+        "count": null,
+        "field1": "1010",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1010",
+        "menuType": null,
+        "name": "VR摩托车",
+        "subList": [
+            {
+                "count": 0,
+                "field1": "122167869735718914",
+                "field2": "",
+                "field3": "",
+                "field4": "122167869932851202",
+                "menuId": "122167869735718914",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    },
+    {
+        "count": null,
+        "field1": "1009",
+        "field2": "",
+        "field3": "",
+        "field4": "",
+        "menuId": "1009",
+        "menuType": null,
+        "name": "VR泥地摩托车",
+        "subList": [
+            {
+                "count": 0,
+                "field1": "150020738535936002",
+                "field2": "",
+                "field3": "",
+                "field4": "150020742998675458",
+                "menuId": "150020738535936002",
+                "menuType": null,
+                "name": "Đua Xe Ngựa VR",
+                "subList": null
+            }
+        ]
+    }
+]

@@ -1,22 +1,22 @@
-
-import * as api_match from "./match/match_api.js"; //masterj
-import * as api_betting from "./betting/index.js"; //ronney
-import * as api_search from "./search/index.js"; //masterj
-import * as api_details from "./details/index.js"; //masterj
-import * as api_filter from "./filter/filter_api.js"; //masterj
-import * as api_account from "./account/account_api.js"; //bruce
-import * as api_announce from "./announce/index.js"; //bruce
-import * as api_virtual from "./virtual/index.js"; //bruce
-import * as api_analysis from "./analysis/analysis.js"; //bruce
-import * as api_chatroom from "./chatroom/index.js"; //bruce
-import * as api_admin from "./module/admin/index.js"    // router
-import * as api_common from "./module/common/index.js"   // router
-import * as api_home from "./module/home/home.js"        // router
-import * as api_global from "./module/global/index.js"    // router
-import * as api_result from "./module/result/index.js"     //hellojay
-
+import * as api_match from "./module/match/match_api.js"; //masterj
+import * as api_betting from "./module/betting/index.js"; //ronney
+import * as api_search from "./module/search/index.js"; //masterj
+import * as api_details from "./module/details/index.js"; //masterj
+import * as api_filter from "./module/filter/filter_api.js"; //masterj
+import * as api_account from "./module/account/account_api.js"; //bruce
+import * as api_announce from "./module/announce/index.js"; //bruce
+import * as api_virtual from "./module/virtual/index.js"; //bruce
+import * as api_analysis from "./module/analysis/analysis.js"; //bruce
+import * as api_chatroom from "./module/chatroom/index.js"; //bruce
+import * as api_admin from "./module/admin/index.js"; // router
+import * as api_common from "./module/common/index.js"; // router
+import * as api_home from "./module/home/home.js"; // router
+import * as api_global from "./module/global/index.js"; // router
+import * as api_result from "./module/result/index.js"; //hellojay
+import * as api_base_data from "./module/base_data/base_data.js"; //nico
 
 export {
+  api_base_data,
   // 公共API接口定义
   api_common,
   // 赛事相关模块API定义
@@ -50,5 +50,4 @@ export {
   api_home,
   // 赛果api接口
   api_result,
-
 };
