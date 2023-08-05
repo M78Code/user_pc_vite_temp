@@ -1,6 +1,4 @@
 <!--
- * @Author: Amor
- * @Date: 2021-06-30 17:13:55
  * @Description: 主菜单——收缩时候的组件 mini
 -->
 <template>

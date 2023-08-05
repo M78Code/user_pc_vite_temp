@@ -1,6 +1,4 @@
 <!--
- * @Author: Amor
- * @Date: 2020-08-04 17:13:55
  * @Description: 主菜单
 -->
 <template>
@@ -90,8 +88,6 @@
             </div>
           </div>
 
-
-
           <!-- 热门赛事 -->
           <div v-if="menu_config.add_mi_introduce.mi_500.label && get_global_switch.hot_match_num"
             @click="new_menu_click(500)" class="menu-item menu-top menu-play menu-border"
@@ -106,19 +102,10 @@
             </div>
           </div>
 
-
-
           <!-- 体育菜单 -->
           <menu-sports />
 
-
-
-
-
-
         </div>
-
-
 
         <!-- 历史记录 -->
         <div v-if="vx_layout_left_show == 'bet_history'" class="col">
@@ -213,6 +200,8 @@
 
 // import menu_config from "src/public/utils/menuClass/menu_class_new.js";
 import { ref, onMounted } from "vue"
+import { useRouter } from "vue-router";
+
 const menu_config = ref({})
 const bet_recode_this = ref(null)
 const bet_single_this = ref(null)
@@ -224,6 +213,7 @@ const show_merge_info = ref(false)
 const data_loaded = ref(false)
 const count = ref(0)
 
+const router = useRouter();
 
 // 格式化用户余额保留2位小数
 const format_balance = num => {
@@ -313,7 +303,7 @@ onMounted(() => {
 const set_route_url = () => {
   let { name } = $route
   if (['details', 'search', 'video', 'virtual_details'].includes(name)) {
-    $router.push('/home');
+    router.push({path:'/home'})
   }
   vx_set_layout_list_type('match')
   set_filter_select_obj([])
