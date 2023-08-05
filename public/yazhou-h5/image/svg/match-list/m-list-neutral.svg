@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>中立场</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="足球标准版" transform="translate(-88.000000, -202.000000)">
+            <g id="编组-6备份" transform="translate(7.000000, 190.000000)">
+                <g id="中立场" transform="translate(81.000000, 12.000000)">
+                    <rect id="矩形" stroke="#79BFAF" x="0.5" y="0.5" width="11" height="11" rx="2"></rect>
+                    <polygon id="形状结合" fill="#79BFAF" points="4.2823219 9 4.2823219 4.68543956 4.31398417 4.6771978 7.7176781 9 9 9 9 3 7.7176781 3 7.7176781 7.31456044 7.68601583 7.3228022 4.2823219 3 3 3 3 9"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

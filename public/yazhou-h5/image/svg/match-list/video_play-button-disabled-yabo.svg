@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="12px" viewBox="0 0 14 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>灰</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.823529 0 0 0 0 0.823529 0 0 0 0 0.823529 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <filter id="filter-2">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.823529 0 0 0 0 0.823529 0 0 0 0 0.823529 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="虚拟体育-足球1" transform="translate(-151.000000, -639.000000)">
+            <g id="编组-2备份-12" transform="translate(5.000000, 544.000000)">
+                <g id="Left" transform="translate(10.000000, 8.000000)">
+                    <g id="编组-54" transform="translate(5.000000, 84.000000)">
+                        <g id="编组备份-24" transform="translate(130.000000, 1.000000)" filter="url(#filter-1)">
+                            <g filter="url(#filter-2)" id="编组">
+                                <g transform="translate(1.000000, 2.500000)">
+                                    <path d="M2,1 C1.4485,1 1,1.4485 1,2 L1,9 C1,9.5515 1.4485,10 2,10 L12,10 C12.5515,10 13,9.5515 13,9 L13,2 C13,1.4485 12.5515,1 12,1 L2,1 Z M2,11 C0.897,11 0,10.103 0,9 L0,2 C0,0.897 0.897,0 2,0 L12,0 C13.103,0 14,0.897 14,2 L14,9 C14,10.103 13.103,11 12,11 L2,11 Z" id="Fill-1" fill="#E5E5E5"></path>
+                                    <path d="M8.11155,5.21535 L6.33005,3.83235 C6.09355,3.64885 5.74905,3.81735 5.74905,4.11735 L5.74905,6.88285 C5.74905,7.18235 6.09355,7.35085 6.33005,7.16735 L8.11155,5.78485 C8.29755,5.64035 8.29755,5.35935 8.11155,5.21535" id="Fill-3" fill="#E5E5E5"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
