@@ -8,7 +8,20 @@ import { get } from "lodash";
 import wslog from "../ws/ws-log";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
+import { usePageVisibilityChange } from "../utils/event-hook";
 
+/**
+ * 页面隐藏时间 纪录
+ */
+let DOCUMENT_HIDDEN = 0;
+usePageVisibilityChange(
+  () => {
+    DOCUMENT_HIDDEN = 0;
+  },
+  () => {
+    DOCUMENT_HIDDEN = Date.now();
+  }
+);
 // 引入 当前  植入配置
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 /**
@@ -219,9 +232,9 @@ class AxiosHttp {
    */
   http_close_check() {
     let closed = false;
-    if (window.DOCUMENT_HIDDEN) {
+    if (DOCUMENT_HIDDEN) {
       if (
-        new Date().getTime() - window.DOCUMENT_HIDDEN >
+        new Date().getTime() - DOCUMENT_HIDDEN >
         this.DOCUMENT_HIDDEN_HTTP_CLOSE_TIME
       ) {
         closed = true;
