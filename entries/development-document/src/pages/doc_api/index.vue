@@ -38,14 +38,29 @@ const formatData = (val) => {
     data = val[0] || {};
   }
   Object.keys(data)?.forEach((key) => {
-    if (["project"].includes(key)) {
-      docDataTable.value = data[key];
-      isComp.value = "projectDoc";
-    } else {
-      docDataTable.value = [data];
-      isComp.value = "userDoc";
+    switch (key) {
+      case "project": {
+        docDataTable.value = data[key];
+        isComp.value = "project-doc";
+        break;
+      }
+      case "entriesdoc": {
+        docDataTable.value = data[key];
+        isComp.value = "entries-doc";
+        break;
+      }
+      case "jobdoc": {
+        docDataTable.value = data[key];
+        isComp.value = "job-doc";
+        break;
+      }
+      default:
+        docDataTable.value = [data];
+        isComp.value = "user-doc";
+        break;
     }
   });
+  console.log(`--${isComp.value}--`, docDataTable.value);
 };
 
 watch(

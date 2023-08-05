@@ -3,7 +3,7 @@
     "level": 1,
     "menuName": "项目内脚本文件"
   },
-  "project": [
+  "jobdoc": [
       {
         "category": "job",
         "directory-name": "job",
