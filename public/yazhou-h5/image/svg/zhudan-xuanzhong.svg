@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.1 (89650) - https://sketch.com -->
+    <title>zhudan-xuanzhong</title>
+    <desc>Created with Sketch.</desc>
+    <g id="zhudan-xuanzhong" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组">
+            <rect id="矩形" fill="#D8D8D8" opacity="0" x="0" y="0" width="24" height="24"></rect>
+            <path d="M19.75,7.68933983 L14.3106602,2.25 L6,2.25 C5.03350169,2.25 4.25,3.03350169 4.25,4 L4.25,20 C4.25,20.9664983 5.03350169,21.75 6,21.75 L18,21.75 C18.9664983,21.75 19.75,20.9664983 19.75,20 L19.75,7.68933983 Z M13.689,3.75 L18.25,8.311 L18.25,20 C18.25,20.1380712 18.1380712,20.25 18,20.25 L6,20.25 C5.86192881,20.25 5.75,20.1380712 5.75,20 L5.75,4 C5.75,3.86192881 5.86192881,3.75 6,3.75 L13.689,3.75 Z" id="矩形" fill="#414655" fill-rule="nonzero"></path>
+            <path d="M14.3106602,2.25 L12.25,2.25 L12.25,8 C12.25,8.96649831 13.0335017,9.75 14,9.75 L19.75,9.75 L19.75,7.68933983 L14.3106602,2.25 Z M18.189,8.25 L14,8.25 L13.9426773,8.24339732 C13.8322334,8.21748682 13.75,8.11834673 13.75,8 L13.75,3.811 L18.189,8.25 Z" id="路径-16" fill="#414655" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>
