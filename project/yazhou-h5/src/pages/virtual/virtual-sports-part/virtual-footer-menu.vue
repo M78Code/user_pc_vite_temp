@@ -1,8 +1,3 @@
-<!--
- * @Author: Cronus
- * @Date: 2020-07-14 17:46:49
- * @Description: 赛事列表页右下角可拖拽的菜单组件
--->
 <template>
   <div class="virtual-footer-menu" v-if="get_newer_standard_edition == 1" :class="{black2:get_theme.includes('theme02')}">
     <!-- 刷新按钮 -->
