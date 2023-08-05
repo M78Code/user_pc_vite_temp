@@ -1,96 +1,69 @@
-import WsQueue from "src/core/ws/wsQueue.js";
-import { WsRev } from "src/core/ws/wsCtr.js";
+/*
+ * @Author: hanmar
+ * @Description: ws通信类
+ */
+import WsQueue from "src/core/ws/ws-queue.js";
+import { WsRev } from "src/core/ws/ws-ctr.js";
+import WsMan from  "src/core/ws/ws_man.js"
 import WsSendManger from "src/core/ws/ws-send-manger.js";
-// import { api_common } from "src/public/api/index.js";
+import STANDARD_KEY from  "src/core/standard-key/index.js"
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
   /**
    * @Description:构造函数
-   * @Author success
    * @param:
-   * @return:
-   * @Date 2020/03/02 14:02:53
    */
-  constructor(view, url) {
+  constructor(url) {
     // ws是否允许执行
     this.run = true;
-    // 创建消息队列
-    this.view = view;
     // ws url
     this.url = url;
     // ws通信对象
     this.ws = '';
     // 心跳包定时器
-    this.headbeetTimer = '';
+    this.headbeet_timer = '';
     //心跳包发送间隔时间
     this.HEARTBEAT_TIME = 15000;
     // ws 消息队列对象--用于消息队列分发
-    this.wsQueue = new WsQueue(view);
+    this.ws_queue = new WsQueue();
     // 开始启动消息队列服务
-    this.wsQueue.start();
+    this.ws_queue.start();
     // 网络链接状态
     this.wsStatus = false;
     // 网络链接状态回调方法
-    this.wsStatusCall = '';
+    this.ws_status_call = '';
     // 是否手动操作ws
     this.ctr = false;
     // ws消息推送管理对象
     this.ws_send_manger_objs={};
-    /* this.mids = "";
-    this.interval;
-    this.sync_time = this.view.throttle(this.sync_time, 3000); */
     // ws断线后,重新连接时定时器对象
     this.timer_ws = null;
     // 可以切换的ws url地址数组
     this.urls = [];
+    // 增加接收内部消息监听
+    this.add_event_listener();
   }
 
 
   /**
    * @Description:增加消息队列数据
-   * @Author success
-   * @param:
-   * @return:
-   * @Date 2020/03/02 14:05:05
+   * @param: msg 消息体
    */
-  pushWsQueueMsg(msg) {
-    if (this.wsQueue && msg) {
+  push_ws_queue_msg(msg) {
+    if (this.ws_queue && msg) {
       // {"cd":{"hs":0,"mid":"74282"},"cmd":"C104","ctsp":"1583130819077","ld":"790.435.15831308179490027"}
-      this.wsQueue.pushMsg(msg);
+      this.ws_queue.push_msg(msg);
     }
-  }
-  /**
-   * @Description:增加订阅对象
-   * @Author success
-   * @param:
-   * @return:
-   * @Date 2020/03/02 14:18:01
-   */
-  addQueueViewObj(key, obj) {
-    this.wsQueue.addQueueViewObj(key, obj)
-  }
-
-  /**
- * @Description:清除消费对象
- * @Author success
- * @param:
- * @return:
- * @Date 2020/03/02 14:18:01
- */
-  removeQueueViewObj(key) {
-    this.wsQueue.removeQueueViewObj(key)
   }
 
   /**
    * @Description:设置ws url
-   * @Author success
-   * @param:
+   * @param: url ws地址
    * @return:
-   * @Date 2020/03/02 16:04:50
    */
-  setWsUrl(url) {
-    console.log('ws setWsUrl new url:'+url);
+  set_ws_url(url) {
+    console.log('ws set_ws_url new url:'+url);
     // 未发现该域名,增加到数组中
     if(!this.urls.includes(url)){
       this.urls.unshift(url);
@@ -101,16 +74,14 @@ export default class Ws {
 
   /**
    * @Description:重新初始化数据
-   * @Author success
    * @param:noAuto-是否手动关闭ws
    * @return:
-   * @Date 2020/03/02 17:27:49
    */
-  retInitData(noAuto) {
-    console.log('-----ws--retInitData----------'+noAuto)
-    if(noAuto)
+  ret_init_data(no_auto) {
+    console.log('-----ws--ret_init_data----------'+no_auto)
+    if(no_auto)
     {
-      this.ctr = noAuto;
+      this.ctr = no_auto;
     }
     if (this.ws) {
       // 清空监听函数
@@ -121,25 +92,26 @@ export default class Ws {
       this.ws = '';
     }
     //清除心跳包定时器
-    if (this.headbeetTimer) {
-      clearInterval(this.headbeetTimer);
-      this.headbeetTimer = '';
+    if (this.headbeet_timer) {
+      clearInterval(this.headbeet_timer);
+      this.headbeet_timer = '';
     }
   }
 
   /**
-   * @Description:析构函数
-   * @Author success
+   * @Description:销毁函数
    * @param:
    * @return:
-   * @Date 2020/03/02 17:27:49
    */
   destroy(is_close) {
     // console.log('-----ws--destroy----------')
     if(is_close){
       this.run = false;
     }
+    // 移除接收内部消息监听
+    this.remove_event_listener();
     if (this.ws) {
+      this.send_msg({cmd:"C00"});
       // 清空监听函数
       this.ws.onopen = function (e){};
       this.ws.onclose = function (e){};
@@ -148,13 +120,13 @@ export default class Ws {
       this.ws = '';
     }
     //清除心跳包定时器
-    if (this.headbeetTimer) {
-      clearInterval(this.headbeetTimer);
-      this.headbeetTimer = '';
+    if (this.headbeet_timer) {
+      clearInterval(this.headbeet_timer);
+      this.headbeet_timer = '';
     }
     //停止消费队列
-    if (this.wsQueue) {
-      this.wsQueue.stop();
+    if (this.ws_queue) {
+      this.ws_queue.stop();
     }
 
     // 销毁ws消息推送管理对象
@@ -223,40 +195,43 @@ export default class Ws {
       console.error(error);
     }
   }
-  //连接ws成功
+  //连接ws成功回调函数
   onConnect(this_) {
     console.log(`--------------------------------------onConnect---------------------this.url=${this.url}`);
     // 设置ws链接状态
     this_.wsStatus = 1;
 
-    if (this_.wsStatusCall) {
-      this_.wsStatusCall(this_.wsStatus)
+    if (this_.ws_status_call) {
+      this_.ws_status_call(this_.wsStatus)
     }
-    if (!this_.headbeetTimer) {
-      clearInterval(this_.headbeetTimer);
-      this_.headbeetTimer = setInterval(() => {
+    if (!this_.headbeet_timer) {
+      clearInterval(this_.headbeet_timer);
+      this_.headbeet_timer = setInterval(() => {
         // 发送心跳包命令
-        this_.sendMsg({ "cmd": "C0" });
+        this_.send_msg({ "cmd": "C0" });
       }, this_.HEARTBEAT_TIME);
     }
   }
+  //关闭ws回调函数
   onClose(this_) {
     console.log(`--------------------------------------onClose------------this.url=${this.url}`);
     // 设置ws链接状态
     this_.wsStatus = 0;
-    if (this_.wsStatusCall) {
-      this_.wsStatusCall(this_.wsStatus)
+    if (this_.ws_status_call) {
+      this_.ws_status_call(this_.wsStatus)
     }
-    this_.retInitData();
+    this_.ret_init_data();
     // 不允许执行时阻止自动重启功能
     if(!this.run){
       return;
     }
     console.log(`--------------------------------------onClose------------this.url=${this.url}----------this.ctr = ${this.ctr}`);
-    // 发送api域名切换命令命令
+    // 发送api域名切换命令
     if(!this.ctr)
     {
-      this.view.$root.$emit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
+      // this.view.$root.$emit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
+      // 改用postmessage消息机制
+      window.postMessage({event: 'WS', cmd:`WS_DOMAIN_UPD_CMD`, data:{name:'api域名切换命令'}},'*');
     }
     this.ctr = false;
     if (!this_.wsStatus && document.visibilityState == 'visible') {
@@ -279,138 +254,111 @@ export default class Ws {
 
   /**
    * @Description:发送ws 消息
-   * @Author success
-   * @param:
+   * @param: msg 事件消息对象
+   * @param: ws_object WS类对象
    * @return:
-   * @Date 2020/03/02 17:36:09
    */
-  sendMsg(msg) {
+  send_msg(msg, ws_object=WsMan.wsm) {
     try {
-      if (this.ws && this.ws.readyState == 1) {
-        // 对特殊命令进行统一管理处理发送
+      let ws = WsMan.ws && WsMan.ws.ws;
+      if (ws && ws.readyState == 1) {
         switch (msg.cmd) {
           case 'C8':
             // 是否一条一条发送
             if(!msg.one_send){
               if(!this.ws_send_manger_objs[msg.cmd])
               {
-                this.ws_send_manger_objs[msg.cmd] = new WsSendManger(this.view, msg.cmd);
+                this.ws_send_manger_objs[msg.cmd] = new WsSendManger(msg.cmd);
               }
               // 增加缓存信息,并获取组装后信息
               msg = this.ws_send_manger_objs[msg.cmd].push_obj(msg.key, msg);
-              // this.mids = msg.mid;
             }
-           /*  if(this.interval) {
-              clearInterval(this.interval);
-            }
-            this.interval = setInterval(()=>{
-              this.sync_time(this.ws_send_manger_objs[msg.cmd]);
-            }, 1000); */
             break;
           default:
             break;
         }
+        // 对特殊命令进行统一管理处理发送
         if(window.vue) {
           try {
-            msg.requestId = window.vue.$store.getters.get_user.token || sessionStorage.getItem('pc_token');
+            msg.requestId = window.vue.$store.getters.get_user.token || sessionStorage.getItem(STANDARD_KEY.token);
           } catch (error) {
             console.error(error)
           }
         }
-        console.log(`---WS SEND MSG---:${JSON.stringify(msg)}`);
-        if(window.wslog && window.wslog.sendMsg){
-          window.wslog.sendMsg('WS---S:', msg)
+
+        window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
+        if(window.wslog && window.wslog.send_msg){
+          window.wslog.send_msg('WS---S:', msg)
         }
-        if(this.ws){
-          this.ws.send(JSON.stringify(msg));
+        if(ws){
+          ws.send(JSON.stringify(msg));
         }
       }
     } catch (error) {
       console.log(`ws send error! data:${JSON.stringify(msg)}`);
     }
   }
+  /**
+   * @Description:接收ws内部通信事件
+   * @param: event 事件消息对象
+   * @param: ws_object WS类对象
+   * @return:
+   */
+  rev_event_msg(event, ws_object=WsMan.ws) {
+    if(ws_object && event && event.data && event.data.event == 'WS'){
+      if(ws_object){
+        switch (event.data.cmd) {
+          case 'WS_MSG_SEND': // 发送消息ws服务器
+            ws_object.send_msg(event.data);
+            break;
+          case 'WS_SET_URL':
+            ws_object.send_msg(event.data);
+            break;
+          case 'WS_SET_RET_URL':
+            ws_object.send_msg(event.data);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+  /**
+   * @Description:增加接收ws内部通信监听
+   * @param: event 事件消息对象
+   * @return:
+   */
+  add_event_listener(){
+    // 监听message
+    window.addEventListener("message", this.rev_event_msg);
+  }
+  /**
+   * @Description:移除接收ws内部通信监听
+   * @param: event 事件消息对象
+   * @return:
+   */
+  remove_event_listener(){
+    // 移除监听message
+    window.removeEventListener("message", this.rev_event_msg);
+  }
 
+  /**
+   * @Description:接收ws外部收到消息
+   * @param: event 事件消息对象
+   * @return:
+   */
   onMessage(this_, e) {
     let msg = e.data;
     // console.log(`---WS REV  MSG---:${msg}`);
     try {
-      if(window.wslog && window.wslog.sendMsg){
-        window.wslog.sendMsg('WS---R:', msg)
+      if(window.wslog && window.wslog.send_msg){
+        window.wslog.send_msg('WS---R:', msg)
         // console.log('------------------------------------onMessage----------------------'+msg)
       }
-      WsRev.wsRevMsg(this_, JSON.parse(msg));
+      WsRev.ws_rev_msg(this_, JSON.parse(msg));
     } catch (error) {
       console.log('=======websocket服务器返回数据错误=======' + msg);
     }
-    // this_.pushWsQueueMsg(msg);
-  }
-
-
-  /**
-   * @Description:客户端伪造指令使用(伪造消息要求必须以C0开头)
-   * @Author success
-   * @param: e-{data:jsonText}
-   * @return:
-   * @Date 2020/06/12 11:51:32
-   */
-  customWsCmdData(data) {
-    // 使用demo
-    // let msg = {"cd":{"hls":[{"hid":"1271012027129176066","hpid":"2","hs":0,"mid":"826414","ol":[{"obv":"285000","oid":"1271015140590395393","os":1,"ot":"Over","ov":"288000"},{"obv":"123000","oid":"1271015140716224514","os":1,"ot":"Under","ov":"123000"}]}],"mid":"826414"},"cmd":"C0105","ctsp":"1591868727453","ld":"ac12b2f6202006111745253233007be6"};
-    // if(window.ws)
-    // {
-    //   window.ws.customWsCmdData(msg)
-    // }
-    this.pushWsQueueMsg(data);
-  }
-  /**
-   * @description: http同步赛事时间
-   * @param {Object} ws_send_manger 对象
-   */
-  sync_time(ws_send_manger) {
-    let mids = '';
-    if(ws_send_manger.cmd == 'C8')
-    {
-      let obj_ = ws_send_manger.obj;
-      if(obj_){
-        let mid_arr = [];
-        for(const key in obj_) {
-          if(obj_[key] && obj_[key].mid) {
-            const matchs = obj_[key].mid;
-            for (const mid_ in matchs) {
-              const match = matchs[mid_];
-              if (match) {
-                if(match.csid==2 && match.mess==0 && ([1,2,7,10,110].includes(match.ms))){
-                  // 是篮球,是滚球的时候,倒计时停表的时候
-                  mid_arr.push(match.mid);
-                }
-              }
-            }
-          }
-        }
-        if(mid_arr.length){
-          mid_arr = _.uniq(mid_arr);
-          mids = mid_arr.join(",");
-        }
-      }
-    }
-    // if(mids){
-    //   api_common.match_event({ mids }).then(res => {
-    //     let code = _.get(res, 'data.code');
-    //     let ctsp = _.get(res, 'data.ts');
-    //     if(code==200) {
-    //       let data = _.get(res, 'data.data');
-    //       let ts_http = _.get(res, 'data.ts_http');
-    //       // 接口响应必须在1S内才进行C102的发送
-    //       if(data && data instanceof Array && ts_http < 1000) {
-    //         _.forEach(data, item=>{
-    //           item.ctsp = ctsp;
-    //           this.view.yabo_common.update_match_time(item);
-    //         });
-    //       }
-    //     }
-    //   }).catch(error =>{
-    //     console.log('=======调用接口获取赛事时间失败=======' + error);
-    //   })
-    // }
+    // this_.push_ws_queue_msg(msg);
   }
 }

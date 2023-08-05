@@ -237,3 +237,10 @@ export const GET_ESPORTS_VIDEO_LIST = "GET_ESPORTS_VIDEO_LIST"
 //网络错误时设置默认最大最小值
 export const EMIT_NET_ERR = "EMIT_NET_ERR"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
+
+
+
+// 发送用户基本信息到服务命令
+export const EMIT_API_USER_PRO_INFO_CMD="EMIT_API_USER_PRO_INFO_CMD"
+// 调用用户接口，更新 域名流程
+export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";

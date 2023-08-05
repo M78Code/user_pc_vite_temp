@@ -1,10 +1,10 @@
 import { ref } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { api_match } from "/src/api/index.js";
-import store from "./src/store-redux-vuex/index.js";
+// import store from "./src/store-redux-vuex/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
-import { loadLanguageAsync } from "./src/i18n";
+import { loadLanguageAsync } from "./src/boot/i18n";
 const token_key = STANDARD_KEY.get("token");
 /**
  * 获取用户信息
@@ -47,12 +47,10 @@ const init_domain = async (config) => {
       //  SDK
       if (config) {
         let { token, tryPlay } = config;
-        // http初始化方法
+
         if (config.token) {
           ss.set(token_key, token);
         } else {
-          // http初始化方法 会调用 setApiDomain
-          http.init();
           // 调用接口，获取token
           handle_user_tryPlay();
         }
@@ -62,10 +60,10 @@ const init_domain = async (config) => {
           }
         }
       } else {
-        // http初始化方法 会调用 setApiDomain
-        http.init();
         handle_user_tryPlay();
       }
+      // http初始化方法 会调用 setApiDomain
+      http.init();
     });
     AllDomain.run();
   }
