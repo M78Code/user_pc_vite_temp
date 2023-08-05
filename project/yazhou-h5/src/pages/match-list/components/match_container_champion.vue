@@ -1,15 +1,10 @@
 <!--
- * @Author: Cronus
- * @Date: 2020-10-13 12：29:47
  * @Description: 冠军赛事组件，用于赛事列表展示赛事信息
 -->
 <template>
   <div class="champion-wrap" v-if="is_show">
     <!--体育类别  menuType 1:滚球 2:即将开赛 3:今日 4:早盘 11:串关 -->
-    <div class="sport-title match-indent"
-    v-if="get_sport_show(i)"
-    @click="ball_folding_click(match_of_list.csid)"
-    >
+    <div class="sport-title match-indent" v-if="get_sport_show(i)" @click="ball_folding_click(match_of_list.csid)">
       <span class="score-inner-span">
         {{match_of_list.csna}}
       </span>
@@ -70,15 +65,16 @@
         </div>
         <div class="ol-list-wrap flex justify-start" :data-ol="hp.ol.length" v-if="hp.ol">
 
-          <odd-item-champion v-for="(ol_item,i) of hp.ol"
-                            :key="i"
-                            :hs="hp.hs"
-                            :data-i="i"
-                            :ol_item="ol_item"
-                            :style="calc_bgcolor(ol_item)"
-                            :class="calc_bgcolor(ol_item) && 'active-item'"
-                            :csid="match_of_list.csid"
-                            @click.native.stop="item_click(match_of_list,hp,ol_item)">
+          <odd-item-champion 
+            v-for="(ol_item,i) of hp.ol"
+            :key="i"
+            :hs="hp.hs"
+            :data-i="i"
+            :ol_item="ol_item"
+            :style="calc_bgcolor(ol_item)"
+            :class="calc_bgcolor(ol_item) && 'active-item'"
+            :csid="match_of_list.csid"
+            @click.native.stop="item_click(match_of_list,hp,ol_item)">
           </odd-item-champion>
         </div>
       </div>
@@ -86,261 +82,220 @@
 
   </div>
 </template>
+ 
+<script setup>
+import EMITTER from  "src/global/mitt.js"
+import { computed } from "vue";
+const props = defineProps({
+  // 当前组件的赛事数据对应列表的赛事
+  match_of_list: Object,
+  // 赛事处于列表中的下标
+  i: Number,
+  // 值为6当前为收藏页
+  menu_type: Number | String,
+  // 赛事列表相关操作的类型封装对象
+  matchCtr: Object,
+})
 
-<script>
-import formartmixin from 'src/project/mixins/module/formartmixin.js';
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
-import bettings from "src/project/mixins/betting/betting";
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
-import common from "src/project/mixins/constant";
-import msc from 'src/public/mixins/common/msc.js';
-import {mapMutations,mapGetters} from 'vuex';
-import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
+// TODO 其他模块得 store  待添加
+// mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
+// ...mapGetters([
+//   "get_bet_list",
+//   "get_show_favorite_list",
+//   "get_collapse_map_match",
+//   "get_collapse_csid_map",
+//   "get_collapse_all_ball",
+//   "get_lang",
+//   "get_theme",
+//   'get_curr_sub_menu_type',
+//   'get_current_menu',
+//   'get_access_config',
+// ]),
 
+const collapsed = computed(() => {
+  let result = true;
+  let tmid = this.gen_collapse_key(this.match_of_list);
+  result = this.get_collapse_map_match[tmid];
+  return result;
+})
 
-export default {
-  name: "match_container_champion",
-  mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
-  props: {
-    // 当前组件的赛事数据对应列表的赛事
-    match_of_list: Object,
-    // 赛事处于列表中的下标
-    i: Number,
-    // 值为6当前为收藏页
-    menu_type: Number | String,
-    // 赛事列表相关操作的类型封装对象
-    matchCtr: Object,
-  },
-  created(){
-  },
-  data(){
-    return {
-      //当前折叠状态 默认展开
-      cur_folding_type: true
+const is_show = computed(() => {
+  let flag = true;
+  if( _.get(this.match_of_list, 'hps')){
+    flag = !this.match_of_list.hps.every(item => item.hs == 2)
+  }
+
+  return flag
+})
+
+const calc_bgcolor = computed(() => {
+  return function(ol){
+    if(!ol) return;
+    if(this.get_bet_list.includes(ol.oid)){
+      if(this.get_theme.includes('y0')){
+        return {'background-color':'#569FFD'}
+      }
+      return {'background-color':'#FFB001'}
+    }else{
+      return ""
     }
-  },
-  methods: {
-    ...mapMutations([
-      'set_goto_detail_matchid',
-      'set_details_item',
-      'set_collapse_map_match',
-      'set_collapse_csid_map',
-      'set_collapse_all_ball',
-      'set_match_list_loading',
-    ]),
-    /**
-     * @description 判断是否显示联赛标题
-     * @param {Number} i 赛事处于列表中的下标
-     * @returns {Boolean}
-     */
-    is_show_league(i) {
-      let flag = false;
-      // 当前赛事
-      let curr = this.matchCtr.match_list_data_sources[i];
-      if (!curr) {
-        return false;
-      }
-      
-      // 虚拟体育没有tid而是tnameCode
-      let property_key = "tnameCode";
-      if(!curr[property_key]){
-        property_key = "tid";
-      }
-      if (i == 0) {
-        flag = true;
-      } else {
-        // 前一个赛事
-        let prev = this.matchCtr.match_list_data_sources[i - 1];
-        // 如果显示  赛事未开赛标题， 或者是  上一次和这一次tid 不一样  则显示联赛标题高度
-        if (curr[property_key] != prev[property_key]) {
-          flag = true;
-        }
-      }
-      
-      return flag;
-    },
-    /**
-       * 判断是否显示体育类型
-       * @param {Object} match 赛事对象
-       * @returns {Boolean}
-       */
-      get_sport_show(i) {
-        if (!_.get(this.get_current_menu, 'main.menuType')) {
-          if (i > 0) {
-            let p = this.matchCtr.list[i - 1], c = this.matchCtr.list[i];
-            if (p && c) {
-              return p.csid !== c.csid;
-            }
-          } else {
-            return true;
-          }
-        } else if ([1, 2, 3, 4, 11, 12,100].includes(_.get(this.get_current_menu, 'main.menuType'))) {
+  }
+})
 
-          if (i > 0) {
-            let p = this.matchCtr.list[i - 1], c = this.matchCtr.list[i];
-            if (p && c) {
-              return p.csid !== c.csid;
-            }
-          } else {
-            return true;
-          }
-        } else {
-          return false;
-        }
-      },
-    get_key_by_obg(obj){
-      let r = "";
-      if(sessionStorage.getItem('wsl') != '9999') return r;
-      if(obj.hid){
-        r = `hid:${obj.hid}`;
+/**
+ * @description 判断是否显示联赛标题
+ * @param {Number} i 赛事处于列表中的下标
+ * @returns {Boolean}
+ */
+const is_show_league = (i) => {
+  let flag = false;
+  // 当前赛事
+  let curr = matchCtr.match_list_data_sources[i];
+  if (!curr) {
+    return false;
+  }
+  
+  // 虚拟体育没有tid而是tnameCode
+  let property_key = "tnameCode";
+  if(!curr[property_key]){
+    property_key = "tid";
+  }
+  if (i == 0) {
+    flag = true;
+  } else {
+    // 前一个赛事
+    let prev = matchCtr.match_list_data_sources[i - 1];
+    // 如果显示  赛事未开赛标题， 或者是  上一次和这一次tid 不一样  则显示联赛标题高度
+    if (curr[property_key] != prev[property_key]) {
+      flag = true;
+    }
+  }
+  
+  return flag;
+}
+/**
+ * 判断是否显示体育类型
+ * @param {Object} match 赛事对象
+ * @returns {Boolean}
+ */
+const get_sport_show = (i) => {
+  if (!_.get(get_current_menu, 'main.menuType')) {
+    if (i > 0) {
+      let p = matchCtr.list[i - 1], c = matchCtr.list[i];
+      if (p && c) {
+        return p.csid !== c.csid;
       }
-      return r;
-    },
-    /**
-     * @description: 获取赔率
-     * @param {Object} ol_item 投注项
-     * @param {Object} hsw
-     * @return {Undefined}
-     */
-    get_odds_value(ol_item,hsw){
-      let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
-      let r1 = this.compute_value_by_cur_odd_type(ov / 100000,null, hsw );
-      return r1 || 0;
-    },
-    gen_collapse_key(match){
-       return match.tid;
-    },
-    /**
-     * @description: 翻转折叠状态
-     * @param {Undefined} Undefined
-     * @return {Undefined}
-     */
-    toggle_collapse_state(){
-      let map_collapse = _.cloneDeep(this.get_collapse_map_match);
-      if(map_collapse){
-        // 翻转折叠时始终将 赛事列表请求状态设为false
-        this.set_match_list_loading(false)
+    } else {
+      return true;
+    }
+  } else if ([1, 2, 3, 4, 11, 12,100].includes(_.get(get_current_menu, 'main.menuType'))) {
 
-        let tmid_list = [],tid = null,mid = null,max_l = this.matchCtr.list.length;
-        for(let i = 0; i < max_l;i++){
-          let match = this.matchCtr.list[i];
-          let match_c_key = this.gen_collapse_key(match);
-          if(match.mid == this.match_of_list.mid){
-            tid = match.tid;
-            mid = match.mid;
-            tmid_list.push(match_c_key);
-          }
-          if(tid){
-            if(tid == match.tid){
-              if(mid != match.mid){
-                tmid_list.push(match_c_key);
-              }
-            }
-            else{
-              break;
-            }
-          }
-        }
-        let tmid = this.gen_collapse_key(this.match_of_list);
-        let f = map_collapse[tmid] ? 0 : 1;
-        tmid_list.forEach(tmid => map_collapse[tmid] = f);
-        this.set_collapse_map_match(map_collapse);
+    if (i > 0) {
+      let p = matchCtr.list[i - 1], c = matchCtr.list[i];
+      if (p && c) {
+        return p.csid !== c.csid;
       }
-    },
-    /**
-     * @description: 冠军投注,内嵌版走这里逻辑
-     * @param {Object} match 赛事对象
-     * @param {Object} hp 盘口级别对象
-     * @param {Object} ol_item 赔率对象
-     * @return {String}
-     */
-    item_click(match,hp,ol_item){
-      if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
-      let flag = this.$common.odds.get_odds_active(0, hp.hs, ol_item.os);
-      if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
-        this.bet_click2(match, hp, ol_item);
-      }
-    },
-    /**
-     * @description: 冠军玩法联赛收藏与取消收藏
-     * @param {Object} match 赛事
-     * @return {String}
-     */
-    toggle_collect(match){
-      let item_ = this.i;
-
-      let param = {
-        match,
-        index:item_,
-        type:'tf',
-        type2:true,
-      };
-      this.$emit('toggle_collect_league',param);
-    },
-  },
-  computed:{
-    ...mapGetters([
-      "get_bet_list",
-      "get_show_favorite_list",
-      "get_collapse_map_match",
-      "get_collapse_csid_map",
-      "get_collapse_all_ball",
-      "get_lang",
-      "get_theme",
-      'get_curr_sub_menu_type',
-      'get_current_menu',
-      'get_access_config',
-    ]),
-    collapsed(){
-      let result = true;
-      let tmid = this.gen_collapse_key(this.match_of_list);
-      result = this.get_collapse_map_match[tmid];
-      // if(typeof result == 'undefined') {
-      //   if(this.matchCtr.list.length > 1){
-      //     result = true;
-      //   }
-      // }
-      return result;
-    },
-    /**
-     *@description 赛事下的全部盘口关盘时,不展示
-     *@return {Boolean} flag
-     */
-    is_show(){
-      let flag = true;
-      if( _.get(this.match_of_list, 'hps')){
-        flag = !this.match_of_list.hps.every(item => item.hs == 2)
-      }
-
-      return flag
-    },
-    /**
-     * @description: 计算投注项背景颜色(冠军玩法)
-     * @param {Object} ol 投注项最里层ol
-     * @return {Object}
-     */
-    calc_bgcolor(){
-      return function(ol){
-        if(!ol) return;
-        if(this.get_bet_list.includes(ol.oid)){
-          if(this.get_theme.includes('y0')){
-            return {'background-color':'#569FFD'}
-          }
-          return {'background-color':'#FFB001'}
-        }else{
-          return ""
-        }
-      }
-    },
-  },
-  components: {
-    oddItemChampion
+    } else {
+      return true;
+    }
+  } else {
+    return false;
   }
 }
-</script>
+const get_key_by_obg = (obj) => {
+  let r = "";
+  if(sessionStorage.getItem('wsl') != '9999') return r;
+  if(obj.hid){
+    r = `hid:${obj.hid}`;
+  }
+  return r;
+}
+/**
+ * @description: 获取赔率
+ * @param {Object} ol_item 投注项
+ * @param {Object} hsw
+ * @return {Undefined}
+ */
+const get_odds_value = (ol_item,hsw) => {
+  let ov = ol_item.ov;hsw='1';  //冠军玩法只支持欧赔
+  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw );
+  return r1 || 0;
+}
+const gen_collapse_key = (match) => {
+    return match.tid;
+}
+/**
+ * @description: 翻转折叠状态
+ * @param {Undefined} Undefined
+ * @return {Undefined}
+ */
+consttoggle_collapse_state = () => {
+  let map_collapse = _.cloneDeep(get_collapse_map_match);
+  if(map_collapse){
+    // 翻转折叠时始终将 赛事列表请求状态设为false
+    set_match_list_loading(false)
 
-<style lang="scss" scoped>
-.champion-wrap {
+    let tmid_list = [],tid = null,mid = null,max_l = matchCtr.list.length;
+    for(let i = 0; i < max_l;i++){
+      let match = matchCtr.list[i];
+      let match_c_key = gen_collapse_key(match);
+      if(match.mid == match_of_list.mid){
+        tid = match.tid;
+        mid = match.mid;
+        tmid_list.push(match_c_key);
+      }
+      if(tid){
+        if(tid == match.tid){
+          if(mid != match.mid){
+            tmid_list.push(match_c_key);
+          }
+        }
+        else{
+          break;
+        }
+      }
+    }
+    let tmid = gen_collapse_key(match_of_list);
+    let f = map_collapse[tmid] ? 0 : 1;
+    tmid_list.forEach(tmid => map_collapse[tmid] = f);
+    set_collapse_map_match(map_collapse);
+  }
+}
+/**
+ * @description: 冠军投注,内嵌版走这里逻辑
+ * @param {Object} match 赛事对象
+ * @param {Object} hp 盘口级别对象
+ * @param {Object} ol_item 赔率对象
+ * @return {String}
+ */
+const item_click = (match,hp,ol_item) => {
+  if (!ol_item.ov || ol_item.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
+  let flag = $common.odds.get_odds_active(0, hp.hs, ol_item.os);
+  if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
+    bet_click2(match, hp, ol_item);
+  }
+}
+/**
+ * @description: 冠军玩法联赛收藏与取消收藏
+ * @param {Object} match 赛事
+ * @return {String}
+ */
+const toggle_collect = (match) => {
+  let item_ = i;
+
+  let param = {
+    match,
+    index:item_,
+    type:'tf',
+    type2:true,
+  };
+  EMITTER.emit('toggle_collect_league',param);
+}
+
+</script>
+ 
+<style scoped lang="scss">
+ .champion-wrap {
   //width: 3.61rem;
   //margin: 0 0 0 0.07rem;
   //border-radius: 0.08rem;
@@ -595,4 +550,3 @@ export default {
     }
   }
 </style>
-

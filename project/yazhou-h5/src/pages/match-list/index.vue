@@ -302,6 +302,84 @@ watch(() => matchCtr.list, () => {
   }
 })
 
+// TODO 其他模块得 store  待添加
+// mixins: [ main_menu_mixin,websocket_data, constant, msc_bw3, match_list_wrap_mixin,match_main_mixin, betting,router_scroll_y_mixin],
+// ...mapMutations([
+//   "set_pre_market_data", //设置所有盘口信息
+//   "set_hide_skeleton_screen", //设置所有盘口信息
+//   "set_list_scroll_top_iconshow", // 设置滚动图标显示
+//   "set_current_menu", // 设置当前选中的主菜单
+//   "set_sort_type",
+//   "set_last_time_sub_menu_type", // 设置上次子菜单
+//   "set_filter_list",  // 设置联赛过滤
+//   "set_prev_menu_type",  // 上一次筛选位置
+//   "set_menu_type",    // 设置当前主菜单menu_type值
+//   "set_md",           // 设置
+//   "set_goto_list_top", // 设置赛事列表返回顶部
+//   "set_goto_detail_matchid",  //设置去详情页的赛事id
+//   "set_details_item",  //设置玩法集tab 的选中项
+//   "set_req_match_list_params", //设置请求赛事列表接口的请求参数
+//   "set_collapse_map_match",    //折叠的赛事
+//   "set_newer_standard_edition",    //新手版1 标准版2
+//   "set_n_s_changed_loaded",         //新手版标准版切换时加载赛事列表完成
+//   'set_date_menu_curr_i',     // 当前选中日期菜单索引
+//   'set_current_esport_csid',    // 电竞游戏csid
+//   'set_curr_third_menu_id',   // 三级菜单id
+//   'set_details_changing_favorite',  // 改变了收藏状态
+//   'set_global_is_back_match_list',  // 详情， 赛果，虚拟体育返回到列表也的时候不更新数据，保持上次的菜单数据
+//   'set_match_top_map_dict',   // 赛事对象对应的dom top映射
+//   'set_secondary_unfold_map',   // 次要玩法展开映射
+//   'set_img_error_map_mid',    // 图标出错与mid映射
+//   'set_user',    // 用户信息,用户金额,userId 需要监听变化
+//   'set_last_route_info',  // 记录上一次路由信息
+//   'set_collapse_csid_map',  // 赛种一键折叠状态map
+//   'set_allow_short_scroll',  // 短距离滚动标识
+//   'set_preload_animation_url',  // 更新预加载动画所需资源文件状态
+// ]),
+// ...mapGetters({
+//   get_is_champion:'get_is_champion',
+//   get_sport_all_selected:'get_sport_all_selected',
+//   get_goto_detail_matchid:'get_goto_detail_matchid',
+//   sort_type: 'get_sort_type',
+//   get_current_menu: "get_current_menu",     // 当前选中的主菜单
+//   get_uid: "get_uid",                       // 用户id
+//   get_user:"get_user",
+//   get_user_token:'get_user_token',
+//   get_current_sub_menuid: 'get_current_sub_menuid', // 当前选中的二级菜单id
+//   get_search_txt: "get_search_txt",
+//   get_filter_list: "get_filter_list",       // 联赛筛选条件
+//   get_last_time_sub_menu_type: "get_last_time_sub_menu_type", // 上一次选中的二级菜单id
+//   menu_type: "get_menu_type",                       // 当前主菜单menu_type
+//   get_changed_favorite: "get_changed_favorite",     // 是否切换到收藏
+//   get_bet_status:'get_bet_status',  //投注框状态
+//   show_favorite_list:'get_show_favorite_list', // 显示收藏弹窗
+//   get_collapse_map_match:"get_collapse_map_match",  // 赛事列表联赛折叠映射对象
+//   get_collapse_csid_map:"get_collapse_csid_map",  // 赛事列表赛种折叠映射对象
+//   get_show_match_filter:"get_show_match_filter",  // 显示筛选頁面
+//   footer_sub_menu_id:"get_footer_sub_menu_id",    // 页脚子菜单id
+//   get_newer_standard_edition:"get_newer_standard_edition",//新手版标准版 1 2
+//   get_lang:"get_lang",
+//   get_detail_data:"get_detail_data",  // 详情页的数据
+//   get_details_changing_favorite:"get_details_changing_favorite",  // 改变了收藏状态
+//   get_md:"get_md",    // 早盘日期的参数    早盘  和   串关 都有加
+//   get_hot_tab_item:"get_hot_tab_item",    // 首页 热门当前选中的菜单
+//   get_hot_list_item:"get_hot_list_item",  // 首页 热门菜单集合
+//   get_is_show_menu:"get_is_show_menu",    // 右侧设置菜单显示时 , 不显示骨架屏
+//   get_v_pre_menu_type:'get_v_pre_menu_type',    // 跳转虚拟体育之前选中的主菜单menu_type 用于虚拟体育返回列表页恢复主菜单选择项
+//   get_curr_third_menu_id:'get_curr_third_menu_id',  // 当前选中的三级菜单id
+//   get_level_four_menu:'get_level_four_menu',  // 当前选中的三级菜单id
+//   get_prev_menu_type:"get_prev_menu_type",    // 赛事列表筛选逻辑使用的menu_type
+//   get_secondary_unfold_map:"get_secondary_unfold_map",  // 次要玩法展开映射
+//   get_match_id_bet_success:"get_match_id_bet_success",  // 投注成功的赛事id
+//   get_list_scroll_top:"get_list_scroll_top",
+//   get_theme:"get_theme",
+//   get_last_route_info: 'get_last_route_info',
+//   get_sub_menu_list: 'get_sub_menu_list',
+//   get_curr_sub_menu_type: 'get_curr_sub_menu_type',
+//   get_allow_short_scroll: 'get_allow_short_scroll',
+//   get_preload_animation_url: 'get_preload_animation_url',
+// }),
+
 const calc_show = computed(() => {
   return menu_type == 1 && !show_favorite_list && !match_is_empty.value && route.name != 'home' && props.invok_source != 'detail_match_list'
 })
@@ -464,131 +542,5 @@ onBeforeUnmount(() => {
 </script>
  
 <style scoped lang="scss">
- 
-.match-main {
-  max-width:3.78rem;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  opacity: 1;
-  transition: transform 0.2s;
-  &.no-padding-bottom {
-    padding-bottom: 0;
-  }
-
-  &.mini_x {
-    padding-top: 0.95rem;
-  }
-
-  &.mini_s {
-    padding-top: 1.3rem;
-  }
-
-  .gap{
-    height: .41rem; // 因该为0.4 多设一个像素 0.41
-    width: 100%;
-    // 缝隙 专门用于解决遮罩和底部的间隙问题
-   // background-image: var(--q-color-com-img-bg-2);
-    background: var(--q-color-page-bg-color-2);
-    &.zaopan{
-      background: var(--q-color-page-bg-color-45);
-    }
-
-  }
-
-  /* ************** 赛事列表包装器 **************** -S */
-  .match-list-container {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: relative;
-    padding-top: 0.67rem; // 减去0.4 因为顶部加了div
-    padding-bottom: 1.02rem;
-    /*border-top: 0.01rem solid transparent;*/
-
-    &.show-status {
-      padding-top:.94rem;
-    }
-
-    &.zaopan {
-      padding-top: 0.96rem;
-
-      &.esport {
-        padding-top: 1.37rem;
-      }
-    }
-
-    &.guanjun {
-      padding-top: 0.63rem;
-    }
-
-    &.jinri {
-      padding-top: 0.63rem;
-    }
-
-    &.level_four_menu {
-      padding-top: 1.38rem;
-    }
-
-    &.jingzu {
-      padding-top: 0.07rem;
-    }
-
-    &.detail_match_list {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-    .cover-loading {
-      width: 0.4rem;
-      display: block;
-      position: fixed;
-      left: 50%;
-      z-index: 30;
-      justify-content: center;
-      align-items: flex-start;
-      margin-left: -0.2rem;
-      margin-top: 1.68rem;
-    }
-
-    .loading-container {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 502;
-
-      &.dark {
-        background-color: transparent;
-      }
-    }
-    .loading-more-container {
-      width: 100%;
-      height: 1.81rem;
-      padding: 0.88rem 0 0.6rem 0;
-      text-align: center;
-      //bottom: -2rem;
-      //position: absolute;
-      //left: 0;
-      &.home_hot{
-        position: unset;
-        bottom: unset;
-      }
-    }
-  }
-
-
-  /* ************** 赛事列表包装器 **************** -E */
-  .match-detail-container {
-    width:3.78rem;
-    height: auto;
-    position: fixed;
-    z-index: 502;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
-
+  @import "./styles//index.scss";
 </style>
