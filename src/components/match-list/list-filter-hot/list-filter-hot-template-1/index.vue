@@ -43,7 +43,6 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 const props = defineProps({ ...useProps });
 const current_menu = ref('')
-const name = ref('list_filter_hot')
 const top_logos = ref([
   "50199",//赛事
   "50101",//竞足
