@@ -9,7 +9,7 @@
       view="hHh Lpr lff"
       container
       style="height: 100vh"
-      class="shadow-2 rounded-borders"
+      class="shadow-2"
     >
       <q-header
         elevated

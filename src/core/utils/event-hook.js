@@ -102,7 +102,7 @@ function useOpenWithPostMessage({
  * @param {boolean} [param0.isDebounce=true]  //防抖/节流  wait=0时无效
  * @param {number} [param0.wait=50] //默认防抖节流时间  =0 时 没有防抖/节流
  */
-export function useEventListener({
+function useEventListener({
   el = window,
   name = "click",
   listener,

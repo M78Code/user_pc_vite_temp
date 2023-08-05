@@ -10,10 +10,6 @@ import {get_file_path} from "src/core/file-path/file-path.js"
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import infoUpload from 'src/core/http/information_upload.js';
 
-
-// 引入 当前 计算出的植入配置 
-import BUILDIN_CONFIG from "app/job/output/env/final.js"
-
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/public/api/index";
 
@@ -23,8 +19,6 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 const axios_instance = axios.create()
-
-
 
 
 class userCtr {
@@ -308,7 +302,7 @@ class userCtr {
        sessionStorage.setItem('gr',gr)
 
       //  if(window.env.config.gr != gr){
-      if(BUILDIN_CONFIG.gr != gr){
+      if(window.BUILDIN_CONFIG.gr != gr){
 
         // #TODO
         let url_search = new URLSearchParams(location.search);
@@ -382,7 +376,7 @@ class userCtr {
    }
 
   //  let api_domains = window.env.config.domain[window.env.config.current_env];
-   let api_domains = BUILDIN_CONFIG.domain[BUILDIN_CONFIG.current_env];
+   let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
    let api_domain = api_domains[0];
 
 
@@ -447,7 +441,7 @@ compute_set_web_meta_config(){
   //  #TODO
    let json = sessionStorage.getItem('merchant_config_json')
   //  let config =  lodash.get(window.env,'config.html_info') || {}
-   let config =  lodash.get(BUILDIN_CONFIG,'htmlVariables') || {}
+   let config =  lodash.get(window.BUILDIN_CONFIG,'htmlVariables') || {}
    if(json ){
     // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
 
@@ -648,7 +642,7 @@ set_league_logo_url(url){
  */
  get_web_title(lang){
   // let title = lodash.get(window.env,`config.html_info.title.${lang}`) || ''
-  let title = lodash.get(BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
+  let title = lodash.get(window.BUILDIN_CONFIG,`htmlVariables.title.${lang}`) || ''
   let json = sessionStorage.getItem('merchant_config_json')
   if(json){
     let merchant_config = JSON.parse(json)

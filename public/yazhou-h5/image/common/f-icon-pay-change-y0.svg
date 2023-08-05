@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="9px" viewBox="0 0 9 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>编组 24备份 4</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="滚球（角球）" transform="translate(-54.000000, -751.000000)" fill-rule="nonzero">
+            <g id="编组-4" transform="translate(0.000000, 730.000000)">
+                <g id="编组" transform="translate(54.000000, 21.000000)">
+                    <g id="编组-24备份-4" transform="translate(4.500000, 4.500000) scale(1, -1) translate(-4.500000, -4.500000) ">
+                        <g id="编组-24" transform="translate(4.500000, 4.500000) scale(-1, -1) rotate(90.000000) translate(-4.500000, -4.500000) translate(-0.000000, 0.829346)">
+                            <polygon id="路径-9" fill="#569FFD" transform="translate(5.000000, 1.335327) rotate(90.000000) translate(-5.000000, -1.335327) " points="6.33532715 -2.66467285 6.33532715 5.33532715 5.15424688 5.33532715 5.14465522 -0.258616534 3.66467285 0.980834961"></polygon>
+                            <polygon id="路径-9备份" fill="#999999" transform="translate(4.000000, 6.005981) scale(-1, -1) rotate(90.000000) translate(-4.000000, -6.005981) " points="5.33532715 2.00598145 5.33532715 10.0059814 4.15424688 10.0059814 4.14465522 4.41203776 2.66467285 5.65148926"></polygon>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

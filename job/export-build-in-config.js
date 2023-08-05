@@ -94,8 +94,8 @@ const export_env_config = (env) => {
     let { htmlVariables = {} } = final_config;
     // 写入文件
     write_env_file(htmlVariables);
-    let str = `window.BUILDIN_CONFIG =  ` + JSON.stringify(final_config) + ";";
-    str += `export default  window.BUILDIN_CONFIG;`;
+    let str = `export default  ` + JSON.stringify(final_config)   ;
+ 
     write_file(full_path, str);
     if (!all_env) {
       write_file(final_file_path, str);

@@ -187,4 +187,9 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export default new WsLog("PC", config.LOG);
+// export default new WsLog("PC", config.LOG); 
+
+
+
+export const WsLog_H5 = new WsLog("H5", config.LOG)
+export const WsLog_PC = new WsLog("H5", config.LOG)
