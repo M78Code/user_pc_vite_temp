@@ -15,7 +15,7 @@ import { setupI18n } from "./src/i18n";
 // and placed in same folder as main.js
 import App from "./App.vue";
 
-const myApp = createApp(App);
+const app = createApp(App);
 setupI18n(myApp);
 myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here

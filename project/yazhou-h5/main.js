@@ -8,18 +8,6 @@ import "@quasar/extras/material-icons/material-icons.css";
 // Import Quasar css
 import "quasar/src/css/index.sass";
 
-// Assumes your root component is App.vue
-// and placed in same folder as main.js
-import App from "./App.vue";
-
-const myApp = createApp(App);
-
-import { i18n } from "src/boot/i18n.js";
-
-myApp.use(Quasar, {
-  plugins: {}, // import Quasar plugins and add here
-});
-
 // 引入 当前 计算出的植入配置
 
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
@@ -28,8 +16,21 @@ console.log("BUILDIN_CONFIG-----------h5---", BUILDIN_CONFIG);
 
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
+
+
+// Assumes your root component is App.vue
+// and placed in same folder as main.js
+import App from "./App.vue";
+
 const app = createApp(App);
 
+app.use(Quasar, {
+  plugins: {}, // import Quasar plugins and add here
+});
+
+
+import { i18n } from "src/boot/i18n.js";
 app.use(i18n);
+
 
 app.mount("#ty-app");
