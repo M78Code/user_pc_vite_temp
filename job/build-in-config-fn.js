@@ -90,6 +90,7 @@ export const compute_build_in_config = (current_env) => {
     NODE_ENV ,
     LOCAL_FUNCTION_SWITCH,  
     SERVER_GLOBAL_SWITCH:{},
+    GLOBAL_IMAGE_PREFFIX: NODE_ENV === "development" ? '' : '/' + BUILD_VERSION,
     API_PREFIX,
     FRONT_WEB_ENV: process.env.FRONT_WEB_ENV,
     API_DOMAIN_PREFIX: "api",
