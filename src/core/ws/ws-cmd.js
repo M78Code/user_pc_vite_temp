@@ -1,11 +1,10 @@
 /*
- * @Author: success
- * @Date: 2020-08-04 17:13:55
+ * @Author: hanmar
  * @Description: ws通信消息定义类
  */
 export default class WsCmd {
   /**
-   *  
+   *
    推送业务
     ├─主动推送开关(C4)
     │  ├─菜单栏目(C301)
@@ -71,10 +70,10 @@ export default class WsCmd {
 
   //首页右侧详情订阅(getMatchOddsInfo2)
   static S_CMD_MATCH_LIST4 = "C04";
-  
+
   // 详情订阅(getMatchOddsInfo1)
   static S_CMD_MATCH_LIST5 = "C05";
-  
+
   // 全局开关(C7)
   static GLOBAL_SWITCH = "C7"
   // 联赛指令(C9)
