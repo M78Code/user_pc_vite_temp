@@ -180,7 +180,8 @@ export const EMIT_MATCH_CURRENT_PLAY_CMD = "EMIT_MATCH_CURRENT_PLAY_CMD";
 export const EMIT_INIT_PLAY_INFO_CMD = "EMIT_INIT_PLAY_INFO_CMD";
 // apis域名全部不可用
 export const APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
-
+// 更改联赛筛选单选框选中状态
+export const CHANGE_CHECK = "CHANGE_CHECK";
 // 同步详情数据到列表
 export const EMIT_SYNCH_FROM_DETAIL = "EMIT_SYNCH_FROM_DETAIL";
 // 串关计算投注区域高度(投注内嵌)
