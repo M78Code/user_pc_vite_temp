@@ -5,14 +5,14 @@
 -->
 <template>
   <div class="is-compont">
-    <component :is="compObj[isComp]" :docData="docData" />
+    <component :is="compObj[isComp]" :docData="docData" :isComp="isComp" />
   </div>
 </template>
     
 <script setup>
 import projectDoc from "basesrc/components/project_doc.vue"; // 项目文档
 import userDoc from "basesrc/components/user_doc.vue"; // api文档
-
+import jobDoc from "basesrc/components/job_doc.vue"; // 脚本配置文档
 const props = defineProps({
   // 数据
   docData: {
@@ -28,7 +28,9 @@ const props = defineProps({
 
 // 组件map
 const compObj = {
-  projectDoc,
-  userDoc,
+  "project-doc": projectDoc,
+  "user-doc": userDoc,
+  "job-doc": jobDoc,
+  "entries-doc": projectDoc,
 };
 </script>
