@@ -6,7 +6,7 @@
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
 import { ss } from "../utils/web-storage";
-const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
+const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
    * @Description:构造函数
@@ -180,4 +180,4 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export default new WsLog("PC", FUNCTION_SWITCH.LOG);
+export default new WsLog("PC", LOCAL_FUNCTION_SWITCH.LOG);

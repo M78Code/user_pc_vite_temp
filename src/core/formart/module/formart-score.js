@@ -50,3 +50,44 @@ export  const format_score = function (str) {
 		return 0
 	}	 
 }
+
+
+
+
+   /**
+   * @description 序列化比分
+   * @param  {Array} msc
+   * @return {object}
+   */
+   export const serialized_score=(msc = [],is_init = false)=>{
+	let score_obj = {}
+	if(is_init){
+	  score_obj = {
+		S11:{
+		  home:'',
+		  away:''
+		},
+		S103:{
+		  home:'0',
+		  away:'0'
+		},
+		S5:{
+		  home:'',
+		  away:''
+		},
+		S10102:{
+		  home:'',
+		  away:''
+		}
+	  }
+	}
+	// 遍历接口比分数据 转成比分对象
+	_.each(msc, score_str => {
+	  let [key,value] = score_str.split('|')
+	  if(value){
+		let [home,away] = value.split(':')
+		score_obj[key] = {home,away}
+	  }
+	})
+	return  score_obj
+   }

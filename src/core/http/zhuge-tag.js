@@ -9,11 +9,11 @@
 import { get } from "lodash";
 import { DateForMat } from "../formart/";
 import { deepMerge, GetUrlParams } from "../utils";
-const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
+const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 
 class ZhuGe {
   config = {
-    enable: FUNCTION_SWITCH.LOG,
+    enable: LOCAL_FUNCTION_SWITCH.LOG,
     js_url: "https://updata.yaohuakuo.com/zhuge.js?v=",
     mid: [],
     app_key: "",
