@@ -335,7 +335,7 @@ const new_menu_click = val => {
   } else if (val == 500) {
     mid_menu_show.list_filter_hot = true
     // 热门默认赛事
-    let mi_500_obj = $BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
+    let mi_500_obj = $base_data.mew_menu_list_res.find((x) => x.mi == 500) || {
       sl: [],
     };
     // 热门赛事有值的
