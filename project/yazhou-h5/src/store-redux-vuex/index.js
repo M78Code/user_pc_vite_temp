@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import menuReducer from './module/menu'
+import matchReducer from './module/match'
   const store = configureStore( {
     reducer:{
-      menuReducer
+      menuReducer,
+      matchReducer
     }
   })
   export default store

@@ -6,6 +6,7 @@
 <template>
   <div id="q-app">
     <appload v-if="init_load"></appload>
+    <router-view></router-view>
   </div>
 </template>
 <script>
