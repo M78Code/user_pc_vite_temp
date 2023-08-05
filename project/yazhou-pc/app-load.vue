@@ -37,14 +37,12 @@ iframe_check();
 //设置错误数据
 // set_error_data("delete");
 // 初始化版本类型
-init_version_name();
+// init_version_name();
 // 初始化语言设置
 // init_lang($t("isoName"));
-
 // 发送日志s
 // window.wslog.sendMsg('xxx');
 timeCheck();
-
 // 只在开发环境下启用vconsole
 /* const Vconsole = require('vconsole')
       new Vconsole(); */
@@ -66,7 +64,7 @@ timeCheck();
 //   },
 //   wait: 0,
 // });
-// 检测是否时间变化异常
+// 检测是否时间变化异常 怎么都没有用到 ws send_msg用的？？？？
 // function timeCheck() {
 //   let date_time_tmp = 0;
 //   clearInterval(_data.timer);

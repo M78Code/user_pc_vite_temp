@@ -1,0 +1,21 @@
+{
+    "bet_record": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "PC-通用头部组件"
+    },
+    "category": "simpleHeader",
+    "component-name": "SimpleHeader",
+    "support-customization": "1",
+    "descriptions": [
+        "通用头部组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "SimpleHeader_1",
+            "descriptions": [
+                "通用头部组件-版本1"
+            ]
+        }
+    ]
+}
