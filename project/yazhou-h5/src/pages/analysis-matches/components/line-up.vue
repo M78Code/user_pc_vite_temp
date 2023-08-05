@@ -1,0 +1,700 @@
+<!--
+ * @Author: ledron
+ * @Date: 2020-02-16 18:18:18
+ * @Description: 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+-->
+<template>
+  <div class="line-up">
+    <!--  头部 -->
+    <div class="header">
+      <div class="tab-radio-button"
+           v-for="(item, index) in tab_radio_button" :key="index+'tb'"
+           :class="{active: radio_button_index == index}"
+           @click="radioButton(item, index)"
+      >
+        <span class="ellipsis">{{ item }}</span>
+      </div>
+    </div>
+    <!--  足球背景图片 -->
+    <div class="football_field" v-if="get_detail_data.csid == 1">
+      <!-- 加载第一项 和 最后一项-->
+      <div class="first_and_last"
+           :class="[
+             `location${item.position}`,
+             (number == 3 && item.position > 8) ? calculatelast(item) : '',
+             (number == 2 && item.position > 9) ? calculatelast(item) : '',
+             (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
+           ]"
+           v-for="(item, i) in line_up_data.up"
+           v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
+           (number == 1 && item.position > 10)) && item.position<=11"
+           :key="i+'f_l'"
+      >
+        <div>
+          <span>{{ item.shirtNumber || 0 }}</span>
+        </div>
+        <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+      </div>
+      <!--  加载中间的内容  -->
+      <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
+      <template v-if="number_columns.length == 2">
+        <div class="two_columns "
+             v-for="(list, index) in football_filtered_data" :key="index+'middle'"
+             :class="[
+               list.data.length == 5 && calculation_radian(index) && 'five_columns'
+             ]"
+        >
+          <div class="first_and_last"
+               v-for="(item, index) in list.data" :key="index+'l_f'"
+               :class="[
+               (index == 0 || index ==4) && list.data.length == 5 ? calculation_radian(index): ''
+             ]"
+          >
+            <div>
+              <span>{{ item.shirtNumber || 0 }}</span>
+            </div>
+            <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+          </div>
+        </div>
+      </template>
+      <!--  如果首发阵容是三列，前面有两列  4-2-3-1 -->
+      <template v-if="number_columns.length == 3">
+        <div class="two_columns "
+             v-for="(list, index) in football_filtered_data" :key="index"
+        >
+          <div class="first_and_last" v-for="(item, index) in list.data" :key="index+'s'">
+            <div>
+              <span>{{ item.shirtNumber || 0 }}</span>
+            </div>
+            <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+          </div>
+        </div>
+      </template>
+    </div>
+    <!--  篮球背景图片 -->
+    <div class="basket-ball-field" v-if="get_detail_data.csid == 2">
+      <div class="basket-ball-item"
+           v-for="(item, index) in basketball_data" :key="index+'s'"
+           :class="[
+             `location${index+1}`,
+           ]"
+      >
+        <div>
+          <span>{{ item.shirtNumber || 0 }}</span>
+        </div>
+        <span class="ellipsis">{{ item.thirdPlayerName }}</span>
+      </div>
+    </div>
+    <!--  首发阵容，替补阵容 -->
+    <template v-if="!no_data">
+      <!-- 首发阵容-->
+      <div class="title" >
+        {{$root.$t('analysis_football_matches.starting_lineup') }}
+        <template v-if="get_detail_data.csid == 1">
+          {{radio_button_index == 0 ? line_up_data.homeFormation : line_up_data.awayFormation}}
+        </template>
+      </div>
+      <div class="public_form football_standings">
+        <!-- 头部 -->
+        <div class="header">
+          <div class="col1"></div>
+          <div class="col2">{{$root.$t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="$root.$t('analysis_football_matches.name')"></div>
+          <div class="col4">{{$root.$t('analysis_football_matches.number') }}</div>
+        </div>
+        <!-- 主内容 -->
+        <div class="team-item" v-for="(item, i) in line_up_data.up" :key="i+'a'">
+          <div class="col1">
+            <!-- 联赛icon -->
+            <img class="match_logo"
+                 :src=" item.thirdPlayerPicUrl ? get_file_path(item.thirdPlayerPicUrl) : default_url"
+                 @error="league_icon_error"
+            />
+          </div>
+          <div class="col2">{{ item.positionName || '-' }}</div>
+          <div class="col3 ellipsis">
+            <template v-if="get_lang == 'en'">&ensp;</template>
+            {{ item.thirdPlayerName || '-' }}
+          </div>
+          <div class="col4 end-btn">
+            <span>{{ item.shirtNumber }}</span>
+          </div>
+        </div>
+        <!-- 没有数据 组件 -->
+        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ $root.$t('common.no_data') }}</div>
+      </div>
+      <!-- 替补阵容-->
+      <div class="title">
+        <span>{{$root.$t('analysis_football_matches.bench_lineup') }}</span>
+      </div>
+      <div class="public_form football_standings">
+        <!-- 头部 -->
+        <div class="header">
+          <div class="col1"></div>
+          <div class="col2">{{$root.$t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="$root.$t('analysis_football_matches.name')"></div>
+          <div class="col4">{{$root.$t('analysis_football_matches.number') }}</div>
+        </div>
+        <!-- 主内容 -->
+        <div class="team-item" v-for="(item, i) in line_up_data.down" :key="i+'b'">
+          <div class="col1">
+            <!-- 联赛icon -->
+            <img class="match_logo"
+                 :src=" item.thirdPlayerPicUrl ? get_file_path(item.thirdPlayerPicUrl) : default_url"
+                 @error="league_icon_error"
+            />
+          </div>
+          <div class="col2">{{ item.positionName || '-' }}</div>
+          <div class="col3 ellipsis">
+            {{ item.thirdPlayerName || '-' }}
+          </div>
+          <div class="col4 end-btn">
+            <span>{{ item.shirtNumber }}</span>
+          </div>
+        </div>
+        <!-- 没有数据 组件 -->
+        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ $root.$t('common.no_data') }}</div>
+      </div>
+    </template>
+  </div>
+</template>
+
+<script>
+import { api_result } from "src/project/api";
+import {mapGetters} from "vuex";
+
+export default {
+  name: "",
+  data() {
+    return {
+      radio_button_index: 0,
+      tab_radio_button: ['曼联', '德联'],
+      line_up_data: [], // 列表数据
+      no_data: true,
+      default_url:  "image/bw3/png/my.png",  //默认图片地址
+      number: '', // 最后一位数
+      number_columns: '', // 代表多少列 并且里边的数字
+      football_filtered_data: [
+        {data:[]},
+        {data:[]},
+      ],
+      // 篮球的 背景图的 数据
+      basketball_data: []
+    }
+  },
+  created() {
+    // 添加监听 赛事分析刷新事件
+    this.$root.$on(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
+
+    this.get_list()
+    this.tab_radio_button = [this.get_detail_data.mhn, this.get_detail_data.man]
+  },
+  mounted() {
+  },
+  watch: {},
+  computed: {
+    ...mapGetters(["get_goto_detail_matchid", 'get_detail_data','get_lang']),
+    // 赛事id
+    match_id() {
+      return this.$route.params.mid || this.get_detail_data.mid
+    },
+  },
+  methods: {
+    // 当首发阵容 有数值是5列的时候，
+    calculation_radian(index) {
+      return `five_columns${index + 1 }`
+    },
+    calculatelast(item) {
+      let how_many_bits
+      if(this.number == 1) {
+        how_many_bits = 'how_many_bits1'
+      }else if(this.number == 2){
+        how_many_bits = 'how_many_bits2'
+      }else if(this.number == 3){
+        how_many_bits = 'how_many_bits3'
+      }
+      return how_many_bits
+    },
+    /**
+     * @description: 图标出错时
+     * @param {Object} $event 错误事件对象
+     */
+    league_icon_error($event){
+      $event.target.src = this.default_url;
+      $event.target.onerror = null
+    },
+    radioButton(item, index) {
+      if(this.radio_button_index == index) return
+      this.radio_button_index = index
+      this.basketball_data = []
+      this.get_list()
+    },
+    async get_list() {
+      this.no_data = true
+      try {
+        let parameter = {
+          matchInfoId: this.match_id, // 2079863足球测试id  2185843篮球测试id
+          homeAway: this.radio_button_index + 1 // 主客队标识(1主队，2客队)
+        }
+        let {code , data} = await api_result.get_match_lineup_list(parameter)
+        if(code == 200 && Object.keys(data).length > 0) {
+          // 如果是足球赛事
+          this.line_up_data = data
+          if(this.get_detail_data.csid == 1){
+            if(this.radio_button_index == 0){
+              this.filter_numbers(this.line_up_data.homeFormation)
+              // this.filter_numbers('4-2-3-1')
+            }else{
+              this.filter_numbers(this.line_up_data.awayFormation)
+            }
+          }else if(this.get_detail_data.csid == 2){//  如果是 篮球赛事
+            this.basketball_data = data.up
+          }
+          this.no_data = false
+        } else {
+          this.no_data = true
+        }
+      } catch (error) {
+        this.no_data = true
+        console.error(error);
+      }
+    },
+    // 过滤 首发阵容的最后一位数字 和  首发阵容的队列数字
+    filter_numbers(data) {
+      if(!data ) return
+      this.number = data.slice(-1)
+      this.number_columns = data.split('-').join('').slice(0,-1)
+      let [number1, number2] = [+this.number_columns[0], +this.number_columns[1]]
+      if(this.number_columns.length == 2){
+        this.football_filtered_data = [{},{}]
+        this.football_filtered_data[0].data = this.line_up_data.up.slice(1, number1 + 1)
+        this.football_filtered_data[1].data = this.line_up_data.up.slice(number1 + 1, number1 + number2 + 1)
+      }else if(this.number_columns.length == 3){
+        this.football_filtered_data = [{},{},{}]
+        let [number3] = [+this.number_columns[2]]
+        this.football_filtered_data[0].data = this.line_up_data.up.slice(1, number1+1)
+        this.football_filtered_data[1].data = this.line_up_data.up.slice(number1+1, number1 + number2 + 1)
+        this.football_filtered_data[2].data = this.line_up_data.up.slice(number1 + number2+1, number1 + number2 + number3 + 1)
+      }
+    },
+    // 刷新 当前赛事分析信息
+    refresh_match_analysis() {
+      const radio_button_index = this.radio_button_index
+      this.radio_button_index = -1
+
+      this.$nextTick(() => {
+        this.radioButton(this.tab_radio_button[radio_button_index], radio_button_index)
+      })
+    }
+  },
+  destroyed() {
+    // 移除监听 赛事分析刷新事件
+    this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
+
+    for (const key in this.$data) {
+      this.$data[key] = null
+    }
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.line-up {
+
+  padding-bottom: 0.2rem;
+
+  > .header {
+    display: flex;
+    justify-content: center;
+    padding: 0.15rem 0;
+
+    position: sticky;
+    top: 1.21rem;
+    width: 100%;
+
+    z-index: 100;
+
+    .tab-radio-button {
+      width: 1.4rem;
+      height: 0.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+
+      letter-spacing: 0;
+      text-align: center;
+
+      font-size: 0.14rem;
+
+      .ellipsis {
+
+        font-weight: unset;
+      }
+
+      &.active {
+
+        border: unset;
+
+        .ellipsis {
+
+          font-weight: bold;
+        }
+      }
+
+      &:nth-child(1) {
+        border-right: unset;
+        border-radius: 0.08rem 0 0 0.08rem;
+        padding: 0 0.15rem;
+      }
+
+      &:nth-child(2) {
+        border-left: unset;
+        border-radius: 0 0.08rem 0.08rem 0;
+        padding: 0 0.15rem;
+      }
+    }
+  }
+
+  .football_field {
+    width: 100%;
+    height: 3.45rem;
+    background:  var(--q-color-com-img-bg-91) no-repeat center;
+    background-size: 100% 100%;
+    margin-bottom: 0.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    padding-top: 0.77rem;
+    padding-bottom: 0.63rem;
+    overflow: hidden;
+
+    .ellipsis {
+      max-width: 0.84rem;
+    }
+
+    .first_and_last {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 0.6rem;
+      margin: 0 0.17rem;
+
+      &.location1 {
+        position: absolute;
+        top: 0.19rem;
+        left: 32%;
+        width: 1rem;
+        max-width: unset;
+      }
+
+      &.how_many_bits1 {
+        position: absolute;
+        bottom: 0.01rem;
+        left: 31.7%;
+        width: 1rem;
+        max-width: unset;
+      }
+
+      &.how_many_bits2 {
+        &.location10 {
+          position: absolute;
+          bottom: 0.07rem;
+          width: 1rem;
+          left: 14%;
+        }
+
+        &.location11 {
+          position: absolute;
+          bottom: 0.07rem;
+          width: 1rem;
+          left: 62%;
+        }
+      }
+
+      &.how_many_bits3 {
+        &.location9 {
+          position: absolute;
+          bottom: 0.01rem;
+          left: 14%;
+          width: 1rem;
+        }
+
+        &.location10 {
+          position: absolute;
+          bottom: 0.3rem;
+          left: 38%;
+          width: 1rem;
+        }
+
+        &.location11 {
+          position: absolute;
+          bottom: 0.01rem;
+          left: 62%;
+          width: 1rem;
+        }
+      }
+
+      > div {
+        width: 0.36rem;
+        height: 0.36rem;
+
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > span {
+
+          font-size: 0.2rem;
+          color: var(--q-color-com-fs-color-8);
+          text-align: center;
+        }
+      }
+
+      > span {
+
+        font-size: 0.12rem;
+        color: var(--q-color-com-fs-color-8);
+        margin-top: 0.02rem;
+      }
+    }
+  }
+
+  .two_columns {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &.five_columns {
+      padding: 0 0.5rem;
+    }
+
+    .first_and_last {
+      -webkit-box-flex: 1;
+      flex: 1;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      font-size: 0.26667rem;
+      color: var(--q-color-com-bg-color-12);
+      text-align: center;
+      max-width: unset;
+      margin: unset;
+
+      &.five_columns1, &.five_columns5 {
+        position: absolute;
+        top: -0.06rem;
+      }
+
+      &.five_columns1 {
+        left: 0;
+      }
+
+      &.five_columns5 {
+        right: 0;
+      }
+
+      .ellipses {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    }
+  }
+
+  .basket-ball-field {
+    width: 100%;
+    height: 3.75rem;
+    background:  var(--q-color-com-img-bg-90) no-repeat center;
+    background-size: 100% 100%;
+    margin-bottom: 0.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    padding-top: 0.77rem;
+    overflow: hidden;
+
+    .basket-ball-item {
+      display: flex;
+      width: 1rem;
+      flex-direction: column;
+      align-items: center;
+      max-width: 0.6rem;
+      margin: 0 0.17rem;
+
+      &.location1 {
+        position: absolute;
+        top: 0.38rem;
+        left: 32%;
+        max-width: unset;
+      }
+
+      &.location2 {
+        position: absolute;
+        top: 1.52rem;
+        left: 2%;
+        max-width: unset;
+      }
+
+      &.location3 {
+        position: absolute;
+        top: 1.52rem;
+        left: 63%;
+        max-width: unset;
+      }
+
+      &.location4 {
+        position: absolute;
+        bottom: 0.61rem;
+        left: 17%;
+        max-width: unset;
+      }
+
+      &.location5 {
+        position: absolute;
+        bottom: 0.61rem;
+        left: 47%;
+        max-width: unset;
+      }
+
+      > div {
+        width: 0.36rem;
+        height: 0.36rem;
+        background:  var(--q-color-com-img-bg-89) no-repeat center;
+        background-size: 100% 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        > span {
+
+          font-size: 0.2rem;
+          color: var(--q-color-com-bg-color-12);
+          text-align: center;
+        }
+      }
+
+      > .ellipsis {
+        color: var(--q-color-com-bg-color-12);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .title {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    padding-left: 0.24rem;
+
+    font-size: 0.14rem;
+
+    letter-spacing: 0;
+
+    font-weight: bold;
+    position: relative;
+
+    &:before {
+      content: '';
+      width: 0.03rem;
+      height: 0.12rem;
+      position: absolute;
+      left: 0.16rem;
+      top: 0.14rem;
+
+      border-radius: 1.5px;
+    }
+  }
+
+  .public_form {
+    position: relative;
+    margin-bottom: 0.1rem;
+
+    /*  头部 */
+    .header {
+      height: 0.3rem;
+      display: flex;
+      text-align: center;
+      line-height: 0.32rem;
+      padding: 0 0.1rem;
+
+      > div {
+
+        font-size: 0.1rem;
+      }
+    }
+
+    .team-item {
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 0.1rem;
+      font-size: 0.13rem;
+      height: 0.48rem;
+      text-align: center;
+
+      &:nth-child(odd) {
+
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.12rem;
+      }
+    }
+
+    .col1 {
+      flex: 1;
+
+      > img {
+        width: 0.36rem;
+        height: 0.348rem;
+        border-radius: 50%;
+      }
+    }
+
+    .col2 {
+      flex: 2;
+    }
+
+    .col3 {
+      flex: 4;
+      text-align: left;
+      justify-content: start !important;
+    }
+
+    .col4 {
+      flex: 1;
+
+      &.end-btn > span {
+        width: 0.54rem;
+        height: 0.2rem;
+        line-height: 0.18rem;
+        letter-spacing: 0;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+
+  .no-list {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: center;
+    padding-top: 0.05rem !important;
+
+
+    font-size: 12px;
+  }
+}
+</style>

@@ -180,7 +180,8 @@ export const EMIT_MATCH_CURRENT_PLAY_CMD = "EMIT_MATCH_CURRENT_PLAY_CMD";
 export const EMIT_INIT_PLAY_INFO_CMD = "EMIT_INIT_PLAY_INFO_CMD";
 // apis域名全部不可用
 export const APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
-
+// 更改联赛筛选单选框选中状态
+export const CHANGE_CHECK = "CHANGE_CHECK";
 // 同步详情数据到列表
 export const EMIT_SYNCH_FROM_DETAIL = "EMIT_SYNCH_FROM_DETAIL";
 // 串关计算投注区域高度(投注内嵌)
@@ -237,3 +238,10 @@ export const GET_ESPORTS_VIDEO_LIST = "GET_ESPORTS_VIDEO_LIST"
 //网络错误时设置默认最大最小值
 export const EMIT_NET_ERR = "EMIT_NET_ERR"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
+
+
+
+// 发送用户基本信息到服务命令
+export const EMIT_API_USER_PRO_INFO_CMD="EMIT_API_USER_PRO_INFO_CMD"
+// 调用用户接口，更新 域名流程
+export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";

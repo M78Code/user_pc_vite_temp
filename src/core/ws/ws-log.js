@@ -5,9 +5,8 @@
  */
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
-import { useSdkConfig } from "../sdk-config";
-const [config] = useSdkConfig();
 import { ss } from "../utils/web-storage";
+const { FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
    * @Description:构造函数
@@ -181,4 +180,4 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export default new WsLog("PC", config.value.LOG);
+export default new WsLog("PC", FUNCTION_SWITCH.LOG);

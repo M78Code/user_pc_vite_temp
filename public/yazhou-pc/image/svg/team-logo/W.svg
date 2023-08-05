@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>W</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="画板" transform="translate(-750.000000, -258.000000)">
+            <g id="W" transform="translate(750.000000, 258.000000)">
+                <rect id="矩形" fill="#5A6074" x="0" y="0" width="20" height="20" rx="10"></rect>
+                <polygon fill="#FFFFFF" fill-rule="nonzero" points="8.62011719 14 10.0087891 8.29296875 11.3974609 14 13.1669922 14 15.0595703 5.46875 13.3076172 5.46875 12.1591797 11.5390625 10.7587891 5.46875 9.27050781 5.46875 7.86425781 11.5273438 6.70996094 5.46875 4.95800781 5.46875 6.85058594 14"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
