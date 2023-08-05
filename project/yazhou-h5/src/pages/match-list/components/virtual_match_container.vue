@@ -1,9 +1,4 @@
 <!--
-<<<<<<< HEAD
-=======
- * @Author: Cronus
- * @Date: 2021-04-30 10:00:33
->>>>>>> 2d95950745d80f1fbd7097633b68b69f73979ad6
  * @Description: 虚拟体育赛狗赛马赛果项
 -->
 <template>
@@ -666,8 +661,4 @@ const data_page_changed = ($event) => {
     height: auto;
   }
 }
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> 2d95950745d80f1fbd7097633b68b69f73979ad6
