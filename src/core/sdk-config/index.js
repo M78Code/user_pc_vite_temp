@@ -4,7 +4,7 @@
  * @Description: postmessage 接收配置sdk 配置
  */
 import { set, cloneDeep, merge } from "lodash";
-import { deepMerge } from "../utils/";
+import utils from "../utils/";
 import { onMounted, onUnmounted, effectScope, ref, unref, watch } from "vue";
 
 /**
@@ -30,7 +30,7 @@ function createGlobalState(stateFactory) {
  */
 const useSdkConfig = createGlobalState(() => {
   console.log("window.BUILDIN_CONFIG", window.BUILDIN_CONFIG);
-  const _c = deepMerge(window.BUILDIN_CONFIG || {}, {
+  const _c = utils.deepMerge(window.BUILDIN_CONFIG || {}, {
     // 这里可以写一些 sdk的  config配置
   });
   const config = ref(_c);
