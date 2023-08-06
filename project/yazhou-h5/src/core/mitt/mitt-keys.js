@@ -40,7 +40,7 @@ export const EMIT_MATCH_ROW_CLICK_CMD = 'MATCH_ROW_CLICK';
 // 发送api域名切换命令命令
 export const EMIT_API_DOMAIN_UPD_CMD = "EMIT_API_DOMAIN_UPD_CMD";
 // apis域名全部不可用
-export const APIS_DOMAIN_ALL_BAD = "APIS_DOMAIN_ALL_BAD";
+export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
 // 更新init_load
 export const EMIT_ALLOW_INIT_LOAD = "EMIT_ALLOW_INIT_LOAD";
 // c201消息处理

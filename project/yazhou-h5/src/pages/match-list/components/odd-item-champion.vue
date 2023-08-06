@@ -41,7 +41,7 @@ const props = defineProps({
 const timer_ = ref(null)
 const red_green_status = ref(0)
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
 // ...mapGetters(['get_menu_type','get_theme']),
 
