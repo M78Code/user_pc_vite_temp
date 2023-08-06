@@ -1,9 +1,4 @@
-<!--
- * @Author: Amor
- * @Date: 2020-08-04 17:13:55
- * @Description: 公告页面
--->
-
+<!-- @Description: 公告页面 -->
 <template>
     <div class="announce-wrap">
         <simple-header-wapper>
