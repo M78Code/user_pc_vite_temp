@@ -19,10 +19,25 @@
     />
 
     <div class="wrap-handicap v-scroll-area-bar">
+      <!-- 详情面板 -->
+      <div class="screen">
+        <v-scroll-area
+          :observer_area="1"
+          page_type="main_details"
+          ref="v_scroll"
+        >
+          <template v-slot:header>
+            <!-- 详情头部 -->
+            <detail-header></detail-header>
+             </template>
+        </v-scroll-area>
+      </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup>
-import loadData from "src/components/load-data/load_data.vue";
+import loadData from "project_path/src/components/load-data/load_data.vue";
+import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area.vue";
+import detailHeader from './components/detail-header.vue'
 </script>
