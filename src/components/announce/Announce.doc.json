@@ -1,0 +1,17 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-搜索组件"
+  },
+  "category": "Announce",
+  "component-name": "Announce",
+  "support-customization": "1",
+  "descriptions": ["搜索组件"],
+  "optional-component": [
+    {
+      "component-name": "Announce_1",
+      "descriptions": ["搜索组件-版本1"]
+    }
+  ]
+}
