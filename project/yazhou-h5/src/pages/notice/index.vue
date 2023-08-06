@@ -38,16 +38,15 @@ import { mapGetters } from "vuex";
 import loading from "src/project/components/common/loading";
 // import simple_header from 'src/project/components/site_header/simple_header.vue';
 import { SimpleHeaderWapper } from 'src/components/simple-header'
-// TODO:
-import tabs from "src/project/components/site_header/tabs.vue";
-import no_data from "src/project/components/common/no_data";
+import tabs from "src/project/yazhou-h5/src/pages/notice/components/tab.vue";
+import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
 
 export default defineComponent({
     name: "notice",
     components: {
         "simple-header": SimpleHeaderWapper,
         'my-tabs': tabs,
-        "no-data": no_data,
+        "no-data": noData,
         'load-page': loading
     },
     setup(props) {

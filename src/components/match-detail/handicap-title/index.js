@@ -1,4 +1,4 @@
 
-import HandicapTitleFullVersionWapper from "./full-version-wapper/index.vue";
+import HandicapTitle from "./full-version-wapper/index.vue";
 
-export { HandicapTitleFullVersionWapper };
+export { HandicapTitle };
