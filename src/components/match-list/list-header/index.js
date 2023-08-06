@@ -1,4 +1,4 @@
 
-import MatchMediaFullVersionWapper from "./full-version-wapper/index.vue";
+import ListHeaderFullVersionWapper from "./full-version-wapper/index.vue";
 
-export { MatchMediaFullVersionWapper };
+export { ListHeaderFullVersionWapper };
