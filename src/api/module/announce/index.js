@@ -4,7 +4,9 @@
  * @Description: 公告模块相关api定义
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
+
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 //获取公告跑马灯数据
 export const post_marquee_data = (params, config={},url = "/v2/notice/headListPB") => http.post(`${prefix}${url}`, params, config);

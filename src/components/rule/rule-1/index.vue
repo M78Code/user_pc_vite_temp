@@ -147,17 +147,13 @@ watch(
     background: #fff;
     overflow-x: hidden;
 
-    &> {
-        &> {
-            &>.absolute-right {
-                display: none;
-            }
+    :deep(.absolute-right) {
+        display: none;
+    }
 
-            &>.tabs-content {
-                padding: inherit !important;
-                padding: 0 0.1rem 0 0.1rem;
-            }
-        }
+    :deep(.tabs-content) {
+        padding: inherit !important;
+        padding: 0 0.1rem 0 0.1rem;
     }
 
     .description-content {
