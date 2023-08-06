@@ -23,7 +23,7 @@ check_value.value = props.default_value || '';
 
 const check_change = (value) => {
   check_value.value = value
-  useMittEmit(MITT_TYPES.CHANGE_CHECK, check_value.value)
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_CHECK, check_value.value)
 }
 
 
