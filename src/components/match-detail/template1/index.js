@@ -1,4 +1,4 @@
 
-import MatchMediaFullVersionWapper from "./full-version-wapper/index.vue";
+import DetailTemp1 from "./full-version-wapper/index.vue";
 
-export { MatchMediaFullVersionWapper };
+export { DetailTemp1 };
