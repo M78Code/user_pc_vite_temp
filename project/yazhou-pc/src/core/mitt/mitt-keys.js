@@ -229,6 +229,10 @@ export const SELECT_FN = "SELECT_FN";
 export const GET_ALL_VSINFO = "GET_ALL_VSINFO";
 //打开单关投注
 export const EMIT_OPEN_SINGLE_BET = "EMIT_OPEN_SINGLE_BET";
+//单关合并投注
+export const EMIT_OPEN_MAERGE_BET = "EMIT_OPEN_MAERGE_BET";
+//左侧 菜单/投注/投注记录切换
+export const EMIT_LAYOUT_LIST_TYPE = "EMIT_LAYOUT_LIST_TYPE";
 
 //按钮失效
 export const EMIT_BTN_CHANGE = "EMIT_BTN_CHANGE"

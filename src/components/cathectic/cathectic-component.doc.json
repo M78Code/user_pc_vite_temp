@@ -1,0 +1,30 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "PC-测试组件"
+      },
+    "category": "component",
+    "component-name": "TestComponent",
+    "support-customization":"1",
+    "descriptions":[
+        "测试组件"
+    ],
+    "optional-component":[
+       {
+        "component-name": "TestComponent_1",
+        "descriptions":[
+            "测试组件-版本1"
+        ]
+        
+       } ,
+       {
+        "component-name": "TestComponent_2",
+        "descriptions":[
+            "测试组件-版本2"
+        ]
+        
+       } 
+    ]
+
+}
