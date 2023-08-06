@@ -1,11 +1,11 @@
-import MatchCard from "../match-card-template-1/index.vue";
+import HandicapTitle from "../handicap-title-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  MatchCard,
+  HandicapTitle,
 };
 const component_config = {
-  registered_component_key: "MatchCard",
-  default_component_key: "MatchCard_1",
+  registered_component_key: "HandicapTitle",
+  default_component_key: "HandicapTitle_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
