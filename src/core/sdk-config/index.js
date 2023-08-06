@@ -92,4 +92,4 @@ function use_get_sdk_config() {
     window.removeEventListener("message", listener_message);
   };
 }
-export { use_get_sdk_config, createGlobalState, useSdkConfig };
+export { use_get_sdk_config };
