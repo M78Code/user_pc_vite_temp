@@ -122,7 +122,7 @@
   </div>
 </template>
 <script setup>
-import { computed, onBeforeUnmount, onMounted } from "vue"
+import { computed, onUnmounted, onMounted } from "vue"
 import formartmixin from 'src/project/mixins/module/formartmixin.js';
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
@@ -139,7 +139,7 @@ const props = defineProps({
   main_source:String,
 })
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
 // ...mapGetters([
 //   "get_bet_list",
@@ -306,7 +306,7 @@ const gen_collapse_key = (match) =>{
   return match.tid
 }
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
   clearTimeout(timer_super11.value);
   timer_super11.value = null;
 })
@@ -314,5 +314,5 @@ onBeforeUnmount(() => {
 </script>
  
 <style scoped lang="scss">
- @import "../styles/match_container_result";
+ @import "../styles/match-container-result";
 </style>

@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
@@ -64,7 +64,7 @@ const clear_time = () => {
     }
 }
 /** 钩子触发 */
-onBeforeUnmount(clear_time)
+onUnmounted(clear_time)
 
 /** 当前系统时间 */
 const date_time = ref('')

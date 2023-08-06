@@ -30,7 +30,7 @@
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/simple-header/config/index.js"
 
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
@@ -77,7 +77,7 @@ const clear_timer = () => {
     timer.value = null
 }
 /** 钩子触发 */
-onBeforeUnmount(clear_timer)
+onUnmounted(clear_timer)
 
 /** 当前系统时间 */
 const date_time = ref('')
