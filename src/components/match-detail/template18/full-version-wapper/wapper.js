@@ -1,11 +1,11 @@
-import DetailTemp1_1 from "../detail-template1-1/index.vue";
+import DetailTemp18_1 from "../detail-template18-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  DetailTemp1_1,
+  DetailTemp18_1,
 };
 const component_config = {
-  registered_component_key: "DetailTemp1",
-  default_component_key: "DetailTemp1_1",
+  registered_component_key: "DetailTemp18",
+  default_component_key: "DetailTemp18_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
