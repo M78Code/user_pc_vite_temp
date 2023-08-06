@@ -118,7 +118,7 @@ const send_user_pro_info = () => {
 const send_api_error_data = throttle(
   (object) => {
     // 发送api域名全部不可用通知
-    useMittEmit(MITT_TYPES.APIS_DOMAIN_ALL_BAD);
+    useMittEmit(MITT_TYPES.EMIT_APIS_DOMAIN_ALL_BAD);
     if (NODE_ENV == "development") {
       // 是开发环境时直接返回
       return;
