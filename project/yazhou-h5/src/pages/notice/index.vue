@@ -40,14 +40,14 @@ import loading from "src/project/components/common/loading";
 import { SimpleHeaderWapper } from 'src/components/simple-header'
 // TODO:
 import tabs from "src/project/components/site_header/tabs.vue";
-import no_data from "src/project/components/common/no_data";
+import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
 
 export default defineComponent({
     name: "notice",
     components: {
         "simple-header": SimpleHeaderWapper,
         'my-tabs': tabs,
-        "no-data": no_data,
+        "no-data": noData,
         'load-page': loading
     },
     setup(props) {
