@@ -26,10 +26,6 @@
 </template>
 
 <script setup>
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/simple-header/config/index.js"
-
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 // TODO: mixins待处理
@@ -37,7 +33,6 @@ import time_format_mixin from "src/public/mixins/common/time_format";
 // TODO: 待处理组件
 import refresh from "src/public/components/refresh/refresh.vue";
 
-useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
     ...useProps,
     /** 区分 PC H5 */
@@ -51,9 +46,6 @@ const props = defineProps({
         default: false
     }
 })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
-//-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const emits = defineEmits(['refresh'])
 /** 赛果刷新当前数据 */
