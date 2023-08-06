@@ -4,7 +4,9 @@
  * @Description: 搜索相关API接口定义
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
+
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix } = API_PREFIX;
 
 // //获取关键词联想列表
 export const get_fetch_keyword_related = (params, config = {}, url  = "/v1/hotSearch/hotSelectPB") => http.get(`${prefix}${url}`, params)

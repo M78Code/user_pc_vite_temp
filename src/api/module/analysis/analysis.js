@@ -5,7 +5,10 @@
  * @Author: 
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
+
+
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 //数据、情报、赔率、对阵
 export const post_getMatchAnalysiseData = (params, config={}, url = "/v1/w/matchAnalysise/getMatchAnalysiseData") => http.post(`${prefix}${url}`, params, config);
