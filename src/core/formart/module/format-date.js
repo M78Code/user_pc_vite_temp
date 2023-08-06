@@ -140,7 +140,7 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
    * @param {int} offset 时区, 默认东八区
    * @return {Date} 转换后的时区Date对象
    */
-  const format_time_zone=(time,offset=8)=>{
+  export const format_time_zone=(time,offset=8)=>{
     var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
     var localTime = d.getTime();//获取的是毫秒级
     var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
@@ -155,7 +155,7 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
    * @param {int} offset 时区, 默认东八区
    * @return {Date} 转换后的时区时间缀
    */
-  const format_time_zone_millisecond=(time,offset=8)=>{
+ export const format_time_zone_millisecond=(time,offset=8)=>{
     var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
     var localTime = d.getTime();//获取的是毫秒级
     var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的

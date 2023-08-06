@@ -191,7 +191,7 @@
   const money = ref('')//金额
   // const get_bet_status = 1,    //0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
   const odds_change = ref('0')    //0-正常，1-赔率升，2-赔率降
-  const  pankou_change= ref('0')  //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
+  const  pankou_change = ref('0')  //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
   const money_ok = ref('true')   //金额是否合适
   const min_money = ref('10')  //最低投注金额
   const max_money = ref('0')   //最高可投金额
@@ -201,7 +201,7 @@
   const is_exist_code = ref('false')   //投注后是否返回code码
   const tips_msg = ref('')  // 提示信息
   const need_bet_again = ref('false')  //是否需要重新发起投注
-  const check_odds_beforebet2 = this.debounce(this.check_odds_beforebet, 200) //防抖处理
+  const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
 
   const max_winmoney = ref('0')   //单关投注成功后接口返回的最高可赢
   const odds_value2 = ref('')  //单关投注成功后接口返回的赔率
@@ -216,35 +216,454 @@
   onmounted(()=>{ 
     flicker()
     // 调用合并后接口还是分开调用
-    if (this.is_exist_pa_operate()) {
-      this.fetch_limit_money_and_odd_info()
+    if (is_exist_pa_operate()) {
+      fetch_limit_money_and_odd_info()
     } else {
       //投注前拉取最新的盘口赔率状态(应对socket推送不及时)
-      this.check_odds_beforebet().then(() => {
+      check_odds_beforebet().then(() => {
         // 获取最大最小金额
-        this.fetch_limit_money();
+        fetch_limit_money();
       })
     }
 
     // 5秒后没有金额返回就用默认值
-    this.timer_5000_2 = setTimeout(() => {
-      if (!this.max_money_back) {
-        this.max_money = 8888;
+    timer_5000_2 = setTimeout(() => {
+      if (!max_money.value) {
+        max_money.value = 8888;
         // 获取接口返回的单关最小投注金额
-        this.min_money = _.get(this.get_user, 'cvo.single.min', 10)
-        if (this.max_money < this.min_money) {
-          this.min_money = this.max_money
+        min_money = _.get(get_user, 'cvo.single.min', 10)
+        if (max_money.value < min_money.value) {
+          min_money.value = max_money.value
         }
-        this.max_money_back = true;
-        this.check_moneyok(this.money)
+        max_money.value = true;
+        check_moneyok(money.value)
       }
     }, 5000);
   })
-/**            onmounted结束             */
+  /**            onmounted结束             */
+  // mapMutations(['set_change_list', 'set_invalid_ids', 'set_is_accept', 'set_toast', "set_bet_status", "set_bet_obj", "set_accept_show", "set_order_no", "set_new_bet",
+  //     "set_bet_list", "set_odds_change", "set_used_money", "set_http_update"]),
 
+    /**
+     *@description 投注完成后点击确定按钮
+     */
+    const bet_end = () =>{
+      set_bet_list([]);
+    }
 
+     /**
+     *@description 保留选项
+     */
+    const bet_save = () =>{
+      tips_msg.value = ''
+      set_bet_status(1)
+      money.value = ''
+    }
+    /**
+     *@description 自动接受跟好赔率规则展示
+     */
+    const constchange_accept = () =>{
+      set_accept_show(true);
+    }
+    /**
+     *@description 接受变化
+     *@param {Number} val 有值表示手动触发
+     *@return {Undefined} undefined
+     */
+    const agree_change = (val) =>{
+      set_odds_change(false);
+      set_bet_status(1);
+      set_change_list({ status: 0 });
+    }
+    /**
+     *@description 点击蒙层收起
+     */
+    const pack_up = ()=> {
+      if ([3, 4, 6, 8].includes(+get_bet_status)) {
+        set_bet_list([]);
+        return
+      }
+    }
 
+    /**
+     *@description 单关投注后，c201消息的处理
+     *@param {Array} : newTotalMaxWinAmount - 最高可赢金额， ov - 赔率， emit_http - 触发哪些接口请求， msg - 提示消息,  code - c201的refuseCode
+     */
+     const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg, code]) =>{
+      //emit_http 是1或者2时都是投注失败
+      if (code == '0400532') {
+        is_0400532 = true
+      }
+      if (emit_http == 1) {
+        msg && (tips_msg.value = msg)
+        check_odds_beforebet2();  //重新拉取投注前校验盘口信息接口
+        need_bet_again.value = true
+        set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+      } else if (emit_http == 2) {
+        msg && (tips_msg.value = msg)
+        check_odds_beforebet2();  //重新拉取投注前校验盘口信息接口
+        need_bet_again.value = true
+        set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+        fetch_limit_money() // 更新单关查询最大最小金额
+      } else {
+        max_winmoney.value = newTotalMaxWinAmount * 100;
+        odds_value2.value = ov;
+      }
+      clearInterval(timer_2000);
+    }
   
+     /**
+     *@description 点击投注
+     */
+     const submit_order = () =>{
+      if (btn_show.value == 4) {   //接受变化并投注点击时，要先接受变化
+        set_odds_change(false);
+        set_change_list({ status: 0 });
+      }
+      is_exist_code.value = false
+      is_0400532 = false
+      set_new_bet(false)
+      need_bet_again.value = false
+
+      clearInterval(timer_25000);
+      clearInterval(timer_5000);
+      clearInterval(timer_5000_2);
+
+      set_order_no('')
+      is_exist_code.value = false
+
+      // 这种情况放过，让钱投注出去
+      let _flag2 = money.value == get_user.balance
+
+      if (!_flag2) {
+        check_moneyok2(money.value)
+        if (!money_ok.value) { return }
+      }
+      if (get_bet_status == 7) {   //锁盘
+        set_toast({ 'txt': $root.$t('bet.odd_upd') });
+        return;
+      }
+
+      if (Number(money.value) < 0.01) {  //请输入金额
+        set_toast({ 'txt': $root.$t('bet.input_v') })
+        return;
+      }
+      if (Number(money.value) > +get_user.balance) {    //弹窗提示：“余额不足，请您先充值”
+        set_toast({ 'txt': $root.$t('bet.err_msg05') });
+        return;
+      }
+      if (!max_money.value) {   // 5秒内限额接口没有返回的话，提示 限额获取中,请稍后
+        set_toast({ 'txt': $root.$t('bet.err_msg06') });
+        return
+      }
+
+      set_bet_status(2);
+      timer_25000 = setTimeout(() => {    // 25秒没有code码返回，红字提示服务繁忙
+        if (!is_exist_code.value) {
+          is_exist_code.value = true
+          set_bet_status(1);
+          tips_msg.value = $root.$t('bet.err_msg08');
+        }
+      }, 25000);
+
+      single_bet() //单关投注
+    }
+
+    /**
+     *@description 单关投注后的逻辑处理
+     */
+    const single_bet = ()=> {
+      submit_betlist((code, data, msg) => {
+        if (is_exist_code.value) {return};  //25秒后返回数据不处理
+
+        is_exist_code.value = true;
+
+        if (code == 200 && data) {  // 投注成功
+          switch (data.orderDetailRespList[0].orderStatusCode) {
+            case 0:   //投注失败
+              set_bet_status(8);
+              break;
+            case 1:   //投注成功
+              set_bet_status(3);
+              break;
+            case 2:   //注单确认中(提交成功)
+              set_order_no(data.orderDetailRespList[0].orderNo);//记录订单号
+              if (data.lock == 1) {   //进入投注新流程
+                set_new_bet(true)
+                clearTimeout(timer_25000)
+                timer_25000 = setTimeout(() => {   //25秒还是有订单在确认中，直接给状态让去注单记录中查看
+                  if (get_new_bet) {
+                    set_bet_status(1);
+                    tips_msg.value = $root.$t('bet.err_msg08');
+                    clearInterval(timer_2000)
+                  }
+                }, 25000);
+              } else {
+                set_bet_status(6);
+                tips_msg.value = $root.$t('bet.err_msg07');
+              }
+              // 隔5秒后，每2秒调用异常接口
+              timer_5000 = setTimeout(() => {
+                timer_2000 = setInterval(() => {
+                  query_order();
+                }, 2000);
+              }, 5000);
+              // c201消息处理
+              $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
+              break;
+            default:
+              break;
+          }
+          max_winmoney.value = data.orderDetailRespList[0].maxWinMoney;
+          odds_value2.value = data.orderDetailRespList[0].oddsValues;
+          bet_money.value = data.orderDetailRespList[0].betMoney;
+          play_optionname.value = data.orderDetailRespList[0].playOptionName;
+          playname.value = data.orderDetailRespList[0].playName;
+          match_info.value = data.orderDetailRespList[0].matchInfo;
+
+          if (get_detail_data.mid && !get_is_show_settle_tab) {   //详情页需要拉取玩法集接口
+            $root.$emit(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET)
+          }
+        } else {  // 投注失败在 back_msg 方法中查看注释
+          set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+          back_msg({ code, data, msg }, (status, msg) => {
+            switch (status) {
+              case 1:
+                need_bet_again.value = true
+                // 同步程序走完后再处理逻辑
+                $nextTick(() => {
+                  if (!get_odds_change) {
+                    set_bet_status(1);
+                  }
+                })
+                break;
+              case 2:
+                set_bet_status(4);
+                tips_msg.value = msg;
+                break;
+              case 3:
+                set_bet_status(1);
+                tips_msg.value = msg;
+                break;
+              case 4:
+                need_bet_again.value = true
+                set_bet_status(1);//设置投注框为初始状态
+                break;
+              default:
+                break;
+            }
+          });
+        }
+      })
+
+    }
+
+    /**
+     *@description 检查金额是否合适
+     *@param {Number} val 金额
+     *@return {Undefined} undefined
+     */
+     const check_moneyok = (val) =>{
+      //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
+      if (+val > +get_user.balance) {
+        money.value = get_user.balance.toString()
+        tips_msg.value = $root.$t('bet.err_msg09')
+        clearTimeout(timer_3000)
+        // 3秒后重置样式
+        timer_3000 = setTimeout(() => {
+          tips_msg.value = ''
+        }, 3000);
+        return
+      }
+    }
+
+     /**
+     *@description 投注前检查金额是否合适
+     *@param {Number} val 金额
+     *@return {Undefined} undefined
+     */
+     const check_moneyok2 = (val) => {
+      if ((val > max_money.value) && (val >= 0.01 || val === '0.00') && max_money.value) {
+        // 已转换为最大可投注金额
+        tips_msg.value = $root.$t('bet_record.bet_amount_betting_limit')
+        clearTimeout(timer_3000)
+        timer_3000 = setTimeout(() => {
+          tips_msg.value = ''
+        }, 3000);
+        money.value = max_money.value.toString()
+        money_ok.value = false
+      } else if ((val < min_money.value) && (val >= 0.01 || val === '0.00') && max_money.value) {
+        // 最小单笔投注金额为 xxx
+        tips_msg.value = $root.$t('bet.err_msg10', [min_money.value])
+        clearTimeout(timer_3000)
+        timer_3000 = setTimeout(() => {
+          tips_msg.value = ''
+        }, 3000);
+        money.value = min_money.value.toString()
+        money_ok.value = false
+      } else {
+        money_ok.value = true;
+      };
+    }
+
+    /**
+     *@description 删除一个投注项
+     */
+     const remove = () =>{
+      set_change_list({ value: value_show.id_, status: 2 });
+      set_invalid_ids({ type: 2, val: value_show.mid })
+      remove_item(value_show.id_);
+    }
+    /**
+     *@description 光标闪动，animation有兼容问题，用函数替代
+     *@return {Undefined} undefined
+     */
+     const flicker = ()=>{
+      timer_700 = setInterval(() => {
+        $refs.cursor_line && $refs.cursor_line.classList.toggle('cursor2')
+      }, 700);
+    }
+    /**
+     *@description 格式化后的金额
+     *@return {Undefined} undefined
+     */
+    const get_money_format = () =>{
+      let mi = global_filters.format_money3(min_money.value)
+      let ma = global_filters.format_money3(max_money.value)
+      return licia_format($root.$t('bet.money_limit2'), mi, ma);
+    }
+
+    // 单关5秒后还是在确认中状态的话，轮询查询订单信息
+    const query_order = () =>{
+      if (get_order_no && get_bet_status == 6 || get_new_bet) {
+        let param = {
+          orderNos: get_order_no
+        }
+        api_betting.get_orderstatus(param).then(res => {
+          if (!(get_bet_status == 6 || get_new_bet)) {return}
+
+          let data = _.get(res, 'data[0]');
+          let code = _.get(res, 'code');
+
+          if (code != 200 || !data) {return};
+
+          if (data.status == 0) {   //投注成功
+            set_bet_status(3);
+
+            if (data.orderNo && data.orderNo == get_order_no) {
+              max_winmoney.value = data.newMaxWinAmount;
+              let oid = _.get(single_item, 'hps[0].hl[0].ol[0].oid', '')
+              if (data.oddsChangeList && data.oddsChangeList[0] && data.oddsChangeList[0].playOptionsId == oid) {
+                odds_value2.value = data.oddsChangeList[0].usedOdds;
+              }
+            }
+
+            set_new_bet(false)
+          } else if (data.status == 4) {   //投注失败
+            if (get_new_bet) {
+              set_bet_status(1);
+
+              if (data.refuseCode == '0400532') {
+                tips_msg.value = $root.$t('error_msg_info.0400532.client_msg')
+              } else {
+                tips_msg.value = $root.$t('bet.err_msg03')  //单关新流程失败后的 对应queryOrderStatus接口的红字提示
+              }
+
+              set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+            } else {
+              set_bet_status(8);
+            }
+          }
+          if ([0, 4].includes(+data.status)) {   //老流程删除确认中的订单号
+            clearInterval(timer_2000);
+          }
+        })
+
+      }
+    }
+
+    // 小键盘 处理按键
+    const _handleKeyPress = (evt) =>{
+      evt.preventDefault();
+      if (evt.target.className.includes("shadow-show")) return;
+
+      let num = evt.target.dataset.num;
+      switch (num) {
+        //最大
+        case "max":
+          _handmaxKey();
+          break;
+        //小数点
+        case ".":
+          _handleDecimalPoint();
+          break;
+        //删除键
+        case "x":
+          _handleDeleteKey();
+          break;
+        default:
+          _handleNumberKey(num);
+          break;
+      }
+    }
+
+    // 小键盘 处理小数点函数
+    const _handleDecimalPoint = () =>{
+      //如果包含小数点，直接返回
+      if (money.value.indexOf(".") > -1) {return false};
+      //如果小数点是第一位，补0
+      if (!money.value.length) money.value = "0.";
+      //如果不是，添加一个小数点
+      else money.value = money.value + ".";
+    }
+    // 小键盘 删除键
+    const _handleDeleteKey = () =>{
+      let S = money.value;
+      //如果没有输入，直接返回
+      if (!S.length) {return false};
+      if (delete_all) {
+        S = "";
+        delete_all = false;
+      }
+      //否则删除最后一个
+      money.value = S.substring(0, S.length - 1);
+      // S = Number(S).toFixed(2);
+    }
+    // 小键盘 MAX键
+    const _handmaxKey = ()=> {
+      money.value = max_money.value >= +get_user.balance ? get_user.balance.toFixed(2) : max_money.value.toFixed(2);
+    }
+    // 小键盘 处理数字
+    const _handleNumberKey = (num) => {
+      if (!num) return;
+
+      if ([100, 200, 500].includes(+num)) {
+        money.value = (money.value / 1 + num / 1).toString();
+        return;
+      }
+
+      let S = money.value;
+      if (S == '0.00' || S > 10000000) {return};
+
+      if (delete_all) {
+        S = "";
+        delete_all = false;
+      }
+
+      //如果有小数点且小数点位数不小于2
+      if (S.indexOf(".") > -1 && S.substring(S.indexOf(".") + 1).length < 2)
+        money.value = S + num;
+
+      //没有小数点
+      if (!(S.indexOf(".") > -1)) {
+        //如果第一位是0，只能输入小数点
+        if (num == 0 && S.length == 0) money.value = "0.";
+        else {
+          if (S.length && Number(S.charAt(0)) === 0) {return};
+          money.value = S + num;
+        }
+      }
+    }
 
 
 </script>
@@ -278,7 +697,7 @@
   }
 }
 /* ************** 中间区域颜色相关样式 ************** -S */
-.money-span {
+.money.value-span {
   color: #ffb001;
 }
 .shang {

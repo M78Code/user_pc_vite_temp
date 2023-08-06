@@ -38,8 +38,7 @@ import { mapGetters } from "vuex";
 import loading from "src/project/components/common/loading";
 // import simple_header from 'src/project/components/site_header/simple_header.vue';
 import { SimpleHeaderWapper } from 'src/components/simple-header'
-// TODO:
-import tabs from "src/project/components/site_header/tabs.vue";
+import tabs from "src/project/yazhou-h5/src/pages/notice/components/tab.vue";
 import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
 
 export default defineComponent({
