@@ -1,9 +1,8 @@
 /***/
 //  应有引入的方法
 import { ss } from "../utils/web-storage";
-import { useSdkConfig } from "../sdk-config";
+const { htmlVariables } = window.BUILDIN_CONFIG;
 function gtag_config_send(user_id) {
-  const [config] = useSdkConfig();
   // 设置默认启动参数
   // GA 埋点开关开启---照常统计，和生产环境保持一致
   window.gtag_run = 1;
@@ -41,7 +40,7 @@ function gtag_config_send(user_id) {
     };
     window.gtag("js", new Date());
     // 配置埋点信息
-    window.gtag("config", config.value.GA_TRACKING_ID, { user_id });
+    window.gtag("config", htmlVariables.GA_TRACKING_ID, { user_id });
     // 设置埋点是否已经配置过
     window.INIT_GTAG = true;
   }

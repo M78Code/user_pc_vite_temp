@@ -130,3 +130,88 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
   }
   return fmt;
 }
+
+
+
+
+  /**
+   * @description: 获取指定时区的Date对象(默认使用东八区)
+   * @param {int} time 时间毫秒数
+   * @param {int} offset 时区, 默认东八区
+   * @return {Date} 转换后的时区Date对象
+   */
+  const format_time_zone=(time,offset=8)=>{
+    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+    var localTime = d.getTime();//获取的是毫秒级
+    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+    var wishTime= utc + (3600000*offset);
+    return new Date(wishTime);
+  }
+
+  /**
+   * @description: 获取指定时区的时间缀(默认使用东八区)
+   * @param {int} time 时间毫秒数
+   * @param {int} offset 时区, 默认东八区
+   * @return {Date} 转换后的时区时间缀
+   */
+  const format_time_zone_millisecond=(time,offset=8)=>{
+    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+    var localTime = d.getTime();//获取的是毫秒级
+    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+    var wishTime= utc + (3600000*offset);
+    return wishTime;
+  }
+  /**
+   * @Description 获取格式化时间对象
+   * @param {undefined} undefined
+  */
+  const format_date_base_obj=(value)=> {
+    let time = new Date(parseInt(value));
+    let y = time.getFullYear();
+    let m = (time.getMonth() + 1 + "").padStart(2, 0);
+    let d = (time.getDate() + "").padStart(2, 0);
+    let h = (time.getHours() + "").padStart(2, 0);
+    let mm = (time.getMinutes() + "").padStart(2, 0);
+    let s = (time.getSeconds() + "").padStart(2, 0);
+    let w = time.getDay();
+    return { y, m, d, h, mm, s, w };
+  }
+
+
+
+
+    /**
+   * @description: 获取指定时区的时间戳(默认使用东八区)
+   * @param {int} time 时间毫秒数
+   * @param {int} offset 时区, 默认东八区
+   * @return {int} 转换后的时区的时间戳
+   */
+   export const format_time_zone_time=(time,offset=8)=>{
+        var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
+        var localTime = d.getTime();//获取的是毫秒级
+        var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
+        var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
+        var wishTime= utc + (3600000*offset);
+        return wishTime;
+      }
+
+
+
+       /**
+   * 红猫赛事显示倒计时优化
+   * @param  match 赛事信息   
+   * @param  counting_time 显示时间
+   *
+   */
+  export const   counting_time_ctr_show_format=(match,counting_time)=> {
+  
+    // counting_time 格式00:00
+    let counting_time_ = counting_time;
+    // 红猫赛事只显示分钟不显示秒
+    if(_.get(match,'cds')=='RC' && _.get(match,'csid')==1 && counting_time){
+      counting_time_ = _.get(counting_time_.split(':'),'[0]');
+    }
+    return counting_time_;
+  }

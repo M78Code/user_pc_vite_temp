@@ -1,0 +1,109 @@
+<template>
+  <div class="tabs-wrapper hairline-border">
+    <div 
+      class="item hairline-border"
+      :class="{
+        'active': i === tab_index,
+        'no-border-r': i === tab_index - 1,
+      }"
+      v-for="(tab, i) in tabs" 
+      :key="i"
+      @click="handle_item_click(tab, i)"
+    >
+      {{ tab.title }}
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "tabs",
+  props: {
+    tabs: {
+      type: Array,
+      default: () => ([])
+    },
+    isChange: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      tab_index: 0,
+    }
+  },
+  methods: {
+    handle_item_click(tab, index) {
+      if(!this.isChange){
+        this.tab_index = index
+      }
+      this.$emit('click', {tab, index})
+    },
+    changeTabIndex(index){
+      this.tab_index = index
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.tabs-wrapper {
+  display: flex;
+  align-items: center;
+  height: .2rem;
+  color: var(--q-color-com-fs-color-8);
+  background: var(--q-color-com-bg-color-32);
+  backdrop-filter: blur(2px);
+  &.hairline-border {
+    &::after {
+      border-color: var(--q-color-com-border-color-22) !important;
+    }
+  }
+  .item {
+    height: 0.2rem;
+    line-height: .2rem;
+    padding: 0 .1rem;
+    font-size: .12rem;
+    z-index: 1;
+    &.hairline-border {
+      &::after {
+        border-radius: 0;
+        border: 0 !important;
+        border-right: 1px solid var(--q-color-com-border-color-22) !important;
+      }
+      &:first-child.active {
+        &::after {
+          border-top-left-radius: .16rem;
+          border-bottom-left-radius: .16rem;
+        }
+      }
+      &:last-child.active {
+        &::after {
+          border-top-right-radius: .16rem;
+          border-bottom-right-radius: .16rem;
+        }
+      }
+    }
+    &.active {
+      font-weight: bold;
+      &.hairline-border {
+        &::after {
+          border: 1px solid var(--q-color-border-color-3) !important;
+        }
+      }
+    }
+    &:last-child {
+      &.hairline-border:not(.active) {
+        &::after {
+          border: 0 !important;
+        }
+      }
+    }
+    &.no-border-r::after {
+      border-right: 0 !important;
+    }
+  }
+}
+
+</style>

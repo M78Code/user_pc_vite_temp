@@ -37,7 +37,7 @@
           <!-- 投注记录 入口 -->
           <div v-show="vx_layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
-            <img class="hot-icon" src="~public/image/yabo/png/bet-record.png" />
+            <img class="hot-icon" src="/public/yazhou-pc/image/png/bet-record.png" />
             <div class="col">
               {{ $root.$t("common.betting_record") }}
             </div>
@@ -80,7 +80,7 @@
           <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
             :class="menu_config.menu_root == 1 && 'active'">
             <!-- 现场滚球盘 -->
-            <img class="hot-icon" src="~public/image/yabo/png/play-match.png" />
+            <img class="hot-icon" src="/public/yazhou-pc/image/png/play-match.png" />
             <div class="col">{{ $root.$t("common.in_plays") }}</div>
 
             <div class="col-right">
@@ -94,7 +94,7 @@
             :class="menu_config.menu_root == 500 && 'active'"
             :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
             <!-- 热门赛事图标 -->
-            <img class="hot-icon" src="~public/image/yabo/svg/hot.svg" />
+            <img class="hot-icon" src="/public/yazhou-pc/image/svg/hot.svg" />
             <div class="col">{{ $root.$t("menu.match_hot") }}</div>
             <div class="col-right">
               <!-- 热门赛事数量 -->

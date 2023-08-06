@@ -3,48 +3,7 @@
  * @Date: 2023-07-30 15:13:55
  * @Description: postmessage 接收配置sdk 配置
  */
-import { set, cloneDeep, merge } from "lodash";
-import utils from "../utils/";
-import { onMounted, onUnmounted, effectScope, ref, unref, watch } from "vue";
-
-/**
- * 创建一个公共的Globalstate函数工厂
- */
-
-function createGlobalState(stateFactory) {
-  let state;
-  let initialized = false;
-  const scope = effectScope(true);
-  return (...args) => {
-    if (!initialized) {
-      state = scope.run(() => stateFactory(...args));
-      initialized = true;
-    }
-    return state;
-  };
-}
-/**
- * config 使用 就是以前的 window.env.xxx
- * 加上SDK自己的配置扩展
- * @returns [ref(config),setConfig]
- */
-const useSdkConfig = createGlobalState(() => {
-  console.log("window.BUILDIN_CONFIG", window.BUILDIN_CONFIG);
-  const _c = utils.deepMerge(window.BUILDIN_CONFIG || {}, {
-    // 这里可以写一些 sdk的  config配置
-  });
-  const config = ref(_c);
-  watch(config, (v, o) => {
-    console.log("config update", o);
-    // window.BUILDIN_CONFIG = unref(v);
-    // window.BUILDIN_CONFIG
-  });
-  const setConfig = (key, value) => {
-    console.log("update config:", key, value);
-    set(config.value, key, value);
-  };
-  return [config, setConfig];
-});
+import { onMounted, onUnmounted } from "vue";
 
 function use_get_sdk_config() {
   onMounted(() => {

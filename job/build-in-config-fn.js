@@ -49,7 +49,7 @@ export const compute_build_in_config = (current_env) => {
   // 最终项目配置信息
   let final_config = {};
   //功能启用   禁用开关  顶层
-  const FUNCTION_SWITCH = {
+  const LOCAL_FUNCTION_SWITCH = {
     // 日志服务开关
     LOG: false,
     // 前端控制是否禁用收藏功能
@@ -88,7 +88,9 @@ export const compute_build_in_config = (current_env) => {
   final_config = {
     CURRENT_ENV: current_env,
     NODE_ENV ,
-    FUNCTION_SWITCH,
+    LOCAL_FUNCTION_SWITCH,  
+    SERVER_GLOBAL_SWITCH:{},
+    GLOBAL_IMAGE_PREFFIX: NODE_ENV === "development" ? '' : '/' + BUILD_VERSION,
     API_PREFIX,
     FRONT_WEB_ENV: process.env.FRONT_WEB_ENV,
     API_DOMAIN_PREFIX: "api",
