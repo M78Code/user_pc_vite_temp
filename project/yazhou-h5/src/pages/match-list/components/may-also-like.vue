@@ -8,8 +8,7 @@
       {{ $root.$t('home_popular.you_may_also_like') }}
     </div>
     <div class="scroll-list">
-      <div class="card2" :key="i" v-for="(item, i) in slide_list"
-           @click="goto_detail_video(item)">
+      <div class="card2" :key="i" v-for="(item, i) in slide_list" @click="goto_detail_video(item)">
         <div class="card">
           <div class="card-title">
             <span class="ellipsis">{{ item.tnjc }}</span>
@@ -40,7 +39,7 @@
                 </template>
                 <span class="ellipsis">{{ item.mhn }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item | format_total_score(0)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(0)}}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,0,normal_(item, 0))" :class="selected_(item,0) && 'Handicap2'">
                 <template v-if="normal_(item, 0)">
                   <!-- 盘口 -->
@@ -62,7 +61,7 @@
                 </template>
                 <span class="ellipsis">{{ item.man }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item | format_total_score(1)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(1)}}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,1,normal_(item, 1))" :class="selected_(item,1) && 'Handicap2'">
                 <template v-if="normal_(item, 1)">
                   <!-- 盘口 -->
@@ -92,6 +91,7 @@ import team_img from "src/project/components/details/team_img";   // 详情页�
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 import betting from "src/project/mixins/betting/betting.js";    // 押注动作相关的所有方法写到这里
 import {mapMutations, mapGetters} from "vuex";
+import { format_total_score } from '../../../boot/global_filters'
 import {api_home} from "src/project/api";
 
 const props = defineProps({
@@ -111,7 +111,7 @@ onMounted(() => {
   get_list()
 })
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // ...mapGetters(['get_bet_list']),
 // ...mapMutations([
 //       // 设置去详情的赛事id

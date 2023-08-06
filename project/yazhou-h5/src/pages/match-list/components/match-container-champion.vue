@@ -105,7 +105,7 @@ const props = defineProps({
   matchCtr: Object,
 })
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
 // ...mapGetters([
 //   "get_bet_list",
