@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import no_data from "../no_data/no_data.vue";
+import noData from "../no-data/no-data.vue";
 import { onMounted,computed,ref } from 'vue'
 
 const props = defineProps({
