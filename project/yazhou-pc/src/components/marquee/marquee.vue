@@ -185,6 +185,10 @@ const timer_obj = reactive({
     settings_timer: null,
     show_gif_timer: null,
 })
+const timer_id = ref(null)
+
+const marqueeRef = ref(null)
+const wrapRef = ref(null)
 /** 初始化 */
 function init() {
     is_destroy.value = false
@@ -212,10 +216,9 @@ function init() {
     timer_obj.run_timer = setTimeout(() => {
         if (is_destroy.value) return
         //设置宽度
-        this.marquee_obj = this.$refs.marquee
-        this.total_width = -parseInt(this.marquee_obj.offsetWidth);
-        this.wrap_width = parseInt(this.$refs.wrap.offsetWidth);
-        this.timer_id = setInterval(this.animation, this.timer_interval)
+        notice_info.total_width = -parseInt(marqueeRef.value.offsetWidth);
+        notice_info.wrap_width = parseInt(wrapRef.value.offsetWidth);
+        timer_id.value = setInterval(animation, notice_info.timer_interval)
     }, 5000)
 }
 onMounted(init)
@@ -238,6 +241,7 @@ function show_menu_icon(icon_id) {
  * @param menu 当前点击菜单对象
  */
 function menu_change(menu) {
+    // TODO: store数据待修改
     if (menu.path.includes('/activity') && !this.get_global_switch.activity_switch) return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
     if (menu.path.includes('/activity')) {
         if (this.get_user_token) {
@@ -249,6 +253,12 @@ function menu_change(menu) {
     }
     emits('navigate', menu)
 }
+// TODO: 需要处理动态refs
+const tabRefs = reactive({
+    /** 根据icon_name定义 */
+    tab1_y0: null
+    // ...
+})
 /**
  * @Description 内嵌版 折叠菜单 鼠标悬浮显示 gif
  * @param e 当前事件
@@ -257,11 +267,9 @@ function menu_change(menu) {
  */
 function show_gif(e, tab, index) {
     const icon_name = tab.icon_name
-
     // 显示gif
     // this.$set(this.right_tabs[index], 'is_show', true)
     right_tabs[index]['is_show'] = true
-
     // 播放gif
     if (this.get_theme.includes('y0')) {
         if (!Array.isArray(this.$refs[icon_name + '_y0'])) {
@@ -276,8 +284,8 @@ function show_gif(e, tab, index) {
     }
 
     // gif播放完1次后，就停止播放
-    clearTimeout(this.show_gif_timer)
-    this.show_gif_timer = setTimeout(() => {
+    clearTimeout(timer_obj.show_gif_timer)
+    timer_obj.show_gif_timer = setTimeout(() => {
         // this.$set(this.right_tabs[index], 'is_show', false)
         right_tabs[index]['is_show'] = false
         if (this.get_theme.includes('y0')) {
@@ -369,11 +377,6 @@ function get_marquee_data() {
 }
 /** 清除当前组件所有定时器 */
 function clear_timer() {
-
-    // interval定时器列表
-    const interval_timer_arr = [
-        'timer_id'
-    ]
     // 批量清除timeout定时器
     for (const key in timer_obj) {
         if (timer_obj[key]) {
@@ -381,10 +384,9 @@ function clear_timer() {
             timer_obj[key] = null
         }
     }
-    // 批量清除interval定时器
-    for (const timer of interval_timer_arr) {
-
-    }
+    // 清除interval定时器
+    clearInterval(timer_id.value)
+    timer_id.value = null
 }
 onUnmounted(clear_timer)
 </script>

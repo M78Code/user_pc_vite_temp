@@ -6,8 +6,8 @@
 
 import {http} from "src/core/http/index.js";
 
-let prefix = window.env.config.api.API_PREFIX_API;
-let prefix_user = window.env.config.api.API_PREFIX_USER;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_user} = API_PREFIX;
 
 let prifix_url =  http.HTTP_UPLOAD_API;
 

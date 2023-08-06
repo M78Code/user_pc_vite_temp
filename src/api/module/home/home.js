@@ -4,9 +4,10 @@
  * @Description:
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
-let prefix_12 = window.env.config.api.API_PREFIX_USER;
 
+ 
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 //菜单栏目初始化接口
 export const get_menu_init = (params) => {

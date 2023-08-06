@@ -68,65 +68,53 @@
  *
  */
 
-import { ref } from "vue"
+import { ref } from "vue";
 import axios from "axios";
 // 域名计算逻辑所用的 单独的 axios 实例
-const axios_instance = axios.create()
- 
+const axios_instance = axios.create();
 
 // 域名计算结果
- let   DOMAIN_RESULT={
-    //gr  
-    gr:"COMMON",
-    //最优 API 
-    first_one: '',
-    //可用 的 api 数组
-    useable_apis: [],
-    //全量API 数组
-    full_apis:[],
-    // 用户信息接口返回
-    getuserinfo_res:null  ,
-    //live_domains 视频页面地址
-    live_domains:[],
-    // 图片域名
-    img_domains:[]
+let DOMAIN_RESULT = {
+  //gr
+  gr: "COMMON",
+  //最优 API
+  first_one: "",
+  //可用 的 api 数组
+  useable_apis: [],
+  //全量API 数组
+  full_apis: [],
+  // 用户信息接口返回
+  getuserinfo_res: null,
+  //live_domains 视频页面地址
+  live_domains: [],
+  // 图片域名
+  img_domains: [],
+};
 
+import STANDARD_KEY from "../standard-key/index.js";
 
-}
+// 域名计算  本地存错 挂载键
+const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
+// 引入 当前 计算出的植入配置
 
-
-
-
-
-import STANDARD_KEY from "../standard-key/index.js"
-
-
-// 域名计算  本地存错 挂载键 
-const   DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01") 
-// 引入 当前 计算出的植入配置 
- 
-
-const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
+const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const {CURRENT_ENV ,NODE_ENV ,OSS_FILE_ARR ,OSS_FILE_NAME} = BUILDIN_CONFIG
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG;
 
+import lodash from "lodash";
 
- 
-import lodash from "lodash"
-
-import { useMittOn, MITT_TYPES} from "src/core/mitt/index.js"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 class AllDomain {
   constructor() {
-    BUILDIN_CONFIG.DOMAIN_RESULT =DOMAIN_RESULT
+    BUILDIN_CONFIG.DOMAIN_RESULT = DOMAIN_RESULT;
     this.init_base_config();
   }
   /**
    * 初始化 最基础配置
    */
   init_base_config() {
-
-    // 域名计算  本地存错 挂载键 
-    this.DOMAIN_API_STORAGE_KEY= DOMAIN_API_STORAGE_KEY;
+    // 域名计算  本地存错 挂载键
+    this.DOMAIN_API_STORAGE_KEY = DOMAIN_API_STORAGE_KEY;
     // getuserinfo接口 内的 oss  配置 内的 oss
     this.GETUSERINFO_OSS = {};
     // 合并 oss 文件内的 api配置 到 最终的 前端 本地 域名池子  开关
@@ -155,8 +143,7 @@ class AllDomain {
    * @description: 构造函数
    * @return {undefined} callback 回调方法通知   {type:'domain_api',status:0 ,list:[]} status字段:0-初始状态 1-已经发现最快的api域名并已经设置,  2-已经切换到最新的可用域名, 3-切换时发现没有域名可用
    */
-  create(  callback) {
-
+  create(callback) {
     //  初始化原始数据
     this.init();
     // 获取本地配置的oss url地址
@@ -168,27 +155,28 @@ class AllDomain {
     // 回调方法参数: {type:'domain_api',status:0 ,list:[]}
     // status字段:0-初始状态 1-首次进入: 发现最快的api域名并已经设置,  2-切换域名时 :已经切换到最新的可用域名, 3- 切换域名时:切换时发现没有域名可用
     this.callback = callback;
-
   }
 
   /**
-  * @description: api参数域名加密(专用)
-  * @param {*} api 加密字符串
-  * @return {*}  明码字符串
-  */
-  api_encrypt(api_str){
-    let res = '';
-  	if(api_str){
-      var encrypt = CryptoJS.AES.encrypt(api_str, this.DECRYPT_KEY_URL_API, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+   * @description: api参数域名加密(专用)
+   * @param {*} api 加密字符串
+   * @return {*}  明码字符串
+   */
+  api_encrypt(api_str) {
+    let res = "";
+    if (api_str) {
+      var encrypt = CryptoJS.AES.encrypt(api_str, this.DECRYPT_KEY_URL_API, {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7,
+      });
       res = encrypt.toString();
-  	}
+    }
     return res;
   }
   /**
    * @description: 初始化数据
    */
   init() {
-
     // 是否首次加载页面
     this.loaded = false;
     // url 内的api 解析后的 数据
@@ -215,22 +203,20 @@ class AllDomain {
       this.begin_process_when_use_oss_file_api();
     }
     // 检查纠正 分组信息
-    setTimeout( ()=>{
-      this.check_and_correct_local_api_pool_group()
-    },30000)
+    setTimeout(() => {
+      this.check_and_correct_local_api_pool_group();
+    }, 30000);
   }
 
   /**
    *    getuserinfo接口 内的 oss  配置 内的 oss   写入 方法
    */
   set_getuserinfo_oss(obj = { api: [] }) {
-    if( Array.isArray(obj.api)&& obj.api.length>0){
-
+    if (Array.isArray(obj.api) && obj.api.length > 0) {
       this.GETUSERINFO_OSS = obj;
       // 计算当前的 域名池子
       this.compute_current_local_api_pool();
     }
-
   }
 
   /**
@@ -259,10 +245,9 @@ class AllDomain {
       console.log("unDecrypt----------1", unDecrypt);
       if (typeof unDecrypt === "string" && unDecrypt) {
         unDecrypt = unDecrypt
-                    .split(",")
-                    .map((x) => x.trim())
-                    .filter((x) => x.startsWith("http://") || x.startsWith("https://"));
-
+          .split(",")
+          .map((x) => x.trim())
+          .filter((x) => x.startsWith("http://") || x.startsWith("https://"));
       }
       if (!Array.isArray(unDecrypt) || unDecrypt.length === 0) {
         current_api_flow = "use_oss_file_api";
@@ -288,8 +273,8 @@ class AllDomain {
     url_api.map((item) =>
       reqs.push(
         axios_instance.get(`${item}/yewu12/user/getUserInfo`, {
-          params: { token: token   },
-          timeout:6000,
+          params: { token: token },
+          timeout: 6000,
           headers: {
             requestId: token,
           },
@@ -300,16 +285,15 @@ class AllDomain {
       .then((res) => {
         // 只要有一个   请求成功
         console.log(" // 只要有一个   请求成功----", res);
-        if( lodash.get(res, "data.code") == "0000000"){
-         //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
-        this.begin_process_when_use_url_api_after_process(res);
-        //保存 用户数据
-        BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res 
-        }else{
-            // 强制 走 oss 文件逻辑
-        this.force_current_api_flow_to_use_oss_file_api();
+        if (lodash.get(res, "data.code") == "0000000") {
+          //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
+          this.begin_process_when_use_url_api_after_process(res);
+          //保存 用户数据
+          BUILDIN_CONFIG.DOMAIN_RESULT.getuserinfo_res = res;
+        } else {
+          // 强制 走 oss 文件逻辑
+          this.force_current_api_flow_to_use_oss_file_api();
         }
-
       })
       .catch((error) => {
         // 所有  全部请求失败
@@ -387,7 +371,7 @@ class AllDomain {
   begin_process_when_use_url_api_after_process(res) {
     // 确保分组信息 赋值
     let gr = (lodash.get(res, "data.data.gr") || "").toUpperCase();
-   BUILDIN_CONFIG.DOMAIN_RESULT.gr =gr
+    BUILDIN_CONFIG.DOMAIN_RESULT.gr = gr;
     //OSS 对象
     let ossobj = lodash.get(res, "data.data.oss");
     console.log("ossobj--------", ossobj);
@@ -417,8 +401,11 @@ class AllDomain {
     // }
     ossobj.api = [...ossobj.api, ...this.url_api];
     // 同步最新域名到  全量API 数组
-  
-    BUILDIN_CONFIG.DOMAIN_RESULT.full_apis =  lodash.uniq([...ossobj.api, ... BUILDIN_CONFIG.DOMAIN_RESULT.full_apis ]  )
+
+    BUILDIN_CONFIG.DOMAIN_RESULT.full_apis = lodash.uniq([
+      ...ossobj.api,
+      ...BUILDIN_CONFIG.DOMAIN_RESULT.full_apis,
+    ]);
     // 第二步 设置   set_getuserinfo_oss
     this.set_getuserinfo_oss(ossobj);
     // 发现可用的域名的逻辑处理
@@ -451,11 +438,10 @@ class AllDomain {
     // let static_src = lodash.get(oss_data, "static",[]);
     //解密 live_domains
     let live_domains = oss_data[this.live_domains_oss_path_api];
- 
- 
+
     // 设置live_domains
     if (live_domains) {
-        BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
+      BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -470,106 +456,102 @@ class AllDomain {
    */
   begin_process_when_use_oss_file_api() {
     // 当前 oss  完整 地址
-    let oss_url =
-      this.oss_urls[0] ;
+    let oss_url = this.oss_urls[0];
     // 获取网络数据
     axios_instance
-      .get(oss_url, { params: { t: new Date().getTime() },timeout:5000 })
+      .get(oss_url, { params: { t: new Date().getTime() }, timeout: 5000 })
       .then((res) => {
         //此处 因为  oss 文件在前端代码内部 ，所以 只要域名能访问 ，这个文件必定能访问
-        if (  lodash.isPlainObject(res.data) ) {
+        if (lodash.isPlainObject(res.data)) {
           // 成功获取到oss文件数据
-          let obj = res.data ;
-        if(obj){
-          this.jiexi_oss_file(obj)
-        }else{
-          this.jixi_build_in_current_env_build_in_oss()
-        }
-        }else{
-          console.error('解析oss数据失败：lodash.isPlainObject(res.data)');
-          this.jixi_build_in_current_env_build_in_oss()
+          let obj = res.data;
+          if (obj) {
+            this.jiexi_oss_file(obj);
+          } else {
+            this.jixi_build_in_current_env_build_in_oss();
+          }
+        } else {
+          console.error("解析oss数据失败：lodash.isPlainObject(res.data)");
+          this.jixi_build_in_current_env_build_in_oss();
         }
       })
       .catch((err) => {
         console.log("oss数据失败地址:" + oss_url);
         //直接  错误 界面遮罩
         console.error(err);
-        this.jixi_build_in_current_env_build_in_oss()
+        this.jixi_build_in_current_env_build_in_oss();
       });
-
-
-
   }
   /**
    * 解析 html 内打包进来的  CURRENT_ENV_BUILD_IN_OSS
    */
-  jixi_build_in_current_env_build_in_oss(){
-    if(!window.CURRENT_ENV_BUILD_IN_OSS){ return false}
-    try {
-    let build_in_file = JSON.parse(decodeURIComponent(window.CURRENT_ENV_BUILD_IN_OSS))
-     if(!build_in_file){  return false}
-    this.jiexi_oss_file(build_in_file)
-
-
-  } catch (error) {
-    console.error(' 解析 html 内打包进来的  CURRENT_ENV_BUILD_IN_OSS---出现错误');
-
-    this.compute_current_local_api_pool();
-
-    // 如果当时 的 流程是 ： 流程 1 走通了 附带 去集成备份oss 文件配置到前端 这里 不需要去 找可用域名
-    // 此时已经有可用域名了
-    if (this.current_api_flow == "use_url_api") {
-    } else {
-      // 如果当时 的 流程是 ： 流程 2  ,此时 是没有可用域名的  ，这里需要去找 可用域名
-      //这里开始 找到一个可用域名  ，不做排序  ，使用 时间戳 接口
-      this.compute_api_domain_firstone_by_currentTimeMillis();
+  jixi_build_in_current_env_build_in_oss() {
+    if (!window.CURRENT_ENV_BUILD_IN_OSS) {
+      return false;
     }
+    try {
+      let build_in_file = JSON.parse(
+        decodeURIComponent(window.CURRENT_ENV_BUILD_IN_OSS)
+      );
+      if (!build_in_file) {
+        return false;
+      }
+      this.jiexi_oss_file(build_in_file);
+    } catch (error) {
+      console.error(
+        " 解析 html 内打包进来的  CURRENT_ENV_BUILD_IN_OSS---出现错误"
+      );
 
+      this.compute_current_local_api_pool();
 
-  }
-
+      // 如果当时 的 流程是 ： 流程 1 走通了 附带 去集成备份oss 文件配置到前端 这里 不需要去 找可用域名
+      // 此时已经有可用域名了
+      if (this.current_api_flow == "use_url_api") {
+      } else {
+        // 如果当时 的 流程是 ： 流程 2  ,此时 是没有可用域名的  ，这里需要去找 可用域名
+        //这里开始 找到一个可用域名  ，不做排序  ，使用 时间戳 接口
+        this.compute_api_domain_firstone_by_currentTimeMillis();
+      }
+    }
   }
   /**
    * 解析 OSS 文件返回体内容
    * @param {*} res
    */
-  jiexi_oss_file(obj){
-  // 获取解密后的明码数据
-  this.get_decrypt_oss_data(obj);
-  // oss url地址返回的数据
-  this.oss_file_content = obj;
-  // 设置 oss文件中的数据到全局配置文件中
-  this.set_all_config_from_oss_file_data_2(obj);
+  jiexi_oss_file(obj) {
+    // 获取解密后的明码数据
+    this.get_decrypt_oss_data(obj);
+    // oss url地址返回的数据
+    this.oss_file_content = obj;
+    // 设置 oss文件中的数据到全局配置文件中
+    this.set_all_config_from_oss_file_data_2(obj);
   }
 
-
-    /**
- * @description: 获取持久化localStorage中的数据
- * @param {string} key localStorage key值
- * @return {object} 返回Json类型数据
- */
-    get_save_domain_api() {
-      let key = this.DOMAIN_API_STORAGE_KEY;
-      console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
-      let gr = sessionStorage.getItem("gr");
-      console.log('sessionStorage.getItem("gr")---', gr);
-      // 返回默认值
-      let ret = [];
-      // 获取持久化数据
-      let str = localStorage.getItem(key);
-      console.log("获取持久化数据------", str);
-      if (str) {
-        try {
-          // 字符串转json对象
-          ret = JSON.parse(str);
-
-        } catch (error) {
-          console.error(error);
-        }
+  /**
+   * @description: 获取持久化localStorage中的数据
+   * @param {string} key localStorage key值
+   * @return {object} 返回Json类型数据
+   */
+  get_save_domain_api() {
+    let key = this.DOMAIN_API_STORAGE_KEY;
+    console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
+    let gr = sessionStorage.getItem("gr");
+    console.log('sessionStorage.getItem("gr")---', gr);
+    // 返回默认值
+    let ret = [];
+    // 获取持久化数据
+    let str = localStorage.getItem(key);
+    console.log("获取持久化数据------", str);
+    if (str) {
+      try {
+        // 字符串转json对象
+        ret = JSON.parse(str);
+      } catch (error) {
+        console.error(error);
       }
-      return ret;
     }
-
+    return ret;
+  }
 
   /**
    *
@@ -602,12 +584,14 @@ class AllDomain {
     // });
 
     getuserinfo_oss_api.map((x) => {
-      new_get_api_obj_arr.push(this.formart_api_to_obj(x,this.GETUSERINFO_OSS.gr));
-    })
+      new_get_api_obj_arr.push(
+        this.formart_api_to_obj(x, this.GETUSERINFO_OSS.gr)
+      );
+    });
     oss_file_api.map((x) => {
       new_get_api_obj_arr.push(this.formart_api_to_obj(x));
-    })
-    new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr,'api');
+    });
+    new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr, "api");
     //   前端本地旧的   api配置  删除新的 认为新进来的数据
     console.log("getuserinfo_oss_api-----", getuserinfo_oss_api);
     console.log("oss_file_api-----", oss_file_api);
@@ -631,7 +615,7 @@ class AllDomain {
       if (!x.update_time) {
         x.update_time = ct;
       }
-      delete x.type
+      delete x.type;
       if (ct - x.update_time < sc) {
         local_api_pool.push(x);
       }
@@ -639,75 +623,73 @@ class AllDomain {
     // 排序，按照更新时间 从大到小排列 ，新的在前，旧的在后
     local_api_pool.sort((a, b) => b.update_time - a.update_time);
     console.log("local_api_pool---------", local_api_pool);
-      let cgr = BUILDIN_CONFIG.DOMAIN_RESULT.gr
-      // 当前分组的 api
-      let  local_api_pool_cg = local_api_pool.filter(x=>x.group ==cgr)
-      //非当前分组的 api
-      let  local_api_pool_not_cg = local_api_pool.filter(x=>x.group !=cgr)
+    let cgr = BUILDIN_CONFIG.DOMAIN_RESULT.gr;
+    // 当前分组的 api
+    let local_api_pool_cg = local_api_pool.filter((x) => x.group == cgr);
+    //非当前分组的 api
+    let local_api_pool_not_cg = local_api_pool.filter((x) => x.group != cgr);
 
     // 截取 最大的 本地域名池子数量上限
     if (local_api_pool_cg.length > this.LOCAL_API_POOL_MAX) {
       local_api_pool_cg.splice(this.LOCAL_API_POOL_MAX);
     }
     //重新组合 本地域名池
-    local_api_pool=  [...local_api_pool_cg,...local_api_pool_not_cg]
+    local_api_pool = [...local_api_pool_cg, ...local_api_pool_not_cg];
 
     // 本地开发 或者 内部导航进来的 维护 时间增加内部域名
-    local_api_pool=  this.add_neibu_domain(local_api_pool)
+    local_api_pool = this.add_neibu_domain(local_api_pool);
 
     // 赋值
-    this.local_api_pool = lodash.uniqBy(local_api_pool,'api') ;
+    this.local_api_pool = lodash.uniqBy(local_api_pool, "api");
     //保存数据到本地
     this.set_sava_json_key(this.local_api_pool);
   }
   // 本地开发 或者 内部导航进来的 维护 时间增加内部域名
-  add_neibu_domain(local_api_pool=[]){
+  add_neibu_domain(local_api_pool = []) {
     //是否需要添加 维护域名
-    let need_add =false
+    let need_add = false;
     //本地开发
     if (NODE_ENV == "development") {
-      need_add =true
-    }else{
-        //线上环境
-       //非生产环境不用处理
-       if(CURRENT_ENV!="idc_online"){
-        need_add =false
-      }else{
+      need_add = true;
+    } else {
+      //线上环境
+      //非生产环境不用处理
+      if (CURRENT_ENV != "idc_online") {
+        need_add = false;
+      } else {
         // 线上生产环境
-        if (location.href.includes("env=line1") ) {
+        if (location.href.includes("env=line1")) {
           //  内部错测试
-          need_add =true
-        }else{
+          need_add = true;
+        } else {
           // 非内部错测试 不处理
-          need_add =false
+          need_add = false;
         }
       }
     }
-     // 不需要 需要添加 维护域名
-    if(!need_add){
-      return local_api_pool
+    // 不需要 需要添加 维护域名
+    if (!need_add) {
+      return local_api_pool;
     }
 
-   // 生产环境 附加内部测试域名
-   let obj={
-    COMMON:'https://api-c.sportxxx1zx.com',
-    Y:'https://api-y.sportxxx1zx.com',
-    S:'https://api-s.sportxxx1zx.com',
-    B:'https://api-b.sportxxx1zx.com',
-   }
-  //过滤掉 内测 域名
-  let arr= local_api_pool.filter(x=> !x.api.includes('.sportxxx1zx.com') )
-  if(CURRENT_ENV=="idc_online"){
-    for(let gr in obj){
-      console.log(gr)
-      // 增加内测域名
-      arr.unshift( this.formart_api_to_obj( obj[gr] ,gr))
+    // 生产环境 附加内部测试域名
+    let obj = {
+      COMMON: "https://api-c.sportxxx1zx.com",
+      Y: "https://api-y.sportxxx1zx.com",
+      S: "https://api-s.sportxxx1zx.com",
+      B: "https://api-b.sportxxx1zx.com",
+    };
+    //过滤掉 内测 域名
+    let arr = local_api_pool.filter((x) => !x.api.includes(".sportxxx1zx.com"));
+    if (CURRENT_ENV == "idc_online") {
+      for (let gr in obj) {
+        console.log(gr);
+        // 增加内测域名
+        arr.unshift(this.formart_api_to_obj(obj[gr], gr));
+      }
     }
+    return arr;
   }
-  return arr
-  }
-
-
 
   /**
    * @description: 字符串解密函数
@@ -768,41 +750,46 @@ class AllDomain {
    * @param {*} data oss文件加密数据
    * @return {*} oss文件中的明码数据
    */
-   get_decrypt_oss_data(data) {
+  get_decrypt_oss_data(data) {
     if (data) {
       //解密 img ,  正确结构：["xsxsax"]
-      let img = lodash.get(data, "img")
-      if(lodash.isArray(img)&&img[0]&&lodash.isString( img[0])) { this.get_oss_decrypt_obj(img);}else{
-        data["img"]=[]
+      let img = lodash.get(data, "img");
+      if (lodash.isArray(img) && img[0] && lodash.isString(img[0])) {
+        this.get_oss_decrypt_obj(img);
+      } else {
+        data["img"] = [];
       }
 
       //解密 static , 正确结构：["xsxsax"]
 
-      let stc = lodash.get(data, "static")
-      if(lodash.isArray(stc)&&stc[0]&&lodash.isString( stc[0])) { this.get_oss_decrypt_obj(stc);}else{
-        data["static"]=[]
+      let stc = lodash.get(data, "static");
+      if (lodash.isArray(stc) && stc[0] && lodash.isString(stc[0])) {
+        this.get_oss_decrypt_obj(stc);
+      } else {
+        data["static"] = [];
       }
 
       //解密 live_domains ,  正确结构：{pc:'xsaxsax'}
 
-      let lds = lodash.get(data, "live_domains")
-      if(lodash.isPlainObject(lds)&&lds) { this.get_oss_decrypt_obj(lds);}else{
-        data["live_domains"]={}
+      let lds = lodash.get(data, "live_domains");
+      if (lodash.isPlainObject(lds) && lds) {
+        this.get_oss_decrypt_obj(lds);
+      } else {
+        data["live_domains"] = {};
       }
-
 
       for (const key_ in data) {
         if (key_ && keylodash.indexOf("GA") == 0) {
           //解密 GA*.api   ,  正确结构：["xsxsax"]
-          let api =  lodash.get(data, key_ + ".api")
-          if(lodash.isArray(api)&&api[0]&&lodash.isString( api[0]))  { this.get_oss_decrypt_obj(api);}else{
-            lodash.set(data,key_ + ".api",[])
+          let api = lodash.get(data, key_ + ".api");
+          if (lodash.isArray(api) && api[0] && lodash.isString(api[0])) {
+            this.get_oss_decrypt_obj(api);
+          } else {
+            lodash.set(data, key_ + ".api", []);
           }
         }
       }
-
     }
- 
   }
   /**
    * @description: 设置oss文件中的数据到全局配置文件中
@@ -816,10 +803,10 @@ class AllDomain {
     let static_src = lodash.get(oss_data, "static");
     //解密 live_domains
     let live_domains = lodash.get(oss_data, this.live_domains_oss_path_file);
- 
+
     // 设置live_domains
     if (live_domains) {
-     BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
+      BUILDIN_CONFIG.DOMAIN_RESULT.live_domains = [live_domains];
     }
     // 设置oss_img_domains
     if (img && img.length) {
@@ -836,18 +823,19 @@ class AllDomain {
   set_all_config_from_oss_file_data_2_api(oss_data) {
     //解密 api
 
-    let api =  [];
+    let api = [];
     // 设置商户分组api ，当前分组的 api
-    let api_x = lodash.get(oss_data, "GA" +   BUILDIN_CONFIG.DOMAIN_RESULT.gr + ".api");
+    let api_x = lodash.get(
+      oss_data,
+      "GA" + BUILDIN_CONFIG.DOMAIN_RESULT.gr + ".api"
+    );
     console.log("api:" + JSON.stringify(api));
     console.log("api_x:" + JSON.stringify(api_x));
-    console.log(
-      "CURRENT_ENV:" + CURRENT_ENV
-    );
- 
+    console.log("CURRENT_ENV:" + CURRENT_ENV);
+
     // 因为存在 对接接口 历史遗留 ，用户 进入界面可能无 gr 参数  但是  时间戳接口可以混合调用，getuserinfo 也一样能 混合调用
     if (!api_x) {
-      let cgr =   "COMMON"
+      let cgr = "COMMON";
       BUILDIN_CONFIG.DOMAIN_RESULT.gr = cgr;
       sessionStorage.setItem("gr", cgr);
       api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
@@ -873,14 +861,19 @@ class AllDomain {
    * 找到 第一个可用的 api   去 进行 后续 页面逻辑
    * @param {*} api
    */
-  async compute_api_domain_firstone_by_currentTimeMillis(check_group=false) {
-   //当前分组的 api 域名
-    let api = this.local_api_pool.filter(x=>x.group==BUILDIN_CONFIG.DOMAIN_RESULT.gr);
-    let check_ok = Array.isArray(api)&& api.length>0
-    console.log("compute_api_domain_firstone_by_currentTimeMillis--", JSON.stringify(api) );
-    if(!check_ok){
+  async compute_api_domain_firstone_by_currentTimeMillis(check_group = false) {
+    //当前分组的 api 域名
+    let api = this.local_api_pool.filter(
+      (x) => x.group == BUILDIN_CONFIG.DOMAIN_RESULT.gr
+    );
+    let check_ok = Array.isArray(api) && api.length > 0;
+    console.log(
+      "compute_api_domain_firstone_by_currentTimeMillis--",
+      JSON.stringify(api)
+    );
+    if (!check_ok) {
       // console.log('compute_api_domain_firstone_by_currentTimeMillis--检查失败',);
-      return false
+      return false;
     }
     // let api =   JSON.parse(JSON.stringify(this.local_api_pool))
     // api.push( { api:"http://xxx.com"})
@@ -892,12 +885,12 @@ class AllDomain {
       let url = `${x.api}?t=${t}`;
       reqs.push(
         axios_instance.get(url, {
-          timeout:5000
+          timeout: 5000,
         })
       );
     });
     //最快的域名对象
-    let fastest_api_obj = ''
+    let fastest_api_obj = "";
 
     try {
       let res = await Promise.any(reqs);
@@ -906,11 +899,17 @@ class AllDomain {
       let c_url = new URL(res.config.url);
       console.log("c_url------", c_url);
       //最快的域名对象
-       fastest_api_obj = this.formart_api_to_obj(c_url.origin,this.compute_exact_group_by_str(res.data||''));
-      if(!check_group){
-     //如果  不是检查 域名分组 正确性 并纠错
+      fastest_api_obj = this.formart_api_to_obj(
+        c_url.origin,
+        this.compute_exact_group_by_str(res.data || "")
+      );
+      if (!check_group) {
+        //如果  不是检查 域名分组 正确性 并纠错
 
-     this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
+        this.find_use_apis_event_first_one(
+          fastest_api_obj,
+          DOMAIN_API_STORAGE_KEY
+        );
       }
     } catch (error) {
       // 所有  全部请求失败
@@ -926,53 +925,57 @@ class AllDomain {
       // {status: 'rejected', reason: reason}
       console.log(" 域名时间戳检测逻辑结果 results----------", results);
       //失败次数
-      let rejected_num =0
+      let rejected_num = 0;
       let tr = new Date().getTime();
       results.map((x, i) => {
         //'fulfilled' 异步操作成功时
         if (x.status == "fulfilled") {
           // 刷新 域名的创建时间 ，刷新理论存活时间
           api[i]["update_time"] = tr;
-          api[i]["group"] =  this.compute_exact_group_by_str(x.value.data||'');
+          api[i]["group"] = this.compute_exact_group_by_str(x.value.data || "");
         } else {
           // 'rejected'  异步操作失败时
-          rejected_num++
+          rejected_num++;
         }
       });
-       //保存数据到本地
+      //保存数据到本地
       this.set_sava_json_key(this.local_api_pool);
       // 重新计算本地域名池 并且写入本地存储
       this.compute_current_local_api_pool();
-        //全部错误
-        if(rejected_num ==  api.length){
-          // 失败 页面  没网 之类的 错误页面
-     
+      //全部错误
+      if (rejected_num == api.length) {
+        // 失败 页面  没网 之类的 错误页面
 
-          useMittOn(MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT)
-          }else{
-      //如果 是检查 域名分组 正确性 并纠错
-      if(check_group){
-         //  当前  使用的 api
- 
-         let  capi =    BUILDIN_CONFIG.DOMAIN_RESULT.first_one ||'' ;
-         // 当前  使用的 api 的 host
-         let capi_str = capi.split('://')[1]
+        useMittOn(MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT);
+      } else {
+        //如果 是检查 域名分组 正确性 并纠错
+        if (check_group) {
+          //  当前  使用的 api
+
+          let capi = BUILDIN_CONFIG.DOMAIN_RESULT.first_one || "";
+          // 当前  使用的 api 的 host
+          let capi_str = capi.split("://")[1];
           //  当前  使用的 api  的分组
-        let  capi_group =  (this.local_api_pool.find(x=>x.api.includes(capi_str))||{})['group']
+          let capi_group = (this.local_api_pool.find((x) =>
+            x.api.includes(capi_str)
+          ) || {})["group"];
 
           //  如果 当前在用的域名的分组和用户的分组  不相同
-          if(capi_group!=BUILDIN_CONFIG.DOMAIN_RESULT.gr){
+          if (capi_group != BUILDIN_CONFIG.DOMAIN_RESULT.gr) {
             //如果 新的最快API 的 分组和  用户的分组 相同
-            if(fastest_api_obj.group ==BUILDIN_CONFIG.DOMAIN_RESULT.gr){
-               // 设置  可用的域名
-              this.find_use_apis_event_first_one(fastest_api_obj, DOMAIN_API_STORAGE_KEY);
-            }else{
-            //如果 分组不相同   利用新的域名池 重新  排序
-            this.compute_api_domain_firstone_by_currentTimeMillis()
+            if (fastest_api_obj.group == BUILDIN_CONFIG.DOMAIN_RESULT.gr) {
+              // 设置  可用的域名
+              this.find_use_apis_event_first_one(
+                fastest_api_obj,
+                DOMAIN_API_STORAGE_KEY
+              );
+            } else {
+              //如果 分组不相同   利用新的域名池 重新  排序
+              this.compute_api_domain_firstone_by_currentTimeMillis();
             }
           }
+        }
       }
-          }
     } catch (error) {
       console.log(error);
       console.log("域名检测 出错:", api);
@@ -982,37 +985,34 @@ class AllDomain {
   /**
    * 通过 域名返回的字符串 计算 真实分组
    */
-  compute_exact_group_by_str(str=''){
+  compute_exact_group_by_str(str = "") {
     // data : "oky\n"
-  let group=''
-  str=str.toLocaleLowerCase()
-  if(!str){
-    group=''
-
-  }else if(str.includes('oky')){
-      group='Y'
-    }else if(str.includes('okb')){
-      group='B'
-    }else if(str.includes('oks')){
-      group='S'
-    }else if(str.includes('ok')||str.includes('okc')){
-      group='COMMON'
+    let group = "";
+    str = str.toLocaleLowerCase();
+    if (!str) {
+      group = "";
+    } else if (str.includes("oky")) {
+      group = "Y";
+    } else if (str.includes("okb")) {
+      group = "B";
+    } else if (str.includes("oks")) {
+      group = "S";
+    } else if (str.includes("ok") || str.includes("okc")) {
+      group = "COMMON";
     }
-  return group
+    return group;
   }
 
   /**
    * 把一条API 数据组装当前的 分组数据 等
    *
    */
-  formart_api_to_obj(api,group) {
+  formart_api_to_obj(api, group) {
     let obj = {
       api, //域名
-      group: group? group: BUILDIN_CONFIG.DOMAIN_RESULT.gr  , //域名分组信息    "COMMON"     "GA" +  .gr
+      group: group ? group : BUILDIN_CONFIG.DOMAIN_RESULT.gr, //域名分组信息    "COMMON"     "GA" +  .gr
       update_time: new Date().getTime(),
     };
-
-
 
     return obj;
   }
@@ -1028,13 +1028,12 @@ class AllDomain {
     this.compute_api_domain_firstone_by_currentTimeMillis();
   }
 
-/**
- * 检查 域名池子 内 域名的 域名分组 正确性 并纠错
- */
-check_and_correct_local_api_pool_group(){
-  this.compute_api_domain_firstone_by_currentTimeMillis( true);
-
-}
+  /**
+   * 检查 域名池子 内 域名的 域名分组 正确性 并纠错
+   */
+  check_and_correct_local_api_pool_group() {
+    this.compute_api_domain_firstone_by_currentTimeMillis(true);
+  }
 
   /**
    *  // 初次进入,发现可用的域名
@@ -1042,17 +1041,16 @@ check_and_correct_local_api_pool_group(){
   find_use_apis_event_first_one(obj) {
     // 首次进入,发现最快的域名
     this.loaded = true;
-    let api =obj.api
+    let api = obj.api;
     console.log("首次加载,已经找到最快的域名:", api);
     // 写入可用api
-    sessionStorage.setItem('best_api', api);
+    sessionStorage.setItem("best_api", api);
     // 挂载当前 环境能使用的 api 数组
     BUILDIN_CONFIG.DOMAIN_RESULT.first_one = api;
     if (this.callback) {
       this.callback();
     }
   }
-
 
   /**
    * @description: 设置持久化localStorage中的数据
@@ -1069,16 +1067,14 @@ check_and_correct_local_api_pool_group(){
    */
   get_oss_urls() {
     // 获取本地的oss_url_obj路径
-    let domains =
-    OSS_FILE_ARR || [];
-  if(OSS_FILE_NAME){
-  //  console.error('get_oss_urls----------0--', JSON.stringify(domains));
+    let domains = OSS_FILE_ARR || [];
+    if (OSS_FILE_NAME) {
+      //  console.error('get_oss_urls----------0--', JSON.stringify(domains));
       // 获取当前的域名地址的/oss/dev.json路径
       let local_domain = `${window.location.origin}/oss/${OSS_FILE_NAME}`;
       // 增加本地的oss url
       domains.push(local_domain);
-  }
-      
+    }
 
     // console.error('get_oss_urls----------1--', JSON.stringify(domains));
     return domains;
@@ -1141,13 +1137,11 @@ check_and_correct_local_api_pool_group(){
       img.onload = function () {
         // 加载图片
         if (this.complete == true) {
-         
-            BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = lodash.uniq([
-              domain,
-              ...BUILDIN_CONFIG.DOMAIN_RESULT.img_domains
-            ])
-         
-           
+          BUILDIN_CONFIG.DOMAIN_RESULT.img_domains = lodash.uniq([
+            domain,
+            ...BUILDIN_CONFIG.DOMAIN_RESULT.img_domains,
+          ]);
+
           resolve(true);
           img = null;
         }
@@ -1160,7 +1154,5 @@ check_and_correct_local_api_pool_group(){
       img.src = url;
     });
   }
-
-
 }
 export default new AllDomain();
