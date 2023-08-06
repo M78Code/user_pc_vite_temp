@@ -105,7 +105,6 @@ export default {
     this.match = {}
     this.match_style_obj = null
   },
-
 }
 </script>
 

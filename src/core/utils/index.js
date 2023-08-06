@@ -132,6 +132,5 @@ export const get_match_tpl_title = (t_path, csid) => {
     console.error(error)
   }
 };
-export default utils;
 
 

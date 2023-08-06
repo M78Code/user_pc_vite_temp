@@ -2,9 +2,21 @@
 export  const  component_symbol = 'ListHeader'
 //公用的 需要注册的一些对接参数
 export  const need_register_props = {
-  match: {
-    type: Object,
-    default: {  },
+  collect_count: {
+    type: Number,
+    default: () => null,
+  },
+  load_data_state: {
+    type: String,
+    default: () => '',
+  },
+  is_show_input: {
+    type: Boolean,
+    default: () => false,
+  },
+  is_show_hot: {
+    type: Boolean,
+    default: () => false,
   },
   NewMenu: {
     type: Object,

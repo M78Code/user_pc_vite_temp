@@ -4,8 +4,9 @@
  * @Description: 全局使用接口定义
  */
 import {http} from "src/core/http/index.js";
-// 定义配置变量
-let prefix = window.env.config.api.API_PREFIX_JOB;
+// 定义配置变量 
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
 // post1配置
 export const post1 = (params, config, url ) => http.post(`${prefix}${url}`, params, config)
 // get1配置

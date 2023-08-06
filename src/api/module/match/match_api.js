@@ -6,9 +6,9 @@
 
 import {http} from "src/core/http/index.js";
 
-let prefix = window.env.config.api.API_PREFIX_JOB;
-let prefix_user = window.env.config.api.API_PREFIX_BAT;
-let project_name = window.env.config.FINAL_TARGET_PROJECT_NAME
+
+const { API_PREFIX = {},TARGET_PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_BAT:prefix_user } = API_PREFIX;
 
 //赛事搜索接口
 export const post_search_match = (params, config = {}, url = "/v1/hotSearch/searchMatchInfoPc2PB") => {

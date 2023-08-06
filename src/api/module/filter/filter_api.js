@@ -4,9 +4,10 @@
  * @Description: 筛选模块API定义
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
 
  
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
 
 //获取筛选数据冠军
 export const get_fetch_filter_match_winner = (params, config = {}, url = "/v1/w/getFilterOutrightMatchsPB") => http.get(`${prefix}${url}`, params);

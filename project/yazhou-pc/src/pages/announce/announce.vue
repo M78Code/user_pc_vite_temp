@@ -8,7 +8,7 @@
             <!-- 左侧菜单开始 -->
             <left-menu :data="announce_title" @tabs_click="tabs_click" class="relative-position" />
             <!-- 左侧菜单结束 -->
-            <q-scroll-area class="col rule-scroll-area" :visible="true">
+            <q-scroll-area class="col rule-scroll-area" visible>
                 <div class="main-page">
                     <div class="announce-title">{{ current_title }}</div>
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
@@ -28,9 +28,8 @@
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
 import { SimpleHeaderWapper } from 'src/components/simple-header'
-// TODO: 待完善组件
-import LeftMenu from "src/project/yabo/components/site_header/left_menu.vue";
-import loadData from "src/public/components/load_data/load_data.vue"
+import LeftMenu from "src/project/yazhou-pc/components/site-header/left-menu.vue";
+import loadData from "src/project/yazhou-pc/components/load-data/load-data.vue"
 // TODO: 待完善接口
 import { api_announce } from "src/public/api/index";
 

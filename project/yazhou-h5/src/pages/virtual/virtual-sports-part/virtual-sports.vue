@@ -1,8 +1,3 @@
-<!--
- * @Author: Cronus
- * @Date: 2020-12-22 18:07:03
- * @Description: 虚拟体育
--->
 <template>
   <div class="virtual-sports">
     <virtual-skeleton v-show="virtual_data_loading">

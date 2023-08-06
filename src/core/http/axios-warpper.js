@@ -9,7 +9,7 @@ import wslog from "../ws/ws-log";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
-
+import domain from "./domain";
 /**
  * 页面隐藏时间 纪录
  */
@@ -24,6 +24,7 @@ usePageVisibilityChange(
 );
 // 引入 当前  植入配置
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
+console.log(BUILDIN_CONFIG);
 /**
  * 去掉 api 参数 reload
  */
@@ -63,6 +64,7 @@ class AxiosHttp {
     this.request_count = 0;
     // http root domain
     this.HTTP_ROOT_DOMAIN = "";
+    this.HTTP_UPLOAD_API=""
     // axios 实例
     this.axios_instance = null;
     // 页面 失去 焦点后  HTTP 断开时间
@@ -135,7 +137,7 @@ class AxiosHttp {
         // session  缓存的 最快域名
         let best_api = sessionStorage.getItem("best_api") || "";
         let gr = sessionStorage.getItem("gr");
-        let domain_api = get_sava_domain_api();
+        let domain_api = domain.get_save_domain_api();
         if (!gr) {
           gr = BUILDIN_CONFIG.DOMAIN_RESULT.gr || "COMMON";
           sessionStorage.setItem("gr", gr);

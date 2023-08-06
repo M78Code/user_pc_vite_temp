@@ -1,6 +1,6 @@
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
-const prefix2 = window.env.config.api.API_PREFIX_ACTIVITY;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_ACTIVITY:prefix2} = API_PREFIX;
 const prefix3 =  '/livechat-api';
 
 // 上次调详情接口的时间

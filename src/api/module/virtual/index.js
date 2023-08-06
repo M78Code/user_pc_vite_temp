@@ -5,7 +5,8 @@
  */
 
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 // 联赛积分榜
 export const post_league_ranking = (params, config={}, url  = "/v1/w/virtual/getVirtualSportTeamRanking") => http.post(`${prefix}${url}`, params, config)

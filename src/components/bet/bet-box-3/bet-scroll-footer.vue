@@ -357,5 +357,5 @@ const set_lock_btn = value => {
     //按钮失效
     // $root.$off(emit_cmd.EMIT_BTN_CHANGE, set_lock_btn)
   // }
-};
+// };
 </script>

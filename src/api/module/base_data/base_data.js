@@ -1,5 +1,6 @@
 import {http} from "src/core/http/";
-let prefix_job = window.env.config.api.API_PREFIX_JOB;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix_job,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 // 新旧菜单ID对应
 export const post_base_data_menu_mapping = (params, config={}, url = "/v3/menu/loadMappingPB")=>{

@@ -4,6 +4,7 @@ import { ls, ss } from "src/core/utils/web-storage";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
+import STANDARD_KEY from "src/core/standard-key/";
 
 const token_key = STANDARD_KEY.get("token");
 // import store from "src/store-redux-vuex/index.js";
