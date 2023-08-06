@@ -167,15 +167,15 @@
 <script setup>
 // TODO 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
-import setMenu from "src/project/components/common/set_menu";
-import sub_menu_specially from "src/project/pages/sport_menu/sub_menu_specially.vue";
+import setMenu from "src/project/components/common/set-menu";
+import sub_menu_specially from "src/project/pages/sport_menu/sub-menu-specially.vue";
 import utils from "utils/utils";
-import list_menu_mixin_new from 'src/project/pages/sport_menu/match_list_menu';
+import list_menu_mixin_new from 'src/project/pages/sport_menu/match-list-menu';
 import { api_result} from "src/project/api/index.js";
 import { activity_task_api } from "src/public/api";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
-import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport_menu/config/common_menu.js" 
+import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js" 
 import { watch } from "vue";
 // import{ date }  from 'quasar'
 

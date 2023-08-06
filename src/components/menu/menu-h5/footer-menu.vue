@@ -88,7 +88,7 @@
 // import { mapGetters, mapMutations} from "vuex";
 
 import common from "src/project/mixins/constant";
-import betBar from 'src/project/components/bet/bet_bar.vue';  // 投注栏收起后的底部条
+import betBar from 'src/project/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import utils from "src/public/utils/utils";
 import { computed, onBeforeUnmount, onMounted, watch } from "vue";
 
