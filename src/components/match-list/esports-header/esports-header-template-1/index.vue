@@ -33,9 +33,8 @@ import { computed, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { EMIT_MX_COLLECT_MATCH } from 'project_path/src/core/mitt/mitt-keys.js';
 useRegistPropsHelper(component_symbol, need_register_props)
-import { useMittEmit } from 'src/core/mitt/index.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other_play_id.js';
@@ -158,7 +157,7 @@ const on_go_detail = () => {
  * @param {undefined} undefined
 */
 const collect = () => {
-  useMittEmit(EMIT_MX_COLLECT_MATCH, props.match)
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
 }
 
 </script>

@@ -21,15 +21,18 @@
       name="viewport"
       content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) {%, viewport-fit=cover<% }%"
     />
-<!-- 
+
     <link
       rel="icon"
       id="link_icon"
       type="image/png"
       href="%VITE_APP_BUILD_VERSION%/image/common/favicon.ico"
     />
-    <link rel="stylesheet" href="%VITE_APP_BUILD_VERSION%/lib/font/font-roboto.min.css">
-    <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script> -->
+    <link
+      rel="stylesheet"
+      href="%VITE_APP_BUILD_VERSION%/lib/font/font-roboto.min.css"
+    />
+    <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
     <style>
       /* 取消默认选中样式 */
       body {
@@ -52,32 +55,36 @@
         background-color: #fff;
       }
 
-      .theme01, .theme01-root-loading{
-          background-color: #fff !important;
+      .theme01,
+      .theme01-root-loading {
+        background-color: #fff !important;
       }
-      .theme01_y0, .theme01_y0-root-loading{
-          background-color: #fff !important;
+      .theme01_y0,
+      .theme01_y0-root-loading {
+        background-color: #fff !important;
       }
-      .theme02, .theme02-root-loading{
-          background-color: #191919 !important;
+      .theme02,
+      .theme02-root-loading {
+        background-color: #191919 !important;
       }
-      .theme02_y0, .theme02_y0-root-loading{
-          background-color: #191919 !important;
+      .theme02_y0,
+      .theme02_y0-root-loading {
+        background-color: #191919 !important;
       }
       #loading-root-main {
-          color: transparent;
+        color: transparent;
       }
-      .theme01-root-loading #loading-root-main{
-          color:#ffb001;
+      .theme01-root-loading #loading-root-main {
+        color: #ffb001;
       }
-      .theme01_y0-root-loading #loading-root-main{
-          color:#569FFD;
+      .theme01_y0-root-loading #loading-root-main {
+        color: #569ffd;
       }
-      .theme02-root-loading #loading-root-main{
-          color:#ffb001;
+      .theme02-root-loading #loading-root-main {
+        color: #ffb001;
       }
-      .theme02_y0-root-loading #loading-root-main{
-          color:#569FFD;
+      .theme02_y0-root-loading #loading-root-main {
+        color: #569ffd;
       }
 
       .la-line-scale,
@@ -421,18 +428,16 @@
         }
       }
     </style>
-    <!-- <script async type="text/javascript" src="%VITE_APP_hidApi%"></script> -->
+    <script async type="text/javascript" src="%VITE_APP_hidApi%"></script>
 
-    <script  >
-
-
-      window.CURRENT_ENV_BUILD_IN_OSS =  "%VITE_APP_current_env_build_in_oss%"
+    <script>
+      window.CURRENT_ENV_BUILD_IN_OSS = "%VITE_APP_current_env_build_in_oss%";
     </script>
-
+    <script src="./public/lib/js/crypto-js.min.js"></script>
     <script>
       //版本兼容判定
       (function () {
-       //
+        //
         var agent = navigator.userAgent.toLowerCase();
         var ie_agent = agent.match(/trident\/[\d.]+/gi);
         var chrome_agent = agent.match(/chrome\/[\d.]+/gi);
@@ -448,48 +453,46 @@
         }
       })();
 
-
-    // 首先明白一点 ： 有session 的 时候说明页面打开过，在刷新 或者 弹窗子页面 共用session
-    // 关于更改 url 路径上的 search 参数的 可能session 不变 数据会错，但是实际场景，哪个用户会去改参数进入
-    // 再者，即便是改参数进入页面后面的流程会纠正错误参数
-
+      // 首先明白一点 ： 有session 的 时候说明页面打开过，在刷新 或者 弹窗子页面 共用session
+      // 关于更改 url 路径上的 search 参数的 可能session 不变 数据会错，但是实际场景，哪个用户会去改参数进入
+      // 再者，即便是改参数进入页面后面的流程会纠正错误参数
 
       try {
         //解析URL参数
         let url_search = new URLSearchParams(location.search);
         // 获取清除缓存参数
-        let clearcache = url_search.get('clearcache');
-        if(clearcache=='1'){
+        let clearcache = url_search.get("clearcache");
+        if (clearcache == "1") {
           // 清除缓存sessionStorage和localStorage
           sessionStorage.clear();
           localStorage.clear();
         }
         //计算token
-        let token =   sessionStorage.getItem("pc_token") || url_search.get("token") ||'';
+        let token =
+          sessionStorage.getItem("pc_token") || url_search.get("token") || "";
         if (token) {
           sessionStorage.setItem("pc_token", token);
         }
-         //计算 pb 压缩
-         // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求
-         let pb = sessionStorage.getItem("pb") || url_search.get("pb") ||'';
-        if(pb){
-           sessionStorage.setItem("pb", "1");
-          }
+        //计算 pb 压缩
+        // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求
+        let pb = sessionStorage.getItem("pb") || url_search.get("pb") || "";
+        if (pb) {
+          sessionStorage.setItem("pb", "1");
+        }
         // 设置商户分组信息
-        let gr =  (sessionStorage.getItem("gr")|| url_search.get("gr") ||'COMMON').toLocaleUpperCase();
-          if(gr){
-            sessionStorage.setItem("gr", gr);
-          }
+        let gr = (
+          sessionStorage.getItem("gr") ||
+          url_search.get("gr") ||
+          "COMMON"
+        ).toLocaleUpperCase();
+        if (gr) {
+          sessionStorage.setItem("gr", gr);
+        }
       } catch (error) {
         console.error(error);
       }
-
-
     </script>
-
-
   </head>
-
   <body class="custom-format-<%=com%">
     <!-- DO NOT touch the following DIV -->
     <div id="ty-app"></div>
@@ -505,51 +508,53 @@
     </div> -->
   </body>
 
+  <script>
+    // 自动化测试页面加载时间时使用
+    window.init_loading_time_obj = {
+      list_end_time: 0,
+      right_details_end_time: 0,
+      duration: "",
+      start: "",
+      end: "",
+      start_time: new Date().getTime(),
+      end_time: 0,
+    };
+    // 设置 loading 动画 主题
+    function set_root_loading_theme(url_search) {
+      //这里 除非 后面对接  theme 参数 否则 严禁 theme 写入 session ,session 在 root_layout 内进行纠正
+      // 不去考虑所谓的  弹出窗口后 主页面再更改 主题 , 弹窗页面刷新不同步问题
+      // 主题设置
+      let current_theme =
+        sessionStorage.getItem("theme") || url_search.get("theme") || "";
 
-<script>
-  // 自动化测试页面加载时间时使用
-  window.init_loading_time_obj = 
-  {
-      "list_end_time":0,
-      "right_details_end_time":0,
-      "duration": '',
-      "start": '',
-      "end": "",
-      "start_time": new Date().getTime(),
-      "end_time": 0,
-  }
-  // 设置 loading 动画 主题
-  function set_root_loading_theme(url_search){
-     //这里 除非 后面对接  theme 参数 否则 严禁 theme 写入 session ,session 在 root_layout 内进行纠正
-    // 不去考虑所谓的  弹出窗口后 主页面再更改 主题 , 弹窗页面刷新不同步问题
-    // 主题设置
-    let current_theme=  sessionStorage.getItem("theme") || url_search.get("theme") ||'';
-
-    // 如果 主题  未知
-    if(!current_theme){
-    //首次加载
-    // 添加蓝色加载中
-    // 如果  url 内有 stm 参数 并且是 blue 或者  merchant_style 是 y0 这里只管 商户级别
-    if(url_search.get('stm') == 'blue' || localStorage.getItem('merchant_style') == 'y0') {
-    current_theme = "theme01_y0"
-    localStorage.setItem('merchant_style','y0')
-    }else {
-    //其他 所有情况下 都是默认的主题色   通用版 白色
-    current_theme = "theme01"
-    localStorage.setItem('merchant_style','common')
+      // 如果 主题  未知
+      if (!current_theme) {
+        //首次加载
+        // 添加蓝色加载中
+        // 如果  url 内有 stm 参数 并且是 blue 或者  merchant_style 是 y0 这里只管 商户级别
+        if (
+          url_search.get("stm") == "blue" ||
+          localStorage.getItem("merchant_style") == "y0"
+        ) {
+          current_theme = "theme01_y0";
+          localStorage.setItem("merchant_style", "y0");
+        } else {
+          //其他 所有情况下 都是默认的主题色   通用版 白色
+          current_theme = "theme01";
+          localStorage.setItem("merchant_style", "common");
+        }
+      }
+      //类名拼接
+      current_theme = current_theme + "-root-loading";
+      //根据 主题 设置节点 类名
+      // document.querySelector('#loading-root-ele').className ="loading "+current_theme
     }
-    }
-    //类名拼接
-    current_theme = current_theme+ '-root-loading'
-    //根据 主题 设置节点 类名
-    // document.querySelector('#loading-root-ele').className ="loading "+current_theme
-  }
-  //对接app跳转需求，当Url地址有传入 token 字段时，认定是初次进入，手动清除掉缓存
-  let url_search = new URLSearchParams(location.search);
+    //对接app跳转需求，当Url地址有传入 token 字段时，认定是初次进入，手动清除掉缓存
+    let url_search = new URLSearchParams(location.search);
 
-  // 设置 loading 动画 主题
-  set_root_loading_theme(url_search)
-</script>
+    // 设置 loading 动画 主题
+    set_root_loading_theme(url_search);
+  </script>
 
-<script type="module" src="./main.js"></script>
+  <script type="module" src="./main.js"></script>
 </html>
