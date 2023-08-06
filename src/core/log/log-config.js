@@ -1,19 +1,12 @@
 /*
  * @Author: jiffy
- * @Date: 2023-07-31 11:02:00
- * @LastEditTime: 2023-08-01 11:59:06
  * @LastEditors: jiffy
- * @Description: 说明
- *
- */
-/*
- * @Author:
  * @Description: ws通信日志功能类
  */
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "../formart";
-import { config } from "../sdk-config";
 import { ss } from "../utils/web-storage";
+const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
    * @Description:构造函数
@@ -50,7 +43,7 @@ class WsLog {
    * @param: msg 消息体
    */
   send_msg(flg, msg) {
-    if (this.ws_run && this.ws && this.ws.readyState == 1) {
+    if (this.ws_run && this.ws) {
       try {
         if (msg && typeof msg == "object") {
           // 对象时
@@ -144,7 +137,7 @@ class WsLog {
     clearInterval(this.interval);
     this.interval = setInterval(() => {
       try {
-        if (this.ws && this.ws.readyState == 1) {
+        if (this.ws) {
           // 发送心跳包
           this.send_heartbeat();
         } else {
@@ -168,7 +161,7 @@ class WsLog {
    * @Description:发送心跳包
    */
   send_heartbeat() {
-    if (this.ws && this.ws.readyState == 1) {
+    if (this.ws) {
       this.ws.send("1");
     }
   }
@@ -181,15 +174,11 @@ class WsLog {
       clearInterval(this.interval);
       this.interval = null;
     }
-    this.ws && this.ws.readyState == 1 && this.ws.close();
+    this.ws && this.ws.close();
     this.ws = null;
   }
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-// export default new WsLog("PC", config.LOG); 
-
-
-
-export const WsLog_H5 = new WsLog("H5", config.LOG)
+export const WsLog_H5 = new WsLog("PC", config.LOG)
 export const WsLog_PC = new WsLog("H5", config.LOG)

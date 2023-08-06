@@ -6,8 +6,8 @@
 
 
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
-
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_prefix_user,API_PREFIX_BAT:prefix_yewu13} = API_PREFIX;
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -173,8 +173,6 @@ export const get_matchDetail_getVirtualMatchOddsInfo = (params, config, url = "/
 };
 
 
-let prefix_prefix_user = window.env.config.api.API_PREFIX_USER;
-let prefix_yewu13 = window.env.config.api.API_PREFIX_BAT;
 // 收藏--------赛事收藏或取消
 export const add_or_cancel_match = (params, config, url ="/v1/userCollection/addOrCancelMatch") => http.post(`${prefix_yewu13}${url}`, params, config);
 // 收藏--------联赛收藏或者取消

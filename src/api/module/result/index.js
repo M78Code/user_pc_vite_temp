@@ -5,9 +5,8 @@
  *
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
-
-
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 //详情页 里边的  精选赛事   接口调用
 export const get_result_match_care_list = (params, config={}, url = "/v1/m/matcheHandpickPB") => {
   return http.post(`${prefix}${url}`, params, config);

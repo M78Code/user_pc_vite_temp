@@ -1,0 +1,224 @@
+$theme-bg-handicap: #414655;
+$theme-bg-record: #fff;
+$theme-bg-invalid: rgba(255, 64, 64, 0.8);
+$theme-bg-win: rgba(255, 64, 64, 0.8);
+$theme-bg-lose: rgba(165, 174, 200, 0.8);
+$theme-bg-bet-series: rgba(86, 159, 253, 0.1);
+$theme-bg-bet-zone-head: transparent;
+$theme-bg-bet-bet-submit2: #f0f5fc;
+$theme-bg-mask: rgba(225, 225, 225, 0.8);
+$theme-cathectic-appoint: rgba(255, 255, 255, 0.5);
+$theme-bg-handicap-hover: #4276fb;
+$theme-bg-bet-confirm: linear-gradient(225deg, #3d72fa 0%, #62b3ff 100%);
+$theme-bg-bet-item: #414655;
+$theme-bg-bet-item-right: rgba(240, 246, 255, 0.4);
+$theme-bg-bet-item-hover: #ecf4ff;
+$theme-bg-bet-pre-input: transparent;
+$theme-bg-bet-card: #f0f5fc;
+$theme-bg-add-sub: #f5f7fa;
+$theme-bg-video-item: #4276fb;
+$theme-bg-bet-saidan-list: #ffffff;
+$theme-bg-clear-btn: rgba(248, 249, 251, 0.2);
+$theme-bg-is-saidan-unclick: #f6f7fa;
+$theme-bg-date-menu-row: #fff;
+$theme-bg-btn-group: #fff;
+$theme-bg-search-match: #fff;
+$theme-bg-search-result: #fff;
+$theme-bg-search-hover: #f6f7fa;
+$theme-bg-site-header: #fff;
+$theme-bg-bet-content: #fff;
+$theme-bg-bet-btn: hsla(0, 0%, 100%, 0.6);
+$theme-bg-bet-btn-appoint: rgba(65, 118, 250, 0.15);
+$theme-main-content-bg-color: #f0f6ff;
+$theme-bg-search-mask: rgba(20, 23, 29, 0.15);
+$theme-bg-menu-line-active: #4276fb;
+$theme-bg-menu-toggle-btn: linear-gradient(
+  180deg,
+  #62b6ffd9 0%,
+  #3d72fad9 100%
+);
+$theme-bg-menu-fixed: #ffffff;
+$theme-bg-menu-match-type: linear-gradient(319.79deg, #3d72fa, #62b3ff);
+$theme-bg-menu-match-type-no-active: linear-gradient(
+  0deg,
+  #ffffff,
+  #e5edff,
+  #ffffff
+);
+$theme-bg-menu-match-type-hover-no-active: linear-gradient(
+  180deg,
+  #f3f5fb,
+  #f3f5fb
+);
+$theme-bg-menu-match-type-old: linear-gradient(180deg, #ffffff, #ffffff);
+$theme-bg-menu-match-type-solid: #bfcedd;
+$theme-bg-menu-match-type-count-no-active: #414655;
+$theme-bg-match-type: linear-gradient(225deg, #3d72fa, #62b6ff);
+$theme-bg-match-league-row: linear-gradient(180deg, #fff 22%, #f7f8ff);
+$theme-bg-match-detail-play-name-row: linear-gradient(
+  180deg,
+  #fff 22%,
+  #f7f8ff
+);
+$theme-bg-main-menu-active: linear-gradient(
+  225deg,
+  rgba(61, 114, 250, 0),
+  rgba(98, 182, 255, 0.3)
+);
+$theme-bg-menu-fold2-wrap: linear-gradient(269deg, #fff, #f0f6ff);
+$theme-bg-menu-search-wrap: #419bf9;
+$theme-bg-card-btn: linear-gradient(180deg, #62b6ff, #3d72fa);
+$theme-bg-card-btn2: linear-gradient(135deg, #3d72fa, #62b6ff);
+$theme-bg-card-btn3: linear-gradient(135deg, #3d72fa, #62b6ff);
+$theme-bg-btn-active1: #f0f6ff;
+$theme-bg-select-btn: #f0f6ff;
+$theme-bg-btn-active2: linear-gradient(180deg, #62b6ff, #3d72fa);
+$theme-bg-search-box: linear-gradient(
+  -62deg,
+  rgba(86, 159, 253, 0.1) 4%,
+  rgba(86, 159, 253, 0.1) 96%
+);
+$theme-bg-details_loading: rgba(0, 0, 0, 0.6);
+$theme-bg-simple-header: #f6f7fa;
+$theme-bg-pre-btn: linear-gradient(
+  180deg,
+  rgba(65, 118, 250, 0),
+  rgba(65, 118, 250, 0.25)
+);
+$theme-bg-pre-btn-hover: #4176fa;
+$theme-bg-pre-btn2: transparent;
+$theme-bg-pre-stop-btn: #ffffff;
+$theme-bg-load-all: #fff;
+$theme-bg-bet-detail: #dfecfe;
+$theme-bg-bet-ceil-detail: transparent;
+$theme-bg-date-range: currentColor;
+$theme-bg-match_results: #fff;
+$theme-bg-results-search-btn: #569ffd;
+$theme-bg-wrap-time-hover: #f6f7fa;
+$theme-bg-appoint-order: transparent;
+$theme-bg-appoint-line: #e4ebf1;
+$theme-bg-appoint-order-status: 0;
+$theme-bg-bet-series-open: #4176fa;
+$theme-bg-bet-series-close: #ffffff;
+$theme-bg-bet-series-text-open: #4176fa;
+$theme-bg-bet-series-text-close: #999999;
+$theme-bg-bet-count: #4176fa;
+$theme-bg-handicap-item: #ffffff;
+$theme-bg-table-content: #ffffff;
+$theme-bg-shadow-bg: #f5f7fa;
+$theme-bg-refresh-icon: linear-gradient(180deg, #fff 22%, #edeffe 72%, #fff);
+$theme-bd-color-common: #414655;
+$theme-bd-color-handicap: #414655;
+$theme-bd-invalid: 1px solid #ff4040;
+$theme-bd-win: #ff4040;
+$theme-bd-lose: #a5aec8;
+$theme-bd-bet-pre-input: #c1c1c1;
+$theme-bd-color-handicap-hover: #fff;
+$theme-bd-color-search-wrap: #419bf9;
+$theme-bd-color-notice-btn: #e4eaff;
+$theme-bd-color-card-btn-active: #2cb2ff;
+$theme-bd-color-menu: #e4eaff;
+$theme-bd-refresh-icon: #e4eaff;
+$theme-bd-color-notice: #bfcedd;
+$theme-bd-bottom-searchBox: #bfcedd;
+$theme-bd-color-search-pnl: #f6f7fa;
+$theme-bd-bet-content: #bfcedd;
+$theme-bd-keyboard-btn: #bfcedd;
+$theme-bd-color-close: #999;
+$theme-bd-bet-btn-cancel: #bfcedd;
+$theme-bd-main-content: #f0f6ff;
+$theme-bd-main-search: #ebecf3;
+$theme-bd-simple-header: #ebecf3;
+$theme-bd-pre-btn: #2883f9;
+$theme-bd-pre-stop-btn: 0.5px solid rgba(191, 206, 221, 1);
+$theme-bd-bet-item: #e4ebf1;
+$theme-bd-btn-confrim: #d0d8de;
+$theme-bd-top-btn-confrim: #d0d8de;
+$theme-bd-top-btn: #d0d8de;
+$theme-bd-top-bt-btn: #d0d8de;
+$theme-bd-scrollarea: none;
+$theme-bd-y-select: 1px solid #d0d8de;
+$theme-bd-tab-btn-wrap: #e7eaee;
+$theme-bd-q-date: 0;
+$theme-bd-load-all: 1px solid rgba(216, 222, 234, 0.5);
+$theme-bd-y-checkbox: none;
+$theme-bd-r-checked: none;
+$theme-bd-tab-item: #e4eaff;
+$theme-bd-tab-item-hover: #4276fb;
+$theme-bg-common: #414655;
+$theme-bg-line: #4176fa;
+$theme-bg-tab-item-active: linear-gradient(180deg, #62b6ff, #3d72fa);
+$theme-bg-tab-item-hover: rgba(66, 118, 251, 0.06);
+$theme-bg-play-name-before: #4276fb;
+$theme-bg-video-history-progress: #4276fb;
+$theme-bg-video-history-progress-container: rgba(0, 0, 0, 0.1);
+$theme-border-video-history-icon: #4276fb66;
+$theme-bg-announce: transparent;
+$theme-body-bg-color: #ffffff;
+$theme-text-color-common: #414655;
+$theme-text-color-handicap: #414655;
+$theme-text-color-handicap-hover: #fff;
+$theme-text-is-clear-unclick: #999;
+$theme-text-show-order-title: #666666;
+$theme-text-show-order-away: #2d2d2d;
+$theme-text-bet-outweight: #333;
+$theme-text-esports-color: #000;
+$theme-text-color-highlight: #414651;
+$color-left-menu-hover: #0086f3;
+$theme-menu-olor: #414655;
+$theme-small-menu-active: #4276fb;
+$theme-menu-text-active: #4276fb;
+$theme-color-card-btn-active: #2cb2ff;
+$theme-color-select-btn: #2cb2ff;
+$theme-color-btn-group: #414655;
+$theme-color-text-close: #000;
+$theme-color-text-close-hover: #414655;
+$theme-color-refresh-icon: #414655;
+$theme-color-icon-eye: #a5aec8;
+$theme-color-bet-info: #a5aec8;
+$theme-color-text-activeOrSearch: #2d2d2d;
+$theme-color-bet-zone: #1c1e23;
+$theme-color-bet-keyboard: #414655;
+$theme-color-bet-gray-btn: rgba(45, 45, 45, 0.3);
+$theme-color-bet-input-placeholder: rgba(108, 123, 168, 0.4);
+$theme-color-bet-handicap-name: #333;
+$theme-color-tab-item: #000;
+$theme-color-tab-item-hover: #000;
+$theme-color-tab-item-active: #fff;
+$theme-color-handicap-item-title: #5163b7;
+$theme-color-handicap-item-bet-hover: #666;
+$theme-color-handicap-item-bet-active: #fff;
+$theme-color-text-active: #fff;
+$theme-color-pre-btn: #0086f3;
+$theme-color-pre-btn-row-2: #000000;
+$theme-color-pre-stop-btn: #7A7D88;
+$theme-color-pre-btn2: #4176fa;
+$theme-color-record-title: #414655;
+$theme-color-load-all: #555;
+$theme-color-tab-wrap: #414655;
+$theme-color-tool-btn: #ffffff;
+$theme-color-records-search-btn: #000;
+$theme-color-wrap-time: #17191d;
+$theme-color-wrap-time-hover: #17191d;
+$theme-color-pre-over: #4176fa;
+$theme-color-lose-color: #000000;
+$theme-color-head-ceil: #000000;
+$theme-color-ceil: #000000;
+$theme-color-play-type: #000000;
+$theme-color-tab-wrap-active: #000;
+$theme-color-df-jb: #000;
+$theme-color-bet-desc: #000;
+$theme-color-appoint-status: #000;
+$theme-color-market_value: #5a6074;
+$theme-color-pagination-wrap: #000;
+$theme-color-rule-area: #35363b;
+$theme-bd-radius-pre-btn: 20px;
+$theme-bd-radius-bet-series: 14px;
+$theme-bd-radius-bet-submit: 18px;
+$theme-color-search-pnl: #000;
+$theme-color-search-pnl-hover: #0086f3;
+$theme-color-search-pnl-active: #000;
+$theme-color-search-nodata: #666;
+$theme-color-search-clear-icon: #ccc;
+    $theme-color-search-clear-icon-hover: #999;
+    $theme-color-search-wrap: rgba(108,123,168,0.8);

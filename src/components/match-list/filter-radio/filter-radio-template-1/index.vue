@@ -11,8 +11,7 @@
 <script>
 
 import { ref, defineProps } from 'vue';
-import { useMittEmit } from 'src/core/mitt/index.js'
-import { CHANGE_CHECK } from 'project_path/src/core/mitt/mitt-keys.js';
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -24,7 +23,7 @@ check_value.value = props.default_value || '';
 
 const check_change = (value) => {
   check_value.value = value
-  useMittEmit('CHANGE_CHECK', check_value.value)
+  useMittEmit(MITT_TYPES.CHANGE_CHECK, check_value.value)
 }
 
 
