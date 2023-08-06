@@ -109,9 +109,8 @@ import { useRegistPropsHelper, useProps } from "src/composables/regist-props/ind
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 
-import { EMIT_FETCH_MATCH_LIST, EMIT_API_BYMIDS } from 'project_path/src/core/mitt/mitt-keys.js';
 import { get_match_tpl_title } from 'src/core/utils/index.js';
-import { useMittEmit } from 'src/core/mitt/index.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
 
@@ -121,7 +120,7 @@ const props = defineProps({ ...useProps })
 const tpl_id = ref('')
 const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
 if (!_.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(props.NewMenu.menu_root)) {
-  useMittEmit(EMIT_FETCH_MATCH_LIST, true)
+  useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
 
 const is_HDP = computed(() => {
@@ -261,7 +260,7 @@ const set_fold = () => {
       inner_param: 1
     };
     // 拉取http请求
-    useMittEmit(EMIT_API_BYMIDS, params, status => {
+    useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params, status => {
       this.match_list_card.set_league_card_load_data_status(this.card_style_obj, status)
     })
   }

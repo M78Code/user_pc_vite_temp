@@ -35,8 +35,7 @@
 
 <script>
 
-import { computed, defineProps, ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { defineProps, ref, onMounted } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)

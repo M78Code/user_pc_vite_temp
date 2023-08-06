@@ -1,40 +1,57 @@
 <!--
+ * @Author: Router
  * @Description: 自动接受更好赔率规则弹框
 -->
 <template>
   <!-- 自动接受更好赔率规则 -->
-  <div class="accept-rules fullscreen" >
-    <div class="fixed-center content-box">
-      <header>自动接受更好赔率</header>
-
-      <footer @click="change_show">我知道了</footer>
+  <div class="accept-rules fullscreen" @click.self="change_show" @touchstart="touchstart_handle($event)">
+    <div class="fixed-center content-box" :class="{'hengping-content-box': get_is_hengping}">
+      <header>{{$root.$t("ac_rules.auto")}}</header>
+      <p><span>1</span> {{ $root.$t('accept_rules.if_bet_when') }}<span class="chu">{{$root.$t('accept_rules.increased_odds')}}</span> ，{{ $root.$t('accept_rules.system_default') }}<span class="chu">{{$root.$t('accept_rules.accept_odds')}}</span>，{{ $root.$t('accept_rules.will_interrupt_behavior') }}</p>
+      <p><span>2</span>{{ $root.$t('accept_rules.if_bet_when') }}<span class="chu">{{$root.$t('accept_rules.lower_odds')}}</span>，{{ $root.$t('accept_rules.system_default') }}<span class="chu">{{$root.$t('accept_rules.do_not_accept_odds')}}</span>，{{ $root.$t('accept_rules.interrupt_your_betting') }}</p>
+      <p><span>3</span>{{ $root.$t('accept_rules.if') }}<span class="chu">{{$root.$t('accept_rules.feature_not_checked')}}</span>，{{ $root.$t('accept_rules.system_will_think') }}<span class="chu">{{$root.$t('accept_rules.automatically_odds')}}</span>{{ $root.$t('accept_rules.matter_placing_content') }}</p>
+      <p v-if="get_chat_bet"><span>4</span>{{$root.$t('accept_rules.chat_msg')}}</p>
+      <footer @click="change_show">{{$root.$t("ac_rules.understand")}}</footer>
     </div>
   </div>
 </template>
 
 <script setup>
-import {ref ,reactive,provide,onMounted,watch,computed} from 'vue'
-import EMITTER from  "src/global/mitt.js"
+import { ref } from 'vue'
 
-// 点击键盘
-const change_show = () => {
-  EMITTER.emit("change_accept", false)
+// import { mapGetters, mapMutations } from "vuex";
+
+const get_is_hengping = ref()
+const get_chat_bet = ref()
+const change_show = () =>{
+  //vuex
+  set_accept_show(false)
 }
 
-
+/**
+ *@description 阻止滑动穿透触摸移动事件
+  *@param {Object} evt 事件对象 
+  */
+  const touchstart_handle = (evt)=> {
+  if (get_is_hengping.value) {
+    evt.preventDefault()
+    if (evt.target.classList.contains('accept-rules') || evt.target.tagName == 'FOOTER') {
+      change_show()
+    }
+  }
+}
 
 </script>
-
 <style lang="scss" scoped>
 .accept-rules {
   text-align: center;
-  z-index: 800000 !important;
+  z-index: 8000 !important;
   white-space: pre-wrap;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.3);
 }
 .content-box {
   border-radius: 0.16rem;
-  width: 30rem;
+  width: 3.4rem;
   padding: 0.16rem 0;
   &.hengping-content-box {
     height: 3rem;
@@ -59,13 +76,11 @@ const change_show = () => {
   letter-spacing: 0;
   margin: 0 0.2rem;
   font-weight: 600;
-  color: salmon;
 }
 .content-box > footer {
   font-size: 0.16rem;
   margin-bottom: -0.06rem;
   padding: 0.13rem 0.2rem 0;
-  color: yellow;
 }
 
 p > span:not(.chu) {
