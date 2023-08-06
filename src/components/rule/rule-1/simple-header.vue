@@ -26,15 +26,10 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD:src/components/simple-header/simple-header-1/index.vue
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/simple-header/config/index.js"
-
 import { onMounted, onUnmounted, ref } from 'vue'
-=======
-import { onMounted, onBeforeUnmount, ref } from 'vue'
->>>>>>> a1f425e8301fcf2538e9093ea90dbc929aef4bc1:src/components/rule/rule-1/simple-header.vue
 import { useRoute, useRouter } from 'vue-router';
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
