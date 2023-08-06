@@ -13,12 +13,11 @@ import { i18n } from "./src/boot/i18n.js";
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 import App from "./App.vue";
-
-const app = createApp(App);
+const myApp = createApp(App);
 myApp.use(i18n);
 myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 // 引入 当前 计算出的植入配置
 
-createApp(App).mount("#ty-app");
+myApp.mount("#ty-app");

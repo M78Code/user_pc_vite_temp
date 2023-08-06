@@ -4,8 +4,9 @@
  * @Description: 押注API接口定义
  */
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_BAT;
-let prefix2 = window.env.config.api.API_PREFIX_USER;
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2 } = API_PREFIX;
+
 
 // 获取押注列表最新数据（valar）
 /* export const post_verify_odds_before = (params, config={}, url = "/v1/betOrder/verifyOddsBeforeBet") => http.post(`${prefix}${url}`, params, config); */

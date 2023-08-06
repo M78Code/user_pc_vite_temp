@@ -5,8 +5,11 @@
  */
 import {http} from "src/core/http/index.js";
 
-let prefix = window.env.config.api.API_PREFIX_USER;
 let prifix_url =  http.HTTP_UPLOAD_API;
+
+
+const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 
 // 注册接口
 export const post_register = (params, config, url = "/user/register") => http.post(`${prefix}${url}`, params, config);
