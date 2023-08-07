@@ -1,7 +1,9 @@
 import Announce_1 from "../announce-1/index.vue";
+import Announce_h5 from "../announce-h5/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
   Announce_1,
+  Announce_h5,
 };
 const component_config = {
   registered_component_key: "Announce",

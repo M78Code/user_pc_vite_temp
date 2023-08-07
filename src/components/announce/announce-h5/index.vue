@@ -1,4 +1,4 @@
-<!-- @Description: 首页跑马灯点击进去的 公告页 -->
+<!-- @Description: h5首页跑马灯点击进去的 公告页 -->
 <template>
     <div class="notice_main">
         <!-- 公共标题 -->
@@ -32,19 +32,26 @@
   
 <script>
 import { defineComponent, ref, nextTick, onMounted, onUnmounted } from 'vue'
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import  { useRegistPropsHelper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({ ...useProps })
+const tableClass_computed = useComputed.tableClass_computed(props)
+const title_computed = useComputed.title_computed(props)
+//-------------------- 对接参数 prop 注册  结束  -------------------- 
 // TODO:
 import { api_home } from "src/project/api/index";
 import { mapGetters } from "vuex";
 import loading from "src/project/components/common/loading";
-// import simple_header from 'src/project/components/site_header/simple_header.vue';
-import { SimpleHeaderWapper } from 'src/components/simple-header'
-import tabs from "src/project/yazhou-h5/src/pages/notice/components/tab.vue";
+import simple_header from 'src/project/components/site_header/simple_header.vue';
 import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
+import tabs from "./tab.vue";
 
 export default defineComponent({
     name: "notice",
     components: {
-        "simple-header": SimpleHeaderWapper,
+        "simple-header": simple_header,
         'my-tabs': tabs,
         "no-data": noData,
         'load-page': loading
