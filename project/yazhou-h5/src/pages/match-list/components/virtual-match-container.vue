@@ -132,7 +132,7 @@ const collapsed = ref(false)
 const home_erroed = ref(false)
 const away_erroed = ref(false)
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // ...mapGetters(['get_lang', 'get_theme']),
 
 const stage_result = computed(() => {

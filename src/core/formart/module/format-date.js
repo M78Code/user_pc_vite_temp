@@ -215,3 +215,20 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
     }
     return counting_time_;
   }
+
+ export const format_day=(value, separator = "/")=> {
+    if (!value) { return '' }
+    let [y, m, d, h, mm, s] = format_date_base(value)
+    return `${y}${separator}${m}${separator}${d}`
+  }
+
+  export const format_date_base=(value)=> {
+    let time = new Date(parseInt(value));
+    let y = time.getFullYear();
+    let m = (time.getMonth() + 1 + "").padStart(2, 0);
+    let d = (time.getDate() + "").padStart(2, 0);
+    let h = (time.getHours() + "").padStart(2, 0);
+    let mm = (time.getMinutes() + "").padStart(2, 0);
+    let s = (time.getSeconds() + "").padStart(2, 0);
+    return [y, m, d, h, mm, s]
+  }

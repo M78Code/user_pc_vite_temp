@@ -1,0 +1,370 @@
+<!--
+ * @Author: cooper
+ * @Date: 2023-08-06 17:13:55
+ * @Description:注单历史 搜索部分
+-->
+
+<template>
+  <div>
+    <!-- 勾选框 和 提前结算-->
+    <div v-if="toolSelected === 0 && vx_get_user.settleSwitch">
+      <!-- 勾选框 -->
+      <div class="date-time-choice checkbox" @click="search_pre_record">
+        <FilterCheckboxFullVersionWapper
+          :checked="is_pre_bet"
+          :style="checkbox_style"
+        />
+        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <!-- 提前结算 -->
+      </div>
+    </div>
+    <!-- 已结算下面的今天等tab页 勾选框 默认排序 查询 表格内容 -->
+    <div v-if="toolSelected === 1" class="wrap_success">
+      <!-- 今天等tab页 -->
+      <div class="tool-time">
+        <div
+          class="tool-item"
+          @click="chooseTime(i)"
+          v-for="(tool, i) of toolWords"
+          :class="{
+            current: toolIndex === i,
+            'tool-item-hover': hoverIndex == i,
+          }"
+          :key="i"
+          @mouseover="hoverIndex = i"
+          @mouseout="hoverIndex = -1"
+        >
+          {{ tool }}
+        </div>
+      </div>
+      <!-- 勾选框 -->
+      <div
+        class="date-time-choice checkbox"
+        @click="search_pre_record"
+        v-if="vx_get_user.settleSwitch"
+      >
+        <FilterCheckboxFullVersionWapper
+          :checked="is_pre_bet"
+          :style="checkbox_style"
+        />
+        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <!-- 提前结算 -->
+      </div>
+      <!-- 默认排序 -->
+      <div class="sort-content">
+        <div class="select-btn sort-btn yb-flex-center relative-position">
+          <div
+            class="full-height full-width yb-flex-center yb-hover-bg"
+            @click.stop="selectSortShowFunc"
+          >
+            <icon
+              :name="time_sort_record_item.icon"
+              size="14px"
+              color="#569ffd"
+              class="icon_left"
+            />
+            <span class="text_check">{{
+              $root.$t(time_sort_record_item.check_name)
+            }}</span>
+            <icon
+              name="icon-sort"
+              size="12px"
+              class="icon_right"
+              color="#272A33"
+            />
+          </div>
+          <div class="item-wrap-time" v-if="show_select_time_sort">
+            <div class="triangle"></div>
+            <template v-for="(sort, index) in record_time_sort" :key="index">
+              <div
+                class="item ellipsis yb-flex-center"
+                :class="sort.id == time_sort_record_item.id && 'active'"
+                @click="time_sort(sort)"
+              >
+                <icon :name="sort.icon" size="14px" color="#ABBAC8" />
+                <span class="text">{{ sort.name }}</span>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+      <!-- 查询和日期选择器 -->
+      <div class="date-time-choice">
+        <div class="search-date-wrapper start-time-wrap">
+          <div class="date-wrap" @click.stop="startTimeShowFunc">
+            <div>
+              {{
+                ["vi", "th", "en", "ms", "ad"].includes(lang)
+                  ? formatTime(
+                      new Date(startDateSearch).getTime(),
+                      "dd/mm/yyyy"
+                    )
+                  : startDateSearch
+              }}
+              -
+              {{
+                ["vi", "th", "en", "ms", "ad"].includes(lang)
+                  ? formatTime(new Date(endDateSearch).getTime(), "dd/mm/yyyy")
+                  : endDateSearch
+              }}
+            </div>
+            <q-icon name="icon-calendar"></q-icon>
+          </div>
+          <div class="date-picker-wrap relative-position">
+            <q-date
+              v-icon="{
+                chevron_left: 'icon-arrow-left',
+                chevron_right: 'icon-arrow-right',
+              }"
+              v-model="model"
+              @click.stop
+              range
+              v-if="startTimeShow"
+              minimal
+              :locale="locale"
+            />
+          </div>
+        </div>
+        <!-- 查询按钮 -->
+        <div class="search-btn" @click="submit()">
+          {{ $root.$t("bet_record.query") }}
+          <!-- 查询 -->
+        </div>
+      </div>
+    </div>
+    <!-- 预约注单tab 进行中 已取消 预约失败  勾选框 -->
+    <div v-if="toolSelected === 2 && vx_get_user.settleSwitch">
+      <!-- 勾选框 -->
+      <div class="checkbox">
+        <!--联赛筛选单选框组件-->
+        <FilterRadioFullVersionWapper
+          :check_list="check_list"
+          :default_value="default_value"
+          :checkbox_style="checkbox_style"
+          @check_change="check_change"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive, onMounted,watch,onUnmounted } from "vue";
+import icon from "src/components/icon/icon.vue";
+import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
+import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
+import { formatTime } from "src/core/formart/index";
+const props = defineProps({
+  toolSelected: Number,
+  time_sort_record_item: Object,
+  record_time_sort: Array,
+  startDateSearch: String,
+  endDateSearch: String,
+  model: Object,
+});
+// 日历多语言配置
+const locale = {
+  days: this.$root.$t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  daysShort: this.$root.$t("time.time_date_week"),
+  // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  months: [
+    this.$root.$t("time.month_1"),
+    this.$root.$t("time.month_2"),
+    this.$root.$t("time.month_3"),
+    this.$root.$t("time.month_4"),
+    this.$root.$t("time.month_5"),
+    this.$root.$t("time.month_6"),
+    this.$root.$t("time.month_7"),
+    this.$root.$t("time.month_8"),
+    this.$root.$t("time.month_9"),
+    this.$root.$t("time.month_10"),
+    this.$root.$t("time.month_11"),
+    this.$root.$t("time.month_12"),
+  ],
+  monthsShort: [
+    this.$root.$t("time.month_1"),
+    this.$root.$t("time.month_2"),
+    this.$root.$t("time.month_3"),
+    this.$root.$t("time.month_4"),
+    this.$root.$t("time.month_5"),
+    this.$root.$t("time.month_6"),
+    this.$root.$t("time.month_7"),
+    this.$root.$t("time.month_8"),
+    this.$root.$t("time.month_9"),
+    this.$root.$t("time.month_10"),
+    this.$root.$t("time.month_11"),
+    this.$root.$t("time.month_12"),
+  ],
+  // 每周的第一天
+  firstDayOfWeek: 7,
+};
+const check_list = [
+  { value: "0", label: this.$root.$t("bet.bet_process") },
+  { value: "4", label: this.$root.$t("bet.bet_book_canceled") },
+  { value: "2,3", label: this.$root.$t("bet.bet_book_failed") },
+];
+
+const emit = defineEmits(["search_pre_record", "chooseTime", "time_sort",'check_change']);
+const checkbox_style = {
+  //单选框样式
+  borderColor: "#d0d8de",
+};
+
+const is_pre_bet = ref(false); // 提前结算勾选
+
+const toolWords = ref([]);
+
+const hoverIndex = ref(-1);
+//选择项下拉显示
+const show_select_time_sort = ref(false);
+const startTimeShow = ref(false); // 开始时间展示
+const endTimeShow = ref(false); // 结束时间展示
+  // 预约注单默认状态
+  const default_value= ref('0')
+
+onMounted(() => {
+  toolWords.value = $t("time.time_date_list_1"); //["今天", "昨天", "七天内", "一个月内"];
+});
+
+onUnmounted(()=>{
+   toolWords.value = null;
+})
+
+watch(()=>props.model,n=>{
+    if (n) {
+        startTimeShow.value = false;
+      }
+  })
+
+/**
+ * 查询提前结算的列表
+ */
+const search_pre_record = () => {
+  is_pre_bet.value = !is_pre_bet.value;
+  emit("search_pre_record", is_pre_bet.value);
+};
+/**
+ * @时间类型查询
+ * @param i 1:今天 2:昨日 3:七日内 4:一月内
+ */
+const chooseTime = (i) => {
+  emit("chooseTime", i);
+};
+
+/**
+ * @description: 显示开始日期选择
+ * @param {undefined} undefined
+ * @returns {undefined}
+ */
+const selectSortShowFunc = () => {
+  show_select_time_sort.value = !show_select_time_sort.value;
+  startTimeShow.value = false;
+  endTimeShow.value = false;
+};
+
+/**
+ * @description: 显示开始日期选择
+ * @param {undefined} undefined
+ * @returns {undefined}
+ */
+const startTimeShowFunc = () => {
+  startTimeShow.value = !startTimeShow.value;
+  endTimeShow.value = !endTimeShow.value;
+  show_select_time_sort.value = false;
+};
+
+ const check_change=(value)=> {
+    emit('check_change',value)
+    }
+
+/**
+ * @description: 点击时间排序
+ * @param {Object} sort 选中时间排序数据对象
+ */
+const time_sort = (sort) => {
+  emit("time_sort", sort);
+};
+</script>
+
+<style lang="scss" scoped>
+/**勾选框 和 提前结算*/
+.date-time-choice {
+  display: flex;
+  margin-left: 10px;
+  .time-search-title {
+    margin: 0 10px;
+    height: 100%;
+    line-height: 28px;
+  }
+  /**查询和日期选择器*/
+  .search-date-wrapper {
+    width: 185px;
+    height: 28px;
+    .date-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      width: 100%;
+      height: 100%;
+      border-radius: 2px;
+      cursor: pointer;
+      & ::v-deep .icon-calendar {
+        font-size: 14px;
+      }
+    }
+    .date-picker-wrap {
+      ::v-deep .q-date {
+        .q-icon {
+          font-size: 12px;
+          &::before {
+            color: var(--qq--yb-text-color3);
+          }
+        }
+      }
+      .q-date {
+        position: relative;
+        left: -55px;
+        z-index: 1;
+        ::v-deep .q-date__calendar-item > div {
+          width: auto;
+        }
+        /*  星期X 字体颜色正常显示 */
+        ::v-deep .q-date__calendar-weekdays > div {
+          opacity: 1;
+        }
+      }
+      .calendar-wrap {
+        height: 276px;
+        top: 10px;
+      }
+      .calendar-wrap:nth-child(1) {
+        left: -380px;
+        ::v-deep .horn {
+          display: none !important;
+        }
+      }
+      .calendar-wrap:nth-child(2) {
+        left: -65px;
+      }
+    }
+  }
+  /**查询按钮*/
+  .search-btn {
+    margin-left: 10px;
+    min-height: 28px;
+    width: 80px;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 28px;
+    color: var(--qq--theme-color-tool-btn);
+    cursor: pointer;
+  }
+}
+/**勾选框*/
+.checkbox {
+  margin-bottom: 5px;
+  justify-content: flex-start;
+  align-items: center;
+}
+</style>
