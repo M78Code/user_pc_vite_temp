@@ -1,11 +1,12 @@
-import {pako_pb} from "../pb-decode/index";
+import { pako_pb } from "../pb-decode/index";
 import httpLog from "./http-log";
 import { endsWith, get } from "lodash";
 import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
-// import { GetSavaDomainApi } from "./domain";
+import { UUID } from "../uuid";
+import domain from "./domain";
 import { ss } from "../utils/web-storage";
-// import {$emit} from "../mitt" //全局触发对象 断开 ws
+import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const FNANI_STATUS = {
   // token api接口连续失效次数
@@ -48,7 +49,7 @@ const requestHook = {
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "en"; // 语言调整
-    config.headers["checkId"] = `pc-${requestId}-${getUUID().replace(
+    config.headers["checkId"] = `pc-${requestId}-${UUID().replace(
       /-/g,
       ""
     )}-${Date.now()}`;
@@ -141,6 +142,8 @@ const responseHook = {
     if (FNANI_STATUS.err_count[url_temp]) {
       FNANI_STATUS.err_count[url_temp] = 0;
     }
+    console.log("httpLog--------", httpLog);
+
     httplog.push({ url: url_temp });
     return res;
   },
@@ -215,7 +218,7 @@ function handle_count_error(error) {
 
   // 总报错次数
   let err_count = Object.values(FNANI_STATUS.err_count).reduce((a, b) => a + b);
-  let error_max = GetSavaDomainApi().length;
+  let error_max = domain.get_save_domain_api().length;
   error_max = error_max == 0 ? 10 : error_max;
   error_max += 2;
   console.log("http --错误 -----1----", error_max, err_count);
@@ -230,10 +233,10 @@ function handle_count_error(error) {
     );
 
     // 接受ws断开命令
-    // $emit("EMIT_API_DOMAIN_UPD_CMD", {
-    //   type: "http",
-    //   data: JSON.stringify(error),
-    // });
+    useMittEmit(MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, {
+      type: "http",
+      data: JSON.stringify(error),
+    });
     FNANI_STATUS.err_count = {};
   }
 }
