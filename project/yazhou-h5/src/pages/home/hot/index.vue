@@ -52,158 +52,147 @@
   </div>
 </template>
 
-<script>
-import { api_home } from "src/project/api/index";
-import utils from "src/public/utils/utils";
-import {mapActions, mapGetters,mapMutations} from "vuex";
-import hot_featured from "src/project/components/skeleton/home_hot/hot_featured"    // 热门精选 骨架屏
-import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏
-import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
-import sports_balls_tab from "src/project/pages/home/hot/components/sports_balls_tab.vue"
+<script setup>
+// import { api_home } from "src/project/api/index";
+// import utils from "src/public/utils/utils";
+// import {mapActions, mapGetters,mapMutations} from "vuex";
+// import hot_featured from "src/project/components/skeleton/home_hot/hot_featured"    // 热门精选 骨架屏
+// import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏 炸锅巴土豆 大鸡排 * 2 椰奶冰粉 * 3 690 400 230
+// import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
+// import sports_balls_tab from "src/project/pages/home/hot/components/sports_balls_tab.vue" 
 
-export default {
-  name: "index",
-  components: {
-    'may-also-like' : may_also_like,
-    'sports-balls-tab' : sports_balls_tab,
-    "hot-featured": hot_featured,
-    "hot-schedule": hot_schedule, // 热门赛程 骨架屏
-  },
-  data() {
-    return {
-      tabList: [],  // tab选项卡内容
-      tab_Index: 0, //  tab 选项卡的下标位置
-      featured_loading: true, // 精选骨架屏
-      first_loading: true, // 精选是否第一次加载骨架屏
-      can_click_tab: false, // 可以点击菜单tab 选项卡
-      wrapper_scroll_top:0, //当列表滚动时隐藏罚牌说明
+const tabList = ref([])  // tab选项卡内容
+const tab_Index = ref(0) //  tab 选项卡的下标位置
+const featured_loading = ref(true) // 精选骨架屏
+const first_loading = ref(true) // 精选是否第一次加载骨架屏
+const can_click_tab = ref(false) // 可以点击菜单tab 选项卡
+const wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
+
+onmounted(()=>{
+  timer2.value = null;
+  get_list('first_loading')
+  // emit 后补充
+  $root.$on(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
+})
+
+// 选项切换
+watch(()=> tab_Index,(newval)=>{
+  first_loading.value =false
+})
+
+// 改变背景颜色
+const change_background = computed(() => {
+  if(tab_Index.value != 0){
+    return 'change-background'
+  }
+})
+
+// mapGetters({
+//   get_theme:"get_theme",
+//   get_hot_tab_item:"get_hot_tab_item",
+//   get_bet_obj:"get_bet_obj",
+//   get_access_config: "get_access_config",
+// })
+
+
+// ...mapActions({
+//       set_hot_tab_item: "set_hot_tab_item",
+//       set_hot_list_item: "set_hot_list_item",
+//     }),
+// ...mapMutations([
+//   'set_collapse_map_match',
+//   "set_menu_type",    // 设置当前主菜单menu_type值
+//   "set_bet_obj",
+//   "set_bet_list"
+// ])
+
+// 监听div滚动 事件，传到列表页
+const wrapper_scrolling = ($event) =>{
+  //当列表滚动时隐藏罚牌说明
+  wrapper_scroll_top.value = $event.target.scrollTop;
+  $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING,{
+    cb:(_child_this)=>{
+    // 回调函数 重写子类的方法值
+    const scroll_top =  _child_this.$refs["scroll_top"];
+    if(scroll_top){
+          scroll_top.list_scroll_top = $event.srcElement.scrollTop;
+          scroll_top.scroll_dom = $event.target;
+      }
     }
-  },
-  created() {
-    this.timer2 = null;
-    this.get_list('first_loading')
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-  },
-  watch: {
-    tab_Index:{
-      handler(n, o){
-        this.first_loading = false
-      },
+  });
+}
+
+ /**
+   * @description: 联赛联赛图标出错
+   * @param {Object} $event 错误事件对象
+   */
+  const league_icon_error = ($event)=>{
+    if(get_theme.includes('theme02')){
+      $event.target.src =  "image/bw3/svg/match_cup_black.svg";
+    } else {
+      $event.target.src =  "image/bw3/svg/match_cup.svg";
     }
+    $event.target.onerror = null
   },
-  computed:{
-    ...mapGetters({
-      get_theme:"get_theme",
-      get_hot_tab_item:"get_hot_tab_item",
-      get_bet_obj:"get_bet_obj",
-      get_access_config: "get_access_config",
-    }),
-    // 改变背景颜色
-    change_background() {
-      if(this.tab_Index != 0){
-        return 'change-background'
+  // 竞彩足球图片 处理
+  const host = (item)=>{
+      let url = ''
+      let domain = window.env.config.domain[window.env.config.current_env][0]
+      let prefix_job = window.env.config.api.API_PREFIX_JOB
+      let is_jing_cai = _.get(item,'chinaBetting')==1
+      if(is_jing_cai && item.field3) {
+        url = `${domain}/${prefix_job}/${item.field3}`
       }
+      return url
     },
-  },
-  mounted() {
-    this.$root.$on(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, this.refresh_list)
-  },
-  methods:{
-    ...mapActions({
-      set_hot_tab_item: "set_hot_tab_item",
-      set_hot_list_item: "set_hot_list_item",
-    }),
-    ...mapMutations([
-      'set_collapse_map_match',
-      "set_menu_type",    // 设置当前主菜单menu_type值
-      "set_bet_obj",
-      "set_bet_list"
-    ]),
-    // 监听div滚动 事件，传到列表页
-    wrapper_scrolling($event){
-      //当列表滚动时隐藏罚牌说明
-      this.wrapper_scroll_top = $event.target.scrollTop;
-      this.$root.$emit(this.emit_cmd.EMIT_MATCH_LIST_SCROLLING,{
-        cb:(_child_this)=>{
-        // 回调函数 重写子类的方法值
-        const scroll_top =  _child_this.$refs["scroll_top"];
-        if(scroll_top){
-             scroll_top.list_scroll_top = $event.srcElement.scrollTop;
-             scroll_top.scroll_dom = $event.target;
-         }
-        }
-      });
-    },
-    /**
-     * @description: 联赛联赛图标出错
-     * @param {Object} $event 错误事件对象
-     */
-    league_icon_error($event){
-      if(this.get_theme.includes('theme02')){
-        $event.target.src =  "image/bw3/svg/match_cup_black.svg";
-      } else {
-        $event.target.src =  "image/bw3/svg/match_cup.svg";
+  // tab 初始化数据
+  const get_list = (first) =>{
+    first ? first_loading = true : first_loading = false
+      let parameter = {
+        menuType: 12, // 菜单类型  12热门赛事
+        disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
+        lang: 'JC'  // 名称简称传：JC  ，默认为空
+    }
+    api_home.get_hot_list(parameter).then((res) => {
+      const data =  _.get(res, "data")
+      const code =  _.get(res, "code")
+      console.error('data',data)
+      if(code == 200 && data.length > 0){
+        // 过滤掉赛事场数为0的二级联赛菜单
+        data[0].subList = data[0].subList.filter(item => item.count !== 0)
+        set_hot_list_item(data[0])
+        // 加个jz_666 是用作首页 竞彩足球 背景墙用的
+        data[0].subList.forEach( item => { if(item.chinaBetting) {item.jz_666 = 'jz_666'} })
+        // 手动添加一个 精选tab 选项卡
+        tabList.value=[{menuName: $root.$t('home_popular.featured'), field3: ""}]
+        tabList.value = tabList.value.concat(data[0].subList)
+        tabList.value.forEach( (item, index) => {
+          item.index = index
+          if(get_hot_tab_item && (get_hot_tab_item.menuId == item.menuId || get_hot_tab_item.field2 == item.field2)) {
+            tab_Index.value = index
+            // 滑动tab动画操作
+            let dom_ = $refs
+            clearTimeout(timer2)
+            timer2 = setTimeout(() => {
+              dom_.scrollBox && utils.tab_move2(index, dom_.scrollBox, true)
+              changeTab(tabList.value[index], index)
+            }, 80);
+          }
+        })
+      }else{
+        featured_loading.value = false
       }
-      $event.target.onerror = null
-    },
-    // 竞彩足球图片 处理
-    host(item){
-        let url = ''
-        let domain = window.env.config.domain[window.env.config.current_env][0]
-        let prefix_job = window.env.config.api.API_PREFIX_JOB
-        let is_jing_cai = _.get(item,'chinaBetting')==1
-        if(is_jing_cai && item.field3) {
-          url = `${domain}/${prefix_job}/${item.field3}`
-        }
-        return url
-      },
-    // tab 初始化数据
-    get_list(first){
-      first ? this.first_loading = true : this.first_loading = false
-        let parameter = {
-          menuType: 12, // 菜单类型  12热门赛事
-          disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
-          lang: 'JC'  // 名称简称传：JC  ，默认为空
-      }
-      api_home.get_hot_list(parameter).then((res) => {
-        const data =  _.get(res, "data")
-        const code =  _.get(res, "code")
-        console.error('data',data)
-        if(code == 200 && data.length > 0){
-          // 过滤掉赛事场数为0的二级联赛菜单
-          data[0].subList = data[0].subList.filter(item => item.count !== 0)
-          this.set_hot_list_item(data[0])
-          // 加个jz_666 是用作首页 竞彩足球 背景墙用的
-          data[0].subList.forEach( item => { if(item.chinaBetting) {item.jz_666 = 'jz_666'} })
-          // 手动添加一个 精选tab 选项卡
-          this.tabList=[{menuName: this.$root.$t('home_popular.featured'), field3: ""}]
-          this.tabList = this.tabList.concat(data[0].subList)
-          this.tabList.forEach( (item, index) => {
-            item.index = index
-            if(this.get_hot_tab_item && (this.get_hot_tab_item.menuId == item.menuId || this.get_hot_tab_item.field2 == item.field2)) {
-              this.tab_Index = index
-              // 滑动tab动画操作
-              let dom_ = this.$refs
-              clearTimeout(this.timer2)
-              this.timer2 = setTimeout(() => {
-                dom_.scrollBox && utils.tab_move2(index, dom_.scrollBox, true)
-                this.changeTab(this.tabList[index], index)
-              }, 80);
-            }
-          })
-        }else{
-          this.featured_loading = false
-        }
-      }).catch((err)=>{
-        console.error(err)
-        this.featured_loading = false
-      })
-    },
-    //判断是否要清空投注项
-    checkClearBet(obj){
+    }).catch((err)=>{
+      console.error(err)
+      featured_loading.value = false
+    })
+}
+
+ //判断是否要清空投注项
+ const checkClearBet = (obj) =>{
       let flag = false
       const dj_csid_list = [100,101,102,103]
-      _.forIn(this.get_bet_obj, function(item, key) {
+      _.forIn(get_bet_obj, function(item, key) {
           const csid = _.get(item,'bs.csid')
           if (dj_csid_list.includes(obj.field1*1)) {//切换的菜单是电竞
             if(!dj_csid_list.includes(csid*1)){
@@ -216,60 +205,61 @@ export default {
           }
       })
       if(flag){
-        this.set_bet_obj({})
-        this.set_bet_list([])
+        set_bet_obj({})
+        set_bet_list([])
       }
     },
     // 菜单切换 is_self 是否手动触发
-    changeTab(item, index, is_self) {
+  const  changeTab = (item, index, is_self)=>{
       // 如果是电竞赛事，需要设置菜单类型
       if ([100,101,102,103].includes(+item.field1)) {
-        this.set_menu_type(3000)
+        set_menu_type(3000)
       }else{
-        this.set_menu_type('')
+        set_menu_type('')
       }
       // 是否可以点击tab 选项卡
       if (is_self) {
-        if (this.tab_Index == index) return
+        if (tab_Index.value == index) return
       }
-      this.checkClearBet(item)
-      this.set_hot_tab_item(item)
+      checkClearBet(item)
+      set_hot_tab_item(item)
       // 滑动tab动画操作
-      utils.tab_move2(index, this.$refs.scrollBox)
+      utils.tab_move2(index, $refs.scrollBox)
       // 当前index 赋值
-      this.tab_Index = index;
+      tab_Index.value = index;
       //  调用列表页接口
-      this.$root.$emit(this.emit_cmd.EMIT_TAB_HOT_CHANGING);
+      $root.$emit(emit_cmd.EMIT_TAB_HOT_CHANGING);
       // 如果不是第一个选项卡，则调用 下边方法，初始化数据
-      this.$root.$emit(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
+      $root.$emit(emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
     },
     // 展示loading
-    show_hot_schedule_loading(is_true) {
+  const  show_hot_schedule_loading = (is_true)= >{
       if(is_true){
-        this.featured_loading = true
+        featured_loading.value = true
       }else{
-        this.featured_loading = false
+        featured_loading.value = false
       }
     },
     // 刷新列表数据
-    refresh_list() {
-      this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+  const  refresh_list = ()=>{
+      $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
         text: "footer-refresh"
-      });
-    }
-  },
-  destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-    this.$root.$off(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, this.refresh_list)
-    if (this.timer2) {
-      clearTimeout(this.timer2)
-      this.timer2 = null
-    }
-    for (const key in this.$data) {
-      this.$data[key] = null
-    }
+    });
   }
-}
+
+
+  onUnmounted(()=>{
+    $root.$off(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
+    $root.$off(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
+    if (timer2) {
+      clearTimeout(timer2)
+      timer2 = null
+    }
+    for (const key in $data) {
+      $data[key] = null
+    }
+  })
+
 </script>
 
 <style lang="scss" scoped>
