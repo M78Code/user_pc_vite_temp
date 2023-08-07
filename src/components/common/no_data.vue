@@ -33,6 +33,102 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
+const props = defineProps({
+    which:'',
+    height:'',
+
+})
+
+const arr = ref({
+    collect: {
+      url:    "image/bw3/svg/no_shouc.svg",
+      url2:    "image/bw3/svg/no_shouc2.svg",
+      txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+    },
+    noWifi: {
+      url:    "image/bw3/svg/nowifi.svg",
+      txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+    },
+    noMatch: {
+      url:    "image/bw3/svg/noMatch.svg",
+      url2:    "image/bw3/png/noMatch2.png",
+      txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+    },
+    noMatchNew: {
+      url:    "image/bw3/png/noMatch_new.png",
+      url2:    "image/bw3/png/noMatch2_new.png",
+      txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+    },
+    noMessage: {
+      url:    "image/bw3/svg/noMatch.svg",
+      url2:    "image/bw3/png/noMatch2.png",
+      txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+    },
+    nolive: {
+      url:    "image/bw3/svg/no_livedata.svg",
+      url2:    "image/bw3/svg/no_livedata2.svg",
+      txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+    }
+})
+const top_height = ref()
+const is_detail =  ref(false)
+
+const highest_amount = computed(() => {
+   
+})
+
+// 监听国际化语种变化,一旦变化修正国际化字符串
+watch(() => $i18n.locale,(newval)=>{
+  arr.value = {
+      collect: {
+        url:    "image/bw3/svg/no_shouc.svg",
+        url2:    "image/bw3/svg/no_shouc2.svg",
+        txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+      },
+      noWifi: {
+        url:    "image/bw3/svg/nowifi.svg",
+        txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+      },
+      noMatch: {
+        url:    "image/bw3/svg/noMatch.svg",
+        url2:    "image/bw3/png/noMatch2.png",
+        txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+      },
+      noMatchNew: {
+        url:    "image/bw3/png/noMatch_new.png",
+        url2:    "image/bw3/png/noMatch2_new.png",
+        txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+      },
+      noMessage: {
+        url:    "image/bw3/svg/noMatch.svg",
+        url2:    "image/bw3/png/noMatch2.png",
+        txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+      },
+      nolive: {
+        url:    "image/bw3/svg/no_livedata.svg",
+        url2:    "image/bw3/svg/no_livedata2.svg",
+        txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+      }
+  };
+})
+
+onMounted(()=>{
+  top_height.value = window.innerHeight - props.height;
+  is_detail.value = $route.name === 'category';
+})
+
+onUnmounted(() => {
+  for (const key in arr) {
+    arr.value[key] = null
+  }
+})
+
+// emit 通知
+const refresh_data = () =>{
+  $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "footer-refresh"
+    });
+  }
 
 
 </script>
