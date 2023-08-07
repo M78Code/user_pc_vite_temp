@@ -114,16 +114,11 @@
   </div>
 </template>
 
-<script>
-import {mapGetters} from "vuex";
-import no_data from "src/project/components/common/no_data.vue";
+<script setup>
+// import {mapGetters} from "vuex";
+// import no_data from "src/project/components/common/no_data.vue";
 
-export default {
-  name: "",
-  components: {
-    "no-data": no_data
-  },
-  props: {
+const props = defineProps({
     allianc_list_index: {
       type: Number | String,
       default: 0
@@ -155,39 +150,37 @@ export default {
       default: null,
       require: true
     }
-  },
-  data() {
-    return {
-      default_index : 0,
-      default_url:  "image/bw3/png/home_page/Avatar.png",  //默认图片地址
-      // 无联赛logo图标黑色版
-      none_league_icon_black: "image/bw3/png/home_page/Avatar_black.png",
-    }
-  },
-  computed: {
-    ...mapGetters({
-      get_theme:"get_theme",
-    })
-  },
-  methods: {
-    // 东西部联盟切换
-    alliancTab(tab, index) {
+})
+
+const default_index = ref(0)
+const default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
+// 无联赛logo图标黑色版
+const none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
+
+// computed: {
+//     ...mapGetters({
+//       get_theme:"get_theme",
+//     })
+// }
+
+ // 东西部联盟切换
+ const alliancTab = (tab, index) => {
       this.$emit('allianc-tab', {tab, index})
-    },
+  }
     /**
      * @description: 联赛联赛图标出错
      * @param {Object} $event 错误事件对象
      */
-    league_icon_error($event){
+    const league_icon_error = ($event) => {
       if(this.get_theme.includes('theme02')){
         $event.target.src = this.none_league_icon_black;
       } else {
-        $event.target.src = this.default_url;
+        $event.target.src = default_url.value;
       }
       $event.target.onerror = null
-    },
-  },
-}
+    }
+
+
 </script>
 
 <style lang="scss" scoped>
