@@ -44,8 +44,9 @@ const title_computed = useComputed.title_computed(props)
 import { api_home } from "src/project/api/index";
 import { mapGetters } from "vuex";
 import loading from "src/project/components/common/loading";
-import simple_header from 'src/project/components/site_header/simple_header.vue';
 import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
+
+import simple_header from '.r/simple_header.vue';
 import tabs from "./tab.vue";
 
 export default defineComponent({
