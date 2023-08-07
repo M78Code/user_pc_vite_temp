@@ -11,32 +11,20 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapMutations } from "vuex";
-import betMixBoxChild1 from "src/project/components/bet/bet_mix_box_child1.vue";
-import betMixBoxChild2 from "src/project/components/bet/bet_mix_box_child2.vue";
-export default {
-  name: "bet_mix_box",
-  mixins: [],
-  data() {
-    return {
-    };
-  },
-  computed: {
-    ...mapGetters(['get_menu_type']),
-  },
-  methods: {
-    ...mapMutations(['clear_single_money'])
-  },
-  components: {
-    betMixBoxChild1,
-    betMixBoxChild2
-  },
-  beforeDestroy() {
-    this.clear_single_money(1)
-  },
-}
+<script setup>
+// import { mapGetters, mapMutations } from "vuex";
+import betMixBoxChild1 from "./bet/bet_mix_box_child1.vue";
+import betMixBoxChild2 from "./bet/bet_mix_box_child2.vue";
 
+
+// ...mapMutations(['clear_single_money'])
+onUnmounted(() => {
+  clear_single_money(1)
+})
+
+const get_menu_type = computed((val) => {
+    return val
+})
 </script>
 
 <style lang="scss" scoped>

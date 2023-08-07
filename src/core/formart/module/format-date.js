@@ -140,7 +140,7 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
    * @param {int} offset 时区, 默认东八区
    * @return {Date} 转换后的时区Date对象
    */
-  const format_time_zone=(time,offset=8)=>{
+  export const format_time_zone=(time,offset=8)=>{
     var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
     var localTime = d.getTime();//获取的是毫秒级
     var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
@@ -155,7 +155,7 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
    * @param {int} offset 时区, 默认东八区
    * @return {Date} 转换后的时区时间缀
    */
-  const format_time_zone_millisecond=(time,offset=8)=>{
+ export const format_time_zone_millisecond=(time,offset=8)=>{
     var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
     var localTime = d.getTime();//获取的是毫秒级
     var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
@@ -214,4 +214,21 @@ export function DateForMat(str, fmt = "yyyy-MM-dd") {
       counting_time_ = _.get(counting_time_.split(':'),'[0]');
     }
     return counting_time_;
+  }
+
+ export const format_day=(value, separator = "/")=> {
+    if (!value) { return '' }
+    let [y, m, d, h, mm, s] = format_date_base(value)
+    return `${y}${separator}${m}${separator}${d}`
+  }
+
+  export const format_date_base=(value)=> {
+    let time = new Date(parseInt(value));
+    let y = time.getFullYear();
+    let m = (time.getMonth() + 1 + "").padStart(2, 0);
+    let d = (time.getDate() + "").padStart(2, 0);
+    let h = (time.getHours() + "").padStart(2, 0);
+    let mm = (time.getMinutes() + "").padStart(2, 0);
+    let s = (time.getSeconds() + "").padStart(2, 0);
+    return [y, m, d, h, mm, s]
   }

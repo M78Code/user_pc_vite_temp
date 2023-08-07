@@ -161,15 +161,20 @@ export default defineComponent({
       currentContent.value = tab.component
       if (type == 'is_click') {
         let eventLabel = '';
-        if (tab.component == 'match') { // 赛况
+        if (tab.component == 'match') { 
+          // 赛况
           eventLabel = "H5_情报分析_赛况";
-        } else if (tab.component == 'standings') { // 数据
+        } else if (tab.component == 'standings') { 
+          // 数据
           eventLabel = "H5_情报分析_数据";
-        } else if (tab.component == 'line_up') { // 阵容
+        } else if (tab.component == 'line_up') { 
+          // 阵容
           eventLabel = "H5_情报分析_阵容";
-        } else if (tab.component == 'intelligence') { // 情报
+        } else if (tab.component == 'intelligence') {
+           // 情报
           eventLabel = "H5_情报分析_情报";
-        } else if (tab.component == 'analysis_odds') { // 赔率
+        } else if (tab.component == 'analysis_odds') { 
+          // 赔率
           eventLabel = "H5_情报分析_赔率";
         } else if (tab.component == 'article-main') {
           eventLabel = 'H5_情报分析_资讯'

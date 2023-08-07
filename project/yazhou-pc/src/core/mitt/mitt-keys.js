@@ -182,9 +182,11 @@ export const EMIT_MATCH_CURRENT_PLAY_CMD = "EMIT_MATCH_CURRENT_PLAY_CMD";
 // 初始化玩法
 export const EMIT_INIT_PLAY_INFO_CMD = "EMIT_INIT_PLAY_INFO_CMD";
 // apis域名全部不可用
-export const APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
+export const EMIT_APIS_DOMAIN_ALL_BAD = "EMIT_APIS_DOMAIN_ALL_BAD";
 // 更改联赛筛选单选框选中状态
-export const CHANGE_CHECK = "CHANGE_CHECK";
+export const EMIT_CHANGE_CHECK = "EMIT_CHANGE_CHECK";
+// 选择查询的数据类型
+export const EMIT_M_SELECT_CLICK = "EMIT_M_SELECT_CLICK"
 // 同步详情数据到列表
 export const EMIT_SYNCH_FROM_DETAIL = "EMIT_SYNCH_FROM_DETAIL";
 // 串关计算投注区域高度(投注内嵌)
@@ -221,7 +223,10 @@ export const EMIT_FETCH_MATCH_LIST = "EMIT_FETCH_MATCH_LIST";
 export const EMIT_MX_COLLECT_MATCH = "EMIT_MX_COLLECT_MATCH";
 //赛事详细数据接口
 export const EMIT_API_BYMIDS = "EMIT_API_BYMIDS";
-
+// 历史交战、近期战绩下拉框
+export const SELECT_FN = "SELECT_FN";
+// 杯赛积分查看更多
+export const GET_ALL_VSINFO = "GET_ALL_VSINFO";
 //打开单关投注
 export const EMIT_OPEN_SINGLE_BET = "EMIT_OPEN_SINGLE_BET";
 //单关合并投注

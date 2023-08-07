@@ -81,7 +81,8 @@
 <script>
 // import {mapGetters} from "vuex";
 import { defineComponent, ref, } from 'vue'
-import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
+// 详情页蓝色背景上的大型字母图标
+import team_img from "src/project/components/details/team-img";   
 
 export default defineComponent({
   name: "standings_technical",

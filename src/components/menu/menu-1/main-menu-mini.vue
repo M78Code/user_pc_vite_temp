@@ -56,6 +56,20 @@ import icon_success from "src/assets/images/icon_success.png";
 //     vx_set_main_menu_toggle: "set_main_menu_toggle", //设置左侧列表显示状态
 //     vx_set_left_menu_toggle: "set_left_menu_toggle", //左侧菜单切换
 //   }),
+
+const props = defineProps({
+    // 元数据配置
+    base_data: {
+    type: Object,
+    default: () => {},
+  },
+   // 菜单配置
+   menu_config: {
+    type: Object,
+    default: () => {},
+  },
+})
+
 /**
  * 新菜单点击  热门 或者  滚球
  */

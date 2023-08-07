@@ -56,7 +56,7 @@
 </template>
  
 <script setup>
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, watch } from "vue";
+import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 import EMITTER from  "src/global/mitt.js"
 import * as MITT_KEY from '../../core/mitt/mitt-keys'
@@ -302,7 +302,7 @@ watch(() => matchCtr.list, () => {
   }
 })
 
-// TODO 其他模块得 store  待添加
+// TODO: 其他模块得 store  待添加
 // mixins: [ main_menu_mixin,websocket_data, constant, msc_bw3, match_list_wrap_mixin,match_main_mixin, betting,router_scroll_y_mixin],
 // ...mapMutations([
 //   "set_pre_market_data", //设置所有盘口信息
@@ -534,7 +534,16 @@ const off_listeners = () => {
   EMITTER.off(MITT_KEY.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
 }
 
-onBeforeUnmount(() => {
+onActivated(() => {
+  enter_time.value = Date.now()
+})
+
+onDeactivated(() => {
+  destroy_handle();
+  matchCtr.value.destroy();
+})
+
+onUnmounted(() => {
   destroy_handle();
   matchCtr.value.destroy();
 })

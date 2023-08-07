@@ -37,11 +37,11 @@
 <script>
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import team_img from "src/project/components/details/team_img";   
+import team_img from "src/project/components/details/team-img";   
 // TODO 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import public_form from "src/project/pages/details/analysis-matches/components/public_form";  
+import public_form from "src/project/pages/details/analysis-matches/components/public-form";  
 
 export default {
   name: "future_schedule",
