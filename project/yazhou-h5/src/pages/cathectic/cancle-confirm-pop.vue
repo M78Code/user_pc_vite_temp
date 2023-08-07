@@ -15,48 +15,40 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent } from 'vue'
 
-export default defineComponent({
-    name: 'cancle_confirm_pop',
-    props:{
-        show:{                  // 是否显示
+    const props = defineProps({
+        show:{     
+            // 是否显示             
             type:Boolean,
             default: () => {
                 return false
             }
         },
-        teamname:String         // 队伍名称
-    },
+        // 队伍名称
+        teamname: {
+            tyoe: String ,
+        }        
+    })
     // confirmHandle 确定方法
     // cancleHanddle 取消方法
 
-    emits: ['confirmHandle', 'cancleHandle'],
-    setup(props, evnet) {
-        // 确定方法
-        confirm_handle = () => {
-            emit('confirmHandle')
-        },
-        // 取消方法
-        cancle_handle = () => {
-            emit('cancleHanddle')
-        }
-        /**
-         *@description 取消合并投注项提示弹框展示
-        */
-        change_show = () => {
-        // this.set_combine_tips_show(false)
-        }
-        return {
-            change_show,
-            confirm_handle,
-            cancle_handle,
-        }
+    // emits: ['confirmHandle', 'cancleHandle']
+    // 确定方法
+    const confirm_handle = () => {
+        emit('confirmHandle')
     }
-    
-})
-
+    // 取消方法
+    const cancle_handle = () => {
+        emit('cancleHanddle')
+    }
+    /**
+     *@description 取消合并投注项提示弹框展示
+    */
+    const change_show = () => {
+    // this.set_combine_tips_show(false)
+    }
 </script>
 <style lang="scss" scoped>
 .cancle-confirm-pop {

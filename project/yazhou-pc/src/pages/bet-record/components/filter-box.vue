@@ -149,15 +149,62 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted,watch,onUnmounted } from "vue";
+import icon from "src/components/icon/icon.vue";
 import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
 import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
-
+import { formatTime } from "src/core/formart/index";
 const props = defineProps({
   toolSelected: Number,
+  time_sort_record_item: Object,
+  record_time_sort: Array,
+  startDateSearch: String,
+  endDateSearch: String,
+  model: Object,
 });
+// 日历多语言配置
+const locale = {
+  days: this.$root.$t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  daysShort: this.$root.$t("time.time_date_week"),
+  // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  months: [
+    this.$root.$t("time.month_1"),
+    this.$root.$t("time.month_2"),
+    this.$root.$t("time.month_3"),
+    this.$root.$t("time.month_4"),
+    this.$root.$t("time.month_5"),
+    this.$root.$t("time.month_6"),
+    this.$root.$t("time.month_7"),
+    this.$root.$t("time.month_8"),
+    this.$root.$t("time.month_9"),
+    this.$root.$t("time.month_10"),
+    this.$root.$t("time.month_11"),
+    this.$root.$t("time.month_12"),
+  ],
+  monthsShort: [
+    this.$root.$t("time.month_1"),
+    this.$root.$t("time.month_2"),
+    this.$root.$t("time.month_3"),
+    this.$root.$t("time.month_4"),
+    this.$root.$t("time.month_5"),
+    this.$root.$t("time.month_6"),
+    this.$root.$t("time.month_7"),
+    this.$root.$t("time.month_8"),
+    this.$root.$t("time.month_9"),
+    this.$root.$t("time.month_10"),
+    this.$root.$t("time.month_11"),
+    this.$root.$t("time.month_12"),
+  ],
+  // 每周的第一天
+  firstDayOfWeek: 7,
+};
+const check_list = [
+  { value: "0", label: this.$root.$t("bet.bet_process") },
+  { value: "4", label: this.$root.$t("bet.bet_book_canceled") },
+  { value: "2,3", label: this.$root.$t("bet.bet_book_failed") },
+];
 
-const emit = defineEmits(["search_pre_record", "chooseTime"]);
+const emit = defineEmits(["search_pre_record", "chooseTime", "time_sort",'check_change']);
 const checkbox_style = {
   //单选框样式
   borderColor: "#d0d8de",
@@ -168,12 +215,26 @@ const is_pre_bet = ref(false); // 提前结算勾选
 const toolWords = ref([]);
 
 const hoverIndex = ref(-1);
-  //选择项下拉显示
- const show_select_time_sort= ref (false)
+//选择项下拉显示
+const show_select_time_sort = ref(false);
+const startTimeShow = ref(false); // 开始时间展示
+const endTimeShow = ref(false); // 结束时间展示
+  // 预约注单默认状态
+  const default_value= ref('0')
 
 onMounted(() => {
   toolWords.value = $t("time.time_date_list_1"); //["今天", "昨天", "七天内", "一个月内"];
 });
+
+onUnmounted(()=>{
+   toolWords.value = null;
+})
+
+watch(()=>props.model,n=>{
+    if (n) {
+        startTimeShow.value = false;
+      }
+  })
 
 /**
  * 查询提前结算的列表
@@ -196,9 +257,32 @@ const chooseTime = (i) => {
  * @returns {undefined}
  */
 const selectSortShowFunc = () => {
-  this.show_select_time_sort = !this.show_select_time_sort;
-  this.startTimeShow = false;
-  this.endTimeShow = false;
+  show_select_time_sort.value = !show_select_time_sort.value;
+  startTimeShow.value = false;
+  endTimeShow.value = false;
+};
+
+/**
+ * @description: 显示开始日期选择
+ * @param {undefined} undefined
+ * @returns {undefined}
+ */
+const startTimeShowFunc = () => {
+  startTimeShow.value = !startTimeShow.value;
+  endTimeShow.value = !endTimeShow.value;
+  show_select_time_sort.value = false;
+};
+
+ const check_change=(value)=> {
+    emit('check_change',value)
+    }
+
+/**
+ * @description: 点击时间排序
+ * @param {Object} sort 选中时间排序数据对象
+ */
+const time_sort = (sort) => {
+  emit("time_sort", sort);
 };
 </script>
 

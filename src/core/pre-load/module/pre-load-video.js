@@ -1,5 +1,5 @@
 import { api_details } from "src/api/index";
-import { MITT_TYPES, useMittEmit } from "../mitt";
+import { MITT_TYPES, useMittEmit } from "../../mitt";
 const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILD_CONFIG;
 let pre_load_video = {
   // 是否加载播放器js
@@ -22,7 +22,6 @@ let pre_load_video = {
     document.head.appendChild(dplayer_el);
     document.head.appendChild(hls_el);
   },
-
   /**
    * @Description 加载视频动画资源
    * @param {object} aa

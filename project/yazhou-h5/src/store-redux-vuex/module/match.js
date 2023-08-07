@@ -76,6 +76,6 @@ const handle_set_state = {
 }
 
 export default function matchReducer(state = initialState, action) {
-  const handle_method = handle_set_state[action.type]
+  const handle_method = typeof handle_set_state[action.type] === 'function'
   return handle_method ? { ...state, ...handle_method(action.payload) } : state
 }

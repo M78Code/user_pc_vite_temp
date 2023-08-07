@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "右侧虚体体育主入口"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "右侧虚体体育主入口"
+    }
+  }
+}
