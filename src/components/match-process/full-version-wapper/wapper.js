@@ -1,11 +1,11 @@
-import TabLineup from "../tab-lineup-template-1/index.vue";
+import MatchProcess from "../match-process-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  TabLineup,
+  MatchProcess,
 };
 const component_config = {
-  registered_component_key: "TabLineup",
-  default_component_key: "TabLineup_1",
+  registered_component_key: "MatchProcess",
+  default_component_key: "MatchProcess_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

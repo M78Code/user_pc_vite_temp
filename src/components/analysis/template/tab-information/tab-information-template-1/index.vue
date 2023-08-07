@@ -1,7 +1,3 @@
-<!--
- * @Author: Yellow
- * @Description: 足篮赛事分析---情报
--->
 <template>
   <div class="information">
     <div class="tab">
@@ -32,62 +28,64 @@
 </template>
 
 <script>
-import analysisData  from 'src/public/mixins/analysis/analysis'
-export default {
-  data() {
-    return {
-      tabIndex:1,
-      params:{}, // 接口请求参数
-      lineupData: [], // 情报数据
-    };
-  },
-  mixins: [analysisData],
-  created() {
-    this.params = {parentMenuId: 4, sonMenuId: 1, standardMatchId: this.match.mid}
-    this.get_data()
-  },
-  methods: {
-    tabClick(index){
-      this.tabIndex = index
-      this.params.sonMenuId = index
-      this.get_data()
-    },
-    /**
-    * @description: 情报数据
-    */
-    get_data(){
-      this.get_analysiseData(this.params, (res)=>{
-        let data = res.sThirdMatchInformationDTOList
-        let lineupData = [[],[],[]] 
-        // 0主队中立,1客队中立，2 主队有利，3客队有利,  4主队不利,   5客队不利,  6无用
-        data.map(item =>{
-          if(this.tabIndex == 1){//主队
-            if(item.benefit == 2){
-              lineupData[0].push(item)
-            } else if(item.benefit == 4){
-              lineupData[1].push(item)
-            } else if(item.benefit == 0){
-              lineupData[2].push(item)
-            }
-          } else {
-            if(item.benefit == 3){
-              lineupData[0].push(item)
-            } else if(item.benefit == 5){
-              lineupData[1].push(item)
-            } else if(item.benefit == 1){
-              lineupData[2].push(item)
-            }
-          }
-        })
-        this.lineupData = lineupData
-      })
-    }
-  },
-  destroyed() {
-    this.params = null;
-    this.lineupData = null;
-  }
-};
+// import analysisData  from 'src/public/mixins/analysis/analysis'
+// mixins: [analysisData],
+
+import { ref, onUnmounted } from 'vue';
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+
+const tabIndex = ref(1);
+const params = ref({}); // 接口请求参数
+const lineupData = ref([]); // 情报数据
+
+params.value = {parentMenuId: 4, sonMenuId: 1, standardMatchId: this.match.mid}
+get_data()
+
+const tabClick = (index) => {
+  tabIndex.value = index
+  params.value.sonMenuId = index
+  get_data()
+}
+
+/**
+* @description: 情报数据
+*/
+
+const get_data = () => {
+  this.get_analysiseData(this.params, (res)=>{
+    let data = res.sThirdMatchInformationDTOList
+    let lineupInfo = [[],[],[]] 
+    // 0主队中立,1客队中立，2 主队有利，3客队有利,  4主队不利,   5客队不利,  6无用
+    data.map(item =>{
+      if(this.tabIndex == 1){//主队
+        if(item.benefit == 2){
+          lineupInfo[0].push(item)
+        } else if(item.benefit == 4){
+          lineupInfo[1].push(item)
+        } else if(item.benefit == 0){
+          lineupInfo[2].push(item)
+        }
+      } else {
+        if(item.benefit == 3){
+          lineupInfo[0].push(item)
+        } else if(item.benefit == 5){
+          lineupInfo[1].push(item)
+        } else if(item.benefit == 1){
+          lineupInfo[2].push(item)
+        }
+      }
+    })
+    lineupData.value = lineupInfo;
+  })
+}
+
+onUnmounted(() => {
+  params.value = null;
+  lineupData.value = null;
+})
+
 </script>
 
 <style lang="scss" scoped>
