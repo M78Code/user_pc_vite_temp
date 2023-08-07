@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import team_img from "src/project/components/details/team-img";   
@@ -35,24 +35,21 @@ import injury_form from "src/project/pages/details/analysis-matches/components/i
 // TODO 后续修改调整
 // import {mapGetters} from "vuex";
 
-export default defineComponent({
-  name: "injury_situation",
-  components: {
-    "team-img": team_img,
-    "injury-form": injury_form,
-  },
-  props: {
+  // components: {
+  //   "team-img": team_img,
+  //   "injury-form": injury_form,
+  // },
+  const props = defineProps({
     // 伤停情况的数据
     injury_situation_data: {
       type: Object,
       default: () => ({}),
-    },
-  },
+    }
+  })
   // TODO 后续修改调整
   // computed: {
   //   ...mapGetters(['get_detail_data'])
   // },
-})
 </script>
 
 <style lang="scss" scoped>
