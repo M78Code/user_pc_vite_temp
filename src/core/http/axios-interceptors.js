@@ -143,8 +143,7 @@ const responseHook = {
       FNANI_STATUS.err_count[url_temp] = 0;
     }
     console.log("httpLog--------", httpLog);
-
-    httplog.push({ url: url_temp });
+    httpLog.push({ url: url_temp });
     return res;
   },
   reject: (error) => {
