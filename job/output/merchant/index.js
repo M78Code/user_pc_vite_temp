@@ -61,3 +61,12 @@ export const  compute_component_wapper_config=(component_config)=>{
     registered_component_key:component_config.registered_component_key
   }
 }
+
+
+export const  compute_server_resource=()=>{
+
+  return  merchant_config.server_resource ||{}
+}
+
+
+export const   server_resource =   compute_server_resource()
