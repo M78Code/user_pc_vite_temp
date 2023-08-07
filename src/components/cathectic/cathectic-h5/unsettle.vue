@@ -41,9 +41,16 @@
 </template>
 
 <script setup>
-  import { defineComponent, ref } from "vue"
+import lodash from 'lodash';
+import { api_betting } from "src/project/api/index.js";
+import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
+import settleVoid from "src/project/pages/cathectic/settle_void.vue";
+import scroll from "src/project/components/record_scroll/scroll.vue";
+// import skt_order from "src/public/mixins/websocket/data/skt_data_order.js"
+import SRecord from "src/project/components/skeleton/record.vue"
+import { mapGetters, mapMutations } from 'vuex';
 
-
+    // mixins: [skt_order]
     // components: {
     //   commonCathecticItem,
     //   settleVoid,
@@ -78,11 +85,18 @@
   // },
   
   init_data()
+  /**
+     * @description 判断所有订单是否有结算注单
+     * @param {undefined} undefined
+     * @returns {null} null
+     */
   watch(() => is_early, (_new) => {
+    /**判断所有订单是否有结算注单*/
       is_all_early_flag = _new ? clac_all_is_early() : false
   })
 
   onMounted(() => {
+    /**先清除计时器，再使用*/
     clearInterval(timer_2)
     timer_2 = setInterval(()=>{
       if (get_main_item == 0 && document.visibilityState == 'visible') {
@@ -94,24 +108,30 @@
   })
     // ...mapMutations(['set_early_moey_data']),
   /**
-   *@description 筛选所有提前结算注单
-    */
+     * @description 筛选所有提前结算注单
+     * @param {undefined} undefined
+     * @returns {null} null
+     */
   const change_early = () => {
     is_early = !is_early
   }
   /**
-   * @description 判断单个订单是否有结算注单
-   */
+     * @description 判断单个订单是否有结算注单
+     * @param {value} 金额
+     * @returns {boolean} 是否显示提前结算
+     */
   const clac_is_early = (value = []) => {
-    return _.some(value,{is_show_early_settle:true})
+    return lodash.some(value,{is_show_early_settle:true})
   }
   /**
-   * @description 判断所有订单是否有结算注单
-   */
+     * @description 判断所有订单是否有结算注单
+     * @param {undefined} undefined
+     * @returns {boolean} 是否有结算注单
+     */
   const clac_all_is_early = () => {
-    const data = _.values(list_data)
-    return _.find(data,(item)=>{
-      return _.some(item.data,{is_show_early_settle:true})
+    const data = lodash.values(list_data)
+    return lodash.find(data,(item)=>{
+      return lodash.some(item.data,{is_show_early_settle:true})
     }) ? false : true
   }
   /**
@@ -135,8 +155,8 @@
       return;
     }
     let tempList = []
-    _.forEach(list_data, (value, key)=> {
-      _.forEach(value.data,(item)=>{
+    lodash.forEach(list_data, (value, key)=> {
+      lodash.forEach(value.data,(item)=>{
         if(item.enablePreSettle){
           tempList.push(item.orderNo)
         }
@@ -145,30 +165,43 @@
     orderNumberItemList = tempList
   }
   /**
-   *@description 重新请求主单记录数据
-    *@return {Undefined} undefined
-    */
+     * @description 重新请求主单记录数据
+     * @param {Undefined} Undefined
+     * @return {Undefined} undefined
+     */
   const refreshOrderList = () => {
     last_record = ''
     init_data(true)
   }
   /**
-   *@description 初始请求注单记录数据
-    *@return {Undefined} undefined
-    */
+     * @description 初始请求注单记录数据
+     * @param {Undefined} Undefined
+     * @return {Undefined} undefined
+     */
   const init_data = (flag) => {
     var params = {
       searchAfter: last_record || undefined,
       orderStatus: 0,
     }
     is_loading = !flag
-    let size = 0  //第一次加载时的注单数
+    //请求注单记录接口
+    get_order_list(params)
+    
+  }
+  /**
+     * @description 请求注单记录接口
+     * @param {Undefined} Undefined
+     * @return {Undefined} undefined
+    */
+  const get_order_list = () => {
+    //第一次加载时的注单数
+    let size = 0  
     api_betting.post_getOrderList(params).then(res => {
       is_limit = false
       if (res.code == 200) {
-        let { record, hasNext } = _.get(res, "data");
+        let { record, hasNext } = lodash.get(res, "data");
         is_hasnext = hasNext
-        if (_.isEmpty(record)) {
+        if (lodash.isEmpty(record)) {
           is_loading = false;
           no_data = false;
           return;
@@ -178,7 +211,7 @@
           item.open = true
           size += item.data.length
         }
-        last_record = _.findLastKey(record);
+        last_record = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
         timer_1 = setTimeout(() => {
@@ -187,8 +220,8 @@
             is_loading = false;
           }
           // 合并数据
-          let obj = _.cloneDeep(list_data)
-          list_data = _.merge(obj, record)
+          let obj = lodash.cloneDeep(list_data)
+          list_data = lodash.merge(obj, record)
         }, 380);
       }else if(res.code == '0401038'){
         is_limit = true
@@ -215,9 +248,10 @@
     });
   }
   /**
-   *@description 页面上推分页加载
-    *@return {Undefined} undefined
-    */
+     * @description 页面上推分页加载
+     * @param {Undefined} Undefined
+     * @return {Undefined} undefined
+     */
   const onPull = () => {
     var params = {
       searchAfter: last_record || undefined,
@@ -234,17 +268,17 @@
     api_betting.post_getOrderList(params).then(res => {
       //加载完成
       ele.setState(5);  
-      let { record, hasNext } = _.get(res, "data", {});
+      let { record, hasNext } = lodash.get(res, "data", {});
       is_hasnext = hasNext
-      if (res.code == 200 && res.data && _.isPlainObject(record) && _.keys(record).length>0) {
+      if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
         for (let item of Object.values(record)) {
           item.open = true
         }
-        last_record = _.findLastKey(record);
+        last_record = lodash.findLastKey(record);
 
         // 合并数据
-        let obj = _.cloneDeep(list_data);
-        list_data = _.merge(obj, record)
+        let obj = lodash.cloneDeep(list_data);
+        list_data = lodash.merge(obj, record)
       } else {
         //没有更多
         ele.setState(7);  
@@ -260,7 +294,11 @@
     val.open = !val.open
     $forceUpdate()
   }
-  // 清除当前组件所有定时器
+  /**
+     * @description 清除当前组件所有定时器
+     * @param {Undefined} Undefined
+     * @return {Undefined} undefined
+     */
   const clear_timer = () => {
     
     clearTimeout(timer_1)
@@ -280,5 +318,58 @@
 </script>
 
 <style lang="scss" scoped>
+/**投注记录弹框未结算*/
+.unsettle {
+  height: 100%;
+  /**提前结算筛选按钮*/
+  .filter-button{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0.1rem;
+    position: absolute;
+    right: 0;
+    top: 0.15rem;
+  }
+  /**订单标题*/
+  .tittle-p {
+    width: 3.55rem;
+    height: 0.54rem;
+    line-height: 0.66rem;
+    margin: 0 auto;
+    padding: 0 0 0 0.04rem;
+    /**订单内容*/
+    span {
+      font-size: 0.18rem;
+      letter-spacing: 0;
+      font-weight: bold;
+    }
+  }
+  /**订单标题2*/
+  .tittle-p2 {
+    width: 3.55rem;
+    margin: 0 auto;
+    padding: 0 0 0 0.04rem;
+  }
 
+  .icon-down-arrow {
+    transform: scaleY(-1);
+  }
+
+  /**线*/
+  .line {
+    height: 0.5px;
+  }
+}
+/**提前结算默认*/
+.early {
+  display: inline-block;
+  background: var(--q-color-com-img-bg-69) no-repeat center / contain;
+  vertical-align: text-bottom;
+  width: 0.14rem;
+  height: 0.14rem;
+}
+/**提前结算*/
+.early2 {
+  background-image: var(--q-color-com-img-bg-68);
+}
 </style>

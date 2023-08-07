@@ -233,7 +233,7 @@ const wrapper_scrolling = ($event) =>{
       $root.$emit(emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
     },
     // 展示loading
-  const  show_hot_schedule_loading = (is_true)= >{
+  const  show_hot_schedule_loading = (is_true)=>{
       if(is_true){
         featured_loading.value = true
       }else{

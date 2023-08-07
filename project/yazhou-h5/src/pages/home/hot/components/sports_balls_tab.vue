@@ -51,177 +51,166 @@
   </div>
 </template>
 
-<script>
-import match_main from "src/project/pages/match-list/match_main";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
-import no_data from "src/project/components/common/no_data";    // 无网络展示组件
-import {mapGetters} from "vuex";
-import {api_home} from "src/project/api";
-import hot_list from "src/project/components/skeleton/home_hot/hot_list";   // 热门榜单 骨架屏
-import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏
-import public_form from "src/project/pages/home/hot/components/public_form.vue";    // 首页热门足球和 篮球的 公共榜单表格
+<script setup>
+// import match_main from "src/project/pages/match-list/match_main";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
+// import no_data from "src/project/components/common/no_data";    // 无网络展示组件
+// import {mapGetters} from "vuex";
+// import {api_home} from "src/project/api";
+// import hot_list from "src/project/components/skeleton/home_hot/hot_list";   // 热门榜单 骨架屏
+// import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏
+// import public_form from "src/project/pages/home/hot/components/public_form.vue";    // 首页热门足球和 篮球的 公共榜单表格
 
-export default {
-  name: "sports_balls_tab",
-  components: {
-    'public-form' : public_form, // 足球篮球榜单组件
-    "match-main": match_main, // 列表页组件
-    "no-data": no_data, // 无数据组件
-    "hot-list": hot_list, // 热门榜单 骨架屏
-    "hot-schedule": hot_schedule, // 热门赛程 骨架屏
-  },
-  props:{
-    tab_Index: Number
-  },
-  data() {
-    return {
-      // 篮球 西部联盟8     东部联盟9
-      allianc_list: [],
-      balls_list:[], // 排行榜 得分榜 表格的数据
-      // 0 代表 积分榜  否则 是 赛事列表
-      guess_standings: true,
-      // 当前榜单选择的下标
-      tabIndex: 0,
-      // 西部联盟8 东部联盟9 选择的下标
-      allianc_list_index: 0,
-      // 积分榜的 切换 下标
-      tab_name_index: 1,
-      // 积分榜 的接口数据
-      liat_data: null,
-      public_form_title: null,
-      loading_standings_data: false, // 有没有积分榜数据
-      list_loading: false, // 榜单 骨架屏
-      schedule_loading: false, // 热门赛程 骨架屏,
-      wrapper_scroll_top:0, //当列表滚动时隐藏罚牌说明
-    };
-  },
-  computed:{
-    ...mapGetters({
-      // 首页 热门当前选中的菜单
-      get_hot_tab_item:"get_hot_tab_item",
-      // 主题
-      get_theme:"get_theme",
-    })
-  },
-  watch: {
-    'balls_list': {
-      handler(n, o){
-        if(n.length>0) {
-          this.changeTab(n[0])
-        }
-        let alliance = n.filter(item => {
-          // 过滤掉热门赛事：item.spell != 'HOT'
-          if (item.type == 7 && item.value != null) {
-            return item
-          }
-        })
-        if(alliance && alliance[0]) {
-          this.allianc_list = alliance[0].value
-        }
-      },
-      immediate: true,
-      deep: true
+const props = defineProps({
+  tab_Index:null,
+})
+
+// 篮球 西部联盟8     东部联盟9
+const  allianc_list = ref([])
+const  balls_list= ref([]) // 排行榜 得分榜 表格的数据
+  // 0 代表 积分榜  否则 是 赛事列表
+const  guess_standings = ref(true)
+  // 当前榜单选择的下标
+const  tabIndex = ref(0)
+// 西部联盟8 东部联盟9 选择的下标
+const allianc_list_index=  ref(0)
+// 积分榜的 切换 下标
+const tab_name_index= ref(1)
+// 积分榜 的接口数据
+const liat_data= ref(null)
+const public_form_title= ref(null)
+const loading_standings_data= ref(false) // 有没有积分榜数据
+const list_loading= ref(false) // 榜单 骨架屏
+const schedule_loading= ref(false) // 热门赛程 骨架屏,
+const wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
+
+// computed:{
+//     ...mapGetters({
+//       // 首页 热门当前选中的菜单
+//       get_hot_tab_item:"get_hot_tab_item",
+//       // 主题
+//       get_theme:"get_theme",
+//     })
+//   }
+
+watch(()=> balls_list,(n,o)=>{
+  if(n.length>0) {
+    this.changeTab(n[0])
+   }
+  let alliance = n.filter(item => {
+    // 过滤掉热门赛事：item.spell != 'HOT'
+    if (item.type == 7 && item.value != null) {
+      return item
     }
-  },
-  mounted() {
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-    this.$root.$on(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-    this.$root.$on(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
-  },
-  methods: {
-    /**
+  })
+  if(alliance && alliance[0]) {
+    allianc_list.value = alliance[0].value
+  }
+})
+
+const on_listeners = () =>{
+
+}
+
+ /**
      * 页面滚动时隐藏提示
      */
-    wrapper_scrolling($event){
+  const  wrapper_scrolling = ($event) =>{
       //当列表滚动时隐藏罚牌说明
-      this.wrapper_scroll_top = $event.target.scrollTop;
-    },
+      wrapper_scroll_top.value = $event.target.scrollTop;
+    }
     // 积分榜表格 接口
-    async get_ranking_list(tid) { // tid 联赛id
+  const   get_ranking_list = async(tid)=>{ // tid 联赛id
       try {
-        this.list_loading = true
-        this.loading_standings_data = false
+        list_loading.value = true
+        loading_standings_data.value = false
         let {code, data} = await api_home.get_ranking_by_tournamentId({tournmentId:tid, isPc:0 })
-        this.list_loading = false
+        list_loading.value = false
         if (code == 200 && data != null) {
           data.forEach( (item, index) => {item.index = index})
-          this.balls_list = data
+          balls_list.value = data
         }else{
-          this.balls_list = []
-          this.loading_standings_data = true
+          balls_list.value = []
+          loading_standings_data.value = true
         }
       } catch (error) {
-        this.list_loading = false
-        this.loading_standings_data = true
+        list_loading.value = false
+        loading_standings_data.value = true
         console.error(error);
       }
-    },
+    }
     // 榜单页 和 赛程列表页面 的切换
-    leaderboard_switch() {
-      this.guess_standings = !this.guess_standings
-      this.loading_standings_data = false
-      if(!this.guess_standings){
+ const  leaderboard_switch = () => {
+      guess_standings.value = !guess_standings.value
+      loading_standings_data.value = false
+      if(!guess_standings.value){
         this.get_ranking_list(this.get_hot_tab_item.field2)
       }
       this.$forceUpdate()
-    },
+    }
     // 数据更新  初始化 sports_balls_tab 的data 数据
-    set_data_update_handle() {
-      this.guess_standings = true
-      this.allianc_list = []
-      this.loading_standings_data = false
-      this.liat_data = null
-    },
+ const  set_data_update_handle = () =>  {
+      guess_standings.value = true
+      allianc_list.value = []
+      loading_standings_data.value = false
+      liat_data.value = null
+    }
     // 赛程骨架屏的 显示
-    show_hot_schedule_loading(is_true) {
+ const show_hot_schedule_loading = (is_true) => {
       if(is_true){
-        this.schedule_loading = true
+        schedule_loading.value = true
       }else{
-        this.schedule_loading = false
+        schedule_loading.value = false
       }
-    },
+    }
     /**
      *  积分榜的 切换
      *  篮球  球队榜7 (西部联盟8     东部联盟9)        得分榜1      篮球助攻榜6    篮板榜3
      *  足球  积分榜4     足球助攻榜2      射手榜5
      */
-    changeTab(tab) {
-      this.tabIndex = tab.index
-      this.public_form_title = tab
+  const changeTab = (tab)  =>  {
+      tabIndex.value = tab.index
+      public_form_title.value = tab
       if(tab.type == 7) {
-        this.tab_name_index = 1
+        tab_name_index.value = 1
         if(tab.value){
-          this.allianc_list = tab.value
+          allianc_list.value = tab.value
           this.alliancTab({tab: tab.value[0], index: 0})
         }else{
-          this.liat_data = null
+          liat_data.value = null
         }
       }else if(tab.type == 4){
-        this.tab_name_index = 3
-        this.liat_data = tab.value
-        this.allianc_list = []
+        tab_name_index.value = 3
+        liat_data.value = tab.value
+        allianc_list.value = []
       } else{
-        this.tab_name_index = 2
-        this.allianc_list = []
+        tab_name_index.value = 2
+        allianc_list.value = []
         if([1,2,3,5,6].includes(+tab.type)){
-          this.liat_data = tab.value
+          liat_data.value = tab.value
         }
       }
-    },
+    }
     // 西部联盟8     东部联盟9 切换
-    alliancTab({tab, index}) {
-      this.allianc_list_index = index
-      this.liat_data = tab.value
+  const  alliancTab = ({tab, index})  => {
+      allianc_list_index.value = index
+      liat_data.value = tab.value
     }
-  },
-  destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-    this.$root.$off(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-    this.$root.$off(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
-    for (const key in this.$data) {
-      this.$data[key] = null
-    }
-  }
-}
+
+onmounted(()=>{
+  // this.$root.$on(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
+  //   this.$root.$on(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
+  //   this.$root.$on(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
+})
+
+onUnmounted(()=>{
+  // this.$root.$off(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
+  //   this.$root.$off(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
+  //   this.$root.$off(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
+  //   for (const key in this.$data) {
+  //     this.$data[key] = null
+  // }
+})
+
 </script>
 
 <style lang="scss" scoped>

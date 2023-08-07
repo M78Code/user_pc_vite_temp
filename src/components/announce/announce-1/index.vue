@@ -35,10 +35,10 @@ const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-// TODO: 
-import simpleHeader from "src/project/yazhou-pc/components/site-header/simple-header.vue";
-import LeftMenu from "src/project/yazhou-pc/components/site-header/left-menu.vue";
-import loadData from "src/project/yazhou-pc/components/load-data/load-data.vue"
+import simpleHeader from "./simple-header.vue";
+import LeftMenu from "./left-menu.vue";
+// TODO: 可能要换路径
+import loadData from "src/project/components/load_data/load_data.vue"
 // TODO: 待完善接口
 import { api_announce } from "src/public/api/index";
 

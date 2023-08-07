@@ -60,10 +60,10 @@
 <script>
 import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
 import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
-import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-results/index.js'
-import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-results/index.js'
-import { TabResultsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-results/index.js'
-import { TabResultsFullVersionWapper as news} from 'src/components/analysis/template/table-results/index.js'
+import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
+import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-infomation/index.js'
+import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
+import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/public/api/index'
 import { mapGetters } from 'vuex'
