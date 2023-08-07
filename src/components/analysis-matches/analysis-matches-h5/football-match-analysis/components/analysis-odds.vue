@@ -92,16 +92,11 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
 // TODO 后续修改调整
 // import { mapGetters } from "vuex";
-
-export default defineComponent({
-  name: "analysis_odds",
-
-  setup(props, event) {
     // 国际化后续修改调整
     let tab_list = ref([
         { name: $root.$t('footer_menu.rangqiu') },
@@ -124,13 +119,13 @@ export default defineComponent({
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-     radioButton = (index) => {
+    const radioButton = (index) => {
       if(tabIndex.value == index) return
       tabIndex.value = index
       data_list.value = []
       get_list()
-    },
-    get_list = async () => {
+    }
+    const get_list = async () => {
       try {
         is_done.value = false
         let parameter = {
@@ -146,9 +141,9 @@ export default defineComponent({
       } catch (error) {
         console.error(error);
       }
-    },
+    }
     // 刷新 当前赛事分析信息
-    refresh_match_analysis = () => {
+    const refresh_match_analysis = () => {
       const tabIndex = tabIndex.value
       tabIndex.value = -1
 
@@ -157,16 +152,14 @@ export default defineComponent({
       })
     }
 
-    computed(() => {
-      search_list_high = () => {
+    const search_list_high = computed(() => {
       let rem_1 = window.innerWidth * 100 / 375;
       return {height : window.innerHeight - rem_1 - 90 + 'px'}
-    },
+    })
     // 赛事id
-    match_id = () => {
+    const match_id = computed(() => {
       // get_detail_data.mid $route 后续修改调整
       return $route.params.mid || get_detail_data.mid
-    }
     })
     onUnmounted(() => {
       // 移除监听 赛事分析刷新事件 TODO $root emit 后续修改调整
@@ -183,24 +176,11 @@ export default defineComponent({
     //数据加载完成
      is_done.value = ref(false)
     })
-
-    return {
-      tab_list,
-      tabIndex,
-      data_list,
-      is_done,
-
-      radioButton,
-      get_list,
-      refresh_match_analysis,
-    }
-  },
   // computed: {
     //  TODO 后续修改调整
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
   // },
   
-})
 </script>
 
 <style lang="scss" scoped>

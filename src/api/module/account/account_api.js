@@ -4,11 +4,10 @@
  * @Description: 用户模块相关api定义
  */
 
-import {http} from "src/core/http/index.js";
+import {http} from "src/core/http/";
 
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_user} = API_PREFIX;
-
 let prifix_url =  http.HTTP_UPLOAD_API;
 
 // 注册

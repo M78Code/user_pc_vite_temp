@@ -64,7 +64,7 @@ class AxiosHttp {
     this.request_count = 0;
     // http root domain
     this.HTTP_ROOT_DOMAIN = "";
-    this.HTTP_UPLOAD_API=""
+    this.HTTP_UPLOAD_API = "";
     // axios 实例
     this.axios_instance = null;
     // 页面 失去 焦点后  HTTP 断开时间
@@ -353,4 +353,5 @@ class AxiosHttp {
     }
   }
 }
-export default new AxiosHttp();
+const http = new AxiosHttp();
+export default http;

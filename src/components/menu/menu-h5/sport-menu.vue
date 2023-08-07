@@ -168,9 +168,9 @@
 // TODO 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
 import setMenu from "src/project/components/common/set-menu";
-import sub_menu_specially from "src/project/pages/sport_menu/sub-menu-specially.vue";
+import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
 import utils from "utils/utils";
-import list_menu_mixin_new from 'src/project/pages/sport_menu/match-list-menu';
+import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
 import { api_result} from "src/project/api/index.js";
 import { activity_task_api } from "src/public/api";
 import lodash from 'lodash'
