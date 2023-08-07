@@ -253,41 +253,38 @@ const compute_value_by_odd_type = (val, odd_type, csid) => {
     }
 }
 
-export const use_bet_business = () => {
-    const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
-        /**
-         * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
-         * 是 对全局 赔率转换的 基础设定
-         * arr: 当前盘口 支持的赔率转换类型的 全部值
-         * csid ：赛种ID
-         */
-        if (!val) {
-            return;
-        }
-        // PS-9881赔率优化
-        let str = "";
-        breakVal = ""; // 断档值废弃
-        // 从欧盘转到港盘
-        if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
-            str = calc_odds(val, csid);
-            //聊天室跟单特殊处理 
-            // 当前不存在聊天室
-            // if(arr && arr.includes( oddsTable[cur_odd]) || vx_get_chat_room_type=="HK") {
-            //   str = change_EU_HK(str);
-            // }
-            return str;
-        }
-
-        if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
-            cur_odd == 'EU' ? str = calc_odds(val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd, csid);
-        } else {
-            str = calc_odds(val, csid);
-        }
+const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
+    /**
+     * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
+     * 是 对全局 赔率转换的 基础设定
+     * arr: 当前盘口 支持的赔率转换类型的 全部值
+     * csid ：赛种ID
+     */
+    if (!val) {
+        return;
+    }
+    // PS-9881赔率优化
+    let str = "";
+    breakVal = ""; // 断档值废弃
+    // 从欧盘转到港盘
+    if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
+        str = calc_odds(val, csid);
+        //聊天室跟单特殊处理 
+        // 当前不存在聊天室
+        // if(arr && arr.includes( oddsTable[cur_odd]) || vx_get_chat_room_type=="HK") {
+        //   str = change_EU_HK(str);
+        // }
         return str;
     }
 
-    return {
-        compute_value_by_cur_odd_type
+    if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
+        cur_odd == 'EU' ? str = calc_odds(val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd, csid);
+    } else {
+        str = calc_odds(val, csid);
     }
+    return str;
 }
 
+export {
+    compute_value_by_cur_odd_type
+}
