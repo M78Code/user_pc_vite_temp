@@ -26,5 +26,5 @@ export function UUID(num = 18) {
   for (let index = 0; index < num; index++) {
     uuid += StrAry[Math.floor(Math.random() * len)];
   }
-  return Math.random();
+  return uuid;
 }

@@ -1,8 +1,7 @@
 import { ref, watch, computed } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
-
-import { api_match } from "/src/api/index.js";
+import { api_match } from "src/api/index.js";
 // import store from "./src/store-redux-vuex/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
@@ -15,13 +14,14 @@ const url_params = GetUrlParams(); //获取url参数
 
 //动画逻辑 靠后
 
-
 /**
  * 获取用户信息
  */
 const handle_user_tryPlay = async () => {
   let token = ss.get(token_key);
   if (!token) {
+    console.log(api_match);
+    //试玩登录
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
@@ -65,12 +65,7 @@ const init_domain = async (config) => {
   try {
     // 设置是否是内嵌iframe
     // 设置商户分割信息
-    //  let gr = ss.get('gr')
-    //  if(gr){
-    //    window.env.config.gr = gr.toLocaleUpperCase();
-    //  } else {
-    //    window.env.config.gr = 'COMMON';
-    //  }
+    BUILDIN_CONFIG.DOMAIN_RESULT.gr = ss.get("gr", "COMMON");
     // 设置商户样式
     if (top.location != location) {
       if (
@@ -94,36 +89,13 @@ const init_domain = async (config) => {
     AllDomain.create(() => {
       // 首次进入,发现最快的域名
       console.log(" init_domain -- 回调执行:");
-      //  SDK
-      if (config) {
-        let { token, tryPlay } = config;
-
-        if (config.token) {
-          ss.set(token_key, token);
-        } else {
-          // 调用接口，获取token
-          handle_user_tryPlay();
-        }
-        if (config.call_back) {
-          if (typeof config.call_back == "function") {
-            config.call_back();
-          }
-        }
-      } else {
-        handle_user_tryPlay();
-      }
+      handle_user_tryPlay();
       // http初始化方法 会调用 setApiDomain
-      http.init();
-      if (!init_load.value) {
-          // http初始化方法 会调用 setApiDomain
-          http.init();
-        }
       // ws和http域名切换逻辑
       http.setApiDomain();
-  init_load.value=true;
-
+      init_load.value = true;
       // 首次初始化时调用
-        handle_user_tryPlay();
+      handle_user_tryPlay();
       // 元数据初始化
       base_data.init();
     });

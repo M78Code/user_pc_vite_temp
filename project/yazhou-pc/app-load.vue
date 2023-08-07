@@ -15,10 +15,9 @@ import "./src/boot/globel-mitt";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import wslog from "src/core/ws/ws-log.js";
 import { httplog } from "src/core/http/";
-import { useEventListener } from "src/core/utils/event-hook";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
-import { reactive, onBeforeMount, onMounted } from "vue";
+import { reactive, onBeforeMount, onMounted,ref } from "vue";
 import { useRouter } from "vue-router";
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
@@ -42,7 +41,7 @@ iframe_check();
 // init_lang($t("isoName"));
 // 发送日志s
 // window.wslog.sendMsg('xxx');
-timeCheck();
+// timeCheck();
 // 只在开发环境下启用vconsole
 /* const Vconsole = require('vconsole')
       new Vconsole(); */

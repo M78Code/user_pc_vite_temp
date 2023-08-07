@@ -1,4 +1,4 @@
 
-import ArticleDetailsFullVersionWapper from "./full-version-wapper/index.vue";
+import TabNewsFullVersionWapper from "./full-version-wapper/index.vue";
 
-export { ArticleDetailsFullVersionWapper };
+export { TabNewsFullVersionWapper };

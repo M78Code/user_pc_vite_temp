@@ -257,3 +257,16 @@ export const EMIT_NET_ERR = "EMIT_NET_ERR"
 export const EMIT_API_USER_PRO_INFO_CMD="EMIT_API_USER_PRO_INFO_CMD"
 // 调用用户接口，更新 域名流程
 export const EMIT_SET_GETUSERINFO_OSS_API = "EMIT_SET_GETUSERINFO_OSS_API";
+
+
+// ------------------------------------------------------------------投注相关-----------------------------------------------------------------------------------
+// 添加虚拟体育投注项对象
+export const EMIT_VITTUAL_BET_OBJ_ADD = "EMIT_VITTUAL_BET_OBJ_ADD"
+// 移除虚拟体育投注项对象 移除对应的键值对
+export const EMIT_VITTUAL_BET_OBJ_DEL = "EMIT_VITTUAL_BET_OBJ_DEL"
+// 移除虚拟体育投注项对象 移除对应的数据
+export const EMIT_VITTUAL_BET_LIST_DEL = "EMIT_VITTUAL_BET_LIST_DEL"
+// 获取投注项状态
+export const EMIT_GET_ODDS_ACTIVE = "EMIT_GET_ODDS_ACTIVE"
+
+

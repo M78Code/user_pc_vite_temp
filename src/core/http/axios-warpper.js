@@ -64,7 +64,7 @@ class AxiosHttp {
     this.request_count = 0;
     // http root domain
     this.HTTP_ROOT_DOMAIN = "";
-    this.HTTP_UPLOAD_API=""
+    this.HTTP_UPLOAD_API = "";
     // axios 实例
     this.axios_instance = null;
     // 页面 失去 焦点后  HTTP 断开时间
@@ -280,7 +280,7 @@ class AxiosHttp {
    * @param {Object} request_config [axios配置项]
    * @param {Object} config [axios配置项]
    */
-  async request(request_config, config) {
+  async request(request_config={}, config) {
     //未知原因导致调用此方法的时候 axios 未实例化
     //38913 【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     if (!this.axios_instance) {
@@ -323,7 +323,7 @@ class AxiosHttp {
     // 删除内部参数
     try {
       wslog.send_msg("HTTP-S:", { url: request_config.url, params });
-      const res = await this.instance.request(request_config);
+      const res = await this.axios_instance.request(request_config);
       //接口的全局跟踪 检查UID gcuuid   嫁接
       if (request_config.gcuuid) {
         res.data.gcuuid = request_config.gcuuid;
@@ -353,4 +353,5 @@ class AxiosHttp {
     }
   }
 }
-export default new AxiosHttp();
+const http = new AxiosHttp();
+export default http;

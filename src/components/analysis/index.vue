@@ -58,14 +58,14 @@
 </template>
 
 <script>
-import tabResults from 'src/public/components/analysis/template/tab_results.vue'
-import tabData from 'src/public/components/analysis/template/tab_data'
-import tabLineup from 'src/public/components/analysis/template/tab_lineup'
-import tabInformation from 'src/public/components/analysis/template/tab_information'
-import tabOdds from 'src/public/components/analysis/template/tab_odds'
-import matchDate from "src/public/components/match_process/match_process.vue";
+import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
+import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
+import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
+import { TabInformationFullVersionWapper as tabInformation} from 'src/components/analysis/template/table-infomation/index.js'
+import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
+import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
+import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/public/api/index'
-import news from "src/public/components/analysis/template/tab_news"
 import { mapGetters } from 'vuex'
 import time_format from 'src/public/mixins/common/time_format'
 export default {

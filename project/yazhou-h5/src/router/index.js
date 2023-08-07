@@ -14,7 +14,7 @@ const router = createRouter({
         {
           path: "/match",
           name: "matchList",
-          component: () => import("project_path/pages/match-list/match_main.vue"),
+          component: () => import("project_path/pages/match-list/index.vue"),
           meta: {
             keepAlive: true // 需要缓存
           },
