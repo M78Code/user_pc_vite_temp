@@ -62,7 +62,7 @@
       </scroll>
     </div>
 </template>
-<script>
+<script setup>
 // TODO  后面数据接入后删除
 //   import { mapGetters } from "vuex";
   import { defineComponent, watch, onUnmounted, ref, getCurrentInstance } from 'vue'
@@ -73,43 +73,40 @@
   import SRecord from "src/project/components/skeleton/record.vue"
   import lodash from "lodash"
   
-export default defineComponent({
-    name: "settle",
-    components: {
-      commonCathecticItem,
-      settleVoid,
-      scroll,
-      SRecord
-    },
-    setup(props, event) {
-        // 锚点
-        const myScroll = ref(null)
-        //是否加载中
-        let is_loading =  ref(true)
-        //列表数据集合
-        let list_data = ref({})
-        //list_data里面最后的一条数据的日期 '2020-11-17'
-        let last_record = ref('')
-        //是否没有数据
-        let no_data = ref(true)
-        // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
-        let sort_active = ref(2)
-        // 展示多长时间的注单记录
-        let date_limit = ref(7)
-        // 是否存在下一页
-        let is_hasnext = ref(false)
-        //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
-        let is_all_early_flag = ref(false)
-        // 提前结算图标是否选中
-        let is_early = ref(false)
-        // 排序设置弹框是否显示
-        let is_sort_show = ref(false)
-        // 接口是否返回错误码为0401038限频
-        let is_limit = ref(false)
-        //服务器返回错误为0401038拉取接口次数
-        let count2 = ref(0)
-        // 强制更新DOM
-        const instance = getCurrentInstance()
+    // components: {
+    //   commonCathecticItem,
+    //   settleVoid,
+    //   scroll,
+    //   SRecord
+    // },
+    // 锚点
+    const myScroll = ref(null)
+    //是否加载中
+    let is_loading =  ref(true)
+    //列表数据集合
+    let list_data = ref({})
+    //list_data里面最后的一条数据的日期 '2020-11-17'
+    let last_record = ref('')
+    //是否没有数据
+    let no_data = ref(true)
+    // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
+    let sort_active = ref(2)
+    // 展示多长时间的注单记录
+    let date_limit = ref(7)
+    // 是否存在下一页
+    let is_hasnext = ref(false)
+    //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
+    let is_all_early_flag = ref(false)
+    // 提前结算图标是否选中
+    let is_early = ref(false)
+    // 排序设置弹框是否显示
+    let is_sort_show = ref(false)
+    // 接口是否返回错误码为0401038限频
+    let is_limit = ref(false)
+    //服务器返回错误为0401038拉取接口次数
+    let count2 = ref(0)
+    // 强制更新DOM
+    const instance = getCurrentInstance()
 
     /**
        *@description 点击其他地方要让排序设置弹框消失
@@ -270,63 +267,33 @@ export default defineComponent({
         val.open = !val.open
         instance.proxy.$forceUpdate()
       }
-    watch(() => {}, () => {
+    watch(() => get_main_item, (newval) => {
     /**
      * @description 初次切换到已结算时加载数据
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-      get_main_item = (newval) => {
-        if (newval == 1) {
-          !last_record.value && init_data()
-        }
-      },
+      if (newval == 1) {
+        !last_record.value && init_data()
+      }})
     /**
      * @description 是否提前结算
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-      is_early = (_new) => {
+    watch(() => is_early, (_new) => {
         is_all_early_flag.value = _new ? clac_all_is_early() : false
-      }
     })
     onUnmounted(() => {
     //   for (const key in this.$data) {
     //     this.$data[key] = null
     //   }
     })
-        return {
-            is_loading,
-            list_data,
-            last_record,
-            no_data,
-            sort_active,
-            date_limit,
-            is_hasnext,
-            is_all_early_flag,
-            is_early,
-            is_sort_show,
-            is_limit,
-            count2,
-            myScroll,
-            instance,
-            toggle_show,
-            onPull,
-            init_data,
-            change_early,
-            change_sort,
-            change_date,
-            clac_all_is_early,
-            clac_is_early,
-            change_is_sort_show,
-        }
-    },
     // computed: {
     //   ...mapGetters(["get_main_item", "get_user"])
     // },
     
     
-  });
 </script>
   
 <style lang="scss" scoped>

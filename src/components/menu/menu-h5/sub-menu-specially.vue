@@ -26,8 +26,12 @@ import { computed } from 'vue';
 // TODO 后续修改调整
 // import {mapGetters} from "vuex";
   const props = defineProps({
-    count:Number,
-    title:String
+    count: {
+      type: Number,
+    },
+    title: {
+      type: String,
+    }
   })
   computed(() => {
     // TODO 后续修改调整
