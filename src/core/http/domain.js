@@ -779,7 +779,7 @@ class AllDomain {
       }
 
       for (const key_ in data) {
-        if (key_ && keylodash.indexOf("GA") == 0) {
+        if (key_ && key_.indexOf("GA") == 0) {
           //解密 GA*.api   ,  正确结构：["xsxsax"]
           let api = lodash.get(data, key_ + ".api");
           if (lodash.isArray(api) && api[0] && lodash.isString(api[0])) {

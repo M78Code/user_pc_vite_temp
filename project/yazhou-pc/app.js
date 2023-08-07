@@ -1,8 +1,7 @@
 import { ref, watch, computed } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
-
-import { api_match } from "/src/api/index.js";
+import { api_match } from "src/api/index.js";
 // import store from "./src/store-redux-vuex/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
@@ -21,7 +20,8 @@ const url_params = GetUrlParams(); //获取url参数
  */
 const handle_user_tryPlay = async () => {
   let token = ss.get(token_key);
-  if (!token) {
+  if (token) {
+    console.log(api_match)
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
