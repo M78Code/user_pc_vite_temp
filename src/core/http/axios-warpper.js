@@ -10,6 +10,7 @@ import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
+import { ss,ls } from "../utils/web-storage";
 /**
  * 页面隐藏时间 纪录
  */
