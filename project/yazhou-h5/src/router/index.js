@@ -22,7 +22,7 @@ const router = createRouter({
         {
           path: "/home",
           name: "home",
-          component: () => import("project_path/pages/home/home_index.vue")
+          component: () => import("project/yazhou-h5/src/pages/home/home_index.vue") 
         },
         {
           path: "/activity_task",
