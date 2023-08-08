@@ -13,7 +13,7 @@ import { i18n } from "project_path/src/boot/i18n";
 
 //  1001  1004
 import { instance as userCtr } from "src/core/user-config/user-ctr.js";
-import _ from 'lodash'
+import _ from "lodash";
 // indexeDb
 import { db } from "src/core/utils/base-data/config/indexedPB.js";
 
@@ -532,8 +532,12 @@ class BaseData {
    * 获取 元数据接口
    */
   async init_base_data() {
-    let res = await api_base_data.get_base_data({});
-    this.set_base_data_res(res);
+    try {
+      let res = await api_base_data.get_base_data({});
+      this.set_base_data_res(res);
+    } catch (error) {
+      console.log("获取 元数据接口 error", error);
+    }
   }
 
   /**
@@ -656,7 +660,7 @@ class BaseData {
     // 获取语言类型
     let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports =i18n.global.messages?.common?.e_sports;
+    let esports = i18n.global.messages?.common?.e_sports;
 
     // 菜单 国际化 数据  map
     res["2000"] = esports;
