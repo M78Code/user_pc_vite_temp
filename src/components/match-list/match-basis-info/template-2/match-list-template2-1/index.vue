@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息
--->
 <template>
   <div class="basic-wrap relative-position" @click.stop="on_go_detail" >
     <!-- 棒球发球方 -->
@@ -87,39 +82,36 @@
   </div>
 </template>
 
-<script>
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-export default {
-  mixins:[match_basis_info_mixin],
-  props: {  
-    // 是否显示中立场 盘口数
-    is_show_more: {
-      type:Boolean,
-      default:true
-    },
-  },
-  computed: {
-    // 是否展示为比分判定中 
-    scoring() {
-      const {csid, ms, mmp, home_score, away_score} = this.match
-      let scoring = false
-      if (
-        this.$utils.is_eports_csid(csid) && // 电竞赛事
-        this.$utils.get_match_status(ms, [ 110 ]) // 且为滚球（进行中）状态
-      ) {
-        // 电竞未开赛 展示为 第一局
-        const mmp_state = mmp || 1
-        // 当前局数不等于 比分总和加一，則提示比分判定中
-        if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
-          scoring = true
-        }
-      }
-      return scoring
+<script setup>
+// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
+// mixins:[match_basis_info_mixin],
+
+import { computed, defineProps } from 'vue';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+import { get_match_status, is_eports_csid } from 'src/core/utils/index'
+
+const props = defineProps({ ...useProps });
+
+//是否展示为比分判定中
+const scoring = computed(() => {
+  const {csid, ms, mmp, home_score, away_score} = this.match
+  let scoring = false
+  if (
+    is_eports_csid(csid) && // 电竞赛事
+    get_match_status(ms, [ 110 ]) // 且为滚球（进行中）状态
+  ) {
+    // 电竞未开赛 展示为 第一局
+    const mmp_state = mmp || 1
+    // 当前局数不等于 比分总和加一，則提示比分判定中
+    if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
+      scoring = true
     }
   }
-};
+  return scoring
+})
 </script>
-
 <style lang="scss" scoped>
 .basic-col {
   .row-item {
@@ -160,3 +152,4 @@ export default {
   }
 }
 </style>
+

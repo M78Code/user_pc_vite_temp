@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息
--->
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
     <!-- 主队信息 -->
@@ -95,132 +90,112 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-import { mapGetters } from "vuex";
-export default {
-  mixins:[match_basis_info_mixin],
-  props: {
-    // 显示类型 'no-more':不显示 收藏、玩法数量等 'all' 显示所有信息
-    show_type: String,
-    is_15min:{
-      type:Boolean,
-      default:false
-    }
-  },
-  inject:['match_list_data'],
+import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+import { get_match_status } from 'src/core/utils/index'
+import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 
-  data(){
-    return {
-      // 是否显示主队进球动画
-      is_show_home_goal:false,
-      // 是否显示客队进球动画
-      is_show_away_goal:false,
-      // 是否显示主队红牌动画
-      is_show_home_red:false,
-      // 是否显示客队红牌动画
-      is_show_away_red:false,
-       //赛事是否收藏
-      is_collect:false
-    }
-  },
-  computed:{
-    ...mapGetters({
-      get_collect_count:'get_collect_count'
-    }),
-    play_name_obj() {
-			let play_name_obj = {
-				key: 'main',
-				suffix_name: '',
-        score_key: ''
-			}
-      let {ms,tpl_id,hSpecial}  =  this.match || {}
-      //滚球
-			if (this.$utils.get_match_status(ms, [110]) == 1) {
-         //角球后缀
-				if ($NewMenu.is_corner_menu()) {
-					play_name_obj = {
-						key: 'corner',
-						suffix_name: ' - ' + this.$root.$t('list.corner'),
-            score_key: 'S5'
-					}
-          //罚牌后缀
-				} else if (tpl_id == 25) {
-					play_name_obj = {
-						key: 'punish',
-						suffix_name: ' - ' + this.$root.$t('list.punish'),
-            score_key: 'S10102'
-					}
-          // 15分钟比分
-				}else if(tpl_id == 24 ){
-          play_name_obj = {
-                key: 'main',
-                suffix_name: '',
-                score_key: `S100${hSpecial}`
-          }
-        }
-			}
-      return play_name_obj
-		},
-  },
-  watch:{
-    // 监听收藏数量，更新收藏icon 颜色
-    get_collect_count(v){
-      const cur = this.match_list_data.mid_obj
-      this.is_collect = Boolean (cur['mid_'+this.match.mid].mf)
-    },
-   
-    // 监听主比分变化
-    'match.home_score'(n,o){
-      //推送时间是否过期
-      let is_time_out = (this.$utils.get_remote_time()-this.match.ws_update_time)<3000
-      // 足球 并且已开赛
-      if(this.match.csid == 1 && this.$utils.get_match_status(this.match.ms,[110]) == 1 && n!=0 && is_time_out ){
-        this.is_show_home_goal = true;
-        this.hide_home_goal();
-      }
-    },
-    // 监听主比分变化
-    'match.away_score'(n,o){
-      //推送时间是否过期
-      let is_time_out = (this.$utils.get_remote_time()-this.match.ws_update_time)<3000
-      // 足球 并且已开赛
-      if(this.match.csid == 1 && this.$utils.get_match_status(this.match.ms,[110]) == 1  && n!=0 && is_time_out ){
-        this.is_show_away_goal = true;
-        this.hide_away_goal();
-      }
-    },
-  },
-  created(){
-    this.is_collect = Boolean (this.match.mf)
-    //进球特效防抖
-    this.hide_home_goal = this.debounce(this.hide_home_goal,5000);
-    this.hide_away_goal = this.debounce(this.hide_away_goal,5000);
-  },
-  beforeDestroy(){
-    this.debounce_throttle_cancel(this.hide_home_goal);
-    this.debounce_throttle_cancel(this.hide_away_goal);
-  },
-  methods:{
-    /**
-     * @Description 隐藏主队进球动画
-     * @param {undefined} undefined
-    */
-    hide_home_goal(){
-      this.is_show_home_goal = false;
-    },
-    /**
-     * @Description 隐藏客队进球动画
-     * @param {undefined} undefined
-    */
-    hide_away_goal(){
-      this.is_show_away_goal = false;
-    },
+const props = defineProps({ ...useProps });
+
+const is_show_home_goal = ref(false) // 是否显示主队进球动画
+const is_show_away_goal = ref(false) // 是否显示客队进球动画
+const is_show_home_red = ref(false) // 是否显示主队红牌动画
+const is_show_away_red = ref(false) // 是否显示客队红牌动画
+const is_collect = ref(false) //赛事是否收藏
+
+const play_name_obj = computed(() => {
+  let play_name_obj = {
+    key: 'main',
+    suffix_name: '',
+    score_key: ''
   }
-};
-</script>
+  let {ms,tpl_id,hSpecial}  =  this.match || {}
+  //滚球
+  if (get_match_status(ms, [110]) == 1) {
+      //角球后缀
+    if (props.NewMenu.is_corner_menu()) {
+      play_name_obj = {
+        key: 'corner',
+        suffix_name: ' - ' + this.$root.$t('list.corner'),
+        score_key: 'S5'
+      }
+      //罚牌后缀
+    } else if (tpl_id == 25) {
+      play_name_obj = {
+        key: 'punish',
+        suffix_name: ' - ' + this.$root.$t('list.punish'),
+        score_key: 'S10102'
+      }
+      // 15分钟比分
+    }else if(tpl_id == 24 ){
+      play_name_obj = {
+        key: 'main',
+        suffix_name: '',
+        score_key: `S100${hSpecial}`
+      }
+    }
+  }
+  return play_name_obj
+})
 
+is_collect.value = Boolean (this.match.mf)
+//进球特效防抖
+hide_home_goal = this.debounce(hide_home_goal,5000);
+hide_away_goal = this.debounce(hide_away_goal,5000);
+
+// 监听收藏数量，更新收藏icon 颜色
+watch(get_collect_count, () => {
+  const cur = this.match_list_data.mid_obj
+  is_collect.value = Boolean (cur['mid_'+this.match.mid].mf)
+})
+
+// 监听主比分变化
+watch(match.home_score, (n) => {
+  //推送时间是否过期
+  let is_time_out = (get_remote_time()-this.match.ws_update_time)<3000
+  // 足球 并且已开赛
+  if(this.match.csid == 1 && get_match_status(this.match.ms,[110]) == 1 && n!=0 && is_time_out ){
+    is_show_home_goal.value = true;
+    hide_home_goal();
+  }
+})
+
+// 监听主比分变化
+watch(match.away_score, (n) => {
+  //推送时间是否过期
+  let is_time_out = (get_remote_time()-this.match.ws_update_time)<3000
+  // 足球 并且已开赛
+  if(this.match.csid == 1 && get_match_status(this.match.ms,[110]) == 1  && n!=0 && is_time_out ){
+    is_show_away_goal.value = true;
+    hide_away_goal();
+  }
+})
+
+/**
+ * @Description 隐藏主队进球动画
+ * @param {undefined} undefined
+*/
+const hide_home_goal = () => {
+  is_show_home_goal.value = false;
+}
+
+/**
+ * @Description 隐藏客队进球动画
+ * @param {undefined} undefined
+*/
+const hide_away_goal = () => {
+  is_show_away_goal.value = false;
+}
+
+onUnmounted(() => {
+  this.debounce_throttle_cancel(hide_home_goal());
+  this.debounce_throttle_cancel(hide_away_goal());
+})
+</script>
 <style lang="scss" scoped>
 .basic-col {
   .row-item {

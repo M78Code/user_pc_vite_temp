@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息
--->
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail">
     <!-- 发球方 -->
@@ -75,17 +70,17 @@
 
   </div>
 </template>
+<script setup>
+// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
+// mixins:[match_basis_info_mixin],
 
-<script>
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-export default {
-  mixins:[match_basis_info_mixin],
-};
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+
 </script>
-
 <style lang="scss" scoped>
-.basic-wrap {
-  position: relative;
+.basic-col {
   .row-item {
     display: flex;
     height: 35px;
@@ -97,30 +92,27 @@ export default {
       align-items: center;
     }
   }
+  .gif-text {
+    white-space: nowrap;
+    padding-left: 3px;
+    animation: 1s text-flash linear infinite normal;
+  }
+  .red-ball {
+    margin: 0 0 2.5px 8px;
+    position: relative;
+    top: 1px;
+    padding: 0 2px;
+    height: 14px;
+    line-height: 14px;
+    &.flash {
+      animation: 1s text-flash linear infinite normal;
+    }
+  }
   .match-icon {
     justify-content: space-between;
   }
   .more-info{
      align-items: center;
-  }
-
-  /*  发球方 */
-  .serve-ball {
-    position: absolute;
-    top: 0;
-    left: -14px;
-    width: 7px;
-    height: 100%;
-    .point {
-      width: 100%;
-      height: 7px;
-      border-radius: 50%;
-      margin-top: 14px;
-      background-color: #d0d8de;
-      &.away {
-        margin-top: 26px;
-      }
-    }
   }
 }
 </style>
