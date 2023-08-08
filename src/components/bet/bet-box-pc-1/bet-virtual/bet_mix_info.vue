@@ -29,19 +29,12 @@
     </div>
   </div>
 </template>
-<script>
-import bet_mix_info from "src/public/mixins/virtual_bet/bet_mix_info.js";
-import BetMixItem from "src/public/components/virtual_bet/bet_mix_item.vue";
-import BetMixInput from "src/public/components/virtual_bet/bet_mix_input.vue";
-export default {
-  mixins: [bet_mix_info],
-    components: {
-    // 串关投注项组件
-    "bet-mix-item": BetMixItem,
-    // 串关投注输入框组件
-    "bet-mix-input": BetMixInput,
-  },
-};
+<script setup>
+
+// import bet_mix_info from "src/public/mixins/virtual_bet/bet_mix_info.js";
+import BetMixItem from "./bet-mix-item.vue";
+import BetMixInput from "./bet-mix-input.vue";
+
 </script>
 <style lang="scss" scoped>
 /*  第一个输入框距离顶部样式 */

@@ -139,15 +139,8 @@
   </q-card>
 </template>
 <script>
-import bet_single_record from "src/public/mixins/virtual_bet/bet_single_record";
-export default {
-  mixins: [bet_single_record],
-  data() {
-    return {
-      
-    }
-  },
-};
+// import bet_single_record from "src/public/mixins/virtual_bet/bet_single_record";
+
 </script>
 <style lang="scss" scoped>
 /*  卡片失去焦点时的样式 */

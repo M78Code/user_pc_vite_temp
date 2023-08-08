@@ -33,7 +33,7 @@
 <script setup>
 
 import VirtualBetSingle from "./bet-virtual/bet-virtual-single.vue"
-import VirtualBetSingle from "./bet-virtual/bet-virtual-single.vue"
+import VirtualBetSingle from "./bet-virtual/bet-virtual-mix.vue"
 import CheckBox from './filter-checkbox.vue'
 import BetSingle from "./bet-single/bet-single.vue"
 import BetMix from "./bet-single/bet-mix.vue"

@@ -85,11 +85,11 @@
   </q-card>
 </template>
 <script>
-import bet_mix_record_item from "src/public/mixins/virtual_bet/bet_mix_record_item.js";
-export default {
-  // 投注记录投注项组件
-  mixins: [bet_mix_record_item]
-};
+// import bet_mix_record_item from "src/public/mixins/virtual_bet/bet_mix_record_item.js";
+// export default {
+//   // 投注记录投注项组件
+//   mixins: [bet_mix_record_item]
+// };
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 */

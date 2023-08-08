@@ -75,7 +75,7 @@
 </template>
 <script setup>
 // import betting from "src/public/mixins/betting/betting.js";
-import BetKeyboard from "./bet/bet_keyboard.vue";
+import BetKeyboard from "../common/bet-keyboard.vue";
 
 </script>
 <style scoped lang="stylus">

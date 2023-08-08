@@ -134,7 +134,7 @@
               </template>
             </div>
             <div class="col-auto bet-total-right">
-              {{bet_this.bet_total_money|format_currency}}
+              {{bet_this.bet_total_money||format_currency}}
             </div>
           </div>
           <div class="row bet-total">
@@ -143,7 +143,7 @@
               <!-- 预计总收益 -->
             </div>
             <div class="col-auto bet-total-right bet-gold-text">
-              {{bet_this.bet_total_win_money|format_currency}}
+              {{bet_this.bet_total_win_money||format_currency}}
             </div>
           </div>
           <template v-if="!bet_this.show_invalid_btn">
@@ -299,35 +299,36 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from "vuex";
-import betting from "src/public/mixins/betting/betting2.js";
-export default {
-  name: "VirtualBetScrollFooter",
-  mixins: [betting],
-  components: {
-    "check-box": () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/project/yabo/components/match_list/filter_checkbox.vue"),  //选择框
-  },
-  props: {
-    bet_recode_this: Object,// 投注记录组件this
-    bet_this: Object // 串关组件this
-  },
-  data() {
-    return {
-    };
-  },
-  created () {
-    // 显示部分dom ID
-    this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
-  },
-  computed: {
-    ...mapGetters({
-      vx_get_virtual_bet_list: "get_virtual_bet_list", //虚拟体育投注列表
-      vx_get_menu_change: "get_menu_change",   // 菜单是否改变
-      vx_layout_left_show: "get_layout_left_show" // 左侧布局
-    })
-  }
-};
+<script setup>
+import CheckBox from "../common/filter-checkbox.vue"
+// import { mapGetters } from "vuex";
+// import betting from "src/public/mixins/betting/betting2.js";
+// export default {
+//   name: "VirtualBetScrollFooter",
+//   mixins: [betting],
+//   components: {
+//     "check-box": () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/project/yabo/components/match_list/filter_checkbox.vue"),  //选择框
+//   },
+//   props: {
+//     bet_recode_this: Object,// 投注记录组件this
+//     bet_this: Object // 串关组件this
+//   },
+//   data() {
+//     return {
+//     };
+//   },
+//   created () {
+//     // 显示部分dom ID
+//     this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+//   },
+//   computed: {
+//     ...mapGetters({
+//       vx_get_virtual_bet_list: "get_virtual_bet_list", //虚拟体育投注列表
+//       vx_get_menu_change: "get_menu_change",   // 菜单是否改变
+//       vx_layout_left_show: "get_layout_left_show" // 左侧布局
+//     })
+//   }
+// };
 </script>
 
 <style lang="scss" scoped>

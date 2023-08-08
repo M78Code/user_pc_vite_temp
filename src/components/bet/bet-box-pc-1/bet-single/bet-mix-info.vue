@@ -41,9 +41,9 @@
 </template>
 <script setup>
 // import bet_mix_info from "src/public/mixins/bet/bet_mix_info.js";
-import BetMixItem from "./bet/bet_mix_item.vue";
-import BetMixInput from "./bet/bet_mix_input.vue";
-import BetMixResult from "./bet/bet_mix_result.vue";
+import BetMixItem from "./bet-mix-item.vue";
+import BetMixInput from "./bet-mix-input.vue";
+import BetMixResult from "./bet-mix-result.vue";
 
 const props = defineProps({
   //接收到的串关数据

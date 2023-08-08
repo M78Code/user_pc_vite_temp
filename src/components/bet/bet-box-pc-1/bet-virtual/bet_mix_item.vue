@@ -146,10 +146,8 @@
   </div>
 </template>
 <script>
-import bet_mix_item from "src/public/mixins/virtual_bet/bet_mix_item.js";
-export default {
-  mixins: [bet_mix_item]
-};
+// import bet_mix_item from "src/public/mixins/virtual_bet/bet_mix_item.js";
+
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 */

@@ -50,18 +50,11 @@
     </template>
   </div>
 </template>
-<script>
-import bet_single from "src/public/mixins/virtual_bet/bet_single.js";
-import BetSingleInfo from "src/public/components/virtual_bet/bet_single_info.vue";
-import BetSingleRecord from "src/public/components/virtual_bet/bet_single_record.vue";
+<script setup>
+// import bet_single from "src/public/mixins/virtual_bet/bet_single.js";
+import BetSingleInfo from "./bet-single-info.vue";
+import BetSingleRecord from "./bet-single-record.vue";
 
-export default {
-  mixins: [  bet_single],
-  components: {
-    "bet-single-info": BetSingleInfo,
-    "bet-single-record": BetSingleRecord
-  }
-};
 </script>
 <style lang="scss" scoped>
 .bet-single{

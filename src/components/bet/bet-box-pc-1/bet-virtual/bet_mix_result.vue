@@ -39,23 +39,16 @@
       </div>
       <div class="row bet-win-info2 yb-fontsize12">
         <div class="col bet-win-value">
-          {{parseFloat(series_obj.seriesBetAmount/100)|format_currency}}
+          {{parseFloat(series_obj.seriesBetAmount/100)||format_currency}}
         </div>
-        <div class="col-auto bet-win-value text-right yb-fontsize12">{{parseFloat(max_win_amount)|format_currency}}</div>
+        <div class="col-auto bet-win-value text-right yb-fontsize12">{{parseFloat(max_win_amount)||format_currency}}</div>
       </div>
     </q-card-section>
   </q-card>
 </template>
 <script>
-import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
-export default {
-  mixins: [bet_mix_result],
-  data() {
-    return {
-  
-    }
-  },
-};
+// import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
+
 </script>
 <style lang="scss" scoped>
 /* *卡片获取焦点时的样式* */

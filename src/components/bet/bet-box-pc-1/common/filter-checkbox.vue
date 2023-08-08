@@ -1,6 +1,4 @@
 <!--
- * @Author: Cable
- * @Date: 2020-08-04 17:13:55
  * @Description: 联赛筛选选择框组件
 -->
 <template>
@@ -10,12 +8,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "FliterCheckbox",
-  props: {
-    //是否选中
-    checked: Boolean,
+<script setup>
+
+const props = defineProps({
+  //是否选中
+  checked: Boolean,
     //赛果单选框样式
     results_checkbox_style: {
       type: Object,
@@ -23,8 +20,8 @@ export default {
         return {};
       },
     },
-  },
-};
+})
+
 </script>
 
 <style lang="scss" scoped>

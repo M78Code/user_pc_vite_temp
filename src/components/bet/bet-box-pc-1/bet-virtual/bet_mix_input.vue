@@ -71,10 +71,8 @@
   </q-card>
 </template>
 <script>
-import bet_mix_input from "src/public/mixins/virtual_bet/bet_mix_input.js";
-export default {
-  mixins: [bet_mix_input]
-};
+// import bet_mix_input from "src/public/mixins/virtual_bet/bet_mix_input.js";
+
 </script>
 <style lang="scss" scoped>
 /*  卡片获取焦点时的样式 */

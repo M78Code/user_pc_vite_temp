@@ -26,7 +26,7 @@
 </template>
 <script setup>
 // import bet_mix_record from "src/public/mixins/bet/bet_mix_record.js";
-import BetMixRecordItem from "./bet/bet_mix_record_item.vue";
-import BetMixResult from "./bet/bet_mix_result.vue";
+import BetMixRecordItem from "./bet-mix-record-item.vue";
+import BetMixResult from "./bet-mix-result.vue";
 
 </script>

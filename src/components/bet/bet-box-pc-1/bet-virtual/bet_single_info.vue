@@ -203,11 +203,8 @@
   </q-card>
 </template>
 <script>
-import bet_single_info from "src/public/mixins/virtual_bet/bet_single_info.js";
-export default {
-  mixins: [bet_single_info]
-};
-</script>
+// import bet_single_info from "src/public/mixins/virtual_bet/bet_single_info.js";
+
 <style lang="scss" scoped>
 /* *卡片获取焦点时的样式background #FFD9D9 * */
 /* *卡片组件样式重写* */

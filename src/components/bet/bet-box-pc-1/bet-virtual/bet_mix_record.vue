@@ -22,15 +22,9 @@
       :class="{'bet-mix-record-result-last': ((index+1)==series_order_data.length)}"></bet-mix-result>
   </div>
 </template>
-<script>
-import bet_mix_record from "src/public/mixins/virtual_bet/bet_mix_record.js";
-import bet_mix_record_item from "src/public/components/virtual_bet/bet_mix_record_item.vue";
-import bet_mix_result from "src/public/components/virtual_bet/bet_mix_result.vue";
-export default {
-  mixins: [bet_mix_record],
-  components: {
-    "bet-mix-record-item":bet_mix_record_item, // 串关投注结果投注项组件
-    "bet-mix-result":bet_mix_result // 串关投注结果组件
-  }
-};
+<script setup>
+// import bet_mix_record from "src/public/mixins/virtual_bet/bet_mix_record.js";
+import BetMixRecordItem from "./bet-mix-record-item.vue";
+import BetMixResult from "./bet-mix-result.vue";
+
 </script>
