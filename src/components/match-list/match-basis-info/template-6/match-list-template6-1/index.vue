@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息
--->
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
     <!-- 主队信息 -->
@@ -33,20 +28,19 @@
   </div>
 </template>
 
-<script>
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-export default {
-  mixins:[match_basis_info_mixin],
-  props: {  
-    // 是否显示中立场 盘口数
-    is_show_more: {
-      type:Boolean,
-      default:true
-    },
-  },
-};
-</script>
+<script setup>
+// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
+// mixins:[match_basis_info_mixin],
 
+import { defineProps } from 'vue';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+
+const props = defineProps({ ...useProps });
+
+
+</script>
 <style lang="scss" scoped>
 .basic-col {
   .row-item {
@@ -60,8 +54,27 @@ export default {
       align-items: center;
     }
   }
-  .more-info {
-    justify-content: flex-end;
+  .gif-text {
+    white-space: nowrap;
+    padding-left: 3px;
+    animation: 1s text-flash linear infinite normal;
+  }
+  .red-ball {
+    margin: 0 0 2.5px 8px;
+    position: relative;
+    top: 1px;
+    padding: 0 2px;
+    height: 14px;
+    line-height: 14px;
+    &.flash {
+      animation: 1s text-flash linear infinite normal;
+    }
+  }
+  .match-icon {
+    justify-content: space-between;
+  }
+  .more-info{
+     align-items: center;
   }
 }
 </style>

@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息
--->
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail" >
     <!-- 队伍信息 -->
@@ -55,46 +50,35 @@
     </div>
   </div>
 </template>
+<script setup>
+// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
+// mixins:[match_basis_info_mixin],
 
-<script>
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-export default {
-  mixins:[match_basis_info_mixin],
-  props: {  
-    // 是否显示中立场 盘口数
-    is_show_more: {
-      type:Boolean,
-      default:true
-    },
-    //阶段后缀
-    is_suffix:{
-      type:Boolean,
-      default:true
-    }
-  },
-  computed:{
-    //队伍名称
-    team_names(){
-      let { mhn = '', man = '', up_half_text = '' } = this.match
-      let team_names = {
-        away:"",
-        home:"",
-      }
-      if(this.is_suffix){
-        team_names = {
-          away:man+up_half_text,
-          home:mhn+up_half_text,
-        }
-      }else {
-        team_names = {
-          away:man,
-          home:mhn,
-        }
-      }
-      return  team_names
-    },
+import { computed, defineProps } from 'vue';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+
+const props = defineProps({ ...useProps });
+const team_names = computed(() => {
+  let { mhn = '', man = '', up_half_text = '' } = this.match
+  let team_names = {
+    away:"",
+    home:"",
   }
-};
+  if(is_suffix.value){
+    team_names = {
+      away:man+up_half_text,
+      home:mhn+up_half_text,
+    }
+  }else {
+    team_names = {
+      away:man,
+      home:mhn,
+    }
+  }
+  return team_names
+})
 </script>
 
 <style lang="scss" scoped>

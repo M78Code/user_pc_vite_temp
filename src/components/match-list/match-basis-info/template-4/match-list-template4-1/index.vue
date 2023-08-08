@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2021-08-04 17:13:55
- * @Description: 赛事基础信息 只有主客队信息
--->
 <template>
   <div class="basic-wrap" @click.stop="on_go_detail">
     <!-- 主队信息 -->
@@ -36,54 +31,55 @@
   </div>
 </template>
 
-<script>
-import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
-export default {
-  mixins:[match_basis_info_mixin],
-  props: {
-    is_show_score: Boolean,
-  },
-  components:{
-    tips: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
-  },
-  computed:{
-    //附加盘名称
-    addition_name(){
-      let addition_name_obj = {
-        //角球
-        hpsCorner: this.$root.$t('list.corner'),
-        //罚牌
-        hpsPunish: this.$root.$t('list.punish'),
-        //15分钟
-        hps15Minutes: this.$root.$t('list.15minutes'),
-        //波胆
-        hpsBold: this.$root.$t('list.bold'),
-         //5分钟
-        hps5Minutes: this.$root.$t('list.5minutes'),
-      }
-      let name = addition_name_obj[this.match.play_current_key]
-      return name ? ' - ' + name : ""
-    },
-    /**
-     * 玩法key
-     */
-    play_key(){
-      let current_key = {
-        //点球
-        hpsPenalty:'penalty',
-        //15分钟
-        hps15Minutes:'15minutes',
-        //罚牌
-        hpsPunish:'punish',
-        //5分钟
-        hps5Minutes:'5minutes',
-      }
-      return current_key[this.match.play_current_key] || ""
-    }
-  }
-};
-</script>
+<script setup>
+// mixins:[match_basis_info_mixin],
+// import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 
+import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+import { get_match_status } from 'src/core/utils/index'
+import { get_remote_time } from 'src/core/utils/match-list-utils.js';
+import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
+
+const props = defineProps({ ...useProps });
+
+//附加盘名称
+const addition_name = computed(() => {
+  let addition_name_obj = {
+    //角球
+    hpsCorner: this.$root.$t('list.corner'),
+    //罚牌
+    hpsPunish: this.$root.$t('list.punish'),
+    //15分钟
+    hps15Minutes: this.$root.$t('list.15minutes'),
+    //波胆
+    hpsBold: this.$root.$t('list.bold'),
+      //5分钟
+    hps5Minutes: this.$root.$t('list.5minutes'),
+  }
+  let name = addition_name_obj[this.match.play_current_key]
+  return name ? ' - ' + name : ""
+})
+/**
+ * 玩法key
+ */
+const play_key = computed(() => {
+  let current_key = {
+    //点球
+    hpsPenalty:'penalty',
+    //15分钟
+    hps15Minutes:'15minutes',
+    //罚牌
+    hpsPunish:'punish',
+    //5分钟
+    hps5Minutes:'5minutes',
+  }
+  return current_key[this.match.play_current_key] || ""
+})
+
+</script>
 <style lang="scss" scoped>
 .basic-col {
   .row-item {
