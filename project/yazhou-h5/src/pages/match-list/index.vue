@@ -56,17 +56,15 @@
 </template>
  
 <script setup>
-import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated } from "vue";
+import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
-import EMITTER from  "src/global/mitt.js"
+import { useMittOn } from  "src/core/mitt"
 import * as MITT_KEY from '../../core/mitt/mitt-keys'
 
 const props = defineProps({
   invok_source: String,
   wrapper_scroll_top: Number
 })
-
-init_router_info()
 
 const route = useRoute()
 const router = useRouter()
@@ -75,6 +73,7 @@ const match_main = ref(null)
 const match_list = ref(null)
 const scroll_top = ref(null)
 const match_list_container = ref(null)
+const emitters = ref({})
 
 const ws_invoke_key = ref('match_main')
 // 获取赛事列表接口超时setTimeout 6000
@@ -106,6 +105,7 @@ const timer_super9 = ref(null)
 const subscription_timer1 = ref(null)
 
 onBeforeMount(() => {
+  init_router_info()
   // 进入页面时记录时间戳
   enter_time.value = Date.now()
 })
@@ -507,31 +507,21 @@ const clear_timer = () => {
 }
 // 绑定相关事件监听
 const on_listeners = () => {
-  // 页脚事件
-  EMITTER.on(MITT_KEY.EMIT_MENU_CHANGE_FOOTER_CMD, footer_event);
-
-  EMITTER.on(MITT_KEY.EMIT_MAIN_MENU_CHANGE,main_menu_change)
-  EMITTER.on(MITT_KEY.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,before_load_third_menu_handle)
-  EMITTER.on(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,special_hps_load_handle)
-  EMITTER.on(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
-  EMITTER.on(MITT_KEY.EMIT_BET_ODD_SYNCHRONIZE,bet_odd_synchronize_handle)
-  //赛事列表滚动获取最新数据
-  EMITTER.on(MITT_KEY.EMIT_MATCH_LIST_SCROLLING,match_list_scroll_handle)
-  EMITTER.on(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,secondary_play_unfold_change_handle)
-  EMITTER.on(MITT_KEY.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
+  emitters.value = {
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_MENU_CHANGE_FOOTER_CMD, footer_event).off,
+    emitter_2: useMittOn.on(MITT_KEY.EMIT_MAIN_MENU_CHANGE,main_menu_change).off,
+    emitter_3: useMittOn.on(MITT_KEY.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,before_load_third_menu_handle).off,
+    emitter_4: useMittOn.on(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,special_hps_load_handle).off,
+    emitter_5: useMittOn.on(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on).off,
+    emitter_6: useMittOn.on(MITT_KEY.EMIT_BET_ODD_SYNCHRONIZE,bet_odd_synchronize_handle).off,
+    emitter_7: useMittOn.on(MITT_KEY.EMIT_MATCH_LIST_SCROLLING,match_list_scroll_handle).off,
+    emitter_8: useMittOn.on(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,secondary_play_unfold_change_handle).off,
+    emitter_9: useMittOn.on(MITT_KEY.EMIT_TAB_HOT_CHANGING,tab_changing_handle).off,
+  }
 }
 // 移除相关事件监听
 const off_listeners = () => {
-  EMITTER.off(MITT_KEY.EMIT_MAIN_MENU_CHANGE,main_menu_change)
-  EMITTER.off(MITT_KEY.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,before_load_third_menu_handle)
-  EMITTER.off(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,special_hps_load_handle)
-  // 取消订阅事件
-  EMITTER.off(MITT_KEY.EMIT_MENU_CHANGE_FOOTER_CMD, footer_event);
-  EMITTER.off(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
-  EMITTER.off(MITT_KEY.EMIT_BET_ODD_SYNCHRONIZE,bet_odd_synchronize_handle);
-  EMITTER.off(MITT_KEY.EMIT_MATCH_LIST_SCROLLING,match_list_scroll_handle);
-  EMITTER.off(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,secondary_play_unfold_change_handle);
-  EMITTER.off(MITT_KEY.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
+  Object.values(emitters.value).map((x) => x())
 }
 
 onActivated(() => {
