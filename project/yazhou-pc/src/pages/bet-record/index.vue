@@ -77,6 +77,8 @@
 import { SimpleHeaderWapper } from "src/components/simple-header";
 import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
+import recordTable from "./record_table.vue";
+import recordBookTable from "./record_book_table.vue";
 import lodash from "lodash";
 
 import { ref } from "vue";
@@ -100,6 +102,7 @@ const {
   orderNo_data_obj,
   orderNo_data_list,
   data_state,
+  tips,
   clear_timer_get_cashout,
   clear_timer_get_book,
   set_search_time,
