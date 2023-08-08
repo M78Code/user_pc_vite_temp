@@ -203,7 +203,7 @@ class AxiosHttp {
     this.set_root_domain();
     //设置ws地址
     ws.set_ws_url(
-      `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${wAPI_PREFIX_WBSOCKET}/push`
+      `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${API_PREFIX_WBSOCKET}/push`
     );
     this.request_count = 0;
     this.err_count = {};
