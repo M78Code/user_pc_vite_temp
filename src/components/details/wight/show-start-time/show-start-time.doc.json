@@ -2,13 +2,13 @@
   "leftmenu": {
     "level": 2,
     "menuName": "客户端PC",
-    "sonName": "圆形进度"
+    "sonName": "详情页同联赛的赛事即将开赛显示时间"
   },
   "props": {
     "match-data": {
       "type": [ "Object", "Array" ],
       "default": [],
-      "description": "圆形进度"
+      "description": "详情页同联赛的赛事即将开赛显示时间"
     }
   }
 }

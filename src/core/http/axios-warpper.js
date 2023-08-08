@@ -10,7 +10,10 @@ import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
-import { ss, ls } from "../utils/web-storage";
+import { ss } from "../utils/web-storage";
+import ws from "../ws/ws.js";
+const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
+const { API_PREFIX_WBSOCKET } = API_PREFIX;
 /**
  * 页面隐藏时间 纪录
  */
@@ -122,11 +125,11 @@ class AxiosHttp {
     // 38913	一般	高	缺陷	【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     //  这个bug 产生原因是 safari 浏览器 强缓存页面导致 。 页面走不了 域名判定流程 ，在挂机启动的时候，初始化没有走域名判定流程
     // 如果没有最快的最优域名 也没有 弹出 token失效的 弹窗,直接走到了这里的 主程序请求流程
-    console.log("api_domain",api_domain)
+    console.log("api_domain", api_domain);
     if (!api_domain) {
       //session 缓存的 是否 因为设置页面API 域名错误 刷新过
       let has_reload = ss.get("set_root_domain_error_force_reload");
-      console.log("has_reload",has_reload)
+      console.log("has_reload", has_reload);
       //不清楚，页面强缓存，唤醒的时候 session 是否还存在
       if (!has_reload) {
         // 只做一次尝试  ，直接走OSS 文件 流程  ，刷新页面  ，不能多次 避免 异常情况下 无限刷新
@@ -196,11 +199,12 @@ class AxiosHttp {
     if (!this.axios_instance) {
       this.init();
     }
-    // 设置   ROOT_DOMAIN
+    // 设置  ROOT_DOMAIN
     this.set_root_domain();
-    if (window.ws && window.ws.setWsUrl) {
-      window.ws.setWsUrl(this.getWsUrl());
-    }
+    //设置ws地址
+    ws.set_ws_url(
+      `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${wAPI_PREFIX_WBSOCKET}/push`
+    );
     this.request_count = 0;
     this.err_count = {};
     // window.ws.retInitData(true)
