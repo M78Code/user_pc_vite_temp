@@ -29,7 +29,7 @@ let DEV_TARGET_MERCHANT_VERSION =''
 //  DEV_TARGET_MERCHANT_VERSION =   "yazhou-h5"
 
 // 指定打包/运行 某个版本 ： 亚洲 PC
- DEV_TARGET_MERCHANT_VERSION =  "yazhou-h5"
+ DEV_TARGET_MERCHANT_VERSION =  "yazhou-pc"
 
 // --------------------------------
 // 所有  目标环境标识

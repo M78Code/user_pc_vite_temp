@@ -135,12 +135,12 @@ class AxiosHttp {
         //如果有缓存过刷新
         //session 缓存 有东西 缓存说刷新过
         // session  缓存的 最快域名
-        let best_api = sessionStorage.getItem("best_api") || "";
-        let gr = sessionStorage.getItem("gr");
+        let best_api = ss.get("best_api") || "";
+        let gr = ss.get("gr");
         let domain_api = domain.get_save_domain_api();
         if (!gr) {
           gr = BUILDIN_CONFIG.DOMAIN_RESULT.gr || "COMMON";
-          sessionStorage.setItem("gr", gr);
+          ss.set("gr", gr);
         }
         if (best_api) {
           // 缓存   有  最快域名
@@ -160,10 +160,7 @@ class AxiosHttp {
           } else {
             // 什么都没有的 补偿刷新一次  或者两次
             if (has_reload < 4) {
-              sessionStorage.setItem(
-                "set_root_domain_error_force_reload",
-                has_reload + 1
-              );
+              ss.get("set_root_domain_error_force_reload", has_reload + 1);
               force_current_api_flow_use_oss_file_api_reload();
             } else {
               // 正常的走到 释放页面 的步骤 ，就是 wifi 图标 必须刷新页面才行的 那种
@@ -174,7 +171,7 @@ class AxiosHttp {
     } else {
       // 有 api_domain
       // 去除垃圾数据  ，避免长时间 挂机或者 safari 的 强缓存机制 再次影响到 页面 流程
-      sessionStorage.removeItem("set_root_domain_error_force_reload");
+      ss.get("set_root_domain_error_force_reload");
     }
     this.axios_instance.defaults.baseURL = api_domain;
     this.axios_instance.prototype.HTTP_ROOT_DOMAIN = api_domain;
@@ -280,7 +277,7 @@ class AxiosHttp {
    * @param {Object} request_config [axios配置项]
    * @param {Object} config [axios配置项]
    */
-  async request(request_config={}, config) {
+  async request(request_config = {}, config) {
     //未知原因导致调用此方法的时候 axios 未实例化
     //38913 【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     if (!this.axios_instance) {

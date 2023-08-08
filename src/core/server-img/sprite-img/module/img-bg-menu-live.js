@@ -2,17 +2,17 @@
 // img-bg-menu-live 对应输出的css名称
 import { server_resource } from "app/job/output/merchant/index.js";
 const { CURRENT_ENV } = window.BUILD_CONFIG;
-const dark = {
+const night = {
   common: "图片地址",
   local_test: "图片地址",
 };
-const light = {
+const day = {
   local_test: "图片地址",
 };
 const config = {
   label: "img-bg-menu-live",
-  dark,
-  light,
+  night,
+  day,
 };
 const item = {
   item_0: 0, //下标从0开始
@@ -56,7 +56,6 @@ function compute_css({ key, theme }) {
       theme = config.common ? config.common[CURRENT_ENV] : undefined;
     }
   }
-
   return {
     "background-image": `url(${theme})`,
     "background-position": compute_position(key),
