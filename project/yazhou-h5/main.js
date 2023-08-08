@@ -21,6 +21,7 @@ window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 import App from "./App.vue";
+import router from './src/router/index'
 
 const app = createApp(App);
 
@@ -30,7 +31,7 @@ app.use(Quasar, {
 
 
 import { i18n } from "src/boot/i18n.js";
-app.use(i18n);
+app.use(i18n).use(router);
 
 
 app.mount("#ty-app");

@@ -1,11 +1,11 @@
-import ArticleDetails from "../article-details-template-1/index.vue";
+import TabLineup from "../tab-lineup-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  ArticleDetails,
+  TabLineup,
 };
 const component_config = {
-  registered_component_key: "ArticleDetails",
-  default_component_key: "ArticleDetails_1",
+  registered_component_key: "TabLineup",
+  default_component_key: "TabLineup_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

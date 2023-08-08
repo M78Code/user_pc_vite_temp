@@ -30,7 +30,7 @@
 <script setup>
 import { api_result } from "src/project/api";
 import { computed, onUnmounted } from "vue";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
   // name: "basketball_incident",
 
@@ -44,11 +44,11 @@ import { computed, onUnmounted } from "vue";
   const tab_index = ref(0)
   const no_data = ref(false)
 
-    // 添加监听 赛事分析刷新事件 TODO $root emit 后续修改调整
+    // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
   $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
   get_list()
   const match_id = computed(() => {
-    // 赛事id TODO $route get_detail_data后续修改调整
+    // 赛事id TODO: $route get_detail_data后续修改调整
     return $route.params.mid || get_detail_data.mid
   })
   // computed: {

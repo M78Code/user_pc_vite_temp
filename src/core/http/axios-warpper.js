@@ -10,6 +10,7 @@ import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
+import { ss, ls } from "../utils/web-storage";
 /**
  * 页面隐藏时间 纪录
  */
@@ -64,12 +65,12 @@ class AxiosHttp {
     this.request_count = 0;
     // http root domain
     this.HTTP_ROOT_DOMAIN = "";
-    this.HTTP_UPLOAD_API=""
+    this.HTTP_UPLOAD_API = "";
     // axios 实例
     this.axios_instance = null;
     // 页面 失去 焦点后  HTTP 断开时间
     this.DOCUMENT_HIDDEN_HTTP_CLOSE_TIME = 5 * 60 * 1000;
-    this.init();
+    // this.init();
   }
   /**
    * @Description:初始化网络配置信息
@@ -121,26 +122,26 @@ class AxiosHttp {
     // 38913	一般	高	缺陷	【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     //  这个bug 产生原因是 safari 浏览器 强缓存页面导致 。 页面走不了 域名判定流程 ，在挂机启动的时候，初始化没有走域名判定流程
     // 如果没有最快的最优域名 也没有 弹出 token失效的 弹窗,直接走到了这里的 主程序请求流程
+    console.log("api_domain",api_domain)
     if (!api_domain) {
       //session 缓存的 是否 因为设置页面API 域名错误 刷新过
-      let has_reload = sessionStorage.getItem(
-        "set_root_domain_error_force_reload"
-      );
+      let has_reload = ss.get("set_root_domain_error_force_reload");
+      console.log("has_reload",has_reload)
       //不清楚，页面强缓存，唤醒的时候 session 是否还存在
       if (!has_reload) {
         // 只做一次尝试  ，直接走OSS 文件 流程  ，刷新页面  ，不能多次 避免 异常情况下 无限刷新
-        sessionStorage.setItem("set_root_domain_error_force_reload", "1");
+        ss.set("set_root_domain_error_force_reload", "1");
         force_current_api_flow_use_oss_file_api_reload();
       } else {
         //如果有缓存过刷新
         //session 缓存 有东西 缓存说刷新过
         // session  缓存的 最快域名
-        let best_api = sessionStorage.getItem("best_api") || "";
-        let gr = sessionStorage.getItem("gr");
+        let best_api = ss.get("best_api") || "";
+        let gr = ss.get("gr");
         let domain_api = domain.get_save_domain_api();
         if (!gr) {
           gr = BUILDIN_CONFIG.DOMAIN_RESULT.gr || "COMMON";
-          sessionStorage.setItem("gr", gr);
+          ss.set("gr", gr);
         }
         if (best_api) {
           // 缓存   有  最快域名
@@ -160,10 +161,7 @@ class AxiosHttp {
           } else {
             // 什么都没有的 补偿刷新一次  或者两次
             if (has_reload < 4) {
-              sessionStorage.setItem(
-                "set_root_domain_error_force_reload",
-                has_reload + 1
-              );
+              ss.set("set_root_domain_error_force_reload", has_reload + 1);
               force_current_api_flow_use_oss_file_api_reload();
             } else {
               // 正常的走到 释放页面 的步骤 ，就是 wifi 图标 必须刷新页面才行的 那种
@@ -174,7 +172,7 @@ class AxiosHttp {
     } else {
       // 有 api_domain
       // 去除垃圾数据  ，避免长时间 挂机或者 safari 的 强缓存机制 再次影响到 页面 流程
-      sessionStorage.removeItem("set_root_domain_error_force_reload");
+      ss.get("set_root_domain_error_force_reload");
     }
     this.axios_instance.defaults.baseURL = api_domain;
     this.axios_instance.prototype.HTTP_ROOT_DOMAIN = api_domain;
@@ -280,7 +278,7 @@ class AxiosHttp {
    * @param {Object} request_config [axios配置项]
    * @param {Object} config [axios配置项]
    */
-  async request(request_config, config) {
+  async request(request_config = {}, config) {
     //未知原因导致调用此方法的时候 axios 未实例化
     //38913 【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     if (!this.axios_instance) {
@@ -323,7 +321,7 @@ class AxiosHttp {
     // 删除内部参数
     try {
       wslog.send_msg("HTTP-S:", { url: request_config.url, params });
-      const res = await this.instance.request(request_config);
+      const res = await this.axios_instance.request(request_config);
       //接口的全局跟踪 检查UID gcuuid   嫁接
       if (request_config.gcuuid) {
         res.data.gcuuid = request_config.gcuuid;
@@ -353,4 +351,5 @@ class AxiosHttp {
     }
   }
 }
-export default new AxiosHttp();
+const http = new AxiosHttp();
+export default http;

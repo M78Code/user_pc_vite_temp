@@ -25,16 +25,13 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { api_result } from "src/project/api";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, nextTick } from 'vue'
 
-export default defineComponent({
-  name: "intelligence",
 
-  setup(props, event) {
     //按钮下标
     let radio_button_index = ref(0)
     //主客队名称
@@ -44,31 +41,29 @@ export default defineComponent({
     //数据加载完成
     let is_done = ref(false)
 
-    // 添加监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
+    // 添加监听 赛事分析刷新事件 TODO: get_detail_data  $root.$on 后续修改调整
     $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     tab_radio_button.value = [get_detail_data.mhn, get_detail_data.man]
     get_list()
 
-    computed(() => {
+    const match_id = computed(() => {
       // 赛事id
-      match_id = () => {
-        // TODO get_detail_data.mid 后续修改调整
-        return $route.params.mid || get_detail_data.mid
-      }
+      // TODO: get_detail_data.mid 后续修改调整
+      return $route.params.mid || get_detail_data.mid
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
-    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      // 移除监听 赛事分析刷新事件 TODO: get_detail_data  $root.$on 后续修改调整
+      $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
     })
 
-    radio_button = (index) => {
+    const radio_button = (index) => {
       if(radio_button_index.value == index) return
       radio_button_index.value = index
       data_list.value = []
       get_list()
-    },
-    get_list = async () => {
+    }
+    const get_list = async () => {
       try {
         is_done.value = false
         let parameter = {
@@ -97,9 +92,9 @@ export default defineComponent({
       } catch (error) {
         console.error(error);
       }
-    },
+    }
     // 刷新 当前赛事分析信息
-    refresh_match_analysis = () => {
+    const refresh_match_analysis = () => {
       const radio_button_index = radio_button_index.value
       radio_button_index.value = -1
 
@@ -107,18 +102,8 @@ export default defineComponent({
         radio_button(radio_button_index)
       })
     }
-    return {
-      radio_button_index,
-      tab_radio_button,
-      data_list,
-      is_done,
-
-      radio_button,
-      get_list,
-    }
-  },
   // computed: {
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
   //   ...mapGetters(['get_detail_data', 'get_goto_detail_matchid']),
   //   // 赛事id
   //   match_id() {
@@ -126,7 +111,6 @@ export default defineComponent({
   //   },
   // },
 
-})
 </script>
 
 <style lang="scss" scoped>

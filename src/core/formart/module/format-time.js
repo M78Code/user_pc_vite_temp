@@ -1,4 +1,4 @@
-import { api_common } from "src/api/";
+// import { api_common } from "src/api/";
 import { get } from "lodash";
 import {format_time_zone_millisecond} from './format-date'
 const server_time = {
@@ -8,14 +8,14 @@ const server_time = {
 /**
  * 获取服务器时间
  */
-api_common.get_server_time().then((res) => {
-  let code = _.get(res, "data.code");
-  if (code == 200) {
-    let serverTime = Number(get(res, "data.data"));
-    server_time.local_time = Date.now();
-    server_time.remote_time = serverTime;
-  }
-});
+// api_common.get_server_time().then((res) => {
+//   let code = _.get(res, "data.code");
+//   if (code == 200) {
+//     let serverTime = Number(get(res, "data.data"));
+//     server_time.local_time = Date.now();
+//     server_time.remote_time = serverTime;
+//   }
+// });
 
 /**
  * 获取与服务器的修正时间

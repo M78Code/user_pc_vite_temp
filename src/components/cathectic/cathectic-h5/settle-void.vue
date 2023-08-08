@@ -17,53 +17,44 @@
     </div>
   </template>
   
-  <script>
+  <script setup>
 //   import { mapGetters } from "vuex";
 import { defineComponent } from 'vue'
-  export default defineComponent({
-    name: "settle_void",
 
-    props: {
-      is_early: {
-        type: Boolean,
-        defalut: false,
-      },
-      is_limit: {
-        type: Boolean,
-        defalut: false,
-      },
+  const props = defineProps({
+    is_early: {
+      type: Boolean,
+      defalut: false,
     },
-    // computed: {
-    //   ...mapGetters([
-    //     'get_main_item',
-    //     'get_theme'
-    //   ]),
-    setup() {
-        const calc_text = () => {
-        if (this.is_limit) {
-          return this.$root.$t('msg.msg_nodata_22')
-        }
-        if (this.get_main_item == 0) {
-            return this.is_early ? this.$root.$t('msg.msg_nodata_15') : this.$root.$t('msg.msg_nodata_12')
-        } else {
-          if (this.is_early) {
-            return this.$root.$t('msg.msg_nodata_16')
-          } else {
-            return this.get_main_item == 2 ? this.$root.$t('msg.msg_nodata_18') : this.$root.$t('msg.msg_nodata_13')
-          }
-        }
-      }
-      //页面跳转逻辑
-      const go_bet = () => {
-        // TODO 数据接入后调整
-        // this.$root.$emit(this.emit_cmd.EMIT_CHANGE_RECORD_SHOW, false)
-      }
-      return {
-        calc_text,
-        go_bet,
-      }
+    is_limit: {
+      type: Boolean,
+      defalut: false,
     },
-  }) 
+  })
+  // computed: {
+  //   ...mapGetters([
+  //     'get_main_item',
+  //     'get_theme'
+  //   ]),
+  const calc_text = () => {
+  if (is_limit) {
+    return $root.$t('msg.msg_nodata_22')
+  }
+  if (get_main_item == 0) {
+      return is_early ? $root.$t('msg.msg_nodata_15') : $root.$t('msg.msg_nodata_12')
+  } else {
+    if (is_early) {
+      return $root.$t('msg.msg_nodata_16')
+    } else {
+      return get_main_item == 2 ? $root.$t('msg.msg_nodata_18') : $root.$t('msg.msg_nodata_13')
+    }
+  }
+}
+//页面跳转逻辑
+const go_bet = () => {
+  // TODO: 数据接入后调整
+  // $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, false)
+}
 </script>
 
 <style lang="scss" scoped>

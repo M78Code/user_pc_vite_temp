@@ -5,7 +5,7 @@
  */
 
 import {http} from "src/core/http/index.js";
-
+import axios from 'axios'
 
 const { API_PREFIX = {},TARGET_PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_BAT:prefix_user } = API_PREFIX;
@@ -123,4 +123,20 @@ export const get_hotRecommendation = (params, config = {}, url="/v1/m/hotUlikeRe
 //电竞右侧5场赛事列表
 export const get_esports_match = (params, config = {}, url="/v1/w/5esportsMatches") => {
   return http.get(`${prefix}${url}`, params);
+};
+
+/**
+ * 试玩
+ * @param {*} url
+ * @returns
+ */
+// https://api.sportxxxw1box.com/yewu6/user/tryPlay
+
+export const handle_user_tryPlay = (url = "/yewu6/user/tryPlay") => {
+  let params = {
+    lang: "zh",
+    terminal: "PC"
+  };
+
+  return axios.get(url, params );
 };

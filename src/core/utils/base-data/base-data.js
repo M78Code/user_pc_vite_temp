@@ -3,7 +3,7 @@
 // 电竞球种 menu_id 规则 ：2000  +对应球种 id   csid  2000 + 100   =2100   英雄联盟
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
-
+import { i18n } from "project_path/src/boot/i18n";
 //   约定 四个 值
 
 // 100 常规球类
@@ -13,7 +13,7 @@
 
 //  1001  1004
 import { instance as userCtr } from "src/core/user-config/user-ctr.js";
-
+import _ from 'lodash'
 // indexeDb
 import { db } from "src/core/utils/base-data/config/indexedPB.js";
 
@@ -654,9 +654,9 @@ class BaseData {
    */
   resolve_menus(res) {
     // 获取语言类型
-    let locale = window.vue.$i18n.locale || "zh";
+    let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports = window.vue.$i18n._vm.messages[locale].common.e_sports;
+    let esports =i18n.global.messages?.common?.e_sports;
 
     // 菜单 国际化 数据  map
     res["2000"] = esports;

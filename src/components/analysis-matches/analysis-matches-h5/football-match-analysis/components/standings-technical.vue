@@ -64,7 +64,7 @@
           </div>
           <div class="group-item">
             <div class="team-item" v-for="(content,index) in item" :key="index+'team'">
-              <div class="col1 flex_start">{{ Calculate_age(content.coachBirthdate) || '-' }}</div>
+              <div class="col1 flex_start">{{ calculate_age(content.coachBirthdate) || '-' }}</div>
               <div class="col1">{{ content.coachStyle|| '-' }}</div>
               <div class="col1">{{ content.score|| '-' }}</div>
               <div class="col-go-war" v-if="content.coachGameCount">{{ content.coachGameCount }} (胜{{content.winCount}}平{{content.drawCount}}负{{content.loseCount}})</div>
@@ -78,42 +78,35 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import {mapGetters} from "vuex";
 import { defineComponent, ref, } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import team_img from "src/project/components/details/team-img";   
 
-export default defineComponent({
-  name: "standings_technical",
-  props: {
+  const props = defineProps({
     homeAwayGoal_and_coach_map: {
       type: Object | Array,
     }
-  },
-  components: {
-    "team-img": team_img,
-  },
-  setup(props, evnet) {
-    Calculate_age = (day) => {
+  })
+  // components: {
+  //   "team-img": team_img,
+  // },
+  const calculate_age = (day) => {
       let birthday = new Date(day.replace(/-/g, "\/"));
       let d=new Date();
       let age = d.getFullYear()-birthday.getFullYear()-((d.getMonth()<birthday.getMonth()|| d.getMonth()==birthday.getMonth() && d.getDate()<birthday.getDate())?1:0);
       return age
     }
 
-    return {
-      Calculate_age,
-    }
-  },
-  // TODO 后续修改调整 
+    
+  // TODO: 后续修改调整 
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },
   // methods:{
     
   // }
-})
 </script>
 
 <style lang="scss" scoped>

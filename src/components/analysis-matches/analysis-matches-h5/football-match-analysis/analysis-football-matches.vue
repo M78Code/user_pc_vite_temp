@@ -1,6 +1,6 @@
 <!--
- * @Author: ledron
- * @Date: 2020-02-16 18:18:18
+ * @Author:
+ * @Date: 
  * @Description: 详情页  足球赛事分析
 -->
 <template>
@@ -17,8 +17,8 @@
   </div>
 </template>
 
-<script>
-// TODO vuex 后续修改调整
+<script setup>
+// TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import lodash from 'lodash'
@@ -39,19 +39,16 @@ import articleMain from 'src/project/pages/details/analysis-matches/article/arti
 // 精彩回放
 import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';   
 
-export default defineComponent({
-  name: "analysis-fooball-matches",
-  components: {
-    match: match_result,
-    standings: standings,
-    line_up: line_up,
-    "head-tab": head_tab,
-    "intelligence": intelligence,
-    "analysis_odds": analysis_odds,
-    articleMain: articleMain,
-    highlights: highlights,
-  },
-  setup(props, evnet) {
+  // components: {
+  //   match: match_result,
+  //   standings: standings,
+  //   line_up: line_up,
+  //   "head-tab": head_tab,
+  //   "intelligence": intelligence,
+  //   "analysis_odds": analysis_odds,
+  //   articleMain: articleMain,
+  //   highlights: highlights,
+  // },
     // 锚点
     let analysis_football_matches = ref(null)
     // tab 数据
@@ -62,43 +59,41 @@ export default defineComponent({
     onMounted(() => {
       nextTick(() => {
       if (analysis_football_matches.value) {
-        // TODO utils后续修改调整
+        // TODO: utils后续修改调整
         analysis_football_matches.value.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
       }
     })
     createTabds(); 
     })
-    watch(() => {}, () => {
+    watch(() => get_detail_data.mid, () => {
         // 详情顶部切换赛事后 更新相应赛事数据
-      'get_detail_data.mid' = () => {
         const currentContent = currentContent.value
         currentContent.value = ''
         nextTick(() => {
           currentContent.value = currentContent
         })
-      },
-      get_event_list = (event_list) => {
-        // 精彩回放开关开启后，显示精彩回放视图 TODO 后续调整 get_user  get_event_list
+      })
+    watch(() => get_event_list, (event_list) => {
+        // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
         const highlights = tabList.value.find(item => item.component === 'highlights')
         const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
         if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
           tabList.value.unshift(
               {
-                // TODO 国际化后续修改调整
+                // TODO: 国际化后续修改调整
                 name: $root.$t('highlights.title'),
                 component: 'highlights'
               }
           )
         }
-      }
-    })
+      })
     onUnmounted(() => {
-      // TODO $data 后续修改调整
+      // TODO: $data 后续修改调整
       analysis_football_matches.value = null
       tabList.value = []
       currentContent.value = 'match'
     })
-    createTabds = () => {
+    const createTabds = () => {
       // 国际化 后续修改调整
       let tabs = [
         {
@@ -122,7 +117,7 @@ export default defineComponent({
           component: 'analysis_odds'
         },
       ]
-      // 红猫tab特殊处理  TODO get_detail_data  get_lang/国际化 后续修改调整
+      // 红猫tab特殊处理  TODO: get_detail_data  get_lang/国际化 后续修改调整
       if (get_detail_data.cds === '1500') {
         tabs = [
           {
@@ -139,7 +134,7 @@ export default defineComponent({
           }
         )
       }
-      // 精彩回放开关开启后，显示精彩回放视图 TODO get_event_list get_user/国际化 后续修改调整
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list get_user/国际化 后续修改调整
       const highlights = tabs.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
@@ -151,13 +146,13 @@ export default defineComponent({
         )
       }
       tabList.value = tabs
-    },
-    close_analysis = () => {
-      // TODO emit 后续修改调整
+    }
+    const close_analysis = () => {
+      // TODO: emit 后续修改调整
       $root.$emit(emit_cmd.EMIT_ANA_SHOW, false)
-    },
-    // 点击一级tab 菜单切换 // TODO $utils get_user 后续修改调整
-    tab_click = ([tab, type]) => {
+    }
+    // 点击一级tab 菜单切换 // TODO: $utils get_user 后续修改调整
+    const tab_click = ([tab, type]) => {
       currentContent.value = tab.component
       if (type == 'is_click') {
         let eventLabel = '';
@@ -182,16 +177,7 @@ export default defineComponent({
         $utils.zhuge_event_send(eventLabel, get_user);
       }
     }
-
-    return {
-      tabList,
-      currentContent,
-      createTabds,
-      close_analysis,
-      tab_click,
-    }
-  },
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([
   //     // 详情页的数据
@@ -213,7 +199,6 @@ export default defineComponent({
   //     this.$data[key] = null
   //   }
   // }
-});
 </script>
 
 <style lang="scss" scoped>

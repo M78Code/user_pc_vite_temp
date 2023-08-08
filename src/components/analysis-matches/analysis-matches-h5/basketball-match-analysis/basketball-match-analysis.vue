@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 赛果详情 赛况统计 和 事件
 import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue'; 
@@ -33,7 +33,7 @@ import { watch, nextTick, onMounted } from 'vue';
   //   "head-tab": head_tab,
   //   articleMain: articleMain,
   // },
-  // TODO 国际化后续修改调整
+  // TODO: 国际化后续修改调整
   const tabList = ref([
     {
       name: $root.$t('analysis_football_matches.match'),
@@ -50,7 +50,7 @@ import { watch, nextTick, onMounted } from 'vue';
   ])
   const currentContent = ref('match')
   const analysis_basketball_matches = ref(null)
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([
   //     // 详情页的数据
@@ -72,7 +72,7 @@ import { watch, nextTick, onMounted } from 'vue';
   })
   onMounted(() => {
     nextTick(() => {
-      // TODO 后续修改调整 $refs $utils
+      // TODO: 后续修改调整 $refs $utils
       if ($refs.analysis_basketball_matches) {
         $refs.analysis_basketball_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
       }
@@ -80,7 +80,7 @@ import { watch, nextTick, onMounted } from 'vue';
     if (['zh', 'tw'].includes(get_lang)) {
       tabList.unshift(
         {
-          // TODO 国际化
+          // TODO: 国际化
           name: get_lang == 'zh' ? '资讯' : '資訊',
           component: 'article-main'
         },

@@ -3,16 +3,20 @@
  * @Date: 2020-08-04 17:13:50
  * @Description: 注部分公共方法提取(包括与列表,详情,投注项三部分)
  */
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import play_mapping from "./play_mapping.js";
+import _ from  "lodash";
+import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
+import { compute_value_by_cur_odd_type } from "../bet/bet_odds_change"
+
 /**
  * @description: 同步投注项部分数据
  * @param {Object} that 视图对象
  * @param {Object} skt_data 推送的指令息体cd部分
  * @return {undefined} undefined
  */
-const sync_bet_obj = (that,skt_data) => {
+const sync_bet_obj = (vx_get_virtual_bet_obj,skt_data) => {
   let hls=[];
-  for(let { bs } of Object.values(_.get(that,'vx_get_virtual_bet_obj'),{})) {
+  for(let { bs } of Object.values(vx_get_virtual_bet_obj , {})) {
     if(bs) {
       let hl =  _.get(bs, 'hps[0].hl');
       if(hl && hl.length) {
@@ -24,7 +28,7 @@ const sync_bet_obj = (that,skt_data) => {
     _.forEach(hls, item=>{
       if(item && item.hid) {
         // console.log(`============common========sync_bet_obj======hid:${item.hid}`);
-        update_bet_item_status(that,{
+        update_bet_item_status(vx_get_virtual_bet_obj,{
           mid: skt_data.mid,
           hid: item.hid,
           status: skt_data.mhs
@@ -39,16 +43,16 @@ const sync_bet_obj = (that,skt_data) => {
  * @param {Object} obj 更新的对象
  * @return {undefined} undefined
  */
-const update_bet_item_status = (that, obj) => { 
-  if (that.vx_get_is_virtual_handle) {
+const update_bet_item_status = (vx_get_virtual_bet_obj, obj,vx_get_is_virtual_handle) => { 
+  if (vx_get_is_virtual_handle) {
     return;
   } 
   let bet_obj,cs; 
-  for(let key of Object.keys(_.get(that,'vx_get_virtual_bet_obj'),{})) {      
-    bet_obj = _.cloneDeep(_.get(that,`vx_get_virtual_bet_obj.${key}`));
+  for(let key of Object.keys(vx_get_virtual_bet_obj,{})) {      
+    bet_obj = _.cloneDeep( vx_get_virtual_bet_obj[key] );
     cs = _.get(bet_obj,'cs', {});
     if(!_.isEmpty(cs) && obj.mid==cs.match_id || obj.hid == cs.handicap_id || obj.id == cs.id) {
-      update_target_obj(that, bet_obj, obj, key);
+      update_target_obj( bet_obj, obj, key);
     } 
   }
 }
@@ -60,7 +64,7 @@ const update_bet_item_status = (that, obj) => {
  * @param {String} key 传入的id(可能是oid后续可能为坑位id)
  * @return {undefined} undefined 
  */
-const update_target_obj = (that, bet_obj, obj, key) => {
+const update_target_obj = (bet_obj, obj, key) => {
   if(_.has(bet_obj,'bs') && 
     _.has(bet_obj,'cs') &&
     _.get(bet_obj,'cs.match_id')==obj.mid &&
@@ -90,7 +94,7 @@ const update_target_obj = (that, bet_obj, obj, key) => {
     // console.log(`==========333=====update_target_obj====source:${bet_obj.cs.source}===obj:${JSON.stringify(obj)}`);    
   } 
   if(bet_obj) {
-    set_bet_obj_value(that, bet_obj);
+    useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_ADD,bet_obj)
   }
 }
 /**
@@ -98,12 +102,14 @@ const update_target_obj = (that, bet_obj, obj, key) => {
  * @param {*} that
  * @return {*}
  */
-const get_sport_id = (that) => {
-  return _.get(that.vx_get_virtual_bet_obj,`${that.id}.bs.csid`);
+const get_sport_id = (vx_get_virtual_bet_obj,id) => {
+  // return _.get(that.vx_get_virtual_bet_obj,`${that.id}.bs.csid`);
+  return _.get(vx_get_virtual_bet_obj,`${id}.bs.csid`);
 }
 // 获取盘口和赔率是否都变化的值
-const get_hv_ov_change = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`, {});
+const get_hv_ov_change = (vx_get_virtual_bet_obj,id) => {
+  // let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`, {});
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`, {});
   if(_.has(bet_obj,'bs') && _.has(bet_obj,'cs')) {
     let bet_cs = _.get(bet_obj,'cs', {});
     let hn = _.get(bet_obj, 'bs.hps[0].hl[0].hn'); // 坑位值
@@ -118,8 +124,8 @@ const get_hv_ov_change = (that) => {
  * @param {Object} that 视图对象 
  * @return {String} 玩法名称
  */
-const get_play_id = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+const get_play_id = (vx_get_virtual_bet_obj,id) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);
   let cs = _.get(bet_obj,'cs', false);
   return cs ? _.trim(cs.play_id) : '';
 }
@@ -128,8 +134,8 @@ const get_play_id = (that) => {
  * @param {Object} that 视图对象 
  * @return {String} 玩法名称
  */
-const get_play_name = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+const get_play_name = (vx_get_virtual_bet_obj,id) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);
   let cs = _.get(bet_obj,'cs', false);
   return cs ? _.trim(cs.play_name) : '';
 }
@@ -138,8 +144,8 @@ const get_play_name = (that) => {
  * @param {*}
  * @return {*}
  */
-const get_numbers = (that) => {
-  let ot = _.get(that,`vx_get_virtual_bet_obj.${that.id}.bs.hps[0].hl[0].ol[0].ot`);
+const get_numbers =  (vx_get_virtual_bet_obj,id) => {
+  let ot = _.get(vx_get_virtual_bet_obj,`${id}.bs.hps[0].hl[0].ol[0].ot`);
   if(ot) {
     if(ot.includes('/')) {
       return ot.split('/');
@@ -154,13 +160,13 @@ const get_numbers = (that) => {
  * @param {String} id 传入的id(可能是oid后续可能为坑位id)
  * @return {Double} 赔率 
  */
-const get_odds_value = (that, id=(that.id||'')) => {
-  let bet_obj= _.get(that,`vx_get_virtual_bet_obj.${id}`), cs, ret = ''; 
+const get_odds_value = (that, id = '' ) => {
+  let bet_obj= _.get(vx_get_virtual_bet_obj,`${id}`), cs, ret = ''; 
   if(!bet_obj) return ret; 
   cs = _.get(bet_obj,'cs', false);
   if (cs) {
     let odds_value_ = cs.odds_value;
-    ret = that.compute_value_by_cur_odd_type(
+    ret = compute_value_by_cur_odd_type(
       odds_value_ / 100000,
       cs.break_odds_value / 100000,
       cs.odds_switch,
@@ -174,8 +180,8 @@ const get_odds_value = (that, id=(that.id||'')) => {
  * @param {object} that 上下文
  * @return {undefined} undefined
  */
-const get_handicap_id = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+const get_handicap_id = (vx_get_virtual_bet_obj,id) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);
   return _.get(bet_obj,'cs.handicap_id', '');
 }
 /**
@@ -183,9 +189,9 @@ const get_handicap_id = (that) => {
  * @param {Object} that 视图对象
  * @return {String} 盘口值 
  */
-const get_handicap = (that) => {
+const get_handicap = (vx_get_virtual_bet_obj,id) => {
   let bet_obj,item_bs,item_cs,team_name='',handicap='',hpid, target_side;
-  bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+  bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);
   if(!_.has(bet_obj,'bs') || !_.has(bet_obj,'cs')) return ''; 
   item_bs = _.get(bet_obj,'bs',false);
   item_cs = _.get(bet_obj,'cs',false);
@@ -243,8 +249,8 @@ const get_handicap = (that) => {
  * @param {Object} that 视图对象
  * @return {String} 显示的状态
  */
-const get_active = (that) => {
-  let bet_obj =_.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+const get_active = (vx_get_virtual_bet_obj,id) => {
+  let bet_obj =_.get(vx_get_virtual_bet_obj,`${id}`);
   let cs = _.get(bet_obj,'cs',false);
   let active = 3;
   if (cs) {
@@ -263,8 +269,8 @@ const get_active = (that) => {
  * @param {Object} that 视图对象
  * @return {String} 赛季名称
  */
-const get_season = (that) => {
-  let tn = _.get(that,`vx_get_virtual_bet_obj.${that.id}.bs.tn`,'');
+const get_season = (vx_get_virtual_bet_obj,id) => {
+  let tn = _.get(vx_get_virtual_bet_obj,`${id}.bs.tn`,'');
   return  tn
 }
 /**
@@ -272,8 +278,8 @@ const get_season = (that) => {
  * @param {object} that 上下文
  * @param {*} that
  */
-const get_serial = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`,{});
+const get_serial = (vx_get_virtual_bet_obj) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`,{});
   return _.get(bet_obj, 'cs.is_serial', false);
 }
 /**
@@ -281,8 +287,8 @@ const get_serial = (that) => {
  * @param {*} that
  * @return {*}
  */
-const get_no = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`), no = '';
+const get_no = (vx_get_virtual_bet_obj) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`), no = '';
   if(_.has(bet_obj,'bs')) {
     let item_bs = _.get(bet_obj,'bs',{});
     no = item_bs.no;
@@ -294,8 +300,8 @@ const get_no = (that) => {
  * @param {*} that
  * @return {*}
  */
-const get_batch_no = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`), batch_no = '';
+const get_batch_no = (vx_get_virtual_bet_obj) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`), batch_no = '';
   if(_.has(bet_obj,'bs')) {
     let item_bs = _.get(bet_obj,'bs',{});
     batch_no = item_bs.batchNo;
@@ -307,8 +313,8 @@ const get_batch_no = (that) => {
  * @param {Object} that 视图对象
  * @return {String} 队伍名称
  */
-const get_team_name = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`,{}),team_name = '',hpid='', handicap='';
+const get_team_name = (vx_get_virtual_bet_obj) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`,{}),team_name = '',hpid='', handicap='';
   if (_.has(bet_obj,'cs') && _.has(bet_obj,'bs')) {
     let item_cs = _.get(bet_obj,'cs',{}),item_bs = _.get(bet_obj,'bs',{}),target_side =  _.get(item_cs, 'target_side',''), sport_id = _.get(item_cs, 'sport_id','');
     hpid = `${_.get(item_bs, 'hps[0].hpid','')}`;
@@ -425,7 +431,7 @@ const reset_hadicap_change = (that, delay) => {
       if(bet_obj && bet_obj.cs) {
         bet_obj.key = that.id;
         bet_obj.cs.hv_ov_change = false;
-        set_bet_obj_value(that, bet_obj);
+        set_bet_obj_value(bet_obj);
       }
       clearTimeout(that.timer_);
       that.timer_ = undefined;
@@ -561,14 +567,14 @@ const check_result_msg = (that, type, money) => {
  * @param {Object} that 视图对象
  * @return {undefined} undefined
  */
-const del_bet_item = (that) => {
-  let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+const del_bet_item = (vx_get_virtual_bet_obj,vx_get_virtual_bet_list,id) => {
+  let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);
   if (bet_obj && bet_obj.bs) {
-    let index = that.vx_get_virtual_bet_list.findIndex(it => it === that.id);
+    let index = vx_get_virtual_bet_list.findIndex(it => it === id);
     //移除对应的键值对
-    that.vx_virtual_bet_obj_del(that.id);
+    useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_DEL,id)
     //移除对应的数据
-    that.vx_virtual_bet_list_del(index);      
+    useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_DEL,index)
   }
 }
 /**
@@ -644,10 +650,11 @@ const play_name_mapping = (csid) => {
  * @param {String} id 投注项的id
  * @return {undefined} undefined
  */
-const set_bet_obj_value = (that, obj) => {
+const set_bet_obj_value = (obj) => {
   if (_.isPlainObject(obj)) {    
     obj.key = _.get(obj,'cs.id',''); 
-    that.vx_virtual_bet_obj_add(obj);
+
+    useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_ADD,obj)
   }
 }
 /**
@@ -656,9 +663,9 @@ const set_bet_obj_value = (that, obj) => {
  * @param {String} okid oid或者坑位id
  * @return {String} 投注项id
  */
- const get_id = (that, okid) => {
+ const get_id = (vx_get_virtual_bet_obj, okid) => {
   let id;
-  for(let [key, obj] of Object.entries(that.vx_get_virtual_bet_obj)) {
+  for(let [key, obj] of Object.entries(vx_get_virtual_bet_obj)) {
     if(_.get(obj,'cs.oid')==okid || _.get(obj,'cs.kid') == okid){
       id = key;
       break;
@@ -672,8 +679,8 @@ const set_bet_obj_value = (that, obj) => {
  * @param {String} id 投注项id
  * @return {String} 投注项oid
  */
- const get_oid = (that, id) => {
-  let oid = id, bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);
+ const get_oid = (vx_get_virtual_bet_obj,virtual_id, id) => {
+  let oid = id, bet_obj = _.get(vx_get_virtual_bet_obj,`${virtual_id}`);
   for(let [key, obj] of Object.entries(that[bet_obj])) {
     if(_.get(obj,'cs.id')==key){
       oid = _.get(obj,'cs.oid','');
@@ -688,8 +695,8 @@ const set_bet_obj_value = (that, obj) => {
  * @param {String} id 投注项id
  * @return {String} 投注项坑位id(kid)
  */
- const get_kid = (that, id) => {
-  let kid, bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`);   
+ const get_kid = (vx_get_virtual_bet_obj, id) => {
+  let kid, bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`);   
   if(_.has(bet_obj,'cs')) {
     kid = _.get(bet_obj,'cs.kid','');
   }
@@ -701,8 +708,8 @@ const set_bet_obj_value = (that, obj) => {
  * @param {String} id 投注项id
  * @return {Object} 投注项
  */
-const get_bet_obj = (that, id) => {
-  let bet_obj = _.get(that,'vx_get_virtual_bet_obj');
+const get_bet_obj = (vx_get_virtual_bet_obj, id) => {
+  let bet_obj = _.cloneDeep(vx_get_virtual_bet_obj);
   for(let obj of Object.values(bet_obj)) {
     if(_.get(obj,'cs.oid')==id || _.get(obj,'cs.kid')==id) {
       bet_obj = obj;
@@ -718,11 +725,11 @@ const get_bet_obj = (that, id) => {
  * @param {Array} match_list 虚拟体育投注列表
  * @return {Array} 赛事id数组
  */
-const check_mix = (that, match_list) => {
+const check_mix = (vx_get_virtual_bet_list, match_list,vx_get_virtual_bet_obj) => {
   let match_team= [],mid_obj = {}, bet_id_obj={};
   // 如果从外部没有传入match_list则取vuex中get_bet_list中的id
   if(!match_list) {
-    match_list = _.get(that,'vx_get_virtual_bet_list',[]);
+    match_list = _.cloneDeep(vx_get_virtual_bet_list) || []
   }
   if(match_list==1) {
     return [];
@@ -730,7 +737,7 @@ const check_mix = (that, match_list) => {
   let m_l_len = match_list.length;
   for(let i=0;i<m_l_len; i++) {
     let obj = {}, id = match_list[i], item;    
-    item = _.get(that,`vx_get_virtual_bet_obj.${id}`,{});
+    item = _.get(vx_get_virtual_bet_obj,`${id}`,{});
     obj.id = id;
     obj.mid = _.get(item, 'bs.mid','');
     // 放入该场赛事的两支球队id，如果提供了球员id则放入球员id
@@ -748,7 +755,7 @@ const check_mix = (that, match_list) => {
     if(obj && obj.cs) {
       obj.cs.is_serial = true;
     }
-    set_bet_obj_value(that, obj);
+    set_bet_obj_value(obj);
     for(let j=i+1;j<match_team.length;j++) {
       let team2 = _.get(match_team,`[${j}].teams`);
       let mid2 = _.get(match_team,`[${j}].mid`);
@@ -766,12 +773,12 @@ const check_mix = (that, match_list) => {
   } 
   // 若mid_obj对象有key值,则表示不可以进行串关,设置对应的标志
   for(let key in bet_id_obj) {
-    let obj = _.cloneDeep(_.get(that,`vx_get_virtual_bet_obj.${key}`,{}));
+    let obj = _.cloneDeep(_.get(vx_get_virtual_bet_obj,`${key}`,{}));
     // 设置为不可串关
     if(obj && obj.cs) {
       obj.cs.is_serial = false;
     }
-    set_bet_obj_value(that, obj);
+    set_bet_obj_value( obj);
   } 
   return Object.keys(mid_obj);
 }
@@ -850,7 +857,7 @@ const update_bet_item_info = (that, data) => {
             clone_bet_obj.bs.hps[0].hl[0].ol[0].ott = obj.bs.hps[0].hl[0].ol[0].ott;   
           } 
           Object.assign(clone_bet_obj.cs, {...obj.cs});       
-          set_bet_obj_value(that, clone_bet_obj);
+          set_bet_obj_value(clone_bet_obj);
         } 
       }
     }
@@ -1201,7 +1208,7 @@ const upd_bet_obj_item = (that,bet_obj,item, handle_time) => {
           match_update:_.get(cs, 'match_update', false)
         }
       });
-      that.vx_virtual_bet_obj_add(obj); 
+      useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_ADD,obj)
     } catch (error) {
       console.log(error)
     }
