@@ -38,7 +38,7 @@
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import team_img from "src/project/components/details/team-img";   
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
 import public_form from "src/project/pages/details/analysis-matches/components/public-form";  
@@ -55,7 +55,7 @@ import public_form from "src/project/pages/details/analysis-matches/components/p
       require: true
     },
   })
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },

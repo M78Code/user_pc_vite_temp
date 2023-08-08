@@ -1,19 +1,31 @@
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
-import { server_resource } from "app/job/output/merchant/index.js";
+import server_resource from "app/job/output/merchant/server-resource.json";
+import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILD_CONFIG;
 const night = {
-  common: "图片地址",
-  local_test: "图片地址",
+  url: "图片地址",
+ 
 };
 const day = {
-  local_test: "图片地址",
+  common: "图片地址",
+ 
 };
 const config = {
   label: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live-3",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live-4",
+
   night,
   day,
 };
+
 const item = {
   item_0: 0, //下标从0开始
   item_1: 0,
@@ -47,17 +59,17 @@ function compute_position(key) {
  */
 function compute_css({ key, theme }) {
   //从打包的 环境拿 图片地址
-  let { theme } = server_resource[config.label] || {};
-  if (!theme) {
+  let url = get(server_resource, `${config.label}.${theme}`);
+  if (!url) {
     //从本地拿
-    theme = config[theme] ? config[theme][CURRENT_ENV] : undefined;
-    if (!theme) {
+    url = get(config, theme);
+    if (!url) {
       //从本地公共拿
-      theme = config.common ? config.common[CURRENT_ENV] : undefined;
+      url = config.common ? config.common[CURRENT_ENV] : undefined;
     }
   }
   return {
-    "background-image": `url(${theme})`,
+    "background-image": `url(${url})`,
     "background-position": compute_position(key),
   };
 }

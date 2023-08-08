@@ -100,7 +100,7 @@ import team_img from "src/project/components/details/team-img";
     }
 
     
-  // TODO 后续修改调整 
+  // TODO: 后续修改调整 
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },

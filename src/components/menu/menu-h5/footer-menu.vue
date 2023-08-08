@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapGetters, mapMutations} from "vuex";
 
 import common from "src/project/mixins/constant";
@@ -157,7 +157,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
     set_footer_menulist();
 
     // 监听赛事列表数据获取事件
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
     $root.$on(emit_cmd.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu);
 
     // 初始化关注按钮显示状态
@@ -221,7 +221,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
               return item.field2 == tid
             })
             if (tid && is_existtid) {
-              // TODO 后续修改调整
+              // TODO: 后续修改调整
               set_home_tab_item({component: 'hot', index: 1, name: '热门'})
               set_hot_tab_item({field2: tid})
               $router.push({name: 'home'})
@@ -294,7 +294,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
      * @return {Undefined} Undefined
      */
     const sub_menu_changed = (sub_menu,i) => {
-      // TODO后续修改调整
+      // TODO:后续修改调整
       sessionStorage.setItem(prev_floating_sub,i);
       // 非足球选择角球时,选中独赢
       if((get_curr_sub_menu_type != 5 && sub_menu.id == 114) || (get_curr_sub_menu_type == 44 && sub_menu.id == 4)){

@@ -57,6 +57,8 @@ import { mapGetters, mapMutations } from 'vuex';
     //   scroll,
     //   SRecord
     // },
+    // 锚点
+    let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
@@ -257,7 +259,7 @@ import { mapGetters, mapMutations } from 'vuex';
       searchAfter: last_record || undefined,
       orderStatus: 0,
     };
-    let ele = $refs.myScroll
+    let ele = myScroll
     if (!is_hasnext || last_record === undefined) {
       //没有更多
       ele.setState(7);  

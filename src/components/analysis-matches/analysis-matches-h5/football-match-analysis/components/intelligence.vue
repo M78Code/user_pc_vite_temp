@@ -27,7 +27,7 @@
 
 <script setup>
 import { api_result } from "src/project/api";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, nextTick } from 'vue'
 
@@ -41,7 +41,7 @@ import { defineComponent, ref, nextTick } from 'vue'
     //数据加载完成
     let is_done = ref(false)
 
-    // 添加监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
+    // 添加监听 赛事分析刷新事件 TODO: get_detail_data  $root.$on 后续修改调整
     $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     tab_radio_button.value = [get_detail_data.mhn, get_detail_data.man]
@@ -49,11 +49,11 @@ import { defineComponent, ref, nextTick } from 'vue'
 
     const match_id = computed(() => {
       // 赛事id
-      // TODO get_detail_data.mid 后续修改调整
+      // TODO: get_detail_data.mid 后续修改调整
       return $route.params.mid || get_detail_data.mid
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO get_detail_data  $root.$on 后续修改调整
+      // 移除监听 赛事分析刷新事件 TODO: get_detail_data  $root.$on 后续修改调整
       $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
     })
 
@@ -103,7 +103,7 @@ import { defineComponent, ref, nextTick } from 'vue'
       })
     }
   // computed: {
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
   //   ...mapGetters(['get_detail_data', 'get_goto_detail_matchid']),
   //   // 赛事id
   //   match_id() {

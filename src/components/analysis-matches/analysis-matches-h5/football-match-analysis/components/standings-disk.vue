@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
@@ -97,11 +97,11 @@ import team_img from "src/project/components/details/team-img";
   // components: {
   //   "team-img": team_img,
   // },
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },
-    // TODO 国际化后续修改调整
+    // TODO: 国际化后续修改调整
     // 赛事标题说明
     // handicapResultList 最近X 场输赢, 2平3输4赢
     // overunderResultList  最近X场大小, 2平3输4赢
