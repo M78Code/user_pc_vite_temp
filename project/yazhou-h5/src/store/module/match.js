@@ -1,6 +1,9 @@
 /*
  * @Description: 赛事 store
  */
+
+import { createSlice } from '@reduxjs/toolkit'
+
 const initialState = {
   //赛事对象对应的dom top映射
   match_top_map_dict: {},
@@ -27,55 +30,50 @@ const initialState = {
   // 短距离滚动标识
   allow_short_scroll: true,
   // 当前基本玩法集展示 0 在左 1 在右  
-  standard_odd_status: 0,
-  // 赛事筛选信息
-  filter_list: {}
-};
+  standard_odd_status: 12313
+}
 
-// handle 集合
-const handle_set_state = {
-  set_match_list_loading(value) {
-    return { match_list_loading: value }
-  },
-  set_list_scroll_direction(value) {
-    return { list_scroll_direction: value } 
-  },
-  set_list_scroll_top(value) {
-    return { list_scroll_top: value } 
-  },
-  set_list_scroll_top_iconshow(value) {
-    return { list_scroll_top_iconshow: value } 
-  },
-  set_allow_short_scroll(value) {
-    return { allow_short_scroll: value } 
-  },
-  set_foot_ball_screen_changing(value) {
-    return { foot_ball_screen_changing: value } 
-  },
-  set_hide_skeleton_screen(value) {
-    return { hide_skeleton_screen: value } 
-  },
-  set_img_error_map_mid(value) {
-    return { img_error_map_mid: value } 
-  },
-  set_is_user_change_status(value) {
-    return { is_user_change_status: value } 
-  },
-  set_secondary_unfold_map(value) {
-    return { secondary_unfold_map: !Object.keys(value).length ? {} : value }
-  },
-  set_match_top_map_dict(value) {
-    return { match_top_map_dict: value } 
-  },
-  set_standard_odd_status(value) {
-    return { standard_odd_status: value } 
-  },
-  set_filter_list(value){
-    return { filter_list: value ? value : {} } 
+const matchSlice = createSlice({
+  name: 'matchReducer',
+  initialState,
+  reducers: {
+    set_match_list_loading(state, { payload }) {
+      state.match_list_loading = payload 
+    },
+    set_list_scroll_direction(state, { payload }) {
+      state.list_scroll_direction = payload 
+    },
+    set_list_scroll_top(state, { payload }) {
+      state.list_scroll_top = payload 
+    },
+    set_list_scroll_top_iconshow(state, { payload }) {
+      state.list_scroll_top_iconshow = payload 
+    },
+    set_allow_short_scroll(state, { payload }) {
+      state.allow_short_scroll = payload 
+    },
+    set_foot_ball_screen_changing(state, { payload }) {
+      state.foot_ball_screen_changing = payload 
+    },
+    set_hide_skeleton_screen(state, { payload }) {
+      state.hide_skeleton_screen = payload 
+    },
+    set_img_error_map_mid(state, { payload }) {
+      state.img_error_map_mid = payload 
+    },
+    set_is_user_change_status(state, { payload }) {
+      state.is_user_change_status = payload 
+    },
+    set_secondary_unfold_map(state, { payload }) {
+      state.secondary_unfold_map = !Object.keys(value).length ? {} : payload
+    },
+    set_match_top_map_dict(state, { payload }) {
+      state.match_top_map_dict = payload 
+    },
+    set_standard_odd_status(state, { payload }) {
+      state.standard_odd_status = payload
+    }
   }
-}
+})
 
-export default function matchReducer(state = initialState, action) {
-  const handle_method = typeof handle_set_state[action.type] === 'function'
-  return handle_method ? { ...state, ...handle_method(action.payload) } : state
-}
+export default matchSlice.reducer

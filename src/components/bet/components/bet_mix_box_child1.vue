@@ -206,7 +206,7 @@ const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了
 const exist_code = ref(0)    //投注后是否返回code码
 const series_order_respList = ref([])   //串关投注成功后的返回(包含订单号、金额···)
 const order_detail_resp_list = ref([])    // 单关和串关投注成功后的返回(投注项信息，赔率、盘口···)
-const bet_money_total = ref(0),    //串关投注成功后的总投注额
+const bet_money_total = ref(0)    //串关投注成功后的总投注额
 const max_win_money_total = ref(0)     //串关投注成功后的总最高可赢
 const query_order_obj = ref([])   //queryOrderStatus接口返回数据
 const is_5s = ref(false)  //弹框弹起来有没有5秒,到了5秒就用默认的5000作限额,不作弹框提示
@@ -228,102 +228,808 @@ const is_loading_balance = ref(false)  // 金额刷新中？
 
 /** --------------------------onmounted开始 ---------------*/
 onMounted(() => {
-  this.timer = null;
-  this.timer2 = null;
-  this.timer3 = null;
-  this.timer_count = null;
-  this.timer_count_1 = null;
-  this.timer_count_2 = null;
+  timer = null;
+  timer2 = null;
+  timer3 = null;
+  timer_count = null;
+  timer_count_1 = null;
+  timer_count_2 = null;
   //高度计算
   let rem_1 = window.innerWidth * 100 / 375;
-  this.max_height1 = window.innerHeight - rem_1 * 3.9
+  max_height1.value = window.innerHeight - rem_1 * 3.9
 
 
-  this.set_is_spread(false);
+  set_is_spread(false);
   // 5秒计时
-  clearTimeout(this.timer)
-  this.timer = setTimeout(() => {
-    this.is_5s = true;
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    is_5s.value = true;
   }, 5000);
 
   //获取最大最小金额
-  this.fetch_limit_money();
-  if (+this.get_menu_type !== 900) {
-    this.check_odds_beforebet2();    //投注前拉取最新的盘口赔率状态(应对socket推送不及时)
+  fetch_limit_money();
+  if (+get_menu_type !== 900) {
+    check_odds_beforebet2.value();    //投注前拉取最新的盘口赔率状态(应对socket推送不及时)
   }
 
-  this.set_new_bet(false)
+  set_new_bet(false)
 
-  this.scroll_box_ele = this.$refs.scroll_box
+  scroll_box_ele.value = $refs.scroll_box
 })
 
 /** --------------------------onmounted结束 ---------------*/
 //单关的数据对象
 const single_item = computed(() => {
-  if (this.get_bet_list[0]) {
-    return this.get_bet_obj[this.get_bet_list[0]].bs
+  if (get_bet_list[0]) {
+    return get_bet_obj[get_bet_list[0]].bs
   } else {
     return {}
   }
 })
 //是否有重复的球员id或者球队id
 const is_conflict = computed(() => {
-  return !(_.uniq(this.get_m_id_list).length == this.get_m_id_list.length)
+  return !(_.uniq(get_m_id_list).length == get_m_id_list.length)
 })
 
 // 是否展示不支持串关提示
 const is_conflict2 = computed(() => {
   let flag =
-    (this.get_cannot_mix_len || this.get_invalid_ids.length) &&
-    this.get_bet_list.length > 1 &&
-    ![900, 3000].includes(+this.get_menu_type)
+    (get_cannot_mix_len || get_invalid_ids.length) &&
+    get_bet_list.length > 1 &&
+    ![900, 3000].includes(+get_menu_type)
 
   if (flag) {
-    this.btn_show = 5
-  } else if (this.get_bet_status == 1) {
-    this.btn_show = 0
+    btn_show.value = 5
+  } else if (get_bet_status == 1) {
+    btn_show.value = 0
   }
   return flag
 })
 //串关新流程且在注单确认中
 // const   mixnew_bet = computed(()=>{
 //   get() {
-//     return this.get_new_bet && this.get_is_mix
+//     return get_new_bet && get_is_mix
 //   }
 // }
 //计算样式，下面几种情况左下角按钮需要置灰不让点击
 const calc_class = computed(() => {
-  let flag = [2, 4].includes(+this.get_bet_status)
-    || this.get_is_champion(this) && !this.get_bet_success
-    || this.get_bet_status == 5 && this.get_bet_list.length == 1
-    || this.get_menu_type == 3000 && _.get(this.single_item, 'hps[0].hl[0].hipo') != 1 && !this.get_bet_success
-    || this.get_menu_type != 3000 && _.get(this.single_item, 'hps[0].hids') == 0 && !this.get_bet_success
-    || this.btn_show == 5;
+  let flag = [2, 4].includes(+get_bet_status)
+    || get_is_champion(this) && !get_bet_success
+    || get_bet_status == 5 && get_bet_list.length == 1
+    || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !get_bet_success
+    || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !get_bet_success
+    || btn_show.value == 5;
   return flag
 })
 //是否进入串关部分投注成功流程
 const part_bet = computed(() => {
-  return this.get_order_los.length && this.get_order_suc.length && !this.get_order_ing.length
+  return get_order_los.length && get_order_suc.length && !get_order_ing.length
 })
 
+/** --------------------------watch开始 ---------------*/
+watch(() => get_update_tips, (new_) => {
+  tips_msg = new_
+})
+
+watch(() => get_money_notok_list2.length, (new_) => {
+  if (!new_ && !get_money_notok_list.length && get_bet_list.length > 2) {
+    tips_msg = ''
+  }
+})
+
+/**
+   *@description 监听确认中的订单号数量
+  *@return {Undefined} undefined
+*/
+watch(() => get_order_ing.length, (new_, old_) => {
+  if (new_ == 0 && old_) {
+    if (get_order_los.length) {  //所有订单确认时，如果新流程有失败的订单回到状态1
+      series_order_respList.value = series_order_respList.value.filter(item => {
+        return get_order_suc.includes(item.orderNo)
+      }, this)
+
+      let s_count_data = get_s_count_data.filter(item => {
+        return get_order_los.includes(item.orderno) || item.money == 0
+      })
+
+      let money_remain = s_count_data.reduce((pre, cur) => {
+        return pre + cur.money * cur.count
+      }, 0)
+
+      // 同步程序走完后再设置总金额
+      $nextTick(() => {
+        set_money_total('clear_')
+        set_money_total(money_remain)
+      })
+
+      set_s_count_data(s_count_data)
+      set_bet_status(1);
+
+      if (is_new_bet.value) {
+        if (!tips_msg) {
+          tips_msg = $root.$t('bet.err_msg03')  //新流程queryOrderStatus 接口返回的投注失败提示语先写死
+        }
+        check_odds_beforebet2.value();  //重新拉取投注前校验盘口信息接口
+        need_bet_again.value = true
+        set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+      }
+    } else {
+      set_bet_status(3);
+    }
+    set_new_bet(false)
+  }
+})
+
+watch(() => get_odds_change, (new_) => {
+  if (new_) {
+    set_bet_status(5);
+    tips_msg = $root.$t('bet.msg08')
+  } else {
+    tips_msg = ''
+  }
+})
+
+watch(() => get_change_list.length, (new_, old_) => {
+  if (new_ == 0 && old_ > 0 && get_bet_status == 5) {
+    agree_change();
+  }
+})
+
+watch(() => get_bet_status, (new_) => {
+  switch (new_) {
+    case 1:
+      set_new_bet(false)
+    case 7:
+      btn_show.value = 0;
+      break;
+    case 2:
+      btn_show.value = 2;
+      tips_msg = '';
+
+      clearTimeout(timer2)
+      timer2 = setTimeout(() => {    // 10秒没有code码返回，红字提示网络异常,点击确定移除投注项
+        if (!exist_code.value) {
+          exist_code.value = '666'
+          if (get_bet_list.length) {
+            set_bet_status(1);
+            tips_msg = $root.$t('bet.err_msg13');
+          }
+        }
+      }, 10000);
+
+      break;
+    case 3:
+    case 8:
+      tips_msg = '';
+      set_keyboard_show(false)
+    case 4:
+      btn_show.value = 1;
+      clearTimeout(timer_count_2);
+      timer_count_2 = null;
+      break;
+    case 6:
+      btn_show.value = 1;
+      set_keyboard_show(false)
+      break;
+    case 5:
+      if (get_invalid_ids.length) {  // 有投注项失效时优先显示失效
+        btn_show.value = 5
+      } else if (need_bet_again.value) {  // 没有失效需要二次投注时显示“接受变化并投注”
+        btn_show.value = 4
+      } else {
+        btn_show.value = 3;  // 接受变化
+      }
+      break;
+    default:
+      break;
+  }
+})
+
+
+/** --------------------------watch结束 ---------------*/
+// ...mapMutations(['set_toast', "set_bet_status", "set_bet_obj", "set_accept_show", "set_is_accept", "set_order_ing", "set_is_mix", "set_order_no", "set_keyboard_show", "set_new_bet", "set_order_los",
+//       "set_bet_list", "set_s_count_data", "set_is_spread", "set_money_total", "set_odds_change", "set_money_notok_list", "set_active_index",
+//       "set_change_list", "add_orderno", "set_used_money", "clear_single_money", 'set_detail_data']),
+
+// 去注单记录页查看
+const go_record = () => {
+  set_bet_list([])
+  $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, true);
+}
+/**
+ * 切换是否接受更好赔率
+ */
+const toggle_accept = () => {
+  set_is_accept()
+  $forceUpdate()
+},
+/**
+ * 切换是否使用常用金额
+ */
+const change_used_money = () => {
+  set_used_money(null)
+  $forceUpdate()
+}
+
+/**
+ *@description 点击添加比赛、顶部蒙层、向下箭头、确定和完成
+ *@param {Number} val 点击的哪个按钮，2代表是投注框左下角按钮
+ */
+const pack_up = (val) => {
+  if ([0, 2].includes(+get_bet_status)) { return };  //投注提交中不能点击
+
+  if (val == 2 && calc_class) {   // 有些情况(冠军玩法、单关失效...)不能点击串关+
+    return
+  }
+
+  // 保留选项
+  if (val == 2 && get_bet_success) {
+    set_keyboard_show(true)
+    set_is_spread(false);
+    tips_msg = ''
+    clear_single_money()
+    set_bet_status(1)
+    set_money_total('clear_')
+    set_active_index(0)
+    clearInterval(timer_count)
+    clearTimeout(timer_count_1)
+    return
+  }
+
+  // 冠军玩法没有串关，清空数据处理
+  if (get_is_champion(this)) {
+    set_bet_list([]);
+    return
+  }
+
+  // 删除全部
+  if (val == 2 && get_bet_list.length >= 2) {
+    set_bet_list([]);
+    return
+  }
+
+  //串关+
+  if (val == 2 && get_bet_list.length == 1) {
+    set_bet_status(0);
+    set_is_mix(true)
+  }
+
+  if (
+    get_is_mix && [1, 5, 7].includes(+get_bet_status)
+  ) {
+    set_bet_status(0);
+    return
+  }
+
+  // 投注后点击蒙层，X ，或者确定直接删除，或者单关点蒙层
+  if (
+    [3, 4, 6, 8].includes(+get_bet_status) ||
+    get_bet_list.length == 1 && val != 2
+  ) {
+    set_bet_list([]);
+    return
+  }
+}
+/**
+ *@description 单关投注后，c201消息的处理
+ *@param {Array} : newTotalMaxWinAmount - 最高可赢金额， ov - 赔率， emit_http - 触发哪些接口请求， msg - 提示消息
+ */
+const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg]) => {
+  //emit_http 是1或者2时都是投注失败
+  if (emit_http == 1) {
+    msg && (tips_msg = msg)
+    // 重新拉取投注前校验盘口信息接口
+    if (check_odds_beforebet2.value) {
+      check_odds_beforebet2.value()
+    } else {
+      check_odds_beforebet()
+    }
+    need_bet_again.value = true
+    set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+  } else if (emit_http == 2) {
+    msg && (tips_msg = msg)
+    // 重新拉取投注前校验盘口信息接口
+    if (check_odds_beforebet2.value) {
+      check_odds_beforebet2.value()
+    } else {
+      check_odds_beforebet()
+    }
+    need_bet_again.value = true
+    set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+    fetch_limit_money(); // 更新单关查询最大最小金额
+  } else {
+    max_winmoney.value = newTotalMaxWinAmount * 100;
+    odds_value2.value = ov;
+  }
+  clearInterval(timer_count);
+  timer_count = null;
+}
+/**
+ *@description 串关投注后，c201消息的处理
+ *@param {Array} : emit_http - 触发哪些接口请求， msg - 提示消息
+ */
+const c201_update_handler2 = ([emit_http, msg]) => {
+  //emit_http 是1或者2时都是投注失败
+  if (emit_http == 1) {
+    msg && (tips_msg = msg)
+    if (check_odds_beforebet2.value) {
+      check_odds_beforebet2.value()
+    } else {
+      check_odds_beforebet()
+    }
+    need_bet_again.value = true
+    set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+  } else if (emit_http == 2) {
+    msg && (tips_msg = msg)
+    if (check_odds_beforebet2.value) {
+      check_odds_beforebet2.value()
+    } else {
+      check_odds_beforebet()
+    }
+    need_bet_again.value = true
+    set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+    fetch_limit_money();
+  }
+  clearInterval(timer_count);
+  timer_count = null;
+  clearTimeout(timer_count_1);
+  timer_count_1 = null;
+  // set_new_bet(false)
+}
+/**
+ *@description 展开串关类型
+ *@return {Undefined} undefined
+ */
+const spread_options = () => {
+  let ele = scroll_box_ele.value
+  if (!ele) { return }
+
+  if (get_bet_list.length == 2) { return };
+
+  let ch = ele.clientHeight,
+    sh = ele.scrollHeight,
+    rem_1 = window.innerWidth * 100 / 375;
+
+  set_is_spread(!get_is_spread);
+  //设置投注项滚动距离，同步程序走完后再处理逻辑
+  $nextTick(() => {
+    if (get_is_spread) {
+      ele.scrollTop = sh + 0.56 * rem_1 - ch;
+    } else {
+      ele.scrollTop = sh - ch;
+    }
+
+  })
+}
+/**
+ *@description 点击移除无效注单
+ */
+const reomve_invalid = () => {
+  $root.$emit(emit_cmd.EMIT_REMOVE_INVALID_)
+}
+/**
+ *@description 点击投注
+ */
+const submit_order = () => {
+  if (btn_show.value == 4) {   //接受变化并投注点击时，要先接受变化
+    set_odds_change(false);
+    set_change_list({ status: 0 });
+    if (get_active_index == -1) {
+      set_active_index(0)
+    }
+  }
+  exist_code.value = ''
+  //校验是否是串关，并且删除后是否小于最小串关数量
+  if (get_is_mix && !vilidata_mix_count()) { return }
+  set_order_los([]);
+  set_new_bet(false)
+
+  series_order_respList.value = []
+  is_new_bet.value = false;
+  need_bet_again.value = false
+
+  clearTimeout(timer_count_2);
+  timer_count_2 = null;
+  clearTimeout(timer_count_1);
+  timer_count_1 = null;
+
+  if (get_money_notok_list.length || is_conflict) { return };
+
+  // 这种情况放过，让钱投注出去
+  let _flag2 = get_money_total == get_user.balance
+  if (get_money_notok_list2.length && !_flag2) {
+    //点击投注后当输入金额小于最低限额时，默认转化为最低限额。并提示“最小单笔投注金额为 xx.” 3s消失。
+    set_money_notok_list({ status: 0 })
+    return
+  }
+
+  set_active_index(-1);
+
+  if (get_bet_status == 7) {   //锁盘
+    set_toast({ 'txt': $root.$t('bet.odd_upd') });
+    return;
+  }
+
+  if (get_money_total > +get_user.balance || get_user.balance == 0) {    //弹窗提示：“余额不足，请您先充值”
+    set_toast({ 'txt': $root.$t('bet.err_msg05') });
+    return;
+  }
+  if (get_money_total < 0.01) {  //请输入金额
+    set_toast({ 'txt': $root.$t('bet.input_v') })
+    return;
+  }
+
+  //限额获取中,请稍后
+  let bet_dom = $refs.bet_single_detail
+  let flag = (get_is_mix && get_s_count_data[0] && !get_s_count_data[0].orderMaxPay
+    || !get_is_mix && bet_dom && !bet_dom.max_money_back) && !is_5s.value
+  if (flag) {
+    set_toast({ 'txt': $root.$t('bet.err_msg06') });
+    return
+  }
+
+
+  if (get_mix_bet_flag) {
+    mix_bet()  //串关投注
+  } else {
+    single_bet() //单关投注
+  }
+}
+/**
+ *@description 单关投注后的逻辑处理
+ *@return {Undefined} undefined
+ */
+const single_bet = () => {
+  submit_betlist((code, data, msg) => {
+    if (exist_code.value == '666') { return };  // 10秒没有code码返回状态不做跟新
+
+    exist_code.value = code;
+
+    if (code == 200 && data) {  //投注成功
+      order_detail_resp_list.value = data.orderDetailRespList;
+      switch (data.orderDetailRespList[0].orderStatusCode) {
+        case 0:   //投注失败
+          set_bet_status(8);
+          break;
+        case 1:   //投注成功
+          set_bet_status(3);
+          break;
+        case 2:   //注单确认中(提交成功)
+          set_order_no(data.orderDetailRespList[0].orderNo);//记录订单号
+
+          if (data.lock == 1) {   //进入投注新流程
+            set_new_bet(true)
+            clearTimeout(timer_count_2)
+            timer_count_2 = setTimeout(() => {   //25秒还是有订单在确认中，直接给状态让去注单记录中查看
+              if (get_new_bet) {
+                set_bet_status(1);
+                mixnew_bet = true;
+                tips_msg = $root.$t('bet.err_msg08');
+                clearInterval(timer_count)
+                timer_count = null;
+              }
+            }, 25000);
+          } else {
+            set_bet_status(6);
+            tips_msg = $root.$t('bet.err_msg07');
+          }
+          // 隔5秒后，每2秒调用异常接口
+          clearTimeout(timer_count_1)
+          timer_count_1 = setTimeout(() => {
+            clearInterval(timer_count)
+            timer_count = setInterval(() => {
+              if (get_bet_status == 6 || get_new_bet) {
+                query_order();
+              }
+            }, 2000);
+          }, 5000);
+          // c201消息处理
+          $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
+          break;
+        default:
+          break;
+      }
+      max_winmoney.value = data.orderDetailRespList[0].maxWinMoney;
+      odds_value2.value = data.orderDetailRespList[0].oddsValues;
+      bet_money.value = data.orderDetailRespList[0].betMoney;
+      play_optionname.value = data.orderDetailRespList[0].playOptionName;
+      playname2.value = data.orderDetailRespList[0].playName;
+
+      // collect_match()
+
+    } else {  //投注失败在 back_msg 方法中查看注释
+      set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+      back_msg({ code, data, msg }, (status, msg) => {
+        switch (status) {
+          case 1:
+            need_bet_again.value = true
+            // 同步程序走完后再处理逻辑
+            $nextTick(() => {
+              if (!get_odds_change) {
+                set_bet_status(1);
+              }
+            })
+            break;
+          case 2:
+            set_bet_status(4);
+            tips_msg = msg;
+            break;
+          case 3:
+            set_bet_status(1);
+            tips_msg = msg;
+            break;
+          case 4:
+            need_bet_again.value = true
+            set_bet_status(1);//设置投注框为初始状态
+            break;
+          default:
+            break;
+        }
+      });
+    }
+  })
+
+}
+/**
+ *@description 串关投注后的逻辑处理
+ *@return {Undefined} undefined
+ */
+const mix_bet = () => {
+  submit_betlist((code, data, msg) => {
+    if (exist_code.value == '666') { return };  // 10秒没有code码返回状态不做跟新
+
+    exist_code.value = code;
+
+    if (code == 200) {
+      series_order_respList.value = data.seriesOrderRespList;
+      let order_ing_ = [];
+
+      series_order_respList.value.forEach(item => {
+        add_orderno({ count: item.seriesSum, num: item.orderNo }) //将订单号存到对象集合中
+        if (item.orderStatusCode == 2) {
+          order_ing_.push(item.orderNo)
+        }
+      })
+      set_order_ing({ change_: 1, value_: order_ing_ })
+
+      order_detail_resp_list.value = data.orderDetailRespList;
+      bet_money_total.value = data.betMoneyTotal;
+      max_win_money_total.value = data.maxWinMoneyTotal;
+
+      if (data.lock == 1 && order_ing_.length) {  //新流程
+        set_new_bet(true)
+        clearTimeout(timer_count_2)
+        timer_count_2 = setTimeout(() => {   //25秒还是有订单在确认中，直接给状态让去注单记录中查看
+          if (get_new_bet) {
+            mixnew_bet = true
+            set_bet_status(1);
+            tips_msg = $root.$t('bet.err_msg08');
+            clearInterval(timer_count);
+            timer_count = null;
+          }
+        }, 25000);
+
+        // c201消息处理
+        $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler2)
+
+        clearTimeout(timer_count_1)
+        timer_count_1 = setTimeout(() => {    //5秒socket没有返回订单状态的话，调接口拉取
+          clearInterval(timer_count)
+          timer_count = setInterval(() => {
+            if (get_order_ing.length) {
+              let param = get_order_ing.toString();
+              api_betting.get_orderstatus({ orderNos: param }).then(res => {
+                if (res.code == 200 && get_bet_status != 1 && res.data) {
+                  query_order_obj.value = res.data
+
+                  query_order_obj.value.forEach(item => {
+                    if (item.status == 4) {   //新流程失败了需要记录
+                      is_new_bet.value = true
+                    }
+                  })
+                }
+              })
+            } else {
+              clearInterval(timer_count);
+              timer_count = null;
+              clearTimeout(timer_count_1);
+              timer_count_1 = null;
+              clearTimeout(timer_count_2);
+              timer_count_2 = null;
+            }
+          }, 2000);
+        }, 5000);
+
+      } else {  //老流程
+        if (order_ing_.length) {
+          set_bet_status(6);
+          tips_msg = $root.$t('bet.err_msg07');
+
+          clearTimeout(timer_count_1)
+          timer_count_1 = setTimeout(() => {    //5秒socket没有返回订单状态的话，调接口拉取
+            clearInterval(timer_count)
+            timer_count = setInterval(() => {
+              if (get_order_ing.length) {
+                let param = get_order_ing.toString();
+                api_betting.get_orderstatus({ orderNos: param }).then(res => {
+                  if (res.code == 200 && res.data) {
+                    query_order_obj.value = res.data
+                  }
+                })
+              } else {
+                clearInterval(timer_count);
+                timer_count = null;
+              }
+            }, 2000);
+          }, 5000);
+        } else {
+          set_bet_status(3);
+        }
+        // collect_match()
+      }
+
+    } else {
+      set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+      back_msg({ code, data, msg }, (status, msg) => {
+        switch (status) {
+          case 1:
+            need_bet_again.value = true
+            // 同步程序走完后再处理逻辑
+            $nextTick(() => {
+              if (!get_odds_change) {
+                set_bet_status(1);
+              }
+            })
+
+            break;
+          case 2:   //对应红色提示语的情况,点击确定移除投注项
+            set_bet_status(4);
+            tips_msg = msg;
+            break;
+          case 3:
+            set_bet_status(1);
+            tips_msg = msg;
+            break;
+          case 4:
+            need_bet_again.value = true
+            set_bet_status(1);
+            break;
+          default:
+            break;
+        }
+      });
+    }
+  })
+
+}
+
+//单关5秒后还是在确认中状态的话，轮询查询订单信息
+const query_order = () => {
+  let param = {
+    orderNos: get_order_no
+  }
+
+  if (!param.orderNos) { return }
+
+  api_betting.get_orderstatus(param).then(res => {
+    if (!(get_bet_status == 6 || get_new_bet)) { return }
+
+    query_order_obj.value = res.data
+
+    let data = _.get(res, 'data[0]');
+    let code = _.get(res, 'code');
+
+    if (code != 200 || !res.data) { return };
+
+    if (data.status == 0) {   //投注成功
+      clearInterval(timer_count);
+      timer_count = null;
+      set_bet_status(3);
+
+      if (data.orderNo && data.orderNo == get_order_no) {
+        max_winmoney.value = data.newMaxWinAmount;
+        let oid = _.get(single_item, 'hps[0].hl[0].ol[0].oid', '')
+        if (data.oddsChangeList && data.oddsChangeList[0] && data.oddsChangeList[0].playOptionsId == oid) {
+          odds_value2.value = data.oddsChangeList[0].usedOdds;
+        }
+      }
+      set_new_bet(false)
+    } else if (data.status == 4) {   //投注失败
+      if (get_new_bet) {
+        set_bet_status(1);
+        mixnew_bet = true;
+        tips_msg = $root.$t('bet.err_msg03')  //单关新流程失败后的 对应queryOrderStatus接口的红字提示
+        set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+      } else {
+        set_bet_status(8);
+      }
+      clearInterval(timer_count);
+      timer_count = null;
+    }
+  })
+}
+
+/**
+ *@description 接受变化
+ *@param {Number} val 有值表示手动触发
+ *@return {Undefined} undefined
+ */
+const agree_change = (val) => {
+  set_odds_change(false);
+  set_bet_status(1);
+  set_change_list({ status: 0 });
+  if (get_active_index == -1) {
+    set_active_index(0)
+  }
+}
+
+/**
+ *@description 自动接受跟好赔率规则展示
+ */
+const change_accept = () => {
+  set_accept_show(true);
+}
+
+/**
+ *@description 串关注单状态变动需要跟新最高可盈
+ *@param {Number} value 最高可赢变动多少
+ *@param {Number} value2 总投注额变动多少
+ *@return {Undefined} undefined
+ */
+const update_money = (value = 0, value2 = 0) => {
+  max_win_money_total.value += value * 100;
+  bet_money_total.value += value2 * 100;
+}
+
+// 清除当前组件所有定时器
+const clear_timer = () => {
+  // timeout定时器列表
+  const timeout_timer_arr = [
+    'timer',
+    'timer2',
+    'timer3',
+    'timer_count_1',
+    'timer_count_2',
+  ]
+
+  // interval定时器列表
+  const interval_timer_arr = [
+    'timer_count'
+  ]
+
+  // 批量清除timeout定时器
+  for (const timer of timeout_timer_arr) {
+    clearTimeout(this[timer])
+    this[timer] = null
+  }
+
+  // 批量清除interval定时器
+  for (const timer of interval_timer_arr) {
+    clearInterval(this[timer])
+    this[timer] = null
+  }
+}
+
+
+
 onUnmounted(() => {
-  this.clear_timer()
+  clear_timer()
 
-  this.set_order_ing({ change_: 1, value_: [] })
-  this.set_order_no('')
+  set_order_ing({ change_: 1, value_: [] })
+  set_order_no('')
 
-  utils.del(this.series_order_respList);
+  utils.del(series_order_respList.value);
 
-  this.set_active_index(0);//活动子项置为初始值
-  this.set_keyboard_show(true)
+  set_active_index(0);//活动子项置为初始值
+  set_keyboard_show(true)
 
-  this.$root.$off(this.emit_cmd.EMIT_C201_UPDATE, this.c201_update_handler1)
-  this.$root.$off(this.emit_cmd.EMIT_C201_UPDATE, this.c201_update_handler2)
+  $root.$off(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
+  $root.$off(emit_cmd.EMIT_C201_UPDATE, c201_update_handler2)
 
-  this.debounce_throttle_cancel(this.check_odds_beforebet2);
+  debounce_throttle_cancel(check_odds_beforebet2.value);
 
-  for (const key in this.$data) {
-    this.$data[key] = null
+  for (const key in $data) {
+    $data[key] = null
   }
 })
 

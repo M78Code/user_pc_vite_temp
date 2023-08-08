@@ -4,9 +4,10 @@
  */
 import WsQueue from "src/core/ws/ws-queue.js";
 import { WsRev } from "src/core/ws/ws-ctr.js";
-import WsMan from  "src/core/ws/ws_man.js"
+import WsMan from "src/core/ws/ws-man.js";
 import WsSendManger from "src/core/ws/ws-send-manger.js";
-import STANDARD_KEY from  "src/core/standard-key/index.js"
+import STANDARD_KEY from "src/core/standard-key/index.js";
+import { uniq } from "lodash";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
@@ -20,9 +21,9 @@ export default class Ws {
     // ws url
     this.url = url;
     // ws通信对象
-    this.ws = '';
+    this.ws = "";
     // 心跳包定时器
-    this.headbeet_timer = '';
+    this.headbeet_timer = "";
     //心跳包发送间隔时间
     this.HEARTBEAT_TIME = 15000;
     // ws 消息队列对象--用于消息队列分发
@@ -32,11 +33,11 @@ export default class Ws {
     // 网络链接状态
     this.wsStatus = false;
     // 网络链接状态回调方法
-    this.ws_status_call = '';
+    this.ws_status_call = "";
     // 是否手动操作ws
     this.ctr = false;
     // ws消息推送管理对象
-    this.ws_send_manger_objs={};
+    this.ws_send_manger_objs = {};
     // ws断线后,重新连接时定时器对象
     this.timer_ws = null;
     // 可以切换的ws url地址数组
@@ -44,7 +45,6 @@ export default class Ws {
     // 增加接收内部消息监听
     this.add_event_listener();
   }
-
 
   /**
    * @Description:增加消息队列数据
@@ -63,13 +63,13 @@ export default class Ws {
    * @return:
    */
   set_ws_url(url) {
-    console.log('ws set_ws_url new url:'+url);
+    console.log("ws set_ws_url new url:" + url);
     // 未发现该域名,增加到数组中
-    if(!this.urls.includes(url)){
+    if (!this.urls.includes(url)) {
       this.urls.unshift(url);
-      this.urls = _.uniq(this.urls);
+      this.urls = uniq(this.urls);
     }
-    console.log('this.urls:',JSON.stringify(this.urls));
+    console.log("this.urls:", JSON.stringify(this.urls));
   }
 
   /**
@@ -78,23 +78,22 @@ export default class Ws {
    * @return:
    */
   ret_init_data(no_auto) {
-    console.log('-----ws--ret_init_data----------'+no_auto)
-    if(no_auto)
-    {
+    console.log("-----ws--ret_init_data----------" + no_auto);
+    if (no_auto) {
       this.ctr = no_auto;
     }
     if (this.ws) {
       // 清空监听函数
-      this.ws.onopen = function (e){};
-      this.ws.onclose = function (e){};
-      this.ws.onmessage = function (e){};
+      this.ws.onopen = function (e) {};
+      this.ws.onclose = function (e) {};
+      this.ws.onmessage = function (e) {};
       this.ws.close();
-      this.ws = '';
+      this.ws = "";
     }
     //清除心跳包定时器
     if (this.headbeet_timer) {
       clearInterval(this.headbeet_timer);
-      this.headbeet_timer = '';
+      this.headbeet_timer = "";
     }
   }
 
@@ -105,24 +104,24 @@ export default class Ws {
    */
   destroy(is_close) {
     // console.log('-----ws--destroy----------')
-    if(is_close){
+    if (is_close) {
       this.run = false;
     }
     // 移除接收内部消息监听
     this.remove_event_listener();
     if (this.ws) {
-      this.send_msg({cmd:"C00"});
+      this.send_msg({ cmd: "C00" });
       // 清空监听函数
-      this.ws.onopen = function (e){};
-      this.ws.onclose = function (e){};
-      this.ws.onmessage = function (e){};
+      this.ws.onopen = function (e) {};
+      this.ws.onclose = function (e) {};
+      this.ws.onmessage = function (e) {};
       this.ws.close();
-      this.ws = '';
+      this.ws = "";
     }
     //清除心跳包定时器
     if (this.headbeet_timer) {
       clearInterval(this.headbeet_timer);
-      this.headbeet_timer = '';
+      this.headbeet_timer = "";
     }
     //停止消费队列
     if (this.ws_queue) {
@@ -131,13 +130,12 @@ export default class Ws {
 
     // 销毁ws消息推送管理对象
     for (const key in this.ws_send_manger_objs) {
-        const item = this.ws_send_manger_objs[key];
-        if(item)
-        {
-          item.destroy();
-        }
+      const item = this.ws_send_manger_objs[key];
+      if (item) {
+        item.destroy();
+      }
     }
-    this.ws_send_manger_objs=null;
+    this.ws_send_manger_objs = null;
     // 销毁定时器
     clearTimeout(this.timer_ws);
   }
@@ -147,49 +145,54 @@ export default class Ws {
    * @param {*} type 操作类型 vue_hidden_to_show:后台转前台时
    */
   connect(type) {
-    console.log('-----ws--connect----------'+type)
+    console.log("-----ws--connect----------" + type);
     if (this.ws) {
       // console.error(`--------readyState:${this.ws.readyState}-----------CONNECTING:${WebSocket.CONNECTING}----------------OPEN:${WebSocket.OPEN}`);
       // ws处于可用状态时,不需要重新创建和连接
-      if(this.ws.readyState == WebSocket.CONNECTING || this.ws.readyState == WebSocket.OPEN){
+      if (
+        this.ws.readyState == WebSocket.CONNECTING ||
+        this.ws.readyState == WebSocket.OPEN
+      ) {
         return;
       }
       // console.log('---------------------------------清空操作-----------------------');
       // 清空监听函数
-      this.ws.onopen = function (e){};
-      this.ws.onclose = function (e){};
-      this.ws.onmessage = function (e){};
+      this.ws.onopen = function (e) {};
+      this.ws.onclose = function (e) {};
+      this.ws.onmessage = function (e) {};
       this.ws.close();
-      this.ws = '';
+      this.ws = "";
     }
     var this_ = this;
     // 获取轮询数组中最前面的url地址
-    if(type != 'vue_hidden_to_show' && this.urls.length){
+    if (type != "vue_hidden_to_show" && this.urls.length) {
       // console.log(`---------------------------------urls:${JSON.stringify(this.urls)}-----------------------`);
       // 将第一个域名移动到数组最后,并设置给this.url参数
       this.url = this.urls[0];
-      this.urls.splice(0,1);
-      this.urls.push(this.url)
+      this.urls.splice(0, 1);
+      this.urls.push(this.url);
     }
     try {
       this.ws = new WebSocket(this.url);
       console.log(this.ws);
-      console.log(`-----------------------------------new WebSocket---------------------this.url:${this.url}`);
+      console.log(
+        `-----------------------------------new WebSocket---------------------this.url:${this.url}`
+      );
       //打开
       this.ws.onopen = function (e) {
         // console.log('------------------------------------onopen----------------------')
         Ws.err_count = 0;
-        this_.onConnect(this_, e)
+        this_.onConnect(this_, e);
       };
       //关闭
       this.ws.onclose = function (e) {
         // console.log('------------------------------------onclose----------------------')
-        this_.onClose(this_, e)
+        this_.onClose(this_, e);
       };
       //接收消息
       this.ws.onmessage = function (e) {
         // console.log('------------------------------------onmessage----------------------')
-        this_.onMessage(this_, e)
+        this_.onMessage(this_, e);
       };
     } catch (error) {
       console.error(error);
@@ -197,53 +200,64 @@ export default class Ws {
   }
   //连接ws成功回调函数
   onConnect(this_) {
-    console.log(`--------------------------------------onConnect---------------------this.url=${this.url}`);
+    console.log(
+      `--------------------------------------onConnect---------------------this.url=${this.url}`
+    );
     // 设置ws链接状态
     this_.wsStatus = 1;
 
     if (this_.ws_status_call) {
-      this_.ws_status_call(this_.wsStatus)
+      this_.ws_status_call(this_.wsStatus);
     }
     if (!this_.headbeet_timer) {
       clearInterval(this_.headbeet_timer);
       this_.headbeet_timer = setInterval(() => {
         // 发送心跳包命令
-        this_.send_msg({ "cmd": "C0" });
+        this_.send_msg({ cmd: "C0" });
       }, this_.HEARTBEAT_TIME);
     }
   }
   //关闭ws回调函数
   onClose(this_) {
-    console.log(`--------------------------------------onClose------------this.url=${this.url}`);
+    console.log(
+      `--------------------------------------onClose------------this.url=${this.url}`
+    );
     // 设置ws链接状态
     this_.wsStatus = 0;
     if (this_.ws_status_call) {
-      this_.ws_status_call(this_.wsStatus)
+      this_.ws_status_call(this_.wsStatus);
     }
     this_.ret_init_data();
     // 不允许执行时阻止自动重启功能
-    if(!this.run){
+    if (!this.run) {
       return;
     }
-    console.log(`--------------------------------------onClose------------this.url=${this.url}----------this.ctr = ${this.ctr}`);
+    console.log(
+      `--------------------------------------onClose------------this.url=${this.url}----------this.ctr = ${this.ctr}`
+    );
     // 发送api域名切换命令
-    if(!this.ctr)
-    {
+    if (!this.ctr) {
       // this.view.$root.$emit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
       // 改用postmessage消息机制
-      window.postMessage({event: 'WS', cmd:`WS_DOMAIN_UPD_CMD`, data:{name:'api域名切换命令'}},'*');
+      window.postMessage(
+        {
+          event: "WS",
+          cmd: `WS_DOMAIN_UPD_CMD`,
+          data: { name: "api域名切换命令" },
+        },
+        "*"
+      );
     }
     this.ctr = false;
-    if (!this_.wsStatus && document.visibilityState == 'visible') {
+    if (!this_.wsStatus && document.visibilityState == "visible") {
       Ws.err_count++;
       clearTimeout(this.timer_ws);
-      if(Ws.err_count>10)
-      {
+      if (Ws.err_count > 10) {
         // 10秒后再连接
         this.timer_ws = setTimeout(() => {
           this_.connect();
         }, 10000);
-      } else{
+      } else {
         // 3秒后再连接
         this.timer_ws = setTimeout(() => {
           this_.connect();
@@ -258,16 +272,15 @@ export default class Ws {
    * @param: ws_object WS类对象
    * @return:
    */
-  send_msg(msg, ws_object=WsMan.wsm) {
+  send_msg(msg, ws_object = WsMan.wsm) {
     try {
       let ws = WsMan.ws && WsMan.ws.ws;
       if (ws && ws.readyState == 1) {
         switch (msg.cmd) {
-          case 'C8':
+          case "C8":
             // 是否一条一条发送
-            if(!msg.one_send){
-              if(!this.ws_send_manger_objs[msg.cmd])
-              {
+            if (!msg.one_send) {
+              if (!this.ws_send_manger_objs[msg.cmd]) {
                 this.ws_send_manger_objs[msg.cmd] = new WsSendManger(msg.cmd);
               }
               // 增加缓存信息,并获取组装后信息
@@ -278,19 +291,21 @@ export default class Ws {
             break;
         }
         // 对特殊命令进行统一管理处理发送
-        if(window.vue) {
+        if (window.vue) {
           try {
-            msg.requestId = window.vue.$store.getters.get_user.token || sessionStorage.getItem(STANDARD_KEY.token);
+            msg.requestId =
+              window.vue.$store.getters.get_user.token ||
+              sessionStorage.getItem(STANDARD_KEY.token);
           } catch (error) {
-            console.error(error)
+            console.error(error);
           }
         }
 
         window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
-        if(window.wslog && window.wslog.send_msg){
-          window.wslog.send_msg('WS---S:', msg)
+        if (window.wslog && window.wslog.send_msg) {
+          window.wslog.send_msg("WS---S:", msg);
         }
-        if(ws){
+        if (ws) {
           ws.send(JSON.stringify(msg));
         }
       }
@@ -304,17 +319,17 @@ export default class Ws {
    * @param: ws_object WS类对象
    * @return:
    */
-  rev_event_msg(event, ws_object=WsMan.ws) {
-    if(ws_object && event && event.data && event.data.event == 'WS'){
-      if(ws_object){
+  rev_event_msg(event, ws_object = WsMan.ws) {
+    if (ws_object && event && event.data && event.data.event == "WS") {
+      if (ws_object) {
         switch (event.data.cmd) {
-          case 'WS_MSG_SEND': // 发送消息ws服务器
+          case "WS_MSG_SEND": // 发送消息ws服务器
             ws_object.send_msg(event.data);
             break;
-          case 'WS_SET_URL':
+          case "WS_SET_URL":
             ws_object.send_msg(event.data);
             break;
-          case 'WS_SET_RET_URL':
+          case "WS_SET_RET_URL":
             ws_object.send_msg(event.data);
             break;
           default:
@@ -328,7 +343,7 @@ export default class Ws {
    * @param: event 事件消息对象
    * @return:
    */
-  add_event_listener(){
+  add_event_listener() {
     // 监听message
     window.addEventListener("message", this.rev_event_msg);
   }
@@ -337,7 +352,7 @@ export default class Ws {
    * @param: event 事件消息对象
    * @return:
    */
-  remove_event_listener(){
+  remove_event_listener() {
     // 移除监听message
     window.removeEventListener("message", this.rev_event_msg);
   }
@@ -351,13 +366,13 @@ export default class Ws {
     let msg = e.data;
     // console.log(`---WS REV  MSG---:${msg}`);
     try {
-      if(window.wslog && window.wslog.send_msg){
-        window.wslog.send_msg('WS---R:', msg)
+      if (window.wslog && window.wslog.send_msg) {
+        window.wslog.send_msg("WS---R:", msg);
         // console.log('------------------------------------onMessage----------------------'+msg)
       }
       WsRev.ws_rev_msg(this_, JSON.parse(msg));
     } catch (error) {
-      console.log('=======websocket服务器返回数据错误=======' + msg);
+      console.log("=======websocket服务器返回数据错误=======" + msg);
     }
     // this_.push_ws_queue_msg(msg);
   }

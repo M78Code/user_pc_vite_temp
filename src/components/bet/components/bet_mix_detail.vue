@@ -2,33 +2,415 @@
  * @Description: bw3新版混合过关投注选项
 -->
 <template>
-  <div class="bet-mix-detail half-border-bottom" ref="bet_mix_detail" v-if="index_ == 0 || get_is_spread" :class="{'bet-mix-detail2':get_bet_list.length -1 == index_}">
+  <div class="bet-mix-detail half-border-bottom" ref="bet_mix_detail" v-if="index_ == 0 || get_is_spread"
+    :class="{ 'bet-mix-detail2': get_bet_list.length - 1 == index_ }">
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
-        <p class="yb_fontsize16">{{$root.$t(`bet.bet_${value_.id}`)}} X {{value_.count}}&nbsp;&nbsp;&nbsp;{{mix_odds}}</p>
-        <p style="font-size:0.11rem">{{$root.$t('bet.total_win2')}} <span :class="{'red-color':!(max_win_money == '0.00' || money_ok),'yellow-color':money_ok && money}"
+        <p class="yb_fontsize16">{{ $root.$t(`bet.bet_${value_.id}`) }} X {{ value_.count }}&nbsp;&nbsp;&nbsp;{{ mix_odds
+        }}</p>
+        <p style="font-size:0.11rem">{{ $root.$t('bet.total_win2') }} <span
+            :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{ max_win_money | format_money2 }}</span></p>
       </div>
       <!-- 右 -->
-      <div class="content-b" :class="{'red-color':!money_ok,'content-b2':!(get_active_index == index_ && [1, 7].includes(+get_bet_status))}" @click="change_kbdshow">
-        <span v-if="money" class="yb_fontsize20 money-number">{{money | format_money3}}</span>
-        <span class="money-span" ref="money_span" :class="{'money-span2':!(get_active_index == index_ && [1, 7].includes(+get_bet_status))}"></span>
-        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{get_money_format()}}</span>
-        <span @click.stop="clear_money" class="money-close" :style="{opacity:money>0?'1':'0'}">x</span>
+      <div class="content-b"
+        :class="{ 'red-color': !money_ok, 'content-b2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"
+        @click="change_kbdshow">
+        <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
+        <span class="money-span" ref="money_span"
+          :class="{ 'money-span2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
+        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
+        <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import betting from 'src/project/mixins/betting/betting.js';
-const licia_format = require('licia/format');
-import global_filters from 'src/boot/global_filters.js';
+// import betting from 'src/project/mixins/betting/betting.js';
+// const licia_format = require('licia/format');
+// import global_filters from 'src/boot/global_filters.js';
 
+const money = ref('')  //输入框金额
+const money_ok = ref(true)   //金额是否合适
+const min_money = ref(1)   //最低投注金额
+const max_money = ref(0)   //最高可投金额
+const is_watch = ref(true)    //组件渲染时是否监听money，后期再优化
+const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
+
+
+onMounted(() => {
+
+  // 延时器
+  timer = null;
+  timer2 = null;
+  timer3 = null;
+  m_timer = null;     // 金额变动计时器
+  //获取串关最小投注金额
+  if (get_s_count_data[index_].money) {
+    is_watch.value = false;
+    money.value = get_s_count_data[index_].money;
+    // 同步程序走完后再处理逻辑
+    clearTimeout(timer3)
+    timer3 = setTimeout(() => {
+      is_watch.value = true;
+    }, 500)
+  }
+
+
+  // 总金额为0时，初始化设置串关各项的金额为0
+  if (+get_money_total == 0) {
+    money.value = ''
+    set_s_money(index_, 0);
+  }
+
+  // 第一个自动弹起键盘
+  if (index_ == 0) {
+    $nextTick(() => {
+      let ele = $refs.bet_mix_detail
+      ele && ele.scrollIntoView({ block: "end" })
+    })
+  }
+
+  // 5秒后没有金额返回就用默认值
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    if (!max_money_back.value) {
+      max_money.value = 8888;
+      // 获取接口返回的串关最小投注金额
+      min_money.value = _.get(get_user, 'cvo.series.min', 5)
+      if (max_money.value < min_money.value) {
+        min_money.value = max_money.value
+      }
+
+      max_money_back.value = true;
+      check_moneyok(money.value)
+    }
+  }, 5000);
+
+  //只有2个投注项是固定active_index是0
+  if (get_bet_list.length >= 2) {
+    set_active_index(0);
+  }
+
+  //监听键盘金额改变事件
+  $root.$on(emit_cmd.EMIT_CHANGE_MONEY, change_money_)
+
+  //将金额和最高可投传递给键盘
+  $nextTick(() => {
+    if (get_active_index == index_) {
+      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    }
+  })
+  $emit('max-win-money-emit', max_win_money_all)
+})
+
+
+// ...mapGetters(["get_active_index", "get_is_spread", "get_bet_list", "get_s_count_data", "get_bet_status", "get_order_los",
+//       "get_user", "get_money_notok_list2", "get_menu_type", "get_money_total", "get_bet_obj"]),
+
+const max_win_money = computed(() => {
+  // 获取第一个的赛种id
+  let _first = get_bet_list[0]
+  let _first_item = get_bet_obj[_first]
+  let _csid = _.get(_first_item, 'bs.csid')
+  // console.log(get_s_count_data, '--get_s_count_data')
+  return calc_maxwin_money(value_.name, money.value, _csid) || '0.00';  // 电竞时计算赔率需要保留3位小数
+})
+const max_win_money_all = computed(() => {
+  let all_win_money = 0
+  get_s_count_data.map((item, i) => {
+    if (item.money > 0) {
+      let _first = get_bet_list[i]
+      let _first_item = get_bet_obj[_first]
+      let _csid = _.get(_first_item, 'bs.csid')
+      all_win_money = all_win_money + calc_maxwin_money(item.name, item.money, _csid) * 100;
+    }
+  })
+  return (all_win_money / 100).toFixed(2);  // 电竞时计算赔率需要保留3位小数
+})
+const index_obj = computed(() => {
+  return get_s_count_data[index_]
+})
+const mix_odds = computed(() => {
+  //当前串关赔率
+  if (index_obj.odds) {
+    let S = index_obj.odds + ''
+    if (S.length > 9) {//超过9位数，显示前六位，后面小数点代替
+      return '@' + S.substring(0, 6) + '...'
+    } else {
+      return '@' + S
+    }
+  } else {
+    return ''
+  }
+})
+
+/**   ----------------watch开始-----------------*/
+
+//点击投注后当输入金额小于最低限额时，默认转化为最低限额
+watch(() => get_money_notok_list2.length, (new_) => {
+  if (new_) { return }
+
+  if (money.value < min_money.value && money.value >= 0.01) {
+    money.value = min_money.value.toString()
+
+    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    tips_msg_update($root.$t('bet.err_msg10', [min_money.value]))
+
+    clearTimeout(timer2)
+    // 提示信息展示3秒
+    timer2 = setTimeout(() => {
+      tips_msg_update()
+    }, 3000);
+  }
+})
+watch(() => get_bet_list.length, (new_) => {
+  money.value = '';
+
+  $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+
+  //投注项数量变动时,先将默认限额置空
+  max_money_back.value = false
+
+  if (m_timer) {
+    clearTimeout(m_timer)
+    m_timer = null
+  }
+  // 5秒后没有金额返回就用默认值
+  m_timer = setTimeout(() => {
+    if (!max_money_back.value) {
+      max_money.value = 8888;
+      // 获取接口返回的串关最小投注金额
+      min_money.value = _.get(get_user, 'cvo.series.min', 5)
+      if (max_money.value < min_money.value) {
+        min_money.value = max_money.value
+      }
+      max_money_back.value = true;
+      check_moneyok(money.value)
+    }
+  }, 5000);
+})
+
+// 监听金额的变化
+watch(() => money.length, (new_, old_) => {
+  check_moneyok(new_)
+
+  let calc_money = (new_ - old_) * value_.count;
+  if (is_watch.value == true) set_money_total(calc_money);
+
+  let full_bet = max_money.value == money.value ? 1 : 0;
+  set_s_money(index_, money.value, full_bet);
+  $emit('max-win-money-emit', max_win_money_all)
+})
+
+// 监听活动下标的变化
+watch(() => get_active_index, (new_) => {
+  if (new_ == index_) {
+    flicker_();
+  } else {
+    clearInterval(flicker_timer);
+    flicker_timer = null;
+  }
+})
+
+//将金额和最高可投传递给键盘
+watch(() => get_money_notok_list2.length, (new_, old_) => {
+  if (get_active_index == index_) {
+    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+  }
+})
+
+// 监听投注框状态的变化
+watch(() => get_bet_status, (new_) => {
+  if (new_ == 1 && old_ == 2 && get_order_los.length) {
+    money.value = get_s_count_data[index_].money
+  }
+  // 添加投注状态变化，手动变化金额，定位解决隐藏bug
+  if (new_ == 5 || old_ == 5) {
+    // 防止投注状态多次发生变化
+    set_money_change(money.value)
+  }
+})
+
+watch(() => index_obj, (new_) => {
+  if (
+    new_ &&
+    (new_.minBet || new_.orderMaxPay) &&
+    !max_money_back.value
+  ) {
+    min_money.value = new_.minBet * 1
+    max_money.value = new_.orderMaxPay * 1
+    if (max_money.value > min_money.value) {
+      max_money.value = round_money(new_.minBet, new_.orderMaxPay)
+    } else {
+      min_money.value = max_money.value
+    }
+    max_money_back.value = true
+    // 同步程序走完后再检查金额
+    $nextTick(() => {
+      check_moneyok(money.value)
+    })
+  }
+})
+
+
+/**   ----------------watch结束-----------------*/
+// ...mapMutations(["set_active_index", 'set_money_total', "set_money_notok_list", "set_keyboard_show", "set_money_notok_list2"]),
+
+/**
+    *@description 点击删除按钮，清空金额
+    *@return {Undefined} undefined
+    */
+const clear_money = () => {
+  money.value = 0
+  $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+}
+//格式化后的金额
+const get_money_format = () => {
+  let mi = global_filters.format_money3(min_money.value)
+  let ma = global_filters.format_money3(max_money.value)
+  return licia_format($root.$t('bet.money_limit2'), mi, ma);
+},
+const flicker_ = () => {    //光标闪动，animation有兼容问题，用函数替代
+  clearInterval(flicker_timer)
+  flicker_timer = setInterval(() => {
+    let ele = $refs.money_span
+    if (ele) {
+      ele.classList.toggle('money-span2')
+    }
+  }, 700);
+}
+/**
+ *@description 金额改变事件
+ *@param {Number} new_money 最新金额值
+ */
+const change_money_ = (new_money) => {
+  if (index_ != get_active_index) { return };
+
+  if (max_money.value < 0.01 && max_money_back.value) {
+    if (new_money) {
+      money.value = '0.00';
+      money_ok.value = false;
+      set_money_notok_list({ value: value_.id, status: 1 });
+    } else {
+      money.value = '';
+      money_ok.value = true;
+      set_money_notok_list({ value: value_.id, status: 2 });
+    }
+    return;
+  }
+
+  money.value = new_money;
+}
+/**
+ *@description 设置金额
+ *@param {Number} new_money 最新金额值
+ */
+const set_money_change = (money) => {
+  // 手动改变金额的类型，暂时解决投注时赔率发生变化导致投注金额参数丢失问题
+  if (typeof (money.value) == 'string') {
+    money.value = money - 0
+  } else {
+    money.value = money + ''
+  }
+}
+/**
+ *@description 检查金额是否合适
+ *@param {Number} val 金额
+ *@return {Undefined} undefined
+ */
+const check_moneyok = (val) => {
+  //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
+  if (val > +get_user.balance && get_bet_list.length == 2) {
+    money.value = get_user.balance.toString()
+
+    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    tips_msg_update($root.$t('bet.err_msg09'))
+
+    clearTimeout(timer2)
+    // 3秒后取消提示信息
+    timer2 = setTimeout(() => {
+      tips_msg_update()
+    }, 3000);
+    return
+  }
+
+  if (val > max_money.value && (val >= 0.01 || val === '0.00') && max_money_back.value) {
+    set_money_notok_list({ value: value_.id, status: 1 })
+    money.value = max_money.value.toString()
+
+    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+  }
+  else if (
+    val < min_money.value &&
+    (val >= 0.01 || val === '0.00') &&
+    max_money_back.value
+  ) {
+    set_money_notok_list2({ value: value_.id, status: 1 })
+  }
+  else {
+    money_ok.value = true; set_money_notok_list({ value: value_.id, status: 2 });
+  };
+
+}
+//改变键盘显示
+const change_kbdshow = () => {
+  set_keyboard_show(true)
+  if ([4, 5].includes(+get_bet_status)) { return };
+
+  set_active_index(index_);
+
+  let ele = $refs.bet_mix_detail
+  ele && ele.scrollIntoView({ block: "nearest" })
+
+  //将金额和最高可投传递给键盘
+  if (get_active_index == index_) {
+    // 同步程序走完后再处理逻辑
+    $nextTick(() => {
+      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    })
+  }
+}
+// 清除当前组件所有定时器
+const clear_timer = () => {
+  // timeout定时器列表
+  const timeout_timer_arr = [
+    'timer',
+    'timer2',
+    'timer3',
+    'm_timer',
+  ]
+
+  // interval定时器列表
+  const interval_timer_arr = [
+    'flicker_timer'
+  ]
+
+  // 批量清除timeout定时器
+  for (const timer of timeout_timer_arr) {
+    clearTimeout(this[timer])
+    this[timer] = null
+  }
+
+  // 批量清除interval定时器
+  for (const timer of interval_timer_arr) {
+    clearInterval(this[timer])
+    this[timer] = null
+  }
+}
+
+
+onUnmounted(() => {
+  clear_timer();
+  $root.$off(emit_cmd.EMIT_CHANGE_MONEY, change_money_);
+
+  for (const key in $data) {
+    $data[key] = null
+  }
+})
 
 
 </script>
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
