@@ -3,17 +3,28 @@
 import { server_resource } from "app/job/output/merchant/index.js";
 const { CURRENT_ENV } = window.BUILD_CONFIG;
 const night = {
-  common: "图片地址",
-  local_test: "图片地址",
+  url: "图片地址",
+ 
 };
 const day = {
-  local_test: "图片地址",
+  common: "图片地址",
+ 
 };
 const config = {
   label: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live-3",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live",
+  local_test: "img-bg-menu-live-4",
+
   night,
   day,
 };
+
 const item = {
   item_0: 0, //下标从0开始
   item_1: 0,
