@@ -60,7 +60,7 @@ import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, 
 import { useRoute, useRouter } from 'vue-router'
 import { useMittOn } from  "src/core/mitt"
 import lodash from 'lodash'
-import store from "src/store-redux-vuex/index.js";
+import store from "src/store-redux/index.js";
 import * as MITT_KEY from '../../core/mitt/mitt-keys'
 
 const props = defineProps({
@@ -70,7 +70,7 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
-const storeState = store.getState()
+const store_state = store.getState()
 
 const enter_time = ref('')
 const match_main = ref(null)
@@ -109,37 +109,38 @@ const timer_super9 = ref(null)
 const subscription_timer1 = ref(null)
 
 
-const get_uid = ref(storeState.get_uid)        
+const get_uid = ref(store_state.get_uid)        
 // 当前选中的二级菜单id
-const get_current_sub_menuid = ref(storeState.get_current_sub_menuid) 
+const get_current_sub_menuid = ref(store_state.get_current_sub_menuid) 
 // 当前主菜单menu_type
-const menu_type = ref(storeState.menu_type)                      
-const get_bet_status = ref(storeState.get_bet_status)  
+const menu_type = ref(store_state.menu_type)                      
+const get_bet_status = ref(store_state.get_bet_status)  
 // 显示收藏弹窗
-const show_favorite_list = ref(storeState.show_favorite_list) 
+const show_favorite_list = ref(store_state.show_favorite_list) 
 // 显示筛选頁面
-const get_show_match_filter = ref(storeState.get_show_match_filter) 
+const get_show_match_filter = ref(store_state.get_show_match_filter) 
 // 页脚子菜单id
-const footer_sub_menu_id = ref(storeState.footer_sub_menu_id)    
+const footer_sub_menu_id = ref(store_state.footer_sub_menu_id)    
 //新手版标准版 1 2
-const get_newer_standard_edition = ref(storeState.get_newer_standard_edition) 
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition) 
 // 详情页的数据
-const get_detail_data = ref(storeState.get_detail_data)  
+const get_detail_data = ref(store_state.get_detail_data)  
  // 改变了收藏状态
-const get_details_changing_favorite = ref(storeState.get_details_changing_favorite) 
+const get_details_changing_favorite = ref(store_state.get_details_changing_favorite) 
 // 右侧设置菜单显示时 , 不显示骨架屏
-const get_is_show_menu = ref(storeState.get_is_show_menu)   
-const get_menu_type = ref(storeState.get_menu_type)
+const get_is_show_menu = ref(store_state.get_is_show_menu)   
+const get_menu_type = ref(store_state.get_menu_type)
 // 次要玩法展开映射
-const get_secondary_unfold_map = ref(storeState.get_secondary_unfold_map) 
-const get_list_scroll_top = ref(storeState.get_list_scroll_top)
-const get_preload_animation_url = ref(storeState.get_preload_animation_url)
+const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map) 
+const get_list_scroll_top = ref(store_state.get_list_scroll_top)
+const get_preload_animation_url = ref(store_state.get_preload_animation_url)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
 })
 
 const update_state = () => {
+  const new_state = store.getState()
   get_uid.value = new_state.get_uid
   get_current_sub_menuid.value = new_state.get_current_sub_menuid
   menu_type.value = new_state.menu_type                 
