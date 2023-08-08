@@ -43,7 +43,7 @@ export const compute_build_in_config = (current_env) => {
   // 当前环境代码内内置 写入的兜底 oss
   current_env_build_in_oss = compute_build_in_oss_by_current_env(current_env);
   //  项目名称   yazhou-h5 yazhou-pc
-  let TARGET_PROJECT_NAME = "yazhou-h5";
+  let TARGET_PROJECT_NAME = "yazhou-pc";
   // 埋点Google Analytics GA_TRACKING_ID
   let GA_TRACKING_ID = "G-3SFG732R1J"; // 生产环境
   // 最终项目配置信息
