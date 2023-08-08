@@ -11,14 +11,9 @@
 </template>
 
 <script>
-export default {
-  name: 'team_name',
-  data(){
-    return {
-      // 队伍名称样式
-      inline_style: ''
-    }
-  },
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
+  name: "team_name",
   props: {
     name:{
       type:String,
@@ -28,17 +23,24 @@ export default {
       type:Number,
     }
   },
-  created(){
-    this.initEvent();
-  },
-  // 获取props里面的type 参数 0 || 1 
-  methods: {
-    initEvent(){
+  setup(props, evnet) {
+    const data = reactive({
+      // 队伍名称样式
+      inline_style: ''
+    });
+    onMounted(() => {
+      initEvent();
+    });
+    const initEvent = () => {
       const style_array = [{'float':'left','margin-left': '0.2rem'},{'float':'right','margin-right': '0.2rem'}]
-      this.inline_style = style_array[this.type];
+      inline_style = style_array[type];
+    };
+    return {
+      ...toRefs(data),
+      initEvent
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

@@ -37,7 +37,7 @@
         <!--        @unfold_league="unfold_league_handle"-->
       </match-list>
       <!-- 到底了容器原加载更多容器-->
-      <div class="loading-more-container" v-if="!match_is_empty && _.size(matchCtr.match_list_data_sources)>3" 
+      <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
         <div style="color:#AAAEB8;font-size:.12rem;">
           {{$root.$t("scroll_wrapper.is_footer")}}
@@ -59,6 +59,8 @@
 import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 import { useMittOn } from  "src/core/mitt"
+import lodash from 'lodash'
+import store from "src/store-redux/index.js";
 import * as MITT_KEY from '../../core/mitt/mitt-keys'
 
 const props = defineProps({
@@ -68,6 +70,8 @@ const props = defineProps({
 
 const route = useRoute()
 const router = useRouter()
+const store_state = store.getState()
+
 const enter_time = ref('')
 const match_main = ref(null)
 const match_list = ref(null)
@@ -104,11 +108,62 @@ const timer_super7 = ref(null)
 const timer_super9 = ref(null)
 const subscription_timer1 = ref(null)
 
+
+const get_uid = ref(store_state.get_uid)        
+// 当前选中的二级菜单id
+const get_current_sub_menuid = ref(store_state.get_current_sub_menuid) 
+// 当前主菜单menu_type
+const menu_type = ref(store_state.menu_type)                      
+const get_bet_status = ref(store_state.get_bet_status)  
+// 显示收藏弹窗
+const show_favorite_list = ref(store_state.show_favorite_list) 
+// 显示筛选頁面
+const get_show_match_filter = ref(store_state.get_show_match_filter) 
+// 页脚子菜单id
+const footer_sub_menu_id = ref(store_state.footer_sub_menu_id)    
+//新手版标准版 1 2
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition) 
+// 详情页的数据
+const get_detail_data = ref(store_state.get_detail_data)  
+ // 改变了收藏状态
+const get_details_changing_favorite = ref(store_state.get_details_changing_favorite) 
+// 右侧设置菜单显示时 , 不显示骨架屏
+const get_is_show_menu = ref(store_state.get_is_show_menu)   
+const get_menu_type = ref(store_state.get_menu_type)
+// 次要玩法展开映射
+const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map) 
+const get_list_scroll_top = ref(store_state.get_list_scroll_top)
+const get_preload_animation_url = ref(store_state.get_preload_animation_url)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  get_uid.value = new_state.get_uid
+  get_current_sub_menuid.value = new_state.get_current_sub_menuid
+  menu_type.value = new_state.menu_type                 
+  get_bet_status.value = new_state.get_bet_status
+  show_favorite_list.value = new_state.show_favorite_list
+  get_show_match_filter.value = new_state.get_show_match_filter
+  footer_sub_menu_id.value = new_state.footer_sub_menu_id
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+  get_detail_data.value = new_state.get_detail_data
+  get_details_changing_favorite.value = new_state.get_details_changing_favorite
+  get_is_show_menu.value = new_state.get_is_show_menu
+  get_menu_type.value = new_state.get_menu_type
+  get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
+  get_list_scroll_top.value = new_state.get_list_scroll_top
+  get_preload_animation_url.value = new_state.get_preload_animation_url
+}
+
 onBeforeMount(() => {
   init_router_info()
   // 进入页面时记录时间戳
   enter_time.value = Date.now()
 })
+
 onMounted(() => {
   if(props.invok_source){
     ws_invoke_key.value = props.invok_source;
@@ -124,7 +179,7 @@ onMounted(() => {
   // 记录埋点，进入列表页
   $utils.gtag_view_send('H5_match', '/match')
   // 详情精选赛事页需清空map折叠状态
-  set_collapse_map_match({})
+  store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: {} })
   // 事件初始化
   event_init()
 })
@@ -160,7 +215,7 @@ watch(() => get_match_id_bet_success, () => {
   if(value){
     let mid = value.split('-')[0];
     let is_collect = value.split('-')[1];
-    let found_index = _.findIndex(matchCtr.value.list,{mid});
+    let found_index = lodash.findIndex(matchCtr.value.list,{mid});
 
     if(found_index > -1){
       let param = {
@@ -179,14 +234,14 @@ watch(() => menu_type, () => {
   // 切换一级菜单时记录最新时间戳
   enter_time = Date.now()
   // 切换一级菜单时 goto_detail_matchid置为空
-  set_goto_detail_matchid('')
+  store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
   // matchCtr.value.clearData();
 })
 
 // 筛选过滤弹层消失
 watch(() => get_show_match_filter, () => {
   if(!flag){
-    set_goto_detail_matchid('')
+    store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
     subscription();
   }
 })
@@ -225,15 +280,15 @@ watch(() => get_newer_standard_edition, () => {
 // 投注栏弹层显示非0否则0
 watch(() => get_bet_status, () => {
   if(c_status == 0){
-    const has_pre = _.findKey(get_bet_obj, function(o) { return o.show_pre })
+    const has_pre = lodash.findKey(get_bet_obj, function(o) { return o.show_pre })
     if(has_pre){
       //当投注框收起时，清空预约相关信息
-      let temp_bet_obj = _.cloneDeep(get_bet_obj)
+      let temp_bet_obj = lodash.cloneDeep(get_bet_obj)
       temp_bet_obj[has_pre].show_pre = false
       delete temp_bet_obj[has_pre].pre_odds
       delete temp_bet_obj[has_pre].pre_market_value
       delete temp_bet_obj[has_pre].min_odds
-      set_pre_market_data([])
+      store.dispatch({ type: 'matchReducer/set_pre_market_data',  payload: [] })
       set_bet_obj(temp_bet_obj)
     }
     clearTimeout(timer_super6.value);
@@ -251,9 +306,9 @@ watch(() => get_show_match_filter, () => {
   // 切换球种时，记录最新时间戳
   enter_time = Date.now()
   // 切换球种时 goto_detail_matchid置为空
-  set_goto_detail_matchid('')
+  store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
   // 切换球种时 清空赛种折叠状态
-  set_collapse_csid_map({})
+  store.dispatch({ type: 'matchReducer/set_collapse_csid_map',  payload: {} })
 })
 
 // 筛选过滤弹层消失
@@ -273,7 +328,7 @@ watch(() => matchCtr.list, () => {
         api_common.videoAnimationUrl(params).then((res) => {
           const { data } = res
           if(send_gcuuid != res.gcuuid) return;
-          if(!_.get(data,'animationUrl')){
+          if(!lodash.get(data,'animationUrl')){
             return
           }
           let animationUrl = ''
@@ -293,7 +348,7 @@ watch(() => matchCtr.list, () => {
           data.referUrl = `${location.protocol}${data.referUrl}`;
 
           $root.$emit(MITT_KEY.EMIT_SET_PRE_VIDEO_SRC, data)
-          set_preload_animation_url(true)
+          store.dispatch({ type: 'matchReducer/set_preload_animation_url',  payload: true })
         })
         // 获取相应动画加载资源后跳出循环
         break
@@ -304,81 +359,6 @@ watch(() => matchCtr.list, () => {
 
 // TODO: 其他模块得 store  待添加
 // mixins: [ main_menu_mixin,websocket_data, constant, msc_bw3, match_list_wrap_mixin,match_main_mixin, betting,router_scroll_y_mixin],
-// ...mapMutations([
-//   "set_pre_market_data", //设置所有盘口信息
-//   "set_hide_skeleton_screen", //设置所有盘口信息
-//   "set_list_scroll_top_iconshow", // 设置滚动图标显示
-//   "set_current_menu", // 设置当前选中的主菜单
-//   "set_sort_type",
-//   "set_last_time_sub_menu_type", // 设置上次子菜单
-//   "set_filter_list",  // 设置联赛过滤
-//   "set_prev_menu_type",  // 上一次筛选位置
-//   "set_menu_type",    // 设置当前主菜单menu_type值
-//   "set_md",           // 设置
-//   "set_goto_list_top", // 设置赛事列表返回顶部
-//   "set_goto_detail_matchid",  //设置去详情页的赛事id
-//   "set_details_item",  //设置玩法集tab 的选中项
-//   "set_req_match_list_params", //设置请求赛事列表接口的请求参数
-//   "set_collapse_map_match",    //折叠的赛事
-//   "set_newer_standard_edition",    //新手版1 标准版2
-//   "set_n_s_changed_loaded",         //新手版标准版切换时加载赛事列表完成
-//   'set_date_menu_curr_i',     // 当前选中日期菜单索引
-//   'set_current_esport_csid',    // 电竞游戏csid
-//   'set_curr_third_menu_id',   // 三级菜单id
-//   'set_details_changing_favorite',  // 改变了收藏状态
-//   'set_global_is_back_match_list',  // 详情， 赛果，虚拟体育返回到列表也的时候不更新数据，保持上次的菜单数据
-//   'set_match_top_map_dict',   // 赛事对象对应的dom top映射
-//   'set_secondary_unfold_map',   // 次要玩法展开映射
-//   'set_img_error_map_mid',    // 图标出错与mid映射
-//   'set_user',    // 用户信息,用户金额,userId 需要监听变化
-//   'set_last_route_info',  // 记录上一次路由信息
-//   'set_collapse_csid_map',  // 赛种一键折叠状态map
-//   'set_allow_short_scroll',  // 短距离滚动标识
-//   'set_preload_animation_url',  // 更新预加载动画所需资源文件状态
-// ]),
-// ...mapGetters({
-//   get_is_champion:'get_is_champion',
-//   get_sport_all_selected:'get_sport_all_selected',
-//   get_goto_detail_matchid:'get_goto_detail_matchid',
-//   sort_type: 'get_sort_type',
-//   get_current_menu: "get_current_menu",     // 当前选中的主菜单
-//   get_uid: "get_uid",                       // 用户id
-//   get_user:"get_user",
-//   get_user_token:'get_user_token',
-//   get_current_sub_menuid: 'get_current_sub_menuid', // 当前选中的二级菜单id
-//   get_search_txt: "get_search_txt",
-//   get_filter_list: "get_filter_list",       // 联赛筛选条件
-//   get_last_time_sub_menu_type: "get_last_time_sub_menu_type", // 上一次选中的二级菜单id
-//   menu_type: "get_menu_type",                       // 当前主菜单menu_type
-//   get_changed_favorite: "get_changed_favorite",     // 是否切换到收藏
-//   get_bet_status:'get_bet_status',  //投注框状态
-//   show_favorite_list:'get_show_favorite_list', // 显示收藏弹窗
-//   get_collapse_map_match:"get_collapse_map_match",  // 赛事列表联赛折叠映射对象
-//   get_collapse_csid_map:"get_collapse_csid_map",  // 赛事列表赛种折叠映射对象
-//   get_show_match_filter:"get_show_match_filter",  // 显示筛选頁面
-//   footer_sub_menu_id:"get_footer_sub_menu_id",    // 页脚子菜单id
-//   get_newer_standard_edition:"get_newer_standard_edition",//新手版标准版 1 2
-//   get_lang:"get_lang",
-//   get_detail_data:"get_detail_data",  // 详情页的数据
-//   get_details_changing_favorite:"get_details_changing_favorite",  // 改变了收藏状态
-//   get_md:"get_md",    // 早盘日期的参数    早盘  和   串关 都有加
-//   get_hot_tab_item:"get_hot_tab_item",    // 首页 热门当前选中的菜单
-//   get_hot_list_item:"get_hot_list_item",  // 首页 热门菜单集合
-//   get_is_show_menu:"get_is_show_menu",    // 右侧设置菜单显示时 , 不显示骨架屏
-//   get_v_pre_menu_type:'get_v_pre_menu_type',    // 跳转虚拟体育之前选中的主菜单menu_type 用于虚拟体育返回列表页恢复主菜单选择项
-//   get_curr_third_menu_id:'get_curr_third_menu_id',  // 当前选中的三级菜单id
-//   get_level_four_menu:'get_level_four_menu',  // 当前选中的三级菜单id
-//   get_prev_menu_type:"get_prev_menu_type",    // 赛事列表筛选逻辑使用的menu_type
-//   get_secondary_unfold_map:"get_secondary_unfold_map",  // 次要玩法展开映射
-//   get_match_id_bet_success:"get_match_id_bet_success",  // 投注成功的赛事id
-//   get_list_scroll_top:"get_list_scroll_top",
-//   get_theme:"get_theme",
-//   get_last_route_info: 'get_last_route_info',
-//   get_sub_menu_list: 'get_sub_menu_list',
-//   get_curr_sub_menu_type: 'get_curr_sub_menu_type',
-//   get_allow_short_scroll: 'get_allow_short_scroll',
-//   get_preload_animation_url: 'get_preload_animation_url',
-// }),
 
 const calc_show = computed(() => {
   return menu_type == 1 && !show_favorite_list && !match_is_empty.value && route.name != 'home' && props.invok_source != 'detail_match_list'
@@ -400,7 +380,7 @@ const show_skeleton_screen = computed(() => {
 const init_router_info = () => {
    // 由首页进入，就不在此处初始化
    if (from.name !== 'home') {
-    _event_init();
+    event_init();
   }
   let match_total = _matchCtr.value && _matchCtr.value.list.length;
 
@@ -422,12 +402,11 @@ const init_router_info = () => {
     _set_global_is_back_match_list(Math.random())
     return;
   }
-  _set_details_changing_favorite(0);    //详情页更改过赛事收藏 列表需重置到0 r
-  _set_collapse_map_match({});         //当前列表也重置到联赛折叠状态r
-
-  _set_secondary_unfold_map({}); //次要玩法折叠状态置空r
+  store.dispatch({ type: 'matchReducer/set_details_changing_favorite',  payload: 0 })   //详情页更改过赛事收藏 列表需重置到0 r
+  store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: {} })         //当前列表也重置到联赛折叠状态r
+  store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: {} })  //次要玩法折叠状态置空r
   clearTimeout(_timer_super7.value);
-  _timer_super7.value = setTimeout(() => {
+  timer_super7.value = setTimeout(() => {
     router.push({ query: {} });   // 去掉其他传过来的当前路由参数 还在当前页刷新一下r
   },200);
 }
@@ -452,7 +431,7 @@ const back_top = () => {
   //获取列表页赛事数据
   match_detail_m_list_init();
   // 图标出错与mid映射，初始化为空
-  set_img_error_map_mid({});
+  store.dispatch({ type: 'matchReducer/set_img_error_map_mid',  payload: {} }) 
   window.vue.scroll_list_wrapper_by = scroll_list_wrapper_by;
   // 去除参数
   if (!location.search.includes('keep_url')) {
@@ -477,16 +456,18 @@ const special_hps_load_handle = (match,key) => {
 }
 const match_detail_m_list_init = () => {
   // 赛果详情页的列表，数据请求
-  if(['detail_match_list'].includes(props.invok_source)){
+  if(['detail_match_list'].includes(this.invok_source)){
     // 列表页全局获取 请求参数
     get_match_data_list();
+  } else if([1,3,30,100].includes(this.get_menu_type)){
+    get_match_data_list()
   }
 }
 const destroy_handle = () => {
   sendSocketCloseCmd();
   del();
   matchCtr.value.init()
-  set_last_time_sub_menu_type('')
+  store.dispatch({ type: 'matchReducer/set_last_time_sub_menu_type',  payload: '' })
 
   clear_timer()
   off_listeners()
@@ -534,8 +515,9 @@ onDeactivated(() => {
 })
 
 onUnmounted(() => {
-  destroy_handle();
-  matchCtr.value.destroy();
+  destroy_handle()
+  unsubscribe()
+  matchCtr.value.destroy()
 })
 
 </script>

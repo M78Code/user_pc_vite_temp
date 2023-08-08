@@ -58,7 +58,7 @@
 </template>
 <script setup>
 import { ref } from "vue"
-import BetKeyboard from "./bet/bet_keyboard.vue";
+import BetKeyboard from "../common/bet-keyboard.vue";
 
 const keyboard = [
   {

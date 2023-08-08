@@ -11,10 +11,9 @@
 </template>
 
 <script>
-
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "team_img",
-
   props: {
     type: { // 0 主队  1 客队
       type: Number
@@ -36,7 +35,15 @@ export default {
       default: ''
     }
   },
-};
+  setup(props, evnet) {
+    const data = reactive({
+
+    });
+    return {
+      ...toRefs(data)
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>
