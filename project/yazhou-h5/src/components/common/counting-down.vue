@@ -350,16 +350,15 @@ function counting_frame() {
         // 是足球时 计算特n , 可视区域数据不多,请求3个mid和1一个mid没有区别 因此直接调用页脚刷新
         if (props.match.csid == 1) {
           // 15分钟玩法 调用
-          const { emit } = useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD)
           set_min15(reduce_second.value, (mmp_15_min) => {
-            emit({
+            useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
               text: "mid-refresh", // 只更新对应的mid
               mid: props.match.mid
             })
           });
           // 5分钟玩法 调用
           set_min5(reduce_second.value, (mmp_5_min) => {
-            emit({
+            useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
               text: "mid-refresh", // 只更新对应的mid
               mid: props.match.mid
             })

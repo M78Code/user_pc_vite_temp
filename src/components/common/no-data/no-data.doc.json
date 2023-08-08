@@ -1,0 +1,21 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端H5",
+        "sonName": "no-data组件"
+    },
+    "category": "component",
+    "component-name": "NoData",
+    "support-customization": "1",
+    "descriptions": [
+        "no-data组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "NoData_1",
+            "descriptions": [
+                "no-data组件-版本1"
+            ]
+        }
+    ]
+}
