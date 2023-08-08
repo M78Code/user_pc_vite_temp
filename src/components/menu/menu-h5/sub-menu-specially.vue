@@ -23,7 +23,7 @@
 <script setup>
 import { computed } from 'vue';
 
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
   const props = defineProps({
     count: {
@@ -34,7 +34,7 @@ import { computed } from 'vue';
     }
   })
   computed(() => {
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
     // show_favorite_list:'get_show_favorite_list',
     // menu_type:'get_menu_type'
   })

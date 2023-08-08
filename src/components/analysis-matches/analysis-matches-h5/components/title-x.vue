@@ -26,11 +26,11 @@ import matchScore from 'src/project/components/match/match-score.vue' // 比分�
   //   matchScore,
   // },
   const handle_callback = () => {
-    // TODO 后续修改调整 $emit
+    // TODO: 后续修改调整 $emit
       $emit('handle_callback')
     }
   const match_score = computed(() =>{
-    // TODO 后续修改调整 get_detail_data
+    // TODO: 后续修改调整 get_detail_data
       let msc = '0 v 0'
       !loadsh.isEmpty(get_detail_data) && get_detail_data.msc.map(item => {
         if (item.indexOf('S1|') > -1) {

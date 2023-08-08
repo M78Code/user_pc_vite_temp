@@ -162,7 +162,7 @@
 <script setup>
 import { api_result } from "src/project/api";
 import { computed, nextTick, onUnmounted } from "vue";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
   const radio_button_index = ref(0)
@@ -182,7 +182,7 @@ import { computed, nextTick, onUnmounted } from "vue";
   ])
   // 篮球的 背景图的 数据
   const basketball_data = ref([])
-  //  添加监听 赛事分析刷新事件 TODO $root get_detail_data 后续修改调整
+  //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
   $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
   get_list()
   tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
@@ -283,7 +283,7 @@ import { computed, nextTick, onUnmounted } from "vue";
     })
   }
   onUnmounted(() => {
-     //   // 移除监听 赛事分析刷新事件 TODO 后续修改调整
+     //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
   //   this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
 
   //   for (const key in this.$data) {

@@ -5,7 +5,7 @@
 import { api_home } from "src/project/api/index.js";
 import { local_menu_data } from "src/project/pages/sport-menu/config/common-menu.js" //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
 // import {mapGetters} from "vuex";
-// TODO 后续改造
+// TODO: 后续改造
 export default {
   methods: {
     // 初始化监听事件

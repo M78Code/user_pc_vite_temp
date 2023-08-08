@@ -47,7 +47,7 @@ import settleVoid from "src/project/pages/cathectic/settle_void.vue";
 import scroll from "src/project/components/record_scroll/scroll.vue";
 import SRecord from "src/project/components/skeleton/record.vue"
 import lodash from "lodash"
-// TODO vuex 待数据调通后删除
+// TODO: vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 
     // components: {
@@ -143,7 +143,7 @@ const show_cancle_order = () => {
 const cancle_pre_order = () => {
     api_betting.cancle_pre_order({orderNo:orderNumber.value}).then((res)=>{
     if(res.code == 200){
-        // TODO 从vuex取待改造
+        // TODO: 从vuex取待改造
         // set_toast({ 'txt': $root.$t('pre_record.canceled'), hide_time: 3000 });
         cancle_confirm_pop_visible.value = false
         timer_2.value = setTimeout(()=>{ change_pre_status([{
@@ -152,7 +152,7 @@ const cancle_pre_order = () => {
         init_data(true)
     }else if(['0400546','0400547'].includes(res.code)){
         cancle_confirm_pop_visible.value = false
-        // TODO 从vuex取待改造
+        // TODO: 从vuex取待改造
         // set_toast({ 'txt':res.code == '0400546'? $root.$t('pre_record.cancle_fail_tips'):$root.$t('pre_record.cancle_fail_tips2'), hide_time: 3000 });
     }
     }).catch(()=>{

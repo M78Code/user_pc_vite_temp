@@ -84,7 +84,7 @@ import { computed, onUnmounted } from "vue";
 
   get_list()
 
-  // 赛事id TODO $route get_detail_data 后续修改调整
+  // 赛事id TODO: $route get_detail_data 后续修改调整
   const match_id = computed(() => {
     $route.params.mid || get_detail_data.mid
   }) 
@@ -105,7 +105,7 @@ import { computed, onUnmounted } from "vue";
       let {code , data} = await api_result.get_team_vs_history(parameter)
       if(code == 200 && data ) {
         records_list = [
-          // TODO 国际化修改后调整
+          // TODO: 国际化修改后调整
           {success: 0, name: $root.$t('analysis_football_matches.victory')},
           {flat: 0, name: $root.$t('analysis_football_matches.flat')},
           {lose: 0, name: $root.$t('analysis_football_matches.negative')},
@@ -146,7 +146,7 @@ import { computed, onUnmounted } from "vue";
         flag = 0;
       }
     }
-    // TODO  后续修改调整
+    // TODO:  后续修改调整
     $forceUpdate()
     get_list()
   }
@@ -154,7 +154,7 @@ import { computed, onUnmounted } from "vue";
     radio_button_index = index
     cps = item.index
     get_list()
-    // TODO  后续修改调整
+    // TODO:  后续修改调整
     $forceUpdate()
   }
   onUnmounted(() => {

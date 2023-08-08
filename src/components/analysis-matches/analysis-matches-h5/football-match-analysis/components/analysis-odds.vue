@@ -95,7 +95,7 @@
 <script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapGetters } from "vuex";
     // 国际化后续修改调整
     let tab_list = ref([
@@ -109,7 +109,7 @@ import { api_result } from "src/project/api";
     //数据加载完成
     let is_done = ref(false)
 
-    // 添加监听 赛事分析刷新事件 TODO 后续修改调整 $root emit
+    // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
     $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     get_list()
@@ -162,7 +162,7 @@ import { api_result } from "src/project/api";
       return $route.params.mid || get_detail_data.mid
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO $root emit 后续修改调整
+      // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
       $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
       // 国际化后续修改调整
      tab_list.value = ref([
@@ -177,7 +177,7 @@ import { api_result } from "src/project/api";
      is_done.value = ref(false)
     })
   // computed: {
-    //  TODO 后续修改调整
+    //  TODO: 后续修改调整
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
   // },
   

@@ -32,7 +32,7 @@ import { defineComponent, ref } from 'vue'
 import team_img from "src/project/components/details/team-img";   
  // 伤停情况列表
 import injury_form from "src/project/pages/details/analysis-matches/components/injury-form";
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
   // components: {
@@ -46,7 +46,7 @@ import injury_form from "src/project/pages/details/analysis-matches/components/i
       default: () => ({}),
     }
   })
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_detail_data'])
   // },

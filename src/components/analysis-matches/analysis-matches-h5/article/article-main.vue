@@ -57,7 +57,7 @@ import lodash from 'lodash'
   const enter_article_time = ref(0)  
 
   onMounted(() => {
-    // TODO $route后续修改调整
+    // TODO: $route后续修改调整
     get_article($route.params.mid)
   })
 
@@ -78,7 +78,7 @@ const calc_height = () => {
     if (!ele) return
     ele.scrollTop = 0
     if (!ele.style.height) {
-      // TODO 后续修改调整  $utils
+      // TODO: 后续修改调整  $utils
       ele.style.height = window.innerHeight - $utils.rem(0.92) + 'px'
       ele.style.maxHeight = 'unset'
     }
@@ -212,7 +212,7 @@ const handle_stay_duration = (article_id) => {
     if (!article_id || !stay_duration) {
       return
     }
-    // TODO $utils 后续修改调整
+    // TODO: $utils 后续修改调整
     $utils.zhuge_event_send(EVENT_NAME, get_user, zhuge_obj)
     enter_article_time = Date.now()
   }

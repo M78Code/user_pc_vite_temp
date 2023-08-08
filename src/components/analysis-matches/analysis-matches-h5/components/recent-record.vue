@@ -73,14 +73,14 @@ import { computed } from "vue";
   const radio_button_index = ref(0)
   const progress_bar = ref(false)
   const tab_radio_button = ref([
-    // TODO 国际化 后续修改调整
+    // TODO: 国际化 后续修改调整
     {name: `${$root.$t('analysis_football_matches.near')}5`, index: 5},
     {name: `${$root.$t('analysis_football_matches.near')}10`, index: 10},
     {name: `${$root.$t('analysis_football_matches.near')}15`, index: 15},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
-    // TODO 国际化 后续修改调整
+    // TODO: 国际化 后续修改调整
     $root.$t('analysis_football_matches.same_game'),
     $root.$t('analysis_football_matches.same_host_guest')
   ])
@@ -94,7 +94,7 @@ import { computed } from "vue";
     // mhid   主队id   mhn 主队名称
     // maid   客队id   man 客队名称
   const match_id = computed(() => {
-    // 赛事id TODO 后续修改调整 $route get_detail_data
+    // 赛事id TODO: 后续修改调整 $route get_detail_data
     return $route.params.mid || get_detail_data.mid
   })
   // 复选框 点击事件
@@ -115,7 +115,7 @@ import { computed } from "vue";
         }
       }
       get_list()
-      // TODO 后续修改调整
+      // TODO: 后续修改调整
       $forceUpdate()
     }
   const radioButton = (item, index) => {
@@ -139,7 +139,7 @@ import { computed } from "vue";
         let grouped_collection = [
           {
             recent_record_data:[],
-            // TODO 国际化后续修改调整
+            // TODO: 国际化后续修改调整
             records_list:[
               {success: 0, name: $root.$t('analysis_football_matches.victory')},
               {flat: 0, name: $root.$t('analysis_football_matches.flat')},
