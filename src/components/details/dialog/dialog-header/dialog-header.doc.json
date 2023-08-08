@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "赛事详情头部点击下拉后显示  '↑ 收起' + '< 返回按钮'"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "赛事详情头部点击下拉后显示  '↑ 收起' + '< 返回按钮'"
+    }
+  }
+}

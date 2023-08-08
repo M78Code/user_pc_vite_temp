@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "详情页背景上的队伍名称"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "详情页背景上的队伍名称"
+    }
+  }
+}

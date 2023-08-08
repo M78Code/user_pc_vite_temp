@@ -1,5 +1,5 @@
 /**
- * 文件 操作 封装 
+ * 文件 操作 封装
  */
 import * as fs from "node:fs";
 // 输出目录
@@ -23,8 +23,8 @@ export const ensure_write_folder_exist = (write_folder) => {
 };
 /**
  * 创建文件
- * @param {*} file_path 
- * @param {*} str 
+ * @param {*} file_path
+ * @param {*} str
  */
 export const write_file = (file_path, str) => {
   try {
@@ -36,21 +36,15 @@ export const write_file = (file_path, str) => {
   }
 };
 /**
- * 删除文件 或者文件夹 
- * @param {*} file_path 
+ * 删除文件 或者文件夹
+ * @param {*} file_path
  */
 export const remove_file = (file_path) => {
-
- 
-
   try {
     let stats = fs.existsSync(file_path);
-
-    console.log('stats---------',stats);
-
+    console.log("stats---------", stats);
     if (stats) {
       console.log(`删除文件  ${file_path} 文件已存在 将进行删除-----`);
-
       fs.rmSync(file_path, { recursive: true, force: true });
     } else {
       console.log(`删除文件  ${file_path} 文件不存在  -----`);

@@ -2,13 +2,11 @@
  * 合并输出商户配置
  */
 import axios from "axios";
-import { merge_merchant_config } from "./merge-merchant-config.js";
 import {
   ensure_write_folder_exist,
   write_file,
   remove_file,
 } from "./write-folder-file.js";
-import path from "path";
 import fs from "node:fs";
 
 // 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
@@ -32,38 +30,38 @@ let env_version = (process.env["MERCHANT-CONFIG-VERSION"] || "").trim();
 let MERCHANT_CONFIG_VERSION =
   env_version || argv_version || DEV_TARGET_MERCHANT_VERSION;
 
-  console.log("MERCHANT_CONFIG_VERSION",MERCHANT_CONFIG_VERSION)
+console.log("MERCHANT_CONFIG_VERSION", MERCHANT_CONFIG_VERSION);
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/server-resource.json`;
 
 // 图片 输出目录
-let img_folder = `./public/server-resource/sprite/`;
+let img_folder = `./public/server-resource/`;
 //开启 ，关闭本地测试  ,这个 上线必须设置false
 let ENABLE_TEST = false;
 
-remove_file(img_folder); //删除输出文件夹
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
-//确保配置 输出目录存在
-ensure_write_folder_exist(img_folder);
+remove_file(img_folder); //删除输出文件夹
+
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
 const download_file_to_local = async (srcs) => {
-  let add_obj = {
-    MERCHANT_CONFIG_VERSION,
-    project: MERCHANT_CONFIG_VERSION,
-    write_file_date: Date.now(),
-  };
-
+  ensure_write_folder_exist(img_folder);
+  // let add_obj = {
+  //   MERCHANT_CONFIG_VERSION,
+  //   project: MERCHANT_CONFIG_VERSION,
+  //   write_file_date: Date.now(),
+  // };
   const img_url_theme_map = {};
   Object.entries(srcs).map(([key, themes]) => {
     img_url_theme_map[key] = {};
     Object.entries(themes).forEach(async ([theme, url]) => {
-      const filename = img_folder + url.split("/").pop();
-      img_url_theme_map[key][theme] = filename;
+      const filename = img_folder + url.split("/").pop(); //入本地路径
+      img_url_theme_map[key][theme] = filename.slice(1); //写入本地路径
       try {
+        //读取文件下载到本地
         const response = await axios.get(url, { responseType: "stream" });
         response.data.pipe(fs.createWriteStream(filename));
       } catch (error) {}

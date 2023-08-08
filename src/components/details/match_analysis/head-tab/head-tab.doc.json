@@ -1,0 +1,14 @@
+{
+  "leftmenu": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "详情页 或者 赛果 赛事分析 公共tab 组件"
+  },
+  "props": {
+    "match-data": {
+      "type": [ "Object", "Array" ],
+      "default": [],
+      "description": "详情页 或者 赛果 赛事分析 公共tab 组件"
+    }
+  }
+}
