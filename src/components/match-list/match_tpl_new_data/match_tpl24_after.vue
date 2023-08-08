@@ -1,0 +1,91 @@
+<!--
+ * @Author: nuanyang
+ * @Date: 2022-06-18 11:50:38
+ * @Description: 15分钟玩法模板
+-->
+
+<template>
+  <div class="c-match-item " :class="'tpl-'+match.tpl_id"  >
+    <!-- 15分钟玩法标题 -->
+    <div class=" flex absolute c15min-title">
+      <div  :style="`width:${match_list_tpl_size.team_width+77}px !important;`"></div>
+      <div class="play-name row col">
+          <div class="col ellipsis text-center" :key="key" :style="`width:${ match_list_tpl_size.bet_width * 3}px !important;`"  v-for="(item,key) in bet_col">
+              {{item}}
+          </div>
+      </div>
+      <div :style="`width:${match_list_tpl_size.media_width-3}px !important;`"></div>
+    </div>
+    <!-- 比赛进程 -->
+    <div class="process-col yb-flex-center">
+      <!--热门赛事显示hot标识-->
+      <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot"/>
+      <!-- 比赛进程 -->
+      <match-process :match_list_data="match_list_data" v-if="is_mounted && match.api_update_time !=0" :match_props="{match, source: 'match_list'}" show_page="match-list" :rows="2" />
+    </div>
+
+    <!-- 盘口 -->
+    <div class="match-handicap-item-wrap">
+      <!-- 主盘 -->
+      <div class="match-handicap-item">
+        <!-- 赛事基础信息 -->
+        <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;`">
+          <basis-info1 v-if="is_mounted" is_15min :match="match" show_type="all" />
+        </div>
+
+        <!-- 赛事盘口投注项 -->
+        <match-handicap
+          :handicap_list="match.main_handicap_list"
+          :match="match"
+        />
+        <!-- 视频按钮 -->
+        <div class="media-col">
+          <match-media :match="match" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+
+export default {
+  name: "MatchItem",
+
+  mixins: [match_item_mixin],
+    computed: {
+    // 其他玩法标题
+    bet_col(){
+      let bet_col,
+      hSpecial =this.match.hSpecial;
+      // 15分钟玩法
+        let start = hSpecial - 1,
+        end =  hSpecial +1;
+        if(hSpecial>=4){
+            start -= 1
+            end -= 1
+        }
+        bet_col = [...this.$root.$t('list.match_tpl_title.tpl0.15minutes_bet_col')]
+        bet_col.splice(2,1)
+        bet_col.splice(bet_col.length-1,1,"")
+        bet_col = bet_col.slice(start,end)
+        if(hSpecial == 6){
+          bet_col.push('')
+        }
+      return    bet_col
+    }
+    }
+
+};
+</script>
+<style lang="scss" scoped>
+.tpl-24{
+  margin-top: 24px;
+  .c15min-title{
+    top: 0;
+    height: 24px;
+  }
+}
+</style>

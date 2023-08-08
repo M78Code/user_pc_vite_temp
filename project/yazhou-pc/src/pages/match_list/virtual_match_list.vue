@@ -1,8 +1,3 @@
-<!--
- * @Author: Amor
- * @Date: 2020-12-33 14:14
- * @Description: 虚拟体育 赛事列表
--->
 <template>
   <div class="yb-match-list full-height virtual-list column  relative-position">
     <span
