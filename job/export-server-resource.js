@@ -38,7 +38,7 @@ let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/server-resource.json`;
 
 // 图片 输出目录
-let img_folder = `./project/${MERCHANT_CONFIG_VERSION}/public/server-resource/sprite/`;
+let img_folder = `./public/server-resource/sprite/`;
 //开启 ，关闭本地测试  ,这个 上线必须设置false
 let ENABLE_TEST = false;
 

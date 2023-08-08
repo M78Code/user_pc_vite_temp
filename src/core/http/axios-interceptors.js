@@ -5,7 +5,7 @@ import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
 import { UUID } from "../uuid";
 import domain from "./domain";
-import { ss } from "../utils/web-storage";
+import { ss,ls } from "../utils/web-storage";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const FNANI_STATUS = {
@@ -45,7 +45,7 @@ const requestHook = {
         break;
     }
     //请求token
-    const requestId = ss.get(STANDARD_KEY.token) || "";
+    const requestId = ss.get(STANDARD_KEY.get("token")) || "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "en"; // 语言调整
@@ -54,7 +54,7 @@ const requestHook = {
       ""
     )}-${Date.now()}`;
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
-    if (ss.get(STANDARD_KEY.pb)) {
+    if (ss.get(STANDARD_KEY.get("pb"))) {
       if (endsWith(config.url, "PB")) {
         config.url = config.url.substring(0, config.url.length - 2);
       } else {

@@ -10,7 +10,7 @@ import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
-import { ss,ls } from "../utils/web-storage";
+import { ss, ls } from "../utils/web-storage";
 /**
  * 页面隐藏时间 纪录
  */
@@ -70,7 +70,7 @@ class AxiosHttp {
     this.axios_instance = null;
     // 页面 失去 焦点后  HTTP 断开时间
     this.DOCUMENT_HIDDEN_HTTP_CLOSE_TIME = 5 * 60 * 1000;
-    this.init();
+    // this.init();
   }
   /**
    * @Description:初始化网络配置信息
@@ -122,15 +122,15 @@ class AxiosHttp {
     // 38913	一般	高	缺陷	【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     //  这个bug 产生原因是 safari 浏览器 强缓存页面导致 。 页面走不了 域名判定流程 ，在挂机启动的时候，初始化没有走域名判定流程
     // 如果没有最快的最优域名 也没有 弹出 token失效的 弹窗,直接走到了这里的 主程序请求流程
+    console.log("api_domain",api_domain)
     if (!api_domain) {
       //session 缓存的 是否 因为设置页面API 域名错误 刷新过
-      let has_reload = sessionStorage.getItem(
-        "set_root_domain_error_force_reload"
-      );
+      let has_reload = ss.get("set_root_domain_error_force_reload");
+      console.log("has_reload",has_reload)
       //不清楚，页面强缓存，唤醒的时候 session 是否还存在
       if (!has_reload) {
         // 只做一次尝试  ，直接走OSS 文件 流程  ，刷新页面  ，不能多次 避免 异常情况下 无限刷新
-        sessionStorage.setItem("set_root_domain_error_force_reload", "1");
+        ss.set("set_root_domain_error_force_reload", "1");
         force_current_api_flow_use_oss_file_api_reload();
       } else {
         //如果有缓存过刷新
@@ -161,7 +161,7 @@ class AxiosHttp {
           } else {
             // 什么都没有的 补偿刷新一次  或者两次
             if (has_reload < 4) {
-              ss.get("set_root_domain_error_force_reload", has_reload + 1);
+              ss.set("set_root_domain_error_force_reload", has_reload + 1);
               force_current_api_flow_use_oss_file_api_reload();
             } else {
               // 正常的走到 释放页面 的步骤 ，就是 wifi 图标 必须刷新页面才行的 那种

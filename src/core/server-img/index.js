@@ -1,13 +1,15 @@
-export * from "./sprite-img/index";
-
-
-
-
+export { compute_css as sprite_compute } from "./sprite-img/index";
+export { compute_css as other_compute } from "./other-img/index";
 
 // import
-export const compute_css = ({ key , theme , label }) => {
-    // img-bg-menu-live
-    let { compute_css = () => {} } = all_fn[label] || {};
-    return compute_css({ key, theme });
-  };
-  
+const compute_css = ({ key, theme, label }) => {
+  // img-bg-menu-live
+  return key
+    ? other_compute({
+        theme,
+        label,
+      })
+    : sprite_compute({ key, theme });
+};
+
+export { compute_css };
