@@ -15,11 +15,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-export default {
-  name: 'football_events',
-  data() {
-    return {
+// #TODO VUEX 
+// import { mapGetters } from "vuex";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
+  name: "football_events",
+  
+  setup(props, evnet) {
+    const data = reactive({
       is_shoe: false,  // 是否显示
       obj: {
         t1: 0,
@@ -27,51 +30,51 @@ export default {
         secondsFromStart: '',
         homeAway: ''
       }, // ws数据对象
-    };
-  },
-  created () {
-    // 延时器
-    this.timer = null;
-  },
+    });
+    onMounted(() => {
+      // 延时器
+      timer = null;
 
-  components: {},
-
-  computed: {
-    ...mapGetters(['get_detail_data', 'get_is_hengping', 'get_is_full_screen']),
-    calc_name() {
-      let { man, mhn } = this.get_detail_data
-      return this.obj.homeAway == 'home' ? man : mhn
-    },
-    calc_time() {
-      let a = Math.floor(this.obj.secondsFromStart / 60), b = ('' + this.obj.secondsFromStart % 60).padStart(2, 0)
+      // 原 mounted 
+      // #TODO $root 
+      // $root.$on(emit_cmd.EMIT_FOOTBALL_EVENTS, football_events_handle);
+    },);
+    // #TODO vuex 
+    // computed: {
+    // ...mapGetters(['get_detail_data', 'get_is_hengping', 'get_is_full_screen']),
+    const calc_name = computed(() => {
+      let { man, mhn } = get_detail_data
+      return obj.homeAway == 'home' ? man : mhn
+    });
+    const calc_time = computed(() => {
+      let a = Math.floor(obj.secondsFromStart / 60), b = ('' + obj.secondsFromStart % 60).padStart(2, 0)
       return `${a}'${b}'`
-    }
-  },
-
-  mounted() {
-    this.$root.$on(this.emit_cmd.EMIT_FOOTBALL_EVENTS, this.football_events_handle);
-  },
-
-  methods: {
+    });
     /**
      *@description ws处理函数
      *@param {Object} obj ws数据对象
      */
-    football_events_handle(obj) {
-      this.obj = obj
-      this.is_shoe = true
-      this.timer = setTimeout(() => {
-        this.is_shoe = false
+    const football_events_handle = (obj) => {
+      obj = obj
+      is_shoe = true
+      timer = setTimeout(() => {
+        is_shoe = false
       }, 6000);
+    };
+    onUnmounted(() => {
+      // #TODO $root 
+      // $root.$off(emit_cmd.EMIT_FOOTBALL_EVENTS, football_events_handle);
+      clearTimeout(timer)
+      timer = null
+    })
+    return {
+      ...toRefs(data),
+      calc_name,
+      calc_time,
+      football_events_handle
     }
-  },
-  beforeDestroy() {
-    this.$root.$off(this.emit_cmd.EMIT_FOOTBALL_EVENTS, this.football_events_handle);
-    clearTimeout(this.timer)
-    this.timer = null
   }
-}
-
+})
 </script>
 <style lang="scss" scoped>
 .football-events {
