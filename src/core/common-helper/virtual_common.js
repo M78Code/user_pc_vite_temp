@@ -260,7 +260,7 @@ const get_active = (vx_get_virtual_bet_obj,id) => {
     let handicap_status = cs.handicap_status;
     // 投注项状态
     active = cs.active;  
-    active = that.get_odds_active(match_status, handicap_status, active);
+    active = get_odds_active(match_status, handicap_status, active);
   }
   return active;
 }
@@ -582,10 +582,10 @@ const del_bet_item = (vx_get_virtual_bet_obj,vx_get_virtual_bet_list,id) => {
  * @param {Object} that 视图对象
  * @return {undefined} undefined
  */
-const update_odds_info = (that) => {
-  if (!that.id) return;  
+const update_odds_info = (vx_get_virtual_bet_obj,id) => {
+  if (!id) return;  
   if(window.ws) {
-    let bet_obj = _.get(that,`vx_get_virtual_bet_obj.${that.id}`,{});
+    let bet_obj = _.get(vx_get_virtual_bet_obj,`${id}`,{});
     //console.log(`=========is_bet_single:${that.vx_is_bet_single}=========bet_obj:${JSON.stringify(bet_obj)}`);
     if(_.has(bet_obj,'cs')&&_.has(bet_obj,'bs')){
       let cs = bet_obj.cs;
@@ -805,7 +805,7 @@ const get_deactive_count = (that) => {
         // 投注项状态
         active = cs.active;
         // console.log(`=========get_deactive_count=====match_status:${match_status}=====handicap_status:${handicap_status}=========active:${active}`);
-        active = that.get_odds_active(match_status, handicap_status, active);
+        active = get_odds_active(match_status, handicap_status, active);
         if([2,3].includes(active)) {
           count++;
         }
@@ -819,6 +819,44 @@ const get_deactive_count = (that) => {
   return count;
 }
 
+ /**
+ * @description: 获取投注项状态
+ * @param {Number} matchHandicapStatus 赛事盘口状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
+ * @param {Number} status 盘口状态0-5。 0：有效，1：暂停，2：停用，3：已结算，4：已取消，5：移交
+ * @param {Number} active 投注项状态 1.开盘，2封盘，3关盘 ，4 锁盘
+ * @return {Number} 投注项状态 1.开盘，2封盘，3关盘 ，4 锁盘
+ */
+ const get_odds_active = (matchHandicapStatus, status, active) => {
+  var active_ = 1;
+  // console.log(`matchHandicapStatus==${matchHandicapStatus}, ${status}, ${active}`);
+  if (matchHandicapStatus) { // 赛事盘口有操作变化时
+    if (matchHandicapStatus == 1) { //赛事封盘状态
+      active_ = 2;
+    } else if (matchHandicapStatus == 11) { //赛事锁盘
+      if(active!=1){
+        active_ = active;
+      } else{
+        active_ = 4;
+      }
+    } else if (matchHandicapStatus == 2 || matchHandicapStatus == 3 || matchHandicapStatus == 4 || matchHandicapStatus == 5) { //赛事关盘
+      active_ = 3;
+    }
+    return active_;
+  }
+
+  if (status) { // 盘口有操作变化时
+    if (status == 1) { //盘口封盘
+      active_ = 2;
+    } else if (status == 2 || status == 3 || status == 4 || status == 5) { //盘口关盘
+      active_ = 3;
+    } else if (status == 11) { //盘口锁盘
+      active_ = 4;
+    }
+    return active_;
+  }
+  return active
+}
+
 
 
 /**
@@ -827,12 +865,12 @@ const get_deactive_count = (that) => {
  * @param {object} data 数据对象
  * @return {undefined}
  */
-const update_bet_item_info = (that, data) => {
-  console.log(data)
+const update_bet_item_info = (vx_get_virtual_bet_obj, data) => {
+  // console.log(data)
   _.forEach(data, item => {
-    for(let key of Object.keys(that.vx_get_virtual_bet_obj)) { 
+    for(let key of Object.keys(vx_get_virtual_bet_obj)) { 
       if(!_.isEmpty(key)) {
-        let clone_bet_obj = _.cloneDeep(_.get(that,`vx_get_virtual_bet_obj.${key}`));
+        let clone_bet_obj = _.cloneDeep(_.get(vx_get_virtual_bet_obj,`${key}`));
         let cs = _.get(clone_bet_obj, 'cs', false);        
         if(cs && item.mid==cs.match_id) {
           let source = cs.source; 
@@ -964,13 +1002,13 @@ const update_bet_item_info = (that, data) => {
 * @param {Object} that 视图对象
 * @return {undefined}
 */
-const has_disable_item = (that) => {
+const has_disable_item = (vx_get_virtual_bet_obj,vx_get_virtual_bet_list) => {
   let index, mhs, hs, active,serial_type;
-  index = _.findIndex(that.vx_get_virtual_bet_list, (item) => {
-    mhs = _.get(that.vx_get_virtual_bet_obj,`${item}.cs.match_status`, 0) * 1;
-    hs = _.get(that.vx_get_virtual_bet_obj,`${item}.cs.handicap_status`, 0) * 1;
-    active = _.get(that.vx_get_virtual_bet_obj,`${item}.cs.active`, 1) * 1;
-    serial_type = _.get(that.vx_get_virtual_bet_obj,`${item}.cs.serial_type`, 1) * 1;
+  index = _.findIndex(vx_get_virtual_bet_list, (item) => {
+    mhs = _.get(vx_get_virtual_bet_obj,`${item}.cs.match_status`, 0) * 1;
+    hs = _.get(vx_get_virtual_bet_obj,`${item}.cs.handicap_status`, 0) * 1;
+    active = _.get(vx_get_virtual_bet_obj,`${item}.cs.active`, 1) * 1;
+    serial_type = _.get(vx_get_virtual_bet_obj,`${item}.cs.serial_type`, 1) * 1;
     return [1,2].includes(mhs) || [1,2].includes(hs) || [2,3].includes(active) || serial_type !== 1;
   });
   return index > -1;
@@ -1161,7 +1199,7 @@ const upd_bet_obj_item = (that,bet_obj,item, handle_time) => {
       item_obj.mhs = ol_obj._mhs;
       item_obj.hps[0].hl[0].hs=ol_obj._hs;
       odds_value = _.get(ol_obj,'ov');
-      active = that.get_odds_active(_.get(ol_obj, '_mhs'), _.get(ol_obj, '_hs'),  _.get(ol_obj, 'os'));
+      active = get_odds_active(_.get(ol_obj, '_mhs'), _.get(ol_obj, '_hs'),  _.get(ol_obj, 'os'));
       // C303,C304拉取接口,如果hv_ov_change在vuex中还是true说明提示还没有结束,应该继续维持hv_ov_change=true
       if((hn && handicap_value_old!=handicap_value && odds_value_old != odds_value) || hv_ov_change_old) {
         hv_ov_change = true;
