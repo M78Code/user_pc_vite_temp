@@ -165,7 +165,7 @@
 </template>
 
 <script setup>
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
 import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
@@ -179,7 +179,7 @@ import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu
 import { watch } from "vue";
 // import{ date }  from 'quasar'
 
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // mixins: [ list_menu_mixin_new ],
   
   //主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据，真正渲染到页面数据的是下面的 main_menu_list_items  =================
@@ -187,7 +187,7 @@ import { watch } from "vue";
   //主菜单 一级主菜单 下边的四个菜单（滚球， 今日， 电竞， 虚拟体育）, 真正渲染到 页面的数据    =================
   // Level_one_menu_list(this) || 后续修改调整
   const main_menu_list_items = ref([]) 
-  //二级菜单项目 TODO second_sub_list(this) ||  后续修改调整
+  //二级菜单项目 TODO: second_sub_list(this) ||  后续修改调整
   const sub_menu_list = ref([]) 
   // 二级菜单选中项下标
   const sub_menu_i = ref(0) 
@@ -233,7 +233,7 @@ import { watch } from "vue";
   //     'get_access_config'
   //   ])
   // },
-  // 进入主列表页立即触发  TODO $route 后续修改调整
+  // 进入主列表页立即触发  TODO: $route 后续修改调整
   if($route.name == 'matchList'){
       enter_page_immediately()
   }
@@ -294,7 +294,7 @@ import { watch } from "vue";
     // }),
     // 进入主列表页 主菜单时，立即触发方法
     const enter_page_immediately = () => {
-      // 初始化 路由的参数 TODO $route后续修改调整
+      // 初始化 路由的参数 TODO: $route后续修改调整
       if ($route.query.m) {
         //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
         let { m, s, t } = $route.query; 
@@ -323,7 +323,7 @@ import { watch } from "vue";
       }
       // 调用接口，更新菜单数据
       call_the_interface_to_update_the_menu_data()
-      // TODO 后续修改调整
+      // TODO: 后续修改调整
       $forceUpdate()
     }
     // 菜单首次加载，一级菜单，二级菜单 数据，都在这里赋值
@@ -374,7 +374,7 @@ import { watch } from "vue";
         // 当前选中的 一级菜单对 下标 (非展开的)
         set_main_menu_dom_i(main_index);
       }
-      //虚拟体育页跳转逻辑，直接跳转到 虚拟体育的 路由 TODO $router后续修改调整
+      //虚拟体育页跳转逻辑，直接跳转到 虚拟体育的 路由 TODO: $router后续修改调整
       if((main_menu_o.menuType == 900 || main_menu_o.menuId == 407) && type == 'dir_click'){
         $router.push({name: 'virtual_sports'});
         return;
@@ -432,7 +432,7 @@ import { watch } from "vue";
         one_lable_zhuge(type)
       }else{  // 如果是赛果
         // 如果有缓存，则使用缓存
-        // TODO sessionStorage 后续修改调整
+        // TODO: sessionStorage 后续修改调整
         let cache_data_str = sessionStorage.getItem('result_sub_menu_cache')
         // 缓存执行
         if(cache_data_str){
@@ -455,7 +455,7 @@ import { watch } from "vue";
                 })
               }
             }
-             // TODO sessionStorage 后续修改调整
+             // TODO: sessionStorage 后续修改调整
             sessionStorage.setItem('result_sub_menu_cache',JSON.stringify(data));
             // 赛果二级菜单数据处理
             result_sub_menu_api_handle(data, type);
@@ -591,7 +591,7 @@ import { watch } from "vue";
             break;
         }
         if (eventLabel && scheduleType) {
-          // TODO $utils 后续修改调整
+          // TODO: $utils 后续修改调整
           $utils.zhuge_event_send(eventLabel, user_info, {'赛程类型': scheduleType});
         }
       }
@@ -652,7 +652,7 @@ import { watch } from "vue";
           scheduleType = '早盘';
         }
         if (eventLabel && scheduleType) {
-          // TODO $utils 后续修改调整
+          // TODO: $utils 后续修改调整
           $utils.zhuge_event_send(eventLabel, user_info, {'赛程类型': scheduleType});
         }
       }
@@ -669,7 +669,7 @@ import { watch } from "vue";
     // 菜单实例 初始化, 调用 列表接口
     const handle_MenuInfoInstance_init = () => {
       // 调用列表接口
-      // TODO $root 后续修改调整
+      // TODO: $root 后续修改调整
       $root.$emit(emit_cmd.EMIT_MAIN_MENU_CHANGE);
     }
     // 早盘 和 串关 和 电竞 的日期菜单用缓存的数据初始化
@@ -683,11 +683,11 @@ import { watch } from "vue";
      */
     const openActivity = () => {
       if(!lodash.get(get_access_config,'activitySwitch')){
-        // TODO $toast 后续修改调整
+        // TODO: $toast 后续修改调整
         $toast($root.$t(`common.temporarily_unavailable`), 2000)
         return
       }
-      // TODO $router $utils 后续修改调整
+      // TODO: $router $utils 后续修改调整
       $utils.zhuge_event_send('H5_任务中心', user_info);
       $router.push({name:'activity_task', query: { rdm: new Date().getTime() }})
     }
@@ -762,7 +762,7 @@ import { watch } from "vue";
     watch(() => get_list_scroll_top, (sc,o_sc) => {
       let scroll_y = +sc.split('-')[0];
       // 只有在今日  下边的 足球  和 篮球下，滑动 超过100px  才有效果，全局触发一次
-       // TODO sessionStorage 后续修改调整
+       // TODO: sessionStorage 后续修改调整
       if (scroll_y >= 100 && !sessionStorage.getItem('matchList_buried_point_time') && [3].includes(+menu_type) && [5, 7].includes(get_curr_sub_menu_type)) {
         sessionStorage.setItem('matchList_buried_point_time', new Date().getTime())
         // 今日足球篮球当 滑动超过100px  或者 今日足球停留 20秒  埋点触发方法

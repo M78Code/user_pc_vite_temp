@@ -78,7 +78,7 @@
 <script setup>
 import { onUnmounted, watch } from 'vue'
 
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
   const props =defineProps({

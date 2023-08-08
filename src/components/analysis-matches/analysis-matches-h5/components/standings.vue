@@ -59,7 +59,7 @@ import injury_situation from "src/project/pages/details/analysis-matches/footbal
 import standings_technical from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"  
 // 盘面 
 import standings_disk from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"   
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_result} from "src/project/api";
  // 加载中
@@ -77,7 +77,7 @@ import loadsh from 'lodash'
   //   "injury-situation": injury_situation,
   //   loading,
   // },
-  // TODO 国际化后续修改调整
+  // TODO: 国际化后续修改调整
   const tab_list = ref([
         {name: $root.$t('analysis_football_matches.Fundamentals')},
         {name: $root.$t('analysis_football_matches.Disk')},
@@ -93,18 +93,18 @@ import loadsh from 'lodash'
   // 技术面的数据
   const homeAwayGoal_and_coach_map = ref({init: null})
   const loading = ref(false)
-  //   // 添加监听 赛事分析刷新事件 TODO $root emit 后续修改调整
+  //   // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
   //   $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
   //   if(this.get_detail_data.csid == 1) {
   //     this.get_data_list()
   //   }
   const match_id =  computed(() => {
-    // TODO 后续修改调整 'get_detail_data'
+    // TODO: 后续修改调整 'get_detail_data'
     //     return this.$route.params.mid || this.get_detail_data.mid
   })
   onUnmounted(() => {
-    // 移除监听 赛事分析刷新事件 TODO $root emit  后续修改调整
+    // 移除监听 赛事分析刷新事件 TODO: $root emit  后续修改调整
   //   $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     tab_list = ref([
@@ -148,7 +148,7 @@ import loadsh from 'lodash'
         injury_situation_data = {init: null}
         matchHistory_battle_dto_map = {init: null}
         homeAwayGoal_and_coach_map = {init: null}
-        // TODO 后续修改调整 'get_detail_data'
+        // TODO: 后续修改调整 'get_detail_data'
         if(get_detail_data.csid == 1) {
           get_data_list()
         }

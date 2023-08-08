@@ -210,7 +210,7 @@ import {
   watch
 } from 'vue'
 import loadsh from 'lodash'
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {api_common, api_result} from "src/project/api/index.js";
 
   directives(// 对阵文案过长时，无限滚动展示
@@ -282,9 +282,9 @@ import loadsh from 'lodash'
     let is_replay_load_error = ref(false)
     // 精彩回放视频增加随机数
     let iframe_rdm = ref('')
-    // TODO $utils 后续修改调整
+    // TODO: $utils 后续修改调整
     // $utils.load_player_js()
-    // TODO set_event_list 后续修改调整
+    // TODO: set_event_list 后续修改调整
     // set_event_list([])
 
     // 监听iframe传来的消息
@@ -301,7 +301,7 @@ import loadsh from 'lodash'
     }
     // 检测精彩回放视频资源加载状态
     const check_replay_url = (url) => {
-      // TODO api_common 后续修改调整
+      // TODO: api_common 后续修改调整
       api_common.get_full_url(url)
         .then((v) => {
           console.log('精彩回放视频加载成功...')
@@ -318,7 +318,7 @@ import loadsh from 'lodash'
     // 第X个——英文下转换
     const trans_num = (num) => {
       let suffix = ''
-      // TODO get_lang 后续修改调整
+      // TODO: get_lang 后续修改调整
       if (get_lang === 'en') {
         if (num === 1) {
           suffix = 'st'
@@ -383,7 +383,7 @@ import loadsh from 'lodash'
       let event_name
       switch (type) {
         // 进球
-        // TODO 国际化后续修改调整
+        // TODO: 国际化后续修改调整
         case 'goal': 
         event_name = $root.$t('highlights.type.goal'); 
         break;  
@@ -412,7 +412,7 @@ import loadsh from 'lodash'
     }
     // iframe加载成功后，通知子iframe
     const handle_replay_video_loaded = (e) => {
-      // TODO  get_is_hengping 后续修改调整
+      // TODO:  get_is_hengping 后续修改调整
       if (get_is_hengping) {
         const data = {
           cmd: 'full_screen_landscape',
@@ -436,12 +436,12 @@ import loadsh from 'lodash'
         replay_url.value = slider_events_list[index].fragmentVideo
         check_replay_url(replay_video_src)
         // 静音当前播放媒体
-        // TODO emit 后续修改调整
+        // TODO: emit 后续修改调整
         // $root.$emit(emit_cmd.IFRAME_VIDEO_VOLUME, {volume:0})
       }
 
       // 滚动目标到屏幕显示区域
-      // TODO $utils 后续修改调整
+      // TODO: $utils 后续修改调整
       nextTick(()=>{
         // $utils.tab_move(index, slider_video.value[0].slider_x.value, slider_video.value[0].item_wrapper.value, true)
       })
@@ -456,7 +456,7 @@ import loadsh from 'lodash'
      */
     const get_football_replay = (event_code) => {
       const params = {
-        // TODO get_detail_data 后续修改调整
+        // TODO: get_detail_data 后续修改调整
         // mid: loadsh.get(get_detail_data, 'mid'),
         device: 'H5',
         eventCode: event_code
@@ -465,7 +465,7 @@ import loadsh from 'lodash'
         .then(res => {
           if (res.code == 200 && loadsh.get(res.data, 'eventList.length')) {
             events_list.value = res.data.eventList
-            // TODO 后续修改调整 set_event_list
+            // TODO: 后续修改调整 set_event_list
             // set_event_list(res.data.eventList)
           }
         })
@@ -526,7 +526,7 @@ import loadsh from 'lodash'
     const set_full_screen = () => {
       let data = {}
       if (is_full_screen.value) {
-        // TODO 后续修改调整  set_event_list  set_event_list set_is_hengping
+        // TODO: 后续修改调整  set_event_list  set_event_list set_is_hengping
         // set_is_full_screen(false)
         // set_is_dp_video_full_screen(false)
 
@@ -629,7 +629,7 @@ import loadsh from 'lodash'
     watch(() => get_user.merchantEventSwitchVO, () => {
       handler = (res) => {
         // tab按钮开关
-        // TODO  国际化后续修改调整
+        // TODO:  国际化后续修改调整
         let new_tab_list = [
           {title: $root.$t('footer_menu.all'), code: '0'},
           {title: $root.$t('match_result.goal'), code: '1'},
@@ -699,7 +699,7 @@ import loadsh from 'lodash'
       })
 
       // 无相应类型事件时返回
-      // TODO  get_is_hengping 后续修改调整
+      // TODO:  get_is_hengping 后续修改调整
       // if (get_is_hengping && !new_events_list.length) {
       //   return [{}]
       // }
@@ -711,13 +711,13 @@ import loadsh from 'lodash'
   }
   // 鉴权域名 + 回放视频url（拼接后的最终url）
   replay_video_src = () => {
-    // TODO  get_user  get_lang 后续修改调整
+    // TODO:  get_user  get_lang 后续修改调整
     // const host_url = window.env.config.live_domains[0] || loadsh.get(get_user,'oss.live_h5')
     // return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
   }
   // slider列表长度是否小于屏幕横屏宽度
   is_slider_in_screen = () => {
-    // TODO  get_is_hengping 后续修改调整
+    // TODO:  get_is_hengping 后续修改调整
     // const full_screen_width = get_is_hengping ? innerWidth : innerHeight
     // const font_size = (get_is_hengping ? innerHeight : innerWidth) * 100 / 375
 
@@ -726,7 +726,7 @@ import loadsh from 'lodash'
   })
   computed(() => {
     if (events_scroller.value) {
-      // TODO $utils 后续修改调整
+      // TODO: $utils 后续修改调整
       // events_scroller.value.style.minHeight = window.innerHeight - $utils.rem(1.94) + 'px';
     }
 
@@ -746,12 +746,12 @@ import loadsh from 'lodash'
     is_controller_show_timer = null
     clearTimeout(is_replay_load_error_timer.value)
     is_replay_load_error_timer.value = null
-    // TODO set_is_dp_video_full_screen 后续修改调整
+    // TODO: set_is_dp_video_full_screen 后续修改调整
     // set_is_dp_video_full_screen(false)
     window.removeEventListener("message", handleMessage);
   })
 
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   //   ...mapGetters([
   //     'get_detail_data',
   //     'get_menu_type',

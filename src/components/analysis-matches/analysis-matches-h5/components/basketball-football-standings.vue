@@ -62,7 +62,7 @@ import {api_result} from "src/project/api";
 import { computed, onUnmounted } from "vue";
 import loadsh from 'lodash'
 
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
   const ranking_data = ref([])
@@ -85,7 +85,7 @@ import loadsh from 'lodash'
     return $route.params.mid || get_detail_data.mid
   })
   // computed: {
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
   // },
   const percentage = (item) => {
@@ -109,7 +109,7 @@ import loadsh from 'lodash'
         }else{
           box_bool = !box_bool;
           if (box_bool == true) {
-            // TODO 国际化后续修改调整
+            // TODO: 国际化后续修改调整
             [btn_text, direction] = [$root.$t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
@@ -135,7 +135,7 @@ import loadsh from 'lodash'
   }
   const rules_normal = () => {
     [btn_text, direction, box_bool] = [
-      // TODO 后续修改调整
+      // TODO: 后续修改调整
       $root.$t("bet_record.pack_up"),
       "",
       false
@@ -145,7 +145,7 @@ import loadsh from 'lodash'
   const rules_a = () => {
     if (ranking_data.length >= 2)
       [btn_text, direction, box_bool] = [
-        // TODO 后续修改调整
+        // TODO: 后续修改调整
         $root.$t("bet_record.pack_down"),
         "down",
         true

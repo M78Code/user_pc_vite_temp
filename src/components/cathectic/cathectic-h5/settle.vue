@@ -63,7 +63,7 @@
     </div>
 </template>
 <script setup>
-// TODO  后面数据接入后删除
+// TODO:  后面数据接入后删除
 //   import { mapGetters } from "vuex";
   import { defineComponent, watch, onUnmounted, ref, getCurrentInstance } from 'vue'
   import { api_betting } from "src/project/api/index.js";
