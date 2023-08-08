@@ -11,23 +11,23 @@
     <div class="hot-pages-tabs">
       <div class="tabs-bar">
         <div class="tabs-bar-nav" ref="scrollBox" :class="[change_background]">
-          <div class="tabs-tab"
-               v-for="(tab, index) in tabList" :key="index"
-               :class="[tab_Index == index ? 'tabs-active' : '']"
-               @click="changeTab(tab, index, true)"
-          >
+          <div class="tabs-tab" v-for="(tab, index) in tabList" :key="index"
+            :class="[tab_Index == index ? 'tabs-active' : '']" @click="changeTab(tab, index, true)">
             <!-- 竞足 tab图标 -->
             <template v-if='tab.menuId == "30101"'>
-              <img  src="image/wwwassets/bw3/home/chinaBet.png" alt="">
+              <img src="image/wwwassets/bw3/home/chinaBet.png" alt="">
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
               <!-- <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black${get_theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
-              <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black2${get_theme.includes('y0') ? '_y0' : ''}.svg`)" alt="">
+              <img v-if='tab.index == 0'
+                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_black2${get_theme.includes('y0') ? '_y0' : ''}.svg`)"
+                alt="">
               <!-- 电竞类的tab图标 -->
-              <img v-else-if="[100,101,102,103].includes(+tab.field1)" :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt=""/>
+              <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)"
+                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_esport_${tab.field1}.svg`)" alt="" />
               <!-- 体育类的图标 -->
-              <img v-else :src=" tab.field3 && get_file_path(tab.field3)" @error="league_icon_error" alt="">
+              <img v-else :src="tab.field3 && get_file_path(tab.field3)" @error="league_icon_error" alt="">
             </template>
             <span class="menu-name">{{ tab.menuName }}</span>
           </div>
@@ -38,7 +38,7 @@
     <div :class="[tab_Index == 0 && 'quiz']">
       <div>
         <!--猜你喜欢  模块-->
-        <may-also-like :from_where="101" v-if="tab_Index == 0 && _.get(get_access_config,'hotRecommend')" />
+        <may-also-like :from_where="101" v-if="tab_Index == 0 && _.get(get_access_config, 'hotRecommend')" />
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
           <div class="title" v-if="tab_Index == 0">
@@ -68,21 +68,21 @@ const first_loading = ref(true) // 精选是否第一次加载骨架屏
 const can_click_tab = ref(false) // 可以点击菜单tab 选项卡
 const wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
 
-onmounted(()=>{
+onmounted(() => {
   timer2.value = null;
   get_list('first_loading')
   // emit 后补充
-  $root.$on(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
+  $root.$on(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
 })
 
 // 选项切换
-watch(()=> tab_Index,(newval)=>{
-  first_loading.value =false
+watch(() => tab_Index, (newval) => {
+  first_loading.value = false
 })
 
 // 改变背景颜色
 const change_background = computed(() => {
-  if(tab_Index.value != 0){
+  if (tab_Index.value != 0) {
     return 'change-background'
   }
 })
@@ -107,158 +107,158 @@ const change_background = computed(() => {
 // ])
 
 // 监听div滚动 事件，传到列表页
-const wrapper_scrolling = ($event) =>{
+const wrapper_scrolling = ($event) => {
   //当列表滚动时隐藏罚牌说明
   wrapper_scroll_top.value = $event.target.scrollTop;
-  $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING,{
-    cb:(_child_this)=>{
-    // 回调函数 重写子类的方法值
-    const scroll_top =  _child_this.$refs["scroll_top"];
-    if(scroll_top){
-          scroll_top.list_scroll_top = $event.srcElement.scrollTop;
-          scroll_top.scroll_dom = $event.target;
+  $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING, {
+    cb: (_child_this) => {
+      // 回调函数 重写子类的方法值
+      const scroll_top = _child_this.$refs["scroll_top"];
+      if (scroll_top) {
+        scroll_top.list_scroll_top = $event.srcElement.scrollTop;
+        scroll_top.scroll_dom = $event.target;
       }
     }
   });
 }
 
- /**
-   * @description: 联赛联赛图标出错
-   * @param {Object} $event 错误事件对象
-   */
-  const league_icon_error = ($event)=>{
-    if(get_theme.includes('theme02')){
-      $event.target.src =  "image/bw3/svg/match_cup_black.svg";
+/**
+  * @description: 联赛联赛图标出错
+  * @param {Object} $event 错误事件对象
+  */
+const league_icon_error = ($event) => {
+  if (get_theme.includes('theme02')) {
+    $event.target.src = "image/bw3/svg/match_cup_black.svg";
+  } else {
+    $event.target.src = "image/bw3/svg/match_cup.svg";
+  }
+  $event.target.onerror = null
+},
+// 竞彩足球图片 处理
+const host = (item) => {
+  let url = ''
+  let domain = window.env.config.domain[window.env.config.current_env][0]
+  let prefix_job = window.env.config.api.API_PREFIX_JOB
+  let is_jing_cai = _.get(item, 'chinaBetting') == 1
+  if (is_jing_cai && item.field3) {
+    url = `${domain}/${prefix_job}/${item.field3}`
+  }
+  return url
+},
+// tab 初始化数据
+const get_list = (first) => {
+  first ? first_loading = true : first_loading = false
+  let parameter = {
+    menuType: 12, // 菜单类型  12热门赛事
+    disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
+    lang: 'JC'  // 名称简称传：JC  ，默认为空
+  }
+  api_home.get_hot_list(parameter).then((res) => {
+    const data = _.get(res, "data")
+    const code = _.get(res, "code")
+    console.error('data', data)
+    if (code == 200 && data.length > 0) {
+      // 过滤掉赛事场数为0的二级联赛菜单
+      data[0].subList = data[0].subList.filter(item => item.count !== 0)
+      set_hot_list_item(data[0])
+      // 加个jz_666 是用作首页 竞彩足球 背景墙用的
+      data[0].subList.forEach(item => { if (item.chinaBetting) { item.jz_666 = 'jz_666' } })
+      // 手动添加一个 精选tab 选项卡
+      tabList.value = [{ menuName: $root.$t('home_popular.featured'), field3: "" }]
+      tabList.value = tabList.value.concat(data[0].subList)
+      tabList.value.forEach((item, index) => {
+        item.index = index
+        if (get_hot_tab_item && (get_hot_tab_item.menuId == item.menuId || get_hot_tab_item.field2 == item.field2)) {
+          tab_Index.value = index
+          // 滑动tab动画操作
+          let dom_ = $refs
+          clearTimeout(timer2)
+          timer2 = setTimeout(() => {
+            dom_.scrollBox && utils.tab_move2(index, dom_.scrollBox, true)
+            changeTab(tabList.value[index], index)
+          }, 80);
+        }
+      })
     } else {
-      $event.target.src =  "image/bw3/svg/match_cup.svg";
-    }
-    $event.target.onerror = null
-  },
-  // 竞彩足球图片 处理
-  const host = (item)=>{
-      let url = ''
-      let domain = window.env.config.domain[window.env.config.current_env][0]
-      let prefix_job = window.env.config.api.API_PREFIX_JOB
-      let is_jing_cai = _.get(item,'chinaBetting')==1
-      if(is_jing_cai && item.field3) {
-        url = `${domain}/${prefix_job}/${item.field3}`
-      }
-      return url
-    },
-  // tab 初始化数据
-  const get_list = (first) =>{
-    first ? first_loading = true : first_loading = false
-      let parameter = {
-        menuType: 12, // 菜单类型  12热门赛事
-        disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除
-        lang: 'JC'  // 名称简称传：JC  ，默认为空
-    }
-    api_home.get_hot_list(parameter).then((res) => {
-      const data =  _.get(res, "data")
-      const code =  _.get(res, "code")
-      console.error('data',data)
-      if(code == 200 && data.length > 0){
-        // 过滤掉赛事场数为0的二级联赛菜单
-        data[0].subList = data[0].subList.filter(item => item.count !== 0)
-        set_hot_list_item(data[0])
-        // 加个jz_666 是用作首页 竞彩足球 背景墙用的
-        data[0].subList.forEach( item => { if(item.chinaBetting) {item.jz_666 = 'jz_666'} })
-        // 手动添加一个 精选tab 选项卡
-        tabList.value=[{menuName: $root.$t('home_popular.featured'), field3: ""}]
-        tabList.value = tabList.value.concat(data[0].subList)
-        tabList.value.forEach( (item, index) => {
-          item.index = index
-          if(get_hot_tab_item && (get_hot_tab_item.menuId == item.menuId || get_hot_tab_item.field2 == item.field2)) {
-            tab_Index.value = index
-            // 滑动tab动画操作
-            let dom_ = $refs
-            clearTimeout(timer2)
-            timer2 = setTimeout(() => {
-              dom_.scrollBox && utils.tab_move2(index, dom_.scrollBox, true)
-              changeTab(tabList.value[index], index)
-            }, 80);
-          }
-        })
-      }else{
-        featured_loading.value = false
-      }
-    }).catch((err)=>{
-      console.error(err)
       featured_loading.value = false
-    })
+    }
+  }).catch((err) => {
+    console.error(err)
+    featured_loading.value = false
+  })
 }
 
- //判断是否要清空投注项
- const checkClearBet = (obj) =>{
-      let flag = false
-      const dj_csid_list = [100,101,102,103]
-      _.forIn(get_bet_obj, function(item, key) {
-          const csid = _.get(item,'bs.csid')
-          if (dj_csid_list.includes(obj.field1*1)) {//切换的菜单是电竞
-            if(!dj_csid_list.includes(csid*1)){
-              flag = true
-            }
-          }else{//切换的菜单是普通赛事
-            if(dj_csid_list.includes(csid*1)){
-              flag = true
-            }
-          }
-      })
-      if(flag){
-        set_bet_obj({})
-        set_bet_list([])
+//判断是否要清空投注项
+const checkClearBet = (obj) => {
+  let flag = false
+  const dj_csid_list = [100, 101, 102, 103]
+  _.forIn(get_bet_obj, function (item, key) {
+    const csid = _.get(item, 'bs.csid')
+    if (dj_csid_list.includes(obj.field1 * 1)) {//切换的菜单是电竞
+      if (!dj_csid_list.includes(csid * 1)) {
+        flag = true
       }
-    },
-    // 菜单切换 is_self 是否手动触发
-  const  changeTab = (item, index, is_self)=>{
-      // 如果是电竞赛事，需要设置菜单类型
-      if ([100,101,102,103].includes(+item.field1)) {
-        set_menu_type(3000)
-      }else{
-        set_menu_type('')
+    } else {//切换的菜单是普通赛事
+      if (dj_csid_list.includes(csid * 1)) {
+        flag = true
       }
-      // 是否可以点击tab 选项卡
-      if (is_self) {
-        if (tab_Index.value == index) return
-      }
-      checkClearBet(item)
-      set_hot_tab_item(item)
-      // 滑动tab动画操作
-      utils.tab_move2(index, $refs.scrollBox)
-      // 当前index 赋值
-      tab_Index.value = index;
-      //  调用列表页接口
-      $root.$emit(emit_cmd.EMIT_TAB_HOT_CHANGING);
-      // 如果不是第一个选项卡，则调用 下边方法，初始化数据
-      $root.$emit(emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
-    },
-    // 展示loading
-  const  show_hot_schedule_loading = (is_true)=>{
-      if(is_true){
-        featured_loading.value = true
-      }else{
-        featured_loading.value = false
-      }
-    },
-    // 刷新列表数据
-  const  refresh_list = ()=>{
-      $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
-        text: "footer-refresh"
-    });
-  }
-
-
-  onUnmounted(()=>{
-    $root.$off(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
-    $root.$off(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
-    if (timer2) {
-      clearTimeout(timer2)
-      timer2 = null
-    }
-    for (const key in $data) {
-      $data[key] = null
     }
   })
+  if (flag) {
+    set_bet_obj({})
+    set_bet_list([])
+  }
+},
+// 菜单切换 is_self 是否手动触发
+const changeTab = (item, index, is_self) => {
+  // 如果是电竞赛事，需要设置菜单类型
+  if ([100, 101, 102, 103].includes(+item.field1)) {
+    set_menu_type(3000)
+  } else {
+    set_menu_type('')
+  }
+  // 是否可以点击tab 选项卡
+  if (is_self) {
+    if (tab_Index.value == index) return
+  }
+  checkClearBet(item)
+  set_hot_tab_item(item)
+  // 滑动tab动画操作
+  utils.tab_move2(index, $refs.scrollBox)
+  // 当前index 赋值
+  tab_Index.value = index;
+  //  调用列表页接口
+  $root.$emit(emit_cmd.EMIT_TAB_HOT_CHANGING);
+  // 如果不是第一个选项卡，则调用 下边方法，初始化数据
+  $root.$emit(emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
+},
+// 展示loading
+const show_hot_schedule_loading = (is_true) => {
+  if (is_true) {
+    featured_loading.value = true
+  } else {
+    featured_loading.value = false
+  }
+},
+// 刷新列表数据
+const refresh_list = () => {
+  $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+    text: "footer-refresh"
+  });
+}
+
+
+onUnmounted(() => {
+  $root.$off(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
+  $root.$off(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
+  if (timer2) {
+    clearTimeout(timer2)
+    timer2 = null
+  }
+  for (const key in $data) {
+    $data[key] = null
+  }
+})
 
 </script>
 
@@ -273,6 +273,7 @@ const wrapper_scrolling = ($event) =>{
     letter-spacing: 0;
     font-weight: 700;
     position: relative;
+
     &:before {
       content: "";
       width: 0.03rem;
@@ -283,15 +284,16 @@ const wrapper_scrolling = ($event) =>{
       border-radius: 1.5px;
     }
   }
+
   .quiz {
     position: fixed;
     top: 1.12rem;
     bottom: 0;
     left: 0;
     right: 0;
-    max-width:3.78rem;
+    max-width: 3.78rem;
 
-    > div {
+    >div {
       height: 100%;
       overflow-y: auto;
       width: 100%;
@@ -321,7 +323,8 @@ const wrapper_scrolling = ($event) =>{
           height: 100%;
           position: relative;
           width: 0.5rem;
-          .menu-name{
+
+          .menu-name {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -336,7 +339,7 @@ const wrapper_scrolling = ($event) =>{
             // }
 
             &.tabs-active {
-              > img {
+              >img {
                 // padding: 0.05rem !important;
               }
             }
@@ -346,7 +349,7 @@ const wrapper_scrolling = ($event) =>{
             padding-right: 0.2rem;
           }
 
-          > img {
+          >img {
             width: 0.22rem;
             height: 0.22rem;
             margin-bottom: 0.04rem;
@@ -355,7 +358,7 @@ const wrapper_scrolling = ($event) =>{
 
           }
 
-          > span {
+          >span {
             font-family: PingFangSC-Medium;
             font-size: 0.1rem;
             text-align: center;
@@ -363,20 +366,20 @@ const wrapper_scrolling = ($event) =>{
 
           &.tabs-active {
 
-            > img {
+            >img {
               width: 0.22rem;
               height: 0.22rem;
               z-index: 11;
-              &.hot_tab_DJ{
+
+              &.hot_tab_DJ {
                 --per: -0.3903rem;
                 background: var(--q-color-com-img-bg-139) no-repeat 0 0/0.33rem 23.06rem;
               }
             }
           }
-          
+
         }
       }
     }
   }
-}
-</style>
+}</style>
