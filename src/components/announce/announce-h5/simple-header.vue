@@ -1,6 +1,7 @@
 <!-- @Description: 简单页面头部  体育规则，公告页面使用到 -->
 <template>
     <div class="header">
+        <!-- /TODO: $common -->
         <div class="go-back"
             @click="$common.go_where({ back_to: 'go_back_from_notice', route_name: $route.path.split('/')[2] })"></div>
         <span class="title">
@@ -9,17 +10,17 @@
     </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-export default {
-    name: "simple_header",
-    methods: {
-
-    },
-    computed: {
-        ...mapGetters(['get_menu_type'])
-    },
-}
+<script setup>
+// import { onUnmounted } from 'vue'
+// import store from "src/store-redux/index.js";
+// /** 收藏菜单为6 */
+// const menu_type = ref()
+// /** stroe仓库 */
+// const unsubscribe = store.subscribe(() => {
+//     const new_state = store.getState()
+//     menu_type.value = new_state.menu_type
+// })
+// onUnmounted(unsubscribe)
 </script>
   
 <style lang="scss" scoped>

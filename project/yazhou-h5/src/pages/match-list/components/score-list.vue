@@ -146,12 +146,15 @@
 import { computed, onMounted, onUnmounted, watch } from "vue";
 import msc from "src/project/mixins/match_list/msc-bw3.js";
 import { score_format } from '../../../boot/global_filters'
+import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
 const props = defineProps({
   match: Object,
   main_source: String,
 })
 
+const store_state = store.getState()
 const timer_1 = ref(null)   
 const timer_2 = ref(null)   
 //斯诺克比分编号为S1的结果
@@ -162,6 +165,15 @@ const last_list_score = ref('')
 const msc_converted = ref([])     
 const show_left_triangle = ref(false)
 const show_right_triangle = ref(false)
+
+const get_menu_type = ref(store_state.get_menu_type)
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_menu_type.value = new_state.get_menu_type
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+})
 
 onMounted(() => {
   get_last_list_score();
@@ -178,11 +190,6 @@ onMounted(() => {
 
 // TODO: 其他模块得 store  待添加
 // mixins: [msc],
-// ...mapGetters({
-//   footer_sub_menu_id:'get_footer_sub_menu_id',
-//   current_main_menu:'get_current_main_menu',
-// }),
-// ...mapGetters(['get_newer_standard_edition','get_menu_type','get_current_menu']),
 
 // 监听赛事比分变化
 watch(() => match.ms, () => {
@@ -282,7 +289,7 @@ const get_total_scores = computed(() => {
 const is_show_score = (match,score) =>{
   let f = false;
   // 红猫赛事屏蔽角球总比分S5,黄牌比分S12,红牌比分S11,点球比分S10
-  if(match.cds=='RC' && match.csid == 1 && ['S5','S10','S11','S12'].includes(_.get(score,'[0]'))){
+  if(match.cds=='RC' && match.csid == 1 && ['S5','S10','S11','S12'].includes(lodash.get(score,'[0]'))){
     return f;
   }
   if(score[1] && score[2] && score[1] != '-' && score[2] != '-'){
@@ -322,7 +329,7 @@ const show_score_match_line = (match) => {
   let csid = +match.csid;
   let result = false;
   result = match.ms == 1 && [1,2,3,4,5,7,8,9,10,11,12,13,14,15,16].includes(csid);
-  if(get_menu_type == 28){
+  if(get_menu_type.value == 28){
     result = true;
   }
   return result;
@@ -438,6 +445,7 @@ const get_snooker_score_space_data = () => {
 }
 
 onUnmounted(() => {
+  unsubscribe()
   clearTimeout(timer_1.value);
   timer_1.value = null;
 

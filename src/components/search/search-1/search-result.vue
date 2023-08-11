@@ -56,8 +56,8 @@
   
 <script>
 import { defineComponent, ref, reactive, watch } from 'vue'
+import loadData from "src/components/load_data/load_data.vue"
 // TODO: 待实现组件
-// import loadData from "src/project/yazhou-pc/components/load-data/load-data.vue"
 // import MatchProcess from "src/public/components/match_process/match_process.vue"
 // TODO: api
 import details from "src/public/utils/detailsClass/details.js"

@@ -58,16 +58,12 @@
     </q-menu>
   </div>
 </template>
-
 <script>
-import { mapGetters, mapActions } from "vuex"
-export default {
-  name: "footbalReplay",
-  data() {
-    return {
-       img_grey_point :require('public/image/yabo/svg/grey-point.svg')
-    }
-  },
+// #TODO vuex 
+// import { mapGetters, mapActions } from "vuex"
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
+  name: "eliminationRank",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object,
@@ -76,30 +72,41 @@ export default {
     // 赛事索引
     match_index: Number,
   },
-  computed:{
-    ...mapGetters({
-      // 获取右侧参数
-      get_vsport_params: "get_vsport_params",
-    }),
-  },
-  watch:{
+  setup(props, evnet) {
+    const data = reactive({
+      img_grey_point :require('public/image/yabo/svg/grey-point.svg')
+    });
+    onMounted(() => {
+      vsport_ctr.set_elimination_rank(true)
+    });
+    // ...mapGetters({
+    //   // 获取右侧参数
+    //   get_vsport_params: "get_vsport_params",
+    // }),
     // 监听赛事状态
-    'vsport_ctr.status':{
-      handler(res){
+    watch(
+      () => vsport_ctr.status,
+      (res) => {
         // 已完赛
         if(res == 2 && this.vsport_ctr.info.mmp != 'PREGAME'){
           this.vsport_ctr.set_match_result(this.match.mid,this.match_index)
         }
       },
-      immediate: true,
-    },
-  },
-  methods:{
-    ...mapActions({
-      set_vsport_params_mid: "set_vsport_params_mid"
-    }),
+      {
+        immediate: true,
+      }
+    );
+    // #TODO vuex 
+    // methods:{
+    //   ...mapActions({
+    //     set_vsport_params_mid: "set_vsport_params_mid"
+    //   }),
+    // }
+    return {
+      ...toRefs(data)
+    }
   }
-};
+})
 </script>
 <style lang="scss" scoped>
 .footbal-replay {

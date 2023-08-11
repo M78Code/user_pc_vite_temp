@@ -316,11 +316,17 @@ const tabs_hover = lodash.debounce((index, type) => {
   }
 }, 100)
 
-// TODO: 待完善store
-const { get_layout_list_size } = useStore()
+/** 页面宽高信息 */
+const layout_list_size = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  layout_list_size.value = new_state.layout_list_size
+})
+onUnmounted(unsubscribe)
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
-  () => get_layout_list_size.value,
+  () => layout_list_size.value,
   () => {
     // TODO: yabo_common
     // item_wrap_width.value = this.yabo_common.get_refs_info('wrap', null, this).clientWidth

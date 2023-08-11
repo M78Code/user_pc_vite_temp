@@ -1,12 +1,13 @@
 /* ********赛事容器相关********** -S*/
 
-.play-icon{
+.play-icon {
   background-image: var(--q-color-img-bg-103);
   background-repeat: no-repeat;
   width: 0.14rem;
   height: 0.14rem;
   margin-top: 0.07rem;
 }
+
 .auto-full-width-100 {
   width: 100%;
 }
@@ -24,7 +25,8 @@
     margin-left: -0.07rem;
     color: var(--q-color-com-fs-color-38);
     padding: 0.03rem 0.03rem 0.03rem 0.15rem;
-    img{
+
+    img {
       margin-right: .06rem;
       width: .13rem;
       height: .13rem;
@@ -37,12 +39,14 @@
 
   .match-inner-container {
     margin: 0 auto;
-    margin: 0 .069rem;  /* 兼容iPhone11边框显示不全 */
+    margin: 0 .069rem;
+    /* 兼容iPhone11边框显示不全 */
     //width: 100%;
     background: var(--q-color-com-bg-color-40);
     display: flex;
     flex-direction: column;
     align-items: center;
+
     // padding-top: 0.05779rem;  /* 兼容iPhone11边框显示不全 */
     &.show-sport {
       border-top-left-radius: 0.08rem;
@@ -76,6 +80,7 @@
       border-radius: .08rem;
       overflow: hidden;
     }
+
     .eports_scoring_tip {
       color: var(--q-color-fs-color-6);
     }
@@ -91,9 +96,10 @@
   }
 
   &.is_division_league {
-   // margin-top: 0.06rem;  遗留代码,暂时注释掉
-   // padding: 0.03rem 0;
+    // margin-top: 0.06rem;  遗留代码,暂时注释掉
+    // padding: 0.03rem 0;
     padding-top: 0.06rem;
+
     &.started_un_started_next {
       .match-odds-container {
         &:after {
@@ -102,9 +108,7 @@
       }
     }
 
-    .league {
-
-    }
+    .league {}
 
     .no-radius {
       border-radius: unset;
@@ -153,10 +157,11 @@
     justify-content: space-between;
     align-items: center;
 
-    > span {
+    >span {
       &:nth-child(2) {
-        padding: 0.02rem 0.09rem;
+        padding: 0 0.09rem;
         height: 0.24rem;
+        line-height: 0.24rem;
         border-radius: 0.115rem;
         box-sizing: border-box;
         font-size: 0.12rem;
@@ -180,16 +185,19 @@
     margin-top: 0.11rem;
     transform: translateY(-5px);
     border-radius: 0.06rem;
-    &.first{
+
+    &.first {
       margin-top: 0rem;
       transform: translateY(-0.065rem);
       // transform: translateY(-11px);
     }
-    &.is_gunqiu{
+
+    &.is_gunqiu {
       transform: translateY(-6px);
     }
+
     .score-inner-span {
-      width: 3.4rem;
+      width: 100%;
       //transform: translateY(-3px);
     }
 
@@ -212,14 +220,14 @@
         height: 0.58rem;
         position: relative;
 
-        > img {
+        >img {
           width: 100%;
           object-fit: cover;
           height: 0.58rem;
           background-color: var(--q-color-page-bg-color-1);
         }
 
-        > span {
+        >span {
           height: 0.58rem;
           position: absolute;
           top: 50%;
@@ -231,7 +239,7 @@
           align-items: center;
           justify-content: center;
 
-          > i {
+          >i {
             display: inline-block;
             margin-right: 0.05rem;
             width: 0.18rem;
@@ -240,24 +248,27 @@
             --per: -0.23rem;
           }
 
-          @each $bg, $y in (s2: 1, s5: 2, s7: 3, s10: 4, s8: 5, s9: 6, s4: 7, s3: 8, s6: 9) {
+          @each $bg,
+          $y in (s2: 1, s5: 2, s7: 3, s10: 4, s8: 5, s9: 6, s4: 7, s3: 8, s6: 9) {
             .#{$bg} {
               background-position-y: calc(var(--per) * #{$y});
             }
           }
 
-          > p {
+          >p {
             position: relative;
             top: 0.02rem;
           }
         }
       }
     }
+
     &.hidden_sport {
       display: none !important;
     }
 
-    .icon_match_cup, .icon_notstarted {
+    .icon_match_cup,
+    .icon_notstarted {
       margin-right: 0.1rem;
       font-size: 0.12rem;
 
@@ -309,19 +320,32 @@
     justify-content: space-between;
     align-items: center;
     height: 0.4rem;
-    
+
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;
     }
-    &.home-hot{
+
+    &.home-hot {
       margin-top: .05rem;
     }
+
     .league-t-wrap {
       width: 100%;
       height: 100%;
       display: flex;
       align-items: center;
       flex-wrap: nowrap;
+
+      .league-collapse-dir {
+        width: 0.12rem;
+        height: 0.06rem;
+        position: relative;
+        right: 0.1rem;
+
+        &.collapsed {
+          transform: rotateZ(180deg);
+        }
+      }
     }
 
     .dir {
@@ -338,6 +362,7 @@
       }
     }
   }
+
   .odd-title-wraper {
     width: 117%;
     height: 0.23rem;
@@ -443,10 +468,11 @@
       display: flex;
       font-size: .12rem;
     }
-
+     // 添加 line-height: 0.14rem 解决42682 生产BUG--malick
     .match-league {
       max-width: 2.8rem;
       padding-top: 0.02rem;
+      line-height: 0.14rem;
       &.match-main-league {
         //max-width: 1.4rem;
       }
@@ -483,7 +509,8 @@
   position: relative;
   min-height: 1.11rem;
 
-  &.simple, &.result {
+  &.simple,
+  &.result {
     min-height: auto;
   }
 
@@ -568,7 +595,7 @@
       .score-wrapper {
         margin-top: 0.04rem;
         height: 0.3rem;
-        padding-left:0.05rem;
+        padding-left: 0.05rem;
 
         .score-section {
           padding-left: 0;
@@ -603,7 +630,8 @@
             .live-i-b-wrap {
               width: 0.18rem;
               margin-right: 0.05rem;
-              img{
+
+              img {
                 height: 0.14rem;
                 width: 0.18rem;
               }
@@ -618,20 +646,21 @@
               }
             }
           }
-            .favorite-icon {
-              width: 0.14rem;
-              height: 0.14rem;
-              margin-right: 0.05rem;
 
-              img {
-                width: 100%;
-                height: 100%;
-              }
+          .favorite-icon {
+            width: 0.14rem;
+            height: 0.14rem;
+            margin-right: 0.05rem;
 
-              .f-icon {
-                display: none;
-              }
+            img {
+              width: 100%;
+              height: 100%;
             }
+
+            .f-icon {
+              display: none;
+            }
+          }
         }
 
         .week-mcid {
@@ -674,6 +703,7 @@
           line-height: 0.14rem;
           display: flex;
           align-items: center;
+
           /*图标*/
           .team-icon {
             width: 0.18rem;
@@ -686,7 +716,8 @@
               width: 0.28rem;
             }
 
-            img, .sprite-div {
+            img,
+            .sprite-div {
               display: block;
               width: 0.18rem;
               flex-shrink: 0;
@@ -787,6 +818,7 @@
         .favorite-icon {
           width: 0.14rem;
           height: 0.14rem;
+
           img {
             width: 100%;
             height: 100%;
@@ -956,18 +988,21 @@
 
   .timer-wrapper-c {
     height: 100%;
+
     &.newer {
       margin-left: 0;
     }
 
-    & > div {
+    &>div {
       height: auto;
     }
   }
+
   .favorite-icon-top {
     width: 0.14rem;
     height: 100%;
     margin-right: .07rem;
+
     img {
       width: 100%;
       height: auto;
@@ -979,6 +1014,7 @@
       display: none;
     }
   }
+
   &.no-running-timer-wrapper {
     .live-i-b-wrap {
       margin-left: 0.08rem;
@@ -990,7 +1026,9 @@
     width: auto;
     display: flex;
     margin-left: 0.08rem;
-    .live-icon-btn, .live-icon-play-btn {
+
+    .live-icon-btn,
+    .live-icon-play-btn {
       width: 0.18rem;
       height: 0.14rem;
     }
@@ -1007,10 +1045,12 @@
     line-height: 1.2;
     align-items: center;
     flex-shrink: 0;
-    .favorite-icon{
+
+    .favorite-icon {
       position: relative;
       top: -.01rem;
     }
+
     .date-time {
       white-space: nowrap;
       color: var(--q-color-com-fs-color-37);
@@ -1019,6 +1059,7 @@
     .counting-down-up-container {
       width: 0.8rem;
       height: .14rem;
+
       &.intermission {
         width: 0.57rem;
       }
@@ -1058,23 +1099,30 @@
   .add_text {
     font-size: 0.12rem;
   }
-  
+
   .mfo-title {
     margin-right: .05rem;
   }
-  
+
   .flag-chuan {
     margin-left: .1rem;
     padding: 0 .01rem;
     height: 0.16rem;
     line-height: .16rem;
     border-radius: .03rem;
+
     &.special-lang {
       margin-left: .06rem;
     }
   }
 }
-
+.match-list-container.jingzu {
+  .date-container {
+    .l .week-mcid {
+      margin: 0 0.06rem 0 0 !important;
+    }
+  }
+}
 /* **************日期********************** -E*/
 
 /* ********赛事容器相关********** -E*/

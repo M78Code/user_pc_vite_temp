@@ -158,41 +158,41 @@ export default defineComponent({
   },
   components: {
     // 模板id=0(默认模板)
-    temp0: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp0.vue"),
+    temp0: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp0.vue"),
     // 模板id=1
-    temp1: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp1.vue"),
+    temp1: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp1.vue"),
     // 模板id=2
-    temp2: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp2.vue"),
+    temp2: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp2.vue"),
     // 模板id=3
-    temp3: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp3.vue"),
+    temp3: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp3.vue"),
     // 模板id=4
-    temp4: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp4.vue"),
+    temp4: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp4.vue"),
     // 模板id=5
-    temp5: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp5.vue"),
+    temp5: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp5.vue"),
     // 模板id=6
-    temp6: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp6.vue"),
+    temp6: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp6.vue"),
     // 模板id=7
-    temp7: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp7.vue"),
+    temp7: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp7.vue"),
     // 模板id=8
-    temp8: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp8.vue"),
+    temp8: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp8.vue"),
     // 模板id=9
-    temp9: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp9.vue"),
+    temp9: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp9.vue"),
     // 模板id=10
-    temp10: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp10.vue"),
+    temp10: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp10.vue"),
     // 模板id=11
-    temp11: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp11.vue"),
+    temp11: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp11.vue"),
     // 模板id=12
-    temp12: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp12.vue"),
+    temp12: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp12.vue"),
     // 模板id=13
-    temp13: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp13.vue"),
+    temp13: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp13.vue"),
     // 模板id=14
-    temp14: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp14.vue"),
+    temp14: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp14.vue"),
     // 模板id=15
-    temp15: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp15.vue"),
+    temp15: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp15.vue"),
     // 模板id=18
-    temp18: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp18.vue"),
+    temp18: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp18.vue"),
     // 模板id=51
-    temp51: () => import(/* webpackChunkName: "user-h5-min-sm" */ "src/project/pages/details/components/tournament_play/template/temp51.vue"),
+    temp51: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp51.vue"),
   },
   // #TODO mixins
   // mixins: [betting],
@@ -293,19 +293,19 @@ export default defineComponent({
       }
     );
     // 32, 34, 231, 233 这4个玩法要对应C103比分集合的变动
-    watch(
-      () => get_detail_data.msc,
-      (newVal) => {
-        if(!(new_score && [32, 34, 231, 233].includes(+item_data.hpid))) return
-        let str1 = item_data.hps.split("|")[0]
-        newVal.forEach(item => {
-          let [str2, str3] = item.split("|")
-          if(str1 == str2) {
-            new_score = str3.replace(/:/, "-")
-          }
-        })
-      }
-    );
+    // watch(
+    //   () => get_detail_data.msc,
+    //   (newVal) => {
+    //     if(!(new_score && [32, 34, 231, 233].includes(+item_data.hpid))) return
+    //     let str1 = item_data.hps.split("|")[0]
+    //     newVal.forEach(item => {
+    //       let [str2, str3] = item.split("|")
+    //       if(str1 == str2) {
+    //         new_score = str3.replace(/:/, "-")
+    //       }
+    //     })
+    //   }
+    // );
     // #TODO vuex 
     // computed: {
     // ...mapGetters([
@@ -493,7 +493,7 @@ export default defineComponent({
           set_is_clicked_mat_info(false)
         }, 30)
       })
-    },
+    };
 
     /**
       *@description: 点击关闭所有弹窗

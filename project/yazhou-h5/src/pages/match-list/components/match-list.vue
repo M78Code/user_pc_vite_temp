@@ -1,64 +1,115 @@
+<!--
+ * @Description: 赛事列表组件，共用于搜索结果、旧版收藏页、赛事列表页展示赛事列表
+-->
+
 <template>
-  <div class="">
- 
+  <div class="refresh-container">
+    <!--列表页-->
+    <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
+      v-if="matchCtr" :main_source="source" :is_goto_top_random="is_goto_top_random"
+      :match_list_wrapper_height="match_list_wrapper_height">
+      <template v-slot="{ item:match_item, index:i}">
+        <!--虚拟体育(赛果)-->
+        <v-match-container :match="match_item"
+          :i_list="i"
+          :match_list="matchCtr.list"
+          :sport_id="match_item.sportId"
+          v-if="[1001,1002,1004,1011,1010,1009].includes(+match_item.sportId)">
+        </v-match-container>
+        <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
+          <!--真实体育赛果 -->
+          <match-container-result
+            v-if="menu_type ==28 && 100 == get_curr_sub_menu_type"
+            :match_of_list="match_item"
+            :matchCtr="matchCtr"
+            :i="i"
+            :menu_type="menu_type"
+            :main_source="source"
+            @unfold_changed="unfold_changed_handle"
+            @toggle_collect_league="toggle_collect"
+            @toggle_collect_match="toggle_collect"
+          />
+          <!--真实体育玩法 -->
+          <match-container
+            v-if="(lodash.get(get_current_menu, 'main.menuType') == 28 ||
+            !is_champion && match_item.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
+            :match_of_list="match_item"
+            :matchCtr="matchCtr"
+            :i="i"
+            :menu_type="menu_type"
+            :main_source="source"
+            @unfold_changed="unfold_changed_handle"
+            @toggle_collect_league="toggle_collect"
+            @toggle_collect_match="toggle_collect">
+          </match-container>
+          <!--冠军玩法-->
+          <match-container-champion
+            :match_of_list="match_item"
+            :matchCtr="matchCtr"
+            :i="i"
+            :menu_type="menu_type"
+            :key="i"
+            @toggle_collect_league="toggle_collect"
+            v-if="is_champion">
+          </match-container-champion>
+        </div>
+      </template>
+    </scroll-wrapper>
+
+    <!-- 次要玩法描述 -->
+    <div class="pg-wrapper" v-show="other_way_info_show" @click="close_other_w_info" ref="other_way_info">
+      <div class="other-way-info-wrapper"  :class="arr_top_down"
+        :style="{left:`${other_way_style.left}px`,top:`${other_way_style.top}px`}"
+        >
+        <div class="row justify-between info-head">
+          <div class="o-title">
+            {{current_way_name}}
+          </div>
+          <img class='close-o-info-icon' @click="close_other_w_info"
+            :src="(`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close_${get_theme.includes('theme01')?'theme01':'theme02'}.svg`)" />
+        </div>
+
+          <!-- 次要玩法如果是数组 例如15分钟展开 -->
+          <div v-if="Array.isArray(play_way_info)">
+            <template v-if="!(show_Xth_title && index === 5)">
+              <div  class="s-table"  v-for="(item,index) in play_way_info" :key="index" >
+                <template v-if="item.title =='5min-icon'">
+                  <div class="wrap-box yb-flex-center">
+                    <div :class="['item-icon',`item-icon-${index}`]" v-for="index in 4" :key="`${index}_before`"></div>
+                    <div class="item-content">{{item.content}}</div>
+                    <div :class="['item-icon',`item-icon-${index}`]" v-for="index in [4,3,2,1]" :key="`${index}_after`"></div>
+                  </div>
+                </template>
+                <template v-else>
+                  <div v-if="show_15min_data">
+                    <div>{{show_Xth_title && index === 4 ? item.Xth_title : item.title}}</div>
+                    <div>{{item.content}}</div>
+                  </div>
+                  <div v-else>
+                    <div :class="{'full-width': index > 3}">{{show_Xth_title && index === 4 ? item.Xth_title : item.title}}</div>
+                    <div v-if="index < 4">{{item.content}}</div>
+                  </div>
+                </template>
+              </div>
+            </template>
+          </div>
+          <div v-else v-html="play_way_info" />
+      </div>
+    </div>
+
+    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
+    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
+
   </div>
 </template>
  
 <script setup>
 
-import { computed, onActivated, onDeactivated, onMounted, watch } from "vue";
-
+import { computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
+import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 // TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin, msc,common],
-// ...mapMutations([
-//   /**
-//    * 押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,
-//    * 4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,
-//    * 7-有投注项锁盘，8-单关投注失败(bet接口返回200)
-//    */
-//   "set_bet_status",
-//   // 赛事id
-//   'set_goto_detail_matchid',
-//   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-//   'set_details_item',
-//   // 提醒内容
-//   'set_toast',
-//   // 控制内容是否高亮用作新手引导使用(home页使用)
-//   'set_show_content',
-// ]),
-// ...mapGetters([
-//   // 投注成功的赛事id
-//   "get_match_id_bet_success",
-//   "get_theme",
-//   // 投注项id集合
-//   "get_bet_list",
-//   // 用户信息,用户金额,userId 需要监听变化
-//   "get_user",
-//   // 当用户未登录时返回uuid, 当用户登录时返回userId
-//   "get_uid",
-//   // 收藏菜单为6
-//   "get_menu_type",
-//   // 当前选中的菜单
-//   'get_current_menu',
-//   // 控制内容是否高亮用作新手引导使用(home页使用)
-//   'get_show_content',
-//   // 获取高亮元素高(match-list页使用)
-//   'get_element_height',
-//   // 滚到顶部
-//   'get_goto_list_top',
-//   // 显示收藏列表
-//   'get_show_favorite_list',
-//   // 当前语言
-//   'get_lang',
-//   // 三级菜单id
-//   'get_curr_third_menu_id',
-//   // 折叠展开与赛事对应
-//   'get_collapse_map_match',
-//   // 简版还是标准版
-//   'get_newer_standard_edition',
-//   //二级菜单type
-//   'get_curr_sub_menu_type',
-//   'get_access_config',
 // ]),
 
 const props = defineProps({
@@ -73,6 +124,7 @@ const props = defineProps({
   match_list_wrapper_height:Number,
 })
 
+const store_state = store.getState();
 const timer_super12 = ref(null)
 // 默认箭头向上
 const arr_top_down = ref('arr-top') 
@@ -98,6 +150,26 @@ const curr_play_info = ref({
   show_15min_data:false // 15分钟玩法数据
 })
 
+// 投注成功的赛事id
+const get_match_id_bet_success = ref(store_state.get_match_id_bet_success)
+// 当前主题
+const get_theme = ref(store_state.get_theme)
+// 当用户未登录时返回uuid, 当用户登录时返回userId
+const get_uid = ref(store_state.get_uid)
+// 用户信息,用户金额,userId 需要监听变化
+const get_user = ref(store_state.get_user)
+// 当前选中的菜单
+const get_current_menu = ref(store_state.get_current_menu)
+// 滚到顶部
+const get_goto_list_top = ref(store_state.get_goto_list_top)
+// 显示收藏列表
+const get_show_favorite_list = ref(store_state.get_show_favorite_list)
+// 简版还是标准版
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+//二级菜单type
+const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
+const get_access_config = ref(store_state.get_access_config)
+
 onMounted(() => {
   timer_super12.value = null;
 })
@@ -110,7 +182,7 @@ watch(() => window_scrolly, () => {
   other_way_info_show.value = false;
 })
 // 投注成功收藏赛事
-watch(() => get_match_id_bet_success, (curr) => {
+watch(() => get_match_id_bet_success.value, (curr) => {
   if(curr){
     let id_s = curr.split('-')[0];
     let favorite = curr.split('-')[1];
@@ -152,11 +224,11 @@ watch(() => get_match_id_bet_success, (curr) => {
   }
 }, { deep: true })
 // 回到顶部
-watch(() => get_goto_list_top, () => {
+watch(() => get_goto_list_top.value, () => {
   is_goto_top_random.value = Math.random();
 })
 
-watch(() => get_newer_standard_edition, (newValue) => {
+watch(() => get_newer_standard_edition.value, (newValue) => {
   if (newValue == 1) {
     other_way_info_show.value = false
   }
@@ -164,7 +236,7 @@ watch(() => get_newer_standard_edition, (newValue) => {
 
 // 当前为冠军或电竞冠军
 const is_champion = computed(() => {
-  let flag = 100 == props.menu_type || (3000 == props.menu_type && _.get(get_current_menu, 'date_menu.menuType') == 100); //电竞冠军
+  let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(get_current_menu.value, 'date_menu.menuType') == 100); //电竞冠军
   return flag;
 })
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
@@ -192,7 +264,7 @@ const info_icon_click_h = (e,mid,menu,match) => {
 
   // 获取当前赛事状态
   curr_play_info.value = {
-    ms: _.get(match, 'ms', 1),
+    ms: lodash.get(match, 'ms', 1),
     menu_id: menu.id
   }
 
@@ -242,7 +314,7 @@ const info_icon_click_h = (e,mid,menu,match) => {
  * @return {Undefined} Undefined
  */
 const toggle_collect = ($event) => {
-  if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
+  if( !utils.judge_collectSwitch( lodash.get(get_access_config.value,'collectSwitch'),this ) ) return
 
   if(favorite_loading.value) {
     clearTimeout(timer_super12.value);
@@ -256,7 +328,7 @@ const toggle_collect = ($event) => {
 
   let api, txt, number = 0;
   let params = {
-    cuid: get_user ? get_user.userId:get_uid,
+    cuid: get_user.value ? get_user.value.userId:get_uid.value,
   };
   if (item == 'tf') {
     //联赛收藏或取消收藏
@@ -274,7 +346,7 @@ const toggle_collect = ($event) => {
       }
       else{
         let mids = []
-        _.each(props.matchCtr.match_list_data_sources,cur_match=>{
+        lodash.each(props.matchCtr.match_list_data_sources,cur_match=>{
           if(cur_match.tid == match.tid){
             mids.push(cur_match.mid)
           }
@@ -314,7 +386,7 @@ const toggle_collect = ($event) => {
     if(res.code == 200){
     }
     else if(res.msg){
-      set_toast({ 'txt': res.msg });
+      store.dispatch({ type: 'matchReducer/set_toast',  payload: { 'txt': res.msg } })
     }
   });
 }
@@ -338,7 +410,25 @@ onActivated(() => {
   $root.$on(emit_cmd.EMIT_INFO_ICON_CLICK,info_icon_click_h);
   $root.$on(emit_cmd.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
 })
- 
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_match_id_bet_success.value = new_state.get_match_id_bet_success
+  get_theme.value = new_state.get_theme
+  get_uid.value = new_state.get_uid
+  get_user.value = new_state.get_user
+  get_current_menu.value = new_state.get_current_menu
+  get_goto_list_top.value = new_state.get_goto_list_top
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+  get_show_favorite_list.value = new_state.get_show_favorite_list
+  get_access_config.value = new_state.get_access_config
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+})
+
+onUnmounted(() => {
+  unsubscribe()
+})
+
 </script>
  
 <style scoped lang="scss">

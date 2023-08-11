@@ -17,10 +17,10 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import category from 'src/project/pages/details/children/category.vue' // 所有赛果
-import detailMatchList from 'src/project/pages/details/components/detail_match_list.vue' // 精选赛事
-import myNoteSheet from 'src/project/pages/details/components/details_match_results/my_note_sheet.vue' // 我的注单
-import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';   // 精彩回放
+import category from 'project_path/src/pages/details/children/category.vue' // 所有赛果
+import detailMatchList from 'project_path/src/pages/details/components/detail_match_list.vue' // 精选赛事
+import myNoteSheet from 'project_path/src/pages/details/components/details_match_results/my_note_sheet.vue' // 我的注单
+import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';   // 精彩回放
 
 
 export default {

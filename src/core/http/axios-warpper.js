@@ -38,7 +38,7 @@ console.log(BUILDIN_CONFIG);
  * 去掉 api 参数 reload
  */
 function force_current_api_flow_use_oss_file_api_reload() {
-  return
+  return;
   let url_search = new URLSearchParams(location.search);
   //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
   url_search.set("rdm", new Date().getTime());
@@ -113,13 +113,10 @@ class AxiosHttp {
     // 系统类型缩写： iphone=4 android=3 PC = 2 H5=1
     // panda-bss-info传参规则： panda-bss-info:"source:4"  内嵌webview panda-bss-info:"source:4,1"
     // 设置系统类型缩写
-    let sessionStorage = window.sessionStorage
-    console.error('sss', sessionStorage.getItem('token'))
     return {
       "request-code": JSON.stringify({
         "panda-bss-source": "2",
       }),
-      "Requestid": sessionStorage.getItem('token')
     };
   }
   /**

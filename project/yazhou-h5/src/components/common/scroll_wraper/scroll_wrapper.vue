@@ -1,0 +1,371 @@
+<!--
+ * @Author: 
+ * @Date: 
+ * @Description: 滚动操作处理
+-->
+
+<template>
+  <div class="scroll-wrapper">
+    <div class="scroll-i-con" :class="{
+        high_scrolling:  set_ishigh_scrolling &&!(lodash.get(get_current_menu, 'date_menu.menuType') == 100)  && !(get_menu_type == 28 && [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type))&& get_menu_type != 100,
+        detail_list:main_source == 'detail_match_list',
+        simple:get_newer_standard_edition == 1,
+        theme02:get_theme.includes('theme02'),
+      }"
+      :style="{'min-height':`${
+         get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem`
+      }">
+      <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template
+            当要v-for与v-if同时使用在一个dom上时,可以使用template
+      -->
+      <template v-for="(scrollItem,index) of data_source">
+        <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
+          :class="{static:is_static_item,last:index==data_source.length-1}"
+          :style="{
+            transform:`translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
+            zIndex:`${200-index}`
+          }">
+          <div v-if="test" class="debug-head data_mid" :data-mid="scrollItem.mid" :class="{first:index === 0}">
+            <span>
+              {{get_index_f_data_source(scrollItem.mid)+'-'+index}}
+            </span>
+            <span>
+              key={{scrollItem.flex_index}}-----{{'tid:'+scrollItem.tid}}-{{'mid:'+scrollItem.mid}}
+              {{get_secondary_unfold_map[scrollItem.mid]?'-unfold:'+get_secondary_unfold_map[scrollItem.mid]:''}}
+              <span>
+                {{get_match_top_by_mid(scrollItem.mid)?"-"+get_match_top_by_mid(scrollItem.mid):'none!'}}
+              </span>
+              <span>ms:{{scrollItem.ms}}</span>
+            </span>
+          </div>
+          <div class="s-w-i-inner">
+            <slot :item="scrollItem" :index="index"></slot>
+          </div>
+        </div>
+      </template>
+
+    </div>
+  </div>
+</template>
+
+<script setup>
+// import {mapGetters,mapMutations} from 'vuex';
+import lodash from 'lodash'
+
+
+// 避免定时器每次滚动总是触发
+let  is_on_check_time_out = false; 
+const props = defineProps({
+    data_source:Array|Object,
+    match_list_wrapper_height:Number,
+    is_goto_top_random:Number,
+    is_search:Boolean,
+    main_source:String,
+    matchCtr:Object,
+  })
+  
+  // 调试信息
+  let test = ref('')             
+  let prev_frame_time = ref(0)
+  let is_arrived_bottom = ref(1)
+  //滚动中上一帧的scroll top
+  let prev_frame_poi = ref(0)
+  let list_wrap_height = ref(0)
+  let target_scroll_obj = ref(null)
+  let scroll_frame_timer = ref(0)
+  let scroll_frame_timer_2 = ref(0)
+  
+  onMounted(() => {
+    test = sessionStorage.getItem('wsl') == '9999';
+    // 详情页以外的列表才设置最小高度
+    if (main_source !== 'detail_match_list') {
+      list_wrap_height = 8;
+    }
+  })
+
+    // ...mapMutations([
+    //   'set_list_scroll_direction',
+    // ]),
+  const get_index_f_data_source = (mid) => {
+      return lodash.findIndex(matchCtr.match_list_data_sources,{mid});
+    }
+    /**
+     * 滚动是否到达底部(非节流)
+     */
+  const get_to_bottom_space_syn = () => {
+      // 距离底部小于100时,认为已滚到底部
+      if(get_to_bottom_space < 100){
+        if(is_arrived_bottom != 1){
+          //触发到达底部逻辑
+          is_arrived_bottom = 1;
+
+        } else{
+          //已经在底部,不触发到达底部逻辑
+        }
+      } else{
+        is_arrived_bottom = 0;
+      }
+    }
+    /**
+     * @description: 页面滚动事件处理函数
+     * @param {Undefined}
+     * @return {Undefined} Undefined
+     */
+  const window_scrolling = () => {
+      let splited = get_list_scroll_top.split('-');
+      target_scroll_obj = {
+        scroll_y: +splited[0],
+        client_height: +splited[1],
+        scroll_height: +splited[2],
+      };
+      // 滚动 是否 到了底部
+      // get_to_bottom_space_syn();
+
+      let now = new Date().getTime();
+      // 1向上滑,  -1向下滑,滚动方向
+      get_is_show_footer_animate();
+      if(now - prev_frame_time < 200){
+        return;
+      }
+      prev_frame_time = now;
+      // 容器的滚动数据
+      let scroll_y = null;
+      scroll_y = +splited[0]
+      clearTimeout(scroll_frame_timer)
+      scroll_frame_timer = setTimeout(() => {
+        // console.error('屏蔽用户频繁滚动触发事件,  还没触发 更新视图，赛事订阅事件 ===========================================1111111111111');
+        // 如果需要对DOM进行多次访问，尽量使用局部变量缓存该DOM   减少回流（Reflow）与重绘（Repaint） 优化
+        let xnyouhua = document.documentElement
+        let params = {
+          position: scroll_y,
+          scrollTop: scroll_y,
+          clientHeight: xnyouhua.clientHeight,
+          scrollHeight: xnyouhua.scrollHeight,
+          liebiao_slide: 'liebiao_slide'
+        };
+        $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING,params);
+      },500);
+    }
+    /**
+     * 判断是否显示页脚菜单
+     *   1向上滑,  -1向下滑
+     */
+  const get_is_show_footer_animate = () => {
+      let scroll_top = null;
+      scroll_top =  get_list_scroll_top.split('-')[0]
+      let scroll_dir = scroll_top - prev_frame_poi;
+      if(scroll_dir > 0){
+        scroll_dir = 1;
+      }else if(scroll_dir < 0){
+        scroll_dir = -1;
+      }
+      set_list_scroll_direction(scroll_dir);
+      prev_frame_poi = scroll_top;
+    }
+    /**
+     * @description: 列表回到顶部
+     * @param {String} is_user
+     * @return {Undefined} Undefined
+     */
+  const goto_top = () => {
+      let window_dom = window
+      if(window_dom.vue && window_dom.vue.scroll_list_wrapper_by){
+        window_dom.vue.scroll_list_wrapper_by(0);
+      }
+    }
+    // 计算每个赛事id 对应的 容器高度 top 值
+  const get_match_top_by_mid = (mid) => {
+      let r = 0;
+      if(mid in get_match_top_map_dict){
+        r = get_match_top_map_dict[mid];
+        r = +r.toFixed(6);
+      }
+      return r;
+    }
+ 
+  watch( () => get_list_scroll_top, (top) => {
+    window_scrolling();
+  })
+  watch( () => is_goto_top_random, () => {
+    //回到顶部
+    goto_top();
+  })
+    // ...mapGetters([
+    //   'get_match_top_map_dict',
+    //   'get_newer_standard_edition',
+    //   'get_menu_type',
+    //   'get_curr_sub_menu_type',
+    //   'get_list_scroll_top',
+    //   'get_theme',
+    //   'get_secondary_unfold_map',
+    //   'get_hide_skeleton_screen',
+    //   'get_current_menu',
+    // ]),
+    // 设置是否快速滚动显示骨架屏背景
+  const set_ishigh_scrolling = computed(() => {
+      // 滚动过程中，是否显示  骨架屏背景图片
+      let flag = false;
+      if(["home_hot_page_schedule"].includes(main_source) || data_source.length<=0){
+        flag = false;
+      } else{
+        flag = get_to_bottom_space > 350 && !is_champion
+        // 一般热门推荐赛事长度为4，详情页内需过滤掉
+        if(main_source !== 'detail_match_list' && lodash.get(target_scroll_obj, 'scroll_height') > 1800){
+          flag = true
+        }
+      // 如果是隐藏骨架屏
+      // if(get_hide_skeleton_screen){
+      //   flag = false
+      // }else{
+      //   flag = true
+      // }
+      }
+      return flag
+    })
+    // 获取滚动到达底部的距离(节流)
+
+  const get_to_bottom_space = computed(() => {
+      let delta = 0
+      let list_scroll_top = target_scroll_obj
+      //容器的滚动数据
+      if(list_scroll_top && data_source){
+        delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);
+      } else{
+        //window的滚动数据
+      }
+      return Math.abs(delta);
+    })
+    // 是否 走高度计算
+
+  const is_static_item = computed(() => {
+      let flag = false;
+      if(get_menu_type == 100 || lodash.get(get_current_menu, 'date_menu.menuType') == 100 || 100 == get_curr_sub_menu_type ||
+          ["detail_match_list","home_hot_page_schedule"].includes(main_source) ||
+          (get_menu_type == 28 && [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type))
+      ){
+        flag = true;
+      }
+      return flag;
+    })
+    /**
+     * 是否为冠军
+     */
+
+  const is_champion = computed(() => {
+      return get_menu_type == 100 || (get_menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100);
+    })
+  
+  onBeforeUnmount(() => {
+    clearTimeout(scroll_frame_timer_2);
+    scroll_frame_timer_2 = null;
+    clearTimeout(scroll_frame_timer);
+    scroll_frame_timer = null;
+  })
+  
+  // 触发本组件销毁之前回调
+  onUnmount(() => {
+    clearTimeout(scroll_frame_timer_2);
+    scroll_frame_timer_2 = null;
+    clearTimeout(scroll_frame_timer);
+    scroll_frame_timer = null;
+  })
+</script>
+
+<style lang="scss" scoped>
+.scroll-wrapper {
+  width: 100%;
+  height: auto;
+  background-color: #f5f5f5;
+  &.data-get-empty {
+    min-height: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+  .scroll-i-con {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background-repeat: repeat-y;
+    margin-top: .03rem;
+    &.high_scrolling {
+      background-size: contain;
+      background-image: var(--q-color-com-img-bg-126);
+      &.simple {
+        background-image: var(--q-color-com-img-bg-127);
+      }
+      &.theme02 {
+        background-image: var(--q-color-com-img-bg-128);
+        &.simple {
+          background-image: var(--q-color-com-img-bg-129);
+        }
+      }
+    }
+    &.detail_list {
+      background-image: none;
+    }
+    .s-w-item {
+      width: 100%;
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding-bottom: 0.015rem;
+      &.last{
+        padding-bottom: 0.01rem;
+        .match-container{
+          padding-bottom: 0rem !important;
+        }
+      }
+    //  background: pink;
+    //  border: 1px solid blue; 用于调试 请勿删除
+      &.static {
+        position: static;
+      }
+      .s-w-i-inner {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        &.absolute {
+          position: absolute;
+        }
+      }
+      .debug-head {
+        width: 98%;
+        height: 0.13rem;
+        position: absolute;
+        color: red;
+        z-index: 501;
+        top: 4px;
+        left: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        //border-bottom: 1px solid #f00;
+        &.first {
+          top: 0.46rem;
+        }
+      }
+    }
+  }
+  .loading-more-container {
+    width: 100%;
+    height: 1.81rem;
+    padding: 0.88rem 0 0.6rem 0;
+    text-align: center;
+    bottom: -2rem;
+    position: absolute;
+    left: 0;
+    &.static {
+      position: static;
+    }
+    .loading {
+      margin-top: 0.08rem;
+    }
+    .loading-static-animation {
+      width: 0.21rem;
+      height: 0.21rem;
+    }
+  }
+}
+</style>
