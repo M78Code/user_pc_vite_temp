@@ -11,8 +11,16 @@
 </template>
 
 <script setup>
-// TODO:
-const { get_menu_type } = useStore()
+// import { onUnmounted } from 'vue'
+// import store from "src/store-redux/index.js";
+// /** 收藏菜单为6 */
+// const menu_type = ref()
+// /** stroe仓库 */
+// const unsubscribe = store.subscribe(() => {
+//     const new_state = store.getState()
+//     menu_type.value = new_state.menu_type
+// })
+// onUnmounted(unsubscribe)
 </script>
   
 <style lang="scss" scoped>
