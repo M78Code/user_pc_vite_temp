@@ -8,7 +8,7 @@
     <div class="icon-wrap">
           <!--  match["lvs"] == 2，显示直播按钮 $root.$t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
-          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? $root.$t('match_info.lvs') : $root.$t('match_info.topic')">
+          which="lvs" icon_class="lvs" :text="_.get(get_detail_data,'lss') == 1 ? $root.$t('match_info.lvs') : $root.$t('match_info.topic')">
         </match-icon>
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
@@ -32,70 +32,71 @@
     </div>
   </div>
 </template>
-
 <script>
-import {mapGetters, mapMutations} from "vuex"
+// #TODO vuex 
+// import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
 import utils from "src/public/utils/utils";
-
-export default {
-  name: 'team_match_icon',
-  data(){
-    return {
-      // 收藏|取消收藏是否请求中
-      favorite_loading: false,
-    }
-  },
-  computed:{
-    ...mapGetters([
-      'get_detail_data',
-      'get_uid',
-      // 投注成功的赛事id
-      'get_match_id_bet_success',
-      'get_access_config',
-      'get_lang',// 当前语言
-    ]),
-    // 展示lvs 图标
-    show_lvs() {
-      return this.get_detail_data.lvs && this.get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(this.get_detail_data,'lss')) && ['zh','tw'].includes(this.get_lang)
-    },
-  },
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
+  name: "team_match_icon",
   components: {
     'match-icon': match_icon,
   },
-  watch:{
+  setup(props, evnet) {
+    const data = reactive({
+      // 收藏|取消收藏是否请求中
+      favorite_loading: false,
+    });
+    // #TODO vuex 
+    // computed:{
+    // ...mapGetters([
+    //   'get_detail_data',
+    //   'get_uid',
+    //   // 投注成功的赛事id
+    //   'get_match_id_bet_success',
+    //   'get_access_config',
+    //   'get_lang',// 当前语言
+    // ]),
+    // 展示lvs 图标
+    const show_lvs = computed(() => {
+      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+    });
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
-    get_match_id_bet_success(bet_curr){
-      let m_detail_data = _.cloneDeep(this.get_detail_data);
-      let bet_mf = bet_curr.split('-')[1];
-      if(bet_mf == 1 || bet_mf == 0){
-        m_detail_data.mf = bet_mf == 1;
+    watch(
+      () => get_match_id_bet_success,
+      (bet_curr) => {
+        let m_detail_data = _.cloneDeep(get_detail_data);
+        let bet_mf = bet_curr.split('-')[1];
+        if(bet_mf == 1 || bet_mf == 0){
+          m_detail_data.mf = bet_mf == 1;
+        }
+        else{
+          m_detail_data.mf = true;
+        }
+        set_detail_data(m_detail_data);
       }
-      else{
-        m_detail_data.mf = true;
-      }
-      this.set_detail_data(m_detail_data);
-    }
-  },
-  methods: {
-    ...mapMutations([
-      "set_detail_data",
-      "set_match_id_bet_success",
-      // 修改收藏状态
-      'set_details_changing_favorite',
-      'set_toast'
-    ]),
+    );
+    // #TODO vuex 
+    // methods: {
+    // ...mapMutations([
+    //   "set_detail_data",
+    //   "set_match_id_bet_success",
+    //   // 修改收藏状态
+    //   'set_details_changing_favorite',
+    //   'set_toast'
+    // ]),
     /**
      * @description: 收藏与取消收藏
      * @param {Object} match 赛事信息
      * @return {String}
      */
-    details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( _.get(this.get_access_config,'collectSwitch'),this ) ) return
+    const details_collect = (match_obj) => {
+      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
 
       // 如果还在请求中则return
-      if ( this.favorite_loading ) return;
+      if ( favorite_loading ) return;
       let txt = 0;
       let params = {
         // 赛事ID
@@ -103,36 +104,41 @@ export default {
         // 1收藏||0取消收藏
         cf: Number(!match_obj.mf),
         // 用户id
-        cuid: this.get_uid,
+        cuid: get_uid,
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = this.$root.$t('common.cancel');//'取消';
+        txt = $root.$t('common.cancel');//'取消';
       } else {
-        txt = this.$root.$t('collect.betted_title');//'收藏';
+        txt = $root.$t('collect.betted_title');//'收藏';
       }
-      this.favorite_loading = true;
+      favorite_loading = true;
       // 更新收藏状态
-      this.set_details_changing_favorite(1)
+      set_details_changing_favorite(1)
 
       api_common.add_or_cancel_match( params ).then( res => {
-        this.favorite_loading = false;
+        favorite_loading = false;
         if (res.code == 200) {
-          let cloneData = _.clone(this.get_detail_data)
+          let cloneData = _.clone(get_detail_data)
           cloneData.mf = params.cf
-          this.set_detail_data(cloneData);
+          set_detail_data(cloneData);
           //同步列表页收藏状态
-          this.set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
+          set_match_id_bet_success(`${match_obj.mid}-${cloneData.mf}-${Math.random()}`);
         } else if (res.msg) {
-          this.set_toast({ 'txt': res.msg });
+          set_toast({ 'txt': res.msg });
         }
       }).catch((e) => {
         console.error(e)
-        this.favorite_loading = false;
+        favorite_loading = false;
       });
-    },
-  },
-}
+    };
+    return {
+      ...toRefs(data),
+      show_lvs,
+      details_collect
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

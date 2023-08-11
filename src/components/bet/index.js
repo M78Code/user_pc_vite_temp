@@ -1,10 +1,10 @@
 
 
-import betVersion from "./bet-version/index.vue";
+import BetBoxWapper from "./full-version-wapper/index.vue";
 
 
 
-export {   betVersion  };
+export {   BetBoxWapper  };
 
 
 

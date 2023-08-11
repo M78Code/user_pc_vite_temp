@@ -1,0 +1,21 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "tab组件"
+    },
+    "category": "component",
+    "component-name": "Tab",
+    "support-customization": "1",
+    "descriptions": [
+        "tab组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "Tab_1",
+            "descriptions": [
+                "tab组件-版本1"
+            ]
+        }
+    ]
+}

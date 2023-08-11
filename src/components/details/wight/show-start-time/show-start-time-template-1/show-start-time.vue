@@ -17,57 +17,62 @@
 
 <script>
 import utils from "src/public/utils/utils.js";
-
-export default {
-  name: 'show_start_time',
-  data(){
-    return {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
+  name: "show_start_time",
+  props: ["detail_data"],
+  
+  setup(props, evnet) {
+    const data = reactive({
       // 赛事进行时间
       longTime: '',
       // 是否显示开赛时间
       start_time: false,
       utils
-    }
-  },
-  props: ["detail_data"],
-  created(){
-    // 时间延时器
-    this.timerInterval = '';
-    this.initEvent(); },
-  destroyed(){ 
-    clearInterval(this.timerInterval);
-    this.timerInterval = null
-  },
-  methods: {
-    initEvent(){
+    });
+    onMounted(() => {
+      // 时间延时器
+      // 原 created 
+      timerInterval = '';
+      initEvent();
+    });
+    const initEvent = () => {
       let now = new Date().getTime();
-      let bool = Number(this.detail_data.mgt) - now < 3600 * 1000;
-      let longTime = Math.floor( (+this.detail_data.mgt -now ) / 1000 / 60 );
+      let bool = Number(detail_data.mgt) - now < 3600 * 1000;
+      let longTime = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
       if( longTime == 0 ){ 
         longTime += 1;
       }
       // 判断开始时间小于本地时间 则不显示具体时间
-      if( this.detail_data.mgt - now < 0 ){
-        clearInterval(this.timerInterval);
-        this.start_time = false;
+      if( detail_data.mgt - now < 0 ){
+        clearInterval(timerInterval);
+        start_time = false;
       } else {
-        this.start_time = bool;
+        start_time = bool;
       }
-      this.longTime = longTime;
+      longTime = longTime;
 
-      this.timerInterval = setInterval(()=>{
+      timerInterval = setInterval(()=>{
         let now = new Date().getTime();
-        if(+this.detail_data.mgt - now < 0 ){
-          clearInterval(this.timerInterval);
-          this.start_time = false;
+        if(+detail_data.mgt - now < 0 ){
+          clearInterval(timerInterval);
+          start_time = false;
         }
-        let longTime = Math.floor( (+this.detail_data.mgt - now )/ 1000 / 60);
+        let longTime = Math.floor( (+detail_data.mgt - now )/ 1000 / 60);
         if(longTime == 0){ longTime += 1; }
-        this.longTime = longTime;
+        longTime = longTime;
       }, 1000 * 1)
     }
-  },
-}
+    onUnmounted(() => {
+      clearInterval(timerInterval);
+      timerInterval = null
+    })
+    return {
+      ...toRefs(data),
+      initEvent
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

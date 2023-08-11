@@ -1,382 +1,893 @@
-<!--
- * @Description: 主菜单
--->
 <template>
-  <div class="c-main-menu column" :class="{ 'bet-menu-upd': layout_left_show == 'bet_history' }">
-    <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-      :observer_middle="layout_left_show == 'bet_list'" :class="{ 'bet-list': layout_left_show == 'bet_list' }">
-      <!-- 滚动：头部 --------------------------------->
-      <template v-slot:header>
-        <!-- 昵称、余额 -->
-        <div class="header-wrap scroll-fixed-bg" :class="get_is_invalid && 'invalid'">
-          <div class="user-info" :token="`?token=${_.get(userInfo, 'token')}`">
-            <!-- 昵称 -->
-            <div class="ellipsis">Hi, {{ _.get(userInfo, "uname") }}</div>
-          </div>
-          <div class="balance-wrap row justify-between relative-position">
-            <div class="row items-center">
-              <!-- 余额隐藏 -->
-              <div v-show="!show_balance" class="balance-text-hide">
-                ******
-              </div>
-              <!-- 余额 -->
-              <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                {{ (userInfo.balance || 0) || format_balance(amount) }}
-              </div>
-              <!-- 余额是否隐藏图标 -->
-              <icon :name="show_balance ? 'icon-eye_show' : 'icon-eye_hide'" size="14px"
-                class="balance-btn-eye cursor-pointer" @click="show_balance = !show_balance " />
-            </div>
-            <!-- 刷新余额按钮 -->
-            <refresh v-show="show_balance" class="refresh-btn" :other_icon="true" icon_name="icon-balance_refresh"
-              :loaded="data_loaded" :disable="!userInfo" @click="set_amount_refresh" />
-          </div>
-        </div>
-
-        <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
-          <!-- 投注记录 入口 -->
-          <div v-show="layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
-            class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
-            <img class="hot-icon" src="/public/yazhou-pc/image/png/bet-record.png" />
-            <div class="col">
-              {{ $root.$t("common.betting_record") }}
-            </div>
-            <span class="bet-count" v-show="count > 0">{{ count }}</span>
-          </div>
-          <!-- 单/串关投注栏 入口 -->
-          <template v-if="show_bet_menu && !['bet_history'].includes(layout_left_show)">
-            <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
-              <span class="text">
-                {{ $root.$t("bet.bet_my_count") }}
-              </span>
-              <span class="bet-count">{{ bet_count }}</span>
-              <!-- <span class="text">
-                <template v-if="vx_get_is_bet_single && ['today','play','early','hot_one','winner_top','hot'].includes(vx_cur_menu_type.type_name)">{{
-                  $root.$t("bet.bet_one")
-                }}</template>
-                <template v-else-if="vx_cur_menu_type.type_name=='bet'">{{ $root.$t("bet.bet_n") }}</template>
-              </span>
-              <span class="bet-count">{{ bet_count }}</span> -->
-            </div>
-          </template>
-        </div>
-        <!-- 返回菜单|单关串关按钮切换 -->
-        <template v-if="['bet_list', 'bet_history'].includes(layout_left_show)">
-          <template v-if="is_virtual_bet">
-            <virtual-bet-scroll-header :bet_recode_this="bet_recode_this" />
-          </template>
-          <template v-else>
-            <bet-scroll-header :bet_recode_this="bet_recode_this" />
-          </template>
-        </template>
-      </template>
-
-      <!-- 滚动：内容 --------------------------------->
-      <template>
-        <!-- 菜单项 -->
-        <div v-show="layout_left_show == 'menu'" class="menu-wrap">
-
-          <!-- 现场滚球盘 -->
-          <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
-            :class="menu_config.menu_root == 1 && 'active'">
-            <!-- 现场滚球盘 -->
-            <img class="hot-icon" src="/public/yazhou-pc/image/png/play-match.png" />
-            <div class="col">{{ $root.$t("common.in_plays") }}</div>
-
-            <div class="col-right">
-              <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_1 }}</span>
-            </div>
-          </div>
-
-          <!-- 热门赛事 -->
-          <div v-if="menu_config.add_mi_introduce.mi_500.label && get_global_switch.hot_match_num"
-            @click="new_menu_click(500)" class="menu-item menu-top menu-play menu-border"
-            :class="menu_config.menu_root == 500 && 'active'"
-            :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
-            <!-- 热门赛事图标 -->
-            <img class="hot-icon" src="/public/yazhou-pc/image/svg/hot.svg" />
-            <div class="col">{{ $root.$t("menu.match_hot") }}</div>
-            <div class="col-right">
-              <!-- 热门赛事数量 -->
-              <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_500 }}</span>
-            </div>
-          </div>
-
-          <!-- 体育菜单 -->
-          <MenuSports />
-
-        </div>
-
-        <!-- 历史记录 -->
-        <div v-if="layout_left_show == 'bet_history'" class="col">
-          <bet-record-view @set_scroll_this="set_scroll_this" />
-        </div>
-        <!-- 投注栏 -->
-        <div v-if="layout_left_show == 'bet_list' && main_menu_toggle != 'mini'" class="bet-view">
-          <!--当前是否为虚拟投注-->
-          <template v-if="is_virtual_bet">
-            <!-- 虚拟单关 -->
-            <virtual-bet-single v-if="virtual_bet_list.length == 1" @set_scroll_this="set_scroll_this" />
-            <!-- 虚拟串关 -->
-            <virtual-bet-mix v-else-if="virtual_bet_list.length > 1" class="full-height"
-              @set_scroll_this="set_scroll_this" />
-          </template>
-          <template v-else>
-            <div class="bet-mode-zone" v-if="is_bet_single">
-              <div class="left">
-                <span>{{ $root.$t("bet.bet_one_") }}</span>
-                <span class="bet-single-count">
-                  {{ bet_single_list.length }}
-                </span>
-              </div>
-              <div class="right">
-                <span class="check-box" :class="{ 'checked': is_bet_merge }" @click.stop="toggle_merge">
-                  <check-box :checked="is_bet_merge" /> <span>{{ $root.$t('bet.merge') }}</span>
-                </span>
-                <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
-                  <icon id="merge-info" name="icon-tips" class="bet-info" size="14px" />
-                </span>
-              </div>
-            </div>
-            <!-- 正常入口的单关 -->
-            <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" />
-            <!-- 正常入口的串关 -->
-            <bet-mix v-if="!is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
-          </template>
-        </div>
-      </template>
-      <!-- 滚动：尾部 --------------------------------->
-      <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
-        <template v-if="is_virtual_bet">
-          <virtual-bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" />
-        </template>
-        <template v-else>
-          <bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" />
-        </template>
-      </template>
-    </v-scroll-area>
-    <!--提示区域-->
-    <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
-      v-if="show_merge_info">
-      <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-        {{ $root.$t('bet.merge_info') }}
+  <div class="c-menu-sports menu-border">
+    <div class="header relative-position">
+      <!--   体育菜单-->
+      <div class="menu-item menu-top menu-item-title disable-hover">
+        <!-- {{ $root.$t('common.menu_title') }} --> 体育菜单
+        <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
-    </q-tooltip>
+      <!--   今日、早盘、 -->
+      <div class="menu-item menu-tab disable-hover double">
+        <div class="item yb-flex-center" :class="jinri_zaopan == 2 ? 'active' : ''" @click="handle_click_jinri_zaopan(2)">
+           今日
+          <!-- {{ $root.$t("menu.match_today") }} -->
+        </div>
+        <div class="item yb-flex-center" :class="jinri_zaopan == 3 ? 'active' : ''" @click="handle_click_jinri_zaopan(3)">
+           早盘 
+          <!-- {{ $root.$t("menu.match_early") }} -->
+        </div>
+      </div>
+    </div>
+    <div v-for="item1 in left_menu_base_mi_arr" :key="`${jinri_zaopan}_${item1}`"
+      :class="(base_data.is_mi_300_open && item1 == 400) ? 'menu-border' : ''">
+      <!--   赛种-->
+      <!-- {{ base_data.filterSport_arr }} -- {{ base_data.compute_sport_id(item1) }} -->
+      <div v-if="item1 == 300 || lv_1_num(item1)" class="menu-item menu-fold1 search"
+        :class="current_lv_1_mi == item1 ? 'y-active' : ''" @click="lev_1_click(item1)">
+        <!-- icon -->
+        <div class="row items-center">
+          <sport-icon :sport_id="base_data.compute_sport_id(item1)" size="18px" class="icon" status="2" />
+        </div>
+        <div class="items-right row" style="flex-wrap: wrap">
+          <div style="line-height: 1; flex: 1">
+            <span class="menu-text">
+              <!-- 名字 {{ item1 }} -->
+              {{ base_data.menus_i18n_map[item1] || "" }}
+            </span>
+          </div>
+          <!-- 数字 显示    有些赛种不显示 -->
+          <div class="col-right" style="min-width: 40px" v-if="base_data.menus_i18n_map[item1]">
+            <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
+
+            <div class="live-text" v-if="jinri_zaopan == 2 && lv_1_num(item1) && base_data.mi_gunqiu.includes(item1)" />
+            <span class="match-count yb-family-odds" v-if="item1 != 300">{{ lv_1_num(item1) }}</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!--  子菜单  ，  开始    -->
+      <!--  子菜单  ， 冠军 不显示子菜单  -->
+      <!--  常规体育 含 娱乐     子菜单  开始    -->
+      <div v-if="![400, 2000, 300].includes(item1)" class="menu-fold2-wrap"
+        :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
+        <!-- :class="current_lv_1_mi == item1 ? '' : ''" -->
+        <template v-for="item2 in compute_item1_sublist_mi_100(item1)">
+          <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
+          <div :key="`${jinri_zaopan}_${item1}_${item2.mi}_100`" @click.stop="
+            lv_2_click_wapper_1({ lv1_mi: item1, lv2_mi: item2.mi })
+            " v-if="item1 != 118" v-show="item2['ct']" :class="current_lv_2_mi == item2.mi ? 'active' : ''"
+            class="menu-item menu-fold2">
+            <div class="row items-center relative-position">
+              <span class="menu-point"></span>
+              <span class="menu-text ellipsis">
+                <!-- 名字{{ item2.mi }}  -->
+                {{ base_data.menus_i18n_map[item2.mi] || "" }}
+              </span>
+            </div>
+            <div class="col-right relative-position" style="min-width: 40px">
+              <span class="match-count yb-family-odds" v-if="item1 != 2000">
+                {{ item2["ct"] }}</span>
+            </div>
+          </div>
+          <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
+        </template>
+        <!-- 常规赛种   （含娱乐）  增补  冠军玩法    开始 -->
+        <div :key="`${jinri_zaopan}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
+          v-if="base_data.commn_sport_guanjun_obj[`mi_${item1}`]"
+          v-show="base_data.commn_sport_guanjun_obj[`mi_${item1}`]['ct']" :class="current_lv_2_mi ==
+              base_data.commn_sport_guanjun_obj[`mi_${item1}`]['mi'] ? 'active' : ''" class="menu-item menu-fold2">
+          <div class="row items-center relative-position">
+            <span class="menu-point"></span>
+            <span class="menu-text ellipsis">
+              <!--国际化字段返回在  基础赛种  拼接 4 冠军专属后缀上   -->
+              {{ base_data.menus_i18n_map[`${item1}4`] || "" }}
+            </span>
+          </div>
+          <div class="col-right relative-position" style="min-width: 40px">
+            <span class="match-count yb-family-odds">
+              {{ base_data.commn_sport_guanjun_obj[`mi_${item1}`]["ct"] }}</span>
+          </div>
+        </div>
+        <!-- 常规赛种   （含娱乐）  增补  冠军玩法      结束  -->
+      </div>
+      <!--  常规体育 含 娱乐    子菜单  结束     -->
+      <!--  电竞    子菜单  开始    -->
+      <div v-if="item1 == 2000" class="menu-fold2-wrap" :data-id="show_menu"
+        :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
+          <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :current_lv_2_mi="current_lv_2_mi" />
+      </div>
+      <!--  电竞    子菜单   结束     -->
+      <!--  VR    子菜单   开始     -->
+      <div v-if="item1 == 300" class="menu-fold2-wrap" :data-id="show_menu"
+        :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
+        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :current_lv_2_mi="current_lv_2_mi" />
+      </div>
+      <!--  VR    子菜单   结束     -->
+      <!--  子菜单  ，  结束     -->
+    </div>
   </div>
 </template>
-
 <script setup>
-// import { mapGetters, mapActions } from "vuex";
-// //单关组件
-// import betSingle from "src/project/yabo/components/bet/bet_single.vue";
-// //虚拟体育单关组件
-// import virtualBetSingle from "src/project/yabo/components/virtual_bet/bet_single.vue";
-// //虚拟体育串关组件
-// import virtualBetMix from "src/project/yabo/components/virtual_bet/bet_mix.vue";
-// // 串关组件
-// import betMix from "src/project/yabo/components/bet/bet_mix.vue";
-// // 左侧菜单 投注相关 头部
-// import bet_scroll_header from "src/public/components/bet/bet_scroll_header.vue";
-// //左侧菜单 投注相关 尾部
-// import bet_scroll_footer from "src/public/components/bet/bet_scroll_footer.vue";
-//  //虚拟体育左侧菜单 投注相关 头部
-// import virtualBetScrollHeader from "src/public/components/virtual_bet/bet_scroll_header.vue";
-// //虚拟体育左侧菜单 投注相关 尾部
-// import virtualBetScrollFooter from "src/public/components/virtual_bet/bet_scroll_footer.vue";
-// // 通屏垂直滚动
-// import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue";
-// //体育菜单
-// //球种对应的 icon
-// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-// import refresh from "src/public/components/refresh/refresh.vue";
-// import { api_betting } from "src/public/api/index.js";
-// import betRecordView from "src/public/components/bet_record_view/bet_record_view.vue";
+import { ref,onMounted } from "vue"
+import { api_base_data } from "src/api/index.js";
 
+import MenuItem from './menu-item.vue'
 
-
-
-// import menu_config from "src/public/utils/menuClass/menu_class_new.js";
-import { ref, onMounted } from "vue"
-import { useRouter } from "vue-router";
-
-import MenuSports from "./sports.vue";
-
-import store from "src/store-redux-vuex/index.js";
-import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
-
-const router = useRouter();
-const state = store.getState()
-
-const menu_config = ref({})
-const bet_recode_this = ref(null)
-const bet_single_this = ref(null)
-const bet_this = ref(null)
-// bet_merge: false,
-// 是否显示合并信息
-const show_merge_info = ref(false)
-// 是否已加载
-const data_loaded = ref(false)
-const count = ref(0)
-
-// 当前显示 内容 menu bet_list  history
-const layout_left_show = ref('menu')
-// 用户信息是否失效
-const get_is_invalid = ref("get_is_invalid")
-
-// 用户信息 和
-const userInfo = ref(state.userReducer.userInfo)
-// 用户金额
-const amount = ref(state.userReducer.amount)
-// 显示余额
-const show_balance = ref(false)
-
+// 今日  2 早盘   3
+const jinri_zaopan_ = ref(2)
+// 当前的一级菜单ID
+const current_lv_1_mi = ref('')//"101",
+// 当前的二级菜单ID
+const current_lv_2_mi = ref("") //"101201", // 101301
+// 当前赛种是否收起 状态
+const show_menu = ref(false)
+// 首次进入 刷新用
+const first_change = ref(false)
 
 const props = defineProps({
-  // 是否为虚拟投注
-  is_virtual_bet: {
-    type: Boolean,
-    default: () => false,
-  },
-  // 是否单关投注
-  is_bet_merge: {
-    type: Boolean,
-    default: () => false,
-  },
-  // 是否单关合并
-  is_bet_single: {
-    type: Boolean,
-    default: () => false,
-  },
-  DOM_ID_SHOW: {
-    type: Boolean,
-    default: () => false,
-  },
-  // 获取虚拟投注列表
-  virtual_bet_list: {
+  // 菜单配置
+  menu_config: {
     type: Object,
-    default: () => [],
+    default: () => { },
   },
-  // 单关投注列表
-  bet_single_list: {
-    type: Object,
-    default: () => [],
-  },
-  // 串关列表
-  bet_series_list:{
-    type: Object,
-    default: () => [],
-  },
-  // 屏幕尺寸 mini
-  main_menu_toggle: {
-    type: String,
-    default: () => '',
-  },
-  // 当前菜单类型
-  cur_menu_type: {
-    type: Object,
-    default: () => {},
-  },
-  // 元数据配置
   base_data: {
     type: Object,
-    default: () => {},
-  },
-   // 菜单配置
-   menu_config: {
-    type: Object,
-    default: () => {},
-  },
-  
+    default: () => { },
+  }
 })
 
-
-onMounted(() => {
-  get_unsettle_tickets_count();
+onMounted(()=>{
+  init_mew_menu_list()
 })
 
-// 格式化用户余额保留2位小数
-const format_balance = num => {
-  if (num && num > 0) {
-    let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-    // 保留两位小数
-    let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
+/**
+ * @description: 菜单列表
+ * @return {*}
+ */
+ const init_mew_menu_list = async () => {
+  let res = await api_base_data.get_base_data_menu_init({});
+  let menu_info = set_ses_wapper(res, []);
+  const left_menu = []
+  const in_play = []
+  // 左侧菜单id
+  menu_info.forEach(item => {
+    // vr300 冠军400 2000 电竞 500热门
+    if (Number(item.mi) < 300) {
+      let count = (item.sl || []).reduce((total,cur) => {
+        if(cur.mi == item.mi + '4'){
+          return total
+        }
+        return total + Number(cur.ct)
+      },0)
 
-    let _num = _split[1] + '.' + decimal
-    return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-  }
-  return '0.00';
-}
+      // 赛种下面有赛事
+      if( count > 0){
+        left_menu.push(Number(item.mi))
 
-const set_amount_refresh = () =>{
-  useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD)
-}
-
-  // // 语言
-  // lang: 'get_lang',
-  // // 用户信息
-  // userInfo: "get_user",
-  // // 用户信息是否失效
-  // vx_get_is_invalid: "get_is_invalid",
-  // // 菜单布局信息
-  // layout_left_show: "get_layout_left_show",
-  // main_menu_toggle: "get_main_menu_toggle",
-  // // 获取是否为虚拟投注
-  // is_virtual_bet: "is_virtual_bet",
-  // // 串关列表
-  // bet_series_list: "get_bet_list",
-  // // 是否单关投注
-  // is_bet_single: "is_bet_single",
-  // // 是否显示余额
-  // show_balance: "get_show_balance",
-  // // 单关投注列表
-  // bet_single_list: "get_bet_single_list",
-  // // 当前菜单类型
-  // vx_cur_menu_type: "get_cur_menu_type",
-  // // 获取虚拟投注列表
-  // virtual_bet_list: "virtual_bet_list",
-  // // 上次盘口类型
-  // vx_get_pre_odd: 'get_pre_odd',
-  // // 当前盘口类型
-  // get_cur_odd: 'get_cur_odd',
-  // is_bet_merge: "get_is_bet_merge",
-  // // 获取项目主题
-  // theme: 'get_theme',
-  // //全局开关
-  // get_global_switch: 'get_global_switch'
-// 是否显示投注菜单
-const show_bet_menu = () => {
-  if (layout_left_show != 'bet_list' && bet_count > 0) {
-    // today今日 play滚球 early早盘 hot_one热门赛事  winner_top冠军  hot热门赛事
-    if (is_bet_single &&
-      ['today', 'play', 'early', 'hot_one', 'winner_top', 'hot'].includes(props.cur_menu_type.type_name)) {
-      return true;
-    } else if (props.bet_series_list.length > 0) {
-      return true;
+        // 有滚球赛事
+        let obj = (item["sl"] || []).find((y) => y.mi == `${item.mi}1` && y.ct > 0 ) || {};
+      
+        if(obj.mi){
+          in_play.push({mi:item.mi,count:obj.ct})
+        }
+      }
     }
-    /**
-      else if(props.cur_menu_type.type_name=='bet' && bet_series_list.length>0) {
-      return true;
+  })
+  // let esports_obj = menu_info.find(page => [2100, 2101, 2102, 2103].includes(Number(page.mi))) || {}
+  // if (esports_obj.mi) {
+  //   left_menu.splice(3, 0, 2000)
+  // }
+
+  // 获取 top events 的 赛种
+  let mi_5000 = menu_info.find(item=> item.mi == 5000) || {}
+  // - 5000 得到 csid  + 100 得到 菜单id 
+  let top_events = ( mi_5000.sl || [] ).map(item => (Number(item.mi) - 5000 + 100) ) || []
+
+
+  // let state = store.getState()
+  // // 获取最新的 数据
+  // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
+
+  // redux_menu.in_play = in_play
+  // redux_menu.top_events = top_events
+  // redux_menu.menu_list = left_menu
+
+  // 设置 左侧菜单
+	// store.dispatch({
+  //   type: "SETREDUXMENU",
+  //   data: redux_menu,
+  // });
+
+  // 设置新菜单 
+  return left_menu;
+}
+
+/**
+   * @description: 今日 早盘 紧急开关
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+const today_early = () => {
+  const { lv2_mi, lv1_mi } = menu_config.left_menu_result
+
+  if (!base_data.left_menu_base_mi_arr.includes(Number(lv1_mi))) {
+    let params = {}, mid_menu_show = { list_filter: true }, has_mid_menu = true
+    params = {
+      root: 1,
+      lv1_mi: '',
+      lv2_mi: 1,
+      sports: '',
+      guanjun: "",
+    };
+    // 设置左侧菜单输出          
+    menu_config.set_left_menu_result({
+      ...params,
+      mid_menu_show,
+      has_mid_menu,
+    })
+  }
+}
+/**
+ * @description: 电竞 vr 紧急开关
+ * @param {undefined} undefined
+ * @return {undefined} undefined
+ */
+const esports_vr_switch = () => {
+  let params = {}, mid_menu_show = { list_filter: true }, has_mid_menu = true
+  // 电竞和 vr关闭后 需要跳转到滚球 (没有数据 也算是关)
+  if (!base_data.is_mi_2000_open || !base_data.is_mi_300_open) {
+    params = {
+      root: 1,
+      lv1_mi: '',
+      lv2_mi: 1,
+      sports: '',
+      guanjun: "",
+    };
+  } else {
+    let { lv2_mi, lv1_mi } = menu_config.left_menu_result
+    // 电竞 vr 部分关停
+
+    // 判断 电竞 下面是否还有该 赛种
+    if (menu_config.menu_root == 2000) {
+      let esports = base_data.dianjing_sublist.find(item => item.mi == lv2_mi) || {}
+      if (esports.mi) {
+        return
+      } else {
+        params.lv2_mi = base_data.dianjing_sublist[0].mi
+      }
     }
-     */
+    // 判断 VR 下面是否还有该 赛种
+    if (menu_config.menu_root == 300) {
+      let vr_sports = base_data.vr_mi_config.find(item => item.menuId == lv2_mi) || {}
+      if (vr_sports.menuId) {
+        return
+      } else {
+        params.lv2_mi = base_data.vr_mi_config[0].menuId
+      }
+      return lv_2_click_wapper_4({ lv1_mi, lv2_mi: params.lv2_mi })
+    }
+
+    // 单个赛事关闭后
+    params.root = menu_config.menu_root
+    params.lv1_mi = lv1_mi
+
   }
-  return false;
+  // 设置 中间 菜单输出
+  menu_config.set_mid_menu_result(params);
+  // 设置左侧菜单输出          
+  menu_config.set_left_menu_result({
+    ...params,
+    mid_menu_show,
+    has_mid_menu,
+  })
 }
-// 投注数量
-const bet_count = () => {
-  // 是否虚拟体育投注
-  if (props.is_virtual_bet) {
-    return props.virtual_bet_list.length;
+/**
+ * @description: 挂载组件初始化各项属性和默认方法调用
+ * @param {undefined} undefined
+ * @return {undefined} undefined
+ */
+const when_created = async () => {
+
+  const { lv1_mi, lv2_mi, root, jinri_zaopan } = menu_config.left_menu_result
+
+  //  min 菜单 没值
+  //  因为 当前默认是点击 滚球  ，如果是默认 点金今日 足球  这里需要写逻辑
+  //如果默认  滚球 / 热门    则在   src\project\yabo\pages\main_menu\main_menu.vue   点 滚球 / 热门
+  //如果默认  早盘 /今日     则在    这里    点 早盘 /今日
+  if (root) {
+    if ([2, 3].includes(Number(root))) {
+      jinri_zaopan_.value = jinri_zaopan
+
+      lev_1_click(lv1_mi, '', lv2_mi);
+
+    } else if ([300, 400, 2000].includes(Number(root))) {
+      lev_1_click(lv1_mi, '', lv2_mi);
+    }
+  } else {
+    jinri_zaopan_.value = 2
+
+    lev_1_click('101', '', lv2_mi);
   }
-  // 是否单关投注
-  if (props.is_bet_single) {
-    return props.bet_single_list.length;
+
+  await nextTick()
+
+  first_change.value = false
+}
+/**
+ * @description: 计算一级菜单下的 二级菜单  常规体育
+ * @param {*} item1
+ * @return {Array} 列表
+ */
+const compute_item1_sublist_mi_100 = item1 => {
+  //  jinri_zaopan
+  item1 = "" + item1;
+  let obj = base_data.mew_menu_list_res.find((x) => x.mi == "" + item1) || {};
+  let sub_list = [];
+  if (item1 == 118) {
+    // 娱乐
+    sub_list = obj["sl"];
+  } else {
+    //常规体育
+    // 整个菜单原始数据
+    // 当前球类的 今日 或者 早盘
+    let obj2 = (obj.sl || []).find(x => x.mi == `${item1}${jinri_zaopan}`) || {};
+    // 当前球类的 今日 或者 早盘  的 玩法数据
+    sub_list = obj2["sl"] || [];
   }
-  return props.bet_series_list.length;
+  return sub_list;
+}
+/**
+ * @description: 计算一级菜单下的 二级菜单    虚拟体育
+ * @param {*} item1
+ * @return {Array} 列表
+ */
+const compute_item1_sublist_mi_300 = () => {
+  return base_data.vr_mi_config;
+}
+/**
+ * @description: 计算一级菜单下的 二级菜单    电子竞技
+ * @param {*} item1
+ * @return {Array} 列表
+ */
+const compute_item1_sublist_mi_2000 = item1 => {
+  //  jinri_zaopan
+  item1 = "" + item1;
+  let obj = base_data.mew_menu_list_res.find(x => x.mi == "" + item1) || {};
+  let sub_list = [];
+  // 电竞
+  sub_list = base_data.dianjing_sublist;
+  //     {
+  //   "menu_id": 101302,
+  //   "parent_id": 1013,
+  //   "menu_name": "波胆",
+  //   "euid": null
+  // }
+  return sub_list;
 }
 
+/**
+ * @description: 一级菜单 点击 找到第一个有数的 菜单
+ * @param {*} mi 一级菜单id
+ * @param {*} jinri_zaopan  今日或早盘
+ * @param {*} lv2 二级菜单id 作用于刷新页面
+ * @return {*}
+ */
+const lev_1_click = (mi, jinri_zaopan, lv2) => {
+  // show_menu 展开或者收起  收起是 true  展开是false
+  // current_lv_1_mi 选中按钮  选中的情况下 点击一级菜单 收起或者展开
+  // 收起的情况下 再次回来 还是收起 / 展开的情况下 再次回来还是展开
 
+  if (!jinri_zaopan) {
+    // 点击一级菜单
+    if (current_lv_1_mi == mi) {
+      // 一级菜单点击无效
+      show_menu = !show_menu
+    } else {
+      show_menu = false
+    }
+  }
+
+  // 今日 / 早盘 选中的情况下 点击无效 
+  if (jinri_zaopan == jinri_zaopan && current_lv_1_mi == mi) {
+    return false;
+  }
+  jinri_zaopan.value = jinri_zaopan ? jinri_zaopan : jinri_zaopan
+  current_lv_1_mi.value = mi;
+  current_lv_2_mi.value = ''
+
+  // 刷新 不切换回列表
+  if (!first_change) {
+    // 详情切换 须回到列表页
+    set_route_url()
+  }
+  if (mi == 400) {
+    const { mid_menu_result } = menu_config
+    // 1级 冠军和vr体育 点击后默认为早盘
+    inri_zaopan.value = 2
+    let mi;
+    if (mid_menu_result.root && mid_menu_result.root == 400) {
+      mi = mid_menu_result.mi
+    } else {
+      mi = 400
+    }
+    // // 设置      中间 菜单输出
+    menu_config.set_mid_menu_result({
+      root: 400,
+      mi,
+      sports: "guanjun",
+      guanjun: "guanjun",
+    });
+
+    //冠军  没有子菜单  直接点击 冠军足球
+    menu_config.set_left_menu_result({
+      root: 400,
+      lv1_mi: 400,
+      lv2_mi: lv2 || "400",
+      sports: "quanbu-guanjun",
+      guanjun: "guanjun-common",
+      mid_menu_show: {
+        list_filter: true, // 滚球  冠军
+      },
+      has_mid_menu: true,
+    })
+    return
+  } else if (mi == 2000) {
+    // 设置默认值
+    let lv2_es = lv2 || "2100"
+    // 默认值是否在 列表中 
+    let esports_mi = base_data.dianjing_sublist.find(item => item.mi == lv2_es) || {}
+    if (!esports_mi.mi) {
+      // 有默认值但是没有在列表中 选择列表中的第一个
+      lv2_es = base_data.dianjing_sublist[0].mi
+    }
+    //电竞  直接点英雄联盟
+    lv_2_click_wapper_3({
+      lv1_mi: "2000",
+      lv2_mi: lv2_es,
+    });
+    return
+  } else if (mi == 300) {
+
+    // 1级 冠军和vr体育 点击后默认为早盘
+    jinri_zaopan.value = 2
+
+    // 拿vr的第一个数据 菜单id作为默认值
+    let menuId = (base_data.vr_mi_config[0] || {}).menuId || '1010'
+
+    // 虚拟体育  直接点 VR足球
+    lv_2_click_wapper_4({
+      lv1_mi: "300",
+      lv2_mi: lv2 || menuId,
+    });
+    return
+  } else if (mi == 118) {
+    //  娱乐
+    lv_2_click_wapper_2({
+      lv1_mi: "118",
+    });
+    return
+  } else {
+    // 常规体育
+    let arr = compute_item1_sublist_mi_100(mi);
+    let arr2 = arr.filter((x) => x.ct > 0);
+    let fmi = "";
+    if (arr2.length) {
+      //有常规玩法
+      fmi = arr2[0]["mi"];
+      // 常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）
+      lv_2_click_wapper_1({
+        lv1_mi: mi,
+        lv2_mi: lv2 || fmi,
+      });
+      current_lv_2_mi.value = fmi
+    } else {
+      //常规赛种   （含娱乐）  的 冠军玩法     点击
+      // 只能走冠军
+      lv_2_click_wapper_2({
+        lv1_mi: mi,
+      });
+    }
+  }
+
+}
+/**
+ *   常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）     点击
+ *
+ * @param {*} detail
+ */
+const lv_2_click_wapper_1 = (detail = {}) => {
+  //当选择了近期开赛时间再点击其他球种时，需要置为全部
+  // this.$store.state.filter.open_select_time = null ??????? todo
+  // console.error(' base_data.mi_info_map', base_data.mi_info_map)
+  let { lv1_mi, lv2_mi } = detail;
+  // 父级euid
+  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`];
+  // 当前 pid 和 orpt
+  // let lv2_mi_info = base_data.mi_info_map[`mi_${lv2_mi}`];
+
+  let root = jinri_zaopan;
+  let config = {
+    root,
+    lv1_mi,
+    lv2_mi,
+    sports: "common",
+    guanjun: "",
+
+    mid_menu_show: {
+      list_filter_date: jinri_zaopan == 3,
+    },
+  };
+
+  //13列玩法菜单  足球 今日  早盘   13    get_unfold_multi_column
+
+  //  (
+  //      menu_config.is_multi_colum()&&
+  //       store.getters.get_unfold_multi_column &&
+  //       store.getters.get_layout_cur_page.cur == "home"
+  //     ) {
+  //       match_tpl_number = 13;
+  //     }
+
+  // 如果
+  if (jinri_zaopan != 3) {
+    // 是否收藏
+    let is_collect = false // this.get_layout_list_type == "collect";
+    //基础参数
+    let base_params = {
+      cuid: '', // vx_get_uid, // ????
+      selectionHour: '', // this.$store.state.filter.open_select_time,
+      sort: '', //vx_match_sort, // ????
+    };
+    // 没有中间菜单
+    let mid_menu_refer_params = {
+      begin_request: true,
+      is_collect,
+      route: "list",
+      root: root,
+      sports: "common",
+      guanjun: "",
+      // 列表队列 接口
+      match_list: {
+        api_name: "post_league_list",
+        params: {
+          ...base_params,
+          apiType: 1,
+          // ...lv2_mi_info,
+          // euid,
+        },
+      },
+      version: Date.now(),
+      //
+      bymids: {
+        api_name: "",
+        api_type: "",
+        params: {},
+      },
+    };
+    config.mid_menu_refer_params = mid_menu_refer_params;
+  }
+
+  this.lv_2_click_common(config);
+}
+/**
+ *  常规赛种   （含娱乐）  的 冠军玩法     点击
+ *
+ * @param {*} detail
+ */
+const lv_2_click_wapper_2 = (detail = {}) => {
+
+  let { lv1_mi } = detail;
+  // console.log(lv1_mi,this.jinri_zaopan)
+
+  // console.warn("lv_2_click_wapper_2-------- 常规赛种   （含娱乐）  的 冠军玩法     点击-----------",base_data)
+
+  let lv2_mi = ''
+  // 获取 二级菜单id
+  if (Object.keys(base_data.commn_sport_guanjun_obj).length) {
+    lv2_mi = base_data.commn_sport_guanjun_obj[`mi_${lv1_mi}`]["mi"];
+  }
+
+  // 父级euid
+  // let euid;
+  // 娱乐
+  // if (lv1_mi==118) {
+  //   // 娱乐冠军写死
+  //   euid = '3020112' || base_data.mi_info_map[`mi_${lv2_mi}`].euid;
+  // }else{
+  //   euid = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`].euid
+  // }
+  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`];
+
+  let config = {
+    root: jinri_zaopan,
+    lv1_mi,
+    lv2_mi,
+    sports: "common",
+    guanjun: "common-guanjun",
+    mid_menu_show: {
+      list_filter_date: jinri_zaopan == 3,
+    },
+  };
+  // 当前 pid 和 orpt
+  // let lv2_mi_info = base_data.mi_info_map[`mi_${lv2_mi}`];
+  // 如果
+  if (jinri_zaopan != 3) {
+    let base_params = {
+      cuid: '',// vx_get_uid, // ??????
+      selectionHour: "",// this.$store.state.filter.open_select_time,
+      sort: "", // this.vx_match_sort,
+      apiType: 1,
+      // orpt: 18,
+      sportId: "",
+    };
+    let csid = "" + (1 * lv1_mi - 100);
+    // 没有中间菜单
+    let mid_menu_refer_params = {
+      begin_request: true,
+      is_collect: false,
+      route: "list",
+      root: "400",
+      sports: "common",
+      guanjun: "common-guanjun",
+      // 列表队列 接口
+      match_list: {
+        api_name: "post_league_list",
+        params: {
+          ...base_params,
+          // ...lv2_mi_info,
+          // orpt: lv2_mi_info.orpt || base_params.orpt,
+          // pids: lv2_mi_info.pids,
+          // euid,
+          sportId: csid,
+        },
+      },
+      //
+      bymids: {
+        api_name: "",
+        api_type: "",
+        params: {},
+      },
+    };
+    config.mid_menu_refer_params = mid_menu_refer_params;
+  }
+  lv_2_click_common(config);
+}
+/**
+ *      电竞    子菜单     点击
+ *
+ * @param {*} detail
+ */
+const lv_2_click_wapper_3 = (detail = {}) => {
+  let { lv1_mi, lv2_mi } = detail;
+  let config = {
+    root: 2000,
+    lv1_mi,
+    lv2_mi,
+    sports: "dianjing",
+    guanjun: "",
+    mid_menu_show: {
+      esports_header: true,
+    },
+  };
+  lv_2_click_common(config);
+}
+/**
+ *      VR    子菜单     点击
+ *
+ * @param {*} detail
+ */
+const lv_2_click_wapper_4 = (detail = {}) => {
+
+
+  let { lv1_mi, lv2_mi } = detail;
+  let vr_obj = base_data.vr_mi_config.find(item => lv2_mi == item.menuId) || {};
+  // console.log(vr_obj)
+  // console.error(vr_obj,'-----------------------------------------------------');
+  let config = {
+    root: 300,
+    route: 'list',
+    lv1_mi,
+    lv2_mi,
+    // begin_request: true,
+    // is_collect: false,
+    sports: "vr",
+    guanjun: "",
+    has_mid_menu: true,
+    mid_menu_show: {
+      virtual_list_sport_header: true,
+      virtual_list_league_header: lv2_mi == 31001,
+    },
+    // match_list :{
+    //   api_name: "post_fetch_virtual_matchs",
+    //   params: {
+    //     csid: vr_obj.csid,
+    //     isLive: 1,
+    //     selectionHour: null,
+    //     tid: vr_obj["sl"][0]['tid'],
+    //   },
+    // }
+
+  };
+
+  let mid_menu_refer_params = {
+    begin_request: true,
+    is_collect: false,
+    route: "list",
+    root: "300",
+    sports: "vr",
+    guanjun: "",
+    match_list: {
+      api_name: "post_fetch_virtual_matchs",
+      params: {
+        tid: vr_obj.subList[0].field1,
+        // isLive: 1,
+        selectionHour: "", // this.$store.state.filter.open_select_time,
+        csid: vr_obj.menuId,
+      },
+    }
+  }
+
+  // this.lv_2_click_common(config);
+  // // 设置      中间 菜单输出
+  menu_config.set_left_menu_result(config);
+
+  // // 设置   请求  列表结构  API 参数的  值
+  menu_config.set_match_list_api_config(mid_menu_refer_params);
+}
+/**
+ * 二级菜单点击
+ * @param {*} mi
+ */
+const lv_2_click_common = (detail = {}) => {
+
+  // 刷新 不切换回列表
+  if (!first_change) {
+    // 详情切换 须回到列表页
+    set_route_url()
+  }
+
+  let {
+    root, // 根mi
+    lv1_mi,
+    lv2_mi,
+    sports,
+    guanjun,
+    mid_menu_show,
+    mid_menu_refer_params,
+  } = detail;
+
+
+  if (current_lv_2_mi == lv2_mi) {
+    return false;
+  }
+
+  current_lv_1_mi.value = lv1_mi;
+  current_lv_2_mi.value = lv2_mi;
+
+  // 获取 euid orpt tid
+  let obj = base_data.mi_info_map[`mi_${lv2_mi}`];
+
+  //电子竞技没有 euis
+  if (lv1_mi != 2000) {
+    // 常规赛种 euid 
+    if (lv1_mi != 118) {
+      obj.euid = base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
+    }
+  }
+  // 常规赛种下 冠军模板都是18
+  if (guanjun == 'common-guanjun') {
+    obj.orpt = 18
+  }
+  if (lv1_mi == 118) {
+    // 娱乐冠军写死
+    obj.euid = '3020112' || obj.euid;
+  }
+
+  let result = {
+    // ...obj, // 有二级
+    jinri_zaopan: jinri_zaopan,
+    root,
+    lv1_mi,
+    lv2_mi,
+    sports,
+    guanjun,
+
+  };
+
+
+  // 今日常规赛种 不包含 电子竞技
+  if (jinri_zaopan == 2 && lv1_mi != 2000) {
+    // 统一处理
+    const params = mid_menu_refer_params.match_list.params
+    mid_menu_refer_params.match_list.params = {
+      ...params,
+      ...obj
+    }
+  }
+
+  // 中间菜单显示配置
+  result.mid_menu_show = {
+    ...mid_menu_show,
+  };
+  // 是否有中间菜单 ，
+  // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
+  // 如果没有 需要逻辑分流计算 列表请求参数
+  let has_mid_menu =
+    Object.values(mid_menu_show).filter((x) => x).length > 0;
+  result.has_mid_menu = has_mid_menu;
+  if (!has_mid_menu) {
+    //如果 没有中间菜单  ，则 需要传递 辅助计算 列表参数的 字段
+    result.mid_menu_refer_params = mid_menu_refer_params;
+  }
+  // jinri_zaopan_men_result.value = result; ????????
+  // console.log("当前选中的 侧边 二级菜单 ------------ ", result);
+  menu_config.set_left_menu_result(result);
+}
+
+/**
+ * 一级菜单数量计算
+ * @param {*} mi
+ */
+const lv_1_num = mi => {
+
+  if (mi == 2000) {
+    //电竞
+    let sub_list = base_data.dianjing_sublist;
+    let num = 0;
+    sub_list.map((x) => {
+      //  1  滚球  3 早盘  4 冠军  合计得出总数
+      num = num + lv_1_num_sublist_dianjing(x.mi);
+    });
+    return num;
+  } else if ([118, 300].includes(1 * mi)) {
+    //娱乐 和 VR
+    let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+    let sl = obj["sl"] || [];
+    let n = 0;
+    sl.map((x) => {
+      n = n + x.ct;
+    });
+    return n;
+  } else if (mi == 400) {
+    // "冠军"
+    let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+    return obj["ct"];
+  } else {
+    //  今日 或者 早盘
+    let changgui = compute_num(`${mi}${jinri_zaopan}`, mi) || 0;
+    // 冠军
+    let guanjun = compute_num(`${mi}4`, mi) || 0;
+    return changgui + guanjun;
+  }
+}
+/**
+ * 计算单个电竞赛种的  数量总数
+ */
+const lv_1_num_sublist_dianjing = (mi, mif) => {
+  let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+  let sl = obj["sl"] || [];
+  let n = 0;
+  //  1  滚球  3 早盘  4 冠军  合计得出总数
+  // let arr = [`${mi}1`, `${mi}3`, `${mi}4`];
+  sl.map((x) => {
+    // if (arr.includes(x.mi)) {
+    n = n + x.ct;
+    // }
+  });
+  return n;
+}
+/**
+ *   菜单数量计算  冠军  / 今日 或者 早盘
+ * @param {*} mi
+ */
+const compute_num = (mi, mif) => {
+  //球类
+  let obj = base_data.mew_menu_list_res.find((x) => x.mi == mif) || {};
+  //冠军
+  let obj2 = (obj.sl || []).find((x) => x.mi == mi) || {};
+  return obj2["ct"] || 0;
+}
 
 /**
  * 详情页回首页
@@ -384,575 +895,55 @@ const bet_count = () => {
 const set_route_url = () => {
   let { name } = $route
   if (['details', 'search', 'video', 'virtual_details'].includes(name)) {
-    router.push({path:'/home'})
+    $router.push('/home');
   }
-  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE,'match')
-
-  // set_filter_select_obj([])
+  vx_set_layout_list_type('match')
+  set_filter_select_obj([])
+  first_change.value = false
 }
 /**
- * 新菜单点击
+ * 今日早盘按钮点击
+ * @param {*} val
  */
-const new_menu_click = val => {
-  // if(!['101201','101',].includes(val) ){
-  //   set_unfold_multi_column(false)
-  // }
-  let mid_menu_show = {}
-
-  let lv2_mi = ''
-  if (val == 1) {
-    mid_menu_show.list_filter = true
-    // 滚球 默认全部
-    lv2_mi = 1
-  } else if (val == 500) {
-    mid_menu_show.list_filter_hot = true
-    // 热门默认赛事
-    let mi_500_obj = base_data.mew_menu_list_res.find((x) => x.mi == 500) || {
-      sl: [],
-    };
-    // 热门赛事有值的
-    let { mi } = mi_500_obj['sl'].find(item => item.ct)
-    lv2_mi = mi
-  }
-  // 清除数据 和 重置收藏
+const handle_click_jinri_zaopan = val => {
   set_route_url()
 
-  let params = {
-    root: val,
-    lv1_mi: '',
-    lv2_mi,
-    sports: '',
-    guanjun: "",
-  };
-  // 设置      中间 菜单输出
-  menu_config.set_mid_menu_result(params);
-
-  menu_config.set_left_menu_result({
-    root: val,
-    lv1_mi: '',
-    lv2_mi,
-    sports: '',
-    guanjun: "",
-    mid_menu_show,
-    has_mid_menu: true,
-  })
+  let lv1_mi = current_lv_1_mi || '101'
+  // 今日/早盘下的 冠军和VR 点击今日、早盘后 默认为足球
+  if ([400, 300].includes(Number(menu_config.menu_root))) {
+    lv1_mi = '101'
+  }
+  //current_lv_1_mi.value = ''
+  lev_1_click(lv1_mi, val)
+}
+// 模拟推送
+const send_menu = () => {
+  base_data.set_ws_send_new_menu_init()
+}
+const send_user = () => {
+  base_data.set_ws_send_new_user_info_init()
+}
+const send_vr = () => {
+  base_data.set_ws_send_new_vr_menu_init()
 }
 
 
-/**
- * @description 左侧菜单与投注栏切换时调用
- * @param  {string} page  类似类型
- * @return {undefined} undefined
- */
-const change_left_menu = page => {
-  // 设置左侧显示
-  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE,page)
-}
-const toggle_merge = () => {
-  useMittEmit(MITT_TYPES.EMIT_OPEN_MAERGE_BET,!props.is_bet_merge)
-  if (is_bet_merge) {
-    // $utils.send_zhuge_event('PC_合并');
-  }
-  let len = props.bet_single_list.length;
-  // 取消合并
-  if (!props.is_bet_merge && len > 1) {
-    let id = props.bet_single_list[len - 1];
-    let bet_single_obj = {} // _.cloneDeep(_.get(vx_get_bet_single_obj, `${id}`));
-    // vx_bet_single_clear();
-    // vx_set_bet_single_list([id]);
-    bet_single_obj.key = id;
-    // mode为清除原有的添加最新的
-    bet_single_obj.mode = "clear_and_add";
-    // vx_bet_single_obj_attr(bet_single_obj);
-  }
-}
 
-//诸葛埋点事件
-const record_zhuge_point = menu_type => {
-  let eventLabel = 'PC_现场滚球盘'
-  if (menu_type == 'hot') {
-    eventLabel = 'PC_热门赛事'
-  }
-  // 发送埋点事件
-  // $utils.send_zhuge_event(eventLabel);
-}
-/**
- * @Description 设置用户偏好
- * @param {undefined} undefined
-*/
-const set_user_preference = (cur, old) => {
-  let userMarketPrefer;
-  if (cur == 18) {
-    userMarketPrefer = 'EU'
-  } else if (old == 18) {
-    userMarketPrefer = vx_get_pre_odd;
-  }
-  if (!userMarketPrefer || userMarketPrefer == get_cur_odd) {
-    return
-  }
-  // 设置用户偏好
-  api_betting.record_user_preference({ userMarketPrefer }).then((res) => {
-    let code = _.get(res, 'data.code');
-    if (code == 200) {
-      if (cur == 18) {
-        // 设置盘口类型
-        // vx_set_pre_odd(vx_get_pre_odd);
-        // vx_set_cur_odd('EU');
-      } else if (old == 18) {
-        // vx_set_pre_odd(vx_get_pre_odd);
-      }
-    }
-  });
-}
-/**
- * @description 设置滚动数据
- * @param  {string} type  类型
- * @param  {oject} _this  上下文对象
- * @return {undefined} undefined
- */
-const set_scroll_this = ({ type, _this }) => {
-  // this[type] = _this
-}
-const get_unsettle_tickets_count = () => {
-  let param = {};
-  // console.log('get_unsettle_tickets_count====',param);
 
-  api_betting.get_unsettle_tickets_count(param).then(response => {
-    let count = _.get(response, 'data.data') || 0;
-    let status = _.get(response, 'status');
-    if (status == 200) {
-      count = count;
-    }
-  }).catch(error => {
-      console.error(error);
-    });
-}
 </script>
+<style lang="scss" scoped>
+/* 体育菜单 */
+.c-menu-sports {
 
-<style lang="scss">
-.c-main-menu {
-  font-size: 13px;
-  /* *** 头部 ************ -S */
-  z-index: 211;
-  width: 100%;
-
-  .header-wrap {
-    padding: 4px 10px 4px 15px;
-    height: 40px;
-    font-weight: 500;
-    line-height: 1.3;
-
-    /*  用户信息 */
-    .user-info {
-      padding-right: 10px;
-      font-size: 12px;
-    }
-
-    /*  用户余额 */
-    .balance-wrap {
-      width: 100%;
-      height: 15px;
-      font-size: 14px;
-
-      /*  用户余额隐藏 */
-      .balance-text-hide {
-        font-size: 16px;
-        // color: var(--qq--theme-color-icon-eye);
-        /* 是否显示余额图标 */
-      }
-
-      .balance-btn-eye {
-        margin-left: 10px;
-      }
-
-      /*  刷新余额按钮 */
-      .refresh-btn {
-        position: absolute;
-        top: -8px;
-        right: 10px;
-        bottom: 11px;
-        width: auto !important;
-
-        .icon-refresh:before {
-          font-size: 14px;
-        }
-      }
-    }
+  /* 体育菜单标题 */
+  .menu-item-title {
+    height: 32px !important;
+    margin-bottom: 2px;
+    font-size: 12px;
   }
 
-  /* *** 头部 ************ -E */
-  .scroll-inner-wrap {
-    margin-bottom: 10px;
+  .menu-tab {
+    padding: 0 !important;
   }
-
-  /* *** 体育 ************ -S */
-  .c-menu-sports {
-    .menu-item {
-      &.menu-tab {
-        font-size: 13px;
-        justify-content: space-around;
-        padding: 10px 4px;
-
-        .item {
-          height: 30px;
-          border-radius: 8px;
-          margin-right: 10px;
-          flex: 1;
-          white-space: nowrap;
-          max-width: 95px;
-
-          &:last-child {
-            margin-right: 0;
-          }
-
-          &.active {
-            font-weight: 600;
-            font-size: 14px;
-          }
-
-          &.active1 {
-            margin-left: 152px;
-          }
-        }
-      }
-    }
-  }
-
-  /* *** 体育 ************ -E */
-  /* *** 公共 ************ -S */
-  .menu-wrap {
-    cursor: pointer;
-
-    .no-click {
-      cursor: auto;
-
-      &:hover {
-        background: none !important;
-      }
-    }
-
-    .menu-item {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      &.active {
-        font-weight: 700;
-        border-bottom: 0;
-      }
-
-      .hot-icon {
-        width: 14px;
-        height: 14px;
-        margin-right: 10px;
-      }
-
-      .menu-new-icon {
-        margin: 0 0 3px 4px;
-      }
-
-      .match-count {
-        padding-right: 15px;
-        display: inline-block;
-        width: 40px;
-        text-align: right;
-        max-width: 45px;
-      }
-
-      &.disable-hover {
-        &:hover {
-          background-color: transparent !important;
-        }
-      }
-
-      &.menu-top {
-        padding: 0 15px 0 16px;
-        height: 40px;
-        border-right: 2px solid transparent;
-
-        .match-count {
-          padding-right: 0;
-        }
-
-        &.menu-virtual {
-          .menu-name {
-            margin-left: 10px;
-          }
-        }
-
-        &.hot-menu {
-          &:hover {
-            background: none;
-          }
-        }
-
-        &.item-bet {
-          width: 200px;
-          height: 36px;
-          border-radius: 10px;
-          border-right: 0;
-          margin-left: 10px;
-        }
-
-        &.no-click {
-          font-size: 12px;
-        }
-      }
-
-      &.menu-fold1,
-      &.menu-fold2 {
-        padding-left: 16px;
-        height: 36px;
-
-        &.active {
-          border-bottom: 0;
-
-          & .items-right.menu-border {
-            border-bottom: 1px solid transparent;
-          }
-
-          & .menu-border {
-            border-bottom: 1px solid transparent;
-          }
-        }
-
-        .league-logo {
-          width: 18px;
-          height: 18px;
-        }
-
-        .items-right {
-          margin-left: 10px;
-          flex: 1;
-          align-items: center;
-          justify-content: space-between;
-          height: 100%;
-
-          .live-text {
-            position: relative;
-            top: 2px;
-            ;
-            display: inline-block;
-            width: 26px;
-            height: 12px;
-          }
-        }
-      }
-    }
-
-    /*  玩法 菜单项 */
-    .menu-fold2-wrap {
-      max-height: 0px;
-      overflow: hidden;
-      transition: max-height 0.2s;
-
-      &.open {
-        max-height: 500px;
-      }
-
-      .menu-fold2 {
-        padding: 0 0 0 43px;
-        border-right: 2px solid transparent;
-
-        .menu-border {
-          position: absolute;
-          width: 128px;
-          height: 1px;
-          right: 0;
-          bottom: 0;
-        }
-
-        .menu-point {
-          position: absolute;
-          left: -18px;
-          width: 4px;
-          height: 4px;
-          border-radius: 100%;
-        }
-
-        .menu-text {
-          max-width: 130px;
-        }
-
-        .match-count {
-          padding-right: 13px;
-        }
-
-        &.menu-virtual {
-          padding-left: 34px;
-        }
-      }
-    }
-  }
-
-  .hot-menu-wrap {
-    margin-top: 15px;
-
-    .level2 {
-      .menu-text {
-        max-width: 170px;
-      }
-    }
-  }
-
-  .menu-normal-fixed-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 40px;
-    cursor: pointer;
-
-    .left {
-      padding-left: 15px;
-
-      .icon-menu_show_normal {
-        margin-right: 5px;
-      }
-    }
-
-    .right {
-      padding-right: 15px;
-      height: 100%;
-
-      .icon-close {
-        transform: scale(0.7);
-      }
-    }
-
-    &.normal-close {
-      height: 32px;
-      justify-content: center;
-
-      .icon-close {
-        transform: scale(0.7);
-      }
-    }
-  }
-
-  .bet-mode-zone {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    height: 40px;
-    align-items: center;
-
-    .left {
-      display: flex;
-      align-items: center;
-      padding-left: 15px;
-
-      .bet-single-count {
-        border-radius: 10px;
-        color: #ffffff;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-        margin-left: 5px;
-        text-align: center;
-        transform: scale(0.8);
-      }
-    }
-
-    .right {
-      display: flex;
-      flex-wrap: nowrap;
-      margin-right: 10px;
-
-      .check-box {
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        padding-left: 5px;
-        padding-right: 5px;
-
-        .check-wrap {
-          padding: 0;
-          margin-right: 5px;
-        }
-      }
-    }
-  }
-
-  .tip-content {
-    width: calc(100% - 20px);
-    height: 100px;
-    position: absolute;
-    bottom: 0;
-    z-index: 500;
-    top: 40px;
-    left: 10px;
-
-    &.top-content {
-      top: 5px;
-    }
-
-    .content-wrap {
-      position: absolute;
-      top: 6px;
-      width: 100%;
-      background: #fff;
-      border: 2px solid #ff781d;
-      border-radius: 5px;
-
-      .content {
-        padding: 10px;
-        font-size: 12px;
-
-        .row-1,
-        .row-2,
-        .row-3 {
-          color: #2d2d2d;
-          text-align: center;
-        }
-
-        .row-1 {
-          margin-bottom: 10px;
-          font-size: 14px;
-          color: #ff781d;
-          font-weight: bold;
-        }
-      }
-
-      .triangle,
-      .triangle1 {
-        position: absolute;
-        background: #fff;
-        border: 2px solid #ff781d;
-        border-top: 0;
-        border-left: 0;
-        width: 15px;
-        height: 15px;
-        transform: rotate(45deg);
-        top: 81px;
-        right: 22px;
-      }
-
-      .triangle1 {
-        top: 116px;
-      }
-
-      .icon-del {
-        position: absolute;
-        top: 16px;
-        right: 10px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  /* *** 公共 ************ -E */
-
-}
-
-.bet-view {
-  width: 220px;
-}
-
-.bet-bg-tooltip {
-  background: #A3AFBF;
-  color: #FFFFFF;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
 </style>
