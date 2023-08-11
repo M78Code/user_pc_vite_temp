@@ -52,9 +52,9 @@ import searchPlay from "./search-play.vue"
 // 搜索查询结果组件
 import searchResult from "./search-result.vue"
 // TODO:
- // 引入tab切换栏组件
-// import Tab from "src/public/components/tab/common-tab.vue"
- // 搜索模块js
+// 引入tab切换栏组件
+import { TabWapper } from "src/components/common/tab"
+// 搜索模块js
 import { api_search } from "src/public/api/index.js";
 // TODO: 待确认
 import search from "src/public/utils/searchClass/search.js"
@@ -67,7 +67,7 @@ export default defineComponent({
     searchSports,
     searchPlay,
     searchResult,
-    Tab,
+    Tab: TabWapper,
   },
   setup() {
     /** 显示类型 */

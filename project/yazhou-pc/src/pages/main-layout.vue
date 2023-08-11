@@ -19,7 +19,8 @@
 
 
 <script setup>
-  // import leftMenu from "./menu/left-menu.vue"
+import leftMenu from "./menu/index.vue"
+  // import leftMenu from "./left-menu/index.vue"
 </script>
 <style scoped lang="scss">
 .c-main-scroll {

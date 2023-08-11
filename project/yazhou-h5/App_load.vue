@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from "vuex";
+// import { mapGetters, mapActions, mapMutations } from "vuex";
 // websocket Log文件
  
 import {WsLog_H5 as WsLog} from  "src/core/log/log-config.js"
@@ -48,8 +48,7 @@ export default {
     this.timer2 = null;
     // 设置商户样式
 
-    this.timerFormat();
-    this.init_version_name();
+    // this.init_version_name();
     this.on_listeners();
 
     // 初始化启动日志系统--开发模式时日志打开
@@ -62,7 +61,7 @@ export default {
     }
     // 发送日志
     // window.wslog.sendMsg('xxx');
-    this.set_vue_hidden_run(false);
+    // this.set_vue_hidden_run(false);
     this.timer2 = setTimeout(() => {
       this.vue_hidden_run_flg = true;
     }, 4000);
@@ -91,11 +90,11 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["set_global_click_count"]),
-    ...mapActions({
-      init_version_name: "init_version_name",
-      set_vue_hidden_run: "set_vue_hidden_run",
-    }),
+    // ...mapMutations(["set_global_click_count"]),
+    // ...mapActions({
+    //   init_version_name: "init_version_name",
+    //   set_vue_hidden_run: "set_vue_hidden_run",
+    // }),
     /**
      *@description 事件preventDefault函数执行体
      */
@@ -119,7 +118,7 @@ export default {
         window.DOCUMENT_HIDDEN = "";
       }
       // 设置当前页面是否后台运行中状态
-      this.set_vue_hidden_run(is_hidden);
+      // this.set_vue_hidden_run(is_hidden);
 
       //页面失去焦点 ，隐藏   后台运行
       if (is_hidden) {
@@ -153,42 +152,7 @@ export default {
     appclick(e) {
       e.preventDefault();
       // 全局点击次数+1
-      this.set_global_click_count();
-    },
-    // 对Date的扩展，将 Date 转化为指定格式的String
-    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
-    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
-    // 例子：
-    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
-    // (new Date()).Format("yyyy-M-d h:m:s.S") ==> 2006-7-2 8:9:4.18
-    timerFormat() {
-      Date.prototype.Format = function (fmt) {
-        var o = {
-          "M+": this.getMonth() + 1, // 月份
-          "d+": this.getDate(), // 日
-          "h+": this.getHours(), // 小时
-          "m+": this.getMinutes(), // 分
-          "s+": this.getSeconds(), // 秒
-          "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-          S: this.getMilliseconds(), // 毫秒
-        };
-        if (/(y+)/.test(fmt))
-          fmt = fmt.replace(
-            RegExp.$1,
-            (this.getFullYear() + "").substr(4 - RegExp.$1.length)
-          );
-        for (var k in o) {
-          if (new RegExp("(" + k + ")").test(fmt)) {
-            fmt = fmt.replace(
-              RegExp.$1,
-              RegExp.$1.length == 1
-                ? o[k]
-                : ("00" + o[k]).substr(("" + o[k]).length)
-            );
-          }
-        }
-        return fmt;
-      };
+      // this.set_global_click_count();
     },
     // 添加相应监听事件
     on_listeners() {

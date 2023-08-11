@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/project/pages/details/components/chatroom/chatroom.vue
+ * @FilePath: d:/projects/user-h5/project_path/src/pages/details/components/chatroom/chatroom.vue
  * @Description: 聊天室组件
 -->
 <template>
@@ -46,16 +46,16 @@
 </template>
 <script>
 
-import input_field from 'src/project/pages/details/components/chatroom/input_field.vue'; // 输入框组件
+import input_field from 'project_path/src/pages/details/components/chatroom/input_field.vue'; // 输入框组件
 // #TODO vuex 
 // import { mapMutations, mapGetters } from "vuex";
-import post_bet from 'src/project/pages/details/components/chatroom/post_bet.vue';
-import msg_list from 'src/project/pages/details/components/chatroom/msg_list.vue';   // 消息列表组件
+import post_bet from 'project_path/src/pages/details/components/chatroom/post_bet.vue';
+import msg_list from 'project_path/src/pages/details/components/chatroom/msg_list.vue';   // 消息列表组件
 import { api_chatroom } from "src/project/api/index.js";
-// import chatroom_mixin from 'src/project/pages/details/components/chatroom/chatroom_mixin'
-// import mqtt_mixin from 'src/project/pages/details/components/chatroom/mqtt_mixin'
-import { get_valid_api } from 'src/project/pages/details/components/chatroom/check_domain.js'
-import notice_bar from 'src/project/pages/details/components/chatroom/notice_bar.vue';
+// import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
+// import mqtt_mixin from 'project_path/src/pages/details/components/chatroom/mqtt_mixin'
+import { get_valid_api } from 'project_path/src/pages/details/components/chatroom/check_domain.js'
+import notice_bar from 'project_path/src/pages/details/components/chatroom/notice_bar.vue';
 import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

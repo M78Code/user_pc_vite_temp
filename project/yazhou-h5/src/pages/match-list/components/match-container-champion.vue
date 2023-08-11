@@ -85,6 +85,7 @@
  
 <script setup>
 import { computed } from "vue";
+import lodash from 'lodash'
 import EMITTER from  "src/global/mitt.js"
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import bettings from "src/project/mixins/betting/betting";
@@ -148,7 +149,7 @@ const collapsed = computed(() => {
 
 const is_show = computed(() => {
   let flag = true;
-  if( _.get(props.match_of_list, 'hps')){
+  if( lodash.get(props.match_of_list, 'hps')){
     flag = !props.match_of_list.hps.every(item => item.hs == 2)
   }
 
@@ -206,7 +207,7 @@ const is_show_league = (i) => {
  * @returns {Boolean}
  */
 const get_sport_show = (i) => {
-  if (!_.get(get_current_menu, 'main.menuType')) {
+  if (!lodash.get(get_current_menu, 'main.menuType')) {
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
       if (p && c) {
@@ -215,7 +216,7 @@ const get_sport_show = (i) => {
     } else {
       return true;
     }
-  } else if ([1, 2, 3, 4, 11, 12,100].includes(_.get(get_current_menu, 'main.menuType'))) {
+  } else if ([1, 2, 3, 4, 11, 12,100].includes(lodash.get(get_current_menu, 'main.menuType'))) {
 
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
@@ -257,7 +258,7 @@ const gen_collapse_key = (match) => {
  * @return {Undefined}
  */
 consttoggle_collapse_state = () => {
-  let map_collapse = _.cloneDeep(get_collapse_map_match);
+  let map_collapse = lodash.cloneDeep(get_collapse_map_match);
   if(map_collapse){
     // 翻转折叠时始终将 赛事列表请求状态设为false
     store.dispatch({ type: 'matchReducer/set_match_list_loading',  payload: false })

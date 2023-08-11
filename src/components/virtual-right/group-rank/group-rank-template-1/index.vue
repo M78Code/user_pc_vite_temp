@@ -44,22 +44,31 @@
 </template>
 
 <script>
-
-export default {
+// #TODO vuex 
+// import { mapGetters, mapActions } from "vuex"
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "groupRank",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  created(){
-    this.vsport_ctr.set_group_rank_list()
-  },
-  destroyed(){
-    this.vsport_ctr.group_rank_list = []
+  setup(props, evnet) {
+    const data = reactive({
+      img_grey_point :require('public/image/yabo/svg/grey-point.svg')
+    });
+    onMounted(() => {
+      vsport_ctr.set_group_rank_list()
+    });
+    onUnmounted(() => {
+      vsport_ctr.group_rank_list = []
+    })
+    return {
+      ...toRefs(data)
+    }
   }
-};
+})
 </script>
-
 <style lang="scss" scoped>
 .group-rank {
   .col1 {

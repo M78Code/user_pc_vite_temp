@@ -1,5 +1,5 @@
 /*
- * @FilePath: d:/projects/user-h5/src/project/pages/details/components/chatroom/chatroom_mixin.js
+ * @FilePath: d:/projects/user-h5/project_path/src/pages/details/components/chatroom/chatroom_mixin.js
  * @Description: 聊天室公用逻辑
  */
 import {

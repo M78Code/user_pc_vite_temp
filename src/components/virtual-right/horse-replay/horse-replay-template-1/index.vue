@@ -18,20 +18,23 @@
 </template>
 
 <script>
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "horseReplay",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object,
   },
-  data(){
-    return {
+  setup(props, evnet) {
+    const data = reactive({
       match:this.vsport_ctr.replay_list[0]
+    });
+    return {
+      ...toRefs(data)
     }
   }
-};
+})
 </script>
-
 <style lang="scss" scoped>
 .rank-col {
   width: 18%;
