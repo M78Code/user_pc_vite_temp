@@ -7,6 +7,8 @@ import userReducer from './module/userInfo'
 import betInfoReducer from './module/betInfo'
 import matchesReducer from './module/matches'
 import menuReducer from './module/menu'
+import detailsReducer from './module/details'
+
 
   const store = configureStore( {
 
@@ -18,6 +20,7 @@ import menuReducer from './module/menu'
       betInfoReducer,
       matchesReducer,
       menuReducer,
+      detailsReducer
     }
   })
 

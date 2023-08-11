@@ -1,18 +1,21 @@
 /*
  * @Description: H5 主菜单 逻辑
  */
-// import utils from 'src/public/utils/utils.js';
+import utils from 'src/public/utils/utils.js';
 import { api_home } from "src/project/api/index.js";
-import { local_menu_data } from "src/project/pages/sport-menu/config/common-menu.js" //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
+//  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
+import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js" 
 // import {mapGetters} from "vuex";
-// TODO: 后续改造
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import lodash from 'lodash'
+
 export default {
   methods: {
     // 初始化监听事件
     on_listeners() {
-      this.$root.$on(this.emit_cmd.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
-      this.$root.$on(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
-      this.$root.$on(this.emit_cmd.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
+      useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
+      useMittOn(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
+      useMittOn(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
     },
     // 调用接口，更新菜单数据
     // follow 代表是 点击关注时，触发这个 方法
@@ -21,20 +24,20 @@ export default {
         cuid: this.cuid
       }
       api_home.get_menu_init(param).then(res => {
-        let menu_data = _.get(res, "data");
+        let menu_data = lodash.get(res, "data");
         // 如果接口正常，有数据
         if (menu_data) {
           this.remove_crosstalk(menu_data)
           // 如果没有get_home_data 数据，则走接口数据形式  first_load 代表是第一次加载菜单接口
-          if(_.isEmpty(this.get_home_data)) {
+          if(lodash.isEmpty(this.get_home_data)) {
             this.menu_first_load(menu_data,'first_load')
           }else if(follow == 'follow'){ //  点击关注才会触发这个方法
             this.menu_first_load(menu_data,follow)
           }
           // 更新主菜单列表
-          this.update_main_menu_list(_.cloneDeep(menu_data));
+          this.update_main_menu_list(lodash.cloneDeep(menu_data));
           // 设置菜单缓存数据
-          this.save_home_data(_.cloneDeep(_.get(res, "data")))
+          this.save_home_data(lodash.cloneDeep(lodash.get(res, "data")))
         }else{
           // 如果接口正常，没有数据，则走本地缓存数据
           this.local_full_menu_method()
@@ -108,9 +111,9 @@ export default {
     record_main_index(main_index){
       let main_menu_first_i = 1;
       // 虚拟体育menuId是 407, 电竞 410
-      if(_.get(this.get_current_first_menu, 'menuType') == 1) {  main_menu_first_i = 0; }
-      else if(_.get(this.get_current_first_menu, 'menuType') == 3000) {  main_menu_first_i = 2; }
-      else if(_.get(this.get_current_first_menu, 'menuType') == 900) {  main_menu_first_i = 3; }
+      if(lodash.get(this.get_current_first_menu, 'menuType') == 1) {  main_menu_first_i = 0; }
+      else if(lodash.get(this.get_current_first_menu, 'menuType') == 3000) {  main_menu_first_i = 2; }
+      else if(lodash.get(this.get_current_first_menu, 'menuType') == 900) {  main_menu_first_i = 3; }
       this.prev_main_menu_i = main_menu_first_i;
     },
     //一级菜单初始化加载
@@ -119,10 +122,10 @@ export default {
       if(this.get_sport_all_selected){
         this.select_all_sub_menu_handle()
       }else{
-        this.sub_menu_i = _.findIndex(this.sub_menu_list,{menuId:this.get_current_sub_menuid});
+        this.sub_menu_i = lodash.findIndex(this.sub_menu_list,{menuId:this.get_current_sub_menuid});
         // 如果首次是进入列表页，找不到赛事时，要查找第一个有赛事的二级菜单
         if(this.sub_menu_i < 0) {
-          this.sub_menu_i = this.find_second_menu_have_first_match()
+          // this.sub_menu_i = this.find_second_menu_have_first_match()
           // 如果是电竞，则默认调用第一个tab 选项卡
           if(this.menu_type == 3000){
             this.sub_menu_i = 0
@@ -147,24 +150,27 @@ export default {
       let middle = this.main_select_items[this.selector_w_m_i ? this.selector_w_m_i : 0]; // 当前选中的 中间一级菜单
       this.main_menu_list_items = [];
       if(first){  // 滚球
-        this.main_menu_list_items.push(_.cloneDeep(first));
+        this.main_menu_list_items.push(lodash.cloneDeep(first));
       }
       if(middle){ // 中间的 一级菜单
-        this.main_menu_list_items.push(_.cloneDeep(middle));
+        this.main_menu_list_items.push(lodash.cloneDeep(middle));
       }
       if(esport){ // 电竞
-        this.main_menu_list_items.push(_.cloneDeep(esport));
+        this.main_menu_list_items.push(lodash.cloneDeep(esport));
       }
       if(virtual){ // 虚拟体育
-        this.main_menu_list_items.push(_.cloneDeep(virtual));
+        this.main_menu_list_items.push(lodash.cloneDeep(virtual));
       }
     },
     // 查找第一个有赛事的二级菜单的 位置下标
     find_second_menu_have_first_match(){
+
       let sub_menu_list_index = -1
       // 二级菜单数据
-      for(let i = 0, len = this.sub_menu_list.length; i < len; i++){
-        if(this.sub_menu_list[i].count > 0 ){ // 二级菜单其中一个有数量，赋值下标
+      // console.error('sssss')
+      let new_main_menu_list_items = this.new_main_menu_list_items
+      for(let i = 0, len = new_main_menu_list_items.length; i < len; i++){
+        if(new_main_menu_list_items[i].ct > 0 ){ // 二级菜单其中一个有数量，赋值下标
           sub_menu_list_index = i
           break
         }
@@ -182,7 +188,7 @@ export default {
         //当前选中项菜单赛事数量小于1,则 切换另一个赛事数量不为0的菜单
         if(+found_sub.count < 1){
           let f_i = -1;
-          f_i = this.find_second_menu_have_first_match()
+          // f_i。 = this.find_second_menu_have_first_match()
           if(f_i > -1){
             this.sub_menu_changed(f_i, 'dir_click');
           }
@@ -203,7 +209,7 @@ export default {
         this.sub_menu_list = this.main_menu_list_items[this.get_main_menu_dom_i].subList
       }
       // 更新二级菜单滚球 里边的 全部菜单赛事数量
-      this.update_gunqiu_count (_.cloneDeep(menu_list));
+      this.update_gunqiu_count (lodash.cloneDeep(menu_list));
       this.$forceUpdate()
     },
     // 统计菜单赛事数量(调用接口)
@@ -215,11 +221,10 @@ export default {
         //接口调用
         let fun_temp = ()=> {
           api_home.get_menu_init(params).then(res => {
-            // console.error(res);
-            let menu_data = _.get(res, "data");
+            let menu_data = lodash.get(res, "data");
             if(menu_data){
               this.remove_crosstalk(menu_data)
-              this.main_menu_list = _.cloneDeep(menu_data)
+              this.main_menu_list = lodash.cloneDeep(menu_data)
               let list_ = utils.menu_to_list_menu_conut(menu_data);
               this.menu_match_count_change_on(list_);
             }
@@ -235,8 +240,9 @@ export default {
      * @return {Undefined}
      */
     menu_match_count_change_on(skt_data) {
+      return
       //更新二级菜单
-      let sub_menu_list_copy = _.cloneDeep(this.sub_menu_list);
+      let sub_menu_list_copy = lodash.cloneDeep(this.sub_menu_list);
       sub_menu_list_copy.forEach(sub_menu => {
         skt_data.forEach(item => {
           if (sub_menu.menuId == item.menuId ) {
@@ -246,7 +252,7 @@ export default {
       });
       this.sub_menu_list = sub_menu_list_copy
       //更新主菜单
-      let main_menu_array = _.cloneDeep(this.main_menu_list);
+      let main_menu_array = lodash.cloneDeep(this.main_menu_list);
       main_menu_array.forEach((main,m_i) => {
         skt_data.forEach(item => {
           if(item.menuId == main.menuId ){
@@ -264,7 +270,7 @@ export default {
           }
         });
       });
-      let m_m_a_copied = _.cloneDeep(main_menu_array);
+      let m_m_a_copied = lodash.cloneDeep(main_menu_array);
       this.main_menu_list = m_m_a_copied
       this.get_main_menu_init_data();
       this.check_selected_is_nomatch();
@@ -278,8 +284,8 @@ export default {
     //  获取二级菜单的列表数据 和 二级菜单 选中的下标
     get_sub_dom_i_handle(main_data_i,s_menu_id){
       let curr_sub_list = this.main_menu_list[main_data_i].subList;
-      this.sub_menu_list = _.cloneDeep(curr_sub_list);
-      this.sub_menu_i = _.findIndex(this.sub_menu_list,{menuId:s_menu_id});
+      this.sub_menu_list = lodash.cloneDeep(curr_sub_list);
+      this.sub_menu_i = lodash.findIndex(this.sub_menu_list,{menuId:s_menu_id});
       this.selected_sub_menu_i_list = [this.sub_menu_i];
     },
     // 监听然后触发隐藏弹出框动作
@@ -299,7 +305,7 @@ export default {
       let main_id = this.get_global_route_menu_param.m;
       let s_menu_id = this.get_global_route_menu_param.s;
       if(main_id){
-        main_data_i = _.findIndex(this.main_menu_list, {menuId: main_id});
+        main_data_i = lodash.findIndex(this.main_menu_list, {menuId: main_id});
         // 如果没有找到，默认 0
         if(main_data_i <0) { main_data_i = 0 }
         // 获取主菜单dom元素下标
@@ -310,7 +316,7 @@ export default {
         sub_id = this.check_sub_id_illegal(main_data_i,sub_id);
         this.set_current_sub_menuid(sub_id);
         // 获取二级菜单的列表数据 和 二级菜单 选中的下标
-        // this.sub_menu_list = _.cloneDeep(curr_sub_list)    this.sub_menu_i    this.selected_sub_menu_i_list=[this.sub_menu_i]
+        // this.sub_menu_list = lodash.cloneDeep(curr_sub_list)    this.sub_menu_i    this.selected_sub_menu_i_list=[this.sub_menu_i]
         this.get_sub_dom_i_handle(main_data_i,sub_id);
         // 选择菜单获取赛事   代表   滚球   电竞   虚拟体育
         if([400,407,410].includes(+main_id)){
@@ -341,14 +347,14 @@ export default {
         if(route_menu_param.mt1 && route_menu_param.mt2){
           let menu_subList = null;
           for (let i = 0; i < menu_data.length; i++) {
-            if(route_menu_param.mt1 == _.get(menu_data,i+'.menuType')){
-              route_menu_param.m = _.get(menu_data,i+'.menuId');
-              menu_subList = _.get(menu_data,i+'.subList')
+            if(route_menu_param.mt1 == lodash.get(menu_data,i+'.menuType')){
+              route_menu_param.m = lodash.get(menu_data,i+'.menuId');
+              menu_subList = lodash.get(menu_data,i+'.subList')
               if(menu_subList){
                 for (let j = 0; j < menu_subList.length; j++) {
-                  if(route_menu_param.mt2 == _.get(menu_subList,j+'.menuType')){
-                    let menu_id2=_.get(menu_subList,j+'.menuId');
-                    let parent_id=_.get(menu_subList,j+'.parentId');
+                  if(route_menu_param.mt2 == lodash.get(menu_subList,j+'.menuType')){
+                    let menu_id2=lodash.get(menu_subList,j+'.menuId');
+                    let parent_id=lodash.get(menu_subList,j+'.parentId');
                     if(parent_id && menu_id2 && menu_id2.startsWith(parent_id)){
                       route_menu_param.s = menu_id2.substring(parent_id.length);
                     }
@@ -363,14 +369,14 @@ export default {
           // 获取第一个有数量的  二级菜单
           let menu_subList = null;
           for (let i = 0; i < menu_data.length; i++) {
-            if(route_menu_param.mt1 == _.get(menu_data,i+'.menuType')){
-              route_menu_param.m = _.get(menu_data,i+'.menuId');
-              menu_subList = _.get(menu_data,i+'.subList')
+            if(route_menu_param.mt1 == lodash.get(menu_data,i+'.menuType')){
+              route_menu_param.m = lodash.get(menu_data,i+'.menuId');
+              menu_subList = lodash.get(menu_data,i+'.subList')
               if(menu_subList){
                 for (let j = 0; j < menu_subList.length; j++) {
-                  if(_.get(menu_subList,j+'.count')){
-                    let menu_id2=_.get(menu_subList,j+'.menuId');
-                    let parent_id=_.get(menu_subList,j+'.parentId');
+                  if(lodash.get(menu_subList,j+'.count')){
+                    let menu_id2=lodash.get(menu_subList,j+'.menuId');
+                    let parent_id=lodash.get(menu_subList,j+'.parentId');
                     if(parent_id && menu_id2 && menu_id2.startsWith(parent_id)){
                       route_menu_param.s = menu_id2.substring(parent_id.length);
                     }
@@ -386,7 +392,7 @@ export default {
       return res;
     },
     // 二级菜单  滚球的全选按钮
-    select_all_sub_menu_handle() {
+    select_all_sub_menu_handle_old() {
       let changeSubmenu = {}
       this.sub_menu_i = null;
       this.selected_sub_menu_i_list = [];
@@ -458,7 +464,7 @@ export default {
     go_home() {
       if (this.show_favorite_list) {
         this.set_show_favorite_list(false);
-        this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-follow"
         });
       } else {
@@ -468,30 +474,33 @@ export default {
       }
     },
     // 早盘,串关,电竞拉取接口更新日期菜单
-    get_date_menu_api_when_subchange(){
+    async get_date_menu_api_when_subchange(item){
       // 如果是早盘，串关，电竞的话
       if ([4,11,3000].includes(+this.menu_type) && this.get_current_sub_menuid) {
         // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
-        // this.$root.$emit('match_skeleton_screen_loading',true)
-        this.$root.$emit(this.emit_cmd.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
+        // useMittEmit('match_skeleton_screen_loading',true)
+        useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
         let api_func = null,params = {"euid":this.get_current_sub_menuid};
         if(3000 == this.menu_type){
           api_func = api_home.esport_date_menu_api;
-          params = {csid:this.get_current_second_menu.field1};
+          let value = item.mi.slice(1,4)
+          params = {csid:value};
           if(!params.csid){
-            params.csid = this.sub_menu_list[this.date_menu_curr_i].field1;
+            params.csid = value;
           }
         }
         else{
           api_func = api_home.post_date_menulist;
         }
-        api_func(params).then(res => {
+        await api_func(params).then(res => {
           if(res.code == 200){
             if(res.data && res.data.length){
               this.date_menu_list = res.data;
               this.set_current_date_menu(res.data);
               // 设置日期选中项  调用三级菜单点击事件，默认第一个
-              this.select_result_date_menu()
+              if(this.menu_type != 3000){
+                this.select_result_date_menu()
+              }
             }else{
               this.date_menu_list = [];
               this.set_current_date_menu([]);
@@ -519,15 +528,15 @@ export default {
       // 一级 主菜单 main, 二级菜单 sub， 三级菜单 date_menu
       let menu_record = {
         main: this.get_current_first_menu,
-        sub: this.get_current_second_menu,
+        sub: this.get_current_sub_menuid,
         date_menu: this.get_current_three_menu,
       };
       // 设置2级菜单类型
-      if(this.get_current_second_menu) { this.set_curr_sub_menu_type(_.get(this.get_current_second_menu, 'menuType')); }
+      if(this.get_current_second_menu) { this.set_curr_sub_menu_type(lodash.get(this.get_current_second_menu, 'menuType')); }
       if(this.get_current_three_menu){
         this.set_md(this.get_current_three_menu.field1)
         // 设置3级菜单id
-        this.set_curr_third_menu_id(_.get(this.get_current_three_menu, 'menuId'))
+        this.set_curr_third_menu_id(lodash.get(this.get_current_three_menu, 'menuId'))
       }
       this.set_current_menu(menu_record);
     },
@@ -538,7 +547,7 @@ export default {
     get_main_dom_i_handle(menu_id){
       let main_dom_i = 0;
       if(menu_id){
-        main_dom_i = _.findIndex(this.main_menu_list_items,{menuId:menu_id});
+        main_dom_i = lodash.findIndex(this.main_menu_list_items,{menuId:menu_id});
         if(main_dom_i == -1){
           main_dom_i = 1;
         }
@@ -628,8 +637,8 @@ export default {
     select_result_date_menu(){
       //设置日期选中下标
       let date_m_c_i;
-      if (this.get_current_menu && this.get_current_menu.date_menu && this.get_prev_menu_type == this.menu_type) {
-        date_m_c_i = _.findIndex(this.date_menu_list, {
+      if (this.get_current_menu && this.get_current_menu.date_menu && this.get_prev_menu_type == this.menu_type && this.get_current_menu.sub == this.get_current_sub_menuid) {
+        date_m_c_i = lodash.findIndex(this.date_menu_list, {
           menuId: this.get_current_menu.date_menu.menuId
         });
         if (date_m_c_i == -1) {
@@ -701,15 +710,6 @@ export default {
       return id;
     },
     // 切换到电竞时 的菜单 背景图片
-    dj_back_img() {
-      return {
-        dota: this.current_esport_csid == 101,
-        lol: this.current_esport_csid == 100,
-        wangzhe: this.current_esport_csid == 103,
-        csgo: this.current_esport_csid == 102,
-      }
-    },
-    // 切换到电竞时 的菜单 背景图片
     first_level_menu_subscript_css() {
       return {
         yb_fontsize12: ['th','ms', 'vi', 'ad'].includes(this.get_lang) || (['en'].includes(this.get_lang) && this.get_newer_standard_edition == 1)
@@ -719,8 +719,8 @@ export default {
     virtual_sports_results_tab() {
       // 如果有二级菜单
       if(this.sub_menu_list.length　> 0){
-        let obj = _.get(this.sub_menu_list[this.sub_menu_i], 'subList')
-        return _.get(obj && obj[this.date_menu_curr_i], 'subList')
+        let obj = lodash.get(this.sub_menu_list[this.sub_menu_i], 'subList')
+        return lodash.get(obj && obj[this.date_menu_curr_i], 'subList')
       }
       return null
     },
@@ -735,9 +735,9 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$root.$off(this.emit_cmd.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
-    this.$root.$off(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
-    this.$root.$off(this.emit_cmd.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
+    this.$root.$off(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
+    this.$root.$off(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
+    this.$root.$off(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
     clearTimeout(this.timer_super1)
     clearTimeout(this.timer_super2)
     clearTimeout(this.route_enter_timeout)

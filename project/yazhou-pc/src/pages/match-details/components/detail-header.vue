@@ -88,12 +88,22 @@ import ZhuGe from "src/core/http/zhuge-tag";
 import { sr_click_handle } from "src/core/match-detail/match-detail";
 import { useRoute, useRouter } from "vue-router";
 
+import store from 'src/store-redux-vuex/index.js';
+
 const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
 const back_to_timer = ref(null);
 
 const useRoute = useRoute();
 const useRouter = useRouter();
+
+  // 监听状态变化
+  let un_subscribe = store.subscribe(() => {
+    state = store.getState()
+    const { } =state.detailsReducer
+  
+  
+  });
 /**
  * @description 返回上一页
  */
@@ -117,7 +127,10 @@ const back_to = (is_back = true) => {
         keyword: useRoute.query.keyword,
         csid: useRoute.params.csid,
       });
-      this.set_search_status(true);
+      store.dispatch({
+      type: 'SET_SEARCH_STATUS',
+      data: true
+    })
     }
     let { from_path } = this.get_layout_cur_page;
     from_path = from_path || "/home";
@@ -125,7 +138,10 @@ const back_to = (is_back = true) => {
       from_path = "/home";
     }
     // 告知列表是详情返回：用于是否重新自动拉右侧内容
-    this.vx_set_is_back_btn_click(is_back);
+    store.dispatch({
+      type: 'SET_IS_BACK_BTN_CLICK',
+      data: is_back
+    })
     useRouter.push(from_path);
     if (from_path.includes("search")) {
       this.set_unfold_multi_column(false);
