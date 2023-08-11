@@ -84,8 +84,16 @@
 <script setup>
 import { ref } from "vue";
 import { is_show_sr_flg } from "src/core/utils/utils";
+import ZhuGe from "src/core/http/zhuge-tag";
+import { sr_click_handle } from "src/core/match-detail/match-detail";
+import { useRoute, useRouter } from "vue-router";
 
 const toggle_panel = ref(true); //比分扳显示|隐藏
+const data_loaded = ref(false); //刷新按钮动画开关
+const back_to_timer = ref(null);
+
+const useRoute = useRoute();
+const useRouter = useRouter();
 /**
  * @description 返回上一页
  */
@@ -99,15 +107,15 @@ const back_to = (is_back = true) => {
     });
   }
 
-  clearTimeout(this.back_to_timer);
-  this.back_to_timer = setTimeout(() => {
+  clearTimeout(back_to_timer.value);
+  back_to_timer.value = setTimeout(() => {
     // 退出页面时清空用户操作状态
     window.sessionStorage.setItem("handle_state", JSON.stringify([]));
     // 如果是从搜索结果进来的
-    if (this.$route.query.keyword) {
+    if (useRoute.query.keyword) {
       search.set_back_keyword({
-        keyword: this.$route.query.keyword,
-        csid: this.$route.params.csid,
+        keyword: useRoute.query.keyword,
+        csid: useRoute.params.csid,
       });
       this.set_search_status(true);
     }
@@ -118,10 +126,42 @@ const back_to = (is_back = true) => {
     }
     // 告知列表是详情返回：用于是否重新自动拉右侧内容
     this.vx_set_is_back_btn_click(is_back);
-    this.$router.push(from_path);
+    useRouter.push(from_path);
     if (from_path.includes("search")) {
       this.set_unfold_multi_column(false);
     }
   }, 50);
+};
+
+// sr 分析数据点击跳转
+const sr_click_handle = (match, type) => {
+  if (type == "details") {
+    // 发送埋点事件
+    ZhuGe.send_zhuge_event("PC_情报分析");
+  } else if (type == 1) {
+    ZhuGe.send_zhuge_event("PC_热门推荐_赛事分析点击");
+  }
+  details.sr_click_handle(match);
+};
+
+/**
+ * @description 刷新页面
+ */
+const refresh = () => {
+  // 接口请求中
+  if (this.is_request) {
+    return;
+  }
+
+  // 重新请求相应接口
+  this.init({ is_refresh: true });
+
+  // 刷新前 先关闭聊天室
+  this.set_chatroom_available(0);
+  // 聊天室开关开启后才显示聊天室
+  if (this.vx_get_user.chatRoomSwitch) {
+    // 获取直播、聊天室信息
+    this.get_live_chat_info();
+  }
 };
 </script>
