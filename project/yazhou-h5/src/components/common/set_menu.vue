@@ -88,7 +88,7 @@
         </div>
         <div class="lang-wrap" :class="{active:is_show_lang}">
           <template v-for="(item,index) in lang_obj">
-            <div class="lang-item" :class="{active:get_lang == key}" :key="index" @click="setting_language_handle(index)">
+            <div class="lang-item" :class="{active:get_lang == index}" :key="index" @click="setting_language_handle(index)">
               <i class="lang-icon yb_mr4" :class="`lang-${index}`"></i>
               <div class="col">{{item}}</div>
               <div class="icon"></div>
