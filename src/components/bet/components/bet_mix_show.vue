@@ -248,37 +248,37 @@ const market_value_unit = ref(0.25)//盘口变动值，默认足球0.25，篮球
 const focus_type = ref(0) // 光标聚焦到哪里
 
 onMounted(() => {
-  this.timer = null;
-  this.timer2 = null;
-  this.timer3 = null;
+  timer = null;
+  timer2 = null;
+  timer3 = null;
 
-  this.flicker_();
+  flicker_();
   //监听键盘赔率改变事件
-  this.$root.$on(this.emit_cmd.EMIT_CHANGE_ODDS, this.change_odds_handle)
+  $root.$on(emit_cmd.EMIT_CHANGE_ODDS, change_odds_handle)
   //监听键盘盘口改变事件
-  this.$root.$on(this.emit_cmd.EMIT_CHANGE_MARKET, this.change_market_handle)
-  if (this.bet_obj_mhs == 11 || this.bet_obj_hs == 11) {
-    this.set_bet_status(7);
+  $root.$on(emit_cmd.EMIT_CHANGE_MARKET, change_market_handle)
+  if (bet_obj_mhs == 11 || bet_obj_hs == 11) {
+    set_bet_status(7);
   };
 
-  this.$root.$on(this.emit_cmd.EMIT_REMOVE_INVALID_, this.reomve_invalid_handle)
-  this.$root.$on(this.emit_cmd.EMIT_C201_UPDATE2, this.c201_update2_handle)
-  if (this.value_show.csid != 1) {
-    this.daxiao_market_value = 0.5//大小玩法最低盘口值，初始最低0.5
-    this.daxiao_market_value_max = 400//大小玩法最大盘口值
-    this.rq_market_value_max = 99.5 //让球类玩法最大盘口值
-    this.rq_market_value_min = -99.5//让球类玩法最小盘口值
-    this.market_value_unit = 0.5
+  $root.$on(emit_cmd.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
+  $root.$on(emit_cmd.EMIT_C201_UPDATE2, c201_update2_handle)
+  if (value_show.csid != 1) {
+    daxiao_market_value.value = 0.5//大小玩法最低盘口值，初始最低0.5
+    daxiao_market_value_max.value = 400//大小玩法最大盘口值
+    rq_market_value_max.value = 99.5 //让球类玩法最大盘口值
+    rq_market_value_min.value = -99.5//让球类玩法最小盘口值
+    market_value_unit.value = 0.5
   }
   // 初始化预约投注的赔率和盘口
-  if (this.show_pre) {
-    this.pre_ov = this.get_bet_obj[this.name_].pre_odds
-    this.low_odds = this.get_bet_obj[this.name_].min_odds || this.bet_obj_ov
-    this.pre_market_value = this.get_bet_obj[this.name_].pre_market_value
+  if (show_pre) {
+    pre_ov.value = get_bet_obj[name_].pre_odds
+    low_odds.value = get_bet_obj[name_].min_odds || bet_obj_ov
+    pre_market_value.value = get_bet_obj[name_].pre_market_value
   }
   //设置当前预约投注索引
-  if (!this.has_pre.own_ && this.has_pre.others) {
-    this.set_active_index(this.index_)
+  if (!has_pre.own_ && has_pre.others) {
+    set_active_index(index_)
   }
 
 })
@@ -305,9 +305,9 @@ const props = defineProps({
 
 //检测比分，设置大小类玩法最低盘口值
 watch(() => score, (new_) => {
-  const ol_obj = _.get(this.value_show, 'hps[0].hl[0].ol[0]')
-  const hps_obj = _.get(this.value_show, 'hps[0]')
-  if (!this.get_is_mix && this.show_pre && this.pre_switch && new_) {
+  const ol_obj = _.get(value_show, 'hps[0].hl[0].ol[0]')
+  const hps_obj = _.get(value_show, 'hps[0]')
+  if (!get_is_mix && show_pre && pre_switch.value && new_) {
     const method_type = ol_obj.ot
     const new_arr = new_.replace(/\(/, '').replace(/\)/, '').split('-') || []
     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
@@ -325,7 +325,7 @@ watch(() => score, (new_) => {
       } else {
         temp_value = +new_arr[0] + +new_arr[1]
       }
-      this.daxiao_market_value = this.acc_add(temp_value, 0.5)
+      daxiao_market_value.value = acc_add(temp_value, 0.5)
     }
   } else {
     return
@@ -337,29 +337,29 @@ watch(() => score, (new_) => {
 
 //监控投注项
 watch(() => get_bet_obj, (new_) => {
-  this.pre_switch = new_[this.name_].pre_switch
-  if (new_[this.name_].market_tips == 1) {
-    this.pre_market_value = new_[this.name_].pre_market_value
-    if (this.get_active_index == 'market' + this.index_) {
-      this.send_market_to_keyboard()
+  pre_switch.value = new_[name_].pre_switch
+  if (new_[name_].market_tips == 1) {
+    pre_market_value.value = new_[name_].pre_market_value
+    if (get_active_index == 'market' + index_) {
+      send_market_to_keyboard()
     }
-    this.tips_msg_update(this.$root.$t('pre_record.market_error_info_low'))
-    let bet_obj = _.cloneDeep(this.get_bet_obj)
-    bet_obj[this.name_].market_tips = 0
-    this.set_bet_obj(bet_obj)
-    clearTimeout(this.timer3)
-    this.timer3 = setTimeout(() => {
-      this.tips_msg_update('')
+    tips_msg_update($root.$t('pre_record.market_error_info_low'))
+    let bet_obj = _.cloneDeep(get_bet_obj)
+    bet_obj[name_].market_tips = 0
+    set_bet_obj(bet_obj)
+    clearTimeout(timer3)
+    timer3 = setTimeout(() => {
+      tips_msg_update('')
     }, 3000);
     return
   }
-  if (new_[this.name_].pre_odds && new_[this.name_].pre_odds > this.pre_ov) {
-    this.pre_odds = ''
-    this.pre_ov = new_[this.name_].pre_odds
-    this.tips_msg_update(this.$root.$t('error_msg_info.0400540.client_msg'))
-    clearTimeout(this.timer3)
-    this.timer3 = setTimeout(() => {
-      this.tips_msg_update('')
+  if (new_[name_].pre_odds && new_[name_].pre_odds > pre_ov.value) {
+    pre_odds.value = ''
+    pre_ov.value = new_[name_].pre_odds
+    tips_msg_update($root.$t('error_msg_info.0400540.client_msg'))
+    clearTimeout(timer3)
+    timer3 = setTimeout(() => {
+      tips_msg_update('')
     }, 3000);
   }
 }, {
@@ -368,9 +368,9 @@ watch(() => get_bet_obj, (new_) => {
 })
 //检测预约赔率变化，更新至投注对象
 watch(() => pre_ov, (new_) => {
-  let bet_obj = _.cloneDeep(this.get_bet_obj)
-  bet_obj[this.name_].pre_odds = new_
-  this.set_bet_obj(bet_obj)
+  let bet_obj = _.cloneDeep(get_bet_obj)
+  bet_obj[name_].pre_odds = new_
+  set_bet_obj(bet_obj)
 })
 //检测预约盘口变化，更新至投注对象
 watch(() => get_update_tips, (new_) => {
@@ -378,62 +378,62 @@ watch(() => get_update_tips, (new_) => {
   if (!newVal && newVal !== 0 && newVal !== '0') {
     return;
   }
-  const ol_obj = _.get(this.value_show, 'hps[0].hl[0].ol[0]')
-  const hps_obj = _.get(this.value_show, 'hps[0]')
-  const marketList = this.get_pre_market_data.filter((o) => {
-    return o.matchInfoId == this.value_show.hps[0].mid && o.playId == this.value_show.hps[0].hpid
+  const ol_obj = _.get(value_show, 'hps[0].hl[0].ol[0]')
+  const hps_obj = _.get(value_show, 'hps[0]')
+  const marketList = get_pre_market_data.filter((o) => {
+    return o.matchInfoId == value_show.hps[0].mid && o.playId == value_show.hps[0].hpid
   })
-  let bet_obj = _.cloneDeep(this.get_bet_obj)
+  let bet_obj = _.cloneDeep(get_bet_obj)
   //处理当盘口值变化时，赔率的变化
   if (marketList.length > 0) {
     const marketItem = marketList[0].marketList
     let hasEqualMarket = false//是否相同盘口，用来判断赋值最低赔率
     marketItem.map((item) => {
       const otObj = _.find(item.marketOddsList, (o) => { return o.oddsType == ol_obj.ot })
-      if (!this.rq_play_list.includes(hps_obj.hpid)) {//大小比较方式
+      if (!rq_play_list.includes(hps_obj.hpid)) {//大小比较方式
         if (item.marketValue == newVal && otObj) {
           hasEqualMarket = true
-          this.low_odds = otObj.oddsValue
-          bet_obj[this.name_].min_odds = otObj.oddsValue
+          low_odds.value = otObj.oddsValue
+          bet_obj[name_].min_odds = otObj.oddsValue
           //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue > this.pre_ov) {
-            this.pre_odds = ''
-            this.pre_ov = Number(otObj.oddsValue)
-            if (this.get_active_index == 'pre' + this.index_) {
-              this.send_odds_to_keyboard()
+          if (otObj.oddsValue > pre_ov.value) {
+            pre_odds.value = ''
+            pre_ov.value = Number(otObj.oddsValue)
+            if (get_active_index == 'pre' + index_) {
+              send_odds_to_keyboard()
             }
           }
         }
       } else {//让球比较方式
         if (otObj && otObj.playOptions == newVal) {
           hasEqualMarket = true
-          this.low_odds = otObj.oddsValue
-          bet_obj[this.name_].min_odds = otObj.oddsValue
+          low_odds.value = otObj.oddsValue
+          bet_obj[name_].min_odds = otObj.oddsValue
           //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue >= this.pre_ov) {
-            this.pre_odds = ''
-            this.pre_ov = Number(otObj.oddsValue)
-            if (this.get_active_index == 'pre' + this.index_) {
-              this.send_odds_to_keyboard()
+          if (otObj.oddsValue >= pre_ov.value) {
+            pre_odds.value = ''
+            pre_ov.value = Number(otObj.oddsValue)
+            if (get_active_index == 'pre' + index_) {
+              send_odds_to_keyboard()
             }
           }
         }
       }
     })
     if (!hasEqualMarket) {
-      this.low_odds = 0
+      low_odds.value = 0
     }
   }
-  bet_obj[this.name_].pre_market_value = newVal
-  this.set_bet_obj(bet_obj)
+  bet_obj[name_].pre_market_value = newVal
+  set_bet_obj(bet_obj)
 })
 // 解决投注项数量减少会导致位置移动，错误显示盘口赔率变化
 watch(() => get_bet_list.length, (newVal, oldVal) => {
   if (newVal > oldVal) return
 
-  this.is_suspend_watch = true
-  this.$nextTick(() => {
-    this.is_suspend_watch = false
+  is_suspend_watch.value = true
+  $nextTick(() => {
+    is_suspend_watch.value = false
 
   })
 })
@@ -443,59 +443,59 @@ bet_obj_mhs(() => get_update_tips, (new_) => {
 })
 watch(() => get_update_tips, (new_) => {
   if (
-    [3, 4, 6].includes(+this.get_bet_status) ||
-    this.is_suspend_watch
+    [3, 4, 6].includes(+get_bet_status) ||
+    is_suspend_watch.value
   ) {
     return
   }
 
   if (new_ == 0) {
-    this.set_invalid_ids({ type: 2, val: this.value_show.mid }) // 删除赛事和盘口级别正常的id
-    this.pankou_change = 0
-    this.set_bet_status(1);
-    this.set_odds_change(false);
+    set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+    pankou_change.value = 0
+    set_bet_status(1);
+    set_odds_change(false);
   }
 
   if (new_ == 11) {
-    this.set_invalid_ids({ type: 2, val: this.value_show.mid }) // 删除赛事和盘口级别正常的id
-    this.pankou_change = 0
-    this.set_bet_status(7);
-    this.set_odds_change(false);
+    set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+    pankou_change.value = 0
+    set_bet_status(7);
+    set_odds_change(false);
   }
 
   if ([1, 2].includes(+new_)) {
-    this.pankou_change = 2;
-    this.set_invalid_ids({ type: 1, val: this.value_show.mid }) // 对应赛事和盘口级别失效时记录id
-    this.set_odds_change(true);
+    pankou_change.value = 2;
+    set_invalid_ids({ type: 1, val: value_show.mid }) // 对应赛事和盘口级别失效时记录id
+    set_odds_change(true);
   }
 })
 //监听盘口级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
 watch(() => bet_obj_hs, (new_) => {
   if (
-    [3, 4, 6].includes(+this.get_bet_status) ||
-    this.is_suspend_watch
+    [3, 4, 6].includes(+get_bet_status) ||
+    is_suspend_watch.value
   ) {
     return
   }
 
   if (new_ == 0) {
-    this.set_invalid_ids({ type: 2, val: this.value_show.mid }) // 删除赛事和盘口级别正常的id
-    this.pankou_change = 0
-    this.set_bet_status(1);
-    this.set_odds_change(false);
+    set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+    pankou_change.value = 0
+    set_bet_status(1);
+    set_odds_change(false);
   }
 
   if (new_ == 11) {
-    this.set_invalid_ids({ type: 2, val: this.value_show.mid }) // 删除赛事和盘口级别正常的id
-    this.pankou_change = 0
-    this.set_bet_status(7);
-    this.set_odds_change(false);
+    set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+    pankou_change.value = 0
+    set_bet_status(7);
+    set_odds_change(false);
   }
 
   if ([1, 2].includes(+new_)) {
-    this.pankou_change = 2;
-    this.set_invalid_ids({ type: 1, val: this.value_show.mid }) // 对应赛事和盘口级别失效时记录id
-    this.set_odds_change(true);
+    pankou_change.value = 2;
+    set_invalid_ids({ type: 1, val: value_show.mid }) // 对应赛事和盘口级别失效时记录id
+    set_odds_change(true);
   }
 }, {
   immediate: true
@@ -503,82 +503,82 @@ watch(() => bet_obj_hs, (new_) => {
 //监听投注项状态变化,socket对应1.开盘，2封盘，3详情页投注项需要隐藏(用失效对应)
 watch(() => bet_obj_os, (new_) => {
   if (
-    [3, 4, 6].includes(+this.get_bet_status) ||
-    this.is_suspend_watch
+    [3, 4, 6].includes(+get_bet_status) ||
+    is_suspend_watch.value
   ) {
     return
   }
 
   if ([2, 3].includes(+new_)) {
-    this.pankou_change = 2;
-    this.set_odds_change(true);
+    pankou_change.value = 2;
+    set_odds_change(true);
   }
 })
 //监听盘口值变化
 watch(() => bet_obj_on, (new_) => {
   if (
-    [3, 4, 6].includes(+this.get_bet_status) ||
-    this.is_suspend_watch
+    [3, 4, 6].includes(+get_bet_status) ||
+    is_suspend_watch.value
   ) {
     return
   }
 
-  if (this.pankou_change != 2) {  //盘口失效时盘口值变化不给颜色变化
-    this.pankou_change = 1;
+  if (pankou_change.value != 2) {  //盘口失效时盘口值变化不给颜色变化
+    pankou_change.value = 1;
   }
 
-  this.set_odds_change(true);
+  set_odds_change(true);
 
   // 3秒后重置样式,盘口失效（关盘或者封盘）时盘口值变化，不用3秒后回到盘口正常状态
-  clearTimeout(this.timer)
-  this.timer = setTimeout(() => {
-    if (![1, 2].includes(+this.bet_obj_hs)) {
-      this.pankou_change = 0;
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    if (![1, 2].includes(+bet_obj_hs)) {
+      pankou_change.value = 0;
     }
   }, 3000);
 
-  if (this.get_is_mix) {    //串关盘口值变更后拉取最新限额
-    this.fetch_limit_money();
+  if (get_is_mix) {    //串关盘口值变更后拉取最新限额
+    fetch_limit_money();
   }
 })
 //监听赔率变化  get_bet_status == 2在C106的地方做了一层过滤
 watch(() => bet_obj_ov, (new_, old_) => {
-  this.calc_mixcount(false)
+  calc_mixcount(false)
   if (
-    [2, 3].includes(+this.get_bet_status) &&
-    _.get(this.value_show, 'hps[0].hl[0].ol[0].ov2')
+    [2, 3].includes(+get_bet_status) &&
+    _.get(value_show, 'hps[0].hl[0].ol[0].ov2')
   ) {
-    this.bet_success_obj.oddsValues = _.get(this.value_show, 'hps[0].hl[0].ol[0].ov2')
+    bet_success_obj.oddsValues = _.get(value_show, 'hps[0].hl[0].ol[0].ov2')
     return
   }
 
   if (
-    ![1, 5, 6, 7].includes(+this.get_bet_status) ||
-    this.pankou_change == 2 ||
-    this.is_suspend_watch
+    ![1, 5, 6, 7].includes(+get_bet_status) ||
+    pankou_change.value == 2 ||
+    is_suspend_watch.value
   ) {
     return
   }
 
-  clearTimeout(this.timer2)
+  clearTimeout(timer2)
   // 3秒后重置样式
-  this.timer2 = setTimeout(() => {
-    this.odds_change = 0;
+  timer2 = setTimeout(() => {
+    odds_change.value = 0;
   }, 3000);
 
-  if (this.get_bet_status == 6) {   //提交成功状态，如果选择的是自动接受任何赔率变动跟着变，如果选的是接受更好的赔率，当赔率更好了跟着变
+  if (get_bet_status == 6) {   //提交成功状态，如果选择的是自动接受任何赔率变动跟着变，如果选的是接受更好的赔率，当赔率更好了跟着变
     if (
-      [1, 3].includes(+this.get_is_accept) &&
+      [1, 3].includes(+get_is_accept) &&
       old_ && new_ - old_ >= 1000
     ) {
-      this.odds_change = 1;
+      odds_change.value = 1;
     }
 
-    if (this.get_is_accept == 2) {
+    if (get_is_accept == 2) {
       if (old_ && new_ - old_ >= 1000) {
-        this.odds_change = 1;
+        odds_change.value = 1;
       } else if (old_ - new_ >= 1000) {
-        this.odds_change = 2;
+        odds_change.value = 2;
       }
     }
 
@@ -586,48 +586,48 @@ watch(() => bet_obj_ov, (new_, old_) => {
   }
 
   if (new_ < 101000) {   //原始欧赔小于101000,失效处理
-    this.pankou_change = 2;
-    this.set_odds_change(true);
+    pankou_change.value = 2;
+    set_odds_change(true);
     return;
   }
 
   if (old_ && new_ - old_ >= 1000) {
-    this.odds_change = 1;
-    this.set_odds_change(true);
+    odds_change.value = 1;
+    set_odds_change(true);
   } else if (old_ - new_ >= 1000) {
-    this.odds_change = 2;
-    this.set_odds_change(true);
+    odds_change.value = 2;
+    set_odds_change(true);
   }
 })
 //状态变为0、1时作初始化处理
 watch(() => get_update_tips, (new_, old_) => {
   if (new_ == 1) {
-    this.odds_change = 0;
-    this.pankou_change = 0;
-    this.set_invalid_ids({ type: 0 })
+    odds_change.value = 0;
+    pankou_change.value = 0;
+    set_invalid_ids({ type: 0 })
   };
 
   //状态变为正常时，可能是 1 也能是 7
   if (
     new_ == 1 &&
     old_ == 5 &&
-    (this.bet_obj_hs == 11 || this.bet_obj_mhs == 11)
+    (bet_obj_hs == 11 || bet_obj_mhs == 11)
   ) {
-    this.set_bet_status(7)
+    set_bet_status(7)
   }
 })
 //监听状态变化来设置赔率或盘口变化的id_集合
 watch(() => get_update_tips, (new_) => {
-  if (new_ && this.get_bet_status != 6) {
-    this.set_change_list({ value: _.get(this.value_show, 'hps[0].hl[0].ol[0].id_'), status: 1 });
+  if (new_ && get_bet_status != 6) {
+    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 1 });
   } else {
-    this.set_change_list({ value: _.get(this.value_show, 'hps[0].hl[0].ol[0].id_'), status: 2 });
+    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 2 });
   }
 })
 // 记录投注项失效的id_集合
 watch(() => pankou_change, (new_) => {
   if (new_ != 2) {
-    this.set_invalid_ids({ type: 2, val: this.value_show.mid })
+    set_invalid_ids({ type: 2, val: value_show.mid })
   }
 })
 
@@ -643,71 +643,71 @@ watch(() => query_order_obj, (new_) => {
 //      'get_bet_status', 'get_bet_list', 'get_bet_obj', 'get_is_accept', 'get_is_mix', 'get_bet_success']),
 //足球或者篮球的让球玩法集合
 const rq_play_list = computed(() => {
-  return this.value_show.csid == 1 ? FOOTBALL_PLAY_LET_BALL : BASKETBALL_PLAY_LET_BALL
+  return value_show.csid == 1 ? FOOTBALL_PLAY_LET_BALL : BASKETBALL_PLAY_LET_BALL
 })
 //赛事id或者球员id是否冲突
 const is_conflict = computed(() => {
-  return this.get_is_conflict([this.value_show.maid, this.value_show.mhid])
+  return get_is_conflict([value_show.maid, value_show.mhid])
 })
 //判断调整后的赔率是否小于最低赔率
 const pre_shadow_flag = computed(() => {
-  if (this.pre_ov <= this.low_odds) {
+  if (pre_ov.value <= low_odds.value) {
     return true
   } else {
-    return this.pre_ov <= 101000
+    return pre_ov.value <= 101000
   }
 })
 // 计算是否展示盘口预约功能
 const is_show_market = computed(() => {
-  let bookMarketSwitch = _.get(this.get_user, 'configVO.bookMarketSwitch')
-  let bookMarketSwitchBasketball = _.get(this.get_user, 'configVO.bookMarketSwitchBasketball', 0)
-  if (this.value_show.csid == 1) {
-    return market_flag_list.includes(this.value_show.hps[0].hpid) && bookMarketSwitch == 1
+  let bookMarketSwitch = _.get(get_user, 'configVO.bookMarketSwitch')
+  let bookMarketSwitchBasketball = _.get(get_user, 'configVO.bookMarketSwitchBasketball', 0)
+  if (value_show.csid == 1) {
+    return market_flag_list.includes(value_show.hps[0].hpid) && bookMarketSwitch == 1
   } else {
-    return market_flag_basketball_list.includes(this.value_show.hps[0].hpid) && bookMarketSwitchBasketball
+    return market_flag_basketball_list.includes(value_show.hps[0].hpid) && bookMarketSwitchBasketball
   }
 })
 //判断让球、大小类盘口值是否低于最低盘口值
 const show_market_shadow = computed(() => {
-  if (['Over', 'Under'].includes(_.get(this.value_show, 'hps[0].hl[0].ol[0].ot'))) {
-    const split_value = _.words(this.pre_market_value, /[^+,/ ]+/g)
+  if (['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'))) {
+    const split_value = _.words(pre_market_value.value, /[^+,/ ]+/g)
     if (split_value.length > 1) {
-      return (Number(split_value[0]) + Number(split_value[1])) / 2 <= this.daxiao_market_value
+      return (Number(split_value[0]) + Number(split_value[1])) / 2 <= daxiao_market_value.value
     } else {
-      return this.pre_market_value <= this.daxiao_market_value
+      return pre_market_value.value <= daxiao_market_value.value
     }
   } else {
-    const split_value = _.words(this.pre_market_value, /[^+,/ ]+/g)
+    const split_value = _.words(pre_market_value.value, /[^+,/ ]+/g)
     if (split_value.length > 1) {
-      return (Number(split_value[0]) + Number(split_value[1])) / 2 <= this.rq_market_value_min
+      return (Number(split_value[0]) + Number(split_value[1])) / 2 <= rq_market_value_min.value
     } else {
-      return this.pre_market_value <= this.rq_market_value_min
+      return pre_market_value.value <= rq_market_value_min.value
     }
   }
 })
 //判断大小类,让球盘口值是否高于最大盘口值
 const show_market_shadow_max = computed(() => {
-  const compaire_val = ['Over', 'Under'].includes(_.get(this.value_show, 'hps[0].hl[0].ol[0].ot')) ? this.daxiao_market_value_max : this.rq_market_value_max;
-  const split_value = _.words(this.pre_market_value, /[^+,/ ]+/g)
+  const compaire_val = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot')) ? daxiao_market_value_max.value : rq_market_value_max.value;
+  const split_value = _.words(pre_market_value.value, /[^+,/ ]+/g)
   if (split_value.length > 1) {
     return (Number(split_value[0]) + Number(split_value[1])) / 2 >= compaire_val
   } else {
-    return this.pre_market_value >= compaire_val
+    return pre_market_value.value >= compaire_val
   }
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!this.get_is_mix) && this.pre_switch && (!this.get_bet_success) && this.authorityFlag && (!this.show_pre)
+  return (!get_is_mix) && pre_switch.value && (!get_bet_success) && authorityFlag && (!show_pre)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
-  const bookBet = _.get(this.get_user, 'configVO.bookBet')
-  const marketConfigValue = _.get(this.get_user, 'configVO.marketConfigValue')
-  return bookBet == 1 && (this.value_show.csid == 1 || this.value_show.csid == 2) && marketConfigValue == 1
+  const bookBet = _.get(get_user, 'configVO.bookBet')
+  const marketConfigValue = _.get(get_user, 'configVO.marketConfigValue')
+  return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
 })
 //判断投注成功后是否是预约投注
 const pre_order_status = computed(() => {
-  const success_pre = _.find(this.order_detail_resp_list, (item) => {
+  const success_pre = _.find(order_detail_resp_list, (item) => {
     return _.get(item, 'is_pre')
   })
   return success_pre
@@ -715,23 +715,23 @@ const pre_order_status = computed(() => {
 // 判断是走正常投注还是预约
 const pre_or_bet = computed(() => {
   let status = ''
-  this.order_detail_resp_list.map(item => {
+  order_detail_resp_list.map(item => {
     status = item.preOrderDetailStatus
   })
   return status
 })
 const bet_obj_item = computed(() => {
-  return this.get_bet_obj[this.name_]
+  return get_bet_obj[name_]
 })
 //投注对象数据
 const value_show = computed(() => {
-  return this.bet_obj_item.bs;
+  return bet_obj_item.bs;
 })
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
-  const item_name = _.findKey(this.get_bet_obj, function (o) { return o.show_pre })
+  const item_name = _.findKey(get_bet_obj, function (o) { return o.show_pre })
   if (item_name) {
-    if (item_name == this.name_) {
+    if (item_name == name_) {
       return {
         own_: false,
         others: true
@@ -751,53 +751,53 @@ const has_pre = computed(() => {
 })
 // 满足下面条件（单关没有输入金额）的投注项在投注成功后不展示,单关多注接口只返回提交成功的注单，所以只展示提交成功的订单
 const is_show_successed_item = computed(() => {
-  let flag = this.get_bet_list.length == 1
-    || !this.get_bet_success
-    || this.get_is_mix
-    || this.get_bet_success && !this.get_is_mix && this.get_bet_list.length > 1 && this.bet_obj_item.money >= 0.01 && this.bet_success_obj
+  let flag = get_bet_list.length == 1
+    || !get_bet_success
+    || get_is_mix
+    || get_bet_success && !get_is_mix && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
   return flag
 })
 //将赔率映射为计算属性
 const bet_obj_ov = computed(() => {
-  return _.get(this.value_show, 'hps[0].hl[0].ol[0].ov')
+  return _.get(value_show, 'hps[0].hl[0].ol[0].ov')
 })
 //将列表页盘口值 on  映射为计算属性
 const bet_obj_on = computed(() => {
-  return _.get(this.value_show, 'hps[0].hl[0].ol[0].on')
+  return _.get(value_show, 'hps[0].hl[0].ol[0].on')
 })
 // 将 普通赛事是否支持串关 映射为计算属性
 const hids = computed(() => {
-  return (this.get_is_mix && _.get(this.bet_obj_item, 'cs.cds') == "C01") || (_.get(this.value_show, 'hps[0].hids') == 0 &&
-    this.get_bet_list.length > 1 &&
-    this.get_menu_type != 3000 &&
-    this.get_is_mix)
+  return (get_is_mix && _.get(bet_obj_item, 'cs.cds') == "C01") || (_.get(value_show, 'hps[0].hids') == 0 &&
+    get_bet_list.length > 1 &&
+    get_menu_type != 3000 &&
+    get_is_mix)
 })
 //将赛事级别盘口状态映射为计算属性
 const bet_obj_mhs = computed(() => {
-  return this.value_show.mhs;
+  return value_show.mhs;
 })
 //将盘口状态映射为计算属性
 const bet_obj_hs = computed(() => {
-  return this.value_show.hps[0].hl[0].hs;
+  return value_show.hps[0].hl[0].hs;
 })
 //盘口值
 const bet_obj_hv = computed(() => {
-  if (!this.rq_play_list.includes(_.get(this.value_show, 'hps[0].hpid'))) {
-    return _.get(this.value_show, 'hps[0].hl[0].hv')
+  if (!rq_play_list.includes(_.get(value_show, 'hps[0].hpid'))) {
+    return _.get(value_show, 'hps[0].hl[0].hv')
   }
-  return _.get(this.value_show, 'hps[0].hl[0].ol[0].on')
+  return _.get(value_show, 'hps[0].hl[0].ol[0].on')
 })
 //将投注项状态状态映射为计算属性
 const bet_obj_os = computed(() => {
-  return _.get(this.value_show, 'hps[0].hl[0].ol[0].os')
+  return _.get(value_show, 'hps[0].hl[0].ol[0].os')
 })
 //是否显示下边线
 const show_border = computed(() => {
-  return this.get_bet_list[this.get_bet_list.length - 1] != this.name_ && this.get_is_mix
+  return get_bet_list[get_bet_list.length - 1] != name_ && get_is_mix
 })
 // 每个投注项赔率和盘口状态是否正常
 const status_normal = computed(() => {
-  return [1, 2].includes(+this.odds_change) || [1, 2].includes(+this.pankou_change)
+  return [1, 2].includes(+odds_change.value) || [1, 2].includes(+pankou_change.value)
 })
 /**
     *@description 赔率转换
@@ -808,31 +808,31 @@ const status_normal = computed(() => {
     */
 const odds_value = computed(() => {
   return (is_pre) => {
-    let val = (is_pre ? this.pre_ov : this.bet_obj_ov) / 100000,
-      hsw = this.value_show.hps[0].hsw;
+    let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
+      hsw = value_show.hps[0].hsw;
 
-    if (this.get_is_champion(this)) {   //冠军玩法不支持赔率转化
+    if (get_is_champion(this)) {   //冠军玩法不支持赔率转化
       hsw = '1'
     }
 
-    let S = this.compute_value_by_cur_odd_type(val, null, hsw, null, this.value_show.csid);
+    let S = compute_value_by_cur_odd_type(val, null, hsw, null, value_show.csid);
     return S ? S : '';
   }
 })
 // 单关投注成功后的bet接口返回的数据
 const bet_success_obj = computed(() => {
-  return this.order_detail_resp_list.find(item => {
-    if (this.pre_order_status) {
-      if (this.pre_or_bet === 0 || this.pre_or_bet) {
-        this.order_status = item.preOrderDetailStatus;
+  return order_detail_resp_list.find(item => {
+    if (pre_order_status) {
+      if (pre_or_bet === 0 || pre_or_bet) {
+        order_status.value = item.preOrderDetailStatus;
       } else {
-        this.order_status = item.orderStatusCode;
+        order_status.value = item.orderStatusCode;
       }
       return true
     }
-    let flag = item.playOptionsId == this.bet_obj_item.cs.oid
+    let flag = item.playOptionsId == bet_obj_item.cs.oid
     if (flag) {
-      this.order_status = item.orderStatusCode;
+      order_status.value = item.orderStatusCode;
     }
     return flag
   }) || ''
@@ -840,27 +840,436 @@ const bet_success_obj = computed(() => {
 // 展示欧洲盘还是香港盘
 const hptype = computed(() => {
   let type = 'EU'
-  if (this.get_cur_odd == 'HK' && _.get(this.value_show, 'hps[0].hsw').includes('2')) {
+  if (get_cur_odd == 'HK' && _.get(value_show, 'hps[0].hsw').includes('2')) {
     type = 'HK'
   }
-  return this.$root.$t(`odds.${type}`)
+  return $root.$t(`odds.${type}`)
 })
 
 /** --------------------------computed结束 ---------------*/
 
 /** --------------------------事件开始 ---------------*/
+
+// ...mapMutations(["set_pre_market_data","set_keyboard_show","set_odds_change","set_active_index", "set_bet_status", "set_change_list", "set_invalid_ids", "set_order_ing", "set_order_los", "set_money_total"]),
+
+//长按事件（起始）
+const gtouchstart = (type) => {
+     if(type==1){
+       return reduce_odd
+     }else if(type==2){
+       return add_odd
+     }else if(type==3){
+       return reduce_market_value
+     }else if(type==4){
+       return add_market_value
+     }
+   }
+   //展示栏点击事件
+  const handleonmousedown = () =>{
+     set_active_index('')
+     set_keyboard_show(false)
+   }
+   /**
+    *@description 赔率改变事件
+    *@param {Number} new_odds 最新赔率
+    */
+    const change_odds_handle = (new_odds) =>{
+     pre_odds.value = new_odds || 0
+     const hswObj = value_show.hps[0].hsw
+     if(get_cur_odd == 'HK' && hswObj && hswObj.split(',').includes('2')){
+       pre_ov.value = Number($mathjs.multiply(acc_add(1,new_odds),100000))
+     }else{
+       pre_ov.value = Number($mathjs.multiply(new_odds,100000))
+     }
+   }
+   const change_market_handle = (new_market) =>{
+     pre_market_value.value = new_market || ''
+   }
+   // 将当前活动项的赔率传递给键盘
+   const send_odds_to_keyboard = () =>{
+     $root.$emit(emit_cmd.EMIT_SEND_PRE_ODDS, { odds_value: pre_odds.value || odds_value(true) })
+   }
+   // 将当前活动项的盘口传递给键盘
+   const  send_market_to_keyboard = () =>{
+     $root.$emit(emit_cmd.EMIT_SEND_PRE_MARKET, { odds_value: pre_market_value.value })
+   }
+   //点击盘口输入框，光标聚焦
+   const focus_market = () => {
+      // if(valu e_show.csid == 2 && ['Over','Under'].includes(_.get(value_show,'hps[0].hl[0].ol[0].ot'))){
+      if(value_show.csid == 2 ){
+        market_value_unit.value = 1
+        set_keyboard_show(true)
+        let ele = $refs.bet_mix_detail
+        ele && ele.scrollIntoView({ block: "nearest" })
+        if(get_active_index == 'market'+ index_){return}
+        send_market_to_keyboard()
+        set_active_index('market'+index_)
+      }
+   }
+   //点击赔率输入框，光标聚焦
+   const focus_odds = () =>{
+      market_value_unit.value = 0
+      set_keyboard_show(true)
+      let ele = $refs.bet_mix_detail
+      ele && ele.scrollIntoView({ block: "nearest" })
+      if(get_active_index == 'pre'+ index_){return}
+      send_odds_to_keyboard()
+      set_active_index('pre'+index_)
+    }
+    const flicker_ = () =>{    //光标闪动，animation有兼容问题，用函数替代
+     clearInterval(flicker_timer.value)
+     flicker_timer.value = setInterval(() => {
+       let ele = !market_value_unit.value  ? $refs.money_span : $refs.money_span_market
+
+       if (ele) {
+         ele.classList.toggle('money-span3')
+       }
+     }, 700);
+   },
+    /**
+    *@description 删除一个投注项
+    *@param {String} id_ 投注项id或者坑位id
+    *@return {Undefined} undefined
+    */
+    const remove_ = (id_) =>{
+     //校验是否是串关，并且删除后是否小于最小串关数量
+     if(get_is_mix && !vilidata_mix_count(true)){return}
+     let _money = get_bet_obj[id_].money
+     if (_money >= 0.01 && get_bet_list.length > 1) {
+       set_money_total(0 - _money)
+     }
+     set_change_list({ value: id_, status: 2 });
+     set_invalid_ids({ type: 2, val: value_show.mid })
+     remove_item(id_);
+   },
+   /**
+    *@description 点击预约投注icon事件
+    *@param del 当为false时表示删除，默认为true
+    */
+    const handlePre = (del) =>{
+     //将预约状态更新至投注项缓存
+     if(show_pre && del){return}
+     let bet_obj = _.cloneDeep(get_bet_obj)
+     pre_odds.value = ''
+     bet_obj[name_].show_pre = del
+     if(del){
+       fetch_pre_limit_money_and_odd_info()
+       pre_ov.value = Number(bet_obj_ov)
+       low_odds.value = Number(bet_obj_ov)
+       pre_market_value.value = bet_obj_hv
+       // 清空单关多项其他金额以及总金额
+       Object.keys(bet_obj).map((key)=>{
+         if(key != name_){
+           bet_obj[key].money = 0
+           bet_obj[key].full_bet = 0
+         }else{
+           bet_obj[key].pre_odds = pre_ov.value
+           bet_obj[key].pre_market_value = pre_market_value.value
+         }
+       })
+     }else{
+       fetch_limit_money_and_odd_info()
+       delete bet_obj[name_].pre_odds
+       delete bet_obj[name_].pre_market_value
+       delete bet_obj[name_].min_odds
+       set_pre_market_data([])
+     }
+     set_bet_obj(bet_obj)
+     set_active_index(index_)
+   },
+   /**
+    *@description 预约投注点击减号减少赔率
+    */
+    const reduce_odd = () =>{
+     timeOutEvent = 0;
+     if(pre_shadow_flag){return}
+     pre_odds.value = ''
+     if(get_active_index != 'pre'+index_){
+       send_odds_to_keyboard()
+       set_active_index('pre'+index_)
+     }
+     if(pre_ov.value <= 101000) {return}
+     const reduceValue = pre_ov.value - 1000
+     pre_ov.value = reduceValue
+   }
+   /**
+    * @description 预约投注点击加号增加赔率
+    */
+    const add_odd = () =>{
+     if(get_active_index != 'pre'+index_){
+       send_odds_to_keyboard()
+       set_active_index('pre'+index_)
+     }
+     const hswObj = value_show.hps[0].hsw
+     if(get_cur_odd == 'HK' &&  hswObj && hswObj.split(',').includes('2')){//香港盘的最大赔率
+       if(pre_ov.value >= 35600000) {return}
+     }else{//欧洲盘的的最大赔率
+       if(pre_ov.value >= 35500000) {return}
+     }
+
+     pre_odds.value = ''
+     pre_ov.value = acc_add(pre_ov.value,1000)
+   }
+   /**
+    * @description 预约投注点击减号减少盘口值
+    */
+    const reduce_market_value = ()=>{
+     if(show_market_shadow){
+         set_toast({ 'txt': $root.$t('pre_record.market_error_info'), hide_time: 3000 });
+         return
+       }
+     let realValue = ''
+     //足球让球类盘口值计算
+     if(rq_play_list.includes(value_show.hps[0].hpid)){
+      if (pre_market_value.value == '-' || pre_market_value.value == '+' || !pre_market_value.value) {
+        pre_market_value.value = '0'
+      }
+       const split_value =_.words(pre_market_value.value || '0',/[^+,/ ]+/g)
+       if(split_value.length > 1){
+         if(split_value[0].indexOf('-') > -1){
+           realValue = ((+split_value[0] - (+split_value[1]))) / 2 - market_value_unit.value
+         }else{
+           realValue = ((+split_value[0] + (+split_value[1]))) / 2 - market_value_unit.value
+         }
+         realValue = realValue > 0 ? ('+'+realValue) : realValue
+       }else{
+         if(split_value[0].indexOf('-') > -1){
+           const withValue = (+split_value[0] - 0.5)
+           if(value_show.csid == 1){
+             realValue = split_value[0] + '/' + Math.abs(withValue)
+           }else{
+             realValue =  withValue
+           }
+         }else{
+           if(split_value[0] == 0){
+             const withValue = (+split_value[0] - 0.5)
+             if(value_show.csid == 1){
+               realValue = '-0'  + '/' + Math.abs(withValue)
+             }else{
+               realValue = -0.5
+             }
+           }else{
+             const withValue = (+split_value[0] - 0.5)
+             if(value_show.csid == 1){
+               realValue = (withValue>=0?'+':'') + withValue  + '/' + split_value[0]
+             }else{
+               realValue = (withValue>=0?'+':'') + withValue
+             }
+
+           }
+
+         }
+       }
+     }else{//大小类盘口值计算
+       const split_value =_.words(pre_market_value.value || '0',/[^/ ]+/g)
+       if(split_value.length > 1){
+         realValue = ((+split_value[0] + (+split_value[1]))) / 2 - market_value_unit.value
+       }else{
+         //如果当前值为0，不操作
+         if(split_value[0] == 0) {
+           return
+         }
+         const withValue = (+split_value[0] - 0.5)
+         if(value_show.csid == 1){
+           realValue = withValue  + '/' + split_value[0]
+         }else{
+           realValue = withValue
+         }
+       }
+     }
+      if (realValue == '+0' || realValue == '-0') {
+        realValue = '0'
+      }
+     pre_market_value.value = realValue
+     if(get_active_index == 'market'+index_){
+       send_market_to_keyboard()
+     }
+   }
+   /**
+    * @description 预约投注点击加号增加盘口值
+    */
+   const add_market_value = () =>{
+     if(show_market_shadow_max){
+         set_toast({ 'txt': $root.$t('pre_record.market_error_info_max'), hide_time: 3000 });
+         return
+     }
+     let realValue = ''
+     if (pre_market_value.value == '-' || pre_market_value.value == '+' || !pre_market_value.value) {
+        pre_market_value.value = '0'
+      }
+     if(rq_play_list.includes(_.get(value_show,'hps[0].hpid'))){
+       const split_value =  _.words(pre_market_value.value || '0', /[^+,/ ]+/g)
+       if(split_value.length > 1){
+         if(split_value[0].indexOf('-') > -1){
+           realValue = acc_add(((+split_value[0]- (+split_value[1]))) / 2 , market_value_unit.value)
+         }else{
+           realValue = acc_add(((+split_value[0] + (+split_value[1]))) / 2 , market_value_unit.value)
+         }
+         realValue = realValue > 0 ? ('+'+realValue) : realValue
+       }else{
+         if(split_value[0].indexOf('-') > -1){
+           const withValue = acc_add(+split_value[0] , 0.5)
+           if(value_show.csid == 1){
+             realValue =  (withValue == 0 ? '-':'') + withValue + '/' + Math.abs(split_value[0])
+           }else{
+             realValue =  (withValue == 0 ? '-':'') + withValue
+           }
+         }else{
+           const withValue = (+split_value[0] + 0.5)
+           if(value_show.csid == 1){
+             realValue =  '+'+split_value[0] + '/' + withValue
+           }else{
+             realValue =  '+' + withValue
+           }
+         }
+       }
+     }else{//大小类盘口值计算
+       const split_value =  pre_market_value.value ? _.words(pre_market_value.value,/[^/ ]+/g) : '0'
+       if(split_value.length > 1){
+         realValue = acc_add(((+split_value[0] + (+split_value[1]))) / 2 , market_value_unit.value)
+       }else{
+         const withValue = acc_add(+split_value[0] , 0.5)
+         if(value_show.csid == 1){
+           realValue =  +split_value[0] + '/' + withValue
+         }else{
+           realValue = withValue
+         }
+       }
+     }
+     if (realValue == '+0' || realValue == '-0') {
+      realValue = '0'
+     }
+     pre_market_value.value = realValue
+     if(get_active_index == 'market'+index_){
+       send_market_to_keyboard()
+     }
+   }
+   /**
+    *@description 点击移除无效注单
+    *@return {Undefined} undefined
+    */
+    const reomve_invalid_handle = () =>{
+     // 如果是封盘或者关盘或者不支持串关，则删除对应投注项
+     if (
+         [1, 2].includes(+bet_obj_hs) ||
+         [2, 3].includes(+bet_obj_os) ||
+         [1, 2].includes(+bet_obj_mhs) ||
+         bet_obj_ov < 101000 ||
+         hids
+     ) {
+       remove_(value_show.id_)
+     }
+   }
+   // 单关单注成功和单关多注消息处理
+   const c201_update2_handle = ({ isOddsChange, newTotalMaxWinAmount, orderNo, orderOddsVos, status } = {}) =>{
+     if (orderNo != bet_obj_item.orderno) return
+
+     if (status == 1) {  // 成功
+       if (
+           isOddsChange &&
+           orderOddsVos &&
+           orderOddsVos[0] &&
+           bet_obj_item.cs.oid == orderOddsVos[0].oid
+       ) {
+         bet_success_obj.oddsValues = orderOddsVos[0].ov
+         bet_success_obj.maxWinMoney = newTotalMaxWinAmount * 100
+       }
+       order_status.value = 1
+     } else if (status == 2) {  // 失败
+       if (get_new_bet && get_bet_list.length == 1) {  // 单关新流程时记录失败的订单号
+         set_order_los(orderNo)
+         set_bet_status(1);
+         set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+         tips_msg_update($root.$t('bet.err_msg03'))
+       }
+       order_status.value = 0
+     }
+     if ([1, 2].includes(+status)) {
+       set_order_ing({ change_: 0, value_: orderNo })
+     }
+   }
+   // 查询订单信息接口响应数据处理， 对于串关投注，只需要在这里更新赔率就行
+   const query_order_obj_handle = (val)=>{
+     if (!Array.isArray(val)) return;
+
+     for (const item of val) {
+       // 去2个地方找注单号
+       if (
+           !([bet_obj_item.orderno+'',get_order_no+''].includes(item.orderNo+'')||
+           get_is_mix && get_bet_list.length > 1
+         )
+       ) {
+         continue
+       }
+
+       if (item.status == 0) {  //投注成功,更新赔率和最高可赢
+         order_status.value = 1
+         bet_success_obj.maxWinMoney = item.newMaxWinAmount
+
+         if (
+             item.isOddsChange &&
+             item.oddsChangeList &&
+             item.oddsChangeList.length
+         ) {
+           item.oddsChangeList.forEach(item1 => {
+             if (item1.playOptionsId == _.get(bet_obj_item,'cs.oid')) {
+               bet_success_obj.oddsValues = item1.usedOdds
+             }
+           })
+         }
+       } else if (item.status == 4) {   //投注失败
+         if (get_new_bet && get_bet_list.length == 1) {  // 单关新流程时记录失败的订单号
+           set_order_los(item.orderNo)
+           set_bet_status(1);
+           set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
+           tips_msg_update($root.$t('bet.err_msg03'))
+         }
+         order_status.value = 0
+       }
+       if ([0, 4].includes(+item.status)) {
+         set_order_ing({ change_: 0, value_: item.orderNo })
+       }
+     }
+   }
+   // 清除当前组件所有定时器
+   const clear_timer = () =>{
+     // timeout定时器列表
+     const timeout_timer_arr = [
+       'timer',
+       'timer2',
+       'timer3',
+     ]
+
+     // interval定时器列表
+     const interval_timer_arr = [
+       'flicker_timer'
+     ]
+
+     // 批量清除timeout定时器
+     for (const timer of timeout_timer_arr) {
+       clearTimeout(this[timer])
+       this[timer] = null
+     }
+
+     // 批量清除interval定时器
+     for (const timer of interval_timer_arr) {
+       clearInterval(this[timer])
+       this[timer] = null
+     }
+   }
+
 /** --------------------------事件结束 ---------------*/
 
 
 onUnmounted(() => {
-  this.clear_timer()
+  clear_timer()
 
-  this.$root.$off(this.emit_cmd.EMIT_REMOVE_INVALID_, this.reomve_invalid_handle)
-  this.$root.$off(this.emit_cmd.EMIT_C201_UPDATE2, this.c201_update2_handle)
-  this.$root.$off(this.emit_cmd.EMIT_CHANGE_ODDS, this.change_odds_handle)
-  this.$root.$off(this.emit_cmd.EMIT_CHANGE_MARKET, this.change_market_handle)
-  for (const key in this.$data) {
-    this.$data[key] = null
+  $root.$off(emit_cmd.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
+  $root.$off(emit_cmd.EMIT_C201_UPDATE2, c201_update2_handle)
+  $root.$off(emit_cmd.EMIT_CHANGE_ODDS, change_odds_handle)
+  $root.$off(emit_cmd.EMIT_CHANGE_MARKET, change_market_handle)
+  for (const key in $data) {
+    $data[key] = null
   }
 })
 
