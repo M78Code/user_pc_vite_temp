@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/project/pages/details/components/chatroom/msg_list.vue
+ * @FilePath: d:/projects/user-h5/project_path/src/pages/details/components/chatroom/msg_list.vue
  * @Description:
 -->
 <template>
@@ -19,8 +19,8 @@
 <script>
 // #TODO vuex 
 // import { mapMutations, mapGetters } from "vuex";
-import chat_msg from 'src/project/pages/details/components/chatroom/chat_msg.vue';
-import { msgType, muteType } from 'src/project/pages/details/components/chatroom/constant.js'
+import chat_msg from 'project_path/src/pages/details/components/chatroom/chat_msg.vue';
+import { msgType, muteType } from 'project_path/src/pages/details/components/chatroom/constant.js'
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

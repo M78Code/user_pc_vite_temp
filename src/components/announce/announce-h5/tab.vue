@@ -16,47 +16,41 @@
     </div>
 </template>
   
-<script>
-import { defineComponent, watch } from 'vue'
-// TODO:
-import utils from "src/public/utils/utils.js";
-
-export default defineComponent({
-    name: 'MyTabs',
-    props: {
-        tabList: {
-            type: Array,
-            default: () => []
-        },
-        tabIndex: {
-            type: Number,
-            default: -1
-        },
-        rightDistance: {
-            type: Boolean,
-            default: true
-        },
+<script setup>
+import { watch } from 'vue'
+import utils from "src/core/utils/utils.js";
+const props = defineProps({
+    tabList: {
+        type: Array,
+        default: () => []
     },
-    setup(props, { emit }) {
-        // 监听 tabIndex 下标变化
-        watch(
-            () => props.tabIndex,
-            (n, o) => {
-                utils.tab_move2(n, this.$refs.scrollBox)
-            },
-            {
-                immediate: true,
-                deep: true
-            }
-        )
-        function changeTab(tab) {
-            emit('changeTab', tab)
-        }
-        return {
-            changeTab
-        }
-    }
+    tabIndex: {
+        type: Number,
+        default: -1
+    },
+    rightDistance: {
+        type: Boolean,
+        default: true
+    },
 })
+
+const emit = defineEmits(['changeTab'])
+
+
+// 监听 tabIndex 下标变化
+watch(
+    () => props.tabIndex,
+    (n, o) => {
+        utils.tab_move2(n, this.$refs.scrollBox)
+    },
+    {
+        immediate: true,
+        deep: true
+    }
+)
+function changeTab(tab) {
+    emit('changeTab', tab)
+}
 </script>
 <style lang="scss" scoped>
 .my-tabs {
@@ -139,4 +133,4 @@ export default defineComponent({
     }
 }
 </style>
-  
+

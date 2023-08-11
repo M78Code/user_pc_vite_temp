@@ -3,7 +3,7 @@
  * @Date: 2023-07-30 17:13:55
  * @Description: 本地存储方法 提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法
  */
-import { isNull, isUndefined } from "lodash";
+import { isNumber, isNull, isUndefined } from "lodash";
 /**
  * 创建一个 web Storage
  * @param {*}
@@ -57,10 +57,7 @@ export const createStorage = ({
       const stringData = JSON.stringify({
         value,
         time: Date.now(),
-        expire:
-          !isNull(expire) || !isUndefined(expire)
-            ? new Date().getTime() + expire * 1000
-            : null,
+        expire: isNumber(expire) ? new Date().getTime() + expire * 1000 : null,
       });
       const stringifyValue = this.hasEncrypt
         ? this.encryption.encryptByAES(stringData)

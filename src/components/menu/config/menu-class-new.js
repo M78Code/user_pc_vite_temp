@@ -1,6 +1,6 @@
 import BaseData from "src/public/utils/base_data/base-data.js";
 import utils from "src/public/utils/utils.js"
-import store from "src/store-redux-vuex/index.js";
+import store from "src/store-redux/index.js";
 
 const state = store.getState()
 // 热门除了50199-30199  赛事、50101-30101 竞足外，

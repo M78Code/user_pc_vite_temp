@@ -9,7 +9,7 @@ const router = createRouter({
       // },
       name: "main",
       component: () => import("project_path/src/layouts/MainLayout.vue"),
-      // children: [
+      children: [
       //   {
       //     path: "/match",
       //     name: "matchList",
@@ -49,18 +49,18 @@ const router = createRouter({
       //     component: () => import("project_path/pages/details/category_loading.vue")
       //   },
       //   // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
-      //   {
-      //     path: "/details/:mid/:mcid?/:csid?",
-      //     name: "category",
-      //     component: () => import("project_path/pages/details/details.vue"),
-      //     // children: [
-      //     //   {
-      //     //     path: "category/:mid?/:id?",
-      //     //     name: "category",
-      //     //     component: () => import("project_path/pages/details/children/category.vue")
-      //     //   }
-      //     // ]
-      //   },
+        {
+          path: "/details/:mid/:mcid?/:csid?",
+          name: "category",
+          component: () => import("project_path/src/pages/details/details.vue"),
+          children: [
+            {
+              path: "category/:mid?/:id?",
+              name: "category",
+              component: () => import("project_path/pages/details/children/category.vue")
+            }
+          ]
+        },
       //   // 赛果详情页
       //   {
       //     path: "/result_details/:mid",
@@ -87,7 +87,7 @@ const router = createRouter({
       //       },
       //     ]
       //   },
-      // ]
+      ]
     },
     // {
     //   path: "/router",

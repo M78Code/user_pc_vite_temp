@@ -361,7 +361,6 @@ class BaseData {
    */
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
-
     let menu_info = this.set_ses_wapper(res, []);
 
     // console.warn('menu_info',menu_info)
@@ -424,7 +423,7 @@ class BaseData {
       // 并且 商户有开启 电子竞技
       if (esport_menu.length && this.is_mi_2000_open_int) {
         let esports_number = 2000;
-        left_menu.splice(2, 0, esports_number);
+        // left_menu.splice(2, 0, esports_number);
         // 替换默认数据 使用接口数据
         this.dianjing_sublist = [...esport_menu];
         // 电竞版本 用于页面更新
@@ -455,13 +454,15 @@ class BaseData {
       let old_menu = JSON.stringify(this.mew_menu_list_res);
       let new_menu = JSON.stringify(menu_info);
 
-      if (old_menu != new_menu) {
+      // if (old_menu != new_menu) {
         this.mew_menu_list_res = menu_info;
 
         localStorage.setItem("is_session_base_data", JSON.stringify(this));
         // 计算 live
         this.set_mi_gunqiu();
-      }
+      // }
+
+      console.error('left_menu_base_mi_arr',this.left_menu_base_mi_arr)
 
       // 更新版本
       this.base_data_version = Date.now();
@@ -660,7 +661,7 @@ class BaseData {
     // 获取语言类型
     let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports = i18n.global.messages?.common?.e_sports;
+    let esports = i18n.global.messages?.common?.e_sports || 'Esports';
 
     // 菜单 国际化 数据  map
     res["2000"] = esports;
@@ -1015,5 +1016,4 @@ class BaseData {
 
 const base_data_instance = new BaseData();
 
-window.$BaseData = base_data_instance;
-export default base_data_instance;
+export default base_data_instance

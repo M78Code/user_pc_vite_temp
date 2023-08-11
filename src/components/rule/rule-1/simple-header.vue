@@ -26,15 +26,12 @@
 </template>
 
 <script setup>
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/simple-header/config/index.js"
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
+import store from "src/store-redux/index.js";
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
-// TODO: 待处理组件
-import refresh from "src/public/components/refresh/refresh.vue";
+import { RefreshWrapper as Refresh } from "src/components/refresh"
 
 const props = defineProps({
     ...useProps,
@@ -80,26 +77,31 @@ const date_time = ref('')
 const get_date_time = () => {
     if (props.source.toLocaleUpperCase() != 'PC') return
     // TODO: 待处理mixins函数
-    let time = this.mx_get_remote_time();
-    date_time.value = this.utc_to_gmt_no_8_ms2(time);
-    timer.value = setInterval(() => {
-        time += 1000;
-        date_time.value = this.utc_to_gmt_no_8_ms2(time);
-    }, 1000);
+    // let time = this.mx_get_remote_time();
+    // date_time.value = this.utc_to_gmt_no_8_ms2(time);
+    // timer.value = setInterval(() => {
+    //     time += 1000;
+    //     date_time.value = this.utc_to_gmt_no_8_ms2(time);
+    // }, 1000);
 }
 /** 钩子触发 */
 onMounted(get_date_time)
 
-/** TODO: 获取store仓库 */
-const store = useStore()
-// ...mapGetters(['get_menu_type'])
+/** 收藏菜单为6 */
+const menu_type = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+    const new_state = store.getState()
+    menu_type.value = new_state.menu_type
+})
+onUnmounted(unsubscribe)
 
 /** 路由实例 */
 const router = useRouter()
 
 /** H5 返回上一级 */
 const go_to_back = () => {
-    if (store.get_menu_type == 900 && current_route_name == 'rule_description') {
+    if (menu_type.value == 900 && current_route_name == 'rule_description') {
         router.push({ name: 'virtual_sports' });//跳转到虚拟体育
         return
     }

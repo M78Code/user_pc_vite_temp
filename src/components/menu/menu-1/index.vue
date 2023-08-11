@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div v-for="item1 in left_menu_base_mi_arr" :key="`${jinri_zaopan}_${item1}`"
+    <div v-for="item1 in base_data.left_menu_base_mi_arr" :key="`${jinri_zaopan}_${item1}`"
       :class="(base_data.is_mi_300_open && item1 == 400) ? 'menu-border' : ''">
       <!--   赛种-->
       <!-- {{ base_data.filterSport_arr }} -- {{ base_data.compute_sport_id(item1) }} -->
@@ -95,13 +95,13 @@
       <!--  电竞    子菜单  开始    -->
       <div v-if="item1 == 2000" class="menu-fold2-wrap" :data-id="show_menu"
         :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
-          <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :current_lv_2_mi="current_lv_2_mi" />
+          <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :base_data="base_data" :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  电竞    子菜单   结束     -->
       <!--  VR    子菜单   开始     -->
       <div v-if="item1 == 300" class="menu-fold2-wrap" :data-id="show_menu"
         :class="(current_lv_1_mi == item1 && !show_menu) ? 'open' : ''">
-        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :current_lv_2_mi="current_lv_2_mi" />
+        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :base_data="base_data" :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  VR    子菜单   结束     -->
       <!--  子菜单  ，  结束     -->
@@ -110,7 +110,6 @@
 </template>
 <script setup>
 import { ref,onMounted } from "vue"
-import { api_base_data } from "src/api/index.js";
 
 import MenuItem from './menu-item.vue'
 
@@ -137,72 +136,6 @@ const props = defineProps({
   }
 })
 
-onMounted(()=>{
-  init_mew_menu_list()
-})
-
-/**
- * @description: 菜单列表
- * @return {*}
- */
- const init_mew_menu_list = async () => {
-  let res = await api_base_data.get_base_data_menu_init({});
-  let menu_info = set_ses_wapper(res, []);
-  const left_menu = []
-  const in_play = []
-  // 左侧菜单id
-  menu_info.forEach(item => {
-    // vr300 冠军400 2000 电竞 500热门
-    if (Number(item.mi) < 300) {
-      let count = (item.sl || []).reduce((total,cur) => {
-        if(cur.mi == item.mi + '4'){
-          return total
-        }
-        return total + Number(cur.ct)
-      },0)
-
-      // 赛种下面有赛事
-      if( count > 0){
-        left_menu.push(Number(item.mi))
-
-        // 有滚球赛事
-        let obj = (item["sl"] || []).find((y) => y.mi == `${item.mi}1` && y.ct > 0 ) || {};
-      
-        if(obj.mi){
-          in_play.push({mi:item.mi,count:obj.ct})
-        }
-      }
-    }
-  })
-  // let esports_obj = menu_info.find(page => [2100, 2101, 2102, 2103].includes(Number(page.mi))) || {}
-  // if (esports_obj.mi) {
-  //   left_menu.splice(3, 0, 2000)
-  // }
-
-  // 获取 top events 的 赛种
-  let mi_5000 = menu_info.find(item=> item.mi == 5000) || {}
-  // - 5000 得到 csid  + 100 得到 菜单id 
-  let top_events = ( mi_5000.sl || [] ).map(item => (Number(item.mi) - 5000 + 100) ) || []
-
-
-  // let state = store.getState()
-  // // 获取最新的 数据
-  // let redux_menu = _.cloneDeep(state.menusReducer.redux_menu) 
-
-  // redux_menu.in_play = in_play
-  // redux_menu.top_events = top_events
-  // redux_menu.menu_list = left_menu
-
-  // 设置 左侧菜单
-	// store.dispatch({
-  //   type: "SETREDUXMENU",
-  //   data: redux_menu,
-  // });
-
-  // 设置新菜单 
-  return left_menu;
-}
-
 /**
    * @description: 今日 早盘 紧急开关
    * @param {undefined} undefined
@@ -211,7 +144,7 @@ onMounted(()=>{
 const today_early = () => {
   const { lv2_mi, lv1_mi } = menu_config.left_menu_result
 
-  if (!base_data.left_menu_base_mi_arr.includes(Number(lv1_mi))) {
+  if (!props.base_data.left_menu_base_mi_arr.includes(Number(lv1_mi))) {
     let params = {}, mid_menu_show = { list_filter: true }, has_mid_menu = true
     params = {
       root: 1,
@@ -236,7 +169,7 @@ const today_early = () => {
 const esports_vr_switch = () => {
   let params = {}, mid_menu_show = { list_filter: true }, has_mid_menu = true
   // 电竞和 vr关闭后 需要跳转到滚球 (没有数据 也算是关)
-  if (!base_data.is_mi_2000_open || !base_data.is_mi_300_open) {
+  if (!props.base_data.is_mi_2000_open || !props.base_data.is_mi_300_open) {
     params = {
       root: 1,
       lv1_mi: '',
@@ -250,20 +183,20 @@ const esports_vr_switch = () => {
 
     // 判断 电竞 下面是否还有该 赛种
     if (menu_config.menu_root == 2000) {
-      let esports = base_data.dianjing_sublist.find(item => item.mi == lv2_mi) || {}
+      let esports = props.base_data.dianjing_sublist.find(item => item.mi == lv2_mi) || {}
       if (esports.mi) {
         return
       } else {
-        params.lv2_mi = base_data.dianjing_sublist[0].mi
+        params.lv2_mi = props.base_data.dianjing_sublist[0].mi
       }
     }
     // 判断 VR 下面是否还有该 赛种
     if (menu_config.menu_root == 300) {
-      let vr_sports = base_data.vr_mi_config.find(item => item.menuId == lv2_mi) || {}
+      let vr_sports = props.base_data.vr_mi_config.find(item => item.menuId == lv2_mi) || {}
       if (vr_sports.menuId) {
         return
       } else {
-        params.lv2_mi = base_data.vr_mi_config[0].menuId
+        params.lv2_mi = props.base_data.vr_mi_config[0].menuId
       }
       return lv_2_click_wapper_4({ lv1_mi, lv2_mi: params.lv2_mi })
     }
@@ -322,7 +255,7 @@ const when_created = async () => {
 const compute_item1_sublist_mi_100 = item1 => {
   //  jinri_zaopan
   item1 = "" + item1;
-  let obj = base_data.mew_menu_list_res.find((x) => x.mi == "" + item1) || {};
+  let obj = props.base_data.mew_menu_list_res.find((x) => x.mi == "" + item1) || {};
   let sub_list = [];
   if (item1 == 118) {
     // 娱乐
@@ -331,7 +264,7 @@ const compute_item1_sublist_mi_100 = item1 => {
     //常规体育
     // 整个菜单原始数据
     // 当前球类的 今日 或者 早盘
-    let obj2 = (obj.sl || []).find(x => x.mi == `${item1}${jinri_zaopan}`) || {};
+    let obj2 = (obj.sl || []).find(x => x.mi == `${item1}${jinri_zaopan_.value}`) || {};
     // 当前球类的 今日 或者 早盘  的 玩法数据
     sub_list = obj2["sl"] || [];
   }
@@ -343,7 +276,7 @@ const compute_item1_sublist_mi_100 = item1 => {
  * @return {Array} 列表
  */
 const compute_item1_sublist_mi_300 = () => {
-  return base_data.vr_mi_config;
+  return props.base_data.vr_mi_config;
 }
 /**
  * @description: 计算一级菜单下的 二级菜单    电子竞技
@@ -353,10 +286,10 @@ const compute_item1_sublist_mi_300 = () => {
 const compute_item1_sublist_mi_2000 = item1 => {
   //  jinri_zaopan
   item1 = "" + item1;
-  let obj = base_data.mew_menu_list_res.find(x => x.mi == "" + item1) || {};
+  let obj = props.base_data.mew_menu_list_res.find(x => x.mi == "" + item1) || {};
   let sub_list = [];
   // 电竞
-  sub_list = base_data.dianjing_sublist;
+  sub_list = props.base_data.dianjing_sublist;
   //     {
   //   "menu_id": 101302,
   //   "parent_id": 1013,
@@ -436,10 +369,10 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
     // 设置默认值
     let lv2_es = lv2 || "2100"
     // 默认值是否在 列表中 
-    let esports_mi = base_data.dianjing_sublist.find(item => item.mi == lv2_es) || {}
+    let esports_mi = props.base_data.dianjing_sublist.find(item => item.mi == lv2_es) || {}
     if (!esports_mi.mi) {
       // 有默认值但是没有在列表中 选择列表中的第一个
-      lv2_es = base_data.dianjing_sublist[0].mi
+      lv2_es = props.base_data.dianjing_sublist[0].mi
     }
     //电竞  直接点英雄联盟
     lv_2_click_wapper_3({
@@ -453,7 +386,7 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
     jinri_zaopan.value = 2
 
     // 拿vr的第一个数据 菜单id作为默认值
-    let menuId = (base_data.vr_mi_config[0] || {}).menuId || '1010'
+    let menuId = (props.base_data.vr_mi_config[0] || {}).menuId || '1010'
 
     // 虚拟体育  直接点 VR足球
     lv_2_click_wapper_4({
@@ -584,8 +517,8 @@ const lv_2_click_wapper_2 = (detail = {}) => {
 
   let lv2_mi = ''
   // 获取 二级菜单id
-  if (Object.keys(base_data.commn_sport_guanjun_obj).length) {
-    lv2_mi = base_data.commn_sport_guanjun_obj[`mi_${lv1_mi}`]["mi"];
+  if (Object.keys(props.base_data.commn_sport_guanjun_obj).length) {
+    lv2_mi = props.base_data.commn_sport_guanjun_obj[`mi_${lv1_mi}`]["mi"];
   }
 
   // 父级euid
@@ -681,7 +614,7 @@ const lv_2_click_wapper_4 = (detail = {}) => {
 
 
   let { lv1_mi, lv2_mi } = detail;
-  let vr_obj = base_data.vr_mi_config.find(item => lv2_mi == item.menuId) || {};
+  let vr_obj = props.base_data.vr_mi_config.find(item => lv2_mi == item.menuId) || {};
   // console.log(vr_obj)
   // console.error(vr_obj,'-----------------------------------------------------');
   let config = {
@@ -766,13 +699,13 @@ const lv_2_click_common = (detail = {}) => {
   current_lv_2_mi.value = lv2_mi;
 
   // 获取 euid orpt tid
-  let obj = base_data.mi_info_map[`mi_${lv2_mi}`];
+  let obj = props.base_data.mi_info_map[`mi_${lv2_mi}`];
 
   //电子竞技没有 euis
   if (lv1_mi != 2000) {
     // 常规赛种 euid 
     if (lv1_mi != 118) {
-      obj.euid = base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
+      obj.euid = props.base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
     }
   }
   // 常规赛种下 冠军模板都是18
@@ -830,10 +763,10 @@ const lv_2_click_common = (detail = {}) => {
  * @param {*} mi
  */
 const lv_1_num = mi => {
-
+  console.warn('mi',mi)
   if (mi == 2000) {
     //电竞
-    let sub_list = base_data.dianjing_sublist;
+    let sub_list = props.base_data.dianjing_sublist;
     let num = 0;
     sub_list.map((x) => {
       //  1  滚球  3 早盘  4 冠军  合计得出总数
@@ -842,7 +775,7 @@ const lv_1_num = mi => {
     return num;
   } else if ([118, 300].includes(1 * mi)) {
     //娱乐 和 VR
-    let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+    let obj = props.base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
     let sl = obj["sl"] || [];
     let n = 0;
     sl.map((x) => {
@@ -851,11 +784,11 @@ const lv_1_num = mi => {
     return n;
   } else if (mi == 400) {
     // "冠军"
-    let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+    let obj = props.base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
     return obj["ct"];
   } else {
     //  今日 或者 早盘
-    let changgui = compute_num(`${mi}${jinri_zaopan}`, mi) || 0;
+    let changgui = compute_num(`${mi}${jinri_zaopan_.value}`, mi) || 0;
     // 冠军
     let guanjun = compute_num(`${mi}4`, mi) || 0;
     return changgui + guanjun;
@@ -865,7 +798,7 @@ const lv_1_num = mi => {
  * 计算单个电竞赛种的  数量总数
  */
 const lv_1_num_sublist_dianjing = (mi, mif) => {
-  let obj = base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
+  let obj = props.base_data.mew_menu_list_res.find((x) => x.mi == mi) || {};
   let sl = obj["sl"] || [];
   let n = 0;
   //  1  滚球  3 早盘  4 冠军  合计得出总数
@@ -882,8 +815,9 @@ const lv_1_num_sublist_dianjing = (mi, mif) => {
  * @param {*} mi
  */
 const compute_num = (mi, mif) => {
+  // console.error('base_data',props.base_data)
   //球类
-  let obj = base_data.mew_menu_list_res.find((x) => x.mi == mif) || {};
+  let obj = props.base_data.mew_menu_list_res.find((x) => x.mi == mif) || {};
   //冠军
   let obj2 = (obj.sl || []).find((x) => x.mi == mi) || {};
   return obj2["ct"] || 0;
@@ -917,15 +851,15 @@ const handle_click_jinri_zaopan = val => {
   lev_1_click(lv1_mi, val)
 }
 // 模拟推送
-const send_menu = () => {
-  base_data.set_ws_send_new_menu_init()
-}
-const send_user = () => {
-  base_data.set_ws_send_new_user_info_init()
-}
-const send_vr = () => {
-  base_data.set_ws_send_new_vr_menu_init()
-}
+// const send_menu = () => {
+//   base_data.set_ws_send_new_menu_init()
+// }
+// const send_user = () => {
+//   base_data.set_ws_send_new_user_info_init()
+// }
+// const send_vr = () => {
+//   base_data.set_ws_send_new_vr_menu_init()
+// }
 
 
 

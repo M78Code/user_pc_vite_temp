@@ -123,7 +123,8 @@
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted } from "vue"
-import store from "src/store-redux/index.js";
+import store from "src/store-redux/index.js"
+import lodash from 'lodash'
 import formartmixin from 'src/project/mixins/module/formartmixin.js';
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
@@ -229,7 +230,7 @@ const is_show_result = () => {
  */
 const league_l_clicked = () => {
   if(['detail_match_list','home_hot_page_schedule'].includes(main_source)) return;
-  let map_collapse = _.cloneDeep(get_collapse_map_match) || {};
+  let map_collapse = lodash.cloneDeep(get_collapse_map_match) || {};
   // 展开联赛
   let tid = match_of_list.tid;
   // 如果是折叠, 则展开赛事
@@ -266,7 +267,7 @@ const league_l_clicked = () => {
   if(![3,11].includes(+menu_type)){
     return result;
   }else if(menu_type == 11){
-    let third_m_id = _.get(get_current_menu,'date_menu.field1');
+    let third_m_id = lodash.get(get_current_menu,'date_menu.field1');
     //串关今日id为0或'0'
     if(third_m_id !== 0 && third_m_id !== '0'){
       return result;
@@ -320,6 +321,7 @@ const gen_collapse_key = (match) =>{
 }
 
 onUnmounted(() => {
+  unsubscribe()
   clearTimeout(timer_super11.value);
   timer_super11.value = null;
 })
