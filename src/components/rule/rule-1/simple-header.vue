@@ -26,15 +26,11 @@
 </template>
 
 <script setup>
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/simple-header/config/index.js"
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
-// TODO: 待处理组件
-import refresh from "src/public/components/refresh/refresh.vue";
+import { RefreshWrapper as Refresh } from "src/components/refresh"
 
 const props = defineProps({
     ...useProps,
@@ -80,12 +76,12 @@ const date_time = ref('')
 const get_date_time = () => {
     if (props.source.toLocaleUpperCase() != 'PC') return
     // TODO: 待处理mixins函数
-    let time = this.mx_get_remote_time();
-    date_time.value = this.utc_to_gmt_no_8_ms2(time);
-    timer.value = setInterval(() => {
-        time += 1000;
-        date_time.value = this.utc_to_gmt_no_8_ms2(time);
-    }, 1000);
+    // let time = this.mx_get_remote_time();
+    // date_time.value = this.utc_to_gmt_no_8_ms2(time);
+    // timer.value = setInterval(() => {
+    //     time += 1000;
+    //     date_time.value = this.utc_to_gmt_no_8_ms2(time);
+    // }, 1000);
 }
 /** 钩子触发 */
 onMounted(get_date_time)

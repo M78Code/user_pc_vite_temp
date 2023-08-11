@@ -4,64 +4,115 @@
 -->
 
 <template>
-    <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
-      <div class="key-row row">
-        <div class="key-cell" data-num="qon" :class="{'shadow-show':prevent_click(addnum.qon)}">
-          <span>+</span>{{addnum.qon}}
-        </div>
-        <div class="key-cell" data-num="1">1</div>
-        <div class="key-cell" data-num="2">2</div>
-        <div class="key-cell" data-num="3">3</div>
+  <div class="keyboard" @click.stop="_handleKeyPress($event)" style="opacity: 1;" @touchmove.prevent>
+    <div class="key-row row">
+      <div class="key-cell" data-num="qon" :class="{ 'shadow-show': prevent_click(addnum.qon) }">
+        <span>+</span>{{ addnum.qon }}
       </div>
-      <div class="key-row row">
-        <div class="key-cell" data-num="qtw" :class="{'shadow-show':prevent_click(addnum.qtw)}">
-          <span>+</span>{{addnum.qtw}}
-        </div>
-        <div class="key-cell" data-num="4">4</div>
-        <div class="key-cell" data-num="5">5</div>
-        <div class="key-cell" data-num="6">6</div>
-      </div>
-      <div class="key-row row">
-        <div class="key-cell" data-num="qth" :class="{'shadow-show':prevent_click(addnum.qth)}">
-          <span>+</span>{{addnum.qth}}
-        </div>
-        <div class="key-cell" data-num="7">7</div>
-        <div class="key-cell" data-num="8">8</div>
-        <div class="key-cell" data-num="9">9</div>
-      </div>
-      <div class="key-row row">
-        <div class="key-cell" data-num="max">
-          MAX
-        </div>
-        <div class="key-cell" data-num=".">.</div>
-        <div class="key-cell" data-num="0">0</div>
-        <div class="key-cell del-key" data-num="x"></div>
-      </div>
+      <div class="key-cell" data-num="1">1</div>
+      <div class="key-cell" data-num="2">2</div>
+      <div class="key-cell" data-num="3">3</div>
     </div>
+    <div class="key-row row">
+      <div class="key-cell" data-num="qtw" :class="{ 'shadow-show': prevent_click(addnum.qtw) }">
+        <span>+</span>{{ addnum.qtw }}
+      </div>
+      <div class="key-cell" data-num="4">4</div>
+      <div class="key-cell" data-num="5">5</div>
+      <div class="key-cell" data-num="6">6</div>
+    </div>
+    <div class="key-row row">
+      <div class="key-cell" data-num="qth" :class="{ 'shadow-show': prevent_click(addnum.qth) }">
+        <span>+</span>{{ addnum.qth }}
+      </div>
+      <div class="key-cell" data-num="7">7</div>
+      <div class="key-cell" data-num="8">8</div>
+      <div class="key-cell" data-num="9">9</div>
+    </div>
+    <div class="key-row row">
+      <div class="key-cell" data-num="max">
+        MAX
+      </div>
+      <div class="key-cell" data-num=".">.</div>
+      <div class="key-cell" data-num="0">0</div>
+      <div class="key-cell del-key" data-num="x"></div>
+    </div>
+  </div>
 </template>
   
 <script setup>
-import {ref ,reactive,provide,onMounted,computed} from 'vue'
+import { ref, reactive, provide, onMounted, computed } from 'vue'
 
-let money = ref() // 最终输入的金额
+const money = ref('') //用户输入金额
+const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
+const max_money = ref()   //最大可投注的金额
+const pre_odds_value = ref("") //预约输入赔率或者盘口
 
-let addnum = reactive({
-  qon: 10,
-  qtw: 50,
-  qth: 100,
-});
 
 const props = defineProps({
-    items:{
-        type: [Object] ,
-        default : () => {}
-    }
+  items: {
+    type: [Object],
+    default: () => { }
+  }
 })
+
+// 预约输入赔率或者盘口
+watch(() => pre_odds_value, (new_) => {
+  if (get_active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
+    try {
+      pre_odds_value.value = pre_odds_value.value + ''
+      if (pre_odds_value.value.indexOf(".") > -1 && pre_odds_value.value.split('.')[1]) {//篮球盘口小数点后面必须是5的倍数，如果非5的倍数，四舍五入
+        let pointAfterValue = pre_odds_value.value.split('.')[1].substr(0, 1)
+        if (pointAfterValue <= 5) {
+          pre_odds_value.value = pre_odds_value.value.split('.')[0] + '.5'
+        } else {
+          pre_odds_value.value = Number(pre_odds_value.value.split('.')[0]) + 1 + ''
+        }
+      }
+      let index = get_active_index.toString().split('market')[1]
+      let value_show = get_bet_obj[get_bet_list[index]].bs
+      const isdaxiao = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'));
+      if (isdaxiao) {
+        if (+pre_odds_value.value > 400) {
+          pre_odds_value.value = '400'
+        }
+      } else {
+        if (+pre_odds_value.value < -99.5) {
+          pre_odds_value.value = '-99.5'
+        } else if (+pre_odds_value.value > 99.5) {
+          pre_odds_value.value = '+99.5'
+        }
+      }
+      $root.$emit(emit_cmd.EMIT_CHANGE_MARKET, pre_odds_value.value);
+    } catch (error) {
+      console.error(error)
+    }
+  } else {
+    if (new_ > 355) {
+      pre_odds_value.value = '355'
+    } else {
+      $root.$emit(emit_cmd.EMIT_CHANGE_ODDS, pre_odds_value.value);
+    }
+  }
+})
+watch(() => money, (new_) => {
+  $root.$emit(emit_cmd.EMIT_CHANGE_MONEY, money.value);
+})
+watch(() => get_active_index, (new_) => {
+  if (money.value) delete_all.value = true;
+})
+watch(() => get_update_tips, (newVal, oldVal) => {
+  if (newVal == 1 && (oldVal == 3 || oldVal == 6) && !get_mix_bet_flag && get_money_total == 0) {
+    money.value = ''
+    set_used_money(-1)
+  }
+})
+// ...mapGetters(['get_user', 'get_bet_status','get_mix_bet_flag', 'get_active_index', 'get_bet_list', 'get_menu_type', 'get_is_combine', 'get_is_mix', 'get_money_total', 'get_bet_obj']),
 
 // 点击键盘
 const _handleKeyPress = (e) => {
   e.preventDefault();
-  if (e.target.className.includes("shadow-show")) {return}; // 置灰的按钮不能再点击
+  if (e.target.className.includes("shadow-show")) { return }; // 置灰的按钮不能再点击
   let num = e.target.dataset.num;
   switch (num) {
     //最大值
@@ -94,9 +145,9 @@ const _handleDecimalPoint = () => {
   if (money.value && money.value >= props.items.orderMaxPay) return
   //如果包含小数点，直接返回
   if (money.value && money.value.includes(".")) return
-  
+
   //如果小数点是第一位，补0
-  if (!money.value){
+  if (!money.value) {
     money.value = "0.";
   } else {
     //如果不是，添加一个小数点
@@ -106,16 +157,16 @@ const _handleDecimalPoint = () => {
 }
 // MAX键
 const _handmaxKey = () => {
-  if(+amount.value < +props.items.orderMaxPay){
-     money.value = amount.value
-     return
+  if (+amount.value < +props.items.orderMaxPay) {
+    money.value = amount.value
+    return
   }
   money.value = props.items.orderMaxPay
   // money_s.value = money.value
 }
 // 删除键
 const _handleDeleteKey = () => {
-  if (!money.value) return 
+  if (!money.value) return
   //删除最后一个
   let s = money.value.toString()
   money.value = s.substring(0, s.length - 1);
@@ -123,47 +174,63 @@ const _handleDeleteKey = () => {
 }
 // 数字建
 const _handleNumberKey = (num) => {
-  if(!num) return
-  
-  if(['qon', 'qtw', 'qth'].includes(num)){
-    if(!money.value){
+  if (!num) return
+
+  if (['qon', 'qtw', 'qth'].includes(num)) {
+    if (!money.value) {
       money.value = addnum[num]
-    }else{
+    } else {
       money.value = (+money.value + addnum[num]).toString();
     }
-  }else{
-    if(!money.value){ // 输入第一位
+  } else {
+    if (!money.value) { // 输入第一位
       money.value = num === '0' ? '0.' : num // 第一位输入0 则显示0.  其他的正常显示
-    }else{
+    } else {
       money.value = money.value + num
-      
+
     }
 
     let S = money.value
     let S_length = S.substring(S.indexOf(".") + 1).length // 0. 后面输入的字符长度  最多只保留两位
-    if (S.includes(".") && S_length > 1){
+    if (S.includes(".") && S_length > 1) {
       money.value = S.substring(0, S.indexOf(".") + 3);// 最多只保留小数点两位
     }
-                                                         
+
 
   }
 
   //超过最大金额  显示最大金额
-  if (money.value && +money.value >= +props.items.orderMaxPay){
+  if (money.value && +money.value >= +props.items.orderMaxPay) {
     money.value = props.items.orderMaxPay
-  } 
+  }
 
 }
 
+// ...mapGetters(['get_user', 'get_bet_status','get_mix_bet_flag', 'get_active_index', 'get_bet_list', 'get_menu_type', 'get_is_combine', 'get_is_mix', 'get_money_total', 'get_bet_obj']),
+
 // 左侧+的按钮 置灰
-const prevent_click = computed(()=>{
-  return function(v){
-    return v + +money.value > +props.items.orderMaxPay
+const prevent_click = computed(() => {
+  return function (v) {
+    if (get_active_index.toString().indexOf('pre') > -1) {
+      return true
+    }
+    if (Number(value) + Number(money.value) > max_money.value) { return true };
   }
 })
 
+const addnum = computed(() => {
+  if (get_mix_bet_flag) {
+    return _.get(get_user, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
+  } else {
+    return _.get(get_user, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
+  }
+})
+// 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
+const has_pre_market = computed(() => {
+  return get_active_index.toString().indexOf('pre') > -1 ||  get_active_index.toString().indexOf('market') > -1
+})
+
+
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

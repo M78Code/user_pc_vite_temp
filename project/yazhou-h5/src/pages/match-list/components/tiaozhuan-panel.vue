@@ -20,14 +20,17 @@
       </template>
     </q-carousel>
     <!-- 猜你喜欢 -->
-    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="_.get(get_access_config,'hotRecommend')"></may-also-like>
+    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
   </div>
 </template>
  
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import lodash from 'lodash'
+import store from "src/store-redux/index.js";
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
 
+const store_state = store.getState()
 // 计时器
 const timer = ref(null)
 // 显示banner图
@@ -37,52 +40,50 @@ const slide = ref(0)
  // 轮播图片地址
 const carousel_src = ref([])
 
-// TODO: 其他模块得 store  待添加
-// ...mapGetters([
-//   // 当前选中的二级菜单id
-//   'get_curr_sub_menu_type',
-//   // 商户配置的图片地址和弹框信息
-//   'get_banner_obj',
-//   // 用户信息,用户金额,userId 需要监听变化
-//   'get_user',
-//   'get_access_config',
-//   'get_golistpage',
-//   'get_hot_list_item'
-// ])
-// ...mapMutations([
-//   // 跳转活动的确认信息
-//   'set_activity_msg',
-//   'get_lang',
-//   'set_menu_type',
-//   'set_goto_detail_matchid',
-//   'set_details_item',
-//   'set_home_tab_item',
-//   'set_hot_tab_item'
-// ]),
+// 商户配置的图片地址和弹框信息
+const get_banner_obj = ref(store_state.get_banner_obj)
+// 用户信息,用户金额,userId 需要监听变化
+const get_user = ref(store_state.get_curr_sub_menu_type)
+const get_golistpage = ref(store_state.get_golistpage)
+const get_hot_list_item = ref(store_state.get_hot_list_item)
+const get_access_config = ref(store_state.get_access_config)
+// 当前选中的二级菜单id
+const get_curr_sub_menu_type = ref(store_state.get_user)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_banner_obj.value = new_state.get_banner_obj
+  get_user.value = new_state.get_user
+  get_golistpage.value = new_state.get_golistpage
+  get_hot_list_item.value = new_state.get_hot_list_item
+  get_access_config.value = new_state.get_access_config
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+})
+
 onMounted(() => {
   fetch_actimg()
 })
 
 //滚球才有
-watch(() => get_curr_sub_menu_type, () => {
+watch(() => get_curr_sub_menu_type.value, () => {
   fetch_actimg()
 })
 
-watch(() => get_banner_obj.type2, () => {
+watch(() => get_banner_obj.value.type2, () => {
   if (get_menu_type === 1) {
     reset_timer()
   }
 })
 
-const show_banner2 = computed(() => get_banner_obj.type2 && get_banner_obj.type2.length && show_banner.value)
+const show_banner2 = computed(() => get_banner_obj.value.type2 && get_banner_obj.value.type2.length && show_banner.value)
 /**
  *@description 获取轮播图片
   *@return {Undefined} undefined
   */
 const fetch_actimg = () => {
-  if (get_banner_obj.type2 && Array.isArray(get_banner_obj.type2)) {
+  if (get_banner_obj.value.type2 && Array.isArray(get_banner_obj.value.type2)) {
     let arr = []
-    get_banner_obj.type2.forEach(item => {
+    get_banner_obj.value.type2.forEach(item => {
       arr.push({ ...item, imgUrl: get_file_path(item.imgUrl) })
     });
     carousel_src.value = arr
@@ -94,11 +95,11 @@ const fetch_actimg = () => {
   *@return {Undefined} undefined
   */
 const confirm = (val) => {
-  let _url = _.get(val, 'hostUrl')
-  let _type = _.get(val, 'urlType')
+  let _url = lodash.get(val, 'hostUrl')
+  let _type = lodash.get(val, 'urlType')
   if (!_url) return
-  if (val.comfirmTxt && get_user.activityList) {
-    set_activity_msg(val)
+  if (val.comfirmTxt && get_user.value.activityList) {
+    store.dispatch({ type: 'matchReducer/set_activity_msg',  payload: val });
   } else if (_url.startsWith('http') && _type === '2') {
       window.open(_url, '_blank')
   } else if (_type === '1') {
@@ -106,22 +107,22 @@ const confirm = (val) => {
       const {groups: {mid, csid}} = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(_url) || {groups:{}}
       if (mid && csid) {
         if ([100,101,102,103].includes(+csid)) {  // 如果是电竞赛事，需要设置菜单类型
-        set_menu_type(3000)
+        store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 })
       }
-      set_goto_detail_matchid(mid);
-      set_details_item(0);
+      store.dispatch({ type: 'matchReducer/set_menu_type',  payload: mid })
+      store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 0 })
       $router.push({name:'category', params: {mid, csid}});
       }
-    } else if (_url == 'act' && get_user.activityList) {
+    } else if (_url == 'act' && get_user.value.activityList) {
       $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
-    } else if (_url.startsWith('hot') && !get_golistpage) {
+    } else if (_url.startsWith('hot') && !get_golistpage.value) {
       let tid = _url.split('/')[1]
-      let is_existtid = get_hot_list_item && get_hot_list_item.subList && get_hot_list_item.subList.find(item => {
+      let is_existtid = get_hot_list_item.value && get_hot_list_item.value.subList && get_hot_list_item.value.subList.find(item => {
         return item.field2 == tid
       })
       if (tid && is_existtid) {
-        set_home_tab_item({component: 'hot', index: 1, name: '热门'})
-        set_hot_tab_item({field2: tid})
+        store.dispatch({ type: 'matchReducer/set_home_tab_item',  payload: {component: 'hot', index: 1, name: '热门'} })
+        store.dispatch({ type: 'matchReducer/set_hot_tab_item',  payload: { field2: tid } })
         if ($route.name == 'home') {
           $root.$emit(emit_cmd.EMIT_HOME_TAB)
         } else {
@@ -143,6 +144,7 @@ const reset_timer = () => {
   }, 7000 * carousel_src.value.length);
 }
 onUnmounted(() => {
+  unsubscribe()
   clearTimeout(timer.value)
   timer.value = null
   for (const key in $data) {

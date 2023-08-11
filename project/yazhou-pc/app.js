@@ -12,7 +12,7 @@ const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成
 const url_params = GetUrlParams(); //获取url参数
 
-let sessionStorage = window.sessionStorage
+let sessionStorage = window.sessionStorage;
 
 //动画逻辑 靠后
 
@@ -20,18 +20,14 @@ let sessionStorage = window.sessionStorage
  * 获取用户信息
  */
 const handle_user_tryPlay = async () => {
-  // let token = ss.get(token_key);
-  let token = sessionStorage.getItem('token')
-  
+  let token = ss.get(token_key);
   if (!token) {
-    console.log(api_match);
     //试玩登录
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
-    // sessionStorage.setItem('token',token)
     ss.set(token_key, token);
-    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("token", token); //兼容之前的 后面删除吧
   } else {
     // 获取用户信息
     try {

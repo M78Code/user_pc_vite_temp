@@ -1,0 +1,21 @@
+{
+    "leftmenu": {
+        "level": 2,
+        "menuName": "客户端PC",
+        "sonName": "Refresh组件"
+    },
+    "category": "component",
+    "component-name": "Refresh",
+    "support-customization": "1",
+    "descriptions": [
+        "Refresh组件"
+    ],
+    "optional-component": [
+        {
+            "component-name": "Refresh_1",
+            "descriptions": [
+                "Refresh组件-版本1"
+            ]
+        }
+    ]
+}

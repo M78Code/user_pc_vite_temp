@@ -178,7 +178,7 @@ export default defineComponent({
         //监听点击搜索关键词改变
         watch(
             // TODO:
-            () => state.get_click_keyword,
+            () => store.get_click_keyword,
             () => {
                 let keyword = res.substr(5);
                 if (keyword == keyword.value) {

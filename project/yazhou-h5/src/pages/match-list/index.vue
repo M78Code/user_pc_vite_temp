@@ -475,10 +475,10 @@ const destroy_handle = () => {
 // 批量清除定时器
 const clear_timer = () => {
   const timer_arr = [
-      'timer_super6',
-      'subscription_timer1',
-      'timer_super7',
-      'timer_super9',
+      timer_super6.value,
+      subscription_timer1.value,
+      timer_super7.value,
+      timer_super9.value,
   ]
 
   for (const timer of timer_arr) {
