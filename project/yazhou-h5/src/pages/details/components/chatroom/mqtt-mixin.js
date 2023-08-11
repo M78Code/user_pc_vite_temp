@@ -1,5 +1,5 @@
 /*
- * @FilePath: d:/projects/user-h5/src/project/pages/details/components/chatroom/mqtt_mixin.js
+ * @FilePath: d:/projects/user-h5/project_path/src/pages/details/components/chatroom/mqtt_mixin.js
  * @Description: mqtt逻辑
  */
 

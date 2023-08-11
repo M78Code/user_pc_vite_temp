@@ -77,7 +77,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import oddsNew from "src/project/pages/details/components/tournament_play/unit/odds_new.vue";
+import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/public/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
