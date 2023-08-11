@@ -62,6 +62,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { useMittOn, MITT_KEY } from  "src/core/mitt"
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert,betting],
@@ -81,6 +82,7 @@ const props = defineProps({
 const store_state = store.getState()
 const timer_ = ref(null)
 const timer1_ = ref(null)
+const emitters = ref({})
 // 投注项
 const odd_item = ref({})
 //红升绿降状态
@@ -119,8 +121,12 @@ onMounted(() => {
   // 设置是否显示投注项dom的id属性值
   dom_id_show.value = window.env.config.DOM_ID_SHOW;
   get_odd_data();
-  $root.$on(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
-  $root.$on(emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,match_result_data_loaded);
+  emitters.value = {
+    // 封盘事件
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_ARRIVED10, arrived10_handle).off,
+     // c105更新
+    emitter_2: useMittOn.on(MITT_KEY.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
+  }
   // 点击事件防抖处理
   item_click3 = debounce(item_click3, 450, {'leading': true, trailing: false});
 })
@@ -449,8 +455,7 @@ const item_click3 = () => {
 
 onUnmounted(() => {
   unsubscribe()
-  $root.$off(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
-  $root.$off(emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,match_result_data_loaded);
+  Object.values(emitters.value).map((x) => x())
   debounce_throttle_cancel(item_click3);
   clearTimeout(timer_.value);
   timer_.value = null;

@@ -27,9 +27,13 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
+import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
+import { useMittEmit, MITT_KEY } from  "src/core/mitt"
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
 
+const route = useRoute()
+const router = useRouter()
 const store_state = store.getState()
 // 计时器
 const timer = ref(null)
@@ -103,7 +107,7 @@ const confirm = (val) => {
   } else if (_url.startsWith('http') && _type === '2') {
       window.open(_url, '_blank')
   } else if (_type === '1') {
-    if (/#*\/*details/.test(_url) && $route.name != 'category') {
+    if (/#*\/*details/.test(_url) && route.name != 'category') {
       const {groups: {mid, csid}} = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(_url) || {groups:{}}
       if (mid && csid) {
         if ([100,101,102,103].includes(+csid)) {  // 如果是电竞赛事，需要设置菜单类型
@@ -111,10 +115,10 @@ const confirm = (val) => {
       }
       store.dispatch({ type: 'matchReducer/set_menu_type',  payload: mid })
       store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 0 })
-      $router.push({name:'category', params: {mid, csid}});
+      router.push({name:'category', params: {mid, csid}});
       }
     } else if (_url == 'act' && get_user.value.activityList) {
-      $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
+      router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
     } else if (_url.startsWith('hot') && !get_golistpage.value) {
       let tid = _url.split('/')[1]
       let is_existtid = get_hot_list_item.value && get_hot_list_item.value.subList && get_hot_list_item.value.subList.find(item => {
@@ -123,10 +127,10 @@ const confirm = (val) => {
       if (tid && is_existtid) {
         store.dispatch({ type: 'matchReducer/set_home_tab_item',  payload: {component: 'hot', index: 1, name: '热门'} })
         store.dispatch({ type: 'matchReducer/set_hot_tab_item',  payload: { field2: tid } })
-        if ($route.name == 'home') {
-          $root.$emit(emit_cmd.EMIT_HOME_TAB)
+        if (route.name == 'home') {
+          useMittEmit(MITT_KEY.EMIT_HOME_TAB)
         } else {
-          $router.push({name: 'home'})
+          router.push({name: 'home'})
         }
       }
     }
