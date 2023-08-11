@@ -28,8 +28,8 @@
                 class="balance-btn-eye cursor-pointer" @click="show_balance = !show_balance " />
             </div>
             <!-- 刷新余额按钮 -->
-            <refresh v-show="show_balance" class="refresh-btn" :other_icon="true" icon_name="icon-balance_refresh"
-              :loaded="data_loaded" :disable="!userInfo" @click="set_amount_refresh" />
+            <!-- <refresh v-show="show_balance" class="refresh-btn" :other_icon="true" icon_name="icon-balance_refresh"
+              :loaded="data_loaded" :disable="!userInfo" @click="set_amount_refresh" /> -->
           </div>
         </div>
 
@@ -39,7 +39,8 @@
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
             <img class="hot-icon" src="/public/yazhou-pc/image/png/bet-record.png" />
             <div class="col">
-              {{ $root.$t("common.betting_record") }}
+              投注记录
+              <!-- {{ $root.$t("common.betting_record") }} -->
             </div>
             <span class="bet-count" v-show="count > 0">{{ count }}</span>
           </div>
@@ -47,7 +48,8 @@
           <template v-if="show_bet_menu && !['bet_history'].includes(layout_left_show)">
             <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
               <span class="text">
-                {{ $root.$t("bet.bet_my_count") }}
+
+                <!-- {{ $root.$t("bet.bet_my_count") }} -->
               </span>
               <span class="bet-count">{{ bet_count }}</span>
               <!-- <span class="text">
@@ -63,10 +65,10 @@
         <!-- 返回菜单|单关串关按钮切换 -->
         <template v-if="['bet_list', 'bet_history'].includes(layout_left_show)">
           <template v-if="is_virtual_bet">
-            <virtual-bet-scroll-header :bet_recode_this="bet_recode_this" />
+            <!-- <virtual-bet-scroll-header :bet_recode_this="bet_recode_this" /> -->
           </template>
           <template v-else>
-            <bet-scroll-header :bet_recode_this="bet_recode_this" />
+            <!-- <bet-scroll-header :bet_recode_this="bet_recode_this" /> -->
           </template>
         </template>
       </template>
@@ -81,24 +83,32 @@
             :class="menu_config.menu_root == 1 && 'active'">
             <!-- 现场滚球盘 -->
             <img class="hot-icon" src="/public/yazhou-pc/image/png/play-match.png" />
-            <div class="col">{{ $root.$t("common.in_plays") }}</div>
+            <div class="col">
+              <!-- {{ $root.$t("common.in_plays") }} -->
+            </div>
 
             <div class="col-right">
-              <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_1 }}</span>
+              <span class="match-count yb-family-odds">
+                <!-- {{ menu_config.menu_root_count.mi_1 }} -->
+              </span>
             </div>
           </div>
 
           <!-- 热门赛事 -->
-          <div v-if="menu_config.add_mi_introduce.mi_500.label && get_global_switch.hot_match_num"
+          <div 
             @click="new_menu_click(500)" class="menu-item menu-top menu-play menu-border"
             :class="menu_config.menu_root == 500 && 'active'"
-            :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
+           >
             <!-- 热门赛事图标 -->
             <img class="hot-icon" src="/public/yazhou-pc/image/svg/hot.svg" />
-            <div class="col">{{ $root.$t("menu.match_hot") }}</div>
+            <div class="col">
+              <!-- {{ $root.$t("menu.match_hot") }} -->
+            </div>
             <div class="col-right">
               <!-- 热门赛事数量 -->
-              <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_500 }}</span>
+              <span class="match-count yb-family-odds">
+                <!-- {{ menu_config.menu_root_count.mi_500 }} -->
+              </span>
             </div>
           </div>
 
@@ -109,23 +119,23 @@
 
         <!-- 历史记录 -->
         <div v-if="layout_left_show == 'bet_history'" class="col">
-          <bet-record-view @set_scroll_this="set_scroll_this" />
+          <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
         </div>
         <!-- 投注栏 -->
         <div v-if="layout_left_show == 'bet_list' && main_menu_toggle != 'mini'" class="bet-view">
           <!-- 投注栏 -->
-          <bet-box-wapper />
+          <!-- <bet-box-wapper /> -->
         </div>
       </template>
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
         <template v-if="is_virtual_bet">
-          <virtual-bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" />
+          <!-- <virtual-bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
+            :bet_this="bet_this" /> -->
         </template>
         <template v-else>
-          <bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" />
+          <!-- <bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
+            :bet_this="bet_this" /> -->
         </template>
       </template>
     </v-scroll-area>
@@ -133,7 +143,7 @@
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
       v-if="show_merge_info">
       <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-        {{ $root.$t('bet.merge_info') }}
+        <!-- {{ $root.$t('bet.merge_info') }} -->
       </div>
     </q-tooltip>
   </div>
@@ -175,10 +185,10 @@ import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router";
 
 import { MenuWapper } from "src/components/menu";
-import { BetBoxWapper } from "src/components/bet"
+// import { BetBoxWapper } from "src/components/bet"
 
 
-import store from "src/store-redux-vuex/index.js";
+import store from "src/store-redux/index.js";
 import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 
 const router = useRouter();

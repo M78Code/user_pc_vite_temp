@@ -5,9 +5,11 @@ import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
 import { UUID } from "../uuid";
 import domain from "./domain";
-import { ss,ls } from "../utils/web-storage";
+import { ss, ls } from "../utils/web-storage";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
+const token_key = STANDARD_KEY.get("token"); //token键
+
 const FNANI_STATUS = {
   // token api接口连续失效次数
   token_invalid_api_count: 0,
@@ -45,7 +47,8 @@ const requestHook = {
         break;
     }
     //请求token
-    const requestId = ss.get(STANDARD_KEY.get("token")) || "";
+    const requestId =
+      ss.get(token_key) || sessionStorage.getItem("token") || "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "en"; // 语言调整

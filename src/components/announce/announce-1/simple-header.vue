@@ -26,8 +26,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 // TODO: 
 import time_format_mixin from "src/public/mixins/common/time_format"
-// TODO: 
-import refresh from "src/public/components/refresh/refresh.vue"
+import { RefreshWrapper as Refresh } from "src/components/refresh"
 
 const props = defineProps({
     /** 刷新按钮动画开关 */

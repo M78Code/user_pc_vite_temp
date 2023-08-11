@@ -51,16 +51,25 @@
 </template>
 
 <script>
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "basketballResult",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  destroyed(){
-    clearInterval(this.vsport_ctr.interval_id_b)
+  setup(props, evnet) {
+    const data = reactive({
+
+    });
+    onUnmounted(() => {
+      clearInterval(vsport_ctr.interval_id_b)
+    })
+    return {
+      ...toRefs(data)
+    }
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>

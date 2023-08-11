@@ -43,7 +43,8 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-// import details from "src/public/utils/detailsClass/details.js";
+
+import details from "src/core/match-list/details-class/details.js";
 
 import { ref, computed, watch } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

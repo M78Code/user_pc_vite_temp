@@ -18,13 +18,13 @@
   
 <script>
 import { defineComponent, ref, reactive } from 'vue'
-// TODO: 待实现组件
-import Tab from "src/public/components/tab/common-tab.vue"
+import { TabWrapper } from "src/components/commont/tab"
+// TODO: 
 import { mapActions } from "vuex";
 export default defineComponent({
     name: "searchSports",
     components: {
-        Tab
+        Tab: TabWrapper
     },
     setup() {
         /** 当前球种索引 */

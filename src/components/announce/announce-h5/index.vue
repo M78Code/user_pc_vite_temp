@@ -40,10 +40,8 @@ const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-// TODO:
-import { api_home } from "src/project/api/index";
+import { api_home } from "src/api/index";
 import { mapGetters } from "vuex";
-
 import { LoadingWapper } from "src/project/components/common/loading";
 import { NoDataWapper } from "src/project/components/common/no-data";
 import simple_header from '.r/simple_header.vue';
