@@ -124,23 +124,31 @@
 </template>
  
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onUnmounted, ref } from 'vue'
+import store from "src/store-redux/index.js";
 import data_pager from "src/public/components/common/data_pager.vue"
 
+const store_state = store.getState()
 const avatar_prefix = ref('/client/h5/v1/bw3/svg/team-logo-20210202/')
 const collapsed = ref(false)
 const home_erroed = ref(false)
 const away_erroed = ref(false)
 
-// TODO: 其他模块得 store  待添加
-// ...mapGetters(['get_lang', 'get_theme']),
+const get_lang = ref(store_state.get_lang)
+const get_theme = ref(store_state.get_theme)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_theme.value = new_state.get_theme
+  get_lang.value = new_state.get_lang
+})
 
 const stage_result = computed(() => {
   let result = "";
   // teamGroup 阶段 GROUPS 小组赛  Q16 32强 Q8 16强 Q4 8强 SEMIFINAL 半决赛  FINAL 决赛
   let color_1 = '#FFB001'
 
-  if(get_theme.includes('theme01_y0')){
+  if(get_theme.value.includes('theme01_y0')){
     color_1 = '#569FFD'
   }else if(get_theme.includes('theme02_y0')){
     color_1 ='#569FFD'
@@ -149,7 +157,7 @@ const stage_result = computed(() => {
     if(match.matchDay){
       let m_str = $root.$t('virtual_sports.matchDay');
       let append_space = "&nbsp;&nbsp;"
-      if(['zh','tw'].includes(get_lang)){
+      if(['zh','tw'].includes(get_lang.value)){
         append_space = "";
       }
       result = m_str.replace('%s',`<span style="{color:${color_1}">${append_space}${match.matchDay}</span>`);
@@ -177,7 +185,7 @@ const stage_result = computed(() => {
     if(match.legOrder){
       let lang_leg_order = $root.$t('virtual_sports.legOrder');
       let append_space = "&nbsp;&nbsp;"
-      if(['zh','tw'].includes(get_lang)){
+      if(['zh','tw'].includes(get_lang.value)){
         append_space = "";
       }
       let result2 = lang_leg_order.replace('%',`<span style="color:${color_1}">${match.legOrder}${append_space}</span>`);
@@ -188,14 +196,14 @@ const stage_result = computed(() => {
   else if(match.matchDay && !match.sportId == '1004'){
     let m_str = $root.$t('virtual_sports.matchDay');
     let append_space = "&nbsp;&nbsp;"
-    if(['zh','tw'].includes(get_lang)){
+    if(['zh','tw'].includes(get_lang.value)){
       append_space = "";
     }
     result = m_str.replace('%s',`<span style="color: ${color_1}">${append_space}${match.matchDay}</span>`);
   }
   // 虚拟篮球显示期数matchesGroupId
   else if(match.sportId == '1004'){
-    if(get_lang == 'vi'){
+    if(get_lang.value == 'vi'){
       let w = $root.$t('virtual_sports.date_number_title');
       result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${match.batchNo}</span>`);
     }
@@ -274,7 +282,7 @@ const get_is_show_league = computed(() => {
 const get_batch_no_by_language = (batch_no) => {
       let lang = `${$root.$t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
-      if(get_lang == 'vi'){
+      if(get_lang.value == 'vi'){
         r = lang.replace('%s',batch_no);
       }
       return r;
@@ -399,6 +407,10 @@ const get_icon_path_by_type = () => {
 const data_page_changed = ($event) => {
   $root.$emit(emit_cmd.EMIT_VIRTUAL_RESULT_PAGE_CHANGE,$event);
 }
+
+onUnmounted(() => {
+  unsubscribe()
+})
 
 </script>
  

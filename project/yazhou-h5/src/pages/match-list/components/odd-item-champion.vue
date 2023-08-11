@@ -29,21 +29,31 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
+import store from "src/store-redux/index.js"
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
   ol_item:Object,
-  hs:Number,        // 0:开, 1:封, 2:关, 11:锁
+  // 0:开, 1:封, 2:关, 11:锁
+  hs:Number,        
   csid:String|Number,
 })
 
+const store_state = store.getState()
 const timer_ = ref(null)
 const red_green_status = ref(0)
+const get_menu_type = ref(store_state.get_menu_type)
+const get_theme = ref(store_state.get_theme)
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
-// ...mapGetters(['get_menu_type','get_theme']),
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_theme.value = new_state.get_theme
+  get_menu_type.value = new_state.get_menu_type
+})
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
@@ -76,6 +86,11 @@ const get_odds_value = (ol_item,hsw) => {
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw,null,csid);
   return r1 || 0;
 }
+
+onUnmounted(() => {
+  unsubscribe()
+})
+
 </script>
 
 <style lang="scss" scoped>

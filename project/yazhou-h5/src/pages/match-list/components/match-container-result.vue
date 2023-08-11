@@ -123,7 +123,7 @@
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted } from "vue"
-import store from "src/store-redux/index.js";
+import store from "src/store-redux/index.js"
 import formartmixin from 'src/project/mixins/module/formartmixin.js';
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
@@ -320,6 +320,7 @@ const gen_collapse_key = (match) =>{
 }
 
 onUnmounted(() => {
+  unsubscribe()
   clearTimeout(timer_super11.value);
   timer_super11.value = null;
 })

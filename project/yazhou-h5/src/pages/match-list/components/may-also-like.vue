@@ -83,7 +83,7 @@
 </template>
  
 <script setup>
-import { computed, onBeforeMount, onMounted, ref, watch } from "vue"
+import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue"
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";  // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 import skt_may_like from "src/public/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
 import counting_down from "src/project/components/common/counting-down";  // 赛事进行中每秒变化的计时器
@@ -93,8 +93,9 @@ import betting from "src/project/mixins/betting/betting.js";    // 押注动作�
 import {mapMutations, mapGetters} from "vuex";
 import { format_total_score } from '../../../boot/global_filters'
 import {api_home} from "src/project/api";
+import store from "src/store-redux/index.js";
 
-const props = defineProps({
+const { from_where, show_ } = defineProps({
   from_where: {
     type: Number | String,
     default: null,
@@ -105,27 +106,23 @@ const props = defineProps({
   }
 })
 
+const store_state = store.getState()
 const slide_list = ref([])
+const get_bet_list = ref(store_state.get_bet_list)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_bet_list.value = new_state.get_bet_list
+})
 
 onMounted(() => {
   get_list()
 })
 
-// TODO: 其他模块得 store  待添加
-// ...mapGetters(['get_bet_list']),
-// ...mapMutations([
-//       // 设置去详情的赛事id
-//       'set_goto_detail_matchid',
-//       // 设置默认的选中的玩法id:0
-//       'set_details_item',
-//       // 轮播请求的更新时间
-//       'updateHotReqTime',
-//     ]),
-
-watch(() => props.show_, () => {
+watch(() => show_, () => {
   //没有轮播图和没有赛事时触发事件
   if (!newVal && !slide_list.value.length) {
-    this.$root.$emit(this.emit_cmd.EMIT_MAY_ALSO_LIKE_CHANGE)
+    $root.$emit(emit_cmd.EMIT_MAY_ALSO_LIKE_CHANGE)
   }
 })
 
@@ -136,7 +133,7 @@ const selected_ = computed(() => {
       let hl_ = item.hps[0].hl[0]
       if(!Object.keys(hl_).length) return
       let id_ = hl_.hn? `${item.mid}_${item.hps[0].chpid || item.hps[0].hpid}_${hl_.ol[index].ot}_${hl_.hn}`:hl_.ol[index].oid
-      return this.get_bet_list.includes(id_)
+      return get_bet_list.value.includes(id_)
     } catch (error) {
       console.error(error)
     }
@@ -168,10 +165,10 @@ const normal_ = computed(() => {
   }
   const  get_list = async() => {
     try {
-      let res = await api_home.hot_ulike_recommendation({isHot: this.from_where})
+      let res = await api_home.hot_ulike_recommendation({isHot: from_where})
       if (_.get(res,'code') == 200 && _.get(res,'data.length') > 0) {
         slide_list.value = _.get(res,'data');
-        this.updateHotReqTime(Date.now())
+        store.dispatch({ type: 'matchReducer/updateHotReqTime',  payload: Date.now() });
       }
     } catch (error) {
       console.error(error);
@@ -180,10 +177,10 @@ const normal_ = computed(() => {
   const goto_detail_video = (match) => {
     if ( !match || !match.mid ) return;
     // 设置去详情的赛事id
-    this.set_goto_detail_matchid(match.mid);
+    store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: match.mid });
     // 设置默认的选中的玩法id:0
-    this.set_details_item(0);
-    this.$router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
+    store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
+    $router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
   }
   // 盘口内容
   const handicap_on = (item, index) => {
@@ -200,7 +197,7 @@ const normal_ = computed(() => {
     try {
       if(item.hps && item.hps[0].hl[0]&& item.hps[0].hl[0].ol){
         let val = item.hps[0].hl[0].ol[index].ov / 100000, hsw = item.hps[0].hsw;
-        return this.compute_value_by_cur_odd_type(val, null, hsw,null,item.ciid) ? this.compute_value_by_cur_odd_type(val, null, hsw,null,item.csid) : '';
+        return compute_value_by_cur_odd_type(val, null, hsw,null,item.ciid) ? compute_value_by_cur_odd_type(val, null, hsw,null,item.csid) : '';
       }
     }catch (e){
       console.error(e);
@@ -218,13 +215,17 @@ const normal_ = computed(() => {
     if (!(match.hps && match.hps[0].hl[0]&& match.hps[0].hl[0].ol && flag)) return
     let ol_item = match.hps[0].hl[0].ol[index]
     if (ol_item.os == 2 || !ol_item.ov || ol_item.ov < 101000) return
-    this.bet_click(match, match.hps[0], ol_item);
+    bet_click(match, match.hps[0], ol_item);
     //应对猜你喜欢模块的赔率盘口跟新不及时
-    this.get_list()
+    get_list()
   }
 
   onBeforeMount(() => {
     slide_list.value = []
+  })
+
+  onUnmounted(() => {
+    unsubscribe()
   })
  
 </script>

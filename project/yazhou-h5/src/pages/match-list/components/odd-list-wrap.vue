@@ -155,25 +155,9 @@
  
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
+import store from "src/store-redux/index.js"
 import odd_column_item from "src/project/pages/match-list/components/odd_column_item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/boot/local-image'
-
-// TODO: 其他模块得 store  待添加
-// ...mapMutations(['set_foot_ball_screen_changing', 'set_standard_odd_status']),
-// ...mapGetters({
-//   footer_sub_menu_id:"get_footer_sub_menu_id",
-//   get_secondary_unfold_map:"get_secondary_unfold_map",
-//   get_bet_list:"get_bet_list",
-// }),
-// ...mapGetters([
-//   'get_newer_standard_edition',
-//   'get_curr_sub_menu_type',
-//   'get_n_s_changed_loaded',
-//   'get_theme',
-//   'get_menu_type',
-//   'get_standard_odd_status',
-//   'get_lang',
-// ]),
 
 const props = defineProps({
   // 赛事信息
@@ -190,6 +174,8 @@ const props = defineProps({
   five_minutes_all_list: null,
 });
 
+const store_state = store.getState()
+
 // 罚牌玩法描述显示
 const show_tips = ref(false);
 const hp_item = ref({});
@@ -202,6 +188,31 @@ const show_lock_selected = ref(false);
 // 简版投注项选中时角球标志
 const index_show_map = ref({});
 const screen_changing_timer = ref(0);
+
+const get_lang = ref(store_state.get_lang)
+const get_theme = ref(store_state.get_theme)
+const get_bet_list = ref(store_state.get_bet_list)
+const get_menu_type = ref(store_state.get_menu_type)
+const footer_sub_menu_id = ref(store_state.get_footer_sub_menu_id)
+const get_standard_odd_status = ref(store_state.get_standard_odd_status)
+const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
+const get_n_s_changed_loaded = ref(store_state.get_n_s_changed_loaded)
+const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_lang.value = new_state.get_lang
+  get_theme.value = new_state.get_theme
+  get_bet_list.value = new_state.get_bet_list
+  get_menu_type.value = new_state.get_menu_type
+  footer_sub_menu_id.value = new_state.footer_sub_menu_id
+  get_standard_odd_status.value = new_state.get_standard_odd_status
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+  get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
+  get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+})
 
 onMounted(() => {
   standard_odd_status.value = get_standard_odd_status;
@@ -685,12 +696,12 @@ const odd_wrapper_pan = ({ direction }) => {
     } else {
       standard_odd_status = 0;
     }
-    set_standard_odd_status(standard_odd_status);
+    store.dispatch({ type: 'matchReducer/set_standard_odd_status',  payload: standard_odd_status });
     // $emit('odd_pan',standard_odd_status.value);
     clearTimeout(screen_changing_timer.value);
-    set_foot_ball_screen_changing(1);
+    store.dispatch({ type: 'matchReducer/set_foot_ball_screen_changing',  payload: 1 });
     screen_changing_timer.value = setTimeout(() => {
-      set_foot_ball_screen_changing(0);
+      store.dispatch({ type: 'matchReducer/set_foot_ball_screen_changing',  payload: 0 });
     }, 500);
   }
 };
@@ -838,6 +849,7 @@ const show_3_space = () => {
 };
 
 onUnmounted(() => {
+  unsubscribe()
   $root.$off(
     emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,
     fapai_way_tips_status_change_h

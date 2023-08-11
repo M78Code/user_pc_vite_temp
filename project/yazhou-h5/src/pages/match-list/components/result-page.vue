@@ -87,20 +87,18 @@
 </template>
  
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
+import store from "src/store-redux/index.js";
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
-// ...mapGetters({
-//   sub_menu_type: 'get_curr_sub_menu_type',
-// }),
-
 
 const props = defineProps({
   match_mid:String,
   current_match:Object
 })
 
+const store_state = store.getState()
 // 接口返回的play字段的内容
 const plays = ref(null)
 // 接口返回的rank字段的内容
@@ -111,6 +109,13 @@ const best_three_list = ref([])
 const best_middle_list = ref([])
 // 赛果最后二项
 const last_three_list = ref([])
+
+const sub_menu_type = ref(store_state.sub_menu_type)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  sub_menu_type.value = new_state.sub_menu_type
+})
 
 onMounted(() => {
   if(current_match.match_status == 2){
@@ -124,7 +129,7 @@ onMounted(() => {
       last_three()
 
       // 虚拟泥地摩托车赛果只有6个结果,每行展示2个
-      if(sub_menu_type == 1009 && plays.value && plays.value.length == 6) {
+      if(sub_menu_type.value == 1009 && plays.value && plays.value.length == 6) {
         let arr = _.chunk(plays.value, 2);
         best_three_list.value = arr[0]
         best_middle_list.value = arr[1]
@@ -216,6 +221,10 @@ const last_three = () => {
 const split_on = (val) => {
   return val.split('/');
 }
+
+onUnmounted(() => {
+  unsubscribe()
+})
 
 </script>
  

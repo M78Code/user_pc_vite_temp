@@ -60,25 +60,10 @@ import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import betting from 'src/project/mixins/betting/betting.js';
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
+import store from "src/store-redux/index.js";
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert,betting],
-// ...mapGetters([
-//   "get_bet_list",
-//   "get_current_menu",
-//   "get_cur_odd",
-//   "get_newer_standard_edition",
-//   "get_menu_type",
-//   "get_theme",
-//   "get_foot_ball_screen_changing",
-//   'get_lang',// 当前语言
-// ]),
-// ...mapGetters({
-//   footer_sub_menu_id:"get_footer_sub_menu_id",
-// }),
-// ...mapMutations([
-//   "set_toast",
-// ]),
 
 const props = defineProps({
   current_tab_item:Object, //
@@ -92,6 +77,7 @@ const props = defineProps({
   column_ceil:Number, //列数量
 })
 
+const store_state = store.getState()
 const timer_ = ref(null)
 const timer1_ = ref(null)
 // 投注项
@@ -104,6 +90,29 @@ const odd_append_value = ref('')
 const ol_dictionary = ref({})
 const is_local_lock = ref(0)
 const dom_id_show = ref('')
+
+const get_bet_list = ref(store_state.get_bet_list)
+const get_current_menu = ref(store_state.get_current_menu)
+const get_cur_odd = ref(store_state.get_cur_odd)
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+const get_menu_type = ref(store_state.get_menu_type)
+const get_theme = ref(store_state.get_theme)
+const get_foot_ball_screen_changing = ref(store_state.get_foot_ball_screen_changing)
+const get_lang = ref(store_state.get_lang)
+const footer_sub_menu_id = ref(store_state.footer_sub_menu_id)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_lang.value = new_state.get_lang
+  get_theme.value = new_state.get_theme
+  get_cur_odd.value = new_state.get_cur_odd
+  get_bet_list.value = new_state.get_bet_list
+  get_menu_type.value = new_state.get_menu_type
+  get_current_menu.value = new_state.get_current_menu
+  footer_sub_menu_id.value = new_state.footer_sub_menu_id
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+  get_foot_ball_screen_changing.value = new_state.get_foot_ball_screen_changing
+})
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
@@ -438,6 +447,7 @@ const item_click3 = () => {
 }
 
 onUnmounted(() => {
+  unsubscribe()
   $root.$off(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
   $root.$off(emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,match_result_data_loaded);
   debounce_throttle_cancel(item_click3);

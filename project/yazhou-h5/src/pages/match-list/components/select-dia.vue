@@ -28,22 +28,33 @@
 </template>
  
 <script setup>
-import { computed, onMounted } from "vue"
-
-// TODO: 其他模块得 store  待添加
-// ...mapActions(["set_search_for_choose", "set_search_term"]),
-// ...mapGetters([
-//   'get_search_for_choose', 'get_search_term', 
-//   'get_curr_sub_menu_type', 'get_access_config',
-//   'get_menu_type',
-//   'get_current_menu',
-//   'get_sport_all_selected',
-// ]),
+import { computed, onMounted, onUnmounted } from "vue"
+import store from "src/store-redux/index.js";
 
 const props = defineProps(['detail_data'])
 
+const store_state = store.getState()
 const change_show = ref(true)
 const search_tab = ref([$root.$t('footer_menu.filter'), $root.$t('search.search_title')])
+
+const get_search_for_choose = ref(store_state.get_search_for_choose)
+const get_search_term = ref(store_state.get_search_term)
+const get_menu_type = ref(store_state.get_menu_type)
+const get_current_menu = ref(store_state.get_current_menu)
+const get_sport_all_selected = ref(store_state.get_sport_all_selected)
+const get_access_config = ref(store_state.get_access_config)
+const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
+
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  get_menu_type.value = new_state.get_menu_type
+  get_search_for_choose.value = new_state.get_search_for_choose
+  get_search_term.value = new_state.get_search_term
+  get_current_menu.value = new_state.get_current_menu
+  get_access_config.value = new_state.get_access_config
+  get_sport_all_selected.value = new_state.get_sport_all_selected
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+})
 
 onMounted(() => {
   // 默认选中筛选
@@ -87,8 +98,8 @@ const results_of_the_virtual_display = computed(() => ([1001,1002,1004,1010,1011
 
 const change_record = (key) => {
   // 搜索返回时，保持搜索原来的页面
-  key == 0 && get_search_term && set_search_term('')
-  set_search_for_choose(key);
+  key == 0 && get_search_term && store.dispatch({ type: 'matchReducer/set_search_term',  payload: '' });
+  store.dispatch({ type: 'matchReducer/set_search_for_choose',  payload: key });
   if(key === 1) {// 赛事搜索页
     change_show.value = false
   } else {
@@ -104,6 +115,10 @@ const is_search_hide = (i) => {
   }
   return f;
 }
+
+onUnmounted(() => {
+  unsubscribe()
+})
 </script>
  
 <style scoped lang="scss">
