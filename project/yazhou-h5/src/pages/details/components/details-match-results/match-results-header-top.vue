@@ -1,8 +1,3 @@
-<!--
- * @Author: ledron
- * @Date: 2021-01-25 18:35:53
- * @Description: 整个赛果详情页的上部  中间比分部分
--->
 <template>
   <div class="match-results-header-top">
     <div class="team_name">
@@ -24,10 +19,11 @@
 </template>
 
 <script>
-import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-
-export default {
-  mixins: [msc],
+// import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+export default defineComponent({
+  // #TODO vuex 
+  // mixins: [msc],
   name: "",
   components: {
   },
@@ -36,25 +32,24 @@ export default {
       type: Object
     }
   },
-  data() {
-    return {
+  // #TODO mixins 
+  // mixins: [chatroom_mixin],
+  setup(props, evnet) {
+    const data = reactive({
       data_list: ''
-    }
-  },
-  watch: {
-    // 监听 detail_data 的变化
-    'detail_data': {
-      handler(n,o){
-        this.data_list = _.cloneDeep(this.detail_data)
+    });
+    watch(
+      () => detail_data,
+      (n,o) => {
+        data_list = _.cloneDeep(detail_data)
       },
-      immediate: true,
-      deep: true
-    },
-  },
-  computed: {
-    // 赛事状态展示文案
-    match_status() {
-      const { mmp, ms } = this.detail_data
+      {
+        immediate: true,
+        deep: true
+      }
+    );
+    const match_status = computed(() => {
+      const { mmp, ms } = detail_data
       // mmp赛事阶段对应展示文案map
       const detail_data_mmp_map = {
         '90': 'mmp.3.90',
@@ -66,17 +61,20 @@ export default {
 
       // 赛事中断 单独判断
       if (ms === 10) {
-        return this.$root.$t('ms.10')
+        return $root.$t('ms.10')
       } else if (detail_data_mmp_map[mmp]) {
-        return this.$root.$t(detail_data_mmp_map[mmp])
+        return $root.$t(detail_data_mmp_map[mmp])
       } else {
         return ''
       }
 
+    });
+    return {
+      ...toRefs(data),
+      match_status
     }
-  },
-  methods: {},
-};
+  }
+})
 </script>
 
 <style lang="scss" scoped>
