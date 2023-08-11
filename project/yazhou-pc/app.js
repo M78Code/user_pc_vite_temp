@@ -25,7 +25,9 @@ const handle_user_tryPlay = async () => {
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
+    console.log("token_keytoken_keytoken_key",token_key)
     ss.set(token_key, token);
+    sessionStorage.setItem("token", token);
   } else {
     // 获取用户信息
     try {
@@ -89,15 +91,14 @@ const init_domain = async (config) => {
     AllDomain.create(() => {
       // 首次进入,发现最快的域名
       console.log(" init_domain -- 回调执行:");
-      handle_user_tryPlay();
       // http初始化方法 会调用 setApiDomain
       // ws和http域名切换逻辑
       http.setApiDomain();
-      init_load.value = true;
       // 首次初始化时调用
       handle_user_tryPlay();
       // 元数据初始化
       base_data.init();
+      init_load.value = true;
     });
     AllDomain.run();
   }

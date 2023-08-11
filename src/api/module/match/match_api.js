@@ -138,5 +138,5 @@ export const handle_user_tryPlay = (url = "/yewu6/user/tryPlay") => {
     terminal: "PC"
   };
 
-  return axios.get(url, params );
+  return http.get(url, params );
 };

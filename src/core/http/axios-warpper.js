@@ -11,7 +11,7 @@ import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
 import { ss } from "../utils/web-storage";
-import ws from "../ws/ws.js";
+// import ws from "../ws/ws.js";
 const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
 const { API_PREFIX_WBSOCKET } = API_PREFIX;
 /**
@@ -202,9 +202,9 @@ class AxiosHttp {
     // 设置  ROOT_DOMAIN
     this.set_root_domain();
     //设置ws地址
-    ws.set_ws_url(
-      `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${API_PREFIX_WBSOCKET}/push`
-    );
+    // ws.set_ws_url(
+    //   `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${API_PREFIX_WBSOCKET}/push`
+    // );
     this.request_count = 0;
     this.err_count = {};
     // window.ws.retInitData(true)

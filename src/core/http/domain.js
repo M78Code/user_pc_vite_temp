@@ -70,7 +70,7 @@
 
 import { ref } from "vue";
 import axios from "axios";
-import {ss,ls} from '../utils/web-storage'
+import { ss, ls } from "../utils/web-storage";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create();
 
@@ -538,20 +538,8 @@ class AllDomain {
     console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
     let gr = ss.get("gr");
     console.log('sessionStorage.getItem("gr")---', gr);
-    // 返回默认值
-    let ret = [];
     // 获取持久化数据
-    let str = localStorage.getItem(key);
-    console.log("获取持久化数据------", str);
-    if (str) {
-      try {
-        // 字符串转json对象
-        ret = JSON.parse(str);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    return ret;
+    return ls.get(key, []);
   }
 
   /**
@@ -1059,9 +1047,9 @@ class AllDomain {
    */
   set_sava_json_key(val) {
     let key = DOMAIN_API_STORAGE_KEY;
-    let str = JSON.stringify(val);
+    // let str = JSON.stringify(val);
     // 设置持久化字符串
-    ls.set(key, str);
+    ls.set(key, val);
   }
   /**
    * @description: 获取本地的oss文件路径(增加本域名的oss url地址)

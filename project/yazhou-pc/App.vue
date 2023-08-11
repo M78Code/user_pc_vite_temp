@@ -8,7 +8,6 @@
       "
       style="width: 200px; height: 200px"
     ></div>
-    <!-- <MainLayOut></MainLayOut> -->
   </div>
 </template>
 <script setup>
