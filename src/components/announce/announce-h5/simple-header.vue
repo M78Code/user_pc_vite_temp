@@ -9,17 +9,9 @@
     </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-export default {
-    name: "simple_header",
-    methods: {
-
-    },
-    computed: {
-        ...mapGetters(['get_menu_type'])
-    },
-}
+<script setup>
+// TODO:
+const { get_menu_type } = useStore()
 </script>
   
 <style lang="scss" scoped>

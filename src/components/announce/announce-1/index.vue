@@ -39,8 +39,7 @@ import simpleHeader from "./simple-header.vue";
 import LeftMenu from "./left-menu.vue";
 // TODO: 可能要换路径
 import loadData from "src/project/components/load_data/load_data.vue"
-// TODO: 待完善接口
-import { api_announce } from "src/public/api/index";
+import { api_announce } from "src/api/index"
 
 /** 返回的大列表 */
 const res_list = reactive([])
