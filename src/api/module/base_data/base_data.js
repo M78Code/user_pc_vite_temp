@@ -4,19 +4,19 @@ import {http} from "src/core/http/index.js";
 let prefix_job = 'https://api.sportxxxw1box.com'
 
 // 新旧菜单ID对应
-export const post_base_data_menu_mapping = (params, config={}, url = "/yewu11/v3/menu/loadMappingPB")=>{
+export const post_base_data_menu_mapping = (params, config={}, url = "/yewu11/v3/menu/loadMapping")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 //菜单数量统计
-export const get_base_data_menu_init = (params, config={}, url = "/yewu11/v3/menu/initPB") => {
+export const get_base_data_menu_init = (params, config={}, url = "/yewu11/v3/menu/init") => {
   return http.get(`${prefix_job}${url}`, params, config);
 };
 // 菜单-联赛-赛事
-export const post_base_data_mi_tid_mids = (params, config={}, url = "/yewu11/v3/menu/loadTournamentMatchPB")=>{
+export const post_base_data_mi_tid_mids = (params, config={}, url = "/yewu11/v3/menu/loadTournamentMatch")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 // 菜单国际化
-export const post_base_data_menu_i18n = (params, config={}, url = "/yewu11/v3/menu/loadNameListPB")=>{
+export const post_base_data_menu_i18n = (params, config={}, url = "/yewu11/v3/menu/loadNameList")=>{
   return http.post(`${prefix_job}${url}`, params, config);
 }
 // 元数据接口
