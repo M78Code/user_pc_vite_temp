@@ -1,9 +1,3 @@
-<!--
- * @Author: nuanyang
- * @Date: 2022-06-18 11:50:38
- * @Description: 15分钟玩法模板
--->
-
 <template>
   <div class="c-match-item " :class="'tpl-'+match.tpl_id"  >
     <!-- 15分钟玩法标题 -->
@@ -48,38 +42,37 @@
   </div>
 </template>
 
-<script>
-import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+<script setup>
+// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+// mixins: [match_item_mixin],
+import { computed } from 'vue';
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
 
-export default {
-  name: "MatchItem",
-
-  mixins: [match_item_mixin],
-    computed: {
-    // 其他玩法标题
-    bet_col(){
-      let bet_col,
-      hSpecial =this.match.hSpecial;
-      // 15分钟玩法
-        let start = hSpecial - 1,
-        end =  hSpecial +1;
-        if(hSpecial>=4){
-            start -= 1
-            end -= 1
-        }
-        bet_col = [...this.$root.$t('list.match_tpl_title.tpl0.15minutes_bet_col')]
-        bet_col.splice(2,1)
-        bet_col.splice(bet_col.length-1,1,"")
-        bet_col = bet_col.slice(start,end)
-        if(hSpecial == 6){
-          bet_col.push('')
-        }
-      return    bet_col
+// 其他玩法标题
+const bet_col = computed(() => {
+  let bet_col,
+  hSpecial =this.match.hSpecial;
+  // 15分钟玩法
+    let start = hSpecial - 1,
+    end =  hSpecial +1;
+    if(hSpecial>=4){
+        start -= 1
+        end -= 1
     }
+    bet_col = [...this.$root.$t('list.match_tpl_title.tpl0.15minutes_bet_col')]
+    bet_col.splice(2,1)
+    bet_col.splice(bet_col.length-1,1,"")
+    bet_col = bet_col.slice(start,end)
+    if(hSpecial == 6){
+      bet_col.push('')
     }
+  return  bet_col
+})
 
-};
 </script>
+
 <style lang="scss" scoped>
 .tpl-24{
   margin-top: 24px;

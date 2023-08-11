@@ -1,9 +1,3 @@
-<!--
- * @Author: Amor
- * @Date: 2020-08-06 21:27:29
- * @Description: 赛事玩法模板18
--->
-
 <template>
   <div 
     class="c-match-item tpl-18"
@@ -41,14 +35,11 @@
   </div>
 </template>
 
-<script>
-import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-export default {
-  name: "MatchItem",
-  mixins: [match_item_mixin],
-};
-</script>
+<script setup>
+// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+// mixins: [match_item_mixin],
 
+</script>
 
 <style lang="scss" scoped>
 .c-match-item {

@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2020-08-06 21:27:29
- * @Description: 虚拟赛事 模板1 （足球）
--->
 <template>
   <div
     v-if="match.mhs != 2"
@@ -34,11 +29,7 @@
   </div>
 </template>
 
-<script>
-import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-
-export default {
-  name: "MatchItem",
-  mixins: [match_item_mixin]
-};
+<script setup>
+// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+// mixins: [match_item_mixin],
 </script>
