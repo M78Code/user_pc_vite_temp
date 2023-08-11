@@ -1,7 +1,7 @@
 /*
  * @Author: lockie
  * @Date: 2023-07-05 13:29:07
- * @FilePath: \user-pc-vue3\src\store-redux-vuex\module\matches.js
+ * @FilePath: \user-pc-vue3\src\store-redux\module\matches.js
  * @Description: 主页信息状态管理器
  */
 

@@ -268,7 +268,9 @@ class AllDomain {
   begin_process_when_use_url_api() {
     let url_api = this.url_api || [];
     // 获取token
-    let token = ss.get("pc_token");
+    let sessionStorage = window.sessionStorage
+    let token = sessionStorage.getItem('token')// ss.get("pc_token");
+   
     // 并发请求
     let reqs = [];
     url_api.map((item) =>

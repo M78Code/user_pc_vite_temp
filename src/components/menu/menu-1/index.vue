@@ -147,6 +147,8 @@ onMounted(()=>{
  */
  const init_mew_menu_list = async () => {
   let res = await api_base_data.get_base_data_menu_init({});
+  console.warn('sssss',res)
+  return
   let menu_info = set_ses_wapper(res, []);
   const left_menu = []
   const in_play = []
@@ -203,6 +205,21 @@ onMounted(()=>{
   return left_menu;
 }
 
+
+  /**
+   * 接口返回数据的 wapper
+   */
+  const set_ses_wapper = (res, default_value) => {
+    let result = default_value;
+
+    let data = ( res || {} ).data;
+    // console.error(" set_ses_wapper(res.data---------", res.data);
+    if (data && (data.code == "0000000" || data.code == "200")) {
+      result = data.data;
+    }
+    // console.error(" set_ses_wapper(result------------", result);
+    return result;
+  }
 /**
    * @description: 今日 早盘 紧急开关
    * @param {undefined} undefined
