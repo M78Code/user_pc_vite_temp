@@ -2,8 +2,8 @@
 
 <template>
   <div class="serach-wrap column"
-    :style="{ right: `${(NewMenu.is_multi_column && get_unfold_multi_column) ? parseInt(vx_get_layout_size.main_width * .3) : vx_get_layout_size.right_width}px`, paddingRight: `${$utils.is_iframe ? 10 : 14}px` }"
-    :class="{ 'hide-search': show_type == 'none', 'mini': vx_main_menu_toggle == 'mini', 'iframe': $utils.is_iframe }">
+    :style="{ right: `${(NewMenu.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${$utils.is_iframe ? 10 : 14}px` }"
+    :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': $utils.is_iframe }">
     <search-input @set_show_type="set_show_type" :show_type="show_type" />
     <div class="bottom-wrap col search-result relative-position">
       <!-- 球类导航 -->
@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref, reactive } from "vue";
 import lodash from "lodash";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -39,8 +39,7 @@ const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
-// TODO:
-import { mapGetters } from "vuex";
+import store from "src/store-redux/index.js";
 // 搜索输入框组件
 import searchInput from "./search-input.vue"
 // 搜索初始化组件
@@ -51,110 +50,95 @@ import searchSports from "./search-sports.vue"
 import searchPlay from "./search-play.vue"
 // 搜索查询结果组件
 import searchResult from "./search-result.vue"
-// TODO:
 // 引入tab切换栏组件
-import { TabWapper } from "src/components/common/tab"
+import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
 import { api_search } from "src/public/api/index.js";
 // TODO: 待确认
 import search from "src/public/utils/searchClass/search.js"
 import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
-export default defineComponent({
-  components: {
-    searchInput,
-    searchInt,
-    searchRelated,
-    searchSports,
-    searchPlay,
-    searchResult,
-    Tab: TabWapper,
-  },
-  setup() {
-    /** 显示类型 */
-    const show_type = ref('init')
-    /** 球种列表 */
-    let sports_list = reactive([])
-    /** 球种tab选中索引 */
-    const sports_tab_index = ref(0)
-    /** 搜索球种 */
-    const search_csid = ref(1)
 
-    /**
-     * @Description:设置搜索球种列表
-     * @return {undefined} undefined
-     */
-    function set_sports_list() {
-      let csid = search.back_keyword.csid
-      api_search.get_search_sport().then(res => {
-        if (lodash.get(res, 'data.code') == 200) {
-          const list = lodash.get(res, 'data.data') || []
-          // 根据商户过滤篮球赛事
-          // if(store.vx_get_user.mId == '1443742662615240704'){
-          //   lodash.remove(sports_list, item => item.id == 2)
-          // }
-          sports_list = list
-          // 默认第一个 足球被禁用后 默认值不是1
-          search_csid.value = (list[0] || {}).id
-          if (csid) {
-            sports_list.forEach((item, index) => {
-              if (csid == item.id) {
-                set_sports_tab_index(index)
-              }
-            })
+/** 显示类型 */
+const show_type = ref('init')
+/** 球种列表 */
+let sports_list = reactive([])
+/** 球种tab选中索引 */
+const sports_tab_index = ref(0)
+/** 搜索球种 */
+const search_csid = ref(1)
+
+/**
+ * @Description:设置搜索球种列表
+ * @return {undefined} undefined
+ */
+function set_sports_list() {
+  let csid = search.back_keyword.csid
+  api_search.get_search_sport().then(res => {
+    if (lodash.get(res, 'data.code') == 200) {
+      const list = lodash.get(res, 'data.data') || []
+      // 根据商户过滤篮球赛事
+      // if(user.value.mId == '1443742662615240704'){
+      //   lodash.remove(sports_list, item => item.id == 2)
+      // }
+      sports_list = list
+      // 默认第一个 足球被禁用后 默认值不是1
+      search_csid.value = (list[0] || {}).id
+      if (csid) {
+        sports_list.forEach((item, index) => {
+          if (csid == item.id) {
+            set_sports_tab_index(index)
           }
-        } else {
-          sports_list = []
-        }
-      }).catch(err => {
-        console.error(err);
-        sports_list = []
-      });
-    }
-    onMounted(set_sports_list)
-
-    /**
-     * @Description:设置显示类型
-     * @param {String} type 类型
-     * @return {Undefined} Undefined
-     */
-    function set_show_type(type) {
-      show_type.value = type
-    }
-    /**
-     * @Description 设置球种tab选中索引
-     * @param {number} index 索引
-     * @param {undefined} undefined
-    */
-    function set_sports_tab_index(index) {
-      let index_ = index;
-      if (typeof (index) == 'object') {
-        index_ = index.index;
+        })
       }
-      sports_tab_index.value = index_
-      search_csid.value = sports_list[index_].id
+    } else {
+      sports_list = []
     }
+  }).catch(err => {
+    console.error(err);
+    sports_list = []
+  });
+}
+onMounted(set_sports_list)
 
-    return {
-      NewMenu,
-      show_type,
-      sports_list,
-      sports_tab_index,
-      search_csid,
-      set_show_type,
-      set_sports_tab_index
-    }
-  },
-  // TODO: 待完善store
-  computed: {
-    ...mapGetters({
-      vx_main_menu_toggle: "get_main_menu_toggle", // 菜单切换
-      vx_get_user: "get_user", // 获取用户信息
-      vx_get_layout_size: "get_layout_size", // 获取视图尺寸
-      //是否展开多列玩法
-      get_unfold_multi_column: "get_unfold_multi_column",
-    }),
+/**
+ * @Description:设置显示类型
+ * @param {String} type 类型
+ * @return {Undefined} Undefined
+ */
+function set_show_type(type) {
+  show_type.value = type
+}
+/**
+ * @Description 设置球种tab选中索引
+ * @param {number} index 索引
+ * @param {undefined} undefined
+*/
+function set_sports_tab_index(index) {
+  let index_ = index;
+  if (typeof (index) == 'object') {
+    index_ = index.index;
   }
+  sports_tab_index.value = index_
+  search_csid.value = sports_list[index_].id
+}
+
+/** 左侧列表显示形式 normal：展开 mini：收起 */
+const main_menu_toggle = ref()
+/** 用户信息 */
+const user = ref()
+/** 页面所有布局宽高信息 */
+const layout_size = ref()
+/** 是否展开多列玩法 */
+const is_unfold_multi_column = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  main_menu_toggle.value = new_state.main_menu_toggle
+  user.value = new_state.user
+  layout_size.value = new_state.layout_size
+  is_unfold_multi_column.value = new_state.is_unfold_multi_column
 })
+onUnmounted(unsubscribe)
 
 </script>
 

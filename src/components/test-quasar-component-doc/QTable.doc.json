@@ -43,11 +43,26 @@
       "desc": "Display data using QVirtualScroll (for non-grid mode only)",
       "category": "virtual-scroll"
     },
-
     "virtual-scroll-target": {
-      "extends": "scroll-target"
+      "type": [ "Element", "String" ],
+      "desc": "CSS selector or DOM element to be used as a custom scroll container instead of the auto detected one",
+      "examples": [
+        ":scroll-target=\"$refs.scrollTarget\"",
+        "scroll-target=\".scroll-target-class\"",
+        "scroll-target=\"#scroll-target-id\"",
+        "scroll-target=\"body\""
+      ],
+      "category": "behavior"
     },
-
+    "fullscreen": {
+      "type": "Boolean",
+      "sync": true,
+      "desc": "Fullscreen mode",
+      "examples": [
+        "v-model:fullscreen=\"isFullscreen\""
+      ],
+      "category": "behavior"
+    },
     "virtual-scroll-slice-size": {
       "type": [ "Number", "String" ],
       "desc": "Minimum number of rows to render in the virtual list",
@@ -96,31 +111,6 @@
       "category": "virtual-scroll|content"
     },
 
-    "color": {
-      "extends": "color",
-      "default": "grey-8"
-    },
-
-    "icon-first-page": {
-      "extends": "icon",
-      "desc": "Icon name following Quasar convention for stepping to first page; Make sure you have the icon library installed unless you are using 'img:' prefix"
-    },
-
-    "icon-prev-page": {
-      "extends": "icon",
-      "desc": "Icon name following Quasar convention for stepping to previous page; Make sure you have the icon library installed unless you are using 'img:' prefix"
-    },
-
-    "icon-next-page": {
-      "extends": "icon",
-      "desc": "Icon name following Quasar convention for stepping to next page; Make sure you have the icon library installed unless you are using 'img:' prefix"
-    },
-
-    "icon-last-page": {
-      "extends": "icon",
-      "desc": "Icon name following Quasar convention for stepping to last page; Make sure you have the icon library installed unless you are using 'img:' prefix"
-    },
-
     "grid": {
       "type": "Boolean",
       "desc": "Display data as a grid instead of the default table",
@@ -131,11 +121,6 @@
       "type": "Boolean",
       "desc": "Display header for grid-mode also",
       "category": "behavior|content"
-    },
-
-    "dense": {
-      "extends": "dense",
-      "desc": "Dense mode; Connect with $q.screen for responsive behavior"
     },
 
     "columns": {
@@ -361,23 +346,6 @@
       "desc": "Hide the pagination controls at the bottom",
       "category": "content"
     },
-
-    "dark": {
-      "extends": "dark"
-    },
-
-    "flat": {
-      "extends": "flat"
-    },
-
-    "bordered": {
-      "extends": "bordered"
-    },
-
-    "square": {
-      "extends": "square"
-    },
-
     "separator": {
       "type": "String",
       "desc": "Use a separator/border between rows, columns or all cells",
@@ -793,15 +761,6 @@
           "type": "Boolean",
           "desc": "Is row/item expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -855,15 +814,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         },
         "__trClass": {
           "type": "String",
@@ -929,15 +879,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -999,15 +940,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -1045,15 +977,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         },
         "__trClass": {
           "type": "String",
@@ -1103,15 +1026,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -1153,15 +1067,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -1215,15 +1120,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
@@ -1261,15 +1157,6 @@
           "type": "Boolean",
           "desc": "Is row expanded? Can directly be assigned new Boolean value which changes expanded state",
           "reactive": true
-        },
-        "color": {
-          "extends": "color"
-        },
-        "dark": {
-          "extends": "dark"
-        },
-        "dense": {
-          "extends": "dense"
         }
       }
     },
