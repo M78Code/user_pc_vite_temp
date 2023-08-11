@@ -30,11 +30,11 @@ function loadLanguageAsync (lang){
     'ms': 'ms-my',// 马来语
     'ad': 'id-id',// 印尼语
   }
-  return import(/* webpackChunkName: "lang-[request]" */`src/i18n/${map_[lang]}`).then(langfile=>{
+  return import(/* webpackChunkName: "lang-[request]" */`../i18n/${map_[lang]}`).then(langfile=>{
     // 动态加载对应的语言包
     let langFile = langfile.default;
     // 设置语言信息
-    i18n.setLocaleMessage(lang,langFile);
+    i18n.global.setLocaleMessage(lang,langFile);
     // 设置语种
     i18n.locale = lang;
     return lang;
