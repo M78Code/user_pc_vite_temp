@@ -28,6 +28,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
+import store from "src/store-redux/index.js";
 // TODO: mixins待处理
 import time_format_mixin from "src/public/mixins/common/time_format";
 import { RefreshWrapper as Refresh } from "src/components/refresh"
@@ -86,16 +87,21 @@ const get_date_time = () => {
 /** 钩子触发 */
 onMounted(get_date_time)
 
-/** TODO: 获取store仓库 */
-const store = useStore()
-// ...mapGetters(['get_menu_type'])
+/** 收藏菜单为6 */
+const menu_type = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+    const new_state = store.getState()
+    menu_type.value = new_state.menu_type
+})
+onUnmounted(unsubscribe)
 
 /** 路由实例 */
 const router = useRouter()
 
 /** H5 返回上一级 */
 const go_to_back = () => {
-    if (store.get_menu_type == 900 && current_route_name == 'rule_description') {
+    if (menu_type.value == 900 && current_route_name == 'rule_description') {
         router.push({ name: 'virtual_sports' });//跳转到虚拟体育
         return
     }

@@ -31,7 +31,7 @@
 </template>
   
 <script setup>
-import { defineComponent, ref, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -41,7 +41,6 @@ const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 import { api_home } from "src/api/index";
-import { mapGetters } from "vuex";
 import loadData from "src/project/components/load_data";
 import { NoDataWapper as noData } from "src/project/components/common/no-data";
 import simpleHeader from './simple-header.vue';
