@@ -3,7 +3,7 @@
 -->
 
 <template>
-  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="DOM_ID_SHOW && `list-${_.get(odd_item, 'oid')}`">
+  <div class="odd-column-item" :class="odds_class_object" @click.stop="item_click3" :id="DOM_ID_SHOW && `list-${lodash.get(odd_item, 'oid')}`">
     <!-- 占位  或者  关盘 -->
     <div v-if="placeholder == 1 || is_close(get_odd_status())" class="item-inner">
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
@@ -14,7 +14,7 @@
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="(!is_fengpan(get_odd_status()) && [18,19].includes(+_.get(current_tab_item, 'id'))) || ((odd_item.on || convert_num(odd_item) === 0) && match.csid != 1)"
+        v-if="(!is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(current_tab_item, 'id'))) || ((odd_item.on || convert_num(odd_item) === 0) && match.csid != 1)"
         v-html="transfer_on(odd_item)">
       </div>
       <img class="icon-lock" :class="{standard:n_s}" :src="match_icon_lock" />
@@ -25,7 +25,7 @@
       <!--csid:1足球全封,不显示盘口名-->
       <div class='odd-title'
         :class="{three:column_ceil > 2,standard:n_s == 2}"
-        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [18,19].includes(+_.get(current_tab_item, 'id'))) ) ||
+        v-if="(odd_item.on || convert_num(odd_item) === 0 || (!is_fengpan(get_odd_status()) && [18,19].includes(+lodash.get(current_tab_item, 'id'))) ) ||
               (is_fengpan(get_odd_status())  || get_obv_is_lock(odd_item))
               && match.csid != 1"
         v-html="transfer_on(odd_item)">
@@ -61,6 +61,7 @@ import betting from 'src/project/mixins/betting/betting.js';
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert,betting],
@@ -132,7 +133,7 @@ watch(() => hpid, () => {
 watch(() => match, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list){
-    if([18,19].includes(+_.get(props.current_tab_item, 'id'))){
+    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       if(odd_item.value)
@@ -171,7 +172,7 @@ watch(() => odds_value, () => {
 
 // 当前玩法ID
 const hpid = computed(() => {
-  return _.get(props.odd_field,'hpid');
+  return lodash.get(props.odd_field,'hpid');
 })
 
 // 判断边框border-radius样式
@@ -233,7 +234,7 @@ const is_selected = computed(() => {
   if (get_menu_type == 900) {  //虚拟体育
     flag = get_bet_list.includes(odd_item.value.oid);
   } else {
-    let id_ = _.get(props.odd_field,'hl[0].hn')? `${props.match.mid}_${props.odd_field.chpid || props.odd_field.hpid}_${odd_item.value.ot}_${props.odd_field.hl[0].hn}` : odd_item.value.oid
+    let id_ = lodash.get(props.odd_field,'hl[0].hn')? `${props.match.mid}_${props.odd_field.chpid || props.odd_field.hpid}_${odd_item.value.ot}_${props.odd_field.hl[0].hn}` : odd_item.value.oid
     flag = get_bet_list.includes(id_);
   }
   $emit('select_change',{flag,i:odd_item.value_i});
@@ -311,11 +312,11 @@ const get_odd_status = () => {
 }
 // on转换html
 const transfer_on = (odd_item) => {
-  if(props.match.csid == 1 && [19].includes(+_.get(props.current_tab_item, 'id')) ){
+  if(props.match.csid == 1 && [19].includes(+lodash.get(props.current_tab_item, 'id')) ){
     return odd_item.onb || odd_item.on;
   }
   let on = odd_item.onb || odd_item.on;
-  if(props.match.csid == 1 && [18].includes(+_.get(props.current_tab_item, 'id')) ){
+  if(props.match.csid == 1 && [18].includes(+lodash.get(props.current_tab_item, 'id')) ){
     on = odd_item.ot
     if(odd_item.ot == 'Other' && ['zh', 'tw'].includes(get_lang)){
       on = '其他'
@@ -333,7 +334,7 @@ const transfer_on = (odd_item) => {
     color = 'var(--qq-color-fs-color-13)';
   }
   let replaced = on
-  if(![18].includes(+_.get(props.current_tab_item, 'id'))){
+  if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){
     replaced = on.replace(/[\/0-9\+\-\.]/ig,found => {
       return `<span style="color:${color}">${found}</span>`
     });
@@ -364,20 +365,20 @@ const get_obv_is_lock = (odd_item) => {
 const get_odd_data = () => {
   let ol = null;
   try{
-    if(_.get(props.odd_field,'hl[0]')){
+    if(lodash.get(props.odd_field,'hl[0]')){
       ol = props.odd_field.hl[0].ol;
     }
   } catch(e){
     console.error(e);
   }
   if(ol && ol.length){
-    if([18,19].includes(+_.get(props.current_tab_item, 'id'))){
+    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
       odd_item.value = ol[odd_item.value_i];
     }
   } else {
-    odd_item.value = {"oid":"","mid":_.get(props.odd_field,'mid')}
+    odd_item.value = {"oid":"","mid":lodash.get(props.odd_field,'mid')}
   }
 }
 /**

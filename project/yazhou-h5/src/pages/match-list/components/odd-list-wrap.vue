@@ -5,9 +5,9 @@
   <div class="odd-list-wrap" 
        :class="{
           standard: !show_newer_edition,
-          special_play: [18].includes(+ _.get(current_tab_item, 'id')), 
-          five_special_play: _.get(current_tab_item, 'id') === 19,
-          five_no_data: !_.size(_.get(five_minutes_all_list, 'hl[0].ol'))
+          special_play: [18].includes(+ lodash.get(current_tab_item, 'id')), 
+          five_special_play: lodash.get(current_tab_item, 'id') === 19,
+          five_no_data: !lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))
        }
       ">
     <!--新手版-->
@@ -37,7 +37,7 @@
       </template>
     </div>
     <!--标准版赔率容器  波胆 5分钟  玩法除外-->
-    <template v-if="![18,19].includes(+_.get(current_tab_item, 'id'))">
+    <template v-if="![18,19].includes(+lodash.get(current_tab_item, 'id'))">
       <div class="standard-odd-l-w" v-touch-swipe.mouse.right.left="odd_wrapper_pan"
         :class="{'status2':standard_odd_status == 1}"
         v-if="!show_newer_edition && get_n_s_changed_loaded">
@@ -79,7 +79,7 @@
       </template>
     </template>
     <!-- 标准版 波胆玩法盘口赔率组件 -->
-    <div v-else-if="[18].includes(+_.get(current_tab_item, 'id'))" class="correct_style">
+    <div v-else-if="[18].includes(+lodash.get(current_tab_item, 'id'))" class="correct_style">
       <!-- 波胆玩法 标题 -->
       <div class="correct_style_title">
         <div>
@@ -117,15 +117,15 @@
       </div>
     </div>
     <!-- 标准版 5分钟 盘口赔率组件 -->
-    <div v-else-if="[19].includes(+_.get(current_tab_item, 'id'))" class="five-minutes-to-play">
+    <div v-else-if="[19].includes(+lodash.get(current_tab_item, 'id'))" class="five-minutes-to-play">
       <div class="odd-wrap-hps-bold-other" 
            :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(props.five_minutes_all_list)"
            :class="{
-             lastBestTwoOddWraps:[1172,1192].includes(+_.get(ol_item, 'otd')),
-             lastFiveOddWraps:[1173,1193].includes(+_.get(ol_item, 'otd')),
-             second_half: _.get(ol_item, 'ot') === '46-50',
-             kill_shot: _.get(ol_item, 'ot') === 'ClutchGoal' && _.get(ol_item, 'os') === 1,
-             'ClutchGoal-os-3': _.get(ol_item, 'ot') === 'ClutchGoal' && [1,2,7,10].includes(+match['ms']),
+             lastBestTwoOddWraps:[1172,1192].includes(+lodash.get(ol_item, 'otd')),
+             lastFiveOddWraps:[1173,1193].includes(+lodash.get(ol_item, 'otd')),
+             second_half: lodash.get(ol_item, 'ot') === '46-50',
+             kill_shot: lodash.get(ol_item, 'ot') === 'ClutchGoal' && lodash.get(ol_item, 'os') === 1,
+             'ClutchGoal-os-3': lodash.get(ol_item, 'ot') === 'ClutchGoal' && [1,2,7,10].includes(+match['ms']),
            }"
       >
         <odd-column-item
@@ -139,7 +139,7 @@
         />
       </div>
       <!--  5分钟 图标  -->
-      <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && _.size(_.get(five_minutes_all_list, 'hl[0].ol'))">
+      <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
         <img @click="info_icon_click($event,match.mid)"
              :src="show_tips ? (get_theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
                   (get_theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
@@ -156,6 +156,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
+import lodash from 'lodash'
 import odd_column_item from "src/project/pages/match-list/components/odd_column_item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/boot/local-image'
 
@@ -477,7 +478,7 @@ const ol_list = computed(() => {
         if (show_newer_edition) {
           if (ol_list.length == 3) {
             //只有三个投注项时才做此操作
-            let found = _.findIndex(ol_list, (item) => item.ot == 2);
+            let found = lodash.findIndex(ol_list, (item) => item.ot == 2);
             if (found == 1) {
               let delted = f_hl_item.ol.splice(found, 1);
               f_hl_item.ol.push(delted[0]);
@@ -534,7 +535,7 @@ const get_five_minutes_ol_list = (data) => {
     { placeholder: 1 },
     { placeholder: 1 },
   ];
-  let ol = _.get(data, "hl[0].ol", []);
+  let ol = lodash.get(data, "hl[0].ol", []);
   let ol_len = 0;
   if (ol.length) {
     const mst = +props.match.mst;
@@ -595,7 +596,7 @@ const get_bold_ol_list = (data, index) => {
   if (mapping && mapping.split("-") && mapping.split("-")[2]) {
     bodan_len = mapping.split("-")[2] - 1;
   }
-  if (_.get(data, "hl[0].ol")) {
+  if (lodash.get(data, "hl[0].ol")) {
     ol_list = data.hl[0].ol;
     let bold_left = [],
       bold_middle = [],
@@ -727,7 +728,7 @@ const get_hp_list = (type) => {
     return hps;
   } else if (type == 1) {
     let hps = []; //
-    if (props.match && _.size(finally_ol_list) > 3) {
+    if (props.match && lodash.size(finally_ol_list) > 3) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.slice(3, 5);
       } else {
@@ -740,7 +741,7 @@ const get_hp_list = (type) => {
 // 获取hl的hs
 const get_hl_hs = (hp_item_obj) => {
   let hs = 0;
-  if (_.get(hp_item_obj, "hl[0]")) {
+  if (lodash.get(hp_item_obj, "hl[0]")) {
     hs = hp_item_obj.hl[0].hs;
   }
   return hs;
@@ -753,7 +754,7 @@ const get_hl_hs = (hp_item_obj) => {
  */
 const get_ol_length = (hp_item_obj, hp_i_i) => {
   let ol_list = [];
-  if (_.get(hp_item_obj, "hl[0].ol")) {
+  if (lodash.get(hp_item_obj, "hl[0].ol")) {
     ol_list = hp_item_obj.hl[0].ol;
     if (get_menu_type == 3000) {
       return 2;
@@ -769,7 +770,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
     if (
       [1].includes(+props.match.csid) &&
       hp_i_i == 0 &&
-      !_.get(props.match, "hps.length")
+      !lodash.get(props.match, "hps.length")
     ) {
       return 3;
     }
@@ -784,7 +785,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
  */
 const get_ol_list = (hp_item, hp_i_i) => {
   let ol_list = [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }];
-  if (_.get(hp_item, "hl[0].ol")) {
+  if (lodash.get(hp_item, "hl[0].ol")) {
     ol_list = hp_item.hl[0].ol;
   } else {
     // 次要玩法

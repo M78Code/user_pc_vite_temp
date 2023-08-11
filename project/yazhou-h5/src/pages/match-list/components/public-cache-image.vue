@@ -7,6 +7,7 @@
 </template>
  
 <script setup>
+import lodash from 'lodash'
 import { onMounted } from "vue";
 
 const props = defineProps({
@@ -70,7 +71,7 @@ const set_default_icon = (theme = "theme02") => {
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素
-  let path = _.isArray(path)?_.get(path,'[0]'):path;
+  let path = lodash.isArray(path)?lodash.get(path,'[0]'):path;
   let params = { key: path, csid: csid, type: type };
   // 检查是否 加载 过 是否 ok  { 0: 第一次加载, 1:加载过 而且成功, -1: 加载过但是已确认 出错 }
   let status = check_if_loaded_img(params);

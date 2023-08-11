@@ -147,6 +147,7 @@ import { computed, onMounted, onUnmounted, watch } from "vue";
 import msc from "src/project/mixins/match_list/msc-bw3.js";
 import { score_format } from '../../../boot/global_filters'
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
 const props = defineProps({
   match: Object,
@@ -288,7 +289,7 @@ const get_total_scores = computed(() => {
 const is_show_score = (match,score) =>{
   let f = false;
   // 红猫赛事屏蔽角球总比分S5,黄牌比分S12,红牌比分S11,点球比分S10
-  if(match.cds=='RC' && match.csid == 1 && ['S5','S10','S11','S12'].includes(_.get(score,'[0]'))){
+  if(match.cds=='RC' && match.csid == 1 && ['S5','S10','S11','S12'].includes(lodash.get(score,'[0]'))){
     return f;
   }
   if(score[1] && score[2] && score[1] != '-' && score[2] != '-'){

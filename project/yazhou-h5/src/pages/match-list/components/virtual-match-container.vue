@@ -59,7 +59,7 @@
               <!--雪碧图-->
               <div
                 v-else
-                class="team-icon-w" v-img="([_.get(match,'homeUrl'), _.get(match,'t1FirstWd'),_.get(match,'csid')])"
+                class="team-icon-w" v-img="([lodash.get(match,'homeUrl'), lodash.get(match,'t1FirstWd'),lodash.get(match,'csid')])"
               />
               <div class="team-title">{{match.homeName}}</div>
             </div>
@@ -87,7 +87,7 @@
               <!--雪碧图-->
               <div
                 v-else
-                class="team-icon-w" v-img="([_.get(match,'awayUrl'), _.get(match,'t2FirstWd'),_.get(match,'csid')])"
+                class="team-icon-w" v-img="([lodash.get(match,'awayUrl'), lodash.get(match,'t2FirstWd'),lodash.get(match,'csid')])"
               />
               <div class="team-title">{{match.awayName}}</div>
             </div>
@@ -126,6 +126,7 @@
 <script setup>
 import { computed, onUnmounted, ref } from 'vue'
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 import data_pager from "src/public/components/common/data_pager.vue"
 
 const store_state = store.getState()

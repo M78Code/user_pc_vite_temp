@@ -89,6 +89,7 @@
 <script setup>
 import { onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
@@ -130,7 +131,7 @@ onMounted(() => {
 
       // 虚拟泥地摩托车赛果只有6个结果,每行展示2个
       if(sub_menu_type.value == 1009 && plays.value && plays.value.length == 6) {
-        let arr = _.chunk(plays.value, 2);
+        let arr = lodash.chunk(plays.value, 2);
         best_three_list.value = arr[0]
         best_middle_list.value = arr[1]
         last_three_list.value = arr[2]
@@ -161,7 +162,7 @@ const get_score_list = () => {
   return res;
 }
 const sort_plays = (plays_) => {
-  let new_plays = _.sortBy(plays_,(item)=>{
+  let new_plays = lodash.sortBy(plays_,(item)=>{
     return item.playId
   })
   plays.value = new_plays

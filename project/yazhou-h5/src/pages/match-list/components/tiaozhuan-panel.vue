@@ -20,12 +20,13 @@
       </template>
     </q-carousel>
     <!-- 猜你喜欢 -->
-    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="_.get(get_access_config,'hotRecommend')"></may-also-like>
+    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
   </div>
 </template>
  
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
 
@@ -94,8 +95,8 @@ const fetch_actimg = () => {
   *@return {Undefined} undefined
   */
 const confirm = (val) => {
-  let _url = _.get(val, 'hostUrl')
-  let _type = _.get(val, 'urlType')
+  let _url = lodash.get(val, 'hostUrl')
+  let _type = lodash.get(val, 'urlType')
   if (!_url) return
   if (val.comfirmTxt && get_user.value.activityList) {
     store.dispatch({ type: 'matchReducer/set_activity_msg',  payload: val });

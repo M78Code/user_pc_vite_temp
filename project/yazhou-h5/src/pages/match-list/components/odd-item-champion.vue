@@ -3,7 +3,7 @@
 -->
 <template>
   <div class="ol-li-item flex items-center justify-between" :data-oid="ol_item.oid"
-    :id="DOM_ID_SHOW && `list-${_.get(ol_item, 'oid')}`"
+    :id="DOM_ID_SHOW && `list-${lodash.get(ol_item, 'oid')}`"
     v-if="odd_status !== 3"> <!--关盘 odd_status === 3 移除-->
     <div class="on">
       {{ol_item.on}}
@@ -31,6 +31,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
+import lodash from 'lodash'
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({

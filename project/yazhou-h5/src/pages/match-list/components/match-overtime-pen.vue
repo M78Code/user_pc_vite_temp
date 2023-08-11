@@ -26,15 +26,15 @@
     <div class="transition-w-odd" :mid="match.mid" v-if="current_tab_item.hps" 
          :class="{
           expanded:any_unfold && any_unfold != '0', 
-          bodan_wanfa: [18].includes(+ _.get(current_tab_item,'id')) && bold_gaodu_css > 3,
-          bodan_wanfa_small: any_unfold && [18].includes(+ _.get(current_tab_item,'id')) && bold_gaodu_css <= 3,
-          five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ _.get(current_tab_item,'id')),
+          bodan_wanfa: [18].includes(+ lodash.get(current_tab_item,'id')) && bold_gaodu_css > 3,
+          bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item,'id')) && bold_gaodu_css <= 3,
+          five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item,'id')),
         }"
     >
       <!--次要玩法标 队名 和 比分 和 盘口-->
       <div class="row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
-        <div class="team-title-container" v-if="![18,19].includes(+ _.get(current_tab_item, 'id'))">
+        <div class="team-title-container" v-if="![18,19].includes(+ lodash.get(current_tab_item, 'id'))">
           <!--主队名 和 比分-->
           <div class="team-t-title-w" :class="{
             'is-handicap':current_tab_handicap_index == 1,
@@ -94,6 +94,7 @@ import { computed, onDeactivated, onMounted, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/boot/constant'
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
@@ -222,7 +223,7 @@ watch(() => get_c303_data_change.value, (curr) => {
       let found = tab_list.value.filter(tab_item => {
         return tab_item && tab_item.unfold;
       });
-      let item = _.get(found,'[0]');
+      let item = lodash.get(found,'[0]');
       if(item){
         let o_hps_key = get_hps_key_by(item);
         let params = {
@@ -246,12 +247,12 @@ watch(() => get_c303_data_change.value, (curr) => {
               //   $root.$emit(emit_cmd.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
               // }
               current_tab_item.value.hps = match[o_hps_key];
-              if([18].includes(+ _.get(current_tab_item.value, 'id'))){
+              if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
                 // 波胆玩法 数据加工处理
-                bold_all_list.value = corrective_action_data_processing(_.get(current_tab_item.value,'hps'), match )
-              }else if([19].includes(+ _.get(current_tab_item.value, 'id'))){
+                bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match )
+              }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
                 // 5分钟 玩法 数据加工处理
-                five_minutes_all_list.value = five_minutes_gameplay_data_processing(_.get(current_tab_item.value,'hps'), match )
+                five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match )
               }
               // current_hps_key.value = o_hps_key;
             }
@@ -274,7 +275,7 @@ watch(() => get_c303_data_change.value, (curr) => {
 // 是否至少存在一个展开tab状态变化,tab展开 属于唯一有用的方法之一
 watch(() => any_unfold, () => {
   let any_unfold = 0;
-  let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+  let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
   if(match.mid in unfold_map){
     let u_status = unfold_map[match.mid] && unfold_map[match.mid].split('-')[1];
     any_unfold = +u_status;
@@ -295,7 +296,7 @@ watch(() => get_corner_oc_change.value, (curr) => {
       if(displayStatus == 'N'){ // 不展示
         if(current_hps_key.value == f_hps_key){
           any_unfold.value = false;
-          let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+          let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
           // 如果传进来的是关闭状态 且当前的id 与传进来的id一样 ,则对当前的id进行折叠操作
           if((match.mid in unfold_map)&& tab_id==current_tab_item.value.id){
             // 当前match折叠状态 所有的折叠状态设置为收起
@@ -315,7 +316,7 @@ watch(() => get_corner_oc_change.value, (curr) => {
         tab_list.value.filter(t => t.id == tab_id)[0].show_tab = true;
       }
       if(!any_unfold.value){
-        let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+        let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
         if(match.mid in unfold_map){
           let id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
           let status = unfold_map[match.mid] && unfold_map[match.mid].split('-')[1];
@@ -357,15 +358,15 @@ const match = computed(() => {
   if(match){
     init_tab_async_show();
     if(current_hps_key.value){
-      let hps_ = _.cloneDeep(match[current_hps_key.value])
+      let hps_ = lodash.cloneDeep(match[current_hps_key.value])
       current_tab_item.value.hps = hps_
       // 如果是波胆 和 5分钟玩法
-      if([18].includes(+ _.get(current_tab_item.value, 'id'))){
+      if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
         // 波胆玩法 数据加工处理
-        bold_all_list.value = corrective_action_data_processing(_.get(current_tab_item.value,'hps'), match )
-      }else if([19].includes(+ _.get(current_tab_item.value, 'id'))){
+        bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match )
+      }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
         // 5分钟 玩法 数据加工处理
-        five_minutes_all_list.value = five_minutes_gameplay_data_processing(_.get(current_tab_item.value,'hps'), match )
+        five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match )
       }
     }
   }
@@ -379,7 +380,7 @@ const show_tab_by_data = computed(() => {
   flag = cos15Minutes || cos5Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || (hpsAdd && hpsAdd.length > 0)
   // 如果没有 玩法时
   if(!flag ){
-    let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+    let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
     let status_id = '';
     if(match.mid in unfold_map){
       status_id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
@@ -433,7 +434,7 @@ const not_show_overtime_play = () => {
     tab_list.value.filter(t => t.id == 4)[0].show_tab = false;
     if(current_hps_key.value == 'hpsOvertime'){
       any_unfold.value = false;
-      let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+      let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
       if(match.mid in unfold_map){
         let id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
         let status = unfold_map[match.mid] && unfold_map[match.mid].split('-')[1];
@@ -450,10 +451,10 @@ const c105_handle = (skt_data) => {
   // hls 判断为undefined 执行下次循环
   if(!skt_data.hls) return;
   if(match.mid == skt_data.mid){
-    skt_data = _.cloneDeep(skt_data)
+    skt_data = lodash.cloneDeep(skt_data)
     skt_data.hls.forEach(hl_ws => {
       // 更新盘口级别hs
-      _.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
+      lodash.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
         if(match_hp.hl){
           match_hp.hl.forEach(hl => {
             if(hl.hid == hl_ws.hid){
@@ -474,7 +475,7 @@ const c105_handle = (skt_data) => {
       // 更新投注项级别ol
       if(hl_ws.ol) {
         hl_ws.ol.forEach(ol_ws => {
-          _.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
+          lodash.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
             if(match_hp.hl){
               match_hp.hl.forEach(hl => {
                 if(!hl.ol) return;
@@ -509,22 +510,22 @@ const fapai_way_tips_status_change_h = (flag) => {
 }
 // 存储次要玩法  赛事id  展开/折叠  状态
 const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_list) => {
-  let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+  let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
   unfold_map[match.mid] = `${item.id}-${item.unfold}`;
   // 如果是波胆玩法开
   if(item.id == 18){
     // 最终 的波胆列表长度     波胆的高度      默认三行
     let finall = [], bold_gaodu = 3, ol_list = [{placeholder:1},{placeholder:1},{placeholder:1}];
-    if( _.size(bold_list) ){
+    if( lodash.size(bold_list) ){
       for (let m =0, hps_length = bold_list.length; m < hps_length; m++){
-        if(_.get(bold_list[m], 'hl[0].ol')) {
+        if(lodash.get(bold_list[m], 'hl[0].ol')) {
           ol_list = bold_list[m].hl[0].ol
           finall.push(ol_list.filter(tab => tab.otd == 1).length)
           finall.push(ol_list.filter(tab => tab.otd == 0).length)
           finall.push(ol_list.filter(tab => tab.otd == 2).length)
         }
       }
-      if(_.size(finall)){
+      if(lodash.size(finall)){
         // 波胆 动态高度
         bold_gaodu = Math.max(...finall) + 1
       }
@@ -538,7 +539,7 @@ const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_li
   }// 如果是5分钟玩法
   else if (item.id == 19){
     let five_height = 3, ol_list = [{placeholder:1}];
-    if(_.get(five_minutes_list, 'hl[0].ol')) {
+    if(lodash.get(five_minutes_list, 'hl[0].ol')) {
       const mst = +match.mst
       /**
        * 25分钟前显示4行，25分钟(包含)后显示3行
@@ -561,7 +562,7 @@ const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_li
   const init_unfold_play_way = (type_way = 'is-auto') => {
   //足球
   if(match.csid == 1){
-    let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+    let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
     if(match.mid in unfold_map){
       let [id,status] = unfold_map[match.mid] && unfold_map[match.mid].split('-');
       unfold_map[match.mid] = `${id}-${status}`;
@@ -635,7 +636,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
   any_unfold.value = tab_list.value.filter(t => t.unfold == 1).length;
   //  如果没有展开的选项，则所有都折叠
   if(!any_unfold.value){
-    let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+    let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
     if(match.mid in unfold_map){
       let id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
       let status = 0;
@@ -680,12 +681,12 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
               $root.$emit(emit_cmd.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
             }
             current_tab_item.value.hps = match[o_hps_key];
-            if([18].includes(+ _.get(current_tab_item.value, 'id'))){
+            if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
               // 波胆玩法 数据加工处理
-              bold_all_list.value = corrective_action_data_processing(_.get(current_tab_item.value,'hps'), match )
-            }else if([19].includes(+ _.get(current_tab_item.value, 'id'))){
+              bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match )
+            }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
               // 5分钟 玩法 数据加工处理
-              five_minutes_all_list.value = five_minutes_gameplay_data_processing(_.get(current_tab_item.value,'hps'), match )
+              five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match )
             }
             current_hps_key.value = o_hps_key;
           }
@@ -724,11 +725,11 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 //   // debugger
 //   //显示本地已有赔率
 //   if(match && match[o_hps_key] && match[o_hps_key].length){
-//     current_tab_item.value.hps = _.cloneDeep(match[o_hps_key]);
+//     current_tab_item.value.hps = lodash.cloneDeep(match[o_hps_key]);
 //     if(!match.csid == 1){
 //       current_tab_item.value.title = mmp_map_title.value;
 //     }
-//     tab_list.value.filter(tab => tab.id == item.id)[0].hps = _.cloneDeep(match[o_hps_key]);
+//     tab_list.value.filter(tab => tab.id == item.id)[0].hps = lodash.cloneDeep(match[o_hps_key]);
 //     current_hps_key.value = o_hps_key;
 //   }else{
 //     current_tab_item.value.hps = [{
@@ -927,7 +928,7 @@ const basketball_mmp_change = (mmp) => {
     else if([31,16,100,1001,1002].includes(+mmp)){
       quater_tab_item.show_tab = false;
       any_unfold.value = false;
-      let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+      let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
       if(match.mid in unfold_map){
         let id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
         unfold_map[match.mid] = `${id}-0`;
@@ -1040,7 +1041,7 @@ const change_status_by_any_unfold = (c_v) => {
       
     } else{
       let v_k = {};
-      let unfold_map = _.cloneDeep(get_secondary_unfold_map.value);
+      let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
       if(match.mid in unfold_map){
         let id = unfold_map[match.mid] && unfold_map[match.mid].split('-')[0];
         v_k[match.mid] = `${id}-0`;
@@ -1053,9 +1054,9 @@ const change_status_by_any_unfold = (c_v) => {
 const apply_15min_title = () => {
   if(current_tab_item.value.id==17){
     // 如果是15分钟玩法下展示玩法时段 ,如果没有滑动取最小值(因为在更新时已经进行了排序因此第一个为最小值),如果滑动到第二个tab取+1值
-    let hSpecial=_.get(match.hps15Minutes,'[0].hSpecial',1) - 1;
-    if(get_standard_odd_status.value==1 && _.get(match,'hps15Minutes',[]).length == 6){ // 翻转后取第二个值
-      hSpecial=_.get(match.hps15Minutes,'[3].hSpecial',1)-1;
+    let hSpecial=lodash.get(match.hps15Minutes,'[0].hSpecial',1) - 1;
+    if(get_standard_odd_status.value==1 && lodash.get(match,'hps15Minutes',[]).length == 6){ // 翻转后取第二个值
+      hSpecial=lodash.get(match.hps15Minutes,'[3].hSpecial',1)-1;
     }
     if(hSpecial>4){
       hSpecial=4; //容错 下标不能大于4 最大特5
@@ -1086,9 +1087,9 @@ const corrective_action_data_processing = (data, match) => {
     if(match['mmp'] <= 6){
         let first_half1 = data.filter((x,i) =>  x.hpid == 341), first_half = data.filter((x,i) => x.hpid == 20)
         // 如果 玩法id 341 没数据，再取 hpid 20 的
-        if(_.get(first_half1,'[0].hl[0].ol')){
+        if(lodash.get(first_half1,'[0].hl[0].ol')){
           arr.push(...first_half1)
-        }else if (_.get(first_half,'[0].hl[0].ol')){
+        }else if (lodash.get(first_half,'[0].hl[0].ol')){
           arr.push(...first_half)
         }else{
           arr.push({hl:[{}]})
@@ -1096,16 +1097,16 @@ const corrective_action_data_processing = (data, match) => {
     }else{    // 如果是下半场，就取下半场的数据           先取 342         再取  74
       let second_half1 = data.filter((x,i) =>  x.hpid == 342), second_half = data.filter((x,i) => x.hpid == 74)
       // 如果 玩法id 341 没数据，再取 hpid 20 的
-      if(_.get(second_half1,'[0].hl[0].ol')){
+      if(lodash.get(second_half1,'[0].hl[0].ol')){
         arr.push(...second_half1)
-      }else if (_.get(second_half,'[0].hl[0].ol')){
+      }else if (lodash.get(second_half,'[0].hl[0].ol')){
         arr.push(...second_half)
       }else{
         arr.push({hl:[{}]})
       }
     }
   }
-  if(_.size(arr) < 2){
+  if(lodash.size(arr) < 2){
     arr = [{hl:[{}]},{hl:[{}]}]
   }
   return arr
@@ -1121,7 +1122,7 @@ const five_minutes_gameplay_data_processing = (data, match) => {
       arr.push( ...data.filter((x,i) =>  x.hpid == 361))
     }
   }
-  if(!_.size(arr)){
+  if(!lodash.size(arr)){
     arr = [{hl:[{}]}]
   }
   return arr[0]

@@ -94,6 +94,7 @@ import {mapMutations, mapGetters} from "vuex";
 import { format_total_score } from '../../../boot/global_filters'
 import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
+import lodash from 'lodash'
 
 const { from_where, show_ } = defineProps({
   from_where: {
@@ -145,8 +146,8 @@ const normal_ = computed(() => {
   return function (item,index) {
     try {
       let mhs_ = item.mhs == 0 || item.mhs == 11
-      let hs_ = _.get(item,'hps[0].hl[0].hs') == 0 || _.get(item,'hps[0].hl[0].hs') == 11
-      let os_ = _.get(item,`hps[0].hl[0].ol[${index}].os`) == 1
+      let hs_ = lodash.get(item,'hps[0].hl[0].hs') == 0 || lodash.get(item,'hps[0].hl[0].hs') == 11
+      let os_ = lodash.get(item,`hps[0].hl[0].ol[${index}].os`) == 1
       return mhs_ && hs_ && os_
     } catch (error) {
       return false
@@ -166,8 +167,8 @@ const normal_ = computed(() => {
   const  get_list = async() => {
     try {
       let res = await api_home.hot_ulike_recommendation({isHot: from_where})
-      if (_.get(res,'code') == 200 && _.get(res,'data.length') > 0) {
-        slide_list.value = _.get(res,'data');
+      if (lodash.get(res,'code') == 200 && lodash.get(res,'data.length') > 0) {
+        slide_list.value = lodash.get(res,'data');
         store.dispatch({ type: 'matchReducer/updateHotReqTime',  payload: Date.now() });
       }
     } catch (error) {
