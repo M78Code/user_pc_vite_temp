@@ -87,7 +87,6 @@
     </v-scroll-area>
   </load-data>
 </template>
-
 <script>
 import loadData from "src/public/components/load_data/load_data.vue"
 import eliminationRank from "src/project/yabo/components/virtual_right/elimination_rank.vue"
@@ -99,8 +98,10 @@ import horseReplay from "src/project/yabo/components/virtual_right/horse_replay.
 import footbalReplay from "src/project/yabo/components/virtual_right/footbal_replay.vue"
 import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue";
 import vsport_ctr from "src/public/utils/vsport/vsport_ctr.js"
-import { mapGetters } from "vuex"
-export default {
+// #TODO vuex 
+// import { mapGetters } from "vuex"
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "virtualRight",
   components:{
     loadData,
@@ -113,8 +114,8 @@ export default {
     virtualVideo,
     vScrollArea
   },
-  data(){
-    return {
+  setup(props, evnet) {
+    const data = reactive({
       // 虚拟体育操作类
       vsport_ctr: new vsport_ctr(this),
       // 是否显示视频提示内容 
@@ -123,74 +124,73 @@ export default {
       listsHeight: 0,
       // title 排行榜是否吸顶
       isFixed: false,
-    }
-  },
-  computed:{
-    ...mapGetters({
-      // 获取右侧参数
-      get_vsport_params: "get_vsport_params",
-      // 获取服务器时间
-      get_timestamp: "get_timestamp",
-      // 获取页面尺寸
-      get_layout_list_size: "get_layout_list_size"
-    })
-  },
-  watch:{
+    });
+    // #TODO vuex 
+    // computed:{
+    //   ...mapGetters({
+    //     // 获取右侧参数
+    //     get_vsport_params: "get_vsport_params",
+    //     // 获取服务器时间
+    //     get_timestamp: "get_timestamp",
+    //     // 获取页面尺寸
+    //     get_layout_list_size: "get_layout_list_size"
+    //   })
+    // },
     // 监听切换批次
-    'get_vsport_params.id':{
-      handler(res){
+    watch(
+      () => get_vsport_params.id,
+      () => {
         if(res){
-          this.vsport_ctr.init()
+          vsport_ctr.init()
         }
-      },
-      immediate: true,
-    },
-    // 监听切换单场赛事
-    'get_vsport_params.mid'(mid){
-      this.vsport_ctr.mid_change(mid)
-    },
-    // 监听页面宽度大小变化
-    'get_layout_list_size.width':{
-      handler(){
-        this.$nextTick(() => {
-          this.vsport_ctr.set_result_style()
+      }
+    );
+    watch(
+      () => get_layout_list_size.width,
+      () => {
+        $nextTick(() => {
+          vsport_ctr.set_result_style()
         })
       }
-    },
-    // 赛事对阵列表有数据之后计算该列表高度
-    'vsport_ctr.replay_list.length': {
-      handler(n) {
-        this.listsHeight = n * 33;
+    );
+    watch(
+      () => vsport_ctr.replay_list.length,
+      () => {
+        listsHeight = n * 33;
       }
-    }
-  },
-  created() {
-    this.$utils.load_player_js()
-    this.$root.$on(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.timer);
-  },
-  destroyed() {
-    this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.timer);
-  },
-  mounted(){
-    this.vsport_ctr.set_result_style()
-  },
-  methods:{
+    );
+    onMounted(() => {
+      $utils.load_player_js()
+      $root.$on(emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, timer);
+
+      // 原mounted 
+      vsport_ctr.set_result_style()
+      
+    })
+    onUnmounted(() => {
+      $root.$off(emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, timer);
+    });
     /**
      * @Description 计时器 
      * @param {undefined} undefined
     */
-    timer(){
-      this.vsport_ctr.timer()
-    },
+    const timer = () => {
+      vsport_ctr.timer()
+    };
     /**
      * 监听右侧内容滚动高度
      */
-    cur_scroll_height(height) {
+    const cur_scroll_height = (height) => {
       // 判断排行榜 title 是否吸顶
-      this.isFixed = height.position >= this.listsHeight
+      isFixed = height.position >= listsHeight
+    }
+    return {
+      ...toRefs(data),
+      timer,
+      cur_scroll_height
     }
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>
