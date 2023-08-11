@@ -13,29 +13,24 @@
   />
 </template>
 
-<script>
+<script setup>
 import utils from 'src/public/utils/utils.js';
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
-
-export default {
-  name: 'scroll_top',
  
-  props: {
+  const props = defineProps({
     // 父组件滚动高度
     list_scroll_top: {
       type: Number,
       default: 0
     }
-  },
-  setup() {
+  })
     // 通过判断父组件滚动时间间隔控制按钮显示，放在该组件维护
     let is_show_back_top_btn = ref(true)
     let scroll_timer = ref(null)
 
-  watch(() => {}, () => {
+  watch(() => list_scroll_top, (curr_top, prev_top) => {
     // 滑动停止5s后 隐藏回到顶部按钮
-    list_scroll_top = (curr_top, prev_top) => {
       if (!is_show_back_top_btn.value) {
         is_show_back_top_btn.value = true
       }
@@ -46,14 +41,12 @@ export default {
       scroll_timer.value = setTimeout(() => {
         is_show_back_top_btn.value = false
       }, 5000)
-    }
   })
-  computed(() => {
+  const scroll_img = computed(() => {
     // 获取图片主题图标
-    scroll_img = () => {
-      // 没获取到的情况
+        // 没获取到的情况
       let suffix="__"; 
-      // TODO 待调整
+      // TODO: 待调整
         //  if(get_theme.includes('theme01')){
         //     suffix='01'
         //  }
@@ -64,7 +57,6 @@ export default {
         //     suffix+='_y0';
         //  }
         return  `image/wwwassets/bw3/list/scroll_top_${suffix}.svg`
-    }
   })
   /**
      * 回到顶部功能实现过程：
@@ -87,12 +79,6 @@ export default {
       clearTimeout(scroll_timer)
       scroll_timer.value = null
     })
-  return {
-      is_show_back_top_btn,
-      back_top,
-      scroll_timer,
-    }
-  },
   // computed:{
   //   ...mapGetters({
   //     get_theme:'get_theme',
@@ -114,7 +100,6 @@ export default {
   //   },
   // },
  
-}
 </script>
 <style lang="scss" scoped>
   .list-scroll-to-top {
