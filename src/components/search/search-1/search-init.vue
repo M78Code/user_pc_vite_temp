@@ -64,122 +64,112 @@
     </div>
 </template>
   
-<script>
-import { defineComponent, reactive, watch } from 'vue'
+<script setup>
+import { reactive, watch } from 'vue'
 // TODO: api
 import search from "src/public/utils/searchClass/search.js"
-// TODO:
-import { mapActions, mapGetters } from "vuex";
-export default defineComponent({
-    props: {
-        show_type: {
-            type: String,
-            default: ''
-        }
-    },
-    setup(props, { emit }) {
-        /** 历史搜索数据 */
-        const histroy_data = reactive([])
-        /** 热门搜索数据 */
-        const hot_data = reactive([])
-        //显示类型改变
-        watch(
-            () => props.show_type,
-            (res) => {
-                if (res == 'init') {
-                    this.init()
-                }
-            }
-        )
-
-        /**
-         * @Description:点击搜索关键词
-         * @param {string} keyword 点击的关键词
-         * @param {boolean} is_insert_history 是否插入历史
-         * @return {undefined} undefined
-         */
-        function click_keyword(keyword, is_insert_history) {
-            if (!keyword) return
-            if (is_insert_history) {
-                // search.js
-                search.insert_history(keyword)
-            }
-            // TODO: 待完善store
-            this.set_search_type(1)
-            this.set_click_keyword(keyword);
-        }
-
-        /**
-         * @Description:获取热门搜索
-         * @return {Undefined} Undefined
-         */
-        function get_hot_search() {
-            search.get_hot_search(res => {
-                hot_data = res
-            })
-        }
-
-        /**
-         * @Description:获取搜索历史数据
-         * @return {Undefined} Undefined
-         */
-        function get_history() {
-            search.get_history(res => {
-                histroy_data = res
-            })
-        }
-
-        /**
-         * @Description:删除搜索历史
-         * @param {string} keyword 删除的关键字
-         * @param {number} index 删除的关键字索引
-         * @return {Undefined} Undefined
-         */
-        function delete_histroy(keyword, index) {
-            search.delete_histroy(keyword, () => {
-                if (keyword) {
-                    histroy_data.splice(index, 1);
-                } else {
-                    histroy_data = [];
-                }
-            })
-        }
-
-        /**
-         * @Description:点击其他搜索
-         * @param {string} type 搜索类型
-         * @return {undefined} undefined
-         */
-        function other_search(type) {
-            emit('set_show_type', type)
-        }
-
-        /**
-         * @Description:组件初始化
-         * @return {undefined} undefined
-         */
-        function init() {
-            this.get_hot_search();
-            this.get_history();
-        }
-        /** 钩子触发 */
-        onMounted(init)
-
-        return {
-            histroy_data,
-            hot_data,
-            click_keyword,
-            get_hot_search,
-            get_history,
-            delete_histroy,
-            other_search
-        }
-    },
-
-    methods: {
-        ...mapActions(['set_click_keyword', 'set_search_type']),
+import store from "src/store-redux/index.js";
+const props = defineProps({
+    show_type: {
+        type: String,
+        default: ''
     }
 })
+const emit = defineEmits(['set_show_type'])
+
+/** 历史搜索数据 */
+const histroy_data = reactive([])
+/** 热门搜索数据 */
+const hot_data = reactive([])
+//显示类型改变
+watch(
+    () => props.show_type,
+    (res) => {
+        if (res == 'init') {
+            init()
+        }
+    }
+)
+
+const set_click_keyword = (data) => store.dispatch({
+    type: 'set_click_keyword',
+    data
+})
+const set_search_type = (data) => store.dispatch({
+    type: 'set_search_type',
+    data
+})
+/**
+ * @Description:点击搜索关键词
+ * @param {string} keyword 点击的关键词
+ * @param {boolean} is_insert_history 是否插入历史
+ * @return {undefined} undefined
+ */
+function click_keyword(keyword, is_insert_history) {
+    if (!keyword) return
+    if (is_insert_history) {
+        // search.js
+        search.insert_history(keyword)
+    }
+    set_search_type(1)
+    set_click_keyword(keyword);
+}
+
+/**
+ * @Description:获取热门搜索
+ * @return {Undefined} Undefined
+ */
+function get_hot_search() {
+    search.get_hot_search(res => {
+        hot_data = res
+    })
+}
+
+/**
+ * @Description:获取搜索历史数据
+ * @return {Undefined} Undefined
+ */
+function get_history() {
+    search.get_history(res => {
+        histroy_data = res
+    })
+}
+
+/**
+ * @Description:删除搜索历史
+ * @param {string} keyword 删除的关键字
+ * @param {number} index 删除的关键字索引
+ * @return {Undefined} Undefined
+ */
+function delete_histroy(keyword, index) {
+    search.delete_histroy(keyword, () => {
+        if (keyword) {
+            histroy_data.splice(index, 1);
+        } else {
+            histroy_data = [];
+        }
+    })
+}
+
+/**
+ * @Description:点击其他搜索
+ * @param {string} type 搜索类型
+ * @return {undefined} undefined
+ */
+function other_search(type) {
+    emit('set_show_type', type)
+}
+
+/**
+ * @Description:组件初始化
+ * @return {undefined} undefined
+ */
+function init() {
+    get_hot_search();
+    get_history();
+}
+/** 钩子触发 */
+onMounted(init)
 
 </script>
   
