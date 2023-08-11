@@ -469,9 +469,9 @@
         }
         //计算token
         let token =
-          sessionStorage.getItem("pc_token") || url_search.get("token") || "";
+          sessionStorage.getItem("token") || url_search.get("token") || "";
         if (token) {
-          sessionStorage.setItem("pc_token", token);
+          sessionStorage.setItem("token", token);
         }
         //计算 pb 压缩
         // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求

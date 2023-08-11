@@ -8,8 +8,9 @@ import {http} from "src/core/http/index.js";
 import axios from 'axios'
 
 const { API_PREFIX = {},TARGET_PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
-const { API_PREFIX_JOB:prefix,API_PREFIX_BAT:prefix_user } = API_PREFIX;
+// const { API_PREFIX_JOB:prefix,API_PREFIX_BAT:prefix_user } = API_PREFIX;
 
+let prefix = 'https://api.sportxxxw1box.com'
 //赛事搜索接口
 export const post_search_match = (params, config = {}, url = "/v1/hotSearch/searchMatchInfoPc2PB") => {
     return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});
@@ -132,11 +133,11 @@ export const get_esports_match = (params, config = {}, url="/v1/w/5esportsMatche
  */
 // https://api.sportxxxw1box.com/yewu6/user/tryPlay
 
-export const handle_user_tryPlay = (url = "/yewu6/user/tryPlay") => {
+export const handle_user_tryPlay = (url = "https://api.sportxxxw1box.com/yewu6/user/tryPlay") => {
   let params = {
     lang: "zh",
     terminal: "PC"
   };
 
-  return axios.get(url, params );
+  return http.get(url, params );
 };

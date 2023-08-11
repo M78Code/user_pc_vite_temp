@@ -39,7 +39,6 @@ useRegistPropsHelper(component_symbol, need_register_props)
 
 const props = defineProps({ ...useProps });
 
-
 </script>
 <style lang="scss" scoped>
 .basic-col {

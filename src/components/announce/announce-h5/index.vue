@@ -33,19 +33,17 @@
 <script>
 import { defineComponent, ref, nextTick, onMounted, onUnmounted } from 'vue'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import  { useRegistPropsHelper, useProps,  useComputed  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
+import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-// TODO:
-import { api_home } from "src/project/api/index";
+import { api_home } from "src/api/index";
 import { mapGetters } from "vuex";
-import loading from "src/project/components/common/loading";
-import noData from "src/project/yazhou-h5/components/common/no-data/no-data.vue";
-
+import { LoadingWapper } from "src/project/components/common/loading";
+import { NoDataWapper } from "src/project/components/common/no-data";
 import simple_header from '.r/simple_header.vue';
 import tabs from "./tab.vue";
 
@@ -54,8 +52,8 @@ export default defineComponent({
     components: {
         "simple-header": simple_header,
         'my-tabs': tabs,
-        "no-data": noData,
-        'load-page': loading
+        "no-data": NoDataWapper,
+        'load-page': LoadingWapper
     },
     setup(props) {
         /** 返回的大列表 */

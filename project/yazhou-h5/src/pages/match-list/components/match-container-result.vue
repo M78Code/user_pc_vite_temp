@@ -123,6 +123,8 @@
 </template>
 <script setup>
 import { computed, onUnmounted, onMounted } from "vue"
+import store from "src/store-redux/index.js"
+import lodash from 'lodash'
 import formartmixin from 'src/project/mixins/module/formartmixin.js';
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
@@ -139,23 +141,35 @@ const props = defineProps({
   main_source:String,
 })
 
-// TODO: 其他模块得 store  待添加
-// mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
-// ...mapGetters([
-//   "get_bet_list",
-//   "get_show_favorite_list",
-//   "get_collapse_map_match",
-//   "get_collapse_csid_map",
-//   "get_collapse_all_ball",
-//   "get_lang",
-//   "get_theme",
-//   'get_curr_sub_menu_type',
-//   'get_current_menu',
-//   'get_access_config',
-// ]),
-
+const store_state = store.getState()
 const timer_super11 = ref(null)
 const is_first_coming = ref(false)
+
+const get_current_menu = ref(store_state.get_current_menu)
+const get_collapse_map_match = ref(store_state.get_collapse_map_match)
+const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
+const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
+const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
+const get_theme = ref(store_state.get_theme)
+const get_current_main_menu = ref(store_state.get_current_main_menu)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  get_current_menu.value = new_state.get_current_menu
+  get_collapse_map_match.value = new_state.get_collapse_map_match
+  get_collapse_csid_map.value = new_state.get_collapse_csid_map
+  get_collapse_all_ball.value = new_state.get_collapse_all_ball
+  get_newer_standard_edition.value = new_state.get_newer_standard_edition
+  get_theme.value = new_state.get_theme
+  get_current_main_menu.value = get_current_main_menu.get_theme
+}
+
+// TODO: 其他模块得 store  待添加
+// mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
 
 onMounted(() => {
   is_first_coming.value = true;
@@ -216,7 +230,7 @@ const is_show_result = () => {
  */
 const league_l_clicked = () => {
   if(['detail_match_list','home_hot_page_schedule'].includes(main_source)) return;
-  let map_collapse = _.cloneDeep(get_collapse_map_match) || {};
+  let map_collapse = lodash.cloneDeep(get_collapse_map_match) || {};
   // 展开联赛
   let tid = match_of_list.tid;
   // 如果是折叠, 则展开赛事
@@ -227,7 +241,7 @@ const league_l_clicked = () => {
   } else{ //  折叠赛事
     map_collapse[match_of_list.tid] = 1
   }
-  set_collapse_map_match(map_collapse);
+  store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
   $emit('unfold_changed',match_of_list);
 }
 
@@ -253,7 +267,7 @@ const league_l_clicked = () => {
   if(![3,11].includes(+menu_type)){
     return result;
   }else if(menu_type == 11){
-    let third_m_id = _.get(get_current_menu,'date_menu.field1');
+    let third_m_id = lodash.get(get_current_menu,'date_menu.field1');
     //串关今日id为0或'0'
     if(third_m_id !== 0 && third_m_id !== '0'){
       return result;
@@ -307,6 +321,7 @@ const gen_collapse_key = (match) =>{
 }
 
 onUnmounted(() => {
+  unsubscribe()
   clearTimeout(timer_super11.value);
   timer_super11.value = null;
 })

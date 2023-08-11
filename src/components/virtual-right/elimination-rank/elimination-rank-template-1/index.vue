@@ -45,19 +45,26 @@
     </div>
   </div>
 </template>
-
 <script>
-
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "eliminationRank",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  created(){
-    this.vsport_ctr.set_elimination_rank(true)
+  setup(props, evnet) {
+    const data = reactive({
+
+    });
+    onMounted(() => {
+      vsport_ctr.set_elimination_rank(true)
+    })
+    return {
+      ...toRefs(data)
+    }
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>

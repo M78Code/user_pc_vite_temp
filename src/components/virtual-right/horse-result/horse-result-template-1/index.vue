@@ -33,22 +33,30 @@
     </div>
   </div>
 </template>
-
 <script>
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "horseResult",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  created(){
-    this.vsport_ctr.set_match_result()
-  },
-  destroyed(){
-    this.vsport_ctr.horse_rank = []
-    this.vsport_ctr.horse_play_data = {}
+  setup(props, evnet) {
+    const data = reactive({
+      match:this.vsport_ctr.replay_list[0]
+    });
+    onMounted(() => {
+      vsport_ctr.set_match_result()
+    });
+    onUnmounted(() => {
+      vsport_ctr.horse_rank = []
+      vsport_ctr.horse_play_data = {}
+    })
+    return {
+      ...toRefs(data)
+    }
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>

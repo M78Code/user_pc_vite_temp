@@ -4,7 +4,7 @@
  * @Description: 赛事基础信息mixin
  */
 
-import details from "src/public/utils/detailsClass/details.js";
+import details from "src/core/match-list/details-class/details.js";
 import { mapGetters} from "vuex"
 export default {
 

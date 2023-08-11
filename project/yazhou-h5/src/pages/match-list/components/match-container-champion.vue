@@ -85,13 +85,14 @@
  
 <script setup>
 import { computed } from "vue";
+import lodash from 'lodash'
 import EMITTER from  "src/global/mitt.js"
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import bettings from "src/project/mixins/betting/betting";
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
 import common from "src/project/mixins/constant";
 import msc from 'src/public/mixins/common/msc.js';
-import {mapMutations,mapGetters} from 'vuex';
+import store from "src/store-redux/index.js";
 import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
 
 const props = defineProps({
@@ -105,20 +106,39 @@ const props = defineProps({
   matchCtr: Object,
 })
 
+const store_state = store.getState()
+
+const get_bet_list = ref(store_state.get_bet_list)
+const get_show_favorite_list = ref(store_state.get_show_favorite_list)
+const get_collapse_map_match = ref(store_state.get_collapse_map_match)
+const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
+const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
+const get_lang = ref(store_state.get_lang)
+const get_theme = ref(store_state.get_theme)
+const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
+const get_current_menu = ref(store_state.get_current_menu)
+const get_access_config = ref(store_state.get_access_config)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  get_bet_list.value = new_state.get_bet_list
+  get_show_favorite_list.value = new_state.get_show_favorite_list
+  get_collapse_map_match.value = new_state.get_collapse_map_match
+  get_collapse_csid_map.value = new_state.get_collapse_csid_map
+  get_collapse_all_ball.value = new_state.get_collapse_all_ball
+  get_lang.value = new_state.get_lang
+  get_theme.value = new_state.get_theme
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+  get_current_menu.value = new_state.get_current_menu
+  get_access_config.value = new_state.get_access_config
+}
+
 // TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
-// ...mapGetters([
-//   "get_bet_list",
-//   "get_show_favorite_list",
-//   "get_collapse_map_match",
-//   "get_collapse_csid_map",
-//   "get_collapse_all_ball",
-//   "get_lang",
-//   "get_theme",
-//   'get_curr_sub_menu_type',
-//   'get_current_menu',
-//   'get_access_config',
-// ]),
 
 const collapsed = computed(() => {
   let result = true;
@@ -129,7 +149,7 @@ const collapsed = computed(() => {
 
 const is_show = computed(() => {
   let flag = true;
-  if( _.get(props.match_of_list, 'hps')){
+  if( lodash.get(props.match_of_list, 'hps')){
     flag = !props.match_of_list.hps.every(item => item.hs == 2)
   }
 
@@ -187,7 +207,7 @@ const is_show_league = (i) => {
  * @returns {Boolean}
  */
 const get_sport_show = (i) => {
-  if (!_.get(get_current_menu, 'main.menuType')) {
+  if (!lodash.get(get_current_menu, 'main.menuType')) {
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
       if (p && c) {
@@ -196,7 +216,7 @@ const get_sport_show = (i) => {
     } else {
       return true;
     }
-  } else if ([1, 2, 3, 4, 11, 12,100].includes(_.get(get_current_menu, 'main.menuType'))) {
+  } else if ([1, 2, 3, 4, 11, 12,100].includes(lodash.get(get_current_menu, 'main.menuType'))) {
 
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
@@ -238,10 +258,10 @@ const gen_collapse_key = (match) => {
  * @return {Undefined}
  */
 consttoggle_collapse_state = () => {
-  let map_collapse = _.cloneDeep(get_collapse_map_match);
+  let map_collapse = lodash.cloneDeep(get_collapse_map_match);
   if(map_collapse){
     // 翻转折叠时始终将 赛事列表请求状态设为false
-    set_match_list_loading(false)
+    store.dispatch({ type: 'matchReducer/set_match_list_loading',  payload: false })
 
     let tmid_list = [],tid = null,mid = null,max_l = props.matchCtr.list.length;
     for(let i = 0; i < max_l;i++){
@@ -266,7 +286,7 @@ consttoggle_collapse_state = () => {
     let tmid = gen_collapse_key(match_of_list);
     let f = map_collapse[tmid] ? 0 : 1;
     tmid_list.forEach(tmid => map_collapse[tmid] = f);
-    set_collapse_map_match(map_collapse);
+    store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
   }
 }
 /**
@@ -300,261 +320,12 @@ const toggle_collect = (match) => {
   EMITTER.emit('toggle_collect_league',param);
 }
 
+onUnmounted(() => {
+  unsubscribe()
+})
+
 </script>
  
 <style scoped lang="scss">
- .champion-wrap {
-  //width: 3.61rem;
-  //margin: 0 0 0 0.07rem;
-  //border-radius: 0.08rem;
-  //overflow: hidden;
-  width: 100%;
-  height: auto;
-  position: relative;
-
-  .league-container {
-    height: 0.4rem;
-    margin: 0 0.07rem;
-    margin-top: 0.07rem;
-    border-radius: 0.08rem;
-
-    .league-wrapper {
-      height: auto;
-
-      .favorite {
-        width: 0.16rem;
-        height: 0.16rem;
-        margin: 0 0.1rem 0.02rem 0.06rem;
-        background: var(--q-color-com-img-bg-38);
-        background-size: contain;
-        background-repeat: no-repeat;
-
-        &.favorited {
-          background-image: var(--q-color-com-img-bg-8);
-        }
-
-        &.theme02 {
-          &.favorited {
-            background-image: var(--q-color-com-img-bg-9);
-          }
-        }
-
-        &.theme01_y0, &.theme02_y0 {
-          &.favorited {
-            background-image: var(--q-color-com-img-bg-10);
-          }
-        }
-      }
-
-      .league-title {
-        overflow: hidden;
-        white-space: nowrap;
-        font-size: 0.13rem;
-        font-weight: bold;
-
-        .league-icon-mini {
-          width: 0.22rem;
-          height: 0.22rem;
-          margin: 0.01rem 0.07rem 0 0.09rem;
-          position: relative;
-          transform: scale(0.85);
-
-          &.league-icon-mini2 {
-            --per: -0.32rem;
-            background: var(--q-color-com-img-bg-11) no-repeat center / 0.2rem 18.88rem;
-            background-position-y: calc(var(--per) * var(--num));
-          }
-
-          img {
-            width: 0.22rem;
-            height: 0.22rem;
-            position: absolute;
-            top: 0;
-            left: 0;
-          }
-        }
-      }
-
-      .league-title-text {
-        font-size: 0.12rem;
-        height: 0.22rem;
-        transform: translateY(0.01rem);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        flex-wrap: nowrap;
-        padding-top: 0.02rem;
-        width: 2.95rem;
-
-        &.without-collect {
-          margin-left: .06rem;
-          display: contents;
-        }
-      }
-    }
-    .collapse-dire {
-      margin: 0.05rem 0.11rem 0.07rem 0;
-
-      .icon-down-arrow {
-        width: 0.12rem;
-        height: 0.06rem;
-        display: block;
-        transition: transform 0.3s;
-
-        &.collapsed {
-          transform: rotateZ(180deg);
-        }
-      }
-    }
-
-    .collapse-dire {
-      margin: 0.05rem 0.11rem 0.07rem 0;
-
-      .icon-down-arrow {
-        width: 0.12rem;
-        height: 0.06rem;
-        display: block;
-        transition: transform 0.3s;
-
-        &.collapsed {
-          transform: rotateZ(180deg);
-        }
-      }
-    }
-  }
-
-  .limit-time {
-    width: 100%;
-    padding-top: 0.05rem;
-    height: 0.25rem;
-    font-size: 0.1rem;
-
-    &.first-t {
-      padding-top: 0;
-      height: 0.2rem;
-    }
-
-    .limit-t-i {
-      width: 3.45rem;
-      height: 0.2rem;
-      line-height: normal;
-      margin: 0 auto;
-      border-radius: 0.04rem;
-    }
-  }
-
-  .hps-wrap {
-    margin: 0 0.07rem;
-    margin-top: 0.05rem;
-    padding-top: 0.05rem;
-
-    .match-title {
-      height: 0.34rem;
-      padding-left: 0.11rem;
-      padding-top: 0.12rem;
-      position: relative;
-
-      &:before {
-        width: 0.03rem;
-        height: 0.16rem;
-        transform: translateY(-1px);
-        content: ' ';
-        display: block;
-        border-radius: 0.015rem;
-      }
-
-      .hpn-wrap {
-        width: 96%;
-        margin-left: 0.06rem;
-      }
-    }
-
-    .ol-list-wrap {
-      width: 100%;
-      height: auto;
-      flex-wrap: wrap;
-      margin-top: 0.07rem;
-      padding-left: 0.07rem;
-      padding-bottom: 0.08rem;
-    }
-
-    .ol-list-wrap2 {
-      padding-bottom: 0.08rem;
-    }
-  }
-}
-.sport-title {
-    width: calc(100% - 0.07rem * 2);
-    display: flex;
-    align-items: center;
-    padding-left: 0.1rem;
-    height: 0.26rem;
-    font-size: 0.11rem;
-    background-image: var(--q-color-linear-gradient-bg-19);
-    /*transform: translateY(3px);*/
-    margin: 0 auto;
-    border-radius: 0.06rem;
-
-    &.hidden_sport {
-      display: none !important;
-    }
-    .score-inner-span{
-      width: 3.3rem;
-      color: var(--q-color-fs-color-153);
-    }
-    .icon_match_cup, .icon_notstarted {
-      margin-right: 0.1rem;
-      font-size: 0.12rem;
-
-      &:before {
-        color: var(--q-color-com-fs-color-35);
-      }
-    }
-
-    .icon_notstarted {
-      &:before {
-        color: var(--q-color-com-fs-color-36);
-      }
-    }
-
-    &.menu-type-3 {
-      height: 0.25rem;
-      border-top: 1px solid var(--q-color-com-border-color-19);
-      background-color: var(--q-color-com-bg-color-12);
-      font-weight: bold;
-      box-shadow: var(--q-color-box-shadow-color-3);
-      position: relative;
-      z-index: 2;
-      padding-left: 0;
-
-      &.not-playing {
-        &:before {
-          background: var(--q-color-com-bg-color-38);
-        }
-      }
-
-      &:before {
-        margin-right: 0.1rem;
-        display: block;
-        content: ' ';
-        width: 0.04rem;
-        height: 100%;
-        background: var(--q-color-com-bg-color-39);
-      }
-    }
-    .collapse-dire {
-      margin: 0.05rem 0.11rem 0.07rem 0;
-
-      .icon-down-arrow {
-        width: 0.12rem;
-        height: 0.06rem;
-        display: block;
-        transition: transform 0.3s;
-
-        &.collapsed {
-          transform: rotateZ(180deg);
-        }
-      }
-    }
-  }
+  @import "../styles/match-container-champion.scss";
 </style>

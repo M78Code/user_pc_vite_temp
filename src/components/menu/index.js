@@ -1,19 +1,8 @@
 
 
-import PaginationWapper from "./full-version-wapper/index.vue";
+import MenuWapper from "./full-version-wapper/index.vue";
 
 
 
-export {   PaginationWapper  };
-
-
-
-
-
-
-
-
- 
-
-
+export {   MenuWapper  };
 

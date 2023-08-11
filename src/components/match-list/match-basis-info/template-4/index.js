@@ -1,4 +1,4 @@
 
-import MatchListTem4 from "./full-version-wapper/index.vue";
+import MatchListTem4FullVersionWapper from "./full-version-wapper/index.vue";
 
-export { MatchListTem4 };
+export { MatchListTem4FullVersionWapper };
