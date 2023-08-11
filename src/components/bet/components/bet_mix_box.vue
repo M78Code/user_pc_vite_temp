@@ -5,16 +5,16 @@
 <template>
   <div class="bet-mix-box fullscreen">
     <!-- 冠军、虚拟体育、电竞菜单 -->
-    <bet-mix-box-child-1 v-if="[100, 900, 3000].includes(+get_menu_type)"></bet-mix-box-child-1>
+    <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1>
     <!-- 普通赛事菜单 -->
-    <bet-mix-box-child-2 v-else></bet-mix-box-child-2>
+    <betMixBoxChild2 v-else></betMixBoxChild2>
   </div>
 </template>
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import betMixBoxChild1 from "./bet/bet_mix_box_child1.vue";
-import betMixBoxChild2 from "./bet/bet_mix_box_child2.vue";
+import betMixBoxChild1 from "./bet_mix_box_child1.vue";
+import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 
 
 // ...mapMutations(['clear_single_money'])
