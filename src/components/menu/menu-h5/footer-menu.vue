@@ -91,6 +91,7 @@ import common from "src/project/mixins/constant";
 import betBar from 'src/project/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import utils from "src/public/utils/utils";
 import { computed, onBeforeUnmount, onMounted, watch } from "vue";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 
 // import { Platform } from 'quasar'
 
@@ -157,8 +158,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
     set_footer_menulist();
 
     // 监听赛事列表数据获取事件
-    // TODO: 后续修改调整
-    $root.$on(emit_cmd.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu);
+    useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu);
 
     // 初始化关注按钮显示状态
     init_follow_icon_style();
@@ -324,7 +324,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
         set_footer_sub_changing(false);
       },800);
       timer_object.timer4_ = setTimeout(() => {
-        $root.$emit(emit_cmd.EMIT_FOOTER_SUB_MENU_ID_CHANGED,sub_menu.id);
+        useMittEmit(MITT_TYPES.EMIT_FOOTER_SUB_MENU_ID_CHANGED,sub_menu.id);
       },200);
     }
     /**
@@ -357,7 +357,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
         timer_object.timer5_ = setTimeout(() => {
           footer_clicked_handleing = false;
         },800);
-        $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-follow",
           before_status:get_show_favorite_list,
         });
@@ -372,7 +372,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
       }
       //注单
       else if(item.id === 2){
-        $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true);
+        useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true);
       }
       //筛选
       else if(item.id === 3){
@@ -391,7 +391,7 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
           is_effecting_ref = false;
           is_refreshing = false;
         },1000);
-        $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
         });
       }

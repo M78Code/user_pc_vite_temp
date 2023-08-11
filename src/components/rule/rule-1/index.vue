@@ -11,9 +11,9 @@
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
-import { computed } from 'vue'
-// TODO: 待处理store
-// import { mapGetters, mapActions } from "vuex";
+import { computed, ref, onUnmounted } from 'vue'
+import lodash from 'lodash'
+import store from "src/store-redux/index.js";
 import simpleHeader from "./simple-header.vue";
 
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -25,12 +25,17 @@ const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 
-/** store仓库数据 */
-const store = useStore()
-// ...mapGetters({
-//             lang: "get_lang",
-//             get_theme: "get_theme"
-//         }),
+/** 国际化 */
+const lang = ref()
+/** 主题 */
+const theme = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+    const new_state = store.getState()
+    lang.value = new_state.lang
+    theme.value = new_state.theme
+})
+onUnmounted(unsubscribe)
 
 /** 体育规则地址-PC */
 const rule_url = computed(get_pc_rule_url)
@@ -49,12 +54,14 @@ const get_pc_rule_url = () => {
         'ms': 'ms_my',
         'ad': 'id_id',
     }
-    let lang = lang_map[store.lang] || 'zh_cn';
-    console.log(`================lang:${lang}`, store.lang);
+    let lang = lang_map[lang.value] || 'zh_cn';
+    console.log(`================lang:${lang}`, lang.value);
     let url = '';
-    const theme = store.get_theme.split('_')[0]
-    const get_merchant_style = store.get_theme.split('_')[1]
-    let domain = _.get(window, `env.config.static_serve[0]`)
+    // const theme = theme.value.split('_')[0]
+    // const get_merchant_style = theme.value.split('_')[1]
+    const [theme, get_merchant_style] = theme.value.split('_')
+    // TODO: 环境变量待修改
+    let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         // 生产环境
     } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {

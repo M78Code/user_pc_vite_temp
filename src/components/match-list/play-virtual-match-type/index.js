@@ -3,7 +3,7 @@ import PlayVirtualMatchTypeFullVersionWapper from "./full-version-wapper/index.v
 
 
 
-export {   PlayVirtualMatchTypeFullVersionWapper  };
+export { PlayVirtualMatchTypeFullVersionWapper };
 
 
 

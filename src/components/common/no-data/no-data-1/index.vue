@@ -5,37 +5,37 @@
 
     <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: get_theme.includes('theme01') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
+        :style="{ backgroundImage: theme.includes('theme01') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
       </div>
-      <p class="title" :style="{ color: get_theme.includes('theme01') ? '#666666' : ' #B9B9B9' }">{{
+      <p class="title" :style="{ color: theme.includes('theme01') ? '#666666' : ' #B9B9B9' }">{{
         arr.noMatchNew.txt[0]
       }}</p>
-      <p class="title-tint" :style="{ color: get_theme.includes('theme01') ? '#999999' : ' #999999' }">{{
+      <p class="title-tint" :style="{ color: theme.includes('theme01') ? '#999999' : ' #999999' }">{{
         arr.noMatchNew.txt[1] }}</p>
       <p>
         <span class="btn" @click="refresh_data"
-          :style="{ color: get_theme.includes('y0') ? '#4987FB' : '#FF9124', borderColor: get_theme.includes('y0') ? '#569FFD' : '#FF9124' }">
+          :style="{ color: theme.includes('y0') ? '#4987FB' : '#FF9124', borderColor: theme.includes('y0') ? '#569FFD' : '#FF9124' }">
           {{ arr.noMatchNew.txt[2] }}</span>
       </p>
     </template>
 
     <template v-if="['noMatch', 'noWifi', 'noMessage'].includes(which)">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: get_theme.includes('theme01') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
+        :style="{ backgroundImage: theme.includes('theme01') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
       </div>
       <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt : arr.noMatch.txt }}</p>
     </template>
 
     <template v-if="which === 'nolive'">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: get_theme.includes('theme01') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
+        :style="{ backgroundImage: theme.includes('theme01') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
       </div>
       <p style="color:#A5A9B3;"> {{ arr.nolive.txt }} </p>
     </template>
 
     <template v-if="which === 'collect'">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: get_theme.includes('theme01') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
+        :style="{ backgroundImage: theme.includes('theme01') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
       </div>
       <p style="color:#A5A9B3;">{{ arr.collect.txt }}</p>
     </template>
@@ -43,8 +43,9 @@
 </template>
   
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import store from "src/store-redux/index.js";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -99,7 +100,14 @@ const arr = ref(arr_const)
 const top_height = ref(0)
 const is_detail = ref(false)
 
-const { get_theme } = useStore()
+/** 主题 */
+const theme = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+  const new_state = store.getState()
+  theme.value = new_state.theme
+})
+onUnmounted(unsubscribe)
 
 const route = useRoute()
 function init() {
