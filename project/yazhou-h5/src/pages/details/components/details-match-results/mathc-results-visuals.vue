@@ -1,0 +1,524 @@
+<!--
+ * @Author: ledron
+ * @Date: 2021-01-13 11:34:53
+ * @Description: 赛果详情 统计图形表
+-->
+<template>
+  <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
+    <div class="title" v-if="!get_analyze_show">{{ $root.$t('match_result.statistics') }}</div>
+    <div class="designation">
+      <span class="ellipsis">{{ statistics_table.mhn }}</span>
+      <span class="ellipsis">{{ statistics_table.man }}</span>
+    </div>
+    <div class="visuals">
+      <!-- 圆环图形 -->
+      <div class="circle-part">
+        <div class="circle" v-for="(item,index) in ring_statistics" :key="index">
+          <template v-if="item.score_type === 'S111'">
+            <span class="number">
+              {{`${item.home}%`}}
+            </span>
+            <span class="text-span" :class="{'vi-top': get_lang == 'vi'}">{{ item.text }}</span>
+            <q-knob
+                readonly
+                :value="item.away"
+                :max="item.home + item.away"
+                :size="get_analyze_show?'':'.56rem'"
+                :thickness="0.3"
+                color="orange"
+                track-color="blue"
+                :class="[(item.away == 0 && item.home == 0) && 'ring-zero-css', 'aaa', 'knob-shrink']"
+            />
+            <span class="number">
+              {{`${item.away}%`}}
+            </span>
+          </template>
+          <template v-else>
+            <span class="number">
+              {{`${item.proportion> 0 ? 100- item.proportion : '0'}%`}}
+            </span>
+            <span class="text-span" :class="{'vi-top': get_lang == 'vi'}">{{ item.text }}</span>
+            <q-knob
+                readonly
+                :value="item.proportion"
+                :size="get_analyze_show?'':'.56rem'"
+                :thickness="0.3"
+                color="orange"
+                track-color="blue"
+                :class="[(item.away == 0 && item.home == 0) && 'ring-zero-css', 'knob-shrink']"
+            />
+            <span class="number">
+              {{`${item.proportion}%`}}
+            </span>
+          </template>
+        </div>
+      </div>
+      <!--中间的图标模块-->
+      <div class="yellow-red-card-corner">
+        <div v-for="(item, index) in card_corner_list" :key="index">
+          <span class="card-title">{{ item.text }}</span>
+          <div class="score">
+            <span>{{ item.home }}</span>
+            <img :src="item.img" alt="">
+            <span>{{ item.away }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="linellae"></div>
+
+      <!--横线条的 比例-->
+      <div class="progress" v-for=" (progress_item, index) in progress_graph" :key="index">
+        <div class="progress-text">
+          {{ progress_item.text }}
+        </div>
+        <div class="progress-left">
+          <span>{{ progress_item.home }}</span>
+        </div>
+        <q-linear-progress size="10px" :value="progress_item.home > 0 ? progress_item.proportion / 100 : 0" reverse class="progress-blue">
+        </q-linear-progress>
+        <q-linear-progress size="10px" :value="progress_item.proportion ? progress_item.proportion / 100 : progress_item.away > 0 ? 0 : 1" reverse class="progress-orange">
+        </q-linear-progress>
+        <div class="progress-right">
+          <span>{{ progress_item.away }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
+import { mapGetters } from "vuex";
+export default {
+  name: "mathc_results_visuals",
+  mixins: [ msc ],
+  components: {},
+  props:{
+    ring_statistics: Array, // 圆环图形
+    card_corner_list: Array, // 中间的图标模块
+    progress_graph: Array,  // 横线条的 比例
+  },
+  data() {
+    return {
+      statistics_table: [],
+      timer1_: null
+    }
+  },
+  created() {
+  },
+  mounted() {
+  },
+  watch: {
+    'get_detail_data':{
+      handler: 'get_list',
+      immediate: true,
+      deep: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      // 赛事id
+      'get_goto_detail_matchid',
+      // 详情页的数据
+      'get_detail_data',
+      // 当前语言
+      'get_lang',
+      'get_analyze_show'
+    ])
+  },
+  methods: {
+    get_list() {
+      console.log(this.card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
+      let cloneData = _.cloneDeep(this.get_detail_data);
+      if(cloneData && cloneData.msc){
+        this.transform_score(cloneData)
+        this.statistics_table = cloneData
+        // 环形比分图形表
+        this.score_processing(this.ring_statistics, this.statistics_table.msc)
+        // 黄牌 红牌 角球
+        this.score_processing(this.card_corner_list, this.statistics_table.msc)
+        // 进度条比分图形表
+        this.score_processing(this.progress_graph, this.statistics_table.msc)
+      }
+    },
+    // msc 比分处理成 图形界面数据格式
+    score_processing(data, msc) {
+      data.forEach( item => {
+        for (let k in msc) {
+          if ([k].includes(item.score_type) && (+msc[k].home + +msc[k].away != 0)) {
+            item.home = +msc[k].home
+            item.away = +msc[k].away
+            if(["S8", "S105", "S1088", "S111"].includes(item.score_type)) {
+              item.proportion = parseInt((item.away / (item.home + item.away)).toFixed(2) * 100)
+            }else if(["S104", "S1101", "S18", "S17", "S19", "S107", "S110", "S108"].includes(item.score_type)){
+              item.proportion = (item.home / (item.home + item.away)).toFixed(2) * 100
+            }
+          }
+        }
+      })
+    }
+  },
+  destroyed() {
+    clearTimeout(this.timer1_)
+    this.timer1_ = null
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.mathc_results_visuals {
+  padding-bottom: 0.31rem;
+
+  .title {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    padding-left: 0.24rem;
+
+    font-size: 0.14rem;
+
+    letter-spacing: 0;
+
+    font-weight: bold;
+    position: relative;
+
+    &:before {
+      content: '';
+      width: 0.03rem;
+      height: 0.12rem;
+      position: absolute;
+      left: 0.16rem;
+      top: 0.14rem;
+
+      border-radius: 1.5px;
+    }
+  }
+
+  .designation {
+    height: 0.34rem;
+    line-height: 0.34rem;
+    padding-left: 0.15rem;
+
+
+    font-weight: bold;
+    font-size: 0.12rem;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0.15rem;
+
+    span {
+      position: relative;
+      width: 50%;
+
+      &:nth-child(1) {
+        padding-left: 0.12rem;
+
+        &:after {
+          content: '';
+          width: 0.06rem;
+          height: 0.06rem;
+          border-radius: 50%;
+          position: absolute;
+          left: 0.01rem;
+          top: 0.14rem;
+        }
+      }
+
+      &:nth-child(2) {
+        padding-right: 0.12rem;
+        text-align: right;
+
+        &:after {
+          content: '';
+          width: 0.06rem;
+          height: 0.06rem;
+          border-radius: 50%;
+          position: absolute;
+          right: 0.01rem;
+          top: 0.14rem;
+        }
+      }
+    }
+  }
+
+  .visuals {
+
+    border-radius: 0.08rem;
+
+    .circle-part {
+      display: flex;
+      margin-bottom: 0.3rem;
+
+      .circle {
+        margin-top: 0.35rem;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        .number {
+
+          font-size: 0.12rem;
+
+          letter-spacing: 0;
+          margin: 0 0.04rem;
+          text-align: right;
+          line-height: 0.12rem;
+        }
+
+        .knob-img {
+          margin: 0 0.04rem;
+        }
+
+        ::v-deep .text-span {
+
+          font-size: 0.12rem;
+
+          letter-spacing: 0;
+          text-align: center;
+          line-height: 0.12rem;
+          position: absolute;
+          top: -0.19rem;
+
+          &.vi-top {
+            top: -0.28rem;
+          }
+        }
+      }
+    }
+
+    .yellow-red-card-corner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.18rem;
+
+      > div {
+        margin-right: 0.7rem;
+        min-width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        .card-title {
+
+          font-size: 0.12rem;
+
+          letter-spacing: 0;
+          text-align: center;
+          line-height: 0.12rem;
+          margin-bottom: 0.04rem;
+        }
+
+        .score {
+          display: flex;
+          align-items: center;
+
+          > span {
+            &:nth-child(1) {
+              margin-right: 0.13rem;
+            }
+
+            &:last-child {
+              margin-left: 0.13rem;
+            }
+          }
+
+          > img {
+            width: 0.095rem;
+            height: 0.112rem;
+          }
+        }
+      }
+    }
+
+    .linellae {
+
+      height: 0.01rem;
+      margin: 0 0.15rem 0.25rem;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.3rem;
+      position: relative;
+
+      .progress-text {
+
+        font-size: 0.12rem;
+
+        letter-spacing: 0;
+        text-align: center;
+        line-height: 0.1rem;
+        position: absolute;
+        top: -0.12rem;
+      }
+
+      img {
+        width: 0.092rem;
+        height: 0.112rem;
+      }
+
+      &:last-child {
+        margin-bottom: unset;
+      }
+
+      .progress-left {
+        display: flex;
+        align-items: center;
+        width: 0.2rem;
+        justify-content: flex-end;
+
+        span {
+
+          font-size: 0.12rem;
+
+          text-align: center;
+          line-height: 0.12rem;
+
+          &:nth-child(1) {
+            margin-right: 0.065rem;
+          }
+
+          &:last-child {
+            margin-left: 0.15rem;
+          }
+        }
+      }
+
+      .q-linear-progress {
+        width: 1.4rem;
+        height: 0.04rem;
+        border-radius: 3px;
+        overflow: unset;
+        margin: 0 0.02rem 0 0;
+
+        &:last-child {
+          margin-right: unset;
+        }
+
+        ::v-deep.q-linear-progress__track--light {
+          background: var(--q-color-com-bg-color-23);
+
+          &.q-linear-progress__track {
+            opacity: 1;
+          }
+        }
+      }
+
+      .progress-right {
+        display: flex;
+        align-items: center;
+        width: 0.2rem;
+
+        span {
+
+          font-size: 0.12rem;
+
+          text-align: center;
+          line-height: 0.12rem;
+
+          &:nth-child(1) {
+            margin-right: 0.15rem;
+          }
+
+          &:last-child {
+            margin-left: 0.065rem;
+          }
+        }
+      }
+    }
+  }
+
+  ::v-deep.text-orange {
+    color: var(--q-color-com-fs-color-31) !important;
+  }
+
+  ::v-deep.text-blue {
+    color: var(--q-color-com-fs-color-12) !important;
+  }
+
+  ::v-deep.q-linear-progress {
+    color: var(--q-color-com-fs-color-12) !important;
+
+    &.progress-orange {
+      color: var(--q-color-com-fs-color-27) !important;
+    }
+  }
+
+&.analyze-show {
+  border: none;
+  background: var(--q-color-com-bg-color-5);
+  opacity: 0.6;
+  width: 3.67rem;
+  height: 2.66rem;
+  .designation {
+    border-bottom: 1px solid rgba(225,225,225, 0.2);
+    margin-bottom: 0.02rem;
+    color: var(--q-color-com-fs-color-8);
+  }
+  .visuals {
+    .linellae {
+      background: rgba(242, 243, 247, 0.2);
+    }
+    .circle-part {
+      margin-bottom: 0rem;
+      .circle {
+        margin-top: 0.15rem;
+        .number {
+          color: var(--q-color-com-fs-color-8);
+        }
+        .text-span {
+          font-size: 0.1rem;
+          top: -0.1rem;
+        }
+        .knob-shrink {
+          transform: scale(0.8);
+        }
+      }
+    }
+    .progress {
+      margin-bottom: .15rem;
+      .progress-text {
+        font-size: 0.1rem
+      }
+      .progress-left {
+        span {
+          color: var(--q-color-com-fs-color-8);
+        }
+      }
+      .progress-right {
+        span {
+          color: var(--q-color-com-fs-color-8);
+        }
+      }
+    }
+    .yellow-red-card-corner {
+      margin-bottom: .05rem;
+      >div{
+        margin-right: 0;
+        .card-title {
+          font-size: 0.1rem;
+        }
+        .score {
+          color: var(--q-color-com-fs-color-8);
+        }
+      }
+      div:nth-child(2) {
+        margin: 0 0.1rem
+      }
+    }
+    .linellae {
+      margin: 0 .15rem .15rem;
+    }
+  }
+}
+}
+</style>

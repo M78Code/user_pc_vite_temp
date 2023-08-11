@@ -1,4 +1,4 @@
 
-import MatchTpl0AfterFullVersionWapper from "./full-version-wapper/index.vue";
+import MatchTpl18AfterFullVersionWapper from "./full-version-wapper/index.vue";
 
-export { MatchTpl0AfterFullVersionWapper };
+export { MatchTpl18AfterFullVersionWapper };

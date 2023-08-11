@@ -139,5 +139,5 @@ export const handle_user_tryPlay = (url = "https://api.sportxxxw1box.com/yewu6/u
     terminal: "PC"
   };
 
-  return axios.get(url, params );
+  return http.get(url, params );
 };

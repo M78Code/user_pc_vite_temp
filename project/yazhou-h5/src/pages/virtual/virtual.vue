@@ -135,8 +135,8 @@ export default defineComponent({
     })
 
     //虚拟体育刷新赛事
-    const timer_super27 = null;
-    const timer_super28 = null;
+    let timer_super27 = null;
+    let timer_super28 = null;
     //获取虚拟体育菜单数据
     get_virtual_menus();
     //首页跳转虚拟体育设置menu_type为900
@@ -241,7 +241,7 @@ export default defineComponent({
         cancel_ref();
       },700);
     };
-    const cancel_ref = () => {
+    let cancel_ref = () => {
       refreshing = false;
     };
     /**

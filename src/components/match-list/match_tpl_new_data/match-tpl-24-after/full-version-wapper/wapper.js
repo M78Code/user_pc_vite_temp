@@ -1,11 +1,11 @@
-import MatchTpl0After from "../match-tpl-0-after-template-1/index.vue";
+import MatchTpl24AfterFullVersionWapper from "../match-tpl-24-after-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  MatchTpl0After,
+  MatchTpl24AfterFullVersionWapper,
 };
 const component_config = {
-  registered_component_key: "MatchTpl0After",
-  default_component_key: "MatchTpl0After_1",
+  registered_component_key: "MatchTpl24AfterFullVersionWapper",
+  default_component_key: "MatchTpl24AfterFullVersionWapper_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
