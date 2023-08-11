@@ -43,7 +43,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const data = reactive({
-      match:this.vsport_ctr.replay_list[0]
+      match:vsport_ctr.replay_list[0]
     });
     onMounted(() => {
       vsport_ctr.set_match_result()
