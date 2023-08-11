@@ -24,7 +24,7 @@
         <!-- 打开赛事分析窗口 -->
         <div
           class="sr-link-icon-w"
-          v-if="$utils.is_show_sr_flg(match_infoData)"
+          v-if="is_show_sr_flg(match_infoData)"
           @click.stop="sr_click_handle(match_infoData, 'details')"
           v-tooltip="{ content: $root.$t('common.analysis') }"
         >
@@ -82,5 +82,46 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { is_show_sr_flg } from "src/core/utils/utils";
 
+const toggle_panel = ref(true); //比分扳显示|隐藏
+/**
+ * @description 返回上一页
+ */
+const back_to = (is_back = true) => {
+  if (this.vx_play_media.media_type === "topic") {
+    video.send_message({
+      cmd: "record_play_info",
+      val: {
+        record_play_time: true,
+      },
+    });
+  }
+
+  clearTimeout(this.back_to_timer);
+  this.back_to_timer = setTimeout(() => {
+    // 退出页面时清空用户操作状态
+    window.sessionStorage.setItem("handle_state", JSON.stringify([]));
+    // 如果是从搜索结果进来的
+    if (this.$route.query.keyword) {
+      search.set_back_keyword({
+        keyword: this.$route.query.keyword,
+        csid: this.$route.params.csid,
+      });
+      this.set_search_status(true);
+    }
+    let { from_path } = this.get_layout_cur_page;
+    from_path = from_path || "/home";
+    if (this.get_layout_cur_page.from == "video") {
+      from_path = "/home";
+    }
+    // 告知列表是详情返回：用于是否重新自动拉右侧内容
+    this.vx_set_is_back_btn_click(is_back);
+    this.$router.push(from_path);
+    if (from_path.includes("search")) {
+      this.set_unfold_multi_column(false);
+    }
+  }, 50);
+};
 </script>
