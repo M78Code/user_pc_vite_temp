@@ -42,9 +42,9 @@ const counter_= ref()   //计时器
 
  //串关总赔率
  const mix_odds = computed(() =>{//当前串关赔率
-    const s_count_data = this.get_s_count_data
+    const s_count_data = get_s_count_data
     const has_sum_odds = _.find(s_count_data,(o)=>{//判断串关列表中是否有总赔率
-      return o.orderno == this.item_.orderNo
+      return o.orderno == item_.orderNo
     })
     return _.get(has_sum_odds,'odds') || ''
   })
@@ -58,13 +58,13 @@ const counter_= ref()   //计时器
     }
   })
   const max_win_money = computed(()=>{
-    this.max_win_money2 = this.finally_winmoney || (this.item_.maxWinAmount / 100).toFixed(2);
-    return this.max_win_money2;
+    max_win_money2 = finally_winmoney || (item_.maxWinAmount / 100).toFixed(2);
+    return max_win_money2;
   })
 
   onnounted(()=>{
     if (order_tatus.value == 0) {
-      $emit('update_money', -this.max_win_money2, -(this.item_.seriesBetAmount / 100).toFixed(2));   //投注失败后，要从总最高可赢和总投注额剔除
+      $emit('update_money', -max_win_money2, -(item_.seriesBetAmount / 100).toFixed(2));   //投注失败后，要从总最高可赢和总投注额剔除
     };
   })
 
