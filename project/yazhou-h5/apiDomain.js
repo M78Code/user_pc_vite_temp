@@ -6,7 +6,7 @@
 
 import { http, AllDomain } from "src/core/http/index.js";
 import { loadLanguageAsync } from "./src/boot/i18n";
-
+import { throttle } from "lodash";
 import STANDARD_KEY from "app/src/core/standard-key";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
@@ -157,14 +157,14 @@ export default {
     bind_debounce_throttle() {
       // 抖动处理
       // 重新设置api域名函数
-      this.resetApiDemo = this.throttle(this.resetApiDemo, 12000, {
+      this.resetApiDemo = throttle(this.resetApiDemo, 12000, {
         leading: true,
         trailing: true,
       });
     },
     // 解绑防抖/节流
     unbind_debounce_throttle() {
-      this.debounce_throttle_cancel(this.resetApiDemo);
+      this.resetApiDemo.cancel && this.resetApiDemo.cancel();
     },
   },
 };

@@ -6,6 +6,7 @@
   <q-layout view="lHh Lpr lFf" class="layout_container">
 
     <q-page-container class="page_container">
+      test
       <router-view />
     </q-page-container>
     <!-- <footer_menu /> -->
@@ -15,7 +16,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
 // import footer_menu from 'src/pages/footer/footer_menu.vue'  // 底部菜单
-import EMITTER from  "src/global/mitt.js"
+import {useMittOn,MITT_TYPES} from  "src/core/mitt/"
 
 let get_accept_show = ref(false) // 接受更好赔率变化 弹窗
 let get_combine_tips_show = ref(false) // 合并投注项提示弹框 弹窗
@@ -25,10 +26,10 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-EMITTER.on("change_accept", (e) => {
+useMittOn(MITT_TYPES["change_accept"], (e) => {
   get_accept_show.value = e
 })
-EMITTER.on("change_combine_tips", (e) => {
+useMittOn(MITT_TYPES["change_combine_tips"], (e) => {
   get_combine_tips_show.value = e
 })
 /**

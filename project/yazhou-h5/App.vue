@@ -12,7 +12,7 @@
 </template>
 <script>
 import _ from  "lodash";
-import appload from "src/App_load.vue";
+import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";
 export default {
   name: 'App',
