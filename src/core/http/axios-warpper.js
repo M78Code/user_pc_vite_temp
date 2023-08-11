@@ -12,8 +12,13 @@ import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
 import { ss } from "../utils/web-storage";
 import ws from "../ws/ws.js";
+
+import STANDARD_KEY from "src/core/standard-key";
+
 const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
 const { API_PREFIX_WBSOCKET } = API_PREFIX;
+const token_key = STANDARD_KEY.get("token"); //token键
+
 /**
  * 页面隐藏时间 纪录
  */
@@ -33,6 +38,7 @@ console.log(BUILDIN_CONFIG);
  * 去掉 api 参数 reload
  */
 function force_current_api_flow_use_oss_file_api_reload() {
+  return
   let url_search = new URLSearchParams(location.search);
   //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
   url_search.set("rdm", new Date().getTime());
@@ -107,10 +113,13 @@ class AxiosHttp {
     // 系统类型缩写： iphone=4 android=3 PC = 2 H5=1
     // panda-bss-info传参规则： panda-bss-info:"source:4"  内嵌webview panda-bss-info:"source:4,1"
     // 设置系统类型缩写
+    let sessionStorage = window.sessionStorage
+    console.error('sss', sessionStorage.getItem('token'))
     return {
       "request-code": JSON.stringify({
         "panda-bss-source": "2",
       }),
+      "Requestid": sessionStorage.getItem('token')
     };
   }
   /**
@@ -202,9 +211,10 @@ class AxiosHttp {
     // 设置  ROOT_DOMAIN
     this.set_root_domain();
     //设置ws地址
-    ws.set_ws_url(
-      `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${API_PREFIX_WBSOCKET}/push`
-    );
+    // 后面打开 暂时先 http 请求 ws不是完整的流程
+    // ws.set_ws_url(
+    //   `${this.axios_instance.prototype.WS_ROOT_DOMAIN}/${API_PREFIX_WBSOCKET}/push`
+    // );
     this.request_count = 0;
     this.err_count = {};
     // window.ws.retInitData(true)

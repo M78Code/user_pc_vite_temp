@@ -44,8 +44,9 @@ const requestHook = {
         }
         break;
     }
+    let sessionStorage = window.sessionStorage
     //请求token
-    const requestId = ss.get(STANDARD_KEY.get("token")) || "";
+    const requestId =   sessionStorage.getItem('token') //ss.get(STANDARD_KEY.get("token")) || "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "en"; // 语言调整

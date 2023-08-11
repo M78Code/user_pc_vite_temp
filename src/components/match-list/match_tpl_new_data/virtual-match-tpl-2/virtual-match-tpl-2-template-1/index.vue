@@ -1,8 +1,3 @@
-<!--
- * @Author: Cable
- * @Date: 2020-08-06 21:27:29
- * @Description: 虚拟赛事 模板2 （赛马,赛狗，摩托车）
--->
 <template>
   <div
     v-if="match.mhs != 2"
@@ -45,27 +40,31 @@
   </div>
 </template>
 
-<script>
-import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-import details from "src/public/utils/detailsClass/details.js";
-export default {
-  name: "MatchItem",
-  mixins: [match_item_mixin],
-  methods:{
-      /**
-     * 跳转至详情
-     * @return {undefined} undefined
-     */
-     on_go_detail() {
-      this.set_global_click()
-      if(this.$utils.is_eports_csid(this.match.csid)){
-        this.match.go_detail_type = 'no_switch'
-      }
-      details.on_go_detail(this.match);
-    },
+<script setup>
+// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+// mixins: [match_item_mixin],
+
+import details from "src/core/match-list/details-class/details.js";
+
+import { ref, computed, watch } from 'vue';
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+import { is_eports_csid } from 'src/core/utils/index.js'
+/**
+ * 跳转至详情
+ * @return {undefined} undefined
+ */
+const on_go_detail = () => {
+  this.set_global_click()
+  if(is_eports_csid(this.match.csid)){
+    this.match.go_detail_type = 'no_switch'
   }
-};
+  details.on_go_detail(this.match);
+}
+
 </script>
+
 <style lang="scss" scoped>
 .team-wrap {
   .team-item {

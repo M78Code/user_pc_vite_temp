@@ -2,7 +2,7 @@ import { ref, watch, computed } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
 import { api_match } from "src/api/index.js";
-// import store from "./src/store-redux-vuex/index.js";
+import store from "src/store-redux/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
 import { loadLanguageAsync } from "./src/boot/i18n";
@@ -12,20 +12,26 @@ const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成
 const url_params = GetUrlParams(); //获取url参数
 
+let sessionStorage = window.sessionStorage
+
 //动画逻辑 靠后
 
 /**
  * 获取用户信息
  */
 const handle_user_tryPlay = async () => {
-  let token = ss.get(token_key);
+  // let token = ss.get(token_key);
+  let token = sessionStorage.getItem('token')
+  
   if (!token) {
     console.log(api_match);
     //试玩登录
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
+    // sessionStorage.setItem('token',token)
     ss.set(token_key, token);
+    sessionStorage.setItem("token", token);
   } else {
     // 获取用户信息
     try {
@@ -89,15 +95,14 @@ const init_domain = async (config) => {
     AllDomain.create(() => {
       // 首次进入,发现最快的域名
       console.log(" init_domain -- 回调执行:");
-      handle_user_tryPlay();
       // http初始化方法 会调用 setApiDomain
       // ws和http域名切换逻辑
       http.setApiDomain();
-      init_load.value = true;
       // 首次初始化时调用
       handle_user_tryPlay();
       // 元数据初始化
       base_data.init();
+      init_load.value = true;
     });
     AllDomain.run();
   }

@@ -1,9 +1,3 @@
-<!--
- * @Author: Amor
- * @Date: 2020-08-06 21:27:29
- * @Description: 赛事玩法模板7
--->
-
 <template>
   <div class="c-match-item jingcai">
     <!-- 主盘 -->
@@ -25,7 +19,7 @@
 
         <div class="score-wrap yb-flex-center">
           <!-- 滚球：比分 -->
-          <template v-if="$utils.get_match_status(match.ms,[110]) == 1">
+          <template v-if="get_match_status(match.ms,[110]) == 1">
             <div :class="['onset-team',match.mat=='home' &&'active']" />
 
             <div class="score">{{match.home_score}}</div>
@@ -82,7 +76,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
             
           </div>
-          <div class="sr-link-icon-w" v-tooltip="{content:$root.$t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:$root.$t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
         </div>
@@ -102,73 +96,95 @@
   </div>
 </template>
 
-<script>
-import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-import details from "src/public/utils/detailsClass/details.js";
-import { mapGetters} from "vuex"
+<script setup>
+// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
+// mixins: [match_item_mixin],
+// import { mapGetters} from "vuex"
+// inject:['match_list_data'],
 
-export default {
-  name: "MatchItem",
 
-  mixins: [match_item_mixin],
-  inject:['match_list_data'],
-  data(){
-    return {
-      // 让球数量
-      hv:'',
-      // 让球投注项
-      hv_ol:{_hid:-1}
-    }
-  },
-  computed:{
-    ...mapGetters({
-      //全局开关
-       get_global_switch:'get_global_switch'
-    }),
-    handicap_num(){
-        if(this.get_global_switch.handicap_num){
-            return `+${ this.match.mc || 0}`
-        }else{
-          return  this.$root.$t('match_info.more')
-        }
-    }
-  },
-  watch:{
-    'hv_ol._hid'(){
-      this.set_hv()
-    }
-  },
-  created(){
-    this.hv_ol = this.match.main_handicap_list[0].ols[1]
-  },
-  methods:{
-    /**
-     * @Description 设置让球数量 
-     * @param {undefined} undefined
-    */
-    set_hv(){
-      let hl_obj = this.match_list_data.hl_obj['hid_'+this.hv_ol._hid] || {}
-      this.hv = hl_obj.hv || -1
-    },
-    /**
-     * @Description 赛事收藏 
-     * @param {undefined} undefined
-    */
-    collect(){
-      this.$root.$emit(this.emit_cmd.EMIT_MX_COLLECT_MATCH,this.match)
-    },
-    /**
-     * 跳转至详情
-     * @return {undefined} undefined
-     */
-    on_go_detail() {
-      if(this.$utils.is_eports_csid(this.match.csid)){
-        this.match.go_detail_type = 'no_switch'
-      }
-      details.on_go_detail(this.match);
-    },
+import { ref, computed, watch } from 'vue';
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { is_eports_csid } from 'src/core/utils/match-list-utils.js';
+import { get_match_status, is_show_sr_flg } from 'src/core/utils/index.js'
+
+const hv = ref('');
+const hv_ol = ref({_hid: -1});
+
+hv_ol.value = this.match.main_handicap_list[0].ols[1]
+// 其他玩法标题
+const handicap_num = computed(() => {
+  if(this.get_global_switch.handicap_num){
+    return `+${ this.match.mc || 0}`
+  }else{
+    return  this.$root.$t('match_info.more')
   }
-};
+})
+
+watch(hv_ol.value._hid, () => {
+  set_hv()
+})
+
+/**
+ * @Description 设置让球数量 
+ * @param {undefined} undefined
+*/
+const set_hv = () => {
+  let hl_obj = this.match_list_data.hl_obj['hid_'+hv_ol.value._hid] || {}
+  hv.value = hl_obj.hv || -1
+}
+
+/**
+ * @Description 赛事收藏 
+ * @param {undefined} undefined
+*/
+const collect = () => {
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, this.match)
+}
+
+/**
+ * 跳转至详情
+ * @return {undefined} undefined
+ */
+const on_go_detail = () => {
+  if(is_eports_csid(this.match.csid)){
+    this.match.go_detail_type = 'no_switch'
+  }
+  details.on_go_detail(this.match);
+}
+
+/**
+ * @Description 点击tab玩法
+ * @param {undefined} undefined
+*/
+const play_tab_click = (obj) => {
+  // 当前已选中
+  if(this.match.play_current_index == obj.index){
+    return
+  }
+  let play_key = play_name_list.value[obj.index].field
+  // 切换玩法
+  this.match_list_data.switch_other_play(this.match.mid,play_key)
+  if (this.match.csid == 1) {
+    let zhugeObj = {
+      "玩法集名称": play_name_list.value[obj.index].play_name,
+      "玩法集ID": '',
+      "区域位置": "主列表"
+    }
+  }
+  this.match_list_card && this.match_list_card.update_match_cur_card_style(this.match.mid,play_key)
+}
+
+/**
+ * @Description 角球折叠
+ * @param {undefined} undefined
+*/
+const fold_tab_play = () => {
+  this.match_list_card && this.match_list_card.fold_tab_play(this.match.mid)
+}
 </script>
 
 <style lang="scss" scoped>
