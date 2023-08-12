@@ -162,6 +162,9 @@
 <script setup>
 import { api_result } from "src/project/api";
 import { computed, nextTick, onUnmounted } from "vue";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useRoute } from 'vue-router'
+
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
@@ -182,13 +185,15 @@ import { computed, nextTick, onUnmounted } from "vue";
   ])
   // 篮球的 背景图的 数据
   const basketball_data = ref([])
+  const route = useRoute()
+
   //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
-  $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
   get_list()
   tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
   const match_id = computed(() => {
     // 赛事id
-    return this.$route.params.mid || this.get_detail_data.mid
+    return route.params.mid || get_detail_data.mid
   })
   // computed: {
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data','get_lang']),
@@ -284,10 +289,10 @@ import { computed, nextTick, onUnmounted } from "vue";
   }
   onUnmounted(() => {
      //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
-  //   this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.refresh_match_analysis)
+  //   $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
-  //   for (const key in this.$data) {
-  //     this.$data[key] = null
+  //   for (const key in $data) {
+  //     $data[key] = null
   //   }
   })
 </script>

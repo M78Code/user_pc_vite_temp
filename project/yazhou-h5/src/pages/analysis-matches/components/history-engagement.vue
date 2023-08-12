@@ -53,6 +53,7 @@ import {api_result} from "src/project/api";
 import public_form from "src/project/pages/details/analysis-matches/components/public-form.vue";  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
 import no_data from "src/project/components/common/no-data";  // 无网络展示组件
 import { computed, onUnmounted } from "vue";
+import { useRoute } from 'vue-router'
 
   // components: {
   //   "public-form": public_form,
@@ -81,12 +82,13 @@ import { computed, onUnmounted } from "vue";
   const cps = ref(5)
   const historical_engagement_data = ref([])
   const no_data = ref(false)
+  const route = useRoute()
 
   get_list()
 
-  // 赛事id TODO $route get_detail_data 后续修改调整
+  // 赛事id TODO route get_detail_data 后续修改调整
   const match_id = computed(() => {
-    $route.params.mid || get_detail_data.mid
+    route.params.mid || get_detail_data.mid
   }) 
   // computed: {
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),

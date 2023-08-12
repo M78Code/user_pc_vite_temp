@@ -5,46 +5,46 @@
   <div  class="menu" @touchmove.stop="" @touchstart.stop="">
     <div id="sport_menu" class="menu-inner-wrap">
       <!--  电竞背景图片  -->
-      <div class="m-i-background" :data-type="current_esport_csid" v-if="3000 == menu_type" :class="dj_back_img"></div>
+      <div class="m-i-background" :data-type="''" v-if="menu_1_type == 7" :class="dj_back_type">******：{{ dj_back_type }}</div>
       <!-- 一级主菜单 -->
-      <div class="main-wrap flex" :class="{esport:3000 == menu_type}">
+      <div class="main-wrap flex" :class="{esport:menu_1_type == 7}">
         <!--  返回按鈕  -->
         <div class="goback-icon-wrapper column justify-center" @click="go_home" :class="get_golistpage && 'goback-icon-wrapper2'">
-          <img class="theme01" v-if="get_theme.includes('theme01') && 3000 != menu_type"
+          <img class="theme01" v-if="get_theme.includes('theme01') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon-theme02.svg"  />
-          <img class="theme02" v-if="get_theme.includes('theme02') && 3000 != menu_type"
+          <img class="theme02" v-if="get_theme.includes('theme02') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon.svg"  />
-          <img class="esport" v-if="3000 == menu_type"
+          <img class="esport" v-if="menu_1_type == 7"
                src="image/wwwassets/bw3/svg/go-back-icon-esport.svg"  />
         </div>
-        <div class="main-menu-container" :class="{esport:3000 == menu_type}">
-          <!-- 一级主菜单 下边的四个主图标 -->
-          <template v-for="(main_m, m_m_i) of main_menu_list_items" :key="m_m_i">
-            <div class="m-menu-item" 
+        <div class="main-menu-container" :class="{esport:menu_1_type == 7}">
+          <!-- 一级主菜单 下边的四个主图标 v-show="main_m.sl.length > 0  ![2,3,6,7].includes(m_m_i)" -->
+          <template v-for="(main_m, m_m_i) of new_main_menu_list_items">
+            <div class="m-menu-item" v-show="show_dianjing(main_m,m_m_i)" :key="m_m_i"
                  :class="[
-                     {current: show_one_menu_index && get_main_menu_dom_i === m_m_i,
-                      esport:3000 == menu_type
+                     {current: new_main_menu_index == m_m_i,
+                      esport:menu_1_type == 7
                      },
-                      `main_menu_${main_m.menuId}`
+                      // `main_menu_${main_m.menuId}`
                   ]"
                  @click="main_item_clicked(m_m_i,'dir_click','',main_m)"
             >
               <div class="i-title" :class="first_level_menu_subscript_css">
-                {{main_m.menuName}}
+              {{
+                $root.$t(`new_menu.${main_m.mi}`) }}
               </div>
               <div class="m-menu-count">
                 <span class="count" :class="{is_unit:main_m.count < 10 && m_m_i == 1,
-                  esport:3000 == menu_type}"
+                  esport:menu_1_type == 7}"
                   :style="{
                     visibility:show_favorite_list ||
-                    main_m.menuType == 900 || main_m.menuId==408 ||
-                    3000 == main_m.menuType ? 'hidden' : 'visible'
+                    main_m.menuType == 900 || main_m.menuId==408  ? 'hidden' : 'visible'
                   }">
-                  {{main_m.count}}
+                  {{count_menu(main_m)||''}}
                 </span>
                 <i v-if="m_m_i === 1"
                    class="dir-triangle"
-                   :class="{open:show_selector_s2,arrow_esport:3000 == menu_type || get_theme == 'theme02'}">
+                   :class="{open:show_selector_s2,arrow_esport:menu_1_type == 7 || get_theme == 'theme02'}">
                 </i>
               </div>
             </div>
@@ -60,64 +60,71 @@
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div
-        v-show="menu_type != 30"
         class="sub-menu-date-w"
+        v-if="menu_1_type !== 30"
         :class="{
-          simple:menu_wrap_simple && 3000 != menu_type,
+          simple:menu_wrap_simple && menu_1_type != 7,
           zaopan:[4,11,28,3000].includes(+menu_type),
           esport:3000 == menu_type,
         }">
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container"
-             :class="{simple:sport_container_simple && 3000 != menu_type,
-            'shadow-down':3000 != menu_type
+             :class="{simple:sport_container_simple && menu_1_type != 7,
+            'shadow-down':menu_1_type != 7
           }">
           <!--二级菜单 球类和运动类-->
           <div class="s-menu-container flex" ref="sub_menu_scroller">
             <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
             <sub-menu-specially
               @click="select_all_sub_menu_handle"
-              v-show="lodash.get(get_access_config,'playAllShow') && lodash.get(get_current_first_menu,'menuId') == 400"
-              :count="all_sport_count ? all_sport_count:0"
+              v-show="lodash.get(get_access_config,'playAllShow') && menu_1_type == 1"
+              :count="all_sport_count_calc()"
               :title="$root.$t('footer_menu.all')"
               v-if="lodash.get(get_access_config,'playAllShow')"
             >
               <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
             </sub-menu-specially>
             <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
-            <div class="sport-menu-item flex justify-center" ref="scrollItem"
-                 v-for="(sub,sub_i) of sub_menu_list" :key="sub_i"
-                 v-show=" show_two_menu_func(sub) && show_secondary_menu_icon(sub)"
-                 @click="sub_menu_changed(sub_i,'dir_click')"
-                 :class="{'current':selected_sub_menu_i_list.includes(sub_i),'champion':menu_type == 100}"
-            >
-              <div class="inner-w flex justify-between items-center" :class="{favorite:show_favorite_list}">
-                <div class="sport-w-icon">
-                    <span class="sport-icon-wrap"
-                          :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)),`${'s'+sub.menuType}`]"
-                          :data-type="sub.menuType+sub.menuName"
-                    ></span>
-                  <div class="sport-match-count"
-                       v-show="28 != menu_type && 3000 != menu_type && menu_type != 900 && ![1001,1002,1004,1011,1010].includes(+sub.menuType)">
-                    {{show_favorite_list ? '' : sub.count ? sub.count:0 }}
+            <!--
+              :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)),`${'s'+format_type(sub)}`]"
+              :data-type="format_type(sub)+$root.$t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
+             -->
+            <template v-if="new_main_menu_list_items[new_main_menu_index]">
+              <template   v-for="(sub,sub_i) of new_main_menu_list_items[new_main_menu_index].sl||[]" >
+              <div class="sport-menu-item flex justify-center" :key="sub_i" ref="scrollItem"
+                  v-show="menu_1_type !== 7 && menu_1_type !== 28 ? sub.ct > 0: true"
+                  @click="sub_menu_changed(sub_i,'dir_click',sub)"
+                  :class="{'current':sub_menu_i==sub_i||selected_sub_menu_i_list.includes(sub_i),'champion':menu_type == 100}"
+                  >
+                <div  class="inner-w flex justify-between items-center" :class="{favorite:show_favorite_list}">
+                  <div class="sport-w-icon">
+                      <span class="sport-icon-wrap"
+                      :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)),`${'s'+format_type(sub)}`]"
+                      :data-type="format_menu_type(sub)"
+                      ></span>
+                    <div class="sport-match-count"
+                      v-show="two_menu_show(sub)">
+                      {{show_favorite_list ? '' : sub.ct ? sub.ct:0 }}
+                    </div>
+                  </div>
+                  <div class="s-w-i-title" :class="{
+                      esport:menu_1_type == 7,
+                      'din-regular':menu_1_type == 7}">
+                    {{sub.name|| filter_meunu_lang(sub.mi) }}
                   </div>
                 </div>
-                <div class="s-w-i-title" :class="{
-                    esport:3000 == menu_type,
-                    'din-regular':3000 == menu_type}">
-                    {{sub.menuName}}
-                </div>
               </div>
-            </div>
+              </template>
+            </template>
           </div>
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
-          <div class="d-c-wrapper" :class="{esport:3000 == menu_type}" v-if="date_menu_list.length && [4,11,28,3000].includes(+menu_type)">
-            <div class="date-container" ref="date_menu_container" :class="{esport:3000 == menu_type}">
+          <div class="d-c-wrapper" :class="{esport:menu_1_type == 7}" v-if="date_menu_list.length && [3,11,28,7].includes(+menu_1_type)">
+            <div class="date-container" ref="date_menu_container" :class="{esport:menu_1_type == 7}">
               <div class="date-menu-item" :key="date_index"
                    :class="{
                       focus:date_menu_curr_i === date_index,
                       'is-favorite':show_favorite_list,
-                      'hidden-champion': show_favorite_list && menu_type === 3000 && date_menu_item.menuId === '-999',
+                      'hidden-champion': show_favorite_list && menu_1_type == 7 && date_menu_item.menuId === '-999',
                       }"
                    @click="date_menu_clicked(date_index, 'date_click')"
                    v-for="(date_menu_item, date_index) of date_menu_list"
@@ -144,17 +151,19 @@
       <!--主菜单里边---中间下拉弹框-->
       <div class="main-m-selector-w" :class="{'effct-in':show_selector_s2}" v-show="show_selector_sub" @click="close_menu_popup">
         <div class="selector-w-inner flex wrap justify-left hairline-border" :class="{show:show_selector_inner}">
-          <template v-for="(m_items,i_m) of main_select_items">
+          <template v-for="(m_items,i_m) in pop_main_select_items">
             <div :key="i_m"
                  :class="[{current:i_m === selector_w_m_i,'is-favorite':show_favorite_list,}]"
-                 @click="selector_m_clicked(i_m,'dir_click')"
+                 @click="selector_m_clicked(i_m,'dir_click',m_items)"
                  class="main-m-select-item flex justify-center items-center"
                  v-if="is_menu_show(m_items)"
                  v-show="show_popup(m_items, i_m)"
             >
-              <div class="m-menu-name-m">{{m_items.menuName}}</div>
-              <div class="m-count-match" v-if="m_items.count && !show_favorite_list">
-                {{m_items.count}}
+              <div class="m-menu-name-m">
+                {{
+                $root.$t(`new_menu.${m_items.mi}`) }}</div>
+              <div class="m-count-match" v-if=" !show_favorite_list">
+                {{count_menu(m_items)}}
               </div>
             </div>
           </template>
@@ -177,6 +186,9 @@ import lodash from 'lodash'
 //  一二级菜单 本地化假数据
 import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js" 
 import { watch } from "vue";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useRoute } from 'vue-router'
+
 // import{ date }  from 'quasar'
 
   // TODO: 后续修改调整
@@ -220,12 +232,24 @@ import { watch } from "vue";
   // 定时器
   const timer_super1 = ref(0)
   const timer_super2 = ref(0)
+  const timer_super3 = ref(0)
   // 隐藏一级菜单下标
   const show_one_menu_index = ref(false) 
   const route_enter_timeout = ref(0)
   const route_enter_timer = ref(null) 
   // 出错时，活动默认图片
   const activity_default = ref(`image/wwwassets/activity/activity_entrance.png`) 
+  // 一级菜单mi
+  const menu_1_type = ref(1)
+  const dj_back_type= ref('lol')
+  const new_main_menu_list_items = ref([])
+  const new_main_menu_index = ref(0)
+  // 锚点
+  const scrollItem = ref(null)
+  const sub_menu_scroller = ref(null)
+  // 路由
+  const route = useRoute()
+
   // computed: {
   //   ...mapGetters([
   //     'get_user',
@@ -233,8 +257,8 @@ import { watch } from "vue";
   //     'get_access_config'
   //   ])
   // },
-  // 进入主列表页立即触发  TODO: $route 后续修改调整
-  if($route.name == 'matchList'){
+  // 进入主列表页立即触发  TODO: route 后续修改调整
+  if(route.name == 'matchList'){
       enter_page_immediately()
   }
   // 早盘，串关，电竞日期，缓存数据获取
@@ -292,16 +316,55 @@ import { watch } from "vue";
     // 存储赛事折叠/展示状态
     //   set_ball_current_csid_object: 'set_ball_current_csid_object', 
     // }),
+  /**
+     * @description: 球类id转化背景
+     * @param {String} id 球类id
+     * @return {}
+     */
+    const format_type = (id) => {
+      if(menu_1_type == 28) {
+        let type = +id?.menuId
+        // 赛果电竞图标
+        if([100,101,103,102].includes(type)){
+          type += 2000
+        }
+        // 赛果 我的投注
+        if(id?.menuType && id.menuType == 29){
+          type = id.menuType
+        }
+        // 赛果冠军
+        if(type == 10000){
+          type = 100
+        }
+        return type
+      }
+      //电竞背景处理
+      if([2100,2101,2103,2102].includes(+id?.mi)) return +id?.mi
+      return base_data.recombine_menu_bg(id,true)
+    }
+    const show_dianjing = (item,index) => {
+      if(item?.mi){
+        if( item.mi == 7) return lodash.get(user_info, 'openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
+        if( item.mi == 8) return lodash.get(user_info, 'openVrSport') // VRtob后台关闭隐藏
+        return ![2,3,6,7].includes(index)
+      }
+    }
+    const format_menu_type = (item) => {
+      if(menu_1_type == 28){
+        return item.menuId + item.name
+      }
+      return format_type(item)+$root.$t(`new_menu.${filter_meunu_desc(item.mi)}`)
+    }
     // 进入主列表页 主菜单时，立即触发方法
     const enter_page_immediately = () => {
-      // 初始化 路由的参数 TODO: $route后续修改调整
-      if ($route.query.m) {
+      // 初始化 路由的参数 TODO: route后续修改调整
+      if (route.query.m) {
         //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
-        let { m, s, t } = $route.query; 
+        let { m, s, t } = route.query; 
         set_global_route_menu_param({ m, s, t });
-      } else if ($route.query.mt1) {
+      } else if (route.query.mt1) {
         //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
-        let { mt1, mt2 } = $route.query; 
+        let { mt1, mt2 } = route.query; 
         set_global_route_menu_param({ mt1, mt2 });
       } else {
         set_global_route_menu_param({});
@@ -314,13 +377,33 @@ import { watch } from "vue";
       }, 2500);
     }
     // 初始化菜单数据
-    const initialize_menu_data = (type) => {
-      prev_main_menu_i = -1
+    const initialize_menu_data = async (type) => {
+      if(new_main_menu_index != 1 || type == 'matchBack'){
+        prev_main_menu_i = -1
+      }
       // 如果所有菜单数据 有缓存，则走缓存
       // 如果有get_home_data 数据，则走缓存, 更快的渲染，或者菜单出错时，可以走得通
       if(get_home_data.length > 0){
-        menu_first_load(get_home_data,type)
+        await get_results_menu()
+        // await base_data.get_load_lang_v3()
+        let new_menu = base_data.recombine_menu(get_home_data,'sort',sub_menu_list);
+        [new_menu[0],new_menu[1]] = [new_menu[1],new_menu[0]]
+        new_main_menu_list_items = new_menu
+        pop_main_select_items = lodash.filter(new_main_menu_list_items,item=>{return ![1,7,8].includes(item.mi) })
+        // 数据替换
+        if(get_selector_w_m_i){
+          let m_selected = pop_main_select_items[get_selector_w_m_i]
+          let new_menu1 = new_main_menu_list_items
+          new_menu1.forEach((item,index) =>{
+            if(item.mi == m_selected.mi){
+              [new_menu1[1],new_menu1[index]] = [new_menu1[index],new_menu1[1]]
+              new_main_menu_list_items = new_menu1
+            }
+          })
+        }
       }
+      let menu_2 = get_new_two_menu
+      sub_menu_changed(menu_2)
       // 调用接口，更新菜单数据
       call_the_interface_to_update_the_menu_data()
       // TODO: 后续修改调整
@@ -328,6 +411,11 @@ import { watch } from "vue";
     }
     // 菜单首次加载，一级菜单，二级菜单 数据，都在这里赋值
     const menu_first_load = (res_data, type) => {
+      // 主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据
+      main_menu_list = base_data.recombine_menu(res_data,'sort');
+      // 获取主菜单列表
+      get_main_menu_init_data()
+      return;
       // 主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据
       main_menu_list = res_data
       // 获取主菜单列表
@@ -347,11 +435,7 @@ import { watch } from "vue";
         main_item_clicked(get_main_menu_dom_i, type || 'init_data')
       }
     }
-    // 二级菜单显示隐藏
-    const show_two_menu_func = (item) => {
-      // ((show_favorite_list && sub.count) || [900,3000].includes(+menu_type) || sub.count)
-      return item.count ? true :false
-    }
+    
     /**
      * 一级菜单点击事件
      * @param {Number} main_index 一级菜单下标
@@ -360,30 +444,17 @@ import { watch } from "vue";
      * @return {undefined}
      */
     const main_item_clicked = (main_index, type, is_selected, main_m) => {
-      // 一级菜单限制切换
-      if((get_main_menu_dom_i == main_index && main_index != 1 && type == 'dir_click')) {return;}
-      // 一级菜单切换时的状态还原   二级菜单, 三级菜单，四级菜单 容器是否收起
-      main_menu_state_restore(false)
-      // menu_type 滚球:1 今日:3 早盘:4 串关:11 冠军:100 虚拟体育:900  赛果:20,如果不是 虚拟体育 900.则设置当前菜单
-      // 点击的 当前 一级菜单对象
-      let main_menu_o = lodash.cloneDeep(main_menu_list_items[main_index]);
-      // 如果不是虚拟体育
-      if(main_menu_o.menuType != 900){
-        // 当前选中的 一级菜单对象
-        set_current_first_menu(main_menu_list_items[main_index])
-        // 当前选中的 一级菜单对 下标 (非展开的)
-        set_main_menu_dom_i(main_index);
+      // console.error('一级菜单点击',main_index)
+      if(new_main_menu_index == main_index && main_index != 1  && type == 'dir_click') {
+        set_menu_type(base_data.menu_id_map(main_m.mi));
+        return
       }
-      //虚拟体育页跳转逻辑，直接跳转到 虚拟体育的 路由 TODO: $router后续修改调整
-      if((main_menu_o.menuType == 900 || main_menu_o.menuId == 407) && type == 'dir_click'){
-        $router.push({name: 'virtual_sports'});
-        return;
+      if(main_m.mi && main_m.mi == 8){
+        router.push({name: 'virtual_sports', query: { from: 'match_list' }});
+        return
       }
-      // 如果当前点击的一级菜单 下标是 1， 并且 上次记录的 一级菜单是 1， 并且是 （第一次查询 或者 用户手动点击）
-      if(main_index == 1 && prev_main_menu_i == 1 && ['init_data','dir_click'].includes(type) && is_selected != 'is_selected'){
-        // 限制点击切换
-        if (utils.is_time_limit()) { return }  
-        // 记录一级菜单切换的 下标,记录之后赋值给 prev_main_menu_i
+
+      if(main_index == 1  && prev_main_menu_i == 1 && is_selected != 'is_selected'){
         record_main_index(main_index)
         // 主菜单  今日里边---中间下拉弹框,如果是true，展开, 则隐藏 中间下拉弹框
         if(show_selector_sub){
@@ -397,25 +468,42 @@ import { watch } from "vue";
           },50);
         }
       }else{
-        // 正常一级菜单切换时触发
-        // 设置上一次的主菜单 menu_type
-        set_prev_menu_type(menu_type);
-        // 设置当前主菜单 menu_type
-        set_menu_type(main_menu_o.menuType);
-        when_switching_primary_menu(main_menu_o, main_index, type)
-        // 主菜单  今日里边---中间下拉弹框,如果是true，展开, 则隐藏 中间下拉弹框
-        if(show_selector_sub){
-          close_menu_popup()
-        }
+        set_euid_type(main_m,true)
+        when_switching_primary_menu(main_m, main_index, type)
+        close_menu_popup()
+        // 储存一级菜单type
+        set_prev_menu_type(base_data.menu_id_map(main_m.mi))
       }
-      if(main_m?.menuId && main_m.menuId == "400"){
+      new_main_menu_index = main_index;
+      // 首页左侧菜单
+      if([1,2,3].includes(main_m.mi)){
+        set_home_menu_index(main_m.mi)
+      }else{
+        set_home_menu_index('')
+      }
+      // 一级菜单mi
+      set_current_first_menu(main_m.mi)
+      set_menu_type(base_data.menu_id_map(main_m.mi));
+      // 一级菜单切换时的状态还原
+      main_menu_state_restore(false)
+      // 首页进来不应清除2级菜单
+      if(is_selected != 'first' || main_m.mi == 7){
+        // 默认值
+        set_new_two_menu(0)  
+      }
+      // 筛选搜素下的Bat默认传1
+      set_useid_ievname(0) 
+      if(main_m.mi == 1){
         if(is_selected != 'first'){
-          setTimeout(() => {
+          clearTimeout(timer_super3)
+          timer_super3 = setTimeout(() => {
             // 头部点击滚球进入列表  默认 全部
             select_all_sub_menu_handle() 
           }, 100);
         }
       }
+      // let menu_2 = get_new_two_menu
+      // sub_menu_changed(menu_2)
     }
     /**
      * 滚球和 今日 和 电竞的正常一级菜单切换
@@ -474,41 +562,98 @@ import { watch } from "vue";
         sub_menu_changed(menu_type == 3000 ? 0 : has_match_index,'init_sub_data')
       }
     }
+    // 切换到电竞时 的菜单 背景图片
+    const dj_back_img = (item) => {
+      let value = +item || 2100
+      let type = ''
+      switch (value) {
+        case 2100: type = "lol"; break;
+        case 2101: type = "dota"; break;
+        case 2102: type = "csgo"; break;
+        case 2103: type = "wangzhe"; break;
+      }
+      dj_back_type = type
+    }
     /**
      * 二级菜单点击事件
      * @param {Number|Array}sub_i 变化菜单的下标
      * @param {String}is_dir_click 是否为用户直接点击触发,而不是一级菜单选中后自动切换二级菜单
      */
-    const sub_menu_changed = (sub_i, is_dir_click) => {
-      //重复点击相同的二级菜单阻止请求
-      if(is_dir_click == 'dir_click' && sub_menu_i == sub_i){
+    const sub_menu_changed = async (index = 0, is_dir_click,sub) => {
+      // console.error('二级菜单点击',menu_1_type)
+      utils.modify_dom_classname('scroll-container-w', 'scroll-container-w')
+      const menu_item = new_main_menu_list_items[new_main_menu_index];
+      // 重复点击
+      if(is_dir_click == 'dir_click' && sub_menu_i == index) return
+      if(!menu_item) return
+      // 置空上一次筛选tid
+      set_filter_list({})  
+      // 全部按钮
+      set_sport_all_selected(false); 
+      // 竟足处理 50101
+      if(menu_1_type == 30){
+        const euid = base_data.get_euid('50101',menu_1_type)||40603; // 获取euid
+        set_current_sub_menuid(euid);
+        set_current_second_menu(euid)
         return
       }
-      // 切换二级菜单时把当前页赛事折叠/展开状态置空
-      set_ball_current_csid_object({})
-      // 二级菜单诸葛埋点集中在这里----赛种
-      zhuge_md(is_dir_click, sub_i)
-      //滚动二级菜单选中项到屏幕显示区域
-      $nextTick(()=>{
-        utils.tab_move(sub_i, $refs.sub_menu_scroller, $refs.scrollItem, is_dir_click == 'init_sub_data' ? true : 'no_fast')
-      })
-      // 选中二级菜单全部按钮 置为false
-      set_sport_all_selected(false);
-      // 二级菜单选中项下标
-      sub_menu_i = sub_i;
-      virtual_sports_results_tab_item_i = 0
-      //选中的子菜单下标集合
-      selected_sub_menu_i_list = [sub_i]
-      // 设置当前二级 菜单 内容
-      set_current_second_menu(sub_menu_list[sub_i]);
-      // 设置当前二级 菜单id
-      set_current_sub_menuid(lodash.get(sub_menu_list[sub_i],'menuId'));
-      // 如果是电竞，则 设置背景图
-      if(main_menu_list_items[get_main_menu_dom_i].menuType == 3000){
-        set_current_esport_csid(sub_menu_list[sub_i].field1)
+      const item = menu_item.sl[index]
+      // 赛果处理
+      if(menu_1_type == 28){
+        // 如果没有赛果二级菜单数据
+        if(!sub_menu_list || !sub_menu_list > 0){
+          await get_results_menu()
+         }
+         sports_results_two(item,index,is_dir_click)
+        return
       }
-      // 早盘,串关,电竞  ------  拉取接口，更新日期菜单
-      get_date_menu_api_when_subchange()
+      let euid_mi = item.mi || item.menuId;
+      sub_menu_i = index;
+      // 选中赛种
+      selected_sub_menu_i_list = [index] 
+      // 二级菜单下标 
+      set_new_two_menu(index) 
+      // 获取euid
+      let euid = base_data.get_euid(euid_mi,menu_1_type); 
+      set_current_sub_menuid(euid);
+      // 当前选中二级菜单
+      set_current_second_menu(euid);  
+      // 传给筛选里面的搜索下Bat选中
+      if(item?.mi) { set_useid_ievname(item.mi.substr(1,2)) }
+
+      if(![3,7,28].includes(menu_1_type)){
+        set_one_two_three_level_menu_data()
+      }
+
+      // 电竞获取日期
+      if(menu_1_type == 7){
+        const csid = base_data.menu_csid(item.mi);
+        dj_back_img(item.mi)
+        set_current_second_menu(euid)
+        // 获取日期
+        await get_date_menu_api_when_subchange(item)
+        // 储存日期菜单csid
+        set_current_esport_csid(csid)
+        // 切换默认选择所有日期
+        select_result_date_menu()
+      }
+      const sub_info = menu_item?.sl[index]
+      if(sub_info){//设置菜单menutype
+        set_curr_sub_menu_type(base_data.second_menu_type_map(format_type(sub_info)));
+      }
+      // 早盘串关
+      if([3].includes(+menu_1_type)){
+        get_date_menu_api_when_subchange()
+        select_result_date_menu()
+      }
+      // 冠军
+      if(menu_1_type==4){
+        euid_mi = $store.state.topmenu.current_second_menu.mi
+      }
+       //滚动二级菜单选中项到屏幕显示区域
+       nextTick(()=>{
+        utils.tab_move(index, sub_menu_scroller, scrollItem, is_dir_click == 'init_sub_data' ? true : 'no_fast')
+      })
     }
     /**
      * 三级菜单日期 点击事件
@@ -516,6 +661,7 @@ import { watch } from "vue";
      * @param {String} is_direct 是否为用户直接点击界面触发
      */
     const date_menu_clicked = (index, is_direct) => {
+      utils.modify_dom_classname('scroll-container-w', 'scroll-container-w')
       // 限制三级菜单
       if(date_menu_curr_i == index && is_direct == 'date_click'){
         return
@@ -539,8 +685,6 @@ import { watch } from "vue";
         four_menu_item = null
         // 菜单实例 初始化
         handle_MenuInfoInstance_init()
-        // 切换二级菜单时把当前页赛事折叠/展开状态置空
-      set_ball_current_csid_object({})
       }
     }
     /**
@@ -554,47 +698,6 @@ import { watch } from "vue";
       virtual_sports_results_tab_item_i = index;
       // 菜单实例 初始化
       handle_MenuInfoInstance_init()
-    }
-    // 诸葛埋点
-    const zhuge_md = (is_dir_click, sub_i) => {
-      if (is_dir_click == 'dir_click' ) {
-        let eventLabel = '',
-        scheduleType = '';
-        // 判断当前菜单类型
-        switch (menu_type) {
-            // 今日
-          case 3:
-            if (sub_menu_list[sub_i].menuType == '7') {
-              eventLabel = 'H5_今日_篮球';
-            } else if (sub_menu_list[sub_i].menuType == '5') {
-              eventLabel = 'H5_今日_足球';
-            }
-            scheduleType = '今日'
-            break;
-            // 早盘
-          case 4:
-            if (sub_menu_list[sub_i].menuType == '7') {
-              eventLabel = 'H5_早盘_篮球';
-            } else if (sub_menu_list[sub_i].menuType == '5') {
-              eventLabel = 'H5_早盘_足球';
-            }
-            scheduleType = '早盘'
-            break;
-            // 串关
-          case 11:
-            if (sub_menu_list[sub_i].menuType == '7') {
-              eventLabel = 'H5_串关_篮球';
-            } else if (sub_menu_list[sub_i].menuType == '5') {
-              eventLabel = 'H5_串关_足球';
-            }
-            scheduleType = '串关'
-            break;
-        }
-        if (eventLabel && scheduleType) {
-          // TODO: $utils 后续修改调整
-          $utils.zhuge_event_send(eventLabel, user_info, {'赛程类型': scheduleType});
-        }
-      }
     }
     // 诸葛埋点
     const one_lable_zhuge = (type) => {
@@ -627,13 +730,24 @@ import { watch } from "vue";
       $event.target.src = activity_default;
       $event.target.onerror = null
     }
+    const set_euid_type = (m_items,is_level1=false) => {
+      menu_1_type = m_items.mi
+      set_menu_type(base_data.menu_id_map(m_items.mi));
+    }
     /**
      * 主菜选择器项目点击
      * @param {Number} i 一级菜单下标
      * @param {Number} type 用户触发的类型，初始化 init_data   点击 是  dir_click
      * @return {undefined}
      */
-    const selector_m_clicked = (i, type) => {
+    const selector_m_clicked = (i, type, m_items) => {
+      // 筛选搜素下的Bat默认传1
+      set_useid_ievname(1) 
+      // new_main_menu_index = i+1;
+      if(m_items.mi == 30){
+        set_menu_type(m_items.mi);
+      }
+      // set_euid_type(m_items)
       // 如果没有数据，则return 终止方法
       if(main_menu_list_items.length < 1) { return }
       // 如果面板点击的是 同一个，则关闭面板，并且 return 终止方法
@@ -652,31 +766,83 @@ import { watch } from "vue";
           scheduleType = '早盘';
         }
         if (eventLabel && scheduleType) {
-          // TODO: $utils 后续修改调整
           $utils.zhuge_event_send(eventLabel, user_info, {'赛程类型': scheduleType});
         }
       }
       // 设置  主菜单下拉选择器选中的赛事下标
       set_selector_w_m_i(i);
-      let m_selected = main_select_items[i];
+      let m_selected = pop_main_select_items[i];
+
       // 当前选择的面板的值，赋值给 一级菜单 中间位置 “今日”
-      // Object.assign(main_menu_list_items[1],lodash.cloneDeep(m_selected));
-      // lodash.merge(main_menu_list_items[1],lodash.cloneDeep(m_selected));
-      main_menu_list_items[1] = lodash.cloneDeep(m_selected)
+      new_main_menu_list_items[1] = lodash.cloneDeep(m_selected)
+
       // 调用中间的 主菜单切换逻辑
-      main_item_clicked(1, type, 'is_selected');
+      main_item_clicked(1, type, 'is_selected',m_items);
+      return;
     }
     // 菜单实例 初始化, 调用 列表接口
     const handle_MenuInfoInstance_init = () => {
       // 调用列表接口
-      // TODO: $root 后续修改调整
-      $root.$emit(emit_cmd.EMIT_MAIN_MENU_CHANGE);
+      useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
     }
     // 早盘 和 串关 和 电竞 的日期菜单用缓存的数据初始化
     const date_cache_initialization = () => {
       if (get_current_date_menu.length && [4, 11, 3000].includes(+menu_type)) {
         date_menu_list = get_current_date_menu;
       }
+    }
+     /**
+     * 一级菜单 点击全部
+     */
+    const select_all_sub_menu_handle = () => {
+      let data_list = new_main_menu_list_items[new_main_menu_index].sl
+      let changeSubmenu = null
+      // 重置上一次储存二级菜单下标
+      sub_menu_i = null;  
+      let selected_sub_menu_i_list = [];
+      let euid_list = [];
+      // 重置上次储存二级菜单muid
+      set_useid_ievname(0) 
+      // 二级菜单 下标
+      data_list.forEach((sub_m,sub_i) => {
+        if(sub_m.ct){
+          let euid = base_data.get_euid(sub_m.mi)
+          euid_list.push(euid);
+          selected_sub_menu_i_list.push(sub_i)
+        }
+      });
+      // 设置 全部二级菜单euid
+      changeSubmenu = euid_list.join(',')
+      set_current_second_menu(changeSubmenu);
+      set_current_sub_menuid(changeSubmenu)
+      // 设置 全部二级菜单下index
+      selected_sub_menu_i_list = selected_sub_menu_i_list
+      // 设置缓存，代表全部
+      set_sport_all_selected(true);
+    }
+    // 计算滚球数量
+    const all_sport_count_calc = () => {
+      let data = new_main_menu_list_items[new_main_menu_index]
+      if(data && data.mi == 1){
+          let num = 0
+          data.sl.forEach(item =>{
+            num += item.ct
+          })
+          return num
+      }
+    }
+    /**
+     * 二级菜单数量 是否展示
+     * @param {Number} sub  赛种item
+     */
+    const two_menu_show = (sub) => {
+      let menu_1_type = menu_1_type
+      if(menu_1_type == 28){
+        return false
+      }
+      // 滚球下足球处理 1011足球
+      let mi_list = menu_1_type == 1 ? [1001,1002,1004,1010] : [1001,1002,1004,1011,1010]
+      return ![7,8,28].includes(menu_1_type) && !mi_list.includes(+sub.mi)
     }
     /**
      * 进入活动页
@@ -687,9 +853,9 @@ import { watch } from "vue";
         $toast($root.$t(`common.temporarily_unavailable`), 2000)
         return
       }
-      // TODO: $router $utils 后续修改调整
+      // TODO: router $utils 后续修改调整
       $utils.zhuge_event_send('H5_任务中心', user_info);
-      $router.push({name:'activity_task', query: { rdm: new Date().getTime() }})
+      router.push({name:'activity_task', query: { rdm: new Date().getTime() }})
     }
     // 是否有活动可领取的任务数量
     const get_task_list = (id = 1) => {
@@ -725,37 +891,119 @@ import { watch } from "vue";
         });
       }
     }
+    const skip_menu_type = () => {
+      let query_m = lodash.get_current_first_menu
+      if(query_m){
+        lodash.new_main_menu_list_items.forEach((item,index) =>{
+          if(item.mi == query_m){
+              // 判断是滚球今日
+            if([3,4].includes(query_m)){
+              const find_index = lodash.pop_main_select_items.findIndex(v => v.mi == item.mi)
+              lodash.set_selector_w_m_i(find_index)
+              lodash.main_item_clicked(1,'dir_click','first',item)
+            }else{
+              lodash.main_item_clicked(index,'dir_click','first',item)
+            }
+          }
+
+        })
+      }
+    }
+    // 赛果下数据
+    const get_results_menu = (type='dir_click') => {
+      if(lodash.menu_1_type !== 28){return}
+      return new Promise( async (resolve) => {
+         // 如果有缓存，则使用缓存
+       let cache_data_str = sessionStorage.getItem('result_sub_menu_cache')
+      try {
+        // 如果当前主菜单是赛果, 获取赛果二级菜单
+      let {code, data} = await api_result.get_result_menu()
+      if (code == 200 && Array.isArray(data)) {
+        if(lodash.get(data,'[0].menuType')==29){
+          // 当是我的投注时菜单进行时间排序
+          let arr = lodash.get(data,'[0].subList');
+          if(arr){
+            arr.sort((a, b)=>{
+              if(b.field1 < a.field1){
+                return -1
+              }else{
+                return 1
+              }
+            })
+          }
+        }
+        sessionStorage.setItem('result_sub_menu_cache',JSON.stringify(data));
+        // 赛果二级菜单数据处理
+        lodash.result_sub_menu_api_handle(data, type);
+      }else{
+        // 出错时使用缓存数据
+        if(cache_data_str){
+          // 赛果二级菜单数据处理
+          await lodash.result_sub_menu_api_handle(JSON.parse(cache_data_str), type);
+        }
+        lodash.$root.$emit(lodash.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+      }
+      
+      } catch (error) {
+        // 接口异常时逻辑处理
+        lodash.$root.$emit(lodash.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+      }
+      resolve()
+      })
+    }
+    const reset_list = (is_favorite=false) => {
+      //默认设置
+      lodash.set_menu_type(lodash.menu_type);
+      // lodash.skip_menu_type()
+      // lodash.get_results_menu()
+    }
+    onMounted(() => {
+      reset_list()
+    })
     // 监听是否路由跳转进入赛事列表页状态变化
     const get_global_match_route_enter = watch((is_enter) => {
       if(is_enter){
         // 早盘 和 串关 和 电竞 的日期菜单用缓存的数据初始化
         date_cache_initialization()
+
         if(lodash.get(get_global_route_menu_param, 'm') || lodash.get(get_global_route_menu_param, 'mt1')){
           initialize_menu_data('first_load');
         }else{
-          initialize_menu_data()
+          initialize_menu_data('matchBack')
         }
+        skip_menu_type();
       }
     })
+    
     //监听路由跳转 信息
-    watch(() => $route, (to, from) => {
+    watch(() => route, (to, from) => {
       if( from.name != 'matchList' && to.name == 'matchList'){
         clearTimeout(route_enter_timer)
         route_enter_timer = setTimeout(() => {
           // 进入主列表页立即触发
           enter_page_immediately()
         },20);
+        // 赛果二级菜单不隐藏
+        if(menu_1_type == 28){
+          main_menu_state_restore(false)
+        }
+        if(from.name == 'virtual_sports'){
+          if(get_sport_all_selected){
+            setTimeout(() => {
+              // 虚拟体育进入滚球列表 上一次在滚球列表没有选择球类就默认全部
+              select_all_sub_menu_handle() 
+            }, 100);
+          }
+        }
       }
     })
     // 监听滚球全部菜单，如果关闭，并且在滚球下，则隐藏全部，调整到第一个位置
     watch(() => get_access_config.playAllShow, (n, o) => {
-      // handler(){
-      //   if(!n && menu_type == 1){
-      //     sub_menu_changed(0,'dir_click');
-      //   }
-      // }
+        if(!n && menu_type == 1){
+          sub_menu_changed(0,'dir_click');
+        }
     })
-    
+  
     /**
      * 列表滚动
      */
@@ -791,6 +1039,15 @@ import { watch } from "vue";
     // 切换关注与非关注时，更新菜单接口数据
     watch(() => show_favorite_list, () => {
       call_the_interface_to_update_the_menu_data('follow');
+      date_menu_clicked(date_menu_curr_i,'')
+    })
+    watch(() => menu_1_type, (n,o) => {
+      if(n != o){
+          initialize_menu_data();
+        }
+    })
+    onUnmounted(() => {
+      clearTimeout(timer_super3)
     })
   // components: {
   //   'set-menu': setMenu,

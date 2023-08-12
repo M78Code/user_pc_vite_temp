@@ -61,6 +61,7 @@
 import {api_result} from "src/project/api";
 import { computed, onUnmounted } from "vue";
 import loadsh from 'lodash'
+import { useRoute } from 'vue-router'
 
 // TODO 后续修改调整
 // import {mapGetters} from "vuex";
@@ -73,6 +74,7 @@ import loadsh from 'lodash'
   //是否展开
   const box_bool =ref('')
   const no_data =ref(false)
+  const route = useRoute()
 
   get_list()
   
@@ -82,7 +84,7 @@ import loadsh from 'lodash'
   })
   const match_id = computed( () => {
     // 赛事id
-    return $route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.mid
   })
   // computed: {
     // TODO 后续修改调整

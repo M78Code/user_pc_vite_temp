@@ -8,6 +8,7 @@ import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu
 // import {mapGetters} from "vuex";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
+import { useRoute } from 'vue-router'
 
 export default {
   methods: {
@@ -214,7 +215,7 @@ export default {
     },
     // 统计菜单赛事数量(调用接口)
     re_statistics_match_count_on() {
-      if(['category','details','virtual_sports'].includes(this.$route.name)){return;}
+      if(['category','details','virtual_sports'].includes(useRoute().name)){return;}
       let params = {cuid: this.cuid };//用户ID/或UUid
       // 如果不是关注模式下，则调用关注赛事列表
       if(!this.show_favorite_list){
@@ -469,7 +470,7 @@ export default {
         });
       } else {
         // 应该需要url回传参数才对
-        this.$router.push({name: 'home'});
+        useRoute()r.push({name: 'home'});
         this.set_sport_all_selected(false);
       }
     },

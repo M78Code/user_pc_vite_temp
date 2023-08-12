@@ -30,14 +30,14 @@
   // TODO: $emit 后续修改调整
   const handle_item_click = (tab, index) => {
       if(!isChange){
-        tab_index.value = index
+        tab_index = index
       }
       $emit('click', {tab, index})
     }
     // TODO: 暂时注释
-  // const changeTabIndex = (index) => { 
-  //     tab_index.value = index
-  //   }
+  const changeTabIndex = (index) => { 
+      tab_index = index
+    }
 </script>
 
 <style scoped lang="scss">

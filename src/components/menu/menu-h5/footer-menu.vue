@@ -9,7 +9,7 @@
       'scrolling-up':scroll_dir > 0,
       'scrolling-down':scroll_dir < 0,
   }">
-    <bet-bar v-if="get_betbar_show && $route.name == 'matchList'"></bet-bar>
+    <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar>
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
       <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
@@ -22,7 +22,7 @@
            :class="{
             'f-disabled-m':k == 0 && menu_type == 100,
             'sub-menu-first':k == 0,
-            'is-hidden':is_sub_first_hidden && k == 0 || !_.get(get_access_config, 'collectSwitch') && item.id == 1 || !_.get(get_access_config, 'filterSwitch') && !_.get(get_access_config, 'searchSwitch') && item.id == 3,
+            'is-hidden':is_sub_first_hidden && k == 0 || !lodash.get(get_access_config, 'collectSwitch') && item.id == 1 || !lodash.get(get_access_config, 'filterSwitch') && !lodash.get(get_access_config, 'searchSwitch') && item.id == 3,
             'effect-show':is_sub_first_effect && k == 0,
             'disabled':item.is_disabled,
             'is-follow': get_show_favorite_list && item.id == 1,
@@ -31,7 +31,7 @@
           <div class="item-img-wrapper"
                :class="{'effected':item.id == 4 && is_effecting_ref,
               'rotate-clock-wise':is_refreshing}">
-            <span class="menu-item-img" :class="[item.icon.slice(0,-4), menu_item_img(item),(_.get(get_user, 'favoriteButton')?'favoriteButton':'')]"></span>
+            <span class="menu-item-img" :class="[item.icon.slice(0,-4), menu_item_img(item),(lodash.get(get_user, 'favoriteButton')?'favoriteButton':'')]"></span>
           </div>
           <div class="menu-item-title"
                :class="{'theme02-focus':get_show_favorite_list && get_theme.includes('theme02') && item.id == 1,}"
@@ -63,7 +63,7 @@
         <div v-for="(sub_m,sub_i) of footer_sub_m_list" :key="sub_i"
              @touchstart.prevent.stop="sub_menu_changed(sub_m,sub_i)"
              class="wrapper column justify-center items-center"
-             v-show="(get_curr_sub_menu_type == 5 || sub_m.id != 114) && !(menu_type == 900 && sub_m.id == 114)"
+             v-show="((get_curr_sub_menu_type == 5 || sub_m.id != 114) && !([900,3000].includes(menu_type) && sub_m.id == 114)) && !(get_sport_all_selected && menu_type==1 && sub_m.id == 114)"
              :data-sid="sub_m.id" :data-mtype="get_curr_sub_menu_type" :data-cmtype="menu_type"
              :class="{
             'current_sub_menu':sub_i == sub_footer_menu_i,
@@ -92,6 +92,8 @@ import betBar from 'src/project/components/bet/bet-bar.vue';  // 投注栏收起
 import utils from "src/public/utils/utils";
 import { computed, onBeforeUnmount, onMounted, watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import lodash from 'lodash'
+import { useRoute, useRouter } from 'vue-router'
 
 // import { Platform } from 'quasar'
 
@@ -152,6 +154,9 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
     timer_super10: null,
   })
   set_show_match_filter(false)
+  // 路由
+  const route =  useRoute()
+  const router = useRouter()
 
 
   onMounted(() => {
@@ -174,7 +179,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
    */
   onBeforeUnmount(() => {
     clear_timer();
-    $root.$off(emit_cmd.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu)
+    $root.$off(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu)
   })
     // ...mapMutations([
     //   'set_goto_list_top', // 设置赛事列表回到顶部
@@ -202,29 +207,28 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
         if (type == '2' && jump_url.startsWith('http')) {
           window.open(calc_resources_obj.jump_url, '_blank')
         } else if (type == '1') {
-          if (/#*\/*details/.test(jump_url) && $route.name != 'category') {
+          if (/#*\/*details/.test(jump_url) && route.name != 'category') {
             const {groups: {mid, csid}} = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(jump_url) || {groups:{}}
             if (mid && csid) {
-               // 如果是电竞赛事，需要设置菜单类型
-              if ([100,101,102,103].includes(+csid)) { 
+              // 如果是电竞赛事，需要设置菜单类型
+              if ([100,101,102,103].includes(+csid)) {  
                 set_menu_type(3000)
               }
               set_goto_detail_matchid(mid);
               set_details_item(0);
-              $router.push({name:'category', params: {mid, csid}});
+              router.push({name:'category', params: {mid, csid}});
             }
           }
+          // 跳热门联赛
           if (jump_url.startsWith('hot') && !get_golistpage) { 
-            // 跳热门联赛
             let tid = jump_url.split('/')[1]
             let is_existtid = get_hot_list_item && get_hot_list_item.subList && get_hot_list_item.subList.find(item => {
               return item.field2 == tid
             })
             if (tid && is_existtid) {
-              // TODO: 后续修改调整
               set_home_tab_item({component: 'hot', index: 1, name: '热门'})
               set_hot_tab_item({field2: tid})
-              $router.push({name: 'home'})
+              router.push({name: 'home'})
             }
           }
         }
@@ -351,7 +355,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       }
       //关注
       else if(item.id === 1){
-        if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
+        if( !utils.judge_collectSwitch( lodash.get(get_access_config,'collectSwitch'),this ) ) return
         if(footer_clicked_handleing) return;
         footer_clicked_handleing = true;
         timer_object.timer5_ = setTimeout(() => {
@@ -376,7 +380,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       }
       //筛选
       else if(item.id === 3){
-        if(!_.get(get_access_config,'filterSwitch') && !_.get(get_access_config,'searchSwitch')){
+        if(!lodash.get(get_access_config,'filterSwitch') && !lodash.get(get_access_config,'searchSwitch')){
           $toast($root.$t(`common.temporarily_unavailable`), 2000)
           return
         }
@@ -409,8 +413,20 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
      * 虚拟体育禁用关注和筛选
      */
     const virtual_disable_follow_filter = () => {
-      //虚拟体育
+      // 赛果禁用筛选
       if(28 == menu_type){
+        footer_menulist.forEach(f_m => {
+          if(f_m.id == 3 && lodash.get(get_current_main_menu,'menuId') == 10000){
+            f_m.is_disabled = true;
+          }else{
+            f_m.is_disabled = false;
+          }
+          // 赛果关注 禁用
+          if(f_m.id === 1){
+            f_m.is_disabled = true;
+          }
+        });
+        //虚拟体育  暂时注释代码
         if([1001,1002,1004,1010,1011,1009].includes(get_curr_sub_menu_type)){
           footer_menulist.forEach(f_m => {
             if(f_m.id == 1){
@@ -418,6 +434,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
             }
           });
         }
+        
         if([100].includes(get_curr_sub_menu_type)){
           footer_menulist.forEach(f_m => {
             if(f_m.id == 3){
@@ -429,7 +446,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       else{
         footer_menulist.forEach(f_m => {
           // 电竞下冠军不可点击关注
-          if (f_m.id === 1 && menu_type === 3000 && _.get(get_current_menu, 'date_menu.menuType') == 100) {
+          if (f_m.id === 1 && menu_type === 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
             f_m.is_disabled = true
           } else {
             if(f_m.id == 3&& get_show_favorite_list){
@@ -438,6 +455,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
               f_m.is_disabled = false
             }
           }
+          // 电竞放开 筛选
           if(f_m.id === 3 && menu_type === 3000){
             f_m.is_disabled = true
           }
@@ -452,57 +470,60 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
      */
     const set_footer_menulist = () => {
       let is_virtual = menu_type == 900;
-      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type); // 赛果虚拟体育
+      // 赛果虚拟体育
+      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type); 
       let is_saiguo_gz = menu_type == 28 && [100].includes(get_curr_sub_menu_type)
       let is_electronicSports = menu_type == 3000  // 电竞
       // console.error(is_virtual, is_saiguo_gz,get_show_favorite_list);
-      footer_menulist = [
-        // 玩法菜单(独赢|大小|让球|角球等)
-        {
-          title:$root.$t('footer_menu.win_alone'),
-          title1:get_lang == 'en'?"":$root.$t('footer_menu.play_way_f'),
-          icon:'f-icon-sub-duying.svg',
-          icon_black:'f-icon-sub-duying-black.svg',
-          id:0,
-          is_disabled:false,
-        },
-        // 关注
-        {
-          title:$root.$t('footer_menu.follow'),
-          icon0:'f-icon-follow.svg',
-          icon:get_show_favorite_list ? 'f-icon-follow1.svg' : 'f-icon-follow.svg',
-          icon1:'f-icon-follow1.svg',
-          icon_black:'f-icon-follow-black.svg',
-          icon_black_fav:'f-icon-follow1-black.svg',
-          icon2:'f-icon-follow-black.svg',
-          id:1,
-          is_disabled:is_virtual || is_result_virtual ||  menu_type == 28 ,
-        },
-        // 注单
-        {
-          title:$root.$t('footer_menu.bet_order'),
-          icon:'f-icon-bet-order.svg',
-          icon_black:'f-icon-bet-order-black.svg',
-          id:2,
-          is_disabled:false,
-        },
-        //筛选
-        {
-          title:$root.$t('footer_menu.filter'),
-          icon:'f-icon-filter.svg',
-          icon_black:'f-icon-filter-black.svg',
-          id:3,
-          is_disabled:is_virtual || is_saiguo_gz || get_show_favorite_list || is_electronicSports,
-        },
-        // 刷新
-        {
-          title:$root.$t('footer_menu.refresh'),
-          icon:'f-icon-refresh.svg',
-          icon_black:'f-icon-refresh-black.svg',
-          id:4,
-          is_disabled:false,
-        }
-      ];
+      if(init_footer_menulist_data){
+        footer_menulist = [
+          // 玩法菜单(独赢|大小|让球|角球等)
+          {
+            title:$root.$t('footer_menu.win_alone'),
+            title1:get_lang == 'en'?"":$root.$t('footer_menu.play_way_f'),
+            icon:'f-icon-sub-duying.svg',
+            icon_black:'f-icon-sub-duying-black.svg',
+            id:0,
+            is_disabled:false,
+          },
+          // 关注
+          {
+            title:$root.$t('footer_menu.follow'),
+            icon0:'f-icon-follow.svg',
+            icon:get_show_favorite_list ? 'f-icon-follow1.svg' : 'f-icon-follow.svg',
+            icon1:'f-icon-follow1.svg',
+            icon_black:'f-icon-follow-black.svg',
+            icon_black_fav:'f-icon-follow1-black.svg',
+            icon2:'f-icon-follow-black.svg',
+            id:1,
+            is_disabled:is_virtual || is_result_virtual ||  menu_type == 28 ,
+          },
+          // 注单
+          {
+            title:$root.$t('footer_menu.bet_order'),
+            icon:'f-icon-bet-order.svg',
+            icon_black:'f-icon-bet-order-black.svg',
+            id:2,
+            is_disabled:false,
+          },
+          //筛选
+          {
+            title:$root.$t('footer_menu.filter'),
+            icon:'f-icon-filter.svg',
+            icon_black:'f-icon-filter-black.svg',
+            id:3,
+            is_disabled:is_virtual || is_saiguo_gz || get_show_favorite_list || is_electronicSports,
+          },
+          // 刷新
+          {
+            title:$root.$t('footer_menu.refresh'),
+            icon:'f-icon-refresh.svg',
+            icon_black:'f-icon-refresh-black.svg',
+            id:4,
+            is_disabled:false,
+          }
+        ];
+      }
       $forceUpdate()
     }
     // 批量清除定时器
@@ -557,12 +578,12 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
     const bottom_option_show = computed(() => {
       return function (item) {
         return !(
-            (menu_type == 3000 && _.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
+            (menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
         )
       }
     })
     // 今日 串关 早盘 筛选时，要高亮
-    const constmenu_item_img = computed(() => {
+    const menu_item_img = computed(() => {
       return function (item) {
         let obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
         if(get_theme.includes('y0')) obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
@@ -577,7 +598,8 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
           icon1:'f-icon-sub-duying-black.svg',
-          id:1   // hpid 独赢
+          // hpid 独赢
+          id:1   
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':$root.$t('footer_menu.full_time'),
@@ -585,7 +607,8 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
           icon1:'f-icon-sub-rang-black.svg',
-          id:4    // hpid 让球
+           // hpid 让球
+          id:4   
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':$root.$t('footer_menu.full_time'),
@@ -593,7 +616,8 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',
           icon1:'f-icon-sub-daxiao-black.svg',
-          id:2  // hpid 大小
+          // hpid 大小
+          id:2  
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':$root.$t('footer_menu.corner_kick'),
@@ -601,7 +625,8 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
           icon0:'f-icon-sub-jiaoqiu0.svg',
           icon:'f-icon-sub-jiaoqiu.svg',
           icon1:'f-icon-sub-jiaoqiu-black.svg',
-          id:114  // hpid 角球
+          // hpid 角球
+          id:114  
         }
       ]
     })
@@ -618,6 +643,19 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       return false;
     })
   // },
+   /**
+     * 滚球菜单是否选中全部菜单变化
+     */
+    watch(() => get_sport_all_selected, (val) => {
+      // 简版时滚球菜单选中全部菜单时
+      if(get_newer_standard_edition == 1 &&val && menu_type==1){
+        let sub_menu = footer_sub_m_list[sub_footer_menu_i];
+        if( lodash.get(sub_menu,'id') == 114){
+          // 当时菜单是角球时设置菜单为独赢
+          sub_menu_changed(footer_sub_m_list[0],0);
+        }
+      }
+    })
     /**
      * 通过列表滚动决定页脚菜单显示/隐藏
      */
@@ -663,7 +701,8 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
     watch(() => get_curr_sub_menu_type, (new_v) => {
       init_play_way_selected();
       // 32014 确定每次点击菜单 都重置为独赢
-      // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){ //赛马 摩托车 泥地摩托车强制改为独赢
+      // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){
+         //赛马 摩托车 泥地摩托车强制改为独赢
       let p_i = 0;
       sub_menu_changed(footer_sub_m_list[p_i],p_i);
       // }
