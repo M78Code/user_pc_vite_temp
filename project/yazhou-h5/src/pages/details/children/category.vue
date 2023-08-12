@@ -90,6 +90,8 @@ import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
 // 精选赛事
 import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import { uid } from "quasar"
+import lodash from "lodash";
+import { useRouter, useRoute } from "vue-router";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "category",
@@ -103,6 +105,8 @@ export default defineComponent({
   },
   props: {},
   setup(props, evnet) {
+    const router = useRouter()
+    const route = useRoute()
     const data = reactive({
       // 加载数据的效果
       is_loading: true,
@@ -145,7 +149,7 @@ export default defineComponent({
     const show_recommend = computed(() => {
       let flag = false;
       if(!is_loading && is_no_data){
-        if($route.name != 'match_result'){
+        if(route.name != 'match_result'){
           if(get_details_item){ //当前玩法下无数据就显示
             flag = true;
           }
@@ -163,10 +167,10 @@ export default defineComponent({
     });
     // 赛事id
     const match_id = computed(() => {
-      return  get_goto_detail_matchid || get_detail_data.mid || $route.params.mid
+      return  get_goto_detail_matchid || get_detail_data.mid || route.params.mid
     });
     watch(
-      () => $route,
+      () => route,
       (to, from) => {
         // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
         if (
@@ -224,7 +228,7 @@ export default defineComponent({
       // 满足刷新页面保持向上展开的状态
       set_fewer(1);
       // 只有赛果详情才调用相应接口
-      if (get_menu_type === 28 && $route.name === 'match_result') {
+      if (get_menu_type === 28 && route.name === 'match_result') {
         initEvent().then(() => {
           // 获取赛果数据后，滑动到顶部
           document.querySelector('.match-header-result').scrollTop = 0
@@ -233,7 +237,7 @@ export default defineComponent({
 
 
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
-      if(!['result_details', 'match_result'].includes($route.name)){
+      if(!['result_details', 'match_result'].includes(route.name)){
         socket_upd_list = debounce(socket_upd_list, 500);
 
         /*// 调用接口的参数
@@ -354,7 +358,7 @@ export default defineComponent({
 
     // 获取vuex中tab切换的玩法集数据，根据玩法集plays对应到所有数据hpid即可过滤数据。
     const get_details_data_cache_fillter = (all_data) => {
-      const mcid =  get_details_item || ($route.params.csid?'':$route.params.mcid)
+      const mcid =  get_details_item || (route.params.csid?'':route.params.mcid)
       const findItme = get_details_tabs_list.find( item=>item.id == mcid )
       // console.log(findItme,"findItme");
       const { plays= [],round='' } = findItme
@@ -398,7 +402,7 @@ export default defineComponent({
 
       let params = {
         // 赛果，赛果详情默认采用0，即是拉取所有的赛果
-        // mcid: ['result_details', 'match_result'].includes($route.name) ? 0 : get_details_item || ($route.params.csid?'':$route.params.mcid), // 玩法集id
+        // mcid: ['result_details', 'match_result'].includes(route.name) ? 0 : get_details_item || (route.params.csid?'':route.params.mcid), // 玩法集id
         // 2023/3/4 普通赛事,电竞详情拉取所有玩法集数据
         mcid:0,
         mid: match_id, // 赛事id
@@ -421,7 +425,7 @@ export default defineComponent({
       }
       // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口
       //赛果页面调用赛果玩法详情接口
-      let http = ['result_details', 'match_result'].includes($route.name) ? api_result.get_match_result :
+      let http = ['result_details', 'match_result'].includes(route.name) ? api_result.get_match_result :
           (get_menu_type == 3000 ? api_common.get_DJ_matchDetail_getMatchOddsInfo : api_common.get_matchDetail_getMatchOddsInfo)
       send_gcuuid = uid();
       params.gcuuid = send_gcuuid;
@@ -434,7 +438,7 @@ export default defineComponent({
       // 将要设置vuex中的详情玩法数据
       const details_data_cache = {}
       // 切换玩法集的时候先去判断历史的玩法集是否有数据，有数据则拦截返回 get_details_data_cache 中所有投注得信息，没有则继续请求
-      if( !to_refresh &&  !['result_details', 'match_result'].includes($route.name) && Object.keys(get_details_data_cache).length && get_details_data_cache[`${match_id}-0`] && get_details_data_cache[`${match_id}-0`].length ){
+      if( !to_refresh &&  !['result_details', 'match_result'].includes(route.name) && Object.keys(get_details_data_cache).length && get_details_data_cache[`${match_id}-0`] && get_details_data_cache[`${match_id}-0`].length ){
         // 将 get_details_data_cache 中所有投注得信息的数据给details_data_cache
         details_data_cache[`${match_id}-0`] = JSON.parse(JSON.stringify(get_details_data_cache[`${match_id}-0`]))
         temp = get_details_data_cache_fillter(details_data_cache[`${match_id}-0`])
@@ -463,14 +467,14 @@ export default defineComponent({
             return;
           }
           first_load = false;
-          if(!_.get(res,'data') || _.get(res,'data.length') == 0){
+          if(!lodash.get(res,'data') || lodash.get(res,'data.length') == 0){
             is_loading = false;
             is_no_data = true;
             return;
           }
           
           is_no_data = false;
-          const data = _.get(res, 'data');
+          const data = lodash.get(res, 'data');
           details_data_cache[`${match_id}-0`] = data
           // chipid进行处理
           const chpid_obj = {}
@@ -482,7 +486,7 @@ export default defineComponent({
           // console.log(chpid_obj,"chpid_obj");
           set_chpid_obj(chpid_obj)
           
-          if (['result_details', 'match_result'].includes($route.name)) {
+          if (['result_details', 'match_result'].includes(route.name)) {
             temp = details_data_cache[`${match_id}-0`]
           } else {
             temp = get_details_data_cache_fillter(details_data_cache[`${match_id}-0`])
@@ -507,9 +511,9 @@ export default defineComponent({
           playlist_length = temp.length;
           temp.forEach(item => {
             // 盘口赔率同级别增加赛事类编号csid
-            if(_.isArray(item.hl)){
+            if(lodash.isArray(item.hl)){
               item.hl.forEach(hls_array => {
-                if(_.isArray(hls_array.ol)){
+                if(lodash.isArray(hls_array.ol)){
                   hls_array.ol.forEach(ol_item => {
                     ol_item.csid = get_detail_data.csid;
                   });
@@ -536,7 +540,7 @@ export default defineComponent({
         }else{
           is_loading = false;
         }
-        if(!['result_details', 'match_result'].includes($route.name)){
+        if(!['result_details', 'match_result'].includes(route.name)){
           // #TODO emit 
           // $root.$emit(emit_cmd.EMIT_MATCHINFO_LOADING, true)
         }
@@ -544,7 +548,7 @@ export default defineComponent({
 
         // 当前赛事对应玩法集存在缓存数据
         if (tabs_active_data_cache) {
-          matchInfoCtr.setList(_.cloneDeep(tabs_active_data_cache))
+          matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
         } else {
           // 无数据
           is_no_data = true;
@@ -555,12 +559,12 @@ export default defineComponent({
       // return http(params).then(res => {
       //   if(send_gcuuid != res.gcuuid) return;
       //   first_load = false;
-      //   if(!_.get(res,'data') || _.get(res,'data.length') == 0){
+      //   if(!lodash.get(res,'data') || lodash.get(res,'data.length') == 0){
       //     return;
       //   }
       //   is_no_data = false;
 
-      //   let temp = _.get(res, 'data');
+      //   let temp = lodash.get(res, 'data');
       //   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
       //   //投注框初始状态或者锁盘时才跟新数据
       //   if(get_bet_status == 1 || get_bet_status ==7 || get_bet_status == 5){
@@ -574,9 +578,9 @@ export default defineComponent({
       //     playlist_length = temp.length;
       //     temp.forEach(item => {
       //       // 盘口赔率同级别增加赛事类编号csid
-      //       if(_.isArray(item.hl)){
+      //       if(lodash.isArray(item.hl)){
       //         item.hl.forEach(hls_array => {
-      //           if(_.isArray(hls_array.ol)){
+      //           if(lodash.isArray(hls_array.ol)){
       //             hls_array.ol.forEach(ol_item => {
       //               ol_item.csid = get_detail_data.csid;
       //             });
@@ -599,14 +603,14 @@ export default defineComponent({
       //   })
       //   .finally(() => {
       //     is_loading = false;
-      //     if(!['result_details', 'match_result'].includes($route.name)){
+      //     if(!['result_details', 'match_result'].includes(route.name)){
       //       $root.$emit(emit_cmd.EMIT_MATCHINFO_LOADING, true)
       //     }
       //     const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item}`]
 
       //     // 当前赛事对应玩法集存在缓存数据
       //     if (tabs_active_data_cache) {
-      //       matchInfoCtr.setList(_.cloneDeep(tabs_active_data_cache))
+      //       matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
       //     } else {
       //       // 无数据
       //       is_no_data = true;
@@ -648,7 +652,7 @@ export default defineComponent({
     const axios_api_loop = async({axios_api,params,fun_then=null,fun_catch=null,max_loop=3,timers=1000, loop_count=0,timer=0,new_params}) => {
       // loop_count 当前循环次数(只在内部回调时使用)
       // timer 异常调用时延时器对象(只在内部回调时使用)
-      // console.log({msg:'axios_api_loop',params,new_params,v:_.isEqual(params, new_params)}); // 比较新老参数方法
+      // console.log({msg:'axios_api_loop',params,new_params,v:lodash.isEqual(params, new_params)}); // 比较新老参数方法
       // todo 传进来的params直接干掉,新的param直接在这里调用方法生成
 
       return new Promise((resolve,reject) => {
@@ -710,11 +714,11 @@ export default defineComponent({
         params.isESport = null
       }
       // 如果不是赛果多加上一个参数
-      if(!['result_details', 'match_result'].includes($route.name)){
+      if(!['result_details', 'match_result'].includes(route.name)){
         params.showType = '2'
       }
       //赛果页面调用赛果玩法详情接口
-      let http = ['result_details', 'match_result'].includes($route.name) ? api_result.get_match_result :
+      let http = ['result_details', 'match_result'].includes(route.name) ? api_result.get_match_result :
           (get_menu_type == 3000 ? api_common.get_DJ_matchDetail_getMatchOddsInfo : api_common.get_matchDetail_getMatchOddsInfo)
       send_gcuuid = uid();
       params.gcuuid = send_gcuuid;
@@ -726,7 +730,7 @@ export default defineComponent({
           return;
         }
         is_no_data = false;
-        var temp = _.get(res, 'data');
+        var temp = lodash.get(res, 'data');
         //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
         if(get_bet_status == 1 || get_bet_status == 7 || get_bet_status == 5){
           update_ol(null, temp)
@@ -739,9 +743,9 @@ export default defineComponent({
           playlist_length = temp.length;
           temp.forEach(item => {
             // 盘口赔率同级别增加赛事类编号csid
-            if(_.isArray(item.hl)){
+            if(lodash.isArray(item.hl)){
               item.hl.forEach(hls_array => {
-                if(_.isArray(hls_array.ol)){
+                if(lodash.isArray(hls_array.ol)){
                   hls_array.ol.forEach(ol_item => {
                     ol_item.csid = get_detail_data.csid;
                   });
@@ -767,7 +771,7 @@ export default defineComponent({
 
           // 当前赛事对应玩法集存在缓存数据
           if (tabs_active_data_cache) {
-            matchInfoCtr.setList(_.cloneDeep(tabs_active_data_cache))
+            matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
           } else {
             // 无数据
             is_no_data = true;
@@ -780,17 +784,17 @@ export default defineComponent({
       let middle_data = null;
       if(list_old)
       {
-        middle_data = _.cloneDeep(list_old);
+        middle_data = lodash.cloneDeep(list_old);
       } else {
-        middle_data = _.cloneDeep(matchInfoCtr.list);
+        middle_data = lodash.cloneDeep(matchInfoCtr.list);
       }
       let middle_obj = {}
-      _.forEach(middle_data, (item) =>{
+      lodash.forEach(middle_data, (item) =>{
         middle_obj[item.hpid+ '-' +item.hpn] = [{
           hshow: item.hshow
         }]
       })
-      _.forEach(temp, item=>{
+      lodash.forEach(temp, item=>{
         if(middle_obj.hasOwnProperty(item.hpid+'-'+item.hpn)){
           Object.assign(item, middle_obj[item.hpid+ '-' +item.hpn][0]);
         }
@@ -816,9 +820,9 @@ export default defineComponent({
           playlist_length = data.length;
           data.forEach(item => {
             // 盘口赔率同级别增加赛事类编号csid
-            if(_.isArray(item.hl)){
+            if(lodash.isArray(item.hl)){
               item.hl.forEach(hls_array => {
-                if(_.isArray(hls_array.ol)){
+                if(lodash.isArray(hls_array.ol)){
                   hls_array.ol.forEach(ol_item => {
                     ol_item.csid = get_detail_data.csid;
                   });
@@ -829,7 +833,7 @@ export default defineComponent({
             listItemAddCustomAttr(item)
           });
         }
-        matchInfoCtr.setList(_.cloneDeep(data));
+        matchInfoCtr.setList(lodash.cloneDeep(data));
       }
       return cach_string;
     };

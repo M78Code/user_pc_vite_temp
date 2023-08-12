@@ -1,63 +1,174 @@
 /*
- * @Author: lockie
- * @Date: 2023-07-05 13:12:04
- * @FilePath: \user-pc-vue3\src\store-redux-vuex\module\betInfo.js
  * @Description: 投注信息管理器
  */
 const initialState = {
-  orderDetailList: [{
-    sportId: '',
-    matchId: '',
-    tournamentId: '',
-    scoreBenchmark: '',  //比分
-    marketId: '', //盘口ID
-    playOptionsId: '', //投注项id
-    marketTypeFinally: '',  // 欧洲版默认是欧洲盘 HK代表香港盘
-    odds: null,  //十万位赔率
-    oddFinally: null, //最终赔率
-    playName: '', //玩法名称
-    sportName: '', //球种名称
-    matchType: '',  //赛事类型
-    matchName: '', //赛事名称
-    playOptionName: '',
-    playOptions: '',
-    tournamentLevel: '', //联赛级别
-    playId: null, //玩法ID
-    dataSource: '', //数据源
-    home: '', //主队名称
-    away: '', //客队名称
-  }], // 投注信息
-  current_check_betId: null,
-  betFooterInfo: {
-    bet_state: false, // 投注状态 是否投注
-    state: false, // 投注框底部状态
-    title:'', // 投注信息展示
-  },
-  bet_layer_state:false, // 投注窗盘口信息状态 
-  bet_show_state:false, // 投注窗状态 
-  tip_show_state:false, // 投注窗状态 
+  // 押注信息列表
+  bet_list: [],
+  // 押注扁平化对象扁平
+  bet_obj: {},
+
+  // 串关信息列表
+  bet_s_list: [],
+  // 串关对象扁平化
+  bet_s_obj: {},
+
+  bet_single_list: [],
+  //单关投注对象
+  bet_single_obj: {},
+  // true: 单关投注 false: 串关投注
+  is_bet_single: true,
+  // 是否正在处理投注
+  is_handle: false,
+  // 单关 是否正在处理投注
+  is_single_handle: false,
+  // 菜单是否改变
+  menu_change: false,
+  // 选择的选项
+  menu_obj: {},
+  // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+  bet_mode: -1,
+  // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
+  bet_item_lock: false,
+  // 当前是否为虚拟投注
+  is_virtual_bet: true,
+  // 虚拟投注是否正在进行
+  is_virtual_handle: false,
+  // 虚拟投注列表
+  virtual_bet_list: [],
+  // 虚拟投注对象
+  virtual_bet_obj: {},
+  // 虚拟体育串关列表
+  virtual_bet_s_list: [],
+  // 虚拟体育串关列表对象
+  virtual_bet_s_obj: {},
+  // 虚拟体育投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+  virtual_bet_mode: -1,
+  // 虚拟体育错误信息
+  virtual_error_info: {},
+  // 左侧菜单的切换状态 true: 展开 false: 收缩
+  left_menu_toggle: true,
+  // 当前电竞查询的模式 false单关模式
+  cur_esports_mode: false,
+  // 是否为合并模式
+  is_bet_merge: false,
+  // 投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
+  bet_category: 1,
+  // 最小串关数
+  mix_min_count: 2,
+  // 最大串关数
+  mix_max_count: 10,
+  // 被预约的投注项id
+  bet_appoint_obj: null,
+  /* bet_appoint_odds_value: null,
+  bet_appoint_ball_head: null */
+  //需要预约的盘口
+  pre_bet_list: null,
+  //输入框最小值 备注 (预约投注用)
+  pre_min_odd_value: -1,
+  //聊天室来源跟单盘口状况eu
+  chat_room_type: '',
+  // 记录投注金额
+  bet_current_money_obj: {},
 };
 
 export default function betInfoReducer(state = initialState, action) {
   switch (action.type) {
-     // 保存投注信息
-    case "SET_BET_INFO":
-      return {...state, orderDetailList: action.data };
-    // 当前选中的赔率id 用于全局互斥 卡片高亮
-    case "SET_BET_ID":
-      return {...state, current_check_betId: action.data };
-    // 投注信息展示
-    case "SET_BET_FOOTER_INFO":
-      return {...state, betFooterInfo: action.data };
-    // 投注窗盘口信息状态
-    case "SET_BET_LAYER_STATE":
-      return {...state, bet_layer_state: action.data };
-       // 投注窗头部状态
-    case "SET_BET_SHOW_STATE":
-      return {...state, bet_show_state: action.data };
-       // 投注窗头部状态
-    case "TIP_SHOW_STATE":
-      return {...state, tip_show_state: action.data };
+    //  押注信息列表
+    case "set_bet_list":
+      return { ...state, bet_list: action.data };
+    // 押注扁平化对象扁平
+    case "set_bet_obj":
+      return { ...state, bet_obj: action.data };
+    // 串关信息列表
+    case "set_bet_s_list":
+      return { ...state, bet_s_list: action.data };
+    // 串关对象扁平化
+    case "set_bet_s_obj":
+      return { ...state, bet_s_obj: action.data };
+    //
+    case "set_bet_single_list":
+      return { ...state, bet_single_list: action.data };
+    // 单关投注对象
+    case "set_bet_single_obj":
+      return { ...state, bet_single_obj: action.data };
+    // true: 单关投注 false: 串关投注
+    case "set_is_bet_single":
+      return { ...state, is_bet_single: action.data };
+    // 是否正在处理投注
+    case "set_is_handle":
+      return { ...state, is_handle: action.data }
+    //  单关 是否正在处理投注
+    case "set_is_single_handle":
+      return { ...state, is_single_handle: action.data };
+    //  菜单是否改变
+    case "set_menu_change":
+      return { ...state, menu_change: action.data };
+    //  选择的选项
+    case "set_menu_obj":
+      return { ...state, menu_obj: action.data };
+    //  投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+    case "set_bet_mode":
+      return { ...state, bet_mode: action.data };
+    // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
+    case "set_bet_item_lock":
+      return { ...state, bet_item_lock: action.data };
+    // 当前是否为虚拟投注
+    case "set_is_virtual_bet":
+      return { ...state, is_virtual_bet: action.data };
+    // 虚拟投注是否正在进行
+    case "set_is_virtual_handle":
+      return { ...state, is_virtual_handle: action.data };
+    //  虚拟投注列表
+    case "set_virtual_bet_list":
+      return { ...state, virtual_bet_list: action.data };
+    //  虚拟投注对象
+    case "set_virtual_bet_obj":
+      return { ...state, virtual_bet_obj: action.data };
+    // 虚拟体育串关列表
+    case "set_virtual_bet_s_list":
+      return { ...state, virtual_bet_s_list: action.data };
+    // 虚拟体育串关列表对象
+    case "set_virtual_bet_s_obj":
+      return { ...state, virtual_bet_s_obj: action.data };
+    // 拟体育投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+    case "set_virtual_bet_mode":
+      return { ...state, virtual_bet_mode: action.data };
+    //  虚拟体育错误信息
+    case "set_virtual_error_info":
+      return { ...state, virtual_error_info: action.data };
+    // 左侧菜单的切换状态 true: 展开 false: 收缩
+    case "set_left_menu_toggle":
+      return { ...state, left_menu_toggle: action.data };
+    //  当前电竞查询的模式 false单关模式
+    case "set_cur_esports_mode":
+      return { ...state, cur_esports_mode: action.data };
+    //  是否为合并模式
+    case "set_is_bet_merge":
+      return { ...state, is_bet_merge: action.data };
+    //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
+    case "set_bet_category":
+      return { ...state, bet_category: action.data };
+    // 最小串关数
+    case "set_mix_min_count":
+      return { ...state, mix_min_count: action.data };
+    //  最大串关数
+    case "set_mix_max_count":
+      return { ...state, mix_max_count: action.data };
+    // 被预约的投注项id
+    case "set_bet_appoint_obj":
+      return { ...state, bet_appoint_obj: action.data };
+    // 需要预约的盘口
+    case "set_pre_bet_list":
+      return { ...state, pre_bet_list: action.data };
+    // 输入框最小值 备注 (预约投注用)
+    case "set_pre_min_odd_value":
+      return { ...state, pre_min_odd_value: action.data };
+    // 聊天室来源跟单盘口状况eu
+    case "set_chat_room_type":
+      return { ...state, chat_room_type: action.data };
+    // 记录投注金额
+    case "set_bet_current_money_obj":
+      return { ...state, bet_current_money_obj: action.data };
     default:
       return state;
   }

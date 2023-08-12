@@ -1,8 +1,7 @@
-import { api_common } from "src/public/api/index.js";
+import { api_common } from "src/api/index.js";
 import BaseUserInfo from "src/core/utils/user/base-user-info.js";
 import { get } from "lodash";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
-
 const initialState = {
   version_name: "zhuanye",
   // 当前网站是否处于后台运行中
@@ -68,7 +67,7 @@ const initialState = {
   is_fold_status: true,
   champion_fold_obj: {},
 };
-export function globalReducer(state = initialState, action) {
+export default function globalReducer(state = initialState, action) {
   switch (action.type) {
     //设置保存的滚动数据
     case "SET_RETAIN_SCROLL_OBJ":
@@ -85,6 +84,7 @@ export function globalReducer(state = initialState, action) {
       return { ...state, menu_special_choose: action.data };
     // //设置服务器时间
     case "SET_REMOTE_SERVER_TIME":
+      console.log("set_remote_server_time----", action);
       return {
         ...state,
         timestamp: {
@@ -104,7 +104,7 @@ export function globalReducer(state = initialState, action) {
         odds: { pre_odds, cur_odds },
       };
     // // 设置上次盘口偏好
-    case set_pre_odd:
+    case "SET_PRE_ODD":
       localStorage.setItem("pre_odds", action.data);
       return {
         ...state,
@@ -179,6 +179,8 @@ export function globalReducer(state = initialState, action) {
     //设置冠军卡片收起展开
     case "SET_CHAMPION_FOLD":
       return { ...state, champion_fold_obj: state.data };
+    default:
+      return { ...state };
   }
 }
 //获取服务器时间
@@ -189,7 +191,7 @@ export const set_remote_server_time = () => {
     if (code == 200) {
       let serverTime = Number(get(res, "data.data"));
       dispatch({
-        type: "set_remote_server_time",
+        type: "SET_REMOTE_SERVER_TIME",
         data: serverTime,
       });
     }

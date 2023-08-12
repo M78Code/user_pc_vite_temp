@@ -55,6 +55,9 @@ import {api_v_sports} from 'src/project/api/index.js'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
 import VSport from 'src/public/utils/vsport/vsport.js';
 
+import lodash from "lodash";
+import { useRouter, useRoute } from "vue-router";
+
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
@@ -68,6 +71,8 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
+    const router = useRouter()
+    const route = useRoute()
     const data = reactive({
       vsport_operate:null,
       match_of_video:null,
@@ -126,15 +131,15 @@ export default defineComponent({
       // }
 
       //获取赛事详情数据
-      let mid_ = $route.query && $route.query.mid;
+      let mid_ = route.query && route.query.mid;
       mid = mid_;
       if(mid_) set_goto_detail_matchid(mid_);
       let parma = {
         mid: matchid || mid_,
       }
       api_v_sports.get_virtual_match_detail(parma).then(res => {
-        let code = _.get(res,'code');
-        let data = _.get(res,'data');
+        let code = lodash.get(res,'code');
+        let data = lodash.get(res,'data');
         if(code == 200 && data){
           init_match_fields(data);
           match = data;
@@ -233,17 +238,17 @@ export default defineComponent({
      * 初始化视频进程数据
      */
     const init_video_play_status = (video_p_data) => {
-      if(sub_menu_type == 1004 && (current_match.mmp == 'PREGAME' || $route.query.i != 0)){
+      if(sub_menu_type == 1004 && (current_match.mmp == 'PREGAME' || route.query.i != 0)){
         return
       }
       if(video_p_data){
-        let match_mid = $route.query.mid
+        let match_mid = route.query.mid
         if(video_p_data.detail){
           let m_o_video = video_p_data.detail[match_mid];
           if(!m_o_video) return;
           if(current_match && (current_match.batchNo == m_o_video.batchNo ||
             current_match.mid == m_o_video.mid) ){
-            Object.assign(current_match,_.cloneDeep(m_o_video));
+            Object.assign(current_match,lodash.cloneDeep(m_o_video));
           }
           if(current_match){
             current_match.start_now_sub = Number(current_match.mgt) - get_now_server();
@@ -291,7 +296,7 @@ export default defineComponent({
 
               if(!detail_setted){
                 detail_setted = true;
-                set_current_gotodetail_match(_.cloneDeep(current_match));
+                set_current_gotodetail_match(lodash.cloneDeep(current_match));
               }
 
             });
@@ -310,7 +315,7 @@ export default defineComponent({
       //篮球滚球倒计时结束拉取视频接口
       if(sub_menu_type == 1004){
         // 如果是滚球状态,并且是列表的第一场赛事,进入详情页要播放视频
-        if(current_match.mmp == "INGAME" && $route.query.i == 0){
+        if(current_match.mmp == "INGAME" && route.query.i == 0){
           // 播放视频
           get_video_process_by_api(() => {
             init_video_play_status(video_process_data);
@@ -333,7 +338,7 @@ export default defineComponent({
       // #TODO vue 
       // let match = window.vue.process_changing_match;
       let match = "";
-      if(match && match.mid == $route.query.mid){
+      if(match && match.mid == route.query.mid){
         current_match = match;
         set_current_sub_menuid(current_match.csid);
         let detail_setted = false;
@@ -373,7 +378,7 @@ export default defineComponent({
           }
           if(!detail_setted){
             detail_setted = true;
-            set_current_gotodetail_match(_.cloneDeep(current_match));
+            set_current_gotodetail_match(lodash.cloneDeep(current_match));
           }
         });
 
