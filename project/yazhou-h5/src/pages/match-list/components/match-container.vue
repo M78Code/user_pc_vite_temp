@@ -461,6 +461,8 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
   animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'src/boot/local-image'
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
+import { useRouter, useRoute } from 'vue-router'
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import counting_timer from 'src/project/components/common/counting-down.vue';
 import counting_down_start from 'src/project/components/common/counting_down_start.vue';
 import no_data from "src/project/components/common/no_data.vue";
@@ -468,7 +470,6 @@ import score_list from 'src/project/pages/match-list/components/score_list.vue';
 import odd_list_wrap from 'src/project/pages/match-list/components/odd_list_wrap.vue';
 import match_overtime_pen from 'src/project/pages/match-list/components/match_overtime_pen.vue'
 import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
-
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -485,6 +486,9 @@ const props = defineProps({
   main_source:String,
 })
 
+const router = useRouter()
+const route = useRoute()
+const emitters = ref({})
 const store_state = store.getState()
 const timer_super11 = ref(null)
 const match_change_timer = ref(null)
@@ -566,7 +570,9 @@ onMounted(() => {
   clear_timer();
   run_new_init_timer();
   score_value();
-  $root.$on(emit_cmd.EMIT_SET_SCROLL_TOP, set_scroll_top);
+  emitters.value = {
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
+  }
   match_period_map(match);
   media_button_button_type_check()
 })
@@ -985,7 +991,7 @@ const media_button_handle_when_muUrl = () => {
   goto_details(match);
 }
 const leaderboard_switch = () => {
-  $root.$emit(emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH)
+  useMittEmit(MITT_KEY.EMIT_HOT_LEADERBOARD_SWITCH)
 }
 const is_show_result = () => {
   let r = false;
@@ -1274,14 +1280,14 @@ const goto_details = (match, flag) => {
   store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: match });
 
   if (get_current_menu && get_current_menu.main && is_show_result()) {
-    $router.push(`/result_details/${match.mid}/0`);
+    router.push(`/result_details/${match.mid}/0`);
   }
   else {
-    if ($route.name == "category") {
-      $router.push({ name: 'category_loading', params: { mid: match.mid } });
+    if (route.name == "category") {
+      router.push({ name: 'category_loading', params: { mid: match.mid } });
     }
     else {
-      $router.push({ name: 'category', params: { analysis: flag ? true : false, mid: match.mid, csid: match.csid } });
+      router.push({ name: 'category', params: { analysis: flag ? true : false, mid: match.mid, csid: match.csid } });
     }
   }
 }
@@ -1615,7 +1621,7 @@ const unsubscribe = store.subscribe(() => {
 
 onUnmounted(() => {
   unsubscribe()
-  $root.$off(emit_cmd.EMIT_SET_SCROLL_TOP, set_scroll_top);
+  Object.values(emitters.value).map((x) => x())
   clear_timer();
 })
 
