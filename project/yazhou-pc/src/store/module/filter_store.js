@@ -23,7 +23,7 @@ export default function filterReducer(state = initialState, action) {
     //保存显示搜索组件状态
     case "set_show_filter_popup":
       return { ...state, show_filter_popup: action.data };
-       //保存选择的筛选数据
+    //保存选择的筛选数据
     case "set_filter_select_obj":
       const params = {
         checked_count: action.data.length,
@@ -31,27 +31,31 @@ export default function filterReducer(state = initialState, action) {
         pre_filter_select_obj: action.data,
       };
       return { ...state, ...params };
-      //设置联赛筛选全选状态
+    //设置联赛筛选全选状态
     case "set_filter_checked_all":
       const obj = {
-        pre_filter_checked_all:state.filter_checked_all,
+        pre_filter_checked_all: state.filter_checked_all,
         filter_checked_all: action.data,
       };
       return { ...state, ...obj };
-       //清空筛选数据 设置全选
+    //清空筛选数据 设置全选
     case "set_remove_filter_condition":
       const obj_ = {
-        filter_select_obj:[],
+        filter_select_obj: [],
         filter_checked_all: true,
-        pre_filter_checked_all:true,
-        checked_count:0
+        pre_filter_checked_all: true,
+        checked_count: 0,
       };
-      return { ...state, ...obj_};
-       // 清空上次筛选数据
+      return { ...state, ...obj_ };
+    // 清空上次筛选数据
     case "remove_pre_filter_select_obj":
-      return { ...state, pre_filter_select_obj:[] };
-       //保存赛事选中数量
+      return { ...state, pre_filter_select_obj: [] };
+    //保存赛事选中数量
     case "set_checked_count":
       return { ...state, checked_count: action.data };
+    default:
+      return {
+        ...state,
+      };
   }
 }
