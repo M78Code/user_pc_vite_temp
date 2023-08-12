@@ -29,9 +29,9 @@
 <script setup>
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import team_img from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";   
  // 伤停情况列表
-import injury_form from "src/project/pages/details/analysis-matches/components/injury-form";
+import injuryForm from "src/project/pages/details/analysis-matches/components/injury-form";
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
