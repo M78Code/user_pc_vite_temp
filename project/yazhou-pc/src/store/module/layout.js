@@ -25,7 +25,7 @@ const initialState = {
     // 主内容宽度
     main_width: 1920,
     // 左侧菜单宽度
-    left_width: 980,
+    left_width: 280,
     // 中间区域宽度
     center_width: 1920,
     // 列表实际内容宽度，除去边框间距等等

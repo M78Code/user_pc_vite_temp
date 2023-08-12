@@ -1,13 +1,6 @@
 import { defineAsyncComponent } from 'vue'
 const routes = [
-  // 根布局
-  {
-    path: "/",
-    redirect: {
-      name: "main_layout"
-    },
-    component: () => import(`../layouts/root-layout.vue`),
-    children: [
+
       // 主框架 
       {
         path: "/",
@@ -115,7 +108,5 @@ const routes = [
       //   component: () => import(`../pages/test/index.vue`),
       // },
     ]
-  }
-]
 
 export default routes

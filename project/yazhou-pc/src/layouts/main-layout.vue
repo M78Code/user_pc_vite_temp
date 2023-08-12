@@ -201,7 +201,7 @@ const virtual_bet_list = ref(state.betInfoReducer.virtual_bet_list)
 // 所有布局宽高信息
 const layout_size = ref(state.layoutReducer.layout_size)
 
-const route_params = ref({ video_size: 1 })
+const route_params = ref({ video_size: 0 })
 // 投注loading
 const bet_loadding = ref(false)
 // 屏幕宽度

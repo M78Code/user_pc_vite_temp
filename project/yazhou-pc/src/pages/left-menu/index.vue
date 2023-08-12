@@ -38,7 +38,7 @@
               v-show="show_balance"
               class="balance-text-show yb-family-odds"
             >
-              {{ (get_user.balance || 0) || format_balance }}
+              <!-- {{ (get_user.balance || 0) || format_balance }} -->
             </div>
               <!-- 余额是否隐藏图标 -->
             <icon
@@ -84,7 +84,7 @@
             <span class="text">
               <!-- {{$root.$t("bet.bet_my_count")}} -->
             </span>
-            <span class="bet-count">{{ bet_count }}</span>
+            <!-- <span class="bet-count">{{ bet_count }}</span> -->
             <!-- <span class="text">
               <template v-if="is_bet_single && ['today','play','early','hot_one','winner_top','hot'].includes(cur_menu_type.type_name)">{{
                 $root.$t("bet.bet_one")
@@ -605,6 +605,7 @@ const get_unsettle_tickets_count_config = () => {
 
   /* *** 体育 ************ -S */
   .c-menu-sports {
+    font-size: 13px;
     .menu-item {
       &.menu-tab {
         font-size: 13px;
