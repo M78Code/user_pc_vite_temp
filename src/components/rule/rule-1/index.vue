@@ -1,7 +1,8 @@
 <template>
     <div class="rule-wrap">
         <simple-header :source="source">
-            <span>{{ $root.$t("common.sports_betting_rules") }}</span>
+            <!-- <span>{{ $root.$t("common.sports_betting_rules") }}</span> -->
+            <span>TODO: $root.$t("common.sports_betting_rules")</span>
         </simple-header>
         <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
     </div>

@@ -1,10 +1,16 @@
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, onUnmounted } from "vue";
 import { is_eports_csid } from "src/core/utils/utils";
 // api文件
 import { api_details } from "src/api/index";
-import { useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import lodash from 'lodash'
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useGetGlobal } from "./global_mixin";
+import lodash from "lodash";
+// 搜索操作相关控制类
+import search from "src/core/search-class/search.js";
+import store from "src/store-redux/index.js";
 export const useGetConfig = () => {
+  const { mx_autoset_active_match } = useGetGlobal({ details_params, back_to });
+  const store_state = store.getState();
   const state = reactive({
     // 菜单数据
     menu_data: $menu.menu_data,
@@ -16,7 +22,7 @@ export const useGetConfig = () => {
     mcid: 0, //默认玩法集id
     plays_list: [], //选中玩法集的盘口玩法集
     match_details: [], //玩法盘口列表
-    is_request:false , // 详情接口 是否请求中
+    is_request: false, // 详情接口 是否请求中
 
     // isInit: false,
     load_data_state: "loading", //整块加载状态
@@ -35,6 +41,18 @@ export const useGetConfig = () => {
     load_detail_statu: "right_details_loading", // loading 状态
     headerHeight: 0, // 头部高度
     get_match_details_timer: null,
+    back_to_timer: null,
+  });
+
+  const details_params = ref(store_state.matchesReducer.params);
+  // 获取当前菜单类型
+  const cur_menu_type = ref(store_state.menusReducer.cur_menu_type);
+
+  // 监听状态变化
+  let un_subscribe = store.subscribe(() => {
+    state = store.getState();
+    details_params.value = state.matchesReduce.params;
+    cur_menu_type.value = state.menusReducer.cur_menu_type;
   });
 
   /**
@@ -86,37 +104,36 @@ export const useGetConfig = () => {
         .then((res) => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
-          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY)
+          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           // this.$root.$emit("get_history");
           const code = lodash.get(res, "data.code");
           const data = lodash.cloneDeep(lodash.get(res, "data.data"));
           if (code == "0400500" || !data || Object.keys(data).length == 0) {
             // 自动切换赛事
-            this.emit_autoset_match(0);
+            emit_autoset_match(0);
             return;
           }
-          const timestap = _.get(res, "data.ts");
+          const timestap = lodash.get(res, "data.ts");
           if (code === 200 && Object.keys(data).length) {
             // 接口拉取成功，错误次数清 0
-            this.countMatchDetailErr = 0;
-            this.load_data_state = "data";
+            state.countMatchDetailErr = 0;
+            state.load_data_state = "data";
             // mmp(比赛阶段)状态修正,
-            if (
-              [
-                "4",
-                "5",
-                "7",
-                "8",
-                "9",
-                "10",
-                "11",
-                "12",
-                "13",
-                "16",
-                "15",
-                "14",
-              ].includes(data.csid)
-            ) {
+            const mmp_list = [
+              "4",
+              "5",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "16",
+              "15",
+              "14",
+            ];
+            if (mmp_list.includes(data.csid)) {
               if (data.ms != 0 && data.mmp == "0") {
                 Object.assign(data, {
                   mmp: "8",
@@ -126,9 +143,11 @@ export const useGetConfig = () => {
             }
             // ms=赛事状态 0未开赛，1 进行中 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断	全量拉取数据
             if ([3, 4, 5, 6, 8, 9].includes(data.ms)) {
-              this.$root.$emit("autoset_match", data.mid);
+              // 赛事移除时右侧赛事自动切换
+              useMittEmit(MITT_TYPES.EMIT_GET_HISTORY, data.mid);
+              // 通知列表右侧详情，获取近期关注数据
               // 自动判断是否需要切换右侧赛事数据
-              this.mx_autoset_active_match({ mid: data.mid });
+              mx_autoset_active_match({ mid: data.mid });
             }
             /**
              * @description 格式化msc(比分)数据
@@ -178,17 +197,108 @@ export const useGetConfig = () => {
     }
   };
 
-      /**
-     * 自动切换赛事
+   /**
+     * @description 玩法集
+     * @param {function} callback 判断是否调玩法列表接口
      */
-    const  emit_autoset_match=(mid)=> {
-        if (state.autoset_mid !== mid) {    
-          // 设置赛事详情选中赛事    
-          this.mx_autoset_active_match({ mid });
-          state.autoset_mid = mid;
-          this.mid = this.vx_details_params.mid;
+  const get_category_list=(callback)=> {
+    //sportId 球类id、mid 赛事id
+    let params = { sportId: this.sportId, mid: this.$route.params.mid };
+    
+    const _obj = {
+      axios_api: api_details.get_category_list,
+      error_codes:['0401038'],
+      params: params,
+      fun_then: res => {
+        if(!this.match_info_ctr){
+          return
+        }
+        const code = _.get(res, "data.code");
+        if(code == '0400500'){
+          this.emit_autoset_match(0);
+          return;
+        }
+        const data = _.get(res, "data.data");
+        if (code === 200 && data.length) {
+          this.category_list = data;
+          // 初始化玩法列表
+          this.match_info_ctr.init_play_menu_list(data);
+          if (callback) {
+            callback();
+          }
+        }else{
+          this.load_data_state = "empty";
         }
       },
+      fun_catch: err => {
+        // 连续3次请求无响应则返回列表页
+        this.back_to();
+      }
+    }
+
+    this.$utils.axios_api_loop(_obj);
+  }
+
+  /**
+   * 自动切换赛事
+   */
+  const emit_autoset_match = (mid) => {
+    if (state.autoset_mid !== mid) {
+      // 设置赛事详情选中赛事
+      mx_autoset_active_match({ mid });
+      state.autoset_mid = mid;
+      state.mid = details_params.value.mid;
+    }
+  };
+
+  /**
+   * @description 返回上一页
+   */
+  const back_to = (is_back = true) => {
+    // 重新请求相应接口
+    if (this.vx_play_media.media_type === "topic") {
+      video.send_message({
+        cmd: "record_play_info",
+        val: {
+          record_play_time: true,
+        },
+      });
+    }
+
+    clearTimeout(state.back_to_timer);
+    state.back_to_timer = setTimeout(() => {
+      // 退出页面时清空用户操作状态
+      window.sessionStorage.setItem("handle_state", JSON.stringify([]));
+      // 如果是从搜索结果进来的
+      if (useRoute.query.keyword) {
+        search.set_back_keyword({
+          keyword: useRoute.query.keyword,
+          csid: useRoute.params.csid,
+        });
+        store.dispatch({
+          type: "SET_SEARCH_STATUS",
+          data: true,
+        });
+      }
+      let { from_path, from } = cur_menu_type.value;
+      from_path = from_path || "/home";
+      if (from == "video") {
+        from_path = "/home";
+      }
+      // 告知列表是详情返回：用于是否重新自动拉右侧内容
+      store.dispatch({
+        type: "SET_IS_BACK_BTN_CLICK",
+        data: is_back,
+      });
+      useRouter.push(from_path);
+      if (from_path.includes("search")) {
+        store.dispatch({
+          type: "set_unfold_multi_column",
+          data: false,
+        });
+      }
+    }, 50);
+  };
 
   //   computed: {    //TODO
 
@@ -229,9 +339,12 @@ export const useGetConfig = () => {
   //       return _.get(this.category_list,'length',0);
   //     }
   //   },
-
+  onUnmounted(() => {
+    un_subscribe();
+  });
   return {
     ...toRefs(state),
     init,
+    back_to,
   };
 };

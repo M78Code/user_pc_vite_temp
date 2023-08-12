@@ -134,6 +134,7 @@ import { api_common } from "src/project/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
@@ -199,6 +200,7 @@ export default defineComponent({
   // mixins: [betting],
   setup(props, evnet) {
     const data = reactive({
+      emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
       // 玩法集合
       play_item_data: {},
@@ -252,6 +254,9 @@ export default defineComponent({
       // 满足ws推送的监听 实时响应数据变化
       if (new_score) {
         // #TODO emit 
+        emitters = [
+          useMittOn.on(MITT_KEY.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
+        ]
         // $root.$on(emit_cmd.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
@@ -262,6 +267,7 @@ export default defineComponent({
 
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
+      emitters.push(useMittOn.on(MITT_KEY.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
       // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
@@ -540,6 +546,8 @@ export default defineComponent({
           item_data.hton = '0';
         } else {
           // #TODO emit 
+          useMittEmit(MITT_KEY.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
+          useMittEmit(MITT_KEY.EMIT_RESET_SET_HTON);
           // $root.$emit(emit_cmd.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           // $root.$emit(emit_cmd.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
@@ -645,6 +653,7 @@ export default defineComponent({
     };
     onUnmounted(() => {
       // #TODO emit 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
       // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
       debounce_throttle_cancel(bet_click_);

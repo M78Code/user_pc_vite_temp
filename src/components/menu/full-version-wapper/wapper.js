@@ -13,3 +13,4 @@ const component_config = {
 const wapper_config = compute_component_wapper_config(component_config);
 
 export default wapper_config;
+

@@ -28,7 +28,7 @@
         >
           <template v-slot:header>
             <!-- 详情头部 -->
-            <detail-header @init="init"></detail-header>
+            <detail-header @init="init" @back_to="back_to"></detail-header>
           </template>
 
           <!-- 玩法列表 -->
@@ -84,7 +84,8 @@ import {useGetConfig} from './detail.config'
 const {
   load_detail_statu,
   match_infoData,
-  init
+  init,
+  back_to
 
 } = useGetConfig()
 
