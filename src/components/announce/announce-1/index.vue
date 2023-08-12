@@ -25,19 +25,19 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 import simpleHeader from "./simple-header.vue";
 import LeftMenu from "./left-menu.vue";
-import loadData from "src/project/components/load_data/load_data.vue"
+import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
 
