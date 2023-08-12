@@ -95,6 +95,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/boot/constant'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
@@ -108,6 +109,7 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 const store_state = store.getState()
+const emitters = ref({})
 
 const wsl_flag = ref(sessionStorage.getItem('wsl') == 7777)
 // 罚牌玩法描述显示
@@ -203,7 +205,7 @@ watch(() => match, (c_m,o_m) => {
     // 通知列表页重新计算dom高度
     clearTimeout(compute_list_dom_time.value);
     compute_list_dom_time.value = setTimeout(() => {
-      $root.$emit(emit_cmd.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE);
+      useMittEmit(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE);
     },200);
   }
 })
@@ -244,7 +246,7 @@ watch(() => get_c303_data_change.value, (curr) => {
               props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
               // if(operate_type == 'is-user'){
               //   // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
-              //   $root.$emit(emit_cmd.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
+              //   useMittEmit(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
               // }
               current_tab_item.value.hps = match[o_hps_key];
               if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
@@ -264,7 +266,7 @@ watch(() => get_c303_data_change.value, (curr) => {
             //   apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
             // }
             //次要玩法展开或者关闭通知列表页重新计算dom高度
-            // $root.$emit(emit_cmd.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
+            // useMittEmit(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
           });
         }
         fun_temp();
@@ -645,7 +647,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
     store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map });
   }
   //隐藏次要玩法描述弹层
-  $root.$emit(emit_cmd.EMIT_INFO_ICON_CLICK,null);
+  useMittEmit(MITT_KEY.EMIT_INFO_ICON_CLICK,null);
   //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
   let o_hps_key = get_hps_key_by(item);
   // if(! operate_type == 'is-user' ){
@@ -678,7 +680,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
             props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
             if(operate_type == 'is-user'){
               // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
-              $root.$emit(emit_cmd.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
+              useMittEmit(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
             }
             current_tab_item.value.hps = match[o_hps_key];
             if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
@@ -698,7 +700,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
             apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
           }
           //次要玩法展开或者关闭通知列表页重新计算dom高度
-          $root.$emit(emit_cmd.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
+          useMittEmit(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
         });
       }
       fun_temp();
@@ -718,7 +720,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
     apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
   }
   //次要玩法展开或者关闭通知列表页重新计算dom高度
-  $root.$emit(emit_cmd.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
+  useMittEmit(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, 'ciyao_bold');
 }
 // 次要玩法   展开   显示本地已有赔率
 // set_local_hps_by_key(item,o_hps_key){
@@ -740,7 +742,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 //玩法说明图标点击
 // $event 时间对象 mid 赛事id
 const info_icon_click = ($event,mid) => {
-  $root.$emit(emit_cmd.EMIT_INFO_ICON_CLICK,$event,mid,current_tab_item.value);
+  useMittEmit(MITT_KEY.EMIT_INFO_ICON_CLICK,$event,mid,current_tab_item.value);
 }
 // 足球之外调用此方法， 获取要展开的tab项  获取次要玩法 id
 const get_tabid_auto_unfold = () => {
@@ -1132,14 +1134,16 @@ const on_listeners = () => {
   // c105  盘口/投注项
   // c303  滚球新赛事通知
   // c305  赛事订阅(C8)-玩法tab(C305)
-  // 封盘事件
-  $root.$on(emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,fapai_way_tips_status_change_h);
-  // c105更新
-  $root.$on(emit_cmd.EMIT_C105_CMD_NOTICE,c105_handle);
+ 
+  emitters.value = {
+    // 封盘事件
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
+     // c105更新
+    emitter_2: useMittOn.on(MITT_KEY.EMIT_C105_CMD_NOTICE, c105_handle).off,
+  }
 }
 const off_listeners = () => {
-  $root.$off(emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,fapai_way_tips_status_change_h);
-  $root.$off(emit_cmd.EMIT_C105_CMD_NOTICE,c105_handle);
+  Object.values(emitters.value).map((x) => x())
 }
 
 onUnmounted(() => {

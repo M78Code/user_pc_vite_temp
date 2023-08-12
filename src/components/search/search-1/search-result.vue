@@ -54,150 +54,150 @@
     </div>
 </template>
   
-<script>
-import { defineComponent, ref, reactive, watch } from 'vue'
+<script setup>
+import { ref, reactive, watch, onUnmounted, nextTick } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
 // TODO: 待实现组件
-// import MatchProcess from "src/public/components/match_process/match_process.vue"
+import MatchProcess from "src/public/components/match_process/match_process.vue"
 // TODO: api
 import details from "src/public/utils/detailsClass/details.js"
 import search from "src/public/utils/searchClass/search.js"
-import { mapGetters, mapActions } from "vuex";
-export default defineComponent({
-    name: "searchResult",
-    components: {
-        loadData,
-        MatchProcess
-    },
-    props: {
-        // 搜索球种
-        search_csid: Number | String
-    },
-    setup(props, { emit }) {
-        /** 数据加载状态 */
-        const load_data_state = ref('data')
-        /** 搜索结果数据 */
-        const list = reactive([])
-        // 监听搜索球种变化
-        watch(
-            () => props.search_csid,
-            () => {
-                const keword = this.get_search_keyword.substr(5)
-                get_search_result(keword, true)
-            }
-        )
-        // 监听搜索关键词改变
-        watch(
-            // TODO:
-            () => store.get_search_keyword,
-            (res) => {
-                if (this.get_search_type == 2) {
-                    emit('set_show_type', 'none')
-                } else {
-                    get_search_result(res.substr(5))
-                }
-            }
-        )
+import store from "src/store-redux/index.js";
 
-        const router = useRouter()
-
-        /**
-         * @Description:点击联赛搜索
-         * @param {string} league 点击的联赛
-         * @return {undefined} undefined
-         */
-        function league_click(league) {
-            search.insert_history(league.league_name)
-            emit('set_show_type', 'none')
-            router.push({
-                name: 'search',
-                params: {
-                    keyword: league.league_name,
-                },
-                query: {
-                    csid: props.search_csid
-                }
-            })
-            // TODO:
-            this.set_search_type(2)
-            this.set_click_keyword(league.league_name)
-        }
-
-        const scrollRef = ref(null)
-        /**
-         * @Description:点击赛事搜索
-         * @param {object} match 点击的赛事
-         * @return {undefined} undefined
-         */
-        function match_click(match) {
-            search.result_scroll = scroll.value.scrollPosition
-            search.insert_history(match.name)
-            details.on_go_detail(match, this.get_search_keyword.substr(5))
-            // TODO:
-            this.set_search_status(false)
-        }
-
-        const timer = ref(null)
-        /**
-         * @Description:获取搜索结果数据
-         * @param {string} keyword 搜索关键字
-         * @return {Undefined} Undefined
-         */
-        function get_search_result(keyword, is_loading) {
-            if (!keyword) {
-                emit('set_show_type', 'init')
-                return
-            }
-            //调用接口前先设置加载状态
-            if (is_loading) {
-                load_data_state.value = 'loading'
-            }
-            // emit('set_show_type','result')
-            //调用接口获取获取搜索结果数据
-            search.get_search_result(keyword, this.search_csid, (load_data_state, list) => {
-                emit('set_show_type', 'result')
-                load_data_state.value = load_data_state
-                list.value = list
-                let _ref_scroll = scroll.value;
-                timer.value = setTimeout(() => {
-                    // 如果是从详情页返回
-                    if (search.back_keyword.keyword) {
-                        this.$nextTick(() => {
-                            //重新设置滚动高度
-                            _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
-                        })
-                    } else {
-                        //重新设置滚动高度
-                        _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
-                    }
-                })
-            })
-        }
-        onBeforeUnmount(() => {
-            if (timer.value) {
-                clearTimeout(timer.value)
-                timer.value = null
-            }
-        })
-
-        return {
-            load_data_state,
-            list,
-            league_click,
-            match_click
-        }
-    },
-    computed: {
-        ...mapGetters([
-            'get_search_keyword',//  获取搜索内容
-            'get_search_type', //获取搜索类型
-            'get_related_keyword'//获取搜索联赛关键字
-        ])
-    },
-    methods: {        //设置搜索联赛关键字   设置搜索状态        设置搜索类型
-        ...mapActions(['set_click_keyword', 'set_search_status', 'set_search_type']),
+const props = defineProps({
+    search_csid: {
+        type: Number | String,
+        default: ''
     }
 })
+
+const emit = defineEmits(['set_show_type'])
+
+/** 数据加载状态 */
+const load_data_state = ref('data')
+/** 搜索结果数据 */
+const list = reactive([])
+// 监听搜索球种变化
+watch(
+    () => props.search_csid,
+    () => {
+        const keword = search_keyword.value.substr(5)
+        get_search_result(keword, true)
+    }
+)
+// 监听搜索关键词改变
+watch(
+    () => search_keyword.value,
+    (res) => {
+        if (search_type.value == 2) {
+            emit('set_show_type', 'none')
+        } else {
+            get_search_result(res.substr(5))
+        }
+    }
+)
+
+const router = useRouter()
+
+/**
+ * @Description:点击联赛搜索
+ * @param {string} league 点击的联赛
+ * @return {undefined} undefined
+ */
+function league_click(league) {
+    search.insert_history(league.league_name)
+    emit('set_show_type', 'none')
+    router.push({
+        name: 'search',
+        params: {
+            keyword: league.league_name,
+        },
+        query: {
+            csid: props.search_csid
+        }
+    })
+    set_search_type(2)
+    set_click_keyword(league.league_name)
+}
+
+const scrollRef = ref(null)
+/**
+ * @Description:点击赛事搜索
+ * @param {object} match 点击的赛事
+ * @return {undefined} undefined
+ */
+function match_click(match) {
+    search.result_scroll = scroll.value.scrollPosition
+    search.insert_history(match.name)
+    details.on_go_detail(match, search_keyword.value.substr(5))
+    set_search_status(false)
+}
+
+const timer = ref(null)
+/**
+ * @Description:获取搜索结果数据
+ * @param {string} keyword 搜索关键字
+ * @return {Undefined} Undefined
+ */
+function get_search_result(keyword, is_loading) {
+    if (!keyword) {
+        emit('set_show_type', 'init')
+        return
+    }
+    //调用接口前先设置加载状态
+    if (is_loading) {
+        load_data_state.value = 'loading'
+    }
+    // emit('set_show_type','result')
+    //调用接口获取获取搜索结果数据
+    search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
+        emit('set_show_type', 'result')
+        load_data_state.value = load_data_state
+        list.value = list
+        let _ref_scroll = scroll.value;
+        timer.value = setTimeout(() => {
+            // 如果是从详情页返回
+            if (search.back_keyword.keyword) {
+                nextTick(() => {
+                    //重新设置滚动高度
+                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
+                })
+            } else {
+                //重新设置滚动高度
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
+            }
+        })
+    })
+}
+onBeforeUnmount(() => {
+    if (timer.value) {
+        clearTimeout(timer.value)
+        timer.value = null
+    }
+})
+
+/** 获取搜索内容 */
+const search_keyword = ref()
+/** 获取搜索类型 */
+const search_type = ref()
+/** 获取搜索联赛关键字 */
+const related_keyword = ref()
+/** stroe仓库 */
+const unsubscribe = store.subscribe(() => {
+    const new_state = store.getState()
+    search_keyword.value = new_state.search_keyword
+    search_type.value = new_state.search_type
+    related_keyword.value = new_state.related_keyword
+})
+onUnmounted(unsubscribe)
+
+/** 设置搜索联赛关键字 */
+const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+/** 设置搜索状态 */
+const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+/** 设置搜索类型 */
+const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+
 
 </script>
   

@@ -127,6 +127,7 @@
 import { computed, onUnmounted, ref } from 'vue'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { useMittEmit, MITT_KEY } from  "src/core/mitt"
 import data_pager from "src/public/components/common/data_pager.vue"
 
 const store_state = store.getState()
@@ -406,7 +407,7 @@ const get_icon_path_by_type = () => {
  * 数据页变化
  */
 const data_page_changed = ($event) => {
-  $root.$emit(emit_cmd.EMIT_VIRTUAL_RESULT_PAGE_CHANGE,$event);
+  useMittEmit(MITT_KEY.EMIT_VIRTUAL_RESULT_PAGE_CHANGE,$event);
 }
 
 onUnmounted(() => {

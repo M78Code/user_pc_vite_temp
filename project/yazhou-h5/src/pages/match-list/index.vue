@@ -58,10 +58,9 @@
 <script setup>
 import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
-import { useMittOn } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import * as MITT_KEY from '../../core/mitt/mitt-keys'
 
 const props = defineProps({
   invok_source: String,
@@ -187,7 +186,7 @@ onMounted(() => {
 // 详情若无热门推荐赛事，则隐藏相应内容
 watch(() => match_is_empty, () => {
   if (props.invok_source === 'detail_match_list' && is_empty) {
-    $root.$emit(MITT_KEY.EMIT_HIDE_DETAIL_MATCH_LIST, true)
+    useMittEmit(MITT_KEY.EMIT_HIDE_DETAIL_MATCH_LIST, true)
   }
 })
 
@@ -347,7 +346,7 @@ watch(() => matchCtr.list, () => {
           data.referUrl = data.referUrl && (data.referUrl.replace(/http:|https:/,'')) // 视频
           data.referUrl = `${location.protocol}${data.referUrl}`;
 
-          $root.$emit(MITT_KEY.EMIT_SET_PRE_VIDEO_SRC, data)
+          useMittEmit(MITT_KEY.EMIT_SET_PRE_VIDEO_SRC, data)
           store.dispatch({ type: 'matchReducer/set_preload_animation_url',  payload: true })
         })
         // 获取相应动画加载资源后跳出循环
