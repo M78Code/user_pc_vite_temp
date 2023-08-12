@@ -1,6 +1,6 @@
 {
   "leftmenu": {
-    "level": 2,
+    "level": 1,
     "menuName": "Quasar",
     "sonName": "Quasar-Table"
   },
@@ -254,7 +254,7 @@
           },
           "returns": {
             "type": "String",
-            "__exemption": [ "desc" ]
+            "examples": [ "desc" ]
           },
           "examples": [
             "'width: 500px'",
@@ -274,7 +274,7 @@
           },
           "returns": {
             "type": "String",
-            "__exemption": [ "desc" ]
+            "examples": [ "desc" ]
           },
           "examples": [
             "'my-special-class bg-primary'",

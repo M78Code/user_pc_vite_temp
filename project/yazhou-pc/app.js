@@ -11,9 +11,6 @@ const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成
 const url_params = GetUrlParams(); //获取url参数
-
-let sessionStorage = window.sessionStorage;
-
 //动画逻辑 靠后
 
 /**
@@ -41,25 +38,6 @@ const handle_user_tryPlay = async () => {
   }
   console.log("token-111", token);
 };
-/**
- * 监听路由变化设置全局
- */
-// watch(
-//   () => router.currentRoute,
-//   (cur_router) => {
-//     const { to, from } = cur_router || {};
-//     console.log(to, from);
-//     if (_to != _from) {
-//       // this.vx_set_layout_cur_page({
-//       //   cur: _to,
-//       //   from: _from,
-//       //   from_path:cur_router.path,
-//       // });
-//     }
-//     console.log("watch", newValue);
-//   },
-//   { immediate: true }
-// );
 console.log("测试执行------------1----3");
 // 资源文件加载时,避免强缓存使用的rdm参数值
 window.src_rdm = Date.now();
