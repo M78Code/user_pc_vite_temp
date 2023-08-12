@@ -1,8 +1,3 @@
-<!--
- * @Author: nuanyang
- * @Date: 2022-11-19 20:39:41
- * @Description: 列表底部模板比分
--->
 <template>
   <!-- 赛事比分 -->
   <div
@@ -94,8 +89,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
+import { computed, defineProps, reactive, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
 export default {
   props: {
     // 赛事

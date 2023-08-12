@@ -69,7 +69,7 @@ const initialState = {
 export default function globalReducer(state = initialState, action) {
   switch (action.type) {
     // 设置是否展开多列玩法
-    case "SET_UNFOLD_MUTI_COLUMN":
+    case "SET_UNFOLD_MULTI_COLUMN":
       return {...state, is_unfold_multi_column: action.data };
     // 设置视频是否展开状态
     case "SET_IS_FOLD_STATUS":
