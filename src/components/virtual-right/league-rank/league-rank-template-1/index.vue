@@ -36,64 +36,66 @@
     </div>
   </div>
 </template>
-
 <script>
-import {mapGetters,} from "vuex";
-export default {
+// #TODO vuex 
+// import {mapGetters,} from "vuex";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "leagueRank",
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object,
     titleFixed: Boolean,
   },
-  data() {
-    return {
+  setup(props, evnet) {
+    const data = reactive({
       // 是否是内嵌版
       is_iframe:window.is_iframe,
       // fixed 定位时距离顶部高度
       titleTop: 0,
       // 吸顶后的宽度
       titleWidth: 0,
-    }
-  },
-  computed:{
-    ...mapGetters(['get_menu_collapse_status'])
-  },
-  watch: {
-    // 当前是否吸顶
-    titleFixed: {
-      handler(n) {
+    });
+    // #TODO vuex 
+    // computed:{
+    //   ...mapGetters(['get_menu_collapse_status'])
+    // },
+    watch(
+      () => titleFixed,
+      () => {
         if (n) {
-          this.titleWidth = this.$refs.league_rank_header.offsetWidth;
+          titleWidth = $refs.league_rank_header.offsetWidth;
         }
       }
-    }
-  },
-  created(){
-    // 获取视频区高度
-    this.$root.$on("virtual_right_list_header_height", this.getHeaderHeight)
-    this.vsport_ctr.set_league_rank_list();
-  },
-  methods: {
+    );
+    onMounted(() => {
+      // 获取视频区高度
+      $root.$on("virtual_right_list_header_height", getHeaderHeight)
+      vsport_ctr.set_league_rank_list();
+    })
     /**
      * 获取头部视频区高度
      */
-    getHeaderHeight(h) {
+    const getHeaderHeight = (h) => {
        
       // 内嵌和非内嵌版顶部导航高度不一样
-      let navHeaderHeight = this.is_iframe ? 50 : 60;
-      if(this.get_menu_collapse_status && this.is_iframe){
+      let navHeaderHeight = is_iframe ? 50 : 60;
+      if(get_menu_collapse_status && is_iframe){
           navHeaderHeight -= 50
        }
       // 吸顶部件离浏览器可视区域顶部的距离
-      this.titleTop = navHeaderHeight + 34 + h + 8 - 2;
+      titleTop = navHeaderHeight + 34 + h + 8 - 2;
+    };
+    onUnmounted(() => {
+      vsport_ctr.league_rank_list = [];
+      $root.$off("virtual_right_list_header_height", getHeaderHeight)
+    })
+    return {
+      ...toRefs(data),
+      getHeaderHeight
     }
-  },
-  destroyed(){
-    this.vsport_ctr.league_rank_list = [];
-    this.$root.$off("virtual_right_list_header_height", this.getHeaderHeight)
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>

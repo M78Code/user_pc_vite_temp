@@ -90,13 +90,13 @@
     </div>
   </div>
 </template>
-
 <script>
 import loadData from "src/public/components/load_data/load_data.vue"
 import arcProgress from "src/project/yabo/components/virtual_right/arc_progress.vue"
 import basketballResult from "src/project/yabo/components/virtual_right/basketball_result.vue"
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
-export default {
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+export default defineComponent({
   name: "virtualVideo",
   components:{
     arcProgress,
@@ -104,31 +104,34 @@ export default {
     basketballResult,
     noVideo
   },
-  data(){
-    return {
-      is_show_content:false,
-      img_white_point:require('public/image/yabo/svg/white-point.svg')
-    }
-  },
   props:{
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  watch:{
-    // 监听播放地址改变
-    'vsport_ctr.video_url':{
-      handler(url){
-        this.$nextTick(() => {
-          this.vsport_ctr.play_video()
+  setup(props, evnet) {
+    const data = reactive({
+      is_show_content:false,
+      img_white_point:require('public/image/yabo/svg/white-point.svg')
+    });
+    watch(
+      () => vsport_ctr.video_url,
+      () => {
+        $nextTick(() => {
+          vsport_ctr.play_video()
         })
       },
-      immediate: true,
-    },
-  },
-  destroyed() {
-    this.vsport_ctr.destroy_video()
-  },
-};
+      {
+        immediate: true,
+      }
+    );
+    onUnmounted(() => {
+      vsport_ctr.destroy_video()
+    })
+    return {
+      ...toRefs(data)
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

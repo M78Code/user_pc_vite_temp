@@ -1,5 +1,5 @@
 <!--
- * @FilePath: d:/projects/user-h5/src/project/pages/details/components/chatroom/chat_msg.vue
+ * @FilePath: d:/projects/user-h5/project_path/src/pages/details/components/chatroom/chat_msg.vue
  * @Description: 消息组件
 -->
 <template>
@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import bet_info from 'src/project/pages/details/components/chatroom/bet_info.vue'; // 晒单展示组件
-import { msgType } from 'src/project/pages/details/components/chatroom/constant'; // 普通消息、注单消息
+import bet_info from 'project_path/src/pages/details/components/chatroom/bet_info.vue'; // 晒单展示组件
+import { msgType } from 'project_path/src/pages/details/components/chatroom/constant'; // 普通消息、注单消息
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

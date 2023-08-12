@@ -18,10 +18,10 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import common_header from "src/project/components/common/common_header1.vue";  // 详情页头部置顶title
-import header_top from "src/project/pages/details/components/header/header_top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
-import header_bottom from "src/project/pages/details/components/header/header_bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
-import match_results_header_top from "src/project/pages/details/components/details_match_results/match_results_header_top.vue";  // 整个赛果详情页的上部比分
+import common_header from "project_path/src/components/common/common-header1.vue";  // 详情页头部置顶title
+import header_top from "project_path/src/pages/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
+import header_bottom from "project_path/src/pages/details/components/header/header-bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
+import match_results_header_top from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
 import base64 from "src/public/utils/base64.js";  // 球类背景图background路径
 import utils from "src/public/utils/utils";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

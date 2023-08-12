@@ -82,6 +82,8 @@ import matchHandicap from "src/components/match-detail/match_handicap.vue";
 import {useGetConfig} from './detail.config'
 
 const {
+  load_detail_statu,
+  match_infoData
 
 } = useGetConfig()
 

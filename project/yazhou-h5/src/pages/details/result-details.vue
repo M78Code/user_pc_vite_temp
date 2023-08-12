@@ -43,12 +43,12 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/project/api/index.js";
-import resultHeader from "src/project/pages/details/components/result_header.vue";
-import resultDetailsTab from "src/project/pages/details/components/result_details_tab.vue";
+import resultHeader from "project_path/src/pages/details/components/result_header.vue";
+import resultDetailsTab from "project_path/src/pages/details/components/result_details_tab.vue";
 import resultDetailsDialog from "src/project/components/details/result_details_dialog.vue";
 import noData from "src/project/components/common/no_data.vue";
-import analysis_football_matches from "src/project/pages/details/analysis-matches/football_match_analysis/analysis_football_matches";
-import basketball_match_analysis from "src/project/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
+import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches";
+import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
 import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
 
 export default {

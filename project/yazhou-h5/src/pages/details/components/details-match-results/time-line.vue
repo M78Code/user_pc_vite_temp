@@ -57,8 +57,8 @@
 import { api_result } from "src/project/api";
 
 import { mapGetters } from "vuex";
-import match_results_stage from 'src/project/pages/details/components/details_match_results/match_results_stage.vue'  // 赛果详情 事件 组件
-import results_footer from 'src/project/pages/details/components/details_match_results/results_footer'   // 赛果详情 底部图标说明
+import match_results_stage from 'project_path/src/pages/details/components/details_match_results/match_results_stage.vue'  // 赛果详情 事件 组件
+import results_footer from 'project_path/src/pages/details/components/details_match_results/results_footer'   // 赛果详情 底部图标说明
 
 export default {
   name: "time_line",

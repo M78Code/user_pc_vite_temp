@@ -70,25 +70,25 @@
 <script>
 // #TODO vuex 
 // import { mapGetters, mapMutations } from "vuex"
-import tournament_play_new from "src/project/pages/details/components/tournament_play/tournament_play_new.vue"
+import tournament_play_new from "project_path/src/pages/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
-import { api_common, api_result} from 'src/project/api/index.js'
+import { api_common, api_result} from 'project_path/src/api/index.js'
 //  无数据显示组件
-import no_data from "src/project/components/common/no_data.vue"
+// import no_data from "project_path/src/components/common/no-data.vue"
 
 // #TODO mixins
 // 引入skt_data_info
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
-// import betting from "src/project/mixins/betting/betting.js";
+// import betting from "project_path/src/mixins/betting/betting.js";
 
 
 // 引入加载中的组件
-import loading from "src/project/components/common/loading.vue"
+import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
 import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
 // 精选赛事
-import detailMatchList from 'src/project/pages/details/components/detail_match_list.vue';
+import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import { uid } from "quasar"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -97,7 +97,7 @@ export default defineComponent({
   // mixins:[websocket_data, betting],
   components: {
     'tournament-play-new': tournament_play_new,
-    'no-data':no_data,
+    // 'no-data':no_data,
     loading,
     detailMatchList
   },

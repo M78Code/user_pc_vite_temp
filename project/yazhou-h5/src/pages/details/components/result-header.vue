@@ -25,9 +25,9 @@
 <script>
 import { mapGetters } from "vuex";
 import commonHeader from "src/project/components/common/common_header1.vue";
-import headerTop from "src/project/pages/details/components/header/header_top.vue";
-import headerBottom from "src/project/pages/details/components/header/header_bottom.vue";
-import matchResultsHeaderTop from "src/project/pages/details/components/details_match_results/match_results_header_top.vue";
+import headerTop from "project_path/src/pages/details/components/header/header_top.vue";
+import headerBottom from "project_path/src/pages/details/components/header/header_bottom.vue";
+import matchResultsHeaderTop from "project_path/src/pages/details/components/details_match_results/match_results_header_top.vue";
 import base64 from "src/public/utils/base64.js";
 export default {
   name: "result-header",

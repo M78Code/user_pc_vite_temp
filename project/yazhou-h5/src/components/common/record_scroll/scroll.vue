@@ -14,18 +14,14 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref, onDeactivated, onUnmounted } from 'vue'
-export default {
-  name: 'my_scroll',
-  props: {
+<script setup>
+  const props = defineProps({
     //加载回调
     'onPull': { 
       type: Function,
       default: true
     },
-  },
-  setup(props, evnet) {
+  })
     let pageY = ref(0)
     //下拉刷新的状态
     let state = ref(0)
@@ -76,23 +72,12 @@ export default {
       }
     }
     onUnmounted(() => {
+      //  TODO: 去掉this.$data
       // for (const key in this.$data) {
       // this.$data[key] = null
     // }
     })
 
-    return {
-      pageY,
-      state,
-      myScroll,
-      myScrollList,
-      setState,
-      onScroll,
-      bottomCallback,
-    }
-  },
-
-}
 </script>
 <style lang="scss" scoped>
 .my-scroll {

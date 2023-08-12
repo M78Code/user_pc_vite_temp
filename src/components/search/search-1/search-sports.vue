@@ -16,50 +16,36 @@
     </div>
 </template>
   
-<script>
-import { defineComponent, ref, reactive } from 'vue'
-import { TabWrapper } from "src/components/commont/tab"
-// TODO: 
-import { mapActions } from "vuex";
-export default defineComponent({
-    name: "searchSports",
-    components: {
-        Tab: TabWrapper
-    },
-    setup() {
-        /** 当前球种索引 */
-        const tab_index = ref(0)
-        /** 当前球种索引 */
-        const sports_list = reactive([])
+<script setup>
+import { ref, reactive } from 'vue'
+import { TabWrapper as Tab } from "src/components/commont/tab"
 
-        /**
-         * @Description:切换球种
-         * @param {number} index 球种索引
-         * @return {undefined} undefined
-         */
-        function tab_click(obj) {
-            tab_index.value = obj.index;
-        }
-        /**
-         * @Description:切换菜单
-         * @param {string} type 菜单类型
-         * @return {undefined} undefined
-         */
-        function menu_click(type) {
-            // TODO: 待完善store
-            this.set_search_status(false)
-            let sports = sports_list[tab_index.value]
-        }
-        return {
-            tab_index,
-            sports_list
-        }
-    },
-    methods: {
-        ...mapActions(['set_search_status']),
+import store from "src/store-redux/index.js";
 
-    }
-})
+/** 当前球种索引 */
+const tab_index = ref(0)
+/** 当前球种索引 */
+const sports_list = reactive([])
+
+/**
+ * @Description:切换球种
+ * @param {number} index 球种索引
+ * @return {undefined} undefined
+ */
+function tab_click(obj) {
+    tab_index.value = obj.index;
+}
+/**
+ * @Description:切换菜单
+ * @param {string} type 菜单类型
+ * @return {undefined} undefined
+ */
+function menu_click(type) {
+    set_search_status(false)
+    let sports = sports_list[tab_index.value]
+}
+/** 保存显示搜索组件状态 */
+const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
 
 </script>
   

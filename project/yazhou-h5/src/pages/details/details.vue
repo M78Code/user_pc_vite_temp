@@ -124,28 +124,28 @@
   </div>
 </template>
 <script>
-import utils from 'src/public/utils/utils.js';  // 公共方法
+import utils from 'src/core/utils/utils.js';  // 公共方法
 
 // #TODO vuex 
 // import { mapGetters, mapActions, mapMutations } from "vuex";
-import {api_common, api_result} from "src/project/api/index.js";  // API 公共入口
+import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 
 // #TODO mixins 
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 
-import details_header from "src/project/pages/details/components/details_header.vue";   // 整个详情页的上部视频区域
-import details_tab from "src/project/pages/details/components/details_tab.vue";         // 详情页中部玩法集tab
-import details_dialog from "src/project/components/details/details_dialog.vue";   // 详情赛事下拉,赛事列表组件
-import no_data from "src/project/components/common/no_data.vue";   // 无网络展示组件
-import videos from "src/project/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
-import change_header from "src/project/pages/details/components/header/change_header.vue";  // 详情页下拉置顶title
-import analysis_football_matches from "src/project/pages/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
-import basketball_match_analysis from "src/project/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
-import info_rules from "src/project/pages/details/components/info_rules.vue"  // 视频info说明弹框
-import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-import category from "src/project/pages/details/children/category.vue";
-import chatroom from "src/project/pages/details/components/chatroom/chatroom.vue"
+import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
+import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
+// import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
+// import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
+// import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
+import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
+// import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
+// import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
+import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
+// import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
+import category from "project_path/src/pages/details/children/category.vue";
+// import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -153,17 +153,17 @@ export default defineComponent({
   // mixins: [websocket_data,common],
   components: {
     "details-header": details_header,
-    "details-dialog": details_dialog,
+    // "details-dialog": details_dialog,
     "change-header": change_header,
     "details-tab": details_tab,
-    "no-data": no_data,
+    // "no-data": no_data,
     "info-rules": info_rules,
-    videos: videos,
-    "analysis-football-matches": analysis_football_matches,
-    "basketball-match-analysis": basketball_match_analysis,
-    SDetails,
+    // videos: videos,
+    // "analysis-football-matches": analysis_football_matches,
+    // "basketball-match-analysis": basketball_match_analysis,
+    // SDetails,
     category,
-    chatroom
+    // chatroom
   },
   // 从首页轮播区域跳转到详情页 增加判断
   beforeRouteEnter(to, from, next) {
@@ -2549,14 +2549,14 @@ export default defineComponent({
 }
 
 /*  刷新按钮 */
-@include keyframes(loading-ring-animate) {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+// @include keyframes(loading-ring-animate) {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 
 .details-ref {
   position: fixed;

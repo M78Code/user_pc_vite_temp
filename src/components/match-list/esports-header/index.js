@@ -1,4 +1,4 @@
 
-import MatchMediaFullVersionWapper from "./full-version-wapper/index.vue";
+import EsportsHeaderFullVersionWapper from "./full-version-wapper/index.vue";
 
-export { MatchMediaFullVersionWapper };
+export { EsportsHeaderFullVersionWapper };

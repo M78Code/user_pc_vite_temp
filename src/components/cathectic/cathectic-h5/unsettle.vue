@@ -48,7 +48,8 @@ import settleVoid from "src/project/pages/cathectic/settle_void.vue";
 import scroll from "src/project/components/record_scroll/scroll.vue";
 // import skt_order from "src/public/mixins/websocket/data/skt_data_order.js"
 import SRecord from "src/project/components/skeleton/record.vue"
-import { mapGetters, mapMutations } from 'vuex';
+// import { mapGetters, mapMutations } from 'vuex';
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 
     // mixins: [skt_order]
     // components: {
@@ -106,7 +107,7 @@ import { mapGetters, mapMutations } from 'vuex';
         search_early_money()
       }
     },10000)
-    $root.$on(emit_cmd.EMIT_GET_ORDER_LIST, refreshOrderList);
+    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
     // ...mapMutations(['set_early_moey_data']),
   /**
@@ -310,7 +311,7 @@ import { mapGetters, mapMutations } from 'vuex';
   }
   onUnmounted(() => {
     clear_timer();
-    $root.$off(emit_cmd.EMIT_GET_ORDER_LIST, refreshOrderList);
+    $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
     set_early_moey_data([])
     // for (const key in $data) {
     //   $data[key] = null

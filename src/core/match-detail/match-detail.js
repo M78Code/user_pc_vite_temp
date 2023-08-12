@@ -7,6 +7,9 @@
 import _ from "lodash";
 import { resolve } from "path";
 
+  //统计分析URL
+ const signal_url = 'https://s5.sir.swiftscore.com'
+
 /**
  * 初始化数据
  */
@@ -226,10 +229,112 @@ const show_wrap_total = (match_infoData) => {
   );
 };
 
+ /**
+  * @Description:sr 分析数据点击跳转
+  * @Author Cable
+  * @param:match 赛事详情
+  * @return:
+  */
+const sr_click_handle=(match)=> {
+  let full_url = get_full_sr_url(match) // seid,match.srid
+  if(!store.getters.get_global_switch.statistics_switch) return window.vue.$root.$emit(window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD, window.vue.$root.$t("msg.msg_09")); 
+  if([1,2].includes(match.csid*1)){
+    full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
+    store.dispatch("set_active_detail", match)
+  }
+  
+  let _window_width = 1000
+  let _window_height = 650
+  let _window_offset_left = (screen.width - _window_width) / 2
+  let _window_offset_top = (screen.height - _window_height) / 2
+
+  if (full_url) {
+    window.open(
+      full_url,
+      "",
+      `height=${_window_height}, width=${_window_width},
+      top=${_window_offset_top}, left=${_window_offset_left},
+      toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+    );
+    return full_url;
+  }
+  
+}
+  /**
+  * @Description:获取数据分析url
+  * @Author Cable
+  * @param:match 赛事详情
+  * @return:
+  */
+ const get_full_sr_url=(match)=> {
+    let csid = _.get(match,'csid')
+    let srid = _.get(match,'srid')
+    if(!csid || !srid) return ''
+
+    let csid_translate = csid, sr_prev = '';
+    csid *= 1;
+    switch (csid) {
+      case 1:                    // 足球
+      case 2:                    // 篮球
+      case 5:                    // 网球
+        csid_translate = csid;
+        break;
+      case 7:
+        csid_translate = 19;   // 斯诺克
+        break;
+      case 8:
+        csid_translate = 20;   // 乒乓球
+        break;
+
+      case 3:
+        csid_translate = 3;   // 棒球
+        break;
+      case 4:
+        csid_translate = 4;   // 冰球
+        break;
+      case 6:
+        csid_translate = 16;   // 美式足球
+        break;
+      case 9:
+        csid_translate = 23;   // 排球球
+        break;
+
+      case 10:
+        csid_translate = 31;   // 羽毛球
+        break;
+    }
+    let sr_lang =  get_src_lang();
+    sr_prev = `/kaihongman/${sr_lang}/${csid_translate}/match/${srid}`;
+    //`https://s5.sir.swiftscore.com/kaihongman/zh/${csid_translate}/match/${srid}`
+
+    return `${signal_url}${sr_prev}`;
+  }
+    /**
+   * @description: 将PC的语言类型转换成SR对应的语言类型
+   */
+   const get_src_lang=()=> {
+      let all_sr_lang = {
+        en: "en", // 英文
+        th: "th", 
+        zh: "zh", // 简体中文
+        tw: "zht", // 繁体中文
+        vi: "vi",
+        ms: "ms",// 马来语
+        de: "de", 
+        fr: "fr", 
+        ko: "ko", 
+        ja: "ja", 
+        es: "es",
+        ad: "ad", // 印尼语
+      }
+      return all_sr_lang[store.getters.get_lang];  // TODO
+    }
+
 export default {
   build_msc,
   check_plays,
   getDetaillist,
   use_polling_mst,
   show_wrap_total,
+  sr_click_handle
 };
