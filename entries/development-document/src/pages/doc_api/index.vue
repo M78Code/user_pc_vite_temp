@@ -4,10 +4,8 @@
  * @Date: 2023-08-02 16:56:09
 -->
 <template>
-  <div>
-    <q-card class="doc-api q-my-md" flat bordered>
-      <isComponent :docData="docDataTable" :isComp="isComp"></isComponent>
-    </q-card>
+  <div class="doc-api q-my-md">
+    <isComponent :docData="docDataTable" :isComp="isComp"></isComponent>
   </div>
 </template>
   
@@ -40,7 +38,7 @@ const formatData = (val) => {
   Object.keys(data)?.forEach((key) => {
     switch (key) {
       case "project": {
-      docDataTable.value = data[key];
+        docDataTable.value = data[key];
         isComp.value = "project-doc";
         break;
       }
@@ -55,7 +53,7 @@ const formatData = (val) => {
         break;
       }
       default:
-      docDataTable.value = [data];
+        docDataTable.value = [data];
         isComp.value = "user-doc";
         break;
     }
