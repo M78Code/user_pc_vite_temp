@@ -7,15 +7,20 @@ import { reactive, toRefs } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
-
+import lodash from "lodash";
 import details from "src/core/match-detail/match-detail";
 import video from "src/core/video/video.js";
+import menu_config from "src/components/menu/config/menu-class-new.js";
 import { useRoute, useRouter } from "vue-router";
-export const useGetGlobal = () => {
+import store from "src/store-redux/index.js";
+export const useGetGlobal = ({details_params}) => {
   const state = reactive({
     latest_match_params_pre: "",
     default_select_all: true,
   });
+
+  const useRoute = useRoute();
+  const router = useRouter();
 
   /**
    * 设置赛事列表/详情选中赛事
@@ -23,14 +28,14 @@ export const useGetGlobal = () => {
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
-    let { name: route_name, params: cur_parmas } = this.$route;
+    let { name: route_name, params: cur_parmas } = useRoute;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
       (route_name === "details" &&
         ["studio", "topic", "anchor"].includes(
           this.vx_play_media.media_type
         )) ||
-      $menu.menu_data.is_esports;
+      menu_config.is_esports();
     // 电竞不用调自动切右侧接口
     if (return_status) {
       return;
@@ -38,11 +43,11 @@ export const useGetGlobal = () => {
 
     /** 非冠军联赛筛选 不调用右侧切换接口 ***********************/
     // 模板 ID
-    let match_tpl_number = $menu.menu_data.match_tpl_number;
+    let match_tpl_number = menu_config.get_match_tpl_number();
 
     //非 冠军
     if (match_tpl_number == 18) {
-      let tid = this.mx_filter_select_ids();
+      let tid = mx_filter_select_ids();
 
       // 是联赛筛选
       if (tid) {
@@ -134,7 +139,7 @@ export const useGetGlobal = () => {
         if (cur_page == "details" || cur_page == "video") {
           if (mid && mid != -1) {
             if (cur_page == "details") {
-              this.$router.push({
+              router.push({
                 name: "details",
                 params: {
                   mid,
@@ -148,7 +153,7 @@ export const useGetGlobal = () => {
               video.match_close();
             }
           } else {
-            if (_.isFunction(this.back_to)) {
+            if (lodash.isFunction(this.back_to)) {
               this.back_to(false);
             }
           }
@@ -156,8 +161,8 @@ export const useGetGlobal = () => {
         }
 
         // 切换右侧赛事
-        let playId = this.vx_details_params.play_id;
-        this.vx_set_match_details_params({
+        let playId = details_params.play_id;
+        store.dispatch("set_match_details_params", {
           mid,
           tid,
           sportId,
@@ -168,9 +173,17 @@ export const useGetGlobal = () => {
     }
   };
 
+  //     /**
+  //      * 格式化选择的联赛
+  //      * @return {string} 以 , 号分隔的联赛ID
+  //      */
+  const mx_filter_select_ids = () => {
+    return this.vx_filter_select_obj.join(","); //TODO
+  };
+
   return {
-    mx_autoset_active_match
-  }
+    mx_autoset_active_match,
+  };
 };
 
 // export default {
