@@ -108,6 +108,8 @@
 import { computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+
 // TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin, msc,common],
 // ]),
@@ -124,6 +126,7 @@ const props = defineProps({
   match_list_wrapper_height:Number,
 })
 
+const emitters = ref({})
 const store_state = store.getState();
 const timer_super12 = ref(null)
 // 默认箭头向上
@@ -175,7 +178,7 @@ onMounted(() => {
 })
 
 watch(() => other_way_info_show, (curr) => {
-  $root.$emit(emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,curr);
+  useMittEmit(MITT_KEY.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,curr);
 })
 
 watch(() => window_scrolly, () => {
@@ -402,13 +405,14 @@ onDeactivated(() => {
   clearTimeout(timer_super12.value)
   timer_super12.value = null
 
-  $root.$off(emit_cmd.EMIT_INFO_ICON_CLICK,info_icon_click_h);
-  $root.$off(emit_cmd.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
+  Object.values(emitters.value).map((x) => x())
 })
 
 onActivated(() => {
-  $root.$on(emit_cmd.EMIT_INFO_ICON_CLICK,info_icon_click_h);
-  $root.$on(emit_cmd.EMIT_TAB_HOT_CHANGING,tab_changing_handle);
+  emitters.value = {
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
+    emitter_2: useMittOn.on(MITT_KEY.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
+  }
 })
 
 const unsubscribe = store.subscribe(() => {
