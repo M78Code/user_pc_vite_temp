@@ -22,7 +22,7 @@
 <script>
 // #TODO mixins
 // import common from 'project_path/mixins/constant/module/common.js'
-
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_timer",
@@ -181,7 +181,7 @@ export default defineComponent({
       path_d = get_path_d(remaining_time);
       if(remaining_time < 1000){
         // #TODO emit事件
-        $emit("time_ended",mid);
+        // $emit("time_ended",mid);
         return;
       }
       timer_super31 = setTimeout(() => {
@@ -190,6 +190,10 @@ export default defineComponent({
         //提前10秒通知锁盘
         if(seconds <= 10 && !(seconds % 3)){
           // #TODO emit事件
+          useMittEmit(MITT_KEY.EMIT_ARRIVED10, {
+            mid:match.mid,
+            batchNo:match.batchNo
+          });
           // $root.$emit(emit_cmd.EMIT_ARRIVED10,{
           //   mid:match.mid,
           //   batchNo:match.batchNo

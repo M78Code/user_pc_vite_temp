@@ -100,7 +100,7 @@
         <div v-else class="football-score row justify-center items-center">
           <div class="name-wrap left">
             <div class="match-name ellipsis">{{home_name}}</div>
-            <img v-img="([_.get(current_match,'mhlu'), _.get(current_match,'frmhn')])" />
+            <img v-img="([lodash.get(current_match,'mhlu'), lodash.get(current_match,'frmhn')])" />
           </div>
           <div class="msc-wrap yb-flex-center">
             <div class="match-end">{{$root.$t('collect.match_end')}}</div>
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="name-wrap right">
-            <img v-img="([_.get(current_match,'malu'), _.get(current_match,'frman')])" />
+            <img v-img="([lodash.get(current_match,'malu'), lodash.get(current_match,'frman')])" />
             <div class="match-name ellipsis">{{away_name}}</div>
           </div>
         </div>
@@ -164,6 +164,9 @@ import settleDialog from "project_path/components/footer_bar/settle_dialog.vue";
 import loading from 'project_path/components/common/loading.vue';
 import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_match_list.vue'
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
+
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_stage",
@@ -202,6 +205,8 @@ export default defineComponent({
   
   setup(props, evnet) {
     const data = reactive({
+      // 事件集合
+      emitters: [],
       // 零时变量暂时控制显示
       show:false,
       // 视频播放器
@@ -261,6 +266,14 @@ export default defineComponent({
     next_date_no = $root.$t('virtual_sports.next_date_no');
 
     // #TODO EMIT 事件
+    emitters = [
+      useMittOn.on(MITT_KEY.EMIT_IS_ALL_END_NOTICE, all_ended_handle).off,
+      useMittOn.on(MITT_KEY.EMIT_SYNC_VIDEO_DATA, sync_video_data_handle).off,
+      useMittOn.on(MITT_KEY.EMIT_CURRENT_VIDEO_PROCESS_INITED, set_init_video_on).off,
+      useMittOn.on(MITT_KEY.EMIT_VIRTUAL_MATCH_LOADING, set_loading_state).off,
+      useMittOn.on(MITT_KEY.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+      useMittOn.on(MITT_KEY.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
+    ]
     // $root.$on(emit_cmd.EMIT_IS_ALL_END_NOTICE,all_ended_handle);
     // $root.$on(emit_cmd.EMIT_SYNC_VIDEO_DATA,sync_video_data_handle);
     // $root.$on(emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,set_init_video_on);
@@ -275,6 +288,9 @@ export default defineComponent({
     set_loading_state();
     user_destroy_resource();
 
+    onUnmounted(() => {
+      emitters.map((x) => x())
+    })
     // #TODO VUEX ACTIONS 
     // ...mapMutations([
     //   'set_settle_dialog_bool',
@@ -355,7 +371,8 @@ export default defineComponent({
     *@return{Undefined}undefined
     */
     const open = (position) => {
-      $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);
+      // $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
     };
     /**
     *@description:关闭投注记录显示
@@ -587,7 +604,7 @@ export default defineComponent({
         }
       }
       if(virtual_result_rank_data.length && sub_menu_type == 1009) {
-        let arr = _.sortBy(virtual_result_rank_data, 'ranking')
+        let arr = lodash.sortBy(virtual_result_rank_data, 'ranking')
         for (const item of arr) {
           res.push(item.no)
         }
@@ -629,9 +646,9 @@ export default defineComponent({
           random_inited = true;
         }
         if(current_league){
-          let p = _.cloneDeep(get_prev_v_sports_params);
+          let p = lodash.cloneDeep(get_prev_v_sports_params);
           let p_key = `${sub_menu_type}-${current_league.menuId}`;
-          p[p_key] = _.cloneDeep(new_);
+          p[p_key] = lodash.cloneDeep(new_);
           set_prev_v_sports_params(p);
         }
       },500);
@@ -671,8 +688,8 @@ export default defineComponent({
       ]
 
       for (const key of timer_arr) {
-        clearTimeout(key])
-        key] = null
+        clearTimeout(timer_arr[key])
+        timer_arr[key] = null
       }
     };
 

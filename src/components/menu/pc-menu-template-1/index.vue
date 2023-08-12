@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    {{ base_data.base_data_version }}
     <div v-for="item1 in base_data.left_menu_base_mi_arr" :key="`${jinri_zaopan}_${item1}`"
       :class="(base_data.is_mi_300_open && item1 == 400) ? 'menu-border' : ''">
       <!--   赛种-->

@@ -17,10 +17,14 @@ import wslog from "src/core/ws/ws-log.js";
 import { httplog } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
-import { reactive, onBeforeMount, onMounted,ref } from "vue";
+import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
+import store from "./src/store/index.js";
+import { set_remote_server_time } from "./src/store/module/global";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
+const { t } = useI18n();
 const router = useRouter();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
@@ -32,13 +36,23 @@ const _data = reactive({
 const get_error_data = ref({});
 // 检查内嵌版的逻辑处理动作
 iframe_check();
-
 //设置错误数据
-// set_error_data("delete");
+store.dispatch({
+  type: "SET_ERROR_DATA",
+  data: "delete",
+});
 // 初始化版本类型
-// init_version_name();
+store.dispatch({
+  type: "INIT_VERSION_NAME",
+});
 // 初始化语言设置
-// init_lang($t("isoName"));
+
+store.dispatch({
+  type: "INIT_LANG",
+  data: t("isoName"),
+});
+//获取服务器时间
+store.dispatch(set_remote_server_time());
 // 发送日志s
 // window.wslog.sendMsg('xxx');
 // timeCheck();
@@ -47,7 +61,26 @@ iframe_check();
       new Vconsole(); */
 //重置即将开赛筛选
 // this.$store.state.filter.open_select_time = null;
-
+/**
+ * 监听路由变化设置全局路由信息  来源和目标
+ */
+watch(
+  () => router.currentRoute,
+  (_to, _from = {}) => {
+    const cur = _to.name;
+    const from = _from.name;
+    if (cur != from) {
+      store.dispatch({
+        type: "SET_LAYOUT_CUR_PAGE",
+        data: {
+          cur,
+          from,
+        },
+      });
+    }
+  },
+  { immediate: true }
+);
 /**
  * @description: message事件监听
  * 这是个啥 没有搜到vx_set_video_iframe_status
@@ -72,7 +105,12 @@ iframe_check();
 //     _data.date_time = date_time_tmp;
 //   }, 1000);
 // }
-function global_click() {}
+//设置点击全局事件+1
+function set_global_click() {
+  store.dispatch({
+    type: "SET_GLOBAL_CLICK",
+  });
+}
 function copyToken(is_key_down) {
   // if (this.get_user && this.get_user.token) {
   if (is_key_down) {

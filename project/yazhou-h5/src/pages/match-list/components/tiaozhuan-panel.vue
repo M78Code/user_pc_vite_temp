@@ -27,10 +27,13 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
+import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
+import { useMittEmit, MITT_KEY } from  "src/core/mitt"
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
-import { useRoute } from 'vue-router'
 
+const route = useRoute()
+const router = useRouter()
 const store_state = store.getState()
 // 计时器
 const timer = ref(null)
@@ -40,7 +43,6 @@ const show_banner = ref(true)
 const slide = ref(0)
  // 轮播图片地址
 const carousel_src = ref([])
-const route = useRoute()
 
 // 商户配置的图片地址和弹框信息
 const get_banner_obj = ref(store_state.get_banner_obj)
@@ -126,7 +128,7 @@ const confirm = (val) => {
         store.dispatch({ type: 'matchReducer/set_home_tab_item',  payload: {component: 'hot', index: 1, name: '热门'} })
         store.dispatch({ type: 'matchReducer/set_hot_tab_item',  payload: { field2: tid } })
         if (route.name == 'home') {
-          $root.$emit(emit_cmd.EMIT_HOME_TAB)
+          useMittEmit(MITT_KEY.EMIT_HOME_TAB)
         } else {
           router.push({name: 'home'})
         }

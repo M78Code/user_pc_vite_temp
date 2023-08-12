@@ -53,7 +53,7 @@
             </div>
             <!-- 玩法数量 -->
             <div v-if="match_item.mc">
-              {{_.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: $root.$t('footer_menu.more')}}
+              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: $root.$t('footer_menu.more')}}
             </div>
           </div>
         </div>
@@ -163,6 +163,9 @@ import odd_column_item from "project_path/pages/match-list/components/odd_column
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
+
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_item",
@@ -186,6 +189,8 @@ export default defineComponent({
   setup(props, evnet) {
     const { match_item, match_selected_i, other_status } = toRefs(props);
     const data = reactive({
+      // 事件集合 
+      emitters: [],
       curr_match_map_time:{},
       vsports:null,
       standard_odd_status:0,
@@ -213,6 +218,12 @@ export default defineComponent({
       video_process_init_video()
       // #TODO EMIT 
       // $root.$on(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
+
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
+        useMittOn.on(MITT_KEY.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+        useMittOn.on(MITT_KEY.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
+      ]
     })
 
     /**
@@ -487,7 +498,7 @@ export default defineComponent({
      */
     const goto_details =(match) => {
       let mid = match.mid;
-      let copied = _.cloneDeep(match);
+      let copied = lodash.cloneDeep(match);
       set_current_gotodetail_match(copied);
       set_details_item(0);
       $router.push({
@@ -516,7 +527,7 @@ export default defineComponent({
 
       let hl_item = get_hl_item(match_item)
       if (!hl_item) return;
-      ol_item.id_ = _.get(hl_item,'hl[0].hn') ?
+      ol_item.id_ = lodash.get(hl_item,'hl[0].hn') ?
         `${match_item.mid}_${hl_item.chpid || hl_item.hpid}_${ol_item.ot}_${hl_item.hl[0].hn}` : ol_item.oid;
       bet_click3(match_item, hl_item, ol_item);
     }
@@ -561,12 +572,14 @@ export default defineComponent({
         vsports.destroy();
       }
       // #TODO EMIT 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
       // $root.$off(emit_cmd.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
       // $root.$off(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status)
     });
     return {
       ...toRefs(data),
+      lodash,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,

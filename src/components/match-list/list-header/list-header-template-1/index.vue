@@ -96,7 +96,6 @@
 </template>
 
 <script setup>
-// import { mapGetters, mapActions } from "vuex";
 
 import global_mixin from "src/public/mixins/global/global_mixin.js";
 import sport_icon from "src/public/components/sport_icon/sport_icon.vue";//精灵图组件
@@ -110,9 +109,28 @@ import { defineProps, ref, onMounted, computed } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
+import store from 'project_path/src/store/index.js';
+let state = store.getState();
 
 const props = defineProps({ ...useProps });
 const { NewMenu } = props;
+
+// 列表显示内容  match:赛事 collect:收藏 search:搜索
+const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
+// 获取当前页路由信息
+const vx_layout_cur_page = ref(state.layoutReducer.layout_cur_page);
+// 是否显示联赛筛选框
+const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
+// 获取联赛筛选是否全选
+const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
+// 获取当前菜单类型
+const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
+// 全局开关
+const get_global_switch = ref(state.globalReducer.global_switch);
+// 收起右侧详情 展开多列玩法
+const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
+// 获取选中的赛事数量(列表右上角赛选功能)
+const vx_get_checked_count = ref(state.filterReducer.checked_count);
 
 // name: "MatchListHeader",
 // mixins: [global_mixin,odds_conversion_mixin],
@@ -120,56 +138,6 @@ const { NewMenu } = props;
 //   "sport-icon": sport_icon, comSelect,
 // },
 
-// ...mapGetters({
-//     vx_get_layout_size: "get_layout_size",
-//     //菜单切换状态
-//     vx_main_menu_toggle:"get_main_menu_toggle",
-//     // 获取当前盘口类型
-//     vx_get_cur_odd: "get_cur_odd",
-//     // 获取上次选择的盘口类型(盘口切换时使用)
-//     vx_get_pre_odd: "get_pre_odd",
-//     // 列表显示内容  match:赛事 collect:收藏 search:搜索
-//     vx_layout_list_type: "get_layout_list_type",
-//     // 获取当前页路由信息
-//     vx_layout_cur_page: "get_layout_cur_page",
-//     // 是否显示联赛筛选框
-//     vx_show_filter_popup: "get_show_filter_popup",
-//     // 获取联赛筛选是否全选
-//     vx_filter_checked_all: "get_filter_checked_all",
-//     // 获取当前菜单类型
-//     vx_cur_menu_type: "get_cur_menu_type",
-//     // 获取全局点击事件
-//     get_global_click: "get_global_click",
-//     // 搜索关键字
-//     get_search_keyword:"get_search_keyword",
-//     // 单关是否正在处理中
-//     vx_get_is_single_handle: 'get_is_single_handle',
-//     // 串关是否正在处理中
-//     vx_get_is_handle: "get_is_handle",
-//     // 获取选中的赛事数量(列表右上角赛选功能)
-//     vx_get_checked_count: "get_checked_count",
-//     vx_is_bet_single: "is_bet_single",
-//     //收起右侧详情 展开多列玩法
-//     get_unfold_multi_column:"get_unfold_multi_column",
-//     //全局开关
-//     get_global_switch:'get_global_switch'
-//   }),
-
-// ...mapActions({
-//   // 设置页面宽高信息
-//   vx_set_layout_list_type: "set_layout_list_type",
-//   // 设置展开区块
-//   vx_set_cur_expand_layout: "set_cur_expand_layout",
-//   // 是否显示联赛筛选框
-//   vx_set_show_filter_popup: "set_show_filter_popup",
-//   // 设置当前赔率
-//   set_cur_odd: "set_cur_odd",
-//   // 设置上次赔率
-//   set_pre_odd: "set_pre_odd",
-//   //收起右侧详情 展开多列玩法
-//   set_unfold_multi_column:"set_unfold_multi_column",
-
-// }),
 
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
@@ -189,7 +157,7 @@ const sort_option = computed(() => {
       icon: "icon-sort_date"
     }
   ]
-  if (!this.get_global_switch.sort_cut) {
+  if (!get_global_switch.value.sort_cut) {
     option = []
   }
   return option
@@ -198,22 +166,17 @@ const sort_option = computed(() => {
 
 // 是否显示刷新 btn
 const computed_show_refresh = computed(() => {
-  let {
-    vx_cur_menu_type,
-    vx_show_filter_popup,
-    vx_layout_cur_page
-  } = this;
 
-  let _show = !["hot_all"].includes(vx_cur_menu_type.type_name) &&
-    vx_show_filter_popup == false &&
-    vx_layout_cur_page.cur != "search"
+  let _show = !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+    vx_show_filter_popup.value == false &&
+    vx_layout_cur_page.value.cur != "search"
 
   return _show
 })
 
 //是否搜索页
 const is_search_page = computed(() => {
-  return this.vx_layout_cur_page.cur == "search";
+  return vx_layout_cur_page.value.cur == "search";
 })
 
 //当前页面菜单title
@@ -271,16 +234,27 @@ time_list.value = [
   { label: this.$t('filter.select_time.12h'), title: '12' + hour, value: 12 },
 ]
 // 显示部分dom ID
-// this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+DOM_ID_SHOW.value = window.env.config.DOM_ID_SHOW;
 // console.error('reload')
 // 刷新时重置为列表展开
-// this.vx_set_cur_expand_layout("match-list");
+store.dispatch({
+  type: 'SETCUREXPANDLAYOUT',
+  data: "match-list"
+})
+
+const set_unfold_multi_column = () => {
+  store.dispatch({
+    type: 'SET_UNFOLD_MULTI_COLUMN',
+    data: false
+  })
+}
+
 /**
  * 计算 全部 按钮样式
  */
 const compute_quanbu_btn_class = () => {
   let str = ''
-  if (this.vx_layout_list_type == 'match') {
+  if (vx_layout_list_type.value == 'match') {
     str += 'active'
   }
 
@@ -306,7 +280,7 @@ const select_time_change = () => {
  * @return {undefined} undefined
  */
 const on_click_sort = (row) => {
-  if (!this.get_global_switch.sort_cut) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"))
+  if (!get_global_switch.value.sort_cut) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"))
   match_sort_show.value = false
   this.vx_set_match_sort(row.id);
 }
@@ -315,13 +289,16 @@ const on_click_sort = (row) => {
  * @return {undefined} undefined
  */
 const toggle_filter_popup = () => {
-  if (!this.get_global_switch.filter_switch) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
-  if ((this.load_data_state != 'data' && !this.vx_show_filter_popup)) {
+  if (!get_global_switch.value.filter_switch) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
+  if ((this.load_data_state != 'data' && !vx_show_filter_popup.value)) {
     return
   }
   //打开或关闭赛事筛选弹层
-  this.vx_set_show_filter_popup(!this.vx_show_filter_popup);
-  if (this.vx_show_filter_popup) {
+  store.dispatch({
+    type: 'SET_SHOW_FILTER_POPUP',
+    data: !vx_show_filter_popup.value
+  })
+  if (vx_show_filter_popup.value) {
     //设置即将开赛筛选默认值
     this.reset_filter()
   }
@@ -335,7 +312,7 @@ const toggle_filter_popup = () => {
  */
 const on_change_list_type = (type) => {
 
-  if (type == this.vx_layout_list_type) {
+  if (type == vx_layout_list_type.value) {
     return
   }
   let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = NewMenu.left_menu_result
@@ -374,7 +351,7 @@ const on_change_list_type = (type) => {
     // 前端开    后台关       >关
     // 前端关    后台开       >关
     // 前端关    后台关       >关
-    if (!this.enable_collect_api || !this.get_global_switch.collect_switch) {
+    if (!this.enable_collect_api || !get_global_switch.value.collect_switch) {
       return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
     }
     apiType = 2

@@ -20,7 +20,7 @@ export default function detailsReducer(state = initialState, action) {
       return { ...state, is_back_btn_click: action.data };
      //收起右侧详情 展开多列玩法
     case "set_unfold_multi_column":
-      return { ...state, is_back_btn_click: action.data };
+      return { ...state, is_unfold_multi_column: action.data };
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import Refresh_1 from "../refresh/index.vue";
+import Refresh_1 from "../refresh-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
   Refresh_1,

@@ -120,13 +120,13 @@
 </template>
 
 <script>
-import no_data from "src/public/components/no_data/no_data";
-import { mapGetters,mapActions } from "vuex";
+import { NoDataWapper as noData } from "src/components/common/no-data";
+// import { mapGetters,mapActions } from "vuex";
 export default {
   name: "loadData",
 
   components: {
-    "no-data": no_data,
+    "no-data": noData,
   },
 
   props: {
@@ -186,21 +186,21 @@ export default {
     this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
-  computed: {
-    ...mapGetters({
-      // 登录是否失效
-      vx_get_is_invalid: "get_is_invalid",
-      //获取当前菜单类型
-      vx_cur_menu_type: "get_cur_menu_type",
-    }),
-    //是否电子竞技
-    is_eports(){
-        return this.$utils.is_eports_csid(+this.$route.params.csid)
-    },
-    cur_state(){
-      return this.state
-    }
-  },
+  // computed: {
+  //   ...mapGetters({
+  //     // 登录是否失效
+  //     vx_get_is_invalid: "get_is_invalid",
+  //     //获取当前菜单类型
+  //     vx_cur_menu_type: "get_cur_menu_type",
+  //   }),
+  //   //是否电子竞技
+  //   is_eports(){
+  //       return this.$utils.is_eports_csid(+this.$route.params.csid)
+  //   },
+  //   cur_state(){
+  //     return this.state
+  //   }
+  // },
 
   methods: {
     refresh() {

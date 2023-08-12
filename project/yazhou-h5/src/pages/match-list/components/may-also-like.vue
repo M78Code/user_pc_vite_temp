@@ -95,6 +95,8 @@ import { format_total_score } from '../../../boot/global_filters'
 import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { useRouter } from 'vue-router'
+import { useMittEmit, MITT_KEY } from  "src/core/mitt"
 
 const { from_where, show_ } = defineProps({
   from_where: {
@@ -107,6 +109,7 @@ const { from_where, show_ } = defineProps({
   }
 })
 
+const router = useRouter()
 const store_state = store.getState()
 const slide_list = ref([])
 const get_bet_list = ref(store_state.get_bet_list)
@@ -123,7 +126,7 @@ onMounted(() => {
 watch(() => show_, () => {
   //没有轮播图和没有赛事时触发事件
   if (!newVal && !slide_list.value.length) {
-    $root.$emit(emit_cmd.EMIT_MAY_ALSO_LIKE_CHANGE)
+    useMittEmit(MITT_KEY.EMIT_MAY_ALSO_LIKE_CHANGE)
   }
 })
 
@@ -181,7 +184,7 @@ const normal_ = computed(() => {
     store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: match.mid });
     // 设置默认的选中的玩法id:0
     store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
-    $router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
+    router.push({name:'category', params: {mid: match.mid, csid: match.csid}});
   }
   // 盘口内容
   const handicap_on = (item, index) => {

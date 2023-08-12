@@ -1,18 +1,16 @@
 <template>
   <div class="c-main-menu column">
-    {{ menu_list }}
-    <menu-wapper :base_data="base_data_instance"></menu-wapper>
+    <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
   </div>
 </template>
 
 <script setup>
-import { ref,onMounted } from "vue"
+import { ref } from "vue"
 import base_data_instance from 'src/core/utils/base-data/base-data.js'
 
 import { MenuWapper } from "src/components/menu";
 
-const menu_list = ref(base_data_instance.left_menu_base_mi_arr)
-console.error('s',JSON.parse(JSON.stringify(base_data_instance)))
+
 
 // 格式化用户余额保留2位小数
 const format_balance = num => {

@@ -159,6 +159,7 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import odd_column_item from "src/project/pages/match-list/components/odd_column_item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'src/boot/local-image'
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 
 const props = defineProps({
   // 赛事信息
@@ -176,6 +177,7 @@ const props = defineProps({
 });
 
 const store_state = store.getState()
+const emitters = ref({})
 
 // 罚牌玩法描述显示
 const show_tips = ref(false);
@@ -218,10 +220,9 @@ const unsubscribe = store.subscribe(() => {
 onMounted(() => {
   standard_odd_status.value = get_standard_odd_status;
   modify_overtime_status(get_standard_odd_status); // 初始化时也调用
-  $root.$on(
-    emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,
-    fapai_way_tips_status_change_h
-  );
+  emitters.value = {
+    emitter_2: useMittOn.on(MITT_KEY.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
+  }
 });
 
 // 左右tab切换也要计算赔率
@@ -654,8 +655,8 @@ const supplementary_spaces = (
 };
 // $event 时间对象 mid 赛事id
 const info_icon_click = ($event, mid) => {
-  $root.$emit(
-    emit_cmd.EMIT_INFO_ICON_CLICK,
+  useMittEmit(
+    MITT_KEY.EMIT_INFO_ICON_CLICK,
     $event,
     mid,
     props.current_tab_item,
@@ -851,10 +852,7 @@ const show_3_space = () => {
 
 onUnmounted(() => {
   unsubscribe()
-  $root.$off(
-    emit_cmd.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,
-    fapai_way_tips_status_change_h
-  );
+  Object.values(emitters.value).map((x) => x())
 });
 </script>
  

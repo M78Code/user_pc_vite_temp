@@ -1,24 +1,24 @@
 import { defineAsyncComponent } from 'vue'
 const routes = [
     // 主框架 
-  //   {
-  //     path: "/",
-  //     name: "main_layout",
-  //     redirect: {
-  //       name: "home"
-  //     },
-  //     component: () => import(`../pages/main-layout.vue`),
-  //     children: [
+    {
+      path: "/",
+      name: "main_layout",
+      redirect: {
+        name: "home"
+      },
+      component: () => import(`../layouts/main-layout.vue`),
+      children: [
   //       // 首页
-  //       {
-  //         path: "/home",
-  //         name: "home",
-  //         // () => import(`../pages/test/index.vue`)
-  //         component: () => import(`../pages/test/index.vue`),
-  //         meta: {
-  //           keepAlive: true // 需要缓存
-  //         },
-  //       },
+        // {
+        //   path: "/home",
+        //   name: "home",
+        //   // () => import(`../pages/test/index.vue`)
+        //   component: () => import(`../pages/test/index.vue`),
+        //   meta: {
+        //     keepAlive: true // 需要缓存
+        //   },
+        // },
   //       // 搜索 
   //       {
   //         path: "/search/:keyword/:time?",
@@ -28,11 +28,11 @@ const routes = [
   //             keepAlive: true // 需要缓存
   //           }
   //       },
-  //       {
-  //         path: "/details/:mid/:tid/:csid",
-  //         name: "details",
-  //         component: () => import(`../pages/test/index.vue`),
-  //       },
+         {
+          path: "/details/:mid/:tid/:csid",
+          name: "details",
+          component: () => import(`project_path/src/pages/match-details/details_main.vue`),
+        },
   //       {
   //         path: "/virtual_details/:mid/:tid/:csid",
   //         name: "virtual_details",
@@ -43,8 +43,8 @@ const routes = [
   //         name: "video",
   //         component: () => import(`../pages/test/index.vue`),
   //       },
-  //     ]
-  //   },
+      ]
+    },
   // //赛事分析
   // {
   //   path: "/analysis_header/:csid/:mid",
@@ -64,17 +64,17 @@ const routes = [
   //   component: () => import(`../pages/test/index.vue`),
   // },
   // // 公告 
-  // {
-  //   path: "/announce",
-  //   name: "announce",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
-  // // 体育规则 
-  // {
-  //   path: "/rule",
-  //   name: "rule",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
+  {
+    path: "/announce",
+    name: "announce",
+    component: () => import('project_path/src/pages/announce/index.vue'),
+  },
+  // 体育规则 
+  {
+    path: "/rule",
+    name: "rule",
+    component: () => import('project_path/src/pages/rule/index.vue'),
+  },
   // // 每日成长任务
   // {
   //   path: '/activity',

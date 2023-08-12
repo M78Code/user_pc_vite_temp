@@ -48,40 +48,45 @@ remove_file(img_folder); //删除输出文件夹
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
 const download_file_to_local = async (srcs) => {
-  ensure_write_folder_exist(img_folder);
-  // let add_obj = {
-  //   MERCHANT_CONFIG_VERSION,
-  //   project: MERCHANT_CONFIG_VERSION,
-  //   write_file_date: Date.now(),
-  // };
-  const img_url_theme_map = {};
-  Object.entries(srcs).map(([key, themes]) => {
-    img_url_theme_map[key] = {};
-    Object.entries(themes).forEach(async ([theme, url]) => {
-      const filename = img_folder + url.split("/").pop(); //入本地路径
-      img_url_theme_map[key][theme] = filename.slice(1); //写入本地路径
-      try {
-        //读取文件下载到本地
-        const response = await axios.get(url, { responseType: "stream" });
-        response.data.pipe(fs.createWriteStream(filename));
-      } catch (error) {}
+  try {
+    //确保配置 输出目录存在
+    ensure_write_folder_exist(img_folder);
+    // let add_obj = {
+    //   MERCHANT_CONFIG_VERSION,
+    //   project: MERCHANT_CONFIG_VERSION,
+    //   write_file_date: Date.now(),
+    // };
+    const img_url_theme_map = {};
+    Object.entries(srcs).map(([key, themes]) => {
+      img_url_theme_map[key] = {};
+      Object.entries(themes).forEach(async ([theme, url]) => {
+        const filename = img_folder + url.split("/").pop(); //入本地路径
+        img_url_theme_map[key][theme] = filename.slice(1); //写入本地路径
+        try {
+          //读取文件下载到本地
+          const response = await axios.get(url, { responseType: "stream" });
+          response.data.pipe(fs.createWriteStream(filename));
+        } catch (error) {}
+      });
     });
-  });
-  write_file(file_path, JSON.stringify(img_url_theme_map));
+    write_file(file_path, JSON.stringify(img_url_theme_map));
+  } catch (error) {
+    console.log("下载文件错误");
+  }
 };
 /**
  * 获取 服务器上 当前商户的 版本配置
  */
 const get_config_info = async () => {
+  const username = "TY-yazhou-lan";
   // API 对外文档 的 单个 版本的详情 获取地址
-  let url =
-    "https://api-doc-server-new.sportxxxw1box.com/openapi/serverSource/findAllDefaultConfigKey?_=" +
-    MERCHANT_CONFIG_VERSION;
+  let url = `https://api-doc-server-new.sportxxxw1box.com/openapi/serverSource/findAllDefaultConfigKey?version=${MERCHANT_CONFIG_VERSION}&username=${username}`;
   try {
     let res = await axios.get(url);
     let { data } = res;
     if (data) {
-      download_file_to_local(data.data.assets.h5);
+      //此处1 应该是配置的与后台相对应
+      download_file_to_local(data.data.assets["1"]);
     }
   } catch (error) {
     console.log("获取 服务器上 当前商户的 版本配置 出错");
