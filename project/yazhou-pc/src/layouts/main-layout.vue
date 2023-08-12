@@ -13,7 +13,7 @@
 
         <q-toolbar-title>
           --亚洲版本----&nbsp;&nbsp;&nbsp;&nbsp;env:
-          {{ current_env }} &nbsp;&nbsp;&nbsp;&nbsp; token: {{ token }}
+          {{ CURRENT_ENV }} &nbsp;&nbsp;&nbsp;&nbsp; token: {{ token }}
         </q-toolbar-title>
 
         <q-btn @click="empty_bet_items"> 清除投注框内容 </q-btn>
@@ -22,7 +22,7 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> 左侧菜单头部 </q-item-label>
+        <q-item-label header> 左侧菜单头部1111 </q-item-label>
       </q-list>
       <!-- <TestPcMenu2 /> -->
     </q-drawer>
@@ -36,11 +36,12 @@
 
 <script setup>
 import { defineComponent, ref } from "vue";
+import { ss } from "src/core/utils/web-storage";
 import STANDARD_KEY from "src/core/standard-key";
-// import LeftMenuTemplate1 from "../components/menu/left-menu/template1/template1.vue";
+// import LeftMenuTemplate1 from "../pages/menu/left-menu/template1/template1.vue";
 // import TestPcMenu2 from "../components/test/test-pc-menu2.vue";
 // import BetBoxDialog from "../components/test/bet-box-dialog.vue";
-// import store from "../store-redux-vuex/index.js";
+import store from "../store/index.js";
 
 const leftDrawerOpen = ref(false);
 
@@ -48,9 +49,8 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 };
 
-const token = ref(sessionStorage.getItem(STANDARD_KEY.get("token")));
-// const current_env = process.env.current_env;
-
+const token = ref(ss.get(STANDARD_KEY.get("token")));
+const {CURRENT_ENV} = window.BUILDIN_CONFIG;
 const empty_bet_items = () => {
   store.dispatch({
     type: "betReducer/empty_bet",
@@ -60,5 +60,4 @@ const empty_bet_items = () => {
     payload: false,
   });
 };
-
 </script>
