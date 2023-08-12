@@ -2,7 +2,8 @@
 <template>
     <div class="announce-wrap">
         <simple-header>
-            <span>{{ $root.$t('common.notice') }}</span>
+            <!-- <span>{{ $root.$t('common.notice') }}</span> -->
+            <span>TODO: $root.$t('common.notice')</span>
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
@@ -16,7 +17,9 @@
                         <div class="ann-content" v-html="item.context"></div>
                         <div class="ann-time">{{ timestr(item.sendTimeOther) }}</div>
                     </div>
-                    <load-data state="notice-empty" :no_data_msg="$root.$t('common.notice_no_data')"
+                    <!-- <load-data state="notice-empty" :no_data_msg="$root.$t('common.notice_no_data')" -->
+                        <!-- TODO: -->
+                    <load-data state="notice-empty" no_data_msg="$root.$t('common.notice_no_data')"
                         v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>
@@ -25,19 +28,19 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 import simpleHeader from "./simple-header.vue";
 import LeftMenu from "./left-menu.vue";
-import loadData from "src/project/components/load_data/load_data.vue"
+import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
 

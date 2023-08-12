@@ -91,7 +91,7 @@
     <div class="mx-4 row team-name">
       <div class="row name-wrap mhn">
         <div class="mhn-name ellipsis-2-lines">
-          <template v-if="_.get(detail_data, 'mhn', '').includes('/')">
+          <template v-if="lodash.get(detail_data, 'mhn', '').includes('/')">
             <div class="ellipsis">{{detail_data.mhn.split(' / ')[0]}}/</div>
             <div class="ellipsis">{{detail_data.mhn.split(' / ')[1]}}</div>
           </template>
@@ -122,7 +122,7 @@
           </div>
         </div>
         <div class="man-name ellipsis-2-lines">
-          <template v-if="_.get(detail_data, 'man', '').includes('/')">
+          <template v-if="lodash.get(detail_data, 'man', '').includes('/')">
             <div class="ellipsis">{{detail_data.man.split(' / ')[0]}}/</div>
             <div class="ellipsis">{{detail_data.man.split(' / ')[1]}}</div>
           </template>
@@ -145,7 +145,8 @@ import counting_down from 'src/project/components/common/counting-down'   // 赛
 import utils from "src/public/utils/utils.js";    // 公共方法
 // #TODO vuex 
 // import {mapGetters, mapMutations} from "vuex";
-
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "details_tab",
@@ -169,6 +170,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const data = reactive({
+      emitters: [],
       // 赛事开始倒计时时间(赛事开始时间-当前时间)
       longTime: '',
       // 赛事开赛时间倒计时是否显示
@@ -206,7 +208,7 @@ export default defineComponent({
         home:null,
         away:null
       }
-      _.forEach(detail_data.msc, item =>{
+      lodash.forEach(detail_data.msc, item =>{
         if(item.split("|")[0] == "S1"){
           score = {
             /*home:item.split("|")[1].split(":")[0] || 0,
@@ -227,7 +229,7 @@ export default defineComponent({
         home:null,
         away:null
       }
-      _.forEach(detail_data.msc, item =>{
+      lodash.forEach(detail_data.msc, item =>{
         if(item.split("|")[0] == "S11"){
           score = {
             home:item.split("|")[1].split(":")[0] || 0,
@@ -450,6 +452,7 @@ export default defineComponent({
           start_time = false;
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
+          useMittEmit(MITT_KEY.EMIT_MATCHINFO_LOADING);
           // $root.$emit(emit_cmd.EMIT_MATCH_NOSTART);
         }
         // 同上注释
@@ -492,6 +495,9 @@ export default defineComponent({
       hide_away_red = debounce(hide_away_red,5000)
       initEvent();
       // #TODO emit 
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
+      ]
       // $root.$on(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     onUnmounted(() => {
@@ -507,6 +513,7 @@ export default defineComponent({
       timer1_ = null
 
       // #TODO emit 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     return {

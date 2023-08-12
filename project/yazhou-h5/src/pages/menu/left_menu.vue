@@ -61,9 +61,7 @@
             <sport_icon size="18" :sport_id="item.mi" />
             <div>
               {{
-                item.mi == "2000"
-                  ? "Esports"
-                  : state.menu_name_list[item.mi]
+                item.mi == "2000" ? "Esports" : state.menu_name_list[item.mi]
               }}
             </div>
           </div>
@@ -75,15 +73,16 @@
 
 <script>
 import { defineComponent, reactive, onMounted } from "vue";
-import { useMetaData } from "src/stores/meta_data";
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store/index.js";
-import lodash from 'lodash'
+import lodash from "lodash";
+import { api_match } from "src/public/api/index";
 export default defineComponent({
   name: "leftMenu",
   components: { sport_icon },
   setup(props, event) {
     let menu_obj = reactive({});
+    let menu_list = reactive({});
     let state = store.getState();
     const router = useRouter();
     const route = useRoute();
@@ -102,8 +101,9 @@ export default defineComponent({
     onMounted(() => {
       // TODO  当menu_list没数据时请求下菜单数据接口--临时解决开发时indexPage页面不走<menu_list />组件无法获取菜单列表数据
       if (state.menu_list.length < 1) {
-       init_menu_list();
+        init_menu_list();
       }
+      unsubscribe();
     });
     const init_menu_list = async (m_data) => {
       const { data } = await api_match.handle_menu_id_list();
@@ -122,11 +122,12 @@ export default defineComponent({
           const parseInt_mi = parseInt(item.mi);
           return (
             item.sl &&
-            (2000 > parseInt_mi || parseInt_mi > 3000) &&![5000,500,400,300,118].includes(parseInt_mi)
+            (2000 > parseInt_mi || parseInt_mi > 3000) &&
+            ![5000, 500, 400, 300, 118].includes(parseInt_mi)
           );
         });
-          //存储menu选中数据
-          store.dispatch({
+        //存储menu list数据
+        store.dispatch({
           type: "SET_MENU_LIST",
           data: menu_list,
         });
@@ -150,7 +151,10 @@ export default defineComponent({
       // 跳赛事列表页面
       route.path !== "/menu_list" && router.push("/menu_list");
     };
-
+    // 监听变化
+    let unsubscribe = store.subscribe(() => {
+      menu_list.value = state.menu_list
+    });
     return {
       change_current_menu,
       init_menu_list,
@@ -163,101 +167,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-@import "src/css/eu.variables.scss";
-.menu_container {
-  h5 {
-    color: $main_color;
-  }
-  .menu_item {
-    line-height: 30px;
-    &.active {
-      color: $main_color;
-    }
-  }
-}
-// 侧边栏样式
-.left_drawer_page {
-  font-family: "Roboto";
-  .q-list-content {
-    padding: 0 !important;
-    .sports-genre {
-      padding: 29px 0 29px 18px;
-    }
-    .menu_container {
-      padding: 20px 0 20px 20px;
-    }
-    .popular {
-      padding: 22px 0 17px 20px;
-    }
-    .sports-genre {
-      .item {
-        display: flex;
-        align-items: center;
-        div {
-          font-size: 16px;
-          color: #3d3b37;
-          font-size: 16px;
-          font-weight: 400;
-          line-height: 19px;
-          letter-spacing: 0px;
-          text-align: left;
-        }
-      }
-    }
-    .esports {
-      margin-bottom: 24px;
-    }
-    .esports span,
-    .vr-sports span {
-      // width: 20px;
-      // height: 20px;
-      display: inline-block;
-      margin-right: 11px;
-      // background-image: url('src/project-ouzhou/assets/common/icon_sports@3_min.png');
-      // background-size: 220px 220px;
-    }
-  }
-
-  // 分割线
-  .segmentation {
-    width: 100%;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  .popular,
-  .menu_container {
-    h5 {
-      font-size: 16px;
-      margin: 0;
-      height: 19px;
-      line-height: 19px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: rgba(255, 112, 0, 1);
-    }
-  }
-  .popular .item,
-  .menu_container .menu_item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-    span {
-      // width: 18px;
-      // height: 18px;
-      margin-right: 11px;
-      display: inline-block;
-      // background-image: url('src/project-ouzhou/assets/common/icon_sports@3_min.png');
-      // background-size: 198px 198px;
-    }
-    div {
-      height: 19px;
-      line-height: 19px;
-      font-weight: 400;
-      color: rgba(61, 59, 55, 1);
-    }
-  }
-  .popular .item:last-child {
-    margin-bottom: 0 !important;
-  }
-}
+  @import "./styles/left-menu.scss";
 </style>

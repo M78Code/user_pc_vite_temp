@@ -133,6 +133,8 @@
 import { api_common } from "src/project/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
@@ -198,6 +200,7 @@ export default defineComponent({
   // mixins: [betting],
   setup(props, evnet) {
     const data = reactive({
+      emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
       // 玩法集合
       play_item_data: {},
@@ -251,6 +254,9 @@ export default defineComponent({
       // 满足ws推送的监听 实时响应数据变化
       if (new_score) {
         // #TODO emit 
+        emitters = [
+          useMittOn.on(MITT_KEY.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
+        ]
         // $root.$on(emit_cmd.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
@@ -261,6 +267,7 @@ export default defineComponent({
 
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
+      emitters.push(useMittOn.on(MITT_KEY.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
       // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
@@ -345,8 +352,8 @@ export default defineComponent({
      */
     const hid = computed(() => {
       var ret = false;
-      var len = _.get(item_data, "hl.length");
-      let hot_name = _.get(item_data, "hotName");
+      var len = lodash.get(item_data, "hl.length");
+      let hot_name = lodash.get(item_data, "hotName");
       if(hot_name){
         return false
       }
@@ -365,12 +372,12 @@ export default defineComponent({
      *@return {Boolean}
      */
     const is_remove = computed(() => {
-      let hl_ = _.get(item_data, "hl");
+      let hl_ = lodash.get(item_data, "hl");
       let res
       if(hl_){
         res =  hl_.every((item) => item.hs == "2");
       }
-      let hot_name = _.get(item_data, "hotName");
+      let hot_name = lodash.get(item_data, "hotName");
       if(hot_name){
         return false
       }
@@ -390,14 +397,14 @@ export default defineComponent({
      *@return {String} 盘口显示判断
      */
     const isEmpty = computed(() => {
-      let hl_list = _.get(item_data, "hl");
+      let hl_list = lodash.get(item_data, "hl");
       let ol_list = null;
       let status = 0;
       let ret = true;
       item_data.hmm == 1; //多盘口
       if (hl_list && hl_list instanceof Array) {
         for (let i = 0; i < hl_list.length; i++) {
-          ol_list = _.get(hl_list[i], "ol");
+          ol_list = lodash.get(hl_list[i], "ol");
           if (item_data.hmm == 1) {
             //主盘
             if (i >= 1) {
@@ -533,12 +540,14 @@ export default defineComponent({
     const set_hton = (item_data,e) => {
       if(timer2_) { clearTimeout(timer2_) }
       timer2_ =setTimeout(()=>{
-        // item_data = _.cloneDeep(item_data)
+        // item_data = lodash.cloneDeep(item_data)
         // 取消置顶
         if (item_data.hton != 0) {
           item_data.hton = '0';
         } else {
           // #TODO emit 
+          useMittEmit(MITT_KEY.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
+          useMittEmit(MITT_KEY.EMIT_RESET_SET_HTON);
           // $root.$emit(emit_cmd.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           // $root.$emit(emit_cmd.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
@@ -555,7 +564,7 @@ export default defineComponent({
         
         // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
-        const all_list_data = _.cloneDeep(get_details_data_cache[key]) || []
+        const all_list_data = lodash.cloneDeep(get_details_data_cache[key]) || []
         const target_play_id = item_data.chpid || item_data.hpid
         all_list_data.forEach((item, i) => {
           if ([item.chpid, item.hpid].includes(target_play_id)) {
@@ -563,7 +572,7 @@ export default defineComponent({
             // 置顶时hton为即时时间戳，如果hton长度与时间戳长度相同，则将目标玩法放在数组第一个位置
             if (item.hton.length === 13) {
               all_list_data.splice(i, 1)
-              all_list_data.unshift(_.cloneDeep(item_data))
+              all_list_data.unshift(lodash.cloneDeep(item_data))
             }
           }
         })
@@ -602,12 +611,12 @@ export default defineComponent({
     const bet_click_ = ({ol_item, hl_data}) => {
       if(ol_item.os == 2 || ol_item.result) return
       if (!ol_item.ov || ol_item.ov < 101000) return;
-      let match = _.cloneDeep(get_detail_data);
+      let match = lodash.cloneDeep(get_detail_data);
       match.hps = [item_data];
       if(get_menu_type == 900){  //虚拟体育
         if (match.match_status) return
         if(hl_data){
-          let hl_data_ = _.cloneDeep(hl_data)
+          let hl_data_ = lodash.cloneDeep(hl_data)
           Object.assign(hl_data_.hl[0],{ol:[ol_item]})
           match.hps = [hl_data_];
           bet_click3(match, hl_data_, ol_item);
@@ -644,6 +653,7 @@ export default defineComponent({
     };
     onUnmounted(() => {
       // #TODO emit 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
       // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
       debounce_throttle_cancel(bet_click_);

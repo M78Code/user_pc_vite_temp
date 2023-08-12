@@ -37,12 +37,12 @@ import { useRegistPropsHelper, useProps, useComputed } from "src/composables/reg
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 import { api_home } from "src/api/index";
-import loadData from "src/project/components/load_data";
-import { NoDataWapper as noData } from "src/project/components/common/no-data";
+import { LoadingWapper as loadPage } from "src/components/common/loading";
+import { NoDataWapper as noData } from "src/components/common/no-data";
 import simpleHeader from './simple-header.vue';
 import tabs from "./tab.vue";
 import store from "src/store-redux/index.js";
