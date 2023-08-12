@@ -217,7 +217,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import utils from 'src/public/utils/utils.js';
+import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp13",
@@ -387,35 +387,35 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .temp13 {
-  @include keyframes(dir_remind_animate) {
-    0% {
-      transform: translateX(0);
-      opacity: 0;
-    }
-    60% {
-      transform: translateX(-0.06rem);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-0.09rem);
-      opacity: 0;
-    }
-  }
+  // @include keyframes(dir_remind_animate) {
+  //   0% {
+  //     transform: translateX(0);
+  //     opacity: 0;
+  //   }
+  //   60% {
+  //     transform: translateX(-0.06rem);
+  //     opacity: 1;
+  //   }
+  //   100% {
+  //     transform: translateX(-0.09rem);
+  //     opacity: 0;
+  //   }
+  // }
 
-  @include keyframes(dir_right_remind_animate) {
-    0% {
-      transform: translateX(-0.09rem) rotate(180deg);
-      opacity: 0;
-    }
-    60% {
-      transform: translateX(-0.06rem) rotate(180deg);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(0) rotate(180deg);
-      opacity: 0;
-    }
-  }
+  // @include keyframes(dir_right_remind_animate) {
+  //   0% {
+  //     transform: translateX(-0.09rem) rotate(180deg);
+  //     opacity: 0;
+  //   }
+  //   60% {
+  //     transform: translateX(-0.06rem) rotate(180deg);
+  //     opacity: 1;
+  //   }
+  //   100% {
+  //     transform: translateX(0) rotate(180deg);
+  //     opacity: 0;
+  //   }
+  // }
 
   .slide_icon {
     width: 0.12rem;

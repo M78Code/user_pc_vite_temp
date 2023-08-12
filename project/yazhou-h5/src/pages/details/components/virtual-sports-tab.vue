@@ -272,12 +272,12 @@ export default {
   background-image: var(--q-color-img-bg-97);
   background-size: 100% 100%;
   transform: rotateZ(180deg);
-  @include webkit(transition, transform 0.3s);
+  // @include webkit(transition, transform 0.3s);
 
-  &.collapsed {
-    transform: rotateZ(0);
-    @include webkit(transition, transform 0.3s);
-  }
+  // &.collapsed {
+  //   transform: rotateZ(0);
+  //   @include webkit(transition, transform 0.3s);
+  // }
 }
 
 .menu-third {

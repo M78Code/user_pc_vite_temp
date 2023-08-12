@@ -15,7 +15,7 @@
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.home}}</div>
           <!-- 中间的赛事阶段 上半场和一个倒计时-->
           <div class="col text-center base-header-font">
-            <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage>
+            <!-- <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage> -->
           </div>
           <div class="col eports_scoring_tip" v-if="eports_scoring">{{$root.$t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
@@ -29,9 +29,9 @@
 <script>
 // #TODO vuex 
 // import { mapGetters} from "vuex";
-import global_filters from 'src/boot/global_filters.js'
-import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
-import base64 from "src/public/utils/base64.js";    // 球类背景图base64路径集合
+// import global_filters from 'src/boot/global_filters.js'
+// import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
+import base64 from "src/core/utils/base64.js";    // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -47,7 +47,7 @@ export default defineComponent({
     }
   },
   components: {
-    "match-stage":match_stage
+    // "match-stage":match_stage
   },
   setup(props, evnet) {
     const data = reactive({

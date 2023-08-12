@@ -52,7 +52,7 @@ import { api_v_sports } from "src/project/api/index.js";
 // #TODO mixins 
 // import common from 'src/project/mixins/constant/module/common.js';
 
-import teamImg from 'src/project/components/details/team_img.vue'
+import teamImg from "src/components/details/team-img/team-img-template-1/team-img.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_basketball",
