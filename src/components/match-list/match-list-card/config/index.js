@@ -2,13 +2,9 @@
 export  const  component_symbol = 'MatchListCard'
 //公用的 需要注册的一些对接参数
 export  const need_register_props = {
-  match: {
-    type: Object,
-    default: {  },
-  },
-  NewMenu: {
-    type: Object,
-    default: {  },
+  card_key: {
+    type: String,
+    default: () => '',
   }
 }
 

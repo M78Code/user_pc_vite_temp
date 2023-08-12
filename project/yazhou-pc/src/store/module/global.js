@@ -69,7 +69,13 @@ const initialState = {
 };
 export default function globalReducer(state = initialState, action) {
   switch (action.type) {
-    //设置保存的滚动数据
+    // 设置是否展开多列玩法
+    case "SET_UNFOLD_MULTI_COLUMN":
+      return {...state, is_unfold_multi_column: action.data };
+    // 设置视频是否展开状态
+    case "SET_IS_FOLD_STATUS":
+      return { ...state, is_fold_status: action.data };
+    // 设置保存的滚动数据
     case "SET_RETAIN_SCROLL_OBJ":
       return { ...state, retain_scroll_obj: action.data };
     //全局开关

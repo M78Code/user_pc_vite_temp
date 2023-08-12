@@ -1,7 +1,7 @@
 <template>
   <div class="match-tab row justify-end">
     <!-- 足球联赛league_type 0 -->
-    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': _.get(get_access_config, 'statisticsSwitch') && sub_menu_type != 1004}">
+    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': lodash.get(get_access_config, 'statisticsSwitch') && sub_menu_type != 1004}">
       <div ref="scrollItem" v-for="(item,i) in no_list" class="row sub-nav-item" @click="sub_nav_click_handle(item.batchNo, true)"
         :class="{focus:item.batchNo === sub_focus_batch_no,footbal:[1001,1004].includes(sub_menu_type)}"
         v-show="sub_menu_type != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
@@ -10,7 +10,7 @@
       </div>
     </div>
     <!-- 分析icon显示 -->
-    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="_.get(get_access_config,'statisticsSwitch') && sub_menu_type != 1004">
+    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="lodash.get(get_access_config,'statisticsSwitch') && sub_menu_type != 1004">
       <img class="sub-item-trend-icon2" v-if="[1002, 1011, 1010, 1009].includes(sub_menu_type) && trend_is_show"
             src="image/wwwassets/bw3/common/analyse_icon.svg" alt="" />
       <img class="sub-item-trend-icon1" v-if="[1001,1004].includes(sub_menu_type) && trend_is_show"
@@ -25,6 +25,8 @@
 // #TODO VUEX 
 // import { mapGetters, mapMutations } from "vuex"
 import utils from "utils/utils";
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "match_tab",
@@ -50,6 +52,8 @@ export default defineComponent({
   
   setup(props, evnet) {
     const data = reactive({
+      // 事件集合
+      emitters: [],
       // 默认显示分析按钮
       trend_is_show:true,
       // 默认选中第一项
@@ -73,9 +77,17 @@ export default defineComponent({
     })
     onMounted(() => {
       // #TODO EMIT 
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_BASKETBALL_TIME_ARRIVED, basket_ball_time_handle).off,
+        useMittOn.on(MITT_KEY.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
+        useMittOn.on(MITT_KEY.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
+      ]
       // $root.$on(emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
       // $root.$on(emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);
       // $root.$on(emit_cmd.EMIT_INGAME_RESULT_SHOW_END,ingame_result_show_end);
+    })
+    onUnmounted(() => {
+      emitters.map((x) => x())
     })
     watch(
       () => props.before_match_tab_trend,
@@ -192,7 +204,7 @@ export default defineComponent({
       if(batchNo == sub_focus_batch_no && is_user_lick){
         return;
       }
-      sub_nav_focus_i = _.findIndex(no_list,{batchNo:batchNo});
+      sub_nav_focus_i = lodash.findIndex(no_list,{batchNo:batchNo});
       sub_focus_batch_no = batchNo;
       utils.tab_move2(sub_nav_focus_i, $refs.scrollBox)
       let current_sub_nav = no_list[sub_nav_focus_i];
@@ -204,8 +216,8 @@ export default defineComponent({
       // });
 
       //将赛马赛事信息跟新到vuex
-      let match_info = _.get(current_sub_nav,'match[0]')
-      match_info && set_detail_data(_.cloneDeep(match_info))
+      let match_info = lodash.get(current_sub_nav,'match[0]')
+      match_info && set_detail_data(lodash.cloneDeep(match_info))
 
       //赛马传递赛事集合唯一赛事的赛事id
       if([1002, 1011, 1010, 1009].includes(sub_menu_type)){
@@ -238,7 +250,7 @@ export default defineComponent({
         try{
           mid = selected.match[0].mid;
           //将赛马赛事信息跟新到vuex
-          selected.match[0] && set_detail_data(_.cloneDeep(selected.match[0]));
+          selected.match[0] && set_detail_data(lodash.cloneDeep(selected.match[0]));
         }catch(e){console.error(e)}
         if(mid){
           set_current_mid(mid);
@@ -299,6 +311,7 @@ export default defineComponent({
     }
     return {
       ...toRefs(data),
+      lodash,
       league_type,
       basket_ball_time_handle,
       sub_nav_click_handle,

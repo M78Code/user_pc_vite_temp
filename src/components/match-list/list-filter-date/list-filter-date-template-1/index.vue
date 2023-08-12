@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import DateTab from "src/public/components/tab/date-tab.vue";
+import { DateTabFullVersionWapper as DateTab} from "src/components/tab/date-tab/index.js";
 </script>
 
 <style lang="scss" scoped>

@@ -39,7 +39,7 @@ const initialState = {
   },
 };
 
-export default function menusReducer(state = initialState, action) {
+export default function layoutReducer(state = initialState, action) {
   switch (action.type) {
     // 获取当前页路由信息
     case "SETLAYOUTCURPAGE":
