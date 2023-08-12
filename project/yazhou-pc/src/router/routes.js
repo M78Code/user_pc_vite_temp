@@ -64,11 +64,11 @@ const routes = [
   //   component: () => import(`../pages/test/index.vue`),
   // },
   // // 公告 
-  // {
-  //   path: "/announce",
-  //   name: "announce",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
+  {
+    path: "/announce",
+    name: "announce",
+    component: () => import('project_path/src/pages/announce/index.vue'),
+  },
   // 体育规则 
   {
     path: "/rule",
