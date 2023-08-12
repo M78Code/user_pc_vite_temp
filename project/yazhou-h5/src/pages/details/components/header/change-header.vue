@@ -1,6 +1,6 @@
 <template>
   <div class="change-header">
-    <div class="bg-wrap" :style="get_menu_type == 3000 ? URL.gaming_type[detail_data.csid] : _.get(URL.sporting_type,`${ballType}.B`)">
+    <div class="bg-wrap" :style="get_menu_type == 3000 ? URL.gaming_type[detail_data.csid] : lodash.get(URL.sporting_type,`${ballType}.B`)">
     </div>
     <div class="h-row row mx-15">
         <!-- 返回按钮 -->
@@ -32,6 +32,7 @@
 import global_filters from 'src/boot/global_filters.js'
 import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 import base64 from "src/public/utils/base64.js";    // 球类背景图base64路径集合
+import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "change_header",
@@ -82,7 +83,8 @@ export default defineComponent({
       ...toRefs(data),
       ballType,
       eports_scoring,
-      is_show_score
+      is_show_score,
+      lodash
     }
   }
 })

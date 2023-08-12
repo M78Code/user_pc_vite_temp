@@ -1,5 +1,5 @@
 <template>
-    <div class="c-simple-header" v-if="source.toLocaleUpperCase() == 'PC'">
+    <div class="c-simple-header">
         <div v-if="is_hide_icon" class="icon-layout"></div>
         <div v-else class="rule-logo">
             <div class="img-logo custom-format-img-logo-01"></div>
@@ -17,29 +17,17 @@
             </div>
         </div>
     </div>
-    <div class="header" v-else-if="source.toLocaleUpperCase() == 'H5'">
-        <div class="go-back" @click="go_to_back"></div>
-        <span class="title">
-            <slot></slot>
-        </span>
-    </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted, onUnmounted, ref, computed } from 'vue'
+import { useRoute } from 'vue-router';
 import store from "src/store-redux/index.js";
 // TODO: mixins待处理
-import time_format_mixin from "src/public/mixins/common/time_format";
-import { RefreshWrapper as Refresh } from "src/components/refresh"
+// import time_format_mixin from "src/public/mixins/common/time_format";
+import { RefreshWapper as Refresh } from "src/components/common/refresh"
 
 const props = defineProps({
-    ...useProps,
-    /** 区分 PC H5 */
-    source: {
-        type: String,
-        default: 'PC',
-    },
     /** 刷新按钮动画开关 */
     data_loaded: {
         type: Boolean,
@@ -75,7 +63,6 @@ onUnmounted(clear_timer)
 const date_time = ref('')
 /** 获取当前系统时间 */
 const get_date_time = () => {
-    if (props.source.toLocaleUpperCase() != 'PC') return
     // TODO: 待处理mixins函数
     // let time = this.mx_get_remote_time();
     // date_time.value = this.utc_to_gmt_no_8_ms2(time);
@@ -96,18 +83,7 @@ const unsubscribe = store.subscribe(() => {
 })
 onUnmounted(unsubscribe)
 
-/** 路由实例 */
-const router = useRouter()
 
-/** H5 返回上一级 */
-const go_to_back = () => {
-    if (menu_type.value == 900 && current_route_name == 'rule_description') {
-        router.push({ name: 'virtual_sports' });//跳转到虚拟体育
-        return
-    }
-    if (route.path == '/rule_description') router.push('/match');
-    if (route.path == '/notice') router.push('/home');
-}
 
 </script>
 

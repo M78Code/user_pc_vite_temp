@@ -270,3 +270,9 @@ export const EMIT_VITTUAL_BET_LIST_DEL = "EMIT_VITTUAL_BET_LIST_DEL"
 export const EMIT_GET_ODDS_ACTIVE = "EMIT_GET_ODDS_ACTIVE"
 
 
+// ------------------------------------------------------------------详情相关-----------------------------------------------------------------------------------
+
+// 通知列表右侧详情，获取近期关注数据
+export const EMIT_GET_HISTORY = "EMIT_GET_HISTORY"
+
+export const EMIT_AUTOSET_MATCH = "EMIT_AUTOSET_MATCH"

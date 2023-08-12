@@ -4,7 +4,7 @@
  * @Description: 红升绿降的展示
 -->
 <template>
-  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${_.get(ol_data, 'oid')}`">
+  <div :class="['odds_new',{'odds-new2':ol_data.result != undefined}]" :id="DOM_ID_SHOW && `list-${lodash.get(ol_data, 'oid')}`">
     <template v-if="ol_data.result == undefined">
       <span v-if="odds_value() < 1.01 && get_cur_odd == 'EU'">
         <img src="image/wwwassets/bw3/common/match-icon-lock.svg" alt="" style=" width: 0.12rem"/>
@@ -25,6 +25,7 @@
 // import { mapGetters } from "vuex";
 // #TODO mixins 
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins 
@@ -98,7 +99,8 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      odds_value
+      odds_value,
+      lodash
     }
   }
 })

@@ -14,6 +14,7 @@ const i18n = createI18n({
   fallbackLocale: "zh",
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},
+  legacy:false,
   // 去除控制台i18n警告信息
   silentTranslationWarn: true,
 });
@@ -39,16 +40,22 @@ let map_ = {
  * @return {*}
  */
 function loadLanguageAsync(lang) {
+  console.log("langFile");
+
   return import(
-    /* webpackChunkName: "lang-[request]" */ `src/i18n/${map_[lang]}`
-  ).then((langfile) => {
-    // 动态加载对应的语言包
-    let langFile = langfile.default;
-    // 设置语言信息
-    i18n.setLocaleMessage(lang, langFile);
-    // 设置语种
-    i18n.locale = lang;
-    return lang;
-  });
+    /* webpackChunkName: "lang-[request]" */ `../i18n/${map_[lang]}/`
+  )
+    .then((_model) => {
+      // 动态加载对应的语言包
+      let langFile = _model.default;
+      console.log("langFile", langFile);
+
+      // 设置语言信息
+      i18n.global.setLocaleMessage(lang, langFile);
+      // 设置语种
+      i18n.locale = lang;
+      return lang;
+    })
+    .catch((e) => console.log("langFile", e));
 }
 export { i18n, loadLanguageAsync };

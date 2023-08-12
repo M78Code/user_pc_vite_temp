@@ -85,17 +85,25 @@
 import { ref } from "vue";
 import { is_show_sr_flg } from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
-import { sr_click_handle } from "src/core/match-detail/match-detail";
+import details from "src/core/match-detail/match-detail";
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux-vuex/index.js';
 
+const props = defineProps({
+
+})
+
 const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
-const back_to_timer = ref(null);
+
 
 const useRoute = useRoute();
 const useRouter = useRouter();
+
+
+
+const emit = defineEmits(['init','back_to'])
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
@@ -108,45 +116,8 @@ const useRouter = useRouter();
  * @description 返回上一页
  */
 const back_to = (is_back = true) => {
-  if (this.vx_play_media.media_type === "topic") {
-    video.send_message({
-      cmd: "record_play_info",
-      val: {
-        record_play_time: true,
-      },
-    });
-  }
-
-  clearTimeout(back_to_timer.value);
-  back_to_timer.value = setTimeout(() => {
-    // 退出页面时清空用户操作状态
-    window.sessionStorage.setItem("handle_state", JSON.stringify([]));
-    // 如果是从搜索结果进来的
-    if (useRoute.query.keyword) {
-      search.set_back_keyword({
-        keyword: useRoute.query.keyword,
-        csid: useRoute.params.csid,
-      });
-      store.dispatch({
-      type: 'SET_SEARCH_STATUS',
-      data: true
-    })
-    }
-    let { from_path } = this.get_layout_cur_page;
-    from_path = from_path || "/home";
-    if (this.get_layout_cur_page.from == "video") {
-      from_path = "/home";
-    }
-    // 告知列表是详情返回：用于是否重新自动拉右侧内容
-    store.dispatch({
-      type: 'SET_IS_BACK_BTN_CLICK',
-      data: is_back
-    })
-    useRouter.push(from_path);
-    if (from_path.includes("search")) {
-      this.set_unfold_multi_column(false);
-    }
-  }, 50);
+    // 重新请求相应接口
+    emit('back_to',true)
 };
 
 // sr 分析数据点击跳转
@@ -165,12 +136,16 @@ const sr_click_handle = (match, type) => {
  */
 const refresh = () => {
   // 接口请求中
-  if (this.is_request) {
+  if (is_request.value) {
     return;
   }
+  
+  // 重新请求相应接口
+  emit('init',{ is_refresh: true})
+
 
   // 重新请求相应接口
-  this.init({ is_refresh: true });
+  // this.init({ is_refresh: true });
 
   // 刷新前 先关闭聊天室
   this.set_chatroom_available(0);

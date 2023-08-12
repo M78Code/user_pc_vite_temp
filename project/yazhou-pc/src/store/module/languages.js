@@ -1,4 +1,4 @@
-import BaseUserInfo from "src/public/utils/user/base_user_info.js"
+import BaseUserInfo from "src/core/utils/user/base-user-info.js"
 
 const initialState = {
   lang:localStorage.getItem('lang') || 'zh',//语言

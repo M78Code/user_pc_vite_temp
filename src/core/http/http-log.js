@@ -44,8 +44,6 @@ class HttpLog {
    * @description: 数据初始化
    */
   init() {
-    // 设置时间格式化函数
-    this.timerFormat();
     // this.log_obj = { data: {} };
     //   this.log_obj = {"data":{"2021-4-16":{"time":{"17:30":{"xxxx2":2,"xxxyy":1}},"total":{"xxxx":2,"xxxyy":1}}}}
     this.log_obj = this.get_local_log_obj();
