@@ -4,6 +4,7 @@
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
 import { i18n } from "project_path/src/boot/i18n";
+import { ref } from "vue"
 //   约定 四个 值
 
 // 100 常规球类
@@ -49,7 +50,7 @@ class BaseData {
     //基础数据返回值
     this.base_data_res = {};
     //基础数据 版本
-    this.base_data_version = 1;
+    this.base_data_version = ref(1);
     // 赛种 基础数据  arr
     this.csids_arr = [];
     // 赛种 基础数据  map
@@ -178,7 +179,7 @@ class BaseData {
   set_ws_send_new_vr_menu_init() {
     // console.warn('开始模拟推送菜单数据-----')
     this.vr_mi_config = vr_menu_info;
-    this.base_data_version = Date.now();
+    this.base_data_version.value = Date.now();
   }
 
   // 菜单初始化 因为菜单是去轮询的 so
@@ -465,7 +466,7 @@ class BaseData {
       console.error('left_menu_base_mi_arr',this.left_menu_base_mi_arr)
 
       // 更新版本
-      this.base_data_version = Date.now();
+      this.base_data_version.value = Date.now();
     }
   }
 
@@ -1005,7 +1006,7 @@ class BaseData {
 
     // this.is_mi_300_open = res_2.includes("false");
 
-    this.base_data_version = Date.now();
+    this.base_data_version.value = Date.now();
     console.warn(
       "用户数据解析完成----------电竞--",
       this.is_mi_300_open_int,
