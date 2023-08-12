@@ -274,3 +274,5 @@ export const EMIT_GET_ODDS_ACTIVE = "EMIT_GET_ODDS_ACTIVE"
 
 // 通知列表右侧详情，获取近期关注数据
 export const EMIT_GET_HISTORY = "EMIT_GET_HISTORY"
+
+export const EMIT_AUTOSET_MATCH = "EMIT_AUTOSET_MATCH"

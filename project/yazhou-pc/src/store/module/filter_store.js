@@ -18,7 +18,7 @@ const initialState = {
   // 获取选中的赛事数量(列表右上角赛选功能)
   checked_count: 0,
 };
-export default function detailsReducer(state = initialState, action) {
+export default function filterReducer(state = initialState, action) {
   switch (action.type) {
     //保存显示搜索组件状态
     case "set_show_filter_popup":

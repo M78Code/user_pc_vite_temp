@@ -1,9 +1,9 @@
 /*
- * @Author: Amor
- * @Date: 2020-08-04 17:13:55
- * @Description: 全局设置
+ * @Author: Cooper
+ * @Date: 2020-08-12 17:13:55
+ * @Description: 详情全局设置
  */
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, onUnmounted } from "vue";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
@@ -13,7 +13,7 @@ import video from "src/core/video/video.js";
 import menu_config from "src/components/menu/config/menu-class-new.js";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
-export const useGetGlobal = ({details_params}) => {
+export const useGetGlobal = ({ details_params, back_to }) => {
   const state = reactive({
     latest_match_params_pre: "",
     default_select_all: true,
@@ -21,6 +21,27 @@ export const useGetGlobal = ({details_params}) => {
 
   const useRoute = useRoute();
   const router = useRouter();
+
+  const store_state = store.getState();
+  const layout_cur_page = ref(store_state.menusReducer.layout_cur_page);
+  const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
+  // 获取当前菜单类型
+  const cur_menu_type = ref(store_state.menusReducer.cur_menu_type);
+  // 赛事列表排序 1:按联赛排序 2:按时间排序
+  const match_sort = ref(store_state.globalReducer.match_sort);
+
+  // 监听状态变化
+  let un_subscribe = store.subscribe(() => {
+    state = store.getState();
+    layout_cur_page.value = state.menusReducer.layout_cur_page;
+    filter_select_obj.value = state.filterReducer.filter_select_obj;
+    cur_menu_type.value = state.menusReducer.cur_menu_type;
+    match_sort.value = state.globalReducer.match_sort;
+  });
+
+  onUnmounted(() => {
+    un_subscribe();
+  });
 
   /**
    * 设置赛事列表/详情选中赛事
@@ -57,54 +78,55 @@ export const useGetGlobal = ({details_params}) => {
 
     details.auto_swich_match = true;
     let { mid: remove_mid, tid } = params;
-    let { cur: cur_page, from: from_page } = this.vx_layout_cur_page;
+    let { cur: cur_page, from: from_page } = vx_layout_cur_page.value;
 
     // 查找参数:1赛事列表，2现场滚球盘，3赛事筛选，4赛事搜索，如果不传，默认赛事列表
     let sm = 1;
-    if (cur_page == "details" && this.vx_cur_menu_type.type_name == "play") {
+    if (cur_page == "details" && cur_menu_type.value.type_name == "play") {
       sm = 2;
     } else if (cur_page == "search" || from_page == "search") {
       sm = 4;
-    } else if (this.mx_filter_select_ids()) {
+    } else if (mx_filter_select_ids()) {
       sm = 3;
     }
 
     let csid = 0;
 
     if (cur_page == "details") {
-      let { tid: _tid, csid: _csid } = this.$route.params;
+      let { tid: _tid, csid: _csid } = useRoute.params;
+      const { tid, csid } = details_params;
       if (_tid) {
         tid = _tid;
         csid = _csid;
       } else {
-        tid = this.vx_details_params.tid;
-        csid = this.vx_details_params.csid;
+        tid = tid;
+        csid = csid;
       }
     } else {
-      tid = this.mx_filter_select_ids() || this.vx_details_params.tid;
-      csid = this.vx_details_params.csid;
+      tid = mx_filter_select_ids() || tid;
+      csid = csid;
     }
 
     let md = "";
-    if (["early"].includes(this.vx_cur_menu_type.type_name)) {
-      md = $menu.match_list_api_params.md;
+    if (["early"].includes(cur_menu_type.type_name)) {
+      md = menu_config.match_list_api_params.md;
     }
 
     /** 自动选择 */
     let _params = {
       sm,
-      euid: $menu.match_list_api_params.euid,
+      euid: menu_config.match_list_api_params.euid,
       md,
       csid,
       tid,
-      sort: this.vx_match_sort,
+      sort: match_sort.value,
       keyword: this.vx_related_keyword.substr(5),
       cuid: this.vx_get_uid,
       mid: remove_mid,
     };
 
     // 如果是聚合冠军页面
-    if (this.vx_cur_menu_type.type_name == "winner_top") {
+    if (cur_menu_type.value.type_name == "winner_top") {
       _params.euid = "";
       delete _params.tid;
       delete _params.keyword;
@@ -113,7 +135,7 @@ export const useGetGlobal = ({details_params}) => {
     }
 
     // 获得当前的模板ID
-    let orpt = $menu.menu_data.match_tpl_number;
+    let orpt = menu_config.get_match_tpl_number();
     if (orpt) {
       _params.orpt = orpt;
     }
@@ -123,8 +145,8 @@ export const useGetGlobal = ({details_params}) => {
       time: Date.now(),
     });
     // 防止同一请求连续多次发送
-    if (latest_match_params_cur != this.latest_match_params_pre) {
-      this.latest_match_params_pre = latest_match_params_cur;
+    if (latest_match_params_cur != state.latest_match_params_pre) {
+      state.latest_match_params_pre = latest_match_params_cur;
 
       let api =
         cur_page == "details"
@@ -133,8 +155,7 @@ export const useGetGlobal = ({details_params}) => {
 
       api.then(({ data }) => {
         if (!details.auto_swich_match) return;
-
-        let { mid = -1, csid: sportId, tid } = _.get(data, "data") || {};
+        let { mid = -1, csid: sportId, tid } = lodash.get(data, "data") || {};
         // 详情时重载页面
         if (cur_page == "details" || cur_page == "video") {
           if (mid && mid != -1) {
@@ -153,8 +174,8 @@ export const useGetGlobal = ({details_params}) => {
               video.match_close();
             }
           } else {
-            if (lodash.isFunction(this.back_to)) {
-              this.back_to(false);
+            if (lodash.isFunction(back_to)) {
+              back_to(false);
             }
           }
           return;
@@ -178,7 +199,7 @@ export const useGetGlobal = ({details_params}) => {
   //      * @return {string} 以 , 号分隔的联赛ID
   //      */
   const mx_filter_select_ids = () => {
-    return this.vx_filter_select_obj.join(","); //TODO
+    return filter_select_obj.value.join(","); //TODO
   };
 
   return {
@@ -201,8 +222,7 @@ export const useGetGlobal = ({details_params}) => {
 //       vx_cur_odd: "get_cur_odd",
 //       // 赛事列表排序 1:按联赛排序 2:按时间排序
 //       vx_match_sort: "get_match_sort",
-//       // 获取当前菜单类型
-//       vx_cur_menu_type: "get_cur_menu_type",
+
 //       // 左侧详情参数
 //       vx_details_params: "get_match_details_params",
 //       // 登录是否失效
@@ -213,8 +233,7 @@ export const useGetGlobal = ({details_params}) => {
 //       vx_get_uid: "get_uid",
 //       // 获取联赛关键字
 //       vx_related_keyword: "get_related_keyword",
-//       // 选择的筛选数据
-//       vx_filter_select_obj: "get_filter_select_obj",
+
 //       // 是否是单关投注
 //       is_bet_single: 'is_bet_single',
 //       vx_get_is_single_handle: "get_is_single_handle", // 单关是否正在处理
