@@ -21,12 +21,12 @@
 </template>
   
 <script>
-import { defineComponent, ref, nextTick, watch } from 'vue'
+import { defineComponent, ref, nextTick, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-// TODO: 待完善store
-import { mapGetters, mapActions } from "vuex";
+import store from "src/store-redux/index.js";
 // TODO: 待确认
 import search from "src/public/utils/searchClass/search.js"
+
 
 export default defineComponent({
     name: "search_input",
@@ -55,10 +55,9 @@ export default defineComponent({
             () => {
                 let trimVal = val.trim();
                 if (is_focus.value) {
-                    // TODO: 待完善store
-                    this.set_search_type(1)
+                    set_search_type(1)
                 }
-                this.set_search_keyword(trimVal)
+                set_search_keyword(trimVal)
             }
         )
 
@@ -82,9 +81,8 @@ export default defineComponent({
         function submit() {
             const keyword = keyword.value.trim();
             if (!keyword) return;
-            // TODO: 待完善store
-            this.set_search_type(1)
-            this.set_search_keyword(keyword);
+            set_search_type(1)
+            set_search_keyword(keyword);
         }
 
         /**
@@ -105,9 +103,8 @@ export default defineComponent({
         function input_click() {
             is_focus.value = true
             const keyword = keyword.value.trim();
-            // TODO: 待完善store
-            this.set_search_type(1)
-            this.set_search_keyword(keyword)
+            set_search_type(1)
+            set_search_keyword(keyword)
         }
 
         const route = useRoute()
@@ -116,8 +113,7 @@ export default defineComponent({
             () => route.name,
             (res) => {
                 if (res != 'search') {
-                    // TODO: 待完善store
-                    this.set_search_status(false)
+                    set_search_status(false)
                 }
             }
         )
@@ -128,16 +124,14 @@ export default defineComponent({
          * @return {undefined} undefined
          */
         function onClose() {
-            // TODO: 待完善store
-            this.set_search_status(false)
+            set_search_status(false)
             // 是搜索结果页时点 关闭 需要返回上一页
             if (route.name == "search") {
                 router.push({
                     name: route_name.value
                 })
             }
-            // TODO: 待完善store
-            this.set_unfold_multi_column(false)
+            set_unfold_multi_column(false)
         }
 
         /** 清空输入框 */
@@ -157,13 +151,12 @@ export default defineComponent({
             } else {
                 route_name.value = route.name;
             }
-            // TODO: 待完善store
-            this.set_search_type(2)
-            this.set_click_keyword(this.$route.params.keyword || '')
-            // search.js
+            set_search_type(2)
+            set_click_keyword(route.params.keyword || '')
+            // TODO: search.js
             if (search.back_keyword.keyword) {
-                this.set_search_type(1)
-                this.set_click_keyword(search.back_keyword.keyword)
+                set_search_type(1)
+                set_click_keyword(search.back_keyword.keyword)
             }
             //输入框获得焦点
             nextTick(() => {
@@ -177,12 +170,11 @@ export default defineComponent({
 
         //监听点击搜索关键词改变
         watch(
-            // TODO:
-            () => store.get_click_keyword,
+            () => click_keyword.value,
             () => {
                 let keyword = res.substr(5);
                 if (keyword == keyword.value) {
-                    this.set_search_keyword(keyword)
+                    set_search_keyword(keyword)
                 } else {
                     keyword.value = res.substr(5);
                 }
@@ -191,7 +183,7 @@ export default defineComponent({
 
         //点击任何地方关闭搜素
         watch(
-            () => store.get_global_click,
+            () => global_click.value,
             () => {
                 if (route.name != 'search') {
                     onClose()
@@ -199,6 +191,30 @@ export default defineComponent({
             }
         )
 
+        /** 搜索点击的关键字 */
+        const click_keyword = ref()
+        /** 用户token */
+        const global_click = ref()
+        /** stroe仓库 */
+        const unsubscribe = store.subscribe(() => {
+            const new_state = store.getState()
+            click_keyword.value = new_state.click_keyword
+            global_click.value = new_state.global_click
+        })
+        onUnmounted(unsubscribe)
+
+        /** 保存显示搜索组件状态 */
+        const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+        /** 保存联想搜索关键字 */
+        const set_related_keyword = (data) => store.dispatch({ type: 'set_related_keyword', data })
+        /** 保存搜索关键字 */
+        const set_search_keyword = (data) => store.dispatch({ type: 'set_search_keyword', data })
+        /** 保存搜索的联赛名 */
+        const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+        /** 保存搜索类型 */
+        const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+        /** 是否展开多列玩法 */
+        const set_unfold_multi_column = (data) => store.dispatch({ type: 'set_unfold_multi_column', data })
 
         return {
             keyword,
@@ -211,22 +227,7 @@ export default defineComponent({
             onClose,
             clear_input
         }
-    },
-    computed: {
-        ...mapGetters(['get_click_keyword', 'get_global_click'])
-    },
-    methods: {
-        ...mapActions([
-            'set_search_status',
-            'set_related_keyword',
-            'set_search_keyword',
-            'set_click_keyword',
-            'set_search_type',
-            //收起右侧详情 展开多列玩法
-            "set_unfold_multi_column",
-        ]),
-
-    }
+    } 
 })
 
 </script>
