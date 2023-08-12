@@ -20,6 +20,6 @@ const on_test = () => {
   }, 1000);
 };
 onBeforeMount(() => {
-  remove(); //移除消息监听
+  // remove(); //移除消息监听
 });
 </script>

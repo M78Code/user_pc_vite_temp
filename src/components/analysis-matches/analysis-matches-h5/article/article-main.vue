@@ -39,6 +39,7 @@ import articleContent from "src/project/pages/details/analysis-matches/article/a
 import articleMaylike from "src/project/pages/details/analysis-matches/article/article-maylike.vue";
 import loading from "src/project/components/common/loading";  // 加载中
 import { onMounted, onUnmounted, watch } from "vue";
+import { useRoute } from 'vue-router'
 import lodash from 'lodash'
   
   // 弹框是否显示
@@ -55,15 +56,15 @@ import lodash from 'lodash'
   const is_loading = ref(true) 
   // 进入文章页面时间
   const enter_article_time = ref(0)  
+  const route = useRoute()
 
   onMounted(() => {
-    // TODO: $route后续修改调整
-    get_article($route.params.mid)
+    get_article(route.params.mid)
   })
 
   watch(() => is_show_dialog, (newValue) => {
     if (newValue) {
-        loadsh.delay(calc_height, 100)
+        lodash.delay(calc_height, 100)
       } else {
         matchids.length = 0
       }
@@ -89,7 +90,7 @@ const calc_height = () => {
 const get_favorite_article = () => {
     api_common.getFavoriteArticle({
       id: article_detail.id,
-      matchId: $route.params.mid
+      matchId: route.params.mid
     }).then(res => {
       if (res.code == 200 && res.data) {
         favorite_article_data = res.data.filter(item => {

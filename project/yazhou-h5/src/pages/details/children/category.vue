@@ -72,7 +72,7 @@
 // import { mapGetters, mapMutations } from "vuex"
 import tournament_play_new from "project_path/src/pages/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
-import { api_common, api_result} from 'project_path/src/api/index.js'
+import { api_common, api_result} from 'src/api/index.js'
 //  无数据显示组件
 // import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -86,7 +86,7 @@ import { api_common, api_result} from 'project_path/src/api/index.js'
 // 引入加载中的组件
 import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
-import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
+import MatchInfoCtr from "src/core/match-class/match-info-ctr.js";
 // 精选赛事
 import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import { uid } from "quasar"

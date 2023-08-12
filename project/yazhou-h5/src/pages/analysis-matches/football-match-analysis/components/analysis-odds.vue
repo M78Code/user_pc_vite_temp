@@ -7,7 +7,7 @@
   <div class="analysis-odds">
     <div class="heade-wrapper">
       <div class="heade">
-        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radioButton(i)">
+        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radio_button(i)">
           {{ item.name }}
         </span>
       </div>
@@ -46,9 +46,9 @@
             </div>
           </div>
           <div class="t2 column justify-center">
-            <span>{{item.handicapOddsDTOList[0].value0}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions.value0 == 1,'green':item.handicapOddsDTOList[1].directions.value0 == -1}">
-              {{item.handicapOddsDTOList[1].value0}}
+            <span>{{item.handicapOddsDTOList[0]}}</span>
+            <span :class="{'red':item.handicapOddsDTOList[1].directions0 == 1,'green':item.handicapOddsDTOList[1].directions0 == -1}">
+              {{item.handicapOddsDTOList[1]}}
               <i class="odd yb_ml4"></i>
             </span>
           </div>
@@ -60,22 +60,22 @@
             </span>
           </div>
           <div class="t4 column justify-center">
-            <span>{{item.handicapOddsDTOList[0].value}}</span>
-            <span :class="{'red':item.handicapOddsDTOList[1].directions.value == 1,'green':item.handicapOddsDTOList[1].directions.value == -1}">
-              {{item.handicapOddsDTOList[1].value}}
+            <span>{{item.handicapOddsDTOList[0]}}</span>
+            <span :class="{'red':item.handicapOddsDTOList[1].directions == 1,'green':item.handicapOddsDTOList[1].directions == -1}">
+              {{item.handicapOddsDTOList[1]}}
               <i class="odd yb_ml4"></i>
             </span>
           </div>
           <template v-if="tabIndex == 1">
             <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
+              <span>{{item.handicapOddsDTOList[0]0WinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directions.value0WinRate == 1,'green':item.handicapOddsDTOList[1].directions.value0WinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directions0WinRate == 1,'green':item.handicapOddsDTOList[1].directions0WinRate == -1}">{{item.handicapOddsDTOList[1]0WinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0].valueWinRate}}%</span>
+              <span>{{item.handicapOddsDTOList[0]WinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directions.valueWinRate == 1,'green':item.handicapOddsDTOList[1].directions.valueWinRate == -1}">{{item.handicapOddsDTOList[1].valueWinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directionsWinRate == 1,'green':item.handicapOddsDTOList[1].directionsWinRate == -1}">{{item.handicapOddsDTOList[1]WinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
               <span>{{item.handicapOddsDTOList[0].returnRate}}%</span>
@@ -92,16 +92,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useRoute } from 'vue-router'
+
 // TODO 后续修改调整
 // import { mapGetters } from "vuex";
 
-export default defineComponent({
-  name: "analysis_odds",
-
-  setup(props, event) {
     // 国际化后续修改调整
     let tab_list = ref([
         { name: $root.$t('footer_menu.rangqiu') },
@@ -113,9 +112,11 @@ export default defineComponent({
     let data_list= ref([])
     //数据加载完成
     let is_done = ref(false)
+    // 路由
+    const route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO 后续修改调整 $root emit
-    $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     get_list()
 
@@ -124,33 +125,33 @@ export default defineComponent({
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-     radioButton = (index) => {
-      if(tabIndex.value == index) return
-      tabIndex.value = index
-      data_list.value = []
+     const radio_button = (index) => {
+      if(tabIndex == index) return
+      tabIndex = index
+      data_list = []
       get_list()
-    },
-    get_list = async () => {
+    }
+    const get_list = async () => {
       try {
-        is_done.value = false
+        is_done = false
         let parameter = {
           standardMatchId: match_id,
           parentMenuId: 5,  //父菜单类型:(2数据;3阵容4情报;5赔率)
-          sonMenuId: tabIndex.value + 1
+          sonMenuId: tabIndex + 1
         }
         let { code, data } = await api_result.get_match_analysise_data(parameter)
         if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
-          data_list.value = data.sThirdMatchHistoryOddsDTOList
+          data_list = data.sThirdMatchHistoryOddsDTOList
         }
-        is_done.value = true
+        is_done = true
       } catch (error) {
         console.error(error);
       }
-    },
+    }
     // 刷新 当前赛事分析信息
-    refresh_match_analysis = () => {
-      const tabIndex = tabIndex.value
-      tabIndex.value = -1
+    const refresh_match_analysis = () => {
+      const tabIndex = tabIndex
+      tabIndex = -1
 
       nextTick(() => {
         radio_button(tabIndex)
@@ -164,43 +165,30 @@ export default defineComponent({
     },
     // 赛事id
     match_id = () => {
-      // get_detail_data.mid $route 后续修改调整
-      return $route.params.mid || get_detail_data.mid
+      // get_detail_data.mid 后续修改调整
+      return route.params.mid || get_detail_data.mid
     }
     })
     onUnmounted(() => {
       // 移除监听 赛事分析刷新事件 TODO $root emit 后续修改调整
-      $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
       // 国际化后续修改调整
-     tab_list.value = ref([
+     tab_list = ref([
         { name: $root.$t('footer_menu.rangqiu') },
         { name: $root.$t('analysis_football_matches.European_Finger') },
         { name: $root.$t('analysis_football_matches.size') },
       ])
-     tabIndex.value = ref(0)
+     tabIndex = ref(0)
     //详细赔率数据
-     data_list.value = ref([])
+     data_list = ref([])
     //数据加载完成
-     is_done.value = ref(false)
+     is_done = ref(false)
     })
-
-    return {
-      tab_list,
-      tabIndex,
-      data_list,
-      is_done,
-
-      radioButton,
-      get_list,
-      refresh_match_analysis,
-    }
-  },
   // computed: {
     //  TODO 后续修改调整
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
   // },
   
-})
 </script>
 
 <style lang="scss" scoped>

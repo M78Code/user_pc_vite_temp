@@ -20,7 +20,7 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import lodash from 'lodash'
 // 赛果详情 赛况统计 和 事件
 import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue';  
@@ -37,7 +37,8 @@ import analysis_odds from 'src/project/pages/details/analysis-matches/football-m
  // 资讯页 
 import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';  
 // 精彩回放
-import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';   
+import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';  
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
 
   // components: {
   //   match: match_result,
@@ -58,40 +59,40 @@ import highlights from 'src/project/pages/details/analysis-matches/highlights/hi
 
     onMounted(() => {
       nextTick(() => {
-      if (analysis_football_matches.value) {
-        // TODO: utils后续修改调整
-        analysis_football_matches.value.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
-      }
+        if (analysis_football_matches) {
+          // TODO: utils后续修改调整
+          analysis_football_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
+        }
     })
     createTabds(); 
     })
     watch(() => get_detail_data.mid, () => {
-        // 详情顶部切换赛事后 更新相应赛事数据
-        const currentContent = currentContent.value
-        currentContent.value = ''
-        nextTick(() => {
-          currentContent.value = currentContent
-        })
+      // 详情顶部切换赛事后 更新相应赛事数据
+      const currentCont = currentContent
+      currentContent = ''
+      nextTick(() => {
+        currentContent = currentCont
       })
+    })
     watch(() => get_event_list, (event_list) => {
-        // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
-        const highlights = tabList.value.find(item => item.component === 'highlights')
-        const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
-        if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
-          tabList.value.unshift(
-              {
-                // TODO: 国际化后续修改调整
-                name: $root.$t('highlights.title'),
-                component: 'highlights'
-              }
-          )
-        }
-      })
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
+      const highlights = tabList.find(item => item.component === 'highlights')
+      const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
+        tabList.unshift(
+            {
+              // TODO: 国际化后续修改调整
+              name: $root.$t('highlights.title'),
+              component: 'highlights'
+            }
+        )
+      }
+    })
     onUnmounted(() => {
       // TODO: $data 后续修改调整
-      analysis_football_matches.value = null
-      tabList.value = []
-      currentContent.value = 'match'
+      analysis_football_matches = null
+      tabList = []
+      currentContent = 'match'
     })
     const createTabds = () => {
       // 国际化 后续修改调整
@@ -145,15 +146,14 @@ import highlights from 'src/project/pages/details/analysis-matches/highlights/hi
             }
         )
       }
-      tabList.value = tabs
+      tabList = tabs
     }
     const close_analysis = () => {
-      // TODO: emit 后续修改调整
-      $root.$emit(emit_cmd.EMIT_ANA_SHOW, false)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
     // 点击一级tab 菜单切换 // TODO: $utils get_user 后续修改调整
     const tab_click = ([tab, type]) => {
-      currentContent.value = tab.component
+      currentContent = tab.component
       if (type == 'is_click') {
         let eventLabel = '';
         if (tab.component == 'match') { 

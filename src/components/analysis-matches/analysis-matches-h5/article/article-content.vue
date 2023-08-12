@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-  const props = ({
+  const props = defineProps({
     article_detail: {
       type: Object,
       default: () => { },
