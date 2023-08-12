@@ -4,7 +4,7 @@
        :class="{results_header_top: ['result_details', 'match_result'].includes($route.name),baseball: detail_data.csid == '3'}"
   >
     <!--详情页头部置顶title-->
-    <common-header :title="detail_data.tn" :view_tab="view_tab"/>
+    <!-- <common-header :title="detail_data.tn" :view_tab="view_tab"/> -->
     <!--详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])-->
     <header-top :detail_data="detail_data"/>
     <!--详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)-->
@@ -18,12 +18,12 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import common_header from "project_path/src/components/common/common-header1.vue";  // 详情页头部置顶title
+// import common_header from "project_path/src/components/common/common-header1.vue";  // 详情页头部置顶title
 import header_top from "project_path/src/pages/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
 import header_bottom from "project_path/src/pages/details/components/header/header-bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
 import match_results_header_top from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
-import base64 from "src/public/utils/base64.js";  // 球类背景图background路径
-import utils from "src/public/utils/utils";
+import base64 from "src/core/utils/base64.js";  // 球类背景图background路径
+import utils from "src/core/utils/utils.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "details_header",
@@ -40,13 +40,14 @@ export default defineComponent({
     }
   },
   components: {
-    "common-header": common_header,
+    // "common-header": common_header,
     "header-top": header_top,
     "header-bottom": header_bottom,
     "match-results-header-top": match_results_header_top,
   },
   setup(props, evnet) {
     const data = reactive({
+      utils,
       // 此处空对象请勿删除;
       URL:base64,
     });

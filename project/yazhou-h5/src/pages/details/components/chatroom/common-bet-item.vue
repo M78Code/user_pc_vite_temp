@@ -115,7 +115,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import utils from 'src/public/utils/utils.js'
+import utils from 'src/core/utils/utils.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: 'common_bet_item',

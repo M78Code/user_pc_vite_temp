@@ -355,14 +355,14 @@ export default defineComponent({
 }
 
 
-@include keyframes(seamless-scrolling) {
-  0% {
-    transform: translateX(0px);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
+// @include keyframes(seamless-scrolling) {
+//   0% {
+//     transform: translateX(0px);
+//   }
+//   100% {
+//     transform: translateX(-50%);
+//   }
+// }
 </style>
 
 <style lang="scss">

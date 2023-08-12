@@ -47,14 +47,14 @@
         <template v-else>
           <span>{{$root.$t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
           <!-- 倒/正计时组件 -->
-          <counting-down
+          <!-- <counting-down
             :title="null"
             :mmp="detail_data.mmp"
             :m_id="detail_data.mid"
             :second="detail_data.mst"
             :match="detail_data"
             :is_add="[100,101,102,103,104].includes(+detail_data.csid)"
-          />
+          /> -->
         </template>
       </div>
     </div>
@@ -84,7 +84,7 @@
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'away'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
 
       <!-- 局间比分 -->
-      <match-between-score :detail_data="detail_data"></match-between-score>
+      <!-- <match-between-score :detail_data="detail_data"></match-between-score> -->
     </div>
 
     <!-- 队名 -->
@@ -136,13 +136,13 @@
 </template>
 <script>
 // 1-足球 2-篮球 3-棒球 4冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球 10-羽毛球
-import team_img from "src/project/components/details/team_img.vue";   // 详情页蓝色背景上的大型字母图标
-import team_text from "src/project/components/details/team_text.vue";   // 中立场赛事展示
-import team_name from "src/project/components/details/team_name.vue";   // 详情页背景上的队伍名称
+import team_img from "src/components/details/team-img/team-img-template-1/team-img.vue";   // 详情页蓝色背景上的大型字母图标
+import team_text from "src/components/details/team-text/team-text-template-1/index.vue";   // 中立场赛事展示
+import team_name from "src/components/details/team-name/team-name-template-1/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "src/public/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
-import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
-import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
-import utils from "src/public/utils/utils.js";    // 公共方法
+// import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
+// import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
+import utils from "src/core/utils/utils.js";    // 公共方法
 // #TODO vuex 
 // import {mapGetters, mapMutations} from "vuex";
 import lodash from "lodash";
@@ -165,8 +165,8 @@ export default defineComponent({
     // 队名
     "team-name": team_name,
     // 局间比分
-    "match-between-score": match_between_score,
-    "counting-down": counting_down,
+    // "match-between-score": match_between_score,
+    // "counting-down": counting_down,
   },
   setup(props, evnet) {
     const data = reactive({

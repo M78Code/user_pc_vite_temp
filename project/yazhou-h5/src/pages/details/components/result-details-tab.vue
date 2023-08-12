@@ -244,12 +244,12 @@ export default {
   background-repeat: no-repeat;
   background-size: 0.12rem 0.12rem;
   transform: rotateZ(180deg);
-  @include webkit(transition, transform 0.3s);
+  // @include webkit(transition, transform 0.3s);
 
-  &.collapsed {
-    transform: rotateZ(0);
-    @include webkit(transition, transform 0.3s);
-  }
+  // &.collapsed {
+  //   transform: rotateZ(0);
+  //   @include webkit(transition, transform 0.3s);
+  // }
 }
 
 .menu-third {
