@@ -85,10 +85,16 @@
 import { ref } from "vue";
 import { is_show_sr_flg } from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
-import { sr_click_handle } from "src/core/match-detail/match-detail";
+import details from "src/core/match-detail/match-detail";
+// 搜索操作相关控制类
+import search from "src/core/search-class/search.js"
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux-vuex/index.js';
+
+const props = defineProps({
+
+})
 
 const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
@@ -96,6 +102,10 @@ const back_to_timer = ref(null);
 
 const useRoute = useRoute();
 const useRouter = useRouter();
+
+
+
+const emit = defineEmits(['init'])
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
@@ -144,7 +154,10 @@ const back_to = (is_back = true) => {
     })
     useRouter.push(from_path);
     if (from_path.includes("search")) {
-      this.set_unfold_multi_column(false);
+      store.dispatch({
+      type: 'set_unfold_multi_column',
+      data: false
+    })
     }
   }, 50);
 };
@@ -165,12 +178,16 @@ const sr_click_handle = (match, type) => {
  */
 const refresh = () => {
   // 接口请求中
-  if (this.is_request) {
+  if (is_request.value) {
     return;
   }
+  
+  // 重新请求相应接口
+  emit('init',{ is_refresh: true})
+
 
   // 重新请求相应接口
-  this.init({ is_refresh: true });
+  // this.init({ is_refresh: true });
 
   // 刷新前 先关闭聊天室
   this.set_chatroom_available(0);
