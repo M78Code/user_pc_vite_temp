@@ -5,6 +5,7 @@ import { api_details } from "src/api/index";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
+import details from "src/core/match-detail/match-detail";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 import store from "src/store-redux/index.js";

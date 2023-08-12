@@ -4,8 +4,8 @@
  * @FilePath: \user-pc-vite\src\core\match-detail\match-detail.js
  * @Description:
  */
-import _ from "lodash";
-import { resolve } from "path";
+import lodash from "lodash";
+
 
   //统计分析URL
  const signal_url = 'https://s5.sir.swiftscore.com'
@@ -82,24 +82,24 @@ const get_category = async (sportId,mid) => {
  */
 const build_msc = (data) => {
   let obj = {};
-  let msc = _.get(data, "msc", []);
-  if (!_.isEmpty(msc) && _.isArray(msc)) {
-    let msc_array = _.cloneDeep(msc);
-    _.forEach(msc_array, (item) => {
+  let msc = lodash.get(data, "msc", []);
+  if (!lodash.isEmpty(msc) && lodash.isArray(msc)) {
+    let msc_array = lodash.cloneDeep(msc);
+    lodash.forEach(msc_array, (item) => {
       let format = item.split("|");
       // 比分格式判断
       if (
-        !_.isEmpty(format) &&
-        !_.isEmpty(format[0]) &&
-        !_.isEmpty(format[1]) &&
-        _.includes(format[1], ":")
+        !lodash.isEmpty(format) &&
+        !lodash.isEmpty(format[0]) &&
+        !lodash.isEmpty(format[1]) &&
+        lodash.includes(format[1], ":")
       ) {
         let score_type = format[0]; // 比分类型
         let score_arr = format[1].split(":"); // 比分类型对应的比分
         // 主队比分
-        let home = _.get(score_arr, "0", "0");
+        let home = lodash.get(score_arr, "0", "0");
         // 客队比分
-        let away = _.get(score_arr, "1", "0");
+        let away = lodash.get(score_arr, "1", "0");
         // 比分对象
         obj[score_type] = {
           home,
@@ -223,7 +223,7 @@ const format_mst_data = (mst) => {
 const show_wrap_total = (match_infoData) => {
   return (
     match_infoData.mcg == 1 &&
-    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(+_.get(match_infoData, "csid")) &&
+    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(+lodash.get(match_infoData, "csid")) &&
     get_global_switch.statistics_switch &&
     match_infoData.cds !== "RC"
   );
@@ -267,8 +267,8 @@ const sr_click_handle=(match)=> {
   * @return:
   */
  const get_full_sr_url=(match)=> {
-    let csid = _.get(match,'csid')
-    let srid = _.get(match,'srid')
+    let csid = lodash.get(match,'csid')
+    let srid = lodash.get(match,'srid')
     if(!csid || !srid) return ''
 
     let csid_translate = csid, sr_prev = '';

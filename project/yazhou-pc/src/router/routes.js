@@ -28,11 +28,11 @@ const routes = [
   //             keepAlive: true // 需要缓存
   //           }
   //       },
-  //       {
-  //         path: "/details/:mid/:tid/:csid",
-  //         name: "details",
-  //         component: () => import(`../pages/test/index.vue`),
-  //       },
+         {
+          path: "/details/:mid/:tid/:csid",
+          name: "details",
+          component: () => import(`project_path/src/pages/match-details/details_main.vue`),
+        },
   //       {
   //         path: "/virtual_details/:mid/:tid/:csid",
   //         name: "virtual_details",

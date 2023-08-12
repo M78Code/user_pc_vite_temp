@@ -133,6 +133,8 @@ import dynamic_ranking from "project_path/pages/virtual/virtual_sports_part/dyna
 import result_page from "project_path/pages/match-list/components/result_page.vue"
 import virtual_skeleton from "project_path/components/skeleton/virtual_sports/virtual.vue"
 
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual",
@@ -162,6 +164,8 @@ export default defineComponent({
   setup(props, evnet) {
     const { menu_list, params, current_sub_menu, is_user_refresh, v_match_router_ente } = toRefs(props);
     const data = reactive({
+      // 事件集合
+      emitters: [],
       show_debug:sessionStorage.getItem('wsl') == '9999',
       //当前选中的赛事id
       current_match_id:'',
@@ -268,7 +272,7 @@ export default defineComponent({
         }
 
         let current_league = tab_items[tab_item_i];
-        set_current_league(_.cloneDeep(current_league));
+        set_current_league(lodash.cloneDeep(current_league));
         // tab_item_click_handle(tab_item_i,'is_force');
       }
       }
@@ -316,6 +320,10 @@ export default defineComponent({
     );
     onMounted(() => {
       // #TODO emit事件
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_ARRIVED10, arrived10_handle).off,
+        useMittOn.on(MITT_KEY.EMIT_MATCH_EDNED_STATUS2, match_ended_status2_handle).off,
+      ]
       // $root.$on(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
       // $root.$on(emit_cmd.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
       match_ended_status2_handle();
@@ -326,8 +334,9 @@ export default defineComponent({
       if(video_process_obj && video_process_obj.destroy){
         video_process_obj.destroy();
       }
-      $root.$off(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
-      $root.$off(emit_cmd.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
+      emitters.map((x) => x())
+      // $root.$off(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
+      // $root.$off(emit_cmd.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
 
       clear_timer()
 
@@ -412,7 +421,8 @@ export default defineComponent({
             });
           });
         }
-        $root.$emit(emit_cmd.EMIT_IS_ALL_END_NOTICE);
+        useMittEmit(MITT_KEY.EMIT_IS_ALL_END_NOTICE);
+        // $root.$emit(emit_cmd.EMIT_IS_ALL_END_NOTICE);
 
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
         if([1011, 1002, 1010, 1009].includes(sub_menu_type)){
@@ -441,7 +451,8 @@ export default defineComponent({
         else if(flag == 'is_basketball_pre'){
           get_video_process_by_api();
           get_score_basket_ball();
-          $root.$emit(emit_cmd.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
+          useMittEmit(MITT_KEY.EMIT_PRE_COUNTING_EDN);
+          // $root.$emit(emit_cmd.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
         }
       }
       else{
@@ -473,7 +484,8 @@ export default defineComponent({
           else if(match.mmp == 'PREGAME'){
             if(match.start_now_sub <= 0){
               get_video_process_by_api();
-              $root.$emit(emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
+              useMittEmit(MITT_KEY.EMIT_BASKETBALL_TIME_ARRIVED);
+              // $root.$emit(emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
             }
           }
           current_match = match;
@@ -524,7 +536,7 @@ export default defineComponent({
         if(!current_league){
           current_league = tab_items[0];
         }
-        set_current_league(_.cloneDeep(current_league));
+        set_current_league(lodash.cloneDeep(current_league));
       }else{
         set_current_league({});
       }

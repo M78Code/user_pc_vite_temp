@@ -3,14 +3,15 @@
     <div class="virtual-main router_scroll_layout" ref="scrollArea" @scroll="wrapper_scroll_handler">
       <!-- 头部 -->
       <div class="virtual-head">
-        <div class="type-bg" :class="'bg'+_.get(sub_menu_list,`[${sub_menu_i}].field1`)">
+        <div class="type-bg" :class="'bg'+lodash.get(sub_menu_list,`[${sub_menu_i}].field1`)">
           <!-- 返回按钮 及 刷新 注单  设置 按钮 -->
           <div class="back-wrap">
             <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual'})"></div>
             <!-- 虚拟体育 -->
-            <div class="col">{{$root.$t('common.virtual_sports')}} {{_.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
+            <div class="col">{{$root.$t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-            <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div>
+            <!-- <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div> -->
+            <div class="no-single" @click="useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);"></div>
             <set-menu />
           </div>
           <!-- 虚拟体育菜单 -->
@@ -82,6 +83,8 @@ import scroll_top from "src/project/components/record_scroll/scroll_top";
 import virtualFooterMenu from 'src/project/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
 import base_data from "src/public/utils/base_data.js";
 
+import lodash from "lodash";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 export default defineComponent({
   name: "virtual",
   components: {
@@ -109,7 +112,10 @@ export default defineComponent({
     });
   },
   setup() {
+    // 路由
     const data = reactive({
+      // 事件集合
+      emitters: [],
       ws_invoke_key:'virtual-sports',
       // 当前选中的虚拟体育菜单(虚拟足球 赛马 赛狗 等)
       current_sub_menu: {},
@@ -151,6 +157,10 @@ export default defineComponent({
     onMounted(() => {
       console.error(get_home_data,"get_home_data====")
       // 浏览器窗口变化事件监听
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_WINDOW_RESIZE, window_resize_on).off,
+        useMittOn.on(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
+      ]
       // $root.$on(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
       // 不让浏览器记住上次的滚动位置
       if ('scrollRestoration' in History){
@@ -172,8 +182,8 @@ export default defineComponent({
     set_menu_type(get_prev_menu_type)
     debounce_throttle_cancel(cancel_ref);
     // $root.$off(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
-    $root.$off(emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
-
+    // $root.$off(emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
+    emitters.map((x) => x())
     utils.clear_timer();
 
     // 删除虚拟体育赛狗和赛马玩法缓存
@@ -264,7 +274,7 @@ export default defineComponent({
     const get_sub_menu_c_index = () => {
       let r = 0;
       let sub_menu_id = get_virtual_current_sub_menuid;
-      r = _.findIndex(sub_menu_list,{
+      r = lodash.findIndex(sub_menu_list,{
         field1: sub_menu_id
       })
       if(r < 0) r = 0;
@@ -275,7 +285,7 @@ export default defineComponent({
      */
     const get_virtual_menus = () => {
       set_virtual_data_loading(1)
-      sub_menu_list =_.cloneDeep(base_data.vr_menu())
+      sub_menu_list =lodash.cloneDeep(base_data.vr_menu())
       let obj_ = {
         // axios api对象
         axios_api:api_v_sports.get_virtual_menus,
@@ -288,11 +298,11 @@ export default defineComponent({
             res.data.forEach(sub_menu => {
               sub_menu.menuName = sub_menu.name;
             });
-            sub_menu_list = !_.isEmpty(res.data)?_.cloneDeep(res.data):_.cloneDeep(base_data.vr_menu());
+            sub_menu_list = !lodash.isEmpty(res.data)?lodash.cloneDeep(res.data):lodash.cloneDeep(base_data.vr_menu());
             sub_menu_i = get_sub_menu_c_index();
             if(sub_menu_list.length){
               if(sub_menu_id_f_detail){
-                let index = _.findIndex(sub_menu_list, item => item.menuId == sub_menu_id_f_detail);
+                let index = lodash.findIndex(sub_menu_list, item => item.menuId == sub_menu_id_f_detail);
                 sub_menu_i = index;
                 sub_menu_id_f_detail = '';
               }
@@ -312,7 +322,8 @@ export default defineComponent({
         },
         // axios中catch回调方法
         fun_catch: err => {
-          $root.$emit(emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA);
+          useMittEmit(MITT_KEY.EMIT_NO_VIRTUAL_MENU_DATA);
+          // $root.$emit(emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA);
         },
         // 最大循环调用次数(异常时会循环调用),默认3次
         max_loop:3,
@@ -328,7 +339,8 @@ export default defineComponent({
     const virtual_menus_loaded = (menues) => {
       if(!menues || !menues.length){
         current_sub_menu = {};
-        $root.$emit(emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
+        useMittEmit(MITT_KEY.EMIT_VIRTUAL_MATCH_LOADING, false);
+        // $root.$emit(emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
         return;
       }
       virtual_sports_params.csid = menues[sub_menu_i].menuId;
@@ -340,6 +352,7 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
+      lodash,
       virtual_menus_loaded,
       get_virtual_menus,
       virtual_menu_changed,
