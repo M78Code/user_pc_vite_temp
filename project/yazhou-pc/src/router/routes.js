@@ -7,18 +7,18 @@ const routes = [
       redirect: {
         name: "home"
       },
-      component: () => import(`../pages/main-layout.vue`),
+      component: () => import(`../layouts/main-layout.vue`),
       children: [
   //       // 首页
-  //       {
-  //         path: "/home",
-  //         name: "home",
-  //         // () => import(`../pages/test/index.vue`)
-  //         component: () => import(`../pages/test/index.vue`),
-  //         meta: {
-  //           keepAlive: true // 需要缓存
-  //         },
-  //       },
+        // {
+        //   path: "/home",
+        //   name: "home",
+        //   // () => import(`../pages/test/index.vue`)
+        //   component: () => import(`../pages/test/index.vue`),
+        //   meta: {
+        //     keepAlive: true // 需要缓存
+        //   },
+        // },
   //       // 搜索 
   //       {
   //         path: "/search/:keyword/:time?",

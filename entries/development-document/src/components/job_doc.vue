@@ -6,84 +6,86 @@
 
 <template>
   <div class="job-doc">
-    <q-tabs
-      v-model="activeTab"
-      dense
-      class="text-black"
-      active-color="primary"
-      indicator-color="primary"
-      align="justify"
-    >
-      <q-tab
-        v-for="(item, idx) in docData"
-        :key="idx"
-        :name="item.category"
-        :label="item.category"
-        no-caps
-        class="text-bold"
+    <q-card class="q-my-md" flat bordered>
+      <q-tabs
+        v-model="activeTab"
+        dense
+        class="text-black"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
       >
-        <q-badge color="primary" text-color="white" floating>{{
-          item.items?.length
-        }}</q-badge>
-        <div style="transform: scale(0.9); font-weight: normal">
-          <span>说明：{{ item.description }}</span
-          ><br />
-          <span>路径：{{ item["directory-name"] }}</span>
-        </div>
-      </q-tab>
-    </q-tabs>
-    <q-separator />
-    <q-tab-panels v-model="activeTab" animated>
-      <q-tab-panel
-        :name="tab.category"
-        v-for="(tab, idx) in docData"
-        :key="idx"
-      >
-        <q-splitter v-model="splitterModel">
-          <template v-slot:before>
-            <q-tabs
-              v-model="innerTab"
-              vertical
-              class="text-black"
-              active-color="primary"
-              indicator-color="primary"
-            >
-              <q-tab
-                v-for="(tab, idx) in table_header[activeTab]"
-                :key="idx"
-                :name="tab.filename"
-                :label="tab.filename"
-                no-caps
-              />
-            </q-tabs>
-          </template>
-
-          <template v-slot:after>
-            <q-tab-panels
-              v-model="innerTab"
-              animated
-              transition-prev="slide-down"
-              transition-next="slide-up"
-            >
-              <q-tab-panel
-                v-for="(tab, idx) in table_header[activeTab]"
-                :key="idx"
-                :name="tab.filename"
+        <q-tab
+          v-for="(item, idx) in docData"
+          :key="idx"
+          :name="item.category"
+          :label="item.category"
+          no-caps
+          class="text-bold"
+        >
+          <q-badge color="primary" text-color="white" floating>{{
+            item.items?.length
+          }}</q-badge>
+          <div style="transform: scale(0.9); font-weight: normal">
+            <span>说明：{{ item.description }}</span
+            ><br />
+            <span>路径：{{ item["directory-name"] }}</span>
+          </div>
+        </q-tab>
+      </q-tabs>
+      <q-separator />
+      <q-tab-panels v-model="activeTab" animated>
+        <q-tab-panel
+          :name="tab.category"
+          v-for="(tab, idx) in docData"
+          :key="idx"
+        >
+          <q-splitter v-model="splitterModel">
+            <template v-slot:before>
+              <q-tabs
+                v-model="innerTab"
+                vertical
+                class="text-black"
+                active-color="primary"
+                indicator-color="primary"
               >
-                <span class="job-doc-table-desc">描述：</span>
-                <div
-                  v-for="(val, i) in tab.descriptions"
-                  :key="i"
-                  class="q-mb-xs"
+                <q-tab
+                  v-for="(tab, idx) in table_header[activeTab]"
+                  :key="idx"
+                  :name="tab.filename"
+                  :label="tab.filename"
+                  no-caps
+                />
+              </q-tabs>
+            </template>
+
+            <template v-slot:after>
+              <q-tab-panels
+                v-model="innerTab"
+                animated
+                transition-prev="slide-down"
+                transition-next="slide-up"
+              >
+                <q-tab-panel
+                  v-for="(tab, idx) in table_header[activeTab]"
+                  :key="idx"
+                  :name="tab.filename"
                 >
-                  {{ val }}
-                </div>
-              </q-tab-panel>
-            </q-tab-panels>
-          </template>
-        </q-splitter>
-      </q-tab-panel>
-    </q-tab-panels>
+                  <span class="job-doc-table-desc">描述：</span>
+                  <div
+                    v-for="(val, i) in tab.descriptions"
+                    :key="i"
+                    class="q-mb-xs"
+                  >
+                    {{ val }}
+                  </div>
+                </q-tab-panel>
+              </q-tab-panels>
+            </template>
+          </q-splitter>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </div>
 </template>
 
@@ -120,11 +122,10 @@ watch(activeTab, (val) => {
 
 <style lang="scss" scoped>
 .job-doc {
-    &-table-desc {
-        font-size: 16px;
-        color: #9f9e9e;
-        font-weight: bold;
-    }
+  &-table-desc {
+    font-size: 16px;
+    color: #9f9e9e;
+    font-weight: bold;
+  }
 }
-
 </style>
