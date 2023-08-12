@@ -1,7 +1,5 @@
 <template>
   <div class="c-main-menu column">
-    {{ base_data_instance.left_menu_base_mi_arr }}
-    {{ base_data_instance.base_data_version }}
     <menu-wapper :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
   </div>
 </template>

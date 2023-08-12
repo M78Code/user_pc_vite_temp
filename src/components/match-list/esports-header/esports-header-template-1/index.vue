@@ -38,36 +38,15 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other_play_id.js';
-// ...mapGetters({
-//     // 左侧详情参数
-//     vx_detail_params: "get_match_details_params",
-//     //视屏播放类型
-//     vx_play_media: "get_play_media",
-//     //获取当前菜单信息
-//     vx_cur_menu_type: "get_cur_menu_type",
-//      // 页面布局大小信息
-//     vx_get_layout_size: "get_layout_size",
-//     //全局开关
-//      get_global_switch:'get_global_switch',
-//      lang: "get_lang",
-//      //视频是否展开状态
-//     vx_get_is_fold_status:'get_is_fold_status'
-//   }),
-
-// ...mapActions({
-//     set_is_pause_video: "set_is_pause_video",
-//     //设置多列玩法状态
-//     set_unfold_multi_column:"set_unfold_multi_column",
-//     // 设置获取视频是否展开状态
-//     vx_set_is_fold_status: "set_is_fold_status"
-//   }),
+import store from 'project_path/src/store/index.js'
+let state = store.getState()
 
 const props = defineProps({ ...useProps })
 const route = useRoute();
 
 // 盘口数量
 const handicap_num = computed(() => {
-  if (this.get_global_switch.handicap_num) {
+  if (state.globalReducer.get_global_switch.handicap_num) {
     return `+${props.match.mc || 0}`
   } else {
     return this.$root.$t('match_info.more')
@@ -127,19 +106,28 @@ const cur_video_icon = computed(() => {
 */
 const on_switch_match = (media_type) => {
   //展开右侧详情
-  this.set_unfold_multi_column(false)
-  this.set_is_pause_video(false)
+  store.dispatch({
+    type: 'SET_UNFOLD_MUTI_COLUMN',
+    data: false,
+  })
+  store.dispatch({
+    type: 'SET_IS_PAUSE_VIDEO',
+    data: false,
+  })
   if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
     media_type = 'info'
   }
-  if (['auto', 'info'].includes(media_type) && this.vx_detail_params.mid == this.match.mid && this.vx_play_media.media_type != 'auto') {
+  if (['auto', 'info'].includes(media_type) && state.matchesReducer.params.mid == this.match.mid && state.matchesReducer.play_media != 'auto') {
     details.sync_mst(props.match.mid, this.match.csid)
   }
   let play_id = other_play_name_to_playid[props.match.play_current_key] || ''
   details.on_switch_match(media_type, props.match, play_id)
   // 如果右侧视频区是折叠，则会展开
-  if (!this.vx_get_is_fold_status) {
-    this.vx_set_is_fold_status(!this.vx_get_is_fold_status)
+  if (!state.globalReducer.is_fold_status) {
+    store.dispatch({
+      type: 'SET_IS_FOLD_STATUS',
+      data: !state.globalReducer.is_fold_status
+    })
   }
 }
 /**
