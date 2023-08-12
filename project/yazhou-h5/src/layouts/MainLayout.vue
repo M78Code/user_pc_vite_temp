@@ -4,9 +4,8 @@
 -->
 <template>
   <q-layout view="lHh Lpr lFf" class="layout_container">
-
     <q-page-container class="page_container">
-      test
+      <left-menu />
       <router-view />
     </q-page-container>
     <!-- <footer_menu /> -->
@@ -15,9 +14,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
-// import footer_menu from 'src/pages/footer/footer_menu.vue'  // 底部菜单
 import {useMittOn,MITT_TYPES} from  "src/core/mitt/"
-
+import leftMenu from "./../pages/menu/index.vue"
 let get_accept_show = ref(false) // 接受更好赔率变化 弹窗
 let get_combine_tips_show = ref(false) // 合并投注项提示弹框 弹窗
 let lastTouchEnd = ref(0)

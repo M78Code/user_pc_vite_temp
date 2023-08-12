@@ -14,16 +14,16 @@
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref, getCurrentInstance } from 'vue'
 import store from "src/store-redux/index.js";
-import simpleHeader from "src/components/announce/announce-h5/simple-header.vue";
+import simpleHeader from "./simple-header.vue";
 
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
     ...useProps,
 })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 
@@ -40,7 +40,7 @@ const unsubscribe = store.subscribe(() => {
 onUnmounted(unsubscribe)
 
 /** 体育规则地址-H5 */
-const more_lang = computed(get_h5_rule_url)
+const more_lang = ref('')
 /** 获取h5体育规则地址 */
 const get_h5_rule_url = () => {
     if (props.source.toLocaleUpperCase() != 'H5') return
@@ -60,15 +60,13 @@ const get_h5_rule_url = () => {
         // 非生产环境
         more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang + `/sport/common?v=h5_${window.env.config.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme.value
     }
-    // this.$forceUpdate()
+    const { ctx } = getCurrentInstance()
+    ctx.$forceUpdate()
 }
 /** 钩子触发 */
 onMounted(get_h5_rule_url)
 /** 监听语言变化 */
-watch(
-    () => lang.value,
-    () => get_h5_rule_url()
-)
+watch(lang.value, get_h5_rule_url)
 
 /** 监听窗口变化 */
 // const client_height = ref(window_resize_handle())

@@ -14,7 +14,7 @@
 <script setup>
 import { init_load, init_domain } from "./app.js";
 import { compute_css } from "src/core/server-img/";
-import MainLayOut from "./src/pages/main-layout.vue";
+import MainLayOut from "./src/layouts/main-layout.vue";
 import appload from "./app-load.vue";
 
 init_domain();

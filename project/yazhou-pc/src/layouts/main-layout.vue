@@ -24,12 +24,12 @@
       <q-list>
         <q-item-label header> 左侧菜单头部 </q-item-label>
       </q-list>
-      <TestPcMenu2 />
+      <!-- <TestPcMenu2 /> -->
     </q-drawer>
     <q-page-container>
       <router-view />
 
-      <BetBoxDialog />
+      <!-- <BetBoxDialog /> -->
     </q-page-container>
   </q-layout>
 </template>
@@ -38,8 +38,8 @@
 import { defineComponent, ref } from "vue";
 import STANDARD_KEY from "src/core/standard-key";
 // import LeftMenuTemplate1 from "../components/menu/left-menu/template1/template1.vue";
-import TestPcMenu2 from "../components/test/test-pc-menu2.vue";
-import BetBoxDialog from "../components/test/bet-box-dialog.vue";
+// import TestPcMenu2 from "../components/test/test-pc-menu2.vue";
+// import BetBoxDialog from "../components/test/bet-box-dialog.vue";
 // import store from "../store-redux-vuex/index.js";
 
 const leftDrawerOpen = ref(false);
@@ -49,7 +49,7 @@ const toggleLeftDrawer = () => {
 };
 
 const token = ref(sessionStorage.getItem(STANDARD_KEY.get("token")));
-const current_env = process.env.current_env;
+// const current_env = process.env.current_env;
 
 const empty_bet_items = () => {
   store.dispatch({
@@ -60,4 +60,5 @@ const empty_bet_items = () => {
     payload: false,
   });
 };
+
 </script>

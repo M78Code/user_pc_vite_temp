@@ -1,10 +1,14 @@
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs,onUnmounted } from "vue";
 import { is_eports_csid } from "src/core/utils/utils";
 // api文件
 import { api_details } from "src/api/index";
-import { useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import lodash from 'lodash'
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useGetGlobal } from "./global_mixin";
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 export const useGetConfig = () => {
+  const { mx_autoset_active_match } = useGetGlobal({details_params});
+  const store_state = store.getState();
   const state = reactive({
     // 菜单数据
     menu_data: $menu.menu_data,
@@ -16,7 +20,7 @@ export const useGetConfig = () => {
     mcid: 0, //默认玩法集id
     plays_list: [], //选中玩法集的盘口玩法集
     match_details: [], //玩法盘口列表
-    is_request:false , // 详情接口 是否请求中
+    is_request: false, // 详情接口 是否请求中
 
     // isInit: false,
     load_data_state: "loading", //整块加载状态
@@ -35,6 +39,15 @@ export const useGetConfig = () => {
     load_detail_statu: "right_details_loading", // loading 状态
     headerHeight: 0, // 头部高度
     get_match_details_timer: null,
+  });
+
+  const details_params = ref(store_state.matchesReducer.params);
+
+  // 监听状态变化
+  let un_subscribe = store.subscribe(() => {
+    state = store.getState();
+    const { params } = state.matchesReducer;
+    details_params.value = params;
   });
 
   /**
@@ -86,13 +99,13 @@ export const useGetConfig = () => {
         .then((res) => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
-          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY)
+          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           // this.$root.$emit("get_history");
           const code = lodash.get(res, "data.code");
           const data = lodash.cloneDeep(lodash.get(res, "data.data"));
           if (code == "0400500" || !data || Object.keys(data).length == 0) {
             // 自动切换赛事
-            this.emit_autoset_match(0);
+            emit_autoset_match(0);
             return;
           }
           const timestap = _.get(res, "data.ts");
@@ -178,17 +191,17 @@ export const useGetConfig = () => {
     }
   };
 
-      /**
-     * 自动切换赛事
-     */
-    const  emit_autoset_match=(mid)=> {
-        if (state.autoset_mid !== mid) {    
-          // 设置赛事详情选中赛事    
-          this.mx_autoset_active_match({ mid });
-          state.autoset_mid = mid;
-          this.mid = this.vx_details_params.mid;
-        }
-      },
+  /**
+   * 自动切换赛事
+   */
+  const emit_autoset_match = (mid) => {
+    if (state.autoset_mid !== mid) {
+      // 设置赛事详情选中赛事
+      mx_autoset_active_match({ mid });
+      state.autoset_mid = mid;
+      state.mid = details_params.value.mid;
+    }
+  };
 
   //   computed: {    //TODO
 
@@ -229,7 +242,9 @@ export const useGetConfig = () => {
   //       return _.get(this.category_list,'length',0);
   //     }
   //   },
-
+  onUnmounted(() => {
+    un_subscribe()
+  })
   return {
     ...toRefs(state),
     init,
