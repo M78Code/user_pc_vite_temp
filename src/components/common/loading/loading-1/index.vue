@@ -47,7 +47,7 @@ onUnmounted(unsubscribe)
 .la-line-scale,
 .la-line-scale>div {
   position: relative;
-  @include webkit(box-sizing, border-box);
+  // @include webkit(box-sizing, border-box);
 }
 
 .la-line-scale {
@@ -81,12 +81,12 @@ onUnmounted(unsubscribe)
   margin-top: 0;
   margin-bottom: 0;
   border-radius: 0;
-  @include webkit(animation, line-scale 1.2s infinite ease);
+  // @include webkit(animation, line-scale 1.2s infinite ease);
 }
 
 @for $item from 1 through 5 {
   .la-line-scale>div:nth-child(#{$item}) {
-    @include webkit(animation-delay, #{-1.3 + $item * 0.1}s)
+    // @include webkit(animation-delay, #{-1.3 + $item * 0.1}s)
   }
 }
 
@@ -132,16 +132,16 @@ onUnmounted(unsubscribe)
 /*
  * Animation
  */
-@include keyframes(line-scale) {
+// @include keyframes(line-scale) {
 
-  0%,
-  40%,
-  100% {
-    @include webkit(transform, scaleY(0.4));
-  }
+//   0%,
+//   40%,
+//   100% {
+//     @include webkit(transform, scaleY(0.4));
+//   }
 
-  20% {
-    @include webkit(transform, scaleY(1));
-  }
-}
+//   20% {
+//     @include webkit(transform, scaleY(1));
+//   }
+// }
 </style>

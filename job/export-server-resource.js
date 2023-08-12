@@ -78,12 +78,14 @@ const download_file_to_local = async (srcs) => {
  * 获取 服务器上 当前商户的 版本配置
  */
 const get_config_info = async () => {
+  const username = "TY-yazhou-lan";
   // API 对外文档 的 单个 版本的详情 获取地址
-  let url = `https://api-doc-server-new.sportxxxw1box.com/openapi/serverSource/findAllDefaultConfigKey?version=${MERCHANT_CONFIG_VERSION}&username=TY-yazhou-lan`;
+  let url = `https://api-doc-server-new.sportxxxw1box.com/openapi/serverSource/findAllDefaultConfigKey?version=${MERCHANT_CONFIG_VERSION}&username=${username}`;
   try {
     let res = await axios.get(url);
     let { data } = res;
     if (data) {
+      //此处1 应该是配置的与后台相对应
       download_file_to_local(data.data.assets["1"]);
     }
   } catch (error) {

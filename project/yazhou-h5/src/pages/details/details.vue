@@ -134,6 +134,8 @@ import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 
+
+import lodash from "lodash";
 import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
 import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
@@ -146,7 +148,7 @@ import info_rules from "project_path/src/pages/details/components/info-rules.vue
 // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
-
+import { useRouter, useRoute } from "vue-router";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "details",
@@ -176,6 +178,8 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
+    const router = useRouter()
+    const route = useRoute()
     const data = reactive({
       // 默认不刷新
       refreshing:false,
@@ -300,11 +304,11 @@ export default defineComponent({
         }
 
         // 只有一个玩法集时，及时更新当前玩法集id
-        if (_.get(data,'length') == 1) {
+        if (lodash.get(data,'length') == 1) {
           set_details_item(data[0].id)
         }
         // 玩法个数不及3个时，提前退出
-        if (_.get(data_list, 'length', 0) < 3) {
+        if (lodash.get(data_list, 'length', 0) < 3) {
           return
         }
 
@@ -314,7 +318,7 @@ export default defineComponent({
           return
         }
         // 深拷贝后操作，否则会报store错误
-        const deep_data_list = _.cloneDeep(data_list)
+        const deep_data_list = lodash.cloneDeep(data_list)
 
         // 非横屏并且"所有投注"不在最后
         if (!get_is_hengping && all_bet_index !== data.length - 1) {
@@ -331,11 +335,11 @@ export default defineComponent({
     // watch(
     //   () => get_is_hengping,
     //   () => {
-    //   if (_.get(data_list, 'length', 0) < 3) {
+    //   if (lodash.get(data_list, 'length', 0) < 3) {
     //     return
     //   }
 
-    //   const deep_data_list = _.cloneDeep(data_list)
+    //   const deep_data_list = lodash.cloneDeep(data_list)
     //     // 横屏时接口返回数据时“所有投注”已排在最后(接口依据orderNo这个字段来排序返回)，解决42812BUG
     //     // data_list = utils.swapArray(deep_data_list, 1, deep_data_list.length - 1)
     //   }
@@ -452,7 +456,7 @@ export default defineComponent({
       detailsTableHeight = innerHeight - rem(2.4);
 
       // 记录路由信息
-      const {fullPath, hash, name, params, path, query} = $route
+      const {fullPath, hash, name, params, path, query} = route
       set_last_route_info({fullPath, hash, name, params, path, query})
       let video_details = sessionStorage.getItem('video_details')
       if(video_details){
@@ -489,7 +493,7 @@ export default defineComponent({
       }
 
       // 进入详情页直接展示赛事分析
-      if ($route.params.analysis) {
+      if (route.params.analysis) {
         viewTab = 'match_analysis'
       }
 
@@ -747,15 +751,15 @@ export default defineComponent({
        * @param {String} event_code 事件code
        */
       const get_football_replay = (event_code) => {
-        if ([$route.params.csid, _.get(get_detail_data, 'csid')].includes('1')) {
+        if ([route.params.csid, lodash.get(get_detail_data, 'csid')].includes('1')) {
           const params = {
-            mid: $route.params.mid,
+            mid: route.params.mid,
             device: 'H5',
             eventCode: event_code
           }
           api_result.get_replay_football(params)
               .then(res => {
-                if (res.code == 200 && _.get(res.data, 'eventList.length')) {
+                if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
                   set_event_list(res.data.eventList)
                 }
               })
@@ -775,7 +779,7 @@ export default defineComponent({
         api( params ).then(({ data, ts,code }) => {
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
           if( code == '0400500' || !data || Object.keys(data).length===0 ){
-            $router.push({name: 'matchList'})
+            router.push({name: 'matchList'})
           }else if(code === 200){
             if (data && Object.keys(data).length) {
               match_detail_data_handle(data)
@@ -789,7 +793,7 @@ export default defineComponent({
               clearTimeout(back_main_list_timer)
               back_main_list_timer = setTimeout(() => {
                 // 如果不是演播厅的，才有退出回到 列表
-                if(_.get(get_video_url, 'active') != 'lvs' ){
+                if(lodash.get(get_video_url, 'active') != 'lvs' ){
                   $common.go_where({back_to: 'go_to_back'})
                 }
               }, 1500)
@@ -807,7 +811,7 @@ export default defineComponent({
               initEvent()
             }, 3000)
           } else {
-            const match_base_info_obj = _.cloneDeep(get_match_base_info_obj)
+            const match_base_info_obj = lodash.cloneDeep(get_match_base_info_obj)
             match_detail_data_handle(match_base_info_obj)
           }
         })
@@ -818,7 +822,7 @@ export default defineComponent({
           skeleton.details = true
           skeleton.list = true
           if(!data || Object.keys(data).length <= 0) {
-            $router.replace({name:'category', params: {mid: matchid}});
+            router.replace({name:'category', params: {mid: matchid}});
             return false;
           }
 
@@ -829,7 +833,7 @@ export default defineComponent({
           updateHotReqTime(Date.now())
 
           // 克隆一份;
-          let cloneData = _.cloneDeep(data);
+          let cloneData = lodash.cloneDeep(data);
           set_detail_data(cloneData);
 
           // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
@@ -893,7 +897,7 @@ export default defineComponent({
       const get_odds_list = async(params = { sportId: get_detail_data.csid,mid: matchid}, init_req) => {
         const _get_category_list = () => {
           api_common.get_category_list(params).then(res => {
-            const data = _.get(res, "data");
+            const data = lodash.get(res, "data");
             data_list = data
             // 给vuex 设置玩法集数据
             set_details_tabs_list(data);
@@ -908,12 +912,12 @@ export default defineComponent({
               // 当第一次进来就会走这里默认赋值第一项
             data && set_details_item(data[0]['id']);
             }
-            let search_term = $route.query && $route.query.search_term
+            let search_term = route.query && route.query.search_term
             if(search_term){
-              $router.replace({name:'category', params:{mid: matchid, mcid: data_list[0]['id']},query:{search_term: search_term}})
+              router.replace({name:'category', params:{mid: matchid, mcid: data_list[0]['id']},query:{search_term: search_term}})
             }
             // else{
-            // $router.replace({name:'category', params:{mcid: data_list[0]['id']}})
+            // router.replace({name:'category', params:{mcid: data_list[0]['id']}})
             // }
           }).finally(() => {
             // 玩法集接口请求结果返回后，再请求盘口信息接口
@@ -928,7 +932,7 @@ export default defineComponent({
                 }
 
                 // 获取赛果数据后，滑动到顶部
-                if (get_menu_type === 28 && $route.name === 'match_result') {
+                if (get_menu_type === 28 && route.name === 'match_result') {
                   document.querySelector('.match-header-result').scrollTop = 0
                 }
               });
@@ -964,11 +968,11 @@ export default defineComponent({
         // 只需要单独对C103的命令单独处理一下，因为msc是个数组，合并需要转化处理;
         if(payload.msc){
           let obj = {}, obj_payload = {}, trans_msc=[];
-          _.forEach(_.get(detail_data, 'msc' ), (item)=>{
+          lodash.forEach(lodash.get(detail_data, 'msc' ), (item)=>{
             let _key = item.split('|')[0], _val = item.split("|")[1];
             obj[_key] = _val;
           })
-          _.forEach(payload.msc, (item) => {
+          lodash.forEach(payload.msc, (item) => {
             let _key = item.split('|')[0], _val = item.split("|")[1];
             obj_payload[_key] = _val;
           })
@@ -987,13 +991,13 @@ export default defineComponent({
           Object.assign(detail_data, payload);
         }
         // 克隆解决问题
-        let cloneData = _.cloneDeep(detail_data);
+        let cloneData = lodash.cloneDeep(detail_data);
         set_detail_data(cloneData);
       };
       const set_native_detail_data = (str) => {
         // 判断是否有相对应的赛事
         let arr_msc = [];
-        _.forEach(_.get(detail_data, 'msc' ), (item)=>{
+        lodash.forEach(lodash.get(detail_data, 'msc' ), (item)=>{
           arr_msc.push(item.split("|")[0]);
         })
         if(!arr_msc.includes(str.split("|")[0])){
@@ -1040,7 +1044,7 @@ export default defineComponent({
         }
 
         api_common.get_detail_video(params).then(res => {
-          let event_data = _.get(res, "data", {});
+          let event_data = lodash.get(res, "data", {});
           if(event_data && event_data.mid){
 
             // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型
@@ -1070,9 +1074,9 @@ export default defineComponent({
             set_goto_detail_matchid(event_data.mid);
           } else {
             // 如果不是演播厅的，才有退出回到 列表
-            if(_.get(get_video_url, 'active') != 'lvs' ) {
+            if(lodash.get(get_video_url, 'active') != 'lvs' ) {
               // 没有返回赛事数据就跳转到列表页
-              $router.push({name: 'matchList'})
+              router.push({name: 'matchList'})
             }
           }
         })
