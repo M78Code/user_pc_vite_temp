@@ -92,6 +92,7 @@ import detailMatchList from 'project_path/src/pages/details/components/detail-ma
 import { uid } from "quasar"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "category",
@@ -108,6 +109,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const data = reactive({
+      emitters: [],
       // 加载数据的效果
       is_loading: true,
       // 玩法集无数据
@@ -542,6 +544,7 @@ export default defineComponent({
         }
         if(!['result_details', 'match_result'].includes(route.name)){
           // #TODO emit 
+          useMittEmit(MITT_KEY.EMIT_MATCHINFO_LOADING, true);
           // $root.$emit(emit_cmd.EMIT_MATCHINFO_LOADING, true)
         }
         const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item}`]
@@ -683,6 +686,7 @@ export default defineComponent({
     // 调用 玩法集列表接口
     const triggle_tabs_update = () => {
       // #TODO emit 
+      useMittEmit(MITT_KEY.EMIT_TABS_LIST_UPDATE_HANDLE);
       // $root.$emit(emit_cmd.EMIT_TABS_LIST_UPDATE_HANDLE);
     };
     // 保存当前展开状态
@@ -876,6 +880,11 @@ export default defineComponent({
     // 添加相应监听事件
     const on_listeners = () => {
       // #TODO emit 
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_CATEGORY_SKT, sendSocketInitCmd).off,
+        useMittOn.on(MITT_KEY.EMIT_REF_API, initEvent).off,
+        useMittOn.on(MITT_KEY.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list).off,
+      ]
       // $root.$on(emit_cmd.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       // $root.$on(emit_cmd.EMIT_REF_API, initEvent);
       // $root.$on(emit_cmd.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
@@ -883,6 +892,7 @@ export default defineComponent({
     // 移除相应监听事件
      const off_listeners = () => {
       // #TODO emit 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       // $root.$off(emit_cmd.EMIT_REF_API, initEvent);
       // $root.$off(emit_cmd.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)

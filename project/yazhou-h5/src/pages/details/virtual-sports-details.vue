@@ -57,6 +57,7 @@ import VSport from 'src/public/utils/vsport/vsport.js';
 
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -202,7 +203,8 @@ export default defineComponent({
       refreshing = false;
     };
     const api_interface = () => {
-      $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
+      useMittEmit(MITT_KEY.EMIT_REF_API, 'details_refresh');
+      // $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
     };
     /**
      *@description: 虚拟体育切换玩法集,滚动条高度默认恢复为0
@@ -267,7 +269,8 @@ export default defineComponent({
               current_match.show_time = res.show_time;
               //当赛事结束
               if(current_match.match_status == 2){
-                $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+                useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+                // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
               }
               //开赛后封盘
               if(current_match.match_status > 0){
@@ -275,7 +278,8 @@ export default defineComponent({
               }
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
-                $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+                useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+                // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
               }
               switch (Number(current_match.csid)) {
                 case 1001:
@@ -350,7 +354,8 @@ export default defineComponent({
           current_match.show_time = res.show_time;
           //当赛事结束
           if(current_match.match_status == 2){
-            $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+            useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+            // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
           }
           //开赛后封盘
           if(current_match.match_status > 0){
@@ -358,7 +363,8 @@ export default defineComponent({
           }
           //视频时间更新,快进视频到相应的时间点
           if(res.upd == 1){
-            $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+            useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+            // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
           }
           switch (Number(current_match.csid)) {
             case 1001:

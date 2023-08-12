@@ -2,7 +2,8 @@
 <template>
     <div class="announce-wrap">
         <simple-header>
-            <span>{{ $root.$t('common.notice') }}</span>
+            <!-- <span>{{ $root.$t('common.notice') }}</span> -->
+            <span>TODO: $root.$t('common.notice')</span>
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
@@ -16,7 +17,9 @@
                         <div class="ann-content" v-html="item.context"></div>
                         <div class="ann-time">{{ timestr(item.sendTimeOther) }}</div>
                     </div>
-                    <load-data state="notice-empty" :no_data_msg="$root.$t('common.notice_no_data')"
+                    <!-- <load-data state="notice-empty" :no_data_msg="$root.$t('common.notice_no_data')" -->
+                        <!-- TODO: -->
+                    <load-data state="notice-empty" no_data_msg="$root.$t('common.notice_no_data')"
                         v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>

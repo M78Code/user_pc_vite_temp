@@ -18,6 +18,7 @@
 // #TODO vuex 
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import utils from "src/public/utils/utils";
+import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "details_tab",
@@ -32,7 +33,9 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const data = reactive();
+    const data = reactive({
+      emitters: [],
+    });
     // #TODO VUEX 
     // computed:{
     // ...mapGetters([
@@ -90,6 +93,7 @@ export default defineComponent({
       $router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
       // #TODO emit 
+      useMittEmit(MITT_KEY.EMIT_DETAILILS_TAB_CHANGED);
       // $root.$emit(emit_cmd.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer == 3){
         set_fewer(1)
@@ -124,6 +128,11 @@ export default defineComponent({
     // 添加相应监听事件
     const on_listeners = () => {
       // #TODO emit 
+      emitters = [
+        useMittOn.on(MITT_KEY.EMIT_REFRESH_DETAILS_TAB, initEvent).off,
+        useMittOn.on(MITT_KEY.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
+        useMittOn.on(MITT_KEY.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
+      ]
       // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent)
       // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
       // $root.$on(emit_cmd.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
@@ -131,6 +140,7 @@ export default defineComponent({
     // 移除相应监听事件
     const off_listeners = () => {
       // #TODO emit 
+      emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent);
       // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
       // $root.$off(emit_cmd.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
