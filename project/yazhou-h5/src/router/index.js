@@ -38,11 +38,11 @@ const router = createRouter({
           name: "notice",
           component: () => import("project_path/src/pages/notice/index.vue")
         },
-      //   {
-      //     path: "/rule_description/:name",
-      //     name: "rule_description",
-      //     component: () => import("project_path/pages/rule_description/description_main.vue")
-      //   },
+        {
+          path: "/rule_description/:name",
+          name: "rule_description",
+          component: () => import("project_path/src/pages/rule-description/description-main.vue")
+        },
       //   {
       //     path: '/category_loading/:mid',
       //     name: 'category_loading',
