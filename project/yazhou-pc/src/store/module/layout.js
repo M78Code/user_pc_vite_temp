@@ -19,23 +19,23 @@ const initialState = {
   },
   layout_size: {
     // 浏览器宽度
-    inner_width: 0,
+    inner_width: 1920,
     // 浏览器高度
-    inner_height: 0,
+    inner_height: 980,
     // 主内容宽度
-    main_width: 0,
+    main_width: 1920,
     // 左侧菜单宽度
-    left_width: 0,
+    left_width: 980,
     // 中间区域宽度
-    center_width: 0,
+    center_width: 1920,
     // 列表实际内容宽度，除去边框间距等等
-    list_content_width: 0,
+    list_content_width: 1920,
     // 右侧区域宽度
-    right_width: 0,
+    right_width: 300,
     // 头部高度
-    header_height: 0,
+    header_height: 80,
     // 主内容高度（菜单、列表、详情、右侧）
-    content_height: 0,
+    content_height:900,
   },
 };
 

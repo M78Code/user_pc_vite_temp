@@ -122,7 +122,7 @@ class menu_config_class {
    * @param {undefined} undefined
    */
   set_api_config_version(version) {
-    this.api_config_version = version
+    this.api_config_version.value = version
   }
 
   /**

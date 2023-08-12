@@ -21,7 +21,7 @@
       <q-scroll-area
         :visible="true"
         ref="ref_v_scroll_area"
-        :thumb-style="{ right: $utils.is_iframe ? '-8px' : '-10.5px' }"
+        :thumb-style="{ right: utils.is_iframe ? '-8px' : '-10.5px' }"
         class="fit v-scrollarea"
       >
         <q-scroll-observer @scroll="on_scroll" />
@@ -58,6 +58,9 @@
 
 <script setup>
 import { ref,onMounted,onUnmounted } from "vue";
+import utils from 'src/core/utils/utils.js'
+// import menu_data from 'src/core/menu/menu-class-new.js'
+
 // import { useMittEmit } from 'src/core/mitt/index.js'
 // import { EMIT_MX_COLLECT_MATCH } from 'project_path/src/core/mitt/mitt-keys.js';
 const props = defineProps({
@@ -92,24 +95,25 @@ const bet_item_position_timer = ref(0); // 定时器ID
  * @return {undefined} undefined
  */
 const on_header_change = ({ height }) => {
-  this.header_height = height;
+ header_height.value = height;
+ //this.$route.name
   if (
-    ["details", "virtual_details", "home", "video"].includes(this.$route.name)
+    ["details", "virtual_details", "home", "video"].includes('home')
   ) {
     // 判断当前是哪一个详情页，根据页面来发送对应的头部高度
     // 通用赛事详情
-    if (this.page_type == "main_details") {
+    if (props.page_type == "main_details") {
       emits("match_details_header_height_main_details", height);
       // 右侧详情
-    } else if (this.page_type == "right_details") {
+    } else if (props.page_type == "right_details") {
       emits("match_details_header_height_right_details", height);
       // 虚拟详情
-    } else if (this.page_type == "virtual_details") {
+    } else if (props.page_type == "virtual_details") {
       emits("match_details_header_height_virtual_details", height);
     }
   }
   // 虚拟体育右侧头部视频区高度
-  if (this.page_type == "virtual_right_list") {
+  if (props.page_type == "virtual_right_list") {
     emits("virtual_right_list_header_height", height);
   }
 };
