@@ -1,8 +1,8 @@
-<!--
- * @Author: snape
- * @Date:
- * @Description: 无限滑动容器组件
--->
+// <!--
+//  * @Author: snape
+//  * @Date:
+//  * @Description: 无限滑动容器组件
+// -->
 
 const throttle= _. throttle;
 

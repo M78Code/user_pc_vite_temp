@@ -39,11 +39,11 @@ const router = createRouter({
           component: () => import("project_path/src/pages/notice/index.vue")
         },
         // 注单历史---临时
-        // {
-        //   path: "/cathectic",
-        //   name: "cathectic",
-        //   component: () => import("project_path/src/pages/cathectic/index.vue")
-        // },
+        {
+          path: "/cathectic",
+          name: "cathectic",
+          component: () => import("project_path/src/pages/cathectic/index.vue")
+        },
         {
           path: "/cathectic",
           name: "cathectic",
