@@ -1,345 +1,347 @@
 <template>
-  <div class="c-main-scroll window-width window-height">
-    <div
-      class="main overflow-hidden relative-position"
-      :class="{
-        'iframe-top-collapse': computed_data.vx_get_menu_collapse_status,
-      }"
-      :style="`width:${computed_data.vx_get_layout_sizemain_width}px;`"
-    >
-      <!-- 搜索 -->
-      <search
-        v-if="computed_data.get_search_status"
-        v-show="route.params.video_size != 1"
-      />
-      <!-- 页面头部容器-->
-      <site-header
-        v-show="route.params.video_size != 1"
-        class="yb-layout-margin-header"
-        :nav_list="data_ref.nav_list"
-        :class="{ activity_bonus: data_ref.hasBonusType3 }"
-        :imgUrl="data_ref.special_img_url"
-        :hostUrl="data_ref.special_host_url"
-        :urlType="data_ref.special_url_type"
-        :hasActivity="data_ref.hasActivity"
-      />
-
+  <q-layout view="lHh Lpr lFf">
+    <div class="c-main-scroll window-width window-height">
       <div
-        class="c-main-content c-content-bg"
-        :style="`width:${
-          computed_data.vx_get_layout_size.main_width
-        }px  !important; height:${
-          computed_data.vx_get_layout_size.content_height + 4
-        }px  !important;`"
+        class="main overflow-hidden relative-position"
+        :class="{
+          'iframe-top-collapse': computed_data.vx_get_menu_collapse_status,
+        }"
+        :style="`width:${computed_data.vx_get_layout_sizemain_width}px;`"
       >
-        <!-- 左侧 菜单区域 -->
-        <div
-          ref="page_left"
+        <!-- 搜索 -->
+        <search
+          v-if="computed_data.get_search_status"
           v-show="route.params.video_size != 1"
-          class="page-left row yb-layout-margin-menu relative-position"
-          :style="`width:${computed_data.vx_get_layout_sizeleft_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`"
-          :class="computed_data.vx_main_menu_toggle"
-        >
-          <div
-            class="cathectic-shade"
-            v-show="
-              data_ref.bet_loadding && computed_data.vx_get_left_menu_toggle
-            "
-          >
-            <div class="shade-fixed">
-              <!--确认中转圈圈-->
-              <div class="loading-wrap">
-                <div class="img-loading"></div>
-                <div
-                  class="text-center loading-text flex items-end justify-center"
-                >
-                  {{ $t("bet.bet_loading") + "..." }}
-                  <!-- 内容加载中... -->
-                </div>
-              </div>
-            </div>
-          </div>
-          <!--左侧菜单mini-->
-          <main-menu-mini
-            v-show="computed_data.vx_main_menu_toggle == 'mini'"
-          />
-          <!--左侧菜单-->
-          <main-menu
-            v-show="
-              ['normal', 'mini-normal'].includes(
-                computed_data.vx_main_menu_toggle
-              )
-            "
-          />
-        </div>
+        />
+        <!-- 页面头部容器-->
+        <site-header
+          v-show="route.params.video_size != 1"
+          class="yb-layout-margin-header"
+          :nav_list="data_ref.nav_list"
+          :class="{ activity_bonus: data_ref.hasBonusType3 }"
+          :imgUrl="data_ref.special_img_url"
+          :hostUrl="data_ref.special_host_url"
+          :urlType="data_ref.special_url_type"
+          :hasActivity="data_ref.hasActivity"
+        />
 
-        <!-- 中间区域 -->
-        <keep-alive include="matchListRouter" max="1">
-          <router-view
-            class="page-center"
-            :class="data_ref.screen_width"
-            :style="
-              route.params.video_size == 1
-                ? 'position: fixed; top: 0;  bottom: 0;right: 0;  left: 0; width: 100%;height: 100%;'
-                : `width:${computed_data.vx_get_layout_sizecenter_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
-            "
-          />
-        </keep-alive>
-
-        <!-- 右侧区域 -->
         <div
-          class="page-right"
-          :class="data_ref.screen_width"
-          :style="
-            route.params.video_size == 1
-              ? ''
-              : `width:${computed_data.vx_get_layout_sizeright_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
-          "
-          v-if="computed_data.vx_get_layout_sizeright_width > 0"
+          class="c-main-content c-content-bg"
+          :style="`width:${
+            computed_data.vx_get_layout_size.main_width
+          }px  !important; height:${
+            computed_data.vx_get_layout_size.content_height + 4
+          }px  !important;`"
         >
-          <!-- 虚拟体育 -->
-          <virtual-right
-            v-if="
-              new_menu.is_virtual_sport() &&
-              route.name != 'search' &&
-              route.name != 'details'
-            "
-          />
-          <!-- 常规竞猜 -->
-          <match-details v-else class="page-match-detail fit" />
-        </div>
-      </div>
-
-      <!-- 小于 1440 时显示折叠按钮  -->
-      <div
-        v-if="route.params.video_size != 1"
-        v-show="computed_data.vx_main_menu_toggle != 'normal'"
-        @click="on_main_menu_toggle"
-        class="menu_toggle-btn yb-flex-center"
-        :class="[
-          computed_data.vx_main_menu_toggle,
-          data_ref.bet_loadding ? 'disable-toggle' : '',
-        ]"
-      >
-        <!-- <img src="~public/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
-      </div>
-
-      <!-- 视频js预加载 -->
-      <iframe
-        v-if="data_ref.video_src"
-        style="display: none"
-        :src="data_ref.video_src"
-      ></iframe>
-      <iframe
-        v-if="animation_src"
-        style="display: none"
-        :src="animation_src"
-      ></iframe>
-
-      <!-- toast 消息提示 -->
-      <toast />
-      <confirm />
-      <alert />
-      <!-- 押注操作相关组件 -->
-      <!-- 活动弹框 -->
-      <activityModel
-        v-if="showActivity"
-        :imgUrl="imgUrl"
-        :imgShowTimer="userBannerTimer"
-        :hostUrl="hostUrl"
-        :urlType="urlType"
-        :allowClick="allowClick"
-      />
-      <!-- 页面底部容器 整个内嵌可拖拽组件 -->
-      <template
-        v-if="
-          show_bet_zone &&
-          !computed_data.vx_get_left_menu_toggle &&
-          route.name != 'video'
-        "
-      >
-        <vue-draggable-resizable
-          ref="resizable"
-          :axis="data_ref.axis"
-          :x="data_ref.x"
-          :y="data_ref.y"
-          :w="300"
-          :h="data_ref.h"
-          :z="2000"
-          :resizable="false"
-          :parent="true"
-          :prevent-deactivation="true"
-          @dragging="move_handle"
-          @dragstop="stop_handle"
-          :style="draggable_style"
-          class-name="bet-zone"
-        >
+          <!-- 左侧 菜单区域 -->
           <div
-            class="cathectic-shade"
-            :class="{
-              'zero-opacity': !data_ref.bet_loadding && data_ref.dragging,
-            }"
-            v-show="data_ref.bet_loadding || data_ref.dragging"
+            ref="page_left"
+            v-show="route.params.video_size != 1"
+            class="page-left row yb-layout-margin-menu relative-position"
+            :style="`width:${computed_data.vx_get_layout_sizeleft_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`"
+            :class="computed_data.vx_main_menu_toggle"
           >
-            <!--确认中转圈圈-->
-            <template v-if="data_ref.bet_loadding">
+            <div
+              class="cathectic-shade"
+              v-show="
+                data_ref.bet_loadding && computed_data.vx_get_left_menu_toggle
+              "
+            >
               <div class="shade-fixed">
+                <!--确认中转圈圈-->
                 <div class="loading-wrap">
                   <div class="img-loading"></div>
                   <div
                     class="text-center loading-text flex items-end justify-center"
                   >
                     {{ $t("bet.bet_loading") + "..." }}
+                    <!-- 内容加载中... -->
                   </div>
                 </div>
               </div>
-            </template>
-          </div>
-          <!--滚动条头部-->
-          <template v-if="computed_data.vx_get_is_virtual_bet">
-            <virtual-bet-scroll-header
-              ref="resizeable_header"
-              :is_free="false"
-              :is_expand="data_ref.is_expand"
+            </div>
+            <!--左侧菜单mini-->
+            <main-menu-mini
+              v-show="computed_data.vx_main_menu_toggle == 'mini'"
             />
-          </template>
-          <bet-scroll-header
-            v-else
-            ref="resizeable_header"
-            :is_expand="data_ref.is_expand"
-            :bet_flag="data_ref.bet_flag"
-            :is_free="false"
-          />
+            <!--左侧菜单-->
+            <main-menu
+              v-show="
+                ['normal', 'mini-normal'].includes(
+                  computed_data.vx_main_menu_toggle
+                )
+              "
+            />
+          </div>
+
+          <!-- 中间区域 -->
+          <keep-alive include="matchListRouter" max="1">
+            <router-view
+              class="page-center"
+              :class="data_ref.screen_width"
+              :style="
+                route.params.video_size == 1
+                  ? 'position: fixed; top: 0;  bottom: 0;right: 0;  left: 0; width: 100%;height: 100%;'
+                  : `width:${computed_data.vx_get_layout_sizecenter_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
+              "
+            />
+          </keep-alive>
+
+          <!-- 右侧区域 -->
           <div
-            class="cathectic-zone"
-            :class="{ 'bet-zone-height': !data_ref.is_expand }"
-            v-show="data_ref.data_ref.is_expand2"
-            @click.stop="data_ref.check_drag"
+            class="page-right"
+            :class="data_ref.screen_width"
+            :style="
+              route.params.video_size == 1
+                ? ''
+                : `width:${computed_data.vx_get_layout_sizeright_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
+            "
+            v-if="computed_data.vx_get_layout_sizeright_width > 0"
           >
-            <!--中间内容部分-->
-            <q-scroll-area
-              ref="bet_scroll_area"
-              class="bet-scroll-area"
-              :thumb-style="thumb_style"
-              :style="{
-                height: `${data_ref.content_height}px`,
-                width: '300px',
-                'max-height': `${
-                  computed_data.vx_get_layout_size.content_height - 190
-                }px`,
+            <!-- 虚拟体育 -->
+            <virtual-right
+              v-if="
+                new_menu.is_virtual_sport() &&
+                route.name != 'search' &&
+                route.name != 'details'
+              "
+            />
+            <!-- 常规竞猜 -->
+            <match-details v-else class="page-match-detail fit" />
+          </div>
+        </div>
+
+        <!-- 小于 1440 时显示折叠按钮  -->
+        <div
+          v-if="route.params.video_size != 1"
+          v-show="computed_data.vx_main_menu_toggle != 'normal'"
+          @click="on_main_menu_toggle"
+          class="menu_toggle-btn yb-flex-center"
+          :class="[
+            computed_data.vx_main_menu_toggle,
+            data_ref.bet_loadding ? 'disable-toggle' : '',
+          ]"
+        >
+          <!-- <img src="~public/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
+        </div>
+
+        <!-- 视频js预加载 -->
+        <iframe
+          v-if="data_ref.video_src"
+          style="display: none"
+          :src="data_ref.video_src"
+        ></iframe>
+        <iframe
+          v-if="animation_src"
+          style="display: none"
+          :src="animation_src"
+        ></iframe>
+
+        <!-- toast 消息提示 -->
+        <toast />
+        <confirm />
+        <alert />
+        <!-- 押注操作相关组件 -->
+        <!-- 活动弹框 -->
+        <activityModel
+          v-if="showActivity"
+          :imgUrl="imgUrl"
+          :imgShowTimer="userBannerTimer"
+          :hostUrl="hostUrl"
+          :urlType="urlType"
+          :allowClick="allowClick"
+        />
+        <!-- 页面底部容器 整个内嵌可拖拽组件 -->
+        <template
+          v-if="
+            show_bet_zone &&
+            !computed_data.vx_get_left_menu_toggle &&
+            route.name != 'video'
+          "
+        >
+          <vue-draggable-resizable
+            ref="resizable"
+            :axis="data_ref.axis"
+            :x="data_ref.x"
+            :y="data_ref.y"
+            :w="300"
+            :h="data_ref.h"
+            :z="2000"
+            :resizable="false"
+            :parent="true"
+            :prevent-deactivation="true"
+            @dragging="move_handle"
+            @dragstop="stop_handle"
+            :style="draggable_style"
+            class-name="bet-zone"
+          >
+            <div
+              class="cathectic-shade"
+              :class="{
+                'zero-opacity': !data_ref.bet_loadding && data_ref.dragging,
               }"
+              v-show="data_ref.bet_loadding || data_ref.dragging"
             >
-              <!--虚拟体育部分-->
-              <template v-if="computed_data.vx_get_is_virtual_bet">
-                <!-- 虚拟单关 -->
-                <virtual-bet-single
-                  ref="embedded_single"
-                  @set_scroll_this="set_scroll_this"
-                  v-if="vx_get_virtual_bet_list.length == 1"
-                />
-                <!-- 虚拟串关 -->
-                <virtual-bet-mix
-                  ref="embedded_mix"
-                  @set_scroll_this="set_scroll_this"
-                  v-if="vx_get_virtual_bet_list.length > 1"
-                />
-              </template>
-              <!--非虚拟体育部分-->
-              <template v-else>
-                <div
-                  ref="bet_mode_zone"
-                  class="bet-mode-zone"
-                  v-if="computed_data.vx_is_bet_single"
-                >
-                  <div class="left">
-                    <span>{{ $t("bet.bet_one_") }}</span>
-                    <span class="bet-single-count">
-                      {{ computed_data.vx_get_bet_single_list.length }}
-                    </span>
-                  </div>
-                  <div class="right">
-                    <span
-                      class="check-box"
-                      :class="{ checked: computed_data.vx_get_is_bet_merge }"
-                      @click.stop="data_ref.toggle_merge"
+              <!--确认中转圈圈-->
+              <template v-if="data_ref.bet_loadding">
+                <div class="shade-fixed">
+                  <div class="loading-wrap">
+                    <div class="img-loading"></div>
+                    <div
+                      class="text-center loading-text flex items-end justify-center"
                     >
-                      <check-box
-                        :checked="computed_data.vx_get_is_bet_merge"
-                      /><span>{{ $t("bet.merge") }}</span>
-                    </span>
-                    <span
-                      @mouseover="data_ref.show_merge_info = true"
-                      @mouseout="data_ref.show_merge_info = false"
-                    >
-                      <icon
-                        id="merge-info"
-                        name="icon-tips"
-                        class="bet-info"
-                        size="14px"
-                      />
-                    </span>
+                      {{ $t("bet.bet_loading") + "..." }}
+                    </div>
                   </div>
                 </div>
-                <!--内嵌的单关-->
-                <bet-single
-                  ref="embedded_single"
-                  @set_scroll_this="set_scroll_this"
-                  v-if="computed_data.vx_is_bet_single"
-                />
-                <!--内嵌的串关-->
-                <bet-mix
-                  ref="embedded_mix"
-                  @set_scroll_this="set_scroll_this"
-                  v-if="!computed_data.vx_is_bet_single"
+              </template>
+            </div>
+            <!--滚动条头部-->
+            <template v-if="computed_data.vx_get_is_virtual_bet">
+              <virtual-bet-scroll-header
+                ref="resizeable_header"
+                :is_free="false"
+                :is_expand="data_ref.is_expand"
+              />
+            </template>
+            <bet-scroll-header
+              v-else
+              ref="resizeable_header"
+              :is_expand="data_ref.is_expand"
+              :bet_flag="data_ref.bet_flag"
+              :is_free="false"
+            />
+            <div
+              class="cathectic-zone"
+              :class="{ 'bet-zone-height': !data_ref.is_expand }"
+              v-show="data_ref.data_ref.is_expand2"
+              @click.stop="data_ref.check_drag"
+            >
+              <!--中间内容部分-->
+              <q-scroll-area
+                ref="bet_scroll_area"
+                class="bet-scroll-area"
+                :thumb-style="thumb_style"
+                :style="{
+                  height: `${data_ref.content_height}px`,
+                  width: '300px',
+                  'max-height': `${
+                    computed_data.vx_get_layout_size.content_height - 190
+                  }px`,
+                }"
+              >
+                <!--虚拟体育部分-->
+                <template v-if="computed_data.vx_get_is_virtual_bet">
+                  <!-- 虚拟单关 -->
+                  <virtual-bet-single
+                    ref="embedded_single"
+                    @set_scroll_this="set_scroll_this"
+                    v-if="vx_get_virtual_bet_list.length == 1"
+                  />
+                  <!-- 虚拟串关 -->
+                  <virtual-bet-mix
+                    ref="embedded_mix"
+                    @set_scroll_this="set_scroll_this"
+                    v-if="vx_get_virtual_bet_list.length > 1"
+                  />
+                </template>
+                <!--非虚拟体育部分-->
+                <template v-else>
+                  <div
+                    ref="bet_mode_zone"
+                    class="bet-mode-zone"
+                    v-if="computed_data.vx_is_bet_single"
+                  >
+                    <div class="left">
+                      <span>{{ $t("bet.bet_one_") }}</span>
+                      <span class="bet-single-count">
+                        {{ computed_data.vx_get_bet_single_list.length }}
+                      </span>
+                    </div>
+                    <div class="right">
+                      <span
+                        class="check-box"
+                        :class="{ checked: computed_data.vx_get_is_bet_merge }"
+                        @click.stop="data_ref.toggle_merge"
+                      >
+                        <check-box
+                          :checked="computed_data.vx_get_is_bet_merge"
+                        /><span>{{ $t("bet.merge") }}</span>
+                      </span>
+                      <span
+                        @mouseover="data_ref.show_merge_info = true"
+                        @mouseout="data_ref.show_merge_info = false"
+                      >
+                        <icon
+                          id="merge-info"
+                          name="icon-tips"
+                          class="bet-info"
+                          size="14px"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <!--内嵌的单关-->
+                  <bet-single
+                    ref="embedded_single"
+                    @set_scroll_this="set_scroll_this"
+                    v-if="computed_data.vx_is_bet_single"
+                  />
+                  <!--内嵌的串关-->
+                  <bet-mix
+                    ref="embedded_mix"
+                    @set_scroll_this="set_scroll_this"
+                    v-if="!computed_data.vx_is_bet_single"
+                  />
+                </template>
+              </q-scroll-area>
+              <!-- 滚动：尾部 --------------------------------->
+              <!--滚动条底部-->
+              <template v-if="computed_data.vx_get_is_virtual_bet">
+                <virtual-bet-scroll-footer
+                  ref="resizeable_footer"
+                  :bet_this="data_ref.bet_this"
                 />
               </template>
-            </q-scroll-area>
-            <!-- 滚动：尾部 --------------------------------->
-            <!--滚动条底部-->
-            <template v-if="computed_data.vx_get_is_virtual_bet">
-              <virtual-bet-scroll-footer
-                ref="resizeable_footer"
-                :bet_this="data_ref.bet_this"
-              />
-            </template>
-            <template v-else>
-              <bet-scroll-footer
-                ref="resizeable_footer"
-                :bet_this="data_ref.bet_this"
-              />
-            </template>
-          </div>
-        </vue-draggable-resizable>
-      </template>
-      <!-- 视频画中画组件 -->
-      <moveVideo v-if="show_move_video"></moveVideo>
-    </div>
-    <loading v-if="data_ref.dataLoading" />
-    <!--提示区域-->
-    <q-tooltip
-      content-class="bet-bg-tooltip"
-      anchor="bottom left"
-      self="top left"
-      :offset="[262, 10]"
-      target="#merge-info"
-      v-if="data_ref.show_merge_info"
-    >
-      <div
-        style="
-          width: 252px;
-          min-height: 60px;
-          padding-top: 5px;
-          padding-bottom: 10px;
-          padding-left: 5px;
-          word-break: break-all;
-        "
-      >
-        {{ $t("bet.merge_info") }}
+              <template v-else>
+                <bet-scroll-footer
+                  ref="resizeable_footer"
+                  :bet_this="data_ref.bet_this"
+                />
+              </template>
+            </div>
+          </vue-draggable-resizable>
+        </template>
+        <!-- 视频画中画组件 -->
+        <moveVideo v-if="show_move_video"></moveVideo>
       </div>
-    </q-tooltip>
-    <!-- 引导页 -->
-    <introduce />
-  </div>
+      <loading v-if="data_ref.dataLoading" />
+      <!--提示区域-->
+      <q-tooltip
+        content-class="bet-bg-tooltip"
+        anchor="bottom left"
+        self="top left"
+        :offset="[262, 10]"
+        target="#merge-info"
+        v-if="data_ref.show_merge_info"
+      >
+        <div
+          style="
+            width: 252px;
+            min-height: 60px;
+            padding-top: 5px;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            word-break: break-all;
+          "
+        >
+          {{ $t("bet.merge_info") }}
+        </div>
+      </q-tooltip>
+      <!-- 引导页 -->
+      <introduce />
+    </div>
+  </q-layout>
 </template>
 <script setup>
 import {
@@ -349,11 +351,12 @@ import {
   defineAsyncComponent,
   reactive,
   nextTick,
+  onBeforeUnmount,
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "../store/index.js";
 import base_data from "src/core/utils/base-data/base-data.js";
-import matchlist from "src/core/match-list/match-scroll.js";
+import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
 import new_menu from "src/core/menu/menu-class-new";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -525,6 +528,58 @@ const computed_data = reactive({
   //全局开关
   get_global_switch: globalReducer.global_switch,
 });
+
+const unsubscribe = store.subscribe(() => {
+  const {
+    userReducer,
+    menuReducer,
+    layoutReducer,
+    globalReducer,
+    betInfoReducer,
+    detailsReducer,
+  } = store.getState();
+  console.log("update store");
+  computed_data.vx_get_is_invalid = userReducer.is_invalid;
+  // 搜索状态
+  computed_data.get_search_status = detailsReducer.search_isShow;
+  // 获取用户信息
+  computed_data.vx_get_user = userReducer.user;
+  // 当前语言
+  computed_data.lang = userReducer.lang;
+  // 单关部分 是否为串关
+  computed_data.vx_is_bet_single = betInfoReducer.is_bet_single;
+  // 串关是否正在处理中
+  computed_data.vx_get_is_handle = betInfoReducer.is_handle;
+  // 单关是否正在处理中
+  computed_data.vx_get_is_single_handle = betInfoReducer.is_single_handle;
+  // 是否为虚拟体育投注
+  computed_data.vx_get_is_virtual_bet = betInfoReducer.is_virtual_bet;
+  // 虚拟投注是否正在进行
+  computed_data.vx_get_is_virtual_handle = betInfoReducer.is_virtual_handle;
+  // 获取虚拟投注列表
+  computed_data.vx_get_virtual_bet_list = betInfoReducer.virtual_bet_list;
+  computed_data.vx_get_bet_list = betInfoReducer.bet_list;
+  computed_data.vx_get_bet_single_list = betInfoReducer.bet_single_list;
+  computed_data.vx_get_bet_single_obj = betInfoReducer.bet_single_obj;
+  computed_data.vx_layout_left_show = layoutReducer.layout_left_show;
+  computed_data.vx_get_cur_odd = globalReducer.odds.cur_odds;
+  computed_data.vx_get_left_menu_toggle = layoutReducer.left_menu_toggle;
+  // 当前菜单类型
+  computed_data.vx_cur_menu_type = menuReducer.cur_menu_type;
+  computed_data.vx_main_menu_toggle = menuReducer.main_menu_toggle;
+  // 获取项目主题
+  // theme:userReducer.theme,
+  // 全局点击事件
+  computed_data.get_global_click = globalReducer.global_click;
+  computed_data.vx_get_layout_size = layoutReducer.layout_size;
+  computed_data.vx_get_is_bet_merge = betInfoReducer.is_bet_merge;
+  computed_data.vx_get_menu_collapse_status = menuReducer.menu_collapse_status;
+  //收起右侧详情 展开多列玩法
+  computed_data.get_unfold_multi_column = globalReducer.is_unfold_multi_column;
+  //全局开关
+  computed_data.get_global_switch = globalReducer.global_switch;
+});
+
 const thumb_style = ref({
   right: "3px",
   borderRadius: "3px",
@@ -679,7 +734,7 @@ function get_access_config() {
  * @param {undefined} undefined
  */
 function list_on_scroll(obj) {
-  let scroll_top = obj ? obj.position : this.$matchlist.scroll_top;
+  let scroll_top = obj ? obj.position : matchlist.scroll_top;
   if (scroll_top === 0) {
     return;
   }
@@ -694,30 +749,18 @@ function list_on_scroll(obj) {
 
   // 两个诸葛事件都发送过 销毁事件绑定
   if (is_send_today_football_zhuge && is_send_today_basketball_zhuge) {
-    this.$root.$off("emit_list_on_scroll", this.list_on_scroll);
-    this.$root.$off("right_details_on_scroll", this.list_on_scroll);
+    this.$root.$off(MITT_TYPES.EMIT_LIST_ON_SCROLL, this.list_on_scroll);
+    this.$root.$off(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, this.list_on_scroll);
   }
 
   // 发送今日足球诸葛事件
-  if (
-    !is_send_today_football_zhuge &&
-    scroll_top > 100 &&
-    !this.user_is_handle
-  ) {
+  if (!is_send_today_football_zhuge && scroll_top > 100 && !user_is_handle) {
     // utils.send_zhuge_event("PC_今日_足球_默认页面滚动超100");
     sessionStorage.setItem("is_send_today_football_zhuge", 1);
-    this.user_is_handle = true;
+    user_is_handle = true;
   }
 }
-/**
- * @Description 全局点击事件
- * @param {undefined} undefined
- */
-function globalclick() {
-  this.user_is_handle = true;
-  window.removeEventListener("mousedown", this.globalclick);
-  // sessionStorage.setItem('is_send_today_football_zhuge2',1)
-}
+
 /**
  * @description 赔率转换
  * @return {undefined} undefined
@@ -1539,7 +1582,6 @@ function update_bet_data() {
       });
   }
 }
-
 store.dispatch({ type: "set_is_virtual_handle", data: true });
 store.dispatch({ type: "set_is_single_handle", data: false });
 store.dispatch({ type: "set_is_handle", data: false });
@@ -1557,50 +1599,73 @@ resize();
 store.dispatch({ type: "SET_INIT_ODD" });
 store.dispatch({ type: "SET_INIT_MATCH_SORT" });
 init_site_header();
+const remove_list = [];
 
 // 接收开启loadding指令
-useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding);
+remove_list.push(
+  useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding).off
+);
 // 接收关闭loadding指令
-useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding);
+remove_list.push(
+  useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding).off
+);
 // 更新用户余额
-useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance);
-useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet);
+remove_list.push(useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance).off);
+remove_list.push(
+  useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet).off
+);
 //计算投注框高度
-useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height);
+remove_list.push(
+  useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height).off
+);
 //获取投注数据(内嵌mini切换或者语言发生变化时调用)
-useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data);
+remove_list.push(
+  useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data).off
+);
 // // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
-useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done);
-useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding);
-useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src);
-useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading);
+remove_list.push(useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done).off);
+remove_list.push(useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding).off);
+remove_list.push(useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src).off);
+remove_list.push(useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading).off);
 // // 保存首页路径，活动页需要用到
-// if (this.route.path == '/home') {
-//   window.localStorage.setItem('home_url', window.location.origin);
-// }
+if (route.path == "/home") {
+  localStorage.setItem("home_url", window.location.origin);
+}
 // // 获取活动维护状态
-// this.isMaintaining = _.get(computed_data.vx_get_user, 'maintaining');
+data_ref.isMaintaining = get(computed_data.vx_get_user, "maintaining");
 // // 在活动窗口内更新首页小红点
-useEventListener({
-  name: "message",
-  listener: cancelDot,
-});
-useEventListener({
-  name: "resize",
-  listener: resize,
-});
-useEventListener({
+remove_list.push(
+  useEventListener({
+    name: "message",
+    listener: cancelDot,
+  })
+);
+remove_list.push(
+  useEventListener({
+    name: "resize",
+    listener: resize,
+  })
+);
+const remove_mousedown = useEventListener({
   name: "mousedown",
-  listener: globalclick,
+  listener: function () {
+    /**
+     * @Description 全局点击事件
+     * @param {undefined} undefined
+     */
+    user_is_handle = true;
+    remove_mousedown();
+    // sessionStorage.setItem('is_send_today_football_zhuge2',1)
+  },
 });
 // // 更新活动入口小红点
-useMittOn(MITT_TYPES.UPDATE_BONUS, getActivityLists);
+remove_list.push(useMittOn(MITT_TYPES.UPDATE_BONUS, getActivityLists));
 // // 版本号检查状态通知
-useMittOn(MITT_TYPES.REQUEST_USER_BANNER, newVersion);
+remove_list.push(useMittOn(MITT_TYPES.REQUEST_USER_BANNER, newVersion));
 // // 重新计算投注框高度
-useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle);
-useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll);
-useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll);
+remove_list.push(useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle).off);
+remove_list.push(useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll));
+remove_list.push(useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll));
 
 // // 重置 vuex 存储
 // vx_set_show_record(false);
@@ -1617,6 +1682,11 @@ store.dispatch({
 // utils.gtag_view_send('PC_home', '/home')
 data_ref.first_load = true;
 get_access_config();
+/*销毁组件*/
+onBeforeUnmount(() => {
+  unsubscribe();
+  remove_list.forEach((item) => item());
+});
 </script>
 
 <style lang="scss" scoped>
