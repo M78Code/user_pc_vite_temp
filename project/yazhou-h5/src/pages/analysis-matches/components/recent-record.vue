@@ -57,10 +57,12 @@
 import {api_result} from "src/project/api";
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
-import team_img from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";   
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import public_form from "src/project/pages/details/analysis-matches/components/public-form.vue"; 
+import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue"; 
 import { computed } from "vue";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useRoute } from 'vue-router'
 // 无网络展示组件 
 // import no_data from "src/project/components/common/no-data";  
 
@@ -88,14 +90,16 @@ import { computed } from "vue";
   const cps = ref(5)
   const recent_record_data = ref([])
   const no_data = ref(false)
+  // 路由
+  const route = useRoute()
 
 
   get_list()
     // mhid   主队id   mhn 主队名称
     // maid   客队id   man 客队名称
   const match_id = computed(() => {
-    // 赛事id TODO 后续修改调整 $route get_detail_data
-    return $route.params.mid || get_detail_data.mid
+    // 赛事id TODO 后续修改调整 get_detail_data
+    return route.params.mid || get_detail_data.mid
   })
   // 复选框 点击事件
   const checkBox_click = (index) => {

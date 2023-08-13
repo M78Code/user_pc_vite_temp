@@ -537,16 +537,35 @@
 
           <!-- 不展示右边 -->
           <template v-else>
-            <div class="user-doc-entrys">
+            <div class="user-doc-entrys user-doc-container">
               <div
-                v-for="(item, i) in table_data[active_headKey]"
+                v-for="(eslots, i) in table_data[active_headKey]"
                 :key="i"
                 class="user-doc-entry"
               >
-                <div style="font-size: 15px" class="bg-orange-8">
-                  {{ item.title }}
+                <div
+                  class="col-xs-12 col-sm-12 row items-center item-definition-title"
+                >
+                  <q-badge
+                    class="item-definition-title-pill"
+                    :label="eslots.title"
+                    color="orange"
+                  />
                 </div>
-                <div>描述：{{ item.desc }}</div>
+                <div class="item-definition-content">
+                  <div class="entry-item-row-type q-mt-xs" v-if="eslots.desc">
+                    <div>描述</div>
+                    <div class="text-black">{{ eslots.desc }}</div>
+                  </div>
+                </div>
+                <div class="item-definition-content">
+                  <div class="entry-item-row-type q-mt-xs">
+                    <div>范围</div>
+                    <div v-for="(data,ids) in eslots.scope" :key="ids">
+                      <userProps :userData="data" ></userProps>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </template>
@@ -557,15 +576,14 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onUnmounted } from "vue";
-
+import { ref, computed, watch } from "vue";
+import userProps from "basesrc/components/user_props.vue"; // API文档展示卡片
 const props = defineProps({
   docData: {
     type: Array,
     default: () => [],
   },
 });
-const splitterModel = ref(12);
 // 顶部key
 const headerKey = ref([]);
 // 数据源
@@ -635,9 +653,12 @@ function definition_filter(objs) {
  */
 function type_text(objs) {
   const isFun = objs.type == "Function";
-  if (isFun) {
+  // 类型是Function && params有值
+  if (isFun && objs.params) {
     // (rows, terms, cols, getCellValue) => Array
-    return `(${Object.keys(objs.params).join(", ")}) => ${objs.returns?.type}`;
+    return `(${Object.keys(objs?.params).join(", ")}) => ${
+      objs.returns?.type ?? "void 0"
+    }`;
   } else {
     // Element | String - required! (required!)表示参数必填
     return Array.isArray(objs.type)
@@ -672,7 +693,11 @@ function table_filter(keys, datas) {
         }
       });
     } else {
-      prev.push(cur);
+      let scopes = {
+        ...cur,
+        scope: definition_filter(cur.scope)
+      }
+      prev.push(scopes);
     }
     return prev;
   }, arrobj);
@@ -766,6 +791,7 @@ watch(active_leftKey, (val) => {
   &-entry:not(:first-child) {
     border-top: 1px solid #ddd;
   }
+  // 属性参数
   .item-definition {
     width: 100%;
     border: 1px solid rgba(0, 0, 0, 0.12);

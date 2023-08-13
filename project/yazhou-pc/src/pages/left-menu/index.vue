@@ -2,151 +2,253 @@
  * @Description: 主菜单
 -->
 <template>
-  <div class="c-main-menu column" :class="{ 'bet-menu-upd': layout_left_show == 'bet_history' }">
-    <v-scroll-area ref="ref_bet_scroll_area" position="menu" :observer_area="3"
-      :observer_middle="layout_left_show == 'bet_list'" :class="{ 'bet-list': layout_left_show == 'bet_list' }">
-      <!-- 滚动：头部 --------------------------------->
-      <template v-slot:header>
-        <!-- 昵称、余额 -->
-        <div class="header-wrap scroll-fixed-bg" :class="get_is_invalid && 'invalid'">
-          <div class="user-info" :token="`?token=${_.get(userInfo, 'token')}`">
-            <!-- 昵称 -->
-            <div class="ellipsis">Hi, {{ _.get(userInfo, "uname") }}</div>
-          </div>
-          <div class="balance-wrap row justify-between relative-position">
-            <div class="row items-center">
-              <!-- 余额隐藏 -->
-              <div v-show="!show_balance" class="balance-text-hide">
-                ******
-              </div>
+  <div
+  class="c-main-menu column"
+  :class="{ 'bet-menu-upd': layout_left_show == 'bet_history' }"
+>
+  <v-scroll-area
+    ref="ref_bet_scroll_area"
+    position="menu"
+    :observer_area="3"
+    :observer_middle="layout_left_show == 'bet_list'"
+    :class="{ 'bet-list': layout_left_show == 'bet_list' }"
+  >
+    <!-- 滚动：头部 --------------------------------->
+    <template v-slot:header>
+      <!-- 昵称、余额 -->
+      <div
+        class="header-wrap scroll-fixed-bg"
+        :class="is_invalid && 'invalid'"
+      >
+        <div
+          class="user-info"
+          :token="`?token=${_.get(get_user, 'token')}`"
+        >
+        <!-- 昵称 -->
+          <div class="ellipsis">Hi, {{ _.get(get_user, "uname") }}</div>
+        </div>
+        <div class="balance-wrap row justify-between relative-position">
+          <div class="row items-center">
+            <!-- 余额隐藏 -->
+            <div v-show="!show_balance" class="balance-text-hide">
+              ******
+            </div>
               <!-- 余额 -->
-              <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                {{ (userInfo.balance || 0) || format_balance(amount) }}
-              </div>
+            <div
+              v-show="show_balance"
+              class="balance-text-show yb-family-odds"
+            >
+              <!-- {{ (get_user.balance || 0) || format_balance }} -->
+            </div>
               <!-- 余额是否隐藏图标 -->
-              <icon :name="show_balance ? 'icon-eye_show' : 'icon-eye_hide'" size="14px"
-                class="balance-btn-eye cursor-pointer" @click="show_balance = !show_balance " />
-            </div>
-            <!-- 刷新余额按钮 -->
-            <!-- <refresh v-show="show_balance" class="refresh-btn" :other_icon="true" icon_name="icon-balance_refresh"
-              :loaded="data_loaded" :disable="!userInfo" @click="set_amount_refresh" /> -->
+            <icon
+              :name="show_balance ? 'icon-eye_show' : 'icon-eye_hide'"
+              size="14px"
+              class="balance-btn-eye cursor-pointer"
+              @click="set_show_balance(!show_balance)"
+            />
           </div>
+          <!-- 刷新余额按钮 -->
+          <!-- <refresh
+            v-show="show_balance"
+            class="refresh-btn"
+            :other_icon="true"
+            icon_name="icon-balance_refresh"
+            :loaded="data_loaded"
+            :disable="!get_user"
+            @click="$root.$emit(emit_cmd.EMIT_GET_BALANCE_CMD)"
+           /> -->
         </div>
+      </div>
 
-        <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
-          <!-- 投注记录 入口 -->
-          <div v-show="layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
-            class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
-            <img class="hot-icon" src="/public/yazhou-pc/image/png/bet-record.png" />
-            <div class="col">
-              投注记录
+      <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
+        <!-- 投注记录 入口 -->
+        <div
+          v-show="layout_left_show != 'bet_history'"
+          @click="change_left_menu('bet_history')"
+          class="menu-item menu-top menu-border item"
+          :class="[bet_count > 0 ? 'justify-end' : 'justify-start']"
+        >
+        <!-- <img class="hot-icon"  src="~public/image/yabo/png/bet-record.png" /> -->
+          <div class="col">
               <!-- {{ $root.$t("common.betting_record") }} -->
-            </div>
-            <span class="bet-count" v-show="count > 0">{{ count }}</span>
           </div>
-          <!-- 单/串关投注栏 入口 -->
-          <template v-if="show_bet_menu && !['bet_history'].includes(layout_left_show)">
-            <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
-              <span class="text">
-
-                <!-- {{ $root.$t("bet.bet_my_count") }} -->
-              </span>
-              <span class="bet-count">{{ bet_count }}</span>
-              <!-- <span class="text">
-                <template v-if="vx_get_is_bet_single && ['today','play','early','hot_one','winner_top','hot'].includes(vx_cur_menu_type.type_name)">{{
-                  $root.$t("bet.bet_one")
-                }}</template>
-                <template v-else-if="vx_cur_menu_type.type_name=='bet'">{{ $root.$t("bet.bet_n") }}</template>
-              </span>
-              <span class="bet-count">{{ bet_count }}</span> -->
-            </div>
-          </template>
+          <span class="bet-count" v-show="count>0">{{ count }}</span>
         </div>
-        <!-- 返回菜单|单关串关按钮切换 -->
-        <template v-if="['bet_list', 'bet_history'].includes(layout_left_show)">
-          <template v-if="is_virtual_bet">
-            <!-- <virtual-bet-scroll-header :bet_recode_this="bet_recode_this" /> -->
-          </template>
-          <template v-else>
-            <!-- <bet-scroll-header :bet_recode_this="bet_recode_this" /> -->
-          </template>
+        <!-- 单/串关投注栏 入口 -->
+        <template v-if="show_bet_menu && !['bet_history'].includes(layout_left_show)">
+          <div
+            @click="change_left_menu('bet_list')"
+            class="menu-item menu-top item-bet menu-border"
+          >
+            <span class="text">
+              <!-- {{$root.$t("bet.bet_my_count")}} -->
+            </span>
+            <!-- <span class="bet-count">{{ bet_count }}</span> -->
+            <!-- <span class="text">
+              <template v-if="is_bet_single && ['today','play','early','hot_one','winner_top','hot'].includes(cur_menu_type.type_name)">{{
+                $root.$t("bet.bet_one")
+              }}</template>
+              <template v-else-if="cur_menu_type.type_name=='bet'">{{ $root.$t("bet.bet_n") }}</template>
+            </span>
+            <span class="bet-count">{{ bet_count }}</span> -->
+          </div>
         </template>
-      </template>
-
-      <!-- 滚动：内容 --------------------------------->
-      <template>
-        <!-- 菜单项 -->
-        <div v-show="layout_left_show == 'menu'" class="menu-wrap">
-
-          <!-- 现场滚球盘 -->
-          <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
-            :class="menu_config.menu_root == 1 && 'active'">
-            <!-- 现场滚球盘 -->
-            <img class="hot-icon" src="/public/yazhou-pc/image/png/play-match.png" />
-            <div class="col">
-              <!-- {{ $root.$t("common.in_plays") }} -->
-            </div>
-
-            <div class="col-right">
-              <span class="match-count yb-family-odds">
-                <!-- {{ menu_config.menu_root_count.mi_1 }} -->
-              </span>
-            </div>
-          </div>
-
-          <!-- 热门赛事 -->
-          <div 
-            @click="new_menu_click(500)" class="menu-item menu-top menu-play menu-border"
-            :class="menu_config.menu_root == 500 && 'active'"
-           >
-            <!-- 热门赛事图标 -->
-            <img class="hot-icon" src="/public/yazhou-pc/image/svg/hot.svg" />
-            <div class="col">
-              <!-- {{ $root.$t("menu.match_hot") }} -->
-            </div>
-            <div class="col-right">
-              <!-- 热门赛事数量 -->
-              <span class="match-count yb-family-odds">
-                <!-- {{ menu_config.menu_root_count.mi_500 }} -->
-              </span>
-            </div>
-          </div>
-
-          <!-- 体育菜单 -->
-          <menu-wapper />
-
-        </div>
-
-        <!-- 历史记录 -->
-        <div v-if="layout_left_show == 'bet_history'" class="col">
-          <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
-        </div>
-        <!-- 投注栏 -->
-        <div v-if="layout_left_show == 'bet_list' && main_menu_toggle != 'mini'" class="bet-view">
-          <!-- 投注栏 -->
-          <!-- <bet-box-wapper /> -->
-        </div>
-      </template>
-      <!-- 滚动：尾部 --------------------------------->
-      <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
-        <template v-if="is_virtual_bet">
-          <!-- <virtual-bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" /> -->
+      </div>
+       <!-- 返回菜单|单关串关按钮切换 -->
+      <template v-if="['bet_list','bet_history'].includes(layout_left_show)">
+        <template v-if="get_is_virtual_bet">
+          <!-- <virtual-bet-scroll-header :bet_recode_this="bet_recode_this"/> -->
         </template>
         <template v-else>
-          <!-- <bet-scroll-footer v-show="layout_left_show != 'menu'" :bet_recode_this="bet_recode_this"
-            :bet_this="bet_this" /> -->
+          <!-- <bet-scroll-header :bet_recode_this="bet_recode_this"/> -->
         </template>
       </template>
-    </v-scroll-area>
-    <!--提示区域-->
-    <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
-      v-if="show_merge_info">
-      <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-        <!-- {{ $root.$t('bet.merge_info') }} -->
+    </template>
+
+    <!-- 滚动：内容 --------------------------------->
+    <template>
+      <!-- 菜单项 -->
+      <div v-show="layout_left_show == 'menu'" class="menu-wrap">
+
+        <!-- 现场滚球盘 -->
+        <div
+          @click="new_menu_click(1)"
+          class="menu-item menu-top menu-roll menu-border"
+          style="margin-bottom:0px"
+          :class="menu_config.menu_root==1 && 'active'"
+          
+        >
+          <!-- 现场滚球盘 -->
+          <!-- <img class="hot-icon"  src="~public/image/yabo/png/play-match.png" /> -->
+          <div class="col">
+            现场滚球盘
+            <!-- {{ $root.$t("common.in_plays") }} -->
+          </div>
+
+          <div class="col-right">
+            <span class="match-count yb-family-odds">{{  menu_config.menu_root_count.mi_1}}</span>
+          </div>
+        </div>
+
+    
+
+        <!-- 热门赛事 -->
+        <div
+          v-if="menu_config.add_mi_introduce.mi_500.label && get_global_switch.hot_match_num"
+          @click="new_menu_click(500)"
+          class="menu-item menu-top menu-play menu-border"
+          :class="menu_config.menu_root==500 && 'active'"
+          :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`"
+        >
+        <!-- 热门赛事图标 -->
+          <!-- <img class="hot-icon"  src="~public/image/yabo/svg/hot.svg" /> -->
+          <div class="col">
+            热门赛事
+            <!-- {{ $root.$t("menu.match_hot") }} -->
+          </div>
+          <div class="col-right">
+            <!-- 热门赛事数量 -->
+            <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_500}}</span>
+          </div>
+        </div>
+
+
+        {{ base_data_instance.base_data_version }}
+        <!-- 体育菜单 -->
+        <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
+
+
+
+
+
+
       </div>
-    </q-tooltip>
-  </div>
+
+
+
+      <!-- 历史记录 -->
+      <div v-if="layout_left_show == 'bet_history'" class="col">
+        <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
+      </div>
+      <!-- 投注栏 -->
+      <div v-if="layout_left_show == 'bet_list' && main_menu_toggle!='mini'" class="bet-view">
+       <!--当前是否为虚拟投注-->
+        <template v-if="get_is_virtual_bet">
+          <!-- 虚拟单关 -->
+          <!-- <virtual-bet-single v-if="get_virtual_bet_list.length==1" @set_scroll_this="set_scroll_this"/> -->
+          <!-- 虚拟串关 -->
+          <!-- <virtual-bet-mix
+            v-else-if="get_virtual_bet_list.length>1"
+            class="full-height"
+            @set_scroll_this="set_scroll_this"
+          /> -->
+        </template>
+        <template v-else>
+          <div class="bet-mode-zone" v-if="is_bet_single">
+            <div class="left">
+              <!-- <span>{{$root.$t("bet.bet_one_")}}</span> -->
+              <span class="bet-single-count">
+                {{bet_single_list.length}}
+              </span>
+            </div>
+            <div class="right">
+              <span class="check-box" :class="{'checked': is_bet_merge}" @click.stop="toggle_merge">
+                <!-- <check-box :checked="is_bet_merge" /> <span>{{$root.$t('bet.merge')}}</span> -->
+              </span>
+              <span @mouseover="show_merge_info=true" @mouseout="show_merge_info=false">
+                <!-- <icon
+                  id="merge-info"
+                  name="icon-tips"
+                  class="bet-info"
+                  size="14px"
+                /> -->
+              </span>
+            </div>
+          </div>
+          <!-- 正常入口的单关 -->
+          <!-- <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" /> -->
+          <!-- 正常入口的串关 -->
+          <!-- <bet-mix
+            v-if="!is_bet_single"
+            class="full-height"
+            @set_scroll_this="set_scroll_this"
+          /> -->
+        </template>
+      </div>
+    </template>
+    <!-- 滚动：尾部 --------------------------------->
+    <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
+      <template v-if="get_is_virtual_bet">
+        <!-- <virtual-bet-scroll-footer
+          v-show="layout_left_show != 'menu'"
+          :bet_recode_this="bet_recode_this"
+          :bet_this="bet_this"
+        /> -->
+      </template>
+      <template v-else>
+        <!-- <bet-scroll-footer
+          v-show="layout_left_show != 'menu'"
+          :bet_recode_this="bet_recode_this"
+          :bet_this="bet_this"
+        /> -->
+      </template>
+    </template>
+  </v-scroll-area>
+  <!--提示区域-->
+  <q-tooltip
+    content-class="bet-bg-tooltip"
+    anchor="bottom left"
+    self="top left"
+    :offset="[181,10]"
+    target="#merge-info"
+    v-if="show_merge_info"
+  >
+    <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
+      <!-- {{$root.$t('bet.merge_info')}} -->
+    </div>
+  </q-tooltip>
+</div>
 </template>
 
 <script setup>
@@ -169,7 +271,7 @@
 // //虚拟体育左侧菜单 投注相关 尾部
 // import virtualBetScrollFooter from "src/public/components/virtual_bet/bet_scroll_footer.vue";
 // // 通屏垂直滚动
-// import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue";
+import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 // //体育菜单
 // //球种对应的 icon
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
@@ -180,105 +282,68 @@
 
 
 
-// import menu_config from "src/public/utils/menuClass/menu_class_new.js";
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router";
+import _ from "lodash"
 
 import { MenuWapper } from "src/components/menu";
 // import { BetBoxWapper } from "src/components/bet"
 
 
-import store from "src/store-redux/index.js";
-import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
+import store from "../../store/index.js";
+import base_data_instance from 'src/core/utils/base-data/base-data.js'
+import menu_config from 'src/core/menu/menu-class-new.js'
+
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const router = useRouter();
 const state = store.getState()
 
-const menu_config = ref({})
-const bet_recode_this = ref(null)
-const bet_single_this = ref(null)
-const bet_this = ref(null)
-// bet_merge: false,
-// 是否显示合并信息
-const show_merge_info = ref(false)
-// 是否已加载
-const data_loaded = ref(false)
-const count = ref(0)
 
-// 当前显示 内容 menu bet_list  history
-const layout_left_show = ref('menu')
+// 用户信息
+const get_user = ref(state.userReducer.user)
+
 // 用户信息是否失效
-const get_is_invalid = ref("get_is_invalid")
+const get_is_invalid = ref(state.userReducer.is_invalid)
+// 菜单布局信息
+const layout_left_show = ref(state.layoutReducer.layout_left_show)
+const main_menu_toggle = ref(state.menuReducer.main_menu_toggle)
+// 当前菜单类型
+const cur_menu_type = ref(state.menuReducer.cur_menu_type)
 
-// 用户信息 和
-const userInfo = ref(state.userReducer.userInfo)
-// 用户金额
-const amount = ref(state.userReducer.amount)
-// 显示余额
-const show_balance = ref(false)
+// 获取是否为虚拟投注
+const is_virtual_bet = ref(state.betInfoReducer.is_virtual_bet)
+// 串关列表
+const bet_list = ref(state.betInfoReducer.bet_list)
+// 是否单关投注
+const is_bet_single = ref(state.betInfoReducer.is_bet_single)
+// 是否显示余额
+const show_balance = ref(state.userReducer.show_balance)
+// 单关投注列表
+const bet_single_list = ref(state.betInfoReducer.bet_single_list)
+//  是否为合并模式
+const is_bet_merge = ref(state.betInfoReducer.is_bet_merge)
+
+// 获取虚拟投注列表
+const virtual_bet_list = ref(state.betInfoReducer.virtual_bet_list)
+// 上次盘口类型
+const get_pre_odd = ref(state.globalReducer.odds.pre_odds)
+// 当前盘口类型
+const get_cur_odd = ref(state.globalReducer.odds.cur_odds)
+// 当前菜单类型
+const get_global_switch = ref(state.globalReducer.global_switch)
 
 
 const props = defineProps({
-  // 是否为虚拟投注
-  is_virtual_bet: {
-    type: Boolean,
-    default: () => false,
-  },
-  // 是否单关投注
-  is_bet_merge: {
-    type: Boolean,
-    default: () => false,
-  },
-  // 是否单关合并
-  is_bet_single: {
-    type: Boolean,
-    default: () => false,
-  },
   DOM_ID_SHOW: {
     type: Boolean,
     default: () => false,
   },
-  // 获取虚拟投注列表
-  virtual_bet_list: {
-    type: Object,
-    default: () => [],
-  },
-  // 单关投注列表
-  bet_single_list: {
-    type: Object,
-    default: () => [],
-  },
-  // 串关列表
-  bet_series_list:{
-    type: Object,
-    default: () => [],
-  },
-  // 屏幕尺寸 mini
-  main_menu_toggle: {
-    type: String,
-    default: () => '',
-  },
-  // 当前菜单类型
-  cur_menu_type: {
-    type: Object,
-    default: () => {},
-  },
-  // 元数据配置
-  base_data: {
-    type: Object,
-    default: () => {},
-  },
-   // 菜单配置
-   menu_config: {
-    type: Object,
-    default: () => {},
-  },
-  
 })
 
 
 onMounted(() => {
-  get_unsettle_tickets_count();
+  get_unsettle_tickets_count_config();
 })
 
 // 格式化用户余额保留2位小数
@@ -294,54 +359,22 @@ const format_balance = num => {
   return '0.00';
 }
 
-const set_amount_refresh = () =>{
+const set_amount_refresh = () => {
   useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD)
 }
 
-  // // 语言
-  // lang: 'get_lang',
-  // // 用户信息
-  // userInfo: "get_user",
-  // // 用户信息是否失效
-  // vx_get_is_invalid: "get_is_invalid",
-  // // 菜单布局信息
-  // layout_left_show: "get_layout_left_show",
-  // main_menu_toggle: "get_main_menu_toggle",
-  // // 获取是否为虚拟投注
-  // is_virtual_bet: "is_virtual_bet",
-  // // 串关列表
-  // bet_series_list: "get_bet_list",
-  // // 是否单关投注
-  // is_bet_single: "is_bet_single",
-  // // 是否显示余额
-  // show_balance: "get_show_balance",
-  // // 单关投注列表
-  // bet_single_list: "get_bet_single_list",
-  // // 当前菜单类型
-  // vx_cur_menu_type: "get_cur_menu_type",
-  // // 获取虚拟投注列表
-  // virtual_bet_list: "virtual_bet_list",
-  // // 上次盘口类型
-  // vx_get_pre_odd: 'get_pre_odd',
-  // // 当前盘口类型
-  // get_cur_odd: 'get_cur_odd',
-  // is_bet_merge: "get_is_bet_merge",
-  // // 获取项目主题
-  // theme: 'get_theme',
-  // //全局开关
-  // get_global_switch: 'get_global_switch'
 // 是否显示投注菜单
 const show_bet_menu = () => {
   if (layout_left_show != 'bet_list' && bet_count > 0) {
     // today今日 play滚球 early早盘 hot_one热门赛事  winner_top冠军  hot热门赛事
     if (is_bet_single &&
-      ['today', 'play', 'early', 'hot_one', 'winner_top', 'hot'].includes(props.cur_menu_type.type_name)) {
+      ['today', 'play', 'early', 'hot_one', 'winner_top', 'hot'].includes(cur_menu_type.type_name)) {
       return true;
-    } else if (props.bet_series_list.length > 0) {
+    } else if (bet_list.length > 0) {
       return true;
     }
     /**
-      else if(props.cur_menu_type.type_name=='bet' && bet_series_list.length>0) {
+      else if(cur_menu_type.type_name=='bet' && bet_series_list.length>0) {
       return true;
     }
      */
@@ -351,14 +384,14 @@ const show_bet_menu = () => {
 // 投注数量
 const bet_count = () => {
   // 是否虚拟体育投注
-  if (props.is_virtual_bet) {
-    return props.virtual_bet_list.length;
+  if (is_virtual_bet) {
+    return virtual_bet_list.length;
   }
   // 是否单关投注
-  if (props.is_bet_single) {
-    return props.bet_single_list.length;
+  if (is_bet_single) {
+    return bet_single_list.length;
   }
-  return props.bet_series_list.length;
+  return bet_list.length;
 }
 
 
@@ -369,9 +402,9 @@ const bet_count = () => {
 const set_route_url = () => {
   let { name } = $route
   if (['details', 'search', 'video', 'virtual_details'].includes(name)) {
-    router.push({path:'/home'})
+    router.push({ path: '/home' })
   }
-  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE,'match')
+  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, 'match')
 
   // set_filter_select_obj([])
 }
@@ -431,24 +464,24 @@ const new_menu_click = val => {
  */
 const change_left_menu = page => {
   // 设置左侧显示
-  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE,page)
+  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, page)
 }
 const toggle_merge = () => {
-  useMittEmit(MITT_TYPES.EMIT_OPEN_MAERGE_BET,!props.is_bet_merge)
+  useMittEmit(MITT_TYPES.EMIT_OPEN_MAERGE_BET, !is_bet_merge)
   if (is_bet_merge) {
     // $utils.send_zhuge_event('PC_合并');
   }
-  let len = props.bet_single_list.length;
+  let len = bet_single_list.length;
   // 取消合并
-  if (!props.is_bet_merge && len > 1) {
-    let id = props.bet_single_list[len - 1];
-    let bet_single_obj = {} // _.cloneDeep(_.get(vx_get_bet_single_obj, `${id}`));
-    // vx_bet_single_clear();
-    // vx_set_bet_single_list([id]);
+  if (!is_bet_merge && len > 1) {
+    let id = bet_single_list[len - 1];
+    let bet_single_obj = {} // _.cloneDeep(_.get(get_bet_single_obj, `${id}`));
+    // bet_single_clear();
+    // set_bet_single_list([id]);
     bet_single_obj.key = id;
     // mode为清除原有的添加最新的
     bet_single_obj.mode = "clear_and_add";
-    // vx_bet_single_obj_attr(bet_single_obj);
+    // bet_single_obj_attr(bet_single_obj);
   }
 }
 
@@ -470,7 +503,7 @@ const set_user_preference = (cur, old) => {
   if (cur == 18) {
     userMarketPrefer = 'EU'
   } else if (old == 18) {
-    userMarketPrefer = vx_get_pre_odd;
+    userMarketPrefer = get_pre_odd;
   }
   if (!userMarketPrefer || userMarketPrefer == get_cur_odd) {
     return
@@ -481,10 +514,10 @@ const set_user_preference = (cur, old) => {
     if (code == 200) {
       if (cur == 18) {
         // 设置盘口类型
-        // vx_set_pre_odd(vx_get_pre_odd);
-        // vx_set_cur_odd('EU');
+        // set_pre_odd(get_pre_odd);
+        // set_cur_odd('EU');
       } else if (old == 18) {
-        // vx_set_pre_odd(vx_get_pre_odd);
+        // set_pre_odd(get_pre_odd);
       }
     }
   });
@@ -498,10 +531,10 @@ const set_user_preference = (cur, old) => {
 const set_scroll_this = ({ type, _this }) => {
   // this[type] = _this
 }
-const get_unsettle_tickets_count = () => {
+const get_unsettle_tickets_count_config = () => {
   let param = {};
   // console.log('get_unsettle_tickets_count====',param);
-
+  return
   api_betting.get_unsettle_tickets_count(param).then(response => {
     let count = _.get(response, 'data.data') || 0;
     let status = _.get(response, 'status');
@@ -509,8 +542,8 @@ const get_unsettle_tickets_count = () => {
       count = count;
     }
   }).catch(error => {
-      console.error(error);
-    });
+    console.error(error);
+  });
 }
 </script>
 
@@ -572,6 +605,7 @@ const get_unsettle_tickets_count = () => {
 
   /* *** 体育 ************ -S */
   .c-menu-sports {
+    font-size: 13px;
     .menu-item {
       &.menu-tab {
         font-size: 13px;
@@ -940,4 +974,6 @@ const get_unsettle_tickets_count = () => {
   border-radius: 2px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
+
+
 </style>

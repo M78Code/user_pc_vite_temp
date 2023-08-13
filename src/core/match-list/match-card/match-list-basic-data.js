@@ -41,62 +41,7 @@ class MatchListBasicDataClass {
       }
     }
   }
-  /**
-   * @Description 根据mid 获取一场赛事数据
-   * @param {number} mid 赛事id
-   * @return {Object} 赛事对象
-  */
-  get_match_data(mid){
-    let match = this.mid_obj['mid_'+mid]
-    if(!match){
-      return false
-    }
-    return {
-      ...match,
-      api_update_time:0,
-      cmec: '',
-      maid: "",
-      mat: "",
-      mc: 0,
-      mcg: 0,
-      mcid: "",
-      mct: 0,
-      mdsc: '',
-      mearlys: 0,
-      mess: 0,
-      mf: false,
-      mfo: null,
-      mft: 0,
-      mgt: "0",
-      mhid: "0",
-      mhs: 0,
-      mle: 0,
-      mlet: "0",
-      mmp: "0",
-      mms: -1,
-      mng: 0,
-      mo: 0,
-      mp: 1,
-      mprmc: "", // 操盘类型取值 "", MTS ,PA
-      mrmc: "",
-      ms: 1,
-      mst: "0",
-      mstst: "0",
-      mststi: "0",
-      mststr: "0",
-      mststs: 0,
-      mvs: -1,
-      operationHotSortTop: 0,
-      operationTournamentSort: 8,
-      regionIdSort: 9,
-      seid: "",
-      srid: "0",
-      tf: false,
-      th: 0,
-      tlev: 0,
-      team_let_ball:"" // 让球方
-    }
-  }
+
   /**
    * @Description 调用接口获取列表基础数据
    * @param {undefined} undefined

@@ -30,6 +30,9 @@
 <script setup>
 import { api_result } from "src/project/api";
 import { computed, onUnmounted } from "vue";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useRoute } from 'vue-router'
+
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
   // name: "basketball_incident",
@@ -43,13 +46,15 @@ import { computed, onUnmounted } from "vue";
       ])
   const tab_index = ref(0)
   const no_data = ref(false)
+  // 路由
+  const route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-  $root.$on(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
   get_list()
   const match_id = computed(() => {
-    // 赛事id TODO: $route get_detail_data后续修改调整
-    return $route.params.mid || get_detail_data.mid
+    // 赛事id TODO: route get_detail_data后续修改调整
+    return route.params.mid || get_detail_data.mid
   })
   // computed: {
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
@@ -74,7 +79,7 @@ import { computed, onUnmounted } from "vue";
   }
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
-    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
     //   for (const key in $data) {
   //     $data[key] = null
   //   }

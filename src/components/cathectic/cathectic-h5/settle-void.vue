@@ -19,7 +19,7 @@
   
   <script setup>
 //   import { mapGetters } from "vuex";
-import { defineComponent } from 'vue'
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 
   const props = defineProps({
     is_early: {
@@ -52,8 +52,7 @@ import { defineComponent } from 'vue'
 }
 //页面跳转逻辑
 const go_bet = () => {
-  // TODO: 数据接入后调整
-  // $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, false)
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
 }
 </script>
 

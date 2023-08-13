@@ -1,6 +1,8 @@
-import BaseData from "src/public/utils/base_data/base-data.js";
-import utils from "src/public/utils/utils.js"
+import base_data_instance from 'src/core/utils/base-data/base-data.js'
+import utils from "src/core/utils/utils.js"
 import store from "src/store-redux/index.js";
+
+import { ref } from "vue"
 
 const state = store.getState()
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -106,7 +108,7 @@ class menu_config_class {
     this.match_list_api_type ='match_list';
 
     // api参数的版本
-    this.api_config_version = '123'
+    this.api_config_version = ref('123')
 
     // 热门足球
     this.hot_500_sport_1 = false
@@ -120,7 +122,7 @@ class menu_config_class {
    * @param {undefined} undefined
    */
   set_api_config_version(version) {
-    this.api_config_version = version
+    this.api_config_version.value = version
   }
 
   /**
@@ -135,18 +137,18 @@ class menu_config_class {
    * 滚球盘 数量计算
    */
   compute_menu_root_cont() {
-    // console.log("compute_menu_root_cont",BaseData.mew_menu_list_res)
+    // console.log("compute_menu_root_cont",base_data_instance.mew_menu_list_res)
     //过滤常规球类
     let mi_100_arr = [];  //常规体育
     let mi_2000_arr = [];  //电竞
 
     // 遍历 新菜单数据
-    BaseData.mew_menu_list_res.map((x) => {
+    base_data_instance.mew_menu_list_res.map((x) => {
       // 拿到 基础赛种 id
       let mif = 1 * x.mi;
       //常规体育
           // 这个全部数量，应该只统计常规赛事的数量，不包含电子竞技和虚拟体育，
-      if (BaseData.left_menu_base_mi_arr.includes(mif)) {
+      if (base_data_instance.left_menu_base_mi_arr.includes(mif)) {
         // 滚球对象
         let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
         item.mif = mif;
@@ -154,7 +156,7 @@ class menu_config_class {
         mi_100_arr.push(item);
       }
       //电竞
-      if (BaseData.sports_mi.includes(mif)) {
+      if (base_data_instance.sports_mi.includes(mif)) {
         // 滚球对象
         let item = (x["sl"] || []).find((y) => y.mi == `${mif}1`) || {};
         mi_2000_arr.push(item);
@@ -162,7 +164,7 @@ class menu_config_class {
     });
 
     //  VR  体育的
-    // let vr_menu_obj = BaseData.mew_menu_list_res.find(
+    // let vr_menu_obj = base_data_instance.mew_menu_list_res.find(
     //   (x) => x.mi == 300
     // ) || {
     //   sl: [],
@@ -170,7 +172,7 @@ class menu_config_class {
     // let vr_sl = vr_menu_obj["sl"] || [];
 
 
-    const mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || { }
+    const mi_500_obj = base_data_instance.mew_menu_list_res.find((x) => x.mi == 500) || { }
     let mi_1_num = 0;
 
     mi_100_arr&&mi_100_arr.forEach(item=>{
@@ -575,7 +577,7 @@ class menu_config_class {
    */
   get_current_left_menu_name() {
     let mi = this.left_menu_result.lv1_mi;
-    let str = BaseData.menus_i18n_map[mi] || mi;
+    let str = base_data_instance.menus_i18n_map[mi] || mi;
     return str;
   }
   /**
@@ -694,7 +696,7 @@ class menu_config_class {
    * $menu_config.update_menu_version()
    */
   update_menu_version() {
-    BaseData.menu_version = Date.now();
+    base_data_instance.menu_version = Date.now();
   }
   /**
    * 获取当前的列表的默认的 模板配置
@@ -782,7 +784,7 @@ class menu_config_class {
    * @param {undefined}
    */
   get_menu_data() {
-    BaseData.init_mew_menu_list();
+    base_data_instance.init_mew_menu_list();
   }
   /**
    * 通过CSID 计算 label

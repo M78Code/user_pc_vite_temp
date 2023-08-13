@@ -2,10 +2,10 @@
  * @Description: 单独处理二级菜单,全部菜单
 -->
 <template>
-<div class="sport-menu-item flex justify-center"
-    ref="scrollItem"
-    @click="$emit('click')"
-  >
+  <div class="sport-menu-item flex justify-center"
+      ref="scrollItem"
+      @click="$emit('click')"
+    >
     <div class="inner-w flex justify-between items-center"
       :class="{favorite:show_favorite_list}">
       <div></div>

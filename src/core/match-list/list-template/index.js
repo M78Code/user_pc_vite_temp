@@ -1,0 +1,67 @@
+import  * as template_1_config from "./module/template-1.js"
+import  * as template_2_config from "./module/template-2.js"
+import  * as template_3_config from "./module/template-3.js"
+import  * as template_5_config from "./module/template-5.js"
+import  * as template_6_config from "./module/template-6.js"
+import  * as template_7_config from "./module/template-7.js"
+import  * as template_8_config from "./module/template-8.js"
+import  * as template_9_config from "./module/template-9.js"
+import  * as template_10_config from "./module/template-10.js"
+import  * as template_11_config from "./module/template-11.js"
+import  * as template_12_config from "./module/template-12.js"
+import  * as template_13_config from "./module/template-13.js"
+import  * as template_15_config from "./module/template-15.js"
+import  * as template_16_config from "./module/template-16.js"
+import  * as template_17_config from "./module/template-17.js"
+import  * as template_19_config from "./module/template-19.js"
+import  * as template_20_config from "./module/template-20.js"
+import  * as template_21_config from "./module/template-21.js"
+import  * as template_23_config from "./module/template-23.js"
+import  * as template_24_config from "./module/template-24.js"
+import  * as template_25_config from "./module/template-25.js"
+import  * as template_26_config from "./module/template-26.js"
+import  * as template_27_config from "./module/template-27.js"
+
+
+/**
+ * 赛事模板玩法配置
+ * main_handicap_list   主盘口 盘口列表
+ * add_handicap_list    附加盘 盘口列表
+ * cur_handicap_list    当前局 盘口列表
+ * hid    盘口ID
+ * _hpid  玩法ID
+ * ol     投注项列表
+ */
+
+
+
+
+export const  MATCH_LIST_TEMPLATE_CONFIG={
+    template_1_config,
+    template_2_config,
+    template_3_config,
+    template_5_config,
+    template_6_config,
+    template_7_config,
+    template_8_config,
+    template_9_config,
+    template_10_config,
+    template_11_config,
+    template_12_config,
+    template_13_config,
+    template_15_config,
+    template_16_config,
+    template_17_config,
+    template_19_config,
+    template_20_config,
+    template_21_config,
+    template_23_config,
+    template_24_config,
+    template_25_config,
+    template_26_config,
+    template_27_config,
+    
+    
+}
+
+ 

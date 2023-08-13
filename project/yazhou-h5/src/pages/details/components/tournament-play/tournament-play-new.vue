@@ -130,7 +130,7 @@
 <script>
 // #TODO vuex 
 // import { mapGetters, mapMutations } from "vuex";
-import { api_common } from "src/project/api/index.js";
+import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
@@ -691,41 +691,41 @@ export default defineComponent({
 /* ************** 单项玩法集合 *************** -S */
 
 /** 置顶操作时增加动画*****/
-@include keyframes(keyframe_heart) {
-  from,
-  20%,
-  40%,
-  60%,
-  80%,
-  to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  30% {
-    -webkit-transform: scale3d(1.3, 1.3, 1.3);
-    transform: scale3d(1.3, 1.3, 1.3);
-  }
-  60% {
-    opacity: 1;
-    -webkit-transform: scale3d(1.03, 1.03, 1.03);
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
-  80% {
-    -webkit-transform: scale3d(0.97, 0.97, 0.97);
-    transform: scale3d(0.97, 0.97, 0.97);
-  }
+// @include keyframes(keyframe_heart) {
+//   from,
+//   20%,
+//   40%,
+//   60%,
+//   80%,
+//   to {
+//     -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+//     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+//   }
+//   0% {
+//     opacity: 0;
+//     -webkit-transform: scale3d(0.3, 0.3, 0.3);
+//     transform: scale3d(0.3, 0.3, 0.3);
+//   }
+//   30% {
+//     -webkit-transform: scale3d(1.3, 1.3, 1.3);
+//     transform: scale3d(1.3, 1.3, 1.3);
+//   }
+//   60% {
+//     opacity: 1;
+//     -webkit-transform: scale3d(1.03, 1.03, 1.03);
+//     transform: scale3d(1.03, 1.03, 1.03);
+//   }
+//   80% {
+//     -webkit-transform: scale3d(0.97, 0.97, 0.97);
+//     transform: scale3d(0.97, 0.97, 0.97);
+//   }
 
-  to {
-    opacity: 1;
-    -webkit-transform: scale3d(1, 1, 1);
-    transform: scale3d(1, 1, 1);
-  }
-}
+//   to {
+//     opacity: 1;
+//     -webkit-transform: scale3d(1, 1, 1);
+//     transform: scale3d(1, 1, 1);
+//   }
+// }
 
 /*  收藏 icon 动画（心跳） */
 .animation-heart {
