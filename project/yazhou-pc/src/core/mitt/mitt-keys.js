@@ -67,6 +67,10 @@ export const EMIT_LOCATION_RELOAD_CMD = "EMIT_LOCATION_RELOAD_CMD";
 
 // 站点 tab 休眠状态转激活
 export const EMIT_SITE_TAB_ACTIVE = "EMIT_SITE_TAB_ACTIVE";
+// 站点 tab 站点页眉 弹窗控制
+export const EMIT_SITE_SHOW_MODEL = "EMIT_SITE_SHOW_MODEL";
+// 站点 tab 站点页眉 打开注单历史
+export const EMIT_SITE_OPEN_HISTORY = "EMIT_SITE_OPEN_HISTORY";
 // 刷新C8订阅
 export const EMIT_REFRESH_C8_SUBSCRIBE = "EMIT_REFRESH_C8_SUBSCRIBE";
 
