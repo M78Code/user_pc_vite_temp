@@ -32,7 +32,7 @@ const requestHook = {
     switch (String(config.method).toLowerCase()) {
       case "post":
         // 自定义参数 说明  type  1 formdata 2 json 3 file   默认 json
-        if (config.type == 1) {
+        if (config.type == 1&& config.data) {
           const formData = new FormData();
           let data = config.data || {};
           Object.keys(data).forEach((key) => {

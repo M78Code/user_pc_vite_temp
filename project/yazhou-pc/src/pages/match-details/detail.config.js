@@ -1,4 +1,4 @@
-import { reactive, toRefs, onUnmounted, computed, onMounted,watch } from "vue";
+import { reactive, toRefs, onUnmounted, computed, onMounted, watch } from "vue";
 import { is_eports_csid } from "src/core/utils/utils";
 // api文件
 import { api_details } from "src/api/index";
@@ -91,6 +91,58 @@ export const useGetConfig = () => {
   const category_list_length = computed(() => {
     return lodash.get(state.category_list, "length", 0);
   });
+  const ms = computed(() => {
+    return lodash.get(state.match_infoData, "ms", 0);
+  });
+  const mmp = computed(() => {
+    return lodash.get(state.match_infoData, "mmp", 0);
+  });
+
+  // ----------------------watch相关----------------------------
+  /**
+   * @description: 计算各球种背景图片todo
+   * @return {undefined} undefined
+   */
+  watch(sportId, (val) => {
+    // let img = this.computed_background(String(res))
+    // if(img) this.background_img = img
+  });
+  // 监听玩法集菜单长度变化
+  watch(
+    () => category_list_length.value,
+    (val) => {
+      set_cur_match_plays_list();
+    }
+  );
+  // 监听玩法集菜单id变化
+  watch(tabs_active_index, (val) => {
+    set_cur_match_plays_list();
+  });
+  // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
+  watch(
+    () => ms.value,
+    (_new, _old) => {
+      let arr_ms = [0, 1, 2, 7, 10, 110];
+      // 1.赛事状态为 0:未开赛 1:滚球阶段 2:暂停 7:延迟 10:比赛中断 110:即将开赛 时更新玩法集
+      // 2.ms变更时才调用
+      if (arr_ms.includes(Number(_new)) && _old) {
+        // 更新右侧详情
+        init();
+      }
+    }
+  );
+  // 监听赛事状态mmp的值
+  watch(
+    () => mmp.value,
+    (_new, _old) => {
+      if (_new !== 999 && _old) {
+        // 更新右侧详情
+        init();
+      }
+    }
+  );
+
+  // ----------------------methods相关----------------------------
 
   /**
    * 用于初次进入详情页和站点休眠转激活状态时获取以下数据：
@@ -275,7 +327,7 @@ export const useGetConfig = () => {
         // 检查gcuuid
         if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
-        get_match_details(res);
+        get_match_detail(res);
       },
       // axios中catch回调方法
       fun_catch: (err) => {

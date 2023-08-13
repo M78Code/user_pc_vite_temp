@@ -45,6 +45,11 @@ const router = createRouter({
         //   component: () => import("project_path/src/pages/cathectic/index.vue")
         // },
         {
+          path: "/cathectic",
+          name: "cathectic",
+          component: () => import("project_path/src/pages/cathectic/index.vue")
+        },
+        {
           path: "/rule_description/:name",
           name: "rule_description",
           component: () => import("project_path/src/pages/rule-description/description-main.vue")
