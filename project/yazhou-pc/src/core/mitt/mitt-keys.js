@@ -294,7 +294,23 @@ export const EMIT_SET_CLOSE_TIPS = "EMIT_SET_CLOSE_TIPS";
 // 详情页 loading 状态改变
 export const EMIT_CHANGE_LOADING_STATUS_DETAILS =
   "EMIT_CHANGE_LOADING_STATUS_DETAILS";
- // 获取详情页头部高度
+// 获取详情页头部高度
 export const EMIT_GET_DETAILS_HEIGHT_MAIN = "EMIT_GET_DETAILS_HEIGHT_MAIN";
 
 export const EMIT_GET_BACKGROUND_IMG = "EMIT_GET_BACKGROUND_IMG";
+
+// // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
+
+export const MENU_INIT_DONE = "MENU_INIT_DONE";
+export const IS_MENU_LOADDING = "IS_MENU_LOADDING";
+export const SET_PRE_VIDEO_SRC = "SET_PRE_VIDEO_SRC";
+export const CLOSE_HOME_LOADING = "CLOSE_HOME_LOADING";
+//更新活动入口小红点
+export const UPDATE_BONUS = "UPDATE_BONUS";
+
+// // 版本号检查状态通知
+const REQUEST_USER_BANNER = "REQUEST_USER_BANNER";
+// // 重新计算投注框高度
+const TOGGLE_HANDL = "TOGGLE_HANDLE";
+const EMIT_LIST_ON_SCROLL = "EMIT_LIST_ON_SCROLL";
+const RIGHT_DETAILS_ON_SCROLL = "RIGHT_DETAILS_ON_SCROLL";
