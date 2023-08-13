@@ -311,7 +311,7 @@ class userCtr {
       sessionStorage.setItem("gr", gr);
 
       //  if(window.env.config.gr != gr){
-      if(window.BUILDIN_CONFIG.gr != gr){
+      if(window.BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr){
         // #TODO
         let url_search = new URLSearchParams(location.search);
        //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
