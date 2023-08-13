@@ -35,13 +35,10 @@ import {update_match_parent_card_style} from  "./utils.js"
 
 
   import {
-    match_status_title_card_template,
-    sport_title_card_template,
+ 
     league_title_card_template,
-    fold_template,
-    league_container_card_template,
-    no_data_card_template
-  } from "./card_config.js"
+ 
+  } from "../config/card-template-config.js"
   import { MATCH_LIST_TEMPLATE_CONFIG } from  "../list-template/index.js"
   
   
@@ -126,8 +123,8 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @Description 跟新次要玩法高度
    * @param {String|Number} mid 赛事id
   */
-   const   update_match_cur_card_style=(match )=>{
-     let {mid} = match
+   export const   update_match_cur_card_style=(mid )=>{
+ 
     let card_obj = MatchListCardData.all_card_obj['mid_'+mid] || {}
     if(!card_obj.is_fold_tab_play){
       card_obj.tab_play_total_height = card_obj.tab_play_title_height + get_tab_play_height(-1)
@@ -200,7 +197,7 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @Description 角球折叠
    * @param {number} mid 折叠的赛事ID
   */
-    const   fold_tab_play=(mid)=>{
+  export  const   fold_tab_play=(mid)=>{
         let card_obj = MatchListCardData.all_card_obj['mid_'+mid] || {}
         card_obj.is_fold_tab_play = !card_obj.is_fold_tab_play
         if(card_obj.is_fold_tab_play){

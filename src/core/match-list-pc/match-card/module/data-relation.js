@@ -79,6 +79,15 @@ const MenuData ={
       }
     
 
+
+         /**
+   * @Description 切换菜单的时候初始化所有卡片数据
+  */
+   const  reset_all_card_data=()=>{
+    // 所有卡片样式对象
+    MatchListCardData.all_card_obj = {}
+  }
+
  
   //计算 当前的 赛事列表 级别 的 卡片 数据
   /**
@@ -117,13 +126,7 @@ const MenuData ={
    */
 
 
-    /**
-   * @Description 切换菜单的时候初始化所有卡片数据
-  */
-   const  reset_all_card_data=()=>{
-        // 所有卡片样式对象
-        MatchListCardData.all_card_obj = {}
-      }
+ 
     
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{

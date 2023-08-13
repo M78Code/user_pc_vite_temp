@@ -1,0 +1,56 @@
+Date : 2023-08-13 19:36:00
+Directory : d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template
+Total : 30 files,  2397 codes, 468 comments, 584 blanks, all 3449 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         30 |      2,397 |        468 |        584 |      3,449 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                     | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                        |         30 |      2,397 |        468 |        584 |      3,449 |
+| . (Files)                                                                                |          1 |         48 |          9 |         10 |         67 |
+| module                                                                                   |         29 |      2,349 |        459 |        574 |      3,382 |
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                 | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\index.js                  | JavaScript |         48 |          9 |         10 |         67 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-0.js      | JavaScript |        395 |         32 |         16 |        443 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-10.js     | JavaScript |         83 |         15 |         21 |        119 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-11.js     | JavaScript |        106 |         16 |         20 |        142 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-12.js     | JavaScript |         50 |         16 |         24 |         90 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-13.js     | JavaScript |        177 |         29 |         29 |        235 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-15.js     | JavaScript |         59 |         13 |         21 |         93 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-16.js     | JavaScript |         71 |         13 |         17 |        101 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-17.js     | JavaScript |         41 |         11 |         22 |         74 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-18.js     | JavaScript |         16 |         13 |          1 |         30 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-19.js     | JavaScript |         31 |         13 |         22 |         66 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-2.js      | JavaScript |         62 |         11 |         16 |         89 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-20.js     | JavaScript |         59 |         11 |         26 |         96 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-21.js     | JavaScript |         81 |         15 |         20 |        116 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-22.js     | JavaScript |         74 |         11 |         25 |        110 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-23.js     | JavaScript |         38 |         11 |         22 |         71 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-24.js     | JavaScript |         60 |         13 |         32 |        105 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-25.js     | JavaScript |         59 |         12 |         23 |         94 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-26.js     | JavaScript |         45 |         12 |         23 |         80 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-27.js     | JavaScript |         44 |         12 |         20 |         76 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-28.js     | JavaScript |         21 |         13 |         29 |         63 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-29.js     | JavaScript |         59 |         13 |         25 |         97 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-3.js      | JavaScript |         59 |         11 |         15 |         85 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-30.js     | JavaScript |         38 |         12 |         20 |         70 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-5.js      | JavaScript |         37 |         11 |         16 |         64 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-6.js      | JavaScript |         51 |         11 |         16 |         78 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-7.js      | JavaScript |        307 |         21 |         14 |        342 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-8.js      | JavaScript |         28 |         11 |         18 |         57 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-9.js      | JavaScript |         69 |         13 |         18 |        100 |
+| d:\CODE-WEB\WEB\user-pc-vite\src\core\match-list\list-template\module\template-common.js | JavaScript |        129 |         64 |          3 |        196 |
+| Total                                                                                    |            |      2,397 |        468 |        584 |      3,449 |
++------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
