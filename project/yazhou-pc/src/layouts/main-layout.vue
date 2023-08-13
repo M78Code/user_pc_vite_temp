@@ -167,6 +167,7 @@ import { get, isEmpty } from 'lodash'
 import store from "../store/index.js";
 
 import MainMenu from '../pages/left-menu/index.vue'
+// import SiteHeader from 'project_path/src/componentssite-header/site-header.vue'
 
 let state = store.getState()
 
