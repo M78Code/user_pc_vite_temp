@@ -20,7 +20,7 @@ if (!project) {
   console.log('');
   console.log('');
   console.log('本地开发需要打开全路径：');
-  console.log(`http://127.0.0.1:28300/${project}/yazhou-pc/index.html`);
+  console.log(`http://localhost:28300/project/${project}/index.html`);
   console.log('');
   console.log('');
   console.log('');

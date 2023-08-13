@@ -76,7 +76,7 @@ onMounted(() => {
   }, 5000);
 
   //监听键盘金额改变事件
-  $root.$on(emit_cmd.EMIT_CHANGE_MONEY, change_money_handle)
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_handle)
 })
 
 /**   ----------------computed 开始-----------------*/
@@ -318,7 +318,7 @@ const obj_bet_money = computed(() => {
   // 将当前活动项的金额和最高可投金额传递给键盘
   const send_money_to_keyboard = () => {
     if (get_active_index == index_) {
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
   }
 
@@ -327,7 +327,7 @@ const obj_bet_money = computed(() => {
   onUnmounted(() => {
     clear_timer()
 
-    $root.$off(emit_cmd.EMIT_CHANGE_MONEY, change_money_);
+    $root.$off(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_);
 
     for (const key in $data) {
       $data[key] = null

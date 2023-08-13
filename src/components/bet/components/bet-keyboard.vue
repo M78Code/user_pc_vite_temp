@@ -83,7 +83,7 @@ watch(() => pre_odds_value, (new_) => {
           pre_odds_value.value = '+99.5'
         }
       }
-      $root.$emit(emit_cmd.EMIT_CHANGE_MARKET, pre_odds_value.value);
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_MARKET, pre_odds_value.value);
     } catch (error) {
       console.error(error)
     }
@@ -91,12 +91,12 @@ watch(() => pre_odds_value, (new_) => {
     if (new_ > 355) {
       pre_odds_value.value = '355'
     } else {
-      $root.$emit(emit_cmd.EMIT_CHANGE_ODDS, pre_odds_value.value);
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_ODDS, pre_odds_value.value);
     }
   }
 })
 watch(() => money, (new_) => {
-  $root.$emit(emit_cmd.EMIT_CHANGE_MONEY, money.value);
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_MONEY, money.value);
 })
 watch(() => get_active_index, (new_) => {
   if (money.value) delete_all.value = true;

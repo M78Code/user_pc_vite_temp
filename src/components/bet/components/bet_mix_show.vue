@@ -254,15 +254,15 @@ onMounted(() => {
 
   flicker_();
   //监听键盘赔率改变事件
-  $root.$on(emit_cmd.EMIT_CHANGE_ODDS, change_odds_handle)
+  useMittOn(MITT_TYPES.EMIT_CHANGE_ODDS, change_odds_handle)
   //监听键盘盘口改变事件
-  $root.$on(emit_cmd.EMIT_CHANGE_MARKET, change_market_handle)
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MARKET, change_market_handle)
   if (bet_obj_mhs == 11 || bet_obj_hs == 11) {
     set_bet_status(7);
   };
 
-  $root.$on(emit_cmd.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
-  $root.$on(emit_cmd.EMIT_C201_UPDATE2, c201_update2_handle)
+  useMittOn(MITT_TYPES.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
+  useMittOn(MITT_TYPES.EMIT_C201_UPDATE2, c201_update2_handle)
   if (value_show.csid != 1) {
     daxiao_market_value.value = 0.5//大小玩法最低盘口值，初始最低0.5
     daxiao_market_value_max.value = 400//大小玩法最大盘口值
@@ -887,11 +887,11 @@ const gtouchstart = (type) => {
    }
    // 将当前活动项的赔率传递给键盘
    const send_odds_to_keyboard = () =>{
-     $root.$emit(emit_cmd.EMIT_SEND_PRE_ODDS, { odds_value: pre_odds.value || odds_value(true) })
+     useMittEmit(MITT_TYPES.EMIT_SEND_PRE_ODDS, { odds_value: pre_odds.value || odds_value(true) })
    }
    // 将当前活动项的盘口传递给键盘
    const  send_market_to_keyboard = () =>{
-     $root.$emit(emit_cmd.EMIT_SEND_PRE_MARKET, { odds_value: pre_market_value.value })
+     useMittEmit(MITT_TYPES.EMIT_SEND_PRE_MARKET, { odds_value: pre_market_value.value })
    }
    //点击盘口输入框，光标聚焦
    const focus_market = () => {
@@ -1264,10 +1264,10 @@ const gtouchstart = (type) => {
 onUnmounted(() => {
   clear_timer()
 
-  $root.$off(emit_cmd.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
-  $root.$off(emit_cmd.EMIT_C201_UPDATE2, c201_update2_handle)
-  $root.$off(emit_cmd.EMIT_CHANGE_ODDS, change_odds_handle)
-  $root.$off(emit_cmd.EMIT_CHANGE_MARKET, change_market_handle)
+  $root.$off(MITT_TYPES.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
+  $root.$off(MITT_TYPES.EMIT_C201_UPDATE2, c201_update2_handle)
+  $root.$off(MITT_TYPES.EMIT_CHANGE_ODDS, change_odds_handle)
+  $root.$off(MITT_TYPES.EMIT_CHANGE_MARKET, change_market_handle)
   for (const key in $data) {
     $data[key] = null
   }
