@@ -12,7 +12,7 @@ import{
 import utils from "src/core/utils/match-list-utils.js"
 
 
-export default class MatchListDataClass {
+ class MatchListDataClass {
   /**
    * @Description 构造函数
    * @param {undefined} undefined
@@ -1561,3 +1561,6 @@ export default class MatchListDataClass {
      
   }
 }
+
+
+export default new MatchListDataClass()

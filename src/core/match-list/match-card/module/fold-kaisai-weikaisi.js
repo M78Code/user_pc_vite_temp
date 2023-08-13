@@ -1,11 +1,18 @@
 
 
+import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListCardData from "./match-list-card-data-class.js";
+import lodash from "lodash";
+
+
+
+import {conpute_match_list_card_offset,set_fold_match_list_scroll_top} from  "./card-show-offset.js"
 
   /**
   * 未开赛 开赛 折叠
   *   click_card_obj 点击折叠的卡片对象
   */
-  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie(click_card_obj,is_no_emit_fold_change){
+ export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie=(click_card_obj,is_no_emit_fold_change)=>{
     let is_match_status_fold = !click_card_obj.is_match_status_fold
     // 已折叠
     if(is_match_status_fold){
@@ -13,7 +20,7 @@
       click_card_obj.card_total_height = click_card_obj.card_fold_height
       if(!is_no_emit_fold_change){
         // 设置折叠后的列表scroll_top
-        this.set_fold_match_list_scroll_top(click_card_obj.offset_top)
+        set_fold_match_list_scroll_top(click_card_obj.offset_top)
       }
     }else{
       // 设置未折叠高度
@@ -22,14 +29,14 @@
     let fold_card_keys_arr
     if(click_card_obj.card_type == 'play_title'){
       // 滚球折叠
-      fold_card_keys_arr = this.play_to_card_key_arr
+      fold_card_keys_arr = MatchListCardData.play_to_card_key_arr
     }else{
       // 未开赛折叠
-      fold_card_keys_arr = this.no_start_to_card_key_arr
+      fold_card_keys_arr = MatchListCardData.no_start_to_card_key_arr
     }
 
     fold_card_keys_arr.forEach(card_key => {
-      let card_obj = this.all_card_obj[card_key]
+      let card_obj = MatchListCardData.all_card_obj[card_key]
       // 设置赛事状态折叠
       card_obj.is_match_status_fold = is_match_status_fold
 
@@ -52,5 +59,5 @@
     })
 
     // 设置列表总高度
-    this.conpute_match_list_card_offset()
+    conpute_match_list_card_offset()
   }
