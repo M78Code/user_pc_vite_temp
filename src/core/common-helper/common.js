@@ -1272,7 +1272,7 @@ const get_bet_obj = (that, id) => {
  * @return {undefined} undefined
  */
 const upd_bet_obj = (that, timestap, mid) => {
-  return;
+  // return;
   // 如果是单关并且单关正在处理投注阻止数据合并 或者如果是串关且串关正在投注中,阻止数据合并
   if ((!mid || that.is_bet_single && that.vx_get_is_single_handle) || (!that.is_bet_single && that.vx_get_is_handle)) {
     return;

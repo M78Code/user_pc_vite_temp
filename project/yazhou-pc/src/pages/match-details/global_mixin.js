@@ -10,7 +10,7 @@ import { api_details } from "src/api/index";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail";
 import video from "src/core/video/video.js";
-import menu_config from "src/components/menu/config/menu-class-new.js";
+import menu_config from "src/core/menu/menu-class-new.js";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
 export const useGetGlobal = ({ details_params, back_to }) => {
