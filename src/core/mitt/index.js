@@ -11,10 +11,10 @@ const emitter = new mitt();
  */
 function useMittOn(...args) {
   const [key, fun] = args;
-  // if (!hasIn(MITT_TYPES, key)) {
-  //   console.error("mitt key is not register:", key);
-  //   return;
-  // }
+  if (!hasIn(MITT_TYPES, key)) {
+    console.error("mitt key is not register:", key);
+    return;
+  }
   emitter.on.apply(emitter, args);
   return {
     off: () => emitter.off(key, fun),

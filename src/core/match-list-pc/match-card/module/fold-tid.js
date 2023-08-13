@@ -23,7 +23,7 @@ const MenuData ={
     * 联赛 折叠
     * click_card_obj 点击的联赛卡片对象
     */
-   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(click_card_obj){
+  export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie =(click_card_obj)=>{
     click_card_obj.is_league_fold = !click_card_obj.is_league_fold
     // 折叠的联赛容器卡片
     let league_container_card_obj = MatchListCardData.all_card_obj[click_card_obj.league_container_card_key]

@@ -53,7 +53,7 @@ export const remove_league = (remove_tid) => {
  * 这里注意  单个赛事增删  不用遍历循环全部 的 数据
  * bymids接口拉取数据或者 ws推送改变赛事盘口变更
  */
-const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs =
+export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs =
   (mids_arr) => {
     // 是否走卡片逻辑
     if (!MatchListCardData.is_run_card_function) {
@@ -204,6 +204,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
 /**
  * @Description 移除一场赛事
  * @param {number} remove_mid 移除的赛事ID
+ * @param {}  callback 特定状态回调
  */
 export const remove_match = (remove_mid, callback) => {
   if (window.vue.$route.name == "search") {
