@@ -57,12 +57,11 @@ const project_map = {
 const [_, PROJECT_NUM] = PROJECT.split("_");
 // 代码内 配置的   商户版本号 ，一般是  本地开发 或者  本地测试 打包指定版本用
 let PROJECT_NAME = project_map[PROJECT_NUM];
-
 //本地环境
-if (process.title.includes("npm run dev")) {
-  //使用 npm run dev yazhou-h5 / yazhou-pc来启动项目
-  PROJECT_NAME = process.argv[2] || "yazhou-pc";
-}
+
+PROJECT_NAME = "yazhou-pc";
+// PROJECT_NAME = "yazhou-h5";
+
 // --------------------------------
 // 所有  目标环境标识
 let ALL_ENV_ARR = [
