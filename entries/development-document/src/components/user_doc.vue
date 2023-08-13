@@ -551,6 +551,12 @@
                     :label="eslots.title"
                     color="orange"
                   />
+                  <div
+                    class="item-definition-title-type q-ml-xs"
+                    v-if="eslots.type"
+                  >
+                    ：{{ eslots.type }}
+                  </div>
                 </div>
                 <div class="item-definition-content">
                   <div class="entry-item-row-type q-mt-xs" v-if="eslots.desc">
@@ -559,10 +565,33 @@
                   </div>
                 </div>
                 <div class="item-definition-content">
-                  <div class="entry-item-row-type q-mt-xs">
+                  <div class="entry-item-row-type q-mt-xs" v-if="eslots.scope">
                     <div>范围</div>
-                    <div v-for="(data,ids) in eslots.scope" :key="ids">
-                      <userProps :userData="data" ></userProps>
+                    <div v-for="(data, ids) in eslots.scope" :key="ids">
+                      <userProps :userData="data"></userProps>
+                    </div>
+                  </div>
+                </div>
+                <div class="item-definition-content">
+                  <div class="entry-item-row-type q-mt-xs" v-if="eslots.params">
+                    <div>参数</div>
+                    <div v-for="(data, idx) in eslots.params" :key="idx">
+                      <userProps :userData="data"></userProps>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="item-definition-content q-mt-xs"
+                  v-if="eslots.examples"
+                >
+                  <div>例子</div>
+                  <div class="q-ml-md row">
+                    <div
+                      class="item-examples"
+                      v-for="(xples, i) in eslots.examples"
+                      :key="i"
+                    >
+                      {{ xples }}
                     </div>
                   </div>
                 </div>
@@ -604,7 +633,7 @@ const init_doc = (docdata) => {
       if (!["file_path", "meta", "leftmenu", "mixins"].includes(key)) {
         for (let k in docdata[key]) {
           const obj = {
-            title: k,
+            title: key == "events" ? `@${k}` : k,
             ...docdata[key][k],
           };
           keyObjData.push(obj);
@@ -627,17 +656,22 @@ const init_doc = (docdata) => {
  * @param {Object} objs
  * @returns {Object|Array}
  */
-function definition_filter(objs) {
+function definition_filter(objs, istype = "params") {
   const isObj = typeof objs === "object" && objs !== null;
   let objData = [];
   if (isObj) {
     for (let [key, val] of Object.entries(objs)) {
+      const isFun = val.type == "Function";
+      if (isFun) {
+        istype = "params";
+      }
       let obj = {
         ...val,
         key,
         type: type_text(val),
-        params: definition_filter(val.params),
+        params: definition_filter(val[istype]),
       };
+      // delete obj[istype];
       objData.push(obj);
     }
     return objData;
@@ -649,15 +683,18 @@ function definition_filter(objs) {
 /**
  * 类型type展示处理
  * @param {Object} objs
+ * @param {Boolean} isBoolean
  * @returns {String}
  */
-function type_text(objs) {
+function type_text(objs, isBoolean = false) {
   const isFun = objs.type == "Function";
-  // 类型是Function && params有值
-  if (isFun && objs.params) {
-    // (rows, terms, cols, getCellValue) => Array
-    return `(${Object.keys(objs?.params).join(", ")}) => ${
-      objs.returns?.type ?? "void 0"
+  // 类型是Function
+  if (isFun || isBoolean) {
+    // (rows, terms, cols, getCellValue) => Array - required!
+    return `(${
+      (objs.params && Object.keys(objs?.params).join(", ")) ?? ""
+    }) => ${objs.returns?.type ?? "void 0"} ${
+      objs.required ? " - required!" : ""
     }`;
   } else {
     // Element | String - required! (required!)表示参数必填
@@ -669,7 +706,7 @@ function type_text(objs) {
 
 /**
  * 表格数据处理
- * @param {String} keys
+ * @param {String} keys  菜单键
  * @param {Array} datas
  * @returns {Array|Object}
  */
@@ -693,9 +730,29 @@ function table_filter(keys, datas) {
         }
       });
     } else {
-      let scopes = {
-        ...cur,
-        scope: definition_filter(cur.scope)
+      let scopes = {};
+      if (keys == "slots") {
+        scopes = {
+          ...cur,
+          scope: definition_filter(cur.scope, "definition"),
+        };
+      } else if (keys == "events") {
+        scopes = {
+          ...cur,
+          type: type_text(cur, keys, true),
+          params: definition_filter(cur.params, "definition"),
+        };
+      } else if (keys == "methods") {
+        scopes = {
+          ...cur,
+          type: type_text(cur, keys, true),
+          params: definition_filter(cur.params, "definition"),
+        };
+      } else {
+        scopes = {
+          ...cur,
+          params: definition_filter(cur.params, "definition"),
+        };
       }
       prev.push(scopes);
     }
@@ -812,6 +869,14 @@ watch(active_leftKey, (val) => {
       }
     }
     &-content {
+      .item-examples {
+        background-color: #eee;
+        border: 1px solid #ddd;
+        color: #000;
+        margin: 4px;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
     }
   }
 }
