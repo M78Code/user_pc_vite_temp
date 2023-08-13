@@ -131,7 +131,7 @@ import { onUnmounted, watch } from "vue";
         tab_click(get_home_tab_item, false,false)
       })
     }
-    $root.$on(emit_cmd.EMIT_HOME_TAB, home_tab_change)
+    useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
   onBeforeRouteEnter((to,from,next) => {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
     next(() => {
@@ -327,7 +327,7 @@ import { onUnmounted, watch } from "vue";
       for (const key in $data) {
         $data[key] = null
       }
-      $root.$off(emit_cmd.EMIT_HOME_TAB, home_tab_change)
+      $root.$off(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
     })
 </script>
 

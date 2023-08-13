@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "arcProgress",
   props:{

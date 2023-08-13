@@ -1,9 +1,9 @@
 import PcMenuTemplate1 from "../pc-menu-template-1/index.vue";
-import Menu_h5 from "../pc-menu-template-1/index.vue";
+import H5MenuTemplate1 from "../h5-menu-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
   PcMenuTemplate1,
-  Menu_h5,
+  H5MenuTemplate1,
 };
 const component_config = {
   registered_component_key: "Menu",

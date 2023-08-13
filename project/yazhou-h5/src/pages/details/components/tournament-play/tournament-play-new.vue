@@ -134,7 +134,7 @@ import { api_common } from "src/api/index.js";
 // #TODO mixins
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
@@ -255,7 +255,7 @@ export default defineComponent({
       if (new_score) {
         // #TODO emit 
         emitters = [
-          useMittOn.on(MITT_KEY.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
+          useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
         ]
         // $root.$on(emit_cmd.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
@@ -267,7 +267,7 @@ export default defineComponent({
 
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
-      emitters.push(useMittOn.on(MITT_KEY.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
+      emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
       // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
@@ -546,8 +546,8 @@ export default defineComponent({
           item_data.hton = '0';
         } else {
           // #TODO emit 
-          useMittEmit(MITT_KEY.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
-          useMittEmit(MITT_KEY.EMIT_RESET_SET_HTON);
+          useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
+          useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // $root.$emit(emit_cmd.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           // $root.$emit(emit_cmd.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值

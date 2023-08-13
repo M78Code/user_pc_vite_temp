@@ -1,11 +1,25 @@
+import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListCardData from "./match-list-card-data-class.js";
+import lodash from "lodash";
+
+
   /**
    * @Description 根据mid 获取一场赛事数据
    * @param {number} mid 赛事id
    * @return {Object} 赛事对象
   */
-  get_match_data(mid){
-    // let match = this.mid_obj['mid_'+mid]
-    let match =  {mid}
+
+    //引入菜单类
+    const MenuData ={
+      menu_data:{
+        is_show_hot :false
+      },
+     
+    }
+    
+  export const  get_match_data =(mid)=>{
+    let match =    MatchListData.mid_obj['mid_'+mid]
+  
     if(!match){
       return false
     }
@@ -58,27 +72,27 @@
   /**
    * @Description 判断联赛是否加载过数据  如果没加载过数据 从基础数据仓库 设置赛事主客队名称
   */
-  set_match_basic_data(league_title_card_obj){
+  export  const set_match_basic_data=(league_title_card_obj)=>{
     // 模板10 网球-准确盘数   模板15 兵乓球-准确盘数  不处理
-    if([10, 15].includes(+$menu.menu_data.match_tpl_number)){
+    if([10, 15].includes(+MenuData.menu_data.match_tpl_number)){
       return
     }
     // 设置联赛加载无数据状态
-    let league_container = this.all_card_obj[league_title_card_obj.league_container_card_key] || {}
+    let league_container = MatchListCardData.all_card_obj[league_title_card_obj.league_container_card_key] || {}
     // 没加载过数据
     if(league_container.load_data_status == 'loading'){
       // 联赛的赛事ID数组
       let mids = league_title_card_obj.league_obj.mids.split(',')
       let match_list = []
       mids.forEach( mid => {
-        let match =  this.get_match_data(mid)
+        let match =  get_match_data(mid)
         if(match){
           match_list.push(match)
         }
       })
       if(match_list.length > 0){
         // 设置列表数据仓库
-        this.match_list_data.compute_match_list_all_data(match_list,true)
+        MatchListData.match_list_data.compute_match_list_all_data(match_list,true)
         // 重新计算赛事样式
         this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(mids)
       }

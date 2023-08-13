@@ -6,6 +6,7 @@
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container class="page_container">
       <left-menu />
+      <div @click="show_bet">投注</div>
       <router-view />
     </q-page-container>
     <!-- <footer_menu /> -->
@@ -58,6 +59,9 @@ const touchend_event_fun = (event) => {
       event.preventDefault();
     }
 
+  const show_bet = () =>{
+    useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP,true)
+  }
   onMounted(() => {
     // 阻止双击放大
     document.addEventListener('touchstart', touchstart_event_fun, false);
