@@ -10,33 +10,21 @@ import {
 import fs from "node:fs";
 
 // 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
-import { DEV_TARGET_MERCHANT_VERSION } from "../dev-target-env.js";
-console.log("export-merchant-config----------server-resource ----");
+import { FILE_PATH, PROJECT_NAME } from "../dev-target-env.js";
+console.log("export-server-resource----------server-resource ----");
 console.log("process.argv----------------------0---");
-console.log(process.argv);
 console.log("process.argv----------------------1---");
-console.log(
-  "MERCHANT-CONFIG-VERSION  :  ",
-  process.env["MERCHANT-CONFIG-VERSION"]
-);
 // console.log('MERCHANT-CONFIG-VERSION  2:  ', process.env);
 console.log("process.argv----------------------3---");
 
-//命令行参数 配置的   商户版本号    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程
-let argv_version = (process.argv[2] || "").trim();
-//env 变量  配置的   商户版本号    , 一般是运维那边 配置打包使用的
-let env_version = (process.env["MERCHANT-CONFIG-VERSION"] || "").trim();
-//最终计算出的 用于执行脚本的  商户版本号
-let MERCHANT_CONFIG_VERSION =
-  env_version || argv_version || DEV_TARGET_MERCHANT_VERSION;
-
-console.log("MERCHANT_CONFIG_VERSION", MERCHANT_CONFIG_VERSION);
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/server-resource.json`;
 
-// 图片 输出目录
-let img_folder = `./public/server-resource/`;
+// 图片输出到项目的 目录
+let img_folder = `./project/${PROJECT_NAME}/public/server-resource/`;
+let project_path = `public/server-resource/`;//项目index.html 访问图片的路径
+
 //开启 ，关闭本地测试  ,这个 上线必须设置false
 let ENABLE_TEST = false;
 
@@ -51,17 +39,12 @@ const download_file_to_local = async (srcs) => {
   try {
     //确保配置 输出目录存在
     ensure_write_folder_exist(img_folder);
-    // let add_obj = {
-    //   MERCHANT_CONFIG_VERSION,
-    //   project: MERCHANT_CONFIG_VERSION,
-    //   write_file_date: Date.now(),
-    // };
     const img_url_theme_map = {};
     Object.entries(srcs).map(([key, themes]) => {
       img_url_theme_map[key] = {};
       Object.entries(themes).forEach(async ([theme, url]) => {
         const filename = img_folder + url.split("/").pop(); //入本地路径
-        img_url_theme_map[key][theme] = filename.slice(1); //写入本地路径
+        img_url_theme_map[key][theme] = project_path+url.split("/").pop(); //写入本地路径
         try {
           //读取文件下载到本地
           const response = await axios.get(url, { responseType: "stream" });
@@ -78,15 +61,13 @@ const download_file_to_local = async (srcs) => {
  * 获取 服务器上 当前商户的 版本配置
  */
 const get_config_info = async () => {
-  const username = "TY-yazhou-lan";
   // API 对外文档 的 单个 版本的详情 获取地址
-  let url = `https://api-doc-server-new.sportxxxw1box.com/openapi/serverSource/findAllDefaultConfigKey?version=${MERCHANT_CONFIG_VERSION}&username=${username}`;
   try {
-    let res = await axios.get(url);
+    let res = await axios.get(FILE_PATH);
     let { data } = res;
     if (data) {
       //此处1 应该是配置的与后台相对应
-      download_file_to_local(data.data.assets["1"]);
+      download_file_to_local(data.assets);
     }
   } catch (error) {
     console.log("获取 服务器上 当前商户的 版本配置 出错");

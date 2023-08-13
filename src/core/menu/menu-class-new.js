@@ -263,10 +263,10 @@ class menu_config_class {
         version: Date.now(),
       };
     }
-    // console.error(
-    //   "set_left_menu_result--------定义左侧菜单-----",
-    //   JSON.stringify(this.left_menu_result)
-    // );
+    console.error(
+      "set_left_menu_result--------定义左侧菜单-----",
+      JSON.stringify(this.left_menu_result)
+    );
     if( [2,3] .includes(Number( obj.root))){
         // 角球
         if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -626,10 +626,10 @@ class menu_config_class {
     
     let match_list_api_config = JSON.parse(JSON.stringify(config));
     match_list_api_config.version = Date.now();
-    // console.error(
-    //   "set_match_list_api_config-------列表结构AP参数的------",
-    //   JSON.stringify(match_list_api_config)
-    // );
+    console.error(
+      "set_match_list_api_config-------列表结构AP参数的------",
+      JSON.stringify(match_list_api_config)
+    );
 
 
     //  //菜单切换是筛选数据置空

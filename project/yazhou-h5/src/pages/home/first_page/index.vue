@@ -251,8 +251,8 @@ import { db } from "src/public/utils/db/index.js";
     set_bet_list([]);
     set_show_favorite_list(false);
     menu_index = 0;
-    $root.$on(emit_cmd.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
-    $root.$on(emit_cmd.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
+    useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
+    useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
 
     get_list();
     get_lang_v3()
@@ -380,7 +380,7 @@ import { db } from "src/public/utils/db/index.js";
           if (tid && is_existtid) {
             set_home_tab_item({ component: 'hot', index: 1, name: '热门' })
             set_hot_tab_item({ field2: tid })
-            $root.$emit(emit_cmd.EMIT_HOME_TAB)
+            useMittEmit(MITT_TYPES.EMIT_HOME_TAB)
           }
         }
       }
@@ -943,7 +943,7 @@ import { db } from "src/public/utils/db/index.js";
     set_current_sub_menuid('');
     set_curr_sub_menu_type('');
     // 浏览器窗口变化事件监听
-    $root.$on(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
+    useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
     // 保证赛事框初始高度正确
     window_resize_on()
   })
@@ -987,9 +987,9 @@ import { db } from "src/public/utils/db/index.js";
       }
     })
   onUnmounted(() => {
-    $root.$off(emit_cmd.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
-    $root.$off(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
-    $root.$off(emit_cmd.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
+    $root.$off(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
+    $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
+    $root.$off(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
 
     if (home_timer1_) {
       clearTimeout(home_timer1_)

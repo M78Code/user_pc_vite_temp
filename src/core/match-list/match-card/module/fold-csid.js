@@ -1,9 +1,16 @@
+import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListCardData from "./match-list-card-data-class.js";
+import lodash from "lodash";
 
+import {conpute_match_list_card_offset ,set_fold_match_list_scroll_top} from  "./card-show-offset.js"
+ 
+ 
  /**
     * 赛种 折叠
     *   click_card_obj 点击折叠的卡片对象
     */
- recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(click_card_obj,is_no_emit_fold_change){
+
+ export const  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie=(click_card_obj,is_no_emit_fold_change)=>{
     // 是否赛种折叠
     let is_sport_fold = !click_card_obj.is_sport_fold
 
@@ -13,7 +20,7 @@
       click_card_obj.card_total_height = click_card_obj.card_fold_height
       if(!is_no_emit_fold_change){
         // 设置折叠后的列表scroll_top
-        this.set_fold_match_list_scroll_top(click_card_obj.offset_top)
+        set_fold_match_list_scroll_top(click_card_obj.offset_top)
       }
     }else{
       // 设置未折叠高度
@@ -21,11 +28,11 @@
     }
 
     // 赛种下所有卡片key列表
-    let sport_card_keys_arr = this.csid_to_card_key_obj['csid_'+click_card_obj.csid] || []
+    let sport_card_keys_arr = MatchListCardData.csid_to_card_key_obj['csid_'+click_card_obj.csid] || []
 
     // 遍历所有赛种下卡片  设置赛种折叠
     sport_card_keys_arr.forEach(card_key => {
-      let card_obj = this.all_card_obj[card_key]
+      let card_obj = MatchListCardData.all_card_obj[card_key]
       // 设置赛种折叠
       card_obj.is_sport_fold = is_sport_fold
 
@@ -49,5 +56,5 @@
       }
     })
     // 设置列表总高度
-    this.conpute_match_list_card_offset()
+    conpute_match_list_card_offset()
   }

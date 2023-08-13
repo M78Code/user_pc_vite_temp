@@ -1,6 +1,6 @@
 
 
-import  MatchListCardData from  "./card-data-class.js"
+import  MatchListCardData from  "./match-list-card-data-class.js"
 
   /**
    * @Description 更新赛事父级卡片样式 即赛事对应的联赛容器卡片样式
