@@ -67,7 +67,7 @@
     <!-- 赛事基本信息 end -->
     <!-- 玩法tab条 -->
     <handicap-tabs-bar
-      ref="handicap-tabs-bar"
+      ref="handicap_tabs_bar"
       :handicap_this="handicap_this"
       :match_info="match_infoData"
       @get_mattch_details="get_mattch_details"
@@ -82,10 +82,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,defineExpose } from "vue";
 import { is_show_sr_flg } from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail";
+// 玩法tab条
+import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar";
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux-vuex/index.js';
@@ -98,8 +100,13 @@ const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
 
 
+const handicap_tabs_bar = ref(null)
+defineExpose({handicap_tabs_bar})
+
+
 const useRoute = useRoute();
 const useRouter = useRouter();
+
 
 
 
