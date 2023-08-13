@@ -38,6 +38,6 @@ const setMenu = (item) => {
   current_menu_list.value = props.base_data.mew_menu_list_res.find((x) => x.mi == mi) || {
     sl: [],
   };
-  menu_config.set_left_menu_result(current_menu)
+  // menu_config.set_left_menu_result(current_menu)
 };
 </script>

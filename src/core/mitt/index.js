@@ -2,6 +2,7 @@ import mitt from "mitt";
 import * as MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
 
 import * as MITT_TYPES_DEFAULT from "./mitt-keys";
+import { mapKeys } from "lodash";
 
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
 
@@ -13,7 +14,7 @@ const emitter = new mitt();
 function useMittOn(...args) {
   const [key, fun] = args;
   if (!MITT_TYPES[key]) {
-    console.error("mitt key is not register");
+    console.error("mitt key is not register:", key);
     return;
   }
   emitter.on.apply(emitter, args);
