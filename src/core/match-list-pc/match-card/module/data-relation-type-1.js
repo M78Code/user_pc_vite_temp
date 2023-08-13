@@ -19,7 +19,14 @@
     import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
- 
+    import {
+      match_status_title_card_template,
+   
+      league_title_card_template,
+      fold_template,
+      league_container_card_template,
+   
+    } from "../config/card-template-config.js"
   //引入菜单类
   const MenuData ={
     menu_data:{
@@ -66,7 +73,7 @@
   /**
    * @Description 计算所有卡片样式数据 1. 单一赛种，有未开赛 已开赛 ，不区分赛种   3 单一赛种，不区分赛种 ，只有未开赛，只有联赛
   */
-  const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
+  export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
     // 赛事模板ID
     let template_id = MenuData.menu_data.match_tpl_number
     if(MenuData.menu_data.is_esports_champion){
