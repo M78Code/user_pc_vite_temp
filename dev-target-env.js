@@ -30,7 +30,7 @@ const ENV_MAP = {
 // --------------------------------
 //测试参数 应该是从 process.argv 来的
 const TEST_ARGV =
-  "project_4-0b1d5ec0284611eea47c132df8d8e15d-1691897964355-online";
+  "project_4-0b1d5ec0284611eea47c132df8d8e15d-1691927205605-shiwan";
 //命令行参数 配置的   商户版本号    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程
 let argv_version = (process.argv[2] || "").trim();
 //env 变量  配置的   商户版本号    , 一般是运维那边 配置打包使用的
@@ -61,7 +61,6 @@ let PROJECT_NAME = project_map[PROJECT_NUM];
 
 PROJECT_NAME = "yazhou-pc";
 // PROJECT_NAME = "yazhou-h5";
-DEV_TARGET_ENV = "idc_sandbox"; //设置环境
 
 // --------------------------------
 // 所有  目标环境标识
