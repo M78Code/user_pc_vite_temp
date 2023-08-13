@@ -15,7 +15,7 @@ import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_c
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
 
-import { uid } from 'quasar';
+import { uid } from "quasar";
 
 export const useGetConfig = () => {
   const { mx_autoset_active_match } = useGetGlobal({ details_params, back_to });
@@ -53,15 +53,22 @@ export const useGetConfig = () => {
     get_match_details_timer: null,
     back_to_timer: null,
     axios_debounce_timer: null,
+    details_loading_time_record: [],
+    last_tab_data: {},
   });
+  const detail_header = ref(null); // 头部组件实例
 
   const details_params = ref(store_state.matchesReducer.params);
   // 获取当前菜单类型
   const cur_menu_type = ref(store_state.menusReducer.cur_menu_type);
   // 当前所选的玩法集子项id
   const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
-    // 当前所选的玩法集子项id
-    const uuid = store_state.userReducer.uuid;
+  // 当前所选的玩法集子项id
+  const uuid = store_state.userReducer.uuid;
+  // 玩法集对应玩法缓存数据
+  const get_details_data_cache = ref(
+    store_state.matchesReducer.details_data_cache
+  );
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
@@ -69,6 +76,7 @@ export const useGetConfig = () => {
     details_params.value = state.matchesReduce.params;
     cur_menu_type.value = state.menusReducer.cur_menu_type;
     tabs_active_index.value = state.matchesReduce.tabs_active_index;
+    get_details_data_cache.value = state.matchesReduce.details_data_cache;
   });
 
   /**
@@ -250,15 +258,15 @@ export const useGetConfig = () => {
       max_loop: is_init ? 3 : 1,
       // axios中then回调方法
       fun_then: (res) => {
-        this.set_details_loading_time_record("ok");
+        set_details_loading_time_record("ok");
         // 检查gcuuid
-        if (this.send_gcuuid != res.config.gcuuid) return;
+        if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
-        this.get_match_details(res);
+        get_match_details(res);
       },
       // axios中catch回调方法
       fun_catch: (err) => {
-        this.set_details_loading_time_record("err");
+        set_details_loading_time_record("err");
         if (err === "api_cancel") {
           return;
         }
@@ -266,15 +274,15 @@ export const useGetConfig = () => {
         if (!is_init) {
           // 若当前玩法接口请求错误，则回退到存在盘口信息的玩法
           if (
-            this.$refs["handicap-tabs-bar"] &&
-            this.$refs["handicap-tabs-bar"].$refs["tab"]
+            detail_header.value["handicap_tabs_bar"].value &&
+            detail_header.value["handicap_tabs_bar"].value.tab.value
           ) {
-            const { index, item } = this.last_tab_data || {};
+            const { index, item } = state.last_tab_data || {};
             // this.$refs['handicap-tabs-bar'].$refs['tab'].onclick(index, item)
-            this.$refs["handicap-tabs-bar"].currentIndex = index;
+            detail_header.value["handicap_tabs_bar"].value.currentIndex = index;
 
             const tabs_active_data_cache =
-              this.get_details_data_cache[`${this.mid}-${item.id}`];
+              get_details_data_cache.value[`${this.mid}-${item.id}`];
             if (tabs_active_data_cache) {
               // 处理当前玩法集数据
               this.handle_match_details_data(
@@ -288,28 +296,61 @@ export const useGetConfig = () => {
             }
           }
         } else if (!is_ws) {
-          this.err_tips(err);
+          err_tips(err);
         }
       },
     };
-    this.$utils.axios_api_loop(obj_);
+    axios_loop(obj_);
+  };
+  /**
+   * @description: 弹出报错提示
+   * @param {}
+   * @return {}
+   */
+  const err_tips = (err) => {
+    state.match_details = [];
+    store.dispatch({
+      type: "SET_ERROR_DATA",
+      data: {
+        site: "details--get_match_detail",
+        error: err,
+      },
+    });
+    if (
+      lodash.isPlainObject(err) ||
+      lodash.get(err, "response.status") == 404
+    ) {
+      state.handicap_state = "404";
+    } else {
+      state.handicap_state = "refresh";
+    }
   };
 
-     /**
-     * 计算进入详情的加载时间
-     */
-    const set_details_loading_time_record=(status)=>{
-      if(lodash.get(window, 'env.config.DOM_ID_SHOW') && _.get(this.details_loading_time_record,'[0].start_time') && _.get(this.details_loading_time_record,'[0].mid') == this.mid){
-          let end_time = new Date().getTime();
-          this.details_loading_time_record[0].duration = end_time - this.details_loading_time_record[0].start_time;
-          this.details_loading_time_record[0].end_time = end_time;
-          this.details_loading_time_record[0].end = new Date(end_time).Format('yyyy-MM-dd hh:mm:ss');
-          this.details_loading_time_record[0].status=status;
-          this.details_loading_time_record[0].mid=this.mid;
-          sessionStorage.setItem('details_loading_time_record',JSON.stringify(this.details_loading_time_record))
-          this.details_loading_time_record = null;
-        }
+  /**
+   * 计算进入详情的加载时间
+   */
+  const set_details_loading_time_record = (status) => {
+    if (
+      lodash.get(window, "BUILDIN_CONFIG.DOM_ID_SHOW") &&
+      lodash.get(state.details_loading_time_record, "[0].start_time") &&
+      lodash.get(state.details_loading_time_record, "[0].mid") == state.mid
+    ) {
+      let end_time = new Date().getTime();
+      state.details_loading_time_record[0].duration =
+        end_time - state.details_loading_time_record[0].start_time;
+      state.details_loading_time_record[0].end_time = end_time;
+      state.details_loading_time_record[0].end = new Date(end_time).Format(
+        "yyyy-MM-dd hh:mm:ss"
+      );
+      state.details_loading_time_record[0].status = status;
+      state.details_loading_time_record[0].mid = state.mid;
+      sessionStorage.setItem(
+        "details_loading_time_record",
+        JSON.stringify(state.details_loading_time_record)
+      );
+      state.details_loading_time_record = null;
     }
+  };
 
   /**
    * @description: 详情比分面板接口报错处理
@@ -469,6 +510,50 @@ export const useGetConfig = () => {
       }
     }, 50);
   };
+      /**
+     * @description 处理当前玩法集数据
+     * @param {Array} data 当前玩法集下数据
+     * @param {Number} timestap 时间戳
+     */
+    const handle_match_details_data = (data, timestap)=> {
+        // 初始化赛事控制类玩法数据
+        state.match_info_ctr.init_plays_data(data);
+        this.match_details_data_set(this.match_info_ctr.list);
+        this.handicap_state = "data";
+        // 同步投注项
+        if(!this.vx_get_lang_change) {
+          if(this.is_esports || $menu.menu_data.is_virtual_sport) {
+            this.virtual_common.upd_bet_obj(this, timestap, this.mid);
+          } else {
+            this.yabo_common.upd_bet_obj(this, timestap, this.mid);
+          }
+        }
+      }
+          /**
+     * 玩法列表渲染
+     */
+  const  match_details_data_set = (list)=>{
+      let match_details_arr = list;
+      // 用户折叠/展开了的玩法
+      let handle_state = window.sessionStorage.getItem('handle_state') || '';
+      handle_state = handle_state && JSON.parse(handle_state);
+      let infoArr = [];
+      if (handle_state.length) {
+        // 如果本地存有用户折叠或展开的玩法，优先使用用户操作后的状态
+        match_details_arr.forEach((item, i) => {
+          handle_state.forEach(item1 => {
+            if (item1.id == item.topKey) {
+              item.hshow = item1.hshow == "Yes" ? 'No' : 'Yes';
+              item.is_show = item1.hshow != "Yes";
+            }
+          })
+          infoArr.push(item);
+        })
+        this.match_details = infoArr;
+      } else {
+        this.match_details = match_details_arr;
+      }
+    },
 
   //   computed: {    //TODO
 
@@ -493,8 +578,7 @@ export const useGetConfig = () => {
   //       // 详情比分板备用数据
   //       get_active_detail: "get_active_detail",
   //       vx_get_lang_change: "get_lang_change",
-  //       // 玩法集对应玩法缓存数据
-  //       get_details_data_cache: "get_details_data_cache",
+  //  
   //       // 聊天室id
   //       get_chatroom_id: "get_chatroom_id",
   //       // 获取右侧赛事详情视频信息
@@ -514,6 +598,7 @@ export const useGetConfig = () => {
   });
   return {
     ...toRefs(state),
+    detail_header,
     init,
     back_to,
   };
