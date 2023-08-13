@@ -1,8 +1,8 @@
-import { reactive, toRefs, onUnmounted } from "vue";
+import { reactive, toRefs, onUnmounted, computed, onMounted,watch } from "vue";
 import { is_eports_csid } from "src/core/utils/utils";
 // api文件
 import { api_details } from "src/api/index";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail";
@@ -14,6 +14,9 @@ import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
+import menu_config from "src/core/menu/menu-class-new.js";
+import { pre_load_video } from "src/core/pre-load/index";
+import { format_plays } from "src/core/formart/index";
 
 import { uid } from "quasar";
 
@@ -65,6 +68,10 @@ export const useGetConfig = () => {
   const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
   // 当前所选的玩法集子项id
   const uuid = store_state.userReducer.uuid;
+  /** 语言变化 */
+  const get_lang_change = store_state.languagesReducer.lang_change;
+  // 获取右侧布局类型
+  const cur_expand_layout = store_state.layoutReducer.cur_expand_layout;
   // 玩法集对应玩法缓存数据
   const get_details_data_cache = ref(
     store_state.matchesReducer.details_data_cache
@@ -77,6 +84,12 @@ export const useGetConfig = () => {
     cur_menu_type.value = state.menusReducer.cur_menu_type;
     tabs_active_index.value = state.matchesReduce.tabs_active_index;
     get_details_data_cache.value = state.matchesReduce.details_data_cache;
+    get_lang_change.value = state.languagesReducer.lang_change;
+    cur_expand_layout.value = state.layoutReducer.cur_expand_layout;
+  });
+
+  const category_list_length = computed(() => {
+    return lodash.get(state.category_list, "length", 0);
   });
 
   /**
@@ -104,7 +117,7 @@ export const useGetConfig = () => {
         get_match_detail();
       } else {
         // 玩法投注项列表;
-        this.get_match_detail({ is_ws, is_init: true });
+        get_match_detail({ is_ws, is_init: true });
       }
     });
   };
@@ -285,14 +298,11 @@ export const useGetConfig = () => {
               get_details_data_cache.value[`${this.mid}-${item.id}`];
             if (tabs_active_data_cache) {
               // 处理当前玩法集数据
-              this.handle_match_details_data(
-                tabs_active_data_cache,
-                Date.now()
-              );
+              handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              this.match_info_ctr.init_plays_data([]);
-              this.match_details = [];
-              this.set_handicap_state("empty");
+              state.match_info_ctr.init_plays_data([]);
+              state.match_details = [];
+              set_handicap_state("empty");
             }
           }
         } else if (!is_ws) {
@@ -301,6 +311,16 @@ export const useGetConfig = () => {
       },
     };
     axios_loop(obj_);
+  };
+  /**
+   * @Description 设置盘口状态
+   * @param {undefined} undefined
+   */
+  const set_handicap_state = (state) => {
+    if (state == "empty") {
+      state = state.mcid == 0 ? "all_empty" : "new_empty";
+    }
+    state.handicap_state = state;
   };
   /**
    * @description: 弹出报错提示
@@ -510,96 +530,185 @@ export const useGetConfig = () => {
       }
     }, 50);
   };
-      /**
-     * @description 处理当前玩法集数据
-     * @param {Array} data 当前玩法集下数据
-     * @param {Number} timestap 时间戳
-     */
-    const handle_match_details_data = (data, timestap)=> {
-        // 初始化赛事控制类玩法数据
-        state.match_info_ctr.init_plays_data(data);
-        this.match_details_data_set(this.match_info_ctr.list);
-        this.handicap_state = "data";
-        // 同步投注项
-        if(!this.vx_get_lang_change) {
-          if(this.is_esports || $menu.menu_data.is_virtual_sport) {
-            this.virtual_common.upd_bet_obj(this, timestap, this.mid);
-          } else {
-            this.yabo_common.upd_bet_obj(this, timestap, this.mid);
-          }
-        }
-      }
-          /**
-     * 玩法列表渲染
-     */
-  const  match_details_data_set = (list)=>{
-      let match_details_arr = list;
-      // 用户折叠/展开了的玩法
-      let handle_state = window.sessionStorage.getItem('handle_state') || '';
-      handle_state = handle_state && JSON.parse(handle_state);
-      let infoArr = [];
-      if (handle_state.length) {
-        // 如果本地存有用户折叠或展开的玩法，优先使用用户操作后的状态
-        match_details_arr.forEach((item, i) => {
-          handle_state.forEach(item1 => {
-            if (item1.id == item.topKey) {
-              item.hshow = item1.hshow == "Yes" ? 'No' : 'Yes';
-              item.is_show = item1.hshow != "Yes";
-            }
-          })
-          infoArr.push(item);
-        })
-        this.match_details = infoArr;
+  /**
+   * @description 处理当前玩法集数据
+   * @param {Array} data 当前玩法集下数据
+   * @param {Number} timestap 时间戳
+   */
+  const handle_match_details_data = (data, timestap) => {
+    // 初始化赛事控制类玩法数据
+    state.match_info_ctr.init_plays_data(data);
+    match_details_data_set(state.match_info_ctr.list);
+    state.handicap_state = "data";
+    // 同步投注项
+    if (!get_lang_change.value) {
+      if (
+        is_eports_csid(useRoute.params.csid) ||
+        menu_config.is_virtual_sport()
+      ) {
+        this.virtual_common.upd_bet_obj(this, timestap, this.mid); //TODO
       } else {
-        this.match_details = match_details_arr;
+        this.yabo_common.upd_bet_obj(this, timestap, this.mid); //TODO
       }
-    },
+    }
+  };
+  /**
+   * 玩法列表渲染
+   */
+  const match_details_data_set = (list) => {
+    let match_details_arr = list;
+    // 用户折叠/展开了的玩法
+    let handle_state = window.sessionStorage.getItem("handle_state") || "";
+    handle_state = handle_state && JSON.parse(handle_state);
+    let infoArr = [];
+    if (handle_state.length) {
+      // 如果本地存有用户折叠或展开的玩法，优先使用用户操作后的状态
+      match_details_arr.forEach((item, i) => {
+        handle_state.forEach((item1) => {
+          if (item1.id == item.topKey) {
+            item.hshow = item1.hshow == "Yes" ? "No" : "Yes";
+            item.is_show = item1.hshow != "Yes";
+          }
+        });
+        infoArr.push(item);
+      });
+      state.match_details = infoArr;
+    } else {
+      state.match_details = match_details_arr;
+    }
+  };
+  /**
+   * 传递玩法列表的数据给到玩法集
+   */
+  const set_handicap_this = (_this) => {
+    state.handicap_this = _this;
+  };
 
-  //   computed: {    //TODO
+  /**
+   * @description 返回顶部
+   * @return {Undefined} Undefined
+   */
+  const on_go_top = () => {
+    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
+  };
 
-  //     ...mapGetters({
-  //       vx_get_user: "get_user",
-  //       // 获取右侧布局类型
-  //       vx_cur_expand_layout: "get_cur_expand_layout",
-  //       // 赛事详情请求参数
-  //       vx_details_params: "get_match_details_params",
-  //       // 获取 uid
-  //       get_uid: "get_uid",
-  //       // 获取当前菜单类型
-  //       vx_cur_menu_type: "get_cur_menu_type",
-  //       // 获取当前页面从哪个页面跳转来的
-  //       get_layout_cur_page: "get_layout_cur_page",
-  //       // 获取置顶的玩法id
-  //       get_top_id: "get_top_id",
-  //       // 当前所选的玩法集子项id
-  //       get_tabs_active_id: "get_tabs_active_id",
-  //       // 当前所选的玩法集子项id对应的盘口玩法
-  //       get_tabs_active_plays: "get_tabs_active_plays",
-  //       // 详情比分板备用数据
-  //       get_active_detail: "get_active_detail",
-  //       vx_get_lang_change: "get_lang_change",
-  //  
-  //       // 聊天室id
-  //       get_chatroom_id: "get_chatroom_id",
-  //       // 获取右侧赛事详情视频信息
-  //       vx_play_media: "get_play_media",
-  //     }),
-  //     // 是否为电竞
-  //     is_esports() {
-  //       return this.$utils.is_eports_csid(this.$route.params.csid)
-  //     },
-  //     // 获取玩法集菜单长度
-  //     category_list_length(){
-  //       return _.get(this.category_list,'length',0);
-  //     }
-  //   },
+  /**
+   * 初始化进入详情的加载时间
+   */
+  const init_details_loading_time_record = () => {
+    let start_time = new Date().getTime();
+    state.details_loading_time_record = [
+      {
+        duration: "",
+        start: new Date(start_time).Format("yyyy-MM-dd hh:mm:ss"),
+        end: "",
+        start_time: start_time,
+        end_time: 0,
+        mid: state.mid,
+      },
+    ];
+  };
+  /**
+   * @description: 检查玩法关盘
+   * @return {undefined} undefined
+   */
+  const check_plays_show = () => {
+    this.match_details.forEach((item) => {
+      item = format_plays(item);
+    });
+  };
+  const emit_site_tab_active = () => {
+    let { mid = null } = useRoute.params;
+    mid = mid || details_params.value.mid;
+    init({ mid });
+  };
+  /**
+   * @description: 隐藏其他tips
+   * @param {}
+   * @return {}
+   */
+  const close_tips = (hpid) => {
+    state.match_details.forEach((item) => {
+      item.tipstatus = item.hpid == hpid;
+    });
+  };
+  /**
+   * @description 获取loading状态
+   */
+  const getLoading = (status) => {
+    state.load_detail_statu = status;
+  };
+  /**
+   * @description 获取头部高度
+   */
+  const getHeaderHeight = (height) => {
+    state.headerHeight = height || 0;
+  };
+  /**
+   * @description 设置背景图
+   */
+  const setBg = (img) => {
+    state.background_img = img;
+  };
+
+  onMounted(() => {
+    // 加载视频动画资源
+    pre_load_video.load_video_resources();
+    // 从链接上获取赛事id 赛种 id 联赛id
+    if (Object.keys(useRoute.params).length) {
+      let { mid, csid: sportId, tid } = useRoute.params;
+      state.mid = mid; // 赛事id
+      state.sportId = sportId; // 赛种 id
+      // 电竞不用切右侧
+      if (!is_eports_csid(sportId)) {
+        // 设置赛事详情的请求参数
+        store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
+      }
+      // 初始化详情页数据
+      // this.init = lodash.debounce(this.init, 2000, { leading: true });
+      init();
+      // 添加近期访问
+      // add_visit_history();
+    }
+
+    // 初始化进入详情的加载时间
+    init_details_loading_time_record();
+    // 自动选择赛事
+    useMittOn(MITT_TYPES.EMIT_AUTOSET_MATCH, emit_autoset_match);
+
+    // 检查玩法关盘
+    useMittOn(MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, check_plays_show);
+
+    // 站点 tab 休眠状态转激活
+    useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active);
+
+    // 隐藏tips
+    useMittOn(MITT_TYPES.EMIT_SET_CLOSE_TIPS, close_tips);
+    // 接受 loading 状态
+    useMittOn(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, getLoading);
+    // 获取详情页头部高度
+    useMittOn(MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, getHeaderHeight);
+
+    // 刷新按钮节流
+    // this.refresh = this.throttle(this.refresh, 1000, {
+    //   leading: true,
+    //   trailing: false,
+    // });
+    // 返回背景图
+    useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg);
+  });
+
   onUnmounted(() => {
     un_subscribe();
   });
   return {
     ...toRefs(state),
     detail_header,
+    cur_expand_layout,
     init,
     back_to,
+    set_handicap_this,
+    on_go_top,
+    set_handicap_state,
   };
 };

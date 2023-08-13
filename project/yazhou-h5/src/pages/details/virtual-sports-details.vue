@@ -57,7 +57,7 @@ import VSport from 'src/public/utils/vsport/vsport.js';
 
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -203,7 +203,7 @@ export default defineComponent({
       refreshing = false;
     };
     const api_interface = () => {
-      useMittEmit(MITT_KEY.EMIT_REF_API, 'details_refresh');
+      useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
       // $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
     };
     /**
@@ -269,7 +269,7 @@ export default defineComponent({
               current_match.show_time = res.show_time;
               //当赛事结束
               if(current_match.match_status == 2){
-                useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+                useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
                 // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
               }
               //开赛后封盘
@@ -278,7 +278,7 @@ export default defineComponent({
               }
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
-                useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+                useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
                 // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
               }
               switch (Number(current_match.csid)) {
@@ -354,7 +354,7 @@ export default defineComponent({
           current_match.show_time = res.show_time;
           //当赛事结束
           if(current_match.match_status == 2){
-            useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+            useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
             // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
           }
           //开赛后封盘
@@ -363,7 +363,7 @@ export default defineComponent({
           }
           //视频时间更新,快进视频到相应的时间点
           if(res.upd == 1){
-            useMittEmit(MITT_KEY.EMIT_SYNC_VIDEO_DATA, res);
+            useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
             // $root.$emit(emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
           }
           switch (Number(current_match.csid)) {

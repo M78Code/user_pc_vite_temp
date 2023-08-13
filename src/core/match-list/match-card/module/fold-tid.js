@@ -1,16 +1,23 @@
 
- /**
-   * @Description 折叠所有联赛   调试用
-  */
- fold_all_league(){
-    this.match_list_card_key_arr.forEach(card_key => {
-      let card_obj = this.all_card_obj[card_key] || {}
-      if(card_obj.card_type == 'league_title'){
-        card_obj.is_league_fold = false
-        this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_obj)
-      }
-    })
-  }
+import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListCardData from "./match-list-card-data-class.js";
+import lodash from "lodash";
+import {conpute_match_list_card_offset,set_fold_match_list_scroll_top} from  "./module/card-show-offset.js"
+
+
+
+
+
+
+import {recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie} from  "./fold-csid.js"
+import {recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie} from  "./fold-kaisai-weikaisi.js"
+
+
+    
+const MenuData ={
+  which_list :1
+}
+
 
    /**
     * 联赛 折叠
@@ -19,7 +26,7 @@
    recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(click_card_obj){
     click_card_obj.is_league_fold = !click_card_obj.is_league_fold
     // 折叠的联赛容器卡片
-    let league_container_card_obj = this.all_card_obj[click_card_obj.league_container_card_key]
+    let league_container_card_obj = MatchListCardData.all_card_obj[click_card_obj.league_container_card_key]
     // 设置联赛容器卡片是否折叠
     league_container_card_obj.is_league_fold = click_card_obj.is_league_fold
     // 设置联赛容器卡片是否显示
@@ -29,7 +36,7 @@
     if(click_card_obj.is_league_fold){
       // 联赛折叠
       // 设置折叠后的列表scroll_top
-      this.set_fold_match_list_scroll_top(click_card_obj.offset_top,true)
+      set_fold_match_list_scroll_top(click_card_obj.offset_top,true)
       // 设置联赛标题卡片高度
       click_card_obj.card_total_height = click_card_obj.league_fold_height
       click_card_obj.card_total_height_back = click_card_obj.league_fold_height
@@ -53,7 +60,7 @@
     }
 
     // 计算所有卡片偏移量 和列表总高度
-    this.conpute_match_list_card_offset()
+    conpute_match_list_card_offset()
   }
 
 
@@ -67,32 +74,32 @@
    * 5. 冠军赛事列表            全部赛种 不区分是否开赛
    * 6. 冠军赛事列表            单一赛种 不区分是否开赛
    */
-   set_new_league_fold(){
+   export const  set_new_league_fold=()=>{
     // 列表类型区分已开赛 和 未开赛
-    if([1,4].includes(this.match_list_mapping_relation_obj_type)){
-      let play_title_card_obj = this.all_card_obj.play_title || {}
+    if([1,4].includes(MatchListCardData.match_list_mapping_relation_obj_type)){
+      let play_title_card_obj = MatchListCardData.all_card_obj.play_title || {}
       // 如果滚球已折叠 调用滚球折叠方法  设置所有的滚球联赛折叠
       if(play_title_card_obj.is_match_status_fold){
         play_title_card_obj.is_match_status_fold = false
-        this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie(play_title_card_obj,true)
+       recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie(play_title_card_obj,true)
       }
-      let no_start_title_card_obj = this.all_card_obj.no_start_title || {}
+      let no_start_title_card_obj = MatchListCardData.all_card_obj.no_start_title || {}
       // 如果未开赛已折叠 调用未开赛折叠方法  设置所有的未开赛联赛折叠
       if(no_start_title_card_obj.is_match_status_fold){
         no_start_title_card_obj.is_match_status_fold = false
-        this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie(no_start_title_card_obj,true)
+      recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie(no_start_title_card_obj,true)
       }
     }
     // 列表类型区分球种
-    else if([2,5].includes(this.match_list_mapping_relation_obj_type)){
+    else if([2,5].includes(MatchListCardData.match_list_mapping_relation_obj_type)){
       // 遍历所有球种标题卡片列表
-      _.each(this.csid_to_card_key_obj, card_keys_arr => {
+      lodash.each(MatchListCardData.csid_to_card_key_obj, card_keys_arr => {
         // 球种标题卡片对象
-        let sport_title_card_obj = this.all_card_obj[card_keys_arr[0]] || {}
+        let sport_title_card_obj = MatchListCardData.all_card_obj[card_keys_arr[0]] || {}
         // 如果球种已折叠 调用球种折叠方法  设置所有的球种联赛折叠
         if(sport_title_card_obj.is_sport_fold){
           sport_title_card_obj.is_sport_fold = false
-          this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(sport_title_card_obj,true)
+          recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie(sport_title_card_obj,true)
         }
       })
     }
@@ -102,13 +109,13 @@
   /**
    * @Description 展开所有联赛 调试用
   */
-  unfold_all_league(){
+  export const unfold_all_league=()=>{
     let params
-    this.match_list_card_key_arr.forEach(card_key => {
-      let card_obj = this.all_card_obj[card_key] || {}
+    MatchListCardData.match_list_card_key_arr.forEach(card_key => {
+      let card_obj = MatchListCardData.all_card_obj[card_key] || {}
       if(card_obj.card_type == 'league_title'){
         if(card_obj.is_league_fold){
-          if(['today','early','bet'].includes(this.which_list)){
+          if(['today','early','bet'].includes(MenuData.which_list)){
             params = {
               mids: card_obj.league_obj.mids.split(','),
             };
@@ -116,8 +123,23 @@
             window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS,params)
           }
           card_obj.is_league_fold = true
-          this.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_obj)
+         recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_obj)
         }
       }
     })
   }
+
+
+
+   /**
+   * @Description 折叠所有联赛   调试用
+  */
+ export const  fold_all_league=()=>{
+  MatchListCardData.match_list_card_key_arr.forEach(card_key => {
+    let card_obj = MatchListCardData.all_card_obj[card_key] || {}
+    if(card_obj.card_type == 'league_title'){
+      card_obj.is_league_fold = false
+      recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(card_obj)
+    }
+  })
+}

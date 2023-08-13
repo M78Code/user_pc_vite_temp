@@ -26,6 +26,14 @@
    * 最好是写 配置文件
    *
    */
+
+import  MatchListData from "../../match-data/match-list-data-class.js"
+import  MatchListCardData from "./match-list-card-data-class.js"
+import lodash from  "lodash"
+
+import {update_match_parent_card_style} from  "./utils.js"
+
+
   import {
     match_status_title_card_template,
     sport_title_card_template,
@@ -37,7 +45,6 @@
   import { MATCH_LIST_TEMPLATE_CONFIG } from  "../list-template/index.js"
   
   
-import {update_match_parent_card_style} from  "./utils.js"
 
 
 
@@ -46,9 +53,9 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @param {string | Number } mid  赛事id
   */
   const get_tab_play_height=(mid)=> {
-    let { play_current_key,other_handicap_list=[] } = this.match_list_data.mid_obj['mid_' + mid] || {}
+    let { play_current_key,other_handicap_list=[] } = MatchListData.mid_obj['mid_' + mid] || {}
     let { tab_play_handicap_height:handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_0_config`]['match_template_config'] || {}
-    let length =  _.get(other_handicap_list,'0.ols.length',3)
+    let length =  lodash.get(other_handicap_list,'0.ols.length',3)
            //5分钟      波胆
     if (['hps5Minutes','hpsBold'].includes(play_current_key)) {
         // 计算0号模板次要玩法 盘口+玩法标题高度
@@ -59,28 +66,45 @@ import {update_match_parent_card_style} from  "./utils.js"
 
 
 
+
+  /**
+   * @Description 获取足篮附加盘数量
+  */
+  const get_add_handicap_count=(match)=>{
+    let add_handicap_count = 0
+    // 是否有附加盘1
+    if(match.has_add1){
+      add_handicap_count++
+    }
+    // 是否有附加盘2
+    if(match.has_add2){
+      add_handicap_count++
+    }
+    return add_handicap_count;
+  }
+
   /**
    * @Description 计算模板0专有的数据
    * @param {object} match 赛事
    * @param {object} template_config 配置
   */
-   compute_style_template_by_matchinfo_template0_zuqiu(match,template_config){
+  const compute_style_template_by_matchinfo_template0_zuqiu=(match,template_config)=>{
     // 是否显示角球、罚牌、点球大战等玩法
     let is_show_tab_play = match.has_other_play
     // 角球、罚牌、点球大战等玩法 是否折叠
-    let is_fold_tab_play = _.get(this.all_card_obj['mid_'+match.mid],'is_fold_tab_play',false)
+    let is_fold_tab_play = lodash.get(MatchListCardData.all_card_obj['mid_'+match.mid],'is_fold_tab_play',false)
 
     let tab_play_total_height = 0
     if(is_show_tab_play && !is_fold_tab_play){
       // 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度加角球盘口高度
-      tab_play_total_height = template_config.tab_play_title_height + this.get_tab_play_height(match.mid)
+      tab_play_total_height = template_config.tab_play_title_height + get_tab_play_height(match.mid)
     }else if (is_show_tab_play){
       // 如果有角球玩法并且未折叠  角球区域总高度 等于角球标题高度
       tab_play_total_height = template_config.tab_play_title_height
     }
 
     // 足球篮球  附加盘数量
-    let add_handicap_count = this.get_add_handicap_count(match)
+    let add_handicap_count = get_add_handicap_count(match)
     // 附加盘高度 等于附加盘数量*模板配置附加盘高度
     let add_handicap_height = add_handicap_count * template_config.add_handicap_height
 
@@ -102,13 +126,13 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @Description 跟新次要玩法高度
    * @param {String|Number} mid 赛事id
   */
-   update_match_cur_card_style(match ) {
+   const   update_match_cur_card_style=(match )=>{
      let {mid} = match
-    let card_obj = this.all_card_obj['mid_'+mid] || {}
+    let card_obj = MatchListCardData.all_card_obj['mid_'+mid] || {}
     if(!card_obj.is_fold_tab_play){
-      card_obj.tab_play_total_height = card_obj.tab_play_title_height + this.get_tab_play_height(-1)
+      card_obj.tab_play_total_height = card_obj.tab_play_title_height + get_tab_play_height(-1)
       card_obj.total_height = card_obj.main_handicap_height + card_obj.add_handicap_height + card_obj.tab_play_total_height + 6
-      this.update_match_parent_card_style(card_obj,this.all_card_obj)
+      update_match_parent_card_style(card_obj,MatchListCardData.all_card_obj)
     }
   }
 
@@ -122,9 +146,9 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @param {object} match 赛事
    * @param {object} template_config 配置
    **/
-  compute_style_template_by_matchinfo_template7_lanqiu(match,template_config){
+  const     compute_style_template_by_matchinfo_template7_lanqiu=(match,template_config)=>{
     // 足球篮球  附加盘数量
-    let add_handicap_count = this.get_add_handicap_count(match)
+    let add_handicap_count = get_add_handicap_count(match)
     // 附加盘高度 等于附加盘数量*模板配置附加盘高度
     let add_handicap_height = add_handicap_count * template_config.add_handicap_height
 
@@ -137,29 +161,14 @@ import {update_match_parent_card_style} from  "./utils.js"
   }
 
 
-  /**
-   * @Description 获取足篮附加盘数量
-  */
-  get_add_handicap_count(match){
-    let add_handicap_count = 0
-    // 是否有附加盘1
-    if(match.has_add1){
-      add_handicap_count++
-    }
-    // 是否有附加盘2
-    if(match.has_add2){
-      add_handicap_count++
-    }
-    return add_handicap_count;
-  }
 
   
   /**
    * @Description 计算冠军模板赛事高度
    * @param {object} match 赛事
    **/
-  compute_style_template_by_matchinfo_template18(match){
-    let cur_match = this.match_list_data.mid_obj[`mid_${match.mid}`]  || {main_handicap_list:[]}
+  const     compute_style_template_by_matchinfo_template18=(match)=>{
+    let cur_match = MatchListData.mid_obj[`mid_${match.mid}`]  || {main_handicap_list:[]}
     // 附加盘口高度
     let add_handicap_height = 0
     // 投注项数量
@@ -183,82 +192,6 @@ import {update_match_parent_card_style} from  "./utils.js"
   }
 
 
-  compute_style_template_by_matchinfo(match,template_id){
-    if(template_id == 13){
-      template_id = 0
-    }
-    // 赛事列表模板配置
-    let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]['match_template_config'] || {}
-    // 赛事样式对象
-    let style_obj = {
-      // 显示等级
-      show_level:1,
-      // 是否显示卡片  没拿到赛事数据的时候 不显示
-      is_show_card:false,
-      // 是否显示角球、罚牌、点球大战等玩法
-      is_show_tab_play: false,
-      // 角球、罚牌、点球大战等玩法 是否折叠
-      is_fold_tab_play: false,
-      // 角球区域高度
-      tab_play_total_height: 0,
-      // 角球盘口高度
-      tab_play_title_height:template_config.tab_play_title_height,
-      // 角球盘口高度
-      tab_play_handicap_height:this.get_tab_play_height( _.get(match,'mid')),
-      // 足球篮球  附加盘数量
-      add_handicap_count: 0,
-      // 附加盘高度
-      add_handicap_height: 0,
-      // 是否需要动态计算高度
-      is_dynamic_compute_height:template_config.is_dynamic_compute_height,
-      // 卡片总高度
-      total_height: 0,
-      // 主盘口高度
-      main_handicap_height: 0,
-      // 是否显示当前局玩法
-      is_show_cur_handicap: false,
-      // 当前局盘口高度
-      cur_handicap_height: 0,
-    }
-
-    // 如果没有赛事信息
-    if(!match || !match.mid){
-      return style_obj
-    }
-    style_obj.csid = match.csid
-    style_obj.tpl_id = match.tpl_id
-    style_obj.is_show_card = true
-    // 0号模板设置角球玩法数据
-    if(template_id == 0){
-      let obj = this.compute_style_template_by_matchinfo_template0_zuqiu(match,template_config)
-      Object.assign(style_obj,obj)
-    }
-    // 7号模板 篮球 让球与大小
-    else if(template_id == 7){
-      let obj = this.compute_style_template_by_matchinfo_template7_lanqiu(match,template_config)
-      Object.assign(style_obj,obj)
-    }
-    // 18号模板 冠军
-    else if(template_id == 18){
-      let obj = this.compute_style_template_by_matchinfo_template18(match)
-      Object.assign(style_obj,obj)
-    }
-
-    // 设置主盘口高度
-    style_obj.main_handicap_height = template_config.main_handicap_height
-    // 是否显示当前局盘口
-    style_obj.is_show_cur_handicap = match.is_show_cur_handicap
-
-    // 如果有当前局盘口 设置当前局盘口高度
-    if(style_obj.is_show_cur_handicap){
-      style_obj.cur_handicap_height = template_config.cur_handicap_height
-    }
-
-    // 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
-    style_obj.total_height = style_obj.main_handicap_height + style_obj.cur_handicap_height + style_obj.add_handicap_height + style_obj.tab_play_total_height + 6
-    return style_obj
-  }
-
 
 
 
@@ -267,20 +200,20 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @Description 角球折叠
    * @param {number} mid 折叠的赛事ID
   */
-    fold_tab_play(mid){
-        let card_obj = this.all_card_obj['mid_'+mid] || {}
+    const   fold_tab_play=(mid)=>{
+        let card_obj = MatchListCardData.all_card_obj['mid_'+mid] || {}
         card_obj.is_fold_tab_play = !card_obj.is_fold_tab_play
         if(card_obj.is_fold_tab_play){
           // 角球已折叠  角球区域总高度 等于角球标题高度
           card_obj.tab_play_total_height = card_obj.tab_play_title_height
         }else if (card_obj.is_show_tab_play){
           // 角球且未折叠  角球区域总高度
-          card_obj.tab_play_total_height = card_obj.tab_play_title_height + this.get_tab_play_height(mid)
+          card_obj.tab_play_total_height = card_obj.tab_play_title_height + get_tab_play_height(mid)
         }
         // 设置赛事卡片总高度 + 赛事间距和边框6px
         card_obj.total_height = card_obj.main_handicap_height + card_obj.add_handicap_height + card_obj.tab_play_total_height + 6
         // 更新赛事父级卡片样式 即对应的联赛容器卡片样式
-        this.update_match_parent_card_style(card_obj,this.all_card_obj)
+       update_match_parent_card_style(card_obj,MatchListCardData.all_card_obj)
       }
     
 
@@ -290,7 +223,7 @@ import {update_match_parent_card_style} from  "./utils.js"
    * @param {number} template_id 赛事模板编号
    * @param {undefined} undefined
   */
-  get_league_title_card_height(template_id){
+export const  get_league_title_card_height=(template_id)=>{
     let height
     // 个别模板有两行玩法标题
     if([1,3,5,21,22].includes(+template_id)){
@@ -300,3 +233,89 @@ import {update_match_parent_card_style} from  "./utils.js"
     }
     return height
   }
+
+
+
+/**
+ * 
+ * 通过赛事信息 和模板 ID 计算 赛事的样式 模板 
+ * @param {*} match 
+ * @param {*} template_id 
+ * @returns 
+ */
+  
+ export const  compute_style_template_by_matchinfo=(match,template_id)=>{
+  if(template_id == 13){
+    template_id = 0
+  }
+  // 赛事列表模板配置
+  let template_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${template_id}_config`]['match_template_config'] || {}
+  // 赛事样式对象
+  let style_obj = {
+    // 显示等级
+    show_level:1,
+    // 是否显示卡片  没拿到赛事数据的时候 不显示
+    is_show_card:false,
+    // 是否显示角球、罚牌、点球大战等玩法
+    is_show_tab_play: false,
+    // 角球、罚牌、点球大战等玩法 是否折叠
+    is_fold_tab_play: false,
+    // 角球区域高度
+    tab_play_total_height: 0,
+    // 角球盘口高度
+    tab_play_title_height:template_config.tab_play_title_height,
+    // 角球盘口高度
+    tab_play_handicap_height:get_tab_play_height( lodash.get(match,'mid')),
+    // 足球篮球  附加盘数量
+    add_handicap_count: 0,
+    // 附加盘高度
+    add_handicap_height: 0,
+    // 是否需要动态计算高度
+    is_dynamic_compute_height:template_config.is_dynamic_compute_height,
+    // 卡片总高度
+    total_height: 0,
+    // 主盘口高度
+    main_handicap_height: 0,
+    // 是否显示当前局玩法
+    is_show_cur_handicap: false,
+    // 当前局盘口高度
+    cur_handicap_height: 0,
+  }
+
+  // 如果没有赛事信息
+  if(!match || !match.mid){
+    return style_obj
+  }
+  style_obj.csid = match.csid
+  style_obj.tpl_id = match.tpl_id
+  style_obj.is_show_card = true
+  // 0号模板设置角球玩法数据
+  if(template_id == 0){
+    let obj =  compute_style_template_by_matchinfo_template0_zuqiu(match,template_config)
+    Object.assign(style_obj,obj)
+  }
+  // 7号模板 篮球 让球与大小
+  else if(template_id == 7){
+    let obj =  compute_style_template_by_matchinfo_template7_lanqiu(match,template_config)
+    Object.assign(style_obj,obj)
+  }
+  // 18号模板 冠军
+  else if(template_id == 18){
+    let obj = compute_style_template_by_matchinfo_template18(match)
+    Object.assign(style_obj,obj)
+  }
+
+  // 设置主盘口高度
+  style_obj.main_handicap_height = template_config.main_handicap_height
+  // 是否显示当前局盘口
+  style_obj.is_show_cur_handicap = match.is_show_cur_handicap
+
+  // 如果有当前局盘口 设置当前局盘口高度
+  if(style_obj.is_show_cur_handicap){
+    style_obj.cur_handicap_height = template_config.cur_handicap_height
+  }
+
+  // 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
+  style_obj.total_height = style_obj.main_handicap_height + style_obj.cur_handicap_height + style_obj.add_handicap_height + style_obj.tab_play_total_height + 6
+  return style_obj
+}

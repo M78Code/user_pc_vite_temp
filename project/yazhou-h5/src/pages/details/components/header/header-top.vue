@@ -146,7 +146,7 @@ import utils from "src/core/utils/utils.js";    // 公共方法
 // #TODO vuex 
 // import {mapGetters, mapMutations} from "vuex";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "details_tab",
@@ -452,7 +452,7 @@ export default defineComponent({
           start_time = false;
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
-          useMittEmit(MITT_KEY.EMIT_MATCHINFO_LOADING);
+          useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
           // $root.$emit(emit_cmd.EMIT_MATCH_NOSTART);
         }
         // 同上注释
@@ -496,7 +496,7 @@ export default defineComponent({
       initEvent();
       // #TODO emit 
       emitters = [
-        useMittOn.on(MITT_KEY.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
+        useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
       // $root.$on(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })

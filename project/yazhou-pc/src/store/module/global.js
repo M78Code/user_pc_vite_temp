@@ -104,7 +104,6 @@ export default function globalReducer(state = initialState, action) {
       let cur_odds = localStorage.getItem("cur_odds") || state.odds.cur_odds;
       localStorage.setItem("pre_odds", pre_odds);
       localStorage.setItem("cur_odds", cur_odds);
-      state.odds = { pre_odds, cur_odds };
       return {
         ...state,
         odds: { pre_odds, cur_odds },
@@ -178,7 +177,7 @@ export default function globalReducer(state = initialState, action) {
       return { ...state, is_roll_show_banner: state.data };
     // //设置是否完成引导页
     case "SET_IS_FIRST_INTRODUCE_WRITE":
-      return { ...state, is_first_introduce_write: state.data };
+      return { ...state, SET_INIT_ODD: state.data };
     // //设置视频是否展开状态
     case "SET_IS_FOLD_STATUS":
       return { ...state, is_fold_status: state.data };
