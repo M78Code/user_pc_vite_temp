@@ -5,17 +5,17 @@
 <template>
   <div class="mx-10 unsettle" ref="unsettle">
     <!-- 加载中 -->
-    <SRecord v-if="is_loading"/>
-    <scroll ref="myScroll" :on-pull="onPull" v-else>
+    <!-- <SRecord v-if="is_loading" /> -->
+    <!-- <scroll ref="myScroll" :on-pull="onPull" v-else> -->
       <template v-if="no_data">
-        <div class="filter-button" v-if="get_user.settleSwitch == 1">
+        <div class="filter-button" v-if="!lodash.get(get_user, 'settleSwitch') == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
-        <template v-if="!is_all_early_flag">
+        <template v-if="is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
@@ -27,7 +27,7 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
-                  <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
+                  <!-- <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item> -->
                 </div>
               </q-slide-transition>
             </template>
@@ -35,21 +35,23 @@
         </template>
       </template>
       <!-- 去投注 -->
-      <settle-void :is_early="is_all_early_flag" v-if="(!no_data || is_all_early_flag)" :is_limit="is_limit"></settle-void>
-    </scroll>
+      <!-- <settle-void :is_early="is_all_early_flag" v-if="(!no_data || is_all_early_flag)" :is_limit="is_limit"></settle-void> -->
+    <!-- </scroll> -->
   </div>
 </template>
 
 <script setup>
 import lodash from 'lodash';
-import { api_betting } from "src/project/api/index.js";
-import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
-import settleVoid from "src/project/pages/cathectic/settle_void.vue";
-import scroll from "src/project/components/record_scroll/scroll.vue";
+import { api_betting } from "src/api";
+// import commonCathecticItem from "src/components/common/h5-common/common_cathectic_item.vue";
+// import settleVoid from "src/project/pages/cathectic/settle_void.vue";
+// import scroll from "src/components/common/h5-common/record_scroll/scroll.vue";
 // import skt_order from "src/public/mixins/websocket/data/skt_data_order.js"
-import SRecord from "src/project/components/skeleton/record.vue"
+// import SRecord from "src/components/common/h5-common/skeleton/record.vue"
 // import { mapGetters, mapMutations } from 'vuex';
+import { ref, watch, onMounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import store from 'src/store-redux'
 
     // mixins: [skt_order]
     // components: {
@@ -58,12 +60,16 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
     //   scroll,
     //   SRecord
     // },
+    
+    let store_ = ref(store.getState())
     // 锚点
     let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
   let list_data = ref([])
+  //list_data里面最后的一条数据的日期 '2020-11-17'
+  let last_record = ref('')
   //是否没有数据
   let no_data = ref(true)
   // 提前结算图标是否选中
@@ -87,7 +93,6 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
   //   ...mapGetters(['get_user', 'get_main_item'])
   // },
   
-  init_data()
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
@@ -99,6 +104,8 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
   })
 
   onMounted(() => {
+    // 首次进入获取数据
+    init_data()
     /**先清除计时器，再使用*/
     clearInterval(timer_2)
     timer_2 = setInterval(()=>{
@@ -115,58 +122,58 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
      * @param {undefined} undefined
      * @returns {null} null
      */
-  const change_early = () => {
-    is_early = !is_early
-  }
+  // const change_early = () => {
+  //   is_early = !is_early
+  // }
   /**
      * @description 判断单个订单是否有结算注单
      * @param {value} 金额
      * @returns {boolean} 是否显示提前结算
      */
-  const clac_is_early = (value = []) => {
-    return lodash.some(value,{is_show_early_settle:true})
-  }
+  // const clac_is_early = (value = []) => {
+  //   return lodash.some(value,{is_show_early_settle:true})
+  // }
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
      * @returns {boolean} 是否有结算注单
      */
-  const clac_all_is_early = () => {
-    const data = lodash.values(list_data)
-    return lodash.find(data,(item)=>{
-      return lodash.some(item.data,{is_show_early_settle:true})
-    }) ? false : true
-  }
+  // const clac_all_is_early = () => {
+  //   const data = lodash.values(list_data)
+  //   return lodash.find(data,(item)=>{
+  //     return lodash.some(item.data,{is_show_early_settle:true})
+  //   }) ? false : true
+  // }
   /**
    * @description 查询提前结算金额
    */
-  const search_early_money = () => {
-    let params = {orderNo:orderNumberItemList.join(',')}
-    // if(orderNumberItemList.length === 0){return}
-    api_betting.oderPreSettleMoney(params).then(res=>{
-      if(res.code == 200 && res.data){
-        set_early_moey_data( res.data)
-      }
-    })
-  }
+  // const search_early_money = () => {
+  //   let params = {orderNo:orderNumberItemList.join(',')}
+  //   // if(orderNumberItemList.length === 0){return}
+  //   api_betting.oderPreSettleMoney(params).then(res=>{
+  //     if(res.code == 200 && res.data){
+  //       set_early_moey_data( res.data)
+  //     }
+  //   })
+  // }
   /**
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
-  const check_early_order = () => {
-    if(!get_user.settleSwitch){
-      orderNumberItemList = []
-      return;
-    }
-    let tempList = []
-    lodash.forEach(list_data, (value, key)=> {
-      lodash.forEach(value.data,(item)=>{
-        if(item.enablePreSettle){
-          tempList.push(item.orderNo)
-        }
-      })
-    })
-    orderNumberItemList = tempList
-  }
+  // const check_early_order = () => {
+  //   if(!get_user.settleSwitch){
+  //     orderNumberItemList = []
+  //     return;
+  //   }
+  //   let tempList = []
+  //   lodash.forEach(list_data, (value, key)=> {
+  //     lodash.forEach(value.data,(item)=>{
+  //       if(item.enablePreSettle){
+  //         tempList.push(item.orderNo)
+  //       }
+  //     })
+  //   })
+  //   orderNumberItemList = tempList
+  // }
   /**
      * @description 重新请求主单记录数据
      * @param {Undefined} Undefined
@@ -183,7 +190,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
      */
   const init_data = (flag) => {
     var params = {
-      searchAfter: last_record || undefined,
+      // searchAfter: undefined,
       orderStatus: 0,
     }
     is_loading = !flag
@@ -196,7 +203,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
      * @param {Undefined} Undefined
      * @return {Undefined} undefined
     */
-  const get_order_list = () => {
+  const get_order_list = (params) => {
     //第一次加载时的注单数
     let size = 0  
     api_betting.post_getOrderList(params).then(res => {
@@ -255,68 +262,68 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
      * @param {Undefined} Undefined
      * @return {Undefined} undefined
      */
-  const onPull = () => {
-    var params = {
-      searchAfter: last_record || undefined,
-      orderStatus: 0,
-    };
-    let ele = myScroll
-    if (!is_hasnext || last_record === undefined) {
-      //没有更多
-      ele.setState(7);  
-      return;
-    }
-    //加载中
-    ele.setState(4);  
-    api_betting.post_getOrderList(params).then(res => {
-      //加载完成
-      ele.setState(5);  
-      let { record, hasNext } = lodash.get(res, "data", {});
-      is_hasnext = hasNext
-      if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
-        for (let item of Object.values(record)) {
-          item.open = true
-        }
-        last_record = lodash.findLastKey(record);
+  // const onPull = () => {
+  //   var params = {
+  //     searchAfter: last_record || undefined,
+  //     orderStatus: 0,
+  //   };
+  //   let ele = myScroll
+  //   if (!is_hasnext || last_record === undefined) {
+  //     //没有更多
+  //     ele.setState(7);  
+  //     return;
+  //   }
+  //   //加载中
+  //   ele.setState(4);  
+  //   api_betting.post_getOrderList(params).then(res => {
+  //     //加载完成
+  //     ele.setState(5);  
+  //     let { record, hasNext } = lodash.get(res, "data", {});
+  //     is_hasnext = hasNext
+  //     if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
+  //       for (let item of Object.values(record)) {
+  //         item.open = true
+  //       }
+  //       last_record = lodash.findLastKey(record);
 
-        // 合并数据
-        let obj = lodash.cloneDeep(list_data);
-        list_data = lodash.merge(obj, record)
-      } else {
-        //没有更多
-        ele.setState(7);  
-      }
-    }).catch(err => { console.error(err) });
-  }
+  //       // 合并数据
+  //       let obj = lodash.cloneDeep(list_data);
+  //       list_data = lodash.merge(obj, record)
+  //     } else {
+  //       //没有更多
+  //       ele.setState(7);  
+  //     }
+  //   }).catch(err => { console.error(err) });
+  // }
   /**
    *@description 展开与收起切换
     *@param {Boolean} val 展开-true  收起-false
     *@return {Undefined} undefined
     */
-  const toggle_show = (val) => {
-    val.open = !val.open
-    $forceUpdate()
-  }
+  // const toggle_show = (val) => {
+  //   val.open = !val.open
+  //   $forceUpdate()
+  // }
   /**
      * @description 清除当前组件所有定时器
      * @param {Undefined} Undefined
      * @return {Undefined} undefined
      */
-  const clear_timer = () => {
+  // const clear_timer = () => {
     
-    clearTimeout(timer_1)
-    clearTimeout(timer_2)
-    clearInterval(timer_1)
-    clearInterval(timer_2)
-  }
-  onUnmounted(() => {
-    clear_timer();
-    $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
-    set_early_moey_data([])
-    // for (const key in $data) {
-    //   $data[key] = null
-    // }
-  })
+  //   clearTimeout(timer_1)
+  //   clearTimeout(timer_2)
+  //   clearInterval(timer_1)
+  //   clearInterval(timer_2)
+  // }
+  // onUnmounted(() => {
+  //   clear_timer();
+  //   $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+  //   set_early_moey_data([])
+  //   // for (const key in $data) {
+  //   //   $data[key] = null
+  //   // }
+  // })
 
 </script>
 
