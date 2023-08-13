@@ -72,7 +72,7 @@ onmounted(() => {
   timer2.value = null;
   get_list('first_loading')
   // emit 后补充
-  $root.$on(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
+  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
 })
 
 // 选项切换
@@ -110,7 +110,7 @@ const change_background = computed(() => {
 const wrapper_scrolling = ($event) => {
   //当列表滚动时隐藏罚牌说明
   wrapper_scroll_top.value = $event.target.scrollTop;
-  $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING, {
+  useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, {
     cb: (_child_this) => {
       // 回调函数 重写子类的方法值
       const scroll_top = _child_this.$refs["scroll_top"];
@@ -228,9 +228,9 @@ const changeTab = (item, index, is_self) => {
   // 当前index 赋值
   tab_Index.value = index;
   //  调用列表页接口
-  $root.$emit(emit_cmd.EMIT_TAB_HOT_CHANGING);
+  useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);
   // 如果不是第一个选项卡，则调用 下边方法，初始化数据
-  $root.$emit(emit_cmd.EMIT_SET_SPORTS_BALLS_TAB)
+  useMittEmit(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB)
 },
 // 展示loading
 const show_hot_schedule_loading = (is_true) => {
@@ -242,15 +242,15 @@ const show_hot_schedule_loading = (is_true) => {
 },
 // 刷新列表数据
 const refresh_list = () => {
-  $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+  useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "footer-refresh"
   });
 }
 
 
 onUnmounted(() => {
-  $root.$off(emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
-  $root.$off(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
+  $root.$off(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
+  $root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
   if (timer2) {
     clearTimeout(timer2)
     timer2 = null

@@ -188,6 +188,7 @@
 
 <script setup>
   import ballSpin from './ball_spin.vue';
+  import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   const money = ref('')//金额
   // const get_bet_status = 1,    //0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
   const odds_change = ref('0')    //0-正常，1-赔率升，2-赔率降
@@ -409,7 +410,7 @@
                 }, 2000);
               }, 5000);
               // c201消息处理
-              $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
+              useMittOn(MITT_TYPES.EMIT_C201_UPDATE, c201_update_handler1)
               break;
             default:
               break;
@@ -422,7 +423,7 @@
           match_info.value = data.orderDetailRespList[0].matchInfo;
 
           if (get_detail_data.mid && !get_is_show_settle_tab) {   //详情页需要拉取玩法集接口
-            $root.$emit(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET)
+            useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET)
           }
         } else {  // 投注失败在 back_msg 方法中查看注释
           set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
