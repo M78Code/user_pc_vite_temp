@@ -35,7 +35,7 @@ const initialState = {
     // 头部高度
     header_height: 80,
     // 主内容高度（菜单、列表、详情、右侧）
-    content_height:900,
+    content_height: 900,
   },
 };
 
@@ -51,10 +51,10 @@ export default function layoutReducer(state = initialState, action) {
     case "SETLAYOUTLEFTSHOW":
       return { ...state, layout_left_show: action.data };
     // 获取页面宽高信息 --可以废弃，废弃改动较大
-    case "SETLAYOUTLISTSIZE":
+    case "SET_LAYOUT_LIST_SIZE":
       return { ...state, layout_list_size: action.data };
     //列表页宽度--可以废弃
-    case "SETLAYOUTLISTWIDTH":
+    case "SET_LAYOUT_LIST_WIDTH":
       return { ...state, layout_list_width: action.data };
     // 设置列表显示内容  match:赛事 collect:收藏 search:搜索
     case "SETLAYOUTLISTTYPE":
@@ -62,12 +62,14 @@ export default function layoutReducer(state = initialState, action) {
     // 自定义滚动条样式
     case "SETSCROLLSTYLE":
       return { ...state, scroll_style: action.data };
-    //页面所有布局宽高信息
-    case "SETLAYOUTSIZE":
-      return { ...state, layout_size: action.data };
     //设置当前页面布局
     case "SET_LAYOUT_CUR_PAGE":
       return { ...state, layout_cur_page: action.data };
+    //页面所有布局宽高信息
+
+    case "SET_LAYOUT_SIZE":
+      const layout_size = Object.assign({}, state.layout_size, action.data);
+      return { ...state, layout_size };
     default:
       return state;
   }
