@@ -1070,7 +1070,7 @@ function get_balance() {
     if (code == 200) {
       this.vx_set_user_balance(result.amount);
     }
-    this.show_fail_alert();
+    userCtr.show_fail_alert();
   });
 }
 /**

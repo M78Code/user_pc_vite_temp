@@ -19,7 +19,8 @@ import lodash from "lodash";
 import axios from "axios";
 const axios_instance = axios.create();
 
-class userCtr {
+import { ref} from "vue"
+class UserCtr {
  constructor() {
    this.init();
  }
@@ -40,7 +41,18 @@ class userCtr {
    this.token_expired_max_process_delay_time = 15000;
    // getUserInfo 原始数据备份 备份数据
    this.getuserinfo_res_backup= null;
+   // uid 
+   this.uid= ref('') 
  }
+/**
+ * 用户 id 
+ * @param {*} uid 
+ */
+
+ set_uid(uid){
+  this.uid.value = uid  
+ }
+
  /**
   *   调用 getuserinfo 接口返回值  数据备份
   *   因为存在 域名检测会走  getuserinfo ，返回体是不做加工的
@@ -656,7 +668,41 @@ set_league_logo_url(url){
       sessionStorage.setItem("theme", session_theme.replace("_y0", ""));
    }
  }
+
+
+  //显示token失效弹窗
+  show_fail_alert() {
+    let ret = false;
+    let callbackUrl = this.vx_get_user.callbackUrl
+
+    if (this.vx_get_is_invalid) { //是否失效
+      // if ((!callbackUrl) && (callbackUrl != undefined)) {
+      //   // 弹出提示消息、登录层
+      //   window.vue.$root.$emit(
+      //     window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD,
+      //     window.vue.$root.$t("login.login_timeout")
+      //   );
+      // } else {
+        // 登录失效直接展示 alert
+        this.$root.$emit(this.emit_cmd.EMIT_SHOW_ALERT_CMD, {
+          text: this.$root.$t("login.login_timeout"),
+          callback: () => {
+
+            location.href = callbackUrl
+            // 清除旧的登录信息
+            this.vx_clear_user()
+          }
+        });
+      // }
+      ret = true;
+    }
+    return ret;
+  }
+
+
+
+
 }
 
-const instance = new userCtr();
-export { instance };
+const instance = new UserCtr();
+export  default instance;

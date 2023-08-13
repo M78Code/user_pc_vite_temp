@@ -33,7 +33,7 @@ const menu_type_to_menu_name = {
 // 菜单名称列表
 const menu_name_arr = Object.values(menu_type_to_menu_name);
 
-class menu_config_class {
+class MenuData {
   /**
    * @Description 构造函数
    * @param {undefined} undefined
@@ -848,6 +848,5 @@ class menu_config_class {
     // console.error("cl_1");
   }
 }
-const menu_config = new menu_config_class();
-
-export default menu_config;
+ 
+export default  new MenuData();

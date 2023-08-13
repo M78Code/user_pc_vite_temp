@@ -113,6 +113,15 @@ class MatchListCard {
       }
     );
   }
+
+
+/**
+ * 哪种列表类型
+ * @returns 
+ */  
+get_match_list_mapping_relation_obj_type(){
+    return MatchListCardData.match_list_mapping_relation_obj_type
+  }
   /**
    * 联赛 折叠
    * click_card_obj 点击的联赛卡片对象

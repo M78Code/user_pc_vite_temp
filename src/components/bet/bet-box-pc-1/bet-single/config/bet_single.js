@@ -544,7 +544,7 @@ export default {
      */
     submit_handle(handle_type) {
       //判断是不是失效
-      if (this.show_fail_alert()) {
+      if (userCtr.show_fail_alert()) {
         return;
       }
       let user = this.vx_get_user;
