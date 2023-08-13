@@ -150,6 +150,7 @@ import lodash from "lodash";
 // import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
+import store from "../../store/index.js";
 // import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -181,7 +182,8 @@ export default defineComponent({
   
   setup(props, evnet) {
     const router = useRouter()
-    const route = useRoute()
+    const route = useRoute();
+    const state = store.getState()
     const data = reactive({
       // emit 数据集合
       emitters: [],
@@ -236,6 +238,73 @@ export default defineComponent({
       viewTab: 'bet',
       // 控制视频是否展示返回按钮
       show_go_back:false,
+      init_event_timer_count: 0,
+      timer1_: null,
+      get_match_detail_timer: null,
+      back_main_list_timer: null,
+      axios_debounce_timer: null,
+      init_event_timer: null,
+
+
+
+      get_details_chatroom_data: "",
+      get_theme: "",
+      // 视频url信息
+      get_video_url: 'get_video_url',
+      // "get_bet_list",
+      // 当前选中的一级菜单, 二级菜单, 三级菜单对象
+      get_current_menu: "get_current_menu",
+      // 是否展示视频
+      get_show_video: "get_show_video",
+
+      // 玩法集置顶效果
+      get_zhiding_info: "get_zhiding_info",
+      // 视频置顶
+      // "get_video_zhiding",
+      // 玩法tab
+      get_details_item: "get_details_item",
+      // 登录用户Id
+      get_uid: '505915677417900030',
+      // 早盘或者串关日期参数
+      get_md: "get_md",
+      // 菜单
+      get_current_sub_menuid: "get_current_sub_menuid",
+      // 排序
+      get_sort_type: "get_sort_type",
+      // 搜素关键字
+      get_search_txt: "get_search_txt",
+      // 是否显示info说明
+      get_info_show: "get_info_show",
+      // 设置玩法集固定
+      get_tab_fix: "get_tab_fix",
+      // 赛果标识
+      get_menu_type: "",
+      // 获取列表页当前选中时间
+      get_current_menu: "get_current_menu",
+      // 是否从直播进入详情
+      get_play_video: "get_play_video",
+      get_detail_data: "get_detail_data",
+      // 视频是否全屏
+      get_is_full_screen: "get_is_full_screen",
+      // 商户是否需要直接跳到列表页（url地址有label参数）
+      get_golistpage: "get_golistpage",
+      get_godetailpage: "get_godetailpage",
+      get_betbar_show: "get_betbar_show",
+      // 是否显示全屏下投注弹窗
+      get_bet_show: "get_bet_show",
+      get_is_hengping: "get_is_hengping",
+      get_is_dp_video_full_screen: "get_is_dp_video_full_screen",
+      get_match_base_info_obj: 'get_match_base_info_obj',
+      get_user: 'get_user',
+      // 'get_analyze_show',
+      // 'get_goto_detail_matchid',
+      get_access_config: 'get_access_config',
+      // 聊天室ID
+      // 'get_chatroom_id',
+      // 获取语言
+      get_lang: 'get_lang',
+      get_event_list: 'get_event_list',
+      get_curr_tab_info: 'get_curr_tab_info',
     });
 
     // #TODO VUEX 
@@ -455,7 +524,7 @@ export default defineComponent({
           // ms变更时才调用
           if (_old) {
             // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-            // get_match_details({ mid: matchid, cuid: get_uid });
+            get_match_details({ mid: matchid.value, cuid: data.get_uid });
             get_odds_list()
           }
         }
@@ -494,7 +563,7 @@ export default defineComponent({
 
     onMounted(() => {
       // 原created 
-    //   init_event_timer_count = 0;
+      data.init_event_timer_count = 0;
       // 延时器
       data.timer1_ = null;
       data.timer2_ = null;
@@ -536,7 +605,7 @@ export default defineComponent({
 
       // 原mounted
       get_chatroom_info()
-    //   utils.load_video_resources(get_uid, 'is_details_page')
+    //   utils.load_video_resources(data.get_uid, 'is_details_page')
     //   set_zhiding_info( false );
     //   set_video_zhiding( false );
       if (!location.search.includes('keep_url')) {
@@ -804,29 +873,29 @@ export default defineComponent({
     //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
     const initEvent = () => {
       // get_uid为空时循环检测进行拉取逻辑处理
-    //   if(get_uid || init_event_timer_count>30){
-    //     get_football_replay(0)
-    //     get_match_details({
-    //       // 赛事id
-    //       // mid: '33522226000129832', // matchid,
-    //       mid: matchid,
-    //       // 用户id
-    //       cuid: get_uid,
-    //     });
-    //     init_event_timer_count = 0;
-    //   } else {
-    //     init_event_timer_count++;
-    //     clearTimeout(init_event_timer);
-    //     init_event_timer = setTimeout(() => {
-    //       initEvent();
-    //     }, 500);
-    //   }
+      if(data.get_uid || data.init_event_timer_count>30){
+        get_football_replay(0)
+        get_match_details({
+          // 赛事id
+          // mid: '33522226000129832', // matchid,
+          mid: matchid.value,
+          // 用户id
+          cuid: data.get_uid,
+        });
+        data.init_event_timer_count = 0;
+      } else {
+        data.init_event_timer_count++;
+        clearTimeout(data.init_event_timer);
+        data.init_event_timer = setTimeout(() => {
+          initEvent();
+        }, 500);
+      }
     };
     /**
      * 聊天室接口
      */
     const get_chatroom_info = () => {
-      api_common.get_chat_datainfo({mid: matchid,device:'H5'}).then(({data})=>{
+      api_common.get_chat_datainfo({mid: matchid.value,device:'H5'}).then(({data})=>{
         if(data){
           set_details_chatroom_data(data)
         }
@@ -863,7 +932,7 @@ export default defineComponent({
      * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
      */
     const get_match_details = (params) => {
-      let api = get_menu_type == 3000 ? api_common.get_DJ_matchDetail_MatchInfo : api_common.get_matchDetail_MatchInfo
+      let api = data.get_menu_type == 3000 ? api_common.get_DJ_matchDetail_MatchInfo : api_common.get_matchDetail_MatchInfo
       api( params ).then(({ data, ts,code }) => {
       // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if( code == '0400500' || !data || Object.keys(data).length===0 ){
@@ -890,10 +959,10 @@ export default defineComponent({
       })
       .catch((err)=>{
         console.error(err);
-        requestCount++
+        data.requestCount++
         // 兜底处理，若连续5次拉取接口数据失败，则从仓库取基本数据
         // 间隔3s拉取（服务端节流限制）
-        if (requestCount < 5) {
+        if (data.requestCount < 5) {
           clearTimeout(get_match_detail_timer)
           get_match_detail_timer = setTimeout(() => {
             initEvent()
@@ -910,11 +979,11 @@ export default defineComponent({
         skeleton.details = true
         skeleton.list = true
         if(!data || Object.keys(data).length <= 0) {
-          router.replace({name:'category', params: {mid: matchid}});
+          router.replace({name:'category', params: {mid: matchid.value}});
           return false;
         }
 
-        requestCount = 0
+        data.requestCount = 0
         is_show_detail_header_data = true;
         data.detail_data = data;
         math_list_data = [data]
@@ -925,7 +994,7 @@ export default defineComponent({
         set_detail_data(cloneData);
 
         // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-        let params1 = { sportId: data.csid,mid: matchid};
+        let params1 = { sportId: data.csid,mid: matchid.value};
         params1 = params1;  // get_odds_list
         // 关联联赛下的赛事项查询,是否存在
         params1 && get_odds_list(params1, 'init_req');
@@ -943,7 +1012,7 @@ export default defineComponent({
           math_list_data = store_data.list;
         }
       }
-      if(get_menu_type == 3000){
+      if(data.get_menu_type == 3000){
         Object.assign(params,{isESport: 1})
       }
       /**
@@ -982,7 +1051,7 @@ export default defineComponent({
     *@param {obj} params 请求参数
     *@return {obj} init_req 是否是初次进入详情
     */
-    const get_odds_list = async(params = { sportId: get_detail_data.csid,mid: matchid}, init_req) => {
+    const get_odds_list = async(params = { sportId: get_detail_data.csid,mid: matchid.value}, init_req) => {
       const _get_category_list = () => {
         api_common.get_category_list(params).then(res => {
           const data = lodash.get(res, "data");
@@ -1002,7 +1071,7 @@ export default defineComponent({
           }
           let search_term = route.query && route.query.search_term
           if(search_term){
-            router.replace({name:'category', params:{mid: matchid, mcid: data_list[0]['id']},query:{search_term: search_term}})
+            router.replace({name:'category', params:{mid: matchid.value, mcid: data_list[0]['id']},query:{search_term: search_term}})
           }
           // else{
           // router.replace({name:'category', params:{mcid: data_list[0]['id']}})
@@ -1020,7 +1089,7 @@ export default defineComponent({
               }
 
               // 获取赛果数据后，滑动到顶部
-              if (get_menu_type === 28 && route.name === 'match_result') {
+              if (data.get_menu_type === 28 && route.name === 'match_result') {
                 document.querySelector('.match-header-result').scrollTop = 0
               }
             });
@@ -1101,7 +1170,7 @@ export default defineComponent({
       // mcms = 3 删除玩法集
       // mcms = 2 新增玩法集
       // 无论增减 都重新调用玩法集接口：category/getCategoryList
-      let n_params = { sportId: data.detail_data.csid,mid: matchid};
+      let n_params = { sportId: data.detail_data.csid,mid: matchid.value};
       get_odds_list(n_params);
     };
     /**
@@ -1126,9 +1195,9 @@ export default defineComponent({
         // 搜索关键词 赛事搜索(字符串)
         keyword: get_search_txt || '',
         // 用户id或者uuid
-        // cuid: get_uid,
+        // cuid: data.get_uid,
         // 赛事id
-        mid: matchid
+        mid: matchid.value
       }
 
       api_common.get_detail_video(params).then(res => {
@@ -1155,7 +1224,7 @@ export default defineComponent({
           }
 
           // 重新调用 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
-        //   get_match_details({ mid: event_data.mid, cuid: get_uid });
+          get_match_details({ mid: event_data.mid, cuid: data.get_uid });
           // 重新调用 详情页面玩法集接口(/v1/m/category/getCategoryList)
           get_odds_list({sportId: event_data.csid,mid: event_data.mid});
           // 存储设置新的赛事id
