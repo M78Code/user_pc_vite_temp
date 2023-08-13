@@ -61,6 +61,7 @@ let PROJECT_NAME = project_map[PROJECT_NUM];
 
 PROJECT_NAME = "yazhou-pc";
 // PROJECT_NAME = "yazhou-h5";
+DEV_TARGET_ENV = "idc_sandbox"; //设置环境
 
 // --------------------------------
 // 所有  目标环境标识
@@ -81,6 +82,7 @@ function get_date_format() {
   const _d = _date.getDate();
   return `${_y}${_m > 9 ? _m : "0" + _m}${_d}`;
 }
+//暂时取全量-1.json  差量的 -2.json
 const FILE_PATH = `https://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${ARGV}-1.json`;
 export {
   DEV_TARGET_ENV,

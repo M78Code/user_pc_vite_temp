@@ -104,8 +104,8 @@ const handicap_tabs_bar = ref(null)
 defineExpose({handicap_tabs_bar})
 
 
-const useRoute = useRoute();
-const useRouter = useRouter();
+const route = useRoute();
+const router = useRouter();
 
 
 

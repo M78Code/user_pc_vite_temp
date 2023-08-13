@@ -16,7 +16,7 @@
       <site-header
         v-show="route.params.video_size != 1"
         class="yb-layout-margin-header"
-        :nav_list="nav_list"
+        :nav_list="data_ref.nav_list"
         :class="{ activity_bonus: data_ref.hasBonusType3 }"
         :imgUrl="data_ref.special_img_url"
         :hostUrl="data_ref.special_host_url"
@@ -312,7 +312,7 @@
         </vue-draggable-resizable>
       </template>
       <!-- 视频画中画组件 -->
-      <moveVideo v-if="data_ref.show_move_video"></moveVideo>
+      <moveVideo v-if="show_move_video"></moveVideo>
     </div>
     <loading v-if="data_ref.dataLoading" />
     <!--提示区域-->
@@ -342,11 +342,17 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, computed, reactive,nextTick } from "vue";
+import {
+  ref,
+  onMounted,
+  computed,
+  defineAsyncComponent,
+  reactive,
+  nextTick,
+} from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "../store/index.js";
 import base_data from "src/core/utils/base-data/base-data.js";
-import MainMenu from "../pages/left-menu/index.vue";
 import matchlist from "src/core/match-list/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
 import new_menu from "src/core/menu/menu-class-new";
@@ -355,7 +361,15 @@ import { useEventListener } from "src/core/utils/event-hook";
 import utils from "src/core/utils/utils.js";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { api_account } from "src/api/";
+import { api_account, api_common } from "src/api/";
+/**组件*/
+import MainMenu from "../pages/left-menu/index.vue";
+// import siteHeader from "../components/site-header/site-header.vue"; //报错
+// import moveVideo from '../components/video/video.vue'//报错
+// const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
+const matchDetails = defineAsyncComponent(() =>
+  import("../pages/match-details/match-details.vue")
+);
 
 const { t } = useI18n();
 const route = useRoute();
@@ -518,14 +532,6 @@ const thumb_style = ref({
   width: "6px",
   opacity: 0.3,
 });
-
-// 是否展开
-const is_expand = ref(true);
-const is_expand2 = ref(true);
-
-// 是否显示合并信息
-const show_merge_info = ref(false);
-
 const show_bet_zone = computed(() => {
   //是不是可以显示内嵌框
   if (
@@ -565,77 +571,6 @@ const show_move_video = computed(() => {
     computed_data.vx_get_user.merchantEventSwitchVO.eventSwitch
   );
 });
-store.dispatch({ type: "set_is_virtual_handle", data: true });
-store.dispatch({ type: "set_is_single_handle", data: false });
-store.dispatch({ type: "set_is_handle", data: false });
-new_menu.get_new_data();
-base_data.get_new_data();
-new_menu.show_bet_zone = false;
-// 用户是否操作过页面
-let user_is_handle = false;
-matchlist.init_loading_time_record();
-// 无 token 时直接关闭loading
-if (window.vue && !window.vue.get_user) {
-  data_ref.dataLoading = false;
-}
-resize();
-store.dispatch({ type: "SET_INIT_ODD" });
-store.dispatch({ type: "SET_INIT_MATCH_SORT" });
-init_site_header();
-
-// 接收开启loadding指令
-useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding);
-// 接收关闭loadding指令
-useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding);
-// 更新用户余额
-useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance);
-useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet);
-//计算投注框高度
-useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height);
-//获取投注数据(内嵌mini切换或者语言发生变化时调用)
-useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data);
-// // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
-useMittOn(MITT_TYPES["MENU_INIT_DONE"], menu_init_done);
-useMittOn(MITT_TYPES["IS_MENU_LOADDING"], is_menu_loadding);
-useMittOn(MITT_TYPES["SET_PRE_VIDEO_SRC"], set_video_src);
-useMittOn(MITT_TYPES["CLOSE_HOME_LOADING"], closeLoading);
-// // 保存首页路径，活动页需要用到
-// if (this.route.path == '/home') {
-//   window.localStorage.setItem('home_url', window.location.origin);
-// }
-// // 获取活动维护状态
-// this.isMaintaining = _.get(computed_data.vx_get_user, 'maintaining');
-// // 在活动窗口内更新首页小红点
-useEventListener({
-  name: "message",
-  listener: cancelDot,
-});
-useEventListener({
-  name: "resize",
-  listener: resize,
-});
-useEventListener({
-  name: "mousedown",
-  listener: globalclick,
-});
-// // 更新活动入口小红点
-useMittOn(MITT_TYPES["UPDATE_BONUS"], getActivityLists);
-// // 版本号检查状态通知
-useMittOn(MITT_TYPES["REQUEST_USER_BANNER"], newVersion);
-// // 重新计算投注框高度
-useMittOn(MITT_TYPES["TOGGLE_HANDLE"], toggle_handle);
-useMittOn(MITT_TYPES["EMIT_LIST_ON_SCROLL"], list_on_scroll);
-useMittOn(MITT_TYPES["RIGHT_DETAILS_ON_SCROLL"], list_on_scroll);
-
-// // 重置 vuex 存储
-// this.vx_set_show_record(false);
-// this.vx_set_show_filter_popup(false);
-
-// this.vx_set_match_details_params({});
-// // 进入首页
-// utils.gtag_view_send('PC_home', '/home')
-// this.first_load = true
-// this.get_access_config()
 // ...mapActions({
 //       set_odds_coversion_map: "set_odds_coversion_map",
 //       vx_set_init_odd: "set_init_odd",
@@ -660,7 +595,9 @@ function vx_set_left_menu_toggle(data) {
 //       vx_set_layout_cur_page: "set_layout_cur_page",
 //       vx_set_show_filter_popup: "set_show_filter_popup",
 
-//       vx_set_show_record: "set_show_record",
+function vx_set_show_record(data) {
+  store.dispatch({ type: "set_show_record", data });
+}
 //       vx_set_match_details_params: "set_match_details_params",
 
 function vx_set_main_menu_toggle(data) {
@@ -676,6 +613,9 @@ function set_layout_list_width(data) {
 //       vx_set_is_bet_single: 'set_is_bet_single',
 //       //设置全局开关
 //       set_global_switch: 'set_global_switch',
+function set_global_switch(data) {
+  store.dispatch({ type: "set_global_switch", data });
+}
 //       // 设置左侧布局
 //       vx_set_layout_left_show: "set_layout_left_show",
 //       //设置多列玩法状态
@@ -717,7 +657,7 @@ function get_access_config() {
         //多列
         multiColumn: multi_column = true,
       } = data;
-      this.set_global_switch({
+      set_global_switch({
         hot_recommend,
         statistics_switch,
         collect_switch,
@@ -831,7 +771,7 @@ function init_site_header(type = null) {
     this.lang == "zh" &&
     this.get_global_switch.activity_switch
   ) {
-    this.hasActivity = true;
+    data_ref.hasActivity = true;
     // 向顶部导航栏添加活动入口
     let tab = {
       id: 9,
@@ -1126,7 +1066,8 @@ function computed_bet_height() {
         }
         if (
           computed_data.vx_get_bet_list.length > 1 &&
-          embedded_single.value.$data.view_ctr_obj.order_confirm_complete == 0 &&
+          embedded_single.value.$data.view_ctr_obj.order_confirm_complete ==
+            0 &&
           !computed_data.vx_is_bet_single
         ) {
           date_ref.content_height += 90;
@@ -1291,7 +1232,7 @@ function cancelDot(e) {
     }
   } else if (get(e, "data.name") == "close_win") {
     let obj = get(e, "data.obj") || {};
-    utils.send_zhuge_event(obj.name, obj.info);
+    // utils.send_zhuge_event(obj.name, obj.info);
   }
 }
 /**
@@ -1523,7 +1464,7 @@ function closeLoading(state) {
 function toggle_merge() {
   this.vx_set_is_bet_merge(!computed_data.vx_get_is_bet_merge);
   if (computed_data.vx_get_is_bet_merge) {
-    utils.send_zhuge_event("PC_合并");
+    // utils.send_zhuge_event("PC_合并");
   }
   let len = computed_data.vx_get_bet_single_list.length;
   // 取消合并
@@ -1598,6 +1539,84 @@ function update_bet_data() {
       });
   }
 }
+
+store.dispatch({ type: "set_is_virtual_handle", data: true });
+store.dispatch({ type: "set_is_single_handle", data: false });
+store.dispatch({ type: "set_is_handle", data: false });
+new_menu.get_new_data();
+base_data.get_new_data();
+new_menu.show_bet_zone = false;
+// 用户是否操作过页面
+let user_is_handle = false;
+matchlist.init_loading_time_record();
+// 无 token 时直接关闭loading
+if (window.vue && !window.vue.get_user) {
+  data_ref.dataLoading = false;
+}
+resize();
+store.dispatch({ type: "SET_INIT_ODD" });
+store.dispatch({ type: "SET_INIT_MATCH_SORT" });
+init_site_header();
+
+// 接收开启loadding指令
+useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding);
+// 接收关闭loadding指令
+useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding);
+// 更新用户余额
+useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance);
+useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet);
+//计算投注框高度
+useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height);
+//获取投注数据(内嵌mini切换或者语言发生变化时调用)
+useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data);
+// // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
+useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done);
+useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding);
+useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src);
+useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading);
+// // 保存首页路径，活动页需要用到
+// if (this.route.path == '/home') {
+//   window.localStorage.setItem('home_url', window.location.origin);
+// }
+// // 获取活动维护状态
+// this.isMaintaining = _.get(computed_data.vx_get_user, 'maintaining');
+// // 在活动窗口内更新首页小红点
+useEventListener({
+  name: "message",
+  listener: cancelDot,
+});
+useEventListener({
+  name: "resize",
+  listener: resize,
+});
+useEventListener({
+  name: "mousedown",
+  listener: globalclick,
+});
+// // 更新活动入口小红点
+useMittOn(MITT_TYPES.UPDATE_BONUS, getActivityLists);
+// // 版本号检查状态通知
+useMittOn(MITT_TYPES.REQUEST_USER_BANNER, newVersion);
+// // 重新计算投注框高度
+useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle);
+useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll);
+useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll);
+
+// // 重置 vuex 存储
+// vx_set_show_record(false);
+store.dispatch({
+  type: "set_show_filter_popup",
+  data: false,
+});
+store.dispatch({
+  type: "set_match_details_params",
+  data: {},
+});
+// // 进入首页
+//gtag打点
+// utils.gtag_view_send('PC_home', '/home')
+data_ref.first_load = true;
+get_access_config();
 </script>
 
 <style lang="scss" scoped>
