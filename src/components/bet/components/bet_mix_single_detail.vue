@@ -130,7 +130,7 @@ watch(() => money, (new_) => {
     if (money.value < min_money.value && money.value >= 0.01) {
       money.value = min_money.value.toString()
 
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
       tips_msg_update($root.$t('bet.err_msg10', [min_money.value]))
 
       clearTimeout(timer2)
@@ -151,7 +151,7 @@ watch(() => get_active_index, (new_) => {
   check_moneyok(new_)
 
   if (get_active_index == index_.value) {
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
   }
 
   if (!is_watch.value) { return }
@@ -167,7 +167,7 @@ watch(() => get_active_index, (new_) => {
 //将金额和最高可投传递给键盘
 watch(() => get_active_index, (new_) => {
   if (get_active_index == index_.value) {
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
   }
 })
 
@@ -215,12 +215,12 @@ onmounted(() => {
   }
 
   //监听键盘金额改变事件
-  $root.$on(emit_cmd.EMIT_CHANGE_MONEY, change_money_)
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_)
 
   //将金额和最高可投传递给键盘
   $nextTick(() => {
     if (get_active_index == index_.value) {
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
     }
   })
 })
@@ -296,7 +296,7 @@ const check_moneyok = (val) => {
   if (val > +get_user.balance) {
     money.value = get_user.balance.toString()
 
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
 
     tips_msg = $root.$t('bet.err_msg09')
 
@@ -316,7 +316,7 @@ const check_moneyok = (val) => {
   ) {
     set_money_notok_list({ value: get_bet_list[0], status: 1 })
     money.value = max_money.toString()
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
   }
   else if (
     val < min_money.value &&
@@ -347,7 +347,7 @@ const change_kbdshow = () => {
   if (get_active_index == index_.value) {
     // 同步程序走完后再处理逻辑
     $nextTick(() => {
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
     })
   }
 }

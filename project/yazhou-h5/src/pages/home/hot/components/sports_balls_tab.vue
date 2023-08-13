@@ -197,15 +197,15 @@ const on_listeners = () =>{
     }
 
 onmounted(()=>{
-  // this.$root.$on(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-  //   this.$root.$on(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-  //   this.$root.$on(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
+  // this.useMittOn(this.MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
+  //   this.useMittOn(this.MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
+  //   this.useMittOn(this.MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
 })
 
 onUnmounted(()=>{
-  // this.$root.$off(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-  //   this.$root.$off(this.emit_cmd.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-  //   this.$root.$off(this.emit_cmd.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
+  // this.$root.$off(this.MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
+  //   this.$root.$off(this.MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
+  //   this.$root.$off(this.MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
   //   for (const key in this.$data) {
   //     this.$data[key] = null
   // }

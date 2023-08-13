@@ -758,7 +758,7 @@ export default {
      * @return {undefined} undefined
      */
     input_max_money() {
-      if(this.show_fail_alert() || this.view_ctr_obj.single_range_money==-3) {
+      if(userCtr.show_fail_alert() || this.view_ctr_obj.single_range_money==-3) {
         return;
       }
       this.bet_reset_money_msg();

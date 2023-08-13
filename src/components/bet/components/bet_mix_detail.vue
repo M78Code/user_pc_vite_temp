@@ -31,6 +31,7 @@
 // import betting from 'src/project/mixins/betting/betting.js';
 // const licia_format = require('licia/format');
 // import global_filters from 'src/boot/global_filters.js';
+import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -38,6 +39,9 @@ const min_money = ref(1)   //最低投注金额
 const max_money = ref(0)   //最高可投金额
 const is_watch = ref(true)    //组件渲染时是否监听money，后期再优化
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
+emitters.value = ref({
+    emitter_1: useMittOn.on(MITT_KEY.EMIT_CHANGE_MONEY, change_money_).off,
+})
 
 
 onMounted(() => {
@@ -95,12 +99,12 @@ onMounted(() => {
   }
 
   //监听键盘金额改变事件
-  $root.$on(emit_cmd.EMIT_CHANGE_MONEY, change_money_)
+  useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_)
 
   //将金额和最高可投传递给键盘
   $nextTick(() => {
     if (get_active_index == index_) {
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
   })
   $emit('max-win-money-emit', max_win_money_all)
@@ -156,7 +160,7 @@ watch(() => get_money_notok_list2.length, (new_) => {
   if (money.value < min_money.value && money.value >= 0.01) {
     money.value = min_money.value.toString()
 
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     tips_msg_update($root.$t('bet.err_msg10', [min_money.value]))
 
     clearTimeout(timer2)
@@ -169,7 +173,7 @@ watch(() => get_money_notok_list2.length, (new_) => {
 watch(() => get_bet_list.length, (new_) => {
   money.value = '';
 
-  $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+  useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
 
   //投注项数量变动时,先将默认限额置空
   max_money_back.value = false
@@ -218,7 +222,7 @@ watch(() => get_active_index, (new_) => {
 //将金额和最高可投传递给键盘
 watch(() => get_money_notok_list2.length, (new_, old_) => {
   if (get_active_index == index_) {
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
 })
 
@@ -265,7 +269,7 @@ watch(() => index_obj, (new_) => {
     */
 const clear_money = () => {
   money.value = 0
-  $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+  useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
 }
 //格式化后的金额
 const get_money_format = () => {
@@ -326,7 +330,7 @@ const check_moneyok = (val) => {
   if (val > +get_user.balance && get_bet_list.length == 2) {
     money.value = get_user.balance.toString()
 
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     tips_msg_update($root.$t('bet.err_msg09'))
 
     clearTimeout(timer2)
@@ -341,7 +345,7 @@ const check_moneyok = (val) => {
     set_money_notok_list({ value: value_.id, status: 1 })
     money.value = max_money.value.toString()
 
-    $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+    useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
   else if (
     val < min_money.value &&
@@ -369,7 +373,7 @@ const change_kbdshow = () => {
   if (get_active_index == index_) {
     // 同步程序走完后再处理逻辑
     $nextTick(() => {
-      $root.$emit(emit_cmd.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
+      useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     })
   }
 }
@@ -404,7 +408,7 @@ const clear_timer = () => {
 
 onUnmounted(() => {
   clear_timer();
-  $root.$off(emit_cmd.EMIT_CHANGE_MONEY, change_money_);
+  Object.values(emitters.value).map((x) => x())
 
   for (const key in $data) {
     $data[key] = null

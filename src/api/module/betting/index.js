@@ -7,7 +7,6 @@ import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2 } = API_PREFIX;
 
-
 // 获取押注列表最新数据（valar）
 /* export const post_verify_odds_before = (params, config={}, url = "/v1/betOrder/verifyOddsBeforeBet") => http.post(`${prefix}${url}`, params, config); */
 
@@ -15,7 +14,7 @@ const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2 } = API_PREFIX;
 export const post_submit_Bet_list = (params, config={}, url = "/v1/betOrder/betPB") => http.post(`${prefix}${url}`, params, config);
 
 // 订单记录页面接口
-export const post_getOrderList = (params, config={}, url = "/v1/betOrder/getOrderList") => http.post(`${prefix}${url}`, params, config);
+export const post_getOrderList = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);
 
 // 获取赛事是否存在赛果接口
 export const get_exist_match_result = (params, config={}, url = "/order/betRecord/existMatchResult") =>  http.get(`${prefix}${url}`, params, config);

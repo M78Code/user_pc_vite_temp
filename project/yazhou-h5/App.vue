@@ -7,7 +7,7 @@
 <template>
   <div id="q-app">
     <appload v-if="init_load"></appload>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 <script>
@@ -22,6 +22,7 @@ export default {
   mixins: [apiDomain],
    data() {
     return {
+      init_load: true
     };
   },
   created() {

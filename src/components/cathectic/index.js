@@ -1,10 +1,10 @@
 
 
-import TestComponentFullVersionWapper from "./full-version-wapper/index.vue";
+import CathecticWapper from "./full-version-wapper/index.vue";
 
 
 
-export {   TestComponentFullVersionWapper  };
+export {   CathecticWapper  };
 
 
 

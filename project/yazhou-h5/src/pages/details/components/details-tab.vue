@@ -18,7 +18,7 @@
 // #TODO vuex 
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import utils from "src/core/utils/utils";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "details_tab",
@@ -35,6 +35,8 @@ export default defineComponent({
   setup(props, evnet) {
     const data = reactive({
       emitters: [],
+      timer1_: null,
+      reset_scroll_dom: null,
     });
     // #TODO VUEX 
     // computed:{
@@ -61,13 +63,13 @@ export default defineComponent({
       on_listeners();
 
       // 延时器
-      timer1_ = null;
+      data.timer1_ = null;
       initEvent();
     })
     onUnmounted(() => {
       off_listeners();
       set_fewer(1);
-      clearTimeout(timer1_)
+      clearTimeout(data.timer1_)
       set_subscript_game_index(0)
     });
     const change_btn = () => {
@@ -85,7 +87,7 @@ export default defineComponent({
       // 点击的玩法是当前选中的玩法
       if(get_details_item == uId) return false;
       // 移动当前玩法的位置
-      utils.tab_move2(index, $refs.reset_scroll_dom)
+      utils.tab_move2(index, data.reset_scroll_dom)
       set_details_item(uId);
       set_subscript_game_index(index)
       let search_term = $route.query.search_term
@@ -93,7 +95,7 @@ export default defineComponent({
       $router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
       // #TODO emit 
-      useMittEmit(MITT_KEY.EMIT_DETAILILS_TAB_CHANGED);
+      useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // $root.$emit(emit_cmd.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer == 3){
         set_fewer(1)
@@ -116,10 +118,10 @@ export default defineComponent({
     };
     const initEvent = () => {
       try{
-        if(timer1_) { clearTimeout(timer1_) }
+        if(data.timer1_) { clearTimeout(data.timer1_) }
         // 加上400毫秒解决scrollLeft未定义的问题
-        timer1_ = setTimeout(() => {
-          $refs.reset_scroll_dom.scrollLeft = 0
+        data.timer1_ = setTimeout(() => {
+          data.reset_scroll_dom.scrollLeft = 0
         }, 400);
       }catch(e){
         console.error(e);
@@ -128,10 +130,10 @@ export default defineComponent({
     // 添加相应监听事件
     const on_listeners = () => {
       // #TODO emit 
-      emitters = [
-        useMittOn.on(MITT_KEY.EMIT_REFRESH_DETAILS_TAB, initEvent).off,
-        useMittOn.on(MITT_KEY.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
-        useMittOn.on(MITT_KEY.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
+      data.emitters = [
+        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off,
+        useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
+        useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
       ]
       // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent)
       // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
@@ -140,7 +142,7 @@ export default defineComponent({
     // 移除相应监听事件
     const off_listeners = () => {
       // #TODO emit 
-      emitters.map((x) => x())
+      data.emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent);
       // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
       // $root.$off(emit_cmd.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)

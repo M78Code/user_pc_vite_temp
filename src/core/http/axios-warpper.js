@@ -289,7 +289,7 @@ class AxiosHttp {
    * @param {Object} request_config [axios配置项]
    * @param {Object} config [axios配置项]
    */
-  async request(request_config = {}, config) {
+  async request(request_config = {}, config = {}) {
     //未知原因导致调用此方法的时候 axios 未实例化
     //38913 【日常】【生产】【PC】Y0商户偶现关机/重启后，首次跳转我们场馆，页面展示异常，显示网络不给力
     if (!this.axios_instance) {
@@ -317,7 +317,7 @@ class AxiosHttp {
       delete params.gcuuid;
     }
     delete params.inner_param;
-    switch (String(config.method).toLowerCase()) {
+    switch (String(request_config.method).toLowerCase()) {
       case "get":
         if (!params.t) {
           params.t = Date.now();
@@ -325,7 +325,7 @@ class AxiosHttp {
         break;
       case "post":
         request_config.params = { t: Date.now() };
-        request_config.data = params;
+        request_config.data = params || {};
         request_config.type = request_config.type || 2;
         break;
     }

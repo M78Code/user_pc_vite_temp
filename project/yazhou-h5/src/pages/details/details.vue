@@ -17,16 +17,16 @@
       @touchmove.passive="moved"
       @click="details_click"
       v-if="is_show_detail_header_data">
-      <template>
+      <div>
         <div  class="header-fix">
           <div ref="scroll_video_height" class="relative-position scroll_video_h">
-            <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos>
+            <!-- <videos v-if="get_show_video" :detail_data="detail_data" :tips.sync="tips" :is_show_text="is_show_text"  :show_go_back="show_go_back" @change_go_back="change_go_back"></videos> -->
             <details-header  @click.stop :detail_data="detail_data" :view_tab="viewTab" :style="{display:get_show_video?'none':'block'}"></details-header>
           </div>
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <change-header :detail_data="detail_data"></change-header>
+          <!-- <change-header :detail_data="detail_data"></change-header> -->
         </div>
 
         <!-- @click.stop -->
@@ -77,8 +77,8 @@
               <div style="height:inherit" ref="scroll_box">
                 <template >
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <category v-if="[0,1,110].includes(+detail_data.ms)" ref="category"></category>
-                  <no-data v-else which='noMatch' height='500'></no-data>
+                  <!-- <category v-if="[0,1,110].includes(+detail_data.ms)" ref="category"></category>
+                  <no-data v-else which='noMatch' height='500'></no-data> -->
                 </template>
               </div>
             </div>
@@ -86,41 +86,41 @@
           <!-- 赛事分析展示内容 -->
           <template v-if="viewTab === 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
             <!-- 足球赛事分析 页面-->
-            <analysis-football-matches v-if="get_detail_data.csid === '1'"></analysis-football-matches>
+            <!-- <analysis-football-matches v-if="get_detail_data.csid === '1'"></analysis-football-matches> -->
             <!-- 篮球赛事分析 页面-->
-            <basketball-match-analysis v-if="get_detail_data.csid === '2'"></basketball-match-analysis>
+            <!-- <basketball-match-analysis v-if="get_detail_data.csid === '2'"></basketball-match-analysis> -->
           </template>
           <!-- 聊天室 -->
           <template v-if="viewTab === 'chatroom'">
-            <chatroom></chatroom>
+            <!-- <chatroom></chatroom> -->
           </template>
         </div>
 
         <!--  详情赛事下拉三角形,赛事列表组件 -->
         <div>
           <q-dialog v-model="is_dialog_details" position="top" content-class="detail-top-pop" v-cloak>
-            <details-dialog
+            <!-- <details-dialog
               :detail_data="detail_data"
               :math_list_data="math_list_data"
-            ></details-dialog>
+            ></details-dialog> -->
           </q-dialog>
         </div>
-      </template>
+      </div>
       <!-- 视频info说明弹窗,和切换高清和标清的 弹框 -->
-      <info-rules v-if="get_info_show"></info-rules>
+      <!-- <info-rules v-if="get_info_show"></info-rules> -->
       <div v-show="scroll_visible && !get_bet_show && !get_is_full_screen && !get_is_hengping && !is_highlights" class="details-ref" @click="details_refresh">
         <div :class="{'refreshing':refreshing}"></div>
       </div>
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
-      <div class="head yb_px14 yb_fontsize14">
-        <!-- <img
+      <!-- <div class="head yb_px14 yb_fontsize14">
+        <img
             :src="get_theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
-        /> -->
-      </div>
-      <no-data which='noMatch' height='500'></no-data>
+        />
+      </div> -->
+      <!-- <no-data which='noMatch' height='500'></no-data> -->
     </template>
   </div>
 </template>
@@ -137,8 +137,8 @@ import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 
 
 import lodash from "lodash";
-// import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
-// import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
+import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
+import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
@@ -151,16 +151,16 @@ import lodash from "lodash";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "../../store/index.js";
-// import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+// import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
-//   components: {
-//     "details-header": details_header,
+  components: {
+    "details-header": details_header,
 //     // "details-dialog": details_dialog,
 //     "change-header": change_header,
-//     "details-tab": details_tab,
+    "details-tab": details_tab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
 //     // videos: videos,
@@ -169,7 +169,7 @@ export default defineComponent({
 //     // SDetails,
 //     category,
 //     // chatroom
-//   },
+  },
   // 从首页轮播区域跳转到详情页 增加判断
 //   beforeRouteEnter(to, from, next) {
 //     next(vm => {
@@ -374,38 +374,39 @@ export default defineComponent({
     });
     // 足篮赛种和后台开关开了才显示显示赛事分析tab
     const show_match_analysis_tab = computed(() => {
-      return [1, 2].includes(+get_detail_data.csid) && lodash.get(get_access_config,'statisticsSwitch')
+      return [1, 2].includes(+data.get_detail_data.csid) && lodash.get(get_access_config,'statisticsSwitch')
     });
     // 是否显示聊天室tab
     const show_chatroom_tab = computed(() => {
       // 中文，繁体并且聊天室ID不为空才显示聊天室Tab, crs 0关闭1打开
-      const { crs }=get_details_chatroom_data||{};
-      const {chatRoomSwitch}=get_user||{}
-      return ['zh','tw'].includes(get_lang) && crs==1&&chatRoomSwitch==1;
+      const { crs }=data.get_details_chatroom_data||{};
+      const {chatRoomSwitch} = data.get_user||{}
+      return ['zh','tw'].includes(data.get_lang) && crs==1&&chatRoomSwitch==1;
     });
     // 判断页面滑动的高度 是否显示置顶change-header
     const scroll_visible = computed(() => {
-      return scroller_scroll_top >= rem(1.65);
+      // return data.scroller_scroll_top >= rem(1.65);
+      return data.scroller_scroll_top >= 100;
     });
     //接口请求是否全部完成
     const skeleton_finish = computed(() => {
-      if(skeleton.details && skeleton.list){
+      if(data.skeleton.details && data.skeleton.list){
         return false
       } else {
         return true
       }
     });
     const matchid = computed(() => {
-      return route.params.mid || get_detail_data.mid
+      return route.params.mid || data.get_detail_data.mid
     });
     // 当前tab
     const curr_active_tab = computed(() => {
-      const tab_name = viewTab.replace('_', '-')
+      const tab_name = data.viewTab.replace('_', '-')
       return `tab-${tab_name}-wrapper`
     });
     // 重播图标
     const icon_replay = computed(() => {
-      const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(data.get_user, 'merchantEventSwitchVO', {})
       if (configValue != 1 || eventSwitch != 1 || !get_event_list.length) {
         return ''
       }
@@ -548,7 +549,7 @@ export default defineComponent({
       () => data.viewTab,
       () => {
         // #TODO $utils 
-        // $utils.zhuge_event_send('H5_情报分析', get_user);
+        // $utils.zhuge_event_send('H5_情报分析', data.get_user);
       }
     );
     // 赛事分析三级服务开关开启后，视图切换到投注tab
@@ -726,7 +727,7 @@ export default defineComponent({
       } else if (curr_tab === 'match_analysis'){
         // 刷新 赛事分析信息
         // #TODO IMIT 
-        // useMittEmit(MITT_KEY.EMIT_REFRESH_MATCH_ANALYSIS);
+        // useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS);
         // $root.$emit(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS)
       } else {
 
@@ -749,7 +750,7 @@ export default defineComponent({
     };
     const api_interface = () => {
       // #TODO IMIT 
-    //   useMittEmit(MITT_KEY.EMIT_REF_API, 'details_refresh');
+    //   useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
       // $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
     };
     /**
@@ -768,7 +769,7 @@ export default defineComponent({
     *@return {Undefined} undefined
     */
     const loading_list = () => {
-      skeleton.list = true
+      data.skeleton.list = true
     };
     /**
      *@description: 足篮显示分析页
@@ -797,13 +798,13 @@ export default defineComponent({
       $nextTick(() => {
         let dom_box = $refs.details_box
         // 视频和动画播放的时候，点击玩法集要重置滚动距离
-        if (get_show_video && scroller_scroll_top > 0) {
+        if (get_show_video && data.scroller_scroll_top > 0) {
           dom_box.scrollTop = 0
         }
         // 切换玩法集后滚动至首个玩法名称处
-        else if (scroller_scroll_top > rem(1.65)) {
-          dom_box.scrollTop = rem(1.67);
-        }
+        // else if (data.scroller_scroll_top > rem(1.65)) {
+        //   dom_box.scrollTop = rem(1.67);
+        // }
         // 当点开视频或者动画时,设置玩法区域的高度
         // if(get_tab_fix){
         //   dom_box.scrollTop = rem(0);
@@ -817,11 +818,11 @@ export default defineComponent({
     *@return {Undefined} undefined
     */
     const detail_scrolling = (event) => {
-      scroller_scroll_top = event.target.scrollTop;
+      data.scroller_scroll_top = event.target.scrollTop;
 
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO IMIT 
-    //   useMittEmit(MITT_KEY.EMIT_HIDE_GAMEPLAY_TITLE, false);
+    //   useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false);
       // $root.$emit(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, false)
     };
     /**
@@ -832,7 +833,7 @@ export default defineComponent({
     const full_screen_detail_scrolling = (e) => {
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO IMIT 
-    //   useMittEmit(MITT_KEY.EMIT_HIDE_GAMEPLAY_TITLE, false);
+    //   useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false);
       // $root.$emit(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, false)
     };
     /**
@@ -934,27 +935,37 @@ export default defineComponent({
     const get_match_details = (params) => {
       let api = data.get_menu_type == 3000 ? api_common.get_DJ_matchDetail_MatchInfo : api_common.get_matchDetail_MatchInfo
       api( params ).then(({ data, ts,code }) => {
+
+
+
+
+        // #TODO 
+        code = 200
+        console.log("code===", data, code)
       // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if( code == '0400500' || !data || Object.keys(data).length===0 ){
           router.push({name: 'matchList'})
         }else if(code === 200){
-          if (data && Object.keys(data).length) {
-            match_detail_data_handle(data)
-          } else {
-            // 赛事下发999后, 显示空空如也
-            skeleton.details = true
-            skeleton.list = true
-            is_show_detail_header_data = false
+          let data11 = {"tnjc":"Australia Football Queensland Premier League","csna":"足球","tid":"826292","mst":"0","srid":"11134232","mcg":1,"mf":false,"mgt":"1691899200000","maid":"191708","mct":0,"tlev":1,"mhlut":"","mo":0,"mp":1,"csid":"1","ms":110,"mle":0,"lvs":-1,"malu":[""],"lurl":"","mprmc":"PA","mhn":"SWQ Thunder","cds":"LS","frmhn":["S"],"mhs":1,"mlet":"45:00","mhid":"101720","mrmc":"","mid":"3528427","mess":1,"mmp":"0","mststi":"0","mms":-1,"mbmty":1,"mhlu":[""],"seid":"","mstst":"0","malut":"","man":"Sunshine Coast FC","frman":["S"],"mat":"","mng":0,"mststr":"0","mvs":-1,"mststs":0,"mearlys":0,"mft":0,"tn":"Australia Football Queensland Premier League","msc":[]}
+          match_detail_data_handle(data11)
+          console.log("code===", data11)
+          // if (data && Object.keys(data).length) {
+          //   match_detail_data_handle(data)
+          // } else {
+          //   // 赛事下发999后, 显示空空如也
+          //   data.skeleton.details = true
+          //   data.skeleton.list = true
+          //   data.is_show_detail_header_data = false
 
-            // 赛事结束后，1.5s后返回主列表页面——bug35360
-            clearTimeout(back_main_list_timer)
-            back_main_list_timer = setTimeout(() => {
-              // 如果不是演播厅的，才有退出回到 列表
-              if(lodash.get(get_video_url, 'active') != 'lvs' ){
-                $common.go_where({back_to: 'go_to_back'})
-              }
-            }, 1500)
-          }
+          //   // 赛事结束后，1.5s后返回主列表页面——bug35360
+          //   clearTimeout(data.back_main_list_timer)
+          //   data.back_main_list_timer = setTimeout(() => {
+          //     // 如果不是演播厅的，才有退出回到 列表
+          //     if(lodash.get(get_video_url, 'active') != 'lvs' ){
+          //       $common.go_where({back_to: 'go_to_back'})
+          //     }
+          //   }, 1500)
+          // }
         }
       })
       .catch((err)=>{
@@ -963,8 +974,8 @@ export default defineComponent({
         // 兜底处理，若连续5次拉取接口数据失败，则从仓库取基本数据
         // 间隔3s拉取（服务端节流限制）
         if (data.requestCount < 5) {
-          clearTimeout(get_match_detail_timer)
-          get_match_detail_timer = setTimeout(() => {
+          clearTimeout(data.get_match_detail_timer)
+          data.get_match_detail_timer = setTimeout(() => {
             initEvent()
           }, 3000)
         } else {
@@ -974,31 +985,32 @@ export default defineComponent({
       })
     };
     // 当前赛事数据后续处理
-    const match_detail_data_handle = (data) => {
-      if( skeleton ){
-        skeleton.details = true
-        skeleton.list = true
-        if(!data || Object.keys(data).length <= 0) {
+    const match_detail_data_handle = (res_data) => {
+      if( data.skeleton ){
+        data.skeleton.details = true
+        data.skeleton.list = true
+        if(!res_data || Object.keys(res_data).length <= 0) {
           router.replace({name:'category', params: {mid: matchid.value}});
           return false;
         }
 
         data.requestCount = 0
-        is_show_detail_header_data = true;
-        data.detail_data = data;
-        math_list_data = [data]
-        updateHotReqTime(Date.now())
+        data.is_show_detail_header_data = true;
+        data.detail_data = res_data;
+        data.math_list_data = [res_data]
+        // updateHotReqTime(Date.now())
 
         // 克隆一份;
-        let cloneData = lodash.cloneDeep(data);
-        set_detail_data(cloneData);
+        let cloneData = lodash.cloneDeep(res_data);
+        // set_detail_data(cloneData);
+        store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
 
         // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-        let params1 = { sportId: data.csid,mid: matchid.value};
+        let params1 = { sportId: res_data.csid,mid: matchid.value};
         params1 = params1;  // get_odds_list
         // 关联联赛下的赛事项查询,是否存在
         params1 && get_odds_list(params1, 'init_req');
-        sendSocketInitCmd();
+        // sendSocketInitCmd();
       }
     };
     /**
@@ -1009,7 +1021,7 @@ export default defineComponent({
       if(sessiong_store) {
         let store_data = JSON.parse(sessiong_store);
         if(store_data.tId == params.tId){
-          math_list_data = store_data.list;
+          data.math_list_data = store_data.list;
         }
       }
       if(data.get_menu_type == 3000){
@@ -1029,7 +1041,7 @@ export default defineComponent({
             });
 
           sessionStorage.setItem('match_list_ofdetails','');
-          math_list_data = [];
+          data.math_list_data = [];
           set_sanjiao_is_bool(false);
         }else{
           let store_data = {
@@ -1041,7 +1053,7 @@ export default defineComponent({
           let sessiong_store = JSON.stringify(store_data);
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem('match_list_ofdetails',sessiong_store);
-          math_list_data = data;
+          data.math_list_data = data;
           set_sanjiao_is_bool(true);
         }
       });
@@ -1051,7 +1063,7 @@ export default defineComponent({
     *@param {obj} params 请求参数
     *@return {obj} init_req 是否是初次进入详情
     */
-    const get_odds_list = async(params = { sportId: get_detail_data.csid,mid: matchid.value}, init_req) => {
+    const get_odds_list = async(params = { sportId: data.get_detail_data.csid,mid: matchid.value}, init_req) => {
       const _get_category_list = () => {
         api_common.get_category_list(params).then(res => {
           const data = lodash.get(res, "data");
@@ -1097,24 +1109,24 @@ export default defineComponent({
         })
       }
 
-      const get_category_list_debounce = axios_debounce_cache.get_category_list
-      if(get_category_list_debounce && get_category_list_debounce['ENABLED']){
-        let info = get_category_list_debounce.can_send_request(params);
-        if(info.can_send){
-          //直接发请求    单次数 请求的方法
-          _get_category_list();
-        }else{
-          // 记录timer
-          clearTimeout(axios_debounce_timer)
-          axios_debounce_timer = setTimeout(() => {
-            //直接发请求    单次数 请求的方法
-            _get_category_list();
-          }, info.delay_time || 1000);
-        }
-      } else {
-        //直接发请求    多 次数  循环请求 的方法
-        _get_category_list();
-      }
+      // const get_category_list_debounce = axios_debounce_cache.get_category_list
+      // if(get_category_list_debounce && get_category_list_debounce['ENABLED']){
+      //   let info = get_category_list_debounce.can_send_request(params);
+      //   if(info.can_send){
+      //     //直接发请求    单次数 请求的方法
+      //     _get_category_list();
+      //   }else{
+      //     // 记录timer
+      //     clearTimeout(axios_debounce_timer)
+      //     axios_debounce_timer = setTimeout(() => {
+      //       //直接发请求    单次数 请求的方法
+      //       _get_category_list();
+      //     }, info.delay_time || 1000);
+      //   }
+      // } else {
+      //   //直接发请求    多 次数  循环请求 的方法
+      //   _get_category_list();
+      // }
     };
     /**
      *@description 响应WS推送C101, C102, C103, C104, C107(参看:src\public\mixins\websocket\data\skt_data_info_header.js)
@@ -1254,21 +1266,21 @@ export default defineComponent({
     const on_listeners = () => {
       // #TODO IMIT 
       data.emitters = [
-        // useMittOn.on(MITT_KEY.EMIT_IS_BOOL_DIALOG_DETAILS, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_RESET_SET_HTON, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_REFRESH_DETAILS, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h).off,
         // // 拳击赛事级别关盘+当前时间(服务器时间)>=赛事开赛时间(mgt) 此时详情页拳击赛事切换下一场
-        // useMittOn.on(MITT_KEY.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_DETAILS_SKT, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_ANA_SHOW, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_CHANGE_DETAILS_MATCH, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_DETAILS_SKT, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_SET_NATIVE_DETAIL_DATA, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_ANA_SHOW, info_icon_click_h).off,
         // // 0号模板点击收起的时候，要调整滚动距离
-        // useMittOn.on(MITT_KEY.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_MATCHINFO_LOADING, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_DETAILILS_TAB_CHANGED, info_icon_click_h).off,
-        // useMittOn.on(MITT_KEY.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_MATCHINFO_LOADING, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE, info_icon_click_h).off,
         // // 监听页面高度的变化 及时动态更新最新的页面高度
-        // useMittOn.on(MITT_KEY.EMIT_WINDOW_RESIZE, info_icon_click_h).off,
+        // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, info_icon_click_h).off,
       ]
       // $root.$on(emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool);
       // $root.$on(emit_cmd.EMIT_RESET_SET_HTON, scrollMethod );

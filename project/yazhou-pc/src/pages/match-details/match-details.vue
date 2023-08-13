@@ -45,7 +45,7 @@
                   :plays_list="plays_list"
                   :currentRound="currentRound"
                   :match_details="match_details"
-                  :screen="vx_cur_expand_layout"
+                  :screen="cur_expand_layout"
                   @set_handicap_this="set_handicap_this"
                   :close_all_handicap="close_all_handicap"
                   :handicap_state="handicap_state"
@@ -84,9 +84,18 @@ import {useGetConfig} from './detail.config'
 const {
   load_detail_statu,
   match_infoData,
+  category_list,
+  plays_list,
+  currentRound,
+  match_details,
+  close_all_handicap,
+  handicap_state,
   detail_header,
   init,
-  back_to
+  back_to,
+  set_handicap_this,
+  on_go_top,
+  set_handicap_state
 
 } = useGetConfig()
 

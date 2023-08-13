@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+import { ref, onUnmounted} from 'vue'
   const props = defineProps({
     //加载回调
     'onPull': { 

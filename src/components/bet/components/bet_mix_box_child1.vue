@@ -189,18 +189,19 @@
 </template>
 
 <script setup>
-// import betMixShow from 'src/project/components/bet/bet_mix_show.vue';
-// import betMixShow2 from 'src/project/components/bet/bet_mix_show2.vue';
-// import betMixDetail from 'src/project/components/bet/bet_mix_detail.vue';
-// import betSingleDetail from 'src/project/components/bet/bet_single_detail.vue';
-// import betSuccessBar from 'src/project/components/bet/bet_success_bar.vue';
+import betMixShow from './bet_mix_show.vue';
+import betMixShow2 from './bet_mix_show2.vue';
+import betMixDetail from './bet_mix_detail.vue';
+import betSingleDetail from './bet_single_detail.vue';
+import betSuccessBar from './bet_success_bar.vue';
 // import betting from 'src/project/mixins/betting/betting.js';
-// import keyBoard from 'src/project/components/bet/keyboard.vue';
-// import ballSpin from 'src/project/components/bet/ball_spin.vue';
-// import betBar from "src/project/components/bet/bet_bar.vue";
+import keyBoard from './keyboard.vue';
+import ballSpin from './ball_spin.vue';
+import betBar from "./bet_bar.vue";
 // import { mapMutations, mapGetters } from "vuex";
 // import utils from 'src/public/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
+import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
 const exist_code = ref(0)    //投注后是否返回code码
@@ -434,7 +435,7 @@ watch(() => get_bet_status, (new_) => {
 // 去注单记录页查看
 const go_record = () => {
   set_bet_list([])
-  $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, true);
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
 }
 /**
  * 切换是否接受更好赔率
@@ -605,7 +606,7 @@ const spread_options = () => {
  *@description 点击移除无效注单
  */
 const reomve_invalid = () => {
-  $root.$emit(emit_cmd.EMIT_REMOVE_INVALID_)
+  useMittEmit(MITT_TYPES.EMIT_REMOVE_INVALID_)
 }
 /**
  *@description 点击投注
@@ -724,7 +725,7 @@ const single_bet = () => {
             }, 2000);
           }, 5000);
           // c201消息处理
-          $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
+          useMittOn(MITT_TYPES.EMIT_C201_UPDATE, c201_update_handler1)
           break;
         default:
           break;
@@ -810,7 +811,7 @@ const mix_bet = () => {
         }, 25000);
 
         // c201消息处理
-        $root.$on(emit_cmd.EMIT_C201_UPDATE, c201_update_handler2)
+        useMittOn(MITT_TYPES.EMIT_C201_UPDATE, c201_update_handler2)
 
         clearTimeout(timer_count_1)
         timer_count_1 = setTimeout(() => {    //5秒socket没有返回订单状态的话，调接口拉取
@@ -1023,8 +1024,8 @@ onUnmounted(() => {
   set_active_index(0);//活动子项置为初始值
   set_keyboard_show(true)
 
-  $root.$off(emit_cmd.EMIT_C201_UPDATE, c201_update_handler1)
-  $root.$off(emit_cmd.EMIT_C201_UPDATE, c201_update_handler2)
+  $root.$off(MITT_TYPES.EMIT_C201_UPDATE, c201_update_handler1)
+  $root.$off(MITT_TYPES.EMIT_C201_UPDATE, c201_update_handler2)
 
   debounce_throttle_cancel(check_odds_beforebet2.value);
 
