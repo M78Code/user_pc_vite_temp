@@ -7,8 +7,9 @@
  * 实现 匹配不到 后 向下 取值
  */
 
-import { mapGetters, mapActions } from "vuex";
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+// import { mapGetters, mapActions } from "vuex";
+import store from "project_path/src/store";
+import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 export default {
   mixins: [global_mixin],
   data() {
@@ -40,7 +41,11 @@ export default {
         GB: '4',
         US: '5',
         ID: '6',
-      }
+      },
+      /** 赔率映射表 */
+      vx_odds_coversion_map: {},
+      /** 聊天室来源跟单盘口状况eu */
+      vx_get_chat_room_type: {}
     };
   },
   filters: {
@@ -75,11 +80,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      // 赔率映射表
-      vx_odds_coversion_map: "get_odds_coversion_map",
-      vx_get_chat_room_type:"get_chat_room_type" //聊天室来源跟单盘口状况eu
-    }),
+    // ...mapGetters({
+    //   // 赔率映射表
+    //   vx_odds_coversion_map: "get_odds_coversion_map",
+    //   vx_get_chat_room_type:"get_chat_room_type" //聊天室来源跟单盘口状况eu
+    // }),
     odds_constant(){
       // 欧洲赔率  1  
       // 香港赔率  2  
@@ -96,6 +101,10 @@ export default {
         { label: this.$root.$t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
       ];
     }
+  },
+  created() {
+    this.vx_odds_coversion_map = store.getState().odds_coversion_map || {}
+    this.vx_get_chat_room_type = store.getState().chat_room_type || {}
   },
   methods: {
     compute_value_by_cur_odd_type(val, breakVal, arr, csid) {
