@@ -111,8 +111,11 @@
 </template>
 <script setup>
 import { ref,onMounted } from "vue"
+// 菜单配置
+import menu_config from 'src/core/menu/menu-class-new.js'
 
 import MenuItem from './menu-item.vue'
+
 
 // 今日  2 早盘   3
 const jinri_zaopan_ = ref(2)
@@ -126,11 +129,7 @@ const show_menu = ref(false)
 const first_change = ref(false)
 
 const props = defineProps({
-  // 菜单配置
-  menu_config: {
-    type: Object,
-    default: () => { },
-  },
+  
   base_data: {
     type: Object,
     default: () => { },
@@ -314,19 +313,19 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
 
   if (!jinri_zaopan) {
     // 点击一级菜单
-    if (current_lv_1_mi == mi) {
+    if (current_lv_1_mi.value == mi) {
       // 一级菜单点击无效
-      show_menu = !show_menu
+      show_menu.value = !show_menu.value
     } else {
-      show_menu = false
+      show_menu.value = false
     }
   }
 
   // 今日 / 早盘 选中的情况下 点击无效 
-  if (jinri_zaopan == jinri_zaopan && current_lv_1_mi == mi) {
+  if (jinri_zaopan_ == jinri_zaopan && current_lv_1_mi.value == mi) {
     return false;
   }
-  jinri_zaopan.value = jinri_zaopan ? jinri_zaopan : jinri_zaopan
+  jinri_zaopan_.value = jinri_zaopan ? jinri_zaopan : jinri_zaopan_
   current_lv_1_mi.value = mi;
   current_lv_2_mi.value = ''
 
@@ -338,7 +337,7 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
   if (mi == 400) {
     const { mid_menu_result } = menu_config
     // 1级 冠军和vr体育 点击后默认为早盘
-    inri_zaopan.value = 2
+    jinri_zaopan_.value = 2
     let mi;
     if (mid_menu_result.root && mid_menu_result.root == 400) {
       mi = mid_menu_result.mi
@@ -384,7 +383,7 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
   } else if (mi == 300) {
 
     // 1级 冠军和vr体育 点击后默认为早盘
-    jinri_zaopan.value = 2
+    jinri_zaopan_.value = 2
 
     // 拿vr的第一个数据 菜单id作为默认值
     let menuId = (props.base_data.vr_mi_config[0] || {}).menuId || '1010'
@@ -432,15 +431,15 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
  */
 const lv_2_click_wapper_1 = (detail = {}) => {
   //当选择了近期开赛时间再点击其他球种时，需要置为全部
-  // this.$store.state.filter.open_select_time = null ??????? todo
+  // $store.state.filter.open_select_time = null ??????? todo
   // console.error(' base_data.mi_info_map', base_data.mi_info_map)
   let { lv1_mi, lv2_mi } = detail;
   // 父级euid
-  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`];
+  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`];
   // 当前 pid 和 orpt
   // let lv2_mi_info = base_data.mi_info_map[`mi_${lv2_mi}`];
 
-  let root = jinri_zaopan;
+  let root = jinri_zaopan_.value;
   let config = {
     root,
     lv1_mi,
@@ -449,7 +448,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
     guanjun: "",
 
     mid_menu_show: {
-      list_filter_date: jinri_zaopan == 3,
+      list_filter_date: jinri_zaopan_ == 3,
     },
   };
 
@@ -464,13 +463,13 @@ const lv_2_click_wapper_1 = (detail = {}) => {
   //     }
 
   // 如果
-  if (jinri_zaopan != 3) {
+  if (jinri_zaopan_ != 3) {
     // 是否收藏
-    let is_collect = false // this.get_layout_list_type == "collect";
+    let is_collect = false // get_layout_list_type == "collect";
     //基础参数
     let base_params = {
       cuid: '', // vx_get_uid, // ????
-      selectionHour: '', // this.$store.state.filter.open_select_time,
+      selectionHour: '', // $store.state.filter.open_select_time,
       sort: '', //vx_match_sort, // ????
     };
     // 没有中间菜单
@@ -502,7 +501,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
     config.mid_menu_refer_params = mid_menu_refer_params;
   }
 
-  this.lv_2_click_common(config);
+  lv_2_click_common(config);
 }
 /**
  *  常规赛种   （含娱乐）  的 冠军玩法     点击
@@ -512,7 +511,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
 const lv_2_click_wapper_2 = (detail = {}) => {
 
   let { lv1_mi } = detail;
-  // console.log(lv1_mi,this.jinri_zaopan)
+  // console.log(lv1_mi,jinri_zaopan)
 
   // console.warn("lv_2_click_wapper_2-------- 常规赛种   （含娱乐）  的 冠军玩法     点击-----------",base_data)
 
@@ -529,28 +528,28 @@ const lv_2_click_wapper_2 = (detail = {}) => {
   //   // 娱乐冠军写死
   //   euid = '3020112' || base_data.mi_info_map[`mi_${lv2_mi}`].euid;
   // }else{
-  //   euid = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`].euid
+  //   euid = base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
   // }
-  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${this.jinri_zaopan}`];
+  // let { euid } = base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`];
 
   let config = {
-    root: jinri_zaopan,
+    root: jinri_zaopan_.value,
     lv1_mi,
     lv2_mi,
     sports: "common",
     guanjun: "common-guanjun",
     mid_menu_show: {
-      list_filter_date: jinri_zaopan == 3,
+      list_filter_date: jinri_zaopan_ == 3,
     },
   };
   // 当前 pid 和 orpt
   // let lv2_mi_info = base_data.mi_info_map[`mi_${lv2_mi}`];
   // 如果
-  if (jinri_zaopan != 3) {
+  if (jinri_zaopan_ != 3) {
     let base_params = {
       cuid: '',// vx_get_uid, // ??????
-      selectionHour: "",// this.$store.state.filter.open_select_time,
-      sort: "", // this.vx_match_sort,
+      selectionHour: "",// $store.state.filter.open_select_time,
+      sort: "", // vx_match_sort,
       apiType: 1,
       // orpt: 18,
       sportId: "",
@@ -656,13 +655,13 @@ const lv_2_click_wapper_4 = (detail = {}) => {
       params: {
         tid: vr_obj.subList[0].field1,
         // isLive: 1,
-        selectionHour: "", // this.$store.state.filter.open_select_time,
+        selectionHour: "", // $store.state.filter.open_select_time,
         csid: vr_obj.menuId,
       },
     }
   }
 
-  // this.lv_2_click_common(config);
+  // lv_2_click_common(config);
   // // 设置      中间 菜单输出
   menu_config.set_left_menu_result(config);
 
@@ -706,7 +705,8 @@ const lv_2_click_common = (detail = {}) => {
   if (lv1_mi != 2000) {
     // 常规赛种 euid 
     if (lv1_mi != 118) {
-      obj.euid = props.base_data.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
+      let mid = `mi_${lv1_mi}${jinri_zaopan_.value}`
+      obj.euid = props.base_data.mi_info_map[mid].euid
     }
   }
   // 常规赛种下 冠军模板都是18
@@ -720,7 +720,7 @@ const lv_2_click_common = (detail = {}) => {
 
   let result = {
     // ...obj, // 有二级
-    jinri_zaopan: jinri_zaopan,
+    jinri_zaopan: jinri_zaopan_.value,
     root,
     lv1_mi,
     lv2_mi,
@@ -731,7 +731,7 @@ const lv_2_click_common = (detail = {}) => {
 
 
   // 今日常规赛种 不包含 电子竞技
-  if (jinri_zaopan == 2 && lv1_mi != 2000) {
+  if (jinri_zaopan_.value == 2 && lv1_mi != 2000) {
     // 统一处理
     const params = mid_menu_refer_params.match_list.params
     mid_menu_refer_params.match_list.params = {
@@ -755,7 +755,7 @@ const lv_2_click_common = (detail = {}) => {
     result.mid_menu_refer_params = mid_menu_refer_params;
   }
   // jinri_zaopan_men_result.value = result; ????????
-  // console.log("当前选中的 侧边 二级菜单 ------------ ", result);
+  console.error("当前选中的 侧边 二级菜单 ------------ ", result);
   menu_config.set_left_menu_result(result);
 }
 
@@ -789,7 +789,7 @@ const lv_1_num = mi => {
     return obj["ct"];
   } else {
     //  今日 或者 早盘
-    let changgui = compute_num(`${mi}${jinri_zaopan_.value}`, mi) || 0;
+    let changgui = compute_num(`${mi}${jinri_zaopan_}`, mi) || 0;
     // 冠军
     let guanjun = compute_num(`${mi}4`, mi) || 0;
     return changgui + guanjun;

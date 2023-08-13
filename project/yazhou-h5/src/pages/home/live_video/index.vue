@@ -432,7 +432,7 @@ import counting_down from 'src/project/components/common/counting-down'
     const no_wifi = () => {
       if(!get_user_token){
         no_menu_txt = "noMatch"
-        $root.$emit(emit_cmd.EMIT_GO_TO_VENDER);
+        useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
       }else{
         no_menu_txt = "noMatch"
       }

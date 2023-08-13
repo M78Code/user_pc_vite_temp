@@ -6,6 +6,8 @@
   class="c-main-menu column"
   :class="{ 'bet-menu-upd': layout_left_show == 'bet_history' }"
 >
+<!-- 体育菜单 -->
+<menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
   <v-scroll-area
     ref="ref_bet_scroll_area"
     position="menu"
@@ -157,10 +159,6 @@
         {{ base_data_instance.base_data_version }}
         <!-- 体育菜单 -->
         <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
-
-
-
-
 
 
       </div>

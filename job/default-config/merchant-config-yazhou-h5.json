@@ -6,7 +6,7 @@
      }
   },
   "Menu": {
-    "use_component": "Menu_h5",
+    "use_component": "H5MenuTemplate1",
      "params":{
       "tableClass":"bg-deep-purple-14"
      }
