@@ -54,7 +54,7 @@ import { dom } from 'quasar'
 import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
 import VSport from 'src/public/utils/vsport/vsport.js';
 import axios_debounce_cache from "utils/http/axios_debounce_cache";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "virtual_sports_category",
@@ -231,7 +231,7 @@ export default defineComponent({
       // 满足刷新页面保持向上展开的状态
       set_fewer(1);
       // #TODO emit 
-      emitters.push(useMittOn.on(MITT_KEY.EMIT_REF_API, sendSocketInitCmd).off);
+      emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
       // $root.$on(emit_cmd.EMIT_REF_API, initEvent);
 
       if($route.query.mid || $route.name == 'virtual_sports'){
@@ -260,7 +260,7 @@ export default defineComponent({
       // #TODO emit 
       // $emit('top_menu_change', false)
       // #TODO emit 
-      emitters.push(useMittOn.on(MITT_KEY.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
+      emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
       // $root.$on(emit_cmd.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
       socket_upd_list = debounce(socket_upd_list, 500);
@@ -637,7 +637,7 @@ export default defineComponent({
 
     const triggle_tabs_update = () => {
       // #TODO emit 
-      useMittEmit(MITT_KEY.EMIT_TABS_LIST_UPDATE_HANDLE);
+      useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
       // $root.$emit(emit_cmd.EMIT_TABS_LIST_UPDATE_HANDLE);
     };
 

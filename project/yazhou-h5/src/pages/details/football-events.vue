@@ -17,7 +17,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters } from "vuex";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "football_events",
@@ -40,7 +40,7 @@ export default defineComponent({
       // 原 mounted 
       // #TODO $root 
       emitters = [
-        useMittOn.on(MITT_KEY.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
+        useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
       ]
       // $root.$on(emit_cmd.EMIT_FOOTBALL_EVENTS, football_events_handle);
     },);

@@ -21,5 +21,5 @@ myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 // 引入 当前 计算出的植入配置
-
+window.is_iframe= window.frames.length != parent.frames.length,
 myApp.mount("#ty-app");

@@ -12,17 +12,67 @@
      * 
      * 处理  13
      */
+    import MatchListData from "../../match-data/match-list-data-class.js";
+    import MatchListCardData from "./match-list-card-data-class.js";
+    import lodash from "lodash";
+
+    import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
+    import {set_new_sport_title_card_fold} from "./add-and-remove.js"
+    import {set_new_league_fold} from  "./fold-tid.js"
+ 
+  //引入菜单类
+  const MenuData ={
+    menu_data:{
+      is_show_hot :false
+    },
+   
+  }
+
+
+  /**
+   * @Description 更新所有未折叠 但是赛事没数据的 赛事
+   * @param {array} all_league_container_keys_arr  所有联赛容器卡片列表
+  */
+  const update_all_unfold_match=(all_league_container_keys_arr)=>{
+    // 需要更的赛事ID列表
+    let update_mids_arr = []
+    all_league_container_keys_arr.forEach( card_key => {
+      let card_obj = MatchListCardData.all_card_obj[card_key] || {}
+      // 判断联赛是否显示
+      if(card_obj.is_show_card){
+        let mids_arr = card_obj.mids.split(',')
+        // 遍历联赛下 所有赛事
+        mids_arr.forEach(mid => {
+          // 判断数据仓库是否有数据  没有数据 就更新
+          if(!MatchListData.mid_obj['mid_'+mid]){
+            update_mids_arr.push(...mids_arr)
+          }
+        })
+      }
+    })
+    // 调用bymids接口 拉数据
+    if(update_mids_arr.length > 0){
+      let params = {
+        mids: update_mids_arr,
+      };
+      // 拉取http请求
+      window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS,params)
+    }
+  }
+
+
+
 
   /**
    * @Description 计算所有卡片样式数据 1. 单一赛种，有未开赛 已开赛 ，不区分赛种   3 单一赛种，不区分赛种 ，只有未开赛，只有联赛
   */
-  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1(all_league_obj,is_ws_call,is_remove_call){
+  const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
     // 赛事模板ID
-    let template_id = $menu.menu_data.match_tpl_number
-    if($menu.menu_data.is_esports_champion){
+    let template_id = MenuData.menu_data.match_tpl_number
+    if(MenuData.menu_data.is_esports_champion){
       // 电竞冠军玩法
       template_id = 18
-    }else if($menu.menu_data.is_esports){
+    }else if(MenuData.menu_data.is_esports){
       // 电竞常规玩法
       template_id = 'esports'
     }
@@ -48,7 +98,7 @@
     // 是否联赛折叠
     let is_league_fold = false
 
-    let league_nofold_height = this.get_league_title_card_height(template_id)
+    let league_nofold_height = get_league_title_card_height(template_id)
 
     // 临时卡片对象变量
     let temp_card_obj
@@ -56,7 +106,7 @@
     let temp_match_status_title_card_obj = {}
 
     // 联赛标题卡片类型
-    let league_title_card_type = $menu.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
+    let league_title_card_type = MenuData.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
 
     // 同样联赛出现次数  用于生成自定义联赛ID
     let league_repeat_count_obj = {}
@@ -70,7 +120,7 @@
       let match_status_type_match_count = 0
 
       // 遍历联赛列表
-      let league_list = _.get(all_league_obj,match_status_type,[])
+      let league_list = lodash.get(all_league_obj,match_status_type,[])
       league_list.forEach( (league_obj,league_index) => {
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
@@ -83,7 +133,7 @@
         match_status_type_match_count += mids_arr.length
 
         // 如果是第一个联赛 并且列表类型是1 有已开赛、未开赛区分，  添加一个已开赛、未开赛标题卡片
-        if(league_index == 0 && this.match_list_mapping_relation_obj_type == 1){
+        if(league_index == 0 && MatchListCardData.match_list_mapping_relation_obj_type == 1){
           // 已开赛、未开赛标题卡片处理
           card_index += 1
           card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
@@ -170,8 +220,8 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = this.match_list_data.mid_obj['mid_'+mid]
-          let match_style_obj = this.compute_style_template_by_matchinfo(match,template_id)
+          let match = MatchListData.match_list_data.mid_obj['mid_'+mid]
+          let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
           all_card_obj['mid_'+mid] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
@@ -210,20 +260,20 @@
     })
 
     // 合并所有卡片样式对象
-    _.merge(this.all_card_obj,all_card_obj)
+    lodash.merge(MatchListCardData.all_card_obj,all_card_obj)
     // 已开赛 到卡片key的 映射对象
-    this.play_to_card_key_arr = play_to_card_key_arr
+    MatchListCardData.play_to_card_key_arr = play_to_card_key_arr
     // 未开赛 到卡片key的 映射对象
-    this.no_start_to_card_key_arr = no_start_to_card_key_arr
+    MatchListCardData.no_start_to_card_key_arr = no_start_to_card_key_arr
     // 所有卡片列表
-    this.match_list_card_key_arr = match_list_card_key_arr
+    MatchListCardData.match_list_card_key_arr = match_list_card_key_arr
 
     // 遍历所有联赛容器卡片
     all_league_container_keys_arr.forEach( card_key => {
       // 设置联赛容器卡片
-      let league_container_card_obj = this.all_card_obj[card_key]
+      let league_container_card_obj = MatchListCardData.all_card_obj[card_key]
       // 联赛标题卡片
-      let league_title_card_obj = this.all_card_obj[league_container_card_obj.league_title_card_key]
+      let league_title_card_obj = MatchListCardData.all_card_obj[league_container_card_obj.league_title_card_key]
       // 如果未设置折叠数据  设置折叠数据
       if(!league_container_card_obj.hasOwnProperty('is_show_card')){
         Object.assign(league_container_card_obj,fold_template)
@@ -259,12 +309,12 @@
     // 如果是ws调用
     if(is_ws_call){
       // 设置新增球种标题卡片折叠数据
-      this.set_new_sport_title_card_fold()
+      set_new_sport_title_card_fold()
       // 设置新增赛事折叠
-      this.set_new_league_fold()
+      set_new_league_fold()
       // 更新未折叠赛事
       if(!is_remove_call){
-        this.update_all_unfold_match(all_league_container_keys_arr)
+       update_all_unfold_match(all_league_container_keys_arr)
       }
     }
   }

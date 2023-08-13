@@ -498,7 +498,10 @@ class BaseData {
     //     })
     //     console.error("set_vr_mi_config----------", res_obj);
   }
-
+  //获取menu
+  get_menu_list(mi){
+    return this.mew_menu_list_res.find((x) => x.mi == mi) || { sl: [] }
+  }
   // 计算   冠军 数据  对象形式
 
   set_commn_sport_guanjun_obj() {
