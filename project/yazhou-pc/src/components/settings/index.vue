@@ -91,7 +91,8 @@ import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
 import { useI18n } from "vue-i18n";
 
-import store from "project_path/src/store";
+// import store from "project_path/src/store";
+import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "project_path/src/i18n/langs/index.mjs";
 import { loadLanguageAsync } from "/src/boot/i18n";
