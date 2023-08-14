@@ -1,5 +1,5 @@
 import { pako_pb } from "../pb-decode/index";
-import httpLog from "./http-log";
+import { httplog } from "../log/";
 import { endsWith, get } from "lodash";
 import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
@@ -32,7 +32,7 @@ const requestHook = {
     switch (String(config.method).toLowerCase()) {
       case "post":
         // 自定义参数 说明  type  1 formdata 2 json 3 file   默认 json
-        if (config.type == 1&& config.data) {
+        if (config.type == 1 && config.data) {
           const formData = new FormData();
           let data = config.data || {};
           Object.keys(data).forEach((key) => {
@@ -66,8 +66,6 @@ const requestHook = {
         }
       }
     }
-    console.log("config-------------", config);
-    // 统计api访问数量
     return config;
   },
   reject: (error) => {
@@ -145,8 +143,8 @@ const responseHook = {
     if (FNANI_STATUS.err_count[url_temp]) {
       FNANI_STATUS.err_count[url_temp] = 0;
     }
-    console.log("httpLog--------", httpLog);
-    httpLog.push({ url: url_temp });
+    console.log("httplog--------", httplog);
+    httplog.push({ url: url_temp });
     return res;
   },
   reject: (error) => {
@@ -169,7 +167,7 @@ const responseHook = {
     }
     //打印日志
     if (error.config) {
-      httpLog.push({ url: error_url });
+      httplog.push({ url: error_url });
     }
     // console.error('请求错误问题定位---------------------2'  , error.config.url
     // ,error);

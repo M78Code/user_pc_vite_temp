@@ -150,7 +150,7 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "../../store/index.js";
+import store from "src/store-redux/index.js";
 import { Level_one_category_list, Level_one_detail_data, Level_one_detail_odd_info } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -846,7 +846,7 @@ export default defineComponent({
     *@return {undefined} undefined
     */
     const start = (e) => {
-      startY = e.targetTouches[0].pageY;
+      data.startY = e.targetTouches[0].pageY;
     };
     /**
      * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
@@ -866,9 +866,9 @@ export default defineComponent({
       let dom_ = document, dom_ele = dom_.documentElement
       var osTop = dom_ele.scrollTop || dom_.body.scrollTop;
       let px160 = rem(1.6);
-      if(( (!!osTop && osTop + 12 >= px160) || ((startY - e.targetTouches[0].pageY) * 1.55) >= px160 )){
+      if(( (!!osTop && osTop + 12 >= px160) || ((data.startY - e.targetTouches[0].pageY) * 1.55) >= px160 )){
         fixed_status = true;
-      }else if( $refs.fixedHeight.scrollTop == 0 && ((e.targetTouches[0].pageY - startY) * 1.5) >= px160){
+      }else if( $refs.fixedHeight.scrollTop == 0 && ((e.targetTouches[0].pageY - data.startY) * 1.5) >= px160){
         fixed_status = false;
       }
     };

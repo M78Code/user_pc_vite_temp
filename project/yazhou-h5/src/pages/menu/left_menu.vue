@@ -74,7 +74,7 @@
 <script>
 import { defineComponent, reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store/index.js";
+import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import { api_match } from "src/public/api/index";
 export default defineComponent({

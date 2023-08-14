@@ -20,9 +20,9 @@
 <script>
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // websocket Log文件
- 
-import {WsLog_H5 as WsLog} from  "src/core/log/log-config.js"
-window.wslog = WsLog;
+
+import { wslog } from "src/core/log/";
+window.wslog = wslog;
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
@@ -36,12 +36,10 @@ export default {
       time_str: "",
       server_env: CURRENT_ENV_NAME,
       buried_time: 0, // 代表今日足球下边距离触发埋点的时间
-      right_menu_show:false
+      right_menu_show: false,
     };
   },
- 
 
- 
   created() {
     // 定时器
     this.timer = null;
