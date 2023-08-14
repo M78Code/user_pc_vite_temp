@@ -56,7 +56,7 @@
         />
         <!-- 隐藏 -->
         <div
-          v-if="!$utils.is_eports_csid(sportId)"
+          v-if="is_eports_csid(sportId)"
           class="hide-btn"
           @click="toggle_panel = false"
         >
@@ -82,17 +82,23 @@
 </template>
 
 <script setup>
-import { ref, defineExpose } from "vue";
-import { is_show_sr_flg } from "src/core/utils/utils";
+import { ref, defineExpose, onUnmounted } from "vue";
+import { is_show_sr_flg, is_eports_csid } from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail";
 // 玩法tab条
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar";
 import { useRoute, useRouter } from "vue-router";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 
-import store from "src/store-redux-vuex/index.js";
+import store from "project_path/src/store/index.js";
 
-const props = defineProps({});
+const props = defineProps({
+  match_infoData: Object,
+  background_img: String,
+  handicap_this: Object,
+  handicap_state: String,
+});
 
 const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
@@ -103,7 +109,7 @@ defineExpose({ handicap_tabs_bar });
 const route = useRoute();
 const router = useRouter();
 
-const emit = defineEmits(["init", "back_to"]);
+const emit = defineEmits(["init", "back_to", "get_mattch_details",'change_loading_state']);
 
 // 监听状态变化
 let un_subscribe = store.subscribe(() => {
@@ -117,6 +123,23 @@ const back_to = (is_back = true) => {
   // 重新请求相应接口
   emit("back_to", true);
 };
+/**
+ * @description 子组件玩法切换
+ * @param {string} id 玩法集id
+ * @param round 电竞赛事需要的动态玩法集局数 id
+ * 获取具体的玩法集数据
+ */
+const get_mattch_details = (arg) => {
+  emit("get_mattch_details", arg);
+};
+   /**
+     * 详情页手动切换玩法时展示 loading 状态
+     * @param n 要展示的 loading 状态
+     */
+
+const change_loading_state = (n)=>{
+  emit("change_loading_state", n);
+}
 
 // sr 分析数据点击跳转
 const sr_click_handle = (match, type) => {
@@ -127,6 +150,13 @@ const sr_click_handle = (match, type) => {
     ZhuGe.send_zhuge_event("PC_热门推荐_赛事分析点击");
   }
   details.sr_click_handle(match);
+};
+/**
+ * @description 返回顶部
+ * @return {Undefined} Undefined
+ */
+const on_go_top = () => {
+  useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
 };
 
 /**
@@ -152,4 +182,8 @@ const refresh = () => {
     this.get_live_chat_info();
   }
 };
+
+onUnmounted(() => {
+  un_subscribe();
+});
 </script>

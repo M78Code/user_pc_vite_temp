@@ -6,7 +6,7 @@
         :class="{
           'iframe-top-collapse': computed_data.menu_collapse_status,
         }"
-        :style="`width:${computed_data.layout_sizemain_width}px;`"
+        :style="`width:${computed_data.layout_size.main_width}px;`"
       >
         <!-- 搜索 -->
         <search
@@ -38,7 +38,7 @@
             ref="page_left"
             v-show="route.params.video_size != 1"
             class="page-left row yb-layout-margin-menu relative-position"
-            :style="`width:${computed_data.layout_sizeleft_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`"
+            :style="`width:${computed_data.layout_size.left_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`"
             :class="computed_data.vx_main_menu_toggle"
           >
             <div
@@ -80,7 +80,7 @@
               :style="
                 route.params.video_size == 1
                   ? 'position: fixed; top: 0;  bottom: 0;right: 0;  left: 0; width: 100%;height: 100%;'
-                  : `width:${computed_data.layout_sizecenter_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
+                  : `width:${computed_data.layout_size.center_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
               "
             />
           </keep-alive>
@@ -92,9 +92,9 @@
             :style="
               route.params.video_size == 1
                 ? ''
-                : `width:${computed_data.layout_sizeright_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
+                : `width:${computed_data.layout_size.right_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
             "
-            v-if="computed_data.layout_sizeright_width > 0"
+            v-if="computed_data.layout_size.right_width > 0"
           >
             <!-- 虚拟体育 -->
             <virtual-right
@@ -122,18 +122,6 @@
         >
           <!-- <img src="~public/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
         </div>
-
-        <!-- 视频js预加载 -->
-        <iframe
-          v-if="data_ref.video_src"
-          style="display: none"
-          :src="data_ref.video_src"
-        ></iframe>
-        <iframe
-          v-if="animation_src"
-          style="display: none"
-          :src="animation_src"
-        ></iframe>
 
         <!-- toast 消息提示 -->
         <toast />
@@ -234,13 +222,13 @@
                   <virtual-bet-single
                     ref="embedded_single"
                     @set_scroll_this="set_scroll_this"
-                    v-if="vx_get_virtual_bet_list.length == 1"
+                    v-if="virtual_bet_list.length == 1"
                   />
                   <!-- 虚拟串关 -->
                   <virtual-bet-mix
                     ref="embedded_mix"
                     @set_scroll_this="set_scroll_this"
-                    v-if="vx_get_virtual_bet_list.length > 1"
+                    v-if="virtual_bet_list.length > 1"
                   />
                 </template>
                 <!--非虚拟体育部分-->
@@ -350,6 +338,7 @@ import {
   reactive,
   nextTick,
   onBeforeUnmount,
+  watch,
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "../store/index.js";
@@ -364,29 +353,31 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
+import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
 import MainMenu from "../pages/left-menu/index.vue";
+// import MainMenuMini from "../pages/left-menu/index-min.vue";
+
 // import siteHeader from "../components/site-header/site-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
-const matchDetails = defineAsyncComponent(() =>
-  import("../pages/match-details/match-details.vue")
-);
+// const matchDetails = defineAsyncComponent(() =>
+//   import("../pages/match-details/match-details.vue")
+// );
 
 const { t } = useI18n();
 const route = useRoute();
-const {
-  userReducer,
-  menuReducer,
-  layoutReducer,
-  globalReducer,
-  betInfoReducer,
-  detailsReducer,
-} = store.getState();
 
+const thumb_style = {
+  right: "3px",
+  borderRadius: "3px",
+  backgroundColor: "#000000",
+  width: "6px",
+  opacity: 0.3,
+};
+const new_version = false; // 是否是最新版本
 const data_ref = {
   nav_list: [], // 顶部导航栏数据
-  upd_time_refresh_timer: null,
   showActivity: false, //活动弹框显隐
   imgUrl: "", // 弹窗图片 Url
   // 上一次打开弹窗的时间
@@ -399,19 +390,12 @@ const data_ref = {
   bet_loadding: false,
   dragging: false, // 拖拽中
   is_expand: true, // 是否展开
-  bet_this: null,
+  bet_this: Object.create({}),
   max_height: document.body.clientHeight - 100,
   content_height: 0,
   single_height: 278,
   mix_height: 100,
   offset_height: null,
-  thumb_style: {
-    right: "3px",
-    borderRadius: "3px",
-    backgroundColor: "#000000",
-    width: "6px",
-    opacity: 0.3,
-  },
   is_expand2: true,
   bet_flag: false, // 是否投注
   pre_odds: "EU",
@@ -427,7 +411,6 @@ const data_ref = {
   hostUrl: "act", // 首页弹窗配置标识符，多活动并存时用来判断跳转到哪个链接
   hasBonusType3: false, // 是否有小红点提示
   activityIds: "", // 已开启的活动 id
-  new_version: false, // 是否是最新版本
   showBannerTimer: null, // 展示运营位弹窗的 setTimeout
   // 通过链接参数打开活动页面的时间
   openActivityPageTime: null,
@@ -436,10 +419,6 @@ const data_ref = {
   hasActivity: false, // 是否有活动入口
   // 菜单是否创建
   menu_obj_created: false,
-  // 预加载视频地址
-  video_src: "",
-  // 预加载动画地址
-  animation_src: "",
   // 屏幕宽度
   screen_width: "",
   // 页面首次加载loading
@@ -449,14 +428,17 @@ const data_ref = {
   // 是否是首次加载页面
   isFirstLoadPage: true,
 };
+
+//一些定时器保存
 const timeOutIds = {}; // 存储 setTimeOut id 方便统一销毁
 // 延迟 重置轮询时间
 let init_reset_time,
   // 菜单初始化 因为菜单是去轮询的 so
   menu_init_time,
-  activityUpdateTimer; // 活动入口状态提示更新定时器
+  activityUpdateTimer, // 活动入口状态提示更新定时器
+  activity_timer;
 
-//dom 节点ref
+//----------------------dom开始节点ref----------------------
 const page_left = ref(null);
 const resizable = ref(null);
 const resizeable_header = ref(null);
@@ -465,15 +447,27 @@ const embedded_single = ref(null);
 const embedded_mix = ref(null);
 const bet_mode_zone = ref(null);
 const resizeable_footer = ref(null);
+//----------------------dom结束----------------------
+
+//----------------------计算属性开始----------------------
+const {
+  userReducer,
+  menuReducer,
+  layoutReducer,
+  globalReducer,
+  betInfoReducer,
+  detailsReducer,
+  languagesReducer,
+} = store.getState();
 
 const computed_data = reactive({
   is_invalid: userReducer.is_invalid,
   // 搜索状态
   get_search_status: detailsReducer.search_isShow,
   // 获取用户信息
-  user: userReducer.user,
+  get_user: userReducer.user,
   // 当前语言
-  lang: userReducer.lang,
+  lang: languagesReducer.lang,
   // 单关部分 是否为串关
   vx_is_bet_single: betInfoReducer.is_bet_single,
   // 串关是否正在处理中
@@ -516,15 +510,16 @@ const unsubscribe = store.subscribe(() => {
     globalReducer,
     betInfoReducer,
     detailsReducer,
+    languagesReducer,
   } = store.getState();
   console.log("update store");
   computed_data.is_invalid = userReducer.is_invalid;
   // 搜索状态
   computed_data.get_search_status = detailsReducer.search_isShow;
   // 获取用户信息
-  computed_data.user = userReducer.user;
+  computed_data.get_user = userReducer.user;
   // 当前语言
-  computed_data.lang = userReducer.lang;
+  computed_data.lang = languagesReducer.lang;
   // 单关部分 是否为串关
   computed_data.vx_is_bet_single = betInfoReducer.is_bet_single;
   // 串关是否正在处理中
@@ -559,13 +554,7 @@ const unsubscribe = store.subscribe(() => {
   computed_data.get_global_switch = globalReducer.global_switch;
 });
 
-const thumb_style = ref({
-  right: "3px",
-  borderRadius: "3px",
-  backgroundColor: "#000000",
-  width: "6px",
-  opacity: 0.3,
-});
+//是不是可以显示内嵌框
 const show_bet_zone = computed(() => {
   //是不是可以显示内嵌框
   if (
@@ -605,60 +594,58 @@ const scroll_style = {
 // 屏蔽视频移动组件(视频回播功能)
 const show_move_video = computed(() => {
   return (
-    computed_data.user.merchantEventSwitchVO &&
-    computed_data.user.merchantEventSwitchVO.eventSwitch
+    computed_data.get_user.merchantEventSwitchVO &&
+    computed_data.get_user.merchantEventSwitchVO.eventSwitch
   );
 });
-// ...mapActions({
-//       set_odds_coversion_map: "set_odds_coversion_map",
-//       vx_set_init_odd: "set_init_odd",
-//       vx_set_init_match_sort: "set_init_match_sort",
-//       // 设置单关是否正在投注处理中
-//       vx_set_is_single_handle: 'set_is_single_handle',
-//       // 设置串关是否正在处理
-//       vx_set_is_handle: 'set_is_handle',
-//       // 虚拟投注正在处理中
-//       vx_set_is_virtual_handle: "set_is_virtual_handle",
-//       // 保存用户余额
-//       vx_set_user_balance: "set_user_balance",
-//       vx_virtual_bet_clear: "virtual_bet_clear",
-//       vx_set_cur_odd: "set_cur_odd",
-//       // 左侧菜单展开折叠状态
-function vx_set_left_menu_toggle(data) {
-  store.dispatch({ type: "set_left_menu_toggle", data });
-}
-//       // 保存页面布局的宽高等数据
-//       vx_set_layout_size: "set_layout_size",
-//       // 保存当前路由信息
-//       vx_set_layout_cur_page: "set_layout_cur_page",
-//       vx_set_show_filter_popup: "set_show_filter_popup",
+//----------------------计算属性结束----------------------
 
-function vx_set_show_record(data) {
-  store.dispatch({ type: "set_show_record", data });
-}
-//       vx_set_match_details_params: "set_match_details_params",
+//----------------------methods开始----------------------
 
-function vx_set_main_menu_toggle(data) {
-  store.dispatch({ type: "set_main_menu_toggle", data });
-}
-
-//       set_layout_list_size: "set_layout_list_size",
-//       // 保存列表的宽度
-function set_layout_list_width(data) {
-  store.dispatch({ type: "SET_LAYOUT_LIST_WIDTH", data });
-}
-//       vx_set_is_bet_merge: "set_is_bet_merge",
-//       vx_set_is_bet_single: 'set_is_bet_single',
-//       //设置全局开关
-//       set_global_switch: 'set_global_switch',
-function set_global_switch(data) {
-  store.dispatch({ type: "set_global_switch", data });
-}
-//       // 设置左侧布局
-//       vx_set_layout_left_show: "set_layout_left_show",
-//       //设置多列玩法状态
-//       set_unfold_multi_column:"set_unfold_multi_column"
-//     }),
+/**
+ *映射store内部的方法
+ */
+const methods_map_store = [
+  "set_odds_coversion_map",
+  "SET_INIT_ODD",
+  "SET_INIT_MATCH_SORT",
+  // 设置单关是否正在投注处理中
+  "set_is_single_handle",
+  // 设置串关是否正在处理
+  "set_is_handle",
+  // 虚拟投注正在处理中
+  "set_is_virtual_handle",
+  // 保存用户余额
+  "set_user_balance",
+  "virtual_bet_clear",
+  "set_cur_odd",
+  // 左侧菜单展开折叠状态
+  "set_left_menu_toggle",
+  // 保存页面布局的宽高等数据
+  "SET_LAYOUT_SIZE",
+  // 保存当前路由信息
+  "set_layout_cur_page",
+  "set_show_filter_popup",
+  "set_show_record",
+  "set_match_details_params",
+  "set_main_menu_toggle",
+  "SET_LAYOUT_LIST_SIZE",
+  // 保存列表的宽度
+  "SET_LAYOUT_LIST_WIDTH",
+  "set_is_bet_merge",
+  "set_is_bet_single",
+  //设置全局开关
+  "set_global_switch",
+  // 设置左侧布局
+  "set_layout_left_show",
+  //设置多列玩法状态
+  "set_unfold_multi_column",
+].reduce((obj, type) => {
+  obj[type] = (data) => {
+    store.dispatch({ type, data });
+  };
+  return obj;
+}, {});
 /**
  * @Description 获取全局配置开关
  * @param {undefined} undefined
@@ -695,7 +682,7 @@ function get_access_config() {
         //多列
         multiColumn: multi_column = true,
       } = data;
-      set_global_switch({
+      methods_map_store["set_global_switch"]({
         hot_recommend,
         statistics_switch,
         collect_switch,
@@ -753,8 +740,7 @@ function get_odds_conversion() {
     let code = get(res, "data.code") || "";
     if (code == 200) {
       let data = get(res, "data.data") || "";
-
-      this.set_odds_coversion_map(data);
+      methods_map_store["set_odds_coversion_map"](data);
     }
   });
 }
@@ -789,7 +775,7 @@ function init_site_header(type = null) {
     }, //体育竞猜规则
   ];
   // 判断是否有活动
-  let activityList = get(computed_data.user, "activityList");
+  let activityList = get(computed_data.get_user, "activityList");
   // 多语言屏蔽活动入口
   if (
     activityList &&
@@ -821,7 +807,10 @@ function init_site_header(type = null) {
       data_ref.activityIds += item.activityId + ",";
     });
     activityTimer();
-    setTimeout(() => getActivityLists({ id: 1, type: "init_nav" }), 1000);
+    activity_timer = setTimeout(
+      () => getActivityLists({ id: 1, type: "init_nav" }),
+      1000
+    );
   }
   if (type != 2) {
     // 运营位专题页
@@ -831,7 +820,7 @@ function init_site_header(type = null) {
   // 运营位弹窗,如果当前是最新版本就直接展示弹窗，如果不是，就延迟几秒再展示
   if (type == null) {
     // type 为 null 是自然触发，如果 == 1就是导航栏二次触发，不要更新这里
-    if (data_ref.new_version) {
+    if (new_version) {
       timeOutIds.timer2 = setTimeout(() => {
         activity_dialog();
       }, 3000);
@@ -871,7 +860,7 @@ function set_menu_init_time(number) {
  * 运营位活动弹窗
  */
 function activity_dialog() {
-  let token = get(computed_data.user, "token");
+  let token = get(computed_data.get_user, "token");
   api_account.get_BannersUrl({ type: 5, token }).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
@@ -927,7 +916,7 @@ function activity_dialog() {
  * 运营位专题页
  */
 function special_page() {
-  let token = get(computed_data.user, "token");
+  let token = get(computed_data.get_user, "token");
   api_account.get_BannersUrl({ type: 7, token }).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
@@ -972,7 +961,7 @@ function open_single_bet() {
  * @return {undefined} undefined
  */
 function set_scroll_this({ type, _this }) {
-  this[type] = _this;
+  data_ref[type] = _this;
 }
 /**
  * @description: 开启投注确认中的loadding效果
@@ -982,11 +971,12 @@ function open_menu_loadding() {
   data_ref.data_ref = true;
   // 投注正在处理中
   if (computed_data.is_virtual_bet) {
-    vx_set_is_virtual_handle(true);
+    true;
+    methods_map_store["set_is_virtual_handle"];
   } else if (computed_data.vx_is_bet_single) {
-    vx_set_is_single_handle(true);
+    methods_map_store["set_is_single_handle"](true);
   } else {
-    vx_set_is_handle(true);
+    methods_map_store["set_is_handle"](true);
   }
 
   useMittEmit(MITT_TYPES.IS_MENU_LOADDING, data_ref.data_ref);
@@ -995,11 +985,11 @@ function open_menu_loadding() {
   bet_is_handle_status_timer = setTimeout(() => {
     // 投注中状态初始化
     if (computed_data.is_virtual_bet) {
-      vx_set_is_virtual_handle(false);
+      methods_map_store["set_is_virtual_handle"](false);
     } else if (computed_data.vx_is_bet_single) {
-      vx_set_is_single_handle(false);
+      methods_map_store["set_is_single_handle"](false);
     } else {
-      vx_set_is_handle(false);
+      methods_map_store["set_is_handle"](false);
     }
   }, 25000);
 }
@@ -1010,11 +1000,11 @@ function close_menu_loadding() {
   data_ref.data_ref = false;
   // 取消投注处理中
   if (computed_data.is_virtual_bet) {
-    vx_set_is_virtual_handle(false);
+    methods_map_store["set_is_virtual_handle"](false);
   } else if (computed_data.vx_is_bet_single) {
-    vx_set_is_single_handle(false);
+    methods_map_store["set_is_single_handle"](false);
   } else {
-    vx_set_is_handle(false);
+    methods_map_store["set_is_handle"](false);
   }
   useMittEmit(MITT_TYPES.IS_MENU_LOADDING, data_ref.data_ref);
 }
@@ -1024,12 +1014,12 @@ function close_menu_loadding() {
  * @return {undefined} undefined
  */
 function get_balance() {
-  let uid = computed_data.user.uid;
+  let uid = computed_data.get_user.uid;
   api_account.check_balance({ uid, t: new Date().getTime() }).then((res) => {
     const result = get(res, "data.data");
     const code = get(res, "data.code");
     if (code == 200) {
-      vx_set_user_balance(result.amount);
+      methods_map_store["set_user_balance"](result.amount);
     }
     userCtr.show_fail_alert();
   });
@@ -1050,10 +1040,8 @@ function computed_bet_height() {
       // 内嵌组件获取
       if (embedded_single.value) {
         let left_height = 0;
-        let page_left = page_left.value;
-        if (page_left) {
-          left_height = page_left.clientHeight;
-          page_left = null;
+        if (page_left.vallue) {
+          left_height = page_left.vallue.clientHeight;
         }
         let embedded_merge;
         let header = resizeable - headervalue;
@@ -1072,12 +1060,12 @@ function computed_bet_height() {
           merge_height = 35;
         }
         // 内容计算 内嵌单关高度 + 合并区域的高度
-        date_ref.content_height =
+        data_ref.content_height =
           embedded_single.value.clientHeight + merge_height + 10;
         if (data_ref.content_height) {
           data_ref.single_height = data_ref.content_height;
         } else {
-          date_ref.content_height = computed_data.is_virtual_bet
+          data_ref.content_height = computed_data.is_virtual_bet
             ? data_ref.single_height + 24
             : data_ref.single_height;
         }
@@ -1087,7 +1075,7 @@ function computed_bet_height() {
             0 &&
           !computed_data.vx_is_bet_single
         ) {
-          date_ref.content_height += 90;
+          data_ref.content_height += 90;
         }
         nextTick(() => {
           let bet_scroll_area = bet_scroll_area.value;
@@ -1103,26 +1091,24 @@ function computed_bet_height() {
     }
     timeOutIds.timer4 = setTimeout(() => {
       let left_height = 0;
-      let page_left = page_left.value;
-      if (page_left) {
-        left_height = page_left.clientHeight;
-        page_left = null;
+      if (page_left.value) {
+        left_height = page_left.value.clientHeight;
       }
       if (embedded_mix.value) {
         let header = resizeable_header.value;
         let footer = resizeable_footer.value;
         data_ref.max_height =
           left_height - header.$el.clientHeight - footer.$el.clientHeight;
-        date_ref.content_height = embedded_mix.value.clientHeight;
+        data_ref.content_height = embedded_mix.value.clientHeight;
 
         if (
           computed_data.bet_list.length > 1 &&
           embedded_mix.value.$data.view_ctr_obj.order_confirm_complete == 0
         ) {
-          date_ref.content_height += 90;
+          data_ref.content_height += 90;
         }
         if (data_ref.max_height < data_ref.content_height) {
-          date_ref.content_height = data_ref.max_height;
+          data_ref.content_height = data_ref.max_height;
         }
       }
     }, 0);
@@ -1194,7 +1180,7 @@ function getActivityLists({ id = 1, type }) {
     data_ref.isFirstLoadPage = false;
     return;
   }
-  let isMaintaining = get(computed_data.user, "maintaining");
+  let isMaintaining = get(computed_data.get_user, "maintaining");
   // 如果活动处于维护状态，直接去掉小红点
   if (isMaintaining == true) {
     if (data_ref.hasBonusType3 == true) {
@@ -1203,7 +1189,7 @@ function getActivityLists({ id = 1, type }) {
     return;
   }
   // 判断是否有活动
-  let activityList = get(computed_data.user, "activityList");
+  let activityList = get(computed_data.get_user, "activityList");
   // 多语言屏蔽活动入口
   if (activityList && activityList.length > 0 && computed_data.lang == "zh") {
     let param = new FormData();
@@ -1256,7 +1242,7 @@ function cancelDot(e) {
  * 检查当前代码是不是最新版本
  */
 function newVersion() {
-  data_ref.new_version = true;
+  new_version = true;
 }
 /**
  * @Description 菜单初始化完成
@@ -1318,34 +1304,20 @@ function activityTimer() {
     getActivityLists({ id: 1, type: "setInterval" });
   }, 900000);
 }
-/**
- * @Description 设置视频预加载地址
- * @param {undefined} undefined
- */
-let load_video_js_timer;
-function set_video_src(obj) {
-  data_ref.video_src = obj.video_src;
-  data_ref.animation_src = obj.animation_src;
-  // 延迟10s销毁预加载iframe
-  if (load_video_js_timer) {
-    clearTimeout(load_video_js_timer);
-  }
-  load_video_js_timer = setTimeout(() => {
-    data_ref.video_src = "";
-    data_ref.animation_src = "";
-  }, 10000);
-}
+
 /**
  * 菜单状态切换
  */
 function on_main_menu_toggle() {
-  if (data_ref.data_ref) {
+  if (data_ref.bet_loadding) {
     return;
   }
   let cur =
     computed_data.vx_main_menu_toggle == "mini" ? "mini-normal" : "mini";
-  vx_set_main_menu_toggle(cur);
-  vx_set_left_menu_toggle(computed_data.vx_main_menu_toggle != "mini");
+  methods_map_store["set_main_menu_toggle"](cur);
+  methods_map_store["set_left_menu_toggle"](
+    computed_data.vx_main_menu_toggle != "mini"
+  );
   update_bet_data();
 }
 /**
@@ -1435,36 +1407,25 @@ function resize() {
   } else {
     list_content_width -= 14;
   }
-  console.log(match_list_tpl_size, "match_list_tpl_size");
   match_list_tpl_size.set_template_width(list_content_width);
-  store.dispatch({
-    type: "SET_LAYOUT_SIZE",
-    data: {
-      inner_width,
-      inner_height,
-      main_width,
-      left_width,
-      right_width,
-      center_width,
-      list_content_width,
-      header_height,
-      content_height,
-    },
+  methods_map_store["SET_LAYOUT_SIZE"]({
+    inner_width,
+    inner_height,
+    main_width,
+    left_width,
+    right_width,
+    center_width,
+    list_content_width,
+    header_height,
+    content_height,
   });
-  store.dispatch({
-    type: "SET_LAYOUT_LIST_SIZE",
-    data: {
-      width: main_width,
-      height: content_height,
-    },
+  methods_map_store["SET_LAYOUT_LIST_SIZE"]({
+    width: main_width,
+    height: content_height,
   });
-  store.dispatch({
-    type: "SET_LAYOUT_LIST_SIZE",
-    data: center_width,
-  });
-  set_layout_list_width(center_width);
-  vx_set_main_menu_toggle(main_menu_toggle);
-  vx_set_left_menu_toggle(main_menu_toggle != "mini");
+  methods_map_store["SET_LAYOUT_LIST_WIDTH"](center_width);
+  methods_map_store["set_main_menu_toggle"](main_menu_toggle);
+  methods_map_store["set_left_menu_toggle"](main_menu_toggle != "mini");
 }
 /**
  * @Description 关闭页面首次加载loading
@@ -1479,7 +1440,8 @@ function closeLoading(state) {
   }, 600);
 }
 function toggle_merge() {
-  tihs.vx_set_is_bet_merge(!computed_data.is_bet_merge);
+  methods_map_store["set_is_bet_merge"](!computed_data.is_bet_merge);
+
   if (computed_data.is_bet_merge) {
     // utils.send_zhuge_event("PC_合并");
   }
@@ -1503,11 +1465,11 @@ function update_bet_data() {
   let ids = [],
     bet_type;
   if (computed_data.is_virtual_bet) {
-    bet_type = "vx_get_virtual_bet_obj";
+    bet_type = "virtual_bet_obj";
   } else if (computed_data.vx_is_bet_single) {
-    bet_type = "vx_get_bet_single_obj";
+    bet_type = "bet_single_obj";
   } else {
-    bet_type = "vx_get_bet_obj";
+    bet_type = "bet_obj";
   }
   for (let obj of Object.values(computed_data[bet_type])) {
     let match_id = get(obj, "cs.match_id", "");
@@ -1554,9 +1516,12 @@ function update_bet_data() {
       });
   }
 }
-store.dispatch({ type: "set_is_virtual_handle", data: true });
-store.dispatch({ type: "set_is_single_handle", data: false });
-store.dispatch({ type: "set_is_handle", data: false });
+//----------------------方法结束----------------------
+
+//----------------------created开始----------------------
+methods_map_store["set_is_virtual_handle"](true);
+methods_map_store["set_is_single_handle"](false);
+methods_map_store["set_is_handle"](false);
 new_menu.get_new_data();
 base_data.get_new_data();
 new_menu.show_bet_zone = false;
@@ -1568,8 +1533,10 @@ if (window.vue && !window.vue.get_user) {
   data_ref.dataLoading = false;
 }
 resize();
-store.dispatch({ type: "SET_INIT_ODD" });
-store.dispatch({ type: "SET_INIT_MATCH_SORT" });
+//获取赔率转换表数据
+//this.get_odds_conversion()
+methods_map_store["SET_INIT_ODD"]();
+methods_map_store["SET_INIT_MATCH_SORT"]();
 init_site_header();
 const remove_mitt_list = [
   // 接收开启loadding指令
@@ -1588,7 +1555,17 @@ const remove_mitt_list = [
   // // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
   useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done).off,
   useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding).off,
-  useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src).off,
+  useMittOn(
+    MITT_TYPES.SET_PRE_VIDEO_SRC,
+    function set_video_src({ video_src, animation_src }) {
+      /**
+       * @Description 设置视频预加载地址
+       * @param {undefined} undefined
+       */
+      pre_load_iframe(video_src);
+      pre_load_iframe(animation_src);
+    }
+  ).off,
   useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading).off,
 
   // /在活动窗口内更新首页小红点
@@ -1607,8 +1584,7 @@ const remove_mitt_list = [
   // // 重新计算投注框高度
   useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle).off,
 
-
-  // 两个诸葛事件事件绑定 请放在最后二个 最后二个 最后二个 
+  // 两个诸葛事件事件绑定 请放在最后二个 最后二个 最后二个
   useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll).off,
   useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll).off,
 ];
@@ -1618,7 +1594,7 @@ if (route.path == "/home") {
   localStorage.setItem("home_url", window.location.origin);
 }
 // // 获取活动维护状态
-data_ref.isMaintaining = get(computed_data.user, "maintaining");
+data_ref.isMaintaining = get(computed_data.get_user, "maintaining");
 const remove_mousedown = useEventListener({
   name: "mousedown",
   listener: function () {
@@ -1631,27 +1607,225 @@ const remove_mousedown = useEventListener({
     // sessionStorage.setItem('is_send_today_football_zhuge2',1)
   },
 });
-
 // // 重置 vuex 存储
 // vx_set_show_record(false);
-store.dispatch({
-  type: "set_show_filter_popup",
-  data: false,
-});
-store.dispatch({
-  type: "set_match_details_params",
-  data: {},
-});
+methods_map_store["set_show_filter_popup"](false);
+methods_map_store["set_match_details_params"]({});
 // // 进入首页
 //gtag打点
 // utils.gtag_view_send('PC_home', '/home')
 data_ref.first_load = true;
 get_access_config();
+
+//----------------------created结束----------------------
 /*销毁组件*/
 onBeforeUnmount(() => {
   unsubscribe();
   remove_mitt_list.forEach((item) => item());
+  clearInterval(activityUpdateTimer);
+  for (let item in timeOutIds) {
+    if (item) {
+      clearTimeout(timeOutIds[item]);
+    }
+  }
+  clearTimeout(load_video_js_timer);
+  clearTimeout(bet_is_handle_status_timer);
+  activity_timer && clearTimeout(activity_timer);
+
+  clearTimeout(init_reset_time);
+  clearInterval(menu_init_time);
+  clearInterval(base_data.clear_menu_init_time());
+  clearTimeout(base_data.clear_reset_init_time());
 });
+/**
+ * ----------------------watch开始----------------------
+ */
+// 投注浮层折叠状态变化时，更新相应max_top值
+watch(
+  () => data_ref.is_expand2,
+  (v) => {
+    if (v) {
+      data_ref.max_top -= 521;
+
+      const max_top = document.body.clientHeight - 568;
+      if (data_ref.y > max_top) {
+        data_ref.y = max_top;
+      }
+    } else {
+      data_ref.max_top += 521;
+    }
+  }
+);
+// menu_collapse_status 内嵌版菜单折叠状态
+// get_unfold_multi_column 多列玩法切换
+watch(
+  () => [
+    computed_data.menu_collapse_status,
+    computed_data.get_unfold_multi_column,
+    // 'NewMenu.is_multi_column'
+  ],
+  () => {
+    resize();
+  }
+);
+watch(
+  () => [computed_data.layout_size.inner_width],
+  (width) => {
+    new_menu.set_multi_column();
+    if (width < 1440) {
+      methods_map_store["set_unfold_multi_column"](false);
+      if (computed_data.vx_main_menu_toggle != "mini" && !data_ref.first_load) {
+        on_main_menu_toggle();
+      }
+    }
+    data_ref.first_load = false;
+  }
+);
+// // 检测到语言变化之后初始化导航
+watch(
+  () => [computed_data.lang],
+  () => {
+    init_site_header(2);
+  }
+);
+// // 监听路由变化 并记录到 vuex
+// $route: {
+//   handler(to, from) {
+//     tooltip('cancel',0,0,0)
+//     let _to = _.get(to, "name") || '';
+//     let _from = _.get(from, "name") || '';
+//     if(_to!=_from) {
+//       //需要重新计算一遍投注框高度
+//       this.computed_bet_height();
+//     }
+//     this.init_bet_postion();
+//     this.resize()
+//     $NewMenu.set_multi_column()
+//   },
+//   immediate: true
+// },
+
+watch(
+  () => [
+    computed_data.vx_is_bet_single, //单关
+    computed_data.bet_list?.length, //串关长度
+    computed_data.bet_single_list?.length, //单关长度
+  ],
+  () => {
+    //计算一遍投注框高度
+    computed_bet_height();
+  },
+  {
+    immediate: true,
+  }
+);
+// //虚拟体育
+
+watch(
+  () => computed_data.virtual_bet_list.length,
+  (count) => {
+    if (count > 1) {
+      methods_map_store["set_is_bet_single"](false);
+    } else if (count == 1) {
+      methods_map_store["set_is_bet_single"](true);
+    }
+    //需要重新计算一遍投注框高度
+    computed_bet_height();
+  },
+  {
+    immediate: true,
+  }
+);
+watch(
+  () => data_ref.bet_this.bet_flag,
+  (new_) => {
+    data_ref.bet_flag = new_;
+    if (computed_data.vx_is_bet_single) {
+      nextTick(() => {
+        if (bet_scroll_area.value) {
+          let embedded_merge;
+          if (computed_data.is_bet_merge) {
+            embedded_merge = bet_mode_zone.value;
+          }
+          let merge_height = 0;
+          if (embedded_merge) {
+            merge_height = embedded_merge.clientHeight;
+          } else if (!computed_data.is_virtual_bet && !new_menu.is_esports()) {
+            merge_height = 40;
+          }
+          bet_scroll_area.value.style.height = `${
+            embedded_single.value.clientHeight + merge_height
+          }px`;
+          embedded_merge = null;
+        }
+      });
+    } else {
+      nextTick(() => {
+        if (
+          !new_ &&
+          embedded_mix.value &&
+          embedded_mix.value.$refs["bet-mix-record"]
+        ) {
+          data_ref.content_height =
+            embedded_mix.value.$refs["bet-mix-record"].$el.clientHeight;
+        } else {
+          //需要重新计算一遍投注框高度
+          computed_bet_height();
+        }
+      });
+    }
+  }
+);
+
+// // 左侧菜单切换状态
+watch(
+  () => computed_data.left_menu_toggle,
+  () => {
+    //   //需要重新计算一遍投注框高度
+    computed_bet_height();
+    init_bet_postion();
+    resize();
+  }
+);
+// //当前赔率
+watch(
+  () => computed_data.cur_odd,
+  (new_) => {
+    BaseUserInfo.assign({ userMarketPrefer: new_ }); //缓存用户盘口偏好信息
+  }
+);
+// // 首次加载页面的时候 activityList 会出现没值的情况，所以等有值了再初始化一下导航
+watch(
+  () => computed_data.get_user.activityList,
+  (new_) => {
+    // 没渲染上的时候才再次调用
+    if (data_ref.hasActivity != true) {
+      data_ref.isMaintaining = get(computed_data.get_user, "maintaining");
+      if (new_ && new_.length > 0) {
+        init_site_header(1);
+      }
+    }
+  }
+);
+//全局点击事件
+watch(
+  () => computed_data.get_global_click,
+  () => {
+    data_ref.showActivity = false;
+  }
+);
+
+//全局开关
+watch(
+  () => computed_data.get_global_switch.activity_switch,
+  () => {
+    init_site_header();
+  }
+);
+
+/**
+ * ----------------------watch结束----------------------
+ */
 </script>
 <style lang="scss" scoped>
 @import url(./main-layout.scss);

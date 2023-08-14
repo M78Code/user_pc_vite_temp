@@ -151,6 +151,7 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "../../store/index.js";
+import { Level_one_category_list } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -185,6 +186,9 @@ export default defineComponent({
     const route = useRoute();
     const state = store.getState()
     const data = reactive({
+      details_box: null,
+      // refs['category']
+      category: null,
       // emit 数据集合
       emitters: [],
       // 默认不刷新
@@ -289,10 +293,10 @@ export default defineComponent({
       // 商户是否需要直接跳到列表页（url地址有label参数）
       get_golistpage: "get_golistpage",
       get_godetailpage: "get_godetailpage",
-      get_betbar_show: "get_betbar_show",
+      get_betbar_show: true,
       // 是否显示全屏下投注弹窗
       get_bet_show: "get_bet_show",
-      get_is_hengping: "get_is_hengping",
+      get_is_hengping: false,
       get_is_dp_video_full_screen: "get_is_dp_video_full_screen",
       get_match_base_info_obj: 'get_match_base_info_obj',
       get_user: 'get_user',
@@ -429,7 +433,7 @@ export default defineComponent({
           set_details_item(data[0].id)
         }
         // 玩法个数不及3个时，提前退出
-        if (lodash.get(data_list, 'length', 0) < 3) {
+        if (lodash.get(data.data_list, 'length', 0) < 3) {
           return
         }
 
@@ -439,32 +443,32 @@ export default defineComponent({
           return
         }
         // 深拷贝后操作，否则会报store错误
-        const deep_data_list = lodash.cloneDeep(data_list)
+        const deep_data_list = lodash.cloneDeep(data.data_list)
 
         // 非横屏并且"所有投注"不在最后
         if (!get_is_hengping && all_bet_index !== data.length - 1) {
-          data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
+          data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
         } else if (get_is_hengping && all_bet_index !== 1) {
           // 横屏并且"所有投注"不在热门后面
-          data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
+          data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
         }
       },
       { deep: true }
     );
     // 切换横屏状态时，调整相应玩法集顺序
     
-    // watch(
-    //   () => get_is_hengping,
-    //   () => {
-    //   if (lodash.get(data_list, 'length', 0) < 3) {
-    //     return
-    //   }
+    watch(
+      () => data.get_is_hengping,
+      () => {
+      if (lodash.get(data.data_list, 'length', 0) < 3) {
+        return
+      }
 
-    //   const deep_data_list = lodash.cloneDeep(data_list)
-    //     // 横屏时接口返回数据时“所有投注”已排在最后(接口依据orderNo这个字段来排序返回)，解决42812BUG
-    //     // data_list = utils.swapArray(deep_data_list, 1, deep_data_list.length - 1)
-    //   }
-    // );
+      const deep_data_list = lodash.cloneDeep(data.data_list)
+        // 横屏时接口返回数据时“所有投注”已排在最后(接口依据orderNo这个字段来排序返回)，解决42812BUG
+        // data_list = utils.swapArray(deep_data_list, 1, deep_data_list.length - 1)
+      }
+    );
     // 顶部切换赛事后，默认展示投注视图
     // watch(
     //   () => get_detail_data.mid,
@@ -538,12 +542,12 @@ export default defineComponent({
     //     data.detail_data.mf = new_
     //   }
     // );
-    // watch(
-    //   () => get_betbar_show,
-    //   () => {
-    //     detail_scroller_height()
-    //   }
-    // );
+    watch(
+      () => data.get_betbar_show,
+      () => {
+        detail_scroller_height()
+      }
+    );
     // 监听tab状态
     watch(
       () => data.viewTab,
@@ -631,7 +635,7 @@ export default defineComponent({
       // vuex--清空详情页的数据
       // set_detail_data('');
       // vuex--清空玩法集的title列表数据
-      set_details_tabs_list('');
+      // set_details_tabs_list('');
       // vuex--清空详情页的选中玩法id
       set_details_item('')
 
@@ -1065,21 +1069,23 @@ export default defineComponent({
     */
     const get_odds_list = async(params = { sportId: data.get_detail_data.csid,mid: matchid.value}, init_req) => {
       const _get_category_list = () => {
+        data.data_list = Level_one_category_list();
         api_common.get_category_list(params).then(res => {
-          const data = lodash.get(res, "data");
-          data_list = data
+          const res_data = lodash.get(res, "data");
+          // data_list = res_data
+          
           // 给vuex 设置玩法集数据
-          set_details_tabs_list(data);
+          // set_details_tabs_list(res_data);
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
-          if( get_details_item && data.length ){
-            const set_details_item_flag = data.some( item=>item.id === get_details_item )
+          if( get_details_item && res_data.length ){
+            const set_details_item_flag = res_data.some( item=>item.id === get_details_item )
             // 找不到就赋值为玩法集第一项
             if( !set_details_item_flag  ){
-              set_details_item(data[0]['id']);
+              set_details_item(res_data[0]['id']);
             }
           }else{
             // 当第一次进来就会走这里默认赋值第一项
-          data && set_details_item(data[0]['id']);
+          res_data && set_details_item(res_data[0]['id']);
           }
           let search_term = route.query && route.query.search_term
           if(search_term){
@@ -1090,10 +1096,13 @@ export default defineComponent({
           // }
         }).finally(() => {
           // 玩法集接口请求结果返回后，再请求盘口信息接口
-          if ($refs['category']) {
+          console.log("category", data.category);
+          // if ($refs['category']) {
+          if (data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading
             const flag = get_category_list_req_count ? 'hide_loading' : ''
-            $refs['category'].initEvent(flag, init_req).then(() => {
+            // $refs['category'].initEvent(flag, init_req).then(() => {
+            data.category.initEvent(flag, init_req).then(() => {
               if (!get_category_list_req_count) {
                 get_category_list_req_count = 1
               } else {
@@ -1124,8 +1133,8 @@ export default defineComponent({
       //     }, info.delay_time || 1000);
       //   }
       // } else {
-      //   //直接发请求    多 次数  循环请求 的方法
-      //   _get_category_list();
+        //直接发请求    多 次数  循环请求 的方法
+        _get_category_list();
       // }
     };
     /**
@@ -1257,11 +1266,12 @@ export default defineComponent({
     */
     const detail_scroller_height = () => {
       // 投注栏收起后的底部条预留空间
-    //   if(get_betbar_show) {
-    //     scroller_height = window.innerHeight - rem(0.5);
-    //   } else {
-    //     scroller_height = window.innerHeight;
-    //   }
+      if(data.get_betbar_show) {
+        // data.scroller_height = window.innerHeight - rem(0.5);
+        data.scroller_height = window.innerHeight - 100;
+      } else {
+        data.scroller_height = window.innerHeight;
+      }
     };
     const on_listeners = () => {
       // #TODO IMIT 
