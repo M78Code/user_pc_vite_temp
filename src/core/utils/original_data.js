@@ -1,4 +1,4 @@
-import lodash from "lodash.."
+import lodash from "lodash"
 const base_data = {
   //=============================
   count_menu(menu_list = [], list) {
