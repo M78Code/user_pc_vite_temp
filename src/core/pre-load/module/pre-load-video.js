@@ -1,6 +1,6 @@
 import { api_details } from "src/api/index";
 import { MITT_TYPES, useMittEmit } from "../../mitt";
-const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILD_CONFIG;
+const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILDIN_CONFIG;
 let pre_load_video = {
   // 是否加载播放器js
   is_load_player_js: false,
