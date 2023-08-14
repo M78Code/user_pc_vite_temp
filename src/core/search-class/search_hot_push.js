@@ -4,7 +4,7 @@
  * @Description: 搜索热推赛事
  */
 
-import { api_search } from "src/public/api/index.js";
+import { api_search } from "src/api/index.js";
 
 export const scroll_to_match = {mid:0}
 

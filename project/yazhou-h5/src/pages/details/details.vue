@@ -150,8 +150,8 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "../../store/index.js";
-import { Level_one_category_list } from "./category-list.js";
+import store from "src/store-redux/index.js";
+import { Level_one_category_list, Level_one_detail_data, Level_one_detail_odd_info } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -259,7 +259,7 @@ export default defineComponent({
       // 当前选中的一级菜单, 二级菜单, 三级菜单对象
       get_current_menu: "get_current_menu",
       // 是否展示视频
-      get_show_video: "get_show_video",
+      get_show_video: false,
 
       // 玩法集置顶效果
       get_zhiding_info: "get_zhiding_info",
@@ -849,6 +849,15 @@ export default defineComponent({
       startY = e.targetTouches[0].pageY;
     };
     /**
+     * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+     * @param {Number} value 需要转换的值
+     * @return {Number} 
+     */
+    const rem = (value) => {
+      let font_size = innerWidth * 100 / 375;
+      return Math.ceil(value * font_size);
+    };
+    /**
      *@description 监听touchmove
     *@param {e} e 事件
     *@return {undefined} undefined
@@ -1000,7 +1009,9 @@ export default defineComponent({
 
         data.requestCount = 0
         data.is_show_detail_header_data = true;
-        data.detail_data = res_data;
+        // data.detail_data = res_data;
+        // #TODO 暂时使用假数据 
+        data.detail_data = Level_one_detail_data();
         data.math_list_data = [res_data]
         // updateHotReqTime(Date.now())
 
@@ -1069,6 +1080,7 @@ export default defineComponent({
     */
     const get_odds_list = async(params = { sportId: data.get_detail_data.csid,mid: matchid.value}, init_req) => {
       const _get_category_list = () => {
+        // #TODO 暂时使用假数据
         data.data_list = Level_one_category_list();
         api_common.get_category_list(params).then(res => {
           const res_data = lodash.get(res, "data");
@@ -1384,6 +1396,7 @@ export default defineComponent({
       full_screen_detail_scrolling,
       start,
       moved,
+      rem,
       scrollMethod,
       changge_bool,
       initEvent,

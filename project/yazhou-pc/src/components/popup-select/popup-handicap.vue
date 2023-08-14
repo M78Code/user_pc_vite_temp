@@ -25,7 +25,8 @@
 import { ref, watch, defineComponent, getCurrentInstance, onUnmounted } from 'vue'
 import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
-import store from "src/store-redux/index.js";
+import store from "project_path/src/store/index.js";
+
 
 /** 获取mixins */
 const { proxy } = getCurrentInstance()
@@ -149,23 +150,12 @@ const set_pre_odd = (data) => store.dispatch({
 
 
 </script>
+
 <script>
 export default defineComponent({
     name: 'popup-handicap',
     mixins: [odds_conversion_mixin],
 })
-</script>
-<script>
-
-import { mapGetters, mapActions } from "vuex";
-export default {
-
-    methods: {
-        ...mapActions(["set_cur_odd", "set_pre_odd"]),
-        
-    },
-
-};
 </script>
   
 <style lang="scss" scoped>

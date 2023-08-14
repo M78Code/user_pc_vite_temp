@@ -3,7 +3,7 @@
  * @Date: 2020-09-07 12:45:19
  * @Description: 专业版列表页面赛事信息操作类-实现快速检索,修改等功能 用于专业版: 热门推荐, 近期关注
  */
-import MatchDataUpdTime from "src/public/utils/dataClassCtr/match_data_upd_time";
+import MatchDataUpdTime from "./match-data-upd-time.js";
 export default class MatchCtr
 {
   /**

@@ -4,7 +4,7 @@
  * @Description: 列表数据和对象结合操作类-实现快速检索,修改等功能
  * 
  *  使用实例demo
- *  import ListMap from "./listMap";
+ *  import ListMap from "./list-map";
  * 
  *  this.listMap = new ListMap('id.index');
  *  var list = []
