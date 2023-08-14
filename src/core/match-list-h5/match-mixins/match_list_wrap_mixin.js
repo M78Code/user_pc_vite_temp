@@ -6,20 +6,31 @@ import {
   get_match_base_info_by_mids
 } from "src/project/api/module/common/index.js";
 import utils from "src/public/utils/utils.js";
-import match_list_public_mixins from 'src/project/mixins/match_list/match_list_public_mixin.js'   // 赛事列表公共minxins
+ 
 import {mapMutations} from 'vuex';
 import axios_debounce_cache from "src/public/utils/http/axios_debounce_cache.js"
-import { uid } from "quasar";
+ 
+
+import {last_gcuuid ,get_matchs_api_func  } from "../composables/match-list-params.js"
+
+import {match_is_empty} from  "../composables/match-list-collect.js"
 export default{
-  mixins: [match_list_public_mixins],
+ 
+  setup(props, { attrs, slots, emit, expose }) {
+    return{
+      last_gcuuid,
+      match_is_empty,
+      get_matchs_api_func
+    }
+  },
   data(){
     return {
+       
       //当前调用的赛事列表接口方法
       current_invoke_api_func:null,
       //上次调详情的时间点
       prev_invoke_match_details_time:0,
-      // 接口出错时，uid的 字符串
-      last_uuid: ''
+   
     }
   },
   created () {
@@ -32,50 +43,7 @@ export default{
   },
   methods:{
     ...mapMutations(['set_foot_ball_screen_changing']),
-    /**
-     * 添加赛事对象前端使用字段 : 让球方
-     * @param {Array} match_list
-     * @return {Array}  filtered
-     */
-    match_list_init(match_list) {
-      let filtered = [];
-      // 当前选中的主菜单 类型，没有则是0
-      let main_meu_type = _.get(this.get_current_menu, 'main') || 0;
-      //附加前端逻辑字段
-      match_list.forEach(match => {
-        if(main_meu_type != 28){ // 28 赛果
-          //ms = 1 为 已开赛 否则未完赛 ms: 3	结束
-          if(match.ms == 3){
-            return;
-          }
-          // 当前选中的日期（串关与早盘）
-          let third_menu_type = _.get(this.get_current_menu,'date_menu.menuType');
-          if(main_meu_type != 100 && third_menu_type != 100){
-            if(match && match.hps && match.hps.length < 3){
-              // 如果盘口投注项小于3个，则push 进hps
-              for(let i1 = match.hps.length; i1 < 3;i1++){
-                match.hps.push({
-                  hl:[{}]
-                });
-              }
-            }
-          }
-          if(!match.hps){
-            match.hps = [];
-          }
-        }
-        let assign_obj = { handicap_index:0 }
-        // 如果当前赛事没有mid，有 matchId，则赋值给mid
-        if(!match.mid && match.matchId) { match.mid = match.matchId }
-        // 获取赛事的让球方 0未找到让球方 1主队为让球方 2客队为让球方
-        assign_obj.handicap_index = this.get_handicap_index_by(match);
-        // 对象浅拷贝
-        Object.assign(match, assign_obj);
-        // filtered 是 整个方法 return 的变量
-        filtered.push(match);
-      });
-      return filtered;
-    },
+
     /**
      * 投注框获取到最新赔率同步到列表页
      */
@@ -99,7 +67,7 @@ export default{
       if(callback)
         callback();
       if(!this.matchCtr.list.length){
-        this.match_is_empty = true;
+        this.match_is_empty.value = true;
       }
     },
     /**
@@ -168,82 +136,7 @@ export default{
         }
       }
     },
-    /**
-     * @description: 改变收藏图标状态
-     * @param {Object} params
-     * @return {Undefined} Undefined
-     */
-    change_favorite_state(params) {
-      let match = this.matchCtr.list[params.index];
-      // 联赛收藏图标状态样式更新
-      if(match && match.mid){
-        if (params.item === "tf") {
-          this.matchCtr.list.forEach(match_iterate => {
-            let match_dic = this.matchCtr.mid_obj[match_iterate.mid];
-            //冠军玩法的mid是唯一的
-            let flag = [100,3000].includes(+this.menu_type) && match_iterate.mid == match.mid || (match_iterate.tid == match.tid && (![100].includes(+this.menu_type)));
-            if(flag){
-              if(match_dic){
-                match_dic.mf = params.bool;
-                match_dic.tf = params.bool;
-              }
-              match_iterate.mf = params.bool;
-              match_iterate.tf = params.bool;
-            }
-          });
-          match.mf = params.bool;
-          match.tf = params.bool;
-        }
-      }
-
-      // 收藏列表点击取消收藏后移除该赛事
-      if(this.matchCtr.mid_obj[match.mid]){
-        this.matchCtr.mid_obj[match.mid][params.item] = params.bool;
-      }
-      for(let i = 0,l = this.matchCtr.list.length; i < l;i++){
-        let m = this.matchCtr.list[i];
-        if(m.mid == match.mid){
-          m[params.item] = params.bool;
-          break;
-        }
-      }
-      // 取消收藏
-      if (!params.bool) {
-        if (this.show_favorite_list) {
-          this.del_collect(params.item, params.index);
-        }
-      }
-    },
-    /**
-     * @description: 删除收藏赛事列表的赛事
-     * @param {String} k 收藏类型赛事('mf')与联赛('tf')
-     * @param {Number} index 赛事下标
-     * @return {Undefined} Undefined
-     */
-    del_collect(k, index) {
-      if (k == "tf") {
-        // 冠军收藏时,mid是唯一的,tn不一定有值
-        // get_current_menu.date_menu.menuType == 100 电竞冠军
-        if(_.get(this.get_current_menu, 'date_menu.menuType') == 100){
-          this.matchCtr.clearMidObj(this.matchCtr.list[index]);
-        }else{
-          let tid = this.matchCtr.list[index].tid;
-          this.matchCtr.list.forEach(item => {
-            if(item.tid == tid){
-              this.matchCtr.clearMidObj(item);
-            }
-          });
-        }
-      } else {
-        this.matchCtr.clearMidObj(this.matchCtr.list[index]);
-      }
-      if(this.matchCtr.list.length == 0){
-        this.match_is_empty = true;
-      }
-      //列表页移除赛事
-      this.run_process_when_need_recompute_container_list&&this.run_process_when_need_recompute_container_list(true);
-
-    },
+ 
     /**
      * @description: 订阅赛事推送,列表滚动调用
      * @param {Undefined} Undefined
@@ -293,8 +186,8 @@ export default{
      */
     update_match_databy_mid(match_list){
       if (match_list && match_list.length) {
-        // 添加赛事对象前端使用字段 : 让球方
-        let list = this.match_list_init(match_list);
+        
+        let list = match_list 
         list.forEach(item => {
           if(item && item.mid)
           {
@@ -479,12 +372,12 @@ export default{
      * @return {Undefined} Undefined
      */
     get_match_data_list(cb) {
-      // 接口请求前置处理，接口参数处理
-      const params =this.get_match_list_params_all();
-      // 赛事接口调用前置条件处理  1.次要玩法折叠   2 重置到联赛折叠状态； 3. 骨架屏 显示
-      this.match_list_api_prev_handle();
+    
+  
       // 调用列表接口   如  "/v1/m/matchesPB"
-      let api_handle_result = this.get_matchs_api_func(params);
+      let api_handle_result = this.get_matchs_api_func();
+          // 赛事接口调用前置条件处理  1.次要玩法折叠   2 重置到联赛折叠状态； 3. 骨架屏 显示
+          this.match_list_api_prev_handle();
       // 新参数直接在此处进行生成新的params
       this.current_invoke_api_func = api_handle_result.api_handle;
       if(this.current_invoke_api_func){
@@ -500,7 +393,7 @@ export default{
           // axios中then回调方法
           fun_then: res => {
             // 如果当前请求的 gcuuid 和 返回的 gcuuid 不是 一样的，说明不是 当前接口发起的请求
-            if(this.last_uuid != res.gcuuid){
+            if(this.last_gcuuid.value != res.gcuuid){
               // this.match_is_empty = true;
               // if(this.matchCtr && this.matchCtr.setList){
               //   this.matchCtr.setList([])
@@ -581,8 +474,8 @@ export default{
      * @param {Object} params 接口参数
      */
     footer_refresh_match_list(){
-      const params = this.get_match_list_params_all();
-      let api_handle_result = this.get_matchs_api_func(params);
+   
+      let api_handle_result = this.get_matchs_api_func();
       this.current_invoke_api_func = api_handle_result.api_handle;
       delete params.hpsFlag;
       //接口调用
@@ -594,8 +487,7 @@ export default{
             }
             //接口返回后页面逻辑与数据处理
             let match_res_data = this.match_list_api_after_handle(res);
-            // 添加赛事对象前端使用字段 : 让球方
-            this.match_list_init(match_res_data);
+          
             this.matchCtr.update_match_list(match_res_data);
           if( this.run_process_when_need_recompute_container_list_when_scroll){
             this.run_process_when_need_recompute_container_list_when_scroll(false,{force:1});
@@ -691,9 +583,9 @@ export default{
       if(!mid || this.menu_type == 900 || (!['home', 'matchList'].includes(this.$route.name))) {
         return;
       }
-      let params = this.get_match_list_params_all();
-      // params = _.cloneDeep(params);
-      let api_handle_result = this.get_matchs_api_func(params);
+    
+ 
+      let api_handle_result = this.get_matchs_api_func();
 
       this.current_invoke_api_func = api_handle_result.api_handle;
       //
@@ -745,175 +637,10 @@ export default{
       }
     },
 
-    // todo 重新方法临时保存,沟通后再行修改 统一入口
-    get_match_list_params_all(){
-      let params = null;
-      // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
-      let main_menu_type = +this.menu_type; //菜单类型
-      // 第一步 计算最基础参数
-      params=this.get_base_params(main_menu_type);
-      //第二步,传入第一步获得的参数 按照首页/详情/列表进行分流处理 其中列表中会第二次进行分流处理
-      params=this.get_detail_params_by_invoke_source(params,main_menu_type);
-      //附加当前请求的 gcuuid 全局检查
-      params.gcuuid= uid()
-      this.last_uuid = params.gcuuid
-      // 第三步 对第二步获取到的结果再次进行后置加工，放在vuex 缓存中
-      this.set_req_match_list_params(params);
-      // 第四步 返回前三步计算的params
-      return params;
-    },
 
-    get_base_params(main_menu_type){
-      return {
-        cuid: this.get_user ? this.get_user.userId:this.get_uid,
-        euid: this.get_current_sub_menuid,
-        // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
-        type: main_menu_type,
-        //排序	 int 类型 1 按热门排序 2 按时间排序
-        sort: this.sort_type,
-        //标准版和简版 1为新手版  2为标准版
-        device:['','v2_h5','v2_h5_st'][this.get_newer_standard_edition]
-      };
-    },
 
-    get_detail_params_by_invoke_source(params,main_menu_type){
-      //第一步根据路由名判断,第二步根据invoke_source或菜单进行分流 清晰化来龙去脉
-      // 如果是在首页中
-      if(this.$route.name == 'home'){
-        if (this.get_hot_tab_item) { // 其他菜单
-          //  菜单id
-          params.euid = this.get_hot_tab_item.menuId;
-          //  排序
-          params.sort = 2;
-          // 菜单类型
-          params.type = this.get_hot_tab_item.menuType || (this.get_hot_list_item && this.get_hot_list_item.menuType);
-          // 联赛id
-          params.tid = this.get_hot_tab_item.field2;
-        }
-        if( [100,101,102,103].includes(+_.get(this.get_hot_tab_item,'field1'))) {
-          // 获取 csid
-          params.csid = this.get_hot_tab_item.field1;
-        }
-        // 如果是在首页中的精选
-        if(_.get(this.get_hot_tab_item, 'index') == 0){
-          params.sort = 2; // todo 电竞的sort首页中都是一
-        }
-      }
-      // 赛果详情页 或者 详情页仅请求两个参数
-      if(['result_details', 'match_result', 'category'].includes(this.$route.name)){
-        params={
-          sportId: _.get(this.get_detail_data, 'csid'),
-          cuid: params.cuid
-        }
-      }
-      // 如果是在列表中
-      if(this.$route.name == 'matchList'){
-        // 处于列表页时的详细计算
-        params = this.get_match_params_detail(params,main_menu_type)
-      }
-      return params;
-    },
 
-    // 处于列表页时分流计算
-    get_match_params_detail(params, main_menu_type){
-      //竞彩足球
-      if(main_menu_type == 30){
-        params.euid = _.get(this.get_current_menu, 'main.menuId');
-      }
-      //赛果请求数据接口如果是赛果-->我的,投注type为29否则为28
-      if(main_menu_type == 28){
-        if(_.get(this.get_current_menu, 'sub')){
-          if(_.get(this.get_current_menu, 'sub') == 0){
-            params.type = 29;
-          }
-          params.euid = this.get_current_sub_menuid || _.get(this.get_current_menu, 'sub');
-        }
-      }
-      // menuType == 100 电竞的冠军
-      if(typeof _.get(this.get_current_menu,'date_menu.field1') != 'undefined'){
-        if(_.get(this.get_current_menu,'date_menu.menuType') == 100){
-          params.category = 2;
-          params.md = '';
-        }
-        else{
-          params.category = 1;
-          params.md = _.get(this.get_current_menu,'date_menu.field1');
-        }
-      }
-      //主菜单不为早盘,赛果,串关,电竞则移除参数的日期
-      if(![4,28,11,3000].includes(main_menu_type)){
-        delete params.md;
-      }
 
-      //列表的 虚拟体育相关
-      if([1001,1002,1004,1011,1010,1009].includes(+params.euid)){
-        let startTime = +params.md;
-        const m_hour = 24 * 60 * 60 * 1000; // 24小时的毫秒数
-        let endTime = startTime + (m_hour - 1000);
-        params = {
-          sportType:params.euid,
-          startTime,
-          endTime,
-          isVirtualSport:1,
-          page:{
-            size: 100,
-            current:1
-          }
-        };
-        // 如果是在 赛果页面的 虚拟体育相关的 页面，则添加 tournamentId  参数
-        if(this.menu_type == 28) {
-          params.tournamentId = _.get(this.get_level_four_menu, 'menuId');
-          params.batchNo  = this.get_search_txt;
-        }
-      }
-
-      //如果是在筛选的过程中
-      if (this.is_in_filtering()) {
-        // 如果筛选不是全部，并且 当前主菜单 等于(上一次 选择的主菜单，或者上一次选中的主菜单 不是 今日，早盘，串关），则执行下边代码块
-        if(this.get_filter_list != this.$root.$t('footer_menu.all')){
-          // 过滤出 tid（联赛id）
-          let current_tids = [];
-          for (let f_tid in this.get_filter_list){
-            current_tids.push(f_tid)
-          }
-          if(current_tids.length){
-            //虚拟体育赛果
-            if(this.menu_type == 28 && [1001,1002,1004,1011,1010,1009].includes(this.get_curr_sub_menu_type)){
-              params.tournamentId = current_tids.join(",");
-            }else{
-              // 如果是今日，早盘，串关
-              if([3,4,11].includes(+this.menu_type)){
-                params.tid = current_tids.join(",");
-              }else{ //滚球->全部多选球类,冠军
-                params.tid = current_tids.join(",");
-              }
-            }
-          }
-        }
-      }
-
-      if(main_menu_type){
-        // 主菜单 == 3000时
-        if(main_menu_type == 3000){
-          // 电竞保存csid,否则不用保存csid
-          params.csid = this.get_current_esport_csid;
-          // this.set_current_esport_csid(params.csid);
-          this.prev_export_csid = params.csid;
-        }
-        else{
-          this.prev_export_csid = '';
-          this.set_current_esport_csid('');
-        }
-      }
-
-      params.hpsFlag = 0; // match中 hpsFlag 都为0 除开冠军或电竞冠军
-      //赛事列表冠军或者电竞冠军/赛果不需要hpsFlag
-      if(this.get_mm_is_champion() || main_menu_type == 28){
-        delete params.hpsFlag;
-      }
-
-      return params;
-    },
 
     /**
      * @description: 比分编号列表从小到达排序

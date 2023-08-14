@@ -54,6 +54,11 @@ class UserCtr {
  set_uid(uid){
   this.uid.value = uid  
  }
+ get_cuid( ){
+
+  return  this.uid.value
+ }
+ 
 
  /**
   *   调用 getuserinfo 接口返回值  数据备份
