@@ -59,7 +59,7 @@
 <script setup>
 import { ref,onMounted,onUnmounted } from "vue";
 import utils from 'src/core/utils/utils.js'
-// import menu_data from 'src/core/menu/menu-class-new.js'
+// import menu_data from 'src/core/menu-pc/menu-data-class.js'
 
 // import { useMittEmit } from 'src/core/mitt/index.js'
 // import { EMIT_MX_COLLECT_MATCH } from 'project_path/src/core/mitt/mitt-keys.js';

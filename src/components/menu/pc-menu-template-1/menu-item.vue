@@ -1,7 +1,11 @@
 <template>
-  <div @click="lv_2_click_wapper_3({ lv1_mi: item1, lv2_mi: item2.mi })" v-for="item2 in props.menu_list"
-    :key="`${item2.mi}_2000`" :class="props.current_lv_2_mi == item2.mi ? 'active' : ''"
-    class="menu-item menu-fold2">
+  <div
+    @click="lv_2_click_wapper_3({ lv1_mi: item1, lv2_mi: item2.mi })"
+    v-for="item2 in props.menu_list"
+    :key="`${item2.mi}_2000`"
+    :class="props.current_lv_2_mi == item2.mi ? 'active' : ''"
+    class="menu-item menu-fold2"
+  >
     <div class="row items-center relative-position">
       <span class="menu-point"></span>
       <span class="menu-text ellipsis">
@@ -23,15 +27,13 @@ const props = defineProps({
   },
   current_lv_2_mi: {
     type: [String, Number],
-    default: () => '',
+    default: "",
   },
   base_data: {
     type: Object,
-    default: () => { },
-  }
-})
+    default: () => ({}),
+  },
+});
 
-const lv_2_click_wapper_3 = (lv1_mi,lv2_mi) =>{
-
-}
+const lv_2_click_wapper_3 = (lv1_mi, lv2_mi) => {};
 </script>
