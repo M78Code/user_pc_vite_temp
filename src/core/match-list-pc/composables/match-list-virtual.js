@@ -8,7 +8,18 @@ import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
  * @description 虚拟体育赛事格式化
  * @return {undefined} undefined
  */
-export const virtual_sport_format = (match_list) => {
+export const virtual_sport_format = ( match_list_input) => {
+
+
+       let  match_list = [...match_list_input]
+       match_list_input.forEach(item => {
+ 
+        match_list= match_list.concat(item.matchs)
+        });
+   
+ 
+
+
   let _match_index = 0;
   // 是否为新批次
   let _vshow_group = true;
@@ -65,4 +76,6 @@ export const virtual_sport_format = (match_list) => {
     }
     pre_match = match;
   });
+
+  return match_list
 };
