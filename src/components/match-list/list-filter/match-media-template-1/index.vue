@@ -42,7 +42,7 @@
 
 <script>
 
-import { computed, defineProps, ref } from 'vue';
+import { computed, defineProps, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -61,7 +61,7 @@ const vx_play_media = ref(state.matchesReducer.play_media)
 //获取当前菜单信息
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 //全局开关
-const get_global_switch = ref(state.globalReducer.global_switch)
+const get_global_switch = reactive(state.globalReducer.global_switch)
 //视频是否展开状态
 const vx_get_is_fold_status = ref(state.globalReducer.is_fold_status)
 
