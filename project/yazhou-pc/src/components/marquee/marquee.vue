@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="label line-height">{{ $root.$t('common.notice') }}</div>
+        <div class="label line-height">{{ t('common.notice') }}</div>
         <div class="content col cursor-pointer  relative-position" ref="wrap"
             @click="$emit('navigate', { path: '/announce', _blank: true })">
             <!--谷歌浏览器  -->
@@ -30,7 +30,7 @@
                     :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${get_theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
                 <q-tooltip anchor="top middle" self="center middle"
-                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ $root.$t(tab.tab_name) }}</q-tooltip>
+                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t(tab.tab_name) }}</q-tooltip>
             </div>
             <div class="iframe-settings"
                 :class="get_theme.includes('y0') ? `tab-icon-item-y0-settings` : `tab-icon-item-settings`"
@@ -43,7 +43,7 @@
 
                 <!-- 设置tip -->
                 <q-tooltip anchor="top middle" self="center middle"
-                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ $root.$t('common.set') }}</q-tooltip>
+                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t('common.set') }}</q-tooltip>
 
                 <!-- hover显示gif -->
                 <img v-show="right_tabs[2].is_show" :ref="get_theme.includes('y0') ? 'settings_y0' : 'settings'"
@@ -57,20 +57,23 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRef, onUnmounted } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
-
-// TODO: api接口待完善
-import { api_announce } from "src/public/api/index";
-// TODO: 组件待完善
-import gSettings from 'src/public/components/settings/index.vue';
-// TODO: 工具类待完善
-import langs from "src/i18n/langs/index.mjs";
+import { useI18n } from "vue-i18n";
+// api接口
+import { api_announce } from "src/api/index";
+import gSettings from 'project_path/src/components/settings/index.vue';
+import langs from "project_path/src/i18n/langs/index.mjs";
 // TODO: this相关都要改
+
+// import store from "project_path/src/store/index.js";
+import store from "src/store-redux/index.js";
 
 const emits = defineEmits(['navigate'])
 const $q = useQuasar()
+/** 国际化 */
+const { t } = useI18n();
 
 /** 公告栏信息集合 */
 const notice_info = reactive({
@@ -96,51 +99,57 @@ const notice_info = reactive({
 const is_iframe = window.is_iframe
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [
-    { id: 2, tab_name: this.$root.$t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
-    { id: 4, tab_name: this.$root.$t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
+    { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
+    { id: 4, tab_name: t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
 ]
 /** 内嵌版 收起右侧菜单 */
 const right_tabs = reactive([
-    { id: 7, icon_name: 'sports_rules', tab_name: this.$root.$t("common.sports_betting_rules"), path: "/rule", is_show: false, _blank: true }, //体育竞猜规则
+    { id: 7, icon_name: 'sports_rules', tab_name: t("common.sports_betting_rules"), path: "/rule", is_show: false, _blank: true }, //体育竞猜规则
     { id: 9, icon_name: 'task_center', tab_name: "任务中心", icon: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", is_show: false, _blank: true },  // 任务中心
-    { id: 99, icon_name: 'settings', tab_name: this.$root.$t("common.set"), is_show: false },  // 设置
+    { id: 99, icon_name: 'settings', tab_name: t("common.set"), is_show: false },  // 设置
 ])
+
+
 const settings_items = [
     {
         id: 1,
-        name: this.$root.$t('common.odds_set'),
+        name: t('common.odds_set'),
         icon: {
-            day: require('public/image/yabo/svg/icon-odds.svg'),
-            night: require('public/image/yabo/svg/icon-odds-night.svg')
+            day: () => import('app/public/yazhou-pc/image/svg/icon-odds.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-odds-night.svg')
         },
         value_arr: [
-            { label: this.$root.$t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
-            { label: this.$root.$t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
-            { label: this.$root.$t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
-            { label: this.$root.$t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
-            { label: this.$root.$t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
-            { label: this.$root.$t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
+            { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
+            { label: t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
+            { label: t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
+            { label: t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
+            { label: t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
+            { label: t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
         ],
         type: 'select'
     },
     {
         id: 2,
-        name: this.$root.$t('common.change_lang'),
+        name: t('common.change_lang'),
         icon: {
-            day: require('public/image/yabo/svg/icon-lang.svg'),
-            night: require('public/image/yabo/svg/icon-lang-night.svg'),
+            day: () => import('app/public/yazhou-pc/image/svg/icon-lang.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-lang-night.svg')
+            // day: require('public/image/yabo/svg/icon-lang.svg'),
+            // night: require('public/image/yabo/svg/icon-lang-night.svg'),
         },
         value_arr: Object.keys(langs),
         type: 'select'
     },
     {
         id: 3,
-        name: this.$root.$t('common.change_skin'),
+        name: t('common.change_skin'),
         icon: {
-            day: require('public/image/yabo/svg/icon-skin.svg'),
-            night: require('public/image/yabo/svg/icon-skin-night.svg'),
+            day: () => import('app/public/yazhou-pc/image/svg/icon-skin.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-skin-night.svg')
+            // day: require('public/image/yabo/svg/icon-skin.svg'),
+            // night: require('public/image/yabo/svg/icon-skin-night.svg'),
         },
-        value_arr: [/*this.$root.$t('odds.HK'), this.$root.$t('odds.EU')*/],
+        value_arr: [/*t('odds.HK'), t('odds.EU')*/],
         type: 'switch'
     },
 ]
@@ -148,13 +157,19 @@ const settings_items = [
 /** 是否显示设置弹窗 */
 const show_g_settings = ref(false)
 
+const get_lang = ref('')
+const get_theme = ref('')
+const get_menu_collapse_status = ref(false)
+const get_user_token = ref('')
+const get_global_switch = ref(false)
+
 /**
  * store仓库
  * TODO: 后面再完善
  * const { lang, setLang } = useLangStore()
  * const { user } = useUserStore(user_id)
  */
-const store = useStore()
+// const store = useStore()
 // ...mapGetters([
 //             'get_lang',
 //             'get_theme',
@@ -242,7 +257,7 @@ function show_menu_icon(icon_id) {
  */
 function menu_change(menu) {
     // TODO: store数据待修改
-    if (menu.path.includes('/activity') && !this.get_global_switch.activity_switch) return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
+    if (menu.path.includes('/activity') && !this.get_global_switch.activity_switch) return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
     if (menu.path.includes('/activity')) {
         if (this.get_user_token) {
             this.$utils.send_zhuge_event("PC_任务中心");

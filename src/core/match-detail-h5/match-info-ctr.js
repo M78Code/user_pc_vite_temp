@@ -1,15 +1,13 @@
 /*
  * @Description:赛事详情页面信息操作类-实现快速检索,修改等功能
  */
-export default class MatchInfoCtr
-{
+export default class MatchInfoCtr {
   /**
    * @description: 构造函数
    * @param {Object} view Vue实例
    * @return {undefined} undefined
    */
-  constructor(view)
-  {
+  constructor(view) {
     // 视图对象
     this.view = view;
     // 初始化数据
@@ -22,14 +20,14 @@ export default class MatchInfoCtr
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  init(){
+  init() {
     this.list = [];
     // 所有投注项对象
-    this.ol_obj={};
+    this.ol_obj = {};
     // 所有盘口对象
-    this.hl_obj={};
+    this.hl_obj = {};
     // 赛事对象
-    this.match_obj={};
+    this.match_obj = {};
   }
 
   /**
@@ -37,8 +35,8 @@ export default class MatchInfoCtr
    * @param {obj} 赛事信息对象
    * @return {undefined} undefined
    */
-  setMatchObj(obj){
-    Object.assign(this.match_obj,obj);
+  setMatchObj(obj) {
+    Object.assign(this.match_obj, obj);
     this.match_obj = _.cloneDeep(this.match_obj);
   }
 
@@ -47,14 +45,13 @@ export default class MatchInfoCtr
    * @param {Array} list 赛事信息集合
    * @return {undefined} undefined
    */
-  setList(list){
-    if(list && (list instanceof Array) && list.length)
-    {
+  setList(list) {
+    if (list && (list instanceof Array) && list.length) {
       // 赛事信息集合
       // this.list = _.cloneDeep(list);
       let list_ = this.list;
       // 所有投注项对象
-      let ol_obj_= this.ol_obj;
+      let ol_obj_ = this.ol_obj;
       // 所有盘口对象
       let hl_obj_ = this.hl_obj;
 
@@ -72,16 +69,15 @@ export default class MatchInfoCtr
     }
   }
 
-   /**
-   * @description: 按照玩法顺序排序(原来地址顺序发生变化)
-   * @param {undefined} undefined
-   * @return {undefined} undefined
-   */
-  listSort(){
-    if(this.list && (this.list instanceof Array))
-    {
-      this.list.sort(function(a, b){
-        return a.hpon-b.hpon;
+  /**
+  * @description: 按照玩法顺序排序(原来地址顺序发生变化)
+  * @param {undefined} undefined
+  * @return {undefined} undefined
+  */
+  listSort() {
+    if (this.list && (this.list instanceof Array)) {
+      this.list.sort(function (a, b) {
+        return a.hpon - b.hpon;
       });
     }
   }
@@ -91,33 +87,30 @@ export default class MatchInfoCtr
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  listSortNew(){
+  listSortNew() {
     let list = this.list;
     var list_ = [];
-    if(list && (list instanceof Array))
-    {
+    if (list && (list instanceof Array)) {
       for (let i = 0; i < list.length; i++) {
-        if(list[i].hton!=0)
-        {
+        if (list[i].hton != 0) {
           list_.push(list[i]);
         }
       }
-      if(list_.length)
-      {
-        var len = list_.length-1;
+      if (list_.length) {
+        var len = list_.length - 1;
         var t = '';
         for (let i = 0; i < len; i++) {
-          for (let k = 0; k < len-i; k++) {
-            if(parseInt(list_[k].hton) < parseInt(list_[k+1].hton)){
-                t = list_[k];
-                list_[k] = list_[k+1];
-                list_[k+1] = t;
+          for (let k = 0; k < len - i; k++) {
+            if (parseInt(list_[k].hton) < parseInt(list_[k + 1].hton)) {
+              t = list_[k];
+              list_[k] = list_[k + 1];
+              list_[k + 1] = t;
             }
           }
         }
       }
     }
-    list_.sort(i=>(i.team?-1:1));
+    list_.sort(i => (i.team ? -1 : 1));
     return list_;
   }
 
@@ -126,27 +119,24 @@ export default class MatchInfoCtr
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  listSortNormal(){
+  listSortNormal() {
     let list = this.list;
     var list_normal = [];
-    if(list && (list instanceof Array))
-    {
+    if (list && (list instanceof Array)) {
       for (let i = 0; i < list.length; i++) {
-        if(list[i].hton == 0)
-        {
+        if (list[i].hton == 0) {
           list_normal.push(list[i]);
         }
       }
-      if(list_normal.length)
-      {
-        var len = list_normal.length-1;
+      if (list_normal.length) {
+        var len = list_normal.length - 1;
         var t = '';
         for (let i = 0; i < len; i++) {
-          for (let k = 0; k < len-i; k++) {
-            if(parseInt(list_normal[k].hpon) > parseInt(list_normal[k+1].hpon)){
-                t = list_normal[k];
-                list_normal[k] = list_normal[k+1];
-                list_normal[k+1] = t;
+          for (let k = 0; k < len - i; k++) {
+            if (parseInt(list_normal[k].hpon) > parseInt(list_normal[k + 1].hpon)) {
+              t = list_normal[k];
+              list_normal[k] = list_normal[k + 1];
+              list_normal[k + 1] = t;
             }
           }
         }
@@ -160,16 +150,14 @@ export default class MatchInfoCtr
    * @param {Object} manyObj 数据叠加时使用的变量
    * @return {undefined} undefined
    */
-  listItemToManyObj(item, manyObj){
+  listItemToManyObj(item, manyObj) {
     let flag = this.view && this.view.$route.name == 'match_result'; // 赛果页的 mhs 固定给 0
-    if(!this.match_obj.mid)
-    {
+    if (!this.match_obj.mid) {
       this.match_obj.mid = item.mid;
     }
-    if(item && item.mid == this.match_obj.mid)
-    {
+    if (item && item.mid == this.match_obj.mid) {
       let mhs = 0;
-      if(this.view && this.match_obj.mid == this.view.get_detail_data.mid){
+      if (this.view && this.match_obj.mid == this.view.get_detail_data.mid) {
         mhs = this.view.get_detail_data.mhs;
       }
       if (item && item.hl && item.hl.length) {
@@ -188,8 +176,8 @@ export default class MatchInfoCtr
                   ms: (flag ? 0 : item.mhs ? item.mhs : 0),
                   mid: item.mid,
                   hid: item3.hid,
-                  id_: item3.hn ? `${item.mid}_${item.chpid || item.hpid}_${item4.ot}_${item3.hn}`: item4.oid,
-                  os:item4.result != undefined ? 1 : item4.os,  //赛果接口没有里层的os，需要拼一个
+                  id_: item3.hn ? `${item.mid}_${item.chpid || item.hpid}_${item4.ot}_${item3.hn}` : item4.oid,
+                  os: item4.result != undefined ? 1 : item4.os,  //赛果接口没有里层的os，需要拼一个
                 });
                 manyObj.ol_obj[item4.oid] = item4;
               });
@@ -205,13 +193,12 @@ export default class MatchInfoCtr
    * @param {Array} list 赛事列表
    * @return {Object} 将赛事列表转成成对象,提高检索速度
    */
-  listToManyObj(list){
-    let manyObj = {ol_obj:{}, hl_obj:{}}
-    if(list && (list instanceof Array))
-    {
+  listToManyObj(list) {
+    let manyObj = { ol_obj: {}, hl_obj: {} }
+    if (list && (list instanceof Array)) {
       // list.forEach((item,i) => {
-        list.forEach((item) => {
-        this.listItemToManyObj(item,manyObj);
+      list.forEach((item) => {
+        this.listItemToManyObj(item, manyObj);
       });
     } else {
 
@@ -225,26 +212,21 @@ export default class MatchInfoCtr
    * @param {Number} status  赛事级别状态
    * @return {undefined} undefined
    */
-  setMatchMsStatus(status){
+  setMatchMsStatus(status) {
     // 赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-    if(this.match_obj && this.match_obj.mid)
-    {
+    if (this.match_obj && this.match_obj.mid) {
       let mid = this.match_obj.mid;
       // 设置赛事状态
-      Object.assign(this.match_obj, {mhs:status, hs:status})
+      Object.assign(this.match_obj, { mhs: status, hs: status })
       // 设置投注项状态
-      if(this.list && (this.list instanceof Array))
-      {
+      if (this.list && (this.list instanceof Array)) {
         this.list.forEach(item_hps => {
-          if(item_hps && item_hps.hl && (item_hps.hl instanceof Array))
-          {
+          if (item_hps && item_hps.hl && (item_hps.hl instanceof Array)) {
             item_hps.hl.forEach(item_hl => {
-              if(item_hl && item_hl.ol && (item_hl.ol instanceof Array))
-              {
+              if (item_hl && item_hl.ol && (item_hl.ol instanceof Array)) {
                 item_hl.ol.forEach(item_ol => {
-                  if(item_ol)
-                  {
-                    Object.assign(item_ol,{ms:status});
+                  if (item_ol) {
+                    Object.assign(item_ol, { ms: status });
                   }
                 });
               }
@@ -261,30 +243,25 @@ export default class MatchInfoCtr
    * @param {Array} ols 盘口所对应的投注项列表
    * @return {undefined} undefined
    */
-  setMatchHsStatus(hid,status,ols){
-    if(hid&&this.hl_obj[hid])
-    {
+  setMatchHsStatus(hid, status, ols) {
+    if (hid && this.hl_obj[hid]) {
       // 设置赛事级别状态
-      Object.assign(this.hl_obj[hid],{hs:status});
+      Object.assign(this.hl_obj[hid], { hs: status });
 
-      if(ols && (ols instanceof Array))
-      {
+      if (ols && (ols instanceof Array)) {
         // 设置新盘口信息(新增和修改)
         ols.forEach(item_ols => {
-          if(item_ols&&item_ols.oid&&this.ol_obj[item_ols.oid])
-          {
+          if (item_ols && item_ols.oid && this.ol_obj[item_ols.oid]) {
             // Object.assign(item_ols,{hs:status});
-            Object.assign(this.ol_obj[item_ols.oid],item_ols);
+            Object.assign(this.ol_obj[item_ols.oid], item_ols);
           }
         });
       }
 
-      if(this.hl_obj[hid] && this.hl_obj[hid].ol && (this.hl_obj[hid].ol instanceof Array))
-      {
+      if (this.hl_obj[hid] && this.hl_obj[hid].ol && (this.hl_obj[hid].ol instanceof Array)) {
         this.hl_obj[hid].ol.forEach(item_ol => {
-          if(item_ol)
-          {
-            Object.assign(item_ol,{hs:status});
+          if (item_ol) {
+            Object.assign(item_ol, { hs: status });
           }
         });
       }
@@ -299,7 +276,7 @@ export default class MatchInfoCtr
   // setMatchOsStatus(oid,status){
   //   if(oid&&this.ol_obj[oid])
   //   {
-      // 设置赛事级别状态
+  // 设置赛事级别状态
   //     Object.assign(this.ol_obj[oid],{os:status});
   //   }
   // }
@@ -361,15 +338,13 @@ export default class MatchInfoCtr
    * @param {String}} hpid 玩法编号  示例  hpid: "2,38,39,216,57"
    * @return {Array} 玩法对象集合
    */
-  getPlayInfo(hpid){
+  getPlayInfo(hpid) {
     let play = [];
-    if(hpid)
-    {
+    if (hpid) {
       let arr_hpid = hpid.split(',');
       for (let i = 0; i < this.list.length; i++) {
         for (const item of arr_hpid) {
-          if(this.list[i].hpid == item)
-          {
+          if (this.list[i].hpid == item) {
             // play = this.list[i];
             play.push(this.list[i])
             // break;
@@ -386,34 +361,29 @@ export default class MatchInfoCtr
    * @param {Object} addPlay 需要修改和增加的玩法信息对象
    * @return {undefined} undefined
    */
-  updPlay(obj_arr,addPlay){
-    if(obj_arr.length && Array.isArray(obj_arr)){   //以前是对象，现在是数组，所以要在外层循环一次
+  updPlay(obj_arr, addPlay) {
+    if (obj_arr.length && Array.isArray(obj_arr)) {   //以前是对象，现在是数组，所以要在外层循环一次
       for (const obj of obj_arr) {
 
-        if(obj && this.match_obj && this.match_obj.mid == obj.mid && this.list &&(this.list instanceof Array))
-        {
+        if (obj && this.match_obj && this.match_obj.mid == obj.mid && this.list && (this.list instanceof Array)) {
           // let isFind = false;
           let hps = this.list;
           let play = null;
           for (let i = 0; i < hps.length; i++) {
-            if((!obj.topKey && hps[i].hpid == obj.hpid) || (hps[i].hpid == obj.hpid && hps[i].topKey == obj.topKey))
-            {
+            if ((!obj.topKey && hps[i].hpid == obj.hpid) || (hps[i].hpid == obj.hpid && hps[i].topKey == obj.topKey)) {
               play = hps[i];
               break;
             }
           }
 
-          if(play)
-          {
+          if (play) {
             // 删除之前的盘口对象和投注项对象
-            if(play&&play.hl&&(play.hl instanceof Array))
-            {
+            if (play && play.hl && (play.hl instanceof Array)) {
               play.hl.forEach(item_hl => {
-                if(item_hl){
-                  if(item_hl.ol&&(item_hl.ol instanceof Array))
-                  {
+                if (item_hl) {
+                  if (item_hl.ol && (item_hl.ol instanceof Array)) {
                     item_hl.ol.forEach(item_ol => {
-                      if(item_ol){
+                      if (item_ol) {
                         // 删除押注项
                         delete this.ol_obj[item_ol.oid];
                       }
@@ -427,14 +397,12 @@ export default class MatchInfoCtr
 
             // let play_ = _.cloneDeep(obj);
             // 修改玩法信息
-            if(obj&&obj.hl&&(obj.hl instanceof Array))
-            {
+            if (obj && obj.hl && (obj.hl instanceof Array)) {
               obj.hl.forEach(item_hl => {
-                if(item_hl){
-                  if(item_hl.ol&&(item_hl.ol instanceof Array))
-                  {
+                if (item_hl) {
+                  if (item_hl.ol && (item_hl.ol instanceof Array)) {
                     item_hl.ol.forEach(item_ol => {
-                      if(item_ol){
+                      if (item_ol) {
                         // 押注项对象增加mid,hid
                         Object.assign(item_ol, {
                           mid: obj.mid,
@@ -454,13 +422,12 @@ export default class MatchInfoCtr
               });
             }
             let play_ = _.cloneDeep(obj);
-            Object.assign(play,play_);
+            Object.assign(play, play_);
             play_.hl.forEach(item_hl => {
-              if(item_hl){
-                if(item_hl.ol&&(item_hl.ol instanceof Array))
-                {
+              if (item_hl) {
+                if (item_hl.ol && (item_hl.ol instanceof Array)) {
                   item_hl.ol.forEach(item_ol => {
-                    if(item_ol){
+                    if (item_ol) {
                       this.ol_obj[item_ol.oid] = item_ol;
                     }
                   });
@@ -469,18 +436,16 @@ export default class MatchInfoCtr
                 this.hl_obj[item_hl.hid] = item_hl;
               }
             });
-          } else if(addPlay){
+          } else if (addPlay) {
             // 未发现玩法增加
             let play_ = obj;
             // 增加盘口对象
-            if(play_&&play.hl&&(play_.hl instanceof Array))
-            {
+            if (play_ && play.hl && (play_.hl instanceof Array)) {
               play_.hl.forEach(item_hl => {
-                if(item_hl){
-                  if(item_hl.ol&&(item_hl.ol instanceof Array))
-                  {
+                if (item_hl) {
+                  if (item_hl.ol && (item_hl.ol instanceof Array)) {
                     item_hl.ol.forEach(item_ol => {
-                      if(item_ol){
+                      if (item_ol) {
                         // 增加押注项
                         Object.assign(item_ol, {
                           mid: obj.mid,
@@ -496,14 +461,12 @@ export default class MatchInfoCtr
               });
             }
             play_ = _.cloneDeep(play_);
-            if(play_&&play_.hl&&(play_.hl instanceof Array))
-            {
+            if (play_ && play_.hl && (play_.hl instanceof Array)) {
               play_.hl.forEach(item_hl => {
-                if(item_hl){
-                  if(item_hl.ol&&(item_hl.ol instanceof Array))
-                  {
+                if (item_hl) {
+                  if (item_hl.ol && (item_hl.ol instanceof Array)) {
                     item_hl.ol.forEach(item_ol => {
-                      if(item_ol){
+                      if (item_ol) {
                         // 增加押注项
                         this.ol_obj[item_ol.oid] = item_ol;
                       }
@@ -522,96 +485,88 @@ export default class MatchInfoCtr
     }
   }
 
-/**
- * @description: 清空盘口对象
- * @param {String,Number} hid 盘口编号
- * @return {undefined} undefined
- */
-clearHlObj(hid){
-  // var isBreak = false;
-  if(hid&&this.hl_obj[hid])
-  {
-    // 查找list中的列表数据
-    if(this.hl_obj[hid].ol && (this.hl_obj[hid].ol instanceof Array))
-    {
-      // 删除下面的所有押注项
-      this.hl_obj[hid].ol.forEach(item_ol => {
-        if(item_ol&&item_ol.oid)
-        {
-          // this.clearOlObj(item_ol.oid);
-          delete this.ol_obj[item_ol.oid];
-        }
-      });
-    }
-    // 删除盘口对象
-    delete this.hl_obj[hid];
-    //删除列表中盘口对象
-    if(this.list && (this.list instanceof Array))
-    {
-      let hl_list = null;
-      let ret = false;
-      for (let i = 0; i < this.list.length; i++) {
-        hl_list = this.list[i];
-        if(hl_list && hl_list.hl && (hl_list.hl instanceof Array))
-        {
-          for (let j = 0; j < hl_list.hl.length; j++) {
-            if(hl_list.hl[j] && hl_list.hl[j].hid && hl_list.hl[j].hid == hid)
-            {
-              hl_list.hl.splice(j, 1);
-              ret = true;
-              break;
+  /**
+   * @description: 清空盘口对象
+   * @param {String,Number} hid 盘口编号
+   * @return {undefined} undefined
+   */
+  clearHlObj(hid) {
+    // var isBreak = false;
+    if (hid && this.hl_obj[hid]) {
+      // 查找list中的列表数据
+      if (this.hl_obj[hid].ol && (this.hl_obj[hid].ol instanceof Array)) {
+        // 删除下面的所有押注项
+        this.hl_obj[hid].ol.forEach(item_ol => {
+          if (item_ol && item_ol.oid) {
+            // this.clearOlObj(item_ol.oid);
+            delete this.ol_obj[item_ol.oid];
+          }
+        });
+      }
+      // 删除盘口对象
+      delete this.hl_obj[hid];
+      //删除列表中盘口对象
+      if (this.list && (this.list instanceof Array)) {
+        let hl_list = null;
+        let ret = false;
+        for (let i = 0; i < this.list.length; i++) {
+          hl_list = this.list[i];
+          if (hl_list && hl_list.hl && (hl_list.hl instanceof Array)) {
+            for (let j = 0; j < hl_list.hl.length; j++) {
+              if (hl_list.hl[j] && hl_list.hl[j].hid && hl_list.hl[j].hid == hid) {
+                hl_list.hl.splice(j, 1);
+                ret = true;
+                break;
+              }
             }
           }
-        }
-        if(ret)
-        {
-          break;
+          if (ret) {
+            break;
+          }
         }
       }
     }
   }
-}
 
-/**
- * @description: 清空投注项对象
- * @param {String,Number} oid 投注项编号
- * @return {undefined} undefined
- */
-// clearOlObj(oid){
-//   if(oid&&this.ol_obj[oid])
-//   {
-//     var hid = this.ol_obj[oid].hid;
-//     // 查找list中的列表数据
-//     if(hid&&this.hl_obj[hid])
-//     {
-//       var ol = this.hl_obj[hid].ol;
-//       if(ol&& ol.length)
-//       {
-//         for (let i = 0; i < ol.length; i++) {
-//           if(ol[i]&&ol[i].oid == oid)
-//           {
-//             ol.splice(i,1);
-//             break;
-//           }
-//         }
-//       }
-//     }
-//     // 删除押注项对象
-//     delete this.ol_obj[oid];
-//   }
-// }
+  /**
+   * @description: 清空投注项对象
+   * @param {String,Number} oid 投注项编号
+   * @return {undefined} undefined
+   */
+  // clearOlObj(oid){
+  //   if(oid&&this.ol_obj[oid])
+  //   {
+  //     var hid = this.ol_obj[oid].hid;
+  //     // 查找list中的列表数据
+  //     if(hid&&this.hl_obj[hid])
+  //     {
+  //       var ol = this.hl_obj[hid].ol;
+  //       if(ol&& ol.length)
+  //       {
+  //         for (let i = 0; i < ol.length; i++) {
+  //           if(ol[i]&&ol[i].oid == oid)
+  //           {
+  //             ol.splice(i,1);
+  //             break;
+  //           }
+  //         }
+  //       }
+  //     }
+  //     // 删除押注项对象
+  //     delete this.ol_obj[oid];
+  //   }
+  // }
 
-/**
- * @description: 清空对象
- * @param {Object,Array} any 要清空的对象和列表
- * @return {undefined} undefined
- */
-  clear(any){
-    if(any&&(typeof any) == 'object')
-    {
-      if(any instanceof Array){
-        any.splice(0,any.length);
-      } else{
+  /**
+   * @description: 清空对象
+   * @param {Object,Array} any 要清空的对象和列表
+   * @return {undefined} undefined
+   */
+  clear(any) {
+    if (any && (typeof any) == 'object') {
+      if (any instanceof Array) {
+        any.splice(0, any.length);
+      } else {
         for (const key in any) {
           delete any[key]
         }
@@ -625,7 +580,7 @@ clearHlObj(hid){
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  clearData(){
+  clearData() {
     this.clear(this.ol_obj);
     this.clear(this.hl_obj);
     this.clear(this.match_obj);
@@ -637,7 +592,7 @@ clearHlObj(hid){
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  destroy(){
+  destroy() {
     this.clear(this.ol_obj);
     this.clear(this.hl_obj);
     this.clear(this.match_obj);

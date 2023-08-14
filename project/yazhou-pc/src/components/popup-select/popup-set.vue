@@ -5,7 +5,7 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ $root.$t(`set.${handicap_theme == 'theme01' ?
+            <div class="popup-text" :class="{ active: is_active }">{{ t(`set.${handicap_theme == 'theme01' ?
                 'day_' : 'night_'}`) }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -14,12 +14,12 @@
                 <div class="triangle"></div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme01' }"
                     @click="handle_set_theme('theme01')">
-                    {{ $root.$t('set.day_') }}
+                    {{ t('set.day_') }}
                     <!-- 日间版 -->
                 </div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme02' }"
                     @click="handle_set_theme('theme02')">
-                    {{ $root.$t('set.night_') }}
+                    {{ t('set.night_') }}
                     <!-- 夜间版 -->
                 </div>
             </div>
@@ -28,12 +28,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted, computed } from 'vue'
+import { useI18n } from "vue-i18n";
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
 
+/** 国际化 */
+const { t } = useI18n();
 
 /** 设置弹窗是否激活 */
 const is_active = ref(false)
@@ -77,7 +80,8 @@ const set_theme = (data) => store.dispatch({
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
-    return get_theme.value.indexOf('theme02') != -1 ? 'theme02' : 'theme01'
+    // return get_theme.value.includes('theme02') ? 'theme02' : 'theme01'
+    return 'theme02'
 })
 
 /**

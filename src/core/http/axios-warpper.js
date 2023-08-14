@@ -5,13 +5,13 @@
  */
 import axios from "axios";
 import { get } from "lodash";
-import wslog from "../ws/ws-log";
+import { wslog } from "../log/";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
 import { usePageVisibilityChange } from "../utils/event-hook";
 import domain from "./domain";
 import { ss } from "../utils/web-storage";
-import ws from "../ws/ws.js";
+// import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";
 

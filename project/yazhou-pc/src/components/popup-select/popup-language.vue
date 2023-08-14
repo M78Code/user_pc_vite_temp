@@ -23,12 +23,19 @@
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
+import { useI18n } from "vue-i18n";
+
 import store from "src/store-redux/index.js";
 import { api_account, api_details } from 'src/api/index';
 import langs_mjs from "project_path/src/i18n/langs/index.mjs";
 import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
 import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
 import { loadLanguageAsync } from 'src/boot/i18n'
+// import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
+// import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
+
+/** 国际化 */
+const { t } = useI18n();
 
 /** 语言列表 */
 const languageList = ref([])
@@ -62,7 +69,7 @@ const vx_cur_menu_type = ref({})
 /** 全局点击事件数 */
 const global_click = ref(0)
 watch(
-    () => get_global_click.value,
+    () => global_click.value,
     () => {
         if (hits.value % 2 == 1) {
             hits.value++;
@@ -163,11 +170,11 @@ function on_click_lang(lang_) {
                     let data = lodash.get(res, 'data.data');
                     if (lodash.isArray(data) && data.length > 0) {
                         if (vx_get_is_virtual_bet.value) {
-                            // TODO: update_bet_item_info
-                            // virtual_common.update_bet_item_info(this, data);
+                            // TODO: this
+                            // virtual_common_update_bet_item_info(this, data);
                         } else {
-                            // TODO: update_bet_item_info
-                            // yabo_common.update_bet_item_info(this, data);
+                            // TODO: this
+                            // yabo_common_update_bet_item_info(this, data);
                         }
                         useMittEmit(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, {})
                         set_lang_change(false);
@@ -196,7 +203,7 @@ function on_click_lang(lang_) {
                     window.reset_lang = '';
                 })
             } else if (code == '0401038') {
-                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, $root.$t("common.code_empty"))
+                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("common.code_empty"))
             }
         })
     }
@@ -216,7 +223,8 @@ function toggle_popup() {
 
 const versions_class = computed(() => {
     // TODO: 环境变量
-    return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
+    // return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
+    return 'versions-'
 })
 
 </script>

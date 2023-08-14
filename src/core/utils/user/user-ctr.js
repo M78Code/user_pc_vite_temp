@@ -11,14 +11,12 @@
  *
  */
 
- import {get_file_path} from "src/core/utils/get-file-path.js"
- import pako_pb from "src/core/utils/custom-pb-pako.js";
- import axios from "axios";
- import infoUpload from 'src/core/http/information-upload.js';
- const axios_instance = axios.create()
-
-
-
+import { get_file_path } from "src/core/file-path/file-path.js";
+import pako_pb from "src/core/utils/custom-pb-pako.js";
+import axios from "axios";
+import infoUpload from "src/core/http/information-upload.js";
+const axios_instance = axios.create();
+import { get, isPlainObject } from "lodash";
 class userCtr {
   constructor() {
     this.init();
@@ -39,9 +37,7 @@ class userCtr {
     // token 过期 累加达到 上限， 延迟 15秒 执行的  弹出 用户token 失效对应的弹窗  等 流程的  延迟时间
     this.token_expired_max_process_delay_time = 15000;
     // getUserInfo 原始数据备份 备份数据
-    this.getuserinfo_res_backup= null;
-
-
+    this.getuserinfo_res_backup = null;
   }
   /**
    *   调用 getuserinfo 接口返回值  数据备份
@@ -54,26 +50,30 @@ class userCtr {
    *
    */
   set_getuserinfo_res(res) {
-
-    if(!res.data){ return false }
-    if(_.get(res,'data.code')!="0000000"){ return false }
-    if(!_.get(res,'data.data.userId')){ return false }
+    if (!res.data) {
+      return false;
+    }
+    if (get(res, "data.code") != "0000000") {
+      return false;
+    }
+    if (!get(res, "data.data.userId")) {
+      return false;
+    }
     // 数据规整容错
 
     // getUserInfo 原始数据备份 备份数据
-     this.getuserinfo_res_backup =     JSON.stringify(res.data) ;
+    this.getuserinfo_res_backup = JSON.stringify(res.data);
 
-     //设置 商户层级的 配置的界面 相关的设置
-     this.set_merchant_config(_.get(res,'data.data.configVO'))
+    //设置 商户层级的 配置的界面 相关的设置
+    this.set_merchant_config(get(res, "data.data.configVO"));
 
-        //  调用用户接口，更新 域名流程
-    let oss = _.get(res,'data.data.oss',{});
-    oss.gr = _.get(res, "data.data.gr","").toUpperCase();
-    window.vue.$root.$emit('set_getuserinfo_oss_api', oss);
+    //  调用用户接口，更新 域名流程
+    let oss = get(res, "data.data.oss", {});
+    oss.gr = get(res, "data.data.gr", "").toUpperCase();
+    window.vue.$root.$emit("set_getuserinfo_oss_api", oss);
     //上传数据
-    infoUpload.upload_data(_.get(res,'data.data',{}))
-   }
-
+    infoUpload.upload_data(get(res, "data.data", {}));
+  }
 
   /**
    * 获取  和 调用 getuserinfo 接口 data 实体 数据
@@ -82,15 +82,14 @@ class userCtr {
    *  这里返回缓存的实体
    */
   get_getuserinfo_data() {
-    if(!this.getuserinfo_res_backup){
-      return null
-    }else{
-     let obj =  JSON.parse( this.getuserinfo_res_backup)
-     obj.code = 200
-     return obj
+    if (!this.getuserinfo_res_backup) {
+      return null;
+    } else {
+      let obj = JSON.parse(this.getuserinfo_res_backup);
+      obj.code = 200;
+      return obj;
     }
-
-   }
+  }
   /**
    * 检查 token 是否过期
    * @param only_getuserinfo  是否仅仅判断 getuserinfo 接口
@@ -171,15 +170,14 @@ class userCtr {
       // 如果有  token 过期 累加达到 上限 的 流程的定时器 就清除
       if (this.token_expired_max_process_timer) {
         clearTimeout(this.token_expired_max_process_timer);
-        this.token_expired_max_process_timer=null
+        this.token_expired_max_process_timer = null;
       }
       //调用 getuserinfo 接口返回值  数据备份
       if (url_temp.includes("user/getUserInfo")) {
-        let data_temp = pako_pb.unzip_data(_.get(res, 'data.data'));
+        let data_temp = pako_pb.unzip_data(get(res, "data.data"));
         data_temp && (res.data.data = data_temp);
-         this. set_getuserinfo_res(res)
+        this.set_getuserinfo_res(res);
       }
-
     }
   }
   /**
@@ -202,8 +200,8 @@ class userCtr {
       // 执行前再次判断 是否超限
       // 如果超限
       if (this.all_expired_count >= this.all_expired_count_max) {
-         // 设置登录无效
-         window.vue.$store.commit("set_is_invalid", true);
+        // 设置登录无效
+        window.vue.$store.commit("set_is_invalid", true);
         //显示登录失效弹窗
         setTimeout(() => {
           window.vue.show_fail_alert();
@@ -217,70 +215,76 @@ class userCtr {
         //如果不超限 //清除定时器
         if (this.token_expired_max_process_timer) {
           clearTimeout(this.token_expired_max_process_timer);
-          this.token_expired_max_process_timer=null
+          this.token_expired_max_process_timer = null;
         }
       }
     }, this.token_expired_max_process_delay_time);
   }
 
-
   /**
    *  用户信息的  内的 视频多久 无操作 时间判定
    */
-   compute_video_no_handle_time(res){
-
-          // 长时间未操作暂停视频开关   1开启; 0关闭
-          let center_video_time = _.get(res,'data.videoManageVo.closedWithoutOperation', 0);
-          // 观看时间设置 0默认时间 1自定义时间
-          let close_video_time_settings = _.get(res,'data.videoManageVo.videoSettings', 0);
-          // 长时间未操作暂停视频时间(自定义时间)
-          let close_video_time_custom = _.get(res,'data.videoManageVo.customViewTime', 0);
-          // 长时间未操作暂停视频时间(默认时间)
-          let close_video_time = _.get(res,'data.videoManageVo.viewingTime', 0)
-          let setting_no_handle_time = (close_video_time_settings ? close_video_time_custom : close_video_time) * 1000 * 60
-          // 商户级别视频流量管控开关 1开启、0关闭
-          let config_video_switch = _.get(res, 'data.videoManageVo.videoSwitch', 0);
-          // 系统级别视频流量管控总开关   '1'开启、'0'关闭
-          let config_video_time = _.get(res, 'data.videoManageVo.configValue', 0);
-          // 检查暂停视频开关是否开启 与 用户是否长时间未操作
-          if(1*config_video_time != 0 && config_video_switch != 0 && center_video_time != 0 && setting_no_handle_time != 0){
-           return  setting_no_handle_time
-
-          }else{
-            return  0
-          }
-
-
-
-   }
-
-
-
+  compute_video_no_handle_time(res) {
+    // 长时间未操作暂停视频开关   1开启; 0关闭
+    let center_video_time = get(
+      res,
+      "data.videoManageVo.closedWithoutOperation",
+      0
+    );
+    // 观看时间设置 0默认时间 1自定义时间
+    let close_video_time_settings = get(
+      res,
+      "data.videoManageVo.videoSettings",
+      0
+    );
+    // 长时间未操作暂停视频时间(自定义时间)
+    let close_video_time_custom = get(
+      res,
+      "data.videoManageVo.customViewTime",
+      0
+    );
+    // 长时间未操作暂停视频时间(默认时间)
+    let close_video_time = get(res, "data.videoManageVo.viewingTime", 0);
+    let setting_no_handle_time =
+      (close_video_time_settings ? close_video_time_custom : close_video_time) *
+      1000 *
+      60;
+    // 商户级别视频流量管控开关 1开启、0关闭
+    let config_video_switch = get(res, "data.videoManageVo.videoSwitch", 0);
+    // 系统级别视频流量管控总开关   '1'开启、'0'关闭
+    let config_video_time = get(res, "data.videoManageVo.configValue", 0);
+    // 检查暂停视频开关是否开启 与 用户是否长时间未操作
+    if (
+      1 * config_video_time != 0 &&
+      config_video_switch != 0 &&
+      center_video_time != 0 &&
+      setting_no_handle_time != 0
+    ) {
+      return setting_no_handle_time;
+    } else {
+      return 0;
+    }
+  }
 
   /**
    *  用户信息的 gr 分组参数 判定 流程
    */
 
-  check_getuserinfo_gr(res){
+  check_getuserinfo_gr(res) {
+    let reload_flg = false;
+    // 获取用户分组信息
+    let gr = get(res, "data.gr");
+    if (gr) {
+      gr = gr.toLocaleUpperCase();
+      // localStorage持久化用户分组信息
+      sessionStorage.setItem("gr", gr);
 
-    let   reload_flg = false;
-      // 获取用户分组信息
-      let gr = _.get(res,'data.gr');
-      if(gr) {
-
-
-        gr = gr.toLocaleUpperCase();
-        // localStorage持久化用户分组信息
-        sessionStorage.setItem('gr',gr)
-
-        if(window.env.config.gr != gr){
-
-
-          let url_search = new URLSearchParams(location.search);
+      if (window.env.config.gr != gr) {
+        let url_search = new URLSearchParams(location.search);
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
         // 删除  api
-        url_search.delete('api')
+        url_search.delete("api");
         // 增加GR 参数
         url_search.set("gr", gr);
 
@@ -304,226 +308,207 @@ class userCtr {
         // 新的 url
         let new_url = location.origin + "?" + new_search + new_hash;
         console.log("new_url-", new_url);
-           // 分组不正确,重新刷新页面
-           location.replace(new_url);
-              // 分组不正确,重新刷新页面
-              // location.reload();
-             reload_flg = true;
-        }
-
-
-
-      } else {
-
-        sessionStorage.setItem('gr','')
+        // 分组不正确,重新刷新页面
+        location.replace(new_url);
+        // 分组不正确,重新刷新页面
+        // location.reload();
+        reload_flg = true;
       }
+    } else {
+      sessionStorage.setItem("gr", "");
+    }
 
-   return reload_flg
-
+    return reload_flg;
   }
 
+  /**
+   * 商户 设置 预览 ，这个时候无 token
+   */
 
-
-/**
- * 商户 设置 预览 ，这个时候无 token
- */
-
-  async handle_merchant_setup_preview(){
-    let params, partnerId
-    if(location.href.indexOf("?")!=-1){
-      let res=location.href.match(/partnerId=([a-zA-Z0-9]*)/);
-      if(res&&res.length>1){
-        partnerId=res[1];
+  async handle_merchant_setup_preview() {
+    let params, partnerId;
+    if (location.href.indexOf("?") != -1) {
+      let res = location.href.match(/partnerId=([a-zA-Z0-9]*)/);
+      if (res && res.length > 1) {
+        partnerId = res[1];
       }
     }
-    if(partnerId){
-      params={
-        merchantCode:partnerId
-      }
-
-    }else{
-      this.set_web_meta_by_config()
-      return Promise.resolve(1)
+    if (partnerId) {
+      params = {
+        merchantCode: partnerId,
+      };
+    } else {
+      this.set_web_meta_by_config();
+      return Promise.resolve(1);
     }
-
 
     let api_domains = window.env.config.domain[window.env.config.current_env];
     let api_domain = api_domains[0];
 
-
     try {
-      let res = await  axios_instance.get(`${api_domain}/yewu12/user/getConfig`, {
-        params ,
-        timeout:10000,
-
-      })
-      let data = _.get(res,'data.data')
-      if ( _.isPlainObject(data) ) {
-        this.set_merchant_config(data)
-      }else{
-        this.set_web_meta_by_config()
+      let res = await axios_instance.get(
+        `${api_domain}/yewu12/user/getConfig`,
+        {
+          params,
+          timeout: 10000,
+        }
+      );
+      let data = get(res, "data.data");
+      if (isPlainObject(data)) {
+        this.set_merchant_config(data);
+      } else {
+        this.set_web_meta_by_config();
       }
-
-
     } catch (error) {
-      this.set_web_meta_by_config()
-
+      this.set_web_meta_by_config();
     }
-   // 留着给 其他地方异步去处理 后续逻辑
-   return Promise.resolve(1)
-
+    // 留着给 其他地方异步去处理 后续逻辑
+    return Promise.resolve(1);
   }
 
   /**
    * 设置 商户层级的 配置的界面 相关的设置
    */
 
-   set_merchant_config(merchant_config){
-
-    if(_.isPlainObject(merchant_config)){
-
-      sessionStorage.setItem('merchant_config_json', JSON.stringify(merchant_config))
+  set_merchant_config(merchant_config) {
+    if (isPlainObject(merchant_config)) {
+      sessionStorage.setItem(
+        "merchant_config_json",
+        JSON.stringify(merchant_config)
+      );
     }
-
-
-
   }
   /**
    * 获取首页 的 默认的  banner 的 地址
    */
-  get_banner_url_first_page(){
-    let merchant_config_json = JSON.parse(sessionStorage.getItem("merchant_config_json"))
-    let url = _.get(merchant_config_json,'bannerUrl')
+  get_banner_url_first_page() {
+    let merchant_config_json = JSON.parse(
+      sessionStorage.getItem("merchant_config_json")
+    );
+    let url = get(merchant_config_json, "bannerUrl");
 
-    return  url
-
+    return url;
   }
 
+  /**
+   * 计算设置 网页 基础信息的 最终配置
+   */
 
-
-
-
-/**
- * 计算设置 网页 基础信息的 最终配置
- */
-
-compute_set_web_meta_config(){
+  compute_set_web_meta_config() {
     // http://test-user-h5-bw3.sportxxxifbdxm2.com/?jz=1&partnerId=489637#/
-    let json = sessionStorage.getItem('merchant_config_json')
-    let config =  _.get(window.env,'config.html_info') || {}
-    if(json ){
-     // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
+    let json = sessionStorage.getItem("merchant_config_json");
+    let config = get(window.env, "config.html_info") || {};
+    if (json) {
+      // 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
 
+      let merchant_config = JSON.parse(json);
 
-     let merchant_config = JSON.parse(json)
+      // 浏览器icon
+      if (merchant_config.pcLogoUrl) {
+        config.icon = get_file_path(merchant_config.pcLogoUrl);
+      }
+      // 最大宽度
+      if (merchant_config.inlineWidth) {
+        config.max_width = merchant_config.inlineWidth;
+      }
+      // 主logo白色
+      if (get(merchant_config, "configMap.1")) {
+        config.day_logo = get_file_path(merchant_config.configMap[1]);
+      }
+      // 主logo黑色
+      if (get(merchant_config, "configMap.2")) {
+        config.night_logo = get_file_path(merchant_config.configMap[2]);
+      }
+      // 兼容页logo
+      if (merchant_config.compatLogoUrl) {
+        config.compatible_logo = get_file_path(merchant_config.compatLogoUrl);
+      }
+      // loading图片
+      if (merchant_config.loadLogoUrl) {
+        config.loadLogoUrl = get_file_path(merchant_config.loadLogoUrl);
+      }
+      // 视频异常
+      if (merchant_config.videoLogoUrl) {
+        config.videoLogoUrl = get_file_path(merchant_config.videoLogoUrl);
+      }
+      // 默认联赛logo
+      if (merchant_config.leagueLogoUrl) {
+        this.set_league_logo_url(merchant_config.leagueLogoUrl);
+        // config.leagueLogoUrl = get_file_path(merchant_config.leagueLogoUrl)
+      }
+      // 专业版默认主题色
+      if (merchant_config.profesTag) {
+        config.default_theme.yabo = merchant_config.profesTag;
+      }
+    } else {
+      // 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
+    }
 
-     // 浏览器icon
-     if(merchant_config.pcLogoUrl){
-       config.icon = get_file_path(merchant_config.pcLogoUrl)
-     }
-     // 最大宽度
-     if(merchant_config.inlineWidth){
-       config.max_width = merchant_config.inlineWidth
-     }
-     // 主logo白色
-     if(_.get(merchant_config,'configMap.1')){
-       config.day_logo = get_file_path(merchant_config.configMap[1])
-     }
-     // 主logo黑色
-     if(_.get(merchant_config,'configMap.2')){
-       config.night_logo = get_file_path(merchant_config.configMap[2])
-     }
-     // 兼容页logo
-     if(merchant_config.compatLogoUrl){
-       config.compatible_logo = get_file_path(merchant_config.compatLogoUrl)
-     }
-     // loading图片
-     if(merchant_config.loadLogoUrl){
-       config.loadLogoUrl = get_file_path(merchant_config.loadLogoUrl)
-     }
-     // 视频异常
-     if(merchant_config.videoLogoUrl){
-       config.videoLogoUrl = get_file_path(merchant_config.videoLogoUrl)
-     }
-     // 默认联赛logo
-     if(merchant_config.leagueLogoUrl){
-       this.set_league_logo_url(merchant_config.leagueLogoUrl)
-       // config.leagueLogoUrl = get_file_path(merchant_config.leagueLogoUrl)
-     }
-     // 专业版默认主题色
-     if(merchant_config.profesTag){
-       config.default_theme.yabo = merchant_config.profesTag
-     }
+    return config;
+  }
 
-
-    }else{
-     // 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
-   }
-
-
-   return  config
-
-}
-
-/**
- * @Description 判断联赛logo是否可用 并设置联赛logo
- * @param {undefined} undefined
-*/
-set_league_logo_url(url){
-  url = get_file_path(url)
-  let img = new Image();
-  img.onload = function () {
-    if (this.complete == true) {
-      // 图片加载成功
-      let style_el = document.createElement('style')
-      style_el.innerHTML = `
+  /**
+   * @Description 判断联赛logo是否可用 并设置联赛logo
+   * @param {undefined} undefined
+   */
+  set_league_logo_url(url) {
+    url = get_file_path(url);
+    let img = new Image();
+    img.onload = function () {
+      if (this.complete == true) {
+        // 图片加载成功
+        let style_el = document.createElement("style");
+        style_el.innerHTML = `
       .leagues-logo-default[src^=data]{background-repeat:no-repeat;}
       .theme01 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
       .theme02 img.leagues-logo-default[src^=data]{background-image: url("${url}") !important;}
-      `
-      document.head.appendChild(style_el)
-    }
+      `;
+        document.head.appendChild(style_el);
+      }
+    };
+    img.src = url;
   }
-  img.src = url
-}
-/**
- * 预览配置 接口出错 后 按照前端默认的配置来设置 整个网页 基础信息
- * 几个场景：
- * 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
- * 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
- *
- *
- */
-  set_web_meta_by_config(){
-     //计算 后的  设置 网页 基础信息的 最终配置
-    let config = this.compute_set_web_meta_config()
+  /**
+   * 预览配置 接口出错 后 按照前端默认的配置来设置 整个网页 基础信息
+   * 几个场景：
+   * 1.本身就是预览，接口炸了，那么按照前端自己的默认配置 设置
+   * 2.本身有token 但是token 失效了 ，这个时候 理论上 之前什么样还什么样，根本不用处理
+   *
+   *
+   */
+  set_web_meta_by_config() {
+    //计算 后的  设置 网页 基础信息的 最终配置
+    let config = this.compute_set_web_meta_config();
     // 设置标题
-    let title_el = document.createElement('title');
-    let lang = window.vue.$store.getters.get_lang
+    let title_el = document.createElement("title");
+    let lang = window.vue.$store.getters.get_lang;
     let title_str = this.get_web_title(lang);
 
     title_el.innerHTML = title_str;
 
-    let metas = document.getElementsByTagName('meta');
+    let metas = document.getElementsByTagName("meta");
     for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') =='description' || metas[i].getAttribute('name') =='product-name') {
-        metas[i].setAttribute('content',title_str);
+      if (
+        metas[i].getAttribute("name") == "description" ||
+        metas[i].getAttribute("name") == "product-name"
+      ) {
+        metas[i].setAttribute("content", title_str);
       }
     }
 
     // 修改网站icon
-    let icon_el = document.getElementById('link_icon')
-    if(icon_el){
-      icon_el.setAttribute('rel','icon')
-      icon_el.setAttribute('type','image/x-icon')
-      if(sessionStorage.getItem('hide_logo_icon') === '0'){
-        icon_el.setAttribute('href',config.icon);
+    let icon_el = document.getElementById("link_icon");
+    if (icon_el) {
+      icon_el.setAttribute("rel", "icon");
+      icon_el.setAttribute("type", "image/x-icon");
+      if (sessionStorage.getItem("hide_logo_icon") === "0") {
+        icon_el.setAttribute("href", config.icon);
       }
     }
     // 设置样式
-    let style_el = document.createElement('style')
+    let style_el = document.createElement("style");
     // 获取商户样式_y0
-    let merchant_style = '';
+    let merchant_style = "";
     let style_html = `
       body.theme01${merchant_style}{background-color:#${config.body_bg_day}!important;}
       body.theme02${merchant_style}{background-color:#${config.body_bg_night}!important;}
@@ -532,14 +517,14 @@ set_league_logo_url(url){
       .custom-format-img-logo-01-theme01{background-image: url("${config.day_logo}") !important;}
       .theme02${merchant_style} .custom-format-img-logo-01{background-image: url("${config.night_logo}") !important;}
       .custom-format-img-logo-04{background-image: url("${config.compatible_logo}") !important;}
-    `
+    `;
     // loading图片
-    if(config.loadLogoUrl){
-      style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`
+    if (config.loadLogoUrl) {
+      style_html += `.custom-format-img-loading{background-image: url("${config.loadLogoUrl}") !important;}`;
     }
     // 视频异常
-    if(config.videoLogoUrl){
-      style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`
+    if (config.videoLogoUrl) {
+      style_html += `.custom-format-web-icon-05{background-image: url("${config.videoLogoUrl}") !important;}`;
     }
     // 默认联赛logo
     // if(config.leagueLogoUrl){
@@ -549,9 +534,9 @@ set_league_logo_url(url){
     //   .theme02 img.leagues-logo-default[src^=data]{background-image: url("${config.leagueLogoUrl}") !important;}
     //   `
     // }
-    style_el.innerHTML = style_html
-    document.head.appendChild(title_el)
-    document.head.appendChild(style_el)
+    style_el.innerHTML = style_html;
+    document.head.appendChild(title_el);
+    document.head.appendChild(style_el);
 
     // 设置主题色
     // if(!window.vue.$store.getters.get_theme){
@@ -560,21 +545,20 @@ set_league_logo_url(url){
     // }
     // window.vue.$store.dispatch('init_loading_theme')
     window.vue.$root.$emit(window.vue.emit_cmd.EMIT_MX_COLLECT_COUNT2_CMD);
-
-
-
-
   }
   /**
    * @Description 设置网站标题
    * @param {undefined} undefined
-  */
-   set_web_title(lang){
-    document.title = this.get_web_title(lang)
-    let metas = document.getElementsByTagName('meta');
+   */
+  set_web_title(lang) {
+    document.title = this.get_web_title(lang);
+    let metas = document.getElementsByTagName("meta");
     for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') =='description' || metas[i].getAttribute('name') =='product-name') {
-        metas[i].setAttribute('content',document.title);
+      if (
+        metas[i].getAttribute("name") == "description" ||
+        metas[i].getAttribute("name") == "product-name"
+      ) {
+        metas[i].setAttribute("content", document.title);
       }
     }
   }
@@ -582,49 +566,45 @@ set_league_logo_url(url){
    * @Description 获取网站标题
    * @param {Object} lang 语言
    * @param {undefined} undefined
-  */
-  get_web_title(lang){
-    let title = _.get(window.env,`config.html_info.title.${lang}`) || ''
-    let json = sessionStorage.getItem('merchant_config_json')
-    if(json){
-      let merchant_config = JSON.parse(json)
-      if(_.get(merchant_config,`titleMap.${lang}`)){
-        title = _.get(merchant_config,`titleMap.${lang}`)
+   */
+  get_web_title(lang) {
+    let title = get(window.env, `config.html_info.title.${lang}`) || "";
+    let json = sessionStorage.getItem("merchant_config_json");
+    if (json) {
+      let merchant_config = JSON.parse(json);
+      if (get(merchant_config, `titleMap.${lang}`)) {
+        title = get(merchant_config, `titleMap.${lang}`);
       }
     }
-    return title
+    return title;
   }
 
   /**
    * @Description 修正用户主题样式
    * @param {Object} user_data 用户对象数据
-  */
-  repair_user_theme(user_data){
-    if(!user_data){
+   */
+  repair_user_theme(user_data) {
+    if (!user_data) {
       return;
     }
-    if(user_data.stm=='blue'){
+    if (user_data.stm == "blue") {
       //同步 商户主题色系
-      localStorage.setItem('merchant_style', 'y0');
+      localStorage.setItem("merchant_style", "y0");
       // 修正session主题
-      let session_theme =  sessionStorage.getItem("theme");
-      if(session_theme){
-        session_theme = session_theme.replace('_y0','')
-        sessionStorage.setItem("theme",session_theme+'_y0')
+      let session_theme = sessionStorage.getItem("theme");
+      if (session_theme) {
+        session_theme = session_theme.replace("_y0", "");
+        sessionStorage.setItem("theme", session_theme + "_y0");
       }
     } else {
       //同步 商户主题色系
-      localStorage.setItem('merchant_style', 'common');
+      localStorage.setItem("merchant_style", "common");
       // 修正session主题
-      let session_theme =  sessionStorage.getItem("theme") ||''
-      sessionStorage.setItem("theme",session_theme.replace('_y0',''))
+      let session_theme = sessionStorage.getItem("theme") || "";
+      sessionStorage.setItem("theme", session_theme.replace("_y0", ""));
     }
   }
-
 }
 
-
-const instance =new userCtr()
-export {
-  instance
-}
+const instance = new userCtr();
+export { instance };

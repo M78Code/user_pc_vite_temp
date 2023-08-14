@@ -8,10 +8,15 @@
  */
 
 // import { mapGetters, mapActions } from "vuex";
-import store from "project_path/src/store";
-import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
+// import store from "project_path/src/store";
+// import { useI18n } from 'vue-i18n'
+import store from "src/store-redux/index.js";
+// TODO:
+// import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
+/** 国际化 */
+// const { t } = useI18n();
 export default {
-  mixins: [global_mixin],
+  // mixins: [global_mixin],
   data() {
     return {
       float_3_csid:[100,101,102,103], // 需要显示三位小数点的,赛种编号(电竞)
@@ -93,12 +98,12 @@ export default {
       // 美式赔率  5  
       // 印尼赔率  6
       return  [
-        { label: this.$root.$t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
-        { label: this.$root.$t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
-        { label: this.$root.$t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
-        { label: this.$root.$t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
-        { label: this.$root.$t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
-        { label: this.$root.$t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
+        // { label: this.$root.$t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
+        // { label: this.$root.$t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
+        // { label: this.$root.$t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
+        // { label: this.$root.$t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
+        // { label: this.$root.$t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
+        // { label: this.$root.$t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
       ];
     }
   },

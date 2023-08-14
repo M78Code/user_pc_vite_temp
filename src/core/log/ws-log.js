@@ -180,5 +180,6 @@ class WsLog {
 }
 // 初始化启动日志系统--开发模式时日志打开
 // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-export const WsLog_H5 = new WsLog("PC", LOCAL_FUNCTION_SWITCH.LOG)
-export const WsLog_PC = new WsLog("H5", LOCAL_FUNCTION_SWITCH.LOG)
+
+//PC 应该用 环境来判断 而不是导出二个变量
+export default new WsLog("PC", LOCAL_FUNCTION_SWITCH.LOG);

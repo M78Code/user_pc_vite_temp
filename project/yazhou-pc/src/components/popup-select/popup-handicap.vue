@@ -5,7 +5,7 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ $root.$t('odds')[vx_cur_odd] }}</div>
+            <div class="popup-text" :class="{ active: is_active }">{{ t('odds')[vx_cur_odd] }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
         <div class="relative-position">
@@ -22,13 +22,18 @@
 </template>
   
 <script setup>
-import { ref, watch, defineComponent, getCurrentInstance, onUnmounted } from 'vue'
+import { ref, reactive, watch, defineComponent, getCurrentInstance, onUnmounted } from 'vue'
 import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
+import { useI18n } from 'vue-i18n'
+// import store from "project_path/src/store/index.js";
 
 /** 获取mixins */
 const { proxy } = getCurrentInstance()
+
+/** 国际化 */
+const { t } = useI18n();
 
 /** 点击数 */
 const hits = ref(0)
@@ -46,7 +51,7 @@ function on_popup() {
     if (vx_get_is_single_handle.value || vx_get_is_handle.value) return; // 单关或者串关投注正在进行中，禁止切换
     // 冠军
     let is_winner = $menu.menu_data.match_tpl_number == 18
-    let type_name = vx_cur_menu_type.value.type_name;
+    let type_name = vx_cur_menu_type.type_name;
     // 串关 && 冠军 不能切换赔率 电竞冠军菜单
     if (["winner_top"].includes(type_name) ||
         (is_winner && type_name != 'virtual_sport') ||
@@ -90,9 +95,11 @@ function set_user_preference(curr_odd) {
 }
 
 /** 获取当前菜单类型 */
-const vx_cur_menu_type = ref({})
+let vx_cur_menu_type = reactive({
+    type_name: ''
+})
 watch(
-    () => vx_cur_menu_type.value.type_name,
+    () => vx_cur_menu_type.type_name,
     (new_, old_) => {
         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
         if (new_ == 'winner_top') {
@@ -106,7 +113,7 @@ watch(
 /** 全局点击事件数 */
 const global_click = ref(0)
 watch(
-    () => get_global_click.value,
+    () => global_click.value,
     () => {
         if (hits.value % 2 == 1) {
             hits.value++;
@@ -126,7 +133,7 @@ const vx_is_bet_single = ref(true)
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
     const new_state = store.getState()
-    vx_cur_menu_type.value = new_state.cur_menu_type
+    vx_cur_menu_type = new_state.cur_menu_type
     global_click.value = new_state.global_click
     get_cur_odd.value = new_state.cur_odd
     vx_get_is_single_handle.value = new_state.is_single_handle
@@ -149,23 +156,12 @@ const set_pre_odd = (data) => store.dispatch({
 
 
 </script>
+
 <script>
 export default defineComponent({
     name: 'popup-handicap',
     mixins: [odds_conversion_mixin],
 })
-</script>
-<script>
-
-import { mapGetters, mapActions } from "vuex";
-export default {
-
-    methods: {
-        ...mapActions(["set_cur_odd", "set_pre_odd"]),
-        
-    },
-
-};
 </script>
   
 <style lang="scss" scoped>

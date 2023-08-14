@@ -48,8 +48,14 @@ const computed_data = reactive({
   vx_get_bet_list: betInfoReducer.bet_list,
   bet_single_list: betInfoReducer.bet_single_list,
   vx_get_bet_single_obj: betInfoReducer.bet_single_obj,
+
+  vx_get_bet_appoint_obj:betInfoReducer.bet_appoint_obj,
+  vx_get_pre_bet_list: betInfoReducer.pre_bet_list,
+  vx_get_is_bet_merge: betInfoReducer.is_bet_merge,
+
+
   vx_layout_left_show: layoutReducer.layout_left_show,
-  cur_odd: globalReducer.odds.cur_odds,
+  vx_get_cur_odd: globalReducer.odds.cur_odds,
   left_menu_toggle: layoutReducer.left_menu_toggle,
   // 当前菜单类型
   vx_cur_menu_type: menuReducer.cur_menu_type,
@@ -59,7 +65,6 @@ const computed_data = reactive({
   // 全局点击事件
   get_global_click: globalReducer.global_click,
   layout_size: layoutReducer.layout_size,
-  is_bet_merge: betInfoReducer.is_bet_merge,
   menu_collapse_status: menuReducer.menu_collapse_status,
   //收起右侧详情 展开多列玩法
   get_unfold_multi_column: globalReducer.is_unfold_multi_column,
@@ -365,7 +370,7 @@ const data_ref = {
         temp.placeNum = _.get(obj, 'hps[0].hl[0].hn') || _.get(obj, 'bs.hps[0].hl[0].ol.hn');
         if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
-          temp.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+          temp.openMiltSingle = computed_data.vx_get_is_bet_merge ? 1 : 0;
         }
         param.orderMaxBetMoney.push(temp);
       }
@@ -440,7 +445,7 @@ const data_ref = {
       for (let index = 0; index < len; index++) {
         let id = _.get(this,`vx_get_bet_single_list[${index}]`);
         // 投注客户端对象
-        let item_cs = _.get(this,`vx_get_bet_single_obj.${id}.cs`, {});
+        let item_cs = _.get(computed_data.vx_get_bet_single_obj ,`${id}.cs`, {});
         // 提交状态为已提交(submit_status=true)
         if (_.get(item_cs,'submit_status')) {
           // 移除单关投注项对象
@@ -458,7 +463,7 @@ const data_ref = {
      */
     const  get_item_disable = (item_) => {
       let ret = false;
-      let active = this.get_odds_active(_.get(item_, 'mhs'),
+      let active = get_odds_active(_.get(item_, 'mhs'),
         _.get(item_, 'hps[0].hl[0].hs'),
         _.get(item_, 'hps[0].hl[0].ol[0].os'));
       // 判断盘口是否可用
@@ -477,17 +482,17 @@ const data_ref = {
     const bet_submit_data_template = (seriesType, seriesBetAmount, item, is_pre=false) => {
       console.log('正常投注参数playOptionName处理------------1', );
       let tempList = [];
-      let bet_list_array = computed_data.vx_is_bet_single ? [item] : _.get(this,'vx_get_bet_list',[]);
+      let bet_list_array = computed_data.vx_is_bet_single ? [item] : ( computed_data.computed_data || []);
       bet_list_array.forEach(id => {
         let item_bs, item_cs;
         //单关
         if (computed_data.vx_is_bet_single) {
-          item_bs = _.get(this,`vx_get_bet_single_obj.${id}.bs`,{}); //列表的数据
-          item_cs = _.get(this,`vx_get_bet_single_obj.${id}.cs`,{}); //组装的数据
+          item_bs = _.get(computed_data.vx_get_bet_single_obj ,`${id}.bs`,{}); //列表的数据
+          item_cs = _.get(computed_data.vx_get_bet_single_obj ,`${id}.cs`,{}); //组装的数据
         } else {
           //串关
-          item_bs = _.get(this,`vx_get_bet_obj.${id}.bs`,{});
-          item_cs = _.get(this,`vx_get_bet_obj.${id}.cs`,{});
+          item_bs = _.get(computed_data.vx_get_bet_obj,`${id}.bs`,{});
+          item_cs = _.get(computed_data.vx_get_bet_obj,`${id}.cs`,{});
         }
         //1-单关, 2-串关 3, 冠军
         if ((seriesType == 1 && _.has(item_cs,'money')) || seriesType == 2) {
@@ -524,8 +529,8 @@ const data_ref = {
           temp.placeNum = _.get(item_bs, 'hps[0].hl[0].hn') || _.get(item_bs, 'hps[0].hl.hn') || _.get(item_bs, 'hps[0].hl[0].ol[0].hn') || _.get(item_bs, 'hps[0].hl[0].ol.hn');
           //查找当前玩法下盘口符合调整的球头对应值的，并且是当前投注项类型 over对象，取里面的marketId 和playOptionId，
           //是预约 计算marketId和playOptionsId
-          if(is_pre && this.vx_get_bet_appoint_obj && !_.isUndefined(this.vx_get_bet_appoint_obj.appoint_ball_head)) {
-             let dl = this.vx_get_pre_bet_list;
+          if(is_pre && computed_data.vx_get_bet_appoint_obj && !_.isUndefined(computed_data.vx_get_bet_appoint_obj.appoint_ball_head)) {
+             let dl = computed_data.vx_get_pre_bet_list;
              if(dl) {
               if(play_mapping.MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id'))
               ||play_mapping.BASKETBALL_BY_APPOINTMENT.includes(_.get(item_cs, 'play_id'))//这里是篮球让球
@@ -537,7 +542,7 @@ const data_ref = {
                   let odd_len = ml_item.marketOddsList.length;
                   for(let j = 0; j < odd_len; j++) {
                     let odd_item = ml_item.marketOddsList[j];
-                    if(_.get(dl, 'currentMarket.marketOddsList[0].oddsType',-1) == odd_item.oddsType && odd_item.playOptions == this.vx_get_bet_appoint_obj.computed_appoint_ball_head) {
+                    if(_.get(dl, 'currentMarket.marketOddsList[0].oddsType',-1) == odd_item.oddsType && odd_item.playOptions == computed_data.vx_get_bet_appoint_obj.computed_appoint_ball_head) {
                         temp.playOptionsId = odd_item.id; //投注项id
                         cur_i = i;
                         break;
@@ -555,7 +560,7 @@ const data_ref = {
                 }
               }else{ //大小球过滤数据
                //第一步过滤出当前盘口值对应的盘口
-               let dl_fillter = dl.marketList.filter(item => item.marketValue == this.vx_get_bet_appoint_obj.computed_appoint_ball_head)[0];
+               let dl_fillter = dl.marketList.filter(item => item.marketValue == computed_data.vx_get_bet_appoint_obj.computed_appoint_ball_head)[0];
                //盘口id 预约需要筛选
                temp.marketId = _.get(dl_fillter, 'id', '');
                //取出marketOddsList
@@ -584,14 +589,14 @@ const data_ref = {
          
            //是预约 传递marketValue 这个值正常投注没有，预约投注才有
            if(is_pre) {
-            if(_.isNull(this.vx_get_bet_appoint_obj.appoint_ball_head) || this.vx_get_bet_appoint_obj.is_head_eq_hadicap || _.isNaN(this.vx_get_bet_appoint_obj.appoint_ball_head)) {
-              temp.marketValue = _.get(this.vx_get_pre_bet_list, 'currentMarket.marketValue', '')
+            if(_.isNull(computed_data.vx_get_bet_appoint_obj.appoint_ball_head) || computed_data.vx_get_bet_appoint_obj.is_head_eq_hadicap || _.isNaN(computed_data.vx_get_bet_appoint_obj.appoint_ball_head)) {
+              temp.marketValue = _.get(computed_data.vx_get_pre_bet_list, 'currentMarket.marketValue', '')
                //盘口id
               temp.marketId = _.get(item_bs, 'hps[0].hl[0].hid') || _.get(item_bs, 'hps[0].hl.hid') || _.get(item_bs, 'hps[0].hl[0].ol[0].hid');;
               //投注项id
               temp.playOptionsId = _.get(item_cs, 'oid');
             }else{
-              temp.marketValue = this.vx_get_bet_appoint_obj.appoint_ball_head;  //盘口值
+              temp.marketValue = computed_data.vx_get_bet_appoint_obj.appoint_ball_head;  //盘口值
             }
           }
           let hsw = _.get(item_bs, 'hps[0].hsw') || _.get(item_bs, 'hps[0].hl[0].hsw');
@@ -614,22 +619,22 @@ const data_ref = {
                 }
               }
             }
-            if (support_odds.includes(_.get(this,'vx_get_cur_odd'))) {
+            if (support_odds.includes(computed_data.vx_get_cur_odd)) {
               //最终盘口类型
-              temp.marketTypeFinally = _.get(this,'vx_get_cur_odd');
+              temp.marketTypeFinally = computed_data.vx_get_cur_odd;
             } else {
               //最终盘口类型
               temp.marketTypeFinally = "EU";
             }
           } else {
             //最终盘口类型
-            temp.marketTypeFinally = _.get(this,'vx_get_cur_odd');
+            temp.marketTypeFinally = computed_data.vx_get_cur_odd;
           }
           let appoint_value;
           //如果是预约 
           if(is_pre) {
             //赔率计算调用this.$mathjs里面的方法，保证精度
-            appoint_value = this.$mathjs.multiply(this.vx_get_bet_appoint_obj.appoint_odds_value,100000);
+            appoint_value = this.$mathjs.multiply(computed_data.vx_get_bet_appoint_obj.appoint_odds_value,100000);
           }
           // console.log('this.get_cur_odd =', this.get_cur_odd );
 
@@ -659,14 +664,14 @@ const data_ref = {
           //盘口名
           let handicap = this.yabo_common.get_handicap(this);
           // 预约的赔率，球头 当前赛事 预约投注需要参数playOptionName处理
-          if(this.vx_get_bet_appoint_obj && this.vx_get_bet_appoint_obj.bet_appoint_id==this.id && is_pre) {
+          if(computed_data.vx_get_bet_appoint_obj && computed_data.vx_get_bet_appoint_obj.bet_appoint_id==this.id && is_pre) {
             let new_name = ''
             //队伍名如果是加号或者减号开头去除符号
             if(team_name.startsWith('+') || team_name.startsWith('-')){
               new_name = team_name.substr(1,handicap.length);
             }
             // let n_name = new_name ? new_name : team_name;
-            let {computed_appoint_ball_head, appoint_ball_head} = this.vx_get_bet_appoint_obj;
+            let {computed_appoint_ball_head, appoint_ball_head} = computed_data.vx_get_bet_appoint_obj;
             //team_name队名不为空，不为nan， handicap不为nan
             if(!_.isEmpty(team_name) &&  !_.isNaN(team_name) && !_.isNaN(handicap)) {
               //预约投注也有可能没有球头，没有的话就传默认得，如果不传投注项和投注记录那里就是空的，服务端是透传的
@@ -789,11 +794,11 @@ const data_ref = {
       if (seriesType == 1) { // 单关
 
   console.log('正常投注参数playOptionName处理------------00' );
-        parm.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+        parm.openMiltSingle = computed_data.vx_get_is_bet_merge?1:0;
         // 有预约id的时候只提交
-        if(this.vx_get_bet_appoint_obj && this.vx_get_bet_appoint_obj.bet_appoint_id) {
-          let { bet_appoint_id } = this.vx_get_bet_appoint_obj;
-          let cs = _.get(this,`vx_get_bet_single_obj[${bet_appoint_id}].cs`,{});
+        if(computed_data.vx_get_bet_appoint_obj && computed_data.vx_get_bet_appoint_obj.bet_appoint_id) {
+          let { bet_appoint_id } = computed_data.vx_get_bet_appoint_obj;
+          let cs = _.get(computed_data.vx_get_bet_single_obj,`[${bet_appoint_id}].cs`,{});
           let temp_bat = {};
           if(cs && cs.money) {
             // 串关数量
@@ -804,7 +809,7 @@ const data_ref = {
             temp_bat.seriesValues = (seriesType == 1) ? this.$root.$t('bet.bet_one_') : this.$root.$t('bet.bet_winner');//'单关' , 冠军
             temp_bat.fullBet = _.get(cs,'full_bet',0);
             //赔率没变，球头没变的情况视为普通注单 preBet传0
-            if(this.vx_get_bet_appoint_obj.appoint_init_odds_value == this.vx_get_bet_appoint_obj.appoint_odds_value && this.vx_get_bet_appoint_obj.is_head_eq_hadicap) {
+            if(computed_data.vx_get_bet_appoint_obj.appoint_init_odds_value == computed_data.vx_get_bet_appoint_obj.appoint_odds_value && computed_data.vx_get_bet_appoint_obj.is_head_eq_hadicap) {
               parm.preBet = 0  //没调整赔率和球头是为普通投注
             }else{
               parm.preBet = 1 //是预约投注
@@ -815,7 +820,7 @@ const data_ref = {
           }
         } else {
           computed_data.vx_is_bet_single.forEach(item=>{
-            let cs = _.get(this,`vx_get_bet_single_obj[${item}].cs`,{});
+            let cs = _.get(computed_data.vx_get_bet_single_obj,`[${item}].cs`,{});
             let temp_bat = {};
             if(cs && cs.money) {
               // 串关数量
@@ -966,7 +971,7 @@ const data_ref = {
       if (computed_data.vx_is_bet_single) {
         // 设置押注成功后的标识符
         computed_data.vx_is_bet_single.forEach(id => {
-          let item = _.cloneDeep(_.get(this,`vx_get_bet_single_obj[${id}]`,{}));
+          let item = _.cloneDeep(_.get(computed_data.vx_get_bet_single_obj,`[${id}]`,{}));
           let oid = _.get(item, 'bs.hps[0].hl[0].ol[0].oid');
           if (oid == _.get(order_item,'playOptionsId')) {
             // 提交投注项id并设置key
@@ -1012,7 +1017,7 @@ const data_ref = {
       bet_list.forEach(id => {
         let obj, item_bs, item_cs;
         if (computed_data.vx_is_bet_single) {
-          obj = "vx_get_bet_single_obj";
+          obj = computed_data.vx_get_bet_single_obj;
         } else {
           obj = "vx_get_bet_obj";
         }
@@ -1080,7 +1085,7 @@ const data_ref = {
         parm.matchType =  _.get(item_cs, 'match_type');
         if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
-          parm.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+          parm.openMiltSingle = computed_data.vx_get_is_bet_merge?1:0;
         }
 
         parm_obj.orderMaxBetMoney.push(parm);

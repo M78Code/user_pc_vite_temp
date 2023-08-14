@@ -11,7 +11,7 @@
             <div class="content-wrap relative-position">
                 <div class="yb-icon-triangle"></div>
                 <!-- 此版面现实的所有直播内容仅供参考........ -->
-                <div class="content">{{ $root.$t('tips.tips_site').replace('%s', minute) }}</div>
+                <div class="content">{{ t('tips.tips_site').replace('%s', minute) }}</div>
             </div>
         </div>
         <div class="header-item item1 row items-stretch relative-position"
@@ -20,7 +20,7 @@
             <div v-if="is_hide_icon || is_iframe" class="icon-layout"></div>
             <!-- 当前是日间版并且有日间版配图就展示日间版图片，夜间版也一样 -->
             <a v-else class="row items-center  img-logo-wrap"
-                :style="{ 'background-image': theme.indexOf('theme01') > -1 && pcDaytimeLink ? `url(${pcDaytimeLink})` : theme.indexOf('theme02') > -1 && pcNightLink ? `url(${pcNightLink})` : 'none' }">
+                :style="{ 'background-image': theme.includes('theme01') && pcDaytimeLink ? `url(${pcDaytimeLink})` : theme.includes('theme02') && pcNightLink ? `url(${pcNightLink})` : 'none' }">
                 <div class="img-logo custom-format-img-logo-01"></div>
             </a>
             <!-- 运营位专题页 -->
@@ -34,7 +34,7 @@
                     <div class="menu-collapse-btn btn-collapse" :class="collapse_style" @click="handle_menu_collapse">
                         <q-tooltip anchor="top middle" self="center middle"
                             :content-style="tooltip_style + ';transform:translateY(40px)'">{{
-                                $root.$t('common.menu_collapsed',
+                                t('common.menu_collapsed',
                                     ['&nbsp;']) }}</q-tooltip>
                     </div>
                 </template>
@@ -55,13 +55,13 @@
                         @click="menu_change('R')" ref="adv_box"
                         :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
                         <p v-if="theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
-                            <img src="~public/image/yabo/svg/day_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                            <img src="~public/image/yabo/svg/day_right.svg" alt="" @click.stop="boxMouseup('next')">
+                            <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
+                            <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                         </p>
                         <p v-if="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow"
                             class="night_arrow">
-                            <img src="~public/image/yabo/svg/night_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                            <img src="~public/image/yabo/svg/night_right.svg" alt="" @click.stop="boxMouseup('next')">
+                            <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
+                            <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                         </p>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
                         @click="menu_change('R')" ref="adv_box"
                         :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
                         <p v-if="theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
-                            <img src="~public/image/yabo/svg/day_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                            <img src="~public/image/yabo/svg/day_right.svg" alt="" @click.stop="boxMouseup('next')">
+                            <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
+                            <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                         </p>
                         <p v-if="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow"
                             class="night_arrow">
-                            <img src="~public/image/yabo/svg/night_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                            <img src="~public/image/yabo/svg/night_right.svg" alt="" @click.stop="boxMouseup('next')">
+                            <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
+                            <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                         </p>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
                             </div>
                             <div v-show="vx_show_balance" class="balance-text-show yb-family-odds">
                                 <!-- {{ (vx_get_user.balance || 0) | format_balance }} -->
-                                {{ format_balance(vx_get_user.balance || 0) }}
+                                {{ format_balance }}
                             </div>
                         </div>
                     </div>
@@ -147,13 +147,13 @@
             <template v-if="is_iframe && get_menu_collapse_status && !get_search_status">
                 <div class="menu-collapse-btn" :class="collapse_style" @click="handle_menu_collapse">
                     <q-tooltip anchor="top middle" self="center middle"
-                        :content-style="tooltip_style + ';transform:translateY(34px)'">{{ $root.$t('common.menu_expand')
+                        :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t('common.menu_expand')
                         }}</q-tooltip>
                 </div>
                 <i class="icon-triangle3 q-icon c-icon menu-collapse-triangle"></i>
             </template>
 
-            <marquee-cst v-if='!get_search_status' @navigate="navigate" />
+            <!-- <marquee-cst v-if='!get_search_status' @navigate="navigate" /> -->
             <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
             <div class="col-right row items-center"
                 :style="`width:${is_iframe ? 390 : parseInt(vx_get_layout_size.main_width * .3)}px`">
@@ -175,13 +175,13 @@
                             :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
                             <p v-show="theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow"
                                 class="day_arrow">
-                                <img src="~public/image/yabo/svg/day_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                                <img src="~public/image/yabo/svg/day_right.svg" alt="" @click.stop="boxMouseup('next')">
+                                <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
+                                <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                             </p>
                             <p v-show="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow"
                                 class="night_arrow">
-                                <img src="~public/image/yabo/svg/night_left.svg" alt="" @click.stop="boxMouseup('pre')">
-                                <img src="~public/image/yabo/svg/night_right.svg" alt="" @click.stop="boxMouseup('next')">
+                                <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
+                                <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                             </p>
                         </div>
                     </div>
@@ -205,7 +205,7 @@
 
                             <div v-show="vx_show_balance" class="balance-text-show yb-family-odds">
                                 <!-- {{ (vx_get_user.balance || 0) | format_balance }} -->
-                                {{ format_balance(vx_get_user.balance || 0) }}
+                                {{ format_balance }}
                             </div>
 
                             <refresh v-show="vx_show_balance" icon_name="icon-balance_refresh" class="refresh-btn"
@@ -236,13 +236,14 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, getCurrentInstance, nextTick, defineComponent } from 'vue'
+import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lodash from 'lodash'
+import { useI18n } from "vue-i18n";
 /** 组件 */
 import marqueeCst from "project_path/src/components/marquee/marquee.vue";
-import popupHandicap from "project_path/src/components/popup-select/popup-handicap.vue"
-import popupSet from "project_path/src/components/popup-select/popup-set.vue"
+import PopupHandicap from "project_path/src/components/popup-select/popup-handicap.vue"
+import PopupSet from "project_path/src/components/popup-select/popup-set.vue"
 import popupLanguage from "project_path/src/components/popup-select/popup-language.vue"
 
 import { TabWapper as Tab } from "src/components/common/tab"
@@ -253,21 +254,26 @@ import timer from "project_path/src/components/site-header/timer.vue"
 /** 工具.js */
 import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
 import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+// import store from "project_path/src/store/index.js";
 import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js"
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
-import { gtag_event_send } from "src/core/http/gtag-tag.js"
+// import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { get_remote_time } from "src/core/formart/module/format-time.js"
+import { ss } from 'src/core/utils/web-storage.js'
 
 /** api */
 import { api_account, api_common } from "src/api/index.js";
 // TODO: 未知用途
 // import AllDomain from 'src/public/utils/http/all_domain.js'
+import img_search_icon from 'app/public/yazhou-pc/image/svg/search-icon.svg'
+import img_search_icon_y0 from 'app/public/yazhou-pc/image/svg/y0-search-icon.svg'
+import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
+import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
+import night_left from 'app/public/yazhou-pc/image/svg/night_left.svg'
+import night_right from 'app/public/yazhou-pc/image/svg/night_right.svg'
 
-
-let img_search_icon = require("public/image/yabo/svg/search-icon.svg")
-let img_search_icon_y0 = require("public/image/yabo/svg/y0-search-icon.svg")
 
 /** props传参 */
 const props = defineProps({
@@ -302,10 +308,13 @@ const props = defineProps({
 })
 
 /** 获取mixins */
-const { proxy } = getCurrentInstance()
+// const { proxy } = getCurrentInstance()
+
+/** 国际化 */
+const { t } = useI18n();
 
 /** 菜单数据 */
-const menu_data = reactive([])
+const menu_data = reactive({})
 /** 搜索热推赛事 */
 const search_hot_push = ref(new SearchHotPush())
 /** 地址栏隐藏logo */
@@ -329,13 +338,13 @@ const dayClickType = reactive({ typeL: 0, urlL: null })
 /** 夜间版 */
 const nightClickType = reactive({ typeL: 0, urlL: null })
 /** 日间版轮播图 */
-const daySwipper = reactive([])
+let daySwipper = reactive([])
 /** 夜间版轮播图 */
-const nightSwipper = reactive([])
+let nightSwipper = reactive([])
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)
 /** 当前资源图片数组 */
-const currentSwipperArr = reactive([])
+let currentSwipperArr = reactive([])
 /** 展示右侧图片资源上的左右箭头 */
 const showArrow = ref(false)
 /** 是否切换到上一张图片 */
@@ -370,22 +379,22 @@ const vx_get_layout_size = ref({})
 
 
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    theme.value = new_state.theme
-    get_global_switch.value = new_state.global_switch
-    vx_get_user.value = new_state.user
-    vx_is_invalid.value = new_state.is_invalid
-    vx_cur_menu_type.value = new_state.cur_menu_type
-    get_menu_collapse_status.value = new_state.menu_collapse_status
-    get_search_status.value = new_state.search_status
-    vx_show_balance.value = new_state.show_balance
-    get_lang.value = new_state.lang
-    vx_get_left_menu_toggle.value = new_state.left_menu_toggle
-    vx_main_menu_toggle.value = new_state.main_menu_toggle
-    vx_get_layout_size.value = new_state.layout_size
-})
-onUnmounted(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//     const new_state = store.getState()
+//     theme.value = new_state.theme
+//     get_global_switch.value = new_state.global_switch
+//     vx_get_user.value = new_state.user || {}
+//     vx_is_invalid.value = new_state.is_invalid
+//     vx_cur_menu_type.value = new_state.cur_menu_type || {}
+//     get_menu_collapse_status.value = new_state.menu_collapse_status
+//     get_search_status.value = new_state.search_status
+//     vx_show_balance.value = new_state.show_balance
+//     get_lang.value = new_state.lang
+//     vx_get_left_menu_toggle.value = new_state.left_menu_toggle
+//     vx_main_menu_toggle.value = new_state.main_menu_toggle
+//     vx_get_layout_size.value = new_state.layout_size || {}
+// })
+// onUnmounted(unsubscribe)
 
 /** 注册并监听"showModel"事件 */
 const { off: off_show_model } = useMittOn(MITT_TYPES.EMIT_SITE_SHOW_MODEL, show_activity_page)
@@ -404,7 +413,7 @@ const router = useRouter()
 
 /** 定时器 */
 const showBannerSwipperTimer = ref(null)
-const timer = ref(null)
+const show_activity_page_timer = ref(null)
 const countDownTimer = ref(null)
 const showBannerSwipperTimer_timeout = ref(null)
 /** 清除全部定时器 */
@@ -413,9 +422,9 @@ function clear_timer() {
         clearTimeout(showBannerSwipperTimer.value)
         showBannerSwipperTimer.value = null
     }
-    if (timer.value) {
-        clearTimeout(timer.value)
-        timer.value = null
+    if (show_activity_page_timer.value) {
+        clearTimeout(show_activity_page_timer.value)
+        show_activity_page_timer.value = null
     }
     if (countDownTimer.value) {
         clearTimeout(countDownTimer.value)
@@ -463,7 +472,7 @@ function boxMouseup(type) {
         if (type == 'pre') {
             isPre.value = true;
             if (currentSwipp.value == 0) {
-                change(currentSwipperArr.value.length - 1)
+                change(currentSwipperArr.length - 1)
             } else {
                 change(currentSwipp.value - 1)
             }
@@ -473,7 +482,7 @@ function boxMouseup(type) {
         }
         // 下一张
         if (type == 'next') {
-            if (currentSwipp.value == currentSwipperArr.value.length - 1) {
+            if (currentSwipp.value == currentSwipperArr.length - 1) {
                 change(0)
             } else {
                 change(currentSwipp.value + 1)
@@ -482,7 +491,8 @@ function boxMouseup(type) {
     }, 300)
 }
 /** 注销 */
-onUnmounted(() => debounce_throttle_cancel(boxMouseup))
+// TODO: debounce_throttle_cancel在原型上 拿不到
+// onUnmounted(() => debounce_throttle_cancel(boxMouseup))
 
 /**
  * 点击左右按钮--切换图片
@@ -494,9 +504,7 @@ function change(index) {
 /** 展开搜索 */
 function show_search() {
     if (!get_global_switch.value.search_switch) {
-        // return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
-        // /TODO: 国际化
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, $root.$t("msg.msg_09"))
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     set_search_status(true);
 }
@@ -510,9 +518,9 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
         tab_click({ index })
     } else {
         //清除定时器
-        clearTimeout(timer.value);
-        timer.value = null
-        timer.value = setTimeout(() => {
+        clearTimeout(show_activity_page_timer.value);
+        show_activity_page_timer.value = null
+        show_activity_page_timer.value = setTimeout(() => {
             // 0：无连接，1：内部导航，2：弹窗连接
             openPage(n, urlType)
         }, 300);
@@ -526,30 +534,29 @@ const vx_set_user = (data) => store.dispatch({
 })
 /**
  * 导航栏菜单点击
- * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 src/project/yabo/layouts/main_layout.vue init_site_header() 方法
+ * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
  */
 function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !get_global_switch.value.activity_switch) {
-        // return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
-        // /TODO: 国际化
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, $root.$t("msg.msg_09"))
+        // return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, this.t("msg.msg_09"));
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     // 电竞
     if (menu.id == 5) {
         zhugeTag.send_zhuge_event('PC_导航_电子竞技');
         // TODO: 菜单数据
-        let menu_id = $menu.menu_data.cur_level1_menu == 'early' ? 3020225 : 3020125
-        $menu.menu_change(2, menu_id)
+        // let menu_id = $menu.menu_data.cur_level1_menu == 'early' ? 3020225 : 3020125
+        // $menu.menu_change(2, menu_id)
     }
     // 虚拟体育
     else if (menu.id == 3) {
-        $menu.menu_change(1, 'virtual_sport', 'nav')
+        // $menu.menu_change(1, 'virtual_sport', 'nav')
     }
     // 如果当前点击的是 Home
     else if (obj.index == 0) {
-        $menu.menu_change(1, 'play')
+        // $menu.menu_change(1, 'play')
     } else {
         let pathObj = menu;
         // 如果点击的是活动入口，就更新一下用户信息
@@ -557,7 +564,7 @@ function tab_click(obj) {
             if (get_user_token.value) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
                 // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
-                gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
+                // gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
                 vx_set_user({ token: get_user_token.value, view: this });
             }
         }
@@ -687,7 +694,7 @@ function openPage(_url, urlType) {
                 let menu_id = get_hot_menuid(url_arr[1])
                 if (menu_id) {
                     // /TODO:  $menu
-                    $menu.menu_change(2, menu_id, 'hot')
+                    // $menu.menu_change(2, menu_id, 'hot')
                     linkType = '热门赛事'
                 }
             }
@@ -720,7 +727,7 @@ function get_hot_menuid(tid) {
     if (tid == 30199 || tid == 30101) {
         return tid
     }
-    let menu_obj = $menu.menu_obj.hot.topMenuList.filter(item => item.field2 == tid)[0]
+    // let menu_obj = $menu.menu_obj.hot.topMenuList.filter(item => item.field2 == tid)[0]
     if (menu_obj) {
         return menu_obj.menuId
     }
@@ -742,7 +749,7 @@ function show_record(
     _window_offset_top,
     _window_offset_left
 ) {
-    proxy.show_fail_alert();
+    // proxy.show_fail_alert();
     if (vx_is_invalid.value) {
         return;
     }
@@ -781,17 +788,17 @@ function open_history_fun() {
 function set_current_index() {
     let c_index = 0
     // TODO: $menu
-    if ($menu.menu_data.is_esports && !['hot', 'play'].includes(vx_cur_menu_type.value.type_name)) {
-        // 电竞
-        c_index = 1;
-        // TODO: $menu
-    } else if ((route.name.includes('virtual') || $menu.menu_data.cur_level1_menu == 'virtual_sport') && vx_cur_menu_type.value.type_name != 'play') {
-        // 虚拟体育
-        let index = props.nav_list.findIndex(item => item.id == 3)
-        if (index > 0) {
-            c_index = index
-        }
-    }
+    // if ($menu.menu_data.is_esports && !['hot', 'play'].includes(vx_cur_menu_type.value.type_name)) {
+    //     // 电竞
+    //     c_index = 1;
+    //     // TODO: $menu
+    // } else if ((route.name.includes('virtual') || $menu.menu_data.cur_level1_menu == 'virtual_sport') && vx_cur_menu_type.value.type_name != 'play') {
+    //     // 虚拟体育
+    //     let index = props.nav_list.findIndex(item => item.id == 3)
+    //     if (index > 0) {
+    //         c_index = index
+    //     }
+    // }
     current_index.value = c_index;
 }
 
@@ -802,57 +809,57 @@ function getFestivalBanner() {
     api_common.queryFestivalBanner().then(res => {
         const data = lodash.get(res, 'data.data') || {}
         // 服务器时间
-        let stime = proxy.mx_get_remote_time();
+        // let stime = proxy.mx_get_remote_time();
         let _time = data.startTime && data.endTime;
         // 当前时间处于开始时间和结束时间中间时才展示图片
-        if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {
-            pcDaytimeLink.value = proxy.get_file_path(data.img1); //PC日间 左边图片链接
-            pcNightLink.value = proxy.get_file_path(data.img2); //PC夜间 左边图片链接
-            nightClickType.typeL = parseInt(data.img2Type); // 夜间版跳转类型  左边
-            dayClickType.typeL = parseInt(data.img1Type); // 日间版跳转类型   左边
-            nightClickType.urlL = data.img2Url; // 夜间版跳转链接  左边
-            dayClickType.urlL = data.img1Url; // 日间版跳转链接  左边
-            // 图片地址，点击类型，跳转链接
-            let { img5, img5Type, img5Url, img6, img6Type, img6Url, img7, img7Type, img7Url, img8, img8Type, img8Url, img9, img9Type, img9Url, img10, img10Type, img10Url } = { ...data }
-            // 轮播图日间版
-            if (img5) {
-                daySwipper.value.push({ img: proxy.get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
-            }
-            if (img6) {
-                daySwipper.value.push({ img: proxy.get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
-            }
-            if (img7) {
-                daySwipper.value.push({ img: proxy.get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
-            }
+        // if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {
+        //     pcDaytimeLink.value = proxy.get_file_path(data.img1); //PC日间 左边图片链接
+        //     pcNightLink.value = proxy.get_file_path(data.img2); //PC夜间 左边图片链接
+        //     nightClickType.typeL = parseInt(data.img2Type); // 夜间版跳转类型  左边
+        //     dayClickType.typeL = parseInt(data.img1Type); // 日间版跳转类型   左边
+        //     nightClickType.urlL = data.img2Url; // 夜间版跳转链接  左边
+        //     dayClickType.urlL = data.img1Url; // 日间版跳转链接  左边
+        //     // 图片地址，点击类型，跳转链接
+        //     let { img5, img5Type, img5Url, img6, img6Type, img6Url, img7, img7Type, img7Url, img8, img8Type, img8Url, img9, img9Type, img9Url, img10, img10Type, img10Url } = { ...data }
+        //     // 轮播图日间版
+        //     if (img5) {
+        //         daySwipper.push({ img: proxy.get_file_path(img5), imgType: img5Type, imgUrl: img5Url, isClick: img5Type != 0 && img5Url })
+        //     }
+        //     if (img6) {
+        //         daySwipper.push({ img: proxy.get_file_path(img6), imgType: img6Type, imgUrl: img6Url, isClick: img6Type != 0 && img6Url })
+        //     }
+        //     if (img7) {
+        //         daySwipper.push({ img: proxy.get_file_path(img7), imgType: img7Type, imgUrl: img7Url, isClick: img7Type != 0 && img7Url })
+        //     }
 
-            // 轮播图夜间版
-            if (img8) {
-                nightSwipper.value.push({ img: proxy.get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
-            }
-            if (img9) {
-                nightSwipper.value.push({ img: proxy.get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
-            }
-            if (img10) {
-                nightSwipper.value.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
-            }
-            // 根据日间或者夜间来判断用哪个数据
-            if (theme.value.includes('theme01') && daySwipper.value.length > 0) {
-                currentSwipperArr.value = daySwipper.value;
-            }
-            if (theme.value.includes('theme02') && nightSwipper.value.length > 0) {
-                currentSwipperArr.value = nightSwipper.value;
-            }
-            // 图片大于一张的时候触发轮播
-            if (currentSwipperArr.value.length > 1) {
-                clearTimeout(showBannerSwipperTimer.value)
-                //在DOM加载完成后，下个tick中开始轮播
-                nextTick(() => {
-                    showBannerSwipperTimer.value = setInterval(() => {
-                        autoPlay()
-                    }, 7000)
-                })
-            }
-        }
+        //     // 轮播图夜间版
+        //     if (img8) {
+        //         nightSwipper.push({ img: proxy.get_file_path(img8), imgType: img8Type, imgUrl: img8Url, isClick: img8Type != 0 && img8Url })
+        //     }
+        //     if (img9) {
+        //         nightSwipper.push({ img: proxy.get_file_path(img9), imgType: img9Type, imgUrl: img9Url, isClick: img9Type != 0 && img9Url })
+        //     }
+        //     if (img10) {
+        //         nightSwipper.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
+        //     }
+        //     // 根据日间或者夜间来判断用哪个数据
+        //     if (theme.value.includes('theme01') && daySwipper.length > 0) {
+        //         currentSwipperArr = daySwipper;
+        //     }
+        //     if (theme.value.includes('theme02') && nightSwipper.length > 0) {
+        //         currentSwipperArr = nightSwipper;
+        //     }
+        //     // 图片大于一张的时候触发轮播
+        //     if (currentSwipperArr.length > 1) {
+        //         clearTimeout(showBannerSwipperTimer.value)
+        //         //在DOM加载完成后，下个tick中开始轮播
+        //         nextTick(() => {
+        //             showBannerSwipperTimer.value = setInterval(() => {
+        //                 autoPlay()
+        //             }, 7000)
+        //         })
+        //     }
+        // }
     })
 }
 /**
@@ -860,7 +867,7 @@ function getFestivalBanner() {
  */
 function autoPlay() {
     currentSwipp.value++
-    if (currentSwipp.value > currentSwipperArr.value.length - 1) {
+    if (currentSwipp.value > currentSwipperArr.length - 1) {
         currentSwipp.value = 0
     }
 }
@@ -927,7 +934,7 @@ function get_balance() {
         if (code == 200) {
             vx_set_user_balance(result.amount);
         }
-        proxy.show_fail_alert()
+        // proxy.show_fail_alert()
     }).catch(err => {
         console.error(err)
         data_loaded.value = true;
@@ -943,7 +950,8 @@ const collapse_style = computed(() => {
     }
 })
 
-const format_balance = computed((num) => {
+const format_balance = computed(() => {
+    const num = vx_get_user.value.balance
     if (num && num > 0) {
         let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
 
@@ -975,16 +983,16 @@ function menu_change(side) {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL
         } else {
-            _type = lodash.get(daySwipper.value, `[${currentSwipp.value}].imgType`)
-            _url = lodash.get(daySwipper.value, `[${currentSwipp.value}].imgUrl`)
+            _type = lodash.get(daySwipper, `[${currentSwipp.value}].imgType`)
+            _url = lodash.get(daySwipper, `[${currentSwipp.value}].imgUrl`)
         }
     } else {
         if (side == 'L') {
             _type = nightClickType.value.typeL
             _url = nightClickType.value.urlL
         } else {
-            _type = lodash.get(nightSwipper.value, `[${currentSwipp.value}].imgType`)
-            _url = lodash.get(nightSwipper.value, `[${currentSwipp.value}].imgUrl`)
+            _type = lodash.get(nightSwipper, `[${currentSwipp.value}].imgType`)
+            _url = lodash.get(nightSwipper, `[${currentSwipp.value}].imgUrl`)
         }
     }
     let linkType
@@ -1000,7 +1008,7 @@ function menu_change(side) {
             else if (url_arr[0] == 'hot') {
                 let menu_id = get_hot_menuid(url_arr[1])
                 if (menu_id) {
-                    $menu.menu_change(2, menu_id, 'hot')
+                    // $menu.menu_change(2, menu_id, 'hot')
                     linkType = '热门赛事'
                 }
             }
@@ -1032,7 +1040,7 @@ function go() {
     clearTimeout(showBannerSwipperTimer_timeout.value)
     clearInterval(showBannerSwipperTimer.value)
     // 图片不止一张的时候才触发轮播
-    if (currentSwipperArr.value.length > 1) {
+    if (currentSwipperArr.length > 1) {
         // 3秒之后立即切换一次图片
         showBannerSwipperTimer_timeout.value = setTimeout(() => {
             autoPlay()
@@ -1086,11 +1094,9 @@ watch(
 )
 
 watch(
-    () => nav_list.length,
+    () => props.nav_list.length,
     () => set_current_index()
 )
-
-
 
 
 /**
@@ -1100,18 +1106,18 @@ watch(
     () => theme.value,
     (o) => {
         clearInterval(showBannerSwipperTimer.value);
-        currentSwipperArr.value = []
-        if (o.includes('theme01')) {
-            if (daySwipper.value.length > 0) {
-                currentSwipperArr.value = daySwipper.value;
+        currentSwipperArr = []
+        if (o && o.includes('theme01')) {
+            if (daySwipper.length > 0) {
+                currentSwipperArr = daySwipper;
             }
         } else {
-            if (nightSwipper.value.length > 0) {
-                currentSwipperArr.value = nightSwipper.value;
+            if (nightSwipper.length > 0) {
+                currentSwipperArr = nightSwipper;
             }
         }
         // 图片大于一张开启轮播
-        if (currentSwipperArr.value.length > 1) {
+        if (currentSwipperArr.length > 1) {
             showBannerSwipperTimer.value = setInterval(() => {
                 autoPlay()
             }, 7000)
@@ -1119,19 +1125,8 @@ watch(
     }
 )
 
-
 </script>
 
-<script>
-/** mixins */
- 
- 
- 
-export default defineComponent({
-    name: 'site-header',
- 
-})
-</script>
 
 <style lang="scss">
 // 运营位专题页

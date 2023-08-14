@@ -5,8 +5,8 @@
  */
 
 
-import details from 'src/public/utils/detailsClass/details.js'
-import { api_search } from "src/public/api/index.js";
+import details from 'src/core/match-detail-pc/match-detail.js'
+import { api_search } from "src/api/index.js";
 import { store } from "src/store/index.js"
 import { i18n } from "src/boot/i18n.js"
 import { msc_array_obj } from "src/public/mixins/common/common.js"
