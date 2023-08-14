@@ -54,13 +54,29 @@
     </div>
   </div>
 </template>
+
+<script>
+// TODO: 待处理模块
+import websocket_data from "project_path/src/mixins/websocket/data/skt_data_list.js";   // websocket数据页面数据接入----赛事列表页面
+import betting from "project_path/src/mixins/betting/betting.js";    // 押注动作相关的所有方法
+import match_list_wrap_mixin from "project_path/src/mixins/match_list/match_list_wrap_mixin.js";   // 赛事列表公共minxins
+import match_main_mixin from "project_path/src/mixins/match_list/match_main_mixin.js";   // 赛事mixins
+export default {
+  mixins: [ websocket_data,match_list_wrap_mixin,match_main_mixin, betting ],
+}
+</script>
  
 <script setup>
 import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
+import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
+import { use_router_scroll } from 'src/core/match-list-h5/use-hooks/router-scroll.js'
+
+// 列表页面赛事信息操作类-实现快速检索,修改等功能
+import MatchCtr from "src/core/match-class/match-ctr.js";  
 
 const props = defineProps({
   invok_source: String,
@@ -186,7 +202,7 @@ onMounted(() => {
 // 详情若无热门推荐赛事，则隐藏相应内容
 watch(() => match_is_empty, () => {
   if (props.invok_source === 'detail_match_list' && is_empty) {
-    useMittEmit(MITT_KEY.EMIT_HIDE_DETAIL_MATCH_LIST, true)
+    useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, true)
   }
 })
 
@@ -346,7 +362,7 @@ watch(() => matchCtr.list, () => {
           data.referUrl = data.referUrl && (data.referUrl.replace(/http:|https:/,'')) // 视频
           data.referUrl = `${location.protocol}${data.referUrl}`;
 
-          useMittEmit(MITT_KEY.EMIT_SET_PRE_VIDEO_SRC, data)
+          useMittEmit(MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC, data)
           store.dispatch({ type: 'matchReducer/set_preload_animation_url',  payload: true })
         })
         // 获取相应动画加载资源后跳出循环
@@ -357,6 +373,7 @@ watch(() => matchCtr.list, () => {
 })
 
 // TODO: 其他模块得 store  待添加
+// 待处理： window.vue.scroll_list_wrapper_by
 // mixins: [ main_menu_mixin,websocket_data, constant, msc_bw3, match_list_wrap_mixin,match_main_mixin, betting,router_scroll_y_mixin],
 
 const calc_show = computed(() => {
@@ -431,7 +448,7 @@ const back_top = () => {
   match_detail_m_list_init();
   // 图标出错与mid映射，初始化为空
   store.dispatch({ type: 'matchReducer/set_img_error_map_mid',  payload: {} }) 
-  window.vue.scroll_list_wrapper_by = scroll_list_wrapper_by;
+  // window.vue.scroll_list_wrapper_by = use_router_scroll().scroll_list_wrapper_by
   // 去除参数
   if (!location.search.includes('keep_url')) {
     history.replaceState(null, '', `${location.pathname}${location.hash}`)
@@ -488,15 +505,15 @@ const clear_timer = () => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_1: useMittOn.on(MITT_KEY.EMIT_MENU_CHANGE_FOOTER_CMD, footer_event).off,
-    emitter_2: useMittOn.on(MITT_KEY.EMIT_MAIN_MENU_CHANGE,main_menu_change).off,
-    emitter_3: useMittOn.on(MITT_KEY.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,before_load_third_menu_handle).off,
-    emitter_4: useMittOn.on(MITT_KEY.EMIT_SPECIAL_HPS_LOADED,special_hps_load_handle).off,
-    emitter_5: useMittOn.on(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on).off,
-    emitter_6: useMittOn.on(MITT_KEY.EMIT_BET_ODD_SYNCHRONIZE,bet_odd_synchronize_handle).off,
-    emitter_7: useMittOn.on(MITT_KEY.EMIT_MATCH_LIST_SCROLLING,match_list_scroll_handle).off,
-    emitter_8: useMittOn.on(MITT_KEY.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,secondary_play_unfold_change_handle).off,
-    emitter_9: useMittOn.on(MITT_KEY.EMIT_TAB_HOT_CHANGING,tab_changing_handle).off,
+    emitter_1: useMittOn.on(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, footer_event).off,
+    emitter_2: useMittOn.on(MITT_TYPES.EMIT_MAIN_MENU_CHANGE,main_menu_change).off,
+    emitter_3: useMittOn.on(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,before_load_third_menu_handle).off,
+    emitter_4: useMittOn.on(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,special_hps_load_handle).off,
+    emitter_5: useMittOn.on(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on).off,
+    emitter_6: useMittOn.on(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE,bet_odd_synchronize_handle).off,
+    emitter_7: useMittOn.on(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING,match_list_scroll_handle).off,
+    emitter_8: useMittOn.on(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,secondary_play_unfold_change_handle).off,
+    emitter_9: useMittOn.on(MITT_TYPES.EMIT_TAB_HOT_CHANGING,tab_changing_handle).off,
   }
 }
 // 移除相关事件监听
