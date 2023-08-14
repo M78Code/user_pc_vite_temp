@@ -1,6 +1,5 @@
 <template>
   <div ref='details_tab' :class="['details-tab',{'tab-fixed':get_tab_fix}]" v-cloak>
-
     <div class="fat-btn" @click="change_btn()">
       <div class="tab-btn" :class="{collapsed:get_fewer != 2}"></div>
     </div>
@@ -59,6 +58,9 @@ export default defineComponent({
     // methods:{
     // ...mapActions(['set_details_item','set_subscript_game_index']),
     // ...mapMutations(['set_fewer']),
+    const set_fewer = () => {
+
+    }
     onMounted(() => {
       on_listeners();
 
@@ -156,6 +158,7 @@ export default defineComponent({
       initEvent,
       on_listeners,
       off_listeners,
+      set_fewer,
     }
   }
 })
