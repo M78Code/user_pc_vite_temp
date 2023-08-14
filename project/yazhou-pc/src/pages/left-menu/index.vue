@@ -290,7 +290,7 @@ import { MenuWapper } from "src/components/menu";
 
 import store from "../../store/index.js";
 import base_data_instance from 'src/core/utils/base-data/base-data.js'
-import menu_config from 'src/core/menu/menu-class-new.js'
+import menu_config from 'src/core/menu-pc/menu-data-class'
 
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 

@@ -5,7 +5,7 @@
  */
 
 import utils from "src/core/utils/utils.js"
-import $NewMenu from "src/core/menu/menu-class-new";
+import $NewMenu from "src/core/menu-pc/menu-data-class";
 
 // import { store } from "src/store/index.js"
 const store={}

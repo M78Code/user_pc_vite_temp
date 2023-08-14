@@ -13,7 +13,7 @@ import { ref } from "vue"
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import { instance as userCtr } from "src/core/user-config/user-ctr.js";
+import { instance as userCtr } from "src/core/utils/user/user-ctr.js";
 import _ from "lodash";
 // indexeDb
 import { db } from "src/core/utils/base-data/config/indexedPB.js";
