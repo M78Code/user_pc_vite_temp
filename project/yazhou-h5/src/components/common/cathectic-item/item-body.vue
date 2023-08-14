@@ -37,9 +37,9 @@
 
 <script setup>
 // 矩形框上部
-import bodyTop from "src/project/components/common/cathectic_item/item_body/body_top.vue";
+import bodyTop from "project_path/src/components/common/cathectic-item/item-body/body-top.vue";
 // 矩形框主体
-import bodyMain from "src/project/components/common/cathectic_item/item_body/body_main.vue";
+import bodyMain from "project_path/src/components/common/cathectic-item/item-body/body-main.vue";
 import lodash from 'lodash'
 
   //按钮名字

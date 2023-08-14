@@ -66,7 +66,7 @@
 // TODO  后面数据接入后删除
 //   import { mapGetters } from "vuex";
   import { defineComponent, watch, onUnmounted, ref, getCurrentInstance } from 'vue'
-  import { api_betting } from "src/project/api/index.js";
+  import { api_betting } from "src/api/index.js";
   import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
   import settleVoid from "src/project/pages/cathectic/settle_void.vue";
   import scroll from "src/project/components/record_scroll/scroll.vue";

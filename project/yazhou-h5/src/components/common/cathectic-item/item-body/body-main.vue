@@ -99,30 +99,46 @@
 
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
-import { api_common } from "src/project/api/index.js";
-import utils from 'src/public/utils/utils.js'
+import { api_common } from "src/api/index.js";
+import utils from "src/core/utils/utils.js"
 // import { i18n } from 'src/boot/i18n'
 
     
   const bet_result = ref({
-    // "0": $root.$t("bet_record.bet_no_status00"), //'未结算',
-    "2": $root.$t("bet_record.bet_no_status02"), //'走水',
-    "3": $root.$t("bet_record.bet_no_status03"), //'输',
-    "4": $root.$t("bet_record.bet_no_status04"), //'赢',
-    "5": $root.$t("bet_record.bet_no_status05"), //'赢半',
-    "6": $root.$t("bet_record.bet_no_status06"), //'输半',
-    "7": $root.$t("bet_record.bet_no_status07"), //'比赛取消',
-    "8": $root.$t("bet_record.bet_no_status08"), //'比赛延期',
-    "11": $root.$t("bet_record.bet_no_status11"), // '比赛延迟',
-    "12": $root.$t("bet_record.bet_no_status12"), // '比赛中断',
-    "15": $root.$t("bet_record.bet_no_status15") // '比赛放弃'
+    //'未结算',
+    // "0": $root.$t("bet_record.bet_no_status00"), 
+    //'走水',
+    "2": $root.$t("bet_record.bet_no_status02"), 
+    //'输',
+    "3": $root.$t("bet_record.bet_no_status03"), 
+    //'赢',
+    "4": $root.$t("bet_record.bet_no_status04"),
+     //'赢半', 
+    "5": $root.$t("bet_record.bet_no_status05"),
+    //'输半',
+    "6": $root.$t("bet_record.bet_no_status06"), 
+    //'比赛取消',
+    "7": $root.$t("bet_record.bet_no_status07"), 
+    //'比赛延期',
+    "8": $root.$t("bet_record.bet_no_status08"), 
+    // '比赛延迟',
+    "11": $root.$t("bet_record.bet_no_status11"), 
+    // '比赛中断',
+    "12": $root.$t("bet_record.bet_no_status12"), 
+    // '比赛放弃'
+    "15": $root.$t("bet_record.bet_no_status15") 
   }) 
   const bet_result_1 = ref({
-    "7": $root.$t("bet_record.bet_no_status07"), //'比赛取消',
-    "8": $root.$t("bet_record.bet_no_status08"), //'比赛延期',
-    "11": $root.$t("bet_record.bet_no_status11"), // '比赛延迟',
-    "12": $root.$t("bet_record.bet_no_status12"), // '比赛中断',
-    "15": $root.$t("bet_record.bet_no_status15") // '比赛放弃'
+    //'比赛取消',
+    "7": $root.$t("bet_record.bet_no_status07"), 
+    //'比赛延期',
+    "8": $root.$t("bet_record.bet_no_status08"), 
+    // '比赛延迟',
+    "11": $root.$t("bet_record.bet_no_status11"), 
+    // '比赛中断',
+    "12": $root.$t("bet_record.bet_no_status12"), 
+    // '比赛放弃'
+    "15": $root.$t("bet_record.bet_no_status15") 
   }) 
   //手动取消订单的原因展示
   const bet_result_3 = ref({
@@ -133,9 +149,8 @@ import utils from 'src/public/utils/utils.js'
     "5": $root.$t("bet_record.cancel_type_5"),
     "6": $root.$t("bet_record.cancel_type_6"),
     "17": $root.$t("bet_record.cancel_type_17"),
-    "20": $root.$t("bet_record.cancel_type_20"),
+    "20": $root.$t("bet_record.cancel_type_20")
   }) 
-  const utils = ref(utils)
   // 3个需要特殊对应的国际化数据写到这里
   const i18n_data = ref({
     sport_name: $root.$t(`common_lang.${lang}.sport2`)[main.sportId],

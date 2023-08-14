@@ -39,7 +39,7 @@
 
 <script setup>
 import { defineComponent, ref, getCurrentInstance, watch,  } from 'vue'
-import { api_betting } from "src/project/api/index.js";
+import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
 import cancleConfirmPop from 'src/project/pages/cathectic/cancle_confirm_pop.vue';  // 合并投注项提示弹框
 import noData from "src/project/components/common/no_data.vue";   // 无数据展示组件
