@@ -4,9 +4,9 @@
       <div
         class="main overflow-hidden relative-position"
         :class="{
-          'iframe-top-collapse': computed_data.vx_get_menu_collapse_status,
+          'iframe-top-collapse': computed_data.menu_collapse_status,
         }"
-        :style="`width:${computed_data.vx_get_layout_sizemain_width}px;`"
+        :style="`width:${computed_data.layout_sizemain_width}px;`"
       >
         <!-- 搜索 -->
         <search
@@ -28,9 +28,9 @@
         <div
           class="c-main-content c-content-bg"
           :style="`width:${
-            computed_data.vx_get_layout_size.main_width
+            computed_data.layout_size.main_width
           }px  !important; height:${
-            computed_data.vx_get_layout_size.content_height + 4
+            computed_data.layout_size.content_height + 4
           }px  !important;`"
         >
           <!-- 左侧 菜单区域 -->
@@ -38,14 +38,12 @@
             ref="page_left"
             v-show="route.params.video_size != 1"
             class="page-left row yb-layout-margin-menu relative-position"
-            :style="`width:${computed_data.vx_get_layout_sizeleft_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`"
+            :style="`width:${computed_data.layout_sizeleft_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`"
             :class="computed_data.vx_main_menu_toggle"
           >
             <div
               class="cathectic-shade"
-              v-show="
-                data_ref.bet_loadding && computed_data.vx_get_left_menu_toggle
-              "
+              v-show="data_ref.bet_loadding && computed_data.left_menu_toggle"
             >
               <div class="shade-fixed">
                 <!--确认中转圈圈-->
@@ -82,7 +80,7 @@
               :style="
                 route.params.video_size == 1
                   ? 'position: fixed; top: 0;  bottom: 0;right: 0;  left: 0; width: 100%;height: 100%;'
-                  : `width:${computed_data.vx_get_layout_sizecenter_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
+                  : `width:${computed_data.layout_sizecenter_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
               "
             />
           </keep-alive>
@@ -94,9 +92,9 @@
             :style="
               route.params.video_size == 1
                 ? ''
-                : `width:${computed_data.vx_get_layout_sizeright_width}px  !important; height:${computed_data.vx_get_layout_size.content_height}px  !important;`
+                : `width:${computed_data.layout_sizeright_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
             "
-            v-if="computed_data.vx_get_layout_sizeright_width > 0"
+            v-if="computed_data.layout_sizeright_width > 0"
           >
             <!-- 虚拟体育 -->
             <virtual-right
@@ -155,7 +153,7 @@
         <template
           v-if="
             show_bet_zone &&
-            !computed_data.vx_get_left_menu_toggle &&
+            !computed_data.left_menu_toggle &&
             route.name != 'video'
           "
         >
@@ -197,7 +195,7 @@
               </template>
             </div>
             <!--滚动条头部-->
-            <template v-if="computed_data.vx_get_is_virtual_bet">
+            <template v-if="computed_data.is_virtual_bet">
               <virtual-bet-scroll-header
                 ref="resizeable_header"
                 :is_free="false"
@@ -215,7 +213,7 @@
               class="cathectic-zone"
               :class="{ 'bet-zone-height': !data_ref.is_expand }"
               v-show="data_ref.data_ref.is_expand2"
-              @click.stop="data_ref.check_drag"
+              @click.stop="check_drag"
             >
               <!--中间内容部分-->
               <q-scroll-area
@@ -226,12 +224,12 @@
                   height: `${data_ref.content_height}px`,
                   width: '300px',
                   'max-height': `${
-                    computed_data.vx_get_layout_size.content_height - 190
+                    computed_data.layout_size.content_height - 190
                   }px`,
                 }"
               >
                 <!--虚拟体育部分-->
-                <template v-if="computed_data.vx_get_is_virtual_bet">
+                <template v-if="computed_data.is_virtual_bet">
                   <!-- 虚拟单关 -->
                   <virtual-bet-single
                     ref="embedded_single"
@@ -255,17 +253,17 @@
                     <div class="left">
                       <span>{{ $t("bet.bet_one_") }}</span>
                       <span class="bet-single-count">
-                        {{ computed_data.vx_get_bet_single_list.length }}
+                        {{ computed_data.bet_single_list.length }}
                       </span>
                     </div>
                     <div class="right">
                       <span
                         class="check-box"
-                        :class="{ checked: computed_data.vx_get_is_bet_merge }"
-                        @click.stop="data_ref.toggle_merge"
+                        :class="{ checked: computed_data.is_bet_merge }"
+                        @click.stop="toggle_merge"
                       >
                         <check-box
-                          :checked="computed_data.vx_get_is_bet_merge"
+                          :checked="computed_data.is_bet_merge"
                         /><span>{{ $t("bet.merge") }}</span>
                       </span>
                       <span
@@ -297,7 +295,7 @@
               </q-scroll-area>
               <!-- 滚动：尾部 --------------------------------->
               <!--滚动条底部-->
-              <template v-if="computed_data.vx_get_is_virtual_bet">
+              <template v-if="computed_data.is_virtual_bet">
                 <virtual-bet-scroll-footer
                   ref="resizeable_footer"
                   :bet_this="data_ref.bet_this"
@@ -365,6 +363,7 @@ import utils from "src/core/utils/utils.js";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { api_account, api_common } from "src/api/";
+import { get_file_path } from "src/core/file-path/file-path.js";
 /**组件*/
 import MainMenu from "../pages/left-menu/index.vue";
 // import siteHeader from "../components/site-header/site-header.vue"; //报错
@@ -467,52 +466,32 @@ const embedded_mix = ref(null);
 const bet_mode_zone = ref(null);
 const resizeable_footer = ref(null);
 
-// 当前是否为虚拟投注
-const is_virtual_bet = ref(betInfoReducer.is_virtual_bet);
-// true: 单关投注 false: 串关投注
-const is_bet_single = ref(betInfoReducer.is_bet_single);
-// 虚拟投注对象
-const virtual_bet_obj = ref(betInfoReducer.virtual_bet_obj);
-// 单关投注对象
-const bet_single_obj = ref(betInfoReducer.bet_single_obj);
-// 押注扁平化对象扁平
-const bet_obj = ref(betInfoReducer.bet_obj);
-const bet_single_list = ref(betInfoReducer.bet_single_list);
-// 押注信息列表
-const bet_list = ref(betInfoReducer.bet_list);
-// 合并模式
-const is_bet_merge = ref(betInfoReducer.is_bet_merge);
-// 虚拟投注列表
-const virtual_bet_list = ref(betInfoReducer.virtual_bet_list);
-
-// 所有布局宽高信息
-const layout_size = ref(layoutReducer.layout_size);
 const computed_data = reactive({
-  vx_get_is_invalid: userReducer.is_invalid,
+  is_invalid: userReducer.is_invalid,
   // 搜索状态
   get_search_status: detailsReducer.search_isShow,
   // 获取用户信息
-  vx_get_user: userReducer.user,
+  user: userReducer.user,
   // 当前语言
   lang: userReducer.lang,
   // 单关部分 是否为串关
   vx_is_bet_single: betInfoReducer.is_bet_single,
   // 串关是否正在处理中
-  vx_get_is_handle: betInfoReducer.is_handle,
+  is_handle: betInfoReducer.is_handle,
   // 单关是否正在处理中
-  vx_get_is_single_handle: betInfoReducer.is_single_handle,
+  is_single_handle: betInfoReducer.is_single_handle,
   // 是否为虚拟体育投注
-  vx_get_is_virtual_bet: betInfoReducer.is_virtual_bet,
+  is_virtual_bet: betInfoReducer.is_virtual_bet,
   // 虚拟投注是否正在进行
-  vx_get_is_virtual_handle: betInfoReducer.is_virtual_handle,
+  is_virtual_handle: betInfoReducer.is_virtual_handle,
   // 获取虚拟投注列表
-  vx_get_virtual_bet_list: betInfoReducer.virtual_bet_list,
-  vx_get_bet_list: betInfoReducer.bet_list,
-  vx_get_bet_single_list: betInfoReducer.bet_single_list,
-  vx_get_bet_single_obj: betInfoReducer.bet_single_obj,
+  virtual_bet_list: betInfoReducer.virtual_bet_list,
+  bet_list: betInfoReducer.bet_list,
+  bet_single_list: betInfoReducer.bet_single_list,
+  bet_single_obj: betInfoReducer.bet_single_obj,
   vx_layout_left_show: layoutReducer.layout_left_show,
-  vx_get_cur_odd: globalReducer.odds.cur_odds,
-  vx_get_left_menu_toggle: layoutReducer.left_menu_toggle,
+  cur_odd: globalReducer.odds.cur_odds,
+  left_menu_toggle: layoutReducer.left_menu_toggle,
   // 当前菜单类型
   vx_cur_menu_type: menuReducer.cur_menu_type,
   vx_main_menu_toggle: menuReducer.main_menu_toggle,
@@ -520,9 +499,9 @@ const computed_data = reactive({
   // theme:userReducer.theme,
   // 全局点击事件
   get_global_click: globalReducer.global_click,
-  vx_get_layout_size: layoutReducer.layout_size,
-  vx_get_is_bet_merge: betInfoReducer.is_bet_merge,
-  vx_get_menu_collapse_status: menuReducer.menu_collapse_status,
+  layout_size: layoutReducer.layout_size,
+  is_bet_merge: betInfoReducer.is_bet_merge,
+  menu_collapse_status: menuReducer.menu_collapse_status,
   //收起右侧详情 展开多列玩法
   get_unfold_multi_column: globalReducer.is_unfold_multi_column,
   //全局开关
@@ -539,31 +518,31 @@ const unsubscribe = store.subscribe(() => {
     detailsReducer,
   } = store.getState();
   console.log("update store");
-  computed_data.vx_get_is_invalid = userReducer.is_invalid;
+  computed_data.is_invalid = userReducer.is_invalid;
   // 搜索状态
   computed_data.get_search_status = detailsReducer.search_isShow;
   // 获取用户信息
-  computed_data.vx_get_user = userReducer.user;
+  computed_data.user = userReducer.user;
   // 当前语言
   computed_data.lang = userReducer.lang;
   // 单关部分 是否为串关
   computed_data.vx_is_bet_single = betInfoReducer.is_bet_single;
   // 串关是否正在处理中
-  computed_data.vx_get_is_handle = betInfoReducer.is_handle;
+  computed_data.is_handle = betInfoReducer.is_handle;
   // 单关是否正在处理中
-  computed_data.vx_get_is_single_handle = betInfoReducer.is_single_handle;
+  computed_data.is_single_handle = betInfoReducer.is_single_handle;
   // 是否为虚拟体育投注
-  computed_data.vx_get_is_virtual_bet = betInfoReducer.is_virtual_bet;
+  computed_data.is_virtual_bet = betInfoReducer.is_virtual_bet;
   // 虚拟投注是否正在进行
-  computed_data.vx_get_is_virtual_handle = betInfoReducer.is_virtual_handle;
+  computed_data.is_virtual_handle = betInfoReducer.is_virtual_handle;
   // 获取虚拟投注列表
-  computed_data.vx_get_virtual_bet_list = betInfoReducer.virtual_bet_list;
-  computed_data.vx_get_bet_list = betInfoReducer.bet_list;
-  computed_data.vx_get_bet_single_list = betInfoReducer.bet_single_list;
-  computed_data.vx_get_bet_single_obj = betInfoReducer.bet_single_obj;
+  computed_data.virtual_bet_list = betInfoReducer.virtual_bet_list;
+  computed_data.bet_list = betInfoReducer.bet_list;
+  computed_data.bet_single_list = betInfoReducer.bet_single_list;
+  computed_data.bet_single_obj = betInfoReducer.bet_single_obj;
   computed_data.vx_layout_left_show = layoutReducer.layout_left_show;
-  computed_data.vx_get_cur_odd = globalReducer.odds.cur_odds;
-  computed_data.vx_get_left_menu_toggle = layoutReducer.left_menu_toggle;
+  computed_data.cur_odd = globalReducer.odds.cur_odds;
+  computed_data.left_menu_toggle = layoutReducer.left_menu_toggle;
   // 当前菜单类型
   computed_data.vx_cur_menu_type = menuReducer.cur_menu_type;
   computed_data.vx_main_menu_toggle = menuReducer.main_menu_toggle;
@@ -571,9 +550,9 @@ const unsubscribe = store.subscribe(() => {
   // theme:userReducer.theme,
   // 全局点击事件
   computed_data.get_global_click = globalReducer.global_click;
-  computed_data.vx_get_layout_size = layoutReducer.layout_size;
-  computed_data.vx_get_is_bet_merge = betInfoReducer.is_bet_merge;
-  computed_data.vx_get_menu_collapse_status = menuReducer.menu_collapse_status;
+  computed_data.layout_size = layoutReducer.layout_size;
+  computed_data.is_bet_merge = betInfoReducer.is_bet_merge;
+  computed_data.menu_collapse_status = menuReducer.menu_collapse_status;
   //收起右侧详情 展开多列玩法
   computed_data.get_unfold_multi_column = globalReducer.is_unfold_multi_column;
   //全局开关
@@ -590,12 +569,16 @@ const thumb_style = ref({
 const show_bet_zone = computed(() => {
   //是不是可以显示内嵌框
   if (
-    !is_virtual_bet &&
-    ((is_bet_single && bet_single_list.length > 0) ||
-      (!is_bet_single && bet_list.length > 0))
+    !computed_data.is_virtual_bet &&
+    ((computed_data.vx_is_bet_single &&
+      computed_data.bet_single_list.length > 0) ||
+      (!computed_data.vx_is_bet_single && computed_data.bet_list.length > 0))
   ) {
     return true;
-  } else if (is_virtual_bet && virtual_bet_list.length > 0) {
+  } else if (
+    computed_data.is_virtual_bet &&
+    computed_data.virtual_bet_list.length > 0
+  ) {
     return true;
   }
   return false;
@@ -622,8 +605,8 @@ const scroll_style = {
 // 屏蔽视频移动组件(视频回播功能)
 const show_move_video = computed(() => {
   return (
-    computed_data.vx_get_user.merchantEventSwitchVO &&
-    computed_data.vx_get_user.merchantEventSwitchVO.eventSwitch
+    computed_data.user.merchantEventSwitchVO &&
+    computed_data.user.merchantEventSwitchVO.eventSwitch
   );
 });
 // ...mapActions({
@@ -749,8 +732,8 @@ function list_on_scroll(obj) {
 
   // 两个诸葛事件都发送过 销毁事件绑定
   if (is_send_today_football_zhuge && is_send_today_basketball_zhuge) {
-    this.$root.$off(MITT_TYPES.EMIT_LIST_ON_SCROLL, this.list_on_scroll);
-    this.$root.$off(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, this.list_on_scroll);
+    remove_mitt_list.pop()();
+    remove_mitt_list.pop()();
   }
 
   // 发送今日足球诸葛事件
@@ -806,13 +789,13 @@ function init_site_header(type = null) {
     }, //体育竞猜规则
   ];
   // 判断是否有活动
-  let activityList = get(computed_data.vx_get_user, "activityList");
+  let activityList = get(computed_data.user, "activityList");
   // 多语言屏蔽活动入口
   if (
     activityList &&
     activityList.length > 0 &&
-    this.lang == "zh" &&
-    this.get_global_switch.activity_switch
+    computed_data.lang == "zh" &&
+    computed_data.get_global_switch.activity_switch
   ) {
     data_ref.hasActivity = true;
     // 向顶部导航栏添加活动入口
@@ -829,19 +812,16 @@ function init_site_header(type = null) {
     if (imgUrl) {
       imgUrl = imgUrl.pcUrl;
     }
-    imgUrl = this.get_file_path(imgUrl);
+    imgUrl = get_file_path(imgUrl);
     // 活动入口的图片，如果接口未返回就用默认图片
     tab.img_src =
       imgUrl || require("public/image/activity_imgs/imgs/gift_package.png");
     nav_list.push(tab);
     activityList.forEach((item) => {
-      this.activityIds += item.activityId + ",";
+      data_ref.activityIds += item.activityId + ",";
     });
-    this.activityTimer();
-    this.activity_timer = setTimeout(
-      () => this.getActivityLists({ id: 1, type: "init_nav" }),
-      1000
-    );
+    activityTimer();
+    setTimeout(() => getActivityLists({ id: 1, type: "init_nav" }), 1000);
   }
   if (type != 2) {
     // 运营位专题页
@@ -891,7 +871,7 @@ function set_menu_init_time(number) {
  * 运营位活动弹窗
  */
 function activity_dialog() {
-  let token = get(computed_data.vx_get_user, "token");
+  let token = get(computed_data.user, "token");
   api_account.get_BannersUrl({ type: 5, token }).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
@@ -914,11 +894,11 @@ function activity_dialog() {
               sessionStorage.setItem("showActivityTime", new Date().getTime());
             }
             // 获取图片地址
-            this.imgUrl = window.vue.get_file_path(item.imgUrl);
-            this.hostUrl = item.hostUrl;
-            this.urlType = item.urlType;
+            data_ref.imgUrl = get_file_path(item.imgUrl);
+            data_ref.hostUrl = item.hostUrl;
+            data_ref.urlType = item.urlType;
             // 是否允许点击跳转 ayx_act 爱游戏  act1 乐鱼
-            this.allowClick =
+            data_ref.allowClick =
               ["act", "zr", "ayx_act", "act1"].includes(item.hostUrl) ||
               item.hostUrl != "";
           }
@@ -930,14 +910,10 @@ function activity_dialog() {
       if (data_ref.showActivity) {
         // 5秒后自动消失
         let time = 5;
-        this.userBannerTimer = this.$root
-          .$t("common.auto_close")
-          .replace("%s", time);
+        data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
         let timer = setInterval(() => {
           time--;
-          this.userBannerTimer = this.$root
-            .$t("common.auto_close")
-            .replace("%s", time);
+          data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
           if (time == 0) {
             data_ref.showActivity = false;
             clearInterval(timer);
@@ -951,7 +927,7 @@ function activity_dialog() {
  * 运营位专题页
  */
 function special_page() {
-  let token = get(computed_data.vx_get_user, "token");
+  let token = get(computed_data.user, "token");
   api_account.get_BannersUrl({ type: 7, token }).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
@@ -960,9 +936,9 @@ function special_page() {
         data.forEach((item) => {
           if (item.tType && item.tType == 7) {
             // 获取图片地址
-            this.special_img_url = window.vue.get_file_path(item.imgUrl);
-            this.special_host_url = item.hostUrl;
-            this.special_url_type = item.urlType;
+            data_ref.special_img_url = get_file_path(item.imgUrl);
+            data_ref.special_host_url = item.hostUrl;
+            data_ref.special_url_type = item.urlType;
           }
         });
       }
@@ -973,21 +949,21 @@ function special_page() {
  * 投注框转开和折叠
  */
 function toggle_handle() {
-  this.is_expand = !this.is_expand;
-  if (this.is_expand) {
+  data_ref.is_expand = !data_ref.is_expand;
+  if (data_ref.is_expand) {
     //展开则需要重新计算一遍投注框高度
-    this.computed_bet_height();
+    computed_bet_height();
   }
-  this.is_expand2 = this.is_expand;
+  data_ref.is_expand2 = data_ref.is_expand;
 }
 /**
  * 展开单关投注框
  */
 function open_single_bet() {
-  this.is_expand = true;
-  this.is_expand2 = this.is_expand;
+  data_ref.is_expand = true;
+  data_ref.is_expand2 = data_ref.is_expand;
   //展开则需要重新计算一遍投注框高度
-  this.computed_bet_height();
+  computed_bet_height();
 }
 /**
  * @description 设置滚动数据
@@ -1001,27 +977,29 @@ function set_scroll_this({ type, _this }) {
 /**
  * @description: 开启投注确认中的loadding效果
  */
+let bet_is_handle_status_timer;
 function open_menu_loadding() {
   data_ref.data_ref = true;
   // 投注正在处理中
-  if (computed_data.vx_get_is_virtual_bet) {
+  if (computed_data.is_virtual_bet) {
     vx_set_is_virtual_handle(true);
   } else if (computed_data.vx_is_bet_single) {
     vx_set_is_single_handle(true);
   } else {
     vx_set_is_handle(true);
   }
+
   useMittEmit(MITT_TYPES.IS_MENU_LOADDING, data_ref.data_ref);
   // 兜底25s后初始化投注处理中状态
-  clearTimeout(this.bet_is_handle_status_timer);
-  this.bet_is_handle_status_timer = setTimeout(() => {
+  clearTimeout(bet_is_handle_status_timer);
+  bet_is_handle_status_timer = setTimeout(() => {
     // 投注中状态初始化
-    if (computed_data.vx_get_is_virtual_bet) {
-      this.vx_set_is_virtual_handle(false);
+    if (computed_data.is_virtual_bet) {
+      vx_set_is_virtual_handle(false);
     } else if (computed_data.vx_is_bet_single) {
-      this.vx_set_is_single_handle(false);
+      vx_set_is_single_handle(false);
     } else {
-      this.vx_set_is_handle(false);
+      vx_set_is_handle(false);
     }
   }, 25000);
 }
@@ -1031,12 +1009,12 @@ function open_menu_loadding() {
 function close_menu_loadding() {
   data_ref.data_ref = false;
   // 取消投注处理中
-  if (computed_data.vx_get_is_virtual_bet) {
-    this.vx_set_is_virtual_handle(false);
+  if (computed_data.is_virtual_bet) {
+    vx_set_is_virtual_handle(false);
   } else if (computed_data.vx_is_bet_single) {
-    this.vx_set_is_single_handle(false);
+    vx_set_is_single_handle(false);
   } else {
-    this.vx_set_is_handle(false);
+    vx_set_is_handle(false);
   }
   useMittEmit(MITT_TYPES.IS_MENU_LOADDING, data_ref.data_ref);
 }
@@ -1046,12 +1024,12 @@ function close_menu_loadding() {
  * @return {undefined} undefined
  */
 function get_balance() {
-  let uid = computed_data.vx_get_user.uid;
+  let uid = computed_data.user.uid;
   api_account.check_balance({ uid, t: new Date().getTime() }).then((res) => {
     const result = get(res, "data.data");
     const code = get(res, "data.code");
     if (code == 200) {
-      this.vx_set_user_balance(result.amount);
+      vx_set_user_balance(result.amount);
     }
     userCtr.show_fail_alert();
   });
@@ -1060,11 +1038,10 @@ function get_balance() {
  * 计算投注框的高度
  */
 function computed_bet_height() {
-  if (computed_data.vx_get_left_menu_toggle) return;
+  if (computed_data.left_menu_toggle) return;
   if (
-    (!computed_data.vx_get_is_virtual_bet && computed_data.vx_is_bet_single) ||
-    (computed_data.vx_get_is_virtual_bet &&
-      computed_data.vx_get_virtual_bet_list.length == 1)
+    (!computed_data.is_virtual_bet && computed_data.vx_is_bet_single) ||
+    (computed_data.is_virtual_bet && computed_data.virtual_bet_list.length == 1)
   ) {
     if (timeOutIds.timer3) {
       clearTimeout(timeOutIds.timer3);
@@ -1081,20 +1058,17 @@ function computed_bet_height() {
         let embedded_merge;
         let header = resizeable - headervalue;
         let footer = resizeable_footer.value;
-        this.max_height =
+        data_ref.max_height =
           left_height - header.$el.clientHeight - footer.$el.clientHeight;
         // 若为合并模式
-        if (computed_data.vx_get_is_bet_merge) {
+        if (computed_data.is_bet_merge) {
           // 获取投注区域
           embedded_merge = bet_mode_zone.value;
         }
         let merge_height = 0;
         if (embedded_merge) {
           merge_height = embedded_merge.clientHeight;
-        } else if (
-          !computed_data.vx_get_is_virtual_bet &&
-          !new_menu.is_esports()
-        ) {
+        } else if (!computed_data.is_virtual_bet && !new_menu.is_esports()) {
           merge_height = 35;
         }
         // 内容计算 内嵌单关高度 + 合并区域的高度
@@ -1103,12 +1077,12 @@ function computed_bet_height() {
         if (data_ref.content_height) {
           data_ref.single_height = data_ref.content_height;
         } else {
-          date_ref.content_height = computed_data.vx_get_is_virtual_bet
+          date_ref.content_height = computed_data.is_virtual_bet
             ? data_ref.single_height + 24
             : data_ref.single_height;
         }
         if (
-          computed_data.vx_get_bet_list.length > 1 &&
+          computed_data.bet_list.length > 1 &&
           embedded_single.value.$data.view_ctr_obj.order_confirm_complete ==
             0 &&
           !computed_data.vx_is_bet_single
@@ -1137,18 +1111,18 @@ function computed_bet_height() {
       if (embedded_mix.value) {
         let header = resizeable_header.value;
         let footer = resizeable_footer.value;
-        this.max_height =
+        data_ref.max_height =
           left_height - header.$el.clientHeight - footer.$el.clientHeight;
         date_ref.content_height = embedded_mix.value.clientHeight;
 
         if (
-          computed_data.vx_get_bet_list.length > 1 &&
+          computed_data.bet_list.length > 1 &&
           embedded_mix.value.$data.view_ctr_obj.order_confirm_complete == 0
         ) {
           date_ref.content_height += 90;
         }
-        if (this.max_height < data_ref.content_height) {
-          date_ref.content_height = this.max_height;
+        if (data_ref.max_height < data_ref.content_height) {
+          date_ref.content_height = data_ref.max_height;
         }
       }
     }, 0);
@@ -1220,7 +1194,7 @@ function getActivityLists({ id = 1, type }) {
     data_ref.isFirstLoadPage = false;
     return;
   }
-  let isMaintaining = get(computed_data.vx_get_user, "maintaining");
+  let isMaintaining = get(computed_data.user, "maintaining");
   // 如果活动处于维护状态，直接去掉小红点
   if (isMaintaining == true) {
     if (data_ref.hasBonusType3 == true) {
@@ -1229,9 +1203,9 @@ function getActivityLists({ id = 1, type }) {
     return;
   }
   // 判断是否有活动
-  let activityList = get(computed_data.vx_get_user, "activityList");
+  let activityList = get(computed_data.user, "activityList");
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && this.lang == "zh") {
+  if (activityList && activityList.length > 0 && computed_data.lang == "zh") {
     let param = new FormData();
     // 检测两个活动是否存在以及活动状态不能是未开始和已结束
     let daily =
@@ -1255,7 +1229,7 @@ function getActivityLists({ id = 1, type }) {
         data_ref.hasBonusType3 =
           data.find((item) => item.bonusType == 3) || false;
         if (!data_ref.hasBonusType3 && id == 1) {
-          this.getActivityLists({ id: 2, type: "2nd" });
+          getActivityLists({ id: 2, type: "2nd" });
         }
       }
     });
@@ -1427,7 +1401,7 @@ function resize() {
   let center_width = parseInt(main_width - left_width - right_width);
   // 头部高度
   let header_height = utils.is_iframe
-    ? computed_data.computed_data.vx_get_menu_collapse_status
+    ? computed_data.computed_data.menu_collapse_status
       ? 36
       : 86
     : 96;
@@ -1501,21 +1475,19 @@ function closeLoading(state) {
     clearTimeout(timeOutIds.data_loading_timer);
   }
   timeOutIds.data_loading_timer = setTimeout(() => {
-    this.dataLoading = state;
+    data_ref.dataLoading = state;
   }, 600);
 }
 function toggle_merge() {
-  this.vx_set_is_bet_merge(!computed_data.vx_get_is_bet_merge);
-  if (computed_data.vx_get_is_bet_merge) {
+  tihs.vx_set_is_bet_merge(!computed_data.is_bet_merge);
+  if (computed_data.is_bet_merge) {
     // utils.send_zhuge_event("PC_合并");
   }
-  let len = computed_data.vx_get_bet_single_list.length;
+  let len = computed_data.bet_single_list.length;
   // 取消合并
-  if (!computed_data.vx_get_is_bet_merge && len > 1) {
-    let id = computed_data.vx_get_bet_single_list[len - 1];
-    let bet_single_obj = cloneDeep(
-      get(computed_data.vx_get_bet_single_obj, `${id}`)
-    );
+  if (!computed_data.is_bet_merge && len > 1) {
+    let id = computed_data.bet_single_list[len - 1];
+    let bet_single_obj = cloneDeep(get(computed_data.bet_single_obj, `${id}`));
     this.vx_bet_single_clear();
     this.vx_set_bet_single_list([id]);
     bet_single_obj.key = id;
@@ -1527,17 +1499,17 @@ function toggle_merge() {
 function update_bet_data() {
   /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
       type:0表示普通赛事(默认值)，1虚拟赛事 */
-  let type = computed_data.vx_get_is_virtual_bet ? 1 : 0;
+  let type = computed_data.is_virtual_bet ? 1 : 0;
   let ids = [],
     bet_type;
-  if (computed_data.vx_get_is_virtual_bet) {
+  if (computed_data.is_virtual_bet) {
     bet_type = "vx_get_virtual_bet_obj";
   } else if (computed_data.vx_is_bet_single) {
     bet_type = "vx_get_bet_single_obj";
   } else {
     bet_type = "vx_get_bet_obj";
   }
-  for (let obj of Object.values(this[bet_type])) {
+  for (let obj of Object.values(computed_data[bet_type])) {
     let match_id = get(obj, "cs.match_id", "");
     let handicap_id = get(obj, "cs.handicap_id", "");
     let play_id = get(obj, "cs.play_id", "");
@@ -1565,7 +1537,7 @@ function update_bet_data() {
       .then((res) => {
         let data = get(res, "data.data");
         if (isArray(data) && data.length > 0) {
-          if (computed_data.vx_get_is_virtual_bet) {
+          if (computed_data.is_virtual_bet) {
             this.virtual_common.update_bet_item_info(this, data);
           } else {
             yabo_common.update_bet_item_info(this, data);
@@ -1599,53 +1571,54 @@ resize();
 store.dispatch({ type: "SET_INIT_ODD" });
 store.dispatch({ type: "SET_INIT_MATCH_SORT" });
 init_site_header();
-const remove_list = [];
+const remove_mitt_list = [
+  // 接收开启loadding指令
+  useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding).off,
+  // 接收关闭loadding指令
+  useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding).off,
+  // 更新用户余额
+  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance).off,
+  useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet).off,
+  //计算投注框高度
+  useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height).off,
+  //获取投注数据(内嵌mini切换或者语言发生变化时调用)
 
-// 接收开启loadding指令
-remove_list.push(
-  useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding).off
-);
-// 接收关闭loadding指令
-remove_list.push(
-  useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding).off
-);
-// 更新用户余额
-remove_list.push(useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance).off);
-remove_list.push(
-  useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet).off
-);
-//计算投注框高度
-remove_list.push(
-  useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height).off
-);
-//获取投注数据(内嵌mini切换或者语言发生变化时调用)
-remove_list.push(
-  useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data).off
-);
-// // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
-remove_list.push(useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done).off);
-remove_list.push(useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding).off);
-remove_list.push(useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src).off);
-remove_list.push(useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading).off);
+  useMittOn(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD, update_bet_data).off,
+
+  // // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
+  useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done).off,
+  useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding).off,
+  useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src).off,
+  useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading).off,
+
+  // /在活动窗口内更新首页小红点
+  useEventListener({
+    name: "message",
+    listener: cancelDot,
+  }),
+  useEventListener({
+    name: "resize",
+    listener: resize,
+  }),
+  // // 更新活动入口小红点
+  useMittOn(MITT_TYPES.UPDATE_BONUS, getActivityLists).off,
+  // // 版本号检查状态通知
+  useMittOn(MITT_TYPES.REQUEST_USER_BANNER, newVersion).off,
+  // // 重新计算投注框高度
+  useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle).off,
+
+
+  // 两个诸葛事件事件绑定 请放在最后二个 最后二个 最后二个 
+  useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll).off,
+  useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll).off,
+];
+
 // // 保存首页路径，活动页需要用到
 if (route.path == "/home") {
   localStorage.setItem("home_url", window.location.origin);
 }
 // // 获取活动维护状态
-data_ref.isMaintaining = get(computed_data.vx_get_user, "maintaining");
-// // 在活动窗口内更新首页小红点
-remove_list.push(
-  useEventListener({
-    name: "message",
-    listener: cancelDot,
-  })
-);
-remove_list.push(
-  useEventListener({
-    name: "resize",
-    listener: resize,
-  })
-);
+data_ref.isMaintaining = get(computed_data.user, "maintaining");
 const remove_mousedown = useEventListener({
   name: "mousedown",
   listener: function () {
@@ -1658,14 +1631,6 @@ const remove_mousedown = useEventListener({
     // sessionStorage.setItem('is_send_today_football_zhuge2',1)
   },
 });
-// // 更新活动入口小红点
-remove_list.push(useMittOn(MITT_TYPES.UPDATE_BONUS, getActivityLists));
-// // 版本号检查状态通知
-remove_list.push(useMittOn(MITT_TYPES.REQUEST_USER_BANNER, newVersion));
-// // 重新计算投注框高度
-remove_list.push(useMittOn(MITT_TYPES.TOGGLE_HANDLE, toggle_handle).off);
-remove_list.push(useMittOn(MITT_TYPES.EMIT_LIST_ON_SCROLL, list_on_scroll));
-remove_list.push(useMittOn(MITT_TYPES.RIGHT_DETAILS_ON_SCROLL, list_on_scroll));
 
 // // 重置 vuex 存储
 // vx_set_show_record(false);
@@ -1685,193 +1650,9 @@ get_access_config();
 /*销毁组件*/
 onBeforeUnmount(() => {
   unsubscribe();
-  remove_list.forEach((item) => item());
+  remove_mitt_list.forEach((item) => item());
 });
 </script>
-
 <style lang="scss" scoped>
-.c-main-scroll {
-  overflow-x: auto;
-
-  ::v-deep .q-page-sticky > div {
-    width: 100%;
-  }
-
-  ::v-deep .page-right {
-    z-index: 52;
-  }
-}
-
-.main {
-  height: 100%;
-
-  .c-site-header {
-    width: 100%;
-  }
-
-  .zero-opacity {
-    opacity: 0;
-  }
-
-  .c-main-content {
-    background-position: center;
-    background-size: cover;
-    display: flex;
-
-    ::v-deep .page-right {
-      z-index: 52;
-
-      .football-after,
-      .more-info {
-        width: 90% !important;
-      }
-    }
-  }
-}
-
-.iframe-top-collapse {
-  ::v-deep {
-    .c-site-header.is-iframe {
-      height: 36px;
-    }
-
-    .serach-wrap.iframe {
-      top: 0 !important;
-    }
-  }
-}
-
-.football-after,
-.basketball-after,
-.more-info {
-  width: 90% !important;
-}
-
-.bet-mode-zone {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  height: 40px;
-  line-height: 40px;
-  align-items: center;
-
-  .left {
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
-  }
-
-  .bet-single-count {
-    font-size: 16px;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    margin-left: 5px;
-    text-align: center;
-    transform: scale(0.8);
-  }
-
-  .right {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-
-    .check-box {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-      padding-left: 5px;
-      padding-right: 5px;
-
-      .check-wrap {
-        padding: 0;
-        margin-right: 5px;
-      }
-
-      &.checked {
-        .check-wrap {
-          border: 0;
-        }
-      }
-    }
-  }
-}
-
-.tip-content {
-  width: calc(100% - 20px);
-  height: 100px;
-  position: absolute;
-  bottom: 0;
-  z-index: 2003;
-  top: -50px;
-  left: 10px;
-
-  &.top-content {
-    top: 5px;
-  }
-
-  .content-wrap {
-    position: absolute;
-    top: 6px;
-    width: 100%;
-    background: #fff;
-    border: 2px solid #ff781d;
-    border-radius: 5px;
-
-    .content {
-      padding: 10px;
-      font-size: 12px;
-
-      .row-1,
-      .row-2,
-      .row-3 {
-        color: #2d2d2d;
-        text-align: center;
-      }
-
-      .row-1 {
-        margin-bottom: 10px;
-        font-size: 14px;
-        color: #ff781d;
-        font-weight: bold;
-      }
-    }
-
-    .triangle,
-    .triangle1 {
-      position: absolute;
-      background: #fff;
-      border: 2px solid #ff781d;
-      border-top: 0;
-      border-left: 0;
-      width: 15px;
-      height: 15px;
-      transform: rotate(45deg);
-      top: 81px;
-      right: 22px;
-    }
-
-    .triangle1 {
-      top: 116px;
-    }
-
-    .icon-del {
-      position: absolute;
-      top: 16px;
-      right: 10px;
-      cursor: pointer;
-    }
-  }
-}
-
-.bet-bg-tooltip {
-  background: #a3afbf;
-  color: #ffffff;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
-}
+@import url(./main-layout.scss);
 </style>
