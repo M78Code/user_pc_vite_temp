@@ -6,6 +6,7 @@ import betInfoReducer from './module/betInfo'
 import userInfoReducer from './module/userinfo'
 import detailsReducer from './module/details'
 import virtualSportsReducer from './module/virtual-sports'
+import cathecticReducer from './module/cathectic'
   const store = configureStore( {
     reducer:{
       betInfoReducer,
@@ -13,7 +14,8 @@ import virtualSportsReducer from './module/virtual-sports'
       menuReducer,
       matchReducer,
       detailsReducer,
-      virtualSportsReducer
+      virtualSportsReducer,
+      cathecticReducer
     }
   })
   export default store

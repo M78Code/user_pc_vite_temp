@@ -119,7 +119,7 @@ import skt_live_bw3 from "src/public/mixins/websocket/data/skt-live-bw3.js";
 import msc from "src/public/mixins/common/msc.js";
 import ListMap from "src/public/utils/list-map";
 import common from "src/project/mixins/constant";
-import utils from "src/public/utils/utils";
+import utils from "src/core/utils/utils.js";
 import SLive from "src/project/components/skeleton/live"
 import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'

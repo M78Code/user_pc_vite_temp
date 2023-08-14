@@ -18,21 +18,26 @@ import team_match_icon from "src/components/details/team-match-icon/team-match-i
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "header_bottom",
-  props: ['detail_data'],
+  props: {
+    detail_data: {
+      type: Object
+    }
+  },
   components: {
     "team-match-icon":team_match_icon,
     // "match-score": match_score,
   },
   setup(props, evnet) {
     const data = reactive({
-
+      get_menu_type: "",
     });
     // #TODO vuex 
     // computed: {
     //   ...mapGetters(["get_menu_type"])
     // },
     return {
-      ...toRefs(data)
+      ...toRefs(data),
+      ...toRefs(props)
     }
   }
 })

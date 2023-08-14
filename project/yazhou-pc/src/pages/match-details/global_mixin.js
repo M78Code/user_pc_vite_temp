@@ -32,11 +32,11 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
-    state = store.getState();
-    layout_cur_page.value = state.menusReducer.layout_cur_page;
-    filter_select_obj.value = state.filterReducer.filter_select_obj;
-    cur_menu_type.value = state.menusReducer.cur_menu_type;
-    match_sort.value = state.globalReducer.match_sort;
+   let state_data = store.getState();
+    layout_cur_page.value = state_data.menusReducer.layout_cur_page;
+    filter_select_obj.value = state_data.filterReducer.filter_select_obj;
+    cur_menu_type.value = state_data.menusReducer.cur_menu_type;
+    match_sort.value = state_data.globalReducer.match_sort;
   });
 
   onUnmounted(() => {
@@ -94,7 +94,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
     if (cur_page == "details") {
       let { tid: _tid, csid: _csid } = useRoute.params;
-      const { tid, csid } = details_params;
+      let { tid, csid } = details_params;
       if (_tid) {
         tid = _tid;
         csid = _csid;

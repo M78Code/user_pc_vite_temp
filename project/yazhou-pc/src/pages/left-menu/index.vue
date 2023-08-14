@@ -288,7 +288,7 @@ import { MenuWapper } from "src/components/menu";
 // import { BetBoxWapper } from "src/components/bet"
 
 
-import store from "../../store/index.js";
+import store from "src/store-redux/index.js";
 import base_data_instance from 'src/core/utils/base-data/base-data.js'
 import menu_config from 'src/core/menu-pc/menu-data-class.js'
 

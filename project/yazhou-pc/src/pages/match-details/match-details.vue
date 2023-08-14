@@ -28,7 +28,18 @@
         >
           <template v-slot:header>
             <!-- 详情头部 -->
-            <detail-header ref="detail_header" @init="init" @back_to="back_to"></detail-header>
+            <detail-header
+              ref="detail_header"
+              :match_infoData="match_infoData"
+              :background_img="background_img"
+              :sportId="sportId"
+              :handicap_state="handicap_state"
+              :handicap_this="handicap_this"
+              @init="init"
+              @back_to="back_to"
+              @get_mattch_details="get_mattch_details"
+              @change_loading_state="change_loading_state"
+            ></detail-header>
           </template>
 
           <!-- 玩法列表 -->
@@ -72,14 +83,14 @@
 </template>
 
 <script setup>
-import loadData from "project_path/src/components/load-data/load_data.vue";
+import loadData from "project_path/src/components/load-data/load-data.vue";
 import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area.vue";
 import detailHeader from "./components/detail-header.vue";
 // 组件
 // 盘口模板
 import matchHandicap from "src/components/match-detail/match_handicap.vue";
 
-import {useGetConfig} from './detail.config'
+import { useGetConfig } from "./detail.config";
 
 const {
   load_detail_statu,
@@ -91,14 +102,15 @@ const {
   close_all_handicap,
   handicap_state,
   detail_header,
+  background_img,
+  sportId,
+  handicap_this,
   init,
   back_to,
   set_handicap_this,
   on_go_top,
-  set_handicap_state
-
-} = useGetConfig()
-
-
-
+  set_handicap_state,
+  get_mattch_details,
+  change_loading_state
+} = useGetConfig();
 </script>

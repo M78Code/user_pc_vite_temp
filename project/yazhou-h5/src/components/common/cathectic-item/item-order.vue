@@ -17,16 +17,16 @@
 import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
-import utils from 'src/public/utils/utils.js';
+import { ref } from 'vue'
+import utils from 'src/core/utils/utils.js'
 
   const props = defineProps({
     data_o: {
-      type: Obeject,
+      type: Object,
       default: {},
     }
   })
   
-  let utils = ref(utils)
   onUnmounted(() => {
     clearTimeout(timer)
     timer = null

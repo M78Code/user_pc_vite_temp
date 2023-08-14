@@ -18,7 +18,7 @@ import { httplog } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
-import store from "./src/store/index.js";
+import store from "src/store-redux/index.js";
 import { set_remote_server_time } from "./src/store/module/global";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";

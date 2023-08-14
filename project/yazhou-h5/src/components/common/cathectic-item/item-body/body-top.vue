@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { api_betting } from 'src/project/api';
+import { api_betting } from "src/api/index.js";
 // import { mapGetters } from "vuex";
 
 const props = defineProps({

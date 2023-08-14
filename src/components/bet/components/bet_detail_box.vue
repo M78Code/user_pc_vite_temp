@@ -189,6 +189,7 @@
 <script setup>
   import ballSpin from './ball_spin.vue';
   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+  import store from "src/store-redux/index.js";
   const money = ref('')//金额
   // const get_bet_status = 1,    //0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
   const odds_change = ref('0')    //0-正常，1-赔率升，2-赔率降
@@ -211,6 +212,48 @@
   const play_optionname = ref('')   //单关投注成功后接口返回的playOptionName
   const match_info = ref('')   //单关投注成功后接口返回的matchInfo 
 
+
+  const store_state = store.getState()
+  const get_user = ref(store_state.get_user)
+  const get_bet_obj = ref(store_state.get_bet_obj)
+  const get_bet_list = ref(store_state.get_bet_list)
+  const get_is_accept = ref(store_state.get_is_accept)
+  const get_odds_change = ref(store_state.get_odds_change)
+  const get_bet_status = ref(store_state.get_bet_status)
+  const get_theme = ref(store_state.get_theme)
+  const get_detail_data = ref(store_state.get_detail_data)
+  const get_is_show_settle_tab = ref(store_state.get_is_show_settle_tab)
+  const get_change_list = ref(store_state.get_change_list)
+  const get_new_bet = ref(store_state.get_new_bet)
+  const get_used_money = ref(store_state.get_used_money)
+  const get_invalid_ids = ref(store_state.get_invalid_ids)
+  const get_order_no = ref(store_state.get_order_no)
+  const get_bet_show = ref(store_state.get_bet_show)
+  const get_bet_success = ref(store_state.get_bet_success)
+
+  const unsubscribe = store.subscribe(() => {
+    update_state()
+  })
+
+  const update_state = () => {
+    const new_state = store.getState()
+    get_user.value = new_state.get_user
+    get_bet_obj.value = new_state.get_bet_obj
+    get_bet_list.value = new_state.get_bet_list
+    get_is_accept.value = new_state.get_is_accept
+    get_odds_change.value = new_state.get_odds_change
+    get_bet_status.value = new_state.get_bet_status
+    get_theme.value = new_state.get_theme
+    get_detail_data.value = new_state.get_detail_data
+    get_is_show_settle_tab.value = new_state.get_is_show_settle_tab
+    get_change_list.value = new_state.get_change_list
+    get_new_bet.value = new_state.get_new_bet
+    get_used_money.value = new_state.get_used_money
+    get_invalid_ids.value = new_state.get_invalid_ids
+    get_order_no.value = new_state.get_order_no
+    get_bet_show.value = new_state.get_bet_show
+    get_bet_success.value = new_state.get_bet_success
+  }
   // mixins: [odd_convert, betting, compute_max_win_money],
   // onmounted开始
   /**            onmounted开始              */
@@ -232,7 +275,7 @@
       if (!max_money.value) {
         max_money.value = 8888;
         // 获取接口返回的单关最小投注金额
-        min_money = _.get(get_user, 'cvo.single.min', 10)
+        min_money = _.get(get_user.value, 'cvo.single.min', 10)
         if (max_money.value < min_money.value) {
           min_money.value = max_money.value
         }
@@ -240,7 +283,9 @@
         check_moneyok(money.value)
       }
     }, 5000);
+    unsubscribe()
   })
+  
   /**            onmounted结束             */
   // mapMutations(['set_change_list', 'set_invalid_ids', 'set_is_accept', 'set_toast', "set_bet_status", "set_bet_obj", "set_accept_show", "set_order_no", "set_new_bet",
   //     "set_bet_list", "set_odds_change", "set_used_money", "set_http_update"]),
@@ -280,7 +325,7 @@
      *@description 点击蒙层收起
      */
     const pack_up = ()=> {
-      if ([3, 4, 6, 8].includes(+get_bet_status)) {
+      if ([3, 4, 6, 8].includes(+get_bet_status.value)) {
         set_bet_list([]);
         return
       }
@@ -334,13 +379,13 @@
       is_exist_code.value = false
 
       // 这种情况放过，让钱投注出去
-      let _flag2 = money.value == get_user.balance
+      let _flag2 = money.value == get_user.value.balance
 
       if (!_flag2) {
         check_moneyok2(money.value)
         if (!money_ok.value) { return }
       }
-      if (get_bet_status == 7) {   //锁盘
+      if (get_bet_status.value == 7) {   //锁盘
         set_toast({ 'txt': $root.$t('bet.odd_upd') });
         return;
       }
@@ -349,7 +394,7 @@
         set_toast({ 'txt': $root.$t('bet.input_v') })
         return;
       }
-      if (Number(money.value) > +get_user.balance) {    //弹窗提示：“余额不足，请您先充值”
+      if (Number(money.value) > +get_user.value.balance) {    //弹窗提示：“余额不足，请您先充值”
         set_toast({ 'txt': $root.$t('bet.err_msg05') });
         return;
       }
@@ -393,7 +438,7 @@
                 set_new_bet(true)
                 clearTimeout(timer_25000)
                 timer_25000 = setTimeout(() => {   //25秒还是有订单在确认中，直接给状态让去注单记录中查看
-                  if (get_new_bet) {
+                  if (get_new_bet.value) {
                     set_bet_status(1);
                     tips_msg.value = $root.$t('bet.err_msg08');
                     clearInterval(timer_2000)
@@ -422,7 +467,7 @@
           playname.value = data.orderDetailRespList[0].playName;
           match_info.value = data.orderDetailRespList[0].matchInfo;
 
-          if (get_detail_data.mid && !get_is_show_settle_tab) {   //详情页需要拉取玩法集接口
+          if (get_detail_data.value.mid && !get_is_show_settle_tab.value) {   //详情页需要拉取玩法集接口
             useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET)
           }
         } else {  // 投注失败在 back_msg 方法中查看注释
@@ -433,7 +478,7 @@
                 need_bet_again.value = true
                 // 同步程序走完后再处理逻辑
                 $nextTick(() => {
-                  if (!get_odds_change) {
+                  if (!get_odds_change.value) {
                     set_bet_status(1);
                   }
                 })
@@ -466,8 +511,8 @@
      */
      const check_moneyok = (val) =>{
       //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-      if (+val > +get_user.balance) {
-        money.value = get_user.balance.toString()
+      if (+val > +get_user.value.balance) {
+        money.value = get_user.value.balance.toString()
         tips_msg.value = $root.$t('bet.err_msg09')
         clearTimeout(timer_3000)
         // 3秒后重置样式
@@ -536,12 +581,12 @@
 
     // 单关5秒后还是在确认中状态的话，轮询查询订单信息
     const query_order = () =>{
-      if (get_order_no && get_bet_status == 6 || get_new_bet) {
+      if (get_order_no.value && get_bet_status.value == 6 || get_new_bet.value) {
         let param = {
-          orderNos: get_order_no
+          orderNos: get_order_no.value
         }
         api_betting.get_orderstatus(param).then(res => {
-          if (!(get_bet_status == 6 || get_new_bet)) {return}
+          if (!(get_bet_status.value == 6 || get_new_bet.value)) {return}
 
           let data = _.get(res, 'data[0]');
           let code = _.get(res, 'code');
@@ -551,7 +596,7 @@
           if (data.status == 0) {   //投注成功
             set_bet_status(3);
 
-            if (data.orderNo && data.orderNo == get_order_no) {
+            if (data.orderNo && data.orderNo == get_order_no.value) {
               max_winmoney.value = data.newMaxWinAmount;
               let oid = _.get(single_item, 'hps[0].hl[0].ol[0].oid', '')
               if (data.oddsChangeList && data.oddsChangeList[0] && data.oddsChangeList[0].playOptionsId == oid) {
@@ -632,7 +677,7 @@
     }
     // 小键盘 MAX键
     const _handmaxKey = ()=> {
-      money.value = max_money.value >= +get_user.balance ? get_user.balance.toFixed(2) : max_money.value.toFixed(2);
+      money.value = max_money.value >= +get_user.value.balance ? get_user.value.balance.toFixed(2) : max_money.value.toFixed(2);
     }
     // 小键盘 处理数字
     const _handleNumberKey = (num) => {

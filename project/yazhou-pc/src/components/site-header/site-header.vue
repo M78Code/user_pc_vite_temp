@@ -1128,14 +1128,11 @@ watch(
 
 <script>
 /** mixins */
-// import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
-// import betting from "src/public/mixins/betting/betting.js";
-// import time_format_mixin from "src/public/mixins/common/time_format";
-// export default defineComponent({
-//     name: 'site-header',
-//     mixins: [odds_conversion_mixin, betting, time_format_mixin]
-// })
-// </script>
+export default defineComponent({
+    name: 'site-header',
+ 
+})
+</script>
 
 <style lang="scss">
 // 运营位专题页
