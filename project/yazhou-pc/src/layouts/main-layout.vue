@@ -358,9 +358,7 @@ import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
 import MainMenu from "../pages/left-menu/index.vue";
-// import MainMenuMini from "../pages/left-menu/index-min.vue";
-
-// import siteHeader from "../components/site-header/site-header.vue"; //报错
+// import siteHeader from "project_path/src/components/site-header/site-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
 // const matchDetails = defineAsyncComponent(() =>

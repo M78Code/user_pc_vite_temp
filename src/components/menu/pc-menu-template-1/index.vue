@@ -171,7 +171,6 @@
           :menu_list="compute_item1_sublist_mi_300(item1)"
           :base_data="base_data"
           :current_lv_2_mi="current_lv_2_mi"
-          
         />
       </div>
       <!--  VR    子菜单   结束     -->
@@ -399,10 +398,13 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
   }
 
   // 今日 / 早盘 选中的情况下 点击无效
-  if (jinri_zaopan_ == jinri_zaopan && current_lv_1_mi.value == mi) {
+  if (jinri_zaopan_.value == jinri_zaopan?.value && current_lv_1_mi.value == mi) {
     return false;
   }
-  jinri_zaopan_.value = jinri_zaopan ? jinri_zaopan : jinri_zaopan_;
+  if (jinri_zaopan) {
+    jinri_zaopan_.value = jinri_zaopan?.value;
+  }
+  // jinri_zaopan_.value  = jinri_zaopan ? jinri_zaopan : jinri_zaopan_;
   current_lv_1_mi.value = mi;
   current_lv_2_mi.value = "";
 
@@ -524,7 +526,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
     guanjun: "",
 
     mid_menu_show: {
-      list_filter_date: jinri_zaopan_ == 3,
+      list_filter_date: jinri_zaopan_.value == 3,
     },
   };
 
@@ -539,7 +541,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
   //     }
 
   // 如果
-  if (jinri_zaopan_ != 3) {
+  if (jinri_zaopan_.value != 3) {
     // 是否收藏
     let is_collect = false; // get_layout_list_type == "collect";
     //基础参数
@@ -614,13 +616,13 @@ const lv_2_click_wapper_2 = (detail = {}) => {
     sports: "common",
     guanjun: "common-guanjun",
     mid_menu_show: {
-      list_filter_date: jinri_zaopan_ == 3,
+      list_filter_date: jinri_zaopan_.value == 3,
     },
   };
   // 当前 pid 和 orpt
   // let lv2_mi_info = base_data.mi_info_map[`mi_${lv2_mi}`];
   // 如果
-  if (jinri_zaopan_ != 3) {
+  if (jinri_zaopan_.value != 3) {
     let base_params = {
       cuid: "", // vx_get_uid, // ??????
       selectionHour: "", // $store.state.filter.open_select_time,
@@ -857,7 +859,7 @@ const lv_1_num = (mi) => {
     return obj["ct"];
   } else {
     //  今日 或者 早盘
-    let changgui = compute_num(`${mi}${jinri_zaopan_}`, mi) || 0;
+    let changgui = compute_num(`${mi}${jinri_zaopan_.value}`, mi) || 0;
     // 冠军
     let guanjun = compute_num(`${mi}4`, mi) || 0;
     return changgui + guanjun;

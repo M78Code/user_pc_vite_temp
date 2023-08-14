@@ -150,7 +150,7 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "../../store/index.js";
+import store from "src/store-redux/index.js";
 import { Level_one_category_list, Level_one_detail_data, Level_one_detail_odd_info } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";

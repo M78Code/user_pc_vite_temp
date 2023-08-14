@@ -4,7 +4,7 @@
  * @Description: 详情全局设置
  */
 import { reactive, toRefs, onUnmounted } from "vue";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+// import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
 import lodash from "lodash";
