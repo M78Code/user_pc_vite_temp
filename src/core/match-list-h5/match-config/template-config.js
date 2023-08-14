@@ -156,7 +156,7 @@ const get_template_config = (config) => {
     sport_type, secondary_play, time_title } = template_config[app_type]
 
   //  最终结果
-  let result = { mid, ...common_template_config }
+  const result = { mid, ...common_template_config }
   
   const source_config = source_data.find(t => t.types.includes(menu_type))
   
