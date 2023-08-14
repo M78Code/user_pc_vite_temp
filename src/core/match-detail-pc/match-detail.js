@@ -176,7 +176,7 @@ const check_plays = (plays) => {
  * @Description:category_list 分类列表，all_list 所有玩法数据
  */
 const getDetaillist = (value) => {
-  const detail_list = [];
+  let detail_list = [];
   const plays = category_list.find((item) => item.orderNo == value).plays;
   let list = all_list.filter((item) => plays.includes(Number(item.hpid)));
   list = list.filter((i) => i.hpn);
