@@ -11,9 +11,10 @@
         <span v-else-if="top_.sportId == 100" style="--num:42"></span>
         <span v-else-if="top_.sportId == 103" style="--num:40"></span>
         <span v-else-if="top_.sportId == 102" style="--num:41"></span>
-        <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="get_theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
-        <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
+        {{store_data.theme}}
+        <!-- <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else> -->
+        <!-- <img v-if="store_data.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src"> -->
+        <!-- <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src"> -->
       </p>
       <p class="col league-title-w ellipsis">
         <template v-if="top_.sportName">{{top_.matchName}}</template>
@@ -40,7 +41,11 @@
 
 <script setup>
 import { api_betting } from "src/api/index.js";
+import { ref, onUnmounted  } from 'vue'
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import {get_file_path} from "src/core/utils/get-file-path.js"
 // import { mapGetters } from "vuex";
+import store from 'src/store-redux'
 
 const props = defineProps({
   top_: {
@@ -56,7 +61,7 @@ const props = defineProps({
     type: Boolean
   }
 })
-
+  let store_data = ref(store.getState())
   let cancleFlag = ref(false) 
   let cancled = ref(false) 
   //用户手动点击取消之后的状态
@@ -66,6 +71,7 @@ const props = defineProps({
 
 
   onUnmounted(() => {
+    console.error(store_data);
     clearTimeout(timer)
     timer = null
   })
@@ -76,9 +82,9 @@ const props = defineProps({
   //   ])
   // },
   const cancleOrder = () => {
-    $root.$emit(emit_cmd.EMIT_SHOW_CANCLE_POP,{
-      orderNo: orderNumber,
-      name: top_.matchInfo
+    useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
+      orderNo: props.orderNumber,
+      name: props.top_.matchInfo
     })
   }
   const handle_img_load_error = (e) => {
