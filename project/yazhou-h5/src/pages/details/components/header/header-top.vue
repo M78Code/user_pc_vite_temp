@@ -463,7 +463,7 @@ export default defineComponent({
       // 赛事开赛时间倒计时为0的时候 让倒计时显示为1分钟
       if(longTime == 0){ longTime += 1 }
       // 此时true或者false 控制是否显示倒计时时间
-      start_time = bool;
+      data.start_time = bool;
       // 计算出来的倒计时时间赋值给data的变量显示在页面上
       longTime = longTime;
 
@@ -473,7 +473,7 @@ export default defineComponent({
         if(+props.detail_data.mgt - now < 0 ){
           clearInterval(data.timerInterval);
           // 不显示倒计时
-          start_time = false;
+          data.start_time = false;
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
@@ -513,13 +513,13 @@ export default defineComponent({
       // 延时器
       data.timerInterval=0;
       data.timer1_ = null;
-      hide_home_goal = debounce(hide_home_goal,5000)
-      hide_away_goal = debounce(hide_away_goal,5000)
-      hide_home_red = debounce(hide_home_red,5000)
-      hide_away_red = debounce(hide_away_red,5000)
+      // hide_home_goal = debounce(hide_home_goal,5000)
+      // hide_away_goal = debounce(hide_away_goal,5000)
+      // hide_home_red = debounce(hide_home_red,5000)
+      // hide_away_red = debounce(hide_away_red,5000)
       initEvent();
       // #TODO emit 
-      emitters = [
+      data.emitters = [
         useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
       // $root.$on(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
@@ -537,7 +537,7 @@ export default defineComponent({
       data.timer1_ = null
 
       // #TODO emit 
-      emitters.map((x) => x())
+      data.emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     return {

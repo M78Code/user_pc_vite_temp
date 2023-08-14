@@ -5,10 +5,30 @@
  * @Description:
  */
 import lodash from "lodash";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+const football = require("public/yazhou-pc/image/png/football.png"); //足球
+const basketball = require("public/yazhou-pc/image/png/basketball.png"); //篮球
+const baseball = require("public/yazhou-pc/image/png/baseball.png"); //棒球
+const ice_hockey = require("public/yazhou-pc/image/jpg/ice_hockey.jpg"); //冰球
+const tennis = require("public/yazhou-pc/image/png/tennis.png"); //网球
+const usa_football = require("public/yazhou-pc/image/png/usa_football.png"); // 美足
+const snooker = require("public/yazhou-pc/image/jpg/snooker.jpg"); //斯诺克
+const ping_pong = require("public/yazhou-pc/image/jpg/ping_pong.jpg"); //乒乓球
+const volleyball = require("public/yazhou-pc/image/png/volleyball.png"); // 排球
+const badminton = require("public/yazhou-pc/image/jpg/badminton.jpg"); //羽毛球
+const handball = require("public/yazhou-pc/image/common/png/handball.png"); //手球
+const boxing = require("public/yazhou-pc/image/common/png/boxing.png"); //拳击
+const beach_volleyball = require("public/yazhou-pc/image/common/png/beach_volleyball.png"); //沙滩排球
+const rugby = require("public/yazhou-pc/image/common/png/rugby.png"); //橄榄球
+const hockey = require("public/yazhou-pc/image/common/png/hockey.png"); //曲棍球
+const polo = require("public/yazhou-pc/image/common/png/polo.png"); //水球
+const virtual_dog = require("public/yazhou-pc/image/png/virtual_dog.png"); //赛狗
+const virtual_racing = require("public/yazhou-pc/image/png/virtual_racing.png"); //赛马
+const motorcycle = require("public/yazhou-pc/image/png/motorcycle.png"); // 虚拟摩托车
+const virtual_dirt_bike_details = require("public/yazhou-pc/image/png/virtual_dirt_bike_details.png"); // 虚拟泥地摩托车
 
-
-  //统计分析URL
- const signal_url = 'https://s5.sir.swiftscore.com'
+//统计分析URL
+const signal_url = "https://s5.sir.swiftscore.com";
 
 /**
  * 初始化数据
@@ -23,7 +43,7 @@ const init = async () => {
  * 获取赛玩法集数据
  * @param {*} mid 赛事id,sportId 球种id
  */
-const get_category = async (sportId,mid) => {
+const get_category = async (sportId, mid) => {
   try {
     const params = {
       sportId,
@@ -40,39 +60,116 @@ const get_category = async (sportId,mid) => {
   } catch (error) {}
 };
 
-  /**
-   * 获取赛事玩法列表数据
-   * @param {*} mid 赛事id
-   */
-  const get_detail_lists = async (mid) => {
-    return new Promise(async (resolve)=>{
-      const params = {
-        mcid: 0,
-        cuid: userInfo.userId,
-        mid,
-        newUser: 0,
-        t: new Date().getTime(),
-      };
-      const res = await get_detail_list(params);
-      resolve(res.data.data || [])
-    }).catch(err=>{})
-  };
+/**
+ * 获取赛事玩法列表数据
+ * @param {*} mid 赛事id
+ */
+const get_detail_lists = async (mid) => {
+  return new Promise(async (resolve) => {
+    const params = {
+      mcid: 0,
+      cuid: userInfo.userId,
+      mid,
+      newUser: 0,
+      t: new Date().getTime(),
+    };
+    const res = await get_detail_list(params);
+    resolve(res.data.data || []);
+  }).catch((err) => {});
+};
 
-   /**
-   * 获取赛事详情数据
-   * @param {*} mid 赛事id
-   */
-   const get_detail = async (mid) => {
-    return new Promise(async (resolve)=>{
-      const params = {
-        mid,
-        cuid: userInfo.userId,
-        t: new Date().getTime(),
-      };
-      const res = await get_detail_data(params);
-      resolve(res.data.data || [])
-    }).catch(err=>{})
-  };
+/**
+ * 获取赛事详情数据
+ * @param {*} mid 赛事id
+ */
+const get_detail = async (mid) => {
+  return new Promise(async (resolve) => {
+    const params = {
+      mid,
+      cuid: userInfo.userId,
+      t: new Date().getTime(),
+    };
+    const res = await get_detail_data(params);
+    resolve(res.data.data || []);
+  }).catch((err) => {});
+};
+
+/**
+ * @description: 获取各球种背景图片
+ * @param {String} csid 球种id
+ * @return {String} 返回各球种背景图片
+ */
+const computed_background = (csid) => {
+  let background_img = "";
+  // 3棒、4冰、5网、7斯诺克、8乒乓、10羽毛球 1001虚拟足球、1002赛狗、1011赛马
+  switch (csid) {
+    case "1": // 足球
+    case "1001": // 虚拟足球
+      background_img = football;
+      break;
+    case "2": // 篮球
+    case "1004": // 虚拟篮球
+      background_img = basketball;
+      break;
+    case "3": // 棒球
+      background_img = baseball;
+      break;
+    case "4": // 冰球
+      background_img = ice_hockey;
+      break;
+    case "5": // 网球
+      background_img = tennis;
+      break;
+    case "6": // 美足
+      background_img = usa_football;
+      break;
+    case "7": // 斯诺克
+      background_img = snooker;
+      break;
+    case "8": // 乒乓
+      background_img = ping_pong;
+      break;
+    case "9": // 排球
+      background_img = volleyball;
+      break;
+    case "10": // 羽毛球
+      background_img = badminton;
+      break;
+    case "11": //手球
+      background_img = handball;
+      break;
+    case "12": //拳击
+      background_img = boxing;
+      break;
+    case "13": //沙滩排球
+      background_img = beach_volleyball;
+      break;
+    case "14": //橄榄球
+      background_img = rugby;
+      break;
+    case "15": //曲棍球
+      background_img = hockey;
+      break;
+    case "16": //水球
+      background_img = polo;
+      break;
+    case "1002": // 虚拟赛狗
+      background_img = virtual_dog;
+      break;
+    case "1011": // 虚拟赛马
+      background_img = virtual_racing;
+      break;
+    case "1010": // 虚拟摩托
+      background_img = motorcycle;
+      break;
+    case "1009": // 虚拟泥地摩托车
+      background_img = virtual_dirt_bike_details;
+      break;
+  }
+  if (background_img)
+  useMittEmit(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, background_img);
+  return background_img;
+};
 
 /**
  *
@@ -223,30 +320,36 @@ const format_mst_data = (mst) => {
 const show_wrap_total = (match_infoData) => {
   return (
     match_infoData.mcg == 1 &&
-    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(+lodash.get(match_infoData, "csid")) &&
+    [1, 2, 3, 4, 6, 5, 7, 9, 10].includes(
+      +lodash.get(match_infoData, "csid")
+    ) &&
     get_global_switch.statistics_switch &&
     match_infoData.cds !== "RC"
   );
 };
 
- /**
-  * @Description:sr 分析数据点击跳转
-  * @Author Cable
-  * @param:match 赛事详情
-  * @return:
-  */
-const sr_click_handle=(match)=> {
-  let full_url = get_full_sr_url(match) // seid,match.srid
-  if(!store.getters.get_global_switch.statistics_switch) return window.vue.$root.$emit(window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD, window.vue.$root.$t("msg.msg_09")); 
-  if([1,2].includes(match.csid*1)){
-    full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
-    store.dispatch("set_active_detail", match)
+/**
+ * @Description:sr 分析数据点击跳转
+ * @Author Cable
+ * @param:match 赛事详情
+ * @return:
+ */
+const sr_click_handle = (match) => {
+  let full_url = get_full_sr_url(match); // seid,match.srid
+  if (!store.getters.get_global_switch.statistics_switch)
+    return window.vue.$root.$emit(
+      window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD,
+      window.vue.$root.$t("msg.msg_09")
+    );
+  if ([1, 2].includes(match.csid * 1)) {
+    full_url = `/#/analysis_header/${match.csid}/${match.mid}`; // seid,match.srid
+    store.dispatch("set_active_detail", match);
   }
-  
-  let _window_width = 1000
-  let _window_height = 650
-  let _window_offset_left = (screen.width - _window_width) / 2
-  let _window_offset_top = (screen.height - _window_height) / 2
+
+  let _window_width = 1000;
+  let _window_height = 650;
+  let _window_offset_left = (screen.width - _window_width) / 2;
+  let _window_offset_top = (screen.height - _window_height) / 2;
 
   if (full_url) {
     window.open(
@@ -258,77 +361,77 @@ const sr_click_handle=(match)=> {
     );
     return full_url;
   }
-  
-}
-  /**
-  * @Description:获取数据分析url
-  * @Author Cable
-  * @param:match 赛事详情
-  * @return:
-  */
- const get_full_sr_url=(match)=> {
-    let csid = lodash.get(match,'csid')
-    let srid = lodash.get(match,'srid')
-    if(!csid || !srid) return ''
+};
+/**
+ * @Description:获取数据分析url
+ * @Author Cable
+ * @param:match 赛事详情
+ * @return:
+ */
+const get_full_sr_url = (match) => {
+  let csid = lodash.get(match, "csid");
+  let srid = lodash.get(match, "srid");
+  if (!csid || !srid) return "";
 
-    let csid_translate = csid, sr_prev = '';
-    csid *= 1;
-    switch (csid) {
-      case 1:                    // 足球
-      case 2:                    // 篮球
-      case 5:                    // 网球
-        csid_translate = csid;
-        break;
-      case 7:
-        csid_translate = 19;   // 斯诺克
-        break;
-      case 8:
-        csid_translate = 20;   // 乒乓球
-        break;
+  let csid_translate = csid,
+    sr_prev = "";
+  csid *= 1;
+  switch (csid) {
+    case 1: // 足球
+    case 2: // 篮球
+    case 5: // 网球
+      csid_translate = csid;
+      break;
+    case 7:
+      csid_translate = 19; // 斯诺克
+      break;
+    case 8:
+      csid_translate = 20; // 乒乓球
+      break;
 
-      case 3:
-        csid_translate = 3;   // 棒球
-        break;
-      case 4:
-        csid_translate = 4;   // 冰球
-        break;
-      case 6:
-        csid_translate = 16;   // 美式足球
-        break;
-      case 9:
-        csid_translate = 23;   // 排球球
-        break;
+    case 3:
+      csid_translate = 3; // 棒球
+      break;
+    case 4:
+      csid_translate = 4; // 冰球
+      break;
+    case 6:
+      csid_translate = 16; // 美式足球
+      break;
+    case 9:
+      csid_translate = 23; // 排球球
+      break;
 
-      case 10:
-        csid_translate = 31;   // 羽毛球
-        break;
-    }
-    let sr_lang =  get_src_lang();
-    sr_prev = `/kaihongman/${sr_lang}/${csid_translate}/match/${srid}`;
-    //`https://s5.sir.swiftscore.com/kaihongman/zh/${csid_translate}/match/${srid}`
-
-    return `${signal_url}${sr_prev}`;
+    case 10:
+      csid_translate = 31; // 羽毛球
+      break;
   }
-    /**
-   * @description: 将PC的语言类型转换成SR对应的语言类型
-   */
-   const get_src_lang=()=> {
-      let all_sr_lang = {
-        en: "en", // 英文
-        th: "th", 
-        zh: "zh", // 简体中文
-        tw: "zht", // 繁体中文
-        vi: "vi",
-        ms: "ms",// 马来语
-        de: "de", 
-        fr: "fr", 
-        ko: "ko", 
-        ja: "ja", 
-        es: "es",
-        ad: "ad", // 印尼语
-      }
-      return all_sr_lang[store.getters.get_lang];  // TODO
-    }
+  let sr_lang = get_src_lang();
+  sr_prev = `/kaihongman/${sr_lang}/${csid_translate}/match/${srid}`;
+  //`https://s5.sir.swiftscore.com/kaihongman/zh/${csid_translate}/match/${srid}`
+
+  return `${signal_url}${sr_prev}`;
+};
+/**
+ * @description: 将PC的语言类型转换成SR对应的语言类型
+ */
+const get_src_lang = () => {
+  let all_sr_lang = {
+    en: "en", // 英文
+    th: "th",
+    zh: "zh", // 简体中文
+    tw: "zht", // 繁体中文
+    vi: "vi",
+    ms: "ms", // 马来语
+    de: "de",
+    fr: "fr",
+    ko: "ko",
+    ja: "ja",
+    es: "es",
+    ad: "ad", // 印尼语
+  };
+  return all_sr_lang[store.getters.get_lang]; // TODO
+};
 
 export default {
   build_msc,
@@ -336,5 +439,6 @@ export default {
   getDetaillist,
   use_polling_mst,
   show_wrap_total,
-  sr_click_handle
+  sr_click_handle,
+  computed_background
 };
