@@ -860,7 +860,7 @@ export default {
      */
     submit_handle(handle_type) {
       //是不是失效
-      if(this.show_fail_alert()) {
+      if(userCtr.show_fail_alert()) {
         return;
       }
       // 获取用户信息

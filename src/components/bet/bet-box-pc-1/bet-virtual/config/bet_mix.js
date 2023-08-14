@@ -706,7 +706,7 @@ export default {
         this.view_ctr_obj.bet_order_status = 1;
         return;
       }
-      if(this.show_fail_alert()) {
+      if(userCtr.show_fail_alert()) {
         return;
       }
       let user = this.vx_get_user;

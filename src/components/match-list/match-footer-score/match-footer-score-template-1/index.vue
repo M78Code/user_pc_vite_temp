@@ -60,7 +60,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 
 import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';

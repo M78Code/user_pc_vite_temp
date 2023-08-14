@@ -48,6 +48,15 @@ class MatchListCardData {
       level3_offset_top: "",
       level3_offset_bottom: "",
     };
+      // 吸顶高度
+      this. sticky_top ={
+        //固定在顶部的头高度
+        fixed_header_height: '36px',
+        // 赛事状态 | 赛种类型 吸顶高度
+        type:0,
+        // 联赛名称吸顶高度
+        league:0,
+      }
   }
   // 设置 的列表scroll_top
   set_scroll_top(scroll_top) {
