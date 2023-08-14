@@ -112,7 +112,7 @@
 <script setup>
 import { ref,onMounted } from "vue"
 // 菜单配置
-import menu_config from 'src/core/menu/menu-class-new.js'
+import menu_config from 'src/core/menu-pc/menu-data-class.js'
 
 import MenuItem from './menu-item.vue'
 
