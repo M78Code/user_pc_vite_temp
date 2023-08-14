@@ -1,4 +1,4 @@
-import Tab_1 from "../tab/index.vue";
+import Tab_1 from "../tab-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
   Tab_1,

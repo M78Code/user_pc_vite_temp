@@ -4,14 +4,14 @@
  * @Description: 详情全局设置
  */
 import { reactive, toRefs, onUnmounted } from "vue";
-import { mapGetters, mapActions, mapMutations } from "vuex";
+// import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import store from "project_path/src/store/index.js";
 export const useGetGlobal = ({ details_params, back_to }) => {
   const state = reactive({

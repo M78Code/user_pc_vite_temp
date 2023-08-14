@@ -41,7 +41,7 @@ import STANDARD_KEY from "src/core/standard-key";
 // import LeftMenuTemplate1 from "../pages/menu/left-menu/template1/template1.vue";
 // import TestPcMenu2 from "../components/test/test-pc-menu2.vue";
 // import BetBoxDialog from "../components/test/bet-box-dialog.vue";
-import store from "../store/index.js";
+import store from "src/store-redux/index.js";
 
 const leftDrawerOpen = ref(false);
 

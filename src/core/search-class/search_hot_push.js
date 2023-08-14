@@ -4,7 +4,8 @@
  * @Description: 搜索热推赛事
  */
 
-import { api_search } from "src/public/api/index.js";
+import { api_search } from "src/api/index.js";
+import lodash from "lodash";
 
 export const scroll_to_match = {mid:0}
 
@@ -39,8 +40,8 @@ export default class SearchHotPush {
   */
   get_hot_push(){
     api_search.get_hot_push().then( res => {
-      let data = _.get(res,'data.data') || {}
-      if(_.get(res,'data.code') == 200 && data.showTime){
+      let data = lodash.get(res,'data.data') || {}
+      if(lodash.get(res,'data.code') == 200 && data.showTime){
         // 远程服务器时间
         let remote_time = new Date() * 1 - this.view.$store.getters.get_timestamp.local_time + this.view.$store.getters.get_timestamp.remote_time 
         let ymd = (new Date()).Format("yyyy-MM-dd");
@@ -55,11 +56,13 @@ export default class SearchHotPush {
           return
         }
       }
-      this.hot_push_name = this.view.$root.$t('common.search')
+      // TODO:
+      // this.hot_push_name = this.view.$root.$t('common.search')
       this.is_hot_push = false
     }).catch(err => {
       console.error(err)
-      this.hot_push_name = this.view.$root.$t('common.search')
+      // TODO:
+      // this.hot_push_name = this.view.$root.$t('common.search')
       this.is_hot_push = false
     });
   }

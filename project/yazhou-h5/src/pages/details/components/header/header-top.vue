@@ -4,18 +4,18 @@
     <div class="row mx-30 top-style">
       <div class="col-3 logo-double">
         <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-        <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="get_menu_type != 3000 ? detail_data.frmhn[0]: detail_data.frmhn" :size="44"></team-img>
-        <team-img v-if="detail_data.mhlu.length > 1 && get_menu_type != 3000" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="44" style="margin-left:-0.1rem;"></team-img>
+        <!-- <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="get_menu_type != 3000 ? detail_data.frmhn[0]: detail_data.frmhn" :size="44"></team-img>
+        <team-img v-if="detail_data.mhlu.length > 1 && get_menu_type != 3000" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="44" style="margin-left:-0.1rem;"></team-img> -->
       </div>
       <div class="col-6">
         <!-- 描述比赛进度相关start -->
-        <team-text :detail_data="detail_data" v-if="get_menu_type!=3000"></team-text>
+        <!-- <team-text :detail_data="detail_data" v-if="get_menu_type!=3000"></team-text> -->
         <!-- 描述比赛进度相关end -->
       </div>
       <div class="col-3 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
-        <team-img :type="0" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="get_menu_type != 3000 ? detail_data.frman[0]: detail_data.frman" :size="44"></team-img>
-        <team-img v-if="detail_data.malu.length > 1 && get_menu_type != 3000" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="44" style="margin-left:-0.1rem;"></team-img>
+        <!-- <team-img :type="0" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="get_menu_type != 3000 ? detail_data.frman[0]: detail_data.frman" :size="44"></team-img>
+        <team-img v-if="detail_data.malu.length > 1 && get_menu_type != 3000" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="44" style="margin-left:-0.1rem;"></team-img> -->
       </div>
     </div>
     <!-- 电竞相关的 头部信息样式  集中在这里-->
@@ -170,6 +170,8 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const data = reactive({
+      timer1_: null,
+      timerInterval: null,
       emitters: [],
       // 赛事开始倒计时时间(赛事开始时间-当前时间)
       longTime: '',
@@ -190,7 +192,8 @@ export default defineComponent({
       },
       // 顶部赛事是否切换
       changeMatch: false,
-      utils
+      utils,
+      lodash
     });
     // #TODO vuex 
     // computed:{
@@ -200,6 +203,27 @@ export default defineComponent({
     //   'get_theme',
     // ]),
     /**
+     * @Description get_menu_type
+     * @param {object} undefined
+    */
+    const get_menu_type = computed(() => {
+      return ''
+    })
+    /**
+     * @Description get_goto_detail_matchid
+     * @param {object} undefined
+    */
+    const get_goto_detail_matchid = computed(() => {
+      return ''
+    })
+    /**
+     * @Description get_theme
+     * @param {object} undefined
+    */
+    const get_theme = computed(() => {
+      return ''
+    })
+    /**
      * @Description 主比分
      * @param {object} undefined
     */
@@ -208,13 +232,13 @@ export default defineComponent({
         home:null,
         away:null
       }
-      lodash.forEach(detail_data.msc, item =>{
+      lodash.forEach(props.detail_data.msc, item =>{
         if(item.split("|")[0] == "S1"){
           score = {
             /*home:item.split("|")[1].split(":")[0] || 0,
             away:item.split("|")[1].split(":")[1] || 0*/
-            home: formatTotalScore(detail_data, 0),
-            away: formatTotalScore(detail_data, 1)
+            home: formatTotalScore(props.detail_data, 0),
+            away: formatTotalScore(props.detail_data, 1)
           }
         }
       })
@@ -229,7 +253,7 @@ export default defineComponent({
         home:null,
         away:null
       }
-      lodash.forEach(detail_data.msc, item =>{
+      lodash.forEach(props.detail_data.msc, item =>{
         if(item.split("|")[0] == "S11"){
           score = {
             home:item.split("|")[1].split(":")[0] || 0,
@@ -243,8 +267,8 @@ export default defineComponent({
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
-      if(get_menu_type == 3000) {
-        const mmp_state = detail_data.mmp || 1
+      if(get_menu_type.value == 3000) {
+        const mmp_state = props.detail_data.mmp || 1
         if(mmp_state != (Number(s1_score.home) + Number(s1_score.away) +1)) {
           scoring = true
         }
@@ -253,7 +277,7 @@ export default defineComponent({
     })
     // 监听到赛事开始时间发生变化及时更新时间
     watch(
-      () => detail_data.mgt,
+      () => props.detail_data.mgt,
       () => {
         initEvent();
       }
@@ -265,7 +289,7 @@ export default defineComponent({
     watch(
       () => s1_score,
       (new_,old_) => {
-        if(detail_data.csid != 1) return
+        if(props.detail_data.csid != 1) return
 
         // 当前赛事，若比分未变化，则提前退出，不展示进球动画
         if (
@@ -312,7 +336,7 @@ export default defineComponent({
     watch(
       () => s11_score,
       (new_,old_) => {
-        if(detail_data.csid != 1) return
+        if(props.detail_data.csid != 1) return
 
         // 当前赛事，若比分未变化，则提前退出，不展示红牌动画
         if (
@@ -352,7 +376,7 @@ export default defineComponent({
     );
     // 监听到赛事开始时间发生变化及时更新时间
     watch(
-      () => get_goto_detail_matchid,
+      () => get_goto_detail_matchid.value,
       (matchId) => {
         changeMatch = true
       }
@@ -433,30 +457,30 @@ export default defineComponent({
       // mgt:赛事开始时间
       let now = new Date().getTime();
       // 赛事开始时间-当前时间 小于一小时并且大于0的时候显示 赛事倒计时
-      let bool = (+detail_data.mgt - now < 3600 * 1000) && (detail_data.mgt - now >0) ? true:false;
+      let bool = (+props.detail_data.mgt - now < 3600 * 1000) && (props.detail_data.mgt - now >0) ? true:false;
       // 赛事开始倒计时时间(整数)
-      let longTime = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
+      let longTime = Math.floor( (+props.detail_data.mgt -now ) / 1000 / 60 );
       // 赛事开赛时间倒计时为0的时候 让倒计时显示为1分钟
       if(longTime == 0){ longTime += 1 }
       // 此时true或者false 控制是否显示倒计时时间
-      start_time = bool;
+      data.start_time = bool;
       // 计算出来的倒计时时间赋值给data的变量显示在页面上
       longTime = longTime;
 
-      timerInterval = setInterval(()=>{
+      data.timerInterval = setInterval(()=>{
         let now = new Date().getTime();
         // 判断赛事开始时间-当前时间 小于0的时候 清除定时器
-        if(+detail_data.mgt - now < 0 ){
-          clearInterval(timerInterval);
+        if(+props.detail_data.mgt - now < 0 ){
+          clearInterval(data.timerInterval);
           // 不显示倒计时
-          start_time = false;
+          data.start_time = false;
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
           // $root.$emit(emit_cmd.EMIT_MATCH_NOSTART);
         }
         // 同上注释
-        let longTime = Math.floor( (+detail_data.mgt - now )/ 1000 / 60);
+        let longTime = Math.floor( (+props.detail_data.mgt - now )/ 1000 / 60);
         if(longTime == 0){ longTime += 1 }
         longTime = longTime;
       }, 1000 * 1)
@@ -464,7 +488,7 @@ export default defineComponent({
     //视频播放
     const icon_click = () => {
       let data = {
-        media_src: detail_data.vurl,
+        media_src: props.detail_data.vurl,
         active:'muUrl',
       };
       let ua = navigator.userAgent.toLowerCase();
@@ -472,30 +496,30 @@ export default defineComponent({
       // 判断是否是苹果手机，是则是true
       let isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
       if(isIos){
-        data.media_src = detail_data.vurl
+        data.media_src = props.detail_data.vurl
       }else{
-        data.media_src = detail_data.varl || detail_data.vurl
+        data.media_src = props.detail_data.varl || props.detail_data.vurl
       }
       set_video_url(data);
       set_show_video(true);
       set_iframe_onload(false);
-      clearTimeout(timer1_)
-      timer1_ = setTimeout(()=>{
+      clearTimeout(data.timer1_)
+      data.timer1_ = setTimeout(()=>{
         set_iframe_onload(true);
       },2000)
     };
     onMounted(() => {
       // 原created
       // 延时器
-      timerInterval=0;
-      timer1_ = null;
-      hide_home_goal = debounce(hide_home_goal,5000)
-      hide_away_goal = debounce(hide_away_goal,5000)
-      hide_home_red = debounce(hide_home_red,5000)
-      hide_away_red = debounce(hide_away_red,5000)
+      data.timerInterval=0;
+      data.timer1_ = null;
+      // hide_home_goal = debounce(hide_home_goal,5000)
+      // hide_away_goal = debounce(hide_away_goal,5000)
+      // hide_home_red = debounce(hide_home_red,5000)
+      // hide_away_red = debounce(hide_away_red,5000)
       initEvent();
       // #TODO emit 
-      emitters = [
+      data.emitters = [
         useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
       // $root.$on(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
@@ -506,21 +530,25 @@ export default defineComponent({
       debounce_throttle_cancel(hide_home_red);
       debounce_throttle_cancel(hide_away_red);
 
-      clearInterval(timerInterval); // 清除相对应的定时器;
-      timerInterval = null
+      clearInterval(data.timerInterval); // 清除相对应的定时器;
+      data.timerInterval = null
 
-      clearTimeout(timer1_)
-      timer1_ = null
+      clearTimeout(data.timer1_)
+      data.timer1_ = null
 
       // #TODO emit 
-      emitters.map((x) => x())
+      data.emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     return {
       ...toRefs(data),
+      ...toRefs(props),
       s1_score,
       s11_score,
       eports_scoring,
+      get_menu_type,
+      get_goto_detail_matchid,
+      get_theme,
       formatTotalScore,
       hide_home_goal,
       hide_away_goal,

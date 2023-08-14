@@ -14,8 +14,8 @@
           v-show="route.params.video_size != 1"
         />
         <!-- 页面头部容器-->
+        <!-- v-show="route.params.video_size != 1" -->
         <site-header
-          v-show="route.params.video_size != 1"
           class="yb-layout-margin-header"
           :nav_list="data_ref.nav_list"
           :class="{ activity_bonus: data_ref.hasBonusType3 }"
@@ -130,12 +130,12 @@
         <!-- 押注操作相关组件 -->
         <!-- 活动弹框 -->
         <activityModel
-          v-if="showActivity"
-          :imgUrl="imgUrl"
-          :imgShowTimer="userBannerTimer"
-          :hostUrl="hostUrl"
-          :urlType="urlType"
-          :allowClick="allowClick"
+          v-if="data_ref.showActivity"
+          :imgUrl="data_ref.imgUrl"
+          :imgShowTimer="data_ref.userBannerTimer"
+          :hostUrl="data_ref.hostUrl"
+          :urlType="data_ref.urlType"
+          :allowClick="data_ref.allowClick"
         />
         <!-- 页面底部容器 整个内嵌可拖拽组件 -->
         <template
@@ -341,7 +341,9 @@ import {
   watch,
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
-import store from "../store/index.js";
+import store from "src/store-redux/index.js";
+import { get_balance } from "src/store-redux/module/user-info.js";
+
 import base_data from "src/core/utils/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
@@ -356,9 +358,7 @@ import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
 import MainMenu from "../pages/left-menu/index.vue";
-// import MainMenuMini from "../pages/left-menu/index-min.vue";
-
-// import siteHeader from "../components/site-header/site-header.vue"; //报错
+import siteHeader from "project_path/src/components/site-header/site-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
 // const matchDetails = defineAsyncComponent(() =>
@@ -457,7 +457,7 @@ const {
   globalReducer,
   betInfoReducer,
   detailsReducer,
-  languagesReducer,
+  langReducer,
 } = store.getState();
 
 const computed_data = reactive({
@@ -465,9 +465,9 @@ const computed_data = reactive({
   // 搜索状态
   get_search_status: detailsReducer.search_isShow,
   // 获取用户信息
-  get_user: userReducer.user,
+  get_user: userReducer.user_info,
   // 当前语言
-  lang: languagesReducer.lang,
+  lang: langReducer.lang,
   // 单关部分 是否为串关
   vx_is_bet_single: betInfoReducer.is_bet_single,
   // 串关是否正在处理中
@@ -510,7 +510,7 @@ const unsubscribe = store.subscribe(() => {
     globalReducer,
     betInfoReducer,
     detailsReducer,
-    languagesReducer,
+    langReducer,
   } = store.getState();
   console.log("update store");
   computed_data.is_invalid = userReducer.is_invalid;
@@ -519,7 +519,7 @@ const unsubscribe = store.subscribe(() => {
   // 获取用户信息
   computed_data.get_user = userReducer.user;
   // 当前语言
-  computed_data.lang = languagesReducer.lang;
+  computed_data.lang = langReducer.lang;
   // 单关部分 是否为串关
   computed_data.vx_is_bet_single = betInfoReducer.is_bet_single;
   // 串关是否正在处理中
@@ -594,8 +594,8 @@ const scroll_style = {
 // 屏蔽视频移动组件(视频回播功能)
 const show_move_video = computed(() => {
   return (
-    computed_data.get_user.merchantEventSwitchVO &&
-    computed_data.get_user.merchantEventSwitchVO.eventSwitch
+    computed_data.get_user?.merchantEventSwitchVO &&
+    computed_data.get_user?.merchantEventSwitchVO.eventSwitch
   );
 });
 //----------------------计算属性结束----------------------
@@ -615,8 +615,6 @@ const methods_map_store = [
   "set_is_handle",
   // 虚拟投注正在处理中
   "set_is_virtual_handle",
-  // 保存用户余额
-  "set_user_balance",
   "virtual_bet_clear",
   "set_cur_odd",
   // 左侧菜单展开折叠状态
@@ -1013,16 +1011,9 @@ function close_menu_loadding() {
  * @description 获取用户余额
  * @return {undefined} undefined
  */
-function get_balance() {
-  let uid = computed_data.get_user.uid;
-  api_account.check_balance({ uid, t: new Date().getTime() }).then((res) => {
-    const result = get(res, "data.data");
-    const code = get(res, "data.code");
-    if (code == 200) {
-      methods_map_store["set_user_balance"](result.amount);
-    }
-    userCtr.show_fail_alert();
-  });
+function get_user_balance() {
+  let uid = get(computed_data.get_user, "uid");
+  store.dispatch(get_balance(uid));
 }
 /**
  * 计算投注框的高度
@@ -1363,7 +1354,7 @@ function resize() {
   // console.warn(['search','home'].includes(this.route.name))
   if (
     computed_data.get_unfold_multi_column &&
-    new_menu.is_multi_column &&
+    new_menu.is_multi_column.value &&
     ["search", "home"].includes(route.name)
   ) {
     // console.warn('right_width-赋值为0')
@@ -1407,7 +1398,7 @@ function resize() {
   } else {
     list_content_width -= 14;
   }
-  match_list_tpl_size.set_template_width(list_content_width);
+  // match_list_tpl_size.set_template_width(list_content_width);
   methods_map_store["SET_LAYOUT_SIZE"]({
     inner_width,
     inner_height,
@@ -1544,7 +1535,7 @@ const remove_mitt_list = [
   // 接收关闭loadding指令
   useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding).off,
   // 更新用户余额
-  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_balance).off,
+  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_user_balance).off,
   useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet).off,
   //计算投注框高度
   useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height).off,
@@ -1662,7 +1653,7 @@ watch(
   () => [
     computed_data.menu_collapse_status,
     computed_data.get_unfold_multi_column,
-    // 'NewMenu.is_multi_column'
+    new_menu.is_multi_column,
   ],
   () => {
     resize();
@@ -1796,7 +1787,7 @@ watch(
 );
 // // 首次加载页面的时候 activityList 会出现没值的情况，所以等有值了再初始化一下导航
 watch(
-  () => computed_data.get_user.activityList,
+  () => computed_data.get_user?.activityList,
   (new_) => {
     // 没渲染上的时候才再次调用
     if (data_ref.hasActivity != true) {

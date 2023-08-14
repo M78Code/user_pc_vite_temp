@@ -99,20 +99,23 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-// import { mapGetters} from "vuex"
 // inject:['match_list_data'],
 
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, reactive } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import { get_match_status, is_show_sr_flg } from 'src/core/utils/index.js'
+import store from 'prject_path/src/store/index.js'
+let state = store.getState()
 
 const hv = ref('');
 const hv_ol = ref({_hid: -1});
+//全局开关
+const get_global_switch = reactive(state.globalReducer.global_switch)
 
 hv_ol.value = this.match.main_handicap_list[0].ols[1]
 // 其他玩法标题

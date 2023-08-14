@@ -13,12 +13,11 @@
   <script setup>
 import "./src/boot/globel-mitt";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
-import wslog from "src/core/ws/ws-log.js";
-import { httplog } from "src/core/http/";
+import {wslog,httplog} from "src/core/log/";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
-import store from "./src/store/index.js";
+import store from "src/store-redux/index.js";
 import { set_remote_server_time } from "./src/store/module/global";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";

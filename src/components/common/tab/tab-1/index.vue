@@ -139,7 +139,7 @@ const item_wrap = ref(null)
  */
 function init_func() {
   let _wrap = warp.value || {}
-  let dom = _.get(item_wrap.value, 'children', [])
+  let dom = lodash.get(item_wrap.value, 'children', [])
   sizes.value = []
   for (let i = 0; i < dom.length; i++) {
     let { offsetLeft = 0, clientWidth = 0 } = dom[i]
@@ -164,15 +164,12 @@ function init_func() {
   }
 }
 
-/** 初始化函数 */
-function init() {
+onMounted(() => {
   // TODO: 
   // DOM_ID_SHOW.value = window.env.config.DOM_ID_SHOW;
   DOM_ID_SHOW.value = ''
   is_mousedown.value = false
-}
-/** 钩子触发 */
-onMounted(nextTick(init))
+})
 /**
  * @Description 鼠标弹起
  * @param {undefined} undefined
@@ -319,11 +316,11 @@ const tabs_hover = lodash.debounce((index, type) => {
 /** 页面宽高信息 */
 const layout_list_size = ref()
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  layout_list_size.value = new_state.layout_list_size
-})
-onUnmounted(unsubscribe)
+// const unsubscribe = store.subscribe(() => {
+//   const new_state = store.getState()
+//   layout_list_size.value = new_state.layout_list_size
+// })
+// onUnmounted(unsubscribe)
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
   () => layout_list_size.value,
@@ -336,7 +333,7 @@ watch(
  * list语言变化时
  * 做异步处理防止data数据发生改变，初始化
 */
-watch(list.value, nextTick(init), { deep: true })
+watch(props.list.value, nextTick(init), { deep: true })
 
 /** 定时器 */
 const timer = ref(null)
