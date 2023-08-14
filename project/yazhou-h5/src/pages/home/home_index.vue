@@ -33,7 +33,7 @@ import hot from "src/project/pages/home/hot/index";    // 热门页入口主页�
 import live_video from "src/project/pages/home/live_video/index.vue";
 import { loadLanguageAsync } from "boot/i18n";
 import router_mixins from "src/project/mixins/router_mixins.js";
-import utils from 'src/public/utils/utils.js';
+import utils from "src/core/utils/utils.js";
 import { onUnmounted, watch } from "vue";
 
   // mixins: [router_mixins],

@@ -206,7 +206,7 @@ import store from 'src/store-redux'
   const get_order_list = (params) => {
     //第一次加载时的注单数
     let size = 0  
-    api_betting.post_getOrderList(params).then(res => {
+    api_betting.post_getH5OrderList(params).then(res => {
       is_limit = false
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");

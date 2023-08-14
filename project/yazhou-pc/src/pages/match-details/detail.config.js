@@ -10,7 +10,7 @@ import details from "src/core/match-detail/match-detail";
 import search from "src/core/search-class/search.js";
 // 赛事详情页面信息操作类
 import MatchInfoCtr from "src/core/match-class/match-info-ctr";
-import store from "project_path/src/store/index.js";
+import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
@@ -69,9 +69,9 @@ export const useGetConfig = () => {
   // 当前所选的玩法集子项id
   const uuid = store_state.userReducer.uuid;
   /** 语言变化 */
-  const get_lang_change = store_state.languagesReducer.lang_change;
+  const get_lang_change = ref(store_state.languagesReducer.lang_change)
   // 获取右侧布局类型
-  const cur_expand_layout = store_state.layoutReducer.cur_expand_layout;
+  const cur_expand_layout =ref(store_state.layoutReducer.cur_expand_layout);
   // 玩法集对应玩法缓存数据
   const get_details_data_cache = ref(
     store_state.matchesReducer.details_data_cache
@@ -104,8 +104,8 @@ export const useGetConfig = () => {
    * @return {undefined} undefined
    */
   watch(sportId, (val) => {
-    // let img = this.computed_background(String(res))
-    // if(img) this.background_img = img
+     let img = details.computed_background(String(res))
+     if(img) state.background_img = img
   });
   // 监听玩法集菜单长度变化
   watch(

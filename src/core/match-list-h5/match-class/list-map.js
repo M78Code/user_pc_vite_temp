@@ -22,17 +22,15 @@
  *  this.listMap.destroy();
  *
  */
-export default class ListMap
-{
+export default class ListMap {
   /**
    * @description: 构造函数
    * @param {String} key 主数组列表子元素对象唯一标识key值属性字符串
    * @return {undefined} undefined
    */
-  constructor(key)
-  {
+  constructor(key) {
     // 设置对象唯一标识key值
-    this.key = key?key:'id';
+    this.key = key ? key : 'id';
     // 初始化数据
     this.init();
   }
@@ -43,10 +41,10 @@ export default class ListMap
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  init(){
+  init() {
     this.list = [];
     // 所有对象
-    this.obj={};
+    this.obj = {};
   }
 
 
@@ -55,9 +53,8 @@ export default class ListMap
    * @param {Array} list 需要设置的集合列表
    * @return {undefined} undefined
    */
-  setList(list){
-    if(list && (list instanceof Array))
-    {
+  setList(list) {
+    if (list && (list instanceof Array)) {
       let list_ = this.list;
       let obj_ = this.obj;
       this.obj = this.listToObj(list);
@@ -72,11 +69,10 @@ export default class ListMap
    * @param {Object} obj 增加的对象
    * @return {Boolean} 是否成功
    */
-  push(obj){
+  push(obj) {
     let ret = false;
     let key = _.get(obj, this.key);
-    if(obj&&key)
-    {
+    if (obj && key) {
       this.list.push(obj);
       this.obj[key] = obj;
       ret = true;
@@ -89,11 +85,10 @@ export default class ListMap
    * @param {Object} obj 增加的对象
    * @return {Boolean} 是否成功
    */
-  unshift(obj){
+  unshift(obj) {
     let ret = false;
     let key = _.get(obj, this.key);
-    if(obj&&key)
-    {
+    if (obj && key) {
       this.list.unshift(obj);
       this.obj[key] = obj;
       ret = true;
@@ -107,11 +102,10 @@ export default class ListMap
    * @param {Number} count 删除数量
    * @return {Boolean} 是否成功
    */
-  splice(i,count){
+  splice(i, count) {
     let ret = false;
-    if(this.list)
-    {
-      let del_ = this.list.splice(i,count);
+    if (this.list) {
+      let del_ = this.list.splice(i, count);
       del_.forEach(item => {
         let key = _.get(item, this.key);
         delete this.obj[key];
@@ -126,10 +120,9 @@ export default class ListMap
    * @param {undefined} undefined
    * @return {Boolean} 是否成功
    */
-  shift(){
+  shift() {
     let ret = false;
-    if(this.list && this.list.length && this.list[0])
-    {
+    if (this.list && this.list.length && this.list[0]) {
       let del_ = this.list.shift();
       let key = _.get(del_, this.key);
       delete this.obj[key];
@@ -143,10 +136,9 @@ export default class ListMap
    * @param {undefined} undefined
    * @return {Boolean} 是否成功
    */
-  pop(){
+  pop() {
     let ret = false;
-    if(this.list && this.list.length)
-    {
+    if (this.list && this.list.length) {
       let del_ = this.list.pop();
       let key = _.get(del_, this.key);
       delete this.obj[key];
@@ -165,31 +157,28 @@ export default class ListMap
    * @description: 通过key删除list中的元素和obj对象的数据
    * @param {Object,String} obj 可以是list中的元素,获list中的元素所对应的key值
    * @return {Boolean} 是否成功
-   */ 
-  removeKeyObj(obj){
+   */
+  removeKeyObj(obj) {
     let ret = false;
-    if(obj)
-    {
-      if((typeof obj) == 'object')
-      {
+    if (obj) {
+      if ((typeof obj) == 'object') {
         let key_ = _.get(obj, this.key);
-        if(key_)
-        {
+        if (key_) {
           for (let i = 0; i < this.list.length; i++) {
             let key = _.get(this.list, `[${i}].${this.key}`);
-            if(key&&key==key_){
-              this.splice(i,1);
+            if (key && key == key_) {
+              this.splice(i, 1);
               break;
             }
           }
           delete this.obj[key_];
           ret = true;
         }
-      } else{
+      } else {
         for (let i = 0; i < this.list.length; i++) {
           let key = _.get(this.list, `[${i}].${this.key}`);
-          if(key&&key==obj){
-            this.splice(i,1);
+          if (key && key == obj) {
+            this.splice(i, 1);
             break;
           }
         }
@@ -205,15 +194,13 @@ export default class ListMap
    * @param {Array} list 列表数据
    * @return {Array} 转换后新对象
    */
-  listToObj(list){
-    let obj_= {};
-    if(list && (list instanceof Array))
-    {
+  listToObj(list) {
+    let obj_ = {};
+    if (list && (list instanceof Array)) {
       let key = '';
       list.forEach(item => {
         key = _.get(item, this.key);
-        if(item && key)
-        {
+        if (item && key) {
           obj_[key] = item;
         }
       });
@@ -221,17 +208,16 @@ export default class ListMap
     return obj_;
   }
 
-/**
-   * @description: 清空对象或数组
-   * @param {Object,Array} any 需要清空的对象,数组
-   * @return {undefined} undefined
- */
-  clear(any){
-    if(any&&(typeof any) == 'object')
-    {
-      if(any instanceof Array){
-        any.splice(0,any.length);
-      } else{
+  /**
+     * @description: 清空对象或数组
+     * @param {Object,Array} any 需要清空的对象,数组
+     * @return {undefined} undefined
+   */
+  clear(any) {
+    if (any && (typeof any) == 'object') {
+      if (any instanceof Array) {
+        any.splice(0, any.length);
+      } else {
         for (const key in any) {
           delete any[key]
         }
@@ -245,7 +231,7 @@ export default class ListMap
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  clearData(){
+  clearData() {
     this.clear(this.obj);
     this.clear(this.list);
   }
@@ -255,7 +241,7 @@ export default class ListMap
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  destroy(){
+  destroy() {
     this.clear(this.obj);
     this.clear(this.list);
     this.obj = null;

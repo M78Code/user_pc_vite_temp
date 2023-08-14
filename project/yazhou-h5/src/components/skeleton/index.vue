@@ -65,13 +65,13 @@ const skeleton_style = computed(()=>{
   }
 }
 
-@include keyframes(skeletonLoading) {
-  0% {
-    background-position: 100% 50%;
-  }
+// @include keyframes(skeletonLoading) {
+//   0% {
+//     background-position: 100% 50%;
+//   }
 
-  to {
-    background-position: 0 50%;
-  }
-}
+//   to {
+//     background-position: 0 50%;
+//   }
+// }
 </style>

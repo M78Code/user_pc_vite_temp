@@ -15,6 +15,8 @@ export const post_submit_Bet_list = (params, config={}, url = "/v1/betOrder/betP
 
 // 订单记录页面接口
 export const post_getOrderList = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);
+//H5订单记录页面接口
+export const post_getH5OrderList = (params, config={}, url = "/order/betRecord/getH5OrderList") => http.post(`${prefix2}${url}`, params, config)
 
 // 获取赛事是否存在赛果接口
 export const get_exist_match_result = (params, config={}, url = "/order/betRecord/existMatchResult") =>  http.get(`${prefix}${url}`, params, config);
