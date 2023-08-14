@@ -7,15 +7,15 @@
       <div class="item-wrap column items-center yb-padding-t5">
         <!-- 投注记录 -->
         <div @click.stop="menu_item_click('bet_history')" class="menu-item">
-          <img class="menu_mini-bet" src="~public/image/yabo/svg/menu_mini_bet.svg" />
+          <img class="menu_mini-bet" src="public/image/yabo/svg/menu_mini_bet.svg" />
         </div>
         <!-- 现场滚球 -->
         <div @click.stop="new_menu_click(1)" class="menu-item">
-          <img width="22" src="~public/image/yabo/png/play-match.png" />
+          <img width="22" src="public/image/yabo/png/play-match.png" />
         </div>
         <!-- 热门赛事 -->
         <div @click.stop="new_menu_click(500)" class="menu-item">
-          <img width="18" src="~public/image/yabo/svg/hot.svg" />
+          <img width="18" src="public/image/yabo/svg/hot.svg" />
         </div>
         <!-- 迷你菜单分割线 -->
         <div class="dividing-line"></div>
@@ -35,9 +35,9 @@
   </div>
 </template>
 <script setup>
-import icon_success from "src/assets/images/icon_success.png";
-import icon_success from "src/assets/images/icon_success.png";
-import icon_success from "src/assets/images/icon_success.png";
+// import icon_success from "src/assets/images/icon_success.png";
+// import icon_success from "src/assets/images/icon_success.png";
+// import icon_success from "src/assets/images/icon_success.png";
 // import { mapActions } from "vuex";
 // import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue"; // 通屏垂直滚动
 // import sports_menu_mixin from  "src/public/components/main_menu/sports-menu.mixin.js"

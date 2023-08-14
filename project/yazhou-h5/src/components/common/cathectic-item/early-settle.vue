@@ -143,9 +143,9 @@
 
 <script setup>
 import ClipboardJS from "clipboard";
-import { api_betting } from "src/project/api/index.js";
+import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
-import utils from "src/public/utils/utils.js";
+import utils from 'src/core/utils/utils.js'
 import { Platform } from "quasar";
 import { inject } from 'vue'
 
@@ -173,11 +173,11 @@ const props = defineProps({
   // orderVOS 里面的第一条数据，只考虑单关
   let ordervos_ = ref({}) 
   // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
-  let front_settle_amount = ref('') 
+  // let front_settle_amount = ref('') 
    // 工具方法
-  let utils = ref(utils) 
+  // let utils = ref(utils) 
   // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
-  let count_ = ref(0) 
+  // let count_ = ref(0) 
   let origin_settle_money = ref(lodash.cloneDeep(item_data.maxCashout)) 
   // 延时器
   let timer = ref(null)

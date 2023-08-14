@@ -10,7 +10,7 @@ import details from "src/core/match-detail/match-detail";
 import search from "src/core/search-class/search.js";
 // 赛事详情页面信息操作类
 import MatchInfoCtr from "src/core/match-class/match-info-ctr";
-import store from "src/store-redux/index.js";
+import store from "project_path/src/store/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
@@ -79,13 +79,13 @@ export const useGetConfig = () => {
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
-    state = store.getState();
-    details_params.value = state.matchesReduce.params;
-    cur_menu_type.value = state.menusReducer.cur_menu_type;
-    tabs_active_index.value = state.matchesReduce.tabs_active_index;
-    get_details_data_cache.value = state.matchesReduce.details_data_cache;
-    get_lang_change.value = state.languagesReducer.lang_change;
-    cur_expand_layout.value = state.layoutReducer.cur_expand_layout;
+   let state_ = store.getState();
+    details_params.value = state_.matchesReduce.params;
+    cur_menu_type.value = state_.menusReducer.cur_menu_type;
+    tabs_active_index.value = state_.matchesReduce.tabs_active_index;
+    get_details_data_cache.value = state_.matchesReduce.details_data_cache;
+    get_lang_change.value = state_.languagesReducer.lang_change;
+    cur_expand_layout.value = state_.layoutReducer.cur_expand_layout;
   });
 
   const category_list_length = computed(() => {
@@ -702,6 +702,27 @@ export const useGetConfig = () => {
   const setBg = (img) => {
     state.background_img = img;
   };
+  /**
+   * @description 子组件玩法切换
+   * @param {string} id 玩法集id
+   * @param round 电竞赛事需要的动态玩法集局数 id
+   * 获取具体的玩法集数据
+   */
+  const get_mattch_details = ({ id, round, plays }) => {
+    state.mcid = id;
+    state.currentRound = round;
+    state.plays_list = plays || [];
+    //   this.get_match_detail();
+  };
+
+  /**
+   * 详情页手动切换玩法时展示 loading 状态
+   * @param n 要展示的 loading 状态
+   */
+  const change_loading_state = (n) => {
+    state.handicap_state = n;
+    state.match_details = [];
+  };
 
   onMounted(() => {
     // 加载视频动画资源
@@ -752,6 +773,56 @@ export const useGetConfig = () => {
 
   onUnmounted(() => {
     un_subscribe();
+    clearTimeout(state.axios_debounce_timer);
+    clearTimeout(state.get_match_details_timer);
+    clearTimeout(state.back_to_timer);
+    useMittOn(MITT_TYPES.EMIT_AUTOSET_MATCH, emit_autoset_match).off;
+    useMittOn(MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, check_plays_show).off;
+    useMittOn(MITT_TYPES.EMIT_SET_CLOSE_TIPS, close_tips).off;
+    useMittOn(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, getLoading).off;
+    useMittOn(MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, getHeaderHeight).off;
+    useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg).off;
+    // this.debounce_throttle_cancel(this.init);
+    // this.debounce_throttle_cancel(this.refresh);
+    // for (const key in this.ol_obj) {
+    //   this.ol_obj[key] = null;
+    // }
+
+    // for (const key in this.hl_obj) {
+    //   this.hl_obj[key] = null;
+    // }
+
+    //玩法列表单双列切换为单列
+    store.dispatch({
+      type: "SET_LAYOUT_STATU",
+      data: 0,
+    });
+    // 清除玩法集下缓存数据
+    store.dispatch({
+      type: "SET_DETAILS_DATA_CACHE",
+      data: {},
+    });
+
+    // 清空选中的玩法集id
+    store.dispatch({
+      type: "SET_TABS_ACTIVE_ID",
+      data: "",
+    });
+    // 清空选中的玩法集id对应的盘口玩法
+    store.dispatch({
+      type: "SET_TABS_ACTIVE_PLAYS",
+      data: [],
+    });
+
+    // 站点 tab 休眠状态转激活
+    useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
+
+    // 销毁前清空数据
+    state.match_info_ctr.destroy();
+    state.match_infoData = null;
+    state.category_list = null;
+    state.match_details = null;
+    state.active_detials = null;
   });
   return {
     ...toRefs(state),
@@ -762,5 +833,7 @@ export const useGetConfig = () => {
     set_handicap_this,
     on_go_top,
     set_handicap_state,
+    get_mattch_details,
+    change_loading_state,
   };
 };

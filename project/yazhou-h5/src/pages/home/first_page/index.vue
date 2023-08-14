@@ -185,7 +185,7 @@ import counting_down_start from 'src/project/components/common/counting_down_sta
 import ListMap from "src/public/utils/list_map";    
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";   
-import utils from "src/public/utils/utils.js";
+import utils from "src/core/utils/utils.js";
 import base_data from "src/public/utils/base_data.js";
 //  一二级菜单 本地化假数据
 import { common_menu_list, secondary_menu } from "src/public/config/common_menu.js" 

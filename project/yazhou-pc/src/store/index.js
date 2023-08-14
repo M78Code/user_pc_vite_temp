@@ -11,6 +11,7 @@ import detailsReducer from "./module/details";
 import layoutReducer from "./module/layout";
 import globalReducer from "./module/global";
 import filterReducer from "./module/filter_store";
+import languagesReducer from "./module/languages";
 
 const store = configureStore({
   reducer: {
@@ -24,7 +25,8 @@ const store = configureStore({
     detailsReducer,
     layoutReducer,
     globalReducer,
-    filterReducer
+    filterReducer,
+    languagesReducer,
   },
 });
 

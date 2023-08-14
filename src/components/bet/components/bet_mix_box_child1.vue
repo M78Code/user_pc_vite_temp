@@ -198,10 +198,10 @@ import betSuccessBar from './bet_success_bar.vue';
 import keyBoard from './keyboard.vue';
 import ballSpin from './ball_spin.vue';
 import betBar from "./bet_bar.vue";
-// import { mapMutations, mapGetters } from "vuex";
 // import utils from 'src/public/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
+import store from "src/store-redux/index.js";
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
 const exist_code = ref(0)    //投注后是否返回code码
@@ -223,9 +223,81 @@ const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
 const scroll_box_ele = ref(null)   // dom元素
 const is_loading_balance = ref(false)  // 金额刷新中？
 
-// ...mapGetters(["get_update_tips","get_odds_change","get_mix_bet_flag", "get_money_total", "get_s_count_data", "get_bet_list", "get_is_accept", "get_order_ing", "get_is_spread", "get_is_mix", "get_current_menu", "get_m_id_list", "get_bet_status",
-//       "get_money_notok_list", "get_user", "get_detail_data", "get_is_show_settle_tab", "get_change_list",   "get_active_index", "get_keyboard_show", "get_new_bet", "get_order_los", "get_bet_obj",
-//       "get_order_suc", "get_money_notok_list2", "get_theme", "get_used_money", "get_is_champion", "get_invalid_ids", "get_cannot_mix_len", "get_order_no", "get_bet_success"]),
+const store_state = store.getState()
+const get_update_tips = ref(store_state.get_update_tips)
+const get_odds_change = ref(store_state.get_odds_change)
+const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
+const get_money_total = ref(store_state.get_money_total)
+const get_s_count_data = ref(store_state.get_s_count_data)
+const get_bet_list = ref(store_state.get_bet_list)
+const get_is_accept = ref(store_state.get_is_accept)
+const get_order_ing = ref(store_state.get_order_ing)
+const get_is_spread = ref(store_state.get_is_spread)
+const get_is_mix = ref(store_state.get_is_mix)
+const get_current_menu = ref(store_state.get_current_menu)
+const get_m_id_list = ref(store_state.get_m_id_list)
+const get_bet_status = ref(store_state.get_bet_status)
+const get_money_notok_list = ref(store_state.get_money_notok_list)
+const get_user = ref(store_state.get_user)
+const get_detail_data = ref(store_state.get_detail_data)
+const get_is_show_settle_tab = ref(store_state.get_is_show_settle_tab)
+const get_change_list = ref(store_state.get_change_list)
+const get_active_index = ref(store_state.get_active_index)
+const get_keyboard_show = ref(store_state.get_keyboard_show)
+const get_new_bet = ref(store_state.get_new_bet)
+const get_order_los = ref(store_state.get_order_los)
+const get_bet_obj = ref(store_state.get_bet_obj)
+const get_order_suc = ref(store_state.get_order_suc)
+const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
+const get_theme = ref(store_state.get_theme)
+const get_used_money = ref(store_state.get_used_money)
+const get_is_champion = ref(store_state.get_is_champion)
+const get_invalid_ids = ref(store_state.get_invalid_ids)
+const get_cannot_mix_len = ref(store_state.get_cannot_mix_len)
+const get_order_no = ref(store_state.get_order_no)
+const get_bet_success = ref(store_state.get_bet_success)
+
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+   const new_state = store.getState()
+   get_update_tips.value = new_state.get_update_tips
+   get_odds_change.value = new_state.get_odds_change
+   get_mix_bet_flag.value = new_state.get_mix_bet_flag
+   get_money_total.value = new_state.get_money_total
+   get_s_count_data.value = new_state.get_s_count_data
+   get_bet_list.value = new_state.get_bet_list
+   get_is_accept.value = new_state.get_is_accept
+   get_order_ing.value = new_state.get_order_ing
+   get_is_spread.value = new_state.get_is_spread
+   get_is_mix.value = new_state.get_is_mix
+   get_current_menu.value = new_state.get_current_menu
+   get_m_id_list.value = new_state.get_m_id_list
+   get_bet_status.value = new_state.get_bet_status
+   get_money_notok_list.value = new_state.get_money_notok_list
+   get_user.value = new_state.get_user
+   get_detail_data.value = new_state.get_detail_data
+   get_is_show_settle_tab.value = new_state.get_is_show_settle_tab
+   get_change_list.value = new_state.get_change_list
+   get_active_index.value = new_state.get_active_index
+   get_keyboard_show.value = new_state.get_keyboard_show
+   get_new_bet.value = new_state.get_new_bet
+   get_order_los.value = new_state.get_order_los
+   get_bet_obj.value = new_state.get_bet_obj
+   get_order_suc.value = new_state.get_order_suc
+   get_money_notok_list2.value = new_state.get_money_notok_list2
+   get_theme.value = new_state.get_theme
+   get_used_money.value = new_state.get_used_money
+   get_is_champion.value = new_state.get_is_champion
+   get_invalid_ids.value = new_state.get_invalid_ids
+   get_cannot_mix_len.value = new_state.get_cannot_mix_len
+   get_order_no.value = new_state.get_order_no
+   get_bet_success.value = new_state.get_bet_success
+}
+
 
 /** --------------------------onmounted开始 ---------------*/
 onMounted(() => {
@@ -1032,6 +1104,8 @@ onUnmounted(() => {
   for (const key in $data) {
     $data[key] = null
   }
+
+  unsubscribe()
 })
 
 
