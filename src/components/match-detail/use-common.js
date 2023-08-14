@@ -6,7 +6,7 @@
 import lodash from "lodash";
 import { ref,watch,onMounted } from "vue";
 import utils from 'src/core/utils/utils'
-import {HandicapTitle} from "src/components/handicap-title/index.js"
+import {HandicapTitle} from "src/components/match-detail/handicap-title/index.js"
 
 
 export const useCommon = ({ emit,props }) => {
