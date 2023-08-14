@@ -24,7 +24,6 @@ const page_source =  [
    
 
 import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
-
 class PageSourceData {
   constructor() {
     // 页面来源标识  当前 页面标识
@@ -85,6 +84,10 @@ class PageSourceData {
    */
   set_from_page(from_page_source) {
     this.from_page_source = from_page_source;
+  }
+
+  is_search(){
+    return   this.page_source.includes('search')
   }
 }
 

@@ -5,17 +5,18 @@
 <template>
   <div class="mx-10 unsettle" ref="unsettle">
     <!-- 加载中 -->
-    <SRecord v-if="is_loading" />
+    <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-        <div class="filter-button" v-if="!lodash.get(get_user, 'settleSwitch') == 1">
+        <div class="filter-button" v-if="lodash.get(get_user, 'settleSwitch') == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
-        <template v-if="is_all_early_flag">
+        {{is_all_early_flag + '-----' + is_early}}
+        <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
@@ -27,7 +28,7 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
-                  <!-- <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item> -->
+                  <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                 </div>
               </q-slide-transition>
             </template>
@@ -43,23 +44,17 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-// import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue"; 
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue"; 
 import settleVoid from "./settle-void.vue";
-import scroll from "project_path/src/components/common/record_scroll/scroll.vue"; 
+import scroll from "project_path/src/components/common/record-scroll/scroll.vue"; 
 // import skt_order from "src/public/mixins/websocket/data/skt-data-order.js"
-// import SRecord from "project_path/src/components/skeleton/record.vue" 
+import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import store from 'src/store-redux'
 
     // mixins: [skt_order]
-    // components: {
-    //   commonCathecticItem,
-    //   settleVoid,
-    //   scroll,
-    //   SRecord
-    // },
     
     let store_data = ref(store.getState())
     // 锚点
@@ -98,9 +93,10 @@ import store from 'src/store-redux'
      * @param {undefined} undefined
      * @returns {null} null
      */
-  watch(() => is_early, (_new) => {
+  watch(() => is_early.value, (_new) => {
+    console.error(_new);
     /**判断所有订单是否有结算注单*/
-      is_all_early_flag = _new ? clac_all_is_early() : false
+      is_all_early_flag.value = _new ? clac_all_is_early() : false
   })
 
   onMounted(() => {
@@ -123,7 +119,7 @@ import store from 'src/store-redux'
      * @returns {null} null
      */
   const change_early = () => {
-    is_early = !is_early
+    is_early.value = !is_early.value
   }
   /**
      * @description 判断单个订单是否有结算注单
@@ -207,13 +203,19 @@ import store from 'src/store-redux'
     //第一次加载时的注单数
     let size = 0  
     // 请求接口
-    api_betting.post_getOrderList(params).then(res => {
+    api_betting.post_getH5OrderList(params).then(reslut => {
+      let res = ''
+      if (reslut.status) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
+      
       is_limit = false
-      console.error(res);
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
-        
         is_hasnext = hasNext
+        // record为空时
         if (lodash.isEmpty(record)) {
           is_loading = false;
           no_data = false;
@@ -227,6 +229,7 @@ import store from 'src/store-redux'
         last_record = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
+        // console.error(record);
         timer_1 = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
@@ -235,7 +238,9 @@ import store from 'src/store-redux'
           // 合并数据
           let obj = lodash.cloneDeep(list_data)
           list_data = lodash.merge(obj, record)
+          // console.error(list_data);
         }, 380);
+        
       }else if(res.code == '0401038'){
         is_limit = true
         no_data = false

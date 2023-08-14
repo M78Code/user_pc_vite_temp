@@ -4,6 +4,7 @@
  * @Description: bw3新版投注记录的页每一条注单（矩形框）
 -->
 <template>
+  {{show_bet_record}}
   <div 
       v-if="show_bet_record"
       class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2':key2==0,'common-cathectic-item3':len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
@@ -23,11 +24,14 @@
 </template>
 
 <script setup>
-import itemBody from "src/project/components/common/cathectic_item/item_body.vue"
-import itemFooter from "src/project/components/common/cathectic_item/item_footer.vue"
-import itemOrder from "src/project/components/common/cathectic_item/item_order.vue"
-import earlySettle from "src/project/components/common/cathectic_item/early_settle.vue"
+import itemBody from "project_path/src/components/common/cathectic-item/item-body.vue"
+import itemFooter from "project_path/src/components/common/cathectic-item/item-footer.vue"
+import itemOrder from "project_path/src/components/common/cathectic-item/item-order.vue"
+import earlySettle from "project_path/src/components/common/cathectic-item/early-settle.vue"
 import lodash from 'lodash'
+import { computed } from "vue";
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+
 
    // 是否显示注单记录
   let show_bet_record = ref(true)
@@ -61,15 +65,9 @@ import lodash from 'lodash'
       }
     }
   )
-  // components: {
-  //   itemBody,
-  //   itemFooter,
-  //   itemOrder,
-  //   earlySettle,
-  // },
-  // computed:{
-    /*mix_odds_sum(){
-      if(item_data.seriesType != '1'){
+  
+  const mix_odds_sum = computed(() => {
+    if(item_data.seriesType != '1'){
         const ordervos_data = lodash.get(item_data,'orderVOS') || []
         let odds_sum = 1
         for(let i = 0;i<ordervos_data.length;i++){
@@ -85,24 +83,23 @@ import lodash from 'lodash'
         }
       }
       return ''
-    }*/
-  // },
+  })
   onMounted(() => {
     is_show_early_settle = item_data.is_show_early_settle
 
     // 监听 重载注单页面
-    $root.$on(emit_cmd.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
   })
   
     // 重载注单页面
   const reload_note_sheet = () => {
       show_bet_record = false
-      $nextTick(() => {
+      nextTick(() => {
         show_bet_record = true
       })
     }
   onUnmounted(() => {
-    $root.$off(emit_cmd.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).off
   })
  
 </script>

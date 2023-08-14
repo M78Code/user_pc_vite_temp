@@ -9,6 +9,69 @@
 // import { mapGetters, mapActions } from "vuex";
 import play_mapping from "../common-helper/play_mapping.js";
 import { uid } from 'quasar';
+import { reactive } from "vue"
+
+import store from "project_path/src/store-redux/index.js"
+const {
+  userReducer,
+  menuReducer,
+  layoutReducer,
+  globalReducer,
+  betInfoReducer,
+  detailsReducer,
+} = store.getState();
+
+
+
+const computed_data = reactive({
+    // 押注扁平化对象扁平
+  vx_get_bet_obj: betInfoReducer.bet_obj,
+  is_invalid: userReducer.is_invalid,
+  // 搜索状态
+  get_search_status: detailsReducer.search_isShow,
+  // 获取用户信息
+  user: userReducer.user,
+  // 当前语言
+  lang: userReducer.lang,
+  // 单关部分 是否为串关
+  vx_is_bet_single: betInfoReducer.is_bet_single,
+  // 串关是否正在处理中
+  is_handle: betInfoReducer.is_handle,
+  // 单关是否正在处理中
+  is_single_handle: betInfoReducer.is_single_handle,
+  // 是否为虚拟体育投注
+  is_virtual_bet: betInfoReducer.is_virtual_bet,
+  // 虚拟投注是否正在进行
+  is_virtual_handle: betInfoReducer.is_virtual_handle,
+  // 获取虚拟投注列表
+  virtual_bet_list: betInfoReducer.virtual_bet_list,
+  vx_get_bet_list: betInfoReducer.bet_list,
+  bet_single_list: betInfoReducer.bet_single_list,
+  vx_get_bet_single_obj: betInfoReducer.bet_single_obj,
+  vx_layout_left_show: layoutReducer.layout_left_show,
+  cur_odd: globalReducer.odds.cur_odds,
+  left_menu_toggle: layoutReducer.left_menu_toggle,
+  // 当前菜单类型
+  vx_cur_menu_type: menuReducer.cur_menu_type,
+  vx_main_menu_toggle: menuReducer.main_menu_toggle,
+  // 获取项目主题
+  // theme:userReducer.theme,
+  // 全局点击事件
+  get_global_click: globalReducer.global_click,
+  layout_size: layoutReducer.layout_size,
+  is_bet_merge: betInfoReducer.is_bet_merge,
+  menu_collapse_status: menuReducer.menu_collapse_status,
+  //收起右侧详情 展开多列玩法
+  get_unfold_multi_column: globalReducer.is_unfold_multi_column,
+  //全局开关
+  get_global_switch: globalReducer.global_switch,
+});
+
+
+const data_ref = {
+  send_gcuuid:''
+}
+
 // export default {
 //   mixins: [inducitve, oddsConversion, msc],
 //   computed: {
@@ -34,11 +97,11 @@ import { uid } from 'quasar';
         idList: []
       };
       //单关
-      if (this.vx_is_bet_single) {
+      if (computed_data.vx_is_bet_single) {
         //单关数据为空
-        if (this.vx_get_bet_single_list.length == 0) return;
+        if (computed_data.vx_get_bet_single_list.length == 0) return;
         // 单关投注前校验接口参数组装
-        for(let obj of Object.values(this.vx_get_bet_single_obj)) {
+        for(let obj of Object.values(computed_data.vx_get_bet_single_obj)) {
           let temp = {};
           // 盘口id
           temp.marketId = _.get(obj, 'bs.hps[0].hl[0].hid');
@@ -60,9 +123,9 @@ import { uid } from 'quasar';
         }
       } else { // 串关
         //单关数据为空
-        if (this.vx_get_bet_list.length == 0) return;
+        if (computed_data.vx_get_bet_list.length == 0) return;
         // 串关投注前校验接口参数组装
-        for(let obj of Object.values(this.vx_get_bet_obj)) {
+        for(let obj of Object.values(computed_data.vx_get_bet_obj)) {
           let temp = {};
           // 盘口id
           temp.marketId = _.get(obj, 'bs.hps[0].hl[0].hid');
@@ -83,16 +146,16 @@ import { uid } from 'quasar';
           param.idList.push(temp);
         }
       }
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      param.gcuuid = data_ref.send_gcuuid;
       // console.log('query_last_market_info====',param);
       // 查询最新的盘口数据
       api_betting.query_last_market_info(param).then((res) => {
-        // console.log('query_last_market_info=======',this.send_gcuuid === res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
+        // console.log('query_last_market_info=======',data_ref.send_gcuuid === res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) return;
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         //code码
@@ -102,9 +165,9 @@ import { uid } from 'quasar';
         if (data && data instanceof Array && data[0]) {
           //存储是否能预约
           // this.vx_set_is_pre(_.get(data[0], 'pendingOrderStatus', -1));
-          if (this.vx_is_bet_single) {
+          if (computed_data.vx_is_bet_single) {
 
-            this.vx_get_bet_single_list.forEach((item, i) => {
+            computed_data.vx_is_bet_single.forEach((item, i) => {
               // 调用vuex中的http_upd_data方法同步数据
               this.vx_http_upd_data({
                 i: i,
@@ -113,7 +176,7 @@ import { uid } from 'quasar';
               });
             });
           } else {
-            this.vx_get_bet_list.forEach((item, i) => {
+            computed_data.vx_get_bet_list.forEach((item, i) => {
               // 调用vuex中的http_upd_data方法同步数据
               this.vx_http_upd_data({
                 i: i,
@@ -135,23 +198,23 @@ import { uid } from 'quasar';
     const query_bet_amount = (callback, type='') => {
       let bet_obj;
       //是单关
-      if (this.vx_is_bet_single) {
-        bet_obj = this.vx_get_bet_single_obj;
+      if (computed_data.vx_is_bet_single) {
+        bet_obj = computed_data.vx_get_bet_single_obj;
       } else {
-        bet_obj = this.vx_get_bet_obj;
+        bet_obj = computed_data.vx_get_bet_obj;
       }
       // console.log('bet_obj====',JSON.stringify(bet_obj));
       //获取额度接口合并 参数
       let param = this.get_bet_amount_param(bet_obj);
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      param.gcuuid = data_ref.send_gcuuid;
       // console.log('param====',JSON.stringify(param));
       api_betting.query_bet_amount(param).then(res=>{
         // console.log('param====res===', res);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
+        // if(data_ref.send_gcuuid != res.config.gcuuid) return;
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         let code = _.get(res, "data.code");
@@ -167,7 +230,7 @@ import { uid } from 'quasar';
         // this.vx_set_is_pre(_.get(latestMarketInfo, '[0].pendingOrderStatus', -1));
         //原有最新盘口信息结构体 latestMarketInfo
         if(latestMarketInfo && _.isArray(latestMarketInfo)) {
-          this.vx_get_bet_single_list.forEach((item, i) => {
+          computed_data.vx_is_bet_single.forEach((item, i) => {
             // 调用vuex中的http_upd_data方法同步数据
             this.vx_http_upd_data({            
               i: i,
@@ -176,7 +239,7 @@ import { uid } from 'quasar';
             });
           });
         } else {
-          this.vx_get_bet_list.forEach((item, i) => {
+          computed_data.vx_get_bet_list.forEach((item, i) => {
             // 调用vuex中的http_upd_data方法同步数据
             this.vx_http_upd_data({
               i: i,
@@ -200,23 +263,23 @@ import { uid } from 'quasar';
     const  query_pre_bet_amount = (callback, type='') => {
       let bet_obj;
       //是单关
-      if (this.vx_is_bet_single) {
-        bet_obj = this.vx_get_bet_single_obj;
+      if (computed_data.vx_is_bet_single) {
+        bet_obj = computed_data.vx_get_bet_single_obj;
       } else {
-        bet_obj = this.vx_get_bet_obj;
+        bet_obj = computed_data.vx_get_bet_obj;
       }
       //获取额度接口合并 参数
-      let param = this.get_bet_amount_param(bet_obj);
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
+      let param = get_bet_amount_param(bet_obj);
+      data_ref.send_gcuuid = uid();
+      param.gcuuid = data_ref.send_gcuuid;
       console.log('preparam===', JSON.stringify(param));
       api_betting.query_pre_bet_amount(param).then(res=>{
-        // console.log('prepreparam===', this.send_gcuuid === res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) {
+        // console.log('prepreparam===', data_ref.send_gcuuid === res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) {
         //   return;
         // }
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         let code = _.get(res, "data.code");
@@ -225,7 +288,7 @@ import { uid } from 'quasar';
         let {latestMarketInfo,betAmountInfo} = data;
         //原有最新盘口信息结构体 latestMarketInfo
         if(latestMarketInfo && _.isArray(latestMarketInfo)) {
-          this.vx_get_bet_single_list.forEach((item, i) => {
+          computed_data.vx_is_bet_single.forEach((item, i) => {
             // 调用vuex中的http_upd_data方法同步数据
             this.vx_http_upd_data({
               i: i,
@@ -234,7 +297,7 @@ import { uid } from 'quasar';
             });
           });
         } else {
-          this.vx_get_bet_list.forEach((item, i) => {
+          computed_data.vx_get_bet_list.forEach((item, i) => {
             // 调用vuex中的http_upd_data方法同步数据
             this.vx_http_upd_data({
               i: i,
@@ -278,7 +341,7 @@ import { uid } from 'quasar';
         // 投注项类型
         temp.playOptions = _.get(obj, 'bs.hps[0].hl[0].ol[0].ot') || _.get(obj, 'bs.hps[0].hl[0].ol.ot');
         // 串关类型 1: 单关 2：串关
-        temp.seriesType = this.vx_is_bet_single? 1: 2;
+        temp.seriesType = computed_data.vx_is_bet_single? 1: 2;
         // 球种id
         temp.sportId = _.get(obj,'cs.sport_id');
         // 赛事阶段
@@ -300,7 +363,7 @@ import { uid } from 'quasar';
         temp.matchType = _.get(obj, 'cs.match_type');
         // 坑位值 1标识主盘, 2表还是第一附盘...
         temp.placeNum = _.get(obj, 'hps[0].hl[0].hn') || _.get(obj, 'bs.hps[0].hl[0].ol.hn');
-        if(this.vx_is_bet_single) {
+        if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
           temp.openMiltSingle = this.vx_get_is_bet_merge?1:0;
         }
@@ -314,14 +377,14 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const remove_close_handicap = (callback) => {
-      if (this.vx_is_bet_single) {
-        let len = this.vx_get_bet_single_list.length;
+      if (computed_data.vx_is_bet_single) {
+        let len = computed_data.vx_is_bet_single.length;
         for (let index = 0; index < len; index++) {
-          let id = this.vx_get_bet_single_list[index];
+          let id = computed_data.vx_is_bet_single[index];
           // 投注服务器对象
-          let item_bs = _.get(this.vx_get_bet_single_obj, `${id}.bs`,{});
+          let item_bs = _.get(computed_data.vx_get_bet_single_obj, `${id}.bs`,{});
           // 投注客户端对象
-          let item_cs = _.get(this.vx_get_bet_single_obj, `${id}.cs`,{});
+          let item_cs = _.get(computed_data.vx_get_bet_single_obj, `${id}.cs`,{});
           // match_over: 1赛事结束
           if ((!_.isEmpty(item_bs) && this.get_item_disable(item_bs)) || (!_.isEmpty(item_cs) && item_cs.match_over==1)) {
             this.vx_bet_single_obj_remove_attr(id);
@@ -342,17 +405,17 @@ import { uid } from 'quasar';
      */
     const remove_mix_match_end = (callback) => {
       //串关
-      if (!this.vx_is_bet_single) {
+      if (!computed_data.vx_is_bet_single) {
         let is_remove_match = false;
-        let len = this.vx_get_bet_list.length;
+        let len = computed_data.vx_get_bet_list.length;
         for (let index = 0; index < len; index++) {
-          let id = this.vx_get_bet_list[index];
+          let id = computed_data.vx_get_bet_list[index];
           // 投注服务器对象
-          let item_bs = _.get(this.vx_get_bet_obj, `${id}.bs`,{});
+          let item_bs = _.get(computed_data.vx_get_bet_obj, `${id}.bs`,{});
           //投注客户端对象
-          let item_cs = _.get(this.vx_get_bet_obj, `${id}.cs`,{});
+          let item_cs = _.get(computed_data.vx_get_bet_obj, `${id}.cs`,{});
           // match_over: 1赛事结束 或者不支持串关
-          if ((!_.isEmpty(item_bs) && this.get_item_disable(item_bs)) || (!_.isEmpty(item_cs) && (item_cs.match_over==1 || !item_cs.serial_type))) {
+          if ((!_.isEmpty(item_bs) && get_item_disable(item_bs)) || (!_.isEmpty(item_cs) && (item_cs.match_over==1 || !item_cs.serial_type))) {
             // 删除投注对象
             this.vx_bet_obj_remove_attr(id);
             // 关盘时,删除该子项
@@ -373,7 +436,7 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const clear_bet_single_list = () => {
-      let len = this.vx_get_bet_single_list.length;
+      let len = computed_data.vx_is_bet_single.length;
       for (let index = 0; index < len; index++) {
         let id = _.get(this,`vx_get_bet_single_list[${index}]`);
         // 投注客户端对象
@@ -414,11 +477,11 @@ import { uid } from 'quasar';
     const bet_submit_data_template = (seriesType, seriesBetAmount, item, is_pre=false) => {
       console.log('正常投注参数playOptionName处理------------1', );
       let tempList = [];
-      let bet_list_array = this.vx_is_bet_single ? [item] : _.get(this,'vx_get_bet_list',[]);
+      let bet_list_array = computed_data.vx_is_bet_single ? [item] : _.get(this,'vx_get_bet_list',[]);
       bet_list_array.forEach(id => {
         let item_bs, item_cs;
         //单关
-        if (this.vx_is_bet_single) {
+        if (computed_data.vx_is_bet_single) {
           item_bs = _.get(this,`vx_get_bet_single_obj.${id}.bs`,{}); //列表的数据
           item_cs = _.get(this,`vx_get_bet_single_obj.${id}.cs`,{}); //组装的数据
         } else {
@@ -692,10 +755,10 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const bet_submit_data = (seriesType, callback) => {
-      if (this.vx_is_bet_single) {
-        if (!_.isArray(this.vx_get_bet_single_list)) return;
+      if (computed_data.vx_is_bet_single) {
+        if (!_.isArray(computed_data.vx_is_bet_single)) return;
       } else {
-        if (!_.isArray(this.vx_get_bet_list)) return;
+        if (!_.isArray(computed_data.vx_get_bet_list)) return;
       }
       let parm = {};
       //用户id
@@ -751,7 +814,7 @@ import { uid } from 'quasar';
             parm.seriesOrders.push(temp_bat);
           }
         } else {
-          this.vx_get_bet_single_list.forEach(item=>{
+          computed_data.vx_is_bet_single.forEach(item=>{
             let cs = _.get(this,`vx_get_bet_single_obj[${item}].cs`,{});
             let temp_bat = {};
             if(cs && cs.money) {
@@ -805,19 +868,19 @@ import { uid } from 'quasar';
           return;
         }
       }
-      this.send_gcuuid = uid();
-      parm.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      parm.gcuuid = data_ref.send_gcuuid;
       // console.log('post_submit_Bet_list====',parm);
       // debugger
       // 押注项调用提交接口
       api_betting.post_submit_Bet_list(parm).then(res => {
-        // console.log('post_submit_Bet_list=======',this.send_gcuuid === res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) {
+        // console.log('post_submit_Bet_list=======',data_ref.send_gcuuid === res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) {
         //   return;
         // }
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if( gcuuid && this.send_gcuuid != gcuuid) {
+        if( gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         let code = _.get(res, "data.code");
@@ -900,9 +963,9 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const set_submit_status = (order_item) => {
-      if (this.vx_is_bet_single) {
+      if (computed_data.vx_is_bet_single) {
         // 设置押注成功后的标识符
-        this.vx_get_bet_single_list.forEach(id => {
+        computed_data.vx_is_bet_single.forEach(id => {
           let item = _.cloneDeep(_.get(this,`vx_get_bet_single_obj[${id}]`,{}));
           let oid = _.get(item, 'bs.hps[0].hl[0].ol[0].oid');
           if (oid == _.get(order_item,'playOptionsId')) {
@@ -915,8 +978,8 @@ import { uid } from 'quasar';
         });
       } else {
         // 设置押注成功后的标识符
-        this.vx_get_bet_list.forEach(id => {
-          let item = _.cloneDeep(this.vx_get_bet_obj[id]);
+        computed_data.vx_get_bet_list.forEach(id => {
+          let item = _.cloneDeep(computed_data.vx_get_bet_obj[id]);
           let oid = _.get(item, 'bs.hps[0].hl[0].ol[0].oid');
           if (oid == _.get(order_item,'playOptionsId')) {
             // 提交投注项id并设置key
@@ -941,14 +1004,14 @@ import { uid } from 'quasar';
         return;
       }
       // 获取押注项最大和最小的金额
-      let bet_list = this.vx_is_bet_single? this.vx_get_bet_single_list : this.vx_get_bet_list
+      let bet_list = computed_data.vx_is_bet_single? computed_data.vx_is_bet_single : computed_data.vx_get_bet_list
       // 获取押注项最大和最小的金额
       let parm_obj = {
         orderMaxBetMoney: []
       };
       bet_list.forEach(id => {
         let obj, item_bs, item_cs;
-        if (this.vx_is_bet_single) {
+        if (computed_data.vx_is_bet_single) {
           obj = "vx_get_bet_single_obj";
         } else {
           obj = "vx_get_bet_obj";
@@ -1015,7 +1078,7 @@ import { uid } from 'quasar';
         parm.dataSource = _.get(item_bs, 'hps[0].hl[0].ol[0].cds');
         // 赛事类型 赛前，滚球，冠军(3)
         parm.matchType =  _.get(item_cs, 'match_type');
-        if(this.vx_is_bet_single) {
+        if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
           parm.openMiltSingle = this.vx_get_is_bet_merge?1:0;
         }
@@ -1026,19 +1089,19 @@ import { uid } from 'quasar';
       if(_.get(parm_obj,'orderMaxBetMoney.length', 0)==0) {
         return;
       }
-      this.send_gcuuid = uid();
-      parm_obj.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      parm_obj.gcuuid = data_ref.send_gcuuid;
       // console.log('get_min_max_money===', JSON.stringify(parm_obj));
 
       api_betting.post_getBetMinAndMaxMoney(parm_obj).then(res => {
 
-        // console.log('get_min_max_money===', this.send_gcuuid === res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) {
+        // console.log('get_min_max_money===', data_ref.send_gcuuid === res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) {
         //   return;
         // }
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         let code = _.get(res, "data.code");
@@ -1061,13 +1124,13 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const getSeriesCountJointNumbe = (callback) => {
-      let data = BetCountJointNumber.getBetCountJoint(this.vx_get_bet_list.length);
+      let data = BetCountJointNumber.getBetCountJoint(computed_data.vx_get_bet_list.length);
       let min_num = this.vx_get_mix_min_count;
       if(min_num <= 10) {
         data = data.filter((item) => {
           return Number(item.id.slice(0, 1)) >= min_num ||  ['10串1','10串1013'].includes(item.name) }
           );
-      }else if(this.vx_get_bet_list.length == 10){
+      }else if(computed_data.vx_get_bet_list.length == 10){
         data = [data[0]];
       }else {
         data = [];
@@ -1120,7 +1183,7 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const init_bet_single_data = () => {
-      _.forEach(this.vx_get_bet_single_list, item => {
+      _.forEach(computed_data.vx_is_bet_single, item => {
         let bs = _.cloneDeep(_.get(this,`vx_get_bet_single_obj[${item}].bs`,{}));
         let cs = _.cloneDeep(_.get(this,`vx_get_bet_single_obj[${item}].cs`,{}));
         if (_.get(cs,'submit_status')) {
@@ -1172,8 +1235,8 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const get_bet_record_data = (params, callback) => {
-      this.send_gcuuid = uid();
-      params.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      params.gcuuid = data_ref.send_gcuuid;
       // console.log('get_bet_record_data====',JSON.stringify(params));
       let obj_ = {
         // axios api对象
@@ -1184,13 +1247,13 @@ import { uid } from 'quasar';
         max_loop: 2,
         // axios中then回调方法
         fun_then: res => {
-          // console.log('get_bet_record_data=======',this.send_gcuuid === res.config.gcuuid);
-          // if(this.send_gcuuid != res.config.gcuuid) {
+          // console.log('get_bet_record_data=======',data_ref.send_gcuuid === res.config.gcuuid);
+          // if(data_ref.send_gcuuid != res.config.gcuuid) {
           //   return;
           // }
 
           let gcuuid = _.get(res,'config.gcuuid')
-          if(gcuuid && this.send_gcuuid != gcuuid) {
+          if(gcuuid && data_ref.send_gcuuid != gcuuid) {
             return;
           }
           let code = _.get(res, "data.code");          
@@ -1223,19 +1286,19 @@ import { uid } from 'quasar';
      * @return {undefined} undefined
      */
     const get_book_record_data = (params, callback) => {
-      this.send_gcuuid = uid();
-      params.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      params.gcuuid = data_ref.send_gcuuid;
       // console.log('get_book_record_data====',JSON.stringify(params));
       api_betting.post_book_list(params).then(res => {
         let code = _.get(res, "data.code");
         let status = _.get(res, "status");
        
 
-        // console.log('get_book_record_data====res===', this.send_gcuuid == res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
+        // console.log('get_book_record_data====res===', data_ref.send_gcuuid == res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) return;
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
 
@@ -1351,13 +1414,13 @@ import { uid } from 'quasar';
      */
     const order_pre_settle_confirm = (callback) => {
       let param = {};
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      param.gcuuid = data_ref.send_gcuuid;
       // console.log('init_data==order_pre_settle_confirm==',JSON.stringify(param));
       api_betting.query_order_pre_settle_confirm(param).then(res => {
-        // console.log('init_data==order_pre_settle_confirm==res===', this.send_gcuuid == res.config.gcuuid);
+        // console.log('init_data==order_pre_settle_confirm==res===', data_ref.send_gcuuid == res.config.gcuuid);
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
         let code = _.get(res, "data.code");
@@ -1407,16 +1470,16 @@ import { uid } from 'quasar';
      */
     const get_server_time = (callback) => {
       let param = {};
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
+      data_ref.send_gcuuid = uid();
+      param.gcuuid = data_ref.send_gcuuid;
       // console.log('get_server_time===',JSON.stringify(param));
 
       api_common.get_server_time(param).then(res => {
-        // console.log('get_server_time===res===', this.send_gcuuid == res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
+        // console.log('get_server_time===res===', data_ref.send_gcuuid == res.config.gcuuid);
+        // if(data_ref.send_gcuuid != res.config.gcuuid) return;
 
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && data_ref.send_gcuuid != gcuuid) {
           return;
         }
 

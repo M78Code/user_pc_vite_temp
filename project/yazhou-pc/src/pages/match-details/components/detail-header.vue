@@ -91,7 +91,7 @@ import handicapTabsBar from "src/components/match-detail/match_info/handicap_tab
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 
-import store from "project_path/src/store/index.js";
+import store from "project_path/src/store-redux/index.js";
 
 const props = defineProps({
   match_infoData: Object,

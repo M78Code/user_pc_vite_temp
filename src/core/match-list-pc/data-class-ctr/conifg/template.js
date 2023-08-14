@@ -3,7 +3,7 @@
  * @Date: 2022-12-20 13:47:46
  * @Description: 
  */
-import { clone_arr, update_tpl_hpid, set_tpl_13_config, set_default_tpl, created_add_temp_config } from 'src/public/utils/dataClassCtr/conifg/method.js'
+import { clone_arr, update_tpl_hpid, set_tpl_13_config, set_default_tpl, created_add_temp_config } from './method.js'
 // 投注项模板
 const ol_template = {
   // 投注项ID
