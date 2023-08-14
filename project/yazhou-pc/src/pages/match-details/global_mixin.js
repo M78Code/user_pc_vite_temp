@@ -11,8 +11,8 @@ import lodash from "lodash";
 import details from "src/core/match-detail/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { useRoute, useRouter } from "vue-router";
-import store from "src/store-redux/index.js";
+import { useRouter } from "vue-router";
+import store from "project_path/src/store/index.js";
 export const useGetGlobal = ({ details_params, back_to }) => {
   const state = reactive({
     latest_match_params_pre: "",
