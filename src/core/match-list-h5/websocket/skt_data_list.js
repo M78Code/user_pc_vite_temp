@@ -3,7 +3,7 @@
  */
 // 发送websocket命令时使用
 import { WsSend } from "../websocket-class/wsCtr";   // ws通信接收消息类
-import wsDebounce from "../websocket-class/ws_debounce.js"    // ws调用接口节流工具类
+import wsDebounce from "../../ws/h5/ws_debounce.js"    // ws调用接口节流工具类
 import { ref, onMounted } from 'vue'
 import lodash from 'lodash'
 import { watch } from "fs"
