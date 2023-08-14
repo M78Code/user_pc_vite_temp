@@ -57,12 +57,11 @@
 
 <script>
 // TODO: 待处理模块
-import websocket_data from "project_path/src/mixins/websocket/data/skt_data_list.js";   // websocket数据页面数据接入----赛事列表页面
 import betting from "project_path/src/mixins/betting/betting.js";    // 押注动作相关的所有方法
 import match_list_wrap_mixin from "project_path/src/mixins/match_list/match_list_wrap_mixin.js";   // 赛事列表公共minxins
 import match_main_mixin from "project_path/src/mixins/match_list/match_main_mixin.js";   // 赛事mixins
 export default {
-  mixins: [ websocket_data,match_list_wrap_mixin,match_main_mixin, betting ],
+  mixins: [ match_list_wrap_mixin, match_main_mixin, betting ],
 }
 </script>
  
@@ -73,7 +72,8 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
-import { use_router_scroll } from 'src/core/match-list-h5/use-hooks/router-scroll.js'
+import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
+import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
 
 // 列表页面赛事信息操作类-实现快速检索,修改等功能
 import MatchCtr from "src/core/match-class/match-ctr.js";  
@@ -86,6 +86,7 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 const store_state = store.getState()
+const websocket_store = use_websocket_store()
 
 const enter_time = ref('')
 const match_main = ref(null)
@@ -467,7 +468,7 @@ const special_hps_load_handle = (match,key) => {
   if(matchCtr.value.mid_obj[match.mid] && match[key] && match[key].length){
     matchCtr.value.mid_obj[match.mid][key] = match[key];
     matchCtr.value.addMatchInfo(match);
-    SCMD_SPECIAL_C8(1,'list',key,match);
+    websocket_store.SCMD_SPECIAL_C8(1,'list',key,match);
   }
 }
 const match_detail_m_list_init = () => {
@@ -480,7 +481,7 @@ const match_detail_m_list_init = () => {
   }
 }
 const destroy_handle = () => {
-  sendSocketCloseCmd();
+  websocket_store.sendSocketCloseCmd();
   del();
   matchCtr.value.init()
   store.dispatch({ type: 'matchReducer/set_last_time_sub_menu_type',  payload: '' })

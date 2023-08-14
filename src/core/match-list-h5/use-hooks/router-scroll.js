@@ -3,7 +3,7 @@ import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { onBeforeRouterLeave } from 'vue-router'
 
-export const use_router_scroll = () => {
+export default use_router_scroll = () => {
   const store_state = store.getState()
   // 滚动条的y轴坐标
   prev_remember_scrolly = ref(0)
