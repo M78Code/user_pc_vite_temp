@@ -337,7 +337,7 @@ export default {
      * @return {undefined} undefined
      */
     submit_handle(handle_type) {
-      if (this.show_fail_alert()) {
+      if (userCtr.show_fail_alert()) {
         return;
       }
       let user = this.vx_get_user;

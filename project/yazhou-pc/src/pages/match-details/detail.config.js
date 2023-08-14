@@ -14,7 +14,7 @@ import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
-import menu_config from "src/core/menu/menu-class-new.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays } from "src/core/formart/index";
 

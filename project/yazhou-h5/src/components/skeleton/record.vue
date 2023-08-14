@@ -26,6 +26,7 @@
 </template>
 
 <script setup> 
+import { ref } from 'vue'
 import skeleton from 'src/components/skeleton/index.vue'
 
 const thumbStyle = ref({

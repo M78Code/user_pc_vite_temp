@@ -19,14 +19,14 @@
       <div class="right-icon">
         <!-- 显示比分栏 -->
         <span v-if="!toggle_panel" @click="toggle_panel = true">{{
-          $root.$t("common.show_score_panel")
+          $t("common.show_score_panel")
         }}</span>
         <!-- 打开赛事分析窗口 -->
         <div
           class="sr-link-icon-w"
           v-if="is_show_sr_flg(match_infoData)"
           @click.stop="sr_click_handle(match_infoData, 'details')"
-          v-tooltip="{ content: $root.$t('common.analysis') }"
+          v-tooltip="{ content: $t('common.analysis') }"
         >
           <icon name="icon-signal" color="#ABBAC8" />
         </div>
@@ -60,7 +60,7 @@
           class="hide-btn"
           @click="toggle_panel = false"
         >
-          {{ $root.$t("common.hide_score_panel") }}
+          {{ $t("common.hide_score_panel") }}
         </div>
       </div>
     </template>
@@ -82,7 +82,7 @@
 </template>
 
 <script setup>
-import { ref,defineExpose } from "vue";
+import { ref, defineExpose } from "vue";
 import { is_show_sr_flg } from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail";
@@ -90,41 +90,32 @@ import details from "src/core/match-detail/match-detail";
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar";
 import { useRoute, useRouter } from "vue-router";
 
-import store from 'src/store-redux-vuex/index.js';
+import store from "src/store-redux-vuex/index.js";
 
-const props = defineProps({
-
-})
+const props = defineProps({});
 
 const toggle_panel = ref(true); //比分扳显示|隐藏
 const data_loaded = ref(false); //刷新按钮动画开关
 
+const handicap_tabs_bar = ref(null);
+defineExpose({ handicap_tabs_bar });
 
-const handicap_tabs_bar = ref(null)
-defineExpose({handicap_tabs_bar})
+const route = useRoute();
+const router = useRouter();
 
+const emit = defineEmits(["init", "back_to"]);
 
-const useRoute = useRoute();
-const useRouter = useRouter();
-
-
-
-
-const emit = defineEmits(['init','back_to'])
-
-  // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-    state = store.getState()
-    const { } =state.detailsReducer
-  
-  
-  });
+// 监听状态变化
+let un_subscribe = store.subscribe(() => {
+  state = store.getState();
+  const {} = state.detailsReducer;
+});
 /**
  * @description 返回上一页
  */
 const back_to = (is_back = true) => {
-    // 重新请求相应接口
-    emit('back_to',true)
+  // 重新请求相应接口
+  emit("back_to", true);
 };
 
 // sr 分析数据点击跳转
@@ -146,10 +137,9 @@ const refresh = () => {
   if (is_request.value) {
     return;
   }
-  
-  // 重新请求相应接口
-  emit('init',{ is_refresh: true})
 
+  // 重新请求相应接口
+  emit("init", { is_refresh: true });
 
   // 重新请求相应接口
   // this.init({ is_refresh: true });

@@ -39,14 +39,22 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref, reactive } from 'vue'
+import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+import store from 'project_path/src/store/index.js'
+//   inject:['match_list_card'],
+let state = store.getState();
+
+const get_global_switch = reactive(state.globalReducer.global_switch)
+
 // import { mapGetters } from "vuex";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 // export default {
 //   components:{
 //     sportIcon
 //   },
-//   inject:['match_list_card'],
+
 
 //   computed: {
 //     ...mapGetters({
