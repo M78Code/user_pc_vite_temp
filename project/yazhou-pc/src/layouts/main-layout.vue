@@ -361,9 +361,9 @@ import MainMenu from "../pages/left-menu/index.vue";
 // import siteHeader from "../components/site-header/site-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
-const matchDetails = defineAsyncComponent(() =>
-  import("../pages/match-details/match-details.vue")
-);
+// const matchDetails = defineAsyncComponent(() =>
+//   import("../pages/match-details/match-details.vue")
+// );
 
 const { t } = useI18n();
 const route = useRoute();
