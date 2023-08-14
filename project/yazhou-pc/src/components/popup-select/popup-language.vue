@@ -69,7 +69,7 @@ const vx_cur_menu_type = ref({})
 /** 全局点击事件数 */
 const global_click = ref(0)
 watch(
-    () => get_global_click.value,
+    () => global_click.value,
     () => {
         if (hits.value % 2 == 1) {
             hits.value++;
@@ -223,7 +223,8 @@ function toggle_popup() {
 
 const versions_class = computed(() => {
     // TODO: 环境变量
-    return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
+    // return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
+    return 'versions-'
 })
 
 </script>

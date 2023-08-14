@@ -58,10 +58,10 @@
 import { ref, reactive, watch, onUnmounted, nextTick } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
 // TODO: 待实现组件
-import MatchProcess from "src/public/components/match_process/match_process.vue"
+// import MatchProcess from "src/public/components/match_process/match_process.vue"
 // TODO: api
-import details from "src/public/utils/detailsClass/details.js"
-import search from "src/public/utils/searchClass/search.js"
+// import details from "src/public/utils/detailsClass/details.js"
+// import search from "src/public/utils/searchClass/search.js"
 import store from "src/store-redux/index.js";
 
 const props = defineProps({
