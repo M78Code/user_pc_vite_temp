@@ -123,18 +123,6 @@
           <!-- <img src="~public/image/yabo/svg/left_menu_toggle.svg" alt="" /> -->
         </div>
 
-        <!-- 视频js预加载 -->
-        <iframe
-          v-if="data_ref.video_src"
-          style="display: none"
-          :src="data_ref.video_src"
-        ></iframe>
-        <iframe
-          v-if="animation_src"
-          style="display: none"
-          :src="animation_src"
-        ></iframe>
-
         <!-- toast 消息提示 -->
         <toast />
         <confirm />
@@ -234,13 +222,13 @@
                   <virtual-bet-single
                     ref="embedded_single"
                     @set_scroll_this="set_scroll_this"
-                    v-if="vx_get_virtual_bet_list.length == 1"
+                    v-if="virtual_bet_list.length == 1"
                   />
                   <!-- 虚拟串关 -->
                   <virtual-bet-mix
                     ref="embedded_mix"
                     @set_scroll_this="set_scroll_this"
-                    v-if="vx_get_virtual_bet_list.length > 1"
+                    v-if="virtual_bet_list.length > 1"
                   />
                 </template>
                 <!--非虚拟体育部分-->
@@ -365,6 +353,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
+import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
 import MainMenu from "../pages/left-menu/index.vue";
 // import MainMenuMini from "../pages/left-menu/index-min.vue";
@@ -379,9 +368,16 @@ const matchDetails = defineAsyncComponent(() =>
 const { t } = useI18n();
 const route = useRoute();
 
+const thumb_style = {
+  right: "3px",
+  borderRadius: "3px",
+  backgroundColor: "#000000",
+  width: "6px",
+  opacity: 0.3,
+};
+const new_version = false; // 是否是最新版本
 const data_ref = {
   nav_list: [], // 顶部导航栏数据
-  upd_time_refresh_timer: null,
   showActivity: false, //活动弹框显隐
   imgUrl: "", // 弹窗图片 Url
   // 上一次打开弹窗的时间
@@ -394,19 +390,12 @@ const data_ref = {
   bet_loadding: false,
   dragging: false, // 拖拽中
   is_expand: true, // 是否展开
-  bet_this: null,
+  bet_this: Object.create({}),
   max_height: document.body.clientHeight - 100,
   content_height: 0,
   single_height: 278,
   mix_height: 100,
   offset_height: null,
-  thumb_style: {
-    right: "3px",
-    borderRadius: "3px",
-    backgroundColor: "#000000",
-    width: "6px",
-    opacity: 0.3,
-  },
   is_expand2: true,
   bet_flag: false, // 是否投注
   pre_odds: "EU",
@@ -422,7 +411,6 @@ const data_ref = {
   hostUrl: "act", // 首页弹窗配置标识符，多活动并存时用来判断跳转到哪个链接
   hasBonusType3: false, // 是否有小红点提示
   activityIds: "", // 已开启的活动 id
-  new_version: false, // 是否是最新版本
   showBannerTimer: null, // 展示运营位弹窗的 setTimeout
   // 通过链接参数打开活动页面的时间
   openActivityPageTime: null,
@@ -431,10 +419,6 @@ const data_ref = {
   hasActivity: false, // 是否有活动入口
   // 菜单是否创建
   menu_obj_created: false,
-  // 预加载视频地址
-  video_src: "",
-  // 预加载动画地址
-  animation_src: "",
   // 屏幕宽度
   screen_width: "",
   // 页面首次加载loading
@@ -698,7 +682,7 @@ function get_access_config() {
         //多列
         multiColumn: multi_column = true,
       } = data;
-      set_global_switch({
+      methods_map_store["set_global_switch"]({
         hot_recommend,
         statistics_switch,
         collect_switch,
@@ -836,7 +820,7 @@ function init_site_header(type = null) {
   // 运营位弹窗,如果当前是最新版本就直接展示弹窗，如果不是，就延迟几秒再展示
   if (type == null) {
     // type 为 null 是自然触发，如果 == 1就是导航栏二次触发，不要更新这里
-    if (data_ref.new_version) {
+    if (new_version) {
       timeOutIds.timer2 = setTimeout(() => {
         activity_dialog();
       }, 3000);
@@ -977,7 +961,7 @@ function open_single_bet() {
  * @return {undefined} undefined
  */
 function set_scroll_this({ type, _this }) {
-  this[type] = _this;
+  data_ref[type] = _this;
 }
 /**
  * @description: 开启投注确认中的loadding效果
@@ -1056,10 +1040,8 @@ function computed_bet_height() {
       // 内嵌组件获取
       if (embedded_single.value) {
         let left_height = 0;
-        let page_left = page_left.value;
-        if (page_left) {
-          left_height = page_left.clientHeight;
-          page_left = null;
+        if (page_left.vallue) {
+          left_height = page_left.vallue.clientHeight;
         }
         let embedded_merge;
         let header = resizeable - headervalue;
@@ -1078,12 +1060,12 @@ function computed_bet_height() {
           merge_height = 35;
         }
         // 内容计算 内嵌单关高度 + 合并区域的高度
-        date_ref.content_height =
+        data_ref.content_height =
           embedded_single.value.clientHeight + merge_height + 10;
         if (data_ref.content_height) {
           data_ref.single_height = data_ref.content_height;
         } else {
-          date_ref.content_height = computed_data.is_virtual_bet
+          data_ref.content_height = computed_data.is_virtual_bet
             ? data_ref.single_height + 24
             : data_ref.single_height;
         }
@@ -1093,7 +1075,7 @@ function computed_bet_height() {
             0 &&
           !computed_data.vx_is_bet_single
         ) {
-          date_ref.content_height += 90;
+          data_ref.content_height += 90;
         }
         nextTick(() => {
           let bet_scroll_area = bet_scroll_area.value;
@@ -1109,26 +1091,24 @@ function computed_bet_height() {
     }
     timeOutIds.timer4 = setTimeout(() => {
       let left_height = 0;
-      let page_left = page_left.value;
-      if (page_left) {
-        left_height = page_left.clientHeight;
-        page_left = null;
+      if (page_left.value) {
+        left_height = page_left.value.clientHeight;
       }
       if (embedded_mix.value) {
         let header = resizeable_header.value;
         let footer = resizeable_footer.value;
         data_ref.max_height =
           left_height - header.$el.clientHeight - footer.$el.clientHeight;
-        date_ref.content_height = embedded_mix.value.clientHeight;
+        data_ref.content_height = embedded_mix.value.clientHeight;
 
         if (
           computed_data.bet_list.length > 1 &&
           embedded_mix.value.$data.view_ctr_obj.order_confirm_complete == 0
         ) {
-          date_ref.content_height += 90;
+          data_ref.content_height += 90;
         }
         if (data_ref.max_height < data_ref.content_height) {
-          date_ref.content_height = data_ref.max_height;
+          data_ref.content_height = data_ref.max_height;
         }
       }
     }, 0);
@@ -1262,7 +1242,7 @@ function cancelDot(e) {
  * 检查当前代码是不是最新版本
  */
 function newVersion() {
-  data_ref.new_version = true;
+  new_version = true;
 }
 /**
  * @Description 菜单初始化完成
@@ -1324,28 +1304,12 @@ function activityTimer() {
     getActivityLists({ id: 1, type: "setInterval" });
   }, 900000);
 }
-/**
- * @Description 设置视频预加载地址
- * @param {undefined} undefined
- */
-let load_video_js_timer;
-function set_video_src(obj) {
-  data_ref.video_src = obj.video_src;
-  data_ref.animation_src = obj.animation_src;
-  // 延迟10s销毁预加载iframe
-  if (load_video_js_timer) {
-    clearTimeout(load_video_js_timer);
-  }
-  load_video_js_timer = setTimeout(() => {
-    data_ref.video_src = "";
-    data_ref.animation_src = "";
-  }, 10000);
-}
+
 /**
  * 菜单状态切换
  */
 function on_main_menu_toggle() {
-  if (data_ref.data_ref) {
+  if (data_ref.bet_loadding) {
     return;
   }
   let cur =
@@ -1501,11 +1465,11 @@ function update_bet_data() {
   let ids = [],
     bet_type;
   if (computed_data.is_virtual_bet) {
-    bet_type = "vx_get_virtual_bet_obj";
+    bet_type = "virtual_bet_obj";
   } else if (computed_data.vx_is_bet_single) {
-    bet_type = "vx_get_bet_single_obj";
+    bet_type = "bet_single_obj";
   } else {
-    bet_type = "vx_get_bet_obj";
+    bet_type = "bet_obj";
   }
   for (let obj of Object.values(computed_data[bet_type])) {
     let match_id = get(obj, "cs.match_id", "");
@@ -1591,7 +1555,17 @@ const remove_mitt_list = [
   // // 左侧菜单初始化完成，顶部导航增加虚拟体育和电竞
   useMittOn(MITT_TYPES.MENU_INIT_DONE, menu_init_done).off,
   useMittOn(MITT_TYPES.IS_MENU_LOADDING, is_menu_loadding).off,
-  useMittOn(MITT_TYPES.SET_PRE_VIDEO_SRC, set_video_src).off,
+  useMittOn(
+    MITT_TYPES.SET_PRE_VIDEO_SRC,
+    function set_video_src({ video_src, animation_src }) {
+      /**
+       * @Description 设置视频预加载地址
+       * @param {undefined} undefined
+       */
+      pre_load_iframe(video_src);
+      pre_load_iframe(animation_src);
+    }
+  ).off,
   useMittOn(MITT_TYPES.CLOSE_HOME_LOADING, closeLoading).off,
 
   // /在活动窗口内更新首页小红点
@@ -1695,7 +1669,7 @@ watch(
   }
 );
 watch(
-  () => [computed_data.vx_get_layout_size.inner_width],
+  () => [computed_data.layout_size.inner_width],
   (width) => {
     new_menu.set_multi_column();
     if (width < 1440) {
@@ -1763,7 +1737,7 @@ watch(
   }
 );
 watch(
-  () => bet_this.bet_flag,
+  () => data_ref.bet_this.bet_flag,
   (new_) => {
     data_ref.bet_flag = new_;
     if (computed_data.vx_is_bet_single) {
