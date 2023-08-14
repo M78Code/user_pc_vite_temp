@@ -752,6 +752,56 @@ export const useGetConfig = () => {
 
   onUnmounted(() => {
     un_subscribe();
+    clearTimeout(state.axios_debounce_timer);
+    clearTimeout(state.get_match_details_timer);
+    clearTimeout(state.back_to_timer);
+    useMittOn(MITT_TYPES.EMIT_AUTOSET_MATCH, emit_autoset_match).off
+    useMittOn(MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, check_plays_show).off
+    useMittOn(MITT_TYPES.EMIT_SET_CLOSE_TIPS, close_tips).off
+    useMittOn(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, getLoading).off
+    useMittOn(MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, getHeaderHeight).off
+    useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg).off
+    // this.debounce_throttle_cancel(this.init);
+    // this.debounce_throttle_cancel(this.refresh);
+    // for (const key in this.ol_obj) {
+    //   this.ol_obj[key] = null;
+    // }
+
+    // for (const key in this.hl_obj) {
+    //   this.hl_obj[key] = null;
+    // }
+
+    //玩法列表单双列切换为单列
+    store.dispatch({
+      type: "SET_LAYOUT_STATU",
+      data: 0,
+    });
+    // 清除玩法集下缓存数据
+    store.dispatch({
+      type: "SET_DETAILS_DATA_CACHE",
+      data: {},
+    });
+  
+    // 清空选中的玩法集id
+    store.dispatch({
+      type: "SET_TABS_ACTIVE_ID",
+      data:'',
+    });
+    // 清空选中的玩法集id对应的盘口玩法
+    store.dispatch({
+      type: "SET_TABS_ACTIVE_PLAYS",
+      data: [],
+    });
+
+    // 站点 tab 休眠状态转激活
+    useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off
+
+    // 销毁前清空数据
+    state.match_info_ctr.destroy();
+    state.match_infoData = null;
+    state.category_list = null;
+    state.match_details = null;
+    state.active_detials = null;
   });
   return {
     ...toRefs(state),
