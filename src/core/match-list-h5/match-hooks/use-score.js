@@ -1,21 +1,27 @@
 /*
  * @Description: 比分处理
  */
+import { ref } from "vue"
+import { i18n } from "src/boot/i18n.js"
 
-export const useScoreUtils = (str) => {
+export const use_score_util = (str) => {
+
+  const get_current_menu = ref(null)
+  const footer_sub_menu_id = ref('')
+  const get_newer_standard_edition = ref(2)
   /**
-     * @Description:格式化比分数据
-     * @Author success
-     * @param: key   (S151)
-     * @return: 返回分隔后的数组
-     * @Date 2020/02/03 21:44:58
-     */
+   * @Description:格式化比分数据
+   * @Author success
+   * @param: key   (S151)
+   * @return: 返回分隔后的数组
+   * @Date 2020/02/03 21:44:58
+   */
   const format_msc = (str) => {
     if (!str) {
       return [];
     }
     if (!window.msc_map) {
-      window.msc_map = this.$root.$t('msc')
+      window.msc_map = i18n.t('msc')
     }
     let list_ = str.split(/[:|]/);
     for (let i = 0, l = 3 - list_.length; i < l; i++) {
@@ -38,7 +44,7 @@ export const useScoreUtils = (str) => {
       return '';
     }
     if (!window.mmp_map) {
-      window.mmp_map = this.$root.$t('mmp')
+      window.mmp_map = i18n.t('mmp')
     }
     return window.mmp_map[parseInt(sport_id)][mmp];
   }
@@ -51,7 +57,7 @@ export const useScoreUtils = (str) => {
     let result = [];
     match.msc.forEach(f_score => {
       if (f_score.indexOf('S1|') > -1) {
-        this.format_msc(f_score)
+        format_msc(f_score)
       }
     });
     return result;
@@ -108,7 +114,7 @@ export const useScoreUtils = (str) => {
    */
   const tennis_score_handle = (match) => {
     let msc_dict = ['S1', 'S23', 'S39', 'S55'];  //全场大比分 第一盘 第二盘 第三盘比分
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
     let current_score_split = 'S1|';
@@ -122,7 +128,7 @@ export const useScoreUtils = (str) => {
         else {
           let code = f_score.split('|')[0];
           if (['S23', 'S39', 'S55', 'S71', 'S87'].includes(code)) {
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         }
       });
@@ -139,12 +145,12 @@ export const useScoreUtils = (str) => {
       match.msc_format = msc_list;
     }
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 0) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 0) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -204,7 +210,7 @@ export const useScoreUtils = (str) => {
     }
     //endregion
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
 
@@ -216,7 +222,7 @@ export const useScoreUtils = (str) => {
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -226,7 +232,7 @@ export const useScoreUtils = (str) => {
         for (let i = msc_list.length; i < max_count; i++) {
           if (msc_dict[i]) {
             let f_score = `${msc_dict[i]}|0:0`;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         }
       }
@@ -254,12 +260,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -327,7 +333,7 @@ export const useScoreUtils = (str) => {
     }
     //endregion
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
 
@@ -340,7 +346,7 @@ export const useScoreUtils = (str) => {
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -350,7 +356,7 @@ export const useScoreUtils = (str) => {
         for (let i = msc_list.length; i < max_count; i++) {
           if (msc_dict[i]) {
             let f_score = `${msc_dict[i]}|0:0`;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         }
       }
@@ -378,12 +384,12 @@ export const useScoreUtils = (str) => {
       match.msc_format = msc_list;
     }
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -420,16 +426,16 @@ export const useScoreUtils = (str) => {
     key_array = key_array.slice(0, count);
 
     let msc_dict = key_array.map(k => `S${k}`);
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], s1_score = null, dict_msc_list = [];
     if (match.msc && match.msc.length) {
       let score_list = [];
       match.msc.forEach(f_score => {
         if (f_score.indexOf('S1|') > -1) {
-          s1_score = this.format_msc(f_score);
+          s1_score = format_msc(f_score);
         } else {
-          score_list.push(this.format_msc(f_score));
+          score_list.push(format_msc(f_score));
         }
       });
       score_list.forEach((f_score) => {
@@ -460,7 +466,7 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
     return { msc_list, s1_score };
@@ -474,7 +480,7 @@ export const useScoreUtils = (str) => {
     let penalty_shoot = 'S170|', is_penalty = false;
     let is_overtime_f = 'S7|', is_overtime = false;
     if (match.csid == 1 || match.csid == 11) {
-      if (_.get(this.get_current_menu, 'main.menuType') == 28) {
+      if (_.get(get_current_menu.value, 'main.menuType') == 28) {
         //有点球大战 S170
         match.msc.forEach(f_score => {
           if (f_score.indexOf(penalty_shoot) > -1) is_penalty = true;
@@ -506,17 +512,17 @@ export const useScoreUtils = (str) => {
         split = 'S170|';
       }
       if (match.csid == 1 || match.csid == 11) {
-        if (this.footer_sub_menu_id == 114) { // 角球玩法
+        if (footer_sub_menu_id.value == 114) { // 角球玩法
           split = 'S5|';
         }
-        if (_.get(this.get_current_menu, 'main.menuType') == 28) { //赛果只显示S1 单号8410
+        if (_.get(get_current_menu.value, 'main.menuType') == 28) { //赛果只显示S1 单号8410
           split = 'S1|';
         }
       }
       let found_full_score = false;
       match.msc.forEach(f_score => {
         if (f_score.indexOf(split) > -1) {
-          let sliced = this.format_msc(f_score);
+          let sliced = format_msc(f_score);
           match.home_score = sliced[1];
           match.away_score = sliced[2];
           found_full_score = true;
@@ -531,8 +537,8 @@ export const useScoreUtils = (str) => {
     let msc_dict_list = [];
     if (match.msc_list_dict && match.msc_list_dict.length) {
       match.msc_list_dict.forEach(f_score => {
-        let formated_msc = this.format_msc(f_score);
-        formated_msc = this.football_score_no(match, formated_msc);
+        let formated_msc = format_msc(f_score);
+        formated_msc = football_score_no(match, formated_msc);
         msc_dict_list.push(formated_msc);
       });
       match.msc_s_format = msc_dict_list;
@@ -602,8 +608,8 @@ export const useScoreUtils = (str) => {
     if (match.mle == 73) {
       msc_dict = ["S1", "S2", "S3"];
     }
-    this.full_msc(match, msc_dict);
-    let result = this.foot_basket_ball(match); // 篮球足球比分处理
+    full_msc(match, msc_dict);
+    let result = foot_basket_ball(match); // 篮球足球比分处理
 
     if (match.msc_s_format && match.msc_s_format.length > 2) {
       let sorted = [];
@@ -631,7 +637,7 @@ export const useScoreUtils = (str) => {
     match.msc_format = match.msc_s_format;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && result.length > 1) {
+    if (get_newer_standard_edition.value == 2 && result.length > 1) {
       let found_valid_msc = [];
       result.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -692,8 +698,8 @@ export const useScoreUtils = (str) => {
       msc_dict = ['S19', "S20", "S21", "S22", "S7", "S170"];
     }
     // 赛果
-    if (_.get(this.get_current_menu, 'main.menuType') == 28) {
-      let splited_type = this.foot_ball_score_type(match);
+    if (_.get(get_current_menu.value, 'main.menuType') == 28) {
+      let splited_type = foot_ball_score_type(match);
       if (splited_type == "S1|") { //无点球大战无加时赛
         msc_dict = ["S5", "S2"];
       }
@@ -704,8 +710,8 @@ export const useScoreUtils = (str) => {
         msc_dict = ["S5", "S2", "S1", "S7"];
       }
     }
-    this.full_msc(match, msc_dict);
-    let result = this.foot_basket_ball(match);
+    full_msc(match, msc_dict);
+    let result = foot_basket_ball(match);
     if (match.msc_s_format) {
       let sorted = [];
       msc_dict.forEach(key => {
@@ -733,7 +739,7 @@ export const useScoreUtils = (str) => {
       'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142',
       'S143', 'S144', 'S145', 'S146'];
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
     let msc_list = [], dict_msc_list = [];
 
     // 按从小到大顺序获取比分序列
@@ -743,7 +749,7 @@ export const useScoreUtils = (str) => {
         let msc_code = dict + '|';
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -751,7 +757,7 @@ export const useScoreUtils = (str) => {
       let msc_a0 = null;
       match.msc.forEach(f_score => {
         if (f_score.indexOf('S1|') > -1) {
-          msc_a0 = this.format_msc(f_score);
+          msc_a0 = format_msc(f_score);
         }
       });
 
@@ -769,7 +775,7 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
     match.latest_score = msc_list;
@@ -794,7 +800,7 @@ export const useScoreUtils = (str) => {
 
     let max_index = score_index_map[match.mmp];
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
 
@@ -807,7 +813,7 @@ export const useScoreUtils = (str) => {
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -817,7 +823,7 @@ export const useScoreUtils = (str) => {
         for (let i = msc_list.length; i < max_count; i++) {
           if (msc_dict[i]) {
             let f_score = `${msc_dict[i]}|0:0`;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         }
       }
@@ -837,12 +843,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -863,7 +869,7 @@ export const useScoreUtils = (str) => {
   const us_football_score_handle = (match) => {
     let msc_dict = ['S19', 'S20', 'S21', 'S22'];  //第一局 第二局 第三局 第四局比分
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
 
@@ -876,7 +882,7 @@ export const useScoreUtils = (str) => {
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -900,12 +906,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -926,7 +932,7 @@ export const useScoreUtils = (str) => {
   const volleyball_score_handle = (match) => {
     let msc_dict = ['S1', 'S120', 'S121', 'S122', 'S123', 'S124'];  //全场大比分 第一局 第二局 第三局比分
 
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
 
     let msc_list = [], dict_msc_list = [];
 
@@ -939,7 +945,7 @@ export const useScoreUtils = (str) => {
         match.msc.forEach(f_score => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
-            msc_list.push(this.format_msc(f_score));
+            msc_list.push(format_msc(f_score));
           }
         });
       });
@@ -965,12 +971,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -990,7 +996,7 @@ export const useScoreUtils = (str) => {
    */
   const hockey_score_handle = (match) => {
     let msc_dict = ['S19', 'S20', 'S21', 'S22', 'S7', 'S170'];  //第一局 第二局 第三局 第四局 点球比分
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
     let msc_list = [], dict_msc_list = [];
 
     // 按从小到大顺序获取比分序列
@@ -1003,8 +1009,8 @@ export const useScoreUtils = (str) => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
 
-            let formated_msc = this.format_msc(f_score);
-            formated_msc = this.football_score_no(match, formated_msc);
+            let formated_msc = format_msc(f_score);
+            formated_msc = football_score_no(match, formated_msc);
             msc_list.push(formated_msc);
 
           }
@@ -1013,7 +1019,7 @@ export const useScoreUtils = (str) => {
 
       match.msc.forEach(f_score => {
         if (f_score.indexOf('S1|') > -1) {
-          let full_score = this.format_msc(f_score);
+          let full_score = format_msc(f_score);
           match.home_score = full_score[1];
           match.away_score = full_score[2];
         }
@@ -1022,11 +1028,11 @@ export const useScoreUtils = (str) => {
       match.msc_format = msc_list;
     }
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -1046,7 +1052,7 @@ export const useScoreUtils = (str) => {
    */
   const water_polo_score_handle = (match) => {
     let msc_dict = ['S19', 'S20', 'S21', 'S22', 'S170'];  //第一局 第二局 第三局 第四局 点球比分
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
     let msc_list = [], dict_msc_list = [];
 
     // 按从小到大顺序获取比分序列
@@ -1059,8 +1065,8 @@ export const useScoreUtils = (str) => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
 
-            let formated_msc = this.format_msc(f_score);
-            formated_msc = this.football_score_no(match, formated_msc);
+            let formated_msc = format_msc(f_score);
+            formated_msc = football_score_no(match, formated_msc);
             msc_list.push(formated_msc);
 
           }
@@ -1069,7 +1075,7 @@ export const useScoreUtils = (str) => {
 
       match.msc.forEach(f_score => {
         if (f_score.indexOf('S1|') > -1) {
-          let full_score = this.format_msc(f_score);
+          let full_score = format_msc(f_score);
           match.home_score = full_score[1];
           match.away_score = full_score[2];
         }
@@ -1079,12 +1085,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -1103,7 +1109,7 @@ export const useScoreUtils = (str) => {
    */
   const dota_score_handle = (match) => {
     let msc_dict = ['S19', 'S20', 'S21', 'S22', 'S170'];  //第一局 第二局 第三局 第四局 点球比分
-    this.full_msc(match, msc_dict);
+    full_msc(match, msc_dict);
     let msc_list = [], dict_msc_list = [];
 
     // 按从小到大顺序获取比分序列
@@ -1116,8 +1122,8 @@ export const useScoreUtils = (str) => {
           if (f_score.indexOf(msc_code) > -1) {
             found_dict_i = dict_i;
 
-            let formated_msc = this.format_msc(f_score);
-            formated_msc = this.football_score_no(match, formated_msc);
+            let formated_msc = format_msc(f_score);
+            formated_msc = football_score_no(match, formated_msc);
             msc_list.push(formated_msc);
 
           }
@@ -1126,7 +1132,7 @@ export const useScoreUtils = (str) => {
 
       match.msc.forEach(f_score => {
         if (f_score.indexOf('S1|') > -1) {
-          let full_score = this.format_msc(f_score);
+          let full_score = format_msc(f_score);
           match.home_score = full_score[1];
           match.away_score = full_score[2];
         }
@@ -1136,12 +1142,12 @@ export const useScoreUtils = (str) => {
     }
 
     match.msc_list_dict.forEach(dict => {
-      dict_msc_list.push(this.format_msc(dict));
+      dict_msc_list.push(format_msc(dict));
     });
     match.msc_s_format = dict_msc_list;
 
     // 标准版只显示当前局比分
-    if (this.get_newer_standard_edition == 2 && msc_list.length > 1) {
+    if (get_newer_standard_edition.value == 2 && msc_list.length > 1) {
       let found_valid_msc = [];
       msc_list.forEach(msc => {
         if (msc && msc.length > 1) {
@@ -1163,63 +1169,63 @@ export const useScoreUtils = (str) => {
     const current_sport_id = match.csid * 1;
     if (!match.msc || (match.msc && match.msc.length == 0)) return [];
     //红牌数
-    this.get_punish_score(match);
+    get_punish_score(match);
     let res = '';
     switch (current_sport_id) {
       case 5:
-        res = this.tennis_score_handle(match);
+        res = tennis_score_handle(match);
         break;
       case 10:
-        res = this.badminton_score_handle(match);
+        res = badminton_score_handle(match);
         break;
       case 8:
-        res = this.pingpong_score_handle(match);
+        res = pingpong_score_handle(match);
         break;
       case 7:  //斯诺克
-        res = this.snoocker_score_handle(match);
+        res = snoocker_score_handle(match);
         break;
       case 2:
-        res = this.basket_ball_score_handle(match);
+        res = basket_ball_score_handle(match);
         break;
       case 1:
-        res = this.foot_ball_score_handle(match);
+        res = foot_ball_score_handle(match);
         break;
       // 3、4、6、9棒冰美排
       case 3:
-        res = this.baseball_score_handle(match);
+        res = baseball_score_handle(match);
         break;
       case 4:
-        res = this.ice_hockey_score_handle(match);
+        res = ice_hockey_score_handle(match);
         break;
       case 6:
-        res = this.us_football_score_handle(match);
+        res = us_football_score_handle(match);
         break;
       case 9:
-        res = this.volleyball_score_handle(match);
+        res = volleyball_score_handle(match);
         break;
       case 11:
-        res = this.foot_ball_score_handle(match);
+        res = foot_ball_score_handle(match);
         break;
       case 12: //拳击
-        res = this.snoocker_score_handle(match);
+        res = snoocker_score_handle(match);
         break;
       case 13:
-        res = this.volleyball_score_handle(match);
+        res = volleyball_score_handle(match);
         break;
       case 14: //英式橄榄球
-        res = this.foot_ball_score_handle(match);
+        res = foot_ball_score_handle(match);
         break;
       case 15: //曲棍球
-        res = this.hockey_score_handle(match);
+        res = hockey_score_handle(match);
         break;
       case 16: //水球
-        res = this.water_polo_score_handle(match);
+        res = water_polo_score_handle(match);
         break;
       case 101: //dota比分获取
       case 100: //lol比分获取
       case 102: //Cs go比分获取
       case 103: //王者荣耀比分获取
-        res = this.dota_score_handle(match);
+        res = dota_score_handle(match);
         break;
     }
     return res;
