@@ -1,11 +1,11 @@
-import H5DetailsTemplate1 from "../h5-details-template/index.vue";
+import H5DetailsTemplate from "../h5-details-template-1/tournament-play-new.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
-  H5DetailsTemplate1,
+  H5DetailsTemplate,
 };
 const component_config = {
   registered_component_key: "Detail",
-  default_component_key: "H5DetailsTemplate1",
+  default_component_key: "H5DetailsTemplate",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

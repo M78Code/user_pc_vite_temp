@@ -92,19 +92,10 @@
 </template>
 
 <script setup>
-// import { mapGetters } from "vuex";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-// ...mapGetters({
-//       // 获取当前页路由信息
-//       vx_layout_cur_page: "get_layout_cur_page",
-//       //获取菜单类型
-//       vx_cur_menu_type: "get_cur_menu_type",
-//        //全局开关
-//        get_global_switch:'get_global_switch'
-//     }),
 // inject:['match_list_data', 'match_list_card'],
 
-import { ref, computed, defineProps } from 'vue';
+import { ref, computed, defineProps, reactive } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -113,12 +104,17 @@ import { get_match_tpl_title } from 'src/core/utils/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
-
+import store from 'project_path/src/store/index.js'
+let state = store.getState()
 
 const props = defineProps({ ...useProps })
 
 const tpl_id = ref('')
 const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
+// 获取菜单类型
+const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
+//全局开关
+const get_global_switch = reactive(state.globalReducer.global_switch)
 if (!_.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(props.NewMenu.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
@@ -250,7 +246,7 @@ const is_highlighted = (csid) => {
  * @Description 设置联赛折叠
 */
 const set_fold = () => {
-  let type_name = this.vx_cur_menu_type.type_name;
+  let type_name =vx_cur_menu_type.value.type_name;
   // 如果当前联赛是折叠的 并且是今日、早盘、串关  调用bymids接口拉数据
   if (this.card_style_obj.is_league_fold && (['today', 'early', 'bet'].includes(type_name) || props.NewMenu.is_esports())) {
     // 设置赛事基础数据

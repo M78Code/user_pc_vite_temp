@@ -10,7 +10,7 @@
       <template v-for="(item, key) in data_b.orderVOS">
         <div v-if="item.isBoolean" :key="key">
           <!-- 非冠军玩法的单关 -->
-          <body-top :top_="item" :preOrder="data_b.preOrder"  v-if="item.matchType != 3 && data_b.seriesType == '1'" class="mx-12 body_top half-border-bottom"></body-top>
+          <!-- <body-top :top_="item" :preOrder="data_b.preOrder"  v-if="item.matchType != 3 && data_b.seriesType == '1'" class="mx-12 body_top half-border-bottom"></body-top> -->
           <!-- 中间主体区域 -->
           <body-main :main="item" :marketType="data_b.marketType" :type_="data_b" :box_bool="box_bool" :index_="key" :len="data_b.orderVOS.length"></body-main>
         </div>
@@ -41,6 +41,7 @@ import bodyTop from "project_path/src/components/common/cathectic-item/item-body
 // 矩形框主体
 import bodyMain from "project_path/src/components/common/cathectic-item/item-body/body-main.vue";
 import lodash from 'lodash'
+import { ref, onMounted, onUnmounted} from 'vue'
 
   //按钮名字
   let btn_text = ref('')    
@@ -56,10 +57,14 @@ import lodash from 'lodash'
       type: Boolean
     }
   })
-  rules_normal();
-  rules_a();
-  rules_b();
-  rules_c()
+  onMounted(() => {
+    console.error(props.is_pre);
+    rules_normal();
+    rules_a();
+    rules_b();
+    rules_c()
+    
+  })
 
   onUnmounted(() => {
     // for (const key in $data) {
@@ -86,14 +91,14 @@ import lodash from 'lodash'
     }
   const rules_normal = () => {
       [btn_text, direction, box_bool] = [
-        $root.$t("bet_record.pack_up"),
+        // $root.$t("bet_record.pack_up"),
         "",
         false
       ];
     }
     // 串关并且长度大于等于3,默认收起,展示一条;
   const rules_a = () => {
-      if ((is_pre && data_b.detailList) || data_b.orderVOS.length >= 3)
+      if ((props.is_pre && props.data_b.detailList) || props.data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
           $root.$t("bet_record.pack_down"),
           "down",
@@ -102,14 +107,14 @@ import lodash from 'lodash'
     }
 
   const rules_b = () => {
-      if (data_b.orderVOS.length <= 2) toggle_rule_a();
+      if (props.data_b.orderVOS.length <= 2) toggle_rule_a();
     }
   const rules_c = () => {
-      if (data_b.orderVOS.length >= 3) toggle_rule_b();
+      if (props.data_b.orderVOS.length >= 3) toggle_rule_b();
     }
     //小于2个时都展开
   const toggle_rule_a = () => {
-      lodash.map(data_b.orderVOS, (item, index) => {
+      lodash.map(props.data_b.orderVOS, (item, index) => {
         item.isBoolean = true;
         return item;
       });

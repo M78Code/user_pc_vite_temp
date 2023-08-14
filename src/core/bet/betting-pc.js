@@ -51,6 +51,8 @@ const computed_data = reactive({
 
   vx_get_bet_appoint_obj:betInfoReducer.bet_appoint_obj,
   vx_get_pre_bet_list: betInfoReducer.pre_bet_list,
+  vx_get_is_bet_merge: betInfoReducer.is_bet_merge,
+
 
   vx_layout_left_show: layoutReducer.layout_left_show,
   vx_get_cur_odd: globalReducer.odds.cur_odds,
@@ -63,7 +65,6 @@ const computed_data = reactive({
   // 全局点击事件
   get_global_click: globalReducer.global_click,
   layout_size: layoutReducer.layout_size,
-  is_bet_merge: betInfoReducer.is_bet_merge,
   menu_collapse_status: menuReducer.menu_collapse_status,
   //收起右侧详情 展开多列玩法
   get_unfold_multi_column: globalReducer.is_unfold_multi_column,
@@ -369,7 +370,7 @@ const data_ref = {
         temp.placeNum = _.get(obj, 'hps[0].hl[0].hn') || _.get(obj, 'bs.hps[0].hl[0].ol.hn');
         if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
-          temp.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+          temp.openMiltSingle = computed_data.vx_get_is_bet_merge ? 1 : 0;
         }
         param.orderMaxBetMoney.push(temp);
       }
@@ -462,7 +463,7 @@ const data_ref = {
      */
     const  get_item_disable = (item_) => {
       let ret = false;
-      let active = this.get_odds_active(_.get(item_, 'mhs'),
+      let active = get_odds_active(_.get(item_, 'mhs'),
         _.get(item_, 'hps[0].hl[0].hs'),
         _.get(item_, 'hps[0].hl[0].ol[0].os'));
       // 判断盘口是否可用
@@ -793,11 +794,11 @@ const data_ref = {
       if (seriesType == 1) { // 单关
 
   console.log('正常投注参数playOptionName处理------------00' );
-        parm.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+        parm.openMiltSingle = computed_data.vx_get_is_bet_merge?1:0;
         // 有预约id的时候只提交
         if(computed_data.vx_get_bet_appoint_obj && computed_data.vx_get_bet_appoint_obj.bet_appoint_id) {
           let { bet_appoint_id } = computed_data.vx_get_bet_appoint_obj;
-          let cs = _.get(this,`vx_get_bet_single_obj[${bet_appoint_id}].cs`,{});
+          let cs = _.get(computed_data.vx_get_bet_single_obj,`[${bet_appoint_id}].cs`,{});
           let temp_bat = {};
           if(cs && cs.money) {
             // 串关数量
@@ -819,7 +820,7 @@ const data_ref = {
           }
         } else {
           computed_data.vx_is_bet_single.forEach(item=>{
-            let cs = _.get(this,`vx_get_bet_single_obj[${item}].cs`,{});
+            let cs = _.get(computed_data.vx_get_bet_single_obj,`[${item}].cs`,{});
             let temp_bat = {};
             if(cs && cs.money) {
               // 串关数量
@@ -970,7 +971,7 @@ const data_ref = {
       if (computed_data.vx_is_bet_single) {
         // 设置押注成功后的标识符
         computed_data.vx_is_bet_single.forEach(id => {
-          let item = _.cloneDeep(_.get(this,`vx_get_bet_single_obj[${id}]`,{}));
+          let item = _.cloneDeep(_.get(computed_data.vx_get_bet_single_obj,`[${id}]`,{}));
           let oid = _.get(item, 'bs.hps[0].hl[0].ol[0].oid');
           if (oid == _.get(order_item,'playOptionsId')) {
             // 提交投注项id并设置key
@@ -1016,7 +1017,7 @@ const data_ref = {
       bet_list.forEach(id => {
         let obj, item_bs, item_cs;
         if (computed_data.vx_is_bet_single) {
-          obj = "vx_get_bet_single_obj";
+          obj = computed_data.vx_get_bet_single_obj;
         } else {
           obj = "vx_get_bet_obj";
         }
@@ -1084,7 +1085,7 @@ const data_ref = {
         parm.matchType =  _.get(item_cs, 'match_type');
         if(computed_data.vx_is_bet_single) {
           // 是否开启 多单关投注模式
-          parm.openMiltSingle = this.vx_get_is_bet_merge?1:0;
+          parm.openMiltSingle = computed_data.vx_get_is_bet_merge?1:0;
         }
 
         parm_obj.orderMaxBetMoney.push(parm);

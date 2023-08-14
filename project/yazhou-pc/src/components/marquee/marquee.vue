@@ -57,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, toRef, onUnmounted } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
 import { useI18n } from "vue-i18n";
@@ -66,6 +66,9 @@ import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
 // TODO: this相关都要改
+
+// import store from "project_path/src/store/index.js";
+import store from "src/store-redux/index.js";
 
 const emits = defineEmits(['navigate'])
 const $q = useQuasar()
@@ -105,13 +108,15 @@ const right_tabs = reactive([
     { id: 9, icon_name: 'task_center', tab_name: "任务中心", icon: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", is_show: false, _blank: true },  // 任务中心
     { id: 99, icon_name: 'settings', tab_name: t("common.set"), is_show: false },  // 设置
 ])
+
+
 const settings_items = [
     {
         id: 1,
         name: t('common.odds_set'),
         icon: {
-            day: require('public/image/yabo/svg/icon-odds.svg'),
-            night: require('public/image/yabo/svg/icon-odds-night.svg')
+            day: () => import('app/public/yazhou-pc/image/svg/icon-odds.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-odds-night.svg')
         },
         value_arr: [
             { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -127,8 +132,10 @@ const settings_items = [
         id: 2,
         name: t('common.change_lang'),
         icon: {
-            day: require('public/image/yabo/svg/icon-lang.svg'),
-            night: require('public/image/yabo/svg/icon-lang-night.svg'),
+            day: () => import('app/public/yazhou-pc/image/svg/icon-lang.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-lang-night.svg')
+            // day: require('public/image/yabo/svg/icon-lang.svg'),
+            // night: require('public/image/yabo/svg/icon-lang-night.svg'),
         },
         value_arr: Object.keys(langs),
         type: 'select'
@@ -137,8 +144,10 @@ const settings_items = [
         id: 3,
         name: t('common.change_skin'),
         icon: {
-            day: require('public/image/yabo/svg/icon-skin.svg'),
-            night: require('public/image/yabo/svg/icon-skin-night.svg'),
+            day: () => import('app/public/yazhou-pc/image/svg/icon-skin.svg'),
+            night: () => import('app/public/yazhou-pc/image/svg/icon-skin-night.svg')
+            // day: require('public/image/yabo/svg/icon-skin.svg'),
+            // night: require('public/image/yabo/svg/icon-skin-night.svg'),
         },
         value_arr: [/*t('odds.HK'), t('odds.EU')*/],
         type: 'switch'
@@ -148,13 +157,19 @@ const settings_items = [
 /** 是否显示设置弹窗 */
 const show_g_settings = ref(false)
 
+const get_lang = ref('')
+const get_theme = ref('')
+const get_menu_collapse_status = ref(false)
+const get_user_token = ref('')
+const get_global_switch = ref(false)
+
 /**
  * store仓库
  * TODO: 后面再完善
  * const { lang, setLang } = useLangStore()
  * const { user } = useUserStore(user_id)
  */
-const store = useStore()
+// const store = useStore()
 // ...mapGetters([
 //             'get_lang',
 //             'get_theme',

@@ -4,43 +4,57 @@
  * @Description: 赛事基础信息mixin
  */
 
+import { reactive, computed } from 'vue';
 import details from "src/core/match-list/details-class/details.js";
+import { i18n } from "src/boot/i18n.js"
+import { is_eports_csid } from "src/core/utils/utils";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import store from 'project_path/src/store/index.js'
 import { mapGetters} from "vuex"
-export default {
+let state = store.getState();
 
+
+export default {
   props: {  
-    match: Object,
-  },
-  computed: {
-    ...mapGetters({
-      //全局开关
-       get_global_switch:'get_global_switch'
-    }),
-    handicap_num(){
-        if(this.get_global_switch.handicap_num){
-            return `+${ this.match.mc || 0}`
-        }else{
-          return  this.$root.$t('match_info.more')
-        }
-    }
-  },
-  methods:{
-    /**
-     * 跳转至详情
-     * @return {undefined} undefined
-     */
-    on_go_detail() {
-      if(this.$utils.is_eports_csid(this.match.csid)){
-        this.match.go_detail_type = 'no_switch'
-      }
-      details.on_go_detail(this.match);
+    match: {
+      type: Object,
+      default: () => {}
     },
+  },
+  setup(props) {
+    //全局开关
+    const get_global_switch = reactive(state.globalReducer.global_switch)
+    
+    const handicap_num = computed(() => {
+      if(get_global_switch.value.handicap_num){
+        return `+${ props.match.mc || 0}`
+      }else{
+        return i18n.t('match_info.more')
+      }
+    })
+
+    /**
+     * @description 跳转至详情
+     */
+    const on_go_detail = () => {
+      if(is_eports_csid(props.match.csid)){
+        props.match.go_detail_type = 'no_switch'
+      }
+      details.on_go_detail(props.match);
+    }
     /**
      * @Description 赛事收藏 
      * @param {undefined} undefined
     */
-    collect(){
-      this.$root.$emit(this.emit_cmd.EMIT_MX_COLLECT_MATCH,this.match)
+    const collect = () => {
+      useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH,props.match)
     }
-  }
+
+    return {
+      get_global_switch,
+      handicap_num,
+      collect,
+      on_go_detail
+    }
+  },
 };
