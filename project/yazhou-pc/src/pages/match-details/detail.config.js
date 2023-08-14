@@ -10,7 +10,7 @@ import details from "src/core/match-detail/match-detail";
 import search from "src/core/search-class/search.js";
 // 赛事详情页面信息操作类
 import MatchInfoCtr from "src/core/match-class/match-info-ctr";
-import store from "project_path/src/store/index.js";
+import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios_debounce_cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";

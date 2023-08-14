@@ -113,7 +113,7 @@ class MenuData {
     // 热门足球
     this.hot_500_sport_1 = false
     //是否可以多列玩法的菜单
-    this.is_multi_column = false
+    this.is_multi_column = ref(false)
 
   }
 
@@ -565,7 +565,7 @@ class MenuData {
       is_multi_column = false
     }
 
-    this.is_multi_column = is_multi_column && !utils.is_iframe && state.configReducer.config.multi_column
+    this.is_multi_column.value = is_multi_column && !utils.is_iframe && state.configReducer.config.multi_column
 
     // store.dispatch("set_unfold_multi_column", this.is_multi_column);
 
@@ -710,7 +710,7 @@ class MenuData {
         
     }
   //搜索13列玩法
-  if(this.is_multi_column && state.configReducer.config.multi_column){
+  if(this.is_multi_column.value && state.configReducer.config.multi_column){
     r = 13
   }
     // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
