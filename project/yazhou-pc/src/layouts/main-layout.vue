@@ -1031,8 +1031,7 @@ function get_balance() {
     if (code == 200) {
       vx_set_user_balance(result.amount);
     }
-    // //显示token失效弹窗
-    //this.show_fail_alert();
+    userCtr.show_fail_alert();
   });
 }
 /**
