@@ -4,11 +4,11 @@
  * @Description: 列表数据仓库，列表页所有数据的仓库
  */
 
-// import { get_match_base_info_by_mids } from 'src/public/api/module/socket/socket_api'
-import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, handicap_highlight_paly_id, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from 'src/public/utils/dataClassCtr/conifg/index.js'
-import utils from "src/public/utils/utils.js"
-import { store } from "src/store/index.js"
-
+import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, handicap_highlight_paly_id, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from './conifg/index.js'
+import utils from "src/core/utils/index.js"
+// TODO hanmar后续处理--S
+// import { store } from "src/store/index.js"
+// TODO hanmar后续处理--E
 export default class MatchListDataClass {
   /**
    * @Description 构造函数

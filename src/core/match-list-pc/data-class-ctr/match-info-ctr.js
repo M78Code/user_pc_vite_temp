@@ -3,7 +3,7 @@
  * @Date: 2020-09-07 12:45:18
  * @Description: 赛事详情页面信息操作类-实现快速检索,修改等功能 用于各个版本的赛事详情
  */
-import MatchDataUpdTime from "src/public/utils/dataClassCtr/match_data_upd_time";
+import MatchDataUpdTime from "./match-data-upd-time.js";
 export default class MatchInfoCtr
 {
   /**
