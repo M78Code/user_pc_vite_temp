@@ -1,6 +1,6 @@
 /*
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
+ * @Author: Coooper
+ * @Date: 2023-08-15 17:13:55
  * @Description: 赛事盘口的mixins
  */
 import { DetailTemp0 } from "src/components/match-detail/template0/index.js";
@@ -111,25 +111,6 @@ export default {
 
   watch: {
 
- 
-    "match_info.mmp": {
-      handler(cur) {
-        if (cur == "999") {
-          if (this.load_type == "details") {
-            this.$emit("set_handicap_state", "empty");
-          } else {
-            this.load_detail_statu = "empty";
-          }
-        }
-      },
-      immediate: true,
-    },
-    // 加载状态
-    handicap_state: {
-      handler(n) {
-        this.load_detail_statu = n;
-      },
-    },
     match_details: {
       handler(res) {
         this.load_detail_statu = this.handicap_state;
@@ -212,21 +193,7 @@ export default {
       },
       immediate: true,
       deep: true,
-    },
-    /**
-     * @Description:监听玩法是否展开
-     * @return {undefined} undefined
-     */
-    panel_status(res) {
-      switch (res) {
-        case "open":
-          this.set_is_show_all(true);
-          break;
-        case "hide":
-          this.set_is_show_all(false);
-          break;
-      }
-    },
+    }
   },
 
   methods: {
@@ -310,19 +277,7 @@ export default {
         }
       }
     },
-    /**
-     * @Description:设置所有玩法集是否展开
-     * @param {boolean} status 设置的状态
-     * @return {undefined} undefined
-     */
-    set_is_show_all(status) {
-      this.waterfall.forEach((list) => {
-        list.forEach((item) => {
-          item.is_show = status;
-          item.is_show_plus = status;
-        });
-      });
-    },
+
     /**
      * 展开|收起投注列表
      * @return {undefined} undefined

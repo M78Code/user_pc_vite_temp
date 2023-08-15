@@ -85,6 +85,7 @@ import {
 import match_handicap from "src/components/match-detail/match_handicap.js";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail-pc/match-detail.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import lodash from "lodash";
 export default defineComponent({
   mixins: [match_handicap], //引入玩法组件
@@ -130,7 +131,7 @@ export default defineComponent({
       has_thumb: false, //是否有滚动条
       handle_: [], // 用户操作过的数据
     });
-    const emit = defineEmits(['set_handicap_state'])
+    const emit = defineEmits(["set_handicap_state"]);
 
     const showDetails = ref(false);
     //  ============================store===================
@@ -186,16 +187,54 @@ export default defineComponent({
       set_go_top_show();
     });
     // 监听关闭全部玩法
-    watch(()=>props.close_all_handicap, (res) => {
-      if (res) {
+    watch(
+      () => props.close_all_handicap,
+      (res) => {
+        if (res) {
           if (props.load_type == "details") {
-            this.$emit("set_handicap_state", "empty");
+            emit("set_handicap_state", "empty");
           } else {
             state.load_detail_statu = "empty";
           }
         }
-    },
-    {immediate:true}
+      },
+      { immediate: true }
+    );
+       // 加载状态
+      watch(
+      () => props.handicap_state,
+      (res) => {
+        state.load_detail_statu = res;
+      }
+    );
+    /**
+     * @Description:监听玩法是否展开
+     * @return {undefined} undefined
+     */
+    watch(
+      () => state.panel_status,
+      (res) => {
+        switch (res) {
+          case "open":
+            set_is_show_all(true);
+            break;
+          case "hide":
+            set_is_show_all(false);
+            break;
+        }
+      }
+    );
+    watch(
+      () => mmp.value,
+      (cur) => {
+        if (cur == "999") {
+          if (props.load_type == "details") {
+            emit("set_handicap_state", "empty");
+          } else {
+            state.load_detail_statu = "empty";
+          }
+        }
+      }
     );
     // watch(get_right_zoom, (val) => {
     //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
@@ -208,6 +247,9 @@ export default defineComponent({
         list.push(element + "-" + props.currentRound);
       });
       return list;
+    });
+    const mmp = computed(() => {
+     return props.match_info.mmp
     });
     //  ============================methods===================
     /**
@@ -241,6 +283,20 @@ export default defineComponent({
         if (obj) {
           state.has_thumb = obj.scrollHeight > obj.clientHeight;
         }
+      });
+    };
+
+    /**
+     * @Description:设置所有玩法集是否展开
+     * @param {boolean} status 设置的状态
+     * @return {undefined} undefined
+     */
+    const set_is_show_all = (status) => {
+      state.waterfall.forEach((list) => {
+        list.forEach((item) => {
+          item.is_show = status;
+          item.is_show_plus = status;
+        });
       });
     };
     onMounted(() => {
