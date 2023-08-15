@@ -4,7 +4,6 @@
  * @FilePath: \user-pc-vite\src\core\match-list\match-list.js
  * @Description: 赛事列表主要逻辑
  */
-
 /**
  * @description 请求数据
  * @param  {boolean} is_socket   是否 socket 调用
@@ -41,23 +40,19 @@ export const fetch_match_list = (is_socket = false, cut) => {
 		this.fetch_search_match_list && this.fetch_search_match_list(is_socket);
 		return false;
 	}
-
 	if (!is_socket) {
 		this.match_list_data.init();
 		this.load_data_state = "loading";
 		// 设置列表滚动条scrollTop
 		this.$route.name != "details" && this.$matchlist.set_scroll_top(0);
 	}
-
 	// 更新列表模板编号 和请求参数
 	$menu.set_match_tpl_number();
 	$menu.set_match_list_api_params();
-
 	// 设置列表接口 和 参数
 	let api = api_match[$menu.match_list_api_name];
 	let _params = _.clone($menu.match_list_api_params);
 	let match_list_api_type = $menu.match_list_api_type;
-
 	let send_match_list_request = () => {
 		/**返回数据处理************/
 		api &&
@@ -70,9 +65,7 @@ export const fetch_match_list = (is_socket = false, cut) => {
 						_params.euid != $menu.match_list_api_params.euid
 					)
 						return;
-
 					let data = _.get(res, "data", {});
-
 					this.api_error_count = 0;
 					if (data.code == 200) {
 						if (match_list_api_type == "league_list") {
@@ -138,14 +131,12 @@ export const fetch_match_list = (is_socket = false, cut) => {
 		send_match_list_request();
 	}
 };
-
 export const mx_get_remote_time = () => {
 	let { local_time, remote_time } = this.vx_get_timestamp;
 	let now = new Date().getTime();
 	let time = remote_time + (now - local_time);
 	return time;
 };
-
 /**
  * @Description 每30秒检查一次可视区域赛事数据最后更新时间，如果超过1分钟未更新数据  调用bymids接口更新数据
  * @param {undefined} undefined

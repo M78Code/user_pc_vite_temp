@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n } from "src/boot/i18n.js";
@@ -59,8 +60,8 @@ const mx_collect_match = (match) => {
     cf: cur_collect_state,
   };
   api_match.post_collect_match(_params).then((res) => {
-    let code = _.get(res, "data.code");
-    let data = _.get(res, "data.data");
+    let code = lodash.get(res, "data.code");
+    let data = lodash.get(res, "data.data");
     if (code == 200 && data == 1) {
       // 在收藏列表页 移除收藏
       if (PageSourceData.page_source == "collect" && !cur_collect_state) {
@@ -107,7 +108,7 @@ const mx_collect_count = (data) => {
   }
   let api;
   let match_list_api_config = MenuData.match_list_api_config.match_list;
-  let _params = _.clone(match_list_api_config.params) || {};
+  let _params = lodash.clone(match_list_api_config.params) || {};
   // 电竞
   if (MenuData.is_esports()) {
     api = api_match.post_collect_count_es;
@@ -126,9 +127,9 @@ const mx_collect_count = (data) => {
   delete _params.cps;
   delete _params.cpn;
   api(_params).then((res) => {
-    let code = _.get(res, "data.code");
+    let code = lodash.get(res, "data.code");
     if (code == 200) {
-      let count = _.get(res, "data.data", 0);
+      let count = lodash.get(res, "data.data", 0);
       set_collect_count({
         type: "set",
         count,
@@ -160,8 +161,8 @@ const mx_collect_leagues = (match, is_champion) => {
   api_match
     .post_collect_leagues(_params)
     .then((res) => {
-      let code = _.get(res, "data.code");
-      let data = _.get(res, "data.data");
+      let code = lodash.get(res, "data.code");
+      let data = lodash.get(res, "data.data");
       if (code == 200 && data == 1) {
         match.tf = cur_collect_state;
         let mids_arr = MatchListCard.update_league_collect_data_and_get_mids(
@@ -187,8 +188,8 @@ const mx_collect_leagues = (match, is_champion) => {
             let match_length;
             if (MenuData.is_esports()) {
               match_length =
-                _.get(MatchListData.league_list_obj, "livedata.length", 0) +
-                _.get(MatchListData.league_list_obj, "nolivedata.length", 0);
+                lodash.get(MatchListData.league_list_obj, "livedata.length", 0) +
+                lodash.get(MatchListData.league_list_obj, "nolivedata.length", 0);
             } else {
               match_length = MatchListData.match_list.length;
             }
@@ -237,7 +238,7 @@ const update_collect_data = (params) => {
       break;
     // 重新收藏赛事
     case "bet":
-      if (_.isArray(params.mids)) {
+      if (lodash.isArray(params.mids)) {
         let mids = params.mids;
         for (let i = 0; i < mids.length; i++) {
           let mid = mids[i];

@@ -3,7 +3,6 @@
  * @Date: 2020-06-03 18:00
  * @Description: 赛事列表头部
 -->
-
 <template>
   <div class="c-match-list-header yb-flex-between "
     :class="menu_config.menu_root == 2 && menu_config.match_list_api_config.guanjun ? 'today-champion' : ''">
@@ -25,10 +24,8 @@
           {{ collect_count }}
         </span>
       </div>
-
       <!--当前菜单-->
       <div class="list-title  row items-center">
-
         <!-- <div class="title-text yb-font-bold ellipsis" :class="{'w105': show_select_time && is_short_title}" v-tooltip="{content:page_title,overflow:1}" v-html="page_title"></div> -->
         <!-- <span v-if="is_search_page" class="title-text path-icon-wrapper" :class="{'search':is_search_page}">
           <span class="icon-triangle3 search-path-icon"></span>
@@ -38,9 +35,7 @@
           <span>{{ page_title }}</span>
         </span>
       </div>
-
     </div>
-
     <!-- right -->
     <!-- 冠军 电子竞技 vr  没有 -->
     <div class="col-right yb-flex-center">
@@ -49,14 +44,12 @@
         <input class="search-input" @input="$emit('filter_league_data', leagueName)" v-model="leagueName"
           :placeholder="i18n.t('common.search_text')" type="search">
       </div>
-
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
       <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_guanjun()"
         :options="time_list" v-model="$store.state.filter.open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ $t("common.match_soon_filtr") }}</span></template>
       </com-select>
-
       <!-- 选择联赛按钮 -->
       <!-- 电子竞技 vr 收藏 没有  -->
       <div v-show="menu_config.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
@@ -79,25 +72,19 @@
           {{ sort.name }}
         </div>
       </div>
-
       <!-- 列表刷新 -->
       <div v-show="computed_show_refresh" class="select-btn refresh-btn yb-flex-center yb-hover-bg">
         <slot name="refresh_icon"></slot>
       </div>
-
-
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
         v-if="menu_config.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
         <span class="text">{{ i18n.t('icon_tips.unfold') }}</span>
         <i class="icon-arrow q-icon c-icon" size="12px"></i>
       </div>
-
     </div>
   </div>
 </template>
-
 <script setup>
-
 import global_mixin from "src/public/mixins/global/global_mixin.js";
 import odds_conversion_mixin from "src/public/mixins/odds_conversion/odds_conversion_mixin";//赔率转换
 import comSelect from "src/public/components/select";
@@ -111,9 +98,7 @@ import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import store from 'src/store-redux/index.js';
 let state = store.getState();
-
 const props = defineProps({ ...useProps });
-
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
 // 获取当前页路由信息
@@ -134,9 +119,6 @@ const vx_get_checked_count = ref(state.filterReducer.checked_count);
 const vx_get_uid = reactive(state.userReducer.user_info)
 const vx_match_sort = ref(state.globalReducer.match_sort)
 // mixins: [global_mixin,odds_conversion_mixin],
-
-
-
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
@@ -161,23 +143,17 @@ const sort_option = computed(() => {
   }
   return option
 })
-
-
 // 是否显示刷新 btn
 const computed_show_refresh = computed(() => {
-
   let _show = !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
     vx_show_filter_popup.value == false &&
     vx_layout_cur_page.value.cur != "search"
-
   return _show
 })
-
 //是否搜索页
 const is_search_page = computed(() => {
   return vx_layout_cur_page.value.cur == "search";
 })
-
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
@@ -189,7 +165,6 @@ const page_title = computed(() => {
     500: i18n.t("menu.match_hot"), //"热门赛事"
     400: i18n.t("menu.match_winner"), //"冠军"
   };
-
   let _page_title = ""
   let _menu_type = menu_config.left_menu_result.root
   if (is_search_page) {
@@ -197,7 +172,6 @@ const page_title = computed(() => {
     // 今日|早盘|串关
   } else if ([2, 3].includes(_menu_type)) {
     let sport_name = menu_config.get_current_left_menu_name()
-
     if (sport_name) {
       _page_title = `${TITLE[_menu_type]}（${sport_name}）`
     } else {
@@ -217,12 +191,10 @@ const page_title = computed(() => {
   }
   return _page_title;
 })
-
 // 前端控制是否禁用收藏功能
 const enable_collect_api = computed(() => {
   return window.env.config.ENABLE_COLLECT_API;
 })
-
 //设置即将开赛筛选列表
 let hour = i18n.t('common.hour')
 time_list.value = [
@@ -240,14 +212,12 @@ store.dispatch({
   type: 'SETCUREXPANDLAYOUT',
   data: "match-list"
 })
-
 const set_unfold_multi_column = () => {
   store.dispatch({
     type: 'SET_UNFOLD_MULTI_COLUMN',
     data: false
   })
 }
-
 /**
  * 计算 全部 按钮样式
  */
@@ -256,7 +226,6 @@ const compute_quanbu_btn_class = () => {
   if (vx_layout_list_type.value == 'match') {
     str += 'active'
   }
-
   let can_show = menu_config.compute_if_can_show_shoucang()
   //如果不能显示收藏
   if (!can_show) {
@@ -270,10 +239,8 @@ const compute_quanbu_btn_class = () => {
 const select_time_change = () => {
   //设置session
   sessionStorage.setItem('is_select_time', '1')
-
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
 }
-
 /**
  * 重置条件
  */
@@ -283,7 +250,6 @@ const reset_filter = () => {
     data: null
   })
 }
-
 /**
  * @ Description:切换联赛排序
  * @param {object} row 切换的排序
@@ -316,7 +282,6 @@ const toggle_filter_popup = () => {
     reset_filter()
   }
 }
-
 /**
  * @description 切换列表展示是的收藏还是非收藏
  *
@@ -324,7 +289,6 @@ const toggle_filter_popup = () => {
  * @return {undefined} undefined
  */
 const on_change_list_type = (type) => {
-
   if (type == vx_layout_list_type.value) {
     return
   }
@@ -352,13 +316,10 @@ const on_change_list_type = (type) => {
       colloet: "post_fetch_collect_list"
     }
   }
-
   let api_name = api_params.other.match
-
   if ([1, 500, 300, 400, 2000].includes(Number(root))) {
     api_name = api_params[root].match
   }
-
   if (type === "collect") {
     // 前端开    后台开       >开
     // 前端开    后台关       >关
@@ -368,21 +329,14 @@ const on_change_list_type = (type) => {
       return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"));
     }
     apiType = 2
-
     api_name = api_params.other.colloet
-
     if ([1, 500, 300, 2000].includes(Number(root))) {
       api_name = api_params[root].colloet
     }
-
   }
-
   // 调用列表接口
-
   // 当前 pid 和 orpt
   let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
-
-
   // 父级euid
   let euid;
   if ([2, 3].includes(Number(root))) {
@@ -393,13 +347,11 @@ const on_change_list_type = (type) => {
     } else {
       euid = BaseData.mi_info_map[`mi_${lv1_mi}${jinri_zaopan}`].euid
     }
-
     lv2_mi_info = {
       apiType,
       "orpt": "0",
       "pids": "",
       ...lv2_mi_info,
-
       euid,
     }
     if (root == 3) {
@@ -408,7 +360,6 @@ const on_change_list_type = (type) => {
       lv2_mi_info.md = md
       lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
     }
-
   } else if (root == 400) {
     guanjun = "guanjun"
     // 冠军
@@ -437,7 +388,6 @@ const on_change_list_type = (type) => {
     euid = mid_menu_result.euid
     // 没有就重新获取
     if (!mid_menu_result.euid) {
-
       // 热门默认赛事
       let mi_500_obj = BaseData.mew_menu_list_res.find((x) => x.mi == 500) || {
         sl: [],
@@ -447,7 +397,6 @@ const on_change_list_type = (type) => {
       let mi_info = BaseData.mi_info_map[`mi_${mi}`] || {};
       euid = mi_info.euid
     }
-
     // 热门赛事
     lv2_mi_info = {
       ...lv2_mi_info,
@@ -457,7 +406,6 @@ const on_change_list_type = (type) => {
       "orpt": euid == "30101" ? '12' : '-1',  // 热门赛事 竞足 12，其他-1
       pids: euid == "30101" ? -999 : '',
     }
-
   } else if (root == 1) {
     // 滚球赛事
     let { mid_menu_result } = menu_config
@@ -469,7 +417,6 @@ const on_change_list_type = (type) => {
       tid: ""
     }
   }
-
   let config = {
     begin_request: true,
     is_collect: type == "collect",
@@ -487,91 +434,70 @@ const on_change_list_type = (type) => {
       },
     }
   }
-
   menu_config.set_match_list_api_config(config);
 }
-
-
-
 </script>
-
 <style lang="scss" scoped>
 .c-match-list-header {
   padding: 0 10px;
   width: 100%;
   height: 36px;
-
   .filter_full_all {
     font-weight: bold;
   }
-
   .col-left {
     .list-title {
       margin-right: 20px;
-
       .title-icon {
         margin-right: 10px;
       }
-
       .title-text {
         font-size: 14px;
       }
-
       .path-icon-wrapper {
         display: flex;
         align-items: center;
       }
-
       .search-path-icon {
         font-size: 18px;
         margin: 0 4px;
         font-weight: bold;
-
         &:before {
           color: #595f73;
         }
       }
-
       .league-logo {
         margin-right: 10px;
         width: 18px;
         height: 18px;
       }
     }
-
     .btn-wrap {
       padding: 0px 12px;
       height: 26px;
-
       &.match-btn {
         border-radius: 2px 0 0 2px;
       }
-
       &.collect-btn {
         border-radius: 0 2px 2px 0;
         margin-right: 10px;
       }
-
       .number {
         margin-left: 6px;
       }
     }
-
     .w105 {
       width: 105px;
     }
   }
-
   .col-right {
     .search-wrap {
       position: relative;
-
       .search-icon {
         position: absolute;
         right: 6px;
         top: 8px;
       }
-
       .search-input {
         margin-left: 5px;
         height: 26px;
@@ -583,54 +509,44 @@ const on_change_list_type = (type) => {
         font-size: 12px;
       }
     }
-
     .list-sort {
       .list-sort-item {
         padding: 2px 11px;
         border-radius: 12px;
       }
     }
-
     .select-btn {
       margin-left: 5px;
       padding: 2px 8px;
       border-radius: 12px;
       cursor: pointer;
       border: 1px solid transparent;
-
       &.disable {
         cursor: not-allowed !important;
       }
-
       &.refresh-btn {
         padding: 4px 8px;
       }
-
       &.leagues-btn {
         .status {
           margin-left: 5px;
         }
-
         .icon-arrow {
           margin-left: 5px;
           transform: rotate(180deg);
-
           &::before {
             color: #abbac8;
           }
         }
       }
-
       &.list-sort {
         padding: 0;
       }
-
       &.refresh-btn {
         width: 24px;
         height: 24px;
       }
     }
-
     .unfold-btn {
       margin-left: 4px;
       border-radius: 11px;
@@ -640,28 +556,22 @@ const on_change_list_type = (type) => {
       display: flex;
       align-items: center;
       cursor: pointer;
-
       .text {
         padding-right: 2px;
       }
-
       .icon-arrow {
-
         transform: rotate(-90deg);
-
         &::before {
           color: #fff;
         }
       }
     }
-
     .icon-toggle1 {
       margin-left: 15px;
     }
   }
 }
 </style>
-
 <style lang="scss">
 /** 联赛排序 -S*/
 .match-sort-wrap {
@@ -671,7 +581,6 @@ const on_change_list_type = (type) => {
   border-radius: 2px !important;
   transform: translate(-16px, 4px);
   overflow: visible !important;
-
   .triangle {
     position: absolute;
     width: 5px;
@@ -680,27 +589,22 @@ const on_change_list_type = (type) => {
     left: 29px;
     top: -2px;
   }
-
   .item-wrap {
     padding: 0 10px;
     display: flex;
     align-items: center;
     height: 26px;
     cursor: pointer;
-
     .text {
       margin-left: 6px;
     }
   }
-
   &.style2 {
     transform: translate(-47px, 4px);
-
     .triangle {
       left: 60px;
     }
   }
 }
-
 /** 联赛排序 -E*/
 </style>

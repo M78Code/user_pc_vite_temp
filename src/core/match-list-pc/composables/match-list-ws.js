@@ -97,6 +97,19 @@ const refresh_c8_subscribe = () => {
 		//  this.SCMD_C8(skt_mid_obj);
 	}
 };
+/**
+		 * @Description 可视赛事ID改变
+		 * @param {undefined} undefined
+		 */
+const show_mids_change = () => {
+	// 列表没加载完 不执行
+	if (this.load_data_state != "data") {
+		return;
+	}
+	// 重新订阅C8
+	this.refresh_c8_subscribe();
+	this.api_bymids({ is_show_mids_change: true });
+}
 
 const ws_composable_fn = () => {
 	return {
@@ -111,6 +124,8 @@ const ws_composable_fn = () => {
 		// 订阅所需 盘口id
 		skt_hpid,
 		refresh_c8_subscribe,
+		// 可视区域id变更
+		show_mids_change,
 	}
 }
 
