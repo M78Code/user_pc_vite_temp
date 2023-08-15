@@ -12,13 +12,13 @@
       <!--全部按钮-->
       <div v-show="!vx_show_filter_popup && !is_search_page" @click="on_change_list_type('match')"
         class="btn-wrap match-btn yb-flex-center cursor-pointer" :class="compute_quanbu_btn_class()">
-        {{ $root.$t("common.all") }}
+        {{ i18n.t("common.all") }}
       </div>
       <!--收藏按钮-->
       <div v-show="NewMenu.compute_if_can_show_shoucang() && !vx_show_filter_popup && !is_search_page"
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
-        class="btn-wrap collect-btn yb-flex-center cursor-pointer" :class="{ 'active': vx_layout_list_type == 'collect', }"
-        :title="$root.$t('list.my_collect')">
+        class="btn-wrap collect-btn yb-flex-center cursor-pointer"
+        :class="{ 'active': vx_layout_list_type == 'collect', }" :title="i18n.t('list.my_collect')">
         <icon name="icon-star" :class="{ active: collect_count }" size="14px"
           :color="vx_layout_list_type == 'collect' ? '#272A33' : collect_count ? '#EFCC6E' : '#ABBAC8'" />
         <span class="number" :class="{ 'had-count': collect_count }">
@@ -47,7 +47,7 @@
       <div class="search-wrap" v-if="is_show_input">
         <icon class="search-icon" color="#ABBAC8" name="icon-search" size="12px" />
         <input class="search-input" @input="$emit('filter_league_data', leagueName)" v-model="leagueName"
-          :placeholder="$root.$t('common.search_text')" type="search">
+          :placeholder="i18n.t('common.search_text')" type="search">
       </div>
 
       <!-- 即将开赛筛选 -->
@@ -64,9 +64,10 @@
         class="select-btn leagues-btn yb-flex-center cursor-pointer filter-handle yb-hover-bg"
         :class="{ active: vx_show_filter_popup, disable: load_data_state != 'data' && !vx_show_filter_popup }"
         :id="DOM_ID_SHOW && `menu-leagues-filter-leagues-btn`">
-        {{ $root.$t('filter.select_league') }}
-        <span class="status yb-font-bold" :class="vx_show_filter_popup ? 'filter_full_all' : ''">{{ (vx_filter_checked_all ||
-          vx_get_checked_count == 0) ? $root.$t('common.all') : vx_get_checked_count }}</span>
+        {{ i18n.t('filter.select_league') }}
+        <span class="status yb-font-bold" :class="vx_show_filter_popup ? 'filter_full_all' : ''">{{ (vx_filter_checked_all
+          ||
+          vx_get_checked_count == 0) ? i18n.t('common.all') : vx_get_checked_count }}</span>
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
       </div>
       <!-- 列表排序按钮 -->
@@ -87,7 +88,7 @@
 
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
         v-if="NewMenu.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
-        <span class="text">{{ $root.$t('icon_tips.unfold') }}</span>
+        <span class="text">{{ i18n.t('icon_tips.unfold') }}</span>
         <i class="icon-arrow q-icon c-icon" size="12px"></i>
       </div>
 
@@ -98,18 +99,17 @@
 <script setup>
 
 import global_mixin from "src/public/mixins/global/global_mixin.js";
-import sport_icon from "src/public/components/sport_icon/sport_icon.vue";//精灵图组件
 import odds_conversion_mixin from "src/public/mixins/odds_conversion/odds_conversion_mixin";//赔率转换
 import comSelect from "src/public/components/select";
 import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
 import BaseData from "src/public/utils/base_data/base-data.js";
-
+import { i18n } from 'src/boot/i18n'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { defineProps, ref, onMounted, computed } from 'vue';
+import { defineProps, ref, computed, reactive } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import store from 'project_path/src/store/index.js';
+import store from 'src/store-redux/index.js';
 let state = store.getState();
 
 const props = defineProps({ ...useProps });
@@ -131,29 +131,29 @@ const get_global_switch = ref(state.globalReducer.global_switch);
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
 const vx_get_checked_count = ref(state.filterReducer.checked_count);
-
-// name: "MatchListHeader",
+// 获取用户id
+const vx_get_uid = reactive(state.userReducer.user_info)
+const vx_match_sort = ref(state.globalReducer.match_sort)
 // mixins: [global_mixin,odds_conversion_mixin],
-// components: {
-//   "sport-icon": sport_icon, comSelect,
-// },
+
 
 
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
 const DOM_ID_SHOW = ref(null)
-
+//即将开赛筛选时间
+const open_select_time = ref(state.filterReducer.open_select_time)
 const sort_option = computed(() => {
   let option = [
     {
       id: 1,
-      name: this.$root.$t('set.match_sort'),//"按联赛排序",
+      name: i18n.t('set.match_sort'),//"按联赛排序",
       icon: "icon-sort_league"
     },
     {
       id: 2,
-      name: this.$root.$t('set.time_sort'),//"按时间排序",
+      name: i18n.t('set.time_sort'),//"按时间排序",
       icon: "icon-sort_date"
     }
   ]
@@ -184,17 +184,17 @@ const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
   let { jinri_zaopan } = NewMenu.left_menu_result
   let TITLE = {
-    1: this.$root.$t("menu.match_play"), //"滚球",
-    2: this.$root.$t("menu.match_today"), //"今日",
-    3: this.$root.$t("menu.match_early"), //"早盘",
-    500: this.$root.$t("menu.match_hot"), //"热门赛事"
-    400: this.$root.$t("menu.match_winner"), //"冠军"
+    1: i18n.t("menu.match_play"), //"滚球",
+    2: i18n.t("menu.match_today"), //"今日",
+    3: i18n.t("menu.match_early"), //"早盘",
+    500: i18n.t("menu.match_hot"), //"热门赛事"
+    400: i18n.t("menu.match_winner"), //"冠军"
   };
 
   let _page_title = ""
   let _menu_type = NewMenu.left_menu_result.root
-  if (this.is_search_page) {
-    _page_title = this.$root.$t("common.search_title")
+  if (is_search_page) {
+    _page_title = i18n.t("common.search_title")
     // 今日|早盘|串关
   } else if ([2, 3].includes(_menu_type)) {
     let sport_name = NewMenu.get_current_left_menu_name()
@@ -211,10 +211,10 @@ const page_title = computed(() => {
   }
   if (jinri_zaopan == 2 && _menu_type == 2000) {
     //'今日  (电子竞技)'
-    _page_title = `  ${this.$root.$t("menu.match_today")} (${this.$root.$t("common.e_sports")})`
+    _page_title = `  ${i18n.t("menu.match_today")} (${i18n.t("common.e_sports")})`
   } else if (jinri_zaopan == 3 && _menu_type == 2000) {
     //'早盘  (电子竞技)'
-    _page_title = `  ${this.$root.$t("menu.match_early")} (${this.$root.$t("common.e_sports")})`
+    _page_title = `  ${i18n.t("menu.match_early")} (${i18n.t("common.e_sports")})`
   }
   return _page_title;
 })
@@ -225,13 +225,13 @@ const enable_collect_api = computed(() => {
 })
 
 //设置即将开赛筛选列表
-let hour = this.$t('common.hour')
+let hour = i18n.t('common.hour')
 time_list.value = [
-  { label: this.$t('common.all'), title: this.$t('common.all'), value: null },
-  { label: this.$t('filter.select_time.3h'), title: '3' + hour, value: 3 },
-  { label: this.$t('filter.select_time.6h'), title: '6' + hour, value: 6 },
-  { label: this.$t('filter.select_time.9h'), title: '9' + hour, value: 9 },
-  { label: this.$t('filter.select_time.12h'), title: '12' + hour, value: 12 },
+  { label: i18n.t('common.all'), title: i18n.t('common.all'), value: null },
+  { label: i18n.t('filter.select_time.3h'), title: '3' + hour, value: 3 },
+  { label: i18n.t('filter.select_time.6h'), title: '6' + hour, value: 6 },
+  { label: i18n.t('filter.select_time.9h'), title: '9' + hour, value: 9 },
+  { label: i18n.t('filter.select_time.12h'), title: '12' + hour, value: 12 },
 ]
 // 显示部分dom ID
 DOM_ID_SHOW.value = window.env.config.DOM_ID_SHOW;
@@ -274,23 +274,37 @@ const select_time_change = () => {
 
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST);
 }
+
+/**
+ * 重置条件
+ */
+const reset_filter = () => {
+  store.dispatch({
+    type: 'set_open_select_time',
+    data: null
+  })
+}
+
 /**
  * @ Description:切换联赛排序
  * @param {object} row 切换的排序
  * @return {undefined} undefined
  */
 const on_click_sort = (row) => {
-  if (!get_global_switch.value.sort_cut) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"))
+  if (!get_global_switch.value.sort_cut) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"))
   match_sort_show.value = false
-  this.vx_set_match_sort(row.id);
+  store.dispatch({
+    type: 'SET_MATCH_SORT',
+    data: row.id
+  })
 }
 /**
  * @Description:切换联赛筛选
  * @return {undefined} undefined
  */
 const toggle_filter_popup = () => {
-  if (!get_global_switch.value.filter_switch) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
-  if ((this.load_data_state != 'data' && !vx_show_filter_popup.value)) {
+  if (!get_global_switch.value.filter_switch) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"));
+  if ((props.load_data_state != 'data' && !vx_show_filter_popup.value)) {
     return
   }
   //打开或关闭赛事筛选弹层
@@ -300,7 +314,7 @@ const toggle_filter_popup = () => {
   })
   if (vx_show_filter_popup.value) {
     //设置即将开赛筛选默认值
-    this.reset_filter()
+    reset_filter()
   }
 }
 
@@ -351,8 +365,8 @@ const on_change_list_type = (type) => {
     // 前端开    后台关       >关
     // 前端关    后台开       >关
     // 前端关    后台关       >关
-    if (!this.enable_collect_api || !get_global_switch.value.collect_switch) {
-      return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.$root.$t("msg.msg_09"));
+    if (!enable_collect_api || !get_global_switch.value.collect_switch) {
+      return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"));
     }
     apiType = 2
 
@@ -467,9 +481,9 @@ const on_change_list_type = (type) => {
     match_list: {
       api_name,
       params: {
-        "cuid": this.vx_get_uid,
-        "sort": this.vx_match_sort,
-        "selectionHour": this.$store.state.filter.open_select_time,
+        "cuid": vx_get_uid.uid || '',
+        "sort": vx_match_sort.value,
+        "selectionHour": open_select_time.value,
         ...lv2_mi_info,
       },
     }
@@ -689,4 +703,5 @@ const on_change_list_type = (type) => {
   }
 }
 
-/** 联赛排序 -E*/</style>
+/** 联赛排序 -E*/
+</style>

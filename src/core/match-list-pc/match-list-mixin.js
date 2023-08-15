@@ -19,7 +19,6 @@ import {
 import { virtual_sport_format } from "src/core/match-list-pc/composables/match-list-ws.js";
 
 import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
-
 const match_list = {
 	setup(props, { attrs, slots, emit, expose }) {
 		return {

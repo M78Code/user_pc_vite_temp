@@ -18,7 +18,7 @@
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
           <sport-icon v-if="NewMenu.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports />
-          <img v-else v-img="[_.get(card_style_obj.league_obj,'lurl')]" />
+          <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -41,8 +41,9 @@
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
+import lodash from 'lodash';
 import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
-import store from 'project_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 //   inject:['match_list_card'],
 let state = store.getState();
 

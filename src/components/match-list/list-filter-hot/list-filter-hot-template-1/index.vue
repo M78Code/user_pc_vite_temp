@@ -21,8 +21,8 @@
           </div>
           <!-- 球种名称 -->
           <div class="name  menu-inline name-margin-left"
-            v-tooltip="{ content: (item.mi == '50199' ? $root.$t('common.all') : BaseData.menus_i18n_map[item.mi] + ' ' + item.ct) || '', overflow: 1 }">
-            <span>{{ (item.mi == '50199' ? $root.$t('common.all') : BaseData.menus_i18n_map[item.mi]) || '' }}</span>
+            v-tooltip="{ content: (item.mi == '50199' ? i18n.t('common.all') : BaseData.menus_i18n_map[item.mi] + ' ' + item.ct) || '', overflow: 1 }">
+            <span>{{ (item.mi == '50199' ? i18n.t('common.all') : BaseData.menus_i18n_map[item.mi]) || '' }}</span>
             <span class="count-text">{{ item.ct }}</span>
           </div>
 
@@ -39,7 +39,7 @@ import { defineProps, ref, onMounted } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-
+import { i18n } from 'src/boot/i18n.js'
 const props = defineProps({ ...useProps });
 const current_menu = ref('')
 const name = ref('list_filter_hot')

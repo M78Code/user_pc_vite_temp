@@ -48,6 +48,7 @@
 import { computed } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
+import { i18n } from 'src/boot/i18n.js'
 useRegistPropsHelper(component_symbol, need_register_props)
 
 // 其他玩法标题
@@ -61,7 +62,7 @@ const bet_col = computed(() => {
         start -= 1
         end -= 1
     }
-    bet_col = [...this.$root.$t('list.match_tpl_title.tpl0.15minutes_bet_col')]
+    bet_col = [...i18n.t('list.match_tpl_title.tpl0.15minutes_bet_col')]
     bet_col.splice(2,1)
     bet_col.splice(bet_col.length-1,1,"")
     bet_col = bet_col.slice(start,end)
