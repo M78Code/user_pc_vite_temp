@@ -3,14 +3,14 @@
     <!-- 无直播源 -->
     <div v-tooltip="{ content: i18n.t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
-      @click="on_switch_match('auto')" v-if="!NewMenu.is_esports() || $route.name == 'search'">
+      @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || $route.name == 'search'">
       <div class="v-icon switch-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"></div>
     </div>
-    <div class="yb-flex-center" :class="{ 'flex-center': NewMenu.is_esports() }">
+    <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
       <!-- 收藏 -->
       <div
-        v-if="NewMenu.is_esports() && (!['play', 'hot'].includes(vx_cur_menu_type.type_name)) && $route.name != 'search' && get_global_switch.collect_switch"
+        v-if="menu_config.is_esports() && (!['play', 'hot'].includes(vx_cur_menu_type.type_name)) && $route.name != 'search' && get_global_switch.collect_switch"
         class="yb-flex-center yb-hover-bg play-count-wrap" @click.stop="collect">
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
@@ -18,7 +18,7 @@
       <div v-if="cur_video_icon.type" @click="on_switch_match(cur_video_icon.type)"
         v-tooltip="{ content: cur_video_icon.text }" class="icon-wrap relative-position">
         <div
-          :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (NewMenu.is_esports() && $route.name != 'search')) }]">
+          :class="['v-icon', `${cur_video_icon.type}-icon`, { 'active': vx_detail_params.mid == match.mid && (vx_play_media.media_type == cur_video_icon.type || (menu_config.is_esports() && $route.name != 'search')) }]">
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
     </div>
     <!-- 盘口数量 -->
     <div class="play-count-wrap no-wrap yb-flex-center" @click="on_go_detail" style="margin-top:10px;"
-      v-if="NewMenu.is_esports() && $route.name != 'search'">
+      v-if="menu_config.is_esports() && $route.name != 'search'">
       <span class="count">{{ handicap_num }}</span>
       <div class="yb-flex-center" style="margin-left:5px">
         <div class="yb-icon-arrow"></div>
@@ -40,7 +40,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { computed, defineProps, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -53,6 +53,8 @@ import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
 import store from 'src/store-redux/index.js';
 import { i18n } from 'src/boot/i18n.js'
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+
 
 let state = store.getState();
 const props = defineProps({ ...useProps })
@@ -89,7 +91,7 @@ const cur_video_icon = computed(() => {
     text: "",
   }
   //电竞
-  let is_esports = props.NewMenu.is_esports()
+  let is_esports = menu_config.is_esports()
   //滚球状态
   let is_play = get_match_status(ms)
   // 包含的语言

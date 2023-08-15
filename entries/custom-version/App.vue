@@ -4,7 +4,7 @@
      <h4>客户端模块化+SDK版本---------full-version </h4>
      <h5>   custom-version   </h5>
      <div>
-      <TestComponentFullVersionWapper @test-emit="handle_test_emit"/>
+      <TestComponentFullVersionWapper @test-emit="handle_test_emit"  :tableClass="'bg-teal'"  :title="'xasxsaxa111'" />
      </div>
  
   

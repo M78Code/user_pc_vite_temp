@@ -29,7 +29,7 @@
         <template  v-else-if="type_.seriesType == '3'">{{main.matchName}}</template>
         <template v-else>{{main.matchInfo}}</template>
       </p>
-      <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{(new Date(utils.format_time_zone_time(+main.beginTime))).Format($root.$t('time4'))}}</p>
+      <!-- <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{(new Date(format_time_zone_time(+main.beginTime))).Format($root.$t('time4'))}}</p> -->
     </div>
 
     <!-- 中 -->
@@ -37,13 +37,15 @@
       <p class="col-8">
         <span>
           <!--球类名称 赛前还是滚球 玩法名称-->
-          {{i18n_data.sport_name}}<span
-            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{i18n_data.type}}&ensp;</span>
+          <!-- {{i18n_data.sport_name}} i18n_data.type-->
+          <span
+            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{'123'}}&ensp;</span> 
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
           <template v-if="main.scoreBenchmark && !is_pre">({{main.scoreBenchmark | format_score}})</template>&thinsp;
-          <span v-if="!type_.acCode">[{{i18n_data.mtype}}]</span>
+          <!-- i18n_data.mtype -->
+          <span v-if="!type_.acCode">[{{'i18n_data.mtype'}}]</span>
         </span>
       </p>
       <!-- 结算比分存在时显示结算比分 -->
@@ -101,64 +103,12 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
 import utils from "src/core/utils/utils.js"
+import { format_time_zone_time, format_odds } from 'src/core/formart'
+import { onUnmounted, ref, computed, onMounted  } from 'vue'
+import { useRoute } from 'vue-router'
 // import { i18n } from 'src/boot/i18n'
 
-    
-  const bet_result = ref({
-    //'未结算',
-    // "0": $root.$t("bet_record.bet_no_status00"), 
-    //'走水',
-    "2": $root.$t("bet_record.bet_no_status02"), 
-    //'输',
-    "3": $root.$t("bet_record.bet_no_status03"), 
-    //'赢',
-    "4": $root.$t("bet_record.bet_no_status04"),
-     //'赢半', 
-    "5": $root.$t("bet_record.bet_no_status05"),
-    //'输半',
-    "6": $root.$t("bet_record.bet_no_status06"), 
-    //'比赛取消',
-    "7": $root.$t("bet_record.bet_no_status07"), 
-    //'比赛延期',
-    "8": $root.$t("bet_record.bet_no_status08"), 
-    // '比赛延迟',
-    "11": $root.$t("bet_record.bet_no_status11"), 
-    // '比赛中断',
-    "12": $root.$t("bet_record.bet_no_status12"), 
-    // '比赛放弃'
-    "15": $root.$t("bet_record.bet_no_status15") 
-  }) 
-  const bet_result_1 = ref({
-    //'比赛取消',
-    "7": $root.$t("bet_record.bet_no_status07"), 
-    //'比赛延期',
-    "8": $root.$t("bet_record.bet_no_status08"), 
-    // '比赛延迟',
-    "11": $root.$t("bet_record.bet_no_status11"), 
-    // '比赛中断',
-    "12": $root.$t("bet_record.bet_no_status12"), 
-    // '比赛放弃'
-    "15": $root.$t("bet_record.bet_no_status15") 
-  }) 
-  //手动取消订单的原因展示
-  const bet_result_3 = ref({
-    "1": $root.$t("bet_record.cancel_type_1"),
-    "2": $root.$t("bet_record.cancel_type_2"),
-    "3": $root.$t("bet_record.cancel_type_3"),
-    "4": $root.$t("bet_record.cancel_type_4"),
-    "5": $root.$t("bet_record.cancel_type_5"),
-    "6": $root.$t("bet_record.cancel_type_6"),
-    "17": $root.$t("bet_record.cancel_type_17"),
-    "20": $root.$t("bet_record.cancel_type_20")
-  }) 
-  // 3个需要特殊对应的国际化数据写到这里
-  const i18n_data = ref({
-    sport_name: $root.$t(`common_lang.${lang}.sport2`)[main.sportId],
-    type: $root.$t(`common_lang.${lang}.matchtype`)[main.matchType],
-    mtype: $root.$t(`common_lang.${lang}.odds`)[main.marketType]
-  }) 
-  let lang = ref(type_.langCode ? (type_.langCode == 'zs' ? 'zh': type_.langCode) : 'zh')
-  const props =defineProps({
+const props =defineProps({
     main: {
       type: Object
     },
@@ -180,14 +130,74 @@ import utils from "src/core/utils/utils.js"
     is_pre: {
       type: Boolean
     }
+  })  
+  // const bet_result = ref({
+  //   //'未结算',
+  //   // "0": $root.$t("bet_record.bet_no_status00"), 
+  //   //'走水',
+  //   "2": $root.$t("bet_record.bet_no_status02"), 
+  //   //'输',
+  //   "3": $root.$t("bet_record.bet_no_status03"), 
+  //   //'赢',
+  //   "4": $root.$t("bet_record.bet_no_status04"),
+  //    //'赢半', 
+  //   "5": $root.$t("bet_record.bet_no_status05"),
+  //   //'输半',
+  //   "6": $root.$t("bet_record.bet_no_status06"), 
+  //   //'比赛取消',
+  //   "7": $root.$t("bet_record.bet_no_status07"), 
+  //   //'比赛延期',
+  //   "8": $root.$t("bet_record.bet_no_status08"), 
+  //   // '比赛延迟',
+  //   "11": $root.$t("bet_record.bet_no_status11"), 
+  //   // '比赛中断',
+  //   "12": $root.$t("bet_record.bet_no_status12"), 
+  //   // '比赛放弃'
+  //   "15": $root.$t("bet_record.bet_no_status15") 
+  // }) 
+  // const bet_result_1 = ref({
+  //   //'比赛取消',
+  //   "7": $root.$t("bet_record.bet_no_status07"), 
+  //   //'比赛延期',
+  //   "8": $root.$t("bet_record.bet_no_status08"), 
+  //   // '比赛延迟',
+  //   "11": $root.$t("bet_record.bet_no_status11"), 
+  //   // '比赛中断',
+  //   "12": $root.$t("bet_record.bet_no_status12"), 
+  //   // '比赛放弃'
+  //   "15": $root.$t("bet_record.bet_no_status15") 
+  // }) 
+  //手动取消订单的原因展示
+  // const bet_result_3 = ref({
+  //   "1": $root.$t("bet_record.cancel_type_1"),
+  //   "2": $root.$t("bet_record.cancel_type_2"),
+  //   "3": $root.$t("bet_record.cancel_type_3"),
+  //   "4": $root.$t("bet_record.cancel_type_4"),
+  //   "5": $root.$t("bet_record.cancel_type_5"),
+  //   "6": $root.$t("bet_record.cancel_type_6"),
+  //   "17": $root.$t("bet_record.cancel_type_17"),
+  //   "20": $root.$t("bet_record.cancel_type_20")
+  // }) 
+  // 3个需要特殊对应的国际化数据写到这里
+  // const i18n_data = ref({
+  //   sport_name: $root.$t(`common_lang.${lang}.sport2`)[main.sportId],
+  //   type: $root.$t(`common_lang.${lang}.matchtype`)[main.matchType],
+  //   mtype: $root.$t(`common_lang.${lang}.odds`)[main.marketType]
+  // }) 
+  let lang = ref(props.type_.langCode ? (props.type_.langCode == 'zs' ? 'zh': props.type_.langCode) : 'zh')
+  // 路由
+  const route = useRoute()
+
+  onMounted(() => {
+    console.error(props.main);
   })
     // ...mapGetters(["get_main_item", "get_theme", "get_menu_type", "get_lang"]),
     //单关已结算投注成功（orderStatus == 1）时，不在此位置显示结算比分
   const calc_settle_score = computed(() => {
-      if (type_.orderStatus == 1 && type_.seriesType == '1') {
+      if (props.type_.orderStatus == 1 && props.type_.seriesType == '1') {
         return '';
       } else {
-        return main.settleScore
+        return props.main.settleScore
       }
     })
     //投注项展示内容，见产品文档  http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=22018812
@@ -269,8 +279,8 @@ import utils from "src/core/utils/utils.js"
     }) 
     //虚拟赛马计算标识数量
   const calc_num = computed(() => {
-      if (/[0-9]/.test(main.playOptions)) {
-        return main.playOptions.split('/')
+      if (/[0-9]/.test(props.main.playOptions)) {
+        return props.main.playOptions.split('/')
       } else {
         return false
       }
@@ -279,9 +289,9 @@ import utils from "src/core/utils/utils.js"
   const show_arrow = computed(() => {
       let flag = true;
       //不在列表页不用跳，赛事id不存在不用跳，虚拟体育不用跳,冠军不用跳，超过投注时间7天不用跳
-      let calc_time = (new Date().getTime() - type_.betTime) / (24 * 60 * 60 * 1000)
-      if ($route.name != 'matchList' || !main.matchId || type_.managerCode == 3
-        || !type_.betTime || calc_time > 7 || type_.seriesType == 3) {
+      let calc_time = (new Date().getTime() - props.type_.betTime) / (24 * 60 * 60 * 1000)
+      if (route.name != 'matchList' || !props.main.matchId || props.type_.managerCode == 3
+        || !props.type_.betTime || calc_time > 7 || props.type_.seriesType == 3) {
         flag = false;
       }
       return flag;
@@ -303,24 +313,24 @@ import utils from "src/core/utils/utils.js"
      */
   const goto_details = () => {
       if (!show_arrow) return;
-      let mid_ = main.matchId;
-      api_common.existMatchResult({ matchId: mid_, playOptionsId: main.playOptionsId }).then(res => {
+      let mid_ = props.main.matchId;
+      api_common.existMatchResult({ matchId: mid_, playOptionsId: props.playOptionsId }).then(res => {
         if (!(res && res.code == 200 && res.data)) return
         const _result = res.data.marketResult, _matchEnd = res.data.matchEnd;
         if (_result) {   //有赛果页去到赛果详情页
           $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, false)
           set_goto_detail_matchid(mid_);
           set_details_item(0);
-          $router.push({ name: 'match_result', params: { mid: mid_, index: '0' } });
+          router.push({ name: 'match_result', params: { mid: mid_, index: '0' } });
         } else {  //无赛果页去到赛事详情页
           if (_matchEnd) return; // 赛事结束但是没有赛果不跳转
           $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW, false)
-          if ([100,101,102,103].includes(+main.sportId)) {  // 如果是电竞赛事，需要设置菜单类型
+          if ([100,101,102,103].includes(+props.main.sportId)) {  // 如果是电竞赛事，需要设置菜单类型
             set_menu_type(3000)
           }
           set_goto_detail_matchid(mid_);
           set_details_item(0);
-          $router.push({ name: 'category', params: {mid: mid_, csid: main.sportId} });
+          router.push({ name: 'category', params: {mid: mid_, csid: props.main.sportId} });
         }
       })
     }

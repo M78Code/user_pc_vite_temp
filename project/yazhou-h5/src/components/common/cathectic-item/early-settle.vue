@@ -45,7 +45,7 @@
         </div>
 
         <!-- 右边设置按钮 -->
-        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && get_user.pcs" :style="{opacity:status == 5||status == 6?0.3:1}">
+        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(get_user, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
             <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
@@ -85,7 +85,7 @@
       <!-- 注单剩余本金 -->
       <p class="yb_mb4">{{$root.$t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
       <!-- 提前结算可用次数 -->
-      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && get_user.pcs==1  && get_user.settleSwitch">{{$root.$t('early.info9')}}：{{ remaining_num }}</p>
+      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(get_user,'pcs')==1  && lodash.get(get_user,'settleSwitch')">{{$root.$t('early.info9')}}：{{ remaining_num }}</p>
     </div>
 
     <!-- 提前结算详情 -->
@@ -147,8 +147,12 @@ import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import utils from 'src/core/utils/utils.js'
 import { Platform } from "quasar";
-import { inject } from 'vue'
+import { inject, ref, computed, onMounted, onUnmounted, watch, toRefs } from 'vue'
+import lodash from 'lodash'
+// import store from 'src/store-redux'
 
+const store_data = ref(store.getState())
+console.error(store_data);
 const props = defineProps({
   item_data: {
     type: Object
@@ -178,13 +182,14 @@ const props = defineProps({
   // let utils = ref(utils) 
   // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
   // let count_ = ref(0) 
-  let origin_settle_money = ref(lodash.cloneDeep(item_data.maxCashout)) 
+  let origin_settle_money = ref(lodash.cloneDeep(props.item_data.maxCashout)) 
   // 延时器
   let timer = ref(null)
   let timer2 = ref(null)
   let timer3 = ref(null)
   let timer4 = ref(null)
   let timer5 = ref(null)
+  const {  } = toRefs(store_data.userReducer)
 
     // ...mapGetters([
       //当前皮肤
@@ -206,9 +211,9 @@ const props = defineProps({
     })
     // 提示信息是否展示
   const is_tips_show = computed(() => {
-      let flag1 = item_data.preSettleBetAmount && calc_show    // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
+      let flag1 = props.item_data.preSettleBetAmount && calc_show    // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
       let flag2 = status == 4  &&  details_show2 == false   // 第一次就全额结算
-      let flag3 = item_data.settleType == 999  // 发生过2次提前结算
+      let flag3 = props.item_data.settleType == 999  // 发生过2次提前结算
       return flag1 && !flag2 && !flag3
     })
   const betting_amount = computed(() => {
@@ -225,11 +230,11 @@ const props = defineProps({
      * 是否仅支持全额结算
      */
   const is_only_fullbet = computed(() => {
-      return item_data.preSettleBetAmount != null && item_data.preSettleBetAmount <= min_bet_money && expected_profit >= 1
+      return props.item_data.preSettleBetAmount != null && props.item_data.preSettleBetAmount <= min_bet_money && expected_profit >= 1
     })
     // 提前结算投注额,四舍五入取整
   const cashout_stake = computed(() => {
-      let pba = item_data.preSettleBetAmount || 0
+      let pba = props.item_data.preSettleBetAmount || 0
       let _money = Math.round(pba * (percentage / 100));
       if (percentage == 100) {
         _money = pba;
@@ -246,17 +251,17 @@ const props = defineProps({
      * @return {number}  返还金额
      */
   const expected_profit = computed(() => {
-      let _maxCashout = item_data.maxCashout
+      let _maxCashout = props.item_data.maxCashout
       // if (_maxCashout) {
         const moneyData = lodash.find(get_early_moey_data,(item)=>{
-          return item_data.orderNo == item.orderNo
+          return props.item_data.orderNo == item.orderNo
         })
         if(moneyData && moneyData.orderStatus === 0){
           if(moneyData.preSettleMaxWin !=  origin_settle_money){
             _maxCashout = moneyData.preSettleMaxWin
           }
         }
-        let _percentage = cashout_stake / item_data.preSettleBetAmount
+        let _percentage = cashout_stake / props.item_data.preSettleBetAmount
         //四舍五入至小数点第二位
         return Math.round(_maxCashout * _percentage * 100) / 100
       // } else {
@@ -269,7 +274,7 @@ const props = defineProps({
     })
     // 计算提前结算按钮是否显示
   const calc_show = computed(() => {
-      return /10true[1-6]+/.test("" + get_user.settleSwitch + get_main_item + item_data.enablePreSettle + status);
+      return /10true[1-6]+/.test("" + lodash.get(get_user, 'settleSwitch') + get_main_item + props.item_data.enablePreSettle + status);
     })
     watch(() => expected_profit, () => {
     //   handler(_new, _old) {
@@ -368,15 +373,15 @@ const props = defineProps({
     })
   
     
-    ordervos_ = lodash.get(item_data, "orderVOS[0]", {});
+    ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
     // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
-    if (ordervoslodash.hs != 0) {
+    if (ordervos_.hs != 0) {
       status = 5;
     }
     // 设置哪些注单处于确认中的状态
     if (Array.isArray(queryorderpresettleconfirm_data) && get_main_item == 0) {
       queryorderpresettleconfirm_data.forEach((item) => {
-        if (item.orderNo == item_data.orderNo && item.preSettleOrderStatus == 0) {
+        if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
           status = 3
           front_settle_amount = item.frontSettleAmount
         }
@@ -384,7 +389,7 @@ const props = defineProps({
     }
   onMounted(() => {
     // 已发生过提前结算或者提前结算取消
-    if (item_data.preBetAmount > 0 || [3,4,5].includes(item_data.settleType)) {
+    if (props.item_data.preBetAmount > 0 || [3,4,5].includes(props.item_data.settleType)) {
       details_show2 = true;
     }
     if (is_only_fullbet) {
@@ -394,7 +399,7 @@ const props = defineProps({
 
     // 该注单支持提前结算，或者做过提前结算的话，需要打个标记
     if (calc_show || details_show2) {
-      item_data.is_show_early_settle = true
+      props.item_data.is_show_early_settle = true
     }
 
     // 处理ws订单状态推送
@@ -413,7 +418,7 @@ const props = defineProps({
      *@param {Object} · orderNo - 订单号, orderStatus - 订单状态
      */
   const c201_handle = ({ orderNo, orderStatus }) => {
-      if (item_data.orderNo == orderNo && status == 3) {
+      if (props.item_data.orderNo == orderNo && status == 3) {
         if (orderStatus == 1) {
           // 成功
           status = 4;
@@ -437,10 +442,10 @@ const props = defineProps({
       oddFinally = Number(oddFinally)
       let flag = cashOutStatus == 1 || cashOutStatus == -1
       if (hid == marketId) {
-        item_data.enablePreSettle = flag
+        props.item_data.enablePreSettle = flag
         if (flag) {
           if (hs == 0 && cashOutStatus == 1 && (status == 5 || status == 7)) {
-            if(!item_data.maxCashout){
+            if(!props.item_data.maxCashout){
               $root.$emit(emit_cmd.EMIT_GET_ORDER_LIST)
             }
             if(expected_profit > 1){
@@ -478,7 +483,7 @@ const props = defineProps({
       if (details_show) {
         details_show = false;
       } else {
-        api_betting.getPreSettleOrderDetail({ orderNo: item_data.orderNo }).then((res) => {
+        api_betting.getPreSettleOrderDetail({ orderNo: props.item_data.orderNo }).then((res) => {
           let { code, data = [] } = res || {};
           if (code == 200) {
             presettleorderdetail_data = data;
@@ -497,7 +502,7 @@ const props = defineProps({
       status = 3;
       let params = {
         // 订单号
-        orderNo: item_data.orderNo, 
+        orderNo: props.item_data.orderNo, 
         // 结算金额
         settleAmount: cashout_stake, 
         // 结算设备类型 1:H5（默认），2：PC，3:Android，4:IOS

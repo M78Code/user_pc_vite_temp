@@ -29,6 +29,14 @@ export default class MatchInfoCtr {
     // 赛事对象
     this.match_obj = {};
   }
+  /**
+   * 当前详情页面赛事的 CSID 
+   */
+  get_csid(){
+    this.match_obj.csid  
+  }
+
+
 
   /**
    * @description: 增加/修改赛事信息

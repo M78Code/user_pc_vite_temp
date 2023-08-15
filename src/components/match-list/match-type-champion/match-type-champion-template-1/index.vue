@@ -17,7 +17,7 @@
       <i class="icon-arrow q-icon c-icon" size="14px" ></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <sport-icon v-if="NewMenu.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports />
+          <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px" is_esports />
           <img v-else v-img="[lodash.get(card_style_obj.league_obj,'lurl')]" />
         </div>
         <!-- 联赛名称 -->
@@ -30,8 +30,8 @@
         <div
           class="icon-wrap"
           :class="card_style_obj.league_obj.tf && 'active'"
-          v-if="!NewMenu.is_esports() && get_global_switch.collect_switch"
-          @click.stop="match_list_card.view.mx_collect({type: NewMenu.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
+          v-if="!menu_config.is_esports() && get_global_switch.collect_switch"
+          @click.stop="match_list_card.view.mx_collect({type: menu_config.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
         >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
@@ -44,6 +44,7 @@ import { ref, reactive } from 'vue'
 import lodash from 'lodash';
 import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import store from 'src/store-redux/index.js'
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 //   inject:['match_list_card'],
 let state = store.getState();
 

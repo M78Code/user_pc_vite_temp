@@ -18,9 +18,10 @@
         {{is_all_early_flag + '-----' + is_early}}
         <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
+            {{value + '--' + name + '==' + index}}
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
+                <!-- <span>{{(new Date(name)).Format($root.$t('time2'))}}</span> -->
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
@@ -50,19 +51,23 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 // import skt_order from "src/public/mixins/websocket/data/skt-data-order.js"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-import store from 'src/store-redux'
+// import { cathecticReducer } from 'project_path/src/store/index.js' // project\yazhou-h5\src\store\index.js
+// import store from "project_path/src/stor/index.js"  // src\store-redux\index.js
+// import * as project_store from "project_path/src/store/index.js";
+// import store from "src/store-redux/index.js"
 
     // mixins: [skt_order]
     
-    let store_data = ref(store.getState())
+    // let store_data = ref(store.getState())
+// console.error(project_store);
     // 锚点
     let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
-  let list_data = ref([])
+  let list_data = ref({})
   //list_data里面最后的一条数据的日期 '2020-11-17'
   let last_record = ref('')
   //是否没有数据
@@ -135,7 +140,7 @@ import store from 'src/store-redux'
      * @returns {boolean} 是否有结算注单
      */
   const clac_all_is_early = () => {
-    const data = lodash.values(list_data)
+    const data = lodash.values(list_data.value)
     return lodash.find(data,(item)=>{
       return lodash.some(item.data,{is_show_early_settle:true})
     }) ? false : true
@@ -161,7 +166,7 @@ import store from 'src/store-redux'
       return;
     }
     let tempList = []
-    lodash.forEach(list_data, (value, key)=> {
+    lodash.forEach(list_data.value, (value, key)=> {
       lodash.forEach(value.data,(item)=>{
         if(item.enablePreSettle){
           tempList.push(item.orderNo)
@@ -205,7 +210,7 @@ import store from 'src/store-redux'
     // 请求接口
     api_betting.post_getH5OrderList(params).then(reslut => {
       let res = ''
-      if (reslut.status) {
+      if (lodash.get(reslut, 'status')) {
         res = reslut.data
       } else {
         res = reslut
@@ -226,7 +231,7 @@ import store from 'src/store-redux'
           item.open = true
           size += item.data.length
         }
-        last_record = lodash.findLastKey(record);
+        last_record.value = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
         // console.error(record);
@@ -236,17 +241,18 @@ import store from 'src/store-redux'
             is_loading = false;
           }
           // 合并数据
-          let obj = lodash.cloneDeep(list_data)
-          list_data = lodash.merge(obj, record)
-          // console.error(list_data);
+          let obj = lodash.cloneDeep(list_data.value)
+          list_data.value = lodash.merge(obj, record) 
         }, 380);
         
       }else if(res.code == '0401038'){
+        // 接口code 0401038 异常处理
         is_limit = true
         no_data = false
         is_loading = false
         return
       } else if (res.code == '0401013') {
+        // 接口code 0401013 异常处理
         is_loading = false;
         no_data = false
         return;
@@ -296,7 +302,7 @@ import store from 'src/store-redux'
 
         // 合并数据
         let obj = lodash.cloneDeep(list_data);
-        list_data = lodash.merge(obj, record)
+        list_data.value = lodash.merge(obj, record)
       } else {
         //没有更多
         ele.setState(7);  

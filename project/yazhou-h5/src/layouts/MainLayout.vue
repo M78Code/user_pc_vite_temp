@@ -27,12 +27,12 @@ const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-useMittOn(MITT_TYPES["change_accept"], (e) => {
-  get_accept_show.value = e
-})
-useMittOn(MITT_TYPES["change_combine_tips"], (e) => {
-  get_combine_tips_show.value = e
-})
+// useMittOn(MITT_TYPES["change_accept"], (e) => {
+//   get_accept_show.value = e
+// })
+// useMittOn(MITT_TYPES["change_combine_tips"], (e) => {
+//   get_combine_tips_show.value = e
+// })
 /**
 * @description: touchstart事件方法体
 */

@@ -1,8 +1,37 @@
+/**
+ * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
+ */
+
+
 import lodash from "lodash"
+
+
+
+
 class MenuData {
   constructor() {
+    //================主列表用的  开始==================
+    //上一次的 菜单
+    this.previous_menu = {}
+    //当前的菜单 
     this.current_menu = {}
-    this.menu_list = []
+     //上一次的菜单 lv1 
+     this.previous_lv_1_menu = {}
+     //当前的菜单 lv1
+     this.current_lv_1_menu = {}
+      //上一次的菜单 lv2 
+      this.previous_lv_2_menu = {}
+      //当前的菜单 lv2
+      this.current_lv_2_menu = {}
+       //上一次的菜单 lv3 
+       this.previous_lv_3_menu = {}
+       //当前的菜单 lv3
+       this.current_lv_3_menu = {}
+       //================主列表用的  结束================== 
+       //热门的 
+       this. hot_tab_menu={}
+
+      this.menu_list = []
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -343,5 +372,43 @@ class MenuData {
       random_minutes,
     };
   }
+  get_level_four_menu(){
+    return ''
+  }
+  get_curr_sub_menu_type(){
+    return ''
+  }
+  get_current_lv_2_menu_type(){
+    return '0'
+  } 
+
+  /**
+   * 电竞菜单要保留上一个 电竞菜单 的 csid 
+   */
+  get_current_esport_csid(){
+    return ''
+  }
+
+  get_current_sub_menuid(){
+    return ''
+  }
+
+      /**
+     * 判断是否为冠军和电竞冠军
+     */
+        get_mm_is_champion(){
+        return   _.get(this.current_menu, 'date_menu.menuType') == 100;
+      } 
+ /**
+  * 一级菜单顶层菜单的 菜单类型  ，没有则是0
+  */
+  get_current_lv_1_menu_type(){
+    return '0'
+  } 
+
+
+  
+
+
 };
 export default  new MenuData();

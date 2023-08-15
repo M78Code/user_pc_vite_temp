@@ -6,26 +6,26 @@
  */
 import lodash from "lodash";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-const football = require("public/yazhou-pc/image/png/football.png"); //足球
-const basketball = require("public/yazhou-pc/image/png/basketball.png"); //篮球
-const baseball = require("public/yazhou-pc/image/png/baseball.png"); //棒球
-const ice_hockey = require("public/yazhou-pc/image/jpg/ice_hockey.jpg"); //冰球
-const tennis = require("public/yazhou-pc/image/png/tennis.png"); //网球
-const usa_football = require("public/yazhou-pc/image/png/usa_football.png"); // 美足
-const snooker = require("public/yazhou-pc/image/jpg/snooker.jpg"); //斯诺克
-const ping_pong = require("public/yazhou-pc/image/jpg/ping_pong.jpg"); //乒乓球
-const volleyball = require("public/yazhou-pc/image/png/volleyball.png"); // 排球
-const badminton = require("public/yazhou-pc/image/jpg/badminton.jpg"); //羽毛球
-const handball = require("public/yazhou-pc/image/common/png/handball.png"); //手球
-const boxing = require("public/yazhou-pc/image/common/png/boxing.png"); //拳击
-const beach_volleyball = require("public/yazhou-pc/image/common/png/beach_volleyball.png"); //沙滩排球
-const rugby = require("public/yazhou-pc/image/common/png/rugby.png"); //橄榄球
-const hockey = require("public/yazhou-pc/image/common/png/hockey.png"); //曲棍球
-const polo = require("public/yazhou-pc/image/common/png/polo.png"); //水球
-const virtual_dog = require("public/yazhou-pc/image/png/virtual_dog.png"); //赛狗
-const virtual_racing = require("public/yazhou-pc/image/png/virtual_racing.png"); //赛马
-const motorcycle = require("public/yazhou-pc/image/png/motorcycle.png"); // 虚拟摩托车
-const virtual_dirt_bike_details = require("public/yazhou-pc/image/png/virtual_dirt_bike_details.png"); // 虚拟泥地摩托车
+const football = require("app/public/yazhou-pc/image/png/football.png"); //足球
+const basketball = require("app/public/yazhou-pc/image/png/basketball.png"); //篮球
+const baseball = require("app/public/yazhou-pc/image/png/baseball.png"); //棒球
+const ice_hockey = require("app/public/yazhou-pc/image/jpg/ice_hockey.jpg"); //冰球
+const tennis = require("app/public/yazhou-pc/image/png/tennis.png"); //网球
+const usa_football = require("app/public/yazhou-pc/image/png/usa_football.png"); // 美足
+const snooker = require("app/public/yazhou-pc/image/jpg/snooker.jpg"); //斯诺克
+const ping_pong = require("app/public/yazhou-pc/image/jpg/ping_pong.jpg"); //乒乓球
+const volleyball = require("app/public/yazhou-pc/image/png/volleyball.png"); // 排球
+const badminton = require("app/public/yazhou-pc/image/jpg/badminton.jpg"); //羽毛球
+const handball = require("app/public/yazhou-pc/image/common/png/handball.png"); //手球
+const boxing = require("app/public/yazhou-pc/image/common/png/boxing.png"); //拳击
+const beach_volleyball = require("app/public/yazhou-pc/image/common/png/beach_volleyball.png"); //沙滩排球
+const rugby = require("app/public/yazhou-pc/image/common/png/rugby.png"); //橄榄球
+const hockey = require("app/public/yazhou-pc/image/common/png/hockey.png"); //曲棍球
+const polo = require("app/public/yazhou-pc/image/common/png/polo.png"); //水球
+const virtual_dog = require("app/public/yazhou-pc/image/png/virtual_dog.png"); //赛狗
+const virtual_racing = require("app/public/yazhou-pc/image/png/virtual_racing.png"); //赛马
+const motorcycle = require("app/public/yazhou-pc/image/png/motorcycle.png"); // 虚拟摩托车
+const virtual_dirt_bike_details = require("app/public/yazhou-pc/image/png/virtual_dirt_bike_details.png"); // 虚拟泥地摩托车
 
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";

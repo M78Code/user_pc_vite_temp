@@ -1,6 +1,6 @@
 <template>
   <!-- 电竞背景图 sportsbg-csid -->
-  <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="NewMenu.menu_root == 2000">
+  <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="menu_config.menu_root == 2000">
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
       <div
@@ -40,6 +40,7 @@ import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
 import store from 'src/store-redux/index.js'
 import { i18n } from 'src/boot/i18n.js'
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
 
 const props = defineProps({ ...useProps })
@@ -65,7 +66,7 @@ const cur_video_icon = computed(() => {
     text: "",
   }
   //电竞
-  let is_esports = props.NewMenu.is_esports()
+  let is_esports = menu_config.is_esports()
   //滚球状态
   let is_play = get_match_status(ms)
   // 包含的语言

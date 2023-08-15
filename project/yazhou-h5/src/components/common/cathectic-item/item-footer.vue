@@ -60,6 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
+import { ref, onUnmounted } from 'vue'
   const props = defineProps({
     data_f: {
       type: Object
@@ -74,55 +75,55 @@
     //'未结算',
     // "0": $root.$t("bet_record.bet_no_status00"), 
     //'走水',
-    "2": $root.$t("bet_record.bet_no_status02"), 
-     //'输',
-    "3": $root.$t("bet_record.bet_no_status03"),
-    //'赢',
-    "4": $root.$t("bet_record.bet_no_status04"), 
-    //'赢半',
-    "5": $root.$t("bet_record.bet_no_status05"), 
-    //'输半',
-    "6": $root.$t("bet_record.bet_no_status06"), 
-    //'比赛取消',
-    "7": $root.$t("bet_record.bet_no_status07"), 
-    //'比赛延期',
-    "8": $root.$t("bet_record.bet_no_status08"), 
-    // '比赛延迟',
-    "11": $root.$t("bet_record.bet_no_status11"), 
-    // '比赛中断',
-    "12": $root.$t("bet_record.bet_no_status12"), 
-    // '比赛放弃'
-    "15": $root.$t("bet_record.bet_no_status15"), 
+    // "2": $root.$t("bet_record.bet_no_status02"), 
+    //  //'输',
+    // "3": $root.$t("bet_record.bet_no_status03"),
+    // //'赢',
+    // "4": $root.$t("bet_record.bet_no_status04"), 
+    // //'赢半',
+    // "5": $root.$t("bet_record.bet_no_status05"), 
+    // //'输半',
+    // "6": $root.$t("bet_record.bet_no_status06"), 
+    // //'比赛取消',
+    // "7": $root.$t("bet_record.bet_no_status07"), 
+    // //'比赛延期',
+    // "8": $root.$t("bet_record.bet_no_status08"), 
+    // // '比赛延迟',
+    // "11": $root.$t("bet_record.bet_no_status11"), 
+    // // '比赛中断',
+    // "12": $root.$t("bet_record.bet_no_status12"), 
+    // // '比赛放弃'
+    // "15": $root.$t("bet_record.bet_no_status15"), 
   }) 
   const outcome = ref({
-    //'走水',
-    "2": $root.$t("bet_record.bet_no_status02"), 
-    //'输',
-    "3": $root.$t("bet_record.bet_no_status03"), 
-    //'赢',
-    "4": $root.$t("bet_record.bet_no_status04"), 
-    //'赢半',
-    "5": $root.$t("bet_record.bet_no_status05"), 
-    //'输半',
-    "6": $root.$t("bet_record.bet_no_status06"), 
+    // //'走水',
+    // "2": $root.$t("bet_record.bet_no_status02"), 
+    // //'输',
+    // "3": $root.$t("bet_record.bet_no_status03"), 
+    // //'赢',
+    // "4": $root.$t("bet_record.bet_no_status04"), 
+    // //'赢半',
+    // "5": $root.$t("bet_record.bet_no_status05"), 
+    // //'输半',
+    // "6": $root.$t("bet_record.bet_no_status06"), 
   }) 
   const bet_result_1 = ref({
-    "7": $root.$t("bet_record.bet_no_status07"),
-    "8": $root.$t("bet_record.bet_no_status08"),
-    "11": $root.$t("bet_record.bet_no_status11"),
-    "12": $root.$t("bet_record.bet_no_status12"),
-    "15": $root.$t("bet_record.bet_no_status15")
+    // "7": $root.$t("bet_record.bet_no_status07"),
+    // "8": $root.$t("bet_record.bet_no_status08"),
+    // "11": $root.$t("bet_record.bet_no_status11"),
+    // "12": $root.$t("bet_record.bet_no_status12"),
+    // "15": $root.$t("bet_record.bet_no_status15")
   }) 
   //手动取消订单的原因展示
   const bet_result_3 = ref({
-    "1": $root.$t("bet_record.cancel_type_1"),
-    "2": $root.$t("bet_record.cancel_type_2"),
-    "3": $root.$t("bet_record.cancel_type_3"),
-    "4": $root.$t("bet_record.cancel_type_4"),
-    "5": $root.$t("bet_record.cancel_type_5"),
-    "6": $root.$t("bet_record.cancel_type_6"),
-    "17": $root.$t("bet_record.cancel_type_17"),
-    "20": $root.$t("bet_record.cancel_type_20"),
+    // "1": $root.$t("bet_record.cancel_type_1"),
+    // "2": $root.$t("bet_record.cancel_type_2"),
+    // "3": $root.$t("bet_record.cancel_type_3"),
+    // "4": $root.$t("bet_record.cancel_type_4"),
+    // "5": $root.$t("bet_record.cancel_type_5"),
+    // "6": $root.$t("bet_record.cancel_type_6"),
+    // "17": $root.$t("bet_record.cancel_type_17"),
+    // "20": $root.$t("bet_record.cancel_type_20"),
   }) 
   //这一单是否赢钱了
   const is_win = ref(false)   
@@ -136,13 +137,13 @@
     //单关已结算投注成功状态（orderStatus == 1）此位置需要返回结算比分
     //单关注单无效状态（orderStatus == 2）此位置需要返回无效原因
   const calc_settle_score = () => {
-      if (data_f.seriesType == '1' && data_f.orderVOS[0]) {
-        if (data_f.orderStatus == '1') {
-          return data_f.orderVOS[0].settleScore
-        } else if (data_f.orderStatus == '2') {
-          let betstatus = data_f.orderVOS[0].betStatus;
-          let betresult = data_f.orderVOS[0].betResult;
-          let canceltype = data_f.orderVOS[0].cancelType;
+      if (props.data_f.seriesType == '1' && props.data_f.orderVOS[0]) {
+        if (props.data_f.orderStatus == '1') {
+          return props.data_f.orderVOS[0].settleScore
+        } else if (props.data_f.orderStatus == '2') {
+          let betstatus = props.data_f.orderVOS[0].betStatus;
+          let betresult = props.data_f.orderVOS[0].betResult;
+          let canceltype = props.data_f.orderVOS[0].cancelType;
           if (betstatus == 1) {
             return bet_result_1[betresult] || '';
           } else if (betstatus == 3 || betstatus == 4) {
@@ -159,19 +160,19 @@
     //返回订单状态
   const calc_text = () => {
       let res = '';
-      switch (data_f.orderStatus) {
+      switch (props.data_f.orderStatus) {
         case '0':
           class_foter = 'green'
           res = $root.$t('bet_record.successful_betting')
           break;
         case '1':
           class_foter = 'black'
-          let flag = data_f.seriesType == '1' && data_f.orderVOS[0]
+          let flag = props.data_f.seriesType == '1' && props.data_f.orderVOS[0]
           //单关
           if (flag) {   
-            if (+data_f.preBetAmount > 0) { 
+            if (+props.data_f.preBetAmount > 0) { 
                // 提前结算的输赢单独一套逻辑算
-              let difference = data_f.backAmount - data_f.orderAmountTotal
+              let difference = props.data_f.backAmount - props.data_f.orderAmountTotal
               // 赢
               if (difference > 0) {     
                 class_foter = 'red'
@@ -185,7 +186,7 @@
               }
               break;
             }
-            let betresult = data_f.orderVOS[0].betResult
+            let betresult = props.data_f.orderVOS[0].betResult
             if (betresult == 13 || betresult == 16) {
               res = $root.$t('bet_record.invalid');
             } else {
@@ -197,11 +198,11 @@
             }
           } else {  
             //串关
-            if (data_f.outcome == 4 || data_f.outcome == 5) {
+            if (props.data_f.outcome == 4 || props.data_f.outcome == 5) {
               class_foter = 'red'
               is_win = true
             }
-            res = outcome[data_f.outcome] || $root.$t('bet_record.successful_betting')
+            res = outcome[props.data_f.outcome] || $root.$t('bet_record.successful_betting')
           }
           break;
         case '2':
