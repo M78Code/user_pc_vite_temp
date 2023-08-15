@@ -46,7 +46,7 @@ function set_date_time(data) {
 const { off: off_set_date_time } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time)
 /** 销毁事件 */
 onUnmounted(() => off_set_date_time(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD))
-</script >
+</script>
 
 <script>
 export default defineComponent({

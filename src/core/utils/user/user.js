@@ -1,4 +1,4 @@
-import { api_details } from "src/public/api/index";
+import { api_details } from "src/api/index";
 
 /**
   * @Description:判断用户是否登录
