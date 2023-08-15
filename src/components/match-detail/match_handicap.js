@@ -24,7 +24,6 @@ import goTop from "src/components/go-top/go-top.vue";
 
 
 import { api_details } from "src/public/api/index";
-// import { mapGetters, mapActions } from "vuex";
 import format from "src/project/yabo/mixins/match_details/index";
 import time_format_mixin from "src/public/mixins/common/time_format";
 
@@ -49,99 +48,70 @@ export default {
     "go-top": goTop,
 
   },
-  data() {
-    return {
-      sportId: null,
-      details_data: [], //拼接数据
-      reset_toggle: 0,
-      // 当前 loading 状态
-      load_detail_statu: "loading",
-      layout_statu: true, // 单双列样式
-      waterfall: [], // 单双列数据
-      // 是否开了滚球盘
-      had_play_handicap: true,
-      // 玩法展开状态
-      panel_status: "default",
-      has_thumb: false, //是否有滚动条
-      handle_: [], // 用户操作过的数据
-    };
-  },
-  props: {
-    // 详情数据
-    match_info: Object,
-    //页面展开的对象
-    is_list: Boolean,
-    //玩法集
-    category_list: Array,
-    //盘口详情
-    match_details: Array,
-    // 关闭全部玩法
-    close_all_handicap: Boolean,
-    // 数据加载状态
-    handicap_state: String,
-    refs_tabs_bar: HTMLDivElement,
-    // 组件加载类型
-    load_type: String,
-    // 选中玩法集的盘口玩法集
-    plays_list: Array,
-    // 电竞当前回合
-    currentRound: {
-      type: [Object, Number],
-    },
-  },
+  // data() {
+  //   return {
+  //     sportId: null,
+  //     details_data: [], //拼接数据
+  //     reset_toggle: 0,
+  //     // 当前 loading 状态
+  //     load_detail_statu: "loading",
+  //     layout_statu: true, // 单双列样式
+  //     waterfall: [], // 单双列数据
+  //     // 是否开了滚球盘
+  //     had_play_handicap: true,
+  //     // 玩法展开状态
+  //     panel_status: "default",
+  //     has_thumb: false, //是否有滚动条
+  //     handle_: [], // 用户操作过的数据
+  //   };
+  // },
+  // props: {
+  //   // 详情数据
+  //   match_info: Object,
+  //   //页面展开的对象
+  //   is_list: Boolean,
+  //   //玩法集
+  //   category_list: Array,
+  //   //盘口详情
+  //   match_details: Array,
+  //   // 关闭全部玩法
+  //   close_all_handicap: Boolean,
+  //   // 数据加载状态
+  //   handicap_state: String,
+  //   refs_tabs_bar: HTMLDivElement,
+  //   // 组件加载类型
+  //   load_type: String,
+  //   // 选中玩法集的盘口玩法集
+  //   plays_list: Array,
+  //   // 电竞当前回合
+  //   currentRound: {
+  //     type: [Object, Number],
+  //   },
+  // },
 
   computed: {
     ...mapGetters({
       // 获取用户uid
-      get_uid: "get_uid",
+      // get_uid: "get_uid",
       // 获取指定的玩法id
-      get_top_id: "get_top_id",
+      // get_top_id: "get_top_id",
       // 获取页面宽高信息 --可以废弃，废弃改动较大
-      get_layout_list_size: "get_layout_list_size",
+      // get_layout_list_size: "get_layout_list_size",
       // 详情页玩法列表单双列 0单列， 1双列
-      get_layout_statu: "get_layout_statu",
+      // get_layout_statu: "get_layout_statu",
       // 获取当前页路由信息
-      vx_layout_cur_page: "get_layout_cur_page",
+      // vx_layout_cur_page: "get_layout_cur_page",
       // 右侧布局布局 大或小  ---未使用
-      get_right_zoom: "get_right_zoom",
+      // get_right_zoom: "get_right_zoom",
       // 当前所选择的玩法集子项
-      get_tabs_active_id: "get_tabs_active_id",
+      // get_tabs_active_id: "get_tabs_active_id",
     }),
-    current_list() {
-      let list = [];
-      this.plays_list.forEach((element) => {
-        list.push(element + "-" + this.currentRound);
-      });
-      return list;
-    },
+
   },
 
   watch: {
-    get_layout_list_size() {
-      if (this.get_layout_statu) {
-        this.set_waterfall(this.details_data);
-      } else {
-        this.waterfall = [this.details_data];
-      }
-      this.int_is_show();
-      this.set_go_top_show();
-    },
-    get_right_zoom() {
-      this.wrap_tabs_width = this.$refs.warp.offsetWidth;
-    },
-    // 监听关闭全部玩法
-    close_all_handicap: {
-      handler(res) {
-        if (res) {
-          if (this.load_type == "details") {
-            this.$emit("set_handicap_state", "empty");
-          } else {
-            this.load_detail_statu = "empty";
-          }
-        }
-      },
-      immediate: true,
-    },
+
+ 
     "match_info.mmp": {
       handler(cur) {
         if (cur == "999") {
@@ -286,25 +256,7 @@ export default {
       return transfer;
     },
 
-    /**
-     * @Description:初始化玩法是否展开
-     * @return {undefined} undefined
-     */
-    int_is_show() {
-      // let show_title = "hide"
-      this.waterfall.forEach((list) => {
-        list.forEach((item) => {
-          //是否有附加盘
-          if (item.hmm == 1 && _.get(item, "hl.length") > 1) {
-            item.has_plus = true;
-          } else {
-            item.has_plus = false;
-          }
-          item.is_show = this.panel_status == "hide" ? false : true;
-          item.is_show_plus = this.panel_status == "hide" ? false : true;
-        });
-      });
-    },
+
     /**
      * @Description:设置玩法是否展开
      * @return {undefined} undefined
@@ -404,88 +356,6 @@ export default {
       this.int_is_show();
     },
 
-    /**
-     * 玩法集瀑布流，设置单列或双列的数据[[]] / [[],[]]
-     * @return {undefined} undefined
-     *
-     * is_hide_panel 判断列表是否是全部展开或收起状态
-     * 如果是全部收起，就直接把玩法左右各放一半
-     * 如果不是，就左右各放一个然后计算高度栏判断放在哪一边
-     */
-    set_waterfall(res, is_hide_panel) {
-      if (!res.length) return;
-      // 双列左边
-      let left_array = [];
-      // 双列右边
-      let right_array = [];
-      // 左侧玩法个数
-      let left_row = 0;
-      // 右侧玩法个数
-      let right_row = 0;
-      //收起状态
-      if (is_hide_panel) {
-        res.forEach((item, index) => {
-          if (index % 2) {
-            right_array.push(item);
-          } else {
-            left_array.push(item);
-          }
-        });
-      } else {
-        //展开状态
-        res.forEach((item, index) => {
-          if (index == 0) {
-            //第一条数据插入左边
-            left_array.push(item);
-            left_row = this.get_play_rows(item);
-          } else if (index == 1) {
-            //第二条数据插入右边
-            right_array.push(item);
-            right_row += this.get_play_rows(item);
-          } else {
-            //从第三条开始计算左右总高度，判断插入
-            if (left_row <= right_row) {
-              left_row += this.get_play_rows(item);
-              left_array.push(item);
-            } else {
-              right_row += this.get_play_rows(item);
-              right_array.push(item);
-            }
-          }
-        });
-      }
-      this.waterfall = [left_array, right_array];
-    },
-    /**
-     * 获取单个玩法的行数
-     * @return {undefined} undefined
-     */
-    get_play_rows(data) {
-      let num = 0; //玩法条数
-      let row = 0; //玩法显示的行数
-      data.hl.forEach((item) => {
-        if (item && item.ol) {
-          num += item.ol.length;
-        }
-      });
-      /*
-      [0, 2, 3, 5, 6].includes(data.hpt)//2
-      [1, 4, 7, 8, 10].includes(data.hpt)//3
-      [9].includes(data.hpt)//5
-      */
-      if ([0, 2, 3, 5, 6].includes(data.hpt)) {
-        [5, 6].includes(data.hpt)
-          ? (row = Math.ceil(num / 2) + 1)
-          : (row = Math.ceil(num / 2));
-      } else if ([1, 4, 7, 8, 10].includes(data.hpt)) {
-        [4, 8].includes(data.hpt)
-          ? (row = Math.ceil(num / 3) + 1)
-          : (row = Math.ceil(num / 3));
-      } else if ([9].includes(data.hpt)) {
-        row = Math.ceil(num / 5) + 1;
-      }
-      return row;
-    },
 
     /**
      * 玩法置顶排序
@@ -575,20 +445,7 @@ export default {
     on_go_top() {
       this.$emit("on_go_top");
     },
-    /**
-     * @Description:设置是否显示返回按钮
-     * @return {Undefined} Undefined
-     */
-    set_go_top_show() {
-      this.$nextTick(() => {
-        let obj =
-          document.querySelector(".details .v-scrollarea .scroll") ||
-          document.querySelector(".virtual_details .v-scrollarea .scroll");
-        if (obj) {
-          this.has_thumb = obj.scrollHeight > obj.clientHeight;
-        }
-      });
-    },
+
     /**
      * @Description 获取当前选中详情玩法集
      * @param {undefined} undefined

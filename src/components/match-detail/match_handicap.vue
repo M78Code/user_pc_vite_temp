@@ -1,6 +1,6 @@
 <!--
- * @Author: Yellow
- * @Date: 2020-08-04 17:13:55
+ * @Author: Coopoer
+ * @Date: 2020-08-15 17:13:55
  * @Description: 玩法模板条件加载 详情页面 玩法集下面的玩法 列表
 -->
 <template>
@@ -72,25 +72,99 @@
   </div>
 </template>
 <script>
-import { defineComponent,defineProps,ref,watch ,onMounted} from "vue";
+import {
+  defineComponent,
+  defineProps,
+  ref,
+  reactive,
+  watch,
+  computed,
+  onMounted,
+  nextTick,
+} from "vue";
 import match_handicap from "src/components/match-detail/match_handicap.js";
+import store from "src/store-redux/index.js";
+import details from "src/core/match-detail-pc/match-detail.js";
+import lodash from "lodash";
 export default defineComponent({
-  mixins: [match_handicap],
-    props: {
+  mixins: [match_handicap], //引入玩法组件
+  props: {
     // 判断当前在哪个详情页
     pageType: String,
+    // 详情数据
+    match_info: Object,
+    //页面展开的对象
+    is_list: Boolean,
+    //玩法集
+    category_list: Array,
+    //盘口详情
+    match_details: Array,
+    // 关闭全部玩法
+    close_all_handicap: Boolean,
+    // 数据加载状态
+    handicap_state: String,
+    refs_tabs_bar: HTMLDivElement,
+    // 组件加载类型
+    load_type: String,
+    // 选中玩法集的盘口玩法集
+    plays_list: Array,
+    // 电竞当前回合
+    currentRound: {
+      type: [Object, Number],
+    },
   },
-
   setup(props, event) {
-    const showDetails = ref(false)
+    //  ============================数据===================
+    const state = reactive({
+      sportId: null,
+      details_data: [], //拼接数据
+      reset_toggle: 0,
+      // 当前 loading 状态
+      load_detail_statu: "loading",
+      layout_statu: true, // 单双列样式
+      waterfall: [], // 单双列数据
+      // 是否开了滚球盘
+      had_play_handicap: true,
+      // 玩法展开状态
+      panel_status: "default",
+      has_thumb: false, //是否有滚动条
+      handle_: [], // 用户操作过的数据
+    });
+    const emit = defineEmits(['set_handicap_state'])
 
-    watch(()=>props.load_detail_statu,val=>{
-       // 盘口关闭时隐藏详情列表
-       if (["all_empty", "new_empty", "refresh", "404"].includes(n)) {
+    const showDetails = ref(false);
+    //  ============================store===================
+    const store_state = store.getState();
+    // 获取页面宽高信息 --可以废弃，废弃改动较大
+    const get_layout_list_size = ref(
+      store_state.layoutReducer.layout_list_size
+    );
+    // 详情页玩法列表单双列 0单列， 1双列
+    const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
+    // 获取用户uid
+    const get_uid = store_state.userReducer.uuid;
+    // 当前所选的玩法集子项id
+    const get_tabs_active_id = ref(
+      store_state.matchesReducer.tabs_active_index
+    );
+    // 获取当前页路由信息
+    const vx_layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
+    // 获取指定的玩法id
+    const get_top_id = ref(store_state.matchesReducer.topId);
+    // 获取指定的玩法id
+    const get_right_zoom = ref(store_state.matchesReducer.zoom);
+
+    //  ============================watch===================
+
+    watch(
+      () => props.load_detail_statu,
+      (val) => {
+        // 盘口关闭时隐藏详情列表
+        if (["all_empty", "new_empty", "refresh", "404"].includes(n)) {
           showDetails.value = false;
           document.querySelector(".wrap-handicap").style.height = "auto";
         } else {
-         showDetails.value = true;
+          showDetails.value = true;
         }
         // 右侧详情加载进行优化
         let s = n == "loading" ? "right_details_loading" : n;
@@ -99,19 +173,84 @@ export default defineComponent({
         if (this.pageType == "right_details") {
           this.$root.$emit("change_loading_status_right_details", s);
         }
-    })
+      }
+    );
+    // 页面宽高变化
+    watch(get_layout_list_size, (val) => {
+      if (get_layout_statu.value) {
+        state.waterfall = details.set_waterfall(state.details_data);
+      } else {
+        state.waterfall = [state.details_data];
+      }
+      int_is_show();
+      set_go_top_show();
+    });
+    // 监听关闭全部玩法
+    watch(()=>props.close_all_handicap, (res) => {
+      if (res) {
+          if (props.load_type == "details") {
+            this.$emit("set_handicap_state", "empty");
+          } else {
+            state.load_detail_statu = "empty";
+          }
+        }
+    },
+    {immediate:true}
+    );
+    // watch(get_right_zoom, (val) => {
+    //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
+    // });
 
-    watch()
-
-    onMounted(()=>{
+    //  ============================computed===================
+    const current_list = computed(() => {
+      let list = [];
+      props.plays_list.forEach((element) => {
+        list.push(element + "-" + props.currentRound);
+      });
+      return list;
+    });
+    //  ============================methods===================
+    /**
+     * @Description:初始化玩法是否展开
+     * @return {undefined} undefined
+     */
+    const int_is_show = () => {
+      // let show_title = "hide"
+      state.waterfall.forEach((list) => {
+        list.forEach((item) => {
+          //是否有附加盘
+          if (item.hmm == 1 && lodash.get(item, "hl.length") > 1) {
+            item.has_plus = true;
+          } else {
+            item.has_plus = false;
+          }
+          item.is_show = state.panel_status == "hide" ? false : true;
+          item.is_show_plus = state.panel_status == "hide" ? false : true;
+        });
+      });
+    };
+    /**
+     * @Description:设置是否显示返回按钮
+     * @return {Undefined} Undefined
+     */
+    const set_go_top_show = () => {
+      nextTick(() => {
+        let obj =
+          document.querySelector(".details .v-scrollarea .scroll") ||
+          document.querySelector(".virtual_details .v-scrollarea .scroll");
+        if (obj) {
+          state.has_thumb = obj.scrollHeight > obj.clientHeight;
+        }
+      });
+    };
+    onMounted(() => {
       rang.value = [
-      3, 4, 19, 33, 46, 52, 58, 64, 69, 71, 113, 121, 128, 130, 143, 154, 155,
-      163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280, 294,
-      306, 308, 324, 327, 334, 20003, 20004, 20015,
-    ];
-    })
-
-  }
+        3, 4, 19, 33, 46, 52, 58, 64, 69, 71, 113, 121, 128, 130, 143, 154, 155,
+        163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280,
+        294, 306, 308, 324, 327, 334, 20003, 20004, 20015,
+      ];
+    });
+  },
 
   // watch: {
   //   // 详情没数据时隐藏容器
