@@ -149,7 +149,8 @@ import utils from 'src/core/utils/utils.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, toRefs } from 'vue'
 import lodash from 'lodash'
-import store from 'src/store-redux'
+// import store from 'src/store-redux'
+
 const store_data = ref(store.getState())
 console.error(store_data);
 const props = defineProps({
