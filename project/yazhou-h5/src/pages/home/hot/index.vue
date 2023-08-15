@@ -133,7 +133,7 @@ const league_icon_error = ($event) => {
     $event.target.src = "image/bw3/svg/match_cup.svg";
   }
   $event.target.onerror = null
-},
+}
 // 竞彩足球图片 处理
 const host = (item) => {
   let url = ''
@@ -144,7 +144,7 @@ const host = (item) => {
     url = `${domain}/${prefix_job}/${item.field3}`
   }
   return url
-},
+}
 // tab 初始化数据
 const get_list = (first) => {
   first ? first_loading = true : first_loading = false

@@ -640,7 +640,7 @@ export default {
       isShow: true,
       timeout_toast:null, // 定时器
       early_settlement_data: [], // 用于提前结算的数据
-      pup_data: {},//赛事信息数据
+ 
       // more_wrap_data: {},//更多弹框数据
       // show_bet_order: {}, //是否查看提前结算
       pre_order_list_obj: {}, //查看提前结算详情

@@ -199,13 +199,11 @@ let show_secondary_play_list = (i) => {
   }
   return result;
 };
-
 const is_show_time_title = () => {
   return (
     PageSourceData.page_source == "home_hot_page_schedule" && match.time_title
   );
 };
-
 // 获取赛事对应的dom显示区域属性
 export const get_match_dom_show_property = (i) => {
   let main_menu_type = +MenuData.get_current_lv_1_menu_type();
@@ -215,7 +213,6 @@ export const get_match_dom_show_property = (i) => {
   if (!match) {
     return {};
   }
-
   return {
     mid: match.mid,
     is_show_league: is_show_league(i),
@@ -227,10 +224,11 @@ export const get_match_dom_show_property = (i) => {
     menu_type: main_menu_type,
     is_newer_edition: PageSourceData.get_newer_standard_edition() == 1,
     is_show_time_title: is_show_time_title(),
-
     invok_source: PageSourceData.page_source,
     sub_menu_type: MenuData.get_current_lv_2_menu_type(),
     index: i,
     number_of_bets: number_of_bets,
   };
 };
+
+
