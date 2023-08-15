@@ -11,7 +11,7 @@
         <i class="icon-arrow q-icon c-icon" size="14px"></i>
         <!-- 联赛图标 -->
         <div class="league-icon-wrap">
-          <sport-icon v-if="NewMenu.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px"
+          <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px"
             is_esports />
           <img v-else v-img="[_.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
@@ -71,7 +71,7 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="match_list_card.view.mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!NewMenu.is_esports() && get_global_switch.collect_switch">
+          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && get_global_switch.collect_switch">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
       </div>
@@ -104,6 +104,7 @@ import { get_match_tpl_title } from 'src/core/utils/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from 'project_path/src/store/index.js'
 let state = store.getState()
 
@@ -115,7 +116,7 @@ const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] |
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 //全局开关
 const get_global_switch = reactive(state.globalReducer.global_switch)
-if (!_.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(props.NewMenu.menu_root)) {
+if (!_.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes( menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
 
@@ -137,7 +138,7 @@ const bet_col = computed(() => {
   }
   let title_name = 'bet_col'
   //角球
-  if (tpl_id == 0 && props.NewMenu.is_corner_menu()) {
+  if (tpl_id == 0 && menu_config.is_corner_menu()) {
     title_name = "corner_bet_col"
   }
   //罚牌主盘
@@ -248,7 +249,7 @@ const is_highlighted = (csid) => {
 const set_fold = () => {
   let type_name =vx_cur_menu_type.value.type_name;
   // 如果当前联赛是折叠的 并且是今日、早盘、串关  调用bymids接口拉数据
-  if (this.card_style_obj.is_league_fold && (['today', 'early', 'bet'].includes(type_name) || props.NewMenu.is_esports())) {
+  if (this.card_style_obj.is_league_fold && (['today', 'early', 'bet'].includes(type_name) || menu_config.is_esports())) {
     // 设置赛事基础数据
     this.match_list_card.set_match_basic_data(props.card_style_obj)
     let params = {

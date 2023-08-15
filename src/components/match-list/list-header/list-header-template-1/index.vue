@@ -6,7 +6,7 @@
 
 <template>
   <div class="c-match-list-header yb-flex-between "
-    :class="NewMenu.menu_root == 2 && NewMenu.match_list_api_config.guanjun ? 'today-champion' : ''">
+    :class="menu_config.menu_root == 2 && menu_config.match_list_api_config.guanjun ? 'today-champion' : ''">
     <!-- left -->
     <div class="col-left row items-center">
       <!--全部按钮-->
@@ -15,7 +15,7 @@
         {{ $root.$t("common.all") }}
       </div>
       <!--收藏按钮-->
-      <div v-show="NewMenu.compute_if_can_show_shoucang() && !vx_show_filter_popup && !is_search_page"
+      <div v-show="menu_config.compute_if_can_show_shoucang() && !vx_show_filter_popup && !is_search_page"
         @click="(enable_collect_api ? collect_count : true) && on_change_list_type('collect')"
         class="btn-wrap collect-btn yb-flex-center cursor-pointer" :class="{ 'active': vx_layout_list_type == 'collect', }"
         :title="$root.$t('list.my_collect')">
@@ -52,14 +52,14 @@
 
       <!-- 即将开赛筛选 -->
       <!-- 今日有 收藏没有 冠军没有 -->
-      <com-select v-else-if="NewMenu.menu_root == 2 && vx_layout_list_type != 'collect' && !NewMenu.is_guanjun()"
+      <com-select v-else-if="menu_config.menu_root == 2 && vx_layout_list_type != 'collect' && !menu_config.is_guanjun()"
         :options="time_list" v-model="$store.state.filter.open_select_time" showKey="title" @input="select_time_change">
         <template #prefix><span class="fg1">{{ $t("common.match_soon_filtr") }}</span></template>
       </com-select>
 
       <!-- 选择联赛按钮 -->
       <!-- 电子竞技 vr 收藏 没有  -->
-      <div v-show="NewMenu.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
+      <div v-show="menu_config.compute_if_can_show_league_fliter() && vx_layout_list_type != 'collect'"
         @click.stop="toggle_filter_popup"
         class="select-btn leagues-btn yb-flex-center cursor-pointer filter-handle yb-hover-bg"
         :class="{ active: vx_show_filter_popup, disable: load_data_state != 'data' && !vx_show_filter_popup }"
@@ -71,7 +71,7 @@
       </div>
       <!-- 列表排序按钮 -->
       <!-- 电子竞技 vr 没有  -->
-      <div v-show="NewMenu.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
+      <div v-show="menu_config.compute_if_can_show_sort()" show_type="sort" class="flex list-sort select-btn  yb-hover-bg">
         <div v-for="(sort, index) in sort_option" @click="on_click_sort(sort)"
           :class="[sort.id == vx_match_sort ? 'active' : 'yb-hover-bg', 'list-sort-item']"
           v-show="!vx_show_filter_popup && !is_search_page" :key="index">
@@ -86,7 +86,7 @@
 
 
       <div class="unfold-btn" @click="set_unfold_multi_column(false)"
-        v-if="NewMenu.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
+        v-if="menu_config.is_multi_column && !vx_show_filter_popup && !is_search_page && get_unfold_multi_column">
         <span class="text">{{ $root.$t('icon_tips.unfold') }}</span>
         <i class="icon-arrow q-icon c-icon" size="12px"></i>
       </div>
@@ -101,7 +101,7 @@ import global_mixin from "src/public/mixins/global/global_mixin.js";
 import sport_icon from "src/public/components/sport_icon/sport_icon.vue";//精灵图组件
 import odds_conversion_mixin from "src/public/mixins/odds_conversion/odds_conversion_mixin";//赔率转换
 import comSelect from "src/public/components/select";
-import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/public/utils/base_data/base-data.js";
 
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -113,7 +113,6 @@ import store from 'project_path/src/store/index.js';
 let state = store.getState();
 
 const props = defineProps({ ...useProps });
-const { NewMenu } = props;
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
@@ -182,7 +181,7 @@ const is_search_page = computed(() => {
 //当前页面菜单title
 const page_title = computed(() => {
   //当前点击的是今日还是早盘 今日 2 早盘为3
-  let { jinri_zaopan } = NewMenu.left_menu_result
+  let { jinri_zaopan } = menu_config.left_menu_result
   let TITLE = {
     1: this.$root.$t("menu.match_play"), //"滚球",
     2: this.$root.$t("menu.match_today"), //"今日",
@@ -192,19 +191,19 @@ const page_title = computed(() => {
   };
 
   let _page_title = ""
-  let _menu_type = NewMenu.left_menu_result.root
+  let _menu_type = menu_config.left_menu_result.root
   if (this.is_search_page) {
     _page_title = this.$root.$t("common.search_title")
     // 今日|早盘|串关
   } else if ([2, 3].includes(_menu_type)) {
-    let sport_name = NewMenu.get_current_left_menu_name()
+    let sport_name = menu_config.get_current_left_menu_name()
 
     if (sport_name) {
       _page_title = `${TITLE[_menu_type]}（${sport_name}）`
     } else {
       _page_title = TITLE[_menu_type]
     }
-  } else if ([1, 500].includes(NewMenu.menu_root)) {
+  } else if ([1, 500].includes(menu_config.menu_root)) {
     _page_title = TITLE[_menu_type]
   } else if (_menu_type == 400) {
     _page_title = TITLE[_menu_type]
@@ -258,7 +257,7 @@ const compute_quanbu_btn_class = () => {
     str += 'active'
   }
 
-  let can_show = NewMenu.compute_if_can_show_shoucang()
+  let can_show = menu_config.compute_if_can_show_shoucang()
   //如果不能显示收藏
   if (!can_show) {
     str += '   collect-btn'
@@ -315,7 +314,7 @@ const on_change_list_type = (type) => {
   if (type == vx_layout_list_type.value) {
     return
   }
-  let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = NewMenu.left_menu_result
+  let { lv2_mi, lv1_mi, jinri_zaopan, root, guanjun } = menu_config.left_menu_result
   let apiType = 1
   const api_params = {
     2000: {
@@ -391,7 +390,7 @@ const on_change_list_type = (type) => {
     }
     if (root == 3) {
       // 早盘获取选中的时间
-      let { match_list: { params: { md, index } } } = NewMenu.match_list_api_config
+      let { match_list: { params: { md, index } } } = menu_config.match_list_api_config
       lv2_mi_info.md = md
       lv2_mi_info.index = index || 0 // 早盘收藏 切换后回到原来的
     }
@@ -399,7 +398,7 @@ const on_change_list_type = (type) => {
   } else if (root == 400) {
     guanjun = "guanjun"
     // 冠军
-    let { mid_menu_result } = NewMenu
+    let { mid_menu_result } = menu_config
     lv2_mi_info = {
       ...lv2_mi_info,
       apiType,
@@ -417,10 +416,10 @@ const on_change_list_type = (type) => {
       "csid": current_menu.csid,
       "collect": 1,
       apiType,
-      md: (NewMenu.match_list_api_config.match_list || {}).params.md,
+      md: (menu_config.match_list_api_config.match_list || {}).params.md,
     }
   } else if (root == 500) {
-    let { mid_menu_result } = NewMenu
+    let { mid_menu_result } = menu_config
     euid = mid_menu_result.euid
     // 没有就重新获取
     if (!mid_menu_result.euid) {
@@ -447,7 +446,7 @@ const on_change_list_type = (type) => {
 
   } else if (root == 1) {
     // 滚球赛事
-    let { mid_menu_result } = NewMenu
+    let { mid_menu_result } = menu_config
     lv2_mi_info = {
       ...lv2_mi_info,
       apiType,
@@ -475,7 +474,7 @@ const on_change_list_type = (type) => {
     }
   }
 
-  NewMenu.set_match_list_api_config(config);
+  menu_config.set_match_list_api_config(config);
 }
 
 

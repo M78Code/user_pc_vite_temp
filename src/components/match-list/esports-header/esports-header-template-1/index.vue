@@ -1,6 +1,6 @@
 <template>
   <!-- 电竞背景图 sportsbg-csid -->
-  <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="NewMenu.menu_root == 2000">
+  <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="menu_config.menu_root == 2000">
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
       <div
@@ -38,6 +38,9 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
+
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+
 import store from 'project_path/src/store/index.js'
 let state = store.getState()
 
@@ -64,7 +67,7 @@ const cur_video_icon = computed(() => {
     text: "",
   }
   //电竞
-  let is_esports = props.NewMenu.is_esports()
+  let is_esports = menu_config.is_esports()
   //滚球状态
   let is_play = get_match_status(ms)
   // 包含的语言
