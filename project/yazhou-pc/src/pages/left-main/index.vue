@@ -6,8 +6,6 @@
   class="c-main-menu column"
   :class="{ 'bet-menu-upd': layout_left_show == 'bet_history' }"
 >
-<!-- 体育菜单 -->
-<menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
   <v-scroll-area
     ref="ref_bet_scroll_area"
     position="menu"
@@ -17,52 +15,7 @@
   >
     <!-- 滚动：头部 --------------------------------->
     <template v-slot:header>
-      <!-- 昵称、余额 -->
-      <div
-        class="header-wrap scroll-fixed-bg"
-        :class="is_invalid && 'invalid'"
-      >
-        <div
-          class="user-info"
-          :token="`?token=${_.get(get_user, 'token')}`"
-        >
-        <!-- 昵称 -->
-          <div class="ellipsis">Hi, {{ _.get(get_user, "uname") }}</div>
-        </div>
-        <div class="balance-wrap row justify-between relative-position">
-          <div class="row items-center">
-            <!-- 余额隐藏 -->
-            <div v-show="!show_balance" class="balance-text-hide">
-              ******
-            </div>
-              <!-- 余额 -->
-            <div
-              v-show="show_balance"
-              class="balance-text-show yb-family-odds"
-            >
-              <!-- {{ (get_user.balance || 0) || format_balance }} -->
-            </div>
-              <!-- 余额是否隐藏图标 -->
-            <icon
-              :name="show_balance ? 'icon-eye_show' : 'icon-eye_hide'"
-              size="14px"
-              class="balance-btn-eye cursor-pointer"
-              @click="set_show_balance(!show_balance)"
-            />
-          </div>
-          <!-- 刷新余额按钮 -->
-          <!-- <refresh
-            v-show="show_balance"
-            class="refresh-btn"
-            :other_icon="true"
-            icon_name="icon-balance_refresh"
-            :loaded="data_loaded"
-            :disable="!get_user"
-            @click="$root.$emit(emit_cmd.EMIT_GET_BALANCE_CMD)"
-           /> -->
-        </div>
-      </div>
-
+     
       <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
         <!-- 投注记录 入口 -->
         <div

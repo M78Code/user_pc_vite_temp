@@ -26,14 +26,14 @@ export default function userReducer(state = initialState, action) {
       return { ...state, user_info: action.data };
     case "SET_AMOUNT":
       // 保存用户余额
-      return { ...state, amount: action.amount };
+      return { ...state, amount: action.data };
     //设置用户id
     case "SET_UUID":
       return { ...state, uuid: action.data };
     //设置用户信息
     case "SET_SHOW_BALANCE":
       //设置用户余额是否展示状态
-      return { ...state, show_balance: action.amount };
+      return { ...state, show_balance: action.data };
     case "SET_SHOW_LOGIN_POPUP":
       // 设置登录弹窗状态
       return { ...state, show_login_popup: action.data };
