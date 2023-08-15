@@ -500,9 +500,6 @@ watch(() => get_bet_status.value, (new_) => {
 
 
 /** --------------------------watch结束 ---------------*/
-// ...mapMutations(['set_toast', "set_bet_status", "set_bet_obj", "set_accept_show", "set_is_accept", "set_order_ing", "set_is_mix", "set_order_no", "set_keyboard_show", "set_new_bet", "set_order_los",
-//       "set_bet_list", "set_s_count_data", "set_is_spread", "set_money_total", "set_odds_change", "set_money_notok_list", "set_active_index",
-//       "set_change_list", "add_orderno", "set_used_money", "clear_single_money", 'set_detail_data']),
 
 // 去注单记录页查看
 const go_record = () => {
