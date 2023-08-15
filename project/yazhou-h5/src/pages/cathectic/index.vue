@@ -8,9 +8,9 @@
   
       <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
         <div class="row col items-center justify-center">
-          <p class="yb_mr10" @click="change_record(0)" :class="store_data.main_item == 0 && 'active-p'">{{$root.$t('bet_record.no_account')}}<span></span></p>
-          <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="store_data.main_item == 1 && 'active-p'">{{$root.$t('bet_record.account')}}<span></span></p>
-          <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="store_data.main_item == 2 && 'active-p'">{{$root.$t('pre_record.book')}}<span></span></p>
+          <!-- <p class="yb_mr10" @click="change_record(0)" :class="store_data.main_item == 0 && 'active-p'">{{$root.$t('bet_record.no_account')}}<span></span></p> -->
+          <!-- <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="store_data.main_item == 1 && 'active-p'">{{$root.$t('bet_record.account')}}<span></span></p> -->
+          <!-- <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="store_data.main_item == 2 && 'active-p'">{{$root.$t('pre_record.book')}}<span></span></p> -->
         </div>
         <div class="col-2 close">
           <span class="close-click-padding" @click="close_show">
@@ -32,17 +32,17 @@
   </template>
   
   <script setup>
-  //   import { api_betting } from "src/api/index.js"; 
+    import { api_betting } from "src/api/index.js"; 
   //   import { mapGetters, mapMutations } from "vuex"
-  import unsettle from "./unsettle.vue"
+  import unsettle from "./unsettle.vue" // project\yazhou-h5\src\pages\cathectic\unsettle.vue
   //   import settle from "src/project/pages/cathectic/settle.vue"
   //   import pre_record from "src/project/pages/cathectic/pre_record.vue"
   import { onMounted, onUnmounted, ref, computed } from 'vue'
   import lodash from 'lodash'
-  import store  from "src/store-redux"
-  //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-  // import { useRoute } from 'vue-router'
-  
+  // import { cathecticReducer }  from "../../store/index.js"; // project\yazhou-h5\src\store\index.js
+    import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+  import { useRoute } from 'vue-router'
+  // console.error(cathecticReducer);
     // provide(){
     //   return {
     //     queryorderpresettleconfirm_data: '',  // 待确认中的提前结算订单
@@ -54,7 +54,7 @@
     let _provided = ref({})
     // 锚点
     let unsettleChild = ref(null)
-    let store_data = ref(store.getState())
+    // let store_data = ref(store.getState())
     // computed: {
     //   ...mapGetters(['main_item','get_theme','get_user']),
       

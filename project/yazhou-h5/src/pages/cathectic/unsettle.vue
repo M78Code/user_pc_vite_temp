@@ -53,12 +53,15 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-// import store from 'project_path/src/store' // project\yazhou-h5\src\store\index.js
+// import { cathecticReducer } from 'project_path/src/store/index.js' // project\yazhou-h5\src\store\index.js
+// import store from "project_path/src/stor/index.js"  // src\store-redux\index.js
+// import * as project_store from "project_path/src/store/index.js";
+// import store from "src/store-redux/index.js"
 
     // mixins: [skt_order]
     
     // let store_data = ref(store.getState())
-// console.error(store.getState());
+// console.error(project_store);
     // 锚点
     let myScroll = ref(null)
   //是否在加载中
