@@ -7,7 +7,7 @@
   <div class="analysis-odds">
     <div class="heade-wrapper">
       <div class="heade">
-        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radio_button(i)">
+        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radioButton(i)">
           {{ item.name }}
         </span>
       </div>
@@ -46,9 +46,9 @@
             </div>
           </div>
           <div class="t2 column justify-center">
-            <span>{{item.handicapOddsDTOList[0]}}</span>
+            <span>{{item.handicapOddsDTOList[0]0}}</span>
             <span :class="{'red':item.handicapOddsDTOList[1].directions0 == 1,'green':item.handicapOddsDTOList[1].directions0 == -1}">
-              {{item.handicapOddsDTOList[1]}}
+              {{item.handicapOddsDTOList[1]0}}
               <i class="odd yb_ml4"></i>
             </span>
           </div>
@@ -95,12 +95,11 @@
 <script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
 import { useRoute } from 'vue-router'
 
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import { mapGetters } from "vuex";
-
     // 国际化后续修改调整
     let tab_list = ref([
         { name: $root.$t('footer_menu.rangqiu') },
@@ -112,10 +111,8 @@ import { useRoute } from 'vue-router'
     let data_list= ref([])
     //数据加载完成
     let is_done = ref(false)
-    // 路由
-    const route = useRoute()
 
-    // 添加监听 赛事分析刷新事件 TODO 后续修改调整 $root emit
+    // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
     useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     get_list()
@@ -125,7 +122,7 @@ import { useRoute } from 'vue-router'
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-     const radio_button = (index) => {
+    const radioButton = (index) => {
       if(tabIndex == index) return
       tabIndex = index
       data_list = []
@@ -158,19 +155,17 @@ import { useRoute } from 'vue-router'
       })
     }
 
-    computed(() => {
-      search_list_high = () => {
+    const search_list_high = computed(() => {
       let rem_1 = window.innerWidth * 100 / 375;
       return {height : window.innerHeight - rem_1 - 90 + 'px'}
-    },
+    })
     // 赛事id
-    match_id = () => {
-      // get_detail_data.mid 后续修改调整
+    const match_id = computed(() => {
+      // get_detail_data.mid  后续修改调整
       return route.params.mid || get_detail_data.mid
-    }
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO $root emit 后续修改调整
+      // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
       $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
       // 国际化后续修改调整
      tab_list = ref([
@@ -185,7 +180,7 @@ import { useRoute } from 'vue-router'
      is_done = ref(false)
     })
   // computed: {
-    //  TODO 后续修改调整
+    //  TODO: 后续修改调整
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
   // },
   

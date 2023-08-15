@@ -61,8 +61,8 @@ import teamImg from "src/project/components/details/team-img";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
 import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue"; 
 import { computed } from "vue";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
+
 // 无网络展示组件 
 // import no_data from "src/project/components/common/no-data";  
 
@@ -75,14 +75,14 @@ import { useRoute } from 'vue-router'
   const radio_button_index = ref(0)
   const progress_bar = ref(false)
   const tab_radio_button = ref([
-    // TODO 国际化 后续修改调整
+    // TODO: 国际化 后续修改调整
     {name: `${$root.$t('analysis_football_matches.near')}5`, index: 5},
     {name: `${$root.$t('analysis_football_matches.near')}10`, index: 10},
     {name: `${$root.$t('analysis_football_matches.near')}15`, index: 15},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
-    // TODO 国际化 后续修改调整
+    // TODO: 国际化 后续修改调整
     $root.$t('analysis_football_matches.same_game'),
     $root.$t('analysis_football_matches.same_host_guest')
   ])
@@ -90,15 +90,13 @@ import { useRoute } from 'vue-router'
   const cps = ref(5)
   const recent_record_data = ref([])
   const no_data = ref(false)
-  // 路由
   const route = useRoute()
-
 
   get_list()
     // mhid   主队id   mhn 主队名称
     // maid   客队id   man 客队名称
   const match_id = computed(() => {
-    // 赛事id TODO 后续修改调整 get_detail_data
+    // 赛事id TODO: 后续修改调整 route get_detail_data
     return route.params.mid || get_detail_data.mid
   })
   // 复选框 点击事件
@@ -119,7 +117,7 @@ import { useRoute } from 'vue-router'
         }
       }
       get_list()
-      // TODO 后续修改调整
+      // TODO: 后续修改调整
       $forceUpdate()
     }
   const radioButton = (item, index) => {
@@ -143,7 +141,7 @@ import { useRoute } from 'vue-router'
         let grouped_collection = [
           {
             recent_record_data:[],
-            // TODO 国际化后续修改调整
+            // TODO: 国际化后续修改调整
             records_list:[
               {success: 0, name: $root.$t('analysis_football_matches.victory')},
               {flat: 0, name: $root.$t('analysis_football_matches.flat')},

@@ -5,7 +5,8 @@ import detailsReducer from "./module/details";
 import virtualSportsReducer from "./module/virtual-sports";
 import cathecticReducer from "./module/cathectic";
 import userInfoReducer from './module/userinfo';
-import themeReducer from './module/theme'
+import themeReducer from './module/theme';
+import bettingListReducer from "./module/betting_list"
 export {
   betInfoReducer,
   menuReducer,
@@ -14,5 +15,6 @@ export {
   virtualSportsReducer,
   cathecticReducer,
   userInfoReducer,
-  themeReducer
+  themeReducer,
+  bettingListReducer
 };

@@ -36,7 +36,7 @@
     }
   }) 
   const show_details= (index) => {
-    // TODO emit 后续修改调整
+    // TODO: emit 后续修改调整
     $emit('maylike_click', index)
   }
   /**
