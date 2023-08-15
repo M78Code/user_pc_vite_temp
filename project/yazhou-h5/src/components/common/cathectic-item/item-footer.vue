@@ -60,7 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, computed } from 'vue'
   const props = defineProps({
     data_f: {
       type: Object
@@ -136,7 +136,7 @@ import { ref, onUnmounted } from 'vue'
     // ...mapGetters(["get_main_item"]),
     //单关已结算投注成功状态（orderStatus == 1）此位置需要返回结算比分
     //单关注单无效状态（orderStatus == 2）此位置需要返回无效原因
-  const calc_settle_score = () => {
+  const calc_settle_score = computed(() => {
       if (props.data_f.seriesType == '1' && props.data_f.orderVOS[0]) {
         if (props.data_f.orderStatus == '1') {
           return props.data_f.orderVOS[0].settleScore
@@ -156,17 +156,17 @@ import { ref, onUnmounted } from 'vue'
         }
       }
 
-    }
+    })
     //返回订单状态
-  const calc_text = () => {
+  const calc_text = computed(() => {
       let res = '';
       switch (props.data_f.orderStatus) {
         case '0':
-          class_foter = 'green'
-          res = $root.$t('bet_record.successful_betting')
+          class_foter.value = 'green'
+          res = 'bet_record.successful_betting'// $root.$t('bet_record.successful_betting')
           break;
         case '1':
-          class_foter = 'black'
+          class_foter.value = 'black'
           let flag = props.data_f.seriesType == '1' && props.data_f.orderVOS[0]
           //单关
           if (flag) {   
@@ -175,7 +175,7 @@ import { ref, onUnmounted } from 'vue'
               let difference = props.data_f.backAmount - props.data_f.orderAmountTotal
               // 赢
               if (difference > 0) {     
-                class_foter = 'red'
+                class_foter.value = 'red'
                 is_win = true
                 res = bet_result[4]
               } else if (difference < 0) { 
@@ -222,7 +222,7 @@ import { ref, onUnmounted } from 'vue'
           break;
       }
       return res;
-    }
+    })
 </script>
 
 <style lang="scss" scoped>
