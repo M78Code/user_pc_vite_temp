@@ -15,16 +15,20 @@ const page_source =  [
   "details",
   "home",
   'result_details',
-   'match_result',
-    'category',
-    "matchList-common",
-    "matchList-filter",
-    "matchList-collect",
-    "detail_match_list",
- 
+  'match_result',
+  'category',
+  "matchList-common",
+  "matchList-filter",
+  "matchList-collect",
+  "detail_match_list",
+
  
 ]
    
+
+
+
+
 
 import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 class PageSourceData {
@@ -134,4 +138,24 @@ class PageSourceData {
   }
 }
 
-export default new PageSourceData();
+const  instance =new PageSourceData()
+
+const PageSourceDataProxy =new Proxy(instance, {
+  get: function (target, key, receiver) {
+    if( typeof target[key] != 'function'){
+      console.log(`getting : key: ${key} ,      `);
+     }
+    return Reflect.get(target, key, receiver);
+  },
+  set: function (target, key, value, receiver) {
+ 
+    console.log(`setting : key: ${key} value:${value} , `)
+
+    return Reflect.set(target, key, value, receiver);
+  }
+});
+
+
+
+
+export default   ;
