@@ -86,34 +86,10 @@ import match_handicap from "src/components/match-detail/match_handicap.js";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail-pc/match-detail.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
 export default defineComponent({
   mixins: [match_handicap], //引入玩法组件
-  props: {
-    // 判断当前在哪个详情页
-    pageType: String,
-    // 详情数据
-    match_info: Object,
-    //页面展开的对象
-    is_list: Boolean,
-    //玩法集
-    category_list: Array,
-    //盘口详情
-    match_details: Array,
-    // 关闭全部玩法
-    close_all_handicap: Boolean,
-    // 数据加载状态
-    handicap_state: String,
-    refs_tabs_bar: HTMLDivElement,
-    // 组件加载类型
-    load_type: String,
-    // 选中玩法集的盘口玩法集
-    plays_list: Array,
-    // 电竞当前回合
-    currentRound: {
-      type: [Object, Number],
-    },
-  },
   setup(props, event) {
     //  ============================数据===================
     const state = reactive({
@@ -132,6 +108,7 @@ export default defineComponent({
       handle_: [], // 用户操作过的数据
     });
     const emit = defineEmits(["set_handicap_state"]);
+    const useRoute = useRoute();
 
     const showDetails = ref(false);
     //  ============================store===================
@@ -200,8 +177,8 @@ export default defineComponent({
       },
       { immediate: true }
     );
-       // 加载状态
-      watch(
+    // 加载状态
+    watch(
       () => props.handicap_state,
       (res) => {
         state.load_detail_statu = res;
@@ -236,6 +213,20 @@ export default defineComponent({
         }
       }
     );
+    // match_detail变化
+    watch(
+      () => props.match_details,
+      (res) => {
+        state.load_detail_statu = props.handicap_state;
+        if (props.handicap_state != "data") {
+          state.details_data = [];
+          state.waterfall = [[]];
+          return false;
+        }
+        change_detail(res);
+      },
+      { immediate: true, deep:true }
+    );
     // watch(get_right_zoom, (val) => {
     //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
     // });
@@ -249,9 +240,63 @@ export default defineComponent({
       return list;
     });
     const mmp = computed(() => {
-     return props.match_info.mmp
+      return props.match_info.mmp;
     });
     //  ============================methods===================
+
+    const change_detail = () => {
+      const obj = {
+        1: 2,
+        2: 3,
+        11: 4,
+      };
+      if (props.match_info.mhs) {
+        let status = 1;
+        status = obj[props.match_info.mhs];
+
+        res.forEach((item) => {
+          item.hl.forEach((list) => {
+            list.ol.forEach((j) => {
+              if (j._hs == 11) {
+                j.os == 1 ? (j.os = status) : "";
+              } else {
+                j.os = status;
+              }
+            });
+          });
+        });
+      } else {
+        res.forEach((item) => {
+          item.hl.forEach((list) => {
+            if (list.hs) {
+              let status = 1;
+              status = obj[list.hs];
+              list.ol.forEach((j) => {
+                if (j._hs == 11) {
+                  j.os == 1 ? (j.os = status) : "";
+                } else {
+                  j.os = status;
+                }
+              });
+            }
+          });
+        });
+      }
+      // 详情和虚拟详情页计算单双列
+      if (["details", "virtual_details"].includes(useRoute.name)) {
+        if (get_layout_statu.value) {
+          state.waterfall = details.set_waterfall(state.details_data);
+        } else {
+          this.waterfall = [res];
+        }
+      } else {
+        this.waterfall = [res];
+      }
+      state.details_data = res;
+      set_go_top_show();
+      int_is_show();
+    };
+
     /**
      * @Description:初始化玩法是否展开
      * @return {undefined} undefined
@@ -307,422 +352,9 @@ export default defineComponent({
       ];
     });
   },
-
-  // watch: {
-  //   // 详情没数据时隐藏容器
-  //   "waterfall.length": {
-  //     handler(n) {
-  //       this.showDetails = n > 0;
-  //     },
-  //   },
-  // },
-  // created() {
-  //   // 角球玩法id
-  //   this.rang = [
-  //     3, 4, 19, 33, 46, 52, 58, 64, 69, 71, 113, 121, 128, 130, 143, 154, 155,
-  //     163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280, 294,
-  //     306, 308, 324, 327, 334, 20003, 20004, 20015,
-  //   ];
-  // },
 });
 </script>
 
 <style lang="scss" scoped>
-.wrap-handicap {
-  display: flex;
-  flex: 1;
-  flex-flow: column;
-  height: 100%;
-  border-right: none !important;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  .details_data {
-    width: 100%;
-  }
-  .details_data_load {
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    flex: 1;
-  }
-  ::v-deep {
-    .load-data-wrap {
-      width: 100% !important;
-      .yb-flex-center {
-        justify-content: start;
-      }
-    }
-    .go-top-btn {
-      height: 24px;
-      .msg {
-        margin-left: 5px;
-      }
-    }
-  }
-}
-/*  玩法集 */
-.wrap-tabs {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  overflow: hidden;
-  height: 40px;
-  border-bottom: 1px solid rgba(40, 43, 55, 0.5);
-  background: #191c24;
-  font-size: 12px;
-  .tabs-bar {
-    z-index: 1;
-    display: flex;
-    width: 1000px;
-    .tabs-item-wrap {
-      display: flex;
-    }
-    .tabs-item {
-      padding: 0 14px;
-      height: 36px;
-      text-align: center;
-      white-space: nowrap;
-      line-height: 38px;
-      cursor: pointer;
-      &:hover {
-        color: #fff;
-      }
-      &.active {
-        color: #fff;
-      }
-    }
-    .tabs-line {
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 24px;
-      height: 2px;
-      border-radius: 2px;
-      background-color: var(--qq--yb-text-color1);
-      transition: all 0.3s;
-    }
-  }
-  /*  玩法集左右滚动 icon */
-  .tabs-icons {
-    position: absolute;
-    top: 0;
-    z-index: 20;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 38px;
-    height: 40px;
-    background-color: #1f222b;
-    cursor: pointer;
-  }
-  .tabs-icons-left {
-    left: 0;
-    .yb-icon-arrow {
-      transform: rotate(180deg);
-    }
-  }
-  .tabs-icons-right {
-    right: 0;
-  }
-  .tabs-handel {
-    z-index: 2;
-  }
-  .right-icons {
-    position: relative;
-    z-index: 2;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  .icon-toggle {
-    margin-right: 10px;
-    cursor: pointer;
-    &:before {
-      color: #999;
-    }
-    &:hover:before {
-      color: #d1d1d1;
-    }
-    &.active:before {
-      color: var(--qq--yb-text-color1);
-    }
-  }
-}
-/*  玩法模板 title */
-.template ::v-deep .template-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
-  height: 32px;
-  font-size: 12px;
-  cursor: pointer;
-  &:hover {
-    .set_top {
-      display: block !important;
-    }
-  }
-  .set_top {
-    margin-right: 5px;
-    padding-left: 20px;
-    height: 100%;
-    text-align: center;
-    line-height: 28px;
-    cursor: pointer;
-  }
-  .play-name {
-    display: flex;
-    align-items: center;
-    height: 14px;
-    font-weight: 600;
-    &::before {
-      display: inline-block;
-      margin-right: 10px;
-      height: 14px;
-      border-radius: 1.5px;
-      content: "";
-      width: 3px;
-      background: var(--qq--theme-bg-play-name-before);
-    }
-  }
-}
-.template ::v-deep {
-  .template0,
-  .template2,
-  .template4,
-  .template6,
-  .template7,
-  .template51 {
-    .os-3 {
-      display: none !important;
-    }
-  }
-  /*  玩法模板 */
-  .handicap {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    line-height: 34px;
-    .handicap-item {
-      height: 34px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &.sub-title-2 {
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding: 0 8px;
-      }
-    }
-    .layout-line {
-      .handicap-item {
-        //border-left: 1px solid rgba(40, 43, 55, 0.5);
-      }
-    }
-    .os-1 {
-      &:hover {
-        .c-bet-item {
-          border-color: transparent;
-          .bet-item {
-            color: var(--qq--theme-color-handicap-item-bet-hover);
-          }
-        }
-      }
-      .c-bet-item.active {
-        .bet-item {
-          color: var(--qq--theme-color-handicap-item-bet-active) !important;
-        }
-        &:hover {
-          .odds {
-            color: var(--qq--theme-color-handicap-item-bet-active) !important;
-          }
-        }
-      }
-      &.sub-title-2:hover {
-        border-color: rgba(0, 0, 0, 0.1);
-      }
-      .handicap-name {
-        color: #999;
-      }
-      .odds {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        height: 100%;
-        .odds-item {
-          display: flex;
-          align-items: center;
-          height: 100%;
-          cursor: pointer;
-          .odds-num {
-            color: #d1d1d1;
-          }
-          .odds-pre {
-            margin-right: 8px;
-          }
-        }
-      }
-    }
-  }
-  /*  投注项 */
-  .c-bet-item {
-    padding: 0 20px 0 15px;
-  }
-}
-/*  玩法列表 */
-.template-handicap {
-  display: flex;
-  flex: 1;
-  position: unset;
-  /*  加载状态样式 */
-  ::v-deep .load-data-wrap.is-detail .empty-wrap {
-    padding-top: 100px !important;
-    .text-center {
-      padding-bottom: 50px;
-    }
-  }
-  ::v-deep .load-data-wrap.is-detail .loading-wrap {
-    padding-top: 100px;
-    .text-center {
-      padding-bottom: 50px;
-    }
-  }
-  ::v-deep .load-data-wrap.is-detail .refresh.fit {
-    padding-top: 80px;
-  }
-  .double {
-    display: flex;
-    .group-template {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      width: 50%;
-      &:first-child {
-        margin-right: 2px;
-      }
-      .template {
-        width: 100%;
-      }
-    }
-  }
-  .group-template {
-    .template {
-      .wrap-template {
-        margin-top: 4px;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .template6 {
-        ::v-deep .main-handicap {
-          .group {
-            &:last-child {
-              border-radius: 0 0 8px 8px;
-              overflow: hidden;
-            }
-          }
-        }
-      }
-      .template0,
-      .template2,
-      .template3,
-      .template7 {
-        ::v-deep .main-handicap {
-          .handicap:last-child {
-            border-radius: 0 0 8px 8px;
-            overflow: hidden;
-          }
-        }
-      }
-      .template10 {
-        & > ::v-deep div:last-child {
-          border-radius: 0 0 8px 8px;
-          overflow: hidden;
-        }
-      }
-      /*  红升绿降样式 */
-      ::v-deep .c-bet-item {
-        .odds-icon {
-          top: auto;
-          bottom: auto;
-          &:before {
-            display: none;
-          }
-        }
-      }
-    }
-  }
-  ::v-deep .handicap-wrap {
-    flex: 1;
-    min-width: 1px;
-    .bet-item {
-      display: flex;
-      align-items: center;
-      .bet-ellipsis {
-        min-width: 1px;
-      }
-    }
-    .bet_handicap {
-      margin-left: 6px;
-      .handicap-value {
-        flex: 1;
-      }
-      .item-label:first-child {
-        margin-right: 6px;
-      }
-    }
-    .ranking-nos {
-      display: flex;
-    }
-    .rank-no {
-      width: 16px;
-      height: 16px;
-    }
-  }
-}
-/*  红升绿降样式 */
-.template {
-  ::v-deep .c-bet-item.up {
-    background: rgba(233, 61, 61, 0.05);
-    &.normal,
-    &.active {
-      .odds {
-        color: #e93d3d;
-        &:after {
-          display: block;
-          content: "";
-          width: 6px;
-          height: 10px;
-          position: absolute;
-          right: -10px;
-          background: url("~public/image/common/svg/red_up.svg") no-repeat
-            center;
-        }
-      }
-    }
-  }
-  ::v-deep .c-bet-item.down {
-    background: rgba(80, 192, 66, 0.05);
-    &.normal,
-    &.active {
-      .odds {
-        color: #50c042;
-        &:after {
-          display: block;
-          content: "";
-          width: 6px;
-          height: 10px;
-          position: absolute;
-          right: -10px;
-          background: url("~public/image/common/svg/green_down.svg") no-repeat
-            center;
-        }
-      }
-    }
-  }
-}
-.null-bg {
-  height: 100px;
-}
+@import "./index.scss";
 </style>

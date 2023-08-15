@@ -46,155 +46,33 @@ export default {
     "template18":DetailTemp18,
     "template51":DetailTemp51,
     "go-top": goTop,
-
   },
-  // data() {
-  //   return {
-  //     sportId: null,
-  //     details_data: [], //拼接数据
-  //     reset_toggle: 0,
-  //     // 当前 loading 状态
-  //     load_detail_statu: "loading",
-  //     layout_statu: true, // 单双列样式
-  //     waterfall: [], // 单双列数据
-  //     // 是否开了滚球盘
-  //     had_play_handicap: true,
-  //     // 玩法展开状态
-  //     panel_status: "default",
-  //     has_thumb: false, //是否有滚动条
-  //     handle_: [], // 用户操作过的数据
-  //   };
-  // },
-  // props: {
-  //   // 详情数据
-  //   match_info: Object,
-  //   //页面展开的对象
-  //   is_list: Boolean,
-  //   //玩法集
-  //   category_list: Array,
-  //   //盘口详情
-  //   match_details: Array,
-  //   // 关闭全部玩法
-  //   close_all_handicap: Boolean,
-  //   // 数据加载状态
-  //   handicap_state: String,
-  //   refs_tabs_bar: HTMLDivElement,
-  //   // 组件加载类型
-  //   load_type: String,
-  //   // 选中玩法集的盘口玩法集
-  //   plays_list: Array,
-  //   // 电竞当前回合
-  //   currentRound: {
-  //     type: [Object, Number],
-  //   },
-  // },
-
-  computed: {
-    ...mapGetters({
-      // 获取用户uid
-      // get_uid: "get_uid",
-      // 获取指定的玩法id
-      // get_top_id: "get_top_id",
-      // 获取页面宽高信息 --可以废弃，废弃改动较大
-      // get_layout_list_size: "get_layout_list_size",
-      // 详情页玩法列表单双列 0单列， 1双列
-      // get_layout_statu: "get_layout_statu",
-      // 获取当前页路由信息
-      // vx_layout_cur_page: "get_layout_cur_page",
-      // 右侧布局布局 大或小  ---未使用
-      // get_right_zoom: "get_right_zoom",
-      // 当前所选择的玩法集子项
-      // get_tabs_active_id: "get_tabs_active_id",
-    }),
-
+  props: {
+    // 判断当前在哪个详情页
+    pageType: String,
+    // 详情数据
+    match_info: Object,
+    //页面展开的对象
+    is_list: Boolean,
+    //玩法集
+    category_list: Array,
+    //盘口详情
+    match_details: Array,
+    // 关闭全部玩法
+    close_all_handicap: Boolean,
+    // 数据加载状态
+    handicap_state: String,
+    refs_tabs_bar: HTMLDivElement,
+    // 组件加载类型
+    load_type: String,
+    // 选中玩法集的盘口玩法集
+    plays_list: Array,
+    // 电竞当前回合
+    currentRound: {
+      type: [Object, Number],
+    },
   },
 
-  watch: {
-
-    match_details: {
-      handler(res) {
-        this.load_detail_statu = this.handicap_state;
-
-        if (this.handicap_state != "data") {
-          this.details_data = [];
-          this.waterfall = [[]];
-          return false;
-        }
-
-        /*hl级关锁盘 || 赛事级关锁盘
-          参考文档 src/public/mixins/details/README.md
-          赛事级封关锁
-        */
-        if (this.match_info.mhs) {
-          let status = 1;
-          switch (this.match_info.mhs) {
-            case 1:
-              status = 2;
-              break;
-            case 2:
-              status = 3;
-              break;
-            case 11:
-              status = 4;
-              break;
-          }
-
-          res.forEach((item) => {
-            item.hl.forEach((list) => {
-              list.ol.forEach((j) => {
-                if (j._hs == 11) {
-                  j.os == 1 ? (j.os = status) : "";
-                } else {
-                  j.os = status;
-                }
-              });
-            });
-          });
-        } else {
-          res.forEach((item) => {
-            item.hl.forEach((list) => {
-              if (list.hs) {
-                let status = 1;
-                switch (list.hs) {
-                  case 1:
-                    status = 2;
-                    break;
-                  case 2:
-                    status = 3;
-                    break;
-                  case 11:
-                    status = 4;
-                    break;
-                }
-                list.ol.forEach((j) => {
-                  if (j._hs == 11) {
-                    j.os == 1 ? (j.os = status) : "";
-                  } else {
-                    j.os = status;
-                  }
-                });
-              }
-            });
-          });
-        }
-        // 详情和虚拟详情页计算单双列
-        if (["details", "virtual_details"].includes(this.$route.name)) {
-          if (this.get_layout_statu) {
-            this.set_waterfall(res);
-          } else {
-            this.waterfall = [res];
-          }
-        } else {
-          this.waterfall = [res];
-        }
-        this.details_data = res;
-        this.set_go_top_show();
-        this.int_is_show();
-      },
-      immediate: true,
-      deep: true,
-    }
-  },
 
   methods: {
     ...mapActions({
