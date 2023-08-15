@@ -2,36 +2,32 @@
  * 菜单 需要实现 保留 各级菜单 以及最终输出结果的   两个版本 ，
  */
 
-
-import lodash from "lodash"
-
-
-
+import lodash from "lodash";
 
 class MenuData {
   constructor() {
     //================主列表用的  开始==================
     //上一次的 菜单
-    this.previous_menu = {}
-    //当前的菜单 
-    this.current_menu = {}
-     //上一次的菜单 lv1 
-     this.previous_lv_1_menu = {}
-     //当前的菜单 lv1
-     this.current_lv_1_menu = {}
-      //上一次的菜单 lv2 
-      this.previous_lv_2_menu = {}
-      //当前的菜单 lv2
-      this.current_lv_2_menu = {}
-       //上一次的菜单 lv3 
-       this.previous_lv_3_menu = {}
-       //当前的菜单 lv3
-       this.current_lv_3_menu = {}
-       //================主列表用的  结束================== 
-       //热门的 
-       this. hot_tab_menu={}
+    this.previous_menu = {};
+    //当前的菜单
+    this.current_menu = {};
+    //上一次的菜单 lv1
+    this.previous_lv_1_menu = {};
+    //当前的菜单 lv1
+    this.current_lv_1_menu = {};
+    //上一次的菜单 lv2
+    this.previous_lv_2_menu = {};
+    //当前的菜单 lv2
+    this.current_lv_2_menu = {};
+    //上一次的菜单 lv3
+    this.previous_lv_3_menu = {};
+    //当前的菜单 lv3
+    this.current_lv_3_menu = {};
+    //================主列表用的  结束==================
+    //热门的
+    this.hot_tab_menu = {};
 
-      this.menu_list = []
+    this.menu_list = [];
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -83,8 +79,8 @@ class MenuData {
   }
   //get euid
   async get_euid(arg_mi, menu_type) {
-    const euid =  await db.menus_mapping.get(arg_mi+'2', "mi");
-    return euid.menus_mapping.h||''
+    const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
+    return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
     if (menu_type == 4) {
@@ -108,11 +104,12 @@ class MenuData {
     }
   }
   //indexDB 存储菜单元数据
-  set_db_menus_info(data){
+  set_db_menus_info(data) {
     if (!lodash.isEmpty(data)) {
       let db_data = [];
       lodash.each(Object.keys(data), (item) => {
-        if(data[item].sl&&this.count_menu(data[item].sl)>0){//过滤没有赛事数据球类
+        if (data[item].sl && this.count_menu(data[item].sl) > 0) {
+          //过滤没有赛事数据球类
           db_data.push({
             mi: item,
             menu_info: data[item],
@@ -123,8 +120,8 @@ class MenuData {
       db.menus_info.bulkAdd(db_data, "mi");
     }
   }
-   //indexDB 存储菜单元数据mapping
-   set_db_menus_mapping(data){
+  //indexDB 存储菜单元数据mapping
+  set_db_menus_mapping(data) {
     if (!lodash.isEmpty(data)) {
       let db_data = [];
       lodash.each(Object.keys(data), (item) => {
@@ -138,7 +135,7 @@ class MenuData {
     }
   }
   //indexDB 存储名称列表元数据
-  set_db_name_list(data){
+  set_db_name_list(data) {
     if (!lodash.isEmpty(data)) {
       let db_data = [];
       lodash.each(Object.keys(data), (item) => {
@@ -372,43 +369,89 @@ class MenuData {
       random_minutes,
     };
   }
-  get_level_four_menu(){
-    return ''
+  //setter=======
+  set_menu_list(data) {
+    //常规
+    let conventional = [
+      101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
+      106, 118, 400, 300,
+    ];
+    let mi_list = [];
+    //1=滚球,2=今日,3=早盘,4=冠军,5=即将开赛,6=串关   左侧一级菜单隐藏 串关和即将开赛
+    let menuRule = [2, 1, 3, 4];
+    // // 竟足
+    // let lottery = this.init_lottery(data);
+    // 电竞 2100 = 英雄联盟
+    let menu_dianjing = { mi: 7, sl: [] };
+    let menu_jingzu = { mi: 30, sl: [] };
+    lodash.each(data, (item) => {
+      if (item && item.sl && item.sl.length > 0) {
+        mi_list.push(...item?.sl);
+      }
+      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
+        menu_dianjing.sl.push(item);
+      }
+      if ([500].includes(+item.mi)) {
+        menu_jingzu.sl.push(item);
+      }
+    });
+    // 赛果数据处理
+    let result_menu = this.init_amidithion(amidithion);
+    let new_menu = [];
+    lodash.each(menuRule, (menu_item, index) => {
+      new_menu[index] = { mi: menu_item, sl: [] };
+      lodash.each(mi_list, (item) => {
+        const filter_data = lodash.find(conventional, (item1) => {
+          return item.mi == `${item1}${menu_item}`;
+        });
+        if (filter_data) {
+          new_menu[index].sl.push(item);
+        }
+      });
+    });
+    this.menu_list = [
+      ...new_menu,
+      menu_dianjing,
+      { mi: 8 },
+      menu_jingzu,
+      result_menu,
+    ];
   }
-  get_curr_sub_menu_type(){
-    return ''
+  set_current_menu(item) {
+    this.current_menu = item;
   }
-  get_current_lv_2_menu_type(){
-    return '0'
-  } 
+  get_level_four_menu() {
+    return "";
+  }
+  get_curr_sub_menu_type() {
+    return "";
+  }
+  get_current_lv_2_menu_type() {
+    return "0";
+  }
 
   /**
-   * 电竞菜单要保留上一个 电竞菜单 的 csid 
+   * 电竞菜单要保留上一个 电竞菜单 的 csid
    */
-  get_current_esport_csid(){
-    return ''
+  get_current_esport_csid() {
+    return "";
   }
 
-  get_current_sub_menuid(){
-    return ''
+  get_current_sub_menuid() {
+    return "";
   }
 
-      /**
-     * 判断是否为冠军和电竞冠军
-     */
-        get_mm_is_champion(){
-        return   _.get(this.current_menu, 'date_menu.menuType') == 100;
-      } 
- /**
-  * 一级菜单顶层菜单的 菜单类型  ，没有则是0
-  */
-  get_current_lv_1_menu_type(){
-    return '0'
-  } 
-
-
-  
-
-
-};
-export default  new MenuData();
+  /**
+   * 判断是否为冠军和电竞冠军
+   */
+  get_mm_is_champion() {
+    return _.get(this.current_menu, "date_menu.menuType") == 100;
+  }
+  /**
+   * 一级菜单顶层菜单的 菜单类型  ，没有则是0
+   */
+  get_current_lv_1_menu_type() {
+    return this.current_menu || "0";
+  }
+}
+export default new MenuData();

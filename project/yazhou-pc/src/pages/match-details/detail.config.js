@@ -1,5 +1,5 @@
 import { reactive, toRefs, onUnmounted, computed, onMounted, watch } from "vue";
-import { is_eports_csid } from "src/core/utils/utils";
+import utils from "src/core/utils/utils";
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
@@ -182,7 +182,7 @@ export const useGetConfig = () => {
     let params = { mid: state.mid, cuid: state.get_uid };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
-    if (is_eports_csid(state.sportId)) {
+    if (utils.is_eports_csid(state.sportId)) {
       api_ = api_details.get_match_detail_ESMatchInfo;
     } else {
       api_ = api_details.get_match_detail_MatchInfo;

@@ -14,12 +14,12 @@
       </span>
       <!-- 出局 -->
       <div class="result">
-        {{ $root.$t("common.out") }}
+        {{ i18n.t("common.out") }}
         <span class="yb-text-color1">{{ match.mbcn }}</span>
       </div>
     </template>
     <template v-else-if="is_show_score_content &&
-      _.get(match, 'score_list.length', 0) > 0 &&
+      lodash.get(match, 'score_list.length', 0) > 0 &&
       match_status
       ">
       <span class="scroll-arrow arrow-left" @click="scorll('left')" v-show="more_left_icon">
@@ -27,7 +27,7 @@
       </span>
       <!-- 历史比分列表 -->
       <div class="stage-score" ref="stage_score">
-        <span v-for="(score, index) in _.get(match, 'score_list', [])" :key="index" class="item">{{ score.home }}-{{
+        <span v-for="(score, index) in lodash.get(match, 'score_list', [])" :key="index" class="item">{{ score.home }}-{{
           score.away }}</span>
       </div>
       <span class="scroll-arrow arrow-right" v-show="more_right_icon" @click="scorll('right')">
@@ -42,10 +42,10 @@
             <!-- // csid：1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
             {{
               match.csid == 5
-              ? $root.$t("list.total_play_count")
+              ? i18n.t("list.total_play_count")
               : [8, 9, 10].includes(match.csid * 1)
-                ? $root.$t("list.total_pp_score_count2")
-                : $root.$t("list.total_pp_score_count")
+                ? i18n.t("list.total_pp_score_count2")
+                : i18n.t("list.total_pp_score_count")
             }}
           </span>
           <span class="active-text">{{ match.total_score_str }}</span>
@@ -62,13 +62,13 @@
 <script>
 
 import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { i18n } from 'src/boot/i18n.js'
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import store from 'project_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 import { get_match_status } from 'src/core/utils/index.js'
-
+import lodash from 'lodash';
 let state = store.getState();
 const props = defineProps({ ...useProps });
 const more_right_icon = ref(false);
@@ -97,7 +97,7 @@ watch(vx_get_layout_size.center_width, () => {
  */
 const compute_is_show_more = () => {
   if (!stage_score.value) return;
-  let length = _.get(this.match, "score_list.length", 0);
+  let length = lodash.get(this.match, "score_list.length", 0);
   if (length < 5) {
     more_right_icon.value = false;
     more_right_icon.value = false;
@@ -106,9 +106,9 @@ const compute_is_show_more = () => {
   //比分总宽度
   let totalWidth = length * 50,
     //已滚动的距离
-    scrollLeft = _.get(stage_score.value, "scrollLeft", 0),
+    scrollLeft = lodash.get(stage_score.value, "scrollLeft", 0),
     //元素实际宽度
-    clientWidth = _.get(stage_score.value, "clientWidth", 0);
+    clientWidth = lodash.get(stage_score.value, "clientWidth", 0);
   //总宽度大于实际宽度
   if (totalWidth > clientWidth) {
     more_right_icon.value = true;
@@ -129,7 +129,7 @@ const compute_is_show_more = () => {
  * 比分溢出时滚动方法
  */
 const scorll = (type) => {
-  let length = _.get(this.match, "score_list.length", 0);
+  let length = lodash.get(this.match, "score_list.length", 0);
   if (!stage_score.value || length < 5) return;
   let stageScore = stage_score.value;
   switch (type) {

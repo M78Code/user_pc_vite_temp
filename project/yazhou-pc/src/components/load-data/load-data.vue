@@ -5,61 +5,126 @@
 -->
 <template>
   <!-- 用户失效隐藏load中的所有布局元素 -->
-  <div class="load-data-wrap col" v-show="!no_user"
-    :class="{ 'is-detail': is_detail, 'not-list': cur_state != 'data', 'limit_height': limit_height }">
-    <div v-if="cur_state == 'data' || limit_height" class="fit"
-      :style="limit_height ? `height:${limit_height}px !important;` : ''">
+  <div
+    class="load-data-wrap col"
+    v-show="!no_user"
+    :class="{
+      'is-detail': is_detail,
+      'not-list': cur_state != 'data',
+      limit_height: limit_height,
+    }"
+  >
+    <div
+      v-if="cur_state == 'data' || limit_height"
+      class="fit"
+      :style="limit_height ? `height:${limit_height}px !important;` : ''"
+    >
       <slot />
     </div>
     <!-- cur_state=='empty' || cur_state=='loading' -->
-    <div class="column yb-flex-center empty"
-      :class="{ 'fit': ['empty', 'notice-empty', 'loading', 'box_opening', 'right_details_loading', 'code_empty'].includes(cur_state) }">
-      <div v-if="cur_state == 'loading' || cur_state == 'box_opening'" class="loading-wrap padding-top">
+    <div
+      class="column yb-flex-center empty"
+      :class="{
+        fit: [
+          'empty',
+          'notice-empty',
+          'loading',
+          'box_opening',
+          'right_details_loading',
+          'code_empty',
+        ].includes(cur_state),
+      }"
+    >
+      <div
+        v-if="cur_state == 'loading' || cur_state == 'box_opening'"
+        class="loading-wrap padding-top"
+      >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span v-if="cur_state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
-          <span v-else>{{ $root.$t('common.loading') }}</span>
+          <span v-if="cur_state == 'box_opening'" style="font-size: 16px"
+            >抽盒中......</span
+          >
+          <span v-else>{{ $root.$t("common.loading") }}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
       <!-- 右侧详情内容加载中... -->
-      <div v-if="cur_state == 'right_details_loading'" class="loading-wrap right_details_loading">
+      <div
+        v-if="cur_state == 'right_details_loading'"
+        class="loading-wrap right_details_loading"
+      >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{ $root.$t('common.loading') }}</span>
+          <span>{{ $root.$t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
-      <no-data v-else-if="['empty', 'notice-empty', 'code_empty'].includes(cur_state)"
-        :msg="no_data_msg ? no_data_msg : ('code_empty' == cur_state ? $root.$t('common.code_empty') : (($store.state.filter.open_select_time ? $root.$t('filter.empty') : $root.$t('common.no_data'))))"
-        :msg2="no_data_msg2" :marginBottom="'0px'" width="180px" height="180px" :color="color" class="empty-wrap"
-        :class="{ filter_img: $store.state.filter.open_select_time }">
+      <no-data
+        v-else-if="['empty', 'notice-empty', 'code_empty'].includes(cur_state)"
+        :msg="
+          no_data_msg
+            ? no_data_msg
+            : 'code_empty' == cur_state
+            ? $root.$t('common.code_empty')
+            : $store.state.filter.open_select_time
+            ? $root.$t('filter.empty')
+            : $root.$t('common.no_data')
+        "
+        :msg2="no_data_msg2"
+        :marginBottom="'0px'"
+        width="180px"
+        height="180px"
+        :color="color"
+        class="empty-wrap"
+        :class="{ filter_img: $store.state.filter.open_select_time }"
+      >
       </no-data>
-      <no-data v-else-if="['all_empty', 'new_empty'].includes(cur_state) && is_eports" :msg="$root.$t('common.no_data')"
-        :type_name="'esports-size'" :marginBottom="'0px'" width="203px" height="180px" :color="color"
-        class="empty-wrap esports">
+      <no-data
+        v-else-if="['all_empty', 'new_empty'].includes(cur_state) && is_eports"
+        :msg="$root.$t('common.no_data')"
+        :type_name="'esports-size'"
+        :marginBottom="'0px'"
+        width="203px"
+        height="180px"
+        :color="color"
+        class="empty-wrap esports"
+      >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
             {{$root.$t('common.go_now')}}
            </div>
         </div> -->
       </no-data>
-      <div class="list_right_empty" v-else-if="['all_empty', 'new_empty'].includes(cur_state)">
+      <div
+        class="list_right_empty"
+        v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
+      >
         <div class="img"></div>
         <span>{{ $root.$t(`common.${cur_state}`) }}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
-    <div class="refresh fit" v-if="cur_state == 'refresh' || cur_state == '404'">
+    <div
+      class="refresh fit"
+      v-if="cur_state == 'refresh' || cur_state == '404'"
+    >
       <div class="row column items-center">
-        <div v-if="cur_state == 'refresh'" class="img refresh-img" :class="color" />
+        <div
+          v-if="cur_state == 'refresh'"
+          class="img refresh-img"
+          :class="color"
+        />
         <!-- 网络不给力 -->
-        <div v-if="cur_state == 'refresh'" class="text1">{{ $root.$t('common.no_network2') }}</div>
+        <div v-if="cur_state == 'refresh'" class="text1">
+          {{ $root.$t("common.no_network2") }}
+        </div>
         <div v-if="cur_state == '404'" class="img img404" :class="color"></div>
         <!-- 哦豁~页面不见了 -->
-        <div v-if="cur_state == '404'" class="text1">{{ $root.$t('common.page404') }}</div>
-        <div class="text2">{{ $root.$t('common.nervous') }}</div>
-        <div class="btn" @click="refresh">{{ $root.$t('common.refresh') }}</div>
+        <div v-if="cur_state == '404'" class="text1">
+          {{ $root.$t("common.page404") }}
+        </div>
+        <div class="text2">{{ $root.$t("common.nervous") }}</div>
+        <div class="btn" @click="refresh">{{ $root.$t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -68,39 +133,49 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{ $root.$t('common.user_api_limited1') }}</span><br>
+          <span>{{ $root.$t("common.user_api_limited1") }}</span
+          ><br />
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{ $root.$t('common.user_api_limited2') }}</span>
+          <span>{{ $root.$t("common.user_api_limited2") }}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{ $root.$t('common.refresh') }}</div>
+        <div class="btn" @click="refresh">{{ $root.$t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
-    <div class="record_api_limited fit column yb-flex-center" v-if="cur_state == 'api_limited'">
+    <div
+      class="record_api_limited fit column yb-flex-center"
+      v-if="cur_state == 'api_limited'"
+    >
       <div class="row column items-center">
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{ $root.$t('common.limited') }}</span>
+          <span>{{ $root.$t("common.limited") }}</span>
         </div>
       </div>
     </div>
     <!-- 投注记录 refresh -->
     <div class="refresh fit" v-if="cur_state == 'record_refresh'">
       <div class="row column items-center">
-        <div v-if="cur_state == 'record_refresh'" class="img refresh-img" :class="color" />
+        <div
+          v-if="cur_state == 'record_refresh'"
+          class="img refresh-img"
+          :class="color"
+        />
         <!-- 网络不给力 -->
-        <div v-if="cur_state == 'record_refresh'" class="text1">{{ $root.$t('common.limited') }}</div>
+        <div v-if="cur_state == 'record_refresh'" class="text1">
+          {{ $root.$t("common.limited") }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import noData from "../no-data/no-data.vue";
+import { NoDataWapper} from "src/components/common/no-data/index";
 import { onMounted,computed,ref } from 'vue'
-
+const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
   is_detail: {
@@ -163,8 +238,6 @@ const no_user_event = () => {
   no_user.value = true;
 
 }
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -173,7 +246,6 @@ const no_user_event = () => {
   overflow: auto;
 
   &.is-detail {
-
     .loading-wrap,
     .empty-wrap {
       padding-top: 30%;
@@ -219,7 +291,7 @@ const no_user_event = () => {
     border-radius: 10px;
 
     .loading-text {
-      color: #FFFFFF;
+      color: #ffffff;
     }
   }
 
@@ -302,7 +374,7 @@ const no_user_event = () => {
         color: #fff;
         font-size: 13px;
         border-radius: 17px;
-        background-image: linear-gradient(270deg, #FF7000 0%, #ff7000 100%);
+        background-image: linear-gradient(270deg, #ff7000 0%, #ff7000 100%);
       }
     }
   }
