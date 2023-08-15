@@ -15,7 +15,10 @@ const skt_mid = ref({});
 const show_mids = ref([]);
 // ** WS 相关 *********************************/
 const socket_name = ref("match_list");
-
+// 是否静默运行(socket、refresh按钮)
+const backend_run = ref(false);
+// 订阅所需 盘口ID
+const skt_hpid = ref("");
 const ws_c8_subscribe = () => {
 	let match_list = [];
 	show_mids.value.forEach((mid) => {
@@ -94,6 +97,19 @@ const refresh_c8_subscribe = () => {
 		//  this.SCMD_C8(skt_mid_obj);
 	}
 };
+/**
+		 * @Description 可视赛事ID改变
+		 * @param {undefined} undefined
+		 */
+const show_mids_change = () => {
+	// 列表没加载完 不执行
+	if (this.load_data_state != "data") {
+		return;
+	}
+	// 重新订阅C8
+	this.refresh_c8_subscribe();
+	this.api_bymids({ is_show_mids_change: true });
+}
 
 const ws_composable_fn = () => {
 	return {
@@ -103,7 +119,13 @@ const ws_composable_fn = () => {
 		socket_name,
 		// 可视区域赛事ID
 		show_mids,
+		// 是否静默运行(socket、refresh按钮)
+		backend_run,
+		// 订阅所需 盘口id
+		skt_hpid,
 		refresh_c8_subscribe,
+		// 可视区域id变更
+		show_mids_change,
 	}
 }
 

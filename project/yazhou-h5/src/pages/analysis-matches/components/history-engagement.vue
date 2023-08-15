@@ -50,8 +50,8 @@
 <script setup>
 // import {mapGetters} from "vuex";
 import {api_result} from "src/project/api";
-import public_form from "src/project/pages/details/analysis-matches/components/public-form.vue";  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import no_data from "src/project/components/common/no-data";  // 无网络展示组件
+import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
+import noData from "src/project/components/common/no-data";  // 无网络展示组件
 import { computed, onUnmounted } from "vue";
 import { useRoute } from 'vue-router'
 
@@ -86,7 +86,7 @@ import { useRoute } from 'vue-router'
 
   get_list()
 
-  // 赛事id TODO route get_detail_data 后续修改调整
+  // 赛事id TODO:  get_detail_data 后续修改调整
   const match_id = computed(() => {
     route.params.mid || get_detail_data.mid
   }) 
@@ -107,7 +107,7 @@ import { useRoute } from 'vue-router'
       let {code , data} = await api_result.get_team_vs_history(parameter)
       if(code == 200 && data ) {
         records_list = [
-          // TODO 国际化修改后调整
+          // TODO: 国际化修改后调整
           {success: 0, name: $root.$t('analysis_football_matches.victory')},
           {flat: 0, name: $root.$t('analysis_football_matches.flat')},
           {lose: 0, name: $root.$t('analysis_football_matches.negative')},
@@ -148,7 +148,7 @@ import { useRoute } from 'vue-router'
         flag = 0;
       }
     }
-    // TODO  后续修改调整
+    // TODO:  后续修改调整
     $forceUpdate()
     get_list()
   }
@@ -156,7 +156,7 @@ import { useRoute } from 'vue-router'
     radio_button_index = index
     cps = item.index
     get_list()
-    // TODO  后续修改调整
+    // TODO:  后续修改调整
     $forceUpdate()
   }
   onUnmounted(() => {

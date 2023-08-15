@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 赛果详情 赛况统计 和 事件
 import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue'; 
@@ -25,6 +25,7 @@ import head_tab from 'src/project/components/details/match-analysis/head-tab.vue
  // 文章页  
 import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';  
 import { watch, nextTick, onMounted } from 'vue';
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 
   // components: {
   //   match: match_result,
@@ -33,7 +34,7 @@ import { watch, nextTick, onMounted } from 'vue';
   //   "head-tab": head_tab,
   //   articleMain: articleMain,
   // },
-  // TODO 国际化后续修改调整
+  // TODO: 国际化后续修改调整
   const tabList = ref([
     {
       name: $root.$t('analysis_football_matches.match'),
@@ -50,7 +51,7 @@ import { watch, nextTick, onMounted } from 'vue';
   ])
   const currentContent = ref('match')
   const analysis_basketball_matches = ref(null)
-  // TODO 后续修改调整
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([
   //     // 详情页的数据
@@ -64,23 +65,23 @@ import { watch, nextTick, onMounted } from 'vue';
   // },
   // 详情顶部切换赛事后 更新相应赛事数据
   watch(() => get_detail_data.mid, () => {
-    const clone_currentContent = currentContent
+    const clone_currentCont = currentContent
       currentContent = ''
       nextTick(() => {
-        currentContent = clone_currentContent
+        currentContent = clone_currentCont
       })
   })
   onMounted(() => {
     nextTick(() => {
-      // TODO 后续修改调整 $refs $utils
-      if ($refs.analysis_basketball_matches) {
-        $refs.analysis_basketball_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
+      // TODO: 后续修改调整 $refs $utils
+      if (analysis_basketball_matches) {
+        analysis_basketball_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
       }
     })
     if (['zh', 'tw'].includes(get_lang)) {
       tabList.unshift(
         {
-          // TODO 国际化
+          // TODO: 国际化
           name: get_lang == 'zh' ? '资讯' : '資訊',
           component: 'article-main'
         },
@@ -88,7 +89,7 @@ import { watch, nextTick, onMounted } from 'vue';
     }
   })
 const close_analysis = () => {
-  $root.$emit(emit_cmd.EMIT_ANA_SHOW, false)
+  useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
 }
 // 点击一级tab 菜单切换
 const tab_click = ([tab, type]) => {

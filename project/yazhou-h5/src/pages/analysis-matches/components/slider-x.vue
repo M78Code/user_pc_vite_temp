@@ -36,8 +36,8 @@
   const item_wrapper = ref(null)
   const handle_item_click = (item, index) => {
     item_index = index
-    // TODO emit后续修改调整
-    // $emit('click', {item, index})
+    // TODO: emit后续修改调整
+    $emit('click', {item, index})
   }
   const handle_img_load_error = (e, index) => {
     item_wrapper[index].classList.add('bg-default')

@@ -33,44 +33,7 @@
             computed_data.layout_size.content_height + 4
           }px  !important;`"
         >
-          <!-- 左侧 菜单区域 -->
-          <div
-            ref="page_left"
-            v-show="route.params.video_size != 1"
-            class="page-left row yb-layout-margin-menu relative-position"
-            :style="`width:${computed_data.layout_size.left_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`"
-            :class="computed_data.vx_main_menu_toggle"
-          >
-            <div
-              class="cathectic-shade"
-              v-show="data_ref.bet_loadding && computed_data.left_menu_toggle"
-            >
-              <div class="shade-fixed">
-                <!--确认中转圈圈-->
-                <div class="loading-wrap">
-                  <div class="img-loading"></div>
-                  <div
-                    class="text-center loading-text flex items-end justify-center"
-                  >
-                    {{ $t("bet.bet_loading") + "..." }}
-                    <!-- 内容加载中... -->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--左侧菜单mini-->
-            <main-menu-mini
-              v-show="computed_data.vx_main_menu_toggle == 'mini'"
-            />
-            <!--左侧菜单-->
-            <main-menu
-              v-show="
-                ['normal', 'mini-normal'].includes(
-                  computed_data.vx_main_menu_toggle
-                )
-              "
-            />
-          </div>
+          <layout-left :loading:="data_ref.bet_loadding" />
 
           <!-- 中间区域 -->
           <keep-alive include="matchListRouter" max="1">
@@ -342,7 +305,6 @@ import {
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "src/store-redux/index.js";
-import { get_balance } from "src/store-redux/module/user-info.js";
 
 import base_data from "src/core/utils/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
@@ -357,7 +319,7 @@ import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
-import MainMenu from "../pages/left-menu/index.vue";
+import LayoutLeft from "./layout-left.vue";
 import siteHeader from "project_path/src/components/site-header/site-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
@@ -771,6 +733,14 @@ function init_site_header(type = null) {
       path: "/rule",
       _blank: true,
     }, //体育竞猜规则
+    {
+      "id": 9,
+      "tab_name": "任务中心",
+      "img_src": "https://image.gredfged.com/group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
+      "class": "activity_center animate-activity-entry activity_dot_bonus",
+      "path": "/activity",
+      "_blank": true
+    },
   ];
   // 判断是否有活动
   let activityList = get(computed_data.get_user, "activityList");
@@ -832,7 +802,7 @@ function init_site_header(type = null) {
     }
   }
   data_ref.nav_list = nav_list;
-  useMittEmit(MITT_TYPES["close_home_loading"], false);
+  // useMittEmit(MITT_TYPES["close_home_loading"], false);
 
   // 菜单初始化 因为菜单是去轮询的 so
   // 因为设置菜单是500s
@@ -1007,14 +977,7 @@ function close_menu_loadding() {
   useMittEmit(MITT_TYPES.IS_MENU_LOADDING, data_ref.data_ref);
 }
 
-/**
- * @description 获取用户余额
- * @return {undefined} undefined
- */
-function get_user_balance() {
-  let uid = get(computed_data.get_user, "uid");
-  store.dispatch(get_balance(uid));
-}
+
 /**
  * 计算投注框的高度
  */
@@ -1534,9 +1497,7 @@ const remove_mitt_list = [
   useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding).off,
   // 接收关闭loadding指令
   useMittOn(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD, close_menu_loadding).off,
-  // 更新用户余额
-  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_user_balance).off,
-  useMittOn(MITT_TYPES.EMIT_OPEN_SINGLE_BET, open_single_bet).off,
+
   //计算投注框高度
   useMittOn(MITT_TYPES.EMIT_COMPUTED_BET_HEIGHT_CMD, computed_bet_height).off,
   //获取投注数据(内嵌mini切换或者语言发生变化时调用)

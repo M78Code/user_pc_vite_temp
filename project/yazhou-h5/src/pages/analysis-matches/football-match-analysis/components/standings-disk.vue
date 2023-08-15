@@ -81,34 +81,31 @@
   </div>
 </template>
 
-<script>
-// TODO 后续修改调整
+<script setup>
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import team_img from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";   
 
-export default defineComponent({
-  name: "standings_disk",
-  props: {
+  const props = defineProps({
     // 盘面的数据
     matchHistory_battle_dto_map: {
       type: Object | Array
     }
-  },
-  components: {
-    "team-img": team_img,
-  },
-  // TODO 后续修改调整
+  })
+  // components: {
+  //   "team-img": team_img,
+  // },
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },
-  setup(props, event) {
-    // TODO 国际化后续修改调整
+    // TODO: 国际化后续修改调整
     // 赛事标题说明
     // handicapResultList 最近X 场输赢, 2平3输4赢
     // overunderResultList  最近X场大小, 2平3输4赢
-    title_calculation = (main, name) => {
+    const title_calculation = (main, name) => {
       let arr_list = []
       if(main && main.handicapResultList && name == 'handicapResultList') {
         main.handicapResultList.forEach( (item, i, arr) => {
@@ -139,15 +136,7 @@ export default defineComponent({
         return arr_list
       }
     }
-    return {
-      title_calculation,
-    }
-  },
-  methods:{
     
-    
-  }
-})
 </script>
 
 <style lang="scss" scoped>

@@ -5,7 +5,7 @@
  */
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2 } = API_PREFIX;
+const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2,API_PREFIX_BAT:prefix3 } = API_PREFIX;
 
 // 获取押注列表最新数据（valar）
 /* export const post_verify_odds_before = (params, config={}, url = "/v1/betOrder/verifyOddsBeforeBet") => http.post(`${prefix}${url}`, params, config); */
@@ -110,7 +110,7 @@ export const oderPreSettleMoney = (params, config, url = "/order/betRecord/getCa
 // 获取预约投注列表（david）
 export const get_preOrderList = (params, config, url = "/order/betRecord/getPreBetOrderlist") => http.post(`${prefix}${url}`, params, config)
 // 获取预约投注列表2（david）
-export const get_preOrderList_news = (params, config, url = "/order/betRecord/getH5PreBetOrderlist") => http.post(`${prefix}${url}`, params, config)
+export const get_preOrderList_news = (params, config, url = "/order/betRecord/getH5PreBetOrderlist") => http.post(`${prefix3}${url}`, params, config)
 // 取消预约投注单（david）
 export const cancle_pre_order = (params, config, url = "/v1/betOrder/cancelPreBetOrder") => http.get(`${prefix}${url}`, params, config)
 
