@@ -13,7 +13,7 @@ const virtual_list_timeout_id = ref(0);
  * @description 虚拟体育赛事格式化
  * @return {undefined} undefined
  */
-export const virtual_sport_format = ( match_list_input) => {
+const virtual_sport_format = ( match_list_input) => {
 
 
        let  match_list = [...match_list_input]
@@ -91,7 +91,9 @@ const virtual_composable_fn = () => {
     is_vr_numer,
     // 第一场虚拟赛事
     // 当列表没拉到数据时  每3秒拉一次
-    virtual_list_timeout_id
+    virtual_list_timeout_id,
+    // 虚拟体育赛事格式化
+    virtual_sport_format
   }
 }
 

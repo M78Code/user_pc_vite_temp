@@ -15,7 +15,10 @@ const skt_mid = ref({});
 const show_mids = ref([]);
 // ** WS 相关 *********************************/
 const socket_name = ref("match_list");
-
+// 是否静默运行(socket、refresh按钮)
+const backend_run = ref(false);
+// 订阅所需 盘口ID
+const skt_hpid = ref("");
 const ws_c8_subscribe = () => {
 	let match_list = [];
 	show_mids.value.forEach((mid) => {
@@ -103,6 +106,10 @@ const ws_composable_fn = () => {
 		socket_name,
 		// 可视区域赛事ID
 		show_mids,
+		// 是否静默运行(socket、refresh按钮)
+		backend_run,
+		// 订阅所需 盘口id
+		skt_hpid,
 		refresh_c8_subscribe,
 	}
 }
