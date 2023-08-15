@@ -7,10 +7,11 @@
         <!-- 加载中 -->
         <SRecord v-if="is_loading"/>
         <scroll ref="myScroll" :on-pull="onPull" v-else>
-        <div class="filter-button" v-if="get_user.settleSwitch == 1">
+        <div class="filter-button" v-if="store_user.user.settleSwitch == 1">
             <!-- 已失效按钮 -->
             <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{'select':selected_expired}">
-            {{i18n.$t('pre_record.expired')}}<i class="early yb_ml4" :class="{'early2': selected_expired}"></i>
+                {{$root.$t('pre_record.expired')}}
+                <i class="early yb_ml4" :class="{'early2': selected_expired}"></i>
             </i>
         </div>
         <template v-if="!lodash.isEmpty(list_data)">
@@ -19,12 +20,24 @@
                 <template v-if="expired_all_flag(value)">
                 <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
                     <span>{{(new Date(name)).Format(i18n.$t('time2'))}}</span>
-                    <span v-if="!value.open && index != 0 && !selected_expired"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
+                    <span v-if="!value.open && index != 0 && !selected_expired">
+                        <img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" />
+                    </span>
                 </p>
                 <div class="line" :class="!value.open && (index != Object.keys(list_data).length-1) && 'line2'"></div>
                 <q-slide-transition>
                     <div v-show="value.open">
-                    <common-cathectic-item  :is_pre="true" :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_show_pre="expired_flag(item2)"></common-cathectic-item>
+                        <!-- 投注记录的页每一条注单（矩形框） -->
+                        <common-cathectic-item  
+                            :is_pre="true" 
+                            :item_data="item2" 
+                            v-for="(item2, key) in value.data" 
+                            :key="key" 
+                            class="my-4" 
+                            :key2="key" 
+                            :len="value.data.length" 
+                            :is_show_pre="expired_flag(item2)" 
+                        />
                     </div>
                 </q-slide-transition>
                 </template>
@@ -33,31 +46,31 @@
         <!-- 无数据展示 -->
         <settle-void  v-else></settle-void>
         </scroll>
+        <!-- 合并投注项提示弹框 -->
         <cancle-confirm-pop @cancleHanddle="cancle_pre_pop" @confirmHandle="cancle_pre_order" :show="cancle_confirm_pop_visible" :teamname="teamName"></cancle-confirm-pop>
     </div>
 </template>
 
 <script setup>
-import { defineComponent, ref, getCurrentInstance, watch,  } from 'vue'
+import { ref, getCurrentInstance, watch, onUnmounted } from 'vue'
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
-import cancleConfirmPop from 'src/project/pages/cathectic/cancle_confirm_pop.vue';  // 合并投注项提示弹框
-import noData from "src/project/components/common/no_data.vue";   // 无数据展示组件
-import settleVoid from "src/project/pages/cathectic/settle_void.vue";
-import scroll from "src/project/components/record_scroll/scroll.vue";
-import SRecord from "src/project/components/skeleton/record.vue"
-import lodash from "lodash"
+import commonCathecticItem from "project_path/src/components/common/common_cathectic_item.vue";
+// 合并投注项提示弹框
+import cancleConfirmPop from 'project_path/src/pages/cathectic/cancle_confirm_pop.vue';  
+import settleVoid from "project_path/src/pages/cathectic/settle_void.vue";
+import scroll from "project_path/src/components/record_scroll/scroll.vue";
+import SRecord from "project_path/src/components/skeleton/record.vue"
+import store from 'src/store-redux/index.js';
+import lodash from "lodash";
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 
-    // components: {
-    //     commonCathecticItem,
-    //     settleVoid,
-    //     scroll,
-    //     SRecord,
-    //     noData,
-    //     cancleConfirmPop
-    // },
+// 仓库数据
+let { cathecticReducer, userInfoReducer } = store.getState()
+let store_user = userInfoReducer
+let store_cathectic = cathecticReducer
+    
 // 页面锚点
 const myScroll = ref(null)
 // 定时器
@@ -230,7 +243,7 @@ const onPull = () => {
     };
     //加载中
     ele.setState(4);  
-    api_betting.get_preOrderList(params).then(res => {
+    api_betting.get_preOrderList_news(params).then(res => {
         // 为 null 时容错处理
         if (!res.data) {  
         is_hasnext.value = false
@@ -273,7 +286,7 @@ const toggle_show = (val) => {
      *@description 初次切换到预约时加载数据
     *@return {Undefined} undefined
     */
-watch(() => get_main_item, (newVal) => {
+watch(() => store_cathectic.main_item, (newVal) => {
         if (newVal == 2) {
             lodash.isEmpty(list_data.value) && init_data()
         }
@@ -294,33 +307,28 @@ watch(() => list_data,  () => {
         orderNumber.map((item)=>{
             orderList.push(item.orderNo)
         })
-        clearTimeout(timer_1)
+        clearTimeout(timer_1.value)
         timer_1.value = setTimeout(()=>{
-            if(get_main_item.value == 2 && document.visibilityState == 'visible'){
+            if(store_cathectic.main_item.value == 2 && document.visibilityState == 'visible'){
             change_pre_status(orderList)
             }
             },5000)
         }else{
-        clearTimeout(timer_1)
+        clearTimeout(timer_1.value)
         }
     }})
+    // 组件销毁后执行的操作
 onUnmounted(() => {
-    clearTimeout(timer_1)
+    clearTimeout(timer_1.value)
     timer_1.value = null
-
-    clearTimeout(timer_2)
+    clearTimeout(timer_2.value)
     timer_2.value = null
-
-    // $root.$off(emit_cmd.EMIT_GET_ORDER_LIST, refreshOrderList)
-    // $root.$off(emit_cmd.EMIT_SHOW_CANCLE_POP, show_cancle_pop)
+    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off
+    useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP, show_cancle_pop).off
     // for (const key in $data) {
     // $data[key] = null
     // }
 })
-
-    // computed: {
-    //     // ...mapGetters(['get_user', 'get_main_item'])
-    // },
    
 </script>
 

@@ -39,8 +39,8 @@ import articleContent from "src/project/pages/details/analysis-matches/article/a
 import articleMaylike from "src/project/pages/details/analysis-matches/article/article-maylike.vue";
 import loading from "src/project/components/common/loading";  // 加载中
 import { onMounted, onUnmounted, watch } from "vue";
-import lodash from 'lodash'
 import { useRoute } from 'vue-router'
+import lodash from 'lodash'
   
   // 弹框是否显示
   const is_show_dialog = ref(false) 
@@ -56,7 +56,6 @@ import { useRoute } from 'vue-router'
   const is_loading = ref(true) 
   // 进入文章页面时间
   const enter_article_time = ref(0)  
-  // 路由
   const route = useRoute()
 
   onMounted(() => {
@@ -65,7 +64,7 @@ import { useRoute } from 'vue-router'
 
   watch(() => is_show_dialog, (newValue) => {
     if (newValue) {
-        loadsh.delay(calc_height, 100)
+        lodash.delay(calc_height, 100)
       } else {
         matchids.length = 0
       }
@@ -80,7 +79,7 @@ const calc_height = () => {
     if (!ele) return
     ele.scrollTop = 0
     if (!ele.style.height) {
-      // TODO 后续修改调整  $utils
+      // TODO: 后续修改调整  $utils
       ele.style.height = window.innerHeight - $utils.rem(0.92) + 'px'
       ele.style.maxHeight = 'unset'
     }
@@ -214,7 +213,7 @@ const handle_stay_duration = (article_id) => {
     if (!article_id || !stay_duration) {
       return
     }
-    // TODO $utils 后续修改调整
+    // TODO: $utils 后续修改调整
     $utils.zhuge_event_send(EVENT_NAME, get_user, zhuge_obj)
     enter_article_time = Date.now()
   }

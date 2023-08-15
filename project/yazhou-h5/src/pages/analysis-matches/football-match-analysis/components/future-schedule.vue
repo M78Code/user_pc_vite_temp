@@ -34,41 +34,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import team_img from "src/project/components/details/team-img";   
-// TODO 后续修改调整
+import teamImg from "src/project/components/details/team-img";   
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import public_form from "src/project/pages/details/analysis-matches/components/public-form";  
+import publicForm from "src/project/pages/details/analysis-matches/components/public-form";  
 
-export default {
-  name: "future_schedule",
-  components: {
-    "team-img": team_img,
-    "public-form": public_form,
-  },
-  props: {
+  // components: {
+  //   "team-img": team_img,
+  //   "public-form": public_form,
+  // },
+  const props = defineProps({
     // 基本面的数据
     future_schedule_data: {
       type: Number | String | Array | Object,
       default: null,
       require: true
     },
-  },
-  setup(props,event) {
-
-    return {
-
-    }
-  },
-  // TODO 后续修改调整
+  })
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },
 
-}
 </script>
 
 <style lang="scss" scoped>

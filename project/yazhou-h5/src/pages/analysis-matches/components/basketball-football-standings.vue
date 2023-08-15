@@ -35,14 +35,17 @@
           </div>
           <!-- 球队 -->
           <div class="col2 ellipsis" :class="{col2_home: item.teamFlag == 't1', col2_away: item.teamFlag == 't2' }">{{ item.teamName }}</div>
-          <div class="league tournamentName" v-if="item.tournamentName  && get_detail_data.csid == 1">{{ item.tournamentName }}</div><!-- 联赛 -->
+          <!-- 联赛 -->
+          <div class="league tournamentName" v-if="item.tournamentName  && get_detail_data.csid == 1">{{ item.tournamentName }}</div>
           <div class="col3" v-show="get_detail_data.csid == 1">{{ item.matchCount }}</div>
           <div class="col3">{{ item.winTotal }}</div><!-- 胜 -->
           <div class="col3">{{ item.lossTotal }}</div>
           <div class="col3" v-show="get_detail_data.csid == 1">{{ item.drawTotal }}</div>
-          <div class="col4" v-show="get_detail_data.csid == 1">{{ item.goalsForTotal }}/{{ item.goalsAgainstTotal }}</div><!-- 进/失 -->
+          <!-- 进/失 -->
+          <div class="col4" v-show="get_detail_data.csid == 1">{{ item.goalsForTotal }}/{{ item.goalsAgainstTotal }}</div>
           <div class="col4" v-show="get_detail_data.csid == 1">{{ item.goalDiffTotal }}</div>
-          <div class="col5" v-show="get_detail_data.csid == 1">{{ item.pointsTotal }}</div><!-- 积分 -->
+          <!-- 积分 -->
+          <div class="col5" v-show="get_detail_data.csid == 1">{{ item.pointsTotal }}</div>
           <div class="col5" v-show="get_detail_data.csid == 2">{{percentage(item)}}</div>
         </div>
       </div>
@@ -63,7 +66,7 @@ import { computed, onUnmounted } from "vue";
 import loadsh from 'lodash'
 import { useRoute } from 'vue-router'
 
-// TODO 后续修改调整
+// TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
   const ranking_data = ref([])
@@ -74,6 +77,7 @@ import { useRoute } from 'vue-router'
   //是否展开
   const box_bool =ref('')
   const no_data =ref(false)
+  // 路由
   const route = useRoute()
 
   get_list()
@@ -87,7 +91,7 @@ import { useRoute } from 'vue-router'
     return route.params.mid || get_detail_data.mid
   })
   // computed: {
-    // TODO 后续修改调整
+    // TODO: 后续修改调整
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
   // },
   const percentage = (item) => {
@@ -111,7 +115,7 @@ import { useRoute } from 'vue-router'
         }else{
           box_bool = !box_bool;
           if (box_bool == true) {
-            // TODO 国际化后续修改调整
+            // TODO: 国际化后续修改调整
             [btn_text, direction] = [$root.$t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
@@ -137,7 +141,7 @@ import { useRoute } from 'vue-router'
   }
   const rules_normal = () => {
     [btn_text, direction, box_bool] = [
-      // TODO 后续修改调整
+      // TODO: 后续修改调整
       $root.$t("bet_record.pack_up"),
       "",
       false
@@ -147,7 +151,7 @@ import { useRoute } from 'vue-router'
   const rules_a = () => {
     if (ranking_data.length >= 2)
       [btn_text, direction, box_bool] = [
-        // TODO 后续修改调整
+        // TODO: 后续修改调整
         $root.$t("bet_record.pack_down"),
         "down",
         true

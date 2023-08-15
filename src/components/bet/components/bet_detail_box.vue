@@ -287,9 +287,6 @@
   })
   
   /**            onmounted结束             */
-  // mapMutations(['set_change_list', 'set_invalid_ids', 'set_is_accept', 'set_toast', "set_bet_status", "set_bet_obj", "set_accept_show", "set_order_no", "set_new_bet",
-  //     "set_bet_list", "set_odds_change", "set_used_money", "set_http_update"]),
-
     /**
      *@description 投注完成后点击确定按钮
      */

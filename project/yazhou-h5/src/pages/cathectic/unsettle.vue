@@ -80,16 +80,11 @@ import store from 'src/store-redux/index.js'
   let is_limit = ref(false)
   //需要查绚提前结算金额的订单集合
   let orderNumberItemList = ref([])
-  //错误码为0401038拉取接口次数
-  let count = ref(0)
-  //服务器返回错误为0401038拉取接口次数
-  let count2 = ref(0)
+  
   // 延时器
   let timer_1 = ref(null)
   let timer_2 = ref(null)    
-  // computed: {
-  //   ...mapGetters(['get_user', 'get_main_item'])
-  // },
+
   
   /**
      * @description 判断所有订单是否有结算注单
@@ -115,7 +110,6 @@ import store from 'src/store-redux/index.js'
     },10000)
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
-    // ...mapMutations(['set_early_moey_data']),
   /**
      * @description 筛选所有提前结算注单
      * @param {undefined} undefined
@@ -147,11 +141,14 @@ import store from 'src/store-redux/index.js'
    * @description 查询提前结算金额
    */
   const search_early_money = () => {
-    let params = {orderNo:orderNumberItemList.join(',')}
+    let params = { orderNo: orderNumberItemList.value.join(',') }
     // if(orderNumberItemList.length === 0){return}
     api_betting.oderPreSettleMoney(params).then(res=>{
       if(res.code == 200 && res.data){
-        set_early_moey_data( res.data)
+        store.dispatch({ 
+          type: "SET_EARLY_MOEY_DATA",
+          data: res.data
+        })
       }
     })
   }
@@ -232,7 +229,6 @@ import store from 'src/store-redux/index.js'
         last_record.value = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
-        // console.error(record);
         timer_1 = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
@@ -323,15 +319,18 @@ import store from 'src/store-redux/index.js'
      */
   const clear_timer = () => {
     
-    clearTimeout(timer_1)
-    clearTimeout(timer_2)
-    clearInterval(timer_1)
-    clearInterval(timer_2)
+    clearTimeout(timer_1.value)
+    clearTimeout(timer_2.value)
+    clearInterval(timer_1.value)
+    clearInterval(timer_2.value)
   }
   onUnmounted(() => {
     clear_timer();
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
-    set_early_moey_data([])
+    store.dispatch({ 
+          type: "SET_EARLY_MOEY_DATA",
+          data: []
+        })
     // for (const key in $data) {
     //   $data[key] = null
     // }

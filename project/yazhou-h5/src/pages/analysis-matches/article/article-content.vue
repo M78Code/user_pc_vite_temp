@@ -3,26 +3,26 @@
  * @Description: 赛事分析页文章页面的文章内容，包含标题，阅读数和文章详情（目前只有足蓝球有）
 -->
 <template>
- <div class="article-content yb_px16 yb_pb4">
+  <div class="article-content yb_px16 yb_pb4">
     <!-- 标题 -->
     <div class="title yb_fontsize20 yb_pt18">
-      {{article_detail.articleTittle}}
+      {{ article_detail.articleTittle }}
     </div>
     <div class="row yb_mb18 yb_mt8">
-      <img  src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
-      <span class="category-name ellipsis">{{article_detail.categoryName}}</span>
-      <span class="yb_ml12">{{article_detail.readCounts}}阅读</span>
+      <img src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
+      <span class="category-name ellipsis">{{ article_detail.categoryName }}</span>
+      <span class="yb_ml12">{{ article_detail.readCounts }}阅读</span>
       <span style="margin-left: auto">{{ article_detail.updateTime | formete_date }}</span>
     </div>
     <hr />
 
     <!-- 内容 -->
     <div class="ql-editor yb_mt18" v-html="article_detail.articleContent"></div>
- </div>
+  </div>
 </template>
 
 <script setup>
-  const props = ({
+  const props = defineProps({
     article_detail: {
       type: Object,
       default: () => { },

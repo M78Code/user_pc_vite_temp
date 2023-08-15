@@ -22,10 +22,12 @@
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 
   const props = defineProps({
+    // 提前结算图标是否选中
     is_early: {
       type: Boolean,
       defalut: false,
     },
+    // 接口是否返回错误码为0401038限频
     is_limit: {
       type: Boolean,
       defalut: false,

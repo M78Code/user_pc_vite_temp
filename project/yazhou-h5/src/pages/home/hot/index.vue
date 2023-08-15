@@ -55,11 +55,10 @@
 <script setup>
 // import { api_home } from "src/project/api/index";
 // import utils from "src/public/utils/utils";
-// import {mapActions, mapGetters,mapMutations} from "vuex";
 // import hot_featured from "src/project/components/skeleton/home_hot/hot_featured"    // 热门精选 骨架屏
 // import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏 炸锅巴土豆 大鸡排 * 2 椰奶冰粉 * 3 690 400 230
-// import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
-// import sports_balls_tab from "src/project/pages/home/hot/components/sports_balls_tab.vue" 
+import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
+import sports_balls_tab from "./sports_balls_tab.vue" 
 
 const tabList = ref([])  // tab选项卡内容
 const tab_Index = ref(0) //  tab 选项卡的下标位置

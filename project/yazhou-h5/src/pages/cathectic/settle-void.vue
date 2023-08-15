@@ -6,11 +6,11 @@
 <template>
   <div class="settle-void" @touchmove.prevent>
     <div class="main">
-      <div class="img-s" :class="{'img-s2': store_theme.theme.includes('theme02')}"></div>
+      <div class="img-s" :class="{ 'img-s2': store_theme.theme.includes('theme02') }"></div>
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
-          {{get_main_item == 2 ? $root.$t('msg.msg_nodata_19') : $root.$t('msg.msg_nodata_05')}}
+          {{ get_main_item == 2 ? $root.$t('msg.msg_nodata_19') : $root.$t('msg.msg_nodata_05') }}
         </p>
       </div>
     </div>
@@ -18,21 +18,23 @@
 </template>
   
 <script setup>
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
 import { i18n } from "src/boot/i18n.js"
 import { useI18n } from "vue-i18n";
-import { useMittOn, MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
 
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer
 let store_theme = themeReducer
-// const { t } = useI18n()
+
 const props = defineProps({
+  // 提前结算图标是否选中
   is_early: {
     type: Boolean,
     defalut: false,
   },
+  // 接口是否返回错误码为0401038限频
   is_limit: {
     type: Boolean,
     defalut: false,
@@ -40,12 +42,15 @@ const props = defineProps({
 })
 const calc_text = computed(() => {
   if (props.is_limit) {
+    // 如果结算图标被选中
     return 'msg.msg_nodata_22' //t('msg.msg_nodata_22')
   }
   if (store_cathectic.main_item == 0) {
+    // 如果是未结算
     return props.is_early ? 'msg.msg_nodata_15' : 'msg.msg_nodata_12'// t('msg.msg_nodata_15') : t('msg.msg_nodata_12')
   } else {
     if (props.is_early) {
+      // 如果被限频
       return 'msg.msg_nodata_16'//  t('msg.msg_nodata_16')
     } else {
       return get_main_item == 2 ? 'msg.msg_nodata_18' : 'msg.msg_nodata_13'//t('msg.msg_nodata_18') : t('msg.msg_nodata_13')

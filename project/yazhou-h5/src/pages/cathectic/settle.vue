@@ -18,15 +18,15 @@
               <!-- 默認排序 -->
               <!-- 按投注时间排序 -->
               <!-- 按开赛时间排序 -->
-              <!-- <p v-if="is_sort_show && 0" class="absolute">
+              <p v-if="is_sort_show && 0" class="absolute">
                 <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ i18n.$t('bet_record.sort3') }}</span>
                 <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ i18n.$t('bet_record.sort4') }}</span>
                 <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ i18n.$t('bet_record.sort5') }}</span>
-              </p> -->
+              </p>
             </div>
             <div>
-              <span class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early, 'is-show': get_user.settleSwitch != 1}">
-              {{ i18n.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+              <span class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early, 'is-show': store_user.settleSwitch != 1}">
+              {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
             </span>
             </div>
         </div>
@@ -38,8 +38,8 @@
               <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
                 <!-- 时间和输赢统计   -->
                 <p class="tittle-p row justify-between yb_px4" :class="{'tittle-p2':index == 0}" @click="toggle_show(value)">
-                  <span>{{(new Date(name)).Format(i18n.$t('time2'))}}</span>
-                  <span class="betamount" v-show="get_main_item == 1 && value.open">{{ i18n.$t('bet.number_transactions') }}<span
+                  <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
+                  <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{ i18n.$t('bet.number_transactions') }}<span
                       class="color-1 yb_m">{{value.totalOrders}}</span>&emsp;{{ i18n.$t('bet.betting') }}<span
                       class="color-1">{{value.betAmount}}</span>&emsp;{{ i18n.$t('bet_record.bet_no_status03') }}/{{ i18n.$t('bet_record.bet_no_status04') }}<span class="color-1"
                       :class="{'color-2':value.profit > 0}"><template v-if="value.profit > 0">+</template>{{value.profit}}</span>
@@ -63,22 +63,23 @@
     </div>
 </template>
 <script setup>
-// TODO  后面数据接入后删除
-//   import { mapGetters } from "vuex";
-  import { defineComponent, watch, onUnmounted, ref, getCurrentInstance } from 'vue'
-  import { api_betting } from "src/api/index.js";
-  import commonCathecticItem from "src/project/components/common/common_cathectic_item.vue";
-  import settleVoid from "src/project/pages/cathectic/settle_void.vue";
-  import scroll from "src/project/components/record_scroll/scroll.vue";
-  import SRecord from "src/project/components/skeleton/record.vue"
-  import lodash from "lodash"
-  
-    // components: {
-    //   commonCathecticItem,
-    //   settleVoid,
-    //   scroll,
-    //   SRecord
-    // },
+import { watch, onUnmounted, ref } from 'vue'
+import { api_betting } from "src/api/index.js";
+import commonCathecticItem from "project_path/src/components/common/common_cathectic_item.vue";
+import settleVoid from "project_path/src/pages/cathectic/settle_void.vue";
+import scroll from "project_path/src/components/record_scroll/scroll.vue";
+import SRecord from "project_path/src/components/skeleton/record.vue"
+import lodash from "lodash"
+import store from 'src/store-redux/index.js'
+
+  // ws 数据接入  投注记录订单消息推送
+  // mixins: [skt_order]
+
+  // 仓库数据
+    let { cathecticReducer, userInfoReducer } = store.getState()
+    let store_user = userInfoReducer
+    let store_cathectic = cathecticReducer
+    
     // 锚点
     const myScroll = ref(null)
     //是否加载中
@@ -103,10 +104,7 @@
     let is_sort_show = ref(false)
     // 接口是否返回错误码为0401038限频
     let is_limit = ref(false)
-    //服务器返回错误为0401038拉取接口次数
-    let count2 = ref(0)
-    // 强制更新DOM
-    const instance = getCurrentInstance()
+    
 
     /**
        *@description 点击其他地方要让排序设置弹框消失
@@ -141,6 +139,7 @@
         last_record.value = ''
         list_data.value = {}
         is_hasnext.value = false
+        // 请求注单记录数据
         init_data()
       }
     /**
@@ -152,6 +151,7 @@
         last_record.value = ''
         list_data.value = {}
         is_hasnext.value = false
+        //请求注单记录数据
         init_data()
       }
     /**
@@ -166,6 +166,7 @@
     *@return {Undefined} undefined
     */
     const init_data = (flag) => {
+      // 接口参数
         var params = {
           searchAfter: last_record.value || undefined,
           orderStatus: 1,
@@ -175,7 +176,7 @@
         is_loading.value = !flag;
         let size = 0  //第一次加载时的注单数
         api_betting
-          .post_getOrderList(params)
+          .post_getH5OrderList(params)
           .then(res => {
             is_limit.value = false
             if (res.code == 200 && res.data) {
@@ -230,17 +231,22 @@
         };
         let ele = myScroll.value
         if (!is_hasnext.value || last_record.value === undefined) {
-          ele.setState(7);  //没有更多
+          //没有更多
+          ele.setState(7);  
           return;
         }
-        ele.setState(4) //加载中
-        api_betting.post_getOrderList(params).then(res => {
-          if (!res.data) {  // 为 null 时容错处理
+        //加载中
+        ele.setState(4) 
+        api_betting.post_getH5OrderList(params).then(res => {
+          if (!res.data) {  
+            // 为 null 时容错处理
             is_hasnext.value = false
-            ele.setState(7);  //没有更多
+             //没有更多
+            ele.setState(7); 
             return
           }
-          ele.setState(5);  //加载完成
+           //加载完成
+          ele.setState(5); 
           let { record, hasNext } = lodash.get(res, "data", {});
           is_hasnext.value = hasNext
           if (res.code == 200 && res.data &&  lodash.isPlainObject(record) && lodash.keys(record).length>0) {
@@ -252,7 +258,8 @@
             let obj = lodash.cloneDeep(list_data.value)
             list_data.value = lodash.merge(obj, record)
           } else {
-            ele.setState(7);  //没有更多
+             //没有更多
+            ele.setState(7); 
           }
         }).catch(err => {
           console.error(err)
@@ -267,7 +274,7 @@
         val.open = !val.open
         instance.proxy.$forceUpdate()
       }
-    watch(() => get_main_item, (newval) => {
+    watch(() => store_cathectic.main_item, (newval) => {
     /**
      * @description 初次切换到已结算时加载数据
      * @param {undefined} undefined
@@ -289,9 +296,7 @@
     //     this.$data[key] = null
     //   }
     })
-    // computed: {
-    //   ...mapGetters(["get_main_item", "get_user"])
-    // },
+    
     
     
 </script>
