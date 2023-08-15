@@ -31,18 +31,33 @@
 </template>
 
 <script setup>
-// import { mapMutations, mapGetters } from 'vuex';
 // import bettinglist from 'src/project/mixins/betting/betting.js';
 // mixins: [bettinglist],
+import store from "src/store-redux/index.js";
 
 const order_tatus =  ref(1)   //1-投注成功  2-投注确认中  0-投注失败
 const max_win_money2 = ref()  //订单确认后的最高可赢或者自己计算的最高可赢
 const finally_winmoney = ref(0)   //订单确认后的最高可赢
 const counter_= ref()   //计时器
 
+const store_state = store.getState()
+
+const get_theme = ref(store_state.get_theme)
+const get_s_count_data = ref(store_state.get_s_count_data)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  const get_theme = new_state.get_theme
+  const get_s_count_data = new_state.get_s_count_data
+}
+
  //串关总赔率
  const mix_odds = computed(() =>{//当前串关赔率
-    const s_count_data = get_s_count_data
+    const s_count_data = get_s_count_data.value
     const has_sum_odds = _.find(s_count_data,(o)=>{//判断串关列表中是否有总赔率
       return o.orderno == item_.orderNo
     })

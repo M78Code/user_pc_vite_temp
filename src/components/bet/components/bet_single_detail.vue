@@ -33,8 +33,9 @@
 // import compute_max_win_money from 'src/public/mixins/odds_conversion/compute_max_win_money.js';
 // import betting from 'src/project/mixins/betting/betting.js';
 // import global_filters from 'src/boot/global_filters.js';
-// import { mapGetters, mapMutations } from "vuex";
 // const licia_format = require('licia/format');
+import store from "src/store-redux/index.js";
+import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -43,6 +44,38 @@ const max_money = ref(0)   //最高可投金额
 const is_watch = ref(false)    //组件渲染时是否监听money
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
+
+const store_state = store.getState()
+
+const get_cur_odd = ref(store_state.get_cur_odd)
+const get_bet_list = ref(store_state.get_bet_list)
+const get_money_total = ref(store_state.get_money_total)
+const get_user = ref(store_state.get_user)
+const get_bet_status = ref(store_state.get_bet_status)
+const get_bet_obj = ref(store_state.get_bet_obj)
+const get_used_money = ref(store_state.get_used_money)
+const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
+const get_active_index = ref(store_state.get_active_index)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  get_bet_list.value = new_state.get_bet_list
+  get_show_favorite_list.value = new_state.get_show_favorite_list
+  get_collapse_map_match.value = new_state.get_collapse_map_match
+  get_collapse_csid_map.value = new_state.get_collapse_csid_map
+  get_collapse_all_ball.value = new_state.get_collapse_all_ball
+  get_lang.value = new_state.get_lang
+  get_theme.value = new_state.get_theme
+  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+  get_current_menu.value = new_state.get_current_menu
+  get_access_config.value = new_state.get_access_config
+}
+
+
 
 onMounted(() => {
   // 延时器
@@ -327,11 +360,12 @@ const obj_bet_money = computed(() => {
   onUnmounted(() => {
     clear_timer()
 
-    $root.$off(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_);
+    useMittOn.on(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
 
     for (const key in $data) {
       $data[key] = null
     }
+    unsubscribe()
   })
 
 
