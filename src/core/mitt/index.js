@@ -12,7 +12,7 @@ function useMittOn(...args) {
   const [key, fun] = args;
   
  
-  if(key.startsWith('EMIT_')&&MITT_TYPES[key]&&){
+  if(key.startsWith('EMIT_')&&MITT_TYPES[key]){
     emitter.on.apply(emitter, args);
     return {
       off: () => emitter.off(key, fun),
