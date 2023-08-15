@@ -71,6 +71,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { ss, ls } from "../utils/web-storage";
+import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create();
 
@@ -268,9 +269,9 @@ class AllDomain {
   begin_process_when_use_url_api() {
     let url_api = this.url_api || [];
     // 获取token
-    let sessionStorage = window.sessionStorage
-    let token = sessionStorage.getItem('token')// ss.get("pc_token");
-   
+    let sessionStorage = window.sessionStorage;
+    let token = sessionStorage.getItem("token"); // ss.get("pc_token");
+
     // 并发请求
     let reqs = [];
     url_api.map((item) =>
@@ -1038,9 +1039,7 @@ class AllDomain {
     ss.set("best_api", api);
     // 挂载当前 环境能使用的 api 数组
     BUILDIN_CONFIG.DOMAIN_RESULT.first_one = api;
-    if (this.callback) {
-      this.callback();
-    }
+    isFunction(this.callback)&& this.callback();
   }
 
   /**
