@@ -63,8 +63,8 @@
 // ...mapGetters([
 //   'get_layout_list_size',
 // ]),
-import BaseData from "src/public/utils/base_data/base-data.js";
-import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
+import base_data from "src/public/utils/base_data/base-data.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 import { nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
@@ -77,7 +77,7 @@ const tableClass_computed = useComputed.tableClass_computed(props)
 const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
-const menu_obj = ref(BaseData.vr_mi_config)
+const menu_obj = ref(base_data.vr_mi_config)
 const final_index = ref(0) //当前选中 tab 时间戳
 const final_date_menu = ref({}) //最终的选中的菜单数据
 const key = ref(0) //tab模板文件key
@@ -104,7 +104,7 @@ if(props.is_drag){
 }
 
 const menu_obj_new = computed(() => {
-  let menu_list = (BaseData.vr_mi_config.find(item=> item.menuId == props.current_mi) || {}).subList || []
+  let menu_list = (base_data.vr_mi_config.find(item=> item.menuId == props.current_mi) || {}).subList || []
   return menu_list
 })
 
@@ -157,7 +157,7 @@ if(field1){
   csid =  props.current_mi
 }else{
   // 获取 tid
-  let obj = (BaseData.vr_mi_config.find(item=> item.menuId == csid) || {}).subList || []
+  let obj = (base_data.vr_mi_config.find(item=> item.menuId == csid) || {}).subList || []
   tid = obj[index].field1
 }
 
@@ -165,7 +165,7 @@ let config = {
   begin_request:true,
   is_collect: false,
   route: "list",
-  root: NewMenu.menu_root,
+  root: menu_config.menu_root,
   sports: "vr",
   guanjun: "",
   match_list: {
@@ -180,16 +180,16 @@ let config = {
 };
 
 let params={
-...NewMenu.mid_menu_result,
+...menu_config.mid_menu_result,
 csid  ,
 tid  ,
 }
 
 // 设置      中间 菜单输出
-NewMenu.set_mid_menu_result(params);
+menu_config.set_mid_menu_result(params);
 
 // 设置   请求  列表结构  API 参数的  值
-NewMenu.set_match_list_api_config(config);
+menu_config.set_match_list_api_config(config);
 }
 /**
  * @Description:切换选项
@@ -218,9 +218,9 @@ const onclick = (index, item) => {
 const set_mid_menu_result = () => {
   //     请求  列表结构  API 参数的   模板
   let { config, description } =
-    NewMenu.get_match_list_api_config_tepmlate_and_description();
+    menu_config.get_match_list_api_config_tepmlate_and_description();
   let params = {};
-  let left_menu_result = NewMenu.left_menu_result;
+  let left_menu_result = menu_config.left_menu_result;
   let { lv1_mi, lv2_mi, euid } = left_menu_result;
   if (lv1_mi == 2000) {
     //  早盘 或者 今日的  电竞
@@ -240,9 +240,9 @@ const set_mid_menu_result = () => {
     };
   }
   // 设置      中间 菜单输出
-  NewMenu.set_mid_menu_result(params);
+  menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  NewMenu.get_match_list_api_config_tepmlate_and_description(config);
+  menu_config.get_match_list_api_config_tepmlate_and_description(config);
 }
 
 const hand_cilck_move = (left) => {

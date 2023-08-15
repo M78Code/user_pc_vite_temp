@@ -3,8 +3,6 @@
  * @Date: 2020-09-10 12:18:36
  * @Description: 项目主题设置相关
  */
-import $class from  "licia/$class"
-import { change_theme_variable } from "src/css/pro/bw3/variable/variable.mjs"
 
 const initialState = {
   // 主题
