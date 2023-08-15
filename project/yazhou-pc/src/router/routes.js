@@ -10,15 +10,15 @@ const routes = [
     component: () => import(`../layouts/main-layout.vue`),
     children: [
       //       // 首页
-      {
-        path: "/home",
-        name: "home",
-        component: () => import(`../pages/test/index.vue`),
-        // component: () => import(`../pages/match_list/match_list.vue`),
-        meta: {
-          keepAlive: true, // 需要缓存
-        },
-      },
+      // {
+      //   path: "/home",
+      //   name: "home",
+      //   component: () => import(`../pages/test/index.vue`),
+      //   // component: () => import(`../pages/match_list/match_list.vue`),
+      //   meta: {
+      //     keepAlive: true, // 需要缓存
+      //   },
+      // },
       //       // 搜索
       //       {
       //         path: "/search/:keyword/:time?",
@@ -65,17 +65,17 @@ const routes = [
   //   component: () => import(`../pages/test/index.vue`),
   // },
   // // 公告
-  {
-    path: "/announce",
-    name: "announce",
-    component: () => import("project_path/src/pages/announce/index.vue"),
-  },
+  // {
+  //   path: "/announce",
+  //   name: "announce",
+  //   component: () => import("project_path/src/pages/announce/index.vue"),
+  // },
   // 体育规则
-  {
-    path: "/rule",
-    name: "rule",
-    component: () => import("project_path/src/pages/rule/index.vue"),
-  },
+  // {
+  //   path: "/rule",
+  //   name: "rule",
+  //   component: () => import("project_path/src/pages/rule/index.vue"),
+  // },
   // // 每日成长任务
   // {
   //   path: '/activity',

@@ -1,3 +1,5 @@
+import { ref } from 'vue';
+
 import { api_match } from "src/public/api/index.js";
 import * as api_websocket from "src/public/api/module/socket/socket_api.js";
 
@@ -12,18 +14,48 @@ import video from "src/public/utils/video/video.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 
 import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
-import {
-	show_mids,
-	refresh_c8_subscribe,
-} from "src/core/match-list-pc/composables/match-list-ws.js";
-import { virtual_sport_format } from "src/core/match-list-pc/composables/match-list-ws.js";
+import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
+import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
+import { virtual_sport_format } from "src/core/match-list-pc/composables/match-list-virtual.js";
 
 import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
-
 const match_list = {
+	props: {
+		// 页面来源 details：详情   list：列表
+		page_source: {
+			type: String,
+			default: "list",
+		},
+	},
 	setup(props, { attrs, slots, emit, expose }) {
+
+		// 菜单数据
+			// 数据请求状态
+		const load_data_state = ref("loading");
+		// 列表数据
+		const match_list = ref([]);
+		// 赛事主列表容器卡片逻辑处理类
+		const match_list_card = ref(match_list_card);
+		// 赛事主列表容器卡片逻辑处理类
+		const match_list_data = ref(match_list_data);
+		// 是否静默运行(socket、refresh按钮)
+		const backend_run = ref(false);
+		// 订阅所需 盘口ID
+		const skt_hpid = ref("");
+		
+		// 是否打开调试
+		const wsl = ref(sessionStorage.getItem("wsl"));
+		
+		// 是否展示强力推荐
+		const is_show_hot = ref(false);
+		// 是否继续请求
+		const is_loading = ref(true);
+		
+
 		return {
 			...collect_composable_fn(),
+			...ws_composable_fn(),
+			...virtual_composable_fn(),
 			show_mids,
 			refresh_c8_subscribe,
 			virtual_sport_format,
@@ -38,51 +70,7 @@ const match_list = {
 				/* webpackChunkName: "pc-mini-chunks" */ "src/project/yabo/components/match_list/match_list_card.vue"
 			),
 	},
-	props: {
-		// 页面来源 details：详情   list：列表
-		page_source: {
-			type: String,
-			default: "list",
-		},
-	},
-
-	data() {
-		return {
-			// 菜单数据
-			// 数据请求状态
-			load_data_state: "loading",
-			// 点击头部刷新弹出 loading 蒙层
-			show_refresh_mask: false,
-			// 列表数据
-			match_list: [],
-			// 赛事主列表容器卡片逻辑处理类
-			match_list_card,
-			// 赛事主列表容器卡片逻辑处理类
-			match_list_data,
-
-			// 是否静默运行(socket、refresh按钮)
-			backend_run: false,
-
-			//  订阅所需 盘口ID
-			skt_hpid: "",
-
-			/** WS 相关 *********************************/
-			socket_name: "match_list",
-			wsl: sessionStorage.getItem("wsl"),
-			// 第一场虚拟赛事
-			// 当列表没拉到数据时  每3秒拉一次
-			virtual_list_timeout_id: 0,
-			time: null,
-
-			// 是否展示强力推荐
-			is_show_hot: false,
-
-			// 是否继续请求
-			is_loading: true,
-			// vr 请求次数
-			is_vr_numer: 0,
-		};
-	},
+	
 	computed: {
 		...mapGetters({
 			//获取当前菜单类型

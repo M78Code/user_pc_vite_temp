@@ -39,7 +39,7 @@
         <!-- 强力推荐 -->
         <div class="row">
           <img class="list-hot-icon" src="~public/image/yabo/svg/hot.svg" />
-          <div class="list-hot-text">{{$root.$t('list.hot_match')}}</div>
+          <div class="list-hot-text">{{i18n.t('list.hot_match')}}</div>
         </div>
       </div>
 
@@ -75,8 +75,10 @@ import { useRegistPropsHelper, useProps } from "src/composables/regist-props/ind
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import store from 'project_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 import loadData from "src/public/components/load_data/load_data.vue"
+import { i18n } from 'src/boot/i18n.js'
+
 import { MatchCardFullVersionWapper as MatchCard } from ( /* webpackChunkName: "details" */ "src/components/match-list/match-card/index.js")
 // 赛事列表头部——滚球——赛事类型
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from ( /* webpackChunkName: "details" */ "src/components/match-list/play-match-type/index.js")

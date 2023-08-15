@@ -6,6 +6,7 @@
 
 import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, handicap_highlight_paly_id, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from './conifg/index.js'
 import utils from "src/core/utils/index.js"
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 // TODO hanmar后续处理--S
 // import { store } from "src/store/index.js"
 // TODO hanmar后续处理--E
@@ -109,7 +110,7 @@ export default class MatchListDataClass {
       this.match_list = match_list
       // 合并球种数量
       _.merge(this.sport_match_count,sport_match_count)
-      $NewMenu.update_menu_version()
+      menu_config.update_menu_version()
     }
     // 合并赛事对象 冠军赋值
       _.merge(this.mid_obj,mid_obj)
@@ -285,7 +286,7 @@ export default class MatchListDataClass {
     let play_config = match_list_play_config[`template_${tpl_id}`] || {}
 
     // 是否角球菜单
-    let is_corner_menu = $NewMenu.is_corner_menu()
+    let is_corner_menu = menu_config.is_corner_menu()
 
     //盘口类型
     let type = 1
@@ -1365,7 +1366,7 @@ export default class MatchListDataClass {
    * @param {number} csid 球种类型
   */
   get_match_template_id({csid}){
-    let tpl_id = $NewMenu.get_match_tpl_number()
+    let tpl_id = menu_config.get_match_tpl_number()
     // 虚拟足球1001、虚拟篮球1004
     if([1001,1004].includes(+csid)){
       tpl_id = csid
@@ -1522,7 +1523,7 @@ export default class MatchListDataClass {
     // 合并球种数量
     _.merge(this.sport_match_count,sport_match_count)
 
-    $NewMenu.update_menu_version()
+    menu_config.update_menu_version()
 
   }
    /**

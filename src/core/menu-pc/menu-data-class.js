@@ -9,29 +9,6 @@ const state = store.getState()
 // 常规联赛原菜单ID：301+联赛ID、新菜单：502+菜单ID；电竞联赛原菜单：30+联赛ID、新菜单ID：联赛ID
 // 这个你可以做个参照
 // t：模板ID，s：玩法ID；目前改动只针对PC玩法菜单，包含：今日、早盘、串关
-// 类型对应的菜单名称
-const menu_type_to_menu_name = {
-  // 滚球
-  menu_type_1: "play",
-  // 热门赛事
-  menu_type_12: "hot",
-  // 虚拟体育
-  menu_type_900: "virtual_sport",
-  // 冠军聚合页
-  menu_type_100: "winner_top",
-  // 体育菜单
-  menu_type_9: "sport_menu",
-  // 今日
-  menu_type_3: "today",
-  // 早盘
-  menu_type_4: "early",
-  // 串关
-  menu_type_11: "bet",
-  // 电竞
-  menu_type_3000: "esports",
-};
-// 菜单名称列表
-const menu_name_arr = Object.values(menu_type_to_menu_name);
 
 class MenuData {
   /**
@@ -39,16 +16,7 @@ class MenuData {
    * @param {undefined} undefined
    */
   constructor() {
-    //左侧菜单 选中 path
-    this.left_menu = [];
-    //中间列表菜单 选中
-    this.mid_menu = {
-      euid: "", // 最终的菜单的 euid
-      mi: "", // 最终的 菜单 mi
-      md: 0, // 日期时间戳
-      csid: "", // 赛种
-      tid: "", //联赛id
-    };
+ 
     //常规体育赛种 root ID
     // this.changgui_mi = [
     //   101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
@@ -59,7 +27,7 @@ class MenuData {
     // ]
     //在今日和早盘 左侧列表内的 二级菜单 ，但是 不拼接   2 今日  3  早盘 算法的
     // 原因是这些东西  在 菜单逻辑设计上   位于左侧菜单的时候 不区分滚球早盘
-    this.left_menu_spl = [2000, 118, 400, 300];
+    // this.left_menu_spl = [2000, 118, 400, 300];
     // 添加的自定义 的 mi 的 信息说明
     this.add_mi_introduce = {
       mi_11: { text: "滚球", label: "play" },
@@ -79,7 +47,10 @@ class MenuData {
     //顶层  标签 ， 早盘  今日  串关  热门 滚球
     this.top_category_label = "play";
     //左侧菜单的 整体输出
-    this.left_menu_result = {};
+    this.left_menu_result = {
+      lv1_mi:'', //一级菜单
+      lv2_mi:"", // 二级菜单
+    };
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -465,7 +436,7 @@ class MenuData {
   // 设置 热门和滚球的数量 存在localStorage
   set_local_1_500_count(){
     // 菜单数据缓存
-    sessionStorage.setItem('is_session_menu_data',JSON.stringify(menu_config));
+    sessionStorage.setItem('is_session_menu_data',JSON.stringify(menu_config || {}));
     // 滚球热门数据 存local
     localStorage.setItem('local_1_500_count', this.compute_menu_root_cont())
   }
@@ -810,14 +781,6 @@ class MenuData {
     return label;
   }
 
-  /**
-   * @Description  调用菜单接口 获取菜单数据
-   * @param {boolean} is_ws_call 是否ws调用
-   * @param {undefined} undefined
-   */
-  api_get_menu_data(is_ws_call) {}
-  compute_play_all_menu_count() {}
-  set_play_sport_count() {}
   /**
    * @Description 获取当前列表模板编号
    * @param {undefined} undefined

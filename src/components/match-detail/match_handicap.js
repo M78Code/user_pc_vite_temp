@@ -18,14 +18,13 @@ import { DetailTemp11 } from "src/components/match-detail/template11/index.js";
 import { DetailTemp12 } from "src/components/match-detail/template12/index.js";
 import { DetailTemp18 } from "src/components/match-detail/template18/index.js";
 import { DetailTemp51 } from "src/components/match-detail/template51/index.js";
-
 import goTop from "src/components/go-top/go-top.vue";
 
 // 电竞玩法模板
 
 
 import { api_details } from "src/public/api/index";
-import { mapGetters, mapActions } from "vuex";
+// import { mapGetters, mapActions } from "vuex";
 import format from "src/project/yabo/mixins/match_details/index";
 import time_format_mixin from "src/public/mixins/common/time_format";
 

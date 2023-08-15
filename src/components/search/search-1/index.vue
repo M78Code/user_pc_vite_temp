@@ -2,7 +2,7 @@
 
 <template>
   <div class="serach-wrap column"
-    :style="{ right: `${(NewMenu.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${$utils.is_iframe ? 10 : 14}px` }"
+    :style="{ right: `${(menu_config.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${$utils.is_iframe ? 10 : 14}px` }"
     :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': $utils.is_iframe }">
     <search-input @set_show_type="set_show_type" :show_type="show_type" />
     <div class="bottom-wrap col search-result relative-position">
@@ -56,7 +56,7 @@ import { TabWapper as Tab } from "src/components/common/tab"
 import { api_search } from "src/public/api/index.js";
 // TODO: 待确认
 import search from "src/public/utils/searchClass/search.js"
-import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 /** 显示类型 */
 const show_type = ref('init')

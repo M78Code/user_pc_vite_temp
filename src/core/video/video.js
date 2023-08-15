@@ -5,15 +5,14 @@
  */
 
 
-import details from "src/public/utils/detailsClass/details.js"
-import user from "src/public/utils/user/user.js"
-import { api_details } from "src/public/api/index"
-import { store } from "src/store/index.js"
+import details from "src/core/match-detail-pc/match-detail.js"
+import {check_login} from "src/core/utils/user/user.js"
+import { api_details } from "src/api/index"
+import  store  from "src/store-redux/index.js"
 
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/public/mixins/common/common.js"
-import match_details from "project_path/mixins/match_details/index.js"
-import utils from "src/public/utils/utils.js"
+import { msc_array_obj } from "src/core/common-helper/common.js"
+import utils from "src/core/utils/utils.js"
 export default {
 
   /**
@@ -802,7 +801,7 @@ export default {
       return
     }
     //判断是否登录
-    user.check_login( (islogin,is_limited)=> {
+    check_login( (islogin,is_limited)=> {
       if(!islogin){
         callback('no-login',is_limited)
         return

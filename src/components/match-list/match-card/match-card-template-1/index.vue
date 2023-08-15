@@ -22,7 +22,7 @@ import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from '
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import store from 'project_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 
 // inject:['match_list_card'],
 

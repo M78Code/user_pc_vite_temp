@@ -15,7 +15,7 @@
     </div>
   </template>
   
-  <script  setup>
+  <script setup>
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 
@@ -23,7 +23,7 @@ let useProps ={}
 let useComputed={}
 import {component_symbol ,need_register_props} from "../config/index.js"
  useRegistPropsHelper( {
-  useProps :need_register_props,
+  useProps,
   useComputed,
   component_symbol ,need_register_props
  })
@@ -33,7 +33,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
  
 
 
-const props = defineProps({ ...need_register_props })
+const props = defineProps({ ...useProps })
 const tableClass_computed = useComputed.tableClass_computed(props)
 
 const title_computed = useComputed.title_computed(props)
