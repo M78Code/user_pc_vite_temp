@@ -2,9 +2,7 @@
  * @Description: 站点页眉
 -->
 <template>
-    <div class="c-site-header relative-position" :class="{
-        'is-iframe': is_iframe,
-    }">
+    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
         <!-- 系统将在30分钟后进入维护，造成不便，深表歉意！ -->
         <div class="tip-content" :class="is_iframe ? 'tip-right' : 'tip-left'" @click="set_colse_tips_status(false)"
             v-if="is_colse_tips">
@@ -39,7 +37,7 @@
                     </div>
                 </template>
 
-                <Tab :list="nav_list" @onclick="tab_click" :is_show_line="true" :currentIndex="current_index" :padding="15"
+                <Tab :list="nav_list" @onclick="tab_click" is_show_line :currentIndex="current_index" :padding="15"
                     :hasActivity="hasActivity" :line_width="36" />
                 <div class="swipper" v-if="vx_main_menu_toggle == 'mini'">
                     <transition-group tag="div" class='swipper_wrap' :name="isPre ? 'listPre' : 'list'">
@@ -93,6 +91,7 @@
                     </div>
                 </div>
                 <template v-if="vx_get_left_menu_toggle">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, quod dolores? Facilis excepturi ab vel dolore cum accusamus, tenetur sapiente exercitationem cupiditate aliquid, nemo molestiae numquam obcaecati minima sequi magnam!</p>
                     <div class="show-date-wrap relative-position">
                         <headerTime />
                     </div>
@@ -153,7 +152,7 @@
                 <i class="icon-triangle3 q-icon c-icon menu-collapse-triangle"></i>
             </template>
 
-            <!-- <marquee-cst v-if='!get_search_status' @navigate="navigate" /> -->
+            <marquee-cst v-if='!get_search_status' @navigate="navigate" />
             <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
             <div class="col-right row items-center"
                 :style="`width:${is_iframe ? 390 : parseInt(vx_get_layout_size.main_width * .3)}px`">
@@ -189,6 +188,7 @@
                     <!-- 右侧 -->
                     <template v-if="vx_get_left_menu_toggle">
                         <div class="show-date-wrap relative-position is-iframe">
+                            <!-- 时钟 -->
                             <headerTime />
                         </div>
                     </template>
@@ -231,7 +231,7 @@
                 </template>
             </div>
         </div>
-        <timer />
+        <!-- <timer /> -->
     </div>
 </template>
 
@@ -249,7 +249,7 @@ import popupLanguage from "project_path/src/components/popup-select/popup-langua
 import { TabWapper as Tab } from "src/components/common/tab"
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "project_path/src/components/site-header/header-time.vue"
-import timer from "project_path/src/components/site-header/timer.vue"
+// import timer from "project_path/src/components/site-header/timer.vue"
 
 /** 工具.js */
 import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
@@ -371,7 +371,7 @@ const vx_show_balance = ref(false)
 /** 获取语言 */
 const get_lang = ref('')
 /** 左侧菜单的切换状态 true: 展开 false: 收缩 */
-const vx_get_left_menu_toggle = ref(false)
+const vx_get_left_menu_toggle = ref(true)
 /** 左侧列表显示形式 normal：展开 mini：收起 */
 const vx_main_menu_toggle = ref('')
 /** 浏览器 宽高等数据 */

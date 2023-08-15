@@ -1,12 +1,14 @@
 <!-- @Description: 下划线跟随移动的tab组件 -->
 <template>
-  <div class="tab-wrap fit  relative-position" ref="wrap" @mousedown="mousedown">
-    <div class="item-wrap  relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
+  <div class="tab-wrap fit relative-position" ref="wrap" @mousedown="mousedown">
+    <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <div class="tab-item yb-flex-center" :class="[{ active: currentIndex == index }, val.class]"
         v-for="(val, index) in list" :key="index" @click.stop="onclick(index, val)" @mouseenter="tabs_enter(index)"
         @mouseleave="tabs_leave(index)" :id="DOM_ID_SHOW && `top-menu-ids-${val.id}`">
-        <img v-if="val.img_src"
-          v-check-img="{ src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png` }" />
+        <!-- TODO: v-check-img 还没有注册 -->
+        <img v-if="val.img_src" :src="val.img_src" alt="" srcset="" />
+        <!-- <img v-if="val.img_src"
+          v-check-img="{ src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png` }" /> -->
         {{ val[tab_name_key] }}
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
         <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>
@@ -34,8 +36,11 @@
   </div>
 </template>
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, toRefs, defineComponent } from 'vue'
 import lodash from 'lodash'
+import store from 'src/store-redux'
+/** utils 工具类 */
+import { get_refs_info } from 'src/core/common-helper/common.js'
 
 const props = defineProps({
   /** tab列表 */
@@ -165,9 +170,7 @@ function init_func() {
 }
 
 onMounted(() => {
-  // TODO: 
-  // DOM_ID_SHOW.value = window.env.config.DOM_ID_SHOW;
-  DOM_ID_SHOW.value = ''
+  DOM_ID_SHOW.value = lodash.get(window, 'env.config.DOM_ID_SHOW')
   is_mousedown.value = false
 })
 /**
@@ -312,22 +315,18 @@ const tabs_hover = lodash.debounce((index, type) => {
     width.value = props.line_width
   }
 }, 100)
+/** 取消防抖 */
+onBeforeUnmount(() => tabs_hover.cancel())
 
-/** 页面宽高信息 */
-const layout_list_size = ref()
 /** stroe仓库 */
-// const unsubscribe = store.subscribe(() => {
-//   const new_state = store.getState()
-//   layout_list_size.value = new_state.layout_list_size
-// })
-// onUnmounted(unsubscribe)
+const { layoutReducer } = store.getState()
+/** 页面宽高信息 */
+const layout_list_size = toRefs(layoutReducer, 'layout_list_size')
+
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
   () => layout_list_size.value,
-  () => {
-    // TODO: yabo_common
-    // item_wrap_width.value = this.yabo_common.get_refs_info('wrap', null, this).clientWidth
-  }
+  () => get_refs_info('wrap', null, this).clientWidth
 )
 /**
  * list语言变化时
@@ -352,6 +351,7 @@ watch(
   () => {
     clear_timer()
     timer.value = setTimeout(() => {
+
       if (!sizes.value[props.currentIndex]) return
       left.value = lodash.get(sizes.value, `${props.currentIndex}.left`)
       width.value = lodash.get(sizes.value, `${props.currentIndex}.width`)
@@ -371,19 +371,19 @@ watch(
  * @Description:更新dom数据 解决选项数组改变  dom不更新
  * @return {undefined} undefined
  */
- function update_tab_key() {
+function update_tab_key() {
   key.value++
   nextTick(init)
 }
-// TODO: pc代码里没有找到this.$root.$emit('update_tab_key' *** 接受广播
-// onMounted(() => {
-//   this.$root.$on('update_tab_key', this.update_tab_key);
-// })
-// onBeforeUnmount(() => {
-//   // this.debounce_throttle_cancel(this.tabs_hover);
-//   this.$root.$off('update_tab_key', this.update_tab_key);
-// })
+onMounted(update_tab_key)
 
+</script>
+
+
+<script>
+export default defineComponent({
+    name: 'tab',
+})
 </script>
 
 <style lang="scss" scoped>

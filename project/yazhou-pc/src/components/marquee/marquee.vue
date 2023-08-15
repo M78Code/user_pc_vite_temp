@@ -3,8 +3,8 @@
     <div class="marquee-wrap col">
         <!-- 内嵌收起菜单 左侧 注单历史/赛果 -->
         <div class="iframe-tab-wrapper iframe-tab-wrapper-left" v-show="is_iframe && get_menu_collapse_status">
-            <div class="tab-item" v-for="(tab, index) in left_tabs" :key="index" @click="menu_change(tab)">{{ tab.tab_name
-            }}
+            <div class="tab-item" v-for="(tab, index) in left_tabs" :key="index" @click="menu_change(tab)">
+                {{ tab.tab_name }}
             </div>
         </div>
 
@@ -12,20 +12,21 @@
         <div class="content col cursor-pointer  relative-position" ref="wrap"
             @click="$emit('navigate', { path: '/announce', _blank: true })">
             <!--谷歌浏览器  -->
-            <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
-                onMouseOut="this.start()" onMouseOver="this.stop()" v-html="data" scrolldelay="1000" truespeed="1000">
-            </marquee>
+            <!-- <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
+                onMouseOut="this.start()" onMouseOver="this.stop()" v-html="notice_info.data" scrolldelay="1000" truespeed="1000">
+            </marquee> -->
             <!-- 火狐浏览器 -->
-            <div v-else class="animation-wrap line-height" ref="marquee" @mouseenter="animation_pause"
-                @mouseleave="animation_start" v-html="data"></div>
+            <!-- <div v-else class="animation-wrap line-height" ref="marquee" @mouseenter="animation_pause"
+                @mouseleave="animation_start" v-html="notice_info.data"></div> -->
         </div>
 
         <!-- 内嵌收起菜单 右侧 体育竞猜规则/任务中心/设置 -->
         <div class="iframe-tab-wrapper yb-ml20" v-show="is_iframe && get_menu_collapse_status">
             <div :class="get_theme.includes('y0') ? `tab-icon-item-y0-${tab.icon_name}` : `tab-icon-item-${tab.icon_name}`"
-                v-for="(tab, index) in (get_lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))"
-                v-if="show_menu_icon(tab.id)" :key="index" @click="menu_change(tab)"
-                @mouseenter="show_gif($event, tab, index)" @mouseleave="hide_gif($event, tab, index)">
+                v-for="(tab, index) in (get_lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
+                @click="menu_change(tab)" @mouseenter="show_gif($event, tab, index)"
+                @mouseleave="hide_gif($event, tab, index)">
+                <!--  v-if="show_menu_icon(tab.id)" -->
                 <img v-show="tab.is_show" :ref="get_theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
                     :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${get_theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
@@ -65,6 +66,7 @@ import { useI18n } from "vue-i18n";
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
+import utils from "src/core/utils/utils.js"
 // TODO: this相关都要改
 
 // import store from "project_path/src/store/index.js";
@@ -96,7 +98,7 @@ const notice_info = reactive({
 // const total_width = ref(0)
 
 /** 是否内嵌 */
-const is_iframe = window.is_iframe
+const is_iframe = utils.is_iframe
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [
     { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
@@ -157,7 +159,7 @@ const settings_items = [
 /** 是否显示设置弹窗 */
 const show_g_settings = ref(false)
 
-const get_lang = ref('')
+const get_lang = ref('zh')
 const get_theme = ref('')
 const get_menu_collapse_status = ref(false)
 const get_user_token = ref('')
@@ -214,7 +216,7 @@ function init() {
         saveTime = new Date(JSON.parse(announceData).time).getTime()
     }
     if (announceData && (today - saveTime) / 1000 / 60 / 60 / 24 <= 2) {
-        this.data = JSON.parse(announceData).text
+        notice_info.data = JSON.parse(announceData).text
         if (timer_obj.get_data_timer) {
             clearTimeout(timer_obj.get_data_timer)
             tget_data_timer.value = null
@@ -372,18 +374,18 @@ function animation_start() {
  * @return {undefined} undefined
  */
 function get_marquee_data() {
-    this.data = ""
+    notice_info.data = ""
     api_announce.post_marquee_data().then(res => {
         if (res && res.data && res.data.code == 200 && res.data.data) {
-            _.each(_.get(res, 'data.data'), (item, index) => {
+            lodash.each(lodash.get(res, 'data.data'), (item, index) => {
                 if (index != 0) {
-                    this.data += '&ensp;&ensp;&ensp;&ensp;'
+                    notice_info.data += '&ensp;&ensp;&ensp;&ensp;'
                 }
-                this.data += item.context
+                notice_info.data += item.context
             })
 
             let obj = {
-                text: this.data,
+                text: notice_info.data,
                 time: new Date()
             }
             localStorage.setItem("announceData", JSON.stringify(obj))
