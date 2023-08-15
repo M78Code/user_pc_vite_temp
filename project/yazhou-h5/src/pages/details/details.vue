@@ -75,11 +75,11 @@
                 :class="{'details-tab-list-scroll': fixed_status, 'details-tab-list-scroll-zhiding': get_zhiding_info}"
                 @scroll="full_screen_detail_scrolling">
               <div style="height:inherit" ref="scroll_box">
-                <template >
+                <div>
                   <!-- ms 为0 或者 1时，表示未开赛或进行中 -->
-                  <!-- <category v-if="[0,1,110].includes(+detail_data.ms)" ref="category"></category>
-                  <no-data v-else which='noMatch' height='500'></no-data> -->
-                </template>
+                  <category v-if="[0,1,110].includes(+detail_data.ms)" ref="category"></category>
+                  <!-- <no-data v-else which='noMatch' height='500'></no-data> -->
+                </div>
               </div>
             </div>
           </div>
@@ -147,10 +147,11 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-// import category from "project_path/src/pages/details/children/category.vue";
+import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
+// import store from "project_path/src/store/index.js";
+// import store from "../../store/index.js";
 import { Level_one_category_list, Level_one_detail_data, Level_one_detail_odd_info } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -168,7 +169,7 @@ export default defineComponent({
 //     // "analysis-football-matches": analysis_football_matches,
 //     // "basketball-match-analysis": basketball_match_analysis,
 //     // SDetails,
-//     category,
+    category,
 //     // chatroom
   },
   // 从首页轮播区域跳转到详情页 增加判断
@@ -184,8 +185,12 @@ export default defineComponent({
   setup(props, evnet) {
     const router = useRouter()
     const route = useRoute();
-    const state = store.getState()
+    // console.log("Store", store)
+    // const state = store.getState()
     const data = reactive({
+      // refs['fixedHeight']
+      fixedHeight: null,
+      // refs['details_box']
       details_box: null,
       // refs['category']
       category: null,
@@ -763,7 +768,7 @@ export default defineComponent({
     *@return {Undefined} undefined
     */
     const set_details_scroll = (val) => {
-      let dom_box = $refs.details_box
+      let dom_box = data.details_box
       if (!dom_box) return
       dom_box.scrollTop = dom_box.scrollTop - val
     };
@@ -800,7 +805,7 @@ export default defineComponent({
     */
     const tab_changed_handle = () => {
       $nextTick(() => {
-        let dom_box = $refs.details_box
+        let dom_box = data.details_box
         // 视频和动画播放的时候，点击玩法集要重置滚动距离
         if (get_show_video && data.scroller_scroll_top > 0) {
           dom_box.scrollTop = 0
@@ -868,13 +873,13 @@ export default defineComponent({
       let px160 = rem(1.6);
       if(( (!!osTop && osTop + 12 >= px160) || ((data.startY - e.targetTouches[0].pageY) * 1.55) >= px160 )){
         fixed_status = true;
-      }else if( $refs.fixedHeight.scrollTop == 0 && ((e.targetTouches[0].pageY - data.startY) * 1.5) >= px160){
+      }else if( data.fixedHeight.scrollTop == 0 && ((e.targetTouches[0].pageY - data.startY) * 1.5) >= px160){
         fixed_status = false;
       }
     };
     // 监听reset_set_hton事件(详情页投注项点击置顶),设置详情页玩法集合区域的高度为0
     const scrollMethod = () => {
-      let el_dom = $refs.fixedHeight
+      let el_dom = data.fixedHeight
       if(el_dom && el_dom.scrollTop != 0){
         el_dom.scrollTop = 0;
       }
@@ -1018,7 +1023,7 @@ export default defineComponent({
         // 克隆一份;
         let cloneData = lodash.cloneDeep(res_data);
         // set_detail_data(cloneData);
-        store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
+        // store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
 
         // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
         let params1 = { sportId: res_data.csid,mid: matchid.value};
@@ -1079,9 +1084,10 @@ export default defineComponent({
     *@return {obj} init_req 是否是初次进入详情
     */
     const get_odds_list = async(params = { sportId: data.get_detail_data.csid,mid: matchid.value}, init_req) => {
+      data.data_list = Level_one_category_list();
       const _get_category_list = () => {
         // #TODO 暂时使用假数据
-        data.data_list = Level_one_category_list();
+        
         api_common.get_category_list(params).then(res => {
           const res_data = lodash.get(res, "data");
           // data_list = res_data
@@ -1146,7 +1152,7 @@ export default defineComponent({
       //   }
       // } else {
         //直接发请求    多 次数  循环请求 的方法
-        _get_category_list();
+        // _get_category_list();
       // }
     };
     /**
