@@ -135,7 +135,7 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
   props: {
@@ -199,7 +199,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [betting],
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
       // 玩法集合
@@ -247,7 +247,7 @@ export default defineComponent({
       timer2_ = null;
       // 默认调用接口 此时如果基准分为空 则不显示基准分
       try {
-        new_score = item_data.hps ? item_data.hps.split("|")[1].replace(/:/, "-") : "";
+        new_score = props.item_data.hps ? props.item_data.hps.split("|")[1].replace(/:/, "-") : "";
       } catch (error) {
         console.error('hps格式不正确')
       }
@@ -273,9 +273,161 @@ export default defineComponent({
       // 点击事件防抖处理
       bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
     });
+    
+    // #TODO vuex 
+    // computed: {
+    // ...mapGetters([
+    //   "get_theme",
+    //   "get_uid",
+    //   "get_detail_data",
+    //   "get_fewer",
+    //   "get_is_close_info",
+    //   "get_is_clicked_mat_info",
+    //   'get_is_hengping',
+    //   'get_bet_show',
+    //   'get_hshow_map',
+    //   'get_details_data_cache',
+    // ]),
+    const get_theme = computed(() => {
+      return "";
+    });
+    const get_uid = computed(() => {
+      return "";
+    });
+    const get_detail_data = computed(() => {
+      return "";
+    });
+    const get_fewer = computed(() => {
+      return "";
+    });
+    const get_is_close_info = computed(() => {
+      return "";
+    });
+    const get_is_clicked_mat_info = computed(() => {
+      return "";
+    });
+    const get_is_hengping = computed(() => {
+      return false;
+    });
+    const get_bet_show = computed(() => {
+      return "";
+    });
+    const get_hshow_map = computed(() => {
+      return "";
+    });
+    const get_details_data_cache = computed(() => {
+      return "";
+    });
+    const judage_hshow = computed(() => {
+      const hshow = props.item_data.hshow
+      const vuex_hshow = get_hshow_map[`${props.item_data.mid}_${props.item_data.hpid}`]
+      // 以vuex中优先级为准，没有就用接口的
+      return vuex_hshow === 'No' ? 'No' : hshow
+    });
+    // 角球换行显示
+    const corner_ball_show = computed(() => {
+      return component_data.corner_ball.includes(props.item_data.hpid)
+    });
+    // 罚牌玩法说明显示
+    const is_show_info = computed(() => {
+      return component_data.penalty_hpid.includes(props.item_data.hpid)
+    });
+    // 当ms=0的时候不显示基准分
+    const show_new_score = computed(() => {
+      return get_detail_data.ms != 0
+    });
+    /**
+     *@description 判断玩法盘口的显示或者是隐藏
+     *@param {Undefined}
+     *@return {String} 是否显示主盘或者附加盘
+     */
+    const hid = computed(() => {
+      var ret = false;
+      var len = lodash.get(props.item_data, "hl.length");
+      let hot_name = lodash.get(props.item_data, "hotName");
+      if(hot_name){
+        return false
+      }
+      if (len) {
+        //主盘
+        if (len < 0) {
+          ret = true;
+        }
+      } else {
+        ret = true;
+      }
+      return ret;
+    });
+    /**
+     *@description hl里面的每一个盘口都关盘的话，移除这个玩法
+     *@return {Boolean}
+     */
+    const is_remove = computed(() => {
+      let hl_ = lodash.get(props.item_data, "hl");
+      let res
+      if(hl_){
+        res =  hl_.every((item) => item.hs == "2");
+      }
+      let hot_name = lodash.get(props.item_data, "hotName");
+      if(hot_name){
+        return false
+      }
+      return res
+    });
+    /**
+     *@description 根据置顶排序值的状态显示置顶按钮的颜色
+     *@param {Undefined}
+     *@return {String} class名
+     */
+    const icon_name = computed(() => {
+      return props.item_data.hton != 0 ? "icon_zd_select" : "icon_zd_default";
+    });
+    /**
+     *@description 是否有子项投注项需要显示(现在关盘的盘口，也要占位显示，这个函数应该用不到)
+     *@param {Undefined}
+     *@return {String} 盘口显示判断
+     */
+    const isEmpty = computed(() => {
+      let hl_list = lodash.get(props.item_data, "hl");
+      let ol_list = null;
+      let status = 0;
+      let ret = true;
+      props.item_data.hmm == 1; //多盘口
+      if (hl_list && hl_list instanceof Array) {
+        for (let i = 0; i < hl_list.length; i++) {
+          ol_list = lodash.get(hl_list[i], "ol");
+          if (props.item_data.hmm == 1) {
+            //主盘
+            if (i >= 1) {
+              break;
+            }
+          }
+          if (ol_list && ol_list instanceof Array) {
+            for (let j = 0; j < ol_list.length; j++) {
+              if (ol_list[j]) {
+                status = $common.odds.get_odds_active(
+                    ol_list[j].ms,
+                    ol_list[j].hs,
+                    ol_list[j].os
+                );
+                // 当等于非关盘时
+                if ([1, 2, 4].includes(status)) {
+                  ret = false;
+                  break;
+                }
+              }
+            }
+          }
+          if (!ret) {
+            break;
+          }
+        }
+      }
+      return ret;
+    });
     // 横屏状态改变时，隐藏角球/罚牌等说明弹窗
     watch(
-      () => get_is_hengping,
+      () => get_is_hengping.value,
       () => {
         is_high_light = false
       }
@@ -313,127 +465,7 @@ export default defineComponent({
     //     })
     //   }
     // );
-    // #TODO vuex 
-    // computed: {
-    // ...mapGetters([
-    //   "get_theme",
-    //   "get_uid",
-    //   "get_detail_data",
-    //   "get_fewer",
-    //   "get_is_close_info",
-    //   "get_is_clicked_mat_info",
-    //   'get_is_hengping',
-    //   'get_bet_show',
-    //   'get_hshow_map',
-    //   'get_details_data_cache',
-    // ]),
-    const judage_hshow = computed(() => {
-      const hshow = item_data.hshow
-      const vuex_hshow = get_hshow_map[`${item_data.mid}_${item_data.hpid}`]
-      // 以vuex中优先级为准，没有就用接口的
-      return vuex_hshow === 'No' ? 'No' : hshow
-    });
-    // 角球换行显示
-    const corner_ball_show = computed(() => {
-      return corner_ball.includes(item_data.hpid)
-    });
-    // 罚牌玩法说明显示
-    const is_show_info = computed(() => {
-      return penalty_hpid.includes(item_data.hpid)
-    });
-    // 当ms=0的时候不显示基准分
-    const show_new_score = computed(() => {
-      return get_detail_data.ms != 0
-    });
-    /**
-     *@description 判断玩法盘口的显示或者是隐藏
-     *@param {Undefined}
-     *@return {String} 是否显示主盘或者附加盘
-     */
-    const hid = computed(() => {
-      var ret = false;
-      var len = lodash.get(item_data, "hl.length");
-      let hot_name = lodash.get(item_data, "hotName");
-      if(hot_name){
-        return false
-      }
-      if (len) {
-        //主盘
-        if (len < 0) {
-          ret = true;
-        }
-      } else {
-        ret = true;
-      }
-      return ret;
-    });
-    /**
-     *@description hl里面的每一个盘口都关盘的话，移除这个玩法
-     *@return {Boolean}
-     */
-    const is_remove = computed(() => {
-      let hl_ = lodash.get(item_data, "hl");
-      let res
-      if(hl_){
-        res =  hl_.every((item) => item.hs == "2");
-      }
-      let hot_name = lodash.get(item_data, "hotName");
-      if(hot_name){
-        return false
-      }
-      return res
-    });
-    /**
-     *@description 根据置顶排序值的状态显示置顶按钮的颜色
-     *@param {Undefined}
-     *@return {String} class名
-     */
-    const icon_name = computed(() => {
-      return item_data.hton != 0 ? "icon_zd_select" : "icon_zd_default";
-    });
-    /**
-     *@description 是否有子项投注项需要显示(现在关盘的盘口，也要占位显示，这个函数应该用不到)
-     *@param {Undefined}
-     *@return {String} 盘口显示判断
-     */
-    const isEmpty = computed(() => {
-      let hl_list = lodash.get(item_data, "hl");
-      let ol_list = null;
-      let status = 0;
-      let ret = true;
-      item_data.hmm == 1; //多盘口
-      if (hl_list && hl_list instanceof Array) {
-        for (let i = 0; i < hl_list.length; i++) {
-          ol_list = lodash.get(hl_list[i], "ol");
-          if (item_data.hmm == 1) {
-            //主盘
-            if (i >= 1) {
-              break;
-            }
-          }
-          if (ol_list && ol_list instanceof Array) {
-            for (let j = 0; j < ol_list.length; j++) {
-              if (ol_list[j]) {
-                status = $common.odds.get_odds_active(
-                    ol_list[j].ms,
-                    ol_list[j].hs,
-                    ol_list[j].os
-                );
-                // 当等于非关盘时
-                if ([1, 2, 4].includes(status)) {
-                  ret = false;
-                  break;
-                }
-              }
-            }
-          }
-          if (!ret) {
-            break;
-          }
-        }
-      }
-      return ret;
-    });
+
     // #TODO vuex 
     //  methods: {
     // ...mapMutations([
@@ -612,6 +644,7 @@ export default defineComponent({
       if(ol_item.os == 2 || ol_item.result) return
       if (!ol_item.ov || ol_item.ov < 101000) return;
       let match = lodash.cloneDeep(get_detail_data);
+      const item_data = props.item_data;
       match.hps = [item_data];
       if(get_menu_type == 900){  //虚拟体育
         if (match.match_status) return
@@ -634,6 +667,7 @@ export default defineComponent({
      *@return {Undefined}
      */
     const updata_item_score = (hls) => {
+      const item_data = props.item_data;
       //15分钟进球-让球({a}-{b})   15分钟角球-让球({a}-{b})
       if([232,33].includes(item_data.hpid*1)){
         hls.forEach((hl) => {
@@ -663,7 +697,17 @@ export default defineComponent({
       timer2_ = null
     })
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      get_theme,
+      get_uid,
+      get_detail_data,
+      get_fewer,
+      get_is_close_info,
+      get_is_clicked_mat_info,
+      get_is_hengping,
+      get_bet_show,
+      get_hshow_map,
+      get_details_data_cache,
       judage_hshow,
       corner_ball_show,
       is_show_info,

@@ -152,7 +152,7 @@ import category from "project_path/src/pages/details/children/category.vue";
 import { useRouter, useRoute } from "vue-router";
 // import store from "project_path/src/store/index.js";
 // import store from "../../store/index.js";
-import { Level_one_category_list, Level_one_detail_data, Level_one_detail_odd_info } from "./category-list.js";
+import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
