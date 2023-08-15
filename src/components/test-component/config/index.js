@@ -14,6 +14,10 @@ export  const need_register_props = {
     type: String,
     default: "bg-red测试组件",
   },
+  title2: {
+    type: String,
+    default: "888组件",
+  },
 }
 
 
