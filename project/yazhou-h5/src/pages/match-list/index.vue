@@ -83,6 +83,7 @@ const props = defineProps({
   wrapper_scroll_top: Number
 })
 
+
 const route = useRoute()
 const router = useRouter()
 const store_state = store.getState()

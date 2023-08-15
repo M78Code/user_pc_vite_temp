@@ -8,8 +8,8 @@
     <div class="text-left ellipsis"  @click="copy">{{$root.$t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
       <img  src="image/wwwassets/bw3/svg/copy.svg" alt=""  style="width:0.1rem" />
     </div>
-    <!-- 时间 -->
-    <div class="text-right">{{$root.$t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(utils.format_time_zone_time(+data_o.betTime))).Format($root.$t('time4'))}}</span></div>
+    <!-- 时间 $root.$t('bet_record.bet_time')   (new Date(utils.format_time_zone_time(+data_o.betTime))).Format($root.$t('time4'))-->
+    <div class="text-right">{{1236}}<span class="orderno">&thinsp;{{"12:02"}}</span></div>
   </div>
 </template>
 
@@ -17,7 +17,7 @@
 import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import utils from 'src/core/utils/utils.js'
 
   const props = defineProps({

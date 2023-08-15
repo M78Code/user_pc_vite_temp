@@ -8,20 +8,19 @@
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-        <div class="filter-button" v-if="lodash.get(get_user, 'settleSwitch') == 1">
+        <div class="filter-button" v-if="store_user.settleSwitch == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
-        {{is_all_early_flag + '-----' + is_early}}
         <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
-            {{value + '--' + name + '==' + index}}
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <!-- <span>{{(new Date(name)).Format($root.$t('time2'))}}</span> -->
+                <!-- (new Date(name|| '')).Format(i18n.$t('time2')) -->
+                <span>{{ '08月15日'}}</span>
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
@@ -29,6 +28,7 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
+
                   <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                 </div>
               </q-slide-transition>
@@ -53,15 +53,13 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-// import { cathecticReducer } from 'project_path/src/store/index.js' // project\yazhou-h5\src\store\index.js
-// import store from "project_path/src/stor/index.js"  // src\store-redux\index.js
-// import * as project_store from "project_path/src/store/index.js";
-// import store from "src/store-redux/index.js"
-
+import store from 'src/store-redux/index.js'
     // mixins: [skt_order]
+    let { cathecticReducer, userInfoReducer } = store.getState()
     
-    // let store_data = ref(store.getState())
-// console.error(project_store);
+    let store_user = userInfoReducer
+    let store_cathectic = cathecticReducer
+
     // 锚点
     let myScroll = ref(null)
   //是否在加载中
@@ -110,7 +108,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
     /**先清除计时器，再使用*/
     clearInterval(timer_2)
     timer_2 = setInterval(()=>{
-      if (store_data.main_item == 0 && document.visibilityState == 'visible') {
+      if (store_cathectic.main_item == 0 && document.visibilityState == 'visible') {
         check_early_order()
         search_early_money()
       }
@@ -161,7 +159,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
   const check_early_order = () => {
-    if(!get_user.settleSwitch){
+    if(!store_user.settleSwitch){
       orderNumberItemList = []
       return;
     }
@@ -223,10 +221,10 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
         // record为空时
         if (lodash.isEmpty(record)) {
           is_loading = false;
-          no_data = false;
+          no_data.value = false;
           return;
         }
-        no_data = true;
+        no_data.value = true;
         for (let item of Object.values(record)) {
           item.open = true
           size += item.data.length
@@ -248,13 +246,13 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
       }else if(res.code == '0401038'){
         // 接口code 0401038 异常处理
         is_limit = true
-        no_data = false
+        no_data.value = false
         is_loading = false
         return
       } else if (res.code == '0401013') {
         // 接口code 0401013 异常处理
         is_loading = false;
-        no_data = false
+        no_data.value = false
         return;
       } else {
         is_loading = false;
@@ -266,7 +264,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
       }
     }).catch(err => {
       is_loading = false;
-      no_data = false;
+      no_data.value = false;
       console.error(err)
       return;
     });
