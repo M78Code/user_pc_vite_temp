@@ -11,7 +11,7 @@ import play_mapping from "../common-helper/play_mapping.js";
 import { uid } from 'quasar';
 import { reactive } from "vue"
 
-import store from "project_path/src/store-redux/index.js"
+import store from "src/store-redux/index.js"
 const {
   userReducer,
   menuReducer,

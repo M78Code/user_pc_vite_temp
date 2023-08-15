@@ -45,7 +45,7 @@
         </div>
 
         <!-- 右边设置按钮 -->
-        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(get_user, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
+        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(store_user, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
             <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
@@ -85,7 +85,7 @@
       <!-- 注单剩余本金 -->
       <p class="yb_mb4">{{$root.$t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
       <!-- 提前结算可用次数 -->
-      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(get_user,'pcs')==1  && lodash.get(get_user,'settleSwitch')">{{$root.$t('early.info9')}}：{{ remaining_num }}</p>
+      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(store_user,'pcs')==1  && lodash.get(store_user,'settleSwitch')">{{$root.$t('early.info9')}}：{{ remaining_num }}</p>
     </div>
 
     <!-- 提前结算详情 -->
@@ -150,9 +150,13 @@ import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, toRefs } from 'vue'
 import lodash from 'lodash'
 // import store from 'src/store-redux'
+import store from "src/store-redux/index.js"
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 
-const store_data = ref(store.getState())
-console.error(store_data);
+// const store_data = ref(store.getState())
+let store_user = store.getState().userReducer
+let store_cathectic = store.getState().cathecticReducer
+// console.error(store_data);
 const props = defineProps({
   item_data: {
     type: Object
@@ -189,7 +193,7 @@ const props = defineProps({
   let timer3 = ref(null)
   let timer4 = ref(null)
   let timer5 = ref(null)
-  const {  } = toRefs(store_data.userReducer)
+  // const {  } = toRefs(store_data.userReducer)
 
     // ...mapGetters([
       //当前皮肤
@@ -270,11 +274,11 @@ const props = defineProps({
     })
     // 单关最低投注金额
   const min_bet_money = computed(() => {
-      return lodash.get(get_user, "cvo.single.min") || 10;
+      return lodash.get(store_user, "cvo.single.min") || 10;
     })
     // 计算提前结算按钮是否显示
   const calc_show = computed(() => {
-      return /10true[1-6]+/.test("" + lodash.get(get_user, 'settleSwitch') + get_main_item + props.item_data.enablePreSettle + status);
+      return /10true[1-6]+/.test("" + lodash.get(store_user, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status);
     })
     watch(() => expected_profit, () => {
     //   handler(_new, _old) {
@@ -379,7 +383,7 @@ const props = defineProps({
       status = 5;
     }
     // 设置哪些注单处于确认中的状态
-    if (Array.isArray(queryorderpresettleconfirm_data) && get_main_item == 0) {
+    if (Array.isArray(queryorderpresettleconfirm_data) && store_cathectic.main_item == 0) {
       queryorderpresettleconfirm_data.forEach((item) => {
         if (item.orderNo == props.item_data.orderNo && item.preSettleOrderStatus == 0) {
           status = 3
@@ -403,13 +407,13 @@ const props = defineProps({
     }
 
     // 处理ws订单状态推送
-    $root.$on(emit_cmd.EMIT_C201_HANDLE, c201_handle);
-    $root.$on(emit_cmd.EMIT_C210_HANDLE, c210_handle);
+    useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
+    useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
   }) 
   onUnmounted(() => {
     clear_timer();
-    $root.$off(emit_cmd.EMIT_C201_HANDLE, c201_handle);
-    $root.$off(emit_cmd.EMIT_C210_HANDLE, c210_handle);
+    $root.$off(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
+    $root.$off(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
   })
 
     // ...mapMutations(["set_toast","set_early_moey_data"]),
@@ -446,7 +450,7 @@ const props = defineProps({
         if (flag) {
           if (hs == 0 && cashOutStatus == 1 && (status == 5 || status == 7)) {
             if(!props.item_data.maxCashout){
-              $root.$emit(emit_cmd.EMIT_GET_ORDER_LIST)
+              $root.$emit(MITT_TYPES.EMIT_GET_ORDER_LIST)
             }
             if(expected_profit > 1){
               status = 1;

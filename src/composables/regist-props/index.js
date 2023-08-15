@@ -5,7 +5,7 @@
 import { computed, ref } from "vue";
 import { get_input_config } from "app/job/output/merchant/index.js";
 
-export const useRegistPropsHelper = (params) => {
+export const useRegistPropsHelper1 = (params) => {
   let { useProps, useComputed, component_symbol, need_register_props } = params;
 
   /**
@@ -67,7 +67,7 @@ export const useRegistPropsHelper = (params) => {
  * @returns
  */
 
-  let  regist_props_fn = () => {
+  let regist_props_fn = () => {
     for (let key in need_register_props) {
       let value = "";
       if (typeof need_register_props[key] == "object") {
@@ -90,11 +90,24 @@ export const useRegistPropsHelper = (params) => {
     }
   };
 
-  regist_props_fn()
-
- 
+  regist_props_fn();
 };
 
+/**
+ * 使用方法劫持只是劫持 props 不要直接使用props的值
+ * const useComputedProps= useRegistPropsHelper(component_symbol,props)
+ * useComputedProps.value.title
+ */
+export function useRegistPropsHelper(component_symbol, props) {
+  let input_config = get_input_config(component_symbol);
+  return computed(() => {
+    const obj = {};
+    for (var key in props) {
+      obj[key] = input_config[key] || props[key];
+    }
+    return obj;
+  });
+}
 /**
  * 使用代码 块 示例
  */

@@ -13,7 +13,7 @@
             {{hl_data.hpn}}
           </div>
           <!--盘口结束时间-->
-          <div>{{`${hl_data.end_time} ${$root.$t('list.bet_close')}`}}</div>
+          <div>{{`${hl_data.end_time} ${i18n.t('list.bet_close')}`}}</div>
         </div>
 
         <!-- 投注列表 -->
@@ -27,7 +27,7 @@
             </div>
           </template>
           <!-- 投注项列表单数 补一个空div 占位 -->
-          <div v-if="_.get(hl_data,'ol.length')%2 !==0" class="bet-col null-bet-col"></div>
+          <div v-if="lodash.get(hl_data,'ol.length')%2 !==0" class="bet-col null-bet-col"></div>
         </div>
       </div>
     </template>
@@ -38,7 +38,8 @@
 <script setup>
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
-
+import lodash from 'lodash';
+import { i18n } from 'src/boot/i18n.js'
 </script>
 
 <style lang="scss" scoped>

@@ -6,26 +6,26 @@
  */
 import lodash from "lodash";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-const football = require("public/yazhou-pc/image/png/football.png"); //足球
-const basketball = require("public/yazhou-pc/image/png/basketball.png"); //篮球
-const baseball = require("public/yazhou-pc/image/png/baseball.png"); //棒球
-const ice_hockey = require("public/yazhou-pc/image/jpg/ice_hockey.jpg"); //冰球
-const tennis = require("public/yazhou-pc/image/png/tennis.png"); //网球
-const usa_football = require("public/yazhou-pc/image/png/usa_football.png"); // 美足
-const snooker = require("public/yazhou-pc/image/jpg/snooker.jpg"); //斯诺克
-const ping_pong = require("public/yazhou-pc/image/jpg/ping_pong.jpg"); //乒乓球
-const volleyball = require("public/yazhou-pc/image/png/volleyball.png"); // 排球
-const badminton = require("public/yazhou-pc/image/jpg/badminton.jpg"); //羽毛球
-const handball = require("public/yazhou-pc/image/common/png/handball.png"); //手球
-const boxing = require("public/yazhou-pc/image/common/png/boxing.png"); //拳击
-const beach_volleyball = require("public/yazhou-pc/image/common/png/beach_volleyball.png"); //沙滩排球
-const rugby = require("public/yazhou-pc/image/common/png/rugby.png"); //橄榄球
-const hockey = require("public/yazhou-pc/image/common/png/hockey.png"); //曲棍球
-const polo = require("public/yazhou-pc/image/common/png/polo.png"); //水球
-const virtual_dog = require("public/yazhou-pc/image/png/virtual_dog.png"); //赛狗
-const virtual_racing = require("public/yazhou-pc/image/png/virtual_racing.png"); //赛马
-const motorcycle = require("public/yazhou-pc/image/png/motorcycle.png"); // 虚拟摩托车
-const virtual_dirt_bike_details = require("public/yazhou-pc/image/png/virtual_dirt_bike_details.png"); // 虚拟泥地摩托车
+const football = require("app/public/yazhou-pc/image/png/football.png"); //足球
+const basketball = require("app/public/yazhou-pc/image/png/basketball.png"); //篮球
+const baseball = require("app/public/yazhou-pc/image/png/baseball.png"); //棒球
+const ice_hockey = require("app/public/yazhou-pc/image/jpg/ice_hockey.jpg"); //冰球
+const tennis = require("app/public/yazhou-pc/image/png/tennis.png"); //网球
+const usa_football = require("app/public/yazhou-pc/image/png/usa_football.png"); // 美足
+const snooker = require("app/public/yazhou-pc/image/jpg/snooker.jpg"); //斯诺克
+const ping_pong = require("app/public/yazhou-pc/image/jpg/ping_pong.jpg"); //乒乓球
+const volleyball = require("app/public/yazhou-pc/image/png/volleyball.png"); // 排球
+const badminton = require("app/public/yazhou-pc/image/jpg/badminton.jpg"); //羽毛球
+const handball = require("app/public/yazhou-pc/image/common/png/handball.png"); //手球
+const boxing = require("app/public/yazhou-pc/image/common/png/boxing.png"); //拳击
+const beach_volleyball = require("app/public/yazhou-pc/image/common/png/beach_volleyball.png"); //沙滩排球
+const rugby = require("app/public/yazhou-pc/image/common/png/rugby.png"); //橄榄球
+const hockey = require("app/public/yazhou-pc/image/common/png/hockey.png"); //曲棍球
+const polo = require("app/public/yazhou-pc/image/common/png/polo.png"); //水球
+const virtual_dog = require("app/public/yazhou-pc/image/png/virtual_dog.png"); //赛狗
+const virtual_racing = require("app/public/yazhou-pc/image/png/virtual_racing.png"); //赛马
+const motorcycle = require("app/public/yazhou-pc/image/png/motorcycle.png"); // 虚拟摩托车
+const virtual_dirt_bike_details = require("app/public/yazhou-pc/image/png/virtual_dirt_bike_details.png"); // 虚拟泥地摩托车
 
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";
@@ -433,6 +433,85 @@ const get_src_lang = () => {
   return all_sr_lang[store.getters.get_lang]; // TODO
 };
 
+
+     /**
+     * 玩法集瀑布流，设置单列或双列的数据[[]] / [[],[]]
+     * @return {undefined} undefined
+     *
+     * is_hide_panel 判断列表是否是全部展开或收起状态
+     * 如果是全部收起，就直接把玩法左右各放一半
+     * 如果不是，就左右各放一个然后计算高度栏判断放在哪一边
+     */
+     const set_waterfall = (res, is_hide_panel) =>{
+      if (!res.length) return;
+      // 双列左边
+      let left_array = [];
+      // 双列右边
+      let right_array = [];
+      // 左侧玩法个数
+      let left_row = 0;
+      // 右侧玩法个数
+      let right_row = 0;
+      //收起状态
+      if (is_hide_panel) {
+        res.forEach((item, index) => {
+          if (index % 2) {
+            right_array.push(item);
+          } else {
+            left_array.push(item);
+          }
+        });
+      } else {
+        //展开状态
+        res.forEach((item, index) => {
+          if (index == 0) {
+            //第一条数据插入左边
+            left_array.push(item);
+            left_row = get_play_rows(item);
+          } else if (index == 1) {
+            //第二条数据插入右边
+            right_array.push(item);
+            right_row += get_play_rows(item);
+          } else {
+            //从第三条开始计算左右总高度，判断插入
+            if (left_row <= right_row) {
+              left_row += get_play_rows(item);
+              left_array.push(item);
+            } else {
+              right_row += get_play_rows(item);
+              right_array.push(item);
+            }
+          }
+        });
+      }
+     return [left_array, right_array];
+    }
+   /**
+     * 获取单个玩法的行数
+     * @return {undefined} undefined
+     */
+  const get_play_rows = (data)=> {
+    let num = 0; //玩法条数
+    let row = 0; //玩法显示的行数
+    data.hl.forEach((item) => {
+      if (item && item.ol) {
+        num += item.ol.length;
+      }
+    });
+    if ([0, 2, 3, 5, 6].includes(data.hpt)) {
+      [5, 6].includes(data.hpt)
+        ? (row = Math.ceil(num / 2) + 1)
+        : (row = Math.ceil(num / 2));
+    } else if ([1, 4, 7, 8, 10].includes(data.hpt)) {
+      [4, 8].includes(data.hpt)
+        ? (row = Math.ceil(num / 3) + 1)
+        : (row = Math.ceil(num / 3));
+    } else if ([9].includes(data.hpt)) {
+      row = Math.ceil(num / 5) + 1;
+    }
+    return row;
+  }
+
 export default {
   build_msc,
   check_plays,
@@ -440,5 +519,6 @@ export default {
   use_polling_mst,
   show_wrap_total,
   sr_click_handle,
-  computed_background
+  computed_background,
+  set_waterfall
 };

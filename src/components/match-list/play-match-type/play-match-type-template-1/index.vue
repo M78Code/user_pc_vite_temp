@@ -17,11 +17,11 @@
 
   import { defineProps, computed } from 'vue';
   import { useRoute } from 'vue-router';
-
+  import lodash from 'lodash';
   import  { useRegistPropsHelper, useProps  } from "src/composables/regist-props/index.js"
   import {component_symbol ,need_register_props} from "../config/index.js"
   useRegistPropsHelper(component_symbol, need_register_props)
-  
+  import { i18n } from 'src/boot/i18n.js'
   const props = defineProps({ ...useProps })
   const route = useRoute()
 
@@ -32,20 +32,20 @@
       //球种标题
       sport_title: {
         name: csna,
-        match_count:  _.get(this.match_list_data,`sport_match_count.csid_${props.card_style_obj.csid}.count`),
+        match_count:  lodash.get(this.match_list_data,`sport_match_count.csid_${props.card_style_obj.csid}.count`),
         show_num: this.vx_cur_menu_type.type_name != "winner_top" && route.name != "search",
         func_name:'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
       },
       //滚球标题
       play_title: {
-        name: this.$root.$t("menu.match_play"),
+        name: i18n.t("menu.match_play"),
         match_count,
         show_num: true,
         func_name
       },
       //未开赛标题
       no_start_title: {
-        name: this.$root.$t("list.match_no_start"),
+        name: i18n.t("list.match_no_start"),
         match_count,
         show_num: true,
         func_name

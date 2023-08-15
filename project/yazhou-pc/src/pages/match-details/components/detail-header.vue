@@ -24,7 +24,7 @@
         <!-- 打开赛事分析窗口 -->
         <div
           class="sr-link-icon-w"
-          v-if="is_show_sr_flg(match_infoData)"
+          v-if="utils.is_show_sr_flg(match_infoData)"
           @click.stop="sr_click_handle(match_infoData, 'details')"
           v-tooltip="{ content: $t('common.analysis') }"
         >
@@ -56,7 +56,7 @@
         />
         <!-- 隐藏 -->
         <div
-          v-if="is_eports_csid(sportId)"
+          v-if="utils.is_eports_csid(sportId)"
           class="hide-btn"
           @click="toggle_panel = false"
         >
@@ -83,7 +83,7 @@
 
 <script setup>
 import { ref, defineExpose, onUnmounted } from "vue";
-import { is_show_sr_flg, is_eports_csid } from "src/core/utils/utils";
+import utils  from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail";
 // 玩法tab条
@@ -91,7 +91,7 @@ import handicapTabsBar from "src/components/match-detail/match_info/handicap_tab
 import { useRoute, useRouter } from "vue-router";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 
-import store from "project_path/src/store-redux/index.js";
+import store from "src/store-redux/index.js";
 
 const props = defineProps({
   match_infoData: Object,

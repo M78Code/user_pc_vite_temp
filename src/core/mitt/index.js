@@ -12,7 +12,7 @@ function useMittOn(...args) {
   const [key, fun] = args;
   
  
-  if(key.startsWith('EMIT_')&&MITT_TYPES[key]){
+  if(String(key).startsWith('EMIT_')&&MITT_TYPES[key]){
     emitter.on.apply(emitter, args);
     return {
       off: () => emitter.off(key, fun),
@@ -34,7 +34,7 @@ function useMittOn(...args) {
  */
 function useMittEmit(key, data) {
   console.log("useMittEmit", key, data);
-  if(key.startsWith('EMIT_')&&MITT_TYPES[key]){
+  if(String(key).startsWith('EMIT_')&&MITT_TYPES[key]){
     emitter.emit(key, data);
   }else{
     console.error("mitt key 未注册 或者 不规范 :", key);
