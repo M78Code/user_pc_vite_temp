@@ -13,6 +13,8 @@ import utils from "src/core/utils/utils.js";
 const skt_mid = ref({});
 //  可视区域赛事ID
 const show_mids = ref([]);
+// ** WS 相关 *********************************/
+const socket_name = ref("match_list");
 
 const ws_c8_subscribe = () => {
 	let match_list = [];
@@ -93,4 +95,16 @@ const refresh_c8_subscribe = () => {
 	}
 };
 
-export { show_mids, refresh_c8_subscribe };
+const ws_composable_fn = () => {
+	return {
+		// 订阅所需  赛事ID
+		skt_mid,
+		// ** WS 相关 *********************************/
+		socket_name,
+		// 可视区域赛事ID
+		show_mids,
+		refresh_c8_subscribe,
+	}
+}
+
+export default ws_composable_fn
