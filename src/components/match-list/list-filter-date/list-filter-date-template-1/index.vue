@@ -1,8 +1,8 @@
 <template>
   <div class="c-match-list-filter" :class="{
-    'date-filter': NewMenu.menu_root == 3,
-    early: NewMenu.menu_root == 3
-  }" v-if="NewMenu.left_menu_result.jinri_zaopan == 3">
+    'date-filter': menu_config.menu_root == 3,
+    early: menu_config.menu_root == 3
+  }" v-if="menu_config.left_menu_result.jinri_zaopan == 3">
     <!-- 早盘-日期 -->
     <DateTab />
   </div>
@@ -10,6 +10,7 @@
 
 <script setup>
 import { DateTabFullVersionWapper as DateTab} from "src/components/tab/date-tab/index.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 </script>
 
 <style lang="scss" scoped>

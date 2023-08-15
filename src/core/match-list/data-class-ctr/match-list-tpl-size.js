@@ -5,7 +5,7 @@
  */
 
 import utils from "src/core/utils/utils.js"
-import $NewMenu from "src/core/menu-pc/menu-data-class";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 // import { store } from "src/store/index.js"
 const store={}
@@ -185,7 +185,7 @@ class match_list_tpl_size {
       process_team_width = 56 + 182
       media_width = 44
     }
-    if ($NewMenu.is_multi_column && store.getters.get_unfold_multi_column && store.getters.get_layout_cur_page.cur == 'home') {
+    if (menu_config.is_multi_column && store.getters.get_unfold_multi_column && store.getters.get_layout_cur_page.cur == 'home') {
       process_team_width = parseInt(total_width * 0.18)
       media_width = parseInt(total_width * 0.03)
     }

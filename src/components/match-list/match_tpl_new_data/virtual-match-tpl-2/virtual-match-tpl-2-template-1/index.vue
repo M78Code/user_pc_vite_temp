@@ -34,7 +34,7 @@
     <!-- 跳转详情 -->
     <div @click.stop="on_go_detail" class="more-row row items-center justify-end cursor-pointer">
       <!-- 显示所有盘口 -->
-      {{ $root.$t("list.show_more_handicap") }}
+      {{ i18n.t("list.show_more_handicap") }}
       <icon name="icon-triangle3" color="#99A3B1" />
     </div>
   </div>
@@ -47,6 +47,7 @@
 import details from "src/core/match-list/details-class/details.js";
 
 import { ref, computed, watch } from 'vue';
+import { i18n } from 'src/boot/i18n.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)

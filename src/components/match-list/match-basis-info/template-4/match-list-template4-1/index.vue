@@ -2,7 +2,7 @@
   <div class="basic-wrap" @click.stop="on_go_detail">
     <!-- 主队信息 -->
     <div class="row-item team-item">
-      <div class="team-logo" :class="_.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
+      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
           <div class="team-name home ellipsis allow-user-select" :class="{'bold': match.other_team_let_ball == 'T1'}" v-tooltip="{content:match.mhn+addition_name,overflow:1}">{{match.mhn }}{{addition_name}} </div>
@@ -15,10 +15,10 @@
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
-      <div class="team-logo" :class="_.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
+      <div class="team-logo" :class="lodash.get(match,'match_logo.is_double',false) && 'double-logo'"></div>
       <div class="ellipsis-wrap">
         <div class="row no-wrap absolute-full">
-          <div class="team-name away ellipsis team-name allow-user-select" :class="{'bold': match.other_team_let_ball == 'T2'}" v-tooltip="{content:_.get(match,'man')+addition_name,overflow:1}">{{match.man}}{{addition_name}}</div>
+          <div class="team-name away ellipsis team-name allow-user-select" :class="{'bold': match.other_team_let_ball == 'T2'}" v-tooltip="{content:lodash.get(match,'man')+addition_name,overflow:1}">{{match.man}}{{addition_name}}</div>
         </div>
       </div>
       <!-- 角球比分 -->
@@ -35,10 +35,12 @@
 // mixins:[match_basis_info_mixin],
 // import match_basis_info_mixin from "src/project/yabo/components/match_list/match_basis_info/match_basis_info_mixin.js"
 
-import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
+import { computed, defineProps} from 'vue';
+import lodash from 'lodash';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
+import { i18n } from 'src/boot/i18n.js'
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
@@ -49,15 +51,15 @@ const props = defineProps({ ...useProps });
 const addition_name = computed(() => {
   let addition_name_obj = {
     //角球
-    hpsCorner: this.$root.$t('list.corner'),
+    hpsCorner: i18n.t('list.corner'),
     //罚牌
-    hpsPunish: this.$root.$t('list.punish'),
+    hpsPunish: i18n.t('list.punish'),
     //15分钟
-    hps15Minutes: this.$root.$t('list.15minutes'),
+    hps15Minutes: i18n.t('list.15minutes'),
     //波胆
-    hpsBold: this.$root.$t('list.bold'),
+    hpsBold: i18n.t('list.bold'),
       //5分钟
-    hps5Minutes: this.$root.$t('list.5minutes'),
+    hps5Minutes: i18n.t('list.5minutes'),
   }
   let name = addition_name_obj[this.match.play_current_key]
   return name ? ' - ' + name : ""

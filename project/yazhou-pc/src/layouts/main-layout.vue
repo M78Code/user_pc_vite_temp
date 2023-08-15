@@ -375,7 +375,7 @@ const thumb_style = {
   width: "6px",
   opacity: 0.3,
 };
-const new_version = false; // 是否是最新版本
+let new_version = false; // 是否是最新版本
 const data_ref = {
   nav_list: [], // 顶部导航栏数据
   showActivity: false, //活动弹框显隐
@@ -799,7 +799,7 @@ function init_site_header(type = null) {
     imgUrl = get_file_path(imgUrl);
     // 活动入口的图片，如果接口未返回就用默认图片
     tab.img_src =
-      imgUrl || require("public/image/activity_imgs/imgs/gift_package.png");
+      imgUrl || require("app/public/image/activity_imgs/imgs/gift_package.png");
     nav_list.push(tab);
     activityList.forEach((item) => {
       data_ref.activityIds += item.activityId + ",";
