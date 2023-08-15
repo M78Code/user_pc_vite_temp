@@ -10,23 +10,23 @@
       <scroll ref="myScroll" :on-pull="onPull" v-else>
         <div class="edit row items-center yb_fontsize12">
             <div class="time yb_mr6 relative-position" @click="change_date">
-              <i class="calendar"></i><span>{{date_limit == 7 ? $root.$t('bet_record.7day') : $root.$t('bet_record.30day')}}</span>
+              <i class="calendar"></i><span>{{date_limit == 7 ? i18n.$t('bet_record.7day') : i18n.$t('bet_record.30day')}}</span>
               </div>
             <div class="sort relative-position" @click.stop="change_sort($event)">
               <i :class="'sort-'+sort_active"></i>
-              <span>{{sort_active == 2 ? $root.$t('bet_record.sort0') : sort_active == 1 ? $root.$t('bet_record.sort1') : $root.$t('bet_record.sort2')}}</span><span></span>
+              <span>{{sort_active == 2 ? i18n.$t('bet_record.sort0') : sort_active == 1 ? i18n.$t('bet_record.sort1') : i18n.$t('bet_record.sort2')}}</span><span></span>
               <!-- 默認排序 -->
               <!-- 按投注时间排序 -->
               <!-- 按开赛时间排序 -->
               <!-- <p v-if="is_sort_show && 0" class="absolute">
-                <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ $root.$t('bet_record.sort3') }}</span>
-                <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ $root.$t('bet_record.sort4') }}</span>
-                <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ $root.$t('bet_record.sort5') }}</span>
+                <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ i18n.$t('bet_record.sort3') }}</span>
+                <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ i18n.$t('bet_record.sort4') }}</span>
+                <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ i18n.$t('bet_record.sort5') }}</span>
               </p> -->
             </div>
             <div>
               <span class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early, 'is-show': get_user.settleSwitch != 1}">
-              {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+              {{ i18n.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
             </span>
             </div>
         </div>
@@ -38,10 +38,10 @@
               <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
                 <!-- 时间和输赢统计   -->
                 <p class="tittle-p row justify-between yb_px4" :class="{'tittle-p2':index == 0}" @click="toggle_show(value)">
-                  <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
-                  <span class="betamount" v-show="get_main_item == 1 && value.open">{{ $root.$t('bet.number_transactions') }}<span
-                      class="color-1 yb_m">{{value.totalOrders}}</span>&emsp;{{ $root.$t('bet.betting') }}<span
-                      class="color-1">{{value.betAmount}}</span>&emsp;{{ $root.$t('bet_record.bet_no_status03') }}/{{ $root.$t('bet_record.bet_no_status04') }}<span class="color-1"
+                  <span>{{(new Date(name)).Format(i18n.$t('time2'))}}</span>
+                  <span class="betamount" v-show="get_main_item == 1 && value.open">{{ i18n.$t('bet.number_transactions') }}<span
+                      class="color-1 yb_m">{{value.totalOrders}}</span>&emsp;{{ i18n.$t('bet.betting') }}<span
+                      class="color-1">{{value.betAmount}}</span>&emsp;{{ i18n.$t('bet_record.bet_no_status03') }}/{{ i18n.$t('bet_record.bet_no_status04') }}<span class="color-1"
                       :class="{'color-2':value.profit > 0}"><template v-if="value.profit > 0">+</template>{{value.profit}}</span>
                   </span>
                   <span v-show="!value.open"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>

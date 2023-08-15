@@ -4,7 +4,6 @@
  * @Description: bw3新版投注记录的页每一条注单（矩形框）
 -->
 <template>
-  {{show_bet_record}}
   <div 
       v-if="show_bet_record"
       class="common-cathectic-item hairline-border" :class="{'common-cathectic-item2':key2==0,'common-cathectic-item3':len==key2+1,}" v-show="(!is_early || (is_early && is_show_early_settle)) && !is_show_pre">
@@ -67,15 +66,15 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
   )
   
   const mix_odds_sum = computed(() => {
-    if(item_data.seriesType != '1'){
-        const ordervos_data = lodash.get(item_data,'orderVOS') || []
+    if(props.item_data.seriesType != '1'){
+        const ordervos_data = lodash.get(props.item_data,'orderVOS') || []
         let odds_sum = 1
         for(let i = 0;i<ordervos_data.length;i++){
           let odd = ordervos_data[i].marketType == 'HK' ? $mathjs.add(ordervos_data[i].oddFinally, 1) : ordervos_data[i].oddFinally
           odds_sum = $mathjs.multiply(odd , odds_sum)
         }
         if(ordervos_data.length > 0){
-          if(item_data.managerCode == 4){
+          if(props.item_data.managerCode == 4){
             return odds_sum.toFixed(3)
           }else{
             return odds_sum.toFixed(2)
@@ -85,7 +84,7 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
       return ''
   })
   onMounted(() => {
-    is_show_early_settle = item_data.is_show_early_settle
+    is_show_early_settle = props.item_data.is_show_early_settle
 
     // 监听 重载注单页面
     useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)

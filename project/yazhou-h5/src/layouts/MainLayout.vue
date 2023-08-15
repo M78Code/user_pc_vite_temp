@@ -6,7 +6,7 @@
   <q-layout view="lHh Lpr lFf" class="layout_container">
     <q-page-container class="page_container">
       <!-- <left-menu /> -->
-      <div @click="show_bet">投注</div>
+      <!-- <div @click="show_bet">投注</div> -->
       <router-view />
     </q-page-container>
     <!-- <footer_menu /> -->
