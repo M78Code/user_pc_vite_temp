@@ -34,12 +34,14 @@
         <!-- <detailMatchList invoke='category' ref="detail_match_list" /> -->
       </div>
     </div>
-    <!-- 详情玩法投注项有数据 -->is_no_data  {{ is_no_data }}
+    <!-- 详情玩法投注项有数据 -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
-      <div slot="scrollList">
+      <!-- <div slot="scrollList"> -->
+      <slot name="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
+          <!-- {{ match_list_normal }} -->
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -57,7 +59,8 @@
             </template>
           </template>
         </transition-group>
-      </div>
+      <!-- </div> -->
+      </slot>
     </div>
     <!-- 详情玩法投注项无数据 -->
     <div v-if="!is_loading && is_no_data && !show_recommend" class="no-data-style">
@@ -92,6 +95,7 @@ import { uid } from "quasar"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { Level_one_detail_odd_info } from "../category-list.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "category",
@@ -110,9 +114,11 @@ export default defineComponent({
     const component_data = reactive({
       emitters: [],
       // 加载数据的效果
-      is_loading: true,
+      // is_loading: true,
+      is_loading: false,
       // 玩法集无数据
-      is_no_data: true,
+      is_no_data: false,
+      // is_no_data: true,
       // 是否无热门推荐赛事 // 改为真
       no_recommend_match_list: true,
       // 单个玩法集下的玩法数量
@@ -196,6 +202,7 @@ export default defineComponent({
       // return flag;
       return true;
     });
+    component_data.matchInfoCtr.setList(Level_one_detail_odd_info())
     // 置顶列表
     const match_list_new = computed(() => {
       return component_data.matchInfoCtr.listSortNew()
@@ -208,59 +215,62 @@ export default defineComponent({
     const match_id = computed(() => {
       return  get_goto_detail_matchid.value || get_detail_data.mid.value || route.params.mid
     });
-    // watch(
-    //   () => route,
-    //   (to, from) => {
-    //     // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
-    //     if (
-    //         get_menu_type !== 28 && !to.query.search_term && to.params.mid === from.params.mid
-    //         || to.query.search_term && match_play_item_changed
-    //     ) {
-    //       initEvent();
-    //     }
-    //     // 当切换玩法集的时候变为: true
-    //     first_load = true;
-    //     match_play_item_changed = true
-    //   }
-    // );
-    // // 监听赛事id的变化 如果赛事id变化 及时更新调用玩法集合的接口
-    // watch(
-    //   () => get_goto_detail_matchid.value,
-    //   () => {
-    //     if(matchInfoCtr){
-    //       matchInfoCtr.destroy()
-    //     }
-    //     matchInfoCtr = new MatchInfoCtr(this);
-    //   }
-    // );
-    // // 监听get_fewer的值
-    // watch(
-    //   () => get_fewer.value,
-    //   (n) => {
-    //     if(n != 3){
-    //       if(Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length){
-    //         for (const item of matchInfoCtr.list) {
-    //           item.hshow = n == 1 ? 'Yes':'No'
-    //         }
-    //       }
-    //     }
-    //   }
-    // );
-    // // 横屏状态变化时
-    // watch(
-    //   () => get_is_hengping.value,
-    //   () => {
-    //     change_minheight()
-    //   }
-    // );
+    watch(
+      () => route,
+      (to, from) => {
+        // 1. 非赛果页 且 不是通过搜索进入 2.搜索进入且已切换过玩法集
+        if (
+            get_menu_type.value !== 28 && !to.query.search_term && to.params.mid === from.params.mid
+            || to.query.search_term && component_data.match_play_item_changed
+        ) {
+          initEvent();
+        }
+        // 当切换玩法集的时候变为: true
+        component_data.first_load = true;
+        component_data.match_play_item_changed = true
+      }
+    );
+    // 监听赛事id的变化 如果赛事id变化 及时更新调用玩法集合的接口
+    watch(
+      () => get_goto_detail_matchid.value,
+      () => {
+        if(component_data.matchInfoCtr){
+          component_data.matchInfoCtr.destroy()
+        }
+        component_data.matchInfoCtr = new MatchInfoCtr(this);
+      }
+    );
+    // 监听get_fewer的值
+    watch(
+      () => get_fewer.value,
+      (n) => {
+        if(n != 3){
+          if(Array.isArray(component_data.matchInfoCtr.list) && component_data.matchInfoCtr.list.length){
+            for (const item of component_data.matchInfoCtr.list) {
+              item.hshow = n == 1 ? 'Yes':'No'
+            }
+          }
+        }
+      }
+    );
+    // 横屏状态变化时
+    watch(
+      () => get_is_hengping.value,
+      () => {
+        change_minheight()
+      }
+    );
     // 显示推荐状态变化时
-    // watch(
-    //   () => show_recommend.value,
-    //   () => {
-    //     change_minheight()
-    //   }
-    // );
+    watch(
+      () => show_recommend.value,
+      () => {
+        change_minheight()
+      }
+    );
     onMounted(() => {
+      // #TODO 测试假数据
+
+      // console.log("match_list_new", match_list_normal.value)
       // 原created 
       on_listeners();
 
@@ -438,7 +448,7 @@ export default defineComponent({
       }else{
         arr_hshow = []
       }
-
+    
       let params = {
         // 赛果，赛果详情默认采用0，即是拉取所有的赛果
         // mcid: ['result_details', 'match_result'].includes(route.name) ? 0 : get_details_item || (route.params.csid?'':route.params.mcid), // 玩法集id
@@ -504,7 +514,7 @@ export default defineComponent({
           if(send_gcuuid != res.gcuuid) {
             return;
           }
-          first_load = false;
+          component_data.first_load = false;
           if(!lodash.get(res,'data') || lodash.get(res,'data.length') == 0){
             component_data.is_loading = false;
             component_data.is_no_data = true;
@@ -522,7 +532,7 @@ export default defineComponent({
             }
           })
           // console.log(chpid_obj,"chpid_obj");
-          set_chpid_obj(chpid_obj)
+          // set_chpid_obj(chpid_obj)
           
           if (['result_details', 'match_result'].includes(route.name)) {
             temp = details_data_cache[`${match_id}-0`]
@@ -587,11 +597,11 @@ export default defineComponent({
 
         // 当前赛事对应玩法集存在缓存数据
         if (tabs_active_data_cache) {
-          matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
+          component_data.matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
         } else {
           // 无数据
           component_data.is_no_data = true;
-          matchInfoCtr.setList([])
+          component_data.matchInfoCtr.setList([])
         }
       }
 
@@ -800,22 +810,22 @@ export default defineComponent({
         temp = save_hshow(temp); // 保存当前相关hshow状态;
         // 当前玩法集下数据缓存
         const details_data_cache = {
-          [`${match_id}-${get_details_item.value}`]: temp
+          [`${match_id.value}-${get_details_item.value}`]: temp
         }
         // set_details_data_cache(details_data_cache)
         if(callback) callback();
       })
         .catch(err =>console.error(err))
         .finally(() => {
-          const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item.value}`]
+          const tabs_active_data_cache = get_details_data_cache.value[`${match_id.value}-${get_details_item.value}`]
 
           // 当前赛事对应玩法集存在缓存数据
           if (tabs_active_data_cache) {
-            matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
+            component_data.matchInfoCtr.setList(lodash.cloneDeep(tabs_active_data_cache))
           } else {
             // 无数据
             component_data.is_no_data = true;
-            matchInfoCtr.setList([])
+            component_data.matchInfoCtr.setList([])
           }
         })
     };
@@ -826,7 +836,7 @@ export default defineComponent({
       {
         middle_data = lodash.cloneDeep(list_old);
       } else {
-        middle_data = lodash.cloneDeep(matchInfoCtr.list);
+        middle_data = lodash.cloneDeep(component_data.matchInfoCtr.list);
       }
       let middle_obj = {}
       lodash.forEach(middle_data, (item) =>{
@@ -873,7 +883,7 @@ export default defineComponent({
             listItemAddCustomAttr(item)
           });
         }
-        matchInfoCtr.setList(lodash.cloneDeep(data));
+        component_data.matchInfoCtr.setList(lodash.cloneDeep(data));
       }
       return cach_string;
     };
@@ -941,7 +951,7 @@ export default defineComponent({
     */
     onUnmounted(() => {
       off_listeners();
-      debounce_throttle_cancel(socket_upd_list);
+      // debounce_throttle_cancel(socket_upd_list);
 
       // 清除数据避免下次进来产生干扰
       // set_details_data_cache({})
