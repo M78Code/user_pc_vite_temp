@@ -76,7 +76,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
             
           </div>
-          <div class="sr-link-icon-w" v-tooltip="{content:$root.$t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:i18n.t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
         </div>
@@ -103,6 +103,7 @@
 
 
 import { ref, computed, watch, reactive } from 'vue';
+import { i18n } from 'src/boot/i18n.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -123,7 +124,7 @@ const handicap_num = computed(() => {
   if(this.get_global_switch.handicap_num){
     return `+${ this.match.mc || 0}`
   }else{
-    return  this.$root.$t('match_info.more')
+    return  i18n.t('match_info.more')
   }
 })
 

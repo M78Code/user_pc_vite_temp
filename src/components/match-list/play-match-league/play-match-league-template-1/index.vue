@@ -1,7 +1,7 @@
 <template>
   <div class="c-match-league"
     :class="[{ 'match-tpl0-bg': tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${tpl_id}`]"
-    v-if="_.get(card_style_obj, 'league_obj.csid')">
+    v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
@@ -13,7 +13,7 @@
         <div class="league-icon-wrap">
           <sport-icon v-if="menu_config.is_esports()" :sport_id="card_style_obj.league_obj.csid" status="2" size="18px"
             is_esports />
-          <img v-else v-img="[_.get(card_style_obj, 'league_obj.lurl')]" />
+          <img v-else v-img="[lodash.get(card_style_obj, 'league_obj.lurl')]" />
         </div>
         <!-- 联赛名称 -->
         <div class="ellipsis-wrap">
@@ -94,18 +94,18 @@
 <script setup>
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 // inject:['match_list_data', 'match_list_card'],
-
+import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-
+import { i18n } from 'src/boot/i18n.js'
 import { get_match_tpl_title } from 'src/core/utils/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
+import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import store from 'project_path/src/store/index.js'
 let state = store.getState()
 
 const props = defineProps({ ...useProps })
@@ -116,7 +116,7 @@ const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] |
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 //全局开关
 const get_global_switch = reactive(state.globalReducer.global_switch)
-if (!_.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes( menu_config.menu_root)) {
+if (!lodash.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
 
@@ -134,7 +134,7 @@ const bet_col = computed(() => {
   let bet_col = []
   if (tpl_id == 13) {
     tpl_id = 0
-    // bet_col = [...this.$root.$t('list.match_tpl_title.tpl13_m.bet_col')]
+    // bet_col = [...i18n.t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球
@@ -148,7 +148,7 @@ const bet_col = computed(() => {
   }
   bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id}.${title_name}`, csid), ...bet_col]
 
-  let mft = _.get(this.match_list_data.mid_obj, `mid_${props.card_style_obj.mid}.mft`)
+  let mft = lodash.get(this.match_list_data.mid_obj, `mid_${props.card_style_obj.mid}.mft`)
 
   // 模板10
   if (tpl_id == 10) {
