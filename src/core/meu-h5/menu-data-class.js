@@ -28,6 +28,7 @@ class MenuData {
     this.hot_tab_menu = {};
 
     this.menu_list = [];
+    this.menu_original_data={}
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -433,7 +434,11 @@ class MenuData {
   /**
    * 电竞菜单要保留上一个 电竞菜单 的 csid
    */
-  get_current_esport_csid() {
+  get_current_esport_csid(item) {
+    if (this.menu_original_data.sp_list) {
+      this.previous_lv_1_menu = item;
+      return this.menu_original_data.sp_list.find((i) => i.csid == item.csid);
+    }
     return "";
   }
 
