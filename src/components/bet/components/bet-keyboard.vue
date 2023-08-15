@@ -41,13 +41,34 @@
 </template>
   
 <script setup>
-import { ref, reactive, provide, onMounted, computed } from 'vue'
+import { ref, reactive, provide, onMounted, computed, onUnmounted } from 'vue'
+import store from "src/store-redux/index.js";
 
 const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
+// ...mapGetters(['', '','', '', 'get_bet_list', '', '', '', '', '']),
 
+const store_state = store.getState()
+const get_user = ref(store_state.get_user)
+const get_bet_status = ref(store_state.get_bet_status)
+const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
+const get_active_index = ref(store_state.get_active_index)
+const get_bet_list = ref(store_state.get_bet_list)
+const get_menu_type = ref(store_state.get_menu_type)
+const get_is_mix = ref(store_state.get_is_mix)
+const get_is_combine = ref(store_state.get_money_total)
+const get_bet_obj = ref(store_state.get_bet_obj)
+
+const unsubscribe = store.subscribe(() => {
+  update_state()
+})
+
+const update_state = () => {
+  const new_state = store.getState()
+  get_bet_list.value = new_state.get_bet_list
+}
 
 const props = defineProps({
   items: {
@@ -107,7 +128,7 @@ watch(() => get_update_tips, (newVal, oldVal) => {
     set_used_money(-1)
   }
 })
-// ...mapGetters(['get_user', 'get_bet_status','get_mix_bet_flag', 'get_active_index', 'get_bet_list', 'get_menu_type', 'get_is_combine', 'get_is_mix', 'get_money_total', 'get_bet_obj']),
+
 
 // 点击键盘
 const _handleKeyPress = (e) => {
@@ -230,6 +251,9 @@ const has_pre_market = computed(() => {
   return get_active_index.toString().indexOf('pre') > -1 ||  get_active_index.toString().indexOf('market') > -1
 })
 
+onUnmounted(()=>{
+  unsubscribe()
+})
 
 </script>
 

@@ -6,10 +6,10 @@
 <template>
   <div
     class="yb-match-list column full-height   relative-position"
-    :class="['match-tpl' + NewMenu.mid_menu_result.match_tpl_number,{'match-tplesports': NewMenu.mid_menu_result.match_tpl_number == 18 && NewMenu.is_esports()}, {'virtual-list':NewMenu.is_virtual_sport()}]"
+    :class="['match-tpl' + menu_config.mid_menu_result.match_tpl_number,{'match-tplesports': menu_config.mid_menu_result.match_tpl_number == 18 && menu_config.is_esports()}, {'virtual-list':menu_config.is_virtual_sport()}]"
   >
     <div class="test-info-wrap" v-if="wsl">
-      <div>{{NewMenu.mid_menu_result.match_tpl_number}}</div>
+      <div>{{menu_config.mid_menu_result.match_tpl_number}}</div>
       <div class="fold-btn" @click="match_list_card.unfold_all_league()">展开联赛</div>
       <div class="fold-btn" @click="match_list_card.fold_all_league()">折叠联赛</div>
       <div class="fold-btn" @click="match_list_card.test_log_data()">打印数据</div>
@@ -40,11 +40,11 @@
 
 
 
-  <!-- <div>NewMenu.match_list_menu_show.list_filter {{ NewMenu.match_list_menu_show.list_filter }}</div> -->
+  <!-- <div>menu_config.match_list_menu_show.list_filter {{ menu_config.match_list_menu_show.list_filter }}</div> -->
 
      <!-- 顶部菜单  // 滚球  冠军 -->
      <list-filter
-        v-if="[1,400].includes(parseInt(NewMenu.menu_root)) && vx_layout_list_type != 'collect'"
+        v-if="[1,400].includes(parseInt(menu_config.menu_root)) && vx_layout_list_type != 'collect'"
         :collect_count="collect_count"
         :load_data_state="load_data_state"
       />
@@ -52,7 +52,7 @@
       <!-- 日期菜单   早盘 日期 -->
 
      <list-filter-date
-        v-if="NewMenu.menu_root == 3  && vx_layout_list_type != 'collect'"
+        v-if="menu_config.menu_root == 3  && vx_layout_list_type != 'collect'"
 
 
         :collect_count="collect_count"
@@ -63,21 +63,21 @@
 
       <!-- 热门赛事顶部菜单 -->
       <list-filter-hot
-        v-if=" NewMenu.menu_root == 500 && vx_layout_list_type != 'collect'"
+        v-if=" menu_config.menu_root == 500 && vx_layout_list_type != 'collect'"
         :collect_count="collect_count"
         :load_data_state="load_data_state"
       />
 
       <!-- 电竞顶部菜单 -->
       <esports-header
-        v-if="NewMenu.menu_root == 2000 "
+        v-if="menu_config.menu_root == 2000 "
         :load_data_state="load_data_state"
       />
       <!-- 赛事状态 | 赛种类型      -->
-      <PlayVirtualMatchType  class="sticky-wrap" v-if="NewMenu.menu_root_show_shoucang == 300"  style="top:100px"  />
+      <PlayVirtualMatchType  class="sticky-wrap" v-if="menu_config.menu_root_show_shoucang == 300"  style="top:100px"  />
 
       <!-- 联赛  VR 足球才会有联赛-->
-      <div class="leagues-tabs leagues-bg" v-if="NewMenu.mid_menu_result.mi =='1001'">
+      <div class="leagues-tabs leagues-bg" v-if="menu_config.mid_menu_result.mi =='1001'">
           <!-- 联赛菜单 -->
         <LeagueTab
         />
@@ -88,7 +88,7 @@
     <load-data :state="load_data_state">
 
       <!-- 滚球虚拟体育列表 -->
-      <scroll-list v-if="NewMenu.menu_root_show_shoucang == 300">
+      <scroll-list v-if="menu_config.menu_root_show_shoucang == 300">
         <template v-slot:before>
           <div :style="{ height: fixed_header_height }"></div>
         </template>
@@ -99,7 +99,7 @@
             :key="`match_type_${match_item.mid}`"
             :mid="match_item.mid"
             :match_index="match_index"
-            :sticky_top=" NewMenu.mid_menu_result.csid == '1001' ? 157.5:117"
+            :sticky_top=" menu_config.mid_menu_result.csid == '1001' ? 157.5:117"
             :style="`width:${vx_get_layout_size.list_content_width}px  !important;`"
           />
           <div class="v-scroll-item" :style="`width:${vx_get_layout_size.list_content_width}px  !important;`" :key="match_item.mid">
@@ -122,7 +122,7 @@
         <template v-slot:before>
           <div :style="{ height: fixed_header_height }"></div>
         </template>
-        <div class="today-champion-bg" v-if="NewMenu.menu_root == '2' || NewMenu.menu_root == 400 || NewMenu.menu_root != 2000"></div>
+        <div class="today-champion-bg" v-if="menu_config.menu_root == '2' || menu_config.menu_root == 400 || menu_config.menu_root != 2000"></div>
         <template>
           <match-list-card
             v-for="card_key in match_list_card.match_list_card_key_arr" 
@@ -159,8 +159,8 @@
 import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 import LeagueTab from "src/public/components/tab/league-tab.vue";//联赛菜单
 import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
-import BaseData from "src/public/utils/base_data/base-data.js";
-import NewMenu from "src/public/utils/menuClass/menu_class_new.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+
 export default {
   name: "MatchList",
   mixins: [match_list_version_mixin,skt_data_list],
@@ -170,12 +170,6 @@ export default {
     LeagueTab,
     virtualMatchTpl1:() => import( /* webpackChunkName: "details" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl1.vue"),  //拟足球 、 虚拟篮球
     virtualMatchTpl2:() => import( /* webpackChunkName: "details" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl2.vue")   //拟赛马 、 虚拟赛狗
-  },
-  data() {
-    return {
-      NewMenu,
-      BaseData
-    }
   },
 
   methods:{

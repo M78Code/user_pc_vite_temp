@@ -11,20 +11,24 @@
  * 3.common   fliter  collect
  * 
  */
-const page_source =  [
+const PAGE_SOURCE_POOL =  [
   "details",
   "home",
   'result_details',
-   'match_result',
-    'category',
-    "matchList-common",
-    "matchList-filter",
-    "matchList-collect",
-    "detail_match_list",
- 
+  'match_result',
+  'category',
+  "matchList-common",
+  "matchList-filter",
+  "matchList-collect",
+  "detail_match_list",
+
  
 ]
    
+
+
+
+
 
 import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 class PageSourceData {
@@ -134,4 +138,21 @@ class PageSourceData {
   }
 }
 
-export default new PageSourceData();
+const  instance =new PageSourceData()
+const PageSourceDataProxy =new Proxy(instance, {
+  set: function (target, key, value, receiver) {
+    console.log(`setting : key: ${key} value:${value} , `)
+    if(key=='page_source'){
+      if(PAGE_SOURCE_POOL.includes(value)){
+        return Reflect.set(target, key, value, receiver);
+      }else{
+        console.error('page_source 必须在 PAGE_SOURCE_POOL 内录入');
+      }
+    }else{
+      return Reflect.set(target, key, value, receiver);
+    }
+  }
+});
+
+
+export default  PageSourceDataProxy ;

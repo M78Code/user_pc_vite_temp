@@ -65,6 +65,8 @@
 
 import { defineComponent, nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -135,7 +137,7 @@ onMounted(() => {
 const get_date_menu_list = async () => {
   let params = compute_get_date_menu_list_params();
   let api_fn_name = ''
-  if (NewMenu.menu_root == 2000) {
+  if (menu_config.menu_root == 2000) {
     //电竞
     api_fn_name = "get_esports_date_menu"
 
@@ -158,7 +160,7 @@ const get_date_menu_list = async () => {
   date_menu_version.value = Date.now()
 
   let index_info = 0, md_info = ''
-  const { left_menu_result, match_list_api_config = {} } = NewMenu
+  const { left_menu_result, match_list_api_config = {} } = menu_config
 
   // 收藏返回还是当前数据
   if (left_menu_result.root == 3 && this.vx_layout_list_type == 'collect') {
@@ -176,7 +178,7 @@ const get_date_menu_list = async () => {
  */
 const compute_get_date_menu_list_params = () => {
   let params = {};
-  let left_menu_result = NewMenu.left_menu_result;
+  let left_menu_result = menu_config.left_menu_result;
   let {
     lv1_mi,
     lv2_mi,
@@ -220,11 +222,11 @@ const compute_get_date_menu_list_params = () => {
 const handle_click_menu_mi_3_date = (detail = {}) => {
   let { md, index } = detail;
   final_index.value = index;
-  let root = NewMenu.menu_root;
+  let root = menu_config.menu_root;
   let guanjun = "";
   let sports = "common-date";
   let route = "list";
-  let { lv2_mi, lv1_mi } = NewMenu.left_menu_result
+  let { lv2_mi, lv1_mi } = menu_config.left_menu_result
   // 当前 pid 和 orpt
   let lv2_mi_info = BaseData.mi_info_map[`mi_${lv2_mi}`];
   // 父级euid
@@ -258,7 +260,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
   }
 
   //设置当前的root
-  // root = NewMenu.menu_root
+  // root = menu_config.menu_root
   // euid  早盘今日  玩法级别 传参 传 euid 为 父级的
   // 今日 早盘
   let api_name = 'post_league_list'
@@ -308,9 +310,9 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
     bymids,
   };
   // 设置      中间 菜单输出
-  NewMenu.set_mid_menu_result(params);
+  menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  NewMenu.set_match_list_api_config(config);
+  menu_config.set_match_list_api_config(config);
 }
 
 /**
@@ -341,9 +343,9 @@ const onclick = (index, item) => {
 const set_mid_menu_result = () => {
   //     请求  列表结构  API 参数的   模板
   let { config, description } =
-    NewMenu.get_match_list_api_config_tepmlate_and_description();
+    menu_config.get_match_list_api_config_tepmlate_and_description();
   let params = {};
-  let left_menu_result = NewMenu.left_menu_result;
+  let left_menu_result = menu_config.left_menu_result;
   let { lv1_mi, lv2_mi, euid } = left_menu_result;
   if (lv1_mi == 2000) {
     //  早盘 或者 今日的  电竞
@@ -363,9 +365,9 @@ const set_mid_menu_result = () => {
     };
   }
   // 设置      中间 菜单输出
-  NewMenu.set_mid_menu_result(params);
+  menu_config.set_mid_menu_result(params);
   // 设置   请求  列表结构  API 参数的  值
-  NewMenu.get_match_list_api_config_tepmlate_and_description(config);
+  menu_config.get_match_list_api_config_tepmlate_and_description(config);
 }
 
 const hand_cilck_move = (left) => {

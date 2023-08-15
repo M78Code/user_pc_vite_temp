@@ -53,6 +53,8 @@ export default function filterReducer(state = initialState, action) {
     //保存赛事选中数量
     case "set_checked_count":
       return { ...state, checked_count: action.data };
+    case "set_open_select_time": 
+      return { ...state, open_select_time: action.data }
     default:
       return {
         ...state,

@@ -9,7 +9,7 @@
       <!-- 玩法列表 -->
       <div class="handicap-col" v-for="(col, col_index) in handicap_list" :key="col_index">
         <div :class="['bet-item-wrap', ol_data.other_class]"
-          :style="get_bet_style(col_index, _.get(col, 'ols.length'), ol_data)" v-for="(ol_data, ol_index) in col.ols"
+          :style="get_bet_style(col_index, lodash.get(col, 'ols.length'), ol_data)" v-for="(ol_data, ol_index) in col.ols"
           :key="ol_index">
           <!-- 投注项组件 -->
           <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
@@ -21,13 +21,14 @@
 
     <!-- 赛事比分 -->
     <MatchFooterScore v-if="is_show_score" :match="match" :is_show_score_content="is_show_score_content"
-      :score_wrap_width="_.get(match_list_tpl_size, 'bet_width', 0) * _.get(match_list_tpl_size, 'bet_col_count', 0)">
+      :score_wrap_width="lodash.get(match_list_tpl_size, 'bet_width', 0) * lodash.get(match_list_tpl_size, 'bet_col_count', 0)">
     </MatchFooterScore>
   </div>
 </template>
 
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
+import lodash from 'lodash';
 import { utils_info } from 'src/core/utils/match-list-utils.js';
 import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -36,7 +37,7 @@ import { get_match_status } from 'src/core/utils/index'
 import betItem from "src/public/components/bet_item/bet_item_list_new_data.vue"
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from ( /* webpackChunkName: "pc-mini-chunks" */ "src/components/match-list/match-footer-score/index.js")
-import store from 'project_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 
 let state = store.getState();
 const props = defineProps({ ...useProps })
@@ -61,7 +62,7 @@ const get_5min_classname = () => {
     props.other_play && ['hps5Minutes'].includes(props.match.play_current_key) // 5分钟玩法
   ) {
     // 滚球 不需要背景色
-    if (get_match_status(_.get(props, 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get(props, 'match.ms'), [110]) == 1) {
       className = 'not-bg-handicap min5-roll-handicap'
     } else {
       // not-bg-handicap 清除被影响的背景色
@@ -127,7 +128,7 @@ const get_bet_height = (length) => {
 * * @return {String} 投注项样式
 */
 const get_bet_style = (col_index, length, ol_data) => {
-  let other_class = _.get(ol_data, 'other_class', '')
+  let other_class = lodash.get(ol_data, 'other_class', '')
   let style = `width:${get_bet_width(col_index, other_class)}px !important;height:${get_bet_height(length)}px !important;`
   if (other_class.includes('displacement')) {
     let { tpl_id } = props.match

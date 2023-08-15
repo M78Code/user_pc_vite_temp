@@ -11,7 +11,7 @@
  * 3.common   fliter  collect
  * 
  */
-const page_source =  [
+const PAGE_SOURCE_POOL =  [
   "details",
   'match-play-common' ,
   'match-play-fliter' ,
@@ -91,4 +91,26 @@ class PageSourceData {
   }
 }
 
-export default new PageSourceData();
+
+const  instance =new PageSourceData()
+const PageSourceDataProxy =new Proxy(instance, {
+  set: function (target, key, value, receiver) {
+    console.log(`setting : key: ${key} value:${value} , `)
+    if(key=='page_source'){
+      if(PAGE_SOURCE_POOL.includes(value)){
+        return Reflect.set(target, key, value, receiver);
+      }else{
+        console.error('page_source 必须在 PAGE_SOURCE_POOL 内录入');
+      }
+    }else{
+      return Reflect.set(target, key, value, receiver);
+    }
+  }
+});
+
+
+export default  PageSourceDataProxy ;
+
+
+
+ 
