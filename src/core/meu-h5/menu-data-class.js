@@ -28,7 +28,7 @@ class MenuData {
     this.hot_tab_menu = {};
 
     this.menu_list = [];
-    this.menu_original_data={}
+    this.menu_original_data = {};
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -81,7 +81,7 @@ class MenuData {
   //get euid
   async get_euid(arg_mi, menu_type) {
     const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
-    return euid.menus_mapping.h || "";
+    if (euid) return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
     if (menu_type == 4) {
@@ -221,49 +221,7 @@ class MenuData {
   recombine_menu_desc(item) {
     return item.substr(0, 3);
   }
-  recombine_menu(data, sort, amidithion) {
-    //常规
-    let conventional = [
-      101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
-      106, 118, 400, 300,
-    ];
-    let mi_list = [];
-    //1=滚球,2=今日,3=早盘,4=冠军,5=即将开赛,6=串关   左侧一级菜单隐藏 串关和即将开赛
-    let menuRule = [2, 1, 3, 4];
-    // // 竟足
-    // let lottery = this.init_lottery(data);
-    // 电竞 2100 = 英雄联盟
-    let menu_dianjing = { mi: 7, sl: [] };
-    let menu_jingzu = { mi: 30, sl: [] };
-    lodash.each(data, (item) => {
-      if (item && item.sl && item.sl.length > 0) {
-        mi_list.push(...item?.sl);
-      }
-      if ([2100, 2101, 2103, 2102].includes(+item.mi)) {
-        menu_dianjing.sl.push(item);
-      }
-      if ([500].includes(+item.mi)) {
-        menu_jingzu.sl.push(item);
-      }
-    });
-    // 赛果数据处理
-    let result_menu = this.init_amidithion(amidithion);
-    let new_menu = [];
-    lodash.each(menuRule, (menu_item, index) => {
-      new_menu[index] = { mi: menu_item, sl: [] };
-      lodash.each(mi_list, (item) => {
-        const filter_data = lodash.find(conventional, (item1) => {
-          return item.mi == `${item1}${menu_item}`;
-        });
-        if (filter_data) {
-          new_menu[index].sl.push(item);
-        }
-      });
-    });
-    return sort
-      ? [...new_menu, menu_dianjing, { mi: 8 }, menu_jingzu, result_menu]
-      : [...new_menu, { mi: 8 }, menu_dianjing];
-  }
+
   // 查找竞足数据
   init_lottery(data) {
     let obj1 = data.find((v) => v.mi == 500) || {};
@@ -430,11 +388,28 @@ class MenuData {
   get_current_lv_2_menu_type() {
     return "0";
   }
+  //竞足数据
+  get_competing(data) {
+    let obj1 = data.find((v) => v.mi == 500) || {};
+    if (obj1?.sl) {
+      let obj2 = obj1.sl.find((v) => v.mi == 50101) || {};
+      return obj2.sl || [];
+    }
+  }
 
   /**
    * 电竞菜单要保留上一个 电竞菜单 的 csid
    */
-  get_current_esport_csid(item) {
+  get_current_esport_csid(mi, item) {
+    if (mi) {
+      let menu_dianjing = {
+        2100: 100,
+        2101: 101,
+        2102: 102,
+        2103: 103,
+      };
+      return menu_dianjing[mi] || "";
+    }
     if (this.menu_original_data.sp_list) {
       this.previous_lv_1_menu = item;
       return this.menu_original_data.sp_list.find((i) => i.csid == item.csid);
@@ -443,7 +418,7 @@ class MenuData {
   }
 
   get_current_sub_menuid() {
-    return "";
+    return this.current_menu?.mi || "";
   }
 
   /**

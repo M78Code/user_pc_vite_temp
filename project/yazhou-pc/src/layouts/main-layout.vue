@@ -771,6 +771,14 @@ function init_site_header(type = null) {
       path: "/rule",
       _blank: true,
     }, //体育竞猜规则
+    {
+      "id": 9,
+      "tab_name": "任务中心",
+      "img_src": "https://image.gredfged.com/group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
+      "class": "activity_center animate-activity-entry activity_dot_bonus",
+      "path": "/activity",
+      "_blank": true
+    },
   ];
   // 判断是否有活动
   let activityList = get(computed_data.get_user, "activityList");
@@ -832,7 +840,7 @@ function init_site_header(type = null) {
     }
   }
   data_ref.nav_list = nav_list;
-  useMittEmit(MITT_TYPES["close_home_loading"], false);
+  // useMittEmit(MITT_TYPES["close_home_loading"], false);
 
   // 菜单初始化 因为菜单是去轮询的 so
   // 因为设置菜单是500s

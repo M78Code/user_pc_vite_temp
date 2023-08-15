@@ -135,7 +135,7 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
   props: {
@@ -160,41 +160,41 @@ export default defineComponent({
   },
   components: {
     // 模板id=0(默认模板)
-    temp0: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp0.vue"),
+    temp0: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp0.vue"),
     // 模板id=1
-    temp1: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp1.vue"),
+    temp1: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp1.vue"),
     // 模板id=2
-    temp2: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp2.vue"),
+    temp2: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp2.vue"),
     // 模板id=3
-    temp3: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp3.vue"),
+    temp3: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp3.vue"),
     // 模板id=4
-    temp4: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp4.vue"),
+    temp4: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp4.vue"),
     // 模板id=5
-    temp5: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp5.vue"),
+    temp5: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp5.vue"),
     // 模板id=6
-    temp6: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp6.vue"),
+    temp6: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp6.vue"),
     // 模板id=7
-    temp7: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp7.vue"),
+    temp7: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp7.vue"),
     // 模板id=8
-    temp8: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp8.vue"),
+    temp8: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp8.vue"),
     // 模板id=9
-    temp9: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp9.vue"),
+    temp9: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp9.vue"),
     // 模板id=10
-    temp10: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp10.vue"),
+    temp10: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp10.vue"),
     // 模板id=11
-    temp11: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp11.vue"),
+    temp11: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp11.vue"),
     // 模板id=12
-    temp12: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp12.vue"),
+    temp12: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp12.vue"),
     // 模板id=13
-    temp13: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp13.vue"),
+    temp13: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp13.vue"),
     // 模板id=14
-    temp14: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp14.vue"),
+    temp14: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp14.vue"),
     // 模板id=15
-    temp15: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp15.vue"),
+    temp15: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp15.vue"),
     // 模板id=18
-    temp18: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp18.vue"),
+    temp18: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp18.vue"),
     // 模板id=51
-    temp51: () => import(/* webpackChunkName: "user-h5-min-sm" */ "project_path/src/pages/details/components/tournament_play/template/temp51.vue"),
+    temp51: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp51.vue"),
   },
   // #TODO mixins
   // mixins: [betting],
@@ -239,35 +239,37 @@ export default defineComponent({
         offset_icon_position_before:'0.11rem',
         offset_icon_position_after:'0.115rem'
       },
+      timer1_: null,
+      timer2_: null,
     });
     onMounted(() => {
       // 原 created 
       // 延时器
-      timer1_ = null;
-      timer2_ = null;
+      component_data.timer1_ = null;
+      component_data.timer2_ = null;
       // 默认调用接口 此时如果基准分为空 则不显示基准分
       try {
-        new_score = props.item_data.hps ? props.item_data.hps.split("|")[1].replace(/:/, "-") : "";
+        component_data.new_score = props.item_data.hps ? props.item_data.hps.split("|")[1].replace(/:/, "-") : "";
       } catch (error) {
         console.error('hps格式不正确')
       }
       // 满足ws推送的监听 实时响应数据变化
-      if (new_score) {
+      if (component_data.new_score) {
         // #TODO emit 
-        emitters = [
+        component_data.emitters = [
           useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
         ]
         // $root.$on(emit_cmd.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
       // if(get_fewer == 2 || item_data.hshow == 'No'){
-      if(get_fewer == 2 || judage_hshow == 'No'){
-        is_show_underline = true;
+      if(get_fewer.value == 2 || judage_hshow.value == 'No'){
+        component_data.is_show_underline = true;
       }
 
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
-      emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
+      component_data.emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
       // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
@@ -320,7 +322,7 @@ export default defineComponent({
     });
     const judage_hshow = computed(() => {
       const hshow = props.item_data.hshow
-      const vuex_hshow = get_hshow_map[`${props.item_data.mid}_${props.item_data.hpid}`]
+      const vuex_hshow = get_hshow_map.value[`${props.item_data.mid}_${props.item_data.hpid}`]
       // 以vuex中优先级为准，没有就用接口的
       return vuex_hshow === 'No' ? 'No' : hshow
     });
@@ -334,7 +336,7 @@ export default defineComponent({
     });
     // 当ms=0的时候不显示基准分
     const show_new_score = computed(() => {
-      return get_detail_data.ms != 0
+      return get_detail_data.value.ms != 0
     });
     /**
      *@description 判断玩法盘口的显示或者是隐藏
@@ -429,38 +431,38 @@ export default defineComponent({
     watch(
       () => get_is_hengping.value,
       () => {
-        is_high_light = false
+        component_data.is_high_light = false
       }
     );
     // 监听到状态改变从而关闭所有弹窗
     watch(
-      () => get_is_close_info,
+      () => get_is_close_info.value,
       () => {
         separate_closed()
       }
     );
     watch(
-      () => get_fewer,
+      () => get_fewer.value,
       (new_val) => {
         if(new_val==2){
-          is_show_underline = true;
+          component_data.is_show_underline = true;
         }
         // 当一键按钮展开时,去除下划线
         if(new_val==1){
-          is_show_underline = false;
+          component_data.is_show_underline = false;
         }
       }
     );
     // 32, 34, 231, 233 这4个玩法要对应C103比分集合的变动
     // watch(
-    //   () => get_detail_data.msc,
+    //   () => get_detail_data.value.msc,
     //   (newVal) => {
-    //     if(!(new_score && [32, 34, 231, 233].includes(+item_data.hpid))) return
+    //     if(!(component_data.new_score && [32, 34, 231, 233].includes(+item_data.hpid))) return
     //     let str1 = item_data.hps.split("|")[0]
     //     newVal.forEach(item => {
     //       let [str2, str3] = item.split("|")
     //       if(str1 == str2) {
-    //         new_score = str3.replace(/:/, "-")
+    //         component_data.new_score = str3.replace(/:/, "-")
     //       }
     //     })
     //   }
@@ -474,9 +476,12 @@ export default defineComponent({
     //   'set_hshow_map',
     //   'set_details_data_cache',
     // ]),
+    const set_is_close_info = () => {};
+    const set_hshow_map = () => {};
+    const set_details_data_cache = () => {};
     // 滑动时，隐藏 罚牌玩法显示
     const hide_gameplay_titlehandler = () => {
-      is_high_light = false
+      component_data.is_high_light = false
     };
     /**
       *@description: 点击关闭当前弹窗
@@ -492,7 +497,7 @@ export default defineComponent({
      * @return {Number}
      */
     const rem = (value) => {
-      let font_size = innerWidth * 100 / (get_bet_show ? 667 : 375);
+      let font_size = innerWidth * 100 / (get_bet_show.value ? 667 : 375);
       return Math.ceil(value * font_size);
     };
     /**
@@ -501,34 +506,34 @@ export default defineComponent({
       *@return {Undefined} undefined
       */
     const info_icon_click = (e) => {
-      let info_status = !is_high_light
+      let info_status = !component_data.is_high_light
       set_is_close_info()
 
       if (e) {
-        other_way_style.left = e.target.offsetLeft + rem(0.12);
-        other_way_style.top = e.clientY + rem(0.16);
+        component_data.other_way_style.left = e.target.offsetLeft + rem(0.12);
+        component_data.other_way_style.top = e.clientY + rem(0.16);
       }
-      other_way_style.offset_icon_position_before = '0.11rem'
-      other_way_style.offset_icon_position_after = '0.115rem'
+      component_data.other_way_style.offset_icon_position_before = '0.11rem'
+      component_data.other_way_style.offset_icon_position_after = '0.115rem'
       if( e && e.target.offsetLeft > (window.innerWidth/2.8)){
-        other_way_style.offset_icon_position_before = window.innerWidth/2.5 +'px'
-        other_way_style.offset_icon_position_after = window.innerWidth/2.5 +'px'
-        other_way_style.left = e.target.offsetLeft + rem(0.12)-(window.innerWidth/2.5) + 12;
+        component_data.other_way_style.offset_icon_position_before = window.innerWidth/2.5 +'px'
+        component_data.other_way_style.offset_icon_position_after = window.innerWidth/2.5 +'px'
+        component_data.other_way_style.left = e.target.offsetLeft + rem(0.12)-(window.innerWidth/2.5) + 12;
       }
 
-      other_way_style.is_rotate=false;
+      component_data.other_way_style.is_rotate=false;
       if( e && (window.innerHeight-e.clientY) < 100){
         // 距离底部过近,向上显示
-        other_way_style.top-=rem(1.3) + 10
-        other_way_style.is_rotate=true;
+        component_data.other_way_style.top-=rem(1.3) + 10
+        component_data.other_way_style.is_rotate=true;
       }
       
-      $nextTick(() => {
-        is_high_light = info_status
+      nextTick(() => {
+        component_data.is_high_light = info_status
         // 初次进入详情页面罚牌tips展示，ios显示问题42039处理
         set_is_clicked_mat_info(true)
-        clearTimeout(timer1_)
-        timer1_ = setTimeout(()=>{
+        clearTimeout(component_data.timer1_)
+        component_data.timer1_ = setTimeout(()=>{
           set_is_clicked_mat_info(false)
         }, 30)
       })
@@ -540,7 +545,7 @@ export default defineComponent({
       *@return {Undefined} undefined
       */
     const separate_closed = () => {
-      is_high_light = false
+      component_data.is_high_light = false
     };
 
     /**
@@ -552,14 +557,14 @@ export default defineComponent({
       const payload = {
         key: `${item_data.mid}_${item_data.hpid}`
       }
-      if (judage_hshow == "Yes") {
+      if (judage_hshow.value == "Yes") {
         item_data.hshow = "No";
         payload.value = "No";
-        is_show_underline = true;
+        component_data.is_show_underline = true;
       } else {
         item_data.hshow = "Yes";
         payload.value = "Yes";
-        is_show_underline = false;
+        component_data.is_show_underline = false;
       }
       set_hshow_map(payload)
       $emit("change_show")
@@ -570,8 +575,8 @@ export default defineComponent({
      *@return {Undefined}
      */
     const set_hton = (item_data,e) => {
-      if(timer2_) { clearTimeout(timer2_) }
-      timer2_ =setTimeout(()=>{
+      if(component_data.timer2_) { clearTimeout(component_data.timer2_) }
+      component_data.timer2_ =setTimeout(()=>{
         // item_data = lodash.cloneDeep(item_data)
         // 取消置顶
         if (item_data.hton != 0) {
@@ -596,7 +601,7 @@ export default defineComponent({
         
         // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
-        const all_list_data = lodash.cloneDeep(get_details_data_cache[key]) || []
+        const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []
         const target_play_id = item_data.chpid || item_data.hpid
         all_list_data.forEach((item, i) => {
           if ([item.chpid, item.hpid].includes(target_play_id)) {
@@ -615,8 +620,8 @@ export default defineComponent({
         
         let status = item_data.hton != 0 ? "0" : "1",
             playId = item_data.hpid,
-            matchId = get_detail_data.mid,
-            cuid = get_uid,
+            matchId = get_detail_data.value.mid,
+            cuid = get_uid.value,
             // 玩法置顶接口增加topKey字段
             topKey = item_data.topKey;
         let params = { status, playId, matchId, cuid, topKey};
@@ -643,7 +648,7 @@ export default defineComponent({
     const bet_click_ = ({ol_item, hl_data}) => {
       if(ol_item.os == 2 || ol_item.result) return
       if (!ol_item.ov || ol_item.ov < 101000) return;
-      let match = lodash.cloneDeep(get_detail_data);
+      let match = lodash.cloneDeep(get_detail_data.value);
       const item_data = props.item_data;
       match.hps = [item_data];
       if(get_menu_type == 900){  //虚拟体育
@@ -672,7 +677,7 @@ export default defineComponent({
       if([232,33].includes(item_data.hpid*1)){
         hls.forEach((hl) => {
           if (hl.hps && hl.hpid == item_data.hpid && hl.hid == item_data.hid) {
-            new_score = hl.hps.split("|")[1].replace(/:/, "-");
+            component_data.new_score = hl.hps.split("|")[1].replace(/:/, "-");
           }
         });
       } else {
@@ -680,7 +685,7 @@ export default defineComponent({
           // 这4个玩法对应C103比分集合更新比分，不对应C105
           let flag = [32, 34, 231, 233].includes(+hl.hpid)
           if (hl.hps && hl.hpid == item_data.hpid && !flag) {
-            new_score = hl.hps.split("|")[1].replace(/:/, "-");
+            component_data.new_score = hl.hps.split("|")[1].replace(/:/, "-");
           }
         });
       }
@@ -691,10 +696,10 @@ export default defineComponent({
       // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
       // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
       debounce_throttle_cancel(bet_click_);
-      clearTimeout(timer1_)
-      clearTimeout(timer2_)
-      timer1_ = null
-      timer2_ = null
+      clearTimeout(component_data.timer1_)
+      clearTimeout(component_data.timer2_)
+      component_data.timer1_ = null
+      component_data.timer2_ = null
     })
     return {
       ...toRefs(component_data),
@@ -716,6 +721,9 @@ export default defineComponent({
       is_remove,
       icon_name,
       isEmpty,
+      set_is_close_info,
+      set_hshow_map,
+      set_details_data_cache,
       hide_gameplay_titlehandler,
       info_icon_close,
       rem,
@@ -730,791 +738,6 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss" scoped>
-/* ************** 单项玩法集合 *************** -S */
-
-/** 置顶操作时增加动画*****/
-// @include keyframes(keyframe_heart) {
-//   from,
-//   20%,
-//   40%,
-//   60%,
-//   80%,
-//   to {
-//     -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-//     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-//   }
-//   0% {
-//     opacity: 0;
-//     -webkit-transform: scale3d(0.3, 0.3, 0.3);
-//     transform: scale3d(0.3, 0.3, 0.3);
-//   }
-//   30% {
-//     -webkit-transform: scale3d(1.3, 1.3, 1.3);
-//     transform: scale3d(1.3, 1.3, 1.3);
-//   }
-//   60% {
-//     opacity: 1;
-//     -webkit-transform: scale3d(1.03, 1.03, 1.03);
-//     transform: scale3d(1.03, 1.03, 1.03);
-//   }
-//   80% {
-//     -webkit-transform: scale3d(0.97, 0.97, 0.97);
-//     transform: scale3d(0.97, 0.97, 0.97);
-//   }
-
-//   to {
-//     opacity: 1;
-//     -webkit-transform: scale3d(1, 1, 1);
-//     transform: scale3d(1, 1, 1);
-//   }
-// }
-
-/*  收藏 icon 动画（心跳） */
-.animation-heart {
-  animation-duration: calc(0.5s * 0.75);
-  animation-name: keyframe_heart;
-}
-
-/*  记录动画 */
-.transition-play-list-leave-to {
-  opacity: 0;
-}
-
-.transition-play-list-enter, .transition-play-list-leave-to {
-  transform: translate(0, 0);
-}
-
-.transition-play-list-leave-active {
-  position: absolute;
-  right: -1px;
-}
-
-.tournament-play {
-  position: relative;
-  min-width: 3.75rem;
-  height: auto;
-  background: transparent;
-  transition: transform 0.6s, opacity 0.1s;
-}
-
-/* ************** 单项玩法集合 *************** -E */
-/* ************** 玩法title栏 *************** -S */
-.play-name {
-  &.vir-mar {
-
-  }
-}
-
-
-/* ************** 玩法title栏 *************** -E */
-/* ************** 玩法名前的icon图标 *************** -S */
-.line-style {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-}
-
-
-/* ************** 玩法名前的icon图标 *************** -E */
-/* ************** 玩法名称 *************** -S */
-.text-color {
-  font-size: 0.14rem;
-  letter-spacing: 0;
-}
-
-/* ************** 玩法名称 *************** -E */
-/* ************** 置顶按钮 *************** -S */
-.icon_zd_select {
-  width: 0.16rem;
-  height: 0.14rem;
-  background: var(--q-color-img-bg-35) no-repeat center / 96% 96%;
-}
-
-.icon_zd_default {
-  width: 0.16rem;
-  height: 0.14rem;
-  background: var(--q-color-com-img-bg-93) no-repeat center / 96% 96%;
-}
-
-/* ************** 置顶按钮 *************** -E */
-/* ************** 玩法名下面的单横线 *************** -S */
-.bottom-style {
-  position: relative;
-}
-
-
-/* ************** 玩法名下面的单横线 *************** -E */
-.play-wrapper {
-  transition: max-height 0.3s;
-  overflow: hidden;
-}
-
-.text-right {
-  margin-left: 0.16rem;
-}
-
-.special-style {
-  width: 1.9rem;
-  font-size: 0.12rem;
-}
-
-.font-weg {
-  padding-left: 0.04rem;
-  font-weight: bold;
-  max-width: 2.8rem;
-  position: relative;
-}
-
-.base-font-weg {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 0.49rem;
-  line-height: 1.3;
-  font-weight: bold;
-  max-width: 2.8rem;
-  position: relative;
-
-  &:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 3px;
-    height: 0.14rem;
-    top: calc(50% - 0.08rem);
-    left: -0.1rem;
-    border-radius: 1.5px;
-  }
-}
-
-.corner-ball-weg {
-  display: flex;
-  align-items: center;
-  padding-left: 0.04rem;
-  font-weight: bold;
-  max-width: 2.8rem;
-  position: relative;
-
-  &:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 3px;
-    height: 0.12rem;
-    top: 0.035rem;
-    left: -0.06rem;
-    border-radius: 1.5px;
-  }
-
-  i {
-    display: inline-block;
-    width: 0.14rem;
-    height: 0.14rem;
-  }
-
-  .information-icon-gray {
-    background: var(--q-color-com-img-bg-94) no-repeat center / cover;
-  }
-}
-
-.fat-sty {
-  flex: 1;
-  padding-left: 0.04rem;
-  position: relative;
-  font-weight: bold;
-  font-size: 0.15rem;
-
-  &:after {
-    content: ' ';
-    display: block;
-    position: absolute;
-    width: 3px;
-    height: 0.14rem;
-    top: calc(50% - 0.08rem);
-    left: -0.06rem;
-    border-radius: 1.5px;
-  }
-}
-
-.dis-block {
-  text-align: center;
-  flex: 1;
-}
-
-.corner-ball {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 0.075rem 0;
-  max-width: 2.8rem;
-  position: relative;
-}
-
-.basic-score {
-  padding-left: 0.04rem;
-  font-size: 0.13rem;
-  line-height: 13px;
-}
-
-.vir-sport {
-  height: 0.49rem;
-  line-height: 0.49rem;
-}
-
-.penalty-card {
-  height: 0.14rem;
-  margin-left: 0.1rem;
-}
-
-.penalty-card-no {
-  top: 28%;
-}
-
-.mat-info {
-  width: 2.19rem;
-  position: fixed;
-  right: -0.33rem;
-  top: 0.38rem;
-  z-index: 999;
-  border-radius: 0.04rem;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  &:before{
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-left: 0.1rem solid transparent;
-    border-right: 0.1rem solid transparent;
-    border-bottom: 0.1rem solid var(--q-color-border-color-42);
-    position: absolute;
-    top: -0.1rem;
-    // left: 0.11rem;
-    left: var(--q-position-left-before);
-  }
-
-  &:after{
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-left: 0.095rem solid transparent;
-    border-right: 0.095rem solid transparent;
-    border-bottom: 0.095rem solid var(--q-color-page-bg-color-2);
-    position: absolute;
-    top: -0.09rem;
-    // left: 0.115rem;
-    left: var(--q-position-left-after);
-  }
-}
-.mat-info2 {
-  width: 2.19rem;
-  position: fixed;
-  right: -0.33rem;
-  top: 0.38rem;
-  z-index: 999;
-  border-radius: 0.04rem;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-  &:before{
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-left: 0.1rem solid transparent;
-    border-right: 0.1rem solid transparent;
-    border-top: 0.1rem solid var(--q-color-border-color-42);
-    position: absolute;
-    bottom: -0.1rem;
-    // left: 0.11rem;
-    left: var(--q-position-left-before);
-
-
-  }
-
-  &:after{
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-left: 0.095rem solid transparent;
-    border-right: 0.095rem solid transparent;
-    border-top: 0.095rem solid var(--q-color-page-bg-color-2);
-    position: absolute;
-    bottom: -0.09rem;
-    // left: 0.115rem;
-    left: var(--q-position-left-after);
-  }
-}
-
-.penalty {
-  width: 1.85rem;
-  margin: auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0.12rem 0 0.08rem 0;
-}
-
-.ply-cd {
-  font-size: 0.14rem;
-  line-height: 0.14rem;
-}
-
-.info-content {
-  width: 1.85rem;
-  margin: auto;
-  font-size: 0.12rem;
-  padding: 0 0 0.12rem 0;
-  line-height: 0.18rem;
-}
-
-.triangle-icon {
-  width: 0.1rem;
-  height: 0.06rem;
-  position: absolute;
-  top: -0.06rem;
-  left: 0.19rem;
-  background-image: var(--q-color-com-img-bg-14);
-  &.is_rotate{
-    bottom: -0.06rem;
-    top: unset;
-    transform: rotate(180deg) ;
-  }
-}
-
-.tournament-play {
-  &.tournament-play-outer {
-    .play-name-outer-wrapper {
-      padding: 0 0.1rem 0.04rem 0.1rem;
-    }
-
-    .play-name {
-      position: relative;
-      width: 3.55rem;
-
-      padding: 0 0.12rem 0 0.18rem;
-      background-image: var(--q-color-linear-gradient-bg-20);
-      border-radius: 0.08rem;
-
-      &::after {
-        content: "";
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 200%;
-        height: 200%;
-        -webkit-transform: scale(0.5);
-        transform: scale(0.5);
-        -webkit-transform-origin: left top;
-        transform-origin: left top;
-        border: 1px solid var(--q-color-border-color-24);
-        border-radius: 0.16rem;
-        overflow: hidden;
-      }
-    }
-
-    .font-weg {
-      padding-left: 0;
-    }
-
-    .base-font-weg {
-      min-height: 0.34rem;
-    }
-
-    .vir-sport {
-      height: 0.34rem;
-      line-height: 0.34rem;
-    }
-
-    .corner-ball-weg {
-      padding-left: 0;
-
-      &::after {
-        left: -0.1rem;
-      }
-    }
-
-    .basic-score {
-      padding-left: 0;
-    }
-
-    ::v-deep [class^=temp] {
-      padding-bottom: 0.04rem;
-
-      .rad-style {
-        position: relative;
-        background-color: var(--q-color-page-bg-color-107);
-        overflow: initial;
-      }
-
-      .play-box {
-        margin-bottom: 0;
-      }
-
-      .play-box,
-      .play-box-sty,
-      .play-box-style {
-        &.win {
-          background-color: var(--q-color-page-bg-color-14) !important;
-        }
-      }
-
-      .title-style {
-        border-radius: 0.08rem 0.08rem 0 0;
-      }
-
-      .title-style, .content > .tittle {
-        height: 0.35rem;
-        line-height: 0.35rem;
-        margin-bottom: 0;
-        background-color: var(--q-color-page-bg-color-105);
-      }
-
-      .fam {
-        height: 0.35rem;
-        line-height: 0.35rem;
-      }
-
-      .item-wrap {
-        border-radius: 0;
-      }
-
-      .bor-style {
-        border-bottom: 1px solid var(--q-color-border-color-56);
-      }
-
-      .margin-other {
-        .play-box-style {
-          border-top: 1px solid var(--q-color-border-color-56);
-          justify-content: center;
-
-          .details_t_color6 {
-            margin-right: 0.1rem;
-            color: var(--q-color-com-fs-color-11);
-          }
-        }
-      }
-
-      .item-wrap, &:not(.temp5) > .row:not(.title-style) {
-        position: relative;
-        overflow: initial;
-
-        &::after {
-          content: "";
-          pointer-events: none;
-          position: absolute;
-          left: 0;
-          top: 0;
-          width: 200%;
-          height: 200%;
-          -webkit-transform: scale(0.5);
-          transform: scale(0.5);
-          -webkit-transform-origin: left top;
-          transform-origin: left top;
-          border: 1px solid rgb(207, 207, 207);
-          border-radius: 0.16rem;
-          overflow: hidden;
-        }
-      }
-
-      .show-more.play-box-style {
-        border-radius: 0 0 0.08rem 0.08rem;
-      }
-
-      .item-col > div:last-child {
-        .bor-style {
-          border-bottom: 0 !important;
-        }
-      }
-
-      .item-col > .bor-style {
-        border-bottom: 0 !important;
-      }
-
-      .bet-box-bg {
-        height: 0.52rem;
-      }
-    }
-
-    ::v-deep .temp0 {
-      background-color: transparent;
-
-      .bor-style {
-        border-bottom: 0;
-        border-radius: 0.08rem;
-
-        &.has-more {
-          border-radius: 0.08rem 0.08rem 0 0;
-        }
-      }
-
-      .show-more {
-        margin-top: 0;
-      }
-    }
-
-    ::v-deep .temp1 {
-      .item-wrap {
-        > div {
-          border-radius: 0.08rem;
-          overflow: hidden;
-        }
-      }
-    }
-
-    ::v-deep .temp3 {
-      .hairline-border {
-        .item-wrap {
-          border-radius: 0.08rem;
-          overflow: hidden;
-
-          &::after {
-            border: 0;
-          }
-        }
-      }
-
-      .bor-style {
-        border-bottom: 0;
-      }
-    }
-
-    ::v-deep .temp5, .temp6 {
-      .col {
-        .play-box-style {
-          margin-bottom: 0;
-        }
-
-        > div {
-          // margin-bottom: 1px;
-        }
-      }
-
-      .content-wrapper {
-        border-radius: 0.08rem;
-        overflow: hidden;
-      }
-    }
-
-    ::v-deep .temp4 {
-      background-color: transparent;
-
-      .item-wrap {
-        border-bottom-left-radius: 0.08rem;
-        border-bottom-right-radius: 0.08rem;
-        overflow: hidden;
-
-        &::after {
-          border: 0;
-        }
-      }
-
-      .remark {
-
-        flex: 0 0 auto;
-        margin-right: 0.1rem;
-      }
-
-      .is-like-bodan-play {
-        .remark {
-          margin-right: 0;
-        }
-        .odds-wrap {
-          flex: 0 0 .2rem;
-        }
-      }
-
-      .odds-wrap {
-        width: unset;
-        flex: 0 0 0.31rem;
-      }
-    }
-
-    ::v-deep .temp5 {
-      .head {
-        height: 0.34rem;
-        line-height: 0.34rem;
-        margin-bottom: 0;
-        background-color: var(--q-color-page-bg-color-105);
-      }
-
-      > .row::after {
-        border: 0;
-      }
-
-      .play-box-style {
-
-      }
-
-      .col {
-        .play-box-style {
-          // margin-bottom: 1px;
-          border-bottom: 1px solid var(--q-color-border-color-56);
-        }
-      }
-    }
-
-    ::v-deep .temp6 {
-      .item-wrap {
-        border-radius: 0 0 0.08rem 0.08rem;
-        overflow: hidden;
-        &::after {
-          border: 0;
-        }
-      }
-    }
-
-    ::v-deep .temp7 {
-      .item-wrap {
-        border-radius: 0 0 0.08rem 0.08rem;
-        overflow: hidden !important;
-
-        &::after {
-          border: 0;
-        }
-      }
-    }
-
-    ::v-deep .temp9 {
-      > .row::after {
-        border: 0 !important;
-      }
-
-      .virtual-bet-wrapper {
-        padding: 0.1rem 0.08rem;
-        border-radius: 0.08rem;
-        overflow: hidden !important;
-      }
-    }
-
-    ::v-deep .temp10 {
-      .virtual-bet-wrapper {
-        padding: 0.1rem 0.08rem;
-      }
-    }
-
-    ::v-deep .temp11 {
-      .virtual-bet-wrapper {
-        padding: 0.1rem 0.08rem;
-      }
-    }
-
-    ::v-deep .temp13 {
-      .rad-style {
-        border-radius: 0.08rem;
-        overflow: hidden;
-
-        ::after {
-          border: 0;
-        }
-      }
-
-      .bor-style {
-        // border-bottom: 0;
-      }
-    }
-
-    ::v-deep .temp14 {
-      background-color: transparent;
-
-      .content {
-        border-radius: 0;
-
-        &:first-child {
-          border-top-left-radius: 0.08rem;
-          border-top-right-radius: 0.08rem;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 0.08rem;
-          border-bottom-right-radius: 0.08rem;
-        }
-
-        .row-bet-wrapper {
-          border-radius: 0;
-        }
-      }
-
-      > .content:not(:last-child) {
-        margin-bottom: 0.04rem;
-      }
-
-      .row-bet-wrapper {
-        border-radius: 0 0 0.08rem 0.08rem;
-        overflow: hidden;
-      }
-    }
-
-    ::v-deep .temp15 {
-      > .hairline-border {
-
-        .sigle-item-border{
-          border-radius: 0.08rem;
-        }
-        .many-item-border {
-          // border-top:1px solid  var(--q-color-border-color-56);
-          background: var(--q-color-page-bg-color-104);
-          &:first-child{
-            border-radius: 0.08rem 0.08rem 0 0;
-          }
-          &:last-child{
-            border-radius: 0 0 0.08rem 0.08rem;
-          }
-        }
-
-        > .row {
-          overflow: hidden;
-        }
-      }
-    }
-
-    ::v-deep .temp16 {
-      background-color: transparent;
-
-      .content {
-        border-radius: 0;
-
-        &:first-child {
-          border-top-left-radius: 0.08rem;
-          border-top-right-radius: 0.08rem;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 0.08rem;
-          border-bottom-right-radius: 0.08rem;
-        }
-
-        .row-bet-wrapper {
-          border-radius: 0;
-          background: var(--q-color-page-bg-color-104);
-        }
-      }
-
-      > .content:not(:last-child) {
-        margin-bottom: 0.04rem;
-      }
-
-      .row-bet-wrapper {
-        border-radius: 0 0 0.08rem 0.08rem;
-        overflow: hidden;
-      }
-    }
-
-    &.esports-play {
-      ::v-deep [class^=temp] {
-        background-color: transparent;
-
-        &:not(.temp5) > .row:not(:first-child) {
-          margin-top: 0.04rem;
-        }
-      }
-    }
-
-    &.result-details {
-      ::v-deep [class^=temp] {
-        .bor-style {
-          // border-bottom: 0;
-        }
-      }
-    }
-  }
-}
+<style scoped lang="scss">
+  @import "../../../styles/details.scss";
 </style>

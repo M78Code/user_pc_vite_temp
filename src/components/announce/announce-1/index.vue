@@ -45,13 +45,13 @@ import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
 
 /** 返回的大列表 */
-const res_list = reactive([])
+let res_list = reactive([])
 /** 左侧菜单 */
-const announce_title = reactive([])
+let announce_title = reactive([])
 /** 大列表 */
-const announce_list = reactive([])
+let announce_list = reactive([])
 /** 全部分类数据 */
-const class_list = reactive([])
+let class_list = reactive([])
 /** 当前标题 */
 const current_title = ref('')
 /** 当前选中公告分类索引 */
@@ -77,7 +77,7 @@ onUnmounted(unsubscribe)
 function tabs_click(item, index) {
     index.value = index;
     current_title.value = announce_title[index].type;
-    announce_list.value = index
+    announce_list = index
         ? class_list[index - 1].mtl
         : res_list;
 }
