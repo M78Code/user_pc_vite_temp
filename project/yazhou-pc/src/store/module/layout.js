@@ -1,3 +1,6 @@
+import { nextTick } from "vue";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt";
+
 const initialState = {
   // 当前页面 home：赛事列表  details：详情
   layout_cur_page: { cur: "", from: "" },
@@ -57,16 +60,21 @@ export default function layoutReducer(state = initialState, action) {
     // 页面是否达到最小宽度
     case "SET_IS_MIN_WIDTH":
       return { ...state, is_min_width: action.data };
-    case "SET_IS_MIN_WIDTH":
-      return { ...state, is_min_width: action.data };
     //设置菜单是否为mini
     case "SET_LEFT_MENU_STATUS":
+      const left_menu_is_mini = action.data == "mini";
+      nextTick(() => {
+        //
+        useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, action.data);
+        //只有宽度变化 才计算
+        if (left_menu_is_mini != state.left_menu_is_mini)
+          useMittEmit(MITT_TYPES.EMIT_LAYOUT_RESIZE, action.data);
+      });
       return {
         ...state,
         left_menu_status: action.data,
-        left_menu_is_mini: action.data == "mini", //true/false
+        left_menu_is_mini, //true/false
       };
-
     // 获取当前页路由信息
     case "SETLAYOUTCURPAGE":
       return { ...state, layout_cur_page: action.data };

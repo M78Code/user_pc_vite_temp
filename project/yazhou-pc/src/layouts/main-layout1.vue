@@ -26,6 +26,7 @@
 import { ref, computed, onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import "./main-layout.js"; //初始化数据
+import { debounce } from "lodash";
 /**组件*/
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
@@ -50,7 +51,7 @@ const layout_setting = layoutReducer.layout_setting;
 const methods_map_store = [
   "SET_IS_MIN_WIDTH",
   // 设置左侧布局
-  "set_layout_left_show",
+  "SET_LEFT_MENU_STATUS",
   //设置多列玩法状态
   "set_unfold_multi_column",
   // 页面所有布局宽高信息
@@ -62,13 +63,8 @@ const methods_map_store = [
   };
   return obj;
 }, {});
-//重新计算
-const { off, emit } = useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, function () {
-  // const { layoutReducer } = store.getState();
-  resize();
-});
-emit();
 function resize() {
+  console.log("EMIT resize");
   const { layoutReducer } = store.getState();
   let {
     // 主内容最小宽度出现滚动条
@@ -98,6 +94,7 @@ function resize() {
   let is_iframe = window.frames.length != parent.frames.length;
   if (is_iframe) {
     nav_height = 0;
+    useMittEmit(CHANGE_LANGE, data);
   }
   // 浏览器宽度
   let client_width = document.documentElement.clientWidth;
@@ -108,16 +105,13 @@ function resize() {
     //"mini-normal" 自己展开的 不做操作
     if ("normal" == left_menu_status) {
       left_menu_status = "mini";
-      methods_map_store["set_left_menu_toggle"](left_menu_status);
-      //通知菜单变mini
-      useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, true);
+      methods_map_store["SET_LEFT_MENU_STATUS"](left_menu_status);
     }
   } else {
     if ("mini" == main_menu_toggle) {
-      main_menu_toggle = "normal";
-      methods_map_store["set_left_menu_toggle"](left_menu_status);
       //通知菜单变展开normal
-      useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, false);
+      main_menu_toggle = "normal";
+      methods_map_store["SET_LEFT_MENU_STATUS"](left_menu_status);
     }
   }
   if (left_menu_status == "mini") {
@@ -138,6 +132,11 @@ function resize() {
     list_content_width: 0,
   });
 }
+//重新计算高度
+const mitt_offs = [
+  useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,
+];
+resize();
 useEventListener({
   name: "resize",
   listener: resize,
@@ -158,7 +157,7 @@ const remove_mousedown = useEventListener({
   },
 });
 onBeforeUnmount(() => {
-  off();
+  mitt_offs.forEach((i) => i());
 });
 </script>
 <style lang="scss" scoped>
