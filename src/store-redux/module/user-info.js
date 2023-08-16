@@ -1,6 +1,9 @@
 /**
  * @Description: 公共数据，存储用户信息，用户余额,菜单信息等
  */
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
+import { nextTick } from "vue";
+import { api_account } from "src/api/";
 const initialState = {
   uuid: null,
   // 用户信息
@@ -23,9 +26,14 @@ export default function userReducer(state = initialState, action) {
   switch (action.type) {
     // 保存用户详情
     case "SET_USER":
+      nextTick(() => {
+        useMittEmit(MITT_TYPES.EMIT_USER_CHAUNGE, action.data);
+      });
       return { ...state, user_info: action.data };
     case "SET_AMOUNT":
       // 保存用户余额
+      //通知mitt用户余额变化
+      useMittEmit(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, action.data);
       return { ...state, amount: action.data };
     //设置用户id
     case "SET_UUID":
@@ -59,7 +67,7 @@ export const get_balance = (uid) => {
   return async (dispatch) => {
     try {
       //获取用户余额
-      const res = await api_match.check_balance({
+      const res = await api_account.check_balance({
         uid,
         t: new Date().getTime(),
       });
