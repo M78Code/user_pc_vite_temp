@@ -123,18 +123,6 @@ export const useTableData = ({ props, emit }) => {
     return ITEM_STATUS[type];
   };
 
-  /**
-   * @description: 取消原因
-   * @param {srting} cancelType: 取消类型
-   * @return {string}
-   */
-  const item_cancelType = (cancelType) => {
-    if ([1, 2, 3, 4, 5, 6, 17, 20].includes(parseInt(cancelType))) {
-      return CANCEL_TYPE[parseInt(cancelType)];
-    } else {
-      return this.$root.$t("bet.invalid"); //注单无效
-    }
-  };
 
   /**
    * @输赢状态calss
@@ -1047,29 +1035,7 @@ export const useTableData = ({ props, emit }) => {
       }, 5000);
     }
   };
-  /**
-   * 金额格式设置
-   */
-  const format_balance = (num) => {
-    if (num) {
-      let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/);
-      // 保留两位小数
-      let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00";
-      let _num = _split[1] + "." + decimal;
-      return _num.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    }
-    return "0.00";
-  };
-  /**
-   * 提前结算按钮金额格式设置
-   */
-  const format_btn_balance = (num) => {
-    if (num) {
-      let _num = Number(num).toFixed(2);
-      return _num.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    }
-    return "0.00";
-  };
+
   /**
    * @description: 提前结算实时查询 更新数据
    */
@@ -1143,24 +1109,7 @@ export const useTableData = ({ props, emit }) => {
       }
     });
   };
-  /**
-   * @description: 提前结算可用次数
-   */
-  const betPreCount = (item, index) => {
-    let min_money = lodash.get(state.money_obj, `${index}.min_money`);
-    let preSettleBetAmount = item.preSettleBetAmount;
-    if (preSettleBetAmount <= min_money) {
-      return 1;
-    } else {
-      return item.preBetAmount ? 1 : 2;
-    }
-  };
-  /**
-   * @description: 单剩余本金
-   */
-  const betPreRemaining = (item) => {
-    return mathjs.subtract(item.orderAmountTotal, item.preBetAmount || 0);
-  };
+
 
   // mounted() {
   //   this.toolWords = this.$root.$t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
@@ -1214,12 +1163,17 @@ export const useTableData = ({ props, emit }) => {
     ...toRefs(state),
     vx_get_user,
     changePage,
-    format_balance,
     copy,
     show_bet_pre_info,
     matchType,
     status_class,
     order_status,
+    start_bet_pre,
+    show_bet_pre,
+    bet_pre_over,
+    bet_pre_out,
+    change_slider,
+    bet_handle,
     lodash
   };
 };
