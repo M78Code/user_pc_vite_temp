@@ -35,12 +35,15 @@ const current_menu = ref("101");
 //选中的球类
 const current_menu_item = ref("");
 const current_menu_list = ref([]);
+const e_uid = ref("");
 onMounted(() => {});
 //选中
 const setMenuItem = (item) => {
   current_menu_item.value = item;
+  console.log(props.base_data.mi_euid_map_res[parseInt(current_menu_item.value.mi)]?.h,current_menu_item.value,"base_data=====")
 };
 const setMenu = (item) => {
+ 
   current_menu.value = item;
   let mi = item;
   current_menu_list.value = props.base_data.mew_menu_list_res.find((x) => x.mi == mi) || {

@@ -3,7 +3,7 @@
  */
 
 import lodash from "lodash";
-
+import base_data_instance from 'src/core/utils/base-data/base-data.js'
 class MenuData {
   constructor() {
     //================主列表用的  开始==================
@@ -85,6 +85,7 @@ class MenuData {
     if (euid) return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
+    return base_data_instance.mi_euid_map_res[parseInt(current_menu_item.value.mi)]?.h
     if (menu_type == 4) {
       //冠军特殊处理
       mi = 400 + (mi?.substr(0, 3) - 100);
