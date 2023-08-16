@@ -4,6 +4,8 @@
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { nextTick } from "vue";
 import { api_account } from "src/api/";
+import { ss } from "src/core/utils/web-storage";
+import STANDARD_KEY from "src/core/standard-key";
 const initialState = {
   uuid: null,
   // 用户信息
@@ -63,20 +65,38 @@ export default function userReducer(state = initialState, action) {
  * 获取用户余额
  * @param {*} uid 用户uid
  */
-export const get_balance = (uid) => {
+export const get_balance = () => {
   return async (dispatch) => {
     try {
       //获取用户余额
       const res = await api_account.check_balance({
-        uid,
         t: new Date().getTime(),
       });
       let obj = res?.data?.data || {};
       // 将用户余额保存于公共仓库
       dispatch({
         type: "SET_AMOUNT",
-        amount: obj.amount,
+        data: obj.amount,
       });
     } catch (error) {}
+  };
+};
+export const get_user_info = (token) => {
+  return async (dispatch) => {
+    try {
+      let res = await api_account.get_user_info({
+        token:
+          token ||
+          ss.get(STANDARD_KEY.get("token"), sessionStorage.getItem("token")),
+      });
+      let obj = res?.data?.data || {};
+      console.log("obj", obj);
+      dispatch({
+        type: "SET_USER",
+        data: obj,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 };
