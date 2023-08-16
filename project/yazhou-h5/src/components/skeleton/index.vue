@@ -6,6 +6,8 @@
 </template>
 
 <script setup>
+import { computed } from "vue"
+
 const props = defineProps({
   width: Boolean,
   height: Boolean,
@@ -15,8 +17,8 @@ const props = defineProps({
 
 const skeleton_style = computed(()=>{
   return {
-        width: this.width? `${this.width}rem`: '100%',
-        height: `${this.height}rem`
+        width: props.width? `${props.width}rem`: '100%',
+        height: `${props.height}rem`
       }
 })
 

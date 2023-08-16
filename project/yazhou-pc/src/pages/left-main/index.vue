@@ -54,57 +54,13 @@
         <!-- 菜单项 -->
         <left-main-menu />
 
-
-
         <!-- 历史记录 -->
         <div v-if="layout_left_show == 'bet_history'" class="col">
-          <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
+          <bet-record-view @set_scroll_this="set_scroll_this" />
         </div>
         <!-- 投注栏 -->
-        <div v-if="layout_left_show == 'bet_list' && main_menu_toggle != 'mini'" class="bet-view">
-          <!--当前是否为虚拟投注-->
-          <template v-if="get_is_virtual_bet">
-            <!-- 虚拟单关 -->
-            <!-- <virtual-bet-single v-if="get_virtual_bet_list.length==1" @set_scroll_this="set_scroll_this"/> -->
-            <!-- 虚拟串关 -->
-            <!-- <virtual-bet-mix
-            v-else-if="get_virtual_bet_list.length>1"
-            class="full-height"
-            @set_scroll_this="set_scroll_this"
-          /> -->
-          </template>
-          <template v-else>
-            <div class="bet-mode-zone" v-if="is_bet_single">
-              <div class="left">
-                <!-- <span>{{$root.$t("bet.bet_one_")}}</span> -->
-                <span class="bet-single-count">
-                  {{ bet_single_list.length }}
-                </span>
-              </div>
-              <div class="right">
-                <span class="check-box" :class="{ 'checked': is_bet_merge }" @click.stop="toggle_merge">
-                  <!-- <check-box :checked="is_bet_merge" /> <span>{{$root.$t('bet.merge')}}</span> -->
-                </span>
-                <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
-                  <!-- <icon
-                  id="merge-info"
-                  name="icon-tips"
-                  class="bet-info"
-                  size="14px"
-                /> -->
-                </span>
-              </div>
-            </div>
-            <!-- 正常入口的单关 -->
-            <!-- <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" /> -->
-            <!-- 正常入口的串关 -->
-            <!-- <bet-mix
-            v-if="!is_bet_single"
-            class="full-height"
-            @set_scroll_this="set_scroll_this"
-          /> -->
-          </template>
-        </div>
+        <left-main-bet />
+
       </template>
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
@@ -160,7 +116,7 @@ import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 // import refresh from "src/public/components/refresh/refresh.vue";
 // import { api_betting } from "src/public/api/index.js";
-// import betRecordView from "src/public/components/bet_record_view/bet_record_view.vue";
+
 
 
 
@@ -171,8 +127,10 @@ import _ from "lodash"
 
 import MainHeader from "./main-header.vue"
 import LeftMainMenu from "./menu/index.vue"
+import LeftMainBet from "./bet/index.vue"
+// import betRecordView from "../bet-record/index.vue";
 
-// import { BetBoxWapper } from "src/components/bet"
+
 
 
 import store from "src/store-redux/index.js";

@@ -65,7 +65,7 @@ const money_filter = function (num) {
  * @param {Integer} number 形如123的数字
  * @return {String} 返回转换成的形如 一百二十三 的字符串
  */
-export const numberToChinese = (number) => {
+const numberToChinese = (number) => {
   // // 单位 字符
   let t = { units: "个十百千万@#%亿^&~", chars: "零一二三四五六七八九" };
   let a = (number + "").split(""),
@@ -127,12 +127,11 @@ export const numberToChinese = (number) => {
       return m;
     });
 };
+
 /**
- * @description: 金额格式化带货币符号
- * @param {Number} num 金额
- * @return {String} 转换后的金额
+ * 金额格式设置
  */
-export const format_currency = (num) => {
+export const format_balance = (num) => {
   if (num) {
     let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/);
     // 保留两位小数
@@ -142,20 +141,35 @@ export const format_currency = (num) => {
   }
   return "0.00";
 };
+
 /**
- * @description: 金额格式化带货币符号
- * @param {Number} num 金额
- * @return {String} 转换后的金额
+ * 提前结算按钮金额格式设置
  */
-export const format_currency2 = (num) => {
+export const format_btn_balance = (num) => {
   if (num) {
-    let _num = num.toString();
-    return _num.replace(/\d+/, function (n) {
-      // 先提取整数部分
-      return n.replace(/(\d)(?=(\d{3})+$)/g, function ($1) {
-        return $1 + ",";
-      });
-    });
+    let _num = Number(num).toFixed(2);
+    return _num.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
   }
-  return "0";
+  return "0.00";
+};
+
+/**
+ * @description: 四舍六入五成双
+ * @param {Number} num 金额
+ * @param {Number} digit
+ * @return {Number} 转换后的金额
+ */
+export const four_five_six_double = (num, digit = 2) => {
+  var ratio = Math.pow(10, digit),
+    _num = num * ratio,
+    mod = _num % 1,
+    integer = Math.floor(_num);
+
+  if (mod > 0.5) {
+    return ((integer + 1) / ratio).toFixed(2);
+  } else if (mod < 0.5) {
+    return (integer / ratio).toFixed(2);
+  } else {
+    return ((integer % 2 === 0 ? integer : integer + 1) / ratio).toFixed(2);
+  }
 };

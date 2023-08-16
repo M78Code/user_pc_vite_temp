@@ -1,5 +1,5 @@
 <!--
- * @Author: 
+ * @Author:
  * @Description: bw3新版投注记录页展示联赛名和比赛时间 非冠军玩法的单关才展示
 -->
 <template>
@@ -62,10 +62,10 @@ const props = defineProps({
   }
 })
   let store_data = ref(store.getState())
-  let cancleFlag = ref(false) 
-  let cancled = ref(false) 
+  let cancleFlag = ref(false)
+  let cancled = ref(false)
   //用户手动点击取消之后的状态
-  let user_operation_done = ref(false) 
+  let user_operation_done = ref(false)
   //延时器
   let timer = ref(null)
 
@@ -82,6 +82,7 @@ const props = defineProps({
   //   ])
   // },
   const cancleOrder = () => {
+    console.error('取消吗');
     useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
       orderNo: props.orderNumber,
       name: props.top_.matchInfo

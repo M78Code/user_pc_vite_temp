@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 投注记录页无数据时展示去投注的界面
 -->
 <template>
@@ -16,14 +16,13 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
 import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
-import { i18n } from "src/boot/i18n.js"
 import { useI18n } from "vue-i18n";
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
-
+const {t} =useI18n()
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer
 let store_theme = themeReducer
@@ -47,13 +46,13 @@ const calc_text = computed(() => {
   }
   if (store_cathectic.main_item == 0) {
     // 如果是未结算
-    return props.is_early ? 'msg.msg_nodata_15' : 'msg.msg_nodata_12'// t('msg.msg_nodata_15') : t('msg.msg_nodata_12')
+    return props.is_early ? t('msg.msg_nodata_15') : t('msg.msg_nodata_12')
   } else {
     if (props.is_early) {
       // 如果被限频
-      return 'msg.msg_nodata_16'//  t('msg.msg_nodata_16')
+      return t('msg.msg_nodata_16')//  t('msg.msg_nodata_16')
     } else {
-      return get_main_item == 2 ? 'msg.msg_nodata_18' : 'msg.msg_nodata_13'//t('msg.msg_nodata_18') : t('msg.msg_nodata_13')
+      return store_cathectic.main_item == 2 ? t('msg.msg_nodata_18') : t('msg.msg_nodata_13')
     }
   }
 })
