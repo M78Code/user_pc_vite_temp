@@ -1,6 +1,6 @@
 <!--
  * @Desc: 投注记录页提前结算的按钮、滑块和提前结算详情
- * @Author: 
+ * @Author:
 -->
 <template>
   <div class="early-settle yb_mt10 yb_mb12" v-if="calc_show || details_show2">
@@ -147,11 +147,13 @@ import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import utils from 'src/core/utils/utils.js'
 import { Platform } from "quasar";
-import { inject, ref, computed, onMounted, onUnmounted, watch, toRefs } from 'vue'
+import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
-// import store from 'src/store-redux'
 import store from "src/store-redux/index.js"
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
+import { useI18n } from "vue-i18n";
+
+let { t } = useI18n()
 
 // const store_data = ref(store.getState())
 let store_user = store.getState().userReducer
@@ -165,28 +167,28 @@ const props = defineProps({
 // 待确认中的提前结算单
   let queryorderpresettleconfirm_data = inject('queryorderpresettleconfirm_data')
   // 1 - 初始状态，2 - 确认提前结算， 3 - 确认中..., 4 - 已提前结算, 5 - 暂停提前结算(置灰), 6 - 仅支持全额结算, 7 - 按钮不显示
-  let status = ref(1) 
+  let status = ref(1)
   // 滑块是否显示
-  let slider_show = ref(false) 
+  let slider_show = ref(false)
   // 提前结算详情列表是否显示
-  let details_show = ref(false) 
+  let details_show = ref(false)
   // 展开 提前结算详情列表 的按钮是否显示
-  let details_show2 = ref(false)  
+  let details_show2 = ref(false)
   // 0  25 - 25%, 50 - 50%, 75 - 75%, 100 - 100%, 一共5个点
-  let percentage = ref(100)  
+  let percentage = ref(100)
   // 0-提前结算金额已包含本金  1-提前结算申请未通过  2-功能暂停中，请稍后再试  3-提前结算金额调整中，请再试一次
-  let tips = ref(0)  
+  let tips = ref(0)
   // 提前结算详情数据
-  let presettleorderdetail_data = ref([]) 
+  let presettleorderdetail_data = ref([])
   // orderVOS 里面的第一条数据，只考虑单关
-  let ordervos_ = ref({}) 
+  let ordervos_ = ref({})
   // 接口返回的正在确认中的金额，当 [2, 3, 4, 6] 4种情况时，也用于赋值锁定金额
-  // let front_settle_amount = ref('') 
+  // let front_settle_amount = ref('')
    // 工具方法
-  // let utils = ref(utils) 
+  // let utils = ref(utils)
   // 接口调用次数计数 // 概率，用于计算钮下的预计返还（盈利），注意，查询订单记录接口是直接返回的金额，而ws推送返回的是概率，所以概率更新了需要重新计算钮下的预计返还（盈利）
-  // let count_ = ref(0) 
-  let origin_settle_money = ref(lodash.cloneDeep(props.item_data.maxCashout)) 
+  // let count_ = ref(0)
+  let origin_settle_money = ref(lodash.cloneDeep(props.item_data.maxCashout))
   // 延时器
   let timer = ref(null)
   let timer2 = ref(null)
@@ -197,13 +199,13 @@ const props = defineProps({
 
     // ...mapGetters([
       //当前皮肤
-    //   "get_theme",  
+    //   "get_theme",
     //用户信息
-    //   "get_user",   
+    //   "get_user",
     // 0未结算/筛选 1已结算/搜索
-    //   "get_main_item",  
+    //   "get_main_item",
     //提前结算金额集合
-    //   "get_early_moey_data", 
+    //   "get_early_moey_data",
     // ]),
     // 剩余可提前结算次数
   const remaining_num = computed(() => {
@@ -215,9 +217,12 @@ const props = defineProps({
     })
     // 提示信息是否展示
   const is_tips_show = computed(() => {
-      let flag1 = props.item_data.preSettleBetAmount && calc_show    // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
-      let flag2 = status == 4  &&  details_show2 == false   // 第一次就全额结算
-      let flag3 = props.item_data.settleType == 999  // 发生过2次提前结算
+    // 必备条件,没有 剩余可提前结算的本金 时不显示, 按钮不展示时不显示
+      let flag1 = props.item_data.preSettleBetAmount && calc_show
+       // 第一次就全额结算
+      let flag2 = status == 4  &&  details_show2 == false
+       // 发生过2次提前结算
+      let flag3 = props.item_data.settleType == 999
       return flag1 && !flag2 && !flag3
     })
   const betting_amount = computed(() => {
@@ -292,91 +297,9 @@ const props = defineProps({
     //       front_settle_amount = _old
     //     }
     //   }
-    // }
-    // status(_new) {
-    //   clearTimeout(timer3);
-    //   clearInterval(timer4);
-    //   if (_new == 4) {
-    //     details_show2 = true;
-    //     item_data.preSettleBetAmount = (item_data.preSettleBetAmount || 0) - cashout_stake;
-    //     // settleType - 1 初始状态，3 - 取消提前结算，4 - 发生过部分提前结算，注单取消过未知，5 - 发生过全额结算，注单是否取消未知，999 - 前端自定义状态，表示发生过2次提前结算
-    //     if (item_data.settleType == 1) {
-    //       if (percentage == 100) {
-    //         details_show2 = false; // 第一次就全额结算，不显示详情下拉按钮
-    //       } else {
-    //         /* 提前结算成功后，5秒后返回到初始状态，扣除金额(第一次做部分才有这个逻辑)
-    //            按钮交互优化：
-    //            若客户进行部分结算成功后后，按钮状态 "提前结算成功"维持5s，再变回初始按钮样式，按钮金额根据剩余可提前结算金额做计算而得，
-    //            当剩余可提前结算金额小于最低投注额时，右侧按钮置灰不让点击
-    //            若是全额和做了二次部分结算，则等待用户刷新后，按钮再变化状态
-    //         */
-    //         timer3 = setTimeout(() => {
-    //           if (status == 4) {
-    //             item_data.maxCashout = (item_data.maxCashout * 100 - expected_profit * 100) / 100
-    //             item_data.settleType = 4
-    //             percentage = 100
-    //             status = is_only_fullbet ? 6 : 1
-    //           }
-    //         }, 5000);
-    //       }
-    //     } else if (item_data.settleType == 4) {
-    //       item_data.settleType = 999
-    //     }
-    //   }
-    //   // 初始状态时金额置空
-    //   if (_new == 1 || _new == 6) {
-    //     front_settle_amount = ''
-    //   }
-    // }
-    // // 提示5秒后消失
-    // tips(newVal) {
-    //   if (newVal == 1) {
-    //     timer2 = setTimeout(() => {
-    //       tips = 0;
-    //     }, 5000);
-    //   }
-    // }
-    // count_() {
-    //   if (status == 3) {
-    //     // 查下提前结算订单状态
-    //     /* {
-    //       "code":"0000000",
-    //       "data":[
-    //         {
-    //           "frontSettleAmount":"9.84",
-    //           "orderNo":"1896739491757663",
-    //           "preSettleOrderStatus":1
-    //         },
-    //         {
-    //           "frontSettleAmount":"38.34",  // 提前结算返还金额
-    //           "orderNo":"1905166626405717", // 订单号
-    //           "preSettleOrderStatus":1    // 提前结算状态   0：确认中 1：接单 2：拒单
-    //         }
-    //       ],
-    //       "msg":"成功",
-    //       "ts":1640154455939
-    //     } */
-    //     api_betting.queryOrderPreSettleConfirm().then((res) => {
-    //       if (!(status == 3 && res.code == 200 && lodash.isArray(res) && res.length > 0)) return
-    //       for (const item of res.data) {
-    //         if (item.orderNo != item_data.orderNo) continue
-    //         if (item.preSettleOrderStatus == 1) {
-    //           front_settle_amount = item.frontSettleAmount
-    //           status = 4;
-    //         } else if (item.preSettleOrderStatus == 2) {
-    //           status = 1;
-    //           tips = 1;
-    //         }
-    //       }
-    //     })
-    //   } else {
-    //     clearInterval(timer4)
-    //     timer4 = null
-    //   }
-    // }
     })
-  
-    
+
+
     ordervos_ = lodash.get(props.item_data, "orderVOS[0]", {});
     // 接口：当 enablePreSettle=true && hs = 0  提前结算显示高亮， 当 enablePreSettle=true && hs != 0  显示置灰， 当 enablePreSettle=false 不显示，
     if (ordervos_.hs != 0) {
@@ -409,11 +332,11 @@ const props = defineProps({
     // 处理ws订单状态推送
     useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
     useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
-  }) 
+  })
   onUnmounted(() => {
     clear_timer();
-    $root.$off(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
-    $root.$off(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
+    useMittOn(MITT_TYPES.EMIT_C201_HANDLE, c201_handle).off;
+    useMittOn(MITT_TYPES.EMIT_C210_HANDLE, c210_handle).off;
   })
 
     // ...mapMutations(["set_toast","set_early_moey_data"]),
@@ -450,7 +373,7 @@ const props = defineProps({
         if (flag) {
           if (hs == 0 && cashOutStatus == 1 && (status == 5 || status == 7)) {
             if(!props.item_data.maxCashout){
-              $root.$emit(MITT_TYPES.EMIT_GET_ORDER_LIST)
+              useMittEmit(MITT_TYPES.EMIT_GET_ORDER_LIST)
             }
             if(expected_profit > 1){
               status = 1;
@@ -506,13 +429,13 @@ const props = defineProps({
       status = 3;
       let params = {
         // 订单号
-        orderNo: props.item_data.orderNo, 
+        orderNo: props.item_data.orderNo,
         // 结算金额
-        settleAmount: cashout_stake, 
+        settleAmount: cashout_stake,
         // 结算设备类型 1:H5（默认），2：PC，3:Android，4:IOS
-        deviceType: 1, 
+        deviceType: 1,
         // 预计返还（盈利）
-        frontSettleAmount: String(front_settle_amount || expected_profit), 
+        frontSettleAmount: String(front_settle_amount || expected_profit),
       };
       // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
       api_betting.orderPreSettle(params).then((res) => {
@@ -551,7 +474,7 @@ const props = defineProps({
           tips = 3;
           let money = res.data
           if (+money > 0) {
-            $nextTick(() => {
+            nextTick(() => {
               front_settle_amount = money
             })
           }
@@ -595,7 +518,7 @@ const props = defineProps({
       })
       clipboard.on('success', () => {
         set_toast({
-          txt: $root.$t("bet_record.copy_suc"),
+          txt: t("bet_record.copy_suc"),
         });
 
         // h5嵌入时Safari阻止弹窗
@@ -624,10 +547,10 @@ const props = defineProps({
         'timer6',
       ]
 
-      for (const timer of timer_arr) {
-        clearTimeout([timer])
-        this[timer] = null
-      }
+      // for (const timer of timer_arr) {
+      //   clearTimeout([timer])
+      //   timer = null
+      // }
     }
 </script>
 <style lang="scss" scoped>

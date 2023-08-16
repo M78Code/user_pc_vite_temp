@@ -150,13 +150,13 @@ const detailsSlice = createSlice({
         },
         set_goto_detail_match_info(state, value) {
           let match_info
-    
+
           if (Object.keys(value).length) {
             match_info = Object.assign({}, state.goto_detail_match_info, value)
           } else {
             match_info = value
           }
-    
+
           state.goto_detail_match_info = match_info;
         },
         set_details_item(state, payload) {
@@ -205,7 +205,7 @@ const detailsSlice = createSlice({
                 obj_payload[_key] = _val;
               });
               Object.assign(obj, obj_payload);
-    
+
               for (let key in obj) {
                 let str = [key, obj[key]].join("|");
                 trans_msc.push(str);
@@ -253,7 +253,7 @@ const detailsSlice = createSlice({
             state.details_data_cache = {}
             return
           }
-    
+
           const details_data_cache = Object.assign({}, state.details_data_cache, data)
           state.details_data_cache = details_data_cache
         },
@@ -276,4 +276,19 @@ const detailsSlice = createSlice({
   });
 
 
-  export default detailsSlice.reducer
+  // export default detailsSlice.reducer
+  // const initialState = {
+  //   // 主题
+  //   theme:'theme01'
+  // };
+  export default function themeReducer(state = initialState, action) {
+    switch (action.type) {
+      // 设置主题
+      case "SET_DETAIL_DATA":
+        return { ...state, detail_data: action.data };
+      case "SET_EVENT_LIST":
+        return { ...state, event_list: action.data };
+      default:
+        return state;
+    }
+  }

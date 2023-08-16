@@ -220,7 +220,7 @@ const utils = {
    * 设置隐藏多余文字（q-pagination bug）
    *
    */
-  set_page_aria_hidden(){    
+  set_page_aria_hidden(){
     let nodes = document.querySelectorAll(".q-pagination [aria-hidden=true]")
     if(nodes.length < 1) return
     _.each(nodes, e => {
@@ -232,6 +232,15 @@ const utils = {
     http.open('HEAD', url, false);
     http.send();
     return  http.status != 404;
+  },
+  /**
+   * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
+   * @param {Number} value 需要转换的值
+   * @return {Number}
+   */
+  rem(value){
+    let font_size = innerWidth * 100 / 375;
+    return Math.ceil(value * font_size);
   },
 };
 export default utils;

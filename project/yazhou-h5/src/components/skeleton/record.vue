@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script setup> 
+<script setup>
 import { ref } from 'vue'
 import skeleton from 'project_path/src/components/skeleton/index.vue'
 
