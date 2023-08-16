@@ -27,6 +27,7 @@
       league_container_card_template,
    
     } from "../config/card-template-config.js"
+import { template_3 } from "../template/module/template-3.js";
   //引入菜单类
   const MenuData ={
     menu_data:{
@@ -66,8 +67,6 @@
       window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS,params)
     }
   }
-
-
 
 
   /**
