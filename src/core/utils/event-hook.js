@@ -6,7 +6,7 @@
  * @Description: 劫持事件统一绑定 不允许直接使用addEventListener来直接绑定事件
  *
  */
-import { onBeforeMount, ref, watch, unref } from "vue";
+import { onBeforeUnmount, ref, watch, unref } from "vue";
 import { isFunction } from "lodash";
 import { debounce, throttle } from "lodash";
 /**
@@ -108,6 +108,7 @@ function useEventListener({
   listener,
   options = false,
   autoRemove = true,
+  config = {},
   isDebounce = true,
   wait = 50,
 }) {
@@ -120,8 +121,8 @@ function useEventListener({
       wait == 0
         ? listener
         : isDebounce
-        ? debounce(listener, wait)
-        : throttle(listener, wait);
+        ? debounce(listener, wait, config)
+        : throttle(listener, wait, config);
     const realHandler = wait ? handler : listener;
     const removeEventListener = (e) => {
       isAddRef.value = true;
@@ -145,7 +146,7 @@ function useEventListener({
       removeEventListener(element.value);
       removeWatch();
     };
-    autoRemove && onBeforeMount(() => remove(element.value));
+    autoRemove && onBeforeUnmount(() => remove(element.value));
   }
 
   return remove;

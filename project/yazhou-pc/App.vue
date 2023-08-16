@@ -1,5 +1,5 @@
 <template>
-  <div id="q-app">
+  <div id="q-app" class="full-height">
     <appload v-if="init_load"></appload>
     <!-- <div :style="compute_css({ label: 'image01', theme: 'day' })"></div>
     <div
