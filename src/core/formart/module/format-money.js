@@ -142,13 +142,34 @@ export const format_balance = (num) => {
   return "0.00";
 };
 
-  /**
-   * 提前结算按钮金额格式设置
-   */
- export const format_btn_balance = (num) => {
-    if (num) {
-      let _num = Number(num).toFixed(2);
-      return _num.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-    }
-    return "0.00";
-  };
+/**
+ * 提前结算按钮金额格式设置
+ */
+export const format_btn_balance = (num) => {
+  if (num) {
+    let _num = Number(num).toFixed(2);
+    return _num.replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+  }
+  return "0.00";
+};
+
+/**
+ * @description: 四舍六入五成双
+ * @param {Number} num 金额
+ * @param {Number} digit
+ * @return {Number} 转换后的金额
+ */
+export const four_five_six_double = (num, digit = 2) => {
+  var ratio = Math.pow(10, digit),
+    _num = num * ratio,
+    mod = _num % 1,
+    integer = Math.floor(_num);
+
+  if (mod > 0.5) {
+    return ((integer + 1) / ratio).toFixed(2);
+  } else if (mod < 0.5) {
+    return (integer / ratio).toFixed(2);
+  } else {
+    return ((integer % 2 === 0 ? integer : integer + 1) / ratio).toFixed(2);
+  }
+};

@@ -11,6 +11,7 @@ const i18n = createI18n({
   fallbackLocale: 'zh',
   // 增加所有语中使用到的公共的国际化字符串
   messages:{},
+  legacy:false,
   // 去除控制台i18n警告信息
   silentTranslationWarn: true
 })

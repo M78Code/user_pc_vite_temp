@@ -51,8 +51,7 @@ export default {
        * 7-有投注项锁盘，8-单关投注失败(bet接口返回200)
        */
       "get_bet_status",
-      // 系统本版
-      "get_version_name",
+    
       // 值为 1简版 2标准版
       "get_newer_standard_edition",
       // 是否是冠军玩法
@@ -2167,21 +2166,7 @@ export default {
 
 
   filters: {
-    //四舍六入五成双
-    four_five_six_double(num, digit = 2) {
-      var ratio = Math.pow(10, digit),
-        _num = num * ratio,
-        mod = _num % 1,
-        integer = Math.floor(_num);
-
-      if (mod > 0.5) {
-        return ((integer + 1) / ratio).toFixed(2);
-      } else if (mod < 0.5) {
-        return (integer / ratio).toFixed(2);
-      } else {
-        return ((integer % 2 === 0 ? integer : integer + 1) / ratio).toFixed(2);
-      }
-    },
+  
     /**
      *@description 计算显示基准分,只有足球滚球展示基准分
      *@param {Object} obj 比分集合

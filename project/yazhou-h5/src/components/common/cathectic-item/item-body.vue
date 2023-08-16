@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: bw3新版矩形框中部
 -->
 <template>
@@ -42,13 +42,16 @@ import bodyTop from "project_path/src/components/common/cathectic-item/item-body
 import bodyMain from "project_path/src/components/common/cathectic-item/item-body/body-main.vue";
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
+import { useI18n } from "vue-i18n";
 
+// 国际化
+let { t } = useI18n()
   //按钮名字
-  let btn_text = ref('')    
+  let btn_text = ref('')
   //按钮图标的方向
-  let direction = ref('')  
+  let direction = ref('')
   //是否展开
-  let box_bool = ref('')  
+  let box_bool = ref('')
   let props = defineProps({
     data_b: {
       type: Object
@@ -63,7 +66,7 @@ import { ref, onMounted, onUnmounted} from 'vue'
     rules_a();
     rules_b();
     rules_c()
-    
+
   })
 
   onUnmounted(() => {
@@ -77,13 +80,13 @@ import { ref, onMounted, onUnmounted} from 'vue'
       box_bool = !box_bool;
       if (box_bool == true) {
         [btn_text, direction] = [
-          $root.$t("bet_record.pack_down"),
+          t("bet_record.pack_down"),
           "down"
         ];
         toggle_rule_b();
       } else {
         [btn_text, direction] = [
-          $root.$t("bet_record.pack_up"),
+          t("bet_record.pack_up"),
           ""
         ];
         toggle_rule_a();
@@ -91,7 +94,7 @@ import { ref, onMounted, onUnmounted} from 'vue'
     }
   const rules_normal = () => {
       [btn_text, direction, box_bool] = [
-        // $root.$t("bet_record.pack_up"),
+        // t("bet_record.pack_up"),
         "",
         false
       ];
@@ -100,7 +103,7 @@ import { ref, onMounted, onUnmounted} from 'vue'
   const rules_a = () => {
       if ((props.is_pre && props.data_b.detailList) || props.data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
-          $root.$t("bet_record.pack_down"),
+          t("bet_record.pack_down"),
           "down",
           true
         ];

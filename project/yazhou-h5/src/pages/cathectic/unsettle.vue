@@ -45,23 +45,25 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue"; 
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
 import settleVoid from "./settle-void.vue";
-import scroll from "project_path/src/components/common/record-scroll/scroll.vue"; 
+import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
 // import skt_order from "src/public/mixins/websocket/data/skt-data-order.js"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import store from 'src/store-redux/index.js'
-    // mixins: [skt_order]
-    let { cathecticReducer, userInfoReducer } = store.getState()
-    
-    let store_user = userInfoReducer
-    let store_cathectic = cathecticReducer
 
-    // 锚点
-    let myScroll = ref(null)
+
+// mixins: [skt_order]
+let { cathecticReducer, userInfoReducer } = store.getState()
+
+let store_user = userInfoReducer
+let store_cathectic = cathecticReducer
+
+// 锚点
+let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
@@ -80,12 +82,12 @@ import store from 'src/store-redux/index.js'
   let is_limit = ref(false)
   //需要查绚提前结算金额的订单集合
   let orderNumberItemList = ref([])
-  
+
   // 延时器
   let timer_1 = ref(null)
-  let timer_2 = ref(null)    
+  let timer_2 = ref(null)
 
-  
+
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
@@ -99,7 +101,7 @@ import store from 'src/store-redux/index.js'
 
   onMounted(() => {
     // 首次进入获取数据
-    init_data()
+    store_cathectic.main_item == 0 && init_data()
     /**先清除计时器，再使用*/
     clearInterval(timer_2)
     timer_2 = setInterval(()=>{
@@ -145,7 +147,7 @@ import store from 'src/store-redux/index.js'
     // if(orderNumberItemList.length === 0){return}
     api_betting.oderPreSettleMoney(params).then(res=>{
       if(res.code == 200 && res.data){
-        store.dispatch({ 
+        store.dispatch({
           type: "SET_EARLY_MOEY_DATA",
           data: res.data
         })
@@ -157,7 +159,7 @@ import store from 'src/store-redux/index.js'
    */
   const check_early_order = () => {
     if(!store_user.settleSwitch){
-      orderNumberItemList = []
+      orderNumberItemList.value = []
       return;
     }
     let tempList = []
@@ -192,7 +194,7 @@ import store from 'src/store-redux/index.js'
     is_loading = !flag
     //请求注单记录接口
     get_order_list(params)
-    
+
   }
   /**
      * @description 请求注单记录接口
@@ -201,7 +203,7 @@ import store from 'src/store-redux/index.js'
     */
   const get_order_list = (params) => {
     //第一次加载时的注单数
-    let size = 0  
+    let size = 0
     // 请求接口
     api_betting.post_getH5OrderList(params).then(reslut => {
       let res = ''
@@ -210,7 +212,7 @@ import store from 'src/store-redux/index.js'
       } else {
         res = reslut
       }
-      
+
       is_limit = false
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
@@ -236,9 +238,9 @@ import store from 'src/store-redux/index.js'
           }
           // 合并数据
           let obj = lodash.cloneDeep(list_data.value)
-          list_data.value = lodash.merge(obj, record) 
+          list_data.value = lodash.merge(obj, record)
         }, 380);
-        
+
       }else if(res.code == '0401038'){
         // 接口code 0401038 异常处理
         is_limit = true
@@ -278,14 +280,14 @@ import store from 'src/store-redux/index.js'
     let ele = myScroll
     if (!is_hasnext || last_record === undefined) {
       //没有更多
-      ele.setState(7);  
+      ele.setState(7);
       return;
     }
     //加载中
-    ele.setState(4);  
+    ele.setState(4);
     api_betting.post_getOrderList(params).then(res => {
       //加载完成
-      ele.setState(5);  
+      ele.setState(5);
       let { record, hasNext } = lodash.get(res, "data", {});
       is_hasnext = hasNext
       if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
@@ -299,7 +301,7 @@ import store from 'src/store-redux/index.js'
         list_data.value = lodash.merge(obj, record)
       } else {
         //没有更多
-        ele.setState(7);  
+        ele.setState(7);
       }
     }).catch(err => { console.error(err) });
   }
@@ -318,7 +320,7 @@ import store from 'src/store-redux/index.js'
      * @return {Undefined} undefined
      */
   const clear_timer = () => {
-    
+
     clearTimeout(timer_1.value)
     clearTimeout(timer_2.value)
     clearInterval(timer_1.value)
@@ -327,7 +329,7 @@ import store from 'src/store-redux/index.js'
   onUnmounted(() => {
     clear_timer();
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
-    store.dispatch({ 
+    store.dispatch({
           type: "SET_EARLY_MOEY_DATA",
           data: []
         })

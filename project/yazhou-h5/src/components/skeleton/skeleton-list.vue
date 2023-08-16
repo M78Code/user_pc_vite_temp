@@ -84,6 +84,7 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
+import { computed } from "vue"
 // import { mapGetters } from "vuex"
 const props = defineProps({
   loading_body: Boolean
