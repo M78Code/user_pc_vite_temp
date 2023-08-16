@@ -739,5 +739,5 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  @import "../../../styles/details.scss";
+  @import "../../styles/tournament-play-new.scss";
 </style>

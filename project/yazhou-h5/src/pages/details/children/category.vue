@@ -14,11 +14,11 @@
       <div class="empty-m-list-w">
         <!-- 当前赛事盘口已全部关闭-->
         <span v-if="get_details_item == 0">
-          {{$root.$t('detail.odd_all_closed')}}
+          {{t('detail.odd_all_closed')}}
         </span>
         <!-- 盘口已关闭 -->
         <span v-else>
-          {{$root.$t('detail.odd_closed')}}
+          {{t('detail.odd_closed')}}
         </span>
       </div>
 
@@ -27,7 +27,7 @@
         <!-- 热门推荐国际化 -->
         <div class="h-recommend-head row items-center">
           <div class="w">
-            {{$root.$t('detail.popular_recommendation')}}
+            {{t('detail.popular_recommendation')}}
           </div>
         </div>
         <!-- 热门赛事列表 -->
@@ -75,6 +75,8 @@
 import tournament_play_new from "project_path/src/pages/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
 import { api_common, api_result} from 'src/api/index.js'
+// 引入国际化
+import { useI18n } from "vue-i18n";
 //  无数据显示组件
 // import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -110,6 +112,11 @@ export default defineComponent({
   },
   props: {},
   setup(props, evnet) {
+    // 路由
+    const router = useRouter();
+    const route = useRoute();
+    // 国际化
+    const { t } = useI18n();
     const {
       component_data,
       show_recommend,
@@ -261,6 +268,7 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
+      t,
       show_recommend,
       match_list_new,
       match_list_normal,
