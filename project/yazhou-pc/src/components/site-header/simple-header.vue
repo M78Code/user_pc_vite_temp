@@ -12,7 +12,7 @@
                 <slot /> <!--插入注单历史标题-->
             </div>
             <div class="systime">
-                <div class="refresh" v-if="$route.name == 'match_results'">
+                <div class="refresh" v-if="current_route_name == 'match_results'">
                     <refresh :loaded="data_loaded" @click="refresh()" />
                 </div>
                 <!--右侧时间-->
@@ -23,11 +23,12 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, defineComponent, getCurrentInstance } from 'vue'
-import time_format_mixin from "project_path/src/mixins/common/time-format.js";
-import { RefreshWapper as Refresh } from "src/components/common/refresh"
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router';
 
-/** props传参 */
+import { RefreshWapper as Refresh } from "src/components/common/refresh"
+import { mx_get_remote_time } from "src/core/formart/module/format-date.js";
+
 const props = defineProps({
     /** 刷新按钮动画开关 */
     data_loaded: {
@@ -36,11 +37,10 @@ const props = defineProps({
     }
 })
 
-/** 自定义事件 */
-const emit = defineEmits(['refresh'])
+const emits = defineEmits(['refresh'])
 
-/** 获取mixins */
-const { proxy } = getCurrentInstance()
+/** 当前路径的名字 */
+const { name: current_route_name } = useRoute()
 
 /** 当前系统时间 */
 const date_time = ref('')
@@ -63,15 +63,14 @@ onUnmounted(() => {
  * @return {undefined} undefined
  */
 function get_date_time() {
-    // TODO: mixin
-    let time = proxy.mx_get_remote_time();
-    date_time.value = proxy.utc_to_gmt_no_8_ms2(time);
+    let time = mx_get_remote_time();
+    date_time.value = utc_to_gmt_no_8_ms2(time);
     timer_id.value = setInterval(() => {
         time += 1000;
-        date_time.value = proxy.utc_to_gmt_no_8_ms2(time);
+        date_time.value = utc_to_gmt_no_8_ms2(time);
     }, 1000);
 }
-// onMounted(get_date_time)
+onMounted(get_date_time)
 
 /**
  * @description: 赛果刷新当前数据
@@ -80,13 +79,6 @@ function get_date_time() {
 function refresh() {
     emit("refresh")
 }
-</script>
-
-<script>
-export default defineComponent({
-    name: 'simple-header',
-    mixins: [time_format_mixin]
-})
 </script>
   
 <style lang="scss" scoped>

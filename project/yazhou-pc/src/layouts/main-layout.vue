@@ -14,17 +14,7 @@
           v-show="route.params.video_size != 1"
         />
         <!-- 页面头部容器-->
-        <!-- v-show="route.params.video_size != 1" -->
-        <site-header
-          class="yb-layout-margin-header"
-          :nav_list="data_ref.nav_list"
-          :class="{ activity_bonus: data_ref.hasBonusType3 }"
-          :imgUrl="data_ref.special_img_url"
-          :hostUrl="data_ref.special_host_url"
-          :urlType="data_ref.special_url_type"
-          :hasActivity="data_ref.hasActivity"
-        />
-
+        <layout-header class="yb-layout-margin-header" :has_bonus_type="data_ref.hasBonusType3"></layout-header>
         <div
           class="c-main-content c-content-bg"
           :style="`width:${
@@ -320,7 +310,7 @@ import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
 /**组件*/
 import LayoutLeft from "./layout-left.vue";
-import siteHeader from "project_path/src/components/site-header/site-header.vue"; //报错
+import layoutHeader from "project_path/src/layouts/layout-header.vue"; //报错
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
 // const matchDetails = defineAsyncComponent(() =>
@@ -339,9 +329,6 @@ const thumb_style = {
 };
 let new_version = false; // 是否是最新版本
 const data_ref = {
-  nav_list: [], // 顶部导航栏数据
-  showActivity: false, //活动弹框显隐
-  imgUrl: "", // 弹窗图片 Url
   // 上一次打开弹窗的时间
   showActivityTime: sessionStorage.getItem("showActivityTime"),
   allowClick: false, // 弹窗图片是否可以点击跳转
@@ -378,7 +365,6 @@ const data_ref = {
   openActivityPageTime: null,
   userBannerTimer: t("common.auto_close").replace("%s", 5),
   isMaintaining: null, // 活动是否处于维护状态
-  hasActivity: false, // 是否有活动入口
   // 菜单是否创建
   menu_obj_created: false,
   // 屏幕宽度
@@ -704,204 +690,7 @@ function get_odds_conversion() {
     }
   });
 }
-/**
- * @description 设置顶部菜单
- * @param {number} type  类型(null-自然触发，1-导航栏二次触发，2-切换语言)
- */
-function init_site_header(type = null) {
-  let nav_list = [
-    { id: 1, tab_name: t("common.sports_betting"), path: "/home" }, //体育投注
-    {
-      id: 2,
-      tab_name: t("common.note_single_history"),
-      path: "/bet_record",
-      _blank: true,
-    }, //注单历史
-    // { id: 8, tab_name: t("common.e_sports"), path: "" }, //电子竞技
-    //{ id: 3, tab_name: t("common.winning_champions"), path: "" }, //优胜冠军
-    {
-      id: 4,
-      tab_name: t("common.amidithion"),
-      path: "/match_results",
-      _blank: true,
-    }, //赛果
-    // { id: 5, tab_name: t("common.score_center"), path: "" }, //比分中心
-    // { id: 6, tab_name: t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
-    {
-      id: 7,
-      tab_name: t("common.sports_betting_rules"),
-      path: "/rule",
-      _blank: true,
-    }, //体育竞猜规则
-    {
-      "id": 9,
-      "tab_name": "任务中心",
-      "img_src": "https://image.gredfged.com/group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
-      "class": "activity_center animate-activity-entry activity_dot_bonus",
-      "path": "/activity",
-      "_blank": true
-    },
-  ];
-  // 判断是否有活动
-  let activityList = get(computed_data.get_user, "activityList");
-  // 多语言屏蔽活动入口
-  if (
-    activityList &&
-    activityList.length > 0 &&
-    computed_data.lang == "zh" &&
-    computed_data.get_global_switch.activity_switch
-  ) {
-    data_ref.hasActivity = true;
-    // 向顶部导航栏添加活动入口
-    let tab = {
-      id: 9,
-      tab_name: "任务中心",
-      img_src: "",
-      class: "activity_center animate-activity-entry activity_dot_bonus",
-      path: "/activity",
-      _blank: true,
-    };
-    // 获取活动入口的图片
-    let imgUrl = activityList.find((item) => item.pcUrl != "");
-    if (imgUrl) {
-      imgUrl = imgUrl.pcUrl;
-    }
-    imgUrl = get_file_path(imgUrl);
-    // 活动入口的图片，如果接口未返回就用默认图片
-    tab.img_src =
-      imgUrl || require("app/public/image/activity_imgs/imgs/gift_package.png");
-    nav_list.push(tab);
-    activityList.forEach((item) => {
-      data_ref.activityIds += item.activityId + ",";
-    });
-    activityTimer();
-    activity_timer = setTimeout(
-      () => getActivityLists({ id: 1, type: "init_nav" }),
-      1000
-    );
-  }
-  if (type != 2) {
-    // 运营位专题页
-    special_page();
-  }
 
-  // 运营位弹窗,如果当前是最新版本就直接展示弹窗，如果不是，就延迟几秒再展示
-  if (type == null) {
-    // type 为 null 是自然触发，如果 == 1就是导航栏二次触发，不要更新这里
-    if (new_version) {
-      timeOutIds.timer2 = setTimeout(() => {
-        activity_dialog();
-      }, 3000);
-    } else {
-      if (timeOutIds.timer2) {
-        clearTimeout(timeOutIds.timer2);
-      }
-      timeOutIds.timer2 = setTimeout(() => {
-        activity_dialog();
-      }, 5000);
-    }
-  }
-  data_ref.nav_list = nav_list;
-  // useMittEmit(MITT_TYPES["close_home_loading"], false);
-
-  // 菜单初始化 因为菜单是去轮询的 so
-  // 因为设置菜单是500s
-  set_menu_init_time(600);
-
-  init_reset_time = setTimeout(() => {
-    // 本身商户的设置有缓存 所以频率太快
-    set_menu_init_time(5000);
-    clearTimeout(init_reset_time);
-  }, 2000);
-}
-/**
- * 定时请求菜单
- * */
-function set_menu_init_time(number) {
-  clearInterval(menu_init_time);
-  // 菜单初始化 因为菜单是去轮询的
-  menu_init_time = setInterval(() => {
-    menu_init_done();
-  }, number);
-}
-/***
- * 运营位活动弹窗
- */
-function activity_dialog() {
-  let token = get(computed_data.get_user, "token");
-  api_account.get_BannersUrl({ type: 5, token }).then((res) => {
-    let code = get(res, "data.code");
-    let data = get(res, "data.data");
-    if (code == 200) {
-      let isShow = false;
-      if (data && data.length > 0) {
-        data.forEach((item) => {
-          if (item.tType && item.tType == 5) {
-            // 去掉一个自然日展示一次的判断，有值就展示
-            if (data_ref.showActivityTime) {
-              // 判断日期如果不在同一天就展示弹窗
-              if (
-                new Date(data_ref.showActivityTime).getDate() !==
-                new Date().getDate()
-              ) {
-                isShow = true;
-              }
-            } else {
-              isShow = true;
-              sessionStorage.setItem("showActivityTime", new Date().getTime());
-            }
-            // 获取图片地址
-            data_ref.imgUrl = get_file_path(item.imgUrl);
-            data_ref.hostUrl = item.hostUrl;
-            data_ref.urlType = item.urlType;
-            // 是否允许点击跳转 ayx_act 爱游戏  act1 乐鱼
-            data_ref.allowClick =
-              ["act", "zr", "ayx_act", "act1"].includes(item.hostUrl) ||
-              item.hostUrl != "";
-          }
-        });
-      } else {
-        isShow = false;
-      }
-      data_ref.showActivity = isShow;
-      if (data_ref.showActivity) {
-        // 5秒后自动消失
-        let time = 5;
-        data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
-        let timer = setInterval(() => {
-          time--;
-          data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
-          if (time == 0) {
-            data_ref.showActivity = false;
-            clearInterval(timer);
-          }
-        }, 1000);
-      }
-    }
-  });
-}
-/***
- * 运营位专题页
- */
-function special_page() {
-  let token = get(computed_data.get_user, "token");
-  api_account.get_BannersUrl({ type: 7, token }).then((res) => {
-    let code = get(res, "data.code");
-    let data = get(res, "data.data");
-    if (code == 200) {
-      if (data && data.length > 0) {
-        data.forEach((item) => {
-          if (item.tType && item.tType == 7) {
-            // 获取图片地址
-            data_ref.special_img_url = get_file_path(item.imgUrl);
-            data_ref.special_host_url = item.hostUrl;
-            data_ref.special_url_type = item.urlType;
-          }
-        });
-      }
-    }
-  });
-}
 /**
  * 投注框转开和折叠
  */
@@ -1198,58 +987,7 @@ function cancelDot(e) {
 function newVersion() {
   new_version = true;
 }
-/**
- * @Description 菜单初始化完成
- * @param {undefined} undefined
- */
-function menu_init_done() {
-  let nav_list = [...data_ref.nav_list];
-  // 如果有电竞
-  if (base_data.is_mi_2000_open) {
-    if (nav_list.findIndex((i) => i.id == 5) == -1) {
-      nav_list.splice(1, 0, {
-        id: 5,
-        tab_name: t("common.e_sports"),
-        path: "/e_sport",
-      });
-    }
-  } else {
-    let index = nav_list.findIndex((i) => i.id == 5);
-    if (index > -1) {
-      nav_list.splice(index, 1);
-    }
-  }
-  // 如果有虚拟体育
-  if (base_data.is_mi_300_open) {
-    if (nav_list.findIndex((i) => i.id == 3) == -1) {
-      let e_index = nav_list.findIndex((i) => i.id == 5);
-      if (e_index == -1) {
-        e_index = 1;
-      } else {
-        e_index++;
-      }
-      nav_list.splice(e_index, 0, {
-        id: 3,
-        tab_name: t("common.virtuals"),
-        path: "",
-        class: "tab_virtaul_sport",
-      });
-    }
-  } else {
-    let index = nav_list.findIndex((i) => i.id == 3);
-    if (index > -1) {
-      nav_list.splice(index, 1);
-    }
-  }
-  // console.error('nav_list',nav_list)
-  let old_nav = JSON.stringify(data_ref.nav_list);
-  let new_nav = JSON.stringify(nav_list);
-  // 对比菜单
-  if (old_nav != new_nav) {
-    data_ref.nav_list = [...nav_list];
-  }
-  // console.error('ssssss',base_data.is_mi_2000_open,'----1111---'+base_data.is_mi_300_open)
-}
+
 // 活动入口小红点定时拉取
 function activityTimer() {
   clearInterval(activityUpdateTimer);
@@ -1491,7 +1229,6 @@ resize();
 //this.get_odds_conversion()
 methods_map_store["SET_INIT_ODD"]();
 methods_map_store["SET_INIT_MATCH_SORT"]();
-init_site_header();
 const remove_mitt_list = [
   // 接收开启loadding指令
   useMittOn(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD, open_menu_loadding).off,
@@ -1633,13 +1370,7 @@ watch(
     data_ref.first_load = false;
   }
 );
-// // 检测到语言变化之后初始化导航
-watch(
-  () => [computed_data.lang],
-  () => {
-    init_site_header(2);
-  }
-);
+
 // // 监听路由变化 并记录到 vuex
 // $route: {
 //   handler(to, from) {
@@ -1744,34 +1475,6 @@ watch(
   () => computed_data.cur_odd,
   (new_) => {
     BaseUserInfo.assign({ userMarketPrefer: new_ }); //缓存用户盘口偏好信息
-  }
-);
-// // 首次加载页面的时候 activityList 会出现没值的情况，所以等有值了再初始化一下导航
-watch(
-  () => computed_data.get_user?.activityList,
-  (new_) => {
-    // 没渲染上的时候才再次调用
-    if (data_ref.hasActivity != true) {
-      data_ref.isMaintaining = get(computed_data.get_user, "maintaining");
-      if (new_ && new_.length > 0) {
-        init_site_header(1);
-      }
-    }
-  }
-);
-//全局点击事件
-watch(
-  () => computed_data.get_global_click,
-  () => {
-    data_ref.showActivity = false;
-  }
-);
-
-//全局开关
-watch(
-  () => computed_data.get_global_switch.activity_switch,
-  () => {
-    init_site_header();
   }
 );
 

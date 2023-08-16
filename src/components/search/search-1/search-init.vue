@@ -7,11 +7,11 @@
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ $root.$t('search.search_record') }}
+                    {{ t('search.search_record') }}
                     <!-- 搜索记录 -->
                 </div>
                 <div class="clear-history" @click="delete_histroy('')" v-if="histroy_data.length">
-                    {{ $root.$t('search.clear_search_history') }}
+                    {{ t('search.clear_search_history') }}
                     <!-- 清除历史记录 -->
                 </div>
             </div>
@@ -28,11 +28,11 @@
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ $root.$t('search.search_hot') }}
+                    {{ t('search.search_hot') }}
                     <!-- 热词搜索 -->
                 </div>
                 <div class="clear-history" @click="get_hot_search">
-                    {{ $root.$t('search.change') }}
+                    {{ t('search.change') }}
                     <!-- 换一换 -->
                 </div>
             </div>
@@ -46,18 +46,18 @@
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ $root.$t('search.other') }}
+                    {{ t('search.other') }}
                     <!-- 其他搜索 -->
                 </div>
             </div>
             <div class="histroy-item other" @click="other_search('sports')">
                 <!-- 搜球类 -->
-                <div>{{ $root.$t('search.search_sports') }}</div>
+                <div>{{ t('search.search_sports') }}</div>
                 <div class="yb-icon-arrow"></div>
             </div>
             <div class="histroy-item other" @click="other_search('play')">
                 <!-- 搜玩法 -->
-                <div>{{ $root.$t('search.search_play') }}</div>
+                <div>{{ t('search.search_play') }}</div>
                 <div class="yb-icon-arrow"></div>
             </div>
         </div>
@@ -66,9 +66,10 @@
   
 <script setup>
 import { reactive, watch } from 'vue'
-// TODO: api
-import search from "src/public/utils/searchClass/search.js"
+import { useI18n } from 'vue-i18n'
+import * as search from "src/api/module/search.js"
 import store from "src/store-redux/index.js";
+
 const props = defineProps({
     show_type: {
         type: String,
@@ -77,10 +78,14 @@ const props = defineProps({
 })
 const emit = defineEmits(['set_show_type'])
 
+/** 国际化 */
+const { t } = useI18n()
+
 /** 历史搜索数据 */
-const histroy_data = reactive([])
+let histroy_data = reactive([])
 /** 热门搜索数据 */
-const hot_data = reactive([])
+let hot_data = reactive([])
+
 //显示类型改变
 watch(
     () => props.show_type,
