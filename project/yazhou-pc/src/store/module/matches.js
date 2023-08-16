@@ -52,7 +52,7 @@ export default function matchesReducer(state = initialState, action) {
     // 保存详情右侧参数
     case "SET_MATCH_DETAILS_PARAMS":
       if (data) {
-        let obj = Object.assign(state.params, data, { time: Date.now() })
+        let obj = Object.assign({},state.params, data, { time: Date.now() })
         return {...state, params: obj };
       } else {
         return {...state, params: {} };
