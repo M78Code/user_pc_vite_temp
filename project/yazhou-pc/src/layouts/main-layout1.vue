@@ -1,6 +1,11 @@
 <template>
   <div class="page-main full-height">
-    <layout-header />
+    {{ layout_setting.nav_height }}
+    <layout-header
+      :style="{
+        height: layout_setting.nav_height + 'px',
+      }"
+    />
     <div class="flex" :style="{ height: content_height }">
       <layout-left class="full-height" :style="{ height: content_height }" />
       <!-- 中间区域 -->
@@ -38,22 +43,19 @@ const computed_style = computed(() => {
   };
 });
 const { layoutReducer } = store.getState();
-const layout_setting = layoutReducer.layout_size;
+const layout_setting = layoutReducer.layout_setting;
 /**
  *映射store内部的方法
  */
 const methods_map_store = [
-  // 保存列表的宽度
-  "SET_LAYOUT_LIST_WIDTH",
   "SET_IS_MIN_WIDTH",
-  //设置全局开关
-  "set_global_switch",
   // 设置左侧布局
   "set_layout_left_show",
   //设置多列玩法状态
   "set_unfold_multi_column",
   // 页面所有布局宽高信息
   "SET_LAYOUT_SIZE",
+  "set_left_menu_toggle",
 ].reduce((obj, type) => {
   obj[type] = (data) => {
     store.dispatch({ type, data });
@@ -86,7 +88,7 @@ function resize() {
     //is_unfold_multi_column多列玩法
     is_unfold_multi_column,
     //左侧列表显示形式 normal：展开 mini：收起  mini-normal手动展开
-    main_menu_toggle,
+    left_menu_status,
   } = layoutReducer;
   //多列玩法 右侧隐藏了
   if (is_unfold_multi_column) {
@@ -104,21 +106,21 @@ function resize() {
   //小于最小宽度
   if (client_width < min_width) {
     //"mini-normal" 自己展开的 不做操作
-    if ("normal" == main_menu_toggle) {
-      main_menu_toggle = "mini";
-      methods_map_store["set_left_menu_toggle"](main_menu_toggle);
+    if ("normal" == left_menu_status) {
+      left_menu_status = "mini";
+      methods_map_store["set_left_menu_toggle"](left_menu_status);
       //通知菜单变mini
       useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, true);
     }
   } else {
     if ("mini" == main_menu_toggle) {
       main_menu_toggle = "normal";
-      methods_map_store["set_left_menu_toggle"](main_menu_toggle);
+      methods_map_store["set_left_menu_toggle"](left_menu_status);
       //通知菜单变展开normal
       useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, false);
     }
   }
-  if (main_menu_toggle == "mini") {
+  if (left_menu_status == "mini") {
     left_width = left_width_mini; //宽度变为 mini
   }
   //设置已是否达到 最小宽度 true/false

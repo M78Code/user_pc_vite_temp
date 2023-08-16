@@ -9,11 +9,10 @@ const initialState = {
   layout_list_width: 0,
   // 列表显示内容  match:赛事 collect:收藏 search:搜索
   layout_list_type: "match",
-  // 左侧列表显示形式 normal：展开 mini：收起
-  main_menu_toggle: "normal",
+  // 左侧列表显示形式 normal：展开 mini：收起 normal-mini自己点击的
+  left_menu_status: "normal",
+  left_menu_is_mini: false, //是否mini
   is_unfold_multi_column: false, //是否展开多列玩法
-  //页面是否达到最小宽度 true是/false否
-  is_min_width: false,
   // 自定义滚动条样式
   scroll_style: {
     width: "9px",
@@ -22,6 +21,7 @@ const initialState = {
     opacity: 1,
     borderRadius: "4px",
   },
+  //不允许从这里拿宽度来判断东西 这是配置的
   layout_setting: {
     // 主内容最大宽度
     max_width: 1920,
@@ -38,7 +38,8 @@ const initialState = {
     //公共高度
     notice_height: 36,
   },
-
+  //页面是否达到最小宽度 true是/false否
+  is_min_width: false,
   layout_size: {
     // // 中间区域宽度
     center_width: 1920,
@@ -56,6 +57,16 @@ export default function layoutReducer(state = initialState, action) {
     // 页面是否达到最小宽度
     case "SET_IS_MIN_WIDTH":
       return { ...state, is_min_width: action.data };
+    case "SET_IS_MIN_WIDTH":
+      return { ...state, is_min_width: action.data };
+    //设置菜单是否为mini
+    case "SET_LEFT_MENU_STATUS":
+      return {
+        ...state,
+        left_menu_status: action.data,
+        left_menu_is_mini: action.data == "mini", //true/false
+      };
+
     // 获取当前页路由信息
     case "SETLAYOUTCURPAGE":
       return { ...state, layout_cur_page: action.data };

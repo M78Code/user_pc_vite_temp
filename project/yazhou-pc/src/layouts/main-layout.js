@@ -6,6 +6,7 @@
  *映射store内部的方法
  */
 import { api_common } from "src/api/";
+import store from "src/store-redux/index.js";
 const methods_map_store = [
   "set_odds_coversion_map",
   "SET_INIT_ODD",
@@ -43,9 +44,6 @@ methods_map_store["SET_MATCH_DETAILS_PARAMS"]({});
 // // 进入首页
 //gtag打点
 // utils.gtag_view_send('PC_home', '/home')
-data_ref.first_load = true;
-get_access_config();
-
 /**
  * @Description 获取全局配置开关
  * @param {undefined} undefined
