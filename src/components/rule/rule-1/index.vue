@@ -1,21 +1,21 @@
 <template>
     <div class="rule-wrap">
-        <simple-header :source="source">
-            <!-- <span>{{ $root.$t("common.sports_betting_rules") }}</span> -->
-            <span>TODO: $root.$t("common.sports_betting_rules")</span>
+        <simple-header>
+            <span>{{ t("common.sports_betting_rules") }}</span>
         </simple-header>
         <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
     </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 import { computed, ref, onUnmounted, nextTick, onMounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import simpleHeader from "./simple-header.vue";
+import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
 
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
@@ -25,18 +25,22 @@ const props = defineProps({
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
-
 /** 国际化 */
-const lang = ref('')
-/** 主题 */
-const theme = ref('')
+const { t } = useI18n()
+
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    lang.value = new_state.lang
-    theme.value = new_state.theme
-})
-onUnmounted(unsubscribe)
+const store_data = store.getState()
+/** 
+ * 语言 lang
+ * 路径: src\store-redux\module\languages.js
+ */
+ const { lang } = store_data.languagesReducer
+// TODO: 语言改变mitt
+/** 
+* 用户余额是否展示状态 default: theme01
+* 路径: project_path/src/store/module/theme.js
+*/
+const { theme } = store_data.themeReducer
 
 
 // TODO: 环境变量怎么获取
@@ -55,12 +59,12 @@ const get_pc_rule_url = () => {
         'ms': 'ms_my',
         'ad': 'id_id',
     }
-    const lang2 = lang_map[lang.value] || 'zh_cn';
-    console.log(`================lang:${lang2}`, lang.value);
+    const lang2 = lang_map[lang] || 'zh_cn';
+    console.log(`================lang:${lang2}`, lang);
     let url = '';
-    // const theme = theme.value.split('_')[0]
-    // const get_merchant_style = theme.value.split('_')[1]
-    const [theme2, get_merchant_style] = theme.value.split('_')
+    // const theme = theme.split('_')[0]
+    // const get_merchant_style = theme.split('_')[1]
+    const [theme2, get_merchant_style] = theme.split('_')
     // TODO: 环境变量待修改
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
@@ -84,7 +88,6 @@ const get_pc_rule_url = () => {
     return url;
 }
 onMounted(get_pc_rule_url)
-// const rule_url = computed(get_pc_rule_url)
 
 </script>
   

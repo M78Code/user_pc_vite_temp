@@ -3,7 +3,7 @@
  */
 
 import lodash from "lodash";
-
+import base_data_instance from 'src/core/utils/base-data/base-data.js'
 class MenuData {
   constructor() {
     //================主列表用的  开始==================
@@ -26,7 +26,8 @@ class MenuData {
     //================主列表用的  结束==================
     //热门的
     this.hot_tab_menu = {};
-
+    //国际化
+    this.menus_i18n_map = {};
     this.menu_list = [];
     this.menu_original_data = {};
   }
@@ -84,6 +85,7 @@ class MenuData {
     if (euid) return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
+    return base_data_instance.mi_euid_map_res[parseInt(current_menu_item.value.mi)]?.h
     if (menu_type == 4) {
       //冠军特殊处理
       mi = 400 + (mi?.substr(0, 3) - 100);
@@ -176,6 +178,30 @@ class MenuData {
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
     return id;
+  }
+  // 是否展示二级菜单 图标
+  show_secondary_menu_icon(item) {
+    if (!this.show_favorite_list) return true;
+    let flag = true;
+    // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
+    if (
+      this.menu_type == 28 &&
+      [1001, 1002, 1011, 1004, 1010].includes(+item.menuType)
+    ) {
+      flag = false;
+    }
+    return flag;
+  }
+  /**
+   * @description 判断是虚拟体育
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  is_virtual_sport() {
+    return (
+      this.current_lv_1_menu.mi == 300 ||
+      (this.match_list_api_config || {}).sports == "vr"
+    );
   }
   vr_menu() {
     const vr_list = [
@@ -376,8 +402,13 @@ class MenuData {
       result_menu,
     ];
   }
+  //选中一级menu
   set_current_menu(item) {
     this.current_menu = item;
+  }
+  //国际化获取菜单名称
+  get_menu_name_i18n(mi) {
+    return this.menus_i18n_map[mi] || "-";
   }
   get_level_four_menu() {
     return "";

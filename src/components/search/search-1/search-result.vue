@@ -4,8 +4,8 @@
     <div class="result-wrap">
         <!-- 无数据 -->
         <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
-            <loadData class="fit" :state="load_data_state" :no_data_msg="$root.$t('search.null1')"
-                :no_data_msg2="$root.$t('search.null2')" />
+            <loadData class="fit" :state="load_data_state" :no_data_msg="t('search.null1')"
+                :no_data_msg2="t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
         <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scroll">
@@ -57,12 +57,12 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted, nextTick } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
-// TODO: 待实现组件
-// import MatchProcess from "src/public/components/match_process/match_process.vue"
-// TODO: api
-// import details from "src/public/utils/detailsClass/details.js"
-// import search from "src/public/utils/searchClass/search.js"
+import { useI18n } from 'vue-i18n'
+
+import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import store from "src/store-redux/index.js";
+import * as details from "src/core/api/module/search.js"
+import * as search from "src/api/module/match-list-pc/details-class/details.js"
 
 const props = defineProps({
     search_csid: {
@@ -72,6 +72,9 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['set_show_type'])
+
+/** 国际化 */
+const { t } = useI18n()
 
 /** 数据加载状态 */
 const load_data_state = ref('data')

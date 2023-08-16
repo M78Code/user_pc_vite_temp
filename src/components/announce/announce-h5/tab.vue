@@ -18,7 +18,7 @@
   
 <script setup>
 import { watch } from 'vue'
-import utils from "src/core/utils/utils.js";
+// import utils from "src/core/utils/utils.js";
 const props = defineProps({
     tabList: {
         type: Array,
@@ -41,7 +41,8 @@ const emit = defineEmits(['changeTab'])
 watch(
     () => props.tabIndex,
     (n, o) => {
-        utils.tab_move2(n, this.$refs.scrollBox)
+        // TODO: 
+        // utils.tab_move2(n, this.$refs.scrollBox)
     },
     {
         immediate: true,
