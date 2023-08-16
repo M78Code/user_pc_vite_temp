@@ -17,6 +17,9 @@ const on_test = () => {
     message: () => {
       console.log("子页面发来消息了");
     },
+    unload:()=>{
+      remove()
+    }
   });
   remove_list.push(remove);
   setTimeout(() => {
