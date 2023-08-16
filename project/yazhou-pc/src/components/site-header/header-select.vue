@@ -121,7 +121,7 @@ const { left_menu_toggle } = betInfoReducer
 const { show_balance, user_info } = userReducer
 /** 
  * 用户余额是否展示状态 default: theme01
- * 路径: src\store-redux\module\theme.js
+ * 路径: project_path/src/store/module/theme.js
  */
 const { theme } = themeReducer
 
