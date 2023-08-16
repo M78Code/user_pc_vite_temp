@@ -77,7 +77,7 @@
 import { SimpleHeaderWapper } from "src/components/simple-header";
 import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
-import recordTable from "./record_table.vue";
+import recordTable from "./record-table/index.vue";
 import recordBookTable from "./record_book_table.vue";
 import lodash from "lodash";
 
@@ -599,16 +599,6 @@ const toolClicked = (f) => {
           }
         }
       }
-      // .triangle {
-      //   position: absolute;
-      //   width: 5px;
-      //   height: 5px;
-      //   position: absolute;
-      //   transform: rotate(45deg);
-      //   top: -2px;
-      //   left: 58px;
-      //   background: #fff;
-      // }
     }
   }
   /**勾选框 和 提前结算*/
