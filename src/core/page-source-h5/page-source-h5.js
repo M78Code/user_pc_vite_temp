@@ -14,6 +14,8 @@
 const PAGE_SOURCE_POOL =  [
   "details",
   "home",
+  "hot-jingxuan",
+  "hot-league",
   'result_details',
   'match_result',
   'category',
