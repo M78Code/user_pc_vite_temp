@@ -15,6 +15,9 @@
   >
     <!-- 滚动：头部 --------------------------------->
     <template v-slot:header>
+
+      <!-- 昵称、余额 -->
+      <main-header />
      
       <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
         <!-- 投注记录 入口 -->
@@ -233,10 +236,12 @@ import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 
 
 
+
 import { ref, onMounted } from "vue"
 import { useRouter } from "vue-router";
 import _ from "lodash"
 
+import MainHeader from "./main-header.vue"
 import { MenuWapper } from "src/components/menu";
 // import { BetBoxWapper } from "src/components/bet"
 
@@ -297,22 +302,7 @@ onMounted(() => {
   get_unsettle_tickets_count_config();
 })
 
-// 格式化用户余额保留2位小数
-const format_balance = num => {
-  if (num && num > 0) {
-    let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-    // 保留两位小数
-    let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
 
-    let _num = _split[1] + '.' + decimal
-    return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-  }
-  return '0.00';
-}
-
-const set_amount_refresh = () => {
-  useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD)
-}
 
 // 是否显示投注菜单
 const show_bet_menu = () => {
