@@ -437,3 +437,39 @@ export const format_second_ms = (second, model = "default") => {
     return date;
   }
 };
+
+
+
+    /**
+     * @description: 获取服务器时间戳
+     * @param {Function} callback 回调函数
+     * @return {undefined} undefined
+     */
+   export const  get_server_time=(callback)=> {
+      let param = {};
+      this.send_gcuuid = uid();
+      param.gcuuid = this.send_gcuuid;
+      // console.log('get_server_time===',JSON.stringify(param));
+
+      api_common.get_server_time(param).then(res => {
+        // console.log('get_server_time===res===', this.send_gcuuid == res.config.gcuuid);
+        // if(this.send_gcuuid != res.config.gcuuid) return;
+
+        let gcuuid = _.get(res,'config.gcuuid')
+        if(gcuuid && this.send_gcuuid != gcuuid) {
+          return;
+        }
+
+        let code = _.get(res, "data.code");
+        if (code == 200) {
+          let data = new Date(parseInt(_.get(res, "data.data")));
+          if (_.isFunction(callback)) {
+            callback(code, data);
+          }
+        } else {
+          if (_.isFunction(callback)) {
+            callback(code, '');
+          }
+        }
+      });
+    }
