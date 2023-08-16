@@ -1,5 +1,5 @@
 <template>
-  <div class="zhuanye" @click="set_global_click">
+  <div class="full-height" @click="set_global_click">
     <div v-if="_data.is_ws_run" class="timeShow" @click="copyToken()">
       {{ _data.current_env }}
     </div>
@@ -9,11 +9,10 @@
     <div id="v-tooltip"></div>
   </div>
 </template>
-  
   <script setup>
 import "./src/boot/globel-mitt";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
-import {wslog,httplog} from "src/core/log/";
+import { wslog, httplog } from "src/core/log/";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
