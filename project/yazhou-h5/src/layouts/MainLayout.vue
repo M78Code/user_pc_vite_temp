@@ -17,7 +17,6 @@
 import { ref, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn,MITT_TYPES} from  "src/core/mitt/"
 import { i18n } from 'src/boot/i18n'
-console.error(i18n);
 // import leftMenu from "./../pages/menu/index.vue"
 let get_accept_show = ref(false) // 接受更好赔率变化 弹窗
 let get_combine_tips_show = ref(false) // 合并投注项提示弹框 弹窗

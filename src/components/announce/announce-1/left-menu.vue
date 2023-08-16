@@ -7,9 +7,7 @@
                 <div class="left-menu-title"
                     :class="{ active: tab_index == index, 'no-subtab': !item.subtab || item.subtab.length == 0 }">
                     <div>{{ item.title }}</div>
-                    <q-icon v-icon="{
-                        'keyboard_arrow_up': 'icon-triangle',
-                    }" name="keyboard_arrow_up"></q-icon>
+                    <q-icon v-icon="{ 'keyboard_arrow_up': 'icon-triangle', }" name="keyboard_arrow_up"></q-icon>
                 </div>
                 <!-- 左侧菜单列表 -->
                 <div class="left-menu-list" :class="tab_index == index && 'active'">
@@ -34,7 +32,7 @@ const props = defineProps({
     }
 })
 
-const emits = defineEmits(['tabs_click'])
+const emits = defineEmits(['tabs_click', 'sub_click'])
 
 /** 一级菜单选择索引 */
 const tab_index = ref(0)

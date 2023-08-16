@@ -13,7 +13,7 @@
         </div>
         <!-- 余额 -->
         <div v-show="show_balance" class="balance-text-show yb-family-odds">
-          <!-- {{ (get_user.balance || 0) || format_balance }} -->
+          {{ (get_user.balance || 0) || format_balance }}
         </div>
         <!-- 余额是否隐藏图标 -->
         <icon :name="show_balance ? 'icon-eye_show' : 'icon-eye_hide'" size="14px" class="balance-btn-eye cursor-pointer"
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref,onBeforeUnmount } from "vue"
+import { ref,onBeforeUnmount,computed,onMounted, reactive } from "vue"
 import { get } from "lodash"
 import store from "src/store-redux/index.js";
 import { get_balance } from "src/store-redux/module/user-info.js";
@@ -39,17 +39,31 @@ const {
 } =  store.getState()
 
 // 用户信息是否失效
-const is_invalid = userReducer.is_invalid
+const is_invalid = ref(userReducer.is_invalid)
 // 获取用户信息
-const get_user = userReducer.user
+const get_user = reactive(userReducer.user || {})
 // 显示余额
-const show_balance = userReducer.show_balance
-
-  // 更新用户余额
-  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_user_balance).off
-
+const show_balance = ref(userReducer.show_balance)
 // 是否已加载
 const data_loaded = ref(true)
+
+onMounted(()=>{
+  // 更新用户余额
+  useMittOn(MITT_TYPES.EMIT_GET_BALANCE_CMD, get_user_balance).off
+})
+
+// 格式化用户余额保留2位小数
+const format_balance = computed( num => {
+  if (num && num > 0) {
+    let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
+    // 保留两位小数
+    let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
+
+    let _num = _split[1] + '.' + decimal
+    return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+  }
+  return '0.00';
+})
 
 // 显示 / 隐藏余额
 const set_show_balance = status => {
@@ -65,7 +79,7 @@ const set_balance_refresh = () => {
  * @description 获取用户余额
  * @return {undefined} undefined
  */
- function get_user_balance() {
+ const get_user_balance = () => {
   let uid = get( get_user, "uid");
   store.dispatch(get_balance(uid));
 }

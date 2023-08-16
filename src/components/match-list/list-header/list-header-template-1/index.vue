@@ -86,7 +86,7 @@
 </template>
 <script setup>
 import global_mixin from "src/public/mixins/global/global_mixin.js";
-import odds_conversion_mixin from "src/public/mixins/odds_conversion/odds_conversion_mixin";//赔率转换
+import match_list_global from 'src/components/match-list/composables/match-list-gloab.js'
 import comSelect from "src/public/components/select";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/public/utils/base_data/base-data.js";
@@ -118,7 +118,7 @@ const vx_get_checked_count = ref(state.filterReducer.checked_count);
 // 获取用户id
 const vx_get_uid = reactive(state.userReducer.user_info)
 const vx_match_sort = ref(state.globalReducer.match_sort)
-// mixins: [global_mixin,odds_conversion_mixin],
+// mixins: [global_mixin],
 const match_sort_show = ref(false) //切换排序是否显示
 const leagueName = ref("") //模糊搜索联赛条件
 const time_list = ref(null) //即将开赛筛选数据
