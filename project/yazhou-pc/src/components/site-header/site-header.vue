@@ -96,7 +96,7 @@ import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { ss } from 'src/core/utils/web-storage.js'
+import { ss, ls } from 'src/core/utils/web-storage.js'
 
 /** api */
 import { api_account } from "src/api/index.js";
@@ -159,8 +159,8 @@ const dayClickType = reactive({ typeL: 0, urlL: null })
 const nightClickType = reactive({ typeL: 0, urlL: null })
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)
-/** 当前资源图片数组 */
-let currentSwipperArr = reactive([])
+/** 用户token */
+const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
 
 /** stroe仓库 */
 const store_data = store.getState()
@@ -177,12 +177,11 @@ const { global_switch } = globalReducer
  */
 const { left_menu_toggle, is_invalid } = betInfoReducer
 /** 
- * token 用户token default: ''
  * user_info 用户信息 default: {}
  * show_balance 用户余额是否展示状态 default: true
  * 路径: src\store-redux\module\user-info.js
  */
-const { token, user_info, show_balance } = userReducer
+const { user_info, show_balance } = userReducer
 
 /** 
  * 语言 languages
@@ -198,7 +197,7 @@ const { lang } = languagesReducer
 const { main_menu_toggle, menu_collapse_status, cur_menu_type } = menuReducer
 /** 
 * 用户余额是否展示状态 default: theme01
-* 路径: src\store-redux\module\theme.js
+* 路径: project_path/src/store/module/theme.js
 */
 const { theme } = themeReducer
 
@@ -315,11 +314,11 @@ function tab_click(obj) {
         let pathObj = menu;
         // 如果点击的是活动入口，就更新一下用户信息
         if (pathObj.path.includes('/activity')) {
-            if (token) {
+            if (token.value) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
                 // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
                 // gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
-                vx_set_user({ token: token, view: this });
+                vx_set_user({ token: token.value, view: this });
             }
         }
 
@@ -581,8 +580,7 @@ function menu_change(side) {
  * 运营位专题页
  */
  function special_page() {
-  let token = get(computed_data.get_user, "token");
-  api_account.get_BannersUrl({ type: 7, token }).then((res) => {
+  api_account.get_BannersUrl({ type: 7, token: token.value }).then((res) => {
     let code = get(res, "data.code");
     let data = get(res, "data.data");
     if (code == 200) {

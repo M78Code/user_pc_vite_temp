@@ -10,7 +10,7 @@
       <!-- 搜索 -->
       <header-search />
       <!-- 公告滚动组件 -->
-      <marquee v-if='!get_search_status' @navigate="navigate" />
+      <marquee v-if='!search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
       <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
       <!-- 广告 & 语言主题等切换 -->
@@ -115,6 +115,7 @@ const { global_switch } = store_data.globalReducer
 * 路径: project_path\src\store\module\search.js
 */
 const { search_isShow } = store_data.searchReducer
+
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)

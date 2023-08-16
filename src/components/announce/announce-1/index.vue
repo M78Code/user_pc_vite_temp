@@ -2,8 +2,7 @@
 <template>
     <div class="announce-wrap">
         <simple-header>
-            <!-- <span>{{ $root.$t('common.notice') }}</span> -->
-            <span>TODO: $root.$t('common.notice')</span>
+            <span>{{ t('common.notice') }}</span>
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
@@ -17,9 +16,7 @@
                         <div class="ann-content" v-html="item.context"></div>
                         <div class="ann-time">{{ timestr(item.sendTimeOther) }}</div>
                     </div>
-                    <!-- <load-data state="notice-empty" :no_data_msg="$root.$t('common.notice_no_data')" -->
-                        <!-- TODO: -->
-                    <load-data state="notice-empty" no_data_msg="$root.$t('common.notice_no_data')"
+                    <load-data state="notice-empty" :no_data_msg="t('common.notice_no_data')"
                         v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>
@@ -28,8 +25,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
+import { useI18n } from 'vue-i18n'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -38,11 +36,14 @@ const props = defineProps({ ...useProps })
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-import simpleHeader from "./simple-header.vue";
+import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
 import LeftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
+
+/** 国际化 */
+const { t } = useI18n()
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -59,14 +60,12 @@ const index = ref(0)
 /** 接口请求完成 */
 const loadd_finish = ref(false)
 
-/** 国际化 */
-const lang = ref()
+
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    lang.value = new_state.lang
-})
-onUnmounted(unsubscribe)
+const store_data = store.getState()
+/** 国际化语言 default: zh */
+const { lang } = store_data.langReducer
+// TODO: 语言改变mitt
 
 /**
 * @Description:切换菜单
@@ -98,7 +97,7 @@ function timestr(time1) {
     time1 = parseInt(time1);
     if (!time1) return "";
     let time = new Date(time1);
-    if (['vi', 'en', 'th', 'ms', 'ad'].includes(lang.value)) {
+    if (['vi', 'en', 'th', 'ms', 'ad'].includes(lang)) {
         return (
             format_str(time.getHours()) +
             ":" +
@@ -134,8 +133,7 @@ function get_list() {
         if (code == 200 && status && data) {
             data.nt.unshift({
                 id: 0,
-                // TODO: $root挂在window下？
-                type: $root.$t('common.all_notice'),
+                type: t('common.all_notice'),
             });
             for (let i in data.nt) {
                 data.nt[i].title = data.nt[i].type;

@@ -1,9 +1,7 @@
 <!-- @Description: 简单页面头部  体育规则，公告页面使用到 -->
 <template>
     <div class="header">
-        <!-- /TODO: $common -->
-        <div class="go-back"
-            @click="$common.go_where({ back_to: 'go_back_from_notice', route_name: $route.path.split('/')[2] })"></div>
+        <div class="go-back" @click="go_back"></div>
         <span class="title">
             <slot />
         </span>
@@ -11,16 +9,14 @@
 </template>
 
 <script setup>
-// import { onUnmounted } from 'vue'
-// import store from "src/store-redux/index.js";
-// /** 收藏菜单为6 */
-// const menu_type = ref()
-// /** stroe仓库 */
-// const unsubscribe = store.subscribe(() => {
-//     const new_state = store.getState()
-//     menu_type.value = new_state.menu_type
-// })
-// onUnmounted(unsubscribe)
+import { useRoute } from 'vue-router';
+const route = useRoute()
+
+/** 返回上一级 */
+const go_back = () => {
+    // TODO: $common
+    $common.go_where({ back_to: 'go_back_from_notice', route_name: route.path.split('/')[2] })
+}
 </script>
   
 <style lang="scss" scoped>
