@@ -14,7 +14,7 @@
 const PAGE_SOURCE_POOL =  [
   "details",
   "home",
-  "hot-jingxuan",
+  "hot-chosen",
   "hot-league",
   'result_details',
   'match_result',
@@ -23,8 +23,7 @@ const PAGE_SOURCE_POOL =  [
   "matchList-filter",
   "matchList-collect",
   "detail_match_list",
-
- 
+  "hot-foot-racing",
 ]
    
 

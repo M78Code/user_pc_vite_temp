@@ -3,7 +3,7 @@
     <div class="notice_main">
         <!-- 公共标题 -->
         <simple-header>
-            {{ $root.$t('common.notice') }}
+            {{ t('common.notice') }}
         </simple-header>
         <!-- tab 组件 及 下边内容 滚动部分 -->
         <tabs :tabList="tabList" :tabIndex="index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
@@ -14,7 +14,7 @@
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="flex justify-between align_items">
                             <div class="ann-title">[{{ current_title }}]</div>
-                            <div class="ann-time">{{ (new Date(+item.sendTimeOther)).Format($root.$t('time6')) }}</div>
+                            <div class="ann-time">{{ (new Date(+item.sendTimeOther)).Format(t('time6')) }}</div>
 
                         </div>
                         <div class="ann-content" v-html="item.context" :class="{ is_long_word: ['en'].includes(lang) }">
@@ -32,6 +32,7 @@
   
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -43,18 +44,23 @@ const props = defineProps({ ...useProps })
 import { api_home } from "src/api/index";
 import { LoadingWapper as loadPage } from "src/components/common/loading";
 import { NoDataWapper as noData } from "src/components/common/no-data";
-import simpleHeader from './simple-header.vue';
+import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
 import tabs from "./tab.vue";
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { ss, ls } from 'src/core/utils/web-storage.js'
+
+/** 国际化 */
+const { t } = useI18n()
+
 /** 返回的大列表 */
-const res_list = reactive([])
+let res_list = reactive([])
 /** 左侧菜单 */
-const tabList = reactive([])
+let tabList = reactive([])
 /** 大列表 */
-const announce_list = reactive([])
+let announce_list = reactive([])
 /** 全部分类数据 */
-const class_list = reactive([])
+let class_list = reactive([])
 /** 当前标题 */
 const current_title = ref('')
 
@@ -103,8 +109,7 @@ onUnmounted(() => {
 function get_list() {
     api_home.post_announce_list().then(({ code, data }) => {
         if (code == 200 && data) {
-            // TODO:
-            // data.nt.unshift({id: 0,type: this.$root.$t('common.all_notice')});
+            data.nt.unshift({ id: 0, type: t('common.all_notice') });
             for (let i in data.nt) {
                 data.nt[i].name = data.nt[i].type
                 data.nt[i].index = Number(i)
@@ -144,16 +149,15 @@ function get_list() {
 /** 钩子触发 */
 onMounted(get_list)
 
-/** 国际化 */
-const lang = ref()
-/** 用户token */
-const token = ref()
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    lang.value = new_state.lang
-    token.value = new_state.token
-})
+const store_data = store.getState()
+/** 国际化语言 default: zh */
+const { lang } = store_data.langReducer
+// TODO: 语言改变mitt
+
+/** 用户token */
+const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
+
 onUnmounted(unsubscribe)
 
 </script>

@@ -47,19 +47,7 @@ export const clone_arr = (arr) => {
   lodash.merge(new_arr, arr || []);
   return new_arr;
 };
-/**
- * @Description 构建足球附加盘
- * @param {Array} main_temp 主盘
- * @return {Array} add_temp 附加盘
- */
-export const created_add_temp_config = (main_temp) => {
-  let add_temp = [];
-  lodash.each(main_temp, (col) => {
-    let ols = col.ols.slice(0, 2);
-    add_temp.push({ ols });
-  });
-  return add_temp;
-};
+
 // 投注项模板
 export const ol_template = {
   // 投注项ID
@@ -86,8 +74,6 @@ export const ol_template = {
   _hn: "",
   // 投注项自定义class类   'no-handicap' : 无盘口值
   class: "",
-  // 附加盘合并到主盘标识  2 3
-  // hn:""
 };
 //单节15分钟玩法
 export const hps_15_minute = [
@@ -187,8 +173,6 @@ export const match_style_template = {
   tab_play_handicap_height: 0,
   // 主盘口高度
   main_handicap_height:105,
-  // 附加盘高度
-  add_handicap_height:0,
   // 当前局玩法高度
   cur_handicap_height:0,
   // 是否需要动态计算高度

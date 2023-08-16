@@ -45,6 +45,8 @@ class UserCtr {
    this.uid= ref('') 
        // 数据持久化使用到的key值
        this.local_storage_key = 'h5_user_base_info';
+
+    
  }
 /**
  * 用户 id 

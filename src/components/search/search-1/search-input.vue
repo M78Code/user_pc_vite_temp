@@ -9,23 +9,24 @@
             <!-- 搜索输入框 -->
             <input type="search" v-model="keyword" class="search-input col" v-focus="is_focus"
                 :class="{ 'key-is-empty': !keyword }" @blur="is_focus = false" @keyup.enter="submit" @input="change_txt"
-                @click="input_click" :key="'search-input-0001'" :placeholder="$root.$t('common.search')" />
+                @click="input_click" :key="'search-input-0001'" :placeholder="t('common.search')" />
             <!-- 清空输入框按钮 -->
             <span class="clear_input" @click="clear_input">
                 <icon class="cursor-pointer clear_input_btn" name="icon-failure" v-if="keyword != ''" size="12px" />
             </span>
         </div>
         <!-- 关闭搜索 -->
-        <div class="close-wrap" @click.stop="onClose">{{ $root.$t('common.close') }}</div>
+        <div class="close-wrap" @click.stop="onClose">{{ t('common.close') }}</div>
     </div>
 </template>
   
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
 import store from "src/store-redux/index.js";
-// TODO: 待确认
-import search from "src/public/utils/searchClass/search.js"
+import * as search from "src/api/module/search.js"
 
 
 export default defineComponent({
@@ -47,6 +48,10 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
+
+        /** 国际化 */
+        const { t } = useI18n()
+
         /** 输入关键字 */
         const keyword = ref('')
         //监听输入框内容改变
@@ -217,6 +222,7 @@ export default defineComponent({
         const set_unfold_multi_column = (data) => store.dispatch({ type: 'set_unfold_multi_column', data })
 
         return {
+            t,
             keyword,
             is_focus,
             route_name,
@@ -227,7 +233,7 @@ export default defineComponent({
             onClose,
             clear_input
         }
-    } 
+    }
 })
 
 </script>

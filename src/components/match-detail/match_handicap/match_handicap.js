@@ -23,12 +23,12 @@ import goTop from "src/components/go-top/go-top.vue";
 // 电竞玩法模板
 
 
-import { api_details } from "src/public/api/index";
-import format from "src/project/yabo/mixins/match_details/index";
-import time_format_mixin from "src/public/mixins/common/time_format";
+// import { api_details } from "src/public/api/index";
+// import format from "src/project/yabo/mixins/match_details/index";
+// import time_format_mixin from "src/public/mixins/common/time_format";
 
 export default {
-  mixins: [format, time_format_mixin],
+  // mixins: [format, time_format_mixin],
   components: {
     "template0":DetailTemp0,
     "template1":DetailTemp1,

@@ -1,0 +1,346 @@
+.record-table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-size: 12px;
+  //无数据
+  &.no-record-data {
+    padding-bottom: 0 !important;
+  }
+
+  .tool {
+    display: flex;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    .tool-item {
+      padding: 10px 30px;
+      border-radius: 1px 1px 0 0;
+      cursor: pointer;
+    }
+  }
+  //整个表单内容
+  .data-table {
+    flex: 1;
+    width: 100%;
+    border-right: none;
+    border-bottom: none;
+    font-size: 12px;
+    //表单内容
+    .data-table-content {
+      flex: 1;
+      ::v-deep {
+        .full-width {
+          //表单内容
+          .r-table {
+            width: 100%;
+            height: 100%;
+            .load-data-wrap {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+    .row {
+      //标题
+      &.head {
+        padding: 0;
+        height: 30px;
+        .ceil {
+          padding: 0 0 0 20px !important;
+          border: none;
+          height: 100%;
+          &:first-child,
+          &:last-child {
+            display: flex;
+            justify-content: center;
+            padding: 0 !important;
+          }
+        }
+      }
+      .ceil {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        padding: 12px 0 12px 20px;
+        border-top: none;
+        border-left: none;
+        //第一个子元素
+        &:nth-child(1) {
+          align-items: center;
+          padding-left: 0;
+          width: 50px;
+        }
+        //第二个子元素
+        &:nth-child(2) {
+          width: 160px;
+          user-select: text;
+        }
+        //第三个子元素
+        &:nth-child(3) {
+          padding: 12px 20px;
+          width: 130px;
+        }
+        //第四个子元素
+        &:nth-child(4) {
+          flex: 1;
+          flex-flow: column;
+          align-items: flex-start;
+        }
+        //第五个子元素
+        &:nth-child(5) {
+          width: 105px;
+        }
+        //第六个子元素
+        &:nth-child(6) {
+          width: 105px;
+        }
+        //第七个子元素
+        &:nth-child(7) {
+          padding-left: 0;
+          width: 106px;
+          text-align: center;
+        }
+        //注单号
+        .order-no {
+          display: flex;
+          margin-top: 2px;
+          .copy {
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
+            cursor: pointer;
+          }
+        }
+        .bet-pre-detail {
+          cursor: pointer;
+
+          /*  箭头向下样式 */
+          .icon-pull-down:before {
+            transform: rotate(180deg);
+            margin-left: 6px;
+          }
+          /*  箭头向上样式 */
+          .icon-pull-up:before {
+            transform: rotate(0deg);
+            margin-left: 6px;
+          }
+        }
+      }
+    }
+    //标题
+    .head {
+      .ceil {
+        &:first-child {
+          border: none;
+        }
+      }
+    }
+    .bottom-hiden {
+      border-bottom: 0px !important;
+    }
+    .top-hiden {
+      border-top: 0px !important;
+    }
+    .left-hiden {
+      border-left: 0px !important;
+    }
+    .right-hiden {
+      border-right: 0px !important;
+    }
+    .pre-bet-part {
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .red-bg {
+      display: inline-block;
+      margin-left: 5px;
+      width: 38px;
+      height: 16px;
+      font-size: 12px;
+      text-align: center;
+      border-radius: 2px;
+    }
+    .bet-info {
+      cursor: pointer;
+      margin-left: 5px;
+      margin-top: -2px;
+    }
+  }
+  .bet-tips-info {
+    display: flex;
+    font-size: 12px;
+    .tips-info {
+      margin-left: 5px;
+    }
+  }
+
+  ::v-deep .load-data-wrap {
+    .refresh {
+      padding-top: 5%;
+    }
+  }
+}
+.play-type {
+  & > span {
+    margin-right: 10px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+.info-wrap {
+  width: 190px;
+  line-height: 1;
+  div {
+    margin-top: 10px;
+  }
+  .bet-pre-wrap {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0px;
+    .bet-pre-btn {
+      flex: 1;
+      height: 40px;
+      text-align: center;
+      border-radius: 4px;
+      cursor: pointer;
+
+      div {
+        height: 20px;
+        &.bet-row-1 {
+          margin-top: 4px;
+        }
+        &.bet-row-2 {
+          margin-top: -3px;
+        }
+      }
+    }
+    .bet-pre-handle {
+      width: 30px;
+      cursor: pointer;
+      .bet-pre-info {
+        margin-left: 10px;
+      }
+    }
+    &.bet-pre-stop {
+      .bet-pre-btn {
+        border: 0px;
+        border-radius: 4px;
+        line-height: 40px;
+      }
+    }
+  }
+  .bet-money {
+    margin-left: 5px;
+  }
+  .bet-compute-money {
+    margin-bottom: 25px;
+    ::v-deep .vue-slider {
+      cursor: pointer;
+      .vue-slider-rail {
+        .vue-slider-marks {
+          .vue-slider-mark {
+            .custom-label {
+              width: 22px;
+              height: 10px;
+              font-family: PingFangSC-Regular;
+              font-size: 10px;
+            }
+            &:first-child {
+              .custom-label {
+                opacity: 0;
+              }
+            }
+          }
+        }
+      }
+      .vue-slider-mark-step {
+        background-color: #d8d8d8;
+        width: 1px;
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 0;
+      }
+    }
+  }
+  .bet-pre-confirm-btn {
+    flex: 1;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    div {
+      text-align: center;
+      height: 20px;
+      &.bet-row-1 {
+        padding-top: 6px;
+      }
+      &.bet-row-2 {
+        margin-top: 3px;
+      }
+    }
+  }
+  .bet-pre-confirming-btn,
+  .bet-pre-complete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-count: 3;
+    height: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    .bet-pre-left {
+      width: 80%;
+      height: 100%;
+      text-align: center;
+      div {
+        height: 20px;
+        &.bet-row-1 {
+          margin-top: 2px;
+        }
+        &.bet-row-2 {
+          margin-top: -3px;
+        }
+      }
+    }
+    .bet-pre-right {
+      margin-top: 3px;
+    }
+  }
+  .bet-pre-complete-btn {
+    cursor: unset;
+  }
+}
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 0 20px;
+  height: 36px;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 36px;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background-color: #414655;
+}
+
+/*  赢 */
+.win-color {
+  color: #e93d3d;
+}
+
+/*  赛事取消 */
+.cancel-color {
+  color: #b58400;
+}
+.bet-pre-color {
+  color: #ff7000;
+}
+.font-family {
+  font-weight: 500;
+}
