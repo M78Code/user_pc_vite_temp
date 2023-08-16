@@ -134,7 +134,15 @@
                   </div>
                   <!-- 选项 -->
                   <div class="ceil c135">
-                    <table-options :data="data" :tool_selected="tool_selected"></table-options>
+                    <table-options
+                      :data="data"
+                      :money_obj="money_obj"
+                      :tool_selected="tool_selected"
+                      @start_bet_pre="start_bet_pre"
+                      @bet_pre_over="bet_pre_over"
+                      @bet_pre_out="bet_pre_out"
+                      @change_slider="change_slider"
+                    ></table-options>
                   </div>
                   <!-- 投注额 -->
                   <div class="ceil font-family">
@@ -398,12 +406,9 @@
 <script setup>
 import tableOptions from ".table-options.vue"; // 选项组件
 import { PaginationWapper } from "src/components/pagination/indes.js";
-import vueSlider from "vue-slider-component";
-import { format_score_t } from "src/core/formart.index.js";
-import "vue-slider-component/theme/default.css";
 import { useTableData } from "./use-table-data";
 import { useI18n } from "vue-i18n";
-import { formatTime } from "src/core/formart/index";
+import { formatTime,format_balance,format_score_t } from "src/core/formart/index";
 const { t } = useI18n();
 
 const props = defineProps({
@@ -473,14 +478,19 @@ const {
   early_settlement_data,
   cur_bet_pre,
   pre_order_list_obj,
+  money_obj,
   color_list,
   changePage,
-  format_balance,
   copy,
   show_bet_pre_info,
   matchType,
   status_class,
   order_status,
+  start_bet_pre,
+  bet_pre_over,
+  bet_pre_out,
+  change_slider,
+  bet_handle,
   lodash,
 } = useTableData({ props, emit });
 </script>
