@@ -8,7 +8,7 @@ import { reactive, toRefs, onUnmounted } from "vue";
 // api文件
 import { api_details } from "src/api/index";
 import lodash from "lodash";
-import details from "src/core/match-detail/match-detail";
+import details from "src/core/match-detail-pc/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter } from "vue-router";

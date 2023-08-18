@@ -173,3 +173,36 @@ export default function betInfoReducer(state = initialState, action) {
       return state;
   }
 }
+
+
+/**
+ * @description: 添加单关投注项对象
+ * @param {*} state
+ * @param {*} obj 要添加的对象
+ */
+const bet_single_obj_attr = (state,obj) => {
+  let new_obj = _.cloneDeep(state.bet_obj);
+  // if(obj.key && (Object.keys(new_obj).indexOf(obj.key) > -1) && !(_.get(obj, 'is_update_single', false))) return;
+  console.log('添加单关投注项对象----------',obj);
+  if(obj.key && !obj.mode) {
+    if(obj.cs.source == 'is_chat_room' || obj.cs.play_name == ''){  
+      if(obj.cs.play_name == '' && state.bet_single_obj[obj.key] && state.bet_single_obj[obj.key].cs && state.bet_single_obj[obj.key].bs){
+      let _cs = _.cloneDeep(state.bet_single_obj[obj.key].cs)
+      let _bs = _.cloneDeep(state.bet_single_obj[obj.key].bs)
+        obj.cs.play_name = _cs.play_name;
+        obj.bs.hps[0].hl[0].ol.hpn = _bs.hps[0].hl[0].ol.hpn
+      }
+      state.bet_single_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+      state.bet_single_obj = _.cloneDeep(state.bet_single_obj);
+    }else{
+      state.bet_single_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+      state.bet_single_obj = _.cloneDeep(state.bet_single_obj);
+    }
+  } else if (obj.key && obj.mode=='clear_and_add') {
+    state.bet_single_obj = {};
+    state.bet_single_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+    state.bet_single_obj = _.cloneDeep(state.bet_single_obj);
+  } else if(obj && !obj.key) {
+    state.bet_single_obj = obj;
+  }
+}

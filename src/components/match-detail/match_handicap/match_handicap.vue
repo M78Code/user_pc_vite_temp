@@ -73,7 +73,7 @@
 </template>
 <script>
 import { defineComponent, defineEmits } from "vue";
-import match_handicap from "src/components/match-detail/match_handicap.js";
+import match_handicap from "src/components/match-detail/match_handicap/match_handicap.js";
 import { useMethods } from "./use-methods";
 export default defineComponent({
   mixins: [match_handicap], //引入玩法组件
