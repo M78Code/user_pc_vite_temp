@@ -13,7 +13,7 @@
   <script setup>
   import { onMounted, ref, reactive } from 'vue'
   import store from "src/store-redux/index.js";
-  import menu_obj1 from "src/core/meu-h5/menu-data-class.js";
+  import menu_obj1 from "src/core/menu-h5/menu-data-class.js";
   onMounted(()=>{
     console.error(menu_obj1,"menudata")
   })
