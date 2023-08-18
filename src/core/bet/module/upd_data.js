@@ -1,9 +1,12 @@
-  /**
+ 
+ 
+import BetData from  "../class/bet-data-class.js"
+ /**
        * @description: 调用queryLatestMarketInfo完接口后的回调方法用来更新vuex中投注项的数据
        * @param {*} this.
        * @param {*} obj 设置的新对象
        */
-  http_upd_data( obj) {
+ const     http_upd_data=( obj)=>  {
     // console.log('进入queryLatestMarketInfo回调方法',{method: 'http_upd_data'});
     let i = obj.i;
 
@@ -350,3 +353,22 @@
     });
 
   }
+
+    /**
+   * @description: 添加串关投注项对象
+   * @param {*}BetData.
+   * @param {*} obj 要添加的投注项对象
+   */
+   const bet_obj_add_attr=(obj)=>{
+      let new_obj = _.cloneDeep(this.bet_obj);
+      if (obj.key && new_obj[obj.key] && new_obj[obj.key].cs) {
+        new_obj[obj.key].cs.is_serial = obj.cs.is_serial;
+      }
+      // if(obj.key && !(Object.keys(new_obj).indexOf(obj.key) > -1)){
+      // new_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+      // }
+      if (obj.key) {
+        new_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+      }
+      BetData.bet_obj = new_obj;
+    }

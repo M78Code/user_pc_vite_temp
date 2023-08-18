@@ -15,7 +15,6 @@ const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成
 const url_params = GetUrlParams(); //获取url参数
 //动画逻辑 靠后
-
 /**
  * 获取用户信息
  */
