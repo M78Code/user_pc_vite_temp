@@ -1,8 +1,8 @@
 
 
-import MenuWapper from "./full-version-wapper/index.vue";
+import DetailWapper from "./full-version-wapper/index.vue";
 
 
 
-export {   MenuWapper  };
+export {   DetailWapper  };
 

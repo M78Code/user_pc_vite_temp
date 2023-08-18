@@ -1,11 +1,10 @@
 /*
- * @Author:
- * @Date: 2021-09-25 19:28:03
- * @Description: 赛事mixins
+ * @Description: 赛事卡片源数据
  */
 
 import { get_template_config } from "./template/template-config.js";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 class MatchListCard {
   constructor() {
@@ -23,16 +22,10 @@ class MatchListCard {
     this.match_height_map_list = [];
     //赛事与dom高度的映射
     this.mid_dom_height_dict = {};
-    //滚动位置
-    this.scrolling_wrapper_top = -1;
-    // 延时器
-    this.requesting_timeout = 0;
-    this.set_scroll_top_timer1 = 0;
     //防止滚动触发红升绿降时钟
     this.screen_changing_timer = 0;
-
-        //足球正在切换第一屏与第二屏
-       this. foot_ball_screen_changing=0;
+    //足球正在切换第一屏与第二屏
+    this. foot_ball_screen_changing=0;
   }
 
   // // 足球正在切换第一屏与第二屏
@@ -41,12 +34,6 @@ class MatchListCard {
   // 'set_list_scroll_top',
   // 'set_standard_odd_status',  // 更新当前列表基本玩法集 状态
 
-  /**
-   * 生成折叠状态键(暂时只返回tid)
-   */
-  gen_collapse_key(match) {
-    return match.tid;
-  }
   /**
    * 从新列表中找出指定mid的赛事插入赛事列表
    * @param {Object} compare_obj 新旧列表比较过后的结果
@@ -92,7 +79,7 @@ class MatchListCard {
     this.set_collapse_map_match({}); // 当前列表也重置到联赛折叠状态
     this.match_is_empty = false;
     // 代表的是 首页热门的  骨架屏 显示
-    this.$root.$emit(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, true);
+    useMittEmit(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, true);
     // 页面异常时，或者  接口请求超时  清除 骨架屏  并且 允许 点击菜单
     clearTimeout(this.requesting_timeout);
     this.requesting_timeout = setTimeout(() => {
@@ -117,8 +104,8 @@ class MatchListCard {
     // 当接口数据返回错误码时
     if (_.get(res, "code") != 200) {
       this.matchCtr.clearData();
-      this.$root.$emit(this.emit_cmd.EMIT_IS_FIRST_LOADED);
-      this.$root.$emit(this.emit_cmd.EMIT_MATCH_LIST_DATA_TAKED);
+      useMittEmit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
+      useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
       // this.show_favorite_list==true代表收藏时
       if (this.show_favorite_list) {
         // 不等于ws静默更新时
@@ -129,7 +116,7 @@ class MatchListCard {
     // 首页热门列表页骨架屏  隐藏
     this.$nextTick(() => {
       this.$forceUpdate();
-      this.$root.$emit(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, false);
+      useMittEmit(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, false);
     });
 
     let data_page = null;
@@ -283,30 +270,6 @@ class MatchListCard {
       this.set_goto_detail_matchid("");
     }
   }
-  // 详情返回时计算滚动距离
-  calac_scrolltop() {
-    for (
-      let i = 0, list_lenght = this.match_height_map_list.length;
-      i < list_lenght;
-      i++
-    ) {
-      if (this.get_goto_detail_matchid == this.match_height_map_list[i].mid) {
-        //容器总高度
-        let back_scroll_top = this.match_height_map_list
-          .slice(0, i)
-          .reduce((total, map_obj) => {
-            let p_total = 0;
-            if (typeof total == "number") {
-              p_total = total;
-            }
-            return p_total + this.get_match_dom_height_by_matchdata(map_obj);
-          }, 0);
-        this.prev_remember_scrolly =
-          back_scroll_top * (window.innerWidth / 3.75) - 50;
-        break;
-      }
-    }
-  }
   /**
    * 赛事列表接口请求异常处理
    * @param {Object} e 异常对象
@@ -314,7 +277,7 @@ class MatchListCard {
    */
   match_list_api_catch_handle(e, cb) {
     // 关闭热门列表的骨架屏
-    this.$root.$emit(this.emit_cmd.EMIT_SHOW_HOT_SCHEDULE_LOADING, false);
+    useMittEmit(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, false);
     // 如果当前请求的接口uid和 返回的是一样的，才做处理
     if (this.last_gcuuid == e.gcuuid) {
       this.match_is_empty = true;
@@ -326,7 +289,7 @@ class MatchListCard {
     if (cb) cb();
     if (!this.get_user_token) {
       this.no_menu_txt = "noMatch";
-      // this.$root.$emit(this.emit_cmd.EMIT_GO_TO_VENDER);
+      // useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
     }
   }
   /**
@@ -341,50 +304,6 @@ class MatchListCard {
       }
     });
     return r;
-  }
-  /**
-   * 赛事折叠状态变化
-   */
-  unfold_changed_handle() {
-    // 走虚拟滚，
-    // 第一步：数据去重
-    // 第二步：重新计算 容器整体高度 ，此 理论高度  在前或者在后调用 理论上都行
-    // 第三步：重新计算 每个容器 的 top 定位 数值
-    this.run_process_when_need_recompute_container_list_when_coolspace_tournament(
-      true
-    );
-    this.set_list_scroll_top_by_target();
-  }
-  /**
-   * 设置赛事列表容器滚动数据
-   */
-  set_list_scroll_top_by_target(scroll_obj) {
-    //获取滚动对象
-    let target = this.$refs.match_list_container;
-    if (target) {
-      let r_str = "";
-      let scroll_y = (this.list_scroll_top = target.scrollTop); // 距离顶部距离 （滑动的距离）
-      let client_height = target.clientHeight; // 内容距离   content area + padding
-      let scroll_height = target.scrollHeight; // 内容展开时的高度（容器的总高度）
-      let aftered = "";
-      if (scroll_obj && scroll_obj.update_type == "standard_simple_change") {
-        aftered = "" + Math.random();
-      }
-
-      r_str = `${scroll_y}-${client_height}${aftered}-${scroll_height}${aftered}`;
-      this.set_list_scroll_top(r_str);
-    }
-  }
-  /**
-   * 赛事列表滚动事件
-   */
-  match_list_scroll_handle(e) {
-    let scroll_top = e.scrollTop ? +e.scrollTop : window.scrollY;
-    this.window_scrolly = scroll_top;
-    if (e.cb) {
-      e.cb(this); // 回调，并将子对象的this传入
-    }
-    this.run_process_when_need_recompute_container_list_when_scroll(null, e);
   }
   /**
    * 次要玩法展开
@@ -440,13 +359,9 @@ class MatchListCard {
     // 1. 第一步：数组去重
     this.run_process_when_need_recompute_container_list_step_one_recompute_next_list_mids();
     // 2. 第二步：重新计算 容器的每个高度，还有 所有列表总和的 整体高度
-    this.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height(
-      scroll_obj
-    );
+    this.run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height( scroll_obj );
     // 3. 第三步：重新计算 每个容器 的 top 定位 数值
-    this.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(
-      scroll_obj
-    );
+    this.run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_obj );
     // 理论上目前的 项目需求内不需要 后置进程 ， 如果需要后置进程  这里进行 后置进程 单独 方法  ， 可以方法复写
   }
   /**场景 1： 首次进入页面，或者列表接口请求   赛事初始化加载
@@ -463,84 +378,21 @@ class MatchListCard {
    *  参数说明：      need_pre_process : 需要执行前置进程
    *
    */
-  run_process_when_need_recompute_container_list_when_first_load_list(
-    need_pre_process = true,
-    update_type
-  ) {
+  run_process_when_need_recompute_container_list_when_first_load_list(need_pre_process = true, update_type) {
     //  更新 赛事列表 进程 综合 控制方法
-    this.run_process_when_need_recompute_container_list(need_pre_process, {
-      update_type,
-    });
+    this.run_process_when_need_recompute_container_list(need_pre_process, { update_type });
   }
   /** 场景 2： 联赛 折叠
    * 触发更新 赛事列表进程 的 场景
    *  参数说明：      need_pre_process : 需要执行前置进程
    */
-  run_process_when_need_recompute_container_list_when_coolspace_tournament(
-    need_pre_process = true,
-    invoke_type
-  ) {
+  run_process_when_need_recompute_container_list_when_coolspace_tournament(need_pre_process = true, invoke_type) {
     //  更新 赛事列表 进程 综合 控制方法
     this.run_process_when_need_recompute_container_list(need_pre_process, {
       update_type: invoke_type,
     });
   }
-  /**
-   * 获取容器滚动距离
-   */
-  get_scroll_wrapper_top(params) {
-    let scroll_top = window.scrollY;
-    if (params) {
-      if (params.scroll_top) {
-        scroll_top = params.scroll_top;
-      }
-      if (params.position) {
-        scroll_top = params.position;
-      }
-    }
-    // 容器滚动距离
-    let scroll_splited = this.get_list_scroll_top.split("-");
-    if (scroll_splited[0]) {
-      scroll_top = +scroll_splited[0];
-    }
-    return scroll_top;
-  }
-  /**
-   * 场景 4： 列表 滚动
-   * 触发更新 赛事列表进程 的 场景
-   * 重点： 理论上来讲 滚动的时候 不需要走 前置进程  直接调用主进程
-   * @param {Boolean} need_pre_process
-   */
-  run_process_when_need_recompute_container_list_when_scroll(
-    need_pre_process = false,
-    params
-  ) {
-    //#start region 当窗口滚过一屏后才更新数据         get_list_scroll_top
-    let scroll_top = this.get_scroll_wrapper_top(params);
-    let delta = Math.abs(scroll_top - this.scrolling_wrapper_top);
-    let limit = this.sliding_can_trigger_process_distance;
-    if (this.menu_type == 28) {
-      limit = 400;
-    }
-    // 阻止用户滚动时频繁切换赛事,scroll_top为0时,需要更新dom高度对象
-    if (
-      delta < limit &&
-      scroll_top != 0 &&
-      params &&
-      !params.force &&
-      params.update_type != "standard_simple_change"
-    ) {
-      return;
-    }
-    this.scrolling_wrapper_top = scroll_top;
-    //#end region
 
-    //  更新 赛事列表 进程 综合 控制方法
-    this.run_process_when_need_recompute_container_list(
-      need_pre_process,
-      params
-    );
-  }
   // 赛事数据源去重，数组 相同的mid 去重
   run_process_when_need_recompute_container_list_step_one_recompute_next_list_mids() {
     // 如果是赛果，不用去重 骚操作
@@ -564,21 +416,13 @@ class MatchListCard {
     }
   }
 
-
-
-
-
-
-
   /**
    * 更新 赛事列表 进程
    * 2. 第二步：重新计算 容器整体高度 ，此 理论高度  在前或者在后调用 理论上都行
    *    次理论高度 因为采用的是绝对定位， 所以这个高度仅仅影响最下面一页的展示的 空白区域，因此 计算在前在后都不影响
    * ： 备注应该在前计算 ： 例如场景 ： 从 联赛全部折叠了到 展开全部联赛 ， 这种从低到高， 从少到多的 过程
    */
-  run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height(
-    scroll_obj
-  ) {
+  run_process_when_need_recompute_container_list_step_two_match_list_wrapper_height( scroll_obj ) {
     // 只有在列表页才有计算逻辑，节省性能
     if (
       !["detail_match_list", "home_hot_page_schedule"].includes(
@@ -620,9 +464,7 @@ class MatchListCard {
    *  重新计算 每个容器 的 top 定位     核心算法可视区域头尾进行插入新数据操作
    *  调用  vuex 里面 set_match_top_map_dict 设置容器 定位 top 值 表征对象
    */
-  run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj(
-    scroll_obj
-  ) {
+  run_process_when_need_recompute_container_list_step_three_recompute_next_list_container_top_obj( scroll_obj ) {
     // 冠军  或者  电竞冠军 或者   赛果虚拟体育  ，赋值全部数据， 不走下边计算逻辑
     if (
       this.menu_type == 100 ||
@@ -699,21 +541,6 @@ class MatchListCard {
         current_match_dom_top += match_height;
       }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       // 如果当前赛事折叠超过 8场赛事 并且 高度 大于5.5  走  虚拟滚动 真正的滑动 算法，和上边 aaaaaaa 逻辑一模一样
       if (this.already_folded > 7 && this.match_list_wrapper_height > 5.5) {
         this.sliding_can_trigger_process_distance =
@@ -782,36 +609,7 @@ class MatchListCard {
   window_focused_handle() {
     this.run_process_when_need_recompute_container_list_when_first_load_list();
   }
-  // 容器滚动事件
-  wrapper_scroll_handler() {
-    // 详情返回后，goto_detail_matchid还未及时清除时，则不响应用户滚动
-    if (this.get_goto_detail_matchid) {
-      this.scroll_touch_count = 0;
-    }
-    // bug33167兼容iPhone滚动兜底处理
-    else if (
-      this.get_allow_short_scroll &&
-      typeof this.scroll_touch_count !== "undefined"
-    ) {
-      this.scroll_touch_count++;
-      if (this.scroll_touch_count <= 2) {
-        clearTimeout(this.match_scroll_timer);
-        this.match_scroll_timer = setTimeout(() => {
-          this.$refs.match_list_container.scrollTop += 1;
-        }, 30);
-      } else if (this.scroll_touch_count > 10) {
-        this.scroll_touch_count = undefined;
-      }
-    }
-    // 只要滑动触发，就显示骨架屏
-    // clearTimeout(this.hide_screen_timer)
-    // this.set_hide_skeleton_screen(false)
-    // this.hide_screen_timer = setTimeout(()=>{
-    //   this.set_hide_skeleton_screen(true)
-    // } 1000)
-    // 设置赛事列表容器滚动数据,触发 赛事列表进程 的 场景
-    this.set_list_scroll_top_by_target();
-  }
+  
   // 批量清除定时器
   clear_mixin_timer() {
     const timer_arr = [
@@ -827,3 +625,5 @@ class MatchListCard {
     }
   }
 }
+
+export default new MatchListCard()

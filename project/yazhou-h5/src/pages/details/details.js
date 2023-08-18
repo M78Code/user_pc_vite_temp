@@ -2,7 +2,7 @@ import lodash from "lodash";
 import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
-import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
+// import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export const details_main = () => {
 const router = useRouter();
@@ -567,9 +567,9 @@ const route = useRoute();
 
       data.requestCount = 0;
       data.is_show_detail_header_data = true;
-      // data.detail_data = res_data;
+      data.detail_data = res_data;
       // #TODO 暂时使用假数据
-      data.detail_data = Level_one_detail_data();
+      // data.detail_data = Level_one_detail_data();
       data.math_list_data = [res_data];
       // updateHotReqTime(Date.now())
 
@@ -643,7 +643,7 @@ const route = useRoute();
     params = { sportId: data.get_detail_data.csid, mid: matchid.value },
     init_req
   ) => {
-    data.data_list = Level_one_category_list();
+    // data.data_list = Level_one_category_list();
     const _get_category_list = () => {
       // #TODO 暂时使用假数据
 
@@ -709,7 +709,7 @@ const route = useRoute();
     //   let info = get_category_list_debounce.can_send_request(params);
     //   if(info.can_send){
     //     //直接发请求    单次数 请求的方法
-    //     _get_category_list();
+        _get_category_list();
     //   }else{
     //     // 记录timer
     //     clearTimeout(axios_debounce_timer)
