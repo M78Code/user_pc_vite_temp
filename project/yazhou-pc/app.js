@@ -3,6 +3,9 @@ import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
 import { get_user_info } from "src/store-redux/module/user-info.js";
 import store from "src/store-redux/index.js";
+
+import { api_match } from "src/api/index.js";
+
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
 import { loadLanguageAsync } from "./src/boot/i18n";
