@@ -5,12 +5,13 @@
 -->
 <template>
   <div class="detials_layout">
+
     <detailsMain :key="key"></detailsMain>
   </div>
 </template>
 
 <script setup>
-import detailsMain from "./match-details.vue";
+ import detailsMain from "./match-details.vue";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
