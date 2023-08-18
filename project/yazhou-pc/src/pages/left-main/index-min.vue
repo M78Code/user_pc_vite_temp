@@ -7,15 +7,15 @@
       <div class="item-wrap column items-center yb-padding-t5">
         <!-- 投注记录 -->
         <div @click.stop="menu_item_click('bet_history')" class="menu-item">
-          <img class="menu_mini-bet" src="public/image/yabo/svg/menu_mini_bet.svg" />
+          <img class="menu_mini-bet" :src="menu_mini_bet_svg" />
         </div>
         <!-- 现场滚球 -->
         <div @click.stop="new_menu_click(1)" class="menu-item">
-          <img width="22" src="public/image/yabo/png/play-match.png" />
+          <img width="22" :src="play_match" />
         </div>
         <!-- 热门赛事 -->
         <div @click.stop="new_menu_click(500)" class="menu-item">
-          <img width="18" src="public/image/yabo/svg/hot.svg" />
+          <img width="18" :src="hot_svg" />
         </div>
         <!-- 迷你菜单分割线 -->
         <div class="dividing-line"></div>
@@ -35,6 +35,12 @@
   </div>
 </template>
 <script setup>
+
+import play_match from "project_path/image/png/play-match.png";
+import hot_svg from "project_path/image/svg/hot.svg"
+import menu_mini_bet_svg from "project_path/image/svg/menu_mini_bet.svg"
+
+
 // import icon_success from "src/assets/images/icon_success.png";
 // import icon_success from "src/assets/images/icon_success.png";
 // import icon_success from "src/assets/images/icon_success.png";

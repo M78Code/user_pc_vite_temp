@@ -51,18 +51,16 @@
       </template>
 
       <!-- 滚动：内容 --------------------------------->
-      <template>
-        <!-- 菜单项 -->
-        <left-main-menu />
+      <!-- 菜单项 -->
+      <left-main-menu />
 
-        <!-- 历史记录 -->
-        <div v-if="layout_left_show == 'bet_history'" class="col">
-          <bet-record-view @set_scroll_this="set_scroll_this" />
-        </div>
-        <!-- 投注栏 -->
-        <left-main-bet />
-
-      </template>
+      <!-- 历史记录 -->
+      <div v-if="layout_left_show == 'bet_history'" class="col">
+        <bet-record-view @set_scroll_this="set_scroll_this" />
+      </div>
+      <!-- 投注栏 -->
+      <left-main-bet />
+      
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
         <template v-if="get_is_virtual_bet">
