@@ -1,3 +1,12 @@
+/**
+ * 主要列表 
+ * H5 是走虚拟算法的 主列表 
+ * PC 是走框架算法的 主列表 
+ * 
+ * 这个不含  match-small-list-data.js  的应用  场景
+ * 
+ */
+
 
 import{ 
   sport_match_count as sport_match_count_template, 
