@@ -2,7 +2,6 @@
   <div>
     <!-- 骨架屏  -->
     <!-- <SDetails v-if="skeleton_finish"/> -->
-    <div>details</div>
     <div
       class="details-fat scroll relative-position"
       :class="{

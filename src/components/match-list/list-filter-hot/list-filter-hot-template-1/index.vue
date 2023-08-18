@@ -36,12 +36,12 @@
 <script>
 
 import { defineProps, ref, onMounted } from 'vue';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
 import { i18n } from 'src/boot/i18n.js'
-const props = defineProps({ ...useProps });
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const current_menu = ref('')
 const name = ref('list_filter_hot')
 const top_logos = ref([

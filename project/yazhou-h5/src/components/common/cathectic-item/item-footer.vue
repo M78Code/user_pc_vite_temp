@@ -195,30 +195,30 @@ let { t } = useI18n()
               res = t('bet_record.invalid');
             } else {
               if (betresult == 4 || betresult == 5) {
-                class_foter = 'red'
-                is_win = true
+                class_foter.value = 'red'
+                is_win.value = true
               }
               res =  bet_result[betresult] || '';
             }
           } else {
             //串关
             if (props.data_f.outcome == 4 || props.data_f.outcome == 5) {
-              class_foter = 'red'
-              is_win = true
+              class_foter.value = 'red'
+              is_win.value = true
             }
             res = outcome[props.data_f.outcome] || t('bet_record.successful_betting')
           }
           break;
         case '2':
-          class_foter = 'black'
+          class_foter.value = 'black'
           res = t('bet_record.invalid_bet')
           break;
         case '3':
-          class_foter = 'orange'
+          class_foter.value = 'orange'
           res = t('bet_record.confirming')
           break;
         case '4':
-          class_foter = 'red'
+          class_foter.value = 'red'
           res = t('bet.bet_err')
           break;
         default:

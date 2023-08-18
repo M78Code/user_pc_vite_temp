@@ -70,10 +70,8 @@
   // inject:['match_list_card'],
 
 import { computed, defineProps, onMounted, onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from 'src/store-redux/index.js'
 import loadData from "src/public/components/load_data/load_data.vue"
@@ -88,7 +86,8 @@ import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from ( /* webpack
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from ( /* webpackChunkName: "details" */ "src/components/match-list/match-type-champion/index.js")
 
 let state = store.getState();
-const props = defineProps({ ...useProps });
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 // 当前列表类型
 const match_list_type = ref(this.match_list_card.match_list_mapping_relation_obj_type)
 // 卡片样式对象

@@ -1,5 +1,5 @@
 <!--
- * @Author: 
+ * @Author:
  * @Description: bw3新版投注记录页处理滚动的组件
 -->
 <template>
@@ -18,7 +18,7 @@
 import { ref, onUnmounted} from 'vue'
   const props = defineProps({
     //加载回调
-    'onPull': { 
+    'onPull': {
       type: Function,
       default: true
     },
@@ -54,22 +54,22 @@ import { ref, onUnmounted} from 'vue'
      */
     const onScroll = (e) => {
       //列表总高度
-      let listHeight = myScrollList.value.offsetHeight; 
+      let listHeight = e.target.offsetHeight;
       //当前滚动条位置
-      let listScrollTop = e.target.scrollTop + myScroll.value.offsetHeight; 
+      let listScrollTop = e.target.scrollTop + listHeight;
       if (state.value == 0 && listHeight - listScrollTop < 100) {
-        this.bottomCallback()
+        bottomCallback()
       }
     }
     /**
      *@description 加载回调
-     *@param {Undefined}  
+     *@param {Undefined}
      *@return {Undefined} undefined
      */
     const bottomCallback = () => {
       if (state.value != 7) {
         state.value = 4
-        onPull(state.value)
+        props.onPull(state.value)
       }
     }
     onUnmounted(() => {
@@ -78,7 +78,9 @@ import { ref, onUnmounted} from 'vue'
       // this.$data[key] = null
     // }
     })
-
+defineExpose({
+  setState
+})
 </script>
 <style lang="scss" scoped>
 .my-scroll {

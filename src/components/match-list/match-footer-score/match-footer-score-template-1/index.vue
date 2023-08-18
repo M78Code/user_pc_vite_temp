@@ -63,14 +63,14 @@
 
 import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
 import { i18n } from 'src/boot/i18n.js'
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
 import { get_match_status } from 'src/core/utils/index.js'
 import lodash from 'lodash';
 let state = store.getState();
-const props = defineProps({ ...useProps });
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 const more_right_icon = ref(false);
 const more_left_icon = ref(false);
 const stage_score = ref(null);
