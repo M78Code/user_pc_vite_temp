@@ -166,6 +166,9 @@ class MenuData {
       db.match_info.bulkAdd(db_data, "mi");
     }
   }
+  get_menu_list(){
+    console.error(base_data_instance,"base_data_instance===")
+  }
   /**
    * @description: 球类id
    * @param {String} id 球类id

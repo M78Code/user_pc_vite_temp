@@ -2,21 +2,25 @@
 <template>
     <div class="yb-h5-layout-header" >
       <!-- 一级菜单 -->
+
      <ul>
         <li>滚球</li>
         <li>早盘</li>
         <li>电竞</li>
      </ul>
+     {{ menu_obj.get_menu_list() }}
     </div>
   </template>
   
   <script setup>
-  import { onMounted, ref, reactive } from 'vue'
+  import { onMounted, ref } from 'vue'
   import store from "src/store-redux/index.js";
-  import menu_obj1 from "src/core/menu-h5/menu-data-class.js";
+  import menu_obj from "src/core/menu-h5/menu-data-class.js";
+  const menu_list = ref([]);
   onMounted(()=>{
-    console.error(menu_obj1,"menudata")
+    menu_list.value = menu_obj.get_menu_list()
   })
+  
   </script>
  <style lang="scss" scoped>
  .yb-h5-layout-header {
