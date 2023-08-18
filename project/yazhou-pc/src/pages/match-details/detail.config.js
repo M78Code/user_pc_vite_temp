@@ -17,6 +17,7 @@ import { axios_loop } from "src/core/http/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays } from "src/core/formart/index";
+import { formatTime } from "src/core/formart/module/format-time.js";
 
 import { uid } from "quasar";
 
@@ -106,7 +107,7 @@ const router = useRouter();
    * @description: 计算各球种背景图片todo
    * @return {undefined} undefined
    */
-  watch(()=>state.sportId, (val) => {
+  watch(()=>state.sportId, (res) => {
      let img = details.computed_background(String(res))
      if(img) state.background_img = img
   });
@@ -358,7 +359,7 @@ const router = useRouter();
     };
     let api_ = null;
     // 判断是电竞还是其他赛种玩法
-    if (is_eports_csid(state.sportId)) {
+    if (utils.is_eports_csid(state.sportId)) {
       // 动态配置玩法集单局玩法的请求字段
       Object.assign(params, { round: state.currentRound });
       // 电竞赛事详情页玩法投注项
@@ -465,9 +466,8 @@ const router = useRouter();
       state.details_loading_time_record[0].duration =
         end_time - state.details_loading_time_record[0].start_time;
       state.details_loading_time_record[0].end_time = end_time;
-      state.details_loading_time_record[0].end = new Date(end_time).Format(
-        "yyyy-MM-dd hh:mm:ss"
-      );
+      state.details_loading_time_record[0].end = formatTime(new Date(end_time), "yyyy-MM-dd hh:mm:ss")  
+      
       state.details_loading_time_record[0].status = status;
       state.details_loading_time_record[0].mid = state.mid;
       sessionStorage.setItem(
@@ -499,6 +499,7 @@ const router = useRouter();
    * @param {function} callback 判断是否调玩法列表接口
    */
   const get_category_list = (callback) => {
+    console.log(111111111111111)
     //sportId 球类id、mid 赛事id
     let params = { sportId: state.sportId, mid: route.params.mid };
 
@@ -507,6 +508,7 @@ const router = useRouter();
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
+        console.log(1111111111111)
         if (!state.match_info_ctr) {
           return;
         }
@@ -601,7 +603,7 @@ const router = useRouter();
     // 同步投注项
     if (!get_lang_change.value) {
       if (
-        is_eports_csid(route.params.csid) ||
+        utils.is_eports_csid(route.params.csid) ||
         menu_config.is_virtual_sport()
       ) {
         this.virtual_common.upd_bet_obj(this, timestap, this.mid); //TODO
@@ -658,7 +660,7 @@ const router = useRouter();
     state.details_loading_time_record = [
       {
         duration: "",
-        start: new Date(start_time).Format("yyyy-MM-dd hh:mm:ss"),
+        start:formatTime(new Date(start_time),"yyyy-MM-dd hh:mm:ss") ,
         end: "",
         start_time: start_time,
         end_time: 0,
@@ -740,9 +742,9 @@ const router = useRouter();
       state.mid = mid; // 赛事id
       state.sportId = sportId; // 赛种 id
       // 电竞不用切右侧
-      if (!is_eports_csid(sportId)) {
+      if (!utils.is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
-        store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
+        // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
       }
       // 初始化详情页数据
       // this.init = lodash.debounce(this.init, 2000, { leading: true });

@@ -1,11 +1,10 @@
 <!-- 页面头部容器-->
 <template>
   <!-- v-show="route.params.video_size != 1" -->
-  <div class="yb-layout-margin-header" :class="{ 'activity_bonus': has_bonus_type }">
-    <site-header  v-bind="site_header_data"
-      @navigate="navigate" />
-    <!-- 第二行 -->
-    <div :class="['header-item item2 row items-center', { 'search-off': !global_switch.search_switch }]"
+  <div class="yb-layout-margin-header c-site-header relative-position" :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }">
+    <site-header v-bind="site_header_data" @navigate="navigate" />
+     <!-- 第二行 -->
+     <div :class="['header-item item2 row items-center', { 'search-off': !global_switch.search_switch }]"
       :style="search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
       <header-search />
@@ -16,19 +15,22 @@
       <!-- 广告 & 语言主题等切换 -->
       <header-select />
     </div>
-    <timer />
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import store from "src/store-redux/index.js";
+import { useI18n } from "vue-i18n";
+
+import store from 'src/store-redux/index.js'
+import utils from "src/core/utils/utils.js"
+
 /** 组件 */
 import siteHeader from 'project_path/src/components/site-header/site-header.vue'
 import headerSearch from 'project_path/src/components/site-header/header-search.vue'
 import marquee from "project_path/src/components/marquee/marquee.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
-import timer from "project_path/src/components/site-header/timer.vue"
+// import timer from "project_path/src/components/site-header/timer.vue"
 
 const props = defineProps({
   /** 
@@ -39,6 +41,9 @@ const props = defineProps({
     default: false
   }
 })
+
+/** 国际化 */
+const { t } = useI18n();
 
 /** mock 菜单数据 */
 let nav_list = [
@@ -102,23 +107,6 @@ const site_header_data = reactive({
   /** 是否有活动入口 */
   has_activity: false,
 })
-
-/** stroe仓库 */
-const store_data = store.getState()
-/** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const { global_switch } = store_data.globalReducer
-/** 
-* 是否显示搜索组件 default: false
-* 路径: project_path\src\store\module\search.js
-*/
-const { search_isShow } = store_data.searchReducer
-
-
-/** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
 
 /**
  * @description 导航路由跳转
@@ -222,215 +210,25 @@ function navigate(obj) {
   }
 }
 
-/**
- * @description 设置顶部菜单
- * @param {number} type  类型(null-自然触发，1-导航栏二次触发，2-切换语言)
+/** stroe仓库 */
+const store_data = store.getState()
+/** 
+ * 全局开关 default: object
+ * 路径: project_path\src\store\module\global.js
  */
-function init_site_header(type = null) {
-  let nav_list = [
-    { id: 1, tab_name: t("common.sports_betting"), path: "/home" }, //体育投注
-    {
-      id: 2,
-      tab_name: t("common.note_single_history"),
-      path: "/bet_record",
-      _blank: true,
-    }, //注单历史
-    // { id: 8, tab_name: t("common.e_sports"), path: "" }, //电子竞技
-    //{ id: 3, tab_name: t("common.winning_champions"), path: "" }, //优胜冠军
-    {
-      id: 4,
-      tab_name: t("common.amidithion"),
-      path: "/match_results",
-      _blank: true,
-    }, //赛果
-    // { id: 5, tab_name: t("common.score_center"), path: "" }, //比分中心
-    // { id: 6, tab_name: t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
-    {
-      id: 7,
-      tab_name: t("common.sports_betting_rules"),
-      path: "/rule",
-      _blank: true,
-    }, //体育竞猜规则
-    {
-      "id": 9,
-      "tab_name": "任务中心",
-      "img_src": "https://image.gredfged.com/group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
-      "class": "activity_center animate-activity-entry activity_dot_bonus",
-      "path": "/activity",
-      "_blank": true
-    },
-  ];
-  // 判断是否有活动
-  let activityList = get(computed_data.get_user, "activityList");
-  // 多语言屏蔽活动入口
-  if (
-    activityList &&
-    activityList.length > 0 &&
-    computed_data.lang == "zh" &&
-    computed_data.get_global_switch.activity_switch
-  ) {
-    data_ref.hasActivity = true;
-    // 向顶部导航栏添加活动入口
-    let tab = {
-      id: 9,
-      tab_name: "任务中心",
-      img_src: "",
-      class: "activity_center animate-activity-entry activity_dot_bonus",
-      path: "/activity",
-      _blank: true,
-    };
-    // 获取活动入口的图片
-    let imgUrl = activityList.find((item) => item.pcUrl != "");
-    if (imgUrl) {
-      imgUrl = imgUrl.pcUrl;
-    }
-    imgUrl = get_file_path(imgUrl);
-    // 活动入口的图片，如果接口未返回就用默认图片
-    tab.img_src =
-      imgUrl || require("app/public/image/activity_imgs/imgs/gift_package.png");
-    nav_list.push(tab);
-    activityList.forEach((item) => {
-      data_ref.activityIds += item.activityId + ",";
-    });
-    activityTimer();
-    activity_timer = setTimeout(
-      () => getActivityLists({ id: 1, type: "init_nav" }),
-      1000
-    );
-  }
-  if (type != 2) {
-    // 运营位专题页
-    special_page();
-  }
+const { global_switch } = store_data.globalReducer
+/** 
+* 是否显示搜索组件 default: false
+* 路径: project_path\src\store\module\search.js
+*/
+const { search_isShow } = store_data.searchReducer
 
-  // 运营位弹窗,如果当前是最新版本就直接展示弹窗，如果不是，就延迟几秒再展示
-  if (type == null) {
-    // type 为 null 是自然触发，如果 == 1就是导航栏二次触发，不要更新这里
-    if (new_version) {
-      timeOutIds.timer2 = setTimeout(() => {
-        activity_dialog();
-      }, 3000);
-    } else {
-      if (timeOutIds.timer2) {
-        clearTimeout(timeOutIds.timer2);
-      }
-      timeOutIds.timer2 = setTimeout(() => {
-        activity_dialog();
-      }, 5000);
-    }
-  }
-  data_ref.nav_list = nav_list;
-  // useMittEmit(MITT_TYPES["close_home_loading"], false);
 
-  // 菜单初始化 因为菜单是去轮询的 so
-  // 因为设置菜单是500s
-  set_menu_init_time(600);
+/** 是否内嵌 */
+const is_iframe = ref(utils.is_iframe)
 
-  init_reset_time = setTimeout(() => {
-    // 本身商户的设置有缓存 所以频率太快
-    set_menu_init_time(5000);
-    clearTimeout(init_reset_time);
-  }, 2000);
-}
-
-/**
- * @Description 菜单初始化完成
- * @param {undefined} undefined
- */
-function menu_init_done() {
-  let nav_list = [...data_ref.nav_list];
-  // 如果有电竞
-  if (base_data.is_mi_2000_open) {
-    if (nav_list.findIndex((i) => i.id == 5) == -1) {
-      nav_list.splice(1, 0, {
-        id: 5,
-        tab_name: t("common.e_sports"),
-        path: "/e_sport",
-      });
-    }
-  } else {
-    let index = nav_list.findIndex((i) => i.id == 5);
-    if (index > -1) {
-      nav_list.splice(index, 1);
-    }
-  }
-  // 如果有虚拟体育
-  if (base_data.is_mi_300_open) {
-    if (nav_list.findIndex((i) => i.id == 3) == -1) {
-      let e_index = nav_list.findIndex((i) => i.id == 5);
-      if (e_index == -1) {
-        e_index = 1;
-      } else {
-        e_index++;
-      }
-      nav_list.splice(e_index, 0, {
-        id: 3,
-        tab_name: t("common.virtuals"),
-        path: "",
-        class: "tab_virtaul_sport",
-      });
-    }
-  } else {
-    let index = nav_list.findIndex((i) => i.id == 3);
-    if (index > -1) {
-      nav_list.splice(index, 1);
-    }
-  }
-  // console.error('nav_list',nav_list)
-  let old_nav = JSON.stringify(data_ref.nav_list);
-  let new_nav = JSON.stringify(nav_list);
-  // 对比菜单
-  if (old_nav != new_nav) {
-    data_ref.nav_list = [...nav_list];
-  }
-  // console.error('ssssss',base_data.is_mi_2000_open,'----1111---'+base_data.is_mi_300_open)
-}
-
-// // 检测到语言变化之后初始化导航
-watch(
-  () => [computed_data.lang],
-  () => {
-    init_site_header(2);
-  }
-);
-
-// 首次加载页面的时候 activityList 会出现没值的情况，所以等有值了再初始化一下导航
-watch(
-  () => computed_data.get_user?.activityList,
-  (new_) => {
-    // 没渲染上的时候才再次调用
-    if (data_ref.hasActivity != true) {
-      data_ref.isMaintaining = get(computed_data.get_user, "maintaining");
-      if (new_ && new_.length > 0) {
-        init_site_header(1);
-      }
-    }
-  }
-);
-//全局点击事件
-watch(
-  () => computed_data.get_global_click,
-  () => {
-    data_ref.showActivity = false;
-  }
-);
-
-//全局开关
-watch(
-  () => computed_data.get_global_switch.activity_switch,
-  () => {
-    init_site_header();
-  }
-);
-
-/**
- * 定时请求菜单
- * */
- function set_menu_init_time(number) {
-  clearInterval(menu_init_time);
-  // 菜单初始化 因为菜单是去轮询的
-  menu_init_time = setInterval(() => {
-    menu_init_done();
-  }, number);
-}
 </script>
+
+<style lang="scss" scoped>
+@import 'project_path/src/components/site-header/site-header.scss';
+</style>

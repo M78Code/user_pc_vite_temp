@@ -26,7 +26,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 
@@ -35,12 +35,43 @@ import { api_account } from "src/api/index.js";
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { menuReducer } = store_data
+const { menuReducer, themeReducer } = store_data
 /** 
  * main_menu_toggle 左侧列表显示形式 normal：展开 mini：收起
  * 路径: project_path\src\store\module\menu.js
  */
 const { main_menu_toggle } = menuReducer
+
+/** 
+* 用户余额是否展示状态 default: theme01
+* 路径: project_path/src/store/module/theme.js
+*/
+const { theme } = themeReducer
+/**
+ * 切换皮肤的时候重新启动计时器
+ */
+watch(
+    () => theme,
+    (o) => {
+        clearInterval(showBannerSwipperTimer.value);
+        currentSwipperArr = []
+        if (o && o.includes('theme01')) {
+            if (daySwipper.length > 0) {
+                currentSwipperArr = daySwipper;
+            }
+        } else {
+            if (nightSwipper.length > 0) {
+                currentSwipperArr = nightSwipper;
+            }
+        }
+        // 图片大于一张开启轮播
+        if (currentSwipperArr.length > 1) {
+            showBannerSwipperTimer.value = setInterval(() => {
+                autoPlay()
+            }, 7000)
+        }
+    }
+)
 
 
 /** 是否切换到上一张图片 */
@@ -128,32 +159,6 @@ function boxMouseup(type) {
 function change(index) {
     currentSwipperIndex.value = index
 }
-
-/**
- * 切换皮肤的时候重新启动计时器
- */
-watch(
-    () => theme,
-    (o) => {
-        clearInterval(showBannerSwipperTimer.value);
-        currentSwipperArr = []
-        if (o && o.includes('theme01')) {
-            if (daySwipper.length > 0) {
-                currentSwipperArr = daySwipper;
-            }
-        } else {
-            if (nightSwipper.length > 0) {
-                currentSwipperArr = nightSwipper;
-            }
-        }
-        // 图片大于一张开启轮播
-        if (currentSwipperArr.length > 1) {
-            showBannerSwipperTimer.value = setInterval(() => {
-                autoPlay()
-            }, 7000)
-        }
-    }
-)
 
 /** TODO:
  * 运营位活动弹窗
