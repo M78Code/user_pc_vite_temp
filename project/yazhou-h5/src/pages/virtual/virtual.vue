@@ -406,14 +406,15 @@ export default defineComponent({
       }
 
       /*  刷新按钮 */
-      @include keyframes(loading-ring-animate) {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
+      // #TODO 
+      // @include keyframes(loading-ring-animate) {
+      //   0% {
+      //     transform: rotate(0deg);
+      //   }
+      //   100% {
+      //     transform: rotate(360deg);
+      //   }
+      // }
 
       .virtual-ref {
         width: 0.4rem;
