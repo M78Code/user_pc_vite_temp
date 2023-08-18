@@ -36,9 +36,9 @@
 </template>
 <script setup>
 
-import play_match from "project_path/image/png/play-match.png";
-import hot_svg from "project_path/image/svg/hot.svg"
-import menu_mini_bet_svg from "project_path/image/svg/menu_mini_bet.svg"
+import play_match from "/public/yazhou-pc/image/png/play-match.png";
+import hot_svg from "/public/yazhou-pc/image/svg/hot.svg"
+import menu_mini_bet_svg from "/public/yazhou-pc/image/svg/menu_mini_bet.svg"
 
 
 // import icon_success from "src/assets/images/icon_success.png";
