@@ -3,7 +3,7 @@
         <div v-show="!search_isShow" @click.stop="search_hot_push.go_to_details()" class="search-wrap"
             :class="main_menu_toggle">
             <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
-                {{ search_hot_push.hot_push_name }}</div>
+                {{ search_hot_push.hot_push_name || t('common.search') }}</div>
             <icon class="icon"
                 :name="!['theme01_y0', 'theme02_y0'].includes(theme) ? `img:${img_search_icon}` : `img:${img_search_icon_y0}`"
                 size="14px" />
@@ -28,15 +28,20 @@ import { useRoute } from 'vue-router';
 
 import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js"
-import { useMittEmit } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
-import { tooltip_style } from 'src/core/config/global-component-style.js.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { tooltip_style } from 'src/core/config/global-component-style.js'
+import utils from "src/core/utils/utils.js"
+
+import icon from 'src/components/icon/icon.vue'
 
 import img_search_icon from 'app/public/yazhou-pc/image/svg/search-icon.svg'
 import img_search_icon_y0 from 'app/public/yazhou-pc/image/svg/y0-search-icon.svg'
 
 /** 国际化 */
 const { t } = useI18n();
+
+/** 是否内嵌 */
+const is_iframe = ref(utils.is_iframe)
 
 /** stroe仓库 */
 const store_data = store.getState()
@@ -113,6 +118,6 @@ function handle_menu_collapse() {
 }
 </script>
 
-<style lang="scss" scoped>
-@import './site-header.scss';
+<style lang="scss">
+// @import './site-header.scss';
 </style>

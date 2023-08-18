@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import { useI18n } from "vue-i18n";
 
 import store from "src/store-redux/index.js";

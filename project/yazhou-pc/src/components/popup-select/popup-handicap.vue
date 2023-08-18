@@ -5,7 +5,7 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ t('odds')[vx_cur_odd] }}</div>
+            <div class="popup-text" :class="{ active: is_active }">{{ t('odds')[cur_odd] }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
         <div class="relative-position">
@@ -13,7 +13,7 @@
                 <div class="triangle"></div>
                 <template v-for="(item, index) in odds_constant">
                     <div v-if="['EU', 'HK'].includes(item.value)" :key="index" class="item"
-                        :class="vx_cur_odd == item.value && 'active'" @click="on_click_handicap(item)">{{ item.label }}
+                        :class="cur_odd == item.value && 'active'" @click="on_click_handicap(item)">{{ item.label }}
                     </div>
                 </template>
             </div>
@@ -40,7 +40,17 @@ const hits = ref(0)
 /** 盘口切换弹窗是否激活 */
 const is_active = ref(false)
 
-const vx_cur_odd = ref('')
+const {
+    userReducer,
+    menuReducer,
+    layoutReducer,
+    globalReducer,
+    betInfoReducer,
+    detailsReducer,
+    langReducer,
+} = store.getState();
+const cur_odd = ref(globalReducer.odds.cur_odds)
+
 
 /**
 * @Description:显示切换盘口弹层
@@ -68,14 +78,14 @@ function on_popup() {
  * @return {undefined} undefined
  */
 function on_click_handicap(row) {
-    if (vx_cur_odd.value != row.value) {
+    if (cur_odd.value != row.value) {
         set_user_preference(row.value);
     }
 }
 
 function set_user_preference(curr_odd) {
     if (curr_odd) {
-        let old_odd = vx_cur_odd.value
+        let old_odd = cur_odd.value
         let old_pre_odd = proxy.vx_get_pre_odd
         set_pre_odd(curr_odd);
         set_cur_odd(curr_odd);
