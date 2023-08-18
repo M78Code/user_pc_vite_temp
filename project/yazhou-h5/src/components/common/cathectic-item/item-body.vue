@@ -61,7 +61,6 @@ let { t } = useI18n()
     }
   })
   onMounted(() => {
-    console.error(props.is_pre);
     rules_normal();
     rules_a();
     rules_b();

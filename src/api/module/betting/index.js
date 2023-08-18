@@ -101,6 +101,8 @@ export const getPreSettleOrderDetail = (params, config, url = "/order/betRecord/
 export const orderPreSettle = (params, config, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config)
 // 查询待确认中的提前结算单（joken）
 export const queryOrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix}${url}`, params, config)
+// 查询待确认中的提前结算单（joken）
+export const queryH5OrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix3}${url}`, params, config)
 // 获取额度接口合并（joken）
 export const queryBetAmount = (params, config, url = "/v1/betOrder/queryBetAmountPB") => http.post(`${prefix}${url}`, params, config)
 //获取预约限额接口（david）
