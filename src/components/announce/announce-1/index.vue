@@ -29,7 +29,7 @@ import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
 import { useI18n } from 'vue-i18n'
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
+import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })

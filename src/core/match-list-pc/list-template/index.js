@@ -1,4 +1,4 @@
-import  * as template_1_config from "./module/template-1.js"
+import  * as template_1_config from "./module/template-0.js"
 import  * as template_2_config from "./module/template-2.js"
 import  * as template_3_config from "./module/template-3.js"
 import  * as template_5_config from "./module/template-5.js"

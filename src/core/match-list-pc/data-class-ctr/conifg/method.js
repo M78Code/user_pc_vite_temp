@@ -1,8 +1,4 @@
-/*
- * @Author: nuanyang
- * @Date: 2022-08-23 14:12:38
- * @Description: 构建模板的一些方法
- */
+import lodash from 'lodash';
 
 /**
     * @Description 设置默认模板
@@ -29,9 +25,9 @@ const set_default_tpl = (num, ol_template, ol_count = 3) => {
  */
 const update_tpl_hpid = (hpid, temp_arr,calssName) => {
     let new_temp_arr = []
-    _.each(temp_arr, hl => {
+    lodash.each(temp_arr, hl => {
         let ols = []
-        _.each(hl.ols, ol => {
+        lodash.each(hl.ols, ol => {
             let cur_ol_template = { ...ol }
             ol._hpid && (cur_ol_template._hpid = hpid)
                 if(calssName && ol.ot === 'Other'){
@@ -49,7 +45,7 @@ const update_tpl_hpid = (hpid, temp_arr,calssName) => {
  */
 const clone_arr = (arr) => {
     let new_arr = []
-    _.merge(new_arr, arr || [])
+    lodash.merge(new_arr, arr || [])
     return new_arr
 }
 
@@ -63,7 +59,7 @@ const clone_arr = (arr) => {
 const set_tpl_13_config = (template_0, template_13) => {
     let template_13_confg = {}
     let tem_name = Object.keys(template_13)
-    _.each(tem_name, cur_tem_name => {
+    lodash.each(tem_name, cur_tem_name => {
         template_13_confg[cur_tem_name] = [
             ...clone_arr(template_0[cur_tem_name]),
             ...clone_arr(template_13[cur_tem_name]),
@@ -80,7 +76,7 @@ const set_tpl_13_config = (template_0, template_13) => {
 
 const created_add_temp_config = (main_temp) => {
     let add_temp = []
-    _.each(main_temp, col => {
+    lodash.each(main_temp, col => {
        let ols = col.ols.slice(0,2)
        add_temp.push({ols})
     })

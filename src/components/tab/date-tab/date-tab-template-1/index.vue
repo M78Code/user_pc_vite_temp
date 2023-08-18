@@ -68,7 +68,7 @@ import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
+import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({ ...useProps })

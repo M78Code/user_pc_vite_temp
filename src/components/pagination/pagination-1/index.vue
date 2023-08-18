@@ -71,7 +71,7 @@
 </template>
 <script setup>
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
+import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { useGetValue } from './use-value'
 import { watch } from 'vue'
