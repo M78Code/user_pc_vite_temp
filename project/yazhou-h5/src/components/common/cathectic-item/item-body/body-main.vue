@@ -188,9 +188,6 @@ const props =defineProps({
   // 路由
   const route = useRoute()
 
-  onMounted(() => {
-    console.error(props.main);
-  })
     // ...mapGetters(["get_main_item", "get_theme", "get_menu_type", "get_lang"]),
     //单关已结算投注成功（orderStatus == 1）时，不在此位置显示结算比分
   const calc_settle_score = computed(() => {
