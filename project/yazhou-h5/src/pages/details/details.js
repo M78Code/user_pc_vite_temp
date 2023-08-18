@@ -2,7 +2,7 @@ import lodash from "lodash";
 import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
-import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
+// import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export const details_main = () => {
 const router = useRouter();
@@ -114,7 +114,7 @@ const route = useRoute();
     get_current_menu: "get_current_menu",
     // 是否从直播进入详情
     get_play_video: "get_play_video",
-    get_detail_data: "get_detail_data",
+    get_detail_data: {},
     // 视频是否全屏
     get_is_full_screen: "get_is_full_screen",
     // 商户是否需要直接跳到列表页（url地址有label参数）
@@ -144,7 +144,8 @@ const route = useRoute();
   const show_match_analysis_tab = computed(() => {
     return (
       [1, 2].includes(+data.get_detail_data.csid) &&
-      lodash.get(get_access_config, "statisticsSwitch")
+      // lodash.get(get_access_config, "statisticsSwitch")
+      true
     );
   });
   // 是否显示聊天室tab
@@ -158,8 +159,8 @@ const route = useRoute();
   });
   // 判断页面滑动的高度 是否显示置顶change-header
   const scroll_visible = computed(() => {
-    // return data.scroller_scroll_top >= rem(1.65);
-    return data.scroller_scroll_top >= 100;
+    return data.scroller_scroll_top >= rem(1.65);
+    // return data.scroller_scroll_top >= 100;
   });
   //接口请求是否全部完成
   const skeleton_finish = computed(() => {
@@ -304,13 +305,13 @@ const route = useRoute();
         dom_box.scrollTop = 0;
       }
       // 切换玩法集后滚动至首个玩法名称处
-      // else if (data.scroller_scroll_top > rem(1.65)) {
-      //   dom_box.scrollTop = rem(1.67);
-      // }
+      else if (data.scroller_scroll_top > rem(1.65)) {
+        dom_box.scrollTop = rem(1.67);
+      }
       // 当点开视频或者动画时,设置玩法区域的高度
-      // if(get_tab_fix){
-      //   dom_box.scrollTop = rem(0);
-      // }
+      if(get_tab_fix){
+        dom_box.scrollTop = rem(0);
+      }
     });
   };
 
@@ -369,12 +370,12 @@ const route = useRoute();
       (!!osTop && osTop + 12 >= px160) ||
       (data.startY - e.targetTouches[0].pageY) * 1.55 >= px160
     ) {
-      fixed_status = true;
+      data.fixed_status = true;
     } else if (
       data.fixedHeight.scrollTop == 0 &&
       (e.targetTouches[0].pageY - data.startY) * 1.5 >= px160
     ) {
-      fixed_status = false;
+      data.fixed_status = false;
     }
   };
   // 监听reset_set_hton事件(详情页投注项点击置顶),设置详情页玩法集合区域的高度为0
@@ -566,9 +567,9 @@ const route = useRoute();
 
       data.requestCount = 0;
       data.is_show_detail_header_data = true;
-      // data.detail_data = res_data;
+      data.detail_data = res_data;
       // #TODO 暂时使用假数据
-      data.detail_data = Level_one_detail_data();
+      // data.detail_data = Level_one_detail_data();
       data.math_list_data = [res_data];
       // updateHotReqTime(Date.now())
 
@@ -576,6 +577,8 @@ const route = useRoute();
       let cloneData = lodash.cloneDeep(res_data);
       // set_detail_data(cloneData);
       // store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
+
+      data.get_detail_data = cloneData;
 
       // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
       let params1 = { sportId: res_data.csid, mid: matchid.value };
@@ -640,7 +643,7 @@ const route = useRoute();
     params = { sportId: data.get_detail_data.csid, mid: matchid.value },
     init_req
   ) => {
-    data.data_list = Level_one_category_list();
+    // data.data_list = Level_one_category_list();
     const _get_category_list = () => {
       // #TODO 暂时使用假数据
 
@@ -706,7 +709,7 @@ const route = useRoute();
     //   let info = get_category_list_debounce.can_send_request(params);
     //   if(info.can_send){
     //     //直接发请求    单次数 请求的方法
-    //     _get_category_list();
+        _get_category_list();
     //   }else{
     //     // 记录timer
     //     clearTimeout(axios_debounce_timer)
@@ -857,8 +860,8 @@ const route = useRoute();
   const detail_scroller_height = () => {
     // 投注栏收起后的底部条预留空间
     if (data.get_betbar_show) {
-      // data.scroller_height = window.innerHeight - rem(0.5);
-      data.scroller_height = window.innerHeight - 100;
+      data.scroller_height = window.innerHeight - rem(0.5);
+      // data.scroller_height = window.innerHeight - 100;
     } else {
       data.scroller_height = window.innerHeight;
     }

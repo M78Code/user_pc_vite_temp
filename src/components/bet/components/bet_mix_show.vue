@@ -648,8 +648,6 @@ watch(() => query_order_obj, (new_) => {
 /** --------------------------watch结束 ---------------*/
 
 /** --------------------------computed 开始---------------*/
-// ...mapGetters(['get_cur_odd','get_pre_market_data','get_is_conflict','get_user','get_active_index', 'get_theme', 'get_lang', 'get_is_champion', 'get_menu_type', 'get_is_combine', 'get_new_bet', 'get_bet_status.value', 'get_order_no',
-//      'get_bet_status.value', 'get_bet_list', 'get_bet_obj', 'get_is_accept', 'get_is_mix.value', 'get_bet_success']),
 //足球或者篮球的让球玩法集合
 const rq_play_list = computed(() => {
   return value_show.csid == 1 ? FOOTBALL_PLAY_LET_BALL : BASKETBALL_PLAY_LET_BALL

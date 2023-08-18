@@ -1,4 +1,20 @@
+    
 
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "./class/bet-data-class.js";
+import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
+import {get_bet_amount_param} from  "./bet-amount.js"
+import {http_upd_data ,bet_obj_add_attr} from  "./upd_data.js"
+import mathjs from "src/core/utils/mathjs.js"
+import yabo_common from "src/core/common-helper/common.js"
+import { uid } from "quasar";
+import {ref} from "vue"
+import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
+import axios_api_loop from "src/core/http/axios-loop.js"
+    
+const post_order_list_gcuuid = ref(uid())
 
 
     /**
@@ -7,9 +23,9 @@
      * @param {Function} callback 回调函数
      * @return {undefined} undefined
      */
-    get_bet_record_data(params, callback) {
-        this.send_gcuuid = uid();
-        params.gcuuid = this.send_gcuuid;
+    export const    get_bet_record_data=(params, callback)=> {
+        post_order_list_gcuuid.value = uid();
+        params.gcuuid =  post_order_list_gcuuid.value ;
         // console.log('get_bet_record_data====',JSON.stringify(params));
         let obj_ = {
           // axios api对象
@@ -20,13 +36,13 @@
           max_loop: 2,
           // axios中then回调方法
           fun_then: res => {
-            // console.log('get_bet_record_data=======',this.send_gcuuid === res.config.gcuuid);
-            // if(this.send_gcuuid != res.config.gcuuid) {
+            // console.log('get_bet_record_data=======', post_order_list_gcuuid.value  === res.config.gcuuid);
+            // if( post_order_list_gcuuid.value  != res.config.gcuuid) {
             //   return;
             // }
   
             let gcuuid = _.get(res,'config.gcuuid')
-            if(gcuuid && this.send_gcuuid != gcuuid) {
+            if(gcuuid &&  post_order_list_gcuuid.value  != gcuuid) {
               return;
             }
             let code = _.get(res, "data.code");
@@ -50,7 +66,7 @@
             }
           }
         }
-        this.$utils.axios_api_loop(obj_);
-      },
+       axios_api_loop(obj_);
+      }
       
   

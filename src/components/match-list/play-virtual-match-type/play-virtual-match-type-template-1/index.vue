@@ -22,10 +22,10 @@
  <script setup>
 
   import { defineProps } from 'vue';
-  import  { useRegistPropsHelper, useProps  } from "src/composables/regist-props/index.js"
+  import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
   import {component_symbol ,need_register_props} from "../config/index.js"
   useRegistPropsHelper(component_symbol, need_register_props)
-  const props = defineProps({ ...useProps })
+  const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 console.log('lockie_test_console', props);
   

@@ -17,7 +17,7 @@ import lodash from "lodash";
  * @param {*}
  * @param {*} obj 要添加的对象
  */
-const bet_single_obj_attr = (obj) => {
+export const bet_single_obj_attr = (obj) => {
   let new_obj = _.cloneDeep(BetData.bet_obj);
   // if(obj.key && (Object.keys(new_obj).indexOf(obj.key) > -1) && !(_.get(obj, 'is_update_single', false))) return;
   console.log("添加单关投注项对象----------", obj);
@@ -75,11 +75,11 @@ const bet_single_list_remove = (i) => {
  * @return {undefined} undefined
  */
 const clear_bet_single_list = () => {
-  let len = BetData.get_bet_single_list.length;
+  let len = BetData.bet_single_list.length;
   for (let index = 0; index < len; index++) {
-    let id = _.get(this, `get_bet_single_list[${index}]`);
+    let id =  BetData.bet_single_list[index]  ;
     // 投注客户端对象
-    let item_cs = _.get(this, `get_bet_single_obj.${id}.cs`, {});
+    let item_cs = _.get(BetData.bet_single_obj, `${id}.cs`, {});
     // 提交状态为已提交(submit_status=true)
     if (_.get(item_cs, "submit_status")) {
       // 移除单关投注项对象
@@ -98,8 +98,8 @@ const clear_bet_single_list = () => {
  */
 const init_bet_single_data = () => {
   _.forEach(BetData._bet_single_list, (item) => {
-    let bs = _.cloneDeep(_.get(this, `get_bet_single_obj[${item}].bs`, {}));
-    let cs = _.cloneDeep(_.get(this, `get_bet_single_obj[${item}].cs`, {}));
+    let bs = _.cloneDeep(_.get(BetData.bet_single_obj, `[${item}].bs`, {}));
+    let cs = _.cloneDeep(_.get(BetData.bet_single_obj, `[${item}].cs`, {}));
     if (_.get(cs, "submit_status")) {
       let obj = JSON.parse('{"key":"", "bs":{}, "cs":{}}');
       obj.key = item;

@@ -25,7 +25,6 @@ const item = {
   item_6: 6,
   item_7: 7,
   item_8: 8,
-
 };
 
 /**

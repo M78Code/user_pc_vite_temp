@@ -1,8 +1,21 @@
-
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "./class/bet-data-class.js";
+import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+import { get_bet_amount_param } from "./bet-amount.js";
+import { http_upd_data } from "./upd_data.js";
+import { set_submit_status } from "./status.js";
+import mathjs from "src/core/utils/mathjs.js";
+import yabo_common from "src/core/common-helper/common.js";
+import { uid } from "quasar";
+import { ref } from "vue";
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import lodash from "lodash";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
 
 
-
+const  post_submit_Bet_list_gcuuid = ref(uid())
 
 
    /**
@@ -12,20 +25,20 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
      * @param {Number} is_pre  是不是预约投注 默认false
      * @return {undefined} undefined
      */
-   bet_submit_data_template(seriesType, seriesBetAmount, item, is_pre=false) {
+  const bet_submit_data_template=(seriesType, seriesBetAmount, item, is_pre=false)=> {
     console.log('正常投注参数playOptionName处理------------1', );
     let tempList = [];
-    let bet_list_array = this.is_bet_single ? [item] : _.get(this,'get_bet_list',[]);
+    let bet_list_array = BetData.is_bet_single ? [item] : _.get(BetData,'get_bet_list',[]);
     bet_list_array.forEach(id => {
       let item_bs, item_cs;
       //单关
-      if (this.is_bet_single) {
-        item_bs = _.get(this,`get_bet_single_obj.${id}.bs`,{}); //列表的数据
-        item_cs = _.get(this,`get_bet_single_obj.${id}.cs`,{}); //组装的数据
+      if (BetData.is_bet_single) {
+        item_bs = _.get(BetData,`get_bet_single_obj.${id}.bs`,{}); //列表的数据
+        item_cs = _.get(BetData,`get_bet_single_obj.${id}.cs`,{}); //组装的数据
       } else {
         //串关
-        item_bs = _.get(this,`get_bet_obj.${id}.bs`,{});
-        item_cs = _.get(this,`get_bet_obj.${id}.cs`,{});
+        item_bs = _.get(BetData,`get_bet_obj.${id}.bs`,{});
+        item_cs = _.get(BetData,`get_bet_obj.${id}.cs`,{});
       }
       //1-单关, 2-串关 3, 冠军
       if ((seriesType == 1 && _.has(item_cs,'money')) || seriesType == 2) {
@@ -37,9 +50,9 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
         //联赛id
         temp.tournamentId = _.get(item_bs,'tid');
 
-        let msc = this.yabo_common.msc_obj_arry(_.get(item_bs,'msc',[]));
+        let msc =  yabo_common.msc_obj_arry(_.get(item_bs,'msc',[]));
         //基准分
-        temp.scoreBenchmark = this.yabo_common.calc_bifen(msc, _.get(item_bs,'csid'),  _.get(item_bs,'ms'), _.get(item_bs,'hps[0].hpid'));
+        temp.scoreBenchmark =  yabo_common.calc_bifen(msc, _.get(item_bs,'csid'),  _.get(item_bs,'ms'), _.get(item_bs,'hps[0].hpid'));
         if (temp.scoreBenchmark && temp.scoreBenchmark == "") {
           temp.scoreBenchmark = "0:0";
         }
@@ -63,8 +76,8 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
         console.warn('ssssssss',_.get(item_bs, 'hps'))
         //查找当前玩法下盘口符合调整的球头对应值的，并且是当前投注项类型 over对象，取里面的marketId 和playOptionId，
         //是预约 计算marketId和playOptionsId
-        if(is_pre && this.get_bet_appoint_obj && !_.isUndefined(this.get_bet_appoint_obj.appoint_ball_head)) {
-           let dl = this.BetDataCtr.pre_bet_list;
+        if(is_pre && BetData.bet_appoint_obj && !_.isUndefined(BetData.bet_appoint_obj.appoint_ball_head)) {
+           let dl =  BetData.pre_bet_list;
            if(dl) {
             let play_mapping_market = _.get(item_bs, 'hps[0].hl[0].ol[0].csid') == 1 ? play_mapping.MARKET_RANG_FLAG_LIST.includes(_.get(item_cs, 'play_id')) : play_mapping.BASKETBALL_BY_APPOINTMENT_let.includes(_.get(item_cs, 'play_id'))
            
@@ -81,7 +94,7 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
                 let odd_len = ml_item.marketOddsList.length;
                 for(let j = 0; j < odd_len; j++) {
                   let odd_item = ml_item.marketOddsList[j];
-                  if(_.get(dl, 'currentMarket.marketOddsList[0].oddsType',-1) == odd_item.oddsType && odd_item.playOptions == this.get_bet_appoint_obj.computed_appoint_ball_head) {
+                  if(_.get(dl, 'currentMarket.marketOddsList[0].oddsType',-1) == odd_item.oddsType && odd_item.playOptions == BetData.bet_appoint_obj.computed_appoint_ball_head) {
                       temp.playOptionsId = odd_item.id; //投注项id
                       cur_i = i;
                       break;
@@ -99,7 +112,7 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
               }
             }else{ //大小球过滤数据
              //第一步过滤出当前盘口值对应的盘口
-             let dl_fillter = dl.marketList.filter(item => item.marketValue == this.get_bet_appoint_obj.computed_appoint_ball_head)[0];
+             let dl_fillter = dl.marketList.filter(item => item.marketValue == BetData.bet_appoint_obj.computed_appoint_ball_head)[0];
              //盘口id 预约需要筛选
              temp.marketId = _.get(dl_fillter, 'id', '');
              //取出marketOddsList
@@ -128,22 +141,18 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
 
          //是预约 传递marketValue 这个值正常投注没有，预约投注才有
          if(is_pre) {
-          if(_.isNull(this.get_bet_appoint_obj.appoint_ball_head) || this.get_bet_appoint_obj.is_head_eq_hadicap || _.isNaN(this.get_bet_appoint_obj.appoint_ball_head)) {
-            temp.marketValue = _.get(this.BetDataCtr.pre_bet_list, 'currentMarket.marketValue', '')
+          if(_.isNull(BetData.bet_appoint_obj.appoint_ball_head) || BetData.bet_appoint_obj.is_head_eq_hadicap || _.isNaN(BetData.bet_appoint_obj.appoint_ball_head)) {
+            temp.marketValue = _.get(BetData.pre_bet_list, 'currentMarket.marketValue', '')
              //盘口id
             temp.marketId = _.get(item_bs, 'hps[0].hl[0].hid') || _.get(item_bs, 'hps[0].hl.hid') || _.get(item_bs, 'hps[0].hl[0].ol[0].hid');;
             //投注项id
             temp.playOptionsId = _.get(item_cs, 'oid');
           }else{
-            temp.marketValue = this.get_bet_appoint_obj.appoint_ball_head;  //盘口值
+            temp.marketValue = BetData.bet_appoint_obj.appoint_ball_head;  //盘口值
           }
         }
         let hsw = _.get(item_bs, 'hps[0].hsw') || _.get(item_bs, 'hps[0].hl[0].hsw');
-        // this.http_upd_data({
-        //   i: i,
-        //   http_data_list: data,
-        //   self: this
-        // });
+      
         //赔率
         if (hsw && hsw != '') {
           let support_odds = [];
@@ -152,65 +161,67 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
           }
           let hsw_len = hsw.length;
           for (let i = 0; i < hsw_len; i++) {
-            for (let [key, value] of Object.entries(this.oddsTable)) {
+            for (let [key, value] of Object.entries(BetData.oddsTable)) {
               if (value == hsw[i]) {
                 support_odds.push(key);
               }
             }
           }
-          if (support_odds.includes(_.get(this,'get_cur_odd'))) {
+          if (support_odds.includes(_.get(BetData,'cur_odd'))) {
             //最终盘口类型
-            temp.marketTypeFinally = _.get(this,'get_cur_odd');
+            temp.marketTypeFinally = _.get(BetData,'cur_odd');
           } else {
             //最终盘口类型
             temp.marketTypeFinally = "EU";
           }
         } else {
           //最终盘口类型
-          temp.marketTypeFinally = _.get(this,'get_cur_odd');
+          temp.marketTypeFinally = _.get(BetData,'cur_odd');
         }
         let appoint_value;
         //如果是预约
         if(is_pre) {
           //赔率计算调用this.$mathjs里面的方法，保证精度
-          appoint_value = this.$mathjs.multiply(this.get_bet_appoint_obj.appoint_odds_value,100000);
+          appoint_value = mathjs.multiply(BetData.bet_appoint_obj.appoint_odds_value,100000);
         }
-        // console.log('this.get_cur_odd =', this.get_cur_odd );
+        // console.log('BetData.cur_odd =', BetData.cur_odd );
 
         //如果是预约还要判断本身这个赛事支不支持香港盘，如果不是预约投注直接取odds_value
-        temp.odds = !is_pre?_.get(item_cs, 'odds_value'): this.cur_odd == 'EU' ? appoint_value : (temp.marketTypeFinally == "EU" ? appoint_value: this.$mathjs.add(appoint_value, 100000));
+        temp.odds = !is_pre?_.get(item_cs, 'odds_value'): BetData.cur_odd == 'EU' ? appoint_value : (temp.marketTypeFinally == "EU" ? appoint_value:  mathjs.add(appoint_value, 100000));
         //最终赔率 这个值不能是负的，负的话就有问题了
-        let odds_js = this.$mathjs.divide(temp.odds, 100000);
+        let odds_js = mathjs.divide(temp.odds, 100000);
 
-        let break_odds_js = this.$mathjs.divide(_.get(item_cs, 'break_odds_value'), 100000);
+        let break_odds_js = mathjs.divide(_.get(item_cs, 'break_odds_value'), 100000);
         if (hsw != 1) {
-          temp.oddFinally = this.compute_value_by_cur_odd_type(odds_js, break_odds_js, hsw);
+          temp.oddFinally = compute_value_by_cur_odd_type(odds_js, break_odds_js, hsw);
         } else {
-          temp.oddFinally = this.compute_value_by_cur_odd_type(odds_js, null, []);
+          temp.oddFinally =  compute_value_by_cur_odd_type(odds_js, null, []);
         }
         // 玩法名称
         temp.playName = _.clone(_.get(item_bs, 'hps[0].hpn')) ||  _.get(item_bs, 'hps[0].hl[0].ol[0].hpn') || _.get(item_cs, 'play_name');
 
         // 球类名称
-        temp.sportName = this.yabo_common.play_name_mapping(temp.sportId);
+        temp.sportName =  yabo_common.play_name_mapping(temp.sportId);
         // 赛事类型 如果为3的话是冠军赛事
         temp.matchType = _.get(item_cs, 'match_type');
         // 赛事名称
         temp.matchName = _.get(item_bs, 'tn');
-        this.id = _.get(item_cs, 'id');
+        
+        let item_cs_id = _.get(item_cs, 'id');
+        this.item_cs_id = item_cs_id
         //队伍名
-        let team_name = this.yabo_common.get_team_name(this);
+        let team_name = yabo_common.get_team_name(this);
         //盘口名
-        let handicap = this.yabo_common.get_handicap(this);
+        let handicap = yabo_common.get_handicap(this);
         // 预约的赔率，球头 当前赛事 预约投注需要参数playOptionName处理
-        if(this.get_bet_appoint_obj && this.get_bet_appoint_obj.bet_appoint_id==this.id && is_pre) {
+        if(BetData.bet_appoint_obj && BetData.bet_appoint_obj.bet_appoint_id==item_cs_id && is_pre) {
           let new_name = ''
           //队伍名如果是加号或者减号开头去除符号
           if(team_name.startsWith('+') || team_name.startsWith('-')){
             new_name = team_name.substr(1,handicap.length);
           }
           // let n_name = new_name ? new_name : team_name;
-          let {computed_appoint_ball_head, appoint_ball_head} = this.get_bet_appoint_obj;
+          let {computed_appoint_ball_head, appoint_ball_head} = BetData.bet_appoint_obj;
           //team_name队名不为空，不为nan， handicap不为nan
           if(!_.isEmpty(team_name) &&  !_.isNaN(team_name) && !_.isNaN(handicap)) {
             //预约投注也有可能没有球头，没有的话就传默认得，如果不传投注项和投注记录那里就是空的，服务端是透传的
@@ -301,17 +312,17 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
      * @param {Function} callback 回调函数
      * @return {undefined} undefined
      */
-    bet_submit_data(seriesType, callback) {
-        if (this.is_bet_single) {
-          if (!_.isArray(this.get_bet_single_list)) return;
+   const bet_submit_data=(seriesType, callback)=> {
+        if (BetData.is_bet_single) {
+          if (!_.isArray(BetData.bet_single_list)) return;
         } else {
-          if (!_.isArray(this.get_bet_list)) return;
+          if (!_.isArray(BetData.bet_list)) return;
         }
         let parm = {};
         //用户id
         parm.userId = ''; //后台userId可以为空 2020-06-09joken
         //接受赔率变化情况
-        parm.acceptOdds = _.get(this.get_user,'userBetPrefer');
+        parm.acceptOdds = _.get(BetData.user,'userBetPrefer');
         //商户id
         parm.tenantId = 1;
         //设备类型
@@ -336,11 +347,11 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
         if (seriesType == 1) { // 单关
   
     console.log('正常投注参数playOptionName处理------------00' );
-          parm.openMiltSingle = this.get_is_bet_merge?1:0;
+          parm.openMiltSingle = BetData.is_bet_merge?1:0;
           // 有预约id的时候只提交
-          if(this.get_bet_appoint_obj && this.get_bet_appoint_obj.bet_appoint_id) {
-            let { bet_appoint_id } = this.get_bet_appoint_obj;
-            let cs = _.get(this,`get_bet_single_obj[${bet_appoint_id}].cs`,{});
+          if(BetData.bet_appoint_obj && BetData.bet_appoint_obj.bet_appoint_id) {
+            let { bet_appoint_id } = BetData.bet_appoint_obj;
+            let cs = _.get(BetData,`get_bet_single_obj[${bet_appoint_id}].cs`,{});
             let temp_bat = {};
             if(cs && cs.money) {
               // 串关数量
@@ -348,21 +359,21 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
               // 串关类型
               temp_bat.seriesType = seriesType;
               // 串关值
-              temp_bat.seriesValues = (seriesType == 1) ? this.$root.$t('bet.bet_one_') : this.$root.$t('bet.bet_winner');//'单关' , 冠军
+              temp_bat.seriesValues = (seriesType == 1) ?  i18n.t('bet.bet_one_') : i18n.t('bet.bet_winner');//'单关' , 冠军
               temp_bat.fullBet = _.get(cs,'full_bet',0);
               //赔率没变，球头没变的情况视为普通注单 preBet传0
-              if(this.get_bet_appoint_obj.appoint_init_odds_value == this.get_bet_appoint_obj.appoint_odds_value && this.get_bet_appoint_obj.is_head_eq_hadicap) {
+              if(BetData.bet_appoint_obj.appoint_init_odds_value == BetData.bet_appoint_obj.appoint_odds_value && BetData.bet_appoint_obj.is_head_eq_hadicap) {
                 parm.preBet = 0  //没调整赔率和球头是为普通投注
               }else{
                 parm.preBet = 1 //是预约投注
               }
               //设置注单集合
-              temp_bat.orderDetailList = this.bet_submit_data_template(seriesType, null, bet_appoint_id, parm.preBet ? true : false);
+              temp_bat.orderDetailList =  bet_submit_data_template(seriesType, null, bet_appoint_id, parm.preBet ? true : false);
               parm.seriesOrders.push(temp_bat);
             }
           } else {
-            this.get_bet_single_list.forEach(item=>{
-              let cs = _.get(this,`get_bet_single_obj[${item}].cs`,{});
+            BetData.bet_single_list.forEach(item=>{
+              let cs = _.get(BetData,`get_bet_single_obj[${item}].cs`,{});
               let temp_bat = {};
               if(cs && cs.money) {
                 // 串关数量
@@ -370,19 +381,19 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
                 // 串关类型
                 temp_bat.seriesType = seriesType;
                 // 串关值
-                temp_bat.seriesValues = (seriesType==1)?this.$root.$t('bet.bet_one_') : this.$root.$t('bet.bet_winner');//'单关' , 冠军
+                temp_bat.seriesValues = (seriesType==1)? i18n.t('bet.bet_one_') :  i18n.t('bet.bet_winner');//'单关' , 冠军
   
                 temp_bat.fullBet = _.get(cs,'full_bet',0);
                 //设置注单集合
-                temp_bat.orderDetailList = this.bet_submit_data_template(seriesType, null, item);
+                temp_bat.orderDetailList =  bet_submit_data_template(seriesType, null, item);
                 parm.preBet = 0 //不是预约投注
                 parm.seriesOrders.push(temp_bat);
               }
             });
           }
         } else if (seriesType == 2) { // 串关
-          this.get_bet_s_list.forEach(id => {
-            let x1 = _.get(this.get_bet_s_obj,`${id}.cs`);
+          BetData.bet_s_list.forEach(id => {
+            let x1 = _.get(BetData.bet_s_obj,`${id}.cs`);
             if (_.has(x1,'money') && x1.money !== null && x1.money !== '') {
               let temp_bat = {};
               // 串关类型
@@ -394,7 +405,7 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
               // 串关值
               // temp_bat.seriesValues = x1.id;
               //设置注单集合
-              temp_bat.orderDetailList = this.bet_submit_data_template(seriesType, x1.money);
+              temp_bat.orderDetailList =  bet_submit_data_template(seriesType, x1.money);
               parm.preBet = 0 //不是预约投注
               parm.seriesOrders.push(temp_bat);
             }
@@ -415,19 +426,16 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
             return;
           }
         }
-        this.send_gcuuid = uid();
-        parm.gcuuid = this.send_gcuuid;
+        post_submit_Bet_list_gcuuid.value = uid();
+        parm.gcuuid = post_submit_Bet_list_gcuuid.value ;
         // console.log('post_submit_Bet_list====',parm);
         // debugger
         // 押注项调用提交接口
         api_betting.post_submit_Bet_list(parm).then(res => {
-          // console.log('post_submit_Bet_list=======',this.send_gcuuid === res.config.gcuuid);
-          // if(this.send_gcuuid != res.config.gcuuid) {
-          //   return;
-          // }
+        
   
           let gcuuid = _.get(res,'config.gcuuid')
-          if( gcuuid && this.send_gcuuid != gcuuid) {
+          if( gcuuid && post_submit_Bet_list_gcuuid.value  != gcuuid) {
             return;
           }
           let code = _.get(res, "data.code");
@@ -447,16 +455,17 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
             order_status_code : order_detail_resp_list.orderStatusCode,
             msg,
           }
-          this.set_bet_info(bet_info)
+          BetData.auto_test_bet_info = bet_info
+ 
           
           if (code == 200) {
              //投注设置诸葛埋点
-             this.bet_send_zhuge_event()
+              // bet_send_zhuge_event()
             // console.log('api_betting:'+JSON.stringify(data));
             // 设置提交成功标识符
             data.orderDetailRespList.forEach(order_item => {
               //设置提交状态
-              this.set_submit_status(order_item);
+            set_submit_status(order_item);
               //预约投注状态转换
               if(_.hasIn(order_item,'preOrderDetailStatus' )&&!_.isNull(order_item.preOrderDetailStatus)) {
                 switch(order_item.preOrderDetailStatus) {
@@ -471,18 +480,18 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
               }
             });
             // 清除串关的缓存钱数
-            this.get_bet_s_list.forEach(id => {
-              let obj = _.cloneDeep(_.get(this.get_bet_s_obj, `${id}`));
+            BetData.bet_s_list.forEach(id => {
+              let obj = _.cloneDeep(_.get(BetData.bet_s_obj, `${id}`));
               if (_.has(obj,'cs')) {
                 obj.cs.money = '';
-                this.bet_s_obj_add_attr(obj);
+                BetData.bet_s_obj_add_attr(obj);
               }
             });
             if (_.isFunction(callback)) {
               callback(code, data);
             }
             //这里增加一个调用余额的接口
-            // this.$root.$emit(this.emit_cmd.EMIT_GET_BALANCE_CMD);
+            useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD);
           } else {
             if (_.isFunction(callback)) {
               callback(code, data, msg);

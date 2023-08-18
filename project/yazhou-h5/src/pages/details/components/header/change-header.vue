@@ -31,7 +31,7 @@
 // import { mapGetters} from "vuex";
 // import global_filters from 'src/boot/global_filters.js'
 // import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
-import base64 from "src/core/utils/base64.js";    // 球类背景图base64路径集合
+import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({

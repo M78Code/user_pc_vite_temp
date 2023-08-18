@@ -18,12 +18,12 @@
   import { defineProps, computed } from 'vue';
   import { useRoute } from 'vue-router';
   import lodash from 'lodash';
-  import  { useRegistPropsHelper, useProps  } from "src/composables/regist-props/index.js"
+  import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
   import {component_symbol ,need_register_props} from "../config/index.js"
-  useRegistPropsHelper(component_symbol, need_register_props)
   import { i18n } from 'src/boot/i18n.js'
-  const props = defineProps({ ...useProps })
+  
   const route = useRoute()
+  const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
   const cur_title_info = computed(() => {
     let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
