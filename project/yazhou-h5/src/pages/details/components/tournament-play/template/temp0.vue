@@ -104,10 +104,15 @@
                   <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
-                    <div
+                    <!-- <div
                       class="play-box-style details_color"
                       @click="go_to_bet(ol_item)"
                       :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                    > -->
+                    <div
+                      class="play-box-style details_color"
+                      @click="go_to_bet(ol_item)"
+                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
                         <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)},{'gray': is_number(ol_item.ott) || is_number(ol_item.on) }]">
