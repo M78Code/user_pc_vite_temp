@@ -43,12 +43,10 @@
 import { defineComponent, nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
 import lodash from "lodash";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const key = ref(0) //tab模板文件key

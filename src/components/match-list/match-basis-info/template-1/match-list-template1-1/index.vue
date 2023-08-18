@@ -94,7 +94,7 @@
 
 import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';

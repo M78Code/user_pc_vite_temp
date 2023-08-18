@@ -51,7 +51,7 @@ import { get_match_status } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import store from 'prject_path/src/store/index.js'
+import store from 'src/store-redux/index.js'
 import { i18n } from 'src/boot/i18n.js'
 let state = store.getState()
 

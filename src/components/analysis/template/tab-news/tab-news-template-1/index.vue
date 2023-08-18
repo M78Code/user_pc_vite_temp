@@ -65,12 +65,13 @@
 
 import { ref, onUnmounted, defineProps } from 'vue';
 import { useRouter } from 'vue-router';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/public/api/index'
 
-const props = defineProps({ ...useProps })
+
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const router = useRouter();
 const articleDetail = ref({});
 const articleList = ref([]);
