@@ -54,22 +54,22 @@
 import MatchListCardData from "./module/match-list-card-data-class.js";
 // import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
 import { set_match_basic_data } from "./module/match-base-data.js";
-// import {
-//   update_match_cur_card_style,
-//   fold_tab_play,
-// } from "./module/compute-style-template.js";
-// import { fold_all_league, unfold_all_league, recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
-// import { test_log_data } from "./module/test-log.js";
-// import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./module/data-relation.js";
-// import {
-//   update_league_collect_data,
-//   update_league_collect_data_and_get_mids,
-// } from "./module/league-collect.js";
-// import {
-//   recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs,
-//   remove_match,
-//   remove_league,
-// } from "./module/add-and-remove.js";
+import {
+  update_match_cur_card_style,
+  fold_tab_play,
+} from "./module/compute-style-template.js";
+import { fold_all_league, unfold_all_league, recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
+import { test_log_data } from "./module/test-log.js";
+import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./module/data-relation.js";
+import {
+  update_league_collect_data,
+  update_league_collect_data_and_get_mids,
+} from "./module/league-collect.js";
+import {
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs,
+  remove_match,
+  remove_league,
+} from "./module/add-and-remove.js";
 
 class MatchListCard {
   constructor() {}

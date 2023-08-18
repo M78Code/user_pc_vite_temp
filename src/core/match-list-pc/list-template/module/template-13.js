@@ -3,7 +3,7 @@
  *  13号模板 足球 13列玩法 
  */
 import * as TemplateCommon from "./template-common.js"
-
+import { template_0 } from './template-0.js'
 let ol_template = TemplateCommon.ol_template
 let hps_15_minute = TemplateCommon.hps_15_minute
 import lodash from  "lodash"

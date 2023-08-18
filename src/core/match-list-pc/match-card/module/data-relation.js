@@ -1,13 +1,13 @@
 
 
 
-import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListData from "src/core/match-data-class/match-list-data-class.js";
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1} from  "./data-relation-type-1.js"
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2} from  "./data-relation-type-2.js"
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5} from  "./data-relation-type-3.js"
-import PageSourceData  from  "src/core/page-source/index.js"
+import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
 
     
 const MenuData ={

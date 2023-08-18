@@ -130,7 +130,7 @@
 
 <script setup>
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js";//联赛菜单
-// import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js";//赛事列表筛选：滚球-球种、早盘-日期
+import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js";//赛事列表筛选：滚球-球种、早盘-日期
 // import { ListFilterDateFullVersionWapper as listFilterDate } from "src/components/match-list/list-filter-date/index.js";//热门赛事列表  早盘-日期
 // import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";//热门赛事列表  早盘-日期
 import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-class.js'
