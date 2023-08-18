@@ -3,39 +3,39 @@
  * @Date: 2020-08-12 17:13:55
  * @Description: 详情全局设置
  */
-import { reactive, toRefs, onUnmounted } from "vue";
+import { reactive,ref, toRefs, onUnmounted } from "vue";
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // api文件
 import { api_details } from "src/api/index";
 import lodash from "lodash";
-import details from "src/core/match-detail/match-detail";
+import details from "src/core/match-detail-pc/match-detail";
 import video from "src/core/video/video.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
+
+const route = useRoute();
+const router = useRouter();
 export const useGetGlobal = ({ details_params, back_to }) => {
   const state = reactive({
     latest_match_params_pre: "",
     default_select_all: true,
   });
 
-  const useRoute = useRoute();
-  const router = useRouter();
-
   const store_state = store.getState();
-  const layout_cur_page = ref(store_state.menusReducer.layout_cur_page);
+  const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
   const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
   // 获取当前菜单类型
-  const cur_menu_type = ref(store_state.menusReducer.cur_menu_type);
+  const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   const match_sort = ref(store_state.globalReducer.match_sort);
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
    let state_data = store.getState();
-    layout_cur_page.value = state_data.menusReducer.layout_cur_page;
+    layout_cur_page.value = state_data.layoutReducer.layout_cur_page;
     filter_select_obj.value = state_data.filterReducer.filter_select_obj;
-    cur_menu_type.value = state_data.menusReducer.cur_menu_type;
+    cur_menu_type.value = state_data.menuReducer.cur_menu_type;
     match_sort.value = state_data.globalReducer.match_sort;
   });
 
@@ -49,7 +49,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
-    let { name: route_name, params: cur_parmas } = useRoute;
+    let { name: route_name, params: cur_parmas } = route;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
       (route_name === "details" &&
@@ -93,7 +93,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
     let csid = 0;
 
     if (cur_page == "details") {
-      let { tid: _tid, csid: _csid } = useRoute.params;
+      let { tid: _tid, csid: _csid } = route.params;
       let { tid, csid } = details_params;
       if (_tid) {
         tid = _tid;

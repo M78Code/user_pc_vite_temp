@@ -93,12 +93,12 @@ import BaseData from "src/public/utils/base_data/base-data.js";
 import { i18n } from 'src/boot/i18n'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { defineProps, ref, computed, reactive } from 'vue';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
 let state = store.getState();
-const props = defineProps({ ...useProps });
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
 // 获取当前页路由信息

@@ -1,6 +1,6 @@
 <template>
   <div class="page-main full-height">
-    {{ layout_setting.nav_height }}
+    <!-- {{ layout_setting.nav_height }} -->
     <layout-header
       :style="{
         height: layout_setting.nav_height + 'px',
@@ -23,14 +23,14 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onBeforeUnmount } from "vue";
+import { ref, computed, onBeforfeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import "./main-layout.js"; //初始化数据
 import { debounce } from "lodash";
 /**组件*/
-import layoutHeader from "./layout-header.vue";
+// import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
-import layoutRight from "./layout-right.vue";
+// import layoutRight from "./layout-right.vue";
 import { useRoute } from "vue-router";
 import { useEventListener } from "src/core/utils/event-hook";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
@@ -43,8 +43,9 @@ const computed_style = computed(() => {
     width: content_width.value,
   };
 });
-const { layoutReducer } = store.getState();
+const { layoutReducer,menuReducer } = store.getState();
 const layout_setting = layoutReducer.layout_setting;
+const main_menu_toggle = ref(menuReducer.main_menu_toggle)
 /**
  *映射store内部的方法
  */

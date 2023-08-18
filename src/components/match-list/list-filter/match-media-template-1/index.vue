@@ -44,9 +44,8 @@
 
 import { computed, defineProps, ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
@@ -67,7 +66,8 @@ const get_global_switch = reactive(state.globalReducer.global_switch)
 //视频是否展开状态
 const vx_get_is_fold_status = ref(state.globalReducer.is_fold_status)
 
-const props = defineProps({ ...useProps })
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 const route = useRoute();
 
 // 盘口数量

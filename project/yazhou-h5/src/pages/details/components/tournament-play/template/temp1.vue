@@ -6,8 +6,8 @@
         <div class="row" v-if="index>0||index==0" :class="{'result-style':is_match_result}">
           <!-- 如果是电竞，展示这个模板-->
           <div class="col fat-warp first-radius DJ_special_treatment" v-if="get_menu_type ==3000">
-            <template v-for="(ol_item,ol_index) in item.ol">
-              <div class="col" :key="ol_index">
+            <template v-for="(ol_item,ol_index) in item.ol" :key="ol_index">
+              <div class="col" >
                 <!-- ms---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
@@ -328,7 +328,18 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list","get_cur_odd","get_menu_type","get_detail_data"]),
-
+    const get_bet_list = computed(() => {
+      return ""
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_menu_type = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return ""
+    });
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
     });
@@ -338,6 +349,10 @@ export default defineComponent({
     };
     return {
       utils,
+      get_bet_list,
+      get_cur_odd,
+      get_menu_type,
+      get_detail_data,
       is_match_result,
       go_to_bet
     }
