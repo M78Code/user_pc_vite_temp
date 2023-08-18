@@ -51,7 +51,7 @@ const requestHook = {
       ss.get(token_key) || sessionStorage.getItem("token") || "";
     config.headers["requestId"] = requestId;
     //请求语言
-    config.headers["lang"] = "en"; // 语言调整
+    config.headers["lang"] = "zh"; // 语言调整
     config.headers["checkId"] = `pc-${requestId}-${UUID().replace(
       /-/g,
       ""

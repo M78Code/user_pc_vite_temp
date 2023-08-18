@@ -1,10 +1,10 @@
-    
+
 
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from  "./submit_data.js"
+import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
 import {get_bet_amount_param} from  "./bet-amount.js"
 import {http_upd_data ,bet_obj_add_attr} from  "./upd_data.js"
 import mathjs from "src/core/utils/mathjs.js"
@@ -22,8 +22,8 @@ import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
     export const   init_bet_mix_data=()=> {
         //所有串关的金额
         BetData.bet_s_list.forEach(item => {
-          let bs = _.cloneDeep(_.get(this,`get_bet_s_obj[${item}].bs`,{}));
-          let cs = _.cloneDeep(this,`get_bet_s_obj[${item}].cs`,{});
+          let bs = _.cloneDeep(_.get(BetData.bet_s_obj,`[${item}].bs`,{}));
+          let cs = _.cloneDeep(BetData.bet_s_obj,`[${item}].cs`,{});
           let obj = JSON.parse('{"key":"", "bs":{}, "cs":{}}');
           obj.key = item;
           obj.bs = bs;

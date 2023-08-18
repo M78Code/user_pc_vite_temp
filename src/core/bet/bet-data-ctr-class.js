@@ -1,7 +1,8 @@
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "./bet-data-class.js";
+import BetData from "./class/bet-data-class.js";
+import {init_bet_single_data} from  "./module/bet-model-single.js"
 
 class BetDataCtr {
   constructor() {}
@@ -23,6 +24,7 @@ class BetDataCtr {
   set_pre_min_odd_value(pre_min_odd_value) {
     BetData.pre_min_odd_value = pre_min_odd_value;
   }
+  
   /**
    * 存储是否能预约
    * @param {*}BetData.
@@ -49,16 +51,7 @@ class BetDataCtr {
   set_bet_list(bet_list) {
     BetData.bet_list = bet_list;
   }
-  /**
-   * @description: 删除串关列表
-   * @param {*}BetData.
-   * @param {*} i 需要删除的id索引
-   */
-  bet_list_remove(i) {
-    let temp = Object.assign([], BetData.bet_list);
-    temp.splice(i, 1);
-    BetData.bet_list = temp;
-  }
+ 
   /**
    * @description: 添加串关列表
    * @param {*}BetData.
@@ -70,14 +63,7 @@ class BetDataCtr {
     }
   }
 
-  /**
-   * @description: 删除投注对象
-   * @param {*}BetData.
-   * @param {*} key 需要删除对象的键值
-   */
-  bet_obj_remove_attr(key) {
-    deleteBetData.bet_obj[key];
-  }
+ 
   /**
    * @description: 清除虚拟投注数据
    * @param {*}BetData.
@@ -150,17 +136,7 @@ class BetDataCtr {
       }
     }
   }
-  /**
-   * @description: 添加投注串关输入对象
-   * @param {*}BetData.
-   * @param {*} obj 需要添加的对象
-   */
-  bet_s_obj_add_attr(obj) {
-    if (obj.key) {
-      BetData.bet_s_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
-      BetData.bet_s_obj = _.cloneDeep(this.bet_s_obj);
-    }
-  }
+  
   /**
    * @description: 删除串关投注项输入对象
    * @param {*}BetData.
@@ -233,14 +209,7 @@ class BetDataCtr {
   set_menu_obj(menu_obj) {
     BetData.menu_obj = menu_obj;
   }
-  /**
-   * @description: 菜单是否有变化
-   * @param {*}BetData.
-   * @param {*} menu_change
-   */
-  set_menu_change(menu_change) {
-    BetData.menu_change = menu_change;
-  }
+ 
   /**
    * 设置投注模式
    * @param {*}BetData.
@@ -461,5 +430,9 @@ class BetDataCtr {
     } else {
       BetData.bet_current_money_obj = {};
     }
+  }
+
+  init_bet_single_data(){
+    init_bet_single_data()
   }
 }

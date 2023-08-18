@@ -77,12 +77,12 @@ import match_handicap from "src/components/match-detail/match_handicap/match_han
 import { useMethods } from "./use-methods";
 export default defineComponent({
   mixins: [match_handicap], //引入玩法组件
-  setup(props, event) {
-    const emit = defineEmits([
-      "set_handicap_state",
-      "on_go_top",
-      "set_handicap_this",
-    ]);
+  setup(props, context) {
+    // const emit = defineEmits([
+    //   "set_handicap_state",
+    //   "on_go_top",
+    //   "set_handicap_this",
+    // ]);
     //  ============================数据===================
     const {
       showDetails,
@@ -99,7 +99,7 @@ export default defineComponent({
       lodash
     } = useMethods({
       props,
-      emit,
+      emit:context.emit,
     });
 
     return {
