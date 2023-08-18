@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    {{ base_data_instance.base_data_version }}
+    <div style="display: none;">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
     <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
       :version="base_data_instance.base_data_version"></menu-wapper>
@@ -52,8 +52,8 @@ import menu_config from 'src/core/menu-pc/menu-data-class.js'
 import base_data_instance from 'src/core/utils/base-data/base-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
-import play_match from "project_path/image/png/play-match.png";
-import hot_svg from "project_path/image/svg/hot.svg"
+import play_match from "/public/yazhou-pc/image/png/play-match.png";
+import hot_svg from "/public/yazhou-pc/image/svg/hot.svg"
 
 import { MenuWapper } from "src/components/menu";
 
