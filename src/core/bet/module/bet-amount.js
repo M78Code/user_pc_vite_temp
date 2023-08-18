@@ -4,7 +4,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from  "./submit_data.js"
+import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
 import {get_bet_amount_param} from  "./bet-amount.js"
 import {http_upd_data} from  "./upd_data.js"
 import mathjs from "src/core/utils/mathjs.js"
@@ -15,7 +15,8 @@ import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
 
 const getBetMinAndMaxMone_gcuuid = ref(uid())
 const query_bet_amount_gcuuid = ref(uid())
-
+ 
+ 
 
 
     /**
@@ -30,7 +31,7 @@ const query_bet_amount_gcuuid = ref(uid())
           return;
         }
         // 获取押注项最大和最小的金额
-        let bet_list = BetData.is_bet_single? BetData.get_bet_single_list : BetData.get_bet_list
+        let bet_list = BetData.is_bet_single? BetData.bet_single_list : BetData.bet_list
         // 获取押注项最大和最小的金额
         let parm_obj = {
           orderMaxBetMoney: []
@@ -38,13 +39,13 @@ const query_bet_amount_gcuuid = ref(uid())
         bet_list.forEach(id => {
           let obj, item_bs, item_cs;
           if (BetData.is_bet_single) {
-            obj = "get_bet_single_obj";
+            obj = "bet_single_obj";
           } else {
-            obj = "get_bet_obj";
+            obj = "bet_obj";
           }
-          if(_.has(this[obj],`${id}.bs`) && _.has(this[obj],`${id}.cs`)) {
-            item_bs = _.get(this,`${obj}.${id}.bs`,{});
-            item_cs = _.get(this,`${obj}.${id}.cs`,{});
+          if(_.has(BetData[obj],`${id}.bs`) && _.has(BetData[obj],`${id}.cs`)) {
+            item_bs = _.get(BetData,`${obj}.${id}.bs`,{});
+            item_cs = _.get(BetData,`${obj}.${id}.cs`,{});
           } else {
             return;
           }
@@ -96,7 +97,7 @@ const query_bet_amount_gcuuid = ref(uid())
           parm.tenantId = 1;
   
           //最终盘口类型
-          parm.marketTypeFinally = BetData.get_cur_odd;
+          parm.marketTypeFinally = BetData.cur_odd;
           // 联赛级别
           parm.tournamentLevel = item_bs.tlev;
           // 联赛id
@@ -107,7 +108,7 @@ const query_bet_amount_gcuuid = ref(uid())
           parm.matchType =  _.get(item_cs, 'match_type');
           if(BetData.is_bet_single) {
             // 是否开启 多单关投注模式
-            parm.openMiltSingle = BetData.get_is_bet_merge?1:0;
+            parm.openMiltSingle = BetData.is_bet_merge?1:0;
           }
   
           parm_obj.orderMaxBetMoney.push(parm);
@@ -161,9 +162,9 @@ const query_bet_amount_gcuuid = ref(uid())
         let bet_obj;
         //是单关
         if (BetData.is_bet_single) {
-          bet_obj = BetData.get_bet_single_obj;
+          bet_obj = BetData.bet_single_obj;
         } else {
-          bet_obj = BetData.get_bet_obj;
+          bet_obj = BetData.bet_obj;
         }
         // console.log('bet_obj====',JSON.stringify(bet_obj));
         //获取额度接口合并 参数
@@ -205,7 +206,7 @@ const query_bet_amount_gcuuid = ref(uid())
          
           //原有最新盘口信息结构体 latestMarketInfo
           if(latestMarketInfo && _.isArray(latestMarketInfo)) {
-           BetData.get_bet_single_list.forEach((item, i) => {
+           BetData.bet_single_list.forEach((item, i) => {
               // 调用vuex中的http_upd_data方法同步数据
            http_upd_data({
                 i: i,
