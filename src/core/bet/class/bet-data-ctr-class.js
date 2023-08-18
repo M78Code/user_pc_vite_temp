@@ -1,7 +1,7 @@
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "./class/bet-data-class.js";
+import BetData from "./bet-data-class.js";
 
 class BetDataCtr {
   constructor() {}
@@ -40,9 +40,7 @@ class BetDataCtr {
     BetData.pre_bet_list = pre_bet_list;
   }
 
-  set_bet_amount(val) {
-    BetData.bet_amount = val;
-  }
+ 
   /**
    * @description: 设置串关列表
    * @param {*}BetData.
@@ -71,24 +69,7 @@ class BetDataCtr {
       BetData.bet_list.push(id);
     }
   }
-  /**
-   * @description: 添加串关投注项对象
-   * @param {*}BetData.
-   * @param {*} obj 要添加的投注项对象
-   */
-  bet_obj_add_attr(obj) {
-    let new_obj = _.cloneDeep(this.bet_obj);
-    if (obj.key && new_obj[obj.key] && new_obj[obj.key].cs) {
-      new_obj[obj.key].cs.is_serial = obj.cs.is_serial;
-    }
-    // if(obj.key && !(Object.keys(new_obj).indexOf(obj.key) > -1)){
-    // new_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
-    // }
-    if (obj.key) {
-      new_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
-    }
-    BetData.bet_obj = new_obj;
-  }
+
   /**
    * @description: 删除投注对象
    * @param {*}BetData.
@@ -215,16 +196,7 @@ class BetDataCtr {
   set_bet_single_list(bet_single_list) {
     BetData.bet_single_list = bet_single_list;
   }
-  /**
-   * @description: 移除单关列表
-   * @param {*}BetData.
-   * @param {*} i 要移除的位置
-   */
-  bet_single_list_remove(i) {
-    let temp = Object.assign([], BetData.bet_single_list);
-    temp.splice(i, 1);
-    BetData.bet_single_list = temp;
-  }
+
   /**
    * @description: 添加单关投注
    * @param {*}BetData.
@@ -236,14 +208,7 @@ class BetDataCtr {
     }
   }
 
-  /**
-   * @description: 移除单关投注项对象
-   * @param {*}BetData.
-   * @param {*} key 要移除的投注项的键值
-   */
-  bet_single_obj_remove_attr(key) {
-    deleteBetData.bet_single_obj[`${key}`];
-  }
+
   /**
    * @description: 清除单关数据
    * @param {*}BetData.

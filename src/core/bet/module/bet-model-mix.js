@@ -1,11 +1,27 @@
+    
+
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "./class/bet-data-class.js";
+import {compute_value_by_cur_odd_type} from  "./submit_data.js"
+import {get_bet_amount_param} from  "./bet-amount.js"
+import {http_upd_data ,bet_obj_add_attr} from  "./upd_data.js"
+import mathjs from "src/core/utils/mathjs.js"
+import yabo_common from "src/core/common-helper/common.js"
+import { uid } from "quasar";
+import {ref} from "vue"
+import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
+
+    
     /**
        * @description: 初始化串关数据
        * @param {undefined} undefined
        * @return {undefined} undefined
        */
-    init_bet_mix_data() {
+    export const   init_bet_mix_data=()=> {
         //所有串关的金额
-        this.get_bet_s_list.forEach(item => {
+        BetData.bet_s_list.forEach(item => {
           let bs = _.cloneDeep(_.get(this,`get_bet_s_obj[${item}].bs`,{}));
           let cs = _.cloneDeep(this,`get_bet_s_obj[${item}].cs`,{});
           let obj = JSON.parse('{"key":"", "bs":{}, "cs":{}}');
@@ -19,9 +35,9 @@
             max_money: "" // 最小值
           });
           obj.cs = cs;
-          this.bet_obj_add_attr(obj);
+         bet_obj_add_attr(obj);
         });
-      },
+      }
 
 
       
@@ -31,14 +47,14 @@
      * @param {Function} callback 回调函数
      * @return {undefined} undefined
      */
-    getSeriesCountJointNumbe(callback) {
-        let data = BetCountJointNumber.getBetCountJoint(this.get_bet_list.length);
-        let min_num = this.get_mix_min_count;
+    export const  getSeriesCountJointNumbe=(callback) =>{
+        let data = BetCountJointNumber.getBetCountJoint(BetData.get_bet_list.length);
+        let min_num = BetData.get_mix_min_count;
         if(min_num <= 10) {
           data = data.filter((item) => {
             return Number(item.id.slice(0, 1)) >= min_num ||  ['10串1','10串1013'].includes(item.name) }
             );
-        }else if(this.get_bet_list.length == 10){
+        }else if(BetData.get_bet_list.length == 10){
           data = [data[0]];
         }else {
           data = [];
@@ -47,6 +63,6 @@
         if (_.isFunction(callback)) {
           callback(200, data);
         }
-      },
+      }
   
   

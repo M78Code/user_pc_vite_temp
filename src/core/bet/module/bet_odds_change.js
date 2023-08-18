@@ -253,7 +253,7 @@ const compute_value_by_odd_type = (val, odd_type, csid) => {
     }
 }
 
-const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
+export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
     /**
      * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
      * 是 对全局 赔率转换的 基础设定
