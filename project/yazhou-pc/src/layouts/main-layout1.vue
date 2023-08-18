@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onBeforeUnmount } from "vue";
+import { ref, computed, onBeforfeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import "./main-layout.js"; //初始化数据
 import { debounce } from "lodash";
