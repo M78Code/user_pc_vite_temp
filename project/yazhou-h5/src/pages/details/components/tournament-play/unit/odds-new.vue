@@ -24,40 +24,49 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 // #TODO mixins 
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins 
-  mixins:[odd_convert],
+  // mixins:[odd_convert],
   props: ['ol_data','item_data'],
   name: 'odds_new',
   setup(props, evnet) {
-    const data = reactive({
-
+    const component_data = reactive({
+      clear_status_timeout: null,
+      cacheData: [],
+      status: '',
+      DOM_ID_SHOW: '',
     });
     // #TODO vuex 
     // computed: {
     // ...mapGetters(['get_cur_odd','get_bet_list']),
+    const get_cur_odd = computed(() => {
+      return "";
+    });
+    const get_bet_list = computed(() => {
+      return "";
+    });
     watch(
       () => props.ol_data,
       (n) => {
         if(Math.ceil(Number(n.ov /1000)) > Math.ceil(Number(cacheData /1000))){
-          status = 10;
-          cacheData = n.ov;
+          component_data.status = 10;
+          component_data.cacheData = n.ov;
         }
         else if(Math.ceil(Number(n.ov /1000)) < Math.ceil(Number(cacheData /1000))){
-          status = -10;
-          cacheData = n.ov;
+          component_data.status = -10;
+          component_data.cacheData = n.ov;
         }
         else{
-          status = '';
+          component_data.status = '';
         }
 
-        clearTimeout(clear_status_timeout);
+        clearTimeout(component_data.clear_status_timeout);
         // 三秒后清除相关符号
-        clear_status_timeout = setTimeout(() => {
-          status = '';
+        component_data.clear_status_timeout = setTimeout(() => {
+          component_data.status = '';
         }, 3000);
       },
       {
@@ -66,39 +75,43 @@ export default defineComponent({
     );
     onMounted(() => {
       // 延时器
-      clear_status_timeout = null;
+      component_data.clear_status_timeout = null;
       // 赋值中间变量值，保证能够顺利红升绿降;
-      cacheData = ol_data.ov;
+      component_data.cacheData = props.ol_data.ov;
       // 设置是否显示投注项dom的id属性值
-      DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+      // component_data.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+      // #TODO 
+      component_data.DOM_ID_SHOW = "DOM_ID_SHOW";
     });
     const odds_value = () => {
-      if(ol_data.result || ol_data.result == 0){
-        let result_ = ol_data.result
+      if(props.ol_data.result || props.ol_data.result == 0){
+        let result_ = props.ol_data.result
         // #TODO $root 
         return $root.$t(`virtual_sports.result.${result_}`)
       }else{
         let r = '';
-        let r1 = compute_value_by_cur_odd_type(
-          ol_data.ov / 100000,
-          null,
-          item_data.hsw,
-          false,
-          ol_data.csid
-        )
-        if(r1){
-          r = r1;
-        }else{
-          r = 0;
-        }
+        // let r1 = compute_value_by_cur_odd_type(
+        //   props.ol_data.ov / 100000,
+        //   null,
+        //   props.item_data.hsw,
+        //   false,
+        //   props.ol_data.csid
+        // )
+        // if(r1){
+        //   r = r1;
+        // }else{
+        //   r = 0;
+        // }
         return r;
       }
     };
     onUnmounted(() => {
-      clearTimeout(clear_status_timeout);
+      clearTimeout(component_data.clear_status_timeout);
     })
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      get_cur_odd,
+      get_bet_list,
       odds_value,
       lodash
     }

@@ -26,7 +26,7 @@
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <!-- <change-header :detail_data="detail_data"></change-header> -->
+          <change-header :detail_data="detail_data"></change-header>
         </div>
 
         <!-- @click.stop -->
@@ -141,7 +141,7 @@ import details_tab from "project_path/src/pages/details/components/details-tab.v
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
-// import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
+import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
@@ -160,7 +160,7 @@ export default defineComponent({
   components: {
     "details-header": details_header,
 //     // "details-dialog": details_dialog,
-//     "change-header": change_header,
+    "change-header": change_header,
     "details-tab": details_tab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
