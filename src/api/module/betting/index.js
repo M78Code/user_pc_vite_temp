@@ -82,8 +82,8 @@ export const query_order_pre_settle_confirm = (params, config={}, url = "/v1/bet
 
 
 
- 
- 
+
+
 //查询串关规则列表接口
 export const get_rules = (params, config, url = "/v1/betOrder/querySeriesRuleList") => http.get(`${prefix}${url}`, params, config)
 // 获取最大值和最小值接口
@@ -94,13 +94,15 @@ export const post_submitbetlist = (params, config, url = "/v1/betOrder/betPB") =
 export const post_verify_odds_before = (params, config, url = "/v1/betOrder/queryLatestMarketInfoPB") => http.post(`${prefix}${url}`, params, config)
 // 轮询获取订单状态和最新赔率最高可盈（joken）
 export const get_orderstatus = (params, config, url = "/v1/betOrder/queryOrderStatus") => http.get(`${prefix}${url}`, params, config)
- 
+
 // 查询提前结算订单记录(valar)
 export const getPreSettleOrderDetail = (params, config, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix}${url}`, params, config)
 // 提交提前结算接口（joken）
 export const orderPreSettle = (params, config, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config)
 // 查询待确认中的提前结算单（joken）
 export const queryOrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix}${url}`, params, config)
+// 查询待确认中的提前结算单（joken）
+export const queryH5OrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix3}${url}`, params, config)
 // 获取额度接口合并（joken）
 export const queryBetAmount = (params, config, url = "/v1/betOrder/queryBetAmountPB") => http.post(`${prefix}${url}`, params, config)
 //获取预约限额接口（david）

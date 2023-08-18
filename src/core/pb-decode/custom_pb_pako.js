@@ -9,14 +9,14 @@
  * 
  */
 
-// import pako from "pako"; pako插件
+import pako from "pako"; //pako插件
 
 /**
  * @description: base64编码PB数据转换
  * @param {String} b64Data  经过base64编码后的PB数据
  * @return {Array} 转换后的字节数组
 */
-const to_Uint8Array = (data) =>{
+const to_Uint8Array = (b64Data) =>{
   let ret = null;
   // base64解码
   var strData = atob(b64Data);
@@ -45,6 +45,7 @@ const pako_pb = {
     let res = null;
     try {
       if (data) {
+        console.log()
         let binData = to_Uint8Array(data);
         if (binData) {
           data = pako.inflate(binData);

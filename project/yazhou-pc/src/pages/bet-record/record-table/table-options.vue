@@ -16,7 +16,7 @@
                 [{{ item.sportName }}]{{ item.matchName }}&nbsp;&nbsp;
               </div>
               <div v-if="data.preOrder" class="col text-right">
-                {{ $root.$t("bet.bet_book_confirm") }}
+                {{ $t("bet.bet_book_confirm") }}
               </div>
             </div>
 
@@ -85,13 +85,13 @@
                 item.scoreBenchmark &&
                 item.playId != '334'
               "
-              >({{ item.scoreBenchmark | format_score }})</span
+              >({{ format_score_t(item.scoreBenchmark) }})</span
             >
             <!-- [欧洲盘]-->
             <span>[{{ marketType(item.marketType, data.langCode) }}]</span>
             <!--冠军玩法 截止投注 -->
             <!-- <div v-show="item.matchType === 3">
-                            <span>{{ $root.$t("list.bet_close") }}:</span>
+                            <span>{{ $t("list.bet_close") }}:</span>
                             <span style="margin:0 5px">
                             {{
                               formatTime(
@@ -124,7 +124,7 @@
                 v-if="show_score_info == true"
               >
                 <div class="score_info_style">
-                  {{ $root.$t("bet.score_info") }}
+                  {{ $t("bet.score_info") }}
                 </div>
               </q-tooltip>
             </span>
@@ -165,13 +165,13 @@
               <template
                 v-if="
                   data.computed_bet_amount > 1 &&
-                  _.get(data, 'orderVOS.0.hs') == 0 &&
+                  lodash.get(data, 'orderVOS.0.hs') == 0 &&
                   data.cash_out_status == 1
                 "
               >
                 <template
                   v-if="
-                    _.get(cur_bet_pre, `${i}.bet_pre_code`) != '0400524' ||
+                    lodash.get(cur_bet_pre, `${i}.bet_pre_code`) != '0400524' ||
                     [3, 4, 5].includes(data.settleType) ||
                     data.pre_settle_order_status == 2
                   "
@@ -179,38 +179,39 @@
                   <div class="text-center">
                     <template
                       v-if="
-                        _.get(cur_bet_pre, `${i}.bet_pre_code`) > 1 &&
-                        _.get(cur_bet_pre, `${i}.bet_pre_code`) != '0400524'
+                        lodash.get(cur_bet_pre, `${i}.bet_pre_code`) > 1 &&
+                        lodash.get(cur_bet_pre, `${i}.bet_pre_code`) !=
+                          '0400524'
                       "
                     >
                       <span style="color: red">
                         <template
                           v-if="
-                            _.get(cur_bet_pre, `${i}.bet_pre_code`) == '0400527'
+                            lodash.get(cur_bet_pre, `${i}.bet_pre_code`) ==
+                            '0400527'
                           "
                         >
                           <!--功能暂停中，请稍后再试-->
-                          {{ $root.$t("bet_record.pre_suspend") }}
+                          {{ $t("bet_record.pre_suspend") }}
                         </template>
                         <template
                           v-else-if="
-                            _.get(cur_bet_pre, `${i}.bet_pre_code`) == '0400537'
+                            lodash.get(cur_bet_pre, `${i}.bet_pre_code`) ==
+                            '0400537'
                           "
                         >
                           <!--提前结算金额调整中，请再试一次-->
-                          {{ $root.$t("bet_record.pre_amount_change") }}
+                          {{ $t("bet_record.pre_amount_change") }}
                         </template>
                         <template v-else>
                           <!--提前结算申请未通过-->
-                          {{ $root.$t("bet_record.pre_not_approved") }}
+                          {{ $t("bet_record.pre_not_approved") }}
                         </template>
                       </span>
                     </template>
                     <template v-else>
                       <!--提前结算金额已包含本金-->
-                      <span>{{
-                        $root.$t("bet_record.pre_bet_include_money")
-                      }}</span>
+                      <span>{{ $t("bet_record.pre_bet_include_money") }}</span>
                     </template>
                   </div>
                 </template>
@@ -222,7 +223,7 @@
                   <div class="bet-pre-btn" @click.stop="start_bet_pre(i)">
                     <!-- 提前结算 -->
                     <div class="bet-row-1">
-                      {{ $root.$t("bet_record.settlement_pre") }}
+                      {{ $t("bet_record.settlement_pre") }}
                     </div>
                     <!--提前结算金额展示-->
                     <div class="bet-row-2">
@@ -243,7 +244,8 @@
                       class="bet-pre-info"
                       :class="{
                         'bet-pre-over':
-                          _.get(cur_bet_pre, `${i}.show_operate`) == 'bet_pre',
+                          lodash.get(cur_bet_pre, `${i}.show_operate`) ==
+                          'bet_pre',
                       }"
                       size="14px"
                     />
@@ -257,18 +259,21 @@
                                 </div> -->
                 </div>
                 <template
-                  v-if="_.get(cur_bet_pre, `${i}.show_operate`) == 'bet_pre'"
+                  v-if="
+                    lodash.get(cur_bet_pre, `${i}.show_operate`) == 'bet_pre'
+                  "
                 >
                   <template
                     v-if="
-                      data.setBetAmount > _.get(money_obj, `${i}.min_money`, 0)
+                      data.setBetAmount >
+                      lodash.get(money_obj, `${i}.min_money`, 0)
                     "
                   >
                     <!-- 结算投注额 -->
                     <div>
-                      {{ $root.$t("bet_record.settlement_bet_money")
+                      {{ $t("bet_record.settlement_bet_money")
                       }}<span class="bet-money">{{
-                        format_balance(_.get(money_obj, `${i}.money`))
+                        format_balance(lodash.get(money_obj, `${i}.money`))
                       }}</span>
                     </div>
                     <div class="bet-compute-money">
@@ -301,22 +306,22 @@
                   </template>
 
                   <!-- TIPS:部分结算后,剩余本金不支持再次提前结算! -->
-                  <!-- <template v-if="[4,5].includes(data.settleType) || data.setBetAmount<=_.get(money_obj, `${i}.min_money`, 0)"> -->
+                  <!-- <template v-if="[4,5].includes(data.settleType) || data.setBetAmount<=lodash.get(money_obj, `${i}.min_money`, 0)"> -->
                   <template>
                     <div class="mt5">
                       <!-- 注单剩余本金 -->
-                      {{ $root.$t("bet_record.settlement_bet_remaining") }}:
+                      {{ $t("bet_record.settlement_bet_remaining") }}:
                       {{ format_balance(betPreRemaining(data)) }}
                     </div>
                     <div class="mt10">
                       <!-- 提前结算可用次数 -->
-                      {{ $root.$t("bet_record.settlement_bet_count") }}:
+                      {{ $t("bet_record.settlement_bet_count") }}:
                       {{ betPreCount(data, i) }}
                     </div>
                     <div
                       v-if="
                         data.setBetAmount <=
-                        _.get(money_obj, `${i}.min_money`, 0)
+                        lodash.get(money_obj, `${i}.min_money`, 0)
                       "
                       class="bet-tips-info"
                     >
@@ -324,7 +329,7 @@
                       <span class="tips-info">
                         <template>
                           <!--仅支持全额结算-->
-                          {{ $root.$t("bet_record.settlement_only_full") }}
+                          {{ $t("bet_record.settlement_only_full") }}
                         </template>
                       </span>
                     </div>
@@ -341,8 +346,8 @@
                     <div class="bet-row-1">
                       {{
                         data.bet_confirm
-                          ? $root.$t("bet_record.confirm")
-                          : $root.$t("bet_record.confirm_bet_pre")
+                          ? $t("bet_record.confirm")
+                          : $t("bet_record.confirm_bet_pre")
                       }}
                     </div>
                     <!--data.amount存在的话优先使用，否则使用计算后的-->
@@ -374,7 +379,7 @@
                   <div class="bet-pre-left">
                     <!-- 已提前结算 -->
                     <div class="bet-row-1">
-                      {{ $root.$t("bet_record.finish_bet_pre") }}
+                      {{ $t("bet_record.finish_bet_pre") }}
                     </div>
                     <div class="bet-row-2">
                       {{ format_btn_balance(data.computed_bet_amount) }}
@@ -388,14 +393,14 @@
               <template
                 v-else-if="
                   data.computed_bet_amount < 1 ||
-                  _.get(data, 'orderVOS.0.hs') != 0 ||
+                  lodash.get(data, 'orderVOS.0.hs') != 0 ||
                   data.cash_out_status == -1
                 "
               >
                 <!--暂停提前结算-->
                 <div class="bet-pre-wrap bet-pre-stop">
                   <div class="bet-pre-btn">
-                    {{ $root.$t("bet_record.pre_bet_stop") }}
+                    {{ $t("bet_record.pre_bet_stop") }}
                   </div>
                   <div
                     :ref="`bet_pre_${data.orderNo}`"
@@ -436,7 +441,7 @@
                 {{ item_cancelType(item.cancelType) }}
               </span>
               <span v-else class="bet-result lose-color">{{
-                $root.$t("bet.invalid")
+                $t("bet.invalid")
               }}</span>
             </template>
             <!-- 其他 -->
@@ -478,7 +483,7 @@
                 {{ item_cancelType(item.cancelType) }}
               </span>
               <span v-else class="bet-result lose-color">{{
-                data.seriesType == "1" ? "" : `${$root.$t("bet.invalid")}`
+                data.seriesType == "1" ? "" : `${$t("bet.invalid")}`
               }}</span>
             </template>
             <template v-if="item.betStatus == 1">
@@ -488,7 +493,7 @@
                 >{{ item_status(item.betResult) }}</span
               >
               <span v-else class="bet-result lose-color">{{
-                data.seriesType == "1" ? "" : `${$root.$t("bet.invalid")}`
+                data.seriesType == "1" ? "" : `${$t("bet.invalid")}`
               }}</span>
             </template>
           </template>
@@ -499,71 +504,156 @@
   </div>
 </template>
 
-<script></script>
+<script setup>
+import { useTableData } from "./use-table-data";
+import { format_score_t,format_balance,formatTime,format_btn_balance } from "src/core/formart.index.js";
+import vueSlider from "vue-slider-component";
+import {  CANCEL_TYPE } from "./config";
+import "vue-slider-component/theme/default.css";
+import lodash from "lodash";
+const props = defineProps({
+  data: {
+    type: Object,
+    default: () => {},
+  },
+  money_obj: {
+    type: Object,
+    default: () => {},
+  },
+  tool_selected: {
+    type: Number,
+    default: 0,
+  },
+});
+const emit = defineEmits([
+  "start_bet_pre",
+  "show_bet_pre",
+  "bet_pre_out",
+  "bet_pre_over",
+  "change_slider",
+  "bet_handle"
+]);
+
+const start_bet_pre = (i) => {
+  emit("start_bet_pre", i);
+};
+const bet_pre_over = (i) => {
+  emit("bet_pre_over", i);
+};
+const bet_pre_out = (i) => {
+  emit("bet_pre_out", i);
+};
+const show_bet_pre = (arg) => {
+  emit("show_bet_pre", arg);
+};
+const change_slider = (arg) => {
+  emit("change_slider", arg);
+};
+
+  /**
+   * @description: 单剩余本金
+   */
+   const betPreRemaining = (item) => {
+    return mathjs.subtract(item.orderAmountTotal, item.preBetAmount || 0);
+  };
+
+    /**
+   * @description: 提前结算可用次数
+   */
+   const betPreCount = (item, index) => {
+    let min_money = lodash.get(props.money_obj, `${index}.min_money`);
+    let preSettleBetAmount = item.preSettleBetAmount;
+    if (preSettleBetAmount <= min_money) {
+      return 1;
+    } else {
+      return item.preBetAmount ? 1 : 2;
+    }
+  };
+  /**
+   * @description: 确认提前结算
+   * @return {}
+   */
+  const bet_handle = (arg)=>{
+    emit("bet_handle", arg);
+  }
+    /**
+   * @description: 取消原因
+   * @param {srting} cancelType: 取消类型
+   * @return {string}
+   */
+   const item_cancelType = (cancelType) => {
+    if ([1, 2, 3, 4, 5, 6, 17, 20].includes(parseInt(cancelType))) {
+      return CANCEL_TYPE[parseInt(cancelType)];
+    } else {
+      return this.$root.$t("bet.invalid"); //注单无效
+    }
+  };
+
+const { matchType, show_score_info, vx_get_user } = useTableData();
+</script>
 
 <style lang="scss" scoped>
-    .ceil-options {
+.ceil-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  width: 100% !important;
+  line-height: 23px;
+  //赛马信息
+  .match-name-wrap {
+    display: flex;
+    align-items: center;
+    .ranking-bg {
+      margin-right: 7px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 25px;
-      width: 100% !important;
-      line-height: 23px;
-      //赛马信息
-      .match-name-wrap {
-        display: flex;
-        align-items: center;
-        .ranking-bg {
-          margin-right: 7px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          div {
-            width: 12px;
-            height: 12px;
-            margin-right: 2px;
-          }
-        }
-        .market_value {
-          margin-right: 20px;
-        }
-      }
-      .both-item {
-        line-height: 16px;
-      }
-      .item-result {
-        margin-right: 20px;
-        width: 48px;
-        text-align: right;
-      }
-      &:last-child {
-        margin: 0;
+      justify-content: space-between;
+      div {
+        width: 12px;
+        height: 12px;
+        margin-right: 2px;
       }
     }
-  //注单号
-  .order-no {
-    display: flex;
-    margin-top: 2px;
-    .copy {
-      display: flex;
-      align-items: center;
-      margin-left: 5px;
-      cursor: pointer;
+    .market_value {
+      margin-right: 20px;
     }
   }
-  .bet-pre-detail {
+  .both-item {
+    line-height: 16px;
+  }
+  .item-result {
+    margin-right: 20px;
+    width: 48px;
+    text-align: right;
+  }
+  &:last-child {
+    margin: 0;
+  }
+}
+//注单号
+.order-no {
+  display: flex;
+  margin-top: 2px;
+  .copy {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
     cursor: pointer;
+  }
+}
+.bet-pre-detail {
+  cursor: pointer;
 
-    /*  箭头向下样式 */
-    .icon-pull-down:before {
-      transform: rotate(180deg);
-      margin-left: 6px;
-    }
-    /*  箭头向上样式 */
-    .icon-pull-up:before {
-      transform: rotate(0deg);
-      margin-left: 6px;
-    }
+  /*  箭头向下样式 */
+  .icon-pull-down:before {
+    transform: rotate(180deg);
+    margin-left: 6px;
+  }
+  /*  箭头向上样式 */
+  .icon-pull-up:before {
+    transform: rotate(0deg);
+    margin-left: 6px;
   }
 }
 </style>

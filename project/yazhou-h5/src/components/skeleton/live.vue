@@ -32,6 +32,7 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
+import { computed } from "vue"
 
 const thumbStyle = ref({
   background: "transparent"

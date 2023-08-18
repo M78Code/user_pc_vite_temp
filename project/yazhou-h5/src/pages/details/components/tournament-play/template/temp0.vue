@@ -18,10 +18,15 @@
                         <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                         <template v-if="ol_item.os == 1">
                           <!-- 主程序 start -->
-                          <div
+                          <!-- <div
                             class="play-box-style details_color"
                             @click="go_to_bet(ol_item)"
                             :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                          > -->
+                          <div
+                            class="play-box-style details_color"
+                            @click="go_to_bet(ol_item)"
+                            :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                           >
                             <div class="ellipsis remark details_t_color6 fz_13 odds-on">
                               <span :class="[{'white_text':get_bet_list.includes(ol_item.id_)}]">
@@ -99,10 +104,15 @@
                   <!-- os: 1、开盘 2、封盘 3、隐藏不显示，不占地方-->
                   <template v-if="ol_item.os == 1">
                     <!-- 主程序 start -->
-                    <div
+                    <!-- <div
                       class="play-box-style details_color"
                       @click="go_to_bet(ol_item)"
                       :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':utils.calc_win(ol_item.result),'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
+                    > -->
+                    <div
+                      class="play-box-style details_color"
+                      @click="go_to_bet(ol_item)"
+                      :class="[get_bet_list.includes(ol_item.id_)?'details-bg5':'',{'win':true,'bor-btm':ol_index != item.ol.length-1 || index_ != item_data.hl.length-1}]"
                     >
                       <div class="ellipsis remark details_t_color6 fz_13">
                         <span class="size-color" :class="[{'white_text':get_bet_list.includes(ol_item.id_)},{'gray': is_number(ol_item.ott) || is_number(ol_item.on) }]">
@@ -176,8 +186,9 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // #TODO mixins 
+import lodash from "lodash";
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -202,17 +213,26 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return {}
+    });
     /**
      * @description: 判断是否隐藏加载更多和收起功能
      */
     const hide_show_more_layout = computed(() => {
       let ret = true;
-      let len_hl = _.get(item_data,'hl.length');
+      let len_hl = lodash.get(props.item_data,'hl.length');
       let len = 0;
       let len_temp = 0;
       if(len_hl){
         for (let i = 0; i < len_hl; i++) {
-          len_temp = _.get(item_data,`hl[${i}].ol.length`)
+          len_temp = lodash.get(props.item_data,`hl[${i}].ol.length`)
           if(len_temp){
             len+=len_temp;
           }
@@ -231,14 +251,14 @@ export default defineComponent({
     });
     onMounted(() => {
       // 根据指定模板,对模板下数据量大的玩法进行折叠处理
-      if(item_data.hpt == 0){
+      if(props.item_data.hpt == 0){
         // 获取玩法下的数量
-        let len_hl = _.get(item_data,'hl.length');
+        let len_hl = lodash.get(props.item_data,'hl.length');
         let len = 0;
         let len_temp = 0;
         if(len_hl){
           for (let i = 0; i < len_hl; i++) {
-            len_temp = _.get(item_data,`hl[${i}].ol.length`)
+            len_temp = lodash.get(props.item_data,`hl[${i}].ol.length`)
             if(len_temp){
               len+=len_temp;
             }
@@ -281,6 +301,9 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
+      get_bet_list,
+      get_cur_odd,
+      get_detail_data,
       is_number,
       go_to_bet,
       change_show,

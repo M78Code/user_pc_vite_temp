@@ -36,8 +36,8 @@
           :content-style="tooltip_style"
           >{{
             handicap_this.panel_status == "hide"
-              ? $root.$t("icon_tips.unfold")
-              : $root.$t("icon_tips.fold")
+              ? $t("icon_tips.unfold")
+              : $t("icon_tips.fold")
           }}</q-tooltip
         >
         <!-- 展开：收起 -->
@@ -63,7 +63,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.column") }}</q-tooltip
+            >{{ $t("icon_tips.column") }}</q-tooltip
           >
           <!-- 一栏布局 -->
         </span>
@@ -80,7 +80,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.multicolumn") }}</q-tooltip
+            >{{ $t("icon_tips.multicolumn") }}</q-tooltip
           >
           <!-- 两栏布局 -->
         </span>
@@ -97,6 +97,7 @@ import {
   onUnmounted,
   watch,
   defineExpose,
+  defineEmits
 } from "vue";
 // import { mapGetters, mapActions } from "vuex";
 import { useRoute } from "vue-router";
@@ -104,6 +105,7 @@ import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
 import icon from "src/components/icon/icon.vue";
+import lodash from 'lodash'
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -124,7 +126,7 @@ export default defineComponent({
 
     defineExpose({
       tab,
-      currentIndex
+      currentIndex,
     });
 
     // 当前所选的玩法集子项id

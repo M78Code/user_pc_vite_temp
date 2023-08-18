@@ -31,26 +31,19 @@
 // import { mapGetters} from "vuex";
 // import global_filters from 'src/boot/global_filters.js'
 // import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
-import base64 from "src/core/utils/base64.js";    // 球类背景图base64路径集合
+import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "change_header",
-  props: {
-    data_list: {
-      type: Array,
-      default: []
-    },
-    scroller_scroll_top: {
-      type: Number,
-      default: 0
-    }
+  props:{
+    detail_data:Object,
   },
   components: {
     // "match-stage":match_stage
   },
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       // 背景图片引入
       URL: base64,
       // 顶部赛事阶段及时间 显示控制
@@ -59,17 +52,31 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_menu_type", "get_change_count"]),
+    const get_menu_type = computed(() => {
+      return "";
+    });
+    const get_change_count = computed(() => {
+      return "";
+    });
     // 通过球种csid减1匹配相应的背景图片
     const ballType = computed(() => {
-      return this.detail_data.csid - 1;
+      return props.detail_data.csid - 1;
+    });
+    const score = computed(() => {
+      return {
+        // home: global_filters.format_total_score(props.detail_data, 0),
+        // away: global_filters.format_total_score(props.detail_data, 1)
+        home: '',
+        away: '',
+      }
     });
     const eports_scoring = computed(() => {
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
-      if(this.get_menu_type == 3000) {
-        const mmp_state = this.detail_data.mmp || 1
-        if(mmp_state != (Number(this.score.home) + Number(this.score.away) +1)) {
+      if(get_menu_type.value == 3000) {
+        const mmp_state = props.detail_data.mmp || 1
+        if(mmp_state != (Number(component_data.score.home) + Number(component_data.score.away) +1)) {
           scoring = true
         }
       }
@@ -77,11 +84,14 @@ export default defineComponent({
     });
     // 是否展示比分
     const is_show_score = computed(() => {
-      return  [1,2,3,4].includes(+this.detail_data.ms) || (this.get_menu_type == 3000 && this.detail_data.ms > 0)
+      return  [1,2,3,4].includes(+props.detail_data.ms) || (get_menu_type.value == 3000 && props.detail_data.ms > 0)
     });
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      get_menu_type,
+      get_change_count,
       ballType,
+      score,
       eports_scoring,
       is_show_score,
       lodash

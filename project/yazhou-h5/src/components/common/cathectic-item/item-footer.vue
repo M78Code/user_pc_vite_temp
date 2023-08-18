@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: bw3新版矩形框底部
 -->
 <template>
@@ -61,6 +61,10 @@
 <script setup>
 // import { mapGetters } from "vuex";
 import { ref, onUnmounted, computed } from 'vue'
+import { useI18n } from "vue-i18n"
+
+let { t } = useI18n()
+
   const props = defineProps({
     data_f: {
       type: Object
@@ -73,66 +77,66 @@ import { ref, onUnmounted, computed } from 'vue'
   const class_foter = ref('')
   const bet_result = ref({
     //'未结算',
-    // "0": $root.$t("bet_record.bet_no_status00"), 
+    "0": t("bet_record.bet_no_status00"),
     //'走水',
-    // "2": $root.$t("bet_record.bet_no_status02"), 
+    "2": t("bet_record.bet_no_status02"),
     //  //'输',
-    // "3": $root.$t("bet_record.bet_no_status03"),
+    "3": t("bet_record.bet_no_status03"),
     // //'赢',
-    // "4": $root.$t("bet_record.bet_no_status04"), 
+    "4": t("bet_record.bet_no_status04"),
     // //'赢半',
-    // "5": $root.$t("bet_record.bet_no_status05"), 
+    "5": t("bet_record.bet_no_status05"),
     // //'输半',
-    // "6": $root.$t("bet_record.bet_no_status06"), 
+    "6": t("bet_record.bet_no_status06"),
     // //'比赛取消',
-    // "7": $root.$t("bet_record.bet_no_status07"), 
+    "7": t("bet_record.bet_no_status07"),
     // //'比赛延期',
-    // "8": $root.$t("bet_record.bet_no_status08"), 
+    "8": t("bet_record.bet_no_status08"),
     // // '比赛延迟',
-    // "11": $root.$t("bet_record.bet_no_status11"), 
+    "11": t("bet_record.bet_no_status11"),
     // // '比赛中断',
-    // "12": $root.$t("bet_record.bet_no_status12"), 
+    "12": t("bet_record.bet_no_status12"),
     // // '比赛放弃'
-    // "15": $root.$t("bet_record.bet_no_status15"), 
-  }) 
+    "15": t("bet_record.bet_no_status15"),
+  })
   const outcome = ref({
     // //'走水',
-    // "2": $root.$t("bet_record.bet_no_status02"), 
+    "2": t("bet_record.bet_no_status02"),
     // //'输',
-    // "3": $root.$t("bet_record.bet_no_status03"), 
+    "3": t("bet_record.bet_no_status03"),
     // //'赢',
-    // "4": $root.$t("bet_record.bet_no_status04"), 
+    "4": t("bet_record.bet_no_status04"),
     // //'赢半',
-    // "5": $root.$t("bet_record.bet_no_status05"), 
+    "5": t("bet_record.bet_no_status05"),
     // //'输半',
-    // "6": $root.$t("bet_record.bet_no_status06"), 
-  }) 
+    "6": t("bet_record.bet_no_status06"),
+  })
   const bet_result_1 = ref({
-    // "7": $root.$t("bet_record.bet_no_status07"),
-    // "8": $root.$t("bet_record.bet_no_status08"),
-    // "11": $root.$t("bet_record.bet_no_status11"),
-    // "12": $root.$t("bet_record.bet_no_status12"),
-    // "15": $root.$t("bet_record.bet_no_status15")
-  }) 
+    "7": t("bet_record.bet_no_status07"),
+    "8": t("bet_record.bet_no_status08"),
+    "11": t("bet_record.bet_no_status11"),
+    "12": t("bet_record.bet_no_status12"),
+    "15": t("bet_record.bet_no_status15")
+  })
   //手动取消订单的原因展示
   const bet_result_3 = ref({
-    // "1": $root.$t("bet_record.cancel_type_1"),
-    // "2": $root.$t("bet_record.cancel_type_2"),
-    // "3": $root.$t("bet_record.cancel_type_3"),
-    // "4": $root.$t("bet_record.cancel_type_4"),
-    // "5": $root.$t("bet_record.cancel_type_5"),
-    // "6": $root.$t("bet_record.cancel_type_6"),
-    // "17": $root.$t("bet_record.cancel_type_17"),
-    // "20": $root.$t("bet_record.cancel_type_20"),
-  }) 
+    "1": t("bet_record.cancel_type_1"),
+    "2": t("bet_record.cancel_type_2"),
+    "3": t("bet_record.cancel_type_3"),
+    "4": t("bet_record.cancel_type_4"),
+    "5": t("bet_record.cancel_type_5"),
+    "6": t("bet_record.cancel_type_6"),
+    "17": t("bet_record.cancel_type_17"),
+    "20": t("bet_record.cancel_type_20"),
+  })
   //这一单是否赢钱了
-  const is_win = ref(false)   
+  const is_win = ref(false)
   onUnmounted(() => {
     // for (const key in $data) {
     //   $data[key] = null
     // }
-  }) 
-  
+  })
+
     // ...mapGetters(["get_main_item"]),
     //单关已结算投注成功状态（orderStatus == 1）此位置需要返回结算比分
     //单关注单无效状态（orderStatus == 2）此位置需要返回无效原因
@@ -163,22 +167,22 @@ import { ref, onUnmounted, computed } from 'vue'
       switch (props.data_f.orderStatus) {
         case '0':
           class_foter.value = 'green'
-          res = 'bet_record.successful_betting'// $root.$t('bet_record.successful_betting')
+          res = t('bet_record.successful_betting')
           break;
         case '1':
           class_foter.value = 'black'
           let flag = props.data_f.seriesType == '1' && props.data_f.orderVOS[0]
           //单关
-          if (flag) {   
-            if (+props.data_f.preBetAmount > 0) { 
+          if (flag) {
+            if (+props.data_f.preBetAmount > 0) {
                // 提前结算的输赢单独一套逻辑算
               let difference = props.data_f.backAmount - props.data_f.orderAmountTotal
               // 赢
-              if (difference > 0) {     
+              if (difference > 0) {
                 class_foter.value = 'red'
                 is_win = true
                 res = bet_result[4]
-              } else if (difference < 0) { 
+              } else if (difference < 0) {
                  // 输
                 res = bet_result[3]
               } else {  // 走水
@@ -188,34 +192,34 @@ import { ref, onUnmounted, computed } from 'vue'
             }
             let betresult = props.data_f.orderVOS[0].betResult
             if (betresult == 13 || betresult == 16) {
-              res = $root.$t('bet_record.invalid');
+              res = t('bet_record.invalid');
             } else {
               if (betresult == 4 || betresult == 5) {
-                class_foter = 'red'
-                is_win = true
+                class_foter.value = 'red'
+                is_win.value = true
               }
               res =  bet_result[betresult] || '';
             }
-          } else {  
+          } else {
             //串关
             if (props.data_f.outcome == 4 || props.data_f.outcome == 5) {
-              class_foter = 'red'
-              is_win = true
+              class_foter.value = 'red'
+              is_win.value = true
             }
-            res = outcome[props.data_f.outcome] || $root.$t('bet_record.successful_betting')
+            res = outcome[props.data_f.outcome] || t('bet_record.successful_betting')
           }
           break;
         case '2':
-          class_foter = 'black'
-          res = $root.$t('bet_record.invalid_bet')
+          class_foter.value = 'black'
+          res = t('bet_record.invalid_bet')
           break;
         case '3':
-          class_foter = 'orange'
-          res = $root.$t('bet_record.confirming')
+          class_foter.value = 'orange'
+          res = t('bet_record.confirming')
           break;
         case '4':
-          class_foter = 'red'
-          res = $root.$t('bet.bet_err')
+          class_foter.value = 'red'
+          res = t('bet.bet_err')
           break;
         default:
           res = ''

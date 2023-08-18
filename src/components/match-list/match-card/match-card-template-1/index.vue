@@ -19,9 +19,8 @@
 
 <script setup>
 import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
 
 // inject:['match_list_card'],
@@ -50,7 +49,8 @@ import { MatchTpl24AfterFullVersionWapper as matchTpl24After } from ( /* webpack
 import { MatchTplEsportsAfterFullVersionWapper as matchTplesportsAfter } from ( /* webpackChunkName: "pc-mini-chunks" */ "src/components/match-list/match_tpl_new_data/match-tpl-esports-after/index.js");
 
 let state = store.getState()
-const props = defineProps({ ...useProps })
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+
 // 赛事样式对象
 const match_style_obj = ref(this.match_list_card.all_card_obj['mid_'+props.mid] || {})
 // 是否显示调试信息

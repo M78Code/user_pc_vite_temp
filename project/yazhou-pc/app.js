@@ -1,8 +1,11 @@
 import { ref, watch, computed } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
-import { api_match } from "src/api/index.js";
+import { get_user_info } from "src/store-redux/module/user-info.js";
 import store from "src/store-redux/index.js";
+
+import { api_match } from "src/api/index.js";
+
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
 import { loadLanguageAsync } from "./src/boot/i18n";
@@ -12,31 +15,21 @@ const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成
 const url_params = GetUrlParams(); //获取url参数
 //动画逻辑 靠后
-
 /**
  * 获取用户信息
  */
 const handle_user_tryPlay = async () => {
-  let token = ss.get(token_key);
+  let token = ss.get(token_key, url_params.token);
   if (!token) {
     //试玩登录
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
     ss.set(token_key, token);
-    sessionStorage.setItem("token", token); //兼容之前的 后面删除吧
+    store.dispatch(get_user_info(token));
   } else {
-    // 获取用户信息
-    try {
-      let res = await api_match.handle_getUserInfo();
-      let obj = res?.data?.data || {};
-      store.dispatch({
-        type: "SETUSER",
-        data: obj,
-      });
-    } catch (error) {}
+    store.dispatch(get_user_info(token));
   }
-  console.log("token-111", token);
 };
 console.log("测试执行------------1----3");
 // 资源文件加载时,避免强缓存使用的rdm参数值

@@ -1,5 +1,5 @@
 <!--
- * @Author: 
+ * @Author:
  * @Description: be3新版投注记录页展示对阵信息，玩法赔率
 -->
 <template>
@@ -39,7 +39,7 @@
           <!--球类名称 赛前还是滚球 玩法名称-->
           <!-- {{i18n_data.sport_name}} i18n_data.type-->
           <span
-            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{'123'}}&ensp;</span> 
+            v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{'123'}}&ensp;</span>
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
@@ -130,43 +130,43 @@ const props =defineProps({
     is_pre: {
       type: Boolean
     }
-  })  
+  })
   // const bet_result = ref({
   //   //'未结算',
-  //   // "0": $root.$t("bet_record.bet_no_status00"), 
+  //   // "0": $root.$t("bet_record.bet_no_status00"),
   //   //'走水',
-  //   "2": $root.$t("bet_record.bet_no_status02"), 
+  //   "2": $root.$t("bet_record.bet_no_status02"),
   //   //'输',
-  //   "3": $root.$t("bet_record.bet_no_status03"), 
+  //   "3": $root.$t("bet_record.bet_no_status03"),
   //   //'赢',
   //   "4": $root.$t("bet_record.bet_no_status04"),
-  //    //'赢半', 
+  //    //'赢半',
   //   "5": $root.$t("bet_record.bet_no_status05"),
   //   //'输半',
-  //   "6": $root.$t("bet_record.bet_no_status06"), 
+  //   "6": $root.$t("bet_record.bet_no_status06"),
   //   //'比赛取消',
-  //   "7": $root.$t("bet_record.bet_no_status07"), 
+  //   "7": $root.$t("bet_record.bet_no_status07"),
   //   //'比赛延期',
-  //   "8": $root.$t("bet_record.bet_no_status08"), 
+  //   "8": $root.$t("bet_record.bet_no_status08"),
   //   // '比赛延迟',
-  //   "11": $root.$t("bet_record.bet_no_status11"), 
+  //   "11": $root.$t("bet_record.bet_no_status11"),
   //   // '比赛中断',
-  //   "12": $root.$t("bet_record.bet_no_status12"), 
+  //   "12": $root.$t("bet_record.bet_no_status12"),
   //   // '比赛放弃'
-  //   "15": $root.$t("bet_record.bet_no_status15") 
-  // }) 
+  //   "15": $root.$t("bet_record.bet_no_status15")
+  // })
   // const bet_result_1 = ref({
   //   //'比赛取消',
-  //   "7": $root.$t("bet_record.bet_no_status07"), 
+  //   "7": $root.$t("bet_record.bet_no_status07"),
   //   //'比赛延期',
-  //   "8": $root.$t("bet_record.bet_no_status08"), 
+  //   "8": $root.$t("bet_record.bet_no_status08"),
   //   // '比赛延迟',
-  //   "11": $root.$t("bet_record.bet_no_status11"), 
+  //   "11": $root.$t("bet_record.bet_no_status11"),
   //   // '比赛中断',
-  //   "12": $root.$t("bet_record.bet_no_status12"), 
+  //   "12": $root.$t("bet_record.bet_no_status12"),
   //   // '比赛放弃'
-  //   "15": $root.$t("bet_record.bet_no_status15") 
-  // }) 
+  //   "15": $root.$t("bet_record.bet_no_status15")
+  // })
   //手动取消订单的原因展示
   // const bet_result_3 = ref({
   //   "1": $root.$t("bet_record.cancel_type_1"),
@@ -177,20 +177,17 @@ const props =defineProps({
   //   "6": $root.$t("bet_record.cancel_type_6"),
   //   "17": $root.$t("bet_record.cancel_type_17"),
   //   "20": $root.$t("bet_record.cancel_type_20")
-  // }) 
+  // })
   // 3个需要特殊对应的国际化数据写到这里
   // const i18n_data = ref({
   //   sport_name: $root.$t(`common_lang.${lang}.sport2`)[main.sportId],
   //   type: $root.$t(`common_lang.${lang}.matchtype`)[main.matchType],
   //   mtype: $root.$t(`common_lang.${lang}.odds`)[main.marketType]
-  // }) 
+  // })
   let lang = ref(props.type_.langCode ? (props.type_.langCode == 'zs' ? 'zh': props.type_.langCode) : 'zh')
   // 路由
   const route = useRoute()
 
-  onMounted(() => {
-    console.error(props.main);
-  })
     // ...mapGetters(["get_main_item", "get_theme", "get_menu_type", "get_lang"]),
     //单关已结算投注成功（orderStatus == 1）时，不在此位置显示结算比分
   const calc_settle_score = computed(() => {
@@ -207,13 +204,13 @@ const props =defineProps({
         //orderStatus  字段0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败。 1  2  4  都在已结算列表里面 ，0 和 3 是在未结算列表里面
         switch (orderStatus) {
           //3（确认中，订单是确认中状态）
-          case '3':   
+          case '3':
           //4（投注失败，订单是投注失败状态)
-          case '4':   
+          case '4':
             res = '';
             break;
             //0（未结算，订单是投注成功状态)
-          case '0':   
+          case '0':
             if (seriesType == '1') {
               res = '';
             } else {
@@ -232,8 +229,8 @@ const props =defineProps({
             }
             break;
             //1（已结算 订单是投注成功状态）
-          case '1':   
-            if (seriesType == '1') {  
+          case '1':
+            if (seriesType == '1') {
               //放到下面显示
               res = ''
             } else {
@@ -257,7 +254,7 @@ const props =defineProps({
             }
             break;
             //2（注单无效，订单是投注无效状态）
-          case '2':   
+          case '2':
             if (seriesType == '1') {
               res = ''
             } else {
@@ -276,7 +273,7 @@ const props =defineProps({
         }
         return res;
       }
-    }) 
+    })
     //虚拟赛马计算标识数量
   const calc_num = computed(() => {
       if (/[0-9]/.test(props.main.playOptions)) {
@@ -284,7 +281,7 @@ const props =defineProps({
       } else {
         return false
       }
-    }) 
+    })
     // 箭头是否展示
   const show_arrow = computed(() => {
       let flag = true;
@@ -295,13 +292,13 @@ const props =defineProps({
         flag = false;
       }
       return flag;
-    }) 
-    onUnmounted(() => {
-      for (const key in $data) {
-      $data[key] = null
-    };
     })
-  
+    onUnmounted(() => {
+    //   for (const key in $data) {
+    //   $data[key] = null
+    // };
+    })
+
     // ...mapMutations(['set_goto_detail_matchid', 'set_details_item', 'set_menu_type']),
   const handle_img_load_error = (e) => {
       e.target.classList.add('err_src')

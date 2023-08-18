@@ -1,4 +1,4 @@
-import { provide, reactive, ref } from "vue";
+import { reactive, computed } from "vue";
 // 引入接口封装文件
 import { api_common, api_result } from "src/api/index.js";
 //  无数据显示组件
@@ -14,6 +14,7 @@ import { api_common, api_result } from "src/api/index.js";
 // import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
 import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js";
+import { Level_one_detail_odd_info } from "../category-list.js";
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import { uid } from "quasar";
@@ -112,8 +113,7 @@ export const category_info = () => {
       }
     }
     // #TODO
-    // return flag;
-    return true;
+    return flag;
   });
   component_data.matchInfoCtr.setList(Level_one_detail_odd_info());
   // 置顶列表

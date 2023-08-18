@@ -65,7 +65,6 @@
               </div>
               <div class="text-scroller" v-else>
                 <span class="text" v-scroll-text>{{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
-                <!--<span class="text">{{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>-->
               </div>
             </div>
             <i class="icon icon-replay-red"></i>
@@ -201,568 +200,575 @@
 
 <script setup>
 // import {mapGetters, mapMutations} from "vuex";
-import { 
-  ref, 
-  onMounted, 
-  computed, 
-  onUnmounted, 
-  nextTick, 
+import {
+  ref,
+  onMounted,
+  computed,
+  onUnmounted,
+  nextTick,
   watch
 } from 'vue'
-import loadsh from 'lodash'
+import lodash from 'lodash'
 // TODO: 后续修改调整
-import {api_common, api_result} from "src/project/api/index.js";
+import {api_common, api_result} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import store from "src/store-redux/index.js"
+import { load_player_js } from "src/core/pre-load/index.js"
+import utils from "src/core/utils/utils.js"
 
-// components: {
-  // 队标视图
-    let teamImg = defineAsyncComponent(() => import("src/project/components/details/team_img.vue"))
-    // 全屏播放时，顶部title 
-    let titleX = defineAsyncComponent(() => import("src/project/pages/details/analysis-matches/components/title_x.vue"))  
-     // 事件类型菜单
-    let tab = defineAsyncComponent(() => import("src/project/pages/details/analysis-matches/components/tabs.vue"))  
-    // 精彩回放视频滚动列表
-    let sliderX= defineAsyncComponent(() => import("src/project/pages/details/analysis-matches/components/slider_x.vue"))   
-  // }
+// 队标视图
+let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))
+// 全屏播放时，顶部title
+let titleX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/title-x.vue"))
+// 事件类型菜单
+let tab = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/tabs.vue"))
+// 精彩回放视频滚动列表
+let sliderX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/slider-x.vue"))
 
-  directives(
-    // 对阵文案过长时，无限滚动展示
-    scroll-text, {
-      inserted: function (el) {
-        const font_size = innerWidth * 100 / 375
-        const width = el.clientWidth
-        if (width >=  Math.floor(2.2 * font_size)) {
-          let span = document.createElement('span')
-          span.className = 'text text-move'
-          span.textContent = el.textContent
-          el.parentElement.appendChild(span)
-          el.classList.add('text-move')
-          span = null
-          el.parentElement.style.animationDuration = `${width / 30 / 2}s`
-        }
-      }
-    })
-    
-
-    // 定时器
-    let get_football_replay_timer = ref(null)
-    let update_slider_index_timer = ref(null)
-    let is_controller_show_timer = ref(null)
-    let is_replay_load_error_timer = ref(null)
-    // 锚点
-    let events_scroller = ref(null)
-    let tabs = ref(null)
-    let slider_video = ref(null)
-    let slider_x = ref(null)
-    let item_wrapper = ref(null)
-    let video_wrapper = ref(null)
-    // 事件类型菜单选项
-    let tab_list = ref([])
-    // 当前选中事件类型
-    let tabIndex = ref(0)
-    let tabEvenCode = ref(0)
-    // 事件列表
-    let events_list = ref([])
-    // 事件列表选中索引
-    let event_index = ref(0)
-    // 目标事件列表是否展开
-    let is_expand = ref(false)
-    // 当前播放视频信息
-    let current_event_video = ref({
-        totalTime: 0,
-        voice: true,
-        status: 0,
-      })
-    // 用户是否控制开启声音
-    let is_user_voice = ref(true)
-    // 当前选中的slider信息(全屏)
-    let curr_active_event = ref({
-        video_url: '',
-        event_id: '',
-        slider_index: 0,
-      })
-    // 是否是全屏
-    let is_full_screen = ref(false)
-    // 是否展示slider列表(全屏)
-    let is_expand_video_list = ref(false)
-    // 是否显示控件
-    let is_controller_show = ref(true)
-    // 实时时间（赛事进行中）
-    let real_time = ref('00:00')
-    // 精彩回放视频url
-    let replay_url = ref('http://localhost:3000/replay.mp4')
-    // 精彩回放视频是否加载失败
-    let is_replay_load_error = ref(false)
-    // 精彩回放视频增加随机数
-    let iframe_rdm = ref('')
-    // TODO: $utils 后续修改调整
-    $utils.load_player_js()
-    // TODO: set_event_list 后续修改调整
-    // set_event_list([])
-
-    // 监听iframe传来的消息
-    window.addEventListener("message", handleMessage);
-
-    // 接收到子iframe消息后，做相应处理
-    const handleMessage = (e) => {
-      const data = e.data;
-
-      switch (data.cmd) {
-        case 'icon':
-          is_controller_show = data.val
-          break;
-      }
+directives(
+  // 对阵文案过长时，无限滚动展示
+  'scroll-text', {
+  inserted: function (el) {
+    const font_size = innerWidth * 100 / 375
+    const width = el.clientWidth
+    if (width >= Math.floor(2.2 * font_size)) {
+      let span = document.createElement('span')
+      span.className = 'text text-move'
+      span.textContent = el.textContent
+      el.parentElement.appendChild(span)
+      el.classList.add('text-move')
+      span = null
+      el.parentElement.style.animationDuration = `${width / 30 / 2}s`
     }
-    // 检测精彩回放视频资源加载状态
-    const check_replay_url = (url) => {
-      // TODO: api_common 后续修改调整
-      api_common.get_full_url(url)
-        .then((v) => {
-          console.log('精彩回放视频加载成功...')
-          is_replay_load_error = false
-        })
-        .catch(err => {
-          console.error('精彩回放视频加载失败...')
-          clearTimeout(is_replay_load_error_timer)
-          is_replay_load_error_timer = setTimeout(() => {
-            is_replay_load_error = true
-          }, 200)
-        })
-    }
-    // 第X个——英文下转换
-    const trans_num = (num) => {
-      let suffix = ''
-      // TODO: get_lang 后续修改调整
-      if (get_lang === 'en') {
-        if (num === 1) {
-          suffix = 'st'
-        } else if (num === 2) {
-          suffix = 'nd'
-        } else if (num === 3 ) {
-          suffix = 'rd'
-        } else {
-          suffix = 'th'
-        }
-      }
-      return num + suffix
-    }
-    // 菜单切换后，更新相应状态
-    const tab_click = (item, i) => {
-      if(tabIndex === i) return
-      
-      tabIndex = i
-      tabEvenCode = Number(item.code)
-      if (!is_full_screen) {
-        is_expand = false
-      }
-    }
-    // 横屏下精彩回放的事件tab切换
-    const get_video_list = ({tab, index}) => {
-      tabEvenCode = index
-      tabIndex  = index
-      tabs[0].changeTabIndex(index)
-    }
-    // 精彩回放列表显示'的图标
-    const flag_icon = (type) => {
-      let flag
-      switch (type) {
-        // 进球
-        case 'goal':
-           flag = 'icon-flag-goal';
-        break;  
-        // 角球
-        case 'corner':
-           flag = 'icon-flag-corner';
-        break;  
-        // 红牌
-        case "red_card": 
-        flag = 'icon-flag-card-red'; 
-        break;  
-        // 黄牌
-        case "yellow_card": 
-        flag = 'icon-flag-card-yellow'; 
-        break;
-        // 黄红牌  
-        case "yellow_red_card": 
-        flag = 'icon-flag-card-red'; 
-        break;  
-        default: 
-        flag = ''; 
-        break;
-      }
-      return flag;
-    }
-    // 精彩回放列表显示的事件文案
-    const event_name = (type) => {
-      let event_name
-      switch (type) {
-        // 进球
-        // TODO: 国际化后续修改调整
-        case 'goal': 
-        event_name = $root.$t('highlights.type.goal'); 
-        break;  
-        // 角球
-        case 'corner': 
-        event_name = $root.$t('highlights.type.corner'); 
-        break;  
-        // 红牌
-        case "red_card": 
-        event_name = $root.$t('highlights.type.card_red'); 
-        break;
-        // 黄牌  
-        case "yellow_card": 
-        event_name = $root.$t('highlights.type.card_yellow'); 
-        break; 
-        // 黄红牌 
-        case "yellow_red_card": 
-        event_name = $root.$t('highlights.type.card_yellow_red'); 
-        break; 
-        // 默认 
-        default: 
-        event_name = ''; 
-        break;
-      }
-      return event_name;
-    }
-    // iframe加载成功后，通知子iframe
-    const handle_replay_video_loaded = (e) => {
-      // TODO:  get_is_hengping 后续修改调整
-      if (get_is_hengping) {
-        const data = {
-          cmd: 'full_screen_landscape',
-          full_screen_landscape: 1
-        }
+  }
+})
 
-        document.getElementById('replayIframe').contentWindow.postMessage(data,'*')
+// 仓库数据
+let { languageReducer, userInfoReducer } = store.getState()
 
-      }
-    }
-    /**
-     * @description 切换精彩回放视频
-     * @param item 目标视频信息
-     * @param index 目标视频索引
-     */
-    const change_event_video = ({item, index}) => {
-      if (item) {
-        is_replay_load_error = false
-        iframe_rdm = Date.now()
-        is_user_voice = current_event_video.voice
-        replay_url = slider_events_list[index].fragmentVideo
-        check_replay_url(replay_video_src)
-        // 静音当前播放媒体
-        useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, {volume:0})
-      }
-
-      // 滚动目标到屏幕显示区域
-      // TODO: $utils 后续修改调整
-      nextTick(()=>{
-        $utils.tab_move(index, slider_video[0].slider_x, slider_video[0].item_wrapper, true)
-      })
-    }
-    // 点击精彩回放视频时，控件显示状态变更
-    const click_video_screen = (e) => {
-      is_controller_show = !video_wrapper[0].classList.contains('dplayer-hide-controller')
-    }
-    /**
-     * 获取精彩回放事件
-     * @param {String} event_code 事件code
-     */
-    const get_football_replay = (event_code) => {
-      const params = {
-        // TODO: get_detail_data 后续修改调整
-        mid: loadsh.get(get_detail_data, 'mid'),
-        device: 'H5',
-        eventCode: event_code
-      }
-      api_result.get_replay_football(params)
-        .then(res => {
-          if (res.code == 200 && loadsh.get(res.data, 'eventList.length')) {
-            events_list = res.data.eventList
-            // TODO: 后续修改调整 set_event_list
-            set_event_list(res.data.eventList)
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
-        .finally(() => {
-          
-        })
-    }
-    // 点击播放目标回放视频（竖屏非全屏）
-    const handle_click_event = (index, event) => {
-      const selected_item_index = events_list_vertical.findIndex(item => item.eventId === event.eventId)
-
-      // 记录当前slider信息
-      curr_active_event = {
-        video_url: event.fragmentVideo,
-        event_id: event.eventId,
-        slider_index: events_list_vertical.length - 1 - selected_item_index
-      }
-
-      is_replay_load_error = false
-      iframe_rdm = Date.now()
-      replay_url = event.fragmentVideo
-
-      if (event_index === index && !is_expand || event_index !== index) {
-        check_replay_url(replay_video_src)
-      }
-
-      // 收起、展开列表
-      if (event_index === index) {
-        is_expand = !is_expand
-      } else {
-        event_index = index
-        is_expand = false
-        nextTick(() => {
-          is_expand = true
-          is_user_voice = current_event_video.voice
+// 定时器
+let get_football_replay_timer = ref(null)
+let update_slider_index_timer = ref(null)
+let is_controller_show_timer = ref(null)
+let is_replay_load_error_timer = ref(null)
+// 锚点
+let events_scroller = ref(null)
+let tabs = ref(null)
+let slider_video = ref(null)
+// TODO:待调试处理
+let slider_x = ref(null)
+let item_wrapper = ref(null)
+let video_wrapper = ref(null)
+// 事件类型菜单选项
+let tab_list = ref([])
+// 当前选中事件类型
+let tabIndex = ref(0)
+let tabEvenCode = ref(0)
+// 事件列表
+let events_list = ref([])
+// 事件列表选中索引
+let event_index = ref(0)
+// 目标事件列表是否展开
+let is_expand = ref(false)
+// 当前播放视频信息
+let current_event_video = ref({
+  totalTime: 0,
+  voice: true,
+  status: 0,
+})
+// 用户是否控制开启声音
+let is_user_voice = ref(true)
+// 当前选中的slider信息(全屏)
+let curr_active_event = ref({
+  video_url: '',
+  event_id: '',
+  slider_index: 0,
+})
+// 是否是全屏
+let is_full_screen = ref(false)
+// 是否展示slider列表(全屏)
+let is_expand_video_list = ref(false)
+// 是否显示控件
+let is_controller_show = ref(true)
+// 实时时间（赛事进行中）
+let real_time = ref('00:00')
+// 精彩回放视频url
+let replay_url = ref('http://localhost:3000/replay.mp4')
+// 精彩回放视频是否加载失败
+let is_replay_load_error = ref(false)
+// 精彩回放视频增加随机数
+let iframe_rdm = ref('')
 
 
-          // 静音当前播放媒体
-          useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, {volume:0})
-        })
 
-      }
+onMounted(() => {
+  // TODO: $utils.load_player_js() 后续修改调整
+  load_player_js()
+  store.dispatch({
+    type: 'SET_EVENT_LIST',
+    data: []
+  })
 
-      // 延时显示底部交互按钮（声音、全屏）
-      is_controller_show = false
-      clearTimeout(is_controller_show_timer)
-      is_controller_show_timer = setTimeout(() => {
-        is_controller_show = true
-      },300)
-    }
-    /**
-     * @Description 设置全屏
-     * @param {undefined} undefined
-     */
-    const set_full_screen = () => {
-      let data = {}
-      if (is_full_screen) {
-        // TODO: 后续修改调整  set_event_list  set_event_list set_is_hengping
-        set_is_full_screen(false)
-        set_is_dp_video_full_screen(false)
+  // 监听iframe传来的消息
+  window.addEventListener("message", handleMessage);
+  if (events_scroller.value) {
+    events_scroller.style.minHeight = window.innerHeight - utils.rem(1.94) + 'px';
+  }
 
-        set_is_hengping(false)
-        exit_browser_full_screen()
-        screen.orientation && screen.orientation.unlock()
-
-        is_expand_video_list = false
-
-        data = {
-          cmd: 'full_screen_portrait',
-          full_screen_portrait: 0
-        }
-      } else {
-        set_is_full_screen(true)
-        set_is_dp_video_full_screen(true)
-
-        set_is_hengping(true)
-        browser_full_screen()
-        screen.orientation && screen.orientation.lock('landscape')
-
-        data = {
-          cmd: 'full_screen_portrait',
-          full_screen_portrait: 1
-        }
-      }
-      is_full_screen = !is_full_screen
-
-
-      document.getElementById('replayIframe').contentWindow.postMessage(data,'*')
-    }
-    // 更新slider信息
-    const update_slider_index = () => {
-      clearTimeout(update_slider_index_timer)
-      update_slider_index_timer = setTimeout(() => {
-        tabs[0].tab_index = tabIndex
-        slider_video[0].handle_item_click(null, curr_active_event.slider_index)
-      }, 50)
-
-    }
-    // （精彩/收起）回放按钮点击处理
-    const toggle_slider_btn = () => {
-      update_variable_event_n()
-      is_expand_video_list = !is_expand_video_list
-    }
-    // 更新event_n变量值
-    const update_variable_event_n = () => {
-      if (is_slider_in_screen) {
-        // 若橫屏下，slider列表长度小于屏幕横屏宽度，则设置动态属性--event_n，用于slider列表居中计算
-        document.documentElement.style.setProperty('--event_n', slider_events_list.length)
-      }
-    }
-    /**
-     * @Description 浏览器全屏
-     * @param {undefined} undefined
-     */
-    const browser_full_screen = () => {
-      let video_dm = document.documentElement;
-      let rfs = video_dm.requestFullscreen || video_dm.webkitRequestFullScreen || video_dm.mozRequestFullScreen || video_dm.msRequestFullScreen;
-      if (rfs) {
-        rfs.call(video_dm);
-      }
-    }
-    // 退出精彩回放视频
-    const close_video = () => {
-      // set_is_full_screen(false)
-      // set_is_dp_video_full_screen(false)
-      is_full_screen = !is_full_screen
-      is_expand_video_list = false
-      is_replay_load_error = false
-    }
-    /**
-     * @Description 设置视频声音
-     * @param {undefined} undefined
-     */
-    const set_video_voice = () => {
-      current_event_video.voice = !current_event_video.voice
-      const data = {
-        cmd: 'replay_volume_video',
-        volume: current_event_video.voice ? 1 : 0
-      }
-      document.getElementById('replayIframe').contentWindow.postMessage(data,'*')
-    }
-    // 控制info弹窗说明
-    const change_info = () => {
-      set_info_show(true)
-    }
-    /**
-     * @Description 退出浏览器全屏
-     * @param {undefined} undefined
-     */
-    const exit_browser_full_screen = () => {
-      let video_dm = document;
-      let cfs = video_dm.cancelFullscreen || video_dm.webkitCancelFullScreen || video_dm.mozCancelFullScreen || video_dm.exitFullscreen;
-      if(cfs) {
-        cfs.call(video_dm);
-      }
-    }
-    // 精彩回播配置信息
-    watch(() => get_user.merchantEventSwitchVO, (res) => {
-      // handler = (res) => {
-        // tab按钮开关
-        // TODO:  国际化后续修改调整
-        let new_tab_list = [
-          {title: $root.$t('footer_menu.all'), code: '0'},
-          {title: $root.$t('match_result.goal'), code: '1'},
-        ]
-        if (res.cornerEvent) {
-          new_tab_list.push({title: $root.$t('match_result.corner_kick'), code: '2'})
-        }
-        if (res.penaltyEvent) {
-          new_tab_list.push({title: $root.$t('football_playing_way.penalty_cards'), code: '3'})
-        }
-        tab_list = new_tab_list
-      // }
-      // immediate: true
-    })
-    // 更新实时时间
-    watch(() => get_match_real_time, (time) => {
-      real_time = time
-    })
-    // 更新slider选中索引
-    watch(() => is_expand_video_list, (is_expand) => {
-      if (is_expand) {
-        update_slider_index()
-      }
-    })
-    // 横屏、竖屏切换时通知子iframe
-    watch(() => get_is_hengping, (is_hengping) => {
-      if (is_hengping) {
-        const data = {
-          cmd: 'full_screen_landscape',
-          full_screen_landscape: 1
-        }
-        document.getElementById('replayIframe').contentWindow.postMessage(data,'*')
-      } else {
-        const data = {
-          cmd: 'full_screen_portrait',
-          full_screen_portrait: 1
-        }
-        document.getElementById('replayIframe').contentWindow.postMessage(data,'*')
-      }
-    })
-  // onMounted(() => {
-    // 事件列表（非全屏）
-  const events_list_vertical = computed(() => {
-      const curr_tab_index = tabEvenCode
-      let new_events_list
-      if (curr_tab_index === 0) {
-        new_events_list = loadsh.cloneDeep(events_list)
-      } else if (curr_tab_index === 1) {
-        new_events_list = events_list.filter(item => item.eventCode === 'goal')
-      } else if (curr_tab_index === 2) {
-        new_events_list = events_list.filter(item => item.eventCode === 'corner')
-      } else {
-        new_events_list = events_list.filter(item => !['goal', 'corner'].includes(item.eventCode))
-      }
-      new_events_list.sort((a, b)=>{
-        if(b.secondsFromStart < a.secondsFromStart){
-          return 1
-        }else if(b.secondsFromStart > a.secondsFromStart){
-          return -1
-        }
-        if(b.firstNum<a.firstNum){
-          return 1
-        }else if(b.firstNum>a.firstNum){
-          return -1
-        }
-        return 0
-      })
-
-      // 无相应类型事件时返回
-      // TODO:  get_is_hengping 后续修改调整
-      if (get_is_hengping && !new_events_list.length) {
-        return [{}]
-      }
-      return new_events_list.reverse()
-    })
-    // 事件列表（全屏）
-  const slider_events_list = computed(() => {
-      return loadsh.cloneDeep(events_list_vertical).reverse()
-    })
-    // 鉴权域名 + 回放视频url（拼接后的最终url）
-  const replay_video_src = computed(() => {
-      // TODO:  get_user  get_lang 后续修改调整
-      const host_url = window.env.config.live_domains[0] || loadsh.get(get_user,'oss.live_h5')
-      return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
-    })
-    // slider列表长度是否小于屏幕横屏宽度
-  const is_slider_in_screen = computed(() => {
-      // TODO:  get_is_hengping 后续修改调整
-      const full_screen_width = get_is_hengping ? innerWidth : innerHeight
-      const font_size = (get_is_hengping ? innerHeight : innerWidth) * 100 / 375
-
-      return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
-    })
-  // })
-  onMounted(() => {
-    if (events_scroller) {
-      // TODO: $utils 后续修改调整
-      // events_scroller.style.minHeight = window.innerHeight - $utils.rem(1.94) + 'px';
-    }
-
-    // 每隔1分钟请求一次精彩回放接口
+  // 每隔1分钟请求一次精彩回放接口
+  get_football_replay(0)
+  clearInterval(get_football_replay_timer.value)
+  get_football_replay_timer.value = setInterval(() => {
     get_football_replay(0)
-    clearInterval(get_football_replay_timer)
-    get_football_replay_timer = setInterval(() => {
-      get_football_replay(0)
-    }, 60 * 1000)
+  }, 60 * 1000)
+})
+
+// 接收到子iframe消息后，做相应处理
+const handleMessage = (e) => {
+  const data = e.data;
+
+  switch (data.cmd) {
+    case 'icon':
+      is_controller_show.value = data.val
+      break;
+  }
+}
+// 检测精彩回放视频资源加载状态
+const check_replay_url = (url) => {
+  api_common.get_full_url(url)
+    .then((v) => {
+      // console.log('精彩回放视频加载成功...')
+      is_replay_load_error.value = false
+    })
+    .catch(err => {
+      // console.error('精彩回放视频加载失败...')
+      clearTimeout(is_replay_load_error_timer.value)
+      is_replay_load_error_timer.value = setTimeout(() => {
+        is_replay_load_error.value = true
+      }, 200)
+    })
+}
+// 第X个——英文下转换
+const trans_num = (num) => {
+  let suffix = ''
+  if (languageReducer.lang === 'en') {
+    if (num === 1) {
+      suffix = 'st'
+    } else if (num === 2) {
+      suffix = 'nd'
+    } else if (num === 3) {
+      suffix = 'rd'
+    } else {
+      suffix = 'th'
+    }
+  }
+  return num + suffix
+}
+// 菜单切换后，更新相应状态
+const tab_click = (item, i) => {
+  if (tabIndex.value === i) return
+
+  tabIndex.value = i
+  tabEvenCode.value = Number(item.code)
+  if (!is_full_screen.value) {
+    is_expand.value = false
+  }
+}
+// 横屏下精彩回放的事件tab切换
+const get_video_list = ({ tab, index }) => {
+  tabEvenCode.value = index
+  tabIndex.value = index
+  tabs.value[0].changeTabIndex(index)
+}
+// 精彩回放列表显示'的图标
+const flag_icon = (type) => {
+  let flag = ''
+  switch (type) {
+    // 进球
+    case 'goal':
+      flag = 'icon-flag-goal';
+      break;
+    // 角球
+    case 'corner':
+      flag = 'icon-flag-corner';
+      break;
+    // 红牌
+    case "red_card":
+      flag = 'icon-flag-card-red';
+      break;
+    // 黄牌
+    case "yellow_card":
+      flag = 'icon-flag-card-yellow';
+      break;
+    // 黄红牌
+    case "yellow_red_card":
+      flag = 'icon-flag-card-red';
+      break;
+    default:
+      flag = '';
+      break;
+  }
+  return flag;
+}
+// 精彩回放列表显示的事件文案
+const event_name = (type) => {
+  let event_name = ''
+  switch (type) {
+    // 进球
+    // TODO: 国际化后续修改调整
+    case 'goal':
+      event_name = $root.$t('highlights.type.goal');
+      break;
+    // 角球
+    case 'corner':
+      event_name = $root.$t('highlights.type.corner');
+      break;
+    // 红牌
+    case "red_card":
+      event_name = $root.$t('highlights.type.card_red');
+      break;
+    // 黄牌
+    case "yellow_card":
+      event_name = $root.$t('highlights.type.card_yellow');
+      break;
+    // 黄红牌
+    case "yellow_red_card":
+      event_name = $root.$t('highlights.type.card_yellow_red');
+      break;
+    // 默认
+    default:
+      event_name = '';
+      break;
+  }
+  return event_name;
+}
+// iframe加载成功后，通知子iframe
+const handle_replay_video_loaded = (e) => {
+  // TODO:  get_is_hengping 后续修改调整
+  if (get_is_hengping) {
+    const data = {
+      cmd: 'full_screen_landscape',
+      full_screen_landscape: 1
+    }
+
+    document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
+
+  }
+}
+/**
+ * @description 切换精彩回放视频
+ * @param item 目标视频信息
+ * @param index 目标视频索引
+ */
+const change_event_video = ({ item, index }) => {
+  if (item) {
+    is_replay_load_error.value = false
+    iframe_rdm.value = Date.now()
+    is_user_voice.value = current_event_video.value.voice
+    replay_url.value = slider_events_list[index].fragmentVideo
+    check_replay_url(replay_video_src)
+    // 静音当前播放媒体
+    useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, { volume: 0 })
+  }
+
+  // 滚动目标到屏幕显示区域
+  // TODO: $utils 后续修改调整
+  nextTick(() => {
+    $utils.tab_move(index, slider_video.value[0].slider_x, slider_video[0].item_wrapper, true)
   })
-  onUnmounted(() => {
-    clearInterval(get_football_replay_timer)
-    get_football_replay_timer = null
-    clearTimeout(update_slider_index_timer)
-    update_slider_index_time = null
-    clearTimeout(is_controller_show_timer)
-    is_controller_show_timer = null
-    clearTimeout(is_replay_load_error_timer)
-    is_replay_load_error_timer = null
-    // TODO: set_is_dp_video_full_screen 后续修改调整
-    // set_is_dp_video_full_screen(false)
-    window.removeEventListener("message", handleMessage);
+}
+// 点击精彩回放视频时，控件显示状态变更
+const click_video_screen = (e) => {
+  is_controller_show.value = !video_wrapper.value[0].classList.contains('dplayer-hide-controller')
+}
+/**
+ * 获取精彩回放事件
+ * @param {String} event_code 事件code
+ */
+const get_football_replay = (event_code) => {
+  const params = {
+    // TODO: get_detail_data 后续修改调整
+    mid: lodash.get(get_detail_data, 'mid'),
+    device: 'H5',
+    eventCode: event_code
+  }
+  api_result.get_replay_football(params)
+    .then(res => {
+      if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
+        events_list.value = res.data.eventList
+        // TODO: 后续修改调整 set_event_list
+        set_event_list(res.data.eventList)
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+    .finally(() => {
+
+    })
+}
+// 点击播放目标回放视频（竖屏非全屏）
+const handle_click_event = (index, event) => {
+  const selected_item_index = events_list_vertical.findIndex(item => item.eventId === event.eventId)
+
+  // 记录当前slider信息
+  curr_active_event.value = {
+    video_url: event.fragmentVideo,
+    event_id: event.eventId,
+    slider_index: events_list_vertical.length - 1 - selected_item_index
+  }
+
+  is_replay_load_error.value = false
+  iframe_rdm.value = Date.now()
+  replay_url.value = event.fragmentVideo
+
+  if (event_index.value === index && !is_expand.value || event_index.value !== index) {
+    check_replay_url(replay_video_src)
+  }
+
+  // 收起、展开列表
+  if (event_index.value === index) {
+    is_expand.value = !is_expand.value
+  } else {
+    event_index.value = index
+    is_expand.value = false
+    nextTick(() => {
+      is_expand.value = true
+      is_user_voice.value = current_event_video.value.voice
+
+
+      // 静音当前播放媒体
+      useMittEmit(MITT_TYPES.IFRAME_VIDEO_VOLUME, { volume: 0 })
+    })
+
+  }
+
+  // 延时显示底部交互按钮（声音、全屏）
+  is_controller_show.value = false
+  clearTimeout(is_controller_show_timer.value)
+  is_controller_show_timer.value = setTimeout(() => {
+    is_controller_show.value = true
+  }, 300)
+}
+/**
+ * @Description 设置全屏
+ * @param {undefined} undefined
+ */
+const set_full_screen = () => {
+  let data = {}
+  if (is_full_screen.value) {
+    // TODO: 后续修改调整  set_event_list  set_event_list set_is_hengping
+    set_is_full_screen(false)
+    set_is_dp_video_full_screen(false)
+
+    set_is_hengping(false)
+    exit_browser_full_screen()
+    screen.orientation && screen.orientation.unlock()
+
+    is_expand_video_list.value = false
+
+    data = {
+      cmd: 'full_screen_portrait',
+      full_screen_portrait: 0
+    }
+  } else {
+    set_is_full_screen(true)
+    set_is_dp_video_full_screen(true)
+
+    set_is_hengping(true)
+    browser_full_screen()
+    screen.orientation && screen.orientation.lock('landscape')
+
+    data = {
+      cmd: 'full_screen_portrait',
+      full_screen_portrait: 1
+    }
+  }
+  is_full_screen.value = !is_full_screen.value
+
+
+  document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
+}
+// 更新slider信息
+const update_slider_index = () => {
+  clearTimeout(update_slider_index_time.value)
+  update_slider_index_timer.value = setTimeout(() => {
+    tabs.value[0].tab_index = tabIndex
+    slider_video.value[0].handle_item_click(null, curr_active_event.value.slider_index)
+  }, 50)
+
+}
+// （精彩/收起）回放按钮点击处理
+const toggle_slider_btn = () => {
+  update_variable_event_n()
+  is_expand_video_list.value = !is_expand_video_list.value
+}
+// 更新event_n变量值
+const update_variable_event_n = () => {
+  if (is_slider_in_screen) {
+    // 若橫屏下，slider列表长度小于屏幕横屏宽度，则设置动态属性--event_n，用于slider列表居中计算
+    document.documentElement.style.setProperty('--event_n', slider_events_list.length)
+  }
+}
+/**
+ * @Description 浏览器全屏
+ * @param {undefined} undefined
+ */
+const browser_full_screen = () => {
+  let video_dm = document.documentElement;
+  let rfs = video_dm.requestFullscreen || video_dm.webkitRequestFullScreen || video_dm.mozRequestFullScreen || video_dm.msRequestFullScreen;
+  if (rfs) {
+    rfs.call(video_dm);
+  }
+}
+// 退出精彩回放视频
+const close_video = () => {
+  // set_is_full_screen(false)
+  // set_is_dp_video_full_screen(false)
+  is_full_screen.value = !is_full_screen.value
+  is_expand_video_list.value = false
+  is_replay_load_error.value = false
+}
+/**
+ * @Description 设置视频声音
+ * @param {undefined} undefined
+ */
+const set_video_voice = () => {
+  current_event_video.value.voice = !current_event_video.value.voice
+  const data = {
+    cmd: 'replay_volume_video',
+    volume: current_event_video.value.voice ? 1 : 0
+  }
+  document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
+}
+// 控制info弹窗说明
+const change_info = () => {
+  set_info_show(true)
+}
+/**
+ * @Description 退出浏览器全屏
+ * @param {undefined} undefined
+ */
+const exit_browser_full_screen = () => {
+  let video_dm = document;
+  let cfs = video_dm.cancelFullscreen || video_dm.webkitCancelFullScreen || video_dm.mozCancelFullScreen || video_dm.exitFullscreen;
+  if (cfs) {
+    cfs.call(video_dm);
+  }
+}
+// 精彩回播配置信息
+watch(() => get_user.merchantEventSwitchVO, (res) => {
+  // handler = (res) => {
+  // tab按钮开关
+  // TODO:  国际化后续修改调整
+  let new_tab_list = [
+    { title: $root.$t('footer_menu.all'), code: '0' },
+    { title: $root.$t('match_result.goal'), code: '1' },
+  ]
+  if (res.cornerEvent) {
+    new_tab_list.push({ title: $root.$t('match_result.corner_kick'), code: '2' })
+  }
+  if (res.penaltyEvent) {
+    new_tab_list.push({ title: $root.$t('football_playing_way.penalty_cards'), code: '3' })
+  }
+  tab_list.value = new_tab_list
+  // }
+  // immediate: true
+})
+// 更新实时时间
+watch(() => get_match_real_time, (time) => {
+  real_time.value = time
+})
+// 更新slider选中索引
+watch(() => is_expand_video_list.value, (is_expand) => {
+  if (is_expand) {
+    update_slider_index()
+  }
+})
+// 横屏、竖屏切换时通知子iframe
+watch(() => get_is_hengping, (is_hengping) => {
+  if (is_hengping) {
+    const data = {
+      cmd: 'full_screen_landscape',
+      full_screen_landscape: 1
+    }
+    document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
+  } else {
+    const data = {
+      cmd: 'full_screen_portrait',
+      full_screen_portrait: 1
+    }
+    document.getElementById('replayIframe').contentWindow.postMessage(data, '*')
+  }
+})
+// onMounted(() => {
+// 事件列表（非全屏）
+const events_list_vertical = computed(() => {
+  const curr_tab_index = tabEvenCode
+  let new_events_list
+  if (curr_tab_index === 0) {
+    new_events_list = lodash.cloneDeep(events_list.value)
+  } else if (curr_tab_index === 1) {
+    new_events_list = events_list.value.filter(item => item.eventCode === 'goal')
+  } else if (curr_tab_index === 2) {
+    new_events_list = events_list.value.filter(item => item.eventCode === 'corner')
+  } else {
+    new_events_list = events_list.value.filter(item => !['goal', 'corner'].includes(item.eventCode))
+  }
+  new_events_list.sort((a, b) => {
+    if (b.secondsFromStart < a.secondsFromStart) {
+      return 1
+    } else if (b.secondsFromStart > a.secondsFromStart) {
+      return -1
+    }
+    if (b.firstNum < a.firstNum) {
+      return 1
+    } else if (b.firstNum > a.firstNum) {
+      return -1
+    }
+    return 0
   })
+
+  // 无相应类型事件时返回
+  // TODO:  get_is_hengping 后续修改调整
+  if (get_is_hengping && !new_events_list.length) {
+    return [{}]
+  }
+  return new_events_list.reverse()
+})
+// 事件列表（全屏）
+const slider_events_list = computed(() => {
+  return lodash.cloneDeep(events_list_vertical).reverse()
+})
+// 鉴权域名 + 回放视频url（拼接后的最终url）
+const replay_video_src = computed(() => {
+  // TODO:  get_user  get_lang 后续修改调整
+  const host_url = window.env.config.live_domains[0] || lodash.get(get_user, 'oss.live_h5')
+  return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
+})
+// slider列表长度是否小于屏幕横屏宽度
+const is_slider_in_screen = computed(() => {
+  // TODO:  get_is_hengping 后续修改调整
+  const full_screen_width = get_is_hengping ? innerWidth : innerHeight
+  const font_size = (get_is_hengping ? innerHeight : innerWidth) * 100 / 375
+
+  return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
+})
+// })
+
+onUnmounted(() => {
+  clearInterval(get_football_replay_timer.value)
+  get_football_replay_timer.value = null
+  clearTimeout(update_slider_index_timer.value)
+  update_slider_index_time = null
+  clearTimeout(is_controller_show_timer.value)
+  is_controller_show_timer.value = null
+  clearTimeout(is_replay_load_error_timer.value)
+  is_replay_load_error_timer.value = null
+  // TODO: set_is_dp_video_full_screen 后续修改调整
+  // set_is_dp_video_full_screen(false)
+  window.removeEventListener("message", handleMessage);
+})
 
   // TODO: 后续修改调整
   //   ...mapGetters([
@@ -775,7 +781,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //     'get_user',
   //     'get_lang',
   //   ]),
-    
+
 </script>
 
 <style scoped lang="scss">

@@ -1,7 +1,7 @@
 <!--
- * @Author: 
- * @Date:  
- * @Description: 
+ * @Author:
+ * @Date:
+ * @Description:
 -->
 <template>
     <div v-if="show" class="cancle-confirm-pop fullscreen" @click.self="change_show" @touchmove.prevent>
@@ -20,7 +20,7 @@ import { defineComponent } from 'vue'
 
 const props = defineProps({
     show: {
-        // 是否显示             
+        // 是否显示
         type: Boolean,
         default: () => {
             return false
@@ -32,7 +32,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['confirmHandle', 'cancleHandle']) 
+const emit = defineEmits(['confirmHandle', 'cancleHandle'])
 // 确定方法
 const confirm_handle = () => {
     emit('confirmHandle')
@@ -46,7 +46,7 @@ const cancle_handle = () => {
 */
 const change_show = () => {
     store.dispatch({
-        type: "COMBINE_TIPS_SHAOW",
+        type: "SET_COMBINE_TIPS_SHAOW",
         data: false,
     })
 }

@@ -17,6 +17,7 @@
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
             <!-- <img class="hot-icon"  src="~public/image/yabo/png/bet-record.png" /> -->
             <div class="col">
+              投注记录
               <!-- {{ $root.$t("common.betting_record") }} -->
             </div>
             <span class="bet-count" v-show="count > 0">{{ count }}</span>
@@ -50,62 +51,16 @@
       </template>
 
       <!-- 滚动：内容 --------------------------------->
-      <template>
-        <!-- 菜单项 -->
-        <left-main-menu />
+      <!-- 菜单项 -->
+      <left-main-menu />
 
-
-
-        <!-- 历史记录 -->
-        <div v-if="layout_left_show == 'bet_history'" class="col">
-          <!-- <bet-record-view @set_scroll_this="set_scroll_this" /> -->
-        </div>
-        <!-- 投注栏 -->
-        <div v-if="layout_left_show == 'bet_list' && main_menu_toggle != 'mini'" class="bet-view">
-          <!--当前是否为虚拟投注-->
-          <template v-if="get_is_virtual_bet">
-            <!-- 虚拟单关 -->
-            <!-- <virtual-bet-single v-if="get_virtual_bet_list.length==1" @set_scroll_this="set_scroll_this"/> -->
-            <!-- 虚拟串关 -->
-            <!-- <virtual-bet-mix
-            v-else-if="get_virtual_bet_list.length>1"
-            class="full-height"
-            @set_scroll_this="set_scroll_this"
-          /> -->
-          </template>
-          <template v-else>
-            <div class="bet-mode-zone" v-if="is_bet_single">
-              <div class="left">
-                <!-- <span>{{$root.$t("bet.bet_one_")}}</span> -->
-                <span class="bet-single-count">
-                  {{ bet_single_list.length }}
-                </span>
-              </div>
-              <div class="right">
-                <span class="check-box" :class="{ 'checked': is_bet_merge }" @click.stop="toggle_merge">
-                  <!-- <check-box :checked="is_bet_merge" /> <span>{{$root.$t('bet.merge')}}</span> -->
-                </span>
-                <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
-                  <!-- <icon
-                  id="merge-info"
-                  name="icon-tips"
-                  class="bet-info"
-                  size="14px"
-                /> -->
-                </span>
-              </div>
-            </div>
-            <!-- 正常入口的单关 -->
-            <!-- <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" /> -->
-            <!-- 正常入口的串关 -->
-            <!-- <bet-mix
-            v-if="!is_bet_single"
-            class="full-height"
-            @set_scroll_this="set_scroll_this"
-          /> -->
-          </template>
-        </div>
-      </template>
+      <!-- 历史记录 -->
+      <div v-if="layout_left_show == 'bet_history'" class="col">
+        <bet-record-view @set_scroll_this="set_scroll_this" />
+      </div>
+      <!-- 投注栏 -->
+      <left-main-bet />
+      
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
         <template v-if="get_is_virtual_bet">
@@ -160,7 +115,7 @@ import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 // import refresh from "src/public/components/refresh/refresh.vue";
 // import { api_betting } from "src/public/api/index.js";
-// import betRecordView from "src/public/components/bet_record_view/bet_record_view.vue";
+
 
 
 
@@ -171,8 +126,10 @@ import _ from "lodash"
 
 import MainHeader from "./main-header.vue"
 import LeftMainMenu from "./menu/index.vue"
+import LeftMainBet from "./bet/index.vue"
+// import betRecordView from "../bet-record/index.vue";
 
-// import { BetBoxWapper } from "src/components/bet"
+
 
 
 import store from "src/store-redux/index.js";
@@ -183,7 +140,6 @@ const state = store.getState()
 
 // 菜单布局信息
 const layout_left_show = ref(state.layoutReducer.layout_left_show)
-const main_menu_toggle = ref(state.menuReducer.main_menu_toggle)
 // 当前菜单类型
 const cur_menu_type = ref(state.menuReducer.cur_menu_type)
 
@@ -196,8 +152,6 @@ const is_bet_single = ref(state.betInfoReducer.is_bet_single)
 
 // 单关投注列表
 const bet_single_list = ref(state.betInfoReducer.bet_single_list)
-//  是否为合并模式
-const is_bet_merge = ref(state.betInfoReducer.is_bet_merge)
 
 // 获取虚拟投注列表
 const virtual_bet_list = ref(state.betInfoReducer.virtual_bet_list)
@@ -250,24 +204,7 @@ const change_left_menu = page => {
   // 设置左侧显示
   useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, page)
 }
-const toggle_merge = () => {
-  useMittEmit(MITT_TYPES.EMIT_OPEN_MAERGE_BET, !is_bet_merge)
-  if (is_bet_merge) {
-    // $utils.send_zhuge_event('PC_合并');
-  }
-  let len = bet_single_list.length;
-  // 取消合并
-  if (!is_bet_merge && len > 1) {
-    let id = bet_single_list[len - 1];
-    let bet_single_obj = {} // _.cloneDeep(_.get(get_bet_single_obj, `${id}`));
-    // bet_single_clear();
-    // set_bet_single_list([id]);
-    bet_single_obj.key = id;
-    // mode为清除原有的添加最新的
-    bet_single_obj.mode = "clear_and_add";
-    // bet_single_obj_attr(bet_single_obj);
-  }
-}
+
 
 //诸葛埋点事件
 const record_zhuge_point = menu_type => {

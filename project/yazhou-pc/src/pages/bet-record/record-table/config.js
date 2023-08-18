@@ -1,6 +1,23 @@
 import {useI18n} from 'vue-i18n'
   const {t} =useI18n()
 
+  // 表格头部分
+const lineList = [
+    { label: t("bet_record.number"), id: 1 },
+    { label: 't("bet_record.betting_details")', id: 2 },
+    { label: t("bet_record.betting_play"), id: 3 },
+    { label: t("bet_record.options"), id: 4 },
+    { label: t("bet_record.bets_forehead"), id: 5 },
+    {
+      label:
+        props.tool_selected === 0
+          ? t("common.maxn_amount_val")
+          : t("common.donate_win"),
+      id: 6,
+    },
+    { label: t("bet_record.status"), id: 7 },
+  ];
+
 
 // 输赢状态
 export const ITEM_STATUS = {

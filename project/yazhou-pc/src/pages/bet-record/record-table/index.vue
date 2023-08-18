@@ -13,42 +13,9 @@
       <!--表单头部标题-->
       <div class="row head">
         <!--每一行-->
-        <div class="ceil">
-          {{ $root.$t("bet_record.number") }}
+        <div class="ceil" v-for="item in lineList" :key="item.id">
+          {{ item.label }}
           <!-- 编号 -->
-        </div>
-        <!--每一行-->
-        <div class="ceil">
-          {{ $root.$t("bet_record.betting_details") }}
-          <!-- 投注详情 -->
-        </div>
-        <!--每一行-->
-        <div class="ceil">
-          {{ $root.$t("bet_record.betting_play") }}
-          <!-- 投注玩法 -->
-        </div>
-        <div class="ceil">
-          {{ $root.$t("bet_record.options") }}
-          <!-- 选项 -->
-        </div>
-        <!--每一行-->
-        <div class="ceil">
-          {{ $root.$t("bet_record.bets_forehead") }}
-          <!-- 投注额 -->
-        </div>
-        <!--每一行-->
-        <div class="ceil">
-          {{
-            tool_selected === 0
-              ? $root.$t("common.maxn_amount_val")
-              : $root.$t("common.donate_win")
-          }}
-          <!--返还金额 -->
-        </div>
-        <!--每一行-->
-        <div class="ceil">
-          {{ $root.$t("bet_record.status") }}
-          <!-- 状态 -->
         </div>
       </div>
       <!--表单内容-->
@@ -77,8 +44,8 @@
                     class="ceil"
                     :class="{
                       'bottom-hiden':
-                        _.get(cur_bet_pre, `${i}.show_detail`, false) &&
-                        _.get(pre_order_list_obj, i),
+                        lodash.get(cur_bet_pre, `${i}.show_detail`, false) &&
+                        lodash.get(pre_order_list_obj, i),
                     }"
                   >
                     {{ recordData.size * (recordData.current - 1) + i + 1 }}
@@ -115,9 +82,7 @@
                         @click="show_bet_pre_info(data.orderNo, i)"
                       >
                         <!--提前结算详情-->
-                        <span>{{
-                          $root.$t("bet_record.settlement_pre_info")
-                        }}</span>
+                        <span>{{ $t("bet_record.settlement_pre_info") }}</span>
                         <span>
                           <!--详情展示部分箭头-->
                           <icon
@@ -125,12 +90,12 @@
                             size="16px"
                             color="#99A3B1"
                             :class="{
-                              'icon-pull-down': _.get(
+                              'icon-pull-down': lodash.get(
                                 cur_bet_pre,
                                 `${i}.show_detail`,
                                 false
                               ),
-                              'icon-pull-up': !_.get(
+                              'icon-pull-up': !lodash.get(
                                 cur_bet_pre,
                                 `${i}.show_detail`,
                                 true
@@ -169,7 +134,15 @@
                   </div>
                   <!-- 选项 -->
                   <div class="ceil c135">
-                    <table-options></table-options>
+                    <table-options
+                      :data="data"
+                      :money_obj="money_obj"
+                      :tool_selected="tool_selected"
+                      @start_bet_pre="start_bet_pre"
+                      @bet_pre_over="bet_pre_over"
+                      @bet_pre_out="bet_pre_out"
+                      @change_slider="change_slider"
+                    ></table-options>
                   </div>
                   <!-- 投注额 -->
                   <div class="ceil font-family">
@@ -207,10 +180,10 @@
                     <!--显示部分提前结算或者全额提前结算-->
                     <span v-if="tool_selected == 1" class="bet-pre-color">
                       <template v-if="data.settleType == 4">{{
-                        $root.$t("bet_record.settlement_pre_part2")
+                        $t("bet_record.settlement_pre_part2")
                       }}</template>
                       <template v-else-if="data.settleType == 5">{{
-                        $root.$t("bet_record.settlement_pre_all2")
+                        $t("bet_record.settlement_pre_all2")
                       }}</template>
                     </span>
                   </div>
@@ -220,13 +193,13 @@
                   v-if="
                     data.seriesType == '1' &&
                     [3, 4, 5].includes(data.settleType) &&
-                    _.get(cur_bet_pre, `${i}.show_detail`, false) &&
-                    _.get(pre_order_list_obj, i)
+                    lodash.get(cur_bet_pre, `${i}.show_detail`, false) &&
+                    lodash.get(pre_order_list_obj, i)
                   "
                 >
                   <div
                     class="row detail-row head"
-                    :key="`detail-title-${i}-${_.get(
+                    :key="`detail-title-${i}-${lodash.get(
                       cur_bet_pre,
                       `${i}.show_detail`,
                       false
@@ -237,26 +210,29 @@
                     <div class="ceil"></div>
                     <div class="ceil"></div>
                     <div class="ceil">
-                      {{ $root.$t("bet_record.settlement_money") }}
+                      {{ $t("bet_record.settlement_money") }}
                     </div>
                     <div class="ceil">
-                      {{ $root.$t("common.donate_win") }}
+                      {{ $t("common.donate_win") }}
                     </div>
                     <div class="ceil">
-                      {{ $root.$t("bet_record.lose_win") }}
+                      {{ $t("bet_record.lose_win") }}
                     </div>
                   </div>
                   <!--详情数据显示-->
                   <template
-                    v-for="(obj, order_index) in _.get(pre_order_list_obj, i)"
+                    v-for="(obj, order_index) in lodash.get(
+                      pre_order_list_obj,
+                      i
+                    )"
+                    :key="`detail-content-${i}-${order_index}`"
                   >
                     <div
                       class="row"
-                      :key="`detail-content-${i}-${order_index}`"
                       :class="{
                         'show-bottom':
                           order_index ==
-                          _.get(pre_order_list_obj, i, []).length - 1,
+                          lodash.get(pre_order_list_obj, i, []).length - 1,
                       }"
                     >
                       <div
@@ -312,17 +288,17 @@
                         <template v-if="obj.orderStatus == 2">
                           <template v-if="obj.type == 1">
                             <span
-                              >{{ $root.$t("bet_record.settlement_pre_part")
+                              >{{ $t("bet_record.settlement_pre_part")
                               }}<span class="red-bg">{{
-                                $root.$t("common.cancel")
+                                $t("common.cancel")
                               }}</span></span
                             >
                           </template>
                           <template v-else-if="obj.type == 2">
                             <span
-                              >{{ $root.$t("bet_record.settlement_pre_all")
+                              >{{ $t("bet_record.settlement_pre_all")
                               }}<span class="red-bg">{{
-                                $root.$t("common.cancel")
+                                $t("common.cancel")
                               }}</span></span
                             >
                           </template>
@@ -333,12 +309,10 @@
                               <!---部分结算金额--->
                               <template v-if="obj.type == 1">
                                 <div>
-                                  {{
-                                    $root.$t("bet_record.settlement_pre_part")
-                                  }}
+                                  {{ $t("bet_record.settlement_pre_part") }}
                                 </div>
                                 <div>
-                                  [{{ $root.$t("bet_record.surplus")
+                                  [{{ $t("bet_record.surplus")
                                   }}{{
                                     format_balance(obj.remainingBetAmount)
                                   }}]
@@ -347,19 +321,13 @@
                               <!--全额结算-->
                               <template v-else-if="obj.type == 2">
                                 <div>
-                                  {{
-                                    $root.$t("bet_record.settlement_pre_all")
-                                  }}
+                                  {{ $t("bet_record.settlement_pre_all") }}
                                 </div>
                               </template>
                               <!--剩余本金结算-->
                               <template v-else-if="obj.type == 3">
                                 <div>
-                                  {{
-                                    $root.$t(
-                                      "bet_record.settlement_pre_surplus"
-                                    )
-                                  }}
+                                  {{ $t("bet_record.settlement_pre_surplus") }}
                                 </div>
                               </template>
                             </span></span
@@ -430,7 +398,7 @@
     </template>
     <!--复制样式 已复制-->
     <div class="toast fit-center" v-if="toast">
-      {{ $root.$t("bet_record.copyed") }}
+      {{ $t("bet_record.copyed") }}
     </div>
   </div>
 </template>
@@ -438,10 +406,10 @@
 <script setup>
 import tableOptions from ".table-options.vue"; // 选项组件
 import { PaginationWapper } from "src/components/pagination/indes.js";
-import vueSlider from "vue-slider-component";
-import { format_score_t } from "src/core/formart.index.js";
-import "vue-slider-component/theme/default.css";
 import { useTableData } from "./use-table-data";
+import { useI18n } from "vue-i18n";
+import { formatTime,format_balance,format_score_t } from "src/core/formart/index";
+const { t } = useI18n();
 
 const props = defineProps({
   record_obj: {
@@ -487,26 +455,44 @@ const emit = defineEmits([
   "clear_timer_get_cashout",
   "res_timer_get_cashout",
 ]);
-
-const {} = useTableData({ props, emit });
-</script>
-
-<script>
-import formartmixin from "src/public/mixins/common/time_format";
-
-export default {
-  name: "RecordTable",
-  mixins: [formartmixin],
-
-  created() {},
-  computed: {
-    ...mapGetters({
-      // 用户信息
-      // vx_get_user: "get_user",
-      vx_get_theme: "get_theme",
-    }),
+// 表格头部分
+const lineList = [
+  { label: t("bet_record.number"), id: 1 },
+  { label: 't("bet_record.betting_details")', id: 2 },
+  { label: t("bet_record.betting_play"), id: 3 },
+  { label: t("bet_record.options"), id: 4 },
+  { label: t("bet_record.bets_forehead"), id: 5 },
+  {
+    label:
+      props.tool_selected === 0
+        ? t("common.maxn_amount_val")
+        : t("common.donate_win"),
+    id: 6,
   },
-};
+  { label: t("bet_record.status"), id: 7 },
+];
+
+const {
+  recordData,
+  toast,
+  early_settlement_data,
+  cur_bet_pre,
+  pre_order_list_obj,
+  money_obj,
+  color_list,
+  changePage,
+  copy,
+  show_bet_pre_info,
+  matchType,
+  status_class,
+  order_status,
+  start_bet_pre,
+  bet_pre_over,
+  bet_pre_out,
+  change_slider,
+  bet_handle,
+  lodash,
+} = useTableData({ props, emit });
 </script>
 
 <style lang="scss" scoped>

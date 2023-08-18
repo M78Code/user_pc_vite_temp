@@ -2,8 +2,7 @@
   <div style="width: 236px">
     <!-- 左侧 菜单区域 -->
     <div ref="page_left" v-show="route.params.video_size != 1"
-      class="page-left row yb-layout-margin-menu relative-position"
-      :style="`width:${computed_data.layout_size.left_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`"
+      class="page-left row yb-layout-margin-menu relative-position fit"
       :class="computed_data.vx_main_menu_toggle">
       <div class="cathectic-shade" v-show="bet_loadding && computed_data.left_menu_toggle">
         <div class="shade-fixed">

@@ -12,13 +12,11 @@
 
 import { ref, defineProps } from 'vue';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 
-const props = defineProps({ ...useProps })
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const check_value = ref('');
-
 check_value.value = props.default_value || '';
 
 const check_change = (value) => {

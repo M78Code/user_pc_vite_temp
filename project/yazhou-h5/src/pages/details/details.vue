@@ -2,7 +2,6 @@
   <div>
     <!-- 骨架屏  -->
     <!-- <SDetails v-if="skeleton_finish"/> -->
-    <div>details</div>
     <div
       class="details-fat scroll relative-position"
       :class="{
@@ -26,7 +25,7 @@
         </div>
         <!-- 滚动时置顶的悬浮条 -->
         <div class="mini-header-container" :class="{'no-z-index': get_is_dp_video_full_screen}" :style="{ visibility: scroll_visible && !get_show_video&& viewTab != 'chatroom'? 'visible' : 'hidden' }">
-          <!-- <change-header :detail_data="detail_data"></change-header> -->
+          <change-header :detail_data="detail_data"></change-header>
         </div>
 
         <!-- @click.stop -->
@@ -46,17 +45,17 @@
                 active-color="active-tab"
                 active-bg-color="active-tab"
                 :content-class="curr_active_tab">
-              <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="$t('bet.betting')" />
+              <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="t('bet.betting')" />
               <q-tab
                 v-if="show_match_analysis_tab"
                 name="match_analysis"
                 :content-class="viewTab === 'bet' ? 'tab-match-analysis' : 'tab-match-analysis-active'"
                 :ripple="false"
-                :label="$t('match_result.match_analysis')"
+                :label="t('match_result.match_analysis')"
                 alert
                 :alert-icon="icon_replay"/>
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
-              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="$t('bet.chatroom')" />
+              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="t('bet.chatroom')" />
             </q-tabs>
             <!-- 玩法集展示内容 -->
             <details-tab v-show="viewTab === 'bet' || get_is_hengping" :data_list="data_list" :scroller_scroll_top="scroller_scroll_top"></details-tab>
@@ -129,20 +128,19 @@ import utils from 'src/core/utils/utils.js';  // 公共方法
 
 // #TODO vuex 
 // import { mapGetters, mapActions, mapMutations } from "vuex";
-import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 
 // #TODO mixins 
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
-
-
+// 引入国际化
+import { useI18n } from "vue-i18n";
 import lodash from "lodash";
 import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
 import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
-// import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
+import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
@@ -152,7 +150,6 @@ import category from "project_path/src/pages/details/children/category.vue";
 import { useRouter, useRoute } from "vue-router";
 // import store from "project_path/src/store/index.js";
 // import store from "../../store/index.js";
-import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -162,7 +159,7 @@ export default defineComponent({
   components: {
     "details-header": details_header,
 //     // "details-dialog": details_dialog,
-//     "change-header": change_header,
+    "change-header": change_header,
     "details-tab": details_tab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
@@ -184,6 +181,7 @@ export default defineComponent({
 //   },
   
   setup(props, evnet) {
+    const { t } = useI18n();
     const router = useRouter();
     const route = useRoute();
     const {
@@ -510,6 +508,7 @@ export default defineComponent({
     
     return {
       ...toRefs(data),
+      t,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,

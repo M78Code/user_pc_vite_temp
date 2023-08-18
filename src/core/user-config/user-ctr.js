@@ -43,8 +43,21 @@ class UserCtr {
    this.getuserinfo_res_backup= null;
    // uid 
    this.uid= ref('') 
-       // 数据持久化使用到的key值
-       this.local_storage_key = 'h5_user_base_info';
+    // 数据持久化使用到的key值
+    this.local_storage_key = 'h5_user_base_info';
+
+    // 用户id 
+    this.user = ref({});
+    // 登录用户的id
+    this.user_logined_id = ref('');
+    // 用户是否长时间未操作
+    this.is_user_no_handle = ref(false);
+    // 用户令牌信息
+    this.user_token = ref('');
+    // 用户信息数据
+    this.user_info_data = ref('');
+
+    
  }
 /**
  * 用户 id 
@@ -58,8 +71,60 @@ class UserCtr {
 
   return  this.uid.value
  }
- 
 
+ get_uid() {
+  // 当用户未登录时返回uuid, 当用户登录时返回userId
+  return (this.user&&this.user.userId)?this.user.userId:this.uid;
+};
+  get_loaded_user_id(){
+    return this.user_logined_id;
+  };
+  get_user() {
+    return this.user;
+  };
+  //用户是否长时间未操作
+  get_is_user_no_handle() {
+    return this.is_user_no_handle;
+  };
+  get_user_token() {
+    return this.user_token;
+  };
+  get_user_info_data() {
+    return this.user_info_data;
+  };
+  set_user(user_obj) {
+    if(!user_obj) {
+      return;
+    }
+    if(user_obj.balance === null) delete user_obj.balance;
+    if(this.user) {
+      Object.assign(this.user, user_obj)
+    } else{
+      this.user = user_obj;
+    }
+    // 设置用户信息，存入localStorage中
+    this.set_user_base_info(this.user);
+  };
+  clear_user({ commit }) {
+    this.user = '';
+  };
+   //设置用户是否长时间未操作
+  set_is_user_no_handle({ commit },val){
+    this.is_user_no_handle = val;
+  };
+  // 获取用户余额
+  fetch_balance() {
+    return _.debounce(function () {
+      api_admin.get_amount({ uid: this.user.userId }).then(res => {
+        if (res.code == 200) {
+          let amount = _.get(res, "data.amount")
+          commit('set_balance', +amount)
+        }
+      }).catch(err => {
+        console.error(err);
+      });
+    }, 1000, { 'leading': true, 'trailing': false })
+  }
  /**
   *   调用 getuserinfo 接口返回值  数据备份
   *   因为存在 域名检测会走  getuserinfo ，返回体是不做加工的

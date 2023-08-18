@@ -135,7 +135,43 @@ import { api_common } from "src/api/index.js";
 // import betting from "src/project/mixins/betting/betting.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
+// 模板id=0(默认模板)
+import temp0 from "./template/temp0.vue"
+// 模板id=1
+import temp1 from "./template/temp0.vue"
+// 模板id=2
+import temp2 from "./template/temp0.vue"
+// 模板id=3
+import temp3 from "./template/temp0.vue"
+// 模板id=4
+import temp4 from "./template/temp0.vue"
+// 模板id=5
+import temp5 from "./template/temp0.vue"
+// 模板id=6
+import temp6 from "./template/temp0.vue"
+// 模板id=7
+import temp7 from "./template/temp0.vue"
+// 模板id=8
+import temp8 from "./template/temp0.vue"
+// 模板id=9
+import temp9 from "./template/temp0.vue"
+// 模板id=10
+import temp10 from "./template/temp0.vue"
+// 模板id=11
+import temp11 from "./template/temp0.vue"
+// 模板id=12
+import tem12 from "./template/temp0.vue"
+// 模板id=13
+import temp13 from "./template/temp0.vue"
+// 模板id=14
+import temp14 from "./template/temp0.vue"
+// 模板id=15
+import temp15 from "./template/temp0.vue"
+// 模板id=18
+import temp18 from "./template/temp0.vue"
+// 模板id=51
+import temp51 from "./template/temp0.vue"
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
 export default defineComponent({
   name: "tournament_play_new",
   props: {
@@ -159,42 +195,21 @@ export default defineComponent({
     },
   },
   components: {
-    // 模板id=0(默认模板)
-    temp0: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp0.vue"),
-    // 模板id=1
-    temp1: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp1.vue"),
-    // 模板id=2
-    temp2: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp2.vue"),
-    // 模板id=3
-    temp3: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp3.vue"),
-    // 模板id=4
-    temp4: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp4.vue"),
-    // 模板id=5
-    temp5: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp5.vue"),
-    // 模板id=6
-    temp6: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp6.vue"),
-    // 模板id=7
-    temp7: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp7.vue"),
-    // 模板id=8
-    temp8: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp8.vue"),
-    // 模板id=9
-    temp9: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp9.vue"),
-    // 模板id=10
-    temp10: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp10.vue"),
-    // 模板id=11
-    temp11: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp11.vue"),
-    // 模板id=12
-    temp12: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp12.vue"),
-    // 模板id=13
-    temp13: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp13.vue"),
-    // 模板id=14
-    temp14: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp14.vue"),
-    // 模板id=15
-    temp15: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp15.vue"),
-    // 模板id=18
-    temp18: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp18.vue"),
-    // 模板id=51
-    temp51: () => import(/* webpackChunkName: "user-h5-min-sm" */ "./template/temp51.vue"),
+    temp0,
+    temp1,
+    temp3,
+    temp4,
+    temp5,
+    temp6,
+    temp7,
+    temp8,
+    temp9,
+    temp10,
+    temp11,
+    temp13,
+    temp14,
+    temp15,
+    temp18,
   },
   // #TODO mixins
   // mixins: [betting],
@@ -273,7 +288,7 @@ export default defineComponent({
       // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
-      bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
+      // bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
     });
     
     // #TODO vuex 
@@ -695,7 +710,7 @@ export default defineComponent({
       emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
       // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
-      debounce_throttle_cancel(bet_click_);
+      // debounce_throttle_cancel(bet_click_);
       clearTimeout(component_data.timer1_)
       clearTimeout(component_data.timer2_)
       component_data.timer1_ = null
@@ -739,5 +754,5 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  @import "../../../styles/details.scss";
+  @import "../../styles/tournament-play-new.scss";
 </style>

@@ -51,6 +51,28 @@ export default defineComponent({
     //   "get_detail_data",
     //   "get_user",
     // ]),
+    // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
+    const get_details_item = computed(() => {
+      return ""
+    });
+    // 当用户未登录时返回uuid, 当用户登录时返回userId
+    const get_uid = computed(() => {
+      return ""
+    });
+    // 点击视频或者是动画的时候玩法集是否固定
+    const get_tab_fix = computed(() => {
+      return ""
+    });
+    // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
+    const get_fewer = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return ""
+    });
+    const get_user = computed(() => {
+      return ""
+    });
     const match_id = computed(() => {
       return $route.params.mid || get_detail_data.mid
     });
