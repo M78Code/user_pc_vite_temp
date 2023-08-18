@@ -285,6 +285,4 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
     return str;
 }
 
-export {
-    compute_value_by_cur_odd_type
-}
+ 

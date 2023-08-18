@@ -32,8 +32,7 @@ class BetData {
     this.is_handle = false;
     // 单关 是否正在处理投注
     this.is_single_handle = false;
-    // 菜单是否改变
-    this.menu_change = false;
+ 
     // 选择的选项
     this.menu_obj = {};
     // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
@@ -79,14 +78,46 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     this.bet_current_money_obj = {};
     // 投注金额
     this.bet_amount = 0;
+    //自动化 测试 
+    this.auto_test_bet_info={}
+    //
+    this.item_cs_id=0;
   }
 
   http_upd_data(obj) {}
-  
+
   set_bet_amount(val) {
     this.bet_amount = val;
   }
-
+ /**
+   * @description: 删除投注对象
+   * @param {*}BetData.
+   * @param {*} key 需要删除对象的键值
+   */
+  bet_obj_remove_attr(key) {
+    delete this.bet_obj[key];
+  }
+   /**
+   * @description: 删除串关列表
+   * @param {*}BetData.
+   * @param {*} i 需要删除的id索引
+   */
+   bet_list_remove(i) {
+    let temp = Object.assign([], this.bet_list);
+    temp.splice(i, 1);
+    this.bet_list = temp;
+  }
+  /**
+   * @description: 添加投注串关输入对象
+   * @param {*}BetData.
+   * @param {*} obj 需要添加的对象
+   */
+  bet_s_obj_add_attr(obj) {
+    if (obj.key) {
+      this.bet_s_obj[obj.key] = { cs: obj.cs, bs: obj.bs };
+      this.bet_s_obj = _.cloneDeep(this.bet_s_obj);
+    }
+  }
 }
 
 export default new BetData();

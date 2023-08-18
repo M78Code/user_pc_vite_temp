@@ -37,7 +37,7 @@ export const useMethods = ({ props,emit }) => {
     handle_: [], // 用户操作过的数据
   });
 
-  const useRoute = useRoute();
+  const route = useRoute();
   const showDetails = ref(false);
 
   //  ============================store===================
@@ -56,6 +56,17 @@ export const useMethods = ({ props,emit }) => {
   const get_top_id = ref(store_state.matchesReducer.topId);
   // 获取指定的玩法id
   const get_right_zoom = ref(store_state.matchesReducer.zoom);
+    //  ============================computed===================
+    const current_list = computed(() => {
+      let list = [];
+      props.plays_list.forEach((element) => {
+        list.push(element + "-" + props.currentRound);
+      });
+      return list;
+    });
+    const mmp = computed(() => {
+      return props.match_info.mmp;
+    });
 
   //  ============================watch===================
 
@@ -156,18 +167,6 @@ export const useMethods = ({ props,emit }) => {
   //   this.wrap_tabs_width = this.$refs.warp.offsetWidth;
   // });
 
-  //  ============================computed===================
-  const current_list = computed(() => {
-    let list = [];
-    props.plays_list.forEach((element) => {
-      list.push(element + "-" + props.currentRound);
-    });
-    return list;
-  });
-  const mmp = computed(() => {
-    return props.match_info.mmp;
-  });
-
   //  ============================methods===================
 
   const change_detail = () => {
@@ -209,7 +208,7 @@ export const useMethods = ({ props,emit }) => {
       });
     }
     // 详情和虚拟详情页计算单双列
-    if (["details", "virtual_details"].includes(useRoute.name)) {
+    if (["details", "virtual_details"].includes(route.name)) {
       if (get_layout_statu.value) {
         state.waterfall = details.set_waterfall(state.details_data);
       } else {
@@ -433,9 +432,9 @@ export const useMethods = ({ props,emit }) => {
    */
   const check_half = () => {
     if (
-      (useRoute.name == "details" &&
+      (route.name == "details" &&
         get_layout_list_size.value.width >= 1680) ||
-      (useRoute.name == "virtual_details" && state.match_info.csid == "1001")
+      (route.name == "virtual_details" && state.match_info.csid == "1001")
     ) {
       return true;
     } else {
@@ -503,7 +502,7 @@ export const useMethods = ({ props,emit }) => {
   };
 
   onBeforeMount(() => {
-    let { csid: sportId } = useRoute.params;
+    let { csid: sportId } = route.params;
     state.sportId = sportId;
     // 设置玩法集 tab_hover 防抖
     // this.tabs_hover = this.debounce(this.tabs_hover, 100);
@@ -547,7 +546,7 @@ const rang = ref([])
     get_layout_statu,
     is_component_show,
     sort_index,
-    useRoute,
+    route,
     lodash,
     on_go_top
   };

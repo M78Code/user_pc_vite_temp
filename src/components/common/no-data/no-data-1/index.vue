@@ -46,8 +46,10 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import store from "src/store-redux/index.js";
+import {useI18n} from 'vue-i18n'
+  const {t} =useI18n()
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
@@ -58,41 +60,41 @@ const props = defineProps({
   height: {
     required: true
   },
-  ...useProps
 })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  --------------------
 
 const arr_const = {
   collect: {
     url: "image/bw3/svg/no_shouc.svg",
     url2: "image/bw3/svg/no_shouc2.svg",
-    txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+    txt: t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
   },
   noWifi: {
     url: "image/bw3/svg/nowifi.svg",
-    txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+    txt: t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
     url: "image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
-    txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+    txt: t('msg.msg_nodata_02'),//'空空如也~',
   },
   noMatchNew: {
     url: "image/bw3/png/noMatch_new.png",
     url2: "image/bw3/png/noMatch2_new.png",
-    txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+    txt: t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
   },
   noMessage: {
     url: "image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
-    txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+    txt: t('msg.msg_nodata_17'),//'暂无消息记录~',
   },
   nolive: {
     url: "image/bw3/svg/no_livedata.svg",
     url2: "image/bw3/svg/no_livedata2.svg",
-    txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+    txt: t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
   }
 }
 

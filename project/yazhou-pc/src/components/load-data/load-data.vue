@@ -44,7 +44,7 @@
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px"
             >抽盒中......</span
           >
-          <span v-else>{{ $root.$t("common.loading") }}</span>
+          <span v-else>{{$t("common.loading") }}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
@@ -55,7 +55,7 @@
       >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{ $root.$t("common.loading") }}</span>
+          <span>{{$t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
@@ -65,10 +65,10 @@
           no_data_msg
             ? no_data_msg
             : 'code_empty' == cur_state
-            ? $root.$t('common.code_empty')
+            ?$t('common.code_empty')
             : $store.state.filter.open_select_time
-            ? $root.$t('filter.empty')
-            : $root.$t('common.no_data')
+            ?$t('filter.empty')
+            :$t('common.no_data')
         "
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
@@ -100,7 +100,7 @@
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
       >
         <div class="img"></div>
-        <span>{{ $root.$t(`common.${cur_state}`) }}</span>
+        <span>{{$t(`common.${cur_state}`) }}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
@@ -116,15 +116,15 @@
         />
         <!-- 网络不给力 -->
         <div v-if="cur_state == 'refresh'" class="text1">
-          {{ $root.$t("common.no_network2") }}
+          {{$t("common.no_network2") }}
         </div>
         <div v-if="cur_state == '404'" class="img img404" :class="color"></div>
         <!-- 哦豁~页面不见了 -->
         <div v-if="cur_state == '404'" class="text1">
-          {{ $root.$t("common.page404") }}
+          {{$t("common.page404") }}
         </div>
-        <div class="text2">{{ $root.$t("common.nervous") }}</div>
-        <div class="btn" @click="refresh">{{ $root.$t("common.refresh") }}</div>
+        <div class="text2">{{$t("common.nervous") }}</div>
+        <div class="btn" @click="refresh">{{$t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -133,13 +133,13 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{ $root.$t("common.user_api_limited1") }}</span
+          <span>{{$t("common.user_api_limited1") }}</span
           ><br />
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{ $root.$t("common.user_api_limited2") }}</span>
+          <span>{{$t("common.user_api_limited2") }}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{ $root.$t("common.refresh") }}</div>
+        <div class="btn" @click="refresh">{{$t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
@@ -151,7 +151,7 @@
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{ $root.$t("common.limited") }}</span>
+          <span>{{$t("common.limited") }}</span>
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
         />
         <!-- 网络不给力 -->
         <div v-if="cur_state == 'record_refresh'" class="text1">
-          {{ $root.$t("common.limited") }}
+          {{$t("common.limited") }}
         </div>
       </div>
     </div>
@@ -174,7 +174,8 @@
 
 <script setup>
 import { NoDataWapper} from "src/components/common/no-data/index";
-import { onMounted,computed,ref } from 'vue'
+import { onMounted,computed,ref,onUnmounted } from 'vue'
+import store from "src/store-redux/index.js";
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
@@ -221,9 +222,21 @@ const menu_data = ref([])
 const time_out = ref(false)
 const no_user = ref(false)   // 用户失效标志位
 
+// 用户信息是否失效
+const store_state = store.getState();
+const is_invalid = ref(store_state.userReducer.is_invalid);
+
+const unsubscribe = store.subscribe(() => {
+  is_invalid.value = store.getState().userReducer.is_invalid
+})
+
 onMounted(() => {
   // 用户登录失效时,直接关闭loading中动画
-  no_user.value = this.vx_get_is_invalid;
+  no_user.value = is_invalid.value;
+})
+
+onUnmounted(()=>{
+  unsubscribe()
 })
 
 const cur_state = computed(()=>{

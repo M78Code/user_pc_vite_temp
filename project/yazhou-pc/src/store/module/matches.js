@@ -51,6 +51,7 @@ export default function matchesReducer(state = initialState, action) {
       return {...state, is_pause_video: data };
     // 保存详情右侧参数
     case "SET_MATCH_DETAILS_PARAMS":
+      console.log(1111111111111111111111)
       if (data) {
         let obj = Object.assign({},state.params, data, { time: Date.now() })
         return {...state, params: obj };

@@ -10,6 +10,7 @@ import {
 } from "src/core/match-list-pc/data-class-ctr/conifg/index.js";
 import utils from "src/core/utils/utils.js";
 import lodash from 'lodash';
+
 class MatchListDataClass {
 	/**
 	 * @Description 构造函数
@@ -76,6 +77,15 @@ class MatchListDataClass {
 		let is_ws_call_all = is_ws_call && is_all_match;
 		// 球种赛事数量
 		let sport_match_count = lodash.cloneDeep(sport_match_count_template);
+/**
+ * 主要列表 
+ * H5 是走虚拟算法的 主列表 
+ * PC 是走框架算法的 主列表 
+ * 
+ * 这个不含  match-small-list-data.js  的应用  场景
+ * 
+ */
+
 
 		// 根据商户过滤篮球赛事
 		// if(store.getters.get_user.mId == '1443742662615240704'){

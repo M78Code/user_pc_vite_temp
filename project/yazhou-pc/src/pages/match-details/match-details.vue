@@ -35,6 +35,7 @@
               :sportId="sportId"
               :handicap_state="handicap_state"
               :handicap_this="handicap_this"
+              :is_request="is_request"
               @init="init"
               @back_to="back_to"
               @get_mattch_details="get_mattch_details"
@@ -104,6 +105,7 @@ const {
   background_img,
   sportId,
   handicap_this,
+  is_request,
   init,
   back_to,
   set_handicap_this,

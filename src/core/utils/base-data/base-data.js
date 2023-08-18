@@ -122,6 +122,8 @@ class BaseData {
 
     // 电竞更新
     this.esport_menu_version = "1111";
+    // 菜单接口类型 old 旧  new 新
+    this.menu_type_old_or_new = 'new'
   }
   /**
    * 初始化数据
@@ -363,11 +365,18 @@ class BaseData {
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
     let menu_info = this.set_ses_wapper(res, []);
-
-    // console.warn('menu_info',menu_info)
+  
+    let menu_old_or_nem_data_list = [...menu_info]
+    this.menu_type_old_or_new = 'new'
+    // 判断新旧菜单
+    // menuId 旧菜单才有
+    if( menu_info[0].menuId ){
+      this.menu_type_old_or_new = 'old'
+      menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info)
+    }
 
     // 设置新菜单
-    this.set_left_menu_init(menu_info);
+    this.set_left_menu_init(menu_old_or_nem_data_list);
 
     // 计算   冠军 数据  对象形式   commn_sport_guanjun_obj
     // 计算虚拟体育 的 数据对象
@@ -376,6 +385,13 @@ class BaseData {
 
     // console.error("init_mew_menu_list------1-", res.data.data);
     // console.error("init_mew_menu_list------2-", this.mew_menu_list_res);
+  }
+
+  /**
+   * 旧菜单改变数据结构
+   */
+  menu_type_old_or_new() {
+
   }
 
   /**
@@ -711,7 +727,7 @@ class BaseData {
         match_info: data[item],
       });
     });
-    console.warn("db_data", db_data);
+    console.error("db_data", db_data);
     //mi作为主键
     db.match_info.bulkAdd(db_data, "mi");
   }

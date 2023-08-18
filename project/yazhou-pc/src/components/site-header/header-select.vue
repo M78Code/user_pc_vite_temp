@@ -64,21 +64,24 @@
         </template>
 
         <template v-if="!is_iframe || (is_iframe && !menu_collapse_status)">
-            <popupLanguage />
-            <PopupHandicap />
-            <PopupSet />
+            <!-- 语言切换 -->
+            <popup-language />
+            <!-- 切换盘口 -->
+            <popup-handicap />
+            <!-- 设置多语言、版本、颜色 -->
+            <popup-set />
         </template>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, reactive } from 'vue'
 import lodash from 'lodash'
 /* 组件 */
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "project_path/src/components/site-header/header-time.vue"
-import PopupHandicap from "project_path/src/components/popup-select/popup-handicap.vue"
-import PopupSet from "project_path/src/components/popup-select/popup-set.vue"
+import popupHandicap from "project_path/src/components/popup-select/popup-handicap.vue"
+import popupSet from "project_path/src/components/popup-select/popup-set.vue"
 import popupLanguage from "project_path/src/components/popup-select/popup-language.vue"
 /* api */
 import { api_account, api_common } from "src/api/index.js";
