@@ -113,8 +113,7 @@ export const category_info = () => {
       }
     }
     // #TODO
-    // return flag;
-    return true;
+    return flag;
   });
   component_data.matchInfoCtr.setList(Level_one_detail_odd_info());
   // 置顶列表
