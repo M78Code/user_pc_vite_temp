@@ -11,7 +11,6 @@ import layoutReducer from "./module/layout";
 import globalReducer from "./module/global";
 import filterReducer from "./module/filter_store";
 import searchReducer from "./module/search";
-import themeReducer from "./module/theme";
 
 
 export {
@@ -26,5 +25,4 @@ export {
   globalReducer,
   filterReducer,
   searchReducer,
-  themeReducer
 };
