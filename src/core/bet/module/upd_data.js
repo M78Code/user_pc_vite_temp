@@ -473,7 +473,7 @@ const bet_obj_add_attr = (obj) => {
  * @param {String} item 投注项id
  * @return {undefined} undefined
  */
-const upd_bet_obj_item = (  bet_obj,item, handle_time) => {
+const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
  
   let mid_obj, msc_obj, id = item, kid, oid,  bs = _.cloneDeep(_.get(bet_obj,`${id}.bs`)), cs = _.cloneDeep(_.get(bet_obj,`${id}.cs`)), obj = {"key":item, "bs":{}, "cs":{} },hl_obj, ol_obj, sport_id, play_id, hn, ot, score_type=_.get(bet_obj,`${id}.cs.score_type`) || 'S1', serial_type, home_score=_.get(cs,'home_score'), away_score=_.get(cs,'away_score');
   if (!bs || !cs ) {
@@ -485,65 +485,26 @@ const upd_bet_obj_item = (  bet_obj,item, handle_time) => {
     hn = _.get(bs, 'hps[0].hl[0].hn', '');
     ot = _.get(bs, 'hps[0].hl[0].ol[0].ot', '');
 
-    if (PageSourceData.page_source=='match_list') { // 赛事列表
+ 
       // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
       if(cs.kid==id) {
         kid = id;
-        ol_obj =  _.cloneDeep(_.get(MatchListData,`hn_obj.${id}`));
+        ol_obj =  _.cloneDeep(_.get(source_data,`hn_obj.${id}`));
         if(_.isObject(ol_obj)) {
           oid = _.get(ol_obj,'oid','');
         }
       } else {
         oid = id;
-        ol_obj = _.cloneDeep(_.get(MatchListData,`ol_obj.oid_${oid}`));
+        ol_obj = _.cloneDeep(_.get(source_data,`ol_obj.oid_${oid}`));
         if(_.isObject(ol_obj)) {
           kid = _.get(ol_obj,'_hn','');
         }
       }
       if(_.isEmpty(ol_obj)) return;
-      hl_obj = _.cloneDeep(_.get(MatchListData, `hl_obj.hid_${_.get(ol_obj,'_hid')}`,{}));
-      mid_obj = _.get(MatchListData,`mid_obj.mid_${_.get(ol_obj,'_mid')}`,{});
+      hl_obj = _.cloneDeep(_.get(source_data, `hl_obj.hid_${_.get(ol_obj,'_hid')}`,{}));
+      mid_obj = _.get(source_data,`mid_obj.mid_${_.get(ol_obj,'_mid')}`,{});
       msc_obj = _.get(mid_obj,'msc') || [];
-    } else if (['match_details','details'].includes(PageSourceData.page_source)) { // 赛事详情
-      // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
-      if(cs.kid==id) {
-        kid = id
-        ol_obj =  _.cloneDeep(_.get(MatchInfoCtr,`hn_obj.${id}`));
-        if(_.isObject(ol_obj)) {
-          oid = _.get(ol_obj,'oid','');
-        }
-      } else {
-        oid = id;
-        ol_obj = _.cloneDeep(_.get(MatchInfoCtr,`ol_obj.${oid}`));
-        if(_.isObject(ol_obj)) {
-          kid = _.get(ol_obj,'_hn','');
-        }
-      }
-      if(_.isEmpty(ol_obj)) return;
-      hl_obj = _.cloneDeep(_.get(MatchInfoCtr,`hl_obj.${_.get(ol_obj,'_hid')}`,{}));
-      mid_obj = _.get(MatchInfoCtr, `mid_obj.${_.get(ol_obj,'_mid')}`,{});
-      msc_obj = _.get(mid_obj,'msc') || [];
-    } else if (['hot' ,'recent'].includes( PageSourceData.page_source)) { 
-      // 热门赛事以及最近访问
-      // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
-      if(cs.kid==id) {
-        kid = id
-        ol_obj =  _.cloneDeep(_.get(this,`hn_obj.${id}`));
-        if(_.isObject(ol_obj)) {
-          oid = _.get(ol_obj,'oid','');
-        }
-      } else {
-        oid = id;
-        ol_obj = _.cloneDeep(_.get(this,`ol_obj.${oid}`));
-        if(_.isObject(ol_obj)) {
-          kid = _.get(ol_obj,'_hn','');
-        }
-      }
-      if(_.isEmpty(ol_obj)) return;
-      hl_obj = _.cloneDeep(_.get(this,`hl_obj.${_.get(ol_obj,'_hid')}`, {}));
-      mid_obj = _.get(this, `mid_obj.${_.get(ol_obj,'_mid')}`,{});
-      msc_obj = _.get(this,'msc') || [];
-    }
+ 
     let cs_handle_time = cs.handle_time || 0;
     let hpid = _.get(hl_obj, 'hpid') || _.get(hl_obj, '_hpid');
     if(_.isEmpty(hl_obj) ||
