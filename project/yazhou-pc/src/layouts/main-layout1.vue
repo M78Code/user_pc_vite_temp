@@ -23,7 +23,7 @@
   </div>
 </template>
 <script setup>
-import { ref, computed, onBeforfeUnmount } from "vue";
+import { ref, computed, onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import "./main-layout.js"; //初始化数据
 import { debounce } from "lodash";
@@ -102,16 +102,16 @@ function resize() {
   // 浏览器高度
   let client_height = document.documentElement.clientHeight;
   //小于最小宽度
-  if (client_width < min_width) {
+  if (client_width <= min_width) {
     //"mini-normal" 自己展开的 不做操作
     if ("normal" == left_menu_status) {
       left_menu_status = "mini";
       methods_map_store["SET_LEFT_MENU_STATUS"](left_menu_status);
     }
   } else {
-    if ("mini" == main_menu_toggle) {
+    if ("mini" == left_menu_status) {
       //通知菜单变展开normal
-      main_menu_toggle = "normal";
+      left_menu_status = "normal";
       methods_map_store["SET_LEFT_MENU_STATUS"](left_menu_status);
     }
   }
