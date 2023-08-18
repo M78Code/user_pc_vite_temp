@@ -7,8 +7,8 @@
     query_pre_bet_amount(callback, type='', oid = "") {
         let bet_obj;
         //是单关
-        if (this.is_bet_single) {
-          bet_obj = this.get_bet_single_obj;
+        if (BetData.is_bet_single) {
+          bet_obj = BetData.get_bet_single_obj;
         } else {
           bet_obj = this.get_bet_obj;
         }

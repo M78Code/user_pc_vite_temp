@@ -59,24 +59,3 @@
     }
   }
 
-     /**
-     * @description:清空押注成功的信息
-     * @param {undefined} undefined
-     * @return {undefined} undefined
-     */
-     clear_bet_single_list() {
-        let len = this.get_bet_single_list.length;
-        for (let index = 0; index < len; index++) {
-          let id = _.get(this,`get_bet_single_list[${index}]`);
-          // 投注客户端对象
-          let item_cs = _.get(this,`get_bet_single_obj.${id}.cs`, {});
-          // 提交状态为已提交(submit_status=true)
-          if (_.get(item_cs,'submit_status')) {
-            // 移除单关投注项对象
-            this.bet_single_obj_remove_attr(id);
-            // 从单关列表中移除投注项id
-            this.bet_single_list_remove(index, 1);
-            index--;
-          }
-        }
-      }
