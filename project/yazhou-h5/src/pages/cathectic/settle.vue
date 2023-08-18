@@ -30,8 +30,9 @@
             </p>
           </div>
           <div>
+            <!-- 提前结算 -->
             <span class="yb_fontsize12" @click.stop="change_early"
-              :class="{ 'select': is_early, 'is-show': store_user.settleSwitch != 1 }">
+              :class="{ 'select': is_early, 'is-show': store_user.user.settleSwitch != 1 }">
               {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
             </span>
           </div>
@@ -42,10 +43,10 @@
           <template v-if="!is_all_early_flag">
             <div v-for="(value, name, index) in list_data" :key="index">
               <template v-if="!is_early || (is_early && clac_is_early(value.data))">
-                <!-- 时间和输赢统计   -->
+                <!-- 时间和输赢统计  .Format($root.$t('time2')) -->
                 <p class="tittle-p row justify-between yb_px4" :class="{ 'tittle-p2': index == 0 }"
                   @click="toggle_show(value)">
-                  <span>{{ (new Date(name)).Format($root.$t('time2')) }}</span>
+                  <span>{{ (new Date(name)) }}</span>
                   <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{
                     $root.$t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
                       $root.$t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
@@ -79,240 +80,257 @@
 
 import { watch, onUnmounted, ref, onMounted } from 'vue';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common_cathectic_item.vue";
-import settleVoid from "project_path/src/pages/cathectic/settle_void.vue";
-import scroll from "project_path/src/components/record_scroll/scroll.vue";
-import SRecord from "project_path/src/components/skeleton/record.vue"
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import settleVoid from "./settle-void.vue";
+import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
+import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 
   // ws 数据接入  投注记录订单消息推送
-  // mixins: [skt_order]
+// mixins: [skt_order]
+const props = defineProps({
+  main_item: {
+    type: Number || String
+  }
+})
+// 仓库数据
+let { cathecticReducer, userInfoReducer } = store.getState()
+let store_user = userInfoReducer
+let store_cathectic = cathecticReducer
 
-  // 仓库数据
-    let { cathecticReducer, userInfoReducer } = store.getState()
-    let store_user = userInfoReducer
-    let store_cathectic = cathecticReducer
+// 锚点
+const myScroll = ref(null)
+//是否加载中
+let is_loading = ref(true)
+//列表数据集合
+let list_data = ref({})
+//list_data里面最后的一条数据的日期 '2020-11-17'
+let last_record = ref('')
+//是否没有数据
+let no_data = ref(true)
+// 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
+let sort_active = ref(2)
+// 展示多长时间的注单记录
+let date_limit = ref(7)
+// 是否存在下一页
+let is_hasnext = ref(false)
+//判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
+let is_all_early_flag = ref(false)
+// 提前结算图标是否选中
+let is_early = ref(false)
+// 排序设置弹框是否显示
+let is_sort_show = ref(false)
+// 接口是否返回错误码为0401038限频
+let is_limit = ref(false)
 
-    // 锚点
-    const myScroll = ref(null)
-    //是否加载中
-    let is_loading =  ref(true)
-    //列表数据集合
-    let list_data = ref({})
-    //list_data里面最后的一条数据的日期 '2020-11-17'
-    let last_record = ref('')
-    //是否没有数据
-    let no_data = ref(true)
-    // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
-    let sort_active = ref(2)
-    // 展示多长时间的注单记录
-    let date_limit = ref(7)
-    // 是否存在下一页
-    let is_hasnext = ref(false)
-    //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
-    let is_all_early_flag = ref(false)
-    // 提前结算图标是否选中
-    let is_early = ref(false)
-    // 排序设置弹框是否显示
-    let is_sort_show = ref(false)
-    // 接口是否返回错误码为0401038限频
-    let is_limit = ref(false)
+// onMounted(() => {
+//   store_cathectic.main_item == 1 && init_data()
+// })
+watch(() => props.main_item, (newval) => {
+  /**
+   * @description 初次切换到已结算时加载数据
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  if (newval == 1) {
+    !last_record.value && init_data()
+  }
+})
+/**
+   *@description 点击其他地方要让排序设置弹框消失
+*/
+const change_is_sort_show = () => {
+  if (is_sort_show.value) {
+    is_sort_show.value = false
+  }
+}
+/**
+ * @description 判断单个订单是否有结算注单
+ */
+const clac_is_early = (value = []) => {
+  return lodash.some(value, { is_show_early_settle: true })
+}
+/**
+ * @description 判断所有订单是否有结算注单
+*/
+const clac_all_is_early = () => {
+  const data = lodash.values(list_data.value)
+  return lodash.find(data, (item) => {
+    return lodash.some(item.data, { is_show_early_settle: true })
+  }) ? false : true
+}
+/**
+ *@description 切换日期
+*/
+const change_date = () => {
+  date_limit.value = date_limit.value == 7 ? 30 : 7
 
-    onMounted(() => {
-      store_cathectic.main_item == 1 && init_data()
-    })
-    watch(() => store_cathectic.main_item, (newval) => {
-    /**
-     * @description 初次切换到已结算时加载数据
-     * @param {undefined} undefined
-     * @return {undefined} undefined
-     */
-      if (newval == 1) {
-        !last_record.value && init_data()
-      }})
-    /**
-       *@description 点击其他地方要让排序设置弹框消失
-    */
-    const change_is_sort_show = () => {
-        if (is_sort_show.value) {
-          is_sort_show.value = false
-        }
-      }
-    /**
-     * @description 判断单个订单是否有结算注单
-     */
-    const clac_is_early = (value = []) => {
-        return lodash.some(value,{is_show_early_settle:true})
-      }
-    /**
-     * @description 判断所有订单是否有结算注单
-    */
-    const clac_all_is_early = () => {
-        const data = lodash.values(list_data.value)
-        return lodash.find(data,(item)=>{
-          return lodash.some(item.data,{is_show_early_settle:true})
-        }) ? false : true
-      }
-    /**
-     *@description 切换日期
-    */
-    const change_date = () => {
-        date_limit.value = date_limit.value == 7 ? 30 : 7
+  // 重置参数并调用接口
+  last_record.value = ''
+  list_data.value = {}
+  is_hasnext.value = false
+  // 请求注单记录数据
+  init_data()
+}
+/**
+ *@description 切换排序
+*/
+const change_sort = (evt) => {
+  sort_active.value = sort_active.value == 2 ? 1 : 2
+  // 重置参数并调用接口
+  last_record.value = ''
+  list_data.value = {}
+  is_hasnext.value = false
+  //请求注单记录数据
+  init_data()
+}
+/**
+ *@description 筛选所有提前结算注单
+*/
+const change_early = () => {
+  is_early.value = !is_early.value
 
-        // 重置参数并调用接口
-        last_record.value = ''
-        list_data.value = {}
-        is_hasnext.value = false
-        // 请求注单记录数据
-        init_data()
+}
+/**
+ *@description 初始请求注单记录数据
+*@return {Undefined} undefined
+*/
+const init_data = (flag) => {
+  // 接口参数
+  var params = {
+    searchAfter: last_record.value || undefined,
+    orderStatus: 1,
+    orderBy: sort_active.value,
+    timeType: date_limit.value == 7 ? 3 : 4,
+  };
+  is_loading.value = !flag;
+  let size = 0  //第一次加载时的注单数
+  api_betting
+    .post_getH5OrderList(params)
+    .then(reslut => {
+      let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
       }
-    /**
-     *@description 切换排序
-    */
-    const change_sort = (evt) => {
-        sort_active.value = sort_active.value == 2 ? 1 : 2
-        // 重置参数并调用接口
-        last_record.value = ''
-        list_data.value = {}
-        is_hasnext.value = false
-        //请求注单记录数据
-        init_data()
-      }
-    /**
-     *@description 筛选所有提前结算注单
-    */
-    const change_early = () => {
-        is_early.value = !is_early.value
-
-      }
-    /**
-     *@description 初始请求注单记录数据
-    *@return {Undefined} undefined
-    */
-    const init_data = (flag) => {
-      // 接口参数
-        var params = {
-          searchAfter: last_record.value || undefined,
-          orderStatus: 1,
-          orderBy: sort_active.value,
-          timeType: date_limit.value == 7 ? 3 : 4,
-        };
-        is_loading.value = !flag;
-        let size = 0  //第一次加载时的注单数
-        api_betting
-          .post_getH5OrderList(params)
-          .then(res => {
-            is_limit.value = false
-            if (res.code == 200 && res.data) {
-             is_loading.value = false;
-              let { record, hasNext } = lodash.get(res, "data");
-              is_hasnext.value = hasNext
-              if (lodash.isEmpty(record)) {
-                no_data.value = false;
-                return;
-              }
-              no_data.value = true;
-              // 合并数据
-              let obj = lodash.cloneDeep(list_data.value)
-              list_data.value = lodash.merge(obj, record)
-              for (let item of Object.values(list_data.value)) {
-                item.open = true
-                size += item.data.length
-              }
-              last_record.value = lodash.findLastKey(record);
-            }else if(res.code == '0401038'){
-              is_limit.value = true
-              no_data.value = false;
-              is_loading.value = false;
-              return
-            }  else {
-              no_data.value = false;
-              is_loading.value = false
-              return;
-            }
-            //容错处理，接口再调一次
-            if (size < 5 && size > 0 && res.data.hasNext == true) {
-              init_data()
-            }
-          })
-          .catch(err => {
-            is_loading.value = false;
-            no_data.value = false;
-            console.error(err)
-            return
-          });
-      }
-    /**
-     *@description 页面上推分页加载
-    *@return {Undefined} undefined
-    */
-    const onPull = () => {
-        var params = {
-          searchAfter: last_record.value || undefined,
-          orderStatus: 1,
-          orderBy: sort_active.value,
-          timeType: date_limit.value == 7 ? 3 : 4,
-        };
-        let ele = myScroll.value
-        if (!is_hasnext.value || last_record.value === undefined) {
-          //没有更多
-          ele.setState(7);
+      is_limit.value = false
+      if (res.code == 200 && res.data) {
+        is_loading.value = false;
+        let { record, hasNext } = lodash.get(res, "data");
+        is_hasnext.value = hasNext
+        if (lodash.isEmpty(record)) {
+          no_data.value = false;
           return;
         }
-        //加载中
-        ele.setState(4)
-        api_betting.post_getH5OrderList(params).then(res => {
-          if (!res.data) {
-            // 为 null 时容错处理
-            is_hasnext.value = false
-             //没有更多
-            ele.setState(7);
-            return
-          }
-           //加载完成
-          ele.setState(5);
-          let { record, hasNext } = lodash.get(res, "data", {});
-          is_hasnext.value = hasNext
-          if (res.code == 200 && res.data &&  lodash.isPlainObject(record) && lodash.keys(record).length>0) {
-            for (let item of Object.values(record)) {
-              item.open = true
-            }
-             last_record.value = lodash.findLastKey(record);
-            // 合并数据
-            let obj = lodash.cloneDeep(list_data.value)
-            list_data.value = lodash.merge(obj, record)
-          } else {
-             //没有更多
-            ele.setState(7);
-          }
-        }).catch(err => {
-          console.error(err)
-        });
+        no_data.value = true;
+        // 合并数据
+        let obj = lodash.cloneDeep(list_data.value)
+        list_data.value = lodash.merge(obj, record)
+        for (let item of Object.values(list_data.value)) {
+          item.open = true
+          size += item.data.length
+        }
+        last_record.value = lodash.findLastKey(record);
+      } else if (res.code == '0401038') {
+        is_limit.value = true
+        no_data.value = false;
+        is_loading.value = false;
+        return
+      } else {
+        no_data.value = false;
+        is_loading.value = false
+        return;
       }
-    /**
-     *@description 展开与收起切换
-    *@param {Boolean} val 展开-true  收起-false
-    *@return {Undefined} undefined
-    */
-    const toggle_show = (val) => {
-        val.open = !val.open
-        instance.proxy.$forceUpdate()
+      //容错处理，接口再调一次
+      if (size < 5 && size > 0 && hasNext == true) {
+        init_data()
       }
+    })
+    .catch(err => {
+      is_loading.value = false;
+      no_data.value = false;
+      console.error(err)
+      return
+    });
+}
+/**
+ *@description 页面上推分页加载
+*@return {Undefined} undefined
+*/
+const onPull = () => {
+  var params = {
+    searchAfter: last_record.value || undefined,
+    orderStatus: 1,
+    orderBy: sort_active.value,
+    timeType: date_limit.value == 7 ? 3 : 4,
+  };
+  let ele = myScroll.value
+  if (!is_hasnext.value || last_record.value === undefined) {
+    //没有更多
+    ele.setState(7);
+    return;
+  }
+  //加载中
+  ele.setState(4)
+  api_betting.post_getH5OrderList(params).then(reslut => {
+    let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
+    if (!res.data) {
+      // 为 null 时容错处理
+      is_hasnext.value = false
+      //没有更多
+      ele.setState(7);
+      return
+    }
+    //加载完成
+    ele.setState(5);
+    let { record, hasNext } = lodash.get(res, "data", {});
+    is_hasnext.value = hasNext
+    if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length > 0) {
+      for (let item of Object.values(record)) {
+        item.open = true
+      }
+      last_record.value = lodash.findLastKey(record);
+      // 合并数据
+      let obj = lodash.cloneDeep(list_data.value)
+      list_data.value = lodash.merge(obj, record)
+    } else {
+      //没有更多
+      ele.setState(7);
+    }
+  }).catch(err => {
+    console.error(err)
+  });
+}
+/**
+ *@description 展开与收起切换
+*@param {Boolean} val 展开-true  收起-false
+*@return {Undefined} undefined
+*/
+const toggle_show = (val) => {
+  val.open = !val.open
+  instance.proxy.$forceUpdate()
+}
 
-    /**
-     * @description 是否提前结算
-     * @param {undefined} undefined
-     * @return {undefined} undefined
-     */
-    watch(() => is_early, (_new) => {
-        is_all_early_flag.value = _new ? clac_all_is_early() : false
-    })
-    onUnmounted(() => {
-    //   for (const key in this.$data) {
-    //     this.$data[key] = null
-    //   }
-    })
+/**
+ * @description 是否提前结算
+ * @param {undefined} undefined
+ * @return {undefined} undefined
+ */
+watch(() => is_early, (_new) => {
+  is_all_early_flag.value = _new ? clac_all_is_early() : false
+})
+onUnmounted(() => {
+  //   for (const key in this.$data) {
+  //     this.$data[key] = null
+  //   }
+})
 
 
 

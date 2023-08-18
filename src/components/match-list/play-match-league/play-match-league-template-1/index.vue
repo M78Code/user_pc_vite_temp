@@ -96,9 +96,8 @@
 // inject:['match_list_data', 'match_list_card'],
 import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import { i18n } from 'src/boot/i18n.js'
 import { get_match_tpl_title } from 'src/core/utils/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
@@ -108,7 +107,7 @@ import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
 
-const props = defineProps({ ...useProps })
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const tpl_id = ref('')
 const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
@@ -134,7 +133,7 @@ const bet_col = computed(() => {
   let bet_col = []
   if (tpl_id == 13) {
     tpl_id = 0
-    // bet_col = [...i18n.t('list.match_tpl_title.tpl13_m.bet_col')]
+    bet_col = [...i18n.t('list.match_tpl_title.tpl13_m.bet_col')]
   }
   let title_name = 'bet_col'
   //角球

@@ -4,7 +4,6 @@
 -->
 <template>
     <div class="mx-10 pre_record" ref="pre_record">
-        {{main_item}}
         <!-- 加载中 -->
         <SRecord v-if="is_loading" />
         <scroll ref="myScroll" :on-pull="onPull" v-else>
@@ -75,7 +74,6 @@ const props = defineProps({
         type: Number || Srting
     }
 })
-console.error(props.main_item);
 let { t } = useI18n()
 // 页面锚点
 const myScroll = ref(null)
@@ -102,9 +100,7 @@ let orderNumberItemList = ref([])
 let selected_expired = ref(false)
 // 强制更新DOM
 const instance = getCurrentInstance()
-const up_store_data = () => {
-    console.error('更新数据');
-}
+
 //获取预约订单状态
 const change_pre_status = (orderList) => {
     const params = {
@@ -204,7 +200,6 @@ const refreshOrderList = () => {
 *@return {Undefined} undefined
 */
 const init_data = (flag) => {
-    console.error('接口');
     var params = {
         preOrderStatusList: [0,2,3,4]
     }
@@ -212,7 +207,6 @@ const init_data = (flag) => {
     //第一次加载时的注单数
     let size = 0
     api_betting.get_preOrderList_news(params).then(result=>{
-        console.error(result);
         let res = {}
         if (result.status) {
             res = result.data
@@ -307,7 +301,6 @@ const toggle_show = (val) => {
     *@return {Undefined} undefined
     */
 watch(() => props.main_item, (newVal) => {
-    console.error("初始化");
     if (newVal == 2) {
         lodash.isEmpty(list_data.value) && init_data()
     }

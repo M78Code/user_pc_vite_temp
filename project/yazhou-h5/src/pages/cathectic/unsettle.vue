@@ -94,7 +94,6 @@ let myScroll = ref(null)
      * @returns {null} null
      */
   watch(() => is_early.value, (_new) => {
-    console.error(_new);
     /**判断所有订单是否有结算注单*/
       is_all_early_flag.value = _new ? clac_all_is_early() : false
   })
@@ -285,7 +284,13 @@ let myScroll = ref(null)
     }
     //加载中
     ele.setState(4);
-    api_betting.post_getOrderList(params).then(res => {
+    api_betting.post_getOrderList(params).then(reslut => {
+      let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
       //加载完成
       ele.setState(5);
       let { record, hasNext } = lodash.get(res, "data", {});
@@ -337,7 +342,10 @@ let myScroll = ref(null)
     //   $data[key] = null
     // }
   })
-
+defineExpose({
+  check_early_order,
+  search_early_money,
+})
 </script>
 
 <style lang="scss" scoped>

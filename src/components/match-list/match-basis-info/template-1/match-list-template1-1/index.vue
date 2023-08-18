@@ -94,13 +94,12 @@
 
 import { computed, defineProps, ref, watch, onUnmounted } from 'vue';
 import lodash from 'lodash'
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 import { i18n } from 'src/boot/i18n.js'
-const props = defineProps({ ...useProps });
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画

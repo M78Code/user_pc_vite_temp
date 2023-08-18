@@ -1,14 +1,14 @@
-// @import url(./module/activity.scss);
-// @import url(./module/analysis.scss);
-// @import url(./module/animate.scss);
-// @import url(./module/background.scss);
-// @import url(./module/border.scss);
-// @import url(./module/chatroom.scss);
-// @import url(./module/form.scss);
-// @import url(./module/index.scss);
-// @import url(./module/match.scss);
-// @import url(./module/media.scss);
-// @import url(./module/text-color.scss);
+@import url(./global/activity.scss);
+@import url(./global/analysis.scss);
+@import url(./global/animate.scss);
+@import url(./global/background.scss);
+@import url(./global/border.scss);
+@import url(./global/chatroom.scss);
+@import url(./global/form.scss);
+@import url(./global/index.scss);
+@import url(./global/match.scss);
+@import url(./global/media.scss);
+@import url(./global/text-color.scss);
 
 $layout_max_width:1920px;//内容最大宽度
 $layout_min_width:1400px;//内容最大宽度

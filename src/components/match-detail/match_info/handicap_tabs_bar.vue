@@ -97,6 +97,7 @@ import {
   onUnmounted,
   watch,
   defineExpose,
+  defineEmits
 } from "vue";
 // import { mapGetters, mapActions } from "vuex";
 import { useRoute } from "vue-router";
@@ -104,6 +105,7 @@ import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
 import icon from "src/components/icon/icon.vue";
+import lodash from 'lodash'
 export default defineComponent({
   name: "HandicapTab",
   components: {

@@ -5,7 +5,6 @@
 -->
 <template>
   <div class="settle-dialog">
-    {{cathecticReducer.main_item}}
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
         <p class="yb_mr10" @click="change_record(0)" :class="main_item == 0 && 'active-p'">
@@ -39,7 +38,7 @@
 import { api_betting } from "src/api/index.js";
 //   import { mapGetters, mapMutations } from "vuex"
 import unsettle from "./unsettle.vue" // project\yazhou-h5\src\pages\cathectic\unsettle.vue
-// import settle from "./settle.vue"
+import settle from "./settle.vue"
 import preRecord from "./pre-record.vue"
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
@@ -89,7 +88,7 @@ onMounted(() => {
   // TODO: 后续修改调整
   window.onresize = height_calc
   // 查询待确认中的提前结算单
-  api_betting.queryOrderPreSettleConfirm().then(res => {
+  api_betting.queryH5OrderPreSettleConfirm().then(res => {
     let { code, data } = res || {}
     if (code == 200 && data) {
       // 待确认中的提前结算单
@@ -97,8 +96,8 @@ onMounted(() => {
     }
     // 弹窗显示接口获取列表后延迟
     timer_1 = setTimeout(() => {
-      unsettleChild.check_early_order()
-      unsettleChild.search_early_money()
+      unsettleChild.value.check_early_order()
+      unsettleChild.value.search_early_money()
     }, 800);
 
 
@@ -128,7 +127,6 @@ const change_record = (key) => {
   if (main_item === key) return;
   main_item.value = key
   store.dispatch({ type: "SET_MAIN_ITEM", data: key })
-  console.error(store.getState());
 
 }
 // 清除当前组件所有定时器

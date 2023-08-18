@@ -3,7 +3,7 @@
  */
 
 import lodash from "lodash";
-import base_data_instance from 'src/core/utils/base-data/base-data.js'
+import base_data_instance from "src/core/utils/base-data/base-data.js";
 class MenuData {
   constructor() {
     //================主列表用的  开始==================
@@ -85,7 +85,9 @@ class MenuData {
     if (euid) return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
-    return base_data_instance.mi_euid_map_res[parseInt(current_menu_item.value.mi)]?.h
+    return base_data_instance.mi_euid_map_res[
+      parseInt(current_menu_item.value.mi)
+    ]?.h;
     if (menu_type == 4) {
       //冠军特殊处理
       mi = 400 + (mi?.substr(0, 3) - 100);
@@ -165,6 +167,14 @@ class MenuData {
       //mi作为主键
       db.match_info.bulkAdd(db_data, "mi");
     }
+  }
+  //菜单列表
+  get_menu_list() {
+    return base_data_instance.left_menu_base_mi_arr;
+  }
+  //菜单名称
+  get_menus_i18n_map(item) {
+    return base_data.menus_i18n_map[item];
   }
   /**
    * @description: 球类id
@@ -405,6 +415,17 @@ class MenuData {
   //选中一级menu
   set_current_menu(item) {
     this.current_menu = item;
+  }
+  //选中二级menu
+  set_current_lv2_menu(item) {
+    this.current_lv_2_menu = item || {};
+  }
+  //根据一级菜单筛选二级菜单列表
+  get_current_lv_2_menu_list() {
+    let mi = this.current_menu;
+   return base_data.mew_menu_list_res.find((x) => x.mi == mi) || {
+      sl: [],
+    };
   }
   //国际化获取菜单名称
   get_menu_name_i18n(mi) {
