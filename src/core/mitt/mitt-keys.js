@@ -6,4 +6,8 @@ export const EMIT_GET_USER_ACCOUNT = "EMIT_GET_USER_ACCOUNT";
 export const EMIT_USER_CHAUNGE = "EMIT_USER_CHAUNGE";
 // 用户余额变化
 export const EMIT_USER_AMOUNT_CHAUNGE = "EMIT_USER_AMOUNT_CHAUNGE";
+// 主题变化
+export const EMIT_THEME_CHANGE = "EMIT_THEME_CHANGE";
+// 语言变化
+export const EMIT_LANG_CHANGE = "EMIT_LANG_CHANGE";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

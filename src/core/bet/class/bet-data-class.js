@@ -82,6 +82,11 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
   }
 
   http_upd_data(obj) {}
+  
+  set_bet_amount(val) {
+    this.bet_amount = val;
+  }
+
 }
 
 export default new BetData();

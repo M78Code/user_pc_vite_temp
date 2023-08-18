@@ -17,6 +17,7 @@
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
             <!-- <img class="hot-icon"  src="~public/image/yabo/png/bet-record.png" /> -->
             <div class="col">
+              投注记录
               <!-- {{ $root.$t("common.betting_record") }} -->
             </div>
             <span class="bet-count" v-show="count > 0">{{ count }}</span>
@@ -50,18 +51,16 @@
       </template>
 
       <!-- 滚动：内容 --------------------------------->
-      <template>
-        <!-- 菜单项 -->
-        <left-main-menu />
+      <!-- 菜单项 -->
+      <left-main-menu />
 
-        <!-- 历史记录 -->
-        <div v-if="layout_left_show == 'bet_history'" class="col">
-          <bet-record-view @set_scroll_this="set_scroll_this" />
-        </div>
-        <!-- 投注栏 -->
-        <left-main-bet />
-
-      </template>
+      <!-- 历史记录 -->
+      <div v-if="layout_left_show == 'bet_history'" class="col">
+        <bet-record-view @set_scroll_this="set_scroll_this" />
+      </div>
+      <!-- 投注栏 -->
+      <left-main-bet />
+      
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
         <template v-if="get_is_virtual_bet">
@@ -141,7 +140,6 @@ const state = store.getState()
 
 // 菜单布局信息
 const layout_left_show = ref(state.layoutReducer.layout_left_show)
-const main_menu_toggle = ref(state.menuReducer.main_menu_toggle)
 // 当前菜单类型
 const cur_menu_type = ref(state.menuReducer.cur_menu_type)
 
@@ -154,8 +152,6 @@ const is_bet_single = ref(state.betInfoReducer.is_bet_single)
 
 // 单关投注列表
 const bet_single_list = ref(state.betInfoReducer.bet_single_list)
-//  是否为合并模式
-const is_bet_merge = ref(state.betInfoReducer.is_bet_merge)
 
 // 获取虚拟投注列表
 const virtual_bet_list = ref(state.betInfoReducer.virtual_bet_list)
@@ -208,24 +204,7 @@ const change_left_menu = page => {
   // 设置左侧显示
   useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, page)
 }
-const toggle_merge = () => {
-  useMittEmit(MITT_TYPES.EMIT_OPEN_MAERGE_BET, !is_bet_merge)
-  if (is_bet_merge) {
-    // $utils.send_zhuge_event('PC_合并');
-  }
-  let len = bet_single_list.length;
-  // 取消合并
-  if (!is_bet_merge && len > 1) {
-    let id = bet_single_list[len - 1];
-    let bet_single_obj = {} // _.cloneDeep(_.get(get_bet_single_obj, `${id}`));
-    // bet_single_clear();
-    // set_bet_single_list([id]);
-    bet_single_obj.key = id;
-    // mode为清除原有的添加最新的
-    bet_single_obj.mode = "clear_and_add";
-    // bet_single_obj_attr(bet_single_obj);
-  }
-}
+
 
 //诸葛埋点事件
 const record_zhuge_point = menu_type => {

@@ -31,8 +31,6 @@ function compute_css({ theme }) {
   return {
     "background-image": `url(${url})`,
     "background-size": "contain",
-    width: "30px",
-    height: "30px",
   };
 }
 

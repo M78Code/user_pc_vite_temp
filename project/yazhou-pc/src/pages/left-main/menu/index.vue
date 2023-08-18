@@ -6,7 +6,7 @@
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
       :class="menu_config.menu_root == 1 && 'active'">
       <!-- 现场滚球盘 -->
-      <!-- <img class="hot-icon"  src="~public/image/yabo/png/play-match.png" /> -->
+      <img class="hot-icon" :src="play_match" />
       <div class="col">
         现场滚球盘
         <!-- {{ $root.$t("common.in_plays") }} -->
@@ -22,7 +22,7 @@
       class="menu-item menu-top menu-play menu-border" :class="menu_config.menu_root == 500 && 'active'"
       :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
-      <!-- <img class="hot-icon"  src="~public/image/yabo/svg/hot.svg" /> -->
+      <img class="hot-icon" :src="hot_svg" />
       <div class="col">
         热门赛事
         <!-- {{ $root.$t("menu.match_hot") }} -->
@@ -33,7 +33,7 @@
       </div>
     </div>
 
-    {{ base_data_instance.base_data_version }}
+    <div style="display: none;">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
     <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
       :version="base_data_instance.base_data_version"></menu-wapper>
@@ -51,6 +51,9 @@ import store from "src/store-redux/index.js";
 import menu_config from 'src/core/menu-pc/menu-data-class.js'
 import base_data_instance from 'src/core/utils/base-data/base-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+
+import play_match from "/public/yazhou-pc/image/png/play-match.png";
+import hot_svg from "/public/yazhou-pc/image/svg/hot.svg"
 
 import { MenuWapper } from "src/components/menu";
 
