@@ -14,7 +14,7 @@
       </span>
       <!-- 出局 -->
       <div class="result">
-        {{ i18n.t("common.out") }}
+        {{ t("common.out") }}
         <span class="yb-text-color1">{{ match.mbcn }}</span>
       </div>
     </template>
@@ -42,10 +42,10 @@
             <!-- // csid：1-足球 2-篮球 3-棒球 4-冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球  10-羽毛球 -->
             {{
               match.csid == 5
-              ? i18n.t("list.total_play_count")
+              ? t("list.total_play_count")
               : [8, 9, 10].includes(match.csid * 1)
-                ? i18n.t("list.total_pp_score_count2")
-                : i18n.t("list.total_pp_score_count")
+                ? t("list.total_pp_score_count2")
+                : t("list.total_pp_score_count")
             }}
           </span>
           <span class="active-text">{{ match.total_score_str }}</span>
@@ -62,7 +62,7 @@
 <script>
 
 import { computed, defineProps, onMounted, reactive, ref, watch } from 'vue';
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
@@ -70,6 +70,7 @@ import { get_match_status } from 'src/core/utils/index.js'
 import lodash from 'lodash';
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 
 const more_right_icon = ref(false);
 const more_left_icon = ref(false);

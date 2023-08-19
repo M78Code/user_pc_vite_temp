@@ -13,7 +13,7 @@
             {{hl_data.hpn}}
           </div>
           <!--盘口结束时间-->
-          <div>{{`${hl_data.end_time} ${i18n.t('list.bet_close')}`}}</div>
+          <div>{{`${hl_data.end_time} ${t('list.bet_close')}`}}</div>
         </div>
 
         <!-- 投注列表 -->
@@ -39,7 +39,8 @@
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
 import lodash from 'lodash';
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n();
 </script>
 
 <style lang="scss" scoped>

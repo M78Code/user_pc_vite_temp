@@ -1,7 +1,7 @@
 <template>
   <div class="details-header"
        :style="get_menu_type == 3000 ? URL.gaming_type[detail_data.csid] : lodash.get(URL.sporting_type,`${ballType}.B`)"
-       :class="{results_header_top: ['result_details', 'match_result'].includes($route.name),baseball: detail_data.csid == '3'}"
+       :class="{results_header_top: ['result_details', 'match_result'].includes(route.name),baseball: detail_data.csid == '3'}"
   >
   <!-- <div class="details-header"
   > -->
@@ -81,6 +81,8 @@ export default defineComponent({
       ...toRefs(props),
       lodash,
       ballType,
+      route,
+      router
     }
   }
 })
