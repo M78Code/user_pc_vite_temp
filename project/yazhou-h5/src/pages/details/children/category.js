@@ -25,6 +25,8 @@ export const category_info = () => {
   const router = useRouter();
   const route = useRoute();
   const component_data = reactive({
+    // uid 
+    send_gcuuid: "",
     emitters: [],
     // 加载数据的效果
     // is_loading: true,
@@ -160,7 +162,7 @@ export const category_info = () => {
   };
   // 点击玩法名称,隐藏或是显示玩法赔率
   const change_show = () => {
-    arr_hshow = [];
+    component_data.arr_hshow = [];
     if (Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length) {
       let flag1 = matchInfoCtr.list.every((item) => {
         return item.hshow == "Yes";
@@ -172,7 +174,7 @@ export const category_info = () => {
       matchInfoCtr.list.forEach((v_item, v_index) => {
         obj_.topKey = v_item.topKey;
         obj_.hshow = v_item.hshow;
-        arr_hshow.push(obj_);
+        component_data.arr_hshow.push(obj_);
         obj_ = {};
       });
       if (flag1) {
@@ -291,7 +293,7 @@ export const category_info = () => {
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {
-      arr_hshow = [];
+      component_data.arr_hshow = [];
     }
 
     let params = {
@@ -330,7 +332,7 @@ export const category_info = () => {
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
     component_data.send_gcuuid = uid();
-    params.gcuuid = send_gcuuid;
+    params.gcuuid = component_data.send_gcuuid;
 
     // console.log(params,"paramsparamsparams");
 
@@ -375,7 +377,7 @@ export const category_info = () => {
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
         const res = await axios_api_loop(_obj);
 
-        if (send_gcuuid != res.gcuuid) {
+        if (component_data.send_gcuuid != res.gcuuid) {
           return;
         }
         component_data.first_load = false;
@@ -630,7 +632,7 @@ export const category_info = () => {
   // 保存当前展开状态
   const save_expanded_state = (arr_list) => {
     arr_list.forEach((v_item) => {
-      arr_hshow.forEach((v_m) => {
+      component_data.arr_hshow.forEach((v_m) => {
         if (v_item.topKey == v_m.topKey) {
           v_item.hshow = v_m.hshow;
         }
@@ -673,11 +675,11 @@ export const category_info = () => {
       : get_menu_type == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
-    send_gcuuid = uid();
-    params.gcuuid = send_gcuuid;
+      component_data.send_gcuuid = uid();
+    params.gcuuid = component_data.send_gcuuid;
     http(params)
       .then((res) => {
-        if (send_gcuuid != res.gcuuid) return;
+        if (component_data.send_gcuuid != res.gcuuid) return;
         is_loading = false;
         if (!res.data || res.data.length == 0) {
           if (callback) callback();
@@ -690,7 +692,7 @@ export const category_info = () => {
           update_ol(null, temp);
         }
         if (temp && temp.length) {
-          if (arr_hshow.length > 0) {
+          if (component_data.arr_hshow.length > 0) {
             save_expanded_state(temp);
           }
           playlist_length = temp.length;
@@ -772,7 +774,7 @@ export const category_info = () => {
       // 解析JSON字符串
       let data = JSON.parse(cach_string);
       if (data && data.length) {
-        if (arr_hshow.length > 0) {
+        if (component_data.arr_hshow.length > 0) {
           save_expanded_state(data);
         }
         // data是数组，其中每一项表示单个投注项
