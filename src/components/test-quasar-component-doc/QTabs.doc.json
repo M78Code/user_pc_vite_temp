@@ -1,5 +1,6 @@
 {
   "leftmenu": {
+    "project": 1,
     "level": 2,
     "menuName": "Quasar",
     "sonName": "Quasar-Tabs"
