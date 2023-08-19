@@ -9,7 +9,6 @@ const routes = [
     // },
     component: () => import(`../layouts/main-layout1.vue`),
     // component: () => import(`../pages/test/index.vue`),
-
   },
   // //赛事分析
   // {

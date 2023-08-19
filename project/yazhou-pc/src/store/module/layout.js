@@ -8,14 +8,9 @@ const initialState = {
   cur_expand_layout: "match-list",
   //左侧显示内容类型 menu:菜单 bet_list:投注列表 bet_history:投注记录
   layout_left_show: "menu",
-  layout_list_size: {},
-  layout_list_width: 0,
   // 列表显示内容  match:赛事 collect:收藏 search:搜索
   layout_list_type: "match",
-  // 左侧列表显示形式 normal：展开 mini：收起 normal-mini自己点击的
-  left_menu_status: "normal",
-  left_menu_is_mini: false, //是否mini
-  is_unfold_multi_column: false, //是否展开多列玩法
+
   // 自定义滚动条样式
   scroll_style: {
     width: "9px",
@@ -24,12 +19,16 @@ const initialState = {
     opacity: 1,
     borderRadius: "4px",
   },
-  //不允许从这里拿宽度来判断东西 这是配置的
+  // 左侧列表显示形式 normal：展开 mini：收起 normal-mini自己点击的
+  left_menu_status: "normal",
+  left_menu_is_mini: false, //是否mini
+  layout_right_status: false, //是否展示右侧
+  //不允许从这里拿宽度来判断东西 这是配置的 和scss对应
   layout_setting: {
     // 主内容最大宽度
     max_width: 1920,
     // 主内容最小宽度出现滚动条
-    min_width: 1400,
+    min_width: 1440,
     // 左侧菜单宽度
     left_width: 234,
     // 左侧菜单宽度mini
@@ -60,13 +59,22 @@ export default function layoutReducer(state = initialState, action) {
     // 页面是否达到最小宽度
     case "SET_IS_MIN_WIDTH":
       return { ...state, is_min_width: action.data };
+    // 是否展示右侧
+    case "SET_LAYOT_RIGHT_STATS":
+      nextTick(() => {
+        useMittEmit(MITT_TYPES.EMIT_LAYOUT_RIGHT_STATUS, action.data);
+      //只有和上次的值 不一样 宽度才是变化 才去计算
+        if (action.data != state.layout_right_status)
+          useMittEmit(MITT_TYPES.EMIT_LAYOUT_RESIZE, action.data);
+      });
+      return { ...state, layout_right_status: action.data };
     //设置菜单是否为mini
     case "SET_LEFT_MENU_STATUS":
       const left_menu_is_mini = action.data == "mini";
       nextTick(() => {
-        //
+        //通知监听了菜单栏变化的消息
         useMittEmit(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, action.data);
-        //只有宽度变化 才计算
+        //只有和上次的值 不一样 宽度才是变化 才去计算
         if (left_menu_is_mini != state.left_menu_is_mini)
           useMittEmit(MITT_TYPES.EMIT_LAYOUT_RESIZE, action.data);
       });
@@ -76,19 +84,19 @@ export default function layoutReducer(state = initialState, action) {
         left_menu_is_mini, //true/false
       };
     // 获取当前页路由信息
-    case "SETLAYOUTCURPAGE":
+    case "SET_LAYOUT_CUR_PAGE":
       return { ...state, layout_cur_page: action.data };
     // 设置展开区块
-    case "SETCUREXPANDLAYOUT":
+    case "SET_CUR_EXPAND_LAYOUT":
       return { ...state, cur_expand_layout: action.data };
     //获取左侧布局信息(取值有menu,bet_list,history)
-    case "SETLAYOUTLEFTSHOW":
+    case "SET_LAYOUT_LEFT_SHOW":
       return { ...state, layout_left_show: action.data };
     // 设置列表显示内容  match:赛事 collect:收藏 search:搜索
-    case "SETLAYOUTLISTTYPE":
+    case "SET_LAYOUT_LIST_TYPE":
       return { ...state, layout_list_type: action.data };
     // 自定义滚动条样式
-    case "SETSCROLLSTYLE":
+    case "SET_SCROLL_STYLE":
       return { ...state, scroll_style: action.data };
     //设置当前页面布局
     case "SET_LAYOUT_CUR_PAGE":
