@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+// import { mapGetters } from "vuex"
 import format_desc from "src/project/yabo/mixins/match_details/index";
 import match_date from "src/public/components/match_process/match_process.vue";
 

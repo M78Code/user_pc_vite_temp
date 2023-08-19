@@ -4,7 +4,7 @@
  * @Description: 详情区--篮球滚球-比分面板
 -->
 <template>
-  <div :class="{'w-100': _.get(match_info, 'msc.S7')}" class="basketball-after" v-if="isRouterAlive">
+  <div :class="{'w-100': lodash.get(match_info, 'msc.S7')}" class="basketball-after" v-if="isRouterAlive">
     <div class="info-time">
       <!-- 正计时 -->
       <div class="match-date">
@@ -31,13 +31,13 @@
         </span>
         <!-- 左滚动按钮 E -->
         <!-- 不同赛制的小节展示区 -->
-        <template v-if="_.get(match_info,'mle')!=73">
+        <template v-if="lodash.get(match_info,'mle')!=73">
           <div class="time-node" :class="[`stage-${match_info.mmp}`, screen_class]" ref="scroll_handel">
             <!-- 篮球 -->
-            <template v-if="_.get(match_info, 'csid') == '2'">
+            <template v-if="lodash.get(match_info, 'csid') == '2'">
               
               <!-- 上下半场赛制 -->
-              <template v-if="_.get(match_info, 'mle') == '17'">
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <span>H1</span>
                 <span>H2</span>
               </template>
@@ -81,7 +81,7 @@
           <!-- 右滚动按钮 E -->
 
           <!-- 加时 -->
-          <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{$root.$t('common.add_time')}}</span>
+          <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{$root.$t('common.add_time')}}</span>
         </template>
         <!-- 总分 -->
         <span class="common-score score">{{$root.$t('common.total')}}</span>
@@ -95,41 +95,41 @@
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]')])"
+            v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" v-tooltip="{content:_.get(match_info,'mhn'),overflow:1}">{{_.get(match_info,'mhn')}}</span>
+          <span class="ellipsis allow-user-select" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:1}">{{lodash.get(match_info,'mhn')}}</span>
         </div>
 
         <div class="score-wrap">
-          <template v-if="_.get(match_info,'mle')!=73">
+          <template v-if="lodash.get(match_info,'mle')!=73">
             <div 
               class="info-data" 
               :class="[`stage-${match_info.mmp}`, screen_class]" 
               ref="scroll_home"
               :style="{'margin': more_left_icon||more_right_icon?'0px 19px 0 14px':'0'}"
             >
-              <template v-if="_.get(match_info, 'mle') == '17'">
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <!-- 上半场比分 -->
-                <span>{{_.get(match_info, 'msc.S2.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S2.home')}}</span>
                 <!-- 下半场比分 -->
-                <span>{{_.get(match_info, 'msc.S3.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S3.home')}}</span>
               </template>
               <template v-else>
                 <!-- 第一节比分 -->
-                <span>{{_.get(match_info, 'msc.S19.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S19.home')}}</span>
                 <!-- 第二节比分 -->
-                <span>{{_.get(match_info, 'msc.S20.home')}}</span>
-                <span class="time-half">{{_.get(match_info, 'msc.S2.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S20.home')}}</span>
+                <span class="time-half">{{lodash.get(match_info, 'msc.S2.home')}}</span>
                 <!-- 第三节比分 -->
-                <span>{{_.get(match_info, 'msc.S21.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S21.home')}}</span>
                 <!-- 第四节比分 -->
-                <span>{{_.get(match_info, 'msc.S22.home')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S22.home')}}</span>
               </template>
             </div>
-            <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{_.get(match_info, 'msc.S7.home')}}</span>
+            <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{lodash.get(match_info, 'msc.S7.home')}}</span>
           </template>
-          <span class="common-score score">{{_.get(match_info, 'msc.S1.home')}}</span>
+          <span class="common-score score">{{lodash.get(match_info, 'msc.S1.home')}}</span>
         </div>
       </div>
       <!-- 主队 结束 -->
@@ -139,35 +139,35 @@
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]')])"
+            v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" v-tooltip="{content:_.get(match_info,'man'),overflow:1}">{{_.get(match_info,'man')}}</span>
+          <span class="ellipsis allow-user-select" v-tooltip="{content:lodash.get(match_info,'man'),overflow:1}">{{lodash.get(match_info,'man')}}</span>
         </div>
         <div class="score-wrap">
-          <template v-if="_.get(match_info,'mle')!=73">
+          <template v-if="lodash.get(match_info,'mle')!=73">
             <div 
               class="info-data" 
               :class="[`stage-${match_info.mmp}`, screen_class]"
               ref="scroll_away"
               :style="{'margin': more_left_icon||more_right_icon?'0px 19px 0 14px':'0'}"
             >
-              <template v-if="_.get(match_info, 'mle') == '17'">
-                <span>{{_.get(match_info, 'msc.S2.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S3.away')}}</span>
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
+                <span>{{lodash.get(match_info, 'msc.S2.away')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S3.away')}}</span>
               </template>
               <template v-else>
-                <span>{{_.get(match_info, 'msc.S19.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S20.away')}}</span>
-                <span class="time-half">{{_.get(match_info, 'msc.S2.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S21.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S22.away')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S19.away')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S20.away')}}</span>
+                <span class="time-half">{{lodash.get(match_info, 'msc.S2.away')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S21.away')}}</span>
+                <span>{{lodash.get(match_info, 'msc.S22.away')}}</span>
               </template>
             </div>
 
-            <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{_.get(match_info, 'msc.S7.away')}}</span>
+            <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{lodash.get(match_info, 'msc.S7.away')}}</span>
           </template>
-          <span class="common-score score">{{_.get(match_info, 'msc.S1.away')}}</span>
+          <span class="common-score score">{{lodash.get(match_info, 'msc.S1.away')}}</span>
         </div>
       </div>
       <!-- 客队 结束 -->
@@ -177,11 +177,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+// import { mapGetters } from "vuex"
 import format from "src/project/yabo/mixins/match_details/index";
 import match_date from "src/public/components/match_process/match_process.vue";
 
 import {get_refs_info} from "src/public/mixins/common/common.js"
+import lodash from 'lodash'
 
 export default {
   components: {
@@ -194,6 +195,7 @@ export default {
   },
   data() {
     return {
+      lodash,
       el_active: "default",//左右滚动条active， right | left
       more_left_icon: false,//向左箭头显隐
       more_right_icon: false,//向右箭头显隐
@@ -312,11 +314,11 @@ export default {
         };
         for (var k in dict) {
           if (k == res.mmp) {
-            res.msc[dict[k]] = _.get(res, `msc[${dict[k]}]`) || this.default;
+            res.msc[dict[k]] = lodash.get(res, `msc[${dict[k]}]`) || this.default;
           }
         }
 
-        if(this.$route.name=='home'&&_.get(res, "msc.S7") && this.get_layout_list_size.width < 1430){
+        if(this.$route.name=='home'&&lodash.get(res, "msc.S7") && this.get_layout_list_size.width < 1430){
           this.is_scroll = true
         } else {
           this.is_scroll = false
@@ -338,7 +340,7 @@ export default {
     get_layout_list_size:{
       handler(res){
         if(this.$route.name == "home"){
-          if(res.width < 1430 && _.get(this.match_info, 'msc.S7')){
+          if(res.width < 1430 && lodash.get(this.match_info, 'msc.S7')){
             if(!this.is_scroll){
               this.screen_class = "is_min_screen"
               this.is_scroll = true
