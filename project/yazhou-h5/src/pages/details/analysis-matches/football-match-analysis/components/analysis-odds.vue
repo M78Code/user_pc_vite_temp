@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 详情页足球赛事分析赔率页面
 -->
 <template>
@@ -46,9 +46,9 @@
             </div>
           </div>
           <div class="t2 column justify-center">
-            <span>{{item.handicapOddsDTOList[0]0}}</span>
+            <span>{{item.handicapOddsDTOList[0].value0}}</span>
             <span :class="{'red':item.handicapOddsDTOList[1].directions0 == 1,'green':item.handicapOddsDTOList[1].directions0 == -1}">
-              {{item.handicapOddsDTOList[1]0}}
+              {{item.handicapOddsDTOList[1].value0}}
               <i class="odd yb_ml4"></i>
             </span>
           </div>
@@ -68,14 +68,14 @@
           </div>
           <template v-if="tabIndex == 1">
             <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0]0WinRate}}%</span>
+              <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directions0WinRate == 1,'green':item.handicapOddsDTOList[1].directions0WinRate == -1}">{{item.handicapOddsDTOList[1]0WinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directions0WinRate == 1,'green':item.handicapOddsDTOList[1].directions0WinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
-              <span>{{item.handicapOddsDTOList[0]WinRate}}%</span>
+              <span>{{item.handicapOddsDTOList[0].value0WinRate}}%</span>
               <span
-                :class="{'red':item.handicapOddsDTOList[1].directionsWinRate == 1,'green':item.handicapOddsDTOList[1].directionsWinRate == -1}">{{item.handicapOddsDTOList[1]WinRate}}%</span>
+                :class="{'red':item.handicapOddsDTOList[1].directionsWinRate == 1,'green':item.handicapOddsDTOList[1].directionsWinRate == -1}">{{item.handicapOddsDTOList[1].value0WinRate}}%</span>
             </div>
             <div class="t4 column justify-center">
               <span>{{item.handicapOddsDTOList[0].returnRate}}%</span>
@@ -95,7 +95,7 @@
 <script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
 import { api_result } from "src/project/api";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
 // TODO: 后续修改调整
@@ -183,7 +183,7 @@ import { useRoute } from 'vue-router'
     //  TODO: 后续修改调整
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data']),
   // },
-  
+
 </script>
 
 <style lang="scss" scoped>

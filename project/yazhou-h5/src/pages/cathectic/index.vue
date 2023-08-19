@@ -1,7 +1,7 @@
 <!--
  * @Author:
  * @Date:
- * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算）
+ * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算+预约）
 -->
 <template>
   <div class="settle-dialog">
@@ -43,7 +43,6 @@ import preRecord from "./pre-record.vue"
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import { useRoute } from 'vue-router'
 import store from 'src/store-redux/index.js'
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()

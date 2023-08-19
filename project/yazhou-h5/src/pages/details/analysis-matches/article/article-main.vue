@@ -1,5 +1,5 @@
 <!--
- * @Author: 
+ * @Author:
  * @Description: 赛事分析页文章页面（目前只有足蓝球有）
 -->
 <template>
@@ -27,36 +27,40 @@
     </q-dialog>
 
    <!-- 加载中icon -->
-   <loading v-if="is_loading" top="58%" @touchmove.prevent></loading>
+   <!-- <loading v-if="is_loading" :top="top" @touchmove.prevent></loading> -->
  </div>
 </template>
 
 <script setup>
 // import { mapGetters } from "vuex";
-import { api_common } from "src/project/api/index.js";
-import noData from "src/project/components/common/no_data.vue";
-import articleContent from "src/project/pages/details/analysis-matches/article/article-content.vue";
-import articleMaylike from "src/project/pages/details/analysis-matches/article/article-maylike.vue";
-import loading from "src/project/components/common/loading";  // 加载中
+import { api_common } from "src/api/index.js";
+import noData from "project_path/src/components/common/no-data.vue";
+import articleContent from "project_path/src/pages/details/analysis-matches/article/article-content.vue";
+import articleMaylike from "project_path/src/pages/details/analysis-matches/article/article-maylike.vue";
+// 加载中
+// import loading from "project_path/src/components/common/loading.vue";
 import { onMounted, onUnmounted, watch } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-  
+
   // 弹框是否显示
-  const is_show_dialog = ref(false) 
+  const is_show_dialog = ref(false)
   // 详情页文章标签下的文章详情
-  const article_detail = ref({})    
-  // 详情页弹框里面的文章详情 
-  const article_detail2 = ref({})   
-  // 猜你喜欢 
-  const favorite_article_data = ref([]) 
-  // 记录点击过的赛事id  
-  const matchids = ref([])  
+  const article_detail = ref({})
+  // 详情页弹框里面的文章详情
+  const article_detail2 = ref({})
+  // 猜你喜欢
+  const favorite_article_data = ref([])
+  // 记录点击过的赛事id
+  const matchids = ref([])
   // 内容加载中？
-  const is_loading = ref(true) 
+  const is_loading = ref(true)
   // 进入文章页面时间
-  const enter_article_time = ref(0)  
+  const enter_article_time = ref(0)
   const route = useRoute()
+  const top = ref('58%')
+
+
 
   onMounted(() => {
     get_article(route.params.mid)
@@ -91,7 +95,13 @@ const get_favorite_article = () => {
     api_common.getFavoriteArticle({
       id: article_detail.id,
       matchId: route.params.mid
-    }).then(res => {
+    }).then(reslut => {
+      let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
       if (res.code == 200 && res.data) {
         favorite_article_data = res.data.filter(item => {
           return item.id != article_detail.id
@@ -106,8 +116,16 @@ const get_favorite_article = () => {
    * @param {String} matchId 赛事id
    */
 const get_article = (matchId) => {
+  console.error(matchId);
+  debugger
     // type 1-matchId是赛事id 2-matchId是文章id
-    api_common.getArticle({ matchId, type: 1 }).then(res => {
+    api_common.getArticle({ matchId, type: 1 }).then(reslut => {
+      let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
       if (res.code == 200 && res.data) {
         // 替换图片域名
         let domain = get_file_path('getArticle').replace('getArticle','')
@@ -145,10 +163,16 @@ const maylike_click = (index) => {
       })
       : api_common.getArticle({
         // type 1-matchId是赛事id 2-matchId是文章id
-        matchId: articleid, 
+        matchId: articleid,
         type: 2
       })
-      api_fn.then(res => {
+      api_fn.then(reslut => {
+        let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
       if (res.code == 200 && res.data) {
         // 替换图片域名
         let domain = get_file_path('getArticle').replace('getArticle','')
