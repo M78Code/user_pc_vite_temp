@@ -24,7 +24,7 @@
       <list-header :collect_count="collect_count" :is_show_hot="is_show_hot" :load_data_state="load_data_state">
         <template v-slot:refresh_icon>
           <!-- 刷新组件 -->
-          <refresh :loaded="load_data_state != 'loading'" :other_icon="true" icon_name="icon-balance_refresh"
+          <refresh :loaded="load_data_state != 'loading'" :other_icon="true" :icon_name="1"
             @click="on_refresh" />
         </template>
       </list-header>
@@ -128,15 +128,38 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js";//联赛菜单
 import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js";//赛事列表筛选：滚球-球种、早盘-日期
-// import { ListFilterDateFullVersionWapper as listFilterDate } from "src/components/match-list/list-filter-date/index.js";//热门赛事列表  早盘-日期
-// import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";//热门赛事列表  早盘-日期
+import { ListFilterDateFullVersionWapper as listFilterDate } from "src/components/match-list/list-filter-date/index.js";//热门赛事列表  早盘-日期
+import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";//热门赛事列表 
+import { ListFilterHotFullVersionWapper as ListFilterHot } from "src/components/match-list/list-filter-hot/index.js";//热门赛事列表 
+import { EsportsHeaderFullVersionWapper as EsportsHeader } from "src/components/match-list/esports-header/index.js";//电竞赛事列表筛选 
+// import { VirtualMatchTypeFullVersionWapper as VirtualMatchType } from "src/components/match-list/match-list-card/index.js";//虚拟体育 赛事列表 赛事头 
+import { PlayVirtualMatchTypeFullVersionWapper as PlayVirtualMatchType } from "src/components/match-list/play-virtual-match-type/index.js";//赛事列表头部——滚球——赛事类型 
+// import { LeaguesFilterFullVersionWapper as LeaguesFilter } from "src/components/match-list/match-list-card/index.js";//联赛筛选页面 
+// import { VirtualMatchTpl1FullVersionWapper as VirtualMatchTpl1 } from "src/components/match-list/match-list-card/index.js"; //拟足球 、 虚拟篮球
+// import { VirtualMatchTpl2FullVersionWapper as VirtualMatchTpl2 } from "src/components/match-list/match-list-card/index.js"; //拟赛马 、 虚拟赛狗
+
 import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import menu_config from "src/core/menu-pc/menu-data-class.js";
+// import match_list_mixin from 'src/core/match-list-pc/match-list-mixin.js'
+export default {
+  components: {
+    LeagueTab,
+    listFilter,
+    listFilterDate,
+    MatchListCard,
+    ListFilterHot,
+    EsportsHeader
+  },
+  created() {
+    console.log('lockie_test_console', menu_config);
+  }
+  // mixins: [match_list_mixin]
+}
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器
 // ScrollList: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/cus_scroll/scroll_list.vue"),

@@ -27,23 +27,22 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { computed, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
-import details from 'src/core/match-list/details-class/details.js'
-import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
+import details from "src/core/match-detail-pc/match-detail";
+import { other_play_name_to_playid } from 'src/core/match-list-pc/data-class-ctr/conifg/index.js';
 import store from 'src/store-redux/index.js'
 import { useI18n } from 'vue-i18n'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
 const { t } = useI18n();
-
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const route = useRoute();
 
 // 盘口数量

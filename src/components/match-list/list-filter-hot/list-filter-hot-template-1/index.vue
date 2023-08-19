@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { defineProps, ref, onMounted } from 'vue';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
