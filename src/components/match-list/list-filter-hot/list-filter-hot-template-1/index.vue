@@ -21,8 +21,8 @@
           </div>
           <!-- 球种名称 -->
           <div class="name  menu-inline name-margin-left"
-            v-tooltip="{ content: (item.mi == '50199' ? i18n.t('common.all') : BaseData.menus_i18n_map[item.mi] + ' ' + item.ct) || '', overflow: 1 }">
-            <span>{{ (item.mi == '50199' ? i18n.t('common.all') : BaseData.menus_i18n_map[item.mi]) || '' }}</span>
+            v-tooltip="{ content: (item.mi == '50199' ? t('common.all') : BaseData.menus_i18n_map[item.mi] + ' ' + item.ct) || '', overflow: 1 }">
+            <span>{{ (item.mi == '50199' ? t('common.all') : BaseData.menus_i18n_map[item.mi]) || '' }}</span>
             <span class="count-text">{{ item.ct }}</span>
           </div>
 
@@ -33,15 +33,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { defineProps, ref, onMounted } from 'vue';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 const current_menu = ref('')
 const name = ref('list_filter_hot')
 const top_logos = ref([
