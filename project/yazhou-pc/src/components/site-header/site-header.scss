@@ -133,10 +133,9 @@
 
             &.normal,
             &.mini-normal {
-                width: 220px;
+                width: $layout_menu_width;
                 margin-right: 13px;
             }
-
             .search-wrap {
                 display: flex;
                 align-items: center;
@@ -150,7 +149,7 @@
                 }
 
                 &.mini {
-                    width: 50px;
+                    width: $layout_menu_width_mini;
                     margin-right: 23px;
 
                     .search-icon {
