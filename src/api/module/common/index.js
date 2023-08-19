@@ -150,7 +150,7 @@ export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url
 // 置顶接口
 export const get_category_playTop = (params, config, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params, config)
 // 赛事详情页面接口（christion）
-export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
+export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix}${url}`, params, config)
 // 赛果详情页面接口（christion）
 export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 
@@ -233,7 +233,7 @@ export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBan
 
 
 
- 
+
 //获取全局开关
 export const get_access_config = (params, config={}, url = "/v1/art/getAccessConfig") => http.get(`${prefix}${url}`, params, config);
 
@@ -269,4 +269,3 @@ export const get_server_time = (params, config={}, url = "/v1/getSystemTime/curr
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);
 
- 

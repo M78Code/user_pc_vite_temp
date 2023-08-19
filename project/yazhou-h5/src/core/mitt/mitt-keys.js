@@ -260,5 +260,5 @@ export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 
 
 export const IFRAME_VIDEO_VOLUME = "IFRAME_VIDEO_VOLUME";
-export const EVENT_DATA = "EVENT_DATA";
+export const EMIT_EVENT_DATA = "EMIT_EVENT_DATA";
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

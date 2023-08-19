@@ -207,7 +207,7 @@ const checkClearBet = (obj) => {
     set_bet_obj({})
     set_bet_list([])
   }
-},
+}
 // 菜单切换 is_self 是否手动触发
 const changeTab = (item, index, is_self) => {
   // 如果是电竞赛事，需要设置菜单类型
@@ -230,7 +230,7 @@ const changeTab = (item, index, is_self) => {
   useMittEmit(MITT_TYPES.EMIT_TAB_HOT_CHANGING);
   // 如果不是第一个选项卡，则调用 下边方法，初始化数据
   useMittEmit(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB)
-},
+}
 // 展示loading
 const show_hot_schedule_loading = (is_true) => {
   if (is_true) {

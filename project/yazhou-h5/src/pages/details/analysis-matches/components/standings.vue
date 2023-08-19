@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页  足球赛事分析 战绩 模块
 -->
 <template>
@@ -46,28 +46,29 @@
 
 <script setup>
 // 详情页 或者 赛果  篮球足球公共组件，杯赛 联赛表格
-import footballStandings from "src/project/pages/details/analysis-matches/components/basketball-football-standings.vue"  
+// import footballStandings from "project_path/src/pages/details/analysis-matches/components/basketball-football-standings.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-import historyEngagement from "src/project/pages/details/analysis-matches/components/history-engagement" 
-// 详情页  足球赛事分析 战绩 模块里边的 历史交战  
-import recentRecord from "src/project/pages/details/analysis-matches/components/recent-record"   
+// import historyEngagement from "project_path/src/pages/details/analysis-matches/components/history-engagement.vue"
+// 详情页  足球赛事分析 战绩 模块里边的 历史交战
+// import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
 // 详情页 或者 赛果  足球
-import futureSchedule from "src/project/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"  
-// 伤停情况 
-import injurySituation from "src/project/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"  
-// 技术面 
-import standingsTechnical from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"  
-// 盘面 
-import standingsDisk from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"   
+// import futureSchedule from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
+// 伤停情况
+// import injurySituation from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
+// 技术面
+// import standingsTechnical from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
+// 盘面
+// import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_result} from "src/project/api";
  // 加载中
-import loading from "src/project/components/common/loading"; 
+import loading from "project_path/src/components/common/loading";
 import { computed, ref, nextTick, onUnmounted } from 'vue'
 import loadsh from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
+import { useI18n } from "vue-i18n"
 
   // components: {
   //   "football-standings": football_standings,
@@ -79,26 +80,27 @@ import { useRoute } from 'vue-router'
   //   "injury-situation": injury_situation,
   //   loading,
   // },
-  // TODO: 国际化后续修改调整
+  // 国际化
+  const { t } = useI18n()
   const tab_list = ref([
-        {name: $root.$t('analysis_football_matches.Fundamentals')},
-        {name: $root.$t('analysis_football_matches.Disk')},
-        {name: $root.$t('analysis_football_matches.Technical_side')}
+        {name: t('analysis_football_matches.Fundamentals')},
+        {name: t('analysis_football_matches.Disk')},
+        {name: t('analysis_football_matches.Technical_side')}
       ])
-  const tabIndex = ref(0)
-  // 基本面的数据
-  const future_schedule_data = ref({})
-  // 伤停情况
-  const injury_situation_data = ref({init: null})
-  // 盘面的数据
-  const matchHistory_battle_dto_map = ref({init: null})
-  // 技术面的数据
-  const homeAwayGoal_and_coach_map = ref({init: null})
-  const loading = ref(false)
+  // const tabIndex = ref(0)
+  // // 基本面的数据
+  // const future_schedule_data = ref({})
+  // // 伤停情况
+  // const injury_situation_data = ref({init: null})
+  // // 盘面的数据
+  // const matchHistory_battle_dto_map = ref({init: null})
+  // // 技术面的数据
+  // const homeAwayGoal_and_coach_map = ref({init: null})
+  // const loading = ref(false)
   const route = useRoute()
 
-  //   // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+  //   // 添加监听 赛事分析刷新事件
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on()
 
     if(get_detail_data.csid == 1) {
       get_data_list()
@@ -108,21 +110,15 @@ import { useRoute } from 'vue-router'
         return route.params.mid || get_detail_data.mid
   })
   onUnmounted(() => {
-    // 移除监听 赛事分析刷新事件 TODO: $root emit  后续修改调整
-    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    // 移除监听 赛事分析刷新事件
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off()
 
     tab_list = ref([
-        {name: $root.$t('analysis_football_matches.Fundamentals')},
-        {name: $root.$t('analysis_football_matches.Disk')},
-        {name: $root.$t('analysis_football_matches.Technical_side')}
+        {name: t('analysis_football_matches.Fundamentals')},
+        {name: t('analysis_football_matches.Disk')},
+        {name: t('analysis_football_matches.Technical_side')}
       ])
-    tabIndex = ref(0)
-    future_schedule_data = ref({})
-    injury_situation_data = ref({init: null})
-    matchHistory_battle_dto_map = ref({init: null})
-    homeAwayGoal_and_coach_map = ref({init: null})
-    loading = ref(false)
-  }) 
+  })
   const get_data_list = async() => {
       try {
         loading = true
@@ -135,10 +131,10 @@ import { useRoute } from 'vue-router'
         let {code , data} = await api_result.get_match_analysise_data(parameter)
         loading = false
         if(code == 200 && Object.keys(data).length > 0) {
-          future_schedule_data = loadsh.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
-          injury_situation_data = loadsh.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
-          matchHistory_battle_dto_map = loadsh.get(data, 'matchHistoryBattleDTOMap', {})
-          homeAwayGoal_and_coach_map = loadsh.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
+          future_schedule_data.value = loadsh.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
+          injury_situation_data.value = loadsh.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
+          matchHistory_battle_dto_map.value = loadsh.get(data, 'matchHistoryBattleDTOMap', {})
+          homeAwayGoal_and_coach_map.value = loadsh.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
         }
       } catch (error) {
         console.error(error);
@@ -148,10 +144,10 @@ import { useRoute } from 'vue-router'
   const tab_click = (item, i) => {
       if(loading || tabIndex == i) return
         tabIndex = i
-        future_schedule_data = {}
-        injury_situation_data = {init: null}
-        matchHistory_battle_dto_map = {init: null}
-        homeAwayGoal_and_coach_map = {init: null}
+        future_schedule_data.value = {}
+        injury_situation_data.value = {init: null}
+        matchHistory_battle_dto_map.value = {init: null}
+        homeAwayGoal_and_coach_map.value = {init: null}
         // TODO: 后续修改调整 'get_detail_data'
         if(get_detail_data.csid == 1) {
           get_data_list()
@@ -161,7 +157,7 @@ import { useRoute } from 'vue-router'
   const refresh_match_analysis = () => {
       const tab_index = tabIndex
       tabIndex = -1
-      
+
       nextTick(() => {
         tab_click(tab_list[tab_index], tab_index)
       })

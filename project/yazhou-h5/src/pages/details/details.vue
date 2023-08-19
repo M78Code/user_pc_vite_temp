@@ -85,10 +85,7 @@
           </div>
           <!-- 赛事分析展示内容 -->
           <template v-if="viewTab === 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <!-- 足球赛事分析 页面-->
-            <!-- <analysis-football-matches v-if="get_detail_data.csid === '1'"></analysis-football-matches> -->
-            <!-- 篮球赛事分析 页面-->
-            <!-- <basketball-match-analysis v-if="get_detail_data.csid === '2'"></basketball-match-analysis> -->
+            <analysis-matches></analysis-matches>
           </template>
           <!-- 聊天室 -->
           <template v-if="viewTab === 'chatroom'">
@@ -127,10 +124,10 @@
 <script>
 import utils from 'src/core/utils/utils.js';  // 公共方法
 
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 
-// #TODO mixins 
+// #TODO mixins
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
@@ -146,6 +143,7 @@ import change_header from "project_path/src/pages/details/components/header/chan
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
+import analysisMatches from './analysis-matches/index.vue';
 import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
@@ -157,6 +155,7 @@ export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
   components: {
+    analysisMatches,
     "details-header": details_header,
 //     // "details-dialog": details_dialog,
     "change-header": change_header,
@@ -179,7 +178,7 @@ export default defineComponent({
 //       }
 //     });
 //   },
-  
+
   setup(props, evnet) {
     const { t } = useI18n();
     const router = useRouter();
@@ -266,7 +265,7 @@ export default defineComponent({
       { deep: true }
     );
     // 切换横屏状态时，调整相应玩法集顺序
-    
+
     watch(
       () => data.get_is_hengping,
       () => {
@@ -362,7 +361,7 @@ export default defineComponent({
     watch(
       () => data.viewTab,
       () => {
-        // #TODO $utils 
+        // #TODO $utils
         // $utils.zhuge_event_send('H5_情报分析', data.get_user);
       }
     );
@@ -377,7 +376,7 @@ export default defineComponent({
     // );
 
     onMounted(() => {
-      // 原created 
+      // 原created
       data.init_event_timer_count = 0;
       // 延时器
       data.timer1_ = null;
@@ -477,7 +476,7 @@ export default defineComponent({
         $data[key] = null
       }
     })
-    // #TODO VUEX 
+    // #TODO VUEX
     //   ...mapActions([
     //   // 设置玩法tab列表 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
     //   "set_details_item",
@@ -521,7 +520,7 @@ export default defineComponent({
     //   'set_last_route_info',
     //   'set_event_list',
     // ]),
-    
+
     return {
       ...toRefs(data),
       t,

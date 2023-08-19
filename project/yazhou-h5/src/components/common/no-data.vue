@@ -41,12 +41,12 @@
         </template>
     </div>
 </template>
-  
-<script>
+
+<script setup>
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 // TODO:
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 
 const arr_const = {
     collect: {
@@ -80,9 +80,7 @@ const arr_const = {
     }
 }
 
-export default defineComponent({
-    name: "no_data",
-    props: {
+ const props = defineProps({
         which: {
             type: String,
             required: true
@@ -90,52 +88,44 @@ export default defineComponent({
         height: {
             required: true
         },
-    },
-    setup(props) {
-        const arr = ref(arr_const)
-        const top_height = ref(0)
-        const is_detail = ref(false)
+    })
+    const arr = ref(arr_const)
+    const top_height = ref(0)
+    const is_detail = ref(false)
 
-        const route = useRoute()
-        function init() {
-            top_height.value = window.innerHeight - props.height;
-            is_detail.value = route.name === 'category';
-        }
-        onMounted(init)
-
-        // 监听国际化语种变化,一旦变化修正国际化字符串
-        watch(
-            () => $i18n.locale,
-            () => arr.value = arr_const
-        )
-
-        function refresh_data() {
-            // TODO: mitt?
-            this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
-                text: "footer-refresh"
-            });
-        }
-
-        return {
-            arr,
-            top_height,
-            is_detail,
-            refresh_data
-        }
-    },
-    destroyed() {
-        // TODO: 暂不清楚$data用途
-        for (const key in this.$data) {
-            this.$data[key] = null
-        }
-    },
-
-    computed: {
-        ...mapGetters(['get_theme']),
+    const route = useRoute()
+    function init() {
+        top_height.value = window.innerHeight - props.height;
+        is_detail.value = route.name === 'category';
     }
-})
+    onMounted(init)
+
+    // 监听国际化语种变化,一旦变化修正国际化字符串
+    watch(
+        () => $i18n.locale,
+        () => arr.value = arr_const
+    )
+
+    function refresh_data() {
+        // TODO: mitt?
+        this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+            text: "footer-refresh"
+        });
+    }
+
+
+    // destroyed() {
+    //     // TODO: 暂不清楚$data用途
+    //     for (const key in this.$data) {
+    //         this.$data[key] = null
+    //     }
+    // },
+
+    // computed: {
+    //     ...mapGetters(['get_theme']),
+    // }
 </script>
-  
+
 <style lang="scss" scoped>
 .no-data {
     border-bottom: 1px solid transparent;
@@ -195,4 +185,3 @@ export default defineComponent({
     }
 }
 </style>
-  

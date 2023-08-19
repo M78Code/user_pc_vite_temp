@@ -10,6 +10,7 @@ const initialState = {
   layout_left_show: "menu",
   // 列表显示内容  match:赛事 collect:收藏 search:搜索
   layout_list_type: "match",
+  layout_list_size: {},
 
   // 自定义滚动条样式
   scroll_style: {
@@ -63,7 +64,7 @@ export default function layoutReducer(state = initialState, action) {
     case "SET_LAYOT_RIGHT_STATS":
       nextTick(() => {
         useMittEmit(MITT_TYPES.EMIT_LAYOUT_RIGHT_STATUS, action.data);
-      //只有和上次的值 不一样 宽度才是变化 才去计算
+        //只有和上次的值 不一样 宽度才是变化 才去计算
         if (action.data != state.layout_right_status)
           useMittEmit(MITT_TYPES.EMIT_LAYOUT_RESIZE, action.data);
       });
@@ -105,6 +106,10 @@ export default function layoutReducer(state = initialState, action) {
     case "SET_LAYOUT_SIZE":
       const layout_size = Object.assign({}, state.layout_size, action.data);
       return { ...state, layout_size };
+    //页面所有布局宽高信息
+    case "SET_LAYOUT_LIST_SIZE":
+      return { ...state, layout_list_size: action.data };
+
     default:
       return state;
   }

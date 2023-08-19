@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 详情页  足球赛事分析
 -->
 <template>
@@ -20,25 +20,29 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 // 赛果详情 赛况统计 和 事件
-import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue';  
+// import matchResult from 'project_path/src/pages/details/components/details-match-results/match-results.vue';
 // 详情页  足球赛事分析 战绩 模块
-import standings from 'src/project/pages/details/analysis-matches/components/standings.vue'; 
-// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面 
-import line_up from 'src/project/pages/details/analysis-matches/components/line-up.vue';  
+// import standings from 'project_path/src/pages/details/analysis-matches/components/standings.vue';
+// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+// import lineUp from 'project_path/src/pages/details/analysis-matches/components/line-up.vue';
 // 详情页 或者 赛果 赛事分析 公共tab 组件
-import head_tab from "src/project/components/details/match-analysis/head-tab.vue";  
+import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
 // 详情页足球赛事分析情报页面
-import intelligence from 'src/project/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue';   
+// import intelligence from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue';
  // 详情页足球赛事分析赔率页面
-import analysis_odds from 'src/project/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue'; 
- // 资讯页 
-import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';  
+// import analysisOdds from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue';
+ // 资讯页
+import articleMain from 'project_path/src/pages/details/analysis-matches/article/article-main.vue';
 // 精彩回放
-import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';  
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
+// import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { useI18n } from "vue-i18n"
+import store from "src/store-redux/index.js"
+import zhuge from "src/core/http/zhuge-tag.js"
+import utils from "src/core/utils/utils.js"
 
   // components: {
   //   match: match_result,
@@ -50,39 +54,52 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //   articleMain: articleMain,
   //   highlights: highlights,
   // },
+    // 国际化
+  const { t } = useI18n()
     // 锚点
     let analysis_football_matches = ref(null)
     // tab 数据
     let tabList = ref([])
     // 当前选中tab
-    let currentContent = ref('match')
+    let currentContent = ref('match-result')
+    // 仓库数据
+    let {  userInfoReducer } = store.getState()
+    let store_user = userInfoReducer
+    // TODO: 临时用
+    let get_detail_data = ref({
+      mid: '2',
+      cds: ''
+    })
+    let get_event_list = ref([])
+    let get_lang = ref('zh')
+    let get_analyze_show = ref(false)
 
     onMounted(() => {
       nextTick(() => {
-        if (analysis_football_matches) {
+        if (analysis_football_matches.value) {
           // TODO: utils后续修改调整
-          analysis_football_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
+          analysis_football_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
         }
     })
-    createTabds(); 
+    createTabds();
     })
     watch(() => get_detail_data.mid, () => {
       // 详情顶部切换赛事后 更新相应赛事数据
-      const currentCont = currentContent
-      currentContent = ''
+      const currentCont = currentContent.value
+      currentContent.value = ''
       nextTick(() => {
-        currentContent = currentCont
+        currentContent.value = currentCont
       })
     })
     watch(() => get_event_list, (event_list) => {
       // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
-      const highlights = tabList.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+      const highlights = tabList.value.find(item => item.component === 'highlights')
+      const { configValue, eventSwitch } = lodash.get(store_user.user, 'merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
-        tabList.unshift(
+        tabList.value.unshift(
             {
               // TODO: 国际化后续修改调整
-              name: $root.$t('highlights.title'),
+              name: t('highlights.title'),
               component: 'highlights'
             }
         )
@@ -91,90 +108,91 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
     onUnmounted(() => {
       // TODO: $data 后续修改调整
       analysis_football_matches = null
-      tabList = []
-      currentContent = 'match'
+      tabList.value = []
+      currentContent.value = 'match-result'
     })
     const createTabds = () => {
       // 国际化 后续修改调整
       let tabs = [
         {
-          name: $root.$t('analysis_football_matches.match'),
-          component: 'match'
+          name: t('analysis_football_matches.match'),
+          component: 'match-result'
         },
         {
-          name: $root.$t('analysis_football_matches.analysis_data'),
+          name: t('analysis_football_matches.analysis_data'),
           component: 'standings'
         },
         {
-          name: $root.$t('analysis_football_matches.line_up'),
-          component: 'line_up'
+          name: t('analysis_football_matches.line_up'),
+          component: 'line-up'
         },
         {
-          name: $root.$t('analysis_football_matches.intelligence'),
+          name: t('analysis_football_matches.intelligence'),
           component: 'intelligence'
         },
         {
-          name: $root.$t('analysis_football_matches.Odds'),
-          component: 'analysis_odds'
+          name: t('analysis_football_matches.Odds'),
+          component: 'analysis-odds'
         },
       ]
       // 红猫tab特殊处理  TODO: get_detail_data  get_lang/国际化 后续修改调整
       if (get_detail_data.cds === '1500') {
         tabs = [
           {
-            name: $root.$t('analysis_football_matches.analysis_data'),
+            name: t('analysis_football_matches.analysis_data'),
             component: 'standings'
           }
         ]
       }
-      if (['zh', 'tw'].includes(get_lang)) {
+      if (['zh', 'tw'].includes(get_lang.value)) {
         tabs.unshift(
           {
-            name: get_lang == 'zh' ? '资讯' : '資訊',
+            name: get_lang.value == 'zh' ? '资讯' : '資訊',
             component: 'article-main'
           }
         )
       }
       // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list get_user/国际化 后续修改调整
       const highlights = tabs.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(store_user.user, 'merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
         tabs.unshift(
             {
-              name: $root.$t('highlights.title'),
+              name: t('highlights.title'),
               component: 'highlights'
             }
         )
       }
-      tabList = tabs
+      tabList.value = tabs
     }
     const close_analysis = () => {
       useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
     // 点击一级tab 菜单切换 // TODO: $utils get_user 后续修改调整
     const tab_click = ([tab, type]) => {
-      currentContent = tab.component
+      console.error(tab.component, type);
+      currentContent.value = tab.component
       if (type == 'is_click') {
         let eventLabel = '';
-        if (tab.component == 'match') { 
+        if (tab.component == 'match-result') {
           // 赛况
           eventLabel = "H5_情报分析_赛况";
-        } else if (tab.component == 'standings') { 
+        } else if (tab.component == 'standings') {
           // 数据
           eventLabel = "H5_情报分析_数据";
-        } else if (tab.component == 'line_up') { 
+        } else if (tab.component == 'line_up') {
           // 阵容
           eventLabel = "H5_情报分析_阵容";
         } else if (tab.component == 'intelligence') {
            // 情报
           eventLabel = "H5_情报分析_情报";
-        } else if (tab.component == 'analysis_odds') { 
+        } else if (tab.component == 'analysis_odds') {
           // 赔率
           eventLabel = "H5_情报分析_赔率";
         } else if (tab.component == 'article-main') {
           eventLabel = 'H5_情报分析_资讯'
         }
-        $utils.zhuge_event_send(eventLabel, get_user);
+        zhuge.send_zhuge_event(eventLabel, store_user.user);
       }
     }
   // TODO: 后续修改调整
@@ -193,7 +211,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //     'get_event_list',
   //   ]),
   // },
-  
+
   // destroyed() {
   //   for (const key in this.$data) {
   //     this.$data[key] = null

@@ -79,7 +79,7 @@ const route = useRoute();
     init_event_timer: null,
 
 
-    // #TODO vuex 
+    // #TODO vuex
     get_details_chatroom_data: "",
     get_theme: "",
     // 视频url信息
@@ -632,6 +632,7 @@ const route = useRoute();
         .finally(() => {
           // 玩法集接口请求结果返回后，再请求盘口信息接口
           console.log("category", data.category);
+          let get_category_list_req_count = ''
           // if ($refs['category']) {
           if (data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading

@@ -156,7 +156,7 @@ export const format_time_zone_millisecond = (time, offset = 8) => {
  * @Description 获取格式化时间对象
  * @param {undefined} undefined
  */
-const format_date_base_obj = (value) => {
+ export const format_date_base_obj = (value) => {
   let time = new Date(parseInt(value));
   let y = time.getFullYear();
   let m = (time.getMonth() + 1 + "").padStart(2, 0);

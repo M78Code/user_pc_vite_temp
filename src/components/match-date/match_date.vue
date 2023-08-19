@@ -73,7 +73,7 @@ import { useI18n } from "vue-i18n";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { mx_get_remote_time,format_date_base_obj } from "src/core/formart/module/format-date.js";
 // const licia_format = require("licia/format");
-const { t } = useI18n();
+
 export default {
   name: "MatchDate",
 
@@ -96,6 +96,7 @@ export default {
   data() {
     return {
       utils,
+      t:useI18n(),
       get_match_status,
       format_second_ms,
       counting_time_ctr_show_format,
@@ -123,7 +124,7 @@ export default {
         Number(this.match_props.match.mgt)
       );
       var date_obj = format_date_base_obj(_mgt);
-      let rs_date = t("time.time_date_5")
+      let rs_date = this.t("time.time_date_5")
         .replace("mm", date_obj.m)
         .replace("dd", date_obj.d)
         .replace("hh", date_obj.h)
@@ -316,7 +317,7 @@ export default {
       // 水球（16）显示为  < X分钟
       if (csid == 16) {
         let mins = _cur_time / 60;
-        obj.time_str = t("match_info.match_date_format").replace("%s", mins);
+        obj.time_str = this.t("match_info.match_date_format").replace("%s", mins);
       }
       // 足球计算15分钟玩法阶段 根据倒计时计算15分钟玩法阶段 避免时间改变赛事阶段切换延迟
       if (
@@ -350,13 +351,13 @@ export default {
       let time_tmp = (match_start_time - now_time) / 1000;
       if (time_tmp < 60) {
         //一分钟之内
-        obj.time_str = 1 + t("list.after_time_start2");
+        obj.time_str = 1 + this.t("list.after_time_start2");
       } else {
         //大于一分钟的提示
         obj.time_str =
           Math.floor(parseInt(time_tmp / 60)) +
           " " +
-          t("list.after_time_start2");
+          this.t("list.after_time_start2");
       }
     },
 

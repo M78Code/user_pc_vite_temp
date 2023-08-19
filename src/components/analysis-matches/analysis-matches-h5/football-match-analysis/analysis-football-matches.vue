@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 详情页  足球赛事分析
 -->
 <template>
@@ -23,22 +23,22 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import lodash from 'lodash'
 // 赛果详情 赛况统计 和 事件
-import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue';  
+import match_result from 'project_path/src/pages/details/components/details-match-results/match-results.vue';
 // 详情页  足球赛事分析 战绩 模块
-import standings from 'src/project/pages/details/analysis-matches/components/standings.vue'; 
-// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面 
-import line_up from 'src/project/pages/details/analysis-matches/components/line-up.vue';  
+import standings from 'project_path/src/pages/details/analysis-matches/components/standings.vue';
+// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+import line_up from 'project_path/src/pages/details/analysis-matches/components/line-up.vue';
 // 详情页 或者 赛果 赛事分析 公共tab 组件
-import head_tab from "src/project/components/details/match-analysis/head-tab.vue";  
+import head_tab from "project_path/src/components/details/match-analysis/head-tab.vue";
 // 详情页足球赛事分析情报页面
-import intelligence from 'src/project/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue';   
+import intelligence from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue';
  // 详情页足球赛事分析赔率页面
-import analysis_odds from 'src/project/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue'; 
- // 资讯页 
-import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';  
+import analysis_odds from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue';
+ // 资讯页
+import articleMain from 'project_path/src/pages/details/analysis-matches/article/article-main.vue';
 // 精彩回放
-import highlights from 'src/project/pages/details/analysis-matches/highlights/highlights.vue';  
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
+import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 
   // components: {
   //   match: match_result,
@@ -64,7 +64,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
           analysis_football_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
         }
     })
-    createTabds(); 
+    createTabds();
     })
     watch(() => get_detail_data.mid, () => {
       // 详情顶部切换赛事后 更新相应赛事数据
@@ -156,19 +156,19 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       currentContent = tab.component
       if (type == 'is_click') {
         let eventLabel = '';
-        if (tab.component == 'match') { 
+        if (tab.component == 'match') {
           // 赛况
           eventLabel = "H5_情报分析_赛况";
-        } else if (tab.component == 'standings') { 
+        } else if (tab.component == 'standings') {
           // 数据
           eventLabel = "H5_情报分析_数据";
-        } else if (tab.component == 'line_up') { 
+        } else if (tab.component == 'line_up') {
           // 阵容
           eventLabel = "H5_情报分析_阵容";
         } else if (tab.component == 'intelligence') {
            // 情报
           eventLabel = "H5_情报分析_情报";
-        } else if (tab.component == 'analysis_odds') { 
+        } else if (tab.component == 'analysis_odds') {
           // 赔率
           eventLabel = "H5_情报分析_赔率";
         } else if (tab.component == 'article-main') {
@@ -193,7 +193,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //     'get_event_list',
   //   ]),
   // },
-  
+
   // destroyed() {
   //   for (const key in this.$data) {
   //     this.$data[key] = null
