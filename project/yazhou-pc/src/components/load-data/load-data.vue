@@ -14,6 +14,7 @@
       limit_height: limit_height,
     }"
   >
+  {{ cur_state+'11111111111111111' }}
     <div
       v-if="cur_state == 'data' || limit_height"
       class="fit"
@@ -176,6 +177,7 @@
 import { NoDataWapper} from "src/components/common/no-data/index";
 import { onMounted,computed,ref,onUnmounted } from 'vue'
 import store from "src/store-redux/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
@@ -233,6 +235,8 @@ const unsubscribe = store.subscribe(() => {
 onMounted(() => {
   // 用户登录失效时,直接关闭loading中动画
   no_user.value = is_invalid.value;
+  // 绑定接收用户失效事件
+  useMittOn(MITT_TYPES.EMIT_SHOW_ALERT_CMD,no_user_event)
 })
 
 onUnmounted(()=>{
@@ -248,6 +252,7 @@ const cur_state = computed(()=>{
     */
 const no_user_event = () => {
   // 设置用户失效
+  console.log(1111111111111)
   no_user.value = true;
 
 }

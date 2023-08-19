@@ -14,7 +14,7 @@
       </div>
       <!-- 联赛标题 -->
       <div class="title ellipsis allow-user-select">
-        {{ match_infoData.tn }}
+        {{ match_infoData.tn }}  {{ toggle_panel }} {{ utils.is_show_sr_flg(match_infoData) }}
       </div>
       <div class="right-icon">
         <!-- 显示比分栏 -->
@@ -86,6 +86,7 @@ import { ref, defineExpose, onUnmounted } from "vue";
 import utils  from "src/core/utils/utils";
 import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail-pc/match-detail";
+import info from 'src/components/match-detail/match_info/info.vue'
 // 玩法tab条
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import { useRoute, useRouter } from "vue-router";
@@ -168,9 +169,10 @@ const refresh = () => {
   if (props.is_request) {
     return;
   }
+  console.log(111111111111)
 
   // 重新请求相应接口
-  emit("init", { is_refresh: true });
+  // emit("init", { is_refresh: true });
 
   // 重新请求相应接口
   // this.init({ is_refresh: true });

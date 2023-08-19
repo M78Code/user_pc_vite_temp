@@ -71,8 +71,8 @@ export const useMethods = ({ props,emit }) => {
   //  ============================watch===================
 
   watch(
-    () => props.load_detail_statu,
-    (val) => {
+    () => state.load_detail_statu,
+    (n) => {
       // 盘口关闭时隐藏详情列表
       if (["all_empty", "new_empty", "refresh", "404"].includes(n)) {
         showDetails.value = false;
@@ -82,10 +82,12 @@ export const useMethods = ({ props,emit }) => {
       }
       // 右侧详情加载进行优化
       let s = n == "loading" ? "right_details_loading" : n;
+      console.log(1111111111111,s)
       // 发送当前 loading 状态
-      this.$root.$emit("change_loading_status_details", s);
-      if (this.pageType == "right_details") {
-        this.$root.$emit("change_loading_status_right_details", s);
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, s)
+      // this.$root.$emit("change_loading_status_details", s);
+      if (props.pageType == "right_details") {
+        useMittEmit(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_RIGHT_DETAILS, s)
       }
     }
   );
@@ -153,6 +155,7 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
+      console.log(1111111111111,props.handicap_state)
       state.load_detail_statu = props.handicap_state;
       if (props.handicap_state != "data") {
         state.details_data = [];
@@ -169,7 +172,7 @@ export const useMethods = ({ props,emit }) => {
 
   //  ============================methods===================
 
-  const change_detail = () => {
+  const change_detail = (res) => {
     const obj = {
       1: 2,
       2: 3,
@@ -212,10 +215,10 @@ export const useMethods = ({ props,emit }) => {
       if (get_layout_statu.value) {
         state.waterfall = details.set_waterfall(state.details_data);
       } else {
-        this.waterfall = [res];
+        state.waterfall = [res];
       }
     } else {
-      this.waterfall = [res];
+      state.waterfall = [res];
     }
     state.details_data = res;
     set_go_top_show();
