@@ -10,14 +10,14 @@ const router = createRouter({
       name: "main",
       component: () => import("project_path/src/layouts/MainLayout.vue"),
       children: [
-        //   {
-        //     path: "/match",
-        //     name: "matchList",
-        //     component: () => import("project_path/pages/match-list/index.vue"),
-        //     meta: {
-        //       keepAlive: true // 需要缓存
-        //     },
-        //   },
+          {
+            path: "/match",
+            name: "matchList",
+            component: () => import("project_path/src/pages/match-list/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
         //   {
         //     path: "/home",
         //     name: "home",
