@@ -274,21 +274,45 @@ const detailsSlice = createSlice({
         },
       }
   });
-
-
-  // export default detailsSlice.reducer
+export default function detailsReducer(state = initialState, action) {
+  switch (action.type) {
+    // 详情页的数据
+    case "SET_DETAIL_DATA":
+      return { ...state, detail_data: action.data };
+    // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
+    case "SET_DETAILS_ITEM":
+      return { ...state, details_item: action.data };
+      // 赛事id
+    case "SET_GOTO_DETAIL_MATCHID":
+      return { ...state, goto_detail_matchid: action.data };
+      // 赛事对象
+    case "SET_GOTO_DETAIL_MATCH_INFO":
+      return { ...state, goto_detail_match_info: action.data };
+    // 当前赛事信息
+    case "SET_MATCH_BASE_INFO_OBJ":
+        return { ...state, match_base_info_obj: action.data };
+    // 玩法集对应玩法缓存数据
+    case "SET_DETAILS_DATA_CACHE":
+      return { ...state, details_data_cache: action.data };
+      // 玩法集的title栏
+    case "SET_DETAILS_TABS_LIST":
+      return { ...state, details_tabs_list: action.data };
+    default:
+      return state;
+  }
+}
   // const initialState = {
   //   // 主题
   //   theme:'theme01'
   // };
-  export default function themeReducer(state = initialState, action) {
-    switch (action.type) {
-      // 设置主题
-      case "SET_DETAIL_DATA":
-        return { ...state, detail_data: action.data };
-      case "SET_EVENT_LIST":
-        return { ...state, event_list: action.data };
-      default:
-        return state;
-    }
-  }
+  // export default function themeReducer(state = initialState, action) {
+  //   switch (action.type) {
+  //     // 设置主题
+  //     case "SET_DETAIL_DATA":
+  //       return { ...state, detail_data: action.data };
+  //     case "SET_EVENT_LIST":
+  //       return { ...state, event_list: action.data };
+  //     default:
+  //       return state;
+  //   }
+  // }

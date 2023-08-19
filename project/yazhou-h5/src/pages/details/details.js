@@ -467,7 +467,7 @@ const route = useRoute();
         console.log("code===res_data", res_data, code);
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
-          router.push({ name: "matchList" });
+          // router.push({ name: "matchList" });
         } else if (code === 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
@@ -796,7 +796,7 @@ const route = useRoute();
         // 如果不是演播厅的，才有退出回到 列表
         if (lodash.get(get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
-          router.push({ name: "matchList" });
+          // router.push({ name: "matchList" });
         }
       }
     });
