@@ -23,11 +23,11 @@ const routes = [
   //   name: "bet_record",
   //   component: () => import(`../pages/test/index.vue`),
   // },
-  // // 赛果
+  // 赛果
   // {
   //   path: "/match_results",
   //   name: "match_results",
-  //   component: () => import(`../pages/test/index.vue`),
+  //   component: () => import('project_path/src/pages/match_results/match_results.vue'),
   // },
   // // 公告
   // {
@@ -36,11 +36,11 @@ const routes = [
   //   component: () => import("project_path/src/pages/announce/index.vue"),
   // },
   // 体育规则
-  // {
-  //   path: "/rule",
-  //   name: "rule",
-  //   component: () => import("project_path/src/pages/rule/index.vue"),
-  // },
+  {
+    path: "/rule",
+    name: "rule",
+    component: () => import("project_path/src/pages/rule/index.vue"),
+  },
   // // 每日成长任务
   // {
   //   path: '/activity',
