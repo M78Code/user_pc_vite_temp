@@ -4,6 +4,7 @@
  * @Description: 赛事详情页面信息操作类-实现快速检索,修改等功能 用于各个版本的赛事详情
  */
 import MatchDataUpdTime from "./match-data-upd-time.js";
+import _ from 'lodash'
 export default class MatchInfoCtr
 {
   /**
