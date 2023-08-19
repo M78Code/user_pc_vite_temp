@@ -22,6 +22,9 @@
 // websocket Log文件
 
 import { wslog } from "src/core/log/";
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+
+
 window.wslog = wslog;
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
@@ -139,7 +142,7 @@ export default {
         } else {
           // 站点 tab 休眠状态转激活  ，
 
-          this.$root.$emit(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT);
+          useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
         }
       }
     },

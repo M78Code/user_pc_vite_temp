@@ -154,6 +154,35 @@ const specific = ref(true);
 const hl_index = ref(0);
 
 
+const get_on = (res) => {
+  let arr = [];
+  for (var i in res.hl[0].ol) {
+    if (!arr.includes(res.hl[0].ol[i].on)) {
+      arr.push(res.hl[0].ol[i].on);
+    }
+  }
+  return arr;
+};
+
+/**
+ * @description: 根据otd排序，处理融合数据顺序错乱问题
+ * @param {Obeject} obj 格式化好的投注项数据
+ * @return {undefined} 主在前、客在后顺序排序
+ */
+ const otd_sort = (obj) => {
+  if (!obj.length) {
+    return obj;
+  }
+
+  obj.forEach((item) => {
+    item.sort((a, b) => {
+      return a.otd - b.otd;
+    });
+  });
+  return obj;
+};
+
+
 watch(()=>props.item_details,res=>{
   if (res.hl[0].ol.length > 2) {
           specific.value = true;
@@ -179,16 +208,6 @@ watch(()=>props.item_details,res=>{
      { immediate: true},
 
 )
-
-const get_on = (res) => {
-  let arr = [];
-  for (var i in res.hl[0].ol) {
-    if (!arr.includes(res.hl[0].ol[i].on)) {
-      arr.push(res.hl[0].ol[i].on);
-    }
-  }
-  return arr;
-};
 
 /**
  * @description: 获取投注列样式
@@ -216,23 +235,6 @@ const get_bet_item_class = (item_details, item, ol, hl_index) => {
   return clas;
 };
 
-/**
- * @description: 根据otd排序，处理融合数据顺序错乱问题
- * @param {Obeject} obj 格式化好的投注项数据
- * @return {undefined} 主在前、客在后顺序排序
- */
-const otd_sort = (obj) => {
-  if (!obj.length) {
-    return obj;
-  }
-
-  obj.forEach((item) => {
-    item.sort((a, b) => {
-      return a.otd - b.otd;
-    });
-  });
-  return obj;
-};
 </script>
 <style lang="scss" scoped>
 .expand-match-list {
