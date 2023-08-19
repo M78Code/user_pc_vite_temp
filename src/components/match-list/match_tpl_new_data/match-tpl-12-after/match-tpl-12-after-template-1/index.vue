@@ -76,7 +76,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
             
           </div>
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n.t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
         </div>
@@ -103,7 +103,7 @@
 
 
 import { ref, computed, watch, reactive } from 'vue';
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -112,6 +112,7 @@ import { is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import { get_match_status, is_show_sr_flg } from 'src/core/utils/index.js'
 import store from 'prject_path/src/store/index.js'
 let state = store.getState()
+const { t } = useI18n();
 
 const hv = ref('');
 const hv_ol = ref({_hid: -1});
@@ -124,7 +125,7 @@ const handicap_num = computed(() => {
   if(this.get_global_switch.handicap_num){
     return `+${ this.match.mc || 0}`
   }else{
-    return  i18n.t('match_info.more')
+    return  t('match_info.more')
   }
 })
 
