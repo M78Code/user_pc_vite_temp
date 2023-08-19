@@ -9,7 +9,7 @@
       <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">        
           <!--未投注就是bet-mix-info组件-->
           <template v-if="bet_flag">
-            <bet-mix-info ref="bet-mix-info" :view_ctr_obj="view_ctr_obj"></bet-mix-info>
+            <bet-mix-info ref="bet-mix-info" ></bet-mix-info>
             <template v-if="vx_get_bet_list.length>1 && vx_get_bet_s_list.length > 0">
              <!--复式连串过关投注-->
               <div class="row bet-toggle" :class="{'bet-border-radius': vx_get_bet_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
@@ -41,7 +41,7 @@
                     :ref="`bet-mix-input-${item}`"
                     :index="index"
                     :id="item"
-                    :view_ctr_obj="view_ctr_obj"
+                    
                     :key="item"
                     @set_min_max_money="set_min_max_money"
                     v-if="view_ctr_obj.series_order_success && ((view_ctr_obj.series_order_success.length==0 && index>0) || (view_ctr_obj.series_order_success.length>0))"
@@ -54,7 +54,7 @@
           <!--已投注bet-mix-record组件-->
           <template v-else>
             <!--投注结果-->
-            <bet-mix-record :view_ctr_obj="view_ctr_obj"></bet-mix-record>
+            <bet-mix-record ></bet-mix-record>
           </template> 
       </div>
     </div>

@@ -12,29 +12,7 @@ export default {
   mixins: [betting, skt_data_single_order],
   data() {
     return {
-      view_ctr_obj: {
-        bet_data_change: false, // 检测数据是否有变,主要在提交时使用
-        bet_order_status: 1,  //  1-投注状态,2-投注中状态,3-投注成功状态,4-投注失败状态,5-投注项失效
-        is_effect: true,
-        bet_tips_info: {
-          id: "", //目标id
-          match_name: "", // 赛事名称  世界杯2022亚洲外围赛
-          battle_info: "", // 对战信息 中国 v 关岛
-          play_game: "", // 玩法游戏 滚球 让球
-          match_type: "", // 赛事类型
-          league_name: "", // 联赛名称
-          bet_end_time: "" // 投注截止时间
-        },
-        //单关信息
-        error_code: "",
-        error_message: "", //错误信息
-        order_detail_data: [], // 单关投注成功记录
-        order_confirm_complete: 0, //0.默认值还没开始确认注单 1.注单确认中 2.所有注单已经确认完成 且全部成功 3.所有注单已经确认完成 且全部失败 4.所有注单已经确认完成 部分成功部分失败
-        is_empty_money: true, // 金额是否为空
-        single_range_money: 0, // -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
-        input_max_flag: 0, // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
-        bet_fail_flag: false // 投注失败标识
-      },
+
       timer_obj: {}, // 定时器对象
       code_exist: false, //是否有返回code码
       button_text: this.$root.$t('bet.accept_change'), // 接受变化

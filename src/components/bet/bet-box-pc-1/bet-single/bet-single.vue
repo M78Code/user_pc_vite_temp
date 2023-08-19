@@ -10,7 +10,7 @@
     <template v-if="bet_flag">
       <!--投注信息-->
       <bet-single-info
-        :view_ctr_obj="view_ctr_obj"
+        
         :id="item"
         :index="index"
         :is_forward="is_forward"
@@ -23,7 +23,7 @@
       ></bet-single-info>
       <!-- 多项单关投注 -->
       <bet-multiple
-      :view_ctr_obj="view_ctr_obj"
+      
       v-if="vx_get_bet_single_list.length>1"
       :key="`multiple-${vx_get_bet_single_list.length}`"
       :is_forward="is_forward"
@@ -34,7 +34,7 @@
     <template v-else>
       <!--投注结果 order_detail_data 里面的每一项就是投注结果数据源-->
       <bet-single-record
-        :view_ctr_obj="view_ctr_obj"
+        
         :single_record_obj="item"
         v-for="(item, index) in view_ctr_obj.order_detail_data"
         :key="`${item.playOptionsId}`"

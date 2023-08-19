@@ -67,11 +67,7 @@ export default {
       type: Number,
       default: 0
     },
-    view_ctr_obj: { //数据源
-      type: Object,
-      default: {
-      }
-    }
+ 
   },
   created() {
     //网络错误时设置默认最大最小值

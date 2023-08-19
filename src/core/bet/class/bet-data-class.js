@@ -81,6 +81,10 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     this.item_cs_id = 0;
     // 前端点击投注项立马生成的前端索引ID ，每个注单不论什么状态，只管用最初始的前端生成的ID 去参照对象内去转换
     this.bet_read_write_refer_obj = {};
+    // 每一个投注对象 的视图控制对象
+    this.all_bet_view_data_obj={
+      // [bet_custom_id]:new  BetViewData()
+    }
   }
   /**
    *
@@ -127,6 +131,21 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     let real_bet_obj = this[mount_point_key][bet_custom_id];
     Object.assign(real_bet_obj,obj)
   }
+
+
+
+  
+ /**
+   * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData
+   */
+ get_bet_view_data_obj_by_bet_custom_id(bet_custom_id) {
+
+  const mount_point_key ='all_bet_view_data_obj'
+ 
+  let bet_view_data_obj = this[mount_point_key][bet_custom_id];
+  return bet_view_data_obj;
+}
+
 
 /**
  * 获取当前 视图展示的 投注单数据列表
