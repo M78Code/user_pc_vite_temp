@@ -9,7 +9,7 @@
     <!-- 返回顶部 -->
     <div class="go-top-btn" @click="on_go_top">
       <icon name="icon-go_top" size="14px"></icon>
-      <div class="msg">{{$root.$t("common.back_top") || ""}}</div>
+      <div class="msg">{{$t("common.back_top") || ""}}</div>
     </div>
   </div>
 </template>

@@ -1,15 +1,16 @@
 <!-- 页面头部容器-->
 <template>
   <!-- v-show="route.params.video_size != 1" -->
-  <div class="yb-layout-margin-header c-site-header relative-position" :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }">
+  <div class="yb-layout-margin-header c-site-header relative-position"
+    :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }">
     <site-header v-bind="site_header_data" @navigate="navigate" />
-     <!-- 第二行 -->
-     <div :class="['header-item item2 row items-center', { 'search-off': !global_switch.search_switch }]"
+    <!-- 第二行 -->
+    <div :class="['header-item item2 row items-center', { 'search-off': !global_switch.search_switch }]"
       :style="search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
       <header-search />
       <!-- 公告滚动组件 -->
-      <marquee v-if='!search_isShow' @navigate="navigate" />
+      <marquee-cst v-if='!search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
       <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
       <!-- 广告 & 语言主题等切换 -->
@@ -19,16 +20,21 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import lodash from 'lodash'
 import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
 import utils from "src/core/utils/utils.js"
+import { ss } from 'src/core/utils/web-storage.js'
+import { get_file_path } from "src/core/file-path/file-path.js"
+import { api_activity, api_account } from "src/api/index";
 
 /** 组件 */
 import siteHeader from 'project_path/src/components/site-header/site-header.vue'
 import headerSearch from 'project_path/src/components/site-header/header-search.vue'
-import marquee from "project_path/src/components/marquee/marquee.vue";
+import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
 
@@ -42,43 +48,48 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['close_home_loading'])
+
 /** 国际化 */
 const { t } = useI18n();
 
-/** mock 菜单数据 */
-let nav_list = [
-  { id: 1, tab_name: t("common.sports_betting"), path: "/home" }, //体育投注
-  {
-    id: 2,
-    tab_name: t("common.note_single_history"),
-    path: "/bet_record",
-    _blank: true,
-  }, //注单历史
-  // { id: 8, tab_name: t("common.e_sports"), path: "" }, //电子竞技
-  //{ id: 3, tab_name: t("common.winning_champions"), path: "" }, //优胜冠军
-  {
-    id: 4,
-    tab_name: t("common.amidithion"),
-    path: "/match_results",
-    _blank: true,
-  }, //赛果
-  // { id: 5, tab_name: t("common.score_center"), path: "" }, //比分中心
-  // { id: 6, tab_name: t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
-  {
-    id: 7,
-    tab_name: t("common.sports_betting_rules"),
-    path: "/rule",
-    _blank: true,
-  }, //体育竞猜规则
-  {
-    "id": 9,
-    "tab_name": "任务中心",
-    "img_src": "https://image.gredfged.com/group1/M00/15/C3/CgURtWJGfT-ABbXtAAA2DscP7Dg590.png",
-    "class": "activity_center animate-activity-entry activity_dot_bonus",
-    "path": "/activity",
-    "_blank": true
-  },
-]
+/** 路由对象 */
+const route = useRoute()
+/** 路由实例 */
+const router = useRouter()
+
+/** stroe仓库 */
+const store_data = store.getState()
+const { globalReducer, searchReducer, userReducer, langReducer, betReducer } = store_data
+
+/** 
+ * 全局开关 default: object
+ * 路径: project_path\src\store\module\global.js
+ */
+const { global_switch } = globalReducer
+/** 
+* 是否显示搜索组件 default: false
+* 路径: project_path\src\store\module\search.js
+*/
+const { search_isShow } = searchReducer
+/** 
+ * user_info 用户信息 default: {}
+ * 路径: src\store-redux\module\user-info.js
+ */
+const { user_info } = userReducer
+/** 
+ * 语言 languages
+ * 路径: src\store-redux\module\languages.js
+ */
+const { lang } = langReducer
+/** 
+ * 选择的选项 menu_obj
+ * 路径: src\store-redux\module\betInfo.js
+ */
+ const { menu_obj } = betReducer
+
+/** 是否内嵌 */
+const is_iframe = ref(utils.is_iframe)
 
 /** 
  * siteHeader组件props数据
@@ -88,7 +99,7 @@ const site_header_data = reactive({
  * 菜单数据
  * 从菜单类拿 get
  */
-  nav_list,
+  nav_list: [],
   /** 
    * 专题页图片url
    * 取 special_img_url
@@ -107,6 +118,241 @@ const site_header_data = reactive({
   /** 是否有活动入口 */
   has_activity: false,
 })
+
+/** 已开启的活动 id */
+const activityIds = ref('')
+/** 是否是首次加载页面 */
+const isFirstLoadPage = ref(true)
+/** 是否有小红点提示 */
+const hasBonusType3 = ref(false)
+// TODO: this.$root.$on('update-bonus', this.getActivityLists);
+/** 检查是否有可领取奖券 */
+function getActivityLists({ id = 1, type }) {
+  // 如果是首次加载页面并且由用户信息接口发起，则不发起请求
+  if (type == "update_bonus" && isFirstLoadPage.value) {
+    isFirstLoadPage.value = false;
+    return;
+  }
+  let isMaintaining = lodash.get(user_info, 'maintaining');
+  // 如果活动处于维护状态，直接去掉小红点
+  if (isMaintaining == true) {
+    if (hasBonusType3.value == true) {
+      hasBonusType3.value = false;
+    }
+    return
+  };
+  // 判断是否有活动
+  let activityList = lodash.get(user_info, 'activityList');
+  // 多语言屏蔽活动入口
+  if (activityList && activityList.length > 0 && lang == 'zh') {
+    let param = new FormData();
+    // 检测两个活动是否存在以及活动状态不能是未开始和已结束
+    let daily = activityList.find(item => item.activityId == '10007' && item.period == 2) || null;
+    let growup = activityList.find(item => item.activityId == '10008' && item.period == 2) || null;
+    if (!daily && !growup) return
+    // 1 每日任务 2成长任务
+    param.append('actId', id);
+    api_activity.get_activity_list_details(param).then(res => {
+      let code = lodash.get(res, 'data.code');
+      let data = lodash.get(res, 'data.data');
+      if (code == 200 && data && data.length > 0) {
+        // 判断是否有可领取奖券的任务
+        hasBonusType3.value = data.find(item => item.bonusType == 3) || false;
+        if (!hasBonusType3.value && id == 1) {
+          getActivityLists({ id: 2, type: "2nd" })
+        };
+      }
+    });
+  }
+}
+/** 活动入口状态提示更新定时器 */
+const activityUpdateTimer = ref(null)
+/** 活动入口小红点定时拉取 */
+function activityTimer() {
+  clearInterval(activityUpdateTimer.value);
+  // 每隔15分钟拉取一次接口更新活动入口状态
+  activityUpdateTimer.value = setInterval(() => {
+    getActivityLists({ id: 1, type: "setInterval" });
+  }, 900000);
+}
+
+const activity_timer = ref(null)
+/***
+ * 运营位专题页
+ */
+function special_page() {
+  let token = lodash.get(user_info, "token");
+  api_account.get_BannersUrl({ 'type': 7, token }).then(res => {
+    let code = lodash.get(res, 'data.code');
+    let data = lodash.get(res, 'data.data');
+    if (code == 200) {
+      if (data && data.length > 0) {
+        data.forEach(item => {
+          if (item.tType && item.tType == 7) {
+            // 获取图片地址
+            site_header_data.img_url = get_file_path(item.imgUrl);
+            site_header_data.host_url = item.hostUrl;
+            site_header_data.url_type = item.urlType;
+          }
+        })
+      }
+    }
+  })
+}
+/** 是否是最新版本 */
+const new_version = ref(false)
+// TODO: this.$root.$on('request_user_banner', this.newVersion);
+/**
+ * 检查当前代码是不是最新版本
+ */
+function newVersion() {
+  new_version.value = true;
+}
+// mitt request_user_banner
+/**  存储 setTimeOut id 方便统一销毁 */
+const timeOutIds = reactive({})
+/** 上一次打开弹窗的时间 */
+const showActivityTime = ref(ss.get('showActivityTime'))
+/** 弹窗图片是否可以点击跳转 */
+const allowClick = ref(false)
+/** 活动弹框显隐 */
+const showActivity = ref(false)
+const userBannerTimer = reactive(t('common.auto_close').replace('%s', 5))
+/***
+ * 运营位活动弹窗
+ */
+function activity_dialog() {
+  let token = lodash.get(user_info, "token");
+  api_account.get_BannersUrl({ 'type': 5, token }).then(res => {
+    let code = lodash.get(res, 'data.code');
+    let data = lodash.get(res, 'data.data');
+    if (code == 200) {
+      let isShow = false;
+      if (data && data.length > 0) {
+        data.forEach(item => {
+          if (item.tType && item.tType == 5) {
+            // 去掉一个自然日展示一次的判断，有值就展示
+            if (showActivityTime.value) {
+              // 判断日期如果不在同一天就展示弹窗
+              if (new Date(showActivityTime.value).getDate() !== new Date().getDate()) {
+                isShow = true
+              }
+            } else {
+              isShow = true
+              ss.set('showActivityTime', new Date().getTime())
+            }
+            // 获取图片地址
+            site_header_data.img_url = get_file_path(item.imgUrl);
+            site_header_data.host_url = item.hostUrl;
+            site_header_data.url_type = item.urlType;
+            // 是否允许点击跳转 ayx_act 爱游戏  act1 乐鱼
+            allowClick.value = ['act', 'zr', 'ayx_act', 'act1'].includes(item.hostUrl) || item.hostUrl != '';
+          }
+        })
+      } else {
+        isShow = false;
+      }
+      showActivity.value = isShow;
+      if (showActivity.value) {
+        // 5秒后自动消失
+        let time = 5;
+        userBannerTimer.value = t('common.auto_close').replace('%s', time);
+        let timer = setInterval(() => {
+          time--;
+          userBannerTimer.value = t('common.auto_close').replace('%s', time);
+          if (time == 0) {
+            showActivity.value = false;
+            clearInterval(timer);
+          }
+        }, 1000);
+      }
+    }
+  })
+}
+/**
+ * @Description 菜单初始化完成
+ * @param {undefined} undefined
+ */
+// this.$root.$on("menu_init_done",this.menu_init_done)
+function menu_init_done() {
+  // 如果有电竞
+  // TODO: 菜单
+  if (menu_obj.esports.menuId) {
+    if (site_header_data.nav_list.findIndex(i => i.id == 5) == -1) {
+      site_header_data.nav_list.splice(1, 0, { id: 5, tab_name: t("common.e_sports"), path: "/e_sport" });
+    }
+  }
+  // 如果有虚拟体育
+  if (menu_obj.virtual_sport.menuId) {
+    if (site_header_data.nav_list.findIndex(i => i.id == 3) == -1) {
+      let e_index = site_header_data.nav_list.findIndex(i => i.id == 5)
+      if (e_index == -1) {
+        e_index = 1
+      } else {
+        e_index++
+      }
+      site_header_data.nav_list.splice(e_index, 0, { id: 3, tab_name: t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
+    }
+  }
+}
+/**
+ * @description 设置顶部菜单
+ * @param {number} type  类型(null-自然触发，1-导航栏二次触发，2-切换语言)
+ */
+function init_site_header(type = null) {
+  let nav_list = [
+    { id: 1, tab_name: t("common.sports_betting"), path: "/home" }, //体育投注
+    { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
+    // { id: 8, tab_name: t("common.e_sports"), path: "" }, //电子竞技
+    //{ id: 3, tab_name: t("common.winning_champions"), path: "" }, //优胜冠军
+    { id: 4, tab_name: t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
+    // { id: 5, tab_name: t("common.score_center"), path: "" }, //比分中心
+    // { id: 6, tab_name: t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
+    { id: 7, tab_name: t("common.sports_betting_rules"), path: "/rule", _blank: true }, //体育竞猜规则
+  ];
+  // 判断是否有活动
+  let activityList = lodash.get(user_info, 'activityList');
+  // 多语言屏蔽活动入口
+  if (activityList && activityList.length > 0 && lang == 'zh' && global_switch.activity_switch) {
+    site_header_data.hasActivity = true;
+    // 向顶部导航栏添加活动入口
+    let tab = { id: 9, tab_name: "任务中心", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
+    // 获取活动入口的图片
+    let imgUrl = activityList.find(item => item.pcUrl != '');
+    if (imgUrl) {
+      imgUrl = imgUrl.pcUrl;
+    }
+    imgUrl = get_file_path(imgUrl);
+    // 活动入口的图片，如果接口未返回就用默认图片
+    tab.img_src = imgUrl || require('project_path/image/activity_imgs/imgs/gift_package.png');
+    nav_list.push(tab);
+    activityList.forEach(item => {
+      activityIds.value += item.activityId + ',';
+    });
+    activityTimer();
+    activity_timer.value = setTimeout(() => getActivityLists({ id: 1, type: "init_nav" }), 1000)
+  }
+  if (type != 2) {
+    // 运营位专题页 
+    special_page()
+  }
+
+  // 运营位弹窗,如果当前是最新版本就直接展示弹窗，如果不是，就延迟几秒再展示
+  if (type == null) { // type 为 null 是自然触发，如果 == 1就是导航栏二次触发，不要更新这里
+    if (new_version.value) {
+      timeOutIds.timer2 = setTimeout(activity_dialog, 3000);
+    } else {
+      if (timeOutIds.timer2) {
+        clearTimeout(timeOutIds.timer2);
+      }
+      timeOutIds.timer2 = setTimeout(activity_dialog, 5000);
+    }
+  }
+  site_header_data.nav_list = nav_list;
+  emit('close_home_loading', false);
+  // menu_init_done()
+}
+onMounted(init_site_header)
 
 /**
  * @description 导航路由跳转
@@ -133,7 +379,7 @@ function navigate(obj) {
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {
     _window_height = 800;
-    let maintaining = lodash.get(vx_get_user.value, "maintaining");
+    let maintaining = lodash.get(user_info, "maintaining");
     if (maintaining && maintaining == true) {
       _path = '/activity_aegis';
     }
@@ -148,11 +394,6 @@ function navigate(obj) {
     url = router.resolve({ path: url }).href
     const searchParams = new URLSearchParams('');
     if (hide_logo_icon) {
-      // if(url.includes('?')){
-      //   url = url +'&i_h=1&t='+new Date().getTime();
-      // } else {
-      //   url = url +'?i_h=1&t='+new Date().getTime();
-      // }
       searchParams.set('i_h', 1);
     }
     // 在#/前增加参数api,i_h
@@ -161,7 +402,6 @@ function navigate(obj) {
     // 组合url参数
     url = '/' + (url_temp_p ? ('?' + url_temp_p) : '') + url.substr(url.indexOf('#/'))
 
-    // url = '/'+url.substr(url.indexOf('#/'))
     show_record(
       url,
       _window_height,
@@ -187,7 +427,6 @@ function navigate(obj) {
     // 本地路径的时候
     url = router.resolve({ path: _path }).href;
     // 在#/前增加参数api,i_h
-
     const searchParams = new URLSearchParams('');
 
     if (hide_logo_icon) {
@@ -196,7 +435,9 @@ function navigate(obj) {
     searchParams.set('t', new Date().getTime());
     let url_temp_p = searchParams.toString();
     // 组合url参数
-    url = '/' + (url_temp_p ? ('?' + url_temp_p) : '') + url.substr(url.indexOf('#/'))
+    url = (url_temp_p ? ('?' + url_temp_p) : '') + url.substr(url.indexOf('#/'))
+
+    url = window.location.pathname + url
   }
 
   if (obj._blank) {
@@ -209,23 +450,6 @@ function navigate(obj) {
     location.href = url;
   }
 }
-
-/** stroe仓库 */
-const store_data = store.getState()
-/** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const { global_switch } = store_data.globalReducer
-/** 
-* 是否显示搜索组件 default: false
-* 路径: project_path\src\store\module\search.js
-*/
-const { search_isShow } = store_data.searchReducer
-
-
-/** 是否内嵌 */
-const is_iframe = ref(utils.is_iframe)
 
 </script>
 

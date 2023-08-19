@@ -14,6 +14,7 @@ import * as api_home from "./module/home/home.js"; // router
 import * as api_global from "./module/global/index.js"; // router
 import * as api_result from "./module/result/index.js"; //hellojay
 import * as api_base_data from "./module/base_data/base_data.js"; //nico
+import * as api_activity from "./module/activity/index.js"; //activity
 
 export {
   api_base_data,
@@ -50,4 +51,6 @@ export {
   api_home,
   // 赛果api接口
   api_result,
+  // 活动api接口
+  api_activity,
 };
