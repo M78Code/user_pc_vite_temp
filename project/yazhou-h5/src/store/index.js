@@ -10,6 +10,7 @@ import bettingListReducer from "./module/betting_list";
 import languageReducer from "./module/languages";
 import commonReducer from "./module/common";
 import toastReducer from "./module/toast"
+import topMenuReducer from "./module/topmenu"
 export {
   betInfoReducer,
   menuReducer,
@@ -23,4 +24,5 @@ export {
   languageReducer,
   commonReducer,
   toastReducer,
+  topMenuReducer,
 };

@@ -3,10 +3,11 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 公共方法对象定义
  */
-import { api_common, api_admin } from 'src/api/index';
 import lodash from 'lodash'
 import { uid, date } from "quasar";
-import play_mapping from 'src/core/match-constant/config/play_mapping.js';
+import { api_common, api_admin } from 'src/api/index';
+import play_mapping from 'src/core/match-constant/config/play-mapping.js';
+
 // let BUILD_VERSION =  process.env.NODE_ENV=='development'?'':   require('app/version.js').BUILD_VERSION;
 
 const BUILD_VERSION = 'development'

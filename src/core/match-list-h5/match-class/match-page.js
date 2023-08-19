@@ -1,10 +1,10 @@
 
-import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
-import utils from "project_path/src/core/utils/index.js";
-import axios_debounce_cache from "src/core/http/axios_debounce_cache.js"
 import { uid } from "quasar";
 import MatchCtr from './match-ctr'
+import utils from "project_path/src/core/utils/index.js";
 import { get_handicap_w_id } from "../match-utils/other-util"
+import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
+import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
 
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -1152,3 +1152,5 @@ class MatchPage {
     }
   }
 }
+
+export default new MatchPage()

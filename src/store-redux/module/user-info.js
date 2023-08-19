@@ -24,7 +24,6 @@ const initialState = {
 };
 
 export default function userReducer(state = initialState, action) {
-  console.log("counterReducer------", action);
   switch (action.type) {
     // 保存用户详情
     case "SET_USER":
