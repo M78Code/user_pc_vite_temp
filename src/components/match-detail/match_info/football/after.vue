@@ -114,7 +114,7 @@
             <div class="gif-text">{{$t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="app/public/yazhou-pc/image/svg/rs_hong.svg">
         </div>
         <div class="info-data">
         
@@ -159,7 +159,7 @@
             <div class="gif-text">{{$t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="app/public/yazhou-pc/image/svg/rs_hong.svg">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
