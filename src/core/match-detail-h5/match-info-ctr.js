@@ -159,7 +159,7 @@ export default class MatchInfoCtr {
    * @return {undefined} undefined
    */
   listItemToManyObj(item, manyObj) {
-    let flag = this.view && this.view.$route.name == 'match_result'; // 赛果页的 mhs 固定给 0
+    let flag = this.view && this.view.route.name == 'match_result'; // 赛果页的 mhs 固定给 0
     if (!this.match_obj.mid) {
       this.match_obj.mid = item.mid;
     }

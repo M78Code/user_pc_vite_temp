@@ -1,7 +1,6 @@
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
-MenuData.get_current_lv_1_menu_type();
 //是否显示次要玩法头部
 let is_show_secondary_head = (i) => {
   let match = MatchCtr.match_list_data_sources[i];

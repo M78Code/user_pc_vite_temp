@@ -707,7 +707,7 @@ export default defineComponent({
     };
     onUnmounted(() => {
       // #TODO emit 
-      emitters.map((x) => x())
+      component_data.emitters.map((x) => x())
       // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
       // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
       // debounce_throttle_cancel(bet_click_);

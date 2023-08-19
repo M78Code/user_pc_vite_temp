@@ -149,8 +149,7 @@ import change_header from "project_path/src/pages/details/components/header/chan
 import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
-// import store from "project_path/src/store/index.js";
-// import store from "../../store/index.js";
+import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -237,7 +236,11 @@ export default defineComponent({
 
         // 只有一个玩法集时，及时更新当前玩法集id
         if (lodash.get(data,'length') == 1) {
-          set_details_item(data[0].id)
+          // set_details_item(data[0].id)
+          store.dispatch({
+            type: 'SET_DETAILS_ITEM',
+            data: data[0].id
+          })
         }
         // 玩法个数不及3个时，提前退出
         if (lodash.get(data.data_list, 'length', 0) < 3) {
@@ -444,7 +447,19 @@ export default defineComponent({
       // vuex--清空玩法集的title列表数据
       // set_details_tabs_list('');
       // vuex--清空详情页的选中玩法id
-      set_details_item('')
+      // set_details_item('')
+      store.dispatch({
+        type: 'SET_DETAIL_DATA',
+        data: ''
+      })
+      store.dispatch({
+        type: 'SET_DETAILS_TABS_LIST',
+        data: ''
+      })
+      store.dispatch({
+        type: 'SET_DETAILS_ITEM',
+        data: ''
+      })
 
       off_listeners()
       clear_timer()

@@ -437,8 +437,8 @@ class MatchListCard {
       // 每一个赛事的高度
       this.match_height_map_list = this.matchCtr.match_list_data_sources.map(
         (match, i) => {
-          let obj = this.get_match_dom_show_property(i);
-          let r = template_config.get_template_config(obj);
+          let obj = get_match_dom_show_property(i);
+          let r = get_template_config(obj);
           // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
           if (location.hash.includes("match") && i == 0) {
             r.odd_list_height -= 0.11;
@@ -529,7 +529,7 @@ class MatchListCard {
             get_match_total++; //赛事容器数量加1
           }
           // 获取赛事对应的dom显示区域属性
-          let dom_show_obj = this.get_match_dom_show_property(i);
+          let dom_show_obj = get_match_dom_show_property(i);
           // 如果当前折叠 并且 当前赛事 显示联赛，则 -1 操作
           if (dom_show_obj.is_collapse && dom_show_obj.is_show_league) {
             if (this.already_folded <= 7) {
