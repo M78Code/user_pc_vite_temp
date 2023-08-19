@@ -65,7 +65,7 @@ const matchSlice = createSlice({
       state.is_user_change_status = payload 
     },
     set_secondary_unfold_map(state, { payload }) {
-      state.secondary_unfold_map = !Object.keys(value).length ? {} : payload
+      state.secondary_unfold_map = !Object.keys(payload).length ? {} : payload
     },
     set_match_top_map_dict(state, { payload }) {
       state.match_top_map_dict = payload 
