@@ -73,15 +73,13 @@
 
 	</q-card>
 </template>
-
 <script setup>
 // import betting from "src/public/mixins/betting/betting.js";
 import BetKeyboard from "../common/bet-keyboard.vue";
 
 </script>
-
-<style lang="scss" scoped>
-/**预约投注遮罩*/
+<style scoped lang="stylus">
+/**遮罩层**/
 .mask-appointment {
   background: #F0F5FC !important;
   position: absolute;
@@ -90,204 +88,19 @@ import BetKeyboard from "../common/bet-keyboard.vue";
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 10000 !important;
+  z-index: 10000;
   opacity: 0.6;
 }
+/**多项单注投注整体**/
+.bet-card
+  line-height 0 !important
+  /* *卡片组件样式重写* */
+  >>>.q-card__section
+    margin 0
+    padding 0
+    line-height 1
+.ie-browser
+  .bet-input-close
+    top 9.5px
 
-/**投注卡片*/
-.bet-card {
-  line-height: 0 !important;
-
-  /* *蒙层* */
-  .cathectic-shade {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 10;
-    opacity: 0;
-  }
-  .mt5 {
-    margin-top: 5px;
-  }
-}
-/* *卡片获取焦点时的样式background #FFD9D9 * */
-/* *卡片组件样式重写* */
-::v-deep .q-card__section {
-  margin: 0;
-  padding: 0;
-  line-height: 1;
-}
-
-/* *玩法及队名部分样式* */
-.bet-play-game {
-  display: flex;
-  align-items: flex-start;
-  word-break: break-word;
-  /**玩法队名盘口*/
-  .bet-play-text {
-    line-height: 1.3;
-    /**玩法*/
-    .bet-match-playing {
-      margin-right: 5px;
-      white-space: nowrap;
-    }
-    /**盘口*/
-    .bet-handicap-name {
-      white-space: pre-wrap;
-    }
-  }
-}
-/*  玩法部分样式 */
-.bet-play-team {
-  display: flex;
-  align-items: flex-start;
-  padding-right: 5px !important;
-  /*  投注项盘口样式 */
-  .bet-team-handicap {
-    display: block;
-    word-break: break-all;
-    line-height: 1.2;
-
-    label {
-      margin-left: 5px;
-      word-break: break-word;
-      /*  盘口样式 */
-      &.bet-handicap {
-        text-align: center;
-        padding: 0px 5px;
-      }
-      &.margin-left-0 {
-        margin-left: 0px;
-      }
-    }
-  }
-}
-/* *赔率的样式* */
-.bet-odds-value {
-  display: inline-block;
-  text-align: right;
-  /*  赔率 */
-  .odds-value {
-    position: relative;
-    padding: 1px 3px;
-  }
-
-  /*  显示无效时的样式 */
-  .invalid {
-    padding: 2px 5px;
-  }
-}
-
-/*  删除按钮列的样式 */
-.col-delete {
-  display: flex;
-  align-items: flex-start;
-
-  /*  删除按钮 */
-  .bet-del {
-    z-index: 20;
-    font-size: 6px;
-  }
-}
-.text-right {
-  text-align: right;
-}
-/*  单关输入框样式 */
-.bet-single-input {
-  margin-top: 8px !important;
-  margin-bottom: 10px !important;
-  /* *蒙层* */
-  .cathectic-shade {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0);
-  }
-  /* 输入金额的样式 */
-  input {
-    width: 100%;
-    padding: 4px 6px;
-    margin-top: 2px;
-    color: #191c24;
-    height: 32px;
-    line-height: 18px;
-    outline: none;
-    /*  输入金额时的样式 */
-    &.bet-input-money {
-      outline: none;
-    }
-  }
-
-  /*  MAX按钮的样式 */
-  .bet-max-btn {
-    position: absolute;
-    top: 12px;
-    right: 6px;
-    z-index: 9;
-    cursor: pointer;
-    font-size: 12px;
-    padding: 1px 2px;
-  }
-
-  /*  输入框中的关闭按钮样式 */
-  .bet-input-close {
-    position: absolute;
-    top: 11px;
-    right: 10px;
-    cursor: pointer;
-    width: auto;
-    height: auto;
-  }
-}
-/* 最高可赢额 */
-.bet-win {
-  line-height: 1;
-  .bet-win-money {
-    margin-top: 2px;
-  }
-}
-/*  输入不在限额范围内错误提示的样式 */
-.bet-win-valid {
-  line-height: 1;
-  margin-top: 3px;
-}
-/* 最高可赢额 */
-.df-jb {
-  height: 12px;
-  display: flex;
-  align-items: center;
-}
-
-/*  投注键盘区域 */
-.bet-keyboard-zone {
-  padding-top: 8px !important;
-  margin-left: -10px !important;
-  margin-right: -10px !important;
-
-  /*  键盘按钮之间的间距 */
-  .bet-keyboard-content {
-    margin-left: 13px !important;
-    margin-right: 13px !important;
-  }
-}
-// 赔率换行
-.book-content>div {
-    word-break:break-all;
-}
-.ie-browser {
-    /*  输入框中的关闭按钮样式 */
-  .bet-input-close {
-    top: 9.5px;
-  }
-}
- .appoint {
-  height: 50px;
- }
 </style>

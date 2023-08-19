@@ -1,11 +1,10 @@
 <template>
-  <div>1111111111111</div>
     <!--当前是否为虚拟投注-->
-    <!-- <template v-if="is_virtual_bet"> -->
+    <template v-if="is_virtual_bet">
       <!-- 虚拟单关 -->
-      <!-- <virtual-bet-single v-if="virtual_bet_list.length == 1" @set_scroll_this="set_scroll_this" /> -->
+      <virtual-bet-single v-if="virtual_bet_list.length == 1" @set_scroll_this="set_scroll_this" />
       <!-- 虚拟串关 -->
-      <!-- <virtual-bet-mix v-else-if="virtual_bet_list.length > 1" class="full-height"
+      <virtual-bet-mix v-else-if="virtual_bet_list.length > 1" class="full-height"
         @set_scroll_this="set_scroll_this" />
     </template>
     <template v-else>
@@ -24,48 +23,48 @@
             <icon id="merge-info" name="icon-tips" class="bet-info" size="14px" />
           </span>
         </div>
-      </div> -->
+      </div>
       <!-- 正常入口的单关 -->
-      <!-- <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" /> -->
+      <bet-single v-if="is_bet_single" @set_scroll_this="set_scroll_this" />
       <!-- 正常入口的串关 -->
-      <!-- <bet-mix v-if="!is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" /> -->
-    <!-- </template> -->
+      <bet-mix v-if="!is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
+    </template>
 </template>
 <script setup>
 
-// import VirtualBetSingle from "./bet-virtual/bet-virtual-single.vue"
-// import VirtualBetMix from "./bet-virtual/bet-virtual-mix.vue"
-// import CheckBox from './common/filter-checkbox.vue'
-// import BetSingle from "./bet-single/bet-single.vue"
-// import BetMix from "./bet-single/bet-mix.vue"
+import VirtualBetSingle from "./bet-virtual/bet-virtual-single.vue"
+import VirtualBetSingle from "./bet-virtual/bet-virtual-mix.vue"
+import CheckBox from './common/filter-checkbox.vue'
+import BetSingle from "./bet-single/bet-single.vue"
+import BetMix from "./bet-single/bet-mix.vue"
 
-// const props = defineProps({
-//   // 是否为虚拟投注
-//   is_virtual_bet: {
-//     type: Boolean,
-//     default: () => false,
-//   },
-//   // 是否单关投注
-//   is_bet_merge: {
-//     type: Boolean,
-//     default: () => false,
-//   },
-//   // 是否单关合并
-//   is_bet_single: {
-//     type: Boolean,
-//     default: () => false,
-//   },
-//   // 获取虚拟投注列表
-//   virtual_bet_list: {
-//     type: Object,
-//     default: () => [],
-//   },
-//   // 单关投注列表
-//   bet_single_list: {
-//     type: Object,
-//     default: () => [],
-//   },
-// })
+const props = defineProps({
+  // 是否为虚拟投注
+  is_virtual_bet: {
+    type: Boolean,
+    default: () => false,
+  },
+  // 是否单关投注
+  is_bet_merge: {
+    type: Boolean,
+    default: () => false,
+  },
+  // 是否单关合并
+  is_bet_single: {
+    type: Boolean,
+    default: () => false,
+  },
+  // 获取虚拟投注列表
+  virtual_bet_list: {
+    type: Object,
+    default: () => [],
+  },
+  // 单关投注列表
+  bet_single_list: {
+    type: Object,
+    default: () => [],
+  },
+})
 
 
 </script>
