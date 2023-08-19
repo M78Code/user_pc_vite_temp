@@ -23,14 +23,56 @@ class BetData {
     this.scroll_box_ele = null // dom元素
     this.is_loading_balance = false // 金额刷新中？
 
-    this.mix_bet_flag = false  // 最小投注数量开关
+    this.mix_bet_flag = false // 最小投注数量开关
 
     this.menu_obj = {};
+
+
+    this.pre_market_data = [] //预约盘口集合
+    this.bet_list = [] //投注项id集合
+    this.bet_obj = {} //押注信息对象
+    this.temp_obj = {} //bet_obj的临时存储
+    this.temp_list = [] //bet_list的临时存储
+    this.s_count_data = [] //统计串关数数据
+    this.bet_status = 0 //押注状态0-隐藏状态 1-初始弹出状态2-注单处理中状态3-投注成功4-投注失败(bet接口没返回200)5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）7-有投注项锁盘，8-单关投注失败(bet接口返回200)
+    this.active_index = 0 // 处于活动的投注项子项
+    this.money_total = 0 //串关总金额
+    this.is_mix = false //是否在串关页面里
+    this.is_combine = false // 是否选中合并投注项
+    this.is_spread = false //是否展开过关投注选项
+    this.accept_show = false //自动接受更好赔率规则是否显示
+    this.combine_tips_show = false // 合并投注项弹框提示是否显示
+    this.odds_change = false //赔率和盘口是否变化
+    this.new_bet = false //是否进入投注新流程
+    this.keyboard_show = true //H5新版键盘是否显示
+    this.change_list = [] //赔率和盘口发生了变化的投注项id集合
+    this.invalid_ids = [] // 失效的投注项赛事id集合
+    this.order_no = '' //投注成功后当前订单编号(只有一个)
+    this.money_notok_list = [] //金额大于最高可投的id集合
+    this.money_notok_list2 = [] //金额小于最低可投的id集合
+    this.order_ing = [] //注单确认中的订单号集合
+    this.order_los = [] //注单失败的的订单号集合
+    this.order_suc = [] //注单成功的的订单号集合
+    this.m_id_list = [] //数组，用于存放赛事id或者球员id
+    this.used_money = 0 //单关投注的常用金额(只有一个投注项时才展示) 0 关闭常用金额展示 -1 开启 其他数字代表常用金额值
+    this.is_accept = 2 //1-自动接受更好赔率 2-自动接受任何赔率
+    this.betbar_show = { // 底部投注条是否显示
+      len: 0, //投注项数量是否合适
+      page: 1, //页面是否正确
+      menu: 1 //菜单是否正确
+    }
+    this.update_tips = '' //更新提示消息
+    this.match_id_bet_success = '' // 投注成功的赛事id
+    this.window_scroll_type = '' // 触发窗口滚动的操作类型 投注弹层触发  设置菜单显示时触发 均为('component-change') 用户已经手动触发
+    this.chat_bet = false //判断是否是在聊天室跟单弹起投注框
   }
 
 
   set_max_height1(val) {
     this.max_height1 = val;
+  }
+  set_is_spread(val) {
+    this.is_spread = val;
   }
 
 }
