@@ -4,7 +4,7 @@
  * 列表可视区 显示级别 算法  
  * */ 
 import MatchListCardData from "./match-list-card-data-class.js";
-import PageSourceData  from  "src/core/page-source/index.js"
+import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
     
 const MenuData ={
   is_show_hot :false

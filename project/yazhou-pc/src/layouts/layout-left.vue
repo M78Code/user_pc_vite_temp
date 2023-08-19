@@ -1,9 +1,8 @@
 <template>
   <!-- 左侧 菜单区域 -->
   <div
-    ref="page_left"
     v-show="route.params.video_size != 1"
-    class="layout-left page-left row relative-position full-height"
+    class="layout-left row relative-position full-height"
     :class="{
       mini: is_mini_menu,
     }"
@@ -28,25 +27,17 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
-import { useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import leftMain from "../pages/left-main/index.vue";
 import leftMainMin from "../pages/left-main/index-min.vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
-// loading 属性
-const props = defineProps({
-  loading: {},
-});
-const { menuReducer, layoutReducer } = store.getState();
+import { is_mini_menu, list_emit } from "../core/layout/left-menu";
+import { useRoute } from "vue-router";
+import { onBeforeUnmount, ref } from "vue";
 const route = useRoute();
-//是否为mini状态
-const is_mini_menu = ref(layoutReducer.left_menu_is_mini);
 const bet_loadding = ref(false);
-//监听宽度变化/单击事件
-useMittOn(MITT_TYPES.EMIT_LAYOUT_MENU_TOGGLE, (v) => {
-  is_mini_menu.value = v == "mini";
+
+onBeforeUnmount(() => {
+  list_emit.forEach((i) => i());
 });
 </script>
 <style scoped lang="scss">
