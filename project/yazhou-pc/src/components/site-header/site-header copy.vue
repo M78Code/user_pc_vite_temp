@@ -2,7 +2,7 @@
  * @Description: 站点页眉
 -->
 <template>
-    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
+    <!-- <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }"> -->
         <!-- 系统将在30分钟后进入维护，造成不便，深表歉意！ -->
         <maintenance-tip></maintenance-tip>
 
@@ -123,7 +123,7 @@
             </template>
         </div>
         
-    </div>
+    <!-- </div> -->
 </template>
 
 <script setup>
@@ -144,7 +144,7 @@ import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
 import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
-// import { gtag_event_send } from "src/core/http/gtag-tag.js"
+import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { ss } from 'src/core/utils/web-storage.js'
 
 /** api */

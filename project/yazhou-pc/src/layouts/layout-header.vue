@@ -10,7 +10,7 @@
       <!-- 搜索 -->
       <header-search />
       <!-- 公告滚动组件 -->
-      <marquee v-if='!search_isShow' @navigate="navigate" />
+      <marquee-cst v-if='!search_isShow' @navigate="navigate" />
       <!-- 占位盒子 -->
       <div :style="`width:${is_iframe ? 10 : 14}px`"></div>
       <!-- 广告 & 语言主题等切换 -->
@@ -34,7 +34,7 @@ import { api_activity, api_account } from "src/api/index";
 /** 组件 */
 import siteHeader from 'project_path/src/components/site-header/site-header.vue'
 import headerSearch from 'project_path/src/components/site-header/header-search.vue'
-import marquee from "project_path/src/components/marquee/marquee.vue";
+import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
 
@@ -214,9 +214,9 @@ const timeOutIds = reactive({})
 /** 上一次打开弹窗的时间 */
 const showActivityTime = ref(ss.get('showActivityTime'))
 /** 弹窗图片是否可以点击跳转 */
-const allowClick = reactive(false)
+const allowClick = ref(false)
 /** 活动弹框显隐 */
-const showActivity = reactive(false)
+const showActivity = ref(false)
 const userBannerTimer = reactive(t('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
