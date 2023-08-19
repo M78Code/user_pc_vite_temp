@@ -37,11 +37,12 @@
     <!-- 详情玩法投注项有数据 -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
+        
       <slot name="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
-          <!-- {{ match_list_normal }} -->
+          11{{ matchInfoCtr.list }}
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -154,6 +155,13 @@ export default defineComponent({
       on_listeners,
       off_listeners,
     } = category_info();
+
+    component_data.matchInfoCtr = new MatchInfoCtr({
+      route,
+      get_detail_data: {
+        mid: route.params.mid
+      }
+    }),
     watch(
       () => route,
       (to, from) => {

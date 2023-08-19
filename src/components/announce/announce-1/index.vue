@@ -28,19 +28,21 @@
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
 import { useI18n } from 'vue-i18n'
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
-// const tableClass_computed = useComputed.tableClass_computed(props)
-// const title_computed = useComputed.title_computed(props)
-//-------------------- 对接参数 prop 注册  结束  -------------------- 
-import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
-import LeftMenu from "./left-menu.vue";
+import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
+
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/announce/config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
+//-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 /** 国际化 */
 const { t } = useI18n()

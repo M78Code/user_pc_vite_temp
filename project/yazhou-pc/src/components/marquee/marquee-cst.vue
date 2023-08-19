@@ -2,53 +2,49 @@
 <template>
     <div class="marquee-wrap col">
         <!-- 内嵌收起菜单 左侧 注单历史/赛果 -->
-        <div class="iframe-tab-wrapper iframe-tab-wrapper-left" v-show="is_iframe && get_menu_collapse_status">
+        <div class="iframe-tab-wrapper iframe-tab-wrapper-left" v-show="is_iframe && menu_collapse_status">
             <div class="tab-item" v-for="(tab, index) in left_tabs" :key="index" @click="menu_change(tab)">
                 {{ tab.tab_name }}
             </div>
         </div>
-
         <div class="label line-height">{{ t('common.notice') }}</div>
         <div class="content col cursor-pointer  relative-position" ref="wrap"
-            @click="$emit('navigate', { path: '/announce', _blank: true })">
+            @click="emit('navigate', { path: '/announce', _blank: true })">
             <!--谷歌浏览器  -->
-            <!-- <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
+            <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
                 onMouseOut="this.start()" onMouseOver="this.stop()" v-html="notice_info.data" scrolldelay="1000" truespeed="1000">
-            </marquee> -->
+            </marquee>
             <!-- 火狐浏览器 -->
-            <!-- <div v-else class="animation-wrap line-height" ref="marquee" @mouseenter="animation_pause"
-                @mouseleave="animation_start" v-html="notice_info.data"></div> -->
+            <div v-else class="animation-wrap line-height" ref="marquee_ref" @mouseenter="animation_pause"
+                @mouseleave="animation_start" v-html="notice_info.data"></div>
         </div>
-
         <!-- 内嵌收起菜单 右侧 体育竞猜规则/任务中心/设置 -->
-        <div class="iframe-tab-wrapper yb-ml20" v-show="is_iframe && get_menu_collapse_status">
-            <div :class="get_theme.includes('y0') ? `tab-icon-item-y0-${tab.icon_name}` : `tab-icon-item-${tab.icon_name}`"
-                v-for="(tab, index) in (get_lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
+        <div class="iframe-tab-wrapper yb-ml20" v-show="is_iframe && menu_collapse_status">
+            <div :class="theme.includes('y0') ? `tab-icon-item-y0-${tab.icon_name}` : `tab-icon-item-${tab.icon_name}`"
+                v-for="(tab, index) in (lang === 'zh' ? right_tabs.slice(0, 2) : right_tabs.slice(0, 1))" :key="index"
                 @click="menu_change(tab)" @mouseenter="show_gif($event, tab, index)"
                 @mouseleave="hide_gif($event, tab, index)">
-                <!--  v-if="show_menu_icon(tab.id)" -->
-                <img v-show="tab.is_show" :ref="get_theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
-                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${get_theme.includes('y0') ? '_y0' : ''}.gif`"
+                <!--  v-if="show_menu_icon(tab.id)"  -->
+                <img v-show="tab.is_show" :ref="theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
+                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t(tab.tab_name) }}</q-tooltip>
             </div>
             <div class="iframe-settings"
-                :class="get_theme.includes('y0') ? `tab-icon-item-y0-settings` : `tab-icon-item-settings`"
+                :class="theme.includes('y0') ? `tab-icon-item-y0-settings` : `tab-icon-item-settings`"
                 @click="handle_settings_click" @mouseenter="show_gif($event, { icon_name: 'settings' }, 2)"
                 @mouseleave="hide_gif($event, { icon_name: 'settings' }, 2)">
 
                 <!-- 设置浮层弹窗 -->
                 <g-settings v-if="show_g_settings" :show_settings="show_g_settings" :el="'.iframe-settings'"
                     :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
-
                 <!-- 设置tip -->
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t('common.set') }}</q-tooltip>
-
                 <!-- hover显示gif -->
-                <img v-show="right_tabs[2].is_show" :ref="get_theme.includes('y0') ? 'settings_y0' : 'settings'"
-                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${get_theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
+                <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
+                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
                     class="tab-icon-img">
 
             </div>
@@ -67,12 +63,13 @@ import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
 import utils from "src/core/utils/utils.js"
-// TODO: this相关都要改
-
-// import store from "project_path/src/store/index.js";
+import { ss, ls } from 'src/core/utils/web-storage.js'
+import zhugeTag from "src/core/http/zhuge-tag.js"
+import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
-const emits = defineEmits(['navigate'])
+const emit = defineEmits(['navigate'])
 const $q = useQuasar()
 /** 国际化 */
 const { t } = useI18n();
@@ -94,11 +91,10 @@ const notice_info = reactive({
     /** 公告栏数据 */
     data: ''
 })
-// /** 公告栏总宽度 */
-// const total_width = ref(0)
 
 /** 是否内嵌 */
-const is_iframe = utils.is_iframe
+const is_iframe = ref(utils.is_iframe)
+
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [
     { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
@@ -110,7 +106,6 @@ const right_tabs = reactive([
     { id: 9, icon_name: 'task_center', tab_name: "任务中心", icon: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", is_show: false, _blank: true },  // 任务中心
     { id: 99, icon_name: 'settings', tab_name: t("common.set"), is_show: false },  // 设置
 ])
-
 
 const settings_items = [
     {
@@ -159,37 +154,51 @@ const settings_items = [
 /** 是否显示设置弹窗 */
 const show_g_settings = ref(false)
 
-const get_lang = ref('zh')
-const get_theme = ref('')
-const get_menu_collapse_status = ref(false)
-const get_user_token = ref('')
-const get_global_switch = ref(false)
-
-/**
- * store仓库
- * TODO: 后面再完善
- * const { lang, setLang } = useLangStore()
- * const { user } = useUserStore(user_id)
+/** stroe仓库 */
+const store_data = store.getState()
+const { globalReducer, userReducer, menuReducer, themeReducer, langReducer } = store_data
+/** 
+* 用户余额是否展示状态 default: theme01
+* 路径: project_path/src/store/module/theme.js
+*/
+const { theme } = themeReducer
+/** 
+ * 获取菜单收起状态 default: false
+ * 路径: project_path\src\store\module\menu.js
  */
-// const store = useStore()
-// ...mapGetters([
-//             'get_lang',
-//             'get_theme',
-//             'get_menu_collapse_status',
-//             'get_user_token',
-//             'get_global_switch'
-//         ]),
-//         ...mapGetters({
-//             get_global_click: "get_global_click",
-//             // 获取用户信息
-//             vx_get_user: "get_user",
-//         })
-// ...mapActions({
-//             vx_set_user: "set_user",
-//         }),
+const { menu_collapse_status } = menuReducer
+/** 
+ * 用户信息中的token
+ * 路径: src\store-redux\module\user-info.js
+ */
+const { user_info } = userReducer
+/** 
+* global_switch 全局开关 default: object
+* global_click 全局点击事件数 default: 0
+* 路径: project_path\src\store\module\global.js
+*/
+const { global_switch, global_click } = globalReducer
+/** 
+ * 语言 languages
+ * 路径: src\store-redux\module\languages.js
+ */
+const { lang } = langReducer
+
+/** 语言修改 */
+const set_lang = (data) => store.dispatch({
+    type: 'set_lang',
+    data
+})
+/** 用户信息修改 */
+const set_user_info = (data) => store.dispatch({
+    type: 'SET_USER',
+    data
+})
+
+
 
 watch(
-    () => store.get_global_click,
+    () => global_click,
     () => show_g_settings.value = false
 )
 
@@ -209,7 +218,7 @@ const wrapRef = ref(null)
 /** 初始化 */
 function init() {
     is_destroy.value = false
-    const announceData = localStorage.getItem("announceData")
+    const announceData = ls.get("announceData") || 'false'
     let today = new Date().getTime()
     let saveTime = 0
     if (JSON.parse(announceData)) {
@@ -247,7 +256,7 @@ onMounted(init)
  */
 function show_menu_icon(icon_id) {
     // 中文语言下不存在活动内容，则不显示任务中心图标
-    if (store.get_lang === 'zh' && icon_id === 9 && !lodash.get(store.get_user, 'activityList.length')) {
+    if (lang === 'zh' && icon_id === 9 && !lodash.get(user_info, 'activityList.length')) {
         return false
     }
     return true
@@ -258,24 +267,19 @@ function show_menu_icon(icon_id) {
  * @param menu 当前点击菜单对象
  */
 function menu_change(menu) {
-    // TODO: store数据待修改
-    if (menu.path.includes('/activity') && !this.get_global_switch.activity_switch) return this.$root.$emit(this.emit_cmd.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+    if (menu.path.includes('/activity') && !global_switch.activity_switch) {
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
+    }
     if (menu.path.includes('/activity')) {
-        if (this.get_user_token) {
-            this.$utils.send_zhuge_event("PC_任务中心");
+        if (user_info.token) {
+            zhugeTag.send_zhuge_event("PC_任务中心");
             // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
-            this.$utils.gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
-            this.vx_set_user({ token: this.get_user_token, view: this });
+            gtagTag.gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
+            set_user_info({ token: user_info.token, view: this });
         }
     }
     emits('navigate', menu)
 }
-// TODO: 需要处理动态refs
-const tabRefs = reactive({
-    /** 根据icon_name定义 */
-    tab1_y0: null
-    // ...
-})
 /**
  * @Description 内嵌版 折叠菜单 鼠标悬浮显示 gif
  * @param e 当前事件
@@ -285,31 +289,15 @@ const tabRefs = reactive({
 function show_gif(e, tab, index) {
     const icon_name = tab.icon_name
     // 显示gif
-    // this.$set(this.right_tabs[index], 'is_show', true)
     right_tabs[index]['is_show'] = true
     // 播放gif
-    if (this.get_theme.includes('y0')) {
-        if (!Array.isArray(this.$refs[icon_name + '_y0'])) {
-            this.$refs[icon_name + '_y0'] = [this.$refs[icon_name + '_y0']]
-        }
-        this.$refs[icon_name + '_y0'][0].play && this.$refs[icon_name + '_y0'][0].play()
-    } else {
-        if (!Array.isArray(this.$refs[icon_name])) {
-            this.$refs[icon_name] = [this.$refs[icon_name]]
-        }
-        this.$refs[icon_name][0].play && this.$refs[icon_name][0].play()
-    }
+    // e.target.play && e.target.play()
 
     // gif播放完1次后，就停止播放
     clearTimeout(timer_obj.show_gif_timer)
     timer_obj.show_gif_timer = setTimeout(() => {
-        // this.$set(this.right_tabs[index], 'is_show', false)
         right_tabs[index]['is_show'] = false
-        if (this.get_theme.includes('y0')) {
-            this.$refs[icon_name + '_y0'][0].stop && this.$refs[icon_name + '_y0'][0].stop()
-        } else {
-            this.$refs[icon_name][0].stop && this.$refs[icon_name][0].stop()
-        }
+        // e.target.stop && e.target.stop()
     }, 1800)
 }
 /**
@@ -321,38 +309,35 @@ function show_gif(e, tab, index) {
 function hide_gif(e, tab, index) {
     const icon_name = tab.icon_name
     // 隐藏gif
-    // this.$set(this.right_tabs[index], 'is_show', false)
     right_tabs[index]['is_show'] = false
     // 停止gif
-    if (this.get_theme.includes('y0')) {
-        this.$refs[icon_name + '_y0'][0].stop && this.$refs[icon_name + '_y0'][0].stop()
-    } else {
-        this.$refs[icon_name][0].stop && this.$refs[icon_name][0].stop()
-    }
+    // e.target.stop && e.target.stop()
 }
 /**
  * @Description: 内嵌版 菜单折叠后 点击设置按钮处理
  * @param
  */
 function handle_settings_click() {
-    let show_g_settings = !this.show_g_settings
+    let show_g_settings = !show_g_settings.value
 
-    clearTimeout(this.settings_timer)
-    this.settings_timer = setTimeout(() => {
-        this.show_g_settings = show_g_settings
+    clearTimeout(timer_obj.settings_timer)
+    timer_obj.settings_timer = setTimeout(() => {
+        show_g_settings.value = show_g_settings
     }, 50)
 }
+
+const marquee_ref = ref(null)
 /**
  * @Description:公告栏文字滚动动画
  * @return {undefined} undefined
  */
 function animation() {
     if (!notice_info.pause) {
-        this.translateX -= this.speed
-        if (this.translateX < this.total_width) {
-            this.translateX = this.wrap_width
+        notice_info.translateX -= notice_info.speed
+        if (notice_info.translateX < notice_info.total_width) {
+            notice_info.translateX = notice_info.wrap_width
         }
-        this.marquee_obj.style.transform = `translateX(${this.translateX}px)`
+        marquee_ref.value.style.transform = `translateX(${notice_info.translateX}px)`
     }
 }
 /**

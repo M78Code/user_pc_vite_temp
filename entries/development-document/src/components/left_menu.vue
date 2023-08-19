@@ -8,15 +8,15 @@
   <div class="container">
     <div v-for="(menu, index) in menudata" :key="`menu-${index}`">
       <!-- 有子节点，显示折叠按钮 -->
-      <template v-if="menu.children && menu.children.length > 0">
+      <template v-if="menu.childs && menu.childs.length > 0">
         <q-expansion-item
           :icon="menu.icon"
-          :label="menu.menuName"
+          :label="menu.name"
           :content-inset-level="0.5"
         >
           <!-- 如果有子节点递归当前组件 -->
           <left_menu
-            :menudata="menu.children"
+            :menudata="menu.childs"
             @changeMenu="change_menu"
           ></left_menu>
         </q-expansion-item>
@@ -24,9 +24,9 @@
       <!-- 没有子节点，不显示折叠按钮 -->
       <template v-else>
         <q-expansion-item
-          @click="change_menu(menu.path)"
+          @click="change_menu(menu)"
           :icon="menu.icon"
-          :label="menu.sonName || menu.menuName"
+          :label="menu.name"
           hide-expand-icon
           expand-separator
         />
@@ -46,10 +46,10 @@ const emit = defineEmits(["changeMenu"]);
 
 /**
  * 当前点击的菜单
- * @param {*} path 路径
+ * @param {*} row 点击项 
  */
-const change_menu = (path) => {
-  emit("changeMenu", path);
+const change_menu = (row) => {
+  emit("changeMenu", row);
 };
 
 </script>
