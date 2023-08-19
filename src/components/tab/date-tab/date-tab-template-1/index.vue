@@ -71,9 +71,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const list = ref([]) //tab模板文件key

@@ -21,7 +21,7 @@
       <!-- 主比分 -->
       <div class="score">
         <span v-show="!scoring">{{match.home_score}}</span>
-        <span v-show="scoring" class="scoring">{{ i18n.t('mmp.100.scoring') }}</span>
+        <span v-show="scoring" class="scoring">{{ t('mmp.100.scoring') }}</span>
       </div>
     </div>
     <!-- 客队信息 -->
@@ -48,7 +48,7 @@
          <div
           v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
           class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: i18n.t('bet_record.settlement_pre')}"
+          v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
            <img class="match_pre" :src="`${$g_image_preffix}/image/yabo/png/match_pre.png`"/>
         </div>
@@ -65,7 +65,7 @@
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
       </span>
       <!-- 统计分析 -->
-      <div class="sr-link-icon-w" v-tooltip="{content:i18n.t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+      <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
       </div>
       <!-- 玩法数量 -->
@@ -88,12 +88,13 @@
 
 import { computed, defineProps } from 'vue';
 import lodash from 'lodash'
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status, is_eports_csid } from 'src/core/utils/index'
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 
 //是否展示为比分判定中
 const scoring = computed(() => {

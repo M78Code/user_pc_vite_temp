@@ -1,12 +1,13 @@
 import { ref, provide  } from "vue";
-import { api_match } from "src/public/api/index.js";
-import * as api_websocket from "src/public/api/module/socket/socket_api.js";
-import scrollList from "src/public/components/cus_scroll/scroll_list.vue";
+import { api_match } from "src/api/index.js";
+import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
+// import * as api_websocket from "src/public/api/module/socket/socket_api.js";
+import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import lodash from 'lodash';
-import Refresh from "src/public/components/refresh/refresh.vue";
+import Refresh from "src/components/refresh/refresh.vue";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import match_list_data from "src/core/match-list-pc/match-data/match-list-data-class.js";
-import video from "src/public/utils/video/video.js";
+import MatchListData from "src/core/match-data-class/match-list-data-class.js";
+import video from "src/core/video/video.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
 import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
@@ -16,7 +17,8 @@ import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 // 赛事主列表容器卡片逻辑处理类
 const match_list_card = ref(MatchListCard);
 // 赛事主列表容器卡片逻辑处理类
-const match_list_data = ref(match_list_data);
+const match_list_data = ref(MatchListData);
+this.api_bymids();
 
 const match_list = {
 	props: {

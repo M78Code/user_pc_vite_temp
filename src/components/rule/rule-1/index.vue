@@ -8,19 +8,18 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
-import { computed, ref, onUnmounted, nextTick, onMounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
+import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({
-    ...useProps,
-})
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
@@ -34,7 +33,7 @@ const store_data = store.getState()
  * 语言 lang
  * 路径: src\store-redux\module\languages.js
  */
- const { lang } = store_data.languagesReducer
+const { lang } = store_data.langReducer
 // TODO: 语言改变mitt
 /** 
 * 用户余额是否展示状态 default: theme01
@@ -60,10 +59,8 @@ const get_pc_rule_url = () => {
         'ad': 'id_id',
     }
     const lang2 = lang_map[lang] || 'zh_cn';
-    console.log(`================lang:${lang2}`, lang);
+    console.error(`================lang:${lang2}`, lang);
     let url = '';
-    // const theme = theme.split('_')[0]
-    // const get_merchant_style = theme.split('_')[1]
     const [theme2, get_merchant_style] = theme.split('_')
     // TODO: 环境变量待修改
     let domain = lodash.get(window, `env.config.static_serve[0]`)
