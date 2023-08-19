@@ -1,7 +1,7 @@
 <template>
   <div class="media-col-wrap">
     <!-- 无直播源 -->
-    <div v-tooltip="{ content: i18n.t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
+    <div v-tooltip="{ content: t('common.score_board') }" class="icon-wrap after_tpl0 relative-position"
       :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'info' && 'active'"
       @click="on_switch_match('auto')" v-if="!menu_config.is_esports() || $route.name == 'search'">
       <div class="v-icon switch-icon"
@@ -25,7 +25,7 @@
 
     <!-- 动画 -->
     <div v-if="match.mvs > -1" class="icon-wrap relative-position" @click="on_switch_match('animation')"
-      v-tooltip="{ content: i18n.t('common.animate') }">
+      v-tooltip="{ content: t('common.animate') }">
       <div class="v-icon animation-icon"
         :class="vx_detail_params.mid == match.mid && vx_play_media.media_type == 'animation' && 'active'"></div>
     </div>
@@ -51,12 +51,13 @@ import { get_match_status, is_eports_csid } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
 import store from 'src/store-redux/index.js';
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 
 const route = useRoute();
 // 左侧详情参数
@@ -76,7 +77,7 @@ const handicap_num = computed(() => {
   if (get_global_switch.handicap_num) {
     return `+${props.match.mc || 0}`
   } else {
-    return i18n.t('match_info.more')
+    return t('match_info.more')
   }
 })
 
@@ -101,26 +102,26 @@ const cur_video_icon = computed(() => {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
-        text: i18n.t('common.studio'),
+        text: t('common.studio'),
       }
       //专题
     } else if (lss === 0 && !is_play) {
       cur_video_icon = {
         type: "topic",
-        text: i18n.t('common.topic'),
+        text: t('common.topic'),
       }
     }
     //主播
   } else if (tvs == 2 && status) {
     cur_video_icon = {
       type: "anchor",
-      text: i18n.t('common.anchor'),
+      text: t('common.anchor'),
     }
     //源视频                       非电竞 或者电竞有url
   } else if (mms == 2 && (varl || vurl || !is_esports) && is_play) {
     cur_video_icon = {
       type: "video",
-      text: i18n.t('common.o_video'),
+      text: t('common.o_video'),
     }
   }
   return cur_video_icon

@@ -4,60 +4,77 @@
 //  * @Description:详情页玩法模板-公共数据
 // -->
 import lodash from "lodash";
-import { ref,watch,onMounted } from "vue";
-import utils from 'src/core/utils/utils'
-import {HandicapTitle} from "src/components/match-detail/handicap-title/index.js"
+import { ref, watch, onMounted, onUnmounted } from "vue";
+import utils from "src/core/utils/utils";
+import store from "src/store-redux/index.js";
+import { HandicapTitle } from "src/components/match-detail/handicap-title/index.js";
 
-
-export const useCommon = ({ emit,props }) => {
-
-
+export const useCommon = ({ emit, props }) => {
   const isShow = ref(true); //主盘折叠
   const isShow_plus = ref(true); //附加盘折叠
-  const  curIsShow = ref(true)  // 是否展示当前玩法
+  const curIsShow = ref(true); // 是否展示当前玩法
+  const store_state = store.getState();
 
-  watch(()=>props.item_details,res=>{
-      //投注项总数若为基数则补空
-      let data = res.hl[0].ol
-      if(data.length %2){
-        res.hl[0].ol.push({})
-      }
-      updateCurMode(this.vx_cur_esports_mode);
-  }
-  , { immediate: true }
-  )
-//   ( 待改造)
-  onMounted(()=>[
-    updateCurMode(this.vx_cur_esports_mode)
-  ])
+  //  当前电竞查询的模式 false单关模式
+  const vx_cur_esports_mode = ref(store_state.betInfoReducer.cur_esports_mode);
+  // 监听状态变化
+  let un_subscribe = store.subscribe(() => {
+    let state_ = store.getState();
+    vx_cur_esports_mode.value = ref(state_.betInfoReducer.cur_esports_mode);
+  });
 
-    // ( 待改造)
-    // vx_cur_esports_mode: {
-    //   handler(n) {
-    //     this.updateCurMode(n);
-    //   }
-    // }
-  
-
-   /**
-     * 数据或串关模式更新时，根据串关模式来显示或隐藏玩法
-     * @param mode  true 串关  false 单关
-     */
-  const updateCurMode=(mode)=> {
-    if (utils.is_eports_csid(lodash.get(props.item_details, 'hl[0].ol[0].csid'))) {
+  /**
+   * 数据或串关模式更新时，根据串关模式来显示或隐藏玩法
+   * @param mode  true 串关  false 单关
+   */
+  const updateCurMode = (mode) => {
+    if (
+      utils.is_eports_csid(lodash.get(props.item_details, "hl[0].ol[0].csid"))
+    ) {
       // hipo 1 为支持串关 0 为不支持
       // 如果当前是串关模式但是玩法不支持串关，就隐藏不支持串关的玩法
       if (mode) {
-        curIsShow.value = props.item_details.hl[0].hipo == 1
+        curIsShow.value = props.item_details.hl[0].hipo == 1;
       } else {
         curIsShow.value = true;
       }
     } else {
       curIsShow.value = true;
     }
-  }
+  };
 
+  watch(
+    () => props.item_details,
+    (res) => {
+      //投注项总数若为基数则补空
+      let data = res.hl[0].ol;
+      if (data.length % 2) {
+        res.hl[0].ol.push({});
+      }
+      updateCurMode(vx_cur_esports_mode.value);
+    },
+    { immediate: true }
+  );
 
+  watch(vx_cur_esports_mode, (val) => {
+    updateCurMode(val);
+  });
+
+  //   ( 待改造)
+  onMounted(() => {
+    updateCurMode(vx_cur_esports_mode.value);
+  });
+
+  onUnmounted(() => {
+    un_subscribe();
+  });
+
+  // ( 待改造)
+  // vx_cur_esports_mode: {
+  //   handler(n) {
+  //     this.updateCurMode(n);
+  //   }
+  // }
 
   /**
    * @description: 置顶
@@ -164,6 +181,6 @@ export const useCommon = ({ emit,props }) => {
     toggle_menu,
     curIsShow,
     HandicapTitle,
-    lodash
+    lodash,
   };
 };

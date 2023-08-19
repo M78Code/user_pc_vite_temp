@@ -1,13 +1,13 @@
-import { i18n } from "src/boot/i18n.js";
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n();
 const mmp_map = () => {
-  return i18n.$t("mmp") || "";
+  return t("mmp") || "";
 };
 const mmp_map_v2 = () => {
-  return i18n.$t("mmp_v2") || "";
+  return t("mmp_v2") || "";
 };
 const msc_map = () => {
-  return i18n.$t("msc") || "";
+  return t("msc") || "";
 };
 
 const score_dict = Object.freeze({

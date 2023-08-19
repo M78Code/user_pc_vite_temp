@@ -20,7 +20,8 @@
   import lodash from 'lodash';
   import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
   import {component_symbol ,need_register_props} from "../config/index.js"
-  import { i18n } from 'src/boot/i18n.js'
+  import { useI18n } from 'vue-i18n'
+  const { t } = useI18n();
   
   const route = useRoute()
   const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -38,14 +39,14 @@
       },
       //滚球标题
       play_title: {
-        name: i18n.t("menu.match_play"),
+        name: t("menu.match_play"),
         match_count,
         show_num: true,
         func_name
       },
       //未开赛标题
       no_start_title: {
-        name: i18n.t("list.match_no_start"),
+        name: t("list.match_no_start"),
         match_count,
         show_num: true,
         func_name

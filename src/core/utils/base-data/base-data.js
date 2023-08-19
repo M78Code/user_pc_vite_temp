@@ -370,7 +370,7 @@ class BaseData {
     this.menu_type_old_or_new = 'new'
     // 判断新旧菜单
     // menuId 旧菜单才有
-    if( menu_info[0].menuId ){
+    if( menu_info[0].menuId || '' ){
       this.menu_type_old_or_new = 'old'
       menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info)
     }

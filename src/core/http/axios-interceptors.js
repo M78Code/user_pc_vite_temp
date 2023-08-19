@@ -6,6 +6,7 @@ import axios_debounce_cache from "./debounce-module/index";
 import { UUID } from "../uuid";
 import domain from "./domain";
 import { ss, ls } from "../utils/web-storage";
+import {Qs} from "../utils/Qs";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
@@ -48,7 +49,7 @@ const requestHook = {
     }
     //请求token
     const requestId =
-      ss.get(token_key) || sessionStorage.getItem("token") || "";
+      ss.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "zh"; // 语言调整

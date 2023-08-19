@@ -11,7 +11,7 @@
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n.t('common.goal')}}</div>
+            <div class="gif-text">{{t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
           <span
@@ -22,7 +22,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n.t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.home`) : match.home_score}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.home`) : match.home_score}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -35,7 +35,7 @@
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
-            <div class="gif-text">{{i18n.t('common.goal')}}</div>
+            <div class="gif-text">{{t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
           <span
@@ -46,7 +46,7 @@
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" :key="match.mid" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n.t('list.15min_stage'):'' ,overflow:1}">{{play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.away`) :  match.away_score}}</div>
+      <div class="score" :key="match.mid" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? t('list.15min_stage'):'' ,overflow:1}">{{play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.away`) :  match.away_score}}</div>
     </div>
 
 
@@ -57,7 +57,7 @@
          <div
           v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
           class="icon-wrap settlement-pre relative-position"
-          v-tooltip="{content: i18n.t('bet_record.settlement_pre')}"
+          v-tooltip="{content: t('bet_record.settlement_pre')}"
         >
           <img class="match_pre" :src="`${$g_image_preffix}/image/yabo/png/match_pre.png`"/>
         </div>
@@ -74,7 +74,7 @@
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
           </span>
           <!-- 统计分析 -->
-          <div class="sr-link-icon-w" v-tooltip="{content:i18n.t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+          <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
             <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
           </div>
           <!-- 玩法数量 -->
@@ -98,8 +98,9 @@ import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
@@ -120,14 +121,14 @@ const play_name_obj = computed(() => {
     if (props.NewMenu.is_corner_menu()) {
       play_name_obj = {
         key: 'corner',
-        suffix_name: ' - ' + i18n.t('list.corner'),
+        suffix_name: ' - ' + t('list.corner'),
         score_key: 'S5'
       }
       //罚牌后缀
     } else if (tpl_id == 25) {
       play_name_obj = {
         key: 'punish',
-        suffix_name: ' - ' + i18n.t('list.punish'),
+        suffix_name: ' - ' + t('list.punish'),
         score_key: 'S10102'
       }
       // 15分钟比分

@@ -15,7 +15,7 @@
 import { onMounted, onUnmounted, ref, defineComponent } from 'vue'
 import { useMittOn } from 'src/core/mitt/index.js'
 import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
-import { mx_get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/formart/module/format-date.js";
+// import { mx_get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/formart/module/format-date.js";
 
 /** 日期时间 */
 const date_time = ref('')

@@ -6,12 +6,13 @@
 
 import { reactive, computed } from 'vue';
 import details from "src/core/match-list/details-class/details.js";
-import { i18n } from "src/boot/i18n.js"
+import { useI18n } from 'vue-i18n'
 import { is_eports_csid } from "src/core/utils/utils";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from 'src/store-redux/index.js'
 import { mapGetters} from "vuex"
 let state = store.getState();
+const { t } = useI18n();
 
 
 export default {
@@ -29,7 +30,7 @@ export default {
       if(get_global_switch.value.handicap_num){
         return `+${ props.match.mc || 0}`
       }else{
-        return i18n.t('match_info.more')
+        return t('match_info.more')
       }
     })
 

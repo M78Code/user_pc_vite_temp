@@ -39,26 +39,27 @@ import { computed, defineProps} from 'vue';
 import lodash from 'lodash';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const { t } = useI18n();
 
 //附加盘名称
 const addition_name = computed(() => {
   let addition_name_obj = {
     //角球
-    hpsCorner: i18n.t('list.corner'),
+    hpsCorner: t('list.corner'),
     //罚牌
-    hpsPunish: i18n.t('list.punish'),
+    hpsPunish: t('list.punish'),
     //15分钟
-    hps15Minutes: i18n.t('list.15minutes'),
+    hps15Minutes: t('list.15minutes'),
     //波胆
-    hpsBold: i18n.t('list.bold'),
+    hpsBold: t('list.bold'),
       //5分钟
-    hps5Minutes: i18n.t('list.5minutes'),
+    hps5Minutes: t('list.5minutes'),
   }
   let name = addition_name_obj[this.match.play_current_key]
   return name ? ' - ' + name : ""
