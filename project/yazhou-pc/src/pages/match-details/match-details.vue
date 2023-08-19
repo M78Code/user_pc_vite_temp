@@ -6,6 +6,7 @@
 
 <template>
   <div class="details relative-position">
+    {{ load_detail_statu }}
     <!-- 加载中，无数据等显示模板 -->
     <load-data
       v-show="load_detail_statu != 'data'"
@@ -17,7 +18,6 @@
       :style="{ 'margin-top': headerHeight + 'px' }"
       :is_detail="true"
     />
-
     <div class="wrap-handicap v-scroll-area-bar">
       <!-- 详情面板 -->
       <div class="screen">

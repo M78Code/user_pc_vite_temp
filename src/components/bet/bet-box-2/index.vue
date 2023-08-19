@@ -2,7 +2,7 @@
 
 <template>
 
-  <div></div>
+
 </template>
 
 

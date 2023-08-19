@@ -4,14 +4,24 @@
  * @Description: 详情区--篮球滚球-比分面板
 -->
 <template>
-  <div :class="{'w-100': _.get(match_info, 'msc.S7')}" class="basketball-after" v-if="isRouterAlive">
+  <div
+    :class="{ 'w-100': lodash.get(match_info, 'msc.S7') }"
+    class="basketball-after"
+    v-if="isRouterAlive"
+  >
     <div class="info-time">
       <!-- 正计时 -->
       <div class="match-date">
-        <match-date :right="right" :match_props="{match:match_info}" class="count_down"></match-date>
+        <match-date
+          :right="right"
+          :match_props="{ match: match_info }"
+          class="count_down"
+        ></match-date>
       </div>
       <!-- 中立场 -->
-      <span v-if="match_info.mng"   class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
+      <span v-if="match_info.mng" class="icon-neutral q-icon c-icon"
+        ><span class="path1"></span><span class="path2"></span
+      ></span>
       <div class="col"></div>
       <div class="score-wrap">
         <!-- 左滚动按钮 S -->
@@ -25,19 +35,22 @@
           <icon
             name="icon-arrow-left"
             size="10px"
-            :color="el_active=='left'?'#FF7000':'#6D7278'"
+            :color="el_active == 'left' ? '#FF7000' : '#6D7278'"
             v-show="more_left_icon"
           />
         </span>
         <!-- 左滚动按钮 E -->
         <!-- 不同赛制的小节展示区 -->
-        <template v-if="_.get(match_info,'mle')!=73">
-          <div class="time-node" :class="[`stage-${match_info.mmp}`, screen_class]" ref="scroll_handel">
+        <template v-if="lodash.get(match_info, 'mle') != 73">
+          <div
+            class="time-node"
+            :class="[`stage-${match_info.mmp}`, screen_class]"
+            ref="scroll_handel"
+          >
             <!-- 篮球 -->
-            <template v-if="_.get(match_info, 'csid') == '2'">
-              
+            <template v-if="lodash.get(match_info, 'csid') == '2'">
               <!-- 上下半场赛制 -->
-              <template v-if="_.get(match_info, 'mle') == '17'">
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <span>H1</span>
                 <span>H2</span>
               </template>
@@ -47,7 +60,7 @@
                 <span>Q1</span>
                 <span>Q2</span>
                 <!-- 半场 -->
-                <span>{{$root.$t('common.half_')}}</span>
+                <span>{{ $root.$t("common.half_") }}</span>
                 <span>Q3</span>
                 <span>Q4</span>
               </template>
@@ -58,7 +71,7 @@
               <span>1</span>
               <span>2</span>
               <!-- 半场 -->
-              <span>{{$root.$t('common.half_')}}</span>
+              <span>{{ $root.$t("common.half_") }}</span>
               <span>3</span>
               <span>4</span>
             </template>
@@ -74,17 +87,19 @@
             <icon
               name="icon-arrow-right"
               size="10px"
-              :color="el_active=='right'?'#FF7000':'#6D7278'"
+              :color="el_active == 'right' ? '#FF7000' : '#6D7278'"
               v-show="more_right_icon"
             />
           </span>
           <!-- 右滚动按钮 E -->
 
           <!-- 加时 -->
-          <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{$root.$t('common.add_time')}}</span>
+          <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{
+            $root.$t("common.add_time")
+          }}</span>
         </template>
         <!-- 总分 -->
-        <span class="common-score score">{{$root.$t('common.total')}}</span>
+        <span class="common-score score">{{ $root.$t("common.total") }}</span>
       </div>
     </div>
 
@@ -95,41 +110,59 @@
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]')])"
+            v-img="[
+              lodash.get(match_info, 'mhlu[0]'),
+              lodash.get(match_info, 'frmhn[0]'),
+            ]"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" v-tooltip="{content:_.get(match_info,'mhn'),overflow:1}">{{_.get(match_info,'mhn')}}</span>
+          <span
+            class="ellipsis allow-user-select"
+            v-tooltip="{ content: lodash.get(match_info, 'mhn'), overflow: 1 }"
+            >{{ lodash.get(match_info, "mhn") }}</span
+          >
         </div>
 
         <div class="score-wrap">
-          <template v-if="_.get(match_info,'mle')!=73">
-            <div 
-              class="info-data" 
-              :class="[`stage-${match_info.mmp}`, screen_class]" 
+          <template v-if="lodash.get(match_info, 'mle') != 73">
+            <div
+              class="info-data"
+              :class="[`stage-${match_info.mmp}`, screen_class]"
               ref="scroll_home"
-              :style="{'margin': more_left_icon||more_right_icon?'0px 19px 0 14px':'0'}"
+              :style="{
+                margin:
+                  more_left_icon || more_right_icon ? '0px 19px 0 14px' : '0',
+              }"
             >
-              <template v-if="_.get(match_info, 'mle') == '17'">
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
                 <!-- 上半场比分 -->
-                <span>{{_.get(match_info, 'msc.S2.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S2.home") }}</span>
                 <!-- 下半场比分 -->
-                <span>{{_.get(match_info, 'msc.S3.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S3.home") }}</span>
               </template>
               <template v-else>
                 <!-- 第一节比分 -->
-                <span>{{_.get(match_info, 'msc.S19.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S19.home") }}</span>
                 <!-- 第二节比分 -->
-                <span>{{_.get(match_info, 'msc.S20.home')}}</span>
-                <span class="time-half">{{_.get(match_info, 'msc.S2.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S20.home") }}</span>
+                <span class="time-half">{{
+                  lodash.get(match_info, "msc.S2.home")
+                }}</span>
                 <!-- 第三节比分 -->
-                <span>{{_.get(match_info, 'msc.S21.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S21.home") }}</span>
                 <!-- 第四节比分 -->
-                <span>{{_.get(match_info, 'msc.S22.home')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S22.home") }}</span>
               </template>
             </div>
-            <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{_.get(match_info, 'msc.S7.home')}}</span>
+            <span
+              class="common-score"
+              v-if="lodash.get(match_info, 'msc.S7')"
+              >{{ lodash.get(match_info, "msc.S7.home") }}</span
+            >
           </template>
-          <span class="common-score score">{{_.get(match_info, 'msc.S1.home')}}</span>
+          <span class="common-score score">{{
+            lodash.get(match_info, "msc.S1.home")
+          }}</span>
         </div>
       </div>
       <!-- 主队 结束 -->
@@ -139,35 +172,53 @@
         <div class="wrap-logo">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-            v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]')])"
+            v-img="[
+              lodash.get(match_info, 'malu[0]'),
+              lodash.get(match_info, 'frman[0]'),
+            ]"
             class="both-logo"
           />
-          <span class="ellipsis allow-user-select" v-tooltip="{content:_.get(match_info,'man'),overflow:1}">{{_.get(match_info,'man')}}</span>
+          <span
+            class="ellipsis allow-user-select"
+            v-tooltip="{ content: lodash.get(match_info, 'man'), overflow: 1 }"
+            >{{ lodash.get(match_info, "man") }}</span
+          >
         </div>
         <div class="score-wrap">
-          <template v-if="_.get(match_info,'mle')!=73">
-            <div 
-              class="info-data" 
+          <template v-if="lodash.get(match_info, 'mle') != 73">
+            <div
+              class="info-data"
               :class="[`stage-${match_info.mmp}`, screen_class]"
               ref="scroll_away"
-              :style="{'margin': more_left_icon||more_right_icon?'0px 19px 0 14px':'0'}"
+              :style="{
+                margin:
+                  more_left_icon || more_right_icon ? '0px 19px 0 14px' : '0',
+              }"
             >
-              <template v-if="_.get(match_info, 'mle') == '17'">
-                <span>{{_.get(match_info, 'msc.S2.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S3.away')}}</span>
+              <template v-if="lodash.get(match_info, 'mle') == '17'">
+                <span>{{ lodash.get(match_info, "msc.S2.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc.S3.away") }}</span>
               </template>
               <template v-else>
-                <span>{{_.get(match_info, 'msc.S19.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S20.away')}}</span>
-                <span class="time-half">{{_.get(match_info, 'msc.S2.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S21.away')}}</span>
-                <span>{{_.get(match_info, 'msc.S22.away')}}</span>
+                <span>{{ lodash.get(match_info, "msc.S19.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc.S20.away") }}</span>
+                <span class="time-half">{{
+                  lodash.get(match_info, "msc.S2.away")
+                }}</span>
+                <span>{{ lodash.get(match_info, "msc.S21.away") }}</span>
+                <span>{{ lodash.get(match_info, "msc.S22.away") }}</span>
               </template>
             </div>
 
-            <span class="common-score" v-if="_.get(match_info, 'msc.S7')">{{_.get(match_info, 'msc.S7.away')}}</span>
+            <span
+              class="common-score"
+              v-if="lodash.get(match_info, 'msc.S7')"
+              >{{ lodash.get(match_info, "msc.S7.away") }}</span
+            >
           </template>
-          <span class="common-score score">{{_.get(match_info, 'msc.S1.away')}}</span>
+          <span class="common-score score">{{
+            lodash.get(match_info, "msc.S1.away")
+          }}</span>
         </div>
       </div>
       <!-- 客队 结束 -->
@@ -177,39 +228,50 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import format from "src/project/yabo/mixins/match_details/index";
-import match_date from "src/public/components/match_process/match_process.vue";
-
-import {get_refs_info} from "src/public/mixins/common/common.js"
+// import { mapGetters } from "vuex"
+// import format from "src/project/yabo/mixins/match_details/index";
+import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
+import { get_refs_info } from "src/core/common-helper/common.js";
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 
 export default {
   components: {
-    "match-date": match_date,
+    "match-date": MatchProcessFullVersionWapper,
   },
-  mixins: [format],
+  // mixins: [format],
   props: {
     match_info: Object,
-    right:Boolean
+    right: Boolean,
   },
   data() {
     return {
-      el_active: "default",//左右滚动条active， right | left
-      more_left_icon: false,//向左箭头显隐
-      more_right_icon: false,//向右箭头显隐
-      one_item_width: 36,//滚动一次的距离
-      timestamp: 0,//当前时间戳
-      format_date: "",//倒计时秒数
+      lodash,
+      el_active: "default", //左右滚动条active， right | left
+      more_left_icon: false, //向左箭头显隐
+      more_right_icon: false, //向右箭头显隐
+      one_item_width: 36, //滚动一次的距离
+      timestamp: 0, //当前时间戳
+      format_date: "", //倒计时秒数
       timer: null,
-      default: {//初始化比分
+      default: {
+        //初始化比分
         home: 0,
         away: 0,
       },
-      isRouterAlive: true,//重载页面开关
+      isRouterAlive: true, //重载页面开关
       screen_class: "",
-      is_scroll: false,//是否出现比分滚动
+      is_scroll: false, //是否出现比分滚动
       scrollTimer: null, // 定时器
+      un_subscribe: null,
+      get_layout_list_size: store.getState().layoutReducer.layout_list_size,
     };
+  },
+  mounted() {
+    this.un_subscribe = store.subscribe(() => {
+      let state_ = store.getState();
+      this.get_layout_list_size = state_.layoutReducer.layout_list_size;
+    });
   },
   methods: {
     /**
@@ -226,30 +288,36 @@ export default {
     },
 
     /**
-    * @description: 比分扳左右滚动
-    * @param {Number} type 0左滚动 1右滚动
-    * @return {undefined} undefined
-    */
+     * @description: 比分扳左右滚动
+     * @param {Number} type 0左滚动 1右滚动
+     * @return {undefined} undefined
+     */
     scorll(type) {
       // 根据 Type 值判断类型，计算滚动距离
       if (type) {
         if (!this.more_right_icon) {
           return;
         }
-        get_refs_info('scroll_handel', null, this).scrollLeft += this.one_item_width;
-        get_refs_info('scroll_home', null, this).scrollLeft += this.one_item_width;
-        get_refs_info('scroll_away', null, this).scrollLeft += this.one_item_width;
+        get_refs_info("scroll_handel", null, this).scrollLeft +=
+          this.one_item_width;
+        get_refs_info("scroll_home", null, this).scrollLeft +=
+          this.one_item_width;
+        get_refs_info("scroll_away", null, this).scrollLeft +=
+          this.one_item_width;
       } else {
         if (!this.more_left_icon) {
           return;
         }
-        get_refs_info('scroll_handel', null, this).scrollLeft -= this.one_item_width;
-        get_refs_info('scroll_home', null, this).scrollLeft -= this.one_item_width;
-        get_refs_info('scroll_away', null, this).scrollLeft -= this.one_item_width;
+        get_refs_info("scroll_handel", null, this).scrollLeft -=
+          this.one_item_width;
+        get_refs_info("scroll_home", null, this).scrollLeft -=
+          this.one_item_width;
+        get_refs_info("scroll_away", null, this).scrollLeft -=
+          this.one_item_width;
       }
 
-      let offset = 3
-      let _scroll_left = get_refs_info('scroll_handel', 'scrollLeft', this);
+      let offset = 3;
+      let _scroll_left = get_refs_info("scroll_handel", "scrollLeft", this);
       let _msc_length = 5 * this.one_item_width;
       let _max_scroll = _msc_length - this.one_item_width * offset;
 
@@ -260,21 +328,21 @@ export default {
     },
 
     /**
-    * @description: 重置比分扳滚动条件
-    * @return {}
-    * 初始化滚动距离
-    */
-    init_scroll(){
-      let scroll_left = this.one_item_width*2;
-      get_refs_info('scroll_handel', null, this).scrollLeft = scroll_left;
-      get_refs_info('scroll_home', null, this).scrollLeft = scroll_left;
-      get_refs_info('scroll_away', null, this).scrollLeft = scroll_left;
+     * @description: 重置比分扳滚动条件
+     * @return {}
+     * 初始化滚动距离
+     */
+    init_scroll() {
+      let scroll_left = this.one_item_width * 2;
+      get_refs_info("scroll_handel", null, this).scrollLeft = scroll_left;
+      get_refs_info("scroll_home", null, this).scrollLeft = scroll_left;
+      get_refs_info("scroll_away", null, this).scrollLeft = scroll_left;
       this.more_left_icon = true;
     },
     /**
-    * @description: 重载组件
-    * @return {undefined} undefined
-    */
+     * @description: 重载组件
+     * @return {undefined} undefined
+     */
     reload_data() {
       this.isRouterAlive = false;
       this.$nextTick(function () {
@@ -283,13 +351,8 @@ export default {
     },
   },
 
-  computed:{
-    ...mapGetters({
-      get_layout_list_size: "get_layout_list_size",
-    })
-  },
-
   destroyed() {
+    this.un_subscribe();
     clearTimeout(this.scrollTimer);
   },
 
@@ -312,47 +375,51 @@ export default {
         };
         for (var k in dict) {
           if (k == res.mmp) {
-            res.msc[dict[k]] = _.get(res, `msc[${dict[k]}]`) || this.default;
+            res.msc[dict[k]] =
+              lodash.get(res, `msc[${dict[k]}]`) || this.default;
           }
         }
 
-        if(this.$route.name=='home'&&_.get(res, "msc.S7") && this.get_layout_list_size.width < 1430){
-          this.is_scroll = true
+        if (
+          this.$route.name == "home" &&
+          lodash.get(res, "msc.S7") &&
+          this.get_layout_list_size.width < 1430
+        ) {
+          this.is_scroll = true;
         } else {
-          this.is_scroll = false
+          this.is_scroll = false;
         }
-        
+
         // 比分滚动条配置偏移量
         if (this.is_scroll) {
           if (this.scrollTimer) clearTimeout(this.scrollTimer);
           this.scrollTimer = setTimeout(() => {
             this.$nextTick(() => {
-              this.init_scroll()
+              this.init_scroll();
             });
           }, 10);
         }
-
       },
       immediate: true,
     },
-    get_layout_list_size:{
-      handler(res){
-        if(this.$route.name == "home"){
-          if(res.width < 1430 && _.get(this.match_info, 'msc.S7')){
-            if(!this.is_scroll){
-              this.screen_class = "is_min_screen"
-              this.is_scroll = true
-              this.init_scroll()
+    get_layout_list_size: {
+      handler(res) {
+        if (this.$route.name == "home") {
+          if (res.width < 1430 && lodash.get(this.match_info, "msc.S7")) {
+            if (!this.is_scroll) {
+              this.screen_class = "is_min_screen";
+              this.is_scroll = true;
+              this.init_scroll();
             }
           } else {
-            this.screen_class = ""
-            this.is_scroll = false
-            this.more_left_icon = false
-            this.more_right_icon = false
+            this.screen_class = "";
+            this.is_scroll = false;
+            this.more_left_icon = false;
+            this.more_right_icon = false;
           }
         }
-      }
-    }
+      },
+    },
   },
 };
 </script>
@@ -504,13 +571,14 @@ export default {
     margin-left: 6px;
   }
 }
-.c-main-content{
+.c-main-content {
   .page-right {
-      .basketball-after{
-        width: 90%;
-      }
-      .w-100{width: 100%!important;}
+    .basketball-after {
+      width: 90%;
     }
+    .w-100 {
+      width: 100% !important;
+    }
+  }
 }
-
 </style>

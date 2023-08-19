@@ -3,26 +3,33 @@
  * @FilePath: \user-pc-vite\entries\development-document\src\components\user_props.vue
  * @Date: 2023-08-12 17:19:33
 -->
-
 <template>
   <div class="q-ml-md">
     <div class="item-definition">
-      <div class="col-xs-12 col-sm-12 row items-center item-definition-title" v-if="userData.key">
+      <!-- 标题/类型 -->
+      <div
+        class="col-xs-12 col-sm-12 row items-center item-definition-title"
+        v-if="userData.title"
+      >
         <q-badge
           class="item-definition-title-pill"
-          :label="userData.key"
-          :class="['badge-1']"
+          :label="userData.title"
+          :class="[`badge-1`]"
+          color="bg-orange-8"
         />
         <div class="item-definition-title-type q-ml-xs">
           ：{{ userData.type }}
         </div>
       </div>
+      <!-- 内容部分 -->
       <div class="item-definition-content">
-        <div class=" q-mt-xs" v-if="userData.desc">
+        <!-- 描述 -->
+        <div class="q-mt-xs" v-if="userData.desc">
           <div>描述</div>
           <div class="text-black">{{ userData.desc }}</div>
         </div>
-        <div class=" q-mt-xs" v-if="userData.default">
+        <!-- 默认值 -->
+        <div class="q-mt-xs" v-if="userData.default">
           <div>默认值</div>
           <div class="q-ml-md row">
             <div class="item-examples">
@@ -30,7 +37,8 @@
             </div>
           </div>
         </div>
-        <div class=" q-mt-xs" v-if="userData.values">
+        <!-- 接受的值 -->
+        <div class="q-mt-xs" v-if="userData.values">
           <div>接受的值</div>
           <div class="q-ml-md row">
             <div
@@ -42,76 +50,27 @@
             </div>
           </div>
         </div>
-
-        <!-- 属性-参数 -->
-        <div class=" q-mt-xs" v-if="userData.params">
+        <!-- 参数-->
+        <div class="q-mt-xs" v-if="userData.params">
           <div>参数</div>
-          <div class="q-ml-md">
-            <div
-              class="item-definition"
-              v-for="(dparms, x) in userData.params"
-              :key="x"
-            >
-              <div
-                class="col-xs-12 col-sm-12 row items-center item-definition-title"
-              >
-                <q-badge
-                  class="item-definition-title-pill"
-                  :label="dparms.key"
-                  :class="['badge-2']"
-                />
-                <div class="item-definition-title-type q-ml-xs">
-                  ： {{ dparms.type }}
-                </div>
-              </div>
-              <div class="item-definition-content">
-                <div class=" q-mt-xs" v-if="dparms.desc">
-                  <div>描述</div>
-                  <div class="text-black">
-                    {{ dparms.desc }}
-                  </div>
-                </div>
-                <div>
-                  <div
-                    class=" q-mt-xs"
-                    v-if="dparms.examples"
-                  >
-                    <div>例子</div>
-                    <div class="q-ml-md row">
-                      <div
-                        class="item-examples"
-                        v-for="(m, i) in dparms.examples"
-                        :key="i"
-                      >
-                        {{ m }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div v-for="(dples3, ix) in userData.params" :key="ix">
+            <user_props :userData="dples3"></user_props>
           </div>
         </div>
 
         <!-- 属性-返回 -->
-        <div class=" q-mt-xs" v-if="userData.returns">
+        <div class="q-mt-xs" v-if="userData.returns">
           <div>返回 &nbsp;&lt;{{ userData.returns.type }}&gt;&nbsp;</div>
           <div class="q-ml-md">
             <div class="item-definition">
               <div class="item-definition-content">
-                <div
-                  class=" q-mt-xs"
-                  v-if="userData.returns.desc"
-                >
+                <div class="q-mt-xs" v-if="userData.returns.desc">
                   <div>描述</div>
                   <div class="text-black">
                     {{ userData.returns.desc }}
                   </div>
                 </div>
-                <div
-                  class=" q-mt-xs"
-                  v-if="userData.returns.examples"
-                >
+                <div class="q-mt-xs" v-if="userData.returns.examples">
                   <div>例子</div>
                   <div class="q-ml-md row">
                     <div
@@ -128,7 +87,7 @@
           </div>
         </div>
         <!-- 例子 -->
-        <div class=" q-mt-xs" v-if="userData.examples">
+        <div class="q-mt-xs" v-if="userData.examples">
           <div>例子</div>
           <div class="q-ml-md row">
             <div
@@ -140,11 +99,25 @@
             </div>
           </div>
         </div>
+        <!-- 属性 -->
+        <div class="q-mt-xs" v-if="userData.definition">
+          <div>属性</div>
+          <div v-for="(dples, ix) in userData.definition" :key="ix">
+            <user_props :userData="dples"></user_props>
+          </div>
+        </div>
+        <!-- 范围 -->
+        <div class="q-mt-xs" v-if="userData.scope">
+          <div>范围</div>
+          <div v-for="(dples2, ix) in userData.scope" :key="ix">
+            <user_props :userData="dples2"></user_props>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</template>
-
+</template>scope
+  
 <script setup>
 import { ref, computed, watch } from "vue";
 
@@ -158,7 +131,6 @@ const props = defineProps({
     default: 1,
   },
 });
-
 </script>
 
 <style lang="scss" scoped>
@@ -193,10 +165,19 @@ const props = defineProps({
     }
   }
   .badge-1 {
-    background-color: var(--q-accent);
+    background-color: #1976d2;
   }
   .badge-2 {
-    background-color: var(--q-secondary);
+    background-color: #66bb6a;
+  }
+  .badge-3 {
+    background-color: #ab47bc;
+  }
+  .badge-4 {
+    background-color: #f49a9a;
+  }
+  .badge-5 {
+    background-color: #c37ea0;
   }
 }
 </style>

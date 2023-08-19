@@ -2,11 +2,11 @@ import { ref } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { i18n } from "src/boot/i18n.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n();
 
 
 
@@ -51,7 +51,7 @@ const mx_collect_match = (match) => {
   // 前端关    后台开       >关
   // 前端关    后台关       >关
   if (!enable_collect_api.value || !collect_switch.value) {
-    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"));
+    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
   let cur_collect_state = Number(!match.mf);
   let _params = {
@@ -202,7 +202,7 @@ const mx_collect_leagues = (match, is_champion) => {
       } else {
         useMittEmit(
           MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-          i18n.t("common.collect_toast")
+          t("common.collect_toast")
         );
       }
       // 获取列表最新的收藏数量
@@ -211,7 +211,7 @@ const mx_collect_leagues = (match, is_champion) => {
     .catch((err) => {
       useMittEmit(
         MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-        i18n.t("common.collect_toast")
+        t("common.collect_toast")
       );
     });
 };
@@ -274,7 +274,7 @@ const mx_collect = ({ type = "match", match, match_index }) => {
   // 前端关    后台开       >关
   // 前端关    后台关       >关
   if (!enable_collect_api.value || !collect_switch.value) {
-    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n.t("msg.msg_09"));
+    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
   if (MenuData.is_guanjun()) {
     type = "champion";

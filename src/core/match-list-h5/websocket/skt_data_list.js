@@ -2,7 +2,7 @@
  * @Description: websocket数据页面数据接入----赛事列表页面
  */
 // 发送websocket命令时使用
-import { WsSend } from "../websocket-class/wsCtr";   // ws通信接收消息类
+import { WsSend } from "../../ws/h5/wsCtr";   // ws通信接收消息类
 import wsDebounce from "../../ws/h5/ws_debounce.js"    // ws调用接口节流工具类
 import { ref, onMounted } from 'vue'
 import lodash from 'lodash'

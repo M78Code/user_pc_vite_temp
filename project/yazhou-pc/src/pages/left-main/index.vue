@@ -59,7 +59,7 @@
         <bet-record-view @set_scroll_this="set_scroll_this" />
       </div>
       <!-- 投注栏 -->
-      <!-- <bet-box-wapper use_component_key="bet_box_pc_1" /> -->
+      <left-main-bet />
       
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
@@ -126,7 +126,7 @@ import _ from "lodash"
 
 import MainHeader from "./main-header.vue"
 import LeftMainMenu from "./menu/index.vue"
-// import { BetBoxWapper } from "src/components/bet/index.js";
+import LeftMainBet from "./bet/index.vue"
 // import betRecordView from "../bet-record/index.vue";
 
 

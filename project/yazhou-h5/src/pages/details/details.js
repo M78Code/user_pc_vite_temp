@@ -3,13 +3,15 @@ import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick } from "vue";
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
   // console.log("Store", store)
   // const state = store.getState()
   const data = reactive({
+    // 切换赛事时，重置玩法集请求次数计数
+    get_category_list_req_count: 0,
     // refs['fixedHeight']
     fixedHeight: null,
     // refs['details_box']
@@ -298,7 +300,7 @@ const route = useRoute();
    *@return {Undefined} undefined
    */
   const tab_changed_handle = () => {
-    $nextTick(() => {
+    nextTick(() => {
       let dom_box = data.details_box;
       // 视频和动画播放的时候，点击玩法集要重置滚动距离
       if (get_show_video && data.scroller_scroll_top > 0) {
@@ -459,84 +461,31 @@ const route = useRoute();
         ? api_common.get_DJ_matchDetail_MatchInfo
         : api_common.get_matchDetail_MatchInfo;
     api(params)
-      .then(({ data, ts, code }) => {
+      .then(({ data: {data: res_data}, ts, code }) => {
         // #TODO
         code = 200;
-        console.log("code===", data, code);
+        console.log("code===res_data", res_data, code);
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
-        if (code == "0400500" || !data || Object.keys(data).length === 0) {
-          router.push({ name: "matchList" });
+        if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
+          // router.push({ name: "matchList" });
         } else if (code === 200) {
-          let data11 = {
-            tnjc: "Australia Football Queensland Premier League",
-            csna: "足球",
-            tid: "826292",
-            mst: "0",
-            srid: "11134232",
-            mcg: 1,
-            mf: false,
-            mgt: "1691899200000",
-            maid: "191708",
-            mct: 0,
-            tlev: 1,
-            mhlut: "",
-            mo: 0,
-            mp: 1,
-            csid: "1",
-            ms: 110,
-            mle: 0,
-            lvs: -1,
-            malu: [""],
-            lurl: "",
-            mprmc: "PA",
-            mhn: "SWQ Thunder",
-            cds: "LS",
-            frmhn: ["S"],
-            mhs: 1,
-            mlet: "45:00",
-            mhid: "101720",
-            mrmc: "",
-            mid: "3528427",
-            mess: 1,
-            mmp: "0",
-            mststi: "0",
-            mms: -1,
-            mbmty: 1,
-            mhlu: [""],
-            seid: "",
-            mstst: "0",
-            malut: "",
-            man: "Sunshine Coast FC",
-            frman: ["S"],
-            mat: "",
-            mng: 0,
-            mststr: "0",
-            mvs: -1,
-            mststs: 0,
-            mearlys: 0,
-            mft: 0,
-            tn: "Australia Football Queensland Premier League",
-            msc: [],
-          };
-          match_detail_data_handle(data11);
-          console.log("code===", data11);
-          // if (data && Object.keys(data).length) {
-          //   match_detail_data_handle(data)
-          // } else {
-          //   // 赛事下发999后, 显示空空如也
-          //   data.skeleton.details = true
-          //   data.skeleton.list = true
-          //   data.is_show_detail_header_data = false
+          if (res_data && Object.keys(res_data).length) {
+            match_detail_data_handle(res_data)
+          } else {
+            // 赛事下发999后, 显示空空如也
+            data.skeleton.details = true
+            data.skeleton.list = true
+            data.is_show_detail_header_data = false
 
-          //   // 赛事结束后，1.5s后返回主列表页面——bug35360
-          //   clearTimeout(data.back_main_list_timer)
-          //   data.back_main_list_timer = setTimeout(() => {
-          //     // 如果不是演播厅的，才有退出回到 列表
-          //     if(lodash.get(get_video_url, 'active') != 'lvs' ){
-          //       $common.go_where({back_to: 'go_to_back'})
-          //     }
-          //   }, 1500)
-          // }
+            // 赛事结束后，1.5s后返回主列表页面——bug35360
+            clearTimeout(data.back_main_list_timer)
+            data.back_main_list_timer = setTimeout(() => {
+              // 如果不是演播厅的，才有退出回到 列表
+              if(lodash.get(data.get_video_url, 'active') != 'lvs' ){
+                // $common.go_where({back_to: 'go_to_back'})
+              }
+            }, 1500)
+          }
         }
       })
       .catch((err) => {
@@ -550,7 +499,7 @@ const route = useRoute();
             initEvent();
           }, 3000);
         } else {
-          const match_base_info_obj = lodash.cloneDeep(get_match_base_info_obj);
+          const match_base_info_obj = lodash.cloneDeep(data.get_match_base_info_obj);
           match_detail_data_handle(match_base_info_obj);
         }
       });
@@ -650,23 +599,23 @@ const route = useRoute();
       api_common
         .get_category_list(params)
         .then((res) => {
-          const res_data = lodash.get(res, "data");
-          // data_list = res_data
+          const res_data = lodash.get(res, "data.data");
+          data.data_list = res_data;
 
           // 给vuex 设置玩法集数据
           // set_details_tabs_list(res_data);
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
-          if (get_details_item && res_data.length) {
+          if (data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
-              (item) => item.id === get_details_item
+              (item) => item.id === data.get_details_item
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
-              set_details_item(res_data[0]["id"]);
+              // set_details_item(res_data[0]["id"]);
             }
           } else {
             // 当第一次进来就会走这里默认赋值第一项
-            res_data && set_details_item(res_data[0]["id"]);
+            // res_data && set_details_item(res_data[0]["id"]);
           }
           let search_term = route.query && route.query.search_term;
           if (search_term) {
@@ -687,13 +636,13 @@ const route = useRoute();
           // if ($refs['category']) {
           if (data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading
-            const flag = get_category_list_req_count ? "hide_loading" : "";
+            const flag = data.get_category_list_req_count ? "hide_loading" : "";
             // $refs['category'].initEvent(flag, init_req).then(() => {
             data.category.initEvent(flag, init_req).then(() => {
-              if (!get_category_list_req_count) {
-                get_category_list_req_count = 1;
+              if (!data.get_category_list_req_count) {
+                data.get_category_list_req_count = 1;
               } else {
-                get_category_list_req_count++;
+                data.get_category_list_req_count++;
               }
 
               // 获取赛果数据后，滑动到顶部
@@ -848,7 +797,7 @@ const route = useRoute();
         // 如果不是演播厅的，才有退出回到 列表
         if (lodash.get(get_video_url, "active") != "lvs") {
           // 没有返回赛事数据就跳转到列表页
-          router.push({ name: "matchList" });
+          // router.push({ name: "matchList" });
         }
       }
     });

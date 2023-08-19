@@ -27,38 +27,32 @@ const isComp = ref("");
 /**
  * 格式化数据
  * @param {*} val 当前点击分类数据
- * 需要排除的键 ["file_path","meta", "leftmenu", "mixins"]
  */
 const formatData = (val) => {
-  docDataTable.value = [];
-  let data = {};
-  if (Array.isArray(val)) {
-    data = val[0] || {};
-  }
-  Object.keys(data)?.forEach((key) => {
+  Object.keys(val)?.forEach((key) => {
     switch (key) {
       case "project": {
-        docDataTable.value = data[key];
+        docDataTable.value = val[key];
         isComp.value = "project-doc";
         break;
       }
       case "entriesdoc": {
-        docDataTable.value = data[key];
+        docDataTable.value = val[key];
         isComp.value = "entries-doc";
         break;
       }
       case "jobdoc": {
-        docDataTable.value = data[key];
+        docDataTable.value = val[key];
         isComp.value = "job-doc";
         break;
       }
       default:
-        docDataTable.value = [data];
+        docDataTable.value = [val];
         isComp.value = "user-doc";
         break;
     }
   });
-  console.log(`--${isComp.value}--`, docDataTable.value);
+  console.log(`-1-${isComp.value}--`, docDataTable.value);
 };
 
 watch(

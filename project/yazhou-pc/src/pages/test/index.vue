@@ -2,17 +2,15 @@
   <div>
     <div>测试页面</div>
     <q-btn @click="on_test">体育规则</q-btn>
-    <!-- <MatchList /> -->
   </div>
 </template>
 
 <script setup>
 import { useOpenWithPostMessage } from "src/core/utils/event-hook";
 import { onBeforeMount } from "vue";
-// import MatchListCard from 'src/core/match-list-pc/match-card/match-list-card-class.js'
-
-// console.log('lockie_test_console', MatchListCard);
-// import MatchList from 'project_path/src/pages/match-list/match-list.vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n();
+console.log('lockie_test_console', t('match_info.more'));
 let remove_list = [];
 const on_test = () => {
   const { postMessage, remove } = useOpenWithPostMessage({

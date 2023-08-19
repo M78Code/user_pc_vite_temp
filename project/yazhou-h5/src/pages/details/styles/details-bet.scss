@@ -110,8 +110,8 @@
           line-height: 0.32rem;
   
           &.t_color {
-            color: var(--q-color-com-fs-color-8);
-            // color: var(--q-color-com-fs-color-8) !important;
+            color: $details-header-team-name;
+            // color: $details-header-team-name !important;
           }
         }
       }
@@ -178,7 +178,7 @@
   
         .text-color {
           font-size: 0.1rem;
-          color: var(--q-color-com-fs-color-8) !important;
+          color: $details-header-team-name !important;
         }
   
         .tournament-play {
@@ -337,7 +337,7 @@
       ::v-deep .odds_new {
         font-size: 0.12rem;
         font-weight: 700;
-        color: var(--q-color-com-fs-color-8);
+        color: $details-header-team-name;
   
         .change-icon {
           right: -0.1rem;
@@ -453,7 +453,7 @@
           font-size: 0.12rem;
           margin-bottom: 0.02rem;
           padding-bottom: 0;
-          color: var(--q-color-com-fs-color-8);
+          color: $details-header-team-name;
           font-weight: 700;
         }
   
@@ -870,7 +870,7 @@
             padding-bottom: 0;
             font-size: 0.12rem;
             font-weight: 700;
-            color: var(--q-color-com-fs-color-8);
+            color: $details-header-team-name;
           }
   
           .night-style {

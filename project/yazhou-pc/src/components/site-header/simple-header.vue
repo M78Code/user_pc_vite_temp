@@ -27,7 +27,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router';
 
 import { RefreshWapper as Refresh } from "src/components/common/refresh"
-import { mx_get_remote_time } from "src/core/formart/module/format-date.js";
+// import { mx_get_remote_time } from "src/core/formart/module/format-date.js";
 
 const props = defineProps({
     /** 刷新按钮动画开关 */
@@ -70,7 +70,7 @@ function get_date_time() {
         date_time.value = utc_to_gmt_no_8_ms2(time);
     }, 1000);
 }
-onMounted(get_date_time)
+// onMounted(get_date_time)
 
 /**
  * @description: 赛果刷新当前数据

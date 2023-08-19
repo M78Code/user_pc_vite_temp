@@ -14,21 +14,31 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter,useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 
-const route = useRoute();
-const router = useRouter();
 export const useGetGlobal = ({ details_params, back_to }) => {
+
+  const route = useRoute();
+const router = useRouter();
   const state = reactive({
     latest_match_params_pre: "",
     default_select_all: true,
   });
 
   const store_state = store.getState();
+
+  const vx_get_uid = store_state.userReducer.uuid;
   const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
   const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
   // 获取当前菜单类型
   const cur_menu_type = ref(store_state.menuReducer.cur_menu_type);
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   const match_sort = ref(store_state.globalReducer.match_sort);
+    // //播放类型
+    const vx_play_media = ref(store_state.matchesReducer.play_media);
+
+      // 获取当前页路由信息
+  const vx_layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
+// 保存联想搜索关键字
+  const vx_related_keyword =  ref(store_state.searchReducer.related_keyword);
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
@@ -37,6 +47,9 @@ export const useGetGlobal = ({ details_params, back_to }) => {
     filter_select_obj.value = state_data.filterReducer.filter_select_obj;
     cur_menu_type.value = state_data.menuReducer.cur_menu_type;
     match_sort.value = state_data.globalReducer.match_sort;
+    vx_play_media.value = state_data.matchesReducer.play_media
+    vx_layout_cur_page.value = state_data.layoutReducer.layout_cur_page
+    vx_related_keyword.value = state_data.searchReducer.related_keyword
   });
 
   onUnmounted(() => {
@@ -49,12 +62,13 @@ export const useGetGlobal = ({ details_params, back_to }) => {
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
+    console.log(1111111111111111,menu_config)
     let { name: route_name, params: cur_parmas } = route;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
       (route_name === "details" &&
         ["studio", "topic", "anchor"].includes(
-          this.vx_play_media.media_type
+          vx_play_media.value.media_type
         )) ||
       menu_config.is_esports();
     // 电竞不用调自动切右侧接口
@@ -109,19 +123,19 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
     let md = "";
     if (["early"].includes(cur_menu_type.type_name)) {
-      md = menu_config.match_list_api_params.md;
+      md = menu_config.match_list_api_config.match_list?.params.md;
     }
 
     /** 自动选择 */
     let _params = {
       sm,
-      euid: menu_config.match_list_api_params.euid,
+      euid: menu_config.match_list_api_config?.match_list.params?.euid,
       md,
       csid,
       tid,
       sort: match_sort.value,
-      keyword: this.vx_related_keyword.substr(5),
-      cuid: this.vx_get_uid,
+      keyword: vx_related_keyword.value.substr(5),
+      cuid: vx_get_uid,
       mid: remove_mid,
     };
 
@@ -175,7 +189,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
             }
           } else {
             if (lodash.isFunction(back_to)) {
-              back_to(false);
+              // back_to(false);
             }
           }
           return;
@@ -183,7 +197,7 @@ export const useGetGlobal = ({ details_params, back_to }) => {
 
         // 切换右侧赛事
         let playId = details_params.play_id;
-        store.dispatch("set_match_details_params", {
+        store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
           mid,
           tid,
           sportId,

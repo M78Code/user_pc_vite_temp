@@ -7,6 +7,9 @@
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 // 电竞赛种csid
+import _ from 'lodash'
+
+const { NODE_ENV } = window.BUILDIN_CONFIG;
 const e_sport_csids = [101, 100, 102, 103];
 
 
@@ -98,7 +101,7 @@ const get_file_path = (path, csid = 0) => {
     return `${api_domain}/${path}`;
   }
 
-  if (window.env.NODE_ENV == "development") {
+  if (NODE_ENV == "development") {
     let api_domain = current_domain[current_env][0];
     api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
     return `${api_domain}/${path}`;

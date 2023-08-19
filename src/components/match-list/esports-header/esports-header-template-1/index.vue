@@ -27,22 +27,22 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { computed, defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status } from 'src/core/utils/index'
-import details from 'src/core/match-list/details-class/details.js'
-import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
+import details from "src/core/match-detail-pc/match-detail";
+import { other_play_name_to_playid } from 'src/core/match-list-pc/data-class-ctr/conifg/index.js';
 import store from 'src/store-redux/index.js'
-import { i18n } from 'src/boot/i18n.js'
+import { useI18n } from 'vue-i18n'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
-
+const { t } = useI18n();
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const route = useRoute();
 
 // 盘口数量
@@ -50,7 +50,7 @@ const handicap_num = computed(() => {
   if (state.globalReducer.get_global_switch.handicap_num) {
     return `+${props.match.mc || 0}`
   } else {
-    return i18n.t('match_info.more')
+    return t('match_info.more')
   }
 })
 
@@ -75,26 +75,26 @@ const cur_video_icon = computed(() => {
     if (lss === 1) {
       cur_video_icon = {
         type: "studio",
-        text: i18n.t('common.studio'),
+        text: t('common.studio'),
       }
       //专题
     } else if (lss === 0 && !is_play) {
       cur_video_icon = {
         type: "topic",
-        text: i18n.t('common.topic'),
+        text: t('common.topic'),
       }
     }
     //主播
   } else if (tvs == 2 && status) {
     cur_video_icon = {
       type: "anchor",
-      text: i18n.t('common.anchor'),
+      text: t('common.anchor'),
     }
     //源视频                       非电竞 或者电竞有url
   } else if (mms == 2 && (varl || vurl || !is_esports) && is_play) {
     cur_video_icon = {
       type: "video",
-      text: i18n.t('common.o_video'),
+      text: t('common.o_video'),
     }
   }
   return cur_video_icon

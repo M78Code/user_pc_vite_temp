@@ -10,16 +10,22 @@
 @import url(./global/media.scss);
 @import url(./global/text-color.scss);
 
-$layout_max_width:1920px;//内容最大宽度
-$layout_min_width:1400px;//内容最大宽度
+
+$layout_max_width: 1920px; //内容最大宽度
+$layout_min_width: 1440px; //内容最大宽度
 
 $layout_menu_width: 234px; //左侧菜单宽度
 $layout_menu_width_mini: 64px; //左侧菜单mini宽度
 $layout_right_width: 441px; //右侧宽度
 
-$layout_nav_height: 60px;//导航高度
-$layout_notice_height:36px; //公告高度
-
+$layout_nav_height: 60px; //导航高度
+$layout_notice_height: 36px; //公告高度
+body,
+html {
+  max-width: $layout_max_width;
+  min-width: $layout_min_width;
+  margin: 0 auto;
+}
 $primary: #1976d2;
 $secondary: #26a69a;
 $accent: #9c27b0;
