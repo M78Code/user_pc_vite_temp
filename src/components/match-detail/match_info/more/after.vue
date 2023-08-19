@@ -252,15 +252,15 @@
 </template>
 
 <script>
-import format_desc from "src/project/yabo/mixins/match_details/index";
-import match_date from "src/public/components/match_process/match_process.vue";
-import {get_refs_info} from "src/public/mixins/common/common.js"
+// import format_desc from "src/project/yabo/mixins/match_details/index";
+import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+import { get_refs_info } from "src/core/common-helper/common.js";
 
 export default {
   components: {
-    "match-date": match_date,
+    "match-date": MatchProcessFullVersionWapper,
   },
-  mixins: [format_desc],
+  // mixins: [format_desc],
   data() {
     return {
       el_active: "default",//左右滚动条active， right | left

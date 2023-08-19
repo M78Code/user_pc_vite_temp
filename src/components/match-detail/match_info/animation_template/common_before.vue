@@ -5,23 +5,23 @@
 -->
 <template>
   <div class="before" v-if="isRouterAlive" >
-    <div class="content" :style="{'background-color': $utils.is_eports_csid(match_info.csid) ? 'transparent' : '', 'box-shadow': $utils.is_eports_csid(match_info.csid) ? 'none' : '0 1px 15px 0 rgba(0, 0, 0, 0.3)'}" :class="{'dota-resize': $utils.is_eports_csid(match_info.csid)}">
+    <div class="content" :style="{'background-color': utils.is_eports_csid(match_info.csid) ? 'transparent' : '', 'box-shadow': utils.is_eports_csid(match_info.csid) ? 'none' : '0 1px 15px 0 rgba(0, 0, 0, 0.3)'}" :class="{'dota-resize': utils.is_eports_csid(match_info.csid)}">
       <div class="team">
         <!-- 主队 开始-->
         <div class="home">
           <!-- 主队名 -->
-          <div class="team_name home-name allow-user-select" v-tooltip="{content:_.get(match_info,'mhn'),overflow:2}">{{_.get(match_info,'mhn')}}</div>
+          <div class="team_name home-name allow-user-select" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:2}">{{lodash.get(match_info,'mhn')}}</div>
           <div class="img-wrap">
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-img="([_.get(match_info,'mhlu[0]'),_.get(match_info,'frmhn[0]'),_.get(match_info,'csid')])"
+              v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]'),lodash.get(match_info,'csid')])"
               class="team_logo"
               alt
             />
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-if="!$utils.is_eports_csid(match_info.csid) && (_.get(match_info,'mhlu') && _.get(match_info,'mhlu').length>1)"
-              v-img="([_.get(match_info,'mhlu[1]'),_.get(match_info,'frmhn[1]'),_.get(match_info,'csid')])"
+              v-if="!utils.is_eports_csid(match_info.csid) && (lodash.get(match_info,'mhlu') && lodash.get(match_info,'mhlu').length>1)"
+              v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt
             />
@@ -42,20 +42,20 @@
           <div class="img-wrap">
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-img="([_.get(match_info,'malu[0]'),_.get(match_info,'frman[0]'),_.get(match_info,'csid')])"
+              v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]'),lodash.get(match_info,'csid')])"
               class="team_logo"
               alt
             />
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-if="!$utils.is_eports_csid(match_info.csid) && _.get(match_info,'malu') && _.get(match_info,'malu').length>1"
-              v-img="([_.get(match_info,'malu[1]'),_.get(match_info,'frman[1]'),_.get(match_info,'csid')])"
+              v-if="!utils.is_eports_csid(match_info.csid) && lodash.get(match_info,'malu') && lodash.get(match_info,'malu').length>1"
+              v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt
             />
           </div>
           <!-- 客队名 -->
-          <div class="team_name away-name allow-user-select" v-tooltip="{content:_.get(match_info,'man'),overflow:2}">{{_.get(match_info,'man')}}</div>
+          <div class="team_name away-name allow-user-select" v-tooltip="{content:lodash.get(match_info,'man'),overflow:2}">{{lodash.get(match_info,'man')}}</div>
         </div>
         <!-- 客队 E -->
       </div>
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import common_before from "src/project/yabo/mixins/match_details/animation_template/common_before";
+import common_before from "./common_before";
 export default {
   mixins: [common_before],
   data() {

@@ -190,14 +190,14 @@
 </template>
 
 <script>
-import format from "src/project/yabo/mixins/match_details/index";
-import match_date from "src/public/components/match_process/match_process.vue";
+// import format from "src/project/yabo/mixins/match_details/index";
+import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 export default {
   components: {
-    "match-date": match_date,
+    "match-date": MatchProcessFullVersionWapper,
   },
   name: "football_after",
-  mixins: [format],
+  // mixins: [format],
   props: {
     match_info: Object,
   },
