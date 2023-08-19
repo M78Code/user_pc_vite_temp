@@ -63,18 +63,14 @@
 // ...mapGetters([
 //   'get_layout_list_size',
 // ]),
-import base_data from "src/public/utils/base_data/base-data.js";
+import base_data from "src/core/utils/base-data/base-data.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 import { nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
-import lodash from "lodash";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper, useProps, useComputed } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 const menu_obj = ref(base_data.vr_mi_config)

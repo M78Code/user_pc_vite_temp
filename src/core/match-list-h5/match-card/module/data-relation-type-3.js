@@ -12,7 +12,7 @@
      * 
      * 处理  56
      */
-    import MatchListData from "../../match-data/match-list-data-class.js";
+    import MatchListData from "src/core/match-data-class/match-list-data-class.js";
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"

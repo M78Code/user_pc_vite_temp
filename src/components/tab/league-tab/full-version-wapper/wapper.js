@@ -1,4 +1,4 @@
-import LeagueTab from "../common-tab-1/index.vue";
+import LeagueTab from "../league-tab-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
 const all_components_obj = {
   LeagueTab,

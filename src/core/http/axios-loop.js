@@ -37,17 +37,17 @@ export default async function axios_api_loop(opts = {}) {
   // loop_count 当前循环次数(只在内部回调时使用)
   // timer 异常调用时延时器对象(只在内部回调时使用)
   //调用接口数据
+  const {
+    axios_api,
+    params,
+    fun_then = null,
+    fun_catch = null,
+    max_loop = 3,
+    timers = 1000,
+    error_codes = [],
+  } = opts;
   try {
-    const {
-      axios_api,
-      params,
-      fun_then = null,
-      fun_catch = null,
-      max_loop = 3,
-      timers = 1000,
-      error_codes = [],
-    } = opts;
-    const res = await axios_api(params);
+     const res = await axios_api(params);
     //timer其实没啥用哦 因为下一次进来是已经执行了  也没有缓存
     //又没有取消方法 不知道以前为什么加
     clearTimeout(opts.timer);

@@ -35,43 +35,37 @@
                     :hasActivity="hasActivity" :line_width="36" />
                 <header-advertisement v-if="main_menu_toggle == 'mini'"></header-advertisement>
             </div>
-
-            <template>
-
-                <header-advertisement v-if="['normal', 'mini-normal'].includes(main_menu_toggle)"></header-advertisement>
-                <template v-if="left_menu_toggle">
-                    <div class="show-date-wrap relative-position">
-                        <headerTime />
+            <!-- 广告轮播 -->
+            <header-advertisement v-if="['normal', 'mini-normal'].includes(main_menu_toggle)"></header-advertisement>
+            <!-- 时钟 -->
+            <div v-if="left_menu_toggle" class="show-date-wrap relative-position">
+                <headerTime />
+            </div>
+            <div v-else class="user-info rows">
+                <div class="row">
+                    <div class="refresh-icon-wrap yb-flex-center">
+                        <refresh icon_name="icon-balance_refresh" class="refresh-btn" :loaded="data_loaded"
+                            :disable="!user_info" @click="get_balance" />
                     </div>
-                </template>
-                <template v-else>
-                    <div class="user-info rows">
-                        <div class="row">
-                            <div class="refresh-icon-wrap yb-flex-center">
-                                <refresh icon_name="icon-balance_refresh" class="refresh-btn" :loaded="data_loaded"
-                                    :disable="!user_info" @click="get_balance" />
-                            </div>
-                            <div class="user-name">Hi,{{ lodash.get(user_info, "uname") }}</div>
-                        </div>
-                        <div class="row">
-                            <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
-                                @click="vx_set_show_balance(!show_balance)"></span>
-                            <div v-show="!show_balance" class="balance-text-hide">
-                                ******
-                            </div>
-                            <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                                {{ format_balance }}
-                            </div>
-                        </div>
-                    </div>
-                </template>
-                <!-- 左边运营广告图 点击占位盒子 -->
-                <div class="adv-box-l"
-                    v-if="(theme.includes('theme01') && dayClickType.typeL) || (theme.includes('theme02') && nightClickType.typeL)"
-                    @click="menu_change('L')"
-                    :style="{ 'cursor': (theme.includes('theme01') && dayClickType.urlL) || (theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                    <div class="user-name">Hi,{{ lodash.get(user_info, "uname") }}</div>
                 </div>
-            </template>
+                <div class="row">
+                    <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
+                        @click="vx_set_show_balance(!show_balance)"></span>
+                    <div v-show="!show_balance" class="balance-text-hide">
+                        ******
+                    </div>
+                    <div v-show="show_balance" class="balance-text-show yb-family-odds">
+                        {{ format_balance }}
+                    </div>
+                </div>
+            </div>
+            <!-- 左边运营广告图 点击占位盒子 -->
+            <div class="adv-box-l"
+                v-if="(theme.includes('theme01') && dayClickType.typeL) || (theme.includes('theme02') && nightClickType.typeL)"
+                @click="menu_change('L')"
+                :style="{ 'cursor': (theme.includes('theme01') && dayClickType.urlL) || (theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+            </div>
         </div>
 
     </div>
@@ -164,7 +158,7 @@ const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, betInfoReducer, userReducer, languagesReducer, menuReducer, themeReducer } = store_data
+const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store_data
 /** 
  * 全局开关 default: object
  * 路径: project_path\src\store\module\global.js
@@ -187,7 +181,7 @@ const { user_info, show_balance } = userReducer
  * 语言 languages
  * 路径: src\store-redux\module\languages.js
  */
-const { lang } = languagesReducer
+const { lang } = langReducer
 /** 
  * main_menu_toggle 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * menu_collapse_status 获取菜单收起状态 default: false
@@ -249,7 +243,6 @@ const set_search_status = (data) => store.dispatch({
 function init() {
     is_hide_icon.value = ss.get('hide_logo_icon') === "1";
     set_current_index()
-    compute_colse_tips_time()
 }
 onMounted(init)
 
@@ -579,23 +572,23 @@ function menu_change(side) {
 /***
  * 运营位专题页
  */
- function special_page() {
-  api_account.get_BannersUrl({ type: 7, token: token.value }).then((res) => {
-    let code = get(res, "data.code");
-    let data = get(res, "data.data");
-    if (code == 200) {
-      if (data && data.length > 0) {
-        data.forEach((item) => {
-          if (item.tType && item.tType == 7) {
-            // 获取图片地址 TODO:
-            data_ref.special_img_url = get_file_path(item.imgUrl);
-            data_ref.special_host_url = item.hostUrl;
-            data_ref.special_url_type = item.urlType;
-          }
-        });
-      }
-    }
-  });
+function special_page() {
+    api_account.get_BannersUrl({ type: 7, token: token.value }).then((res) => {
+        let code = get(res, "data.code");
+        let data = get(res, "data.data");
+        if (code == 200) {
+            if (data && data.length > 0) {
+                data.forEach((item) => {
+                    if (item.tType && item.tType == 7) {
+                        // 获取图片地址 TODO:
+                        data_ref.special_img_url = get_file_path(item.imgUrl);
+                        data_ref.special_host_url = item.hostUrl;
+                        data_ref.special_url_type = item.urlType;
+                    }
+                });
+            }
+        }
+    });
 }
 
 /** 监听路由变化 */

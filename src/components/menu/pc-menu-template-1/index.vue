@@ -836,7 +836,7 @@ const lv_2_click_common = (detail = {}) => {
  * @param {*} mi
  */
 const lv_1_num = (mi) => {
-  console.warn("mi", mi);
+  // console.warn("mi", mi);
   if (mi == 2000) {
     //电竞
     let sub_list = props.base_data.dianjing_sublist;

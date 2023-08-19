@@ -10,6 +10,8 @@ import detailsReducer from "./module/details";
 import layoutReducer from "./module/layout";
 import globalReducer from "./module/global";
 import filterReducer from "./module/filter_store";
+import searchReducer from "./module/search";
+
 
 export {
   todosReducer,
@@ -22,4 +24,5 @@ export {
   layoutReducer,
   globalReducer,
   filterReducer,
+  searchReducer,
 };

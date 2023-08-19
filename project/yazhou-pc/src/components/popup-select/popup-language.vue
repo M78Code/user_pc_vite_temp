@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-wrap  relative-position" :class="[versions_class, { active: show_popup }]">
+    <div class="popup-wrap relative-position" :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
                 <span :class="['flag lang-active', lang]"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
@@ -50,8 +50,6 @@ const language_arr = ref(Object.keys(langs_mjs))
 const hits = ref(0)
 const langs = ref(langs_mjs)
 
-/** 语言 */
-const lang = ref('')
 /** 用户信息 */
 const get_user = ref({})
 /** true: 单关投注 false: 串关投注 */
@@ -79,19 +77,44 @@ watch(
     }
 )
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    lang.value = new_state.lang
-    get_user.value = new_state.user
-    vx_is_bet_single.value = new_state.is_bet_single
-    vx_get_bet_single_obj.value = new_state.bet_single_obj
-    vx_get_bet_obj.value = new_state.bet_obj
-    vx_get_is_virtual_bet.value = new_state.is_virtual_bet
-    vx_get_virtual_bet_obj.value = new_state.virtual_bet_obj
-    vx_cur_menu_type.value = new_state.cur_menu_type
-    global_click.value = new_state.global_click
-})
-onUnmounted(unsubscribe)
+const store_data = store.getState()
+const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store_data
+/** 
+ * 全局开关 default: object
+ * 路径: project_path\src\store\module\global.js
+ */
+const { global_switch } = globalReducer
+/** 
+ * left_menu_toggle 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
+ * is_invalid 判断是否是登录状态 default: false
+ * 路径: project_path\src\store\module\betInfo.js
+ */
+const { left_menu_toggle, is_invalid } = betInfoReducer
+/** 
+ * user_info 用户信息 default: {}
+ * show_balance 用户余额是否展示状态 default: true
+ * 路径: src\store-redux\module\user-info.js
+ */
+const { user_info, show_balance } = userReducer
+
+/** 
+ * 语言 languages
+ * 路径: src\store-redux\module\languages.js
+ */
+const { lang } = langReducer
+// const unsubscribe = store.subscribe(() => {
+//     const new_state = store.getState()
+//     lang.value = new_state.lang
+//     get_user.value = new_state.user
+//     vx_is_bet_single.value = new_state.is_bet_single
+//     vx_get_bet_single_obj.value = new_state.bet_single_obj
+//     vx_get_bet_obj.value = new_state.bet_obj
+//     vx_get_is_virtual_bet.value = new_state.is_virtual_bet
+//     vx_get_virtual_bet_obj.value = new_state.virtual_bet_obj
+//     vx_cur_menu_type.value = new_state.cur_menu_type
+//     global_click.value = new_state.global_click
+// })
+// onUnmounted(unsubscribe)
 
 
 /** 设置语言 */

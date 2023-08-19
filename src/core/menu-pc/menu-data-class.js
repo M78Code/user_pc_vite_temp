@@ -403,7 +403,7 @@ class MenuData {
         },
       },
     };
-    this.menu_config.set_left_menu_result(config);
+    this.set_left_menu_result(config);
   }
 
   // 获取数据缓存 ，用于刷新
@@ -446,7 +446,7 @@ class MenuData {
     // 菜单数据缓存
     sessionStorage.setItem(
       "is_session_menu_data",
-      JSON.stringify(menu_config || {})
+      JSON.stringify(this || {})
     );
     // 滚球热门数据 存local
     localStorage.setItem("local_1_500_count", this.compute_menu_root_cont());
@@ -575,8 +575,8 @@ class MenuData {
    * 计算当前菜单 是否显示  联赛过滤
    */
   compute_if_can_show_league_fliter() {
-    let state = !menu_config.is_esports() && !menu_config.is_virtual_sport();
-    // vx_layout_list_type!='collect' && !is_search_page &&!menu_config.is_esports() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
+    let state = !this.is_esports() && !this.is_virtual_sport();
+    // vx_layout_list_type!='collect' && !is_search_page &&!this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot && get_global_switch.filter_switch
     return state;
   }
   /**
@@ -584,11 +584,11 @@ class MenuData {
    * @returns
    */
   compute_if_can_show_sort() {
-    ////  console.warn("冠军 ",menu_config.is_guanjun() )
-    ////  console.warn("电子竞技 ",menu_config.is_esports() )
-    ////  console.warn("vr ",menu_config.is_virtual_sport() )
-    let state = !menu_config.is_esports() && !menu_config.is_virtual_sport();
-    // !is_search_page && !menu_config.is_esports() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
+    ////  console.warn("冠军 ",this.is_guanjun() )
+    ////  console.warn("电子竞技 ",this.is_esports() )
+    ////  console.warn("vr ",this.is_virtual_sport() )
+    let state = !this.is_esports() && !this.is_virtual_sport();
+    // !is_search_page && !this.is_esports() && !menu_data.is_virtual_sport && !is_show_hot &&!vx_show_filter_popup
     return state;
   }
   /**
@@ -674,7 +674,7 @@ class MenuData {
    *
    * 更新菜单整体视图
    *
-   * $menu_config.update_menu_version()
+   * $this.update_menu_version()
    */
   update_menu_version() {
     base_data_instance.menu_version = Date.now();

@@ -1,4 +1,5 @@
 import { api_details } from "src/api/index";
+import lodash from 'lodash'
 import { MITT_TYPES, useMittEmit } from "../../mitt";
 const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILDIN_CONFIG;
 let pre_load_video = {
@@ -38,9 +39,9 @@ let pre_load_video = {
       api_details.post_video_refer().then((res) => {
         // 获取视频动画域名
         let video_src =
-          DOMAIN_RESULT.live_domains[0] || _.get(res, "data.data.referUrl", "");
+          DOMAIN_RESULT.live_domains[0] || lodash.get(res, "data.data.referUrl", "");
         video_src = video_src.replace(/https?:/, "") + "?is_preload=1";
-        let animation_src = _.get(res, "data.data.aniUrl", "");
+        let animation_src = lodash.get(res, "data.data.aniUrl", "");
         let obj = {
           video_src,
           animation_src,

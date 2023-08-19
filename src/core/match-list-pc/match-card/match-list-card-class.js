@@ -1,8 +1,3 @@
-/*
- * @Author: Cable
- * @Date: 2020-09-09 12:30
- * @Description: 赛事主列表容器卡片逻辑
- */
 /**
  * 赛事主列表容器卡片逻辑 设计思路
  * 原始痛点：
@@ -57,13 +52,13 @@
  *
  */
 import MatchListCardData from "./module/match-list-card-data-class.js";
-import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
+// import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
 import { set_match_basic_data } from "./module/match-base-data.js";
 import {
   update_match_cur_card_style,
   fold_tab_play,
 } from "./module/compute-style-template.js";
-import { fold_all_league, unfold_all_league } from "./module/fold-tid.js";
+import { fold_all_league, unfold_all_league, recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
 import { test_log_data } from "./module/test-log.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./module/data-relation.js";
 import {

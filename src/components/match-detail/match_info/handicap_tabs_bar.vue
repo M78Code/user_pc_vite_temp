@@ -5,7 +5,7 @@
 -->
 <template>
   <div
-    v-if="handicap_this && handicap_this.category_list.length"
+    v-if="handicap_this && handicap_this.category_list"
     class="scroll-fixed-header wrap-tabs"
   >
     <div class="tabs-panel relative-position" ref="warp">
@@ -97,6 +97,7 @@ import {
   onUnmounted,
   watch,
   defineExpose,
+  defineEmits
 } from "vue";
 // import { mapGetters, mapActions } from "vuex";
 import { useRoute } from "vue-router";
@@ -104,6 +105,7 @@ import store from "src/store-redux/index.js";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
 import icon from "src/components/icon/icon.vue";
+import lodash from 'lodash'
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -133,9 +135,9 @@ export default defineComponent({
     const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
     // 监听状态变化
     let un_subscribe = store.subscribe(() => {
-      state = store.getState();
-      tabs_active_index.value = state.matchesReduce.tabs_active_index;
-      get_layout_statu.value = state.matchesReduce.layout_statu;
+     const state = store.getState();
+      tabs_active_index.value = state.matchesReducer.tabs_active_index;
+      get_layout_statu.value = state.matchesReducer.layout_statu;
     });
     const route = useRoute();
 

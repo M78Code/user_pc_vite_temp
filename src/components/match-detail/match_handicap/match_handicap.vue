@@ -53,7 +53,7 @@
         <!-- 详情页下方文案和返回顶部按钮 -->
         <div
           v-show="
-            ['details', 'virtual_details'].includes(useRoute.name) &&
+            ['details', 'virtual_details'].includes(route.name) &&
             lodash.get(waterfall, '[0].length')
           "
           style="margin-top: 20px"
@@ -66,7 +66,7 @@
             ></go-top>
           </div>
         </div>
-        <div class="null-bg" v-show="useRoute.name != 'details'"></div>
+        <div class="null-bg" v-show="route.name != 'details'"></div>
       </div>
     </div>
   </div>
@@ -77,12 +77,12 @@ import match_handicap from "src/components/match-detail/match_handicap/match_han
 import { useMethods } from "./use-methods";
 export default defineComponent({
   mixins: [match_handicap], //引入玩法组件
-  setup(props, event) {
-    const emit = defineEmits([
-      "set_handicap_state",
-      "on_go_top",
-      "set_handicap_this",
-    ]);
+  setup(props, context) {
+    // const emit = defineEmits([
+    //   "set_handicap_state",
+    //   "on_go_top",
+    //   "set_handicap_this",
+    // ]);
     //  ============================数据===================
     const {
       showDetails,
@@ -91,7 +91,7 @@ export default defineComponent({
       panel_status,
       get_layout_statu,
       waterfall,
-      useRoute,
+      route,
       has_thumb,
       is_component_show,
       sort_index,
@@ -99,7 +99,7 @@ export default defineComponent({
       lodash
     } = useMethods({
       props,
-      emit,
+      emit:context.emit,
     });
 
     return {
@@ -113,7 +113,7 @@ export default defineComponent({
       is_component_show,
       sort_index,
       on_go_top,
-      useRoute,
+      route,
       lodash
     };
   },

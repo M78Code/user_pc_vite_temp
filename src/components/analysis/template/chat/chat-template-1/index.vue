@@ -82,11 +82,9 @@
 
 <script setup>
 import { ref, computed, onUnmounted, defineProps } from 'vue';
-import { useRegistPropsHelper, useProps } from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
-
-const props = defineProps({ ...useProps });
+import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import {component_symbol ,need_register_props} from "../config/index.js"
+const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const dict = ref({
   //全场比分，红牌，黄牌，角球，危险进攻，球权，进攻，射门，射正球门，射骗球门
