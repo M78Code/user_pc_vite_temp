@@ -18,7 +18,7 @@ export const get_match_home_page_handpick = (params, config={}, url = "/v1/m/mat
 };
 
 // 赛果详情足球赛况 (star)
-export const get_event_result = (params, config={}, url = "/v1/m/matchDetail/getEventResultPB") => {
+export const get_event_result = (params, config={}, url = "/v1/m/matchDetail/getEventResult") => {
   return http.get(`${prefix}${url}`, params, config);
 };
 

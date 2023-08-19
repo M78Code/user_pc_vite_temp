@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import mathc_results_visuals from "project_path/src/pages/details/components/details_match_results/mathc_results_visuals.vue";  // 赛果详情 统计图形表
-import basketball_incident from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_incident";   // 详情页 或者 赛果  篮球赛事事件
-import time_line from 'project_path/src/pages/details/components/details_match_results/time_line.vue';  // 赛果详情 事件 组件
+import mathc_results_visuals from "project_path/src/pages/details/components/details-match-results/mathc-results-visuals.vue";  // 赛果详情 统计图形表
+// import basketball_incident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident";   // 详情页 或者 赛果  篮球赛事事件
+// import time_line from 'project_path/src/pages/details/components/details-match-results/time-line.vue';  // 赛果详情 事件 组件
 
-import {mapGetters} from "vuex";
+// import {mapGetters} from "vuex";
 
 export default {
   name: "match_results",

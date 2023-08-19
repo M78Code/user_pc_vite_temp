@@ -88,7 +88,7 @@
   </div>
 </template>
 <script>
-import match_date from "src/public/components/match_process/match_process.vue";
+import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 export default {
   data() {
     return {
@@ -96,7 +96,7 @@ export default {
     };
   },
   components: {
-    'match-date': match_date
+    'match-date': MatchProcessFullVersionWapper
   },
   props: {
     match_info: Object
