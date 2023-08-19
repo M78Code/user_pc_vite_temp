@@ -4,10 +4,10 @@
  * @Description: 赛事详情相关操作类
  */
 
-import { store } from "src/store/index.js"
-import { api_details } from "src/public/api/index";
-import { update_match_time } from "src/public/mixins/common/common.js"
-import utils from "src/public/utils/utils.js"
+// import { store } from "src/store/index.js"
+import { api_details } from "src/api/index";
+// import { update_match_time } from "src/core/common-helper/common.js"
+import utils from "src/core/utils/utils.js"
 export default {
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',

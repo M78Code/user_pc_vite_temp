@@ -24,7 +24,7 @@
  *
  */
 
-import MatchListData from "../../match-data/match-list-data-class.js";
+import MatchListData from "src/core/match-data-class/match-list-data-class.js";
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 

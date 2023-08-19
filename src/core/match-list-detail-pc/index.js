@@ -1,7 +1,7 @@
 
 
 
-import PageSourceData  from  "src/core/page-source/index.js"
+import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
 
 /**
  * PC  列表 和 详情  之间的 数据中间件 
