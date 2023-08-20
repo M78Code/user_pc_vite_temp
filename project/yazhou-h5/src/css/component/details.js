@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-export default {
-    // 详情页玩法集背景颜色
-    "details-tab-bg-color": "#ffffff",
-    // 详情页玩法模板背景颜色
-    "details-odds-bg-color": "#F7F9FE",
-    // 详情页顶部区域字体颜色
-    "details-header-team-name": "#ffffff",
-}
-
-=======
 export default {
   // 详情页玩法集背景颜色
   "$details-tab-bg-color": "#ffffff",
@@ -61,4 +49,3 @@ export default {
   "$details-head-top-counting-text-color": "rgba(255, 255, 255, 0.8)",
   "$details-head-top-gif-text-text-color": "#ffb001",
 };
->>>>>>> faf352835e37fbe1be7c33a80cbc536c466c0096
