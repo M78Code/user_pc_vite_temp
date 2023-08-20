@@ -244,7 +244,7 @@ class AllDomain {
       api = api.replace(/\s/g, "+");
       // const api = 'vEtkQtmX6wF8fAGV5b4UDx2mPRca2zMHLMj/YELjSwxjyhV5t0ifZDD6I0iwkpzJ'
       unDecrypt = this.get_oss_decrypt_str(api, this.DECRYPT_KEY_URL_API);
-      console.log("unDecrypt----------1", unDecrypt);
+      // console.log("unDecrypt----------1", unDecrypt);
       if (typeof unDecrypt === "string" && unDecrypt) {
         unDecrypt = unDecrypt
           .split(",")
@@ -256,7 +256,7 @@ class AllDomain {
       } else {
         current_api_flow = "use_url_api";
       }
-      console.log("unDecrypt----------2", JSON.stringify(unDecrypt));
+      // console.log("unDecrypt----------2", JSON.stringify(unDecrypt));
     }
     // console.log('unDecrypt----------2', JSON.stringify(unDecrypt_f));
     this.current_api_flow = current_api_flow;
@@ -288,7 +288,7 @@ class AllDomain {
     Promise.any(reqs)
       .then((res) => {
         // 只要有一个   请求成功
-        console.log(" // 只要有一个   请求成功----", res);
+        // console.log(" // 只要有一个   请求成功----", res);
         if (lodash.get(res, "data.code") == "0000000") {
           //当流程一： 当 使用url 内 api 参数  计算一个可用的 api   计算出来之后 后置进程
           this.begin_process_when_use_url_api_after_process(res);
@@ -301,7 +301,7 @@ class AllDomain {
       })
       .catch((error) => {
         // 所有  全部请求失败
-        console.log(error);
+        // console.log(error);
         // 需要 重定向  url  页面重新刷新  去掉  api 参数
         //去掉 api 参数 reload
         // 强制 走 oss 文件逻辑
@@ -332,8 +332,7 @@ class AllDomain {
     url_search.set("rdm", new Date().getTime());
     // 删除  api
     url_search.delete("api");
-    console.log("new url 1", new URL(location.href));
-    console.log();
+    // console.log("new url 1", new URL(location.href));
     // 旧的哈希  兼容   #/home?rdm=1660636891118 这种形式处理
     let old_hash = location.hash;
     // 新的 哈希
@@ -352,7 +351,7 @@ class AllDomain {
     let new_search = url_search.toString();
     // 新的 url
     let new_url = location.origin + "?" + new_search + new_hash;
-    console.log("new_url-", new_url);
+    // console.log("new_url-", new_url);
     // 这里因为版本不一致 ，无论如何都重定向 刷新
     location.replace(new_url);
   }
@@ -378,7 +377,7 @@ class AllDomain {
     BUILDIN_CONFIG.DOMAIN_RESULT.gr = gr;
     //OSS 对象
     let ossobj = lodash.get(res, "data.data.oss");
-    console.log("ossobj--------", ossobj);
+    // console.log("ossobj--------", ossobj);
     // 如果 有 api 但是拿不到 ossobj    ， 强制 走 oss 文件逻辑
     if (!ossobj) {
       this.force_current_api_flow_to_use_oss_file_api();
@@ -387,7 +386,7 @@ class AllDomain {
     // 第一步  拿到 可用api
     // 确保 ossobj .api 字段内  有包含 当前这个可用的  api
     let c_url = new URL(res.config.url);
-    console.log("c_url------", c_url);
+    // console.log("c_url------", c_url);
     //当前这个可用的 api
     let use_api = c_url.origin;
     // 当前唯一 已知可用的 api
@@ -475,12 +474,12 @@ class AllDomain {
             this.jixi_build_in_current_env_build_in_oss();
           }
         } else {
-          console.error("解析oss数据失败：lodash.isPlainObject(res.data)");
+          // console.error("解析oss数据失败：lodash.isPlainObject(res.data)");
           this.jixi_build_in_current_env_build_in_oss();
         }
       })
       .catch((err) => {
-        console.log("oss数据失败地址:" + oss_url);
+        // console.log("oss数据失败地址:" + oss_url);
         //直接  错误 界面遮罩
         console.error(err);
         this.jixi_build_in_current_env_build_in_oss();
@@ -538,9 +537,9 @@ class AllDomain {
    */
   get_save_domain_api() {
     let key = this.DOMAIN_API_STORAGE_KEY;
-    console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
+    // console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
     let gr = ss.get("gr");
-    console.log('sessionStorage.getItem("gr")---', gr);
+    // console.log('sessionStorage.getItem("gr")---', gr);
     // 获取持久化数据
     return ls.get(key, []);
   }
@@ -551,7 +550,7 @@ class AllDomain {
    *  逻辑 每次都走 有冗余，但是 事实上 调度次数很少 无所谓
    */
   compute_current_local_api_pool() {
-    console.log("this.GETUSERINFO_OSS-----", this.GETUSERINFO_OSS);
+    // console.log("this.GETUSERINFO_OSS-----", this.GETUSERINFO_OSS);
     //   getuserinfo 接口下的oss 配置
     if (!this.GETUSERINFO_OSS) {
       this.GETUSERINFO_OSS = { api: [] };
@@ -585,17 +584,17 @@ class AllDomain {
     });
     new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr, "api");
     //   前端本地旧的   api配置  删除新的 认为新进来的数据
-    console.log("getuserinfo_oss_api-----", getuserinfo_oss_api);
-    console.log("oss_file_api-----", oss_file_api);
-    console.log("old_local_api-----", old_local_api);
-    console.log("new_get_api_obj_arr---------", new_get_api_obj_arr);
+    // console.log("getuserinfo_oss_api-----", getuserinfo_oss_api);
+    // console.log("oss_file_api-----", oss_file_api);
+    // console.log("old_local_api-----", old_local_api);
+    // console.log("new_get_api_obj_arr---------", new_get_api_obj_arr);
     //把认为新进来的 里面的  事实上本地已存在的 删除掉，留下真正新增的
     let real_new_api =
       lodash.pullAllBy(new_get_api_obj_arr, old_local_api, "api") || [];
-    console.log("real_new_api----------", real_new_api);
+    // console.log("real_new_api----------", real_new_api);
     // 最终的 api 数组
     let final_api_pool = [...real_new_api, ...old_local_api];
-    console.log("final_api_pool---------", final_api_pool);
+    // console.log("final_api_pool---------", final_api_pool);
     //  删除 旧的
     // 当前时间
     let ct = new Date().getTime();
@@ -614,7 +613,7 @@ class AllDomain {
     });
     // 排序，按照更新时间 从大到小排列 ，新的在前，旧的在后
     local_api_pool.sort((a, b) => b.update_time - a.update_time);
-    console.log("local_api_pool---------", local_api_pool);
+    // console.log("local_api_pool---------", local_api_pool);
     let cgr = BUILDIN_CONFIG.DOMAIN_RESULT.gr;
     // 当前分组的 api
     let local_api_pool_cg = local_api_pool.filter((x) => x.group == cgr);
@@ -675,7 +674,7 @@ class AllDomain {
     let arr = local_api_pool.filter((x) => !x.api.includes(".sportxxx1zx.com"));
     if (CURRENT_ENV == "idc_online") {
       for (let gr in obj) {
-        console.log(gr);
+        // console.log(gr);
         // 增加内测域名
         arr.unshift(this.formart_api_to_obj(obj[gr], gr));
       }
@@ -690,9 +689,9 @@ class AllDomain {
    */
   get_oss_decrypt_str(word, DECRYPT_KEY) {
     let ret = "";
-    console.log("word", word);
-    console.log(word.includes(" "));
-    console.log("DECRYPT_KEY", DECRYPT_KEY);
+    // console.log("word", word);
+    // console.log(word.includes(" "));
+    // console.log("DECRYPT_KEY", DECRYPT_KEY);
     if (word) {
       try {
         // 解密
@@ -703,10 +702,10 @@ class AllDomain {
         );
         // 转字符串
         ret = CryptoJS.enc.Utf8.stringify(decrypt).toString();
-        console.log("转字符串-", ret);
+        // console.log("转字符串-", ret);
         // 去除左右空格
         ret = ret.replace(/(^\s*)|(\s*$)/g, "");
-        console.log("转字符串-", ret);
+        // console.log("转字符串-", ret);
         // 删除结尾的/
         if (ret && ret[ret.length - 1] == "/") {
           ret = ret.substr(0, ret.length - 1);
@@ -821,9 +820,9 @@ class AllDomain {
       oss_data,
       "GA" + BUILDIN_CONFIG.DOMAIN_RESULT.gr + ".api"
     );
-    console.log("api:" + JSON.stringify(api));
-    console.log("api_x:" + JSON.stringify(api_x));
-    console.log("CURRENT_ENV:" + CURRENT_ENV);
+    // console.log("api:" + JSON.stringify(api));
+    // console.log("api_x:" + JSON.stringify(api_x));
+    // console.log("CURRENT_ENV:" + CURRENT_ENV);
 
     // 因为存在 对接接口 历史遗留 ，用户 进入界面可能无 gr 参数  但是  时间戳接口可以混合调用，getuserinfo 也一样能 混合调用
     if (!api_x) {
@@ -831,9 +830,9 @@ class AllDomain {
       BUILDIN_CONFIG.DOMAIN_RESULT.gr = cgr;
       ss.set("gr", cgr);
       api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
-      console.log(
-        "分组信息错误,分组强制设置为COMMON组 api_x:" + JSON.stringify(api_x)
-      );
+      // console.log(
+      //   "分组信息错误,分组强制设置为COMMON组 api_x:" + JSON.stringify(api_x)
+      // );
     }
     api = [...api_x];
     // 存到
@@ -886,10 +885,10 @@ class AllDomain {
 
     try {
       let res = await Promise.any(reqs);
-      console.log("找到 第一个可用的 api ---返回的数据----", res);
+      // console.log("找到 第一个可用的 api ---返回的数据----", res);
       // 发现可用的域名的逻辑处理
       let c_url = new URL(res.config.url);
-      console.log("c_url------", c_url);
+      // console.log("c_url------", c_url);
       //最快的域名对象
       fastest_api_obj = this.formart_api_to_obj(
         c_url.origin,
@@ -905,8 +904,8 @@ class AllDomain {
       }
     } catch (error) {
       // 所有  全部请求失败
-      console.log(error);
-      console.log("域名检测失败地址:", api);
+      // console.log(error);
+      // console.log("域名检测失败地址:", api);
       // 失败 页面  没网 之类的 错误页面
     }
     try {
@@ -915,7 +914,7 @@ class AllDomain {
       // {status: 'fulfilled', value: value}
       // // 异步操作失败时
       // {status: 'rejected', reason: reason}
-      console.log(" 域名时间戳检测逻辑结果 results----------", results);
+      // console.log(" 域名时间戳检测逻辑结果 results----------", results);
       //失败次数
       let rejected_num = 0;
       let tr = new Date().getTime();
@@ -969,8 +968,8 @@ class AllDomain {
         }
       }
     } catch (error) {
-      console.log(error);
-      console.log("域名检测 出错:", api);
+      // console.log(error);
+      // console.log("域名检测 出错:", api);
     }
   }
 
@@ -1034,7 +1033,7 @@ class AllDomain {
     // 首次进入,发现最快的域名
     this.loaded = true;
     let api = obj.api;
-    console.log("首次加载,已经找到最快的域名:", api);
+    // console.log("首次加载,已经找到最快的域名:", api);
     // 写入可用api
     ss.set("best_api", api);
     // 挂载当前 环境能使用的 api 数组

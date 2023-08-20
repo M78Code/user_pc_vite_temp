@@ -1,4 +1,4 @@
 
-import DetailTemp7 from "./full-version-wapper/index.vue";
+import DetailTemp7 from "./detail-template7-1/index.vue";
 
 export { DetailTemp7 };

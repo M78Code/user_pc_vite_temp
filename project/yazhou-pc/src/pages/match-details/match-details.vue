@@ -6,7 +6,6 @@
 
 <template>
   <div class="details relative-position">
-    {{ load_detail_statu }}
     <!-- 加载中，无数据等显示模板 -->
     <load-data
       v-show="load_detail_statu != 'data'"
@@ -42,9 +41,8 @@
               @change_loading_state="change_loading_state"
             ></detail-header>
           </template>
-
           <!-- 玩法列表 -->
-          <template>
+          <div>
             <div
               class="col wrap-scroll"
               v-show="['data', 'loading'].includes(load_detail_statu)"
@@ -76,7 +74,7 @@
               :class="is_esports ? 'esport-list' : ''"
               v-if="['all_empty', 'new_empty'].includes(handicap_state)"
             /> -->
-          </template>
+          </div>
         </v-scroll-area>
       </div>
     </div>
@@ -112,6 +110,255 @@ const {
   on_go_top,
   set_handicap_state,
   get_mattch_details,
-  change_loading_state
+  change_loading_state,
 } = useGetConfig();
 </script>
+
+<style lang="scss" scoped>
+.details {
+  display: flex;
+  height: 100% !important;
+  .wrap-handicap {
+    display: flex;
+    flex: 1;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    border-right: 2px solid #1e232a;
+    .v-scroll-area:after {
+      border-left: none;
+    }
+  }
+  .bg-wrap-handicap {
+    background: #2b3038;
+  }
+  .smaple-left-border {
+    border-left: 6px solid #1d212a;
+  }
+  .screen {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    font-size: 12px;
+    ::v-deep .content-wrap {
+      border-top: none;
+    }
+    .match_list_hot {
+      margin-top: 200px;
+      z-index: 5;
+      &.esport-list {
+        margin-top: 250px;
+      }
+    }
+  }
+  /* ************** 顶部标题 *************** -S */
+  .wrap-title {
+    display: flex;
+    align-items: center;
+    padding: 0 10px 0 15px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: 6px 6px 0 0;
+    .group-back {
+      display: flex;
+      align-items: center;
+      .back {
+        margin-right: 11px;
+      }
+      .before_active {
+        margin-left: 3px;
+        color: #d2ac46;
+      }
+    }
+    .title {
+      flex: 1;
+      text-align: center;
+    }
+    .sr-link-icon-w {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 13px;
+      cursor: pointer;
+
+      i.icon-signal {
+        display: block;
+        width: 14px;
+        height: 13px;
+        &:before {
+          color: #abbac8;
+        }
+        &.focus-icon {
+          display: none;
+        }
+      }
+    }
+    .right-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      ::v-deep .icon-wrap {
+        // height: 15px;
+        .icon-refresh {
+          position: relative;
+          top: -2px;
+        }
+      }
+      & > span {
+        margin-right: 15px;
+        color: var(--qq--color-card-wrap-title);
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+    .refresh {
+      width: 24px;
+      height: 24px;
+      border-radius: 13px;
+      .refresh_icon {
+        .icon-balance_refresh {
+          span {
+            font-size: 18px;
+            &::before {
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+    .i-refresh {
+      width: 17px;
+    }
+    .title-label {
+      color: #d1d1d1;
+    }
+    .mr-10 {
+      margin-right: 10px;
+    }
+    .score {
+      color: #b1987f;
+    }
+    .live-source {
+      display: flex;
+      .icon {
+        padding-right: 8px;
+      }
+      .wrap_source {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:first-child {
+          margin-right: 15px;
+        }
+        .active {
+          color: #b1987f;
+        }
+      }
+    }
+  }
+
+  /* ************** 顶部标题 *************** -E */
+  /* ************** 比分扳 *************** -S */
+  .head-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 190px;
+    background-size: cover !important;
+    color: #fff;
+    .info-upd {
+      z-index: 90;
+      justify-content: center;
+      ::v-deep .match_time {
+        .timer-layout2 {
+          width: 100%;
+          min-width: 42px;
+        }
+      }
+    }
+    .hide-btn {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      padding: 5px 6px;
+      border-radius: 13px;
+      background: rgba(31, 33, 41, 0.6);
+      cursor: pointer;
+      &:hover {
+        background: rgba(31, 33, 41, 0.8);
+        color: #fff;
+      }
+    }
+  }
+
+  /* ************** 比分扳 *************** -E */
+}
+.sub-title {
+  justify-content: space-between;
+}
+.cursor {
+  cursor: pointer;
+}
+.details_data_load {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  pointer-events: none;
+  ::v-deep .yb-flex-center {
+    justify-content: unset;
+  }
+}
+.details_loading {
+  height: 3000px;
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+}
+.theme01 {
+  .esports-head-info-101 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_01_101.jpg") !important;
+  }
+  .esports-head-info-100 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_01_100.jpg") !important;
+  }
+  .esports-head-info-103 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_01_103.jpg") !important;
+  }
+  .esports-head-info-102 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_01_102.jpg") !important;
+  }
+  .details_loading {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  .match_list_hot {
+    ::v-deep .load-data-wrap {
+      background-color: #f9fbfc;
+    }
+  }
+}
+.theme02 {
+  .esports-head-info-101 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_02_101.jpg") !important;
+  }
+  .esports-head-info-100 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_02_100.jpg") !important;
+  }
+  .esports-head-info-103 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_02_103.jpg") !important;
+  }
+  .esports-head-info-102 {
+    background-image: url("~public/image/yabo/jpg/sports_bg_02_102.jpg") !important;
+  }
+  .details_loading {
+    background-color: rgba(39, 42, 51, 0.5);
+  }
+  .match_list_hot {
+    ::v-deep .load-data-wrap {
+      background-color: #181822;
+    }
+  }
+}
+</style>

@@ -41,48 +41,58 @@
         </template>
     </div>
 </template>
-  
-<script>
-import { defineComponent, ref } from 'vue'
+
+<script setup>
+import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from "vue-i18n"
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 // TODO:
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
+const { t } = useI18n()
+
+// TODO: 临时用
+const get_theme =  ref('theme01')
 
 const arr_const = {
     collect: {
         url: "image/bw3/svg/no_shouc.svg",
         url2: "image/bw3/svg/no_shouc2.svg",
-        txt: this.$root.$t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+        // '暂无关注的赛事哦',
+        txt: t('msg.msg_nodata_08'),
     },
     noWifi: {
         url: "image/bw3/svg/nowifi.svg",
-        txt: this.$root.$t('msg.msg_nodata_09'),//'网络不给力',
+        //'网络不给力',
+        txt: t('msg.msg_nodata_09'),
     },
     noMatch: {
         url: "image/bw3/svg/noMatch.svg",
         url2: "image/bw3/png/noMatch2.png",
-        txt: this.$root.$t('msg.msg_nodata_02'),//'空空如也~',
+        //'空空如也~',
+        txt: t('msg.msg_nodata_02'),
     },
     noMatchNew: {
         url: "image/bw3/png/noMatch_new.png",
         url2: "image/bw3/png/noMatch2_new.png",
-        txt: this.$root.$t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+        //'数组 对应 标题 提示文字 刷新',
+        txt: t('msg.msg_nodata_02_new'),
     },
     noMessage: {
         url: "image/bw3/svg/noMatch.svg",
         url2: "image/bw3/png/noMatch2.png",
-        txt: this.$root.$t('msg.msg_nodata_17'),//'暂无消息记录~',
+        //'暂无消息记录~',
+        txt: t('msg.msg_nodata_17'),
     },
     nolive: {
         url: "image/bw3/svg/no_livedata.svg",
         url2: "image/bw3/svg/no_livedata2.svg",
-        txt: this.$root.$t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+        //'暂无直播的赛事哦',
+        txt: t('msg.msg_nodata_14'),
     }
 }
 
-export default defineComponent({
-    name: "no_data",
-    props: {
+ const props = defineProps({
         which: {
             type: String,
             required: true
@@ -90,52 +100,44 @@ export default defineComponent({
         height: {
             required: true
         },
-    },
-    setup(props) {
-        const arr = ref(arr_const)
-        const top_height = ref(0)
-        const is_detail = ref(false)
+    })
+    const arr = ref(arr_const)
+    const top_height = ref(0)
+    const is_detail = ref(false)
 
-        const route = useRoute()
-        function init() {
-            top_height.value = window.innerHeight - props.height;
-            is_detail.value = route.name === 'category';
-        }
-        onMounted(init)
-
-        // 监听国际化语种变化,一旦变化修正国际化字符串
-        watch(
-            () => $i18n.locale,
-            () => arr.value = arr_const
-        )
-
-        function refresh_data() {
-            // TODO: mitt?
-            this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
-                text: "footer-refresh"
-            });
-        }
-
-        return {
-            arr,
-            top_height,
-            is_detail,
-            refresh_data
-        }
-    },
-    destroyed() {
-        // TODO: 暂不清楚$data用途
-        for (const key in this.$data) {
-            this.$data[key] = null
-        }
-    },
-
-    computed: {
-        ...mapGetters(['get_theme']),
+    const route = useRoute()
+    function init() {
+        top_height.value = window.innerHeight - props.height;
+        is_detail.value = route.name === 'category';
     }
-})
+    onMounted(init)
+
+    // 监听国际化语种变化,一旦变化修正国际化字符串
+    watch(
+        // () => $i18n.locale,
+        () => arr.value = arr_const
+    )
+
+    function refresh_data() {
+        // TODO: mitt?
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+            text: "footer-refresh"
+        });
+    }
+
+
+    // destroyed() {
+    //     // TODO: 暂不清楚$data用途
+    //     for (const key in this.$data) {
+    //         this.$data[key] = null
+    //     }
+    // },
+
+    // computed: {
+    //     ...mapGetters(['get_theme']),
+    // }
 </script>
-  
+
 <style lang="scss" scoped>
 .no-data {
     border-bottom: 1px solid transparent;
@@ -195,4 +197,3 @@ export default defineComponent({
     }
 }
 </style>
-  

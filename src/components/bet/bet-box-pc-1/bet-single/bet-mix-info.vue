@@ -6,7 +6,7 @@
     <template v-for="(item, index) in vx_get_bet_list">
       <!---串关投注项部分-->
       <bet-mix-item
-        :view_ctr_obj="view_ctr_obj"
+        
         :id="item"
         :item_obj="item"
         :key="`${item}_${index}`"
@@ -30,7 +30,7 @@
           ref="bet-mix-input-0"
           class="bet-input"
           :index="0"
-          :view_ctr_obj="view_ctr_obj"
+          
           :id="vx_get_bet_s_list[0]"
           :key="`0-${vx_get_bet_s_list[0]}`"
           v-if="vx_get_bet_list.length>1"          
@@ -45,13 +45,7 @@ import BetMixItem from "./bet-mix-item.vue";
 import BetMixInput from "./bet-mix-input.vue";
 import BetMixResult from "./bet-mix-result.vue";
 
-const props = defineProps({
-  //接收到的串关数据
-  view_ctr_obj: {
-    type: Object,
-    default: {}
-  }
-})
+ 
 
 </script>
 <style lang="scss" scoped>

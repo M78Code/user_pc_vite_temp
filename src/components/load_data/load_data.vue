@@ -173,7 +173,8 @@ export default {
   data() {
     return {
       // 菜单数据
-      menu_data: $menu.menu_data,
+      // menu_data: $menu.menu_data,
+      menu_data: [],
       time_out: false,
       // 用户失效标志位
       no_user:false,
@@ -183,7 +184,7 @@ export default {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = this.vx_get_is_invalid;
     // 绑定接收用户失效事件
-    this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
   // computed: {
@@ -237,7 +238,7 @@ export default {
   },
   destroyed () {
     // 解绑接收用户失效事件
-    this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 };
 </script>

@@ -84,8 +84,7 @@ import headerTime from "project_path/src/components/site-header/header-time.vue"
 import headerAdvertisement from "project_path/src/components/site-header/header-advertisement.vue"
 
 /** 工具.js */
-import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"

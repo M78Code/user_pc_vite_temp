@@ -23,13 +23,7 @@ export default {
     };
   },
   props: {
-    // 视图测控制对象
-    view_ctr_obj: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    },
+ 
     // 投注项id
     oid: {
       type: String | Object,

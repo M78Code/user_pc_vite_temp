@@ -146,7 +146,7 @@ const template_config = {
   }]
 }
 
-const get_template_config = (config) => {
+export const get_template_config = (config) => {
   // 赛事信息
   const { app_type, mid, menu_type, is_show_league, is_show_secondary_head, show_secondary_play_list, number_of_bets,
     is_collapse, is_show_no_play, show_sport_type, is_show_time_title, invok_source, sub_menu_type } = config

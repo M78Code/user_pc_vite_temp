@@ -209,7 +209,7 @@
                   }" :id="DOM_ID_SHOW && `but-bet-single-submit`" @click.stop="bet_this.submit_handle('submit')">
                     <!--一下错误码显示确定按钮点击可以二次发起请求-->
                     <template
-                      v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(bet_this.view_ctr_obj.error_code)">
+                      v-if="view_ctr_obj.compute_show_xxx()">
                       <!-- 确定 -->
                       {{ $root.$t('common.confirm') }}
                     </template>
@@ -315,13 +315,15 @@
 
 import { ref, onMounted } from "vue"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import BetData from "src/core/bet/class/bet-view-data-class.js";
+
 
 const props = defineProps({
   // 投注记录组件this
   bet_recode_this: Object,
-  // 串关组件this
-  bet_this: Object
+  bet_custom_id:String
 })
+const view_ctr_obj =  BetData.get_bet_view_data_obj_by_bet_custom_id(props.bet_custom_id)
 //是否失效
 const lock_btn = ref(false)
 

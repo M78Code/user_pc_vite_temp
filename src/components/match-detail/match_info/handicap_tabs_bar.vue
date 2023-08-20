@@ -5,7 +5,7 @@
 -->
 <template>
   <div
-    v-if="handicap_this && handicap_this.category_list"
+    v-if="category_list_length>0"
     class="scroll-fixed-header wrap-tabs"
   >
     <div class="tabs-panel relative-position" ref="warp">
@@ -18,7 +18,6 @@
         :currentIndex="currentIndex"
         :is_drag="!is_details"
       />
-      {{ handicap_this.category_list.length }}
     </div>
     <!-- 详情右侧 排序、单列、双列 || 右侧详情视频区域-->
     <div v-if="is_details || whitchDetail == 'rightDetails'" class="row">
@@ -169,7 +168,7 @@ export default defineComponent({
         if (lodash.get(props.handicap_this, "category_list")) {
           let index = lodash.findIndex(
             props.handicap_this.category_list,
-            (item) => item.id == get_tabs_active_id.value
+            (item) => item.id == tabs_active_index.value
           );
           currentIndex.value = index == -1 ? 0 : index;
         }
@@ -225,6 +224,7 @@ export default defineComponent({
       is_details,
       get_layout_statu,
       currentIndex,
+      category_list_length
     };
   },
 });

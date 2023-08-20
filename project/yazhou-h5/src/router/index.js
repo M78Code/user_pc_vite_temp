@@ -10,14 +10,14 @@ const router = createRouter({
       name: "main",
       component: () => import("project_path/src/layouts/MainLayout.vue"),
       children: [
-        //   {
-        //     path: "/match",
-        //     name: "matchList",
-        //     component: () => import("project_path/pages/match-list/index.vue"),
-        //     meta: {
-        //       keepAlive: true // 需要缓存
-        //     },
-        //   },
+          {
+            path: "/match",
+            name: "matchList",
+            component: () => import("project_path/src/pages/match-list/index.vue"),
+            meta: {
+              keepAlive: true // 需要缓存
+            },
+          },
         //   {
         //     path: "/home",
         //     name: "home",
@@ -49,6 +49,12 @@ const router = createRouter({
           name: "cathectic",
           component: () => import("project_path/src/pages/cathectic/index.vue"),
         },
+        // 赛事分析---临时
+        {
+          path: "/match_analysis",
+          name: "match_analysis",
+          component: () => import("project_path/src/pages/details/analysis-matches/index.vue"),
+        },
         {
           path: "/rule_description/:name",
           name: "rule_description",
@@ -72,7 +78,7 @@ const router = createRouter({
               path: "category/:mid?/:id?",
               name: "category",
               component: () =>
-                import("project_path/pages/details/children/category.vue"),
+                import("project_path/src/pages/details/children/category.vue"),
             },
           ],
         },

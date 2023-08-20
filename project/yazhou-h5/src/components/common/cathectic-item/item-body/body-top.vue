@@ -43,7 +43,7 @@
 import { api_betting } from "src/api/index.js";
 import { ref, onUnmounted  } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-import {get_file_path} from "src/core/utils/get-file-path.js"
+import { get_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'
 

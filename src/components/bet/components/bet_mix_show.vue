@@ -948,7 +948,7 @@ const remove_ = (id_) => {
   set_change_list({ value: id_, status: 2 });
   set_invalid_ids({ type: 2, val: value_show.mid })
   remove_item(id_);
-},
+}
 /**
  *@description 点击预约投注icon事件
  *@param del 当为false时表示删除，默认为true

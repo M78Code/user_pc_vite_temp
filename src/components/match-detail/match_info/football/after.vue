@@ -114,7 +114,7 @@
             <div class="gif-text">{{$t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="rs_hong">
         </div>
         <div class="info-data">
         
@@ -159,7 +159,7 @@
             <div class="gif-text">{{$t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="app/public/yazhou-pc/image/svg/rs_hong.svg">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -194,15 +194,20 @@
 </template>
 
 <script>
-import format from "src/project/yabo/mixins/match_details/index";
-import match_date from "src/public/components/match_process/match_process.vue";
+// import format from "src/project/yabo/mixins/match_details/index";
+import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
+import {
+  get_match_status
+} from "src/core/utils/match-list-utils.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import rs_hong from 'app/public/yazhou-pc/image/svg/rs_hong.svg'
 export default {
   components: {
-    "match-date": match_date,
+    "match-date":MatchProcessFullVersionWapper,
   },
   name: "football_after",
-  mixins: [format],
+  // mixins: [format],
   props: {
     match_info: Object,
     right:Boolean,
@@ -210,6 +215,7 @@ export default {
   data() {
     return {
       lodash,
+      rs_hong,
       timestamp: 0,//当前时间戳
       format_date: "",//倒计时秒数
       percentage: "",//百分比
@@ -259,10 +265,7 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      this.$root.$on(
-        this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
-        this.start_timer_loop
-      );
+      useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop)
     },
     start_timer_loop() {
       let date = this.timestamp++;
@@ -280,20 +283,17 @@ export default {
     },
   },
   created(){
-    this.hide_home_goal = this.debounce(this.hide_home_goal,5000)
-    this.hide_away_goal = this.debounce(this.hide_away_goal,5000)
-    this.hide_home_red = this.debounce(this.hide_home_red,5000)
-    this.hide_away_red = this.debounce(this.hide_away_red,5000)
+    this.hide_home_goal = this.lodash.debounce(this.hide_home_goal,5000)
+    this.hide_away_goal = this.lodash.debounce(this.hide_away_goal,5000)
+    this.hide_home_red = this.lodash.debounce(this.hide_home_red,5000)
+    this.hide_away_red = this.lodash.debounce(this.hide_away_red,5000)
   },
   destroyed() {
     this.debounce_throttle_cancel(this.hide_home_goal);
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
-    this.$root.$off(
-      this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
-      this.start_timer_loop
-    );
+    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop).off
   },
   watch: {
     match_info: {
@@ -318,7 +318,7 @@ export default {
         if (["34", "50", "120"].includes(res.mmp) && !lodash.get(res, 'msc.S170')) {
           res.msc.S170 = this.default;
         }
-        if (this.$utils.get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
+        if (get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
           this.timestamp = parseInt(res.mst);
           this.start_timer();
         }

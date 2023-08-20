@@ -14,6 +14,8 @@ import { api_common, api_result } from "src/api/index.js";
 // import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
 import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js";
+// 引入redux 
+import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
@@ -24,7 +26,10 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 export const category_info = () => {
   const router = useRouter();
   const route = useRoute();
+  const store_state = store.getState()
   const component_data = reactive({
+    // 测试数据
+    match_info_list: [],
     // uid 
     send_gcuuid: "",
     emitters: [],
@@ -39,7 +44,12 @@ export const category_info = () => {
     // 单个玩法集下的玩法数量
     playlist_length: undefined,
     // 所有数据集合
-    matchInfoCtr: new MatchInfoCtr(this),
+    matchInfoCtr: new MatchInfoCtr({
+      route,
+      get_detail_data: {
+        mid: route.params.mid
+      }
+    }),
     // dom_play元素的观察对象
     observer_: undefined,
     // 第一次进来根据数据是否折叠玩法
@@ -84,7 +94,7 @@ export const category_info = () => {
     return "get_uid";
   });
   const get_details_tabs_list = computed(() => {
-    return "get_details_tabs_list";
+    return store_state.detailsReducer.details_tabs_list || [];
   });
   const get_subscript_game_index = computed(() => {
     return "get_subscript_game_index";
@@ -104,6 +114,10 @@ export const category_info = () => {
   const get_chpid_obj = computed(() => {
     return "gt_chpid_obj";
   });
+  //押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
+  const get_bet_status = computed(() => {
+    return 0;
+  });
   const show_recommend = computed(() => {
     let flag = false;
     if (!component_data.is_loading && component_data.is_no_data) {
@@ -117,14 +131,15 @@ export const category_info = () => {
     // #TODO
     return flag;
   });
-  // component_data.matchInfoCtr.setList(Level_one_detail_odd_info());
   // 置顶列表
   const match_list_new = computed(() => {
+    // console.log("match_info_list=-===", component_data.match_info_list)
     return component_data.matchInfoCtr.listSortNew();
   });
   // 非置顶列表
   const match_list_normal = computed(() => {
-    return component_data.matchInfoCtr.listSortNormal();
+    // return component_data.matchInfoCtr.listSortNormal();
+    return component_data.match_info_list;
   });
   // 赛事id
   const match_id = computed(() => {
@@ -163,15 +178,15 @@ export const category_info = () => {
   // 点击玩法名称,隐藏或是显示玩法赔率
   const change_show = () => {
     component_data.arr_hshow = [];
-    if (Array.isArray(matchInfoCtr.list) && matchInfoCtr.list.length) {
-      let flag1 = matchInfoCtr.list.every((item) => {
+    if (Array.isArray(component_data.matchInfoCtr.list) && component_data.matchInfoCtr.list.length) {
+      let flag1 = component_data.matchInfoCtr.list.every((item) => {
         return item.hshow == "Yes";
       });
-      let flag2 = matchInfoCtr.list.every((item) => {
+      let flag2 = component_data.matchInfoCtr.list.every((item) => {
         return item.hshow == "No";
       });
       let obj_ = {};
-      matchInfoCtr.list.forEach((v_item, v_index) => {
+      component_data.matchInfoCtr.list.forEach((v_item, v_index) => {
         obj_.topKey = v_item.topKey;
         obj_.hshow = v_item.hshow;
         component_data.arr_hshow.push(obj_);
@@ -201,7 +216,7 @@ export const category_info = () => {
     if (item && item.hl && item.hl.length) {
       item.hl.forEach((item2) => {
         if (item2.hid) {
-          matchInfoCtr.hl_obj[item2.hid] = item2;
+          component_data.matchInfoCtr.hl_obj[item2.hid] = item2;
         }
         if (item2 && item2.ol && item2.ol.length) {
           item2.ol.forEach((item3) => {
@@ -242,8 +257,8 @@ export const category_info = () => {
   const get_details_data_cache_fillter = (all_data) => {
     const mcid =
       get_details_item.value || (route.params.csid ? "" : route.params.mcid);
-    const findItme = get_details_tabs_list.find((item) => item.id == mcid);
-    // console.log(findItme,"findItme");
+    const findItme = get_details_tabs_list.value.find((item) => item.id == mcid) || {};
+    console.log(findItme,"findItme");
     const { plays = [], round = "" } = findItme;
 
     // console.log(get_chpid_obj,"set_chpid_objset_chpid_obj");
@@ -290,19 +305,21 @@ export const category_info = () => {
    * @returns {Promise<void>}
    */
   const initEvent = async (to_refresh, init_req) => {
+    // debugger
     if (to_refresh) {
       to_refresh = to_refresh;
     } else {
       component_data.arr_hshow = [];
     }
-
     let params = {
       // 赛果，赛果详情默认采用0，即是拉取所有的赛果
       // mcid: ['result_details', 'match_result'].includes(route.name) ? 0 : get_details_item || (route.params.csid?'':route.params.mcid), // 玩法集id
       // 2023/3/4 普通赛事,电竞详情拉取所有玩法集数据
       mcid: 0,
-      mid: match_id.value, // 赛事id
-      cuid: get_uid.value, // userId或者uuid
+      // mid: match_id.value, // 赛事id
+      // cuid: get_uid.value, // userId或者uuid
+      cuid: '507708033232540302',
+      mid: route.params.mid,
       // round: get_menu_type == 3000 ? (get_details_tabs_list && get_details_tabs_list[get_subscript_game_index] && get_details_tabs_list[get_subscript_game_index].round) : null
       round: null,
     };
@@ -317,6 +334,7 @@ export const category_info = () => {
     }
 
     component_data.is_loading = to_refresh !== "hide_loading";
+    // #TODO 
     const tabs_active_data_cache =
       get_details_data_cache.value[
         `${match_id.value}-${get_details_item.value}`
@@ -333,7 +351,6 @@ export const category_info = () => {
       : api_common.get_matchDetail_getMatchOddsInfo;
     component_data.send_gcuuid = uid();
     params.gcuuid = component_data.send_gcuuid;
-
     // console.log(params,"paramsparamsparams");
 
     let temp = [];
@@ -375,8 +392,7 @@ export const category_info = () => {
           },
         };
         /************** 响应成功则继续往下走，失败则执行fun_catch **************/
-        const res = await axios_api_loop(_obj);
-
+        const { data: res } = await axios_api_loop(_obj);
         if (component_data.send_gcuuid != res.gcuuid) {
           return;
         }
@@ -397,6 +413,8 @@ export const category_info = () => {
             chpid_obj[item.chpid] = item.chpid;
           }
         });
+        component_data.matchInfoCtr.setList(data);
+        component_data.match_info_list = data;
         // console.log(chpid_obj,"chpid_obj");
         // set_chpid_obj(chpid_obj)
 
@@ -448,16 +466,16 @@ export const category_info = () => {
       temp = save_hshow(temp); // 保存当前相关hshow状态;
       // 当前玩法集下数据缓存和所有的投注项
       details_data_cache[`${match_id}-${get_details_item.value}`] = temp;
-      set_details_data_cache(details_data_cache);
+      // set_details_data_cache(details_data_cache);
     } catch (err) {
       console.error(err);
     } finally {
       if (is_cache) {
         setTimeout(() => {
-          is_loading = false;
+          component_data.is_loading = false;
         }, 100);
       } else {
-        is_loading = false;
+        component_data.is_loading = false;
       }
       if (!["result_details", "match_result"].includes(route.name)) {
         // #TODO emit
@@ -468,15 +486,16 @@ export const category_info = () => {
         get_details_data_cache[`${match_id}-${get_details_item.value}`];
 
       // 当前赛事对应玩法集存在缓存数据
-      if (tabs_active_data_cache) {
-        component_data.matchInfoCtr.setList(
-          lodash.cloneDeep(tabs_active_data_cache)
-        );
-      } else {
-        // 无数据
-        component_data.is_no_data = true;
-        component_data.matchInfoCtr.setList([]);
-      }
+      // #TODO 
+      // if (tabs_active_data_cache) {
+      //   component_data.matchInfoCtr.setList(
+      //     lodash.cloneDeep(tabs_active_data_cache)
+      //   );
+      // } else {
+      //   // 无数据
+      //   component_data.is_no_data = true;
+      //   component_data.matchInfoCtr.setList([]);
+      // }
     }
 
     // return http(params).then(res => {
@@ -651,9 +670,9 @@ export const category_info = () => {
       cuid: get_uid,
       round:
         get_menu_type == 3000
-          ? get_details_tabs_list &&
-            get_details_tabs_list[get_subscript_game_index] &&
-            get_details_tabs_list[get_subscript_game_index].round
+          ? get_details_tabs_list.value &&
+            get_details_tabs_list.value[get_subscript_game_index] &&
+            get_details_tabs_list.value[get_subscript_game_index].round
           : null,
     };
     // 如果是 赛果下边的 电竞，则加 isESport 参数
@@ -680,7 +699,7 @@ export const category_info = () => {
     http(params)
       .then((res) => {
         if (component_data.send_gcuuid != res.gcuuid) return;
-        is_loading = false;
+        component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
           if (callback) callback();
           return;
@@ -688,7 +707,7 @@ export const category_info = () => {
         component_data.is_no_data = false;
         var temp = lodash.get(res, "data");
         //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
-        if (get_bet_status == 1 || get_bet_status == 7 || get_bet_status == 5) {
+        if (get_bet_status.value == 1 || get_bet_status.value == 7 || get_bet_status.value == 5) {
           update_ol(null, temp);
         }
         if (temp && temp.length) {

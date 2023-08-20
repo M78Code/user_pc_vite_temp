@@ -10,7 +10,7 @@
     <!--投注记录项部分-->
     <bet-mix-record-item
       :oid="item.playOptionsId"
-      :view_ctr_obj="view_ctr_obj"    
+          
       :item_obj="item"
       v-for="(item, index) in view_ctr_obj.order_detail_data"
       :key="item.playOptionsId"

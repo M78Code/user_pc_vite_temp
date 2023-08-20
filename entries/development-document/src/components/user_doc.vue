@@ -7,6 +7,7 @@
 <template>
   <div class="user-doc">
     <q-card class="q-my-md" flat bordered>
+      <!-- 顶部菜单 -->
       <q-tabs
         class="header-tabs"
         v-model="active_headKey"
@@ -16,24 +17,23 @@
         :breakpoint="0"
       >
         <q-tab
-          v-for="tab in headerKey"
+          v-for="tab in header_menu"
           :key="`tab-${tab}`"
-          :name="tab.tabName"
+          :name="tab.name"
           class="header-btn"
         >
           <div class="row no-wrap items-center">
-            <span class="q-mr-xs text-capitalize">{{ tab.tabName }}</span>
-            <q-badge v-if="tab.sunLen" :label="tab.sunLen" />
+            <span class="q-mr-xs text-capitalize">{{ tab.name }}</span>
+            <q-badge v-if="tab.menuLen" :label="tab.menuLen" />
           </div>
         </q-tab>
       </q-tabs>
-
       <q-separator />
-
+      <!-- 内容 -->
       <q-tab-panels v-model="active_headKey" animated>
         <q-tab-panel
-          :name="hand.tabName"
-          v-for="(hand, id) in headerKey"
+          :name="hand.name"
+          v-for="(hand, id) in header_menu"
           :key="id"
           class="q-pa-none"
         >
@@ -55,7 +55,7 @@
                   <q-tab
                     style="width: 100%"
                     class="user-doc-subtabs-item header-btn"
-                    v-for="innerTab in leftKey_data"
+                    v-for="innerTab in props_left_menu"
                     :key="`inner-tab-${innerTab.name}`"
                     :name="innerTab.name"
                   >
@@ -83,7 +83,7 @@
               >
                 <q-tab-panel
                   class="user-doc-entrys q-pa-none"
-                  v-for="innerTab in leftKey_data"
+                  v-for="innerTab in props_left_menu"
                   :name="innerTab.name"
                   :key="innerTab.name"
                 >
@@ -94,18 +94,20 @@
                     :key="index"
                     class="user-doc-entry"
                   >
+                    <!-- 标题/type类型 -->
                     <div
                       class="user-doc-entry-item col-xs-12 col-sm-12 row items-center"
                     >
                       <q-badge
                         class="user-doc-entry-pill"
                         :label="item.title"
-                        color="orange"
+                        :color="item.bcolor"
                       />
                       <div class="user-doc-entry-type q-ml-xs">
                         ：{{ item.type }}
                       </div>
                     </div>
+                    <!-- 内容 -->
                     <div class="user-doc-entry-item col-xs-12 col-sm-12">
                       <div class="entry-item-row-type q-mt-xs" v-if="item.desc">
                         <div>描述</div>
@@ -143,174 +145,10 @@
                         <div>属性</div>
                         <div class="q-ml-md">
                           <div
-                            class="item-definition"
                             v-for="(defin, idx) in item.definition"
                             :key="idx"
                           >
-                            <div
-                              class="col-xs-12 col-sm-12 row items-center item-definition-title"
-                            >
-                              <q-badge
-                                class="item-definition-title-pill"
-                                :label="defin.key"
-                                color="secondary"
-                              />
-                              <div class="item-definition-title-type q-ml-xs">
-                                ：{{ defin.type }}
-                              </div>
-                            </div>
-                            <div class="item-definition-content">
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.desc"
-                              >
-                                <div>描述</div>
-                                <div class="item-desc">{{ defin.desc }}</div>
-                              </div>
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.default"
-                              >
-                                <div>默认值</div>
-                                <div class="q-ml-md row">
-                                  <div class="item-examples">
-                                    {{ defin.default }}
-                                  </div>
-                                </div>
-                              </div>
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.values"
-                              >
-                                <div>接受的值</div>
-                                <div class="q-ml-md row">
-                                  <div
-                                    class="item-examples"
-                                    v-for="(vals, i) in defin.values"
-                                    :key="i"
-                                  >
-                                    {{ vals }}
-                                  </div>
-                                </div>
-                              </div>
-
-                              <!-- 属性-参数 -->
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.params"
-                              >
-                                <div>参数</div>
-                                <div class="q-ml-md">
-                                  <div
-                                    class="item-definition"
-                                    v-for="(dparms, x) in defin.params"
-                                    :key="x"
-                                  >
-                                    <div
-                                      class="col-xs-12 col-sm-12 row items-center item-definition-title"
-                                    >
-                                      <q-badge
-                                        class="item-definition-title-pill"
-                                        :label="dparms.key"
-                                        color="orange"
-                                      />
-                                      <div
-                                        class="item-definition-title-type q-ml-xs"
-                                      >
-                                        ：{{ dparms.type }}
-                                      </div>
-                                    </div>
-                                    <div class="item-definition-content">
-                                      <div
-                                        class="entry-item-row-type q-mt-xs"
-                                        v-if="dparms.desc"
-                                      >
-                                        <div>描述</div>
-                                        <div class="item-desc">
-                                          {{ dparms.desc }}
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div
-                                          class="entry-item-row-type q-mt-xs"
-                                          v-if="dparms.examples"
-                                        >
-                                          <div>例子</div>
-                                          <div class="q-ml-md row">
-                                            <div
-                                              class="item-examples"
-                                              v-for="(m, i) in dparms.examples"
-                                              :key="i"
-                                            >
-                                              {{ m }}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <!-- 属性-返回 -->
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.returns"
-                              >
-                                <div>
-                                  返回 &nbsp;&lt;{{
-                                    defin.returns.type
-                                  }}&gt;&nbsp;
-                                </div>
-                                <div class="q-ml-md">
-                                  <div class="item-definition">
-                                    <div class="item-definition-content">
-                                      <div
-                                        class="entry-item-row-type q-mt-xs"
-                                        v-if="defin.returns.desc"
-                                      >
-                                        <div>描述</div>
-                                        <div class="item-desc">
-                                          {{ defin.returns.desc }}
-                                        </div>
-                                      </div>
-                                      <div
-                                        class="entry-item-row-type q-mt-xs"
-                                        v-if="defin.returns.examples"
-                                      >
-                                        <div>例子</div>
-                                        <div class="q-ml-md row">
-                                          <div
-                                            class="item-examples"
-                                            v-for="(detx, di) in defin.returns
-                                              .examples"
-                                            :key="di"
-                                          >
-                                            {{ detx }}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="defin.examples"
-                              >
-                                <div>例子</div>
-                                <div class="q-ml-md row">
-                                  <div
-                                    class="item-examples"
-                                    v-for="(dples, ix) in defin.examples"
-                                    :key="ix"
-                                  >
-                                    {{ dples }}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            <userProps :userData="defin"></userProps>
                           </div>
                         </div>
                       </div>
@@ -321,151 +159,8 @@
                       >
                         <div>参数</div>
                         <div class="q-ml-md">
-                          <div
-                            class="item-definition"
-                            v-for="(parms, x) in item.params"
-                            :key="x"
-                          >
-                            <div
-                              class="col-xs-12 col-sm-12 row items-center item-definition-title"
-                            >
-                              <q-badge
-                                class="item-definition-title-pill"
-                                :label="parms.key"
-                                color="accent"
-                              />
-                              <div class="item-definition-title-type q-ml-xs">
-                                ：{{ parms.type }}
-                              </div>
-                            </div>
-                            <div class="item-definition-content">
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="parms.desc"
-                              >
-                                <div>描述</div>
-                                <div class="item-desc">{{ parms.desc }}</div>
-                              </div>
-
-                              <!-- 参数-参数 -->
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="parms.params"
-                              >
-                                <div>参数</div>
-                                <div class="q-ml-md">
-                                  <div
-                                    class="item-definition"
-                                    v-for="(pps, x) in parms.params"
-                                    :key="x"
-                                  >
-                                    <div
-                                      class="col-xs-12 col-sm-12 row items-center item-definition-title"
-                                    >
-                                      <q-badge
-                                        class="item-definition-title-pill"
-                                        :label="pps.key"
-                                        color="secondary"
-                                      />
-                                      <div
-                                        class="item-definition-title-type q-ml-xs"
-                                      >
-                                        ：{{ pps.type }}
-                                      </div>
-                                    </div>
-                                    <div class="item-definition-content">
-                                      <div
-                                        class="entry-item-row-type q-mt-xs"
-                                        v-if="pps.desc"
-                                      >
-                                        <div>描述</div>
-                                        <div class="item-desc">
-                                          {{ pps.desc }}
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div
-                                          class="entry-item-row-type q-mt-xs"
-                                          v-if="pps.examples"
-                                        >
-                                          <div>例子</div>
-                                          <div class="q-ml-md row">
-                                            <div
-                                              class="item-examples"
-                                              v-for="(pms, i) in pps.examples"
-                                              :key="i"
-                                            >
-                                              {{ pms }}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <!-- 参数-返回 -->
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="parms.returns"
-                              >
-                                <div>
-                                  返回 &nbsp;&lt;{{
-                                    parms.returns.type
-                                  }}&gt;&nbsp;
-                                </div>
-                                <div class="q-ml-md">
-                                  <div class="item-definition">
-                                    <div class="item-definition-content">
-                                      <div
-                                        class="entry-item-row-type q-mt-xs"
-                                        v-if="parms.returns.desc"
-                                      >
-                                        <div>描述</div>
-                                        <div class="item-desc">
-                                          {{ parms.returns.desc }}
-                                        </div>
-                                      </div>
-                                      <div>
-                                        <div
-                                          class="entry-item-row-type q-mt-xs"
-                                          v-if="parms.returns.examples"
-                                        >
-                                          <div>例子</div>
-                                          <div class="q-ml-md row">
-                                            <div
-                                              class="item-examples"
-                                              v-for="(dex, di) in parms.returns
-                                                .examples"
-                                              :key="di"
-                                            >
-                                              {{ dex }}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div
-                                class="entry-item-row-type q-mt-xs"
-                                v-if="parms.examples"
-                              >
-                                <div>例子</div>
-                                <div class="q-ml-md row">
-                                  <div
-                                    class="item-examples"
-                                    v-for="(m, i) in parms.examples"
-                                    :key="i"
-                                  >
-                                    {{ m }}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          <div v-for="(parms, x) in item.params" :key="x">
+                            <userProps :userData="parms"></userProps>
                           </div>
                         </div>
                       </div>
@@ -549,7 +244,7 @@
                   <q-badge
                     class="item-definition-title-pill"
                     :label="eslots.title"
-                    color="orange"
+                    :color="eslots.bcolor"
                   />
                   <div
                     class="item-definition-title-type q-ml-xs"
@@ -613,91 +308,139 @@ const props = defineProps({
     default: () => [],
   },
 });
-// 顶部key
-const headerKey = ref([]);
-// 数据源
+// 顶部菜单
+const header_menu = ref([]);
+// table数据 {props:{category: []}, slots: [{}]}
 const table_data = ref({});
-// props左边分类
-const leftKey_data = ref([]);
+// props右边菜单
+const props_left_menu = ref([]);
 // 顶部选中的key
 const active_headKey = ref("props");
+// props 右侧选中的key
 const active_leftKey = ref("");
+// badge颜色
+const badge_color = [
+  "orange-8",
+  "blue-5",
+  "green-5",
+  "purple-5",
+  "cyan-5",
+  "teal-5",
+  "indigo-5",
+];
 
+// 初始化
 const init_doc = (docdata) => {
-  headerKey.value = [];
+  header_menu.value = [];
   table_data.value = {};
-  docdata?.forEach((docdata) => {
-    for (let key in docdata) {
-      let keyObjData = [];
-      // 排除
-      if (!["file_path", "meta", "leftmenu", "mixins"].includes(key)) {
-        for (let k in docdata[key]) {
-          const obj = {
-            title: key == "events" ? `@${k}` : k,
-            ...docdata[key][k],
-          };
-          keyObjData.push(obj);
-        }
-        // header数据
-        const keysObj = {
-          tabName: key,
-          sunLen: keyObjData?.length || 0,
-        };
-        headerKey.value.push(keysObj);
-        table_data.value[key] = table_filter(key, keyObjData);
+  docdata?.forEach((objs) => {
+    for (const key in objs) {
+      if (!["leftmenu", "mixins", "meta"].includes(key)) {
+        header_menu.value.push({
+          name: key,
+          menuLen: Object.keys(objs[key]).length,
+        });
+        table_data.value[key] = deepObjsArray(objs[key], key);
       }
     }
-    console.log("--table_data---", table_data.value);
   });
+  console.log("----table_data----", table_data.value);
 };
 
 /**
  * 对象数据处理
  * @param {Object} objs
+ * @param {Object} keytype  分类
+ * @param {Object} depidx  层级
  * @returns {Object|Array}
  */
-function definition_filter(objs, istype = "params") {
+function deepObjsArray(objs, keytype, depidx = 0) {
   const isObj = typeof objs === "object" && objs !== null;
-  let objData = [];
-  if (isObj) {
+  const isProps = keytype === "props";
+  let arrList = [];
+  if (isObj && !isProps) {
     for (let [key, val] of Object.entries(objs)) {
-      const isFun = val.type == "Function";
-      if (isFun) {
-        istype = "params";
+      // definition:属性  params:参数		scope:范围
+      const isdeep = Object.keys(val)?.some((v) =>
+        ["params", "definition", "scope"].includes(v)
+      );
+      let obj = {};
+      if (isdeep) {
+        Object.keys(val).forEach((item) => {
+          if (["params", "definition", "scope"].includes(item)) {
+            obj = {
+              ...val,
+              bcolor: badge_color[depidx],
+              index: depidx,
+              title: keytype == "events" && depidx == 0 ? `@${key}` : key,
+              [item]: deepObjsArray(val[item], keytype, depidx + 1),
+              type: type_text(val, keytype),
+            };
+          }
+        });
+      } else {
+        obj = {
+          ...val,
+          title: keytype == "events" && depidx == 0 ? `@${key}` : key,
+          bcolor: badge_color[depidx],
+          index: depidx,
+          type: type_text(val, keytype),
+        };
       }
-      let obj = {
-        ...val,
-        key,
-        type: type_text(val),
-        params: definition_filter(val[istype]),
-      };
-      // delete obj[istype];
-      objData.push(obj);
+      arrList.push(obj);
     }
-    return objData;
+    return arrList;
   } else {
-    return objs;
+    if (isProps) {
+      // Props数据 根据category分类     "category": "virtual-scroll|behavior"
+      return Object.entries(objs)?.reduce((prev, [key, cur]) => {
+        const cats = cur.category?.split("|");
+        cats?.forEach((item) => {
+          const curs = {
+            ...cur,
+            title: key,
+            bcolor: badge_color[0],
+            index: 0,
+            type: type_text(cur, keytype),
+            definition: deep_props_params(cur.definition, keytype),
+            params: deep_props_params(cur.params, keytype),
+          };
+          if (prev[item]) {
+            prev[item].push(curs);
+          } else {
+            prev[item] = [curs];
+          }
+        });
+        return prev;
+      }, {});
+    }
   }
 }
 
 /**
  * 类型type展示处理
  * @param {Object} objs
- * @param {Boolean} isBoolean
+ * @param {String} key  分类
  * @returns {String}
  */
-function type_text(objs, isBoolean = false) {
+function type_text(objs, key) {
+  // events/methods 首个type显示为函数   slots首个type不显示
   const isFun = objs.type == "Function";
-  // 类型是Function
-  if (isFun || isBoolean) {
-    // (rows, terms, cols, getCellValue) => Array - required!
+  const isType = ["events", "methods"].includes(key);
+  // 类型是Function  || 是events/methods && 不设置type
+  if (isFun || (isType && !objs.type)) {
+    // (rows, terms, cols, getCellValue) => Array - required!  (required!)表示参数必填
     return `(${
-      (objs.params && Object.keys(objs?.params).join(", ")) ?? ""
+      (objs.params && Object.keys(objs.params)?.join(", ")) ?? ""
     }) => ${objs.returns?.type ?? "void 0"} ${
       objs.required ? " - required!" : ""
     }`;
   } else {
-    // Element | String - required! (required!)表示参数必填
+    // slots 第一层不显示type
+    if (!objs.type) {
+      return "";
+    }
+    // Element | String - required!
     return Array.isArray(objs.type)
       ? objs.type?.join(" | ") + (objs.required ? " - required!" : "")
       : objs.type + (objs.required ? " - required!" : "");
@@ -705,77 +448,77 @@ function type_text(objs, isBoolean = false) {
 }
 
 /**
- * 表格数据处理
- * @param {String} keys  菜单键
- * @param {Array} datas
- * @returns {Array|Object}
+ * 处理props数据
+ * @param {Object} paramData
+ * @param {String} keytype 分类
+ * @param {Number} depidx 层级
+ * @returns {Array}
  */
-function table_filter(keys, datas) {
-  const arrobj = keys == "props" ? {} : [];
-  return datas.reduce((prev, cur) => {
-    // props 处理
-    if (["props"].includes(keys)) {
-      const categorys = cur.category?.split("|");
-      categorys?.map((v) => {
-        const obj1 = {
-          ...cur,
-          type: type_text(cur),
-          params: definition_filter(cur.params),
-          definition: definition_filter(cur.definition),
+function deep_props_params(paramData, keytype, depidx = 1) {
+  if (!paramData) {
+    return;
+  }
+  const isObj = typeof paramData === "object" && paramData !== null;
+  let dataList = [];
+  if (isObj) {
+    for (let [key, val] of Object.entries(paramData)) {
+      let paramObj = {};
+      // 参数
+      if (val.params && Object.keys(val.params).length) {
+        paramObj = {
+          title: key,
+          ...val,
+          bcolor: badge_color[depidx],
+          index: depidx,
+          params: deep_props_params(val.params, keytype, depidx + 1),
+          type: type_text(val, keytype),
         };
-        if (prev[v]) {
-          prev[v].push(obj1);
-        } else {
-          prev[v] = [obj1];
-        }
-      });
-    } else {
-      let scopes = {};
-      if (keys == "slots") {
-        scopes = {
-          ...cur,
-          scope: definition_filter(cur.scope, "definition"),
-        };
-      } else if (keys == "events") {
-        scopes = {
-          ...cur,
-          type: type_text(cur, keys, true),
-          params: definition_filter(cur.params, "definition"),
-        };
-      } else if (keys == "methods") {
-        scopes = {
-          ...cur,
-          type: type_text(cur, keys, true),
-          params: definition_filter(cur.params, "definition"),
+        // 属性
+      } else if (val.definition && Object.keys(val.definition).length) {
+        paramObj = {
+          ...val,
+          bcolor: badge_color[depidx],
+          index: depidx,
+          definition: deep_props_params(val.definition, keytype, depidx + 1),
+          title: key,
+          type: type_text(val, keytype),
         };
       } else {
-        scopes = {
-          ...cur,
-          params: definition_filter(cur.params, "definition"),
+        paramObj = {
+          ...val,
+          title: key,
+          bcolor: badge_color[depidx],
+          index: depidx,
+          type: type_text(val, keytype),
         };
       }
-      prev.push(scopes);
+      dataList.push(paramObj);
     }
-    return prev;
-  }, arrobj);
+  }
+  return dataList;
 }
 
+/**
+ * Props左边数据
+ * @param {String} key 分类
+ * @returns {undefined}
+ */
 const props_left = (key) => {
   for (let k in table_data.value[key]) {
     let Obj = {
       len: Object.keys(table_data.value[key][k])?.length || 0,
       name: k,
     };
-    leftKey_data.value.push(Obj);
+    props_left_menu.value.push(Obj);
   }
-  leftKey_data.value.sort((a, b) => a.name.localeCompare(b.name));
-  active_leftKey.value = leftKey_data.value[0]?.name;
+  props_left_menu.value.sort((a, b) => a.name.localeCompare(b.name));
+  active_leftKey.value = props_left_menu.value[0]?.name;
 };
 
 watch(
   () => props.docData,
   (docval) => {
-    leftKey_data.value = [];
+    props_left_menu.value = [];
     init_doc(docval);
     props_left("props");
     active_headKey.value = "props";
@@ -786,7 +529,7 @@ watch(
 watch(
   active_headKey,
   (handkey) => {
-    leftKey_data.value = [];
+    props_left_menu.value = [];
     if (handkey == "props") {
       props_left(handkey);
     }

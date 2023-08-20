@@ -63,14 +63,14 @@ onUnmounted(() => {
  * @return {undefined} undefined
  */
 function get_date_time() {
-    // let time = mx_get_remote_time();
-    // date_time.value = utc_to_gmt_no_8_ms2(time);
+    let time = mx_get_remote_time();
+    date_time.value = utc_to_gmt_no_8_ms2(time);
     timer_id.value = setInterval(() => {
         time += 1000;
-        // date_time.value = utc_to_gmt_no_8_ms2(time);
+        date_time.value = utc_to_gmt_no_8_ms2(time);
     }, 1000);
 }
-onMounted(get_date_time)
+// onMounted(get_date_time)
 
 /**
  * @description: 赛果刷新当前数据

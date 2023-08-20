@@ -1,20 +1,28 @@
-### .doc.json说明
+### .doc.json说明 
+
+##### 参数关键词说明
+> **definition**	属性
+> **params**		参数		
+> **scope**		范围		(slots插槽使用)
+> **returns** 返回值
+
+##### 配置说明
 ```
+具体参考QTable.doc.json
+
 {
   "leftmenu": {
-    "level": 1,             // 顶级分类
-    "menuName": "Quasar",  // 菜单名称
-    "sonName": "Quasar-Table"  // 子菜单名称
+    "project": 1, // 所属项目   1: 亚洲版 H5（旧版） 2:亚洲版 PC（旧版）  3:亚洲版 H5（新版） 4:亚洲版 PC（新版）
   },
   "meta": {
     "docsUrl": "https://v2.quasar.dev/vue-components/table"
   },
-  "props": {              // 分类
-    "columns": {
-      "type": "Array",    // 类型  "Function|Array"
-      "desc": "The column definitions (Array of Objects)",  // 描述/说明
-      "examples": [ "row-key=\"name\"", ":row-key=\"row => row.name\"" ],  // 示例/例子
-      "category": "column", // 分类    "column|content"
+  "props": {              // 大分类（必填）  示例：props / slots / events / methods / computedProps
+    "columns": {          // 字段（必填）
+      "type": "Array",    // 类型（必填）   示例：[ "String", "Object" ]  
+      "desc": "The column definitions (Array of Objects)",  // 描述（必填）
+      "examples": [ "desc" ],  // 示例/例子     示例： [ "row-key=\"name\"", ":row-key=\"row => row.name\"" ]
+      "category": "column", // 分类（必填）    "column|content"
       "default": "horizontal",   // 默认值
       "values": [ "ad", "da" ],  // 接受的值
       "params": {           // type==Function 函数参数  (rows, sortBy, descending) => Array
@@ -196,6 +204,12 @@
         }
       }
     }
+  },
+  "slots": {
+
+  },
+  "events": {
+
   }
 }
 
