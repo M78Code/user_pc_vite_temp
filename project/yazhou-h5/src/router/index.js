@@ -49,7 +49,7 @@ const router = createRouter({
           name: "cathectic",
           component: () => import("project_path/src/pages/cathectic/index.vue"),
         },
-        // 注单历史---临时
+        // 赛事分析---临时
         {
           path: "/match_analysis",
           name: "match_analysis",

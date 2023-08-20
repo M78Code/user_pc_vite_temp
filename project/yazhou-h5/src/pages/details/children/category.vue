@@ -35,6 +35,7 @@
       </div>
     </div>
     <!-- 详情玩法投注项有数据 -->
+    <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
         
@@ -42,7 +43,7 @@
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
-          11{{ matchInfoCtr.list }}
+          
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -90,8 +91,6 @@ import { useI18n } from "vue-i18n";
 
 // 引入加载中的组件
 // import loading from "project_path/src/components/common/loading.vue"
-// 引入处理数据的封装方法
-import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js";
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
 import { uid } from "quasar"
@@ -156,12 +155,6 @@ export default defineComponent({
       off_listeners,
     } = category_info();
 
-    component_data.matchInfoCtr = new MatchInfoCtr({
-      route,
-      get_detail_data: {
-        mid: route.params.mid
-      }
-    }),
     watch(
       () => route,
       (to, from) => {
@@ -184,7 +177,12 @@ export default defineComponent({
         if(component_data.matchInfoCtr){
           component_data.matchInfoCtr.destroy()
         }
-        component_data.matchInfoCtr = new MatchInfoCtr(this);
+        component_data.matchInfoCtr = new MatchInfoCtr({
+          route,
+          get_detail_data: {
+            mid: route.params.mid
+          }
+        });
       }
     );
     // 监听get_fewer的值

@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
 -->
 <template>
@@ -160,7 +160,7 @@
 </template>
 
 <script setup>
-import { api_result } from "src/project/api";
+import { api_result } from "src/api/index.js";
 import { computed, nextTick, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
@@ -232,9 +232,9 @@ import { useRoute } from 'vue-router'
     try {
       let parameter = {
         // 2079863足球测试id  2185843篮球测试id
-        matchInfoId: match_id, 
+        matchInfoId: match_id,
         // 主客队标识(1主队，2客队)
-        homeAway: radio_button_index + 1 
+        homeAway: radio_button_index + 1
       }
       let {code , data} = await api_result.get_match_lineup_list(parameter)
       if(code == 200 && Object.keys(data).length > 0) {

@@ -9,6 +9,13 @@ import { ref } from "vue";
 
 
 const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
+// const gongyong_status_1= ref('')
 
 
 class  BetViewData{
@@ -92,6 +99,21 @@ init(){
         bet_fail_flag: false // 投注失败标识
       }
 }
+
+
+/**
+ * 计算确定按钮显示
+ */
+
+compute_show_xxx(){
+
+ let arr=   ['0400459', '0400475', '0400486', '0400517', '0400519', '0400540']
+ 
+ 
+  return  arr.includes( this.error_code)
+
+
+}
 } 
-export default new BetViewData();
+
  

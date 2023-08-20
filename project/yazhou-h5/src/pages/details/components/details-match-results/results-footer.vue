@@ -12,25 +12,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "results_footer",
-  components: {},
-  data() {
-    return {
-      footer_list: [
-        {text: this.$root.$t('match_result.yellow_card')},
-        {text: this.$root.$t('match_result.red_card')},
-        {text: this.$root.$t('match_result.corner_kick')},
-        {text: this.$root.$t('match_result.substitution')},
-        {text: this.$root.$t('match_result.goal')},
-        {text: this.$root.$t('match_result.penalty_kick')},
-        {text: this.$root.$t('match_result.penalty_missed')},
-        {text: this.$root.$t('match_result.own_goals')}
-      ]
-    }
-  }
-};
+<script setup>
+import { useI18n } from "vue-i18n"
+import { ref } from "vue"
+const { t } = useI18n()
+const footer_list = ref([
+  {text: t('match_result.yellow_card')},
+  {text: t('match_result.red_card')},
+  {text: t('match_result.corner_kick')},
+  {text: t('match_result.substitution')},
+  {text: t('match_result.goal')},
+  {text: t('match_result.penalty_kick')},
+  {text: t('match_result.penalty_missed')},
+  {text: t('match_result.own_goals')}
+])
 </script>
 
 <style lang="scss" scoped>

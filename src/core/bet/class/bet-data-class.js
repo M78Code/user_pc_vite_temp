@@ -40,19 +40,48 @@ class BetData {
     this.is_virtual_bet = true;
     // 虚拟投注是否正在进行
     this.is_virtual_handle = false;
-    // 虚拟投注列表
-    this.virtual_bet_list = [];
-    // 虚拟投注对象
-    this.virtual_bet_obj = {};
-    // 虚拟体育串关列表
-    this.virtual_bet_s_list = [];
-    // 虚拟体育串关列表对象
-    this.virtual_bet_s_obj = {};
-    // 虚拟体育投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-    this.virtual_bet_mode = -1;
-    // 虚拟体育错误信息
-    this.virtual_error_info = {};
-    this.this.left_menu_toggle = true; // 左侧菜单的切换状态 true= 展开 false= 收缩
+ 
+    //==============================================投注之前 无注单ID=============
+    // 虚拟投注对象  VR 菜单下的那种 
+    this.virtual_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+    // 常规体育 含一部分电子赛事 
+    this.common_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+
+    // 常规体育 含一部分电子赛事 
+    this.guanjun_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+    // 常规体育 含一部分电子赛事 
+    this.dianjing_bet_obj = {
+      [bet_custom_id]:{
+        bs:{},cs:{}
+        
+      }
+    };
+   
+   //==============================================投注之后 有注单ID=============
+ 
+    // 投注后的 
+    this.orderNo_bet_obj = {
+      [bet_custom_id]:{
+        
+      }
+    };
+   ///////////////////
+
+
+ 
+ 
     // 当前电竞查询的模式 false单关模式
     this.cur_esports_mode = false;
     // 是否为合并模式
@@ -80,12 +109,57 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     //
     this.item_cs_id = 0;
     // 前端点击投注项立马生成的前端索引ID ，每个注单不论什么状态，只管用最初始的前端生成的ID 去参照对象内去转换
-    this.bet_read_write_refer_obj = {};
+    this.bet_read_write_refer_obj = {
+
+     [bet_custom_id]:{
+      // mount_point_key:'virtual_bet_obj',
+      // shuju_laiyuan: 'xiangqing',       //  
+      // shuju_laiyuan_obj:  data_souce,       //  
+      // c_csid,
+      // c_tid,
+      // c_mid,
+      // c_hid,
+      // c_oid,
+      // c_kid,
+      // c_hn,
+      // c_topKey,
+      // is_guanjun:1,  
+      // is_dianjing:1,
+      // is_common:1,
+      // is_vr:1,   // 
+      // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+      // is_pre_bet,
+
+      
+     }
+
+    };
     // 每一个投注对象 的视图控制对象
     this.all_bet_view_data_obj={
       // [bet_custom_id]:new  BetViewData()
     }
+    // 注单 到 自定义ID 的 反向映射 
+    //当前视图的注单区域的  需要显示  自定义ID 数组 
+
+ 
+    this.show_bet_custom_id_arr=[];
+    //ids 变更  ， 用这个监听 或者 发事件  
+    this.show_bet_custom_id_arr_change=1
+
+
+
+    const c_csid_map={
+      common:'csid',
+      dianjing:'csid',
+      guanjun:'csid',
+      vr_1:'csid',  //足蓝 
+      vr_2:'csidxasxsax', //
+    }
   }
+
+
+
+
   /**
    *
    * 管道负责 读写 衔接  使用对象引用类型的 原理
@@ -146,6 +220,11 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
   return bet_view_data_obj;
 }
 
+set_show_bet_custom_id_arr(){
+
+  this.show_bet_custom_id_arr=[]
+  this.show_bet_custom_id_arr_change =Date.now()
+}
 
 /**
  * 获取当前 视图展示的 投注单数据列表
@@ -153,7 +232,8 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
 get_current_show_bet_obj_arr(){
   //自己算 IDS 数组
 
-  let ids=[]
+  let ids=    this.show_bet_custom_id_arr=[];
+
   let arr=[]
 
 
