@@ -94,7 +94,6 @@
                     :key="index"
                     class="user-doc-entry"
                   >
-
                     <!-- 标题/type类型 -->
                     <div
                       class="user-doc-entry-item col-xs-12 col-sm-12 row items-center"
@@ -102,7 +101,7 @@
                       <q-badge
                         class="user-doc-entry-pill"
                         :label="item.title"
-                        color="orange"
+                        :color="item.bcolor"
                       />
                       <div class="user-doc-entry-type q-ml-xs">
                         ：{{ item.type }}
@@ -160,11 +159,8 @@
                       >
                         <div>参数</div>
                         <div class="q-ml-md">
-                          <div
-                            v-for="(parms, x) in item.params"
-                            :key="x"
-                          >
-                          <userProps :userData="parms"></userProps>
+                          <div v-for="(parms, x) in item.params" :key="x">
+                            <userProps :userData="parms"></userProps>
                           </div>
                         </div>
                       </div>
@@ -248,7 +244,7 @@
                   <q-badge
                     class="item-definition-title-pill"
                     :label="eslots.title"
-                    color="orange"
+                    :color="eslots.bcolor"
                   />
                   <div
                     class="item-definition-title-type q-ml-xs"
@@ -322,6 +318,16 @@ const props_left_menu = ref([]);
 const active_headKey = ref("props");
 // props 右侧选中的key
 const active_leftKey = ref("");
+// badge颜色
+const badge_color = [
+  "orange-8",
+  "blue-5",
+  "green-5",
+  "purple-5",
+  "cyan-5",
+  "teal-5",
+  "indigo-5",
+];
 
 // 初始化
 const init_doc = (docdata) => {
@@ -337,15 +343,18 @@ const init_doc = (docdata) => {
         table_data.value[key] = deepObjsArray(objs[key], key);
       }
     }
-  })
+  });
+  console.log("----table_data----", table_data.value);
 };
 
 /**
  * 对象数据处理
  * @param {Object} objs
+ * @param {Object} keytype  分类
+ * @param {Object} depidx  层级
  * @returns {Object|Array}
  */
- function deepObjsArray(objs, keytype) {
+function deepObjsArray(objs, keytype, depidx = 0) {
   const isObj = typeof objs === "object" && objs !== null;
   const isProps = keytype === "props";
   let arrList = [];
@@ -361,8 +370,10 @@ const init_doc = (docdata) => {
           if (["params", "definition", "scope"].includes(item)) {
             obj = {
               ...val,
-              [item]: deepObjsArray(val[item], keytype),
-              title: key,
+              bcolor: badge_color[depidx],
+              index: depidx,
+              title: keytype == "events" && depidx == 0 ? `@${key}` : key,
+              [item]: deepObjsArray(val[item], keytype, depidx + 1),
               type: type_text(val, keytype),
             };
           }
@@ -370,7 +381,9 @@ const init_doc = (docdata) => {
       } else {
         obj = {
           ...val,
-          title: key,
+          title: keytype == "events" && depidx == 0 ? `@${key}` : key,
+          bcolor: badge_color[depidx],
+          index: depidx,
           type: type_text(val, keytype),
         };
       }
@@ -379,12 +392,15 @@ const init_doc = (docdata) => {
     return arrList;
   } else {
     if (isProps) {
+      // Props数据 根据category分类     "category": "virtual-scroll|behavior"
       return Object.entries(objs)?.reduce((prev, [key, cur]) => {
         const cats = cur.category?.split("|");
         cats?.forEach((item) => {
           const curs = {
             ...cur,
             title: key,
+            bcolor: badge_color[0],
+            index: 0,
             type: type_text(cur, keytype),
             definition: deep_props_params(cur.definition, keytype),
             params: deep_props_params(cur.params, keytype),
@@ -404,7 +420,7 @@ const init_doc = (docdata) => {
 /**
  * 类型type展示处理
  * @param {Object} objs
- * @param {String} key
+ * @param {String} key  分类
  * @returns {String}
  */
 function type_text(objs, key) {
@@ -433,8 +449,12 @@ function type_text(objs, key) {
 
 /**
  * 处理props数据
+ * @param {Object} paramData
+ * @param {String} keytype 分类
+ * @param {Number} depidx 层级
+ * @returns {Array}
  */
- function deep_props_params(paramData, keytype) {
+function deep_props_params(paramData, keytype, depidx = 1) {
   if (!paramData) {
     return;
   }
@@ -448,14 +468,18 @@ function type_text(objs, key) {
         paramObj = {
           title: key,
           ...val,
-          params: deep_props_params(val.params),
+          bcolor: badge_color[depidx],
+          index: depidx,
+          params: deep_props_params(val.params, keytype, depidx + 1),
           type: type_text(val, keytype),
         };
         // 属性
       } else if (val.definition && Object.keys(val.definition).length) {
         paramObj = {
           ...val,
-          definition: deep_props_params(val.definition),
+          bcolor: badge_color[depidx],
+          index: depidx,
+          definition: deep_props_params(val.definition, keytype, depidx + 1),
           title: key,
           type: type_text(val, keytype),
         };
@@ -463,6 +487,8 @@ function type_text(objs, key) {
         paramObj = {
           ...val,
           title: key,
+          bcolor: badge_color[depidx],
+          index: depidx,
           type: type_text(val, keytype),
         };
       }
@@ -472,6 +498,11 @@ function type_text(objs, key) {
   return dataList;
 }
 
+/**
+ * Props左边数据
+ * @param {String} key 分类
+ * @returns {undefined}
+ */
 const props_left = (key) => {
   for (let k in table_data.value[key]) {
     let Obj = {
@@ -488,7 +519,6 @@ watch(
   () => props.docData,
   (docval) => {
     props_left_menu.value = [];
-    console.log('------logs-docval---', docval);
     init_doc(docval);
     props_left("props");
     active_headKey.value = "props";

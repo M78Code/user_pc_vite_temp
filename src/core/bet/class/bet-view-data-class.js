@@ -93,5 +93,5 @@ init(){
       }
 }
 } 
-
+export default new BetViewData();
  
