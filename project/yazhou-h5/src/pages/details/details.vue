@@ -472,9 +472,9 @@ export default defineComponent({
         }
       }
 
-      for (const key in $data) {
-        $data[key] = null
-      }
+      // for (const key in $data) {
+      //   $data[key] = null
+      // }
     })
     // #TODO VUEX
     //   ...mapActions([
@@ -568,12 +568,12 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-  @import "./styles/details.scss";
+  // @import "./styles/details.scss";
 </style>
 
 <style scoped lang="scss">
   /****************** 横屏投注弹窗*******************/
-  @import "./styles/details-bet.scss";
+  // @import "./styles/details-bet.scss";
 </style>
 <style scoped lang="scss">
 .details-fat {
@@ -581,7 +581,7 @@ export default defineComponent({
   // background: var(--q-color-page-bg-color-9);
 }
 .details-f {
-  background: $details-odds-bg-color;
+  // background: $details-odds-bg-color;
 }
 }
 </style>

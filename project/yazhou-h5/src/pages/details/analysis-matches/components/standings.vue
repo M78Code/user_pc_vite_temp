@@ -46,9 +46,9 @@
 
 <script setup>
 // 详情页 或者 赛果  篮球足球公共组件，杯赛 联赛表格
-// import footballStandings from "project_path/src/pages/details/analysis-matches/components/basketball-football-standings.vue"
+import footballStandings from "project_path/src/pages/details/analysis-matches/components/basketball-football-standings.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-// import historyEngagement from "project_path/src/pages/details/analysis-matches/components/history-engagement.vue"
+import historyEngagement from "project_path/src/pages/details/analysis-matches/components/history-engagement.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
 // import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
 // 详情页 或者 赛果  足球
@@ -61,15 +61,23 @@
 // import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import {api_result} from "src/project/api";
+import {api_result} from "src/api/index.js";
  // 加载中
-import loading from "project_path/src/components/common/loading";
-import { computed, ref, nextTick, onUnmounted } from 'vue'
-import loadsh from 'lodash'
+// import loading from "project_path/src/components/common/loading.vue";
+import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
+import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { useI18n } from "vue-i18n"
-
+// TODO: 临时用
+let get_detail_data = ref({
+  mid: '1',
+  csid: '1',
+  cds: ''
+})
+    let get_event_list = ref([])
+    let get_lang = ref('zh')
+    let get_analyze_show = ref(false)
   // components: {
   //   "football-standings": football_standings,
   //   "history-engagement": history_engagement,
@@ -87,33 +95,36 @@ import { useI18n } from "vue-i18n"
         {name: t('analysis_football_matches.Disk')},
         {name: t('analysis_football_matches.Technical_side')}
       ])
-  // const tabIndex = ref(0)
-  // // 基本面的数据
-  // const future_schedule_data = ref({})
-  // // 伤停情况
-  // const injury_situation_data = ref({init: null})
-  // // 盘面的数据
-  // const matchHistory_battle_dto_map = ref({init: null})
-  // // 技术面的数据
-  // const homeAwayGoal_and_coach_map = ref({init: null})
-  // const loading = ref(false)
+  const tabIndex = ref(0)
+  // 基本面的数据
+  const future_schedule_data = ref({})
+  // 伤停情况
+  const injury_situation_data = ref({init: null})
+  // 盘面的数据
+  const matchHistory_battle_dto_map = ref({init: null})
+  // 技术面的数据
+  const homeAwayGoal_and_coach_map = ref({init: null})
+  const loading = ref(false)
   const route = useRoute()
 
-  //   // 添加监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on()
+  onMounted(() => {
+    //   // 添加监听 赛事分析刷新事件
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on
 
     if(get_detail_data.csid == 1) {
       get_data_list()
     }
+  })
+
   const match_id =  computed(() => {
     // TODO: 后续修改调整 'get_detail_data'
         return route.params.mid || get_detail_data.mid
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off()
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
-    tab_list = ref([
+    tab_list.value = ref([
         {name: t('analysis_football_matches.Fundamentals')},
         {name: t('analysis_football_matches.Disk')},
         {name: t('analysis_football_matches.Technical_side')}
@@ -121,20 +132,27 @@ import { useI18n } from "vue-i18n"
   })
   const get_data_list = async() => {
       try {
-        loading = true
+        loading.value = true
         let parameter = {
            //2274159, //2274159 ,//2079863足球测试id
           standardMatchId: match_id,
           parentMenuId: 2,
-          sonMenuId: tabIndex + 1
+          sonMenuId: tabIndex.value + 1
         }
-        let {code , data} = await api_result.get_match_analysise_data(parameter)
-        loading = false
+        let results = await api_result.get_match_analysise_data(parameter)
+        let res = {}
+        if (results.status) {
+          res = results.data
+        } else {
+          res = results
+        }
+        let {code , data} = res
+        loading.value = false
         if(code == 200 && Object.keys(data).length > 0) {
-          future_schedule_data.value = loadsh.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
-          injury_situation_data.value = loadsh.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
-          matchHistory_battle_dto_map.value = loadsh.get(data, 'matchHistoryBattleDTOMap', {})
-          homeAwayGoal_and_coach_map.value = loadsh.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
+          future_schedule_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
+          injury_situation_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
+          matchHistory_battle_dto_map.value = lodash.get(data, 'matchHistoryBattleDTOMap', {})
+          homeAwayGoal_and_coach_map.value = lodash.get(data, 'homeAwayGoalAndCoachMap.sThirdMatchCoachDTOMap', {})
         }
       } catch (error) {
         console.error(error);
@@ -142,8 +160,8 @@ import { useI18n } from "vue-i18n"
       }
     }
   const tab_click = (item, i) => {
-      if(loading || tabIndex == i) return
-        tabIndex = i
+      if(loading || tabIndex.value == i) return
+        tabIndex.value = i
         future_schedule_data.value = {}
         injury_situation_data.value = {init: null}
         matchHistory_battle_dto_map.value = {init: null}
@@ -155,11 +173,11 @@ import { useI18n } from "vue-i18n"
     }
     // 刷新 当前赛事分析信息
   const refresh_match_analysis = () => {
-      const tab_index = tabIndex
-      tabIndex = -1
+      const tab_index = tabIndex.value
+      tabIndex.value = -1
 
       nextTick(() => {
-        tab_click(tab_list[tab_index], tab_index)
+        tab_click(tab_list.value[tab_index], tab_index)
       })
     }
 </script>
