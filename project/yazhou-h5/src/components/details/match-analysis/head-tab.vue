@@ -16,7 +16,7 @@
           }"
             v-show="handle_show_tab(item, i)"
         >
-          <div class="tabs-label" ref="label" @click="child_tab_click(item, i, 'is_click', '点击的')"> {{ item.name }}</div>
+          <div class="tabs-label" ref="label" @click="child_tab_click(item, i, 'is_click')"> {{ item.name }}</div>
         </li>
       </ul>
     </div>
