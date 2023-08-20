@@ -73,7 +73,7 @@
             position: absolute;
             bottom: -.33rem;
           }
-          ::v-deep .odd-column-item{
+          :deep(.odd-column-item){
             flex: unset!important;
             width: 100%;
             &.mred{
@@ -163,18 +163,18 @@
         margin-right: 0;
       }
       &.second_half, &.kill_shot {
-        ::v-deep .odd-title {
+        :deep(.odd-title) {
           display: inline-block;
           white-space: nowrap;
           transform: scale(0.9);
         }
       }
       &.ClutchGoal-os-3 {
-        ::v-deep .item-inner {
+        :deep(.item-inner) {
           display: none;
         }
       }
-      ::v-deep .odd-column-item{
+      :deep(.odd-column-item){
         flex: unset!important;
         width: 100%;
         &.mred{

@@ -1,3 +1,5 @@
+import { i18n } from 'src/boot/i18n'
+
 export const csid_map_smenu_type = {
   1: 5 ,// 足球"
   2: 7 ,// 篮球"

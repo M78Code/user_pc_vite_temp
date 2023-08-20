@@ -1,4 +1,6 @@
 import { isDate } from "lodash";
+import { i18n } from "src/boot/i18n.js"
+
 export const format_Y_M_D_H_M = function (payload) {
   if (!payload) return "";
   let time = new Date(parseInt(payload));
@@ -220,7 +222,7 @@ export const formatTime = (timestamp, fmt) => {
   try {
     // const date = new Date(parseInt(timestamp))
     const date = new Date(
-      this.$utils.format_time_zone_millisecond(parseInt(timestamp))
+     format_time_zone_millisecond(parseInt(timestamp))
     );
     let ret;
     let opt = {
@@ -274,7 +276,7 @@ export const format_date_by_manage = (value) => {
   let i = time.getDay();
   let weekday = arr[i];
   // return `${m}月${d}日 (${weekday})`;
-  return licia_format(this.$root.$t("time.time_date_2"), m, d, arr[i]);
+  return licia_format(i18n.t("time.time_date_2"), m, d, arr[i]);
 };
 export const format_day = (value, separator = "/") => {
   if (!value) {
@@ -289,7 +291,7 @@ export const format_month = (value) => {
   }
   // utc转成gmt+8
   let time = parseInt(value) + 8 * 60 * 60 * 1000;
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   separator = separator || "/";
   return `${m}${separator}${d} ${h}:${mm}:${s}`;
 };
@@ -297,7 +299,7 @@ export const format_date = (value) => {
   if (!value) {
     return "";
   }
-  let [y, m, d, h, mm, s] = this.format_date_base(value);
+  let [y, m, d, h, mm, s] = format_date_base(value);
   return `${y}-${m}-${d} ${h}:${mm}:${s}`;
 };
 export const format_date_today_base = (value) => {
@@ -314,7 +316,7 @@ export const format_week = (value) => {
   // let arr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   let i = new Date(parseInt(value)).getDay();
   // return a[i];
-  return this.$root.$t("time.time_date_week")[i];
+  return i18n.t("time.time_date_week")[i];
 };
 /**
  * @Description 时间戳转星期
@@ -323,14 +325,14 @@ export const format_week = (value) => {
  */
 export const format_week2 = (value) => {
   let i = new Date(parseInt(value)).getDay();
-  return this.$root.$t("time.time_date_week_3")[i];
+  return i18n.t("time.time_date_week_3")[i];
 };
 export const utc_to_gmt_8 = (value) => {
   if (!value) {
     return "";
   }
   let time = parseInt(value) + 8 * 60 * 60 * 1000;
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${m}/${d} ${h}:${mm}`;
 };
 export const utc_to_gmt_8_hm = (value) => {
@@ -338,7 +340,7 @@ export const utc_to_gmt_8_hm = (value) => {
     return "";
   }
   let time = parseInt(value) + 8 * 60 * 60 * 1000;
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${h}:${mm}`;
 };
 export const utc_to_gmt_8_ms = (value) => {
@@ -346,7 +348,7 @@ export const utc_to_gmt_8_ms = (value) => {
     return "";
   }
   let time = parseInt(value) + 8 * 60 * 60 * 1000;
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${mm}'${s}'`;
 };
 export const utc_to_gmt_no_8 = (value) => {
@@ -354,15 +356,15 @@ export const utc_to_gmt_no_8 = (value) => {
     return "";
   }
   let time = parseInt(value);
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${m}/${d} ${h}:${mm}`;
 };
 export const utc_to_gmt_no_8_ms2 = (value) => {
   if (!value) {
     return "";
   }
-  let time = this.$utils.format_time_zone_millisecond(parseInt(value));
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let time = format_time_zone_millisecond(parseInt(value));
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${h}:${mm}:${s}`;
 };
 export const utc_to_gmt_8_ms2 = (value) => {
@@ -370,7 +372,7 @@ export const utc_to_gmt_8_ms2 = (value) => {
     return "";
   }
   let time = parseInt(value) * 1000 + 8 * 60 * 60 * 1000;
-  let [y, m, d, h, mm, s] = this.format_date_base(time);
+  let [y, m, d, h, mm, s] = format_date_base(time);
   return `${h}:${mm}:${s}`;
 };
 export const utc_to_label_show = (value) => {
@@ -382,9 +384,9 @@ export const utc_to_label_show = (value) => {
   let time_local = new Date().getTime();
   if (time > time_local) {
     let cha_m = Math.floor((time - time_local) / (60 * 1000));
-    str = `${cha_m}` + this.$root.$t("match_info.after_start"); //分钟后开始
+    str = `${cha_m}` + i18n.t("match_info.after_start"); //分钟后开始
   } else {
-    str = this.$root.$t("match_info.match_playing"); //`已开赛`
+    str = i18n.t("match_info.match_playing"); //`已开赛`
   }
   return str;
 };
@@ -397,9 +399,9 @@ export const gmt_to_label_show = (value) => {
   let time_local = new Date().getTime();
   if (time > time_local) {
     let cha_m = Math.floor((time - time_local) / (60 * 1000));
-    str = `${cha_m}` + this.$root.$t("match_info.after_start"); //分钟后开始
+    str = `${cha_m}` + i18n.t("match_info.after_start"); //分钟后开始
   } else {
-    str = this.$root.$t("match_info.match_playing"); //`已开赛`
+    str = i18n.t("match_info.match_playing"); //`已开赛`
   }
   return str;
 };
@@ -447,16 +449,11 @@ export const format_second_ms = (second, model = "default") => {
      */
    export const  get_server_time=(callback)=> {
       let param = {};
-      this.send_gcuuid = uid();
-      param.gcuuid = this.send_gcuuid;
-      // console.log('get_server_time===',JSON.stringify(param));
-
+      const send_gcuuid = uid();
+      param.gcuuid = send_gcuuid;
       api_common.get_server_time(param).then(res => {
-        // console.log('get_server_time===res===', this.send_gcuuid == res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
-
         let gcuuid = _.get(res,'config.gcuuid')
-        if(gcuuid && this.send_gcuuid != gcuuid) {
+        if(gcuuid && send_gcuuid != gcuuid) {
           return;
         }
 
