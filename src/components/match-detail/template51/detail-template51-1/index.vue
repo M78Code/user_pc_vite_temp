@@ -83,6 +83,7 @@ const {
   curIsShow,
   HandicapTitle,
   lodash,
+  betItem
 } = useCommon({ emit, props });
 
 </script>

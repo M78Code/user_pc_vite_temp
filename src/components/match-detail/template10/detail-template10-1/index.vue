@@ -233,6 +233,7 @@ const {
   toggle_menu,
   curIsShow,
   HandicapTitle,
+  betItem,
   lodash
 } = useCommon({ emit, props });
 

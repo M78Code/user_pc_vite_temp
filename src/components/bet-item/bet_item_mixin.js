@@ -21,6 +21,7 @@ import { useI18n } from "vue-i18n";
 import ZhuGe from "src/core/http/zhuge-tag";
 import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
+import {get_odds_active}from 'src/core/bet/module/status.js'
 
 export const useGetItem = ({ props }) => {
   const route = useRoute();
@@ -130,172 +131,6 @@ export const useGetItem = ({ props }) => {
     return state.ol_data_item.ov;
   });
 
-  // =============================watch============================
-  /**
-   * 监听状态变化
-   */
-
-  watch(
-    () => ol_data.value,
-    (cur) => {
-      if (cur) {
-        let { _mhs, _hs, os } = cur;
-        state.odds_state = get_odds_state(_mhs, _hs, os);
-      }
-      assign_ol_data_item();
-    },
-    { immediate: true }
-  );
-
-  watch(
-    vx_get_cur_odd,
-    (cur) => {
-      // 投注项赔率值处理
-      let ov = lodash.get(state.ol_data_item, "ov");
-      let obv = lodash.get(state.ol_data_item, "obv");
-      format_odds(ov, obv);
-
-      // 马来和印尼盘负数显示红色
-      state.is_odds_value_red =
-        state.match_odds < 0 && ["MY", "ID"].includes(cur);
-    },
-    { immediate: true }
-  );
-  // 监听赛事ID变化 取消赔率升降
-  watch(
-    () => mid_.value,
-    () => {
-      nextTick(() => {
-        state.odds_lift = "";
-      });
-    }
-  );
-
-  // 监听投注项赔率变化
-  watch(
-    () => ol_data_item_ov.value,
-    (cur, old) => {
-      // 赔率值处理
-      format_odds(cur, 1);
-      if (state.ol_data_item) {
-        let { _mhs, _hs, os } = state.ol_data_item;
-        state.odds_state = get_odds_state(_mhs, _hs, os);
-      }
-      // 红升绿降变化
-      set_odds_lift(cur, old);
-    }
-  );
-
-  // 计算是否需要选中,用来控制热门推荐轮播是否需要继续
-  watch(
-    () => computed_bet_select.value,
-    (new_) => {
-      // 热门推荐模块是否有投注项选中选中则停止轮播,没有选中则继续轮播
-      if (props.bet_source == "hot") {
-        // 热门推荐轮播控制
-        if (new_) {
-          useMittEmit(MITT_TYPES.EMIT_HOT_STOP_PLAY);
-        } else {
-          useMittEmit(MITT_TYPES.EMIT_HOT_START_PLAY);
-        }
-      }
-    },
-    { immediate: true }
-  );
-  // 监控串关切换时设置投注项的选中
-  watch(
-    vx_get_bet_list,
-    (val) => {
-      if (state.ol_data_item) {
-        let { _mhs, _hs, os } = state.ol_data_item;
-        state.odds_state = get_odds_state(_mhs, _hs, os);
-      }
-    },
-    { immediate: true }
-  );
-
-  // 监控串关切换时设置投注项的选中
-  watch(vx_is_bet_single, (val) => {
-    if (state.ol_data_item) {
-      let { _mhs, _hs, os } = state.ol_data_item;
-      state.odds_state = get_odds_state(_mhs, _hs, os);
-    }
-  });
-
-  // 监控单关列表的投注项选中
-  watch(
-    vx_get_bet_single_list,
-    (val) => {
-      if (state.ol_data_item) {
-        let { _mhs, _hs, os } = state.ol_data_item;
-        state.odds_state = get_odds_state(_mhs, _hs, os);
-      }
-    },
-    { immediate: true }
-  );
-
-  // 监控串关切换时设置投注项的选中
-  watch(
-    vx_get_virtual_bet_list,
-    (val) => {
-      if (state.ol_data_item) {
-        let { _mhs, _hs, os } = state.ol_data_item;
-        state.odds_state = get_odds_state(_mhs, _hs, os);
-      }
-    },
-    { immediate: true }
-  );
-
-  //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
-  watch(vx_get_bet_category, (new_) => {
-    if ([2, 3].includes(new_ * 1)) {
-      store.dispatch({
-        type: "set_is_virtual_bet",
-        data: true,
-      });
-    } else {
-      store.dispatch({
-        type: "set_is_virtual_bet",
-        data: false,
-      });
-    }
-    // this.vx_virtual_bet_clear();  //TODO
-  });
-
-  /**
-   * 监听预约投注计算球头字段
-   */
-  // "vx_get_bet_appoint_obj.computed_appoint_ball_head"() {
-  //   return;
-  //   let { _mhs, _hs, os } = this.ol_data_item;
-  //   this.odds_state = this.get_odds_state(_mhs, _hs, os);
-  //   // 如果为单关
-  //   if (this.vx_is_bet_single) {
-  //     // 获取球头是否与盘口相等字段
-  //     let is_head_eq_hadicap = lodash.get(
-  //       this.vx_get_bet_appoint_obj,
-  //       "is_head_eq_hadicap"
-  //     );
-  //     // 当预约投注的球头与盘口值不相等并且此时投注项处于选中状态则取消选中
-  //     if (!is_head_eq_hadicap && this.odds_state == "active") {
-  //       this.odds_state = "";
-  //     }
-  //   }
-  // },
-
-  watch(
-    () => state.odds_state,
-    (_new, _old) => {
-      if (props.bet_source === "hot" || props.bet_source === "recent") {
-        if (_old == "active") {
-          window.sessionStorage.removeItem("_bet_source");
-        }
-        if (_new == "active") {
-          window.sessionStorage.setItem("_bet_source", props.bet_source);
-        }
-      }
-    }
-  );
 
   // ========================================methods==============================
   /**
@@ -638,6 +473,173 @@ export const useGetItem = ({ props }) => {
     }
     state.score = score;
   };
+
+   // =============================watch============================
+  /**
+   * 监听状态变化
+   */
+
+  watch(
+    () => ol_data.value,
+    (cur) => {
+      if (cur) {
+        let { _mhs, _hs, os } = cur;
+        state.odds_state = get_odds_state(_mhs, _hs, os);
+      }
+      assign_ol_data_item();
+    },
+    { immediate: true }
+  );
+
+  watch(
+    vx_get_cur_odd,
+    (cur) => {
+      // 投注项赔率值处理
+      let ov = lodash.get(state.ol_data_item, "ov");
+      let obv = lodash.get(state.ol_data_item, "obv");
+      format_odds(ov, obv);
+
+      // 马来和印尼盘负数显示红色
+      state.is_odds_value_red =
+        state.match_odds < 0 && ["MY", "ID"].includes(cur);
+    },
+    { immediate: true }
+  );
+  // 监听赛事ID变化 取消赔率升降
+  watch(
+    () => mid_.value,
+    () => {
+      nextTick(() => {
+        state.odds_lift = "";
+      });
+    }
+  );
+
+  // 监听投注项赔率变化
+  watch(
+    () => ol_data_item_ov.value,
+    (cur, old) => {
+      // 赔率值处理
+      format_odds(cur, 1);
+      if (state.ol_data_item) {
+        let { _mhs, _hs, os } = state.ol_data_item;
+        state.odds_state = get_odds_state(_mhs, _hs, os);
+      }
+      // 红升绿降变化
+      set_odds_lift(cur, old);
+    }
+  );
+
+  // 计算是否需要选中,用来控制热门推荐轮播是否需要继续
+  watch(
+    () => computed_bet_select.value,
+    (new_) => {
+      // 热门推荐模块是否有投注项选中选中则停止轮播,没有选中则继续轮播
+      if (props.bet_source == "hot") {
+        // 热门推荐轮播控制
+        if (new_) {
+          useMittEmit(MITT_TYPES.EMIT_HOT_STOP_PLAY);
+        } else {
+          useMittEmit(MITT_TYPES.EMIT_HOT_START_PLAY);
+        }
+      }
+    },
+    { immediate: true }
+  );
+  // 监控串关切换时设置投注项的选中
+  watch(
+    vx_get_bet_list,
+    (val) => {
+      if (state.ol_data_item) {
+        let { _mhs, _hs, os } = state.ol_data_item;
+        state.odds_state = get_odds_state(_mhs, _hs, os);
+      }
+    },
+    { immediate: true }
+  );
+
+  // 监控串关切换时设置投注项的选中
+  watch(vx_is_bet_single, (val) => {
+    if (state.ol_data_item) {
+      let { _mhs, _hs, os } = state.ol_data_item;
+      state.odds_state = get_odds_state(_mhs, _hs, os);
+    }
+  });
+
+  // 监控单关列表的投注项选中
+  watch(
+    vx_get_bet_single_list,
+    (val) => {
+      if (state.ol_data_item) {
+        let { _mhs, _hs, os } = state.ol_data_item;
+        state.odds_state = get_odds_state(_mhs, _hs, os);
+      }
+    },
+    { immediate: true }
+  );
+
+  // 监控串关切换时设置投注项的选中
+  watch(
+    vx_get_virtual_bet_list,
+    (val) => {
+      if (state.ol_data_item) {
+        let { _mhs, _hs, os } = state.ol_data_item;
+        state.odds_state = get_odds_state(_mhs, _hs, os);
+      }
+    },
+    { immediate: true }
+  );
+
+  //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
+  watch(vx_get_bet_category, (new_) => {
+    if ([2, 3].includes(new_ * 1)) {
+      store.dispatch({
+        type: "set_is_virtual_bet",
+        data: true,
+      });
+    } else {
+      store.dispatch({
+        type: "set_is_virtual_bet",
+        data: false,
+      });
+    }
+    // this.vx_virtual_bet_clear();  //TODO
+  });
+
+  /**
+   * 监听预约投注计算球头字段
+   */
+  // "vx_get_bet_appoint_obj.computed_appoint_ball_head"() {
+  //   return;
+  //   let { _mhs, _hs, os } = this.ol_data_item;
+  //   this.odds_state = this.get_odds_state(_mhs, _hs, os);
+  //   // 如果为单关
+  //   if (this.vx_is_bet_single) {
+  //     // 获取球头是否与盘口相等字段
+  //     let is_head_eq_hadicap = lodash.get(
+  //       this.vx_get_bet_appoint_obj,
+  //       "is_head_eq_hadicap"
+  //     );
+  //     // 当预约投注的球头与盘口值不相等并且此时投注项处于选中状态则取消选中
+  //     if (!is_head_eq_hadicap && this.odds_state == "active") {
+  //       this.odds_state = "";
+  //     }
+  //   }
+  // },
+
+  watch(
+    () => state.odds_state,
+    (_new, _old) => {
+      if (props.bet_source === "hot" || props.bet_source === "recent") {
+        if (_old == "active") {
+          window.sessionStorage.removeItem("_bet_source");
+        }
+        if (_new == "active") {
+          window.sessionStorage.setItem("_bet_source", props.bet_source);
+        }
+      }
+    }
+  );
 
   onUnmounted(() => {
     // un_subscribe();
