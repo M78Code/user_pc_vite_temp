@@ -114,7 +114,7 @@
             <div class="gif-text">{{$t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="app/public/yazhou-pc/image/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="rs_hong">
         </div>
         <div class="info-data">
         
@@ -201,6 +201,7 @@ import {
   get_match_status
 } from "src/core/utils/match-list-utils.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import rs_hong from 'app/public/yazhou-pc/image/svg/rs_hong.svg'
 export default {
   components: {
     "match-date":MatchProcessFullVersionWapper,
@@ -214,6 +215,7 @@ export default {
   data() {
     return {
       lodash,
+      rs_hong,
       timestamp: 0,//当前时间戳
       format_date: "",//倒计时秒数
       percentage: "",//百分比
