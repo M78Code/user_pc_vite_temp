@@ -28,7 +28,7 @@ import { debounce } from "lodash";
 /**组件*/
 // import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
-import layoutRight from "./layout-right.vue";
+// import layoutRight from "./layout-right.vue";
 import { useRoute } from "vue-router";
 import { useEventListener } from "src/core/utils/event-hook";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
