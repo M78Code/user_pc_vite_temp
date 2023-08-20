@@ -144,7 +144,7 @@
 // import format_desc from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import store from "src/store-redux/index.js";
-import { get_refs_info } from "src/core/common-helper/common.js";
+import { get_refs_info } from "src/core/bet/common-helper/common-sport.js";
 // 两局之间的局间休息--根据赛事阶段比对文档[http://lan-confluence.sportxxxr1pub.com/pages/viewpage.action?pageId=24127556]，特殊处理为 mct +1 和不显示发球方
 const _mmp = [422, 424, 426, 428, 430, 432, 434, 436, 43810, 43811, 43812, 43813, 43814, 43815, 43816, 43817, 43818, 43819];
 // 一局的上下半局间休息--不需要处理

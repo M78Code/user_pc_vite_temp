@@ -37,11 +37,6 @@ import { loadLanguageAsync } from 'src/boot/i18n'
 /** 国际化 */
 const { t } = useI18n();
 
-/** 语言列表 */
-const languageList = ref([])
-onMounted(() => languageList.value = lodash.get(user_info, 'languageList') || [])
-onUnmounted(() => languageList.value = [])
-
 /** 是否展示 */
 const show_popup = ref(false)
 /** 语言列表key集合 */
@@ -116,6 +111,10 @@ const set_open_select_time = (data) => store.dispatch({
     data
 })
 
+/** 语言列表 */
+const languageList = ref([])
+onMounted(() => languageList.value = lodash.get(user_info, 'languageList') || [])
+onUnmounted(() => languageList.value = [])
 
 /** 路由对象 */
 const route = useRoute()

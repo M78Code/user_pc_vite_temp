@@ -1,13 +1,13 @@
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "./class/bet-data-class.js";
-import BetViewData from "./class/bet-view-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
-import { get_bet_amount_param } from "./bet-amount.js";
-import { http_upd_data } from "./upd_data.js";
-import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/common-helper/common.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewData from "src/core/bet/class/bet-view-data-class.js";
+import { compute_value_by_cur_odd_type } from "../module/bet_odds_change.js";
+// import { get_bet_amount_param } from "./bet-amount.js";
+// import { http_upd_data } from "./upd_data.js";
+// import mathjs from "src/core/utils/mathjs.js";
+// import yabo_common from "src/core/common-helper/common.js";
 import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
@@ -74,17 +74,17 @@ export const get_handicap_id = () => {
  * @return {Double} 赔率
  */
 export const get_odds_value = (bet_custom_id) => {
-  let bet_obj = BetData.get_bet_obj_by_bet_custom_id(bet_custom_id);
-  id = get_id(  bet_item_id);
+  // let bet_obj = BetData.get_bet_obj_by_bet_custom_id(bet_custom_id);
+  // id = get_id(  bet_item_id);
   
-  bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
-  cs = _.get(bet_obj, "cs", false);
-  let odds_js = mathjs.divide(cs.odds_value, 100000);
-  let break_js = mathjs.divide(cs.break_odds_value, 100000);
-  if (!_.isEmpty(bet_obj) && cs) {
-    ret =  compute_value_by_cur_odd_type(odds_js, break_js, cs.odds_switch);
-  }
-  return ret;
+  // bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
+  // cs = _.get(bet_obj, "cs", false);
+  // let odds_js = mathjs.divide(cs.odds_value, 100000);
+  // let break_js = mathjs.divide(cs.break_odds_value, 100000);
+  // if (!_.isEmpty(bet_obj) && cs) {
+  //   ret =  compute_value_by_cur_odd_type(odds_js, break_js, cs.odds_switch);
+  // }
+  // return ret;
 };
 
 /**

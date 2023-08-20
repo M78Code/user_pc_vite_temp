@@ -87,7 +87,6 @@ const { searchReducer, userReducer, layoutReducer, menuReducer, globalReducer } 
 // const search_isShow = ref(searchReducer.search_isShow)
 const search_isShow = ref(false)
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
-  console.error('执行了', bool);
   search_isShow.value = bool
 })
 onUnmounted(off)
