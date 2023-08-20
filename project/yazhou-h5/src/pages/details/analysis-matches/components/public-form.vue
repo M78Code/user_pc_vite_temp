@@ -1,22 +1,22 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页  足球赛事分析 战绩 模块里边的 公共列表
 -->
 <template>
   <div class="public_form">
     <!-- 头部 -->
     <div class="header">
-      <div class="col1">{{$root.$t('analysis_football_matches.date')}}</div>
-      <div class="col2">{{$root.$t('analysis_football_matches.league')}}</div>
-      <div class="col3">{{future_schedule == 'future_schedule' ? (get_lang === 'zh' ? '比' : '') + $root.$t('analysis_football_matches.game') :$root.$t('analysis_football_matches.score')}}</div>
+      <div class="col1">{{t('analysis_football_matches.date')}}</div>
+      <div class="col2">{{t('analysis_football_matches.league')}}</div>
+      <div class="col3">{{future_schedule == 'future_schedule' ? (get_lang === 'zh' ? '比' : '') + t('analysis_football_matches.game') :t('analysis_football_matches.score')}}</div>
       <div class="col4" v-if="future_schedule == 'future_schedule'">
-        {{ $root.$t('analysis_football_matches.Interval_days') }}
+        {{ t('analysis_football_matches.Interval_days') }}
       </div>
       <div class="col4" @click="change_default_number" v-else>
-        <span v-if="default_index == 0">{{$root.$t('analysis_football_matches.results')}}</span>
-        <span v-else-if="default_index == 1">{{$root.$t('analysis_football_matches.turn_around')}}</span>
-        <span v-else-if="default_index == 2">{{$root.$t('analysis_football_matches.size')}}</span>
+        <span v-if="default_index == 0">{{t('analysis_football_matches.results')}}</span>
+        <span v-else-if="default_index == 1">{{t('analysis_football_matches.turn_around')}}</span>
+        <span v-else-if="default_index == 2">{{t('analysis_football_matches.size')}}</span>
         <i class="icon sort-flag"></i>
         <!--<img src="image/wwwassets/bw3/common/f-icon-pay-change.svg" class="sort-flag">-->
       </div>
@@ -24,7 +24,7 @@
     <!-- 主内容 -->
     <template v-if="liat_data.length">
       <div class="team-item" v-for="(item, i) in liat_data" :key="i">
-        <div class="col1 ellipsis">{{(new Date(+item.beginTime)).Format($root.$t('time5'))}}</div>
+        <div class="col1 ellipsis">{{(new Date(+item.beginTime)).Format(t('time5'))}}</div>
         <div class="col2 tournamentName">{{ item.tournamentName }}</div>
         <div class="col3 ellipsis">
           <span class="home ellipsis" :class="[item.homeTeamName == hm_index_name ? 'add_bold' :'']">{{ item.homeTeamName }}</span>
@@ -42,7 +42,7 @@
               v-if="default_index == 0"
               :class="item.result == 2 ? 'results_flat' : item.result == 3 ? 'results_lose' : 'results_win'"
           >
-          {{ item.result ==2 ? $root.$t('analysis_football_matches.flat') : item.result ==3 ? $root.$t('analysis_football_matches.negative') : $root.$t('analysis_football_matches.victory') }}
+          {{ item.result ==2 ? t('analysis_football_matches.flat') : item.result ==3 ? t('analysis_football_matches.negative') : t('analysis_football_matches.victory') }}
         </span>
           <!--盘路-->
           <span
@@ -50,10 +50,10 @@
               v-else-if="default_index == 1"
               :class="item.handicapResult ==2 ? 'flat' : item.handicapResult ==3 ? 'no_pan_road' : item.handicapResult ==4 ? 'have_pan_road' : ''"
           >
-           <!-- <template v-if="item.handicapVal">{{ item.handicapVal }}{{ item.handicapResult ==2 ? $root.$t('analysis_football_matches.level') : item.handicapResult ==3 ? $root.$t('analysis_football_matches.lose')  : item.handicapResult ==4 ? $root.$t('analysis_football_matches.win') : '' }}</template> -->
-           <template v-if="item.handicapVal">{{ item.handicapResult ==2 ? $root.$t('analysis_football_matches.level') : item.handicapResult ==3 ? $root.$t('analysis_football_matches.lose')  : item.handicapResult ==4 ? $root.$t('analysis_football_matches.win') : '' }}</template>
+           <!-- <template v-if="item.handicapVal">{{ item.handicapVal }}{{ item.handicapResult ==2 ? t('analysis_football_matches.level') : item.handicapResult ==3 ? t('analysis_football_matches.lose')  : item.handicapResult ==4 ? t('analysis_football_matches.win') : '' }}</template> -->
+           <template v-if="item.handicapVal">{{ item.handicapResult ==2 ? t('analysis_football_matches.level') : item.handicapResult ==3 ? t('analysis_football_matches.lose')  : item.handicapResult ==4 ? t('analysis_football_matches.win') : '' }}</template>
 
-          <template v-else>{{ $root.$t('analysis_football_matches.no_data') }}</template>
+          <template v-else>{{ t('analysis_football_matches.no_data') }}</template>
         </span>
           <!--大小-->
           <span
@@ -61,27 +61,30 @@
               v-else-if="default_index == 2"
               :class="item.overunderResult ==2 ? 'flat' : item.overunderResult ==3 ? 'no_big_small' : item.overunderResult ==4 ? 'have_big_small' : ''"
           >
-           <!-- <template v-if="item.overunderVal">{{ item.overunderVal }}{{ item.overunderResult ==2 ? $root.$t('analysis_football_matches.level') : item.overunderResult ==3 ? $root.$t('analysis_football_matches.small') : item.overunderResult ==4 ? $root.$t('analysis_football_matches.big') : ''}}</template> -->
-           <template v-if="item.overunderVal">{{ item.overunderResult ==2 ? $root.$t('analysis_football_matches.level') : item.overunderResult ==3 ? $root.$t('analysis_football_matches.small') : item.overunderResult ==4 ? $root.$t('analysis_football_matches.big') : ''}}</template>
+           <!-- <template v-if="item.overunderVal">{{ item.overunderVal }}{{ item.overunderResult ==2 ? t('analysis_football_matches.level') : item.overunderResult ==3 ? t('analysis_football_matches.small') : item.overunderResult ==4 ? t('analysis_football_matches.big') : ''}}</template> -->
+           <template v-if="item.overunderVal">{{ item.overunderResult ==2 ? t('analysis_football_matches.level') : item.overunderResult ==3 ? t('analysis_football_matches.small') : item.overunderResult ==4 ? t('analysis_football_matches.big') : ''}}</template>
 
-          <template v-else>{{ $root.$t('analysis_football_matches.no_data') }}</template>
+          <template v-else>{{ t('analysis_football_matches.no_data') }}</template>
         </span>
         </div>
       </div>
     </template>
     <div v-else class="team-item">
-      <div class="col1 ellipsis no-list">{{$root.$t('analysis_football_matches.no_data')}}</div>
+      <div class="col1 ellipsis no-list">{{t('analysis_football_matches.no_data')}}</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onUnmounted, watch } from 'vue'
+import { useI18n } from "vue-i18n"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
-  const props =defineProps({
+   // 国际化
+   const { t } = useI18n()
+  const props = defineProps({
     liat_data: {
       type: Number | String,
       default: null,
@@ -95,19 +98,19 @@ import { onUnmounted, watch } from 'vue'
     }
   })
   const default_index = ref(0)
-  
- const liat_data = watch(() => handler, () => {
-  liat_data = n
- },{immediate: true,deep: true})
+
+ watch(() => liat_data, (n) => {
+  liat_data.value = n
+ })
 
  const change_default_number = () => {
-    ++ default_index
-    if(this.default_index >2) {
-      default_index = 0
+    ++ default_index.value
+    if(default_index.value >2) {
+      default_index.value = 0
     }
   }
   onUnmounted(() => {
-    default_index = 0
+    default_index.value = 0
   })
   // watch: {
   //   'liat_data': {
@@ -157,10 +160,6 @@ import { onUnmounted, watch } from 'vue'
     font-size: 0.13rem;
     height: 0.48rem;
     text-align: center;
-
-    &:nth-child(odd) {
-
-    }
 
     div {
       display: flex;
@@ -241,18 +240,6 @@ import { onUnmounted, watch } from 'vue'
         border-radius: 0.02rem;
 
         font-size: 0.12rem;
-
-        &.results_flat {
-
-        }
-
-        &.results_lose {
-
-        }
-
-        &.results_win {
-
-        }
       }
 
       &.pan-road {
@@ -260,18 +247,6 @@ import { onUnmounted, watch } from 'vue'
         border-radius: 0.02rem;
 
         font-size: 0.12rem;
-
-        &.have_pan_road {
-
-        }
-
-        &.no_pan_road {
-
-        }
-
-        &.flat {
-
-        }
       }
 
       &.big-small {
@@ -282,17 +257,6 @@ import { onUnmounted, watch } from 'vue'
 
         text-align: center;
 
-        &.have_big_small {
-
-        }
-
-        &.no_big_small {
-
-        }
-
-        &.flat {
-
-        }
       }
     }
   }

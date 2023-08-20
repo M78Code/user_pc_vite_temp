@@ -7,25 +7,25 @@
   <div class="football_standings" :class="{'football_standings-empty': no_data}">
     <div class="title" v-if="ranking_data.length>0">
       <!-- 联赛类别(0:其他,1联赛,2杯赛) -->
-      {{ranking_data[0].tournamentType == 1 ? $root.$t('analysis_football_matches.league_points') : $root.$t('analysis_football_matches.cup_points') }}
+      {{ranking_data[0].tournamentType == 1 ? t('analysis_football_matches.league_points') : t('analysis_football_matches.cup_points') }}
     </div>
-    <div class="title" v-if="ranking_data.length <= 0">{{$root.$t('analysis_football_matches.league_points') }}</div>
+    <div class="title" v-if="ranking_data.length <= 0">{{t('analysis_football_matches.league_points') }}</div>
     <!-- 杯赛积分 联赛积分  二选一 -->
     <div class="table-score" v-if="ranking_data.length>0"
     :class="{'backball-table': get_detail_data.csid == 2}">
       <!-- 头部 -->
       <div class="header">
-        <div class="col1">{{$root.$t('analysis_football_matches.rank') }}</div>
-        <div class="col2">{{$root.$t('analysis_football_matches.team') }}</div>
-        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.league') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.game') }}</div>
-        <div class="col3">{{$root.$t('analysis_football_matches.victory') }}</div>
-        <div class="col3">{{$root.$t('analysis_football_matches.negative') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.flat') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.gain_loss') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.net_win') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.integral') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 2">{{$root.$t('home_popular.win_rate') }}</div>
+        <div class="col1">{{t('analysis_football_matches.rank') }}</div>
+        <div class="col2">{{t('analysis_football_matches.team') }}</div>
+        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{t('analysis_football_matches.league') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.game') }}</div>
+        <div class="col3">{{t('analysis_football_matches.victory') }}</div>
+        <div class="col3">{{t('analysis_football_matches.negative') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.flat') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.gain_loss') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.net_win') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.integral') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 2">{{t('home_popular.win_rate') }}</div>
       </div>
       <!-- 主内容 -->
       <div class="group-item">
@@ -56,18 +56,25 @@
       </span>
     </div>
     <!-- 没有数据 组件 -->
-     <div v-if="no_data" class="no-list">{{ $root.$t('common.no_data') }}</div>
+     <div v-if="no_data" class="no-list">{{ t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
-import {api_result} from "src/project/api";
-import { computed, onUnmounted } from "vue";
-import loadsh from 'lodash'
+import {api_result} from "src/api/index.js";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import lodash from 'lodash'
 import { useRoute } from 'vue-router'
+import { useI18n } from "vue-i18n"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
+// TODO: 临时
+let get_detail_data = ref({
+  csid: '1',
+  cds: ''
+})
+
 
   const ranking_data = ref([])
   //按钮名字
@@ -79,9 +86,14 @@ import { useRoute } from 'vue-router'
   const no_data =ref(false)
   // 路由
   const route = useRoute()
+  //
+  const { t } = useI18n()
 
-  get_list()
-  
+  onMounted(() => {
+    get_list()
+  })
+
+
   const show_btn = computed(() => {
     // 是否展示按钮
     return ranking_data.length > 1
@@ -106,7 +118,7 @@ import { useRoute } from 'vue-router'
       let {code, data} = await api_result.get_vs_info(parameter)
       if (code == 200 && data.length > 0) {
         ranking_data = data
-        no_data = false
+        no_data.value = false
         if(flag != 0){
           rules_normal();
           rules_a();
@@ -115,19 +127,18 @@ import { useRoute } from 'vue-router'
         }else{
           box_bool = !box_bool;
           if (box_bool == true) {
-            // TODO: 国际化后续修改调整
-            [btn_text, direction] = [$root.$t("bet_record.pack_down"), "down"];
+            [btn_text, direction] = [t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
-            [btn_text, direction] = [$root.$t("bet_record.pack_up"), ""];
+            [btn_text, direction] = [t("bet_record.pack_up"), ""];
             toggle_rule_a();
           }
         }
       } else {
-        no_data = true
+        no_data.value = true
       }
     } catch (error) {
-      no_data = true
+      no_data.value = true
       console.error(error);
     }
   }
@@ -141,8 +152,7 @@ import { useRoute } from 'vue-router'
   }
   const rules_normal = () => {
     [btn_text, direction, box_bool] = [
-      // TODO: 后续修改调整
-      $root.$t("bet_record.pack_up"),
+      t("bet_record.pack_up"),
       "",
       false
     ];
@@ -151,8 +161,7 @@ import { useRoute } from 'vue-router'
   const rules_a = () => {
     if (ranking_data.length >= 2)
       [btn_text, direction, box_bool] = [
-        // TODO: 后续修改调整
-        $root.$t("bet_record.pack_down"),
+        t("bet_record.pack_down"),
         "down",
         true
       ];
@@ -166,14 +175,14 @@ import { useRoute } from 'vue-router'
   }
   //小于2个时都展开
   const toggle_rule_a = () => {
-    loadsh.map(ranking_data, (item, index) => {
+    lodash.map(ranking_data, (item, index) => {
       item.isBoolean = true;
       return item;
     });
   }
   //大于等于2个时，第一个和第二个展开
   const toggle_rule_b = () => {
-    loadsh.map(ranking_data, (item, index) => {
+    lodash.map(ranking_data, (item, index) => {
       item.isBoolean = false;
       if (index == 0 || index == 1) {
         item.isBoolean = true;
