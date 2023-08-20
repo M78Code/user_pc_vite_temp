@@ -4,18 +4,18 @@
     <div class="row mx-30 top-style">
       <div class="col-3 logo-double">
         <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-        <!-- <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="get_menu_type != 3000 ? detail_data.frmhn[0]: detail_data.frmhn" :size="44"></team-img>
-        <team-img v-if="detail_data.mhlu.length > 1 && get_menu_type != 3000" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="44" style="margin-left:-0.1rem;"></team-img> -->
+        <team-img :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[0]" :fr="get_menu_type != 3000 ? detail_data.frmhn[0]: detail_data.frmhn" :size="44"></team-img>
+        <team-img v-if="detail_data.mhlu.length > 1 && get_menu_type != 3000" :type="0" :csid="detail_data.csid" :url="detail_data.mhlu[1]" :fr="detail_data.frmhn[1]" :size="44" style="margin-left:-0.1rem;"></team-img>
       </div>
       <div class="col-6">
         <!-- 描述比赛进度相关start -->
-        <!-- <team-text :detail_data="detail_data" v-if="get_menu_type!=3000"></team-text> -->
+        <team-text :detail_data="detail_data" v-if="get_menu_type!=3000"></team-text>
         <!-- 描述比赛进度相关end -->
       </div>
       <div class="col-3 logo-double">
         <!-- 右侧双打图标 type 1 表示客队,malu 客队的url -->
-        <!-- <team-img :type="0" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="get_menu_type != 3000 ? detail_data.frman[0]: detail_data.frman" :size="44"></team-img>
-        <team-img v-if="detail_data.malu.length > 1 && get_menu_type != 3000" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="44" style="margin-left:-0.1rem;"></team-img> -->
+        <team-img :type="0" :csid="detail_data.csid" :url="detail_data.malu[0]" :fr="get_menu_type != 3000 ? detail_data.frman[0]: detail_data.frman" :size="44"></team-img>
+        <team-img v-if="detail_data.malu.length > 1 && get_menu_type != 3000" :type="1" :csid="detail_data.csid" :url="detail_data.malu[1]" :fr="detail_data.frman[1]" :size="44" style="margin-left:-0.1rem;"></team-img>
       </div>
     </div>
     <!-- 电竞相关的 头部信息样式  集中在这里-->
@@ -136,9 +136,9 @@
 </template>
 <script>
 // 1-足球 2-篮球 3-棒球 4冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球 10-羽毛球
-import team_img from "src/components/details/team-img/team-img-template-1/team-img.vue";   // 详情页蓝色背景上的大型字母图标
-import team_text from "src/components/details/team-text/team-text-template-1/index.vue";   // 中立场赛事展示
-import team_name from "src/components/details/team-name/team-name-template-1/team-name.vue";   // 详情页背景上的队伍名称
+import { TeamImgWapper } from "src/components/details/team-img";   // 详情页蓝色背景上的大型字母图标
+import { TeamTextWapper } from "src/components/details/team-text";   // 中立场赛事展示
+import { TeamNameWapper } from "src/components/details/team-name";   // 详情页背景上的队伍名称
 // import msc from "src/public/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
@@ -159,11 +159,11 @@ export default defineComponent({
   },
   components: {
     // 队徽
-    "team-img": team_img,
+    "team-img": TeamImgWapper,
     // 状态描述
-    "team-text": team_text,
-    // 队名
-    "team-name": team_name,
+    "team-text": TeamTextWapper,
+    // // 队名
+    "team-name": TeamNameWapper,
     // 局间比分
     // "match-between-score": match_between_score,
     // "counting-down": counting_down,
