@@ -1,4 +1,4 @@
 
-import ListHeaderFullVersionWapper from "./full-version-wapper/index.vue";
+import TeamImgWapper from "./full-version-wapper/index.vue";
 
-export { ListHeaderFullVersionWapper };
+export { TeamImgWapper };
