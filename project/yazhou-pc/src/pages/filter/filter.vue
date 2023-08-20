@@ -107,7 +107,7 @@ const is_suck_down = ref(false)
 //       }
 //   created () {
 //     // 显示部分dom ID
-//     this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+//     this.DOM_ID_SHOW =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 //   },
 
 //   computed: {

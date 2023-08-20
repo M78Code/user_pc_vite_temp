@@ -67,7 +67,7 @@ export const useTableData = ({ props, emit }) => {
 
 
     (val) => {
-      let scroll_area = this.yabo_common.get_refs_info(
+      let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,
         getCurrentInstance

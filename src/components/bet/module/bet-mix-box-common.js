@@ -39,7 +39,7 @@ const pack_up = (val) => {
     }
 
     // 冠军玩法没有串关，清空数据处理
-    if (get_is_champion.value(this)) {
+    if (get_is_champion.value()) {
         set_bet_list([]);
         return
     }

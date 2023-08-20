@@ -172,7 +172,7 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash } =
+const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle,lodash,betItem } =
   useCommon({ emit, props });
 
   const other = ref({})

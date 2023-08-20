@@ -158,7 +158,7 @@ const bet_item = {
   },
   created() {
     // this.score_format()
-    // this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW
+    // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW
     this.DOM_ID_SHOW = _.get(window, 'env.config.DOM_ID_SHOW', false)
   },
   mounted(){

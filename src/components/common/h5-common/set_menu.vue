@@ -189,7 +189,7 @@ import { computed, onUnmounted, watch } from "vue";
     })
   const get_is_champion2 = computed(() => {
     // TODO: this
-      // return get_is_champion(this) 
+      // return get_is_champion() 
     })
     //刷新金额loading时钟
     balance_timer = 0;
@@ -311,7 +311,7 @@ import { computed, onUnmounted, watch } from "vue";
      * @param {undefined} undefined
     */
   const change_odd = () => {
-      if(get_is_champion(this)) return;  //冠军玩法点不动
+      if(get_is_champion()) return;  //冠军玩法点不动
       let odd = get_cur_odd == 'EU' ? 'HK' : 'EU'
       // 将盘口偏好记录到服务端
       api_betting.record_user_preference({userMarketPrefer:odd}).then().catch(err=>console.error(err))

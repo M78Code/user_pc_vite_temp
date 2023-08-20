@@ -15,11 +15,11 @@
       </div>
       <!-- 右 -->
       <div class="content-b"
-        :class="{ 'red-color': !money_ok, 'content-b2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"
+        :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"
         @click="change_kbdshow">
         <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
         <span class="money-span" ref="money_span"
-          :class="{ 'money-span2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
+          :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
         <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
         <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
@@ -33,6 +33,7 @@
 // import global_filters from 'src/boot/global-filters.js';
 import store from "src/store-redux/index.js";
 import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
+import BetData from "../class/bet-data-class";
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -46,7 +47,7 @@ emitters.value = ref({
 
 
 const store_state = store.getState()
-const get_active_index = ref(store_state.get_active_index)
+const BetData.active_index = ref(store_state.BetData.active_index)
 const get_is_spread = ref(store_state.get_is_spread)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_s_count_data = ref(store_state.get_s_count_data)
@@ -55,7 +56,6 @@ const get_order_los = ref(store_state.get_order_los)
 const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
-const get_bet_obj = ref(store_state.get_bet_obj)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -63,7 +63,7 @@ const unsubscribe = store.subscribe(() => {
 
 const update_state = () => {
   const new_state = store.getState()
-  get_active_index.value = new_state.get_active_index
+  BetData.active_index = new_state.BetData.active_index
   get_is_spread.value = new_state.get_is_spread
   get_bet_list.value = new_state.get_bet_list
   get_s_count_data.value = new_state.get_s_count_data
@@ -72,7 +72,6 @@ const update_state = () => {
   get_user.value = new_state.get_user
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
-  get_bet_obj.value = new_state.get_bet_obj
 }
 
 
@@ -135,7 +134,7 @@ onMounted(() => {
 
   //将金额和最高可投传递给键盘
   $nextTick(() => {
-    if (get_active_index.value == index_) {
+    if (BetData.active_index == index_) {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
   })
@@ -143,13 +142,10 @@ onMounted(() => {
 })
 
 
-// ...mapGetters(["get_active_index.value", "get_is_spread", "get_bet_list.value", "get_s_count_data.value", "get_bet_status", "get_order_los",
-//       "get_user.value", "get_money_notok_list2", "get_menu_type", "get_money_total", "get_bet_obj"]),
-
 const max_win_money = computed(() => {
   // 获取第一个的赛种id
   let _first = get_bet_list.value[0]
-  let _first_item = get_bet_obj.value[_first]
+  let _first_item = view_ctr_obj
   let _csid = _.get(_first_item, 'bs.csid')
   // console.log(get_s_count_data.value, '--get_s_count_data.value')
   return calc_maxwin_money(value_.name, money.value, _csid) || '0.00';  // 电竞时计算赔率需要保留3位小数
@@ -159,7 +155,7 @@ const max_win_money_all = computed(() => {
   get_s_count_data.value.map((item, i) => {
     if (item.money > 0) {
       let _first = get_bet_list.value[i]
-      let _first_item = get_bet_obj.value[_first]
+      let _first_item = view_ctr_obj[xx]
       let _csid = _.get(_first_item, 'bs.csid')
       all_win_money = all_win_money + calc_maxwin_money(item.name, item.money, _csid) * 100;
     }
@@ -242,7 +238,7 @@ watch(() => money.length, (new_, old_) => {
 })
 
 // 监听活动下标的变化
-watch(() => get_active_index.value, (new_) => {
+watch(() => BetData.active_index, (new_) => {
   if (new_ == index_) {
     flicker_();
   } else {
@@ -253,7 +249,7 @@ watch(() => get_active_index.value, (new_) => {
 
 //将金额和最高可投传递给键盘
 watch(() => get_money_notok_list2.value.length, (new_, old_) => {
-  if (get_active_index.value == index_) {
+  if (BetData.active_index == index_) {
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
 })
@@ -323,7 +319,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
  *@param {Number} new_money 最新金额值
  */
 const change_money_ = (new_money) => {
-  if (index_ != get_active_index.value) { return };
+  if (index_ != BetData.active_index) { return };
 
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
@@ -402,7 +398,7 @@ const change_kbdshow = () => {
   ele && ele.scrollIntoView({ block: "nearest" })
 
   //将金额和最高可投传递给键盘
-  if (get_active_index.value == index_) {
+  if (BetData.active_index == index_) {
     // 同步程序走完后再处理逻辑
     $nextTick(() => {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })

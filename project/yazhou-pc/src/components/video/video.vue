@@ -111,7 +111,7 @@
     //     load_data_state:'loading',//数据加载状态
     //     mid:0,//赛事ID
     //     match_info:{},//赛事详情数据
-    //     match_info_ctr: new MatchInfoCtr(this), // 赛事控制类
+    //     match_info_ctr: new MatchInfoCtr(), // 赛事控制类
     //     socket_name: 'skt_data_video', //对应的socket名称
     //     refresh_loading: false, // 刷新loading、
     //     refresh_time: 0, // 刷新次数

@@ -94,7 +94,7 @@
 
 <script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
-import { api_result } from "src/project/api";
+import { api_result } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 

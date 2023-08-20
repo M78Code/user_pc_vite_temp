@@ -661,7 +661,7 @@ export default class VsportCtr {
       if(code == 200){
         // 足球
         if([1001,1004].includes(this.info.csid*1)){
-          if(_.get(this,'replay_list['+index+'].result')){
+          if(_.get('replay_list['+index+'].result')){
             this.replay_list[index].result = _.get(res,'data.data') || []
           } else {
             this.horse_rank = []

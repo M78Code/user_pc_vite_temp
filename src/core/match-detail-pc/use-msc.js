@@ -425,7 +425,7 @@ export const useMsc = () => {
       match.msc_format = msc_format;
       //网球当前局得分
       if (csid == 5) {
-        match.score = this.yabo_common.msc_array_obj(match.msc);
+        match.score = BetCommonHelper.msc_array_obj(match.msc);
         let is_zero = this.$utils.get_match_status(match.ms);
         details.init_score(match.score, ["S103"], is_zero);
       }

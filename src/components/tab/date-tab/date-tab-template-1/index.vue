@@ -93,7 +93,7 @@ const emit = defineEmits(['onclick'])
 //获取 日期 菜单
 get_date_menu_list();
 // 显示部分dom ID
-this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // 鼠标是否按下
 this.is_mousedown = false;
 // 鼠标事件监听
@@ -529,7 +529,7 @@ watch(BaseData.left_menu_result.version, () => {
 
 //监听屏幕宽度改变  设置是否显示按钮
 watch(get_layout_list_size.width, () => {
-  item_wrap_width.value = this.yabo_common.get_refs_info(
+  item_wrap_width.value = BetCommonHelper.get_refs_info(
     "wrap",
     null,
     this

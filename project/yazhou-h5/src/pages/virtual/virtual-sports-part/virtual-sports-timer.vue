@@ -185,7 +185,7 @@ export default defineComponent({
         return;
       }
       timer_super31 = setTimeout(() => {
-        draw_timer_by_second.call(this);
+        draw_timer_by_second.call();
         let seconds = Math.floor(remaining_time / 1000);
         //提前10秒通知锁盘
         if(seconds <= 10 && !(seconds % 3)){

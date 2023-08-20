@@ -33,7 +33,7 @@ function useImageElmentHook(imgdom, config = {}) {
       canvas.width = width;
       canvas.height = height;
       // 绘制图片帧（第一帧）
-      canvas.getContext("2d").drawImage(this, 0, 0, width, height);
+      canvas.getContext("2d").drawImage( 0, 0, width, height);
       // 重置当前图片
       try {
         _dom.src = canvas.toDataURL("image/gif");

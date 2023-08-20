@@ -8,6 +8,7 @@ import { ref, watch, onMounted, onUnmounted } from "vue";
 import utils from "src/core/utils/utils";
 import store from "src/store-redux/index.js";
 import { HandicapTitle } from "src/components/match-detail/handicap-title/index.js";
+import betItem from "src/components/bet-item/bet_item.vue";
 
 export const useCommon = ({ emit, props }) => {
   const isShow = ref(true); //主盘折叠
@@ -180,7 +181,9 @@ export const useCommon = ({ emit, props }) => {
     filter_odds,
     toggle_menu,
     curIsShow,
+    isShow,
     HandicapTitle,
+    betItem,
     lodash,
   };
 };

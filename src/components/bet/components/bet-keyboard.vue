@@ -54,12 +54,10 @@ const store_state = store.getState()
 const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-const get_active_index = ref(store_state.get_active_index)
+const BetData.active_index = ref(store_state.BetData.active_index)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_menu_type = ref(store_state.get_menu_type)
 const get_is_mix = ref(store_state.get_is_mix)
-const get_is_combine = ref(store_state.get_money_total)
-const get_bet_obj = ref(store_state.get_bet_obj)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -79,7 +77,7 @@ const props = defineProps({
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
-  if (get_active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
+  if (BetData.active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
     try {
       pre_odds_value.value = pre_odds_value.value + ''
       if (pre_odds_value.value.indexOf(".") > -1 && pre_odds_value.value.split('.')[1]) {//篮球盘口小数点后面必须是5的倍数，如果非5的倍数，四舍五入
@@ -90,8 +88,8 @@ watch(() => pre_odds_value, (new_) => {
           pre_odds_value.value = Number(pre_odds_value.value.split('.')[0]) + 1 + ''
         }
       }
-      let index = get_active_index.toString().split('market')[1]
-      let value_show = get_bet_obj[get_bet_list[index]].bs
+      let index = BetData.active_index.toString().split('market')[1]
+      let value_show = view_ctr_obj[get_bet_list[index]].bs
       const isdaxiao = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'));
       if (isdaxiao) {
         if (+pre_odds_value.value > 400) {
@@ -119,14 +117,8 @@ watch(() => pre_odds_value, (new_) => {
 watch(() => money, (new_) => {
   useMittEmit(MITT_TYPES.EMIT_CHANGE_MONEY, money.value);
 })
-watch(() => get_active_index, (new_) => {
+watch(() => BetData.active_index, (new_) => {
   if (money.value) delete_all.value = true;
-})
-watch(() => get_update_tips, (newVal, oldVal) => {
-  if (newVal == 1 && (oldVal == 3 || oldVal == 6) && !get_mix_bet_flag && get_money_total == 0) {
-    money.value = ''
-    set_used_money(-1)
-  }
 })
 
 
@@ -227,12 +219,11 @@ const _handleNumberKey = (num) => {
 
 }
 
-// ...mapGetters(['get_user', 'get_bet_status','get_mix_bet_flag', 'get_active_index', 'get_bet_list', 'get_menu_type', 'get_is_combine', 'get_is_mix', 'get_money_total', 'get_bet_obj']),
 
 // 左侧+的按钮 置灰
 const prevent_click = computed(() => {
   return function (v) {
-    if (get_active_index.toString().indexOf('pre') > -1) {
+    if (BetData.active_index.toString().indexOf('pre') > -1) {
       return true
     }
     if (Number(value) + Number(money.value) > max_money.value) { return true };
@@ -248,7 +239,7 @@ const addnum = computed(() => {
 })
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
 const has_pre_market = computed(() => {
-  return get_active_index.toString().indexOf('pre') > -1 ||  get_active_index.toString().indexOf('market') > -1
+  return BetData.active_index.toString().indexOf('pre') > -1 ||  BetData.active_index.toString().indexOf('market') > -1
 })
 
 onUnmounted(()=>{

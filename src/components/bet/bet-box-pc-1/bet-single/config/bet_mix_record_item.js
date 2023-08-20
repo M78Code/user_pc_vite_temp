@@ -39,11 +39,11 @@ export default {
   },
   created() {
     // 通过投注项oid获取投注项id
-    this.id = this.yabo_common.get_id(this, this.oid);
-    this.play_id = this.yabo_common.get_play_id(this);
+    this.id = BetCommonHelper.get_id( this.oid);
+    this.play_id = BetCommonHelper.get_play_id();
     // console.log('this.play_id======', this.play_id);
     // 获取赛季
-    this.season = this.yabo_common.get_season(this);
+    this.season = BetCommonHelper.get_season();
     let item_obj = this.item_obj;
     if (item_obj) {
       if(item_obj.matchName) {
@@ -128,7 +128,7 @@ export default {
      * @return {String} 投注项状态
      */
     active() {
-      return this.yabo_common.get_active(this);
+      return BetCommonHelper.get_active();
     },
     /**
      * @description: 赛事时间
@@ -139,7 +139,7 @@ export default {
       let obj_bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        let format_str = this.yabo_common.format_str;
+        let format_str = BetCommonHelper.format_str;
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份

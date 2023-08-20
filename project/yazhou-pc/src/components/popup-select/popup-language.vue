@@ -171,10 +171,10 @@ function on_click_lang(lang_) {
                     if (lodash.isArray(data) && data.length > 0) {
                         if (is_virtual_bet) {
                             // TODO: this
-                            // virtual_common_update_bet_item_info(this, data);
+                            // virtual_common_update_bet_item_info( data);
                         } else {
                             // TODO: this
-                            // yabo_common_update_bet_item_info(this, data);
+                            // yabo_common_update_bet_item_info( data);
                         }
                         useMittEmit(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, {})
                         set_lang_change(false);
@@ -222,7 +222,7 @@ function toggle_popup() {
 
 const versions_class = computed(() => {
     // TODO: 环境变量
-    // return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
+    // return `versions-${window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME}`
     return 'versions-zhuanye'
 })
 

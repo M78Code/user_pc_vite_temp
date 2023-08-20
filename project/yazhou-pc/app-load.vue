@@ -26,7 +26,7 @@ const { t } = useI18n();
 const router = useRouter();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开
-  // config:window.env.config,
+  // config:window.BUILDIN_CONFIG,
   current_env: CURRENT_ENV,
   // 父类窗口句柄
   parent_doc_element: null,

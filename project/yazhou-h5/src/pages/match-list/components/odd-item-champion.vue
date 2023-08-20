@@ -58,7 +58,7 @@ const unsubscribe = store.subscribe(() => {
 
 onMounted(() => {
   // 设置是否显示投注项dom的id属性值
-  DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+  DOM_ID_SHOW =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
 })
 
 watch(() => ol_item.ov, () => {

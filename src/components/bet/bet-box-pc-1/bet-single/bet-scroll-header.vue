@@ -298,7 +298,7 @@ const change_series = () => {
         vx_bet_obj_add_attr(obj);
       });
       // 检查是否可以串关
-      yabo_common.check_mix(this);
+      yabo_common.check_mix();
     }
   } else if (!is_bet_single) { // 若为串关
     // 克隆单关列表以及单关对象
@@ -309,7 +309,7 @@ const change_series = () => {
     vx_set_bet_list([id]);
     obj.key = id;
     vx_bet_obj_add_attr(obj);
-    yabo_common.check_mix(this);
+    yabo_common.check_mix();
   }
   vx_set_is_bet_single(is_bet_single);
   //获取投注数据(内嵌mini切换或者语言发生变化时调用)

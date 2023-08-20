@@ -11,7 +11,7 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import { ref } from "vue";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import play_mapping from "../config/play-mapping.js";
+import play_mapping from "../../config/play-mapping.js";
 import _ from "lodash";
 
 /**

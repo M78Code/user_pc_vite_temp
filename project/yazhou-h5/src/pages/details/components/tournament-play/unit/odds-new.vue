@@ -79,7 +79,7 @@ export default defineComponent({
       // 赋值中间变量值，保证能够顺利红升绿降;
       component_data.cacheData = props.ol_data.ov;
       // 设置是否显示投注项dom的id属性值
-      // component_data.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+      // component_data.DOM_ID_SHOW =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
       // #TODO 
       component_data.DOM_ID_SHOW = "DOM_ID_SHOW";
     });

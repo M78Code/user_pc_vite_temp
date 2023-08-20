@@ -59,7 +59,7 @@ const test = ref(sessionStorage.getItem('wsl'))
 const is_mounted = ref(false)
 const current_comp = shallowRef(match_components_name)
 // 显示部分dom ID
-this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 // 赛事模板名称
 const match_components_name = computed(() => {

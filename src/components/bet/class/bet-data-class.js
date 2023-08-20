@@ -74,7 +74,15 @@ class BetData {
   set_is_spread(val) {
     this.is_spread = val;
   }
+  
+  // 是否投注成功状态
+  is_bet_success_status() {
 
+    let arr = [3, 6, 8]
+
+    return arr.includes(this.bet_status)
+
+  }
 }
 
 export default new BetData();

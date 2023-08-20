@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :style="css_var_style">
         <!-- 足球赛事分析 页面-->
             <analysis-football-matches v-if="get_detail_data.csid === '1'"></analysis-football-matches>
             <!-- 篮球赛事分析 页面-->
@@ -13,6 +13,9 @@
     const get_detail_data = ref({
         csid: '1'
     })
+
+    const  css_var_style =  CurrentTheme.all_css_module_obj['analysis']
+
 </script>
 
 <style lang="scss" scoped>

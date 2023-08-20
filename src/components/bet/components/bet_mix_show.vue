@@ -8,8 +8,8 @@
     <!-- 失效蒙层 -->
     <div class="locked-shadow" v-if="(pankou_change == 2 || hids || has_pre.own_)"></div>
     <div class="row justify-start items-center"
-      :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
-      <div class="yb_mr12 dele-left" v-if="!get_bet_success">
+      :class="[BetData.is_bet_success_status ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
+      <div class="yb_mr12 dele-left" v-if="!BetData.is_bet_success_status">
         <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
       </div>
       <div style="flex:1;">
@@ -39,16 +39,16 @@
             </span>
             <!-- 红升绿降 -->
             <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }" class="odd-change yb_ml4"
-              v-if="!get_bet_success"></span>
+              v-if="!BetData.is_bet_success_status"></span>
           </div>
         </div>
 
         <!-- 中 -->
         <div class="row justify-between yb_my4 yb_fontsize14">
-          <span :class="get_lang == 'vi' && get_bet_success ? 'col-6' : 'col-7'">
+          <span :class="get_lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
             <template v-if="_.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ $root.$t('bet_record.ing')
             }}&thinsp;</template>
-            <template v-if="get_is_champion(this)">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
+            <template v-if="get_is_champion()">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
             <!-- 投注成功后的玩法名称用接口返回的 -->
             <!--<template v-else-if="bet_success_obj.playName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playName}}</template>-->
             <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
@@ -60,7 +60,7 @@
               <template v-else>{{ value_show | calc_bifen }}</template>
             </template>
           </span>
-          <template v-if="get_bet_success && !(get_is_mix && get_bet_list.length > 1)">
+          <template v-if="BetData.is_bet_success_status && !(get_is_mix && get_bet_list.length > 1)">
             <template v-if="(pre_or_bet === 0 || pre_or_bet) && pre_order_status">
               <!-- 预约成功 -->
               <span class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg" class="img0">{{
@@ -88,13 +88,13 @@
         </div>
 
         <!-- 联赛名称 -->
-        <div class="xia" v-if="value_show.tn && !get_is_champion(this)">{{ value_show.tn }}</div>
+        <div class="xia" v-if="value_show.tn && !get_is_champion()">{{ value_show.tn }}</div>
 
         <!-- 下 -->
         <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
           <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
-            <template v-if="get_is_champion(this)">{{ value_show.onTn || value_show.tn }}</template>
-            <template v-else-if="get_bet_success && bet_success_obj.matchInfo">{{ bet_success_obj.matchInfo }}</template>
+            <template v-if="get_is_champion()">{{ value_show.onTn || value_show.tn }}</template>
+            <template v-else-if="BetData.is_bet_success_status && bet_success_obj.matchInfo">{{ bet_success_obj.matchInfo }}</template>
             <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }} {{ score }}</template>
           </div>
           <div v-if="authorityOptionFlag" class="col-3 row subscribe-button" @click.stop="handlePre(true)">
@@ -129,7 +129,7 @@
           <div class="odd" @click.stop="focus_market">
             <div class="odd_text">{{ pre_market_value || 0 }}</div>
             <span class="money-span" ref="money_span_market"
-              :class="{ 'money-span2': !(get_active_index == 'market' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'market' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
@@ -153,7 +153,7 @@
             <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
               odds_value(true) }}</div>
             <span class="money-span" ref="money_span"
-              :class="{ 'money-span2': !(get_active_index == 'pre' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'pre' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
@@ -169,9 +169,9 @@
     <!-- 对应单关多个注单样式 -->
     <template v-if="![11, 100, 900, 3000].includes(+get_menu_type)">
       <!-- 单关金额输入框 -->
-      <bet-single-detail ref="bet_single_detail" v-if="!(get_bet_success || get_is_mix)" v-bind="$attrs" :name_="name_"
+      <bet-single-detail ref="bet_single_detail" v-if="!(BetData.is_bet_success_status || get_is_mix)" v-bind="$attrs" :name_="name_"
         :index_="index_"></bet-single-detail>
-      <template v-if="get_bet_success && !get_is_mix && bet_success_obj">
+      <template v-if="BetData.is_bet_success_status && !get_is_mix && bet_success_obj">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bottom-bar row justify-between yb_px14 yb_fontsize14 yb_mb8 ">
           <!--左边， 最高可赢 -->
@@ -211,50 +211,6 @@ const rq_market_value_min = ref(-10) //让球类玩法最小盘口值
 const market_value_unit = ref(0.25)//盘口变动值，默认足球0.25，篮球是0.5
 const focus_type = ref(0) // 光标聚焦到哪里
 
-const store_state = store.getState()
-
-const get_cur_odd = ref(store_state.get_cur_odd)
-const get_pre_market_data = ref(store_state.get_pre_market_data)
-const get_is_conflict = ref(store_state.get_is_conflict)
-const get_user = ref(store_state.get_user)
-const get_active_index = ref(store_state.get_active_index)
-const get_theme = ref(store_state.get_theme)
-const get_lang = ref(store_state.get_lang)
-const get_is_champion = ref(store_state.get_is_champion)
-const get_menu_type = ref(store_state.get_menu_type)
-const get_is_combine = ref(store_state.get_is_combine)
-const get_new_bet = ref(store_state.get_new_bet)
-const get_bet_status = ref(store_state.get_bet_status)
-const get_order_no = ref(store_state.get_order_no)
-const get_bet_obj = ref(store_state.get_bet_obj)
-const get_is_mix = ref(store_state.get_is_mix)
-const get_bet_success = ref(store_state.get_bet_success)
-
-
-
-const unsubscribe = store.subscribe(() => {
-  update_state()
-})
-
-const update_state = () => {
-  const new_state = store.getState()
-  get_cur_odd.value = new_state.get_cur_odd
-  get_pre_market_data.value = new_state.get_pre_market_data
-  get_is_conflict.value = new_state.get_is_conflict
-  get_user.value = new_state.get_user
-  get_active_index.value= new_state.get_active_index
-  get_theme.value = new_state.get_theme
-  get_lang.value = new_state.get_lang
-  get_is_champion.value = new_state.get_is_champion
-  get_menu_type.value = new_state.get_menu_type
-  get_is_combine.value = new_state.get_is_combine
-  get_new_bet.value = new_state.get_new_bet
-  get_bet_status.value = new_state.get_bet_status
-  get_order_no.value = new_state.get_order_no
-  get_bet_obj.value = new_state.get_bet_obj
-  get_is_mix.value = new_state.get_is_mix
-  get_bet_success = new_state.get_bet_success
-}
 
 onMounted(() => {
   timer = null;
@@ -281,9 +237,9 @@ onMounted(() => {
   }
   // 初始化预约投注的赔率和盘口
   if (show_pre) {
-    pre_ov.value = get_bet_obj.value[name_].pre_odds
-    low_odds.value = get_bet_obj.value[name_].min_odds || bet_obj_ov
-    pre_market_value.value = get_bet_obj.value[name_].pre_market_value
+    pre_ov.value = view_ctr_obj[name_].pre_odds
+    low_odds.value = view_ctr_obj[name_].min_odds || bet_obj_ov
+    pre_market_value.value = view_ctr_obj[name_].pre_market_value
   }
   //设置当前预约投注索引
   if (!has_pre.own_ && has_pre.others) {
@@ -345,15 +301,15 @@ watch(() => score, (new_) => {
 })
 
 //监控投注项
-watch(() => get_bet_obj.value, (new_) => {
+watch(() => view_ctr_obj, (new_) => {
   pre_switch.value = new_[name_].pre_switch
   if (new_[name_].market_tips == 1) {
     pre_market_value.value = new_[name_].pre_market_value
-    if (get_active_index.value == 'market' + index_) {
+    if (BetData.active_index == 'market' + index_) {
       send_market_to_keyboard()
     }
     tips_msg_update($root.$t('pre_record.market_error_info_low'))
-    let bet_obj = _.cloneDeep(get_bet_obj.value)
+    let bet_obj = _.cloneDeep(view_ctr_obj)
     bet_obj[name_].market_tips = 0
     set_bet_obj(bet_obj)
     clearTimeout(timer3)
@@ -377,65 +333,11 @@ watch(() => get_bet_obj.value, (new_) => {
 })
 //检测预约赔率变化，更新至投注对象
 watch(() => pre_ov, (new_) => {
-  let bet_obj = _.cloneDeep(get_bet_obj.value)
+  let bet_obj = _.cloneDeep(view_ctr_obj)
   bet_obj[name_].pre_odds = new_
   set_bet_obj(bet_obj)
 })
-//检测预约盘口变化，更新至投注对象
-watch(() => get_update_tips, (new_) => {
-  //盘口值有存在为0的情况
-  if (!newVal && newVal !== 0 && newVal !== '0') {
-    return;
-  }
-  const ol_obj = _.get(value_show, 'hps[0].hl[0].ol[0]')
-  const hps_obj = _.get(value_show, 'hps[0]')
-  const marketList = get_pre_market_data.value.filter((o) => {
-    return o.matchInfoId == value_show.hps[0].mid && o.playId == value_show.hps[0].hpid
-  })
-  let bet_obj = _.cloneDeep(get_bet_obj.value)
-  //处理当盘口值变化时，赔率的变化
-  if (marketList.length > 0) {
-    const marketItem = marketList[0].marketList
-    let hasEqualMarket = false//是否相同盘口，用来判断赋值最低赔率
-    marketItem.map((item) => {
-      const otObj = _.find(item.marketOddsList, (o) => { return o.oddsType == ol_obj.ot })
-      if (!rq_play_list.includes(hps_obj.hpid)) {//大小比较方式
-        if (item.marketValue == newVal && otObj) {
-          hasEqualMarket = true
-          low_odds.value = otObj.oddsValue
-          bet_obj[name_].min_odds = otObj.oddsValue
-          //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue > pre_ov.value) {
-            pre_odds.value = ''
-            pre_ov.value = Number(otObj.oddsValue)
-            if (get_active_index.value == 'pre' + index_) {
-              send_odds_to_keyboard()
-            }
-          }
-        }
-      } else {//让球比较方式
-        if (otObj && otObj.playOptions == newVal) {
-          hasEqualMarket = true
-          low_odds.value = otObj.oddsValue
-          bet_obj[name_].min_odds = otObj.oddsValue
-          //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue >= pre_ov.value) {
-            pre_odds.value = ''
-            pre_ov.value = Number(otObj.oddsValue)
-            if (get_active_index.value == 'pre' + index_) {
-              send_odds_to_keyboard()
-            }
-          }
-        }
-      }
-    })
-    if (!hasEqualMarket) {
-      low_odds.value = 0
-    }
-  }
-  bet_obj[name_].pre_market_value = newVal
-  set_bet_obj(bet_obj)
-})
+
 // 解决投注项数量减少会导致位置移动，错误显示盘口赔率变化
 watch(() => get_bet_list.length, (newVal, oldVal) => {
   if (newVal > oldVal) return
@@ -447,10 +349,7 @@ watch(() => get_bet_list.length, (newVal, oldVal) => {
   })
 })
 //监听赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-bet_obj_mhs(() => get_update_tips, (new_) => {
-  tips_msg = new_
-})
-watch(() => get_update_tips, (new_) => {
+watch(() => BetData.update_tips, (new_) => {
   if (
     [3, 4, 6].includes(+get_bet_status.value) ||
     is_suspend_watch.value
@@ -608,31 +507,7 @@ watch(() => bet_obj_ov, (new_, old_) => {
     set_odds_change(true);
   }
 })
-//状态变为0、1时作初始化处理
-watch(() => get_update_tips, (new_, old_) => {
-  if (new_ == 1) {
-    odds_change.value = 0;
-    pankou_change.value = 0;
-    set_invalid_ids({ type: 0 })
-  };
 
-  //状态变为正常时，可能是 1 也能是 7
-  if (
-    new_ == 1 &&
-    old_ == 5 &&
-    (bet_obj_hs == 11 || bet_obj_mhs == 11)
-  ) {
-    set_bet_status(7)
-  }
-})
-//监听状态变化来设置赔率或盘口变化的id_集合
-watch(() => get_update_tips, (new_) => {
-  if (new_ && get_bet_status.value != 6) {
-    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 1 });
-  } else {
-    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 2 });
-  }
-})
 // 记录投注项失效的id_集合
 watch(() => pankou_change, (new_) => {
   if (new_ != 2) {
@@ -704,7 +579,7 @@ const show_market_shadow_max = computed(() => {
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!get_is_mix.value) && pre_switch.value && (!get_bet_success.value) && authorityFlag && (!show_pre)
+  return (!get_is_mix.value) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
@@ -728,7 +603,7 @@ const pre_or_bet = computed(() => {
   return status
 })
 const bet_obj_item = computed(() => {
-  return get_bet_obj.value[name_]
+  return view_ctr_obj[name_]
 })
 //投注对象数据
 const value_show = computed(() => {
@@ -736,7 +611,7 @@ const value_show = computed(() => {
 })
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
-  const item_name = _.findKey(get_bet_obj.value, function (o) { return o.show_pre })
+  const item_name = _.findKey(view_ctr_obj, function (o) { return o.show_pre })
   if (item_name) {
     if (item_name == name_) {
       return {
@@ -759,9 +634,9 @@ const has_pre = computed(() => {
 // 满足下面条件（单关没有输入金额）的投注项在投注成功后不展示,单关多注接口只返回提交成功的注单，所以只展示提交成功的订单
 const is_show_successed_item = computed(() => {
   let flag = get_bet_list.length == 1
-    || !get_bet_success.value
+    || !BetData.is_bet_success_status
     || get_is_mix.value
-    || get_bet_success.value && !get_is_mix.value && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
+    || BetData.is_bet_success_status && !get_is_mix.value && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
   return flag
 })
 //将赔率映射为计算属性
@@ -818,7 +693,7 @@ const odds_value = computed(() => {
     let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
       hsw = value_show.hps[0].hsw;
 
-    if (get_is_champion.value(this)) {   //冠军玩法不支持赔率转化
+    if (get_is_champion.value()) {   //冠军玩法不支持赔率转化
       hsw = '1'
     }
 
@@ -908,7 +783,7 @@ const focus_market = () => {
     set_keyboard_show(true)
     let ele = $refs.bet_mix_detail
     ele && ele.scrollIntoView({ block: "nearest" })
-    if (get_active_index.value == 'market' + index_) { return }
+    if (BetData.active_index == 'market' + index_) { return }
     send_market_to_keyboard()
     set_active_index('market' + index_)
   }
@@ -919,7 +794,7 @@ const focus_odds = () => {
   set_keyboard_show(true)
   let ele = $refs.bet_mix_detail
   ele && ele.scrollIntoView({ block: "nearest" })
-  if (get_active_index.value == 'pre' + index_) { return }
+  if (BetData.active_index == 'pre' + index_) { return }
   send_odds_to_keyboard()
   set_active_index('pre' + index_)
 }
@@ -941,7 +816,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
 const remove_ = (id_) => {
   //校验是否是串关，并且删除后是否小于最小串关数量
   if (get_is_mix.value && !vilidata_mix_count(true)) { return }
-  let _money = get_bet_obj.value[id_].money
+  let _money = view_ctr_obj[id_].money
   if (_money >= 0.01 && get_bet_list.length > 1) {
     set_money_total(0 - _money)
   }
@@ -956,7 +831,7 @@ const remove_ = (id_) => {
 const handlePre = (del) => {
   //将预约状态更新至投注项缓存
   if (show_pre && del) { return }
-  let bet_obj = _.cloneDeep(get_bet_obj.value)
+  let bet_obj = _.cloneDeep(view_ctr_obj)
   pre_odds.value = ''
   bet_obj[name_].show_pre = del
   if (del) {
@@ -983,7 +858,7 @@ const handlePre = (del) => {
   }
   set_bet_obj(bet_obj)
   set_active_index(index_)
-},
+}
 /**
  *@description 预约投注点击减号减少赔率
  */
@@ -991,7 +866,7 @@ const reduce_odd = () => {
   timeOutEvent = 0;
   if (pre_shadow_flag) { return }
   pre_odds.value = ''
-  if (get_active_index.value != 'pre' + index_) {
+  if (BetData.active_index != 'pre' + index_) {
     send_odds_to_keyboard()
     set_active_index('pre' + index_)
   }
@@ -1003,7 +878,7 @@ const reduce_odd = () => {
  * @description 预约投注点击加号增加赔率
  */
 const add_odd = () => {
-  if (get_active_index.value != 'pre' + index_) {
+  if (BetData.active_index != 'pre' + index_) {
     send_odds_to_keyboard()
     set_active_index('pre' + index_)
   }
@@ -1088,7 +963,7 @@ const reduce_market_value = () => {
     realValue = '0'
   }
   pre_market_value.value = realValue
-  if (get_active_index.value == 'market' + index_) {
+  if (BetData.active_index == 'market' + index_) {
     send_market_to_keyboard()
   }
 }
@@ -1147,7 +1022,7 @@ const add_market_value = () => {
     realValue = '0'
   }
   pre_market_value.value = realValue
-  if (get_active_index.value == 'market' + index_) {
+  if (BetData.active_index == 'market' + index_) {
     send_market_to_keyboard()
   }
 }

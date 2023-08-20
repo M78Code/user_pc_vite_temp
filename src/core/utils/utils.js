@@ -16,8 +16,8 @@ const utils = {
   get_icon_url(menu){
     let url = ''
     // 竞彩足球
-     let domain = window.env.config.domain[window.env.config.current_env][0]
-    let prefix_job = window.env.config.api.API_PREFIX_JOB
+     let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]
+    let prefix_job = window.BUILDIN_CONFIG.api.API_PREFIX_JOB
     let is_jing_cai = _.get(menu,'chinaBetting')==1
     if(is_jing_cai){
       url = `${domain}/${prefix_job}/${menu.field3}`
@@ -111,7 +111,7 @@ const utils = {
     if([1,2].includes(+match.csid) && statistics_switch){
       ret = true;
     }
-    if(!(window.env &&  window.env.config && window.env.config.FINAL_TARGET_PROJECT_NAME == 'yabo'))
+    if(!(window.env &&  window.BUILDIN_CONFIG && window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME == 'yabo'))
     { // 只有专业版显示sr标志入口图标
       ret = false;
     }

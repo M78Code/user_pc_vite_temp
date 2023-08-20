@@ -28,7 +28,7 @@ export default {
      * @return {String}
      */
     get_oid(item) {
-      return this.yabo_common.get_id(this, item); //根据oid或者坑位id获取投注项id
+      return BetCommonHelper.get_id( item); //根据oid或者坑位id获取投注项id
     }
   }
 };

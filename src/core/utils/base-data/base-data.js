@@ -356,7 +356,7 @@ class BaseData {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
     this.mi_euid_map_res = this.set_ses_wapper(res, {});
 
-    localStorage.setItem("is_session_base_data", JSON.stringify(this));
+    localStorage.setItem("is_session_base_data", JSON.stringify());
     this.resolve_mi_euid_map_res();
   }
   /**
@@ -474,7 +474,7 @@ class BaseData {
       // if (old_menu != new_menu) {
         this.mew_menu_list_res = menu_info;
 
-        localStorage.setItem("is_session_base_data", JSON.stringify(this));
+        localStorage.setItem("is_session_base_data", JSON.stringify());
         // 计算 live
         this.set_mi_gunqiu();
       // }

@@ -1192,9 +1192,9 @@ function update_bet_data() {
         let data = get(res, "data.data");
         if (isArray(data) && data.length > 0) {
           if (computed_data.is_virtual_bet) {
-            this.virtual_common.update_bet_item_info(this, data);
+            this.virtual_common.update_bet_item_info( data);
           } else {
-            yabo_common.update_bet_item_info(this, data);
+            yabo_common.update_bet_item_info( data);
           }
           if (computed_data.vx_is_bet_single) {
             useMittEmit(MITT_TYPES[EMIT_INIT_BET_LIST_ITEM_CMD]);

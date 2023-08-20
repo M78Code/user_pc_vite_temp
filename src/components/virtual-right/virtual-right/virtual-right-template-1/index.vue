@@ -117,7 +117,7 @@ export default defineComponent({
   setup(props, evnet) {
     const data = reactive({
       // 虚拟体育操作类
-      vsport_ctr: new vsport_ctr(this),
+      vsport_ctr: new vsport_ctr(),
       // 是否显示视频提示内容 
       is_show_content:false,
       // 赛事对阵列表高度

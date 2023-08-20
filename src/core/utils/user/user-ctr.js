@@ -279,7 +279,7 @@ class userCtr {
       // localStorage持久化用户分组信息
       sessionStorage.setItem("gr", gr);
 
-      if (window.env.config.gr != gr) {
+      if (window.BUILDIN_CONFIG.gr != gr) {
         let url_search = new URLSearchParams(location.search);
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
         url_search.set("rdm", new Date().getTime());
@@ -342,7 +342,7 @@ class userCtr {
       return Promise.resolve(1);
     }
 
-    let api_domains = window.env.config.domain[window.env.config.current_env];
+    let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env];
     let api_domain = api_domains[0];
 
     try {
@@ -540,7 +540,7 @@ class userCtr {
 
     // 设置主题色
     // if(!window.vue.$store.getters.get_theme){
-    //   let theme = 'theme0'+config.default_theme[window.env.config.FINAL_TARGET_PROJECT_NAME]
+    //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME]
     //   window.vue.$store.dispatch('set_theme',theme)
     // }
     // window.vue.$store.dispatch('init_loading_theme')

@@ -13,7 +13,7 @@
 
       <!-- 头部 -->
       <bet-bar @click.native="pack_up"></bet-bar>
-      <div class="dele-wrap yb_px12 yb_py10 row" v-if="!get_bet_success" @touchmove.prevent>
+      <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)"><img src="image/wwwassets/bw3/svg/close3.svg"
             class="yb_mr4 img1" />{{ $root.$t('bet.delete_all') }}</span>
@@ -32,7 +32,7 @@
       <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
         <!-- 上部纯展示组件 展示盘口赔率玩法对阵信息-->
-        <bet-mix-show v-for="(value, name, index1) in get_bet_obj" :order_detail_resp_list="order_detail_resp_list"
+        <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show>
 
@@ -53,7 +53,7 @@
         </template>
 
         <!-- 多项单注 金额输入框-->
-        <template v-if="!get_is_mix && get_bet_list.length > 1 && get_is_combine && ![3, 6].includes(+get_bet_status)">
+        <template v-if="!get_is_mix && get_bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
           <bet-mix-single-detail :tips_msg.sync="tips_msg"></bet-mix-single-detail>
         </template>
 
@@ -106,13 +106,13 @@
       <template v-else>
         <div class="yb_px14 row items-center yb_fontsize12"
           :class="tips_msg ? 'justify-center err-msg' : 'justify-end err-msg2'"
-          :style="{ 'min-height': get_bet_success ? '0.38rem' : '0.3rem' }" @touchmove.prevent @click="nothing">
+          :style="{ 'min-height': BetData.is_bet_success_status ? '0.38rem' : '0.3rem' }" @touchmove.prevent @click="nothing">
           <template v-if="tips_msg"><span class="text-center yb_py4">{{ (tips_msg) }}</span></template>
           <template v-else-if="!tips_msg && [1, 2, 7].includes(+get_bet_status)">
             <!-- 左， 合并投注项 -->
             <span :style="{ 'opacity': calc_combine_show ? '0' : '1', 'margin-right': 'auto' }">
-              <i class="img2" :class="{ 'img3': get_is_combine }" @click="change_is_combine"></i>
-              <span class="yb_mx4" :class="{ 'auto-text': !get_is_combine }" @click="change_is_combine">{{
+              <i class="img2" :class="{ 'img3': view_ctr_obj.bet_is_combine }" @click="change_is_combine"></i>
+              <span class="yb_mx4" :class="{ 'auto-text': !view_ctr_obj.bet_is_combine }" @click="change_is_combine">{{
                 $root.$t("tips.msg1") }}</span>
               <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_tips_show" class="img1"
                 v-if="get_theme.includes('theme01')" />
@@ -143,8 +143,8 @@
 
         <!-- 左边， 3种情况-->
         <!-- 保留选项 -->
-        <div class="add-box add-box2" :class="{ 'add-box2': get_bet_success, 'add-box3': calc_class }"
-          @click.stop="pack_up(4)" v-if="get_bet_success">{{ $root.$t('bet.save') }}</div>
+        <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
+          @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ $root.$t('bet.save') }}</div>
         <!-- 单关 -->
         <div v-else-if="get_is_mix" class="bet-add-box text-bold display_center one_text_color"
           :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
@@ -215,6 +215,7 @@
 // import utils from 'src/public/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
+import BetData from "../class/bet-data-class";
 
 // 此文件需抽离重构
 

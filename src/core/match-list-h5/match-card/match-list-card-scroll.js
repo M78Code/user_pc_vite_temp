@@ -67,7 +67,7 @@ class MatchListCardScroll {
     let scroll_top = e.scrollTop ? +e.scrollTop : window.scrollY;
     this.window_scrolly = scroll_top;
     if (e.cb) {
-      e.cb(this); // 回调，并将子对象的this传入
+      e.cb(); // 回调，并将子对象的this传入
     }
     this.run_process_when_need_recompute_container_list_when_scroll(null, e);
   }

@@ -122,7 +122,7 @@ require_all.keys().forEach( item => require_all(item))
 
 
   // 目前环境信息
-  const current_env = window.env.config.current_env;
+  const current_env = window.BUILDIN_CONFIG.current_env;
   //获取图片完整网络路径
   Vue.prototype.get_file_path =get_file_path;
 

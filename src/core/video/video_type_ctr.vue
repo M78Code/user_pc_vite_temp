@@ -92,7 +92,7 @@ export default {
     }),
     //是否专题
     is_topic(){
-      let index  = _.get(this,'$route.params.play_type')  ||  this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let index  = _.get('$route.params.play_type')  ||  this.$utils.get_media_icon_index(this.vx_play_media.media_type)
         return index == 5
     },
   },
@@ -110,7 +110,7 @@ export default {
       set_is_back_btn_click: "set_is_back_btn_click"//设置获取是否从详情页返回
     }),
      get_video_clarity_name(){
-      let  type  = _.get(this,'$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let  type  = _.get('$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
       let text = ""
         if(type == 1){
           if(this.ctr_data.video_type == 1){
@@ -129,7 +129,7 @@ export default {
         return text
     },
     get_video_clarity_name2(num){
-      let  type  = _.get(this,'$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
+      let  type  = _.get('$route.params.play_type')  || this.$utils.get_media_icon_index(this.vx_play_media.media_type)
       let text = ""
         if(type == 1){
           if(num == 1){

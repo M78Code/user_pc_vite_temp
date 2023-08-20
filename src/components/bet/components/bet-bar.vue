@@ -51,8 +51,8 @@ const get_lang = ref(store_state.get_lang)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
-const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
-const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
+// const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
+// const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
 const get_is_mix = ref(store_state.get_is_mix) // 是否串关
 const get_money_total = ref(store_state.get_money_total)  // 总金额
 
@@ -60,24 +60,7 @@ const unsubscribe = store.subscribe(() => {
   update_state()
 })
 
-const update_state = () => {
-  const new_state = store.getState()
-  get_bet_list = new_state.get_bet_list
-  get_s_count_data = new_state.get_s_count_data
-  get_lang = new_state.get_lang
-  get_mix_bet_flag = new_state.get_mix_bet_flag
-  get_bet_status = new_state.get_bet_status
-  get_menu_type = new_state.get_menu_type
-  get_bet_obj = new_state.get_bet_obj
-  get_is_combine = new_state.get_is_combine
-  get_is_mix = new_state.get_is_mix
-  get_money_total = new_state.get_money_total
-}
 
-let bet_headle_info = reactive({
-  quantity: 1,
-  amount: 98684.32
-}); // 头部金额
 
 // 悬浮条点击 
 const menu_click = () => {
@@ -104,7 +87,7 @@ const menu_click = () => {
 
   if (bet_list.length == 1) {
     // 单关时若金额不合要求，则清除金额
-    let _money = +lodash.get(get_bet_obj.value[get_bet_list[0]], 'money')
+    let _money = +lodash.get(view_ctr_obj[get_bet_list[0]], 'money')
     if (!_money || _money < 0.01 || _money > +get_user.value.balance) {
       set_money_total('clear_')
     }
@@ -117,7 +100,7 @@ const menu_click = () => {
   ) {
     let _money = 0,
       _money_total = get_money_total.value
-    lodash.forIn(get_bet_obj.value, function (item, key) {
+    lodash.forIn(view_ctr_obj, function (item, key) {
       if (+item.money > 0.01) {
         _money = _money + +item.money
       }
@@ -145,9 +128,9 @@ const mix_sum_odds = computed(() => {
     const mix_data = get_s_count_data.value
     let S = ''
     if (mix_data.length == 0 || mix_data.length == 1 && this.get_bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
-      const odds = _.get(_.values(this.get_bet_obj.value)[0], 'bs.hps.0.hl.0.ol.0.ov')
-      const hsw = _.get(_.values(this.get_bet_obj.value)[0], 'bs.hps[0].hsw') || 0
-      const csid = _.get(_.values(this.get_bet_obj.value)[0], 'bs.csid') || 0
+      const odds = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
+      const hsw = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
+      const csid = _.get(_.values(this.view_ctr_obj)[0], 'bs.csid') || 0
       S = this.compute_value_by_cur_odd_type(odds / 100000, null, hsw, null, csid)
     } else {
       S = mix_data.length > 0 ? mix_data[0].odds : ''

@@ -292,9 +292,9 @@ function on_click_lang(lang_) {
                     if (lodash.isArray(data) && data.length > 0) {
                         if (vx_get_is_virtual_bet.value) {
                             // TODO: this?
-                            // virtual_common_update_bet_item_info(this, data);
+                            // virtual_common_update_bet_item_info( data);
                         } else {
-                            // yabo_common_update_bet_item_info(this, data);
+                            // yabo_common_update_bet_item_info( data);
                         }
                         useMittEmit(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, {})
                         set_lang_change(false);

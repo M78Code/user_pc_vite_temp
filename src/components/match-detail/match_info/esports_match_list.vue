@@ -36,7 +36,7 @@ export default {
       menu_data: $menu.menu_data,
       // 赛事列表
       match_list:[],
-      match_ctr: new MatchCtr(this, 'esport_match_list'),
+      match_ctr: new MatchCtr( 'esport_match_list'),
       skt_mid: {}, // 需要订阅的赛事id
       skt_hpid: "", // 需要订阅的玩法
       socket_name: "esports_score_list"

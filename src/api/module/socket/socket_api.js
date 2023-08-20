@@ -5,8 +5,8 @@
  */
 
 import {http} from "src/core/http/index.js";
-let prefix = window.env.config.api.API_PREFIX_JOB;
-let project_name = window.env.config.FINAL_TARGET_PROJECT_NAME
+let prefix = window.BUILDIN_CONFIG.api.API_PREFIX_JOB;
+let project_name = window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME
 
 // 赛事详情玩法信息
 export const get_socket_match_odds_info = (params, config={}, url = "/v1/w/getMatchOddsInfos") => http.post(`${prefix}${url}`, params, config);

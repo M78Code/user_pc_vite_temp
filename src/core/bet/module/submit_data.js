@@ -1,18 +1,18 @@
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "./class/bet-data-class.js";
+import BetData from "../class/bet-data-class.js";
 import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
 import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/common-helper/common.js";
+import yabo_common from "src/core/bet/common-helper/common.js";
 import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import play_mapping from "../config/play-mapping.js";
 
 
 const  post_submit_Bet_list_gcuuid = ref(uid())
@@ -210,9 +210,9 @@ const  post_submit_Bet_list_gcuuid = ref(uid())
         let item_cs_id = _.get(item_cs, 'id');
         this.item_cs_id = item_cs_id
         //队伍名
-        let team_name = yabo_common.get_team_name(this);
+        let team_name = yabo_common.get_team_name();
         //盘口名
-        let handicap = yabo_common.get_handicap(this);
+        let handicap = yabo_common.get_handicap();
         // 预约的赔率，球头 当前赛事 预约投注需要参数playOptionName处理
         if(BetData.bet_appoint_obj && BetData.bet_appoint_obj.bet_appoint_id==item_cs_id && is_pre) {
           let new_name = ''

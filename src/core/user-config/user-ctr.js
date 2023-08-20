@@ -394,7 +394,7 @@ class UserCtr {
        // localStorage持久化用户分组信息
       sessionStorage.setItem("gr", gr);
 
-      //  if(window.env.config.gr != gr){
+      //  if(window.BUILDIN_CONFIG.gr != gr){
       if(window.BUILDIN_CONFIG.DOMAIN_RESULT.gr != gr){
         // #TODO
         let url_search = new URLSearchParams(location.search);
@@ -459,7 +459,7 @@ class UserCtr {
       return Promise.resolve(1);
    }
 
-  //  let api_domains = window.env.config.domain[window.env.config.current_env];
+  //  let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env];
     let api_domains =
       window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.CURRENT_ENV] || [];
    let api_domain = api_domains[0];
@@ -674,7 +674,7 @@ set_league_logo_url(url){
 
    // 设置主题色
    // if(!window.vue.$store.getters.get_theme){
-   //   let theme = 'theme0'+config.default_theme[window.env.config.FINAL_TARGET_PROJECT_NAME]
+   //   let theme = 'theme0'+config.default_theme[window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME]
    //   window.vue.$store.dispatch('set_theme',theme)
    // }
    // window.vue.$store.dispatch('init_loading_theme')
@@ -1046,7 +1046,7 @@ set_league_logo_url(url){
       // localStorage持久化用户分组信息
       sessionStorage.setItem('gr', gr)
       localStorage.setItem('user_gr', JSON.stringify({ token: sessionStorage.getItem('h5_token'), gr }));
-      if (window.env.config.gr != gr) {
+      if (window.BUILDIN_CONFIG.gr != gr) {
 
         let url_search = new URLSearchParams(location.search);
         //  重置 rdm 到最新的 时间戳  ，没有就 相当于新设置 ，有就相当于重置
@@ -1113,7 +1113,7 @@ set_league_logo_url(url){
       this.set_web_meta_by_config()
       return Promise.resolve(1)
     }
-    let api_domains = window.env.config.domain[window.env.config.current_env];
+    let api_domains = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env];
     let api_domain = api_domains[0];
 
 
@@ -1244,7 +1244,7 @@ set_league_logo_url(url){
     dom_.head.appendChild(title_el)
     dom_.head.appendChild(icon_el)
     // 设置主题色
-    let theme = 'theme0' + config.default_theme[window.env.config.DEFAULT_VERSION_NAME]
+    let theme = 'theme0' + config.default_theme[window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME]
     // let theme = _.get(window, 'vue.$store.getters.get_theme', 'theme01')
     // window.vue.$store.dispatch('set_theme',theme)
   }

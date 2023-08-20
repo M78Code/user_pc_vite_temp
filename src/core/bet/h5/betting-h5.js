@@ -102,13 +102,13 @@ export default {
     hide_bet_series_but(){
       let res = false;
       // 单关时,获取投注列表数据
-      if(!this.get_is_mix && _.get(this,'get_bet_list.length')){
+      if(!this.get_is_mix && _.get('get_bet_list.length')){
         // 遍历投注列表数据,检测是否C01赛事
         for (let i = 0; i < this.get_bet_list.length; i++) {
           // 获取投注项id
-          let id = _.get(this,`get_bet_list[${i}]`);
+          let id = _.get(`get_bet_list[${i}]`);
           // 获取投注项的数据源
-          let cds = _.get(this,`get_bet_obj[${id}].bs.cds`);
+          let cds = _.get(`get_bet_obj[${id}].bs.cds`);
           if(cds == "C01"){
             // C01赛事时,隐藏串关按钮
             res=true;
@@ -648,14 +648,14 @@ export default {
               if (vm.get_menu_type == 3000) {return 5}; // 电竞
               if (bet_obj.hps[0].hl[0].hmt == 1) {return 1};  //早盘赛事
               if (bet_obj.hps[0].hl[0].hmt == 0) {return 2};  //滚球赛事
-            })(this)
+            })()
           }
           bet_obj.hps[0].hl[0].hn && flag_map.push(bet_obj.mid)
           param.idList.push(temp);
         }
       })
       if (res_obj) {
-        result_handle.bind(this)(res_obj)
+        result_handle.bind()(res_obj)
         return Promise.resolve()
       }
 
@@ -733,7 +733,7 @@ export default {
       if (_.get(param, 'idList.length')) {
         result_promise = new Promise((resolve) => {
           api_betting.post_verify_odds_before(param).then((res) => {
-            result_handle.bind(this)(res)
+            result_handle.bind()(res)
             resolve()
           })
         })
@@ -816,7 +816,7 @@ export default {
         param.matchProcessId = bet_obj.mmp;
 
         //最终赔率
-        if (this.get_is_champion(this)) {
+        if (this.get_is_champion()) {
           param.oddsFinally = this.compute_value_by_cur_odd_type(_.get(bet_obj,'hps[0].hl[0].ol[0].ov') / 100000, null, [], 'no_format', bet_obj.csid);   //冠军,不用转换赔率
         } else {
           param.oddsFinally = this.compute_value_by_cur_odd_type(_.get(bet_obj,'hps[0].hl[0].ol[0].ov') / 100000, null, _.get(bet_obj,'hps[0].hsw'), 'no_format', bet_obj.csid);
@@ -855,7 +855,7 @@ export default {
         if (temp_hmt == 0) {
           param.matchType = 2;   //滚球赛事
         }
-        if (this.get_is_champion(this)) {
+        if (this.get_is_champion()) {
           param.matchType = 3;   //冠军
         }
         if (this.get_menu_type == 900) {
@@ -881,7 +881,7 @@ export default {
       if (this.get_bet_list.length == 0) {return}
 
       if (res_obj) {
-        result_handle.bind(this)(res_obj)
+        result_handle.bind()(res_obj)
         return
       }
 
@@ -901,7 +901,7 @@ export default {
       if (this.get_bet_list.length == 0) {return}
 
       if (res_obj) {
-        result_handle.bind(this)(res_obj)
+        result_handle.bind()(res_obj)
         return
       }
 
@@ -927,7 +927,7 @@ export default {
 
       this.fetch_limit_money_params()
         .then(api_betting.post_maxminmoney)
-        .then(result_handle.bind(this))
+        .then(result_handle.bind())
         .catch(err => {
           console.error('fetch_limit_money', err)
         })
@@ -1227,7 +1227,7 @@ export default {
           //坑位（盘口位置，1：表示主盘，2：表示第一副盘）
           temp.placeNum = hl_obj.hn;
           //最终赔率
-          if (this.get_is_champion(this)) {
+          if (this.get_is_champion()) {
             temp.oddFinally = this.compute_value_by_cur_odd_type(ol_obj.ov / 100000, null, [], 'no_format', bet_obj.csid);   //冠军的时候，投注传值不用转换赔率
           } else {
             temp.oddFinally = this.compute_value_by_cur_odd_type(ol_obj.ov / 100000, null, hps_obj.hsw, 'no_format', bet_obj.csid);
@@ -1237,7 +1237,7 @@ export default {
         temp.betAmount = String(money);
         //最终盘口类型(冠军玩法固定传 EU)
         let oddsTable = { EU: '1', HK: '2', MY: '3', GB: '4', US: '5', ID: '6', };
-        temp.marketTypeFinally = hps_obj.hsw && !hps_obj.hsw.includes(oddsTable[this.get_cur_odd]) || this.get_is_champion(this) ? "EU" : this.get_cur_odd;
+        temp.marketTypeFinally = hps_obj.hsw && !hps_obj.hsw.includes(oddsTable[this.get_cur_odd]) || this.get_is_champion() ? "EU" : this.get_cur_odd;
         //赛事id
         temp.matchId = bet_obj.mid;
         //对阵信息
@@ -1275,7 +1275,7 @@ export default {
           temp.matchType = 2;   //滚球赛事
         }
 
-        if (this.get_is_champion(this)) {
+        if (this.get_is_champion()) {
           temp.matchType = 3;   // 冠军赛事
           temp.matchProcessId = '0';
           temp.matchInfo = bet_obj.seoy;

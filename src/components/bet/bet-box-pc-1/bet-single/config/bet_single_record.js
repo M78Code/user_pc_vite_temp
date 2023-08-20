@@ -38,8 +38,8 @@ export default {
     // 投注项oid
     this.oid = _.get(this.single_record_obj,'playOptionsId');
     // 通过投注项的oid获取投注项id
-    this.id = this.yabo_common.get_id(this, this.oid);
-    this.play_id = this.yabo_common.get_play_id(this);
+    this.id = BetCommonHelper.get_id( this.oid);
+    this.play_id = BetCommonHelper.get_play_id();
     console.log('this.play_id======', this.play_id);
     let item_obj = this.single_record_obj;
     if (item_obj.matchInfo) {
@@ -154,7 +154,7 @@ export default {
       //是不是个普通对象
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        let format_str = this.yabo_common.format_str;
+        let format_str = BetCommonHelper.format_str;
         //冠军
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
@@ -193,7 +193,7 @@ export default {
      * @return {String} 投注项状态
     */
     active() {
-      let flag = this.yabo_common.get_active(this);
+      let flag = BetCommonHelper.get_active();
       return flag
     }, 
   },

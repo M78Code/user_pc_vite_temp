@@ -128,7 +128,7 @@ export default {
      * @return {String}
      */
     hv_ov_change() {
-      return this.yabo_common.get_hv_ov_change(this);
+      return BetCommonHelper.get_hv_ov_change();
     },
     /**
      * @description: 赛事比分
@@ -137,7 +137,7 @@ export default {
      */
     basic_score() {
       // 获取及时比分 格式: (主队比分-客队比分)
-      return this.yabo_common.get_score_info(this);
+      return BetCommonHelper.get_score_info();
     },
     /**
      * @description:及时比分
@@ -145,7 +145,7 @@ export default {
      * @return {undefined}
      */
     timerly_basic_score() {
-      return this.yabo_common.get_timerly_score_info(this);
+      return BetCommonHelper.get_timerly_score_info();
     },
     /**
      * @description: 赔率值
@@ -154,7 +154,7 @@ export default {
      */
     odds_value() {
       //赔率计算
-      return this.yabo_common.get_odds_value(this);
+      return BetCommonHelper.get_odds_value();
     },
     /**
      * @description: 盘口id
@@ -162,7 +162,7 @@ export default {
      * @return {undefined}
      */
     handicap_id() {
-      return this.yabo_common.get_handicap_id(this);
+      return BetCommonHelper.get_handicap_id();
     },
   /**
    * @description: 当前盘口名称 欧洲盘/香港盘
@@ -198,7 +198,7 @@ export default {
      */
     handicap() {
       //获取盘口值
-      return this.yabo_common.get_handicap(this);
+      return BetCommonHelper.get_handicap();
     },
     /**
      * @description: 是否有盘口值
@@ -218,7 +218,7 @@ export default {
      * @return {String} 投注项状态
      */
     active() {
-      return this.yabo_common.get_active(this);
+      return BetCommonHelper.get_active();
     },
     /**
      * @description: tips icon的id
@@ -240,7 +240,7 @@ export default {
      * @return {undefined}
      */
     is_serial() {
-      return this.yabo_common.get_serial(this);
+      return BetCommonHelper.get_serial();
     },
     /**
      * @description: 串关类型
@@ -248,7 +248,7 @@ export default {
      * @returns {undefined}
      */
     serial_type() {
-      return this.yabo_common.get_serial_type(this);
+      return BetCommonHelper.get_serial_type();
     },
     /**
      * @description:下注数量
@@ -267,7 +267,7 @@ export default {
       let obj_bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
         let date,month,day,hour,minute;
-        let format_str = this.yabo_common.format_str;
+        let format_str = BetCommonHelper.format_str;
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份
@@ -321,7 +321,7 @@ export default {
         // console.log(`===============new:${new_}==============old:${old_}`);
         if(this.view_ctr_obj.is_submit_result) return;
         this.view_ctr_obj.bet_data_change = true;
-        let count = this.yabo_common.get_deactive_count(this);   
+        let count = BetCommonHelper.get_deactive_count();   
         // console.log(`===========odds_value==============count:${count}`);   
         if(count == 0 && this.is_serial && this.view_ctr_obj.error_code != '0400532'){
           this.view_ctr_obj.error_code = "0402027";
@@ -364,7 +364,7 @@ export default {
         if(this.view_ctr_obj.is_submit_result) return; 
         this.view_ctr_obj.bet_data_change = true;
         // 获取失效的投注项数量
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = BetCommonHelper.get_deactive_count();
         // console.log(`===========handicap==============count:${count}`);
         // 没有失效的投注项并且支持串关
         if(count == 0 && this.is_serial) { 
@@ -401,14 +401,14 @@ export default {
           // 更新投注项有效无效的标识
           obj.cs.effect = is_effect;
           // 重新设置到存储的对象(对此字段进行更新)
-          this.yabo_common.set_bet_obj_value(this, obj);
+          BetCommonHelper.set_bet_obj_value( obj);
         }   
         // 若为开盘状态并且可以串关
         if(new_ == 1 && this.is_serial) {
           // 清除定时器 
           clearTimeout(this.timer_obj[`timer_${this.id}`]); 
           // 初始化提示信息
-          this.yabo_common.init_message(this); 
+          BetCommonHelper.init_message(); 
           // 赔率是否上升
           this.odds_change_up = false;
           // 赔率是否下降
@@ -430,7 +430,7 @@ export default {
             this.view_ctr_obj.error_code = "M400004";           
           }
           // 获取失效的投注项数量
-          let count = this.yabo_common.get_deactive_count(this);
+          let count = BetCommonHelper.get_deactive_count();
           // console.log(`============active=========count:${count}`); 
           // 设置提示信息
           this.set_message(count);
@@ -452,7 +452,7 @@ export default {
         // 盘口有变化
         this.handicap_change = true;
         // 获取失效的投注项数量
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = BetCommonHelper.get_deactive_count();
         // console.log(`===========hv_ov_change==============count:${count}`);
         // 可以串关并且没有失效的投注项
         if(this.is_serial && count == 0) {
@@ -500,11 +500,11 @@ export default {
      */
     vx_get_lang_change() {
       // 重新设置赛季
-      this.season = this.yabo_common.get_season(this);
+      this.season = BetCommonHelper.get_season();
       // 重新设置玩法名称
-      this.play_name = this.yabo_common.get_play_name(this);
+      this.play_name = BetCommonHelper.get_play_name();
       // 重新设置队伍名称
-      this.team_name = this.yabo_common.get_team_name(this);
+      this.team_name = BetCommonHelper.get_team_name();
     },
     /**
      * @description:是否支持串关
@@ -549,16 +549,16 @@ export default {
         }
       } else {
         //初始化提示信息
-        this.yabo_common.del_bet_item(this);
+        BetCommonHelper.del_bet_item();
       }
       //判断是否还有失效的投注项
-      if(this.yabo_common.has_disable_item(this)) {
+      if(BetCommonHelper.has_disable_item()) {
         //串关失效投注项的个数
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = BetCommonHelper.get_deactive_count();
         this.set_message(count);
       } else {
         //初始化提示信息
-        this.yabo_common.init_message(this); 
+        BetCommonHelper.init_message(); 
       }   
       if(this.bet_item_count == 0) {
 
@@ -635,7 +635,7 @@ export default {
         // 获取到延迟时间
         if(delay) {
           // 调用延迟后恢复消息的方法
-          this.yabo_common.delay_reset_message(this, delay, ()=>{
+          BetCommonHelper.delay_reset_message( delay, ()=>{
             // 如果投注失败
             if(this.view_ctr_obj.bet_fail_flag) {
               // 设置订单确认标识为默认值
@@ -744,11 +744,11 @@ export default {
      */
     update_home_away() {
        // 获取赛季名称 
-      this.season = this.yabo_common.get_season(this);
+      this.season = BetCommonHelper.get_season();
       // 获取玩法名称
-      this.play_name = this.yabo_common.get_play_name(this);
+      this.play_name = BetCommonHelper.get_play_name();
       // 获取队伍名称
-      this.team_name = this.yabo_common.get_team_name(this);
+      this.team_name = BetCommonHelper.get_team_name();
       let bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
       let cs = _.get(this.vx_get_bet_obj,`${this.id}.cs`);
       // bs如果是个对象

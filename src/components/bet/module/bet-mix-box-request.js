@@ -13,7 +13,7 @@ const fetch_limit_money = (res_obj) => {
     }
 
     if (res_obj) {
-        result_handle.bind(this)(res_obj)
+        result_handle.bind()(res_obj)
         return
     }
 
@@ -43,7 +43,7 @@ const fetch_limit_money = (res_obj) => {
 
     this.fetch_limit_money_params()
         .then(api_betting.post_maxminmoney)
-        .then(result_handle.bind(this))
+        .then(result_handle.bind())
         .catch(err => {
             console.error('fetch_limit_money', err)
         })

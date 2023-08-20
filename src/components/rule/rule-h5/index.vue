@@ -61,10 +61,10 @@ const get_h5_rule_url = () => {
     if (current_env == 'idc_online' || current_env == 'idc_sandbox' || current_env == 'idc_pre') {
         // 生产环境
         let domain = this.$lodash.get(window, `env.config.static_serve[0]`)
-        more_lang.value = domain + '/sports-rules/#/' + lang + `/sport/common?v=h5_${window.env.config.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
+        more_lang.value = domain + '/sports-rules/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
     } else {
         // 非生产环境
-        more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang + `/sport/common?v=h5_${window.env.config.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
+        more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
     }
     const { ctx } = getCurrentInstance()
     ctx.$forceUpdate()
