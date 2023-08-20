@@ -2,6 +2,8 @@ import lodash from "lodash";
 import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
+import store from "src/store-redux/index.js";
+import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick } from "vue";
 export const details_main = () => {
@@ -525,15 +527,19 @@ const route = useRoute();
       // 克隆一份;
       let cloneData = lodash.cloneDeep(res_data);
       // set_detail_data(cloneData);
+      store.dispatch({
+        type: 'SET_DETAIL_DATA',
+        data: cloneData
+      });
       // store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
 
       data.get_detail_data = cloneData;
 
       // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
-      let params1 = { sportId: res_data.csid, mid: matchid.value };
-      params1 = params1; // get_odds_list
+      // let params1 = { sportId: res_data.csid, mid: matchid.value };
+      // params1 = params1; // get_odds_list
       // 关联联赛下的赛事项查询,是否存在
-      params1 && get_odds_list(params1, "init_req");
+      // params1 && get_odds_list(params1, "init_req");
       // sendSocketInitCmd();
     }
   };
@@ -604,6 +610,10 @@ const route = useRoute();
 
           // 给vuex 设置玩法集数据
           // set_details_tabs_list(res_data);
+          store.dispatch({
+            type: 'SET_DETAILS_TABS_LIST',
+            data: res_data
+          });
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
           if (data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
@@ -654,24 +664,24 @@ const route = useRoute();
         });
     };
 
-    // const get_category_list_debounce = axios_debounce_cache.get_category_list
-    // if(get_category_list_debounce && get_category_list_debounce['ENABLED']){
-    //   let info = get_category_list_debounce.can_send_request(params);
-    //   if(info.can_send){
-    //     //直接发请求    单次数 请求的方法
+    const get_category_list_debounce = axios_debounce_cache.get_category_list
+    if(get_category_list_debounce && get_category_list_debounce['ENABLED']){
+      let info = get_category_list_debounce.can_send_request(params);
+      if(info.can_send){
+        //直接发请求    单次数 请求的方法
         _get_category_list();
-    //   }else{
-    //     // 记录timer
-    //     clearTimeout(axios_debounce_timer)
-    //     axios_debounce_timer = setTimeout(() => {
-    //       //直接发请求    单次数 请求的方法
-    //       _get_category_list();
-    //     }, info.delay_time || 1000);
-    //   }
-    // } else {
-    //直接发请求    多 次数  循环请求 的方法
-    // _get_category_list();
-    // }
+      }else{
+        // 记录timer
+        clearTimeout(data.axios_debounce_timer)
+        data.axios_debounce_timer = setTimeout(() => {
+          //直接发请求    单次数 请求的方法
+          _get_category_list();
+        }, info.delay_time || 1000);
+      }
+    } else {
+      // 直接发请求    多 次数  循环请求 的方法
+      _get_category_list();
+    }
   };
   /**
    *@description 响应WS推送C101, C102, C103, C104, C107(参看:src\public\mixins\websocket\data\skt_data_info_header.js)
@@ -712,7 +722,11 @@ const route = useRoute();
     }
     // 克隆解决问题
     let cloneData = lodash.cloneDeep(data.detail_data);
-    set_detail_data(cloneData);
+    // set_detail_data(cloneData);
+    store.dispatch({
+      type: 'SET_DETAIL_DATA',
+      data: cloneData
+    });
   };
   const set_native_detail_data = (str) => {
     // 判断是否有相对应的赛事
