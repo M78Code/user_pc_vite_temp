@@ -41,4 +41,84 @@ function useMittEmit(key, data) {
   }
 
 }
-export { useMittOn, useMittEmit, MITT_TYPES };
+
+
+  /**
+   * 生产随机字符串
+   */
+  const  randomstring=(n=16)=>{
+
+    let result=''
+    let str="ABCDEFGH1KLMNOPQRSTUVWXYZabCdefghijk1mnopqrstuVWxyz0123456789"
+    for(let i=0;i<n;i++){
+    
+
+        let i = Math.floor(Math.random()* (str.length))
+        result+= str[i]  
+
+    }
+      
+     return result
+
+  }
+
+
+//==============================事件监听  生成器  demo 开始  ====================================
+ 
+// let   { emitters, emitters_on, emitters_off } =  useMittEmitterGenerator(event_pairs)
+// /**
+// * 生成事件监听  
+// */
+// handle_generat_emitters(){
+// let event_pairs=  [
+// // 投注数量
+// { type:MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD, callback:this.get_bet_total_count} 
+// ]
+// let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+// this.emitters_off=emitters_off
+// //移除相应监听事件 //视图销毁钩子函数内执行
+// if(this.emitters_off){this.emitters_off()}   
+
+//==============================事件监听  生成器  demo  结束 ====================================
+
+
+/**
+ * 批量  生成 事件监听 和 取消 事件监听     事件监听  生成器 
+ * @param {*} event_pairs  事件 配置对象数组
+ * @returns 
+ */
+
+const useMittEmitterGenerator =(event_pairs)=>{
+  //挂载点 
+  let emitters={}
+
+
+  // 添加相应监听事件
+const emitters_on=()=>{
+  event_pairs.map((item,i)=>{
+    let { type, callback} =item
+    if(!callback){
+      callback=()=>{}
+    }
+
+    emitters[`emitter_${   randomstring() }`] =  useMittOn(type, callback ).off 
+  })
+
+}
+// 执行 
+emitters_on()
+
+ // 移除相应监听事件
+  const emitters_off=()=>{
+     Object.values( emitters).map((x) => x());
+}
+
+ 
+
+  return  { emitters,   emitters_off }
+}
+
+
+
+
+export { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES };

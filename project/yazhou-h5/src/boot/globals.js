@@ -7,7 +7,7 @@ import Vue from 'vue'
 
 import filters from 'src/boot/global-filters.js'
 import * as wsCmd from "src/public/utils/ws/wsCmd.js";
-import * as emit_cmd from "src/public/utils/http/emit_cmd.js";
+import * as emit_cmd from "src/public/utils/http/MITT_TYPES.js";
 import toastRegistry from "src/public/components/toast/toast";
 import {common} from "src/boot/common.js";
 import 'url-search-params-polyfill'
@@ -66,7 +66,7 @@ require_all.keys().forEach( item => require_all(item))
   // 高精度运算工具对象(例子:this.$mathjs.multiply(1.13,100000))
   Vue.prototype.$mathjs = math;
 
-   // emit 常量 ：this.emit_cmd.常量
+   // emit 常量 ：MITT_TYPES.常量
   Vue.prototype.emit_cmd = emit_cmd;
   // // 用户相关的 全局 单实例 类
   Vue.prototype.userCtr = userCtr

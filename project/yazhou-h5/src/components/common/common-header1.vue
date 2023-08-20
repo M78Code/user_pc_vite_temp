@@ -60,7 +60,7 @@ export default {
 
     this.go_to_back = this.debounce(this.go_to_back, 500, {leading: true})
 
-    this.$root.$on(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
+    this.$root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
   },
   // 接受父组件传递的数据
   props: {
@@ -119,7 +119,7 @@ export default {
     this.debounce_throttle_cancel(this.cancel_ref);
     this.debounce_throttle_cancel(this.go_to_back);
 
-    this.$root.$off(this.emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
+    this.$root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
 
     clearTimeout(this.timer1_)
     this.timer1_ = null
@@ -182,28 +182,28 @@ export default {
       const curr_tab = this.view_tab
       if (this.$route.name === 'match_result') {
         // 刷新 盘口赔率信息
-        this.$root.$emit(this.emit_cmd.EMIT_REF_API, 'details_refresh')
+        this.$root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
-        this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
         });
         // 刷新 注单记录----请求
-        this.$root.$emit(this.emit_cmd.EMIT_UPDATE_ORDER_LIST)
+        this.$root.$emit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
       }
       else if (curr_tab === 'bet') {
         // 刷新 盘口赔率信息
-        this.$root.$emit(this.emit_cmd.EMIT_REFRESH_DETAILS)
-        // this.$root.$emit(this.emit_cmd.EMIT_REF_API, 'details_refresh')
+        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+        // this.$root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
       }
       else if (curr_tab === 'match_analysis') {
         // 刷新 赛事分析信息
-        this.$root.$emit(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS)
+        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
       }
       else {
-        this.$root.$emit(this.emit_cmd.EMIT_REFRESH_CHATROOM)
+        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
       }
 
-      // this.$root.$emit(this.emit_cmd.EMIT_REFRESH_DETAILS)
+      // this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
       this.refreshing = true;
       clearTimeout(this.timer1_)
       this.timer1_ = setTimeout(() => {
@@ -221,7 +221,7 @@ export default {
      */
     analysis_show(obj){
       let csid = _.get(obj,'csid')
-      this.$root.$emit(this.emit_cmd.EMIT_ANA_SHOW,csid)
+      this.$root.$emit(MITT_TYPES.EMIT_ANA_SHOW,csid)
     },
     /**
      *@description 加载联赛列表
@@ -230,7 +230,7 @@ export default {
      */
     async interface_b_header() {
       // 显示联赛列表传true
-      this.$root.$emit(this.emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, true);
+      this.$root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
     },
     // 返回列表页亦或是返回上一级
     go_to_back() {
@@ -248,7 +248,7 @@ export default {
      *@return {Undefined} undefined
      */
     open(position){
-      this.$root.$emit(this.emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      this.$root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     },
   },
 };

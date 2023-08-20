@@ -42,7 +42,7 @@ export default defineComponent({
       emitters = [
         useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
       ]
-      // $root.$on(emit_cmd.EMIT_FOOTBALL_EVENTS, football_events_handle);
+      // $root.$on(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
     },);
     // #TODO vuex 
     // computed: {
@@ -69,7 +69,7 @@ export default defineComponent({
     onUnmounted(() => {
       // #TODO $root 
       emitters.map((x) => x())
-      // $root.$off(emit_cmd.EMIT_FOOTBALL_EVENTS, football_events_handle);
+      // $root.$off(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
       clearTimeout(timer)
       timer = null
     })

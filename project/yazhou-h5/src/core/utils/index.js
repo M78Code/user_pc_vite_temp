@@ -73,7 +73,7 @@ const utils = {
             video_src,
             animation_src
           }
-          window.vue.$root.$emit(window.vue.emit_cmd.EMIT_SET_PRE_VIDEO_SRC,obj)
+          window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC,obj)
         }
       }).catch(err => {
         console.log(err)

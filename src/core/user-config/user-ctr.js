@@ -678,7 +678,7 @@ set_league_logo_url(url){
    //   window.vue.$store.dispatch('set_theme',theme)
    // }
    // window.vue.$store.dispatch('init_loading_theme')
-  //  window.vue.$root.$emit(window.vue.emit_cmd.EMIT_MX_COLLECT_COUNT2_CMD);
+  //  window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD);
  }
  /**
   * @Description 设置网站标题
@@ -751,12 +751,12 @@ set_league_logo_url(url){
       // if ((!callbackUrl) && (callbackUrl != undefined)) {
       //   // 弹出提示消息、登录层
       //   window.vue.$root.$emit(
-      //     window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD,
+      //     window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
       //     window.vue.$root.$t("login.login_timeout")
       //   );
       // } else {
         // 登录失效直接展示 alert
-        this.$root.$emit(this.emit_cmd.EMIT_SHOW_ALERT_CMD, {
+        this.$root.$emit(MITT_TYPES.EMIT_SHOW_ALERT_CMD, {
           text: this.$root.$t("login.login_timeout"),
           callback: () => {
 
@@ -859,7 +859,7 @@ set_league_logo_url(url){
     //  调用用户接口，更新 域名流程
     let oss = _.get(res, 'data.data.oss', {});
     oss.gr = _.get(res, "data.data.gr", "").toUpperCase();
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_SET_GETUSERINFO_OSS_API, oss);
+    window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_SET_GETUSERINFO_OSS_API, oss);
     // 保存userinfo
     window.vue.$store.commit('set_user', res.data.data)
     //上传数据
@@ -996,7 +996,7 @@ set_league_logo_url(url){
       // 如果超限
       if (this.all_expired_count >= this.all_expired_count_max) {
         // 跳转商户
-        window.vue.$root.$emit(window.vue.emit_cmd.EMIT_GO_TO_VENDER);
+        window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_GO_TO_VENDER);
         // 关闭WS
         if (window.ws) {
           window.ws.destroy(true);

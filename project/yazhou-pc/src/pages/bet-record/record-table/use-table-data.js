@@ -611,7 +611,7 @@ export const useTableData = ({ props, emit }) => {
   //         this.show_bet_slide(index);
   //         this.re_settlement(orderNo, index);
   //         // 拉取用户金额接口
-  //         this.$root.$emit(this.emit_cmd.EMIT_GET_BALANCE_CMD);
+  //         this.$root.$emit(MITT_TYPES.EMIT_GET_BALANCE_CMD);
   //       } else if (["0400525", "0400526"].includes(code)) {
   //         this.$set(this.cur_bet_pre, `${index}.bet_pre_code`, code);
   //         this.$set(this.early_settlement_data[index], "bet_status", "default");
@@ -1117,12 +1117,12 @@ export const useTableData = ({ props, emit }) => {
   // destroyed() {
   //   // 关闭设置提前结算状态事件
   //   this.$root.$off(
-  //     this.emit_cmd.EMIT_SET_PRE_ORDER_STATUS_CMD,
+  //     MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
   //     this.set_pre_order_status
   //   );
   //   // 关闭ws推送数据事件
   //   this.$root.$off(
-  //     this.emit_cmd.EMIT_SET_WS_INFO_DATA_CMD,
+  //     MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
   //     this.set_ws_info_data
   //   );
   //   // 清除定时器
@@ -1148,16 +1148,16 @@ export const useTableData = ({ props, emit }) => {
     this.recordData = this.order_list;
     // 提前结算订单设施
     this.$root.$on(
-      this.emit_cmd.EMIT_SET_PRE_ORDER_STATUS_CMD,
+      MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
       this.set_pre_order_status
     );
     // 提前结算ws推送的数据设置
     this.$root.$on(
-      this.emit_cmd.EMIT_SET_WS_INFO_DATA_CMD,
+      MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
       this.set_ws_info_data
     );
     // 统计未结算订单数量
-    this.$root.$emit(this.emit_cmd.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    this.$root.$emit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
   });
   return {
     ...toRefs(state),

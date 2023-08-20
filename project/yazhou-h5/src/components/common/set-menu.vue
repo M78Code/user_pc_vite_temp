@@ -196,12 +196,12 @@ import { computed, onUnmounted, watch } from "vue";
     cancel_loading_balance = debounce(cancel_loading_balance,200)
     calc_width = window.innerWidth * 100 * 2.6 / 375
     // set_is_show_menu(false)
-    $root.$on(emit_cmd.EMIT_WINDOW_RESIZE,window_resize_handle);
+    $root.$on(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle);
     onUnmounted(() => {
       clearTimeout(balance_timer);
     balance_timer = null;
 
-    $root.$off(emit_cmd.EMIT_WINDOW_RESIZE,window_resize_handle);
+    $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle);
     debounce_throttle_cancel(cancel_loading_balance);
     })
   watch(() => is_show_menu, (newValue) => {
@@ -302,7 +302,7 @@ import { computed, onUnmounted, watch } from "vue";
       set_collapse_map_match({})
 
       set_sort_type(status);
-      $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD,{
+      $root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,{
         text:"sortRules",
       });
     }

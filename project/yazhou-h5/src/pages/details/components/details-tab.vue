@@ -120,7 +120,7 @@ export default defineComponent({
       // 点击玩法对页面吸顶tab做高度处理
       // #TODO emit 
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
-      // $root.$emit(emit_cmd.EMIT_DETAILILS_TAB_CHANGED)
+      // $root.$emit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer == 3){
         set_fewer(1)
       }
@@ -159,17 +159,17 @@ export default defineComponent({
         useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
         useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
       ]
-      // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent)
-      // $root.$on(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // $root.$on(emit_cmd.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
+      // $root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
+      // $root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+      // $root.$on(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
     };
     // 移除相应监听事件
     const off_listeners = () => {
       // #TODO emit 
       data.emitters.map((x) => x())
-      // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB, initEvent);
-      // $root.$off(emit_cmd.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // $root.$off(emit_cmd.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
+      // $root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent);
+      // $root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+      // $root.$off(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
     };
     return {
       ...toRefs(data),

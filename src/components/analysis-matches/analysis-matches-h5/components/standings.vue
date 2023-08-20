@@ -109,7 +109,7 @@ import { useRoute } from 'vue-router'
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件 TODO: $root emit  后续修改调整
-    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     tab_list = ref([
         {name: $root.$t('analysis_football_matches.Fundamentals')},

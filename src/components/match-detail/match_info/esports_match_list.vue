@@ -84,7 +84,7 @@ export default {
           }
     }
     //更新电竞右侧视频
-    this.$root.$on(this.emit_cmd.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
+    this.$root.$on(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
   },
   methods:{
     ...mapActions({
@@ -184,7 +184,7 @@ export default {
   },
   destroyed() {
     //更新电竞右侧视频
-    this.$root.$off(this.emit_cmd.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
+    this.$root.$off(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
     this.match_ctr.destroy();
   },
 };

@@ -71,19 +71,19 @@ export default {
   },
   created() {
     //网络错误时设置默认最大最小值
-    this.$root.$on(this.emit_cmd.EMIT_NET_ERR, this.net_err_fun)
+    this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
     // 串关的校验金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
     // 触发清除串关输入框金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
     // 设置金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
     // 设置输入框的最大金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
     // 设置最小金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
     // 更新键盘按键状态
-    this.$root.$on(this.emit_cmd.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
+    this.$root.$on(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
     // 若为串关的额第一个输入投注项
     if (this.index == 0) {
       // 计算第一个输入投注项显示的赔率(各个投注项赔率进行相乘)
@@ -101,19 +101,19 @@ export default {
   },
   destroyed() {
     //清除网络错误时设置默认最大最小值
-    this.$root.$off(this.emit_cmd.EMIT_NET_ERR, this.net_err_fun)
+    this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
     //清除串关的校验金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
     // 清除触发清除串关输入框金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
      // 清除设置金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
     //清除 设置输入框的最大金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
     // 清除设置最小金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
      // 清除更新键盘按键状态
-    this.$root.$off(this.emit_cmd.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
+    this.$root.$off(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
     //清除计时器
     clearTimeout(this.timer_input_focus);
     this.keyboard_data = null;
@@ -214,7 +214,7 @@ export default {
       // 存储最高可赢额
       this.set_bet_s_obj("win_money", new_);
       // 重新统计总的最高可赢额
-      this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_WIN_MONEY_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
     },
     /**
      * 最高限额值
@@ -235,9 +235,9 @@ export default {
       if(this.money) {
          this.set_bet_s_obj('money', parseFloat(this.money));
          // 计算总投注额
-         this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD);
+         this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
          // 计算总收益额
-         this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_WIN_MONEY_CMD);
+         this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
       }
     },
     'view_ctr_obj':{
@@ -432,9 +432,9 @@ export default {
       // 键盘按键状态更新
       this.update_keyboard_status();
       // 更新投注数量显示
-      this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_COUNT_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
       // 更新收益额
-      this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     },
     /**
      * @description: 按键事件
@@ -482,9 +482,9 @@ export default {
         // 更新键盘按键状态
         this.update_keyboard_status();
         // 统计总投注数量
-        this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_COUNT_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
         // 统计总收益额
-        this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
         // 校验输入的金额
         this.check_money(this.money);
       }
@@ -584,9 +584,9 @@ export default {
       // 更新键盘按键状态
       this.update_keyboard_status();
       // 统计总投注数量
-      this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_COUNT_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
       // 统计总收益额
-      this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     },
     /**
      * @description: 检查所有输入框是否金额都是空的
@@ -746,7 +746,7 @@ export default {
     setTimeout(() => {
        this.money = value
        this.set_bet_s_obj("money", this.money);
-       this.$root.$emit(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD);
+       this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     }, 500);
     }
     // 第一个投注输入框

@@ -202,7 +202,7 @@ export default defineComponent({
     })
     // #TODO EMIT 
       // created(){
-      //   $root.$on(emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
+      //   $root.$on(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
       // },
 
       
@@ -214,10 +214,10 @@ export default defineComponent({
       // ...mapMutations(['set_current_gotodetail_match','set_toast']),
     onMounted(() => {
       // #TODO EMIT 
-      // $root.$on(emit_cmd.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
+      // $root.$on(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
       video_process_init_video()
       // #TODO EMIT 
-      // $root.$on(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
+      // $root.$on(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
         useMittOn.on(MITT_KEY.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
@@ -573,9 +573,9 @@ export default defineComponent({
       }
       // #TODO EMIT 
       emitters.map((x) => x())
-      // $root.$off(emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
-      // $root.$off(emit_cmd.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-      // $root.$off(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status)
+      // $root.$off(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
+      // $root.$off(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
+      // $root.$off(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status)
     });
     return {
       ...toRefs(data),

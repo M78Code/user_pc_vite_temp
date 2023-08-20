@@ -132,12 +132,12 @@ const toolClicked = (f) => {
       params.value.size = 200;
       //TODO
       // this.$root.$emit(
-      //   this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //   this.params.size
       // );
     }
     // 统计未结算订单
-    this.$root.$emit(this.emit_cmd.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    this.$root.$emit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
     this.getOrderList();
   } else {
     if (localStorage.getItem("time_sort_record")) {
@@ -156,7 +156,7 @@ const toolClicked = (f) => {
       params.value.size = old_page_size.value;
       // TODO
       //   this.$root.$emit(
-      //     this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      //     MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //     this.params.size
       //   );
       // }
@@ -216,12 +216,12 @@ const toolClicked = (f) => {
     if (old_page_size.value) {
       params.value.size = old_page_size.value;
       // this.$root.$emit(    TODO
-      //   this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //   this.params.size
       // );
     }
     // if (od_page != 1) {    TODO
-    //   this.$root.$emit(this.emit_cmd.EMIT_RECODES_QUERY_BUT_CMD);
+    //   this.$root.$emit(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD);
     // } else {
     //   this.getOrderList();
     // }

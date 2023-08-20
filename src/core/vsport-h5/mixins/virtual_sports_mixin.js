@@ -59,7 +59,7 @@ export default {
     this.checking_first_delete_timer = null;
     //重调用视频进程接口时钟
     this.procee_again_timer = null;
-    this.$root.$on(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
+    this.$root.$on(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
   },
   methods:{
     ...mapMutations({
@@ -145,7 +145,7 @@ export default {
         return;
       }
       if(is_user_clicked != 'is_user_refreshing'){
-        this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,true);
+        this.$root.$emit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,true);
         this.virtual_match_list = [];
         this.match_list_by_no = [];
         this.no_title_list = [];
@@ -153,10 +153,10 @@ export default {
       }
       api_v_sports.get_virtual_sport_list(params).then(res => {
         this.virtual_data_loading = false;
-        this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
+        this.$root.$emit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
-        this.$root.$emit(this.emit_cmd.EMIT_IS_FIRST_LOADED);
-        this.$root.$emit(this.emit_cmd.EMIT_MATCH_LIST_DATA_TAKED);
+        this.$root.$emit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
+        this.$root.$emit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
         if(res.code == 200 && res.data && res.data.length){
           this.virtual_match_list = this.append_result_fields(res.data);
@@ -237,10 +237,10 @@ export default {
         this.is_reset_tab_i = Math.random();
       }).catch((e) => {
         this.virtual_data_loading = false;
-        this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
+        this.$root.$emit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         this.set_virtual_data_loading(0);
-        this.$root.$emit(this.emit_cmd.EMIT_IS_FIRST_LOADED);
-        this.$root.$emit(this.emit_cmd.EMIT_MATCH_LIST_DATA_TAKED);
+        this.$root.$emit(MITT_TYPES.EMIT_IS_FIRST_LOADED);
+        this.$root.$emit(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED);
 
         this.virtual_match_list = [];
         this.match_list_by_no = [];
@@ -301,7 +301,7 @@ export default {
           if(res.code == 200 && res.data && res.data.length){
             this.virtual_match_list = this.append_result_fields(res.data);
             if(this.current_match.mmp == "INGAME" && res.data.length == 1 && res.data[0].mmp == "PREGAME"){
-              this.$root.$emit(this.emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL);
+              this.$root.$emit(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL);
               return;
             }
             this.no_title_list = this.virtual_match_list.map(m => {
@@ -410,7 +410,7 @@ export default {
             if(res.code == 200){
               let result_list = res.data;
               this.append_match_result(result_list,this.match_list_by_no);
-              this.$root.$emit(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,result_list);
+              this.$root.$emit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,result_list);
             }
           }).catch((err)=>{
             this.skeleton = false
@@ -518,7 +518,7 @@ export default {
       this.gen_video_api_cache_key();
       this.set_current_batch(_.cloneDeep(data));
       if(this.sub_menu_type == 1004){
-        this.$root.$emit(this.emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
+        this.$root.$emit(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
       }
       let found = this.virtual_match_list.filter(vm => {
         let r = false;
@@ -608,7 +608,7 @@ export default {
               let video_data = _.cloneDeep(res.data);
               this.set_basketball_video_data(video_data);
               this.set_video_process_data(video_data);
-              this.$root.$emit(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,res.data);
+              this.$root.$emit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,res.data);
             }
             if(success_cb){
               success_cb(res.data);
@@ -761,7 +761,7 @@ export default {
             let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
             cache_dict[p_key] = _.cloneDeep(this.virtual_match_list);
             this.set_prev_v_sports(cache_dict);
-            this.$root.$emit(this.emit_cmd.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
+            this.$root.$emit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
           }
         }
         callback()
@@ -779,7 +779,7 @@ export default {
       if(this.again_total > 10){
         this.again_total = 0;
         clearTimeout(this.procee_again_timer);
-        this.$root.$emit(this.emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
+        this.$root.$emit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         if(this.no_video_data_invoke_match_data_count < 1){
           this.no_video_data_invoke_match_data_count++;
           if(this.get_virtual_sport_list){
@@ -806,7 +806,7 @@ export default {
                 let copied_video = _.cloneDeep(res.data);
                 this.set_basketball_video_data(copied_video);
                 this.set_video_process_data(copied_video);
-                this.$root.$emit(this.emit_cmd.EMIT_VIDEO_PROCESS_DATA_GOT,copied_video);
+                this.$root.$emit(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,copied_video);
                 if(success_cb){
                   success_cb();
                 }
@@ -848,14 +848,14 @@ export default {
               //当赛事结束,检查所有赛事是否结束
               if(match.match_status == 2){
                 this.is_video_playing = false;
-                this.$root.$emit(this.emit_cmd.EMIT_MATCH_EDNED_STATUS2,match);
+                this.$root.$emit(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match);
               }
               if(match.match_status > 0){
                 match.mhs = 1;
               }
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
-                this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+                this.$root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
               }
               switch (Number(match.csid)) {
                 case 1001:
@@ -875,7 +875,7 @@ export default {
                   break;
               }
             });
-            this.$root.$emit(this.emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.get_video_process_data);
+            this.$root.$emit(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED,this.get_video_process_data);
           }
         }
       }
@@ -1003,7 +1003,7 @@ export default {
     }
   },
   beforeDestroy(){
-    this.$root.$off(this.emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
+    this.$root.$off(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
   },
   destroyed () {
     this.clear_mixin_timer();

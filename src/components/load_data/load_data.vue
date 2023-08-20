@@ -184,7 +184,7 @@ export default {
     // 用户登录失效时,直接关闭loading中动画
     this.no_user = this.vx_get_is_invalid;
     // 绑定接收用户失效事件
-    // this.$root.$on(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$on(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
   // computed: {
@@ -229,7 +229,7 @@ export default {
     //  let csid = (_.find(newsub,menu=>menu.count>0) || {} ).field1
     //  //如果电竞有其他赛事就跳转热门赛事
     //  if(csid){
-    //     this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
+    //     this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
     //  }else{
     //    //跳转热门
     //       window.$menu.subMenuClick('301');
@@ -238,7 +238,7 @@ export default {
   },
   destroyed () {
     // 解绑接收用户失效事件
-    // this.$root.$off(this.emit_cmd.EMIT_SHOW_ALERT_CMD, this.no_user_event);
+    // this.$root.$off(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 };
 </script>

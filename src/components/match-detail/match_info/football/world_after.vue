@@ -253,7 +253,7 @@ export default {
     },
     start_timer() {
       this.$root.$on(
-        this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
+        MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
         this.start_timer_loop
       );
     },
@@ -284,7 +284,7 @@ export default {
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
     this.$root.$off(
-      this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
+      MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
       this.start_timer_loop
     );
   },

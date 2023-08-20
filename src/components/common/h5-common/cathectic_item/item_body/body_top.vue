@@ -76,7 +76,7 @@ const props = defineProps({
   //   ])
   // },
   const cancleOrder = () => {
-    $root.$emit(emit_cmd.EMIT_SHOW_CANCLE_POP,{
+    $root.$emit(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
       orderNo: orderNumber,
       name: top_.matchInfo
     })

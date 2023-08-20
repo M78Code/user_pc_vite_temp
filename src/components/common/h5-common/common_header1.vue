@@ -70,7 +70,7 @@ const props = defineProps({
   let timer2_ = ref(null)
   cancel_ref = debounce(cancel_ref,200)
   go_to_back = debounce(go_to_back, 500, {leading: true})
-  $root.$on(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+  $root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
 
     // ...mapMutations(["set_is_matchpage","set_toast","set_is_show_settle_tab","set_godetailpage",
     // "set_detail_data","set_details_changing_favorite"]),
@@ -128,28 +128,28 @@ const props = defineProps({
       const curr_tab = view_tab
       if ($route.name === 'match_result') {
         // 刷新 盘口赔率信息
-        $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
+        $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
-        $root.$emit(emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        $root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
         });
         // 刷新 注单记录----请求
-        $root.$emit(emit_cmd.EMIT_UPDATE_ORDER_LIST)
+        $root.$emit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
       }
       else if (curr_tab === 'bet') {
         // 刷新 盘口赔率信息
-        $root.$emit(emit_cmd.EMIT_REFRESH_DETAILS)
-        // $root.$emit(emit_cmd.EMIT_REF_API, 'details_refresh')
+        $root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+        // $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
       }
       else if (curr_tab === 'match_analysis') {
         // 刷新 赛事分析信息
-        $root.$emit(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS)
+        $root.$emit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
       }
       else {
-        $root.$emit(emit_cmd.EMIT_REFRESH_CHATROOM)
+        $root.$emit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
       }
 
-      // $root.$emit(emit_cmd.EMIT_REFRESH_DETAILS)
+      // $root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
       refreshing = true;
       clearTimeout(timer1_)
       timer1_ = setTimeout(() => {
@@ -167,7 +167,7 @@ const props = defineProps({
      */
   const analysis_show = (obj) => {
       let csid = lodash.get(obj,'csid')
-      $root.$emit(emit_cmd.EMIT_ANA_SHOW,csid)
+      $root.$emit(MITT_TYPES.EMIT_ANA_SHOW,csid)
     }
     /**
      *@description 加载联赛列表
@@ -176,7 +176,7 @@ const props = defineProps({
      */
   const interface_b_header = async() => {
       // 显示联赛列表传true
-      $root.$emit(emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, true);
+      $root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
     }
     // 返回列表页亦或是返回上一级
   const go_to_back = () => {
@@ -194,7 +194,7 @@ const props = defineProps({
      *@return {Undefined} undefined
      */
   const open = (position) => {
-      $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
   }
     // ...mapGetters([
     //   // 赛事id
@@ -235,7 +235,7 @@ const props = defineProps({
     debounce_throttle_cancel(cancel_ref);
     debounce_throttle_cancel(go_to_back);
 
-    $root.$off(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+    $root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
 
     clearTimeout(timer1_)
     timer1_ = null

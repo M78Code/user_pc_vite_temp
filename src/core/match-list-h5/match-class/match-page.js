@@ -143,7 +143,7 @@ class MatchPage {
         this.footer_refresh_match_list();
       }
       if (this.$route.name !== 'match_result') {
-        this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
+        this.$root.$emit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
       }
     }
     // 单纯刷新一个mid,例如十五分钟  或者  5分钟  临界点只刷新对应mid
@@ -1061,7 +1061,7 @@ class MatchPage {
     // 删除已结束的赛事
     let delete_ended_match = () => {
       delete_source();
-      this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
+      this.$root.$emit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
     };
     // csid:12 拳击   开赛时间小于当前时间则移除
     let delete_boxing_match = () => {

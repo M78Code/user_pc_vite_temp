@@ -68,7 +68,7 @@ export default {
      *@return {Undefined} undefined
      */
     open(){
-      this.$root.$emit(this.emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      this.$root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     },
     /**
      *@description: 关闭投注记录显示

@@ -788,7 +788,7 @@ export default {
         data_dict[mid].hls = [hl_dict[hid]];
       });
 
-      this.$root.$emit(this.emit_cmd.EMIT_BET_ODD_SYNCHRONIZE, data_dict);
+      this.$root.$emit(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, data_dict);
     },
     /**
      *@description 用于为 fetch_limit_money 和 fetch_limit_money_and_odd_info 方法获取参数

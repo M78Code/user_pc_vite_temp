@@ -91,7 +91,7 @@ import lodash from 'lodash'
     is_show_early_settle = item_data.is_show_early_settle
 
     // 监听 重载注单页面
-    $root.$on(emit_cmd.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    $root.$on(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
   })
   
     // 重载注单页面
@@ -102,7 +102,7 @@ import lodash from 'lodash'
       })
     }
   onUnmounted(() => {
-    $root.$off(emit_cmd.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    $root.$off(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
   })
  
 </script>

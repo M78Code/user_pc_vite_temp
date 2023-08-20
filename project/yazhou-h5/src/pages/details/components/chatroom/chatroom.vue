@@ -112,7 +112,7 @@ export default defineComponent({
         set_toast({ txt: '聊天室未开启' });
       }
       // #TODO emit 
-      // $root.$on(emit_cmd.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // $root.$on(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
 
       // 原 mounted 
       const { offsetTop } = $refs.chatroom || {};
@@ -120,7 +120,7 @@ export default defineComponent({
     })
     onUnmounted(() => {
       // #TODO emit 
-      // $root.$off(emit_cmd.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // $root.$off(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
       hasDestroyed = true;
       set_is_enter_chat(false);
       chatroomWs && chatroomWs.destory();

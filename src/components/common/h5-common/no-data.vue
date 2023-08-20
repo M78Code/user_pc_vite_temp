@@ -111,7 +111,7 @@ export default defineComponent({
 
         function refresh_data() {
             // TODO: mitt?
-            this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+            this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
                 text: "footer-refresh"
             });
         }

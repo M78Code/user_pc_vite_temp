@@ -398,13 +398,13 @@ const props = defineProps({
     }
 
     // 处理ws订单状态推送
-    $root.$on(emit_cmd.EMIT_C201_HANDLE, c201_handle);
-    $root.$on(emit_cmd.EMIT_C210_HANDLE, c210_handle);
+    $root.$on(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
+    $root.$on(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
   }) 
   onUnmounted(() => {
     clear_timer();
-    $root.$off(emit_cmd.EMIT_C201_HANDLE, c201_handle);
-    $root.$off(emit_cmd.EMIT_C210_HANDLE, c210_handle);
+    $root.$off(MITT_TYPES.EMIT_C201_HANDLE, c201_handle);
+    $root.$off(MITT_TYPES.EMIT_C210_HANDLE, c210_handle);
   })
 
     // ...mapMutations(["set_toast","set_early_moey_data"]),
@@ -441,7 +441,7 @@ const props = defineProps({
         if (flag) {
           if (hs == 0 && cashOutStatus == 1 && (status == 5 || status == 7)) {
             if(!item_data.maxCashout){
-              $root.$emit(emit_cmd.EMIT_GET_ORDER_LIST)
+              $root.$emit(MITT_TYPES.EMIT_GET_ORDER_LIST)
             }
             if(expected_profit > 1){
               status = 1;

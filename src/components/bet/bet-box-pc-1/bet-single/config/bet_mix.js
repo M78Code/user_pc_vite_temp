@@ -8,6 +8,7 @@ import betting from "src/public/mixins/betting/betting.js"; //投注逻辑
 import skt_data_mix_order from "src/public/mixins/websocket/data/skt_data_mix_order.js"; //串关ws推送
 import { api_betting } from "src/public/api/index.js"; // 投注api
 
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 export default {
   name: "bet-mix",
   mixins: [   betting, skt_data_mix_order],
@@ -40,7 +41,9 @@ export default {
       timer_obj: {}, //计时器对象
       // 用户喜好 false:自动接受更好赔率 true 不接收任何赔率
       user_bet_prefer: false,
-      save_bet_item:false
+      save_bet_item:false,
+      //事件监听器 取消监听的函数
+      emitters_off:""
     }
   },
   created() {
@@ -48,20 +51,10 @@ export default {
     this.$emit("set_scroll_this",{type:'bet_this', _this:this});
     //设置串关最大高度
     this.set_max_height = this.debounce(this.set_max_height, 100);
-    // 投注数量
-    this.$root.$on(this.emit_cmd.EMIT_BET_TOTAL_COUNT_CMD, this.get_bet_total_count);
-    // 投注金额
-    this.$root.$on(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD, this.get_bet_total_money);
-    // 最高可赢额
-    this.$root.$on(this.emit_cmd.EMIT_BET_TOTAL_WIN_MONEY_CMD, this.get_bet_total_win_money);
-    // 完成按钮功能
-    this.$root.$on(this.emit_cmd.EMIT_COMPLETE_HANDLE_CMD, this.complete_handle);
-    // 最大最小值
-    this.$root.$on(this.emit_cmd.EMIT_MIN_MAX_MONEY_CMD, this.set_min_max_money);
-    // 初始化视图
-    this.$root.$on(this.emit_cmd.EMIT_MIX_INIT_VIEW_CMD, this.init_view);
-    // 保留这些选项
-    this.$root.$on(this.emit_cmd.EMIT_MIX_SAVE_BET_CMD, this.save_bet_items);
+ 
+    //生成事件监听 
+    this.handle_generat_emitters()
+
     // 是否正在处理为未处理
     this.vx_set_is_handle(false);
     // 设置投注模式为未知
@@ -71,8 +64,8 @@ export default {
     // 菜单是否改变设置为未改变
     this.vx_set_menu_change(false);
     this.user_bet_prefer = _.get(this.vx_get_user,'userBetPrefer') == 1;
-    //监听键盘抬起事件
-    this.$root.$on(this.emit_cmd.EMIT_ENTER_PRESS_EVENT, this.keyup_handle);
+
+
     //全局的键盘抬起事件
     window.addEventListener("keyup", this.keyup_handle);
   },
@@ -88,21 +81,8 @@ export default {
     this.view_ctr_obj = {};
     //清理防抖节流
     this.debounce_throttle_cancel(this.set_max_height);
-    // 销毁接收版本类型变化参数
-    //清除监听 投注数量
-    this.$root.$off(this.emit_cmd.EMIT_BET_TOTAL_COUNT_CMD, this.get_bet_total_count);
-    //清除监听  投注金额
-    this.$root.$off(this.emit_cmd.EMIT_BET_TOTAL_MONEY_CMD, this.get_bet_total_money);
-    //清除监听 最高可赢额
-    this.$root.$off(this.emit_cmd.EMIT_BET_TOTAL_WIN_MONEY_CMD, this.get_bet_total_win_money);
-    //清除监听 完成按钮功能
-    this.$root.$off(this.emit_cmd.EMIT_COMPLETE_HANDLE_CMD, this.complete_handle);
-    //清除监听 最大最小值
-    this.$root.$off(this.emit_cmd.EMIT_MIN_MAX_MONEY_CMD, this.set_min_max_money);
-    //清除监听 初始化视图
-    this.$root.$off(this.emit_cmd.EMIT_MIX_INIT_VIEW_CMD, this.init_view);
-    //清除监听 保留这些选项
-    this.$root.$off(this.emit_cmd.EMIT_MIX_SAVE_BET_CMD, this.save_bet_items);
+    //移除相应监听事件 //视图销毁钩子函数内执行
+    if(this.emitters_off){this.emitters_off()}  
     this.user_bet_prefer = _.get(this.vx_get_user,'userBetPrefer')==1;
     //清除监听 键盘抬起事件
     this.$root.$off("enter_press_event", this.keyup_handle);
@@ -301,10 +281,10 @@ export default {
         let oid = _.get(this.vx_get_bet_obj,`${id}.cs.oid`);
         if(new_.length == 2) {
           //更新串关投注项上的match_udpate字段
-          this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_MATCH_UPDATE, oid);
+          this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, oid);
         } else if (new_.length == 1 && old_.length == 2) {
           // 更改串关的match_update字段值
-          this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, oid);
+          this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, oid);
         }
         //获取串关数据
         this.get_mix_data(()=>{
@@ -385,7 +365,7 @@ export default {
             let cs = _.get(obj, 'cs');
             if(cs && cs.money) {
               //设置输入框金额
-              this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_SET_MONEY_CMD, {id: cs.id, money: cs.money});
+              this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, {id: cs.id, money: cs.money});
             }
           }
         });
@@ -404,7 +384,7 @@ export default {
         //红色选项不可结合进行串关投注 0400478
         if(!["0400477","0400478"].includes(this.view_ctr_obj.error_code)) {
           // 触发清除串关输入框金额
-          this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_CLEAR_HANDLE_CMD);
+          this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD);
         }
         this.view_ctr_obj.input_max_flag = 0;
       }
@@ -461,7 +441,7 @@ export default {
           this.timer_obj['over_time'] = undefined;
         }
         //关闭菜单上loading指令
-        this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
 
         let find_match_collect = false, find_hot = false,bet_obj, mids = [];
         let d_data = this.view_ctr_obj.order_detail_data;
@@ -485,14 +465,14 @@ export default {
         }
         // if(find_match_collect) {
         //   // 收藏投注赛事
-        //   this.$root.$emit(this.emit_cmd.EMIT_MX_COLLECT_COUNT_CMD, {type:"bet", mids});
+        //   this.$root.$emit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, {type:"bet", mids});
         // }
         // if(find_hot) {
         //   // 热门推荐收藏成功
-        //   this.$root.$emit(this.emit_cmd.EMIT_HOT_COLLECT);
+        //   this.$root.$emit(MITT_TYPES.EMIT_HOT_COLLECT);
         // }
         // 统计未结算订单
-        this.$root.$emit(this.emit_cmd.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
       }
       // 投注项锁住不让点击
       if(this.vx_get_bet_mode ===1 && new_===1) {
@@ -575,6 +555,41 @@ export default {
       vx_set_is_bet_merge: "set_is_bet_merge",// 是否为合并模式
       vx_set_bet_current_money_obj: "set_bet_current_money_obj"//投注成功清除保存的金额数据
     }),
+
+
+     /**
+      * 生成事件监听 
+      */
+     handle_generat_emitters(){
+      let event_pairs=  [
+        // 投注数量
+{ type:MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD, callback:this.get_bet_total_count} ,
+// 投注金额
+{ type:MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD, callback:this.get_bet_total_money} ,
+// 最高可赢额
+{ type:MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD, callback:this.get_bet_total_win_money} ,
+// 完成按钮功能
+{ type:MITT_TYPES.EMIT_COMPLETE_HANDLE_CMD, callback:this.complete_handle} ,
+// 最大最小值
+{ type:MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD, callback:this.set_min_max_money} ,
+// 初始化视图
+{ type:MITT_TYPES.EMIT_MIX_INIT_VIEW_CMD, callback:this.init_view} ,
+// 保留这些选项
+{ type:MITT_TYPES.EMIT_MIX_SAVE_BET_CMD, callback:this.save_bet_items} ,
+//监听键盘抬起事件
+{ type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
+
+  ]
+
+ 
+let  {   emitters_off } =  useMittEmitterGenerator(event_pairs)
+this.emitters_off=emitters_off
+ 
+
+    },
+
+  
+
     /**
      * @description:串关打开左侧菜单那个未结算已结算注单记录
      * @param {undefined} undefined
@@ -653,9 +668,9 @@ export default {
         }
         if(!all_empty_money) {
           // 串关的校验金额
-          this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_CHECK_MONEY_CMD);
+          this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD);
         }
-        this.$root.$emit(this.emit_cmd.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
         this.$nextTick(()=>{
           if (this.view_ctr_obj.error_code=='0400517') {
             this.view_ctr_obj.mix_range_money=-4;
@@ -852,7 +867,7 @@ export default {
           //重置串关投注标志为
           this.reset_bet_mix();
           // 关闭遮罩
-          this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+          this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
         }
       });
       if(len1 < 2) {
@@ -870,12 +885,12 @@ export default {
       // 金额为空时提交校验
       if(this.view_ctr_obj.is_empty_money) {
         // 检查串关金额
-        this.check_money(this.emit_cmd.EMIT_BET_MIX_CHECK_MONEY_CMD);
+        this.check_money(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD);
         return;
       }
       if(this.view_ctr_obj.mix_range_money==-4) {
         // 调用最大最小值接口
-        this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_MIN_MONEY);
+        this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY);
         // 获取总投注额
         this.get_bet_total_money();
         // 获取总的预计收益
@@ -897,7 +912,7 @@ export default {
       // 投注数据变更状态改为false
       this.view_ctr_obj.bet_data_change = false;
       // 打开遮罩
-      this.$root.$emit(this.emit_cmd.EMIT_OPEN_MENU_LOADDING_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD);
       // 描述：断网25秒的处理办法
       if (this.timer_obj['over_time']) clearTimeout(this.timer_obj['over_time']);
       this.timer_obj['over_time'] = setTimeout(() => {
@@ -909,7 +924,7 @@ export default {
         // 投注项模式设置为默认
         this.vx_set_bet_mode(-1);
         // 关闭遮罩
-        this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
         this.set_message('0400483');//网络异常，请在投注单中查看投注结果
         clearTimeout(this.timer_obj['over_time']);
       }, 1000 * 25);
@@ -937,14 +952,14 @@ export default {
             let index = _.findIndex(this.vx_get_bet_list, item => _.get(this.vx_get_bet_obj,`[${item}].cs.active`)!=1);
             if(index>-1) {
               let offsetTop = BetCommonHelper.get_bet_scroll_top('bet-mix-info',index);
-              this.$root.$emit(this.emit_cmd.EMIT_BET_ITEM_SCROLL_TOP, offsetTop);
+              this.$root.$emit(MITT_TYPES.EMIT_BET_ITEM_SCROLL_TOP, offsetTop);
               return;
             }
           } */
 
           if(handle_type == 'accept' && !this.has_disable_item) {
             //重置串关投注项组件的标志
-            this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_ITEM_RESET_CMD);
+            this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD);
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
             // 恢复校验
@@ -976,7 +991,7 @@ export default {
             BetCommonHelper.init_message();
           }
           // 校验金额
-          if (![-4,0].includes(this.check_money(this.emit_cmd.EMIT_BET_MIX_CHECK_MONEY_CMD))) {
+          if (![-4,0].includes(this.check_money(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD))) {
             // 校验串关金额
             if(this.view_ctr_obj.error_code) {
               this.set_message(this.view_ctr_obj.error_code,handle_type);//请您输入投注金额
@@ -1021,7 +1036,7 @@ export default {
               this.vx_set_bet_item_lock(false);
               this.vx_set_bet_mode(-1);
               // 关闭遮罩
-              this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+              this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
               this.set_message('0400483');//服务繁忙，再试一次吧~
               clearTimeout(this.timer_obj['over_time']);
             }, 1000 * 25); // 原本30s Aden要求修改为25s
@@ -1102,7 +1117,7 @@ export default {
                   // 解锁投注项(解锁后可以点击)
                   this.vx_set_bet_item_lock(false);
                   // 关闭遮罩
-                  this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+                  this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                 } else if(this.vx_get_bet_mode === 1){ // 新流程调用接口22秒后还在确认中的时候拉取一次查询状态的接口
                   if(this.view_ctr_obj.series_order_data.length > 0) {
                     // 获取投注成功的订单
@@ -1129,7 +1144,7 @@ export default {
                       // 解锁投注项使其可以点击
                       this.vx_set_bet_item_lock(false);
                       // 关闭遮罩
-                      this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+                      this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                       clearTimeout(this.timer_obj['over_time']);
                     }, 1000 * 25);
                   }
@@ -1146,7 +1161,7 @@ export default {
                 // 解锁投注项
                 this.vx_set_bet_item_lock(false);
                 // 关闭遮罩
-                this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+                this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                 // 设置投注订单状态为投注失败
                 this.view_ctr_obj.bet_order_status = 4;
                 // 提交结果标识
@@ -1179,7 +1194,7 @@ export default {
           if(handle_type=='accept' && !this.has_disable_item) {
             // 移除无效投注项
             this.remove_mix_match_end();
-            this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_ITEM_RESET_CMD);
+            this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD);
           }
           if(before_code!==200) {
             // 设置提示信息
@@ -1566,7 +1581,7 @@ export default {
       // 投注失败还原默认的模式
       this.vx_set_bet_mode(-1);
       // 关闭遮罩 关闭菜单上loadding指令
-      this.$root.$emit(this.emit_cmd.EMIT_CLOSE_MENU_LOADDING_CMD);
+      this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
     },
     /**
      * @description: 重置获取金额后的标记以及消息提示信息
@@ -1864,7 +1879,7 @@ export default {
         }
       }
       //赛事订阅
-      this.$root.$emit(this.emit_cmd.EMIT_BET_MIX_INPUT_MAX_MONEY, {type: item.type, value: input_max});
+      this.$root.$emit(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, {type: item.type, value: input_max});
     },
     /**
      * @description:监听键盘抬起事件
@@ -1995,7 +2010,7 @@ export default {
             this.view_ctr_obj.bet_order_status = 1;
             // 是否正在处理投注
             this.vx_set_is_handle(false);
-            this.$root.$emit(this.emit_cmd.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
+            this.$root.$emit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
           }
         });
       } else {
@@ -2050,7 +2065,7 @@ export default {
         }
         //重置获取金额后的标记以及消息提示信息
         this.bet_reset_money_msg();
-        this.$root.$emit(this.emit_cmd.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
+        this.$root.$emit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD);
       }, 5000);
     },
     /**

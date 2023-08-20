@@ -311,8 +311,8 @@ onUnmounted(() => {
     clearTimeout(timer_2)
     timer_2.value = null
 
-    // $root.$off(emit_cmd.EMIT_GET_ORDER_LIST, refreshOrderList)
-    // $root.$off(emit_cmd.EMIT_SHOW_CANCLE_POP, show_cancle_pop)
+    // $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList)
+    // $root.$off(MITT_TYPES.EMIT_SHOW_CANCLE_POP, show_cancle_pop)
     // for (const key in $data) {
     // $data[key] = null
     // }

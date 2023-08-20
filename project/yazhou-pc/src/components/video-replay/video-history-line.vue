@@ -124,7 +124,7 @@ export default {
         // 关闭弹窗iframe
         this.closePopIframe()
         this.historyPlayTimer && clearInterval(this.historyPlayTimer)
-        this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+        this.$root.$off(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
         this.clear();
     },
     methods: {

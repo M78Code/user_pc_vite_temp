@@ -164,7 +164,7 @@
     //   this.from = this.get_layout_cur_page.from
     //   video.from = this.$route.params.video_size
     //   // 站点 tab 休眠状态转激活
-    //   this.$root.$on(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+    //   this.$root.$on(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
     //   this.$root.$on(`exit_full_screen`, this.exit_full_screen);
     //   this.$root.$on(`exit_browser_full_screen`, this.exit_browser_full_screen);
     //   window.addEventListener('keydown',this.cur_keydown);
@@ -174,7 +174,7 @@
     // },
     // destroyed() {
     //   // 站点 tab 休眠状态转激活
-    //   this.$root.$off(this.emit_cmd.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
+    //   this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
     //   this.$root.$off(`exit_full_screen`, this.exit_full_screen);
     //   this.$root.$off(`exit_browser_full_screen`, this.exit_browser_full_screen);
     //   this.refresh_loading_timer && clearTimeout(this.refresh_loading_timer)

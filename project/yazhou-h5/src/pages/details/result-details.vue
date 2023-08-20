@@ -140,16 +140,16 @@ export default {
     // 默认加载赛事详情页面接口getMatchDetail
     this.get_match_detail_info()
     // 监听是否下拉联赛列表
-    this.$root.$on(this.emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
+    this.$root.$on(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
     // 监听调用赛事详情页面接口
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
-    this.$root.$on(this.emit_cmd.EMIT_ANA_SHOW,this.ana_show);
+    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
+    this.$root.$on(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show);
 
-    this.$root.$on(this.emit_cmd.EMIT_RESULT_LIST_LOADING,()=>{
+    this.$root.$on(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
       this.skeleton.list = true
     });
 
-    this.$root.$on(this.emit_cmd.EMIT_CHANGE_TAB, ()=>{
+    this.$root.$on(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       this.skeleton.changeTab = true
     });
 
@@ -282,14 +282,14 @@ export default {
   },
   destroyed() {
     // 清除监听下拉联赛列表
-    this.$root.$off(this.emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
+    this.$root.$off(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
     // 清除刷新详情页;
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
+    this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
     // 组件销毁时设置vuex的值为空对象
     // this.set_detail_data({})
-    this.$root.$off(this.emit_cmd.EMIT_ANA_SHOW,this.ana_show)
-    this.$root.$off(this.emit_cmd.EMIT_RESULT_LIST_LOADING)
-    this.$root.$off(this.emit_cmd.EMIT_CHANGE_TAB)
+    this.$root.$off(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show)
+    this.$root.$off(MITT_TYPES.EMIT_RESULT_LIST_LOADING)
+    this.$root.$off(MITT_TYPES.EMIT_CHANGE_TAB)
     this.set_event_list([])
   },
 }

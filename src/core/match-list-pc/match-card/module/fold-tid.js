@@ -118,7 +118,7 @@ export const unfold_all_league = () => {
 						mids: card_obj.league_obj.mids.split(","),
 					};
 					// 拉取http请求
-					window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS, params);
+					window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, params);
 				}
 				card_obj.is_league_fold = true;
 				recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(

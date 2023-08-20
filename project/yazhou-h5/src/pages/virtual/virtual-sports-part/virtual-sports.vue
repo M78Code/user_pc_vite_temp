@@ -324,8 +324,8 @@ export default defineComponent({
         useMittOn.on(MITT_KEY.EMIT_ARRIVED10, arrived10_handle).off,
         useMittOn.on(MITT_KEY.EMIT_MATCH_EDNED_STATUS2, match_ended_status2_handle).off,
       ]
-      // $root.$on(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
-      // $root.$on(emit_cmd.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
+      // $root.$on(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
+      // $root.$on(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
       match_ended_status2_handle();
     });
 
@@ -335,8 +335,8 @@ export default defineComponent({
         video_process_obj.destroy();
       }
       emitters.map((x) => x())
-      // $root.$off(emit_cmd.EMIT_ARRIVED10,arrived10_handle);
-      // $root.$off(emit_cmd.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
+      // $root.$off(MITT_TYPES.EMIT_ARRIVED10,arrived10_handle);
+      // $root.$off(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match_ended_status2_handle);
 
       clear_timer()
 
@@ -422,7 +422,7 @@ export default defineComponent({
           });
         }
         useMittEmit(MITT_KEY.EMIT_IS_ALL_END_NOTICE);
-        // $root.$emit(emit_cmd.EMIT_IS_ALL_END_NOTICE);
+        // $root.$emit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
 
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
         if([1011, 1002, 1010, 1009].includes(sub_menu_type)){
@@ -452,7 +452,7 @@ export default defineComponent({
           get_video_process_by_api();
           get_score_basket_ball();
           useMittEmit(MITT_KEY.EMIT_PRE_COUNTING_EDN);
-          // $root.$emit(emit_cmd.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
+          // $root.$emit(MITT_TYPES.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
         }
       }
       else{
@@ -485,7 +485,7 @@ export default defineComponent({
             if(match.start_now_sub <= 0){
               get_video_process_by_api();
               useMittEmit(MITT_KEY.EMIT_BASKETBALL_TIME_ARRIVED);
-              // $root.$emit(emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED);
+              // $root.$emit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
             }
           }
           current_match = match;

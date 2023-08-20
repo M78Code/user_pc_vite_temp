@@ -32,14 +32,14 @@ export default {
 
             //当赛事结束,检查所有赛事是否结束
             if(match.match_status == 2){
-              this.$root.$emit(this.emit_cmd.EMIT_MATCH_EDNED_STATUS2,match);
+              this.$root.$emit(MITT_TYPES.EMIT_MATCH_EDNED_STATUS2,match);
             }
             if(match.match_status == 1 || match.match_status == 2){
               match.mhs = 1;
             }
             //视频时间更新,快进视频到相应的时间点
             if(res.upd == 1){
-              this.$root.$emit(this.emit_cmd.EMIT_SYNC_VIDEO_DATA,res);
+              this.$root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
             }
             switch (Number(match.csid)) {
               case 1001:

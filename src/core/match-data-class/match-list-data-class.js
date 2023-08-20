@@ -1009,7 +1009,7 @@ class MatchListDataClass {
 			play_key,
 		});
 		this.coverage_match_data({ other_handicap_list }, mid);
-		window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS, {
+		window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, {
 			mids: [mid],
 		});
 	}

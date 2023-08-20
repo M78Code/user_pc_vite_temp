@@ -915,7 +915,7 @@ export default class MatchListDataClass {
     let type = play_key == 'hps15Minutes' ? 4 : 1
     other_handicap_list = this.merge_template_data({match,handicap_list:other_handicap_list,type,play_key})
     this.coverage_match_data({other_handicap_list}, mid)
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS, {mids:[mid]});
+    window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, {mids:[mid]});
   }
   /**
    * @Description 设置其他玩法选中索引    更新玩法模板及数据

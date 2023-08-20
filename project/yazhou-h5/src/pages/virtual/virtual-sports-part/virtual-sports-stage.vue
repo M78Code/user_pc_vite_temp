@@ -274,12 +274,12 @@ export default defineComponent({
       useMittOn.on(MITT_KEY.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
       useMittOn.on(MITT_KEY.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
     ]
-    // $root.$on(emit_cmd.EMIT_IS_ALL_END_NOTICE,all_ended_handle);
-    // $root.$on(emit_cmd.EMIT_SYNC_VIDEO_DATA,sync_video_data_handle);
-    // $root.$on(emit_cmd.EMIT_CURRENT_VIDEO_PROCESS_INITED,set_init_video_on);
-    // $root.$on(emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,set_loading_state);
-    // $root.$on(emit_cmd.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-    // $root.$on(emit_cmd.EMIT_VISIBILITYCHANGE_EVENT,visibilitychange_handle)
+    // $root.$on(MITT_TYPES.EMIT_IS_ALL_END_NOTICE,all_ended_handle);
+    // $root.$on(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,sync_video_data_handle);
+    // $root.$on(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED,set_init_video_on);
+    // $root.$on(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,set_loading_state);
+    // $root.$on(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
+    // $root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT,visibilitychange_handle)
 
 
     timer_super28 = setTimeout(() => {
@@ -372,7 +372,7 @@ export default defineComponent({
     */
     const open = (position) => {
       useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);
-      // $root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)
+      // $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     };
     /**
     *@description:关闭投注记录显示

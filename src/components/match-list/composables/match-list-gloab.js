@@ -166,7 +166,7 @@ const show_fail_alert = () => {
 		// if ((!callbackUrl) && (callbackUrl != undefined)) {
 		//   // 弹出提示消息、登录层
 		//   window.vue.$root.$emit(
-		//     window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD,
+		//     window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
 		//     window.vue.$root.$t("login.login_timeout")
 		//   );
 		// } else {

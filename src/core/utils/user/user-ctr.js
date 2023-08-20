@@ -544,7 +544,7 @@ class userCtr {
     //   window.vue.$store.dispatch('set_theme',theme)
     // }
     // window.vue.$store.dispatch('init_loading_theme')
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_MX_COLLECT_COUNT2_CMD);
+    window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD);
   }
   /**
    * @Description 设置网站标题

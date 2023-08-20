@@ -244,7 +244,7 @@ export default class Ws {
     console.log(`--------------------------------------onClose------------this.url=${this.url}----------this.ctr = ${this.ctr}`);
     // 发送api域名切换命令命令
     if (!this.ctr) {
-      this.view.$root.$emit(this.view.emit_cmd.EMIT_API_DOMAIN_UPD_CMD, { type: 'ws', data: { url: this.url } });
+      this.view.$root.$emit(this.view.MITT_TYPES.EMIT_API_DOMAIN_UPD_CMD, { type: 'ws', data: { url: this.url } });
     }
     this.ctr = false;
     // 设置超时时间为3s
