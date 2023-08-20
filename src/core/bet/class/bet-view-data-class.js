@@ -116,4 +116,4 @@ compute_show_xxx(){
 }
 } 
 
- 
+export default new BetViewData();
