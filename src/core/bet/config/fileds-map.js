@@ -5,7 +5,7 @@
 
 //常规体育 
 export const fileds_map_common={
-        c_csid:'',
+      c_csid:'',
       c_tid:'',
       c_mid:'',
       c_hid:'',

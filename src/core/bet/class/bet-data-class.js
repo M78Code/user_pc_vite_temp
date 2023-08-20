@@ -129,12 +129,20 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
       // c_hn,
       // c_topKey,
       // },
-      // is_guanjun:1,  
+
+      // is_type:{
+       // is_guanjun:1,  
       // is_dianjing:1,
       // is_common:1,
+
       // is_vr:1,   // 
+       // is_pre_bet,
+      // }
+
+ 
+
       // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-      // is_pre_bet,
+     
 
       
      }
