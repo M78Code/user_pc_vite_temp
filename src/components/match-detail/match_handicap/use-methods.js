@@ -82,7 +82,6 @@ export const useMethods = ({ props,emit }) => {
       }
       // 右侧详情加载进行优化
       let s = n == "loading" ? "right_details_loading" : n;
-      console.log(1111111111111,s)
       // 发送当前 loading 状态
       useMittEmit(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, s)
       // this.$root.$emit("change_loading_status_details", s);
@@ -155,7 +154,6 @@ export const useMethods = ({ props,emit }) => {
   watch(
     () => props.match_details,
     (res) => {
-      console.log(1111111111111,props.handicap_state)
       state.load_detail_statu = props.handicap_state;
       if (props.handicap_state != "data") {
         state.details_data = [];
@@ -522,12 +520,20 @@ export const useMethods = ({ props,emit }) => {
   });
 const rang = ref([])
   onMounted(() => {
-    emit("set_handicap_this", getCurrentInstance);
     rang.value = [
       3, 4, 19, 33, 46, 52, 58, 64, 69, 71, 113, 121, 128, 130, 143, 154, 155,
       163, 172, 176, 181, 185, 232, 243, 249, 253, 268, 269, 270, 278, 280, 294,
       306, 308, 324, 327, 334, 20003, 20004, 20015,
     ];
+
+    const _this = {
+      ...toRefs(state),
+      category_list:props.category_list,
+      toggele_layout,
+      check_half,
+    }
+    emit("set_handicap_this", _this);
+
   });
   onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state).off;
@@ -551,6 +557,7 @@ const rang = ref([])
     sort_index,
     route,
     lodash,
-    on_go_top
+    on_go_top,
+    check_half
   };
 };

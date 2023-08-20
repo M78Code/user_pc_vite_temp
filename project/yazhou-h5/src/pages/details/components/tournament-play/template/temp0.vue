@@ -189,6 +189,7 @@
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
 // #TODO mixins 
 import lodash from "lodash";
+import store from "src/store-redux/index.js";
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -201,6 +202,7 @@ export default defineComponent({
   },
   props: ["item_data", "title"],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils,
       // 最大显示行数
@@ -220,7 +222,7 @@ export default defineComponent({
       return ""
     });
     const get_detail_data = computed(() => {
-      return {}
+      return store_state.detailsReducer.details_data || {}
     });
     /**
      * @description: 判断是否隐藏加载更多和收起功能

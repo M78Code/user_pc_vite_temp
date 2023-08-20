@@ -104,10 +104,7 @@ export default {
     };
   },
   props: {
-    view_ctr_obj: { //数据源
-      type: Object,
-      default: {}
-    },
+  
     index: { //第几个
       type: Number,
       default: -1

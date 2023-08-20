@@ -6,12 +6,7 @@
 export default {
   name: "bet-mix-record",
   props: {
-    view_ctr_obj: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    },
+ 
     is_close: {
       type: Boolean,
       default: true

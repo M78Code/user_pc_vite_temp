@@ -14,8 +14,7 @@
         <q-badge
           class="item-definition-title-pill"
           :label="userData.title"
-          :class="[`badge-1`]"
-          color="bg-orange-8"
+          :color="userData.bcolor"
         />
         <div class="item-definition-title-type q-ml-xs">
           ：{{ userData.type }}
@@ -119,16 +118,11 @@
 </template>scope
   
 <script setup>
-import { ref, computed, watch } from "vue";
 
 const props = defineProps({
   userData: {
     type: Object,
     default: () => ({}),
-  },
-  badgeColor: {
-    type: Number,
-    default: 1,
   },
 });
 </script>
@@ -163,21 +157,6 @@ const props = defineProps({
       padding: 2px 4px;
       border-radius: 4px;
     }
-  }
-  .badge-1 {
-    background-color: #1976d2;
-  }
-  .badge-2 {
-    background-color: #66bb6a;
-  }
-  .badge-3 {
-    background-color: #ab47bc;
-  }
-  .badge-4 {
-    background-color: #f49a9a;
-  }
-  .badge-5 {
-    background-color: #c37ea0;
   }
 }
 </style>

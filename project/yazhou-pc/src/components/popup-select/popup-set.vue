@@ -43,24 +43,29 @@ const is_active = ref(false)
 /** 点击数 */
 const hits = ref(0)
 
-/** 语言 */
-const lang = ref('')
-/** 全局点击事件 */
-const get_global_click = ref(0)
-/** 获取当前主题 */
-const get_theme = ref('')
-/** 用户信息 */
-const get_user = ref({})
 /** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    lang.value = new_state.lang
-    get_global_click.value = new_state.global_click
-    get_theme.value = new_state.theme
-    get_user.value = new_state.user
-
-})
-onUnmounted(unsubscribe)
+const store_data = store.getState()
+const { globalReducer, userReducer, langReducer, themeReducer } = store_data
+/** 
+ * 语言 languages
+ * 路径: src\store-redux\module\languages.js
+ */
+ const { lang } = langReducer
+/** 
+* 全局点击事件数 default: 0
+* 路径: project_path\src\store\module\global.js
+*/
+const { global_click } = globalReducer
+/** 
+* 用户余额是否展示状态 default: theme01
+* 路径: project_path/src/store/module/theme.js
+*/
+const { theme } = themeReducer
+/** 
+ * 用户信息 default: {}
+ * 路径: src\store-redux\module\user-info.js
+ */
+ const { user_info } = userReducer
 
 /** 设置语言 */
 const set_lang = (data) => store.dispatch({
@@ -80,8 +85,7 @@ const set_theme = (data) => store.dispatch({
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
-    // return get_theme.value.includes('theme02') ? 'theme02' : 'theme01'
-    return 'theme02'
+    return theme.includes('theme02') ? 'theme02' : 'theme01'
 })
 
 /**
@@ -110,15 +114,12 @@ function on_click_version(type) {
  */
 async function on_click_lang(lang_) {
     set_lang(lang_);
-    let user = get_user.value
-    api_account.get_lang({ token: user.token, languageName: lang_ })
+    api_account.get_lang({ token: user_info.token, languageName: lang_ })
 
 }
 // 设置主题
 function handle_set_theme(theme) {
-    const curr_theme = get_theme.value
-
-    if (curr_theme.includes('y0')) {
+    if (theme.includes('y0')) {
         set_theme(theme + '_y0')
     } else {
         set_theme(theme)
@@ -127,7 +128,7 @@ function handle_set_theme(theme) {
 
 /** 点击任何地方关闭弹窗 */
 watch(
-    () => get_global_click.value,
+    () => global_click,
     () => {
         if (hits.value % 2 == 1) {
             hits.value++;

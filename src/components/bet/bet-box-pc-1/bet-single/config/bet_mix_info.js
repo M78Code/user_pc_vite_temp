@@ -7,11 +7,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "bet-mix-info",
   props: {
-    //接收到的串关数据
-    view_ctr_obj: {
-      type: Object,
-      default: {}
-    }
+   
   },
   computed: {
     ...mapGetters({
