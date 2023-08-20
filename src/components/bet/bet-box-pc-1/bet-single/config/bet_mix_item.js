@@ -73,13 +73,7 @@ export default {
     this.$root.$off(this.emit_cmd.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
   },
   props: {
-    // 视图控制对象
-    view_ctr_obj: {
-      type: Object,
-      default: () => {
-        return {};
-      }
-    },
+ 
     // 投注项id
     id: {
       type: String | Object,

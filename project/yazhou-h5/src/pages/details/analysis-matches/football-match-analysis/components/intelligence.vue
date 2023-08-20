@@ -1,6 +1,6 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 详情页足球赛事分析情报页面
 -->
 <template>
@@ -12,13 +12,13 @@
       </div>
     </div>
     <div class="content yb_mt10" v-for="(item,index) in data_list" :key="index">
-      <p class="tittle"><span :class="{'color0':item.label == 0,'color1':item.label == 1,'color2':item.label == 2}"></span>&ensp;
+      <p class="tittle"><span :class="{'color0': item.label == 0,'color1': item.label == 1,'color2': item.label == 2}"></span>&ensp;
         <template v-if="item.label == 0">{{ $root.$t('analysis_football_matches.Neutral_Information') }}</template>
         <template v-if="item.label == 1">{{ $root.$t('analysis_football_matches.Favorable_information') }}</template>
         <template v-if="item.label == 2">{{ $root.$t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
-      <template v-for="(item2,index2) in item.msg" >
-        <p class="item" :key="index2">{{item2}}</p>
+      <template v-for="(item2,index2) in item.msg">
+        <p class="item">{{item2}}</p>
       </template>
     </div>
     <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ $root.$t('common.no_data') }}</div>
@@ -27,7 +27,7 @@
 
 <script setup>
 import { api_result } from "src/project/api";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
 // TODO: 后续修改调整
@@ -74,7 +74,7 @@ import { ref, nextTick } from 'vue'
         let parameter = {
           standardMatchId: match_id,
           //父菜单类型:(2数据;3阵容4情报;5赔率)
-          parentMenuId: 4,  
+          parentMenuId: 4,
           sonMenuId: radio_button_index + 1
         }
         let { code, data } = await api_result.get_match_analysise_data(parameter)
@@ -83,13 +83,13 @@ import { ref, nextTick } from 'vue'
           data.sThirdMatchInformationDTOList.forEach(item => {
             if (item.benefit == 0 || item.benefit == 1) {
               //中立情报
-              msg0.msg.push(item.content) 
+              msg0.msg.push(item.content)
             } else if (item.benefit == 2 && radio_button_index == 0 || item.benefit == 3 && radio_button_index == 1) {
               //有利情报
-              msg1.msg.push(item.content) 
+              msg1.msg.push(item.content)
             } else if (item.benefit == 4 && radio_button_index == 0 || item.benefit == 5 && radio_button_index == 1) {
               //不利情报
-              msg2.msg.push(item.content) 
+              msg2.msg.push(item.content)
             }
           });
           data_list.push(msg0, msg1, msg2)

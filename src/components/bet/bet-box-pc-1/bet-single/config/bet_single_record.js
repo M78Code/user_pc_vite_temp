@@ -26,10 +26,7 @@ export default {
     }
   },
   props: {
-    view_ctr_obj: { // 投注结果控制信息
-      type: Object,
-      default: {}
-    },
+  
     single_record_obj: Object, // 投注结果对象信息
     type: {
       type: String,

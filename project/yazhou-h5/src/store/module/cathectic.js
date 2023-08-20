@@ -15,7 +15,6 @@ const initialState = {
 }
 
 export default function cathecticReducer(state = initialState, action) {
-  console.error(state, action);
   switch (action.type) {
     // 记录点击的tab--0未结算/筛选 1已结算/搜索
     case "SET_MAIN_ITEM":

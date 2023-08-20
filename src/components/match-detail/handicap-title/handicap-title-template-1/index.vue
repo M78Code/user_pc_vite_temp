@@ -15,11 +15,11 @@
     <div class="play-name col">
       <span class="ellipsis">
         <!-- 玩法名称 -->
-        {{ _.get(item_details, "hpn") }}
+        {{ lodash.get(item_details, "hpn") }}
         <template
           v-if="
-            ![0, 110].includes(_.get(match_info, 'ms')) &&
-            !corner_dist.includes(_.get(item_details, 'hpid') * 1)
+            ![0, 110].includes(lodash.get(match_info, 'ms')) &&
+            !corner_dist.includes(lodash.get(item_details, 'hpid') * 1)
           "
         >
           <!-- 让球比分 -->
@@ -27,9 +27,9 @@
         </template>
         <template
           v-if="
-            ![0, 110].includes(_.get(match_info, 'ms')) &&
+            ![0, 110].includes(lodash.get(match_info, 'ms')) &&
             [33, 306, 308, 324, 327, 113, 121].includes(
-              _.get(item_details, 'hpid') * 1
+              lodash.get(item_details, 'hpid') * 1
             )
           "
         >
@@ -40,29 +40,29 @@
       <tips1 :playId="item_details.hpid" :tipstatus="item_details.tipstatus" />
     </div>
     <span style="color: red; font-size: 15px" v-if="wsl">{{
-      `模板 ———————— ${_.get(
+      `模板 ———————— ${lodash.get(
         item_details,
         "hpt"
-      )} ~~~~~~~~~  玩法id ———————— ${_.get(item_details, "hpid")}`
+      )} ~~~~~~~~~  玩法id ———————— ${lodash.get(item_details, "hpid")}`
     }}</span>
     <div
       v-if="
-        ![0, 110].includes(_.get(match_info, 'ms')) &&
-        corner_dist.includes(_.get(item_details, 'hpid') * 1) &&
+        ![0, 110].includes(lodash.get(match_info, 'ms')) &&
+        corner_dist.includes(lodash.get(item_details, 'hpid') * 1) &&
         ![33, 306, 308, 324, 327, 113, 121].includes(
-          _.get(item_details, 'hpid') * 1
+          lodash.get(item_details, 'hpid') * 1
         )
       "
     >
       <!-- 当前总分： -->
-      {{ $root.$t("match_info.current_score") }}：{{ score_formate }}
+      {{ $t("match_info.current_score") }}：{{ score_formate }}
     </div>
     <!-- 置顶排序 -->
     <div style="width: 37px">
       <span
-        @click.stop="set_top(_.get(item_details, 'hton') != '0')"
+        @click.stop="set_top(lodash.get(item_details, 'hton') != '0')"
         class="set_top"
-        v-show="_.get(item_details, 'hton') != '0'"
+        v-show="lodash.get(item_details, 'hton') != '0'"
       >
         <icon name="icon-set_top" />
       </span>
@@ -75,7 +75,7 @@
 
 
 import lodash from "lodash";
-import { computed } from "vue";
+import { computed,ref } from "vue";
 
 //角球玩法hpid
 const corner_dist = [

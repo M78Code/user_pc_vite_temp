@@ -23,11 +23,10 @@
   
 <script setup>
 import { ref, reactive, watch, defineComponent, getCurrentInstance, onUnmounted } from 'vue'
-import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
+// import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import { useI18n } from 'vue-i18n'
-// import store from "project_path/src/store/index.js";
 
 /** 获取mixins */
 const { proxy } = getCurrentInstance()
@@ -41,15 +40,17 @@ const hits = ref(0)
 const is_active = ref(false)
 
 const {
-    userReducer,
-    menuReducer,
-    layoutReducer,
     globalReducer,
     betInfoReducer,
-    detailsReducer,
-    langReducer,
 } = store.getState();
+/** 当前赔率 */
 const cur_odd = ref(globalReducer.odds.cur_odds)
+/** 单关 是否正在处理中 */
+const vx_get_is_single_handle = ref(betInfoReducer.is_single_handle)
+/** 是否正在处理投注 */
+const is_handle = ref(betInfoReducer.is_handle)
+/** true: 单关投注 false: 串关投注 */
+const is_bet_singl = ref(betInfoReducer.is_bet_singl)
 
 
 /**
@@ -58,14 +59,14 @@ const cur_odd = ref(globalReducer.odds.cur_odds)
 */
 function on_popup() {
     hits.value++;
-    if (vx_get_is_single_handle.value || vx_get_is_handle.value) return; // 单关或者串关投注正在进行中，禁止切换
+    if (vx_get_is_single_handle.value || is_handle.value) return; // 单关或者串关投注正在进行中，禁止切换
     // 冠军
     let is_winner = $menu.menu_data.match_tpl_number == 18
     let type_name = vx_cur_menu_type.type_name;
     // 串关 && 冠军 不能切换赔率 电竞冠军菜单
     if (["winner_top"].includes(type_name) ||
         (is_winner && type_name != 'virtual_sport') ||
-        ($menu.menu_data.is_esports && !vx_is_bet_single.value) ||
+        ($menu.menu_data.is_esports && !is_bet_singl.value) ||
         $menu.menu_data.is_esports_champion) {
         return;
     }
@@ -113,8 +114,7 @@ watch(
     (new_, old_) => {
         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
         if (new_ == 'winner_top') {
-            let cur_odd = 'EU'
-            if (get_cur_odd.value !== cur_odd) {
+            if (cur_odd.value !== 'EU') {
                 set_cur_odd(cur_odd);
             }
         }
@@ -132,25 +132,6 @@ watch(
         is_active.value = false
     }
 )
-/** 当前赔率 */
-const get_cur_odd = ref(0)
-/** 单关 是否正在处理中 */
-const vx_get_is_single_handle = ref(false)
-/** 串关 是否正在处理中 */
-const vx_get_is_handle = ref(false)
-/** true: 单关投注 false: 串关投注 */
-const vx_is_bet_single = ref(true)
-/** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    vx_cur_menu_type = new_state.cur_menu_type
-    global_click.value = new_state.global_click
-    get_cur_odd.value = new_state.cur_odd
-    vx_get_is_single_handle.value = new_state.is_single_handle
-    vx_get_is_handle.value = new_state.is_handle
-    vx_is_bet_single.value = new_state.is_bet_single
-})
-onUnmounted(unsubscribe)
 
 /** 设置当前赔率 */
 const set_cur_odd = (data) => store.dispatch({
@@ -167,12 +148,6 @@ const set_pre_odd = (data) => store.dispatch({
 
 </script>
 
-<script>
-export default defineComponent({
-    name: 'popup-handicap',
-    mixins: [odds_conversion_mixin],
-})
-</script>
   
 <style lang="scss" scoped>
 .item-wrap {

@@ -15,23 +15,23 @@
         <!--<img v-show="is_show_slide_r && !get_is_hengping" class="slide_icon slide_icon_r animate-effect-r"  src="image/wwwassets/bw3/common/slide_icon_r.svg" alt="">-->
 
         <div class="play-name-wrapper" v-show="get_is_hengping">
-          <div class="item-name ellipsis">{{_.get(item_data, 'title[0].osn')}}</div>
-          <div class="item-name ellipsis">{{_.get(item_data, 'title[1].osn')}}</div>
+          <div class="item-name ellipsis">{{lodash.get(item_data, 'title[0].osn')}}</div>
+          <div class="item-name ellipsis">{{lodash.get(item_data, 'title[1].osn')}}</div>
         </div>
         <!-- 大 -->
         <div class="row bor-style" :class="get_is_hengping?'bor-style2':'' ">
           <div class="play-name ellipsis" v-show="!get_is_hengping">
-            {{_.get(item_data, 'title[0].osn')}}
+            {{lodash.get(item_data, 'title[0].osn')}}
           </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
-              {'slide-wrap-width-100': append_single_list.filter(append_single=>_.get(item_data, 'title[0].otd') == append_single.otd).length===1,
-                'slide-wrap-width-50': append_single_list.filter(append_single=>_.get(item_data, 'title[0].otd') == append_single.otd).length===2 }]"
+              {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length===1,
+                'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length===2 }]"
               :style="{left:`${left}px`}">
               <template v-for="(append_single, index) of append_single_list">
-                <!-- ---{{append_single_list.filter(append_single=>_.get(item_data, 'title[0].otd') == append_single.otd).length}}--- -->
-                <div class="col bet-item" :key="index" v-if="_.get(item_data, 'title[0].otd') == append_single.otd">
+                <!-- ---{{append_single_list.filter(append_single=>lodash.get(item_data, 'title[0].otd') == append_single.otd).length}}--- -->
+                <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[0].otd') == append_single.otd">
                   <div class="row row-fat">
                     <!-- (开盘ms=0或者锁盘ms=11) -->
                     <div v-if="append_single.ms == 0 || append_single.ms == 11" style="flex:1;">
@@ -109,7 +109,7 @@
                   </div>
                 </div>
               </template>
-              <template v-if="_.get(item_data,'hl.length') !=2 && !get_is_hengping">
+              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
                 <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
               </template>
             </div>
@@ -118,17 +118,17 @@
         <div class="row">
           <!-- 小 -->
           <div class="play-name ellipsis" v-show="!get_is_hengping">
-            {{_.get(item_data, 'title[1].osn')}}
+            {{lodash.get(item_data, 'title[1].osn')}}
           </div>
           <div class="row slide-con" ref="bet_slide" style="flex:1;" v-touch-pan.horizontal.prevent.mouse="touch_pan">
             <div class="slide-wrap"
             :class="[
-              {'slide-wrap-width-100': append_single_list.filter(append_single=>_.get(item_data, 'title[1].otd') == append_single.otd).length===1,
-                'slide-wrap-width-50': append_single_list.filter(append_single=>_.get(item_data, 'title[1].otd') == append_single.otd).length===2 }]"
+              {'slide-wrap-width-100': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length===1,
+                'slide-wrap-width-50': append_single_list.filter(append_single=>lodash.get(item_data, 'title[1].otd') == append_single.otd).length===2 }]"
             :style="{left:`${left}px`}">
               <template v-for="(append_single,index) of append_single_list">
-                <div class="col bet-item" :key="index" v-if="_.get(item_data, 'title[1].otd') == append_single.otd">
-                  <div class="row row-fat" v-if="_.get(item_data, 'title[1].otd') == append_single.otd">
+                <div class="col bet-item" :key="index" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
+                  <div class="row row-fat" v-if="lodash.get(item_data, 'title[1].otd') == append_single.otd">
                     <!-- (开盘ms=0或者锁盘ms=11) -->
                     <div v-if="append_single.ms == 0 || append_single.ms == 11" style="flex:1;">
                       <template v-if="append_single.hs == 0 || append_single.hs == 11">
@@ -202,7 +202,7 @@
                   </div>
                 </div>
               </template>
-              <template v-if="_.get(item_data,'hl.length') !=2 && !get_is_hengping">
+              <template v-if="lodash.get(item_data,'hl.length') !=2 && !get_is_hengping">
                 <div class="col" v-for="(item,index2) in null_box_list" :key="'bb'+index2"></div>
               </template>
             </div>
@@ -216,6 +216,9 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
+// 引入redux 
+import store from "src/store-redux/index.js";
+import lodash from "lodash";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -228,6 +231,7 @@ export default defineComponent({
     "odds-new": odds_new
   },
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils,
       // 滑动left
@@ -236,6 +240,15 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list", "get_detail_data", 'get_is_hengping']),
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
+    const get_is_hengping = computed(() => {
+      return ""
+    });
     const devote_value_d = computed(() => {
       return function (val) {
         if (val == 'Over') {
@@ -287,11 +300,11 @@ export default defineComponent({
       for (let i = 0; i < item_data.hl.length; i++) {
         for (let i_ = 0; i_ < item_data.hl[i].ol.length; i_++) {
           // 如果此时otd满足title里面第一个otd 则为true
-          if (item_data.hl[i].ol[i_].otd == _.get(item_data, 'title[0].otd')) {
+          if (item_data.hl[i].ol[i_].otd == lodash.get(item_data, 'title[0].otd')) {
             arr_max = true
           }
           // 如果此时otd满足title里面第二个otd 则为true
-          if (item_data.hl[i].ol[i_].otd == _.get(item_data, 'title[1].otd')) {
+          if (item_data.hl[i].ol[i_].otd == lodash.get(item_data, 'title[1].otd')) {
             arr_min = true
           }
         }
@@ -370,6 +383,10 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
+      lodash,
+      get_bet_list,
+      get_detail_data,
+      get_is_hengping,
       devote_value_d,
       devote_value_x,
       ol_length,

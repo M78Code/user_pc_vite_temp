@@ -1,11 +1,11 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 加载中
 -->
 <template>
-  <div class="loading" :style="`top:${top}`">
-    <div class="la-line-scale" :class="{'y0_bg': get_theme.includes('y0')}">
+  <div class="loading">
+    <div class="la-line-scale">
       <div></div>
       <div></div>
       <div></div>
@@ -17,6 +17,9 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
+import { ref } from "vue"
+// TODO: 临时
+const get_theme = ref('y0')
 
   const props = defineProps({
     top: {
@@ -24,6 +27,7 @@
       default: '46%',
     },
   })
+console.error(props.top);
   computed(() => {
     // ...mapGetters({
     //   get_theme: "get_theme",

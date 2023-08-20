@@ -8,7 +8,7 @@ import {
   nextTick,
   getCurrentInstance,
 } from "vue";
-import { get_refs_info } from "src/core/common-helper/common.js";
+import { get_refs_info } from "src/core/bet/common-helper/common-sport.js";
 import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
 import mathjs from "src/core/utils/mathjs.js";
 import lodash from "lodash";

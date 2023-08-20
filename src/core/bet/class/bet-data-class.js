@@ -2,6 +2,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
+import * as FILEDS_MAP from "../config/fileds-map.js"
 class BetData {
   constructor() {}
   init_core() {
@@ -15,7 +16,6 @@ class BetData {
     this.is_accept = false;
     // 是否串关
     this.is_mix = false;
-
     // 押注信息列表
     this.bet_list = [];
     // 押注扁平化对象扁平
@@ -32,7 +32,6 @@ class BetData {
     this.is_handle = false;
     // 单关 是否正在处理投注
     this.is_single_handle = false;
- 
     // 选择的选项
     this.menu_obj = {};
     // 投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
@@ -43,19 +42,48 @@ class BetData {
     this.is_virtual_bet = true;
     // 虚拟投注是否正在进行
     this.is_virtual_handle = false;
-    // 虚拟投注列表
-    this.virtual_bet_list = [];
-    // 虚拟投注对象
-    this.virtual_bet_obj = {};
-    // 虚拟体育串关列表
-    this.virtual_bet_s_list = [];
-    // 虚拟体育串关列表对象
-    this.virtual_bet_s_obj = {};
-    // 虚拟体育投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-    this.virtual_bet_mode = -1;
-    // 虚拟体育错误信息
-    this.virtual_error_info = {};
-    this.this.left_menu_toggle = true; // 左侧菜单的切换状态 true= 展开 false= 收缩
+ 
+    //==============================================投注之前 无注单ID=============
+    // 虚拟投注对象  VR 菜单下的那种 
+    this.virtual_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+    // 常规体育 含一部分电子赛事 
+    this.common_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+
+    // 常规体育 含一部分电子赛事 
+    this.guanjun_bet_obj = {
+      [bet_custom_id]:{
+         
+       }
+    };
+    // 常规体育 含一部分电子赛事 
+    this.dianjing_bet_obj = {
+      [bet_custom_id]:{
+        bs:{},cs:{}
+        
+      }
+    };
+   
+   //==============================================投注之后 有注单ID=============
+ 
+    // 投注后的 
+    this.orderNo_bet_obj = {
+      [bet_custom_id]:{
+        
+      }
+    };
+   ///////////////////
+
+
+ 
+ 
     // 当前电竞查询的模式 false单关模式
     this.cur_esports_mode = false;
     // 是否为合并模式
@@ -78,18 +106,158 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     this.bet_current_money_obj = {};
     // 投注金额
     this.bet_amount = 0;
-    //自动化 测试 
-    this.auto_test_bet_info={}
+    //自动化 测试
+    this.auto_test_bet_info = {};
     //
-    this.item_cs_id=0;
+    this.item_cs_id = 0;
+    // 前端点击投注项立马生成的前端索引ID ，每个注单不论什么状态，只管用最初始的前端生成的ID 去参照对象内去转换
+    this.bet_read_write_refer_obj = {
+
+     [bet_custom_id]:{
+      // mount_point_key:'virtual_bet_obj',
+      // 
+      // shuju_laiyuan: 'xiangqing',       //  
+      // shuju_laiyuan_obj:  data_souce,       //  
+   
+      // fileds_map:{
+      // c_csid,
+      // c_tid,
+      // c_mid,
+      // c_hid,
+      // c_oid,
+      // c_kid,
+      // c_hn,
+      // c_topKey,
+      // },
+
+      // is_type:{
+       // is_guanjun:1,  
+      // is_dianjing:1,
+      // is_common:1,
+
+      // is_vr:1,   // 
+       // is_pre_bet,
+      // }
+
+ 
+
+      // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+     
+
+      
+     }
+
+    };
+    // 每一个投注对象 的视图控制对象
+    this.all_bet_view_data_obj={
+      // [bet_custom_id]:new  BetViewData()
+    }
+    // 注单 到 自定义ID 的 反向映射 
+    //当前视图的注单区域的  需要显示  自定义ID 数组 
+    this.show_bet_custom_id_arr=[];
+    //ids 变更  ， 用这个监听 或者 发事件  
+    this.show_bet_custom_id_arr_change=1
+ 
   }
 
-  http_upd_data(obj) {}
+  // 通过  mount_point_key 计算 取值字段映射
+  get_fields_map_by_mount_point_type(type){
+    let obj=  FILEDS_MAP['fileds_map_common']
+    return obj 
+  }
 
+
+  /**
+   *
+   * 管道负责 读写 衔接  使用对象引用类型的 原理
+   * 平坦化读写 ， 让逻辑层不关心挂载点
+   *
+   */
+  /**
+   * 通过前端 自定义 投注ID 获取 当前 ID 对应的 配置参照对象 ，也可能附加其他参照逻辑
+   */
+  get_refer_obj_by_bet_custom_id(bet_custom_id) {
+    return this.bet_read_write_refer_obj[bet_custom_id];
+  }
+  /**
+   * 通过前端 自定义 投注ID 获取数据对象
+   */
+  get_bet_obj_by_bet_custom_id(bet_custom_id) {
+    let refer_obj = get_refer_obj_by_bet_custom_id(bet_custom_id);
+    let { mount_point_key } = refer_obj["mount_point_key"];
+    let real_bet_obj = this[mount_point_key][bet_custom_id];
+    return real_bet_obj;
+  }
+  /**
+   * 通过前端 自定义 投注ID 获取 当前 ID 对应的 配置参照对象 ，也可能附加其他参照逻辑
+   */
+  get_refer_obj_by_bet_custom_id(bet_custom_id) {
+    return this.bet_read_write_refer_obj[bet_custom_id];
+  }
+  /**
+   * 通过前端 自定义 投注ID 获取数据对象
+   */
+  get_bet_obj_by_bet_custom_id(bet_custom_id) {
+    let refer_obj = get_refer_obj_by_bet_custom_id(bet_custom_id);
+    let { mount_point_key } = refer_obj["mount_point_key"];
+    let real_bet_obj = this[mount_point_key][bet_custom_id];
+    return real_bet_obj;
+  }
+ /**
+   * 通过前端 自定义 投注ID 写入/更新数据对象
+   */
+ set_bet_obj_by_bet_custom_id(bet_custom_id,obj) {
+    let refer_obj = get_refer_obj_by_bet_custom_id(bet_custom_id);
+    let { mount_point_key } = refer_obj["mount_point_key"];
+    let real_bet_obj = this[mount_point_key][bet_custom_id];
+    Object.assign(real_bet_obj,obj)
+  }
+
+
+
+  
+ /**
+   * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData
+   */
+ get_bet_view_data_obj_by_bet_custom_id(bet_custom_id) {
+
+  const mount_point_key ='all_bet_view_data_obj'
+ 
+  let bet_view_data_obj = this[mount_point_key][bet_custom_id];
+  return bet_view_data_obj;
+}
+
+set_show_bet_custom_id_arr(){
+
+  this.show_bet_custom_id_arr=[]
+  this.show_bet_custom_id_arr_change =Date.now()
+}
+
+/**
+ * 获取当前 视图展示的 投注单数据列表
+ */
+get_current_show_bet_obj_arr(){
+  //自己算 IDS 数组
+
+  let ids=    this.show_bet_custom_id_arr=[];
+
+  let arr=[]
+
+
+  ids.map(x=>{
+    arr.push(  this.get_bet_obj_by_bet_custom_id(x) )  
+  })
+
+  return arr
+}
+
+
+
+  http_upd_data() {}
   set_bet_amount(val) {
     this.bet_amount = val;
   }
- /**
+  /**
    * @description: 删除投注对象
    * @param {*}BetData.
    * @param {*} key 需要删除对象的键值
@@ -97,12 +265,12 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
   bet_obj_remove_attr(key) {
     delete this.bet_obj[key];
   }
-   /**
+  /**
    * @description: 删除串关列表
    * @param {*}BetData.
    * @param {*} i 需要删除的id索引
    */
-   bet_list_remove(i) {
+  bet_list_remove(i) {
     let temp = Object.assign([], this.bet_list);
     temp.splice(i, 1);
     this.bet_list = temp;
@@ -119,5 +287,4 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     }
   }
 }
-
 export default new BetData();

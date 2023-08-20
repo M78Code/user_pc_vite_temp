@@ -130,7 +130,6 @@ import {
 } from "src/core/utils/match-list-utils.js";
 import {
   useRegistPropsHelper,
-  useProps,
 } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 useRegistPropsHelper(component_symbol, need_register_props);
@@ -141,7 +140,27 @@ import { get_mmp_name } from "src/core/match-list-h5/match-utils/handle-score.js
 
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
 
-const props = defineProps({ ...useProps });
+const props = defineProps({
+  // 当场赛事信息
+  match_props: Object,
+  match_list_data: Object,
+  // 显示的页面
+  show_page: {
+    type: String,
+    default: "",
+  },
+  // 行数
+  rows: {
+    type: Number,
+    default: 1,
+  },
+  // 日期行数
+  date_rows: {
+    type: Number,
+    default: 1,
+  },
+  right: Boolean,
+});
 const { t } = useI18n();
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)

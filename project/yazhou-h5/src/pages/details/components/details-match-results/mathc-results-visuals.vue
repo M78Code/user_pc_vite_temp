@@ -27,7 +27,7 @@
                 :thickness="0.3"
                 color="orange"
                 track-color="blue"
-                :class="[(item.away == 0 && item.home == 0) && 'ring-zero-css', 'aaa', 'knob-shrink']"
+                :class="[(item.away == 0 && item.home == 0) && 'ring-zero-css', 'knob-shrink']"
             />
             <span class="number">
               {{`${item.away}%`}}
@@ -87,83 +87,80 @@
   </div>
 </template>
 
-<script>
-import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
-import { mapGetters } from "vuex";
-export default {
-  name: "mathc_results_visuals",
-  mixins: [ msc ],
-  components: {},
-  props:{
-    ring_statistics: Array, // 圆环图形
-    card_corner_list: Array, // 中间的图标模块
-    progress_graph: Array,  // 横线条的 比例
-  },
-  data() {
-    return {
-      statistics_table: [],
-      timer1_: null
-    }
-  },
-  created() {
-  },
-  mounted() {
-  },
-  watch: {
-    'get_detail_data':{
-      handler: 'get_list',
-      immediate: true,
-      deep: true
-    }
-  },
-  computed: {
-    ...mapGetters([
-      // 赛事id
-      'get_goto_detail_matchid',
-      // 详情页的数据
-      'get_detail_data',
-      // 当前语言
-      'get_lang',
-      'get_analyze_show'
-    ])
-  },
-  methods: {
-    get_list() {
-      console.log(this.card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
-      let cloneData = _.cloneDeep(this.get_detail_data);
-      if(cloneData && cloneData.msc){
-        this.transform_score(cloneData)
-        this.statistics_table = cloneData
-        // 环形比分图形表
-        this.score_processing(this.ring_statistics, this.statistics_table.msc)
-        // 黄牌 红牌 角球
-        this.score_processing(this.card_corner_list, this.statistics_table.msc)
-        // 进度条比分图形表
-        this.score_processing(this.progress_graph, this.statistics_table.msc)
-      }
+<script setup>
+ // 国际化比赛阶段比分转换工具
+// import msc from "src/public/mixins/common/msc.js";
+import { onUnmounted, ref, watch } from "vue";
+  // mixins: [ msc ],
+  const props = defineProps({
+    // 圆环图形
+    ring_statistics:{
+      type:Array
     },
-    // msc 比分处理成 图形界面数据格式
-    score_processing(data, msc) {
-      data.forEach( item => {
-        for (let k in msc) {
-          if ([k].includes(item.score_type) && (+msc[k].home + +msc[k].away != 0)) {
-            item.home = +msc[k].home
-            item.away = +msc[k].away
-            if(["S8", "S105", "S1088", "S111"].includes(item.score_type)) {
-              item.proportion = parseInt((item.away / (item.home + item.away)).toFixed(2) * 100)
-            }else if(["S104", "S1101", "S18", "S17", "S19", "S107", "S110", "S108"].includes(item.score_type)){
-              item.proportion = (item.home / (item.home + item.away)).toFixed(2) * 100
-            }
+    // 中间的图标模块
+    card_corner_list: {
+      type: Array
+    },
+    // 横线条的 比例
+    progress_graph: {
+      type: Array
+    }
+  })
+  const statistics_table = ref([])
+  const timer1_ = ref(null)
+
+  // watch: {
+  //   'get_detail_data':{
+  //     handler: 'get_list',
+  //     immediate: true,
+  //     deep: true
+  //   }
+  // },
+  // computed: {
+  //   ...mapGetters([
+  //     // 赛事id
+  //     'get_goto_detail_matchid',
+  //     // 详情页的数据
+  //     'get_detail_data',
+  //     // 当前语言
+  //     'get_lang',
+  //     'get_analyze_show'
+  //   ])
+  // },
+  const get_list = () => {
+    console.log(card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
+    let cloneData = _.cloneDeep(get_detail_data);
+    if(cloneData && cloneData.msc){
+      transform_score(cloneData)
+      statistics_table = cloneData
+      // 环形比分图形表
+      score_processing(ring_statistics, statistics_table.msc)
+      // 黄牌 红牌 角球
+      score_processing(card_corner_list, statistics_table.msc)
+      // 进度条比分图形表
+      score_processing(progress_graph, statistics_table.msc)
+    }
+  }
+  // msc 比分处理成 图形界面数据格式
+  const score_processing = (data, msc) => {
+    data.forEach( item => {
+      for (let k in msc) {
+        if ([k].includes(item.score_type) && (+msc[k].home + +msc[k].away != 0)) {
+          item.home = +msc[k].home
+          item.away = +msc[k].away
+          if(["S8", "S105", "S1088", "S111"].includes(item.score_type)) {
+            item.proportion = parseInt((item.away / (item.home + item.away)).toFixed(2) * 100)
+          }else if(["S104", "S1101", "S18", "S17", "S19", "S107", "S110", "S108"].includes(item.score_type)){
+            item.proportion = (item.home / (item.home + item.away)).toFixed(2) * 100
           }
         }
-      })
-    }
-  },
-  destroyed() {
-    clearTimeout(this.timer1_)
-    this.timer1_ = null
+      }
+    })
   }
-};
+  onUnmounted(() => {
+    clearTimeout(timer1_.value)
+    timer1_.value = null
+  })
 </script>
 
 <style lang="scss" scoped>

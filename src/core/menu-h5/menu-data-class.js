@@ -30,6 +30,13 @@ class MenuData {
     this.menus_i18n_map = {};
     this.menu_list = [];
     this.menu_original_data = {};
+    this.lv_1_menu_map={
+      1:"滚球",
+      2:"今日",
+      3:"早盘",
+      4:"冠军",
+      30:"热门" ,
+    }
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -81,13 +88,14 @@ class MenuData {
   }
   //get euid
   async get_euid(arg_mi, menu_type) {
-    const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
-    if (euid) return euid.menus_mapping.h || "";
     let mi = arg_mi;
     if (!mi) return "";
     return base_data_instance.mi_euid_map_res[
-      parseInt(current_menu_item.value.mi)
+      parseInt(mi)
     ]?.h;
+    const euid = await db.menus_mapping.get(arg_mi + "2", "mi");
+    if (euid) return euid.menus_mapping.h || "";
+  
     if (menu_type == 4) {
       //冠军特殊处理
       mi = 400 + (mi?.substr(0, 3) - 100);
@@ -365,7 +373,7 @@ class MenuData {
     };
   }
   //setter=======
-  set_menu_list(data) {
+  recombine_menu(data) {
     //常规
     let conventional = [
       101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
@@ -391,7 +399,7 @@ class MenuData {
       }
     });
     // 赛果数据处理
-    let result_menu = this.init_amidithion(amidithion);
+    // let result_menu = this.init_amidithion(amidithion);
     let new_menu = [];
     lodash.each(menuRule, (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
@@ -409,8 +417,9 @@ class MenuData {
       menu_dianjing,
       { mi: 8 },
       menu_jingzu,
-      result_menu,
+      // result_menu,
     ];
+    return this.menu_list
   }
   //选中一级menu
   set_current_menu(item) {

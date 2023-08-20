@@ -1,7 +1,6 @@
 
 
 
-import { get_handicap_w_id } from "./other-util"
 import MenuData from "src/core/menu-pc/menu-data-class.js"
 
 
