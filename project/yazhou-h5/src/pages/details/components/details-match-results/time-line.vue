@@ -6,7 +6,7 @@
 <template>
   <div class="time_line">
     <template v-if="!no_data">
-      <div class="title">{{ $root.$t('match_result.event') }}</div>
+      <div class="title">{{ t('match_result.event') }}</div>
       <div class="incident_event" v-for="(item, index) in event_data" :key="index">
         <div
           class="incident_event_title"
@@ -53,51 +53,52 @@
   </div>
 </template>
 
-<script>
-import { api_result } from "src/project/api";
+<script setup>
+// TODO: store数据未处理
+import { api_result } from "src/api/index.js";
+// import { mapGetters } from "vuex";
+  // 赛果详情 事件 组件
+import matchResultsStage from 'project_path/src/pages/details/components/details-match-results/match-results-stage.vue'
+ // 赛果详情 底部图标说明
+import resultsFooter from 'project_path/src/pages/details/components/details-match-results/results-footer.vue' // project\yazhou-h5\src\pages\details\components\details-match-results\results-footer.vue
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRoute } from "vue-router"
+import { computed, onUnmounted, ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n"
+import lodash from "lodash"
 
-import { mapGetters } from "vuex";
-import match_results_stage from 'project_path/src/pages/details/components/details_match_results/match_results_stage.vue'  // 赛果详情 事件 组件
-import results_footer from 'project_path/src/pages/details/components/details_match_results/results_footer'   // 赛果详情 底部图标说明
+  // components: {
+  //   'match-results-stage': match_results_stage,
+  //   'results-footer': results_footer
+  // },
+  // 国际化
+  const { t } = useI18n()
+  // 图片
+  const yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
+  const red_img = ref('image/bw3/svg/match-results/red.svg')
+  const corner_img = ref('image/bw3/svg/match-results/corner.svg')
+  const substitution_img = ref('image/bw3/svg/match-results/substitution.svg')
+  const goal_img = ref('image/bw3/svg/match-results/goal.svg')
+  const penalty_img = ref('image/bw3/svg/match-results/penalty.svg')
+  const penalty_missed_img = ref('image/bw3/svg/match-results/penalty_missed.svg')
+  const own_goals_img = ref('image/bw3/svg/match-results/own_goals.svg')
 
-export default {
-  name: "time_line",
-  components: {
-    'match-results-stage': match_results_stage,
-    'results-footer': results_footer
-  },
-  data() {
-    return {
-      yellow_img:'image/bw3/svg/match-results/yellow.svg',
-red_img:'image/bw3/svg/match-results/red.svg',
-corner_img:'image/bw3/svg/match-results/corner.svg',
-substitution_img:'image/bw3/svg/match-results/substitution.svg',
-goal_img:'image/bw3/svg/match-results/goal.svg',
-penalty_img:'image/bw3/svg/match-results/penalty.svg',
-penalty_missed_img:'image/bw3/svg/match-results/penalty_missed.svg',
-own_goals_img:'image/bw3/svg/match-results/own_goals.svg',
+  const event_data = ref([])
+  const no_data = ref(true)
+  // 路由
+  const route = useRoute()
 
-      event_data: [],
-      no_data: true
-    }
-  },
-  created() {
+  onMounted(() => {
     // 添加监听 赛事分析刷新事件
-    this.$root.$on(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.get_list)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).on
 
-    this.get_list()
-  },
-  mounted() {
-  },
-  computed: {
-    ...mapGetters(["get_goto_detail_matchid", 'get_detail_data', 'get_lang']),
-    // 赛事id
-    match_id() {
-      return this.$route.params.mid || this.get_detail_data.mid
-    },
-    // 时间线icon
-    imgWidth() {
-      return function (item) {
+    get_list()
+  })
+  const match_id = computed(() => {
+    return route.params.mid || get_detail_data.mid
+  })
+  const imgWidth = computed(() => {
+    return function (item) {
         if (['yellow_card', 'red_card'].includes(item.eventCode)) {
           return 'icon-w11'
         } else if (['corner'].includes(item.eventCode)) {
@@ -110,86 +111,120 @@ own_goals_img:'image/bw3/svg/match-results/own_goals.svg',
           return ''
         }
       }
-    },
-  },
-  methods: {
+  })
+  // computed: {
+  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data', 'get_lang']),
+  //   // 赛事id
+  //   match_id() {
+  //     return $route.params.mid || get_detail_data.mid
+  //   },
+  //   // 时间线icon
+  //   imgWidth() {
+
+  //   },
+  // },
     // 初始化方法
-    async get_list() {
+  const get_list = async () => {
+     // {mid: match_id} TODO: 待处理
       try {
-        let {code , data} = await api_result.get_event_result({mid: this.match_id})
+        let reslut = await api_result.get_event_result({mid: route.params.mid || get_detail_data.mid})
+        let res = ''
+      if (lodash.get(reslut, 'status')) {
+        res = reslut.data
+
+      } else {
+        res = reslut
+      }
+      let { code, data } = res
         if(code == 200 && data.length > 0) {
           data.forEach( (item, i, arr) => {
             item.matchPeriodId = (item.mid && item.mid.matchPeriodId) || (item.away && item.away.matchPeriodId) || (item.home && item.home.matchPeriodId)
             item.eventCode = (item.mid && item.mid.eventCode) || (item.away && item.away.eventCode) || (item.home && item.home.eventCode)
             item.numPlace = (item.away && item.away.numPlace) || (item.home && item.home.numPlace)
             if(item.away){
-              item.away.secondsFromStart = Math.floor(item.away.secondsFromStart/60) +'\''+ this.add_zero(Math.floor((item.away.secondsFromStart % 60))) + "\''"
+              item.away.secondsFromStart = Math.floor(item.away.secondsFromStart/60) +"/''"+ add_zero(Math.floor((item.away.secondsFromStart % 60))) + "/''"
             }
             if(item.home){
-              item.home.secondsFromStart = Math.floor(item.home.secondsFromStart/60) +'\''+ this.add_zero(Math.floor((item.home.secondsFromStart % 60))) + "\''"
+              item.home.secondsFromStart = Math.floor(item.home.secondsFromStart/60) +"/''"+ add_zero(Math.floor((item.home.secondsFromStart % 60))) + "/''"
             }
             // 中场休息，上边的样式去除line
             if(item.matchPeriodId == 31 && i > 0) {
               arr[i-1].intermission = true
             }
           })
-          this.event_data = data
-          this.no_data = false
+          event_data = data
+          no_data.value = false
         } else {
-          this.no_data = true
+          no_data.value = true
         }
       } catch (error) {
-        this.no_data = true
+        no_data.value = true
         console.error(error);
       }
-    },
+    }
     // 后面字体补0
-    add_zero  (num_b) {
+  const add_zero = (num_b) => {
       if (parseInt(num_b) < 10) {
         num_b = '0' + num_b
       }
       return num_b
-    },
+    }
     // 赛事标题说明
-    title_calculation(item) {
-      return item.matchPeriodId == 999 ? this.$root.$t('match_result.finish') : item.matchPeriodId == 120 ? this.$root.$t('match_result.penalty_kick_ended') : item.matchPeriodId == 110 ? this.$root.$t('match_result.overtime_is_over') :
-              item.matchPeriodId == 100 ? this.$root.$t('match_result.end_of_regular_season') : item.matchPeriodId == 31 ? this.$root.$t('match_result.midfield') : item.matchPeriodId == 0 ? this.$root.$t('match_result.start') : ''
-    },
+  const title_calculation = (item) => {
+      return item.matchPeriodId == 999 ? t('match_result.finish') : item.matchPeriodId == 120 ? t('match_result.penalty_kick_ended') : item.matchPeriodId == 110 ? t('match_result.overtime_is_over') :
+              item.matchPeriodId == 100 ? t('match_result.end_of_regular_season') : item.matchPeriodId == 31 ? t('match_result.midfield') : item.matchPeriodId == 0 ? t('match_result.start') : ''
+    }
     // 中间的图片转换
-    picture_conversion(item) {
-      return item.eventCode == 'yellow_card' ? this.yellow_img : item.eventCode == 'red_card' ? this.red_img : item.eventCode == 'corner' ? this.corner_img :
-              item.eventCode == 'substitution' ? this.substitution_img : item.eventCode == 'goal' ? this.goal_img : item.eventCode == 'goal_penalty' ? this.penalty_img :
-                item.eventCode == 'penalty_missed' ? this.penalty_missed_img : item.eventCode == 'goal_own' ? this.own_goals_img : ''
-    },
-    // 角球的中英文切换
-    translation_switch(item) {
-      let  number = item.numPlace
-      if(this.get_lang == 'en'){
-        if(number == 1){
-          return number + 'st ' + this.$root.$t('match_result.corner')
-        }else if(number == 2){
-          return number + 'nd ' + this.$root.$t('match_result.corner')
-        }else if(number == 3){
-          return number + 'rd ' + this.$root.$t('match_result.corner')
-        }else{
-          return number + 'th ' + this.$root.$t('match_result.corner')
-        }
-      }else if(this.get_lang == 'vi'){
-        return this.$root.$t('match_result.corner') + number
-      } else{
-        return this.$root.$t('match_result.which_number') + number + this.$root.$t('match_result.corner')
-      }
-    },
-  },
-  destroyed() {
-    // 移除监听 赛事分析刷新事件
-    this.$root.$off(this.emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, this.get_list)
-
-    for (const key in this.$data) {
-      this.$data[key] = null
+  const picture_conversion = (item) => {
+    switch (item.eventCode) {
+      case 'yellow_card':
+        return yellow_img
+      case 'red_card':
+        return red_img
+      case 'corner':
+        return corner_img
+      case 'substitution':
+        return substitution_img
+      case 'goal':
+        return goal_img
+      case 'goal_penalty':
+        return penalty_img
+      case 'penalty_missed':
+        return penalty_missed_img
+      case 'goal_own':
+        return own_goals_img
+      default:
+        return ''
     }
   }
-};
+    // 角球的中英文切换
+  const translation_switch = (item) => {
+      let  number = item.numPlace
+      if(get_lang == 'en'){
+        switch (number) {
+          case 1:
+            return number + 'st ' + t('match_result.corner')
+          case 2:
+            return number + 'nd ' + t('match_result.corner')
+          case 3:
+            return number + 'rd ' + t('match_result.corner')
+          default:
+            return number + 'th ' + t('match_result.corner')
+        }
+      }else if(get_lang == 'vi'){
+        return t('match_result.corner') + number
+      } else{
+        return t('match_result.which_number') + number + t('match_result.corner')
+      }
+    }
+  onUnmounted(() => {
+    // 移除监听 赛事分析刷新事件
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).off
+
+    // for (const key in $data) {
+    //   $data[key] = null
+    // }
+  })
 </script>
 
 <style lang="scss" scoped>

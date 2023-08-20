@@ -20,40 +20,31 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch, nextTick } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent } from 'vue'
 import lodash from 'lodash'
-// 赛果详情 赛况统计 和 事件
-// import matchResult from 'project_path/src/pages/details/components/details-match-results/match-results.vue';
-// 详情页  足球赛事分析 战绩 模块
-// import standings from 'project_path/src/pages/details/analysis-matches/components/standings.vue';
-// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-// import lineUp from 'project_path/src/pages/details/analysis-matches/components/line-up.vue';
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
-// 详情页足球赛事分析情报页面
-// import intelligence from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue';
- // 详情页足球赛事分析赔率页面
-// import analysisOdds from 'project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue';
- // 资讯页
-import articleMain from 'project_path/src/pages/details/analysis-matches/article/article-main.vue';
-// 精彩回放
-// import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useI18n } from "vue-i18n"
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import utils from "src/core/utils/utils.js"
 
-  // components: {
-  //   match: match_result,
-  //   standings: standings,
-  //   line_up: line_up,
-  //   "head-tab": head_tab,
-  //   "intelligence": intelligence,
-  //   "analysis_odds": analysis_odds,
-  //   articleMain: articleMain,
-  //   highlights: highlights,
-  // },
+
+  // 资讯页
+  const articleMain = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/article/article-main.vue"))
+  // 赛果详情 赛况统计 和 事件
+  const matchResult = defineAsyncComponent(() => import("project_path/src/pages/details/components/details-match-results/match-results.vue"))
+  // 详情页  足球赛事分析 战绩 模块
+  const standings = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/components/standings.vue"))
+  // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+  const lineUp = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/components/line-up.vue"))
+  // 详情页足球赛事分析情报页面
+  const intelligence = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/intelligence.vue"))
+  // 详情页足球赛事分析赔率页面
+  const analysisOdds = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
+  // 精彩回放
+  const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
     // 国际化
   const { t } = useI18n()
     // 锚点
@@ -93,12 +84,11 @@ import utils from "src/core/utils/utils.js"
     })
     watch(() => get_event_list, (event_list) => {
       // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
-      const highlights = tabList.value.find(item => item.component === 'highlights')
+      const highlights_component = tabList.value.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(store_user.user, 'merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
+      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabList.value.unshift(
             {
-              // TODO: 国际化后续修改调整
               name: t('highlights.title'),
               component: 'highlights'
             }
@@ -135,7 +125,7 @@ import utils from "src/core/utils/utils.js"
           component: 'analysis-odds'
         },
       ]
-      // 红猫tab特殊处理  TODO: get_detail_data  get_lang/国际化 后续修改调整
+      // 红猫tab特殊处理  TODO: get_detail_data  get_lang 后续修改调整
       if (get_detail_data.cds === '1500') {
         tabs = [
           {
@@ -152,10 +142,10 @@ import utils from "src/core/utils/utils.js"
           }
         )
       }
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list get_user/国际化 后续修改调整
-      const highlights = tabs.find(item => item.component === 'highlights')
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list get_user 后续修改调整
+      const highlights_component = tabs.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(store_user.user, 'merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
+      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabs.unshift(
             {
               name: t('highlights.title'),
@@ -171,7 +161,27 @@ import utils from "src/core/utils/utils.js"
     // 点击一级tab 菜单切换 // TODO: $utils get_user 后续修改调整
     const tab_click = ([tab, type]) => {
       console.error(tab.component, type);
-      currentContent.value = tab.component
+      switch(tab.component) {
+        case "article-main":
+        currentContent.value = articleMain
+        break
+        case "match-result":
+        currentContent.value = matchResult
+        break
+        case "standings":
+        currentContent.value = standings
+        break
+        case "line-up":
+        currentContent.value = lineUp
+        break
+        case "intelligence":
+        currentContent.value = intelligence
+        break
+        case "analysis-odds":
+        currentContent.value = analysisOdds
+        break
+
+      }
       if (type == 'is_click') {
         let eventLabel = '';
         if (tab.component == 'match-result') {
