@@ -5,57 +5,178 @@
 -->
 <template>
   <div
-    v-if="ol_data_item && odds_state!='close' && _.get(ol_data_item,'_hs') != 2"
-    class="c-bet-item yb-flex-center  relative-position"
-    :class="[bet_source=='match_list' && 'list-show',bet_tpl, odds_lift, version_name,
-    `csid${match.csid}`,![367,368,369,7,20,74,103,241,341,342,343,236,344].includes(_.get(play_data, 'hpid')*1)||(odds_state!=='seal'&&[367,368,369,7,20,74,103,241,341,342,343,236,344].includes(_.get(play_data, 'hpid')*1)) ? odds_state:'odds_state']"
+    v-if="
+      ol_data_item &&
+      odds_state != 'close' &&
+      lodash.get(ol_data_item, '_hs') != 2
+    "
+    class="c-bet-item yb-flex-center relative-position"
+    :class="[
+      bet_source == 'match_list' && 'list-show',
+      bet_tpl,
+      odds_lift,
+      version_name,
+      `csid${match.csid}`,
+      ![367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344].includes(
+        lodash.get(play_data, 'hpid') * 1
+      ) ||
+      (odds_state !== 'seal' &&
+        [367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344].includes(
+          lodash.get(play_data, 'hpid') * 1
+        ))
+        ? odds_state
+        : 'odds_state',
+    ]"
     @click.stop="bet_click"
     :id="DOM_ID_SHOW && `${bet_source}-${ol_data_item.oid}`"
   >
-    <div class="bet-inner yb-flex-center fit"
-    :class="odds_state=='seal' && [367,368,369,7,20,74,103,241,341,342,343,236,344].includes(_.get(play_data, 'hpid')*1)? 'seal_on' :''"
+    <div
+      class="bet-inner yb-flex-center fit"
+      :class="
+        odds_state == 'seal' &&
+        [367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344].includes(
+          lodash.get(play_data, 'hpid') * 1
+        )
+          ? 'seal_on'
+          : ''
+      "
     >
       <!-- 盘口 -->
       <div class="handicap-wrap" :class="bet_tpl">
         <slot>
-          <div class="handicap-value" v-if="handicap_value">{{handicap_value}}</div>
+          <div class="handicap-value" v-if="handicap_value">
+            {{ handicap_value }}
+          </div>
           <div
-            class="handicap-value yb-number-font yb-family-odds "
+            class="handicap-value yb-number-font yb-family-odds"
             :class="handicap_highlight && 'color-highlight'"
             v-else
           >
-            <span v-show="ol_data_item.onbl" class="handicap-more">{{ol_data_item.onbl}}</span>
-            <div class="ellipsis">
-             {{score}} {{ol_data_item.onb}}
-            </div>            
+            <span v-show="ol_data_item.onbl" class="handicap-more">{{
+              ol_data_item.onbl
+            }}</span>
+            <div class="ellipsis">{{ score }} {{ ol_data_item.onb }}</div>
           </div>
         </slot>
       </div>
       <!-- 赔率 -->
-      <div :class="['odds yb-number-font',odds_lift]" @click.stop="bet_click">
-          <div v-if="odds_state=='seal' " class="lock"  :class="[367,368,369,7,20,74,103,241,341,342,343,236,344].includes(_.get(play_data, 'hpid')*1) ? 'seal_lock' : ''"> </div>
-        <div 
-          v-show="odds_state!='seal'" 
+      <div :class="['odds yb-number-font', odds_lift]" @click.stop="bet_click">
+        <div
+          v-if="odds_state == 'seal'"
+          class="lock"
+          :class="
+            [
+              367, 368, 369, 7, 20, 74, 103, 241, 341, 342, 343, 236, 344,
+            ].includes(lodash.get(play_data, 'hpid') * 1)
+              ? 'seal_lock'
+              : ''
+          "
+        ></div>
+        <div
+          v-show="odds_state != 'seal'"
           :class="is_odds_value_red && 'color-red'"
         >
-        <!-- ['match_details', 'hot','recent', 'match_list'].includes(bet_source)?  -->
-          <span class="yb-family-odds yb-number-bold" :class="bet_source">{{match_odds | format_odds_value}}</span>
+          <!-- ['match_details', 'hot','recent', 'match_list'].includes(bet_source)?  -->
+          <span class="yb-family-odds yb-number-bold" :class="bet_source">{{
+              format_odds_value(match_odds)
+          }}</span>
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
-<script>
-import bet_item_mixin  from "src/public/components/bet_item/bet_item_mixin.js";  
+<script setup>
+import lodash from "lodash";
+import { useGetItem } from "./bet_item_mixin.js";
+const props = defineProps({
+  // 当前玩法信息
+  play_data: Object,
 
-export default {
-    name: "BetItem",
-    mixins: [bet_item_mixin],
-  };
+  // 投注项来源 match_list:主列表、match_details：详情、hot：热门推荐、recent：近期关注
+  bet_source: {
+    type: String,
+    default: "match_list",
+  },
 
+  // 投注项对象
+  bet_info: {
+    type: Object,
+    default: () => {
+      return {
+        mid_obj: {},
+        hl_obj: {},
+        ol_obj: {},
+      };
+    },
+  },
+
+  //投注项队名
+  team_name: {
+    type: String,
+    default: "",
+  },
+
+  /** 仅主列表拥有***********************/
+  // 投注项 index
+  ol_index: Number,
+  // 投注项 id
+  oid: String,
+  // 是否显示盘口
+  bet_tpl: {
+    type: String,
+    default: "",
+  },
+  //盘口
+  handicap_value: {
+    type: String,
+    default: "",
+  },
+  // 盘口是否高亮
+  handicap_highlight: {
+    type: Boolean,
+    default: true,
+  },
+
+  /** 仅非主列表拥有***********************/
+  // 投注项所在赛事的信息
+  match_info: Object,
+  bet_ids: Object,
+
+  // 选中的投注项路径
+  bet_path: {
+    type: Object,
+    default: () => {
+      return {
+        hps_index: 0,
+        hl_index: 0,
+        ol_index: 0,
+      };
+    },
+  },
+  // 投注项
+  bet_data: [Object, String],
+
+  /** 虚拟体育***********************/
+  // tpl2 行 index
+  row_index: {
+    type: Number,
+    default: -1,
+  },
+});
+
+const {
+  DOM_ID_SHOW,
+  ol_data_item,
+  odds_state,
+  odds_lift,
+  version_name,
+  match,
+  score,
+  is_odds_value_red,
+  bet_click,
+  format_odds_value
+} = useGetItem({ props });
 </script>
 
 <style lang="scss" scoped>
@@ -95,14 +216,13 @@ export default {
     justify-content: center;
   }
 }
-.seal_on{
-justify-content: space-around;
- 
+.seal_on {
+  justify-content: space-around;
 }
-.seal_lock{
-  margin-left:-20px ;
+.seal_lock {
+  margin-left: -20px;
 }
-.bet-front{
+.bet-front {
   color: var(--qq--theme-color-handicap-item-title);
   font-size: 12px;
 }

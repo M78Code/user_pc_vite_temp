@@ -27,7 +27,7 @@ class BetData {
     this.bet_single_list = [];
     //单关投注对象
     this.bet_single_obj = {};
-    this.this.is_bet_single = true; // true= 单关投注 false= 串关投注
+    this.is_bet_single = true; // true= 单关投注 false= 串关投注
     // 是否正在处理投注
     this.is_handle = false;
     // 单关 是否正在处理投注
@@ -46,38 +46,38 @@ class BetData {
     //==============================================投注之前 无注单ID=============
     // 虚拟投注对象  VR 菜单下的那种 
     this.virtual_bet_obj = {
-      [bet_custom_id]:{
+      // [bet_custom_id]:{
          
-       }
+      //  }
     };
     // 常规体育 含一部分电子赛事 
     this.common_bet_obj = {
-      [bet_custom_id]:{
+      // [bet_custom_id]:{
          
-       }
+      //  }
     };
 
     // 常规体育 含一部分电子赛事 
     this.guanjun_bet_obj = {
-      [bet_custom_id]:{
+      // [bet_custom_id]:{
          
-       }
+      //  }
     };
     // 常规体育 含一部分电子赛事 
     this.dianjing_bet_obj = {
-      [bet_custom_id]:{
-        bs:{},cs:{}
+      // [bet_custom_id]:{
+      //   bs:{},cs:{}
         
-      }
+      // }
     };
    
    //==============================================投注之后 有注单ID=============
  
     // 投注后的 
     this.orderNo_bet_obj = {
-      [bet_custom_id]:{
+      // [bet_custom_id]:{
         
-      }
+      // }
     };
    ///////////////////
 
@@ -88,7 +88,7 @@ class BetData {
     this.cur_esports_mode = false;
     // 是否为合并模式
     this.is_bet_merge = false;
-    this.this.bet_category = 1; // 投注类别 1= 普通赛事 2= 虚拟体育 3= 电竞
+    this.bet_category = 1; // 投注类别 1= 普通赛事 2= 虚拟体育 3= 电竞
     // 最小串关数
     this.mix_min_count = 2;
     // 最大串关数
@@ -96,8 +96,9 @@ class BetData {
     // 被预约的投注项id
     this.bet_appoint_obj = null;
     //需要预约的盘口
-    this /* bet_appoint_odds_value= null;
-this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
+    /* this bet_appoint_odds_value= null;
+this.bet_appoint_ball_head= null */
+this.pre_bet_list = null;
     //输入框最小值 备注 (预约投注用)
     this.pre_min_odd_value = -1;
     //聊天室来源跟单盘口状况eu
@@ -113,7 +114,7 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     // 前端点击投注项立马生成的前端索引ID ，每个注单不论什么状态，只管用最初始的前端生成的ID 去参照对象内去转换
     this.bet_read_write_refer_obj = {
 
-     [bet_custom_id]:{
+    //  [bet_custom_id]:{
       // mount_point_key:'virtual_bet_obj',
       // 
       // shuju_laiyuan: 'xiangqing',       //  
@@ -145,7 +146,7 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
      
 
       
-     }
+    //  }
 
     };
     // 每一个投注对象 的视图控制对象
@@ -213,7 +214,35 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     Object.assign(real_bet_obj,obj)
   }
 
+  /* 
+    设置 投注项立马生成的前端索引ID
+  */
+  set_bet_read_write_refer_obj(obj) {
+    let custom_id = Date.now()
+    console.error('sssss',obj)
+    const bet_refer_obj = {
+      // mount_point_key:'virtual_bet_obj',
+      // shuju_laiyuan: 'xiangqing',       //  
+      // shuju_laiyuan_obj:  data_souce,       //  
+      c_csid: obj.csid,
+      c_tid: obj.tid,
+      c_mid: obj.mid,
+      c_hid: obj.hid,
+      c_kid: obj.kid,
+      c_hn: obj.hn,
+      c_topKey: obj.topKey,
+      is_guanjun: obj.is_guanjun,
+      is_dianjing: obj.is_dianjing,
+      is_common: obj.is_common,
+      is_vr: obj.is_vr,
+      virtual_bet_mode: obj.virtual_bet_mode,//操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+    
+    }
 
+    this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
+
+    console.error(' this.bet_read_write_refer_obj', this.bet_read_write_refer_obj)
+  }
 
   
  /**

@@ -732,7 +732,6 @@ export const useGetConfig = () => {
    * @param {Number} timestap 时间戳
    */
   const handle_match_details_data = (data, timestap) => {
-    console.log(111111111);
     // 初始化赛事控制类玩法数据
     state.match_info_ctr.init_plays_data(data);
     match_details_data_set(state.match_info_ctr.list);
