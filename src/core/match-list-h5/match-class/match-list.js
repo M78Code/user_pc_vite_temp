@@ -4,6 +4,8 @@
 
 // TODO: get_lang
 
+import MatchCtr from './match-ctr'
+
 class matchListClass {
   /**
   * @description:斯诺克7局显示处理
@@ -103,7 +105,7 @@ class matchListClass {
     // 球种csid折叠map
     let collapse_csid_map = _.cloneDeep(this.get_collapse_csid_map)
     // 当前操作赛种tid列表
-    let cur_cid_arr = this.matchCtr.match_list_data_sources.filter(item => item.csid == csid)
+    let cur_cid_arr = MatchCtr.match_list_data_sources.filter(item => item.csid == csid)
     // 当前操作赛种已折叠联赛tid数量
     let collapse_len = 0
 
@@ -153,9 +155,9 @@ class matchListClass {
     if (!this.get_sport_all_selected) {
       let is_all_fold = false
       let arr_tid = []
-      for (let i = 0, match_list_len = this.matchCtr.match_list_data_sources.length; i < match_list_len; i++) {
-        if (arr_tid.indexOf(this.matchCtr.match_list_data_sources[i]['tid']) == -1) {
-          arr_tid.push(this.matchCtr.match_list_data_sources[i]['tid'])
+      for (let i = 0, match_list_len = MatchCtr.match_list_data_sources.length; i < match_list_len; i++) {
+        if (arr_tid.indexOf(MatchCtr.match_list_data_sources[i]['tid']) == -1) {
+          arr_tid.push(MatchCtr.match_list_data_sources[i]['tid'])
         }
       }
 
@@ -211,7 +213,7 @@ class matchListClass {
     // }
 
 
-    let cur_cid_arr = this.matchCtr.match_list_data_sources.filter(item => item.csid == this.match_of_list.csid)
+    let cur_cid_arr = MatchCtr.match_list_data_sources.filter(item => item.csid == this.match_of_list.csid)
     let co_map_match = _.cloneDeep(this.get_collapse_map_match);
     for (let j = 0, cur_len = cur_cid_arr.length; j < cur_len; j++) {
       let d_key = this.gen_collapse_key(cur_cid_arr[j])

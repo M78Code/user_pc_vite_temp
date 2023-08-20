@@ -11,6 +11,9 @@
  * 3.common   fliter  collect
  * 
  */
+
+import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
+
 const PAGE_SOURCE_POOL =  [
   "details",
   "home",
@@ -26,18 +29,12 @@ const PAGE_SOURCE_POOL =  [
   "hot-foot-racing",
 ]
 
- 
-   
-
-
-
-
-
-import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 class PageSourceData {
   constructor() {
     // 页面来源标识  当前 页面标识
     this.page_source = "";
+    // 页面来源标识  当前 页面标识
+    this.route_name = "";
     //  上一个页面的标识
     this.from_page_source = "";
     //初始化 页面根据  page_source 计算出来的 一些参照值
@@ -45,7 +42,7 @@ class PageSourceData {
     //排序	 int 类型 1 按热门排序 2 按时间排序
     this.sort_type =1 ;
     // //标准版和简版 1为新手版  2为标准版    ['','v2_h5','v2_h5_st']
-    this. get_newer_standard_edition =2 
+    // this.get_newer_standard_edition =2 
     // 列表 搜素 文字 
     this.get_search_txt =''
     // 列表查询额外辅助参数
@@ -107,12 +104,13 @@ class PageSourceData {
 
   }
 
-
+  // 设置当前路由名称
+  set_route_name (value) {
+    this.route_name = value
+  }
 
 
   // 列表与收藏切换
-
-
 
 
   /**

@@ -121,7 +121,8 @@
       </div>
       <div class="score last score-important"
         v-if="![1,2,3,4,6,7,8,9,10,13,11,12].includes(+match.csid)">
-        {{all_s1 || score_format()}}
+        <!-- {{all_s1 || score_format()}} -->
+        {{all_s1}}
       </div>
 
       <!--棒球-->
@@ -144,7 +145,7 @@
  
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from "vue";
-import { score_format } from 'project_path/src/boot/global-filters.js'
+// import { score_format } from 'project_path/src/boot/global-filters.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 

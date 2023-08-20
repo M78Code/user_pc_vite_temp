@@ -61,7 +61,6 @@ import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-cla
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      console.log(vm)
       // 由首页进入，就不在此处初始化
       if (from.name !== 'home') {
         vm.event_init();
@@ -191,7 +190,7 @@ const get_detail_data = ref(store_state.get_detail_data)
 const get_details_changing_favorite = ref(store_state.get_details_changing_favorite) 
 // 右侧设置菜单显示时 , 不显示骨架屏
 const get_is_show_menu = ref(store_state.get_is_show_menu)   
-const get_menu_type = ref(store_state.get_menu_type)
+const get_menu_type = ref(store_state.get_menu_type || 1)
 // 次要玩法展开映射
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map) 
 const get_list_scroll_top = ref(store_state.get_list_scroll_top)
@@ -208,7 +207,7 @@ onMounted(() => {
     ws_invoke_key.value = props.invok_source;
   }
   // 初始化赛事列表操作工具类
-  matchCtr.value = new MatchCtr();
+  matchCtr.value = MatchCtr;
   standard_edition_type.value = get_newer_standard_edition;
   if(get_newer_standard_edition == 2){
     newer_standard_changing.value = true;
@@ -351,7 +350,7 @@ watch(() => get_show_match_filter, () => {
 })
 
 // 筛选过滤弹层消失
-watch(() => matchCtr.list, (match_list) => {
+watch(() => matchCtr.value, (match_list) => {
   // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
   if (!get_preload_animation_url && match_list.length) {
     // 通过遍历列表，查找动画状态mvs > 0（可播放）的赛事mid，然后获取相应动画加载资源
@@ -394,7 +393,7 @@ watch(() => matchCtr.list, (match_list) => {
       }
     }
   }
-})
+}, { deep: true })
 
 // TODO: 其他模块得 store  待添加
 // 待处理： window.vue.scroll_list_wrapper_by

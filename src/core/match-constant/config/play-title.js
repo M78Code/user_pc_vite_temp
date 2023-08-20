@@ -124,7 +124,7 @@ export const play_title = (title = 'coming song') => {
     },
     // 网球
     {
-      title:title
+      title:title,
       id:7,
       unfold:0,
       show_tab:false,
@@ -137,7 +137,7 @@ export const play_title = (title = 'coming song') => {
     },
     //乒乓球
     {
-      title:title
+      title:title,
       id:8,
       unfold:0,
       show_tab:false,
@@ -150,7 +150,7 @@ export const play_title = (title = 'coming song') => {
     },
     //斯诺克
     {
-      title:title
+      title:title,
       id:9,
       unfold:0,
       show_tab:false,

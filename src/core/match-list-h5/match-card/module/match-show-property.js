@@ -1,6 +1,9 @@
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import store from "src/store-redux/index.js";
+
+const main_menu_type = 3
 //是否显示次要玩法头部
 let is_show_secondary_head = (i) => {
   let match = MatchCtr.match_list_data_sources[i];
@@ -97,6 +100,7 @@ let is_show_league = (i) => {
 };
 //赛事未开赛标题
 let is_show_no_play = (i) => {
+  
   let match = MatchCtr.match_list_data_sources[i];
   let result = false;
   // 详情页，或者  非今日串关不显示
@@ -144,10 +148,11 @@ let is_show_no_play = (i) => {
 };
 // 是折叠
 let is_collapse = (i) => {
+  const state = store.getState()
   let match = MatchCtr.match_list_data_sources[i];
   let flag = false;
   let collapse_key = match.tid;
-  if (this.get_collapse_map_match[collapse_key] == 1) {
+  if (state.topMenuReducer.collapse_map_match[collapse_key] == 1) {
     //折叠
     flag = true;
   } else {
@@ -158,13 +163,14 @@ let is_collapse = (i) => {
 };
 //显示次要玩法投注项
 let show_secondary_play_list = (i) => {
+  const state = store.getState()
   let result = 0;
   if (is_collapse(i)) {
     return result;
   }
   let match = MatchCtr.match_list_data_sources[i];
   // 次要玩法展开映射
-  let mapping = this.get_secondary_unfold_map[match.mid];
+  let mapping = state.matchReducer.secondary_unfold_map[match.mid];
   if (mapping) {
     let list_play_id = mapping.split("-")[0];
     let status = mapping.split("-")[1];

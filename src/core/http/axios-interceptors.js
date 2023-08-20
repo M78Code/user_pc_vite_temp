@@ -48,8 +48,8 @@ const requestHook = {
         break;
     }
     //请求token
-    const requestId =
-      ss.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+    const requestId = "8dba39ba7a01fe9a4227c06619fc56e9ad62de8f"
+    // const requestId = ss.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "zh"; // 语言调整
