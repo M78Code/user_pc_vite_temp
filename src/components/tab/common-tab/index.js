@@ -1,6 +1,6 @@
 
 
-import CommonTabFullVersionWapper from "./full-version-wapper/index.vue";
+import CommonTabFullVersionWapper from "./common-tab-template-1/index.vue";
 
 
 

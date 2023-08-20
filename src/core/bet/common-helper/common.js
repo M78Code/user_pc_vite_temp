@@ -6,7 +6,7 @@ import BetViewData from "src/core/bet/class/bet-view-data-class.js";
 import { compute_value_by_cur_odd_type } from "../module/bet_odds_change.js";
 // import { get_bet_amount_param } from "./bet-amount.js";
 // import { http_upd_data } from "./upd_data.js";
-import mathjs from "src/core/utils/mathjs.js";
+// import mathjs from "src/core/utils/mathjs.js";
 // import yabo_common from "src/core/common-helper/common.js";
 import { uid } from "quasar";
 import { ref } from "vue";
