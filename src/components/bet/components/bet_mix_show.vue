@@ -129,7 +129,7 @@
           <div class="odd" @click.stop="focus_market">
             <div class="odd_text">{{ pre_market_value || 0 }}</div>
             <span class="money-span" ref="money_span_market"
-              :class="{ 'money-span2': !(get_active_index == 'market' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'market' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
@@ -153,7 +153,7 @@
             <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
               odds_value(true) }}</div>
             <span class="money-span" ref="money_span"
-              :class="{ 'money-span2': !(get_active_index == 'pre' + index_) }"></span>
+              :class="{ 'money-span2': !(BetData.active_index == 'pre' + index_) }"></span>
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
@@ -305,7 +305,7 @@ watch(() => view_ctr_obj, (new_) => {
   pre_switch.value = new_[name_].pre_switch
   if (new_[name_].market_tips == 1) {
     pre_market_value.value = new_[name_].pre_market_value
-    if (get_active_index.value == 'market' + index_) {
+    if (BetData.active_index == 'market' + index_) {
       send_market_to_keyboard()
     }
     tips_msg_update($root.$t('pre_record.market_error_info_low'))
@@ -337,61 +337,7 @@ watch(() => pre_ov, (new_) => {
   bet_obj[name_].pre_odds = new_
   set_bet_obj(bet_obj)
 })
-//检测预约盘口变化，更新至投注对象
-watch(() => get_update_tips, (new_) => {
-  //盘口值有存在为0的情况
-  if (!newVal && newVal !== 0 && newVal !== '0') {
-    return;
-  }
-  const ol_obj = _.get(value_show, 'hps[0].hl[0].ol[0]')
-  const hps_obj = _.get(value_show, 'hps[0]')
-  const marketList = get_pre_market_data.value.filter((o) => {
-    return o.matchInfoId == value_show.hps[0].mid && o.playId == value_show.hps[0].hpid
-  })
-  let bet_obj = _.cloneDeep(view_ctr_obj)
-  //处理当盘口值变化时，赔率的变化
-  if (marketList.length > 0) {
-    const marketItem = marketList[0].marketList
-    let hasEqualMarket = false//是否相同盘口，用来判断赋值最低赔率
-    marketItem.map((item) => {
-      const otObj = _.find(item.marketOddsList, (o) => { return o.oddsType == ol_obj.ot })
-      if (!rq_play_list.includes(hps_obj.hpid)) {//大小比较方式
-        if (item.marketValue == newVal && otObj) {
-          hasEqualMarket = true
-          low_odds.value = otObj.oddsValue
-          bet_obj[name_].min_odds = otObj.oddsValue
-          //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue > pre_ov.value) {
-            pre_odds.value = ''
-            pre_ov.value = Number(otObj.oddsValue)
-            if (get_active_index.value == 'pre' + index_) {
-              send_odds_to_keyboard()
-            }
-          }
-        }
-      } else {//让球比较方式
-        if (otObj && otObj.playOptions == newVal) {
-          hasEqualMarket = true
-          low_odds.value = otObj.oddsValue
-          bet_obj[name_].min_odds = otObj.oddsValue
-          //当变更后的盘口，赔率大于当前赔率时处理
-          if (otObj.oddsValue >= pre_ov.value) {
-            pre_odds.value = ''
-            pre_ov.value = Number(otObj.oddsValue)
-            if (get_active_index.value == 'pre' + index_) {
-              send_odds_to_keyboard()
-            }
-          }
-        }
-      }
-    })
-    if (!hasEqualMarket) {
-      low_odds.value = 0
-    }
-  }
-  bet_obj[name_].pre_market_value = newVal
-  set_bet_obj(bet_obj)
-})
+
 // 解决投注项数量减少会导致位置移动，错误显示盘口赔率变化
 watch(() => get_bet_list.length, (newVal, oldVal) => {
   if (newVal > oldVal) return
@@ -403,10 +349,7 @@ watch(() => get_bet_list.length, (newVal, oldVal) => {
   })
 })
 //监听赛事级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-bet_obj_mhs(() => get_update_tips, (new_) => {
-  tips_msg = new_
-})
-watch(() => get_update_tips, (new_) => {
+watch(() => BetData.update_tips, (new_) => {
   if (
     [3, 4, 6].includes(+get_bet_status.value) ||
     is_suspend_watch.value
@@ -564,31 +507,7 @@ watch(() => bet_obj_ov, (new_, old_) => {
     set_odds_change(true);
   }
 })
-//状态变为0、1时作初始化处理
-watch(() => get_update_tips, (new_, old_) => {
-  if (new_ == 1) {
-    odds_change.value = 0;
-    pankou_change.value = 0;
-    set_invalid_ids({ type: 0 })
-  };
 
-  //状态变为正常时，可能是 1 也能是 7
-  if (
-    new_ == 1 &&
-    old_ == 5 &&
-    (bet_obj_hs == 11 || bet_obj_mhs == 11)
-  ) {
-    set_bet_status(7)
-  }
-})
-//监听状态变化来设置赔率或盘口变化的id_集合
-watch(() => get_update_tips, (new_) => {
-  if (new_ && get_bet_status.value != 6) {
-    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 1 });
-  } else {
-    set_change_list({ value: _.get(value_show, 'hps[0].hl[0].ol[0].id_'), status: 2 });
-  }
-})
 // 记录投注项失效的id_集合
 watch(() => pankou_change, (new_) => {
   if (new_ != 2) {
@@ -864,7 +783,7 @@ const focus_market = () => {
     set_keyboard_show(true)
     let ele = $refs.bet_mix_detail
     ele && ele.scrollIntoView({ block: "nearest" })
-    if (get_active_index.value == 'market' + index_) { return }
+    if (BetData.active_index == 'market' + index_) { return }
     send_market_to_keyboard()
     set_active_index('market' + index_)
   }
@@ -875,7 +794,7 @@ const focus_odds = () => {
   set_keyboard_show(true)
   let ele = $refs.bet_mix_detail
   ele && ele.scrollIntoView({ block: "nearest" })
-  if (get_active_index.value == 'pre' + index_) { return }
+  if (BetData.active_index == 'pre' + index_) { return }
   send_odds_to_keyboard()
   set_active_index('pre' + index_)
 }
@@ -947,7 +866,7 @@ const reduce_odd = () => {
   timeOutEvent = 0;
   if (pre_shadow_flag) { return }
   pre_odds.value = ''
-  if (get_active_index.value != 'pre' + index_) {
+  if (BetData.active_index != 'pre' + index_) {
     send_odds_to_keyboard()
     set_active_index('pre' + index_)
   }
@@ -959,7 +878,7 @@ const reduce_odd = () => {
  * @description 预约投注点击加号增加赔率
  */
 const add_odd = () => {
-  if (get_active_index.value != 'pre' + index_) {
+  if (BetData.active_index != 'pre' + index_) {
     send_odds_to_keyboard()
     set_active_index('pre' + index_)
   }
@@ -1044,7 +963,7 @@ const reduce_market_value = () => {
     realValue = '0'
   }
   pre_market_value.value = realValue
-  if (get_active_index.value == 'market' + index_) {
+  if (BetData.active_index == 'market' + index_) {
     send_market_to_keyboard()
   }
 }
@@ -1103,7 +1022,7 @@ const add_market_value = () => {
     realValue = '0'
   }
   pre_market_value.value = realValue
-  if (get_active_index.value == 'market' + index_) {
+  if (BetData.active_index == 'market' + index_) {
     send_market_to_keyboard()
   }
 }

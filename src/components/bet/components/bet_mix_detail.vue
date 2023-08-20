@@ -15,11 +15,11 @@
       </div>
       <!-- 右 -->
       <div class="content-b"
-        :class="{ 'red-color': !money_ok, 'content-b2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"
+        :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"
         @click="change_kbdshow">
         <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
         <span class="money-span" ref="money_span"
-          :class="{ 'money-span2': !(get_active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
+          :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
         <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
         <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
@@ -33,6 +33,7 @@
 // import global_filters from 'src/boot/global-filters.js';
 import store from "src/store-redux/index.js";
 import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
+import BetData from "../class/bet-data-class";
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -46,7 +47,7 @@ emitters.value = ref({
 
 
 const store_state = store.getState()
-const get_active_index = ref(store_state.get_active_index)
+const BetData.active_index = ref(store_state.BetData.active_index)
 const get_is_spread = ref(store_state.get_is_spread)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_s_count_data = ref(store_state.get_s_count_data)
@@ -62,7 +63,7 @@ const unsubscribe = store.subscribe(() => {
 
 const update_state = () => {
   const new_state = store.getState()
-  get_active_index.value = new_state.get_active_index
+  BetData.active_index = new_state.BetData.active_index
   get_is_spread.value = new_state.get_is_spread
   get_bet_list.value = new_state.get_bet_list
   get_s_count_data.value = new_state.get_s_count_data
@@ -133,7 +134,7 @@ onMounted(() => {
 
   //将金额和最高可投传递给键盘
   $nextTick(() => {
-    if (get_active_index.value == index_) {
+    if (BetData.active_index == index_) {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
   })
@@ -237,7 +238,7 @@ watch(() => money.length, (new_, old_) => {
 })
 
 // 监听活动下标的变化
-watch(() => get_active_index.value, (new_) => {
+watch(() => BetData.active_index, (new_) => {
   if (new_ == index_) {
     flicker_();
   } else {
@@ -248,7 +249,7 @@ watch(() => get_active_index.value, (new_) => {
 
 //将金额和最高可投传递给键盘
 watch(() => get_money_notok_list2.value.length, (new_, old_) => {
-  if (get_active_index.value == index_) {
+  if (BetData.active_index == index_) {
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
   }
 })
@@ -318,7 +319,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
  *@param {Number} new_money 最新金额值
  */
 const change_money_ = (new_money) => {
-  if (index_ != get_active_index.value) { return };
+  if (index_ != BetData.active_index) { return };
 
   if (max_money.value < 0.01 && max_money_back.value) {
     if (new_money) {
@@ -397,7 +398,7 @@ const change_kbdshow = () => {
   ele && ele.scrollIntoView({ block: "nearest" })
 
   //将金额和最高可投传递给键盘
-  if (get_active_index.value == index_) {
+  if (BetData.active_index == index_) {
     // 同步程序走完后再处理逻辑
     $nextTick(() => {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })

@@ -18,11 +18,11 @@
 
     <!-- 右 -->
     <div class="content-b"
-      :class="{ 'red-color': !money_ok, 'content-b2': !(get_active_index === index_ && [1, 7].includes(+get_bet_status)) }"
+      :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === index_ && [1, 7].includes(+get_bet_status)) }"
       @click.stop="input_click">
       <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
       <span class="money-span" ref="money_span"
-        :style="{ opacity: get_active_index === index_ && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
+        :style="{ opacity: BetData.active_index === index_ && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
       <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
       <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
     </div>
@@ -54,7 +54,7 @@ const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
-const get_active_index = ref(store_state.get_active_index)
+const BetData.active_index = ref(store_state.BetData.active_index)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -194,7 +194,7 @@ const obj_bet_money = computed(() => {
     if (new_) { return }
 
     if (money.value < min_money.value && money.value >= 0.01) {
-      if (get_active_index === -1) {
+      if (BetData.active_index === -1) {
         //获取最大最小限额
         const tempNew =
           Object
@@ -270,7 +270,7 @@ const obj_bet_money = computed(() => {
    *@param {Number} new_money 最新金额值
    */
   const change_money_handle = (new_money) => {
-    if (index_ != get_active_index) { return };
+    if (index_ != BetData.active_index) { return };
 
     if (max_money.value < 0.01 && max_money_back.value) {
       if (new_money) {
@@ -348,7 +348,7 @@ const obj_bet_money = computed(() => {
   }
   // 将当前活动项的金额和最高可投金额传递给键盘
   const send_money_to_keyboard = () => {
-    if (get_active_index == index_) {
+    if (BetData.active_index == index_) {
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     }
   }
