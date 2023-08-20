@@ -12,14 +12,14 @@
 
 <template>
   <div class="bet-mix-show2 row justify-start items-center" @click="handleonmousedown"
-    :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show3': is_conflict, 'bet-mix-show4': pankou_change == 2 }]">
+    :class="[BetData.is_bet_success_status ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show3': is_conflict, 'bet-mix-show4': pankou_change == 2 }]">
     <!-- 失效蒙层 -->
     <div class="locked-shadow" v-if="pankou_change == 2"></div>
     <!-- 计时器 -->
     <timer :mgt="value_show.mgt" class="timer-down" v-if="[1, 5, 7].includes(+get_bet_status) && pankou_change != 2"
       @time_over="time_over"></timer>
 
-    <div class="yb_mr12 dele-left" v-if="!get_bet_success">
+    <div class="yb_mr12 dele-left" v-if="!BetData.is_bet_success_status">
       <!-- 删除按钮 -->
       <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_">
     </div>
@@ -52,7 +52,7 @@
             </template>
             <template v-else>{{ odds_value | format_odds(value_show.csid) }}</template>
           </span>
-          <span class="odd-change yb_ml4" v-if="!get_bet_success"></span>
+          <span class="odd-change yb_ml4" v-if="!BetData.is_bet_success_status"></span>
         </div>
       </div>
 
@@ -65,7 +65,7 @@
             playname2 }}</template>
           <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
         </span>
-        <template v-if="get_bet_success && get_bet_list.length == 1">
+        <template v-if="BetData.is_bet_success_status && get_bet_list.length == 1">
           <!-- 投注成功 -->
           <span v-if="get_bet_status == 3" class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg"
               class="img0">{{ $root.$t('bet.bet_suc') }}</span>
@@ -101,7 +101,6 @@
 <script setup>
 // import { mapMutations, mapGetters } from "vuex";
 import odd_convert from "src\core\odds_conversion\compute_max_win_money.js";
-import betting from 'src\core\bet\betting.js';
 import timer from "src/project/components/bet/timer.vue";
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
@@ -109,7 +108,6 @@ const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘�
 const odds_after = ref(0) //串关投注成功后的赔率
 const playname = ref('')  //串关投注成功后的玩法名称
 const play_optionname = ref('') //串关投注成功后的投注项展示值
-
 
 
 
@@ -138,9 +136,9 @@ onMounted(() => {
   }
   // 初始化预约投注的赔率和盘口
   if (show_pre) {
-    pre_ov.value = get_bet_obj[name_].pre_odds
-    low_odds.value = get_bet_obj[name_].min_odds || bet_obj_ov
-    pre_market_value.value = get_bet_obj[name_].pre_market_value
+    pre_ov.value = view_ctr_obj[name_].pre_odds
+    low_odds.value = view_ctr_obj[name_].min_odds || bet_obj_ov
+    pre_market_value.value = view_ctr_obj[name_].pre_market_value
   }
   //设置当前预约投注索引
   if (!has_pre.own_ && has_pre.others) {
@@ -223,7 +221,7 @@ const show_market_shadow_max = computed(() => {
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!get_is_mix) && pre_switch.value && (!get_bet_success) && authorityFlag && (!show_pre)
+  return (!get_is_mix) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
@@ -247,7 +245,7 @@ const pre_or_bet = computed(() => {
   return status
 })
 const bet_obj_item = computed(() => {
-  return get_bet_obj[name_]
+  return view_ctr_obj[name_]
 })
 //投注对象数据
 const value_show = computed(() => {
@@ -255,7 +253,7 @@ const value_show = computed(() => {
 })
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
-  const item_name = _.findKey(get_bet_obj, function (o) { return o.show_pre })
+  const item_name = _.findKey(view_ctr_obj, function (o) { return o.show_pre })
   if (item_name) {
     if (item_name == name_) {
       return {
@@ -278,9 +276,9 @@ const has_pre = computed(() => {
 // 满足下面条件（单关没有输入金额）的投注项在投注成功后不展示,单关多注接口只返回提交成功的注单，所以只展示提交成功的订单
 const is_show_successed_item = computed(() => {
   let flag = get_bet_list.length == 1
-    || !get_bet_success
+    || !BetData.is_bet_success_status
     || get_is_mix
-    || get_bet_success && !get_is_mix && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
+    || BetData.is_bet_success_status && !get_is_mix && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
   return flag
 })
 //将赔率映射为计算属性
@@ -409,7 +407,7 @@ watch(() => score, (new_) => {
 })
 
 //监控投注项
-watch(() => get_bet_obj, (new_) => {
+watch(() => view_ctr_obj, (new_) => {
   pre_switch.value = new_[name_].pre_switch
   if (new_[name_].market_tips == 1) {
     pre_market_value.value = new_[name_].pre_market_value
@@ -417,7 +415,7 @@ watch(() => get_bet_obj, (new_) => {
       send_market_to_keyboard()
     }
     tips_msg_update($root.$t('pre_record.market_error_info_low'))
-    let bet_obj = _.cloneDeep(get_bet_obj)
+    let bet_obj = _.cloneDeep(view_ctr_obj)
     bet_obj[name_].market_tips = 0
     set_bet_obj(bet_obj)
     clearTimeout(timer3)
@@ -441,7 +439,7 @@ watch(() => get_bet_obj, (new_) => {
 })
 //检测预约赔率变化，更新至投注对象
 watch(() => pre_ov, (new_) => {
-  let bet_obj = _.cloneDeep(get_bet_obj)
+  let bet_obj = _.cloneDeep(view_ctr_obj)
   bet_obj[name_].pre_odds = new_
   set_bet_obj(bet_obj)
 })
@@ -456,7 +454,7 @@ watch(() => get_update_tips, (new_) => {
   const marketList = get_pre_market_data.filter((o) => {
     return o.matchInfoId == value_show.hps[0].mid && o.playId == value_show.hps[0].hpid
   })
-  let bet_obj = _.cloneDeep(get_bet_obj)
+  let bet_obj = _.cloneDeep(view_ctr_obj)
   //处理当盘口值变化时，赔率的变化
   if (marketList.length > 0) {
     const marketItem = marketList[0].marketList
@@ -797,7 +795,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
 const remove_ = (id_) => {
   //校验是否是串关，并且删除后是否小于最小串关数量
   if (get_is_mix && !vilidata_mix_count(true)) { return }
-  let _money = get_bet_obj[id_].money
+  let _money = view_ctr_obj[id_].money
   if (_money >= 0.01 && get_bet_list.length > 1) {
     set_money_total(0 - _money)
   }
@@ -812,7 +810,7 @@ const remove_ = (id_) => {
 const handlePre = (del) => {
   //将预约状态更新至投注项缓存
   if (show_pre && del) { return }
-  let bet_obj = _.cloneDeep(get_bet_obj)
+  let bet_obj = _.cloneDeep(view_ctr_obj)
   pre_odds.value = ''
   bet_obj[name_].show_pre = del
   if (del) {

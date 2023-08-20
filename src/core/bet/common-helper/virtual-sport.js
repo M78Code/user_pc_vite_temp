@@ -7,14 +7,28 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
-import { get_bet_amount_param } from "./bet-amount.js";
-import { http_upd_data } from "./upd_data.js";
+import {
+  compute_value_by_cur_odd_type
+} from "./bet_odds_change.js";
+import {
+  get_bet_amount_param
+} from "./bet-amount.js";
+import {
+  http_upd_data
+} from "./upd_data.js";
 import mathjs from "src/core/utils/mathjs.js";
 import yabo_common from "src/core/bet/common-helper/common.js";
-import { uid } from "quasar";
-import { ref } from "vue";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import {
+  uid
+} from "quasar";
+import {
+  ref
+} from "vue";
+import {
+  useMittOn,
+  useMittEmit,
+  MITT_TYPES
+} from "src/core/mitt/index.js";
 
 import play_mapping from "../config/play-mapping.js";
 import _ from "lodash";
@@ -25,14 +39,14 @@ import _ from "lodash";
  * @description: 串关失效投注项的个数
  * @return {number}
  */
-export const get_deactive_count = ( ) => {
- 
-    count = 0;
-  try {
-  
+export const get_deactive_count = () => {
 
-    let arr= BetData.get_current_show_bet_obj_arr()
-    for (let  obj  in arr) {
+  count = 0;
+  try {
+
+
+    let arr = BetData.get_current_show_bet_obj_arr()
+    for (let obj in arr) {
       let active = 1;
       let cs = _.get(obj, "cs", false);
       if (cs) {
@@ -116,7 +130,10 @@ export const get_odds_active = (matchHandicapStatus, status, active) => {
  * @return {Object} 返回需要更新的投注项对象数据
  */
 export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
-  let obj = { bs: {}, cs: {} },
+  let obj = {
+      bs: {},
+      cs: {}
+    },
     item_obj,
     hps,
     hl,
@@ -203,8 +220,7 @@ export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
       hv &&
       cur_on.startsWith(cur_home) &&
       cur_on.endsWith(hv) &&
-      cur_on.endsWith(hv) &&
-      [
+      cur_on.endsWith(hv) && [
         ...play_mapping.VIRTUAL_PLAY_LET_BALL,
         ...play_mapping.ESPORTS_PLAY_LET_BALL,
       ].includes(hpid)
@@ -218,8 +234,7 @@ export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
     } else if (
       hv &&
       cur_on.startsWith(cur_away) &&
-      cur_on.endsWith(hv) &&
-      [
+      cur_on.endsWith(hv) && [
         ...play_mapping.VIRTUAL_PLAY_LET_BALL,
         ...play_mapping.ESPORTS_PLAY_LET_BALL,
       ].includes(hpid)
@@ -246,7 +261,9 @@ export const tidy_virtual_bet_item = (cur_obj, bet_obj, source) => {
     bet_omit_obj.hps[0].hl[0].ol[0].ott = _.get(ol, "0.ott", "");
     bet_omit_obj.hps[0].hl[0].ol[0].on = _.get(ol, "0.on", "");
   }
-  Object.assign(obj.bs, { ...bet_omit_obj });
+  Object.assign(obj.bs, {
+    ...bet_omit_obj
+  });
   obj.cs = {
     play_name: _.get(bet_omit_obj, "hps[0].hpn"), //玩法名称
   };
@@ -264,9 +281,7 @@ export const has_disable_item = (virtual_bet_obj, virtual_bet_list) => {
     active = _.get(virtual_bet_obj, `${item}.cs.active`, 1) * 1;
     serial_type = _.get(virtual_bet_obj, `${item}.cs.serial_type`, 1) * 1;
     return (
-      [1, 2].includes(mhs) ||
-      [1, 2].includes(hs) ||
-      [2, 3].includes(active) ||
+      [1, 2].includes(mhs) || [1, 2].includes(hs) || [2, 3].includes(active) ||
       serial_type !== 1
     );
   });
@@ -277,228 +292,63 @@ export const has_disable_item = (virtual_bet_obj, virtual_bet_list) => {
  * @description: 更新投注项对象
  * @return {undefined} undefined
  */
-export const upd_bet_obj = ( timestap, mid) => {
- 
+export const upd_bet_obj = (timestap, mid) => {
 
-  let arr= BetData.get_current_show_bet_obj_arr()
 
-  arr.map(bet_obj=>{
+  let arr = BetData.get_current_show_bet_obj_arr()
+
+  arr.map(bet_obj => {
     let match_id = _.get(bet_obj, `.cs.match_id`, "");
-    if(  match_id == mid){
-      upd_bet_obj_item(    item, timestap);
+    if (match_id == mid) {
+      upd_bet_obj_item(item, timestap);
     }
   })
 
- 
-};
-/**
- * @description: 更新投注项对象
- * @param {Object} bet_obj 更新的目标对象
- * @return {undefined} undefined
- */
-export const upd_bet_obj_item = (  bet_obj, item, handle_time) => {
- 
-  if (
-    (that.vx_layout_cur_page.cur == "home" &&
-      that.socket_name == "match_list") ||
-    ["hot", "details"].includes(that.socket_name)
-  ) {
-    let id = item,
-      kid,
-      oid,
-      sport_id,
-      bs = _.cloneDeep(_.get(bet_obj, `${id}.bs`)),
-      cs = _.cloneDeep(_.get(bet_obj, `${id}.cs`)),
-      obj = { key: item, bs: {}, cs: {} },
-      hl_obj,
-      ol_obj,
-      play_id,
-      hn,
-      ot,
-      score_type = "S1";
-    if (!bs || !cs) {
-      return;
-    }
-    try {
-      play_id = _.get(bs, "hps[0].hpid");
-      sport_id = _.get(bs, "csid");
-      hn = _.get(bs, "hps[0].hl[0].hn", "");
-      ot = _.get(bs, "hps[0].hl[0].ol[0].ot", "");
-      if (that.socket_name == "match_list") {
-        // 赛事列表
-        // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
-        if (cs.kid == id) {
-          kid = id;
-          ol_obj = _.cloneDeep(_.get(data_source, `hn_obj.${id}`));
-          if (_.isObject(ol_obj)) {
-            oid = _.get(ol_obj, "oid", "");
-          }
-        } else {
-          oid = id;
-          ol_obj = _.cloneDeep(_.get(data_source, `ol_obj.ol_${oid}`));
-          if (_.isObject(ol_obj)) {
-            kid = _.get(ol_obj, "_hn", "");
-          }
-        }
-        if (_.isEmpty(ol_obj)) return;
-        // console.log('赛事列表更新投注项:', { kid, oid });
-        hl_obj = _.cloneDeep(
-          _.get(data_source, `hl_obj.hid_${_.get(ol_obj, "_hid")}`, {})
-        );
-      } else if (that.socket_name == "details") {
-        // 赛事详情
-        // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
-        if (cs.kid == id) {
-          kid = id;
-          ol_obj = _.cloneDeep(_.get(that, `match_info_ctr.hn_obj.${id}`));
-          if (_.isObject(ol_obj)) {
-            oid = _.get(ol_obj, "oid", "");
-          }
-        } else {
-          oid = id;
-          ol_obj = _.cloneDeep(_.get(that, `match_info_ctr.ol_obj.${oid}`));
-          if (_.isObject(ol_obj)) {
-            kid = _.get(ol_obj, "_hn", "");
-          }
-        }
-        if (_.isEmpty(ol_obj)) return;
-        hl_obj = _.cloneDeep(
-          _.get(that, `match_info_ctr.hl_obj.${_.get(ol_obj, "_hid")}`, {})
-        );
-      } else if (that.socket_name == "hot") {
-        // 热门赛事以及最近访问
-        // item如果是oid则必然坑位hn_obj通过id拿不到对象,所以可以再去ol_obj中去拿
-        if (cs.kid == id) {
-          kid = id;
-          ol_obj = _.cloneDeep(_.get(that, `hn_obj.${id}`));
-          if (_.isObject(ol_obj)) {
-            oid = _.get(ol_obj, "oid", "");
-          }
-        } else {
-          oid = id;
-          ol_obj = _.cloneDeep(_.get(that, `ol_obj.${oid}`));
-          if (_.isObject(ol_obj)) {
-            kid = _.get(ol_obj, "_hn", "");
-          }
-        }
-        if (_.isEmpty(ol_obj)) return;
-        hl_obj = _.cloneDeep(
-          _.get(that, `hl_obj.${_.get(ol_obj, "_hid")}`, {})
-        );
-      }
-      if (
-        _.isEmpty(hl_obj) ||
-        (hn && _.isObject(hl_obj) && _.get(hl_obj, "hpid") != play_id) ||
-        (ol_obj && ol_obj.ot != ot) ||
-        (handle_time && cs.handle_time > handle_time)
-      )
-        return;
-      let item_obj = _.cloneDeep({ ...bs }),
-        target_side = _.get(item_obj, "hps[0].hl[0].ol[0].ots", ""),
-        handicap_value,
-        handicap_value_old = cs.handicap_value,
-        odds_value,
-        odds_value_old = cs.odds_value,
-        home_score = 0,
-        away_score = 0,
-        active,
-        hv_ov_change_old = _.get(cs, "hv_ov_change", false),
-        hv_ov_change = false,
-        msc_obj;
 
-      item_obj.hps[0].hl = _.cloneDeep([hl_obj]);
-      item_obj.hps[0].hl[0].ol = _.cloneDeep([ol_obj]);
-      handicap_value = _.get(hl_obj, "hv");
-      if (that.socket_name == "details") {
-        let play_obj = _.get(that, `match_info_ctr.pl_obj.${play_id}`, {});
-        if (_.has(play_obj, "hps") && play_obj.hps.includes("|")) {
-          score_type = play_obj.hps.split("|")[0];
-        }
-        handicap_value = _.get(ol_obj, "on", "");
-      }
-      msc_obj = item_obj.msc;
-      if (msc_obj && _.isString(msc_obj)) {
-        msc_obj = [msc_obj];
-        msc_obj = msc_array_obj(msc_obj);
-      } else if (_.isArray(msc_obj)) {
-        msc_obj = msc_array_obj(msc_obj);
-      }
-      if (_.isEmpty(msc_obj)) {
-        msc_obj[score_type] = {
-          home: "0",
-          away: "0",
-        };
-      }
-      if (msc_obj && _.get(msc_obj, `${score_type}`)) {
-        home_score = _.get(msc_obj, `${score_type}.home`, "0");
-        away_score = _.get(msc_obj, `${score_type}.away`, "0");
-      } else {
-        home_score = "0";
-        away_score = "0";
-      }
-      item_obj.mhs = ol_obj._mhs;
-      item_obj.hps[0].hl[0].hs = ol_obj._hs;
-      odds_value = _.get(ol_obj, "ov");
-      active = get_odds_active(
-        _.get(ol_obj, "_mhs"),
-        _.get(ol_obj, "_hs"),
-        _.get(ol_obj, "os")
-      );
-      // C303,C304拉取接口,如果hv_ov_change在vuex中还是true说明提示还没有结束,应该继续维持hv_ov_change=true
-      if (
-        (hn &&
-          handicap_value_old != handicap_value &&
-          odds_value_old != odds_value) ||
-        hv_ov_change_old
-      ) {
-        hv_ov_change = true;
-      }
-      Object.assign(obj, {
-        key: id,
-        bs: item_obj,
-        cs: {
-          id, // 投注项id
-          oid, // 投注项oid
-          kid, // 坑位id
-          match_id: _.get(ol_obj, "_mid"), // 赛事id
-          handicap_id: _.get(ol_obj, "_hid"), //盘口id
-          play_id, //玩法id
-          sport_id: _.get(item_obj, "csid"), //球种
-          match_status: _.get(ol_obj, "_mhs"), //赛事盘口状态
-          handicap_value, // 盘口
-          handicap_status: _.get(ol_obj, "_hs"), //盘口状态
-          odds_value, //赔率
-          active: _.get(ol_obj, "os"), // 投注项状态
-          play_name: _.get(item_obj, "hps[0].hpn", ""), //玩法名称
-          odds_switch: _.get(item_obj, "hps[0].hsw", ""), //支持的赔率转换模板
-          break_odds_value: _.get(ol_obj, "obv"), //断档赔率
-          target_side, //T1,T2
-          score_type,
-          home_id: _.get(item_obj, "mhid"), // 主队id
-          home: _.get(item_obj, "mhn"), //主队
-          home_score, // 主队得分
-          away_id: _.get(item_obj, "maid"), // 客队id
-          away: _.get(item_obj, "man"), //客队
-          away_score, // 客队得分
-          effect: ["1", "4"].includes(`${active}`), // 是否有效
-          full_bet: 0, //是否满额投注，1：是，0：否
-          money: _.get(cs, "money"), // 投注额
-          win_money: _.get(cs, "win_money", ""), // 可赢额
-          min_money: _.get(cs, "min_money", ""), // 最大值
-          max_money: _.get(cs, "max_money", ""), // 最小值
-          source: _.get(that, "socket_name", ""),
-          match_type: _.get(cs, "match_type", ""), // 赛事类型
-          market_type: _.get(cs, "market_type", ""), // 盘口类型
-          hv_ov_change, // 盘口值与赔率是否一起变化
-          handle_time,
-          serial_type: _.get(cs, "serial_type", true), // 是否可以进行串关
-          match_update: _.get(cs, "match_update", false),
-        },
-      });
-      useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_ADD, obj);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 };
- 
+export const upd_bet_obj_item = (bet_obj, item, handle_time) => {
+  let beting_data = BetData.get_current_show_bet_obj_arr()
+  Object.assign(beting_data, {
+    key: id,
+    bs: item_obj,
+    cs: {
+      id, // 投注项id
+      oid, // 投注项oid
+      kid, // 坑位id
+      match_id: _.get(ol_obj, "_mid"), // 赛事id
+      handicap_id: _.get(ol_obj, "_hid"), //盘口id
+      play_id, //玩法id
+      sport_id: _.get(item_obj, "csid"), //球种
+      match_status: _.get(ol_obj, "_mhs"), //赛事盘口状态
+      handicap_value, // 盘口
+      handicap_status: _.get(ol_obj, "_hs"), //盘口状态
+      odds_value, //赔率
+      active: _.get(ol_obj, "os"), // 投注项状态
+      play_name: _.get(item_obj, "hps[0].hpn", ""), //玩法名称
+      odds_switch: _.get(item_obj, "hps[0].hsw", ""), //支持的赔率转换模板
+      break_odds_value: _.get(ol_obj, "obv"), //断档赔率
+      target_side, //T1,T2
+      score_type,
+      home_id: _.get(item_obj, "mhid"), // 主队id
+      home: _.get(item_obj, "mhn"), //主队
+      home_score, // 主队得分
+      away_id: _.get(item_obj, "maid"), // 客队id
+      away: _.get(item_obj, "man"), //客队
+      away_score, // 客队得分
+      effect: ["1", "4"].includes(`${active}`), // 是否有效
+      full_bet: 0, //是否满额投注，1：是，0：否
+      money: _.get(cs, "money"), // 投注额
+      win_money: _.get(cs, "win_money", ""), // 可赢额
+      min_money: _.get(cs, "min_money", ""), // 最大值
+      max_money: _.get(cs, "max_money", ""), // 最小值
+      source: _.get(that, "socket_name", ""),
+      match_type: _.get(cs, "match_type", ""), // 赛事类型
+      market_type: _.get(cs, "market_type", ""), // 盘口类型
+      hv_ov_change, // 盘口值与赔率是否一起变化
+      handle_time,
+      serial_type: _.get(cs, "serial_type", true), // 是否可以进行串关
+      match_update: _.get(cs, "match_update", false),
+    },
+  });
+  useMittEmit(MITT_TYPES.EMIT_VITTUAL_BET_OBJ_ADD, beting_data);
+}

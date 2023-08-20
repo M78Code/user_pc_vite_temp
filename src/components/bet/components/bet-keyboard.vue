@@ -58,8 +58,6 @@ const get_active_index = ref(store_state.get_active_index)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_menu_type = ref(store_state.get_menu_type)
 const get_is_mix = ref(store_state.get_is_mix)
-const get_is_combine = ref(store_state.get_money_total)
-const get_bet_obj = ref(store_state.get_bet_obj)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -91,7 +89,7 @@ watch(() => pre_odds_value, (new_) => {
         }
       }
       let index = get_active_index.toString().split('market')[1]
-      let value_show = get_bet_obj[get_bet_list[index]].bs
+      let value_show = view_ctr_obj[get_bet_list[index]].bs
       const isdaxiao = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'));
       if (isdaxiao) {
         if (+pre_odds_value.value > 400) {
@@ -227,7 +225,6 @@ const _handleNumberKey = (num) => {
 
 }
 
-// ...mapGetters(['get_user', 'get_bet_status','get_mix_bet_flag', 'get_active_index', 'get_bet_list', 'get_menu_type', 'get_is_combine', 'get_is_mix', 'get_money_total', 'get_bet_obj']),
 
 // 左侧+的按钮 置灰
 const prevent_click = computed(() => {

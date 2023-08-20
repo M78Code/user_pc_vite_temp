@@ -17,7 +17,7 @@
       <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
         <!-- 上部纯展示组件 -->
-        <div v-for="(value, name) in get_bet_obj" :key="name" class="mix-show-box">
+        <div v-for="(value, name) in view_ctr_obj" :key="name" class="mix-show-box">
           <!-- 虚拟体育 -->
           <template v-if="get_menu_type == 900">
             <bet-mix-show2 :name_="name" :order_detail_resp_list="order_detail_resp_list" :odds_value2="odds_value2"
@@ -42,7 +42,7 @@
 
         <!-- 单关 -->
         <template v-if="get_bet_list.length == 1">
-          <template v-if="get_bet_success">
+          <template v-if="BetData.is_bet_success_status">
             <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
             <div class="row justify-between yb_px14 yb_fontsize14 yb_mb8 bottom-bar">
               <p><span>{{ $root.$t('bet_record.bet_max_win') }}</span><span class="yb_fontsize14 yb_ml8 bottom-bar-sp">{{
@@ -72,9 +72,9 @@
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
         <!-- 左边 -->
-        <div class="add-box" :class="{ 'add-box2': get_bet_list.length >= 2 || get_bet_success, 'add-box3': calc_class }"
+        <div class="add-box" :class="{ 'add-box2': get_bet_list.length >= 2 || BetData.is_bet_success_status, 'add-box3': calc_class }"
           @click.stop="pack_up(2)">
-          <template v-if="!get_bet_success">
+          <template v-if="!BetData.is_bet_success_status">
             <span v-if="get_bet_list.length > 1">{{ $root.$t('bet.delete_all') }}</span>
             <span class="kushikatsu-text" v-else>
               {{ $root.$t('bet.kushikatsu') }}
@@ -196,7 +196,7 @@ onMounted(() => {
 //单关的数据对象
 const single_item = computed(() => {
   if (get_bet_list.value[0]) {
-    return get_bet_obj.value[get_bet_list.value[0]].bs
+    return view_ctr_obj.bs
   } else {
     return {}
   }
@@ -223,10 +223,10 @@ const is_conflict2 = computed(() => {
 //计算样式，下面几种情况左下角按钮需要置灰不让点击
 const calc_class = computed(() => {
   let flag = [2, 4].includes(+get_bet_status.value)
-    || get_is_champion.value(this) && !get_bet_success.value
+    || get_is_champion.value(this) && !BetData.is_bet_success_status
     || get_bet_status.value == 5 && get_bet_list.value.length == 1
-    || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !get_bet_success.value
-    || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !get_bet_success.value
+    || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
+    || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
     || btn_show.value == 5;
   return flag
 })
