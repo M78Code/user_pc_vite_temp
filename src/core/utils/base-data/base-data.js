@@ -727,7 +727,6 @@ class BaseData {
         match_info: data[item],
       });
     });
-    console.error("db_data", db_data);
     //mi作为主键
     db.match_info.bulkAdd(db_data, "mi");
   }
