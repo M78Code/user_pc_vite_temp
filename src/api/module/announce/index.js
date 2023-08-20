@@ -12,4 +12,4 @@ const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_12} = API_PREFIX;
 export const post_marquee_data = (params, config={},url = "/v2/notice/headListPB") => http.post(`${prefix}${url}`, params, config);
 
 //获取公告列表  
-export const post_announce_list = (params, config={},url = "/v2/notice/frontListPB") => http.post(`${prefix}${url}`, params, config);
+export const post_announce_list = (params, config={},url = "/v2/notice/frontList") => http.post(`${prefix}${url}`, params, config);

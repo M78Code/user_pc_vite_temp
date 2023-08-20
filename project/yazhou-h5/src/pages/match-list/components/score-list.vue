@@ -144,8 +144,7 @@
  
 <script setup>
 import { computed, onMounted, onUnmounted, watch } from "vue";
-import msc from "src/project/mixins/match_list/msc-bw3.js";
-import { score_format } from '../../../boot/global_filters'
+import { score_format } from 'project_path/src/boot/global-filters.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 
@@ -187,9 +186,6 @@ onMounted(() => {
     score_layout_init();
   },300);
 })
-
-// TODO: 其他模块得 store  待添加
-// mixins: [msc],
 
 // 监听赛事比分变化
 watch(() => match.ms, () => {

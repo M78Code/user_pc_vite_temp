@@ -18,7 +18,7 @@
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
-          <match-container-result
+          <!-- <match_container_result
             v-if="menu_type ==28 && 100 == get_curr_sub_menu_type"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
@@ -28,7 +28,7 @@
             @unfold_changed="unfold_changed_handle"
             @toggle_collect_league="toggle_collect"
             @toggle_collect_match="toggle_collect"
-          />
+          /> -->
           <!--真实体育玩法 -->
           <match-container
             v-if="(lodash.get(get_current_menu, 'main.menuType') == 28 ||
@@ -43,7 +43,7 @@
             @toggle_collect_match="toggle_collect">
           </match-container>
           <!--冠军玩法-->
-          <match-container-champion
+          <!-- <match_container_champion
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="i"
@@ -51,7 +51,7 @@
             :key="i"
             @toggle_collect_league="toggle_collect"
             v-if="is_champion">
-          </match-container-champion>
+          </match_container_champion> -->
         </div>
       </template>
     </scroll-wrapper>
@@ -66,7 +66,7 @@
             {{current_way_name}}
           </div>
           <img class='close-o-info-icon' @click="close_other_w_info"
-            :src="(`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close_${get_theme.includes('theme01')?'theme01':'theme02'}.svg`)" />
+            :src="(`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close_${get_theme && get_theme.includes('theme01')?'theme01':'theme02'}.svg`)" />
         </div>
 
           <!-- 次要玩法如果是数组 例如15分钟展开 -->
@@ -97,22 +97,30 @@
       </div>
     </div>
 
-    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
-    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
+    <no_data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no_data>
+    <no_data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no_data>
 
   </div>
 </template>
  
 <script setup>
 
-import { computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import utils from "project_path/src/core/utils/index.js";
+import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
 
-// TODO: 其他模块得 store  待添加
-// mixins: [formartmixin, odd_convert, bettings, match_list_mixin, msc,common],
-// ]),
+import match_container from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
+import v_match_container from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
+// import match_container_champion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
+// import match_container_result from "./match-container-result.vue" // 赛果冠军
+import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
+import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
+ 
+// import * as formatUtils from "src/core/formart/module/format-date.js"; // 时间格式化处理
+
 
 const props = defineProps({
   // 赛事列表无数据
@@ -178,10 +186,10 @@ onMounted(() => {
 })
 
 watch(() => other_way_info_show, (curr) => {
-  useMittEmit(MITT_KEY.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,curr);
+  useMittEmit(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE,curr);
 })
 
-watch(() => window_scrolly, () => {
+watch(() => props.window_scrolly, () => {
   other_way_info_show.value = false;
 })
 // 投注成功收藏赛事
@@ -410,8 +418,8 @@ onDeactivated(() => {
 
 onActivated(() => {
   emitters.value = {
-    emitter_1: useMittOn.on(MITT_KEY.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
-    emitter_2: useMittOn.on(MITT_KEY.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
+    emitter_1: useMittOn.on(MITT_TYPES.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
+    emitter_2: useMittOn.on(MITT_TYPES.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
   }
 })
 

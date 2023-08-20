@@ -125,9 +125,7 @@
 import { computed, onUnmounted, onMounted } from "vue"
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import formartmixin from 'src/project/mixins/module/formartmixin.js';
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
-import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
+import ImageCacheLoad from "./public-cache-image.vue";
 
 const props = defineProps({
   match_of_list: Object,
@@ -180,14 +178,14 @@ onMounted(() => {
 })
 
 // 当前显示的赛事数据
-const match = computed(() => match_of_list)
-const collapsed = computed(() => get_collapse_map_match[match_of_list.tid])
-const show_newer_edition = computed(() => get_newer_standard_edition == 1 || main_source == 'detail_match_list')
+const match = computed(() => props.match_of_list)
+const collapsed = computed(() => get_collapse_map_match[props.match_of_list.tid])
+const show_newer_edition = computed(() => get_newer_standard_edition == 1 || props.main_source == 'detail_match_list')
 
 const get_sport_show = (i) => {
   if (!get_current_main_menu.menuType) {
     if (i > 0) {
-      let p = matchCtr.list[i - 1], c = matchCtr.list[i];
+      let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
       if (p && c) {
         return p.csid !== c.csid;
       }
@@ -220,7 +218,7 @@ const getMatchResult = (value) => {
 const is_show_result = () => {
   let r = false;
   if(get_current_menu && get_current_menu.main){
-    r = get_current_menu.main.menuType == 28 && main_source != 'detail_match_list' && main_source != 'home_hot_page_schedule';
+    r = get_current_menu.main.menuType == 28 && props.main_source != 'detail_match_list' && props.main_source != 'home_hot_page_schedule';
   }
   return r;
 }
@@ -229,20 +227,20 @@ const is_show_result = () => {
  * @param {Object} match 点击的赛事
  */
 const league_l_clicked = () => {
-  if(['detail_match_list','home_hot_page_schedule'].includes(main_source)) return;
+  if(['detail_match_list','home_hot_page_schedule'].includes(props.main_source)) return;
   let map_collapse = lodash.cloneDeep(get_collapse_map_match) || {};
   // 展开联赛
-  let tid = match_of_list.tid;
+  let tid = props.match_of_list.tid;
   // 如果是折叠, 则展开赛事
   if(map_collapse[tid] == 1){
-    if(!match_of_list) return;
+    if(!props.match_of_list) return;
     //展开联赛
-    map_collapse[match_of_list.tid] = 0;
+    map_collapse[props.match_of_list.tid] = 0;
   } else{ //  折叠赛事
-    map_collapse[match_of_list.tid] = 1
+    map_collapse[props.match_of_list.tid] = 1
   }
   store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse })
-  $emit('unfold_changed',match_of_list);
+  $emit('unfold_changed',props.match_of_list);
 }
 
 /**
@@ -260,23 +258,23 @@ const league_l_clicked = () => {
  */
  const get_m_status_show = (i) => {
   let result = false;
-  if(main_source == 'detail_match_list'){
+  if(props.main_source == 'detail_match_list'){
     return false
   }
   //非今日串关不显示
-  if(![3,11].includes(+menu_type)){
+  if(![3,11].includes(+props.menu_type)){
     return result;
-  }else if(menu_type == 11){
+  }else if(props.menu_type == 11){
     let third_m_id = lodash.get(get_current_menu,'date_menu.field1');
     //串关今日id为0或'0'
     if(third_m_id !== 0 && third_m_id !== '0'){
       return result;
     }
   }
-  let match = matchCtr.list[i];
+  let match = props.matchCtr.list[i];
   if(match){
     if(i > 0){
-      let prev_match = matchCtr.list[i - 1];
+      let prev_match = props.matchCtr.list[i - 1];
       if([1,110].includes(+match.ms)){
         result = false;
       }
@@ -298,8 +296,8 @@ const league_l_clicked = () => {
   let flag = true;
   let c = null,p = null;
   if (i) {
-    p = matchCtr.list[i - 1];
-    c = matchCtr.list[i];
+    p = props.matchCtr.list[i - 1];
+    c = props.matchCtr.list[i];
     if (p && c) {
       if(p.sportId != c.sportId){
         flag = true;

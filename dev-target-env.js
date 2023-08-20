@@ -9,11 +9,11 @@ let DEV_TARGET_ENV = "local_test";
 // 局域网  压力测试环境
 // DEV_TARGET_ENV = "local_ylcs";
 // 局域网  测试环境
-// DEV_TARGET_ENV = "local_test";
+DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
-DEV_TARGET_ENV = "idc_sandbox";
+// DEV_TARGET_ENV = "idc_sandbox";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境

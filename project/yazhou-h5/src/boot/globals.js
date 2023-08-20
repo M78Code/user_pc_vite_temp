@@ -5,7 +5,7 @@
  */
 import Vue from 'vue'
 
-import filters from 'src/boot/global_filters.js'
+import filters from 'src/boot/global-filters.js'
 import * as wsCmd from "src/public/utils/ws/wsCmd.js";
 import * as emit_cmd from "src/public/utils/http/emit_cmd.js";
 import toastRegistry from "src/public/components/toast/toast";
