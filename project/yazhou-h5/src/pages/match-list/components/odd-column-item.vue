@@ -62,7 +62,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { useMittOn, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert,betting],
@@ -123,9 +123,9 @@ onMounted(() => {
   get_odd_data();
   emitters.value = {
     // 封盘事件
-    emitter_1: useMittOn.on(MITT_KEY.EMIT_ARRIVED10, arrived10_handle).off,
+    emitter_1: useMittOn.on(MITT_TYPES.EMIT_ARRIVED10, arrived10_handle).off,
      // c105更新
-    emitter_2: useMittOn.on(MITT_KEY.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
+    emitter_2: useMittOn.on(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
   }
   // 点击事件防抖处理
   item_click3 = debounce(item_click3, 450, {'leading': true, trailing: false});

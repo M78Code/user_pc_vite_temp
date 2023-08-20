@@ -12,7 +12,7 @@
             @click="emit('navigate', { path: '/announce', _blank: true })">
             <!--谷歌浏览器  -->
             <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
-                onMouseOut="this.start()" onMouseOver="this.stop()" v-html="notice_info.data" scrolldelay="1000" truespeed="1000">
+                :onmouseout="onmouseout" :onmouseover="onmouseover" v-html="notice_info.data" scrolldelay="1000" truespeed="1000">
             </marquee>
             <!-- 火狐浏览器 -->
             <div v-else class="animation-wrap line-height" ref="marquee_ref" @mouseenter="animation_pause"
@@ -340,6 +340,15 @@ function animation() {
         marquee_ref.value.style.transform = `translateX(${notice_info.translateX}px)`
     }
 }
+
+/** 谷歌浏览器 公告开始滚动 */
+function onmouseout(e) {
+    e.target.start()
+}
+/** 谷歌浏览器 公告停止滚动 */
+function onmouseover(e) {
+    e.target.stop()
+}
 /**
  * @Description:动画暂停
  * @return {undefined} undefined
@@ -437,34 +446,34 @@ onUnmounted(clear_timer)
 
         .tab-icon-item {
             &-sports_rules {
-                background-image: url("~public/image/yabo/svg/sports_rules.svg");
+                background-image: url("app/yazhou-pc/image/svg/sports_rules.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("~public/image/yabo/svg/task_center.svg");
+                background-image: url("app/yazhou-pc/image/svg/task_center.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("~public/image/yabo/svg/settings.svg");
+                background-image: url("app/yazhou-pc/image/svg/settings.svg");
                 background-size: cover;
             }
         }
 
         .tab-icon-item-y0 {
             &-sports_rules {
-                background-image: url("~public/image/yabo/svg/sports_rules_y0.svg");
+                background-image: url("app/yazhou-pc/image/svg/sports_rules_y0.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("~public/image/yabo/svg/task_center_y0.svg");
+                background-image: url("app/yazhou-pc/image/svg/task_center_y0.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("~public/image/yabo/svg/settings_y0.svg");
+                background-image: url("app/yazhou-pc/image/svg/settings_y0.svg");
                 background-size: cover;
             }
         }

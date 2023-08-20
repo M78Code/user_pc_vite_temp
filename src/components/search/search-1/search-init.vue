@@ -65,9 +65,9 @@
 </template>
   
 <script setup>
-import { reactive, watch } from 'vue'
+import { reactive, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import * as search from "src/api/module/search.js"
+// import search from "src/core/search-class/search.js"
 import store from "src/store-redux/index.js";
 
 const props = defineProps({
@@ -114,7 +114,7 @@ function click_keyword(keyword, is_insert_history) {
     if (!keyword) return
     if (is_insert_history) {
         // search.js
-        search.insert_history(keyword)
+        // search.insert_history(keyword)
     }
     set_search_type(1)
     set_click_keyword(keyword);
@@ -125,9 +125,9 @@ function click_keyword(keyword, is_insert_history) {
  * @return {Undefined} Undefined
  */
 function get_hot_search() {
-    search.get_hot_search(res => {
-        hot_data = res
-    })
+    // search.get_hot_search(res => {
+    //     hot_data = res
+    // })
 }
 
 /**
@@ -135,9 +135,9 @@ function get_hot_search() {
  * @return {Undefined} Undefined
  */
 function get_history() {
-    search.get_history(res => {
-        histroy_data = res
-    })
+    // search.get_history(res => {
+    //     histroy_data = res
+    // })
 }
 
 /**
@@ -147,13 +147,13 @@ function get_history() {
  * @return {Undefined} Undefined
  */
 function delete_histroy(keyword, index) {
-    search.delete_histroy(keyword, () => {
-        if (keyword) {
-            histroy_data.splice(index, 1);
-        } else {
-            histroy_data = [];
-        }
-    })
+    // search.delete_histroy(keyword, () => {
+    //     if (keyword) {
+    //         histroy_data.splice(index, 1);
+    //     } else {
+    //         histroy_data = [];
+    //     }
+    // })
 }
 
 /**

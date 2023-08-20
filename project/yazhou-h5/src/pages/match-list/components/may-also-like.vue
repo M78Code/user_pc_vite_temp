@@ -91,12 +91,12 @@ import team_img from "src/project/components/details/team_img";   // 详情页�
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 import betting from "src/project/mixins/betting/betting.js";    // 押注动作相关的所有方法写到这里
 import {mapMutations, mapGetters} from "vuex";
-import { format_total_score } from '../../../boot/global_filters'
+import { format_total_score } from '../../../boot/global-filters'
 import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 const { from_where, show_ } = defineProps({
   from_where: {
@@ -126,7 +126,7 @@ onMounted(() => {
 watch(() => show_, () => {
   //没有轮播图和没有赛事时触发事件
   if (!newVal && !slide_list.value.length) {
-    useMittEmit(MITT_KEY.EMIT_MAY_ALSO_LIKE_CHANGE)
+    useMittEmit(MITT_TYPES.EMIT_MAY_ALSO_LIKE_CHANGE)
   }
 })
 
@@ -260,7 +260,7 @@ const normal_ = computed(() => {
     }
   }
 
-  & ::v-deep .q-card {
+  & :deep(.q-card) {
     background: initial;
     box-shadow: initial;
     border-radius: initial;
@@ -345,7 +345,7 @@ const normal_ = computed(() => {
       }
     }
 
-    ::v-deep.counting-down-wrap {
+    :deep(.counting-down-wrap) {
       width: 0.8rem;
       right: 100%;
       left: unset;
@@ -372,7 +372,7 @@ const normal_ = computed(() => {
       }
     }
 
-    ::v-deep.special {
+    :deep(.special) {
       color: var(--q-color-com-fs-color-8);
       padding-top: 1px;
     }
@@ -435,7 +435,7 @@ const normal_ = computed(() => {
           }
         }
 
-        ::v-deep.team-img-s {
+        :deep(.team-img-s) {
           width: unset;
           height: unset;
           margin: 0 auto;

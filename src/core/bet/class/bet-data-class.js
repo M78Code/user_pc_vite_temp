@@ -1,6 +1,8 @@
-// import MenuData from "src/core/menu-pc/menu-data-class.js";
-// import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
-// import UserCtr from "src/core/user-config/user-ctr.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
+import * as FILEDS_MAP from "../config/fileds-map.js"
 class BetData {
   constructor() {}
   init_core() {
@@ -114,8 +116,11 @@ this.pre_bet_list = null;
 
     //  [bet_custom_id]:{
       // mount_point_key:'virtual_bet_obj',
+      // 
       // shuju_laiyuan: 'xiangqing',       //  
       // shuju_laiyuan_obj:  data_souce,       //  
+   
+      // fileds_map:{
       // c_csid,
       // c_tid,
       // c_mid,
@@ -124,12 +129,21 @@ this.pre_bet_list = null;
       // c_kid,
       // c_hn,
       // c_topKey,
-      // is_guanjun:1,  
+      // },
+
+      // is_type:{
+       // is_guanjun:1,  
       // is_dianjing:1,
       // is_common:1,
+
       // is_vr:1,   // 
+       // is_pre_bet,
+      // }
+
+ 
+
       // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-      // is_pre_bet,
+     
 
       
     //  }
@@ -141,24 +155,17 @@ this.pre_bet_list = null;
     }
     // 注单 到 自定义ID 的 反向映射 
     //当前视图的注单区域的  需要显示  自定义ID 数组 
-
- 
     this.show_bet_custom_id_arr=[];
     //ids 变更  ， 用这个监听 或者 发事件  
     this.show_bet_custom_id_arr_change=1
-
-
-
-    const c_csid_map={
-      common:'csid',
-      dianjing:'csid',
-      guanjun:'csid',
-      vr_1:'csid',  //足蓝 
-      vr_2:'csidxasxsax', //
-    }
+ 
   }
 
-
+  // 通过  mount_point_key 计算 取值字段映射
+  get_fields_map_by_mount_point_type(type){
+    let obj=  FILEDS_MAP['fileds_map_common']
+    return obj 
+  }
 
 
   /**
