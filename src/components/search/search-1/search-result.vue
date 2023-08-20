@@ -45,7 +45,7 @@
                         </div>
                         <!-- 点点点 -->
                         <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img src="~public/image/yabo/svg/point.svg">
+                            <img src="project-path/image/svg/point.svg">
                         </div>
                     </div>
                 </div>
@@ -55,18 +55,19 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onUnmounted, nextTick } from 'vue'
+import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import store from "src/store-redux/index.js";
-import * as details from "src/core/api/module/search.js"
-import * as search from "src/api/module/match-list-pc/details-class/details.js"
+// import details from "src/core/match-list-pc/details-class/search.js"
+// import search from "src/core/search-class/search.js"
 
 const props = defineProps({
     search_csid: {
-        type: Number | String,
+        type: [Number, String],
         default: ''
     }
 })
@@ -80,27 +81,35 @@ const { t } = useI18n()
 const load_data_state = ref('data')
 /** 搜索结果数据 */
 const list = reactive([])
-// 监听搜索球种变化
-watch(
-    () => props.search_csid,
-    () => {
-        const keword = search_keyword.value.substr(5)
-        get_search_result(keword, true)
-    }
-)
-// 监听搜索关键词改变
-watch(
-    () => search_keyword.value,
-    (res) => {
-        if (search_type.value == 2) {
-            emit('set_show_type', 'none')
-        } else {
-            get_search_result(res.substr(5))
-        }
-    }
-)
 
 const router = useRouter()
+
+/** stroe仓库 */
+const new_state = store.getState()
+const { searchReducer } = new_state
+/**
+ * 获取搜索内容 default: ''
+ * 路径: project_path\src\store\module\search.js
+ */
+const keyword = ref(searchReducer.keyword)
+/**
+ * 获取搜索类型 default: 1
+ * 路径: project_path\src\store\module\search.js
+ */
+ const search_type = ref(searchReducer.search_type)
+/**  */
+/**
+ * 获取搜索联赛关键字 default: ''
+ * 路径: project_path\src\store\module\search.js
+ */
+ const related_keyword = ref(searchReducer.related_keyword)
+
+/** 设置搜索联赛关键字 */
+const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+/** 设置搜索状态 */
+const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+/** 设置搜索类型 */
+const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
 
 /**
  * @Description:点击联赛搜索
@@ -108,7 +117,7 @@ const router = useRouter()
  * @return {undefined} undefined
  */
 function league_click(league) {
-    search.insert_history(league.league_name)
+    // search.insert_history(league.league_name)
     emit('set_show_type', 'none')
     router.push({
         name: 'search',
@@ -130,9 +139,9 @@ const scrollRef = ref(null)
  * @return {undefined} undefined
  */
 function match_click(match) {
-    search.result_scroll = scroll.value.scrollPosition
-    search.insert_history(match.name)
-    details.on_go_detail(match, search_keyword.value.substr(5))
+    // search.result_scroll = scroll.value.scrollPosition
+    // search.insert_history(match.name)
+    // details.on_go_detail(match, keyword.value.substr(5))
     set_search_status(false)
 }
 
@@ -153,24 +162,24 @@ function get_search_result(keyword, is_loading) {
     }
     // emit('set_show_type','result')
     //调用接口获取获取搜索结果数据
-    search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
-        emit('set_show_type', 'result')
-        load_data_state.value = load_data_state
-        list.value = list
-        let _ref_scroll = scroll.value;
-        timer.value = setTimeout(() => {
-            // 如果是从详情页返回
-            if (search.back_keyword.keyword) {
-                nextTick(() => {
-                    //重新设置滚动高度
-                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
-                })
-            } else {
-                //重新设置滚动高度
-                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
-            }
-        })
-    })
+    // search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
+    //     emit('set_show_type', 'result')
+    //     load_data_state.value = load_data_state
+    //     list.value = list
+    //     let _ref_scroll = scroll.value;
+    //     timer.value = setTimeout(() => {
+    //         // 如果是从详情页返回
+    //         if (search.back_keyword.keyword) {
+    //             nextTick(() => {
+    //                 //重新设置滚动高度
+    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
+    //             })
+    //         } else {
+    //             //重新设置滚动高度
+    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
+    //         }
+    //     })
+    // })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -179,28 +188,25 @@ onBeforeUnmount(() => {
     }
 })
 
-/** 获取搜索内容 */
-const search_keyword = ref()
-/** 获取搜索类型 */
-const search_type = ref()
-/** 获取搜索联赛关键字 */
-const related_keyword = ref()
-/** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    search_keyword.value = new_state.search_keyword
-    search_type.value = new_state.search_type
-    related_keyword.value = new_state.related_keyword
-})
-onUnmounted(unsubscribe)
-
-/** 设置搜索联赛关键字 */
-const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
-/** 设置搜索状态 */
-const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
-/** 设置搜索类型 */
-const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
-
+// 监听搜索球种变化
+watch(
+    () => props.search_csid,
+    () => {
+        const keword = keyword.value.substr(5)
+        get_search_result(keword, true)
+    }
+)
+// 监听搜索关键词改变
+watch(
+    () => keyword.value,
+    (res) => {
+        if (search_type.value == 2) {
+            emit('set_show_type', 'none')
+        } else {
+            get_search_result(res.substr(5))
+        }
+    }
+)
 
 </script>
   

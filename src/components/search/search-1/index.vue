@@ -1,9 +1,9 @@
 <!-- @Description: 搜索弹层 -->
 
 <template>
-  <div class="serach-wrap column"
-    :style="{ right: `${(menu_config.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${$utils.is_iframe ? 10 : 14}px` }"
-    :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': $utils.is_iframe }">
+  <div v-if="search_isShow" v-show="route.params.video_size != 1" class="serach-wrap column"
+    :style="{ right: `${(MenuData.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
+    :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
     <search-input @set_show_type="set_show_type" :show_type="show_type" />
     <div class="bottom-wrap col search-result relative-position">
       <!-- 球类导航 -->
@@ -28,15 +28,20 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, reactive } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import lodash from "lodash";
+import { useRoute } from "vue-router";
+import { useMittOn, MITT_TYPES } from 'src/core/mitt'
+import utils from "src/core/utils/utils.js"
+
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/search/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 import store from "src/store-redux/index.js";
@@ -53,10 +58,12 @@ import searchResult from "./search-result.vue"
 // 引入tab切换栏组件
 import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
-import { api_search } from "src/public/api/index.js";
-// TODO: 待确认
-import search from "src/public/utils/searchClass/search.js"
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+import { api_search } from "src/api/index.js";
+// import search from "src/core/search-class/search.js"
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+
+/** 是否内嵌 */
+const is_iframe = ref(utils.is_iframe);
 
 /** 显示类型 */
 const show_type = ref('init')
@@ -67,17 +74,57 @@ const sports_tab_index = ref(0)
 /** 搜索球种 */
 const search_csid = ref(1)
 
+/* 路由对象 */
+const route = useRoute();
+
+/** stroe仓库 */
+const store_data = store.getState();
+const { searchReducer, userReducer, layoutReducer, menuReducer, globalReducer } = store_data;
+/**
+ * 是否显示搜索组件 default: false
+ * 路径: project_path\src\store\module\search.js
+ */
+// const search_isShow = ref(searchReducer.search_isShow)
+const search_isShow = ref(false)
+const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
+  console.error('执行了', bool);
+  search_isShow.value = bool
+})
+onUnmounted(off)
+
+/** 
+ * 左侧列表显示形式 normal：展开 mini：收起
+ * 路径: project_path\src\store\module\menu.js
+ */
+const { main_menu_toggle } = menuReducer
+/** 
+ * 用户信息 default: {}
+ * 路径: src\store-redux\module\user-info.js
+ */
+const { user_info } = userReducer
+/** 
+ * 浏览器 宽高等数据 default: object
+ * 路径: project_path\src\store\module\layout.js
+ */
+const { layout_size } = layoutReducer
+/** 
+* 是否展开多列玩法 default: object
+* 路径: project_path\src\store\module\global.js
+*/
+const { is_unfold_multi_column } = globalReducer
+
 /**
  * @Description:设置搜索球种列表
  * @return {undefined} undefined
  */
 function set_sports_list() {
-  let csid = search.back_keyword.csid
+  // let csid = search.back_keyword.csid
+  let csid = ''
   api_search.get_search_sport().then(res => {
     if (lodash.get(res, 'data.code') == 200) {
       const list = lodash.get(res, 'data.data') || []
       // 根据商户过滤篮球赛事
-      // if(user.value.mId == '1443742662615240704'){
+      // if(user_info.mId == '1443742662615240704'){
       //   lodash.remove(sports_list, item => item.id == 2)
       // }
       sports_list = list
@@ -121,24 +168,6 @@ function set_sports_tab_index(index) {
   sports_tab_index.value = index_
   search_csid.value = sports_list[index_].id
 }
-
-/** 左侧列表显示形式 normal：展开 mini：收起 */
-const main_menu_toggle = ref()
-/** 用户信息 */
-const user = ref()
-/** 页面所有布局宽高信息 */
-const layout_size = ref()
-/** 是否展开多列玩法 */
-const is_unfold_multi_column = ref()
-/** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  main_menu_toggle.value = new_state.main_menu_toggle
-  user.value = new_state.user
-  layout_size.value = new_state.layout_size
-  is_unfold_multi_column.value = new_state.is_unfold_multi_column
-})
-onUnmounted(unsubscribe)
 
 </script>
 

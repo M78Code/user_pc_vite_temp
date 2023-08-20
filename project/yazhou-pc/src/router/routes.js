@@ -4,17 +4,17 @@ const routes = [
   {
     path: "/",
     name: "main_layout",
-    // redirect: {
-    //   name: "home",
-    // },
+    redirect: {
+      name: "home",
+    },
     component: () => import(`../layouts/main-layout1.vue`),
     children: [
       //       // 首页
       {
         path: "/home",
         name: "home",
-        // component: () => import(`../pages/test/index.vue`),
-        component: () => import(`../pages/match-list/match-list.vue`),
+        component: () => import(`../pages/test/index.vue`),
+        // component: () => import(`../pages/match-list/match-list.vue`),
         meta: {
           keepAlive: true, // 需要缓存
         },

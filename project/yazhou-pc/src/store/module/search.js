@@ -1,4 +1,6 @@
 import lodash from "lodash";
+import { nextTick } from "vue";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt'
 
 const initialState = {
 	related_keyword: "", //联想关键字
@@ -30,6 +32,7 @@ export default function searchReducer(state = initialState, action) {
 			};
 		// 保存显示搜索组件状态
 		case "SET_SEARCH_STATUS":
+			nextTick(() => useMittEmit(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, data))
 			return { ...state, search_isShow: data };
 		// 保存搜索类型
 		case "SET_SEARCH_TYPE":

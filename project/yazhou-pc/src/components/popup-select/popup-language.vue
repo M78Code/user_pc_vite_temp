@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-wrap relative-position" :class="[versions_class, { active: show_popup }]">
+    <div class="popup-wrap relative-position " :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
                 <span :class="['flag lang-active', lang]"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
@@ -39,7 +39,7 @@ const { t } = useI18n();
 
 /** 语言列表 */
 const languageList = ref([])
-onMounted(() => languageList.value = lodash.get(get_user.value, 'languageList') || [])
+onMounted(() => languageList.value = lodash.get(user_info, 'languageList') || [])
 onUnmounted(() => languageList.value = [])
 
 /** 是否展示 */
@@ -50,20 +50,10 @@ const language_arr = ref(Object.keys(langs_mjs))
 const hits = ref(0)
 const langs = ref(langs_mjs)
 
-/** 用户信息 */
-const get_user = ref({})
-/** true: 单关投注 false: 串关投注 */
-const vx_is_bet_single = ref(true)
-/** 单关投注对象 */
-const vx_get_bet_single_obj = ref({})
-/** 串关投注对象 */
-const vx_get_bet_obj = ref({})
-/** 是否为虚拟体育投注 */
-const vx_get_is_virtual_bet = ref(true)
-/** 虚拟投注列表对象 */
-const vx_get_virtual_bet_obj = ref({})
-/** 获取当前菜单类型 */
-const vx_cur_menu_type = ref({})
+/** stroe仓库 */
+const store_data = store.getState()
+const { betInfoReducer, userReducer, langReducer, menuReducer } = store_data
+
 /** 全局点击事件数 */
 const global_click = ref(0)
 watch(
@@ -76,45 +66,33 @@ watch(
         show_popup.value = false;
     }
 )
-/** stroe仓库 */
-const store_data = store.getState()
-const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store_data
+
 /** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const { global_switch } = globalReducer
-/** 
- * left_menu_toggle 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
- * is_invalid 判断是否是登录状态 default: false
+ * is_bet_single true: 单关投注 false: 串关投注 default: true
+ * bet_single_obj 单关投注对象 default: {}
+ * bet_obj 单关投注对象 default: {}
+ * is_virtual_bet true: 当前是否为虚拟投注 default: true
+ * virtual_bet_obj 虚拟投注对象 default: {}
  * 路径: project_path\src\store\module\betInfo.js
  */
-const { left_menu_toggle, is_invalid } = betInfoReducer
+/**  */
+const { is_bet_single, bet_single_obj, bet_obj, is_virtual_bet, virtual_bet_obj } = betInfoReducer
 /** 
- * user_info 用户信息 default: {}
- * show_balance 用户余额是否展示状态 default: true
+ * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
-const { user_info, show_balance } = userReducer
+const { user_info } = userReducer
 
 /** 
  * 语言 languages
  * 路径: src\store-redux\module\languages.js
  */
 const { lang } = langReducer
-// const unsubscribe = store.subscribe(() => {
-//     const new_state = store.getState()
-//     lang.value = new_state.lang
-//     get_user.value = new_state.user
-//     vx_is_bet_single.value = new_state.is_bet_single
-//     vx_get_bet_single_obj.value = new_state.bet_single_obj
-//     vx_get_bet_obj.value = new_state.bet_obj
-//     vx_get_is_virtual_bet.value = new_state.is_virtual_bet
-//     vx_get_virtual_bet_obj.value = new_state.virtual_bet_obj
-//     vx_cur_menu_type.value = new_state.cur_menu_type
-//     global_click.value = new_state.global_click
-// })
-// onUnmounted(unsubscribe)
+/** 
+ * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 
+ * 路径: src\store-redux\module\menu.js
+ */
+const { cur_menu_type } = menuReducer
 
 
 /** 设置语言 */
@@ -161,12 +139,12 @@ function on_click_lang(lang_) {
             set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
-            let type = vx_get_is_virtual_bet.value ? 1 : 0;
-            let ids = [], bet_type = vx_get_bet_obj.value;
-            if (vx_get_is_virtual_bet.value) {
-                bet_type = vx_get_virtual_bet_obj.value
-            } else if (vx_is_bet_single.value) {
-                bet_type = vx_get_bet_single_obj.value;
+            let type = is_virtual_bet ? 1 : 0;
+            let ids = [], bet_type = bet_obj;
+            if (is_virtual_bet) {
+                bet_type = virtual_bet_obj
+            } else if (is_bet_single) {
+                bet_type = bet_single_obj;
             }
             for (let obj of Object.values(bet_type)) {
                 let match_id = lodash.get(obj, 'cs.match_id', '');
@@ -192,7 +170,7 @@ function on_click_lang(lang_) {
                 api_details.get_bet_olds(params).then(res => {
                     let data = lodash.get(res, 'data.data');
                     if (lodash.isArray(data) && data.length > 0) {
-                        if (vx_get_is_virtual_bet.value) {
+                        if (is_virtual_bet) {
                             // TODO: this
                             // virtual_common_update_bet_item_info(this, data);
                         } else {
@@ -209,8 +187,7 @@ function on_click_lang(lang_) {
         }
     }
     if (lang.value != lang_) {
-        let user = get_user.value
-        api_account.set_user_lang({ token: user.token, languageName: lang_ }).then(res => {
+        api_account.set_user_lang({ token: user_info.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
                 set_user_assign({ languageName: lang_ })
@@ -239,7 +216,7 @@ function on_click_lang(lang_) {
 function toggle_popup() {
     hits.value++;
     if (lodash.isEmpty(languageList.value)) {
-        languageList.value = lodash.get(get_user.value, 'languageList') || [];
+        languageList.value = lodash.get(user_info, 'languageList') || [];
     }
     show_popup.value = !show_popup.value
 }
@@ -247,7 +224,7 @@ function toggle_popup() {
 const versions_class = computed(() => {
     // TODO: 环境变量
     // return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
-    return 'versions-'
+    return 'versions-zhuanye'
 })
 
 </script>
