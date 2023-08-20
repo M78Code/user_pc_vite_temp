@@ -83,7 +83,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import global_filters from 'src/boot/global_filters.js'
+import global_filters from 'src/boot/global-filters.js'
 import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
 import team_img from 'src/project/components/details/team_img.vue'    // 详情页蓝色背景上的大型字母图标
 import match_stage from 'src/project/components/match/match_stage.vue';   // 下拉列表赛事时间展示

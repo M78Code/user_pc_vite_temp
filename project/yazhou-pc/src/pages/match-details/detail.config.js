@@ -655,6 +655,7 @@ export const useGetConfig = () => {
         const data = lodash.get(res, "data.data");
         if (code === 200 && data.length) {
           state.category_list = data;
+          state.handicap_this['category_list'] = data
           // 初始化玩法列表
           state.match_info_ctr.init_play_menu_list(data);
           if (callback) {

@@ -63,6 +63,7 @@ export default defineConfig({
       app: path.resolve(process.cwd(), "./"),
       dist: path.resolve(process.cwd(), "./dist"),
       node_modules: path.resolve(process.cwd(), "./node_modules"),
+      public: path.resolve(process.cwd(), `./public/${project}`),
       project_path: path.resolve(process.cwd(), `./project/${project}`),
     },
   },

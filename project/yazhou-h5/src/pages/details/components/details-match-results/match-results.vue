@@ -14,7 +14,7 @@
         :progress_graph="football_progress_graph"
       />
       <!-- 事件时间轴及 底部图片 -->
-      <time-line-footer v-if="!get_analyze_show"/>
+      <time-line v-if="!get_analyze_show"/>
     </template>
     <!-- 篮球赛事-->
     <template v-if="get_detail_data.csid == 2">
@@ -31,88 +31,88 @@
   </div>
 </template>
 
-<script>
-import mathc_results_visuals from "project_path/src/pages/details/components/details-match-results/mathc-results-visuals.vue";  // 赛果详情 统计图形表
-// import basketball_incident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident";   // 详情页 或者 赛果  篮球赛事事件
-// import time_line from 'project_path/src/pages/details/components/details-match-results/time-line.vue';  // 赛果详情 事件 组件
+<script setup>
+// 赛果详情 统计图形表
+import mathcResultsVisuals from "project_path/src/pages/details/components/details-match-results/mathc-results-visuals.vue";
+// 详情页 或者 赛果  篮球赛事事件
+// import basketballIncident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident";
+ // 赛果详情 事件 组件
+import timeLine from 'project_path/src/pages/details/components/details-match-results/time-line.vue';
+import { useI18n } from "vue-i18n"
+import utils from "src/core/utils/utils.js"
 
-// import {mapGetters} from "vuex";
+import { ref, onMounted } from "vue";
 
-export default {
-  name: "match_results",
-  components: {
-    'mathc-results-visuals': mathc_results_visuals,
-    'basketball-incident': basketball_incident,
-    'time-line-footer': time_line,
-  },
-  data() {
-    const yellow_img = "image/bw3/svg/match-results/yellow.svg",
-      red_img = "image/bw3/svg/match-results/red.svg",
-      corner_img = "image/bw3/svg/match-results/corner.svg",
-      Whistle_img = "image/bw3/svg/match-results/Whistle.svg",
-      time_out_img = "image/bw3/svg/match-results/time_out.svg"
-    return{
-      yellow_img,
-      red_img,
-      corner_img,
-      Whistle_img,
-      time_out_img,
-      //    S104 进攻, S8 危险进攻, S105 球权/控球率
-      football_ring_statistics: [
-        // {score_type:'S104', text: this.$root.$t('match_result.attack'), home: 0, away: 0, proportion: 50},
-        {score_type:'S8', text: this.$root.$t('match_result.dangerous_offense'), home: 0, away: 0, proportion: 0},
-        {score_type:'S105', text: this.$root.$t('match_result.ball_possession'), home: 0, away: 0, proportion: 0}
-      ],
-      //    S1088 三分命中率, S1235 投篮命中率, S111 罚球命中率
-      basketball_ring_statistics: [
-        {score_type:'S1088', text: this.$root.$t('match_result.three_point_shooting'), home: 0, away: 0, proportion: 0},
-        {score_type:'S1235', text: this.$root.$t('match_result.Field_goal_percentage'), home: 0, away: 0, proportion: 0},
-        {score_type:'S111', text: this.$root.$t('match_result.Free_throw_percentage'), home: 0, away: 0, proportion: 0}
-      ],
-      //    S104 进攻, S8 危险进攻
-      football_card_corner_list: [
-        {score_type:'S12', text: this.$root.$t('match_result.yellow_card'), home: 0, away: 0, img: yellow_img},
-        {score_type:'S11', text: this.$root.$t('match_result.red_card'), home: 0, away: 0, img: red_img},
-        {score_type:'S5', text: this.$root.$t('match_result.corner_kick'), home: 0, away: 0, img: corner_img}
-      ],
-      //    S106 犯规数, S11 剩余暂停
-      basketball_card_corner_list: [
-        {score_type:'S106', text: this.$root.$t('match_result.Fouls'), home: 0, away: 0, img: Whistle_img},
-        {score_type:'S109', text: this.$root.$t('match_result.Remaining_pause'), home: 0, away: 0, img: time_out_img},
-      ],
-      football_progress_graph: [
-        //    S104 进攻
-        {score_type:'S104', text: this.$root.$t('match_result.attack'), home: 0, away: 0, proportion: 0 },
-        //    S1101 射门        S12 黄牌比分
-        {score_type:'S1101', text: this.$root.$t('match_result.shot'), home: 0, away: 0, proportion: 0 },
-        //    S18   射正        S11	红牌比分
-        {score_type:'S18', text: this.$root.$t('match_result.shoot_right'), home: 0, away: 0, proportion: 0 },
-        //    S17   射偏        S5	角球比分
-        {score_type:'S17', text: this.$root.$t('match_result.shot_off'), home: 0, away: 0, proportion: 0 }
-      ],
-      basketball_progress_graph: [
-        //    S108 三分球得分
-        {score_type:'S108', text: this.$root.$t('match_result.Three_pointer'), home: 0, away: 0, proportion: 0 },
-        //    S107 两分球得分
-        {score_type:'S107', text: this.$root.$t('match_result.Two_pointer'), home: 0, away: 0, proportion: 0 },
-        //    S110   罚球得分
-        {score_type:'S110', text: this.$root.$t('match_result.Free_throw'), home: 0, away: 0, proportion: 0 }
-      ]
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'get_detail_data',
-      'get_analyze_show',
-      'get_is_hengping'
-      ])
-  },
-  mounted () {
-    if (this.$refs.analysis_detail) {
-      this.$refs.analysis_detail.style.minHeight = window.innerHeight - this.$utils.rem(1.24) + 'px';
-    }
-  },
-};
+// TODO: 临时
+const get_detail_data = ref({
+  csid: 1
+})
+const get_is_hengping = ref(true)
+const get_analyze_show = ref(false)
+
+  // 图片
+  const yellow_img = ref("image/bw3/svg/match-results/yellow.svg")
+  const red_img = ref("image/bw3/svg/match-results/red.svg")
+  const corner_img = ref("image/bw3/svg/match-results/corner.svg")
+  const Whistle_img = ref("image/bw3/svg/match-results/Whistle.svg")
+  const time_out_img = ref("image/bw3/svg/match-results/time_out.svg")
+  // 锚点
+  const analysis_detail = ref(null)
+  // 国际化
+  const { t } = useI18n()
+  //    S104 进攻, S8 危险进攻, S105 球权/控球率
+  const football_ring_statistics = ref([
+      // {score_type:'S104', text: t('match_result.attack'), home: 0, away: 0, proportion: 50},
+      {score_type:'S8', text: t('match_result.dangerous_offense'), home: 0, away: 0, proportion: 0},
+      {score_type:'S105', text: t('match_result.ball_possession'), home: 0, away: 0, proportion: 0}
+    ])
+    //    S1088 三分命中率, S1235 投篮命中率, S111 罚球命中率
+  const basketball_ring_statistics = ref([
+    {score_type:'S1088', text: t('match_result.three_point_shooting'), home: 0, away: 0, proportion: 0},
+    {score_type:'S1235', text: t('match_result.Field_goal_percentage'), home: 0, away: 0, proportion: 0},
+    {score_type:'S111', text: t('match_result.Free_throw_percentage'), home: 0, away: 0, proportion: 0}
+  ])
+    //    S104 进攻, S8 危险进攻
+  const football_card_corner_list = ref([
+    {score_type:'S12', text: t('match_result.yellow_card'), home: 0, away: 0, img: yellow_img},
+    {score_type:'S11', text: t('match_result.red_card'), home: 0, away: 0, img: red_img},
+    {score_type:'S5', text: t('match_result.corner_kick'), home: 0, away: 0, img: corner_img}
+  ])
+    //    S106 犯规数, S11 剩余暂停
+  const basketball_card_corner_list = ref([
+    {score_type:'S106', text: t('match_result.Fouls'), home: 0, away: 0, img: Whistle_img},
+    {score_type:'S109', text: t('match_result.Remaining_pause'), home: 0, away: 0, img: time_out_img},
+  ])
+  const football_progress_graph = ref( [
+    //    S104 进攻
+    {score_type:'S104', text: t('match_result.attack'), home: 0, away: 0, proportion: 0 },
+    //    S1101 射门        S12 黄牌比分
+    {score_type:'S1101', text: t('match_result.shot'), home: 0, away: 0, proportion: 0 },
+    //    S18   射正        S11	红牌比分
+    {score_type:'S18', text: t('match_result.shoot_right'), home: 0, away: 0, proportion: 0 },
+    //    S17   射偏        S5	角球比分
+    {score_type:'S17', text: t('match_result.shot_off'), home: 0, away: 0, proportion: 0 }
+  ])
+  const basketball_progress_graph = ref([
+    //    S108 三分球得分
+    {score_type:'S108', text: t('match_result.Three_pointer'), home: 0, away: 0, proportion: 0 },
+    //    S107 两分球得分
+    {score_type:'S107', text: t('match_result.Two_pointer'), home: 0, away: 0, proportion: 0 },
+    //    S110   罚球得分
+    {score_type:'S110', text: t('match_result.Free_throw'), home: 0, away: 0, proportion: 0 }
+  ])
+
+  // computed: {
+  //   ...mapGetters([
+  //     'get_detail_data',
+  //     'get_analyze_show',
+  //     'get_is_hengping'
+  //     ])
+  // },
+  onMounted (() => {
+    if (analysis_detail.value) {
+      analysis_detail.value.style.minHeight = window.innerHeight - utils.rem(1.24) + 'px';
+    }})
 </script>
 
 

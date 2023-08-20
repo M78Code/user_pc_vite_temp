@@ -79,7 +79,7 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import global_filters from 'src/boot/global_filters.js'
+import global_filters from 'src/boot/global-filters.js'
 import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'
 import team_img from 'src/project/components/details/team_img.vue'
 import match_stage from 'src/project/components/match/match_stage.vue';

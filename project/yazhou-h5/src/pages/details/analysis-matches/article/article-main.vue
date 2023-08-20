@@ -4,7 +4,7 @@
 -->
 <template>
  <div class="article-main">
-    <template v-if="loadsh.isEmpty(article_detail) && !is_loading">
+    <template v-if="lodash.isEmpty(article_detail) && !is_loading">
       <no-data which='noMatch' height='500' />
     </template>
     <template v-else-if="article_detail.articleTittle">
@@ -39,7 +39,7 @@ import articleContent from "project_path/src/pages/details/analysis-matches/arti
 import articleMaylike from "project_path/src/pages/details/analysis-matches/article/article-maylike.vue";
 // 加载中
 // import loading from "project_path/src/components/common/loading.vue";
-import { onMounted, onUnmounted, watch } from "vue";
+import { onMounted, onUnmounted, watch, ref } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 
@@ -61,16 +61,15 @@ import lodash from 'lodash'
   const top = ref('58%')
 
 
-
   onMounted(() => {
     get_article(route.params.mid)
   })
 
-  watch(() => is_show_dialog, (newValue) => {
+  watch(() => is_show_dialog.value, (newValue) => {
     if (newValue) {
         lodash.delay(calc_height, 100)
       } else {
-        matchids.length = 0
+        matchids.value.length = 0
       }
   })
 
@@ -93,7 +92,7 @@ const calc_height = () => {
    */
 const get_favorite_article = () => {
     api_common.getFavoriteArticle({
-      id: article_detail.id,
+      id: article_detail.value.id,
       matchId: route.params.mid
     }).then(reslut => {
       let res = ''
@@ -103,8 +102,8 @@ const get_favorite_article = () => {
         res = reslut
       }
       if (res.code == 200 && res.data) {
-        favorite_article_data = res.data.filter(item => {
-          return item.id != article_detail.id
+        favorite_article_data.value = res.data.filter(item => {
+          return item.id != article_detail.value.id
         }).slice(0, 3)
       }
     }).catch(err => {
@@ -117,7 +116,6 @@ const get_favorite_article = () => {
    */
 const get_article = (matchId) => {
   console.error(matchId);
-  debugger
     // type 1-matchId是赛事id 2-matchId是文章id
     api_common.getArticle({ matchId, type: 1 }).then(reslut => {
       let res = ''
@@ -132,17 +130,17 @@ const get_article = (matchId) => {
         if(res.data.articleContent){
           res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain)
         }
-        article_detail = res.data
+        article_detail.value = res.data
         get_favorite_article()
-        add_article_count(article_detail.id)
+        add_article_count(article_detail.value.id)
 
         // 记录进入文章时间
-        enter_article_time = Date.now()
+        enter_article_time.value = Date.now()
       }
     }).catch(err => {
       console.error(err);
     }).finally(() => {
-      is_loading = false
+      is_loading.value = false
     })
   }
   /**
@@ -150,7 +148,7 @@ const get_article = (matchId) => {
    * @param {Number} index 数组下标
    */
 const maylike_click = (index) => {
-    const item = favorite_article_data[index]
+    const item = favorite_article_data.value[index]
     if (!item) return
     const articleid = item.id
 
@@ -179,19 +177,19 @@ const maylike_click = (index) => {
         if(res.data.articleContent){
           res.data.articleContent = res.data.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER/g,domain)
         }
-        article_detail2 = res.data
-        favorite_article_data[index].articleContent = res.data.articleContent
+        article_detail2.value = res.data
+        favorite_article_data.value[index].articleContent = res.data.articleContent
 
         add_article_count(res.data.id)
-        matchids.push(index)
-        matchids.last_click = true
+        matchids.value.push(index)
+        matchids.value.last_click = true
         calc_height()
 
         // 触发停留时长埋点
-        const article_id = matchids.length === 1 ? article_detail.id : favorite_article_data[matchids.length - 2].id
+        const article_id = matchids.value.length === 1 ? article_detail.value.id : favorite_article_data.value[matchids.value.length - 2].id
         handle_stay_duration(article_id)
       }
-      is_show_dialog = true
+      is_show_dialog.value = true
     }).catch(err => {
       console.error(err);
     })
@@ -200,17 +198,17 @@ const maylike_click = (index) => {
    * 返回按钮点击
    */
 const back = () => {
-    handle_stay_duration(article_detail2.id)
+    handle_stay_duration(article_detail2.value.id)
 
-    if (matchids.last_click) {
-      matchids.last_click = false
-      matchids.pop()
+    if (matchids.value.last_click) {
+      matchids.value.last_click = false
+      matchids.value.pop()
     }
-    if (matchids.length) {
-      article_detail2 = favorite_article_data[matchids.pop()]
+    if (matchids.value.length) {
+      article_detail2.value = favorite_article_data.value[matchids.value.pop()]
     } else {
       is_show_dialog = false
-      matchids.length = 0
+      matchids.value.length = 0
     }
     calc_height()
   }
@@ -227,7 +225,7 @@ const add_article_count = (id) => {
    */
 const handle_stay_duration = (article_id) => {
     const EVENT_NAME = 'H5_赛事文章_页面停留'
-    const stay_duration = parseInt((Date.now() - enter_article_time) / 1000)
+    const stay_duration = parseInt((Date.now() - enter_article_time.value) / 1000)
     const zhuge_obj = {
       "页面停留时长": stay_duration,
       "文章ID": article_id
@@ -246,10 +244,10 @@ const handle_stay_duration = (article_id) => {
    * @param e
    */
 const handle_hide_dialog = (e) => {
-    handle_stay_duration(article_detail2.id)
+    handle_stay_duration(article_detail2.value.id)
   }
   onUnmounted(() => {
-    handle_stay_duration(article_detail.id)
+    handle_stay_duration(article_detail.value.id)
   })
   // destroyed() {
   //   handle_stay_duration(article_detail.id)

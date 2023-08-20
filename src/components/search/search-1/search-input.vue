@@ -21,12 +21,12 @@
 </template>
   
 <script>
-import { defineComponent, ref, nextTick, watch, onUnmounted } from 'vue'
+import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import store from "src/store-redux/index.js";
-import * as search from "src/api/module/search.js"
+// import search from "src/core/search-class/search.js"
 
 
 export default defineComponent({
@@ -96,7 +96,7 @@ export default defineComponent({
          */
         function focusclick() {
             is_focus.value = true
-            if (show_type.value == 'none') {
+            if (props.show_type == 'none') {
                 emit('set_show_type', 'init')
             }
         }
@@ -159,10 +159,10 @@ export default defineComponent({
             set_search_type(2)
             set_click_keyword(route.params.keyword || '')
             // TODO: search.js
-            if (search.back_keyword.keyword) {
-                set_search_type(1)
-                set_click_keyword(search.back_keyword.keyword)
-            }
+            // if (search.back_keyword.keyword) {
+            //     set_search_type(1)
+            //     set_click_keyword(search.back_keyword.keyword)
+            // }
             //输入框获得焦点
             nextTick(() => {
                 if (route.name != 'search') {
@@ -172,6 +172,33 @@ export default defineComponent({
         }
         /** 钩子触发 */
         onMounted(init)
+
+        /** stroe仓库 */
+        const store_data = store.getState();
+        const { searchReducer, globalReducer } = store_data;
+        /** 
+         * 点击的关键字 default: ''
+         * 路径: project/src/store/module/search.js
+         */
+        const click_keyword = ref(searchReducer.searchReducer)
+        /** 
+         * global_click 全局点击事件数 default: 0
+         * 路径: project_path\src\store\module\global.js
+         */
+        const global_click = ref(globalReducer.global_click)
+
+        /** 保存显示搜索组件状态 */
+        const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+        /** 保存联想搜索关键字 */
+        const set_related_keyword = (data) => store.dispatch({ type: 'set_related_keyword', data })
+        /** 保存搜索关键字 */
+        const set_search_keyword = (data) => store.dispatch({ type: 'set_search_keyword', data })
+        /** 保存搜索的联赛名 */
+        const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+        /** 保存搜索类型 */
+        const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+        /** 是否展开多列玩法 */
+        const set_unfold_multi_column = (data) => store.dispatch({ type: 'set_unfold_multi_column', data })
 
         //监听点击搜索关键词改变
         watch(
@@ -195,31 +222,6 @@ export default defineComponent({
                 }
             }
         )
-
-        /** 搜索点击的关键字 */
-        const click_keyword = ref()
-        /** 用户token */
-        const global_click = ref()
-        /** stroe仓库 */
-        const unsubscribe = store.subscribe(() => {
-            const new_state = store.getState()
-            click_keyword.value = new_state.click_keyword
-            global_click.value = new_state.global_click
-        })
-        onUnmounted(unsubscribe)
-
-        /** 保存显示搜索组件状态 */
-        const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
-        /** 保存联想搜索关键字 */
-        const set_related_keyword = (data) => store.dispatch({ type: 'set_related_keyword', data })
-        /** 保存搜索关键字 */
-        const set_search_keyword = (data) => store.dispatch({ type: 'set_search_keyword', data })
-        /** 保存搜索的联赛名 */
-        const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
-        /** 保存搜索类型 */
-        const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
-        /** 是否展开多列玩法 */
-        const set_unfold_multi_column = (data) => store.dispatch({ type: 'set_unfold_multi_column', data })
 
         return {
             t,

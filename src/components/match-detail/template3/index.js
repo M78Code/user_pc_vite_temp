@@ -1,4 +1,4 @@
 
-import DetailTemp3 from "./full-version-wapper/index.vue";
+import DetailTemp3 from "./detail-template3-1/index.vue";
 
 export { DetailTemp3 };

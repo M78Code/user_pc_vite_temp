@@ -273,7 +273,7 @@
 <script>
 // #TODO vuex 
 // import {mapGetters, mapMutations} from "vuex";
-// import global_filters from 'src/boot/global_filters.js'
+// import global_filters from 'src/boot/global-filters.js'
 import {api_common, api_result} from 'src/project/api/index.js';
 import video from "src/public/utils/video/video.js"   // 视频相关公共方法
 import matchScore from 'src/project/components/match/match_score.vue' // 比分组件

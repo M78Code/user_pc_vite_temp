@@ -30,7 +30,7 @@
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
 // const licia_format = require('licia/format');
-// import global_filters from 'src/boot/global_filters.js';
+// import global_filters from 'src/boot/global-filters.js';
 import store from "src/store-redux/index.js";
 import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
 
