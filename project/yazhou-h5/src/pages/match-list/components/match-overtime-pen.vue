@@ -92,7 +92,7 @@
 <script setup>
 import { computed, onDeactivated, onMounted, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from 'vue-router'
-import { play_title } from 'src/boot/constant'
+import { play_title } from 'src/core/match-constant/config/play-title'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

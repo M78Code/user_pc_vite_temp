@@ -486,7 +486,7 @@ class MenuData {
    * 判断是否为冠军和电竞冠军
    */
   get_mm_is_champion() {
-    return _.get(this.current_menu, "date_menu.menuType") == 100;
+    return lodash.get(this.current_menu, "date_menu.menuType") == 100;
   }
   /**
    * 一级菜单顶层菜单的 菜单类型  ，没有则是0

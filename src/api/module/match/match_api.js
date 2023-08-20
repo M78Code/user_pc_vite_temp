@@ -10,7 +10,7 @@ import axios from 'axios'
 const { API_PREFIX = {},TARGET_PROJECT_NAME:project_name } = window.BUILDIN_CONFIG;
 // const { API_PREFIX_JOB:prefix,API_PREFIX_BAT:prefix_user } = API_PREFIX;
 
-let prefix = 'https://api.sportxxxw1box.com'
+let prefix = 'http://sit-api-1.sportxxxifbdxm2.com'
 //赛事搜索接口
 export const post_search_match = (params, config = {}, url = "/v1/hotSearch/searchMatchInfoPc2PB") => {
     return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_list'});

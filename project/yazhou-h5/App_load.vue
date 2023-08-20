@@ -24,6 +24,7 @@
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
+import pageSourceData from "src/core/page-source-h5/page-source-h5.js";
 
 window.wslog = wslog;
 
@@ -41,6 +42,15 @@ export default {
       buried_time: 0, // 代表今日足球下边距离触发埋点的时间
       right_menu_show: false,
     };
+  },
+
+  watch: {
+    '$route.name': {
+      handler () {
+        pageSourceData.set_route_name(this.$route.name)
+      },
+      immediate: true,
+    }
   },
 
   created() {
@@ -220,7 +230,6 @@ export default {
 
     this.off_listeners();
   },
-  watch: {},
 };
 </script>
 

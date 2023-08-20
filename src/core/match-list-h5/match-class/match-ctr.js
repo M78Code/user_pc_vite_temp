@@ -3,7 +3,7 @@
 /*
  * @Description:列表页面赛事信息操作类-实现快速检索,修改等功能
  */
-export default class MatchCtr {
+class MatchCtr {
   /**
    * @description: 构造函数
    * @param {Object} view Vue实例
@@ -1200,3 +1200,5 @@ export default class MatchCtr {
     this.view = null;
   }
 }
+
+export default new MatchCtr()

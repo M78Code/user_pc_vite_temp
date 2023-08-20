@@ -8,7 +8,7 @@
     <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
       v-if="matchCtr" :main_source="source" :is_goto_top_random="is_goto_top_random"
       :match_list_wrapper_height="match_list_wrapper_height">
-      <template v-slot="{ item:match_item, index:i}">
+      <template v-slot="{ item: match_item, index:i}">
         <!--虚拟体育(赛果)-->
         <v-match-container :match="match_item"
           :i_list="i"
@@ -182,6 +182,7 @@ const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 const get_access_config = ref(store_state.get_access_config)
 
 onMounted(() => {
+  console.log(props.matchCtr)
   timer_super12.value = null;
 })
 

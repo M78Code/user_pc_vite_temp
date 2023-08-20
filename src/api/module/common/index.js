@@ -7,7 +7,9 @@
 
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_prefix_user,API_PREFIX_BAT:prefix_yewu13} = API_PREFIX;
+const { API_PREFIX_USER:prefix_prefix_user,API_PREFIX_BAT:prefix_yewu13} = API_PREFIX;
+
+const prefix = 'http://sit-api-1.sportxxxifbdxm2.com/yewu11'
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -26,11 +28,12 @@ export const get_tournament_list = (params, config, url = "/v1/m/tournamentMatch
 };
 //赛事列表接口
 export const post_match_full_list = (params) => {
-  let url = "/v1/m/matchesPB"
+  let url = "/v1/m/matches"
   if(params.query){
     url += params.query;
   }
-  return http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'post_match_full_list',type:2});
+  const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
+  return http.post(`${prefix}${url}`, queryParams, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 
 

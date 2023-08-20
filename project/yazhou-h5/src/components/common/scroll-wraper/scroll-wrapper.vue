@@ -12,9 +12,7 @@
         simple:get_newer_standard_edition == 1,
         theme02:get_theme.includes('theme02'),
       }"
-      :style="{'min-height':`${
-         get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem`
-      }">
+      :style="{'min-height':`${ get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template
             当要v-for与v-if同时使用在一个dom上时,可以使用template
       -->
@@ -39,6 +37,7 @@
             </span>
           </div>
           <div class="s-w-i-inner">
+            {{ scrollItem }}
             <slot :item="scrollItem" :index="index"></slot>
           </div>
         </div>
@@ -76,6 +75,8 @@ const props = defineProps({
   let scroll_frame_timer_2 = ref(0)
   
   onMounted(() => {
+    console.log(11111111)
+    console.log(props.data_source)
     test = sessionStorage.getItem('wsl') == '9999';
     // 详情页以外的列表才设置最小高度
     if (main_source !== 'detail_match_list') {

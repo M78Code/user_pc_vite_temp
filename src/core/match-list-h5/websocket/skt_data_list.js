@@ -7,6 +7,7 @@ import wsDebounce from "../../ws/h5/ws_debounce.js"    // ws调用接口节流�
 import { ref, onMounted } from 'vue'
 import lodash from 'lodash'
 import { watch } from "fs"
+import MatchCtr from '../match-class/match-ctr'
 
 // TODO: 待处理 store
 // ...mapActions(['fetch_balance']),
@@ -74,12 +75,12 @@ export default use_websocket_store = () => {
         if (this.window_focused_handle && typeof this.window_focused_handle == 'function') {
           this.window_focused_handle()
         }
-        this.$root.$emit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
+        this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
 
         // 如果为世界杯时的操作
         if (this.$route.name == 'wordcup') {
           // 静默更新数据
-          this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+          this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
             text: "footer-refresh",
           });
         }
@@ -138,16 +139,16 @@ export default use_websocket_store = () => {
 
   //赛事状态(C101)
   const RCMD_C101 = (obj) => {
-    if (obj && this.matchCtr.match_list_data_sources) {
+    if (obj && MatchCtr.match_list_data_sources) {
       let skt_data = obj.cd;
-      for (let i = 0, len = this.matchCtr.match_list_data_sources.length; i < len; i++) {
-        if (this.matchCtr.match_list_data_sources[i].mid == obj.cd.mid) {
-          Object.assign(this.matchCtr.match_list_data_sources[i], { ms: skt_data.ms });
+      for (let i = 0, len = MatchCtr.match_list_data_sources.length; i < len; i++) {
+        if (MatchCtr.match_list_data_sources[i].mid == obj.cd.mid) {
+          Object.assign(MatchCtr.match_list_data_sources[i], { ms: skt_data.ms });
           break;
         }
       }
-      if (this.matchCtr.mid_obj[obj.cd.mid]) {
-        Object.assign(this.matchCtr.mid_obj[skt_data.mid], { ms: skt_data.ms });
+      if (MatchCtr.mid_obj[obj.cd.mid]) {
+        Object.assign(MatchCtr.mid_obj[skt_data.mid], { ms: skt_data.ms });
       }
       //ms = 0未开赛,1进行中,2暂停,(其他赛事结束)
       if (this.match_status_changed) { //  &&
@@ -176,10 +177,10 @@ export default use_websocket_store = () => {
     if (!obj) return;
 
     let skt_data = obj.cd;
-    if (this.matchCtr.mid_obj[skt_data.mid]) {
-      if (this.matchCtr.mid_obj[skt_data.mid] &&
-        this.matchCtr.mid_obj[skt_data.mid].handle_time &&
-        this.matchCtr.mid_obj[skt_data.mid].handle_time > obj.ctsp) {
+    if (MatchCtr.mid_obj[skt_data.mid]) {
+      if (MatchCtr.mid_obj[skt_data.mid] &&
+        MatchCtr.mid_obj[skt_data.mid].handle_time &&
+        MatchCtr.mid_obj[skt_data.mid].handle_time > obj.ctsp) {
         return;
       }
 
@@ -207,8 +208,8 @@ export default use_websocket_store = () => {
         skt_data.mmp = '0';
       }
       try {
-        if (this.matchCtr.mid_obj[skt_data.mid]) {
-          Object.assign(this.matchCtr.mid_obj[skt_data.mid], { ...skt_data, handle_time: obj.ctsp });
+        if (MatchCtr.mid_obj[skt_data.mid]) {
+          Object.assign(MatchCtr.mid_obj[skt_data.mid], { ...skt_data, handle_time: obj.ctsp });
         }
       } catch (error) {
         console.error(error)
@@ -216,9 +217,9 @@ export default use_websocket_store = () => {
 
       //更新赛事数据
       let found = null;
-      for (let i = 0; i < this.matchCtr.match_list_data_sources.length; i++) {
-        if (this.matchCtr.match_list_data_sources[i].mid == skt_data.mid) {
-          found = this.matchCtr.match_list_data_sources[i];
+      for (let i = 0; i < MatchCtr.match_list_data_sources.length; i++) {
+        if (MatchCtr.match_list_data_sources[i].mid == skt_data.mid) {
+          found = MatchCtr.match_list_data_sources[i];
           break;
         }
       }
@@ -231,7 +232,7 @@ export default use_websocket_store = () => {
       //足球去掉加时赛玩法
       let invalid_mmp = [33, 34, 41, 42, 50, 80, 90, 100, 110, 120].includes(skt_data.mmp * 1);
       if (invalid_mmp) {
-        this.matchCtr.mid_obj[skt_data.mid].hpsOvertime = [];
+        MatchCtr.mid_obj[skt_data.mid].hpsOvertime = [];
       }
 
     }
@@ -278,17 +279,17 @@ export default use_websocket_store = () => {
         console.error(err)
       }
     }
-    if (!(obj.cd.mid in this.matchCtr.mid_obj)) {
+    if (!(obj.cd.mid in MatchCtr.mid_obj)) {
       return;
     }
     // 新比分合并到旧比分
-    let msc = this.matchCtr.mid_obj[skt_data.mid].msc;
+    let msc = MatchCtr.mid_obj[skt_data.mid].msc;
     let combined = this.combine_msc(msc, skt_data.msc);
     // 比分编号排序
     this.msc_sort(combined);
 
-    Object.assign(this.matchCtr.mid_obj[skt_data.mid], { msc: combined });
-    let found = this.matchCtr.match_list_data_sources.filter(m => m.mid == skt_data.mid)[0];
+    Object.assign(MatchCtr.mid_obj[skt_data.mid], { msc: combined });
+    let found = MatchCtr.match_list_data_sources.filter(m => m.mid == skt_data.mid)[0];
     if (found) Object.assign(found, { msc: combined });
   }
   // 比分列表(S1,S121,S122等)从小到大排序
@@ -322,24 +323,24 @@ export default use_websocket_store = () => {
     // 赛事状态 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     // 开与锁
     if (skt_data.mhs == 0 || skt_data.mhs == 11) {
-      this.matchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs);
+      MatchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs);
       this.get_match_info_upd(skt_data.mid)
     }
     // 封
     else if (skt_data.mhs == 1) {
-      this.matchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs)
+      MatchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs)
     }
     // 关
     else if (skt_data.mhs == 2) {
       if (this.removeMatch) {
         this.removeMatch(() => {
-          this.matchCtr.clearMidObj(skt_data.mid);
+          MatchCtr.clearMidObj(skt_data.mid);
         });
       } else {
-        this.matchCtr.clearMidObj(skt_data.mid);
+        MatchCtr.clearMidObj(skt_data.mid);
       }
     } else if (skt_data.hs == 11 || skt_data.mhs == 11) {
-      this.matchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs);
+      MatchCtr.setMatchMsStatus(skt_data.mid, skt_data.mhs);
     }
 
     if (this.run_process_when_need_recompute_container_list_when_scroll) {
@@ -416,7 +417,7 @@ export default use_websocket_store = () => {
     clearTimeout(this.c302_timeout);
     //新开赛事后需要重新订阅C8
     this.c302_timeout = setTimeout(() => {
-      this.$root.$emit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
+      this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
       this.subscription && this.subscription()
     }, 500);
 
@@ -433,22 +434,22 @@ export default use_websocket_store = () => {
     if (skt_data.hls && skt_data.hls.length) {
       skt_data.hls.forEach(hl => {
         // 设置盘口状态 -- 盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
-        this.matchCtr.setMatchHsStatus(hl.hid, (hl.hs ? hl.hs : 0), hl.ol);
+        MatchCtr.setMatchHsStatus(hl.hid, (hl.hs ? hl.hs : 0), hl.ol);
       });
     }
-    this.matchCtr.set_match_odd_list(skt_data);
-    this.$root.$emit(MITT_TYPES.EMIT_C105_CMD_NOTICE, skt_data);
+    MatchCtr.set_match_odd_list(skt_data);
+    this.$root.$emit(this.emit_cmd.EMIT_C105_CMD_NOTICE, skt_data);
   }
   // 赛事视频/动画状态(C107)
   const RCMD_C107 = (obj) => {
-    if (!obj || (!this.matchCtr.mid_obj[obj.cd.mid])) {
+    if (!obj || (!MatchCtr.mid_obj[obj.cd.mid])) {
       return;
     }
     let skt_data = obj.cd;
     if (skt_data) {
       // mvs-	赛事动画状态   0:不可用 1:可用，暂未播放 2：可用，播放中
       // mms-  赛事视频动态   0:不可用 1:可用，暂未播放 2：可用，播放中
-      Object.assign(this.matchCtr.mid_obj[skt_data.mid], skt_data);
+      Object.assign(MatchCtr.mid_obj[skt_data.mid], skt_data);
     }
   }
   //移除联赛的赛事id,或为空联赛时移除联赛
@@ -474,9 +475,9 @@ export default use_websocket_store = () => {
         list.splice(is_empty_i, 1);
       }
     };
-    remove_list(this.matchCtr.match_list_data_sources);
-    remove_list(this.matchCtr.list);
-    this.matchCtr.clearMidObj(mid);
+    remove_list(MatchCtr.match_list_data_sources);
+    remove_list(MatchCtr.list);
+    MatchCtr.clearMidObj(mid);
   }
   //添加联赛里的赛事
   const add_mid_of_league = (tid, mid) => {
@@ -492,8 +493,8 @@ export default use_websocket_store = () => {
         }
       });
     };
-    remove_list(this.matchCtr.match_list_data_sources);
-    remove_list(this.matchCtr.list);
+    remove_list(MatchCtr.match_list_data_sources);
+    remove_list(MatchCtr.list);
   }
   //联赛的赛事变化推送
   const RCMD_C901 = (obj) => {
@@ -511,20 +512,20 @@ export default use_websocket_store = () => {
     if (!obj) return;
     let skt_data = obj.cd;
     if (skt_data) {
-      let match = this.matchCtr.mid_obj[skt_data.mid];
+      let match = MatchCtr.mid_obj[skt_data.mid];
       if (match) {
-        Object.assign(this.matchCtr.mid_obj[skt_data.mid], skt_data);
+        Object.assign(MatchCtr.mid_obj[skt_data.mid], skt_data);
       }
 
-      for (let i = 0; i < this.matchCtr.list.length; i++) {
-        if (this.matchCtr.list[i].mid == skt_data.mid) {
-          Object.assign(this.matchCtr.list[i], skt_data);
+      for (let i = 0; i < MatchCtr.list.length; i++) {
+        if (MatchCtr.list[i].mid == skt_data.mid) {
+          Object.assign(MatchCtr.list[i], skt_data);
         }
       }
 
-      for (let i = 0; i < this.matchCtr.match_list_data_sources.length; i++) {
-        if (this.matchCtr.match_list_data_sources[i].mid == skt_data.mid) {
-          Object.assign(this.matchCtr.match_list_data_sources[i], skt_data);
+      for (let i = 0; i < MatchCtr.match_list_data_sources.length; i++) {
+        if (MatchCtr.match_list_data_sources[i].mid == skt_data.mid) {
+          Object.assign(MatchCtr.match_list_data_sources[i], skt_data);
         }
       }
     }
@@ -636,7 +637,7 @@ export default use_websocket_store = () => {
       return;
     }
     // 未在赛事列表中的赛事直接返回
-    let match = this.matchCtr.list.filter(match_t => match_t.mid == obj.cd.mid)[0];
+    let match = MatchCtr.list.filter(match_t => match_t.mid == obj.cd.mid)[0];
     if (!obj) return;
     if (!match) return;
     let skt_data = obj.cd;
@@ -650,8 +651,8 @@ export default use_websocket_store = () => {
     let skt_data = obj.cd;
     if (Array.isArray(skt_data) && skt_data.length) {
       for (let item of skt_data) {
-        if (this.matchCtr.mid_obj[item.mid]) {
-          Object.assign(this.matchCtr.mid_obj[item.mid], item);
+        if (MatchCtr.mid_obj[item.mid]) {
+          Object.assign(MatchCtr.mid_obj[item.mid], item);
         }
       }
     }
@@ -662,12 +663,12 @@ export default use_websocket_store = () => {
     let _mid = _.get(obj, 'cd.mid')
     let _mearlys = _.get(obj, 'cd.mearlys')
     if (!_mid) return;
-    if (this.matchCtr.mid_obj[_mid]) {
-      Object.assign(this.matchCtr.mid_obj[_mid], { mearlys: _mearlys });
+    if (MatchCtr.mid_obj[_mid]) {
+      Object.assign(MatchCtr.mid_obj[_mid], { mearlys: _mearlys });
     }
-    for (let i = 0; i < this.matchCtr.list.length; i++) {
-      if (this.matchCtr.list[i].mid == _mid) {
-        Object.assign(this.matchCtr.list[i], { mearlys: _mearlys });
+    for (let i = 0; i < MatchCtr.list.length; i++) {
+      if (MatchCtr.list[i].mid == _mid) {
+        Object.assign(MatchCtr.list[i], { mearlys: _mearlys });
       }
     }
   }
@@ -678,7 +679,7 @@ export default use_websocket_store = () => {
     obj.key = key;
     obj.module = 'list';
     if (status) {
-      let m_list = this.matchCtr.match_list_data_sources;
+      let m_list = MatchCtr.match_list_data_sources;
       if (!m_list) return;
       // 联赛Id，多个联赛Id用逗号分隔。联赛Id为空时取消订阅
       let tid_obj = _.keyBy(m_list, 'tid');
@@ -695,10 +696,10 @@ export default use_websocket_store = () => {
     obj.key = key;
     obj.module = 'list';
     if (status) {
-      if (!this.matchCtr) {
+      if (!MatchCtr) {
         return;
       }
-      let m_list = this.matchCtr.match_list_data_sources;
+      let m_list = MatchCtr.match_list_data_sources;
       if (!m_list) {
         return;
       }
