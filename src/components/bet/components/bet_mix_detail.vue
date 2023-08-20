@@ -55,7 +55,6 @@ const get_order_los = ref(store_state.get_order_los)
 const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
-const get_bet_obj = ref(store_state.get_bet_obj)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -72,7 +71,6 @@ const update_state = () => {
   get_user.value = new_state.get_user
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
-  get_bet_obj.value = new_state.get_bet_obj
 }
 
 
@@ -143,13 +141,10 @@ onMounted(() => {
 })
 
 
-// ...mapGetters(["get_active_index.value", "get_is_spread", "get_bet_list.value", "get_s_count_data.value", "get_bet_status", "get_order_los",
-//       "get_user.value", "get_money_notok_list2", "get_menu_type", "get_money_total", "get_bet_obj"]),
-
 const max_win_money = computed(() => {
   // 获取第一个的赛种id
   let _first = get_bet_list.value[0]
-  let _first_item = get_bet_obj.value[_first]
+  let _first_item = view_ctr_obj
   let _csid = _.get(_first_item, 'bs.csid')
   // console.log(get_s_count_data.value, '--get_s_count_data.value')
   return calc_maxwin_money(value_.name, money.value, _csid) || '0.00';  // 电竞时计算赔率需要保留3位小数
@@ -159,7 +154,7 @@ const max_win_money_all = computed(() => {
   get_s_count_data.value.map((item, i) => {
     if (item.money > 0) {
       let _first = get_bet_list.value[i]
-      let _first_item = get_bet_obj.value[_first]
+      let _first_item = view_ctr_obj[xx]
       let _csid = _.get(_first_item, 'bs.csid')
       all_win_money = all_win_money + calc_maxwin_money(item.name, item.money, _csid) * 100;
     }

@@ -52,7 +52,6 @@ const get_bet_list = ref(store_state.get_bet_list)
 const get_money_total = ref(store_state.get_money_total)
 const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
-const get_bet_obj = ref(store_state.get_bet_obj)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_active_index = ref(store_state.get_active_index)
@@ -84,7 +83,7 @@ onMounted(() => {
   timer4 = null;
   flicker_timer = null  //光标闪动计时器
 
-  money.value = get_money_total && get_bet_obj[name_].money || ''
+  money.value = get_money_total && view_ctr_obj[name_].money || ''
 
   // 同步程序走完后再处理逻辑
   $nextTick(() => {
@@ -113,14 +112,13 @@ onMounted(() => {
 })
 
 /**   ----------------computed 开始-----------------*/
-// ...mapGetters(["get_cur_odd","get_bet_list", "get_money_total", "get_user", "get_bet_status", "get_bet_obj", "get_used_money", "get_money_notok_list2", "get_active_index"]),
 
 const item_ = computed(() => {
-  return get_bet_obj[name_].bs;
+  return view_ctr_obj[name_].bs;
 })
 // 计算单关最高可赢
 const max_win_money = computed(() => {
-  let ov = (get_bet_obj[name_].show_pre ? get_bet_obj[name_].pre_odds : _.get(item_, 'hps[0].hl[0].ol[0].ov')) / 100000
+  let ov = (view_ctr_obj[name_].show_pre ? view_ctr_obj[name_].pre_odds : _.get(item_, 'hps[0].hl[0].ol[0].ov')) / 100000
   return compute_money_by_cur_odd_type(ov, null, _.get(item_, 'hps[0].hsw'), money.value, item_.csid)
 })
 // 转化过后的坑位id
@@ -129,11 +127,11 @@ const hn_id = computed(() => {
 })
 // 单关监听最高可投注金额
 const obj_max_money = computed(() => {
-  return get_bet_obj[name_].orderMaxPay
+  return view_ctr_obj[name_].orderMaxPay
 })
 // 单关监听多项单关输入值
 const obj_bet_money = computed(() => {
-  return get_bet_obj[name_].money
+  return view_ctr_obj[name_].money
 
   /**   ----------------computed 开始-----------------*/
 
@@ -148,7 +146,7 @@ const obj_bet_money = computed(() => {
       tips_msg_update($root.$t('bet_record.bet_amount_betting_limit'))
     }
     max_money.value = +newVal
-    min_money.value = +get_bet_obj[name_].minBet
+    min_money.value = +view_ctr_obj[name_].minBet
     if (max_money.value > min_money.value) {
       max_money.value = round_money(min_money.value, newVal)
     } else {
@@ -200,10 +198,10 @@ const obj_bet_money = computed(() => {
         //获取最大最小限额
         const tempNew =
           Object
-            .keys(get_bet_obj)
+            .keys(view_ctr_obj)
             .map((key) => {
               return {
-                minBet: _.toNumber(get_bet_obj[key].minBet),
+                minBet: _.toNumber(view_ctr_obj[key].minBet),
               }
             })
         money.value = _.maxBy(tempNew, (item) => { return item.minBet }).minBet * 1
@@ -223,7 +221,7 @@ const obj_bet_money = computed(() => {
   // 多注单项，删除投注项时，需要清空金额
   watch(() => get_bet_list.length, (newVal, oldVal) => {
     if (newVal < oldVal) {
-      money.value = get_money_total && get_bet_obj[name_].money || ''
+      money.value = get_money_total && view_ctr_obj[name_].money || ''
 
       is_watch.value = false
       $nextTick(() => {

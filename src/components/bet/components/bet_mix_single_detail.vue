@@ -55,7 +55,6 @@ const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
 const get_money_total = ref(store_state.get_money_total)
-const get_bet_obj = ref(store_state.get_bet_obj)
 
 const update_state = () => {
   const new_state = store.getState()
@@ -69,7 +68,6 @@ const update_state = () => {
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
   get_money_total.value = new_state.get_money_total
-  get_bet_obj.value = new_state.get_bet_obj
 }
 
 const unsubscribe = store.subscribe(() => {
@@ -79,7 +77,7 @@ const unsubscribe = store.subscribe(() => {
 
 /**   ----------------computed 开始-----------------*/
 const has_pre = computed(() => {
-  const item_name = _.findKey(get_bet_obj.value, function (o) { return o.show_pre })
+  const item_name = _.findKey(view_ctr_obj, function (o) { return o.show_pre })
   if (item_name) {
     return true
   } else {
@@ -106,7 +104,7 @@ const max_win_money = computed(() => {
   return max_win / 10000
 })
 const _item = computed(() => {
-  return get_bet_obj.value
+  return view_ctr_obj
 })
 /**   ----------------computed 结束-----------------*/
 
@@ -188,10 +186,10 @@ watch(() => get_active_index.value, (new_) => {
   if (!is_watch.value) { return }
 
   // 缓存金额到vuex
-  let temp_bet_obj = _.cloneDeep(get_bet_obj.value)
+  let temp_bet_obj = _.cloneDeep(view_ctr_obj)
   Object.keys(temp_bet_obj).map((key) => {
     temp_bet_obj[key].money = money.value
-    temp_bet_obj[key].full_bet = get_bet_obj.value[key].max_money == money.value ? 1 : 0
+    temp_bet_obj[key].full_bet = view_ctr_obj[key].max_money == money.value ? 1 : 0
   })
   set_bet_obj(temp_bet_obj)
 })
@@ -212,8 +210,8 @@ onmounted(() => {
   timer2 = null  // 计时器2
   flicker_timer = undefined     //光标闪动计时器
   const newArr = []
-  Object.keys(get_bet_obj.value).map((key) => {
-    newArr.push(get_bet_obj.value[key].money)
+  Object.keys(view_ctr_obj).map((key) => {
+    newArr.push(view_ctr_obj[key].money)
   })
 
   let rst = newArr.every(item => newArr.every(it => it == item ? true : false))
@@ -283,8 +281,8 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
 //判断单关输入金额是否一致，并处理
 const change_others_money_ = () => {
   const newArr = []
-  Object.keys(get_bet_obj.value).map((key) => {
-    newArr.push(get_bet_obj.value[key].money)
+  Object.keys(view_ctr_obj).map((key) => {
+    newArr.push(view_ctr_obj[key].money)
   })
   //判断每个投注项输入框的金额是否一致
   let rst = newArr.every(item => newArr.every(it => it == item ? true : false))

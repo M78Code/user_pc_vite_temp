@@ -17,6 +17,7 @@
           :is_show="isShow"
           :match_info="match_info"
         ></handicap-title>
+         <div>{{ isShow }}4444</div>
         <template v-if="isShow">
           <!--横向标题-->
           <div class="row sub-title-1">
@@ -146,7 +147,7 @@ const props = defineProps({
   panel_status: String, //列表展开收起
 });
 
-const { sort_index, filter_odds, toggle_menu, curIsShow, HandicapTitle } =
+const { sort_index, filter_odds, toggle_menu,isShow, curIsShow, HandicapTitle,betItem } =
   useCommon({ emit, props });
 
 const page_data = ref([]); //纵向标题

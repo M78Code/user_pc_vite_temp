@@ -11,7 +11,7 @@
 
       <!-- 投注单和金额 -->
       <div class="title row justify-between yb_fontsize14">
-        <template v-if="get_bet_success">
+        <template v-if="BetData.is_bet_success_status">
           <span>{{$root.$t("bet.bet_information")}}</span>
           <img  src="image/wwwassets/bw3/svg/bet_close.svg" alt="" @click.stop="remove">
         </template>
@@ -26,7 +26,7 @@
 
       <!-- 展示投注项名称、赔率、玩法名称、对阵信息 -->
       <div class="detail row yb_py8" :class="{'detail2':pankou_change == 2}">
-        <div class="imgbox yb_mr6 yb_pt4" v-if="!get_bet_success">
+        <div class="imgbox yb_mr6 yb_pt4" v-if="!BetData.is_bet_success_status">
           <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove">
         </div>
         <div style="flex:1">
@@ -43,7 +43,7 @@
               </template>
             </div>
             <div class="oddwrap col-3 text-right yb_fontsize16" :class="{'sheng':odds_change == 1,'jiang':odds_change == 2}">
-              <i class="yb_mr8" v-if="!get_bet_success"></i>
+              <i class="yb_mr8" v-if="!BetData.is_bet_success_status"></i>
               <span>
                 <template v-if="get_bet_status == 3">
                   {{odds_value2 | format_odds(value_show.csid)}}
@@ -80,13 +80,13 @@
           </div>
           <!-- 下 -->
           <div class="xia">
-            <template v-if="get_bet_success && match_info">{{match_info}}</template>
+            <template v-if="BetData.is_bet_success_status && match_info">{{match_info}}</template>
             <template v-else>{{value_show.mhn}}<span class="q-mx-xs">v</span>{{value_show.man}} {{calc_now_score(value_show)}}</template>
           </div>
         </div>
       </div>
 
-      <template v-if="get_bet_success">
+      <template v-if="BetData.is_bet_success_status">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bet-after row justify-between yb_fontsize12">
           <p><span>{{ $root.$t('bet_record.bet_max_win') }}:</span><span class="color3 yb_ml8">{{ (max_winmoney / 100).toFixed(2) }}</span></p>
@@ -155,7 +155,7 @@
       <div class="btn-box yb_mb12 row yb_fontsize14">
 
         <!-- 左边 -->
-        <div class="save yb_mr10 row text-center" @click.stop="bet_save" v-if="get_bet_success">
+        <div class="save yb_mr10 row text-center" @click.stop="bet_save" v-if="BetData.is_bet_success_status">
           <span>{{$root.$t('bet.save')}}</span>
         </div>
         <!-- 右边 -->
@@ -190,6 +190,10 @@
   import ballSpin from './ball_spin.vue';
   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   import store from "src/store-redux/index.js";
+  import BetData from "../class/bet-data-class";
+
+
+
   const money = ref('')//金额
   // const get_bet_status = 1,    //0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,4-投注失败(bet接口没返回200),5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）,7-有投注项锁盘，8-单关投注失败(bet接口返回200)
   const odds_change = ref('0')    //0-正常，1-赔率升，2-赔率降
@@ -215,7 +219,6 @@
 
   const store_state = store.getState()
   const get_user = ref(store_state.get_user)
-  const get_bet_obj = ref(store_state.get_bet_obj)
   const get_bet_list = ref(store_state.get_bet_list)
   const get_is_accept = ref(store_state.get_is_accept)
   const get_odds_change = ref(store_state.get_odds_change)
@@ -229,7 +232,6 @@
   const get_invalid_ids = ref(store_state.get_invalid_ids)
   const get_order_no = ref(store_state.get_order_no)
   const get_bet_show = ref(store_state.get_bet_show)
-  const get_bet_success = ref(store_state.get_bet_success)
 
   const unsubscribe = store.subscribe(() => {
     update_state()
@@ -238,7 +240,6 @@
   const update_state = () => {
     const new_state = store.getState()
     get_user.value = new_state.get_user
-    get_bet_obj.value = new_state.get_bet_obj
     get_bet_list.value = new_state.get_bet_list
     get_is_accept.value = new_state.get_is_accept
     get_odds_change.value = new_state.get_odds_change
@@ -252,7 +253,6 @@
     get_invalid_ids.value = new_state.get_invalid_ids
     get_order_no.value = new_state.get_order_no
     get_bet_show.value = new_state.get_bet_show
-    get_bet_success.value = new_state.get_bet_success
   }
   // mixins: [odd_convert, betting, compute_max_win_money],
   // onmounted开始

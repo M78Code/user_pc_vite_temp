@@ -19,7 +19,6 @@
 <script setup>
 import { ref } from 'vue'
 
-// import { mapGetters, mapMutations } from "vuex";
 
 const get_is_hengping = ref()
 const get_chat_bet = ref()
