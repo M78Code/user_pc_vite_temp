@@ -35,13 +35,13 @@
       <!-- v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed" -->
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme01')" src='~public/image/wwwassets/bw3/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme02')" src='~public/image/wwwassets/bw3/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme01')" src='public/image/list/league-collapse-icon.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme02')" src='public/image/list/league-collapse-icon-black.svg' />
       </div>
     </div>
     <!-- 未开赛标题  -->
     <div class="match-status-fixed flex items-center" v-if="match.is_show_no_play">
-      <img src='~public/image/wwwassets/bw3/list/list-red.svg' />
+      <img src='public/image/list/list-red.svg' />
       <span class="din-regular">
         {{ $t('list.match_no_start') }}&nbsp;&nbsp;<span v-show="no_start_total">({{ no_start_total }})</span>
       </span>
@@ -98,9 +98,9 @@
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
             <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme01')"
-              src='~public/image/wwwassets/bw3/list/league-collapse-icon.svg' />
+              src='public/image/list/league-collapse-icon.svg' />
             <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="get_theme.includes('theme02')"
-              src='~public/image/wwwassets/bw3/list/league-collapse-icon-black.svg' />
+              src='public/image/list/league-collapse-icon-black.svg' />
           </template>
         </div>
       </div>
@@ -168,7 +168,7 @@
               <!-- mng 是否中立场   1:是中立场，0:非中立场-->
               <div class="live-i-b-wrap v-mode-span row items-center"
                 v-if="![5, 10, 7, 8, 13].includes(Number(match.csid)) && match.mng * 1">
-                <img class="neutral-icon-btn l-bottom" src='~public/image/wwwassets/bw3/list/m-list-neutral.svg' />
+                <img class="neutral-icon-btn l-bottom" src='public/image/list/m-list-neutral.svg' />
               </div>
 
               <!-- 电竞串关标识 -->
@@ -420,7 +420,7 @@
               </div>
               <!--中立场图标-->
               <div class="live-i-b-wrap newer" v-show="match.mng * 1 && ![5, 10, 7, 8].includes(Number(match.csid))">
-                <img class="neutral-icon-btn" src='~public/image/wwwassets/bw3/list/m-list-neutral.svg' />
+                <img class="neutral-icon-btn" src='public/image/list/m-list-neutral.svg' />
               </div>
               <!--玩法数量-->
               <div class="go-container-w mcount flex">
@@ -457,19 +457,21 @@
 
  
 <script setup name="match-container">
-import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, 
-  animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'src/boot/local-image'
+
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
-import counting_timer from 'src/project/components/common/counting-down.vue';
-import counting_down_start from 'src/project/components/common/counting_down_start.vue';
-import no_data from "src/project/components/common/no_data.vue";
-import score_list from 'src/project/pages/match-list/components/score_list.vue';
-import odd_list_wrap from 'src/project/pages/match-list/components/odd_list_wrap.vue';
-import match_overtime_pen from 'src/project/pages/match-list/components/match_overtime_pen.vue'
-import ImageCacheLoad from "src/project/pages/match-list/components/public_cache_image.vue";
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import counting_timer from 'project_path/src/components/common/counting-down.vue';
+import counting_down_start from 'project_path/src/components/common/counting-down-start.vue';
+import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
+import score_list from './score-list.vue';
+import odd_list_wrap from './odd-list-wrap.vue';
+import match_overtime_pen from './match-overtime-pen.vue'
+import ImageCacheLoad from "./public-cache-image.vue";
+
+import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
+  animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formartmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
@@ -571,7 +573,7 @@ onMounted(() => {
   run_new_init_timer();
   score_value();
   emitters.value = {
-    emitter_1: useMittOn.on(MITT_KEY.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
+    emitter_1: useMittOn.on(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
   }
   match_period_map(match);
   media_button_button_type_check()
@@ -991,7 +993,7 @@ const media_button_handle_when_muUrl = () => {
   goto_details(match);
 }
 const leaderboard_switch = () => {
-  useMittEmit(MITT_KEY.EMIT_HOT_LEADERBOARD_SWITCH)
+  useMittEmit(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH)
 }
 const is_show_result = () => {
   let r = false;

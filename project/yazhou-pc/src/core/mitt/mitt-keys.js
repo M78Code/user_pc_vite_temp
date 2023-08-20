@@ -8,6 +8,8 @@
 export const EMIT_SKT1_CMD = "EMIT_SKT1_SCMD";
 /** websocket接收消息命令 */
 export const EMIT_SKT1_R_CMD = "EMIT_SKT1_RCMD";
+/** layout-header展示搜索 */
+export const EMIT_LAYOUT_HEADER_SEARCH_ISSHOW = "EMIT_LAYOUT_HEADER_SEARCH_ISSHOW";
 // 点击键盘
 export const EMIT_KEY_BOARD_CLICK_CMD = "EMIT_KEY_BOARD_CLICK";
 // 计算总投注数

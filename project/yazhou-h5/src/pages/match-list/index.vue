@@ -24,7 +24,7 @@
       <!-- 列表骨架屏 -->
       <SList v-if="show_skeleton_screen" :loading_body="true"/>
       <!-- 列表页主内容 -->
-      <match-list
+      <MatchListComponents
         ref="match_list"
         :matchCtr="matchCtr"
         :menu_type="menu_type"
@@ -35,7 +35,7 @@
         @unfold_changed="unfold_changed_handle"
         @change_favorite_state="change_favorite_state">
         <!--        @unfold_league="unfold_league_handle"-->
-      </match-list>
+      </MatchListComponents>
       <!-- 到底了容器原加载更多容器-->
       <!-- <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
@@ -123,6 +123,8 @@ import utils from '../../core/utils/index.js'
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";  
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";  
 import MatchPage from 'src/core/match-list-h5/match-class/match-page.js'
+
+import MatchListComponents from "./components/match-list.vue"; 
 
 const props = defineProps({
   invok_source: String,
@@ -349,7 +351,7 @@ watch(() => get_show_match_filter, () => {
 })
 
 // 筛选过滤弹层消失
-watch(() => matchCtr.list, () => {
+watch(() => matchCtr.list, (match_list) => {
   // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
   if (!get_preload_animation_url && match_list.length) {
     // 通过遍历列表，查找动画状态mvs > 0（可播放）的赛事mid，然后获取相应动画加载资源

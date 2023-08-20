@@ -158,8 +158,8 @@ import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import odd_column_item from "src/project/pages/match-list/components/odd_column_item.vue";
-import { img1, img2, img3, img4, Y0_img_white } from 'src/boot/local-image'
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 const props = defineProps({
   // 赛事信息
@@ -221,7 +221,7 @@ onMounted(() => {
   standard_odd_status.value = get_standard_odd_status;
   modify_overtime_status(get_standard_odd_status); // 初始化时也调用
   emitters.value = {
-    emitter_2: useMittOn.on(MITT_KEY.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
+    emitter_2: useMittOn.on(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
   }
 });
 
@@ -656,7 +656,7 @@ const supplementary_spaces = (
 // $event 时间对象 mid 赛事id
 const info_icon_click = ($event, mid) => {
   useMittEmit(
-    MITT_KEY.EMIT_INFO_ICON_CLICK,
+    MITT_TYPES.EMIT_INFO_ICON_CLICK,
     $event,
     mid,
     props.current_tab_item,

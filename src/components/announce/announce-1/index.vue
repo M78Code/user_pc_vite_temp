@@ -50,7 +50,7 @@ const { t } = useI18n()
 /** 返回的大列表 */
 let res_list = reactive([])
 /** 左侧菜单 */
-let announce_title = reactive([])
+let announce_title = ref([])
 /** 大列表 */
 let announce_list = reactive([])
 /** 全部分类数据 */
@@ -77,7 +77,7 @@ const { lang } = store_data.langReducer
 */
 function tabs_click(item, index) {
     index.value = index;
-    current_title.value = announce_title[index].type;
+    current_title.value = announce_title.value[index].type;
     announce_list = index
         ? class_list[index - 1].mtl
         : res_list;
@@ -132,6 +132,7 @@ function get_list() {
         let code = lodash.get(res, "data.code");
         let status = lodash.get(res, "status");
         const data = lodash.get(res, "data.data");
+
         if (code == 200 && status && data) {
             data.nt.unshift({
                 id: 0,
@@ -140,7 +141,7 @@ function get_list() {
             for (let i in data.nt) {
                 data.nt[i].title = data.nt[i].type;
             }
-            announce_title = data.nt; //左侧菜单
+            announce_title.value = data.nt; //左侧菜单
             class_list = data.nl; //分类
             res_list = data.nb;
             announce_list = data.nb; //大列表

@@ -18,7 +18,7 @@
   
 <script setup>
 import { ref, reactive } from 'vue'
-import { TabWrapper as Tab } from "src/components/commont/tab"
+import { TabWapper as Tab } from "src/components/common/tab"
 
 import store from "src/store-redux/index.js";
 

@@ -1,7 +1,9 @@
 <template>
   <div class="page-main full-height">
+    <!-- 搜索 -->
+    <search-wapper />
     <!-- 页面头部容器-->
-    <!-- <layout-header :has_bonus_type="1" /> -->
+    <layout-header :has_bonus_type="1" />
 
     <div class="flex" :style="{ height: content_height }">
       <layout-left class="full-height" :style="{ height: content_height }" />
@@ -26,7 +28,8 @@ import store from "src/store-redux/index.js";
 import "./main-layout.js"; //初始化数据
 import { debounce } from "lodash";
 /**组件*/
-// import layoutHeader from "./layout-header.vue";
+import { SearchWapper } from 'src/components/search'
+import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
 import { useRoute } from "vue-router";
