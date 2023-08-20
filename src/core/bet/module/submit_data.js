@@ -210,9 +210,9 @@ const  post_submit_Bet_list_gcuuid = ref(uid())
         let item_cs_id = _.get(item_cs, 'id');
         this.item_cs_id = item_cs_id
         //队伍名
-        let team_name = yabo_common.get_team_name(this);
+        let team_name = yabo_common.get_team_name();
         //盘口名
-        let handicap = yabo_common.get_handicap(this);
+        let handicap = yabo_common.get_handicap();
         // 预约的赔率，球头 当前赛事 预约投注需要参数playOptionName处理
         if(BetData.bet_appoint_obj && BetData.bet_appoint_obj.bet_appoint_id==item_cs_id && is_pre) {
           let new_name = ''

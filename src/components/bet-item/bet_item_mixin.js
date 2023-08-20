@@ -656,8 +656,8 @@ export const useGetItem = ({ props }) => {
     score_format();
     format_odds(state.ol_data_item.ov, 1);
     state .DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-    // this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW
-    // this.version_name = window.env.config.DEFAULT_VERSION_NAME
+    // this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW
+    // this.version_name = window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME
     // this.DOM_ID_SHOW = lodash.get(window, "env.config.DOM_ID_SHOW", false);
     state.version_name = lodash.get(
       window,

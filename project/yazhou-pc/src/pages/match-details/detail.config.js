@@ -37,7 +37,7 @@ export const useGetConfig = () => {
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
-    match_info_ctr: new MatchInfoCtr(this),
+    match_info_ctr: new MatchInfoCtr(),
     mid: "", //赛事id
     sportId: "", //球类id
     match_infoData: {}, //赛事状态比分信息
@@ -742,9 +742,9 @@ export const useGetConfig = () => {
         utils.is_eports_csid(route.params.csid) ||
         menu_config.is_virtual_sport()
       ) {
-        this.virtual_common.upd_bet_obj(this, timestap, this.mid); //TODO
+        this.virtual_common.upd_bet_obj( timestap, this.mid); //TODO
       } else {
-        this.yabo_common.upd_bet_obj(this, timestap, this.mid); //TODO
+        BetCommonHelper.upd_bet_obj( timestap, this.mid); //TODO
       }
     }
   };

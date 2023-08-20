@@ -257,11 +257,11 @@ export default {
       const lang = window.reset_lang || window.vue.lang || "zh";
       // 获取命令
       let cmd = _.get(obj, 'cmd');
-      let live_domains = window.env.config.live_domains[0] || _.get(this.vx_get_user,'oss.live_pc');
+      let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.vx_get_user,'oss.live_pc');
       let lang_obj={full_screen:this.$root.$t('video.full_screen_mode'), back:this.$root.$t('common.back'), back_live:this.$root.$t('video.back_live')};
       switch (cmd) {
         case 'play': // 播放
-          // window.env.config.live_domains[0]='http://127.0.0.1:5500/video/pc/final'
+          // window.BUILDIN_CONFIG.live_domains[0]='http://127.0.0.1:5500/video/pc/final'
           let video_url = `${live_domains}/videoReplay.html?lang=${lang}&c_f_s=1&src=${_.get(obj, 'url')}`;
           // video_url = 'http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&c_f_s=1'
           video_url=`${video_url}&txt=${JSON.stringify(lang_obj)}`;

@@ -227,7 +227,7 @@ export default {
       api_common.getMatchUserIsLogin().then(res => {
         // 判断用户是否登录
         if (res && res.code == 200 && res.data.isLogin) {
-          let referUrl = window.env.config.live_domains[0];
+          let referUrl = window.BUILDIN_CONFIG.live_domains[0];
           let media_src
 
           if (referUrl) {

@@ -86,7 +86,7 @@ const match_list = {
 		})
 
 		// 开启自动化测试功能
-		this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+		this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 		// 列表数据仓库
 		match_list_data.value.init();
 		check_match_last_update_timer_id.value = setInterval(
@@ -778,10 +778,10 @@ const match_list = {
 				);
 				match_list.forEach((match) => {
 					// bymid数据同步投注项 1508要改的
-					this.yabo_common.upd_bet_obj(this, ts1, match.mid);
+					BetCommonHelper.upd_bet_obj( ts1, match.mid);
 					// 同步比分到右侧
 					if (vx_detail_params.value.mid == match.mid) {
-						this.yabo_common.update_match_score(this, 0, match.mid);
+						BetCommonHelper.update_match_score( 0, match.mid);
 					}
 				});
 				//热门赛事 提取足球赛事

@@ -835,7 +835,7 @@ export default {
   * @param {function} callback  回调函数
   */
   get_video_refer(mid,callback){
-    let refer_url = window.env.config.live_domains[0]
+    let refer_url = window.BUILDIN_CONFIG.live_domains[0]
     if(refer_url){
       callback(this.join_video_url(mid,refer_url))
       return
@@ -860,7 +860,7 @@ export default {
   join_video_url(mid,refer_url){
     // 移除 http(s)
     refer_url = refer_url.replace(/https?:/, "")
-    let request_domain = window.env.config.domain[window.env.config.current_env][0];
+    let request_domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0];
     let url = ''
     // if (window.env.NODE_ENV == "development" && (refer_url.indexOf('//prolivepc') == 0)) {
     //   // 生产环境使用代理进行播放视频连接操作

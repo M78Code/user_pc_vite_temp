@@ -223,7 +223,7 @@ const is_conflict2 = computed(() => {
 //计算样式，下面几种情况左下角按钮需要置灰不让点击
 const calc_class = computed(() => {
   let flag = [2, 4].includes(+get_bet_status.value)
-    || get_is_champion.value(this) && !BetData.is_bet_success_status
+    || get_is_champion.value() && !BetData.is_bet_success_status
     || get_bet_status.value == 5 && get_bet_list.value.length == 1
     || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
     || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status

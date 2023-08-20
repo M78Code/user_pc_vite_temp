@@ -377,7 +377,7 @@ const mousemove = (e) => {
 
 //监听屏幕宽度改变  设置是否显示按钮
 watch(get_layout_list_size.width, () => {
-  // item_wrap_width.value = this.yabo_common.get_refs_info(
+  // item_wrap_width.value = BetCommonHelper.get_refs_info(
   //   "wrap",
   //   null,
   //   this

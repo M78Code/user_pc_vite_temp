@@ -94,7 +94,7 @@ export default defineComponent({
       // 玩法集合投注底部兼容白块的处理PS-12302
       // dom_play_bool: false,
       // 所有数据集合
-      matchInfoCtr: new MatchInfoCtr(this),
+      matchInfoCtr: new MatchInfoCtr(),
       // dom_play元素的观察对象
       observer_:undefined,
       // 第一次进来根据数据是否折叠玩法

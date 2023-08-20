@@ -65,7 +65,7 @@ const utils = {
         if(this.send_gcuuid != res.gcuuid) return;
         if (res.code == 200) {
           // 获取视频动画域名
-          let referUrls = window.env.config.live_domains[0] || lodash.get(res,'data.referUrl');
+          let referUrls = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(res,'data.referUrl');
           referUrls = referUrls.replace(/https?:/, "");
           let animation_src = lodash.get(res,'data.aniUrl');
           let video_src = referUrls[referUrls.length - 1] == '/' ? referUrls+'video.html' : referUrls+ '/video.html'
@@ -89,7 +89,7 @@ const utils = {
     this.is_load_player_js = true
     let dom_ = document
     let dplayer_el = dom_.createElement('script');
-    let  BUILD_VERSION=  window.env.config.BUILD_VERSION
+    let  BUILD_VERSION=  window.BUILDIN_CONFIG.BUILD_VERSION
 
 
     dplayer_el.src = `${BUILD_VERSION?'/'+BUILD_VERSION:''}/lib/video/DPlayer.min.js`
@@ -433,7 +433,7 @@ const utils = {
       window.gtag = function gtag() { dataLayer.push(arguments); }
       window.gtag('js', new Date());
       // 配置埋点信息
-      window.gtag('config', window.env.config.GA_TRACKING_ID,{user_id});
+      window.gtag('config', window.BUILDIN_CONFIG.GA_TRACKING_ID,{user_id});
       // 设置埋点是否已经配置过
       window.INIT_GTAG = true;
 
@@ -457,7 +457,7 @@ const utils = {
       //   return;
       // }
       // 埋点发送网页跟踪信息
-      window.gtag('config', window.env.config.GA_TRACKING_ID, {
+      window.gtag('config', window.BUILDIN_CONFIG.GA_TRACKING_ID, {
         'page_title' : title, // 'homepage',
         'page_path': path, // '/home'
         user_id,// 用户id
@@ -650,7 +650,7 @@ const utils = {
     // 测试环境的key    c41f8b7cb97640838d90a73a0f077a43
     // 生产环境的key    5a0301efe0244733acb0488763592a6b
     try {
-      switch (window.env.config.current_env) {
+      switch (window.BUILDIN_CONFIG.current_env) {
         case 'local_dev': // 开发
           break;
         case 'local_test': // 测试
@@ -967,7 +967,7 @@ const utils = {
       // 前端开    后台关       >关
       // 前端关    后台开       >关
       // 前端关    后台关       >关
-      if(!collectSwitchStatus || !window.env.config.ENABLE_COLLECT_API ){
+      if(!collectSwitchStatus || ! window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API ){
         vm.$toast(vm.$root.$t(`common.temporarily_unavailable`), 2000)
         return false
       }

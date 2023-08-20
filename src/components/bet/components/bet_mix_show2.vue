@@ -335,7 +335,7 @@ const odds_value = computed(() => {
     let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
       hsw = value_show.hps[0].hsw;
 
-    if (get_is_champion(this)) {   //冠军玩法不支持赔率转化
+    if (get_is_champion()) {   //冠军玩法不支持赔率转化
       hsw = '1'
     }
 

@@ -76,7 +76,7 @@ export default {
     // 移动端设备下 url参数 vlg=1 开启vconsole调试
     if (sessionStorage.getItem("vlg")) {
       const script = document.createElement("script");
-      let BUILD_VERSION = window.env.config.BUILD_VERSION;
+      let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
 
       script.src = `${
         BUILD_VERSION ? "/" + BUILD_VERSION : ""

@@ -116,7 +116,7 @@ const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] |
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 //全局开关
 const get_global_switch = reactive(state.globalReducer.global_switch)
-if (!lodash.get(this, 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
+if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
 

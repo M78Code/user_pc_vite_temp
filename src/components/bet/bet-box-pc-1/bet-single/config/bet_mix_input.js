@@ -303,7 +303,7 @@ export default {
      * @return {Number} 赔率值
      */
     get_odds_value(id) {
-      return this.yabo_common.get_odds_value(this, id);
+      return BetCommonHelper.get_odds_value( id);
     },
     /**
      * @description: 设置串关投注额对象
@@ -389,7 +389,7 @@ export default {
         // 设置串关最大最小值正在获取中
         this.view_ctr_obj.mix_range_money = -3; 
         // 校验并提示
-        this.yabo_common.check_result_msg(this, 'mix');
+        BetCommonHelper.check_result_msg( 'mix');
       }
       // 最高限额存在并且输入的金额大于等于最高限额
       if(this.max_money != "" && _.gte(this.money, parseFloat(this.max_money))) {
@@ -401,7 +401,7 @@ export default {
       // 输入金额大于最高限额时
       if(_.gt(this.money, this.max_money)) {
         // 获取无效的投注项个数
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = BetCommonHelper.get_deactive_count();
         // 错误码不是不可串关的错误码并且没有失效的投注项
         if(!['0400477','0400478'].includes(this.view_ctr_obj.error_code) && count == 0) {
           // 金额存在时
@@ -422,7 +422,7 @@ export default {
         // 存储输入的金额
         this.set_bet_s_obj("money", this.money);
         // 提示信息
-        this.yabo_common.check_result_msg(this, 'mix');
+        BetCommonHelper.check_result_msg( 'mix');
       } else {
         // 存储输入金额
         this.set_bet_s_obj("money", this.money);
@@ -477,7 +477,7 @@ export default {
           // 最大最小值正在获取中
           this.view_ctr_obj.mix_range_money = -3; 
           // 进行提示
-          this.yabo_common.check_result_msg(this, 'mix');
+          BetCommonHelper.check_result_msg( 'mix');
         }
         // 更新键盘按键状态
         this.update_keyboard_status();
@@ -497,7 +497,7 @@ export default {
     check_money(value) {
       try {
         // 统计无效投注项
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = BetCommonHelper.get_deactive_count();
         // 如果不能串关结合 或者有无效的投注项则不做任何处理
         if(['0400477','0400478'].includes(this.view_ctr_obj.error_code) || count>0) {
           return;
@@ -507,7 +507,7 @@ export default {
           // 最大最小值正在获取中设置
           this.view_ctr_obj.mix_range_money = -3; 
           // 设置提示信息
-          this.yabo_common.check_result_msg(this, 'mix');
+          BetCommonHelper.check_result_msg( 'mix');
           return;
         }
         // 统计未输入金额的输入投注项
@@ -556,7 +556,7 @@ export default {
           this.view_ctr_obj.is_empty_money = false;
         }
         // 检查校验结果(需要显示提示信息时会提示)
-        this.yabo_common.check_result_msg(this, 'mix');
+        BetCommonHelper.check_result_msg( 'mix');
         // 转换成最大金额
         if(this.view_ctr_obj.error_code == "M400011") {
           // 输入金额转换最大限额
@@ -659,7 +659,7 @@ export default {
         // 存储输入金额
         this.set_bet_s_obj("money", this.money);
         // 设置提示信息
-        this.yabo_common.check_result_msg(this, 'mix', this.money);
+        BetCommonHelper.check_result_msg( 'mix', this.money);
       }      
     },
     /**
@@ -706,7 +706,7 @@ export default {
         clearTimeout(timer);
         if(this.money != null && this.view_ctr_obj.error_code == "M400005") {
           // 复位提示语
-          this.yabo_common.reset_message_info(this);
+          BetCommonHelper.reset_message_info();
           this.view_ctr_obj.mix_range_money = 0;
         }
       },0);

@@ -121,15 +121,15 @@ const { t } = useI18n();
 const bet_col = computed(() => {
   let bet_col = []
   //是否多列
-  let multi_column = lodash.get(this, 'match.tpl_id') == 13
-  let play_current_key = lodash.get(this, 'match.play_current_key')
+  let multi_column = lodash.get( 'match.tpl_id') == 13
+  let play_current_key = lodash.get( 'match.play_current_key')
   // 5分钟玩法
   if (play_current_key == 'hps5Minutes') {
     let hpid = 361
-    if (get_match_status(lodash.get(this, 'match.ms'), [110]) == 1) {
+    if (get_match_status(lodash.get( 'match.ms'), [110]) == 1) {
       hpid = 362
     }
-    bet_col = [lodash.get(this, `match.play_obj.hpid_${hpid}.hpn`, '')]
+    bet_col = [lodash.get( `match.play_obj.hpid_${hpid}.hpn`, '')]
     if (multi_column) {
       bet_col.push('')
     }
@@ -223,7 +223,7 @@ watch(match.tab_play_keys, (tab_play_keys) => {
 
 //赛事阶段变化时跟新次要玩法
 watch(match.ms, () => {
-  let tab_play_keys = lodash.get(this, 'match.tab_play_keys', '') || ''
+  let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
   if (tab_play_keys.includes('hps5Minutes')) {
     set_play_name_list(tab_play_keys)
   }
@@ -254,7 +254,7 @@ const set_play_name_list = (tab_play_keys = '') => {
     // 波胆
     hpsBold: { play_name: t('list.bold'), field: 'hpsBold' },
     // 5分钟玩法 5minutes_roll
-    hps5Minutes: { play_name: get_match_status(lodash.get(this, 'match.ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
+    hps5Minutes: { play_name: get_match_status(lodash.get( 'match.ms'), [110]) == 1 ? t('list.5minutes_roll') : t('list.5minutes'), field: 'hps5Minutes' },
   }
   tab_play_keys = tab_play_keys.split(',')
   tab_play_keys.forEach(key => {
@@ -270,7 +270,7 @@ const set_play_name_list = (tab_play_keys = '') => {
 */
 const set_secondary_bg = (index, length) => {
   let bg_status = false
-  if ([2, 5].includes(length) && index == 1 && lodash.get(this, 'match.play_current_key') !== 'hps5Minutes') {
+  if ([2, 5].includes(length) && index == 1 && lodash.get( 'match.play_current_key') !== 'hps5Minutes') {
     bg_status = true
   } else if ([3, 4, 5].includes(index) && length > 5) {
     bg_status = true
@@ -286,7 +286,7 @@ const set_secondary_bg = (index, length) => {
 */
 const get_bet_width = (index, length) => {
   //是否多列
-  let multi_column = lodash.get(this, 'match.tpl_id') == 13
+  let multi_column = lodash.get( 'match.tpl_id') == 13
   let bet_width = this.match_list_tpl_size.bet_width
   if (multi_column) {
     if (length == 5) {

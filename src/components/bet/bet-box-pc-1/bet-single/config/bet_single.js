@@ -31,7 +31,7 @@ export default {
   },
   created() {
     // 显示部分dom ID
-    this.DOM_ID_SHOW = window.env.config.DOM_ID_SHOW;
+    this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
     this.$root.$on(this.emit_cmd.EMIT_SINGLE_COMPLETE_HANDLE_CMD, this.complete_handle); //单关投注完成
     this.$root.$on(this.emit_cmd.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, this.check_valid_money); //检查单关无效的金额
     this.$root.$on(this.emit_cmd.EMIT_SINGLE_SAVE_BET_CMD, this.save_bet_items); //单关保留选项
@@ -122,7 +122,7 @@ export default {
       let error_code = this.view_ctr_obj.error_code;
       // 接受变化按钮对应的错误码
       let codes = this.error_mapping.ERROR_CODE_ACCEPT_BTN;
-      // let count =  this.yabo_common.get_deactive_count(this);
+      // let count =  BetCommonHelper.get_deactive_count();
       //bet_order_status 1-投注状态,2-投注中状态,4-投注失败状态,5-投注校验未通过
       return ([1, 2, 4, 5].includes(this.view_ctr_obj.bet_order_status) && codes.includes(error_code)) && !this.vx_get_bet_appoint_obj;
     },
@@ -169,7 +169,7 @@ export default {
      * @return {undefined} undefined
     */
     has_disable_item() {
-      return this.yabo_common.has_disable_item(this);
+      return BetCommonHelper.has_disable_item();
     },
     /**
      * 删除无效项按钮是否显示
@@ -177,7 +177,7 @@ export default {
      * @return {undefined} undefined
      */
     show_invalid_btn() {
-      let count = this.yabo_common.get_deactive_count(this);
+      let count = BetCommonHelper.get_deactive_count();
       return this.vx_get_bet_single_list.length > 1 && count > 0 && this.bet_flag;
     }
   },
@@ -483,7 +483,7 @@ export default {
           obj.cs.win_money = "";
           obj.cs.min_money = "";
           obj.cs.max_money = "";
-          this.yabo_common.set_bet_obj_value(this, obj);
+          BetCommonHelper.set_bet_obj_value( obj);
           if(obj.cs.operate_type=='PA') {
             count_pa++;
           }
@@ -649,7 +649,7 @@ export default {
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
             // 恢复校验
-            this.yabo_common.init_message(this);
+            BetCommonHelper.init_message();
           }
 
           // 移除无效盘口后投注项的数量
@@ -668,7 +668,7 @@ export default {
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
             // 恢复校验
-            this.yabo_common.init_message(this);
+            BetCommonHelper.init_message();
           }
           //console.log(`=========================single_range_money:${this.view_ctr_obj.single_range_money}`);
           // 校验金额
@@ -724,7 +724,7 @@ export default {
                 clearTimeout(this.timer_obj['time_over']);
               }
               if (code == 200) {
-                this.yabo_common.init_message(this);
+                BetCommonHelper.init_message();
                 this.view_ctr_obj.bet_order_status = 3;//投注成功状态
                 this.view_ctr_obj.order_detail_data = data.orderDetailRespList; //这里是playoptionname的数据源 总进球数区间玩法 预约如果是空  将导致投注记录那里0-1比分不显示
                 let lock = data.lock ? data.lock : 0; // 如果没有返回，给默认老的投注流程
@@ -735,11 +735,11 @@ export default {
                 let fail_count = 0; // 注单失败的个数
                 _.forEach(data.orderDetailRespList, item => {
                   let oid =  _.get(item, 'playOptionsId');
-                  let bet_single_obj = _.cloneDeep(this.yabo_common.get_bet_obj(this, oid));
+                  let bet_single_obj = _.cloneDeep(BetCommonHelper.get_bet_obj( oid));
                   if(bet_single_obj && bet_single_obj.cs) {
                     bet_single_obj.cs.handle_time = new Date().getTime();
                   }
-                  this.yabo_common.set_bet_obj_value(this, bet_single_obj); 
+                  BetCommonHelper.set_bet_obj_value( bet_single_obj); 
                   //正常注单统计数量
                   if(_.isNull(item.preOrderDetailStatus) || !_.hasIn(item,'preOrderDetailStatus' )) {
                     // 订单失败
@@ -871,7 +871,7 @@ export default {
         } else {
           this.reset_bet_single();
           // 恢复校验
-          this.yabo_common.init_message(this);
+          BetCommonHelper.init_message();
           this.code_exist = true;
           this.view_ctr_obj.bet_order_status = 1;
 
@@ -907,7 +907,7 @@ export default {
         // 投注失败返回的投注项oid
         let oid = _.get(data, '[0].data.playOptionsId');
         // 通过oid获取投注项对象
-        let bet_obj = this.yabo_common.get_bet_obj(this, oid);
+        let bet_obj = BetCommonHelper.get_bet_obj( oid);
         if (bet_obj) {
           let obj = _.cloneDeep(bet_obj);
           if (obj && obj.cs) {
@@ -921,7 +921,7 @@ export default {
               this.vx_bet_single_obj_attr(obj);
               this.id = bet_obj.id;
               //console.log('bet_single=============================开始调用');
-              this.yabo_common.update_odds_info(this);
+              BetCommonHelper.update_odds_info();
             } else if (this.error_mapping.ERROR_CODE_ODDS_CHANGE.includes(code)) { // 错误码是否包含在需要显示赔率变化的错误码集合中(ERROR_CODE_ODDS_CHANGE)
               let odds_value = _.get(data, '[0].data.odds');
               // os: 1 开盘
@@ -931,7 +931,7 @@ export default {
               obj.bs.hps[0].hl[0].ol[0].ov = odds_value;
               this.vx_bet_single_obj_attr(obj);
               this.id = bet_obj.id;
-              this.yabo_common.update_odds_info(this);
+              BetCommonHelper.update_odds_info();
             }
           }
         }
@@ -962,7 +962,7 @@ export default {
           } else {
             let oid = _.get(data, '[0].data.playOptionsId');
             // 通过oid获取投注项对象
-            let bet_obj = this.yabo_common.get_bet_obj(this, oid);
+            let bet_obj = BetCommonHelper.get_bet_obj( oid);
             if(bet_obj) {
               id = bet_obj.id;
             }
@@ -1152,10 +1152,10 @@ export default {
         return;
       }
       // console.log('==================code=========================', code);
-      let count = this.yabo_common.get_deactive_count(this);
+      let count = BetCommonHelper.get_deactive_count();
       if(count > 0) return;
 
-      this.yabo_common.init_message(this);
+      BetCommonHelper.init_message();
       let msg = this.$root.$t(`error_msg_info.${code}`);
       // 若msg为空则显示投注失败处理
       if (msg == `error_msg_info.${code}`) {
@@ -1171,7 +1171,7 @@ export default {
       if (delay && count == 0) {
         clearTimeout(this.timer_obj['init_message']);
         this.timer_obj['init_message'] = setTimeout(() => {
-          this.yabo_common.init_message(this);
+          BetCommonHelper.init_message();
         }, delay);
       }
     },
@@ -1516,7 +1516,7 @@ export default {
               // 输入金额转换为最高限额
               obj.cs.money = parseFloat(max_money);
             }
-            this.yabo_common.set_bet_obj_value(this,obj);
+            BetCommonHelper.set_bet_obj_value(obj);
           }
         }
       }
@@ -1628,7 +1628,7 @@ export default {
               // 输入金额转换为最高限额
               obj.cs.money = parseFloat(max_money);
             }
-            this.yabo_common.set_bet_obj_value(this,obj);
+            BetCommonHelper.set_bet_obj_value(obj);
           }
         }         
       }, 5000);
@@ -1681,7 +1681,7 @@ export default {
               // 设置最大限额为输入金额
               obj.cs.money = parseFloat(max_money);
             }
-            this.yabo_common.set_bet_obj_value(this,obj);
+            BetCommonHelper.set_bet_obj_value(obj);
           }                
         }
       });
@@ -1715,13 +1715,13 @@ export default {
       if(["M400005","M400010","M400011","M400012","M400009"].includes(this.view_ctr_obj.error_code)) {
         this.view_ctr_obj.single_range_money = 0; 
         // 重新初始化错误信息
-        this.yabo_common.init_message(this);
+        BetCommonHelper.init_message();
       }
     }
   },
   mounted() {
     this.$nextTick().then(() => {
-      let count = this.yabo_common.get_deactive_count(this);
+      let count = BetCommonHelper.get_deactive_count();
       // 如果存在无效项需要提示
       if(count > 0) {
         this.view_ctr_obj.error_code = "0402049"; //已失效

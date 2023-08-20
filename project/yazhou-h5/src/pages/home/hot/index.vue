@@ -136,8 +136,8 @@ const league_icon_error = ($event) => {
 // 竞彩足球图片 处理
 const host = (item) => {
   let url = ''
-  let domain = window.env.config.domain[window.env.config.current_env][0]
-  let prefix_job = window.env.config.api.API_PREFIX_JOB
+  let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]
+  let prefix_job = window.BUILDIN_CONFIG.api.API_PREFIX_JOB
   let is_jing_cai = _.get(item, 'chinaBetting') == 1
   if (is_jing_cai && item.field3) {
     url = `${domain}/${prefix_job}/${item.field3}`

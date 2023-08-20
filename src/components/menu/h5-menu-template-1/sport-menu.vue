@@ -197,9 +197,9 @@ import { useRoute } from 'vue-router'
   //主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据，真正渲染到页面数据的是下面的 main_menu_list_items  =================
   const main_menu_list = ref([]) 
   //主菜单 一级主菜单 下边的四个菜单（滚球， 今日， 电竞， 虚拟体育）, 真正渲染到 页面的数据    =================
-  // Level_one_menu_list(this) || 后续修改调整
+  // Level_one_menu_list() || 后续修改调整
   const main_menu_list_items = ref([]) 
-  //二级菜单项目 TODO: second_sub_list(this) ||  后续修改调整
+  //二级菜单项目 TODO: second_sub_list() ||  后续修改调整
   const sub_menu_list = ref([]) 
   // 二级菜单选中项下标
   const sub_menu_i = ref(0) 

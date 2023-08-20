@@ -160,7 +160,7 @@ class BetDataCtr {
    */
   upd_bet_obj(callback) {
     if (callback) {
-      callback(this);
+      callback();
     }
   }
   http_upd_data(obj) {}

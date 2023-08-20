@@ -194,7 +194,7 @@ const page_title = computed(() => {
 })
 // 前端控制是否禁用收藏功能
 const enable_collect_api = computed(() => {
-  return window.env.config.ENABLE_COLLECT_API;
+  return  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.ENABLE_COLLECT_API;
 })
 //设置即将开赛筛选列表
 let hour = t('common.hour')
@@ -206,7 +206,7 @@ time_list.value = [
   { label: t('filter.select_time.12h'), title: '12' + hour, value: 12 },
 ]
 // 显示部分dom ID
-DOM_ID_SHOW.value = window.env.config.DOM_ID_SHOW;
+DOM_ID_SHOW.value = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 // console.error('reload')
 // 刷新时重置为列表展开
 store.dispatch({

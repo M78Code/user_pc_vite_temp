@@ -48,7 +48,7 @@
           <span :class="get_lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
             <template v-if="_.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ $root.$t('bet_record.ing')
             }}&thinsp;</template>
-            <template v-if="get_is_champion(this)">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
+            <template v-if="get_is_champion()">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
             <!-- 投注成功后的玩法名称用接口返回的 -->
             <!--<template v-else-if="bet_success_obj.playName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playName}}</template>-->
             <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
@@ -88,12 +88,12 @@
         </div>
 
         <!-- 联赛名称 -->
-        <div class="xia" v-if="value_show.tn && !get_is_champion(this)">{{ value_show.tn }}</div>
+        <div class="xia" v-if="value_show.tn && !get_is_champion()">{{ value_show.tn }}</div>
 
         <!-- 下 -->
         <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
           <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
-            <template v-if="get_is_champion(this)">{{ value_show.onTn || value_show.tn }}</template>
+            <template v-if="get_is_champion()">{{ value_show.onTn || value_show.tn }}</template>
             <template v-else-if="BetData.is_bet_success_status && bet_success_obj.matchInfo">{{ bet_success_obj.matchInfo }}</template>
             <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }} {{ score }}</template>
           </div>
@@ -774,7 +774,7 @@ const odds_value = computed(() => {
     let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
       hsw = value_show.hps[0].hsw;
 
-    if (get_is_champion.value(this)) {   //冠军玩法不支持赔率转化
+    if (get_is_champion.value()) {   //冠军玩法不支持赔率转化
       hsw = '1'
     }
 

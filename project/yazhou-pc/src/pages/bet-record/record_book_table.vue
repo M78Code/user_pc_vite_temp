@@ -442,7 +442,7 @@ export default {
   watch: {
     order_list: {
       handler(val) {
-        let scroll_area =  this.yabo_common.get_refs_info('scrollArea', null, this);
+        let scroll_area =  BetCommonHelper.get_refs_info('scrollArea', null, this);
         if (scroll_area && scroll_area.setScrollPosition) {
           scroll_area.setScrollPosition(0);
         }

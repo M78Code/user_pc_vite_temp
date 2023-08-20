@@ -45,7 +45,7 @@ export default {
     let languageName = "zh";
     loadLanguageAsync(languageName).finally(() => {
       // 实例化域名检测类对象
-      AllDomain.create(this, () => {
+      AllDomain.create( () => {
         // data参数说明: {type:'domain_api',status:0 ,list:[]}
         // 是api域名类型时
 

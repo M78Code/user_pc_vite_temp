@@ -458,7 +458,7 @@ export default defineComponent({
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.env.config.live_domains[0] || _.get(this.get_user,'oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.get_user,'oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'

@@ -180,7 +180,7 @@ class ZhuGe {
 //   // 测试环境的key    c41f8b7cb97640838d90a73a0f077a43
 //   // 生产环境的key    5a0301efe0244733acb0488763592a6b
 //   try {
-//     switch (window.env.config.current_env) {
+//     switch (window.BUILDIN_CONFIG.current_env) {
 //       case "local_dev": // 开发
 //         break;
 //       case "local_test": // 测试

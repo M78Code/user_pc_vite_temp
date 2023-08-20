@@ -45,7 +45,7 @@ export default use_websocket_store = () => {
   const c302_timeout = ref(null)
 
   onMounted(() => {
-    ws_debounce.value = new wsDebounce(this, this.get_match_info_upd)
+    ws_debounce.value = new wsDebounce( this.get_match_info_upd)
     c302_timeout.value = 0
 
     if (window.ws) {

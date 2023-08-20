@@ -52,7 +52,7 @@ export default {
     },
     // 本地完整菜单，走主流程的方法
     local_full_menu_method() {
-      this.menu_first_load(local_menu_data(this),'first_load')
+      this.menu_first_load(local_menu_data(),'first_load')
     },
     // 去除串关
     remove_crosstalk(data) {

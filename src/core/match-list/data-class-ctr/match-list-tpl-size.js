@@ -190,7 +190,7 @@ class match_list_tpl_size {
       media_width = parseInt(total_width * 0.03)
     }
 
-    Object.keys(this).forEach(key => {
+    Object.keys().forEach(key => {
       // 竞彩足球
       if (key == 'template12') {
         let process_team_width_12 = parseInt(total_width * 0.45)
