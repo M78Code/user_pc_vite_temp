@@ -215,6 +215,7 @@
 // import utils from 'src/public/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
+import BetData from "../class/bet-data-class";
 
 // 此文件需抽离重构
 
