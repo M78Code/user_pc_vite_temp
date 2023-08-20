@@ -112,23 +112,23 @@ this.bet_appoint_ball_head= null */.this.pre_bet_list = null;
     this.bet_read_write_refer_obj = {
 
      [bet_custom_id]:{
-      mount_point_key:'virtual_bet_obj',
-      shuju_laiyuan: 'xiangqing',       //  
-      shuju_laiyuan_obj:  data_souce,       //  
-      c_csid,
-      c_tid,
-      c_mid,
-      c_hid,
-      c_oid,
-      c_kid,
-      c_hn,
-      c_topKey,
-      is_guanjun:1,  
-      is_dianjing:1,
-      is_common:1,
-      is_vr:1,   // 
-      virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-      is_pre_bet,
+      // mount_point_key:'virtual_bet_obj',
+      // shuju_laiyuan: 'xiangqing',       //  
+      // shuju_laiyuan_obj:  data_souce,       //  
+      // c_csid,
+      // c_tid,
+      // c_mid,
+      // c_hid,
+      // c_oid,
+      // c_kid,
+      // c_hn,
+      // c_topKey,
+      // is_guanjun:1,  
+      // is_dianjing:1,
+      // is_common:1,
+      // is_vr:1,   // 
+      // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+      // is_pre_bet,
 
       
      }
