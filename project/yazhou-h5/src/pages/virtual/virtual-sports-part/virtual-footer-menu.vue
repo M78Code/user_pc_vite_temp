@@ -31,7 +31,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_footer_menu",
   setup(props, evnet) {
@@ -42,7 +42,7 @@ export default defineComponent({
       //上一次的
       prev_floating_sub:'prev-floating-sub-i',
     })
-    cancel_loading = debounce(this.cancel_loading,500)
+    // cancel_loading = debounce(this.cancel_loading,500)
 
     onUnmounted(() => {
       this.debounce_throttle_cancel(this.cancel_loading);
@@ -61,6 +61,18 @@ export default defineComponent({
     //   "get_newer_standard_edition", // 1新手版 2标准版
     //   "get_theme"
     // ]),
+    const get_show_favorite_list = computed(() => {
+      return ""
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return ""
+    });
+    const get_newer_standard_edition = computed(() => {
+      return ""
+    });
+    const get_theme = computed(() => {
+      return ""
+    });
     /**
      * 初始化玩法选中项
      */
@@ -136,6 +148,10 @@ export default defineComponent({
       set_loading,
       cancel_loading,
       footer_sub_m_list,
+      get_show_favorite_list,
+      get_curr_sub_menu_type,
+      get_newer_standard_edition, // 1新手版 2标准版
+      get_theme
     }
   }
 })
@@ -143,14 +159,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 /*  刷新按钮 */
-@include keyframes(loading-ring-animate) {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+// @include keyframes(loading-ring-animate) {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 
 .virtual-footer-menu {
   //height: 0.66rem;

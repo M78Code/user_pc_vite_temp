@@ -8,14 +8,14 @@
           <div class="back-wrap">
             <div class="detail-back" @click="$common.go_where({back_to: 'go_back_from_virtual'})"></div>
             <!-- 虚拟体育 -->
-            <div class="col">{{$root.$t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
+            <div class="col">{{t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
             <!-- <div class="no-single" @click="$root.$emit(emit_cmd.EMIT_CHANGE_RECORD_SHOW,true)"></div> -->
-            <div class="no-single" @click="useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);"></div>
-            <set-menu />
+            <div class="no-single" @click="useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);"></div>
+            <!-- <set-menu /> -->
           </div>
           <!-- 虚拟体育菜单 -->
-          <div class="virtual-menu-list" ref='virtual_menu_list' v-if="virtual_menu_list.length">
+          <div class="virtual-menu-list" ref='virtual_menu_list_dom' v-if="virtual_menu_list.length">
             <div class="tabs-bar">
               <div class="tabs-bar-nav" ref="scroll_main">
                 <div class="tabs-tab"
@@ -24,9 +24,9 @@
                      :class="[sub_menu_i == i ? 'tabs-active' : '']"
                      @click="virtual_menu_changed(i)"
                 >
-                  <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
+                  <!-- <div class="icon" :class="['icon'+tab.field1, get_theme.includes('y0')?'icon_y0':'']">
                     <img v-if="false" class="menu-new-icon" src="image/bw3/svg/virtual-sports/new.svg" />
-                  </div>
+                  </div> -->
                   <span>{{ tab.name }}</span>
                 </div>
               </div>
@@ -47,12 +47,12 @@
     </div>
 
     <!-- 回到顶部按钮组件 -->
-    <scroll-top
+    <!-- <scroll-top
         v-show="!right_menu_show && list_scroll_top > 0"
         ref="scroll_top"
         :list_scroll_top="list_scroll_top"
         @back-top="back_top"
-    />
+    /> -->
 
     <!-- 简版 底部菜单 -->
     <virtual-footer-menu v-show="!right_menu_show" />
@@ -68,29 +68,33 @@
 4.mixins更改
 */
 
-
-import { reactive, computed, onMounted, onUnmounted, toRefs } from "vue";
+// 引入国际化
+import { useI18n } from "vue-i18n";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs } from "vue";
 
 // #TODO vuex更改
 // import { mapGetters, mapMutations } from "vuex";
 
 // #TODO 路径需修改
-import virtualSports from "src/project/pages/virtual/virtual_sports_part/virtual_sports.vue";    // 虚拟体育
-import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
-import { api_v_sports} from "src/project/api/index";
-import utils from "src/public/utils/utils";
-import scroll_top from "src/project/components/record_scroll/scroll_top";
-import virtualFooterMenu from 'src/project/pages/virtual/virtual_sports_part/virtual_footer_menu.vue'
-import base_data from "src/public/utils/base_data.js";
+import virtualSports from "project_path/src/pages/virtual/virtual-sports-part/virtual-sports.vue";    // 虚拟体育
+// import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
+import { api_virtual } from "src/api/index";
+// 公共方法
+import utils from 'src/core/utils/utils.js';
+// import { axios_api_loop } from "src/core/http"
+import axios_api_loop from "src/core/http/axios-loop.js"
+// import scroll_top from "src/project/components/record_scroll/scroll_top";
+import virtualFooterMenu from 'project_path/src/pages/virtual/virtual-sports-part/virtual-footer-menu.vue'
+import base_data from "src/core/menu-h5/menu-data-class.js";
 
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 export default defineComponent({
   name: "virtual",
   components: {
     virtualSports,
-    setMenu,
-    "scroll-top": scroll_top,
+    // setMenu,
+    // "scroll-top": scroll_top,
     virtualFooterMenu,
   },
   /**
@@ -102,7 +106,7 @@ export default defineComponent({
    */
   beforeRouteEnter(to, from, next) {
     next(_this => {
-      _this.set_current_esport_csid('');
+      // _this.set_current_esport_csid('');
       _this.v_match_router_ente = Math.random();
       if(from.name == "virtual_sports_details"){
         if(_this.get_virtual_current_sub_menuid){
@@ -112,8 +116,11 @@ export default defineComponent({
     });
   },
   setup() {
+    const { t } = useI18n();
     // 路由
-    const data = reactive({
+    const component_data = reactive({
+      // dom 
+      virtual_menu_list_dom: null,
       // 事件集合
       emitters: [],
       ws_invoke_key:'virtual-sports',
@@ -140,26 +147,27 @@ export default defineComponent({
       virtual_menu_list: [], // 虚拟赛事的数据
     })
 
-    //虚拟体育刷新赛事
-    let timer_super27 = null;
-    let timer_super28 = null;
-    //获取虚拟体育菜单数据
-    get_virtual_menus();
-    //首页跳转虚拟体育设置menu_type为900
-    set_menu_type(900);
-    clearTimeout(timer_super28)
-    timer_super28 = setTimeout(()=>{
-      set_menu_type(900);
-    }, 500)
-    cancel_ref = debounce(cancel_ref,200)
-
-
     onMounted(() => {
-      console.error(get_home_data,"get_home_data====")
+      // 原 created 
+      //虚拟体育刷新赛事
+      let timer_super27 = null;
+      let timer_super28 = null;
+      //获取虚拟体育菜单数据
+      get_virtual_menus();
+      //首页跳转虚拟体育设置menu_type为900
+      // set_menu_type(900);
+      // clearTimeout(timer_super28)
+      // timer_super28 = setTimeout(()=>{
+      //   set_menu_type(900);
+      // }, 500)
+      // cancel_ref = debounce(cancel_ref,200)
+      
+      // 原mounted 
+      // console.error(get_home_data,"get_home_data====")
       // 浏览器窗口变化事件监听
-      emitters = [
-        useMittOn.on(MITT_KEY.EMIT_WINDOW_RESIZE, window_resize_on).off,
-        useMittOn.on(MITT_KEY.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
+      component_data.emitters = [
+        // useMittOn.on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off,
+        // useMittOn.on(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
       ]
       // $root.$on(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
       // 不让浏览器记住上次的滚动位置
@@ -167,9 +175,9 @@ export default defineComponent({
         history.scrollRestoration = 'manual'
       }
       //虚拟体育页更改语言
-      if (!location.search.includes('keep_url')) {
-        history.replaceState(null,'',`${location.pathname}${location.hash}`)    //地址栏优化
-      }
+      // if (!location.search.includes('keep_url')) {
+      //   history.replaceState(null,'',`${location.pathname}${location.hash}`)    //地址栏优化
+      // }
     });
   
   /**
@@ -179,11 +187,11 @@ export default defineComponent({
    */
   onUnmounted(() => {
     // 设置上次的菜单类型
-    set_menu_type(get_prev_menu_type)
+    // set_menu_type(get_prev_menu_type)
     debounce_throttle_cancel(cancel_ref);
     // $root.$off(emit_cmd.EMIT_WINDOW_RESIZE, window_resize_on);
     // $root.$off(emit_cmd.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
-    emitters.map((x) => x())
+    component_data.emitters.map((x) => x())
     utils.clear_timer();
 
     // 删除虚拟体育赛狗和赛马玩法缓存
@@ -211,17 +219,40 @@ export default defineComponent({
   //     }),
   //   },
 
-
-  // #TODO vuex actions
-  // ...mapMutations([
-  //       "set_list_scroll_top_iconshow", // 设置滚动图标显示
-  //       "set_menu_type",    // 设置当前主菜单menu_type值
-  //       'set_virtual_current_sub_menuid',   // 设置当前选中的二级菜单id
-  //       'set_curr_sub_menu_type',   // 设置当前选中的二级菜单type
-  //       'set_virtual_data_loading',  // 设置虚拟体育数据loading状态
-  //       'set_current_esport_csid',   // 设置电竞游戏csid
-  //       'set_is_user_refreshing',    // 设置用户刷新状态
-  //     ]),
+    const get_virtual_current_sub_menuid = computed(() => {
+      return ""
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return ""
+    });
+    const get_prev_menu_type = computed(() => {
+      return ""
+    });
+    const get_is_close_video = computed(() => {
+      return ""
+    });
+    const get_is_banner_jump = computed(() => {
+      return ""
+    });
+    const get_golistpage = computed(() => {
+      return ""
+    });
+    const get_theme = computed(() => {
+      return ""
+    });
+    const right_menu_show = computed(() => {
+      return ""
+    });
+    // #TODO vuex actions
+    // ...mapMutations([
+    //       "set_list_scroll_top_iconshow", // 设置滚动图标显示
+    //       "set_menu_type",    // 设置当前主菜单menu_type值
+    //       'set_virtual_current_sub_menuid',   // 设置当前选中的二级菜单id
+    //       'set_curr_sub_menu_type',   // 设置当前选中的二级菜单type
+    //       'set_virtual_data_loading',  // 设置虚拟体育数据loading状态
+    //       'set_current_esport_csid',   // 设置电竞游戏csid
+    //       'set_is_user_refreshing',    // 设置用户刷新状态
+    //     ]),
 
 
     /**
@@ -229,7 +260,7 @@ export default defineComponent({
      */
     const back_top = () => {
       // #TODO 
-      $refs.scrollArea && $refs.scrollArea.scrollTo(0,0)
+      // $refs.scrollArea && $refs.scrollArea.scrollTo(0,0)
     };
     /**
      * @description: 更新赛事列表滚动高度
@@ -260,23 +291,23 @@ export default defineComponent({
     const virtual_menu_changed = (i) => {
       // #TODO
       utils.tab_move(i, $refs.scroll_main, $refs.scroll_box)
-      sub_menu_i = i;
-      current_sub_menu = sub_menu_list[i];
-      virtual_sports_params.csid = current_sub_menu.menuId;
+      component_data.sub_menu_i = i;
+      component_data.current_sub_menu = component_data.sub_menu_list[i];
+      component_data.virtual_sports_params.csid = component_data.current_sub_menu.menuId;
 
       // 足蓝跳转到其他虚拟赛种前， 给状态一个标识
-      v_menu_changed = ([1001, 1004].includes(get_curr_sub_menu_type) ? 'zu_lan_' : '') + Math.random();
+      component_data.v_menu_changed = ([1001, 1004].includes(get_curr_sub_menu_type.value) ? 'zu_lan_' : '') + Math.random();
 
-      set_virtual_current_sub_menuid(current_sub_menu.menuId);
+      // set_virtual_current_sub_menuid(component_data.current_sub_menu.menuId);
       // 虚拟二级菜单type储存
-      set_curr_sub_menu_type(current_sub_menu.menuType || current_sub_menu.menuId)
+      // set_curr_sub_menu_type(component_data.current_sub_menu.menuType || component_data.current_sub_menu.menuId)
     };
     const get_sub_menu_c_index = () => {
       let r = 0;
-      let sub_menu_id = get_virtual_current_sub_menuid;
-      r = lodash.findIndex(sub_menu_list,{
-        field1: sub_menu_id
-      })
+      // let sub_menu_id = get_virtual_current_sub_menuid;
+      // r = lodash.findIndex(component_data.sub_menu_list,{
+      //   field1: sub_menu_id
+      // })
       if(r < 0) r = 0;
       return r;
     };
@@ -284,45 +315,48 @@ export default defineComponent({
      * 获取虚拟体育菜单
      */
     const get_virtual_menus = () => {
-      set_virtual_data_loading(1)
-      sub_menu_list =lodash.cloneDeep(base_data.vr_menu())
+      // set_virtual_data_loading(1)
+      component_data.sub_menu_list =lodash.cloneDeep(base_data.vr_menu())
       let obj_ = {
         // axios api对象
-        axios_api:api_v_sports.get_virtual_menus,
+        axios_api:api_virtual.get_virtual_menus,
         // axios api对象参数
         params:{},
         // axios中then回调方法
-        fun_then: res => {
+        fun_then: result => {
+          let { data: res } = result;
+          console.log("res", res);
           if(res.code == 200){
-            virtual_menu_list = res.data || []
+            component_data.virtual_menu_list = res.data || []
             res.data.forEach(sub_menu => {
               sub_menu.menuName = sub_menu.name;
             });
-            sub_menu_list = !lodash.isEmpty(res.data)?lodash.cloneDeep(res.data):lodash.cloneDeep(base_data.vr_menu());
-            sub_menu_i = get_sub_menu_c_index();
-            if(sub_menu_list.length){
-              if(sub_menu_id_f_detail){
-                let index = lodash.findIndex(sub_menu_list, item => item.menuId == sub_menu_id_f_detail);
-                sub_menu_i = index;
-                sub_menu_id_f_detail = '';
+            console.log("base_data.vr_menu()", base_data.vr_menu());
+            component_data.sub_menu_list = !lodash.isEmpty(res.data)?lodash.cloneDeep(res.data):lodash.cloneDeep(base_data.vr_menu());
+            component_data.sub_menu_i = get_sub_menu_c_index();
+            if(component_data.sub_menu_list.length){
+              if(component_data.sub_menu_id_f_detail){
+                let index = lodash.findIndex(component_data.sub_menu_list, item => item.menuId == component_data.sub_menu_id_f_detail);
+                component_data.sub_menu_i = index;
+                component_data.sub_menu_id_f_detail = '';
               }
 
-              if(!get_virtual_current_sub_menuid){
-                set_virtual_current_sub_menuid(sub_menu_list[sub_menu_i].menuId);
-              }
-              set_curr_sub_menu_type(sub_menu_list[sub_menu_i].menuId);
-
-              virtual_menus_loaded(sub_menu_list);
+              // if(!get_virtual_current_sub_menuid){
+              //   set_virtual_current_sub_menuid(component_data.sub_menu_list[component_data.sub_menu_i].menuId);
+              // }
+              // set_curr_sub_menu_type(component_data.sub_menu_list[component_data.sub_menu_i].menuId);
+              
+              virtual_menus_loaded(component_data.sub_menu_list);
             }else{
-              virtual_menus_loaded(sub_menu_list);
+              virtual_menus_loaded(component_data.sub_menu_list);
             }
           }else{
-            virtual_menu_list = []
+            component_data.virtual_menu_list = []
           }
         },
         // axios中catch回调方法
         fun_catch: err => {
-          useMittEmit(MITT_KEY.EMIT_NO_VIRTUAL_MENU_DATA);
+          useMittEmit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
           // $root.$emit(emit_cmd.EMIT_NO_VIRTUAL_MENU_DATA);
         },
         // 最大循环调用次数(异常时会循环调用),默认3次
@@ -330,28 +364,30 @@ export default defineComponent({
         // 异常调用时延时时间,毫秒数,默认1000
         timers:1100
       }
+      // #TODO 
       // axios_api轮询调用方法
-      $utils.axios_api_loop(obj_);
+      axios_api_loop(obj_);
     };
     /**
      * 虚拟体育菜单加载完成
      */
     const virtual_menus_loaded = (menues) => {
       if(!menues || !menues.length){
-        current_sub_menu = {};
-        useMittEmit(MITT_KEY.EMIT_VIRTUAL_MATCH_LOADING, false);
+        component_data.current_sub_menu = {};
+        useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, false);
         // $root.$emit(emit_cmd.EMIT_VIRTUAL_MATCH_LOADING,false);
         return;
       }
-      virtual_sports_params.csid = menues[sub_menu_i].menuId;
+      component_data.virtual_sports_params.csid = menues[component_data.sub_menu_i].menuId;
       if(menues.length){
-        set_virtual_current_sub_menuid(menues[sub_menu_i].menuId);
-        set_curr_sub_menu_type(menues[sub_menu_i].menuId);
+        // set_virtual_current_sub_menuid(menues[component_data.sub_menu_i].menuId);
+        // set_curr_sub_menu_type(menues[component_data.sub_menu_i].menuId);
       }
-      current_sub_menu = menues[sub_menu_i];
+      component_data.current_sub_menu = menues[component_data.sub_menu_i];
     };
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      t,
       lodash,
       virtual_menus_loaded,
       get_virtual_menus,
@@ -359,7 +395,15 @@ export default defineComponent({
       cancel_ref,
       vir_refresh,
       wrapper_scroll_handler,
-      back_top
+      back_top,
+      get_virtual_current_sub_menuid, // 当前选中的二级菜单id
+      get_curr_sub_menu_type, // 当前选中的二级菜单type
+      get_prev_menu_type,//赛事列表筛选逻辑使用的menu_type
+      get_is_close_video,
+      get_is_banner_jump,
+      get_golistpage,
+      get_theme,
+      right_menu_show,
     }
   }
 })
