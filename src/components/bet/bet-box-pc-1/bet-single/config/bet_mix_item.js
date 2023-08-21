@@ -368,7 +368,7 @@ this.handle_generat_emitters()
     active: {
       handler(new_){
         // 当前是单关时不做任何处理
-        if(this.BetDataCtr.is_bet_single) return;
+        if(BetDataCtr.is_bet_single) return;
         // 是否有效
         let is_effect;
         // 如果投注项状态是开盘或者是锁盘
@@ -542,9 +542,9 @@ handle_generat_emitters(){
         let index = _.findIndex(this.BetData.bet_list,item => item == this.id);
         if(index > -1) {
           //移除对应的键值对
-          this.BetDataCtr.set_bet_obj_remove_attr(this.id);
+          BetDataCtr.set_bet_obj_remove_attr(this.id);
           //移除对应的数据
-          this.BetDataCtr.bet_list_remove(index);
+          BetDataCtr.bet_list_remove(index);
         }
       } else {
         //初始化提示信息
@@ -562,15 +562,15 @@ handle_generat_emitters(){
       if(this.bet_item_count == 0) {
 
         clearTimeout(this.timer_obj[`timer_${this.id}`]);
-        this.BetDataCtr.set_layout_left_show('menu');
+        BetDataCtr.set_layout_left_show('menu');
         // 移除了串关数据后发现单关里面也存在此投注项，且仅剩下一个那么移除数据
         if(this.BetData.is_bet_merge || (this.BetData.bet_single_list.length == 1 && this.id == this.BetData.bet_single_list[0])) {
-          this.BetDataCtr.bet_single_clear();
+          BetDataCtr.bet_single_clear();
         }
-        if(this.BetDataCtr.cur_menu_type.type_name != 'bet') {
+        if(BetDataCtr.cur_menu_type.type_name != 'bet') {
           this.$nextTick(()=>{       
-            this.BetDataCtr.set_is_bet_merge(false);    //是否合并
-            this.BetDataCtr.set_is_bet_single(true);    //是否单关
+            BetDataCtr.set_is_bet_merge(false);    //是否合并
+            BetDataCtr.set_is_bet_single(true);    //是否单关
           });
         }
       }
@@ -720,7 +720,7 @@ handle_generat_emitters(){
         let obj = _.cloneDeep(this.BetData.bet_obj);
         obj.match_update = true;
         this.match_update = obj.match_update;
-        this.BetDataCtr.bet_obj_add_attr(obj);
+        BetDataCtr.bet_obj_add_attr(obj);
       }
     },
     /**
@@ -733,7 +733,7 @@ handle_generat_emitters(){
         let obj = _.cloneDeep(this.BetData.bet_obj);
         obj.match_update = false;
         this.match_update = obj.match_update;
-        this.BetDataCtr.bet_obj_add_attr(obj);
+        BetDataCtr.bet_obj_add_attr(obj);
       }      
     },
     /**

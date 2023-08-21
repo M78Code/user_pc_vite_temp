@@ -1,14 +1,13 @@
 <template>
   <div class="yb-site-left-width" v-if="global_switch.search_switch" :class="`${main_menu_toggle}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
-    <div v-show="!search_isShow" class="search-wrap"
-      :class="main_menu_toggle">
+    <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
         {{ search_hot_push.hot_push_name || t("common.search") }}
       </div>
       <icon class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(theme)
-          ? `img:${img_search_icon}`
-          : `img:${img_search_icon_y0}`
+        ? `img:${img_search_icon}`
+        : `img:${img_search_icon_y0}`
         " size="14px" />
     </div>
   </div>
@@ -24,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { ref, onMounted, computed, watch, onUnmounted } from "vue";
+import { t } from "src/boot/i18n";
 import { useRoute } from "vue-router";
 import {
   main_menu_toggle,
@@ -44,33 +43,45 @@ import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";
 import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.svg";
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);
 
 /** stroe仓库 */
-const store_data = store.getState();
-const { globalReducer, searchReducer, themeReducer } = store_data
+const { globalReducer, searchReducer, themeReducer, menuReducer } = store.getState();
+const unsubscribe = store.subscribe(() => {
+  global_switch.value = globalReducer.global_switch
+  search_isShow.value = searchReducer.search_isShow
+  theme.value = themeReducer.theme
+  menu_collapse_status.value = menuReducer.menu_collapse_status
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /**
  * 全局开关 default: object
  * 路径: project_path\src\store\module\global.js
  */
-const { global_switch } = globalReducer;
+const global_switch = ref(globalReducer.global_switch)
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-const { search_isShow } = searchReducer;
+const search_isShow = ref(searchReducer.search_isShow)
 /** 
  * 用户余额是否展示状态 default: theme01
  * 路径: project_path/src/store/module/theme.js
  */
-const { theme } = themeReducer
+const theme = ref(themeReducer.theme)
+/** 
+ * 获取菜单收起状态 default: false
+ * 路径: project_path\src\store\module\menu.js
+ */
+const menu_collapse_status = ref(menuReducer.menu_collapse_status)
 
 /** 计算菜单状态切换按钮 */
 const collapse_style = computed(() => {
-  if (theme.includes("y0")) {
+  if (theme.value.includes("y0")) {
     return is_mini_menu.value ? "collapse-open-y0" : "collapse-hide-y0";
   } else {
     return is_mini_menu.value ? "collapse-open" : "collapse-hide";
@@ -88,7 +99,7 @@ const set_search_status = (data) => (store.dispatch({
 
 /** 展开搜索 */
 function show_search() {
-  if (!global_switch.search_switch) {
+  if (!global_switch.value.search_switch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
   set_search_status(true);
@@ -117,12 +128,12 @@ watch(
 /** 内嵌版 菜单收起状态 */
 const set_is_mini_menu = (data) =>
   store.dispatch({
-    type: "set_is_mini_menu",
+    type: "SET_MENU_COLLAPSE_STATUS",
     data,
   });
 /** 内嵌版 菜单状态切换按钮 */
 function handle_menu_collapse() {
-  set_is_mini_menu(!get_is_mini_menu.value);
+  set_is_mini_menu(!menu_collapse_status.value);
 }
 </script>
 

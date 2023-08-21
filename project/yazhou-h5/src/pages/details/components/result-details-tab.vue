@@ -25,9 +25,9 @@ import {api_betting, api_result} from 'src/project/api/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 const router = useRouter()
 const route = useRoute()
 

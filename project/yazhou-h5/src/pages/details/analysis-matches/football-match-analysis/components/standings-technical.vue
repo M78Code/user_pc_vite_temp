@@ -82,9 +82,9 @@
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "src/project/components/details/team-img";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
   const props = defineProps({
     homeAwayGoal_and_coach_map: {

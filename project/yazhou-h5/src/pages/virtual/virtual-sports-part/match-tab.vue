@@ -26,7 +26,7 @@
 // import { mapGetters, mapMutations } from "vuex"
 import utils from "utils/utils";
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "match_tab",
@@ -78,9 +78,9 @@ export default defineComponent({
     onMounted(() => {
       // #TODO EMIT 
       emitters = [
-        useMittOn.on(MITT_KEY.EMIT_BASKETBALL_TIME_ARRIVED, basket_ball_time_handle).off,
-        useMittOn.on(MITT_KEY.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
-        useMittOn.on(MITT_KEY.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
+        useMittOn.on(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED, basket_ball_time_handle).off,
+        useMittOn.on(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
+        useMittOn.on(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
       ]
       // useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
       // useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);

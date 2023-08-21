@@ -37,7 +37,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 
@@ -53,7 +53,7 @@ import logout_notice_th from 'app/public/yazhou-pc/image/logout_notice_th.png'
 import logout_notice_ma from 'app/public/yazhou-pc/image/logout_notice_ma.png'
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /* 是否展示 */
 const is_show = ref(false)

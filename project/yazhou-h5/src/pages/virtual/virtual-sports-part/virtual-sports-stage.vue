@@ -166,7 +166,7 @@ import dateMatchList from 'project_path/pages/virtual/virtual_sports_part/date_m
 import virtualBasketball from 'project_path/pages/details/children/virtual_basketball.vue'
 
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_stage",
@@ -267,12 +267,12 @@ export default defineComponent({
 
     // #TODO EMIT 事件
     emitters = [
-      useMittOn.on(MITT_KEY.EMIT_IS_ALL_END_NOTICE, all_ended_handle).off,
-      useMittOn.on(MITT_KEY.EMIT_SYNC_VIDEO_DATA, sync_video_data_handle).off,
-      useMittOn.on(MITT_KEY.EMIT_CURRENT_VIDEO_PROCESS_INITED, set_init_video_on).off,
-      useMittOn.on(MITT_KEY.EMIT_VIRTUAL_MATCH_LOADING, set_loading_state).off,
-      useMittOn.on(MITT_KEY.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
-      useMittOn.on(MITT_KEY.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
+      useMittOn.on(MITT_TYPES.EMIT_IS_ALL_END_NOTICE, all_ended_handle).off,
+      useMittOn.on(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, sync_video_data_handle).off,
+      useMittOn.on(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, set_init_video_on).off,
+      useMittOn.on(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, set_loading_state).off,
+      useMittOn.on(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+      useMittOn.on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
     ]
     // useMittOn(MITT_TYPES.EMIT_IS_ALL_END_NOTICE,all_ended_handle);
     // useMittOn(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,sync_video_data_handle);
@@ -371,7 +371,7 @@ export default defineComponent({
     *@return{Undefined}undefined
     */
     const open = (position) => {
-      useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
       // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     };
     /**

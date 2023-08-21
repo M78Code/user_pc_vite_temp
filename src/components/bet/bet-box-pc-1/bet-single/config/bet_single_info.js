@@ -390,7 +390,7 @@ this.handle_generat_emitters()
       //聊天室跟单特殊处理
       if(this.source == 'is_chat_room'){
         _odd = this.BetData.chat_room_type;
-        this.BetDataCtr.set_cur_odd(_odd);
+        BetDataCtr.set_cur_odd(_odd);
         return `[${i18n.t('odds')[_odd]}]`;
       }
       // 根据odds_switch字段显示对应的盘口名称
@@ -844,7 +844,7 @@ this.handle_generat_emitters()
         obj.appoint_ball_head = this.appoint_ball_head; // 球头(小数形式)
         obj.is_head_eq_hadicap = this.appoint_ball_head == this.init_ball_head; // 球头和盘口值是否一样
          // 设置预约投注项
-        this.BetDataCtr.set_bet_appoint_obj(obj);
+        BetDataCtr.set_bet_appoint_obj(obj);
         return obj;
     },
     appoint_ball_head(new_) {
@@ -855,7 +855,7 @@ this.handle_generat_emitters()
       obj.appoint_ball_head = this.appoint_ball_head; // 球头(小数形式)
       obj.is_head_eq_hadicap = this.appoint_ball_head == this.init_ball_head; // 球头和盘口值是否一样
        // 设置预约投注项
-      this.BetDataCtr.set_bet_appoint_obj(obj);
+      BetDataCtr.set_bet_appoint_obj(obj);
     },
     /**
      * @Description :计算预约赔率
@@ -871,7 +871,7 @@ this.handle_generat_emitters()
       if(obj) {
         obj.appoint_odds_value = new_;
           // 设置预约投注项
-        this.BetDataCtr.set_bet_appoint_obj(obj);
+        BetDataCtr.set_bet_appoint_obj(obj);
       }
     },
     money(new_,old){
@@ -925,7 +925,7 @@ handle_generat_emitters(){
       obj.key = this.id;
       obj.cs.max_money = '8888';
       obj.cs.min_money = '10'
-      this.BetDataCtr.bet_single_obj_attr(obj);
+      BetDataCtr.bet_single_obj_attr(obj);
     },
 
     /**
@@ -1028,7 +1028,7 @@ handle_generat_emitters(){
       // 重置消息
       this.reset_input_empty_message();
       // 设置限额标识为默认
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 是否满额为默认值(不满额)
       this.set_bet_obj_value("full_bet", 0);
       // 获取输入值
@@ -1046,7 +1046,7 @@ handle_generat_emitters(){
       localStorage.setItem("common_amount", value);
       if(this.max_money=="") {
         // 最大最小值正在获取中
-        this.view_ctr_obj.single_range_money = -3;
+        this.view_ctr_obj.input_money_state = -3;
         // 设置提示信息
         BetCommonHelper.check_result_msg( 'single');
       }
@@ -1070,7 +1070,7 @@ handle_generat_emitters(){
         // 输入金额转换为用户余额
         this.money = parseFloat(user.balance);
         // 设置限额标识为超出用户余额
-        this.view_ctr_obj.single_range_money = 2;
+        this.view_ctr_obj.input_money_state = 2;
         // 设置提示信息
         BetCommonHelper.check_result_msg( 'single');
       }
@@ -1078,7 +1078,7 @@ handle_generat_emitters(){
       // 存储用户金额
       this.set_bet_obj_value("money", cs_money);
       // 限额标识为没有超出用户余额
-      if(this.view_ctr_obj.single_range_money!=2) {
+      if(this.view_ctr_obj.input_money_state!=2) {
         // 校验用户金额
         this.check_money(value);
       }
@@ -1173,7 +1173,7 @@ handle_generat_emitters(){
       // 如果删除的是当前预约的投注项，则回复预约投注项id为初始值
       if(this.BetData.bet_appoint_obj && this.BetData.bet_appoint_obj.bet_appoint_id==this.id) {
          // 置空预约投注项
-        this.BetDataCtr.set_bet_appoint_obj(null);
+        BetDataCtr.set_bet_appoint_obj(null);
       }
     },
     /**
@@ -1210,7 +1210,7 @@ handle_generat_emitters(){
          // 存储输入金额
         this.set_bet_obj_value("money", this.money); 
         if(this.max_money=="") {
-          this.view_ctr_obj.single_range_money = -3; // 最大最小值正在获取中
+          this.view_ctr_obj.input_money_state = -3; // 最大最小值正在获取中
           // 设置提示错误信息
           BetCommonHelper.check_result_msg( 'single');
         }
@@ -1226,7 +1226,7 @@ handle_generat_emitters(){
      * @return {undefined} undefined
      */
     input_max_money() {
-      if(userCtr.show_fail_alert() || this.view_ctr_obj.single_range_money == -3) {
+      if(userCtr.show_fail_alert() || this.view_ctr_obj.input_money_state == -3) {
         return;
       }
       this.bet_reset_money_msg();
@@ -1248,7 +1248,7 @@ handle_generat_emitters(){
       // 设置常用金额  
       localStorage.setItem("common_amount", this.money);
       // 设置限额范围标识为正常默认值    
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 更新键盘状态  
       this.update_keyboard_status();    
     },
@@ -1285,7 +1285,7 @@ handle_generat_emitters(){
         obj.key = this.id;
         obj.cs[k] = v;
         obj.is_update_single = true; //更新金钱数量
-        this.BetDataCtr.bet_single_obj_attr(obj);
+        BetDataCtr.bet_single_obj_attr(obj);
       }
     },
     /**
@@ -1297,7 +1297,7 @@ handle_generat_emitters(){
       try {
         if(this.view_ctr_obj.input_max_flag == 1) {
           // 最大最小值正在获取中
-          this.view_ctr_obj.single_range_money = -3;
+          this.view_ctr_obj.input_money_state = -3;
           // 设置提示信息 
           BetCommonHelper.check_result_msg( 'single');
           return;
@@ -1316,7 +1316,7 @@ handle_generat_emitters(){
         // 所有的投注项都没有输入金额时
         if (empty_count == this.BetData.bet_single_list.length) {
           // 设置限额标识为输入为空
-          this.view_ctr_obj.single_range_money = -2;
+          this.view_ctr_obj.input_money_state = -2;
           this.view_ctr_obj.is_empty_money = true;
         } else {
           // 输入金额
@@ -1332,13 +1332,13 @@ handle_generat_emitters(){
           // 用户余额为0
           if(parseFloat(user.balance) == 0.00) {
           } else if(parseFloat(this.min_money) > input_amount) { // 输入金额比最小金额还小
-            this.view_ctr_obj.single_range_money = -4;
+            this.view_ctr_obj.input_money_state = -4;
           } else if(parseFloat(this.max_money) < input_amount) { // 输入金额比最大限额还大
             // 设置单关限额标识为 大于最大金额
-            this.view_ctr_obj.single_range_money = 1; 
+            this.view_ctr_obj.input_money_state = 1; 
           } else {
             // 设置为默认
-            this.view_ctr_obj.single_range_money = 0;
+            this.view_ctr_obj.input_money_state = 0;
           }
           // 金额是否为空标识为false
           this.view_ctr_obj.is_empty_money = false;
@@ -1453,7 +1453,7 @@ handle_generat_emitters(){
       // 清除定时器
       clearTimeout(this.timer_obj['min_max_timer']);
       // 限额标识设置为默认
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 设置为最大最小值获取完成标识
       this.view_ctr_obj.input_max_flag = 2;
       // 大于最大金额,小于最小金额,金额为空,最大最小值正在获取中的code码
@@ -1488,7 +1488,7 @@ handle_generat_emitters(){
         // 限额最小金额给输入金额
         this.money = parseFloat(this.min_money);
         // 设置单关最低限额标识
-        this.view_ctr_obj.single_range_money = -1;
+        this.view_ctr_obj.input_money_state = -1;
         // 存储输入金额
         this.set_bet_obj_value("money", this.money);
         // 设置常用金额
@@ -1532,7 +1532,7 @@ handle_generat_emitters(){
           // 清除提示信息
           BetCommonHelper.reset_message_info();
           // 限额标识设置为默认
-          this.view_ctr_obj.single_range_money = 0;
+          this.view_ctr_obj.input_money_state = 0;
         }
       },0);
     },
@@ -1955,7 +1955,7 @@ handle_generat_emitters(){
                   }
                   this.min_odds_value = vu;
                   //设置输入框最小值
-                  this.BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
+                  BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
                   console.log('当前赔率===',  this.appoint_odds_value);
                   console.log('当前盘口===', odd_item.playOptions);
                   break;
@@ -1985,7 +1985,7 @@ handle_generat_emitters(){
             }
             this.min_odds_value = vu
             //设置输入框最小值
-            this.BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
+            BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
             // console.log('当前赔率3333===',  this.appoint_odds_value)
             // console.log('当前盘口3333===', filter_arr[0].playOptions);
           }
@@ -1999,7 +1999,7 @@ handle_generat_emitters(){
           // this.appoint_odds_value  = 0.01
         } 
         //设置输入框最小值
-        this.BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
+        BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
         // console.log('当前最小值等于3', this.min_odds_value); 
       }
       // console.log('当前赔率等于1', this.appoint_odds_value);
@@ -2019,7 +2019,7 @@ handle_generat_emitters(){
       this.init_odds_value = Number(this.odds_value);
       this.min_odds_value = Number(this.odds_value)
       //设置输入框最小值默认值
-      this.BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
+      BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
       // 预约赔率
       this.appoint_odds_value = Number(this.odds_value);      
       // 球头处理
@@ -2036,7 +2036,7 @@ handle_generat_emitters(){
       // 预约时的球头(小数形式)
       this.appoint_ball_head = this.init_ball_head;
       // 预约的投注项id
-      this.BetDataCtr.set_bet_appoint_obj({
+      BetDataCtr.set_bet_appoint_obj({
         bet_appoint_id: this.id,  //3162815_18_1_Over
         appoint_ball_head: this.appoint_ball_head, // 球头(小数形式)
         appoint_odds_value: this.appoint_odds_value,  //赔率
@@ -2085,9 +2085,9 @@ handle_generat_emitters(){
       //重新调用单关最大最小值接口
       useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.id);
       // 置空预约投注项
-      this.BetDataCtr.set_bet_appoint_obj(null)
+      BetDataCtr.set_bet_appoint_obj(null)
       //置空当前盘口下所有的投注项
-      this.BetDataCtr.set_pre_bet_list(null)
+      BetDataCtr.set_pre_bet_list(null)
     },
 
     /**

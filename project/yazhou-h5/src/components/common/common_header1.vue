@@ -39,9 +39,9 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 // 接受父组件传递的数据
 const props = defineProps({

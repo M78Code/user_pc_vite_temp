@@ -5,13 +5,12 @@
  */
 // import format from "src/project/yabo/mixins/match_details/index";
 import { formatTime } from "src/core/formart/module/format-time.js";
-import {useI18n} from 'vue-i18n'
+import { t } from "src/boot/i18n";;
 import utils from "src/core/utils/utils";
 import lodash from 'lodash'
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 // const licia_format = require('licia/format');
 import licia_format from 'licia/format'
-// const {t} =useI18n()
 export default {
   components: {
     "match-date": MatchProcessFullVersionWapper
@@ -22,7 +21,7 @@ export default {
     return {
       utils,
       lodash,
-      t:useI18n(),
+      t:t,
       background_img: "", // 球种背景图片
     };
   },

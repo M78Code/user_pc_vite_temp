@@ -57,7 +57,7 @@
 import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 // api接口
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
@@ -72,7 +72,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 const emit = defineEmits(['navigate'])
 const $q = useQuasar()
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 公告栏信息集合 */
 const notice_info = reactive({
@@ -155,50 +155,50 @@ const settings_items = [
 const show_g_settings = ref(false)
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { globalReducer, userReducer, menuReducer, themeReducer, langReducer } = store_data
+const { globalReducer, userReducer, menuReducer, themeReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    theme.value = themeReducer.theme
+    menu_collapse_status.value = menuReducer.menu_collapse_status
+    user_info.value = userReducer.user_info
+    global_switch.value = globalReducer.global_switch
+    global_click.value = globalReducer.global_click
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const { theme } = themeReducer
+const theme = ref(themeReducer.theme)
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
-const { menu_collapse_status } = menuReducer
+const menu_collapse_status = ref(menuReducer.menu_collapse_status)
 /** 
  * 用户信息中的token
  * 路径: src\store-redux\module\user-info.js
  */
-const { user_info } = userReducer
+const user_info = ref(userReducer.user_info)
 /** 
-* global_switch 全局开关 default: object
-* global_click 全局点击事件数 default: 0
+* 全局开关 default: object
 * 路径: project_path\src\store\module\global.js
 */
-const { global_switch, global_click } = globalReducer
+const global_switch = ref(globalReducer.global_switch)
 /** 
- * 语言 languages
- * 路径: src\store-redux\module\languages.js
- */
-const { lang } = langReducer
+* 全局点击事件数 default: 0
+* 路径: project_path\src\store\module\global.js
+*/
+const global_click = ref(globalReducer.global_click)
 
-/** 语言修改 */
-const set_lang = (data) => store.dispatch({
-    type: 'set_lang',
-    data
-})
 /** 用户信息修改 */
 const set_user_info = (data) => store.dispatch({
     type: 'SET_USER',
     data
 })
 
-
-
 watch(
-    () => global_click,
+    () => global_click.value,
     () => show_g_settings.value = false
 )
 
@@ -256,7 +256,7 @@ onMounted(init)
  */
 function show_menu_icon(icon_id) {
     // 中文语言下不存在活动内容，则不显示任务中心图标
-    if (lang === 'zh' && icon_id === 9 && !lodash.get(user_info, 'activityList.length')) {
+    if (lang === 'zh' && icon_id === 9 && !lodash.get(user_info.value, 'activityList.length')) {
         return false
     }
     return true
@@ -267,15 +267,15 @@ function show_menu_icon(icon_id) {
  * @param menu 当前点击菜单对象
  */
 function menu_change(menu) {
-    if (menu.path.includes('/activity') && !global_switch.activity_switch) {
+    if (menu.path.includes('/activity') && !global_switch.value.activity_switch) {
         return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     if (menu.path.includes('/activity')) {
-        if (user_info.token) {
+        if (user_info.value.token) {
             zhugeTag.send_zhuge_event("PC_任务中心");
             // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
             gtagTag.gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
-            set_user_info({ token: user_info.token, view: this });
+            set_user_info({ token: user_info.value.token, view: this });
         }
     }
     emits('navigate', menu)

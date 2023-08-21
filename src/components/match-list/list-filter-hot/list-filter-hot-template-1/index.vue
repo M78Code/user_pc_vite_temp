@@ -37,12 +37,12 @@
 
 import { defineProps, ref, onMounted } from 'vue';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 const current_menu = ref('')
 const name = ref('list_filter_hot')
 const top_logos = ref([

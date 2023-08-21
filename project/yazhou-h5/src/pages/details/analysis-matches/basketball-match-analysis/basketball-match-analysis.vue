@@ -26,9 +26,9 @@ import head_tab from 'src/project/components/details/match-analysis/head-tab.vue
 import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';
 import { watch, nextTick, onMounted } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
   // components: {
   //   match: match_result,

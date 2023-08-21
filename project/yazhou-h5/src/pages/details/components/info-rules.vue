@@ -24,9 +24,9 @@
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: "info_rules",

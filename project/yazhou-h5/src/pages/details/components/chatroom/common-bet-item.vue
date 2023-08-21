@@ -117,9 +117,9 @@
 // import { mapGetters } from "vuex";
 import utils from 'src/core/utils/utils.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: 'common_bet_item',

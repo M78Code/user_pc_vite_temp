@@ -30,9 +30,9 @@ import {mapGetters, mapMutations} from "vuex"
 import {api_common} from 'src/project/api/index.js';
 import video from "src/public/utils/video/video.js"   // 视频相关公共方法
 import { uid } from "quasar"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default {
   name: 'match_icon',

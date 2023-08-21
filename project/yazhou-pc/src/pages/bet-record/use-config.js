@@ -8,10 +8,10 @@ import { ref, watch, onMounted, reactive, toRefs, onUnmounted } from "vue";
 import utils from "src/core/utils/utils";
 import { format_day } from "src/core/formart/index.js";
 import { api_common, api_betting, api_account } from "src/api/index";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { uid } from "quasar";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-const { t } = useI18n();
+;
 
 export const useConfig = ({ getOrderList }) => {
   //时间排序数据

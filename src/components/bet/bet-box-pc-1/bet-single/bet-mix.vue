@@ -44,7 +44,7 @@
                     
                     :key="item"
                     @set_min_max_money="set_min_max_money"
-                    v-if="view_ctr_obj.series_order_success && ((view_ctr_obj.series_order_success.length==0 && index>0) || (view_ctr_obj.series_order_success.length>0))"
+                    v-if="view_ctr_obj.bet_order_success_success && ((view_ctr_obj.bet_order_success_success.length==0 && index>0) || (view_ctr_obj.bet_order_success_success.length>0))"
                     :class="{'bet-mix-input-last': ((index+1)==BetData.bet_list.length)}"
                   ></bet-mix-input>
                 </template>

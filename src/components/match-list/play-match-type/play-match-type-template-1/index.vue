@@ -18,8 +18,8 @@ import { useRoute } from 'vue-router';
 import lodash from 'lodash';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n();
+import { t } from "src/boot/i18n";
+;
 
 const route = useRoute()
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));

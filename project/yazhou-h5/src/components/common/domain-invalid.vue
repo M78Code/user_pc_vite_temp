@@ -22,9 +22,9 @@
 import { computed } from 'vue'
 // TODO:
 import { invalid_url } from 'src/public/utils/base64_url'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 const emit = defineEmits(['isgo_vender_url'])
 // TODO: 改为真实的store替换

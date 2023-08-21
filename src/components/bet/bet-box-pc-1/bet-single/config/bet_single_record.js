@@ -135,7 +135,7 @@ export default {
      * @return {boolean} 是否确认中状态
      */
     has_confirm_status() {
-      return _.findIndex(this.view_ctr_obj.order_detail_data, item => item.orderStatusCode == 2) > -1;
+      return _.findIndex(this.view_ctr_obj.bet_order_success_all, item => item.orderStatusCode == 2) > -1;
     },
     /**
      * @description: 赛事时间
@@ -226,7 +226,7 @@ export default {
       if(!new_) {
         let success_count = 0; // 注单提交成功的个数
         let fail_count = 0; // 注单失败的个数
-        _.forEach(this.view_ctr_obj.order_detail_data, item => {
+        _.forEach(this.view_ctr_obj.bet_order_success_all, item => {
 
           if(item.orderStatusCode == 0) {  //失败
             // 失败订单统计
@@ -238,7 +238,7 @@ export default {
         });
 
         // 注单全部成功
-        if(success_count == this.view_ctr_obj.order_detail_data.length) {
+        if(success_count == this.view_ctr_obj.bet_order_success_all.length) {
           this.view_ctr_obj.order_confirm_complete = 2;      
           // 清除超时定时器
           if(this.timer_obj['time_over']) {
@@ -252,7 +252,7 @@ export default {
         }
 
         // 注单全部失败
-        if(fail_count == this.view_ctr_obj.order_detail_data.length) {
+        if(fail_count == this.view_ctr_obj.bet_order_success_all.length) {
           this.view_ctr_obj.order_confirm_complete = 3; 
           // 清除超时定时器
           if(this.timer_obj['time_over']) {
@@ -265,7 +265,7 @@ export default {
           }
         }
         // 全部注单已完成 有成功有失败的
-        if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == this.view_ctr_obj.order_detail_data.length)) {
+        if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == this.view_ctr_obj.bet_order_success_all.length)) {
           this.view_ctr_obj.order_confirm_complete = 4; 
           // 清除超时定时器
           if(this.timer_obj['time_over']) {

@@ -33,9 +33,9 @@ import { useRoute } from 'vue-router'
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
 import { ref, nextTick } from 'vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 
     //按钮下标

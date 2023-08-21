@@ -32,7 +32,7 @@
   
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -51,7 +51,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ss, ls } from 'src/core/utils/web-storage.js'
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -151,14 +151,19 @@ onMounted(get_list)
 
 /** stroe仓库 */
 const store_data = store.getState()
+const unsubscribe = store.subscribe(() => {
+    lang.value = store_data.langReducer.lang
+    // user_info.value = store_data.userReducer.user_info
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 国际化语言 default: zh */
-const { lang } = store_data.langReducer
-// TODO: 语言改变mitt
+const lang = ref(store_data.langReducer.lang)
+// const user_info = ref(store_data.userReducer.user_info)
 
 /** 用户token */
 const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
 
-onUnmounted(unsubscribe)
 
 </script>
   

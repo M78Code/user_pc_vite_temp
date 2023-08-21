@@ -1,10 +1,10 @@
 import { Qs } from "../utils/Qs";
 import { ls } from "src/core/utils/web-storage.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
-import { includes } from "lodash";
 class EnterParamsYazhouH5 {
   constructor() {
     this.url = "";
+    this.paramsVideo = {};
   }
   set_enter_url(url) {
     this.url = url;
@@ -37,12 +37,24 @@ class EnterParamsYazhouH5 {
     if (Qs.sy) {
     }
     //如果是直接从外层跳转到电竞赛事详情页，则需要传赛事类型id
-    if(Qs.csid){
-
+    if (Qs.csid) {
+    }
+    //赛事回放参数
+    if (Qs.mid) {
+      this.paramsVideo.eventCode = {
+        device: Qs.device || "PC",
+        mid: Qs.mid, //赛事id
+        eventCode: Qs.eventCode || 0,
+      };
+    }
+    //标记 开启列表和详情页跳转功能
+    if (Qs.label) {
     }
   }
   get_url() {
-    return this.url || "";
+    //增加时间戳 避免浏览器或者APP 一定程度的缓存
+    const t = new Date().valueOf();
+    return this.url + "&t=" + t || "";
   }
 }
 
