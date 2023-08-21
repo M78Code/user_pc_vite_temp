@@ -138,6 +138,8 @@
                       :data="data"
                       :money_obj="money_obj"
                       :tool_selected="tool_selected"
+                      :vx_get_user="vx_get_user"
+                      :matchType="matchType"
                       @start_bet_pre="start_bet_pre"
                       @bet_pre_over="bet_pre_over"
                       @bet_pre_out="bet_pre_out"
@@ -409,6 +411,7 @@ import { PaginationWapper } from "src/components/pagination/indes.js";
 import { useTableData } from "./use-table-data";
 import { useI18n } from "vue-i18n";
 import { formatTime,format_balance,format_score_t } from "src/core/formart/index";
+import {defineExpose} from 'vue'
 const { t } = useI18n();
 
 const props = defineProps({
@@ -480,6 +483,7 @@ const {
   pre_order_list_obj,
   money_obj,
   color_list,
+  vx_get_user,
   changePage,
   copy,
   show_bet_pre_info,
@@ -493,6 +497,10 @@ const {
   bet_handle,
   lodash,
 } = useTableData({ props, emit });
+
+defineExpose({
+  recordData
+})
 </script>
 
 <style lang="scss" scoped>

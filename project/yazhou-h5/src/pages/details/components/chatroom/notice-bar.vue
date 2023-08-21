@@ -11,9 +11,9 @@
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters} from "vuex";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
 export default defineComponent({
   name: 'notice_bar',
   props: {
@@ -28,7 +28,7 @@ export default defineComponent({
       value: 0,
       pwidth:0,//公告文本的宽度
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters([
     //     'get_theme',
@@ -57,7 +57,7 @@ export default defineComponent({
     );
     const clickCommend = (e) =>  {
       let _this = this;
-      $nextTick(() => {
+      nextTick(() => {
         value -=1;
         $refs.notice_list.style.marginLeft = _this.pwidth + value + "px";
       });

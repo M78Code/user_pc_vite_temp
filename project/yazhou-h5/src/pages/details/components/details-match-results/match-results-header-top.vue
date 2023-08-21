@@ -22,7 +22,7 @@
 // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
-  // #TODO vuex 
+  // #TODO vuex
   // mixins: [msc],
   name: "",
   components: {
@@ -32,7 +32,7 @@ export default defineComponent({
       type: Object
     }
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [chatroom_mixin],
   setup(props, evnet) {
     const data = reactive({
@@ -61,9 +61,9 @@ export default defineComponent({
 
       // 赛事中断 单独判断
       if (ms === 10) {
-        return i18n.t('ms.10')
+        return t('ms.10')
       } else if (detail_data_mmp_map[mmp]) {
-        return i18n.t(detail_data_mmp_map[mmp])
+        return t(detail_data_mmp_map[mmp])
       } else {
         return ''
       }

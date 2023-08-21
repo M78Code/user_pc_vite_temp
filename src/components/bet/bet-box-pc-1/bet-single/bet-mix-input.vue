@@ -117,8 +117,8 @@ const timer_input_focus = ref(null)
      */
     const get_series_odds = () => {
       let series_odds = 1;
-      vx_get_bet_list.forEach(item => {
-        let obj = _.get(vx_get_bet_obj, `${item}.cs`);
+      BetData.bet_list.forEach(item => {
+        let obj = _.get(BetData.bet_obj, `${item}.cs`);
         let odds_value = (obj && obj.odds_value) || 1;
          // 此处乘以100然后除以100是为了保证精度
         series_odds = ((Math.floor(odds_value / 1000)) / 100) * series_odds;
@@ -132,7 +132,7 @@ const timer_input_focus = ref(null)
      * @return {String} 个数
      */
      const count = () => {
-      let count =  _.get(vx_get_bet_s_obj,`${id}.cs.count`);
+      let count =  _.get(BetData.bet_s_obj,`${id}.cs.count`);
       if(count) {
         return `${count}`;
       }
@@ -144,7 +144,7 @@ const timer_input_focus = ref(null)
      * @return {String}
      */
      const max_money = () =>  {
-      let max_money =  _.get(vx_get_bet_s_obj,`${id}.cs.max_money`);
+      let max_money =  _.get(BetData.bet_s_obj,`${id}.cs.max_money`);
       if(max_money) {
         return `${max_money}`;
       }
@@ -156,7 +156,7 @@ const timer_input_focus = ref(null)
      * @return {String}
      */
      const min_money = () =>  {
-      let min_money =  _.get(vx_get_bet_s_obj,`${id}.cs.min_money`);
+      let min_money =  _.get(BetData.bet_s_obj,`${id}.cs.min_money`);
       if(min_money) {
         return `${min_money}`;
       }

@@ -80,12 +80,17 @@ import filterBox from "./components/filter-box.vue";
 import recordTable from "./record-table/index.vue";
 import recordBookTable from "./record_book_table.vue";
 import lodash from "lodash";
+import { api_betting } from "src/api/index";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import store from "src/store-redux/index.js";
 
 import { ref } from "vue";
 import { useConfig } from "./use-config";
-
+// 用户信息
+const vx_get_user = store.getState().userReducer.user_info;
 const toolSelected = ref(0);
 const is_pre_bet = ref(false); // 提前结算勾选
+const betRecord = ref(null);
 
 const {
   params,
@@ -103,11 +108,18 @@ const {
   orderNo_data_list,
   data_state,
   tips,
+  record_obj,
+  get_cashout_num,
+  send_cashout,
   clear_timer_get_cashout,
   clear_timer_get_book,
   set_search_time,
-  res_timer_get_cashout
-} = useConfig({getOrderList});
+  res_timer_get_cashout,
+  clear_send_cashout,
+  check_confirm_complete,
+  get_order_no,
+  uid
+} = useConfig({ getOrderList });
 
 /**
  * @description:记录切换 结算、未结算
@@ -130,15 +142,14 @@ const toolClicked = (f) => {
     resetParams("clearDate");
     if (is_pre_bet.value) {
       params.value.size = 200;
-      //TODO
-      // useMittEmit(
-      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
-      //   this.params.size
-      // );
+      useMittEmit(
+        MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+        params.value.size
+      );
     }
     // 统计未结算订单
     useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
-    this.getOrderList();
+    getOrderList();
   } else {
     if (localStorage.getItem("time_sort_record")) {
       time_sort_record_item.value = JSON.parse(
@@ -155,315 +166,326 @@ const toolClicked = (f) => {
     if (old_page_size.value) {
       params.value.size = old_page_size.value;
       // TODO
-      //   useMittEmit(
-      //     MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
-      //     this.params.size
-      //   );
-      // }
-      // this.getOrderList();
+      useMittEmit(
+        MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+        params.value.size
+      );
+    }
+    getOrderList();
+  }
+};
+/**
+ * 查询提前结算的列表
+ */
+const search_pre_record = (is_pre_bet) => {
+  is_pre_bet.value = is_pre_bet;
+  params.value.enablePreSettle = is_pre_bet;
+  if (is_pre_bet.value) {
+    params.value.size = 200; // 部分页
+  } else {
+    params.value.size = 50;
+  }
+  getOrderList();
+};
+/**
+ * @时间类型查询
+ * @param i 1:今天 2:昨日 3:七日内 4:一月内
+ */
+const chooseTime = (i) => {
+  set_search_time(i);
+  random.value = Math.random();
+  toolIndex.value = i;
+  params.value.timeType = i + 1;
+  resetParams("clearDate"); //删除日期控件参数
+  getOrderList();
+};
+
+/**
+ * @description:重置请求参数
+ * @param type clearDate:清除日历时间、为空时，清除timeType获取未结算记录
+ * @return {undefined} undefined
+ */
+const resetParams = (type) => {
+  params.value.page = 1;
+  if (type == "clearDate") {
+    params.value = lodash.omit(params.value, ["beginTime", "endTime"]);
+  } else {
+    params.value = lodash.omit(params.value, ["timeType"]);
+  }
+};
+/**
+ * @description: 点击时间排序
+ * @param {Object} sort 选中时间排序数据对象
+ */
+const time_sort = () => {
+  localStorage.setItem("time_sort_record", JSON.stringify(sort));
+  let od_page = params.value.page;
+  // this.match_sort_show = false;
+  time_sort_record_item.value = sort;
+  params.value.page = 1;
+  params.value.orderBy = sort.id;
+  if (old_page_size.value) {
+    params.value.size = old_page_size.value;
+    useMittEmit(MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD, params.value.size);
+  }
+  if (od_page != 1) {
+    useMittEmit(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD);
+  } else {
+    getOrderList();
+  }
+};
+
+const check_change = (value) => {
+  console.log(value);
+  let list = value.split(",");
+  is_book_status.value = list || [];
+  getBookList();
+};
+
+/**
+ * @翻页
+ * @param tableData
+ * size：每页条数
+ * page：当前页码
+ */
+const changePage = (tableData) => {
+  params.value.size = tableData[0];
+  params.value.page = tableData[2];
+  if (toolSelected.value == 2) {
+    getBookList();
+  } else {
+    getOrderList();
+  }
+};
+
+/**  TODO
+ * @description:获取表格数据
+ * @param this.params
+ * @return {undefined} undefined
+ */
+const getOrderList = (isScoket, callback) => {
+  if (record_obj.value) {
+    for (let key in record_obj.value) {
+      delete record_obj.value[key];
     }
   }
-  /**
-   * 查询提前结算的列表
-   */
-  const search_pre_record = (is_pre_bet) => {
-    is_pre_bet.value = is_pre_bet;
-    params.value.enablePreSettle = is_pre_bet;
-    if (is_pre_bet.value) {
-      params.value.size = 200; // 部分页
-    } else {
-      params.value.size = 50;
-    }
-    // this.getOrderList();  TODO
-  };
-  /**
-   * @时间类型查询
-   * @param i 1:今天 2:昨日 3:七日内 4:一月内
-   */
-  const chooseTime = (i) => {
-    set_search_time(i);
-    random.value = Math.random();
-    toolIndex.value = i;
-    params.value.timeType = i + 1;
-    resetParams("clearDate"); //删除日期控件参数
-    // this.getOrderList();  TODO
-  };
+  if (!isScoket) {
+    data_state.value.load_data_state = "loading";
+  }
+  const send_gcuuid = uid();
+  params.value.gcuuid = send_gcuuid;
+  // console.log('getOrderList===', JSON.stringify(this.params));
 
-  /**
-   * @description:重置请求参数
-   * @param type clearDate:清除日历时间、为空时，清除timeType获取未结算记录
-   * @return {undefined} undefined
-   */
-  const resetParams = (type) => {
-    params.value.page = 1;
-    if (type == "clearDate") {
-      params.value = lodash.omit(params.value, ["beginTime", "endTime"]);
-    } else {
-      params.value = lodash.omit(params.value, ["timeType"]);
-    }
-  };
-  /**
-   * @description: 点击时间排序
-   * @param {Object} sort 选中时间排序数据对象
-   */
-  const time_sort = () => {
-    localStorage.setItem("time_sort_record", JSON.stringify(sort));
-    let od_page = params.value.page;
-    // this.match_sort_show = false;
-    time_sort_record_item.value = sort;
-    params.value.page = 1;
-    params.value.orderBy = sort.id;
-    if (old_page_size.value) {
-      params.value.size = old_page_size.value;
-      // useMittEmit(    TODO
-      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
-      //   this.params.size
-      // );
-    }
-    // if (od_page != 1) {    TODO
-    //   useMittEmit(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD);
-    // } else {
-    //   this.getOrderList();
-    // }
-  };
-
-  const check_change = (value) => {
-    console.log(value);
-    let list = value.split(",");
-    is_book_status.value = list || [];
-
-    // this.getBookList()   TODO
-  };
-
-  /**
-   * @description:清除提前结算实时查询定时器
-   * @param {undefined} undefined undefined
-   * @return {undefined} undefined
-   */
-  const lear_timer_get_cashout = () => {
-    if (this.timer_get_cashout) {
-      clearInterval(this.timer_get_cashout);
-      this.timer_get_cashout = undefined;
-    }
-  };
-
-  /**
-   * @翻页
-   * @param tableData
-   * size：每页条数
-   * page：当前页码
-   */
-  const changePage = (tableData) => {
-    params.value.size = tableData[0];
-    params.value.page = tableData[2];
-    if (toolSelected.value == 2) {
-      getBookList();
-    } else {
-      getOrderList();
-    }
-  };
-
-  /**  TODO
-   * @description:获取表格数据
-   * @param this.params
-   * @return {undefined} undefined
-   */
-  const getOrderList = (isScoket, callback) => {
-    if (this.record_obj) {
-      for (let key in this.record_obj) {
-        delete this.record_obj[key];
+  api_betting
+    .post_order_list(params.value)
+    .then((res) => {
+      // console.log('getOrderList===', this.send_gcuuid === res.config.gcuuid);
+      //检查gcuuid
+      let gcuuid = lodash.get(res, "config.gcuuid");
+      if (gcuuid && send_gcuuid != gcuuid) {
+        return;
       }
-    }
-    if (!isScoket) {
-      this.data_state.load_data_state = "loading";
-    }
-    this.send_gcuuid = uid();
-    this.params.gcuuid = this.send_gcuuid;
-    // console.log('getOrderList===', JSON.stringify(this.params));
 
-    api_betting
-      .post_order_list(this.params)
-      .then((res) => {
-        // console.log('getOrderList===', this.send_gcuuid === res.config.gcuuid);
-        //检查gcuuid
-        let gcuuid = _.get(res, "config.gcuuid");
-        if (gcuuid && this.send_gcuuid != gcuuid) {
-          return;
-        }
-
-        let code = _.get(res, "data.code");
-        let status = _.get(res, "status");
-        if (code == "0401038") {
-          this.data_state.load_data_state = "api_limited";
-          this.clear_timer_get_cashout();
-        }
-        if (code == 200 && status) {
-          const data = _.get(res, "data.data");
-          // 当maxcashout为null时，定时1秒重新拉次数据，最多查询5次
-          let records_ = _.filter(data.records, {
-            enablePreSettle: true,
-            orderStatus: "0",
-            initPresettleWs: true,
-          });
-          let maxcashout_list = _.map(records_, "maxCashout");
-          // 判断提前结算实时查询返回集合数据的投注额有null
-          if (_.includes(maxcashout_list, null)) {
-            this.get_cashout_num++;
-            if (this.get_cashout_num <= 4) {
-              this.clear_send_cashout();
-              this.send_cashout = setTimeout(() => {
-                // 重新拉取列表数据
-                this.getOrderList();
-              }, 1000);
-            } else {
-              this.get_cashout_num = 0;
-            }
+      let code = lodash.get(res, "data.code");
+      let status = lodash.get(res, "status");
+      if (code == "0401038") {
+        data_state.value.load_data_state = "api_limited";
+        clear_timer_get_cashout();
+      }
+      if (code == 200 && status) {
+        const data = lodash.get(res, "data.data");
+        // 当maxcashout为null时，定时1秒重新拉次数据，最多查询5次
+        let records_ = lodash.filter(data.records, {
+          enablePreSettle: true,
+          orderStatus: "0",
+          initPresettleWs: true,
+        });
+        let maxcashout_list = lodash.map(records_, "maxCashout");
+        // 判断提前结算实时查询返回集合数据的投注额有null
+        if (lodash.includes(maxcashout_list, null)) {
+          get_cashout_num.value++;
+          if (get_cashout_num.value <= 4) {
+            clear_send_cashout();
+            send_cashout.value = setTimeout(() => {
+              // 重新拉取列表数据
+              getOrderList();
+            }, 1000);
           } else {
-            this.get_cashout_num = 0;
-          }
-
-          // get_cashout_num ===0是代表提前结算的单子里面maxcashout没有 null
-          if (this.get_cashout_num === 0) {
-            data.orderStatus = this.params.orderStatus;
-            let record_list = data.records;
-            if (!record_list) {
-              this.data_state.load_data_state = "empty";
-              this.$refs.betRecord.recordData.total = "0";
-              return;
-            }
-            let record_obj = this.get_obj(record_list, data);
-            delete record_obj.list;
-            this.record_obj = record_obj;
-            if (this.check_confirm_complete()) {
-              this.get_timed_task();
-            }
-            if (
-              !this.order_list ||
-              !this.order_list.records ||
-              this.order_list.records.length == 0
-            ) {
-              this.data_state.load_data_state = "empty";
-            } else {
-              // 订阅为结算注单
-              if (this.toolSelected == 0 && this.vx_get_user.settleSwitch) {
-                this.SCMD_C21();
-                // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
-                this.get_order_no();
-              }
-            }
-            this.get_balance();
-            if (_.isFunction(callback)) {
-              callback();
-            }
-          } else {
-            this.data_state.load_data_state = "record_refresh";
-          }
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err) {
-          if (_.isPlainObject(err) || _.get(err, "response.status") == 404) {
-            this.data_state.load_data_state = "404";
-          } else {
-            this.data_state.load_data_state = "record_refresh";
+            get_cashout_num.value = 0;
           }
         } else {
-          this.data_state.load_data_state = "record_refresh";
+          get_cashout_num.value = 0;
         }
-        if (_.isFunction(callback)) {
-          callback();
-        }
-      });
-  };
 
-  /**
-   * @description:预约
-   * @param {callback} callback 回调方法
-   * @return {undefined} undefined
-   */
-  const getBookList = (callback) => {
-    if (this.record_obj) {
-      for (let key in this.record_obj) {
-        delete this.record_obj[key];
-      }
-    }
-    this.data_state.load_data_state = "loading";
-    let preOrderStatusList = this.is_book_status;
-    //0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注
-    // jumpFrom跳转来源(非空 1.详情投注界面   2.注单界面)
-    let param = {
-      page: this.params.page,
-      size: this.params.size,
-      jumpFrom: 2,
-      preOrderStatusList: preOrderStatusList,
-    };
-    this.getBook_gcuuid = uid();
-    param.gcuuid = this.getBook_gcuuid;
-    // console.log('get_book_record_data==getBookList==',JSON.stringify(param));
-    api_betting
-      .post_book_list(param)
-      .then((res) => {
-        // console.log('get_book_record_data==getBookList==res===', this.getBook_gcuuid == res.config.gcuuid);
-        let gcuuid = _.get(res, "config.gcuuid");
-        if (gcuuid && this.getBook_gcuuid != gcuuid) {
-          return;
-        }
-        let code = _.get(res, "data.code");
-        let status = _.get(res, "status");
-        if (code == 200 && status) {
-          const data = _.get(res, "data.data");
-          // data.orderStatus = this.params.orderStatus;
+        // get_cashout_num ===0是代表提前结算的单子里面maxcashout没有 null
+        if (get_cashout_num.value === 0) {
+          data.orderStatus = params.value.orderStatus;
           let record_list = data.records;
           if (!record_list) {
-            this.clear_timer_get_book();
-            this.data_state.load_data_state = "empty";
+            data_state.value.load_data_state = "empty";
+            betRecord.value.recordData.total = "0";
             return;
           }
-          let record_obj = this.get_obj(record_list, data);
+          let record_obj = get_obj(record_list, data);
           delete record_obj.list;
-          this.record_obj = record_obj;
-
+          record_obj.value = record_obj;
+          if (check_confirm_complete()) {
+            get_timed_task();
+          }
           if (
-            !this.order_list ||
-            !this.order_list.records ||
-            this.order_list.records.length == 0
+            !order_list.value ||
+            !order_list.value.records ||
+            order_list.value.records.length == 0
           ) {
-            this.clear_timer_get_book();
-            this.data_state.load_data_state = "empty";
+            data_state.value.load_data_state = "empty";
           } else {
-            // 预约中开启定时器，不是则关闭
-            if (this.is_book_status.includes("0")) {
-              this.orderNo_book = _.map(this.order_list.records, "orderNo");
-              this.res_timer_get_book();
-            } else {
-              this.orderNo_book = "";
-              this.clear_timer_get_book();
+            // 订阅为结算注单
+            if (toolSelected.value == 0 && vx_get_user.settleSwitch) {
+              // this.SCMD_C21();   //todo
+              // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
+              get_order_no();
             }
           }
-        }
-        if ("0401038" == code) {
-          this.clear_timer_get_book();
-          this.data_state.load_data_state = "code_empty";
-          return;
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err) {
-          if (_.isPlainObject(err) || _.get(err, "response.status") == 404) {
-            this.data_state.load_data_state = "404";
-          } else {
-            this.data_state.load_data_state = "record_refresh";
+          this.get_balance();
+          if (lodash.isFunction(callback)) {
+            callback();
           }
         } else {
           this.data_state.load_data_state = "record_refresh";
         }
-        if (_.isFunction(callback)) {
-          callback();
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err) {
+        if (
+          lodash.isPlainObject(err) ||
+          lodash.get(err, "response.status") == 404
+        ) {
+          this.data_state.load_data_state = "404";
+        } else {
+          this.data_state.load_data_state = "record_refresh";
         }
-      });
+      } else {
+        this.data_state.load_data_state = "record_refresh";
+      }
+      if (lodash.isFunction(callback)) {
+        callback();
+      }
+    });
+};
+
+/**
+ * @description:预约
+ * @param {callback} callback 回调方法
+ * @return {undefined} undefined
+ */
+const getBookList = (callback) => {
+  if (this.record_obj) {
+    for (let key in this.record_obj) {
+      delete this.record_obj[key];
+    }
+  }
+  this.data_state.load_data_state = "loading";
+  let preOrderStatusList = this.is_book_status;
+  //0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注
+  // jumpFrom跳转来源(非空 1.详情投注界面   2.注单界面)
+  let param = {
+    page: this.params.page,
+    size: this.params.size,
+    jumpFrom: 2,
+    preOrderStatusList: preOrderStatusList,
   };
+  this.getBook_gcuuid = uid();
+  param.gcuuid = this.getBook_gcuuid;
+  // console.log('get_book_record_data==getBookList==',JSON.stringify(param));
+  api_betting
+    .post_book_list(param)
+    .then((res) => {
+      // console.log('get_book_record_data==getBookList==res===', this.getBook_gcuuid == res.config.gcuuid);
+      let gcuuid = lodash.get(res, "config.gcuuid");
+      if (gcuuid && this.getBook_gcuuid != gcuuid) {
+        return;
+      }
+      let code = lodash.get(res, "data.code");
+      let status = lodash.get(res, "status");
+      if (code == 200 && status) {
+        const data = lodash.get(res, "data.data");
+        // data.orderStatus = this.params.orderStatus;
+        let record_list = data.records;
+        if (!record_list) {
+          this.clear_timer_get_book();
+          this.data_state.load_data_state = "empty";
+          return;
+        }
+        let record_obj = this.get_obj(record_list, data);
+        delete record_obj.list;
+        this.record_obj = record_obj;
+
+        if (
+          !this.order_list ||
+          !this.order_list.records ||
+          this.order_list.records.length == 0
+        ) {
+          this.clear_timer_get_book();
+          this.data_state.load_data_state = "empty";
+        } else {
+          // 预约中开启定时器，不是则关闭
+          if (this.is_book_status.includes("0")) {
+            this.orderNo_book = lodash.map(this.order_list.records, "orderNo");
+            this.res_timer_get_book();
+          } else {
+            this.orderNo_book = "";
+            this.clear_timer_get_book();
+          }
+        }
+      }
+      if ("0401038" == code) {
+        this.clear_timer_get_book();
+        this.data_state.load_data_state = "code_empty";
+        return;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err) {
+        if (
+          lodash.isPlainObject(err) ||
+          lodash.get(err, "response.status") == 404
+        ) {
+          this.data_state.load_data_state = "404";
+        } else {
+          this.data_state.load_data_state = "record_refresh";
+        }
+      } else {
+        this.data_state.load_data_state = "record_refresh";
+      }
+      if (lodash.isFunction(callback)) {
+        callback();
+      }
+    });
+};
+
+const get_obj = (record_list, data) => {
+  let obj = { list: record_list };
+  if (obj.list && obj.list.length) {
+    obj.list.forEach((item) => {
+      obj[item.orderNo] = item;
+    });
+  }
+  if (obj.list) {
+    delete data.records;
+    this.order_list = data;
+    let temp = this.order_list.records;
+    this.order_list.records = obj.list;
+    if (temp && temp.length) {
+      for (let i = 0; i < temp.length; i++) {
+        temp.splice(i, 1);
+        i--;
+      }
+    }
+  }
+  return obj;
 };
 </script>
 

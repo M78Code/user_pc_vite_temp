@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 串关金额输入部分 正常
  */
-import { mapGetters, mapActions } from "vuex";
+
 import betting from "src/public/mixins/betting/betting.js";
 import odds_conversion from "src/public/mixins/odds_conversion/odds_conversion_mixin.js";
 import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
@@ -81,12 +81,12 @@ export default {
     // 若为串关的额第一个输入投注项
     if (this.index == 0) {
       // 计算第一个输入投注项显示的赔率(各个投注项赔率进行相乘)
-      this.vx_get_bet_list.forEach(id => {
+      this.BetData.bet_list.forEach(id => {
         this.odds_value *= this.get_odds_value(id);
       });
     }
     // 获取串关配置信息
-    this.setup_mix_info = _.get(this.vx_get_user, 'cvo.series');
+    this.setup_mix_info = _.get(this.BetData.user, 'cvo.series');
     // 串关配置信息存在且是一个对象
     if(!_.isEmpty(this.setup_mix_info) && _.isObject(this.setup_mix_info)) {
       // 重新获取键盘数据集合
@@ -103,15 +103,7 @@ if(this.emitters_off){this.emitters_off()}
     this.setup_mix_info = {};
   },
   computed: {
-    ...mapGetters({
-      vx_get_user: "get_user",  // 用户信息
-      vx_get_bet_list: "get_bet_list",  // 押注信息列表
-      vx_get_bet_obj: "get_bet_obj",   // 押注信息对象
-      vx_get_bet_s_list: "get_bet_s_list",   // 串关信息列表
-      vx_get_bet_s_obj: "get_bet_s_obj",   // 串关信息对象
-      vx_get_is_bet_merge: "get_is_bet_merge",  //是否合并
-      vx_get_bet_current_money_obj: 'get_bet_current_money_obj',
-    }),
+   
     /**
      * @description: 获取串关赔率(欧赔)
      * @param {undefined} undefined
@@ -119,8 +111,8 @@ if(this.emitters_off){this.emitters_off()}
      */
     get_series_odds() {
       let series_odds = 1;
-      this.vx_get_bet_list.forEach(item => {
-        let obj = _.get(this.vx_get_bet_obj, `${item}.cs`);
+      this.BetData.bet_list.forEach(item => {
+        let obj = _.get(this.BetData.bet_obj, `${item}.cs`);
         let odds_value = (obj && obj.odds_value) || 1;
          // 此处乘以100然后除以100是为了保证精度
         series_odds = ((Math.floor(odds_value / 1000)) / 100) * series_odds;
@@ -134,7 +126,7 @@ if(this.emitters_off){this.emitters_off()}
      * @return {String} 个数
      */
     count() {
-      let count =  _.get(this.vx_get_bet_s_obj,`${this.id}.cs.count`);
+      let count =  _.get(this.BetData.bet_s_obj,`${this.id}.cs.count`);
       if(count) {
         return `${count}`;
       }
@@ -146,7 +138,7 @@ if(this.emitters_off){this.emitters_off()}
      * @return {String}
      */
     max_money() {
-      let max_money =  _.get(this.vx_get_bet_s_obj,`${this.id}.cs.max_money`);
+      let max_money =  _.get(this.BetData.bet_s_obj,`${this.id}.cs.max_money`);
       if(max_money) {
         return `${max_money}`;
       }
@@ -158,7 +150,7 @@ if(this.emitters_off){this.emitters_off()}
      * @return {String}
      */
     min_money() {
-      let min_money =  _.get(this.vx_get_bet_s_obj,`${this.id}.cs.min_money`);
+      let min_money =  _.get(this.BetData.bet_s_obj,`${this.id}.cs.min_money`);
       if(min_money) {
         return `${min_money}`;
       }
@@ -184,7 +176,7 @@ if(this.emitters_off){this.emitters_off()}
      */
     "view_ctr_obj.cur_keyboard_index"(new_) {
       // 当前点击的是那个输入投注项
-      let index = this.vx_get_bet_s_list.findIndex(item => item === this.id);
+      let index = this.BetData.bet_s_list.findIndex(item => item === this.id);
       // index与当前键盘索引一致时显示
       this.is_show_keyboard = new_ == index ? true : false;
     },
@@ -214,7 +206,7 @@ if(this.emitters_off){this.emitters_off()}
     /**
      * 投注列表变化
      */
-    vx_get_bet_list() {
+    "BetData.bet_list"() {
       if(this.money) {
          this.set_bet_s_obj('money', parseFloat(this.money));
          // 计算总投注额
@@ -232,19 +224,14 @@ if(this.emitters_off){this.emitters_off()}
   },
   beforeDestroy () {
     //  将输入框金额保存在vuex 待切换成小框使用
-      if (this.money&&this.vx_get_bet_list.length>0) {
-        this.vx_set_bet_current_money_obj({id:this.id,value:this.money}) 
+      if (this.money&&this.BetData.bet_list.length>0) {
+        this.BetDataCtr.set_bet_current_money_obj({id:this.id,value:this.money}) 
       }else{
-        this.vx_set_bet_current_money_obj({id:this.id,value:null}) 
+        this.BetDataCtr.set_bet_current_money_obj({id:this.id,value:null}) 
       }
     },
   methods: {
-    ...mapActions({
-      vx_bet_obj_remove_attr: "bet_obj_remove_attr",  // 删除投注对象
-      vx_bet_obj_add_attr: "bet_obj_add_attr",    // 添加投注对象
-      vx_bet_s_obj_add_attr: "bet_s_obj_add_attr",  // 添加投注串关输入对象
-      vx_set_bet_current_money_obj: "set_bet_current_money_obj", // 保存当前输入金额
-    }),
+  
 
 /**
 * 生成事件监听  
@@ -253,25 +240,7 @@ handle_generat_emitters(){
 
 
 
-
-   //网络错误时设置默认最大最小值
-   this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-   // 串关的校验金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
-   // 触发清除串关输入框金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
-   // 设置金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
-   // 设置输入框的最大金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
-   // 设置最小金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
-   // 更新键盘按键状态
-   this.$root.$on(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
-
-
-
-
+ 
 
 
 
@@ -294,8 +263,7 @@ handle_generat_emitters(){
   ]
   let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
   this.emitters_off=emitters_off
-  ////移除相应监听事件 //视图销毁钩子函数内执行
-  //if(this.emitters_off){this.emitters_off()}   
+
   },
   
 
@@ -307,12 +275,12 @@ handle_generat_emitters(){
      * @return {undefined} undefined
      */
     net_err_fun(){
-      let obj = _.cloneDeep(_.get(this.vx_get_bet_s_obj, `${this.id}`));
+      let obj = _.cloneDeep(_.get(this.BetData.bet_s_obj, `${this.id}`));
       if(!obj) return;
       obj.key = this.id;
       obj.cs.max_money = '8888';
       obj.cs.min_money = '5'
-      this.vx_bet_s_obj_add_attr(obj);
+      this.BetDataCtr.bet_s_obj_add_attr(obj);
     },
     /**
      * @description: 获取最大最小值金额
@@ -322,15 +290,15 @@ handle_generat_emitters(){
     get_max_win_money() {
       let series_values, temp, money;
       // 多个串关的计算
-      let id = this.vx_get_bet_s_list[this.index];
+      let id = this.BetData.bet_s_list[this.index];
       // 串关值获取
-      series_values = _.get(this.vx_get_bet_s_obj,`${id}.cs.name`) || '';
+      series_values = _.get(this.BetData.bet_s_obj,`${id}.cs.name`) || '';
       // 获取存储的金额
-      money = _.get(this.vx_get_bet_s_obj,`${id}.cs.money`) || 0.00;
+      money = _.get(this.BetData.bet_s_obj,`${id}.cs.money`) || 0.00;
       // 串关值存在时
       if (series_values) {
         // 计算最高可赢额
-        temp = bet_utils.get_max_win_money(this.vx_get_bet_list, this.vx_get_bet_obj, this.vx_get_bet_s_list, series_values, parseFloat(money), this);
+        temp = bet_utils.get_max_win_money(this.BetData.bet_list, this.BetData.bet_obj, this.BetData.bet_s_list, series_values, parseFloat(money), this);
       }
       this.win_money = (!temp || _.isNaN(temp)) ? '0.00' : temp;
       return this.win_money;
@@ -350,18 +318,18 @@ handle_generat_emitters(){
      * @return {Number} 赔率值
      */
     set_bet_s_obj(k, v) {
-      if (!this.vx_get_bet_s_list.includes(this.id)) {
+      if (!this.BetData.bet_s_list.includes(this.id)) {
         return;
       }
       // 根据id克隆投注项对象
-      let obj = _.cloneDeep(_.get(this.vx_get_bet_s_obj,`${this.id}`));
+      let obj = _.cloneDeep(_.get(this.BetData.bet_s_obj,`${this.id}`));
       if (obj) {
         // 投注项的用投注项对象id作为key
         obj.key = this.id;
         // 更新投注项对象
         obj.cs[k] = v;
         // 存储投注项对象
-        this.vx_bet_s_obj_add_attr(obj);
+        this.BetDataCtr.bet_s_obj_add_attr(obj);
       }
     },
     /**
@@ -380,7 +348,7 @@ handle_generat_emitters(){
      */
     foucs_handle() {
       // 获取当前输入投注项的索引
-      let index = this.vx_get_bet_s_list.findIndex(item => item === this.id);
+      let index = this.BetData.bet_s_list.findIndex(item => item === this.id);
       // 设置当前键盘所在的输入投注项索引
       this.view_ctr_obj.cur_keyboard_index = index;
       clearTimeout(this.timer_input_focus);
@@ -450,9 +418,9 @@ handle_generat_emitters(){
           }
         }
       }
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       // 用户存在以及用户有输入金额并且输入金额大于用户账户金额，并且串关投注项为两个(2串1)时
-      if (user && this.money > parseFloat(user.balance) && this.vx_get_bet_list.length == 2) {
+      if (user && this.money > parseFloat(user.balance) && this.BetData.bet_list.length == 2) {
         // 转换输入金额为用户账户余额
         this.money = parseFloat(user.balance);
         // 串关金额范围设置为输入最大金额
@@ -481,7 +449,7 @@ handle_generat_emitters(){
      */
     keypress_handle(data_) {
       this.reset_input_empty_message();
-      let bet_s_obj = this.vx_get_bet_s_obj && this.vx_get_bet_s_obj[this.id];
+      let bet_s_obj = this.BetData.bet_s_obj && this.BetData.bet_s_obj[this.id];
       // 输入投注项存在并且cs不为空
       if (bet_s_obj && bet_s_obj.cs) {
         // 获取该输入投注项上的存储金额
@@ -552,8 +520,8 @@ handle_generat_emitters(){
         let empty_count = 0;
         this.view_ctr_obj.error_code = "";
         this.view_ctr_obj.mix_range_money = 0;
-        this.vx_get_bet_s_list.forEach(item => {
-          let cs = _.get(this.vx_get_bet_s_obj,`${item}.cs`);
+        this.BetData.bet_s_list.forEach(item => {
+          let cs = _.get(this.BetData.bet_s_obj,`${item}.cs`);
           // 金额为空
           if (cs && (cs.money === null || cs.money === '')) {
             // 统计未输入金额的输入投注项个数
@@ -561,7 +529,7 @@ handle_generat_emitters(){
           }
         });
         // 为空的投注项个数和未输入投注项数量相等时
-        if (empty_count == this.vx_get_bet_s_list.length) {
+        if (empty_count == this.BetData.bet_s_list.length) {
           //-2: 输入金额全部为空
           this.view_ctr_obj.mix_range_money = -2; 
           // 设置输入金额为空的标识
@@ -577,7 +545,7 @@ handle_generat_emitters(){
             // 投注框金额给输入金额
             input_amount = parseFloat(this.money);
           }
-          let user = this.vx_get_user;
+          let user = this.BetData.user;
           // 当账户金额为0时
           if(parseFloat(user.balance) == 0.00) {
           } else if(parseFloat(this.min_money) > input_amount) { // 当输入金额比输入框最小限额时
@@ -638,8 +606,8 @@ handle_generat_emitters(){
         return check_result;
       }
       // 当投注项输入框有金额时校验是否为空设置为false
-      this.vx_get_bet_s_list.forEach(item => {
-        let cs = _.get(this.vx_get_bet_s_obj,`${item}.cs`);
+      this.BetData.bet_s_list.forEach(item => {
+        let cs = _.get(this.BetData.bet_s_obj,`${item}.cs`);
         if(cs && cs.money) {
           check_result = false;
         }
@@ -717,7 +685,7 @@ handle_generat_emitters(){
      */
     update_keyboard_status() {
       //用户信息
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       // 用户余额获取
       let init_money = parseFloat(user.balance) || 0.00;
       // 输入金额存在并且用户账户有钱
@@ -779,8 +747,8 @@ handle_generat_emitters(){
   },
   mounted() {
       // 当切换小窗口或内嵌版投注栏金额要保留
-    const value = this.vx_get_bet_current_money_obj[this.id]||null
-    if (value&&this.vx_get_bet_list.length>0) {
+    const value = this.BetData.bet_current_money_obj[this.id]||null
+    if (value&&this.BetData.bet_list.length>0) {
     setTimeout(() => {
        this.money = value
        this.set_bet_s_obj("money", this.money);
@@ -790,7 +758,7 @@ handle_generat_emitters(){
     // 第一个投注输入框
     if (this.index == 0) {
       this.$nextTick().then(() => {
-        let len = this.vx_get_bet_s_list.length;
+        let len = this.BetData.bet_s_list.length;
         if (len > 0) {
           // 调用输入点击方法使其获取焦点
           this.click_handle();

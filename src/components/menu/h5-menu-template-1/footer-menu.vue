@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 赛事列表页 底部菜单
 -->
 <template>
@@ -163,7 +163,7 @@ import { useRoute, useRouter } from 'vue-router'
     set_footer_menulist();
 
     // 监听赛事列表数据获取事件
-    useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu);
+    useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu).on;
 
     // 初始化关注按钮显示状态
     init_follow_icon_style();
@@ -179,7 +179,7 @@ import { useRoute, useRouter } from 'vue-router'
    */
   onBeforeUnmount(() => {
     clear_timer();
-    $root.$off(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu)
+    useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu).off
   })
     // ...mapMutations([
     //   'set_goto_list_top', // 设置赛事列表回到顶部
@@ -211,7 +211,7 @@ import { useRoute, useRouter } from 'vue-router'
             const {groups: {mid, csid}} = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(jump_url) || {groups:{}}
             if (mid && csid) {
               // 如果是电竞赛事，需要设置菜单类型
-              if ([100,101,102,103].includes(+csid)) {  
+              if ([100,101,102,103].includes(+csid)) {
                 set_menu_type(3000)
               }
               set_goto_detail_matchid(mid);
@@ -220,7 +220,7 @@ import { useRoute, useRouter } from 'vue-router'
             }
           }
           // 跳热门联赛
-          if (jump_url.startsWith('hot') && !get_golistpage) { 
+          if (jump_url.startsWith('hot') && !get_golistpage) {
             let tid = jump_url.split('/')[1]
             let is_existtid = get_hot_list_item && get_hot_list_item.subList && get_hot_list_item.subList.find(item => {
               return item.field2 == tid
@@ -434,7 +434,7 @@ import { useRoute, useRouter } from 'vue-router'
             }
           });
         }
-        
+
         if([100].includes(get_curr_sub_menu_type)){
           footer_menulist.forEach(f_m => {
             if(f_m.id == 3){
@@ -471,7 +471,7 @@ import { useRoute, useRouter } from 'vue-router'
     const set_footer_menulist = () => {
       let is_virtual = menu_type == 900;
       // 赛果虚拟体育
-      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type); 
+      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type);
       let is_saiguo_gz = menu_type == 28 && [100].includes(get_curr_sub_menu_type)
       let is_electronicSports = menu_type == 3000  // 电竞
       // console.error(is_virtual, is_saiguo_gz,get_show_favorite_list);
@@ -566,7 +566,7 @@ import { useRoute, useRouter } from 'vue-router'
     const isshow_bottom_banner = computed(() => {
       return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
     })
-    
+
     const calc_resources_obj = computed(() => {
       if (get_theme.includes('theme01')) {
         return get_resources_obj.theme01
@@ -589,7 +589,7 @@ import { useRoute, useRouter } from 'vue-router'
         if(get_theme.includes('y0')) obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
         return obj;
       }
-    }) 
+    })
     const footer_sub_m_list = computed(() => {
       return [
         {
@@ -599,7 +599,7 @@ import { useRoute, useRouter } from 'vue-router'
           icon:'f-icon-sub-duying.svg',
           icon1:'f-icon-sub-duying-black.svg',
           // hpid 独赢
-          id:1   
+          id:1
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.full_time'),
@@ -608,7 +608,7 @@ import { useRoute, useRouter } from 'vue-router'
           icon:'f-icon-sub-rang.svg',
           icon1:'f-icon-sub-rang-black.svg',
            // hpid 让球
-          id:4   
+          id:4
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.full_time'),
@@ -617,7 +617,7 @@ import { useRoute, useRouter } from 'vue-router'
           icon:'f-icon-sub-daxiao.svg',
           icon1:'f-icon-sub-daxiao-black.svg',
           // hpid 大小
-          id:2  
+          id:2
         },
         {
           title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.corner_kick'),
@@ -626,7 +626,7 @@ import { useRoute, useRouter } from 'vue-router'
           icon:'f-icon-sub-jiaoqiu.svg',
           icon1:'f-icon-sub-jiaoqiu-black.svg',
           // hpid 角球
-          id:114  
+          id:114
         }
       ]
     })
@@ -937,7 +937,7 @@ import { useRoute, useRouter } from 'vue-router'
     &.is-hidden {
       display: none;
     }
-    
+
     &.sub-menu-first {
       width: 0;
       height: 0;

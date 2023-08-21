@@ -185,7 +185,7 @@ const init_data = (flag) => {
     }
     is_loading.value = !flag
     //第一次加载时的注单数
-    let size = 0  
+    let size = 0
     api_betting.get_preOrderList_news(params).then(res=>{
         if(res.code == 200 && res.data){
         is_loading.value = false
@@ -221,7 +221,7 @@ const onPull = () => {
     let ele = myScroll.value
     if (!is_hasnext.value || last_record.value === undefined) {
         //没有更多
-        ele.setState(7);  
+        ele.setState(7);
         return;
     }
     var params = {
@@ -229,17 +229,17 @@ const onPull = () => {
         searchAfter: last_record.value || undefined,
     };
     //加载中
-    ele.setState(4);  
+    ele.setState(4);
     api_betting.get_preOrderList(params).then(res => {
         // 为 null 时容错处理
-        if (!res.data) {  
+        if (!res.data) {
         is_hasnext.value = false
         //没有更多
-        ele.setState(7);  
+        ele.setState(7);
         return
         }
         //加载完成
-        ele.setState(5);  
+        ele.setState(5);
         let { record, hasNext } = lodash.get(res, "data", {});
         is_hasnext.value = hasNext
         if(res.code == 200 && res.data){
@@ -256,7 +256,7 @@ const onPull = () => {
 
         }else {
             //没有更多
-        ele.setState(7);  
+        ele.setState(7);
         }
     }).catch(err => { console.error(err) });
 }
@@ -311,8 +311,8 @@ onUnmounted(() => {
     clearTimeout(timer_2)
     timer_2.value = null
 
-    // $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList)
-    // $root.$off(MITT_TYPES.EMIT_SHOW_CANCLE_POP, show_cancle_pop)
+    // useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off
+    // useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP, show_cancle_pop).off
     // for (const key in $data) {
     // $data[key] = null
     // }
@@ -321,7 +321,7 @@ onUnmounted(() => {
     // computed: {
     //     // ...mapGetters(['get_user', 'get_main_item'])
     // },
-   
+
 </script>
 
 <style lang="scss" scoped>

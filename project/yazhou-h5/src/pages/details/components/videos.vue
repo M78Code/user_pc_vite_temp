@@ -22,7 +22,7 @@
             </div>
             <div class="row" style="margin-right:0.1rem;max-width:2.43rem;">
               <div class="col title-text-style">{{title.mhn}}</div>
-              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
+              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
               <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
               <div class="col title-text-style">{{title.man}}</div>
             </div>
@@ -51,7 +51,7 @@
           <img  src="image/bw3/svg/video_reload.svg" :class="[rotate ? 'rotate_2': 'rotate_1']">
         </div>
         <div style="padding: 0.1rem;color:#6D7075;">
-          {{i18n.t("video.sorry")}}
+          {{t("video.sorry")}}
         </div>
       </div>
 
@@ -63,18 +63,18 @@
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/one-click.svg" alt="">
-            <span>{{i18n.t("video.click_on")}}</span>
-            <p>{{i18n.t("video.show_hide")}}</p>
+            <span>{{t("video.click_on")}}</span>
+            <p>{{t("video.show_hide")}}</p>
           </div>
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/double-click.svg" alt="">
-            <span>{{i18n.t("video.double_click")}}</span>
-            <p>{{i18n.t("video.full_screen_play")}}</p>
+            <span>{{t("video.double_click")}}</span>
+            <p>{{t("video.full_screen_play")}}</p>
           </div>
         </div>
-        
+
         <!-- 视频单页项目-->
-        <iframe v-if="iframe_show && !is_show_no_handle && iframe_src" v-show="!is_playing_replay" ref="iframe" id="bdIframe" style="width:100%;height:100%;" allow="autoplay" frameborder="0" scrolling="no" :src="iframe_src+'&rdm='+this.iframe_rdm"></iframe>
+        <iframe v-if="iframe_show && !is_show_no_handle && iframe_src" v-show="!is_playing_replay" ref="iframe" id="bdIframe" style="width:100%;height:100%;" allow="autoplay" frameborder="0" scrolling="no" :src="iframe_src+'&rdm='+iframe_rdm"></iframe>
         <!-- 视频单页项目精彩回放页面-->
         <iframe
             v-if="is_playing_replay"
@@ -89,7 +89,7 @@
         ></iframe>
         <div class="load-error-mask" v-show="is_replay_load_error">
           <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
-          <div>{{ i18n.t('highlights.reconnect') }}</div>
+          <div>{{ t('highlights.reconnect') }}</div>
         </div>
 
         <template v-if="is_playing_replay">
@@ -117,15 +117,15 @@
 
         <!-- 精彩回放 -->
         <template v-if="get_detail_data.csid === '1' && get_is_hengping && is_replay_switch && events_list.length">
-          
+
           <!-- 精彩回放事件类型切换 -->
           <tabs v-show="is_expand_video_list" :tabs="tab_list" @click="get_video_list" ref="tabs"></tabs>
-          
+
           <template v-if="get_is_hengping">
             <!--（精彩/收起）回放 -->
             <div v-if="events_list.length" class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
               <img src="image/bw3/svg/details/replay_toggle.svg" />
-              <span>{{ !is_expand_video_list ? i18n.t('highlights.title') : i18n.t('highlights.collapse_replay') }}</span>
+              <span>{{ !is_expand_video_list ? t('highlights.title') : t('highlights.collapse_replay') }}</span>
             </div>
 
             <!-- 关闭回放视频 -->
@@ -153,12 +153,12 @@
               <div class="event-time">{{ +slotProps.item.secondsFromStart | format_mgt_time }}</div>
             </template>
           </slider-x>
-          
+
         </template>
-        
+
         <!-- 长时间未操作 -->
         <div v-if="is_show_no_handle" class="no-handle information-score">
-          <div class="text text-center">{{i18n.t('video.nohandle')}}</div>
+          <div class="text text-center">{{t('video.nohandle')}}</div>
           <div class="collect-icon" @click="is_show_no_handle = false"></div>
         </div>
         <!-- 动画背景遮罩层 -->
@@ -194,7 +194,7 @@
               <!-- 动画不显示对阵信息 -->
               <div v-if="get_video_url.active == 'muUrl'" class="col-10 row" style="max-width: 2.43rem;">
                 <div class="col title-text-style">{{title.mhn}}</div>
-                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
+                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
                 <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
                 <div class="col title-text-style">{{title.man}}</div>
               </div>
@@ -248,7 +248,7 @@
           class="description-popup"
         >
           <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && _.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
-            {{get_hd_sd == 1 ? i18n.t("common.HD"): i18n.t("common.SD")}}
+            {{get_hd_sd == 1 ? t("common.HD"): t("common.SD")}}
           </span>
           <div class="img-wrap">
             <img :src="tips ? tips_act :tips_def" @click="change_info"/>
@@ -258,7 +258,7 @@
     </div>
     <div class="tips details_bg6 details_t_color1" v-if="tips && video_iframe_status != 'error'">
       <div class="tips_content details_t_color3">
-        {{i18n.t("video.msg")}}
+        {{t("video.msg")}}
       </div>
     </div>
     <div v-if="(get_is_hengping && get_analyze_show)"  :class="{'analyze-show':(get_is_hengping && get_analyze_show)}">
@@ -267,11 +267,11 @@
         <!-- 篮球赛事分析 页面-->
         <basketball-match-analysis v-if="get_detail_data.csid === '2'"></basketball-match-analysis>
     </div>
-    
+
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
 import {api_common, api_result} from 'src/project/api/index.js';
@@ -286,8 +286,11 @@ import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { video_info } from "./videos.js";
-
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+const route = useRoute()
 export default defineComponent({
   name: "videos",
   components: {
@@ -307,7 +310,7 @@ export default defineComponent({
     'show_go_back',
     'detail_data' //详情数据
   ],
-  
+
   setup(props, evnet) {
     const component_data = reactive({
       tips_def: "image/wwwassets/bw3/svg/video_b.svg",
@@ -360,10 +363,10 @@ export default defineComponent({
       is_expand_video_list: false,
       // 事件类型菜单选项
       tab_list:[
-        {title: i18n.t('footer_menu.all')},
-        {title:i18n.t('match_result.goal')},
-        {title:i18n.t('match_result.corner_kick')},
-        {title:i18n.t('football_playing_way.penalty_cards')},
+        {title: t('footer_menu.all')},
+        {title:t('match_result.goal')},
+        {title:t('match_result.corner_kick')},
+        {title:t('football_playing_way.penalty_cards')},
       ],
       // 当前播放视频信息
       current_event_video: {
@@ -458,37 +461,37 @@ export default defineComponent({
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.get_user,'oss.live_h5')
-      return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(get_user,'oss.live_h5')
+      return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
-      // return `${host_url}src=${this.replay_url}&volume=${this.is_user_voice ? 1 : 0}`
+      // return `${host_url}src=${replay_url}&volume=${is_user_voice ? 1 : 0}`
     });
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return this.get_detail_data.lvs != -1 && this.get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(this.get_detail_data,'lss')) && ['zh','tw'].includes(this.get_lang)
+      return get_detail_data.lvs != -1 && get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
     });
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
       // letian = 乐天  oubao = 欧宝
-      if(this.get_user.merchantCode){
-        return this.get_user.merchantCode == 'letian'
+      if(get_user.merchantCode){
+        return get_user.merchantCode == 'letian'
       }
     });
     const iframe_show = computed(() => {
-      if(this.get_video_url.active == 'animationUrl' || this.get_iframe_onload){
+      if(get_video_url.active == 'animationUrl' || get_iframe_onload){
         return true
       }
       return false
     });
     // 动画下显示tips icon
     const show_animation = computed(() => {
-      return this.get_detail_data.mvs > -1 && this.get_video_url.active == 'animationUrl'
+      return get_detail_data.mvs > -1 && get_video_url.active == 'animationUrl'
     });
     // 媒体类型
     const media_type = computed(() => {
-      const {lss} = this.get_detail_data
-      const {active} = this.get_video_url
+      const {lss} = get_detail_data
+      const {active} = get_video_url
 
       // 专题视频，mp4等带有可控制进度条
       if (lss === 0 && active === 'lvs') {
@@ -500,24 +503,24 @@ export default defineComponent({
     });
     // 赛事id
     const match_id = computed(() => {
-      return this.$route.params.mid || this.get_detail_data.mid
+      return $route.params.mid || get_detail_data.mid
     });
     // 赛事id
     const score = computed(() => {
       return {
         home: "",
         away: ""
-        // home: global_filters.format_total_score(this.detail_data, 0),
-        // away: global_filters.format_total_score(this.detail_data, 1)
+        // home: global_filters.format_total_score(detail_data, 0),
+        // away: global_filters.format_total_score(detail_data, 1)
       }
     });
     const eports_scoring = computed(() => {
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
-      if(this.get_menu_type == 3000) {
-        const mmp_state = this.detail_data.mmp || 1
-        if(mmp_state != (Number(this.score.home) + Number(this.score.away) +1)) {
+      if(get_menu_type == 3000) {
+        const mmp_state = detail_data.mmp || 1
+        if(mmp_state != (Number(score.home) + Number(score.away) +1)) {
           scoring = true
         }
       }
@@ -525,43 +528,43 @@ export default defineComponent({
     });
     // 事件列表（非全屏）
     const events_list_vertical = computed(() => {
-      const curr_tab_index = this.tabIndex
+      const curr_tab_index = tabIndex
       let events_list
       if (curr_tab_index === 0) {
-        events_list = _.cloneDeep(this.events_list)
+        events_list = _.cloneDeep(events_list)
       } else if (curr_tab_index === 1) {
-        events_list = this.events_list.filter(item => item.eventCode === 'goal')
+        events_list = events_list.filter(item => item.eventCode === 'goal')
       } else if (curr_tab_index === 2) {
-        events_list = this.events_list.filter(item => item.eventCode === 'corner')
+        events_list = events_list.filter(item => item.eventCode === 'corner')
       } else {
-        events_list = this.events_list.filter(item => !['goal', 'corner'].includes(item.eventCode))
+        events_list = events_list.filter(item => !['goal', 'corner'].includes(item.eventCode))
       }
       return events_list.reverse()
     });
     // 事件列表（全屏）
     const slider_events_list = computed(() => {
-      return _.cloneDeep(this.events_list_vertical).reverse()
+      return _.cloneDeep(events_list_vertical).reverse()
     });
     // 精彩回放视频开关是否开启
     const is_replay_switch = computed(() => {
-      const { configValue, eventSwitch } = _.get(this.get_user, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(get_user, 'merchantEventSwitchVO', {})
       return configValue == 1 && eventSwitch == 1
     });
     // slider列表长度是否小于屏幕横屏宽度
     const is_slider_in_screen = computed(() => {
-      const full_screen_width = this.get_is_hengping ? innerWidth : innerHeight
-      const font_size = (this.get_is_hengping ? innerHeight : innerWidth) * 100 / 375
+      const full_screen_width = get_is_hengping ? innerWidth : innerHeight
+      const font_size = (get_is_hengping ? innerHeight : innerWidth) * 100 / 375
 
-      return this.slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
+      return slider_events_list.length * Math.ceil(1.44 * font_size) < full_screen_width
     });
     // 监听用户是否长时间未操作
     watch(
       () => get_is_user_no_handle.value,
       (res) => {
-        if(res && this.iframe_show && this.get_video_url.active == 'muUrl'){
-          this.iframe_rdm = new Date().getTime()
-          this.is_show_no_handle = true
-          this.sendMessage2({cmd: 'destroy_video'})
+        if(res && iframe_show && get_video_url.active == 'muUrl'){
+          iframe_rdm = new Date().getTime()
+          is_show_no_handle = true
+          sendMessage2({cmd: 'destroy_video'})
         }
       }
     );
@@ -570,27 +573,27 @@ export default defineComponent({
       () => get_is_hengping.value,
       (is_hengping) => {
         if (!is_hengping) {
-          this.set_bet_show(false)
-          this.set_analyze_show(false);
+          set_bet_show(false)
+          set_analyze_show(false);
         }
-        this.set_analyze_show(false);
+        set_analyze_show(false);
         // 播放视频的时候横屏，自动触发全屏
-        if (is_hengping && this.get_show_video && this.get_video_url.active == 'muUrl') {
-          this.set_is_full_screen(true)
-          this.show_icons = true;
-          this.clear_timer()
-          if(this.is_need_timer) {
-            this.timer1_ = setTimeout(() => {
-            this.show_icons = false;
-            this.sendMessage2({cmd: 'hide_icon'})
+        if (is_hengping && get_show_video && get_video_url.active == 'muUrl') {
+          set_is_full_screen(true)
+          show_icons = true;
+          clear_timer()
+          if(is_need_timer) {
+            timer1_ = setTimeout(() => {
+            show_icons = false;
+            sendMessage2({cmd: 'hide_icon'})
           }, 3000)
         }
         }
         // 视频播放时，切换横屏则清除投注项数据
-        this.set_bet_list([]);
+        set_bet_list([]);
 
         // 横屏、竖屏切换时通知子iframe
-        if (this.is_playing_replay) {
+        if (is_playing_replay) {
           if (!is_hengping) {
             const data = {
               cmd: 'full_screen_portrait',
@@ -607,7 +610,7 @@ export default defineComponent({
 
           }
         }
-        
+
 
       }
     );
@@ -617,29 +620,29 @@ export default defineComponent({
       (new_) => {
         console.log(new_,"new_new_new_");
         // 当是动画当时候，详情外面点击默认就是展示返回按钮，关闭的话只能点击顶部返回
-        if(this.get_video_url.active == 'animationUrl' && this.show_go_back){
-          this.show_icons = true
-          if(this.show_icons){
-            this.sendMessage2({cmd: 'show_icon'})
+        if(get_video_url.active == 'animationUrl' && show_go_back){
+          show_icons = true
+          if(show_icons){
+            sendMessage2({cmd: 'show_icon'})
           }else{
-            this.sendMessage2({cmd: 'hide_icon'})
+            sendMessage2({cmd: 'hide_icon'})
           }
-          this.fade_icons();
-          // this.set_bet_show(false);
-          this.set_analyze_show(false);
-          this.select_item = -1;
+          fade_icons();
+          // set_bet_show(false);
+          set_analyze_show(false);
+          select_item = -1;
         }else{
           // 视频中的iframe是可以交互隐藏返回显示按钮的
-          this.show_icons = !this.show_icons
-          if(this.show_icons){
-            this.sendMessage2({cmd: 'show_icon'})
+          show_icons = !show_icons
+          if(show_icons){
+            sendMessage2({cmd: 'show_icon'})
           }else{
-            this.sendMessage2({cmd: 'hide_icon'})
+            sendMessage2({cmd: 'hide_icon'})
           }
-          this.fade_icons();
-          // this.set_bet_show(false);
-          this.set_analyze_show(false);
-          this.select_item = -1;
+          fade_icons();
+          // set_bet_show(false);
+          set_analyze_show(false);
+          select_item = -1;
         }
       }
     );
@@ -647,30 +650,30 @@ export default defineComponent({
       () => get_video_url.value,
       (new_value, old_value) => {
         if(new_value.active == 'muUrl'){
-          if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-            this.iframe_src = new_value.media_src + this.dj_http_fix(new_value.media_src) +'controls=1'
+          if ([100,101,102,103].includes(+get_detail_data.csid)){
+            iframe_src = new_value.media_src + dj_http_fix(new_value.media_src) +'controls=1'
           } else {
-            this.iframe_src = new_value.media_src + '&controls=1'
+            iframe_src = new_value.media_src + '&controls=1'
           }
           //用戶第一次登录 显示 视频指引层
           let is_login_one = localStorage.getItem("is_first_login");
-          if (this.get_show_video && is_login_one != "end") {
-            this.first_login = true;
-            if(this.timer5_) { clearTimeout(this.timer5_) }
-            this.timer5_ = setTimeout(()=>{
-              this.first_login = false;
+          if (get_show_video && is_login_one != "end") {
+            first_login = true;
+            if(timer5_) { clearTimeout(timer5_) }
+            timer5_ = setTimeout(()=>{
+              first_login = false;
             },5000)
             localStorage.setItem("is_first_login", "end");
           }
         }
         else{
           if (new_value.referUrl && new_value[new_value.active]) {
-            if ([100,101,102,103].includes(+this.get_detail_data.csid)){
-              this.iframe_src = new_value[new_value.active] + this.dj_http_fix(new_value[new_value.active]) +'controls=1'
+            if ([100,101,102,103].includes(+get_detail_data.csid)){
+              iframe_src = new_value[new_value.active] + dj_http_fix(new_value[new_value.active]) +'controls=1'
             } else {
-              this.iframe_src = new_value[new_value.active] + '&controls=1'
+              iframe_src = new_value[new_value.active] + '&controls=1'
             }
-            
+
           }
         }
       }
@@ -679,9 +682,9 @@ export default defineComponent({
       () => component_data.nail,
       (n, o) => {
         if(n == true){
-          this.set_zhiding_info(true);
+          set_zhiding_info(true);
         }else{
-          this.set_zhiding_info(false);
+          set_zhiding_info(false);
         }
       }
     );
@@ -689,9 +692,9 @@ export default defineComponent({
       () => component_data.tips,
       (n, o) => {
         if(n == true){
-          this.set_video_zhiding(true);
+          set_video_zhiding(true);
         }else{
-          this.set_video_zhiding(false);
+          set_video_zhiding(false);
         }
       }
     );
@@ -699,18 +702,18 @@ export default defineComponent({
     watch(
       () => get_detail_data.value.msc,
       (new_value) => {
-        this.get_msc()
+        get_msc()
       }
     );
     // 动画状态 -1 没有配置动画源 ，0 ： 已配置，但是不可用   1： 已配置，可用，播放中   2：已配置，可用，播放中
     watch(
       () => get_detail_data.value.mvs,
       (new_value) => {
-        if(new_value == -1 && this.get_video_url.active == 'animationUrl'){
-          this.set_toast({
-            txt: i18n.t("video.close_1"),
+        if(new_value == -1 && get_video_url.active == 'animationUrl'){
+          set_toast({
+            txt: t("video.close_1"),
           });
-          this.close_video()
+          close_video()
         }
       }
     );
@@ -718,10 +721,10 @@ export default defineComponent({
     watch(
       () => get_detail_data.value.mms,
       (new_value) => {
-        if(new_value != 2 && this.get_video_url.active == 'muUrl'){
-          this.close_video()
-          this.set_toast({
-            txt: i18n.t("video.close_2"),
+        if(new_value != 2 && get_video_url.active == 'muUrl'){
+          close_video()
+          set_toast({
+            txt: t("video.close_2"),
           });
         }
       }
@@ -736,7 +739,7 @@ export default defineComponent({
       (new_value) => {
         if(new_value){
           for(let i = 0;i < new_value.length;i++){
-            this.sendMessage2({cmd: 'update_sts', val: new_value[i]})
+            sendMessage2({cmd: 'update_sts', val: new_value[i]})
           }
         }
       }
@@ -745,12 +748,12 @@ export default defineComponent({
       () => get_is_dp_video_full_screen.value,
       (status) => {
         if (!status) {
-          clearTimeout(this.reload_iframe_timer)
-          this.reload_iframe_timer = setTimeout(() => {
+          clearTimeout(reload_iframe_timer)
+          reload_iframe_timer = setTimeout(() => {
             // 部分iPhone safari退出全屏后，视频高度不正确，重载iframe更新
-            this.set_iframe_onload(false)
-            this.$nextTick(() => {
-              this.set_iframe_onload(true)
+            set_iframe_onload(false)
+            $nextTick(() => {
+              set_iframe_onload(true)
             })
           }, 300)
         }
@@ -758,50 +761,50 @@ export default defineComponent({
     );
     onMounted(() => {
       // 延时器
-      this.timer1_ = null;
-      this.timer2_ = null;
-      this.timer3_ = null;
-      this.timer4_ = null;
-      this.timer5_ = null;
-      this.timer6_ = null;
-      this.reload_create_fun();
+      timer1_ = null;
+      timer2_ = null;
+      timer3_ = null;
+      timer4_ = null;
+      timer5_ = null;
+      timer6_ = null;
+      reload_create_fun();
       // iframe视频参数时间戳
-      this.iframe_rdm = new Date().getTime()
-      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
+      iframe_rdm = new Date().getTime()
+      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume).on;
 
       // 监听精彩回放iframe传来的消息
-      window.addEventListener("message", this.handle_replay_message);
+      window.addEventListener("message", handle_replay_message);
 
-      this.replay_url = 'http://localhost:3000/replay.mp4'
+      replay_url = 'http://localhost:3000/replay.mp4'
 
 
-      // 原mounted 
-      this.set_zhiding_info( false )
-      this.set_video_zhiding( false )
-      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
-      this.mapFrame = this.$refs.iframe
+      // 原mounted
+      set_zhiding_info( false )
+      set_video_zhiding( false )
+      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,icon_click_lvs).on;
+      mapFrame = $refs.iframe
     });
     onUnmounted(() => {
-      this.set_video_url({media_src:'',referUrl:''})
-      window.removeEventListener("message", this.handleMessage);
-      window.removeEventListener("message", this.handle_replay_message);
-      this.set_tab_fix(false);
-      this.set_is_dp_video_full_screen(false);
-      this.clear_timer()
-      if(this.get_video_url.active == 'muUrl') localStorage.setItem("is_first_login", "end");
-      clearTimeout(this.timer1_)
-      clearTimeout(this.timer2_)
-      clearTimeout(this.timer3_)
-      clearTimeout(this.timer4_)
-      clearTimeout(this.timer5_);
-      clearTimeout(this.timer6_)
-      clearTimeout(this.media_type_change_timer)
-      clearTimeout(this.reload_iframe_timer)
-      clearInterval(this.get_replay_video_timer)
-      this.$root.$off(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
-      this.$root.$off(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
+      set_video_url({media_src:'',referUrl:''})
+      window.removeEventListener("message", handleMessage);
+      window.removeEventListener("message", handle_replay_message);
+      set_tab_fix(false);
+      set_is_dp_video_full_screen(false);
+      clear_timer()
+      if(get_video_url.active == 'muUrl') localStorage.setItem("is_first_login", "end");
+      clearTimeout(timer1_)
+      clearTimeout(timer2_)
+      clearTimeout(timer3_)
+      clearTimeout(timer4_)
+      clearTimeout(timer5_);
+      clearTimeout(timer6_)
+      clearTimeout(media_type_change_timer)
+      clearTimeout(reload_iframe_timer)
+      clearInterval(get_replay_video_timer)
+      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,icon_click_lvs).off;
+      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume).off;
     });
-    // #TODO vuex actions 
+    // #TODO vuex actions
     // ...mapMutations([
     //   'set_change_count',
     //   'set_video_url',
@@ -829,7 +832,7 @@ export default defineComponent({
     return {
       ...toRefs(data)
     }
-    
+
   }
 })
 

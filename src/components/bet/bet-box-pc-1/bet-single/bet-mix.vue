@@ -10,9 +10,9 @@
           <!--未投注就是bet-mix-info组件-->
           <template v-if="bet_flag">
             <bet-mix-info ref="bet-mix-info" ></bet-mix-info>
-            <template v-if="vx_get_bet_list.length>1 && vx_get_bet_s_list.length > 0">
+            <template v-if="BetData.bet_list.length>1 && BetData.bet_s_list.length > 0">
              <!--复式连串过关投注-->
-              <div class="row bet-toggle" :class="{'bet-border-radius': vx_get_bet_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
+              <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
                 <div
                   class="col bet-toggle-text cursor-pointer" 
                   :class="{'disabled-toggle': expend_disable}"              
@@ -35,7 +35,7 @@
               </div>
               <div v-show="is_expend">
                 <!--金额输入框-->
-                <template v-for="(item, index) in vx_get_bet_s_list">
+                <template v-for="(item, index) in BetData.bet_s_list">
                  <!--2串1以及输入框-->
                   <bet-mix-input
                     :ref="`bet-mix-input-${item}`"
@@ -45,7 +45,7 @@
                     :key="item"
                     @set_min_max_money="set_min_max_money"
                     v-if="view_ctr_obj.series_order_success && ((view_ctr_obj.series_order_success.length==0 && index>0) || (view_ctr_obj.series_order_success.length>0))"
-                    :class="{'bet-mix-input-last': ((index+1)==vx_get_bet_list.length)}"
+                    :class="{'bet-mix-input-last': ((index+1)==BetData.bet_list.length)}"
                   ></bet-mix-input>
                 </template>
               </div>

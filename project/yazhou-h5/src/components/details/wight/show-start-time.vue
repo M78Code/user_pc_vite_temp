@@ -7,7 +7,7 @@
   <span class='show-start-time'>
     <span v-if="start_time" class="fz_12" style="font-weight:400">
       <!-- "after_time_start": "分钟后开赛", -->
-      {{i18n.t("list.after_time_start",[longTime])}}
+      {{t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
       {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}
@@ -17,6 +17,9 @@
 
 <script>
 import utils from "src/public/utils/utils.js";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
 export default {
   name: 'show_start_time',
@@ -32,38 +35,38 @@ export default {
   props: ["detail_data"],
   created(){
     // 时间延时器
-    this.timerInterval = '';
-    this.initEvent(); },
-  beforeUnmount(){ 
-    clearInterval(this.timerInterval);
-    this.timerInterval = null
+    timerInterval = '';
+    initEvent(); },
+  beforeUnmount(){
+    clearInterval(timerInterval);
+    timerInterval = null
   },
   methods: {
     initEvent(){
       let now = new Date().getTime();
-      let bool = Number(this.detail_data.mgt) - now < 3600 * 1000;
-      let longTime = Math.floor( (+this.detail_data.mgt -now ) / 1000 / 60 );
-      if( longTime == 0 ){ 
+      let bool = Number(detail_data.mgt) - now < 3600 * 1000;
+      let longTime = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
+      if( longTime == 0 ){
         longTime += 1;
       }
       // 判断开始时间小于本地时间 则不显示具体时间
-      if( this.detail_data.mgt - now < 0 ){
-        clearInterval(this.timerInterval);
-        this.start_time = false;
+      if( detail_data.mgt - now < 0 ){
+        clearInterval(timerInterval);
+        start_time = false;
       } else {
-        this.start_time = bool;
+        start_time = bool;
       }
-      this.longTime = longTime;
+      longTime = longTime;
 
-      this.timerInterval = setInterval(()=>{
+      timerInterval = setInterval(()=>{
         let now = new Date().getTime();
-        if(+this.detail_data.mgt - now < 0 ){
-          clearInterval(this.timerInterval);
-          this.start_time = false;
+        if(+detail_data.mgt - now < 0 ){
+          clearInterval(timerInterval);
+          start_time = false;
         }
-        let longTime = Math.floor( (+this.detail_data.mgt - now )/ 1000 / 60);
+        let longTime = Math.floor( (+detail_data.mgt - now )/ 1000 / 60);
         if(longTime == 0){ longTime += 1; }
-        this.longTime = longTime;
+        longTime = longTime;
       }, 1000 * 1)
     }
   },

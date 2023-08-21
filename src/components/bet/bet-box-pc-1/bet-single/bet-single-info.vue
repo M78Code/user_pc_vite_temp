@@ -6,7 +6,7 @@
   <q-card flat class="relative-position bet-card bet-single-item-card"
     :class="{'bet-no-effect':!(active == 1 || active == 4)}">
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <div class="cathectic-appoint" v-if="!_.isEmpty(vx_get_bet_appoint_obj) && vx_get_bet_appoint_obj.bet_appoint_id != id"></div>
+    <div class="cathectic-appoint" v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->

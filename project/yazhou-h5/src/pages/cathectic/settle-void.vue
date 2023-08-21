@@ -10,7 +10,7 @@
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
-          {{ get_main_item == 2 ? i18n.t('msg.msg_nodata_19') : i18n.t('msg.msg_nodata_05') }}
+          {{ get_main_item == 2 ? t('msg.msg_nodata_19') : t('msg.msg_nodata_05') }}
         </p>
       </div>
     </div>
