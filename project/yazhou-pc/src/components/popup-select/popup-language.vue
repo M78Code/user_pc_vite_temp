@@ -20,7 +20,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch, computed, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
 import { useI18n } from "vue-i18n";
@@ -46,8 +46,19 @@ const hits = ref(0)
 const langs = ref(langs_mjs)
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { betInfoReducer, userReducer, langReducer, menuReducer } = store_data
+const { globalReducer, betInfoReducer, userReducer, langReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    global_click.value = globalReducer.global_click
+    lang.value = langReducer.lang
+    user_info.value = userReducer.user_info || {}
+    is_bet_single.value = betInfoReducer.is_bet_single
+    bet_single_obj.value = betInfoReducer.bet_single_obj || {}
+    bet_obj.value = betInfoReducer.bet_obj || {}
+    is_virtual_bet.value = betInfoReducer.is_virtual_bet
+    virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /** 全局点击事件数 */
 const global_click = ref(0)
@@ -61,7 +72,6 @@ watch(
         show_popup.value = false;
     }
 )
-
 /** 
  * is_bet_single true: 单关投注 false: 串关投注 default: true
  * bet_single_obj 单关投注对象 default: {}
@@ -71,38 +81,31 @@ watch(
  * 路径: project_path\src\store\module\betInfo.js
  */
 /**  */
-const { is_bet_single, bet_single_obj, bet_obj, is_virtual_bet, virtual_bet_obj } = betInfoReducer
+const { is_bet_single, bet_single_obj, bet_obj, is_virtual_bet, virtual_bet_obj } = toRefs(...reactive(betInfoReducer))
 /** 
  * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
 const { user_info } = userReducer
-
 /** 
  * 语言 languages
  * 路径: src\store-redux\module\languages.js
  */
 const { lang } = langReducer
-/** 
- * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 
- * 路径: src\store-redux\module\menu.js
- */
-const { cur_menu_type } = menuReducer
-
 
 /** 设置语言 */
 const set_lang = (data) => store.dispatch({
-    type: 'set_lang',
+    type: 'SET_LANG',
     data
 })
 /** 设置语言变化 */
 const set_lang_change = (data) => store.dispatch({
-    type: 'set_lang_change',
+    type: 'SET_LANGUAGE_CHANGING',
     data
 })
 /** 更新用户信息 */
-const set_user_assign = (data) => store.dispatch({
-    type: 'set_user_assign',
+const set_user = (data) => store.dispatch({
+    type: 'SET_USER',
     data
 })
 /** 即将开赛筛选时间 */
@@ -138,12 +141,12 @@ function on_click_lang(lang_) {
             set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
-            let type = is_virtual_bet ? 1 : 0;
-            let ids = [], bet_type = bet_obj;
-            if (is_virtual_bet) {
-                bet_type = virtual_bet_obj
-            } else if (is_bet_single) {
-                bet_type = bet_single_obj;
+            let type = is_virtual_bet.value ? 1 : 0;
+            let ids = [], bet_type = bet_obj.value;
+            if (is_virtual_bet.value) {
+                bet_type = virtual_bet_obj.value
+            } else if (is_bet_single.value) {
+                bet_type = bet_single_obj.value;
             }
             for (let obj of Object.values(bet_type)) {
                 let match_id = lodash.get(obj, 'cs.match_id', '');
@@ -169,7 +172,7 @@ function on_click_lang(lang_) {
                 api_details.get_bet_olds(params).then(res => {
                     let data = lodash.get(res, 'data.data');
                     if (lodash.isArray(data) && data.length > 0) {
-                        if (is_virtual_bet) {
+                        if (is_virtual_bet.value) {
                             // TODO: this
                             // virtual_common_update_bet_item_info( data);
                         } else {
@@ -189,7 +192,7 @@ function on_click_lang(lang_) {
         api_account.set_user_lang({ token: user_info.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
-                set_user_assign({ languageName: lang_ })
+                set_user({ languageName: lang_ })
                 set_lang(lang_);
                 // TODO: 
                 window.reset_lang = lang_;

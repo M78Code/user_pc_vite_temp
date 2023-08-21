@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted, computed } from 'vue'
+import { ref, watch, onUnmounted, computed, toRefs } from 'vue'
 import { useI18n } from "vue-i18n";
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
@@ -45,31 +45,33 @@ const hits = ref(0)
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, userReducer, langReducer, themeReducer } = store_data
-/** 
- * 语言 languages
- * 路径: src\store-redux\module\languages.js
- */
- const { lang } = langReducer
+const { globalReducer, userReducer, themeReducer } = store_data
+const unsubscribe = store.subscribe(() => {
+    global_click.value = globalReducer.global_click
+    theme.value = langReducer.theme
+    user_info.value = userReducer.user_info || {}
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
 * 全局点击事件数 default: 0
 * 路径: project_path\src\store\module\global.js
 */
-const { global_click } = globalReducer
+const global_click = ref(globalReducer.global_click)
 /** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const { theme } = themeReducer
+const theme = ref(themeReducer.theme)
 /** 
  * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
- const { user_info } = userReducer
+const user_info = ref(userReducer.user_info)
 
 /** 设置语言 */
 const set_lang = (data) => store.dispatch({
-    type: 'set_lang',
+    type: 'SET_LANG',
     data
 })
 /** 设置版本 */
@@ -85,7 +87,7 @@ const set_theme = (data) => store.dispatch({
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
-    return theme.includes('theme02') ? 'theme02' : 'theme01'
+    return theme.value.includes('theme02') ? 'theme02' : 'theme01'
 })
 
 /**
@@ -114,7 +116,7 @@ function on_click_version(type) {
  */
 async function on_click_lang(lang_) {
     set_lang(lang_);
-    api_account.get_lang({ token: user_info.token, languageName: lang_ })
+    api_account.get_lang({ token: user_info.value.token, languageName: lang_ })
 
 }
 // 设置主题
@@ -128,7 +130,7 @@ function handle_set_theme(theme) {
 
 /** 点击任何地方关闭弹窗 */
 watch(
-    () => global_click,
+    () => global_click.value,
     () => {
         if (hits.value % 2 == 1) {
             hits.value++;

@@ -51,7 +51,7 @@
                 </div>
                 <div class="row">
                     <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
-                        @click="vx_set_show_balance(!show_balance)"></span>
+                        @click="set_show_balance(!show_balance)"></span>
                     <div v-show="!show_balance" class="balance-text-hide">
                         ******
                     </div>
@@ -84,12 +84,13 @@ import headerTime from "project_path/src/components/site-header/header-time.vue"
 import headerAdvertisement from "project_path/src/components/site-header/header-advertisement.vue"
 
 /** 工具.js */
-import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
+import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { ss, ls } from 'src/core/utils/web-storage.js'
+import userCtr from 'src/core/user-config/user-ctr.js'
 
 /** api */
 import { api_account } from "src/api/index.js";
@@ -155,54 +156,81 @@ const currentSwipperIndex = ref(0)
 const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store_data
-/** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const { global_switch } = globalReducer
-/** 
- * left_menu_toggle 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
- * is_invalid 判断是否是登录状态 default: false
- * 路径: project_path\src\store\module\betInfo.js
- */
-const { left_menu_toggle, is_invalid } = betInfoReducer
-/** 
- * user_info 用户信息 default: {}
- * show_balance 用户余额是否展示状态 default: true
- * 路径: src\store-redux\module\user-info.js
- */
-const { user_info, show_balance } = userReducer
-
-/** 
- * 语言 languages
- * 路径: src\store-redux\module\languages.js
- */
-const { lang } = langReducer
-/** 
- * main_menu_toggle 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
- * menu_collapse_status 获取菜单收起状态 default: false
- * cur_menu_type 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 default：Object
- * 路径: project_path\src\store\module\menu.js
- */
-const { main_menu_toggle, menu_collapse_status, cur_menu_type } = menuReducer
+const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    theme.value = themeReducer.theme
+    global_switch.value = globalReducer.global_switch
+    user_info.value = userReducer.user_info || {}
+    is_invalid.value = betInfoReducer.is_invalid
+    cur_menu_type.value = menuReducer.cur_menu_type || {}
+    menu_collapse_status.value = menuReducer.menu_collapse_status
+    show_balance.value = userReducer.show_balance
+    lang.value = langReducer.lang
+    left_menu_toggle.value = betInfoReducer.left_menu_toggle
+    main_menu_toggle.value = menuReducer.main_menu_toggle
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const { theme } = themeReducer
+const theme = ref(themeReducer.theme)
+/** 
+ * 全局开关 default: object
+ * 路径: project_path\src\store\module\global.js
+ */
+const global_switch = ref(globalReducer.global_switch)
+/** 
+ * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
+ * 路径: project_path\src\store\module\betInfo.js
+ */
+const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
+/** 
+ * 判断是否是登录状态 default: false
+ * 路径: project_path\src\store\module\betInfo.js
+ */
+const is_invalid = ref(betInfoReducer.is_invalid)
+/** 
+ * 用户信息 default: {}
+ * 路径: src\store-redux\module\user-info.js
+ */
+const user_info = ref(userReducer.user_info)
+/** 
+ * 用户余额是否展示状态 default: true
+ * 路径: src\store-redux\module\user-info.js
+ */
+const show_balance = ref(userReducer.show_balance)
+/** 
+ * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
+ * 路径: project_path\src\store\module\menu.js
+ */
+const main_menu_toggle = ref(menuReducer.main_menu_toggle)
+/** 
+ * 获取菜单收起状态 default: false
+ * 路径: project_path\src\store\module\menu.js
+ */
+const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+/** 
+ * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 default：Object
+ * 路径: project_path\src\store\module\menu.js
+ */
+const cur_menu_type = ref(menuReducer.cur_menu_type)
+/** 
+ * 语言
+ * 路径: src\store-redux\module\languages.js
+ */
+const lang = ref(langReducer.lang)
 
-
-/** 注册并监听"showModel"事件 */
-const { off: off_show_model } = useMittOn(MITT_TYPES.EMIT_SITE_SHOW_MODEL, show_activity_page)
-/** 关闭监听"showModel"事件 */
-onUnmounted(() => off_show_model(MITT_TYPES.EMIT_SITE_SHOW_MODEL))
-/** bet接口返回canceled,打开注单历史 */
-const { off: off_open_history } = useMittOn(MITT_TYPES.EMIT_SITE_OPEN_HISTORY, open_history_fun)
-/** 关闭 */
-onUnmounted(() => off_open_history(MITT_TYPES.EMIT_SITE_OPEN_HISTORY))
-
+/** 批量注册mitt */
+const { emitters_off } = useMittEmitterGenerator([
+    /** showModel事件 */
+    { type: MITT_TYPES.EMIT_SITE_SHOW_MODEL, callback: show_activity_page },
+    /** bet接口返回canceled,打开注单历史 */
+    { type: MITT_TYPES.EMIT_SITE_OPEN_HISTORY, callback: open_history_fun },
+])
+/** 关闭mitt */
+onUnmounted(emitters_off)
 
 /** 路由对象 */
 const route = useRoute()
@@ -231,12 +259,6 @@ function clear_timer() {
 /** 钩子触发 */
 onBeforeMount(clear_timer)
 
-
-/** 保存显示搜索组件状态 */
-const set_search_status = (data) => store.dispatch({
-    type: 'set_search_status',
-    data
-})
 /** 初始化 */
 function init() {
     is_hide_icon.value = ss.get('hide_logo_icon') === "1";
@@ -244,18 +266,7 @@ function init() {
 }
 onMounted(init)
 
-
-/** 展开搜索 */
-function show_search() {
-    if (!global_switch.search_switch) {
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
-    }
-    set_search_status(true);
-}
-
-/**
- * 活动弹窗跳转判断
- */
+/** 活动弹窗跳转判断 */
 function show_activity_page(n, urlType) { // 首页弹窗跳转判断
     if (n == 'act') {
         let index = props.nav_list.findIndex(item => item.path.includes('activity'));
@@ -272,8 +283,8 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
 }
 
 /** 保存显示搜索组件状态 */
-const vx_set_user = (data) => store.dispatch({
-    type: 'set_user',
+const set_user = (data) => store.dispatch({
+    type: 'SET_USER',
     data
 })
 /**
@@ -283,11 +294,7 @@ const vx_set_user = (data) => store.dispatch({
 function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
-    if (menu.path.includes('/activity') && !global_switch.activity_switch) {
-<<<<<<< HEAD
-=======
-        // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.t("msg.msg_09"));
->>>>>>> c9b53c3fcbecae8c2cc46e67770ef95124b62d99
+    if (menu.path.includes('/activity') && !global_switch.value.activity_switch) {
         return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     // 电竞
@@ -312,7 +319,7 @@ function tab_click(obj) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
                 // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
                 // gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
-                vx_set_user({ token: token.value, view: this });
+                set_user({ token: token.value, view: this });
             }
         }
 
@@ -320,9 +327,7 @@ function tab_click(obj) {
     }
 }
 
-/**
-  * 运营位专题页跳转判断
-  */
+/** 运营位专题页跳转判断 */
 function openPage(_url, urlType) {
     let linkType
     // 0：无连接，1：内部导航，2：弹窗连接
@@ -343,7 +348,6 @@ function openPage(_url, urlType) {
                     linkType = '热门赛事'
                 }
             }
-
             break;
         case '2':
             let _window_offset_left = (screen.width - 1000) / 2;
@@ -354,7 +358,6 @@ function openPage(_url, urlType) {
         case '0':
             return false;
     }
-
     let link_key = '跳转链接'
     let obj = {
         [link_key]: linkType
@@ -381,7 +384,7 @@ function get_hot_menuid(tid) {
 
 /** 保存显示搜索组件状态 */
 const set_show_login_popup = (data) => store.dispatch({
-    type: 'set_show_login_popup',
+    type: 'SET_SHOW_LOGIN_POPUP',
     data
 })
 /**
@@ -394,11 +397,11 @@ function show_record(
     _window_offset_top,
     _window_offset_left
 ) {
-    // proxy.show_fail_alert();
-    if (is_invalid) {
+    userCtr.show_fail_alert();
+    if (is_invalid.value) {
         return;
     }
-    if (!user_info) {
+    if (!user_info.value) {
         set_show_login_popup({
             isShow: true,
             redirect: "bet_order_history",
@@ -433,11 +436,11 @@ function open_history_fun() {
 function set_current_index() {
     let c_index = 0
     // TODO: $menu
-    // if ($menu.menu_data.is_esports && !['hot', 'play'].includes(cur_menu_type.type_name)) {
+    // if ($menu.menu_data.is_esports && !['hot', 'play'].includes(cur_menu_type.value.type_name)) {
     //     // 电竞
     //     c_index = 1;
     //     // TODO: $menu
-    // } else if ((route.name.includes('virtual') || $menu.menu_data.cur_level1_menu == 'virtual_sport') && cur_menu_type.type_name != 'play') {
+    // } else if ((route.name.includes('virtual') || $menu.menu_data.cur_level1_menu == 'virtual_sport') && cur_menu_type.value.type_name != 'play') {
     //     // 虚拟体育
     //     let index = props.nav_list.findIndex(item => item.id == 3)
     //     if (index > 0) {
@@ -449,20 +452,23 @@ function set_current_index() {
 
 /** 内嵌版 菜单收起状态 */
 const set_menu_collapse_status = (data) => store.dispatch({
-    type: 'set_menu_collapse_status',
+    type: 'SET_MENU_COLLAPSE_STATUS',
     data
 })
 /** 内嵌版 菜单状态切换按钮 */
 function handle_menu_collapse() {
-    set_menu_collapse_status(!menu_collapse_status)
+    set_menu_collapse_status(!menu_collapse_status.value)
 }
-
 /** 设置用户余额是否展示状态 */
-const vx_set_user_balance = (data) => store.dispatch({
-    type: 'set_user_balance',
+const set_amount = (data) => store.dispatch({
+    type: 'SET_AMOUNT',
     data
 })
-
+/** 设置用户余额是否展示状态 */
+const set_show_balance = (data) => store.dispatch({
+    type: 'SET_SHOW_BALANCE',
+    data
+})
 
 /**
  * @description 获取用户余额
@@ -470,15 +476,13 @@ const vx_set_user_balance = (data) => store.dispatch({
  */
 function get_balance() {
     data_loaded.value = false;
-    let uid = user_info.uid;
+    let uid = user_info.value.uid;
     api_account.check_balance({ uid, t: new Date().getTime() }).then(res => {
         const result = lodash.get(res, "data.data");
         const code = lodash.get(res, "data.code");
         data_loaded.value = true;
-        if (code == 200) {
-            vx_set_user_balance(result.amount);
-        }
-        // proxy.show_fail_alert()
+        if (code == 200) set_amount(result.amount);
+        userCtr.show_fail_alert()
     }).catch(err => {
         console.error(err)
         data_loaded.value = true;
@@ -487,31 +491,24 @@ function get_balance() {
 
 /** 计算菜单状态切换按钮 */
 const collapse_style = computed(() => {
-    if (theme.includes('y0')) {
-        return menu_collapse_status ? 'collapse-open-y0' : 'collapse-hide-y0'
+    if (theme.value.includes('y0')) {
+        return menu_collapse_status.value ? 'collapse-open-y0' : 'collapse-hide-y0'
     } else {
-        return menu_collapse_status ? 'collapse-open' : 'collapse-hide'
+        return menu_collapse_status.value ? 'collapse-open' : 'collapse-hide'
     }
 })
 
+/** 格式和金额 */
 const format_balance = computed(() => {
-    const num = user_info.balance
+    const num = user_info.value.balance
     if (num && num > 0) {
         let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-
         // 保留两位小数
         let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-
         let _num = _split[1] + '.' + decimal
         return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
     }
     return '0.00';
-})
-
-/** 设置用户余额是否展示状态 */
-const vx_set_show_balance = (data) => store.dispatch({
-    type: 'set_show_balance',
-    data
 })
 
 /**
@@ -522,7 +519,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(theme)) {
+    if (['theme01', 'theme01_y0'].includes(theme.value)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL
@@ -550,7 +547,6 @@ function menu_change(side) {
                     linkType = '热门赛事'
                 }
             }
-
             break;
         case '2':
             let _window_offset_left = (screen.width - 1000) / 2;
@@ -561,35 +557,12 @@ function menu_change(side) {
         case '0':
             return false;
     }
-
     let link_key = '跳转链接'
     let obj = {
         [link_key]: linkType
     }
     // 发送诸葛埋点事件
     zhugeTag.send_zhuge_event('TY_PC_首页_节庆UI挂件点击', obj)
-}
-
-/***
- * 运营位专题页
- */
-function special_page() {
-    api_account.get_BannersUrl({ type: 7, token: token.value }).then((res) => {
-        let code = get(res, "data.code");
-        let data = get(res, "data.data");
-        if (code == 200) {
-            if (data && data.length > 0) {
-                data.forEach((item) => {
-                    if (item.tType && item.tType == 7) {
-                        // 获取图片地址 TODO:
-                        data_ref.special_img_url = get_file_path(item.imgUrl);
-                        data_ref.special_host_url = item.hostUrl;
-                        data_ref.special_url_type = item.urlType;
-                    }
-                });
-            }
-        }
-    });
 }
 
 /** 监听路由变化 */
@@ -599,36 +572,29 @@ watch(
         set_current_index()
     }
 )
-
 /** 清除虚拟投注数据 */
 const vx_virtual_bet_clear = (data) => store.dispatch({
     type: 'virtual_bet_clear',
     data
 })
 watch(
-    () => cur_menu_type.type_name,
+    () => cur_menu_type.value.type_name,
     () => {
         set_current_index();
         // 清除虚拟体育和电竞的投注项
         vx_virtual_bet_clear();
     }
 )
-
 watch(
     () => menu_data.cur_level2_menu,
     () => set_current_index()
 )
-
 watch(
     () => props.nav_list.length,
     () => set_current_index()
 )
-
-
 </script>
-
 
 <style lang="scss">
 @import './site-header.scss';
 </style>
-  

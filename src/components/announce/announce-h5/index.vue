@@ -151,14 +151,19 @@ onMounted(get_list)
 
 /** stroe仓库 */
 const store_data = store.getState()
+const unsubscribe = store.subscribe(() => {
+    lang.value = store_data.langReducer.lang
+    // user_info.value = store_data.userReducer.user_info
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 国际化语言 default: zh */
-const { lang } = store_data.langReducer
-// TODO: 语言改变mitt
+const lang = ref(store_data.langReducer.lang)
+// const user_info = ref(store_data.userReducer.user_info)
 
 /** 用户token */
 const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
 
-onUnmounted(unsubscribe)
 
 </script>
   

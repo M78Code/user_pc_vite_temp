@@ -13,15 +13,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from "vue-i18n";
 
 import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import { get_remote_time } from "src/core/formart/module/format-time.js"
 
-/** stroe仓库 */
-const store_data = store.getState()
+
 
 /** 国际化 */
 const { t } = useI18n();
@@ -39,7 +38,7 @@ function clear_timer() {
     }
 }
 /** 钩子触发 */
-onBeforeMount(clear_timer)
+onUnmounted(clear_timer)
 
 
 /** 维护提示状态 */
@@ -54,18 +53,26 @@ function set_colse_tips_status(state = false) {
 
 /** 维护提示时间 */
 const minute = ref(0)
+/** stroe仓库 */
+const store_data = store.getState()
+const unsubscribe = store.subscribe(() => {
+    user_info.value = store_data.userReducer.user_info
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
  * 用户信息
  * src/store-redux/module/user-info.js
  */
-const { user_info } = store_data.userReducer
+const user_info = ref(store_data.userReducer.user_info)
+
 /**
  * 计算维护提示时间
  */
 function compute_colse_tips_time() {
     /** 获取与服务器的修正时间 */
     const curTime = get_remote_time()
-    const { maintainTime } = user_info
+    const { maintainTime } = user_info.value
     if (maintainTime) {
         const serverTimer = Number(maintainTime),
             countDown = Math.floor((serverTimer - curTime) / 1000 / 60);

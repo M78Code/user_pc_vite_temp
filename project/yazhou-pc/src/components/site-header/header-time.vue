@@ -13,8 +13,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, defineComponent } from 'vue'
-import { useMittOn } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 // import { mx_get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/formart/module/format-date.js";
 
 /** 日期时间 */
@@ -41,9 +40,9 @@ function set_date_time(data) {
     // date_time.value = utc_to_gmt_no_8_ms2(time.value + (now_ - time_local.value) + (now_ - data.time));
 }
 /** 监听和销毁 页面右上角服务器时间展示 */
-// const { off: off_set_date_time } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time)
+const { off: off_set_date_time } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time)
 /** 销毁事件 */
-// onUnmounted(() => off_set_date_time(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD))
+onUnmounted(() => off_set_date_time(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD))
 </script >
 
 <script>
