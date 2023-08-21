@@ -4,7 +4,7 @@
 
 import { uid } from 'quasar';
 import lodash from 'lodash'
-import userCtr from 'src/public/utils/user/userCtr.js';
+import userCtr from 'src/core/user-config/user-ctr.js';
 import { api_admin } from "src/api/index.js";
 import { createSlice } from '@reduxjs/toolkit'
 

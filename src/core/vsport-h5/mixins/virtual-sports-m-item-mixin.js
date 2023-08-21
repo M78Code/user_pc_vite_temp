@@ -8,7 +8,7 @@ import VSport from "src/public/utils/vsport/vsport.js"
 
 export default {
   methods:{
-    ...mapMutations(['set_video_process_loaded']),
+    // ...mapMutations(['set_video_process_loaded']),
     /**
      * 获取赛事比分
      * @param {Object} match 赛事
@@ -75,12 +75,12 @@ export default {
     }
   },
   computed:{
-    ...mapGetters({
-      video_process_loaded:'get_video_process_loaded',
-      sub_menu_type: 'get_curr_sub_menu_type',
-      current_league:'get_current_league',
-      current_batch:'get_current_batch',
-    }),
+    // ...mapGetters({
+    //   video_process_loaded:'get_video_process_loaded',
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   current_league:'get_current_league',
+    //   current_batch:'get_current_batch',
+    // }),
   },
   // watch:{
   //   get_video_process_data(){
