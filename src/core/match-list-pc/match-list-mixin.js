@@ -1269,7 +1269,7 @@ const match_list = {
 	mounted() {
 		this.$utils.load_video_resources();
 	},
-	destroyed() {
+	beforeUnmount() {
 		clearTimeout(this.axios_debounce_timer);
 		clearTimeout(axios_debounce_timer2.value);
 		clearInterval(check_match_last_update_timer_id.value);

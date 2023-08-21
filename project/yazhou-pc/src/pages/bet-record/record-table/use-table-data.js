@@ -1114,7 +1114,7 @@ export const useTableData = ({ props, emit }) => {
   // mounted() {
   //   this.toolWords = this.$root.$t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
   // },
-  // destroyed() {
+  // beforeUnmount() {
   //   // 关闭设置提前结算状态事件
   //   this.$root.$off(
   //     MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,

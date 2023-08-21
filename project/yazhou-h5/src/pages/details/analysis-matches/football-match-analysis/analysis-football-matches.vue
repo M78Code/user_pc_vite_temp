@@ -222,7 +222,7 @@ import utils from "src/core/utils/utils.js"
   //   ]),
   // },
 
-  // destroyed() {
+  // beforeUnmount() {
   //   for (const key in this.$data) {
   //     this.$data[key] = null
   //   }

@@ -104,7 +104,7 @@ export default {
   /**
    * @description: 销毁前回调函数
    */
-  destroyed() {
+  beforeUnmount() {
     clearTimeout(this.timer1_)
     this.timer1_ = null
   },

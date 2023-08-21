@@ -180,7 +180,7 @@ export default {
     // 刷新按钮节流
     this.refresh = this.throttle(this.refresh, 1000,{leading:true, trailing:false});
   },
-  destroyed() {
+  beforeUnmount() {
     this.debounce_throttle_cancel(this.refresh);
   }
 };

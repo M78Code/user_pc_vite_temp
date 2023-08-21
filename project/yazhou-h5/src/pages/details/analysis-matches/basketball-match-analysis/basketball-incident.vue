@@ -84,7 +84,7 @@ import { useRoute } from 'vue-router'
   //     $data[key] = null
   //   }
   })
-  // destroyed() {
+  // beforeUnmount() {
   //   // 移除监听 赛事分析刷新事件
   //   this.$root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, this.get_list)
 

@@ -280,7 +280,7 @@ export default {
       this.is_dialog_details = bool;
     },
   },
-  destroyed() {
+  beforeUnmount() {
     // 清除监听下拉联赛列表
     this.$root.$off(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
     // 清除刷新详情页;

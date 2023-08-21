@@ -3,13 +3,8 @@
   <div class="c-esports-header" :class="`sportsbg-${current_menu.csid}`" v-if="menu_config.menu_root == 2000">
     <!-- 游戏种类列表 -->
     <div class="sport-tab">
-      <div
-        class="sport-item"
-        :class="{ active: current_menu.mi == item.mi }"
-        v-for="item in dianjing_sublist"
-        :key="item.csid"
-        @click="sport_click(item)"
-      >
+      <div class="sport-item" :class="{ active: current_menu.mi == item.mi }" v-for="item in dianjing_sublist"
+        :key="item.csid" @click="sport_click(item)">
         <!-- 游戏logo -->
         <sport-icon :sport_id="item.csid" status="2" size="24px" />
         <!-- 游戏名称-->
@@ -19,23 +14,22 @@
         </div>
       </div>
     </div>
-
     <!-- 日期列表 -->
     <div class="date-wrap">
       <DateTab />
     </div>
   </div>
 </template>
-
 <script setup>
-
-import { computed, defineProps } from 'vue';
+import { computed, defineProps, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
-import {component_symbol ,need_register_props} from "../config/index.js"
+import DateTab from "src/public/components/tab/date-tab.vue";
+import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "../config/index.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { get_match_status } from 'src/core/utils/index'
-import details from "src/core/match-detail-pc/match-detail";
+import BaseData from 'src/core/utils/base-data/base-data.js'
+import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import { other_play_name_to_playid } from 'src/core/match-list-pc/data-class-ctr/conifg/index.js';
 import store from 'src/store-redux/index.js'
 import { useI18n } from 'vue-i18n'
@@ -43,164 +37,120 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
 const { t } = useI18n();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const route = useRoute();
-
-// 盘口数量
-const handicap_num = computed(() => {
-  if (state.globalReducer.get_global_switch.handicap_num) {
-    return `+${props.match.mc || 0}`
-  } else {
-    return t('match_info.more')
-  }
+const currentIndex = ref(0);
+const current_menu = ref({});
+const dianjing_sublist = ref(BaseData.dianjing_sublist);
+const menus_i18n_map = ref(BaseData.menus_i18n_map);
+onMounted(() => {
+  //解析菜单数据
+  const { left_menu_result } = NewMenu
+  current_menu.value = dianjing_sublist.value.find(item => item.mi == left_menu_result.lv2_mi) || {}
+  sport_click(current_menu.value)
 })
-
 /**
-   * @Description 计算当前视频图标
-   * @return {Object}
-  */
-const cur_video_icon = computed(() => {
-  let { lvs = -1, mms = -1, lss = -1, tvs = -1, ms, varl = "", vurl = "" } = props.match
-  let cur_video_icon = {
-    type: "",
-    text: "",
-  }
-  //电竞
-  let is_esports = menu_config.is_esports()
-  //滚球状态
-  let is_play = get_match_status(ms)
-  // 包含的语言
-  let status = ['zh', 'tw'].includes(localStorage.getItem(lang))
-  //演播厅
-  if (lvs == 2 && status && [1, 0].includes(lss)) {
-    if (lss === 1) {
-      cur_video_icon = {
-        type: "studio",
-        text: t('common.studio'),
-      }
-      //专题
-    } else if (lss === 0 && !is_play) {
-      cur_video_icon = {
-        type: "topic",
-        text: t('common.topic'),
-      }
-    }
-    //主播
-  } else if (tvs == 2 && status) {
-    cur_video_icon = {
-      type: "anchor",
-      text: t('common.anchor'),
-    }
-    //源视频                       非电竞 或者电竞有url
-  } else if (mms == 2 && (varl || vurl || !is_esports) && is_play) {
-    cur_video_icon = {
-      type: "video",
-      text: t('common.o_video'),
-    }
-  }
-  return cur_video_icon
-})
-
-/**
- * @Description 切换右侧赛事
- * @param {string} media_type 播放类型
- * @param {undefined} undefined
+* @Description 球种点击
+* @param {undefined} undefined
 */
-const on_switch_match = (media_type) => {
-  //展开右侧详情
-  store.dispatch({
-    type: 'SET_UNFOLD_MUTI_COLUMN',
-    data: false,
-  })
-  store.dispatch({
-    type: 'SET_IS_PAUSE_VIDEO',
-    data: false,
-  })
-  if ((route.name == 'details' || route.name == 'search') && media_type == 'auto') {
-    media_type = 'info'
-  }
-  if (['auto', 'info'].includes(media_type) && state.matchesReducer.params.mid == this.match.mid && state.matchesReducer.play_media != 'auto') {
-    details.sync_mst(props.match.mid, this.match.csid)
-  }
-  let play_id = other_play_name_to_playid[props.match.play_current_key] || ''
-  details.on_switch_match(media_type, props.match, play_id)
-  // 如果右侧视频区是折叠，则会展开
-  if (!state.globalReducer.is_fold_status) {
-    store.dispatch({
-      type: 'SET_IS_FOLD_STATUS',
-      data: !state.globalReducer.is_fold_status
-    })
-  }
+const sport_click = (item) => {
+  // console.error("sport_click------",item)
+  current_menu.value = { ...item };
+  // 是否收藏
+  let is_collect = false // this.get_layout_list_type == "collect";
+  let mi_info = BaseData.mi_info_map[`mi_${item.mi}`] || {};
+  let params = {
+    ...mi_info,
+    mi: item.mi,
+    csid: item.csid,
+  };
+  let config = {
+    begin_request: false,
+    is_collect,
+    route: "list",
+    root: "2000",
+    sports: "",
+    guanjun: "",
+    // 列表队列 接口
+    match_list: {
+      api_name: "",
+      api_type: "",
+      params: {},
+    },
+    //
+    bymids: {
+      api_name: "",
+      api_type: "",
+      params: {},
+    },
+  };
+  // 设置      左侧 菜单输出
+  NewMenu.set_left_menu_result({
+    ...NewMenu.left_menu_result,
+    lv2_mi: item.mi
+  });
+  // 设置     中间 菜单输出
+  NewMenu.set_mid_menu_result(params);
+  // 设置   请求  列表结构  API 参数的  值
+  // NewMenu.set_match_list_api_config(config);
 }
 /**
- * 跳转至详情
- * @return {undefined} undefined
+ * @Description 日期菜单点击
+ * @param {undefined} undefined
  */
-const on_go_detail = () => {
-  if (is_eports_csid(props.match.csid)) {
-    props.match.go_detail_type = 'no_switch'
+const tab_click = (obj) => {
+  // 如果列表数据在加载中
+  if (props.load_data_state == "loading") {
+    return;
   }
-  details.on_go_detail(props.match)
 }
-/**
- * @Description 赛事收藏
- * @param {undefined} undefined
-*/
-const collect = () => {
-  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH, props.match)
-}
-
 </script>
 <style lang="scss" scoped>
-/*  视频按钮 */
-.media-col-wrap {
+.c-esports-header {
+  border-radius: 0 0 6px 6px;
+  position: relative;
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  .icon-wrap {
-    margin: 4px 0;
-
-    .match_pre {
-      width: 26px;
-      height: auto;
+  background-size: 100% auto;
+  padding-top: 56px;
+  z-index: -1;
+  .sport-tab {
+    height: 118px;
+    display: flex;
+    margin-left: 20px;
+    height: 60px;
+    .sport-item {
+      width: 80px;
+      height: 100%;
+      border-radius: 4px 4px 0 0;
+      text-align: center;
+      line-height: 14px;
+      cursor: pointer;
+      .sport-img {
+        margin: 6px auto;
+        display: block;
+        background-image: url("~public/image/common/png/elf_esports.png");
+      }
+      &.active {
+        .sport-img {
+          background-image: url("~public/image/common/png/sport_old_icon.png");
+        }
+      }
     }
   }
-
-  .c-icon {
+  .date-wrap {
+    border-radius: 0 0 6px 6px;
+    border: 1px solid var(--qq--yb-border-color12);
+    border-top: 0;
+    height: 40px;
+    padding-left: 10px;
     font-size: 14px;
   }
-
-  .v-icon {
-    width: 20px;
-    height: 14px;
-    cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .flex-center {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 0 3px;
-  }
-
-  .settlement-pre {
-    display: flex;
-    justify-content: center;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    height: 10px;
+    width: 100%;
+    background-color: var(--qq--match-bg-color11);
+    z-index: -1;
   }
 }
-
-.play-count-wrap {
-  cursor: pointer;
-}
-
-@media (max-width: 1698px) {
-  .media-col-wrap {
-    .flex-center {
-      margin: 0;
-    }
-  }
-}</style>
+</style>

@@ -22,7 +22,7 @@ export default {
     // 虚拟体育控制类
     vsport_ctr: Object
   },
-  destroyed(){
+  beforeUnmount(){
     clearInterval(this.vsport_ctr.interval_id)
   }
 };

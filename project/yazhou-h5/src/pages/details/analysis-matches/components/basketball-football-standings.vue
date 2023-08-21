@@ -191,7 +191,7 @@ let get_detail_data = ref({
     });
   }
   onUnmounted(() => {})
-  // destroyed() {
+  // beforeUnmount() {
   //   for (const key in $data) {
   //     $data[key] = null
   //   }

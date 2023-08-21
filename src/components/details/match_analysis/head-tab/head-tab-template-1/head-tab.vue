@@ -93,7 +93,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  beforeUnmount() {
     this.$root.$off(MITT_TYPES.EVENT_DATA, this.change_show_tab)
   }
 }

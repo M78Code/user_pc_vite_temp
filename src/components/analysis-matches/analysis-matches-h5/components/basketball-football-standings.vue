@@ -182,7 +182,7 @@ import { useRoute } from 'vue-router'
     });
   }
   onUnmounted(() => {})
-  // destroyed() {
+  // beforeUnmount() {
   //   for (const key in $data) {
   //     $data[key] = null
   //   }

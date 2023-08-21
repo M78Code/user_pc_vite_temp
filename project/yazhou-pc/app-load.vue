@@ -174,10 +174,10 @@ onMounted(() => {});
 onBeforeMount(() => {
   // 释放日志功能对象
   if (wslog.destroyed) {
-    wslog.destroyed();
+    wslog.beforeUnmount();
   }
   if (httplog.destroyed) {
-    httplog.destroyed();
+    httplog.beforeUnmount();
   }
   if (_data.timer) {
     clearInterval(_data.timer);

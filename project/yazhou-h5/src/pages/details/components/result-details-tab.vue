@@ -193,7 +193,7 @@ export default {
       }
     },
   },
-  destroyed() {
+  beforeUnmount() {
     this.set_fewer(1);
 
     this.$root.$off(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)

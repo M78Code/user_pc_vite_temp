@@ -175,7 +175,7 @@ export default {
     this.bookMarketSwitch = _.get(this.vx_get_user, 'configVO.bookMarketSwitch', 0);
     this.bookMarketSwitchBasketball = _.get(this.vx_get_user, 'configVO.bookMarketSwitchBasketball', 0);
   },
-  destroyed() {
+  beforeUnmount() {
     //清除计时器对象
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);
