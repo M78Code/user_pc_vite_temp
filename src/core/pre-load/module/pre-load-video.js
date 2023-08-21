@@ -52,4 +52,4 @@ let pre_load_video = {
   },
 };
 
-export { pre_load_video };
+export { pre_load_video, load_video_resources };
