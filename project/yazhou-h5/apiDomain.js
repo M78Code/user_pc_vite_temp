@@ -5,7 +5,7 @@
  */
 
 import { http, AllDomain } from "src/core/http/index.js";
-import { loadLanguageAsync } from "src/boot/i18n";
+import { loadLanguageAsync } from "src/boot/i18n.js";
 import { throttle } from "lodash";
 import STANDARD_KEY from "app/src/core/standard-key";
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;

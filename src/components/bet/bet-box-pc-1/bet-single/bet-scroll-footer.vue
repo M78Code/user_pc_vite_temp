@@ -2,7 +2,7 @@
  * @Description: 左侧菜单 投注相关 尾部
 -->
 <template>
-  <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !vx_is_bet_single }">
+  <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetDataCtr.is_bet_single }">
     <!-- 投注记录 ------------------------->
     <div
       v-if="bet_recode_this && vx_layout_left_show == 'bet_history' && _.get(bet_recode_this, 'record_data.records.length') > 0">
@@ -32,7 +32,7 @@
           {{ i18n.t('bet.remove_invalid_item') }}
           <icon name="icon-del" class="bet-del" />
         </div>
-        <template v-if="vx_is_bet_single">
+        <template v-if="BetDataCtr.is_bet_single">
           <template v-if="bet_this.bet_fail_flag">
             <div class="bet-fail-message text-center">
               <!--投注失败-->
@@ -43,7 +43,7 @@
             <!--投注是的错误提示信息-->
             <!--这个错误提示信息一般预约状态时不显示除了0400540和0400483这个两个错误码-->
             <div class="bet-message text-center"
-              v-if="!lock_btn || (this.vx_get_bet_appoint_obj && (bet_this.view_ctr_obj.error_code == '0400483' || bet_this.view_ctr_obj.error_code == '0400540' || bet_this.view_ctr_obj.error_code == 'M400004'))">
+              v-if="!lock_btn || (this.BetData.bet_appoint_obj && (bet_this.view_ctr_obj.error_code == '0400483' || bet_this.view_ctr_obj.error_code == '0400540' || bet_this.view_ctr_obj.error_code == 'M400004'))">
               {{ bet_this.view_ctr_obj.error_message }}
             </div>
             <div class="full-width">
@@ -99,7 +99,7 @@
                 <check-box :checked="bet_this.user_bet_prefer" /> {{ i18n.t('bet.bet_auto_msg_1') }}
               </div>
               <div class="row check-box cursor-pointer" :class="{ 'checked': bet_this.is_common_amount }"
-                @click.stop="bet_this.toggle_amount" v-if="bet_this.vx_get_bet_single_list.length == 1">
+                @click.stop="bet_this.toggle_amount" v-if="bet_this.BetData.bet_single_list.length == 1">
                 <check-box :checked="bet_this.is_common_amount" /> {{ i18n.t('bet.common_amount') }}
               </div>
             </div>
@@ -170,12 +170,12 @@
               <q-separator class="bet-mix-separator"></q-separator>
               <!--提示区域 您所选择的盘口、赔率或有效性已经发生了变化-->
               <div class="bet-message text-center">
-                <template v-if="bet_this.vx_get_bet_list.length < bet_this.vx_get_mix_min_count">
+                <template v-if="bet_this.BetData.bet_list.length < bet_this.BetData.mix_min_count">
                   <!--至少选择2场比赛-->
-                  {{ i18n.t("bet.bet_min_item").replace('%s', bet_this.vx_get_mix_min_count) }}
+                  {{ i18n.t("bet.bet_min_item").replace('%s', bet_this.BetData.mix_min_count) }}
                 </template>
-                <template v-else-if="bet_this.vx_get_bet_list.length > bet_this.vx_get_mix_max_count">
-                  {{ i18n.t("bet.bet_max_item").replace('%s', bet_this.vx_get_mix_max_count) }}
+                <template v-else-if="bet_this.BetData.bet_list.length > bet_this.BetData.mix_max_count">
+                  {{ i18n.t("bet.bet_max_item").replace('%s', bet_this.BetData.mix_max_count) }}
                 </template>
                 <template v-else>
                   <!--错误提示-->
@@ -202,8 +202,8 @@
                   <div class="full-width cursor-pointer bet-submit" :class="{
                     'bet-submit2': bet_this.show_invalid_btn ||
                       bet_this.show_valid_btn ||
-                      bet_this.vx_get_bet_list.length < bet_this.vx_get_mix_min_count ||
-                      bet_this.vx_get_bet_list.length > bet_this.vx_get_mix_max_count ||
+                      bet_this.BetData.bet_list.length < bet_this.BetData.mix_min_count ||
+                      bet_this.BetData.bet_list.length > bet_this.BetData.mix_max_count ||
                       bet_this.has_disable_item ||
                       ['0400477', '0400478'].includes(bet_this.view_ctr_obj.error_code)
                   }" :id="DOM_ID_SHOW && `but-bet-single-submit`" @click.stop="bet_this.submit_handle('submit')">
@@ -225,8 +225,8 @@
                   <div class="full-width cursor-pointer bet-submit" :class="{
                     'bet-submit2': bet_this.show_invalid_btn ||
                       bet_this.show_valid_btn ||
-                      bet_this.vx_get_bet_list.length < bet_this.vx_get_mix_min_count ||
-                      bet_this.vx_get_bet_list.length > bet_this.vx_get_mix_max_count ||
+                      bet_this.BetData.bet_list.length < bet_this.BetData.mix_min_count ||
+                      bet_this.BetData.bet_list.length > bet_this.BetData.mix_max_count ||
                       bet_this.has_disable_item ||
                       ['0400477', '0400478'].includes(bet_this.view_ctr_obj.error_code)
                   }" :id="DOM_ID_SHOW && `but-bet-single-submit`" @click.stop="bet_this.go_history">
@@ -251,7 +251,7 @@
                 </div>
               </div>
             </div>
-            <template v-if="bet_this.vx_get_bet_list.length > 0">
+            <template v-if="bet_this.BetData.bet_list.length > 0">
               <!--底部菜单部分-->
               <div class="full-width bet-foot-menu">
                 <div class="row check-bet-prefer cursor-pointer" :class="{ 'checked': bet_this.user_bet_prefer }"
@@ -342,17 +342,7 @@ const set_lock_btn = value => {
 
 
   // computed: {
-  //   ...mapGetters({
-  //     // 是否为单关投注
-  //     vx_is_bet_single: "is_bet_single",
-  //     // 菜单是否改变
-  //     vx_get_menu_change: "get_menu_change",
-  //     // 左侧布局
-  //     vx_layout_left_show: "get_layout_left_show",
-  //     //预约数据
-  //     vx_get_bet_appoint_obj: "get_bet_appoint_obj",
-  //     lang: "get_lang"
-  //   })
+
   // },
 
   // beforeUnmount() {

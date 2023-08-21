@@ -4,32 +4,36 @@
     <div class="content-box" :class="{'content-box2':get_is_hengping,'is_hd_sd':get_hd_sd_show}">
       <template v-if="!get_hd_sd_show">
         <!-- 文字头 -->
-        <header>{{i18n.t("info_rules.auto")}}</header>
+        <header>{{t("info_rules.auto")}}</header>
         <!-- 2条说明规则，有换行，文字颜色，多语言区分 -->
           <div v-for="(value,key) in rules" :key="key" v-html="value"></div>
         <!-- 按钮-我知道了 -->
-        <footer @click="change_show">{{i18n.t("info_rules.i_know")}}</footer>
+        <footer @click="change_show">{{t("info_rules.i_know")}}</footer>
       </template>
       <div v-if="get_hd_sd_show" class="hd-sd-css">
         <!-- 文字头 -->
-        <header>{{i18n.t("match_info.video") +'  '+ i18n.t("footer_menu.change_simple01")}}</header>
-        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{i18n.t("common.SD")}}</span>
-        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{i18n.t("common.HD")}}</span>
+        <header>{{t("match_info.video") +'  '+ t("footer_menu.change_simple01")}}</header>
+        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{t("common.SD")}}</span>
+        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{t("common.HD")}}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: "info_rules",
-  
+
   setup(props, evnet) {
     const data = reactive();
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   // 是否显示info说明
     //   ...mapGetters([
@@ -39,7 +43,7 @@ export default defineComponent({
     //     'get_hd_sd',
     //   ])
     // },
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations(['set_info_show', 'set_iframe_onload', 'set_hd_sd_show']),
     /**
@@ -48,19 +52,19 @@ export default defineComponent({
      *@return {Undefined} undefined
      */
     const change_show = () => {
-      this.set_info_show(false);
-      this.set_hd_sd_show(false);
+      set_info_show(false);
+      set_hd_sd_show(false);
     };
     // 视频切换
     const video_switching = (n) => {
       // 先隐藏视频，2秒后 再显示视频
-      this.set_iframe_onload(false);
-      clearTimeout(this.timer1_)
-      this.timer1_ = setTimeout(()=>{
-        this.set_iframe_onload(true);
+      set_iframe_onload(false);
+      clearTimeout(timer1_)
+      timer1_ = setTimeout(()=>{
+        set_iframe_onload(true);
       },1000)
       useMittEmit(MITT_TYPES.EMIT_VIDEO_SWITCHING,n)
-      this.change_show()
+      change_show()
     };
     return {
       change_show,

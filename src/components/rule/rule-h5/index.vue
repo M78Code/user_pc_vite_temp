@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
@@ -29,7 +29,7 @@ const props = defineProps({
 
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** stroe仓库 */
 const { langReducer, themeReducer } = store.getState()

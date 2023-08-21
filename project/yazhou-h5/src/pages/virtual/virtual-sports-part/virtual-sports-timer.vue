@@ -22,7 +22,7 @@
 <script>
 // #TODO mixins
 // import common from 'project_path/mixins/constant/module/common.js'
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_timer",
@@ -190,7 +190,7 @@ export default defineComponent({
         //提前10秒通知锁盘
         if(seconds <= 10 && !(seconds % 3)){
           // #TODO emit事件
-          useMittEmit(MITT_KEY.EMIT_ARRIVED10, {
+          useMittEmit(MITT_TYPES.EMIT_ARRIVED10, {
             mid:match.mid,
             batchNo:match.batchNo
           });

@@ -52,9 +52,9 @@ import details from 'src/core/match-list-pc/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list-pc/data-class-ctr/conifg/index.js';
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import store from 'src/store-redux/index.js'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 let state = store.getState()
-const { t } = useI18n();
+;
 
 // 左侧详情参数
 const vx_detail_params = ref(state.matchesReducer.params)

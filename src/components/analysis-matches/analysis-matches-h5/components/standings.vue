@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页  足球赛事分析 战绩 模块
 -->
 <template>
@@ -46,24 +46,24 @@
 
 <script setup>
 // 详情页 或者 赛果  篮球足球公共组件，杯赛 联赛表格
-import footballStandings from "src/project/pages/details/analysis-matches/components/basketball-football-standings.vue"  
+import footballStandings from "src/project/pages/details/analysis-matches/components/basketball-football-standings.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-import historyEngagement from "src/project/pages/details/analysis-matches/components/history-engagement" 
-// 详情页  足球赛事分析 战绩 模块里边的 历史交战  
-import recentRecord from "src/project/pages/details/analysis-matches/components/recent-record"   
+import historyEngagement from "src/project/pages/details/analysis-matches/components/history-engagement"
+// 详情页  足球赛事分析 战绩 模块里边的 历史交战
+import recentRecord from "src/project/pages/details/analysis-matches/components/recent-record"
 // 详情页 或者 赛果  足球
-import futureSchedule from "src/project/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"  
-// 伤停情况 
-import injurySituation from "src/project/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"  
-// 技术面 
-import standingsTechnical from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"  
-// 盘面 
-import standingsDisk from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"   
+import futureSchedule from "src/project/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
+// 伤停情况
+import injurySituation from "src/project/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
+// 技术面
+import standingsTechnical from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
+// 盘面
+import standingsDisk from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_result} from "src/project/api";
  // 加载中
-import loading from "src/project/components/common/loading"; 
+import loading from "src/project/components/common/loading";
 import { computed, ref, nextTick, onUnmounted } from 'vue'
 import loadsh from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
@@ -81,9 +81,9 @@ import { useRoute } from 'vue-router'
   // },
   // TODO: 国际化后续修改调整
   const tab_list = ref([
-        {name: i18n.t('analysis_football_matches.Fundamentals')},
-        {name: i18n.t('analysis_football_matches.Disk')},
-        {name: i18n.t('analysis_football_matches.Technical_side')}
+        {name: t('analysis_football_matches.Fundamentals')},
+        {name: t('analysis_football_matches.Disk')},
+        {name: t('analysis_football_matches.Technical_side')}
       ])
   const tabIndex = ref(0)
   // 基本面的数据
@@ -109,12 +109,12 @@ import { useRoute } from 'vue-router'
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件 TODO: $root emit  后续修改调整
-    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
     tab_list = ref([
-        {name: i18n.t('analysis_football_matches.Fundamentals')},
-        {name: i18n.t('analysis_football_matches.Disk')},
-        {name: i18n.t('analysis_football_matches.Technical_side')}
+        {name: t('analysis_football_matches.Fundamentals')},
+        {name: t('analysis_football_matches.Disk')},
+        {name: t('analysis_football_matches.Technical_side')}
       ])
     tabIndex = ref(0)
     future_schedule_data = ref({})
@@ -122,7 +122,7 @@ import { useRoute } from 'vue-router'
     matchHistory_battle_dto_map = ref({init: null})
     homeAwayGoal_and_coach_map = ref({init: null})
     loading = ref(false)
-  }) 
+  })
   const get_data_list = async() => {
       try {
         loading = true
@@ -161,7 +161,7 @@ import { useRoute } from 'vue-router'
   const refresh_match_analysis = () => {
       const tab_index = tabIndex
       tabIndex = -1
-      
+
       nextTick(() => {
         tab_click(tab_list[tab_index], tab_index)
       })

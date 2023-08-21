@@ -4,15 +4,15 @@
     <div class="fixed-center">
       <div :class="token_bg" :style="{ 'background-image': `url(${token_bg_url})` }"></div>
       <div class="txt-info">
-        <div class="dear-user">{{ i18n.t("token_inv.dear_user") }}</div>
+        <div class="dear-user">{{ t("token_inv.dear_user") }}</div>
         <!-- 您的登录信息已失效, 请关闭本页面 -->
         <img :src="token_bg_middle_url">
         <!-- 再次重新进入本场馆 -->
-        <span class="head-text">{{ i18n.t("msg.msg_nodata_20") }}</span>
+        <span class="head-text">{{ t("msg.msg_nodata_20") }}</span>
         <!-- 别紧张 -->
-        <span>{{ i18n.t("msg.msg_nodata_21") }}</span>
+        <span>{{ t("msg.msg_nodata_21") }}</span>
         <!-- 知道了 -->
-        <p class="know" @click="refresh()">{{ i18n.t("footer_menu.refresh") }}</p>
+        <p class="know" @click="refresh()">{{ t("footer_menu.refresh") }}</p>
       </div>
     </div>
   </div>
@@ -20,8 +20,11 @@
 
 <script setup>
 import { computed } from 'vue'
-// TODO: 
+// TODO:
 import { invalid_url } from 'src/public/utils/base64_url'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 const emit = defineEmits(['isgo_vender_url'])
 // TODO: 改为真实的store替换

@@ -42,7 +42,7 @@
 
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">
       <!-- 文章资讯 -->
-      <news :mid="this.get_active_detail.mid" v-if="hasNews && activeTab == 0" />
+      <news :mid="active_detail.mid" v-if="hasNews && activeTab == 0" />
       <!-- 赛况 -->
       <tab-results :match="matchDetail" v-if="(hasNews ? activeTab - 1 : activeTab) == 0"/>
       <!-- 数据 -->
@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { TabResultsFullVersionWapper as tabResults} from 'src/components/analysis/template/table-results/index.js'
 import { TabDataFullVersionWapper as tabData} from 'src/components/analysis/template/table-data/index.js'
 import { TabLineupFullVersionWapper as tabLineup} from 'src/components/analysis/template/table-lineup/index.js'
@@ -65,61 +67,68 @@ import { TabInformationFullVersionWapper as tabInformation} from 'src/components
 import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/template/table-odds/index.js'
 import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
-import {api_analysis} from 'src/public/api/index'
+import {api_analysis} from 'src/api/index.js' 
 import { mapGetters } from 'vuex'
 import time_format from 'src/public/mixins/common/time_format'
+import store from 'src/store-redux/index.js'
+
+const route = useRoute();
+let state = store.getState();
+
 export default {
-  data() {
+  setup() {
+    //赛况，数据，阵容，情报，赔率
+    const tab = ref(['result','data','lineup','information','odds'])
+    const activeTab = ref(null)
+    const sportDict = ref({
+      allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
+      line: ['S1101',"S17", "S18",'S108','S107','S110']
+    })
+    const hasNews = ref(false)
+    const articleDetail = ref({})
+    const newsTabName = ref(null)
+    const active_detail = ref(state.matchesReducer.active_detail)
     return {
-      //赛况，数据，阵容，情报，赔率
-      tab: ['result','data','lineup','information','odds'],
-      activeTab: null,
-      sportDict:{
-        allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
-        line: ['S1101',"S17", "S18",'S108','S107','S110']
-      },
-      hasNews: false,
-      articleDetail: {},
-      newsTabName: null,
-    };
+      tab,
+      activeTab,
+      sportDict,
+      hasNews,
+      articleDetail,
+      newsTabName
+    }
   },
   mixins:[time_format],
   components:{
     tabResults,tabData,tabLineup,tabInformation,tabOdds,matchDate,news
   },
   created() {
-    if (Object.keys(this.$route.params).length) {
-      let { csid } = this.$route.params
+    if (Object.keys(route.params).length) {
+      let { csid } = route.params
       // 篮球只展示赛况、数据和阵容
       if(csid == '2'){
-        this.tab = ['result','data','lineup']
+        tab.value = ['result','data','lineup']
       }
     }
     // 只在简中和繁中的时候有赛事文章
-    if (['zh', 'tw'].includes(this.lang)) {
-      if (this.lang == 'zh') {
-        this.newsTabName = '资讯'
+    if (['zh', 'tw'].includes(localStorage.getItem('lang'))) {
+      if (localStorage.getItem('lang') == 'zh') {
+        newsTabName.value = '资讯'
       } else {
-        this.newsTabName = '資訊'
+        newsTabName.value = '資訊'
       }
-      this.tab.unshift('news');
-      this.hasNews = true;
-      this.activeTab = this.get_active_detail.ms==1?1:2
+      tab.value.unshift('news');
+      hasNews.value = true;
+      activeTab.value = active_detail.value.ms==1?1:2
     } else {
-      this.activeTab = this.get_active_detail.ms==1?0:1
+      activeTab.value = active_detail.value.ms==1?0:1
     }
   },
   computed:{
-    ...mapGetters({
-      get_active_detail: "get_active_detail", // 获取详情页保存的比分面板数据
-      vx_get_user: 'get_user',
-      lang: 'get_lang'
-    }),
     matchDetail(){
-      let match = _.cloneDeep(this.get_active_detail)
+      let match = _.cloneDeep(active_detail.value)
       let obj = {}
       if(match.msc_obj){
-         this.sportDict.allScore.map(k=>{
+         sportDict.value.allScore.map(k=>{
           if(!match.msc_obj[k]){
             obj[k] = {
               home: 0,
@@ -130,7 +139,7 @@ export default {
             // 获取主客队得分数据
             let home = parseInt(_.get(match, `msc_obj[${k}][1]`)),
                 away = parseInt(_.get(match, `msc_obj[${k}][2]`));
-            if(this.sportDict.line.includes(k)){
+            if(sportDict.value.line.includes(k)){
               //'S108'三分球得分，'S107'两分球得分
               if(k == 'S107'){
                 home*= 2
@@ -157,7 +166,7 @@ export default {
       } else {
         let msc = match.msc
 
-        this.sportDict.allScore.map(k=>{
+        sportDict.value.allScore.map(k=>{
           if(!msc[k]){
             obj[k] = {
               home: 0,
@@ -174,7 +183,7 @@ export default {
   },
   methods: {
     switchTabs(index) {
-      this.activeTab = index;
+      activeTab.value = index;
       let eventLabel = '';
       switch (index) {
         case 0:

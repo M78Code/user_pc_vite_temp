@@ -21,7 +21,7 @@
     <!-- 电竞相关的 头部信息样式  集中在这里-->
     <div class="DJ-score-information" v-if="get_menu_type==3000">
       <!-- 展示比分信息-->
-      <div class="eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
+      <div class="eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
       <div class="information-score" v-else-if="[1,2,3,4].includes(+detail_data.ms)">
         <span>{{s1_score.home}}</span>
         <div class="collect-icon"  @click="icon_click" v-if="+detail_data.mms > 1 && detail_data.vurl"></div>
@@ -33,19 +33,19 @@
         <span v-if="detail_data.ms == 0">
           <span v-if="start_time" class="fz_12" style="font-weight:400">
             <!-- 距离开赛时间小于一小时显示倒计时 -->
-            {{i18n.t("list.after_time_start",[longTime])}}
+            {{t("list.after_time_start",[longTime])}}
           </span>
           <template v-else>
-            <div class="sj-time-day">{{utils.format_time_zone(+detail_data.mgt).Format(i18n.t('time3'))}}</div>
+            <div class="sj-time-day">{{utils.format_time_zone(+detail_data.mgt).Format(t('time3'))}}</div>
             <!-- <span class="sj-time-soon">{{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}</span> -->
           </template>
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
         <span v-else-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-          {{i18n.t(`ms[${detail_data.ms}]`)}}
+          {{t(`ms[${detail_data.ms}]`)}}
         </span>
         <template v-else>
-          <span>{{i18n.t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
+          <span>{{t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
           <!-- 倒/正计时组件 -->
           <!-- <counting-down
             :title="null"
@@ -65,7 +65,7 @@
       <span v-if="detail_data.ms == 0">
         <span v-if="start_time" class="fz_12" style="font-weight:400">
           <!-- 距离开赛时间小于一小时显示倒计时 -->
-          {{i18n.t("list.after_time_start",[longTime])}}
+          {{t("list.after_time_start",[longTime])}}
         </span>
         <span v-else>
           <!-- {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }} -->
@@ -73,7 +73,7 @@
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
       <span v-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-        {{i18n.t(`ms[${detail_data.ms}]`)}}
+        {{t(`ms[${detail_data.ms}]`)}}
       </span>
       <!-- 棒球的进攻方绿点在大比分两侧展示 -->
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'home'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
@@ -103,7 +103,7 @@
         <div class="goal-wrap" v-if="is_show_home_goal">
           <div class="inner yb-flex-center left">
             <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
-            <div class="gif-text">{{i18n.t('match_result.goal')}}</div>
+            <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
         <div class="red-gif" :class="{flash:is_show_home_red}">
@@ -118,7 +118,7 @@
         <div class="goal-wrap" v-if="is_show_away_goal">
           <div class="inner yb-flex-center right">
             <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
-            <div class="gif-text">{{i18n.t('match_result.goal')}}</div>
+            <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
         <div class="man-name ellipsis-2-lines">
@@ -143,14 +143,18 @@ import { TeamNameWapper } from "src/components/details/team-name";   // 详情�
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
 import utils from "src/core/utils/utils.js";    // 公共方法
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: "details_tab",
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [msc],
   props: {
     detail_data: {
@@ -195,7 +199,7 @@ export default defineComponent({
       utils,
       lodash
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed:{
     // ...mapGetters([
     //   "get_menu_type",
@@ -381,7 +385,7 @@ export default defineComponent({
         changeMatch = true
       }
     );
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations(['set_video_url', 'set_show_video','set_toast','set_iframe_onload']),
     /**
@@ -475,7 +479,7 @@ export default defineComponent({
           // 不显示倒计时
           data.start_time = false;
           // 此时同步更新match_stage组件的时间
-          // #TODO emit 
+          // #TODO emit
           useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
           // useMittEmit(MITT_TYPES.EMIT_MATCH_NOSTART);
         }
@@ -518,11 +522,11 @@ export default defineComponent({
       // hide_home_red = debounce(hide_home_red,5000)
       // hide_away_red = debounce(hide_away_red,5000)
       initEvent();
-      // #TODO emit 
+      // #TODO emit
       data.emitters = [
         useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
-      // useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
+      useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).on;
     })
     onUnmounted(() => {
       debounce_throttle_cancel(hide_home_goal);
@@ -536,9 +540,9 @@ export default defineComponent({
       clearTimeout(data.timer1_)
       data.timer1_ = null
 
-      // #TODO emit 
+      // #TODO emit
       data.emitters.map((x) => x())
-      // $root.$off(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
+      useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off;
     })
     return {
       ...toRefs(data),

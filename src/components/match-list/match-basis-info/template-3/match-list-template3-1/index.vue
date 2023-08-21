@@ -56,11 +56,11 @@
 
 import { computed, defineProps } from 'vue';
 import lodash from 'lodash';
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 
 const team_names = computed(() => {
   let { mhn = '', man = '', up_half_text = '' } = this.match

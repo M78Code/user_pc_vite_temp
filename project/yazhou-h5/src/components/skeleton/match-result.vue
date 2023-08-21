@@ -6,7 +6,7 @@
     <template v-if="!loading_body">
       <div class="header-wrap">
         <div class="header">
-          <div class="back" @click="$router.go(-1)">
+          <div class="back" @click="router.go(-1)">
             <div class="back-btn"></div>
           </div>
           <skeleton :width="1.59" :height="0.1" :radius="5"/>
@@ -38,6 +38,8 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
+import { useRouter } from "vue-router"
+let router = useRouter()
 const props = defineProps({
   loading_body:Boolean
 })

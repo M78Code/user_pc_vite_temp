@@ -68,7 +68,7 @@ import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 // TODO: 临时用
 let get_detail_data = ref({
   mid: '1',
@@ -89,7 +89,7 @@ let get_detail_data = ref({
   //   loading,
   // },
   // 国际化
-  const { t } = useI18n()
+  
   const tab_list = ref([
         {name: t('analysis_football_matches.Fundamentals')},
         {name: t('analysis_football_matches.Disk')},

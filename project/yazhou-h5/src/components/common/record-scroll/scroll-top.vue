@@ -1,15 +1,15 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 全局公共 滑动到顶部组件
 -->
 
 <template>
   <img
     v-show="is_show_back_top_btn"
-    class="list-scroll-to-top" 
-    :src="scroll_img" 
-    @click="back_top" 
+    class="list-scroll-to-top"
+    :src="scroll_img"
+    @click="back_top"
   />
 </template>
 
@@ -17,7 +17,7 @@
 import utils from 'src/core/utils/utils.js'
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
- 
+
   const props = defineProps({
     // 父组件滚动高度
     list_scroll_top: {
@@ -45,7 +45,7 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
   const scroll_img = computed(() => {
     // 获取图片主题图标
         // 没获取到的情况
-      let suffix="__"; 
+      let suffix="__";
       // TODO: 待调整
         //  if(get_theme.includes('theme01')){
         //     suffix='01'
@@ -67,9 +67,9 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
      */
     const back_top = () => {
       //  防止调用多次
-      if(utils.is_time_limit(500)) return 
-      
-      // this.$emit('back-top')
+      if(utils.is_time_limit(500)) return
+
+      // $emit('back-top')
     }
     onDeactivated(() => {
       clearTimeout(scroll_timer)
@@ -87,19 +87,19 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
   //   // 获取图片主题图标
   //   scroll_img(){
   //     let suffix="__"; // 没获取到的情况
-  //        if(this.get_theme.includes('theme01')){
+  //        if(get_theme.includes('theme01')){
   //           suffix='01'
   //        }
-  //        if(this.get_theme.includes('theme02')){
+  //        if(get_theme.includes('theme02')){
   //           suffix='02'
   //        }
-  //        if(this.get_theme.includes('y0')){
+  //        if(get_theme.includes('y0')){
   //           suffix+='_y0';
   //        }
   //       return  `image/wwwassets/bw3/list/scroll_top_${suffix}.svg`
   //   },
   // },
- 
+
 </script>
 <style lang="scss" scoped>
   .list-scroll-to-top {

@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  篮球赛事分析
 -->
 <template>
@@ -15,17 +15,20 @@
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 赛果详情 赛况统计 和 事件
-import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue'; 
-// 详情页  足球赛事分析 战绩 模块 
-import standings from 'src/project/pages/details/analysis-matches/components/standings.vue';  
+import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue';
+// 详情页  足球赛事分析 战绩 模块
+import standings from 'src/project/pages/details/analysis-matches/components/standings.vue';
 // 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-import line_up from 'src/project/pages/details/analysis-matches/components/line-up.vue';  
+import line_up from 'src/project/pages/details/analysis-matches/components/line-up.vue';
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import head_tab from 'src/project/components/details/match-analysis/head-tab.vue';
- // 文章页  
-import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';  
+ // 文章页
+import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';
 import { watch, nextTick, onMounted } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { t } from "src/boot/i18n";;
+//国际化
+
 
   // components: {
   //   match: match_result,
@@ -37,15 +40,15 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   // TODO: 国际化后续修改调整
   const tabList = ref([
     {
-      name: i18n.t('analysis_football_matches.match'),
+      name: t('analysis_football_matches.match'),
       component: 'match'
     },
     {
-      name: i18n.t('analysis_football_matches.standings'),
+      name: t('analysis_football_matches.standings'),
       component: 'standings'
     },
     {
-      name: i18n.t('analysis_football_matches.line_up'),
+      name: t('analysis_football_matches.line_up'),
       component: 'line_up'
     }
   ])
@@ -97,12 +100,12 @@ const tab_click = ([tab, type]) => {
   if (type == 'is_click') {
     let eventLabel = '';
     // 赛况
-    if (tab.component == 'match') { 
+    if (tab.component == 'match') {
       eventLabel = "H5_情报分析_赛况";
-    } else if (tab.component == 'standings') { 
+    } else if (tab.component == 'standings') {
       // 数据
       eventLabel = "H5_情报分析_战绩";
-    } else if (tab.component == 'line_up') { 
+    } else if (tab.component == 'line_up') {
       // 阵容
       eventLabel = "H5_情报分析_阵容";
     } else if (tab.component == 'article-main') {
@@ -111,11 +114,7 @@ const tab_click = ([tab, type]) => {
     this.$utils.zhuge_event_send(eventLabel, this.get_user);
   }
 }
-  // beforeUnmount() {
-  //   for (const key in this.$data) {
-  //     this.$data[key] = null
-  //   }
-  // }
+
 </script>
 
 <style lang="scss" scoped>
@@ -126,7 +125,7 @@ const tab_click = ([tab, type]) => {
 
 .clear-bg {
   background: none
-} 
+}
 
 @media (min-width: 600px) {
   .analysis-football-matches {

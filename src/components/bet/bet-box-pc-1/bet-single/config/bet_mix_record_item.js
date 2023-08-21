@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 串关投注项
  */
-import { mapGetters } from "vuex";
+
 import betting from "src/public/mixins/betting/betting.js";
 export default {
   name: "bet-mix-item",
@@ -76,14 +76,7 @@ export default {
     }  
   },
   computed: {
-    ...mapGetters({
-      vx_get_bet_list: "get_bet_list", //  投注项列表
-      vx_get_bet_obj: "get_bet_obj",   // 投注项对象
-      vx_cur_menu_type: "get_cur_menu_type",   // 当前菜单类型
-      get_menu_obj: "get_menu_obj",  // 菜单对象
-      vx_get_theme: "get_theme",   // 皮肤
-      lang: "get_lang"   // 当前语言
-    }),
+
     /**
      * @description: 当前盘口名称 欧洲盘/香港盘
      * @param {undefined} undefined
@@ -136,7 +129,7 @@ export default {
      * @return {undefined} 
      */
     match_time() {
-      let obj_bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
+      let obj_bs = _.get(this.BetData.bet_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
         let format_str = BetCommonHelper.format_str;

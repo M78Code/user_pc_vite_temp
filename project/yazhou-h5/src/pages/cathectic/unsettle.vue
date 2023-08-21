@@ -11,7 +11,7 @@
         <div class="filter-button" v-if="store_user.settleSwitch == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ i18n.t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+            {{ t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
@@ -19,8 +19,8 @@
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <!-- (new Date(name|| '')).Format(i18n.$t('time2')) -->
-                <span>{{ '08月15日'}}</span>
+                <!-- (new Date(name|| '')).Format(tt('time2')) -->
+                <span>{{ new Date(name)}}</span>
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
@@ -54,6 +54,9 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import store from 'src/store-redux/index.js'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 
 // mixins: [skt_order]

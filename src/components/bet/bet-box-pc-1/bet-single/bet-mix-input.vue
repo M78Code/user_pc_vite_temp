@@ -15,10 +15,10 @@
         </span>
       </div>
       <!--金额输入区域包括键盘 -->
-      <div class="row bet-mix-input" :data-check-money="view_ctr_obj.mix_range_money">
+      <div class="row bet-mix-input" :data-check-money="view_ctr_obj.input_money_state">
         <!--金额输入区-->
         <currency-input :ref="'input-money-' + id" class="bet-input input-border"
-          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.mix_range_money) && money != null) || view_ctr_obj.error_code == 'M400005' }"
+          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.input_money_state) && money != null) || view_ctr_obj.error_code == 'M400005' }"
           :placeholder="`${i18n.t('bet.money_range')} ${min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
           v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
             hideCurrencySymbol: true
@@ -117,8 +117,8 @@ const timer_input_focus = ref(null)
      */
     const get_series_odds = () => {
       let series_odds = 1;
-      vx_get_bet_list.forEach(item => {
-        let obj = _.get(vx_get_bet_obj, `${item}.cs`);
+      BetData.bet_list.forEach(item => {
+        let obj = _.get(BetData.bet_obj, `${item}.cs`);
         let odds_value = (obj && obj.odds_value) || 1;
          // 此处乘以100然后除以100是为了保证精度
         series_odds = ((Math.floor(odds_value / 1000)) / 100) * series_odds;
@@ -132,7 +132,7 @@ const timer_input_focus = ref(null)
      * @return {String} 个数
      */
      const count = () => {
-      let count =  _.get(vx_get_bet_s_obj,`${id}.cs.count`);
+      let count =  _.get(BetData.bet_s_obj,`${id}.cs.count`);
       if(count) {
         return `${count}`;
       }
@@ -144,7 +144,7 @@ const timer_input_focus = ref(null)
      * @return {String}
      */
      const max_money = () =>  {
-      let max_money =  _.get(vx_get_bet_s_obj,`${id}.cs.max_money`);
+      let max_money =  _.get(BetData.bet_s_obj,`${id}.cs.max_money`);
       if(max_money) {
         return `${max_money}`;
       }
@@ -156,7 +156,7 @@ const timer_input_focus = ref(null)
      * @return {String}
      */
      const min_money = () =>  {
-      let min_money =  _.get(vx_get_bet_s_obj,`${id}.cs.min_money`);
+      let min_money =  _.get(BetData.bet_s_obj,`${id}.cs.min_money`);
       if(min_money) {
         return `${min_money}`;
       }

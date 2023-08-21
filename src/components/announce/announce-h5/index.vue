@@ -32,7 +32,7 @@
   
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
@@ -51,7 +51,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { ss, ls } from 'src/core/utils/web-storage.js'
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 返回的大列表 */
 let res_list = reactive([])

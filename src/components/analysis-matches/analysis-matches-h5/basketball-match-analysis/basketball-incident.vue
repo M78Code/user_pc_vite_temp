@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  篮球赛事事件
 -->
 <template>
@@ -50,7 +50,7 @@ import { useRoute } from 'vue-router'
   const route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).on
   get_list()
   const match_id = computed(() => {
     // 赛事id TODO: route get_detail_data后续修改调整
@@ -79,19 +79,12 @@ import { useRoute } from 'vue-router'
   }
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
-    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).off
     //   for (const key in $data) {
   //     $data[key] = null
   //   }
   })
-  // beforeUnmount() {
-  //   // 移除监听 赛事分析刷新事件
-  //   this.$root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, this.get_list)
 
-  //   for (const key in this.$data) {
-  //     this.$data[key] = null
-  //   }
-  // }
 </script>
 
 <style lang="scss" scoped>

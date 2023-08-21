@@ -23,7 +23,7 @@
 import { ref, reactive, onMounted, onUnmounted, watch, computed, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 import store from "src/store-redux/index.js";
 import { api_account, api_details } from 'src/api/index';
@@ -35,7 +35,7 @@ import { loadLanguageAsync } from 'src/boot/i18n'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 是否展示 */
 const show_popup = ref(false)

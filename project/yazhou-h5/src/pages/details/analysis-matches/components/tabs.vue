@@ -1,12 +1,12 @@
 <template>
   <div class="tabs-wrapper hairline-border">
-    <div 
+    <div
       class="item hairline-border"
       :class="{
         'active': i === tab_index,
         'no-border-r': i === tab_index - 1,
       }"
-      v-for="(tab, i) in tabs" 
+      v-for="(tab, i) in tabs"
       :key="i"
       @click="handle_item_click(tab, i)"
     >
@@ -16,6 +16,7 @@
 </template>
 
 <script setup>
+import { ref } from "vue"
   const tab_index = ref(0)
   const props =defineProps({
     tabs: {
@@ -26,7 +27,7 @@
       type: Boolean,
       default: false
     }
-  }) 
+  })
   // TODO: $emit 后续修改调整
   const handle_item_click = (tab, index) => {
       if(!isChange){
@@ -35,7 +36,7 @@
       $emit('click', {tab, index})
     }
     // TODO: 暂时注释
-  const changeTabIndex = (index) => { 
+  const changeTabIndex = (index) => {
       tab_index = index
     }
 </script>

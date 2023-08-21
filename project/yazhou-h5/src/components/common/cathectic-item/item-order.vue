@@ -5,11 +5,11 @@
 <template>
   <div class="item-order row mx-16 justify-between">
     <!-- 订单号 -->
-    <div class="text-left ellipsis"  @click="copy">{{i18n.t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
+    <div class="text-left ellipsis"  @click="copy">{{t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
       <img  src="image/wwwassets/bw3/svg/copy.svg" alt=""  style="width:0.1rem" />
     </div>
-    <!-- 时间 i18n.t('bet_record.bet_time')   .Format(i18n.t('time4'))-->
-    <div class="text-right">{{i18n.t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(format_time_zone_time(+data_o.betTime)))}}</span></div>
+    <!-- 时间 t('bet_record.bet_time')   .Format(t('time4'))-->
+    <div class="text-right">{{t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(format_time_zone_time(+data_o.betTime)))}}</span></div>
   </div>
 </template>
 
@@ -19,6 +19,9 @@ import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { format_time_zone_time } from 'src/core/formart/index.js'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
   const props = defineProps({
     data_o: {
@@ -48,7 +51,7 @@ import { format_time_zone_time } from 'src/core/formart/index.js'
       })
       clipboard.on('success', () => {
         set_toast({
-          txt: i18n.t("bet_record.copy_suc"),
+          txt: t("bet_record.copy_suc"),
         });
 
         // h5嵌入时Safari阻止弹窗

@@ -30,6 +30,9 @@ import {mapGetters, mapMutations} from "vuex"
 import {api_common} from 'src/project/api/index.js';
 import video from "src/public/utils/video/video.js"   // 视频相关公共方法
 import { uid } from "quasar"
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 export default {
   name: 'match_icon',
@@ -64,9 +67,9 @@ export default {
   },
   created() {
     // 延时器
-    this.timer1_ = null;
-    if(this.icon_class == 'lvs'){
-      this.media_button_button_type_check()
+    timer1_ = null;
+    if(icon_class == 'lvs'){
+      media_button_button_type_check()
     }
   },
   computed: {
@@ -83,19 +86,19 @@ export default {
     ]),
     // 赛事id
     match_id() {
-      return this.$route.params.mid || this.get_detail_data.mid
+      return $route.params.mid || get_detail_data.mid
     },
   },
   watch: {
     // 监听点击直播事件,触发详情页视频直接播放
     get_play_video: {
       handler(new_) {
-        if (new_ && (this.which == 'muUrl' || this.get_is_in_play == 'muUrl')) {
-          this.icon_click_muUrl()
-        } else if (this.get_is_in_play == 'animationUrl') {
-          this.icon_click_animationUrl()
-        } else if (this.get_is_in_play == 'lvs') {
-          this.icon_click_lvs('lvs')
+        if (new_ && (which == 'muUrl' || get_is_in_play == 'muUrl')) {
+          icon_click_muUrl()
+        } else if (get_is_in_play == 'animationUrl') {
+          icon_click_animationUrl()
+        } else if (get_is_in_play == 'lvs') {
+          icon_click_lvs('lvs')
         }
       },
       immediate: true
@@ -105,8 +108,8 @@ export default {
    * @description: 销毁前回调函数
    */
   beforeUnmount() {
-    clearTimeout(this.timer1_)
-    this.timer1_ = null
+    clearTimeout(timer1_)
+    timer1_ = null
   },
   methods: {
     ...mapMutations(['set_video_url', 'set_show_video', 'set_toast', 'set_iframe_onload']),
@@ -117,17 +120,17 @@ export default {
      */
     media_button_button_type_check(button_type='lvs') {
       let state_obj = {
-        lvs: _.get(this.get_detail_data,'lvs') != -1,
+        lvs: _.get(get_detail_data,'lvs') != -1,
         icon_path:'',
       }
       // 赛前图标
-      if(_.get(this.get_detail_data,'lss') == 0){
-        state_obj.icon_path = this.lvs_icon_pre
-      }else if(_.get(this.get_detail_data,'lss') == 1){
+      if(_.get(get_detail_data,'lss') == 0){
+        state_obj.icon_path = lvs_icon_pre
+      }else if(_.get(get_detail_data,'lss') == 1){
         // 正在直播的图标
-        state_obj.icon_path = this.lvs_icon_ing
+        state_obj.icon_path = lvs_icon_ing
       }
-      Object.assign(this.lvs_state_obj, state_obj)
+      Object.assign(lvs_state_obj, state_obj)
     },
     check_url(url, which) {
       // 本地代码连接 调试 时，打开此注释即可播放视频------勿删除此注释
@@ -136,11 +139,11 @@ export default {
       //   media_src:url,
       //   active:'muUrl',
       // };
-      //   this.set_video_url(data);
-      //   this.set_show_video(true);
-      //   this.set_iframe_onload(false);
+      //   set_video_url(data);
+      //   set_show_video(true);
+      //   set_iframe_onload(false);
       //   setTimeout(()=>{
-      //   this.set_iframe_onload(true);
+      //   set_iframe_onload(true);
       // },2000)
       // return
       api_common.get_full_url(url).then((v) => {
@@ -149,35 +152,35 @@ export default {
             media_src: url,
             active: which ? which :'muUrl',
           };
-          this.set_video_url(data);
-          this.set_show_video(true);
-          this.set_iframe_onload(false);
-          this.timer1_ = setTimeout(() => {
-            this.set_iframe_onload(true);
+          set_video_url(data);
+          set_show_video(true);
+          set_iframe_onload(false);
+          timer1_ = setTimeout(() => {
+            set_iframe_onload(true);
           }, 2000)
         } else {
-          this.set_toast({
-            txt: i18n.t('video.sorry'),
+          set_toast({
+            txt: t('video.sorry'),
           });
         }
       }).catch((v) => {
-        this.set_toast({
-          txt: i18n.t('video.sorry'),
+        set_toast({
+          txt: t('video.sorry'),
         });
       })
     },
     icon_click(e) {
       console.log(e,"whichwhichwhichwhich");
       e.stopPropagation()
-      switch (this.which) {
+      switch (which) {
         case 'lvs':
-          this.icon_click_lvs(this.which)
+          icon_click_lvs(which)
           break;
         case 'muUrl':
-          this.icon_click_muUrl()
+          icon_click_muUrl()
           break;
         case 'animationUrl':
-          this.icon_click_animationUrl()
+          icon_click_animationUrl()
           break;
 
         default:
@@ -189,7 +192,7 @@ export default {
      */
     icon_click_lvs(which) {
       let params = {
-        mid: this.match_id,
+        mid: match_id,
         device: 'H5'
       };
       api_common.getliveVideoUrl(params).then((res) => {
@@ -204,8 +207,8 @@ export default {
           // referUrl : "http://testliveh5.sportxxx13ky.com"//域名
           // sdUrl : "rtmp://test-pull-live.wafqa2.com/live/654321"  //直播视频标清地址
           // serverTime : "1663733773446"
-          let media_src = video.get_video_url(res, params.mid, 3, this.get_hd_sd);
-          this.check_url(media_src,which);
+          let media_src = video.get_video_url(res, params.mid, 3, get_hd_sd);
+          check_url(media_src,which);
         }
       })
     },
@@ -213,14 +216,14 @@ export default {
      * 点击视频
      */
     icon_click_muUrl() {
-      let check = this.get_detail_data.mms >= 2 || this.get_detail_data.mvs > -1
+      let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1
 
       if (!check) {
         return false
       }
 
       let params = {
-        mid: this.match_id,
+        mid: match_id,
         type: 'Video'
       };
 
@@ -232,47 +235,47 @@ export default {
 
           if (referUrl) {
             media_src = video.get_video_url({data: {referUrl}}, params.mid, 1);
-            this.check_url(media_src);
+            check_url(media_src);
           } else {
             let param = {}
-            this.send_gcuuid = uid();
-            param.gcuuid = this.send_gcuuid;
+            send_gcuuid = uid();
+            param.gcuuid = send_gcuuid;
             api_common.getVideoReferurl(param).then(res => {
-              if(this.send_gcuuid != res.gcuuid) return;
+              if(send_gcuuid != res.gcuuid) return;
               media_src = video.get_video_url(res, params.mid, 1);
-              this.check_url(media_src);
+              check_url(media_src);
             });
           }
           ;
         } else {
           if(_.get(res,'code')=='0401038'){
-            this.set_toast({
-              txt: i18n.t('msg.msg_nodata_22'),
+            set_toast({
+              txt: t('msg.msg_nodata_22'),
             });
             return;
           }
           let data = {};
           data.active = 'muUrl';
-          this.set_video_url(data);
-          this.set_show_video(true);
+          set_video_url(data);
+          set_show_video(true);
           let video_sorry_temp="";
-          if(this.get_lang=='zh')
+          if(get_lang=='zh')
           {
             video_sorry_temp="!";
           }
-          this.set_toast({
-            txt: i18n.t('video.sorry')+video_sorry_temp,
+          set_toast({
+            txt: t('video.sorry')+video_sorry_temp,
           });
         }
       }).catch((v) => {
         let video_sorry_temp="";
-        if(this.get_lang=='zh')
+        if(get_lang=='zh')
         {
           video_sorry_temp="!";
         }
 
-        this.set_toast({
-          txt: i18n.t('video.sorry')+video_sorry_temp,
+        set_toast({
+          txt: t('video.sorry')+video_sorry_temp,
         });
       })
 
@@ -282,25 +285,25 @@ export default {
      * 点击动画
      */
     icon_click_animationUrl() {
-      let check = this.get_detail_data.mms >= 2 || this.get_detail_data.mvs > -1
+      let check = get_detail_data.mms >= 2 || get_detail_data.mvs > -1
 
       if (!check) {
         return false
       }
 
       let params = {
-        mid: this.match_id,
+        mid: match_id,
         type: 'Animation'
       };
-      this.send_gcuuid = uid();
-      params.gcuuid = this.send_gcuuid;
+      send_gcuuid = uid();
+      params.gcuuid = send_gcuuid;
 
       api_common.videoAnimationUrl(params).then((res) => {
         const { data } = res
-        if(this.send_gcuuid != res.gcuuid) return;
+        if(send_gcuuid != res.gcuuid) return;
         let animationUrl = ''
         //足篮棒网使用3.0动画  其他使用2.0
-        if ([1, 2, 3, 5].includes(_.get(this.get_detail_data,'csid') * 1)) {
+        if ([1, 2, 3, 5].includes(_.get(get_detail_data,'csid') * 1)) {
           let animation3Url = data.animation3Url || []
           animation3Url.forEach(item => {
             if (item.styleName.indexOf('day') >= 0) {
@@ -313,10 +316,10 @@ export default {
         data.referUrl = data.referUrl && (data.referUrl.replace(/http:|https:/, '')) // 视频
         data.active = 'animationUrl';
         data.referUrl = `${location.protocol}${data.referUrl}`;
-        let CTime = this.get_detail_data.mgt;
+        let CTime = get_detail_data.mgt;
         let STime = data.serverTime;
-        this.set_video_url(data);
-        this.set_show_video(true);
+        set_video_url(data);
+        set_show_video(true);
       })
 
 

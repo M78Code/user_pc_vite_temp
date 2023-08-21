@@ -1,5 +1,5 @@
  
-import { mapGetters, mapActions } from "vuex";
+
 import odds_conversion from "src/public/mixins/odds_conversion/compute_max_win_money";
 import betting from "src/public/mixins/betting/betting.js";
 import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
@@ -119,17 +119,10 @@ export default {
   created() {
     // 显示部分dom ID
     this.DOM_ID_SHOW = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, this.check_money);    //单关的校验金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, this.bet_single_reset);//重置单关红升绿降状态
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, this.set_min_money);//设置单关最小金额
-    this.$root.$on(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, this.update_keyboard_status);// 更新键盘状态
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);//更新主客队信息(主要用于国际化切换时调用)
-    this.$root.$on(MITT_TYPES.EMIT_BET_SET_MONEY, this.set_money); // 设置输入框
-    this.$root.$on(MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, this.init_bet_list_item);// 初始化联赛名称 赛季 玩法名称 队伍名称
-    this.$root.$on(MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, this.del_bet_item); //关闭大视频投注
-    this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)//无网络事件
+ //生成事件监听
+this.handle_generat_emitters()
 
-    this.setup_single_info = _.get(this.vx_get_user, 'cvo.single'); // 获取用户单关配置信息
+    this.setup_single_info = _.get(this.BetData.user, 'cvo.single'); // 获取用户单关配置信息
     if(!_.isEmpty(this.setup_single_info) && _.isObject(this.setup_single_info) && (!this.$route.params.video_size || this.$route.params.video_size != '1')) { // 非大视频
       this.keyboard_data = this.get_keyboard_data();
     } else if(this.$route.params.video_size == '1') { // 大视频
@@ -170,10 +163,10 @@ export default {
     // this.img_mouseleave = this.debounce(this.img_mouseleave, 500);
     // this.img_mouseenter = this.debounce(this.img_mouseenter, 500);
     //初始化后台开关权重按顺序排列
-    this.marketConfigValue = _.get(this.vx_get_user, 'configVO.marketConfigValue', 0);
-    this.bookBet = _.get(this.vx_get_user, 'configVO.bookBet', 0);
-    this.bookMarketSwitch = _.get(this.vx_get_user, 'configVO.bookMarketSwitch', 0);
-    this.bookMarketSwitchBasketball = _.get(this.vx_get_user, 'configVO.bookMarketSwitchBasketball', 0);
+    this.marketConfigValue = _.get(this.BetData.user, 'configVO.marketConfigValue', 0);
+    this.bookBet = _.get(this.BetData.user, 'configVO.bookBet', 0);
+    this.bookMarketSwitch = _.get(this.BetData.user, 'configVO.bookMarketSwitch', 0);
+    this.bookMarketSwitchBasketball = _.get(this.BetData.user, 'configVO.bookMarketSwitchBasketball', 0);
   },
   beforeUnmount() {
     //清除计时器对象
@@ -185,42 +178,14 @@ export default {
     this.keyboard_data = null;
     this.setup_single_info = {};
     this.value_range = {};
-    // 清除监听
-    this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, this.check_money);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, this.bet_single_reset);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, this.set_min_money);
-    this.$root.$off(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, this.update_keyboard_status);
-    this.$root.$off(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SET_MONEY, this.set_money);
-    this.$root.$off(MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, this.init_bet_list_item);
-    this.$root.$off(MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, this.del_bet_item);
+  //移除相应监听事件 //视图销毁钩子函数内执行
+ if(this.emitters_off){this.emitters_off()}  
      //取消防抖和节流
     //  this.debounce_throttle_cancel(this.img_mouseleave);
     //  this.debounce_throttle_cancel(this.img_mouseenter);
   },
   computed: {
-    ...mapGetters({
-      vx_get_bet_single_list: "get_bet_single_list",// 单关信息列表
-      vx_get_bet_single_obj: "get_bet_single_obj", // 单关对象扁平化
-      vx_get_user: "get_user",//用户信息
-      vx_is_bet_single: "is_bet_single",//是单关
-      vx_cur_menu_type: "get_cur_menu_type",//获取当前菜单
-      get_is_fullscreen: "get_is_fullscreen",//是否全屏
-      vx_get_cur_odd: "get_cur_odd", //当前赔率
-      vx_get_lang_change: "get_lang_change", // 是否改变语言
-
-      vx_get_bet_appoint_obj: "get_bet_appoint_obj",// 被预约的投注项id
-
-      vx_get_is_bet_merge: "get_is_bet_merge",//是否单关合并
-      lang: "get_lang",// 当前语言
-      vx_get_pre_bet_list:"get_pre_bet_list",
-      //语言
-      get_lang: "get_lang",
-      vx_get_chat_room_type:"get_chat_room_type", //聊天室来源跟单盘口状况eu
-      vx_get_bet_current_money_obj: 'get_bet_current_money_obj',
-      vx_get_left_menu_toggle: 'get_left_menu_toggle',
-    }),
+   
 
     /**
      * @Description 根据开关来判断是不是开启
@@ -324,7 +289,7 @@ export default {
      */
     match_type() {
       // 默认为普通赛
-      return _.get(this.vx_get_bet_single_obj, `${this.id}.cs.match_type`);
+      return _.get(this.BetData.bet_single_obj, `${this.id}.cs.match_type`);
     },
     /**
      * @description: 赛事状态 0未开赛 滚球:进行中
@@ -332,9 +297,9 @@ export default {
      * @returns {string} 赛事类型
      */
     market_type() {
-      let match_type = _.get(this.vx_get_bet_single_obj, `${this.id}.cs.match_type`);
+      let match_type = _.get(this.BetData.bet_single_obj, `${this.id}.cs.match_type`);
       if(match_type!=3) {
-        return _.get(this.vx_get_bet_single_obj, `${this.id}.cs.market_type`);
+        return _.get(this.BetData.bet_single_obj, `${this.id}.cs.market_type`);
       }
       return '';
     },
@@ -392,7 +357,7 @@ export default {
      * @return {boolean}
      */
     has_handicap_value() {
-      let bet_obj = this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj[this.id];
       if(bet_obj) {
         return _.trim(_.get(bet_obj, 'cs.handicap_value')) !== '';
       }
@@ -412,7 +377,7 @@ export default {
      * @return {String}
      */
     handicap_name() {
-      let cs = _.get(this.vx_get_bet_single_obj,`${this.id}.cs`);
+      let cs = _.get(this.BetData.bet_single_obj,`${this.id}.cs`);
       let odds_table = {
         EU: '1',//欧盘
         HK: '2',//香港盘
@@ -424,13 +389,13 @@ export default {
       let _odd = ''
       //聊天室跟单特殊处理
       if(this.source == 'is_chat_room'){
-        _odd = this.vx_get_chat_room_type;
-        this.vx_set_cur_odd(_odd);
+        _odd = this.BetData.chat_room_type;
+        BetDataCtr.set_cur_odd(_odd);
         return `[${i18n.t('odds')[_odd]}]`;
       }
       // 根据odds_switch字段显示对应的盘口名称
-      if(cs && cs.odds_switch && cs.odds_switch.includes(odds_table[this.vx_get_cur_odd])) {
-        return `[${i18n.t('odds')[this.vx_get_cur_odd]}]`;
+      if(cs && cs.odds_switch && cs.odds_switch.includes(odds_table[this.BetData.cur_odd])) {
+        return `[${i18n.t('odds')[this.BetData.cur_odd]}]`;
       }
       // 默认显示欧洲盘
       return `[${i18n.t('odds')['EU']}]`
@@ -465,7 +430,7 @@ export default {
      * @return {String}
      */
     min_money() {
-      let min_money =  _.get(this.vx_get_bet_single_obj,`${this.id}.cs.min_money`, '');
+      let min_money =  _.get(this.BetData.bet_single_obj,`${this.id}.cs.min_money`, '');
       return `${min_money}`
     },
     /**
@@ -474,7 +439,7 @@ export default {
      * @return {String}
      */
     max_money() {
-      let max_money =  _.get(this.vx_get_bet_single_obj,`${this.id}.cs.max_money`, '');
+      let max_money =  _.get(this.BetData.bet_single_obj,`${this.id}.cs.max_money`, '');
       return `${max_money}`;
     },
     /**
@@ -483,7 +448,7 @@ export default {
      * @return {String}
      */
     match_time() {
-      let obj_bs = _.get(this.vx_get_bet_single_obj,`${this.id}.bs`);
+      let obj_bs = _.get(this.BetData.bet_single_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
 
         // 赛事时间显示日期，月份，天，小时，分钟
@@ -577,7 +542,7 @@ export default {
      * @returns {number} 
      */
     win_money() {
-      let bet_obj = this.vx_get_bet_single_obj && this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj && this.BetData.bet_single_obj[this.id];
       let temp = 0.00;
       if (this.money && bet_obj && bet_obj.bs) {
         let item = bet_obj.bs;        
@@ -605,16 +570,16 @@ export default {
                 }
               }
             }
-            if (support_odds.includes(_.get('vx_get_cur_odd'))) {
+            if (support_odds.includes(_.get('BetData.cur_odd'))) {
               //最终盘口类型
-              marketTypeFinally = _.get('vx_get_cur_odd');
+              marketTypeFinally = _.get('BetData.cur_odd');
             } else {
               //最终盘口类型
               marketTypeFinally = "EU";
             }
           } else {
             //最终盘口类型
-            marketTypeFinally = _.get('vx_get_cur_odd');
+            marketTypeFinally = _.get('BetData.cur_odd');
           }
 
 
@@ -637,7 +602,7 @@ export default {
      * @returns {number}
      */
     pending_order_status() {
-      let bet_obj = this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj[this.id];
       if(bet_obj) {
         return _.get(bet_obj, 'cs.pending_order_status')
       }
@@ -650,7 +615,7 @@ export default {
      * @param {Object} new_ 
      * @returns {undefined} undefined
      */
-    vx_get_bet_appoint_obj(new_) {
+    'BetData.bet_appoint_obj'(new_) {
       if(_.isNull(new_)) return;
       this.appoint_odds_value = new_.appoint_odds_value
     },
@@ -659,7 +624,7 @@ export default {
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-    vx_get_cur_odd() {
+   'BetData.cur_odd'() {
       this.is_change_odds = true;
       this.cancel_operate();
     },
@@ -823,7 +788,7 @@ export default {
      * @param {undefined} undefined
      * @return {undefined} 
      */
-    vx_get_lang_change() {
+   "BetData.lang_change"() {
       this.season = BetCommonHelper.get_season();
       this.play_name = BetCommonHelper.get_play_name();
       this.team_name = BetCommonHelper.get_team_name();
@@ -833,7 +798,7 @@ export default {
      * @param {undefined} undefined
      * @return {undefined} 
      */
-    vx_get_is_bet_merge: {
+    "BetData.is_bet_merge": {
       handler(new_) {
         this.$nextTick(() => {
           let last_obj =  _.last(this.keyboard_data);
@@ -873,24 +838,24 @@ export default {
      * @return {undefined} 
      */
     computed_appoint_ball_head(new_) {
-        let obj = _.cloneDeep(this.vx_get_bet_appoint_obj);
+        let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
         if(_.isNull(obj)) return;
         obj.computed_appoint_ball_head = new_; // 计算的球头(分数形式)
         obj.appoint_ball_head = this.appoint_ball_head; // 球头(小数形式)
         obj.is_head_eq_hadicap = this.appoint_ball_head == this.init_ball_head; // 球头和盘口值是否一样
          // 设置预约投注项
-        this.vx_set_bet_appoint_obj(obj);
+        BetDataCtr.set_bet_appoint_obj(obj);
         return obj;
     },
     appoint_ball_head(new_) {
       return;
-      let obj = _.cloneDeep(this.vx_get_bet_appoint_obj);
+      let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
       if(_.isNull(obj)) return;
       obj.computed_appoint_ball_head = new_; // 计算的球头(分数形式)
       obj.appoint_ball_head = this.appoint_ball_head; // 球头(小数形式)
       obj.is_head_eq_hadicap = this.appoint_ball_head == this.init_ball_head; // 球头和盘口值是否一样
        // 设置预约投注项
-      this.vx_set_bet_appoint_obj(obj);
+      BetDataCtr.set_bet_appoint_obj(obj);
     },
     /**
      * @Description :计算预约赔率
@@ -902,44 +867,52 @@ export default {
        if (this.appoint_odds_value>355) {
         useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_max_booked_odds')}`);
       }
-      let obj = _.cloneDeep(this.vx_get_bet_appoint_obj);
+      let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
       if(obj) {
         obj.appoint_odds_value = new_;
           // 设置预约投注项
-        this.vx_set_bet_appoint_obj(obj);
+        BetDataCtr.set_bet_appoint_obj(obj);
       }
     },
     money(new_,old){
       // 监听当是合并项的时候给money赋值
-      if (new_===null&& this.vx_get_is_bet_merge) {
-        this.money = this.vx_get_bet_current_money_obj[this.id]||null
+      if (new_===null&& this.BetData.is_bet_merge) {
+        this.money = this.BetData.bet_current_money_obj[this.id]||null
       }
     }
   },
   beforeDestroy () {
   //  将输入框金额保存在vuex 待切换成小框使用
-    if (this.money&&this.vx_get_bet_single_list.length>0) {
+    if (this.money&&this.BetData.bet_single_list.length>0) {
       this.set_bet_current_money_obj({id:this.id,value:this.money}) 
     }else{
       this.set_bet_current_money_obj({id:this.id,value:null}) 
     }
   },
   methods: {
-    ...mapActions({
-      vx_bet_single_obj_attr: "bet_single_obj_attr", //添加单关投注项对象
-      vx_bet_single_obj_remove_attr: "bet_single_obj_remove_attr", //移除单关投注项对象
-      vx_bet_single_list_remove: "bet_single_list_remove",//移除单关列表
-      vx_set_is_single_handle: 'set_is_single_handle',//设置单关是否处理中
-      vx_set_layout_left_show: "set_layout_left_show", //设置左侧显示内容类型
-      
-      vx_set_bet_appoint_obj: "set_bet_appoint_obj", // 设置预约投注项
 
-      vx_bet_single_clear: "bet_single_clear",  // 清除单关数据
-      
-      vx_set_pre_min_odd_value: "set_pre_min_odd_value", // 设置输入框最小值
-      vx_set_cur_odd: "set_cur_odd", //设置当前赔率
-      set_bet_current_money_obj: "set_bet_current_money_obj", // 保存当前输入金额
-    }),
+
+        /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+  let event_pairs=  [
+    { type:MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, callback: this.check_money} ,    //单关的校验金额
+    { type:MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, callback: this.bet_single_reset} ,//重置单关红升绿降状态
+    { type:MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, callback: this.set_min_money} ,//设置单关最小金额
+    { type:MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, callback: this.update_keyboard_status} ,// 更新键盘状态
+    { type:MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, callback: this.update_home_away} ,//更新主客队信息(主要用于国际化切换时调用} ,
+    { type:MITT_TYPES.EMIT_BET_SET_MONEY, callback: this.set_money} , // 设置输入框
+    { type:MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, callback: this.init_bet_list_item} ,// 初始化联赛名称 赛季 玩法名称 队伍名称
+    { type:MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, callback: this.del_bet_item} , //关闭大视频投注
+    { type:MITT_TYPES.EMIT_NET_ERR, callback: this.net_err_fun} ,//无网络事件
+  ]
+  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+  this.emitters_off=emitters_off
+    //移除相应监听事件 //视图销毁钩子函数内执行
+    // if(this.emitters_off){this.emitters_off()}  
+},
+ 
 
     /**
      * @description:网络错误时触发方法 用于最大最小值接口错误时 设置默认最大最小值
@@ -947,12 +920,12 @@ export default {
      * @return {undefined} undefined
      */
     net_err_fun(){
-      let obj = _.cloneDeep(_.get(this.vx_get_bet_single_obj, `${this.id}`));
+      let obj = _.cloneDeep(_.get(this.BetData.bet_single_obj, `${this.id}`));
       if(!obj) return;
       obj.key = this.id;
       obj.cs.max_money = '8888';
       obj.cs.min_money = '10'
-      this.vx_bet_single_obj_attr(obj);
+      BetDataCtr.bet_single_obj_attr(obj);
     },
 
     /**
@@ -987,7 +960,7 @@ export default {
       let min_money = "10";
       //最大投注额 之前是2000 世界杯改为8888
       let max_money = "8888";
-      let len = this.vx_get_bet_single_list.length;
+      let len = this.BetData.bet_single_list.length;
       _.forEach(data, item =>{
         if(item.playOptionsId) {               
           let obj;
@@ -1038,7 +1011,7 @@ export default {
         if(200 == code) {
           this.bet_reset_money_msg();
           if(code == 200 && betAmountInfo && betAmountInfo.length > 0) {       
-            let bet_single_obj = _.cloneDeep(this.vx_get_bet_single_obj);       
+            let bet_single_obj = _.cloneDeep(this.BetData.bet_single_obj);       
             this.min_max_handle(bet_single_obj, betAmountInfo);
           }
         }
@@ -1055,7 +1028,7 @@ export default {
       // 重置消息
       this.reset_input_empty_message();
       // 设置限额标识为默认
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 是否满额为默认值(不满额)
       this.set_bet_obj_value("full_bet", 0);
       // 获取输入值
@@ -1073,7 +1046,7 @@ export default {
       localStorage.setItem("common_amount", value);
       if(this.max_money=="") {
         // 最大最小值正在获取中
-        this.view_ctr_obj.single_range_money = -3;
+        this.view_ctr_obj.input_money_state = -3;
         // 设置提示信息
         BetCommonHelper.check_result_msg( 'single');
       }
@@ -1081,7 +1054,7 @@ export default {
         // 设置按钮上的显示文字
         this.$emit("get_button_text", true);
       }
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       // 最高限额比用户余额小
       if(this.max_money!="" &&
         parseFloat(this.max_money) < parseFloat(user.balance) &&
@@ -1097,7 +1070,7 @@ export default {
         // 输入金额转换为用户余额
         this.money = parseFloat(user.balance);
         // 设置限额标识为超出用户余额
-        this.view_ctr_obj.single_range_money = 2;
+        this.view_ctr_obj.input_money_state = 2;
         // 设置提示信息
         BetCommonHelper.check_result_msg( 'single');
       }
@@ -1105,7 +1078,7 @@ export default {
       // 存储用户金额
       this.set_bet_obj_value("money", cs_money);
       // 限额标识为没有超出用户余额
-      if(this.view_ctr_obj.single_range_money!=2) {
+      if(this.view_ctr_obj.input_money_state!=2) {
         // 校验用户金额
         this.check_money(value);
       }
@@ -1147,8 +1120,8 @@ export default {
       this.play_name = BetCommonHelper.get_play_name();
       // 队伍名称
       this.team_name = BetCommonHelper.get_team_name();
-      let bs = _.get(this.vx_get_bet_single_obj,`${this.id}.bs`);
-      let cs = _.get(this.vx_get_bet_single_obj,`${this.id}.cs`);
+      let bs = _.get(this.BetData.bet_single_obj,`${this.id}.bs`);
+      let cs = _.get(this.BetData.bet_single_obj,`${this.id}.cs`);
       if(_.isPlainObject(bs)) {
         this.league_name = bs.tn;
       }
@@ -1175,7 +1148,7 @@ export default {
      * @return {undefined} undefined
      */
     get_max_win_money() {   
-      let bet_obj = this.vx_get_bet_single_obj && this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj && this.BetData.bet_single_obj[this.id];
       if (bet_obj && bet_obj.bs) {
         let item = bet_obj.bs;
         // 通过输入金额计算最高限额
@@ -1198,9 +1171,9 @@ export default {
     del_bet_item() {
       BetCommonHelper.del_bet_item();
       // 如果删除的是当前预约的投注项，则回复预约投注项id为初始值
-      if(this.vx_get_bet_appoint_obj && this.vx_get_bet_appoint_obj.bet_appoint_id==this.id) {
+      if(this.BetData.bet_appoint_obj && this.BetData.bet_appoint_obj.bet_appoint_id==this.id) {
          // 置空预约投注项
-        this.vx_set_bet_appoint_obj(null);
+        BetDataCtr.set_bet_appoint_obj(null);
       }
     },
     /**
@@ -1210,10 +1183,10 @@ export default {
      */
     keypress_handle(data_) {
       this.reset_input_empty_message();
-      let bet_obj = this.vx_get_bet_single_obj && this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj && this.BetData.bet_single_obj[this.id];
       if (bet_obj && bet_obj.cs) {
         let money_ = _.get(bet_obj.cs, 'money', null);
-        let user = this.vx_get_user;
+        let user = this.BetData.user;
         // 从键盘上获取值赋给组件
         if (money_ && this.max_money!="" && user.balance) {
           // 输入的金额 最高限额 用户金额存在
@@ -1237,7 +1210,7 @@ export default {
          // 存储输入金额
         this.set_bet_obj_value("money", this.money); 
         if(this.max_money=="") {
-          this.view_ctr_obj.single_range_money = -3; // 最大最小值正在获取中
+          this.view_ctr_obj.input_money_state = -3; // 最大最小值正在获取中
           // 设置提示错误信息
           BetCommonHelper.check_result_msg( 'single');
         }
@@ -1253,11 +1226,11 @@ export default {
      * @return {undefined} undefined
      */
     input_max_money() {
-      if(userCtr.show_fail_alert() || this.view_ctr_obj.single_range_money == -3) {
+      if(userCtr.show_fail_alert() || this.view_ctr_obj.input_money_state == -3) {
         return;
       }
       this.bet_reset_money_msg();
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       this.set_bet_obj_value("full_bet", 0);
       // 首先判断用户余额是不是比max_money多，多的话就是max_money
       // 比max_money少的话，就显示剩余金额
@@ -1275,7 +1248,7 @@ export default {
       // 设置常用金额  
       localStorage.setItem("common_amount", this.money);
       // 设置限额范围标识为正常默认值    
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 更新键盘状态  
       this.update_keyboard_status();    
     },
@@ -1303,16 +1276,16 @@ export default {
      * @return {undefined} undefined
      */
     set_bet_obj_value(k, v) {
-      if (!this.vx_get_bet_single_list.includes(this.id)) {
+      if (!this.BetData.bet_single_list.includes(this.id)) {
         return;
       }
-      let bet_obj = this.vx_get_bet_single_obj && this.vx_get_bet_single_obj[this.id];
+      let bet_obj = this.BetData.bet_single_obj && this.BetData.bet_single_obj[this.id];
       if (bet_obj) {
         let obj = _.cloneDeep(bet_obj);
         obj.key = this.id;
         obj.cs[k] = v;
         obj.is_update_single = true; //更新金钱数量
-        this.vx_bet_single_obj_attr(obj);
+        BetDataCtr.bet_single_obj_attr(obj);
       }
     },
     /**
@@ -1324,7 +1297,7 @@ export default {
       try {
         if(this.view_ctr_obj.input_max_flag == 1) {
           // 最大最小值正在获取中
-          this.view_ctr_obj.single_range_money = -3;
+          this.view_ctr_obj.input_money_state = -3;
           // 设置提示信息 
           BetCommonHelper.check_result_msg( 'single');
           return;
@@ -1332,8 +1305,8 @@ export default {
         // 统计为输入金额的投注项个数
         let empty_count = 0;
         this.view_ctr_obj.error_code = "";
-        this.vx_get_bet_single_list.forEach(item => {
-          let cs = this.vx_get_bet_single_obj && this.vx_get_bet_single_obj[item] && this.vx_get_bet_single_obj[item].cs;
+        this.BetData.bet_single_list.forEach(item => {
+          let cs = this.BetData.bet_single_obj && this.BetData.bet_single_obj[item] && this.BetData.bet_single_obj[item].cs;
           // 存储的金额为空并且输入金额不为0
           if ((cs &&(cs.money === null || cs.money === '')) && this.money !== 0) {
             // 统计计入到位输入投注项金额中
@@ -1341,9 +1314,9 @@ export default {
           }
         });
         // 所有的投注项都没有输入金额时
-        if (empty_count == this.vx_get_bet_single_list.length) {
+        if (empty_count == this.BetData.bet_single_list.length) {
           // 设置限额标识为输入为空
-          this.view_ctr_obj.single_range_money = -2;
+          this.view_ctr_obj.input_money_state = -2;
           this.view_ctr_obj.is_empty_money = true;
         } else {
           // 输入金额
@@ -1355,17 +1328,17 @@ export default {
             // 没有传入使用this.money的值
             input_amount = parseFloat(this.money);
           }
-          let user = this.vx_get_user;
+          let user = this.BetData.user;
           // 用户余额为0
           if(parseFloat(user.balance) == 0.00) {
           } else if(parseFloat(this.min_money) > input_amount) { // 输入金额比最小金额还小
-            this.view_ctr_obj.single_range_money = -4;
+            this.view_ctr_obj.input_money_state = -4;
           } else if(parseFloat(this.max_money) < input_amount) { // 输入金额比最大限额还大
             // 设置单关限额标识为 大于最大金额
-            this.view_ctr_obj.single_range_money = 1; 
+            this.view_ctr_obj.input_money_state = 1; 
           } else {
             // 设置为默认
-            this.view_ctr_obj.single_range_money = 0;
+            this.view_ctr_obj.input_money_state = 0;
           }
           // 金额是否为空标识为false
           this.view_ctr_obj.is_empty_money = false;
@@ -1480,7 +1453,7 @@ export default {
       // 清除定时器
       clearTimeout(this.timer_obj['min_max_timer']);
       // 限额标识设置为默认
-      this.view_ctr_obj.single_range_money = 0;
+      this.view_ctr_obj.input_money_state = 0;
       // 设置为最大最小值获取完成标识
       this.view_ctr_obj.input_max_flag = 2;
       // 大于最大金额,小于最小金额,金额为空,最大最小值正在获取中的code码
@@ -1497,7 +1470,7 @@ export default {
     update_keyboard(value) {
       _.forEach(this.keyboard_data, item => {
         // 当value值小于键盘按键值或者点击的是MAX按键并且勾选了合并则按键置灰
-        if(item.value>value || (item.text=='MAX' && this.vx_get_is_bet_merge)) {
+        if(item.value>value || (item.text=='MAX' && this.BetData.is_bet_merge)) {
           item.disabled = true;
         } else {
           // 按键正常状态
@@ -1515,7 +1488,7 @@ export default {
         // 限额最小金额给输入金额
         this.money = parseFloat(this.min_money);
         // 设置单关最低限额标识
-        this.view_ctr_obj.single_range_money = -1;
+        this.view_ctr_obj.input_money_state = -1;
         // 存储输入金额
         this.set_bet_obj_value("money", this.money);
         // 设置常用金额
@@ -1530,7 +1503,7 @@ export default {
      * @return {undefined} undefined
      */
     update_keyboard_status() {
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       // 获取用户余额
       let init_money = parseFloat(user.balance) || 0.00;
       // 输入的金额存在并且用户有余额
@@ -1559,7 +1532,7 @@ export default {
           // 清除提示信息
           BetCommonHelper.reset_message_info();
           // 限额标识设置为默认
-          this.view_ctr_obj.single_range_money = 0;
+          this.view_ctr_obj.input_money_state = 0;
         }
       },0);
     },
@@ -1571,7 +1544,7 @@ export default {
     select_money() {
       this.view_ctr_obj.is_empty_money = false;
       let input = this.$refs[`input-${this.id}`];
-      if(input && this.vx_get_bet_single_list.length == 1) {
+      if(input && this.BetData.bet_single_list.length == 1) {
         // 设置选中
         input.$el.select();
         input = null;
@@ -1658,8 +1631,8 @@ export default {
      * @return {undefined} undefined
      */
     update_home_away() {
-      let bs = _.get(this.vx_get_bet_single_obj,`${this.id}.bs`);
-      let cs = _.get(this.vx_get_bet_single_obj,`${this.id}.cs`);
+      let bs = _.get(this.BetData.bet_single_obj,`${this.id}.bs`);
+      let cs = _.get(this.BetData.bet_single_obj,`${this.id}.cs`);
       if(_.isPlainObject(bs)) {
         // 联赛名称
         this.league_name = bs.tn;
@@ -1894,7 +1867,7 @@ export default {
             this.ball_score = this.timerly_basic_score ? parseInt(arr[1]) + 0.5: 0.5;
           }
           //下面还有一种获取分数的渠道，那就是直接在betpreamount接口获取
-          // let new_score =  _.get(this.vx_get_pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
+          // let new_score =  _.get(this.BetData.pre_bet_list, 'currentMarket.preBetBenchmarkScore', '')
           // this.ball_score = -1;
           // if(this.play_mapping.MARKET_BIG_SMALL_PLAY_LIST.includes(this.play_id)) {
           //   this.ball_score = new_score ? parseInt(new_score.split('-')[0]) +  parseInt(new_score.split('-')[1]) + 0.5: 0.5;
@@ -1952,12 +1925,12 @@ export default {
      * @return {undefined} undefined
      */
     search_odds_value_by_ball_head() {
-      let head = this.vx_get_bet_appoint_obj.computed_appoint_ball_head;
-      let list = this.vx_get_pre_bet_list;
+      let head = this.BetData.bet_appoint_obj.computed_appoint_ball_head;
+      let list = this.BetData.pre_bet_list;
       if(!list || _.isNull(list.marketList)) return;
       let playOptionsId = '';
       let marketId = ''
-      // console.log('外围数据vx_get_pre_bet_list===', list);
+      // console.log('外围数据BetData.pre_bet_list===', list);
       // console.log('外围数据head===', head);
       //让球处理
       if(play_mapping.MARKET_RANG_FLAG_LIST.includes(this.play_id)) {
@@ -1982,7 +1955,7 @@ export default {
                   }
                   this.min_odds_value = vu;
                   //设置输入框最小值
-                  this.vx_set_pre_min_odd_value(this.min_odds_value)
+                  BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
                   console.log('当前赔率===',  this.appoint_odds_value);
                   console.log('当前盘口===', odd_item.playOptions);
                   break;
@@ -1992,7 +1965,7 @@ export default {
         }
       }else { //非让球处理
           //这里要调整下
-          let dl_fillter = list.marketList.filter(item => item.marketValue == this.vx_get_bet_appoint_obj.computed_appoint_ball_head)[0];
+          let dl_fillter = list.marketList.filter(item => item.marketValue == this.BetData.bet_appoint_obj.computed_appoint_ball_head)[0];
           //盘口id 预约需要筛选
           marketId = _.get(dl_fillter, 'id', '');
           let parr = _.get(dl_fillter, 'marketOddsList', []);
@@ -2012,7 +1985,7 @@ export default {
             }
             this.min_odds_value = vu
             //设置输入框最小值
-            this.vx_set_pre_min_odd_value(this.min_odds_value)
+            BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
             // console.log('当前赔率3333===',  this.appoint_odds_value)
             // console.log('当前盘口3333===', filter_arr[0].playOptions);
           }
@@ -2026,7 +1999,7 @@ export default {
           // this.appoint_odds_value  = 0.01
         } 
         //设置输入框最小值
-        this.vx_set_pre_min_odd_value(this.min_odds_value)
+        BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
         // console.log('当前最小值等于3', this.min_odds_value); 
       }
       // console.log('当前赔率等于1', this.appoint_odds_value);
@@ -2046,7 +2019,7 @@ export default {
       this.init_odds_value = Number(this.odds_value);
       this.min_odds_value = Number(this.odds_value)
       //设置输入框最小值默认值
-      this.vx_set_pre_min_odd_value(this.min_odds_value)
+      BetDataCtr.set_pre_min_odd_value(this.min_odds_value)
       // 预约赔率
       this.appoint_odds_value = Number(this.odds_value);      
       // 球头处理
@@ -2063,7 +2036,7 @@ export default {
       // 预约时的球头(小数形式)
       this.appoint_ball_head = this.init_ball_head;
       // 预约的投注项id
-      this.vx_set_bet_appoint_obj({
+      BetDataCtr.set_bet_appoint_obj({
         bet_appoint_id: this.id,  //3162815_18_1_Over
         appoint_ball_head: this.appoint_ball_head, // 球头(小数形式)
         appoint_odds_value: this.appoint_odds_value,  //赔率
@@ -2092,7 +2065,7 @@ export default {
       this.appoint_ball_head = this.init_ball_head;
       this.appoint_odds_value = this.init_odds_value;
 
-      let cs = _.get(this.vx_get_bet_single_obj,`${this.id}.cs`);
+      let cs = _.get(this.BetData.bet_single_obj,`${this.id}.cs`);
       let odds_table = {
         EU: '1',//欧盘
         HK: '2',//香港盘
@@ -2102,7 +2075,7 @@ export default {
         ID: '6'
       }
       // 根据odds_switch字段显示对应的盘口名称 且是香港盘才加1
-      /* if(cs && cs.odds_switch && cs.odds_switch.includes(odds_table[this.vx_get_cur_odd]) && this.cur_odd == 'HK') {
+      /* if(cs && cs.odds_switch && cs.odds_switch.includes(odds_table[this.BetData.cur_odd]) && this.cur_odd == 'HK') {
         this.set_bet_obj_value("odds_value", this.$mathjs.multiply(this.init_odds_value + 1, 100000));
       } else  {
           this.set_bet_obj_value("odds_value", this.$mathjs.multiply(this.init_odds_value, 100000));
@@ -2112,9 +2085,9 @@ export default {
       //重新调用单关最大最小值接口
       useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.id);
       // 置空预约投注项
-      this.vx_set_bet_appoint_obj(null)
+      BetDataCtr.set_bet_appoint_obj(null)
       //置空当前盘口下所有的投注项
-      this.vx_set_pre_bet_list(null)
+      BetDataCtr.set_pre_bet_list(null)
     },
 
     /**
@@ -2138,19 +2111,19 @@ export default {
   },
   mounted() {
     // 获取投注数量
-    let len = this.vx_get_bet_single_list.length;
+    let len = this.BetData.bet_single_list.length;
     // 投注数量大于0时
     if(len > 0) {
       // 设置焦点
       this.focus_handle();
       // 当切换小窗口或内嵌版投注栏金额要保留
       this.$nextTick(()=>{
-        if (this.vx_get_bet_current_money_obj[this.id] && this.is_common_amount) {
-          this.money = this.vx_get_bet_current_money_obj[this.id]
+        if (this.BetData.bet_current_money_obj[this.id] && this.is_common_amount) {
+          this.money = this.BetData.bet_current_money_obj[this.id]
         } 
       })
 
-      let user = this.vx_get_user;
+      let user = this.BetData.user;
       // 输入金额大于最高限额
       if(this.max_money && this.money > parseFloat(this.max_money)) {
         // 转换最高限额为输入金额

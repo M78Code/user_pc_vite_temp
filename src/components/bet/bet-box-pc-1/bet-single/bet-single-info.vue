@@ -6,7 +6,7 @@
   <q-card flat class="relative-position bet-card bet-single-item-card"
     :class="{'bet-no-effect':!(active == 1 || active == 4)}">
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <div class="cathectic-appoint" v-if="!_.isEmpty(vx_get_bet_appoint_obj) && vx_get_bet_appoint_obj.bet_appoint_id != id"></div>
+    <div class="cathectic-appoint" v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->
@@ -244,7 +244,7 @@
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row bet-single-input">
-        <div class="col relative-position" :data-check-money="view_ctr_obj.single_range_money">
+        <div class="col relative-position" :data-check-money="view_ctr_obj.input_money_state">
           <template v-if="!(active==1 || active==4)">
             <div class="cathectic-shade"></div>
           </template>
@@ -255,7 +255,7 @@
             class="bet-input input-border"
             :class="{
               'input-money': !is_empty_money,
-              'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)
+              'input-border-red':![-4,0].includes(view_ctr_obj.input_money_state)
               }"
             :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
             v-model="money"

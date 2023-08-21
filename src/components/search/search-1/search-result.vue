@@ -57,7 +57,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
@@ -75,7 +75,7 @@ const props = defineProps({
 const emit = defineEmits(['set_show_type'])
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 数据加载状态 */
 const load_data_state = ref('data')

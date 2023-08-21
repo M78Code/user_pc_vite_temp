@@ -21,11 +21,11 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /* 是否展示 */
 const is_show = ref(false)

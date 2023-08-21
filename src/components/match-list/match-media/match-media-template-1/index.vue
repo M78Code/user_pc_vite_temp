@@ -51,13 +51,13 @@ import { get_match_status, is_eports_csid } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
 import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
 import store from 'src/store-redux/index.js';
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 
 const route = useRoute();
 // 左侧详情参数

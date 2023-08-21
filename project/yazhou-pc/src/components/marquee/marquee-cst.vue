@@ -57,7 +57,7 @@
 import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 // api接口
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
@@ -72,7 +72,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 const emit = defineEmits(['navigate'])
 const $q = useQuasar()
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 公告栏信息集合 */
 const notice_info = reactive({

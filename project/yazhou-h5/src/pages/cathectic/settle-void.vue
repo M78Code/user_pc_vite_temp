@@ -10,7 +10,7 @@
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
-          {{ get_main_item == 2 ? i18n.t('msg.msg_nodata_19') : i18n.t('msg.msg_nodata_05') }}
+          {{ get_main_item == 2 ? t('msg.msg_nodata_19') : t('msg.msg_nodata_05') }}
         </p>
       </div>
     </div>
@@ -20,7 +20,7 @@
 <script setup>
 import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
 const {t} =useI18n()
 let { themeReducer, cathecticReducer } = store.getState()

@@ -1,11 +1,11 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  篮球赛事事件
 -->
 <template>
   <div class="basketball-incident" v-if="no_data">
-    <div class="title">{{ i18n.t('match_result.event') }}</div>
+    <div class="title">{{ t('match_result.event') }}</div>
     <div class="tabs">
       <div v-for="(item, index) in event_data" :key="index"
         :class="{active: tab_index == index}"
@@ -16,7 +16,7 @@
     </div>
     <div class="basketball-incident-content">
       <div v-for="(item, index) in event_data[tab_index].value" :key="index">
-        <span>{{(new Date(+item.createTime)).Format(i18n.t('time4'))}}</span>
+        <span>{{(new Date(+item.createTime)).Format(t('time4'))}}</span>
         <i class="Glow" :class="{noLine: +event_data[tab_index].value.length -1 == index,home:item.team ==1, away: item.team == 2}"></i>
         <div class="ellipsis-2-lines">
           <span>{{ item.scores }} </span>
@@ -32,6 +32,9 @@ import { api_result } from "src/project/api";
 import { computed, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
@@ -50,7 +53,7 @@ import { useRoute } from 'vue-router'
   const route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).on
   get_list()
   const match_id = computed(() => {
     // 赛事id TODO: route get_detail_data后续修改调整
@@ -79,19 +82,12 @@ import { useRoute } from 'vue-router'
   }
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
-    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).off
     //   for (const key in $data) {
   //     $data[key] = null
   //   }
   })
-  // beforeUnmount() {
-  //   // 移除监听 赛事分析刷新事件
-  //   this.$root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, this.get_list)
 
-  //   for (const key in this.$data) {
-  //     this.$data[key] = null
-  //   }
-  // }
 </script>
 
 <style lang="scss" scoped>

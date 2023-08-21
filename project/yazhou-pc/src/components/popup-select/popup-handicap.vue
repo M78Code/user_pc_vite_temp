@@ -26,10 +26,10 @@ import { ref, reactive, watch, onUnmounted } from 'vue'
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 const odds_constant = [
     { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
