@@ -119,15 +119,8 @@ export default {
   created() {
     // 显示部分dom ID
     this.DOM_ID_SHOW = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, this.check_money);    //单关的校验金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, this.bet_single_reset);//重置单关红升绿降状态
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, this.set_min_money);//设置单关最小金额
-    this.$root.$on(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, this.update_keyboard_status);// 更新键盘状态
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);//更新主客队信息(主要用于国际化切换时调用)
-    this.$root.$on(MITT_TYPES.EMIT_BET_SET_MONEY, this.set_money); // 设置输入框
-    this.$root.$on(MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, this.init_bet_list_item);// 初始化联赛名称 赛季 玩法名称 队伍名称
-    this.$root.$on(MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, this.del_bet_item); //关闭大视频投注
-    this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)//无网络事件
+ //生成事件监听
+this.handle_generat_emitters()
 
     this.setup_single_info = _.get(this.vx_get_user, 'cvo.single'); // 获取用户单关配置信息
     if(!_.isEmpty(this.setup_single_info) && _.isObject(this.setup_single_info) && (!this.$route.params.video_size || this.$route.params.video_size != '1')) { // 非大视频
@@ -185,16 +178,8 @@ export default {
     this.keyboard_data = null;
     this.setup_single_info = {};
     this.value_range = {};
-    // 清除监听
-    this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, this.check_money);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, this.bet_single_reset);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, this.set_min_money);
-    this.$root.$off(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, this.update_keyboard_status);
-    this.$root.$off(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
-    this.$root.$off(MITT_TYPES.EMIT_BET_SET_MONEY, this.set_money);
-    this.$root.$off(MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, this.init_bet_list_item);
-    this.$root.$off(MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, this.del_bet_item);
+  //移除相应监听事件 //视图销毁钩子函数内执行
+ if(this.emitters_off){this.emitters_off()}  
      //取消防抖和节流
     //  this.debounce_throttle_cancel(this.img_mouseleave);
     //  this.debounce_throttle_cancel(this.img_mouseenter);
@@ -940,6 +925,28 @@ export default {
       vx_set_cur_odd: "set_cur_odd", //设置当前赔率
       set_bet_current_money_obj: "set_bet_current_money_obj", // 保存当前输入金额
     }),
+
+        /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+  let event_pairs=  [
+    { type:MITT_TYPES.EMIT_BET_SINGLE_CHECK_MONEY_CMD, callback: this.check_money} ,    //单关的校验金额
+    { type:MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD, callback: this.bet_single_reset} ,//重置单关红升绿降状态
+    { type:MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY, callback: this.set_min_money} ,//设置单关最小金额
+    { type:MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD, callback: this.update_keyboard_status} ,// 更新键盘状态
+    { type:MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, callback: this.update_home_away} ,//更新主客队信息(主要用于国际化切换时调用} ,
+    { type:MITT_TYPES.EMIT_BET_SET_MONEY, callback: this.set_money} , // 设置输入框
+    { type:MITT_TYPES.EMIT_INIT_BET_LIST_ITEM_CMD, callback: this.init_bet_list_item} ,// 初始化联赛名称 赛季 玩法名称 队伍名称
+    { type:MITT_TYPES.EMIT_CLOSE_BIG_VIDEO_BET, callback: this.del_bet_item} , //关闭大视频投注
+    { type:MITT_TYPES.EMIT_NET_ERR, callback: this.net_err_fun} ,//无网络事件
+  ]
+  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+  this.emitters_off=emitters_off
+    //移除相应监听事件 //视图销毁钩子函数内执行
+    // if(this.emitters_off){this.emitters_off()}  
+},
+ 
 
     /**
      * @description:网络错误时触发方法 用于最大最小值接口错误时 设置默认最大最小值

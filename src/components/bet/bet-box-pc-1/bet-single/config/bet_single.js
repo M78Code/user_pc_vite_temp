@@ -54,7 +54,8 @@ export default {
     this.$nextTick(() => {
       this.user_bet_prefer = _.get(this.vx_get_user,'userBetPrefer') == 1;
     });
-    this.$root.$on(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,this.keyup_handle); //触发enter键执行
+//生成事件监听
+this.handle_generat_emitters()
     window.addEventListener("keyup", this.keyup_handle); // 监听键盘抬起事件
     this.$emit("set_scroll_this", {type:'bet_this', _this:this}); //设置滚动数据
   },
@@ -469,11 +470,11 @@ handle_generat_emitters(){
   { type:MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, callback:this.save_bet_items} ,
   //重新调用单关最大最小值接口
   { type:MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, callback:this.get_min_max_money_by_id} ,
+   //触发enter键执行
+  { type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
   ]
   let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
   this.emitters_off=emitters_off
-    //移除相应监听事件 //视图销毁钩子函数内执行
-    // if(this.emitters_off){this.emitters_off()}  
 },
  
 
