@@ -2,20 +2,14 @@
 let str1=`
 
 
-//网络错误时设置默认最大最小值
-this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-// 串关的校验金额
-this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
-// 触发清除串关输入框金额
-this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
-// 设置金额
-this.$root.$on(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
-// 设置输入框的最大金额
-this.$root.$on(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
-// 设置最小金额
-this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
-// 更新键盘按键状态
-this.$root.$on(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
+// 重置串关红升绿降状态
+this.$root.$on(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
+// 更改串关的match_update字段值
+this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
+//更新串关投注项上的match_udpate字段
+this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
+//更新主客队信息(主要用于国际化切换时调用)
+this.$root.$on(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away); 
 
 
 `
@@ -41,3 +35,16 @@ console.log( str2);
 
 // 使用的时候更改  str1 的值
 // 运行方式：     node ./job/emitter-generator.js
+
+
+// created() 内 ：
+
+
+////生成事件监听
+// this.handle_generat_emitters()
+
+
+// beforeUnmount() 内
+
+//  //移除相应监听事件 //视图销毁钩子函数内执行
+//  if(this.emitters_off){this.emitters_off()}  
