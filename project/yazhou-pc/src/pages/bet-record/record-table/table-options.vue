@@ -505,10 +505,15 @@
 </template>
 
 <script setup>
-import { useTableData } from "./use-table-data";
-import { format_score_t,format_balance,formatTime,format_btn_balance } from "src/core/formart.index.js";
+import {
+  format_score_t,
+  format_balance,
+  formatTime,
+  format_btn_balance,
+} from "src/core/formart.index.js";
 import vueSlider from "vue-slider-component";
-import {  CANCEL_TYPE } from "./config";
+import { CANCEL_TYPE } from "./config";
+import { ref } from "vue";
 import "vue-slider-component/theme/default.css";
 import lodash from "lodash";
 const props = defineProps({
@@ -524,14 +529,18 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  matchType: Function,
+  vx_get_user:Object
 });
+
+const show_score_info = ref(false); //比分提示默认隐藏
 const emit = defineEmits([
   "start_bet_pre",
   "show_bet_pre",
   "bet_pre_out",
   "bet_pre_over",
   "change_slider",
-  "bet_handle"
+  "bet_handle",
 ]);
 
 const start_bet_pre = (i) => {
@@ -550,46 +559,44 @@ const change_slider = (arg) => {
   emit("change_slider", arg);
 };
 
-  /**
-   * @description: 单剩余本金
-   */
-   const betPreRemaining = (item) => {
-    return mathjs.subtract(item.orderAmountTotal, item.preBetAmount || 0);
-  };
+/**
+ * @description: 单剩余本金
+ */
+const betPreRemaining = (item) => {
+  return mathjs.subtract(item.orderAmountTotal, item.preBetAmount || 0);
+};
 
-    /**
-   * @description: 提前结算可用次数
-   */
-   const betPreCount = (item, index) => {
-    let min_money = lodash.get(props.money_obj, `${index}.min_money`);
-    let preSettleBetAmount = item.preSettleBetAmount;
-    if (preSettleBetAmount <= min_money) {
-      return 1;
-    } else {
-      return item.preBetAmount ? 1 : 2;
-    }
-  };
-  /**
-   * @description: 确认提前结算
-   * @return {}
-   */
-  const bet_handle = (arg)=>{
-    emit("bet_handle", arg);
+/**
+ * @description: 提前结算可用次数
+ */
+const betPreCount = (item, index) => {
+  let min_money = lodash.get(props.money_obj, `${index}.min_money`);
+  let preSettleBetAmount = item.preSettleBetAmount;
+  if (preSettleBetAmount <= min_money) {
+    return 1;
+  } else {
+    return item.preBetAmount ? 1 : 2;
   }
-    /**
-   * @description: 取消原因
-   * @param {srting} cancelType: 取消类型
-   * @return {string}
-   */
-   const item_cancelType = (cancelType) => {
-    if ([1, 2, 3, 4, 5, 6, 17, 20].includes(parseInt(cancelType))) {
-      return CANCEL_TYPE[parseInt(cancelType)];
-    } else {
-      return i18n.t("bet.invalid"); //注单无效
-    }
-  };
-
-const { matchType, show_score_info, vx_get_user } = useTableData();
+};
+/**
+ * @description: 确认提前结算
+ * @return {}
+ */
+const bet_handle = (arg) => {
+  emit("bet_handle", arg);
+};
+/**
+ * @description: 取消原因
+ * @param {srting} cancelType: 取消类型
+ * @return {string}
+ */
+const item_cancelType = (cancelType) => {
+  if ([1, 2, 3, 4, 5, 6, 17, 20].includes(parseInt(cancelType))) {
+    return CANCEL_TYPE[parseInt(cancelType)];
+  } else {
+    return i18n.t("bet.invalid"); //注单无效
+  }
+};
 </script>
 
 <style lang="scss" scoped>

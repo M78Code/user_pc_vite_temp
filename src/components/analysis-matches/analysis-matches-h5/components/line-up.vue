@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
 -->
 <template>
@@ -188,7 +188,7 @@ import { useRoute } from 'vue-router'
   const route = useRoute()
 
   //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
-  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on
   get_list()
   tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
   const match_id = computed(() => {
@@ -232,9 +232,9 @@ import { useRoute } from 'vue-router'
     try {
       let parameter = {
         // 2079863足球测试id  2185843篮球测试id
-        matchInfoId: match_id, 
+        matchInfoId: match_id,
         // 主客队标识(1主队，2客队)
-        homeAway: radio_button_index + 1 
+        homeAway: radio_button_index + 1
       }
       let {code , data} = await api_result.get_match_lineup_list(parameter)
       if(code == 200 && Object.keys(data).length > 0) {
@@ -289,7 +289,7 @@ import { useRoute } from 'vue-router'
   }
   onUnmounted(() => {
      //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
-  //   $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
   //   for (const key in $data) {
   //     $data[key] = null

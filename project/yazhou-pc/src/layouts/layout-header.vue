@@ -22,7 +22,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
@@ -51,7 +51,7 @@ const props = defineProps({
 const emit = defineEmits(['close_home_loading'])
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 路由对象 */
 const route = useRoute()

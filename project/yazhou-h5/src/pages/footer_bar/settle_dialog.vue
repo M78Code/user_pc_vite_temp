@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算）
 -->
 <template>
@@ -8,9 +8,9 @@
 
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
-        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{i18n.t('bet_record.no_account')}}<span></span></p>
-        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{i18n.t('bet_record.account')}}<span></span></p>
-        <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="get_main_item == 2 && 'active-p'">{{i18n.t('pre_record.book')}}<span></span></p>
+        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{t('bet_record.no_account')}}<span></span></p>
+        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{t('bet_record.account')}}<span></span></p>
+        <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)" :class="get_main_item == 2 && 'active-p'">{{t('pre_record.book')}}<span></span></p>
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-//   import { api_betting } from "src/api/index.js"; 
+//   import { api_betting } from "src/api/index.js";
 //   import { mapGetters, mapMutations } from "vuex"
 import unsettle from "./unsettle.vue"
 //   import settle from "src/project/pages/cathectic/settle.vue"
@@ -42,6 +42,8 @@ import lodash from 'lodash'
 import store  from "src/store-redux"
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
+import { t } from "src/boot/i18n";;
+//国际化
 
   // provide(){
   //   return {
@@ -57,14 +59,14 @@ import store  from "src/store-redux"
   let store_data = ref(store.getState())
   // computed: {
   //   ...mapGetters(['get_main_item','get_theme','get_user']),
-    
+
   // },
   //判断该商户是否有权限预约投注
   // const authorityFlag = computed(() => {
   //     const bookBet = lodash.get(get_user, 'configVO.bookBet')
   //     return bookBet == 1
   // })
- 
+
   // onMounted(() => {
   //   over_body(true)
   //   height_calc()
@@ -82,8 +84,8 @@ import store  from "src/store-redux"
   //       unsettleChild.check_early_order()
   //       unsettleChild.search_early_money()
   //     }, 800);
-      
-      
+
+
   //   })
   // })
   //   ...mapMutations(['set_main_item']),

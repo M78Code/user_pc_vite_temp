@@ -1,5 +1,5 @@
 import { api_common } from "src/api/index.js";
-import BaseUserInfo from "src/core/utils/user/base-user-info.js";
+import BaseUserInfo from "src/core/user-config/base-user-info.js";
 import { get } from "lodash";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const initialState = {

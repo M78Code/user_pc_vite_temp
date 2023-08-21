@@ -47,8 +47,8 @@ export default {
       "get_current_menu",
     ]),
     ballType() {
-      if(this.result_detail_data.csid){
-        return this.result_detail_data.csid - 1;
+      if(result_detail_data.csid){
+        return result_detail_data.csid - 1;
       }else{
         // 这里999 目的是让图片的下标不符合data里面的值
         return 999

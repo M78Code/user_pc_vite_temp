@@ -10,7 +10,7 @@
             <div class="filter-button" v-if="store_user.user.settleSwitch == 1">
                 <!-- 已失效按钮 -->
                 <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{ 'select': selected_expired }">
-                    {{ i18n.t('pre_record.expired') }}
+                    {{ t('pre_record.expired') }}
                     <i class="early yb_ml4" :class="{ 'early2': selected_expired }"></i>
                 </i>
             </div>
@@ -18,7 +18,7 @@
                 <!-- 订单内容 -->
                 <div v-for="(value, name, index) in list_data" :key="index">
                     <template v-if="expired_all_flag(value)">
-                        <!-- .Format(i18n.t('time2')) -->
+                        <!-- .Format(t('time2')) -->
                         <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'"
                             @click="toggle_show(value)">
                             <span>{{ (new Date(name)) }}</span>
@@ -60,7 +60,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 

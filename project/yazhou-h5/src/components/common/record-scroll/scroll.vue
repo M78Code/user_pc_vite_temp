@@ -7,8 +7,8 @@
     <div class="scroll-list">
       <slot></slot>
       <div class="scroll-bottom">
-        <p v-if="state==4">{{i18n.t('myScroll.msg5')}}</p>
-        <p v-if="state==5">{{i18n.t('myScroll.msg6')}}</p>
+        <p v-if="state==4">{{t('myScroll.msg5')}}</p>
+        <p v-if="state==5">{{t('myScroll.msg6')}}</p>
       </div>
     </div>
   </div>
@@ -16,6 +16,10 @@
 
 <script setup>
 import { ref, onUnmounted} from 'vue'
+import { t } from "src/boot/i18n";;
+//国际化
+
+
   const props = defineProps({
     //加载回调
     'onPull': {
@@ -73,9 +77,9 @@ import { ref, onUnmounted} from 'vue'
       }
     }
     onUnmounted(() => {
-      //  TODO: 去掉this.$data
-      // for (const key in this.$data) {
-      // this.$data[key] = null
+      //  TODO: 去掉$data
+      // for (const key in $data) {
+      // $data[key] = null
     // }
     })
 defineExpose({

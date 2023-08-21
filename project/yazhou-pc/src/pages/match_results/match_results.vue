@@ -1248,17 +1248,41 @@ export default {
     }
     this.is_first_load = true;
     this.get_serverTime(); //获取服务器时间
-    // 球种下拉框更新选中球种
-    this.$root.$on("change-sport", this.setSport);
-    // 下拉框选择球种
-    this.$root.$on("select-sport", this.choose_sport);
-    // 监听是否关闭日期选择器
-    this.$root.$on("startTimeShowFunc", this.startTimeShowFunc);
+
+    
+//生成事件监听
+this.handle_generat_emitters()
+
+ 
+  },
+  methods: {
+  //生成事件监听 
+handle_generat_emitters(){
+let event_pairs=  [
+
+
+// 球种下拉框更新选中球种
+{ type:"change-sport", callback: this.setSport} ,
+// 下拉框选择球种
+{ type:"select-sport", callback: this.choose_sport} ,
+// 监听是否关闭日期选择器
+{ type:"startTimeShowFunc", callback: this.startTimeShowFunc} ,
+
+]
+let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+this.emitters_off=emitters_off
+
+},
+
   },
   beforeUnmount() {
-    this.$root.$off("change-sport", this.setSport);
-    this.$root.$off("select-sport", this.choose_sport);
-    this.$root.$off("startTimeShowFunc", this.startTimeShowFunc);
+ 
+
+ //移除相应监听事件 //视图销毁钩子函数内执行
+ if(this.emitters_off){this.emitters_off()}  
+
+
+
     /**清除定时器 */
     clearTimeout(this.timer);
     this.timer = null;

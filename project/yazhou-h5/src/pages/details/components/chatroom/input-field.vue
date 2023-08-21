@@ -8,12 +8,12 @@
     <!-- input区域 -->
     <div class="input_container" @click.stop="onInputClick">
       <input class="text_input input_bg"
-        :class="{ 
-          'up-to-standard': get_can_send_msg, 
+        :class="{
+          'up-to-standard': get_can_send_msg,
           'input-banned': computed_mute_type != muteType.unmute,
         }"
         v-model="inputText" :placeholder="placeHolder" :maxlength="maxTextLen"
-        :readonly="!get_can_send_msg || computed_mute_type != muteType.unmute" 
+        :readonly="!get_can_send_msg || computed_mute_type != muteType.unmute"
          @blur.prevent="onInputblur"
          @keyup.enter="send_msg_by_enter"
       />
@@ -53,32 +53,36 @@
       <!-- 晒单 -->
       <div class="icon-text-container" @click="openShowBet" :class="{ 't_shaidan_disable': !is_post_bet }">
         <div class="shaidan_icon icon"></div>
-        <div class="text">{{ i18n.t('chatroom.post_bet') }}</div>
+        <div class="text">{{ t('chatroom.post_bet') }}</div>
       </div>
       <!-- 注单 -->
       <div class="icon-text-container" @click="toggleBet">
         <i class="bet_icon"></i>
-        <div class="text">{{ i18n.t('chatroom.betting') }}</div>
+        <div class="text">{{ t('chatroom.betting') }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapMutations, mapGetters } from "vuex";
 import PopperBlockHint from 'project_path/src/pages/details/components/chatroom/popper_block_hint.vue';   // 屏蔽消息提示组件
 import PopperSendHint from 'project_path/src/pages/details/components/chatroom/popper_send_hint.vue';    // 发言条件提示组件
 import EmojiSelector from 'project_path/src/pages/details/components/chatroom/emoji_selector.vue';      //表情选择框
 import { api_chatroom } from "src/project/api/index.js";
 import { muteType } from "project_path/src/pages/details/components/chatroom/constant";
-// #TODO mixins 
+// #TODO mixins
 // import chatroom_mixin from "project_path/src/pages/details/components/chatroom/chatroom_mixin";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: 'input_field',
 
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [chatroom_mixin],
   props: {
     text: {
@@ -104,7 +108,7 @@ export default defineComponent({
       timeOutObj: null,
       send_frequency_timer: null
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters([
     //   'get_is_block_msg',  // 是否屏蔽消息
@@ -125,13 +129,13 @@ export default defineComponent({
     const placeHolder = computed(() => {
       if (!get_can_send_msg && get_chatroom_userinfo) {
         const { time, interval, limit } = get_chatroom_userinfo || {};
-        // #TODO $root 
-        return i18n.t('chatroom.input_field_ph1', { numOfSend: limit - time, numOfCD: interval / 60000 });
+        // #TODO $root
+        return t('chatroom.input_field_ph1', { numOfSend: limit - time, numOfCD: interval / 60000 });
       } else if (computed_mute_type == muteType.self_mute) {
         return ban_placeholder
       } else if (computed_mute_type == muteType.global_mute) {
-        // #TODO $root 
-        return i18n.t('chatroom.mute_hint2')
+        // #TODO $root
+        return t('chatroom.mute_hint2')
       }
       return '';
     });
@@ -140,9 +144,9 @@ export default defineComponent({
       if (computed_mute_type != muteType.self_mute) {
         return ''
       }
-      
+
       const {banTime = 0, banType = 1} = get_user_mute_info
-      
+
       // 禁言时间-提示映射
       const time_map = {
         0: 4,
@@ -151,19 +155,19 @@ export default defineComponent({
         3600: 2,
         10800: 3
       }
-      
+
       // 禁言类型-提示映射
       const type_map = {
         1: 0,
         2: 1,
         3: 2
       }
-      // #TODO $root 
-      return i18n.t(
-            'chatroom.mute_hint4', 
+      // #TODO $root
+      return t(
+            'chatroom.mute_hint4',
             {
-              time: i18n.t('chatroom.mute_hint.time')[time_map[banTime]], 
-              type:i18n.t('chatroom.mute_hint.type')[type_map[banType]]
+              time: t('chatroom.mute_hint.time')[time_map[banTime]],
+              type:t('chatroom.mute_hint.type')[type_map[banType]]
             }
           )
     });
@@ -191,11 +195,11 @@ export default defineComponent({
     onUnmounted(() => {
       timeOutObj && clearTimeout(timeOutObj);
       timeOutObj = null;
-      
+
       clearTimeout(send_frequency_timer);
       send_frequency_timer = null;
     });
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations([
     //   'set_toast',
@@ -207,8 +211,8 @@ export default defineComponent({
     // ]),
     const onInputClick = (e) => {
       if (!get_can_send_msg) {
-        // #TODO $root 
-        set_toast({ txt: i18n.t('chatroom.mute_hint3') });
+        // #TODO $root
+        set_toast({ txt: t('chatroom.mute_hint3') });
       }
     };
     // 设置发送条件显隐
@@ -229,14 +233,14 @@ export default defineComponent({
       }
       if (inputText.trim() == "") {
         // 请输入聊天内容
-        // #TODO $root 
-        set_toast({ txt: i18n.t('chatroom.send_err_hint1') });
+        // #TODO $root
+        set_toast({ txt: t('chatroom.send_err_hint1') });
         return;
       }
       if (sendFrequencyLimit) {
         // 抱歉！您说话太快了
-        // #TODO $root 
-        set_toast({ txt: i18n.t('chatroom.send_err_hint2') });
+        // #TODO $root
+        set_toast({ txt: t('chatroom.send_err_hint2') });
         return;
       }
       sendFrequencyLimit = true;
@@ -248,7 +252,7 @@ export default defineComponent({
         if (res.code == 0) {
           set_send_msg_count(get_send_msg_count + 1);
         }
-        
+
         // isSuper: 超级会员 isVip: 普通会员
         const { isSuper, isVip, time } = get_chatroom_userinfo || {};
         if (res.code == 0 && isSuper === 'false' && isVip === 'false') {  // 不是Vip的话要更新用户发言条件信息，并设置定时器更新用户发言状态
@@ -271,8 +275,8 @@ export default defineComponent({
     const openShowBet = () => {
       if (!is_post_bet) {
         // 禁止晒单
-        // #TODO $root 
-        // set_toast({ txt: i18n.t('chatroom.ban_post_bet') });
+        // #TODO $root
+        // set_toast({ txt: t('chatroom.ban_post_bet') });
         return;
       }
       set_post_bet_show(true);
@@ -283,7 +287,7 @@ export default defineComponent({
     };
     // 打开注单界面
     const toggleBet = () => {
-      // #TODO emit 
+      // #TODO emit
       // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
     };
     // 表情选择
@@ -382,7 +386,7 @@ export default defineComponent({
   .up-to-standard {
     padding-right: 0.65rem;
   }
-  
+
   .input-banned {
     padding-right: 0.35rem;
     font-size: .1rem;

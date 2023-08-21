@@ -8,11 +8,11 @@
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
         <p class="yb_mr10" @click="change_record(0)" :class="main_item == 0 && 'active-p'">
-          {{ i18n.t('bet_record.no_account') }}<span></span></p>
+          {{ t('bet_record.no_account') }}<span></span></p>
         <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="main_item == 1 && 'active-p'">
-          {{ i18n.t('bet_record.account') }}<span></span></p>
+          {{ t('bet_record.account') }}<span></span></p>
         <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)"
-          :class="main_item == 2 && 'active-p'">{{ i18n.t('pre_record.book') }}<span></span></p>
+          :class="main_item == 2 && 'active-p'">{{ t('pre_record.book') }}<span></span></p>
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
@@ -44,6 +44,9 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
 let store_user = ref(userInfoReducer)

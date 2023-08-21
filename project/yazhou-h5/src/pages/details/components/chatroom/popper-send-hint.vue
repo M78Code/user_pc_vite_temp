@@ -7,14 +7,14 @@
   <div class="popper t-popper">
     <div class="popper_content">
       <template v-if="type === 'condition'">
-        <div class="popper_text">{{  i18n.t('chatroom.pop_send_hint1')  }}</div>
-        <div class="popper_text">{{  i18n.t('chatroom.pop_send_hint2')  }}</div>
-        <div class="popper_text">{{  i18n.t('chatroom.pop_send_hint3')  }}</div>
+        <div class="popper_text">{{  t('chatroom.pop_send_hint1')  }}</div>
+        <div class="popper_text">{{  t('chatroom.pop_send_hint2')  }}</div>
+        <div class="popper_text">{{  t('chatroom.pop_send_hint3')  }}</div>
       </template>
       <template v-if="type === 'rules'">
         <div v-if="ban_placeholder" class="popper_text_ban">{{ ban_placeholder }}</div>
-        <div class="popper_text">{{  i18n.t('chatroom.pop_send_hint4')  }}</div>
-        <div class="popper_text">{{  i18n.t('chatroom.pop_send_hint5')  }}</div>
+        <div class="popper_text">{{  t('chatroom.pop_send_hint4')  }}</div>
+        <div class="popper_text">{{  t('chatroom.pop_send_hint5')  }}</div>
       </template>
     </div>
   </div>
@@ -23,6 +23,10 @@
 
 <script>
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: 'popper_send_hint',
   props: {
@@ -77,7 +81,7 @@ export default defineComponent({
     padding: 0.1rem 0.1rem;
     word-break: break-all;
   }
-  
+
   .popper_text_ban {
     margin-bottom: .04rem;
   }

@@ -29,13 +29,13 @@ export default {
     }
   },
   created(){
-    this.initEvent();
+    initEvent();
   },
-  // 获取props里面的type 参数 0 || 1 
+  // 获取props里面的type 参数 0 || 1
   methods: {
     initEvent(){
       const style_array = [{'float':'left','margin-left': '0.2rem'},{'float':'right','margin-right': '0.2rem'}]
-      this.inline_style = style_array[this.type];
+      inline_style = style_array[type];
     }
   }
 }

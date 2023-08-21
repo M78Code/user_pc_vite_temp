@@ -50,6 +50,7 @@ import noData from "src/project/components/common/no_data.vue";
 import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches";
 import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
 import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 export default {
   name:"result_details",
@@ -86,10 +87,10 @@ export default {
       "get_curr_sub_menu_type"
     ]),
     is_match_result(){
-      return ['result_details', 'match_result'].includes(this.$route.name)
+      return ['result_details', 'match_result'].includes($route.name)
     },
     skeleton_loading(){
-      if(this.skeleton.header && this.skeleton.list){
+      if(skeleton.header && skeleton.list){
         return false
       } else{
         return true
@@ -113,16 +114,16 @@ export default {
       if (new_value) {
         let time_,mgt,date_,dateTime;  //菜单里取不到dateTime 就去详情数据对象里取
         try {
-          mgt = Number(this.get_detail_data.mgt);
+          mgt = Number(get_detail_data.mgt);
           date_ = new Date(mgt).toLocaleDateString()
           time_ = new Date(date_).getTime()
         } catch (error) {
           console.error(error)
         }
         // tid: 联赛id
-        let tId = this.result_detail_data.tid;
-        if (this.get_current_menu && this.get_current_menu.date_menu && this.get_current_menu.date_menu.field1) {
-          dateTime = this.get_current_menu.date_menu.field1
+        let tId = result_detail_data.tid;
+        if (get_current_menu && get_current_menu.date_menu && get_current_menu.date_menu.field1) {
+          dateTime = get_current_menu.date_menu.field1
         } else {
           dateTime = time_
         }
@@ -132,26 +133,26 @@ export default {
           type: 1,
           dateTime
           };
-        this.get_match_list(params);
+        get_match_list(params);
       }
     },
   },
   created() {
     // 默认加载赛事详情页面接口getMatchDetail
-    this.get_match_detail_info()
+    get_match_detail_info()
     // 监听是否下拉联赛列表
-    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
+    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool).on;
     // 监听调用赛事详情页面接口
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show);
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).on;
+    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).on;
 
     useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
-      this.skeleton.list = true
-    });
+      skeleton.list = true
+    }).on;
 
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
-      this.skeleton.changeTab = true
-    });
+      skeleton.changeTab = true
+    }).on;
 
   },
   methods: {
@@ -166,14 +167,14 @@ export default {
     //  足篮显示分析页
     ana_show(val){
       if(val == 1) { // 足球
-        this.analysis_show.football = true;
+        analysis_show.football = true;
         return
       }else if(val == 2){ // 篮球
-        this.analysis_show.basketball = true;
+        analysis_show.basketball = true;
         return
       }else{
-        Object.getOwnPropertyNames(this.analysis_show).forEach((key) => {
-          this.analysis_show[key] = false
+        Object.getOwnPropertyNames(analysis_show).forEach((key) => {
+          analysis_show[key] = false
         });
       }
     },
@@ -184,30 +185,30 @@ export default {
      */
     get_match_detail_info() {
       // 从url取值赛事id：mid
-      let mid = this.$route.params.mid || this.get_goto_detail_matchid;
+      let mid = $route.params.mid || get_goto_detail_matchid;
       if(mid){
-        this.set_goto_detail_matchid(mid);
+        set_goto_detail_matchid(mid);
       }
       let params = {
         mid: mid,
         type: 1,
-        cuid: this.get_uid, // userId或者uuid
-        isESport: (this.get_menu_type == 28 && [3001,3002,3003,3004].includes(+this.get_curr_sub_menu_type)) ? 1 : null
+        cuid: get_uid, // userId或者uuid
+        isESport: (get_menu_type == 28 && [3001,3002,3003,3004].includes(+get_curr_sub_menu_type)) ? 1 : null
       }
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if( code == '0400500' || !data || Object.keys(data).length===0 ){
-          this.$router.push({name: 'matchList'})
+          $router.push({name: 'matchList'})
         }else if(code === 200){
-          this.skeleton.header = true
-          this.loading = true
+          skeleton.header = true
+          loading = true
           if(!data) return false
-          this.result_detail_data = data;
+          result_detail_data = data;
           // 61-比赛延迟,80-比赛中断,90-比赛放弃
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'
           }
-          if(['result_details', 'match_result'].includes(this.$route.name) && data.mo == 1){
+          if(['result_details', 'match_result'].includes($route.name) && data.mo == 1){
             // 61-比赛延迟,80-比赛中断,90-比赛放弃
             if(!(['90','80','61'].includes(data.mmp+''))){
               data.mmp = '999'
@@ -215,11 +216,11 @@ export default {
           }
           // 克隆一份;
           let cloneData = _.cloneDeep(data);
-          this.set_detail_data(cloneData);
+          set_detail_data(cloneData);
         }
       }).catch((err) =>{
-        this.loading = true
-        this.skeleton.header = true
+        loading = true
+        skeleton.header = true
       });
     },
     /**
@@ -232,10 +233,10 @@ export default {
       if(sessiong_store) {
         let store_data = JSON.parse(sessiong_store);
         if(store_data.tId == params.tId){
-          this.math_list_data = store_data.list;
+          math_list_data = store_data.list;
         }
       }
-      if(this.get_menu_type == 28 && [100,101,102,103,104].includes(+this.get_detail_data.csid)){
+      if(get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid)){
         params.isESport = 1
       }else{
         params.isESport = null
@@ -248,14 +249,14 @@ export default {
       api_common.get_matchDetail_getMatchDetailByTournamentId(params).then(({ data }) => {
         if(!data || data.length == 0){
 
-            this.set_toast({
-              txt: i18n.t("bet_record.bet_match_tishi"),
+            set_toast({
+              txt: t("bet_record.bet_match_tishi"),
               is_show: true
             });
 
           sessionStorage.setItem('match_list_ofdetails','');
-          this.math_list_data = [];
-          this.set_sanjiao_is_bool(false);
+          math_list_data = [];
+          set_sanjiao_is_bool(false);
         }else{
           let store_data = {
             tId:params.tId,
@@ -265,8 +266,8 @@ export default {
           let sessiong_store = JSON.stringify(store_data);
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem('match_list_ofdetails',sessiong_store);
-          this.math_list_data = data;
-          this.set_sanjiao_is_bool(true);
+          math_list_data = data;
+          set_sanjiao_is_bool(true);
         }
       });
     },
@@ -277,20 +278,20 @@ export default {
      */
     changge_bool(bool) {
       // bool 的值为true或者是false
-      this.is_dialog_details = bool;
+      is_dialog_details = bool;
     },
   },
   beforeUnmount() {
     // 清除监听下拉联赛列表
-    this.$root.$off(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
+    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool).off;
     // 清除刷新详情页;
-    this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).off;
     // 组件销毁时设置vuex的值为空对象
-    // this.set_detail_data({})
-    this.$root.$off(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show)
-    this.$root.$off(MITT_TYPES.EMIT_RESULT_LIST_LOADING)
-    this.$root.$off(MITT_TYPES.EMIT_CHANGE_TAB)
-    this.set_event_list([])
+    // set_detail_data({})
+    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).off
+    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING).off
+    useMittOn(MITT_TYPES.EMIT_CHANGE_TAB).off
+    set_event_list([])
   },
 }
 </script>

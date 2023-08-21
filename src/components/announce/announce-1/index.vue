@@ -27,7 +27,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
@@ -45,7 +45,7 @@ const props = defineProps({})
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 返回的大列表 */
 let res_list = reactive([])

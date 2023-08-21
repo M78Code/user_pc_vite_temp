@@ -9,7 +9,7 @@ const i18n = createI18n({
   fallbackLocale: "zh",
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},
-  legacy:true,
+  legacy: true,
   // 去除控制台i18n警告信息
   silentTranslationWarn: true,
 });
@@ -48,4 +48,9 @@ function loadLanguageAsync(lang) {
     return lang;
   });
 }
-export { i18n, loadLanguageAsync, map_lang };
+// 新增
+function t(key, args, options) {
+  if (!i18n) return key;
+  return i18n.global.t(key, args, options);
+}
+export { i18n, loadLanguageAsync, map_lang, t };

@@ -6,16 +6,20 @@
 <template>
   <div class="popper t-popper" v-if="isShow">
     <div class="popper_content">
-      <div class="popper_text">{{  i18n.t('chatroom.block_msg_info2')  }}</div>
-      <div class="m-button t-m-button" @click="toggleShow">{{  `${i18n.t('chatroom.pop_content1')}(${countdownSec}s)`  }}</div>
+      <div class="popper_text">{{  t('chatroom.block_msg_info2')  }}</div>
+      <div class="m-button t-m-button" @click="toggleShow">{{  `${t('chatroom.pop_content1')}(${countdownSec}s)`  }}</div>
     </div>
   </div>
 
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters} from "vuex";
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: 'popper_block_hint',
   props: {
@@ -30,7 +34,7 @@ export default defineComponent({
       value: 0,
       pwidth:0,//公告文本的宽度
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters([
     //     'get_theme',
@@ -58,10 +62,9 @@ export default defineComponent({
       }
     );
     const clickCommend = (e) =>  {
-      let _this = this;
-      $nextTick(() => {
+      nextTick(() => {
         value -=1;
-        $refs.notice_list.style.marginLeft = _this.pwidth + value + "px";
+        $refs.notice_list.style.marginLeft = pwidth + value + "px";
       });
     };
     const menter = () => {

@@ -42,7 +42,7 @@ const max_money = ref(0)   //最高可投金额
 const is_watch = ref(true)    //组件渲染时是否监听money，后期再优化
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 emitters.value = ref({
-    emitter_1: useMittOn.on(MITT_KEY.EMIT_CHANGE_MONEY, change_money_).off,
+    emitter_1: useMittOn.on(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off,
 })
 
 

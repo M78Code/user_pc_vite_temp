@@ -6,13 +6,13 @@
     <q-separator v-if='!is_free' class="bet-top-separator"
       :class="{ 'shijiebei-separator': $route.name.includes('world_cup') }"></q-separator>
     <div class="row bet-back-btn yb-flex-between" :class="{ 'free-style': !is_free }"
-      @click.stop="vx_set_layout_left_show('menu')">
+      @click.stop="BetDataCtr.set_layout_left_show('menu')">
       <!-- 返回菜单（投注记录、单/串关投注栏） -->
       <div class="col yb-flex cursor-pointer" v-if="is_free">
         <!--箭头图标-->
         <icon name="icon-back" size="14px" />
         <!--返回菜单-->
-        <div class="back-text ellipsis" v-if="vx_is_bet_single">{{ i18n.t('common.return_sports') }}</div>
+        <div class="back-text ellipsis" v-if="BetDataCtr.is_bet_single">{{ i18n.t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
           v-tooltip="{ content: '&n b sp;'+i18n.t('common.return_spo r ts') +'&nbsp;' , overflow:1}" v-else>
           {{ i18n.t('common.return_sports') }}</div>
@@ -21,13 +21,13 @@
         <!-- <q-separator class="bet-top-separator" :class="{'shijiebei-separator': $route.name.includes('world_cup')}"></q-separator> -->
         <!--bet-zone-head-width虚拟体育投注框宽度-->
         <div class="bet-zone-head justify-between align-items center cursor-pointer" @click.stop="toggle_handle"
-          :class="{ 'bet-zone-head-width': vx_get_is_virtual_bet }">
-          <template v-if="vx_get_is_virtual_bet">
+          :class="{ 'bet-zone-head-width': BetData.is_virtual_bet }">
+          <template v-if="BetData.is_virtual_bet">
             <div>
-              <template v-if="vx_get_virtual_bet_list.length == 1">
+              <template v-if="BetData.virtual_bet_list.length == 1">
                 {{ i18n.t('bet.bet_one_') }}
               </template>
-              <template v-else-if="vx_get_virtual_bet_list.length > 1">
+              <template v-else-if="BetData.virtual_bet_list.length > 1">
                 {{ i18n.t('menu.match_bet') }}<span class="bet-count">{{ bet_count }}</span>
               </template>
             </div>
@@ -40,7 +40,7 @@
             <div>
               <template v-if="!$route.name.includes('world_cup')"> <!--世界杯rn-->
                 <icon class="mr15" :name="`img:${iocn_img_unfold}`" size="14px"
-                  v-if="vx_get_theme.includes('y0') ? is_expand : !is_expand" />
+                  v-if="BetData.theme.includes('y0') ? is_expand : !is_expand" />
                 <icon class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
                 <span>{{ i18n.t('bet.bet_order') }}</span> <!--投注单-->
               </template> <!--世界杯rn-->
@@ -57,9 +57,9 @@
         </div>
       </div>
       <!--右边的单关或者复式串关按钮-->
-      <template v-if="computed_show_btn && !vx_get_is_virtual_bet && (vx_layout_left_show != 'bet_history')">
+      <template v-if="computed_show_btn && !BetData.is_virtual_bet && (vx_layout_left_show != 'bet_history')">
         <div class="col-auto bet-series yb-flex-between" @click.stop="change_series">
-          <template v-if="vx_is_bet_single">
+          <template v-if="BetDataCtr.is_bet_single">
             <!--复式串关已改为串关-->
             <span class="series_style"
               :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(get_lang) }">{{ i18n.t('bet.bet_series') }}</span>
@@ -145,34 +145,34 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  if (vx_cur_menu_type.pre_name == 'virtual_sport' && vx_cur_menu_type.type_name == 'play' && vx_get_bet_single_list.length == 0) {
-    vx_set_is_bet_single(true)
+  if (vx_cur_menu_type.pre_name == 'virtual_sport' && vx_cur_menu_type.type_name == 'play' && BetData.bet_single_list.length == 0) {
+    BetDataCtr.set_is_bet_single(true)
   }
   console.log('is_free===', is_free);
 })
 
 // //获取当前盘口类型
-// vx_get_cur_odd: "get_cur_odd",
+// BetData.cur_odd: "get_cur_odd",
 // // 左侧布局
 // vx_layout_left_show: "get_layout_left_show",
 // // 菜单类型
 // vx_cur_menu_type: "get_cur_menu_type",
 // // 是否为单关
-// vx_is_bet_single: 'is_bet_single',
+// BetDataCtr.is_bet_single: 'is_bet_single',
 // // 单关列表
-// vx_get_bet_single_list: "get_bet_single_list",
+// BetData.bet_single_list: "get_bet_single_list",
 // // 单关投注对象
-// vx_get_bet_single_obj: "get_bet_single_obj",
+// BetData.bet_single_obj: "get_bet_single_obj",
 // // 串关列表
-// vx_get_bet_list: "get_bet_list",
+// BetData.bet_list: "get_bet_list",
 // // 串关投注对象
-// vx_get_bet_obj: "get_bet_obj",
+// BetData.bet_obj: "get_bet_obj",
 // // 是否合并
-// vx_get_is_bet_merge: "get_is_bet_merge",
+// BetData.is_bet_merge: "get_is_bet_merge",
 // // 被预约的投注项id
-// vx_get_bet_appoint_obj: "get_bet_appoint_obj",
+// BetData.bet_appoint_obj: "get_bet_appoint_obj",
 // get_lang: 'get_lang'  ,
-// vx_get_theme: "get_theme",
+// BetData.theme: "get_theme",
 
 /**
  * @description:是否显示右边的单关或者复式串关按钮
@@ -181,11 +181,11 @@ onMounted(() => {
 */
 const computed_show_btn = () => {
   let type_name = vx_cur_menu_type.type_name;
-  if (!vx_get_is_bet_merge) {
+  if (!BetData.is_bet_merge) {
     // 获取单关id
-    let id = vx_get_bet_single_list[0];
+    let id = BetData.bet_single_list[0];
     // 是否为冠军投注
-    let match_type = _.get(vx_get_bet_single_obj, `${id}.cs.match_type`, 1);
+    let match_type = _.get(BetData.bet_single_obj, `${id}.cs.match_type`, 1);
     // 冠军不显示按钮
     if (match_type == 3) {
       return false;
@@ -204,16 +204,16 @@ const computed_show_btn = () => {
  * @return {undefined} undefined
 */
 const bet_count = () => {
-  if (vx_get_is_virtual_bet) {
-    return vx_get_virtual_bet_list.length;
+  if (BetData.is_virtual_bet) {
+    return BetData.virtual_bet_list.length;
   }
-  if (vx_is_bet_single) {
-    return vx_get_bet_single_list.length;
+  if (BetDataCtr.is_bet_single) {
+    return BetData.bet_single_list.length;
   }
-  if (vx_get_is_bet_merge) {
-    return vx_get_bet_list.length;
+  if (BetData.is_bet_merge) {
+    return BetData.bet_list.length;
   } else {
-    return vx_get_bet_single_list.length;
+    return BetData.bet_single_list.length;
   }
 }
 /**
@@ -225,13 +225,13 @@ const show_series_btn = () => {
   // 获取当前菜单类型
   let { type_name } = vx_cur_menu_type;
   // 获取单关id
-  let id = vx_get_bet_single_list[0];
+  let id = BetData.bet_single_list[0];
   // 是否为冠军投注
-  let has_winner = _.get(vx_get_bet_single_obj, `${id}.cs.match_type`, 3) != 3;
+  let has_winner = _.get(BetData.bet_single_obj, `${id}.cs.match_type`, 3) != 3;
   // 数据来源
-  let source = _.get(vx_get_bet_single_obj, `${id}.cs.source`, 'match_list');
+  let source = _.get(BetData.bet_single_obj, `${id}.cs.source`, 'match_list');
   // 数据是从投注列表并且为单关并且为冠军
-  return vx_is_bet_single &&
+  return BetDataCtr.is_bet_single &&
     has_winner &&
     (!['bet', 'virtual_sport'].includes(type_name) ||
       (type_name == 'winner_top' && source != 'match_list')) &&
@@ -242,14 +242,14 @@ const show_series_btn = () => {
 */
 
 const iocn_img_unfold = () => {
-  return require(`public/image/yabo/${vx_get_theme}/${vx_get_theme}_unfold.svg`)
+  return require(`public/image/yabo/${BetData.theme}/${BetData.theme}_unfold.svg`)
 }
 /**
  * 正常体育赛事折叠  ICON
  */
 
 const iocn_img_fold = () => {
-  return require(`public/image/yabo/${vx_get_theme}/${vx_get_theme}_fold.svg`)
+  return require(`public/image/yabo/${BetData.theme}/${BetData.theme}_fold.svg`)
 
 }
 
@@ -260,58 +260,58 @@ const iocn_img_fold = () => {
  */
 const change_series = () => {
   // 恢复预约投注项id为初始值
-  if (!_.isNull(vx_get_bet_appoint_obj)) {
+  if (!_.isNull(BetData.bet_appoint_obj)) {
     // 置空预约投注项
-    vx_set_bet_appoint_obj(null);
+    BetDataCtr.set_bet_appoint_obj(null);
   }
-  let is_bet_single = !vx_is_bet_single;
+  let is_bet_single = !BetDataCtr.is_bet_single;
   // 串关数量小于10 如果是合并
-  if (vx_get_is_bet_merge) {
+  if (BetData.is_bet_merge) {
     if (is_bet_single) {
       // 串关投注列表拷贝出来
-      let bet_single_list = [...vx_get_bet_list];
+      let bet_single_list = [...BetData.bet_list];
       // 串关投注项对象拷贝出来
-      let bet_single_obj = { ...vx_get_bet_obj };
+      let bet_single_obj = { ...BetData.bet_obj };
       // 设置拷贝出来的数据放到单关投注项列表中
-      vx_set_bet_single_list(bet_single_list);
+      BetDataCtr.set_bet_single_list(bet_single_list);
       _.forEach(bet_single_list, item => {
         // 根绝单关列表中的投注项id，获取拷贝出来的对象
         let obj = _.get(bet_single_obj, `${item}`);
         // 设置key值为投注项id
         obj.key = item;
         // 存储对象到单关对象中
-        vx_bet_single_obj_attr(obj);
+        BetDataCtr.bet_single_obj_attr(obj);
       });
     } else {
       // 单关投注列表拷贝出来
-      let bet_list = [...vx_get_bet_single_list];
+      let bet_list = [...BetData.bet_single_list];
       // 单关投注项对象拷贝出来
-      let bet_obj = { ...vx_get_bet_single_obj };
+      let bet_obj = { ...BetData.bet_single_obj };
       // 设置拷贝出来的数据放到串关投注项列表中
-      vx_set_bet_list(bet_list);
+      BetDataCtr.set_bet_list(bet_list);
       _.forEach(bet_list, item => {
         // 根绝串关列表中的投注项id，获取拷贝出来的对象
         let obj = _.get(bet_obj, `${item}`);
         // 设置key值为投注项id
         obj.key = item;
         // 存储对象到串关对象中
-        vx_bet_obj_add_attr(obj);
+        BetDataCtr.bet_obj_add_attr(obj);
       });
       // 检查是否可以串关
       yabo_common.check_mix();
     }
   } else if (!is_bet_single) { // 若为串关
     // 克隆单关列表以及单关对象
-    let id = vx_get_bet_single_list[0];
-    let bet_single_obj = { ...vx_get_bet_single_obj };
+    let id = BetData.bet_single_list[0];
+    let bet_single_obj = { ...BetData.bet_single_obj };
     let obj = _.get(bet_single_obj, `${id}`);
     // 设置拷贝出来的数据放到串关投注项列表中
-    vx_set_bet_list([id]);
+    BetDataCtr.set_bet_list([id]);
     obj.key = id;
-    vx_bet_obj_add_attr(obj);
+    BetDataCtr.bet_obj_add_attr(obj);
     yabo_common.check_mix();
   }
-  vx_set_is_bet_single(is_bet_single);
+  BetDataCtr.set_is_bet_single(is_bet_single);
   //获取投注数据(内嵌mini切换或者语言发生变化时调用)
   useMittEmit(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD);
 }

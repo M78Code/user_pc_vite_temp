@@ -6,17 +6,20 @@
 <template>
     <div v-if="show" class="cancle-confirm-pop fullscreen" @click.self="change_show" @touchmove.prevent>
         <div class="main-box fixed-center text-center">
-            <p class="text-left yb_fontsize14">{{ i18n.$t("pre_record.confirm_matchinfo", [teamname]) }}</p>
+            <p class="text-left yb_fontsize14">{{ t("pre_record.confirm_matchinfo", [teamname]) }}</p>
             <footer class="yb_fontsize16">
-                <span class="cancle-button button" @click.self="cancle_handle">{{ i18n.$t("common.cancel") }}</span>
-                <span class="confirm-button button" @click.self="confirm_handle">{{ i18n.$t("common.ok") }}</span>
+                <span class="cancle-button button" @click.self="cancle_handle">{{ t("common.cancel") }}</span>
+                <span class="confirm-button button" @click.self="confirm_handle">{{ t("common.ok") }}</span>
             </footer>
         </div>
     </div>
 </template>
 
 <script setup>
-import { defineComponent } from 'vue'
+import store from "src/store-redux/index.js"
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 const props = defineProps({
     show: {

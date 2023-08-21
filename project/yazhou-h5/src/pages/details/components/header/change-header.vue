@@ -17,7 +17,7 @@
           <div class="col text-center base-header-font">
             <!-- <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage> -->
           </div>
-          <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
+          <div class="col eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.away}}</div>
         </div>
@@ -27,13 +27,17 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
 // import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
 import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
+
 export default defineComponent({
   name: "change_header",
   props:{
@@ -49,7 +53,7 @@ export default defineComponent({
       // 顶部赛事阶段及时间 显示控制
       show_match_stage: false,
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(["get_menu_type", "get_change_count"]),
     const get_menu_type = computed(() => {

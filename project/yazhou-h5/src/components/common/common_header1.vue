@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页头部置顶title
 -->
 <template>
@@ -20,10 +20,10 @@
         </template>
       </div>
       <div class="row common-header-right" >
-        <div 
-          class="collect-icon" 
-          :class="{active:get_detail_data.mf}" 
-          v-if="lodash.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28" 
+        <div
+          class="collect-icon"
+          :class="{active:get_detail_data.mf}"
+          v-if="lodash.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -39,15 +39,18 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import lodash from 'lodash'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名
     title: {
       // 类型字符串
-      type: String, 
+      type: String,
       // 默认值为空
-      default: "" 
+      default: ""
     },
     // 当前tab
     view_tab: {
@@ -60,11 +63,11 @@ const props = defineProps({
   // },
 
   let dialog = ref(false)
-  let position = ref('top') 
+  let position = ref('top')
   // 默认不刷新
   let refreshing = ref(false)
   // 收藏|取消收藏是否请求中
-  let favorite_loading = ref(false) 
+  let favorite_loading = ref(false)
   // 延时器
   let timer1_ = ref(null)
   let timer2_ = ref(null)
@@ -96,10 +99,10 @@ const props = defineProps({
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
         //'取消';
-        txt = i18n.t('common.cancel');
+        txt = t('common.cancel');
       } else {
         //'收藏';
-        txt = i18n.t('collect.betted_title');
+        txt = t('collect.betted_title');
       }
       favorite_loading = true;
       // 更新收藏状态

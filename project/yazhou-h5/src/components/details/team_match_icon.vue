@@ -6,28 +6,28 @@
 <template>
   <div class='team-match-icon'>
     <div class="icon-wrap">
-          <!--  match["lvs"] == 2，显示直播按钮 i18n.t('match_info.lvs')是国际化取值 -->
+          <!--  match["lvs"] == 2，显示直播按钮 t('match_info.lvs')是国际化取值 -->
         <match-icon v-if="show_lvs" class="fl"
-          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? i18n.t('match_info.lvs') : i18n.t('match_info.topic')">
+          which="lvs" icon_class="lvs" :text="_.get(this.get_detail_data,'lss') == 1 ? t('match_info.lvs') : t('match_info.topic')">
         </match-icon>
 
       <!-- mvs动画状态：-1：没有配置动画源 | 0 ：已配置，但是不可用 | 1：已配置，可用，播放中 | 2：已配置，可用，播放中 -->
       <template v-if="get_detail_data.mvs > -1 || (get_detail_data.mms > 1 && [1,2,7,10,110].includes(get_detail_data.ms*1))">
 
-        <!-- 视频状态大于1时，显示视频按钮 i18n.t('match_info.video')是国际化取值 -->
+        <!-- 视频状态大于1时，显示视频按钮 t('match_info.video')是国际化取值 -->
         <match-icon v-if="get_detail_data.mms > 1" class="fl" :status="get_detail_data.mms"
-          which="muUrl" icon_class="shipin" :text="i18n.t('match_info.video')">
+          which="muUrl" icon_class="shipin" :text="t('match_info.video')">
         </match-icon>
 
-        <!-- 动画状态大于-1时，显示动画按钮 i18n.t('match_info.animation')是国际化取值 -->
+        <!-- 动画状态大于-1时，显示动画按钮 t('match_info.animation')是国际化取值 -->
         <match-icon v-if="get_detail_data.mvs > -1" class="fl" :status="get_detail_data.mvs"
-          which="animationUrl" icon_class="donghua" :text="i18n.t('match_info.animation')">
+          which="animationUrl" icon_class="donghua" :text="t('match_info.animation')">
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
       <div v-if="get_access_config.collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
-        <div class="text">{{i18n.t('footer_menu.collect')}}</div>
+        <div class="text">{{t('footer_menu.collect')}}</div>
       </div>
     </div>
   </div>
@@ -38,6 +38,9 @@ import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
 import utils from "src/public/utils/utils";
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 export default {
   name: 'team_match_icon',
@@ -107,9 +110,9 @@ export default {
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = i18n.t('common.cancel');//'取消';
+        txt = t('common.cancel');//'取消';
       } else {
-        txt = i18n.t('collect.betted_title');//'收藏';
+        txt = t('collect.betted_title');//'收藏';
       }
       this.favorite_loading = true;
       // 更新收藏状态

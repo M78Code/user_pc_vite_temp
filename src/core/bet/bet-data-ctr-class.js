@@ -4,6 +4,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
 import {init_bet_single_data} from  "./module/bet-model-single.js"
 
+
+// import BetDataCtr from  "src/core/bet/bet-data-ctr-class.js"
 class BetDataCtr {
   constructor() {}
   init() {}

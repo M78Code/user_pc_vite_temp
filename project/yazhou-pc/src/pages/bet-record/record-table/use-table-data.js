@@ -57,7 +57,6 @@ export const useTableData = ({ props, emit }) => {
     setup_single_info: {},
     timer_obj: {},
     is_cancel: false, // 是否被拒单过（ws）
-    show_score_info: false, //比分提示默认隐藏
   });
 
   //   ====================watch======================================

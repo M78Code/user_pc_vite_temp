@@ -6,7 +6,7 @@
 <template>
   <div class="standings_technical football_standings recent_record" v-if="matchHistory_battle_dto_map">
     <div class="title">
-      {{ i18n.t('analysis_football_matches.Turning_trend') }}
+      {{ t('analysis_football_matches.Turning_trend') }}
     </div>
     <div class="standings-technical-home" v-for="(main, index) in matchHistory_battle_dto_map" :key="index+'qi'">
       <!-- 主队客队的 图标 及 名称 -->
@@ -30,25 +30,25 @@
           <div class="header">
             <div class="item-1st">
               <!--<div class="col1"></div>-->
-              <div class="col1 text-right pad-r5">{{ i18n.t('analysis_football_matches.game') }}</div>
+              <div class="col1 text-right pad-r5">{{ t('analysis_football_matches.game') }}</div>
             </div>
             <div class="item-2nd">
-              <div class="col1">{{ i18n.t('analysis_football_matches.win_plate') }}</div>
-              <div class="col1">{{ i18n.t('analysis_football_matches.Move_plate') }}</div>
-              <div class="col1">{{ i18n.t('analysis_football_matches.Lose_plate') }}</div>
-              <div class="col4">{{ i18n.t('analysis_football_matches.Win_rate') }}</div>
+              <div class="col1">{{ t('analysis_football_matches.win_plate') }}</div>
+              <div class="col1">{{ t('analysis_football_matches.Move_plate') }}</div>
+              <div class="col1">{{ t('analysis_football_matches.Lose_plate') }}</div>
+              <div class="col4">{{ t('analysis_football_matches.Win_rate') }}</div>
             </div>
             <div class="item-3rd">
-              <div class="col1">{{ i18n.t('analysis_football_matches.big_ball') }}</div>
-              <div class="col4">{{ i18n.t('analysis_football_matches.Big_ball_rate') }}</div>
-              <div class="col1">{{ i18n.t('analysis_football_matches.small_ball') }}</div>
-              <div class="col4">{{ i18n.t('analysis_football_matches.small_ball_rate') }}</div>
+              <div class="col1">{{ t('analysis_football_matches.big_ball') }}</div>
+              <div class="col4">{{ t('analysis_football_matches.Big_ball_rate') }}</div>
+              <div class="col1">{{ t('analysis_football_matches.small_ball') }}</div>
+              <div class="col4">{{ t('analysis_football_matches.small_ball_rate') }}</div>
             </div>
           </div>
           <div class="group-item">
             <div class="team-item" v-for="(item,index) in main.matchHistoryBattleDetailDTOList" :key="index+'y'">
               <div class="item-1st">
-                <div class="col1">{{item.postionFlag ==1 ? i18n.t('analysis_football_matches.total_all') : item.postionFlag ==2 ? i18n.t('analysis_football_matches.main') : item.postionFlag ==3 ? i18n.t('analysis_football_matches.customer') : ''}}</div>
+                <div class="col1">{{item.postionFlag ==1 ? t('analysis_football_matches.total_all') : item.postionFlag ==2 ? t('analysis_football_matches.main') : item.postionFlag ==3 ? t('analysis_football_matches.customer') : ''}}</div>
                 <div class="col1">{{+item.handicapResultWin + +item.handicapResultEqual + +item.handicapResultLose}}</div>
               </div>
               <div class="item-2nd">
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="recent-games" v-if="main && main.handicapResultList">
-        <span class="item-1st text-center" style="white-space: nowrap;">{{ i18n.t('analysis_football_matches.field', [main.handicapResultList.length])}}</span>
+        <span class="item-1st text-center" style="white-space: nowrap;">{{ t('analysis_football_matches.field', [main.handicapResultList.length])}}</span>
         <div class="item-2nd">
           <span v-html="results" v-for="(results, i) in title_calculation(main, 'handicapResultList')" :key="i+'title'"></span>
         </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div v-if="Object.keys(matchHistory_battle_dto_map).length <= 0" class="no-list">{{ i18n.t('common.no_data') }}</div>
+    <div v-if="Object.keys(matchHistory_battle_dto_map).length <= 0" class="no-list">{{ t('common.no_data') }}</div>
   </div>
 </template>
 
@@ -86,7 +86,10 @@
 // import {mapGetters} from "vuex";
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";
+import { t } from "src/boot/i18n";;
+//国际化
+
 
   const props = defineProps({
     // 盘面的数据
@@ -110,13 +113,13 @@ import teamImg from "src/project/components/details/team-img";
       if(main && main.handicapResultList && name == 'handicapResultList') {
         main.handicapResultList.forEach( (item, i, arr) => {
           if(item == 2){
-            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${i18n.t('analysis_football_matches.level')}</span>`)
+            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${t('analysis_football_matches.level')}</span>`)
           }
           if(item == 3){
-            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${i18n.t('analysis_football_matches.lose')}</span>`)
+            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${t('analysis_football_matches.lose')}</span>`)
           }
           if(item == 4){
-            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${i18n.t('analysis_football_matches.win')}</span>`)
+            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${t('analysis_football_matches.win')}</span>`)
           }
         })
         return arr_list
@@ -124,19 +127,19 @@ import teamImg from "src/project/components/details/team-img";
       if(main && main.overunderResultList && name == 'overunderResultList') {
         main.overunderResultList.forEach( (item, i, arr) => {
           if(item == 2){
-            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${i18n.t('analysis_football_matches.level')}</span>`)
+            arr_list.push(`<span style="color:#71C0F7;margin:0 .01rem">${t('analysis_football_matches.level')}</span>`)
           }
           if(item == 3){
-            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${i18n.t('analysis_football_matches.small')}</span>`)
+            arr_list.push(`<span style="color:#8AD181;margin:0 .01rem">${t('analysis_football_matches.small')}</span>`)
           }
           if(item == 4){
-            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${i18n.t('analysis_football_matches.big')}</span>`)
+            arr_list.push(`<span style="color:#FF7979;;margin:0 .01rem">${t('analysis_football_matches.big')}</span>`)
           }
         })
         return arr_list
       }
     }
-    
+
 </script>
 
 <style lang="scss" scoped>

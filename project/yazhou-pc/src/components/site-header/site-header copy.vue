@@ -130,7 +130,7 @@
 import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 /** 组件 */
 import maintenanceTip from 'project_path/src/components/site-header/maintenance-tip.vue'
 import { TabWapper as Tab } from "src/components/common/tab"
@@ -191,7 +191,7 @@ const props = defineProps({
 
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 菜单数据 */
 const menu_data = reactive({})

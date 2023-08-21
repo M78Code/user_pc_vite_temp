@@ -48,9 +48,9 @@
 import { computed } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 useRegistPropsHelper(component_symbol, need_register_props)
-const { t } = useI18n();
+;
 
 // 其他玩法标题
 const bet_col = computed(() => {

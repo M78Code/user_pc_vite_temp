@@ -17,7 +17,7 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import ZhuGe from "src/core/http/zhuge-tag";
 import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
@@ -54,7 +54,7 @@ export const useGetItem = ({ props }) => {
     DOM_ID_SHOW:''
   });
 
-  const { t } = useI18n();
+  ;
 
   // ===========================store====================
   const {

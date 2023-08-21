@@ -4,7 +4,7 @@
  * @Description: 串关投注结果
  */
 import betting from "src/public/mixins/betting/betting.js";
-import { mapGetters } from "vuex";
+
 export default {
   name: "bet-mix-result",
   mixins: [betting],
@@ -24,9 +24,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      vx_get_theme: "get_theme"  // 主题色
-    }),
+ 
     /**
      * @description: 最大最小值
      * @param {undefined} undefined 

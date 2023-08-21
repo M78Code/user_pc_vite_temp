@@ -638,11 +638,11 @@ export const check_result_msg = (type, money) => {
   // console.log('=====================check_result_msg=============');
   let count = get_deactive_count();
   if (count > 0) return;
-  //single_range_money取值说明 -2: 当前输入金额为空 -1: 当前输入金额小于最小值 1: 当前输入金额大于最大值 0: 在正常范围内
+  //input_money_state取值说明 -2: 当前输入金额为空 -1: 当前输入金额小于最小值 1: 当前输入金额大于最大值 0: 在正常范围内
   type =
     type == "single"
-      ? BetViewData.single_range_money
-      : BetViewData.mix_range_money;
+      ? BetViewData.input_money_state
+      : BetViewData.input_money_state;
   switch (type) {
     case -1:
       // 小于最小金额时的提示

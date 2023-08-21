@@ -187,7 +187,7 @@
 </template>
 
 <script setup>
-// import { mapMutations, mapGetters } from "vuex";
+
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 // import betting from 'src/project/mixins/betting/betting.js';
 import store from "src/store-redux/index.js";
@@ -226,8 +226,10 @@ onMounted(() => {
     set_bet_status(7);
   };
 
-  useMittOn(MITT_TYPES.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
-  useMittOn(MITT_TYPES.EMIT_C201_UPDATE2, c201_update2_handle)
+ 
+
+
+
   if (value_show.csid != 1) {
     daxiao_market_value.value = 0.5//大小玩法最低盘口值，初始最低0.5
     daxiao_market_value_max.value = 400//大小玩法最大盘口值
@@ -751,6 +753,25 @@ const handleonmousedown = () => {
   set_active_index('')
   set_keyboard_show(false)
 }
+
+
+let emitters_off
+//生成事件监听 
+const handle_generat_emitters=()=>{
+let event_pairs=  [
+
+ 
+{ type:MITT_TYPES.EMIT_REMOVE_INVALID_, callback: reomve_invalid_handle} ,
+{ type:MITT_TYPES.EMIT_C201_UPDATE2, callback: c201_update2_handle} ,     
+{ type:MITT_TYPES.EMIT_CHANGE_ODDS, callback: change_odds_handle} ,       
+{ type:MITT_TYPES.EMIT_CHANGE_MARKET, callback: change_market_handle} ,   
+
+]
+let  obj  =  useMittEmitterGenerator(event_pairs)
+ emitters_off= obj.emitters_off
+
+}
+
 /**
  *@description 赔率改变事件
  *@param {Number} new_odds 最新赔率
@@ -807,7 +828,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
       ele.classList.toggle('money-span3')
     }
   }, 700);
-},
+}
 /**
 *@description 删除一个投注项
 *@param {String} id_ 投注项id或者坑位id
@@ -1140,20 +1161,27 @@ const clear_timer = () => {
   }
 }
 
+
+
+
 /** --------------------------事件结束 ---------------*/
 
 
 onUnmounted(() => {
   clear_timer()
 
-  $root.$off(MITT_TYPES.EMIT_REMOVE_INVALID_, reomve_invalid_handle)
-  $root.$off(MITT_TYPES.EMIT_C201_UPDATE2, c201_update2_handle)
-  $root.$off(MITT_TYPES.EMIT_CHANGE_ODDS, change_odds_handle)
-  $root.$off(MITT_TYPES.EMIT_CHANGE_MARKET, change_market_handle)
+ 
+
+
+
   for (const key in $data) {
     $data[key] = null
   }
-  unsubscribe()
+
+   //移除相应监听事件 //视图销毁钩子函数内执行
+ if( emitters_off){emitters_off()}  
+
+ 
 })
 
 

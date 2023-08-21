@@ -23,7 +23,7 @@
           <!-- 输、赢、走水...-->
           <span v-if="[2, 3, 4, 5, 6].includes(+bet_data.outcome)" :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : 'normal'">{{outcome2[bet_data.outcome]}}</span>
           <!--跟单-->
-          <span class="bet-submit" @click="handle_bet" v-else>{{i18n.t('chatroom.follow_bet')}}</span>
+          <span class="bet-submit" @click="handle_bet" v-else>{{t('chatroom.follow_bet')}}</span>
         </div>
         <div class="content-item font-size14">
           <template v-if="bet_data.playOptionName&&bet_data.playOptionName.includes(' ')">
@@ -50,16 +50,16 @@
       <!-- 底部 -->
       <div class="bet-footer">
         <!-- 投注额 -->
-        <span class="label">{{i18n.t('bet_record.bet_val')}}:
+        <span class="label">{{t('bet_record.bet_val')}}:
           <span>{{ format_currency(bet_data.originalOrderAmountTotal)}}</span>
         </span>
         <!-- 返还 -->
         <template v-if="[2, 3, 4, 5, 6].includes(+bet_data.outcome)">
-          <span class="label">{{ i18n.t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ bet_data.settleAmount | format_currency }}</span></span>
+          <span class="label">{{ t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ bet_data.settleAmount | format_currency }}</span></span>
         </template>
         <!-- 最高可赢 -->
         <template v-else-if="msgInfo.status == 1">
-          <span class="label">{{i18n.t('bet_record.bet_max_win')}}:
+          <span class="label">{{t('bet_record.bet_max_win')}}:
             <span>{{ format_currency(bet_data.originalMaxWinAmount) }}</span>
           </span>
         </template>
@@ -72,15 +72,18 @@
 // import betting from 'src/project/mixins/betting/betting.js';
 import { api_chatroom } from "src/project/api/index.js";
 import { api_common } from 'src/project/api/index.js'
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 // import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import { uid } from "quasar";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { t } from "src/boot/i18n";;
+//国际化
+
 export default defineComponent({
   name: 'bet_info',
 
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [betting, chatroom_mixin],
   props: {
     msgInfo: {
@@ -93,15 +96,15 @@ export default defineComponent({
   setup(props, evnet) {
     const data = reactive({
       outcome2: {
-        // #TODO $root 
-        // "2": i18n.t("bet_record.bet_no_status02"), //'走水',
-        // "3": i18n.t("bet_record.bet_no_status03"), //'输',
-        // "4": i18n.t("bet_record.bet_no_status04"), //'赢',
-        // "5": i18n.t("bet_record.bet_no_status05"), //'赢半',
-        // "6": i18n.t("bet_record.bet_no_status06"), //'输半',
+        // #TODO $root
+        // "2": t("bet_record.bet_no_status02"), //'走水',
+        // "3": t("bet_record.bet_no_status03"), //'输',
+        // "4": t("bet_record.bet_no_status04"), //'赢',
+        // "5": t("bet_record.bet_no_status05"), //'赢半',
+        // "6": t("bet_record.bet_no_status06"), //'输半',
       },
     });
-    // #TODO vuex 
+    // #TODO vuex
     // ...mapGetters([
     //   'get_chatroom_id',  // 聊天室ID
     //   'get_details_item', //玩法集id
@@ -123,10 +126,10 @@ export default defineComponent({
     const i18n_data = computed(() => {
       const lang = 'zh';
       return {
-        // #TODO $root 
-        // sport_name: i18n.t(`common_lang.${lang}.sport2`)[bet_data.sportId],
-        // type: i18n.t(`common_lang.${lang}.matchtype`)[bet_data.matchType],
-        // market_type_name: i18n.t(`common_lang.${lang}.odds`)[bet_data.marketType]
+        // #TODO $root
+        // sport_name: t(`common_lang.${lang}.sport2`)[bet_data.sportId],
+        // type: t(`common_lang.${lang}.matchtype`)[bet_data.matchType],
+        // market_type_name: t(`common_lang.${lang}.odds`)[bet_data.marketType]
       }
     });
     // 用户是否已点赞
@@ -135,7 +138,7 @@ export default defineComponent({
       const { messageId } = msgInfo || {};
       return likeList.includes(messageId);
     });
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations(['set_toast', 'set_bet_list', 'set_bet_obj', 'set_like_info', 'set_chat_bet']),
     /**
@@ -198,8 +201,8 @@ export default defineComponent({
             const mhs = data_details.mhs, hs = ol_item.hs, os = ol_item.os;
             const flag = mhs == 1 || mhs == 2 || hs == 1 || hs == 2 || os == 2 || os == 3
             if (flag) {  // 提示盘口失效
-              // #TODO $root 
-              // set_toast({ 'txt': i18n.t('bet.msg12')});
+              // #TODO $root
+              // set_toast({ 'txt': t('bet.msg12')});
               return
             }
             data_details.hps = [ol_field_data]
@@ -208,8 +211,8 @@ export default defineComponent({
             set_chat_bet(true)
             bet_click(data_details, ol_field_data, ol_item)
           } else {  // 提示盘口失效
-            // #TODO $root 
-            // set_toast({ 'txt': i18n.t('bet.msg12')});
+            // #TODO $root
+            // set_toast({ 'txt': t('bet.msg12')});
           }
         }
       })
@@ -311,7 +314,7 @@ export default defineComponent({
         height: .12rem;
         margin: 0 .04rem 0 .14rem;
       }
-      
+
       .msg-time {
         position: absolute;
         top: 50%;
@@ -319,7 +322,7 @@ export default defineComponent({
         transform: translateY(-48%);
         font-size: .1rem;
       }
-      
+
     }
 
     .bet-content {

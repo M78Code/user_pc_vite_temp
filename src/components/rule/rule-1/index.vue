@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
@@ -25,7 +25,7 @@ const props = defineProps({})
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** stroe仓库 */
 const store_data = store.getState()

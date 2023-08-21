@@ -38,7 +38,7 @@ import mathcResultsVisuals from "project_path/src/pages/details/components/detai
 // import basketballIncident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident";
  // 赛果详情 事件 组件
 import timeLine from 'project_path/src/pages/details/components/details-match-results/time-line.vue';
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 import utils from "src/core/utils/utils.js"
 
 import { ref, onMounted } from "vue";
@@ -59,7 +59,7 @@ const get_analyze_show = ref(false)
   // 锚点
   const analysis_detail = ref(null)
   // 国际化
-  const { t } = useI18n()
+  
   //    S104 进攻, S8 危险进攻, S105 球权/控球率
   const football_ring_statistics = ref([
       // {score_type:'S104', text: t('match_result.attack'), home: 0, away: 0, proportion: 50},

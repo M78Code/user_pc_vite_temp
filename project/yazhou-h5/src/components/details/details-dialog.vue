@@ -46,7 +46,7 @@
                   <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{i18n.t('mmp.eports_scoring')}}
+                      {{t('mmp.eports_scoring')}}
                     </template>
                     <template v-else-if="is_match_result">
                       {{calc_score(item)}}
@@ -84,11 +84,19 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import global_filters from 'src/boot/global-filters.js'
-import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'   // 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
-import team_img from 'src/project/components/details/team_img.vue'    // 详情页蓝色背景上的大型字母图标
-import match_stage from 'src/project/components/match/match_stage.vue';   // 下拉列表赛事时间展示
-import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';   // 详情点击下拉显示当前赛事的时间
-import show_start_time from 'src/project/components/details/wight/show_start_time.vue'   // 详情页同联赛的赛事即将开赛显示时间
+// 赛事详情头部点击下拉后显示  "↑ 收起" + "< 返回按钮"
+import dialog_header from 'src/project/components/details/dialog/dialog_header.vue'
+ // 详情页蓝色背景上的大型字母图标
+import team_img from 'src/project/components/details/team_img.vue'
+// 下拉列表赛事时间展示
+import match_stage from 'src/project/components/match/match_stage.vue';
+// 详情点击下拉显示当前赛事的时间
+import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
+ // 详情页同联赛的赛事即将开赛显示时间
+import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
+import { t } from "src/boot/i18n";;
+//国际化
+
 
 export default {
   name: "details_dialog",
@@ -115,20 +123,20 @@ export default {
       'get_theme'
     ]),
     is_match_result(){
-      return ['result_details', 'match_result'].includes(this.$route.name)
+      return ['result_details', 'match_result'].includes($route.name)
     }
   },
   created () {
     // 定时器变量
-    this.timer1_ = null
-    this.timer2_ = null;
+    timer1_ = null
+    timer2_ = null;
   },
   methods: {
     ...mapMutations(["set_goto_detail_matchid", "set_details_item", 'set_event_list']),
     // 展示lvs 图标
     show_lvs(item) {
       return item.lvs != -1  && ['string', 'number'].includes(typeof _.get(item,'lss')) &&
-          ['zh','tw'].includes(this.get_lang) && this.get_menu_type != 3000
+          ['zh','tw'].includes(get_lang) && get_menu_type != 3000
     },
     is_eports_scoring(item) {
       //计算主分和客分，用全局的分支处理方法进行处理
@@ -137,7 +145,7 @@ export default {
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
-      if(this.get_menu_type == 3000) {
+      if(get_menu_type == 3000) {
         const mmp_state = item.mmp || 1
         if(mmp_state != (Number(home) + Number(away) +1)) {
           scoring = true
@@ -161,36 +169,36 @@ export default {
     },
     change_active(item) {
       useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
-      if (this.detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
-      this.set_goto_detail_matchid(item.mid); //设置mid;
-      this.set_event_list([])
+      if (detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
+      set_goto_detail_matchid(item.mid); //设置mid;
+      set_event_list([])
 
-      if(!(_.get(this.get_current_menu,'sub.menuType') == '5' && ['result_details', 'match_result'].includes(this.$route.name))) {
-        this.set_details_item(this.get_details_tabs_list[0].id); // 选中的tab的item项;
+      if(!(_.get(get_current_menu,'sub.menuType') == '5' && ['result_details', 'match_result'].includes($route.name))) {
+        set_details_item(get_details_tabs_list[0].id); // 选中的tab的item项;
       }
-      this.$router.replace({ name: "category", params: {mid: item.mid,index: '1' }}); // todo 优化此处
+      $router.replace({ name: "category", params: {mid: item.mid,index: '1' }}); // todo 优化此处
       useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
       useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
       useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
       useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
-      this.timer1_ = setInterval(()=>{
+      timer1_ = setInterval(()=>{
         useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
         useMittEmit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
-        clearInterval(this.timer1_)
-        clearInterval(this.timer2_)
+        clearInterval(timer1_)
+        clearInterval(timer2_)
       },100)
     }
   },
   mounted () {
     // 解决三星手机图片不出来问题
-    this.$forceUpdate();
-    this.timer2_ = setInterval(this.$forceUpdate, 2000);
+    $forceUpdate();
+    timer2_ = setInterval($forceUpdate, 2000);
   },
   beforeDestroy () {
-    clearInterval(this.timer2_)
-    this.timer2_ = null
-    clearInterval(this.timer1_)
-    this.timer1_ = null
+    clearInterval(timer2_)
+    timer2_ = null
+    clearInterval(timer1_)
+    timer1_ = null
   },
 };
 </script>

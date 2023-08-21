@@ -4,33 +4,33 @@
 //  * @Description:注单历史相关数据
 // -->
 import lodash from "lodash";
-import { ref, watch, onMounted, reactive, toRefs,onUnmounted } from "vue";
+import { ref, watch, onMounted, reactive, toRefs, onUnmounted } from "vue";
 import utils from "src/core/utils/utils";
 import { format_day } from "src/core/formart/index.js";
-import {
-    api_common,
-    api_betting,
-    api_account,
-  } from "src/public/api/index";
+import { api_common, api_betting, api_account } from "src/api/index";
+import { t } from "src/boot/i18n";;
+import { uid } from "quasar";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+;
 
 export const useConfig = ({ getOrderList }) => {
   //时间排序数据
   const record_time_sort = [
     {
       id: 2,
-      name: i18n.t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
+      name: t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
       icon: "icon-sort_settle_time",
       check_name: "bet_record.settled_time",
     },
     {
       id: 1,
-      name: i18n.t("bet_record.sort_by_bet_time"), //"按投注时间排序",
+      name: t("bet_record.sort_by_bet_time"), //"按投注时间排序",
       icon: "icon-sort_bet_time",
       check_name: "bet_record.bet_time",
     },
     {
       id: 3,
-      name: i18n.t("bet_record.sort_by_match_time"), //"按开赛时间排序",
+      name: t("bet_record.sort_by_match_time"), //"按开赛时间排序",
       icon: "icon-sort_match_time",
       check_name: "bet_record.match_time",
     },
@@ -56,6 +56,8 @@ export const useConfig = ({ getOrderList }) => {
     orderNo_data_obj: [],
     // 提前结算状态单号
     orderNo_data_list: [],
+    // 当maxcashout为null时，定时1秒重新拉次数据，拉取次数
+    get_cashout_num: 0,
     is_book_status: ["0"], // 预约注单筛选状态条件
     data_state: {
       load_data_state: "loading",
@@ -77,36 +79,38 @@ export const useConfig = ({ getOrderList }) => {
     // 预约orderNo
     orderNo_book: [],
     tips: {
-        //自定义提示
-        statu: false, //显隐
-        message: "",
-      },
+      //自定义提示
+      statu: false, //显隐
+      message: "",
+    },
+    has_confirm_status: "", //设置确认中状态为true
   });
-  watch(()=>state.model,n=>{
-    if (n) {
+  watch(
+    () => state.model,
+    (n) => {
+      if (n) {
         // 这里会存在选中单个日期的情况 ['2021/12/12', from: '2021/01/01', to: '2021/01/07']
         if (!n.from) {
           if (lodash.isArray(n)) {
-            dateChanged(n[0], n[0])
-          } else{
-            dateChanged(n, n)
+            dateChanged(n[0], n[0]);
+          } else {
+            dateChanged(n, n);
           }
         } else {
-          dateChanged(n.from, n.to)
+          dateChanged(n.from, n.to);
         }
       }
-  })
+    }
+  );
   /**
-     * @description: 获取全局点击  TODO
-     * @param {undefined} undefined
-     * @returns {undefined}
-     */
-//   get_global_click() {
-//     this.startTimeShow = false;
-//     this.show_select_time_sort = false
-//   }
-
-
+   * @description: 获取全局点击  TODO
+   * @param {undefined} undefined
+   * @returns {undefined}
+   */
+  //   get_global_click() {
+  //     this.startTimeShow = false;
+  //     this.show_select_time_sort = false
+  //   }
 
   /**
    * @description:清除提前结算实时查询定时器
@@ -191,11 +195,11 @@ export const useConfig = ({ getOrderList }) => {
   const res_timer_get_cashout = () => {
     clear_timer_get_cashout();
     setTimeout(() => {
-      this.get_cashout_max_amount_list(this.orderNo_list);
+      get_cashout_max_amount_list(state.orderNo_list);
     }, 500);
     state.timer_get_cashout = setInterval(() => {
       // 传入查询提前结算的订单
-      get_cashout_max_amount_list(this.orderNo_list);
+      get_cashout_max_amount_list(state.orderNo_list);
     }, 5000);
   };
   /**
@@ -258,13 +262,34 @@ export const useConfig = ({ getOrderList }) => {
       res_timer_get_book();
     }
   };
-      // 启动5秒一次轮训预约投注记录
-    const  res_timer_get_book=()=> {
-        clear_timer_get_book()
-        state.timer_get_book = setInterval(() => {
-          get_book_record_list();
-        }, 5000);
-      }
+
+  /**
+   * @description: 提前结算实时查询，取里面orderNo
+   * @param {Object} params undefined
+   * @param {Function} callback undefined
+   * @return {undefined} undefined
+   */
+  const get_order_no = () => {
+    // 过滤提前结算条件，同步提前结算按钮显示条件
+    let orderNo_ = lodash.filter(state.order_list.records, {
+      enablePreSettle: true,
+      orderStatus: "0",
+      initPresettleWs: true,
+    });
+    let orderNo = lodash.map(orderNo_, "orderNo");
+    state.orderNo_list = orderNo;
+    if (state.orderNo_list && state.orderNo_list.length) {
+      // 提前结算实时查询定时器
+      res_timer_get_cashout();
+    }
+  };
+  // 启动5秒一次轮训预约投注记录
+  const res_timer_get_book = () => {
+    clear_timer_get_book();
+    state.timer_get_book = setInterval(() => {
+      get_book_record_list();
+    }, 5000);
+  };
   /**
    * @description: 轮询更新获取预投住中注单记录(只查预约中数据)
    * @param {Number} cur_page 当前页 第一页
@@ -293,36 +318,233 @@ export const useConfig = ({ getOrderList }) => {
       }
     });
   };
-      /**
-     * @description: 自定义提示
-     * @param {String} message 提示语
-     */
-    const toast=(message)=> {
-        /**清除定时器 */
-        clearTimeout(state.timer)
-        state.timer = null
-        state.tips = {
-          statu: true,
-          message: message,
-        };
-        state.timer = setTimeout(() => {
-          state.tips.statu = false;
-        }, 2000);
+  /**
+   * @description: 自定义提示
+   * @param {String} message 提示语
+   */
+  const toast = (message) => {
+    /**清除定时器 */
+    clearTimeout(state.timer);
+    state.timer = null;
+    state.tips = {
+      statu: true,
+      message: message,
+    };
+    state.timer = setTimeout(() => {
+      state.tips.statu = false;
+    }, 2000);
+  };
+
+  /**
+   * @description: 检查状态是否从确认中变为已完成
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  const check_confirm_complete = () => {
+    let result = false;
+    /* console.log('=========check_confirm_complete===========');
+      console.log(`========================record_obj:${JSON.stringify(this.record_obj)}`); */
+    for (let obj of Object.values(state.record_obj)) {
+      // 是否有确认中状态
+      if (obj.orderStatus == 3) {
+        state.has_confirm_status = true; // 设置确认中状态为true
+        result = true;
+        break;
       }
+    }
+    if (!state.has_confirm_status && state.timer) {
+      clearTimeout(state.timer);
+    }
+    //console.log(`=========has_confirm_status===========${this.has_confirm_status}`);
+    return result;
+  };
+
+  /**
+   * @description: 定时任务
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  const get_timed_task = () => {
+    //console.log('====================bet_record_view=============get_timed_task');
+    if (state.has_confirm_status) {
+      if (state.timer) {
+        clearTimeout(state.timer);
+        state.timer = undefined;
+      }
+      state.timer = setTimeout(() => {
+        //console.log('====================bet_record_view============ddddadafda');
+        get_order_result();
+      }, 5 * 1000); // 30s拉取接口改为5S
+    }
+  };
+
+  /**
+   * @description: 获取订单结果
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  const get_order_result = () => {
+    //console.log('=================================get_order_result========check_confirm_complete:'+this.check_confirm_complete());
+    let orderNos = [];
+    for (let [orderNo, obj] of Object.entries(this.record_obj)) {
+      // 确认中状态则用orderNos收集订单号
+      if (obj.orderStatus == 3) {
+        orderNos.push(orderNo);
+      }
+    }
+    if (orderNos.length > 0) {
+      orderNos = orderNos.join(",");
+      api_betting
+        .query_order_status({ orderNos })
+        .then((res) => {
+          let code = _.get(res, "data.code");
+          let data = _.get(res, "data.data");
+          let handle_time = _.get(res, "data.ts");
+          //console.log(`=====================================${JSON.stringify(data)}`);
+          //清除定时器
+          if (this.timer_) {
+            clearTimeout(this.timer_);
+            this.timer_ = undefined;
+          }
+
+          // 自动化测试 接口数据
+          let data_info = (data && data[0]) || {};
+          let order_status = {
+            code,
+            order_no: data_info.orderNo,
+            status: data_info.status,
+            refuse_code: data_info.refuseCode,
+          };
+          this.vx_set_order_status(order_status);
+
+          if (code == 200 && data) {
+            _.forEach(data, (item) => {
+              // 如果C201和接口拉取都同时进行,则优先最晚的执行
+              if (
+                this.record_obj[item.orderNo] &&
+                this.record_obj[item.orderNo].handle_time &&
+                this.record_obj[item.orderNo].handle_time > handle_time
+              ) {
+                return;
+              }
+              Object.assign(this.record_obj[item.orderNo], {
+                orderStatus: `${item.status}`,
+                handle_time,
+              });
+              if (item.status == 0) {
+                // 订单状态为成功时 合并一下最新的数据,如果为失败则什么都不做
+                if (item.oddsChangeList && item.oddsChangeList.length) {
+                  Object.assign(this.record_obj[item.orderNo], {
+                    maxWinAmount: (
+                      (parseFloat(item.newTotalMaxWinAmount) * 100) /
+                      10000
+                    ).toFixed(2),
+                  });
+                  _.forEach(item.oddsChangeList, (item2) => {
+                    if (
+                      this.record_obj[item.orderNo].orderVOS &&
+                      this.record_obj[item.orderNo].orderVOS.length
+                    ) {
+                      // 都住单对应的投注项集合获取
+                      let order_vos = this.record_obj[item.orderNo].orderVOS;
+                      for (let i = 0; i < order_vos.length; i++) {
+                        // 根据投注单id进行匹配
+                        if (order_vos[i].playOptionsId == item2.playOptionsId) {
+                          // 如果是单关的话后台返回的是最终赔率不用除10000
+                          if (this.record_obj[item.orderNo].seriesType == "1") {
+                            Object.assign(
+                              this.record_obj[item.orderNo].orderVOS[i],
+                              { oddFinally: item2.usedOdds }
+                            );
+                          } else {
+                            Object.assign(
+                              this.record_obj[item.orderNo].orderVOS[i],
+                              { oddFinally: item2.usedOdds }
+                            );
+                          }
+                          // 更新vuex里面的数据
+                          let bet_obj = _.cloneDeep(
+                            this.yabo_common.get_bet_obj(this, oid)
+                          );
+                          if (bet_obj) {
+                            bet_obj.cs.odds_value = item2.usedOdds;
+                            bet_obj.bs.hps[0].hl[0].ol[0].ov = item2.usedOdds;
+                            this.yabo_common.set_bet_obj_value(this, bet_obj);
+                            // 同步详情和列表的数据
+                            this.yabo_common.update_odds_info(this);
+                          }
+                          break;
+                        }
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          }
+          // 是否要继续执行
+          if (!this.check_confirm_complete()) return;
+          if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = undefined;
+          }
+          this.timer = setTimeout(() => {
+            this.get_order_result();
+          }, 2 * 1000); // 5s 改为 2s
+        })
+        .catch(() => {
+          console.log("获取订单状态和最新赔率最高可盈接口调用异常");
+          //清除定时器
+          if (this.timer_) {
+            clearTimeout(this.timer_);
+            this.timer_ = undefined;
+          }
+          this.timer = setTimeout(() => {
+            this.get_order_result();
+          }, 2 * 1000); // 5s 改为 2s
+        });
+    }
+  };
+
+  /**
+   * @更新用户余额
+   * @param uid ：this.params.userId
+   */
+  const get_balance = () => {
+    const get_balance_gcuuid = uid();
+    let gcuuid = get_balance_gcuuid;
+    // console.log('get_balance===', JSON.stringify(gcuuid));
+    api_account
+      .check_balance({ uid: UserCtr.get_uid, t: new Date().getTime(), gcuuid })
+      .then((res) => {
+        // console.log('get_balance===', this.get_balance_gcuuid === res.config.gcuuid);
+        //检查gcuuid
+        let gcuuid = lodash.get(res, "config.gcuuid");
+        if (gcuuid && get_balance_gcuuid != gcuuid) {
+          return;
+        }
+
+        const result = lodash.get(res, "data.data");
+        const code = lodash.get(res, "data.code");
+        if (code == 200) {
+          // this.vx_set_user_balance(result.amount);  //todo
+        }
+      });
+  };
 
   //   ( 待改造)
   onMounted(() => {});
 
-  onUnmounted(()=>{
+  onUnmounted(() => {
     state.order_list = {};
     state.record_obj = {};
     state.data_state = {};
     state.params = {};
     clearTimeout(state.timer);
-    clear_timer_get_book()
-    clear_timer_get_cashout()
-    clear_send_cashout()
-  })
+    clear_timer_get_book();
+    clear_timer_get_cashout();
+    clear_send_cashout();
+  });
 
   return {
     ...toRefs(state),
@@ -331,6 +553,10 @@ export const useConfig = ({ getOrderList }) => {
     record_time_sort,
     set_search_time,
     res_timer_get_cashout,
-    delete_book_record
+    delete_book_record,
+    clear_send_cashout,
+    check_confirm_complete,
+    get_order_no,
+    uid
   };
 };

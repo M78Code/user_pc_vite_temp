@@ -8,8 +8,8 @@
 <script setup>
 import { useOpenWithPostMessage } from "src/core/utils/event-hook";
 import { onBeforeMount } from "vue";
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n();
+import { t } from "src/boot/i18n";
+;
 console.log('lockie_test_console', t('match_info.more'));
 let remove_list = [];
 const on_test = () => {

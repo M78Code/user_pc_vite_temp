@@ -89,7 +89,7 @@
 import { ref, } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 // import store from "project_path/src/store";
 import store from "src/store-redux/index.js";
@@ -120,7 +120,7 @@ const props = defineProps({
 const emit = defineEmits(['auto_close'])
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 const route = useRoute()
 const router = useRouter()

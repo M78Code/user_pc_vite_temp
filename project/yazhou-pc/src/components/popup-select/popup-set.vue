@@ -29,14 +29,14 @@
 
 <script setup>
 import { ref, watch, onUnmounted, computed } from 'vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 设置弹窗是否激活 */
 const is_active = ref(false)

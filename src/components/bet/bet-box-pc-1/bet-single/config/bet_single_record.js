@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 单关投注记录 正常
  */
-import { mapGetters } from "vuex";
+
 import betting from "src/public/mixins/betting/betting.js";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
 export default {
@@ -94,14 +94,7 @@ export default {
     }
   },  
   computed: {
-    ...mapGetters({
-      vx_cur_odd: "get_cur_odd",   //当前赔率
-      vx_cur_menu_type: "get_cur_menu_type",  // 当前菜单类型
-      get_menu_obj: "get_menu_obj",   // 菜单对象
-      vx_get_theme: "get_theme",   // 皮肤
-      vx_get_bet_single_obj: "get_bet_single_obj",   // 单关对象
-      lang: "get_lang"  // 国际化
-    }),
+
     /**
      * @description: 是否为印尼盘
      * @param {undefined} undefined
@@ -142,7 +135,7 @@ export default {
      * @return {boolean} 是否确认中状态
      */
     has_confirm_status() {
-      return _.findIndex(this.view_ctr_obj.order_detail_data, item => item.orderStatusCode == 2) > -1;
+      return _.findIndex(this.view_ctr_obj.bet_order_success_all, item => item.orderStatusCode == 2) > -1;
     },
     /**
      * @description: 赛事时间
@@ -150,7 +143,7 @@ export default {
      * @return {string} 处理后的赛事时间
      */
     match_time() {
-      let obj_bs = _.get(this.vx_get_bet_single_obj,`${this.id}.bs`);
+      let obj_bs = _.get(this.BetData.bet_single_obj,`${this.id}.bs`);
       //是不是个普通对象
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
@@ -233,7 +226,7 @@ export default {
       if(!new_) {
         let success_count = 0; // 注单提交成功的个数
         let fail_count = 0; // 注单失败的个数
-        _.forEach(this.view_ctr_obj.order_detail_data, item => {
+        _.forEach(this.view_ctr_obj.bet_order_success_all, item => {
 
           if(item.orderStatusCode == 0) {  //失败
             // 失败订单统计
@@ -245,7 +238,7 @@ export default {
         });
 
         // 注单全部成功
-        if(success_count == this.view_ctr_obj.order_detail_data.length) {
+        if(success_count == this.view_ctr_obj.bet_order_success_all.length) {
           this.view_ctr_obj.order_confirm_complete = 2;      
           // 清除超时定时器
           if(this.timer_obj['time_over']) {
@@ -259,7 +252,7 @@ export default {
         }
 
         // 注单全部失败
-        if(fail_count == this.view_ctr_obj.order_detail_data.length) {
+        if(fail_count == this.view_ctr_obj.bet_order_success_all.length) {
           this.view_ctr_obj.order_confirm_complete = 3; 
           // 清除超时定时器
           if(this.timer_obj['time_over']) {
@@ -272,7 +265,7 @@ export default {
           }
         }
         // 全部注单已完成 有成功有失败的
-        if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == this.view_ctr_obj.order_detail_data.length)) {
+        if(fail_count > 0 && success_count > 0 && ((fail_count+success_count) == this.view_ctr_obj.bet_order_success_all.length)) {
           this.view_ctr_obj.order_confirm_complete = 4; 
           // 清除超时定时器
           if(this.timer_obj['time_over']) {

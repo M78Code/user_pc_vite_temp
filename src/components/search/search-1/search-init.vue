@@ -66,7 +66,7 @@
   
 <script setup>
 import { reactive, watch, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 // import search from "src/core/search-class/search.js"
 import store from "src/store-redux/index.js";
 
@@ -79,7 +79,7 @@ const props = defineProps({
 const emit = defineEmits(['set_show_type'])
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 历史搜索数据 */
 let histroy_data = reactive([])
