@@ -10,6 +10,8 @@ export const EMIT_SKT1_CMD = "EMIT_SKT1_SCMD";
 export const EMIT_SKT1_R_CMD = "EMIT_SKT1_RCMD";
 /** layout-header展示搜索 */
 export const EMIT_LAYOUT_HEADER_SEARCH_ISSHOW = "EMIT_LAYOUT_HEADER_SEARCH_ISSHOW";
+/** 错误页面 */
+export const EMIT_DOMAIN_ERROR_ALERT = "EMIT_DOMAIN_ERROR_ALERT";
 // 点击键盘
 export const EMIT_KEY_BOARD_CLICK_CMD = "EMIT_KEY_BOARD_CLICK";
 // 计算总投注数
@@ -341,3 +343,7 @@ export const EMIT_SET_PANEL_STATUS = "EMIT_SET_PANEL_STATUS";
 // 监听获取当前选中详情玩法集
 export const EMIT_GET_ACTIVE_DETAILS_PLAY_TAB = "EMIT_GET_ACTIVE_DETAILS_PLAY_TAB";
 export const EMIT_SET_MATCH_LIST_SCROLL_TOP = 'EMIT_SET_MATCH_LIST_SCROLL_TOP'
+
+// ------------------------------------------------------------------视频相关-----------------------------------------------------------------------------------
+/** 关闭视频播放窗口 */
+export const EMIT_VIDEO_ZONE_EVENT_CMD = 'EMIT_VIDEO_ZONE_EVENT_CMD'

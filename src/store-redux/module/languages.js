@@ -8,7 +8,9 @@
  *  vi-越南语
  *  th-泰国语
  */
+import { nextTick } from "vue";
 import { ls, ss } from "src/core/utils/web-storage.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt";
 
 const initialState = {
   /** 语言 */
@@ -24,6 +26,7 @@ const initialState = {
 
 export default function langReducer(state = initialState, action) {
   const { type, data } = action;
+  nextTick(() => useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data))
   switch (type) {
     /** 设置语言 */
     case "SET_LANG":
