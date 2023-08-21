@@ -4,7 +4,7 @@ import {useI18n} from 'vue-i18n'
   // 表格头部分
 const lineList = [
     { label: t("bet_record.number"), id: 1 },
-    { label: 't("bet_record.betting_details")', id: 2 },
+    { label: t("bet_record.betting_details"), id: 2 },
     { label: t("bet_record.betting_play"), id: 3 },
     { label: t("bet_record.options"), id: 4 },
     { label: t("bet_record.bets_forehead"), id: 5 },
