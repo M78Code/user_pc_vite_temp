@@ -32,7 +32,7 @@
       <!-- 全屏 -->
       <div class="col-right">
         <div class="fold-btn" @click="set_unfold_multi_column(true)"  v-if="menu_data.is_multi_column && get_global_switch.multi_column  && !get_unfold_multi_column && ['search','home'].includes($route.name) && !vx_show_filter_popup">
-          <span class="text">{{$root.$t('icon_tips.fold')}}</span>
+          <span class="text">{{i18n.t('icon_tips.fold')}}</span>
           <i class="icon-arrow q-icon c-icon" size="12px" ></i>
         </div>
         <div v-if="animation_btn_show && ['animation'].includes(vx_play_media.media_type) && vx_get_is_fold_status">
@@ -41,7 +41,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style+';white-space: nowrap;'"
-          >{{$root.$t('video.big_screen_mode')}}</q-tooltip>
+          >{{i18n.t('video.big_screen_mode')}}</q-tooltip>
           <!-- 全屏 -->
         </div>
         <!-- 刷新按钮 -->

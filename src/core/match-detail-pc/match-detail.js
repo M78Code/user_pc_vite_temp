@@ -340,7 +340,7 @@ const sr_click_handle = (match) => {
   if (!store.getters.get_global_switch.statistics_switch)
     return window.vue.useMittEmit(
       window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-      window.vue.$root.$t("msg.msg_09")
+      window.vue.i18n.t("msg.msg_09")
     );
   if ([1, 2].includes(match.csid * 1)) {
     full_url = `/#/analysis_header/${match.csid}/${match.mid}`; // seid,match.srid

@@ -445,7 +445,7 @@ const router = useRouter();
 //         //   // 弹出提示消息、登录层
 //         //   window.vue.useMittEmit(
 //         //     window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-//         //     window.vue.$root.$t("login.login_timeout")
+//         //     window.vue.i18n.t("login.login_timeout")
 //         //   );
 //         // } else {
 //           // 登录失效直接展示 alert

@@ -1,7 +1,7 @@
 <template>
     <div ref="video_history_line" class="video-history-line" :class="[mode]">
         <div class="block-header">
-            <div class="block-title">{{ $root.$t('video.video_event_history') }}</div>
+            <div class="block-title">{{ i18n.t('video.video_event_history') }}</div>
         </div>
         <div class="video-history-main">
             <div class="progress-container">

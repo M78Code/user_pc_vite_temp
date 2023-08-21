@@ -7,25 +7,25 @@
   <div class="football_standings" :class="{'football_standings-empty': no_data}">
     <div class="title" v-if="ranking_data.length>0">
       <!-- 联赛类别(0:其他,1联赛,2杯赛) -->
-      {{ranking_data[0].tournamentType == 1 ? $root.$t('analysis_football_matches.league_points') : $root.$t('analysis_football_matches.cup_points') }}
+      {{ranking_data[0].tournamentType == 1 ? i18n.t('analysis_football_matches.league_points') : i18n.t('analysis_football_matches.cup_points') }}
     </div>
-    <div class="title" v-if="ranking_data.length <= 0">{{$root.$t('analysis_football_matches.league_points') }}</div>
+    <div class="title" v-if="ranking_data.length <= 0">{{i18n.t('analysis_football_matches.league_points') }}</div>
     <!-- 杯赛积分 联赛积分  二选一 -->
     <div class="table-score" v-if="ranking_data.length>0"
     :class="{'backball-table': get_detail_data.csid == 2}">
       <!-- 头部 -->
       <div class="header">
-        <div class="col1">{{$root.$t('analysis_football_matches.rank') }}</div>
-        <div class="col2">{{$root.$t('analysis_football_matches.team') }}</div>
-        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.league') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.game') }}</div>
-        <div class="col3">{{$root.$t('analysis_football_matches.victory') }}</div>
-        <div class="col3">{{$root.$t('analysis_football_matches.negative') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.flat') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.gain_loss') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.net_win') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 1">{{$root.$t('analysis_football_matches.integral') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 2">{{$root.$t('home_popular.win_rate') }}</div>
+        <div class="col1">{{i18n.t('analysis_football_matches.rank') }}</div>
+        <div class="col2">{{i18n.t('analysis_football_matches.team') }}</div>
+        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.league') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.game') }}</div>
+        <div class="col3">{{i18n.t('analysis_football_matches.victory') }}</div>
+        <div class="col3">{{i18n.t('analysis_football_matches.negative') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.flat') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.gain_loss') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.net_win') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 1">{{i18n.t('analysis_football_matches.integral') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 2">{{i18n.t('home_popular.win_rate') }}</div>
       </div>
       <!-- 主内容 -->
       <div class="group-item">
@@ -56,7 +56,7 @@
       </span>
     </div>
     <!-- 没有数据 组件 -->
-     <div v-if="no_data" class="no-list">{{ $root.$t('common.no_data') }}</div>
+     <div v-if="no_data" class="no-list">{{ i18n.t('common.no_data') }}</div>
   </div>
 </template>
 
@@ -116,10 +116,10 @@ import { useRoute } from 'vue-router'
           box_bool = !box_bool;
           if (box_bool == true) {
             // TODO: 国际化后续修改调整
-            [btn_text, direction] = [$root.$t("bet_record.pack_down"), "down"];
+            [btn_text, direction] = [i18n.t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
-            [btn_text, direction] = [$root.$t("bet_record.pack_up"), ""];
+            [btn_text, direction] = [i18n.t("bet_record.pack_up"), ""];
             toggle_rule_a();
           }
         }
@@ -142,7 +142,7 @@ import { useRoute } from 'vue-router'
   const rules_normal = () => {
     [btn_text, direction, box_bool] = [
       // TODO: 后续修改调整
-      $root.$t("bet_record.pack_up"),
+      i18n.t("bet_record.pack_up"),
       "",
       false
     ];
@@ -152,7 +152,7 @@ import { useRoute } from 'vue-router'
     if (ranking_data.length >= 2)
       [btn_text, direction, box_bool] = [
         // TODO: 后续修改调整
-        $root.$t("bet_record.pack_down"),
+        i18n.t("bet_record.pack_down"),
         "down",
         true
       ];

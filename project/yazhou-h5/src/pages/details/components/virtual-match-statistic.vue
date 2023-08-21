@@ -6,7 +6,7 @@
 <template>
   <div class="c-match-startistic">
     <!-- 历史战绩 -->
-    <div class="historical-record">{{$root.$t('collect.historical_record')}}</div>
+    <div class="historical-record">{{i18n.t('collect.historical_record')}}</div>
     <!-- 比分板 -->
     <div class="score-list">
       <div

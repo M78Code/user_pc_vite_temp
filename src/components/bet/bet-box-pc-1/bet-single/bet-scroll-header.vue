@@ -12,10 +12,10 @@
         <!--箭头图标-->
         <icon name="icon-back" size="14px" />
         <!--返回菜单-->
-        <div class="back-text ellipsis" v-if="vx_is_bet_single">{{ $root.$t('common.return_sports') }}</div>
+        <div class="back-text ellipsis" v-if="vx_is_bet_single">{{ i18n.t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
-          v-tooltip="{ content: '&n b sp;'+$root.$t('common.return_spo r ts') +'&nbsp;' , overflow:1}" v-else>
-          {{ $root.$t('common.return_sports') }}</div>
+          v-tooltip="{ content: '&n b sp;'+i18n.t('common.return_spo r ts') +'&nbsp;' , overflow:1}" v-else>
+          {{ i18n.t('common.return_sports') }}</div>
       </div>
       <div v-else>
         <!-- <q-separator class="bet-top-separator" :class="{'shijiebei-separator': $route.name.includes('world_cup')}"></q-separator> -->
@@ -25,10 +25,10 @@
           <template v-if="vx_get_is_virtual_bet">
             <div>
               <template v-if="vx_get_virtual_bet_list.length == 1">
-                {{ $root.$t('bet.bet_one_') }}
+                {{ i18n.t('bet.bet_one_') }}
               </template>
               <template v-else-if="vx_get_virtual_bet_list.length > 1">
-                {{ $root.$t('menu.match_bet') }}<span class="bet-count">{{ bet_count }}</span>
+                {{ i18n.t('menu.match_bet') }}<span class="bet-count">{{ bet_count }}</span>
               </template>
             </div>
             <span>
@@ -42,14 +42,14 @@
                 <icon class="mr15" :name="`img:${iocn_img_unfold}`" size="14px"
                   v-if="vx_get_theme.includes('y0') ? is_expand : !is_expand" />
                 <icon class="mr15" :name="`img:${iocn_img_fold}`" size="14px" v-else />
-                <span>{{ $root.$t('bet.bet_order') }}</span> <!--投注单-->
+                <span>{{ i18n.t('bet.bet_order') }}</span> <!--投注单-->
               </template> <!--世界杯rn-->
               <template v-else> <!--世界杯rn-->
                 <icon class="mr15" :name="`img:${require('public/yabo/shijiebei_unfold.svg')}`" size="14px"
                   v-if="is_expand" />
                 <icon class="mr15" :name="`img:${require('public/yabo/shijiebei_fold.svg')}`" size="14px" v-else />
                 <!--世界杯rn-->
-                <span>{{ $root.$t('bet.bet_order') }}</span>
+                <span>{{ i18n.t('bet.bet_order') }}</span>
               </template>
             </div>
           </template>
@@ -62,12 +62,12 @@
           <template v-if="vx_is_bet_single">
             <!--复式串关已改为串关-->
             <span class="series_style"
-              :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(get_lang) }">{{ $root.$t('bet.bet_series') }}</span>
+              :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(get_lang) }">{{ i18n.t('bet.bet_series') }}</span>
             <span>+</span>
           </template>
           <!--单关-->
           <template v-else>
-            <span>{{ $root.$t('bet.bet_one_') }}</span>
+            <span>{{ i18n.t('bet.bet_one_') }}</span>
             <span class="bet-single-btn">
               <!--单关数量-->
               <span class="bet-single-count">{{ bet_count }}</span>
@@ -85,7 +85,7 @@
       <div class="row bet-record-item cursor-pointer">
         <!--点选未结算0-->
         <div class="col text-center" :class="{ 'active': bet_recode_selected == 0 }" @click.stop="bet_recode_selected = 0">
-          {{ $root.$t('common.no_settlement') }}
+          {{ i18n.t('common.no_settlement') }}
           <!--未结算-->
         </div>
         <!--点选预约2-->
@@ -94,14 +94,14 @@
         </div>
         <!--点选已结算1-->
         <div class="col text-center" :class="{ 'active': bet_recode_selected == 1 }" @click.stop="bet_recode_selected = 1">
-          {{ $root.$t('common.settlement_') }}
+          {{ i18n.t('common.settlement_') }}
           <!--已结算-->
         </div>
         <div class="col-auto menu-tab-line" v-if="bet_recode_selected == 0">
           <div class="line"></div>
         </div>
         <div class="col text-center" :class="{ 'active': bet_recode_selected == 2 }" @click.stop="bet_recode_selected = 2">
-          {{ $root.$t('bet.bet_book2') }}
+          {{ i18n.t('bet.bet_book2') }}
           <!--预约-->
         </div>
       </div>
@@ -109,7 +109,7 @@
         <div class="row cursor-pointer appoint-order-status">
           <div class="col text-center" :class="{ 'active': bet_recode_appoint_order_status == 0 }"
             @click.stop="bet_recode_appoint_order_status = 0">
-            {{ $root.$t('bet.bet_process') }}
+            {{ i18n.t('bet.bet_process') }}
             <template v-if="bet_recode_appoint_order_status == 0">
               <div class="tabs-line"></div>
             </template>
@@ -119,7 +119,7 @@
           </div>
           <div class="col text-center" :class="{ 'active': bet_recode_appoint_order_status == 2 }"
             @click.stop="bet_recode_appoint_order_status = 2">
-            {{ $root.$t('bet.bet_invalid') }}
+            {{ i18n.t('bet.bet_invalid') }}
             <template v-if="bet_recode_appoint_order_status == 2">
               <div class="tabs-line"></div>
             </template>

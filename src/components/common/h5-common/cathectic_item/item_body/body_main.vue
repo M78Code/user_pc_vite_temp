@@ -29,7 +29,7 @@
         <template  v-else-if="type_.seriesType == '3'">{{main.matchName}}</template>
         <template v-else>{{main.matchInfo}}</template>
       </p>
-      <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{(new Date(utils.format_time_zone_time(+main.beginTime))).Format($root.$t('time4'))}}</p>
+      <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{(new Date(utils.format_time_zone_time(+main.beginTime))).Format(i18n.t('time4'))}}</p>
     </div>
 
     <!-- 中 -->
@@ -73,7 +73,7 @@
       </p>
       <!-- managerCode=4 代表电竞 orderStatus=1 是已结算 -->
       <p class="col-8 text-left yb_fontsize10 item-order" v-if="type_.managerCode == 4&&type_.orderStatus == 1">
-        <!-- {{$root.$t('bet_record.result_score')}}： -->
+        <!-- {{i18n.t('bet_record.result_score')}}： -->
         {{main.settleScore}}
       </p>
 
@@ -85,10 +85,10 @@
 
       <!-- <div class="col-8 text-left yb_fontsize10 item-order" v-if="type_.seriesType == '3'">
         <template v-if="!['zh', 'tw'].includes(get_lang)">
-          {{(new Date(+type_.orderVOS[0].closingTime)).Format($root.$t('time7'))}} {{ $root.$t('match_main.cut_off')}}
+          {{(new Date(+type_.orderVOS[0].closingTime)).Format(i18n.t('time7'))}} {{ i18n.t('match_main.cut_off')}}
         </template>
         <template v-else>
-          {{(new Date(+type_.orderVOS[0].closingTime)).Format($root.$t('time7'))}} {{ $root.$t('match_main.cut_off')}}
+          {{(new Date(+type_.orderVOS[0].closingTime)).Format(i18n.t('time7'))}} {{ i18n.t('match_main.cut_off')}}
         </template>
       </div> -->
 
@@ -105,42 +105,42 @@ import utils from 'src/public/utils/utils.js'
 
     
   const bet_result = ref({
-    // "0": $root.$t("bet_record.bet_no_status00"), //'未结算',
-    "2": $root.$t("bet_record.bet_no_status02"), //'走水',
-    "3": $root.$t("bet_record.bet_no_status03"), //'输',
-    "4": $root.$t("bet_record.bet_no_status04"), //'赢',
-    "5": $root.$t("bet_record.bet_no_status05"), //'赢半',
-    "6": $root.$t("bet_record.bet_no_status06"), //'输半',
-    "7": $root.$t("bet_record.bet_no_status07"), //'比赛取消',
-    "8": $root.$t("bet_record.bet_no_status08"), //'比赛延期',
-    "11": $root.$t("bet_record.bet_no_status11"), // '比赛延迟',
-    "12": $root.$t("bet_record.bet_no_status12"), // '比赛中断',
-    "15": $root.$t("bet_record.bet_no_status15") // '比赛放弃'
+    // "0": i18n.t("bet_record.bet_no_status00"), //'未结算',
+    "2": i18n.t("bet_record.bet_no_status02"), //'走水',
+    "3": i18n.t("bet_record.bet_no_status03"), //'输',
+    "4": i18n.t("bet_record.bet_no_status04"), //'赢',
+    "5": i18n.t("bet_record.bet_no_status05"), //'赢半',
+    "6": i18n.t("bet_record.bet_no_status06"), //'输半',
+    "7": i18n.t("bet_record.bet_no_status07"), //'比赛取消',
+    "8": i18n.t("bet_record.bet_no_status08"), //'比赛延期',
+    "11": i18n.t("bet_record.bet_no_status11"), // '比赛延迟',
+    "12": i18n.t("bet_record.bet_no_status12"), // '比赛中断',
+    "15": i18n.t("bet_record.bet_no_status15") // '比赛放弃'
   }) 
   const bet_result_1 = ref({
-    "7": $root.$t("bet_record.bet_no_status07"), //'比赛取消',
-    "8": $root.$t("bet_record.bet_no_status08"), //'比赛延期',
-    "11": $root.$t("bet_record.bet_no_status11"), // '比赛延迟',
-    "12": $root.$t("bet_record.bet_no_status12"), // '比赛中断',
-    "15": $root.$t("bet_record.bet_no_status15") // '比赛放弃'
+    "7": i18n.t("bet_record.bet_no_status07"), //'比赛取消',
+    "8": i18n.t("bet_record.bet_no_status08"), //'比赛延期',
+    "11": i18n.t("bet_record.bet_no_status11"), // '比赛延迟',
+    "12": i18n.t("bet_record.bet_no_status12"), // '比赛中断',
+    "15": i18n.t("bet_record.bet_no_status15") // '比赛放弃'
   }) 
   //手动取消订单的原因展示
   const bet_result_3 = ref({
-    "1": $root.$t("bet_record.cancel_type_1"),
-    "2": $root.$t("bet_record.cancel_type_2"),
-    "3": $root.$t("bet_record.cancel_type_3"),
-    "4": $root.$t("bet_record.cancel_type_4"),
-    "5": $root.$t("bet_record.cancel_type_5"),
-    "6": $root.$t("bet_record.cancel_type_6"),
-    "17": $root.$t("bet_record.cancel_type_17"),
-    "20": $root.$t("bet_record.cancel_type_20"),
+    "1": i18n.t("bet_record.cancel_type_1"),
+    "2": i18n.t("bet_record.cancel_type_2"),
+    "3": i18n.t("bet_record.cancel_type_3"),
+    "4": i18n.t("bet_record.cancel_type_4"),
+    "5": i18n.t("bet_record.cancel_type_5"),
+    "6": i18n.t("bet_record.cancel_type_6"),
+    "17": i18n.t("bet_record.cancel_type_17"),
+    "20": i18n.t("bet_record.cancel_type_20"),
   }) 
   const utils = ref(utils)
   // 3个需要特殊对应的国际化数据写到这里
   const i18n_data = ref({
-    sport_name: $root.$t(`common_lang.${lang}.sport2`)[main.sportId],
-    type: $root.$t(`common_lang.${lang}.matchtype`)[main.matchType],
-    mtype: $root.$t(`common_lang.${lang}.odds`)[main.marketType]
+    sport_name: i18n.t(`common_lang.${lang}.sport2`)[main.sportId],
+    type: i18n.t(`common_lang.${lang}.matchtype`)[main.matchType],
+    mtype: i18n.t(`common_lang.${lang}.odds`)[main.marketType]
   }) 
   let lang = ref(type_.langCode ? (type_.langCode == 'zs' ? 'zh': type_.langCode) : 'zh')
   const props =defineProps({
@@ -194,10 +194,10 @@ import utils from 'src/public/utils/utils.js'
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || $root.$t("bet_record.invalid");
+                res = bet_result_3[cancelType] || i18n.t("bet_record.invalid");
               } else if (betStatus == 1) {
                 if (betResult == 13 || betResult == 16) {
-                  res = $root.$t("bet_record.invalid")
+                  res = i18n.t("bet_record.invalid")
                 } else {
                   res = bet_result[betResult] || '';
                 }
@@ -214,10 +214,10 @@ import utils from 'src/public/utils/utils.js'
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || $root.$t("bet_record.invalid");
+                res = bet_result_3[cancelType] || i18n.t("bet_record.invalid");
               } else if (betStatus == 1) {
                 if (betResult == 13 || betResult == 16) {
-                  res = $root.$t("bet_record.invalid");
+                  res = i18n.t("bet_record.invalid");
                 } else {
                   // 冠军玩法特殊对应
                   if (seriesType == '3' && [2, 3, 4, 5, 6].includes(+betResult)) {
@@ -238,9 +238,9 @@ import utils from 'src/public/utils/utils.js'
             } else {
               if (betStatus == 3 || betStatus == 4) {
                 // return '无效';
-                res = bet_result_3[cancelType] || $root.$t("bet_record.invalid");
+                res = bet_result_3[cancelType] || i18n.t("bet_record.invalid");
               } else if (betStatus == 1) {
-                res = bet_result_1[betResult] || $root.$t("bet_record.invalid");
+                res = bet_result_1[betResult] || i18n.t("bet_record.invalid");
               } else {
                 res = '';
               }

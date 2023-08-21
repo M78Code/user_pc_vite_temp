@@ -513,7 +513,7 @@ class MatchListDataClass {
 				col.ols.forEach((ol) => {
 					// 非投注项关盘
 					if (ol.oid && ol._hs != 2 && ol.os != 3) {
-						match.up_half_text = "-" + window.vue.$root.$t("common.up_half");
+						match.up_half_text = "-" + window.vue.i18n.t("common.up_half");
 						is_show_cur_handicap = true;
 					}
 				});
@@ -521,11 +521,11 @@ class MatchListDataClass {
 		} else {
 			//第一节        刚开赛
 			if (mmp == 13 || mmp == 0) {
-				match.up_half_text = "-" + window.vue.$root.$t("mmp.2.13");
+				match.up_half_text = "-" + window.vue.i18n.t("mmp.2.13");
 			}
 			//第三节   第二节休息
 			if (mmp == 15 || mmp == 302) {
-				match.up_half_text = "-" + window.vue.$root.$t("mmp.2.15");
+				match.up_half_text = "-" + window.vue.i18n.t("mmp.2.15");
 			}
 			is_show_cur_handicap = true;
 		}

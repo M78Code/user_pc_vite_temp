@@ -9,30 +9,30 @@
       <p class="row justify-between yb_pl10">
         <span class="col-7">
           <!-- 提前结算申请未通过 -->
-          <i class="tips" v-if="tips == 1">{{$root.$t('early.info2')}}</i>
+          <i class="tips" v-if="tips == 1">{{i18n.t('early.info2')}}</i>
           <!-- 功能暂停中，请稍后再试 -->
-          <i class="tips" v-else-if="tips == 2">{{$root.$t('early.info6')}}</i>
+          <i class="tips" v-else-if="tips == 2">{{i18n.t('early.info6')}}</i>
           <!-- 提前结算金额调整中，请再试一次 -->
-          <i class="tips" v-else-if="tips == 3">{{$root.$t('early.info7')}}</i>
+          <i class="tips" v-else-if="tips == 3">{{i18n.t('early.info7')}}</i>
           <!-- 提前结算金额已包含本金 -->
-          <i v-else>{{$root.$t('early.info1')}}</i>
+          <i v-else>{{i18n.t('early.info1')}}</i>
         </span>
-        <span class="col-5 text-right tips-right" v-if="status == 6">{{$root.$t('early.info3')}}</span>
+        <span class="col-5 text-right tips-right" v-if="status == 6">{{i18n.t('early.info3')}}</span>
       </p>
 
       <div class="btn-wrap row justify-between yb_mt8 yb_mb12">
         <div class="btn-l row justify-between col" :class="{'btn2': status !== 1 && status !== 5 && status !== 6,'btn3': status == 5}">
           <p class="btn-ll text-center col ellipsis yb_fontsize12 column justify-center" @click="submit_click">
             <!-- 暂停提前结算 -->
-            <span v-if="status == 5">{{$root.$t('early.btn1')}} </span>
+            <span v-if="status == 5">{{i18n.t('early.btn1')}} </span>
             <!-- 提前结算 -->
-            <span v-if="status == 1 || status == 6">{{$root.$t('early.btn2')}}</span>
+            <span v-if="status == 1 || status == 6">{{i18n.t('early.btn2')}}</span>
             <!-- 确认提前结算 -->
-            <span v-if="status == 2">{{$root.$t('early.btn3')}}</span>
+            <span v-if="status == 2">{{i18n.t('early.btn3')}}</span>
             <!-- 确认中... -->
-            <span v-if="status == 3">{{$root.$t('early.btn4')}}</span>
+            <span v-if="status == 3">{{i18n.t('early.btn4')}}</span>
             <!-- 已提前结算 -->
-            <span v-if="status == 4">{{$root.$t('early.btn5')}}</span>
+            <span v-if="status == 4">{{i18n.t('early.btn5')}}</span>
             <!-- 按钮上的金额 -->
             <span v-if="status !== 5 && (Number(front_settle_amount) || expected_profit)">{{betting_amount}}</span>
           </p>
@@ -63,7 +63,7 @@
       <q-slide-transition>
         <div v-show="slider_show" class="slider-wrap">
           <!-- 提前结算投注额 -->
-          <p class="yb_mb14">{{$root.$t('early.info4')}}：{{cashout_stake.toFixed(2)}} </p>
+          <p class="yb_mb14">{{i18n.t('early.info4')}}：{{cashout_stake.toFixed(2)}} </p>
           <q-slider
             track-size="0.06rem"
             @change="change_percentage"
@@ -83,15 +83,15 @@
     </template>
     <div class="yb_pl10 yb_pt10 yb_mb6" v-if="is_tips_show">
       <!-- 注单剩余本金 -->
-      <p class="yb_mb4">{{$root.$t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
+      <p class="yb_mb4">{{i18n.t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
       <!-- 提前结算可用次数 -->
-      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && get_user.pcs==1  && get_user.settleSwitch">{{$root.$t('early.info9')}}：{{ remaining_num }}</p>
+      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && get_user.pcs==1  && get_user.settleSwitch">{{i18n.t('early.info9')}}：{{ remaining_num }}</p>
     </div>
 
     <!-- 提前结算详情 -->
     <p class="row justify-between yb_pl10 yb_py4" @click="fetch_early_settle_detail" v-if="details_show2">
       <!-- 提前结算详情 -->
-      <span>{{$root.$t('early.list1')}}</span>
+      <span>{{i18n.t('early.list1')}}</span>
       <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" :class="{arrow2: details_show}" class="arrow">
     </p>
     <q-slide-transition>
@@ -104,34 +104,34 @@
               <span class="order-num" v-if="item.preOrderNo">{{item.preOrderNo}}
                 &ensp;<img  src="image/wwwassets/bw3/svg/copy.svg" style="width:0.1rem;vertical-align:-2px" alt="" @click="copy($event, item.preOrderNo)">
               </span>
-              <span class="order-num" v-else>{{$root.$t('early.list6')}}</span>
+              <span class="order-num" v-else>{{i18n.t('early.list6')}}</span>
 
-              <span>{{(new Date(utils.format_time_zone_time(+item.createTime))).Format($root.$t('time4'))}}</span>
+              <span>{{(new Date(utils.format_time_zone_time(+item.createTime))).Format(i18n.t('time4'))}}</span>
             </p>
             <!-- 取消原因 -->
             <div class="row yb_px10 yb_py4" v-if="item.orderStatus == 2">
-              <span class="cancel">{{$root.$t('common.cancel')}}</span>
+              <span class="cancel">{{i18n.t('common.cancel')}}</span>
             </div>
             <!-- 注单被取消 -->
             <template v-if="item.orderStatus == 2">
               <!-- 部分结算 -->
               <!-- 结算本金 -->
-              <p class="yb_mt4"><span>{{item.remainingBetAmount?$root.$t('early.list7'):$root.$t('early.list2')}}</span><span>0.00</span></p>
+              <p class="yb_mt4"><span>{{item.remainingBetAmount?i18n.t('early.list7'):i18n.t('early.list2')}}</span><span>0.00</span></p>
               <!-- 返还金额 -->
-              <p><span>{{$root.$t('early.list4')}}</span><span>0.00</span></p>
+              <p><span>{{i18n.t('early.list4')}}</span><span>0.00</span></p>
               <!-- 输/赢 -->
-              <p><span>{{$root.$t('early.list5')}}</span><span>0.00</span></p>
+              <p><span>{{i18n.t('early.list5')}}</span><span>0.00</span></p>
             </template>
             <template v-else>
               <!-- 部分结算 -->
               <!-- 结算本金 -->
-              <p class="yb_mt4"><span>{{item.remainingBetAmount?$root.$t('early.list7'):$root.$t('early.list2')}}</span><span>{{(+item.preBetAmount).toFixed(2)}}</span></p>
+              <p class="yb_mt4"><span>{{item.remainingBetAmount?i18n.t('early.list7'):i18n.t('early.list2')}}</span><span>{{(+item.preBetAmount).toFixed(2)}}</span></p>
               <!-- 返还金额 -->
-              <p><span>{{$root.$t('early.list4')}}</span><span>{{(+item.settleAmount).toFixed(2)}}</span></p>
+              <p><span>{{i18n.t('early.list4')}}</span><span>{{(+item.settleAmount).toFixed(2)}}</span></p>
               <!-- 输/赢 -->
-              <p><span>{{$root.$t('early.list5')}}</span><span>{{(+item.profit).toFixed(2)}}</span></p>
+              <p><span>{{i18n.t('early.list5')}}</span><span>{{(+item.profit).toFixed(2)}}</span></p>
               <!-- 剩余本金 -->
-              <p v-if="item.remainingBetAmount"><span>{{$root.$t('early.list3')}}</span><span>{{(+item.remainingBetAmount).toFixed(2)}}</span></p>
+              <p v-if="item.remainingBetAmount"><span>{{i18n.t('early.list3')}}</span><span>{{(+item.remainingBetAmount).toFixed(2)}}</span></p>
             </template>
           </div>
         </template>
@@ -586,7 +586,7 @@ const props = defineProps({
       })
       clipboard.on('success', () => {
         set_toast({
-          txt: $root.$t("bet_record.copy_suc"),
+          txt: i18n.t("bet_record.copy_suc"),
         });
 
         // h5嵌入时Safari阻止弹窗

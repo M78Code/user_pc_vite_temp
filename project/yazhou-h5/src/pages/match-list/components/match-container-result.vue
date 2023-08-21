@@ -110,7 +110,7 @@
               <div class="row" v-if="is_show_result()">
                 <!--赛果开赛时间-->
                 <div class="m-result-time date-time">
-                    {{ format_time_zone(+match.matchTime).Format($root.$t("time4")) }}
+                    {{ format_time_zone(+match.matchTime).Format(i18n.t("time4")) }}
                 </div>
               </div>
             </div>

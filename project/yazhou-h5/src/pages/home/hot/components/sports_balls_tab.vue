@@ -31,7 +31,7 @@
                v-if='!get_hot_tab_item.chinaBetting'
                @click="leaderboard_switch"
           >
-            {{guess_standings ? $root.$t('home_popular.ranking') : $root.$t('home_popular.quiz')}}
+            {{guess_standings ? i18n.t('home_popular.ranking') : i18n.t('home_popular.quiz')}}
           </div>
         </div>
 

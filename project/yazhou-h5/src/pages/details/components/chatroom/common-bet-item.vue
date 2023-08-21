@@ -25,7 +25,7 @@
             <template v-else-if="data.seriesType == '3'">{{item.matchName}}</template>
             <template v-else>{{item.matchInfo}}</template>
             <p class="text-right begintime" v-if="!data.acCode">{{(new
-            Date(utils.format_time_zone_time(+item.beginTime))).Format($root.$t('time4'))}}</p>
+            Date(utils.format_time_zone_time(+item.beginTime))).Format(i18n.t('time4'))}}</p>
           </div>
           <div class="row box-main yb_py4">
             <p class="col-8">
@@ -68,7 +68,7 @@
       </div>
       <div class="item-footer yb_mx10 yb_px14 yb_mt10 yb_pt8 row yb_fontsize12">
         <div class="col-4">
-          <p class="top-p">{{ $root.$t('bet_record.bet_val2') }}</p>
+          <p class="top-p">{{ i18n.t('bet_record.bet_val2') }}</p>
           <p class="yb_fontsize14 money-p" v-if="data.orderAmountTotal">{{data.orderAmountTotal | format_money2}}</p>
         </div>
         <!-- 中 -->
@@ -76,7 +76,7 @@
         <div>
           <!-- 订单状态orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
           <template v-if="data.orderStatus == 1 || data.orderStatus == 2 || data.orderStatus == 4">
-            <p class="top-p">{{$root.$t('bet_record.go_back')}}</p>
+            <p class="top-p">{{i18n.t('bet_record.go_back')}}</p>
             <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
             <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
               <template v-if="data.backAmount !== null">{{data.backAmount | format_money2}}</template>
@@ -84,7 +84,7 @@
             </p>
           </template>
           <template v-else>
-            <p class="top-p">{{$root.$t('bet_record.bet_max_win')}}</p>
+            <p class="top-p">{{i18n.t('bet_record.bet_max_win')}}</p>
             <p class="yb_fontsize14 money-p">
               <!-- 留空处理 -->
               <template v-if="data.acCode">- -</template>
@@ -102,12 +102,12 @@
       </div>
       <div class="item-order row mx-16 justify-between">
         <!-- 订单号 -->
-        <div class="text-left ellipsis">{{$root.$t('bet.order_no')}}&thinsp;<span
+        <div class="text-left ellipsis">{{i18n.t('bet.order_no')}}&thinsp;<span
             class="yb_mr4 orderno">{{data.orderNo}}</span>
         </div>
         <!-- 时间 -->
-        <div class="text-right">{{$root.$t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new
-        Date(utils.format_time_zone_time(+data.betTime))).Format($root.$t('time4'))}}</span></div>
+        <div class="text-right">{{i18n.t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new
+        Date(utils.format_time_zone_time(+data.betTime))).Format(i18n.t('time4'))}}</span></div>
       </div>
     </div>
   </div>
@@ -141,25 +141,25 @@ export default defineComponent({
       class_foter: '',//订单状态的颜色类名
       bet_result: {
         // #TODO $root替换
-        // // "0": $root.$t("bet_record.bet_no_status00"), //'未结算',
-        // "2": $root.$t("bet_record.bet_no_status02"), //'走水',
-        // "3": $root.$t("bet_record.bet_no_status03"), //'输',
-        // "4": $root.$t("bet_record.bet_no_status04"), //'赢',
-        // "5": $root.$t("bet_record.bet_no_status05"), //'赢半',
-        // "6": $root.$t("bet_record.bet_no_status06"), //'输半',
-        // "7": $root.$t("bet_record.bet_no_status07"), //'比赛取消',
-        // "8": $root.$t("bet_record.bet_no_status08"), //'比赛延期',
-        // "11": $root.$t("bet_record.bet_no_status11"), // '比赛延迟',
-        // "12": $root.$t("bet_record.bet_no_status12"), // '比赛中断',
-        // "15": $root.$t("bet_record.bet_no_status15"), // '比赛放弃'
+        // // "0": i18n.t("bet_record.bet_no_status00"), //'未结算',
+        // "2": i18n.t("bet_record.bet_no_status02"), //'走水',
+        // "3": i18n.t("bet_record.bet_no_status03"), //'输',
+        // "4": i18n.t("bet_record.bet_no_status04"), //'赢',
+        // "5": i18n.t("bet_record.bet_no_status05"), //'赢半',
+        // "6": i18n.t("bet_record.bet_no_status06"), //'输半',
+        // "7": i18n.t("bet_record.bet_no_status07"), //'比赛取消',
+        // "8": i18n.t("bet_record.bet_no_status08"), //'比赛延期',
+        // "11": i18n.t("bet_record.bet_no_status11"), // '比赛延迟',
+        // "12": i18n.t("bet_record.bet_no_status12"), // '比赛中断',
+        // "15": i18n.t("bet_record.bet_no_status15"), // '比赛放弃'
       },
       outcome: {
         // #TODO $root替换
-        // "2": $root.$t("bet_record.bet_no_status02"), //'走水',
-        // "3": $root.$t("bet_record.bet_no_status03"), //'输',
-        // "4": $root.$t("bet_record.bet_no_status04"), //'赢',
-        // "5": $root.$t("bet_record.bet_no_status05"), //'赢半',
-        // "6": $root.$t("bet_record.bet_no_status06"), //'输半',
+        // "2": i18n.t("bet_record.bet_no_status02"), //'走水',
+        // "3": i18n.t("bet_record.bet_no_status03"), //'输',
+        // "4": i18n.t("bet_record.bet_no_status04"), //'赢',
+        // "5": i18n.t("bet_record.bet_no_status05"), //'赢半',
+        // "6": i18n.t("bet_record.bet_no_status06"), //'输半',
       },
     });
     const i18n_data = (item) => {
@@ -167,9 +167,9 @@ export default defineComponent({
       const lang = data.langCode ? (data.langCode == 'zs' ? 'zh' : data.langCode) : 'zh'
       return {
         // #TODO $root替换
-        // sport_name: $root.$t(`common_lang.${lang}.sport2`)[item.sportId],
-        // type: $root.$t(`common_lang.${lang}.matchtype`)[item.matchType],
-        // mtype: $root.$t(`common_lang.${lang}.odds`)[item.marketType]
+        // sport_name: i18n.t(`common_lang.${lang}.sport2`)[item.sportId],
+        // type: i18n.t(`common_lang.${lang}.matchtype`)[item.matchType],
+        // mtype: i18n.t(`common_lang.${lang}.odds`)[item.marketType]
       }
     };
     const calc_num = (item) => {
@@ -195,7 +195,7 @@ export default defineComponent({
       switch (data.orderStatus) {
         case '0':
           class_foter = 'green'
-          res = $root.$t('bet_record.successful_betting')
+          res = i18n.t('bet_record.successful_betting')
           break;
         case '1':
           class_foter = 'black'
@@ -216,7 +216,7 @@ export default defineComponent({
             }
             let betresult = data.detailList[0].betResult
             if (betresult == 13 || betresult == 16) {
-              res = $root.$t('bet_record.invalid');
+              res = i18n.t('bet_record.invalid');
             } else {
               if (betresult == 4 || betresult == 5) {
                 class_foter = 'red'
@@ -229,20 +229,20 @@ export default defineComponent({
               class_foter = 'red'
               is_win = true
             }
-            res = outcome[data.outcome] || $root.$t('bet_record.successful_betting')
+            res = outcome[data.outcome] || i18n.t('bet_record.successful_betting')
           }
           break;
         case '2':
           class_foter = 'black'
-          res = $root.$t('bet_record.invalid_bet')
+          res = i18n.t('bet_record.invalid_bet')
           break;
         case '3':
           class_foter = 'orange'
-          res = $root.$t('bet_record.confirming')
+          res = i18n.t('bet_record.confirming')
           break;
         case '4':
           class_foter = 'red'
-          res = $root.$t('bet.bet_err')
+          res = i18n.t('bet.bet_err')
           break;
         default:
           res = ''

@@ -4,17 +4,17 @@
     <div class="content-box" :class="{'content-box2':get_is_hengping,'is_hd_sd':get_hd_sd_show}">
       <template v-if="!get_hd_sd_show">
         <!-- 文字头 -->
-        <header>{{$root.$t("info_rules.auto")}}</header>
+        <header>{{i18n.t("info_rules.auto")}}</header>
         <!-- 2条说明规则，有换行，文字颜色，多语言区分 -->
           <div v-for="(value,key) in rules" :key="key" v-html="value"></div>
         <!-- 按钮-我知道了 -->
-        <footer @click="change_show">{{$root.$t("info_rules.i_know")}}</footer>
+        <footer @click="change_show">{{i18n.t("info_rules.i_know")}}</footer>
       </template>
       <div v-if="get_hd_sd_show" class="hd-sd-css">
         <!-- 文字头 -->
-        <header>{{$root.$t("match_info.video") +'  '+ $root.$t("footer_menu.change_simple01")}}</header>
-        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{$root.$t("common.SD")}}</span>
-        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{$root.$t("common.HD")}}</span>
+        <header>{{i18n.t("match_info.video") +'  '+ i18n.t("footer_menu.change_simple01")}}</header>
+        <span @click="video_switching(0)" :class="[get_hd_sd == 0 && 'gaoliang']">{{i18n.t("common.SD")}}</span>
+        <span @click="video_switching(1)" :class="[get_hd_sd == 1 && 'gaoliang']">{{i18n.t("common.HD")}}</span>
       </div>
     </div>
   </div>

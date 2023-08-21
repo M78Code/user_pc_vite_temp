@@ -287,11 +287,11 @@ const match_result_data_loaded = (data) => {
 const get_odd_append_value = (ol_item) => {
   let r = "";
   if(ol_item.result === "0" || ol_item.result){
-    r = $root.$t(`virtual_sports.result[${ol_item.result}]`);
+    r = i18n.t(`virtual_sports.result[${ol_item.result}]`);
   } else{
     let dict_result = ol_dictionary.value[ol_item.oid];
     if(dict_result === "0" || dict_result){
-      r = $root.$t(`virtual_sports.result[${dict_result}]`);
+      r = i18n.t(`virtual_sports.result[${dict_result}]`);
     } else{
       r = odds_value;
     }

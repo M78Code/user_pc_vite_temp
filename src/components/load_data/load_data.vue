@@ -15,7 +15,7 @@
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
-          <span v-else>{{$root.$t('common.loading')}}</span>
+          <span v-else>{{i18n.t('common.loading')}}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
@@ -23,13 +23,13 @@
       <div v-if="cur_state=='right_details_loading'" class="loading-wrap right_details_loading" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{$root.$t('common.loading')}}</span>
+          <span>{{i18n.t('common.loading')}}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
       <no-data
         v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?$root.$t('common.code_empty'):(($store.state.filter.open_select_time?$root.$t('filter.empty'):$root.$t('common.no_data'))))"
+        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?i18n.t('common.code_empty'):(($store.state.filter.open_select_time?i18n.t('filter.empty'):i18n.t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
@@ -40,7 +40,7 @@
       >
       </no-data>
       <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
-        :msg="$root.$t('common.no_data')"
+        :msg="i18n.t('common.no_data')"
         :type_name="'esports-size'"
         :marginBottom="'0px'"
         width="203px"
@@ -50,13 +50,13 @@
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
-            {{$root.$t('common.go_now')}}
+            {{i18n.t('common.go_now')}}
            </div>
         </div> -->
       </no-data>
       <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(cur_state)">
         <div class="img"></div>
-        <span>{{$root.$t(`common.${cur_state}`)}}</span>
+        <span>{{i18n.t(`common.${cur_state}`)}}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
@@ -68,16 +68,16 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='refresh'" class="text1">{{$root.$t('common.no_network2')}}</div>
+        <div v-if="cur_state=='refresh'" class="text1">{{i18n.t('common.no_network2')}}</div>
         <div
           v-if="cur_state=='404'"
           class="img img404"
           :class="color"
         ></div>
         <!-- 哦豁~页面不见了 -->
-        <div v-if="cur_state=='404'" class="text1">{{$root.$t('common.page404')}}</div>
-        <div class="text2">{{$root.$t('common.nervous')}}</div>
-        <div class="btn" @click="refresh">{{$root.$t('common.refresh')}}</div>
+        <div v-if="cur_state=='404'" class="text1">{{i18n.t('common.page404')}}</div>
+        <div class="text2">{{i18n.t('common.nervous')}}</div>
+        <div class="btn" @click="refresh">{{i18n.t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -86,12 +86,12 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{$root.$t('common.user_api_limited1')}}</span><br>
+          <span>{{i18n.t('common.user_api_limited1')}}</span><br>
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{$root.$t('common.user_api_limited2')}}</span>
+          <span>{{i18n.t('common.user_api_limited2')}}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{$root.$t('common.refresh')}}</div>
+        <div class="btn" @click="refresh">{{i18n.t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
@@ -100,7 +100,7 @@
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{$root.$t('common.limited')}}</span>
+          <span>{{i18n.t('common.limited')}}</span>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='record_refresh'" class="text1">{{$root.$t('common.limited')}}</div>
+        <div v-if="cur_state=='record_refresh'" class="text1">{{i18n.t('common.limited')}}</div>
       </div>
     </div>
   </div>

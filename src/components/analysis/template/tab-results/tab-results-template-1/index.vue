@@ -2,7 +2,7 @@
   <div class="q-pb-md">
     <div class="panel">
       <!-- 统计 -->
-      <div class="panel-title">{{ $root.$t("analysis.statistics") }}</div>
+      <div class="panel-title">{{ i18n.t("analysis.statistics") }}</div>
       <div class="total">
         <div class="list">
           <div class="">
@@ -89,7 +89,7 @@
     <div class="panel match-event">
       <div class="panel-title">
         <!-- 事件 -->
-        <span>{{ $root.$t('analysis.event') }}</span>
+        <span>{{ i18n.t('analysis.event') }}</span>
         <div class="stage-tab" v-if="match.csid == '2'">
           <span class="item" :class="{ 'active': activeStage == index }" @click="stage_choose(index)"
             v-for="(item, index) in event_all_data" :key="index">{{ item.key }}</span>

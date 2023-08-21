@@ -13,15 +13,15 @@
     </div>
     <div class="content yb_mt10" v-for="(item,index) in data_list" :key="index">
       <p class="tittle"><span :class="{'color0':item.label == 0,'color1':item.label == 1,'color2':item.label == 2}"></span>&ensp;
-        <template v-if="item.label == 0">{{ $root.$t('analysis_football_matches.Neutral_Information') }}</template>
-        <template v-if="item.label == 1">{{ $root.$t('analysis_football_matches.Favorable_information') }}</template>
-        <template v-if="item.label == 2">{{ $root.$t('analysis_football_matches.Unfavorable_information') }}</template>
+        <template v-if="item.label == 0">{{ i18n.t('analysis_football_matches.Neutral_Information') }}</template>
+        <template v-if="item.label == 1">{{ i18n.t('analysis_football_matches.Favorable_information') }}</template>
+        <template v-if="item.label == 2">{{ i18n.t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
       <template v-for="(item2,index2) in item.msg" >
         <p class="item" :key="index2">{{item2}}</p>
       </template>
     </div>
-    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ $root.$t('common.no_data') }}</div>
+    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n.t('common.no_data') }}</div>
   </div>
 </template>
 

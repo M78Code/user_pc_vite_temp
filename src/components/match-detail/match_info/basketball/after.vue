@@ -60,7 +60,7 @@
                 <span>Q1</span>
                 <span>Q2</span>
                 <!-- 半场 -->
-                <span>{{ $root.$t("common.half_") }}</span>
+                <span>{{ i18n.t("common.half_") }}</span>
                 <span>Q3</span>
                 <span>Q4</span>
               </template>
@@ -71,7 +71,7 @@
               <span>1</span>
               <span>2</span>
               <!-- 半场 -->
-              <span>{{ $root.$t("common.half_") }}</span>
+              <span>{{ i18n.t("common.half_") }}</span>
               <span>3</span>
               <span>4</span>
             </template>
@@ -95,11 +95,11 @@
 
           <!-- 加时 -->
           <span class="common-score" v-if="lodash.get(match_info, 'msc.S7')">{{
-            $root.$t("common.add_time")
+            i18n.t("common.add_time")
           }}</span>
         </template>
         <!-- 总分 -->
-        <span class="common-score score">{{ $root.$t("common.total") }}</span>
+        <span class="common-score score">{{ i18n.t("common.total") }}</span>
       </div>
     </div>
 

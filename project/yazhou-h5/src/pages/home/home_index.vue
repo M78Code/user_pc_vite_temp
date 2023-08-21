@@ -59,17 +59,17 @@ import { onUnmounted, watch } from "vue";
       let res = [];
         let tabList_ = [{
             index: 0,
-            name: $root.$t('home.home'),
+            name: i18n.t('home.home'),
             component: 'home'
           },
           {
             index: 1,
-            name: $root.$t('home.hot'),
+            name: i18n.t('home.hot'),
             component: 'hot'
           },
           {
             index: 2,
-            name: $root.$t('home.live_video'),
+            name: i18n.t('home.live_video'),
             component: 'live_video'
           }
         ];
@@ -78,12 +78,12 @@ import { onUnmounted, watch } from "vue";
           tabList_ = [
             {
               index: 0,
-              name: $root.$t('home.home'),
+              name: i18n.t('home.home'),
               component: 'home'
             },
             {
               index: 1,
-              name: $root.$t('home.live_video'),
+              name: i18n.t('home.live_video'),
               component: 'live_video'
             }
           ]

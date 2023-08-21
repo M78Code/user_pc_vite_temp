@@ -7,8 +7,8 @@
     <div class="scroll-list">
       <slot></slot>
       <div class="scroll-bottom">
-        <p v-if="state==4">{{$root.$t('myScroll.msg5')}}</p>
-        <p v-if="state==5">{{$root.$t('myScroll.msg6')}}</p>
+        <p v-if="state==4">{{i18n.t('myScroll.msg5')}}</p>
+        <p v-if="state==5">{{i18n.t('myScroll.msg6')}}</p>
       </div>
     </div>
   </div>

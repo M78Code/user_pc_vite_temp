@@ -12,37 +12,37 @@
       <div class="row head">
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet_record.number')}}
+          {{i18n.t('bet_record.number')}}
           <!-- 编号 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet_record.betting_details')}}
+          {{i18n.t('bet_record.betting_details')}}
           <!-- 投注详情 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet_record.betting_play')}}
+          {{i18n.t('bet_record.betting_play')}}
           <!-- 投注玩法 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet_record.options')}}
+          {{i18n.t('bet_record.options')}}
           <!-- 选项 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet.bet_book_stake')}}
+          {{i18n.t('bet.bet_book_stake')}}
           <!-- 预约投注额 -->
         </div>
         <!--列-->
         <div class="ceil" v-if="is_book_status[0]==='0'">
-          {{$root.$t('common.maxn_amount_val')}}
+          {{i18n.t('common.maxn_amount_val')}}
           <!--最高可赢 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{$root.$t('bet_record.status')}}
+          {{i18n.t('bet_record.status')}}
           <!-- 状态 -->
         </div>
       </div>
@@ -170,7 +170,7 @@
                             >
                               {{item_cancelType(item.cancelType)}}
                             </span>
-                            <span v-else class="bet-result lose-color">{{$root.$t("bet.invalid")}}</span>
+                            <span v-else class="bet-result lose-color">{{i18n.t("bet.invalid")}}</span>
                           </template>
                           <!-- 其他 -->
                           <span
@@ -209,7 +209,7 @@
                             >
                               {{item_cancelType(item.cancelType)}}
                             </span>
-                            <span v-else class="bet-result lose-color">{{data.seriesType =='1'?'':`${$root.$t("bet.invalid")}`}}</span>
+                            <span v-else class="bet-result lose-color">{{data.seriesType =='1'?'':`${i18n.t("bet.invalid")}`}}</span>
                           </template>
                           <template v-if="item.betStatus ==1">
                             <span
@@ -219,7 +219,7 @@
                             <span
                               v-else
                               class="bet-result lose-color"
-                            >{{data.seriesType =='1'?'':`${$root.$t("bet.invalid")}`}}</span>
+                            >{{data.seriesType =='1'?'':`${i18n.t("bet.invalid")}`}}</span>
                           </template>
                         </template>
                         <!-- 已结算注单无效 -->
@@ -243,16 +243,16 @@
                   appoint_status(0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注) -->
                   <div class="ceil">
                       <span v-if="data.preOrderStatus==0" class="book_status">
-                        {{$root.$t('bet.bet_booking')}}
+                        {{i18n.t('bet.bet_booking')}}
                       </span>
                       <span v-if="data.preOrderStatus==0" class="book_cancel cursor-pointer" @click.stop="cancel_appoint(data)">
-                        {{$root.$t('select.cancel')}}
+                        {{i18n.t('select.cancel')}}
                       </span>
                       <span v-if="[2, 3].includes(data.preOrderStatus)" class="book_status book_failed">
-                        {{$root.$t('bet.bet_book_failed')}}
+                        {{i18n.t('bet.bet_book_failed')}}
                       </span>
                       <span v-if="data.preOrderStatus==4" class="book_status">
-                        {{$root.$t('bet.bet_book_canceled')}}
+                        {{i18n.t('bet.bet_book_canceled')}}
                       </span>
                   </div>
                 </div>
@@ -281,17 +281,17 @@
     <q-dialog v-model="bookShow" persistent>
         <q-card class="book-dialog">
           <q-card-section class="row items-center">
-            <div class="book-msg">{{ cancel_book_msg(matchInfo, $root.$t('bet.bet_book_cancel_msg')) }}</div>
+            <div class="book-msg">{{ cancel_book_msg(matchInfo, i18n.t('bet.bet_book_cancel_msg')) }}</div>
           </q-card-section>
 
           <q-card-actions align="center">
             <div class="cursor-pointer book-record book-record-cancel" :disabled="book_loading" @click="close_book_dialog">
               <!--确认中-->
-              {{$root.$t('select.cancel')}}
+              {{i18n.t('select.cancel')}}
             </div>
             <div class="cursor-pointer book-record book-record-submit" :disabled="book_loading" @click="cancel_book_handle">
               <!--确认中-->
-              {{$root.$t('select.confirm')}}
+              {{i18n.t('select.confirm')}}
             </div>
           </q-card-actions>
         </q-card>

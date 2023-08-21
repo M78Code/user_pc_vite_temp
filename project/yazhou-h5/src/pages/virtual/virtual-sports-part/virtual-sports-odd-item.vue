@@ -49,7 +49,7 @@ export default defineComponent({
       let r = "";
       if(ol_item.result === "0" || ol_item.result === 0 || ol_item.result){
         // #TODO EMIT 
-        // r = $root.$t(`virtual_sports.result[${ol_item.result}]`);
+        // r = i18n.t(`virtual_sports.result[${ol_item.result}]`);
       }
       else{
         r = odds_value;

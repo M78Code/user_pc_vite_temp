@@ -96,10 +96,10 @@ const props = defineProps({
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
         //'取消';
-        txt = $root.$t('common.cancel');
+        txt = i18n.t('common.cancel');
       } else {
         //'收藏';
-        txt = $root.$t('collect.betted_title');
+        txt = i18n.t('collect.betted_title');
       }
       favorite_loading = true;
       // 更新收藏状态

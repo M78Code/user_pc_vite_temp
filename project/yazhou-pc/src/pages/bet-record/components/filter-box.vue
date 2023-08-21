@@ -14,7 +14,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n.t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
     </div>
@@ -47,7 +47,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n.t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
       <!-- 默认排序 -->
@@ -64,7 +64,7 @@
               class="icon_left"
             />
             <span class="text_check">{{
-              $root.$t(time_sort_record_item.check_name)
+              i18n.t(time_sort_record_item.check_name)
             }}</span>
             <icon
               name="icon-sort"
@@ -127,7 +127,7 @@
         </div>
         <!-- 查询按钮 -->
         <div class="search-btn" @click="submit()">
-          {{ $root.$t("bet_record.query") }}
+          {{ i18n.t("bet_record.query") }}
           <!-- 查询 -->
         </div>
       </div>

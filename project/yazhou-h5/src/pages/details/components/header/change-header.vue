@@ -17,7 +17,7 @@
           <div class="col text-center base-header-font">
             <!-- <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage> -->
           </div>
-          <div class="col eports_scoring_tip" v-if="eports_scoring">{{$root.$t('mmp.eports_scoring')}}</div>
+          <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.away}}</div>
         </div>

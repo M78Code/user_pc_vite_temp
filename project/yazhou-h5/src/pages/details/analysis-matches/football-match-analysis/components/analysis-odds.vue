@@ -15,25 +15,25 @@
     <div class="content" :class="tabIndex == 1 && 'ouzhi'">
       <div class="tittle row align_items">
         <template v-if="tabIndex != 1">
-          <span class="t1">{{ $root.$t('analysis_football_matches.company') }}</span>
-          <span class="t2">{{  tabIndex == 2 ? $root.$t('analysis_football_matches.big') : $root.$t('analysis_football_matches.Main_win') }}</span>
-          <span class="t3">{{$root.$t('analysis_football_matches.handicap') }}</span>
-          <span class="t4">{{ tabIndex == 2 ? $root.$t('analysis_football_matches.small') : $root.$t('analysis_football_matches.away_win') }}</span>
+          <span class="t1">{{ i18n.t('analysis_football_matches.company') }}</span>
+          <span class="t2">{{  tabIndex == 2 ? i18n.t('analysis_football_matches.big') : i18n.t('analysis_football_matches.Main_win') }}</span>
+          <span class="t3">{{i18n.t('analysis_football_matches.handicap') }}</span>
+          <span class="t4">{{ tabIndex == 2 ? i18n.t('analysis_football_matches.small') : i18n.t('analysis_football_matches.away_win') }}</span>
         </template>
         <template v-else>
           <div class="t1 row items-center justify-between">
-            <div class="ellipsis" style="width:0.5rem">{{ $root.$t('analysis_football_matches.company') }}</div>
+            <div class="ellipsis" style="width:0.5rem">{{ i18n.t('analysis_football_matches.company') }}</div>
             <div class="yb_ml6" style="visibility: hidden">
-              <span>{{ $root.$t('analysis_football_matches.Initial_offer') }}</span>
+              <span>{{ i18n.t('analysis_football_matches.Initial_offer') }}</span>
               <span>1</span>
             </div>
           </div>
-          <i class="t2">{{ $root.$t('analysis_football_matches.home_win1') }}</i>
-          <i class="t3">{{ $root.$t('analysis_football_matches.flat') }}</i>
-          <i class="t4">{{ $root.$t('analysis_football_matches.away_win') }}</i>
-          <i class="t4">{{ $root.$t('analysis_football_matches.Main_win_rate') }}</i>
-          <i class="t4">{{ $root.$t('analysis_football_matches.Customer_win_rate') }}</i>
-          <i class="t4">{{ $root.$t('analysis_football_matches.Return_rate') }}</i>
+          <i class="t2">{{ i18n.t('analysis_football_matches.home_win1') }}</i>
+          <i class="t3">{{ i18n.t('analysis_football_matches.flat') }}</i>
+          <i class="t4">{{ i18n.t('analysis_football_matches.away_win') }}</i>
+          <i class="t4">{{ i18n.t('analysis_football_matches.Main_win_rate') }}</i>
+          <i class="t4">{{ i18n.t('analysis_football_matches.Customer_win_rate') }}</i>
+          <i class="t4">{{ i18n.t('analysis_football_matches.Return_rate') }}</i>
         </template>
       </div>
       <div class="sliding" v-if="data_list.length">
@@ -41,8 +41,8 @@
           <div class="t1 row items-center justify-between">
             <div class="ellipsis" style="width:0.5rem">{{item.bookName}}</div>
             <div class="yb_ml6">
-              <span>{{ $root.$t('analysis_football_matches.Initial_offer') }}</span>
-              <span>{{ $root.$t('analysis_football_matches.immediate') }}</span>
+              <span>{{ i18n.t('analysis_football_matches.Initial_offer') }}</span>
+              <span>{{ i18n.t('analysis_football_matches.immediate') }}</span>
             </div>
           </div>
           <div class="t2 column justify-center">
@@ -86,7 +86,7 @@
           </template>
         </div>
       </div>
-      <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ $root.$t('common.no_data') }}</div>
+      <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n.t('common.no_data') }}</div>
     </div>
 
   </div>
@@ -102,9 +102,9 @@ import { useRoute } from 'vue-router'
 // import { mapGetters } from "vuex";
     // 国际化后续修改调整
     let tab_list = ref([
-        { name: $root.$t('footer_menu.rangqiu') },
-        { name: $root.$t('analysis_football_matches.European_Finger') },
-        { name: $root.$t('analysis_football_matches.size') },
+        { name: i18n.t('footer_menu.rangqiu') },
+        { name: i18n.t('analysis_football_matches.European_Finger') },
+        { name: i18n.t('analysis_football_matches.size') },
       ])
     let tabIndex = ref(0)
     //详细赔率数据
@@ -169,9 +169,9 @@ import { useRoute } from 'vue-router'
       $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
       // 国际化后续修改调整
      tab_list = ref([
-        { name: $root.$t('footer_menu.rangqiu') },
-        { name: $root.$t('analysis_football_matches.European_Finger') },
-        { name: $root.$t('analysis_football_matches.size') },
+        { name: i18n.t('footer_menu.rangqiu') },
+        { name: i18n.t('analysis_football_matches.European_Finger') },
+        { name: i18n.t('analysis_football_matches.size') },
       ])
      tabIndex = ref(0)
     //详细赔率数据

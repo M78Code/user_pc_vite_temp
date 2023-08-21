@@ -12,7 +12,7 @@
     <!-- 注单历史 以及时间  注单历史头 -->
     <simple-header-wapper>
       <!-- 注单历史 -->
-      <span>{{ $root.$t("common.note_single_history") }}</span>
+      <span>{{ i18n.t("common.note_single_history") }}</span>
     </simple-header-wapper>
     <div class="wrap-records" ref="record">
       <!--表格头部分 未结算已结算预约注单按钮tab-->

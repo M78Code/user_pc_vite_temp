@@ -7,7 +7,7 @@
   <div class="item-footer yb_mx10 yb_px14 yb_mt10 yb_pt8 row yb_fontsize12">
     <!-- 左 -->
     <div class="col-4">
-      <p class="top-p">{{ is_pre ?  $root.$t('pre_record.book_bet_amount') : $root.$t('bet_record.bet_val2') }}</p>
+      <p class="top-p">{{ is_pre ?  i18n.t('pre_record.book_bet_amount') : i18n.t('bet_record.bet_val2') }}</p>
       <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{data_f.orderAmountTotal | format_money2}}</p>
     </div>
 
@@ -16,7 +16,7 @@
     <div v-if="get_main_item == 0 || get_main_item == 2">
       <!-- 订单状态orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
       <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
-        <p class="top-p">{{$root.$t('bet_record.go_back')}}</p>
+        <p class="top-p">{{i18n.t('bet_record.go_back')}}</p>
         <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
         <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
           <template v-if="data_f.backAmount !== null">{{data_f.backAmount | format_money2}}</template>
@@ -25,9 +25,9 @@
       </template>
       <template v-else>
         <p class="top-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
-          <!-- {{$root.$t('bet_record.bet_refund')}} -->
+          <!-- {{i18n.t('bet_record.bet_refund')}} -->
         </p>
-        <p class="top-p" v-else>{{$root.$t('bet_record.bet_max_win')}}</p>
+        <p class="top-p" v-else>{{i18n.t('bet_record.bet_max_win')}}</p>
         <p class="yb_fontsize14 money-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
           <!-- 留空处理 -->
           <!-- <template v-if="data_f.acCode">- -</template> -->
@@ -44,7 +44,7 @@
     </div>
     <!-- 已结算页面 -->
     <div v-else>
-      <p class="top-p">{{ $root.$t('bet_record.go_back') }}</p>
+      <p class="top-p">{{ i18n.t('bet_record.go_back') }}</p>
       <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{data_f.backAmount | format_money2}}</p>
     </div>
 
