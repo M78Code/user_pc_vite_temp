@@ -165,7 +165,7 @@ import odd_column_item from "project_path/pages/match-list/components/odd_column
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
 
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_KEY } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_item",
@@ -220,9 +220,9 @@ export default defineComponent({
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
-        useMittOn.on(MITT_KEY.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
-        useMittOn.on(MITT_KEY.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
-        useMittOn.on(MITT_KEY.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
+        useMittOn.on(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
+        useMittOn.on(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+        useMittOn.on(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
       ]
     })
 

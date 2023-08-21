@@ -32,13 +32,13 @@
     </template>
     <!--已投注-->
     <template v-else>
-      <!--投注结果 order_detail_data 里面的每一项就是投注结果数据源-->
+      <!--投注结果 bet_order_success_all 里面的每一项就是投注结果数据源-->
       <bet-single-record
         
         :single_record_obj="item"
-        v-for="(item, index) in view_ctr_obj.order_detail_data"
+        v-for="(item, index) in view_ctr_obj.bet_order_success_all"
         :key="`${item.playOptionsId}`"
-        :class="{'mt5': index>0,'fillet': index<view_ctr_obj.order_detail_data.length-2, 'last-item':index==view_ctr_obj.order_detail_data.length-1}"
+        :class="{'mt5': index>0,'fillet': index<view_ctr_obj.bet_order_success_all.length-2, 'last-item':index==view_ctr_obj.bet_order_success_all.length-1}"
       ></bet-single-record>
       <!--确认中, 投注成功, 投注失败的提示-->
       <div class="bet-confirm-message  text-center yb-fontsize12"

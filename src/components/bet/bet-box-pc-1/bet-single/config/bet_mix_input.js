@@ -225,9 +225,9 @@ if(this.emitters_off){this.emitters_off()}
   beforeDestroy () {
     //  将输入框金额保存在vuex 待切换成小框使用
       if (this.money&&this.BetData.bet_list.length>0) {
-        this.BetDataCtr.set_bet_current_money_obj({id:this.id,value:this.money}) 
+        BetDataCtr.set_bet_current_money_obj({id:this.id,value:this.money}) 
       }else{
-        this.BetDataCtr.set_bet_current_money_obj({id:this.id,value:null}) 
+        BetDataCtr.set_bet_current_money_obj({id:this.id,value:null}) 
       }
     },
   methods: {
@@ -280,7 +280,7 @@ handle_generat_emitters(){
       obj.key = this.id;
       obj.cs.max_money = '8888';
       obj.cs.min_money = '5'
-      this.BetDataCtr.bet_s_obj_add_attr(obj);
+      BetDataCtr.bet_s_obj_add_attr(obj);
     },
     /**
      * @description: 获取最大最小值金额
@@ -329,7 +329,7 @@ handle_generat_emitters(){
         // 更新投注项对象
         obj.cs[k] = v;
         // 存储投注项对象
-        this.BetDataCtr.bet_s_obj_add_attr(obj);
+        BetDataCtr.bet_s_obj_add_attr(obj);
       }
     },
     /**
@@ -393,7 +393,7 @@ handle_generat_emitters(){
       // 暂时还没有最高限额时
       if(this.max_money == "") {
         // 设置串关最大最小值正在获取中
-        this.view_ctr_obj.mix_range_money = -3; 
+        this.view_ctr_obj.input_money_state = -3; 
         // 校验并提示
         BetCommonHelper.check_result_msg( 'mix');
       }
@@ -424,7 +424,7 @@ handle_generat_emitters(){
         // 转换输入金额为用户账户余额
         this.money = parseFloat(user.balance);
         // 串关金额范围设置为输入最大金额
-        this.view_ctr_obj.mix_range_money = 2;
+        this.view_ctr_obj.input_money_state = 2;
         // 存储输入的金额
         this.set_bet_s_obj("money", this.money);
         // 提示信息
@@ -481,7 +481,7 @@ handle_generat_emitters(){
         // 最高限额未拿到时
         if(this.max_money == "") {
           // 最大最小值正在获取中
-          this.view_ctr_obj.mix_range_money = -3; 
+          this.view_ctr_obj.input_money_state = -3; 
           // 进行提示
           BetCommonHelper.check_result_msg( 'mix');
         }
@@ -511,7 +511,7 @@ handle_generat_emitters(){
         // 正在获取限额时
         if (this.view_ctr_obj.input_max_flag == 1) {
           // 最大最小值正在获取中设置
-          this.view_ctr_obj.mix_range_money = -3; 
+          this.view_ctr_obj.input_money_state = -3; 
           // 设置提示信息
           BetCommonHelper.check_result_msg( 'mix');
           return;
@@ -519,7 +519,7 @@ handle_generat_emitters(){
         // 统计未输入金额的输入投注项
         let empty_count = 0;
         this.view_ctr_obj.error_code = "";
-        this.view_ctr_obj.mix_range_money = 0;
+        this.view_ctr_obj.input_money_state = 0;
         this.BetData.bet_s_list.forEach(item => {
           let cs = _.get(this.BetData.bet_s_obj,`${item}.cs`);
           // 金额为空
@@ -531,7 +531,7 @@ handle_generat_emitters(){
         // 为空的投注项个数和未输入投注项数量相等时
         if (empty_count == this.BetData.bet_s_list.length) {
           //-2: 输入金额全部为空
-          this.view_ctr_obj.mix_range_money = -2; 
+          this.view_ctr_obj.input_money_state = -2; 
           // 设置输入金额为空的标识
           this.view_ctr_obj.is_empty_money = true;
         } else {
@@ -550,13 +550,13 @@ handle_generat_emitters(){
           if(parseFloat(user.balance) == 0.00) {
           } else if(parseFloat(this.min_money) > input_amount) { // 当输入金额比输入框最小限额时
             // 设置串关输入金额标识为小于最小限额
-            this.view_ctr_obj.mix_range_money = -4;
+            this.view_ctr_obj.input_money_state = -4;
           } else if(parseFloat(this.max_money)<input_amount) { // 当输入金额大于输入框最大限额时
             // 输入金额超出最大限额时
-            this.view_ctr_obj.mix_range_money = 1; 
+            this.view_ctr_obj.input_money_state = 1; 
           } else {
             // 设置为默认值
-            this.view_ctr_obj.mix_range_money = 0;
+            this.view_ctr_obj.input_money_state = 0;
           }
           // 输入金额是否为空设置为false
           this.view_ctr_obj.is_empty_money = false;
@@ -661,7 +661,7 @@ handle_generat_emitters(){
         // 转换输入金额为最小限额
         this.money = parseFloat(this.min_money);
         // 输入金额小于最小限额标识
-        this.view_ctr_obj.mix_range_money = -1;
+        this.view_ctr_obj.input_money_state = -1;
         // 存储输入金额
         this.set_bet_s_obj("money", this.money);
         // 设置提示信息
@@ -713,7 +713,7 @@ handle_generat_emitters(){
         if(this.money != null && this.view_ctr_obj.error_code == "M400005") {
           // 复位提示语
           BetCommonHelper.reset_message_info();
-          this.view_ctr_obj.mix_range_money = 0;
+          this.view_ctr_obj.input_money_state = 0;
         }
       },0);
     },

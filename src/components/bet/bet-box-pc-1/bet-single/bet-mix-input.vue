@@ -15,10 +15,10 @@
         </span>
       </div>
       <!--金额输入区域包括键盘 -->
-      <div class="row bet-mix-input" :data-check-money="view_ctr_obj.mix_range_money">
+      <div class="row bet-mix-input" :data-check-money="view_ctr_obj.input_money_state">
         <!--金额输入区-->
         <currency-input :ref="'input-money-' + id" class="bet-input input-border"
-          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.mix_range_money) && money != null) || view_ctr_obj.error_code == 'M400005' }"
+          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.input_money_state) && money != null) || view_ctr_obj.error_code == 'M400005' }"
           :placeholder="`${i18n.t('bet.money_range')} ${min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
           v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
             hideCurrencySymbol: true
