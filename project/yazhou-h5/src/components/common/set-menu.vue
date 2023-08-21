@@ -122,7 +122,7 @@
 <script setup>
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import { api_betting } from "src/project/api/index";
-import userCtr from "src/public/utils/user/userCtr.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 import lodash from 'lodash'
 
 

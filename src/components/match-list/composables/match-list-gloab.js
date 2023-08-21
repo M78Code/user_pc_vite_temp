@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import pageSourceData from "src/core/page-source-pc/page-source-pc.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import NewMenu from "src/core/menu-pc/menu-data-class.js";
 const latest_match_params_pre = ref("");
 const default_select_all = ref(true);
 const get_full_sr_url = (match) => {
@@ -34,14 +35,14 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		(route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
 		(route_name === "details" &&
 			["studio", "topic", "anchor"].includes(this.vx_play_media.media_type)) ||
-		$NewMenu.is_esports();
+		NewMenu.is_esports();
 	// 电竞不用调自动切右侧接口
 	if (return_status) {
 		return;
 	}
 	/** 非冠军联赛筛选 不调用右侧切换接口 ***********************/
 	// 模板 ID
-	let match_tpl_number = $NewMenu.get_match_tpl_number();
+	let match_tpl_number = NewMenu.get_match_tpl_number();
 	//非 冠军
 	if (match_tpl_number == 18) {
 		let tid = mx_filter_select_ids();
@@ -77,7 +78,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		csid = this.vx_details_params.csid;
 	}
 	let params_1 =
-		_.get(window.$NewMenu, "match_list_api_config.match_list.params") || {};
+		_.get(NewMenu, "match_list_api_config.match_list.params") || {};
 	let md = "";
 	if (["early"].includes(this.vx_cur_menu_type.type_name)) {
 		md = params_1.md;
@@ -103,7 +104,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		delete _params.mid;
 	}
 	// 获得当前的模板ID
-	let orpt = $NewMenu.get_match_tpl_number();
+	let orpt = NewMenu.get_match_tpl_number();
 	if (orpt) {
 		_params.orpt = orpt;
 	}

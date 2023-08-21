@@ -3,6 +3,7 @@ import { uid } from "quasar";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 import store from "src/store-redux/index.js";
 import utils from "project_path/src/core/utils/index.js";
 import { get_handicap_w_id } from "../match-utils/other-util"
@@ -10,6 +11,7 @@ import MenuData from "src/core/menu-h5/menu-data-class.js"
 import MatchListCardClass from '../match-card/match-list-card-class'
 import pageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import matchListParams from '../composables/match-list-params'
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
 

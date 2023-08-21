@@ -169,7 +169,7 @@ export default defineComponent({
         // useMittOn.on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off,
         // useMittOn.on(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
       ]
-      // $root.$on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
+      // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
       // 不让浏览器记住上次的滚动位置
       if ('scrollRestoration' in History){
         history.scrollRestoration = 'manual'
@@ -189,8 +189,8 @@ export default defineComponent({
     // 设置上次的菜单类型
     // set_menu_type(get_prev_menu_type)
     debounce_throttle_cancel(cancel_ref);
-    // $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
-    // $root.$off(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
+    // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
+    // useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
     component_data.emitters.map((x) => x())
     utils.clear_timer();
 

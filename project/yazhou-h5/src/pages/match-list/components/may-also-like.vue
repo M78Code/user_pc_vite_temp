@@ -96,6 +96,7 @@ import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
+import { i18n } from 'src/boot/i18n.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 const { from_where, show_ } = defineProps({

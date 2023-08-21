@@ -70,20 +70,14 @@ export default {
  
   },
   created() {
-    //网络错误时设置默认最大最小值
-    this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-    // 串关的校验金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
-    // 触发清除串关输入框金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
-    // 设置金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
-    // 设置输入框的最大金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
-    // 设置最小金额
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
-    // 更新键盘按键状态
-    this.$root.$on(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
+ 
+
+
+
+  //  生成事件监听  
+  this.handle_generat_emitters()
+
+
     // 若为串关的额第一个输入投注项
     if (this.index == 0) {
       // 计算第一个输入投注项显示的赔率(各个投注项赔率进行相乘)
@@ -100,20 +94,9 @@ export default {
     }
   },
   beforeUnmount() {
-    //清除网络错误时设置默认最大最小值
-    this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-    //清除串关的校验金额
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
-    // 清除触发清除串关输入框金额
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
-     // 清除设置金额
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
-    //清除 设置输入框的最大金额
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
-    // 清除设置最小金额
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
-     // 清除更新键盘按键状态
-    this.$root.$off(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
+//移除相应监听事件 //视图销毁钩子函数内执行
+if(this.emitters_off){this.emitters_off()}   
+
     //清除计时器
     clearTimeout(this.timer_input_focus);
     this.keyboard_data = null;
@@ -262,6 +245,42 @@ export default {
       vx_bet_s_obj_add_attr: "bet_s_obj_add_attr",  // 添加投注串关输入对象
       vx_set_bet_current_money_obj: "set_bet_current_money_obj", // 保存当前输入金额
     }),
+
+/**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+
+
+
+ 
+
+
+
+  let event_pairs=  [
+//网络错误时设置默认最大最小值
+{ type:MITT_TYPES.EMIT_NET_ERR, callback: this.net_err_fun} ,
+// 串关的校验金额
+{ type:MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, callback: this.check_money} ,
+// 触发清除串关输入框金额
+{ type:MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, callback: this.bet_clear_handle} ,
+// 设置金额
+{ type:MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, callback: this.set_money} ,
+// 设置输入框的最大金额
+{ type:MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, callback: this.set_input_max} ,
+// 设置最小金额
+{ type:MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, callback: this.set_min_money} ,
+// 更新键盘按键状态
+{ type:MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD, callback:this.update_keyboard_status} ,
+
+  ]
+  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+  this.emitters_off=emitters_off
+
+  },
+  
+
+
 
     /**
      * @description:网络错误时触发方法 用于最大最小值接口错误时 设置默认最大最小值

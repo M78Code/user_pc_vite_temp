@@ -1,5 +1,5 @@
 /*
- * @Description: 赛事 store
+ * @Description: 顶部菜单信息
  */
 import lodash from 'lodash'
 import { createSlice } from '@reduxjs/toolkit'

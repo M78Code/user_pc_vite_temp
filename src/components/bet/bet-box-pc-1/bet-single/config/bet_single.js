@@ -7,6 +7,7 @@ import { mapGetters, mapActions } from "vuex";
 import betting from "src/public/mixins/betting/betting.js"; // 押注相关功能
 import skt_data_single_order from "src/public/mixins/websocket/data/skt_data_single_order.js";  //websocket数据页面数据接入 ---- 单关投注订单
 import { api_betting } from "src/public/api/index.js";  //API 共通入口 
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 export default {
   name: "bet-single",
   mixins: [betting, skt_data_single_order],
@@ -31,11 +32,16 @@ export default {
   },
   created() {
     // 显示部分dom ID
-    this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
-    this.$root.$on(MITT_TYPES.EMIT_SINGLE_COMPLETE_HANDLE_CMD, this.complete_handle); //单关投注完成
-    this.$root.$on(MITT_TYPES.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, this.check_valid_money); //检查单关无效的金额
-    this.$root.$on(MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, this.save_bet_items); //单关保留选项
-    this.$root.$on(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.get_min_max_money_by_id); //重新调用单关最大最小值接口
+    this.DOM_ID_SHOW = window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
+ 
+
+
+   //生成事件监听  
+   this.handle_generat_emitters()
+
+ 
+
+
     // 投注模式默认为未知
     this.vx_set_bet_mode(-1);
     // 设置投注项为可选
@@ -48,7 +54,8 @@ export default {
     this.$nextTick(() => {
       this.user_bet_prefer = _.get(this.vx_get_user,'userBetPrefer') == 1;
     });
-    this.$root.$on(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,this.keyup_handle); //触发enter键执行
+//生成事件监听
+this.handle_generat_emitters()
     window.addEventListener("keyup", this.keyup_handle); // 监听键盘抬起事件
     this.$emit("set_scroll_this", {type:'bet_this', _this:this}); //设置滚动数据
   },
@@ -59,10 +66,9 @@ export default {
     }
     //清空计时器对象
     this.timer_obj = {};
-    this.$root.$off(MITT_TYPES.EMIT_SINGLE_COMPLETE_HANDLE_CMD, this.complete_handle); //单关投注完成
-    this.$root.$off(MITT_TYPES.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, this.check_valid_money); //检查单关无效的金额
-    this.$root.$off(MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, this.save_bet_items);  //单关保留选项
-    this.$root.$off(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.get_min_max_money_by_id); //重新调用单关最大最小值接口
+ 
+    //移除相应监听事件 //视图销毁钩子函数内执行
+    if(this.emitters_off){this.emitters_off()}  
     //清除计时器
     if (this.view_ctr_obj.timer_) {
       clearTimeout(this.view_ctr_obj.timer_);
@@ -450,6 +456,29 @@ export default {
       // 预约押注信息
       vx_set_pre_bet_list: "set_pre_bet_list",  
     }),
+
+    /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+  let event_pairs=  [
+   //单关投注完成
+  { type:MITT_TYPES.EMIT_SINGLE_COMPLETE_HANDLE_CMD, callback:this.complete_handle} ,
+   //检查单关无效的金额
+  { type:MITT_TYPES.EMIT_SINGLE_CHECK_VALID_MOENY_CMD, callback:this.check_valid_money} ,
+  //单关保留选项
+  { type:MITT_TYPES.EMIT_SINGLE_SAVE_BET_CMD, callback:this.save_bet_items} ,
+  //重新调用单关最大最小值接口
+  { type:MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, callback:this.get_min_max_money_by_id} ,
+   //触发enter键执行
+  { type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
+  ]
+  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+  this.emitters_off=emitters_off
+},
+ 
+
+  
     /**
      * @description: 返回体育项目
      * @param {undefined} undefined
