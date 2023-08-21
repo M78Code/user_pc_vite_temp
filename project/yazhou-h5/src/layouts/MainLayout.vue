@@ -6,7 +6,7 @@
   <div>
     <q-layout view="lHh Lpr lFf" class="layout_container">
       <q-page-container class="page_container">
-        <!-- <layout-header /> -->
+        <layout-header />
         <!-- <layout-conent /> -->
         <router-view />
       </q-page-container>
