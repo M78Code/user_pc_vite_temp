@@ -11,8 +11,7 @@
 import { ref, onBeforeUnmount, defineComponent, getCurrentInstance, onMounted } from 'vue'
 import { ss } from "src/core/utils/web-storage";
 // import menu_stay_time from "src/public/utils/menuClass/menu_stay_time.js"
-import { useMittEmit } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 时间 */
 const time_str = ref('')
@@ -64,6 +63,7 @@ function global_one_second_timer() {
     /** 广播事件 */
     useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime() })
     // 统计各个菜单停留时间 每秒执行一次
+    // TODO: menu_stay_time.js
     // proxy.statistical_stay_time()
 }
 /**
@@ -74,12 +74,6 @@ function set_time_str() {
     time_str.value = (new Date()).Format("yyyy-MM-dd hh:mm:ss.S");
 }
 
-</script>
-<script>
-export default defineComponent({
-    name: 'timer',
-    // mixins: [menu_stay_time]
-})
 </script>
   
 <style lang="scss" scoped>

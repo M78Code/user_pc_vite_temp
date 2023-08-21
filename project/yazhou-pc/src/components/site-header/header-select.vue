@@ -75,7 +75,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, reactive } from 'vue'
+import { onMounted, ref, computed, reactive, onUnmounted } from 'vue'
 import lodash from 'lodash'
 /* 组件 */
 import { RefreshWapper as refresh } from "src/components/common/refresh";
@@ -98,35 +98,54 @@ import night_right from 'app/public/yazhou-pc/image/svg/night_right.svg'
 const is_iframe = ref(utils.is_iframe)
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store_data
+const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    layout_size.value = layoutReducer.layout_size
+    main_menu_toggle.value = menuReducer.main_menu_toggle
+    menu_collapse_status.value = menuReducer.menu_collapse_status
+    left_menu_toggle.value = betInfoReducer.left_menu_toggle
+    user_info.value = userReducer.user_info
+    show_balance.value = userReducer.show_balance
+    theme.value = themeReducer.theme
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
  */
-const { layout_size } = layoutReducer
+const layout_size = ref(layoutReducer.layout_size)
 /** 
- * menu_collapse_status 浏览器 内嵌版 菜单收起状态 default: false
- * main_menu_toggle 左侧列表显示形式 normal：展开 mini：收起
+ * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
-const { menu_collapse_status, main_menu_toggle } = menuReducer
+ const main_menu_toggle = ref(menuReducer.main_menu_toggle)
+/** 
+ * 获取菜单收起状态 default: false
+ * 路径: project_path\src\store\module\menu.js
+ */
+const menu_collapse_status = ref(menuReducer.menu_collapse_status)
 /** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-const { left_menu_toggle } = betInfoReducer
+const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
 /** 
- * show_balance 用户余额是否展示状态 default: true
- * user_info 用户信息 default: {}
+ * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
-const { show_balance, user_info } = userReducer
+ const user_info = ref(userReducer.user_info)
+/** 
+ * 用户余额是否展示状态 default: true
+ * 路径: src\store-redux\module\user-info.js
+ */
+const show_balance = ref(userReducer.show_balance)
+/** 
 /** 
  * 用户余额是否展示状态 default: theme01
  * 路径: project_path/src/store/module/theme.js
  */
-const { theme } = themeReducer
+const theme = ref(themeReducer.theme)
 
 /** 刷新组件loading */
 const data_loaded = ref(false)
@@ -199,7 +218,6 @@ function menu_change(side) {
                     linkType = '热门赛事'
                 }
             }
-
             break;
         case '2':
             let _window_offset_left = (screen.width - 1000) / 2;
@@ -210,7 +228,6 @@ function menu_change(side) {
         case '0':
             return false;
     }
-
     let link_key = '跳转链接'
     let obj = {
         [link_key]: linkType
@@ -221,13 +238,11 @@ function menu_change(side) {
 
 
 const format_balance = computed(() => {
-    const num = user_info.balance
+    const num = user_info.value.balance
     if (num && num > 0) {
         let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-
         // 保留两位小数
         let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-
         let _num = _split[1] + '.' + decimal
         return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
     }
@@ -277,10 +292,10 @@ function getFestivalBanner() {
         //         nightSwipper.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
         //     }
         //     // 根据日间或者夜间来判断用哪个数据
-        //     if (theme.includes('theme01') && daySwipper.length > 0) {
+        //     if (theme.value.includes('theme01') && daySwipper.length > 0) {
         //         currentSwipperArr = daySwipper;
         //     }
-        //     if (theme.includes('theme02') && nightSwipper.length > 0) {
+        //     if (theme.value.includes('theme02') && nightSwipper.length > 0) {
         //         currentSwipperArr = nightSwipper;
         //     }
         //     // 图片大于一张的时候触发轮播

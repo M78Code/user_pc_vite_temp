@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { t } from "src/boot/i18n";
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
@@ -28,19 +28,24 @@ const props = defineProps({})
 
 
 /** stroe仓库 */
-const store_data = store.getState()
-/** 
- * 语言 lang
- * 路径: src\store-redux\module\languages.js
- */
-const { lang } = store_data.langReducer
-// TODO: 语言改变mitt
+const { langReducer, themeReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    theme.value = themeReducer.theme
+    lang.value = userReducer.lang
+   
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const { theme } = store_data.themeReducer
-
+const theme = ref(themeReducer.theme)
+/** 
+ * 语言
+ * 路径: src\store-redux\module\languages.js
+ */
+ const lang = ref(langReducer.lang)
 
 // TODO: 环境变量怎么获取
 /** 环境变量 */
@@ -58,10 +63,10 @@ const get_pc_rule_url = () => {
         'ms': 'ms_my',
         'ad': 'id_id',
     }
-    const lang2 = lang_map[lang] || 'zh_cn';
-    console.error(`================lang:${lang2}`, lang);
+    const lang2 = lang_map[lang.value] || 'zh_cn';
+    console.error(`================lang:${lang2}`, lang.value);
     let url = '';
-    const [theme2, get_merchant_style] = theme.split('_')
+    const [theme2, get_merchant_style] = theme.value.split('_')
     // TODO: 环境变量待修改
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {

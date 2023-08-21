@@ -20,7 +20,7 @@
         <result-header :result_detail_data="result_detail_data" />
       </div>
       <!-- 赛果tab集 -->
-      <result-details-tab :tab_index="$route.params.index" :result_detail_data="result_detail_data" />
+      <result-details-tab :tab_index="route.params.index" :result_detail_data="result_detail_data" />
     </div>
     <!-- 下拉联赛列表 -->
     <template>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+// import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/project/api/index.js";
 import resultHeader from "project_path/src/pages/details/components/result_header.vue";
 import resultDetailsTab from "project_path/src/pages/details/components/result_details_tab.vue";
@@ -51,6 +51,7 @@ import analysis_football_matches from "project_path/src/pages/details/analysis-m
 import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
 import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   name:"result_details",
@@ -77,17 +78,41 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      // 获取列表页当前选中二级菜单时间
-      "get_current_menu",
-      "get_menu_type",
-      "get_uid",
-      "get_detail_data",
-      "get_goto_detail_matchid",
-      "get_curr_sub_menu_type"
-    ]),
+    // ...mapGetters([
+    //   // 获取列表页当前选中二级菜单时间
+    //   "get_current_menu",
+    //   "get_menu_type",
+    //   "get_uid",
+    //   "get_detail_data",
+    //   "get_goto_detail_matchid",
+    //   "get_curr_sub_menu_type"
+    // ]),
+    //   "get_current_menu",
+    //   "get_menu_type",
+    //   "get_uid",
+    //   "get_detail_data",
+    //   "get_goto_detail_matchid",
+    //   "get_curr_sub_menu_type"
+    get_current_menu(){
+      return ""
+    },
+    get_menu_type(){
+      return ""
+    },
+    get_uid(){
+      return ""
+    },
+    get_detail_data(){
+      return ""
+    },
+    get_goto_detail_matchid(){
+      return ""
+    },
+    get_curr_sub_menu_type(){
+      return ""
+    },
     is_match_result(){
-      return ['result_details', 'match_result'].includes($route.name)
+      return ['result_details', 'match_result'].includes(route.name)
     },
     skeleton_loading(){
       if(skeleton.header && skeleton.list){
@@ -156,14 +181,14 @@ export default {
 
   },
   methods: {
-    ...mapMutations([
-      // 三角状态
-      "set_sanjiao_is_bool",
-      "set_toast",
-      "set_goto_detail_matchid",
-      "set_detail_data",
-      "set_event_list",
-    ]),
+    // ...mapMutations([
+    //   // 三角状态
+    //   "set_sanjiao_is_bool",
+    //   "set_toast",
+    //   "set_goto_detail_matchid",
+    //   "set_detail_data",
+    //   "set_event_list",
+    // ]),
     //  足篮显示分析页
     ana_show(val){
       if(val == 1) { // 足球
@@ -185,7 +210,7 @@ export default {
      */
     get_match_detail_info() {
       // 从url取值赛事id：mid
-      let mid = $route.params.mid || get_goto_detail_matchid;
+      let mid = route.params.mid || get_goto_detail_matchid;
       if(mid){
         set_goto_detail_matchid(mid);
       }
@@ -198,7 +223,7 @@ export default {
       api_common.get_matchResultDetail_MatchInfo( params ).then(({ data,code }) => {
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if( code == '0400500' || !data || Object.keys(data).length===0 ){
-          $router.push({name: 'matchList'})
+          router.push({name: 'matchList'})
         }else if(code === 200){
           skeleton.header = true
           loading = true
@@ -208,7 +233,7 @@ export default {
           if(!(['90','80','61'].includes(data.mmp+''))){
             data.mmp = '999'
           }
-          if(['result_details', 'match_result'].includes($route.name) && data.mo == 1){
+          if("" && data.mo == 1){
             // 61-比赛延迟,80-比赛中断,90-比赛放弃
             if(!(['90','80','61'].includes(data.mmp+''))){
               data.mmp = '999'
