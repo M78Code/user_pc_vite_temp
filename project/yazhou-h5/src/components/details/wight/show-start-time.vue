@@ -34,7 +34,7 @@ export default {
     // 时间延时器
     this.timerInterval = '';
     this.initEvent(); },
-  destroyed(){ 
+  beforeUnmount(){ 
     clearInterval(this.timerInterval);
     this.timerInterval = null
   },

@@ -355,7 +355,7 @@ const set_lock_btn = value => {
   //   })
   // },
 
-  // destroyed() {
+  // beforeUnmount() {
     //按钮失效
     // $root.$off(MITT_TYPES.EMIT_BTN_CHANGE, set_lock_btn)
   // }

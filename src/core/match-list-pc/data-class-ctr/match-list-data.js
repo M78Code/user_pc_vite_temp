@@ -53,7 +53,7 @@ export default class MatchListDataClass {
    * @Description 销毁
    * @param {undefined} undefined
   */
-  destroyed(){
+  beforeUnmount(){
     this.mid_obj = null
     this.hl_obj = null
     this.ol_obj = null

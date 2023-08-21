@@ -91,7 +91,7 @@ class WsLog {
   reconnect(url) {
     url && (this.url = url);
     if (this.ws) {
-      this.destroyed();
+      this.beforeUnmount();
       // return;
     }
     //连接校验
@@ -169,7 +169,7 @@ class WsLog {
   /**
    * @Description:销毁函数
    */
-  destroyed() {
+  beforeUnmount() {
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;

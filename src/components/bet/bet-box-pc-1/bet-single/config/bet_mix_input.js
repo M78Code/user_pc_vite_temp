@@ -99,7 +99,7 @@ export default {
       this.keyboard_data = this.get_keyboard_data();
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //清除网络错误时设置默认最大最小值
     this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
     //清除串关的校验金额

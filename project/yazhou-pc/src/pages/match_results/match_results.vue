@@ -1255,7 +1255,7 @@ export default {
     // 监听是否关闭日期选择器
     this.$root.$on("startTimeShowFunc", this.startTimeShowFunc);
   },
-  destroyed() {
+  beforeUnmount() {
     this.$root.$off("change-sport", this.setSport);
     this.$root.$off("select-sport", this.choose_sport);
     this.$root.$off("startTimeShowFunc", this.startTimeShowFunc);

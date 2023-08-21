@@ -196,7 +196,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  beforeUnmount() {
     this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent);
     this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
     this.set_fewer(1);

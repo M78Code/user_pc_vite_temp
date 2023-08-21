@@ -52,7 +52,7 @@ export default {
     window.addEventListener("keyup", this.keyup_handle); // 监听键盘抬起事件
     this.$emit("set_scroll_this", {type:'bet_this', _this:this}); //设置滚动数据
   },
-  destroyed() {
+  beforeUnmount() {
     // 清除计时器对象
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);

@@ -113,7 +113,7 @@ export default {
       return this.get_menu_type == 3000 || (this.get_menu_type == 28 && [100,101,102,103,104].includes(+this.get_detail_data.csid))
     }
   },
-  destroyed() {
+  beforeUnmount() {
     // 恢复默认的注单icon
     this.set_is_show_settle_tab(false)
     this.debounce_throttle_cancel(this.cancel_ref);

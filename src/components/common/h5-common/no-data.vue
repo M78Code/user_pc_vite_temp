@@ -123,7 +123,7 @@ export default defineComponent({
             refresh_data
         }
     },
-    destroyed() {
+    beforeUnmount() {
         // TODO: 暂不清楚$data用途
         for (const key in this.$data) {
             this.$data[key] = null

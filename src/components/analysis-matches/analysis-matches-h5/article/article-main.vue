@@ -227,7 +227,7 @@ const handle_hide_dialog = (e) => {
   onUnmounted(() => {
     handle_stay_duration(article_detail.id)
   })
-  // destroyed() {
+  // beforeUnmount() {
   //   handle_stay_duration(article_detail.id)
   // }
 </script>

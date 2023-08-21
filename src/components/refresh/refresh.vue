@@ -81,7 +81,7 @@ export default {
       }
     }
   },
-   destroyed() {
+   beforeUnmount() {
       /**清除定时器 */
         if(this.timer) {
           clearTimeout(this.timer)

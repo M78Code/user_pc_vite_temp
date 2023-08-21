@@ -288,7 +288,7 @@ export default {
     // 监听message
     window.addEventListener("message", this.handleMessage);
   },
-  destroyed() {
+  beforeUnmount() {
     clearTimeout(this.handle_screen_timer)
     this.handle_screen_timer = null
     this.debounce_throttle_cancel(this.stop_rotate);

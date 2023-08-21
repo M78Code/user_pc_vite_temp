@@ -63,8 +63,8 @@ function useMittEmit(key, data) {
   }
 
 
-//==============================事件监听  生成器  demo 开始  ====================================
- 
+//==============================事件监听  生成器  demo  option  开始  ====================================
+// import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 // let   { emitters, emitters_on, emitters_off } =  useMittEmitterGenerator(event_pairs)
 // /**
 // * 生成事件监听  
@@ -79,9 +79,9 @@ function useMittEmit(key, data) {
 // //移除相应监听事件 //视图销毁钩子函数内执行
 // if(this.emitters_off){this.emitters_off()}   
 
-//==============================事件监听  生成器  demo  结束 ====================================
+//==============================事件监听  生成器  demo   option   结束 ====================================
 
-
+ 
 /**
  * 批量  生成 事件监听 和 取消 事件监听     事件监听  生成器 
  * @param {*} event_pairs  事件 配置对象数组
