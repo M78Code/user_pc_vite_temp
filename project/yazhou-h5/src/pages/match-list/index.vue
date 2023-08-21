@@ -40,7 +40,7 @@
       <!-- <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
         <div style="color:#AAAEB8;font-size:.12rem;">
-          {{$root.$t("scroll_wrapper.is_footer")}}
+          {{i18n.t("scroll_wrapper.is_footer")}}
         </div>
       </div> -->
       

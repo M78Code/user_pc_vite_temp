@@ -57,12 +57,12 @@ export default class SearchHotPush {
         }
       }
       // TODO:
-      // this.hot_push_name = this.view.$root.$t('common.search')
+      // this.hot_push_name = this.view.i18n.t('common.search')
       this.is_hot_push = false
     }).catch(err => {
       console.error(err)
       // TODO:
-      // this.hot_push_name = this.view.$root.$t('common.search')
+      // this.hot_push_name = this.view.i18n.t('common.search')
       this.is_hot_push = false
     });
   }
@@ -82,7 +82,7 @@ export default class SearchHotPush {
       menu_arr.shift()
       window.$menu.specialMenuChoose(menu_arr)
       scroll_to_match.mid = matchId
-      this.view.$root.$emit('scroll_to_hot_push_match', matchId)
+      this.view.useMittEmit('scroll_to_hot_push_match', matchId)
     }else{
       this.view.$router.push({
         name: 'details',

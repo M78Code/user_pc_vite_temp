@@ -20,7 +20,7 @@
       <div class="content-wrap relative-position">
         <div class="yb-icon-triangle"></div>
         <!-- 此版面现实的所有直播内容仅供参考........ -->
-        <div class="content">{{$root.$t('common.live_notice')}}</div>
+        <div class="content">{{i18n.t('common.live_notice')}}</div>
       </div>
     </div>
       </div>
@@ -34,8 +34,8 @@
     <!-- 未登录 视频不可播 2 -->
     <div class="video-not fit column yb-flex-center no-video-bg" v-if="show_type == 'no-login'">
       <!-- 账户信息已经失效 /  请重新进入后观看 -->
-      <div class="label" v-if="is_limited">{{$root.$t('common.limited')}}</div>
-      <div class="label" v-else>{{$root.$t('common.account_invalid')}}<br/>{{$root.$t('common.account_invalid2')}}</div>
+      <div class="label" v-if="is_limited">{{i18n.t('common.limited')}}</div>
+      <div class="label" v-else>{{i18n.t('common.account_invalid')}}<br/>{{i18n.t('common.account_invalid2')}}</div>
     </div>
  
     <!-- 有直播可放 3-->
@@ -45,7 +45,7 @@
     >
       <div class="img-loading custom-format-img-loading" v-show="show_loading"></div>
       <div class="loading-text">
-        {{$root.$t('common.loading')}}
+        {{i18n.t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
       </div>
   
@@ -69,7 +69,7 @@
           :class="{'move-up': is_expand_video_list}"
           @click.stop="toggleVideoReplay">
           <div class="video-history-icon"></div>
-          <span>{{ !is_expand_video_list ? $root.$t('video.video_event_history') : $root.$t('video.video_event_history_close') }}</span>
+          <span>{{ !is_expand_video_list ? i18n.t('video.video_event_history') : i18n.t('video.video_event_history_close') }}</span>
         </div>
         <!-- 精彩回放事件类型切换 -->
         <tabs
@@ -112,7 +112,7 @@
 
     <!-- 长时间未操作暂停 -->
     <div class="video-not fit no-video-bg custom-format-web-icon-06" v-if="show_type == 'no-handle'">
-      <div class="no-handle-text">{{$root.$t('video.novideo6')}}</div>
+      <div class="no-handle-text">{{i18n.t('video.novideo6')}}</div>
       <div class="pause-icon" @click="show_type = 'play-video'"></div>
     </div>
 

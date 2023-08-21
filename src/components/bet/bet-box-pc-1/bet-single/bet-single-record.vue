@@ -44,7 +44,7 @@
       <div class="bet-content">
         <div class="row">
           <!--match_type 1: 早盘 2: 滚球  玩法名称  比分  盘口类型-->
-          <label class="bet-play-text"><template v-if="match_type === 2"><label class="bet-match-playing">[{{$root.$t('menu.match_playing')}}]</label></template>{{single_record_obj.playName}}
+          <label class="bet-play-text"><template v-if="match_type === 2"><label class="bet-match-playing">[{{i18n.t('menu.match_playing')}}]</label></template>{{single_record_obj.playName}}
             <template v-if="single_record_obj.scoreBenchmark!=''
             && match_type===2 &&
             !((single_record_obj.preOrderDetailStatus != null) && play_mapping.MARKET_RANG_FLAG_LIST.includes(vx_get_pre_bet_list.playId.toString())) &&!
@@ -52,7 +52,7 @@
               ({{single_record_obj.scoreBenchmark.replace(':','-')}})
             </template>
              <!--盘口类型-->
-            <label class="bet-handicap-name">[{{$root.$t('odds')[single_record_obj.marketType]}}]</label>
+            <label class="bet-handicap-name">[{{i18n.t('odds')[single_record_obj.marketType]}}]</label>
           </label>
         </div>
         <!--队名及盘口区域-->
@@ -82,14 +82,14 @@
       <div class="row bet-win yb-fontsize12">
         <div class="col" v-if="single_record_obj.preOrderDetailStatus == 0 || single_record_obj.preOrderDetailStatus == 1">
           <!--投注额-->
-          {{$root.$t("bet.bet_book_stake")}}
+          {{i18n.t("bet.bet_book_stake")}}
         </div>
         <div class="col" v-else>
           <!--投注额-->
-          {{$root.$t('common.bets_val')}}
+          {{i18n.t('common.bets_val')}}
         </div>
         <div class="col-auto">
-         {{$root.$t('common.maxn_amount_val')}}
+         {{i18n.t('common.maxn_amount_val')}}
          <!-- 最高可赢额 -->
         </div>
       </div>

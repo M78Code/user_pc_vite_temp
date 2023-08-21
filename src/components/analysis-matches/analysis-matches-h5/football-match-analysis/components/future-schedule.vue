@@ -6,7 +6,7 @@
 <template>
   <div class="future-schedule football_standings recent_record" v-if="Object.keys(future_schedule_data).length > 0">
     <div class="title">
-      {{ $root.$t('analysis_football_matches.Future_schedule') }}
+      {{ i18n.t('analysis_football_matches.Future_schedule') }}
     </div>
 
     <template v-for="(item, index) in future_schedule_data" :key="index">

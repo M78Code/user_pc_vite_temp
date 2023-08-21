@@ -54,7 +54,7 @@
       <!-- 热门模块的 榜单页 和 赛程列表页面 的切换    menuId == "30101"是 竞彩足球的 唯一字段  ['1','2'].includes(get_hot_tab_item.field1) 表示只在篮球足球下显示时间-->
       <span @click="leaderboard_switch"
         v-show="i == 0 && !get_hot_tab_item.chinaBetting && ['1', '2'].includes(get_hot_tab_item.field1)">{{
-          $root.$t('home_popular.ranking') }}</span>
+          i18n.t('home_popular.ranking') }}</span>
     </div>
 
 
@@ -87,7 +87,7 @@
                 <div class="odd-t-i-wrapper flex items-center"
                   :class="{ 'status2': get_standard_odd_status == 1 && match_of_list_ascertain.length > 3 }">
                   <div class="hpl-title row items-center justify-center" :class="{ 'boxing': match_of_list.csid == 12 }"
-                    :key="i" v-for="(hpl_title, i) of $root.$t('list_title.' + match.csid + '.title')">
+                    :key="i" v-for="(hpl_title, i) of i18n.t('list_title.' + match.csid + '.title')">
                     <div class="hpl-t-inner">
                       {{ hpl_title }}
                     </div>
@@ -138,14 +138,14 @@
 
                 <!--即将开赛 ms = 110-->
                 <div class="coming-soon" v-if="match.ms" v-show="match.ms == 110">
-                  {{ $root.$t(`ms[${match.ms}]`) }}
+                  {{ i18n.t(`ms[${match.ms}]`) }}
                 </div>
 
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time" v-show="match.ms != 110 &&
                   !show_start_counting_down(match) &&
                   !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format($root.$t('time4')) }}
+                  {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -173,12 +173,12 @@
 
               <!-- 电竞串关标识 -->
               <div v-if="menu_type == 3000 && match.ispo" class="flag-chuan"
-                :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ $root.$t('match_info.match_parlay') }}
+                :class="{ 'special-lang': ['zh', 'tw'].includes(get_lang) }">{{ i18n.t('match_info.match_parlay') }}
               </div>
             </div>
             <!-- 标准版 比分组件 -->
             <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-            <div class="eports_scoring_tip" v-if="eports_scoring">{{ $root.$t('mmp.eports_scoring') }}</div>
+            <div class="eports_scoring_tip" v-if="eports_scoring">{{ i18n.t('mmp.eports_scoring') }}</div>
             <score-list :match="match" v-else-if="main_source != 'home_hot_page_schedule'"></score-list>
           </div>
           <!-- 下边的模块，左方是  队名和 队比分,  右面是  盘口  模块 -->
@@ -219,7 +219,7 @@
                     <!-- 进球动画 -->
                     <div class="yb-flex-center" v-if="is_show_home_goal && is_new_init2 && (!is_show_away_goal)">
                       <div class="yb-goal-gif" :class="{ 'yb-goal-yo': get_theme.includes('y0') }"></div>
-                      <div class="gif-text">{{ $root.$t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ i18n.t('match_result.goal') }}</div>
                     </div>
                     <span class='score-punish' v-show="home_red_score"
                       :class="{ flash: is_show_home_red && !is_show_result() }">
@@ -258,7 +258,7 @@
                     <div class="yb-flex-center" v-if="is_show_away_goal && is_new_init2 && (!is_show_home_goal)">
 
                       <div class="yb-goal-gif" :class="{ 'yb-goal-yo': get_theme.includes('y0') }"></div>
-                      <div class="gif-text">{{ $root.$t('match_result.goal') }}</div>
+                      <div class="gif-text">{{ i18n.t('match_result.goal') }}</div>
                     </div>
                     <!--进行中的赛事显示比分-->
                     <span class='score-punish' v-show="away_red_score"
@@ -283,7 +283,7 @@
                   </div>
                   <!--赛果开赛时间-->
                   <div class="m-result-time date-time">
-                    {{ format_time_zone(+match.mgt).Format($root.$t('time4')) }}
+                    {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
                   </div>
                   <div class="flex play-icon" v-if="match_of_list.playBack&&is_replay_switch">
                     <!-- <img src="image/bw3/svg/details/replay_y0.svg" /> -->
@@ -319,7 +319,7 @@
                         <span class="count_span" :class="{ esports: 3000 == menu_type }">
                           <span class="mc-n">
                             {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) :
-                              $root.$t('footer_menu.more') }}
+                              i18n.t('footer_menu.more') }}
                           </span>
                           <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
                         </span>
@@ -342,7 +342,7 @@
                   <div class="go-to-d-detail-w">
                     <div @click="goto_details(match)" class="go-to-i-detail-i row items-center justify-center">
                       <div class='word'>
-                        {{ $root.$t('list.go_to_details') }}
+                        {{ i18n.t('list.go_to_details') }}
                       </div>
                       <div>
                         <img class="go-to-d-icon" src="image/wwwassets/bw3/list/m-list-way-more.svg" />
@@ -387,13 +387,13 @@
               <div class="timer-wrapper-c newer">
                 <!--即将开赛 ms = 110-->
                 <div class="coming-soon" v-show="match.ms == 110">
-                  {{ $root.$t(`ms[${match.ms}]`) }}
+                  {{ i18n.t(`ms[${match.ms}]`) }}
                 </div>
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                 <div class="date-time" v-show="match.ms != 110 &&
                   !show_start_counting_down(match) &&
                   !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format($root.$t('time4')) }}
+                  {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -427,7 +427,7 @@
                 <div class='goto-detail' @click='goto_details(match)'>
                   <div class="count_span">
                     <span class="mc-n">
-                      {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) : $root.$t('footer_menu.more') }}
+                      {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) : i18n.t('footer_menu.more') }}
                     </span>
                     <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
                   </div>
@@ -442,7 +442,7 @@
             </div>
             <!-- 简版 比分组件 -->
             <!-- 电竞中，如果是比分判定中，则不显示该比分 -->
-            <div class="eports_scoring_tip" v-if="eports_scoring">{{ $root.$t('mmp.eports_scoring') }}</div>
+            <div class="eports_scoring_tip" v-if="eports_scoring">{{ i18n.t('mmp.eports_scoring') }}</div>
           </div>
           <!--角球，罚牌，晋级，加时赛，点球大战玩法-->
           <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
@@ -813,7 +813,7 @@ const is_it_popular = computed(() => {
 const time_change = computed(() => {
   if (props.match_of_list) {
         let time_stamp = +props.match_of_list.mgt
-        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format($root.$t('time2')) + '  ' + format_week(time_stamp)
+        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n.t('time2')) + '  ' + format_week(time_stamp)
   }
 })
 

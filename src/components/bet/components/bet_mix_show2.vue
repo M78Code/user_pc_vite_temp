@@ -68,18 +68,18 @@
         <template v-if="BetData.is_bet_success_status && get_bet_list.length == 1">
           <!-- 投注成功 -->
           <span v-if="get_bet_status == 3" class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg"
-              class="img0">{{ $root.$t('bet.bet_suc') }}</span>
+              class="img0">{{ i18n.t('bet.bet_suc') }}</span>
           <!-- 投注失败 -->
           <span v-if="get_bet_status == 8" class="color3"><img src="image/wwwassets/bw3/svg/bet_shib.svg" class="img0">{{
-            $root.$t('bet.bet_err') }}</span>
+            i18n.t('bet.bet_err') }}</span>
           <!-- 提交成功 -->
           <span v-if="get_bet_status == 6" class="color2"><img
               :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)"
-              class="img0">{{ $root.$t('bet.submitted_successfully') }}</span>
+              class="img0">{{ i18n.t('bet.submitted_successfully') }}</span>
         </template>
         <template v-else>
           <!-- 失效 -->
-          <span v-if="pankou_change == 2" class="invalid-span">{{ $root.$t('bet.invalidation') }}</span>
+          <span v-if="pankou_change == 2" class="invalid-span">{{ i18n.t('bet.invalidation') }}</span>
         </template>
       </div>
 
@@ -367,7 +367,7 @@ const hptype = computed(() => {
   if (get_cur_odd == 'HK' && _.get(value_show, 'hps[0].hsw').includes('2')) {
     type = 'HK'
   }
-  return $root.$t(`odds.${type}`)
+  return i18n.t(`odds.${type}`)
 })
 
 /** --------------------------  computed 结束---------------*/
@@ -414,7 +414,7 @@ watch(() => view_ctr_obj, (new_) => {
     if (BetData.active_index == 'market' + index_) {
       send_market_to_keyboard()
     }
-    tips_msg_update($root.$t('pre_record.market_error_info_low'))
+    tips_msg_update(i18n.t('pre_record.market_error_info_low'))
     let bet_obj = _.cloneDeep(view_ctr_obj)
     bet_obj[name_].market_tips = 0
     set_bet_obj(bet_obj)
@@ -427,7 +427,7 @@ watch(() => view_ctr_obj, (new_) => {
   if (new_[name_].pre_odds && new_[name_].pre_odds > pre_ov.value) {
     pre_odds.value = ''
     pre_ov.value = new_[name_].pre_odds
-    tips_msg_update($root.$t('error_msg_info.0400540.client_msg'))
+    tips_msg_update(i18n.t('error_msg_info.0400540.client_msg'))
     clearTimeout(timer3)
     timer3 = setTimeout(() => {
       tips_msg_update('')
@@ -769,7 +769,7 @@ const add_odd = () => {
  */
 const reduce_market_value = () => {
   if (show_market_shadow) {
-    set_toast({ 'txt': $root.$t('pre_record.market_error_info'), hide_time: 3000 });
+    set_toast({ 'txt': i18n.t('pre_record.market_error_info'), hide_time: 3000 });
     return
   }
   let realValue = ''
@@ -844,7 +844,7 @@ const reduce_market_value = () => {
  */
 const add_market_value = () => {
   if (show_market_shadow_max) {
-    set_toast({ 'txt': $root.$t('pre_record.market_error_info_max'), hide_time: 3000 });
+    set_toast({ 'txt': i18n.t('pre_record.market_error_info_max'), hide_time: 3000 });
     return
   }
   let realValue = ''
@@ -933,8 +933,8 @@ const c201_update2_handle = ({ isOddsChange, newTotalMaxWinAmount, orderNo, orde
     if (get_new_bet && get_bet_list.length == 1) {  // 单关新流程时记录失败的订单号
       set_order_los(orderNo)
       set_bet_status(1);
-      set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
-      tips_msg_update($root.$t('bet.err_msg03'))
+      set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+      tips_msg_update(i18n.t('bet.err_msg03'))
     }
     order_status.value = 0
   }
@@ -975,8 +975,8 @@ const query_order_obj_handle = (val) => {
       if (get_new_bet && get_bet_list.length == 1) {  // 单关新流程时记录失败的订单号
         set_order_los(item.orderNo)
         set_bet_status(1);
-        set_toast({ 'txt': $root.$t('bet.bet_err'), hide_time: 3000 });
-        tips_msg_update($root.$t('bet.err_msg03'))
+        set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+        tips_msg_update(i18n.t('bet.err_msg03'))
       }
       order_status.value = 0
     }

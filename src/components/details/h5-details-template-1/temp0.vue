@@ -167,7 +167,7 @@
       </div>
       <!-- 显示更多 -->
       <div v-if="!hide_show_more_layout" class="show-more play-box-style" :class="{'pack-up': show_more}"  @click="change_show">
-        <span class="fz_13">{{show_more?$root.$t('match_info.pack_up'):$root.$t('match_info.show_more')}}
+        <span class="fz_13">{{show_more?i18n.t('match_info.pack_up'):i18n.t('match_info.show_more')}}
         </span>
       </div>
     </div>
@@ -274,7 +274,7 @@ export default defineComponent({
           document.documentElement.scrollTop -= distance
         } else {
           // #TODO emit 
-          // $root.$emit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
+          // useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
       show_more = !show_more

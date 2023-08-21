@@ -180,7 +180,7 @@ export const set_card_show_level = (scroll_top) => {
     }
     // 如果折叠后 标题不在可视区域  则滚动到标题吸顶的位置
     if(offset_top <  MatchListCardData.scroll_top){
-      // this.view.$root.$emit('set_match_list_scroll_top',offset_top)
+      // this.view.useMittEmit('set_match_list_scroll_top',offset_top)
     }
   }
 

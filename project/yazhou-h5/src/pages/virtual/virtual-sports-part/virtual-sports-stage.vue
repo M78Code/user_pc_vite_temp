@@ -91,7 +91,7 @@
           <!-- 已完赛 -->
           <div :style="{visibility: ![1002, 1011, 1010, 1009].includes(sub_menu_type) ? 'hidden':'visible'}"
             v-if="source != 'detail'"
-            class="match-over">{{$root.$t('collect.match_end')}}</div>
+            class="match-over">{{i18n.t('collect.match_end')}}</div>
           <div v-for="(score,i) in get_score_list()" :key="i">
             <div class="score-box row justify-center items-center" :class="get_rank_background(score,sub_menu_type)"></div>
           </div>
@@ -103,7 +103,7 @@
             <img v-img="([lodash.get(current_match,'mhlu'), lodash.get(current_match,'frmhn')])" />
           </div>
           <div class="msc-wrap yb-flex-center">
-            <div class="match-end">{{$root.$t('collect.match_end')}}</div>
+            <div class="match-end">{{i18n.t('collect.match_end')}}</div>
             <div class="match-msc">
               <span>{{home_score}}</span>
               <span class="heng">-</span>
@@ -115,7 +115,7 @@
                 class="match-msc match-penalty"
             >
               <!--<span>-->
-              <!--  {{$root.$t('mmp[1][50]')}}:&nbsp;-->
+              <!--  {{i18n.t('mmp[1][50]')}}:&nbsp;-->
               <!--</span>-->
               <i class="icon icon-penalty"></i>
               <div class="penalty-score">
@@ -261,9 +261,9 @@ export default defineComponent({
       // 下一轮赛事开赛倒计时时钟
     next_match_timer = 0;
     // 轮号国际化字符串
-    next_batch_no = $root.$t('virtual_sports.next_batch_no');
+    next_batch_no = i18n.t('virtual_sports.next_batch_no');
     // 期号国际化字符串
-    next_date_no = $root.$t('virtual_sports.next_date_no');
+    next_date_no = i18n.t('virtual_sports.next_date_no');
 
     // #TODO EMIT 事件
     emitters = [
@@ -372,7 +372,7 @@ export default defineComponent({
     */
     const open = (position) => {
       useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);
-      // $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
+      // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     };
     /**
     *@description:关闭投注记录显示

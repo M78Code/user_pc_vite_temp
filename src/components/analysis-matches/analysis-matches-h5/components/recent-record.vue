@@ -6,7 +6,7 @@
 <template>
   <div class="recent_record" v-if="recent_record_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ $root.$t('analysis_football_matches.recent_record') }}</span>
+      <span class="title ellipsis">{{ i18n.t('analysis_football_matches.recent_record') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index+'box'"
            :class="{active:if_the_selected[index]}"
@@ -76,15 +76,15 @@ import { useRoute } from 'vue-router'
   const progress_bar = ref(false)
   const tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
-    {name: `${$root.$t('analysis_football_matches.near')}5`, index: 5},
-    {name: `${$root.$t('analysis_football_matches.near')}10`, index: 10},
-    {name: `${$root.$t('analysis_football_matches.near')}15`, index: 15},
+    {name: `${i18n.t('analysis_football_matches.near')}5`, index: 5},
+    {name: `${i18n.t('analysis_football_matches.near')}10`, index: 10},
+    {name: `${i18n.t('analysis_football_matches.near')}15`, index: 15},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
     // TODO: 国际化 后续修改调整
-    $root.$t('analysis_football_matches.same_game'),
-    $root.$t('analysis_football_matches.same_host_guest')
+    i18n.t('analysis_football_matches.same_game'),
+    i18n.t('analysis_football_matches.same_host_guest')
   ])
   const flag = ref(0)
   const cps = ref(5)
@@ -143,17 +143,17 @@ import { useRoute } from 'vue-router'
             recent_record_data:[],
             // TODO: 国际化后续修改调整
             records_list:[
-              {success: 0, name: $root.$t('analysis_football_matches.victory')},
-              {flat: 0, name: $root.$t('analysis_football_matches.flat')},
-              {lose: 0, name: $root.$t('analysis_football_matches.negative')},
+              {success: 0, name: i18n.t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n.t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n.t('analysis_football_matches.negative')},
             ]
           },
           {
             recent_record_data:[],
             records_list:[
-              {success: 0, name: $root.$t('analysis_football_matches.victory')},
-              {flat: 0, name: $root.$t('analysis_football_matches.flat')},
-              {lose: 0, name: $root.$t('analysis_football_matches.negative')},
+              {success: 0, name: i18n.t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n.t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n.t('analysis_football_matches.negative')},
             ]
           }
         ],  // host_team_id

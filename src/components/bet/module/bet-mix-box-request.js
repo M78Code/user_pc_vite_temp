@@ -66,7 +66,7 @@ const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg]) => {
         }
         BetData.need_bet_again = true
         SetData.set_toast({
-            'txt': this.$root.$t('bet.bet_err'),
+            'txt': i18n.t('bet.bet_err'),
             hide_time: 3000
         });
     } else if (emit_http == 2) {
@@ -79,7 +79,7 @@ const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg]) => {
         }
         BetData.need_bet_again = true
         SetData.set_toast({
-            'txt': this.$root.$t('bet.bet_err'),
+            'txt': i18n.t('bet.bet_err'),
             hide_time: 3000
         });
         this.fetch_limit_money(); // 更新单关查询最大最小金额
@@ -107,7 +107,7 @@ const c201_update_handler2 = ([emit_http, msg]) => {
         }
         BetData.need_bet_again = true
         SetData.set_toast({
-            'txt': this.$root.$t('bet.bet_err'),
+            'txt': i18n.t('bet.bet_err'),
             hide_time: 3000
         });
     } else if (emit_http == 2) {
@@ -119,7 +119,7 @@ const c201_update_handler2 = ([emit_http, msg]) => {
         }
         BetData.need_bet_again = true
         SetData.set_toast({
-            'txt': this.$root.$t('bet.bet_err'),
+            'txt': i18n.t('bet.bet_err'),
             hide_time: 3000
         });
         this.fetch_limit_money();

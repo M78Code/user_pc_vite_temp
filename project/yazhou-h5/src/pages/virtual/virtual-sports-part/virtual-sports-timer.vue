@@ -194,7 +194,7 @@ export default defineComponent({
             mid:match.mid,
             batchNo:match.batchNo
           });
-          // $root.$emit(MITT_TYPES.EMIT_ARRIVED10,{
+          // useMittEmit(MITT_TYPES.EMIT_ARRIVED10,{
           //   mid:match.mid,
           //   batchNo:match.batchNo
           // });

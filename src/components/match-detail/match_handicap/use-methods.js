@@ -84,7 +84,7 @@ export const useMethods = ({ props,emit }) => {
       let s = n == "loading" ? "right_details_loading" : n;
       // 发送当前 loading 状态
       useMittEmit(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, s)
-      // this.$root.$emit("change_loading_status_details", s);
+      // useMittEmit("change_loading_status_details", s);
       if (props.pageType == "right_details") {
         useMittEmit(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_RIGHT_DETAILS, s)
       }

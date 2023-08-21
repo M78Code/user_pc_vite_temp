@@ -61,9 +61,9 @@ export default defineComponent({
 
       // 赛事中断 单独判断
       if (ms === 10) {
-        return $root.$t('ms.10')
+        return i18n.t('ms.10')
       } else if (detail_data_mmp_map[mmp]) {
-        return $root.$t(detail_data_mmp_map[mmp])
+        return i18n.t(detail_data_mmp_map[mmp])
       } else {
         return ''
       }

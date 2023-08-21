@@ -87,7 +87,7 @@ export default defineComponent({
       if(props.ol_data.result || props.ol_data.result == 0){
         let result_ = props.ol_data.result
         // #TODO $root 
-        return $root.$t(`virtual_sports.result.${result_}`)
+        return i18n.t(`virtual_sports.result.${result_}`)
       }else{
         let r = '';
         // let r1 = compute_value_by_cur_odd_type(

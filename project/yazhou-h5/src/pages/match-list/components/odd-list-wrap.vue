@@ -84,12 +84,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{$root.$t('football_playing_way.full_time_draw')}}</span>
+          <span>{{i18n.t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{$root.$t('football_playing_way.half_time_draw')}}</span>
+          <span>{{i18n.t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>
@@ -144,7 +144,7 @@
              :src="show_tips ? (get_theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
                   (get_theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
         <span class="ellipsis">
-          {{[1,2,7,10].includes(+match['ms']) ? $root.$t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : $root.$t('football_playing_way.any_goal')}}
+          {{[1,2,7,10].includes(+match['ms']) ? i18n.t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n.t('football_playing_way.any_goal')}}
         </span>
       </div>
       

@@ -32,7 +32,7 @@
       <!-- 全屏 -->
       <div class="col-right">
         <div class="fold-btn" @click="set_unfold_multi_column(true)"  v-if="menu_data.is_multi_column && get_global_switch.multi_column  && !get_unfold_multi_column && ['search','home'].includes($route.name) && !vx_show_filter_popup">
-          <span class="text">{{$root.$t('icon_tips.fold')}}</span>
+          <span class="text">{{i18n.t('icon_tips.fold')}}</span>
           <i class="icon-arrow q-icon c-icon" size="12px" ></i>
         </div>
         <div v-if="animation_btn_show && ['animation'].includes(vx_play_media.media_type) && vx_get_is_fold_status">
@@ -41,7 +41,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style+';white-space: nowrap;'"
-          >{{$root.$t('video.big_screen_mode')}}</q-tooltip>
+          >{{i18n.t('video.big_screen_mode')}}</q-tooltip>
           <!-- 全屏 -->
         </div>
         <!-- 刷新按钮 -->
@@ -109,37 +109,37 @@ export default {
         /**比分版 */
         {
           type:"info",
-          text:this.$root.$t('common.score_board'),
+          text:i18n.t('common.score_board'),
           icon:"switch"
         },
         /**演播室 */
         {
           type:"studio",
-          text:this.$root.$t('common.studio'),
+          text:i18n.t('common.studio'),
           icon:"studio"
         },
         /**主播 */
         {
           type:"anchor",
-          text:this.$root.$t('common.anchor'),
+          text:i18n.t('common.anchor'),
           icon:"anchor"
         },
         /** 专题*/
         {
           type:"topic",
-          text:this.$root.$t('common.topic'),
+          text:i18n.t('common.topic'),
           icon:"topic"
         },
         /**源视频 */
         {
           type:"video",
-          text:this.$root.$t('common.o_video'),
+          text:i18n.t('common.o_video'),
           icon:"video"
         },
          /**动画 */
        {
           type:"animation",
-          text:this.$root.$t('common.animate'),
+          text:i18n.t('common.animate'),
           icon:"animation"
         }, 
        ]

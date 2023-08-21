@@ -151,9 +151,9 @@ export default {
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = this.$root.$t('common.cancel');//'取消';
+        txt = i18n.t('common.cancel');//'取消';
       } else {
-        txt = this.$root.$t('collect.betted_title');//'收藏';
+        txt = i18n.t('collect.betted_title');//'收藏';
       }
       this.favorite_loading = true;
       // 更新收藏状态
@@ -182,28 +182,28 @@ export default {
       const curr_tab = this.view_tab
       if (this.$route.name === 'match_result') {
         // 刷新 盘口赔率信息
-        this.$root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+        useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
-        this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
         });
         // 刷新 注单记录----请求
-        this.$root.$emit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
+        useMittEmit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
       }
       else if (curr_tab === 'bet') {
         // 刷新 盘口赔率信息
-        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-        // this.$root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+        // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
       }
       else if (curr_tab === 'match_analysis') {
         // 刷新 赛事分析信息
-        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
       }
       else {
-        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
       }
 
-      // this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+      // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
       this.refreshing = true;
       clearTimeout(this.timer1_)
       this.timer1_ = setTimeout(() => {
@@ -221,7 +221,7 @@ export default {
      */
     analysis_show(obj){
       let csid = _.get(obj,'csid')
-      this.$root.$emit(MITT_TYPES.EMIT_ANA_SHOW,csid)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW,csid)
     },
     /**
      *@description 加载联赛列表
@@ -230,7 +230,7 @@ export default {
      */
     async interface_b_header() {
       // 显示联赛列表传true
-      this.$root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
+      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
     },
     // 返回列表页亦或是返回上一级
     go_to_back() {
@@ -248,7 +248,7 @@ export default {
      *@return {Undefined} undefined
      */
     open(position){
-      this.$root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     },
   },
 };

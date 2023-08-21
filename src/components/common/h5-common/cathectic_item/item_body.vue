@@ -72,13 +72,13 @@ import lodash from 'lodash'
       box_bool = !box_bool;
       if (box_bool == true) {
         [btn_text, direction] = [
-          $root.$t("bet_record.pack_down"),
+          i18n.t("bet_record.pack_down"),
           "down"
         ];
         toggle_rule_b();
       } else {
         [btn_text, direction] = [
-          $root.$t("bet_record.pack_up"),
+          i18n.t("bet_record.pack_up"),
           ""
         ];
         toggle_rule_a();
@@ -86,7 +86,7 @@ import lodash from 'lodash'
     }
   const rules_normal = () => {
       [btn_text, direction, box_bool] = [
-        $root.$t("bet_record.pack_up"),
+        i18n.t("bet_record.pack_up"),
         "",
         false
       ];
@@ -95,7 +95,7 @@ import lodash from 'lodash'
   const rules_a = () => {
       if ((is_pre && data_b.detailList) || data_b.orderVOS.length >= 3)
         [btn_text, direction, box_bool] = [
-          $root.$t("bet_record.pack_down"),
+          i18n.t("bet_record.pack_down"),
           "down",
           true
         ];

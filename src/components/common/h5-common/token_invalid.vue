@@ -4,15 +4,15 @@
     <div class="fixed-center">
       <div :class="token_bg" :style="{ 'background-image': `url(${token_bg_url})` }"></div>
       <div class="txt-info">
-        <div class="dear-user">{{ $root.$t("token_inv.dear_user") }}</div>
+        <div class="dear-user">{{ i18n.t("token_inv.dear_user") }}</div>
         <!-- 您的登录信息已失效, 请关闭本页面 -->
-        <p>{{ $root.$t("token_inv.token_dis") }}</p>
+        <p>{{ i18n.t("token_inv.token_dis") }}</p>
         <!-- 再次重新进入本场馆 -->
-        <p>{{ $root.$t("token_inv.reaccess") }}</p>
+        <p>{{ i18n.t("token_inv.reaccess") }}</p>
         <!-- 祝您游戏愉快 -->
-        <p>{{ $root.$t("token_inv.play_happily") }}</p>
+        <p>{{ i18n.t("token_inv.play_happily") }}</p>
         <!-- 知道了 -->
-        <p class="know" @click="isgo_vender_url(true)">{{ $root.$t("token_inv.confrim") }}</p>
+        <p class="know" @click="isgo_vender_url(true)">{{ i18n.t("token_inv.confrim") }}</p>
       </div>
     </div>
   </div>

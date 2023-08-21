@@ -22,7 +22,7 @@
             </div>
             <div class="row" style="margin-right:0.1rem;max-width:2.43rem;">
               <div class="col title-text-style">{{title.mhn}}</div>
-              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{$root.$t('mmp.eports_scoring')}}</div>
+              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
               <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
               <div class="col title-text-style">{{title.man}}</div>
             </div>
@@ -51,7 +51,7 @@
           <img  src="image/bw3/svg/video_reload.svg" :class="[rotate ? 'rotate_2': 'rotate_1']">
         </div>
         <div style="padding: 0.1rem;color:#6D7075;">
-          {{$root.$t("video.sorry")}}
+          {{i18n.t("video.sorry")}}
         </div>
       </div>
 
@@ -63,13 +63,13 @@
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/one-click.svg" alt="">
-            <span>{{$root.$t("video.click_on")}}</span>
-            <p>{{$root.$t("video.show_hide")}}</p>
+            <span>{{i18n.t("video.click_on")}}</span>
+            <p>{{i18n.t("video.show_hide")}}</p>
           </div>
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/double-click.svg" alt="">
-            <span>{{$root.$t("video.double_click")}}</span>
-            <p>{{$root.$t("video.full_screen_play")}}</p>
+            <span>{{i18n.t("video.double_click")}}</span>
+            <p>{{i18n.t("video.full_screen_play")}}</p>
           </div>
         </div>
         
@@ -89,7 +89,7 @@
         ></iframe>
         <div class="load-error-mask" v-show="is_replay_load_error">
           <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
-          <div>{{ $root.$t('highlights.reconnect') }}</div>
+          <div>{{ i18n.t('highlights.reconnect') }}</div>
         </div>
 
         <template v-if="is_playing_replay">
@@ -125,7 +125,7 @@
             <!--（精彩/收起）回放 -->
             <div v-if="events_list.length" class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
               <img src="image/bw3/svg/details/replay_toggle.svg" />
-              <span>{{ !is_expand_video_list ? $root.$t('highlights.title') : $root.$t('highlights.collapse_replay') }}</span>
+              <span>{{ !is_expand_video_list ? i18n.t('highlights.title') : i18n.t('highlights.collapse_replay') }}</span>
             </div>
 
             <!-- 关闭回放视频 -->
@@ -158,7 +158,7 @@
         
         <!-- 长时间未操作 -->
         <div v-if="is_show_no_handle" class="no-handle information-score">
-          <div class="text text-center">{{$root.$t('video.nohandle')}}</div>
+          <div class="text text-center">{{i18n.t('video.nohandle')}}</div>
           <div class="collect-icon" @click="is_show_no_handle = false"></div>
         </div>
         <!-- 动画背景遮罩层 -->
@@ -194,7 +194,7 @@
               <!-- 动画不显示对阵信息 -->
               <div v-if="get_video_url.active == 'muUrl'" class="col-10 row" style="max-width: 2.43rem;">
                 <div class="col title-text-style">{{title.mhn}}</div>
-                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{$root.$t('mmp.eports_scoring')}}</div>
+                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
                 <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
                 <div class="col title-text-style">{{title.man}}</div>
               </div>
@@ -248,7 +248,7 @@
           class="description-popup"
         >
           <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && _.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
-            {{get_hd_sd == 1 ? $root.$t("common.HD"): $root.$t("common.SD")}}
+            {{get_hd_sd == 1 ? i18n.t("common.HD"): i18n.t("common.SD")}}
           </span>
           <div class="img-wrap">
             <img :src="tips ? tips_act :tips_def" @click="change_info"/>
@@ -258,7 +258,7 @@
     </div>
     <div class="tips details_bg6 details_t_color1" v-if="tips && video_iframe_status != 'error'">
       <div class="tips_content details_t_color3">
-        {{$root.$t("video.msg")}}
+        {{i18n.t("video.msg")}}
       </div>
     </div>
     <div v-if="(get_is_hengping && get_analyze_show)"  :class="{'analyze-show':(get_is_hengping && get_analyze_show)}">
@@ -360,10 +360,10 @@ export default defineComponent({
       is_expand_video_list: false,
       // 事件类型菜单选项
       tab_list:[
-        {title: this.$root.$t('footer_menu.all')},
-        {title:this.$root.$t('match_result.goal')},
-        {title:this.$root.$t('match_result.corner_kick')},
-        {title:this.$root.$t('football_playing_way.penalty_cards')},
+        {title: i18n.t('footer_menu.all')},
+        {title:i18n.t('match_result.goal')},
+        {title:i18n.t('match_result.corner_kick')},
+        {title:i18n.t('football_playing_way.penalty_cards')},
       ],
       // 当前播放视频信息
       current_event_video: {
@@ -708,7 +708,7 @@ export default defineComponent({
       (new_value) => {
         if(new_value == -1 && this.get_video_url.active == 'animationUrl'){
           this.set_toast({
-            txt: this.$root.$t("video.close_1"),
+            txt: i18n.t("video.close_1"),
           });
           this.close_video()
         }
@@ -721,7 +721,7 @@ export default defineComponent({
         if(new_value != 2 && this.get_video_url.active == 'muUrl'){
           this.close_video()
           this.set_toast({
-            txt: this.$root.$t("video.close_2"),
+            txt: i18n.t("video.close_2"),
           });
         }
       }

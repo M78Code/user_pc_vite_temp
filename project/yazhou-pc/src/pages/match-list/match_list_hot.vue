@@ -11,7 +11,7 @@
   >
     <div class="detais-hot-head">
       <img src="~public/image/yabo/svg/hot.svg" />
-      <div>{{$root.$t('list.hot_match')}}</div>
+      <div>{{i18n.t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->
     <load-data :state="load_data_state">
@@ -36,7 +36,7 @@ export default {
   mixins: [match_list_version_mixin,skt_data_list],
   mounted() {
     //同步热门接口
-    this.$root.$emit(MITT_TYPES.EMIT_HOT_COLLECT)
+    useMittEmit(MITT_TYPES.EMIT_HOT_COLLECT)
   },
 };
 </script>

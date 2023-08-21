@@ -7,7 +7,7 @@
   <span class='show-start-time'>
     <span v-if="start_time" class="fz_12" style="font-weight:400">
       <!-- "after_time_start": "分钟后开赛", -->
-      {{$root.$t("list.after_time_start",[longTime])}}
+      {{i18n.t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
       {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}

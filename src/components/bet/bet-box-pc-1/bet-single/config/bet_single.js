@@ -15,7 +15,7 @@ export default {
 
       timer_obj: {}, // 定时器对象
       code_exist: false, //是否有返回code码
-      button_text: this.$root.$t('bet.accept_change'), // 接受变化
+      button_text: i18n.t('bet.accept_change'), // 接受变化
       bet_delete_over: false,
       // 单关主题文件路径
       valid_money_obj: {},
@@ -222,7 +222,7 @@ export default {
       }
       if([2,3,4].includes(new_)) {
         clearTimeout(this.timer_obj['time_over']);
-        this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+        useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
         
         let mids = [], has_match_collect = false, has_hot_collect = false;
         let len = this.vx_get_bet_single_list.length
@@ -244,15 +244,15 @@ export default {
         // 来源为热门赛事
         // if (has_hot_collect) {
         //   // 热门赛事收藏
-        //   this.$root.$emit(MITT_TYPES.EMIT_HOT_COLLECT);
+        //   useMittEmit(MITT_TYPES.EMIT_HOT_COLLECT);
         // }
         // //投注成功后会调用这里，把赛事收藏起来
         // if(has_match_collect) {
         //   // 收藏投注赛事
-        //   this.$root.$emit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, { type: "bet", mids });
+        //   useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, { type: "bet", mids });
         // }
         // 统计未结算订单
-        this.$root.$emit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+        useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
       }
 
       // 投注项锁住不让点击
@@ -356,7 +356,7 @@ export default {
               let bet_single_obj = _.cloneDeep(this.vx_get_bet_single_obj); 
               //获取最大最小值接口
               this.set_min_max_money(() => {             
-                this.$root.$emit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD);
+                useMittEmit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD);
               }, bet_single_obj);
               this.view_ctr_obj.bet_order_status = 1;
             });
@@ -587,7 +587,7 @@ export default {
       }
       if(this.view_ctr_obj.single_range_money == -4) {
         //设置单关最小金额
-        this.$root.$emit(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY);
+        useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_MIN_MONEY);
         return;
       }
       //有备注
@@ -595,7 +595,7 @@ export default {
       //判断是否有投注数据发生变化
       this.view_ctr_obj.bet_data_change = false;
       // 打开遮罩
-      this.$root.$emit(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD);
+      useMittEmit(MITT_TYPES.EMIT_OPEN_MENU_LOADDING_CMD);
       // 设置投注状态为处理中
       this.view_ctr_obj.bet_order_status = 2;
       // 描述：断网25秒的处理办法
@@ -606,7 +606,7 @@ export default {
         this.vx_set_bet_item_lock(false);
         this.vx_set_bet_mode(-1);
         // 关闭遮罩
-        this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+        useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
         this.set_message('0400483');//网络异常，请稍后再试
         clearTimeout(this.timer_obj['time_over']);
         if(this.view_ctr_obj.timer_) {
@@ -636,7 +636,7 @@ export default {
             // this.remove_close_handicap(()=>{
             //   if(this.vx_get_bet_single_list.length==0) {
             //     // 关闭遮罩
-            //     this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+            //     useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
             //     return;
             //   }
             // });
@@ -645,7 +645,7 @@ export default {
           }
           // 是否为接受变化按钮
           if (handle_type == 'accept' && !this.has_disable_item) {
-            this.$root.$emit(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD);
+            useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD);
             clearTimeout(this.view_ctr_obj.timer_);
             this.view_ctr_obj.timer_ = undefined;
             // 恢复校验
@@ -712,7 +712,7 @@ export default {
               this.vx_set_bet_item_lock(false);
               this.vx_set_bet_mode(-1);
               // 关闭遮罩
-              this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+              useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
               this.set_message('0400483');//服务繁忙，再试一次吧~
               clearTimeout(this.timer_obj['time_over']);
             }, 1000 * 25); // 原本30s Aden要求修改为25s
@@ -796,7 +796,7 @@ export default {
                 if(this.vx_get_bet_mode == 0) {
                   this.vx_set_bet_item_lock(false);
                   // 关闭遮罩
-                  this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+                  useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                 } else if(this.vx_get_bet_mode == 1 && this.view_ctr_obj.order_confirm_complete == 1){ // 新流程调用接口22秒后还在确认中的时候拉取一次查询状态的接口
                   clearTimeout(this.timer_obj['time_over']);
                   this.timer_obj['time_over'] = setTimeout(()=>{
@@ -813,7 +813,7 @@ export default {
                       this.view_ctr_obj.timer_ = undefined;
                     }
                     // 关闭遮罩
-                    this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+                    useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                   }, 1000 * 25);
                 }
                 //是不是预约投注
@@ -836,7 +836,7 @@ export default {
                   let cs = _.get(this.vx_get_bet_single_obj, `${bet_appoint_id}.cs`);
                   if(cs) {
                     let {home, away, play_name} = cs;
-                    this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${home} v ${away} - ${play_name} ${this.$root.$t('bet.bet_booked')}`);
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${home} v ${away} - ${play_name} ${i18n.t('bet.bet_booked')}`);
                   }
                 }
               } else if(code=='0400532'){
@@ -857,7 +857,7 @@ export default {
                 // 投注失败还原默认的模式
                 this.vx_set_bet_mode(-1);
                 // 关闭遮罩
-                this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+                useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
                 this.view_ctr_obj.bet_order_status = 4;
                 if(code == '111111') {
                   this.view_ctr_obj.error_code = code;
@@ -877,7 +877,7 @@ export default {
 
           if (handle_type == 'accept') {
             this.remove_close_handicap();
-            this.$root.$emit(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD);
+            useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RESET_CMD);
           }
 
           if (before_code !== 200) {
@@ -942,7 +942,7 @@ export default {
           this.reset_bet_single();
         }
         this.view_ctr_obj.error_code = code;
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${code}`).client_msg1;
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${code}`).client_msg1;
       } else {
         // 说明对应的id变化了(业务提示:坑位已发生改变，投注失败)
         if(['0402010','0400467'].includes(code)) {
@@ -967,7 +967,7 @@ export default {
               id = bet_obj.id;
             }
           }   
-          this.$root.$emit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, id);       
+          useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, id);       
         }
         this.set_message(code, handle_type);
       }
@@ -1087,7 +1087,7 @@ export default {
       let len = this.vx_get_bet_single_list.length;
       // 如果单关列表为一个值时，输入的金额即使小于最小金额也可以提交
       if(len>1) {       
-        this.$root.$emit(cmd);
+        useMittEmit(cmd);
         return this.view_ctr_obj.single_range_money;
       } else {
         let id = this.vx_get_bet_single_list[0];
@@ -1102,7 +1102,7 @@ export default {
           }
         }
         //当用户余额不足时，且最低投注金额比用户余额更大时 需要让用户能投注更小的金额
-        this.$root.$emit(cmd);
+        useMittEmit(cmd);
         return this.view_ctr_obj.single_range_money;
       }      
     },
@@ -1156,11 +1156,11 @@ export default {
       if(count > 0) return;
 
       BetCommonHelper.init_message();
-      let msg = this.$root.$t(`error_msg_info.${code}`);
+      let msg = i18n.t(`error_msg_info.${code}`);
       // 若msg为空则显示投注失败处理
       if (msg == `error_msg_info.${code}`) {
         // 异常码无对应的消息是显示默认的提示
-        msg = this.$root.$t('error_msg_info.XXXXXX');
+        msg = i18n.t('error_msg_info.XXXXXX');
         code = 'XXXXXX';
       }
       //console.log('==================set_message=========================' + JSON.stringify(msg));
@@ -1211,10 +1211,10 @@ export default {
     get_button_text(data) {
       if (data && this.view_ctr_obj.is_effect) {
         // 接受变化并投注
-        this.button_text = this.$root.$t('bet.accept_change_bet');
+        this.button_text = i18n.t('bet.accept_change_bet');
       } else {
         // 接受变化
-        this.button_text = this.$root.$t('bet.accept_change');
+        this.button_text = i18n.t('bet.accept_change');
         this.view_ctr_obj.is_effect = true;
       }
     },
@@ -1237,7 +1237,7 @@ export default {
       this.vx_set_bet_item_lock(false);
       // 投注失败还原默认的模式
       this.vx_set_bet_mode(-1);
-      this.$root.$emit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
+      useMittEmit(MITT_TYPES.EMIT_CLOSE_MENU_LOADDING_CMD);
     },
     /**
      * @description: 定时任务
@@ -1667,7 +1667,7 @@ export default {
             if(parseFloat(max_money) == 0) {
               this.view_ctr_obj.bet_order_status = 5;  //投注项失败
               this.view_ctr_obj.error_code = "M400009"; //"该选项当前不可投注，请选择其他选项"
-              this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
+              this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
             }
             // 最小值
             obj.cs.min_money = min_money;
@@ -1686,7 +1686,7 @@ export default {
         }
       });
       this.view_ctr_obj.input_max_flag = 2;
-      this.$root.$emit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD); //更新键盘状态
+      useMittEmit(MITT_TYPES.EMIT_SINGLE_UPDATE_KEYBOARD_STATUS_CMD); //更新键盘状态
     },
     /**
      * @description:检测用户账户金额
@@ -1725,7 +1725,7 @@ export default {
       // 如果存在无效项需要提示
       if(count > 0) {
         this.view_ctr_obj.error_code = "0402049"; //已失效
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.0402049.client_msg1`);
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.0402049.client_msg1`);
       }
     });
   }

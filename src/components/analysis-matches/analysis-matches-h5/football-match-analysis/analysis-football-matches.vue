@@ -82,7 +82,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
         tabList.unshift(
             {
               // TODO: 国际化后续修改调整
-              name: $root.$t('highlights.title'),
+              name: i18n.t('highlights.title'),
               component: 'highlights'
             }
         )
@@ -98,23 +98,23 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       // 国际化 后续修改调整
       let tabs = [
         {
-          name: $root.$t('analysis_football_matches.match'),
+          name: i18n.t('analysis_football_matches.match'),
           component: 'match'
         },
         {
-          name: $root.$t('analysis_football_matches.analysis_data'),
+          name: i18n.t('analysis_football_matches.analysis_data'),
           component: 'standings'
         },
         {
-          name: $root.$t('analysis_football_matches.line_up'),
+          name: i18n.t('analysis_football_matches.line_up'),
           component: 'line_up'
         },
         {
-          name: $root.$t('analysis_football_matches.intelligence'),
+          name: i18n.t('analysis_football_matches.intelligence'),
           component: 'intelligence'
         },
         {
-          name: $root.$t('analysis_football_matches.Odds'),
+          name: i18n.t('analysis_football_matches.Odds'),
           component: 'analysis_odds'
         },
       ]
@@ -122,7 +122,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       if (get_detail_data.cds === '1500') {
         tabs = [
           {
-            name: $root.$t('analysis_football_matches.analysis_data'),
+            name: i18n.t('analysis_football_matches.analysis_data'),
             component: 'standings'
           }
         ]
@@ -141,7 +141,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights) {
         tabs.unshift(
             {
-              name: $root.$t('highlights.title'),
+              name: i18n.t('highlights.title'),
               component: 'highlights'
             }
         )

@@ -46,7 +46,7 @@
                   <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{$root.$t('mmp.eports_scoring')}}
+                      {{i18n.t('mmp.eports_scoring')}}
                     </template>
                     <template v-if="is_match_result">
                       {{calc_score(item)}}
@@ -145,7 +145,7 @@ export default {
     },
     change_active(item) {
       // 点击联赛页面收起下拉窗效果 传值false
-      this.$root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
+      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
       // 如果选择当前页的比赛,则不给予跳转;
       if (this.detail_data.mid == item.mid) return;
       this.set_event_list([])
@@ -156,7 +156,7 @@ export default {
         // 点击联赛列表设置url赛事id todo优化此处 replace
         this.$router.replace({ name: "result_details", params: { mid: item.mid,index: '1' } });
         // 触发调用赛事详情页面接口:getMatchDetail 刷新详情页头部信息;
-        this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS);
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS);
         clearInterval(this.timer1_)
         clearInterval(this.timer2_)
       }, 400)

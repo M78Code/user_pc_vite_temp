@@ -37,15 +37,15 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   // TODO: 国际化后续修改调整
   const tabList = ref([
     {
-      name: $root.$t('analysis_football_matches.match'),
+      name: i18n.t('analysis_football_matches.match'),
       component: 'match'
     },
     {
-      name: $root.$t('analysis_football_matches.standings'),
+      name: i18n.t('analysis_football_matches.standings'),
       component: 'standings'
     },
     {
-      name: $root.$t('analysis_football_matches.line_up'),
+      name: i18n.t('analysis_football_matches.line_up'),
       component: 'line_up'
     }
   ])

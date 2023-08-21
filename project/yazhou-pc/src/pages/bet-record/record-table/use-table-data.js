@@ -101,12 +101,12 @@ export const useTableData = ({ props, emit }) => {
   const marketType = (type, langCode = "zh") => {
     var res = "";
     const obj = {
-      EU: this.$root.$t(`common_lang.${langCode}.odds.EU`), //"欧洲盘";
-      HK: this.$root.$t(`common_lang.${langCode}.odds.HK`), //"欧洲盘";
-      US: this.$root.$t(`common_lang.${langCode}.odds.US`), //"欧洲盘";
-      ID: this.$root.$t(`common_lang.${langCode}.odds.ID`), //"欧洲盘";
-      MY: this.$root.$t(`common_lang.${langCode}.odds.MY`), //"欧洲盘";
-      GB: this.$root.$t(`common_lang.${langCode}.odds.GB`), //"欧洲盘";
+      EU: i18n.t(`common_lang.${langCode}.odds.EU`), //"欧洲盘";
+      HK: i18n.t(`common_lang.${langCode}.odds.HK`), //"欧洲盘";
+      US: i18n.t(`common_lang.${langCode}.odds.US`), //"欧洲盘";
+      ID: i18n.t(`common_lang.${langCode}.odds.ID`), //"欧洲盘";
+      MY: i18n.t(`common_lang.${langCode}.odds.MY`), //"欧洲盘";
+      GB: i18n.t(`common_lang.${langCode}.odds.GB`), //"欧洲盘";
     };
     if (type && langCode) {
       res = obj[type];
@@ -171,13 +171,13 @@ export const useTableData = ({ props, emit }) => {
     if (type && langCode) {
       switch (parseInt(type)) {
         case 1:
-          res = this.$root.$t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+          res = i18n.t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
           break;
         case 2:
-          res = this.$root.$t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
+          res = i18n.t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
           break;
         case 3:
-          res = this.$root.$t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+          res = i18n.t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
           break;
       }
     }
@@ -611,7 +611,7 @@ export const useTableData = ({ props, emit }) => {
   //         this.show_bet_slide(index);
   //         this.re_settlement(orderNo, index);
   //         // 拉取用户金额接口
-  //         this.$root.$emit(MITT_TYPES.EMIT_GET_BALANCE_CMD);
+  //         useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD);
   //       } else if (["0400525", "0400526"].includes(code)) {
   //         this.$set(this.cur_bet_pre, `${index}.bet_pre_code`, code);
   //         this.$set(this.early_settlement_data[index], "bet_status", "default");
@@ -1112,7 +1112,7 @@ export const useTableData = ({ props, emit }) => {
 
 
   // mounted() {
-  //   this.toolWords = this.$root.$t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
+  //   this.toolWords = i18n.t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
   // },
   // beforeUnmount() {
   //   // 关闭设置提前结算状态事件
@@ -1157,7 +1157,7 @@ export const useTableData = ({ props, emit }) => {
       this.set_ws_info_data
     );
     // 统计未结算订单数量
-    this.$root.$emit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
   });
   return {
     ...toRefs(state),

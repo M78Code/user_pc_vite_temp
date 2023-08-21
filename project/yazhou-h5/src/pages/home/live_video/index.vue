@@ -77,7 +77,7 @@
                   <div class="time relative-position">
                     <!-- 倒计时组件 -->
                     <counting-down
-                      :title="item.ms == 0? $root.$t('list.match_no_start') :match_period_map(item)"
+                      :title="item.ms == 0? i18n.t('list.match_no_start') :match_period_map(item)"
                       :mmp="item.mmp"
                       :m_id="item.mid"
                       :second="item.mst"
@@ -86,7 +86,7 @@
                     />
                   </div>
                   <div class="score">
-                    <span>{{ _.get(get_access_config, 'handicapNum') ? item.mc: $root.$t('footer_menu.more') }}</span>
+                    <span>{{ _.get(get_access_config, 'handicapNum') ? item.mc: i18n.t('footer_menu.more') }}</span>
                     <span v-if="_.get(get_access_config,'handicapNum')">+</span>
                   </div>
                 </div>
@@ -229,7 +229,7 @@ import counting_down from 'src/project/components/common/counting-down'
     // 切换头部菜单选项卡
     const changeTab = (tab, index) => {
       if(tab.count === 0) {
-        $toast($root.$t('home.no_favorite_events'), 1000)
+        $toast(i18n.t('home.no_favorite_events'), 1000)
         return
       }
       if (tab_Index == index) return
@@ -333,7 +333,7 @@ import counting_down from 'src/project/components/common/counting-down'
                 if(item.subList.length) {
                   item.subList.unshift({
                     field1: '',
-                    name: $root.$t('footer_menu.all'),
+                    name: i18n.t('footer_menu.all'),
                   });
                 }
               })

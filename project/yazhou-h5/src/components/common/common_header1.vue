@@ -96,10 +96,10 @@ const props = defineProps({
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
         //'取消';
-        txt = $root.$t('common.cancel');
+        txt = i18n.t('common.cancel');
       } else {
         //'收藏';
-        txt = $root.$t('collect.betted_title');
+        txt = i18n.t('collect.betted_title');
       }
       favorite_loading = true;
       // 更新收藏状态
@@ -128,28 +128,28 @@ const props = defineProps({
       const curr_tab = view_tab
       if ($route.name === 'match_result') {
         // 刷新 盘口赔率信息
-        $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+        useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
-        $root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+        useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
         });
         // 刷新 注单记录----请求
-        $root.$emit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
+        useMittEmit(MITT_TYPES.EMIT_UPDATE_ORDER_LIST)
       }
       else if (curr_tab === 'bet') {
         // 刷新 盘口赔率信息
-        $root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-        // $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+        // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
       }
       else if (curr_tab === 'match_analysis') {
         // 刷新 赛事分析信息
-        $root.$emit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
       }
       else {
-        $root.$emit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
+        useMittEmit(MITT_TYPES.EMIT_REFRESH_CHATROOM)
       }
 
-      // $root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS)
+      // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
       refreshing = true;
       clearTimeout(timer1_)
       timer1_ = setTimeout(() => {
@@ -167,7 +167,7 @@ const props = defineProps({
      */
   const analysis_show = (obj) => {
       let csid = lodash.get(obj,'csid')
-      $root.$emit(MITT_TYPES.EMIT_ANA_SHOW,csid)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW,csid)
     }
     /**
      *@description 加载联赛列表
@@ -176,7 +176,7 @@ const props = defineProps({
      */
   const interface_b_header = async() => {
       // 显示联赛列表传true
-      $root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
+      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, true);
     }
     // 返回列表页亦或是返回上一级
   const go_to_back = () => {
@@ -194,7 +194,7 @@ const props = defineProps({
      *@return {Undefined} undefined
      */
   const open = (position) => {
-      $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
   }
     // ...mapGetters([
     //   // 赛事id

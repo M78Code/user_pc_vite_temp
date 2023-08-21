@@ -46,7 +46,7 @@
                   <span v-if="item.ms == 1 || item.ms == 2 || item.ms == 3 || item.ms == 4 || is_match_result" class="decated">
                     <!-- 增加比分判定中的判断和显示 -->
                     <template v-if="is_eports_scoring(item)">
-                      {{$root.$t('mmp.eports_scoring')}}
+                      {{i18n.t('mmp.eports_scoring')}}
                     </template>
                     <template v-else-if="is_match_result">
                       {{calc_score(item)}}
@@ -160,7 +160,7 @@ export default {
       }
     },
     change_active(item) {
-      this.$root.$emit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
+      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false);
       if (this.detail_data.mid == item.mid) return; // 如果选择当前页的比赛,则不给予跳转;
       this.set_goto_detail_matchid(item.mid); //设置mid;
       this.set_event_list([])
@@ -169,13 +169,13 @@ export default {
         this.set_details_item(this.get_details_tabs_list[0].id); // 选中的tab的item项;
       }
       this.$router.replace({ name: "category", params: {mid: item.mid,index: '1' }}); // todo 优化此处
-      this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
-      this.$root.$emit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
-      this.$root.$emit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
-      this.$root.$emit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
+      useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
+      useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
+      useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接
+      useMittEmit(MITT_TYPES.EMIT_DETAILS_SKT); // 头部信息skt连接
       this.timer1_ = setInterval(()=>{
-        this.$root.$emit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
-        this.$root.$emit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
+        useMittEmit(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT);
+        useMittEmit(MITT_TYPES.EMIT_UPDATE_GAME_TIME)
         clearInterval(this.timer1_)
         clearInterval(this.timer2_)
       },100)

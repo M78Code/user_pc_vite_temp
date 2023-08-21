@@ -70,7 +70,7 @@ const menu_click = () => {
   let bet_list = get_bet_list.value
 
   if (get_mix_bet_flag.value && bet_list.length < min_num) {
-    set_toast({ 'txt': this.$root.$t('bet.match_min', [min_num]) });
+    set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
     return
   }
 
