@@ -12,6 +12,7 @@
 </template>
 <script setup>
 // import { compute_css } from "src/core/server-img/";
+import appload from './app-load.vue'
 import { ref } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";

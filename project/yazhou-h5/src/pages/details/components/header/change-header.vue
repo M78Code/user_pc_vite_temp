@@ -34,9 +34,9 @@
 import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: "change_header",

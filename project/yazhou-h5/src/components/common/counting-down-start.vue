@@ -11,9 +11,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 const props = defineProps({
   /** 赛事对象 */

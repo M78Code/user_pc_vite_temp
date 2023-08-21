@@ -78,8 +78,8 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import lodash from 'lodash';
-import { useI18n } from 'vue-i18n'
-  const { t } = useI18n();
+import { t } from "src/boot/i18n";
+  ;
 </script>
 <style lang="scss" scoped>
 .basic-col {

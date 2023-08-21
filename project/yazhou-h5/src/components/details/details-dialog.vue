@@ -94,9 +94,9 @@ import match_stage from 'src/project/components/match/match_stage.vue';
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
  // 详情页同联赛的赛事即将开赛显示时间
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default {
   name: "details_dialog",

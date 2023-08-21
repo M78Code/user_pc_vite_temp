@@ -61,7 +61,7 @@
 <script setup>
 // import { mapGetters } from "vuex";
 import { ref, onUnmounted, computed } from 'vue'
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 
 let { t } = useI18n()
 

@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeMount } from 'vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
@@ -24,7 +24,7 @@ import { get_remote_time } from "src/core/formart/module/format-time.js"
 const store_data = store.getState()
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)

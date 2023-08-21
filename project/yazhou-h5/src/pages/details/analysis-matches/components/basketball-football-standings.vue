@@ -65,7 +65,7 @@ import {api_result} from "src/api/index.js";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
@@ -87,7 +87,7 @@ let get_detail_data = ref({
   // 路由
   const route = useRoute()
   //
-  const { t } = useI18n()
+  
 
   onMounted(() => {
     get_list()

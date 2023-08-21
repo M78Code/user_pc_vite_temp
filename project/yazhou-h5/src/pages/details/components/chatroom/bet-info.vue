@@ -77,9 +77,9 @@ import { api_common } from 'src/project/api/index.js'
 // import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import { uid } from "quasar";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 export default defineComponent({
   name: 'bet_info',
 

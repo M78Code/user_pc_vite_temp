@@ -62,9 +62,9 @@ import teamImg from "src/project/components/details/team-img";
 import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 // 无网络展示组件
 // import no_data from "src/project/components/common/no-data";

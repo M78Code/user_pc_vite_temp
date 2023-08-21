@@ -18,11 +18,10 @@ import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import { set_remote_server_time } from "./src/store/module/global";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";
 import { useRouter } from "vue-router";
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
-const { t } = useI18n();
 const router = useRouter();
 const _data = reactive({
   is_ws_run: wslog.ws_run, //// 初始化启动日志系统--开发模式时日志打开

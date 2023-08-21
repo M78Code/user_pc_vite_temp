@@ -32,9 +32,9 @@ import { defineComponent, ref } from 'vue'
 import teamImg from "src/project/components/details/team-img";
  // 伤停情况列表
 import injuryForm from "src/project/pages/details/analysis-matches/components/injury-form";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 
 // TODO: 后续修改调整

@@ -46,9 +46,9 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import { get_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 const props = defineProps({
   top_: {

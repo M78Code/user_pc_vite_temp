@@ -38,9 +38,9 @@ import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
 import utils from "src/public/utils/utils";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default {
   name: 'team_match_icon',

@@ -54,9 +54,9 @@ import { api_v_sports } from "src/project/api/index.js";
 
 import teamImg from "src/components/details/team-img/team-img-template-1/team-img.vue";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: "virtual_basketball",

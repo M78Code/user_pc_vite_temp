@@ -60,7 +60,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 

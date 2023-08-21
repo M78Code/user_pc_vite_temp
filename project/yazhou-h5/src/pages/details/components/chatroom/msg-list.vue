@@ -23,9 +23,9 @@ import chat_msg from 'project_path/src/pages/details/components/chatroom/chat_ms
 import { msgType, muteType } from 'project_path/src/pages/details/components/chatroom/constant.js'
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: 'msg_list',

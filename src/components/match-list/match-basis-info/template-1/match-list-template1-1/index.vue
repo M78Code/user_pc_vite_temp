@@ -98,9 +98,9 @@ import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画

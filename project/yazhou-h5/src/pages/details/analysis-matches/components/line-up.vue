@@ -164,9 +164,9 @@ import { api_result } from "src/api/index.js";
 import { computed, nextTick, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

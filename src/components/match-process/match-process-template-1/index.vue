@@ -134,7 +134,7 @@ import {
 import { component_symbol, need_register_props } from "../config/index.js";
 useRegistPropsHelper(component_symbol, need_register_props);
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import lodash from "lodash";
 import { get_mmp_name } from "src/core/match-list-h5/match-utils/handle-score.js";
 
@@ -161,7 +161,7 @@ const props = defineProps({
   },
   right: Boolean,
 });
-const { t } = useI18n();
+;
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {

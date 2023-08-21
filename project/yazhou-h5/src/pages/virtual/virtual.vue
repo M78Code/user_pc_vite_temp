@@ -69,7 +69,7 @@
 */
 
 // 引入国际化
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs } from "vue";
 
 // #TODO vuex更改
@@ -116,7 +116,7 @@ export default defineComponent({
     });
   },
   setup() {
-    const { t } = useI18n();
+    ;
     // 路由
     const component_data = reactive({
       // dom 

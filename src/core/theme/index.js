@@ -21,6 +21,7 @@ useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
   current_theme.value = _v;
 });
 
+//前缀名称
 const css_prefix = "--qq--";
 /**
  * 获取当前节点的 CSS 变量值  style 对象

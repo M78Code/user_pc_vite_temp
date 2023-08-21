@@ -59,9 +59,9 @@ import notice_bar from 'project_path/src/pages/details/components/chatroom/notic
 import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: 'chatroom',

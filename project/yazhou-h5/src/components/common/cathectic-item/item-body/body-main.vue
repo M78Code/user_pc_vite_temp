@@ -106,9 +106,9 @@ import utils from "src/core/utils/utils.js"
 import { format_time_zone_time, format_odds } from 'src/core/formart'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 const props =defineProps({
     main: {

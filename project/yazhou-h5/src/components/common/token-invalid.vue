@@ -24,9 +24,9 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
 import { invalid_url } from 'src/public/utils/base64_url'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: 'token_invalid',

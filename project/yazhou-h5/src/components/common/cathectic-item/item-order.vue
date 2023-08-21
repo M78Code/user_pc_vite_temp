@@ -19,9 +19,9 @@ import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { format_time_zone_time } from 'src/core/formart/index.js'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
   const props = defineProps({
     data_o: {
