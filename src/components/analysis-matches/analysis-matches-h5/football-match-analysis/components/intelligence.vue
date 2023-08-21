@@ -1,33 +1,35 @@
 <!--
  * @Author:
- * @Date: 
+ * @Date:
  * @Description: 详情页足球赛事分析情报页面
 -->
 <template>
   <div class="intelligence">
     <!--  头部 -->
     <div class="header">
-      <div class="tab-radio-button" v-for="(item, index) in tab_radio_button" :key="index+'b'" :class="{active: radio_button_index == index}" @click="radio_button(index)">
+      <div class="tab-radio-button" v-for="(item, index) in tab_radio_button" :key="index + 'b'"
+        :class="{ active: radio_button_index == index }" @click="radio_button(index)">
         <span class="ellipsis">{{ item }}</span>
       </div>
     </div>
-    <div class="content yb_mt10" v-for="(item,index) in data_list" :key="index">
-      <p class="tittle"><span :class="{'color0':item.label == 0,'color1':item.label == 1,'color2':item.label == 2}"></span>&ensp;
-        <template v-if="item.label == 0">{{ i18n.t('analysis_football_matches.Neutral_Information') }}</template>
-        <template v-if="item.label == 1">{{ i18n.t('analysis_football_matches.Favorable_information') }}</template>
-        <template v-if="item.label == 2">{{ i18n.t('analysis_football_matches.Unfavorable_information') }}</template>
+    <div class="content yb_mt10" v-for="(item, index) in data_list" :key="index">
+      <p class="tittle"><span
+          :class="{ 'color0': item.label == 0, 'color1': item.label == 1, 'color2': item.label == 2 }"></span>&ensp;
+        <template v-if="item.label == 0">{{ t('analysis_football_matches.Neutral_Information') }}</template>
+        <template v-if="item.label == 1">{{ t('analysis_football_matches.Favorable_information') }}</template>
+        <template v-if="item.label == 2">{{ t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
-      <template v-for="(item2,index2) in item.msg" >
-        <p class="item" :key="index2">{{item2}}</p>
+      <template v-for="(item2, index2) in item.msg">
+        <p class="item" :key="index2">{{ item2 }}</p>
       </template>
     </div>
-    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n.t('common.no_data') }}</div>
+    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
 import { api_result } from "src/project/api";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/" 
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
 // TODO: 后续修改调整
@@ -59,7 +61,7 @@ import { ref, nextTick } from 'vue'
     })
     onUnmounted(() => {
       // 移除监听 赛事分析刷新事件 TODO: get_detail_data  $root.$off 后续修改调整
-      $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
     })
 
     const radio_button = (index) => {
@@ -74,7 +76,7 @@ import { ref, nextTick } from 'vue'
         let parameter = {
           standardMatchId: match_id,
           //父菜单类型:(2数据;3阵容4情报;5赔率)
-          parentMenuId: 4,  
+          parentMenuId: 4,
           sonMenuId: radio_button_index + 1
         }
         let { code, data } = await api_result.get_match_analysise_data(parameter)
@@ -83,13 +85,13 @@ import { ref, nextTick } from 'vue'
           data.sThirdMatchInformationDTOList.forEach(item => {
             if (item.benefit == 0 || item.benefit == 1) {
               //中立情报
-              msg0.msg.push(item.content) 
+              msg0.msg.push(item.content)
             } else if (item.benefit == 2 && radio_button_index == 0 || item.benefit == 3 && radio_button_index == 1) {
               //有利情报
-              msg1.msg.push(item.content) 
+              msg1.msg.push(item.content)
             } else if (item.benefit == 4 && radio_button_index == 0 || item.benefit == 5 && radio_button_index == 1) {
               //不利情报
-              msg2.msg.push(item.content) 
+              msg2.msg.push(item.content)
             }
           });
           data_list.push(msg0, msg1, msg2)

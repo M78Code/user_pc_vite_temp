@@ -11,7 +11,7 @@
         <div class="filter-button" v-if="!lodash.get(get_user, 'settleSwitch') == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ i18n.t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+            {{ t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
@@ -19,7 +19,7 @@
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <span>{{(new Date(name)).Format(i18n.t('time2'))}}</span>
+                <span>{{(new Date(name)).Format(t('time2'))}}</span>
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
@@ -60,7 +60,7 @@ import store from 'src/store-redux'
     //   scroll,
     //   SRecord
     // },
-    
+
     let store_ = ref(store.getState())
     // 锚点
     let myScroll = ref(null)
@@ -88,11 +88,11 @@ import store from 'src/store-redux'
   let count2 = ref(0)
   // 延时器
   let timer_1 = ref(null)
-  let timer_2 = ref(null)    
+  let timer_2 = ref(null)
   // computed: {
   //   ...mapGetters(['get_user', 'get_main_item'])
   // },
-  
+
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
@@ -114,7 +114,7 @@ import store from 'src/store-redux'
         search_early_money()
       }
     },10000)
-    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).on;
   })
     // ...mapMutations(['set_early_moey_data']),
   /**
@@ -196,7 +196,7 @@ import store from 'src/store-redux'
     is_loading = !flag
     //请求注单记录接口
     get_order_list(params)
-    
+
   }
   /**
      * @description 请求注单记录接口
@@ -205,7 +205,7 @@ import store from 'src/store-redux'
     */
   const get_order_list = (params) => {
     //第一次加载时的注单数
-    let size = 0  
+    let size = 0
     api_betting.post_getH5OrderList(params).then(res => {
       is_limit = false
       if (res.code == 200) {
@@ -270,14 +270,14 @@ import store from 'src/store-redux'
   //   let ele = myScroll
   //   if (!is_hasnext || last_record === undefined) {
   //     //没有更多
-  //     ele.setState(7);  
+  //     ele.setState(7);
   //     return;
   //   }
   //   //加载中
-  //   ele.setState(4);  
+  //   ele.setState(4);
   //   api_betting.post_getOrderList(params).then(res => {
   //     //加载完成
-  //     ele.setState(5);  
+  //     ele.setState(5);
   //     let { record, hasNext } = lodash.get(res, "data", {});
   //     is_hasnext = hasNext
   //     if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
@@ -291,7 +291,7 @@ import store from 'src/store-redux'
   //       list_data = lodash.merge(obj, record)
   //     } else {
   //       //没有更多
-  //       ele.setState(7);  
+  //       ele.setState(7);
   //     }
   //   }).catch(err => { console.error(err) });
   // }
@@ -310,7 +310,7 @@ import store from 'src/store-redux'
      * @return {Undefined} undefined
      */
   // const clear_timer = () => {
-    
+
   //   clearTimeout(timer_1)
   //   clearTimeout(timer_2)
   //   clearInterval(timer_1)
@@ -318,7 +318,7 @@ import store from 'src/store-redux'
   // }
   // onUnmounted(() => {
   //   clear_timer();
-  //   $root.$off(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+  //   useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
   //   set_early_moey_data([])
   //   // for (const key in $data) {
   //   //   $data[key] = null

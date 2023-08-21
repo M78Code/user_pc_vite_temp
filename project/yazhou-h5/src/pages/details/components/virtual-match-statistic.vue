@@ -1,12 +1,12 @@
 <!--
- * @Author: Supermark 
+ * @Author: Supermark
  * @Date: 2021-01-05 20:25
  * @Description: 虚拟体育详情页赛事统计
 -->
 <template>
   <div class="c-match-startistic">
     <!-- 历史战绩 -->
-    <div class="historical-record">{{i18n.t('collect.historical_record')}}</div>
+    <div class="historical-record">{{t('collect.historical_record')}}</div>
     <!-- 比分板 -->
     <div class="score-list">
       <div
@@ -63,7 +63,7 @@
     </div>
   </div>
 </template>
- 
+
 <script>
 import { mapGetters } from "vuex"
 export default {
@@ -130,7 +130,7 @@ export default {
       let match_total = 5;
       let _win_home = (win_home / match_total) * 100;
       let _win_away = (win_away / match_total) * 100;
-      
+
       return {
         score_list,
         result_home,

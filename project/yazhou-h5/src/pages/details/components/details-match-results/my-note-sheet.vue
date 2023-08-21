@@ -30,7 +30,7 @@ export default {
     return {
       queryorderpresettleconfirm_data: '',  // 待确认中的提前结算订单，实际上赛果页面不会有未结算的订单，这里是占位，避免报错
     }
-  },    
+  },
   data() {
     return {
       list_data: {},  //列表数据
@@ -38,7 +38,7 @@ export default {
     }
   },
   mounted() {
-    this.container_height = innerHeight - this.rem(1.68);
+    tcontainer_height = innerHeight - trem(1.68);
   },
   computed: {
     ...mapGetters(["get_note_sheet_records_data"])// 待确认中的提前结算订单

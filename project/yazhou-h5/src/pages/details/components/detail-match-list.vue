@@ -24,11 +24,11 @@ export default {
     }
   },
   mounted(){
-    if(this.invoke == 'category'){
-      this.container_height = 'auto';
+    if(invoke == 'category'){
+      container_height = 'auto';
     }
     else{
-      this.container_height = innerHeight - this.rem(1.68);
+      container_height = innerHeight - rem(1.68);
     }
   },
   components:{

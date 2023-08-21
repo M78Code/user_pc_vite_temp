@@ -20,10 +20,10 @@
         </template>
       </div>
       <div class="row common-header-right" >
-        <div 
-          class="collect-icon" 
-          :class="{active:get_detail_data.mf}" 
-          v-if="_.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28" 
+        <div
+          class="collect-icon"
+          :class="{active:get_detail_data.mf}"
+          v-if="_.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -38,6 +38,10 @@
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
 
 export default {
@@ -54,13 +58,13 @@ export default {
   },
   created() {
     // 延时器
-    this.timer1_ = null;
-    this.timer2_ = null;
-    this.cancel_ref = this.debounce(this.cancel_ref,200)
+    timer1_ = null;
+    timer2_ = null;
+    cancel_ref = debounce(cancel_ref,200)
 
-    this.go_to_back = this.debounce(this.go_to_back, 500, {leading: true})
+    go_to_back = debounce(go_to_back, 500, {leading: true})
 
-    this.$root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
+    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).on
   },
   // 接受父组件传递的数据
   props: {
@@ -110,22 +114,22 @@ export default {
     // ]),
     // 是否是电竞
     is_DJ_show() {
-      return this.get_menu_type == 3000 || (this.get_menu_type == 28 && [100,101,102,103,104].includes(+this.get_detail_data.csid))
+      return get_menu_type == 3000 || (get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid))
     }
   },
   beforeUnmount() {
     // 恢复默认的注单icon
-    this.set_is_show_settle_tab(false)
-    this.debounce_throttle_cancel(this.cancel_ref);
-    this.debounce_throttle_cancel(this.go_to_back);
+    set_is_show_settle_tab(false)
+    debounce_throttle_cancel(cancel_ref);
+    debounce_throttle_cancel(go_to_back);
 
-    this.$root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh)
+    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).off
 
-    clearTimeout(this.timer1_)
-    this.timer1_ = null
+    clearTimeout(timer1_)
+    timer1_ = null
 
-    clearTimeout(this.timer2_)
-    this.timer2_ = null
+    clearTimeout(timer2_)
+    timer2_ = null
   },
   methods: {
     // ...mapMutations(["set_is_matchpage","set_toast","set_is_show_settle_tab","set_godetailpage",
@@ -136,10 +140,10 @@ export default {
      * @return {String}
      */
     details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( _.get(this.get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
 
       // 如果还在请求中则return
-      if ( this.favorite_loading ) return;
+      if ( favorite_loading ) return;
       let txt = 0;
       let params = {
         // 赛事ID
@@ -147,26 +151,26 @@ export default {
         // 1收藏||0取消收藏
         cf: Number(!match_obj.mf),
         // 用户id
-        cuid: this.get_uid,
+        cuid: get_uid,
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = i18n.t('common.cancel');//'取消';
+        txt = t('common.cancel');//'取消';
       } else {
-        txt = i18n.t('collect.betted_title');//'收藏';
+        txt = t('collect.betted_title');//'收藏';
       }
-      this.favorite_loading = true;
+      favorite_loading = true;
       // 更新收藏状态
-      this.set_details_changing_favorite(1)
+      set_details_changing_favorite(1)
 
       api_common.add_or_cancel_match( params ).then( res => {
-        this.favorite_loading = false;
+        favorite_loading = false;
         if (res.code == 200) {
-          let cloneData = _.clone(this.get_detail_data)
+          let cloneData = _.clone(get_detail_data)
           cloneData.mf = params.cf
-          this.set_detail_data(cloneData);
+          set_detail_data(cloneData);
         } else if (res.msg) {
-          this.set_toast({ 'txt': res.msg });
+          set_toast({ 'txt': res.msg });
         }
       }).catch((e) => {console.error(e)});
     },
@@ -176,11 +180,11 @@ export default {
      *@return {Undefined} undefined
      */
     details_refresh(){
-      if(this.refreshing) return;
+      if(refreshing) return;
 
       // 赛果详情页
-      const curr_tab = this.view_tab
-      if (this.$route.name === 'match_result') {
+      const curr_tab = view_tab
+      if ($route.name === 'match_result') {
         // 刷新 盘口赔率信息
         useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
@@ -204,15 +208,15 @@ export default {
       }
 
       // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
-      this.refreshing = true;
-      clearTimeout(this.timer1_)
-      this.timer1_ = setTimeout(() => {
+      refreshing = true;
+      clearTimeout(timer1_)
+      timer1_ = setTimeout(() => {
         // 取消刷新 已做节流
-        this.cancel_ref();
+        cancel_ref();
       },700);
     },
     cancel_ref(){
-      this.refreshing = false;
+      refreshing = false;
     },
     /**
      *@description 显示足篮分析页
@@ -234,13 +238,13 @@ export default {
     },
     // 返回列表页亦或是返回上一级
     go_to_back() {
-      this.$common.go_where({back_to: 'go_to_back'})
+      $common.go_where({back_to: 'go_to_back'})
     },
     // 点击下拉三角加载联赛列表
     show_dialog(){
-      let params0 = { tId: this.get_detail_data.tid , page: 1, count: 50 };
+      let params0 = { tId: get_detail_data.tid , page: 1, count: 50 };
       // 加载联赛列表
-      this.interface_b_header(params0)
+      interface_b_header(params0)
     },
     /**
      *@description: 点击注单icon显示注单历史

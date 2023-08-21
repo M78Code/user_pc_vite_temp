@@ -1,15 +1,15 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页  足球赛事分析 战绩 模块里边的 公共列表
 -->
 <template>
   <div class="public_form">
     <!-- 头部 -->
     <div class="header">
-      <div class="col1">{{i18n.t('analysis_football_matches.player')}}</div>
-      <div class="col2">{{i18n.t('analysis_football_matches.position')}}</div>
-      <div class="col3">{{ i18n.t('analysis_football_matches.reason') }}</div>
+      <div class="col1">{{t('analysis_football_matches.player')}}</div>
+      <div class="col2">{{t('analysis_football_matches.position')}}</div>
+      <div class="col3">{{ t('analysis_football_matches.reason') }}</div>
     </div>
     <!-- 主内容 -->
     <template v-if="_.get(list_data, 'length', 0) > 0">
@@ -23,13 +23,15 @@
 </template>
 
 <script setup>
-
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
   const props = defineProps({
     list_data: {
       type: Array,
       default: () => [],
     }
-  }) 
+  })
 </script>
 
 <style lang="scss" scoped>

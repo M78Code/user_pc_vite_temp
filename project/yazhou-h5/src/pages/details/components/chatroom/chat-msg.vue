@@ -7,7 +7,7 @@
     <div class="nick_name t_nick_name">{{ computed_name }}</div>
     <!-- 渲染注单消息标题 -->
     <!-- <div class="bet_info_container" v-if="msgItem.type == msgType.bet">
-      <div class="title">{{ i18n.t('chatroom.post_bet_info1') }}</div>
+      <div class="title">{{ t('chatroom.post_bet_info1') }}</div>
     </div> -->
     <!-- 渲染普通消息 -->
     <div class="msg_container t_msg_container" v-if="msgItem.type == msgType.normal">
@@ -26,7 +26,7 @@
 <script>
 import bet_info from 'project_path/src/pages/details/components/chatroom/bet_info.vue'; // 晒单展示组件
 import { msgType } from 'project_path/src/pages/details/components/chatroom/constant'; // 普通消息、注单消息
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -44,7 +44,7 @@ export default defineComponent({
     const data = reactive({
       msgType
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters([
     //   'get_user', // 当前登录的用户信息
@@ -140,14 +140,14 @@ export default defineComponent({
         border-width: 0.06rem;
         border-style: solid;
       }
-      
+
       .msg-time {
         position: absolute;
         // top: 50%;
         right: .1rem;
         // transform: translateY(-48%);
         font-size: .1rem;
-      }  
+      }
     }
   }
 }

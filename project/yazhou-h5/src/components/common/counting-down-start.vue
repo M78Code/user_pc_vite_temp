@@ -3,7 +3,7 @@
   <!--凡是小于一个小时开赛的都显示为 * 分钟后开赛-->
   <div v-show="show" :mid="match.mid" style="color:#7d87a5">
     <div :class="{ 'counting-down-start': get_lang != 'en' }">
-      {{ i18n.t('list.after_time_start', [start_minutes]) }}
+      {{ t('list.after_time_start', [start_minutes]) }}
     </div>
   </div>
 </template>
@@ -11,6 +11,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
 const props = defineProps({
   /** 赛事对象 */
@@ -93,7 +96,7 @@ function counting_down() {
       }
       else {
         const { emit } = useMittEmit(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED)
-        emit(tprops.match.mid);
+        emit(props.match.mid);
       }
     }
   }
