@@ -20,13 +20,13 @@
 				<div class="col bet-count">
           <span>{{BetData.bet_single_list.length}}</span><span class="operation-symbol">×</span>
         </div>
-				<div class="col-auto right-input" :data-check-money="view_ctr_obj.single_range_money">
+				<div class="col-auto right-input" :data-check-money="view_ctr_obj.input_money_state">
           <!--投注金额输入框-->
           <currency-input
             :id="`but-${BetData.bet_single_list.length}`"
             :ref="'but-input-'+BetData.bet_single_list.length"
             class="bet-input input-border"
-            :class="{'input-money': !is_empty_money,'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)}"
+            :class="{'input-money': !is_empty_money,'input-border-red':![-4,0].includes(view_ctr_obj.input_money_state)}"
             :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
             v-model="money"
             :value="money"

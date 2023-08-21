@@ -14,11 +14,11 @@
         :ref="`bet-mix-item-${index}`"
       ></bet-mix-item>
     </template>
-    <template v-if="view_ctr_obj.series_order_success && view_ctr_obj.series_order_success.length>0">
+    <template v-if="view_ctr_obj.bet_order_success_success && view_ctr_obj.bet_order_success_success.length>0">
       <!--投注结果部分-->
       <bet-mix-result 
         :series_obj="item" 
-        v-for="(item, index) in view_ctr_obj.series_order_success" 
+        v-for="(item, index) in view_ctr_obj.bet_order_success_success" 
         :key="index"
         :class="{'bet-mix-result-first':(index==0)}"
       ></bet-mix-result>

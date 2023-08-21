@@ -244,7 +244,7 @@
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row bet-single-input">
-        <div class="col relative-position" :data-check-money="view_ctr_obj.single_range_money">
+        <div class="col relative-position" :data-check-money="view_ctr_obj.input_money_state">
           <template v-if="!(active==1 || active==4)">
             <div class="cathectic-shade"></div>
           </template>
@@ -255,7 +255,7 @@
             class="bet-input input-border"
             :class="{
               'input-money': !is_empty_money,
-              'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)
+              'input-border-red':![-4,0].includes(view_ctr_obj.input_money_state)
               }"
             :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
             v-model="money"

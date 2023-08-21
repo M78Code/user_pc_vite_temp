@@ -74,6 +74,62 @@ const setMenu = (item) => {
     height: 100%;
     flex-shrink: 0;
     display: flex;
+    &.champion{
+            // width: 0.9rem;
+          }
+          &.current{
+            .inner-w{
+              position: relative;
+              font-size: .1rem;
+              &.favorite{
+                &:after {
+                  background: rgba(255,145,36,.08);
+                }
+              }
+            }
+          }
+          .inner-w{
+            height:.41rem;
+            flex-direction:column;
+            flex-wrap:nowrap;
+            position:relative;
+            .sport-w-icon{
+              height:.27rem;
+              position: relative;
+              .sport-icon-wrap {
+                --per: -0.32rem;
+                display: block;
+                width: auto;
+                height: 0.22rem;
+                width: 0.22rem;
+              }
+              .sport-icon-wrap2{
+                position:absolute;
+                bottom:0;
+                right:-0.04rem;
+                width:.13rem;
+                height:.14rem;
+              }
+              .sport-match-count{
+                width:1px;
+                height:1px;
+                line-height:1;
+                position:absolute;
+                right:-.03rem;
+                top: 0;
+                font-size:.11rem;
+              }
+            }
+            .s-w-i-title {
+              max-width: 0.7rem;
+              font-size: 0.1rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              position: relative;
+              top: -0.01rem;
+            }
+          }
   }
 }
 </style>
