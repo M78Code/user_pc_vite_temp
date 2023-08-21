@@ -71,6 +71,8 @@ export default {
     this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
     this.$root.$off(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
     this.$root.$off(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
+
+    
   },
   props: {
  
