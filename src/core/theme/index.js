@@ -9,47 +9,34 @@
  *
  */
 
-import { ref } from "vue";
+import merchant_config from "app/job/output/merchant/config.json";
+import all_css_keys from "app/job/output/css/index";
+import { ref, computed } from "vue";
+import store from "src/store-redx/";
 
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+const { langReducer } = store.getState();
+const current_theme = ref(langReducer.theme);
+useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
+  current_theme.value = _v;
+});
 
-current_theme.value = "night";
-
-class CurrentTheme {
-  constructor() {
-    this.current_theme = ref("day");
-
-    this.all_css_module_obj = {
-      global: ref({}),
-      activity: ref({}),
-    };
-  }
-
-  set_current_theme(val) {
-    this.current_theme.value = val;
-  }
-
-  compute_all_css_module_obj() {
-    // this.current_theme.value
-  }
-}
-
-
-export default  new CurrentTheme()
-
+const css_prefix = "--qq--";
 /**
  * 获取当前节点的 CSS 变量值  style 对象
  * @param {*} css_module
  */
-
-//  global    activity
-
 export const compute_css_var_style = (css_module) => {
-  return {
-    "--qq--activity-bg-color": "#fff",
-  };
+  //要看看最后css的解构是如何的
+  return computed(() => {
+    return all_css_keys[css_module].reduce((obj, key) => {
+      css_prefix;
+      obj[`${css_prefix}${key}`] =
+        merchant_config.css[css_module][current_theme.value];
+      return obj;
+    }, {});
+  });
 };
-
 let all_var_obj = {
   global: {
     "activity-bg-color": { day: "", night: "" },

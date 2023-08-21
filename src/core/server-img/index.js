@@ -1,10 +1,10 @@
 import sprite_compute from "./sprite-img/index";
 import other_compute from "./other-img/index";
 import { MITT_TYPES, useMittOn } from "../mitt/";
-import { ls, ss } from "src/core/utils/web-storage.js";
-
+import store from "src/store-redx/";
+const { langReducer } = store.getState();
 import { ref, computed } from "vue";
-const theme = ref(ls.get("theme", "day"));
+const theme = ref(langReducer.theme);
 useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
   theme.value = _v;
 });
