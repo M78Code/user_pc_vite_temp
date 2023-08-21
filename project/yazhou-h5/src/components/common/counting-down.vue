@@ -23,6 +23,9 @@ import { ref, watch, onMounted, computed, nextTick, onActivated } from 'vue'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
 const props = defineProps({
   /** 赛事id */
@@ -166,8 +169,8 @@ function get_counting_time() {
   second = String(second_count - minutes_to_second);
   //水球
   if (props.match.csid == 16) {
-    // TODO: 
-    let water_p_countingdown = i18n.t('list.water_polo_countdown');
+    // TODO:
+    let water_p_countingdown = t('list.water_polo_countdown');
     let f_minutes = Math.ceil(second_count / 60);
     f_minutes = f_minutes > 0 ? f_minutes : 1
     counting_time.value = water_p_countingdown.replace('S%', f_minutes);

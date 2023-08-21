@@ -32,7 +32,7 @@
                   <!-- 角球玩法名称 -->
                   <div class="corner-ball-weg">{{ item_data.hpn }}</div>
                   <!-- 角球总比分 -->
-                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{i18n.t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
                 </div>
                 <!-- 罚牌比分 -->
                 <div v-else-if="is_show_info"    :style="{ '--q-position-left-before':other_way_style.offset_icon_position_before,'--q-position-left-after':other_way_style.offset_icon_position_after}" class="corner-ball">
@@ -45,11 +45,11 @@
                     </div>
                   </div>
                   <!-- 罚牌比分 -->
-                  <div class="basic-score" v-if="is_show_info && new_score"> {{i18n.t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="is_show_info && new_score"> {{t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
 
                   <!-- 罚牌玩法说明弹窗 -->
-                  <div 
-                    v-if="is_high_light" 
+                  <div
+                    v-if="is_high_light"
                     :class="other_way_style.is_rotate ? 'mat-info2' : 'mat-info'"
                     :style="{left:`${other_way_style.left}px`,top:`${other_way_style.top}px`}"
                     @click.stop
@@ -57,11 +57,11 @@
                     <div class="penalty">
                       <!-- 角球 -->
                       <div v-if="['125','230'].includes(item_data.hpid)" class="ply-cd">
-                        {{i18n.t('football_playing_way.corner')}}
+                        {{t('football_playing_way.corner')}}
                       </div>
                       <!-- 罚牌 -->
                       <div v-else class="ply-cd">
-                        {{i18n.t('football_playing_way.penalty_cards')}}
+                        {{t('football_playing_way.penalty_cards')}}
                       </div>
                       <!-- 关闭按钮 -->
                       <img
@@ -71,9 +71,9 @@
                       >
                     </div>
                     <!-- 角球说明文本 -->
-                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{i18n.t('play_way_info.6')}}</div>
+                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{t('play_way_info.6')}}</div>
                     <!-- 罚牌说明文本 -->
-                    <div v-else class="info-content">{{i18n.t('play_way_info.5')}}</div>
+                    <div v-else class="info-content">{{t('play_way_info.5')}}</div>
                   </div>
                 </div>
                 <!-- 普通赛事基准分 -->
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
 // #TODO mixins
@@ -172,6 +172,10 @@ import temp18 from "./template/temp0.vue"
 // 模板id=51
 import temp51 from "./template/temp0.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+
 export default defineComponent({
   name: "tournament_play_new",
   props: {
@@ -258,7 +262,7 @@ export default defineComponent({
       timer2_: null,
     });
     onMounted(() => {
-      // 原 created 
+      // 原 created
       // 延时器
       component_data.timer1_ = null;
       component_data.timer2_ = null;
@@ -270,11 +274,11 @@ export default defineComponent({
       }
       // 满足ws推送的监听 实时响应数据变化
       if (component_data.new_score) {
-        // #TODO emit 
+        // #TODO emit
         component_data.emitters = [
           useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
         ]
-        // $root.$on(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score);
+        // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).on;
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
       // if(get_fewer == 2 || item_data.hshow == 'No'){
@@ -283,15 +287,15 @@ export default defineComponent({
       }
 
       // 滚动时隐藏罚牌/角球等说明弹窗
-      // #TODO emit 
+      // #TODO emit
       component_data.emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
-      // $root.$on(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOnn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).on
 
       // 点击事件防抖处理
       // bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
     });
-    
-    // #TODO vuex 
+
+    // #TODO vuex
     // computed: {
     // ...mapGetters([
     //   "get_theme",
@@ -483,7 +487,7 @@ export default defineComponent({
     //   }
     // );
 
-    // #TODO vuex 
+    // #TODO vuex
     //  methods: {
     // ...mapMutations([
     //   "set_is_close_info",
@@ -542,7 +546,7 @@ export default defineComponent({
         component_data.other_way_style.top-=rem(1.3) + 10
         component_data.other_way_style.is_rotate=true;
       }
-      
+
       nextTick(() => {
         component_data.is_high_light = info_status
         // 初次进入详情页面罚牌tips展示，ios显示问题42039处理
@@ -597,7 +601,7 @@ export default defineComponent({
         if (item_data.hton != 0) {
           item_data.hton = '0';
         } else {
-          // #TODO emit 
+          // #TODO emit
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
@@ -613,7 +617,7 @@ export default defineComponent({
           // 将点击置顶的hton设置为:最大置顶排序值+1
           item_data.hton = Date.now() + '';
         }
-        
+
         // 置顶状态变化时，更新相应玩法存储状态
         const key = `${item_data.mid}-0`
         const all_list_data = lodash.cloneDeep(get_details_data_cache.value[key]) || []
@@ -632,7 +636,7 @@ export default defineComponent({
         set_details_data_cache({
           [key]: all_list_data
         })
-        
+
         let status = item_data.hton != 0 ? "0" : "1",
             playId = item_data.hpid,
             matchId = get_detail_data.value.mid,
@@ -706,10 +710,10 @@ export default defineComponent({
       }
     };
     onUnmounted(() => {
-      // #TODO emit 
+      // #TODO emit
       component_data.emitters.map((x) => x())
-      // $root.$off(MITT_TYPES.EMIT_CHANGE_BASE_SCORE);
-      // $root.$off(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE).off;
+      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off
       // debounce_throttle_cancel(bet_click_);
       clearTimeout(component_data.timer1_)
       clearTimeout(component_data.timer2_)

@@ -21,14 +21,18 @@
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
-// #TODO mixins 
+// #TODO mixins
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+
 export default defineComponent({
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   props: ['ol_data','item_data'],
   name: 'odds_new',
@@ -39,7 +43,7 @@ export default defineComponent({
       status: '',
       DOM_ID_SHOW: '',
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(['get_cur_odd','get_bet_list']),
     const get_cur_odd = computed(() => {
@@ -80,14 +84,14 @@ export default defineComponent({
       component_data.cacheData = props.ol_data.ov;
       // 设置是否显示投注项dom的id属性值
       // component_data.DOM_ID_SHOW =  window.BUILDIN_CONFIG.LOCAL_FUNCTION_SWITCH.DOM_ID_SHOW;
-      // #TODO 
+      // #TODO
       component_data.DOM_ID_SHOW = "DOM_ID_SHOW";
     });
     const odds_value = () => {
       if(props.ol_data.result || props.ol_data.result == 0){
         let result_ = props.ol_data.result
-        // #TODO $root 
-        return i18n.t(`virtual_sports.result.${result_}`)
+        // #TODO $root
+        return t(`virtual_sports.result.${result_}`)
       }else{
         let r = '';
         // let r1 = compute_value_by_cur_odd_type(

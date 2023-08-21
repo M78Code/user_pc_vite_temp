@@ -12,17 +12,21 @@
     <!--</div>-->
     <chat_msg v-for="msgItem in filtered_msg_list" :msgItem="msgItem" :key="msgItem.messageId"></chat_msg>
     <div class="read-more" v-if="read_more_visible" @click="scrollToBottom">
-      {{ i18n.t('chatroom.read_more') }}
+      {{ t('chatroom.read_more') }}
     </div>
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapMutations, mapGetters } from "vuex";
 import chat_msg from 'project_path/src/pages/details/components/chatroom/chat_msg.vue';
 import { msgType, muteType } from 'project_path/src/pages/details/components/chatroom/constant.js'
 
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+
 export default defineComponent({
   name: 'msg_list',
   components: {
@@ -61,7 +65,7 @@ export default defineComponent({
       }
     );
     // 屏蔽消息状态变化
-    // #TODO watch vuex 
+    // #TODO watch vuex
     // watch(
     //   () => get_is_block_msg,
     //   () => {
@@ -70,7 +74,7 @@ export default defineComponent({
     //   }
     // );
     // 监听用户发送消息
-    // #TODO watch vuex 
+    // #TODO watch vuex
     // watch(
     //   () => get_send_msg_count,
     //   () => {
@@ -78,7 +82,7 @@ export default defineComponent({
     //   }
     // );
 
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters([
     //   'get_post_bet_show',  // 晒单弹窗显隐
@@ -94,10 +98,10 @@ export default defineComponent({
       let res = '';
       switch (computed_mute_type) {
         case muteType.self_mute:   // 个人禁言
-          res = i18n.t('chatroom.mute_hint1');
+          res = t('chatroom.mute_hint1');
           break;
         case muteType.global_mute:  // 全体禁言
-          res = i18n.t('chatroom.mute_hint2');
+          res = t('chatroom.mute_hint2');
           break;
       }
       return res;
@@ -142,7 +146,7 @@ export default defineComponent({
       return muteType.unmute;
     });
     onMounted(() => {
-      // 原created 
+      // 原created
       _onListScroll = debounce(onListScroll, 50);      // 列表滚动监听回调节流
       _setScrollInfo = debounce(setScrollInfo, 50);   // 设置滚动信息节流
 
@@ -152,17 +156,17 @@ export default defineComponent({
       debounce_throttle_cancel(_onListScroll);   // 列表节流回收内存
       debounce_throttle_cancel(_setScrollInfo);
     });
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations(['set_toast', 'set_is_enter_chat']),
     // 滚动列表到底部
     const scrollToBottom = () => {
-      $nextTick(() => {
+      nextTick(() => {
         $refs.msg_list.scrollTop = 10000000;       // msgList初始化滚动到底部
       });
     };
     const setScrollInfo = () => {
-      $nextTick(() => {
+      nextTick(() => {
         const { scrollTop, scrollHeight } = $refs.msg_list;
         listScrollTop = scrollTop;
         listScrollHeight = scrollHeight;

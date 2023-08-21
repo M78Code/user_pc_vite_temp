@@ -27,6 +27,12 @@
 <script>
 import { mapGetters,mapMutations } from "vuex"
 import { api_common } from "src/project/api/index.js";
+import { useRoute, useRouter } from "vue-router"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import lodash from "lodash"
+const route = useRoute()
+const router = useRouter()
+
 export default {
   name: 'virtual_sports_tab',
   data(){
@@ -55,12 +61,12 @@ export default {
     }),
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
-      return _.get(this.get_access_config, 'statisticsSwitch') && this.$route.name != 'virtual_sports' && this.get_detail_data.csid != 1004
+      return lodash.get(get_access_config, 'statisticsSwitch') && route.name != 'virtual_sports' && get_detail_data.csid != 1004
     }
   },
   watch: {
     "batch"(){
-      this.play_list()
+      play_list()
     }
   },
   props:[
@@ -69,14 +75,14 @@ export default {
   ],
   created(){
     // 延时器
-    this.timer1_ = null;
-    this.timer_ = null;
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
+    timer1_ = null;
+    timer_ = null;
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).on
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).on
 
-    this.initEvent();
-    this.play_list()
-    this.set_is_show_details_analyse(false)
+    initEvent();
+    play_list()
+    set_is_show_details_analyse(false)
   },
   methods:{
     ...mapMutations([
@@ -91,55 +97,55 @@ export default {
      *@return {Undefined} undefined
      */
     analyse_btn() {
-      this.analyse = !this.analyse
-      this.set_is_show_details_analyse(!this.is_show_analyse)
+      analyse = !analyse
+      set_is_show_details_analyse(!is_show_analyse)
     },
     change_btn(){
       // 设置vuex变量值
-      if(this.get_fewer == 1 || this.get_fewer == 3){
-        this.set_fewer(2)
+      if(get_fewer == 1 || get_fewer == 3){
+        set_fewer(2)
       }else{
-        this.set_fewer(1)
+        set_fewer(1)
       }
     },
     // 单击玩法集
     selete_item(uId,e){
       // 点击的玩法是当前选中的玩法
-      if(this.get_details_item == uId) return false;
-      if(this.is_show_analyse){
-        this.analyse = true
+      if(get_details_item == uId) return false;
+      if(is_show_analyse){
+        analyse = true
       }
-      this.set_is_show_details_analyse(false)
+      set_is_show_details_analyse(false)
       //实现动态效果
       try {
-        let dom = this.$refs.reset_scroll_dom;
+        let dom = $refs.reset_scroll_dom;
         if(!dom) return;
 
         let start_ = dom.scrollLeft;
         let end_ = e.target.offsetLeft + e.target.clientWidth/2 - dom.offsetWidth/2;
         if(start_ > end_ && end_ > 0){
           let s = start_;
-          this.timer_ = setInterval(() => {
+          timer_ = setInterval(() => {
             dom.scrollLeft = s;
             s -= 7;
             if(s <= end_){
-              clearInterval(this.timer_);
+              clearInterval(timer_);
             }
           }, 18);
         }else if(start_ <= end_ && end_ > 0){
           let s = start_;
-          this.timer_ = setInterval(() => {
+          timer_ = setInterval(() => {
             dom.scrollLeft = s;
             s += 7;
             if(s >= end_){
-              clearInterval(this.timer_);
+              clearInterval(timer_);
             }
           }, 18);
         }else if(end_ < 0){
-          this.timer_ = setInterval(() => {
+          timer_ = setInterval(() => {
             dom.scrollLeft -= 7
             if(dom.scrollLeft <= 0){
-              clearInterval(this.timer_);
+              clearInterval(timer_);
             }
           }, 18);
         }
@@ -147,20 +153,20 @@ export default {
         console.error(error)
       }
 
-      this.set_details_item(uId);
+      set_details_item(uId);
       // 点击玩法对页面吸顶tab做高度处理
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
-      this.$emit('virtual_play_height')
-      if(this.get_fewer == 3){
-        this.set_fewer(1)
+      $emit('virtual_play_height')
+      if(get_fewer == 3){
+        set_fewer(1)
       }
     },
     initEvent(){
-      if(this.timer1_) { clearTimeout(this.timer1_) }
-      this.timer1_ = setTimeout(() => {
+      if(timer1_) { clearTimeout(timer1_) }
+      timer1_ = setTimeout(() => {
         try{
-          this.$refs.reset_scroll_dom.scrollLeft = 0
+          $refs.reset_scroll_dom.scrollLeft = 0
         }catch(e){
           console.error(e)
         }
@@ -174,22 +180,22 @@ export default {
     play_list(){
       // 1.在足球页进入详情需要调用玩法集合接口
       // 2.在赛马页需要调用玩法集合接口
-      if(![1001,1004].includes(this.sub_menu_type) || this.$route.name == 'virtual_sports_details'){
+      if(![1001,1004].includes(sub_menu_type) || $route.name == 'virtual_sports_details'){
         let new_mid = ''
-        if(this.batch){
-          new_mid =  this.batch
+        if(batch){
+          new_mid =  batch
         }else{
-          new_mid = this.$route.query.mid
+          new_mid = $route.query.mid
         }
-        let params = { sportId: this.sub_menu_type,mid: new_mid};
+        let params = { sportId: sub_menu_type,mid: new_mid};
         api_common.get_category_list(params).then(res =>{
           if(res.code == 200 && res.data){
-            this.data_list = _.get(res, "data");
-            let first_data_item = this.data_list[0];
+            data_list = lodash.get(res, "data");
+            let first_data_item = data_list[0];
             if(first_data_item){
               // 将玩法集第一个存入store，后续赛种/赛事期数跳转时做判断用
-              this.set_first_details_item(first_data_item.id);
-              this.set_details_item(first_data_item.id);
+              set_first_details_item(first_data_item.id);
+              set_details_item(first_data_item.id);
             }
           }
         })
@@ -197,11 +203,11 @@ export default {
     }
   },
   beforeUnmount() {
-    this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent);
-    this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
-    this.set_fewer(1);
-    clearTimeout(this.timer1_)
-    clearInterval(this.timer_);
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off;
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off
+    set_fewer(1);
+    clearTimeout(timer1_)
+    clearInterval(timer_);
   }
 }
 </script>

@@ -7,13 +7,13 @@
   <div ref='result_details_tab' v-show="tab_item_list.length" class="result-details-tab row items-center" v-cloak>
     <!-- 收起icon -->
     <div class="tab-fat">
-      <div class="tab-btn" :class="{collapsed:get_fewer != 2}" @click="change_btn()"></div>
+      <div class="tab-btn" :class="{ collapsed: get_fewer != 2 }" @click="change_btn()"></div>
     </div>
     <!-- 赛果tab区域 -->
     <div class="menu-s row" ref="reset_scroll_dom">
-      <div v-for="(tab_item,i) of tab_item_list" :key="i"
-        class="common-style" @click="result_tab(i,tab_item)" :class="{'t_color':item_index == i || i == tab_item_list.length -1 && item_index == 3}">
-        {{tab_item.text}}
+      <div v-for="(tab_item, i) of tab_item_list" :key="i" class="common-style" @click="result_tab(i, tab_item)"
+        :class="{ 't_color': item_index == i || i == tab_item_list.length - 1 && item_index == 3 }">
+        {{ tab_item.text }}
       </div>
     </div>
   </div>
@@ -22,6 +22,14 @@
 <script>
 import { mapGetters,mapMutations } from "vuex"
 import {api_betting, api_result} from 'src/project/api/index.js'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRouter, useRoute } from "vue-router"
+import lodash from "lodash"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+const router = useRouter()
+const route = useRoute()
 
 export default {
   name: 'result_details_tab',
@@ -36,9 +44,9 @@ export default {
       item_index:0,
       tab_item_list:[
         // 所有赛果
-        {id:1, text: i18n.t('match_info.all_result')},
+        {id:1, text: t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: i18n.t('match_info.select_event')}
+        {id:2, text: t('match_info.select_event')}
       ],
       list_data: [],
     }
@@ -48,20 +56,20 @@ export default {
     'result_detail_data.csid': {
       handler(n,o){
         // 切换顶部菜单，csid变化，触发tab事件
-        this.result_tab(0, this.tab_item_list[0])
-        this.get_list()
+        result_tab(0, tab_item_list[0])
+        get_list()
       },
       deep: true
     },
     tab_index(n,o){
       if(n!=2){
-        this.result_tab(n, this.tab_item_list[n])
+        result_tab(n, tab_item_list[n])
       }
     }
   },
   created() {
     // 监听 刷新 注单记录----请求
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
+    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list).on
   },
   computed:{
     ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", 'get_user']),
@@ -73,36 +81,36 @@ export default {
      * 标签数据初始化
      */
     tab_data_init(){
-      this.tab_item_list =[
+      tab_item_list =[
         // 所有赛果
-        {id:1, text: i18n.t('match_info.all_result')},
+        {id:1, text: t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: i18n.t('match_info.select_event')}
+        {id:2, text: t('match_info.select_event')}
       ];
-      if(this.get_menu_type == 28 && [100,101,102,103,104].includes(+this.result_detail_data.csid))  {
-        this.tab_item_list =[
+      if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
+        tab_item_list =[
           // 所有赛果
-          {id:1, text: i18n.t('match_info.all_result')}
+          {id:1, text: t('match_info.all_result')}
         ];
       }
     },
     // 点击高亮显示tab
     result_tab(index,tab_item){
-      let search_term = this.$route.query.search_term
+      let search_term =route.query.search_term
       useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
-      if(this.item_index != index){
-        this.item_index = tab_item.id === 4 ? 3 : index
+      if(item_index != index){
+        item_index = tab_item.id === 4 ? 3 : index
       }
-      if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+this.result_detail_data.csid)){
+      if(tab_item && tab_item.id == 3 && [100,101,102,103,104].includes(+result_detail_data.csid)){
         index = 2
-        this.item_index = 1
+        item_index = 1
       }
-      if(this.result_detail_data && this.result_detail_data.mid){
-        let mid = this.result_detail_data.mid;
+      if(result_detail_data && result_detail_data.mid){
+        let mid = result_detail_data.mid;
         // todo 考虑优化此处代码
-        this.$router.replace({
+        $router.replace({
           name:'match_result',
-          params:{mid, index: this.item_index},
+          params:{mid, index: item_index},
           query: {search_term: search_term}
         });
       }
@@ -111,7 +119,7 @@ export default {
     async get_list() {
       try {
         let params = {
-          matchId: this.matchid,
+          matchId: matchid,
           timeType: 3,
           orderStatus: 1,
           orderBy: 2,
@@ -120,15 +128,15 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
 
         if(code == 200) {
-          this.tab_data_init()
+          tab_data_init()
           if (data && data.record) {
-            this.list_data = data.record
-            this.set_note_sheet_records_data(this.list_data)
-            if(Object.keys(this.list_data).length>0) {
-              this.tab_item_list.push({
+            list_data = data.record
+            set_note_sheet_records_data(list_data)
+            if(Object.keys(list_data).length>0) {
+              tab_item_list.push({
                 id:3,
                 // 我的注单
-                text: i18n.t('match_info.my_bets')
+                text: t('match_info.my_bets')
               });
             }
 
@@ -137,14 +145,14 @@ export default {
           }
         }
       } catch (error) {
-        this.no_data = false;
+        no_data = false;
         console.error(error)
         useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
-        this.tab_data_init()
+        tab_data_init()
       } finally {
-        const { configValue, eventSwitch } = _.get(this.get_user, 'merchantEventSwitchVO', {})
-        if (configValue == 1 && eventSwitch == 1 && _.get(this.result_detail_data, 'csid') == 1) {
-          this.get_football_replay(0)
+        const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+        if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
+          get_football_replay(0)
         }
       }
     },
@@ -154,18 +162,18 @@ export default {
      */
     get_football_replay(event_code) {
       const params = {
-        mid: _.get(this.result_detail_data, 'mid'),
+        mid: lodash.get(result_detail_data, 'mid'),
         device: 'H5',
         eventCode: event_code
       }
       api_result.get_replay_football(params)
           .then(res => {
-            if (res.code == 200 && _.get(res.data, 'eventList.length')) {
+            if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
               // 足球类型赛果需添加精彩回放菜单
-              this.tab_item_list.push({
+              tab_item_list.push({
                 id: 4,
                 // 精彩回放
-                text: i18n.t('highlights.title')
+                text: t('highlights.title')
               });
             }
           })
@@ -173,30 +181,30 @@ export default {
             console.error(err)
           })
           .finally(() => {
-           
+
           })
     },
     // 展开收起按钮
     change_btn(){
       // 设置vuex变量值,当选中"所有赛果"时才可以点击
-      if (this.item_index != 0) return;
-      if(this.get_fewer == 1 || this.get_fewer == 3){
-        this.set_fewer(2)
+      if (item_index != 0) return;
+      if(get_fewer == 1 || get_fewer == 3){
+        set_fewer(2)
       }else{
-        this.set_fewer(1)
+        set_fewer(1)
       }
     },
     // 刷新 注单记录----请求
     update_order_list() {
-      if (this.tab_index === 2) {
-        this.get_list()
+      if (tab_index === 2) {
+        get_list()
       }
     },
   },
   beforeUnmount() {
-    this.set_fewer(1);
+    set_fewer(1);
 
-    this.$root.$off(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
+    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list).off
   }
 }
 </script>

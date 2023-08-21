@@ -265,7 +265,7 @@
 
           <!-- 展开和收起按钮 -->
           <div v-if="!hide_show_more_layout" class="show-more play-box-style"  @click="change_show">
-          <span class="fz_13">{{show_more?i18n.t('match_info.pack_up'):i18n.t('match_info.show_more')}}
+          <span class="fz_13">{{show_more?t('match_info.pack_up'):t('match_info.show_more')}}
           </span>
           </div>
 
@@ -275,12 +275,17 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useRoute } from "vue-router"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+const route = useRoute()
 export default defineComponent({
   // #TODO mixins
   // mixins: [odd_convert],
@@ -293,7 +298,7 @@ export default defineComponent({
     const data = reactive({
       show_more:true,
     })
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters([
     // "get_bet_list",
@@ -337,7 +342,7 @@ export default defineComponent({
     const change_show = () => {
       if (this.show_more) {
         let distance = this.$refs.element.offsetHeight - (6 * utils.rem(0.52))
-        if (this.$route.name == 'virtual_sports_details') {
+        if (this.route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
           useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
@@ -368,7 +373,7 @@ export default defineComponent({
       return reg.test(val) ? "highlight" :""
     };
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
+      // #TODO emit
       // $emit("bet_click_", {ol_item});
     };
     return {

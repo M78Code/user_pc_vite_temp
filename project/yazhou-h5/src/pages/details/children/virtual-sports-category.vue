@@ -6,7 +6,7 @@
 <template>
   <div class='category virtual-sport'>
     <!-- loading效果 -->
-    <loading v-if="is_loading" :top="$route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
+    <loading v-if="is_loading" :top="route.name == 'virtual_sports' ? '76%' : '64%'"></loading>
       <!-- 详情玩法投注项有数据 -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;">
       <div slot="scrollList" class="scrollList">
@@ -37,25 +37,30 @@
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
 import tournament_play_new from "project_path/src/pages/details/components/tournament_play/tournament_play_new.vue"
  // 引入接口封装文件
 import { api_common } from 'src/project/api/index.js'
  // 引入投注逻辑mixin
- // #TODO mixins 
+ // #TODO mixins
 import betting from "src/project/mixins/betting/betting.js";
 
  // 引入加载中的组件
 import loading from "src/project/components/common/loading.vue"
  // 引入quasar
-import { dom } from 'quasar'
+import { dom, useQuasar } from 'quasar'
  // 引入处理数据的封装方法
 import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
 import VSport from 'src/public/utils/vsport/vsport.js';
 import axios_debounce_cache from "utils/http/axios_debounce_cache";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useRoute, useRouter } from "vue-router"
+
+
+let route =  useRoute()
+let router = useRouter()
 export default defineComponent({
   name: "virtual_sports_category",
   props: {
@@ -73,13 +78,13 @@ export default defineComponent({
     loading
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      if(vm.get_details_item == -1){
-        vm.$router.replace({name: 'details_unsettle', params:{id: vm.get_goto_detail_matchid}})
+    next(() => {
+      if(get_details_item == -1){
+        router.replace({name: 'details_unsettle', params:{id: vm.get_goto_detail_matchid}})
       }
     });
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[betting],
   setup(props, evnet) {
     const data = reactive({
@@ -116,7 +121,7 @@ export default defineComponent({
       pre_params_mid:'',
       created_init_event:false,
     });
-    // #TODO VUEX 
+    // #TODO VUEX
     // computed:{
     // ...mapGetters([
     //   'get_detail_data',
@@ -141,7 +146,7 @@ export default defineComponent({
     const match_list_normal = computed(() => {
       return matchInfoCtr.listSortNormal()
     });
-    // #TODO vuex 
+    // #TODO vuex
     // watch(
     //   () => get_current_league.menuId,
     //   () => {
@@ -181,7 +186,7 @@ export default defineComponent({
       }
     );
     watch(
-      () => $route,
+      () => route,
       (to, from) => {
         initEvent();
         // 当切换玩法集的时候变为: true
@@ -225,16 +230,16 @@ export default defineComponent({
     );
 
     onMounted(() => {
-      // 原created 
+      // 原created
       // 延时器
       get_video_timer = null;
       // 满足刷新页面保持向上展开的状态
       set_fewer(1);
-      // #TODO emit 
+      // #TODO emit
       emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
-      // $root.$on(MITT_TYPES.EMIT_REF_API, initEvent);
+      // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).on;
 
-      if($route.query.mid || $route.name == 'virtual_sports'){
+      if(route.query.mid || route.name == 'virtual_sports'){
         init_vsport();
       }
 
@@ -257,9 +262,9 @@ export default defineComponent({
       }
 
       // 重置顶部菜单切换状态
-      // #TODO emit 
+      // #TODO emit
       // $emit('top_menu_change', false)
-      // #TODO emit 
+      // #TODO emit
       emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
       // $root.$on(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
@@ -277,7 +282,7 @@ export default defineComponent({
       }
       cache_limiting_throttling_get_list(params, socket_upd_list, 'match_detail_odds_info')
     })
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations([
     //   "set_fewer",
@@ -539,10 +544,10 @@ export default defineComponent({
       is_loading = true;
 
       let mid
-      if($route.name == "virtual_sports"){
+      if(route.name == "virtual_sports"){
         mid = get_current_mid
-      }else if($route.name == "virtual_sports_details"){
-        mid = $route.query.mid
+      }else if(route.name == "virtual_sports_details"){
+        mid = route.query.mid
       }
 
       match_mid = mid;
@@ -610,7 +615,7 @@ export default defineComponent({
      */
     const get_match_result = () => {
       let params = {
-        mid: $route.query.mid,
+        mid: route.query.mid,
         mcid: get_details_item,
         cuid: get_uid, // userId或者uuid
       }
@@ -636,7 +641,7 @@ export default defineComponent({
     };
 
     const triggle_tabs_update = () => {
-      // #TODO emit 
+      // #TODO emit
       useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
       // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
     };
@@ -644,10 +649,10 @@ export default defineComponent({
     // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口
     const socket_upd_list = (skt_data,callback) => {
       let mid
-      if($route.name == "virtual_sports"){
+      if(route.name == "virtual_sports"){
         mid = get_current_mid
-      }else if($route.name == "virtual_sports_details"){
-        mid = $route.query.mid
+      }else if(route.name == "virtual_sports_details"){
+        mid = route.query.mid
       }
 
       // 调用接口的参数
@@ -790,7 +795,7 @@ export default defineComponent({
     */
     onUnmounted(() => {
       // 取消订阅事件
-      // #TODO emit 
+      // #TODO emit
       emitters.map((x) => x())
       // $root.$off(MITT_TYPES.EMIT_REF_API, initEvent);
       // $root.$off(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);

@@ -2,7 +2,7 @@
   <div class="standings_technical football_standings recent_record">
     <template v-if="false">
       <div class="title">
-        {{ i18n.t('analysis_football_matches.Turning_trend') }}
+        {{ t('analysis_football_matches.Turning_trend') }}
       </div>
       <div class="standings-technical-home" v-for="(item, index) in 2" :key="index+'title'">
         <div class="technical-home">
@@ -23,7 +23,7 @@
             </div>
             <div class="group-item">
               <div class="team-item" v-for="(item,index) in 3" :key="index+'score'">
-                <div class="col1 flex_start">{{ i18n.t('analysis_football_matches.total_all') }}</div>
+                <div class="col1 flex_start">{{ t('analysis_football_matches.total_all') }}</div>
                 <div class="col2 ellipsis">24</div>
                 <div class="col1">29</div>
                 <div class="col1">21</div>
@@ -37,7 +37,7 @@
       </div>
     </template>
     <div class="title">
-      {{ i18n.t('analysis_football_matches.Coach_data') }}
+      {{ t('analysis_football_matches.Coach_data') }}
     </div>
     <div class="standings-technical-home" v-for="(item, index) in homeAwayGoal_and_coach_map" :key="index+'h'">
       <!-- 主队客队的 图标 及 名称 -->
@@ -57,10 +57,10 @@
       <div>
         <div class="table-score">
           <div class="standings_technical_header">
-            <div class="col1 flex_start">{{ i18n.t('analysis_football_matches.age') }}</div>
-            <div class="col1">{{ i18n.t('analysis_football_matches.Tactical_division') }}</div>
-            <div class="col1">{{ i18n.t('analysis_football_matches.Points_per_game') }}</div>
-            <div class="col-go-war">{{ i18n.t('analysis_football_matches.Go_to_war') }}</div>
+            <div class="col1 flex_start">{{ t('analysis_football_matches.age') }}</div>
+            <div class="col1">{{ t('analysis_football_matches.Tactical_division') }}</div>
+            <div class="col1">{{ t('analysis_football_matches.Points_per_game') }}</div>
+            <div class="col-go-war">{{ t('analysis_football_matches.Go_to_war') }}</div>
           </div>
           <div class="group-item">
             <div class="team-item" v-for="(content,index) in item" :key="index+'team'">
@@ -68,20 +68,23 @@
               <div class="col1">{{ content.coachStyle|| '-' }}</div>
               <div class="col1">{{ content.score|| '-' }}</div>
               <div class="col-go-war" v-if="content.coachGameCount">{{ content.coachGameCount }} (胜{{content.winCount}}平{{content.drawCount}}负{{content.loseCount}})</div>
-              <div class="col-go-war" v-else> {{ i18n.t('common.no_data') }} </div>
+              <div class="col-go-war" v-else> {{ t('common.no_data') }} </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="Object.keys(homeAwayGoal_and_coach_map).length <= 0" class="no-list">{{ i18n.t('common.no_data') }}</div>
+    <div v-if="Object.keys(homeAwayGoal_and_coach_map).length <= 0" class="no-list">{{ t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
   const props = defineProps({
     homeAwayGoal_and_coach_map: {
@@ -98,13 +101,13 @@ import teamImg from "src/project/components/details/team-img";
       return age
     }
 
-    
-  // TODO: 后续修改调整 
+
+  // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_goto_detail_matchid', 'get_detail_data'])
   // },
   // methods:{
-    
+
   // }
 </script>
 

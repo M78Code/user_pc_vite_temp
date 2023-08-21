@@ -13,15 +13,15 @@
     </div>
     <div class="content yb_mt10" v-for="(item,index) in data_list" :key="index">
       <p class="tittle"><span :class="{'color0': item.label == 0,'color1': item.label == 1,'color2': item.label == 2}"></span>&ensp;
-        <template v-if="item.label == 0">{{ i18n.t('analysis_football_matches.Neutral_Information') }}</template>
-        <template v-if="item.label == 1">{{ i18n.t('analysis_football_matches.Favorable_information') }}</template>
-        <template v-if="item.label == 2">{{ i18n.t('analysis_football_matches.Unfavorable_information') }}</template>
+        <template v-if="item.label == 0">{{ t('analysis_football_matches.Neutral_Information') }}</template>
+        <template v-if="item.label == 1">{{ t('analysis_football_matches.Favorable_information') }}</template>
+        <template v-if="item.label == 2">{{ t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
       <template v-for="(item2,index2) in item.msg">
         <p class="item">{{item2}}</p>
       </template>
     </div>
-    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n.t('common.no_data') }}</div>
+    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ t('common.no_data') }}</div>
   </div>
 </template>
 
@@ -33,6 +33,9 @@ import { useRoute } from 'vue-router'
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
 import { ref, nextTick } from 'vue'
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
 
     //按钮下标
@@ -58,8 +61,8 @@ import { ref, nextTick } from 'vue'
       return route.params.mid || get_detail_data.mid
     })
     onUnmounted(() => {
-      // 移除监听 赛事分析刷新事件 TODO: get_detail_data  $root.$off 后续修改调整
-      $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      // 移除监听 赛事分析刷新事件 TODO: get_detail_data  后续修改调整
+      useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
     })
 
     const radio_button = (index) => {

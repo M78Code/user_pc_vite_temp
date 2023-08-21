@@ -32,6 +32,9 @@
 import { mapMutations, mapGetters } from 'vuex'
 import settleDialog from "src/project/components/footer_bar/settle_dialog.vue";
 import virtualSportsTimer from "src/project/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
+import { useRouter } from "vue-router"
+const router = useRouter()
+
 export default {
   name:'virtual_sports_videos',
   data(){
@@ -60,7 +63,7 @@ export default {
      *@return {Undefined} undefined
      */
     detail_back(){
-      this.$router.push({name: 'matchList'});
+      router.push({name: 'matchList'});
     },
     /**
      *@description: 点击注单icon显示注单历史
@@ -76,8 +79,8 @@ export default {
      *@return {Undefined} undefined
      */
     change_settle_status(){
-      this.set_settle_dialog_bool(false)
-      this.dialog = false
+      set_settle_dialog_bool(false)
+      dialog = false
     },
   },
 }
