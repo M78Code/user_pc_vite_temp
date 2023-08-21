@@ -313,7 +313,7 @@ const change_series = () => {
   }
   vx_set_is_bet_single(is_bet_single);
   //获取投注数据(内嵌mini切换或者语言发生变化时调用)
-  $root.$emit(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD);
+  useMittEmit(MITT_TYPES.EMIT_UPDATE_BET_DATA_CMD);
 }
 /**
  * @description: 点击加或者减图标需要重新计算高度
@@ -322,7 +322,7 @@ const change_series = () => {
 */
 const toggle_handle = () => {
   //重新计算投注框高度
-  $root.$emit("toggle-handle");
+  useMittEmit("toggle-handle");
 }
 </script>
 

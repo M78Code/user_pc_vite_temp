@@ -941,12 +941,12 @@ import { useRoute } from 'vue-router'
           // 赛果二级菜单数据处理
           await lodash.result_sub_menu_api_handle(JSON.parse(cache_data_str), type);
         }
-        lodash.$root.$emit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+        lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
       }
       
       } catch (error) {
         // 接口异常时逻辑处理
-        lodash.$root.$emit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+        lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
       }
       resolve()
       })

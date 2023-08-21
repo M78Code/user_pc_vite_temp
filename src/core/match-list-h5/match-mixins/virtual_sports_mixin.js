@@ -119,7 +119,7 @@ export default {
           if(res.code == 200 && res.data && res.data.length){
             this.virtual_match_list = this.append_result_fields(res.data);
             if(this.current_match.mmp == "INGAME" && res.data.length == 1 && res.data[0].mmp == "PREGAME"){
-              this.$root.$emit(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL);
+              useMittEmit(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL);
               return;
             }
             this.no_title_list = this.virtual_match_list.map(m => {
@@ -220,7 +220,7 @@ export default {
       this.gen_video_api_cache_key();
       this.set_current_batch(_.cloneDeep(data));
       if(this.sub_menu_type == 1004){
-        this.$root.$emit(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
+        useMittEmit(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, 0)
       }
       let found = this.virtual_match_list.filter(vm => {
         let r = false;
@@ -401,7 +401,7 @@ export default {
             let p_key = `${this.sub_menu_type}-${this.current_league.menuId}`;
             cache_dict[p_key] = _.cloneDeep(this.virtual_match_list);
             this.set_prev_v_sports(cache_dict);
-            this.$root.$emit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
+            useMittEmit(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED,match_list);
           }
         }
         callback()

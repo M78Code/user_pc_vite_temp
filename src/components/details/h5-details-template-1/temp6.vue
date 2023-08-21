@@ -340,7 +340,7 @@ export default defineComponent({
         if (this.$route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
-          this.$root.$emit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
+          useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
       this.show_more = !this.show_more

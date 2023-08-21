@@ -284,7 +284,7 @@ export default defineComponent({
     // 打开注单界面
     const toggleBet = () => {
       // #TODO emit 
-      // $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+      // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
     };
     // 表情选择
     const onEmojiSelect = (emojiTxt) => {

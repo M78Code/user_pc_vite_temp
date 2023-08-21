@@ -36,7 +36,7 @@ export default {
   mixins: [match_list_version_mixin,skt_data_list],
   mounted() {
     //同步热门接口
-    this.$root.$emit(MITT_TYPES.EMIT_HOT_COLLECT)
+    useMittEmit(MITT_TYPES.EMIT_HOT_COLLECT)
   },
 };
 </script>

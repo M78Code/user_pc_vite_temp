@@ -599,7 +599,7 @@ const match_list = {
 					mids.forEach((mid) => {
 						// 从列表触发详情接口同步数据
 						if (this.vx_details_params.mid == mid) {
-							this.$root.$emit("match_detail_base", {
+							useMittEmit("match_detail_base", {
 								isWs: true,
 								mid,
 								is_bymids: true,
@@ -671,7 +671,7 @@ const match_list = {
 								route.name !== "search" &&
 								!is_first_load
 							) {
-								this.$root.$emit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);
+								useMittEmit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);
 							}
 							let code = lodash.get(res, "data.code");
 							let match_list = lodash.get(res, "data.data.data") || [];

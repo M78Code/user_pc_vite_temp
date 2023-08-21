@@ -249,7 +249,7 @@ export default {
         if(!data || data.length == 0){
 
             this.set_toast({
-              txt: this.$root.$t("bet_record.bet_match_tishi"),
+              txt: i18n.t("bet_record.bet_match_tishi"),
               is_show: true
             });
 

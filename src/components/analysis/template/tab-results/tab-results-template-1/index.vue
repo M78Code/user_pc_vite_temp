@@ -128,21 +128,21 @@ const event_data = ref([]); // 足球事件
 const event_all_data = ref([]); // 篮球事件
 const icons = ref([
   // 黄牌
-  { name: require('public/image/yabo/svg/analysis-yellow_card.svg'), label: this.$root.$t("icon_tips.yellow_card") },
+  { name: require('public/image/yabo/svg/analysis-yellow_card.svg'), label: i18n.t("icon_tips.yellow_card") },
   // 红牌
-  { name: require('public/image/yabo/svg/analysis-red_card.svg'), label: this.$root.$t("icon_tips.red_card") },
+  { name: require('public/image/yabo/svg/analysis-red_card.svg'), label: i18n.t("icon_tips.red_card") },
   // 角球
-  { name: require('public/image/yabo/svg/analysis-corner.svg'), label: this.$root.$t("list.corner") },
+  { name: require('public/image/yabo/svg/analysis-corner.svg'), label: i18n.t("list.corner") },
   // 换人
-  { name: require('public/image/yabo/svg/analysis-substitution.svg'), label: this.$root.$t("analysis.substitution") },
+  { name: require('public/image/yabo/svg/analysis-substitution.svg'), label: i18n.t("analysis.substitution") },
   // 进球
-  { name: require('public/image/yabo/svg/analysis-goal.svg'), label: this.$root.$t("icon_tips.goal") },
+  { name: require('public/image/yabo/svg/analysis-goal.svg'), label: i18n.t("icon_tips.goal") },
   // 点球
-  { name: require('public/image/yabo/svg/analysis-goal_penalty.svg'), label: this.$root.$t("icon_tips.penalty_kick") },
+  { name: require('public/image/yabo/svg/analysis-goal_penalty.svg'), label: i18n.t("icon_tips.penalty_kick") },
   // 点球未进
-  { name: require('public/image/yabo/svg/analysis-penalty_missed.svg'), label: this.$root.$t("analysis.penalty_missed") },
+  { name: require('public/image/yabo/svg/analysis-penalty_missed.svg'), label: i18n.t("analysis.penalty_missed") },
   // 乌龙球
-  { name: require('public/image/yabo/svg/analysis-goal_own.svg'), label: this.$root.$t("analysis.own_goals") },
+  { name: require('public/image/yabo/svg/analysis-goal_own.svg'), label: i18n.t("analysis.own_goals") },
 ])
 
 // 足球
@@ -176,17 +176,17 @@ const get_result = () => {
           obj.secondsFromStart = _.get(item, 'mid.secondsFromStart')
           switch (_.get(item, 'mid.matchPeriodId')) {
             // 开始
-            case '0': obj.cnText = this.$root.$t("analysis.start"); break;
+            case '0': obj.cnText = i18n.t("analysis.start"); break;
             // 中场
-            case '31': obj.cnText = this.$root.$t("analysis.midfield"); break;
+            case '31': obj.cnText = i18n.t("analysis.midfield"); break;
             // 常规赛结束
-            case '100': obj.cnText = this.$root.$t("analysis.end_of_regular_season"); break;
+            case '100': obj.cnText = i18n.t("analysis.end_of_regular_season"); break;
             // 加时赛结束
-            case '110': obj.cnText = this.$root.$t("analysis.overtime_is_over"); break;
+            case '110': obj.cnText = i18n.t("analysis.overtime_is_over"); break;
             // 点球大战结束
-            case '120': obj.cnText = this.$root.$t("analysis.penalty_kick_ended"); break;
+            case '120': obj.cnText = i18n.t("analysis.penalty_kick_ended"); break;
             // 完赛
-            case '999': obj.cnText = this.$root.$t("analysis.match_end"); break;
+            case '999': obj.cnText = i18n.t("analysis.match_end"); break;
           }
         } else {
           let k = 'home',
@@ -200,21 +200,21 @@ const get_result = () => {
 
           switch (item[k].eventCode) {
             // 换人
-            case 'substitution': obj.cnText = `${teamName} ${item[k].playName} ${this.$root.$t("analysis.substitution")} ${item[k].playChangedName}`; break;
+            case 'substitution': obj.cnText = `${teamName} ${item[k].playName} ${i18n.t("analysis.substitution")} ${item[k].playChangedName}`; break;
             // 角球
-            case 'corner': obj.cnText = `${teamName} ${item[k].numPlace}${this.$root.$t("analysis.corner")}`; break;
+            case 'corner': obj.cnText = `${teamName} ${item[k].numPlace}${i18n.t("analysis.corner")}`; break;
             // 黄牌
-            case 'yellow_card': obj.cnText = `${teamName} ${this.$root.$t("icon_tips.yellow_card")}`; break;
+            case 'yellow_card': obj.cnText = `${teamName} ${i18n.t("icon_tips.yellow_card")}`; break;
             // 红牌
-            case 'red_card': obj.cnText = `${teamName} ${this.$root.$t("icon_tips.red_card")}`; break;
+            case 'red_card': obj.cnText = `${teamName} ${i18n.t("icon_tips.red_card")}`; break;
             // 进球
-            case 'goal': obj.cnText = `${teamName} ${this.$root.$t("icon_tips.goal")} ${item[k].score.replace(":", "-")}`; break;
+            case 'goal': obj.cnText = `${teamName} ${i18n.t("icon_tips.goal")} ${item[k].score.replace(":", "-")}`; break;
             // 点球
-            case 'goal_penalty': obj.cnText = `${teamName} ${this.$root.$t("icon_tips.penalty_kick")}`; break;
+            case 'goal_penalty': obj.cnText = `${teamName} ${i18n.t("icon_tips.penalty_kick")}`; break;
             // 点球未进
-            case 'penalty_missed': obj.cnText = `${teamName} ${this.$root.$t("analysis.penalty_missed")}`; break;
+            case 'penalty_missed': obj.cnText = `${teamName} ${i18n.t("analysis.penalty_missed")}`; break;
             // 乌龙球
-            case 'goal_own': obj.cnText = `${teamName} ${this.$root.$t("analysis.own_goals")}`; break;
+            case 'goal_own': obj.cnText = `${teamName} ${i18n.t("analysis.own_goals")}`; break;
           }
           obj.secondsFromStart = item[k].secondsFromStart
           obj.icon = item[k].eventCode

@@ -145,7 +145,7 @@ export default {
      * @param {number} 
     */
     emit_on_scroll() {
-      this.$root.$emit('emit_list_on_scroll')
+      useMittEmit('emit_list_on_scroll')
     },
     /**
      * @Description 滚动高度改变事件(容器高度变化回调函数) 

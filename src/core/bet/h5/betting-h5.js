@@ -130,7 +130,7 @@ export default {
       }
       const min_num = _.get(this.get_user, 'configVO.minSeriesNum', 2)
       if((bet_length - (value ? 1 : 0)) < min_num){
-        this.set_toast({ 'txt': this.$root.$t('bet.match_min', [min_num]) });
+        this.set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
         return false
       }else{
         return true
@@ -164,7 +164,7 @@ export default {
       // 投注项数量已达上限
       let _maxunm = _.get(this.get_user, 'configVO.maxSeriesNum', 10)
       if (this.get_bet_list.length >= _maxunm) {
-        this.set_toast({ 'txt': this.$root.$t('bet.match_max2') });
+        this.set_toast({ 'txt': i18n.t('bet.match_max2') });
         return;
       }
 
@@ -301,7 +301,7 @@ export default {
             bet_bs.value2 = 'Other'
           }
         }
-        if ([this.$root.$t("bet.home_win"), this.$root.$t("bet.away_win")].includes(bet_bs.value2)) bet_bs.value2 = "";
+        if ([i18n.t("bet.home_win"), i18n.t("bet.away_win")].includes(bet_bs.value2)) bet_bs.value2 = "";
         if (ol[0].ots == 'T1') {
           bet_bs.value1 = match.mhn;
         } else if (ol[0].ots == 'T2') {
@@ -336,7 +336,7 @@ export default {
           if (this.get_menu_type == 3000 && !this.get_mids.includes(match.mid)) {
             let _hipo = _.get(hps, '[0].hl[0].hipo')
             if (_hipo != 1) {
-              this.set_toast({ 'txt': this.$root.$t('bet.err_msg12') })
+              this.set_toast({ 'txt': i18n.t('bet.err_msg12') })
               return
             }
           }
@@ -415,7 +415,7 @@ export default {
       // 投注项数量已达上限
       let _maxunm = _.get(this.get_user, 'configVO.maxSeriesNum', 10)
       if (this.get_bet_list.length >= _maxunm) {
-        this.set_toast({ 'txt': this.$root.$t('bet.match_max2') });
+        this.set_toast({ 'txt': i18n.t('bet.match_max2') });
         return;
       }
 
@@ -455,7 +455,7 @@ export default {
           bet_bs.value2 = ol[0].on;
         }
       } else {    //在列表页
-        if ([this.$root.$t("bet.home_win"), this.$root.$t("bet.away_win")].includes(bet_bs.value2)) bet_bs.value2 = "";
+        if ([i18n.t("bet.home_win"), i18n.t("bet.away_win")].includes(bet_bs.value2)) bet_bs.value2 = "";
 
         if (ol[0].ots == 'T1') {
           bet_bs.value1 = match.teams[0];
@@ -788,7 +788,7 @@ export default {
         data_dict[mid].hls = [hl_dict[hid]];
       });
 
-      this.$root.$emit(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, data_dict);
+      useMittEmit(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, data_dict);
     },
     /**
      *@description 用于为 fetch_limit_money 和 fetch_limit_money_and_odd_info 方法获取参数
@@ -1245,7 +1245,7 @@ export default {
         //玩法名称  hpn, hpid, csid
         temp.playName = bet_obj.hps[0].hpnb || bet_obj.hps[0].hpn;
         //球类名称
-        temp.sportName = bet_obj.csna ? bet_obj.csna : this.$root.$t('sport.football');
+        temp.sportName = bet_obj.csna ? bet_obj.csna : i18n.t('sport.football');
         //赛事名称
         temp.matchName = bet_obj.tn;
 
@@ -1531,7 +1531,7 @@ export default {
           }
         } else {
           // bet 接口响应体返回有误时容错处理
-          callbackfn(3, this.$root.$t(`error_msg_info.0401999.client_msg`));
+          callbackfn(3, i18n.t(`error_msg_info.0401999.client_msg`));
         }
 
         return;
@@ -1549,7 +1549,7 @@ export default {
             },3000)
           }
         } else {
-          callbackfn(2, this.$root.$t(`error_msg_info.${code}.client_msg`));
+          callbackfn(2, i18n.t(`error_msg_info.${code}.client_msg`));
           if (code == '0400455') {  // 提示余额不足时拉接口更新余额
             this.fetch_balance && this.fetch_balance()
           }
@@ -1559,7 +1559,7 @@ export default {
       }
 
       if (tips_info2_check) {
-        callbackfn(3, this.$root.$t(`error_msg_info.${code}.client_msg`));
+        callbackfn(3, i18n.t(`error_msg_info.${code}.client_msg`));
         //这2个特殊对应，拉限额接口
         if (['0400475', '0400517'].includes(code)) {
           this.fetch_limit_money()
@@ -1575,13 +1575,13 @@ export default {
       }
 
       if (!(handicap_odds_check || handicap_placeholder_check)) {  // 对应其他没有列出的code码
-        callbackfn(2, this.$root.$t(`error_msg_info.0401999.client_msg`));
+        callbackfn(2, i18n.t(`error_msg_info.0401999.client_msg`));
         return;
       }
 
       this.check_odds_beforebet().then(() => {
         if (handicap_odds_check) {
-          callbackfn(1, this.$root.$t(`error_msg_info.${code}.client_msg`));
+          callbackfn(1, i18n.t(`error_msg_info.${code}.client_msg`));
 
           // 电竞这2个码特殊对应
           if (!Array.isArray(data) || this.get_menu_type != 3000) {return}

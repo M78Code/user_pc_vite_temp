@@ -82,7 +82,7 @@ export default class SearchHotPush {
       menu_arr.shift()
       window.$menu.specialMenuChoose(menu_arr)
       scroll_to_match.mid = matchId
-      this.view.$root.$emit('scroll_to_hot_push_match', matchId)
+      this.view.useMittEmit('scroll_to_hot_push_match', matchId)
     }else{
       this.view.$router.push({
         name: 'details',

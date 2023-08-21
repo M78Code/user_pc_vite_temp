@@ -157,12 +157,12 @@ export default {
           }, 2000)
         } else {
           this.set_toast({
-            txt: this.$root.$t('video.sorry'),
+            txt: i18n.t('video.sorry'),
           });
         }
       }).catch((v) => {
         this.set_toast({
-          txt: this.$root.$t('video.sorry'),
+          txt: i18n.t('video.sorry'),
         });
       })
     },
@@ -247,7 +247,7 @@ export default {
         } else {
           if(_.get(res,'code')=='0401038'){
             this.set_toast({
-              txt: this.$root.$t('msg.msg_nodata_22'),
+              txt: i18n.t('msg.msg_nodata_22'),
             });
             return;
           }
@@ -261,7 +261,7 @@ export default {
             video_sorry_temp="!";
           }
           this.set_toast({
-            txt: this.$root.$t('video.sorry')+video_sorry_temp,
+            txt: i18n.t('video.sorry')+video_sorry_temp,
           });
         }
       }).catch((v) => {
@@ -272,7 +272,7 @@ export default {
         }
 
         this.set_toast({
-          txt: this.$root.$t('video.sorry')+video_sorry_temp,
+          txt: i18n.t('video.sorry')+video_sorry_temp,
         });
       })
 

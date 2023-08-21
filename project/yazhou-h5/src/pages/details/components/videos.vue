@@ -360,10 +360,10 @@ export default defineComponent({
       is_expand_video_list: false,
       // 事件类型菜单选项
       tab_list:[
-        {title: this.$root.$t('footer_menu.all')},
-        {title:this.$root.$t('match_result.goal')},
-        {title:this.$root.$t('match_result.corner_kick')},
-        {title:this.$root.$t('football_playing_way.penalty_cards')},
+        {title: i18n.t('footer_menu.all')},
+        {title:i18n.t('match_result.goal')},
+        {title:i18n.t('match_result.corner_kick')},
+        {title:i18n.t('football_playing_way.penalty_cards')},
       ],
       // 当前播放视频信息
       current_event_video: {
@@ -708,7 +708,7 @@ export default defineComponent({
       (new_value) => {
         if(new_value == -1 && this.get_video_url.active == 'animationUrl'){
           this.set_toast({
-            txt: this.$root.$t("video.close_1"),
+            txt: i18n.t("video.close_1"),
           });
           this.close_video()
         }
@@ -721,7 +721,7 @@ export default defineComponent({
         if(new_value != 2 && this.get_video_url.active == 'muUrl'){
           this.close_video()
           this.set_toast({
-            txt: this.$root.$t("video.close_2"),
+            txt: i18n.t("video.close_2"),
           });
         }
       }

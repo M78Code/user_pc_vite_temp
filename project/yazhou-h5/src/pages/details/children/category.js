@@ -480,7 +480,7 @@ export const category_info = () => {
       if (!["result_details", "match_result"].includes(route.name)) {
         // #TODO emit
         useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true);
-        // $root.$emit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
+        // useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
       }
       const tabs_active_data_cache =
         get_details_data_cache[`${match_id}-${get_details_item.value}`];
@@ -546,7 +546,7 @@ export const category_info = () => {
     //   .finally(() => {
     //     is_loading = false;
     //     if(!['result_details', 'match_result'].includes(route.name)){
-    //       $root.$emit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
+    //       useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
     //     }
     //     const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item}`]
 
@@ -646,7 +646,7 @@ export const category_info = () => {
   const triggle_tabs_update = () => {
     // #TODO emit
     useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
-    // $root.$emit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
+    // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
   };
   // 保存当前展开状态
   const save_expanded_state = (arr_list) => {

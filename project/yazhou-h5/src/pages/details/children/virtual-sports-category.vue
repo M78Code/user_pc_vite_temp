@@ -638,7 +638,7 @@ export default defineComponent({
     const triggle_tabs_update = () => {
       // #TODO emit 
       useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
-      // $root.$emit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
+      // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
     };
 
     // 调用:/v1/m/matchDetail/getMatchOddsInfoPB接口

@@ -68,7 +68,7 @@ export default {
       'set_curr_tab_info',
     ]),
     close_analysis() {
-      this.$root.$emit(MITT_TYPES.EMIT_ANA_SHOW, false)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     },
     tab_click(tab, i, type) {
       this.tabIndex = i

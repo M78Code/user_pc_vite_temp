@@ -477,7 +477,7 @@ export default defineComponent({
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
-          // $root.$emit(MITT_TYPES.EMIT_MATCH_NOSTART);
+          // useMittEmit(MITT_TYPES.EMIT_MATCH_NOSTART);
         }
         // 同上注释
         let longTime = Math.floor( (+props.detail_data.mgt - now )/ 1000 / 60);

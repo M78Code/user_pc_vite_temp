@@ -204,7 +204,7 @@ export default defineComponent({
     };
     const api_interface = () => {
       useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
-      // $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+      // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
     };
     /**
      *@description: 虚拟体育切换玩法集,滚动条高度默认恢复为0
@@ -270,7 +270,7 @@ export default defineComponent({
               //当赛事结束
               if(current_match.match_status == 2){
                 useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
-                // $root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
+                // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
               }
               //开赛后封盘
               if(current_match.match_status > 0){
@@ -279,7 +279,7 @@ export default defineComponent({
               //视频时间更新,快进视频到相应的时间点
               if(res.upd == 1){
                 useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
-                // $root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
+                // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
               }
               switch (Number(current_match.csid)) {
                 case 1001:
@@ -355,7 +355,7 @@ export default defineComponent({
           //当赛事结束
           if(current_match.match_status == 2){
             useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
-            // $root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
+            // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
           }
           //开赛后封盘
           if(current_match.match_status > 0){
@@ -364,7 +364,7 @@ export default defineComponent({
           //视频时间更新,快进视频到相应的时间点
           if(res.upd == 1){
             useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, res);
-            // $root.$emit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
+            // useMittEmit(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,res);
           }
           switch (Number(current_match.csid)) {
             case 1001:

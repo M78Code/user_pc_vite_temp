@@ -59,7 +59,7 @@ export default defineComponent({
       this.timer1_ = setTimeout(()=>{
         this.set_iframe_onload(true);
       },1000)
-      this.$root.$emit(MITT_TYPES.EMIT_VIDEO_SWITCHING,n)
+      useMittEmit(MITT_TYPES.EMIT_VIDEO_SWITCHING,n)
       this.change_show()
     };
     return {

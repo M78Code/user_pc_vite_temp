@@ -229,7 +229,7 @@ export default {
     //  let csid = (_.find(newsub,menu=>menu.count>0) || {} ).field1
     //  //如果电竞有其他赛事就跳转热门赛事
     //  if(csid){
-    //     this.$root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
+    //     useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_CMD, { click_type:'left_menu' })
     //  }else{
     //    //跳转热门
     //       window.$menu.subMenuClick('301');

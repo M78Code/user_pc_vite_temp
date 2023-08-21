@@ -372,7 +372,7 @@ export default defineComponent({
     */
     const open = (position) => {
       useMittEmit(MITT_KEY.EMIT_CHANGE_RECORD_SHOW, true);
-      // $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
+      // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)
     };
     /**
     *@description:关闭投注记录显示

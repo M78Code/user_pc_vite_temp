@@ -109,37 +109,37 @@ export default {
         /**比分版 */
         {
           type:"info",
-          text:this.$root.$t('common.score_board'),
+          text:i18n.t('common.score_board'),
           icon:"switch"
         },
         /**演播室 */
         {
           type:"studio",
-          text:this.$root.$t('common.studio'),
+          text:i18n.t('common.studio'),
           icon:"studio"
         },
         /**主播 */
         {
           type:"anchor",
-          text:this.$root.$t('common.anchor'),
+          text:i18n.t('common.anchor'),
           icon:"anchor"
         },
         /** 专题*/
         {
           type:"topic",
-          text:this.$root.$t('common.topic'),
+          text:i18n.t('common.topic'),
           icon:"topic"
         },
         /**源视频 */
         {
           type:"video",
-          text:this.$root.$t('common.o_video'),
+          text:i18n.t('common.o_video'),
           icon:"video"
         },
          /**动画 */
        {
           type:"animation",
-          text:this.$root.$t('common.animate'),
+          text:i18n.t('common.animate'),
           icon:"animation"
         }, 
        ]

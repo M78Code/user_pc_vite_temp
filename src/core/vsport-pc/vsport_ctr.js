@@ -593,7 +593,7 @@ export default class VsportCtr {
     this.video_show_type = this.get_video_show_type(no_start_animation)
      if((this.video_show_type == 'result' || this.video_show_type == 'basketball_result') && this.view.$route.name=='virtual_details'){
        // 赛事结束
-       this.view.$root.$emit("virtual_match_done")
+       this.view.useMittEmit("virtual_match_done")
      }
     // 如果不是视频类型  销毁视频
     if(this.video_show_type != 'video'){

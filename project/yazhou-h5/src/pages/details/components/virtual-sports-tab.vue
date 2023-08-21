@@ -149,7 +149,7 @@ export default {
 
       this.set_details_item(uId);
       // 点击玩法对页面吸顶tab做高度处理
-      this.$root.$emit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
+      useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
       this.$emit('virtual_play_height')
       if(this.get_fewer == 3){

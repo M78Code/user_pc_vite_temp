@@ -441,7 +441,7 @@ const props = defineProps({
         if (flag) {
           if (hs == 0 && cashOutStatus == 1 && (status == 5 || status == 7)) {
             if(!item_data.maxCashout){
-              $root.$emit(MITT_TYPES.EMIT_GET_ORDER_LIST)
+              useMittEmit(MITT_TYPES.EMIT_GET_ORDER_LIST)
             }
             if(expected_profit > 1){
               status = 1;

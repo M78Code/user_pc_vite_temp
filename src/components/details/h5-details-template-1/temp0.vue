@@ -274,7 +274,7 @@ export default defineComponent({
           document.documentElement.scrollTop -= distance
         } else {
           // #TODO emit 
-          // $root.$emit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
+          // useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
       show_more = !show_more

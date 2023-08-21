@@ -114,16 +114,16 @@ export default {
       let text = ""
         if(type == 1){
           if(this.ctr_data.video_type == 1){
-            text=  this.$root.$t('video.flv')
+            text=  i18n.t('video.flv')
           }else{
-            text=  this.$root.$t('video.m3u8')
+            text=  i18n.t('video.m3u8')
           }
             
         }else{
            if(this.ctr_data.video_type == 1){
-            text=  this.$root.$t('video.clarity1')
+            text=  i18n.t('video.clarity1')
           }else{
-            text=  this.$root.$t('video.clarity2')
+            text=  i18n.t('video.clarity2')
           }
         }
         return text
@@ -133,15 +133,15 @@ export default {
       let text = ""
         if(type == 1){
           if(num == 1){
-            text = this.$root.$t('video.flv')
+            text = i18n.t('video.flv')
           }else{
-            text = this.$root.$t('video.m3u8')
+            text = i18n.t('video.m3u8')
           }
         }else{
           if(num == 1){
-            text = this.$root.$t('video.clarity1')
+            text = i18n.t('video.clarity1')
           }else{
-            text = this.$root.$t('video.clarity2') 
+            text = i18n.t('video.clarity2') 
           }
         }
         return text
@@ -208,7 +208,7 @@ export default {
 
       clearTimeout(this.handle_screen_timer)
       this.handle_screen_timer = setTimeout(() => {
-        this.$root.$emit(`exit_full_screen`,size);
+        useMittEmit(`exit_full_screen`,size);
       }, 100)
     },
     show_click(){

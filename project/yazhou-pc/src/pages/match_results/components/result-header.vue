@@ -41,7 +41,7 @@
               }"
               v-model="model"
               @click.stop
-              @range-end="$root.$emit('init_select', 1)"
+              @range-end="useMittEmit('init_select', 1)"
               range
               v-if="startTimeShow"
               minimal

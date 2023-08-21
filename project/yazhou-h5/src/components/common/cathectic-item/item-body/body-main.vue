@@ -315,13 +315,13 @@ const props =defineProps({
         if (!(res && res.code == 200 && res.data)) return
         const _result = res.data.marketResult, _matchEnd = res.data.matchEnd;
         if (_result) {   //有赛果页去到赛果详情页
-          $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
+          useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
           set_goto_detail_matchid(mid_);
           set_details_item(0);
           router.push({ name: 'match_result', params: { mid: mid_, index: '0' } });
         } else {  //无赛果页去到赛事详情页
           if (_matchEnd) return; // 赛事结束但是没有赛果不跳转
-          $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
+          useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, false)
           if ([100,101,102,103].includes(+props.main.sportId)) {  // 如果是电竞赛事，需要设置菜单类型
             set_menu_type(3000)
           }

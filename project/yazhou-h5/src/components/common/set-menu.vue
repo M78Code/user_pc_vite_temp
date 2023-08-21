@@ -302,7 +302,7 @@ import { computed, onUnmounted, watch } from "vue";
       set_collapse_map_match({})
 
       set_sort_type(status);
-      $root.$emit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,{
+      useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,{
         text:"sortRules",
       });
     }

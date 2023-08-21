@@ -73,7 +73,7 @@ const utils = {
             video_src,
             animation_src
           }
-          window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC,obj)
+          window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC,obj)
         }
       }).catch(err => {
         console.log(err)
@@ -973,7 +973,7 @@ const utils = {
       }
       // 世界杯后恢复
       // if(!lodash.get(this.get_access_config,'collectSwitch')){
-      //   this.$toast(this.$root.$t(`common.temporarily_unavailable`), 2000)
+      //   this.$toast(i18n.t(`common.temporarily_unavailable`), 2000)
       //   return false
       // }
       return true

@@ -63,7 +63,7 @@
         mids: update_mids_arr,
       };
       // 拉取http请求
-      window.vue.$root.$emit(window.vue.MITT_TYPES.EMIT_API_BYMIDS,params)
+      window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS,params)
     }
   }
 

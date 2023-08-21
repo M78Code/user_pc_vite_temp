@@ -101,9 +101,9 @@ export default {
       handler(res, old) {
         if (res.csid == "5") {
           //网球
-          this.stage_txt.chart_one = this.$root.$t("common.ace"); //"发球得分";
-          this.stage_txt.chart_two = this.$root.$t("common.fault"); //"发球失误";
-          this.stage_txt.chart_center = this.$root.$t("common.break_point_success"); //"破发成功率";
+          this.stage_txt.chart_one = i18n.t("common.ace"); //"发球得分";
+          this.stage_txt.chart_two = i18n.t("common.fault"); //"发球失误";
+          this.stage_txt.chart_center = i18n.t("common.break_point_success"); //"破发成功率";
           this.stage_txt.chart_two_point = "";//(当前局/总)
 
           this.stage_data.num_one = res.msc.S4 || this.default;
@@ -111,9 +111,9 @@ export default {
           this.stage_data.num_center = res.msc.S114 || this.default;
         } else if (res.csid == "7") {
           //斯诺克
-          this.stage_txt.chart_one = this.$root.$t("common.foul"); //"犯规";
-          this.stage_txt.chart_two = this.$root.$t("common.max_bureau"); //"单杆最高";
-          this.stage_txt.chart_two_point = this.$root.$t("common.current_total"); //"（当前局/总）";
+          this.stage_txt.chart_one = i18n.t("common.foul"); //"犯规";
+          this.stage_txt.chart_two = i18n.t("common.max_bureau"); //"单杆最高";
+          this.stage_txt.chart_two_point = i18n.t("common.current_total"); //"（当前局/总）";
           this.stage_txt.chart_center = "";
 
           this.stage_data.num_one = res.msc.S118 || this.default;
@@ -121,8 +121,8 @@ export default {
           res.msc.S1190 && (this.snk_S1190 = res.msc.S1190);
         } else if (res.csid == "9") {
           //排球
-          this.stage_txt.chart_one = this.$root.$t("common.ace");//发球得分
-          this.stage_txt.chart_two = this.$root.$t("common.sigle_fault");//发球失误
+          this.stage_txt.chart_one = i18n.t("common.ace");//发球得分
+          this.stage_txt.chart_two = i18n.t("common.sigle_fault");//发球失误
           this.stage_txt.chart_center = "";
           this.stage_txt.chart_two_point = "";//(当前局/总)
 
@@ -130,9 +130,9 @@ export default {
           this.stage_data.num_two = res.msc.S113 || this.default;
         } else if (res.csid == "10") {
           //羽毛球
-          this.stage_txt.chart_one = this.$root.$t("common.score_"); //"得分";
-          this.stage_txt.chart_two = this.$root.$t("common.receiving_point_score"); //"接收点得分";
-          this.stage_txt.chart_center = this.$root.$t("common.ace"); //"发球得分";
+          this.stage_txt.chart_one = i18n.t("common.score_"); //"得分";
+          this.stage_txt.chart_two = i18n.t("common.receiving_point_score"); //"接收点得分";
+          this.stage_txt.chart_center = i18n.t("common.ace"); //"发球得分";
           this.stage_txt.chart_two_point = "";//(当前局/总)
 
           this.stage_data.num_one = res.msc.S115 || this.default;
@@ -140,8 +140,8 @@ export default {
           this.stage_data.num_center = res.msc.S117 || this.default;
         } else if(res.csid == "4"){
           //冰球
-          this.stage_txt.chart_one = this.$root.$t("common.micro_penalty"); //"小罚";
-          this.stage_txt.chart_two = this.$root.$t("common.big_penalty"); //"大罚";
+          this.stage_txt.chart_one = i18n.t("common.micro_penalty"); //"小罚";
+          this.stage_txt.chart_two = i18n.t("common.big_penalty"); //"大罚";
           this.stage_txt.chart_two_point = ""; //"
           this.stage_txt.chart_center = "";
 
@@ -149,8 +149,8 @@ export default {
           this.stage_data.num_two = res.msc.S4011 || this.default;//大罚比分
         } else if(res.csid == "6"){
           //美足
-          this.stage_txt.chart_one = this.$root.$t("common.shot_num"); //"射门";
-          this.stage_txt.chart_two = this.$root.$t("common.touchdown"); //"达阵";
+          this.stage_txt.chart_one = i18n.t("common.shot_num"); //"射门";
+          this.stage_txt.chart_two = i18n.t("common.touchdown"); //"达阵";
           this.stage_txt.chart_two_point = ""; //"
           this.stage_txt.chart_center = "";
 

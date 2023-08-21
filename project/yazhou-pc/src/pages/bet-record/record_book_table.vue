@@ -463,22 +463,22 @@ export default {
       if(type && langCode) {
         switch (type) {
           case "EU":
-            res = this.$root.$t(`common_lang.${langCode}.odds.EU`); //"欧洲盘";
+            res = i18n.t(`common_lang.${langCode}.odds.EU`); //"欧洲盘";
             break;
           case "HK":
-            res = this.$root.$t(`common_lang.${langCode}.odds.HK`); //"香港盘";
+            res = i18n.t(`common_lang.${langCode}.odds.HK`); //"香港盘";
             break;
           case "US":
-            res = this.$root.$t(`common_lang.${langCode}.odds.US`); //"美式盘";
+            res = i18n.t(`common_lang.${langCode}.odds.US`); //"美式盘";
             break;
           case "ID":
-            res = this.$root.$t(`common_lang.${langCode}.odds.ID`); //"印尼盘";
+            res = i18n.t(`common_lang.${langCode}.odds.ID`); //"印尼盘";
             break;
           case "MY":
-            res = this.$root.$t(`common_lang.${langCode}.odds.MY`); //"马来盘";
+            res = i18n.t(`common_lang.${langCode}.odds.MY`); //"马来盘";
             break;
           case "GB":
-            res = this.$root.$t(`common_lang.${langCode}.odds.GB`); //"英式盘";
+            res = i18n.t(`common_lang.${langCode}.odds.GB`); //"英式盘";
             break;
           default:
             res = "";
@@ -495,29 +495,29 @@ export default {
     item_status(type) {
       switch (parseInt(type)) {
         case 2:
-          return this.$root.$t("bet_record.effective_water_"); //"走水";
+          return i18n.t("bet_record.effective_water_"); //"走水";
         case 3:
-          return this.$root.$t("bet_record.lose"); //输
+          return i18n.t("bet_record.lose"); //输
         case 4:
-          return this.$root.$t("bet_record.win"); //赢
+          return i18n.t("bet_record.win"); //赢
         case 5:
-          return this.$root.$t("bet_record.win_half"); //"赢半";
+          return i18n.t("bet_record.win_half"); //"赢半";
         case 6:
-          return this.$root.$t("bet_record.lose_half"); //"输半";
+          return i18n.t("bet_record.lose_half"); //"输半";
         case 7:
-          return this.$root.$t("bet_record.match_cancel2"); //"赛事取消";
+          return i18n.t("bet_record.match_cancel2"); //"赛事取消";
         case 8:
-          return this.$root.$t("bet_record.match_delay"); //"赛事延期";
+          return i18n.t("bet_record.match_delay"); //"赛事延期";
         case 11:
-          return this.$root.$t("bet_record.match_delay2"); //"比赛延迟";
+          return i18n.t("bet_record.match_delay2"); //"比赛延迟";
         case 12:
-          return this.$root.$t("bet_record.match_interrupt"); //"比赛中断";
+          return i18n.t("bet_record.match_interrupt"); //"比赛中断";
         case 13:
-          return this.$root.$t("bet.invalid"); //"无效";
+          return i18n.t("bet.invalid"); //"无效";
         case 16:
-          return this.$root.$t("bet.invalid"); //"无效";
+          return i18n.t("bet.invalid"); //"无效";
         case 15:
-          return this.$root.$t("bet_record.match_give_up"); //"比赛放弃";
+          return i18n.t("bet_record.match_give_up"); //"比赛放弃";
         default:
           return '';
       }
@@ -531,31 +531,31 @@ export default {
       let str = '';
       switch (parseInt(cancelType)) {
         case 1:
-          str =  this.$root.$t("bet_record.match_cancel2"); //"比赛取消";
+          str =  i18n.t("bet_record.match_cancel2"); //"比赛取消";
           break;
         case 2:
-          str = this.$root.$t("bet_record.match_delay"); //"比赛延期";
+          str = i18n.t("bet_record.match_delay"); //"比赛延期";
           break;
         case 3:
-          str = this.$root.$t("bet_record.match_interrupt"); //"比赛中断";
+          str = i18n.t("bet_record.match_interrupt"); //"比赛中断";
           break;
         case 4:
-          str = this.$root.$t("bet_record.match_rematch"); //比赛重赛
+          str = i18n.t("bet_record.match_rematch"); //比赛重赛
           break;
         case 5:
-          str = this.$root.$t("bet_record.match_waist"); //"比赛腰斩";
+          str = i18n.t("bet_record.match_waist"); //"比赛腰斩";
           break;
         case 6:
-          str = this.$root.$t("bet_record.match_give_up"); //"比赛放弃";
+          str = i18n.t("bet_record.match_give_up"); //"比赛放弃";
           break;
         case 17:
-          str = this.$root.$t("bet_record.match_advance"); //"赛事提前";
+          str = i18n.t("bet_record.match_advance"); //"赛事提前";
           break;
         case 20:
-         str = this.$root.$t("bet_record.match_delay2"); //"比赛延迟";
+         str = i18n.t("bet_record.match_delay2"); //"比赛延迟";
          break;
         default: 
-          str = this.$root.$t("bet.invalid") //注单无效
+          str = i18n.t("bet.invalid") //注单无效
           break;
       }
       return str;
@@ -615,15 +615,15 @@ export default {
     order_status(orderStatus) {
       switch (parseInt(orderStatus)) {
         case 0:
-          return this.$root.$t("bet.bet_suc"); //"投注成功";
+          return i18n.t("bet.bet_suc"); //"投注成功";
         case 1:
-          return this.$root.$t("bet.bet_suc"); //"投注成功";
+          return i18n.t("bet.bet_suc"); //"投注成功";
         case 2:
-          return this.$root.$t("bet.betting_cancel"); //"注单无效";
+          return i18n.t("bet.betting_cancel"); //"注单无效";
         case 3:
-          return this.$root.$t("bet.bet_loading"); //"确认中";
+          return i18n.t("bet.bet_loading"); //"确认中";
         case 4:
-          return this.$root.$t("bet.bet_fail"); //"投注失败";
+          return i18n.t("bet.bet_fail"); //"投注失败";
         default:
           return '';
       }
@@ -658,13 +658,13 @@ export default {
       if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
-            res = this.$root.$t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+            res = i18n.t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
             break;
           case 2:
-            res = this.$root.$t(`common_lang.${langCode}.bet.bowls`);//"滚球盘赛事";
+            res = i18n.t(`common_lang.${langCode}.bet.bowls`);//"滚球盘赛事";
             break;
           case 3:
-            res = this.$root.$t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+            res = i18n.t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
             break;
         }
       }
@@ -690,7 +690,7 @@ export default {
       oInput.value = data;
       document.body.appendChild(oInput);
       oInput.select();
-      let msg = this.$root.$t("bet_record.copyed")
+      let msg = i18n.t("bet_record.copyed")
       this.toast_tips(msg)
       this.toast = true;
       document.execCommand("Copy");
@@ -755,16 +755,16 @@ export default {
       const params = { orderNo: this.orderNo }
       this.cancel_book_record_order(params, (code, data, msg) => {
         if (code == 200) {
-          this.toast_tips(this.$root.$t('bet.bet_book_canceled'))
+          this.toast_tips(i18n.t('bet.bet_book_canceled'))
           this.$emit('delete_book_record', this.orderNo, this.bookShow)
           this.bookShow = false
           this.orderNo = ''
           this.matchInfo = ''
         } else if (code == '0400546') {
-          this.toast_tips(this.$root.$t('bet.bet_book_error_msg_0400546'))
+          this.toast_tips(i18n.t('bet.bet_book_error_msg_0400546'))
           this.close_book_dialog()
         } else if (code == '0400547') {
-          this.toast_tips(this.$root.$t('bet.bet_book_error_msg_0400547'))
+          this.toast_tips(i18n.t('bet.bet_book_error_msg_0400547'))
           this.close_book_dialog()
         } else {
           this.toast_tips(msg)

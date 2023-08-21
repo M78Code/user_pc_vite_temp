@@ -98,7 +98,7 @@ class MatchListCard {
       mids: card_obj.mids.split(","),
     };
     // 拉取http请求
-    window.vue.$root.$emit(
+    window.vue.useMittEmit(
       window.vue.MITT_TYPES.EMIT_API_BYMIDS,
       params,
       (status) => {

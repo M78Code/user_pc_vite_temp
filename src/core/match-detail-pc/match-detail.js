@@ -338,7 +338,7 @@ const show_wrap_total = (match_infoData) => {
 const sr_click_handle = (match) => {
   let full_url = get_full_sr_url(match); // seid,match.srid
   if (!store.getters.get_global_switch.statistics_switch)
-    return window.vue.$root.$emit(
+    return window.vue.useMittEmit(
       window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
       window.vue.$root.$t("msg.msg_09")
     );

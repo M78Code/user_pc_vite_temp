@@ -406,7 +406,7 @@ function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !get_global_switch.value.activity_switch) {
-        // return this.$root.$emit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.t("msg.msg_09"));
+        // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.t("msg.msg_09"));
         return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     // 电竞

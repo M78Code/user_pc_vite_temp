@@ -120,7 +120,7 @@ export default defineComponent({
       // 点击玩法对页面吸顶tab做高度处理
       // #TODO emit 
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
-      // $root.$emit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
+      // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer == 3){
         set_fewer(1)
       }

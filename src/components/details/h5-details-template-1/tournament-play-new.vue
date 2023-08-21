@@ -585,8 +585,8 @@ export default defineComponent({
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
-          // $root.$emit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
-          // $root.$emit(MITT_TYPES.EMIT_RESET_SET_HTON);
+          // useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
+          // useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
           var hton_ = 0;
           for (let i = 0; i < list.length; i++) {
