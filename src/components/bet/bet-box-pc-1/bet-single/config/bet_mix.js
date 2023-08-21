@@ -69,7 +69,7 @@ export default {
     //全局的键盘抬起事件
     window.addEventListener("keyup", this.keyup_handle);
   },
-  destroyed() {
+  beforeUnmount() {
     //清除定时器
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);
@@ -563,28 +563,28 @@ export default {
      handle_generat_emitters(){
       let event_pairs=  [
         // 投注数量
-{ type:MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD, callback:this.get_bet_total_count} ,
-// 投注金额
-{ type:MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD, callback:this.get_bet_total_money} ,
-// 最高可赢额
-{ type:MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD, callback:this.get_bet_total_win_money} ,
-// 完成按钮功能
-{ type:MITT_TYPES.EMIT_COMPLETE_HANDLE_CMD, callback:this.complete_handle} ,
-// 最大最小值
-{ type:MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD, callback:this.set_min_max_money} ,
-// 初始化视图
-{ type:MITT_TYPES.EMIT_MIX_INIT_VIEW_CMD, callback:this.init_view} ,
-// 保留这些选项
-{ type:MITT_TYPES.EMIT_MIX_SAVE_BET_CMD, callback:this.save_bet_items} ,
-//监听键盘抬起事件
-{ type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
+      { type:MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD, callback:this.get_bet_total_count} ,
+      // 投注金额
+      { type:MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD, callback:this.get_bet_total_money} ,
+      // 最高可赢额
+      { type:MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD, callback:this.get_bet_total_win_money} ,
+      // 完成按钮功能
+      { type:MITT_TYPES.EMIT_COMPLETE_HANDLE_CMD, callback:this.complete_handle} ,
+      // 最大最小值
+      { type:MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD, callback:this.set_min_max_money} ,
+      // 初始化视图
+      { type:MITT_TYPES.EMIT_MIX_INIT_VIEW_CMD, callback:this.init_view} ,
+      // 保留这些选项
+      { type:MITT_TYPES.EMIT_MIX_SAVE_BET_CMD, callback:this.save_bet_items} ,
+      //监听键盘抬起事件
+      { type:MITT_TYPES.EMIT_ENTER_PRESS_EVENT, callback:this.keyup_handle} ,
 
-  ]
+        ]
 
- 
-let  {   emitters_off } =  useMittEmitterGenerator(event_pairs)
-this.emitters_off=emitters_off
- 
+      
+      let  {   emitters_off } =  useMittEmitterGenerator(event_pairs)
+      this.emitters_off=emitters_off
+      
 
     },
 

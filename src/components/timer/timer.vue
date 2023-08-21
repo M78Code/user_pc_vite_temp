@@ -47,7 +47,7 @@ export default {
     this.start();
     useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
   },
-  destroyed() {
+  beforeUnmount() {
     useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time).off;
     this.clear();
   },

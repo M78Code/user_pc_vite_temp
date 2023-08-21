@@ -172,7 +172,7 @@
     //   // 获取直播、聊天室信息
     //   this.get_live_chat_info()
     // },
-    // destroyed() {
+    // beforeUnmount() {
     //   // 站点 tab 休眠状态转激活
     //   this.$root.$off(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, this.emit_site_tab_active);
     //   this.$root.$off(`exit_full_screen`, this.exit_full_screen);

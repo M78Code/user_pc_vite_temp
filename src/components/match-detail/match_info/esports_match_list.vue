@@ -182,7 +182,7 @@ export default {
       details.on_go_detail(match)
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //更新电竞右侧视频
     this.$root.$off(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
     this.match_ctr.destroy();

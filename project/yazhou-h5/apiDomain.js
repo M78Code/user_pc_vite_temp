@@ -56,7 +56,7 @@ export default {
       AllDomain.run();
     });
   },
-  destroyed() {
+  beforeUnmount() {
     this.off_listeners();
     this.unbind_debounce_throttle();
     // 清除定时器

@@ -215,10 +215,10 @@ export default {
       document.removeEventListener("click", this.event_listener_preventDefault);
     },
   },
-  destroyed() {
+  beforeUnmount() {
     // 释放日志功能对象
     if (window.wslog && window.wslog.destroyed) {
-      window.wslog.destroyed();
+      window.wslog.beforeUnmount();
     }
     window.wslog = null;
     if (this.timer) {

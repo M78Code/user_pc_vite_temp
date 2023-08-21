@@ -59,7 +59,7 @@ export default class wsMan {
    * @Description:销毁ws数据
    * @return:
    */
-  static destroyed() {
+  static beforeUnmount() {
     if (wsMan.ws) {
       wsMan.ws.destroy();
     }

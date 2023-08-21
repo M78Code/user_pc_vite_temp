@@ -507,7 +507,7 @@ export default {
       immediate: true,
     },
   },
-  destroyed() {
+  beforeUnmount() {
     this.un_subscribe();
     clearTimeout(this.scrollTimer);
     this.$root.$off('update_baseball_score', this.update_baseball_score);

@@ -111,7 +111,7 @@ const tab_click = ([tab, type]) => {
     this.$utils.zhuge_event_send(eventLabel, this.get_user);
   }
 }
-  // destroyed() {
+  // beforeUnmount() {
   //   for (const key in this.$data) {
   //     this.$data[key] = null
   //   }

@@ -591,7 +591,7 @@ export default {
       return str
     }
   },
-  destroyed() {
+  beforeUnmount() {
     clearTimeout(this.scrollTimer);
   }
 };

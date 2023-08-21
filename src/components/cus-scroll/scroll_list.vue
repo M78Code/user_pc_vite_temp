@@ -70,7 +70,7 @@ export default {
     // 设置列表滚动条位置
     this.$root.$on('set_match_list_scroll_top',this.set_scrollTop);
   },
-  destroyed(){
+  beforeUnmount(){
     this.is_destroy = true
     // 设置列表滚动条位置
     this.$root.$off('set_match_list_scroll_top',this.set_scrollTop);

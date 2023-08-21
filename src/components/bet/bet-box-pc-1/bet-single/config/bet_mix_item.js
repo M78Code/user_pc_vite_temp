@@ -60,7 +60,7 @@ export default {
       }, 3000);
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //清除定时器
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);

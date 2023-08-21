@@ -781,7 +781,7 @@ export default {
         }
       }
   },
-  destroyed(){
+  beforeUnmount(){
     this.debounce_throttle_cancel(this.cancel_book_handle)
     // 清除定时器
     clearTimeout(this.timeout_toast);

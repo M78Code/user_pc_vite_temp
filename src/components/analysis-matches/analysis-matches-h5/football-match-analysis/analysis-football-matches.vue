@@ -194,7 +194,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //   ]),
   // },
 
-  // destroyed() {
+  // beforeUnmount() {
   //   for (const key in this.$data) {
   //     this.$data[key] = null
   //   }
