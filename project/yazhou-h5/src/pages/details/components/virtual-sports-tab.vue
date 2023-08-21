@@ -71,8 +71,8 @@ export default {
     // 延时器
     this.timer1_ = null;
     this.timer_ = null;
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
 
     this.initEvent();
     this.play_list()
@@ -149,7 +149,7 @@ export default {
 
       this.set_details_item(uId);
       // 点击玩法对页面吸顶tab做高度处理
-      this.$root.$emit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
+      useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       // 虚拟体育切换玩法集,滚动条高度默认恢复为0
       this.$emit('virtual_play_height')
       if(this.get_fewer == 3){
@@ -196,7 +196,7 @@ export default {
       }
     }
   },
-  destroyed() {
+  beforeUnmount() {
     this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent);
     this.$root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
     this.set_fewer(1);

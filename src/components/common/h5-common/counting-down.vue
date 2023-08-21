@@ -167,7 +167,7 @@ function get_counting_time() {
   //水球
   if (props.match.csid == 16) {
     // TODO: 
-    let water_p_countingdown = $root.$t('list.water_polo_countdown');
+    let water_p_countingdown = i18n.t('list.water_polo_countdown');
     let f_minutes = Math.ceil(second_count / 60);
     f_minutes = f_minutes > 0 ? f_minutes : 1
     counting_time.value = water_p_countingdown.replace('S%', f_minutes);

@@ -36,9 +36,9 @@ export default {
       item_index:0,
       tab_item_list:[
         // 所有赛果
-        {id:1, text: this.$root.$t('match_info.all_result')},
+        {id:1, text: i18n.t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: this.$root.$t('match_info.select_event')}
+        {id:2, text: i18n.t('match_info.select_event')}
       ],
       list_data: [],
     }
@@ -61,7 +61,7 @@ export default {
   },
   created() {
     // 监听 刷新 注单记录----请求
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
+    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
   },
   computed:{
     ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", 'get_user']),
@@ -75,21 +75,21 @@ export default {
     tab_data_init(){
       this.tab_item_list =[
         // 所有赛果
-        {id:1, text: this.$root.$t('match_info.all_result')},
+        {id:1, text: i18n.t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: this.$root.$t('match_info.select_event')}
+        {id:2, text: i18n.t('match_info.select_event')}
       ];
       if(this.get_menu_type == 28 && [100,101,102,103,104].includes(+this.result_detail_data.csid))  {
         this.tab_item_list =[
           // 所有赛果
-          {id:1, text: this.$root.$t('match_info.all_result')}
+          {id:1, text: i18n.t('match_info.all_result')}
         ];
       }
     },
     // 点击高亮显示tab
     result_tab(index,tab_item){
       let search_term = this.$route.query.search_term
-      this.$root.$emit(MITT_TYPES.EMIT_CHANGE_TAB, true)
+      useMittEmit(MITT_TYPES.EMIT_CHANGE_TAB, true)
       if(this.item_index != index){
         this.item_index = tab_item.id === 4 ? 3 : index
       }
@@ -117,7 +117,7 @@ export default {
           orderBy: 2,
           }
         let {code , data} = await api_betting.post_getOrderList(params)
-        this.$root.$emit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
+        useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, true)
 
         if(code == 200) {
           this.tab_data_init()
@@ -128,18 +128,18 @@ export default {
               this.tab_item_list.push({
                 id:3,
                 // 我的注单
-                text: this.$root.$t('match_info.my_bets')
+                text: i18n.t('match_info.my_bets')
               });
             }
 
             // 刷新 注单记录----重载页面
-            this.$root.$emit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET)
+            useMittEmit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET)
           }
         }
       } catch (error) {
         this.no_data = false;
         console.error(error)
-        this.$root.$emit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
+        useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
         this.tab_data_init()
       } finally {
         const { configValue, eventSwitch } = _.get(this.get_user, 'merchantEventSwitchVO', {})
@@ -165,7 +165,7 @@ export default {
               this.tab_item_list.push({
                 id: 4,
                 // 精彩回放
-                text: this.$root.$t('highlights.title')
+                text: i18n.t('highlights.title')
               });
             }
           })
@@ -193,7 +193,7 @@ export default {
       }
     },
   },
-  destroyed() {
+  beforeUnmount() {
     this.set_fewer(1);
 
     this.$root.$off(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)

@@ -237,7 +237,7 @@ export default class Ws {
     );
     // 发送api域名切换命令
     if (!this.ctr) {
-      // this.view.$root.$emit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
+      // this.view.useMittEmit('EMIT_API_DOMAIN_UPD_CMD',{type:'ws', data:{url:this.url}});
       // 改用postmessage消息机制
       window.postMessage(
         {

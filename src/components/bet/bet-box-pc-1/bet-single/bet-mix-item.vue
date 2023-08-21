@@ -52,7 +52,7 @@
         <div class="row">
           <div class="col bet-play-game">
             <!--盘口类型，盘口名称，比分的显示 market_type 0 滚球-->
-            <label class="bet-play-text"><template v-if="market_type === 0"><label class="bet-match-playing">{{$root.$t('menu.match_playing')}}</label></template>{{play_name}}<template v-if="basic_score">({{basic_score}})</template><label class="bet-handicap-name">{{handicap_name}}</label></label>
+            <label class="bet-play-text"><template v-if="market_type === 0"><label class="bet-match-playing">{{i18n.t('menu.match_playing')}}</label></template>{{play_name}}<template v-if="basic_score">({{basic_score}})</template><label class="bet-handicap-name">{{handicap_name}}</label></label>
           </div>
         </div>
         <!--队名及盘口区域-->
@@ -85,14 +85,14 @@
           <!--右侧无效按钮  当active不是激活和锁盘时-->
           <div class="auto-col" v-if="!(active == 1 || active == 4)">
             <span class="invalid">
-              {{$root.$t('common.invalid')}}
+              {{i18n.t('common.invalid')}}
               <!-- 无效 -->
             </span>
           </div>
           <div class="auto-col" v-else-if="!serial_type">
             <span class="invalid serial-msg">
                 <!--不支持串关-->
-                {{$root.$t('bet.no_support_serial')}}
+                {{i18n.t('bet.no_support_serial')}}
               </span>
           </div>
         </div>

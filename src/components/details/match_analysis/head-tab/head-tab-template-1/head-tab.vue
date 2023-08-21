@@ -38,7 +38,7 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on(MITT_TYPES.EVENT_DATA, this.change_show_tab)
+    this.useMittOn(MITT_TYPES.EVENT_DATA, this.change_show_tab)
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
     this.$nextTick(()=> {
       let i = 0
@@ -68,7 +68,7 @@ export default {
       'set_curr_tab_info',
     ]),
     close_analysis() {
-      this.$root.$emit(MITT_TYPES.EMIT_ANA_SHOW, false)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     },
     tab_click(tab, i, type) {
       this.tabIndex = i
@@ -93,8 +93,8 @@ export default {
       }
     }
   },
-  destroyed() {
-    this.$root.$off(MITT_TYPES.EVENT_DATA, this.change_show_tab)
+  beforeUnmount() {
+    useMittOn(MITT_TYPES.EVENT_DATA, this.change_show_tab)
   }
 }
 </script>

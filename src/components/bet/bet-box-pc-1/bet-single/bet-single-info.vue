@@ -64,7 +64,7 @@
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
                 <template v-if="market_type===0">
-                    <label class="bet-match-playing">[{{$root.$t('menu.match_playing')}}]</label>
+                    <label class="bet-match-playing">[{{i18n.t('menu.match_playing')}}]</label>
                 </template>
                 {{play_name}}
                 <label v-if="basic_score" class="score">({{basic_score}})</label>
@@ -90,7 +90,7 @@
                 {{_.trim(team_name)}}
               </template>
               <!--【预约】-->
-              <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${$root.$t('bet.bet_book2')}]`}}</label>
+              <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${i18n.t('bet.bet_book2')}]`}}</label>
             </div>
             
             <!--+/1.5-->
@@ -112,14 +112,14 @@
             </div>
             <div class="auto-col" v-if="!(active == 1 || active == 4)">
               <span class="invalid">
-                {{$root.$t('common.invalid')}}
+                {{i18n.t('common.invalid')}}
               </span>
             </div>
 
             <!--足球且pending_order_status==1时可以进行预约（锁盘的情况下也是可以预约的）-->
             <div class="auto-col" v-if="(sport_id == 1 || sport_id == 2) && pending_order_status == 1">
               <span class="appoint" @click.stop="appoint_handle" @mouseleave="img_mouseleave" @mouseenter="img_mouseenter">
-                +{{$root.$t('bet.bet_book2')}}
+                +{{i18n.t('bet.bet_book2')}}
               </span>
             </div>
           </div>
@@ -127,7 +127,7 @@
         <template v-else-if="(play_mapping.MARKET_FLAG_LIST.includes(play_id) || play_mapping.BASKETBALL_BY_APPOINTMENT.includes(play_id)) && (appoint && (_.trim(team_name)!='' && handicap != '' ) || handicap=='0') && get_open_value">
           <div class="row yb-flex-center book-content">
             <!--预-->
-            <div class="col-2">{{$root.$t('bet.bet_dish')}}</div> 
+            <div class="col-2">{{i18n.t('bet.bet_dish')}}</div> 
             <!--此处为盘口区域，-->
             <div class="col-9 input-number" >
               <!-- 盘口减- -->
@@ -163,7 +163,7 @@
             <div class="col-1" @click="cancel_operate"><icon name="icon-delete" size="13px"/></div>
           </div>
           <div class="row yb-flex-center book-content">
-            <div class="col-2 mt5">{{$root.$t('bet.bet_odds')}}</div>
+            <div class="col-2 mt5">{{i18n.t('bet.bet_odds')}}</div>
             <!--减号 赔率输入框 加号-->
             <div class="col-9 input-number mt5">
             <div 
@@ -203,7 +203,7 @@
         <template v-else-if="appoint">
           <div class="row yb-flex-center book-content">
             <!--赔率-->
-            <div class="col-2">{{$root.$t('bet.bet_odds')}}</div> 
+            <div class="col-2">{{i18n.t('bet.bet_odds')}}</div> 
             <!--减号 赔率输入框 加号-->
             <div class="col-9 input-number">
             <div 
@@ -257,7 +257,7 @@
               'input-money': !is_empty_money,
               'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)
               }"
-            :placeholder="`${$root.$t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
+            :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
             v-model="money"
             :value="money"
             @keyup="keyup_handle"
@@ -282,7 +282,7 @@
       <div class="row bet-win yb-fontsize12">
         <div class="col df-jb">
           <!--最高可赢额-->
-          {{$root.$t('common.maxn_amount_val')}}
+          {{i18n.t('common.maxn_amount_val')}}
         </div>
         <!--金额-->
         <div class="col-auto bet-win-money yb-number-bold">{{win_money || format_currency}}</div>

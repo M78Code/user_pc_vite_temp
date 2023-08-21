@@ -2,11 +2,11 @@
   <div class="datum">
     <div class="tab" v-if="match.csid == '1'">
       <!-- 基本面 -->
-      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ $root.$t('analysis.Fundamentals') }}</span>
+      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ i18n.t('analysis.Fundamentals') }}</span>
       <!-- 盘面 -->
-      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ $root.$t('analysis.Disk') }}</span>
+      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ i18n.t('analysis.Disk') }}</span>
       <!-- 技术面 -->
-      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ $root.$t('analysis.Technical_side') }}</span>
+      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ i18n.t('analysis.Technical_side') }}</span>
     </div>
     <!-- 基本面 -->
     <template v-if="tabIndex == 1">
@@ -20,7 +20,7 @@
     <template v-if="tabIndex == 2 && match.csid == '1'">
       <div class="panel disk analysis_disk">
         <!-- 盘路走势 -->
-        <div class="panel-title">{{ $root.$t('analysis.Turning_trend') }}</div>
+        <div class="panel-title">{{ i18n.t('analysis.Turning_trend') }}</div>
         <div>
           <div class="match-info">
             <div class="team">
@@ -32,32 +32,32 @@
             <!-- 总 -->
             <div class="d-td border_r">
               <div class="match_total">&nbsp;</div>
-              <div class="match_total">{{ $root.$t('vsport.gtab2') }}</div>
+              <div class="match_total">{{ i18n.t('vsport.gtab2') }}</div>
             </div>
             <!-- 赢盘 -->
-            <div class="d-td">{{ $root.$t('analysis.win_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.win_plate') }}</div>
             <!-- 走盘 -->
-            <div class="d-td">{{ $root.$t('analysis.Move_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Move_plate') }}</div>
             <!-- 输盘 -->
-            <div class="d-td">{{ $root.$t('analysis.Lose_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Lose_plate') }}</div>
             <!-- 赢盘率 -->
-            <div class="d-td border_r">{{ $root.$t('analysis.Win_rate') }}</div>
+            <div class="d-td border_r">{{ i18n.t('analysis.Win_rate') }}</div>
             <!-- 大球 -->
-            <div class="d-td">{{ $root.$t('analysis.big_ball') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.big_ball') }}</div>
             <!-- 大球率 -->
-            <div class="d-td">{{ $root.$t('analysis.Big_ball_rate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Big_ball_rate') }}</div>
             <!-- 小球 -->
-            <div class="d-td">{{ $root.$t('analysis.small_ball') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.small_ball') }}</div>
             <!-- 小球率 -->
-            <div class="d-td">{{ $root.$t('analysis.small_ball_rate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.small_ball_rate') }}</div>
           </div>
           <div class="d-body d-tr" v-for="(item, index) in _.get(baseData, '1.matchHistoryBattleDetailDTOList')"
             :key="index">
             <!-- 总   主   客 -->
             <div class="d-td">
               <div class="match_num_total">
-                {{ item.postionFlag == 1 ? $root.$t('analysis.total_all')
-                  : (item.postionFlag == 2 ? $root.$t('analysis.main') : $root.$t('analysis.customer')) }}
+                {{ item.postionFlag == 1 ? i18n.t('analysis.total_all')
+                  : (item.postionFlag == 2 ? i18n.t('analysis.main') : i18n.t('analysis.customer')) }}
               </div>
               <div class="match_num_total">{{ parseInt(item.handicapResultWin) + parseInt(item.handicapResultEqual) +
                 parseInt(item.handicapResultLose) }}</div>
@@ -72,7 +72,7 @@
             <div class="d-td">{{ (item.overunderResultLoseRate * 100).toFixed(2) }}%</div>
           </div>
           <div class="d-body d-tr">
-            <div class="d-td color_83838a">{{ $root.$t("analysis.last10games") }}</div>
+            <div class="d-td color_83838a">{{ i18n.t("analysis.last10games") }}</div>
             <div class="d-td match_status">
               <span class="result-item" :class="result_filter('cls', item)"
                 v-for="(item, index) in _.get(baseData, '1.handicapResultList')"
@@ -97,32 +97,32 @@
             <!-- 总 -->
             <div class="d-td border_r">
               <div class="match_total">&nbsp;</div>
-              <div class="match_total">{{ $root.$t('vsport.gtab2') }}</div>
+              <div class="match_total">{{ i18n.t('vsport.gtab2') }}</div>
             </div>
             <!-- 赢盘 -->
-            <div class="d-td">{{ $root.$t('analysis.win_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.win_plate') }}</div>
             <!-- 走盘 -->
-            <div class="d-td">{{ $root.$t('analysis.Move_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Move_plate') }}</div>
             <!-- 输盘 -->
-            <div class="d-td">{{ $root.$t('analysis.Lose_plate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Lose_plate') }}</div>
             <!-- 赢盘率 -->
-            <div class="d-td border_r">{{ $root.$t('analysis.Win_rate') }}</div>
+            <div class="d-td border_r">{{ i18n.t('analysis.Win_rate') }}</div>
             <!-- 大球 -->
-            <div class="d-td">{{ $root.$t('analysis.big_ball') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.big_ball') }}</div>
             <!-- 大球率 -->
-            <div class="d-td">{{ $root.$t('analysis.Big_ball_rate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Big_ball_rate') }}</div>
             <!-- 小球 -->
-            <div class="d-td">{{ $root.$t('analysis.small_ball') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.small_ball') }}</div>
             <!-- 小球率 -->
-            <div class="d-td">{{ $root.$t('analysis.small_ball_rate') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.small_ball_rate') }}</div>
           </div>
           <div class="d-body d-tr" v-for="(item, index) in _.get(baseData, '2.matchHistoryBattleDetailDTOList')"
             :key="index">
             <!-- 总   主   客 -->
             <div class="d-td">
               <div class="match_num_total">
-                {{ item.postionFlag == 1 ? $root.$t('analysis.total_all')
-                  : (item.postionFlag == 2 ? $root.$t('analysis.main') : $root.$t('analysis.customer')) }}
+                {{ item.postionFlag == 1 ? i18n.t('analysis.total_all')
+                  : (item.postionFlag == 2 ? i18n.t('analysis.main') : i18n.t('analysis.customer')) }}
               </div>
               <div class="match_num_total">{{ parseInt(item.handicapResultWin) + parseInt(item.handicapResultEqual) +
                 parseInt(item.handicapResultLose) }}</div>
@@ -138,7 +138,7 @@
           </div>
           <!-- 近10场 -->
           <div class="d-body d-tr">
-            <div class="d-td color_83838a">{{ $root.$t("analysis.last10games") }}</div>
+            <div class="d-td color_83838a">{{ i18n.t("analysis.last10games") }}</div>
             <div class="d-td match_status">
               <!-- 输赢 -->
               <span class="result-item" :class="result_filter('cls', item)"
@@ -159,7 +159,7 @@
     <template v-if="tabIndex == 3 && match.csid == '1'">
       <div class="panel disk technical">
         <!-- 教练数据 -->
-        <div class="panel-title">{{ $root.$t('analysis.Coach_data') }}</div>
+        <div class="panel-title">{{ i18n.t('analysis.Coach_data') }}</div>
         <div class="home" v-for="(item, index) in _.get(baseData, 'sThirdMatchCoachDTOMap.1')"
           :key="`sThirdMatchCoachDTOMap${index}`">
           <div class="match-info">
@@ -170,13 +170,13 @@
           </div>
           <div class="d-header d-tr">
             <!-- 年龄 -->
-            <div class="d-td">{{ $root.$t('analysis.age') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.age') }}</div>
             <!-- 战术分格 -->
-            <div class="d-td">{{ $root.$t('analysis.Tactical_division') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Tactical_division') }}</div>
             <!-- 场均得分 -->
-            <div class="d-td">{{ $root.$t('analysis.Points_per_game') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Points_per_game') }}</div>
             <!-- 出站 -->
-            <div class="d-td">{{ $root.$t('analysis.Go_to_war') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Go_to_war') }}</div>
           </div>
           <div class="d-body d-tr">
             <div class="d-td">{{ getAge(item.coachBirthdate) }}</div>
@@ -196,13 +196,13 @@
           </div>
           <div class="d-header d-tr">
             <!-- 年龄 -->
-            <div class="d-td">{{ $root.$t('analysis.age') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.age') }}</div>
             <!-- 战术分格 -->
-            <div class="d-td">{{ $root.$t('analysis.Tactical_division') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Tactical_division') }}</div>
             <!-- 场均得分 -->
-            <div class="d-td">{{ $root.$t('analysis.Points_per_game') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Points_per_game') }}</div>
             <!-- 出站 -->
-            <div class="d-td">{{ $root.$t('analysis.Go_to_war') }}</div>
+            <div class="d-td">{{ i18n.t('analysis.Go_to_war') }}</div>
           </div>
           <div class="d-body d-tr">
             <div class="d-td">{{ getAge(item.coachBirthdate) }}</div>

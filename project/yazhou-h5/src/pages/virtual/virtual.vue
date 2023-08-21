@@ -10,7 +10,7 @@
             <!-- 虚拟体育 -->
             <div class="col">{{t('common.virtual_sports')}} {{lodash.get(sub_menu_list,`[${sub_menu_i}].name`)}}</div>
             <div class="virtual-ref" :class="{'refreshing':refreshing}" @click="vir_refresh"></div>
-            <!-- <div class="no-single" @click="$root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)"></div> -->
+            <!-- <div class="no-single" @click="useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true)"></div> -->
             <div class="no-single" @click="useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);"></div>
             <!-- <set-menu /> -->
           </div>
@@ -169,7 +169,7 @@ export default defineComponent({
         // useMittOn.on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off,
         // useMittOn.on(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
       ]
-      // $root.$on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
+      // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
       // 不让浏览器记住上次的滚动位置
       if ('scrollRestoration' in History){
         history.scrollRestoration = 'manual'
@@ -189,8 +189,8 @@ export default defineComponent({
     // 设置上次的菜单类型
     // set_menu_type(get_prev_menu_type)
     debounce_throttle_cancel(cancel_ref);
-    // $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
-    // $root.$off(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
+    // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
+    // useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,counting_down_start_ended_on);
     component_data.emitters.map((x) => x())
     utils.clear_timer();
 
@@ -357,7 +357,7 @@ export default defineComponent({
         // axios中catch回调方法
         fun_catch: err => {
           useMittEmit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
-          // $root.$emit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
+          // useMittEmit(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA);
         },
         // 最大循环调用次数(异常时会循环调用),默认3次
         max_loop:3,
@@ -375,7 +375,7 @@ export default defineComponent({
       if(!menues || !menues.length){
         component_data.current_sub_menu = {};
         useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, false);
-        // $root.$emit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
+        // useMittEmit(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING,false);
         return;
       }
       component_data.virtual_sports_params.csid = menues[component_data.sub_menu_i].menuId;

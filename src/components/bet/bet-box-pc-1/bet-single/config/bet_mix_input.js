@@ -99,7 +99,7 @@ export default {
       this.keyboard_data = this.get_keyboard_data();
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //清除网络错误时设置默认最大最小值
     this.$root.$off(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
     //清除串关的校验金额
@@ -214,7 +214,7 @@ export default {
       // 存储最高可赢额
       this.set_bet_s_obj("win_money", new_);
       // 重新统计总的最高可赢额
-      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
+      useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
     },
     /**
      * 最高限额值
@@ -235,9 +235,9 @@ export default {
       if(this.money) {
          this.set_bet_s_obj('money', parseFloat(this.money));
          // 计算总投注额
-         this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
+         useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
          // 计算总收益额
-         this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
+         useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_WIN_MONEY_CMD);
       }
     },
     'view_ctr_obj':{
@@ -432,9 +432,9 @@ export default {
       // 键盘按键状态更新
       this.update_keyboard_status();
       // 更新投注数量显示
-      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
+      useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
       // 更新收益额
-      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
+      useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     },
     /**
      * @description: 按键事件
@@ -482,9 +482,9 @@ export default {
         // 更新键盘按键状态
         this.update_keyboard_status();
         // 统计总投注数量
-        this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
+        useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
         // 统计总收益额
-        this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
+        useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
         // 校验输入的金额
         this.check_money(this.money);
       }
@@ -584,9 +584,9 @@ export default {
       // 更新键盘按键状态
       this.update_keyboard_status();
       // 统计总投注数量
-      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
+      useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_COUNT_CMD);
       // 统计总收益额
-      this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
+      useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     },
     /**
      * @description: 检查所有输入框是否金额都是空的
@@ -746,7 +746,7 @@ export default {
     setTimeout(() => {
        this.money = value
        this.set_bet_s_obj("money", this.money);
-       this.$root.$emit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
+       useMittEmit(MITT_TYPES.EMIT_BET_TOTAL_MONEY_CMD);
     }, 500);
     }
     // 第一个投注输入框

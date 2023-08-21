@@ -28,9 +28,9 @@
             <div class="date-number">
             </div>
             <div class="title-i-w row items-center">
-              <div>{{$root.$t('virtual_sports.champion')}}</div>
-              <div>{{$root.$t('virtual_sports.runner_up')}}</div>
-              <div>{{$root.$t('virtual_sports.third_place')}}</div>
+              <div>{{i18n.t('virtual_sports.champion')}}</div>
+              <div>{{i18n.t('virtual_sports.runner_up')}}</div>
+              <div>{{i18n.t('virtual_sports.third_place')}}</div>
             </div>
             <div class="date-number">
             </div>
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="date-number">
-              {{(new Date(+match.matchTime)).Format($root.$t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n.t('time4'))}}
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
           </div>
           <div class="row justify-between">
             <div class="match-time">
-              {{(new Date(+match.matchTime)).Format($root.$t('time4'))}}
+              {{(new Date(+match.matchTime)).Format(i18n.t('time4'))}}
             </div>
             <div class="row match-type justify-center"
               v-html="stage_result">
@@ -128,6 +128,7 @@ import { computed, onUnmounted, ref } from 'vue'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { i18n } from 'src/boot/i18n.js'
 import data_pager from "project_path/src/components/common/data-pager.vue"
 
 const store_state = store.getState()
@@ -157,7 +158,7 @@ const stage_result = computed(() => {
   }
   if(match.teamGroup && !match.sportId == '1004'){
     if(match.matchDay){
-      let m_str = $root.$t('virtual_sports.matchDay');
+      let m_str = i18n.t('virtual_sports.matchDay');
       let append_space = "&nbsp;&nbsp;"
       if(['zh','tw'].includes(get_lang.value)){
         append_space = "";
@@ -166,7 +167,7 @@ const stage_result = computed(() => {
     }
     else{
       let lang_key = `virtual_sports.${match.teamGroup}`
-      result = `${$root.$t(lang_key)}`;
+      result = `${i18n.t(lang_key)}`;
 
       let found_str_list = [];
       let found = result.match(/[0-9]/ig);
@@ -185,7 +186,7 @@ const stage_result = computed(() => {
 
     // legOrder 回合
     if(match.legOrder){
-      let lang_leg_order = $root.$t('virtual_sports.legOrder');
+      let lang_leg_order = i18n.t('virtual_sports.legOrder');
       let append_space = "&nbsp;&nbsp;"
       if(['zh','tw'].includes(get_lang.value)){
         append_space = "";
@@ -196,7 +197,7 @@ const stage_result = computed(() => {
   }
   // matchDay 轮次
   else if(match.matchDay && !match.sportId == '1004'){
-    let m_str = $root.$t('virtual_sports.matchDay');
+    let m_str = i18n.t('virtual_sports.matchDay');
     let append_space = "&nbsp;&nbsp;"
     if(['zh','tw'].includes(get_lang.value)){
       append_space = "";
@@ -206,24 +207,24 @@ const stage_result = computed(() => {
   // 虚拟篮球显示期数matchesGroupId
   else if(match.sportId == '1004'){
     if(get_lang.value == 'vi'){
-      let w = $root.$t('virtual_sports.date_number_title');
+      let w = i18n.t('virtual_sports.date_number_title');
       result = w.replace('%s',`&nbsp;<span style="color: ${color_1}">${match.batchNo}</span>`);
     }
     else{
       result = `<span style="color: ${color_1};font-family:dinRegular;">
         ${match.batchNo}
-      </span>&nbsp;<span>${$root.$t('virtual_sports.date_number_title')}</span>`;
+      </span>&nbsp;<span>${i18n.t('virtual_sports.date_number_title')}</span>`;
     }
   }
   else{
-    let language_des = $root.$t('virtual_sports.date_number_title');
+    let language_des = i18n.t('virtual_sports.date_number_title');
     if(language_des.indexOf('%s') > -1){
       result = language_des.replace('%s',`&nbsp;<span style="color: ${color_1}">${match.batchNo}</span>`);
     }
     else{
       result = `<span style="color:${color_1};font-family:dinRegular;">
         ${match.batchNo}
-      </span>&nbsp;<span>${$root.$t('virtual_sports.date_number_title')}</span>`;
+      </span>&nbsp;<span>${i18n.t('virtual_sports.date_number_title')}</span>`;
     }
   }
   return result;
@@ -282,7 +283,7 @@ const get_is_show_league = computed(() => {
 })
 
 const get_batch_no_by_language = (batch_no) => {
-      let lang = `${$root.$t('virtual_sports.date_number_title')}`;
+      let lang = `${i18n.t('virtual_sports.date_number_title')}`;
       let r = `${batch_no} ${lang}`;
       if(get_lang.value == 'vi'){
         r = lang.replace('%s',batch_no);

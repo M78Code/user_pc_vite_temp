@@ -20,20 +20,20 @@
         <template v-if="top_.sportId == 1001 || top_.sportId == 1004">&ensp;{{top_.matchDay}}&ensp;{{top_.batchNo}}</template>
       </p>
       <p class="pre-wrapper" v-if="[0,2,3,4].includes(pre_order_status)">
-        <span v-if="[2,3].includes(pre_order_status)">{{$root.$t('pre_record.booked_fail')}}</span>
-        <span v-else-if="pre_order_status == 4 || user_operation_done">{{$root.$t('pre_record.canceled')}}</span>
-        <span v-else class="pre-button">{{$root.$t('pre_record.booking')}}
+        <span v-if="[2,3].includes(pre_order_status)">{{i18n.t('pre_record.booked_fail')}}</span>
+        <span v-else-if="pre_order_status == 4 || user_operation_done">{{i18n.t('pre_record.canceled')}}</span>
+        <span v-else class="pre-button">{{i18n.t('pre_record.booking')}}
           <span class="pre-cancle-button" @click="cancleOrder()">
             <!-- 取消 -->
-            <template v-if="!cancleFlag">{{$root.$t('common.cancel')}}</template>
+            <template v-if="!cancleFlag">{{i18n.t('common.cancel')}}</template>
             <!-- 确认取消 -->
-            <template v-if="cancleFlag && !cancled">{{$root.$t('pre_record.confirm_cancle')}}</template>
+            <template v-if="cancleFlag && !cancled">{{i18n.t('pre_record.confirm_cancle')}}</template>
             <!-- 确认中 -->
-            <template v-if="cancleFlag && cancled">{{$root.$t('early.btn4')}}</template>
+            <template v-if="cancleFlag && cancled">{{i18n.t('early.btn4')}}</template>
           </span></span>
       </p>
       <p class="pre-wrapper" v-if="preOrder">
-        {{$root.$t('pre_record.book')}}
+        {{i18n.t('pre_record.book')}}
       </p>
   </div>
 </template>
@@ -76,7 +76,7 @@ const props = defineProps({
   //   ])
   // },
   const cancleOrder = () => {
-    $root.$emit(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
+    useMittEmit(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
       orderNo: orderNumber,
       name: top_.matchInfo
     })

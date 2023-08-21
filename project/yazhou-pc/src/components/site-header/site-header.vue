@@ -284,6 +284,10 @@ function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !global_switch.activity_switch) {
+<<<<<<< HEAD
+=======
+        // return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, this.t("msg.msg_09"));
+>>>>>>> c9b53c3fcbecae8c2cc46e67770ef95124b62d99
         return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     // 电竞

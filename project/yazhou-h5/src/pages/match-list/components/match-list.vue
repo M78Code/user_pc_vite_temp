@@ -108,6 +108,7 @@
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import utils from "project_path/src/core/utils/index.js";
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
@@ -317,7 +318,7 @@ const info_icon_click_h = (e,mid,menu,match) => {
   }
   arr_top_down.value=arr_to_down?'arr-down':'arr-top'; // 箭头向上向下显示 // 赋值给this
 
-  play_way_info.value = $root.$t(`play_way_info.${menu_id}`);
+  play_way_info.value = i18n.t(`play_way_info.${menu_id}`);
   pre_info_clicked_mid.value = mid;
 }
 /**
@@ -346,9 +347,9 @@ const toggle_collect = ($event) => {
     //联赛收藏或取消收藏
     api = add_or_cancel_tournament;
     if (match.tf) {
-      txt = $root.$t('common.cancel');//'取消';
+      txt = i18n.t('common.cancel');//'取消';
     } else {
-      txt = $root.$t('collect.betted_title');//'收藏';
+      txt = i18n.t('collect.betted_title');//'收藏';
     }
     if(type2){  //冠军联赛收藏
       //电竞冠军收藏dota2传非空
@@ -376,9 +377,9 @@ const toggle_collect = ($event) => {
     api = add_or_cancel_match;
     number = 1;
     if (match.mf) {
-      txt = $root.$t('common.cancel');//'取消';
+      txt = i18n.t('common.cancel');//'取消';
     } else {
-      txt = $root.$t('collect.betted_title');//'收藏';
+      txt = i18n.t('collect.betted_title');//'收藏';
     }
     Object.assign(params, {cf: Number(!match.mf), mid: match.mid})
   }

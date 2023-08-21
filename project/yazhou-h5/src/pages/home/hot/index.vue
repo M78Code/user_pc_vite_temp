@@ -42,7 +42,7 @@
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
           <div class="title" v-if="tab_Index == 0">
-            {{ $root.$t('home_popular.featured_events') }}
+            {{ i18n.t('home_popular.featured_events') }}
           </div>
         </div>
         <!-- 精选赛事  标题-->
@@ -163,7 +163,7 @@ const get_list = (first) => {
       // 加个jz_666 是用作首页 竞彩足球 背景墙用的
       data[0].subList.forEach(item => { if (item.chinaBetting) { item.jz_666 = 'jz_666' } })
       // 手动添加一个 精选tab 选项卡
-      tabList.value = [{ menuName: $root.$t('home_popular.featured'), field3: "" }]
+      tabList.value = [{ menuName: i18n.t('home_popular.featured'), field3: "" }]
       tabList.value = tabList.value.concat(data[0].subList)
       tabList.value.forEach((item, index) => {
         item.index = index

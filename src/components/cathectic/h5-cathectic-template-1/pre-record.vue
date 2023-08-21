@@ -10,7 +10,7 @@
         <div class="filter-button" v-if="get_user.settleSwitch == 1">
             <!-- 已失效按钮 -->
             <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{'select':selected_expired}">
-            {{$root.$t('pre_record.expired')}}<i class="early yb_ml4" :class="{'early2': selected_expired}"></i>
+            {{i18n.t('pre_record.expired')}}<i class="early yb_ml4" :class="{'early2': selected_expired}"></i>
             </i>
         </div>
         <template v-if="!lodash.isEmpty(list_data)">
@@ -18,7 +18,7 @@
             <div v-for="(value,name,index) in list_data" :key="index">
                 <template v-if="expired_all_flag(value)">
                 <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                    <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
+                    <span>{{(new Date(name)).Format(i18n.t('time2'))}}</span>
                     <span v-if="!value.open && index != 0 && !selected_expired"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
                 </p>
                 <div class="line" :class="!value.open && (index != Object.keys(list_data).length-1) && 'line2'"></div>
@@ -144,7 +144,7 @@ const cancle_pre_order = () => {
     api_betting.cancle_pre_order({orderNo:orderNumber.value}).then((res)=>{
     if(res.code == 200){
         // TODO: 从vuex取待改造
-        // set_toast({ 'txt': $root.$t('pre_record.canceled'), hide_time: 3000 });
+        // set_toast({ 'txt': i18n.t('pre_record.canceled'), hide_time: 3000 });
         cancle_confirm_pop_visible.value = false
         timer_2.value = setTimeout(()=>{ change_pre_status([{
         orderNo: orderNumber.value
@@ -153,7 +153,7 @@ const cancle_pre_order = () => {
     }else if(['0400546','0400547'].includes(res.code)){
         cancle_confirm_pop_visible.value = false
         // TODO: 从vuex取待改造
-        // set_toast({ 'txt':res.code == '0400546'? $root.$t('pre_record.cancle_fail_tips'):$root.$t('pre_record.cancle_fail_tips2'), hide_time: 3000 });
+        // set_toast({ 'txt':res.code == '0400546'? i18n.t('pre_record.cancle_fail_tips'):i18n.t('pre_record.cancle_fail_tips2'), hide_time: 3000 });
     }
     }).catch(()=>{
     cancle_confirm_pop_visible.value = false

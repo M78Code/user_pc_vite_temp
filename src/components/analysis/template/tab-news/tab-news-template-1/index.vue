@@ -8,7 +8,7 @@
 <template>
   <div class="news">
     <load-data :state="state" :style="{ 'margin-top': (articleDetail && articleDetail.articleContent) ? 0 : '10%' }"
-      :no_data_msg="$root.$t('common.empty_data')">
+      :no_data_msg="i18n.t('common.empty_data')">
       <div class="article_detail">
         <p class="article_title">{{ articleDetail.articleTittle }}</p>
         <p class="author">
@@ -22,7 +22,7 @@
         猜你喜欢
       </div>
       <load-data :state="showEmpty" :class="[showEmpty && 'empty_data_padding_b']"
-        :no_data_msg="$root.$t('common.empty_data')">
+        :no_data_msg="i18n.t('common.empty_data')">
         <ul class="favorite_list" v-if="articleList.length > 0">
           <li v-for="(item, i) in articleList" :key="item.id" @click="showArticle(item)">
             <div class="wrap" v-if="i < 3">

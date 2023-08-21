@@ -23,10 +23,10 @@
             <div class="item-flag icon-flag-game-over"></div>
             <div class="item-content real-time-contv-ifent hairline-border">
               <!-- <span class="time">{{ lodash.get(get_detail_data, 'mststr', 0) | format_mgt_time}}</span> -->
-              <span class="time" v-if="get_detail_data.mmp==31">{{ $root.$t('mmp.1.31') }}</span>
+              <span class="time" v-if="get_detail_data.mmp==31">{{ i18n.t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ lodash.get(get_detail_data, 'mststr', 0) | format_mgt_time}}</span>
               <span class="score">[{{ get_detail_data | format_total_score(0) }}-{{ get_detail_data | format_total_score(1) }}]</span>
-              <span class="text">{{ $root.$t('match_info.match_over') }}</span>
+              <span class="text">{{ i18n.t('match_info.match_over') }}</span>
             </div>
           </div>
         </template>
@@ -38,10 +38,10 @@
             <div class="dot-real-time"></div>
             <div class="item-flag item-flag-real-time"></div>
             <div class="item-content real-time-content hairline-border">
-              <span class="time" v-if="get_detail_data.mmp==31">{{ $root.$t('mmp.1.31') }}</span>
+              <span class="time" v-if="get_detail_data.mmp==31">{{ i18n.t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ real_time }}</span>
               <span class="score">[{{ get_detail_data | format_total_score(0) }}-{{ get_detail_data | format_total_score(1) }}]</span>
-              <span class="text" >{{ $root.$t('msc.S1') }}</span>
+              <span class="text" >{{ i18n.t('msc.S1') }}</span>
             </div>
           </div>
         </template>
@@ -57,15 +57,15 @@
             <div class="text-wrapper">
               <!-- 点球大战 -->
               <div class="text-scroller" v-if="event.matchPeriodId==50">
-                <span class="text" v-scroll-text>{{$root.$t('mmp')[1][event.matchPeriodId]}}</span>
+                <span class="text" v-scroll-text>{{i18n.t('mmp')[1][event.matchPeriodId]}}</span>
               </div>
               <!-- 加时赛 -->
               <div class="text-scroller" v-else-if="event.matchPeriodId==41||event.matchPeriodId==42">
-                <span class="text" v-scroll-text>{{$root.$t('mmp')[2][40]}} {{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                <span class="text" v-scroll-text>{{i18n.t('mmp')[2][40]}} {{event.homeAway}} {{i18n.t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
               </div>
               <div class="text-scroller" v-else>
-                <span class="text" v-scroll-text>{{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
-                <!--<span class="text">{{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>-->
+                <span class="text" v-scroll-text>{{event.homeAway}} {{i18n.t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>
+                <!--<span class="text">{{event.homeAway}} {{i18n.t(`highlights.event_type.${event.eventCode}`, {X: trans_num(event.firstNum)})}}</span>-->
               </div>
             </div>
             <i class="icon icon-replay-red"></i>
@@ -83,7 +83,7 @@
               ]">
             <div class="load-error-mask" v-show="is_expand && is_replay_load_error">
               <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
-              <div>{{ $root.$t('highlights.reconnect') }}</div>
+              <div>{{ i18n.t('highlights.reconnect') }}</div>
             </div>
 
             <!-- 精彩回放视频iframe -->
@@ -102,7 +102,7 @@
             <template v-if="i === event_index && is_expand">
               <div v-show="is_controller_show" class="event-title-wrapper" :class="{'is-full-screen': is_full_screen}">
                 <!-- 事件title -->
-                <div class="event-title">{{event.homeAway}} {{$root.$t(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
+                <div class="event-title">{{event.homeAway}} {{i18n.t(`highlights.event_type.${event.eventCode}`, {X: event.firstNum})}}</div>
                 <!-- 主客队比分 -->
                 <div class="home-away-score-wrapper">
                   <team-img :type="0" :csid="lodash.get(get_detail_data, 'csid')" :url="lodash.get(get_detail_data, 'mhlu[0]')" :fr="get_menu_type != 3000 ? lodash.get(get_detail_data, 'frmhn[0]'): lodash.get(get_detail_data, 'frmhn')" :size="13"></team-img>
@@ -153,7 +153,7 @@
                 <!--（精彩/收起）回放 -->
                 <div class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
                   <img src="image/bw3/svg/details/replay_toggle.svg" />
-                  <span>{{ !is_expand_video_list ? $root.$t('highlights.title') : $root.$t('highlights.collapse_replay') }}</span>
+                  <span>{{ !is_expand_video_list ? i18n.t('highlights.title') : i18n.t('highlights.collapse_replay') }}</span>
                 </div>
 
                 <!-- 关闭回放视频 -->
@@ -190,7 +190,7 @@
           <div class="item-content">
             <span class="time">00:00</span>
             <span class="score">[0-0]</span>
-            <span class="text">{{ $root.$t('game.start') }}</span>
+            <span class="text">{{ i18n.t('game.start') }}</span>
           </div>
         </div>
 
@@ -399,23 +399,23 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
         // 进球
         // TODO: 国际化后续修改调整
         case 'goal': 
-        event_name = $root.$t('highlights.type.goal'); 
+        event_name = i18n.t('highlights.type.goal'); 
         break;  
         // 角球
         case 'corner': 
-        event_name = $root.$t('highlights.type.corner'); 
+        event_name = i18n.t('highlights.type.corner'); 
         break;  
         // 红牌
         case "red_card": 
-        event_name = $root.$t('highlights.type.card_red'); 
+        event_name = i18n.t('highlights.type.card_red'); 
         break;
         // 黄牌  
         case "yellow_card": 
-        event_name = $root.$t('highlights.type.card_yellow'); 
+        event_name = i18n.t('highlights.type.card_yellow'); 
         break; 
         // 黄红牌 
         case "yellow_red_card": 
-        event_name = $root.$t('highlights.type.card_yellow_red'); 
+        event_name = i18n.t('highlights.type.card_yellow_red'); 
         break; 
         // 默认 
         default: 
@@ -644,14 +644,14 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
         // tab按钮开关
         // TODO:  国际化后续修改调整
         let new_tab_list = [
-          {title: $root.$t('footer_menu.all'), code: '0'},
-          {title: $root.$t('match_result.goal'), code: '1'},
+          {title: i18n.t('footer_menu.all'), code: '0'},
+          {title: i18n.t('match_result.goal'), code: '1'},
         ]
         if (res.cornerEvent) {
-          new_tab_list.push({title: $root.$t('match_result.corner_kick'), code: '2'})
+          new_tab_list.push({title: i18n.t('match_result.corner_kick'), code: '2'})
         }
         if (res.penaltyEvent) {
-          new_tab_list.push({title: $root.$t('football_playing_way.penalty_cards'), code: '3'})
+          new_tab_list.push({title: i18n.t('football_playing_way.penalty_cards'), code: '3'})
         }
         tab_list = new_tab_list
       // }

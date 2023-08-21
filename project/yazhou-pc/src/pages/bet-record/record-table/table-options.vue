@@ -585,7 +585,7 @@ const change_slider = (arg) => {
     if ([1, 2, 3, 4, 5, 6, 17, 20].includes(parseInt(cancelType))) {
       return CANCEL_TYPE[parseInt(cancelType)];
     } else {
-      return this.$root.$t("bet.invalid"); //注单无效
+      return i18n.t("bet.invalid"); //注单无效
     }
   };
 

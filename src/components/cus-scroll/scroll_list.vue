@@ -70,7 +70,7 @@ export default {
     // 设置列表滚动条位置
     this.$root.$on('set_match_list_scroll_top',this.set_scrollTop);
   },
-  destroyed(){
+  beforeUnmount(){
     this.is_destroy = true
     // 设置列表滚动条位置
     this.$root.$off('set_match_list_scroll_top',this.set_scrollTop);
@@ -145,7 +145,7 @@ export default {
      * @param {number} 
     */
     emit_on_scroll() {
-      this.$root.$emit('emit_list_on_scroll')
+      useMittEmit('emit_list_on_scroll')
     },
     /**
      * @Description 滚动高度改变事件(容器高度变化回调函数) 

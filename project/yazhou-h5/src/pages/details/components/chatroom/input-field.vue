@@ -53,12 +53,12 @@
       <!-- 晒单 -->
       <div class="icon-text-container" @click="openShowBet" :class="{ 't_shaidan_disable': !is_post_bet }">
         <div class="shaidan_icon icon"></div>
-        <div class="text">{{ $root.$t('chatroom.post_bet') }}</div>
+        <div class="text">{{ i18n.t('chatroom.post_bet') }}</div>
       </div>
       <!-- 注单 -->
       <div class="icon-text-container" @click="toggleBet">
         <i class="bet_icon"></i>
-        <div class="text">{{ $root.$t('chatroom.betting') }}</div>
+        <div class="text">{{ i18n.t('chatroom.betting') }}</div>
       </div>
     </div>
   </div>
@@ -126,12 +126,12 @@ export default defineComponent({
       if (!get_can_send_msg && get_chatroom_userinfo) {
         const { time, interval, limit } = get_chatroom_userinfo || {};
         // #TODO $root 
-        return $root.$t('chatroom.input_field_ph1', { numOfSend: limit - time, numOfCD: interval / 60000 });
+        return i18n.t('chatroom.input_field_ph1', { numOfSend: limit - time, numOfCD: interval / 60000 });
       } else if (computed_mute_type == muteType.self_mute) {
         return ban_placeholder
       } else if (computed_mute_type == muteType.global_mute) {
         // #TODO $root 
-        return $root.$t('chatroom.mute_hint2')
+        return i18n.t('chatroom.mute_hint2')
       }
       return '';
     });
@@ -159,11 +159,11 @@ export default defineComponent({
         3: 2
       }
       // #TODO $root 
-      return $root.$t(
+      return i18n.t(
             'chatroom.mute_hint4', 
             {
-              time: $root.$t('chatroom.mute_hint.time')[time_map[banTime]], 
-              type:$root.$t('chatroom.mute_hint.type')[type_map[banType]]
+              time: i18n.t('chatroom.mute_hint.time')[time_map[banTime]], 
+              type:i18n.t('chatroom.mute_hint.type')[type_map[banType]]
             }
           )
     });
@@ -208,7 +208,7 @@ export default defineComponent({
     const onInputClick = (e) => {
       if (!get_can_send_msg) {
         // #TODO $root 
-        set_toast({ txt: $root.$t('chatroom.mute_hint3') });
+        set_toast({ txt: i18n.t('chatroom.mute_hint3') });
       }
     };
     // 设置发送条件显隐
@@ -230,13 +230,13 @@ export default defineComponent({
       if (inputText.trim() == "") {
         // 请输入聊天内容
         // #TODO $root 
-        set_toast({ txt: $root.$t('chatroom.send_err_hint1') });
+        set_toast({ txt: i18n.t('chatroom.send_err_hint1') });
         return;
       }
       if (sendFrequencyLimit) {
         // 抱歉！您说话太快了
         // #TODO $root 
-        set_toast({ txt: $root.$t('chatroom.send_err_hint2') });
+        set_toast({ txt: i18n.t('chatroom.send_err_hint2') });
         return;
       }
       sendFrequencyLimit = true;
@@ -272,7 +272,7 @@ export default defineComponent({
       if (!is_post_bet) {
         // 禁止晒单
         // #TODO $root 
-        // set_toast({ txt: $root.$t('chatroom.ban_post_bet') });
+        // set_toast({ txt: i18n.t('chatroom.ban_post_bet') });
         return;
       }
       set_post_bet_show(true);
@@ -284,7 +284,7 @@ export default defineComponent({
     // 打开注单界面
     const toggleBet = () => {
       // #TODO emit 
-      // $root.$emit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
+      // useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
     };
     // 表情选择
     const onEmojiSelect = (emojiTxt) => {

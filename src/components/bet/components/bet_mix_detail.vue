@@ -7,9 +7,9 @@
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
-        <p class="yb_fontsize16">{{ $root.$t(`bet.bet_${value_.id}`) }} X {{ value_.count }}&nbsp;&nbsp;&nbsp;{{ mix_odds
+        <p class="yb_fontsize16">{{ i18n.t(`bet.bet_${value_.id}`) }} X {{ value_.count }}&nbsp;&nbsp;&nbsp;{{ mix_odds
         }}</p>
-        <p style="font-size:0.11rem">{{ $root.$t('bet.total_win2') }} <span
+        <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{ max_win_money | format_money2 }}</span></p>
       </div>
@@ -189,7 +189,7 @@ watch(() => get_money_notok_list2.value.length, (new_) => {
     money.value = min_money.value.toString()
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
-    tips_msg_update($root.$t('bet.err_msg10', [min_money.value]))
+    tips_msg_update(i18n.t('bet.err_msg10', [min_money.value]))
 
     clearTimeout(timer2)
     // 提示信息展示3秒
@@ -303,7 +303,7 @@ const clear_money = () => {
 const get_money_format = () => {
   let mi = global_filters.format_money3(min_money.value)
   let ma = global_filters.format_money3(max_money.value)
-  return licia_format($root.$t('bet.money_limit2'), mi, ma);
+  return licia_format(i18n.t('bet.money_limit2'), mi, ma);
 }
 const flicker_ = () => {    //光标闪动，animation有兼容问题，用函数替代
   clearInterval(flicker_timer)
@@ -359,7 +359,7 @@ const check_moneyok = (val) => {
     money.value = get_user.value.balance.toString()
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
-    tips_msg_update($root.$t('bet.err_msg09'))
+    tips_msg_update(i18n.t('bet.err_msg09'))
 
     clearTimeout(timer2)
     // 3秒后取消提示信息

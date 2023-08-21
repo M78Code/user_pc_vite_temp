@@ -8,6 +8,7 @@ import { ref, onMounted } from 'vue'
 import lodash from 'lodash'
 import { watch } from "fs"
 import MatchCtr from '../match-class/match-ctr'
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 // TODO: 待处理 store
 // ...mapActions(['fetch_balance']),
@@ -75,12 +76,12 @@ export default use_websocket_store = () => {
         if (this.window_focused_handle && typeof this.window_focused_handle == 'function') {
           this.window_focused_handle()
         }
-        this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
+        useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
 
         // 如果为世界杯时的操作
         if (this.$route.name == 'wordcup') {
           // 静默更新数据
-          this.$root.$emit(this.emit_cmd.EMIT_MENU_CHANGE_FOOTER_CMD, {
+          useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
             text: "footer-refresh",
           });
         }
@@ -417,7 +418,7 @@ export default use_websocket_store = () => {
     clearTimeout(this.c302_timeout);
     //新开赛事后需要重新订阅C8
     this.c302_timeout = setTimeout(() => {
-      this.$root.$emit(this.emit_cmd.EMIT_RE_STATISTICS_MATCH_COUNT);
+      useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
       this.subscription && this.subscription()
     }, 500);
 
@@ -438,7 +439,7 @@ export default use_websocket_store = () => {
       });
     }
     MatchCtr.set_match_odd_list(skt_data);
-    this.$root.$emit(this.emit_cmd.EMIT_C105_CMD_NOTICE, skt_data);
+    useMittEmit(MITT_TYPES.EMIT_C105_CMD_NOTICE, skt_data);
   }
   // 赛事视频/动画状态(C107)
   const RCMD_C107 = (obj) => {

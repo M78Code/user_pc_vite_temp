@@ -100,7 +100,7 @@ export default {
       const mmp_state = mmp || 1
       // 当前局数不等于 比分总和加一，則提示比分判定中
       if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
-        score_text = this.$root.$t('mmp.100.scoring')
+        score_text = i18n.t('mmp.100.scoring')
       }
       return score_text
     },
@@ -182,7 +182,7 @@ export default {
       details.on_go_detail(match)
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //更新电竞右侧视频
     this.$root.$off(MITT_TYPES.GET_ESPORTS_VIDEO_LIST, this.get_match_list)
     this.match_ctr.destroy();

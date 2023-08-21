@@ -46,10 +46,10 @@
           :class="{'first-t':index == 0}">
           <div class="limit-t-i row justify-center items-center">
             <template v-if="!['zh', 'tw'].includes(get_lang)">
-              {{(new Date(+hp.hmed)).Format($root.$t('time7'))}} {{ $root.$t('match_main.cut_off')}}
+              {{(new Date(+hp.hmed)).Format(i18n.t('time7'))}} {{ i18n.t('match_main.cut_off')}}
             </template>
             <template v-else>
-              {{(new Date(+hp.hmed)).Format($root.$t('time7'))}} {{ $root.$t('match_main.cut_off')}}
+              {{(new Date(+hp.hmed)).Format(i18n.t('time7'))}} {{ i18n.t('match_main.cut_off')}}
             </template>
           </div>
         </div>
@@ -87,6 +87,8 @@
 import { computed } from "vue";
 import lodash from 'lodash'
 import EMITTER from  "src/global/mitt.js"
+import { defineComponent } from 'vue'
+import { i18n } from 'src/boot/i18n.js'
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import bettings from "src/project/mixins/betting/betting";
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";

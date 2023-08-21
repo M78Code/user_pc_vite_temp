@@ -12,7 +12,7 @@
         <div class="line"></div>
         <div class="col">
           <!--多项单注-->
-          {{$root.$t('bet.bet_multiple')}}
+          {{i18n.t('bet.bet_multiple')}}
         </div>
 			</div>
       <!--单关数量以及输入框-->
@@ -27,7 +27,7 @@
             :ref="'but-input-'+vx_get_bet_single_list.length"
             class="bet-input input-border"
             :class="{'input-money': !is_empty_money,'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)}"
-            :placeholder="`${$root.$t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
+            :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
             v-model="money"
             :value="money"
             @keyup="keyup_handle"
@@ -51,7 +51,7 @@
 			<div class="row bet-win yb-fontsize12">
 				<div class="col df-jb">
 					<!--最高可赢额-->
-					{{$root.$t('common.maxn_amount_val')}}
+					{{i18n.t('common.maxn_amount_val')}}
 				</div>
 				<div class="col-auto bet-win-money yb-number-bold">{{win_money || four_five_six_double(2) || format_currency}}</div>
 			</div>

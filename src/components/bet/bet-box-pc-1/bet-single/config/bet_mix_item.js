@@ -60,7 +60,7 @@ export default {
       }, 3000);
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //清除定时器
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);
@@ -185,11 +185,11 @@ export default {
         // 盘口名称值存在
         if(hsw.includes(odds_table[this.vx_get_cur_odd])) {
           // 盘口类型
-          return `[${this.$root.$t('odds')[this.vx_get_cur_odd]}]`;
+          return `[${i18n.t('odds')[this.vx_get_cur_odd]}]`;
         }
       }
       // 欧洲盘
-      return `[${this.$root.$t('odds')['EU']}]`;
+      return `[${i18n.t('odds')['EU']}]`;
     },
     /**
      * @description: 盘口值
@@ -331,7 +331,7 @@ export default {
         // console.log(`=====================11111111======================odds_value================${new_}`);
         // console.log(`====odds_value===========11111=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
         // 重新计算最高可赢额
-        this.$root.$emit(MITT_TYPES.EMIT_MAX_WIN_MONEY_CMD);
+        useMittEmit(MITT_TYPES.EMIT_MAX_WIN_MONEY_CMD);
         // console.log(`====odds_value===========33333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
       }
     },
@@ -342,10 +342,10 @@ export default {
      */
     handicap_id() {
       // 发送C2订阅
-      this.$root.$emit(MITT_TYPES.EMIT_SCMD_C2_CMD);
+      useMittEmit(MITT_TYPES.EMIT_SCMD_C2_CMD);
       if(this.bet_item_count > 1) {
         // 获取最大最小值
-        this.$root.$emit(MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD);
+        useMittEmit(MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD);
       }
       this.old_hv = null;
       this.new_hv = null;      
@@ -488,7 +488,7 @@ export default {
           // 设置错误码
           this.view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         }
       },
       immediate: true
@@ -518,7 +518,7 @@ export default {
           // 设置错误码
           this.view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         }
       },
       immediate: true
@@ -628,7 +628,7 @@ export default {
       // 可以串关并且为不是封盘或者关盘状态且没有无效的投注项
       if(this.is_serial && this.active != 2 && this.active != 3 && count == 0) {
         // 设置错误信息
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;      
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;      
         // 获取错误信息延迟显示的时间
         let delay = this.error_mapping.ERROR_CODE_DELAY[this.view_ctr_obj.error_code];
         // console.log(`===============333333333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
@@ -653,7 +653,7 @@ export default {
           this.view_ctr_obj.error_code = "0402022";
         } 
         // 设置提示信息
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2; 
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2; 
         // console.log(`===============44444444=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);   
         // 3s后取消提示信息    
         this.timer_obj['message'] = setTimeout(() => {          

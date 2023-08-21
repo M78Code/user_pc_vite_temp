@@ -50,16 +50,16 @@ export default defineComponent({
     const data = reactive({
       tabIndex: 0,
       tab_list: [
-        { index: 0, label: this.$root.$t('virtual_sports.group_matches'), value: 'group_matches' ,disable: false},
-        { index: 1, label: this.$root.$t('virtual_sports.knockout'), value: 'knockout', disable: false }
+        { index: 0, label: i18n.t('virtual_sports.group_matches'), value: 'group_matches' ,disable: false},
+        { index: 1, label: i18n.t('virtual_sports.knockout'), value: 'knockout', disable: false }
       ],
       tabList: [
         {
-          name: this.$root.$t('virtual_sports.group_matches'),
+          name: i18n.t('virtual_sports.group_matches'),
           component: 'group_matches'
         },
         {
-          name: this.$root.$t('virtual_sports.knockout'),
+          name: i18n.t('virtual_sports.knockout'),
           component: 'knockout'
         }
       ],

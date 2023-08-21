@@ -1016,7 +1016,7 @@ export default {
   */
   match_close(mid){
     this.is_video_end = true
-    window.vue.$root.$emit('exit_browser_full_screen')
+    window.vue.useMittEmit('exit_browser_full_screen')
     window.vue.$router.push('/home')
     // this.get_videos( match_list => {
     //   for(let i in match_list){

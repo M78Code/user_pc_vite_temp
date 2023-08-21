@@ -288,7 +288,7 @@ export default {
     this.hide_home_red = this.lodash.debounce(this.hide_home_red,5000)
     this.hide_away_red = this.lodash.debounce(this.hide_away_red,5000)
   },
-  destroyed() {
+  beforeUnmount() {
     this.debounce_throttle_cancel(this.hide_home_goal);
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);

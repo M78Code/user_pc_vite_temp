@@ -8,18 +8,18 @@
   <div class="league-rank">
     <template v-if="vsport_ctr.league_rank_list.length > 0">
       <div class="title" :class="{'fixed_league_rank_title': titleFixed}"
-        :style="{'top': `${titleTop}px`, 'width': titleFixed ? `${titleWidth}px` : 'auto'}"><span>{{$root.$t('vsport.rank')}}</span></div>
+        :style="{'top': `${titleTop}px`, 'width': titleFixed ? `${titleWidth}px` : 'auto'}"><span>{{i18n.t('vsport.rank')}}</span></div>
       <div class="header" ref="league_rank_header">
         <!-- 排名 -->
-        <div class="col1">{{$root.$t('vsport.gtab9')}}</div>
+        <div class="col1">{{i18n.t('vsport.gtab9')}}</div>
         <!-- 球队 -->
-        <div class="col2">{{$root.$t('vsport.gtab1')}}</div>
+        <div class="col2">{{i18n.t('vsport.gtab1')}}</div>
         <!-- 比赛 -->
-        <div class="col3">{{$root.$t('vsport.gtab2')}}</div>
+        <div class="col3">{{i18n.t('vsport.gtab2')}}</div>
         <!-- 胜/平/负 -->
-        <div class="col4">{{$root.$t('vsport.gtab3')}}</div>
+        <div class="col4">{{i18n.t('vsport.gtab3')}}</div>
         <!-- 积分 -->
-        <div class="col5">{{$root.$t('vsport.gtab7')}}</div>
+        <div class="col5">{{i18n.t('vsport.gtab7')}}</div>
       </div>
     </template>
     <!-- 榜单列表 -->
@@ -50,7 +50,8 @@ export default defineComponent({
   setup(props, evnet) {
     const data = reactive({
       // 是否是内嵌版
-      is_iframe:window.is_iframe,
+      // is_iframe:window.is_iframe,
+      is_iframe: false,
       // fixed 定位时距离顶部高度
       titleTop: 0,
       // 吸顶后的宽度
@@ -70,7 +71,7 @@ export default defineComponent({
     );
     onMounted(() => {
       // 获取视频区高度
-      $root.$on("virtual_right_list_header_height", getHeaderHeight)
+      useMittOn("virtual_right_list_header_height", getHeaderHeight)
       vsport_ctr.set_league_rank_list();
     })
     /**
@@ -88,7 +89,7 @@ export default defineComponent({
     };
     onUnmounted(() => {
       vsport_ctr.league_rank_list = [];
-      $root.$off("virtual_right_list_header_height", getHeaderHeight)
+      useMittOn("virtual_right_list_header_height", getHeaderHeight)
     })
     return {
       ...toRefs(data),

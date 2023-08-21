@@ -232,7 +232,7 @@ const route = useRoute();
       // 刷新 赛事分析信息
       // #TODO IMIT
       // useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS);
-      // $root.$emit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
+      // useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS)
     } else {
     }
 
@@ -256,7 +256,7 @@ const route = useRoute();
   const api_interface = () => {
     // #TODO IMIT
     //   useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh');
-    // $root.$emit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
+    // useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
   };
   /**
    *@description 0号模板点击收起的时候，要调整滚动距离
@@ -330,7 +330,7 @@ const route = useRoute();
     // 滚动时隐藏罚牌/角球等说明弹窗
     // #TODO IMIT
     //   useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false);
-    // $root.$emit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false)
+    // useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false)
   };
   /**
    *@description 横屏投注下滚动
@@ -341,7 +341,7 @@ const route = useRoute();
     // 滚动时隐藏罚牌/角球等说明弹窗
     // #TODO IMIT
     //   useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false);
-    // $root.$emit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false)
+    // useMittEmit(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, false)
   };
   /**
    *@description 获取当前手指第一次触摸的高度
@@ -568,7 +568,7 @@ const route = useRoute();
         if (!data || data.length == 0) {
           set_toast({
             // #TODO IMIT
-            // txt: $root.$t("bet_record.bet_match_tishi"),
+            // txt: i18n.t("bet_record.bet_match_tishi"),
           });
 
           sessionStorage.setItem("match_list_ofdetails", "");

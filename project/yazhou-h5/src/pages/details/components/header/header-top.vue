@@ -21,7 +21,7 @@
     <!-- 电竞相关的 头部信息样式  集中在这里-->
     <div class="DJ-score-information" v-if="get_menu_type==3000">
       <!-- 展示比分信息-->
-      <div class="eports_scoring_tip" v-if="eports_scoring">{{$root.$t('mmp.eports_scoring')}}</div>
+      <div class="eports_scoring_tip" v-if="eports_scoring">{{i18n.t('mmp.eports_scoring')}}</div>
       <div class="information-score" v-else-if="[1,2,3,4].includes(+detail_data.ms)">
         <span>{{s1_score.home}}</span>
         <div class="collect-icon"  @click="icon_click" v-if="+detail_data.mms > 1 && detail_data.vurl"></div>
@@ -33,19 +33,19 @@
         <span v-if="detail_data.ms == 0">
           <span v-if="start_time" class="fz_12" style="font-weight:400">
             <!-- 距离开赛时间小于一小时显示倒计时 -->
-            {{$root.$t("list.after_time_start",[longTime])}}
+            {{i18n.t("list.after_time_start",[longTime])}}
           </span>
           <template v-else>
-            <div class="sj-time-day">{{utils.format_time_zone(+detail_data.mgt).Format($root.$t('time3'))}}</div>
+            <div class="sj-time-day">{{utils.format_time_zone(+detail_data.mgt).Format(i18n.t('time3'))}}</div>
             <!-- <span class="sj-time-soon">{{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}</span> -->
           </template>
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
         <span v-else-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-          {{$root.$t(`ms[${detail_data.ms}]`)}}
+          {{i18n.t(`ms[${detail_data.ms}]`)}}
         </span>
         <template v-else>
-          <span>{{$root.$t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
+          <span>{{i18n.t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
           <!-- 倒/正计时组件 -->
           <!-- <counting-down
             :title="null"
@@ -65,7 +65,7 @@
       <span v-if="detail_data.ms == 0">
         <span v-if="start_time" class="fz_12" style="font-weight:400">
           <!-- 距离开赛时间小于一小时显示倒计时 -->
-          {{$root.$t("list.after_time_start",[longTime])}}
+          {{i18n.t("list.after_time_start",[longTime])}}
         </span>
         <span v-else>
           <!-- {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }} -->
@@ -73,7 +73,7 @@
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
       <span v-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-        {{$root.$t(`ms[${detail_data.ms}]`)}}
+        {{i18n.t(`ms[${detail_data.ms}]`)}}
       </span>
       <!-- 棒球的进攻方绿点在大比分两侧展示 -->
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'home'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
@@ -103,7 +103,7 @@
         <div class="goal-wrap" v-if="is_show_home_goal">
           <div class="inner yb-flex-center left">
             <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
-            <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
+            <div class="gif-text">{{i18n.t('match_result.goal')}}</div>
           </div>
         </div>
         <div class="red-gif" :class="{flash:is_show_home_red}">
@@ -118,7 +118,7 @@
         <div class="goal-wrap" v-if="is_show_away_goal">
           <div class="inner yb-flex-center right">
             <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
-            <div class="gif-text">{{$root.$t('match_result.goal')}}</div>
+            <div class="gif-text">{{i18n.t('match_result.goal')}}</div>
           </div>
         </div>
         <div class="man-name ellipsis-2-lines">
@@ -477,7 +477,7 @@ export default defineComponent({
           // 此时同步更新match_stage组件的时间
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING);
-          // $root.$emit(MITT_TYPES.EMIT_MATCH_NOSTART);
+          // useMittEmit(MITT_TYPES.EMIT_MATCH_NOSTART);
         }
         // 同上注释
         let longTime = Math.floor( (+props.detail_data.mgt - now )/ 1000 / 60);
@@ -522,7 +522,7 @@ export default defineComponent({
       data.emitters = [
         useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
-      // $root.$on(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
+      // useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     onUnmounted(() => {
       debounce_throttle_cancel(hide_home_goal);

@@ -5,6 +5,7 @@
 // TODO: get_lang
 
 import MatchCtr from './match-ctr'
+import { i18n } from 'src/boot/i18n.js'
 
 class matchListClass {
   /**
@@ -24,14 +25,14 @@ class matchListClass {
     if (this.get_lang == 'zh') {
       new_num = utils.numberToChinese(mct);
     }
-    let game_count = this.$root.$t("mmp.7.x")
+    let game_count = i18n.t("mmp.7.x")
     let ext = {
-      419: this.$root.$t("mmp.7.419"),
-      420: this.$root.$t("mmp.7.420"),
-      439: this.$root.$t("mmp.7.439"),
+      419: i18n.t("mmp.7.419"),
+      420: i18n.t("mmp.7.420"),
+      439: i18n.t("mmp.7.439"),
     };
     if (mmp == 445) {
-      result = this.$root.$t("mmp.7.445");
+      result = i18n.t("mmp.7.445");
     }
     else {
       let game_count_des = game_count.replace('%s', new_num);
@@ -47,7 +48,7 @@ class matchListClass {
     let { mmp, csid, ms } = match;
     let r = '';
     if ([110].includes(+ms)) { // ms == 110: 代表 即将开赛
-      r = this.$root.$t(`ms[${ms}]`);
+      r = i18n.t(`ms[${ms}]`);
       this.mmp_map_title = r;
       return r;
     }
@@ -71,7 +72,7 @@ class matchListClass {
         r = this.mmp_map_title = this.covert_mct(match);
         return r;
       }
-      let sport_mmp = this.$root.$t('mmp')[csid];
+      let sport_mmp = i18n.t('mmp')[csid];
       if (sport_mmp) {
         r = sport_mmp[mmp];
         // 如果是篮球的  小节玩法，则转成 上半场
@@ -82,7 +83,7 @@ class matchListClass {
     } catch (e) { console.error(e) }
     // 篮球3X3滚球时显示"全场"
     if (ms == 1 && csid == 2 && match.mle == 73) {
-      r = this.$root.$t('mmp.2.21');
+      r = i18n.t('mmp.2.21');
     }
 
     this.mmp_map_title = r;
