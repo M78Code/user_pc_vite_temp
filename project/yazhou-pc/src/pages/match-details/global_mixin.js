@@ -443,14 +443,14 @@ const router = useRouter();
 //       if (this.vx_get_is_invalid) { //是否失效
 //         // if ((!callbackUrl) && (callbackUrl != undefined)) {
 //         //   // 弹出提示消息、登录层
-//         //   window.vue.$root.$emit(
-//         //     window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD,
-//         //     window.vue.$root.$t("login.login_timeout")
+//         //   window.vue.useMittEmit(
+//         //     window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD,
+//         //     window.vue.i18n.t("login.login_timeout")
 //         //   );
 //         // } else {
 //           // 登录失效直接展示 alert
-//           this.$root.$emit(this.emit_cmd.EMIT_SHOW_ALERT_CMD, {
-//             text: this.$root.$t("login.login_timeout"),
+//           useMittEmit(MITT_TYPES.EMIT_SHOW_ALERT_CMD, {
+//             text: i18n.t("login.login_timeout"),
 //             callback: () => {
 
 //               location.href = callbackUrl

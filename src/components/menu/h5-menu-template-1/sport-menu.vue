@@ -31,7 +31,7 @@
             >
               <div class="i-title" :class="first_level_menu_subscript_css">
               {{
-                $root.$t(`new_menu.${main_m.mi}`) }}
+                i18n.t(`new_menu.${main_m.mi}`) }}
               </div>
               <div class="m-menu-count">
                 <span class="count" :class="{is_unit:main_m.count < 10 && m_m_i == 1,
@@ -79,7 +79,7 @@
               @click="select_all_sub_menu_handle"
               v-show="lodash.get(get_access_config,'playAllShow') && menu_1_type == 1"
               :count="all_sport_count_calc()"
-              :title="$root.$t('footer_menu.all')"
+              :title="i18n.t('footer_menu.all')"
               v-if="lodash.get(get_access_config,'playAllShow')"
             >
               <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
@@ -87,7 +87,7 @@
             <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
             <!--
               :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)),`${'s'+format_type(sub)}`]"
-              :data-type="format_type(sub)+$root.$t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
+              :data-type="format_type(sub)+i18n.t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
              -->
             <template v-if="new_main_menu_list_items[new_main_menu_index]">
               <template   v-for="(sub,sub_i) of new_main_menu_list_items[new_main_menu_index].sl||[]" >
@@ -161,7 +161,7 @@
             >
               <div class="m-menu-name-m">
                 {{
-                $root.$t(`new_menu.${m_items.mi}`) }}</div>
+                i18n.t(`new_menu.${m_items.mi}`) }}</div>
               <div class="m-count-match" v-if=" !show_favorite_list">
                 {{count_menu(m_items)}}
               </div>
@@ -353,7 +353,7 @@ import { useRoute } from 'vue-router'
       if(menu_1_type == 28){
         return item.menuId + item.name
       }
-      return format_type(item)+$root.$t(`new_menu.${filter_meunu_desc(item.mi)}`)
+      return format_type(item)+i18n.t(`new_menu.${filter_meunu_desc(item.mi)}`)
     }
     // 进入主列表页 主菜单时，立即触发方法
     const enter_page_immediately = () => {
@@ -850,7 +850,7 @@ import { useRoute } from 'vue-router'
     const openActivity = () => {
       if(!lodash.get(get_access_config,'activitySwitch')){
         // TODO: $toast 后续修改调整
-        $toast($root.$t(`common.temporarily_unavailable`), 2000)
+        $toast(i18n.t(`common.temporarily_unavailable`), 2000)
         return
       }
       // TODO: router $utils 后续修改调整
@@ -941,12 +941,12 @@ import { useRoute } from 'vue-router'
           // 赛果二级菜单数据处理
           await lodash.result_sub_menu_api_handle(JSON.parse(cache_data_str), type);
         }
-        lodash.$root.$emit(lodash.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+        lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
       }
       
       } catch (error) {
         // 接口异常时逻辑处理
-        lodash.$root.$emit(lodash.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
+        lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
       }
       resolve()
       })

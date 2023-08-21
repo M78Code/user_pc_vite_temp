@@ -6,7 +6,6 @@
 // import { mapMutations } from "vuex"
 // import { api_v_sports } from "src/project/api/index.js";
 // import VSport from "src/public/utils/vsport/vsport.js"
-// import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // import { api_common} from "src/project/api/index.js";  // 引入api接口封装文件
 
 // export default {
@@ -60,7 +59,7 @@
 //     this.checking_first_delete_timer = null;
 //     //重调用视频进程接口时钟
 //     this.procee_again_timer = null;
-//     useMittOn(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
+//     this.$root.$on(MITT_TYPES.EMIT_NO_VIRTUAL_MENU_DATA,this.no_virtual_menu_data);
 //   },
 //   methods:{
 //     ...mapMutations({

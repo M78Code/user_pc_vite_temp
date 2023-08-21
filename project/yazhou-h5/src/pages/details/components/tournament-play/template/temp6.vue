@@ -265,7 +265,7 @@
 
           <!-- 展开和收起按钮 -->
           <div v-if="!hide_show_more_layout" class="show-more play-box-style"  @click="change_show">
-          <span class="fz_13">{{show_more?$root.$t('match_info.pack_up'):$root.$t('match_info.show_more')}}
+          <span class="fz_13">{{show_more?i18n.t('match_info.pack_up'):i18n.t('match_info.show_more')}}
           </span>
           </div>
 
@@ -340,7 +340,7 @@ export default defineComponent({
         if (this.$route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
-          this.$root.$emit(this.emit_cmd.EMIT_SET_DETAILDS_SCROLL,distance)
+          useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
       this.show_more = !this.show_more

@@ -81,9 +81,9 @@ import { useRoute } from 'vue-router'
   // },
   // TODO: 国际化后续修改调整
   const tab_list = ref([
-        {name: $root.$t('analysis_football_matches.Fundamentals')},
-        {name: $root.$t('analysis_football_matches.Disk')},
-        {name: $root.$t('analysis_football_matches.Technical_side')}
+        {name: i18n.t('analysis_football_matches.Fundamentals')},
+        {name: i18n.t('analysis_football_matches.Disk')},
+        {name: i18n.t('analysis_football_matches.Technical_side')}
       ])
   const tabIndex = ref(0)
   // 基本面的数据
@@ -109,12 +109,12 @@ import { useRoute } from 'vue-router'
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件 TODO: $root emit  后续修改调整
-    $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     tab_list = ref([
-        {name: $root.$t('analysis_football_matches.Fundamentals')},
-        {name: $root.$t('analysis_football_matches.Disk')},
-        {name: $root.$t('analysis_football_matches.Technical_side')}
+        {name: i18n.t('analysis_football_matches.Fundamentals')},
+        {name: i18n.t('analysis_football_matches.Disk')},
+        {name: i18n.t('analysis_football_matches.Technical_side')}
       ])
     tabIndex = ref(0)
     future_schedule_data = ref({})

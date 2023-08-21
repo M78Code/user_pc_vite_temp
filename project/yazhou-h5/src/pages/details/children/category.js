@@ -480,7 +480,7 @@ export const category_info = () => {
       if (!["result_details", "match_result"].includes(route.name)) {
         // #TODO emit
         useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true);
-        // $root.$emit(emit_cmd.EMIT_MATCHINFO_LOADING, true)
+        // useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
       }
       const tabs_active_data_cache =
         get_details_data_cache[`${match_id}-${get_details_item.value}`];
@@ -546,7 +546,7 @@ export const category_info = () => {
     //   .finally(() => {
     //     is_loading = false;
     //     if(!['result_details', 'match_result'].includes(route.name)){
-    //       $root.$emit(emit_cmd.EMIT_MATCHINFO_LOADING, true)
+    //       useMittEmit(MITT_TYPES.EMIT_MATCHINFO_LOADING, true)
     //     }
     //     const tabs_active_data_cache = get_details_data_cache[`${match_id}-${get_details_item}`]
 
@@ -646,7 +646,7 @@ export const category_info = () => {
   const triggle_tabs_update = () => {
     // #TODO emit
     useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
-    // $root.$emit(emit_cmd.EMIT_TABS_LIST_UPDATE_HANDLE);
+    // useMittEmit(MITT_TYPES.EMIT_TABS_LIST_UPDATE_HANDLE);
   };
   // 保存当前展开状态
   const save_expanded_state = (arr_list) => {
@@ -863,17 +863,17 @@ export const category_info = () => {
       useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
         .off,
     ];
-    // $root.$on(emit_cmd.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-    // $root.$on(emit_cmd.EMIT_REF_API, initEvent);
-    // $root.$on(emit_cmd.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+    // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
+    // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
+    // useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
   };
   // 移除相应监听事件
   const off_listeners = () => {
     // #TODO emit
     component_data.emitters.map((x) => x());
-    // $root.$off(emit_cmd.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-    // $root.$off(emit_cmd.EMIT_REF_API, initEvent);
-    // $root.$off(emit_cmd.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+    // $root.$off(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
+    // $root.$off(MITT_TYPES.EMIT_REF_API, initEvent);
+    // $root.$off(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
   };
   return {
     component_data,

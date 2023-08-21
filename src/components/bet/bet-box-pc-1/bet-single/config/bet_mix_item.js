@@ -33,13 +33,13 @@ export default {
   },
   created() {  
     // 重置串关红升绿降状态
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
     // 更改串关的match_update字段值
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
     //更新串关投注项上的match_udpate字段
-    this.$root.$on(this.emit_cmd.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
+    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
     //更新主客队信息(主要用于国际化切换时调用)
-    this.$root.$on(this.emit_cmd.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away); 
+    this.$root.$on(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away); 
     //更新主客队信息  
     this.update_home_away();
     // 赛事需要更新并且投注项列表中有多余一个投注项
@@ -60,17 +60,17 @@ export default {
       }, 3000);
     }
   },
-  destroyed() {
+  beforeUnmount() {
     //清除定时器
     for (const key in this.timer_obj) {
       clearTimeout(this.timer_obj[key]);
     }
     this.timer_obj = {};
     //清除监听事件
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
-    this.$root.$off(this.emit_cmd.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
-    this.$root.$off(this.emit_cmd.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
+    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
+    this.$root.$off(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
   },
   props: {
  
@@ -185,11 +185,11 @@ export default {
         // 盘口名称值存在
         if(hsw.includes(odds_table[this.vx_get_cur_odd])) {
           // 盘口类型
-          return `[${this.$root.$t('odds')[this.vx_get_cur_odd]}]`;
+          return `[${i18n.t('odds')[this.vx_get_cur_odd]}]`;
         }
       }
       // 欧洲盘
-      return `[${this.$root.$t('odds')['EU']}]`;
+      return `[${i18n.t('odds')['EU']}]`;
     },
     /**
      * @description: 盘口值
@@ -331,7 +331,7 @@ export default {
         // console.log(`=====================11111111======================odds_value================${new_}`);
         // console.log(`====odds_value===========11111=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
         // 重新计算最高可赢额
-        this.$root.$emit(this.emit_cmd.EMIT_MAX_WIN_MONEY_CMD);
+        useMittEmit(MITT_TYPES.EMIT_MAX_WIN_MONEY_CMD);
         // console.log(`====odds_value===========33333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
       }
     },
@@ -342,10 +342,10 @@ export default {
      */
     handicap_id() {
       // 发送C2订阅
-      this.$root.$emit(this.emit_cmd.EMIT_SCMD_C2_CMD);
+      useMittEmit(MITT_TYPES.EMIT_SCMD_C2_CMD);
       if(this.bet_item_count > 1) {
         // 获取最大最小值
-        this.$root.$emit(this.emit_cmd.EMIT_MIN_MAX_MONEY_CMD);
+        useMittEmit(MITT_TYPES.EMIT_MIN_MAX_MONEY_CMD);
       }
       this.old_hv = null;
       this.new_hv = null;      
@@ -488,7 +488,7 @@ export default {
           // 设置错误码
           this.view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         }
       },
       immediate: true
@@ -518,7 +518,7 @@ export default {
           // 设置错误码
           this.view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         }
       },
       immediate: true
@@ -628,7 +628,7 @@ export default {
       // 可以串关并且为不是封盘或者关盘状态且没有无效的投注项
       if(this.is_serial && this.active != 2 && this.active != 3 && count == 0) {
         // 设置错误信息
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;      
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;      
         // 获取错误信息延迟显示的时间
         let delay = this.error_mapping.ERROR_CODE_DELAY[this.view_ctr_obj.error_code];
         // console.log(`===============333333333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
@@ -653,7 +653,7 @@ export default {
           this.view_ctr_obj.error_code = "0402022";
         } 
         // 设置提示信息
-        this.view_ctr_obj.error_message = this.$root.$t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2; 
+        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2; 
         // console.log(`===============44444444=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);   
         // 3s后取消提示信息    
         this.timer_obj['message'] = setTimeout(() => {          

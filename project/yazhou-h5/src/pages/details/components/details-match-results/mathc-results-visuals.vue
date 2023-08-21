@@ -5,7 +5,7 @@
 -->
 <template>
   <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
-    <div class="title" v-if="!get_analyze_show">{{ $root.$t('match_result.statistics') }}</div>
+    <div class="title" v-if="!get_analyze_show">{{ i18n.t('match_result.statistics') }}</div>
     <div class="designation">
       <span class="ellipsis">{{ statistics_table.mhn }}</span>
       <span class="ellipsis">{{ statistics_table.man }}</span>

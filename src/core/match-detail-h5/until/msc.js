@@ -17,7 +17,7 @@ export const useMsc = () => {
         return [];
       }
       if (!window.msc_map) {
-        window.msc_map = this.$root.$t("msc");
+        window.msc_map = i18n.t("msc");
       }
       let list_ = str.split(/[:|]/);
       for (let i = 0, l = 3 - list_.length; i < l; i++) {
@@ -65,7 +65,7 @@ export const useMsc = () => {
         return "";
       }
       if (!window.mmp_map) {
-        window.mmp_map = this.$root.$t("mmp");
+        window.mmp_map = i18n.t("mmp");
       }
       return window.mmp_map[parseInt(sport_id)][mmp];
     };

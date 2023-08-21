@@ -102,7 +102,7 @@ export const useCommon = ({ emit, props }) => {
       props.item_details.is_show = isShow.value;
     }
     // 用户点击了玩法就发送一次数据(需要改造)
-    this.$root.$emit("set_panel_status", { handle: this.item_details });
+    useMittEmit("set_panel_status", { handle: this.item_details });
   };
 
   /**

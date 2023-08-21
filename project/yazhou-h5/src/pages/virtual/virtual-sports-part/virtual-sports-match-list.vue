@@ -4,7 +4,7 @@
       <div class="title-wrap-standard row justify-end" v-if="get_newer_standard_edition == 2">
         <div class="odd-title-wrapper row">
           <div class="odd-t-w-inner row items-center" :class="{status2:standard_odd_status}">
-            <div v-for="(hpl_title, hp_i) of $root.$t('list_title.'+csid+'.title')" :key="hp_i">
+            <div v-for="(hpl_title, hp_i) of i18n.t('list_title.'+csid+'.title')" :key="hp_i">
               {{hpl_title}}
             </div>
           </div>
@@ -68,11 +68,11 @@ export default defineComponent({
 
     onMounted(() => {
       // #TODO emit
-      // $root.$on(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
+      // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
     })
     onUnmounted(() => {
       // #TODO emit
-    // $root.$off(emit_cmd.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle)
+    // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle)
     })
     /**
      * 切换赛事

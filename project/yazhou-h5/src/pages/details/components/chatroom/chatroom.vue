@@ -23,7 +23,7 @@
     <q-dialog v-model="is_show_bulletin_dialog" >
       <q-card class="dialog-wrap" >
         <div  class="card-header">
-          <div class="text-center">{{$root.$t('chatroom.bulletin')}}</div>
+          <div class="text-center">{{i18n.t('chatroom.bulletin')}}</div>
         </div>
         <q-card-section class="card-body">
           <div class="dialog-scroll">
@@ -33,7 +33,7 @@
         </q-card-section>
 
         <div class="card-footer">
-          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ $root.$t('chatroom.close') }}</div>
+          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ i18n.t('chatroom.close') }}</div>
         </div>
       </q-card>
     </q-dialog>
@@ -112,7 +112,7 @@ export default defineComponent({
         set_toast({ txt: '聊天室未开启' });
       }
       // #TODO emit 
-      // $root.$on(emit_cmd.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
 
       // 原 mounted 
       const { offsetTop } = $refs.chatroom || {};
@@ -120,7 +120,7 @@ export default defineComponent({
     })
     onUnmounted(() => {
       // #TODO emit 
-      // $root.$off(emit_cmd.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // $root.$off(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
       hasDestroyed = true;
       set_is_enter_chat(false);
       chatroomWs && chatroomWs.destory();

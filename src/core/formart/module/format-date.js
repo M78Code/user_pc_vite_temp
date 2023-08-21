@@ -27,8 +27,8 @@ export const format_M_D = function (payload, that) {
   let time = new Date(parseInt(payload));
   let m = time.getMonth();
   let d = time.getDate() + "";
-  let monthes = that.$root.$t("time.monthes");
-  let format = that.$root.$t("time.time_date_1");
+  let monthes = i18n.t("time.monthes");
+  let format = i18n.t("time.time_date_1");
   format = format.replace("%date", d);
   format = format.replace("%month", monthes[m]);
   return format;
@@ -272,7 +272,7 @@ export const format_date_by_manage = (value) => {
   let h = (time.getHours() + "").padStart(2, 0);
   let mm = (time.getMinutes() + "").padStart(2, 0);
   let s = (time.getSeconds() + "").padStart(2, 0);
-  let arr = $root.$t("time.time_date_week"); // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  let arr = i18n.t("time.time_date_week"); // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   let i = time.getDay();
   let weekday = arr[i];
   // return `${m}月${d}日 (${weekday})`;

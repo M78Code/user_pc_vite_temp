@@ -32,7 +32,7 @@
                   <!-- 角球玩法名称 -->
                   <div class="corner-ball-weg">{{ item_data.hpn }}</div>
                   <!-- 角球总比分 -->
-                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{$root.$t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="corner_ball_show && new_score"> {{i18n.t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
                 </div>
                 <!-- 罚牌比分 -->
                 <div v-else-if="is_show_info"    :style="{ '--q-position-left-before':other_way_style.offset_icon_position_before,'--q-position-left-after':other_way_style.offset_icon_position_after}" class="corner-ball">
@@ -45,7 +45,7 @@
                     </div>
                   </div>
                   <!-- 罚牌比分 -->
-                  <div class="basic-score" v-if="is_show_info && new_score"> {{$root.$t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
+                  <div class="basic-score" v-if="is_show_info && new_score"> {{i18n.t('match_info.total_score')}}:&nbsp;{{ new_score }}</div>
 
                   <!-- 罚牌玩法说明弹窗 -->
                   <div 
@@ -57,11 +57,11 @@
                     <div class="penalty">
                       <!-- 角球 -->
                       <div v-if="['125','230'].includes(item_data.hpid)" class="ply-cd">
-                        {{$root.$t('football_playing_way.corner')}}
+                        {{i18n.t('football_playing_way.corner')}}
                       </div>
                       <!-- 罚牌 -->
                       <div v-else class="ply-cd">
-                        {{$root.$t('football_playing_way.penalty_cards')}}
+                        {{i18n.t('football_playing_way.penalty_cards')}}
                       </div>
                       <!-- 关闭按钮 -->
                       <img
@@ -71,9 +71,9 @@
                       >
                     </div>
                     <!-- 角球说明文本 -->
-                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{$root.$t('play_way_info.6')}}</div>
+                    <div v-if="['125','230'].includes(item_data.hpid)" class="info-content">{{i18n.t('play_way_info.6')}}</div>
                     <!-- 罚牌说明文本 -->
-                    <div v-else class="info-content">{{$root.$t('play_way_info.5')}}</div>
+                    <div v-else class="info-content">{{i18n.t('play_way_info.5')}}</div>
                   </div>
                 </div>
                 <!-- 普通赛事基准分 -->
@@ -259,7 +259,7 @@ export default defineComponent({
         component_data.emitters = [
           useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
         ]
-        // $root.$on(emit_cmd.EMIT_CHANGE_BASE_SCORE, updata_item_score);
+        // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
       // if(get_fewer == 2 || item_data.hshow == 'No'){
@@ -270,7 +270,7 @@ export default defineComponent({
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
       component_data.emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
-      // $root.$on(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
       bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
@@ -585,8 +585,8 @@ export default defineComponent({
           // #TODO emit 
           useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
           useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
-          // $root.$emit(emit_cmd.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
-          // $root.$emit(emit_cmd.EMIT_RESET_SET_HTON);
+          // useMittEmit(MITT_TYPES.EMIT_ANIMATE_RESET_MYSCROLL_TOP, 100);
+          // useMittEmit(MITT_TYPES.EMIT_RESET_SET_HTON);
           // 获取最大置顶排序值
           var hton_ = 0;
           for (let i = 0; i < list.length; i++) {
@@ -693,8 +693,8 @@ export default defineComponent({
     onUnmounted(() => {
       // #TODO emit 
       emitters.map((x) => x())
-      // $root.$off(emit_cmd.EMIT_CHANGE_BASE_SCORE);
-      // $root.$off(emit_cmd.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE).off();
+      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off()
       debounce_throttle_cancel(bet_click_);
       clearTimeout(component_data.timer1_)
       clearTimeout(component_data.timer2_)

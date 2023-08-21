@@ -89,7 +89,7 @@
     <template v-if="!no_data">
       <!-- 首发阵容-->
       <div class="title" >
-        {{$root.$t('analysis_football_matches.starting_lineup') }}
+        {{i18n.t('analysis_football_matches.starting_lineup') }}
         <template v-if="get_detail_data.csid == 1">
           {{radio_button_index == 0 ? line_up_data.homeFormation : line_up_data.awayFormation}}
         </template>
@@ -98,9 +98,9 @@
         <!-- 头部 -->
         <div class="header">
           <div class="col1"></div>
-          <div class="col2">{{$root.$t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="$root.$t('analysis_football_matches.name')"></div>
-          <div class="col4">{{$root.$t('analysis_football_matches.number') }}</div>
+          <div class="col2">{{i18n.t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="i18n.t('analysis_football_matches.name')"></div>
+          <div class="col4">{{i18n.t('analysis_football_matches.number') }}</div>
         </div>
         <!-- 主内容 -->
         <div class="team-item" v-for="(item, i) in line_up_data.up" :key="i+'a'">
@@ -121,19 +121,19 @@
           </div>
         </div>
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ $root.$t('common.no_data') }}</div>
+        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ i18n.t('common.no_data') }}</div>
       </div>
       <!-- 替补阵容-->
       <div class="title">
-        <span>{{$root.$t('analysis_football_matches.bench_lineup') }}</span>
+        <span>{{i18n.t('analysis_football_matches.bench_lineup') }}</span>
       </div>
       <div class="public_form football_standings">
         <!-- 头部 -->
         <div class="header">
           <div class="col1"></div>
-          <div class="col2">{{$root.$t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="$root.$t('analysis_football_matches.name')"></div>
-          <div class="col4">{{$root.$t('analysis_football_matches.number') }}</div>
+          <div class="col2">{{i18n.t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="i18n.t('analysis_football_matches.name')"></div>
+          <div class="col4">{{i18n.t('analysis_football_matches.number') }}</div>
         </div>
         <!-- 主内容 -->
         <div class="team-item" v-for="(item, i) in line_up_data.down" :key="i+'b'">
@@ -153,7 +153,7 @@
           </div>
         </div>
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ $root.$t('common.no_data') }}</div>
+        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ i18n.t('common.no_data') }}</div>
       </div>
     </template>
   </div>
@@ -289,7 +289,7 @@ import { useRoute } from 'vue-router'
   }
   onUnmounted(() => {
      //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
-  //   $root.$off(emit_cmd.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+  //   $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
   //   for (const key in $data) {
   //     $data[key] = null

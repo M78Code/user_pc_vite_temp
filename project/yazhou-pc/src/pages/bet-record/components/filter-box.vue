@@ -14,7 +14,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n.t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
     </div>
@@ -47,7 +47,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $root.$t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n.t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
       <!-- 默认排序 -->
@@ -64,7 +64,7 @@
               class="icon_left"
             />
             <span class="text_check">{{
-              $root.$t(time_sort_record_item.check_name)
+              i18n.t(time_sort_record_item.check_name)
             }}</span>
             <icon
               name="icon-sort"
@@ -127,7 +127,7 @@
         </div>
         <!-- 查询按钮 -->
         <div class="search-btn" @click="submit()">
-          {{ $root.$t("bet_record.query") }}
+          {{ i18n.t("bet_record.query") }}
           <!-- 查询 -->
         </div>
       </div>
@@ -164,44 +164,44 @@ const props = defineProps({
 });
 // 日历多语言配置
 const locale = {
-  days: this.$root.$t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-  daysShort: this.$root.$t("time.time_date_week"),
+  days: i18n.t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  daysShort: i18n.t("time.time_date_week"),
   // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   months: [
-    this.$root.$t("time.month_1"),
-    this.$root.$t("time.month_2"),
-    this.$root.$t("time.month_3"),
-    this.$root.$t("time.month_4"),
-    this.$root.$t("time.month_5"),
-    this.$root.$t("time.month_6"),
-    this.$root.$t("time.month_7"),
-    this.$root.$t("time.month_8"),
-    this.$root.$t("time.month_9"),
-    this.$root.$t("time.month_10"),
-    this.$root.$t("time.month_11"),
-    this.$root.$t("time.month_12"),
+    i18n.t("time.month_1"),
+    i18n.t("time.month_2"),
+    i18n.t("time.month_3"),
+    i18n.t("time.month_4"),
+    i18n.t("time.month_5"),
+    i18n.t("time.month_6"),
+    i18n.t("time.month_7"),
+    i18n.t("time.month_8"),
+    i18n.t("time.month_9"),
+    i18n.t("time.month_10"),
+    i18n.t("time.month_11"),
+    i18n.t("time.month_12"),
   ],
   monthsShort: [
-    this.$root.$t("time.month_1"),
-    this.$root.$t("time.month_2"),
-    this.$root.$t("time.month_3"),
-    this.$root.$t("time.month_4"),
-    this.$root.$t("time.month_5"),
-    this.$root.$t("time.month_6"),
-    this.$root.$t("time.month_7"),
-    this.$root.$t("time.month_8"),
-    this.$root.$t("time.month_9"),
-    this.$root.$t("time.month_10"),
-    this.$root.$t("time.month_11"),
-    this.$root.$t("time.month_12"),
+    i18n.t("time.month_1"),
+    i18n.t("time.month_2"),
+    i18n.t("time.month_3"),
+    i18n.t("time.month_4"),
+    i18n.t("time.month_5"),
+    i18n.t("time.month_6"),
+    i18n.t("time.month_7"),
+    i18n.t("time.month_8"),
+    i18n.t("time.month_9"),
+    i18n.t("time.month_10"),
+    i18n.t("time.month_11"),
+    i18n.t("time.month_12"),
   ],
   // 每周的第一天
   firstDayOfWeek: 7,
 };
 const check_list = [
-  { value: "0", label: this.$root.$t("bet.bet_process") },
-  { value: "4", label: this.$root.$t("bet.bet_book_canceled") },
-  { value: "2,3", label: this.$root.$t("bet.bet_book_failed") },
+  { value: "0", label: i18n.t("bet.bet_process") },
+  { value: "4", label: i18n.t("bet.bet_book_canceled") },
+  { value: "2,3", label: i18n.t("bet.bet_book_failed") },
 ];
 
 const emit = defineEmits(["search_pre_record", "chooseTime", "time_sort",'check_change']);

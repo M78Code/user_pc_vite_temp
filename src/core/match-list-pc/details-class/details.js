@@ -145,7 +145,7 @@ export default {
   */
   sr_click_handle(match) {
     let full_url = this.get_full_sr_url(match) // seid,match.srid
-    if(!store.getters.get_global_switch.statistics_switch) return window.vue.$root.$emit(window.vue.emit_cmd.EMIT_SHOW_TOAST_CMD, window.vue.$root.$t("msg.msg_09")); 
+    if(!store.getters.get_global_switch.statistics_switch) return window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SHOW_TOAST_CMD, window.vue.i18n.t("msg.msg_09")); 
     if([1,2].includes(match.csid*1)){
       full_url = `/#/analysis_header/${match.csid}/${match.mid}` // seid,match.srid
       store.dispatch("set_active_detail", match)

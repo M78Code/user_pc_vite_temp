@@ -61,7 +61,7 @@ import lodash from 'lodash'
             if (tid && is_existtid) {
               set_home_tab_item({component: 'hot', index: 1, name: '热门'})
               set_hot_tab_item({field2: tid})
-              $root.$emit(emit_cmd.EMIT_HOME_TAB)
+              useMittEmit(MITT_TYPES.EMIT_HOME_TAB)
             }
           }
       }

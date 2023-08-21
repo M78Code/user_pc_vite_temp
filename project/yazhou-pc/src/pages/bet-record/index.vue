@@ -12,7 +12,7 @@
     <!-- 注单历史 以及时间  注单历史头 -->
     <simple-header-wapper>
       <!-- 注单历史 -->
-      <span>{{ $root.$t("common.note_single_history") }}</span>
+      <span>{{ i18n.t("common.note_single_history") }}</span>
     </simple-header-wapper>
     <div class="wrap-records" ref="record">
       <!--表格头部分 未结算已结算预约注单按钮tab-->
@@ -131,13 +131,13 @@ const toolClicked = (f) => {
     if (is_pre_bet.value) {
       params.value.size = 200;
       //TODO
-      // this.$root.$emit(
-      //   this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      // useMittEmit(
+      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //   this.params.size
       // );
     }
     // 统计未结算订单
-    this.$root.$emit(this.emit_cmd.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
+    useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
     this.getOrderList();
   } else {
     if (localStorage.getItem("time_sort_record")) {
@@ -155,8 +155,8 @@ const toolClicked = (f) => {
     if (old_page_size.value) {
       params.value.size = old_page_size.value;
       // TODO
-      //   this.$root.$emit(
-      //     this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      //   useMittEmit(
+      //     MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //     this.params.size
       //   );
       // }
@@ -215,13 +215,13 @@ const toolClicked = (f) => {
     params.value.orderBy = sort.id;
     if (old_page_size.value) {
       params.value.size = old_page_size.value;
-      // this.$root.$emit(    TODO
-      //   this.emit_cmd.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+      // useMittEmit(    TODO
+      //   MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
       //   this.params.size
       // );
     }
     // if (od_page != 1) {    TODO
-    //   this.$root.$emit(this.emit_cmd.EMIT_RECODES_QUERY_BUT_CMD);
+    //   useMittEmit(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD);
     // } else {
     //   this.getOrderList();
     // }

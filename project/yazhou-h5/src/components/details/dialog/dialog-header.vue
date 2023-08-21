@@ -47,7 +47,7 @@ export default {
     // 点击倒三角收起
     hide_dialog(){
       // 显示联赛列表传false
-      this.$root.$emit(this.emit_cmd.EMIT_IS_BOOL_DIALOG_DETAILS, false)
+      useMittEmit(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, false)
     }
   }
 }

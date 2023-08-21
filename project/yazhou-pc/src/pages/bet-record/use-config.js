@@ -18,19 +18,19 @@ export const useConfig = ({ getOrderList }) => {
   const record_time_sort = [
     {
       id: 2,
-      name: this.$root.$t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
+      name: i18n.t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
       icon: "icon-sort_settle_time",
       check_name: "bet_record.settled_time",
     },
     {
       id: 1,
-      name: this.$root.$t("bet_record.sort_by_bet_time"), //"按投注时间排序",
+      name: i18n.t("bet_record.sort_by_bet_time"), //"按投注时间排序",
       icon: "icon-sort_bet_time",
       check_name: "bet_record.bet_time",
     },
     {
       id: 3,
-      name: this.$root.$t("bet_record.sort_by_match_time"), //"按开赛时间排序",
+      name: i18n.t("bet_record.sort_by_match_time"), //"按开赛时间排序",
       icon: "icon-sort_match_time",
       check_name: "bet_record.match_time",
     },

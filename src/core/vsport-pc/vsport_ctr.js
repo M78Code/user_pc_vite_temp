@@ -37,10 +37,10 @@ export default class VsportCtr {
     // 淘汰赛tab
     this.elimination_tab = ''
     this.elimination_tabs = [
-      {key:'q8',value:this.view.$root.$t('vsport.etab1')}, // 16强
-      {key:'q4',value:this.view.$root.$t('vsport.etab2')}, // 1/4决赛
-      {key:'semifinal',value:this.view.$root.$t('vsport.etab3')}, // 半决赛
-      {key:'final',value:this.view.$root.$t('vsport.etab4')}, // 决赛
+      {key:'q8',value:this.view.i18n.t('vsport.etab1')}, // 16强
+      {key:'q4',value:this.view.i18n.t('vsport.etab2')}, // 1/4决赛
+      {key:'semifinal',value:this.view.i18n.t('vsport.etab3')}, // 半决赛
+      {key:'final',value:this.view.i18n.t('vsport.etab4')}, // 决赛
     ]
     // 禁用的淘汰赛tab
     this.elimination_disable = []
@@ -336,7 +336,7 @@ export default class VsportCtr {
       key = 'vsport.xqi'
     }
     if(no){
-      no = this.view.$root.$t(key).replace('%s',no)  
+      no = this.view.i18n.t(key).replace('%s',no)  
     }
     return no
   }
@@ -593,7 +593,7 @@ export default class VsportCtr {
     this.video_show_type = this.get_video_show_type(no_start_animation)
      if((this.video_show_type == 'result' || this.video_show_type == 'basketball_result') && this.view.$route.name=='virtual_details'){
        // 赛事结束
-       this.view.$root.$emit("virtual_match_done")
+       this.view.useMittEmit("virtual_match_done")
      }
     // 如果不是视频类型  销毁视频
     if(this.video_show_type != 'video'){
@@ -829,9 +829,9 @@ export default class VsportCtr {
     api_virtual.get_elimination_rank(params).then( res => {
       let code = _.get(res,'data.code')
       if(code == 200){
-        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),this.view.$root.$t('vsport.etab2'))
-        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),this.view.$root.$t('vsport.etab3'))
-        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),this.view.$root.$t('vsport.etab4'))
+        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),this.view.i18n.t('vsport.etab2'))
+        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),this.view.i18n.t('vsport.etab3'))
+        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),this.view.i18n.t('vsport.etab4'))
         this.final = _.get(res,'data.data.FINAL[0]') || {}
         if(is_init){
           this.info.mmp && (this.elimination_tab = this.info.mmp.toLowerCase())

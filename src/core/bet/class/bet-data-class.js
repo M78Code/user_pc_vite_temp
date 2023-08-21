@@ -4,7 +4,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 
 import * as FILEDS_MAP from "../config/fileds-map.js"
 class BetData {
-  constructor() {}
+  constructor() { }
   init_core() {
     // 当前赔率
     this.cur_odd = "eu";
@@ -280,11 +280,59 @@ this.bet_appoint_ball_head= null */
 
     }
 
+    // 根据投注类型 设置投注分类
+    switch(bet_type){
+      // vr
+      case 'vr_bet' :
+        this.set_vrtual_bet_obj({custom_id,...obj})
+        break;
+      // 常规体育
+      case 'common_bet' :
+        this.set_common_bet_obj({custom_id,...obj})
+        break;
+      // 冠军  
+      case 'guanjun_bet' :
+        this.set_guanjun_bet_obj({custom_id,...obj})
+        break;
+      // 电竞
+      case 'esports_bet' :
+        this.set_dianjing_bet_obj({custom_id,...obj})
+        break;
+
+    }
+
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
     console.error(' this.bet_read_write_refer_obj', this.bet_read_write_refer_obj)
   }
 
+  /*
+    设置 vr 投注分类
+  */
+  set_vrtual_bet_obj(obj) {
+    this.vrtual_bet_obj[obj.custom_id] = obj
+  }
+
+  /*
+  设置 常规 投注分类
+  */
+  set_common_bet_obj(obj) {
+    this.common_bet_obj[obj.custom_id] = obj
+  }
+
+    /*
+  设置 冠军 投注分类
+  */
+  set_guanjun_bet_obj(obj) {
+  this.guanjun_bet_obj[obj.custom_id] = obj
+  }
+
+  /*
+  设置 电竞 投注分类
+  */
+  set_dianjing_bet_obj(obj) {
+    this.dianjing_bet_obj[obj.custom_id] = obj
+  }
 
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData
@@ -323,7 +371,7 @@ this.bet_appoint_ball_head= null */
 
 
 
-  http_upd_data() {}
+  http_upd_data() { }
   set_bet_amount(val) {
     this.bet_amount = val;
   }

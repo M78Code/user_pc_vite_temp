@@ -12,10 +12,10 @@
     <div class="bet-record" @click.stop :style="{ bottom: -bottom + 'px' }">
       <div class="top flex flex-center">
         <!--<div class="collapse-icon"><img src="image/wwwassets/bw3/svg/arrow-bottom.svg" /></div>-->
-        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{$root.$t('bet_record.no_account')}}<span></span></p>
-        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{$root.$t('bet_record.account')}}<span></span></p>
+        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{i18n.t('bet_record.no_account')}}<span></span></p>
+        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{i18n.t('bet_record.account')}}<span></span></p>
       </div>
-      <div class="bet-tips flex flex-center">{{  $root.$t('chatroom.post_bet_info2')  }}</div>
+      <div class="bet-tips flex flex-center">{{  i18n.t('chatroom.post_bet_info2')  }}</div>
       <div class="content">
         <scroll ref="myScroll" :on-pull="onPull" v-if="list_data&&list_data.length">
           <div class="bet-content-item" v-for="(value,  index) in list_data" :key="index"
@@ -27,9 +27,9 @@
       </div>
       <div class="bet-footer flex justify-between">
         <div @click="clear_active_bet" class="cancle-button text-center yb_fontsize12 flex justify-center items-center"
-          :class="get_active_bet  ?  'cancle-button-selected'  :  null">{{  $root.$t('chatroom.clear')  }}</div>
+          :class="get_active_bet  ?  'cancle-button-selected'  :  null">{{  i18n.t('chatroom.clear')  }}</div>
         <div @click="submit_bet" class="submit-button text-center yb_fontsize16 flex justify-center items-center"
-          :class="get_active_bet  ?  'submit-button-selected'  :  null">{{  $root.$t('chatroom.post_bet2')  }}</div>
+          :class="get_active_bet  ?  'submit-button-selected'  :  null">{{  i18n.t('chatroom.post_bet2')  }}</div>
       </div>
     </div>
   </div>

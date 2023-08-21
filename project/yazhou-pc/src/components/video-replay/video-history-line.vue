@@ -1,7 +1,7 @@
 <template>
     <div ref="video_history_line" class="video-history-line" :class="[mode]">
         <div class="block-header">
-            <div class="block-title">{{ $root.$t('video.video_event_history') }}</div>
+            <div class="block-title">{{ i18n.t('video.video_event_history') }}</div>
         </div>
         <div class="video-history-main">
             <div class="progress-container">
@@ -56,12 +56,12 @@ export default {
     },
     data() {
         this.eventNameMap = {
-            corner: this.$root.$t('replay_video.corner_kick'), // 角球
-            goal: this.$root.$t('replay_video.goal'), // 进球
-            yellow_card: this.$root.$t('icon_tips.yellow_card'), // 黄牌
-            red_card: this.$root.$t('icon_tips.red_card'), // 红牌
+            corner: i18n.t('replay_video.corner_kick'), // 角球
+            goal: i18n.t('replay_video.goal'), // 进球
+            yellow_card: i18n.t('icon_tips.yellow_card'), // 黄牌
+            red_card: i18n.t('icon_tips.red_card'), // 红牌
             // 红黄牌，就是一个球员当收到第二张黄牌的时候变成红牌，其实就是红牌
-            yellow_red_card: this.$root.$t('icon_tips.red_card') // 黄红牌
+            yellow_red_card: i18n.t('icon_tips.red_card') // 黄红牌
         }
         this.historyPlayTimer = null // 历史数据轮询定时器
         return {
@@ -124,13 +124,13 @@ export default {
         // 关闭弹窗iframe
         this.closePopIframe()
         this.historyPlayTimer && clearInterval(this.historyPlayTimer)
-        this.$root.$off(this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+        this.$root.$off(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
         this.clear();
     },
     methods: {
         // 关闭弹窗iframe
         closePopIframe() {
-            this.$root.$emit('VIDEO_ZONE_EVENT_CMD', {
+            useMittEmit('VIDEO_ZONE_EVENT_CMD', {
                 cmd: 'colse',
                 val: {
                     mid: this.mid
@@ -155,9 +155,9 @@ export default {
         // 播放回放视频
         showVideoHistory(item) {
             // 静音原视频
-            this.$root.$emit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'muted'});
+            useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'muted'});
             // 禁止原视频全屏
-            this.$root.$emit('IFRAME_VIDEO_STATUS_CHANGE', {
+            useMittEmit('IFRAME_VIDEO_STATUS_CHANGE', {
                 fullscreen_disabled: true
             });
             // TODO hanmar后续处理--S
@@ -173,7 +173,7 @@ export default {
                 ret_obj = {x:rect.x,y:rect.y,w:rect.width,h:rect.height}
             }
             // 弹出新视频
-            this.$root.$emit('VIDEO_ZONE_EVENT_CMD', {
+            useMittEmit('VIDEO_ZONE_EVENT_CMD', {
                 cmd: 'play',
                 url: item.fragmentVideo,
                 rect:ret_obj,

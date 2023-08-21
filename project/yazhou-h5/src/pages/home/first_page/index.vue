@@ -50,7 +50,7 @@
                   :style="{ 'height': item.ms != 110 && show_counting_down(item) ? 'auto' : '100%' }">
                   <!--即将开赛 ms = 110-->
                   <template v-if="item.ms == 110">
-                    <div>{{ $root.$t(`ms[${item.ms}]`) }}</div>
+                    <div>{{ i18n.t(`ms[${item.ms}]`) }}</div>
                   </template>
 
                   <!--一小时内开赛 -->
@@ -61,13 +61,13 @@
 
                   <!--开赛日期(早盘) ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                   <template v-if="item.ms != 110 && !show_start_counting_down(item) && !show_counting_down(item)">
-                    <div>{{ $root.$t('list.match_no_start') }}</div>
-                    <div>{{ utils.format_time_zone(+item.mgt).Format($root.$t('time4')) }}</div>
+                    <div>{{ i18n.t('list.match_no_start') }}</div>
+                    <div>{{ utils.format_time_zone(+item.mgt).Format(i18n.t('time4')) }}</div>
                   </template>
 
                   <!--倒计时或正计时-->
                   <template v-if="item.ms != 110 && show_counting_down(item)">
-                    <counting-down-second :title="item.ms == 0 ? $root.$t('list.match_no_start') : match_period_map(item)"
+                    <counting-down-second :title="item.ms == 0 ? i18n.t('list.match_no_start') : match_period_map(item)"
                       :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item"
                       :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" home />
                   </template>
@@ -110,7 +110,7 @@
       <div class="money-wrap" @click="fetch_balance">
         <div class="balance-wrap">
           <i class="icon-balance"></i>
-          <span class="balance">{{ $root.$t('common.money') }}</span>
+          <span class="balance">{{ i18n.t('common.money') }}</span>
         </div>
         <div class="money">
           <span class="int">{{ balance_obj.int || '0' }}</span>
@@ -137,7 +137,7 @@
             <div class="item" :class="{ 'active': index == menu_index }" v-for="(item, index) in new_menu"
               :key="`menu-${index}`" @click="change_menu(index)"  v-show="calc_show2(item)">
               <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(get_lang) }">{{
-                $root.$t(`new_menu.${item.mi}`) }}</span>
+                i18n.t(`new_menu.${item.mi}`) }}</span>
               <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{ count_menu(item.sl)||'' }}</span>
             </div>
           </q-scroll-area>
@@ -150,10 +150,10 @@
               <div class="item-bg" :class="format_type(item)"></div>
               <div class="item-info" :class="{ 'is-english': get_lang == 'en' }">
                 <div class="column items-center">
-                  <!-- <span class="match-type">{{$root.$t(`new_menu.${filter_meunu_desc(item.mi)}`) }}</span> -->
+                  <!-- <span class="match-type">{{i18n.t(`new_menu.${filter_meunu_desc(item.mi)}`) }}</span> -->
                   <span class="match-type">{{ filter_meunu_desc(item.mi)}}</span>
                   <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
-                  <span class="match-label ellipsis-2-lines">{{ $root.$t('home.can_bet') }}</span>
+                  <span class="match-label ellipsis-2-lines">{{ i18n.t('home.can_bet') }}</span>
                 </div>
               </div>
             </div>
@@ -824,7 +824,7 @@ import { db } from "src/public/utils/db/index.js";
         // 设置左边菜单选中下标
         set_home_menu_index(index)
       } else {
-        $toast($root.$t('home.match_no_has'), 800)
+        $toast(i18n.t('home.match_no_has'), 800)
       }
     }
   }
@@ -856,7 +856,7 @@ import { db } from "src/public/utils/db/index.js";
         }
       });
     }else{
-      $toast($root.$t('home.match_no_has'), 800)
+      $toast(i18n.t('home.match_no_has'), 800)
     }
     return;
     if (item.count) {
@@ -893,7 +893,7 @@ import { db } from "src/public/utils/db/index.js";
           }
         });
       } else {
-        $toast($root.$t('home.match_no_has'), 800)
+        $toast(i18n.t('home.match_no_has'), 800)
       }
     }
   }

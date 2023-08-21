@@ -53,7 +53,7 @@ export default class MatchListDataClass {
    * @Description 销毁
    * @param {undefined} undefined
   */
-  destroyed(){
+  beforeUnmount(){
     this.mid_obj = null
     this.hl_obj = null
     this.ol_obj = null
@@ -460,7 +460,7 @@ export default class MatchListDataClass {
         col.ols.forEach( ol => {
           // 非投注项关盘
           if(ol.oid && ol._hs != 2 && ol.os != 3){
-            match.up_half_text = '-'+window.vue.$root.$t('common.up_half')
+            match.up_half_text = '-'+window.vue.i18n.t('common.up_half')
             is_show_cur_handicap = true
           }
         })
@@ -468,11 +468,11 @@ export default class MatchListDataClass {
     }else {
       //第一节        刚开赛
       if(mmp ==13 || mmp ==0 ){
-        match.up_half_text = '-'+window.vue.$root.$t('mmp.2.13')
+        match.up_half_text = '-'+window.vue.i18n.t('mmp.2.13')
       }
       //第三节   第二节休息
       if(mmp ==15 || mmp == 302){
-        match.up_half_text = '-'+window.vue.$root.$t('mmp.2.15')
+        match.up_half_text = '-'+window.vue.i18n.t('mmp.2.15')
       }
       is_show_cur_handicap = true
     }
@@ -915,7 +915,7 @@ export default class MatchListDataClass {
     let type = play_key == 'hps15Minutes' ? 4 : 1
     other_handicap_list = this.merge_template_data({match,handicap_list:other_handicap_list,type,play_key})
     this.coverage_match_data({other_handicap_list}, mid)
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_API_BYMIDS, {mids:[mid]});
+    window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, {mids:[mid]});
   }
   /**
    * @Description 设置其他玩法选中索引    更新玩法模板及数据
@@ -1356,7 +1356,7 @@ export default class MatchListDataClass {
       let h = String(time.getHours()).padStart(2, 0);
       let mm = String(time.getMinutes()).padStart(2, 0);
       // 根据国际化转换时间
-      return window.vue.$root.$t('time.time_date_4').replace('yy',y).replace('mm',m).replace('dd',d).replace('hh',h).replace('ii',mm);
+      return window.vue.i18n.t('time.time_date_4').replace('yy',y).replace('mm',m).replace('dd',d).replace('hh',h).replace('ii',mm);
     } else {
       return ''
     }

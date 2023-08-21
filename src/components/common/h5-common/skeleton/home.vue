@@ -35,7 +35,7 @@ const status = ref({
 const isshow = ref(true)
 
 onMounted(() => {
-  $root.$on(this.emit_cmd.EMIT_API_LOAD, api_load())
+  $root.$on(MITT_TYPES.EMIT_API_LOAD, api_load())
 })
 
 const api_load = (data) => {
@@ -45,7 +45,7 @@ const api_load = (data) => {
   }
 }
 onUnmounted(() => {
-  $root.$off(this.emit_cmd.EMIT_API_LOAD, api_load());
+  $root.$off(MITT_TYPES.EMIT_API_LOAD, api_load());
 })
 
 </script>

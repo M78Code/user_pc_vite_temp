@@ -90,7 +90,7 @@ export default {
      * @return {String} 
      */
     handicap_name() {
-      return `[${this.$root.$t('odds')[this.item_obj.marketType]}]`;
+      return `[${i18n.t('odds')[this.item_obj.marketType]}]`;
     },
     /**
      * @description: 赔率

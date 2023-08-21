@@ -48,6 +48,6 @@ const MenuData ={
       console.log('=====打印数据')
       console.log(log_data)
       let is_clog = (sessionStorage.getItem('clog') == 1)?1: ((location.href.indexOf('clog=1') != -1)?1:0);
-      // this.view.$root.$emit('SHOW_TOAST',is_clog ? '打印成功' : 'clog=1未开启')
+      // this.view.useMittEmit('SHOW_TOAST',is_clog ? '打印成功' : 'clog=1未开启')
     }
   }

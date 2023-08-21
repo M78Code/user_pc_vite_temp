@@ -143,7 +143,7 @@ const props = defineProps({
           scrollHeight: xnyouhua.scrollHeight,
           liebiao_slide: 'liebiao_slide'
         };
-        $root.$emit(emit_cmd.EMIT_MATCH_LIST_SCROLLING,params);
+        useMittEmit(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING,params);
       },500);
     }
     /**

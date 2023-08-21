@@ -10,7 +10,7 @@
         <div class="text-s">
           <p style="line-height: 0.18rem">{{ calc_text }}</p>
           <p @click="go_bet" class="go-bet">
-            {{get_main_item == 2 ? $root.$t('msg.msg_nodata_19') : $root.$t('msg.msg_nodata_05')}}
+            {{get_main_item == 2 ? i18n.t('msg.msg_nodata_19') : i18n.t('msg.msg_nodata_05')}}
           </p>
         </div>
       </div>
@@ -40,15 +40,15 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   //   ]),
   const calc_text = () => {
   if (is_limit) {
-    return $root.$t('msg.msg_nodata_22')
+    return i18n.t('msg.msg_nodata_22')
   }
   if (get_main_item == 0) {
-      return is_early ? $root.$t('msg.msg_nodata_15') : $root.$t('msg.msg_nodata_12')
+      return is_early ? i18n.t('msg.msg_nodata_15') : i18n.t('msg.msg_nodata_12')
   } else {
     if (is_early) {
-      return $root.$t('msg.msg_nodata_16')
+      return i18n.t('msg.msg_nodata_16')
     } else {
-      return get_main_item == 2 ? $root.$t('msg.msg_nodata_18') : $root.$t('msg.msg_nodata_13')
+      return get_main_item == 2 ? i18n.t('msg.msg_nodata_18') : i18n.t('msg.msg_nodata_13')
     }
   }
 }

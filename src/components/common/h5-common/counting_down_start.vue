@@ -3,7 +3,7 @@
   <!--凡是小于一个小时开赛的都显示为 * 分钟后开赛-->
   <div v-show="show" :mid="match.mid" style="color:#7d87a5">
     <div :class="{ 'counting-down-start': get_lang != 'en' }">
-      {{ $root.$t('list.after_time_start', [start_minutes]) }}
+      {{ i18n.t('list.after_time_start', [start_minutes]) }}
     </div>
   </div>
 </template>

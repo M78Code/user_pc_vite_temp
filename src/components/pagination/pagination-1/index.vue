@@ -10,13 +10,13 @@
   <div>
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
-        {{ $root.$t('bet_record.total_count') }}
+        {{ i18n.t('bet_record.total_count') }}
         <!-- 总计单数 -->
         ：
         <span class="footer-text">{{ count }}</span>
       </span>
       <span>
-        {{ toolSelected == 2 ? $root.$t('bet.bet_book_total') : $root.$t('bet_record.total_v') }}
+        {{ toolSelected == 2 ? i18n.t('bet.bet_book_total') : i18n.t('bet_record.total_v') }}
         <!-- 总投注额/预约总投资额 -->
         ：
         <span class="footer-text">{{ betTotalAmount | format_balance }}</span>
@@ -24,12 +24,12 @@
       <template v-if="recordType">
         <!-- 目前屏蔽有效流水展示 -->
         <span v-if="0">
-          {{ $root.$t('bet_record.effective_water') }}
+          {{ i18n.t('bet_record.effective_water') }}
           <!-- 有效流水 -->
           ：{{ effectiveFlow }}
         </span>
         <span>
-          {{ profit.indexOf("-") != -1 ? $root.$t('bet_record.lose') : $root.$t('bet_record.win') }}：
+          {{ profit.indexOf("-") != -1 ? i18n.t('bet_record.lose') : i18n.t('bet_record.win') }}：
           <span class="footer-text">{{ profit }}</span>
         </span>
         <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
@@ -50,19 +50,19 @@
           </template>
         </q-select>
         <span>
-          {{ $root.$t('common.page_') }}
+          {{ i18n.t('common.page_') }}
           <!-- 条/页 -->
         </span>
       </div>
 
       <div class="pagination-link">
         <span>
-          {{ $root.$t('common.goto') }}
+          {{ i18n.t('common.goto') }}
           <!-- 跳转至 -->
         </span>
         <input type="text" v-model="goPage" @blur="goToPage(goPage)" @keyup.enter="goToPage(goPage)" :max="max" />
         <span v-show="lang != 'vi'">
-          {{ $root.$t('common.page') }}
+          {{ i18n.t('common.page') }}
           <!-- 页 -->
         </span>
       </div>

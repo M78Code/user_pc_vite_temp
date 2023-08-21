@@ -7,9 +7,9 @@
   <div class="public_form">
     <!-- 头部 -->
     <div class="header">
-      <div class="col1">{{$root.$t('analysis_football_matches.player')}}</div>
-      <div class="col2">{{$root.$t('analysis_football_matches.position')}}</div>
-      <div class="col3">{{ $root.$t('analysis_football_matches.reason') }}</div>
+      <div class="col1">{{i18n.t('analysis_football_matches.player')}}</div>
+      <div class="col2">{{i18n.t('analysis_football_matches.position')}}</div>
+      <div class="col3">{{ i18n.t('analysis_football_matches.reason') }}</div>
     </div>
     <!-- 主内容 -->
     <template v-if="_.get(list_data, 'length', 0) > 0">

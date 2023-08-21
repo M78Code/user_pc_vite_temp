@@ -70,7 +70,7 @@ class userCtr {
     //  调用用户接口，更新 域名流程
     let oss = get(res, "data.data.oss", {});
     oss.gr = get(res, "data.data.gr", "").toUpperCase();
-    window.vue.$root.$emit("set_getuserinfo_oss_api", oss);
+    window.vue.useMittEmit("set_getuserinfo_oss_api", oss);
     //上传数据
     infoUpload.upload_data(get(res, "data.data", {}));
   }
@@ -544,7 +544,7 @@ class userCtr {
     //   window.vue.$store.dispatch('set_theme',theme)
     // }
     // window.vue.$store.dispatch('init_loading_theme')
-    window.vue.$root.$emit(window.vue.emit_cmd.EMIT_MX_COLLECT_COUNT2_CMD);
+    window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD);
   }
   /**
    * @Description 设置网站标题

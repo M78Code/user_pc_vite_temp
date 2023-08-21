@@ -202,10 +202,10 @@ export default {
         this.y=this.y+e.data.val.y;
       } else if(e.data.cmd == 'video_replay_back_but_event'){
         // 设置偏移量
-        this.$root.$emit('VIDEO_ZONE_EVENT_CMD_END',e.data);
+        useMittEmit('VIDEO_ZONE_EVENT_CMD_END',e.data);
       } else if(e.data.cmd == 'video_replay_full_srceen_event'){
         // 设置偏移量
-        this.$root.$emit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
+        useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
         clearTimeout(this.open_full_video_timer);
         this.open_full_video_timer = setTimeout(() => {
           if(_.get(e.data,'val.type') == 1 && this.play_data){
@@ -228,7 +228,7 @@ export default {
         }, 500);
         
       } else if(e.data.cmd == 'replay_video_get_status_cmd'){
-        this.$root.$emit('IFRAME_VIDEO_MSG_EVENT', {cmd:'replay_video_status_cmd',val:{show:this.show}});
+        useMittEmit('IFRAME_VIDEO_MSG_EVENT', {cmd:'replay_video_status_cmd',val:{show:this.show}});
         // this.send_message({cmd:'replay_video_status_cmd',val:{show:this.show}})
       }
     },
@@ -258,7 +258,7 @@ export default {
       // 获取命令
       let cmd = _.get(obj, 'cmd');
       let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.vx_get_user,'oss.live_pc');
-      let lang_obj={full_screen:this.$root.$t('video.full_screen_mode'), back:this.$root.$t('common.back'), back_live:this.$root.$t('video.back_live')};
+      let lang_obj={full_screen:i18n.t('video.full_screen_mode'), back:i18n.t('common.back'), back_live:i18n.t('video.back_live')};
       switch (cmd) {
         case 'play': // 播放
           // window.BUILDIN_CONFIG.live_domains[0]='http://127.0.0.1:5500/video/pc/final'
@@ -389,8 +389,8 @@ export default {
       // 销毁视频
       this.destroy_video();
       this.video_url = '';
-      this.$root.$emit('VIDEO_ZONE_EVENT_CMD_END',{cmd:"play_end",val:this.play_data});
-      this.$root.$emit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
+      useMittEmit('VIDEO_ZONE_EVENT_CMD_END',{cmd:"play_end",val:this.play_data});
+      useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
     },
     /**
      * @Description 鼠标移入 

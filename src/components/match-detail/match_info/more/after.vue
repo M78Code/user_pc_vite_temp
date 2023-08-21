@@ -59,14 +59,14 @@
         </span>
 
         <!-- 11手球，16水球、15曲棍球、14橄榄球 -->
-        <div class="add-stage" v-if="['11','16','15','14'].includes(_.get(match_info, 'csid'))">{{$root.$t('common.half_')}}</div>
+        <div class="add-stage" v-if="['11','16','15','14'].includes(_.get(match_info, 'csid'))">{{i18n.t('common.half_')}}</div>
         <!-- 半场 -->
         <!-- 4冰球、11手球16水球、15曲棍球、14橄榄球 加时赛、点球大战 -->
         <div class="hockey_add" v-if="['4','11','16','15','14'].includes(_.get(match_info, 'csid'))">
           <!-- 加时 -->
-          <span v-if="_.get(match_info,'msc.S7')">{{$root.$t('common.add_time')}}</span>
+          <span v-if="_.get(match_info,'msc.S7')">{{i18n.t('common.add_time')}}</span>
           <!-- 点球 -->
-          <span v-if="_.get(match_info,'msc.S170')">{{$root.$t('icon_tips.penalty_kick')}}</span>
+          <span v-if="_.get(match_info,'msc.S170')">{{i18n.t('icon_tips.penalty_kick')}}</span>
         </div>
         <!-- 冰球加时赛、点球大战 -->
 
@@ -563,12 +563,12 @@ export default {
     * @return {undefined} undefined
     */
     stage_name(){
-      let str = this.$root.$t('common.bureau')//"局"
+      let str = i18n.t('common.bureau')//"局"
       switch(this.match_info.csid){
         case '3': str = 'R';break;//3棒球 ’R'
-        case '5': str = this.$root.$t('common.dish');break;//5网球 ‘赛盘’
-        case '9': str = this.$root.$t('common.bureau');break;//9排球 ‘盘’
-        default: str = this.$root.$t('common.bureau');break;//"局"
+        case '5': str = i18n.t('common.dish');break;//5网球 ‘赛盘’
+        case '9': str = i18n.t('common.bureau');break;//9排球 ‘盘’
+        default: str = i18n.t('common.bureau');break;//"局"
       }
       return str
     },
@@ -578,20 +578,20 @@ export default {
     * @return {undefined} 结算文字
     */
     result_name(){
-      let str = this.$root.$t('common.total')//'总分'
+      let str = i18n.t('common.total')//'总分'
       switch(this.match_info.csid){
         case '3': str = 'H';break;//3棒球 ’H'
-        case '5': str = this.$root.$t('common.score_');break;//5网球 '得分'
-        case '11': str = this.$root.$t('icon_tips.overall');break;//11手球 全场
-        case '16': str = this.$root.$t('icon_tips.overall');break;//16水球 全场
-        case '15': str = this.$root.$t('icon_tips.overall');break;//15曲棍球 全场
-        case '14': str = this.$root.$t('icon_tips.overall');break;//14橄榄球 全场
-        default: str = this.$root.$t('common.total');break;//'总分'
+        case '5': str = i18n.t('common.score_');break;//5网球 '得分'
+        case '11': str = i18n.t('icon_tips.overall');break;//11手球 全场
+        case '16': str = i18n.t('icon_tips.overall');break;//16水球 全场
+        case '15': str = i18n.t('icon_tips.overall');break;//15曲棍球 全场
+        case '14': str = i18n.t('icon_tips.overall');break;//14橄榄球 全场
+        default: str = i18n.t('common.total');break;//'总分'
       }
       return str
     }
   },
-  destroyed() {
+  beforeUnmount() {
     clearTimeout(this.scrollTimer);
   }
 };

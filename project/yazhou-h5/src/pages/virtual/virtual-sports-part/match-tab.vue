@@ -82,9 +82,9 @@ export default defineComponent({
         useMittOn.on(MITT_KEY.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
         useMittOn.on(MITT_KEY.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
       ]
-      // $root.$on(emit_cmd.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
-      // $root.$on(emit_cmd.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);
-      // $root.$on(emit_cmd.EMIT_INGAME_RESULT_SHOW_END,ingame_result_show_end);
+      // useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
+      // useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);
+      // useMittOn(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END,ingame_result_show_end);
     })
     onUnmounted(() => {
       emitters.map((x) => x())

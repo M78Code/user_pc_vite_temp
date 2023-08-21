@@ -19,7 +19,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('list.corner')}}</q-tooltip>
+          >{{i18n.t('list.corner')}}</q-tooltip>
           <!-- 角球 -->
           <div class="result-icon rs_jiao_quan"></div>
         </div>
@@ -29,7 +29,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.yellow_card')}}</q-tooltip>
+          >{{i18n.t('icon_tips.yellow_card')}}</q-tooltip>
           <!-- 黄牌 -->
           <div class="result-icon yellow_card"></div>
         </div>
@@ -39,7 +39,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.red_card')}}</q-tooltip>
+          >{{i18n.t('icon_tips.red_card')}}</q-tooltip>
           <!-- 红牌 -->
           <div class="result-icon red_card"></div>
         </div>
@@ -49,7 +49,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.penalty_kick')}}</q-tooltip>
+          >{{i18n.t('icon_tips.penalty_kick')}}</q-tooltip>
           <!-- 点球 -->
           <div class="result-icon rs_dian"></div>
         </div>
@@ -59,7 +59,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('common.half_1')}}</q-tooltip>
+          >{{i18n.t('common.half_1')}}</q-tooltip>
           <!-- 上半场 -->
           <div class="result-icon rs_jin_shang"></div>
         </div>
@@ -69,7 +69,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.overall')}}</q-tooltip>
+          >{{i18n.t('icon_tips.overall')}}</q-tooltip>
           <!-- 全场 -->
           <div class="result-icon rs_jin_quan"></div>
         </div>
@@ -79,7 +79,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.overtime_goal')}}</q-tooltip>
+          >{{i18n.t('icon_tips.overtime_goal')}}</q-tooltip>
           <!-- 加时赛进球 -->
           <div class="result-icon add_time"></div>
         </div>
@@ -88,7 +88,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$root.$t('icon_tips.penalty_shootout')}}</q-tooltip>
+          >{{i18n.t('icon_tips.penalty_shootout')}}</q-tooltip>
           <!-- 点球大战进球 -->
           <icon class="result-icon" name="icon-jia-dian" size="15px"></icon>
         </div>
@@ -108,7 +108,7 @@
           <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif"></div>
             <!-- 进球 -->
-            <div class="gif-text">{{$root.$t('common.goal')}}</div>
+            <div class="gif-text">{{i18n.t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
           <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
@@ -152,7 +152,7 @@
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
             <!-- 进球 -->
-            <div class="gif-text">{{$root.$t('common.goal')}}</div>
+            <div class="gif-text">{{i18n.t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
           <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="~public/image/yabo/svg/rs_hong.svg">
@@ -253,7 +253,7 @@ export default {
     },
     start_timer() {
       this.$root.$on(
-        this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
+        MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
         this.start_timer_loop
       );
     },
@@ -278,13 +278,13 @@ export default {
     this.hide_home_red = this.debounce(this.hide_home_red,5000)
     this.hide_away_red = this.debounce(this.hide_away_red,5000)
   },
-  destroyed() {
+  beforeUnmount() {
     this.debounce_throttle_cancel(this.hide_home_goal);
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
     this.$root.$off(
-      this.emit_cmd.EMIT_UPD_TIME_REFRESH_CMD,
+      MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,
       this.start_timer_loop
     );
   },

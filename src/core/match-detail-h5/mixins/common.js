@@ -21,7 +21,7 @@ export default {
     amount_format(value,min){
       let param = {};
       min = min || 100000;
-      let k = 10000, sizes = ['',this.$root.$t("bet.wan"),this.$root.$t("bet.wanwan"),this.$root.$t("bet.wanyi")], i;
+      let k = 10000, sizes = ['',i18n.t("bet.wan"),i18n.t("bet.wanwan"),i18n.t("bet.wanyi")], i;
       if(value < min ){
         param.value = value;
         param.unit = '';

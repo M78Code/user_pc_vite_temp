@@ -11,7 +11,7 @@
         <div class="filter-button" v-if="store_user.settleSwitch == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+            {{ i18n.t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
