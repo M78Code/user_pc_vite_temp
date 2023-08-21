@@ -10,7 +10,7 @@
   </div>
 </template>
   <script setup>
-import "./src/boot/globel-mitt";
+import "./src/core/globel-mitt";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
 import { GetUrlParams } from "src/core/utils/";

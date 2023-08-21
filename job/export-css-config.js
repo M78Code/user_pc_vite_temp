@@ -57,17 +57,16 @@ const getAllFile = function (dir) {
  */
 const get_css_config = async (css_params) => {
   try {
-    const merchant_css_config = {
-      global: Object.keys(css_params["global"]),
-      component: {},
-    };
-    for (const key in css_params.component) {
-      merchant_css_config.component[key] = Object.values(
-        css_params.component[key]
-      );
+    let merchant_css_config = {};
+    for (const key in css_params) {
+      merchant_css_config[key] = Object.keys(css_params[key]);
     }
     write_file(
       file_path,
+      `export default  ` + JSON.stringify(merchant_css_config)
+    );
+    write_file(
+      write_folder + "index.js",
       `export default  ` + JSON.stringify(merchant_css_config)
     );
     // diff_css_local(merchant_css_config);
@@ -91,10 +90,7 @@ const diff_css_local = (merchant_css_config) => {
     const file_name = file_path.split("/").pop().replace(".js", "");
     import("../" + file_path.replace(/\\/g, "/")).then((res) => {
       if (
-        !lodash.hasIn(
-          merchant_css_config.component[file_name],
-          Object.keys(res.default)
-        )
+        !lodash.hasIn(merchant_css_config[file_name], Object.keys(res.default))
       ) {
         process.emit(1);
       }
@@ -121,16 +117,14 @@ const get_config_info = async () => {
 if (ENABLE_TEST) {
   get_css_config({
     global: {
-      test: 1,
+      "text-color": "#fff",
     },
-    component: {
-      activity: { test: 1 },
-      analysis: { test: 1 },
-      chatroom: { test: 1 },
-      match: { test: 1 },
-      media: { test: 1 },
-      "text-color": { test: 1 },
-    },
+    activity: { "text-color": "#fff" },
+    analysis: { "text-color": "#fff" },
+    chatroom: { "text-color": "#fff" },
+    match: { "text-color": "#fff" },
+    media: { "text-color": "#fff" },
+    "text-color": { "text-color": "#fff" },
   });
 } else {
   // 获取 服务器上 当前商户的 版本配置
