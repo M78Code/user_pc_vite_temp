@@ -767,7 +767,7 @@ export default defineComponent({
       this.reload_create_fun();
       // iframe视频参数时间戳
       this.iframe_rdm = new Date().getTime()
-      this.$root.$on(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
+      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, this.video_volume);
 
       // 监听精彩回放iframe传来的消息
       window.addEventListener("message", this.handle_replay_message);
@@ -778,7 +778,7 @@ export default defineComponent({
       // 原mounted 
       this.set_zhiding_info( false )
       this.set_video_zhiding( false )
-      this.$root.$on(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
+      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,this.icon_click_lvs);
       this.mapFrame = this.$refs.iframe
     });
     onUnmounted(() => {

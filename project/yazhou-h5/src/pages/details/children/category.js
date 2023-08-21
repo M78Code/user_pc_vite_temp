@@ -863,9 +863,9 @@ export const category_info = () => {
       useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
         .off,
     ];
-    // $root.$on(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-    // $root.$on(MITT_TYPES.EMIT_REF_API, initEvent);
-    // $root.$on(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+    // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
+    // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
+    // useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
   };
   // 移除相应监听事件
   const off_listeners = () => {

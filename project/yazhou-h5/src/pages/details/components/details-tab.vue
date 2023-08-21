@@ -159,9 +159,9 @@ export default defineComponent({
         useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
         useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
       ]
-      // $root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-      // $root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // $root.$on(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
+      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
     };
     // 移除相应监听事件
     const off_listeners = () => {

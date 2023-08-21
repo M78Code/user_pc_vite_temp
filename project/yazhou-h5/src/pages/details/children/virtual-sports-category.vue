@@ -232,7 +232,7 @@ export default defineComponent({
       set_fewer(1);
       // #TODO emit 
       emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
-      // $root.$on(MITT_TYPES.EMIT_REF_API, initEvent);
+      // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
 
       if($route.query.mid || $route.name == 'virtual_sports'){
         init_vsport();
@@ -261,7 +261,7 @@ export default defineComponent({
       // $emit('top_menu_change', false)
       // #TODO emit 
       emitters.push(useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off);
-      // $root.$on(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
+      // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
       //函数防抖 在500毫秒内只触发最后一次需要执行的事件
       socket_upd_list = debounce(socket_upd_list, 500);
 

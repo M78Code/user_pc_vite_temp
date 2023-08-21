@@ -42,7 +42,7 @@ export default defineComponent({
       emitters = [
         useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
       ]
-      // $root.$on(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
+      // useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
     },);
     // #TODO vuex 
     // computed: {

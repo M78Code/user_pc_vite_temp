@@ -71,8 +71,8 @@ export default {
     // 延时器
     this.timer1_ = null;
     this.timer_ = null;
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, this.initEvent)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, this.initEvent)
 
     this.initEvent();
     this.play_list()
