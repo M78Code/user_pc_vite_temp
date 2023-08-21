@@ -1,4 +1,4 @@
-import { ref, provide, computed, reactive } from "vue";
+import { ref, provide, computed, reactive, beforeUnmount } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash';
 
@@ -13,6 +13,7 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 import MatchListData from "src/core/match-data-class/match-list-data-class.js";
 import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
 import video from "src/core/video/video.js";
+import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
 import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
@@ -1267,9 +1268,9 @@ const match_list = {
 		},
 	},
 	mounted() {
-		this.$utils.load_video_resources();
+		load_video_resources();
 	},
-	beforeUnmount() {
+	beforeUnmount(){
 		clearTimeout(this.axios_debounce_timer);
 		clearTimeout(axios_debounce_timer2.value);
 		clearInterval(check_match_last_update_timer_id.value);
@@ -1283,28 +1284,28 @@ const match_list = {
 		this.debounce_throttle_cancel();
 		this.$root.$off("match_list_show_mids_change", show_mids_change());
 		this.destroyed = true;
-		this.$root.$off(
+		useMittOn(
 			MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD,
 			update_collect_data
-		);
-		this.$root.$off(
+		).off();
+		useMittOn(
 			MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD,
 			mx_collect_count()
-		);
+		).off();
 		// 站点 tab 休眠状态转激活
-		this.$root.$off(
+		useMittOn(
 			MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
 			emit_site_tab_active()
-		);
+		).off();
 		clearTimeout(this.virtual_list_timeout_id);
 		clearTimeout(this.switch_timer_id);
 		clearTimeout(get_match_list_timeid.value);
 		// 调用列表接口
-		this.$root.$off(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
-		this.$root.$off(MITT_TYPES.EMIT_API_BYMIDS, api_bymids());
-		this.$root.$off(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match());
+		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
+		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
 		match_list_card = {};
 		timer_obj.value = {};
-	},
+	}
 };
 export default match_list;
