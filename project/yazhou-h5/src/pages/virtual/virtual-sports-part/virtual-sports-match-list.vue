@@ -68,11 +68,11 @@ export default defineComponent({
 
     onMounted(() => {
       // #TODO emit
-      // $root.$on(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
+      // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
     })
     onUnmounted(() => {
       // #TODO emit
-    // $root.$off(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle)
+    // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle)
     })
     /**
      * 切换赛事

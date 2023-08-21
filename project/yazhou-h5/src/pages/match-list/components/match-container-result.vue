@@ -125,6 +125,7 @@
 import { computed, onUnmounted, onMounted } from "vue"
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 
 const props = defineProps({

@@ -128,6 +128,7 @@ import { computed, onUnmounted, ref } from 'vue'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { i18n } from 'src/boot/i18n.js'
 import data_pager from "project_path/src/components/common/data-pager.vue"
 
 const store_state = store.getState()

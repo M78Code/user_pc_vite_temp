@@ -21,23 +21,17 @@
   </div>
 </template>
 <script setup>
-import { computed, defineProps, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { defineProps, onMounted } from 'vue';
 import DateTab from "src/public/components/tab/date-tab.vue";
 import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BaseData from 'src/core/utils/base-data/base-data.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
-import { other_play_name_to_playid } from 'src/core/match-list-pc/data-class-ctr/conifg/index.js';
-import store from 'src/store-redux/index.js'
 import { useI18n } from 'vue-i18n'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-let state = store.getState()
 const { t } = useI18n();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const currentIndex = ref(0);
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);
 const menus_i18n_map = ref(BaseData.menus_i18n_map);
@@ -92,6 +86,7 @@ const sport_click = (item) => {
   // 设置   请求  列表结构  API 参数的  值
   // NewMenu.set_match_list_api_config(config);
 }
+
 /**
  * @Description 日期菜单点击
  * @param {undefined} undefined
@@ -102,6 +97,7 @@ const tab_click = (obj) => {
     return;
   }
 }
+
 </script>
 <style lang="scss" scoped>
 .c-esports-header {
