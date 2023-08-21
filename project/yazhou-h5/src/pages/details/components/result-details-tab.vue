@@ -61,7 +61,7 @@ export default {
   },
   created() {
     // 监听 刷新 注单记录----请求
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
+    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, this.update_order_list)
   },
   computed:{
     ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", 'get_user']),

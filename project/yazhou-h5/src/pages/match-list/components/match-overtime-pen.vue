@@ -95,6 +95,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/core/match-constant/config/play-title'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
  // TODO: 其他模块得 store  待添加

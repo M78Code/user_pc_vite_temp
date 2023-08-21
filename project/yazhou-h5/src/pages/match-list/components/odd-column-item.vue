@@ -62,6 +62,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 
 // TODO: 其他模块得 store  待添加

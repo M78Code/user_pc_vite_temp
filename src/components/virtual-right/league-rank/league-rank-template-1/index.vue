@@ -50,7 +50,8 @@ export default defineComponent({
   setup(props, evnet) {
     const data = reactive({
       // 是否是内嵌版
-      is_iframe:window.is_iframe,
+      // is_iframe:window.is_iframe,
+      is_iframe: false,
       // fixed 定位时距离顶部高度
       titleTop: 0,
       // 吸顶后的宽度
@@ -70,7 +71,7 @@ export default defineComponent({
     );
     onMounted(() => {
       // 获取视频区高度
-      $root.$on("virtual_right_list_header_height", getHeaderHeight)
+      useMittOn("virtual_right_list_header_height", getHeaderHeight)
       vsport_ctr.set_league_rank_list();
     })
     /**
@@ -88,7 +89,7 @@ export default defineComponent({
     };
     onUnmounted(() => {
       vsport_ctr.league_rank_list = [];
-      $root.$off("virtual_right_list_header_height", getHeaderHeight)
+      useMittOn("virtual_right_list_header_height", getHeaderHeight)
     })
     return {
       ...toRefs(data),

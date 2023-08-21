@@ -259,7 +259,7 @@ export default defineComponent({
         component_data.emitters = [
           useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score).off,
         ]
-        // $root.$on(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score);
+        // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE, updata_item_score);
       }
       // 切换玩法集的时候判断全局收起时 或者该玩法默认收起时:加上下划线
       // if(get_fewer == 2 || item_data.hshow == 'No'){
@@ -270,7 +270,7 @@ export default defineComponent({
       // 滚动时隐藏罚牌/角球等说明弹窗
       // #TODO emit 
       component_data.emitters.push(useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off)
-      // $root.$on(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
 
       // 点击事件防抖处理
       bet_click_ = debounce(bet_click_, 450, { 'leading': true, 'trailing': false })
@@ -693,8 +693,8 @@ export default defineComponent({
     onUnmounted(() => {
       // #TODO emit 
       emitters.map((x) => x())
-      // $root.$off(MITT_TYPES.EMIT_CHANGE_BASE_SCORE);
-      // $root.$off(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler)
+      // useMittOn(MITT_TYPES.EMIT_CHANGE_BASE_SCORE).off();
+      // useMittOn(MITT_TYPES.EMIT_HIDE_GAMEPLAY_TITLE, hide_gameplay_titlehandler).off()
       debounce_throttle_cancel(bet_click_);
       clearTimeout(component_data.timer1_)
       clearTimeout(component_data.timer2_)
