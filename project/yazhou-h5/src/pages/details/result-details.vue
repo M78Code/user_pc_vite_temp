@@ -140,16 +140,16 @@ export default {
     // 默认加载赛事详情页面接口getMatchDetail
     this.get_match_detail_info()
     // 监听是否下拉联赛列表
-    this.$root.$on(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
+    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, this.changge_bool);
     // 监听调用赛事详情页面接口
-    this.$root.$on(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
-    this.$root.$on(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show);
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, this.get_match_detail_info);
+    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,this.ana_show);
 
-    this.$root.$on(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
+    useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
       this.skeleton.list = true
     });
 
-    this.$root.$on(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
+    useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       this.skeleton.changeTab = true
     });
 

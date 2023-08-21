@@ -31,6 +31,7 @@
 import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import { i18n } from 'src/boot/i18n.js'
 
 const props = defineProps(['detail_data'])
 

@@ -112,7 +112,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { get_match_status } from 'src/core/utils/index.js'
-
+import { utils_info } from 'src/core/utils/match-list-utils.js';
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(this.match_list_card, `all_card_obj.mid_${this.mid}`, {}));
 const { t } = useI18n();
@@ -308,7 +308,7 @@ const get_bet_width = (index, length) => {
     } else if (length == 2) {
       bet_width = bet_width * 3
     } else {
-      if (window.is_iframe) {
+      if (utils_info.is_iframe) {
         if ([0, 3].includes(index)) {
           bet_width = this.match_list_tpl_size.bet_width - 4
         } else {
