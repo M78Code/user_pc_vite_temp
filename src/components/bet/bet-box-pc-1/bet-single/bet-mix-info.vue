@@ -3,14 +3,14 @@
 -->
 <template>
   <div class="c-bet-mix-info">
-    <template v-for="(item, index) in vx_get_bet_list">
+    <template v-for="(item, index) in BetData.bet_list">
       <!---串关投注项部分-->
       <bet-mix-item
         
         :id="item"
         :item_obj="item"
         :key="`${item}_${index}`"
-        :class="{'bet-mix-item-first': (index==0 && vx_get_bet_list.length>1), 'bet-mix-item-one': (index==0 && vx_get_bet_list.length==1)}"
+        :class="{'bet-mix-item-first': (index==0 && BetData.bet_list.length>1), 'bet-mix-item-one': (index==0 && BetData.bet_list.length==1)}"
         :ref="`bet-mix-item-${index}`"
       ></bet-mix-item>
     </template>
@@ -24,16 +24,16 @@
       ></bet-mix-result>
     </template>
     <template v-else>
-      <div id="bet_input_defaut_one" v-if="vx_get_bet_s_list.length > 0">
+      <div id="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
         <!--第一个输入框的-->
         <bet-mix-input
           ref="bet-mix-input-0"
           class="bet-input"
           :index="0"
           
-          :id="vx_get_bet_s_list[0]"
-          :key="`0-${vx_get_bet_s_list[0]}`"
-          v-if="vx_get_bet_list.length>1"          
+          :id="BetData.bet_s_list[0]"
+          :key="`0-${BetData.bet_s_list[0]}`"
+          v-if="BetData.bet_list.length>1"          
         ></bet-mix-input>
       </div>
     </template>

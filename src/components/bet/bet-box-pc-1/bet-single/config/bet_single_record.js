@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 单关投注记录 正常
  */
-import { mapGetters } from "vuex";
+
 import betting from "src/public/mixins/betting/betting.js";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
 export default {
@@ -94,14 +94,7 @@ export default {
     }
   },  
   computed: {
-    ...mapGetters({
-      vx_cur_odd: "get_cur_odd",   //当前赔率
-      vx_cur_menu_type: "get_cur_menu_type",  // 当前菜单类型
-      get_menu_obj: "get_menu_obj",   // 菜单对象
-      vx_get_theme: "get_theme",   // 皮肤
-      vx_get_bet_single_obj: "get_bet_single_obj",   // 单关对象
-      lang: "get_lang"  // 国际化
-    }),
+
     /**
      * @description: 是否为印尼盘
      * @param {undefined} undefined
@@ -150,7 +143,7 @@ export default {
      * @return {string} 处理后的赛事时间
      */
     match_time() {
-      let obj_bs = _.get(this.vx_get_bet_single_obj,`${this.id}.bs`);
+      let obj_bs = _.get(this.BetData.bet_single_obj,`${this.id}.bs`);
       //是不是个普通对象
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;

@@ -5,7 +5,7 @@
 	<q-card flat class="relative-position bet-multiple bet-card"
   >
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <div class="cathectic-appoint" v-if="!_.isEmpty(vx_get_bet_appoint_obj)"></div>
+    <div class="cathectic-appoint" v-if="!_.isEmpty(BetData.bet_appoint_obj)"></div>
 		<q-card-section>
       <!--竖线以及多项单注-->
 			<div class="row">
@@ -18,13 +18,13 @@
       <!--单关数量以及输入框-->
 			<div class="row bet-multiple-input yb-flex-nowrap">
 				<div class="col bet-count">
-          <span>{{vx_get_bet_single_list.length}}</span><span class="operation-symbol">×</span>
+          <span>{{BetData.bet_single_list.length}}</span><span class="operation-symbol">×</span>
         </div>
 				<div class="col-auto right-input" :data-check-money="view_ctr_obj.single_range_money">
           <!--投注金额输入框-->
           <currency-input
-            :id="`but-${vx_get_bet_single_list.length}`"
-            :ref="'but-input-'+vx_get_bet_single_list.length"
+            :id="`but-${BetData.bet_single_list.length}`"
+            :ref="'but-input-'+BetData.bet_single_list.length"
             class="bet-input input-border"
             :class="{'input-money': !is_empty_money,'input-border-red':![-4,0].includes(view_ctr_obj.single_range_money)}"
             :placeholder="`${i18n.t('bet.money_range')} ${ min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"

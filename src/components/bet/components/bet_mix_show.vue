@@ -187,7 +187,7 @@
 </template>
 
 <script setup>
-// import { mapMutations, mapGetters } from "vuex";
+
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 // import betting from 'src/project/mixins/betting/betting.js';
 import store from "src/store-redux/index.js";
@@ -828,7 +828,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
       ele.classList.toggle('money-span3')
     }
   }, 700);
-},
+}
 /**
 *@description 删除一个投注项
 *@param {String} id_ 投注项id或者坑位id

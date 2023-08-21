@@ -14,7 +14,7 @@
       :item_obj="item"
       v-for="(item, index) in view_ctr_obj.order_detail_data"
       :key="item.playOptionsId"
-      :class="{'bet-mix-record-item-first': (index==0 && vx_get_bet_list.length>1),  'bet-mix-record-item-last': ((index+1)==vx_get_bet_list.length && vx_get_bet_list.length>1)}"
+      :class="{'bet-mix-record-item-first': (index==0 && BetData.bet_list.length>1),  'bet-mix-record-item-last': ((index+1)==BetData.bet_list.length && BetData.bet_list.length>1)}"
     ></bet-mix-record-item>
     <!--投注结果部分-->
     <bet-mix-result 

@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 串关投注项组件minxin 正常
  */
-import { mapGetters, mapActions } from "vuex";
+
 import betting from "src/public/mixins/betting/betting.js";
 export default {
   name: "bet-mix-item",
@@ -39,19 +39,19 @@ this.handle_generat_emitters()
     //更新主客队信息  
     this.update_home_away();
     // 赛事需要更新并且投注项列表中有多余一个投注项
-    if(this.match_update && this.vx_get_bet_list.length > 1) {
+    if(this.match_update && this.BetData.bet_list.length > 1) {
       let self = this;
       clearTimeout(this.timer_obj[`created_${this.id}`]);
       // 更新标志3s后恢复初始值
       this.timer_obj[`created_${this.id}`] = setTimeout(() => {
         self.match_update = false;
-        let obj = _.cloneDeep(self.vx_get_bet_obj[self.id]);
+        let obj = _.cloneDeep(self.BetData.bet_obj[self.id]);
         if(obj) {
           obj.key = self.id;
           if(obj.cs) {
             obj.cs.match_update = false;
           }
-          self.vx_bet_obj_add_attr(obj);
+          self.BetDataCtr.bet_obj_add_attr(obj);
         }      
       }, 3000);
     }
@@ -88,18 +88,7 @@ this.handle_generat_emitters()
     }
   },
   computed: {
-    ...mapGetters({
-      vx_get_bet_list: "get_bet_list", // 串关列表
-      vx_get_bet_obj: "get_bet_obj",  // 串关列表对应对象
-      vx_is_bet_single: "is_bet_single",  //单关
-      vx_cur_menu_type: "get_cur_menu_type",  //当前主菜单
-      vx_get_cur_odd: "get_cur_odd", //当前赔率
-      vx_get_lang_change: "get_lang_change", // 国际化语言改变
-      vx_get_bet_single_list: "get_bet_single_list",  // 单关列表
-      vx_get_is_bet_merge: "get_is_bet_merge", // 是否合并
-      vx_get_theme: "get_theme", // 主题皮肤
-      lang: "get_lang" // 国际化语言
-    }),
+
     /**
      * @description: 赛事类型 match_type: 3 冠军赛
      * @param {undefined} undefined
@@ -107,7 +96,7 @@ this.handle_generat_emitters()
      */
     match_type() {
       // 默认为普通赛
-      return _.get(this.vx_get_bet_obj,`${this.id}.cs.match_type`);
+      return _.get(this.BetData.bet_obj,`${this.id}.cs.match_type`);
     },
     /**
      * @description: 赛事状态 0未开赛 滚球:进行中
@@ -115,7 +104,7 @@ this.handle_generat_emitters()
      * @return {undefined}
      */
     market_type() {
-      return _.get(this.vx_get_bet_obj, `${this.id}.cs.market_type`);
+      return _.get(this.BetData.bet_obj, `${this.id}.cs.market_type`);
     },
     /**
      * @description: 盘口和赔率是否一起变化
@@ -166,7 +155,7 @@ this.handle_generat_emitters()
    */
     handicap_name() {
       // 获取赔率支持的类型
-      let hsw = _.get(this.vx_get_bet_obj,`${this.id}.bs.hps[0].hsw`);
+      let hsw = _.get(this.BetData.bet_obj,`${this.id}.bs.hps[0].hsw`);
       // 盘口名称和盘口值映射
       if(hsw) {
         let odds_table = {
@@ -178,9 +167,9 @@ this.handle_generat_emitters()
           ID: '6'
         }
         // 盘口名称值存在
-        if(hsw.includes(odds_table[this.vx_get_cur_odd])) {
+        if(hsw.includes(odds_table[this.BetData.cur_odd])) {
           // 盘口类型
-          return `[${i18n.t('odds')[this.vx_get_cur_odd]}]`;
+          return `[${i18n.t('odds')[this.BetData.cur_odd]}]`;
         }
       }
       // 欧洲盘
@@ -201,7 +190,7 @@ this.handle_generat_emitters()
      * @return {undefined}
      */
     has_handicap_value() {
-      let bet_obj = this.vx_get_bet_obj[this.id];
+      let bet_obj = this.BetData.bet_obj[this.id];
       if(bet_obj) {
         return _.trim(_.get(bet_obj, 'cs.handicap_value')) !== '';
       }
@@ -251,7 +240,7 @@ this.handle_generat_emitters()
      * @returns {number} 下注数量 默认0
      */
     bet_item_count() {
-      return this.vx_get_bet_list.length || 0;
+      return this.BetData.bet_list.length || 0;
     },
     /**
      * @description:赛事时间
@@ -259,7 +248,7 @@ this.handle_generat_emitters()
      * @returns {string} 格式化后的时间
      */
     match_time() {
-      let obj_bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
+      let obj_bs = _.get(this.BetData.bet_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
         let date,month,day,hour,minute;
         let format_str = BetCommonHelper.format_str;
@@ -301,7 +290,7 @@ this.handle_generat_emitters()
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-    vx_get_cur_odd() {
+    "BetData.cur_odd"() {
       this.is_change_odds = true;
     },
     /**
@@ -379,7 +368,7 @@ this.handle_generat_emitters()
     active: {
       handler(new_){
         // 当前是单关时不做任何处理
-        if(this.vx_is_bet_single) return;
+        if(this.BetDataCtr.is_bet_single) return;
         // 是否有效
         let is_effect;
         // 如果投注项状态是开盘或者是锁盘
@@ -390,7 +379,7 @@ this.handle_generat_emitters()
           // 投注项无效
           is_effect = false;
         }
-        let bet_obj = this.vx_get_bet_obj[this.id]; 
+        let bet_obj = this.BetData.bet_obj[this.id]; 
         let obj = _.cloneDeep(bet_obj);
         if(obj && obj.cs) {
           // 更新投注项有效无效的标识
@@ -493,7 +482,7 @@ this.handle_generat_emitters()
      * @param {undefined} undefined 
      * @return {undefined} undefined
      */
-    vx_get_lang_change() {
+    "BetData.lang_change"() {
       // 重新设置赛季
       this.season = BetCommonHelper.get_season();
       // 重新设置玩法名称
@@ -520,14 +509,6 @@ this.handle_generat_emitters()
     }
   },
   methods: {
-    ...mapActions({
-      vx_set_bet_obj_remove_attr: "bet_obj_remove_attr", //删除投注对象
-      vx_bet_list_remove: "bet_list_remove", //删除串关列表
-      vx_set_layout_left_show: "set_layout_left_show", //左侧显示页面
-      vx_set_is_bet_single: 'set_is_bet_single',  //单关
-      vx_bet_single_clear: 'bet_single_clear',  //清除单关数据
-      vx_set_is_bet_merge: "set_is_bet_merge"  //合并
-    }),
 
     
     /**
@@ -558,12 +539,12 @@ handle_generat_emitters(){
      */
     del_bet_item() {
       if(this.id == "" || this.id == undefined) {
-        let index = _.findIndex(this.vx_get_bet_list,item => item == this.id);
+        let index = _.findIndex(this.BetData.bet_list,item => item == this.id);
         if(index > -1) {
           //移除对应的键值对
-          this.vx_set_bet_obj_remove_attr(this.id);
+          this.BetDataCtr.set_bet_obj_remove_attr(this.id);
           //移除对应的数据
-          this.vx_bet_list_remove(index);
+          this.BetDataCtr.bet_list_remove(index);
         }
       } else {
         //初始化提示信息
@@ -581,15 +562,15 @@ handle_generat_emitters(){
       if(this.bet_item_count == 0) {
 
         clearTimeout(this.timer_obj[`timer_${this.id}`]);
-        this.vx_set_layout_left_show('menu');
+        this.BetDataCtr.set_layout_left_show('menu');
         // 移除了串关数据后发现单关里面也存在此投注项，且仅剩下一个那么移除数据
-        if(this.vx_get_is_bet_merge || (this.vx_get_bet_single_list.length == 1 && this.id == this.vx_get_bet_single_list[0])) {
-          this.vx_bet_single_clear();
+        if(this.BetData.is_bet_merge || (this.BetData.bet_single_list.length == 1 && this.id == this.BetData.bet_single_list[0])) {
+          this.BetDataCtr.bet_single_clear();
         }
-        if(this.vx_cur_menu_type.type_name != 'bet') {
+        if(this.BetDataCtr.cur_menu_type.type_name != 'bet') {
           this.$nextTick(()=>{       
-            this.vx_set_is_bet_merge(false);    //是否合并
-            this.vx_set_is_bet_single(true);    //是否单关
+            this.BetDataCtr.set_is_bet_merge(false);    //是否合并
+            this.BetDataCtr.set_is_bet_single(true);    //是否单关
           });
         }
       }
@@ -736,10 +717,10 @@ handle_generat_emitters(){
      */
     change_match_update(oid) {
       if(this.oid == oid) {
-        let obj = _.cloneDeep(this.vx_get_bet_obj);
+        let obj = _.cloneDeep(this.BetData.bet_obj);
         obj.match_update = true;
         this.match_update = obj.match_update;
-        this.vx_bet_obj_add_attr(obj);
+        this.BetDataCtr.bet_obj_add_attr(obj);
       }
     },
     /**
@@ -749,10 +730,10 @@ handle_generat_emitters(){
      */
     reset_match_update(oid) {
       if(this.oid == oid) {
-        let obj = _.cloneDeep(this.vx_get_bet_obj);
+        let obj = _.cloneDeep(this.BetData.bet_obj);
         obj.match_update = false;
         this.match_update = obj.match_update;
-        this.vx_bet_obj_add_attr(obj);
+        this.BetDataCtr.bet_obj_add_attr(obj);
       }      
     },
     /**
@@ -767,8 +748,8 @@ handle_generat_emitters(){
       this.play_name = BetCommonHelper.get_play_name();
       // 获取队伍名称
       this.team_name = BetCommonHelper.get_team_name();
-      let bs = _.get(this.vx_get_bet_obj,`${this.id}.bs`);
-      let cs = _.get(this.vx_get_bet_obj,`${this.id}.cs`);
+      let bs = _.get(this.BetData.bet_obj,`${this.id}.bs`);
+      let cs = _.get(this.BetData.bet_obj,`${this.id}.cs`);
       // bs如果是个对象
       if(_.isPlainObject(bs)) {
         // 获取联赛名称
