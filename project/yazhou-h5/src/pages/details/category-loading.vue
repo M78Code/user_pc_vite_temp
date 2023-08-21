@@ -10,12 +10,15 @@
 
 <script>
   import {mapMutations} from "vuex";
+import { useRouter, useRoute } from "vue-router"
 
+const router = useRouter()
+const route = useRoute()
   export default {
     name: "category_loading",
     mounted(){
-      this.set_is_close_video(Math.random());
-      this.$router.push({name:'category', params: {mid: this.$route.params.mid}});
+      set_is_close_video(Math.random());
+      router.push({name:'category', params: {mid: route.params.mid}});
     },
     methods:{
       ...mapMutations(['set_is_close_video']),

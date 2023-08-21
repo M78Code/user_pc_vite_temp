@@ -1,12 +1,12 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页  足球赛事分析 战绩 模块里边的 历史交战
 -->
 <template>
   <div class="recent_record" v-if="recent_record_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ i18n.t('analysis_football_matches.recent_record') }}</span>
+      <span class="title ellipsis">{{ t('analysis_football_matches.recent_record') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index+'box'"
            :class="{active:if_the_selected[index]}"
@@ -57,14 +57,17 @@
 import {api_result} from "src/project/api";
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue"; 
+import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
 
-// 无网络展示组件 
-// import no_data from "src/project/components/common/no-data";  
+// 无网络展示组件
+// import no_data from "src/project/components/common/no-data";
 
   // components: {
   //   "public-form": public_form,
@@ -76,15 +79,15 @@ import { useRoute } from 'vue-router'
   const progress_bar = ref(false)
   const tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
-    {name: `${i18n.t('analysis_football_matches.near')}5`, index: 5},
-    {name: `${i18n.t('analysis_football_matches.near')}10`, index: 10},
-    {name: `${i18n.t('analysis_football_matches.near')}15`, index: 15},
+    {name: `${t('analysis_football_matches.near')}5`, index: 5},
+    {name: `${t('analysis_football_matches.near')}10`, index: 10},
+    {name: `${t('analysis_football_matches.near')}15`, index: 15},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
     // TODO: 国际化 后续修改调整
-    i18n.t('analysis_football_matches.same_game'),
-    i18n.t('analysis_football_matches.same_host_guest')
+    t('analysis_football_matches.same_game'),
+    t('analysis_football_matches.same_host_guest')
   ])
   const flag = ref(0)
   const cps = ref(5)
@@ -130,11 +133,11 @@ import { useRoute } from 'vue-router'
     try {
       let parameter = {
         // 1940891  赛事ID
-        mid: match_id, 
+        mid: match_id,
         // 0 = 默认，1=同联赛, 2= 同主客
-        flag: flag,  
+        flag: flag,
         // 显示数量： 5场，10场，15场。
-        cps: cps 
+        cps: cps
       }
       let {code , data} = await api_result.get_team_vs_other_team(parameter)
       if(code == 200 && data != null) {
@@ -143,17 +146,17 @@ import { useRoute } from 'vue-router'
             recent_record_data:[],
             // TODO: 国际化后续修改调整
             records_list:[
-              {success: 0, name: i18n.t('analysis_football_matches.victory')},
-              {flat: 0, name: i18n.t('analysis_football_matches.flat')},
-              {lose: 0, name: i18n.t('analysis_football_matches.negative')},
+              {success: 0, name: t('analysis_football_matches.victory')},
+              {flat: 0, name: t('analysis_football_matches.flat')},
+              {lose: 0, name: t('analysis_football_matches.negative')},
             ]
           },
           {
             recent_record_data:[],
             records_list:[
-              {success: 0, name: i18n.t('analysis_football_matches.victory')},
-              {flat: 0, name: i18n.t('analysis_football_matches.flat')},
-              {lose: 0, name: i18n.t('analysis_football_matches.negative')},
+              {success: 0, name: t('analysis_football_matches.victory')},
+              {flat: 0, name: t('analysis_football_matches.flat')},
+              {lose: 0, name: t('analysis_football_matches.negative')},
             ]
           }
         ],  // host_team_id

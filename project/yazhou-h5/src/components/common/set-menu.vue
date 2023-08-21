@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 设置菜单
 -->
 
@@ -32,58 +32,58 @@
           </div>
         </div>
         <!-- 排序 -->
-        <div class="set-item" v-if="lodash.get(get_access_config, 'sortCut') &&$route.name != 'virtual_sports' && $route.name != 'virtual_sports_details' && menu_type !== 3000">
+        <div class="set-item" v-if="lodash.get(get_access_config, 'sortCut') &&route.name != 'virtual_sports' && route.name != 'virtual_sports_details' && menu_type !== 3000">
           <div class="icon set-icon-1"></div>
-          <div class="name">{{i18n.t("setting_menu.footer_t_sort")}}</div>
+          <div class="name">{{t("setting_menu.footer_t_sort")}}</div>
           <div class="option" @click="sort_type_changed">
             <div class="op-item active">
-              {{sort_type == 2?i18n.t("footer_menu.time2"):i18n.t("footer_menu.hot2")}}
+              {{sort_type == 2?t("footer_menu.time2"):t("footer_menu.hot2")}}
             </div>
             <div class="op-icon"></div>
             <div class="op-item">
-              {{sort_type == 2?i18n.t("footer_menu.hot2"):i18n.t("footer_menu.time2")}}
+              {{sort_type == 2?t("footer_menu.hot2"):t("footer_menu.time2")}}
             </div>
           </div>
         </div>
         <!-- 盘口 -->
         <div class="set-item">
           <div class="icon set-icon-2"></div>
-          <div class="name">{{i18n.t("setting_menu.handicap")}}</div>
+          <div class="name">{{t("setting_menu.handicap")}}</div>
           <div class="option" @click="change_odd">
-            <div class="op-item active">{{get_cur_odd == 'EU'?i18n.t("setting_menu.odd_europe2"):i18n.t("setting_menu.odd_hong_kong2")}}</div>
+            <div class="op-item active">{{get_cur_odd == 'EU'?t("setting_menu.odd_europe2"):t("setting_menu.odd_hong_kong2")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_cur_odd == 'EU'?i18n.t("setting_menu.odd_hong_kong2"):i18n.t("setting_menu.odd_europe2")}}</div>
+            <div class="op-item">{{get_cur_odd == 'EU'?t("setting_menu.odd_hong_kong2"):t("setting_menu.odd_europe2")}}</div>
           </div>
         </div>
         <!-- 赔率 -->
         <div class="set-item no-border">
           <div class="icon set-icon-4"></div>
-          <div class="name">{{i18n.t("setting_menu.footer_t_odds")}}</div>
+          <div class="name">{{t("setting_menu.footer_t_odds")}}</div>
           <div class="option" @click="set_is_accept">
-            <div class="op-item active">{{get_is_accept == 2?i18n.t("setting_menu.odd_any2"):i18n.t("setting_menu.odd_optimal2")}}</div>
+            <div class="op-item active">{{get_is_accept == 2?t("setting_menu.odd_any2"):t("setting_menu.odd_optimal2")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_is_accept == 2?i18n.t("setting_menu.odd_optimal2"):i18n.t("setting_menu.odd_any2")}}</div>
+            <div class="op-item">{{get_is_accept == 2?t("setting_menu.odd_optimal2"):t("setting_menu.odd_any2")}}</div>
           </div>
         </div>
         <div class="line"></div>
         <!-- 版本 -->
         <div class="set-item">
           <div class="icon set-icon-3"></div>
-          <div class="name">{{i18n.t("setting_menu.version")}}</div>
+          <div class="name">{{t("setting_menu.version")}}</div>
           <div class="option" @click="change_edition">
-            <div class="op-item active">{{get_newer_standard_edition == 2?i18n.t("setting_menu.standard"):i18n.t("setting_menu.concise")}}</div>
+            <div class="op-item active">{{get_newer_standard_edition == 2?t("setting_menu.standard"):t("setting_menu.concise")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_newer_standard_edition == 2?i18n.t("setting_menu.concise"):i18n.t("setting_menu.standard")}}</div>
+            <div class="op-item">{{get_newer_standard_edition == 2?t("setting_menu.concise"):t("setting_menu.standard")}}</div>
           </div>
         </div>
         <!-- 语言 -->
         <div class="set-item no-border">
           <div class="icon set-icon-5"></div>
-          <div class="name">{{i18n.t("setting_menu.chan_lan")}}</div>
+          <div class="name">{{t("setting_menu.chan_lan")}}</div>
           <div class="option option3" @click="is_show_lang = !is_show_lang">
             <i class="lang-icon yb_mr4" :class="`lang-${get_lang}`"></i>
             <div class="op-icon op-icon2"></div>
-            <div class="op-item active" style="font-size: 0.14rem">{{i18n.t('setting_menu.lang')}}</div>
+            <div class="op-item active" style="font-size: 0.14rem">{{t('setting_menu.lang')}}</div>
           </div>
         </div>
         <div class="lang-wrap" :class="{active:is_show_lang}">
@@ -99,7 +99,7 @@
         <!-- 规则说明 -->
         <div class="set-item no-border" @click="go_description">
           <div class="icon set-icon-6"></div>
-          <div class="name">{{i18n.t('setting_menu.rule_description')}}</div>
+          <div class="name">{{t('setting_menu.rule_description')}}</div>
           <div class="option option2">
             <div class="yb-icon-arrow right"></div>
           </div>
@@ -108,7 +108,7 @@
         <!-- 换肤 -->
         <div class="set-item">
           <div class="icon set-icon-7"></div>
-          <div class="name">{{i18n.t('setting_menu.skin')}}</div>
+          <div class="name">{{t('setting_menu.skin')}}</div>
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" @click="handle_set_theme('theme01')"></div>
             <div class="skin-icon skin-icon2" @click="handle_set_theme('theme02')"></div>
@@ -128,7 +128,11 @@ import lodash from 'lodash'
 
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
- 
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRoute, useRouter } from "vue-router"
+
+  let route = useRoute()
+  let router = useRouter()
   // 是否显示设置菜单
   let is_show_menu = ref(false)
   // 是否显示设置语言
@@ -138,6 +142,7 @@ import { computed, onUnmounted, watch } from "vue";
   //弹出菜单宽度
   let calc_width = ref(260)
   let wrapper_effect = ref(true)
+
     // ...mapGetters({
     //   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
     //   user_info: "get_user",                // 当前登录的用户信息
@@ -189,7 +194,7 @@ import { computed, onUnmounted, watch } from "vue";
     })
   const get_is_champion2 = computed(() => {
     // TODO: this
-      // return get_is_champion() 
+      // return get_is_champion()
     })
     //刷新金额loading时钟
     balance_timer = 0;
@@ -201,7 +206,7 @@ import { computed, onUnmounted, watch } from "vue";
       clearTimeout(balance_timer);
     balance_timer = null;
 
-    $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle);
+    useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle).off;
     debounce_throttle_cancel(cancel_loading_balance);
     })
   watch(() => is_show_menu, (newValue) => {
@@ -220,7 +225,7 @@ import { computed, onUnmounted, watch } from "vue";
         set_cur_odd(old_odd);
       }
   })
-    
+
     // ...mapActions([
     //   'fetch_balance',
     //   'set_theme',
@@ -240,8 +245,8 @@ import { computed, onUnmounted, watch } from "vue";
     //   set_global_route_menu_param:'set_global_route_menu_param',
     // }),
   const go_description = () => {
-      const query = $route.query
-      $router.push({path:`/rule_description/${$route.name}`, query})
+      const query = route.query
+      router.push({path:`/rule_description/${route.name}`, query})
     }
     //设置语言
   const setting_language_handle = (key) => {
@@ -264,7 +269,7 @@ import { computed, onUnmounted, watch } from "vue";
         const web_site_title = userCtr.get_web_title(key)
         document.title = web_site_title
       }).catch((err)=>{
-        $toast(i18n.t('pre_record.cancle_fail_tips'), 2000);
+        $toast(t('pre_record.cancle_fail_tips'), 2000);
       }).finally((res) => {
         document.getElementById('loading-root-ele').style.visibility = 'hidden';
       })
@@ -292,7 +297,7 @@ import { computed, onUnmounted, watch } from "vue";
     */
   const sort_type_changed = () => {
       if(!lodash.get(get_access_config,'sortCut')){
-        $toast(i18n.t(`common.temporarily_unavailable`), 2000)
+        $toast(t(`common.temporarily_unavailable`), 2000)
         return
       }
       let status = sort_type == 1 ? 2 : 1

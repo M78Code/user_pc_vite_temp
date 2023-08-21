@@ -12,10 +12,10 @@
     <div class="bet-record" @click.stop :style="{ bottom: -bottom + 'px' }">
       <div class="top flex flex-center">
         <!--<div class="collapse-icon"><img src="image/wwwassets/bw3/svg/arrow-bottom.svg" /></div>-->
-        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{i18n.t('bet_record.no_account')}}<span></span></p>
-        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{i18n.t('bet_record.account')}}<span></span></p>
+        <p class="yb_mr10" @click="change_record(0)" :class="get_main_item == 0 && 'active-p'">{{t('bet_record.no_account')}}<span></span></p>
+        <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="get_main_item == 1 && 'active-p'">{{t('bet_record.account')}}<span></span></p>
       </div>
-      <div class="bet-tips flex flex-center">{{  i18n.t('chatroom.post_bet_info2')  }}</div>
+      <div class="bet-tips flex flex-center">{{  t('chatroom.post_bet_info2')  }}</div>
       <div class="content">
         <scroll ref="myScroll" :on-pull="onPull" v-if="list_data&&list_data.length">
           <div class="bet-content-item" v-for="(value,  index) in list_data" :key="index"
@@ -27,16 +27,16 @@
       </div>
       <div class="bet-footer flex justify-between">
         <div @click="clear_active_bet" class="cancle-button text-center yb_fontsize12 flex justify-center items-center"
-          :class="get_active_bet  ?  'cancle-button-selected'  :  null">{{  i18n.t('chatroom.clear')  }}</div>
+          :class="get_active_bet  ?  'cancle-button-selected'  :  null">{{  t('chatroom.clear')  }}</div>
         <div @click="submit_bet" class="submit-button text-center yb_fontsize16 flex justify-center items-center"
-          :class="get_active_bet  ?  'submit-button-selected'  :  null">{{  i18n.t('chatroom.post_bet2')  }}</div>
+          :class="get_active_bet  ?  'submit-button-selected'  :  null">{{  t('chatroom.post_bet2')  }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
 import commonBetItem from "project_path/src/pages/details/components/chatroom/common_bet_item.vue";
 import scroll from "src/project/components/record_scroll/scroll.vue";
@@ -44,6 +44,10 @@ import { api_chatroom } from "src/project/api/index.js";
 import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import no_data from "src/project/components/common/no_data.vue";   // 无数据展示组件
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+
 export default defineComponent({
   name: 'post_bet',
   props: {
@@ -57,7 +61,7 @@ export default defineComponent({
     scroll,
     "no-data": no_data
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [chatroom_mixin],
   setup(props, evnet) {
     const data = reactive({
@@ -95,7 +99,7 @@ export default defineComponent({
       return selected_bet.length > 0
     });
     onMounted(() => {
-      // 原created 
+      // 原created
       getSharedOrderList();
 
       // 原mounted
@@ -108,7 +112,7 @@ export default defineComponent({
       }
       getRecord()
     });
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations(['set_post_bet_show', 'set_toast', 'set_main_item']),
     const change_record = (key) => {
@@ -191,7 +195,7 @@ export default defineComponent({
     };
     // 拉取注单消息ID列表
     const getRecord = () => {
-      const params = { 
+      const params = {
         page: current,
         size: pageSize,
         matchId: get_detail_data.mid,
@@ -356,11 +360,11 @@ export default defineComponent({
   height: 0.4rem;
   border-radius: 0.16rem 0.16rem 0 0;
   font-size: .16rem;
-  
+
   p {
     position: relative;
     color: var(--q-color-fs-color-161);
-    
+
     span {
       position: absolute;
       display: block;

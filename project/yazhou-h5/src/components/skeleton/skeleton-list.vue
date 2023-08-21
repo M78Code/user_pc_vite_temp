@@ -95,13 +95,13 @@ const props = defineProps({
 //   get_newer_standard_edition: 'get_newer_standard_edition',
 // }),
 const poisition_top = computed(() => {
-  const menu_type = this.get_menu_type
+  const menu_type = get_menu_type
 
   if ([4, 11, 3000].includes(menu_type)) {
     return '1.33rem';
   }
 
-  if (this.loading_body) {
+  if (loading_body) {
     // 赛果
     if (menu_type === 28) {
       return '1.4rem';

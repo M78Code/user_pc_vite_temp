@@ -1,35 +1,38 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 详情页 或者 赛果  足球
 -->
 <template>
   <div class="future-schedule football_standings recent_record" v-if="Object.keys(future_schedule_data).length > 0">
     <div class="title">
-      {{ i18n.t('analysis_football_matches.Future_schedule') }}
+      {{ t('analysis_football_matches.Future_schedule') }}
     </div>
 
     <template v-for="(item, index) in future_schedule_data" :key="index">
-      <div class="technical-home team-recent" >
+      <div class="technical-home team-recent">
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
-            <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]" :size="22"></team-img>
-            <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
-            <span class="team-name">{{ get_detail_data.mhn }}</span>
+          <team-img :type="0" :csid="get_detail_data.csid" :url="get_detail_data.mhlu[0]" :fr="get_detail_data.frmhn[0]"
+            :size="22"></team-img>
+          <team-img v-if="get_detail_data.mhlu.length > 1" :type="0" :csid="get_detail_data.csid"
+            :url="get_detail_data.mhlu[1]" :fr="get_detail_data.frmhn[1]" :size="22"
+            style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <span class="team-name">{{ get_detail_data.mhn }}</span>
         </template>
         <template v-if="index == 2">
           <!-- 右侧双打图标 type 1 表示客队,malu 客队的url  -->
-          <team-img :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[0]" :fr="get_detail_data.frman[0]" :size="22"></team-img>
-          <team-img v-if="get_detail_data.malu.length > 1" :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[1]" :fr="get_detail_data.frman[1]" :size="22" style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
+          <team-img :type="1" :csid="get_detail_data.csid" :url="get_detail_data.malu[0]" :fr="get_detail_data.frman[0]"
+            :size="22"></team-img>
+          <team-img v-if="get_detail_data.malu.length > 1" :type="1" :csid="get_detail_data.csid"
+            :url="get_detail_data.malu[1]" :fr="get_detail_data.frman[1]" :size="22"
+            style="margin-top: 0.11rem; margin-left:-0.08rem;"></team-img>
           <span class="team-name">{{ get_detail_data.man }}</span>
         </template>
       </div>
-      <public-form
-        :liat_data="item"
+      <public-form :liat_data="item"
         :hm_index_name="index == 1 ? get_detail_data.mhn : index == 2 ? get_detail_data.man : ''"
-        future_schedule="future_schedule"
-        :key="index+'id'"
-      />
+        future_schedule="future_schedule" :key="index+'id'" />
     </template>
   </div>
 </template>
@@ -37,11 +40,11 @@
 <script setup>
 import { defineComponent, ref } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";   
+import teamImg from "src/project/components/details/team-img";
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/project/pages/details/analysis-matches/components/public-form";  
+import publicForm from "src/project/pages/details/analysis-matches/components/public-form";
 
   // components: {
   //   "team-img": team_img,

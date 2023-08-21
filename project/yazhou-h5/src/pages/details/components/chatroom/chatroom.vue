@@ -23,7 +23,7 @@
     <q-dialog v-model="is_show_bulletin_dialog" >
       <q-card class="dialog-wrap" >
         <div  class="card-header">
-          <div class="text-center">{{i18n.t('chatroom.bulletin')}}</div>
+          <div class="text-center">{{t('chatroom.bulletin')}}</div>
         </div>
         <q-card-section class="card-body">
           <div class="dialog-scroll">
@@ -33,11 +33,11 @@
         </q-card-section>
 
         <div class="card-footer">
-          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ i18n.t('chatroom.close') }}</div>
+          <div class="btn"  @click.stop="is_show_bulletin_dialog = false">{{ t('chatroom.close') }}</div>
         </div>
       </q-card>
     </q-dialog>
-    
+
     <!-- 晒单弹层 -->
     <template v-if="get_post_bet_show">
       <post_bet :visible="get_post_bet_show"></post_bet>
@@ -47,7 +47,7 @@
 <script>
 
 import input_field from 'project_path/src/pages/details/components/chatroom/input_field.vue'; // 输入框组件
-// #TODO vuex 
+// #TODO vuex
 // import { mapMutations, mapGetters } from "vuex";
 import post_bet from 'project_path/src/pages/details/components/chatroom/post_bet.vue';
 import msg_list from 'project_path/src/pages/details/components/chatroom/msg_list.vue';   // 消息列表组件
@@ -58,10 +58,15 @@ import { get_valid_api } from 'project_path/src/pages/details/components/chatroo
 import notice_bar from 'project_path/src/pages/details/components/chatroom/notice_bar.vue';
 import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+
 export default defineComponent({
   name: 'chatroom',
 
-  
+
   components: {
     input_field,
     post_bet,
@@ -69,7 +74,7 @@ export default defineComponent({
     notice_bar,
     marquee_bulletin,
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins: [chatroom_mixin, mqtt_mixin],
   props: {
 
@@ -87,7 +92,7 @@ export default defineComponent({
       bulletin_list: [],
       is_show_bulletin_dialog: false,
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters([
     //     'get_post_bet_show',  // 晒单弹窗显隐
@@ -102,7 +107,7 @@ export default defineComponent({
     //   ]),
     // },
     onMounted(() => {
-      // 原 created 
+      // 原 created
       set_is_enter_chat(true);    // 设置进入聊天室状态
       const { chatRoomId } = get_details_chatroom_data || {};
       if (chatRoomId) {
@@ -111,16 +116,16 @@ export default defineComponent({
       } else {
         set_toast({ txt: '聊天室未开启' });
       }
-      // #TODO emit 
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // #TODO emit
+      useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin).on
 
-      // 原 mounted 
+      // 原 mounted
       const { offsetTop } = $refs.chatroom || {};
       list_height = window.innerHeight - offsetTop;  // 计算消息列表的高度
     })
     onUnmounted(() => {
-      // #TODO emit 
-      // $root.$off(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
+      // #TODO emit
+      useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin).off
       hasDestroyed = true;
       set_is_enter_chat(false);
       chatroomWs && chatroomWs.destory();
@@ -130,7 +135,7 @@ export default defineComponent({
       msgIntervalObj && clearInterval(msgIntervalObj);
       msgIntervalObj = null;
     });
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations([
     //   'set_toast', 'set_is_enter_chat', 'set_chatroom_id', 'set_chatroom_userinfo',
@@ -187,12 +192,12 @@ export default defineComponent({
               bulletin_info += `<span style="margin-right: .2rem;">${index + 1}. ${item.content}</span>`
             })
             bulletin_list = res.data || []
-            
+
             // 非初次获取公告时，需重新计算动画时长
             if (!init_load && bulletin_list.length) {
               $refs.bulletin.get_marquee_data()
             }
-            
+
             // 不存在公告时，则隐藏公告弹窗
             if (!bulletin_list.length) {
               is_show_bulletin_dialog = false
@@ -343,7 +348,7 @@ export default defineComponent({
       border-radius: 0.24rem;
     }
   }
-  
+
   ::v-deep .lucky-user {
     width: 3.36rem;
     left: .35rem;

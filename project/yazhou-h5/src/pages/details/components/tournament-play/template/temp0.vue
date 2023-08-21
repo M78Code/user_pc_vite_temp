@@ -177,22 +177,27 @@
       </div>
       <!-- 显示更多 -->
       <div v-if="!hide_show_more_layout" class="show-more play-box-style" :class="{'pack-up': show_more}"  @click="change_show">
-        <span class="fz_13">{{show_more?i18n.t('match_info.pack_up'):i18n.t('match_info.show_more')}}
+        <span class="fz_13">{{show_more?t('match_info.pack_up'):t('match_info.show_more')}}
         </span>
       </div>
     </div>
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament-play/unit/odds-new.vue";
-// #TODO mixins 
+// #TODO mixins
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useRoute } from "vue-router"
+import { useI18n } from "vue-i18n";
+//国际化
+const { t } = useI18n()
+const route = useRoute()
 export default defineComponent({
   // #TODO mixins
   // mixins:[odd_convert],
@@ -212,7 +217,7 @@ export default defineComponent({
       show_more:true,
       len:0,  //一共有多少个投注项
     })
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
     const get_bet_list = computed(() => {
@@ -282,7 +287,7 @@ export default defineComponent({
       return reg.test(val)
     };
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
+      // #TODO emit
       // $emit("bet_click_", {ol_item});
     };
     /**
@@ -292,11 +297,11 @@ export default defineComponent({
     const change_show = () => {
       if (show_more) {
         let distance = (len - 5) * utils.rem(0.52)
-        if ($route.name == 'virtual_sports_details') {
+        if (route.name == 'virtual_sports_details') {
           document.documentElement.scrollTop -= distance
         } else {
-          // #TODO emit 
-          // useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
+          // #TODO emit
+          useMittEmit(MITT_TYPES.EMIT_SET_DETAILDS_SCROLL,distance)
         }
       }
       show_more = !show_more

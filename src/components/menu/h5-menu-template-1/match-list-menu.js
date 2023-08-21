@@ -4,7 +4,7 @@
 import utils from 'src/public/utils/utils.js';
 import { api_home } from "src/project/api/index.js";
 //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
-import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js" 
+import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js"
 // import {mapGetters} from "vuex";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
@@ -14,9 +14,9 @@ export default {
   methods: {
     // 初始化监听事件
     on_listeners() {
-      useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
-      useMittOn(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
-      useMittOn(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
+      useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on).on;
+      useMittOn(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on).on;
+      useMittOn(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia).on;
     },
     // 调用接口，更新菜单数据
     // follow 代表是 点击关注时，触发这个 方法
@@ -736,9 +736,9 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$root.$off(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on);
-    this.$root.$off(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on);
-    this.$root.$off(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia);
+    this.useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, this.menu_match_count_change_on).off;
+    this.useMittOn(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT, this.re_statistics_match_count_on).off;
+    this.useMittOn(MITT_TYPES.EMIT_HID_SEARCH_DIA,this.hid_search_dia).off;
     clearTimeout(this.timer_super1)
     clearTimeout(this.timer_super2)
     clearTimeout(this.route_enter_timeout)

@@ -32,14 +32,10 @@ export default {
     };
   },
   created() {  
-    // 重置串关红升绿降状态
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
-    // 更改串关的match_update字段值
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
-    //更新串关投注项上的match_udpate字段
-    this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
-    //更新主客队信息(主要用于国际化切换时调用)
-    this.$root.$on(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away); 
+
+//生成事件监听
+this.handle_generat_emitters()
+
     //更新主客队信息  
     this.update_home_away();
     // 赛事需要更新并且投注项列表中有多余一个投注项
@@ -66,13 +62,10 @@ export default {
       clearTimeout(this.timer_obj[key]);
     }
     this.timer_obj = {};
-    //清除监听事件
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, this.bet_mix_reset);
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, this.change_match_update);
-    this.$root.$off(MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, this.reset_match_update);
-    this.$root.$off(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, this.update_home_away);
+     //移除相应监听事件 //视图销毁钩子函数内执行
+    if(this.emitters_off){this.emitters_off()}  
 
-    
+
   },
   props: {
  
@@ -535,6 +528,29 @@ export default {
       vx_bet_single_clear: 'bet_single_clear',  //清除单关数据
       vx_set_is_bet_merge: "set_is_bet_merge"  //合并
     }),
+
+    
+    /**
+* 生成事件监听  
+*/
+handle_generat_emitters(){
+  let event_pairs=  [
+// 重置串关红升绿降状态
+{ type:MITT_TYPES.EMIT_BET_MIX_ITEM_RESET_CMD, callback: this.bet_mix_reset} ,
+// 更改串关的match_update字段值
+{ type:MITT_TYPES.EMIT_BET_MIX_CHANGE_MATCH_UPDATE, callback: this.change_match_update} ,
+//更新串关投注项上的match_udpate字段
+{ type:MITT_TYPES.EMIT_BET_MIX_MATCH_UPDATE, callback: this.reset_match_update} ,        
+//更新主客队信息(主要用于国际化切换时调用} ,
+{ type:MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, callback: this.update_home_away} , 
+
+  ]
+  let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+  this.emitters_off=emitters_off
+    //移除相应监听事件 //视图销毁钩子函数内执行
+    // if(this.emitters_off){this.emitters_off()}  
+},
+ 
     /**
      * @description: 删除投注项
      * @param {undefined} undefined

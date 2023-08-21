@@ -14,11 +14,15 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
 import utils from "src/core/utils/utils";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { useRoute, useRouter } from "vue-router"
+
+const route = useRoute()
+const router = useRouter()
 export default defineComponent({
   name: "details_tab",
   props: {
@@ -37,7 +41,7 @@ export default defineComponent({
       timer1_: null,
       reset_scroll_dom: null,
     });
-    // #TODO VUEX 
+    // #TODO VUEX
     // computed:{
     // ...mapGetters([
     //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
@@ -74,9 +78,9 @@ export default defineComponent({
       return ""
     });
     const match_id = computed(() => {
-      return $route.params.mid || get_detail_data.mid
+      return route.params.mid || get_detail_data.mid
     });
-    // #TODO VUEX 
+    // #TODO VUEX
     // methods:{
     // ...mapActions(['set_details_item','set_subscript_game_index']),
     // ...mapMutations(['set_fewer']),
@@ -114,11 +118,11 @@ export default defineComponent({
       utils.tab_move2(index, data.reset_scroll_dom)
       set_details_item(uId);
       set_subscript_game_index(index)
-      let search_term = $route.query.search_term
+      let search_term = route.query.search_term
       // 重新加载category组件，触发重新请求
-      $router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
+      router.replace({name: 'category', params: {mid: match_id, mcid: uId}, query: {search_term: search_term}})
       // 点击玩法对页面吸顶tab做高度处理
-      // #TODO emit 
+      // #TODO emit
       useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED);
       // useMittEmit(MITT_TYPES.EMIT_DETAILILS_TAB_CHANGED)
       if(get_fewer == 3){
@@ -153,23 +157,23 @@ export default defineComponent({
     };
     // 添加相应监听事件
     const on_listeners = () => {
-      // #TODO emit 
+      // #TODO emit
       data.emitters = [
         useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off,
         useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off,
         useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, get_active_details_play_tab).off,
       ]
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
-      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).on
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).on
+      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab).on
     };
     // 移除相应监听事件
     const off_listeners = () => {
-      // #TODO emit 
+      // #TODO emit
       data.emitters.map((x) => x())
-      // $root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent);
-      // $root.$off(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
-      // $root.$off(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab)
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).off;
+      // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).off
+      // useMittOn(MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,get_active_details_play_tab).off
     };
     return {
       ...toRefs(data),

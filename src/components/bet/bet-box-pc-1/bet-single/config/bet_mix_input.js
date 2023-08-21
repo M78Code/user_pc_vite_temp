@@ -253,25 +253,7 @@ handle_generat_emitters(){
 
 
 
-
-   //网络错误时设置默认最大最小值
-   this.$root.$on(MITT_TYPES.EMIT_NET_ERR, this.net_err_fun)
-   // 串关的校验金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, this.check_money);
-   // 触发清除串关输入框金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, this.bet_clear_handle);
-   // 设置金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, this.set_money);
-   // 设置输入框的最大金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, this.set_input_max);
-   // 设置最小金额
-   this.$root.$on(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, this.set_min_money);
-   // 更新键盘按键状态
-   this.$root.$on(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD,this.update_keyboard_status);
-
-
-
-
+ 
 
 
 
@@ -294,8 +276,7 @@ handle_generat_emitters(){
   ]
   let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
   this.emitters_off=emitters_off
-  ////移除相应监听事件 //视图销毁钩子函数内执行
-  //if(this.emitters_off){this.emitters_off()}   
+
   },
   
 
