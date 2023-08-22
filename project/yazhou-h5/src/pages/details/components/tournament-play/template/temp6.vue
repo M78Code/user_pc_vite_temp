@@ -22,7 +22,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     {{void (line1++)}}
                     <template v-if="ol_list_0[ol_index0 - 1]">
-                      <div v-if="_.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
+                      <div v-if="lodash.get(item_data.title,'[0].otd') == ol_list_0[ol_index0 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_0[ol_index0 - 1].ms == 0 || ol_list_0[ol_index0 - 1].ms == 11">
@@ -105,7 +105,7 @@
                   <template v-if="((hide_show_more_layout || (!hide_show_more_layout && (show_more || (!show_more && ol_index<5)))))">
                     <template v-if="ol_list_1[ol_index1 - 1]">
                       <div
-                          v-if="_.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
+                          v-if="lodash.get(item_data.title,'[1].otd') == ol_list_1[ol_index1 - 1].otd" :key="ol_index">
                         <!--  0开 2关 1封 11锁 -->
                         <!-- 开盘or锁盘 正常显示 -->
                         <template v-if="ol_list_1[ol_index1 - 1].ms == 0 || ol_list_1[ol_index1 - 1].ms == 11">
@@ -278,8 +278,10 @@
 // #TODO vuex
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { t } from "src/boot/i18n";;
@@ -295,6 +297,7 @@ export default defineComponent({
     "odds-new": odds_new
   },
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       show_more:true,
     })
@@ -307,10 +310,21 @@ export default defineComponent({
     // // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
     // "get_flag_get_ol_list"
     // ]),
-
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_flag_get_ol_list = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
     const hide_show_more_layout = computed(() => {
       let ret = true;
-      let len = _.get(this.item_data,'hl[0].ol.length');
+      let len = lodash.get(this.item_data,'hl[0].ol.length');
       if(!len){
         len = 0;
       }
@@ -330,7 +344,7 @@ export default defineComponent({
     onMounted(() => {
       // 根据指定模板,对模板下数据量大的玩法进行折叠处理
       // 获取玩法下的数量
-      let temp = _.get(this.item_data,'hl[0].ol.length');
+      let temp = lodash.get(this.item_data,'hl[0].ol.length');
       if(temp && temp>10){
         this.show_more = false;
       }
@@ -379,6 +393,11 @@ export default defineComponent({
     return {
       ...toRefs(data),
       utils,
+      get_bet_list,
+      get_cur_odd,
+      get_detail_data,
+      // 收到C105推送赔率,生成一个浮点, 伪随机数在范围从0到小于1
+      get_flag_get_ol_list,
       hide_show_more_layout,
       go_to_bet,
       change_show,

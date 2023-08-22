@@ -32,7 +32,9 @@
 // #TODO vuex 
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp10",
@@ -42,6 +44,7 @@ export default defineComponent({
   // #TODO mixins 
   // mixins:[odd_convert],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       // 五列居中数据
       odds_list:[],
@@ -53,6 +56,12 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return ""
+    });
     /**
      *@description 是否选中
      *@param {String} id 投注项id
@@ -82,10 +91,10 @@ export default defineComponent({
       $emit("bet_click_", {ol_item});
     };
     const temp_odds = () => {
-      hsw_single = _.get(item_data,'hsw').toString()
-      let odd_ol_list = _.get(item_data,'hl[0].ol')
+      hsw_single = lodash.get(item_data,'hsw').toString()
+      let odd_ol_list = lodash.get(item_data,'hl[0].ol')
       let odds_list = []
-      _.forEach(odd_ol_list,(ol_item,i) => {
+      lodash.forEach(odd_ol_list,(ol_item,i) => {
         let odds_obj = {}
         let ol_on = ol_item.on.split('/');
         odds_obj['two_num'] = ol_on;
@@ -100,6 +109,9 @@ export default defineComponent({
     return {
       ...toRefs(data),
       is_select,
+      get_bet_list,
+      get_curr_sub_menu_type,
+      lodash,
       go_to_bet,
       temp_odds
     }
