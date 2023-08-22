@@ -178,6 +178,11 @@ function set_sports_tab_index(index) {
   bottom: 0;
   z-index: 999;
 
+  .init-wrap .init-row .line,
+  .type-item .type-wrap .line {
+    background-color: var(--qq--search-text-color1);
+  }
+
   &.iframe {
     top: 50px !important;
   }
@@ -191,14 +196,181 @@ function set_sports_tab_index(index) {
     }
   }
 
+  /* 暂无数据 */
+  .load-data-wrap .empty-wrap {
+    .text-center {
+      color: var(--qq--search-text-color2);
+    }
+
+    .nodata-text2 {
+      color: var(--qq--search-text-color3);
+    }
+  }
+
+  /*  搜索框包装器 */
+  .wrap-input {
+    .search-icon-container {
+      background-color: transparent;
+    }
+
+    .search-icon {
+      color: rgb(171, 186, 200);
+    }
+
+    .close-wrap {
+      &:hover {
+        color: var(--qq--search-text-color4);
+      }
+    }
+
+    /*  搜索框内部容器 */
+    .input-wrap {
+
+      // .search-input {
+      //   color: #fff;
+      // }
+      .clear_input {
+        .clear_input_btn {
+          &::before {
+            color: var(--qq--search-text-color5);
+          }
+        }
+
+        &:hover {
+          .clear_input_btn {
+            &::before {
+              color: var(--qq--search-text-color6);
+            }
+          }
+        }
+      }
+    }
+  }
+
   .bottom-wrap {
     top: -1px;
-    background: var(--qq--theme-bg-search-mask);
+    background: var(--qq--search-bg-color2);
 
     ::v-deep .serach-background {
-      background-color: var(--qq--theme-bg-search-match);
+      background-color: var(--qq--search-bg-color3);
       min-height: 400px;
       overflow: hidden;
+
+      .init-wrap {
+        .init-row {
+          color: var(--qq--search-text-color2);
+          border-bottom-color: var(--qq--search-border-color2);
+
+          .clear-history {
+            color: var(--qq--search-text-color2);
+
+            &:hover {
+              color: var(--qq--search-text-color2);
+            }
+          }
+        }
+      }
+
+      .histroy-item {
+        color: var(--qq--search-text-color2);
+
+        .ellipsis {
+          color: var(--qq--search-text-color2);
+        }
+
+        .search_deleteIcon {
+          &:before {
+            color: var(--qq--search-text-color7);
+          }
+        }
+
+        &:hover {
+          background-color: var(--qq--search-bg-color1);
+          color: var(--qq--search-text-color1);
+
+          .ellipsis {
+            color: var(--qq--search-text-color1);
+          }
+
+          .search_deleteIcon {
+            &:before {
+              color: var(--qq--search-text-color7-hover);
+            }
+          }
+        }
+      }
+
+      .type-item {
+        .type-wrap {
+          border-bottom-color: var(--qq--search-border-color3);
+
+          .type-name {
+            color: var(--qq--search-text-color2);
+          }
+        }
+
+        .text-wrap {
+          .process-name {
+            color: var(--qq--search-text-color2);
+          }
+
+          .score {
+            color: var(--qq--search-text-color1);
+          }
+
+          .timer-layout {
+            color: var(--qq--search-text-color2);
+          }
+        }
+
+        .league-item {
+          .league-wrap {
+            .name-wrap {
+              .league-name {
+                color: var(--qq--search-text-color8); //var(--qq--search-text-color2);
+
+                &:hover {
+                  color: var(--qq--search-text-color1);
+                }
+              }
+
+              .league-total {
+                color: var(--qq--search-text-color2);
+              }
+            }
+          }
+
+          .match-item {
+            .team {
+              color: var(--qq--search-text-color2); //var(--qq--color-text-search-team);
+
+              &:hover {
+                color: var(--qq--search-text-color1);
+              }
+            }
+
+            .text-wrap {
+              .c-match-process {
+                .date-wrap {
+                  color: var(--qq--search-text-color2);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .c-keyword-related {
+      .item {
+        color: var(--qq--search-text-color2);
+        .highlight {
+          color: var(--qq--search-text-color1);
+        }
+        &:hover {
+          color: var(--qq--search-text-color1);
+        }
+      }
     }
 
     ::v-deep .sports-tab {
@@ -210,13 +382,18 @@ function set_sports_tab_index(index) {
       padding: 10px 0 0 30px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
-      background-color: var(--qq--theme-bg-search-match);
-      border-bottom: 1px solid var(--qq--theme-bd-color-search-pnl);
+      background-color: var(--qq--search-bg-color3);
+      border-bottom: 1px solid var(--qq--search-border-color2);
 
       .tab-item {
         height: 38px;
         line-height: 40px;
         padding: 0 10px;
+        color: var(--qq--search-text-color2);
+
+        &.active {
+          color: var(--qq--search-text-color2-active);
+        }
       }
     }
   }

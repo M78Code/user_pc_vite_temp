@@ -94,10 +94,20 @@ function refresh() {
     /*  必须用min-height；兼容IE */
     align-items: center;
     text-transform: uppercase;
+    border-bottom: 1px solid var(--qq--simple-header-border-color1);
+    background: var(--qq--simple-header-bg-color1);
 
     .rule-logo {
         margin-right: 33.3px;
         height: 100%;
+
+        .rule-title {
+            color: var(--qq--simple-header-text-color1);
+        }
+
+        .systime {
+            color: var(--qq--simple-header-text-color2);
+        }
 
         .img-logo {
             width: 130px;
