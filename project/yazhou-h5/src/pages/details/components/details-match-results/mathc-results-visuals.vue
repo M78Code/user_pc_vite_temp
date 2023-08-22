@@ -88,6 +88,7 @@
 </template>
 
 <script setup>
+import lodash from "lodash";
  // 国际化比赛阶段比分转换工具
 // import msc from "src/public/mixins/common/msc.js";
 import { onUnmounted, ref, watch } from "vue";
@@ -129,7 +130,7 @@ import { onUnmounted, ref, watch } from "vue";
   // },
   const get_list = () => {
     console.log(card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
-    let cloneData = _.cloneDeep(get_detail_data);
+    let cloneData = lodash.cloneDeep(get_detail_data);
     if(cloneData && cloneData.msc){
       transform_score(cloneData)
       statistics_table = cloneData

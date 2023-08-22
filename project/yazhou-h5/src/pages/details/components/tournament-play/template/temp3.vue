@@ -104,8 +104,8 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
-import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -121,7 +121,15 @@ export default defineComponent({
     // computed: {
     //   ...mapGetters(["get_bet_list","get_detail_data", 'get_is_hengping'])
     // },
-
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
+    const get_is_hengping = computed(() => {
+      return ""
+    });
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
     });
@@ -131,6 +139,9 @@ export default defineComponent({
     };
     return {
       utils,
+      get_bet_list,
+      get_detail_data,
+      get_is_hengping,
       is_match_result,
       go_to_bet
     }
