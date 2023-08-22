@@ -13,9 +13,9 @@
 </template>
 
 <script setup>
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 import { ref } from "vue"
-const { t } = useI18n()
+
 const footer_list = ref([
   {text: t('match_result.yellow_card')},
   {text: t('match_result.red_card')},

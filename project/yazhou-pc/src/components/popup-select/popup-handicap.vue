@@ -22,14 +22,14 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onUnmounted } from 'vue'
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 const odds_constant = [
     { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -44,11 +44,18 @@ const odds_constant = [
 const hits = ref(0)
 /** 盘口切换弹窗是否激活 */
 const is_active = ref(false)
+/** stroe仓库 */
+const { globalReducer, betInfoReducer } = store.getState();
+const unsubscribe = store.subscribe(() => {
+    is_single_handle.value = betInfoReducer.is_single_handle
+    is_handle.value = betInfoReducer.is_handle
+    is_bet_singl.value = betInfoReducer.is_bet_singl
+    cur_odd.value = globalReducer.cur_odd
+    pre_odd.value = globalReducer.pre_odd
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
-const {
-    globalReducer,
-    betInfoReducer,
-} = store.getState();
 /** 当前赔率 */
 const cur_odd = ref(globalReducer.odds.cur_odds)
 /** 单关 是否正在处理中 */

@@ -45,11 +45,11 @@
 <script setup>
 import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 // TODO:
 // import { mapGetters } from "vuex";
-const { t } = useI18n()
+
 
 // TODO: 临时用
 const get_theme =  ref('theme01')

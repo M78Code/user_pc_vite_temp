@@ -48,7 +48,7 @@ const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
-// ...mapGetters(['', '','', '', 'get_bet_list', '', '', '', '', '']),
+
 
 const store_state = store.getState()
 const get_user = ref(store_state.get_user)

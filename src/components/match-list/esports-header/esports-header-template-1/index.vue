@@ -28,9 +28,9 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import BaseData from 'src/core/utils/base-data/base-data.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-const { t } = useI18n();
+;
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const current_menu = ref({});
 const dianjing_sublist = ref(BaseData.dianjing_sublist);

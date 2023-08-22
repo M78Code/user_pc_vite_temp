@@ -47,13 +47,13 @@
 import details from "src/core/match-list/details-class/details.js";
 
 import { ref, computed, watch } from 'vue';
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { is_eports_csid } from 'src/core/utils/index.js'
 
-const { t } = useI18n();
+;
 
 /**
  * 跳转至详情

@@ -4,7 +4,7 @@
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
 import { i18n } from "src/boot/i18n";
-import { ref } from "vue"
+import { ref } from "vue";
 //   约定 四个 值
 
 // 100 常规球类
@@ -13,7 +13,7 @@ import { ref } from "vue"
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import { instance as userCtr } from "src/core/utils/user/user-ctr.js";
+import userCtr from "src/core/user-config/user-ctr.js";
 import _ from "lodash";
 // indexeDb
 import { db } from "src/core/utils/base-data/config/indexedPB.js";
@@ -123,7 +123,7 @@ class BaseData {
     // 电竞更新
     this.esport_menu_version = "1111";
     // 菜单接口类型 old 旧  new 新
-    this.menu_type_old_or_new = 'new'
+    this.menu_type_old_or_new = "new";
   }
   /**
    * 初始化数据
@@ -365,14 +365,15 @@ class BaseData {
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
     let menu_info = this.set_ses_wapper(res, []);
-  
-    let menu_old_or_nem_data_list = [...menu_info]
-    this.menu_type_old_or_new = 'new'
+
+    let menu_old_or_nem_data_list = [...menu_info];
+    this.menu_type_old_or_new = "new";
     // 判断新旧菜单
     // menuId 旧菜单才有
-    if( menu_info[0].menuId || '' ){
-      this.menu_type_old_or_new = 'old'
-      menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info)
+    console.error(menu_info,"menu_info")
+    if ((menu_info.length && menu_info[0].menuId) || "") {
+      this.menu_type_old_or_new = "old";
+      menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info);
     }
 
     // 设置新菜单
@@ -390,9 +391,7 @@ class BaseData {
   /**
    * 旧菜单改变数据结构
    */
-  menu_type_old_or_new() {
-
-  }
+  menu_type_old_or_new() {}
 
   /**
    * 计算 左侧菜单数据
@@ -472,14 +471,14 @@ class BaseData {
       let new_menu = JSON.stringify(menu_info);
 
       // if (old_menu != new_menu) {
-        this.mew_menu_list_res = menu_info;
+      this.mew_menu_list_res = menu_info;
 
-        localStorage.setItem("is_session_base_data", JSON.stringify());
-        // 计算 live
-        this.set_mi_gunqiu();
+      localStorage.setItem("is_session_base_data", JSON.stringify());
+      // 计算 live
+      this.set_mi_gunqiu();
       // }
 
-      console.error('left_menu_base_mi_arr',this.left_menu_base_mi_arr)
+      console.error("left_menu_base_mi_arr", this.left_menu_base_mi_arr);
 
       // 更新版本
       this.base_data_version.value = Date.now();
@@ -515,8 +514,8 @@ class BaseData {
     //     console.error("set_vr_mi_config----------", res_obj);
   }
   //获取menu
-  get_menu_list(mi){
-    return this.mew_menu_list_res.find((x) => x.mi == mi) || { sl: [] }
+  get_menu_list(mi) {
+    return this.mew_menu_list_res.find((x) => x.mi == mi) || { sl: [] };
   }
   // 计算   冠军 数据  对象形式
 
@@ -681,7 +680,7 @@ class BaseData {
     // 获取语言类型
     let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports = i18n.global.messages?.common?.e_sports || 'Esports';
+    let esports = i18n.global.messages?.common?.e_sports || "Esports";
 
     // 菜单 国际化 数据  map
     res["2000"] = esports;
@@ -1035,4 +1034,4 @@ class BaseData {
 
 const base_data_instance = new BaseData();
 
-export default base_data_instance
+export default base_data_instance;

@@ -39,8 +39,8 @@
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
 import lodash from 'lodash';
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n();
+import { t } from "src/boot/i18n";
+;
 </script>
 
 <style lang="scss" scoped>

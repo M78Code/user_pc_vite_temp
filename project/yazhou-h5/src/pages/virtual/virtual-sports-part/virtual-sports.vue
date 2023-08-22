@@ -457,7 +457,7 @@ export default defineComponent({
             });
           });
         }
-        useMittEmit(MITT_KEY.EMIT_IS_ALL_END_NOTICE);
+        useMittEmit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
         // useMittEmit(MITT_TYPES.EMIT_IS_ALL_END_NOTICE);
 
         //1011赛马、1002赛狗、1010摩托车、1009泥地摩托车结束时更新下一期
@@ -487,7 +487,7 @@ export default defineComponent({
         else if(flag == 'is_basketball_pre'){
           get_video_process_by_api();
           get_score_basket_ball();
-          useMittEmit(MITT_KEY.EMIT_PRE_COUNTING_EDN);
+          useMittEmit(MITT_TYPES.EMIT_PRE_COUNTING_EDN);
           // useMittEmit(MITT_TYPES.EMIT_PRE_COUNTING_EDN); //篮球早盘倒计时结束
         }
       }
@@ -520,7 +520,7 @@ export default defineComponent({
           else if(match.mmp == 'PREGAME'){
             if(match.start_now_sub <= 0){
               get_video_process_by_api();
-              useMittEmit(MITT_KEY.EMIT_BASKETBALL_TIME_ARRIVED);
+              useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
               // useMittEmit(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED);
             }
           }

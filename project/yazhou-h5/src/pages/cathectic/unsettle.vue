@@ -54,9 +54,9 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import store from 'src/store-redux/index.js'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 
 // mixins: [skt_order]

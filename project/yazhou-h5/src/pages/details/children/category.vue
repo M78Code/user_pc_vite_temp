@@ -78,7 +78,7 @@ import tournament_play_new from "project_path/src/pages/details/components/tourn
 // 引入接口封装文件
 import { api_common, api_result} from 'src/api/index.js'
 // 引入国际化
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //  无数据显示组件
 // import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -116,7 +116,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     // 国际化
-    const { t } = useI18n();
+    ;
     const {
       component_data,
       show_recommend,

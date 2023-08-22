@@ -88,13 +88,13 @@
 
 import { computed, defineProps } from 'vue';
 import lodash from 'lodash'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status, is_eports_csid } from 'src/core/utils/index'
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 
 //是否展示为比分判定中
 const scoring = computed(() => {

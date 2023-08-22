@@ -21,7 +21,7 @@
           </template>
           <template v-if="single_record_obj.orderStatusCode == 2">
             <!--投注确认中转圈，滚球才有的转圈圈-->
-            <span class="bet-confirm-handle"><img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_confirming.gif`)" style="height:18px;width:18px" /></span>
+            <span class="bet-confirm-handle"><img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${BetData.theme}/${BetData.theme}_confirming.gif`)" style="height:18px;width:18px" /></span>
           </template>
         </div>
       </div>
@@ -47,7 +47,7 @@
           <label class="bet-play-text"><template v-if="match_type === 2"><label class="bet-match-playing">[{{i18n.t('menu.match_playing')}}]</label></template>{{single_record_obj.playName}}
             <template v-if="single_record_obj.scoreBenchmark!=''
             && match_type===2 &&
-            !((single_record_obj.preOrderDetailStatus != null) && play_mapping.MARKET_RANG_FLAG_LIST.includes(vx_get_pre_bet_list.playId.toString())) &&!
+            !((single_record_obj.preOrderDetailStatus != null) && play_mapping.MARKET_RANG_FLAG_LIST.includes(BetData.pre_bet_list.playId.toString())) &&!
             play_mapping.MARKET_NO_SCORE_LIST.includes(play_id)">
               ({{single_record_obj.scoreBenchmark.replace(':','-')}})
             </template>

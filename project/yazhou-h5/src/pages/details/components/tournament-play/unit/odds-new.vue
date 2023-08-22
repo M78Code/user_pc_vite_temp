@@ -27,9 +27,9 @@
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   // #TODO mixins

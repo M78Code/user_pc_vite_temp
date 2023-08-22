@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {mapMutations} from "vuex";
+  // import {mapMutations} from "vuex";
 import { useRouter, useRoute } from "vue-router"
 
 const router = useRouter()
@@ -21,7 +21,10 @@ const route = useRoute()
       router.push({name:'category', params: {mid: route.params.mid}});
     },
     methods:{
-      ...mapMutations(['set_is_close_video']),
+      // ...mapMutations(['set_is_close_video']),
+      set_is_close_video() {
+        
+      }
     }
   }
 </script>

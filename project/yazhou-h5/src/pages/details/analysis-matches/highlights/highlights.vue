@@ -215,9 +215,9 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import utils from "src/core/utils/utils.js"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 // 队标视图
 let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))

@@ -172,9 +172,9 @@ import temp18 from "./template/temp0.vue"
 // 模板id=51
 import temp51 from "./template/temp0.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: "tournament_play_new",

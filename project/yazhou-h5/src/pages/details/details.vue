@@ -131,7 +131,7 @@ import utils from 'src/core/utils/utils.js';  // 公共方法
 // import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import lodash from "lodash";
 import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
 import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
@@ -151,9 +151,9 @@ import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
 export default defineComponent({
   name: "details",
@@ -184,7 +184,7 @@ export default defineComponent({
 //   },
 
   setup(props, evnet) {
-    const { t } = useI18n();
+    ;
     const router = useRouter();
     const route = useRoute();
     const {

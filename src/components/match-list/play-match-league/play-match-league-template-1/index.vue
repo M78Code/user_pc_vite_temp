@@ -98,7 +98,7 @@ import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import { get_match_tpl_title } from 'src/core/utils/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
@@ -106,7 +106,7 @@ import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-t
 import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState()
-const { t } = useI18n();
+;
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 

@@ -1,5 +1,5 @@
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n();
+import { t } from "src/boot/i18n";
+;
 const mmp_map = () => {
   return t("mmp") || "";
 };

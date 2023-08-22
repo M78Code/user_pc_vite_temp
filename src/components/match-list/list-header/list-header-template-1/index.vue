@@ -90,7 +90,7 @@ import match_list_global from 'src/components/match-list/composables/match-list-
 import comSelect from "src/public/components/select";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import BaseData from "src/public/utils/base_data/base-data.js";
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { defineProps, ref, computed, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
@@ -98,7 +98,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const { t } = useI18n();
+;
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);

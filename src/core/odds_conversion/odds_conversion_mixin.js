@@ -9,12 +9,12 @@
 
 // import { mapGetters, mapActions } from "vuex";
 // import store from "project_path/src/store";
-// import { useI18n } from 'vue-i18n'
+// import { t } from "src/boot/i18n";
 import store from "src/store-redux/index.js";
 // TODO:
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 /** 国际化 */
-// const { t } = useI18n();
+// ;
 export default {
   // mixins: [global_mixin],
   data() {

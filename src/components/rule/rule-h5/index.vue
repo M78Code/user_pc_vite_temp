@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
@@ -29,21 +29,27 @@ const props = defineProps({
 
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** stroe仓库 */
-const store_data = store.getState()
-/** 
- * 语言 lang
- * 路径: src\store-redux\module\languages.js
- */
-const { lang } = store_data.languagesReducer
-// TODO: 语言改变mitt
+const { langReducer, themeReducer } = store.getState()
+const unsubscribe = store.subscribe(() => {
+    theme.value = themeReducer.theme
+    lang.value = userReducer.lang
+   
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const { theme } = store_data.themeReducer
+const theme = ref(themeReducer.theme)
+/** 
+ * 语言
+ * 路径: src\store-redux\module\languages.js
+ */
+ const lang = ref(langReducer.lang)
 
 /** 体育规则地址-H5 */
 const more_lang = ref('')
@@ -57,14 +63,14 @@ const get_h5_rule_url = () => {
         'en': 'en-gb',
         'vi': 'en-gb', //越南文暂时对应英文显示
     }
-    let lang = lang_obj[lang] || 'zh-cn'
+    let lang = lang_obj[lang.value] || 'zh-cn'
     if (current_env == 'idc_online' || current_env == 'idc_sandbox' || current_env == 'idc_pre') {
         // 生产环境
         let domain = this.$lodash.get(window, `env.config.static_serve[0]`)
-        more_lang.value = domain + '/sports-rules/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
+        more_lang.value = domain + '/sports-rules/#/' + lang.value + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
     } else {
         // 非生产环境
-        more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
+        more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang.value + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + theme
     }
     const { ctx } = getCurrentInstance()
     ctx.$forceUpdate()
@@ -72,7 +78,7 @@ const get_h5_rule_url = () => {
 /** 钩子触发 */
 onMounted(get_h5_rule_url)
 /** 监听语言变化 */
-watch(lang, get_h5_rule_url)
+watch(lang.value, get_h5_rule_url)
 
 /** 监听窗口变化 */
 // const client_height = ref(window_resize_handle())

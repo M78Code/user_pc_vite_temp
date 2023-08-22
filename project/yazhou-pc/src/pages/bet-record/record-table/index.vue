@@ -409,10 +409,10 @@
 import tableOptions from ".table-options.vue"; // 选项组件
 import { PaginationWapper } from "src/components/pagination/indes.js";
 import { useTableData } from "./use-table-data";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { formatTime,format_balance,format_score_t } from "src/core/formart/index";
 import {defineExpose} from 'vue'
-const { t } = useI18n();
+;
 
 const props = defineProps({
   record_obj: {

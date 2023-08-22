@@ -1,5 +1,4 @@
-import {useI18n} from 'vue-i18n'
-  const {t} =useI18n()
+import { t } from "src/boot/i18n";;
 
   // 表格头部分
 const lineList = [

@@ -19,26 +19,26 @@
         :key="`single-${item}`"
         @get_lock_index="get_lock_index"
         @get_button_text="get_button_text"
-        v-for="(item, index) in vx_get_bet_single_list"
+        v-for="(item, index) in BetData.bet_single_list"
       ></bet-single-info>
       <!-- 多项单关投注 -->
       <bet-multiple
       
-      v-if="vx_get_bet_single_list.length>1"
-      :key="`multiple-${vx_get_bet_single_list.length}`"
+      v-if="BetData.bet_single_list.length>1"
+      :key="`multiple-${BetData.bet_single_list.length}`"
       :is_forward="is_forward"
       >
       </bet-multiple>
     </template>
     <!--已投注-->
     <template v-else>
-      <!--投注结果 order_detail_data 里面的每一项就是投注结果数据源-->
+      <!--投注结果 bet_order_success_all 里面的每一项就是投注结果数据源-->
       <bet-single-record
         
         :single_record_obj="item"
-        v-for="(item, index) in view_ctr_obj.order_detail_data"
+        v-for="(item, index) in view_ctr_obj.bet_order_success_all"
         :key="`${item.playOptionsId}`"
-        :class="{'mt5': index>0,'fillet': index<view_ctr_obj.order_detail_data.length-2, 'last-item':index==view_ctr_obj.order_detail_data.length-1}"
+        :class="{'mt5': index>0,'fillet': index<view_ctr_obj.bet_order_success_all.length-2, 'last-item':index==view_ctr_obj.bet_order_success_all.length-1}"
       ></bet-single-record>
       <!--确认中, 投注成功, 投注失败的提示-->
       <div class="bet-confirm-message  text-center yb-fontsize12"
@@ -87,10 +87,10 @@ const view_ctr_obj = ref(view_ctr_obj_config)
      * @return {Boolean} 是否未投注: true, 已投注: false
      */
  const    bet_flag =  computed(() => {
-      if(BetData.vx_get_bet_mode == 0) {
+      if(BetData.BetData.bet_mode == 0) {
         return false;
       }
-      return BetData.vx_get_bet_mode == -1 || (BetData.vx_get_bet_mode == 1 && BetViewDataClass.view_ctr_obj.order_confirm_complete != 2);
+      return BetData.BetData.bet_mode == -1 || (BetData.BetData.bet_mode == 1 && BetViewDataClass.view_ctr_obj.order_confirm_complete != 2);
     })
 
 </script>

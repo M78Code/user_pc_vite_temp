@@ -5,8 +5,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n();
+import { t } from "src/boot/i18n";
+;
 
 
 

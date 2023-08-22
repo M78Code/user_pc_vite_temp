@@ -46,8 +46,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import store from "src/store-redux/index.js";
-import {useI18n} from 'vue-i18n'
-  const {t} =useI18n()
+import { t } from "src/boot/i18n";;
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"

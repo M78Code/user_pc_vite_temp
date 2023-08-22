@@ -304,7 +304,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { useEventListener } from "src/core/utils/event-hook";
 import utils from "src/core/utils/utils.js";
 import { useRoute } from "vue-router";
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
@@ -317,7 +317,7 @@ import layoutHeader from "project_path/src/layouts/layout-header.vue"; //报错
 //   import("../pages/match-details/match-details.vue")
 // );
 
-const { t } = useI18n();
+;
 const route = useRoute();
 
 const thumb_style = {

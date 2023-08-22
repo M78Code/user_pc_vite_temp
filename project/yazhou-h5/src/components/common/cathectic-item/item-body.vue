@@ -42,7 +42,7 @@ import bodyTop from "project_path/src/components/common/cathectic-item/item-body
 import bodyMain from "project_path/src/components/common/cathectic-item/item-body/body-main.vue";
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 // 国际化
 let { t } = useI18n()

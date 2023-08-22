@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-// import { mapMutations, mapGetters } from "vuex";
+
 import odd_convert from "src\core\odds_conversion\compute_max_win_money.js";
 import timer from "src/project/components/bet/timer.vue";
 

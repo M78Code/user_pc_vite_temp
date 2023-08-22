@@ -89,7 +89,7 @@
 import { ref, } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 // import store from "project_path/src/store";
 import store from "src/store-redux/index.js";
@@ -120,7 +120,7 @@ const props = defineProps({
 const emit = defineEmits(['auto_close'])
 
 /** 国际化 */
-const { t } = useI18n();
+;
 
 const route = useRoute()
 const router = useRouter()
@@ -178,23 +178,23 @@ const set_theme = (data) => store.dispatch({
     data
 })
 const set_lang = (data) => store.dispatch({
-    type: 'set_lang',
+    type: 'SET_LANG',
     data
 })
 const set_lang_change = (data) => store.dispatch({
-    type: 'set_lang_change',
+    type: 'SET_LANGUAGE_CHANGING',
     data
 })
 const set_user_assign = (data) => store.dispatch({
-    type: 'set_user_assign',
+    type: 'SET_USER',
     data
 })
 const set_cur_odd = (data) => store.dispatch({
-    type: 'set_cur_odd',
+    type: 'SET_CUR_ODD',
     data
 })
 const set_pre_odd = (data) => store.dispatch({
-    type: 'set_pre_odd',
+    type: 'SET_PRE_ODD',
     data
 })
 

@@ -23,7 +23,7 @@
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 
 import store from "src/store-redux/index.js";
 // import search from "src/core/search-class/search.js"
@@ -50,7 +50,7 @@ export default defineComponent({
     setup(props, { emit }) {
 
         /** 国际化 */
-        const { t } = useI18n()
+        
 
         /** 输入关键字 */
         const keyword = ref('')

@@ -1,13 +1,82 @@
 import { Qs } from "../utils/Qs";
 import { ls } from "src/core/utils/web-storage.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
-import { includes } from "lodash";
+import lodash from "lodash";
 class EnterParamsYazhouH5 {
   constructor() {
     this.url = "";
+    this.paramsVideo = {};
+    // 是否已经加载过
+    this.init_load = false;
+    this.app_init_loading_timer = null;
   }
   set_enter_url(url) {
     this.url = url;
+  }
+  /**
+   * @description: 设置this.init_load变量的状态
+   * @param {*} status 布尔值
+   */
+  set_init_load(status) {
+    // 当this.init_load值从false,变到true时进入
+    if (!this.init_load && status) {
+      // 清除上次的定时器
+      clearTimeout(this.app_init_loading_timer);
+      // 10秒后关闭,阻止页面数据加载时白屏问题
+      this.app_init_loading_timer = setTimeout(() => {
+        // 关闭app全局loading动画
+        this.app_init_loading = false;
+      }, 10000);
+    }
+    this.init_load = status;
+  }
+  init() {
+    // 设置商户信息
+    let gr = ls.get("gr");
+    // 首屏loading动画是否显示使用的延时器
+    this.loading_is_show_timer = 0;
+    this.app_init_loading = true;
+  }
+  //默认打开赛事详情
+  go_match_detail(data) {
+    //定位赛事id
+    const mid = Qs.mid;
+  }
+  //默认打开赛果详情
+  go_match_result(data) {
+    //定位赛事id
+    const mid = Qs.mid;
+  }
+  //活动页面
+  go_activity(activityList, act_copy) {
+    const tab_list = lodash.cloneDeep(activityList);
+    tab_list.forEach((item, i) => {
+      // 商户跳转过来时,有带 act参数，调用方法
+      if (act_copy == item.activityId) {
+        const tab_Id = act_copy;
+        this.tab_click(
+          lodash.cloneDeep(activityList)[i],
+          tab_Id,
+          i,
+          "",
+          "is_first_time"
+        );
+      } else if (i == 0) {
+        // 默认调用第一个
+        console.log("默认调用第一个");
+        const tab_Id = item.activityId;
+        // this.tab_click(
+        //   lodash.cloneDeep(activityList)[0],
+        //   tab_Id,
+        //   0,
+        //   "",
+        //   "is_first_time"
+        // );
+      }
+      // 盲盒活动的下标
+      if (item.activityId == "10009") item.lucky_blind_box_index = i;
+    });
+    return tab_list;
   }
   //解析参数
   analyze() {
@@ -37,12 +106,24 @@ class EnterParamsYazhouH5 {
     if (Qs.sy) {
     }
     //如果是直接从外层跳转到电竞赛事详情页，则需要传赛事类型id
-    if(Qs.csid){
-
+    if (Qs.csid) {
+    }
+    //赛事回放参数
+    if (Qs.mid) {
+      this.paramsVideo.eventCode = {
+        device: Qs.device || "PC",
+        mid: Qs.mid, //赛事id
+        eventCode: Qs.eventCode || 0,
+      };
+    }
+    //标记 开启列表和详情页跳转功能
+    if (Qs.label) {
     }
   }
   get_url() {
-    return this.url || "";
+    //增加时间戳 避免浏览器或者APP 一定程度的缓存
+    const t = new Date().valueOf();
+    return this.url + "&t=" + t || "";
   }
 }
 

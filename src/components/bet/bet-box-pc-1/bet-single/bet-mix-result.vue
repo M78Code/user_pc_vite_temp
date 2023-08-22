@@ -23,7 +23,7 @@
           </template>
           <template v-if="series_obj.orderStatusCode==2">
             <!--投注确认中转圈-->
-            <span class="bet-confirm-handle"><img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_confirming.gif`)" style="width:18px;height:18px"/></span>
+            <span class="bet-confirm-handle"><img :src="(`${$g_image_preffix}/image/wwwassets/yabo/gif/${BetData.theme}/${BetData.theme}_confirming.gif`)" style="width:18px;height:18px"/></span>
           </template>
         </div>
       </div>

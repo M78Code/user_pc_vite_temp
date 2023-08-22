@@ -86,9 +86,9 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
   // ws 数据接入  投注记录订单消息推送
 // mixins: [skt_order]

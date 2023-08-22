@@ -25,7 +25,7 @@ import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { useI18n } from "vue-i18n"
+import { t } from "src/boot/i18n";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import utils from "src/core/utils/utils.js"
@@ -46,7 +46,7 @@ import utils from "src/core/utils/utils.js"
   // 精彩回放
   const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
     // 国际化
-  const { t } = useI18n()
+  
     // 锚点
     let analysis_football_matches = ref(null)
     // tab 数据

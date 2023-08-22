@@ -25,9 +25,9 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
-import { useI18n } from 'vue-i18n'
+import { t } from "src/boot/i18n";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
@@ -45,7 +45,7 @@ const props = defineProps({})
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 /** 国际化 */
-const { t } = useI18n()
+
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -65,9 +65,13 @@ const loadd_finish = ref(false)
 
 /** stroe仓库 */
 const store_data = store.getState()
+const unsubscribe = store.subscribe(() => {
+    lang.value = store_data.langReducer.lang
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 /** 国际化语言 default: zh */
-const { lang } = store_data.langReducer
-// TODO: 语言改变mitt
+const lang = ref(store_data.langReducer.lang)
 
 /**
 * @Description:切换菜单

@@ -2,16 +2,17 @@
  * 用户主题设置
  *
  */
+import { nextTick } from "vue";
 import { ls, ss } from "src/core/utils/web-storage.js";
+
 const initialState = {
   /** 语言 */
   theme: ls.get("theme", "day"),
 };
-import { MITT_TYPES, useMittEmit } from "src/core/mitt/";
 
 export default function langReducer(state = initialState, action) {
   const { type, data } = action;
-  useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, data);
+  nextTick(() => useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, data))
   switch (type) {
     /** 设置主题 */
     case "SET_THEME":

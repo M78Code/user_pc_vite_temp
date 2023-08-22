@@ -16,9 +16,9 @@
 
 <script setup>
 import { ref, onUnmounted} from 'vue'
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 //国际化
-const { t } = useI18n()
+
 
   const props = defineProps({
     //加载回调

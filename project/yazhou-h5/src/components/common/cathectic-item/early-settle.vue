@@ -151,7 +151,7 @@ import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from '
 import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
-import { useI18n } from "vue-i18n";
+import { t } from "src/boot/i18n";;
 
 let { t } = useI18n()
 
