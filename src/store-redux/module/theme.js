@@ -4,6 +4,7 @@
  */
 import { nextTick } from "vue";
 import { ls, ss } from "src/core/utils/web-storage.js";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {
   /** 语言 */

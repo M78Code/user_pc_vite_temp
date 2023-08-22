@@ -149,11 +149,14 @@ onUnmounted(() => {
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
+  background-color: var(--q-cathectic-page-bg-color);
+  color: var(--q-cathectic-fs-defalut-color)
 }
 
 .head-top {
   height: 0.5rem;
   position: relative;
+  border-bottom: 1px solid var(--q-cathectic-border-bottom-color-1);
 
   .close {
     position: absolute;
@@ -193,7 +196,11 @@ onUnmounted(() => {
 
     &.active-p {
       font-weight: 600;
-      color: var(--q-color-fs-color-145);
+      color: var(--q-cathectic-fs-active-color);
+      span {
+        border-color: var(--q-cathectic-underline-border-color);
+        background:var(--q-cathectic-underline-bg-color);
+      }
     }
   }
 }
