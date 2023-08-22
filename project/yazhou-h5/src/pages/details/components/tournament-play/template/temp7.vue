@@ -18,7 +18,7 @@
               <div class="col">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
-                      v-if="_.get(item_data.title,'[0].otd') == ol_item.otd"
+                      v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd"
                       :key="ol_index"
                   >
                     <!--  0开 2关 1封 11锁 -->
@@ -95,7 +95,7 @@
               <div class="col">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
-                      v-if="_.get(item_data.title,'[1].otd') == ol_item.otd"
+                      v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd"
                       :key="ol_index"
                   >
                     <!--  0开 2关 1封 11锁 -->
@@ -172,7 +172,7 @@
               <div v-if="item_data.title.length > 2" class="col">
                 <template v-for="(ol_item,ol_index) in item.ol">
                   <div
-                      v-if="_.get(item_data.title,'[2].otd') == ol_item.otd"
+                      v-if="lodash.get(item_data.title,'[2].otd') == ol_item.otd"
                       :key="ol_index"
                   >
                     <!--  0开 2关 1封 11锁 -->
@@ -257,8 +257,9 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
+import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp7",

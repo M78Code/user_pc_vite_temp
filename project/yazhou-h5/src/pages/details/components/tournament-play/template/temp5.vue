@@ -15,7 +15,7 @@
           <!-- 左 -->
           <div class="col yb_fontsize14" style="min-width: 1px;">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="_.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
+              <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index" class="ellipsis font_color play-box-style">
                 {{ol_item.on}}
               </div>
             </template>
@@ -24,7 +24,7 @@
           <!-- 中 -->
           <div class="col">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="_.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+              <div v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
@@ -74,7 +74,7 @@
           <!-- 右 -->
           <div class="col">
             <template v-for="(ol_item,ol_index) in item.ol">
-              <div v-if="_.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
+              <div v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd" :key="ol_index">
                 <!--  0开 2关 1封 11锁 -->
                 <!-- 开盘or锁盘 正常显示 -->
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
@@ -183,6 +183,8 @@
 // import { mapGetters } from "vuex";
 import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import utils from 'src/core/utils/utils.js';
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp5",
@@ -191,13 +193,16 @@ export default defineComponent({
     oddsNew,
   },
   setup(props, evnet) {
+    const store_state = store.getState()
     // #TODO vuex 
     // computed: {
     //   ...mapGetters(["get_bet_list"])
     // },
-
+    const get_bet_list = computed(() => {
+      return []
+    });
     const change_ms = computed(() => {
-      return _.get(item_data,'hl[0].ol[0].os')
+      return lodash.get(item_data,'hl[0].ol[0].os')
     });
     const go_to_bet = (ol_item) => {
       // #TODO emit 
@@ -223,7 +228,8 @@ export default defineComponent({
     return {
       utils,
       change_ms,
-      go_to_bet
+      go_to_bet,
+      get_bet_list
     }
   }
 })

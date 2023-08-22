@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import common from "src/project/mixins/constant/module/common.js"
+// import common from "src/project/mixins/constant/module/common.js"
 // import match_main from "src/project/pages/match-list/match_main.vue"
 
 export default {
-  mixins:[common],
+  // mixins:[common],
   props:{
     invoke:String
   },

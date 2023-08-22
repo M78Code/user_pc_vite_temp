@@ -14,22 +14,22 @@
           </div>
           <div class="row team justify-between">
             <div class="col-4 team-odds" @click="go_to_bet(`20033${team.teamId}`,index)" :class="[is_select(`20033${team.teamId}`) && 'team-odds2']">
-              <div v-if="_.get(play_obj,`20033${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20033${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(_.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20033${team.teamId}.ov`) / 100000,null,hsw_obj[20033])}}
               </div>
             </div>
             <div class="col-4 team-odds" @click="go_to_bet(`20034${team.teamId}`,index)" :class="[is_select(`20034${team.teamId}`) && 'team-odds2']">
-              <div v-if="_.get(play_obj,`20034${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20034${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(_.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20034${team.teamId}.ov`) / 100000,null,hsw_obj[20034])}}
               </div>
             </div>
             <div v-if="'1009' != sub_menu_type"
             class="col-4 team-odds" @click="go_to_bet(`20035${team.teamId}`,index)" :class="is_select(`20035${team.teamId}`) && 'team-odds2'">
-              <div v-if="_.get(play_obj,`20035${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
+              <div v-if="lodash.get(play_obj,`20035${team.teamId}.os`) == 2"><img src="image/wwwassets/bw3/common/match-icon-lock.svg" /></div>
               <div v-else>
-                {{compute_value_by_cur_odd_type(_.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
+                {{compute_value_by_cur_odd_type(lodash.get(play_obj,`20035${team.teamId}.ov`) / 100000,null,hsw_obj[20035])}}
               </div>
             </div>
           </div>
@@ -41,8 +41,10 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 // import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins
@@ -55,12 +57,25 @@ export default defineComponent({
 
   },
   setup(props, evnet) {
+    const store_state = store.getState()
     // #TODO vuex 
     // ...mapGetters(["get_bet_list","get_cur_odd","get_detail_data"]),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     // }),
-
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return ""
+    });
+    
     const is_match_result = computed(() => {
       return ['result_details', 'match_result'].includes($route.name)
     });
@@ -79,12 +94,12 @@ export default defineComponent({
     });
     const get_odds = () => {
     // plays集合
-      let play_ = _.get(item_data,'plays')
+      let play_ = lodash.get(item_data,'plays')
       let play_obj = {}
-      _.each(play_,(item) => {
-        _.each(_.get(item,'hl[0].ol'), ol_item => {
-          let hpid = _.get(item,'hpid')
-          hsw_obj[hpid] =  _.get(item,'hsw').toString()
+      lodash.each(play_,(item) => {
+        lodash.each(lodash.get(item,'hl[0].ol'), ol_item => {
+          let hpid = lodash.get(item,'hpid')
+          hsw_obj[hpid] =  lodash.get(item,'hsw').toString()
           let key = hpid + '' + ol_item.teamId;
           ol_item.hpid = hpid;
           play_obj[key] = ol_item
@@ -105,10 +120,15 @@ export default defineComponent({
       // console.log('qwe',JSON.stringify(ol_item,null,'--'))
       // console.log('qwe',JSON.stringify(play_obj2[ol_item.hpid],null,'--'))
 
-      $emit("bet_click_", {ol_item, hl_data:play_obj2[ol_item.hpid]});
+      // $emit("bet_click_", {ol_item, hl_data:play_obj2[ol_item.hpid]});
     };
     return {
       utils,
+      lodash,
+      get_bet_list,
+      get_cur_odd,
+      get_detail_data,
+      get_curr_sub_menu_type,
       is_select,
       get_odds,
       go_to_bet,

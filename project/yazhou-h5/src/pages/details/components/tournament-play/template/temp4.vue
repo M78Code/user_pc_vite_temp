@@ -357,6 +357,8 @@
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   // #TODO mixins
@@ -367,16 +369,33 @@ export default defineComponent({
     oddsNew: 'odds_new',
   },
   setup(props, evnet) {
+    const store_state = store.getState()
     // #TODO vuex 
     // computed: {
     //   ...mapGetters(["get_bet_list","get_cur_odd","get_flag_get_ol_list", "get_menu_type","get_detail_data"]),
     //   change_ms(){
-    //     return _.get(item_data,'hl[0].ol[0].os')
+    //     return lodash.get(item_data,'hl[0].ol[0].os')
     //   }
     // },
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_flag_get_ol_list = computed(() => {
+      return ""
+    });
+    const get_menu_type = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
+    
 
     const change_ms = computed(() => {
-      return _.get(item_data,'hl[0].ol[0].os')
+      return lodash.get(item_data,'hl[0].ol[0].os')
     });
     const go_to_bet = (ol_item) => {
       // #TODO emit 
@@ -402,7 +421,12 @@ export default defineComponent({
     return {
       utils,
       change_ms,
-      go_to_bet
+      go_to_bet,
+      get_bet_list,
+      get_cur_odd,
+      get_flag_get_ol_list,
+      get_menu_type,
+      get_detail_data,
     }
   }
 })
