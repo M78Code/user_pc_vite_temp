@@ -38,6 +38,10 @@ export default {
 "cathectic-text-color-7": "#99a3b1",
 // var(--q-color-fs-color-148)
 "cathectic-text-color-7": "#414655",
+// var(--q-color-com-fs-color-9)
+"cathectic-text-color-7": "#ff2a2a",
+// var(--q-color-fs-color-14)
+"cathectic-text-color-7": "#000000",
 
 /**
  * -----背景色-----
@@ -54,6 +58,12 @@ export default {
 "cathectic-page-bg-color-5": "#f5f5f5",
 // var(--q-color-page-bg-color-114)
 "cathectic-page-bg-color-6": "#ffffff",
+// var(--q-color-page-bg-color-41)
+"cathectic-page-bg-color-6": "#e6e6e6",
+// var(--q-color-page-bg-color-2)
+"cathectic-page-bg-color-6": "#ffffff",
+// var(--q-color-page-bg-color-29)
+"cathectic-page-bg-color-6": "#F6F7FA",
 
 
 /**
@@ -64,6 +74,12 @@ export default {
 // var(--q-color-border-color-11)
 "cathectic-border-color-2": "#f5f7fa",
 // var(--q-color-border-color-58)
+"cathectic-border-color-2": "#F5F7FA",
+// var(--q-color-border-color-31)
+"cathectic-border-color-2": "rgba(255,145,36,0.36)",
+// var(--q-color-border-color-7)
+"cathectic-border-color-2": "#eeeeee",
+
 
 
 /**
@@ -77,6 +93,10 @@ export default {
 "cathectic-linear-gradient-bg-color-3": "linear-gradient(270deg, #ffb001 0%, #ff7000 100%)",
 // var(--q-color-linear-gradient-bg-9)
 "cathectic-linear-gradient-bg-color-4": "linear-gradient(180deg, rgba(255,176,1,0.20) 0%, rgba(255,176,1,0.02) 99%)",
+// var(--q-color-linear-gradient-bg-6)
+"cathectic-linear-gradient-bg-color-4": "linear-gradient(-34deg,  #F7B500 0%, #FF9124 88%)",
+// var(--q-color-linear-gradient-bg-13)
+"cathectic-linear-gradient-bg-color-4": "linear-gradient(270deg, #FFB001 0%, #FF7000 100%)",
 
 
 
