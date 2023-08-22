@@ -264,8 +264,9 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp12",
@@ -278,6 +279,7 @@ export default defineComponent({
   // #TODO mixins 
   // mixins:[ odd_convert ],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils,
       // 主队是否显示
@@ -288,6 +290,12 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list","get_detail_data"]),
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
     const home_name = computed(() => {
       return item_data.title[0]
     })
@@ -318,6 +326,8 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
+      get_bet_list,
+      get_detail_data,
       home_name,
       away_name,
       go_to_bet

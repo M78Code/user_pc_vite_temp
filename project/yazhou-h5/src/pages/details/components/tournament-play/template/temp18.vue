@@ -19,7 +19,7 @@
           <!-- 左 -->
           <div class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item, ol_index) in item_data.hl[0].ol">
-              <div v-if="_.get(item_data.title,`[${index}][0].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][0].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
                   <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -80,7 +80,7 @@
           <!-- 中 -->
           <div class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item,ol_index) in item_data.hl[0].ol">
-              <div v-if="_.get(item_data.title,`[${index}][1].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][1].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
                   <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -131,7 +131,7 @@
           <!-- 右 -->
           <div v-if="titles.length > 2" class="col" :class="{col3: titles.length > 2}">
             <template v-for="(ol_item,ol_index) in item_data.hl[0].ol">
-              <div v-if="_.get(item_data.title,`[${index}][2].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
+              <div v-if="lodash.get(item_data.title,`[${index}][2].otd`) == ol_item.otd" :key="ol_index" class="bet-box-bg">
                 <template v-if="ol_item.ms == 0 || ol_item.ms == 11">
                   <template v-if="ol_item.hs == 0 || ol_item.hs == 11">
                     <template v-if="ol_item.os == 1">
@@ -188,6 +188,8 @@
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import utils from 'src/core/utils/utils.js';
+import lodash from "lodash";
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp16",
@@ -198,6 +200,7 @@ export default defineComponent({
   // #TODO mixins 
   // mixins:[odd_convert],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils
     });
@@ -205,6 +208,15 @@ export default defineComponent({
     //   computed: {
     //   ...mapGetters(["get_bet_list", "get_cur_odd","get_detail_data"])
     // },
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_cur_odd = computed(() => {
+      return ""
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
     onUnmounted(() => {
       for (const key in $data) {
         $data[key] = null
@@ -215,6 +227,10 @@ export default defineComponent({
     }
     return {
       ...toRefs(data),
+      lodash,
+      get_bet_list,
+      get_cur_odd,
+      get_detail_data,
       go_to_bet
     }
   }

@@ -63,7 +63,8 @@
 // #TODO vuex 
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp15",
@@ -74,6 +75,7 @@ export default defineComponent({
   // #TODO mixins 
   // mixins:[odd_convert],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils,
       name_: '',  //计算类名
@@ -82,6 +84,12 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters(["get_bet_list","get_detail_data"]),
+    const get_bet_list = computed(() => {
+      return []
+    });
+    const get_detail_data = computed(() => {
+      return store_state.detailsReducer.details_data || {}
+    });
     const olitem_name = computed(() => {
       return function (val) {
         if (val.ott && val.on) {
@@ -148,6 +156,8 @@ export default defineComponent({
     };
     return {
       ...toRefs(data),
+      get_bet_list,
+      get_detail_data,
       olitem_name,
       go_to_bet,
       calc_num,
