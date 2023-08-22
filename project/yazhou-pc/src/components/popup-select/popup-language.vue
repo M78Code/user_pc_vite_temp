@@ -23,19 +23,15 @@
 import { ref, reactive, onMounted, onUnmounted, watch, computed, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
 
 import store from "src/store-redux/index.js";
 import { api_account, api_details } from 'src/api/index';
 import langs_mjs from "project_path/src/i18n/langs/index.mjs";
-import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync } from 'src/boot/i18n'
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
-
-/** 国际化 */
-;
 
 /** 是否展示 */
 const show_popup = ref(false)
@@ -44,21 +40,6 @@ const language_arr = ref(Object.keys(langs_mjs))
 /** 点击数 */
 const hits = ref(0)
 const langs = ref(langs_mjs)
-
-/** stroe仓库 */
-const { globalReducer, betInfoReducer, userReducer, langReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    global_click.value = globalReducer.global_click
-    lang.value = langReducer.lang
-    user_info.value = userReducer.user_info || {}
-    is_bet_single.value = betInfoReducer.is_bet_single
-    bet_single_obj.value = betInfoReducer.bet_single_obj || {}
-    bet_obj.value = betInfoReducer.bet_obj || {}
-    is_virtual_bet.value = betInfoReducer.is_virtual_bet
-    virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
 
 /** 全局点击事件数 */
 const global_click = ref(0)
@@ -72,26 +53,32 @@ watch(
         show_popup.value = false;
     }
 )
+
+/** stroe仓库 */
+const { globalReducer, betInfoReducer, userReducer, langReducer } = store.getState()
 /** 
- * is_bet_single true: 单关投注 false: 串关投注 default: true
- * bet_single_obj 单关投注对象 default: {}
- * bet_obj 单关投注对象 default: {}
- * is_virtual_bet true: 当前是否为虚拟投注 default: true
- * virtual_bet_obj 虚拟投注对象 default: {}
+ * 单关投注 false: 串关投注 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-/**  */
-const { is_bet_single, bet_single_obj, bet_obj, is_virtual_bet, virtual_bet_obj } = toRefs(...reactive(betInfoReducer))
+const is_bet_single = ref(betInfoReducer.is_bet_single)
+/* 单关投注对象 default: {} */
+const bet_single_obj = ref(betInfoReducer.bet_single_obj)
+/* 押注扁平化对象扁平 default: {} */
+const bet_obj = ref(betInfoReducer.bet_obj)
+/* 当前是否为虚拟投注 default: true */
+const is_virtual_bet = ref(betInfoReducer.is_virtual_bet)
+/* 虚拟投注对象 default: {} */
+const virtual_bet_obj = ref(betInfoReducer.virtual_bet_obj)
 /** 
  * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
-const { user_info } = userReducer
+const user_info = ref(userReducer.user_info)
 /** 
  * 语言 languages
  * 路径: src\store-redux\module\languages.js
  */
-const { lang } = langReducer
+const lang = ref(langReducer.lang)
 
 /** 设置语言 */
 const set_lang = (data) => store.dispatch({
@@ -113,10 +100,22 @@ const set_open_select_time = (data) => store.dispatch({
     type: 'set_open_select_time',
     data
 })
+const unsubscribe = store.subscribe(() => {
+    global_click.value = globalReducer.global_click
+    lang.value = langReducer.lang
+    user_info.value = userReducer.user_info || {}
+    is_bet_single.value = betInfoReducer.is_bet_single
+    bet_single_obj.value = betInfoReducer.bet_single_obj || {}
+    bet_obj.value = betInfoReducer.bet_obj || {}
+    is_virtual_bet.value = betInfoReducer.is_virtual_bet
+    virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /** 语言列表 */
 const languageList = ref([])
-onMounted(() => languageList.value = lodash.get(user_info, 'languageList') || [])
+onMounted(() => languageList.value = lodash.get(user_info.value, 'languageList') || [])
 onUnmounted(() => languageList.value = [])
 
 /** 路由对象 */
@@ -189,7 +188,7 @@ function on_click_lang(lang_) {
         }
     }
     if (lang.value != lang_) {
-        api_account.set_user_lang({ token: user_info.token, languageName: lang_ }).then(res => {
+        api_account.set_user_lang({ token: user_info.value.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
                 set_user({ languageName: lang_ })
@@ -218,7 +217,7 @@ function on_click_lang(lang_) {
 function toggle_popup() {
     hits.value++;
     if (lodash.isEmpty(languageList.value)) {
-        languageList.value = lodash.get(user_info, 'languageList') || [];
+        languageList.value = lodash.get(user_info.value, 'languageList') || [];
     }
     show_popup.value = !show_popup.value
 }
