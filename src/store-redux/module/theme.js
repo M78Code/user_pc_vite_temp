@@ -11,7 +11,7 @@ const initialState = {
   theme: ls.get("theme", "day"),
 };
 
-export default function langReducer(state = initialState, action) {
+export default function themeReducer(state = initialState, action) {
   const { type, data } = action;
   nextTick(() => useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, data))
   switch (type) {

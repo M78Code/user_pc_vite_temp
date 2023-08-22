@@ -40,7 +40,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, toRefs, def
 import lodash from 'lodash'
 import store from 'src/store-redux'
 /** utils 工具类 */
-import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
+// import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
 
 const props = defineProps({
   /** tab列表 */

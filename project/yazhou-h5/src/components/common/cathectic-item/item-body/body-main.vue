@@ -368,6 +368,7 @@ const props =defineProps({
   margin-right: 0.15rem;
   .box-top {
     position: relative;
+    color: var(--q-cathectic-fs-defalut-color);
     &::before {
       content: "";
       display: block;

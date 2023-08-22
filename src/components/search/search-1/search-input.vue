@@ -247,9 +247,9 @@ export default defineComponent({
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: var(--qq--theme-bg-search-match);
-    border-top: 1px solid var(--qq--theme-bd-color-notice);
-    border-bottom: 1px solid var(--qq--theme-bd-bottom-searchBox);
+    background-color: var(--qq--search-bg-color3);
+    border-top: 1px solid var(--qq--search-border-color4);
+    border-bottom: 1px solid var(--qq--search-border-color3);
     margin-bottom: 5px;
 
     .search-icon-container {
@@ -271,7 +271,7 @@ export default defineComponent({
             outline: none;
             background: none;
             border: none;
-            color: var(--qq--theme-color-text-activeOrSearch);
+            color: var(--qq--search-text-color8);
             font-size: 12px;
             caret-color: #999999;
 
@@ -303,12 +303,12 @@ export default defineComponent({
         height: 18px;
         line-height: 18px;
         cursor: pointer;
-        border-left: 1px solid var(--qq--theme-bd-color-close);
+        border-left: 1px solid var(--qq--search-border-color5);
         padding-left: 10px;
-        color: var(--qq--theme-color-text-close);
+        color: var(--qq--search-text-color3);
 
         &:hover {
-            color: var(--qq--theme-color-text-close-hover);
+            color: var(--qq--search-text-color6);
         }
     }
 }

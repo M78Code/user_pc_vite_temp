@@ -35,9 +35,6 @@ import { api_account } from 'src/api/index'
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
 
-/** 国际化 */
-;
-
 /** 设置弹窗是否激活 */
 const is_active = ref(false)
 /** 点击数 */
@@ -45,7 +42,7 @@ const hits = ref(0)
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, userReducer, themeReducer } = store_data
+const { globalReducer, userReducer, themeReducer, langReducer } = store_data
 const unsubscribe = store.subscribe(() => {
     global_click.value = globalReducer.global_click
     theme.value = langReducer.theme
@@ -87,13 +84,13 @@ const set_theme = (data) => store.dispatch({
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
-    return theme.value.includes('theme02') ? 'theme02' : 'theme01'
+    return theme.value === 'theme02' ? 'theme02' : 'theme01'
 })
 
 /**
-        * @Description:显示设置弹层
-        * @return {undefined} undefined
-        */
+ * @Description:显示设置弹层
+ * @return {undefined} undefined
+ */
 function on_popup() {
     hits.value++;
     is_active.value = !is_active.value
