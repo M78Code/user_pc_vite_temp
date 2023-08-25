@@ -80,7 +80,7 @@ export default {
     this.timer_obj = {};
     clearTimeout(this.view_ctr_obj.timer_);
     this.view_ctr_obj.timer_ = undefined;
-    this.view_ctr_obj = {};
+ 
     //清理防抖节流
     this.debounce_throttle_cancel(this.set_max_height);
     //移除相应监听事件 //视图销毁钩子函数内执行
@@ -768,33 +768,7 @@ export default {
      * @return {undefined} undefined
      */
     init_view() {
-      this.view_ctr_obj = {
-        bet_order_status: 1,  //  1-投注状态,2-投注中状态,3-投注成功状态,4-投注失败状态,5-投注项校验未通过
-        cur_keyboard_index: -1,
-        bet_tips_info: {
-          id: "", //目标id
-          match_name: "", // 赛事名称  世界杯2022亚洲外围赛
-          battle_info: "", // 对战信息 中国 v 关岛
-          play_game: "", // 玩法游戏 滚球 让球
-          match_type: "", // 赛事类型
-          league_name: "", // 联赛名称
-          bet_end_time: "" // 投注结束时间
-        },
-        bet_order_success_all: [], // 单关投注成功记录
-        bet_order_success_all: [],  // 串关投注成功记录
-        bet_order_success_success: [],
-        order_confirm_complete: 0, //0.默认值还没开始确认注单 1.注单确认中 2.所有注单已经确认完成 且全部成功 3.所有注单已经确认完成 且全部失败 4.所有注单已经确认完成 部分成功部分失败
-        is_empty_money: true, // 金额是否为空
-        error_code: "", // 错误码
-        error_message: "", // 错误消息
-        is_submit_result: false, // 是否提交标志
-        is_effect: true, //供串关是使用
-        input_money_state: 0, // 串关金额范围
-        timer: undefined,
-        input_max_flag: 0, // 输入最大金额标志
-        valid_money_obj: {}, // 是否显示失效按钮
-        bet_fail_flag: false
-      };
+      this.view_ctr_obj = BetData.get_bet_view_data_obj_by_bet_custom_id(bet_custom_id)
       this.refuse_code = undefined;
       this.call_interface = 0; // 调用接口 1.调用投注前校验接口 2. 调用投注前校验和最大最小值接口
       // 总投注数

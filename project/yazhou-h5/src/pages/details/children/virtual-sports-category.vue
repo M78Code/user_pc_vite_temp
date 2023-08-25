@@ -57,7 +57,7 @@ import axios_debounce_cache from "utils/http/axios_debounce_cache";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router"
-
+import lodash from "lodash";
 
 let route =  useRoute()
 let router = useRouter()
@@ -356,7 +356,7 @@ export default defineComponent({
         api_common.get_Video_MaxTime(params).then(res => {
           let res_data = null;
           if (res.code == 200) {
-            res_data = _.get(res,'data');
+            res_data = lodash.get(res,'data');
             let totalTime = res_data[params.tid]
             if(source=='virtual_sports_details')
             {
@@ -481,7 +481,7 @@ export default defineComponent({
       }
     };
     const check_data = (data) => {
-      var bool =  _.some(data,async(v,k)=>{
+      var bool =  lodash.some(data,async(v,k)=>{
         if(v.hl.length >=80) return true;
       })
       return bool;
@@ -577,7 +577,7 @@ export default defineComponent({
         }
         is_no_data = false;
 
-        let temp = _.get(res, 'data');
+        let temp = lodash.get(res, 'data');
         if(is_lock_add){
           set_all_match_os_status(2, temp);
         }
@@ -603,7 +603,7 @@ export default defineComponent({
             listItemAddCustomAttr(item)
           });
         }
-        let list_ = _.cloneDeep(temp);
+        let list_ = lodash.cloneDeep(temp);
         matchInfoCtr.setList(list_);
         delete res.data;
       })
@@ -630,10 +630,10 @@ export default defineComponent({
         }
         is_no_data = false;
 
-        let result_list = _.get(res, 'data');
+        let result_list = lodash.get(res, 'data');
         // 虚拟体育title字段增加
         vir_add_title(result_list)
-        let result_ = _.cloneDeep(result_list);
+        let result_ = lodash.cloneDeep(result_list);
         matchInfoCtr.setList(result_);
       }).catch( err=> {
         console.error(err);
@@ -678,7 +678,7 @@ export default defineComponent({
           return;
         }
         is_no_data = false;
-        var temp = _.get(res, 'data');
+        var temp = lodash.get(res, 'data');
         set_detail_data_storage(params,temp);
         try {   //getMatchOddsInfo 接口拉取时，联动跟新投注框的数据
           if(get_bet_status == 1 || get_bet_status == 7 || get_bet_status == 5){
@@ -696,7 +696,7 @@ export default defineComponent({
             });
           }
         temp = save_hshow(temp); // 保存当前相关hshow状态;
-        matchInfoCtr.setList(_.cloneDeep(temp))
+        matchInfoCtr.setList(lodash.cloneDeep(temp))
         delete res.data;
         if(callback) callback();
       }).catch(err =>console.error(err));
@@ -708,17 +708,17 @@ export default defineComponent({
       let middle_data = null;
       if(list_old)
       {
-        middle_data = _.cloneDeep(list_old);
+        middle_data = lodash.cloneDeep(list_old);
       } else {
-        middle_data = _.cloneDeep(matchInfoCtr.list);
+        middle_data = lodash.cloneDeep(matchInfoCtr.list);
       }
       let middle_obj = {}
-      _.forEach(middle_data, (item) =>{
+      lodash.forEach(middle_data, (item) =>{
         middle_obj[item.hpid+ '-' +item.hpn] = [{
           hshow: item.hshow
         }]
       })
-      _.forEach(temp, item=>{
+      lodash.forEach(temp, item=>{
         if(middle_obj.hasOwnProperty(item.hpid+'-'+item.hpn)){
           Object.assign(item, middle_obj[item.hpid+ '-' +item.hpn][0]);
         }
@@ -744,7 +744,7 @@ export default defineComponent({
             listItemAddCustomAttr(item)
           });
         }
-        let list_ = _.cloneDeep(data);
+        let list_ = lodash.cloneDeep(data);
         if(is_lock_add){
           set_all_match_os_status(2, list_);
         }

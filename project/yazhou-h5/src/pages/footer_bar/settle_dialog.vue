@@ -146,16 +146,23 @@ import { t } from "src/boot/i18n";;
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
+  background-color: var(--q-cathectic-page-bg-color);
+  color: var(--q-cathectic-fs-defalut-color)
 }
+
 .head-top {
   height: 0.5rem;
   position: relative;
-  .close{
+  border-bottom: 1px solid var(--q-cathectic-border-bottom-color-1);
+
+  .close {
     position: absolute;
     right: 0;
-    .close-click-padding{
+
+    .close-click-padding {
       padding: 0.08rem 0.04rem;
     }
+
     img {
       width: 0.24rem;
       opacity: 0.7;
@@ -163,6 +170,7 @@ import { t } from "src/boot/i18n";;
       transform: translateY(0.02rem);
     }
   }
+
   & div:last-child {
     text-align: right;
     padding-right: 0.14rem;
@@ -185,7 +193,11 @@ import { t } from "src/boot/i18n";;
 
     &.active-p {
       font-weight: 600;
-      color: var(--q-color-fs-color-145);
+      color: var(--q-cathectic-fs-active-color);
+      span {
+        border-color: var(--q-cathectic-underline-border-color);
+        background:var(--q-cathectic-underline-bg-color);
+      }
     }
   }
 }

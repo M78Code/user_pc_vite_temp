@@ -52,6 +52,7 @@ import basketball_match_analysis from "project_path/src/pages/details/analysis-m
 import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
+import lodash from "lodash";
 
 export default {
   name:"result_details",
@@ -240,7 +241,7 @@ export default {
             }
           }
           // 克隆一份;
-          let cloneData = _.cloneDeep(data);
+          let cloneData = lodash.cloneDeep(data);
           set_detail_data(cloneData);
         }
       }).catch((err) =>{

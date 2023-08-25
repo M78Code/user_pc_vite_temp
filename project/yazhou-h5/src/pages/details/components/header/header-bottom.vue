@@ -38,9 +38,13 @@ export default defineComponent({
     // computed: {
     //   ...mapGetters(["get_menu_type"])
     // },
+    const get_menu_type = computed(() => {
+      return ""
+    })
     return {
       ...toRefs(data),
-      ...toRefs(props)
+      ...toRefs(props),
+      get_menu_type
     }
   }
 })

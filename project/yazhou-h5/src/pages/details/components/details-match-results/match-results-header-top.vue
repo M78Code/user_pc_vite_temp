@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import lodash from "lodash";
 // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -41,7 +42,7 @@ export default defineComponent({
     watch(
       () => detail_data,
       (n,o) => {
-        data_list = _.cloneDeep(detail_data)
+        data_list = lodash.cloneDeep(detail_data)
       },
       {
         immediate: true,

@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import category from 'project_path/src/pages/details/children/category.vue' // 所有赛果
 import detailMatchList from 'project_path/src/pages/details/components/detail_match_list.vue' // 精选赛事
 import myNoteSheet from 'project_path/src/pages/details/components/details_match_results/my_note_sheet.vue' // 我的注单
@@ -28,7 +28,7 @@ const router = useRouter()
 export default {
   name:"result_fat_tab",
   computed:{
-    ...mapGetters(["get_detail_data","get_goto_detail_matchid"]),
+    // ...mapGetters(["get_detail_data","get_goto_detail_matchid"]),
   },
   created() {
     let search_term = route.query.search_term

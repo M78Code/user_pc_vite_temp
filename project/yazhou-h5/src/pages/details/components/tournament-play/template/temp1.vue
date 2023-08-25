@@ -80,7 +80,7 @@
           <template v-if="get_menu_type !=3000">
             <div class="col fat-warp first-radius">
               <template v-for="(ol_item,ol_index) in item.ol">
-                <div class="col" v-if="_.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
+                <div class="col" v-if="lodash.get(item_data.title,'[0].otd') == ol_item.otd" :key="ol_index">
                   <!-- ms---是外层的赛事级别状态值  mhs: 0开 2关 1封 11锁 -->
                   <!--  0开 2关 1封 11锁 -->
                   <!-- 开盘or锁盘 正常显示 -->
@@ -154,7 +154,7 @@
               <template v-for="(ol_item,ol_index) in item.ol">
                 <div
                   class="col"
-                  v-if="_.get(item_data.title,'[1].otd') == ol_item.otd"
+                  v-if="lodash.get(item_data.title,'[1].otd') == ol_item.otd"
                   :key="ol_index"
                 >
                   <!--  0开 2关 1封 11锁 -->
@@ -229,7 +229,7 @@
               <template v-for="(ol_item,ol_index) in item.ol">
                 <div
                   class="col"
-                  v-if="_.get(item_data.title,'[2].otd') == ol_item.otd"
+                  v-if="lodash.get(item_data.title,'[2].otd') == ol_item.otd"
                   :key="ol_index"
                 >
                   <!--  0开 2关 1封 11锁 -->
@@ -312,8 +312,9 @@
 <script>
 // #TODO vuex 
 // import { mapGetters } from "vuex";
+import lodash from "lodash"
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import odd_convert from "src/core/odds_conversion/odds_conversion_mixin.js";
 import utils from 'src/core/utils/utils.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -349,6 +350,7 @@ export default defineComponent({
     };
     return {
       utils,
+      lodash,
       get_bet_list,
       get_cur_odd,
       get_menu_type,

@@ -185,7 +185,7 @@ this.bet_appoint_ball_head= null */
 
     };
     // 每一个投注对象 的视图控制对象
-    this.all_bet_view_data_obj = {
+    this.all_bet_view_ctr_obj = {
       // [bet_custom_id]:new  BetViewData()
     }
     // 注单 到 自定义ID 的 反向映射 
@@ -339,7 +339,7 @@ this.bet_appoint_ball_head= null */
    */
   get_bet_view_data_obj_by_bet_custom_id(bet_custom_id) {
 
-    const mount_point_key = 'all_bet_view_data_obj'
+    const mount_point_key = 'all_bet_view_ctr_obj'
 
     let bet_view_data_obj = this[mount_point_key][bet_custom_id];
     return bet_view_data_obj;

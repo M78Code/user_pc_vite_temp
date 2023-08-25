@@ -4,13 +4,14 @@
  */
 import { nextTick } from "vue";
 import { ls, ss } from "src/core/utils/web-storage.js";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {
   /** 语言 */
   theme: ls.get("theme", "day"),
 };
 
-export default function langReducer(state = initialState, action) {
+export default function themeReducer(state = initialState, action) {
   const { type, data } = action;
   nextTick(() => useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, data))
   switch (type) {

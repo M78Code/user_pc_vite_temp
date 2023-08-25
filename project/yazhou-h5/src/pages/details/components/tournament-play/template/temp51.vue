@@ -78,8 +78,9 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
+import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp51",
@@ -90,6 +91,7 @@ export default defineComponent({
   // #TODO mixins 
   // mixins:[odd_convert],
   setup(props, evnet) {
+    const store_state = store.getState()
     const data = reactive({
       utils
     });
@@ -97,6 +99,9 @@ export default defineComponent({
     // computed: {
     //   ...mapGetters(["get_bet_list"])
     // },
+    const get_bet_list = computed(() => {
+      return []
+    });
     onUnmounted(() => {
       // #TODO $data 
       // for (const key in $data) {
@@ -108,7 +113,8 @@ export default defineComponent({
     }
     return {
       ...toRefs(data),
-      go_to_bet
+      get_bet_list,
+      go_to_bet,
     }
   }
 })
