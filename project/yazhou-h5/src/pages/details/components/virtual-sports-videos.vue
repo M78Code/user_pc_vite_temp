@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+// import { mapMutations, mapGetters } from 'vuex'
 import settleDialog from "src/project/components/footer_bar/settle_dialog.vue";
 import virtualSportsTimer from "src/project/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 import { useRouter } from "vue-router"
@@ -44,19 +44,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'get_is_show_settle_tab',
-      "get_current_league"
-    ])
+    // ...mapGetters([
+    //   'get_is_show_settle_tab',
+    //   "get_current_league"
+    // ])
   },
   components: {
     settleDialog,
     virtualSportsTimer,
   },
   methods: {
-    ...mapMutations([
-      'set_settle_dialog_bool'
-    ]),
+    // ...mapMutations([
+    //   'set_settle_dialog_bool'
+    // ]),
     /**
      *@description: 虚拟体育详情页返回
      *@param {Undefined}
