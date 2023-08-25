@@ -47,6 +47,134 @@ class EnterParamsYazhouH5 {
     //定位赛事id
     const mid = Qs.mid;
   }
+  /**
+   * @description: 获取url参数集合
+   * @param {Array} 参数key值列表
+   * @return {Object} 参数对象数据
+   */
+  get_url_param_key_obj(arr_key) {
+    let obj = {};
+    let url_search = new URLSearchParams(location.search);
+    arr_key.forEach((element) => {
+      obj[element] = url_search.get(element);
+    });
+    return obj;
+  }
+  // 删除指定参数
+  delete_params() {
+    let url = window.location.href;
+    // 删除参数
+    url = this.$utils.remove_url_param(["mt1", "m", "s", "mt2"]);
+    // 设置最新url地址
+    history.replaceState(null, null, url);
+  }
+  
+  //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
+  to_corresponding_route() {
+    // 是否跳转/home页面
+    let goto_home = window.location.href.includes("homeIndex") ? false : true;
+    try {
+      // 获取指定key值参数数组的url参数对象
+      let params_obj = this.get_url_param_key_obj([
+        "m",
+        "s",
+        "mid",
+        "label",
+        "sy",
+        "activity",
+        "mt1",
+        "mt2",
+        "csid",
+        "isAPP",
+        "gotohash",
+        "keep_url",
+      ]);
+      let act = params_obj.activity || this.get_url_param("activity");
+      // home_index.vue页面辅助参数
+      this.tianzhuan = true;
+      if (params_obj.label == 1 || params_obj.sy == 1) {
+        //跳转列表
+        this.set_golistpage(true);
+      }
+      if (params_obj.mt1 && params_obj.mt1 != 900) {
+        //去到列表页
+        this.$router.push({
+          name: "matchList",
+          query: { mt1: params_obj.mt1, mt2: params_obj.mt2 },
+        });
+        // if(!params_obj.keep_url){
+        this.delete_params();
+        // }
+        goto_home = false;
+      } else if (params_obj.m == "407" || params_obj.mt1 == 900) {
+        //去到虚拟体育
+        this.$router.push({ name: "virtual_sports", query: { home: "home" } });
+        goto_home = false;
+      } else if (params_obj.mid) {
+        //去赛事详情
+        if ([100, 101, 102, 103].includes(+params_obj.csid)) {
+          // 如果是电竞赛事，需要设置菜单类型
+          this.set_menu_type(3000);
+        }
+        // 改变跳转详情页标志状态
+        this.set_godetailpage(true);
+        // 更新赛事详情对应的赛事id
+        this.set_goto_detail_matchid(params_obj.mid);
+        // 更新详情玩法集
+        this.set_details_item(0);
+        this.$router.push({
+          name: "category",
+          params: { flag: 1, mid: params_obj.mid },
+        });
+        goto_home = false;
+      } else if (params_obj.m) {
+        //去到列表页
+        this.$router.push({
+          name: "matchList",
+          query: {
+            m: params_obj.m,
+            s: params_obj.s,
+          },
+        });
+        // if(!params_obj.keep_url){
+        this.delete_params();
+        // }
+        goto_home = false;
+      } else if (act) {
+        act = act.split(",")[0];
+        if (["10007", "10008", "10009"].includes(act)) {
+          this.$router.replace({
+            name: "activity_task",
+            params: { act: act, isAPP: params_obj.isAPP },
+            query: { rdm: new Date().getTime() },
+          });
+          goto_home = false;
+        } else {
+          this.tianzhuan = false;
+        }
+      } else if (params_obj.label == 1 || params_obj.sy == 1) {
+        // 不要首页页面,'m','s','mid','mt1','mt2'值为空时,直接跳到赛事列表页面
+        this.$router.push({
+          name: "matchList",
+        });
+        // if(!params_obj.keep_url){
+        this.delete_params();
+        // }
+        goto_home = false;
+      } else {
+        this.tianzhuan = false;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // 默认跳转到home页面
+    if (goto_home) {
+      this.$router.replace({
+        name: "home",
+        query: this.$router.query,
+      });
+    }
+  }
   //活动页面
   go_activity(activityList, act_copy) {
     const tab_list = lodash.cloneDeep(activityList);
