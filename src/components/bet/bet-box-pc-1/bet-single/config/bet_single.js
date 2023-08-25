@@ -74,8 +74,7 @@ this.handle_generat_emitters()
       clearTimeout(this.view_ctr_obj.timer_);
       this.view_ctr_obj.timer_ = undefined;
     }
-    //清空数据源对象
-    this.view_ctr_obj = {};
+ 
     this.valid_money_obj = {};
     // this.valid_error_codes = {};
     this.$root.$off("enter_press_event",this.keyup_handle); //清除触发enter键执行
@@ -1095,28 +1094,7 @@ handle_generat_emitters(){
      * @return {undefined} undefined
      */
     init_view() {
-      this.view_ctr_obj = {
-        bet_order_status: 1,  //  1-投注状态,2-投注中状态,3-投注成功状态,4-投注失败状态,5-投注项失效
-        //tips 数据
-        bet_tips_info: {
-          id: "", //目标id
-          match_name: "", // 赛事名称  世界杯2022亚洲外围赛
-          battle_info: "", // 对战信息 中国 v 关岛
-          play_game: "", // 玩法游戏 滚球 让球
-          match_type: "", // 赛事类型
-          league_name: "", // 联赛名称
-          bet_end_time: "" // 投注结束时间
-        },
-        //单关信息
-        error_code: "",
-        error_message: "",
-        bet_order_success_all: [], // 单关投注成功记录
-        order_confirm_complete: 0, // 订单是否确认完成
-        is_empty_money: false, // 金额是否为空
-        input_money_state: 0,
-        input_max_flag: 0, // 最大值获取标志 0: 默认值 1: 正在获取最大最小值 2:获取完成
-        bet_fail_flag: false //投注失败标识
-      };
+      this.view_ctr_obj = BetData.get_bet_view_data_obj_by_bet_custom_id(bet_custom_id)
       this.refuse_code = undefined; // 错误码
       this.call_interface = 0; // 调用接口 1.调用投注前校验接口 2. 调用投注前校验和最大最小值接口
       BetDataCtr.set_bet_mode(-1);
