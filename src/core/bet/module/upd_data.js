@@ -2,10 +2,10 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
-import { get_bet_amount_param } from "./bet-amount.js";
+// import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+// import { get_bet_amount_param } from "./bet-amount.js";
 // import { http_upd_data } from "./upd_data.js";
-import { set_submit_status } from "./status.js";
+// import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import { uid } from "quasar";
@@ -22,7 +22,7 @@ import  MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
  * @description: 调用queryLatestMarketInfo完接口后的回调方法用来更新vuex中投注项的数据
  * @param {*} obj 设置的新对象
  */
-const http_upd_data = (obj) => {
+export const http_upd_data = (obj) => {
   // console.log('进入queryLatestMarketInfo回调方法',{method: 'http_upd_data'});
   let i = obj.i;
 
@@ -450,7 +450,7 @@ const http_upd_data = (obj) => {
  * @param {*}BetData.
  * @param {*} obj 要添加的投注项对象
  */
-const bet_obj_add_attr = (obj) => {
+ export const bet_obj_add_attr = (obj) => {
   let new_obj = _.cloneDeep(BetData.bet_obj);
   if (obj.key && new_obj[obj.key] && new_obj[obj.key].cs) {
     new_obj[obj.key].cs.is_serial = obj.cs.is_serial;
