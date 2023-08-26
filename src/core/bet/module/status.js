@@ -17,7 +17,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
  * @param {Object} order_item 订单数据
  * @return {undefined} undefined
  */
-const set_submit_status = (order_item) => {
+export const set_submit_status = (order_item) => {
   if (BetData.is_bet_single) {
     // 设置押注成功后的标识符
     BetData.bet_single_list.forEach((id) => {

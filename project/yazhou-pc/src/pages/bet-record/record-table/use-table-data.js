@@ -8,7 +8,7 @@ import {
   nextTick,
   getCurrentInstance,
 } from "vue";
-import { get_refs_info } from "src/core/bet/common-helper/index.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
 import mathjs from "src/core/utils/mathjs.js";
 import lodash from "lodash";
@@ -59,6 +59,8 @@ export const useTableData = ({ props, emit }) => {
     is_cancel: false, // 是否被拒单过（ws）
   });
 
+  const { ctx } = getCurrentInstance()
+
   //   ====================watch======================================
 
   watch(
@@ -69,7 +71,7 @@ export const useTableData = ({ props, emit }) => {
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,
-        getCurrentInstance
+        ctx
       );
       if (scroll_area && scroll_area.setScrollPosition) {
         scroll_area.setScrollPosition(0);
@@ -233,10 +235,10 @@ export const useTableData = ({ props, emit }) => {
           state.early_settlement_data[index],
           "frontSettleAmount"
         );
-        let slider = get_refs_info(
+        let slider = BetCommonHelper.get_refs_info(
           `vue-slider-${index}`,
           null,
-          getCurrentInstance
+          ctx
         );
         if (lodash.isArray(slider)) {
           // 滑块当前的所在节点
@@ -310,10 +312,10 @@ export const useTableData = ({ props, emit }) => {
     // 对所算的比率向下取整
     rat = Math.floor(rat);
     nextTick(() => {
-      let slider = get_refs_info(
+      let slider =BetCommonHelper. get_refs_info(
         `vue-slider-${index}`,
         null,
-        getCurrentInstance
+        getCurrentInstance().ctx
       );
       if (slider && slider[0] && lodash.isFunction(slider[0].getIndex)) {
         // 获取当前滑块所在的节点

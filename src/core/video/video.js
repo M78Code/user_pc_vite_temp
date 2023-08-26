@@ -11,7 +11,7 @@ import { api_details } from "src/api/index"
 import  store  from "src/store-redux/index.js"
 
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/core/bet/common-helper/index.js"
+import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import utils from "src/core/utils/utils.js"
 export default {
 
@@ -81,7 +81,7 @@ export default {
       t1: '',  //主队比分
       t2: ''   //客队比分
     }
-    match.msc = msc_array_obj(match.msc)
+    match.msc =BetCommonHelper.msc_array_obj(match.msc)
     // 比分文档参考 src/i18n/zh-cn/index.js 文件 msc 字段值
     details.init_score(match.msc,['S1'],true)
     //加时  点球比分
@@ -999,7 +999,7 @@ export default {
       //   _.remove(data, match => match.csid == 2)
       // }
       data.forEach( match => {
-        match.msc = msc_array_obj(match.msc)
+        match.msc = BetCommonHelper.msc_array_obj(match.msc)
         details.init_score(match.msc,['S1'],true)
       });
       callback(data)

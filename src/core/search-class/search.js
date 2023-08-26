@@ -9,7 +9,7 @@ import details from 'src/core/match-detail-pc/match-detail.js'
 import { api_search } from "src/api/index.js";
 import  store  from "src/store-redux/index.js"
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/core/bet/common-helper/index.js"
+import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
 
 export default {
@@ -97,7 +97,7 @@ export default {
           if(match.type != 'team'){
             match.name = match.tn
           }
-          match.msc = msc_array_obj(match.msc)
+          match.msc = BetCommonHelper.msc_array_obj(match.msc)
           details.init_score(match.msc,['S1'],true)
           bowling.children[0].children.push(match)
         // }

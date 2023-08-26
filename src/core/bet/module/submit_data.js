@@ -12,7 +12,7 @@ import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "../config/play-mapping.js";
+import * as play_mapping from "src/core/bet/config/play-mapping.js";
 
 
 const  post_submit_Bet_list_gcuuid = ref(uid())

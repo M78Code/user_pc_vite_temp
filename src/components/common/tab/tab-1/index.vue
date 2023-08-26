@@ -38,6 +38,7 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch, toRefs, defineComponent } from 'vue'
 import lodash from 'lodash'
+// import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import store from 'src/store-redux'
 /** utils 工具类 */
 // import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
@@ -326,7 +327,7 @@ const layout_list_size = toRefs(layoutReducer, 'layout_list_size')
 /** 监听屏幕宽度改变  设置是否显示按钮 */
 watch(
   () => layout_list_size.value,
-  () => get_refs_info('wrap', null, this).clientWidth
+  () =>wrap.value.clientWidth
 )
 /**
  * list语言变化时
