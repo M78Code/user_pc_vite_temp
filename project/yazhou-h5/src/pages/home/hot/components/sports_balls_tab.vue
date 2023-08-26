@@ -57,8 +57,9 @@
 // import {api_home} from "src/project/api";
 // import hot_list from "src/project/components/skeleton/home_hot/hot_list";   // 热门榜单 骨架屏
 // import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏
-import no_data from "src\components\common\no-data.vue";    // 无网络展示组件
+import no_data from "src/components/common/no-data.vue";    // 无网络展示组件
 import public_form from "./public_form.vue";    // 首页热门足球和 篮球的 公共榜单表格
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 const props = defineProps({
   tab_Index:null,
@@ -94,7 +95,7 @@ const wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
 
 watch(()=> balls_list,(n,o)=>{
   if(n.length>0) {
-    this.changeTab(n[0])
+    changeTab(n[0])
    }
   let alliance = n.filter(item => {
     // 过滤掉热门赛事：item.spell != 'HOT'
@@ -143,9 +144,9 @@ const on_listeners = () =>{
       guess_standings.value = !guess_standings.value
       loading_standings_data.value = false
       if(!guess_standings.value){
-        this.get_ranking_list(this.get_hot_tab_item.field2)
+        get_ranking_list(get_hot_tab_item.field2)
       }
-      this.$forceUpdate()
+      $forceUpdate()
     }
     // 数据更新  初始化 sports_balls_tab 的data 数据
  const  set_data_update_handle = () =>  {
@@ -174,7 +175,7 @@ const on_listeners = () =>{
         tab_name_index.value = 1
         if(tab.value){
           allianc_list.value = tab.value
-          this.alliancTab({tab: tab.value[0], index: 0})
+          alliancTab({tab: tab.value[0], index: 0})
         }else{
           liat_data.value = null
         }
@@ -197,17 +198,17 @@ const on_listeners = () =>{
     }
 
 onmounted(()=>{
-  // this.useMittOn(this.MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-  //   this.useMittOn(this.MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-  //   this.useMittOn(this.MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
+  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading).on
+    useMittOn(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,leaderboard_switch).on
+    useMittOn(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,set_data_update_handle).on
 })
 
 onUnmounted(()=>{
-  // this.$root.$off(this.MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,this.show_hot_schedule_loading)
-  //   this.$root.$off(this.MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,this.leaderboard_switch)
-  //   this.$root.$off(this.MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,this.set_data_update_handle)
-  //   for (const key in this.$data) {
-  //     this.$data[key] = null
+  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading).off
+    useMittOn(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,leaderboard_switch).off
+    useMittOn(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,set_data_update_handle).off
+  //   for (const key in $data) {
+  //     $data[key] = null
   // }
 })
 
