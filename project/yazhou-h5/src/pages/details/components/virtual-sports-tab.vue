@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters,mapMutations } from "vuex"
+// import { mapGetters,mapMutations } from "vuex"
 import { api_common } from "src/project/api/index.js";
 import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
@@ -44,21 +44,21 @@ export default {
     }
   },
   computed:{
-    ...mapGetters([
-      'get_details_item',
-      'get_uid',
-      'get_tab_fix',
-      "get_fewer",
-      "get_current_league",
-      "get_detail_data",
-      'get_access_config',
-    ]),
-    ...mapGetters({
-      matchid: "get_goto_detail_matchid",
-      sub_menu_id: 'get_current_sub_menuid',
-      sub_menu_type: 'get_curr_sub_menu_type',
-      is_show_analyse: 'get_is_show_details_analyse'
-    }),
+    // ...mapGetters([
+    //   'get_details_item',
+    //   'get_uid',
+    //   'get_tab_fix',
+    //   "get_fewer",
+    //   "get_current_league",
+    //   "get_detail_data",
+    //   'get_access_config',
+    // ]),
+    // ...mapGetters({
+    //   matchid: "get_goto_detail_matchid",
+    //   sub_menu_id: 'get_current_sub_menuid',
+    //   sub_menu_type: 'get_curr_sub_menu_type',
+    //   is_show_analyse: 'get_is_show_details_analyse'
+    // }),
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
       return lodash.get(get_access_config, 'statisticsSwitch') && route.name != 'virtual_sports' && get_detail_data.csid != 1004
@@ -85,12 +85,12 @@ export default {
     set_is_show_details_analyse(false)
   },
   methods:{
-    ...mapMutations([
-      'set_details_item',
-      'set_first_details_item',
-      'set_fewer',
-      'set_is_show_details_analyse'
-    ]),
+    // ...mapMutations([
+    //   'set_details_item',
+    //   'set_first_details_item',
+    //   'set_fewer',
+    //   'set_is_show_details_analyse'
+    // ]),
     /**
      *@description: 虚拟体育分析按钮
      *@param {Undefined}

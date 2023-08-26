@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+// import { mapGetters } from "vuex"
 export default {
   data() {
     return {
@@ -73,11 +73,11 @@ export default {
       datas: null,
     };
   },
-  computed:{
-    ...mapGetters({
-      match:'get_current_gotodetail_match'
-    }),
-  },
+  // computed:{
+  //   ...mapGetters({
+  //     match:'get_current_gotodetail_match'
+  //   }),
+  // },
   created() {
     this.datas = this.format_datas();
   },

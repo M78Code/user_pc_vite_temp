@@ -73,7 +73,7 @@ export const PLAY_ESPORTS_IDS = [
     "30053" //王者
   ]
   //滚球下虚拟体育menuIds
-  export  export const PLAY_VIRTUAL_IDS = [
+  export const PLAY_VIRTUAL_IDS = [
      '30054', //虚拟足球
      '30056',//虚拟篮球
      '30057', //虚拟赛马
