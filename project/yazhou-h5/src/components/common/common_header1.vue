@@ -39,7 +39,8 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 //国际化
 
 
@@ -238,7 +239,7 @@ const props = defineProps({
     debounce_throttle_cancel(cancel_ref);
     debounce_throttle_cancel(go_to_back);
 
-    $root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).off
 
     clearTimeout(timer1_)
     timer1_ = null
