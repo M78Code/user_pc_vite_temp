@@ -115,7 +115,7 @@ export default defineComponent({
     vScrollArea
   },
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       // 虚拟体育操作类
       vsport_ctr: new vsport_ctr(),
       // 是否显示视频提示内容 
@@ -136,9 +136,18 @@ export default defineComponent({
     //     get_layout_list_size: "get_layout_list_size"
     //   })
     // },
+    const get_vsport_params = computed(() => {
+      return ""
+    })
+    const get_timestamp = computed(() => {
+      return ""
+    })
+    const get_layout_list_size = computed(() => {
+      return ""
+    })
     // 监听切换批次
     watch(
-      () => get_vsport_params.id,
+      () => get_vsport_params.value.id,
       () => {
         if(res){
           vsport_ctr.init()
@@ -185,7 +194,10 @@ export default defineComponent({
       isFixed = height.position >= listsHeight
     }
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      get_vsport_params,
+      get_timestamp,
+      get_layout_list_size,
       timer,
       cur_scroll_height
     }

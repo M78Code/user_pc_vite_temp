@@ -73,7 +73,7 @@ export default defineComponent({
     match_index: Number,
   },
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       img_grey_point :require('public/image/yabo/svg/grey-point.svg')
     });
     onMounted(() => {
@@ -83,13 +83,16 @@ export default defineComponent({
     //   // 获取右侧参数
     //   get_vsport_params: "get_vsport_params",
     // }),
+    const get_vsport_params = computed(() => {
+      return "";
+    })
     // 监听赛事状态
     watch(
       () => vsport_ctr.status,
       (res) => {
         // 已完赛
-        if(res == 2 && this.vsport_ctr.info.mmp != 'PREGAME'){
-          this.vsport_ctr.set_match_result(this.match.mid,this.match_index)
+        if(res == 2 && component_data.vsport_ctr.info.mmp != 'PREGAME'){
+          component_data.vsport_ctr.set_match_result(component_data.match.mid,component_data.match_index)
         }
       },
       {
@@ -102,8 +105,13 @@ export default defineComponent({
     //     set_vsport_params_mid: "set_vsport_params_mid"
     //   }),
     // }
+    const set_vsport_params_mid = () => {
+
+    }
     return {
-      ...toRefs(data)
+      ...toRefs(component_data),
+      get_vsport_params,
+      set_vsport_params_mid
     }
   }
 })

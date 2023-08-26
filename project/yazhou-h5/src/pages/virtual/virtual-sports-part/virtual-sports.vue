@@ -132,7 +132,7 @@ import utils from 'src/core/utils/utils.js';
 // import dynamic_ranking from "project_path/pages/virtual/virtual_sports_part/dynamic_ranking.vue"
 // import result_page from "project_path/pages/match-list/components/result_page.vue"
 // import virtual_skeleton from "project_path/components/skeleton/virtual_sports/virtual.vue"
-
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -273,7 +273,7 @@ export default defineComponent({
       return ""
     });
     const get_newer_standard_edition = computed(() => {
-      return ""
+      return PageSourceData.get_newer_standard_edition();
     });
     const tab_items = computed(() => {
       let r = [];

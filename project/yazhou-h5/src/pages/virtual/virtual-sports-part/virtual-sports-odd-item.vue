@@ -58,6 +58,9 @@ export default defineComponent({
     };
     // #TODO VUEX GETTERS 
     // ...mapGetters(['get_bet_list']),
+    const get_bet_list = computed(() => {
+      return ""
+    });
     /**
      * @description: 计算最终显示的赔率
      * @param {Undefined} Undefined
@@ -73,6 +76,7 @@ export default defineComponent({
     return {
       get_odd_value,
       odds_value,
+      get_bet_list,
 
     }
   }

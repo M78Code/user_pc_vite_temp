@@ -95,7 +95,7 @@ import loadData from "src/public/components/load_data/load_data.vue"
 import arcProgress from "src/project/yabo/components/virtual_right/arc_progress.vue"
 import basketballResult from "src/project/yabo/components/virtual_right/basketball_result.vue"
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, defineComponent } from "vue";
 export default defineComponent({
   name: "virtualVideo",
   components:{
@@ -116,7 +116,7 @@ export default defineComponent({
     watch(
       () => vsport_ctr.video_url,
       () => {
-        $nextTick(() => {
+        nextTick(() => {
           vsport_ctr.play_video()
         })
       },
