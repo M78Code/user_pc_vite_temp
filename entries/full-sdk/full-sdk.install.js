@@ -6,24 +6,28 @@ import { Quasar } from "quasar";
 // Import icon libraries
 import "@quasar/extras/material-icons/material-icons.css";
 // Import Quasar css
-import "quasar/src/css/index.sass";
+// import "quasar/src/css/index.sass";
 
 // import BetBoxDialog from "../../src/components/test/bet-box-dialog.vue";
 
+//所有的组件
 import * as ALL_COMPONENTS from "./components.js";
 
  
+//初始化域
+// import init_domain from "src/core/http/domain.js";
 
-import init_domain from "src/global/domain.js";
-
+//所有组件的key
 let ALL_COMPONENTS_NAMES = Object.keys(ALL_COMPONENTS);
-import EMITTER from "src/global/mitt.js";
+// import * as EMITTER from "src/core/mitt/index.js";//mitt
 
-import final_config_idc_online from "app/z-config/idc_online.js";
-import final_config_idc_sandbox from "app/z-config/idc_sandbox.js";
+import final_config_idc_online from "app/job/output/env/module/idc_online.js";
+import final_config_idc_sandbox from "app/job/output/env/module/idc_sandbox.js";
 
 let final_config = final_config_idc_sandbox;
-
+/**
+ * 根据参数生成实例
+*/
 const draw_component = (config) => {
   let { dom_id, component, props } = config;
 
@@ -55,7 +59,7 @@ const SDK = {
  
   ALL_COMPONENTS_NAMES,
   draw_component,
-  init_domain,
-  EMITTER,
+  // init_domain,
+  // EMITTER,
 };
 export default SDK;

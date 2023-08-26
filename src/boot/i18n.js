@@ -1,11 +1,10 @@
 import { createI18n } from "vue-i18n";
+import { ls, ss } from "src/core/utils/web-storage.js";
+
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
-  locale:
-    (localStorage.h5_user_base_info &&
-      localStorage.h5_user_base_info.languageName) ||
-    "zh",
+  locale: ls.get("lang", "zh"),
   fallbackLocale: "zh",
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},
