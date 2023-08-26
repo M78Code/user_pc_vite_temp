@@ -10,7 +10,7 @@ import {get_item_disable} from  "./status.js"
 import {bet_single_obj_remove_attr ,bet_single_list_remove,bet_single_list_remove} from  "./bet-model-single.js"
 import mathjs from "src/core/utils/mathjs.js"
  
-import yabo_common from "src/core/bet/common-helper/common.js"
+import yabo_common from "src/core/bet/common-helper/index.js"
 import { uid } from "quasar";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"

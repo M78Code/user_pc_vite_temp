@@ -12,7 +12,7 @@ import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import play_mapping from "../../config/play-mapping.js";
+import * as play_mapping from "src/core/bet/config/play-mapping.js";
 import _ from "lodash";
 
  

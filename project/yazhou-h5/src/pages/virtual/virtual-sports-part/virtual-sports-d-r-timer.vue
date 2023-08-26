@@ -34,7 +34,7 @@ export default defineComponent({
 
 
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       team_obj :null,
       change_effect:true,
       team_list_sort:null,
@@ -45,6 +45,9 @@ export default defineComponent({
     //     sub_menu_type: 'get_curr_sub_menu_type',
     //   }),
     // },
+    const sub_menu_type = computed(() => {
+      return "get_curr_sub_menu_type";
+    })
     onMounted(() => {
       let obj = {};
       let list = [];
@@ -121,7 +124,8 @@ export default defineComponent({
       }
     };
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      sub_menu_type,
       upd_list_sort,
       get_list_i_top,
       set_new_poi_to_old

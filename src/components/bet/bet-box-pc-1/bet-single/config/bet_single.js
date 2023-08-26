@@ -77,7 +77,8 @@ this.handle_generat_emitters()
  
     this.valid_money_obj = {};
     // this.valid_error_codes = {};
-    this.$root.$off("enter_press_event",this.keyup_handle); //清除触发enter键执行
+    //清除触发enter键执行
+    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,this.keyup_handle).off
     window.removeEventListener("keyup",this.keyup_handle); // 取消监听键盘抬起事件
   },
   computed: {

@@ -6,12 +6,12 @@
 
 
 import details from "src/core/match-detail-pc/match-detail.js"
-import {check_login} from "src/core/utils/user/user.js"
+import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
 import  store  from "src/store-redux/index.js"
 
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/core/bet/common-helper/common.js"
+import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import utils from "src/core/utils/utils.js"
 export default {
 
@@ -81,7 +81,7 @@ export default {
       t1: '',  //主队比分
       t2: ''   //客队比分
     }
-    match.msc = msc_array_obj(match.msc)
+    match.msc =BetCommonHelper.msc_array_obj(match.msc)
     // 比分文档参考 src/i18n/zh-cn/index.js 文件 msc 字段值
     details.init_score(match.msc,['S1'],true)
     //加时  点球比分
@@ -801,7 +801,7 @@ export default {
       return
     }
     //判断是否登录
-    check_login( (islogin,is_limited)=> {
+    User.check_login( (islogin,is_limited)=> {
       if(!islogin){
         callback('no-login',is_limited)
         return
@@ -999,7 +999,7 @@ export default {
       //   _.remove(data, match => match.csid == 2)
       // }
       data.forEach( match => {
-        match.msc = msc_array_obj(match.msc)
+        match.msc = BetCommonHelper.msc_array_obj(match.msc)
         details.init_score(match.msc,['S1'],true)
       });
       callback(data)

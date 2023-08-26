@@ -102,3 +102,4 @@ class BetViewData {
     return arr.includes(this.error_code);
   }
 }
+export default new BetViewData();

@@ -4,7 +4,7 @@
  * @Date: 2022-06-14 20:31:51
  * @Description: 
  */
-const calc = require('calculatorjs')
+const calc ={}
 const math = {
   //加减乘除混合运算this.$mathjs.calc('1+1-1*1/2+(1/1)/-1')
   calc(){

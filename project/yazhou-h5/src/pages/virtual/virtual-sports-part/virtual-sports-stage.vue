@@ -204,7 +204,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       // 事件集合
       emitters: [],
       // 零时变量暂时控制显示
@@ -830,7 +830,7 @@ export default defineComponent({
     //   }
     // );
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
       get_rank_background,
       visibilitychange_handle,
       pre_counting_end_handle,

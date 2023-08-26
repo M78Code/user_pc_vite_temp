@@ -6,12 +6,12 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 // import { get_bet_amount_param } from "src/core/bet/model/bet-amount.js";
 // import { http_upd_data } from "src/core/bet/model/upd_data.js";
 // import mathjs from "src/core/utils/mathjs.js";
-// import yabo_common from "src/core/bet/common-helper/common.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js"
 // import { uid } from "quasar";
 // import { ref } from "vue";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import play_mapping from "../../config/play-mapping.js";
+import {PLAY_TODAY_SCORE} from "src/core/bet/config/play-mapping";
 import _ from "lodash";
 
 /**
@@ -35,7 +35,7 @@ export const get_score_info = (bet_custom_id) => {
       ms != 0 &&
       market_type == 0 &&
       sport_id == "1" &&
-      play_mapping.PLAY_TODAY_SCORE.includes(`${play_id}`)
+      PLAY_TODAY_SCORE.includes(`${play_id}`)
     ) {
       return `${_.get(bet_cs, "home_score", 0)}-${_.get(
         bet_cs,
@@ -417,7 +417,7 @@ export const match_fill_time = (data_source, skt_data, socket_name) => {
         cur_match = _.get(data_source, `mid_obj.${item.mid}`, {});
         if (!_.isEmpty(item.msc)) {
           let score_obj = _.cloneDeep(_.get(cur_match, "msc", {}));
-          score_obj = msc_array_obj(item.msc);
+          score_obj =BetCommonHelper. msc_array_obj(item.msc);
           item.msc = score_obj;
         }
       } else if (
