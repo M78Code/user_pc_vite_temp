@@ -5,17 +5,17 @@
  * 
  * h5和pc赛事列表使用
  * 
- * this.db.set_list(list); 设置全部列表数据-初次使用
- * this.db.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
- * this.db.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
- * this.db.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
+ * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
+ * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
  * 
  * h5和pc赛事详情页面使用
- * this.db.set_list_from_match_details(match_details); 设置赛事基本信息-初次使用
- * this.db.set_list_from_match_details(match_details,1); 同步更新赛事基本信息(对部分赛事数据进行删除和更新数据合并逻辑操作)
- * this.db.set_quick_query_list_from_match_details(match_details_odds_info) 设置赛事详情的所有玩法数据-初次使用
- * this.db.set_quick_query_list_from_match_details(match_details_odds_info,1) 同步更新赛事详情的所有玩法数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_list_from_match_details(match_details); 设置赛事基本信息-初次使用
+ * MatchDataWarehouseInstance.set_list_from_match_details(match_details,1); 同步更新赛事基本信息(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info) 设置赛事详情的所有玩法数据-初次使用
+ * MatchDataWarehouseInstance.set_quick_query_list_from_match_details(match_details_odds_info,1) 同步更新赛事详情的所有玩法数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
  * 
  */
@@ -26,10 +26,21 @@ export default class MatchDataBase
    * @description: 构造函数
    * @return {undefined} undefined
    */
-  constructor(moudle='list')
+  constructor(params={})
   {
-    // 视图对象
-    this._moudle = moudle;
+
+   let { name_code='' } = params
+
+  if(!name_code){
+    console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
+    return false
+
+  }
+
+    // 实例化名字标识
+    this.name_code = name_code;
+ 
+
 
     // 初始化数据
     this.init();
