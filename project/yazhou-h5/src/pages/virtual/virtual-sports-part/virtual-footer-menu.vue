@@ -31,6 +31,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_footer_menu",
@@ -68,7 +69,7 @@ export default defineComponent({
       return ""
     });
     const get_newer_standard_edition = computed(() => {
-      return ""
+      return PageSourceData.get_newer_standard_edition();
     });
     const get_theme = computed(() => {
       return ""

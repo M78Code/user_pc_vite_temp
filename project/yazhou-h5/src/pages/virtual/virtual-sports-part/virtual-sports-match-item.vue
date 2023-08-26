@@ -163,7 +163,8 @@ import odd_column_item from "project_path/pages/match-list/components/odd_column
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
-
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -543,7 +544,27 @@ export default defineComponent({
     //   get_theme:'get_theme',
     //   get_access_config:'get_access_config',
     // }),
-
+    const footer_sub_menu_id = computed(() => {
+      return ""
+    });
+    const get_video_process_data = computed(() => {
+      return ""
+    });
+    const get_newer_standard_edition = computed(() => {
+      return PageSourceData.get_newer_standard_edition();
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return MenuData.get_curr_sub_menu_type();
+    });
+    const get_theme = computed(() => {
+      return ""
+    });
+    /**
+     * @Description 获取全局配置开关
+     * @param {undefined} undefined
+     */
+    const get_access_config = computed(() => {
+    });
     const show_debugger_line = computed(() => {
       let wsl = sessionStorage.getItem('wsl');
       if(wsl == '9999') return true;
@@ -573,13 +594,18 @@ export default defineComponent({
       }
       // #TODO EMIT 
       emitters.map((x) => x())
-      // useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
-      // useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
-      // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status)
     });
     return {
       ...toRefs(data),
       lodash,
+      get_newer_standard_edition,
+      footer_sub_menu_id,
+      get_video_process_data,
+      get_newer_standard_edition,
+      get_n_s_changed_loaded,
+      get_curr_sub_menu_type,
+      get_theme,
+      get_access_config,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,
