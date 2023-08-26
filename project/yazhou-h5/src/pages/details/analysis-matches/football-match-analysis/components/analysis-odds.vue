@@ -169,7 +169,7 @@ import { t } from "src/boot/i18n";;
     })
     onUnmounted(() => {
       // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-      $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
       // 国际化后续修改调整
      tab_list = ref([
         { name: t('footer_menu.rangqiu') },

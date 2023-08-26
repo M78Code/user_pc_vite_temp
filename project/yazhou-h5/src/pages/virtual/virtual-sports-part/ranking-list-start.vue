@@ -83,13 +83,22 @@ export default defineComponent({
     //     "get_theme"
     //   ]),
     // },
+    const get_current_mid = computed(() => {
+      return "";
+    });
+    const get_curr_sub_menu_type = computed(() => {
+      return "";
+    })
+    const get_theme = computed(() => {
+      return "";
+    })
     // #TODO VUEX 
-    // watch(
-    //   () => props.get_current_mid,
-    //   (N) => {
-    //     get_list();
-    //   }
-    // );
+    watch(
+      () => get_current_mid.value,
+      (N) => {
+        get_list();
+      }
+    );
     /**
      *@description 计算类名
      *@param {Number} rank_i 编号
@@ -138,6 +147,9 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
+      get_current_mid,
+      get_curr_sub_menu_type,
+      get_theme,
       get_rank_background,
       get_list,
     }

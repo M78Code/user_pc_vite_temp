@@ -8,12 +8,13 @@ import {
   nextTick,
   getCurrentInstance,
 } from "vue";
-import { get_refs_info } from "src/core/bet/common-helper/common-sport.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
 import mathjs from "src/core/utils/mathjs.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 export const useTableData = ({ props, emit }) => {
   const store_state = store.getState();
   // 用户信息
@@ -59,6 +60,8 @@ export const useTableData = ({ props, emit }) => {
     is_cancel: false, // 是否被拒单过（ws）
   });
 
+  const { ctx } = getCurrentInstance()
+
   //   ====================watch======================================
 
   watch(
@@ -69,7 +72,7 @@ export const useTableData = ({ props, emit }) => {
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,
-        getCurrentInstance
+        ctx
       );
       if (scroll_area && scroll_area.setScrollPosition) {
         scroll_area.setScrollPosition(0);
@@ -233,10 +236,10 @@ export const useTableData = ({ props, emit }) => {
           state.early_settlement_data[index],
           "frontSettleAmount"
         );
-        let slider = get_refs_info(
+        let slider = BetCommonHelper.get_refs_info(
           `vue-slider-${index}`,
           null,
-          getCurrentInstance
+          ctx
         );
         if (lodash.isArray(slider)) {
           // 滑块当前的所在节点
@@ -310,10 +313,10 @@ export const useTableData = ({ props, emit }) => {
     // 对所算的比率向下取整
     rat = Math.floor(rat);
     nextTick(() => {
-      let slider = get_refs_info(
+      let slider =BetCommonHelper. get_refs_info(
         `vue-slider-${index}`,
         null,
-        getCurrentInstance
+        getCurrentInstance().ctx
       );
       if (slider && slider[0] && lodash.isFunction(slider[0].getIndex)) {
         // 获取当前滑块所在的节点
@@ -1115,15 +1118,15 @@ export const useTableData = ({ props, emit }) => {
   // },
   // beforeUnmount() {
   //   // 关闭设置提前结算状态事件
-  //   this.$root.$off(
+  //   this.useMittOn(
   //     MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
   //     this.set_pre_order_status
-  //   );
+  //   ),off;
   //   // 关闭ws推送数据事件
-  //   this.$root.$off(
+  //   this.useMittOn(
   //     MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
   //     this.set_ws_info_data
-  //   );
+  //   ),off;
   //   // 清除定时器
   //   clearTimeout(this.timeout_toast);
   //   this.money_obj = {};

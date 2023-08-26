@@ -254,7 +254,7 @@
 <script>
 // import format_desc from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
-import { get_refs_info } from "src/core/bet/common-helper/common-sport.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 
 export default {
   components: {
@@ -307,22 +307,22 @@ export default {
         if (!this.more_right_icon) {
           return;
         }
-        get_refs_info('scroll_handel', null, this).scrollLeft += this.one_item_width;
-        get_refs_info('scroll_home', null, this).scrollLeft += this.one_item_width;
-        get_refs_info('scroll_away', null, this).scrollLeft += this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_handel', null, this).scrollLeft += this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_home', null, this).scrollLeft += this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_away', null, this).scrollLeft += this.one_item_width;
       } else {
         if (!this.more_left_icon) {
           return;
         }
-        get_refs_info('scroll_handel', null, this).scrollLeft -= this.one_item_width;
-        get_refs_info('scroll_home', null, this).scrollLeft -= this.one_item_width;
-        get_refs_info('scroll_away', null, this).scrollLeft -= this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_handel', null, this).scrollLeft -= this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_home', null, this).scrollLeft -= this.one_item_width;
+        BetCommonHelper.get_refs_info('scroll_away', null, this).scrollLeft -= this.one_item_width;
       }
 
       if (this.right) {
         this.offset = 5;
       }
-      let _scroll_left = get_refs_info('scroll_handel', 'scrollLeft', this);
+      let _scroll_left = BetCommonHelper.get_refs_info('scroll_handel', 'scrollLeft', this);
       let _msc_length = this.msc_data.length * this.one_item_width;
       let _max_scroll = _msc_length - this.one_item_width * this.offset;
       // 更多-左图标 显隐
@@ -529,9 +529,9 @@ export default {
               }
               let scroll_left = (res.mct - this.offset) * this.one_item_width;
 
-              get_refs_info('scroll_handel', null, this).scrollLeft = scroll_left;
-              get_refs_info('scroll_home', null, this).scrollLeft = scroll_left;
-              get_refs_info('scroll_away', null, this).scrollLeft = scroll_left;
+              BetCommonHelper.get_refs_info('scroll_handel', null, this).scrollLeft = scroll_left;
+              BetCommonHelper.get_refs_info('scroll_home', null, this).scrollLeft = scroll_left;
+              BetCommonHelper.get_refs_info('scroll_away', null, this).scrollLeft = scroll_left;
               if(scroll_left > this.one_item_width){
                 this.more_left_icon = true;
               } else {

@@ -87,7 +87,7 @@ export default {
     if(this.emitters_off){this.emitters_off()}  
     this.user_bet_prefer = _.get(this.BetData.user,'userBetPrefer')==1;
     //清除监听 键盘抬起事件
-    this.$root.$off("enter_press_event", this.keyup_handle);
+    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,this.keyup_handle).off
     //清除监听 全局的键盘抬起事件
     window.removeEventListener("keyup", this.keyup_handle);
     //置空对象

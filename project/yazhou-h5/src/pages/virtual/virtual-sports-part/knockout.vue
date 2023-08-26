@@ -98,10 +98,10 @@ export default defineComponent({
     const data = reactive({
       tabs: [
         // #TODO EMIT 
-        // {name: i18n.t('virtual_sports.top_16'), key: 'Q8'},
-        // {name: i18n.t('virtual_sports.quarter_finals'), key: 'Q4'},
-        // {name: i18n.t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
-        // {name: i18n.t('virtual_sports.finals'), key: 'FINAL'}
+        {name: i18n.t('virtual_sports.top_16'), key: 'Q8'},
+        {name: i18n.t('virtual_sports.quarter_finals'), key: 'Q4'},
+        {name: i18n.t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
+        {name: i18n.t('virtual_sports.finals'), key: 'FINAL'}
       ],
       tab_index: -1,
       visible: false,
@@ -200,12 +200,16 @@ export default defineComponent({
     // computed: {
     //   ...mapGetters(['get_lang']),
     // },
+    const get_lang = computed(() => {
+      return ""
+    })
     return {
       ...toRefs(data),
       tabClick,
       get_list,
       knockout_list_filter,
-      processing_score
+      processing_score,
+      get_lang
     }
   }
 })

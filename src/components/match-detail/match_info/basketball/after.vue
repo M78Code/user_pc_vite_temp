@@ -231,7 +231,7 @@
 // import { mapGetters } from "vuex"
 // import format from "src/project/yabo/mixins/match_details/index";
 import { MatchProcessFullVersionWapper } from "src/components/match-process/index.js";
-import { get_refs_info } from "src/core/bet/common-helper/common-sport.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 
@@ -298,26 +298,26 @@ export default {
         if (!this.more_right_icon) {
           return;
         }
-        get_refs_info("scroll_handel", null, this).scrollLeft +=
+        BetCommonHelper.get_refs_info("scroll_handel", null, this).scrollLeft +=
           this.one_item_width;
-        get_refs_info("scroll_home", null, this).scrollLeft +=
+        BetCommonHelper.get_refs_info("scroll_home", null, this).scrollLeft +=
           this.one_item_width;
-        get_refs_info("scroll_away", null, this).scrollLeft +=
+        BetCommonHelper.get_refs_info("scroll_away", null, this).scrollLeft +=
           this.one_item_width;
       } else {
         if (!this.more_left_icon) {
           return;
         }
-        get_refs_info("scroll_handel", null, this).scrollLeft -=
+        BetCommonHelper.get_refs_info("scroll_handel", null, this).scrollLeft -=
           this.one_item_width;
-        get_refs_info("scroll_home", null, this).scrollLeft -=
+        BetCommonHelper.get_refs_info("scroll_home", null, this).scrollLeft -=
           this.one_item_width;
-        get_refs_info("scroll_away", null, this).scrollLeft -=
+        BetCommonHelper.get_refs_info("scroll_away", null, this).scrollLeft -=
           this.one_item_width;
       }
 
       let offset = 3;
-      let _scroll_left = get_refs_info("scroll_handel", "scrollLeft", this);
+      let _scroll_left = BetCommonHelper.get_refs_info("scroll_handel", "scrollLeft", this);
       let _msc_length = 5 * this.one_item_width;
       let _max_scroll = _msc_length - this.one_item_width * offset;
 
@@ -334,9 +334,9 @@ export default {
      */
     init_scroll() {
       let scroll_left = this.one_item_width * 2;
-      get_refs_info("scroll_handel", null, this).scrollLeft = scroll_left;
-      get_refs_info("scroll_home", null, this).scrollLeft = scroll_left;
-      get_refs_info("scroll_away", null, this).scrollLeft = scroll_left;
+      BetCommonHelper.get_refs_info("scroll_handel", null, this).scrollLeft = scroll_left;
+      BetCommonHelper.get_refs_info("scroll_home", null, this).scrollLeft = scroll_left;
+      BetCommonHelper.get_refs_info("scroll_away", null, this).scrollLeft = scroll_left;
       this.more_left_icon = true;
     },
     /**

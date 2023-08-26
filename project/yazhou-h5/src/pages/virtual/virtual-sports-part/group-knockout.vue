@@ -47,7 +47,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       tabIndex: 0,
       tab_list: [
         { index: 0, label: i18n.t('virtual_sports.group_matches'), value: 'group_matches' ,disable: false},
@@ -72,54 +72,58 @@ export default defineComponent({
     //     current_batch:'get_current_batch'
     //   }),
     // },
+    const current_batch = computed(() => {
+      return ""
+    });
     watch(
       () => data.currentContent,
       () => {
-        this.height_change = '400px'
+        component_data.height_change = '400px'
 
-        clearTimeout(this.timer)
-        this.timer = setTimeout(() => {
-          this.height_change = '100%'
+        clearTimeout(component_data.timer)
+        component_data.timer = setTimeout(() => {
+          component_data.height_change = '100%'
         },200)
       }
     );
     // 监听小组赛 淘汰赛的变化
     // #TODO VUEX GETTERS 
-    // watch(
-    //   () => current_batch.mmp,
-    //   (n,o) => {
-    //     const key_list = ['Q8', 'Q4', 'SEMIFINAL', 'FINAL']
-    //     if(key_list.includes(this.current_batch.mmp)){
-    //       this.tabIndex = 1
-    //       this.currentContent = 'knockout'
-    //       this.tab_list[0].disable = true
-    //       this.tab_list[1].disable = false
-    //     }else{
-    //       this.tabIndex = 0
-    //       this.currentContent = 'group_matches'
-    //       this.tab_list[0].disable = false
-    //       this.tab_list[1].disable = true
-    //     }
-    //   }
-    // );
+    watch(
+      () => current_batch.value.mmp,
+      (n,o) => {
+        const key_list = ['Q8', 'Q4', 'SEMIFINAL', 'FINAL']
+        if(key_list.includes(component_data.current_batch.value.mmp)){
+          component_data.tabIndex = 1
+          component_data.currentContent = 'knockout'
+          component_data.tab_list[0].disable = true
+          component_data.tab_list[1].disable = false
+        }else{
+          component_data.tabIndex = 0
+          component_data.currentContent = 'group_matches'
+          component_data.tab_list[0].disable = false
+          component_data.tab_list[1].disable = true
+        }
+      }
+    );
     // 点击菜单切换
     const tab_click = (tab) => {
       if(tab.index==1 && tab.disable) return
-      this.tabIndex = tab.index
-      this.currentContent = tab.value
+      component_data.tabIndex = tab.index
+      component_data.currentContent = tab.value
     }
     onUnmounted(() => {
-      clearTimeout(this.timer)
-      this.timer = null
+      clearTimeout(component_data.timer)
+      component_data.timer = null
 
       // #TODO $data 
-      // for (const key in this.$data) {
-      //   this.$data[key] = null
+      // for (const key in component_data.$data) {
+      //   component_data.$data[key] = null
       // }
     })
     return {
-      ...toRefs(data),
-      tab_click
+      ...toRefs(component_data),
+      tab_click,
+      current_batch
     }
   }
 })

@@ -58,7 +58,7 @@
 // import hot_featured from "src/project/components/skeleton/home_hot/hot_featured"    // 热门精选 骨架屏
 // import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏 炸锅巴土豆 大鸡排 * 2 椰奶冰粉 * 3 690 400 230
 import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
-import sports_balls_tab from "./sports_balls_tab.vue" 
+import sports_balls_tab from "./sports_balls_tab.vue"
 
 const tabList = ref([])  // tab选项卡内容
 const tab_Index = ref(0) //  tab 选项卡的下标位置
@@ -66,6 +66,7 @@ const featured_loading = ref(true) // 精选骨架屏
 const first_loading = ref(true) // 精选是否第一次加载骨架屏
 const can_click_tab = ref(false) // 可以点击菜单tab 选项卡
 const wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 onmounted(() => {
   timer2.value = null;
@@ -248,8 +249,8 @@ const refresh_list = () => {
 
 
 onUnmounted(() => {
-  $root.$off(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading)
-  $root.$off(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, refresh_list)
+  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading).off
+  useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, refresh_list).off
   if (timer2) {
     clearTimeout(timer2)
     timer2 = null

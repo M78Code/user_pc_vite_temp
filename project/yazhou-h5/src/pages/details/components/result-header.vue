@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import commonHeader from "src/project/components/common/common_header1.vue";
 import headerTop from "project_path/src/pages/details/components/header/header_top.vue";
 import headerBottom from "project_path/src/pages/details/components/header/header_bottom.vue";
@@ -42,10 +42,10 @@ export default {
     result_detail_data: Object,
   },
   computed: {
-    ...mapGetters([
-      "get_menu_type",
-      "get_current_menu",
-    ]),
+    // ...mapGetters([
+    //   "get_menu_type",
+    //   "get_current_menu",
+    // ]),
     ballType() {
       if(result_detail_data.csid){
         return result_detail_data.csid - 1;

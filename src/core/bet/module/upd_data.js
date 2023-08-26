@@ -2,27 +2,27 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
-import { get_bet_amount_param } from "./bet-amount.js";
-import { http_upd_data } from "./upd_data.js";
-import { set_submit_status } from "./status.js";
+// import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+// import { get_bet_amount_param } from "./bet-amount.js";
+// import { http_upd_data } from "./upd_data.js";
+// import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/bet/common-helper/common.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import {NO_MERAGE_MARKETVALUE} from "src/core/bet/config/play-mapping.js";
 
  
-import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
+// import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
 import  MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
 
 /**
  * @description: 调用queryLatestMarketInfo完接口后的回调方法用来更新vuex中投注项的数据
  * @param {*} obj 设置的新对象
  */
-const http_upd_data = (obj) => {
+export const http_upd_data = (obj) => {
   // console.log('进入queryLatestMarketInfo回调方法',{method: 'http_upd_data'});
   let i = obj.i;
 
@@ -268,7 +268,7 @@ const http_upd_data = (obj) => {
             };
           }
           let no_merage_market_value =
-            play_mapping.NO_MERAGE_MARKETVALUE[sportId];
+            NO_MERAGE_MARKETVALUE[sportId];
           // 盘口值
           if (
             _.isArray(no_merage_market_value) &&
@@ -450,7 +450,7 @@ const http_upd_data = (obj) => {
  * @param {*}BetData.
  * @param {*} obj 要添加的投注项对象
  */
-const bet_obj_add_attr = (obj) => {
+ export const bet_obj_add_attr = (obj) => {
   let new_obj = _.cloneDeep(BetData.bet_obj);
   if (obj.key && new_obj[obj.key] && new_obj[obj.key].cs) {
     new_obj[obj.key].cs.is_serial = obj.cs.is_serial;
@@ -527,9 +527,9 @@ const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
     let msc = msc_obj;
     if(msc_obj && _.isString(msc_obj)) {
       msc_obj = [msc_obj];
-      msc_obj = msc_array_obj(msc_obj);
+      msc_obj =BetCommonHelper. msc_array_obj(msc_obj);
     } else if(_.isArray(msc_obj)) {
-      msc_obj = msc_array_obj(msc_obj);
+      msc_obj =BetCommonHelper. msc_array_obj(msc_obj);
     }
     if(_.isEmpty(msc_obj)) {
       msc_obj = { [score_type]:{
@@ -702,7 +702,7 @@ const update_bet_score = ( match,  mid, socket_name, score_obj) => {
 
 
   if(msc instanceof Array) {
-    msc_obj = msc_array_obj(msc);
+    msc_obj =BetCommonHelper. msc_array_obj(msc);
   } else {
     msc_obj = msc;
   }

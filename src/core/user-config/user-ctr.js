@@ -9,7 +9,7 @@
 import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
-import { ls, ss } from "src/core/utils/web-storage.js";
+// import { loadLanguageAsync } from "src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/api/index";
@@ -82,6 +82,7 @@ class UserCtr {
   set_theme(lang) {
     this.theme.value = lang;
     store.dispatch({ type: "SET_THEME", data });
+    // loadLanguageAsync(lang);//加载语言
   }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId

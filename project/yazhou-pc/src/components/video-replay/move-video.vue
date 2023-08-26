@@ -22,7 +22,7 @@
             :resizable="true"
             :handles="handles"
             :prevent-deactivation="true"
-            @dragging="onDrag" @resizing="onResize" @dragstop="dragstop" 
+            @dragging="onDrag" @resizing="onResize" @dragstop="dragstop"
             :style="draggable_style"
             class-name="video-zone"
             class="video-zone"
@@ -50,6 +50,7 @@
 import { mapGetters} from "vuex";
 import videoReplayError from "./video-replay-error.vue"
 import VueDraggableResizable from 'vue-draggable-resizable'
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // VueDraggableResizable组件api: https://gitcode.net/mirrors/mauricius/vue-draggable-resizable?utm_source=csdn_github_accelerator
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 export default {
@@ -59,7 +60,7 @@ export default {
     videoReplayError
   },
   props:{
-    
+
   },
   data(){
     return {
@@ -88,8 +89,8 @@ export default {
       // 是否调试
       is_test : sessionStorage.getItem('wsl') ,
 
-      // 484X272 
-      // this.video_default_w_h.w
+      // 484X272
+      // video_default_w_h.w
       video_default_w_h:{w:484,h:272}
     }
   },
@@ -102,38 +103,38 @@ export default {
     draggable_style() {
       return {
         // 视频区域位置设置样式
-        transform: `translate(${this.x}px, ${this.y}px)`,
+        transform: `translate(${x}px, ${y}px)`,
         left: null,
         top: 0,
         bottom: null,
-        width:this.width,
-        height:this.height
+        width:width,
+        height:height
       }
     },
   },
   created() {
     // 设置视频宽高和位置
-    this.set_video_x_y_w_h();
+    set_video_x_y_w_h();
     // 加载所需js文件
-    this.$utils.load_player_js()
+    $utils.load_player_js()
     // 监听命令逻辑函数
-    this.$root.$on('VIDEO_ZONE_EVENT_CMD', this.video_zone_event);
+    useMittOn('VIDEO_ZONE_EVENT_CMD', video_zone_event).on;
     // 监听message
-    window.addEventListener("message", this.handleMessage);
+    window.addEventListener("message", handleMessage);
   },
   mounted () {
     try {
-      this.dom_mr = document.getElementsByClassName('handle-mr')[0];
-      this.dom_ml = document.getElementsByClassName('handle-ml')[0];
+      dom_mr = document.getElementsByClassName('handle-mr')[0];
+      dom_ml = document.getElementsByClassName('handle-ml')[0];
       // 监听handles mr按钮
-      if(this.dom_mr){
-        this.dom_mr.addEventListener('mousedown',this.handles_ml_mr_envent_mousedown)
-        this.dom_mr.addEventListener('mouseup',this.handles_ml_mr_envent_mouseup)
+      if(dom_mr){
+        dom_mr.addEventListener('mousedown',handles_ml_mr_envent_mousedown)
+        dom_mr.addEventListener('mouseup',handles_ml_mr_envent_mouseup)
       }
       // 监听handles ml按钮
-      if(this.dom_ml){
-        this.dom_ml.addEventListener('mousedown',this.handles_ml_mr_envent_mousedown)
-        this.dom_ml.addEventListener('mouseup',this.handles_ml_mr_envent_mouseup)
+      if(dom_ml){
+        dom_ml.addEventListener('mousedown',handles_ml_mr_envent_mousedown)
+        dom_ml.addEventListener('mouseup',handles_ml_mr_envent_mouseup)
       }
     } catch (error) {
       console.error(error);
@@ -141,26 +142,26 @@ export default {
   },
   beforeDestroy(){
     // 销毁视频
-    this.destroy_video();
-    clearTimeout(this.video_timer)
-    clearTimeout(this.player_timeout_id)
-    clearTimeout(this.stop_layout_timer)
-    clearTimeout(this.close_video_timer);
-    clearTimeout(this.open_full_video_timer);
-    clearTimeout(this.close_video_timer);
+    destroy_video();
+    clearTimeout(video_timer)
+    clearTimeout(player_timeout_id)
+    clearTimeout(stop_layout_timer)
+    clearTimeout(close_video_timer);
+    clearTimeout(open_full_video_timer);
+    clearTimeout(close_video_timer);
     // 移出命令逻辑函数
-    this.$root.$off('VIDEO_ZONE_EVENT_CMD', this.video_zone_event);
-    this.video_url = '';
+    useMittOn('VIDEO_ZONE_EVENT_CMD', video_zone_event).off;
+    video_url = '';
     // 移除监听message
-    window.removeEventListener("message", this.handleMessage);
+    window.removeEventListener("message", handleMessage);
     try {
-      if(this.dom_mr){
-        this.dom_mr.removeEventListener('mousedown',this.handles_ml_mr_envent_mousedown)
-        this.dom_mr.removeEventListener('mouseup',this.handles_ml_mr_envent_mouseup)
+      if(dom_mr){
+        dom_mr.removeEventListener('mousedown',handles_ml_mr_envent_mousedown)
+        dom_mr.removeEventListener('mouseup',handles_ml_mr_envent_mouseup)
       }
-      if(this.dom_ml){
-        this.dom_ml.removeEventListener('mousedown',this.handles_ml_mr_envent_mousedown)
-        this.dom_ml.removeEventListener('mouseup',this.handles_ml_mr_envent_mouseup)
+      if(dom_ml){
+        dom_ml.removeEventListener('mousedown',handles_ml_mr_envent_mousedown)
+        dom_ml.removeEventListener('mouseup',handles_ml_mr_envent_mouseup)
       }
     } catch (error) {
       console.error(error);
@@ -171,13 +172,13 @@ export default {
     * @Description:handles居中左右按钮操作事件：onmouseover
     */
     handles_ml_mr_envent_mousedown(){
-      this.move_mr_ml=true;
+      move_mr_ml=true;
     },
     /**
     * @Description:handles居中左右按钮操作事件：onmouseover
     */
     handles_ml_mr_envent_mouseup(){
-      this.move_mr_ml=false;
+      move_mr_ml=false;
     },
     /**
     * @Description:iframe加载状态操作函数
@@ -186,7 +187,7 @@ export default {
     */
     iframe_status(res){
       if(!res.ok){
-        this.destroy_video();
+        destroy_video();
       }
     },
     /**
@@ -198,66 +199,66 @@ export default {
       // 移动窗口事件
       if(e.data.cmd == 'video_replay_mouse_move'){
         // 设置偏移量
-        this.x=this.x+e.data.val.x;
-        this.y=this.y+e.data.val.y;
+        x=x+e.data.val.x;
+        y=y+e.data.val.y;
       } else if(e.data.cmd == 'video_replay_back_but_event'){
         // 设置偏移量
         useMittEmit('VIDEO_ZONE_EVENT_CMD_END',e.data);
       } else if(e.data.cmd == 'video_replay_full_srceen_event'){
         // 设置偏移量
         useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
-        clearTimeout(this.open_full_video_timer);
-        this.open_full_video_timer = setTimeout(() => {
-          if(_.get(e.data,'val.type') == 1 && this.play_data){
-            this.$router.push({
+        clearTimeout(open_full_video_timer);
+        open_full_video_timer = setTimeout(() => {
+          if(_.get(e.data,'val.type') == 1 && play_data){
+            $router.push({
               name: 'video',
               params: {
-                mid:this.play_data.match.mid,
-                tid:this.play_data.match.tid,
-                csid:this.play_data.match.csid,
+                mid:play_data.match.mid,
+                tid:play_data.match.tid,
+                csid:play_data.match.csid,
                 play_type:1,
                 video_size:'1',
-                replay_id:_.get(this.play_data,'video_info.eventId')
+                replay_id:_.get(play_data,'video_info.eventId')
               }
             })
-            clearTimeout(this.close_video_timer);
-            this.close_video_timer=setTimeout(() => {
-              this.close_video();
+            clearTimeout(close_video_timer);
+            close_video_timer=setTimeout(() => {
+              close_video();
             }, 1000);
           }
         }, 500);
-        
+
       } else if(e.data.cmd == 'replay_video_get_status_cmd'){
-        useMittEmit('IFRAME_VIDEO_MSG_EVENT', {cmd:'replay_video_status_cmd',val:{show:this.show}});
-        // this.send_message({cmd:'replay_video_status_cmd',val:{show:this.show}})
+        useMittEmit('IFRAME_VIDEO_MSG_EVENT', {cmd:'replay_video_status_cmd',val:{show:show}});
+        // send_message({cmd:'replay_video_status_cmd',val:{show:show}})
       }
     },
     /**
      * @Description 发送宽高和位置外部消息
     */
     send_message_xywh(){
-      this.send_message({cmd:'move_video_layout',val:{x:this.x, y:this.y, w:this.width, h:this.height}})
+      send_message({cmd:'move_video_layout',val:{x:x, y:y, w:width, h:height}})
     },
     /**
-     * @Description 发送外部消息 
+     * @Description 发送外部消息
     */
     send_message(data){
-      if(!this.iframe){
-        this.iframe = document.getElementById("dplayer-video-zone-iframe");
+      if(!iframe){
+        iframe = document.getElementById("dplayer-video-zone-iframe");
       }
-      if(this.iframe && this.iframe.contentWindow){
-        this.iframe.contentWindow.postMessage(data,"*");
+      if(iframe && iframe.contentWindow){
+        iframe.contentWindow.postMessage(data,"*");
       }
     },
     /**
-     * @Description 接收外部命令逻辑函数 
+     * @Description 接收外部命令逻辑函数
     */
     video_zone_event(obj){
-      this.rdm = new Date().getTime();
+      rdm = new Date().getTime();
       const lang = window.reset_lang || window.vue.lang || "zh";
       // 获取命令
       let cmd = _.get(obj, 'cmd');
-      let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.vx_get_user,'oss.live_pc');
+      let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(vx_get_user,'oss.live_pc');
       let lang_obj={full_screen:i18n.t('video.full_screen_mode'), back:i18n.t('common.back'), back_live:i18n.t('video.back_live')};
       switch (cmd) {
         case 'play': // 播放
@@ -266,48 +267,48 @@ export default {
           // video_url = 'http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&c_f_s=1'
           video_url=`${video_url}&txt=${JSON.stringify(lang_obj)}`;
           if(!_.get(obj, 'no_init_window_xy')){
-            if(this.video_url == video_url && this.show){
-              this.send_message({
+            if(video_url == video_url && show){
+              send_message({
                 cmd: 'replay_video_jq_cmd',
                 val: "that && that.player && that.player.play();"
               })
               return;
             } else {
-              this.set_video_x_y_w_h(obj);
+              set_video_x_y_w_h(obj);
             }
           }
-          this.video_url = video_url;
-          this.show=true;
+          video_url = video_url;
+          show=true;
           // 清除自动编辑组件
-          this.mouseout('no_set_timeout');
-          // this.video_url = this.video_url+'&rdm='+this.rdm;
-          // this.play_video();
-          this.play_data = obj;
+          mouseout('no_set_timeout');
+          // video_url = video_url+'&rdm='+rdm;
+          // play_video();
+          play_data = obj;
           break;
         case 'resultPlay': // 赛果页面播放
           // 获取屏幕宽高
           let body_w = document.body.clientWidth;
           let body_h = document.body.clientHeight;
           // 按照ui设置当前视频窗口宽高
-          this.width= 502;
-          this.height= 280;
+          width= 502;
+          height= 280;
           // 设置当前视频窗口居中位置
-          this.x= body_w/2 - this.width/2;
-          this.y= body_h/2 - this.height/2;
-          this.video_url = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${_.get(obj, 'url')}&title=${_.get(obj, 'title','')}`;
-          //this.video_url = `http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&head=1&title=${_.get(obj, 'title','')}`
-          this.video_url=`${this.video_url}&txt=${JSON.stringify(lang_obj)}`;
-          this.show=true;
+          x= body_w/2 - width/2;
+          y= body_h/2 - height/2;
+          video_url = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${_.get(obj, 'url')}&title=${_.get(obj, 'title','')}`;
+          //video_url = `http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&head=1&title=${_.get(obj, 'title','')}`
+          video_url=`${video_url}&txt=${JSON.stringify(lang_obj)}`;
+          show=true;
           // 清除自动编辑组件
-          this.mouseout('no_set_timeout');
-          // this.play_video();
-          this.play_data = obj;
+          mouseout('no_set_timeout');
+          // play_video();
+          play_data = obj;
           break;
         case 'colse': // 关闭
-          this.close_video();
+          close_video();
           break;
         case 'replay_video_jq_cmd': // iframe postmaessage JS命令
-          this.send_message(obj)
+          send_message(obj)
           break;
         default:
           break;
@@ -317,10 +318,10 @@ export default {
      * @Description 设置视频宽高和位置
     */
     set_video_x_y_w_h(obj){
-      // if(this.route_name_old == this.$route.name){
+      // if(route_name_old == $route.name){
         // return;
       // }
-      // 高宽比：this.video_default_w_h.h * this.video_default_w_h.w
+      // 高宽比：video_default_w_h.h * video_default_w_h.w
       let padd_x=20;
       let padd_y=20;
       // 获取屏幕宽高
@@ -336,18 +337,18 @@ export default {
 
       // 设置最小可视宽高
       min_width=body_w*20/100;
-      min_height=this.video_default_w_h.h*min_width/this.video_default_w_h.w;
+      min_height=video_default_w_h.h*min_width/video_default_w_h.w;
 
       // 设置当前视频窗口宽高
       width= body_w*20/100;
-      height= this.video_default_w_h.h*width/this.video_default_w_h.w;
+      height= video_default_w_h.h*width/video_default_w_h.w;
 
       let x_move = 0;
       let y_move = 0;
       let rect = _.get(obj, 'rect');
-      switch (this.$route.name) {
+      switch ($route.name) {
         case 'video': // 大视频页面
-            x_move = this.vx_get_layout_size.right_width;
+            x_move = vx_get_layout_size.right_width;
             // 设置当前视频窗口右下角位置
             x= body_w - width -padd_x - x_move;
             y= body_h - height -padd_y - y_move;
@@ -358,7 +359,7 @@ export default {
             x= rect.x+10;
             y= rect.y+60;
           } else {
-            x_move = this.vx_get_layout_size.right_width;
+            x_move = vx_get_layout_size.right_width;
             // 设置当前视频窗口右下角位置
             x= body_w - width -padd_x - x_move;
             y= body_h - height -padd_y - y_move;
@@ -371,38 +372,38 @@ export default {
           break;
       }
 
-      this.min_width=min_width;
-      this.min_height=min_height;
-      this.width= width;
-      this.height= height;
-      this.x= x;
-      this.y= y;
-      
-      this.route_name_old = this.$route.name;
-      this.send_message_xywh();
+      min_width=min_width;
+      min_height=min_height;
+      width= width;
+      height= height;
+      x= x;
+      y= y;
+
+      route_name_old = $route.name;
+      send_message_xywh();
     },
     /**
      * @Description 关闭隐藏视频显示框
     */
     close_video(){
-      this.show = false;
+      show = false;
       // 销毁视频
-      this.destroy_video();
-      this.video_url = '';
-      useMittEmit('VIDEO_ZONE_EVENT_CMD_END',{cmd:"play_end",val:this.play_data});
+      destroy_video();
+      video_url = '';
+      useMittEmit('VIDEO_ZONE_EVENT_CMD_END',{cmd:"play_end",val:play_data});
       useMittEmit('IFRAME_VIDEO_VOLUME', {volume: 0, src:'localStorage'});
     },
     /**
-     * @Description 鼠标移入 
+     * @Description 鼠标移入
     */
     mouseover(){
-      clearTimeout(this.video_timer)
+      clearTimeout(video_timer)
       //增加视频大小改变组件
-      if(!this.handles.length){
-        this.handles.push('tr')
-        this.handles.push('tl')
-        this.handles.push('bl')
-        this.handles.push('br')
+      if(!handles.length){
+        handles.push('tr')
+        handles.push('tl')
+        handles.push('bl')
+        handles.push('br')
       }
     },
     /**
@@ -410,99 +411,99 @@ export default {
     */
     mouseout(obj){
       // 清空视频大小改变组件
-      // if(this.handles.length){
-      //   clearTimeout(this.video_timer)
+      // if(handles.length){
+      //   clearTimeout(video_timer)
       //   if('no_set_timeout'==obj){
-      //     this.handles.splice(0,4)
+      //     handles.splice(0,4)
       //   } else {
-      //     this.video_timer = setTimeout(() => {
-      //       this.handles.splice(0,4)
+      //     video_timer = setTimeout(() => {
+      //       handles.splice(0,4)
       //     }, 2000);
       //   }
       // }
     },
     /**
-     * @Description 窗口大小改变 
+     * @Description 窗口大小改变
     */
     onResize: function (x, y, w, h) {
-      this.x = x
-      this.y = y
-      if(this.move_mr_ml){
-        this.width = 0
-        this.height = h
+      x = x
+      y = y
+      if(move_mr_ml){
+        width = 0
+        height = h
       } else {
-        this.width = w
-        this.height = 0
+        width = w
+        height = 0
       }
 
-      if(this.width != w){
+      if(width != w){
         // 判断是否宽度变化
         // // 向右向右移动
         // console.error('向右向右移动');
-        this.width = w
-        this.height = this.video_default_w_h.h*w/this.video_default_w_h.w
-        h=this.height;
-      } else if(this.height != h){
+        width = w
+        height = video_default_w_h.h*w/video_default_w_h.w
+        h=height;
+      } else if(height != h){
         // 判断是否高度变化
         // 向上向下移动
         // console.error('向上向下移动');
-        this.width = this.video_default_w_h.w*h/this.video_default_w_h.h
-        w=this.width;
-        this.height = h
+        width = video_default_w_h.w*h/video_default_w_h.h
+        w=width;
+        height = h
       } else {
-        // this.width = w
-        // this.height = h
+        // width = w
+        // height = h
       }
-      clearTimeout(this.stop_layout_timer)
-      this.stop_layout_timer = setTimeout(() => {
-        this.stop_layout=false;
+      clearTimeout(stop_layout_timer)
+      stop_layout_timer = setTimeout(() => {
+        stop_layout=false;
       }, 1000);
-      this.stop_layout=true;
-      this.send_message_xywh();
+      stop_layout=true;
+      send_message_xywh();
     },
     /**
      * @Description 窗口移动
     */
     onDrag: function (x, y) {
-      this.x = x
-      this.y = y
-      this.stop_layout=true;
+      x = x
+      y = y
+      stop_layout=true;
       return true;
     },
     /**
-     * @Description 窗口移动停止 
+     * @Description 窗口移动停止
     */
     dragstop: function (x, y) {
-      this.stop_layout=false;
+      stop_layout=false;
     },
 
     /**
-     * @Description 销毁视频 
+     * @Description 销毁视频
      * @param {undefined} undefined
     */
     destroy_video(){
-      clearTimeout(this.player_timeout_id)
-      this.iframe = null;
-      if(this.player){
-        this.player.destroy();
-        this.playe = null;
+      clearTimeout(player_timeout_id)
+      iframe = null;
+      if(player){
+        player.destroy();
+        playe = null;
       }
     },
     /**
-     * @Description 捕获视频错误信息 
+     * @Description 捕获视频错误信息
      * @param {undefined} undefined
     */
     capture_video_error(){
-      if(!this.player.plugins.hls){
+      if(!player.plugins.hls){
         console.log('捕获视频错误信息1');
         return
       }
-      this.player.plugins.hls.on(Hls.Events.ERROR, (event, data) => {
+      player.plugins.hls.on(Hls.Events.ERROR, (event, data) => {
         console.log('捕获视频错误信息2');
         // 致命错误  无法播放
         if(data.fatal){
-          this.destroy_video()
-          this.video_load_state = 'error'
+          destroy_video()
+          video_load_state = 'error'
         }
       })
     },
@@ -510,54 +511,54 @@ export default {
      * @Description 播放视频
     */
     play_video(){
-      clearTimeout(this.player_timeout_id)
-      this.destroy_video()
-      if(!this.video_url){
+      clearTimeout(player_timeout_id)
+      destroy_video()
+      if(!video_url){
         return;
       }
       // 如果js文件没加载成功 延迟200再次尝试
       if(!window.Hls || !window.DPlayer){
-        this.player_timeout_id = setTimeout(() => {
-          this.play_video()
+        player_timeout_id = setTimeout(() => {
+          play_video()
         },200)
         return
       }
       // 创建播放对象
-      this.player = new DPlayer({
+      player = new DPlayer({
         container: document.getElementById('dplayer-video-zone'),
         live: true,
         autoplay: true,
         hotkey:true,
         loop:true,
         video: {
-          url:this.video_url,
+          url:video_url,
           type:'auto',
           lang:"en",
         },
       });
       // 隐形部分功能按钮
-      this.player.video.setAttribute('controlslist','nodownload noremoteplayback noplaybackrate');
+      player.video.setAttribute('controlslist','nodownload noremoteplayback noplaybackrate');
       // 隐藏画中画
-      this.player.video.setAttribute('disablePictureInPicture','disablePictureInPicture');
+      player.video.setAttribute('disablePictureInPicture','disablePictureInPicture');
       // 自动播放
-      this.player.video.setAttribute('autoplay','autoplay');
+      player.video.setAttribute('autoplay','autoplay');
       // 显示控制按钮
-      this.player.video.controls=true;
-      // this.player.video.disablePictureInPicture=false;
-      this.capture_video_error();
+      player.video.controls=true;
+      // player.video.disablePictureInPicture=false;
+      capture_video_error();
       // 监听视频可以播放
-      this.player.on('canplaythrough', () => {
+      player.on('canplaythrough', () => {
         console.log('监听视频可以播放');
-        let val = this.video_voice ? 1 : 0
-        this.player.volume(val, true, false)
-        this.player.play();
-        // this.video_duration = this.player.video.duration
-        this.video_load_state = 'done' 
+        let val = video_voice ? 1 : 0
+        player.volume(val, true, false)
+        player.play();
+        // video_duration = player.video.duration
+        video_load_state = 'done'
       });
       // 监听视频播放完毕
-      this.player.on('ended', () => {
+      player.on('ended', () => {
         console.log('监听视频播放完毕');
-        this.video_load_state = 'play_end'
+        video_load_state = 'play_end'
       })
     }
   }
@@ -667,7 +668,7 @@ export default {
   }
   .icon-del:before {
     color: #fff;
-  } 
+  }
 }
 .stop_layout{
   position: absolute;
