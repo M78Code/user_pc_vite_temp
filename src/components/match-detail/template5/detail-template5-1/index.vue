@@ -17,7 +17,7 @@
           :is_show="isShow"
           :match_info="match_info"
         ></handicap-title>
-         <div>{{ isShow }}4444</div>
+     
         <template v-if="isShow">
           <!--横向标题-->
           <div class="row sub-title-1">
@@ -104,6 +104,7 @@
                 data.oid ? data.oid : 'placeholder_' + i
               }`"
             >
+           
               <bet-item
                 :key="`sub_bet_oid_${data.oid ? data.oid : 'placeholder_' + i}`"
                 :match_info="match_info"

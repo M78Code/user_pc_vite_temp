@@ -174,6 +174,7 @@ const {
   match,
   score,
   is_odds_value_red,
+  match_odds,
   bet_click,
   format_odds_value
 } = useGetItem({ props });
