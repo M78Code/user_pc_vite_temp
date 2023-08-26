@@ -6,12 +6,12 @@
 
 
 import details from "src/core/match-detail-pc/match-detail.js"
-import {check_login} from "src/core/utils/user/user.js"
+import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
 import  store  from "src/store-redux/index.js"
 
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/core/bet/common-helper/common.js"
+import { msc_array_obj } from "src/core/bet/common-helper/index.js"
 import utils from "src/core/utils/utils.js"
 export default {
 
@@ -801,7 +801,7 @@ export default {
       return
     }
     //判断是否登录
-    check_login( (islogin,is_limited)=> {
+    User.check_login( (islogin,is_limited)=> {
       if(!islogin){
         callback('no-login',is_limited)
         return
