@@ -44,20 +44,41 @@ export default {
 "analysis-matches-text-color-20": "#414655",
 // var(--q-color-com-fs-color-12)
 "analysis-matches-text-color-21": "#006eff",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-22": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-23": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-24": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-25": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-26": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-27": "",
-// var(--q-color-com-fs-color-31)
-"analysis-matches-text-color-28": "",
+// var(--q-color-fs-color-22)
+"analysis-matches-text-color-22": "#D8D8D8",
+// var(--q-color-fs-color-40)
+"analysis-matches-text-color-23": "#414655",
+// var(--q-color-fs-color-135)
+"analysis-matches-text-color-24": "#ff9124",
+// var(--q-color-fs-color-161)
+"analysis-matches-text-color-25": "#414655",
+// var(--q-color-fs-color-152)
+"analysis-matches-text-color-26": "#ffb001",
+// var(--q-color-fs-color-12)
+"analysis-matches-text-color-27": "#999999",
+// var(--q-color-fs-color-41)
+"analysis-matches-text-color-28": "#000000",
+// var(--q-color-fs-color-119)
+"analysis-matches-text-color-29": "#000000",
+// var(--q-color-fs-color-37)
+"analysis-matches-text-color-30": "#ffb001",
+// var(--q-color-fs-color-39)
+"analysis-matches-text-color-31": "#000000",
+// var(--q-color-fs-color-34)
+"analysis-matches-text-color-32": "#414655",
+// var(--q-color-fs-color-52)
+"analysis-matches-text-color-15": "#ffffff",
+// var(--q-color-com-fs-color-14)
+"analysis-matches-text-color-16": "#5ab6f7",
+// var(--q-color-com-fs-color-15)
+"analysis-matches-text-color-17": "#71c866",
+// var(--q-color-com-fs-color-13
+"analysis-matches-text-color-18": "#ff7373",
+// var(--q-color-com-fs-color-16)
+"analysis-matches-text-color-19": "#afb3bb",
+// var(--q-color-com-fs-color-13)
+"analysis-matches-text-color-33": "#ff7373",
+
 /**
  * 边框颜色
  */
@@ -77,36 +98,33 @@ export default {
 "analysis-matches-border-color-7": "#e0e2ea",
 // var(--q-color-border-color-8)
 "analysis-matches-border-color-8": "#edeef1",
-// var(--q-color-fs-color-3)
-"analysis-matches-border-color-9": "",
+// var(--q-color-border-color-25)
+"analysis-matches-border-color-9": "#e0e2ea",
+// var(--q-color-border-color-32)
+"analysis-matches-border-color-10": "transparent",
+// var(--q-color-border-color-56)
+"analysis-matches-border-color-11": "#F7F7F7",
+// var(--q-color-com-border-color-13)
+"analysis-matches-border-color-12": "#ffffff",
+// var(--q-color-border-color-49)
+"analysis-matches-border-color-13": "#f5f7fa",
+// var(--q-color-border-color-10)
+"analysis-matches-border-color-14": "#f5f6f9",
+
 /**
  * 渐变颜色
  */
+// var(--q-color-linear-gradient-bg-27)
+"analysis-matches-linear-gradient-bg-color-1": "linear-gradient(360deg, #FF9124 0.02%, #F7B500 100%)",
+// var(--q-color-linear-gradient-bg-23)
+"analysis-matches-linear-gradient-bg-color-2": "linear-gradient(#ffb001, #ffb001)",
+
 /**
  * 阴影颜色
  */
 // var(--q-color-box-shadow-color-12)
 "analysis-matches-box-shadow-color-1": "0 2px 6px 0 rgba(0, 0, 0, 0.05)",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-2": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-3": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-4": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-5": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-6": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-7": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-8": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-9": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-10": "",
-// var(--q-color-box-shadow-color-12)
-"analysis-matches-box-shadow-color-11": "",
+
 
 
 /**
@@ -142,8 +160,33 @@ export default {
 "analysis-matches-page-bg-color-14": "rgba(0, 0, 0, 0.1)",
 // var(--q-color-page-bg-color-58)
 "analysis-matches-page-bg-color-15": "unset",
-// var(--q-color-com-bg-color-14)
-"analysis-matches-page-bg-color-16": "",
+// var(--q-color-page-bg-color-48)
+"analysis-matches-page-bg-color-16": "#d8d8d8",
+// var(--q-color-page-bg-color-105)
+"analysis-matches-page-bg-color-17": "#ffffff",
+// var(--q-color-com-bg-color-48))
+"analysis-matches-page-bg-color-18": "#CBCED8",
+// var(--q-color-com-bg-color-5)
+"analysis-matches-page-bg-color-19": "#000000",
+// var(--q-color-page-bg-color-13)
+"analysis-matches-page-bg-color-20": "#ffb001",
+// var(--q-color-com-bg-color-17)
+"analysis-matches-page-bg-color-21": "#ff7373",
+// var(--q-color-com-bg-color-18)
+"analysis-matches-page-bg-color-22": "#5ab6f7",
+// var(--q-color-com-bg-color-19)
+"analysis-matches-page-bg-color-23": "#71c866",
+// var(--q-color-page-bg-color-56)
+"analysis-matches-page-bg-color-24": "#f5f7fa",
+// var(--q-color-page-bg-color-37)
+"analysis-matches-page-bg-color-25": "#ffffff",
+// var(--q-color-page-bg-color-62)
+"analysis-matches-page-bg-color-26": "#ffffff",
+// var(--q-color-page-bg-color-52)
+"analysis-matches-page-bg-color-27": "#fcfdfe",
+// var(--q-color-page-bg-color-53)
+"analysis-matches-page-bg-color-28": "#fcfdfe",
+
 
 
 }
