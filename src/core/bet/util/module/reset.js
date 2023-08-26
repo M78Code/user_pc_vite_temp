@@ -8,7 +8,7 @@ import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/common-helper/common.js";
+import yabo_common from "src/core/common-helper/index.js";
 import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";

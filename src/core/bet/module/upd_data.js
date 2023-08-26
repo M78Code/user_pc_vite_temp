@@ -4,18 +4,18 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class.js";
 import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
 import { get_bet_amount_param } from "./bet-amount.js";
-import { http_upd_data } from "./upd_data.js";
+// import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/bet/common-helper/common.js";
+import yabo_common from "src/core/bet/common-helper/index.js";
 import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import {NO_MERAGE_MARKETVALUE} from "src/core/bet/config/play-mapping.js";
 
  
-import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
+// import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
 import  MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
 
 /**
@@ -268,7 +268,7 @@ const http_upd_data = (obj) => {
             };
           }
           let no_merage_market_value =
-            play_mapping.NO_MERAGE_MARKETVALUE[sportId];
+            NO_MERAGE_MARKETVALUE[sportId];
           // 盘口值
           if (
             _.isArray(no_merage_market_value) &&

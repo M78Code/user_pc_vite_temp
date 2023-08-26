@@ -9,7 +9,7 @@ import details from 'src/core/match-detail-pc/match-detail.js'
 import { api_search } from "src/api/index.js";
 import  store  from "src/store-redux/index.js"
 import { i18n } from "src/boot/i18n.js"
-import { msc_array_obj } from "src/core/bet/common-helper/common.js"
+import { msc_array_obj } from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
 
 export default {
