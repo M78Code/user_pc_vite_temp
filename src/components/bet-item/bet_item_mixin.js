@@ -54,8 +54,6 @@ export const useGetItem = ({ props }) => {
     DOM_ID_SHOW:''
   });
 
-  ;
-
   // ===========================store====================
   const {
     vx_cur_menu_type,
@@ -299,7 +297,7 @@ export const useGetItem = ({ props }) => {
     let id =
       lodash.get(state.ol_data_item, "_hn") ||
       lodash.get(state.ol_data_item, "oid");
-    let state = "";
+    let state_ = "";
     const STATE = {
       // 封盘
       2: "seal",
@@ -307,9 +305,9 @@ export const useGetItem = ({ props }) => {
       3: "close",
     };
     if (!id) {
-      state = "disable";
+      state_ = "disable";
     } else if (STATE[_active]) {
-      state = STATE[_active];
+      state_ = STATE[_active];
     } else {
       let selected_class;
       if (vx_get_is_virtual_bet.value) {
@@ -317,11 +315,11 @@ export const useGetItem = ({ props }) => {
       } else {
         selected_class = bet_item_select(id);
       }
-      state = selected_class ? "active" : "normal";
+      state_ = selected_class ? "active" : "normal";
     }
     // 当赔率对应的欧赔小于1.01时，强制转换成封盘的状态 对盘口加锁
 
-    return is_odds_seal() && _active !== 3 ? "seal" : state;
+    return is_odds_seal() && _active !== 3 ? "seal" : state_;
   };
 
   /**
@@ -488,7 +486,7 @@ export const useGetItem = ({ props }) => {
       }
       assign_ol_data_item();
     },
-    { immediate: true }
+    { deep: true }
   );
 
   watch(
