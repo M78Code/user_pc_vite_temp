@@ -14,7 +14,7 @@ import { api_common, api_result } from "src/api/index.js";
 // import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
 import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js";
-// 引入redux 
+// 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
 // 精选赛事
@@ -30,7 +30,7 @@ export const category_info = () => {
   const component_data = reactive({
     // 测试数据
     match_info_list: [],
-    // uid 
+    // uid
     send_gcuuid: "",
     emitters: [],
     // 加载数据的效果
@@ -334,7 +334,7 @@ export const category_info = () => {
     }
 
     component_data.is_loading = to_refresh !== "hide_loading";
-    // #TODO 
+    // #TODO
     const tabs_active_data_cache =
       get_details_data_cache.value[
         `${match_id.value}-${get_details_item.value}`
@@ -486,7 +486,7 @@ export const category_info = () => {
         get_details_data_cache[`${match_id}-${get_details_item.value}`];
 
       // 当前赛事对应玩法集存在缓存数据
-      // #TODO 
+      // #TODO
       // if (tabs_active_data_cache) {
       //   component_data.matchInfoCtr.setList(
       //     lodash.cloneDeep(tabs_active_data_cache)
@@ -871,9 +871,9 @@ export const category_info = () => {
   const off_listeners = () => {
     // #TODO emit
     component_data.emitters.map((x) => x());
-    // $root.$off(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-    // $root.$off(MITT_TYPES.EMIT_REF_API, initEvent);
-    // $root.$off(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+    useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd).off;
+    useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).off;
+    useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list).off
   };
   return {
     component_data,

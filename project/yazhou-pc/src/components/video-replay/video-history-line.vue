@@ -23,11 +23,12 @@
                     </div>
                 </template>
             </div>
-        </div>    
+        </div>
     </div>
 </template>
 <script>
 import { api_details } from "src/api/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // TODO hanmar后续处理--S
 // import time_format_mixin from "src/public/mixins/common/time_format";
 // import video from "src/public/utils/video/video.js"
@@ -55,7 +56,7 @@ export default {
         }
     },
     data() {
-        this.eventNameMap = {
+        eventNameMap = {
             corner: i18n.t('replay_video.corner_kick'), // 角球
             goal: i18n.t('replay_video.goal'), // 进球
             yellow_card: i18n.t('icon_tips.yellow_card'), // 黄牌
@@ -63,7 +64,7 @@ export default {
             // 红黄牌，就是一个球员当收到第二张黄牌的时候变成红牌，其实就是红牌
             yellow_red_card: i18n.t('icon_tips.red_card') // 黄红牌
         }
-        this.historyPlayTimer = null // 历史数据轮询定时器
+        historyPlayTimer = null // 历史数据轮询定时器
         return {
             baseTime: 90 * 60, // 进度条标准时间
             pecent: 0,
@@ -76,56 +77,56 @@ export default {
         matchTime(n) {
             console.log('matchTime', n)
             if (n) {
-                this.start();
+                start();
             }
             // 加时
             if (n > 90 * 60) {
-                this.baseTime = 120 * 60
+                baseTime = 120 * 60
                 // 重新获取数据格式化
-                this.getVideoPlayHistory()
+                getVideoPlayHistory()
             }
         },
         // 赛事ID改变
         mid() {
             //定时计算
-            this.start();
+            start();
             // 获取精彩回放信息
-            this.getVideoPlayHistory()
+            getVideoPlayHistory()
         },
         timer_tmp() {
-            this.calcProgressLine(this.matchTime)
+            calcProgressLine(matchTime)
         },
         mmp(n) {
             console.log('mmp', n)
             // "31": "中场休息",
             if (n == 31) {
-                this.calcProgressLine(45 * 60)
+                calcProgressLine(45 * 60)
             }
         }
     },
     created() {
         // 设置时间进度百分比
-        if (this.matchTime) {   
+        if (matchTime) {
             // 加时
-            if (this.matchTime > 90 * 60) {
-                this.baseTime = 120 * 60
+            if (matchTime > 90 * 60) {
+                baseTime = 120 * 60
             }
-            this.start();
-            this.calcProgressLine(this.matchTime)
+            start();
+            calcProgressLine(matchTime)
         }
         // 获取精彩回放信息
-        this.getVideoPlayHistory()
-        this.historyPlayTimer && clearInterval(this.historyPlayTimer)
-        this.historyPlayTimer = setInterval(() => this.getVideoPlayHistory(), 60 * 1000)
+        getVideoPlayHistory()
+        historyPlayTimer && clearInterval(historyPlayTimer)
+        historyPlayTimer = setInterval(() => getVideoPlayHistory(), 60 * 1000)
     },
     mounted() {
     },
     beforeDestroy() {
         // 关闭弹窗iframe
-        this.closePopIframe()
-        this.historyPlayTimer && clearInterval(this.historyPlayTimer)
-        this.$root.$off(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
-        this.clear();
+        closePopIframe()
+        historyPlayTimer && clearInterval(historyPlayTimer)
+        useMittOnf(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time).off;
+        clear();
     },
     methods: {
         // 关闭弹窗iframe
@@ -133,24 +134,24 @@ export default {
             useMittEmit('VIDEO_ZONE_EVENT_CMD', {
                 cmd: 'colse',
                 val: {
-                    mid: this.mid
+                    mid: mid
                 }
             });
         },
         // 启动计时器
         start() {
-            this.timer_tmp = this.matchTime
-            if (this.timer) {
-                this.clear()
+            timer_tmp = matchTime
+            if (timer) {
+                clear()
             }
-            this.timer = setInterval(() => {
-                this.timer_tmp += 1 
+            timer = setInterval(() => {
+                timer_tmp += 1
             }, 1000)
         },
         //销毁计时器
         clear() {
-            this.timer && clearInterval(this.timer)
-            this.timer = false;
+            timer && clearInterval(timer)
+            timer = false;
         },
         // 播放回放视频
         showVideoHistory(item) {
@@ -168,7 +169,7 @@ export default {
             // });
             // TODO hanmar后续处理--E
             let ret_obj = {};
-            let rect = this.$refs['video_history_line'].getBoundingClientRect();
+            let rect = $refs['video_history_line'].getBoundingClientRect();
             if(rect){
                 ret_obj = {x:rect.x,y:rect.y,w:rect.width,h:rect.height}
             }
@@ -178,16 +179,16 @@ export default {
                 url: item.fragmentVideo,
                 rect:ret_obj,
                 video_info: item,
-                match:this.match_info,
+                match:match_info,
             });
         },
         // 获取精彩回放信息
         getVideoPlayHistory() {
-            if (!this.mid) {
+            if (!mid) {
                 return false
             }
             const params = {
-                mid: this.mid,
+                mid: mid,
                 device: 'PC',
                 eventCode: 0, // 0全部 1进球 2角球 3罚牌
             }
@@ -206,9 +207,9 @@ export default {
                 //         "t2": 1　//客队比分
                 //     }
                 // ]
-                if (data && data.code === 200 && data.data) {   
+                if (data && data.code === 200 && data.data) {
                     // 格式化历史事件数据
-                    this.formatHistoryMatchEventData(data.data.eventList)
+                    formatHistoryMatchEventData(data.data.eventList)
                 }
             }).catch(err => console.error(err))
         },
@@ -237,25 +238,25 @@ export default {
             const _eventsHistory = [] // 零时事件数据
             let maxEventTime = 0 // 离当前直播时间最近的一个事件的时间
             data.map(v => {
-                const desc = `${v.homeAway} ${this.eventNameMap[v.eventCode]}${v.firstNum} ${this.format_second_ms(v.secondsFromStart)}`
+                const desc = `${v.homeAway} ${eventNameMap[v.eventCode]}${v.firstNum} ${format_second_ms(v.secondsFromStart)}`
                 _eventsHistory.push({
                     eventCode: v.eventCode,
                     eventId: v.eventId,
                     fragmentId: v.fragmentId,
                     fragmentVideo: v.fragmentVideo,
-                    pecent: parseInt(v.secondsFromStart * 100 / this.baseTime),
+                    pecent: parseInt(v.secondsFromStart * 100 / baseTime),
                     desc
                 })
                 if (v.secondsFromStart > maxEventTime) {
                     maxEventTime = v.secondsFromStart
                 }
             })
-            this.calcIconPosition(_eventsHistory)
+            calcIconPosition(_eventsHistory)
         },
         // 计算icon偏移位置
         calcIconPosition(items) {
-            if (items.length < 2 || !this.pecent) {
-                this.matchEvents = items
+            if (items.length < 2 || !pecent) {
+                matchEvents = items
                 return false
             }
             let _tempItems = [...items]
@@ -267,7 +268,7 @@ export default {
                 }
             }
             // 当最后一个大于当前百分比时，整体向前偏移差量
-            const diffX = _tempItems[_tempItems.length - 1].pecent - (this.pecent ? this.pecent: 100)
+            const diffX = _tempItems[_tempItems.length - 1].pecent - (pecent ? pecent: 100)
             if (diffX > 0) {
                 _tempItems = _tempItems.map(v => {
                     let _newPecent = v.pecent - diffX
@@ -280,15 +281,15 @@ export default {
                     }
                 })
             }
-            this.matchEvents = _tempItems
+            matchEvents = _tempItems
         },
         // 计算进度条bg的范围
         calcProgressLine(value) {
-            let pecent = parseInt(value * 100 / this.baseTime)
+            let pecent = parseInt(value * 100 / baseTime)
             pecent = pecent > 100 ? 100 : pecent
-            this.pecent = pecent
-            if (this.pecent) {
-                this.calcIconPosition(this.matchEvents)
+            pecent = pecent
+            if (pecent) {
+                calcIconPosition(matchEvents)
             }
         }
     }

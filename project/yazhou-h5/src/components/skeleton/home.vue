@@ -26,6 +26,7 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 const status = ref({
   carousel: false,
@@ -45,7 +46,7 @@ const api_load = (data) => {
   }
 }
 onUnmounted(() => {
-  $root.$off(this.MITT_TYPES.EMIT_API_LOAD, api_load());
+  useMittOn(MITT_TYPES.EMIT_API_LOAD, api_load()).off;
 })
 
 </script>

@@ -15,14 +15,14 @@
 </template>
 
 <script>
-// #TODO VUEX 
+// #TODO VUEX
 // import { mapGetters } from "vuex";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "football_events",
-  
+
   setup(props, evnet) {
     const store_state = store.getState()
     const data = reactive({
@@ -39,14 +39,14 @@ export default defineComponent({
       // 延时器
       timer = null;
 
-      // 原 mounted 
-      // #TODO $root 
+      // 原 mounted
+      // #TODO $root
       emitters = [
         useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, info_icon_click_h).off,
       ]
       // useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
     },);
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(['get_detail_data', 'get_is_hengping', 'get_is_full_screen']),
     const get_detail_data = computed(() => {
@@ -78,9 +78,9 @@ export default defineComponent({
       }, 6000);
     };
     onUnmounted(() => {
-      // #TODO $root 
+      // #TODO $root
       emitters.map((x) => x())
-      // $root.$off(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle);
+      useMittOn(MITT_TYPES.EMIT_FOOTBALL_EVENTS, football_events_handle).off;
       clearTimeout(timer)
       timer = null
     })

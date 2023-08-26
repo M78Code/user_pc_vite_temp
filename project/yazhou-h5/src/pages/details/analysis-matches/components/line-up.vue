@@ -292,7 +292,7 @@ import { t } from "src/boot/i18n";;
   }
   onUnmounted(() => {
      //   // 移除监听 赛事分析刷新事件 TODO: 后续修改调整
-  //   $root.$off(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
   //   for (const key in $data) {
   //     $data[key] = null

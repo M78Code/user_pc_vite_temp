@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 -->
 <template>
@@ -172,71 +172,72 @@ import { api_home } from "src/project/api/index";
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
-import skt_home_bw3 from "src/public/mixins/websocket/data/skt_home_bw3.js"; 
-// 公告栏跑马灯  
-import marquee from 'src/public/components/marquee/marquee.vue'  
-// 无网络展示组件 
-import no_data from "src/project/components/common/no_data.vue";  
-// 赛事进行中每秒变化的计时器 
-import counting_down from 'src/project/components/common/counting-down.vue';   
+import skt_home_bw3 from "src/public/mixins/websocket/data/skt_home_bw3.js";
+// 公告栏跑马灯
+import marquee from 'src/public/components/marquee/marquee.vue'
+// 无网络展示组件
+import no_data from "src/project/components/common/no_data.vue";
+// 赛事进行中每秒变化的计时器
+import counting_down from 'src/project/components/common/counting-down.vue';
 // 一小时以内的开赛计时器（累加计时|倒计时）
-import counting_down_start from 'src/project/components/common/counting_down_start.vue';  
-// 列表数据和对象结合操作类-实现快速检索,修改等功能 
-import ListMap from "src/public/utils/list_map";    
+import counting_down_start from 'src/project/components/common/counting_down_start.vue';
+// 列表数据和对象结合操作类-实现快速检索,修改等功能
+import ListMap from "src/public/utils/list_map";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";   
+import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
 import utils from "src/core/utils/utils.js";
 import base_data from "src/public/utils/base_data.js";
 //  一二级菜单 本地化假数据
-import { common_menu_list, secondary_menu } from "src/public/config/common_menu.js" 
+import { common_menu_list, secondary_menu } from "src/public/config/common_menu.js"
 //  api1.5 菜单 本地化假数据
-import menu_data  from "src/public/config/menu_new_data.js" 
+import menu_data  from "src/public/config/menu_new_data.js"
 import { uid } from "quasar"
 import { db } from "src/public/utils/db/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
-  const slide = ref(0) 
+  const slide = ref(0)
   //轮播图数据，init是数据加载中的标识
-  const carousel_data = ref({ list: [], obj: {} }) 
+  const carousel_data = ref({ list: [], obj: {} })
   //余额
-  const balance_obj = ref({}) 
+  const balance_obj = ref({})
    // 代表接口加载结束
-  const loading_done =ref(false) 
+  const loading_done =ref(false)
   //左侧菜单选中项
-  const menu_index = ref(0) 
+  const menu_index = ref(0)
   //左侧菜单
-  const menu = ref(common_menu_list()) 
+  const menu = ref(common_menu_list())
   //右边内容
-  const match_list = ref(secondary_menu()) 
+  const match_list = ref(secondary_menu())
   //右侧无数据
-  const noData = ref(false) 
-  const no_data_txt = ref("moMatch") 
+  const noData = ref(false)
+  const no_data_txt = ref("moMatch")
   //菜单无数据
-  const noMenu = ref(false) 
-  const no_menu_txt = ref("moMatch") 
+  const noMenu = ref(false)
+  const no_menu_txt = ref("moMatch")
   //点击动画
-  const animation = ref(false) 
+  const animation = ref(false)
   //滚动中的位置
-  const clientY = ref(0) 
+  const clientY = ref(0)
   //开始滚动的位置
-  const start_move_clientY = ref(0) 
+  const start_move_clientY = ref(0)
   const thumbStyle = ref({
     background: "transparent"
-  }) 
+  })
   //轮播背景图片,
-  const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '') 
+  const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
   //右边内容默认高度
-  const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75)) 
+  const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
   const utils = ref('')
   // 定时器
-  const home_timer1_ = ref(null) 
+  const home_timer1_ = ref(null)
   // 默认banner初始不显示
-  const defaultBannerShow = ref(false) 
+  const defaultBannerShow = ref(false)
   // 定时器变量
-  const timer_1 = ref(null) 
+  const timer_1 = ref(null)
   // 展示banner loading
-  const show_banner_loading = ref(true) 
+  const show_banner_loading = ref(true)
   const new_menu = ref([])
     // 展示banner loading
     show_banner_loading = true
@@ -256,7 +257,7 @@ import { db } from "src/public/utils/db/index.js";
 
     get_list();
     get_lang_v3()
-  
+
   watch(() => user_info.balance, () => {
     handler= 'format_balance'
   })
@@ -545,7 +546,7 @@ import { db } from "src/public/utils/db/index.js";
   const menu_data_config = (data) => {
     new_menu = data
     chang_index(data)
-    
+
     // 处理无数据的情况
     if (!new_menu.length) {
       noMenu = true
@@ -971,7 +972,7 @@ import { db } from "src/public/utils/db/index.js";
     //   get_hot_list_item: 'get_hot_list_item',
     //   get_current_first_menu: 'get_current_first_menu' //用于获取选中的
     // }),
-    
+
     const banner_loading_url = computed(() => {
       if (get_theme.includes('y0')) {
         return "image/wwwassets/bw3/home/banner_loading_y0.gif"
@@ -987,9 +988,9 @@ import { db } from "src/public/utils/db/index.js";
       }
     })
   onUnmounted(() => {
-    $root.$off(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
-    $root.$off(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
-    $root.$off(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
+    useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu).off;
+    useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off;
+    useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data).off
 
     if (home_timer1_) {
       clearTimeout(home_timer1_)
@@ -1000,9 +1001,9 @@ import { db } from "src/public/utils/db/index.js";
       carousel_data.destroy && carousel_data.destroy()
     }
     //左侧菜单
-    menu = [] 
+    menu = []
     //右边内容
-    match_list = [] 
+    match_list = []
     clearTimeout(timer_1)
     timer_1 = null
 
@@ -1010,7 +1011,7 @@ import { db } from "src/public/utils/db/index.js";
     //   $data[key] = null
     // }
   })
-  
+
 </script>
 
 <style lang="scss" scoped>

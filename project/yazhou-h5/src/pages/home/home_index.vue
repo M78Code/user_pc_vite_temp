@@ -35,6 +35,7 @@ import { loadLanguageAsync } from "boot/i18n";
 import router_mixins from "src/project/mixins/router_mixins.js";
 import utils from "src/core/utils/utils.js";
 import { onUnmounted, watch } from "vue";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
   // mixins: [router_mixins],
 
@@ -101,9 +102,9 @@ import { onUnmounted, watch } from "vue";
   //   //   get_global_click_count: 'get_global_click_count', // 全局点击次数
   //   //   get_access_config: 'get_access_config', // 全局点击次数
   //   // }),
-    
+
   // },
-  
+
   watch(() => tabIndex, (n) => {
     // 首页、视频直播以及热门下精选不显示背景
       if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
@@ -327,7 +328,7 @@ import { onUnmounted, watch } from "vue";
       for (const key in $data) {
         $data[key] = null
       }
-      $root.$off(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off
     })
 </script>
 
