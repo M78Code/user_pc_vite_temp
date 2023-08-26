@@ -6,13 +6,20 @@ import lodash from "lodash";
  */
 export const set_default_tpl = (num,  ol_count = 3) => {
   let tpl_arr = [];
-  for (let index = 0; index < num; index++) {
-    let ols = [];
-    for (let i = 0; i < ol_count; i++) {
-      ols.push({ empty:1});
+  if(num){
+    for (let index = 0; index < num; index++) {
+      let ols = [];
+      for (let i = 0; i < ol_count; i++) {
+        ols.push({ empty:1});
+      }
+      tpl_arr.push({ ols });
     }
-    tpl_arr.push({ ols });
+  }else{
+    for (let i = 0; i < ol_count; i++) {
+      tpl_arr.push({ empty:1});
+    }
   }
+
   return tpl_arr;
 };
 /**

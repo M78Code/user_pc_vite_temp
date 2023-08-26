@@ -30,11 +30,7 @@ const tpl_21_full = [
         {  _hpid: 7, ot: '2:2' },
         {  _hpid: 7, ot: '3:3' },
         {  _hpid: 7, ot: '4:4' },
-        { empty:1}
-        { empty:1}
-        { empty:1}
-        { empty:1}
-        { empty:1}
+        ...TemplateCommon.set_default_tpl(0,5),
         { ...ol_template , other_class: 'visibility'},
       ],
     },
