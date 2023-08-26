@@ -28,7 +28,7 @@ import itemFooter from "src/project/components/common/cathectic_item/item_footer
 import itemOrder from "src/project/components/common/cathectic_item/item_order.vue"
 import earlySettle from "src/project/components/common/cathectic_item/early_settle.vue"
 import lodash from 'lodash'
-
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
    // 是否显示注单记录
   let show_bet_record = ref(true)
   // 该注单是否存在提前结算
@@ -91,7 +91,7 @@ import lodash from 'lodash'
     is_show_early_settle = item_data.is_show_early_settle
 
     // 监听 重载注单页面
-    $root.$on(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    useMittEmit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).on
   })
   
     // 重载注单页面
@@ -102,7 +102,7 @@ import lodash from 'lodash'
       })
     }
   onUnmounted(() => {
-    $root.$off(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+    useMittEmit(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).off
   })
  
 </script>
