@@ -9,6 +9,7 @@ class EnterParamsYazhouH5 {
     // 是否已经加载过
     this.init_load = false;
     this.app_init_loading_timer = null;
+    this.get_activity_msg = null
   }
   set_enter_url(url) {
     this.url = url;
@@ -60,6 +61,28 @@ class EnterParamsYazhouH5 {
     });
     return obj;
   }
+  // 获取地址栏哈希后面的指定值
+  get_url_param(paraName) {
+    try {
+      let url = window.location.hash.toString();
+      let arrObj = url.split("?");
+      if (arrObj.length > 1) {
+        let arrPara = arrObj[1].split("&");
+        let arr;
+        for (let i = 0, len = arrPara.length; i < len; i++) {
+          arr = arrPara[i].split("=");
+          if (arr != null && arr[0] == paraName) {
+            return arr[1];
+          }
+        }
+        return "";
+      } else {
+        return "";
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   // 删除指定参数
   delete_params() {
     let url = window.location.href;
@@ -68,7 +91,35 @@ class EnterParamsYazhouH5 {
     // 设置最新url地址
     history.replaceState(null, null, url);
   }
-  
+  /**
+   * @description: 移除url地址中指定参数数据
+   * @param {string} url url地址
+   * @param {string} key 移除的参数名称
+   * @return {string} 返回最新的url
+   */
+  remove_url_param(url, key) {
+    let res = url;
+    if (res && key) {
+      let re = new RegExp(`${key}=([a-zA-Z0-9]*)`);
+      // rdm参数处理
+      let param = res.match(re);
+      if (param && param.length > 1) {
+        res = res.replace(param[0], "");
+      }
+      res = res
+        .replace("?#", "#")
+        .replace("?&", "?")
+        .replace("&#", "#")
+        .replace(/[\?&]$/, "");
+
+      // 检测是否还有该参数
+      let re2 = new RegExp(`[?&]{1}(${key}=\w*&?)`);
+      if (re2.test(res)) {
+        res = this.remove_url_param(res, key);
+      }
+    }
+    return res;
+  }
   //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
   to_corresponding_route() {
     // 是否跳转/home页面
@@ -205,6 +256,52 @@ class EnterParamsYazhouH5 {
       if (item.activityId == "10009") item.lucky_blind_box_index = i;
     });
     return tab_list;
+  }
+  //路由解析检测
+  go_activity_confirm() {
+    let _url = lodash.get(this.get_activity_msg, "hostUrl");
+    let _type = lodash.get(this.get_activity_msg, "urlType");
+    this.set_activity_msg({});
+    if (!_url) return;
+    if (_url.startsWith("http") && _type === "2") {
+      window.open(_url, "_blank");
+    } else if (_type === "1") {
+      if (/#*\/*details/.test(_url) && this.$route.name != "category") {
+        const {
+          groups: { mid, csid },
+        } = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(_url) || {
+          groups: {},
+        };
+        if (mid && csid) {
+          if ([100, 101, 102, 103].includes(+csid)) {
+            // 如果是电竞赛事，需要设置菜单类型
+            this.set_menu_type(3000);
+          }
+          this.set_goto_detail_matchid(mid);
+          this.set_details_item(0);
+          this.$router.push({ name: "category", params: { mid, csid } });
+        }
+      } else if (_url == "act" && this.get_user.activityList) {
+        this.$router.push({
+          name: "activity_task",
+          query: { rdm: new Date().getTime() },
+        });
+      } else if (_url.startsWith("hot") && !this.get_golistpage) {
+        // 跳热门联赛
+        let tid = _url.split("/")[1];
+        let is_existtid =
+          this.get_hot_list_item &&
+          this.get_hot_list_item.subList &&
+          this.get_hot_list_item.subList.find((item) => {
+            return item.field2 == tid;
+          });
+        if (tid && is_existtid) {
+          this.set_home_tab_item({ component: "hot", index: 1, name: "热门" });
+          this.set_hot_tab_item({ field2: tid });
+          this.$router.push({ name: "home" });
+        }
+      }
+    }
   }
   //解析参数
   analyze() {
