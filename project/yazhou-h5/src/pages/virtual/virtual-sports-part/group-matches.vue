@@ -42,7 +42,7 @@ import { api_v_sports } from "project_path/api";
 import no_data from "project_path/components/common/no_data";
 
 // #TODO VUEX 
-import {mapGetters} from "vuex";
+// import {mapGetters} from "vuex";
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -63,7 +63,7 @@ export default defineComponent({
   },
   
   setup(props, evnet) {
-    const data = reactive({
+    const component_data = reactive({
       group_stage_list: [],
       no_data: false
     });
@@ -71,6 +71,9 @@ export default defineComponent({
     // computed: {
     //   ...mapGetters(['get_lang']),
     // },
+    const get_lang = computed(() => {
+      return ""
+    })
     watch(
       () => props.tid,
       () => {
@@ -99,8 +102,9 @@ export default defineComponent({
       // }
     })
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
       get_list,
+      get_lang,
     }
   }
 })

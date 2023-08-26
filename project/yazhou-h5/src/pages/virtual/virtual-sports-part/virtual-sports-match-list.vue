@@ -25,6 +25,7 @@ import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virt
 import virtual_sports_match_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import SVirtual from "project_path/components/skeleton/virtual_sports/virtual"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -47,7 +48,7 @@ export default defineComponent({
   
   
   setup(props, evnet) {
-    const  data = reactive({
+    const component_data = reactive({
       selected_match_i:0,
       v_match_hps:[],
       standard_odd_status:0,
@@ -65,7 +66,13 @@ export default defineComponent({
     //     get_newer_standard_edition:"get_newer_standard_edition",//新手版1    标准版  2
     //   }),
     // },
-
+    const set_details_item = () => {}
+    const footer_sub_menu_id = computed(() => {
+      return ""
+    })
+    const get_newer_standard_edition = computed(() => {
+      return PageSourceData.get_newer_standard_edition()
+    })
     onMounted(() => {
       // #TODO emit
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,odd_pan_handle);
@@ -80,7 +87,7 @@ export default defineComponent({
      * @return {Undefined}
      */
     const switch_match_handle = (i) => {
-      selected_match_i = i;
+      component_data.selected_match_i = i;
       // #TODO emit
       // $emit('switch_match',i);
     };
@@ -88,29 +95,32 @@ export default defineComponent({
      * 赔率滑动状态
      */
     const odd_pan_handle = (status) => {
-      standard_odd_status = status;
+      component_data.standard_odd_status = status;
     };
     watch(
       () => props.v_menu_changed,
       () => {
-        standard_odd_status = 0;
+        component_data.standard_odd_status = 0;
       }
     );
     watch(
       () => props.virtual_match_list,
       () => {
         if(!virtual_match_list || !virtual_match_list.length) return;
-        v_match_hps = virtual_match_list[0].hps
-        switch_match_handle(selected_match_i);
+        component_data.v_match_hps = virtual_match_list[0].hps
+        switch_match_handle(component_data.selected_match_i);
 
         // #TODO emit 
         // $emit('switch_match',selected_match_i);
       }
     );
     return {
-      ...toRefs(data),
+      ...toRefs(component_data),
+      footer_sub_menu_id,
+      get_newer_standard_edition,
       switch_match_handle,
       odd_pan_handle,
+      set_details_item,
     }
   }
 })
