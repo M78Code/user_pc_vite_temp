@@ -3,59 +3,59 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+l
 
 // 9号模板 网球-让球与大小
 export const template_3 = {
   main_handicap_list: [
     {
       ols: [
-        { ...ol_template, _hpid: 153, ot: '1', class: 'no-handicap' },
-        { ...ol_template, _hpid: 153, ot: '2', class: 'no-handicap' },
+        {  _hpid: 153, ot: '1', class: 'no-handicap' },
+        {  _hpid: 153, ot: '2', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 154, ot: '1' },
-        { ...ol_template, _hpid: 154, ot: '2' },
+        {  _hpid: 154, ot: '1' },
+        {  _hpid: 154, ot: '2' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 155, ot: '1' },
-        { ...ol_template, _hpid: 155, ot: '2' },
+        {  _hpid: 155, ot: '1' },
+        {  _hpid: 155, ot: '2' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 202, ot: 'Over' },
-        { ...ol_template, _hpid: 202, ot: 'Under' },
+        {  _hpid: 202, ot: 'Over' },
+        {  _hpid: 202, ot: 'Under' },
       ],
     },
   ],
   cur_handicap_list: [
     {
       ols: [
-        { ...ol_template, _hpid: 162, ot: '1', class: 'no-handicap' },
-        { ...ol_template, _hpid: 162, ot: '2', class: 'no-handicap' },
+        {  _hpid: 162, ot: '1', class: 'no-handicap' },
+        {  _hpid: 162, ot: '2', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template },
-        { ...ol_template },
+        { empty:1},
+        { empty:1}
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 163, ot: '1' },
-        { ...ol_template, _hpid: 163, ot: '2' },
+        {  _hpid: 163, ot: '1' },
+        {  _hpid: 163, ot: '2' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 164, ot: 'Over' },
-        { ...ol_template, _hpid: 164, ot: 'Under' },
+        {  _hpid: 164, ot: 'Over' },
+        {  _hpid: 164, ot: 'Under' },
       ],
     },
   ],

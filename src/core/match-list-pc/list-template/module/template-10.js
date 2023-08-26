@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -13,17 +13,17 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list_5_3: [
       {
         ols: [
-          { ...ol_template, _hpid: 159, ot: '2', class: 'no-handicap' },
+          {  _hpid: 159, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 159, ot: '3', class: 'no-handicap' },
+          {  _hpid: 159, ot: '3', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template },
+          { empty:1}
         ],
       },
     ],
@@ -31,17 +31,17 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list_5_5: [
       {
         ols: [
-          { ...ol_template, _hpid: 159, ot: '3', class: 'no-handicap' },
+          {  _hpid: 159, ot: '3', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 159, ot: '4', class: 'no-handicap' },
+          {  _hpid: 159, ot: '4', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 159, ot: '5', class: 'no-handicap' },
+          {  _hpid: 159, ot: '5', class: 'no-handicap' },
         ],
       },
     ],
@@ -49,17 +49,17 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list_10_3: [
       {
         ols: [
-          { ...ol_template, _hpid: 174, ot: '2', class: 'no-handicap' },
+          {  _hpid: 174, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 174, ot: '3', class: 'no-handicap' },
+          {  _hpid: 174, ot: '3', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template },
+          { empty:1}
         ],
       },
     ],
@@ -67,17 +67,17 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list_10_5: [
       {
         ols: [
-          { ...ol_template, _hpid: 174, ot: '3', class: 'no-handicap' },
+          {  _hpid: 174, ot: '3', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 174, ot: '4', class: 'no-handicap' },
+          {  _hpid: 174, ot: '4', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 174, ot: '5', class: 'no-handicap' },
+          {  _hpid: 174, ot: '5', class: 'no-handicap' },
         ],
       },
     ],

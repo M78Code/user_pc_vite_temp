@@ -2,7 +2,7 @@
  * 18号模板  冠军玩法
  */
 import * as TemplateCommon from "./template-common.js"
-let ol_template = TemplateCommon.ol_template
+
   // 18号模板  冠军玩法
   export const template_18 = {
   } 

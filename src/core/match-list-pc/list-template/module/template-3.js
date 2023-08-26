@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -13,44 +13,44 @@ export const template_3 = {
   main_handicap_list: [
     {
       ols: [
-        { ...ol_template, _hpid: 15, ot: 'Odd', class: 'no-handicap' },
+        {  _hpid: 15, ot: 'Odd', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 15, ot: 'Even', class: 'no-handicap' },
+        {  _hpid: 15, ot: 'Even', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 42, ot: 'Odd', class: 'no-handicap' },
+        {  _hpid: 42, ot: 'Odd', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 42, ot: 'Even', class: 'no-handicap' },
+        {  _hpid: 42, ot: 'Even', class: 'no-handicap' },
       ],
     },
   ],
   main_handicap_list_6: [
     {
       ols: [
-        { ...ol_template, _hpid: 40, ot: 'Odd', class: 'no-handicap' },
+        {  _hpid: 40, ot: 'Odd', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 40, ot: 'Even', class: 'no-handicap' },
+        {  _hpid: 40, ot: 'Even', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 42, ot: 'Odd', class: 'no-handicap' },
+        {  _hpid: 42, ot: 'Odd', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 42, ot: 'Even', class: 'no-handicap' },
+        {  _hpid: 42, ot: 'Even', class: 'no-handicap' },
       ],
     },
   ],

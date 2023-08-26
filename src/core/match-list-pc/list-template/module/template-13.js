@@ -4,7 +4,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 import { template_0 } from './template-0.js'
-let ol_template = TemplateCommon.ol_template
+
 let hps_15_minute = TemplateCommon.hps_15_minute
 import lodash from  "lodash"
 
@@ -13,51 +13,51 @@ import lodash from  "lodash"
 export const template_left =  [
   {
     ols: [
-      { ...ol_template, _hpid: 28, ot: '1' },
-      { ...ol_template, _hpid: 28, ot: '2' },
-      { ...ol_template, _hpid: 28, ot: 'None' },
+      {  _hpid: 28, ot: '1' },
+      {  _hpid: 28, ot: '2' },
+      {  _hpid: 28, ot: 'None' },
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 10, ot: 'Over' },
-      { ...ol_template, _hpid: 10, ot: 'Under' },
-      { ...ol_template },
+      {  _hpid: 10, ot: 'Over' },
+      {  _hpid: 10, ot: 'Under' },
+      { empty:1}
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 11, ot: 'Over' },
-      { ...ol_template, _hpid: 11, ot: 'Under' },
-      { ...ol_template },
+      {  _hpid: 11, ot: 'Over' },
+      {  _hpid: 11, ot: 'Under' },
+      { empty:1}
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 12, ot: 'Yes' },
-      { ...ol_template, _hpid: 12, ot: 'No' },
-      { ...ol_template },
+      {  _hpid: 12, ot: 'Yes' },
+      {  _hpid: 12, ot: 'No' },
+      { empty:1}
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 27, ot: '1' },
-      { ...ol_template, _hpid: 27, ot: '2' },
-      { ...ol_template, _hpid: 27, ot: 'X' },
+      {  _hpid: 27, ot: '1' },
+      {  _hpid: 27, ot: '2' },
+      {  _hpid: 27, ot: 'X' },
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 15, ot: 'Odd' },
-      { ...ol_template, _hpid: 15, ot: 'Even' },
-      { ...ol_template },
+      {  _hpid: 15, ot: 'Odd' },
+      {  _hpid: 15, ot: 'Even' },
+      { empty:1}
     ]
   },
   {
     ols: [
-      { ...ol_template, _hpid: 5, ot: '1', },
-      { ...ol_template, _hpid: 5, ot: '2', },
-      { ...ol_template },
+      {  _hpid: 5, ot: '1', },
+      {  _hpid: 5, ot: '2', },
+      { empty:1}
     ]
   },
 ]
@@ -71,94 +71,94 @@ export const template_right = {
   hpsCorner: [
     {
       ols: [
-        { ...ol_template, _hpid: 225, ot: '1' },
-        { ...ol_template, _hpid: 225, ot: '2' },
-        { ...ol_template, _hpid: 225, ot: 'None' },
+        {  _hpid: 225, ot: '1' },
+        {  _hpid: 225, ot: '2' },
+        {  _hpid: 225, ot: 'None' },
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 115, ot: 'Over' },
-        { ...ol_template, _hpid: 115, ot: 'Under' },
-        { ...ol_template },
+        {  _hpid: 115, ot: 'Over' },
+        {  _hpid: 115, ot: 'Under' },
+        { empty:1}
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 116, ot: 'Over' },
-        { ...ol_template, _hpid: 116, ot: 'Under' },
-        { ...ol_template },
+        {  _hpid: 116, ot: 'Over' },
+        {  _hpid: 116, ot: 'Under' },
+        { empty:1}
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 118, ot: 'Odd' },
-        { ...ol_template, _hpid: 118, ot: 'Even' },
-        { ...ol_template },
+        {  _hpid: 118, ot: 'Odd' },
+        {  _hpid: 118, ot: 'Even' },
+        { empty:1}
       ]
     },
-    ...TemplateCommon.set_default_tpl(3, ol_template)
+    ...TemplateCommon.set_default_tpl(3)
   ],
   //罚牌投注项模板
   hpsPunish: [
     {
       ols: [
-        { ...ol_template, _hpid: 224, ot: '1' },
-        { ...ol_template, _hpid: 224, ot: '2' },
-        { ...ol_template, _hpid: 224, ot: 'None' },
+        {  _hpid: 224, ot: '1' },
+        {  _hpid: 224, ot: '2' },
+        {  _hpid: 224, ot: 'None' },
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 314, ot: 'Over' },
-        { ...ol_template, _hpid: 314, ot: 'Under' },
-        { ...ol_template },
+        {  _hpid: 314, ot: 'Over' },
+        {  _hpid: 314, ot: 'Under' },
+        { empty:1}
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 315, ot: 'Over' },
-        { ...ol_template, _hpid: 315, ot: 'Under' },
-        { ...ol_template },
+        {  _hpid: 315, ot: 'Over' },
+        {  _hpid: 315, ot: 'Under' },
+        { empty:1}
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 312, ot: 'Odd' },
-        { ...ol_template, _hpid: 312, ot: 'Even' },
-        { ...ol_template },
+        {  _hpid: 312, ot: 'Odd' },
+        {  _hpid: 312, ot: 'Even' },
+        { empty:1}
       ]
     },
-    ...TemplateCommon.set_default_tpl(3, ol_template)
+    ...TemplateCommon.set_default_tpl(3)
   ],
   // 晋级投注项模板
-  hpsPromotion: TemplateCommon.set_default_tpl(7, ol_template),
+  hpsPromotion: TemplateCommon.set_default_tpl(7),
   // 冠军投注项模板
-  hpsOutright: TemplateCommon.set_default_tpl(7, ol_template),
+  hpsOutright: TemplateCommon.set_default_tpl(7),
   // 加时赛投注项模板
   hpsOvertime: [
     {
       ols: [
-        { ...ol_template, _hpid: 235, ot: '1' },
-        { ...ol_template, _hpid: 235, ot: '2' },
-        { ...ol_template, _hpid: 235, ot: 'None' },
+        {  _hpid: 235, ot: '1' },
+        {  _hpid: 235, ot: '2' },
+        {  _hpid: 235, ot: 'None' },
       ]
     },
     {
       ols: [
-        { ...ol_template, _hpid: 330, ot: 'Odd' },
-        { ...ol_template, _hpid: 330, ot: 'Even' },
-        { ...ol_template },
+        {  _hpid: 330, ot: 'Odd' },
+        {  _hpid: 330, ot: 'Even' },
+        { empty:1}
       ]
     },
-    ...TemplateCommon.set_default_tpl(5, ol_template)
+    ...TemplateCommon.set_default_tpl(5)
   ],
   // 点球大战
-  hpsPenalty: TemplateCommon.set_default_tpl(7, ol_template),
+  hpsPenalty: TemplateCommon.set_default_tpl(7),
    // 5分钟玩法 早盘
-  hps5Minutes_361: TemplateCommon.set_default_tpl(7, ol_template,6),
+  hps5Minutes_361: TemplateCommon.set_default_tpl(7,6),
    // 5分钟玩法 滚球
-  hps5Minutes_362: TemplateCommon.set_default_tpl(7, ol_template,6),
+  hps5Minutes_362: TemplateCommon.set_default_tpl(7,6),
 }
 
 /**
@@ -194,7 +194,7 @@ const set_tpl_13_config = (template_left, template_right) => {
       ...TemplateCommon.clone_arr(hps_15_minute),
       ...TemplateCommon.clone_arr(hps_15_minute),
       ...TemplateCommon.clone_arr(hps_15_minute),
-      ...TemplateCommon.set_default_tpl(1, ol_template)
+      ...TemplateCommon.set_default_tpl(1)
     ],
   } 
 

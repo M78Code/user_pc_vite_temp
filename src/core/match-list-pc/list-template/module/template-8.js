@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -13,13 +13,13 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 200, ot: '1And6+', class: 'no-handicap' },
-          { ...ol_template, _hpid: 200, ot: '2And6+', class: 'no-handicap' },
+          {  _hpid: 200, ot: '1And6+', class: 'no-handicap' },
+          {  _hpid: 200, ot: '2And6+', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 200, ot: 'Other', class: 'no-handicap' },
+          {  _hpid: 200, ot: 'Other', class: 'no-handicap' },
         ],
       },
     ],

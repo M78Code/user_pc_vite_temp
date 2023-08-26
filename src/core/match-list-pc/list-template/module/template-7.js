@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
  
@@ -12,98 +12,98 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 37, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 37, ot: '2', class: 'no-handicap' },
+          {  _hpid: 37, ot: '1', class: 'no-handicap' },
+          {  _hpid: 37, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 39, ot: '1' },
-          { ...ol_template, _hpid: 39, ot: '2' },
+          {  _hpid: 39, ot: '1' },
+          {  _hpid: 39, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 38, ot: 'Over' },
-          { ...ol_template, _hpid: 38, ot: 'Under' },
+          {  _hpid: 38, ot: 'Over' },
+          {  _hpid: 38, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 198, ot: 'Over' },
-          { ...ol_template, _hpid: 199, ot: 'Over' },
+          {  _hpid: 198, ot: 'Over' },
+          {  _hpid: 199, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 198, ot: 'Under' },
-          { ...ol_template, _hpid: 199, ot: 'Under' },
+          {  _hpid: 198, ot: 'Under' },
+          {  _hpid: 199, ot: 'Under' },
         ],
       },
     ],
     add_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 37, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 37, ot: '2', class: 'no-handicap' },
+          {  _hpid: 37, ot: '1', class: 'no-handicap' },
+          {  _hpid: 37, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 39, ot: '1' },
-          { ...ol_template, _hpid: 39, ot: '2' },
+          {  _hpid: 39, ot: '1' },
+          {  _hpid: 39, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 38, ot: 'Over' },
-          { ...ol_template, _hpid: 38, ot: 'Under' },
+          {  _hpid: 38, ot: 'Over' },
+          {  _hpid: 38, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 198, ot: 'Over' },
-          { ...ol_template, _hpid: 199, ot: 'Over' },
+          {  _hpid: 198, ot: 'Over' },
+          {  _hpid: 199, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 198, ot: 'Under' },
-          { ...ol_template, _hpid: 199, ot: 'Under' },
+          {  _hpid: 198, ot: 'Under' },
+          {  _hpid: 199, ot: 'Under' },
         ],
       },
     ],
-    cur_handicap_list: TemplateCommon.set_default_tpl(5, ol_template,2),
+    cur_handicap_list: TemplateCommon.set_default_tpl(5,2),
     // 篮球第一节玩法
     cur_handicap_list_1: [
       {
         ols: [
-          { ...ol_template, _hpid: 48, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 48, ot: '2', class: 'no-handicap' },
+          {  _hpid: 48, ot: '1', class: 'no-handicap' },
+          {  _hpid: 48, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 46, ot: '1' },
-          { ...ol_template, _hpid: 46, ot: '2' },
+          {  _hpid: 46, ot: '1' },
+          {  _hpid: 46, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 45, ot: 'Over' },
-          { ...ol_template, _hpid: 45, ot: 'Under' },
+          {  _hpid: 45, ot: 'Over' },
+          {  _hpid: 45, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Over' },
-          { ...ol_template, _hpid: 146, ot: 'Over' },
+          {  _hpid: 145, ot: 'Over' },
+          {  _hpid: 146, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Under' },
-          { ...ol_template, _hpid: 146, ot: 'Under' },
+          {  _hpid: 145, ot: 'Under' },
+          {  _hpid: 146, ot: 'Under' },
         ],
       },
     ],
@@ -111,32 +111,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_1_rest: [
       {
         ols: [
-          { ...ol_template, _hpid: 54, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 54, ot: '2', class: 'no-handicap' },
+          {  _hpid: 54, ot: '1', class: 'no-handicap' },
+          {  _hpid: 54, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 52, ot: '1' },
-          { ...ol_template, _hpid: 52, ot: '2' },
+          {  _hpid: 52, ot: '1' },
+          {  _hpid: 52, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 51, ot: 'Over' },
-          { ...ol_template, _hpid: 51, ot: 'Under' },
+          {  _hpid: 51, ot: 'Over' },
+          {  _hpid: 51, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Over' },
-          { ...ol_template, _hpid: 146, ot: 'Over' },
+          {  _hpid: 145, ot: 'Over' },
+          {  _hpid: 146, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Under' },
-          { ...ol_template, _hpid: 146, ot: 'Under' },
+          {  _hpid: 145, ot: 'Under' },
+          {  _hpid: 146, ot: 'Under' },
         ],
       },
     ],
@@ -144,32 +144,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_2: [
       {
         ols: [
-          { ...ol_template, _hpid: 43, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 43, ot: '2', class: 'no-handicap' },
+          {  _hpid: 43, ot: '1', class: 'no-handicap' },
+          {  _hpid: 43, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 19, ot: '1' },
-          { ...ol_template, _hpid: 19, ot: '2' },
+          {  _hpid: 19, ot: '1' },
+          {  _hpid: 19, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 18, ot: 'Over' },
-          { ...ol_template, _hpid: 18, ot: 'Under' },
+          {  _hpid: 18, ot: 'Over' },
+          {  _hpid: 18, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 87, ot: 'Over' },
-          { ...ol_template, _hpid: 97, ot: 'Over' },
+          {  _hpid: 87, ot: 'Over' },
+          {  _hpid: 97, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 87, ot: 'Under' },
-          { ...ol_template, _hpid: 97, ot: 'Under' },
+          {  _hpid: 87, ot: 'Under' },
+          {  _hpid: 97, ot: 'Under' },
         ],
       },
     ],
@@ -177,32 +177,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_3: [
       {
         ols: [
-          { ...ol_template, _hpid: 60, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 60, ot: '2', class: 'no-handicap' },
+          {  _hpid: 60, ot: '1', class: 'no-handicap' },
+          {  _hpid: 60, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 58, ot: '1' },
-          { ...ol_template, _hpid: 58, ot: '2' },
+          {  _hpid: 58, ot: '1' },
+          {  _hpid: 58, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 57, ot: 'Over' },
-          { ...ol_template, _hpid: 57, ot: 'Under' },
+          {  _hpid: 57, ot: 'Over' },
+          {  _hpid: 57, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Over' },
-          { ...ol_template, _hpid: 146, ot: 'Over' },
+          {  _hpid: 145, ot: 'Over' },
+          {  _hpid: 146, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Under' },
-          { ...ol_template, _hpid: 146, ot: 'Under' },
+          {  _hpid: 145, ot: 'Under' },
+          {  _hpid: 146, ot: 'Under' },
         ],
       },
     ],
@@ -210,32 +210,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_4: [
       {
         ols: [
-          { ...ol_template, _hpid: 66, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 66, ot: '2', class: 'no-handicap' },
+          {  _hpid: 66, ot: '1', class: 'no-handicap' },
+          {  _hpid: 66, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 64, ot: '1' },
-          { ...ol_template, _hpid: 64, ot: '2' },
+          {  _hpid: 64, ot: '1' },
+          {  _hpid: 64, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 63, ot: 'Over' },
-          { ...ol_template, _hpid: 63, ot: 'Under' },
+          {  _hpid: 63, ot: 'Over' },
+          {  _hpid: 63, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Over' },
-          { ...ol_template, _hpid: 146, ot: 'Over' },
+          {  _hpid: 145, ot: 'Over' },
+          {  _hpid: 146, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 145, ot: 'Under' },
-          { ...ol_template, _hpid: 146, ot: 'Under' },
+          {  _hpid: 145, ot: 'Under' },
+          {  _hpid: 146, ot: 'Under' },
         ],
       },
     ],
@@ -243,32 +243,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_up: [
       {
         ols: [
-          { ...ol_template, _hpid: 43, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 43, ot: '2', class: 'no-handicap' },
+          {  _hpid: 43, ot: '1', class: 'no-handicap' },
+          {  _hpid: 43, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 19, ot: '1' },
-          { ...ol_template, _hpid: 19, ot: '2' },
+          {  _hpid: 19, ot: '1' },
+          {  _hpid: 19, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 18, ot: 'Over' },
-          { ...ol_template, _hpid: 18, ot: 'Under' },
+          {  _hpid: 18, ot: 'Over' },
+          {  _hpid: 18, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 87, ot: 'Over' },
-          { ...ol_template, _hpid: 97, ot: 'Over' },
+          {  _hpid: 87, ot: 'Over' },
+          {  _hpid: 97, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 87, ot: 'Under' },
-          { ...ol_template, _hpid: 97, ot: 'Under' },
+          {  _hpid: 87, ot: 'Under' },
+          {  _hpid: 97, ot: 'Under' },
         ],
       },
     ],
@@ -276,32 +276,32 @@ let ol_template = TemplateCommon.ol_template
     cur_handicap_list_down: [
       {
         ols: [
-          { ...ol_template, _hpid: 142, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 142, ot: '2', class: 'no-handicap' },
+          {  _hpid: 142, ot: '1', class: 'no-handicap' },
+          {  _hpid: 142, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 143, ot: '1' },
-          { ...ol_template, _hpid: 143, ot: '2' },
+          {  _hpid: 143, ot: '1' },
+          {  _hpid: 143, ot: '2' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 26, ot: 'Over' },
-          { ...ol_template, _hpid: 26, ot: 'Under' },
+          {  _hpid: 26, ot: 'Over' },
+          {  _hpid: 26, ot: 'Under' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 88, ot: 'Over' },
-          { ...ol_template, _hpid: 98, ot: 'Over' },
+          {  _hpid: 88, ot: 'Over' },
+          {  _hpid: 98, ot: 'Over' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 88, ot: 'Under' },
-          { ...ol_template, _hpid: 98, ot: 'Under' },
+          {  _hpid: 88, ot: 'Under' },
+          {  _hpid: 98, ot: 'Under' },
         ],
       },
     ],

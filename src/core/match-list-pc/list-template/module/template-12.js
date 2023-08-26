@@ -4,7 +4,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
   // 12号模板 足球 竟足
@@ -12,20 +12,20 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: '1', class: 'no-handicap' },
+          {  _hpid: 1, ot: '1', class: 'no-handicap' },
+          {  _hpid: 3, ot: '1', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: 'X', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: 'X', class: 'no-handicap' },
+          {  _hpid: 1, ot: 'X', class: 'no-handicap' },
+          {  _hpid: 3, ot: 'X', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: '2', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: '2', class: 'no-handicap' },
+          {  _hpid: 1, ot: '2', class: 'no-handicap' },
+          {  _hpid: 3, ot: '2', class: 'no-handicap' },
         ],
       },
     ],

@@ -10,7 +10,7 @@ export const set_default_tpl = (num, ol_template, ol_count = 3) => {
   for (let index = 0; index < num; index++) {
     let ols = [];
     for (let i = 0; i < ol_count; i++) {
-      ols.push({ ...ol_template });
+      ols.push({ empty:1});
     }
     tpl_arr.push({ ols });
   }
@@ -93,23 +93,23 @@ export const ol_template = {
 export const hps_15_minute = [
   {
     ols: [
-      { ...ol_template, _hpid: 32, ot: "1" },
-      { ...ol_template, _hpid: 32, ot: "2" },
-      { ...ol_template, _hpid: 32, ot: "X" },
+      {  _hpid: 32, ot: "1" },
+      {  _hpid: 32, ot: "2" },
+      {  _hpid: 32, ot: "X" },
     ],
   },
   {
     ols: [
-      { ...ol_template, _hpid: 33, ot: "1" },
-      { ...ol_template, _hpid: 33, ot: "2" },
-      { ...ol_template },
+      {  _hpid: 33, ot: "1" },
+      {  _hpid: 33, ot: "2" },
+      { empty:1}
     ],
   },
   {
     ols: [
-      { ...ol_template, _hpid: 34, ot: "Over" },
-      { ...ol_template, _hpid: 34, ot: "Under" },
-      { ...ol_template },
+      {  _hpid: 34, ot: "Over" },
+      {  _hpid: 34, ot: "Under" },
+      { empty:1}
     ],
   },
 ];

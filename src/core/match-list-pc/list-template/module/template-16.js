@@ -4,7 +4,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
   // 16号模板 冰球-让球与大小
@@ -12,56 +12,56 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: '1' },
-          { ...ol_template, _hpid: 1, ot: '2' },
-          { ...ol_template, _hpid: 1, ot: 'X' },
+          {  _hpid: 1, ot: '1' },
+          {  _hpid: 1, ot: '2' },
+          {  _hpid: 1, ot: 'X' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 4, ot: '1' },
-          { ...ol_template, _hpid: 4, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 4, ot: '1' },
+          {  _hpid: 4, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 2, ot: 'Over' },
-          { ...ol_template, _hpid: 2, ot: 'Under' },
-          { ...ol_template },
+          {  _hpid: 2, ot: 'Over' },
+          {  _hpid: 2, ot: 'Under' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 15, ot: 'Odd' },
-          { ...ol_template, _hpid: 15, ot: 'Even' },
-          { ...ol_template },
+          {  _hpid: 15, ot: 'Odd' },
+          {  _hpid: 15, ot: 'Even' },
+          { empty:1}
         ],
       },
     ],
     cur_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 261, ot: '1' },
-          { ...ol_template, _hpid: 261, ot: '2' },
-          { ...ol_template, _hpid: 261, ot: 'X' },
+          {  _hpid: 261, ot: '1' },
+          {  _hpid: 261, ot: '2' },
+          {  _hpid: 261, ot: 'X' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 268, ot: '1' },
-          { ...ol_template, _hpid: 268, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 268, ot: '1' },
+          {  _hpid: 268, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 262, ot: 'Over' },
-          { ...ol_template, _hpid: 262, ot: 'Under' },
-          { ...ol_template },
+          {  _hpid: 262, ot: 'Over' },
+          {  _hpid: 262, ot: 'Under' },
+          { empty:1}
         ],
       },
-      ...TemplateCommon.set_default_tpl(1, ol_template)
+      ...TemplateCommon.set_default_tpl(1)
     ],
   } 
 

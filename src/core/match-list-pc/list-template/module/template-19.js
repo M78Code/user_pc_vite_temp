@@ -4,7 +4,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -15,14 +15,14 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 153, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 153, ot: '2', class: 'no-handicap' },
+          {  _hpid: 153, ot: '1', class: 'no-handicap' },
+          {  _hpid: 153, ot: '2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 2, ot: 'Over' },
-          { ...ol_template, _hpid: 2, ot: 'Under' },
+          {  _hpid: 2, ot: 'Over' },
+          {  _hpid: 2, ot: 'Under' },
         ],
       },
     ],

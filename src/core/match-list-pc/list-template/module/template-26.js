@@ -6,7 +6,7 @@
 
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
  
@@ -16,30 +16,30 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 20043, ot: '1' },
-          { ...ol_template, _hpid: 20043, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 20043, ot: '1' },
+          {  _hpid: 20043, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 20045, ot: '1' },
-          { ...ol_template, _hpid: 20045, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 20045, ot: '1' },
+          {  _hpid: 20045, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 20044, ot: 'Over' },
-          { ...ol_template, _hpid: 20044, ot: 'Under' },
-          { ...ol_template },
+          {  _hpid: 20044, ot: 'Over' },
+          {  _hpid: 20044, ot: 'Under' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 20046, ot: 'Yes' },
-          { ...ol_template, _hpid: 20046, ot: 'No' },
-          { ...ol_template },
+          {  _hpid: 20046, ot: 'Yes' },
+          {  _hpid: 20046, ot: 'No' },
+          { empty:1}
         ],
       },
     ],

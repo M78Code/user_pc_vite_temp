@@ -7,7 +7,7 @@
 
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 let hps_15_minute = TemplateCommon.hps_15_minute
 
 

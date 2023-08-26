@@ -4,53 +4,53 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 // 21 比分模板前3项 固定
 const tpl_21_full = [
     {
       ols: [
-        { ...ol_template, _hpid: 7, ot: '1:0' },
-        { ...ol_template, _hpid: 7, ot: '2:0' },
-        { ...ol_template, _hpid: 7, ot: '2:1' },
-        { ...ol_template, _hpid: 7, ot: '3:0' },
-        { ...ol_template, _hpid: 7, ot: '3:1' },
-        { ...ol_template, _hpid: 7, ot: '3:2' },
-        { ...ol_template, _hpid: 7, ot: '4:0' },
-        { ...ol_template, _hpid: 7, ot: '4:1' },
-        { ...ol_template, _hpid: 7, ot: '4:2' },
-        { ...ol_template, _hpid: 7, ot: '4:3' },
-        { ...ol_template, _hpid: 7, ot: 'Other', other_class: 'col3 absolute' },
+        {  _hpid: 7, ot: '1:0' },
+        {  _hpid: 7, ot: '2:0' },
+        {  _hpid: 7, ot: '2:1' },
+        {  _hpid: 7, ot: '3:0' },
+        {  _hpid: 7, ot: '3:1' },
+        {  _hpid: 7, ot: '3:2' },
+        {  _hpid: 7, ot: '4:0' },
+        {  _hpid: 7, ot: '4:1' },
+        {  _hpid: 7, ot: '4:2' },
+        {  _hpid: 7, ot: '4:3' },
+        {  _hpid: 7, ot: 'Other', other_class: 'col3 absolute' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 7, ot: '0:0' },
-        { ...ol_template, _hpid: 7, ot: '1:1' },
-        { ...ol_template, _hpid: 7, ot: '2:2' },
-        { ...ol_template, _hpid: 7, ot: '3:3' },
-        { ...ol_template, _hpid: 7, ot: '4:4' },
-        { ...ol_template },
-        { ...ol_template },
-        { ...ol_template },
-        { ...ol_template },
-        { ...ol_template },
+        {  _hpid: 7, ot: '0:0' },
+        {  _hpid: 7, ot: '1:1' },
+        {  _hpid: 7, ot: '2:2' },
+        {  _hpid: 7, ot: '3:3' },
+        {  _hpid: 7, ot: '4:4' },
+        { empty:1}
+        { empty:1}
+        { empty:1}
+        { empty:1}
+        { empty:1}
         { ...ol_template , other_class: 'visibility'},
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 7, ot: '0:1' },
-        { ...ol_template, _hpid: 7, ot: '0:2' },
-        { ...ol_template, _hpid: 7, ot: '1:2' },
-        { ...ol_template, _hpid: 7, ot: '0:3' },
-        { ...ol_template, _hpid: 7, ot: '1:3' },
-        { ...ol_template, _hpid: 7, ot: '2:3' },
-        { ...ol_template, _hpid: 7, ot: '0:4' },
-        { ...ol_template, _hpid: 7, ot: '1:4' },
-        { ...ol_template, _hpid: 7, ot: '2:4' },
-        { ...ol_template, _hpid: 7, ot: '3:4' },
-        { ...ol_template, other_class: 'visibility' },
+        {  _hpid: 7, ot: '0:1' },
+        {  _hpid: 7, ot: '0:2' },
+        {  _hpid: 7, ot: '1:2' },
+        {  _hpid: 7, ot: '0:3' },
+        {  _hpid: 7, ot: '1:3' },
+        {  _hpid: 7, ot: '2:3' },
+        {  _hpid: 7, ot: '0:4' },
+        {  _hpid: 7, ot: '1:4' },
+        {  _hpid: 7, ot: '2:4' },
+        {  _hpid: 7, ot: '3:4' },
+        {  other_class: 'visibility' },
       ],
     },
   ]
@@ -68,7 +68,7 @@ const tpl_21_full = [
       ...TemplateCommon.clone_arr(tpl_21_full),
        ...TemplateCommon.update_tpl_hpid(20, tpl_21_full), 
       //  ...TemplateCommon.update_tpl_hpid(74, tpl_21_full),
-       ...TemplateCommon.set_default_tpl(7, ol_template,11)
+       ...TemplateCommon.set_default_tpl(7,11)
       ],
     main_handicap_list_341: [
         ...TemplateCommon.clone_arr(tpl_21_full),
@@ -78,7 +78,7 @@ const tpl_21_full = [
       ...TemplateCommon.clone_arr(tpl_21_full), 
       ...TemplateCommon.update_tpl_hpid(341, tpl_21_full),
       //  ...TemplateCommon.update_tpl_hpid(342, tpl_21_full),
-       ...TemplateCommon.set_default_tpl(7, ol_template,11)
+       ...TemplateCommon.set_default_tpl(7,11)
       ],
   } 
 

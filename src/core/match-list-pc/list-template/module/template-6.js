@@ -3,7 +3,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -12,36 +12,36 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: '1And1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 340, ot: '2And1', class: 'no-handicap' },
+          {  _hpid: 340, ot: '1And1', class: 'no-handicap' },
+          {  _hpid: 340, ot: '2And1', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: '1And2', class: 'no-handicap' },
-          { ...ol_template, _hpid: 340, ot: '2And2', class: 'no-handicap' },
+          {  _hpid: 340, ot: '1And2', class: 'no-handicap' },
+          {  _hpid: 340, ot: '2And2', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: '1And3', class: 'no-handicap' },
-          { ...ol_template, _hpid: 340, ot: '2And3', class: 'no-handicap' },
+          {  _hpid: 340, ot: '1And3', class: 'no-handicap' },
+          {  _hpid: 340, ot: '2And3', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: '1And4+', class: 'no-handicap' },
-          { ...ol_template, _hpid: 340, ot: '2And4+', class: 'no-handicap' },
+          {  _hpid: 340, ot: '1And4+', class: 'no-handicap' },
+          {  _hpid: 340, ot: '2And4+', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: 'X1', class: 'no-handicap' },
+          {  _hpid: 340, ot: 'X1', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 340, ot: 'X0', class: 'no-handicap' },
+          {  _hpid: 340, ot: 'X0', class: 'no-handicap' },
         ],
       },
     ],

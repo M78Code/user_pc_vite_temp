@@ -4,7 +4,7 @@
  */
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 
@@ -14,59 +14,59 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: '1' },
-          { ...ol_template, _hpid: 3, ot: '1',hn:2 },
+          {  _hpid: 1, ot: '1', class: 'no-handicap' },
+          {  _hpid: 3, ot: '1' },
+          {  _hpid: 3, ot: '1',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: 'X', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: 'X' },
-          { ...ol_template, _hpid: 3, ot: 'X',hn:2 },
+          {  _hpid: 1, ot: 'X', class: 'no-handicap' },
+          {  _hpid: 3, ot: 'X' },
+          {  _hpid: 3, ot: 'X',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 1, ot: '2', class: 'no-handicap' },
-          { ...ol_template, _hpid: 3, ot: '2' },
-          { ...ol_template, _hpid: 3, ot: '2',hn:2 },
+          {  _hpid: 1, ot: '2', class: 'no-handicap' },
+          {  _hpid: 3, ot: '2' },
+          {  _hpid: 3, ot: '2',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 17, ot: '1', class: 'no-handicap' },
-          { ...ol_template, _hpid: 69, ot: '1' },
-          { ...ol_template, _hpid: 69, ot: '1',hn:2 },
+          {  _hpid: 17, ot: '1', class: 'no-handicap' },
+          {  _hpid: 69, ot: '1' },
+          {  _hpid: 69, ot: '1',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 17, ot: 'X', class: 'no-handicap' },
-          { ...ol_template, _hpid: 69, ot: 'X' },
-          { ...ol_template, _hpid: 69, ot: 'X',hn:2 },
+          {  _hpid: 17, ot: 'X', class: 'no-handicap' },
+          {  _hpid: 69, ot: 'X' },
+          {  _hpid: 69, ot: 'X',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 17, ot: '2', class: 'no-handicap' },
-          { ...ol_template, _hpid: 69, ot: '2' },
-          { ...ol_template, _hpid: 69, ot: '2',hn:2 },
+          {  _hpid: 17, ot: '2', class: 'no-handicap' },
+          {  _hpid: 69, ot: '2' },
+          {  _hpid: 69, ot: '2',hn:2 },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 6, ot: '1X', class: 'no-handicap' },
+          {  _hpid: 6, ot: '1X', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 6, ot: '12', class: 'no-handicap' },
+          {  _hpid: 6, ot: '12', class: 'no-handicap' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 6, ot: 'X2', class: 'no-handicap' },
+          {  _hpid: 6, ot: 'X2', class: 'no-handicap' },
         ],
       },
     ],

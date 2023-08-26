@@ -7,7 +7,7 @@
 
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
  
@@ -19,44 +19,44 @@ let ol_template = TemplateCommon.ol_template
     main_handicap_list: [ 
       {
         ols: [
-          { ...ol_template, _hpid: 310, ot: '1' },
-          { ...ol_template, _hpid: 310, ot: '2' },
-          { ...ol_template, _hpid: 310, ot: 'X' },
+          {  _hpid: 310, ot: '1' },
+          {  _hpid: 310, ot: '2' },
+          {  _hpid: 310, ot: 'X' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 306, ot: '1' },
-          { ...ol_template, _hpid: 306, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 306, ot: '1' },
+          {  _hpid: 306, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 307, ot: 'Over' },
-          { ...ol_template, _hpid: 307, ot: 'Under' },
-          { ...ol_template },
+          {  _hpid: 307, ot: 'Over' },
+          {  _hpid: 307, ot: 'Under' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 311, ot: '1' },
-          { ...ol_template, _hpid: 311, ot: '2' },
-          { ...ol_template, _hpid: 311, ot: 'X' },
+          {  _hpid: 311, ot: '1' },
+          {  _hpid: 311, ot: '2' },
+          {  _hpid: 311, ot: 'X' },
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 308, ot: '1' },
-          { ...ol_template, _hpid: 308, ot: '2' },
-          { ...ol_template },
+          {  _hpid: 308, ot: '1' },
+          {  _hpid: 308, ot: '2' },
+          { empty:1}
         ],
       },
       {
         ols: [
-          { ...ol_template, _hpid: 309, ot: 'Over' },
-          { ...ol_template, _hpid: 309, ot: 'Under' },
-          { ...ol_template },
+          {  _hpid: 309, ot: 'Over' },
+          {  _hpid: 309, ot: 'Under' },
+          { empty:1}
         ],
       },
     ],

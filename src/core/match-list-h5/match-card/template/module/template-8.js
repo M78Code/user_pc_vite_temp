@@ -7,7 +7,7 @@
 
 import * as TemplateCommon from "./template-common.js"
 
-let ol_template = TemplateCommon.ol_template
+
 
 
 // 虚拟赛狗、虚拟赛马、虚拟摩托
@@ -16,32 +16,32 @@ export const template_8 = {
   main_handicap_list: [
     {
       ols: [
-        { ...ol_template, _hpid: 20033, ot: '1', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20033, ot: '2', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20033, ot: '3', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20033, ot: '4', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20033, ot: '5', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20033, ot: '6', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '1', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '2', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '3', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '4', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '5', class: 'no-handicap' },
+        {  _hpid: 20033, ot: '6', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 20034, ot: '1', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20034, ot: '2', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20034, ot: '3', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20034, ot: '4', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20034, ot: '5', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20034, ot: '6', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '1', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '2', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '3', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '4', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '5', class: 'no-handicap' },
+        {  _hpid: 20034, ot: '6', class: 'no-handicap' },
       ],
     },
     {
       ols: [
-        { ...ol_template, _hpid: 20035, ot: '1', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20035, ot: '2', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20035, ot: '3', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20035, ot: '4', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20035, ot: '5', class: 'no-handicap' },
-        { ...ol_template, _hpid: 20035, ot: '6', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '1', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '2', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '3', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '4', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '5', class: 'no-handicap' },
+        {  _hpid: 20035, ot: '6', class: 'no-handicap' },
       ],
     },
   ],
