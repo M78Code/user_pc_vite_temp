@@ -6,18 +6,18 @@
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "./class/bet-data-class.js";
-import {
-  compute_value_by_cur_odd_type
-} from "./bet_odds_change.js";
-import {
-  get_bet_amount_param
-} from "./bet-amount.js";
-import {
-  http_upd_data
-} from "./upd_data.js";
-import mathjs from "src/core/utils/mathjs.js";
-import yabo_common from "src/core/bet/common-helper/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+// import {
+//   compute_value_by_cur_odd_type
+// } from "./bet_odds_change.js";
+// import {
+//   get_bet_amount_param
+// } from "./bet-amount.js";
+// import {
+//   http_upd_data
+// } from "./upd_data.js";
+// import mathjs from "src/core/utils/mathjs.js";
+// import yabo_common from "src/core/bet/common-helper/index.js";
 import {
   uid
 } from "quasar";
