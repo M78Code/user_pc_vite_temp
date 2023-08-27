@@ -1,3 +1,31 @@
+
+/**
+ * @description: 用户金额格式化
+ * @param {Number} value 用户金额
+ * @param {Number} min 最小值
+ * @return {Object} 
+ */
+export const amount_format = (value, min) => {
+  let param = {};
+  min = min || 100000;
+  let k = 10000, sizes = ['', i18n.t("bet.wan"), i18n.t("bet.wanwan"), i18n.t("bet.wanyi")], i;
+  if (value < min) {
+    param.value = value;
+    param.unit = '';
+  } else {
+    i = Math.floor(Math.log(value) / Math.log(k));
+    param.value = ((value / Math.pow(k, i))).toFixed(3).slice(0, -1);
+    param.unit = sizes[i];
+  }
+  return {
+    value: param.value + '',
+    unit: param.unit
+  };
+}
+
+
+
+
 /**
  *@description 将金额转化为千位符格式保留2位小数
  *@param {Number} num 待格式化的金额
@@ -53,6 +81,13 @@ export const format_money3 = function (num) {
     return "";
   }
 };
+
+
+
+
+
+
+
 
 const money_filter = function (num) {
   return num.toString().indexOf(".") !== -1
