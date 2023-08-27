@@ -1,8 +1,3 @@
-/*
- * @Author: nuanyang
- * @Date: 2022-12-20 13:40:38
- * @Description: 比分key列表
- */
 // S120~S159 比分key列表
 let many_keys = []
 for (let i = 120; i <= 159; i++) {

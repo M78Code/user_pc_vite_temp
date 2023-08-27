@@ -1,6 +1,5 @@
 import { createI18n } from "vue-i18n";
 import { ls, ss } from "src/core/utils/web-storage.js";
-
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
@@ -12,7 +11,6 @@ const i18n = createI18n({
   // 去除控制台i18n警告信息
   silentTranslationWarn: true,
 });
-
 const map_lang = {
   en: "en-gb",
   zh: "zh-cn",
@@ -34,9 +32,8 @@ const map_lang = {
  */
 function loadLanguageAsync(lang) {
   // 语言映射路径
-
   return import(
-    /* webpackChunkName: "lang-[request]" */ `project_path/src/i18n/${map_lang[lang]}`
+    /* webpackChunkName: "lang-[request]" */ `../../project/yazhou-pc/src/i18n/${map_lang[lang]}/index.json`
   ).then((langfile) => {
     // 动态加载对应的语言包
     let langFile = langfile.default;
@@ -45,6 +42,8 @@ function loadLanguageAsync(lang) {
     // 设置语种
     i18n.locale = lang;
     return lang;
+  }).catch(error => {
+    console.log('lockie_test_consolee', error);
   });
 }
 // 新增

@@ -1,26 +1,26 @@
-import { ref, provide, computed, reactive, beforeUnmount } from "vue";
-import { useRoute } from 'vue-router'
-import lodash from 'lodash';
+import { ref, provide, computed, reactive, watch, onMounted, onUnmounted } from "vue";
+import { useRoute } from "vue-router";
+import lodash from "lodash";
 
-import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
-import { api_match } from "src/api/index.js";
-import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
+import PageSourceData from "src/core/page-source-pc/page-source-pc.js";
+// import { api_match } from "src/api/index.js";
+// import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 // import * as api_websocket from "src/public/api/module/socket/socket_api.js";
-import scrollList from "src/components/cus-scroll/scroll_list.vue";
-import { MatchListCardFullVersionWapper as MatchListCard} from '/* webpackChunkName: "pc-mini-chunks" */ "src/components/match-list/match-list-card/index.js"'
+// import scrollList from "src/components/cus-scroll/scroll_list.vue";
+import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-data-class/match-list-data-class.js";
-import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
-import video from "src/core/video/video.js";
-import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'
+// import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
+// import video from "src/core/video/video.js";
+// import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
-import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
-import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
-import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
-import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
-import store from 'src/store-redux/index.js';
+// import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
+// import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
+// import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
+// import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
+// import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
+import store from "src/store-redux/index.js";
 
 const route = useRoute();
 let state = store.getState();
@@ -29,9 +29,8 @@ const { page_source } = PageSourceData;
 const match_list_card = reactive(MatchListCardClass);
 // 赛事主列表容器卡片逻辑处理类
 const match_list_data = reactive(MatchListData);
-
 const match_list = {
-	setup(props, { attrs, slots, emit, expose }) {
+	setup() {
 		// 菜单数据
 		// 数据请求状态
 		const load_data_state = ref("loading");
@@ -42,31 +41,31 @@ const match_list = {
 		// 是否继续请求
 		const is_loading = ref(true);
 		// 获取当前菜单类型
-		const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
+		const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
 		// 赛事列表排序 1:按联赛排序 2:按时间排序
-		const vx_match_sort = ref(state.filterReducer.show_filter_popup)
+		const vx_match_sort = ref(state.filterReducer.show_filter_popup);
 		// 筛选是否全选
-		const vx_filter_checked_all = ref(state.filterReducer.show_filter_popup)
+		const vx_filter_checked_all = ref(state.filterReducer.show_filter_popup);
 		// 上次筛选选中的数据
-		const vx_pre_filter_select_obj = ref(state.filterReducer.show_filter_popup)
+		const vx_pre_filter_select_obj = ref(state.filterReducer.show_filter_popup);
 		// 左侧详情参数
-		const vx_detail_params = ref(state.filterReducer.show_filter_popup)
+		const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 		// 获取联赛筛选框显示状态
-		const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup)
+		const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 		// 是否展开多列玩法
-		const get_unfold_multi_column = ref(state.filterReducer.show_filter_popup)
-		const timer_obj = ref({})
-		const api_error_count = ref(0)
-		const check_match_last_update_timer_id = ref(null)
+		const get_unfold_multi_column = ref(state.filterReducer.show_filter_popup);
+		const timer_obj = ref({});
+		const api_error_count = ref(0);
+		const check_match_last_update_timer_id = ref(null);
 		const get_match_list_timeid = ref(null);
 		const hot_match_list_timeout = ref(null);
 		const show_refresh_mask = ref(null);
-		const current_hash_code = ref(null)
-		const axios_debounce_timer2 = ref(null)
+		const current_hash_code = ref(null);
+		const axios_debounce_timer2 = ref(null);
 		// 注入依赖
-		provide('match_list_data', match_list_data)
-		provide('match_list_card', match_list_card)
-		
+		provide("match_list_data", match_list_data);
+		provide("match_list_card", match_list_card);
+
 		const match_tpl_component = computed(() => {
 			let match_tpl;
 			let lv2_mi;
@@ -84,7 +83,7 @@ const match_list = {
 				match_tpl = "virtual-match-tpl2";
 			}
 			return match_tpl;
-		})
+		});
 
 		// 开启自动化测试功能
 		this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
@@ -98,33 +97,99 @@ const match_list = {
 		store.dispatch({
 			type: "SET_IS_ROLL_SHOW_BANNER",
 			data: false,
-		})
+		});
 		store.dispatch({
-			type: 'SET_IS_SHOW_BANNER',
-			data: false
-		})
+			type: "SET_IS_SHOW_BANNER",
+			data: false,
+		});
 		api_error_count.value = 0;
 		is_vr_numer.value = 0;
-		useMittOn(
-			MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD,
-			update_collect_data
-		);
-		useMittOn(
-			MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD,
-			mx_collect_count()
-		);
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data);
+		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count());
 		// 站点 tab 休眠状态转激活
-		useMittOn(
-			MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
-			emit_site_tab_active()
-		);
+		useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active());
 		// 调用列表接口
 		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids());
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match());
 		useMittOn("match_list_show_mids_change", show_mids_change());
-		
-		const methods = {
+
+		watch(MenuData.match_list_api_config.version, (cur) => {
+			// bug 版本没有变化 也可以进入
+			if (MenuData.api_config_version != cur) {
+				MenuData.set_api_config_version(cur);
+				// is_loading.value = false
+				// 清除过滤条件
+				// this.vx_set_remove_filter_condition()
+				// 获取赛事列表数据
+				fetch_match_list();
+				// 设置联赛吸顶高度
+				set_sticky_top();
+				// setTimeout(()=>{
+				//   is_loading.value = true
+				// },100)
+			}
+		}, {immediate: true})
+
+		onMounted(() => {
+			load_video_resources();
+		})
+		onUnmounted(() => {
+			clearTimeout(this.axios_debounce_timer);
+			clearTimeout(axios_debounce_timer2.value);
+			clearInterval(check_match_last_update_timer_id.value);
+			for (let key in timer_obj.value) {
+				clearTimeout(timer_obj.value[key]);
+			}
+			//热门推荐定时器
+			if (hot_match_list_timeout.value) {
+				clearTimeout(hot_match_list_timeout.value);
+			}
+			this.debounce_throttle_cancel();
+			this.$root.$off("match_list_show_mids_change", show_mids_change());
+			this.destroyed = true;
+			useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off();
+			useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
+			// 站点 tab 休眠状态转激活
+			useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
+			clearTimeout(this.virtual_list_timeout_id);
+			clearTimeout(this.switch_timer_id);
+			clearTimeout(get_match_list_timeid.value);
+			// 调用列表接口
+			useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
+			useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
+			useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
+			match_list_card = {};
+			timer_obj.value = {};
+		})
+		return {
+			...collect_composable_fn(),
+			...ws_composable_fn(),
+			...virtual_composable_fn(),
+			...process_composable_fn(),
+			// 是否展示强力推荐
+			is_show_hot,
+			// 是否继续请求
+			is_loading,
+			// 数据请求状态
+			load_data_state,
+			// 菜单数据
+			match_list,
+			match_list_card,
+			match_list_data,
+			vx_cur_menu_type,
+			vx_show_filter_popup,
+			vx_match_sort,
+			vx_filter_checked_all,
+			vx_pre_filter_select_obj,
+			vx_detail_params,
+			get_unfold_multi_column,
+			match_tpl_component,
+			get_match_list_timeid,
+			hot_match_list_timeout,
+			show_refresh_mask,
+			current_hash_code,
+			axios_debounce_timer2,
 			/**
 			 * @description 请求数据
 			 * @param  {boolean} is_socket   是否 socket 调用
@@ -160,7 +225,8 @@ const match_list = {
 				}
 				// 【搜索列表】 WS 之类的调用 fetch_match_list 转向到 fetch_search_match_list
 				if (route.name == "search") {
-					this.fetch_search_match_list && this.fetch_search_match_list(is_socket);
+					this.fetch_search_match_list &&
+						this.fetch_search_match_list(is_socket);
 					return false;
 				}
 				if (!is_socket) {
@@ -199,8 +265,7 @@ const match_list = {
 							.then((res) => {
 								// 组件和路由不匹配 菜单id不匹配
 								if (
-									(route.name == "details" &&
-										page_source != "details") ||
+									(route.name == "details" && page_source != "details") ||
 									this.destroyed ||
 									_params.euid != match_api.params.euid
 								)
@@ -269,7 +334,7 @@ const match_list = {
 			},
 			/**
 			 * // 处理服务器返回的 列表 数据   fetch_match_list
-			*/
+			 */
 			handle_match_list_request_when_ok(data, is_socket, cut, collect) {
 				// console.warn('daya',data)
 				let {
@@ -374,7 +439,7 @@ const match_list = {
 						}
 					});
 			},
-			
+
 			/***
 			 * @description 当接口状态为成功且有数据时 调用此方法
 			 */
@@ -537,7 +602,7 @@ const match_list = {
 				fetch_match_list(2);
 				show_refresh_mask.value = true;
 			},
-			
+
 			/**
 			 * @description 调用列表bymids接口
 			 * @param  {boolean} is_first_load 是否用户切换菜单  第一次加载调用
@@ -661,8 +726,7 @@ const match_list = {
 							this.set_home_loading_time_record("ok");
 							// 组件和路由不匹配
 							if (
-								(route.name == "details" &&
-									page_source != "details") ||
+								(route.name == "details" && page_source != "details") ||
 								this.destroyed
 							)
 								return;
@@ -693,7 +757,11 @@ const match_list = {
 								});
 							}
 							if (code == 200 && match_list.length > 0) {
-								this.set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
+								this.set_match_base_info_by_mids_info(
+									match_list,
+									mids_arr,
+									ts1
+								);
 							} else if (code == "0400500" && by_mids_fun_count++ < 3) {
 								by_mids_fun();
 								league_load_status = "empty";
@@ -779,10 +847,10 @@ const match_list = {
 				);
 				match_list.forEach((match) => {
 					// bymid数据同步投注项 1508要改的
-					BetCommonHelper.upd_bet_obj( ts1, match.mid);
+					BetCommonHelper.upd_bet_obj(ts1, match.mid);
 					// 同步比分到右侧
 					if (vx_detail_params.value.mid == match.mid) {
-						BetCommonHelper.update_match_score( 0, match.mid);
+						BetCommonHelper.update_match_score(0, match.mid);
 					}
 				});
 				//热门赛事 提取足球赛事
@@ -1085,11 +1153,8 @@ const match_list = {
 									mids_info: item.mids,
 								})) || [];
 							// 常规赛种/联赛  滚球
-							let live_data_match = this.get_match_list_by_mid_for_base_data_res(
-								mid,
-								csid,
-								"ld"
-							);
+							let live_data_match =
+								this.get_match_list_by_mid_for_base_data_res(mid, csid, "ld");
 							// 常规赛种、联赛  未开赛
 							let nolive_data_match =
 								this.get_match_list_by_mid_for_base_data_res(mid, csid, "nd");
@@ -1168,144 +1233,12 @@ const match_list = {
 				}) || [];
 				return matchs_list;
 			},
-		}		
-
-		return {
-			...collect_composable_fn(),
-			...ws_composable_fn(),
-			...virtual_composable_fn(),
-			...process_composable_fn(),
-			...methods,
-			// 是否展示强力推荐
-			is_show_hot, 
-			// 是否继续请求
-			is_loading,
-			// 数据请求状态
-			load_data_state,
-			// 菜单数据
-			match_list,
-			match_list_card,
-			match_list_data,
-			vx_cur_menu_type,
-			vx_show_filter_popup,
-			vx_match_sort,
-			vx_filter_checked_all,
-			vx_pre_filter_select_obj,
-			vx_detail_params,
-			get_unfold_multi_column,
-			match_tpl_component
 		};
 	},
 	components: {
 		Refresh,
-		scrollList,
+		// scrollList,
 		MatchListCard,
 	},
-	watch: {
-		// 监听当前  菜单 key 变化
-		"MenuData.match_list_api_config.version": {
-			handler(cur, old) {
-				// bug 版本没有变化 也可以进入
-				if (MenuData.api_config_version != cur) {
-					MenuData.set_api_config_version(cur);
-					// is_loading.value = false
-					// 清除过滤条件
-					// this.vx_set_remove_filter_condition()
-					// 获取赛事列表数据
-					fetch_match_list();
-					// 设置联赛吸顶高度
-					set_sticky_top();
-					// setTimeout(()=>{
-					//   is_loading.value = true
-					// },100)
-				}
-			},
-			immediate: true,
-		},
-		get_unfold_multi_column() {
-			store.dispatch({
-				type: "SET_RETAIN_SCROLL_OBJ",
-				deta: { 
-					status: true,
-					height: match_scroll_utils.scroll_top, 
-				}
-			})
-			// this.set_retain_scroll_obj({
-			// 	status: true,
-			// 	height: match_scroll_utils.scroll_top,
-			// });
-			fetch_match_list(false, true);
-		},
-		// 排序切换
-		vx_match_sort() {
-			fetch_match_list();
-		},
-		// 列表与收藏切换
-		vx_layout_list_type() {
-			// 清除过滤条件
-			store.dispatch({
-				type: 'SET_REMOVE_FILTER_CONDITION',
-			})
-		},
-		// 联赛筛选
-		vx_show_filter_popup(cur, pre) {
-			if (pre && this.vx_filter_select_obj) {
-				fetch_match_list();
-			}
-		},
-		// 监听列表加载状态变化  记录loading所需时间
-		load_data_state: {
-			handler(load_data_state) {
-				if (this.DOM_ID_SHOW) {
-					if (load_data_state == "loading") {
-						match_scroll_utils.start_loading();
-					} else {
-						match_scroll_utils.end_loading();
-					}
-				}
-			},
-			immediate: true,
-		},
-	},
-	mounted() {
-		load_video_resources();
-	},
-	beforeUnmount(){
-		clearTimeout(this.axios_debounce_timer);
-		clearTimeout(axios_debounce_timer2.value);
-		clearInterval(check_match_last_update_timer_id.value);
-		for (let key in timer_obj.value) {
-			clearTimeout(timer_obj.value[key]);
-		}
-		//热门推荐定时器
-		if (hot_match_list_timeout.value) {
-			clearTimeout(hot_match_list_timeout.value);
-		}
-		this.debounce_throttle_cancel();
-		this.$root.$off("match_list_show_mids_change", show_mids_change());
-		this.destroyed = true;
-		useMittOn(
-			MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD,
-			update_collect_data
-		).off();
-		useMittOn(
-			MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD,
-			mx_collect_count()
-		).off();
-		// 站点 tab 休眠状态转激活
-		useMittOn(
-			MITT_TYPES.EMIT_SITE_TAB_ACTIVE,
-			emit_site_tab_active()
-		).off();
-		clearTimeout(this.virtual_list_timeout_id);
-		clearTimeout(this.switch_timer_id);
-		clearTimeout(get_match_list_timeid.value);
-		// 调用列表接口
-		useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
-		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
-		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
-		match_list_card = {};
-		timer_obj.value = {};
-	}
 };
 export default match_list;

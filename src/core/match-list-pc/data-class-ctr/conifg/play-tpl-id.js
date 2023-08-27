@@ -1,8 +1,3 @@
-/*
- * @Author: nuanyang
- * @Date: 2022-12-20 13:48:58
- * @Description: 特定模板
- */
 /**
  * 让球模板
  * 
