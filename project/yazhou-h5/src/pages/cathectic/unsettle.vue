@@ -8,19 +8,19 @@
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-        <div class="filter-button" v-if="store_user.settleSwitch == 1">
+        <div class="filter-button" v-if="lodash.get(get_user, 'settleSwitch') == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+            {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
+        {{is_all_early_flag + '-----' + is_early}}
         <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-                <!-- (new Date(name|| '')).Format(tt('time2')) -->
-                <span>{{ new Date(name)}}</span>
+                <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
@@ -28,7 +28,6 @@
               <q-slide-transition>
                 <div v-show="value.open">
                   <!--投注记录的页每一条注单-->
-
                   <common-cathectic-item :item_data="item2" v-for="(item2,key) in value.data" :key="key" class="my-4" :key2="key" :len="value.data.length" :is_early="is_early"></common-cathectic-item>
                 </div>
               </q-slide-transition>
@@ -45,32 +44,25 @@
 <script setup>
 import lodash from 'lodash';
 import { api_betting } from "src/api/index.js";
-import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue"; 
 import settleVoid from "./settle-void.vue";
-import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
+import scroll from "project_path/src/components/common/record-scroll/scroll.vue"; 
 // import skt_order from "src/public/mixins/websocket/data/skt-data-order.js"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
-import { ref, watch, onMounted, onUnmounted, reactive } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-import store from 'src/store-redux/index.js'
-import { t } from "src/boot/i18n";;
-//国际化
+import store from 'src/store'
 
-
-
-// mixins: [skt_order]
-let { cathecticReducer, userInfoReducer } = store.getState()
-
-let store_user = userInfoReducer
-let store_cathectic = cathecticReducer
-
-// 锚点
-let myScroll = ref(null)
+    // mixins: [skt_order]
+    
+    let store_data = ref(store.getState())
+    // 锚点
+    let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
-  let list_data = ref({})
+  let list_data = ref([])
   //list_data里面最后的一条数据的日期 '2020-11-17'
   let last_record = ref('')
   //是否没有数据
@@ -85,35 +77,42 @@ let myScroll = ref(null)
   let is_limit = ref(false)
   //需要查绚提前结算金额的订单集合
   let orderNumberItemList = ref([])
-
+  //错误码为0401038拉取接口次数
+  let count = ref(0)
+  //服务器返回错误为0401038拉取接口次数
+  let count2 = ref(0)
   // 延时器
   let timer_1 = ref(null)
-  let timer_2 = ref(null)
-
-
+  let timer_2 = ref(null)    
+  // computed: {
+  //   ...mapGetters(['get_user', 'get_main_item'])
+  // },
+  
   /**
      * @description 判断所有订单是否有结算注单
      * @param {undefined} undefined
      * @returns {null} null
      */
   watch(() => is_early.value, (_new) => {
+    console.error(_new);
     /**判断所有订单是否有结算注单*/
       is_all_early_flag.value = _new ? clac_all_is_early() : false
   })
 
   onMounted(() => {
     // 首次进入获取数据
-    store_cathectic.main_item == 0 && init_data()
+    init_data()
     /**先清除计时器，再使用*/
     clearInterval(timer_2)
     timer_2 = setInterval(()=>{
-      if (store_cathectic.main_item == 0 && document.visibilityState == 'visible') {
+      if (store_data.main_item == 0 && document.visibilityState == 'visible') {
         check_early_order()
         search_early_money()
       }
     },10000)
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
+    // ...mapMutations(['set_early_moey_data']),
   /**
      * @description 筛选所有提前结算注单
      * @param {undefined} undefined
@@ -136,7 +135,7 @@ let myScroll = ref(null)
      * @returns {boolean} 是否有结算注单
      */
   const clac_all_is_early = () => {
-    const data = lodash.values(list_data.value)
+    const data = lodash.values(list_data)
     return lodash.find(data,(item)=>{
       return lodash.some(item.data,{is_show_early_settle:true})
     }) ? false : true
@@ -145,14 +144,11 @@ let myScroll = ref(null)
    * @description 查询提前结算金额
    */
   const search_early_money = () => {
-    let params = { orderNo: orderNumberItemList.value.join(',') }
+    let params = {orderNo:orderNumberItemList.join(',')}
     // if(orderNumberItemList.length === 0){return}
     api_betting.oderPreSettleMoney(params).then(res=>{
       if(res.code == 200 && res.data){
-        store.dispatch({
-          type: "SET_EARLY_MOEY_DATA",
-          data: res.data
-        })
+        set_early_moey_data( res.data)
       }
     })
   }
@@ -160,12 +156,12 @@ let myScroll = ref(null)
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
   const check_early_order = () => {
-    if(!store_user.settleSwitch){
-      orderNumberItemList.value = []
+    if(!get_user.settleSwitch){
+      orderNumberItemList = []
       return;
     }
     let tempList = []
-    lodash.forEach(list_data.value, (value, key)=> {
+    lodash.forEach(list_data, (value, key)=> {
       lodash.forEach(value.data,(item)=>{
         if(item.enablePreSettle){
           tempList.push(item.orderNo)
@@ -196,7 +192,7 @@ let myScroll = ref(null)
     is_loading = !flag
     //请求注单记录接口
     get_order_list(params)
-
+    
   }
   /**
      * @description 请求注单记录接口
@@ -205,16 +201,16 @@ let myScroll = ref(null)
     */
   const get_order_list = (params) => {
     //第一次加载时的注单数
-    let size = 0
+    let size = 0  
     // 请求接口
     api_betting.post_getH5OrderList(params).then(reslut => {
       let res = ''
-      if (lodash.get(reslut, 'status')) {
+      if (reslut.status) {
         res = reslut.data
       } else {
         res = reslut
       }
-
+      
       is_limit = false
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
@@ -222,37 +218,37 @@ let myScroll = ref(null)
         // record为空时
         if (lodash.isEmpty(record)) {
           is_loading = false;
-          no_data.value = false;
+          no_data = false;
           return;
         }
-        no_data.value = true;
+        no_data = true;
         for (let item of Object.values(record)) {
           item.open = true
           size += item.data.length
         }
-        last_record.value = lodash.findLastKey(record);
+        last_record = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
+        // console.error(record);
         timer_1 = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
             is_loading = false;
           }
           // 合并数据
-          let obj = lodash.cloneDeep(list_data.value)
-          list_data.value = lodash.merge(obj, record)
+          let obj = lodash.cloneDeep(list_data)
+          list_data = lodash.merge(obj, record)
+          // console.error(list_data);
         }, 380);
-
+        
       }else if(res.code == '0401038'){
-        // 接口code 0401038 异常处理
         is_limit = true
-        no_data.value = false
+        no_data = false
         is_loading = false
         return
       } else if (res.code == '0401013') {
-        // 接口code 0401013 异常处理
         is_loading = false;
-        no_data.value = false
+        no_data = false
         return;
       } else {
         is_loading = false;
@@ -264,7 +260,7 @@ let myScroll = ref(null)
       }
     }).catch(err => {
       is_loading = false;
-      no_data.value = false;
+      no_data = false;
       console.error(err)
       return;
     });
@@ -282,20 +278,14 @@ let myScroll = ref(null)
     let ele = myScroll
     if (!is_hasnext || last_record === undefined) {
       //没有更多
-      ele.setState(7);
+      ele.setState(7);  
       return;
     }
     //加载中
-    ele.setState(4);
-    api_betting.post_getOrderList(params).then(reslut => {
-      let res = ''
-      if (lodash.get(reslut, 'status')) {
-        res = reslut.data
-      } else {
-        res = reslut
-      }
+    ele.setState(4);  
+    api_betting.post_getOrderList(params).then(res => {
       //加载完成
-      ele.setState(5);
+      ele.setState(5);  
       let { record, hasNext } = lodash.get(res, "data", {});
       is_hasnext = hasNext
       if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
@@ -306,10 +296,10 @@ let myScroll = ref(null)
 
         // 合并数据
         let obj = lodash.cloneDeep(list_data);
-        list_data.value = lodash.merge(obj, record)
+        list_data = lodash.merge(obj, record)
       } else {
         //没有更多
-        ele.setState(7);
+        ele.setState(7);  
       }
     }).catch(err => { console.error(err) });
   }
@@ -328,27 +318,21 @@ let myScroll = ref(null)
      * @return {Undefined} undefined
      */
   const clear_timer = () => {
-
-    clearTimeout(timer_1.value)
-    clearTimeout(timer_2.value)
-    clearInterval(timer_1.value)
-    clearInterval(timer_2.value)
+    
+    clearTimeout(timer_1)
+    clearTimeout(timer_2)
+    clearInterval(timer_1)
+    clearInterval(timer_2)
   }
   onUnmounted(() => {
     clear_timer();
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
-    store.dispatch({
-          type: "SET_EARLY_MOEY_DATA",
-          data: []
-        })
+    set_early_moey_data([])
     // for (const key in $data) {
     //   $data[key] = null
     // }
   })
-defineExpose({
-  check_early_order,
-  search_early_money,
-})
+
 </script>
 
 <style lang="scss" scoped>

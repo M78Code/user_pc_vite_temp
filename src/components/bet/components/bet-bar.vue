@@ -8,7 +8,7 @@
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
     <div>
-      <span class="bet-num">{{ get_bet_list.length }}</span>
+      <span class="bet-num">{{ BetData.bet_list.length }}</span>
       <!-- 投注单 -->
       <span class="yb_fontsize16 yb_ml8">
         <template v-if="get_bet_status != 0"><span>{{}}</span></template>
@@ -45,7 +45,6 @@ let balance_timer = null // 延时器
 
 
 const store_state = store.getState()
-const get_bet_list = ref(store_state.get_bet_list)
 const get_s_count_data = ref(store_state.get_s_count_data)
 const get_lang = ref(store_state.get_lang)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
@@ -53,8 +52,6 @@ const get_bet_status = ref(store_state.get_bet_status)
 const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
 // const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
 // const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
-const get_is_mix = ref(store_state.get_is_mix) // 是否串关
-const get_money_total = ref(store_state.get_money_total)  // 总金额
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -67,7 +64,7 @@ const menu_click = () => {
   // 至少选择几场比赛
   let min_num = lodash.get(get_user.value, 'configVO.minSeriesNum', 2)
   // 投注数组信息
-  let bet_list = get_bet_list.value
+  let bet_list = BetData.bet_list.value
 
   if (get_mix_bet_flag.value && bet_list.length < min_num) {
     set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
@@ -87,7 +84,7 @@ const menu_click = () => {
 
   if (bet_list.length == 1) {
     // 单关时若金额不合要求，则清除金额
-    let _money = +lodash.get(view_ctr_obj[get_bet_list[0]], 'money')
+    let _money = +lodash.get(view_ctr_obj[BetData.bet_list[0]], 'money')
     if (!_money || _money < 0.01 || _money > +get_user.value.balance) {
       set_money_total('clear_')
     }
@@ -96,10 +93,10 @@ const menu_click = () => {
   if (
     get_is_combine.value &&
     ![3000, 900, 11].includes(+get_menu_type.value) &&
-    !get_is_mix.value
+    !BetData.bet_is_mix.value
   ) {
     let _money = 0,
-      _money_total = get_money_total.value
+      _money_total = BetData.bet_money_total.value
     lodash.forIn(view_ctr_obj, function (item, key) {
       if (+item.money > 0.01) {
         _money = _money + +item.money
@@ -124,10 +121,10 @@ const get_balance = () => {
 }
 
 const mix_sum_odds = computed(() => {
-  if (get_is_mix.value) {
+  if (BetData.bet_is_mix.value) {
     const mix_data = get_s_count_data.value
     let S = ''
-    if (mix_data.length == 0 || mix_data.length == 1 && this.get_bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
+    if (mix_data.length == 0 || mix_data.length == 1 && this.BetData.bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
       const odds = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
       const hsw = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
       const csid = _.get(_.values(this.view_ctr_obj)[0], 'bs.csid') || 0
@@ -135,7 +132,7 @@ const mix_sum_odds = computed(() => {
     } else {
       S = mix_data.length > 0 ? mix_data[0].odds : ''
     }
-    if (S && this.get_bet_list.length > 1) {
+    if (S && this.BetData.bet_list.length > 1) {
       S = S + ''
       if (S.length > 9) {//超过9位数，显示前六位，后面小数点代替
         return '@' + S.substring(0, 6) + '...'
