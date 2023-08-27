@@ -407,5 +407,13 @@ this.bet_appoint_ball_head= null */
       this.bet_s_obj = _.cloneDeep(this.bet_s_obj);
     }
   }
+  /**
+   * @description: 存储最高可赢额
+   * @param {*}win_money 存储字段
+   * @param {*} value 需要存储的值
+   */
+  set_bet_s_obj(win_money,value){
+    this.set_bet_s_obj[win_money] = value
+  }
 }
 export default new BetData();
