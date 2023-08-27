@@ -22,7 +22,6 @@ import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
 import { t } from "src/boot/i18n";;
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
-const {t} =useI18n()
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer
 let store_theme = themeReducer
