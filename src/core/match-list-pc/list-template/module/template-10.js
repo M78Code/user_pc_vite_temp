@@ -54,7 +54,7 @@ import * as TemplateCommon from "./template-common.js"
       },
       {
         ols: [
-          {  _hpid: 174, ot: '3', class: 'no-handicap' },
+          {  _hpid: 174, _hpids:[],   _hpid_fn:(obj)=>{}, ot: '3', class: 'no-handicap' },
         ],
       },
       {

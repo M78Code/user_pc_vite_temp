@@ -1,3 +1,23 @@
+
+
+/**
+ *   ols 下单个项目  这四个维度不共存 
+ *    empty:1, _hpid: 174,     _hpid_fn:(obj)=>{ return 174},
+ *    _hpid: 174,  ======    _hpid_fn:(obj)=>174,
+ *  场景说明：
+ *   empty： 永远空模板 占位 不可能有数据 
+ *   _hpid： 单一玩法ID 不变的 
+ *   _hpid_fn: 动态计算 
+ *             单一时间节点 可能共存的 几个玩法ID  需要根据特殊要求计算的 
+ *             单一时间节点 永远不可能共存的 几个玩法ID ，根据 实际赛事阶段计算
+ *             
+ * 
+ * 
+ */
+
+
+
+
 import lodash from "lodash";
 /**
  * @Description 设置默认模板

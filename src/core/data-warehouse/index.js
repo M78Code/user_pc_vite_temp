@@ -13,7 +13,7 @@ import  MatchDataBase from "./match-ctr/match-ctr.js"
  * 4. 详情赛事相当于一条数据的赛事列表
  * 5. 列表页渲染流程逻辑：
  *    列表使用菜单计算模板，通过模板配置渲染视图框架 生成好格子， 
- *    ==>>> 通过单个玩法 ols 下的 _hpid 或者 _hpids include 玩法id 计算出 玩法ID （动态的通过算法自己实现，和数据仓库无关）
+ *    ==>>> 通过单个玩法 ols 下的 _hpid 或者 _hpid_fn   玩法ID （动态的通过算法自己实现，和数据仓库无关）
  *    ==>>> 通过玩法ID 去数据仓库 取数据 显示赔率填坑
  * 6. 详情页渲染流程逻辑：
  *    详情页使用 玩法集和玩法ID映射关系 ，过滤显示 需要显示的玩法数据
@@ -28,9 +28,9 @@ import  MatchDataBase from "./match-ctr/match-ctr.js"
  * 
  */
 
-// 使用方式
+// 使用方式  别名：   MatchDataWarehouseInstance  暂时不推荐  最好别用 
 // import {MatchDataWarehouse_PC_List_Common as MatchDataWarehouseInstance} from "src/core/data-warehouse/index.js"
-// 或者 
+// 或者  推荐 
 // import {MatchDataWarehouse_PC_List_Common  } from "src/core/data-warehouse/index.js"
 
 
@@ -121,3 +121,5 @@ export const   MatchDataWarehouse_H5_List_Jingxuan =new MatchDataBase({name_code
  */
 
 export const   MatchDataWarehouse_H5_Detail_Jingxuan =new MatchDataBase({name_code:"MatchDataWarehouse_H5_Detail_Jingxuan"})
+
+
