@@ -41,7 +41,7 @@
         </template>
 
         <!-- 单关 -->
-        <template v-if="get_bet_list.length == 1">
+        <template v-if="BetData.bet_list.length == 1">
           <template v-if="BetData.is_bet_success_status">
             <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
             <div class="row justify-between yb_px14 yb_fontsize14 yb_mb8 bottom-bar">
@@ -54,12 +54,12 @@
           <template v-else>
             <!-- 单关金额输入框 -->
             <bet-single-detail ref="bet_single_detail" :tips_msg.sync="tips_msg"
-              :name_="get_bet_list[0]"></bet-single-detail>
+              :name_="BetData.bet_list[0]"></bet-single-detail>
           </template>
         </template>
 
         <!-- 串关主体 金额输入框-->
-        <template v-if="get_bet_list.length != 1 && ![3, 6].includes(+get_bet_status)">
+        <template v-if="BetData.bet_list.length != 1 && ![3, 6].includes(+get_bet_status)">
           <bet-mix-detail :value_="item" :index_="index" v-for="(item, index) of get_s_count_data" :key="index"
             :tips_msg.sync="tips_msg"></bet-mix-detail>
         </template>
@@ -72,10 +72,10 @@
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
         <!-- 左边 -->
-        <div class="add-box" :class="{ 'add-box2': get_bet_list.length >= 2 || BetData.is_bet_success_status, 'add-box3': calc_class }"
+        <div class="add-box" :class="{ 'add-box2': BetData.bet_list.length >= 2 || BetData.is_bet_success_status, 'add-box3': calc_class }"
           @click.stop="pack_up(2)">
           <template v-if="!BetData.is_bet_success_status">
-            <span v-if="get_bet_list.length > 1">{{ i18n.t('bet.delete_all') }}</span>
+            <span v-if="BetData.bet_list.length > 1">{{ i18n.t('bet.delete_all') }}</span>
             <span class="kushikatsu-text" v-else>
               {{ i18n.t('bet.kushikatsu') }}
               <i class="bet-add"></i>
@@ -140,15 +140,14 @@ import betBar from "./bet_bar.vue";
 import betConflictTips from './bet-conflict-tips'
 import utils from 'src/public/utils/utils.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import store from "src/store-redux/index.js";
 import BetData from "../class/bet-data-class";
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
 const exist_code = ref(0)    //投注后是否返回code码
 const series_order_respList = ref([])   //串关投注成功后的返回(包含订单号、金额···)
 const order_detail_resp_list = ref([])    // 单关和串关投注成功后的返回(投注项信息，赔率、盘口···)
-const bet_money_total = ref(0)    //串关投注成功后的总投注额
-const max_win_money_total = ref(0)     //串关投注成功后的总最高可赢
+// const bet_money_total = ref(0)    //串关投注成功后的总投注额
+// const max_win_money_total = ref(0)     //串关投注成功后的总最高可赢
 const query_order_obj = ref([])   //queryOrderStatus接口返回数据
 const is_5s = ref(false)  //弹框弹起来有没有5秒,到了5秒就用默认的5000作限额,不作弹框提示
 const max_winmoney = ref(0)    //单关投注成功后接口返回的最高可赢
@@ -196,7 +195,7 @@ onMounted(() => {
 /** --------------------------onmounted结束 ---------------*/
 //单关的数据对象
 const single_item = computed(() => {
-  if (get_bet_list.value[0]) {
+  if (BetData.bet_list[0]) {
     return view_ctr_obj.bs
   } else {
     return {}
@@ -211,7 +210,7 @@ const is_conflict = computed(() => {
 const is_conflict2 = computed(() => {
   let flag =
     (get_cannot_mix_len.value || get_invalid_ids.value.length) &&
-    get_bet_list.value.length > 1 &&
+    BetData.bet_list.length > 1 &&
     ![900, 3000].includes(+get_menu_type)
 
   if (flag) {
@@ -225,7 +224,7 @@ const is_conflict2 = computed(() => {
 const calc_class = computed(() => {
   let flag = [2, 4].includes(+get_bet_status.value)
     || get_is_champion.value() && !BetData.is_bet_success_status
-    || get_bet_status.value == 5 && get_bet_list.value.length == 1
+    || get_bet_status.value == 5 && BetData.bet_list.length == 1
     || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
     || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
     || btn_show.value == 5;
@@ -239,7 +238,7 @@ const part_bet = computed(() => {
 /** --------------------------watch开始 ---------------*/
 
 watch(() => get_money_notok_list2.value.length, (new_) => {
-  if (!new_ && !get_money_notok_list.value.length && get_bet_list.value.length > 2) {
+  if (!new_ && !get_money_notok_list.value.length && BetData.bet_list.length > 2) {
     tips_msg = ''
   }
 })
@@ -317,7 +316,7 @@ watch(() => get_bet_status.value, (new_) => {
       timer2 = setTimeout(() => {    // 10秒没有code码返回，红字提示网络异常,点击确定移除投注项
         if (!exist_code.value) {
           exist_code.value = '666'
-          if (get_bet_list.value.length) {
+          if (BetData.bet_list.length) {
             set_bet_status(1);
             tips_msg = i18n.t('bet.err_msg13');
           }

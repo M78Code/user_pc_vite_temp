@@ -17,7 +17,7 @@
       <div class="content-b"
         :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"
         @click="change_kbdshow">
-        <span class="intro-other yb_fontsize16">{{ get_bet_list.length }}&nbsp;X</span>
+        <span class="intro-other yb_fontsize16">{{ BetData.bet_list.length }}&nbsp;X</span>
         <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
@@ -45,9 +45,7 @@ const index_ = ref(-1)//光标默认索引
 
 const store_state = store.getState()
 
-const BetData.active_index = ref(store_state.BetData.active_index)
 const get_is_spread = ref(store_state.get_is_spread)
-const get_bet_list = ref(store_state.get_bet_list)
 const get_s_count_data = ref(store_state.get_s_count_data)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_order_los = ref(store_state.get_order_los)
@@ -59,7 +57,6 @@ const update_state = () => {
   const new_state = store.getState()
   BetData.active_index = new_state.BetData.active_index
   get_is_spread.value = new_state.get_is_spread
-  get_bet_list.value = new_state.get_bet_list
   get_s_count_data.value = new_state.get_s_count_data
   get_bet_status.value = new_state.get_bet_status
   get_order_los.value = new_state.get_order_los
@@ -233,7 +230,7 @@ onmounted(() => {
   }, 5000);
 
   //投注项大于1时，光标聚焦到多项单关输入框
-  if (get_bet_list.value.length > 1 && !has_pre) {
+  if (BetData.bet_list.value.length > 1 && !has_pre) {
     set_active_index(-1);
   }
 
@@ -302,11 +299,11 @@ const change_money_ = (new_money) => {
     if (new_money) {
       money.value = '0.00';
       money_ok.value = false;
-      set_money_notok_list({ value: get_bet_list.value[0], status: 1 });
+      set_money_notok_list({ value: BetData.bet_list.value[0], status: 1 });
     } else {
       money.value = '';
       money_ok.value = true;
-      set_money_notok_list({ value: get_bet_list.value[0], status: 2 });
+      set_money_notok_list({ value: BetData.bet_list.value[0], status: 2 });
     }
     return;
   }
@@ -341,7 +338,7 @@ const check_moneyok = (val) => {
     (val >= 0.01 || val === '0.00') &&
     max_money_back.value
   ) {
-    set_money_notok_list({ value: get_bet_list.value[0], status: 1 })
+    set_money_notok_list({ value: BetData.bet_list.value[0], status: 1 })
     money.value = max_money.toString()
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
   }
@@ -350,11 +347,11 @@ const check_moneyok = (val) => {
     (val >= 0.01 || val === '0.00') &&
     max_money_back.value
   ) {
-    set_money_notok_list2({ value: get_bet_list.value[0], status: 1 })
+    set_money_notok_list2({ value: BetData.bet_list.value[0], status: 1 })
   }
   else {
     money_ok.value = true;
-    set_money_notok_list({ value: get_bet_list.value[0], status: 2 });
+    set_money_notok_list({ value: BetData.bet_list.value[0], status: 2 });
   };
 
 }

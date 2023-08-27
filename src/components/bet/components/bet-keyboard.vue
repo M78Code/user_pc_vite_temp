@@ -55,17 +55,12 @@ const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
 const active_index = ref(store_state.BetData.active_index)
-const get_bet_list = ref(store_state.get_bet_list)
 const get_menu_type = ref(store_state.get_menu_type)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
 })
 
-const update_state = () => {
-  const new_state = store.getState()
-  get_bet_list.value = new_state.get_bet_list
-}
 
 const props = defineProps({
   items: {
@@ -88,7 +83,7 @@ watch(() => pre_odds_value, (new_) => {
         }
       }
       let index = BetData.active_index.toString().split('market')[1]
-      let value_show = view_ctr_obj[get_bet_list[index]].bs
+      let value_show = view_ctr_obj[BetData.bet_list[index]].bs
       const isdaxiao = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'));
       if (isdaxiao) {
         if (+pre_odds_value.value > 400) {

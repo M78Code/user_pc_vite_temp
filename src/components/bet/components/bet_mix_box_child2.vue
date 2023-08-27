@@ -53,7 +53,7 @@
         </template>
 
         <!-- 多项单注 金额输入框-->
-        <template v-if="!BetData.bet_is_mix && get_bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
+        <template v-if="!BetData.bet_is_mix && BetData.bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
           <bet-mix-single-detail :tips_msg.sync="tips_msg"></bet-mix-single-detail>
         </template>
 
@@ -120,14 +120,14 @@
             </span>
             <!-- 右 -->
             <!-- 常用金额 -->
-            <span v-if="get_bet_list.length == 1">
+            <span v-if="BetData.bet_list.length == 1">
               <i class="img2" :class="{ 'img3': get_used_money != 0 }" @click="change_used_money"></i>
               <span class="yb_ml4" :class="get_used_money == 0 && 'auto-text'" @click="change_used_money">{{
                 i18n.t('bet.used_money2') }}</span>
             </span>
             <!-- 更多串关类型 -->
             <span v-else-if="BetData.bet_is_mix" @click.stop="spread_options"
-              :class="{ 'opacity-m': get_bet_list.length == 2 || get_s_count_data.length == 1, 'col-8 text-right': get_bet_list.length > 1 }">
+              :class="{ 'opacity-m': BetData.bet_list.length == 2 || get_s_count_data.length == 1, 'col-8 text-right': BetData.bet_list.length > 1 }">
               {{ get_is_spread ? i18n.t('bet.msg04') : i18n.t('bet.msg05') }}
               <i class="arrow" :class="{ 'arrow2': !get_is_spread }"></i>
             </span>

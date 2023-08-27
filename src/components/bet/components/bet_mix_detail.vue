@@ -3,7 +3,7 @@
 -->
 <template>
   <div class="bet-mix-detail half-border-bottom" ref="bet_mix_detail" v-if="index_ == 0 || get_is_spread"
-    :class="{ 'bet-mix-detail2': get_bet_list.length - 1 == index_ }">
+    :class="{ 'bet-mix-detail2': BetData.bet_list.length - 1 == index_ }">
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
@@ -49,7 +49,6 @@ emitters.value = ref({
 const store_state = store.getState()
 const BetData.active_index = ref(store_state.BetData.active_index)
 const get_is_spread = ref(store_state.get_is_spread)
-const get_bet_list = ref(store_state.get_bet_list)
 const get_s_count_data = ref(store_state.get_s_count_data)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_order_los = ref(store_state.get_order_los)
@@ -65,7 +64,6 @@ const update_state = () => {
   const new_state = store.getState()
   BetData.active_index = new_state.BetData.active_index
   get_is_spread.value = new_state.get_is_spread
-  get_bet_list.value = new_state.get_bet_list
   get_s_count_data.value = new_state.get_s_count_data
   get_bet_status.value = new_state.get_bet_status
   get_order_los.value = new_state.get_order_los
@@ -125,7 +123,7 @@ onMounted(() => {
   }, 5000);
 
   //只有2个投注项是固定active_index是0
-  if (get_bet_list.value.length >= 2) {
+  if (BetData.bet_list.value.length >= 2) {
     set_active_index(0);
   }
 
@@ -144,7 +142,7 @@ onMounted(() => {
 
 const max_win_money = computed(() => {
   // 获取第一个的赛种id
-  let _first = get_bet_list.value[0]
+  let _first = BetData.bet_list.value[0]
   let _first_item = view_ctr_obj
   let _csid = _.get(_first_item, 'bs.csid')
   // console.log(get_s_count_data.value, '--get_s_count_data.value')
@@ -154,7 +152,7 @@ const max_win_money_all = computed(() => {
   let all_win_money = 0
   get_s_count_data.value.map((item, i) => {
     if (item.money > 0) {
-      let _first = get_bet_list.value[i]
+      let _first = BetData.bet_list.value[i]
       let _first_item = view_ctr_obj[xx]
       let _csid = _.get(_first_item, 'bs.csid')
       all_win_money = all_win_money + calc_maxwin_money(item.name, item.money, _csid) * 100;
@@ -198,7 +196,7 @@ watch(() => get_money_notok_list2.value.length, (new_) => {
     }, 3000);
   }
 })
-watch(() => get_bet_list.value.length, (new_) => {
+watch(() => BetData.bet_list.value.length, (new_) => {
   money.value = '';
 
   useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
@@ -355,7 +353,7 @@ const set_money_change = (money) => {
  */
 const check_moneyok = (val) => {
   //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-  if (val > +get_user.value.balance && get_bet_list.value.length == 2) {
+  if (val > +get_user.value.balance && BetData.bet_list.value.length == 2) {
     money.value = get_user.value.balance.toString()
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })

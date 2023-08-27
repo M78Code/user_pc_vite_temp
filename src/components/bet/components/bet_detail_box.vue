@@ -219,7 +219,6 @@
 
   const store_state = store.getState()
   const get_user = ref(store_state.get_user)
-  const get_bet_list = ref(store_state.get_bet_list)
   const get_odds_change = ref(store_state.get_odds_change)
   const get_bet_status = ref(store_state.get_bet_status)
   const get_theme = ref(store_state.get_theme)
@@ -239,7 +238,6 @@
   const update_state = () => {
     const new_state = store.getState()
     get_user.value = new_state.get_user
-    get_bet_list.value = new_state.get_bet_list
     get_odds_change.value = new_state.get_odds_change
     get_bet_status.value = new_state.get_bet_status
     get_theme.value = new_state.get_theme

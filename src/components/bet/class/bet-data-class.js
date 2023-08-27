@@ -83,6 +83,30 @@ class BetData {
     return arr.includes(this.bet_status)
 
   }
+  /**
+   *@description 投注框选中的赛事id集合
+   */
+  get_mids() {
+    let arr = [];
+    _.forIn(this.bet_obj, function (val, ) {
+      let _mid = val.mid || val.cs.mid;
+      if (_mid) {
+        arr.push(_mid)
+      }
+    });
+    return arr
+  }
+
+  // 普通赛事不支持串关的投注项数量
+  get_cannot_mix_len() {
+    let len = 0;
+    for (const item of Object.values(this.bet_obj)) {
+      if (item.bs.hps[0].hids == 0) {
+        len++
+      }
+    }
+    return this.is_mix ? len : 0
+  }
 }
 
 export default new BetData();
