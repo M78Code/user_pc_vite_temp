@@ -84,10 +84,10 @@ const mix_odds_sum = computed(() => {
   return ''
 })
 onMounted(() => {
-  is_show_early_settle = props.item_data.is_show_early_settle
+  is_show_early_settle.value = props.item_data.is_show_early_settle
 
   // 监听 重载注单页面
-  useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
+  useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).on
 })
 
 // 重载注单页面

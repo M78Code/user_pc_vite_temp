@@ -43,7 +43,6 @@ import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";
 import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.svg";
 
 /** 国际化 */
-;
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);

@@ -48,13 +48,11 @@ const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 const store_state = store.getState()
 
 const get_cur_odd = ref(store_state.get_cur_odd)
-const get_bet_list = ref(store_state.get_bet_list)
-const get_money_total = ref(store_state.get_money_total)
 const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
-const BetData.active_index = ref(store_state.BetData.active_index)
+const active_index = ref(store_state.BetData.active_index)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -62,7 +60,6 @@ const unsubscribe = store.subscribe(() => {
 
 const update_state = () => {
   const new_state = store.getState()
-  get_bet_list.value = new_state.get_bet_list
   get_show_favorite_list.value = new_state.get_show_favorite_list
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_collapse_csid_map.value = new_state.get_collapse_csid_map
@@ -83,7 +80,7 @@ onMounted(() => {
   timer4 = null;
   flicker_timer = null  //光标闪动计时器
 
-  money.value = get_money_total && view_ctr_obj[name_].money || ''
+  money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
   // 同步程序走完后再处理逻辑
   $nextTick(() => {
@@ -123,7 +120,7 @@ const max_win_money = computed(() => {
 })
 // 转化过后的坑位id
 const hn_id = computed(() => {
-  return get_bet_list[index_]
+  return BetData.bet_list[index_]
 })
 // 单关监听最高可投注金额
 const obj_max_money = computed(() => {
@@ -179,9 +176,9 @@ const obj_bet_money = computed(() => {
   watch(() => max_money_back, (new_) => {
     if (
       get_used_money > 0 &&
-      get_bet_list.length == 1 &&
+      BetData.bet_list.length == 1 &&
       money.value < 0.01 &&
-      !get_money_total &&
+      !BetData.bet_money_total &&
       new_
     ) {
       money.value = (get_used_money > max_money.value ? max_money.value : get_used_money).toString()
@@ -219,9 +216,9 @@ const obj_bet_money = computed(() => {
     }
   })
   // 多注单项，删除投注项时，需要清空金额
-  watch(() => get_bet_list.length, (newVal, oldVal) => {
+  watch(() => BetData.bet_list.length, (newVal, oldVal) => {
     if (newVal < oldVal) {
-      money.value = get_money_total && view_ctr_obj[name_].money || ''
+      money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
       is_watch.value = false
       $nextTick(() => {
@@ -229,7 +226,7 @@ const obj_bet_money = computed(() => {
       })
     }
   })
-  watch(() => get_money_total, (new_) => {
+  watch(() => BetData.bet_money_total, (new_) => {
     if (newVal == 0) {
       money.value = ''
       send_money_to_keyboard()
@@ -276,11 +273,11 @@ const obj_bet_money = computed(() => {
       if (new_money) {
         money.value = '0.00';
         money_ok.value = false;
-        set_money_notok_list({ value: get_bet_list[0], status: 1 });
+        set_money_notok_list({ value: BetData.bet_list[0], status: 1 });
       } else {
         money.value = '';
         money_ok.value = true;
-        set_money_notok_list({ value: get_bet_list[0], status: 2 });
+        set_money_notok_list({ value: BetData.bet_list[0], status: 2 });
       }
 
       return;
@@ -314,7 +311,7 @@ const obj_bet_money = computed(() => {
       (val >= 0.01 || val === '0.00') &&
       max_money_back.value
     ) {
-      set_money_notok_list({ value: get_bet_list[0], status: 1 })
+      set_money_notok_list({ value: BetData.bet_list[0], status: 1 })
       money.value = max_money.value.toString()
     }
     else if (
@@ -322,10 +319,10 @@ const obj_bet_money = computed(() => {
       (val >= 0.01 || val === '0.00') &&
       max_money_back.value
     ) {
-      set_money_notok_list2({ value: get_bet_list[0], status: 1 })
+      set_money_notok_list2({ value: BetData.bet_list[0], status: 1 })
     }
     else {
-      money_ok.value = true; set_money_notok_list({ value: get_bet_list[0], status: 2 });
+      money_ok.value = true; set_money_notok_list({ value: BetData.bet_list[0], status: 2 });
     }
   },
   /**

@@ -19,9 +19,8 @@
                 <div v-for="(value, name, index) in list_data" :key="index">
                     <template v-if="expired_all_flag(value)">
                         <!-- .Format(t('time2')) -->
-                        <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'"
-                            @click="toggle_show(value)">
-                            <span>{{ (new Date(name)) }}</span>
+                        <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
+                            <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                             <span v-if="!value.open && index != 0 && !selected_expired">
                                 <img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" />
                             </span>
@@ -44,7 +43,8 @@
         </scroll>
         <!-- 合并投注项提示弹框 -->
         <cancle-confirm-pop @cancleHanddle="cancle_pre_pop" @confirmHandle="cancle_pre_order"
-            :show="cancle_confirm_pop_visible" :teamname="teamName"></cancle-confirm-pop>
+            :show="cancle_confirm_pop_visible" :teamname="teamName">
+        </cancle-confirm-pop>
     </div>
 </template>
 
@@ -52,6 +52,7 @@
 import { ref, getCurrentInstance, watch, onUnmounted, onMounted } from 'vue'
 import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+import { format_M_D } from 'src/core/formart/index.js'
 // 合并投注项提示弹框
 import cancleConfirmPop from 'project_path/src/pages/cathectic/cancle-confirm-pop.vue';
 import settleVoid from "project_path/src/pages/cathectic/settle-void.vue";
@@ -59,7 +60,7 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { t } from "src/boot/i18n";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
@@ -74,16 +75,15 @@ const props = defineProps({
         type: Number || Srting
     }
 })
-let { t } = useI18n()
 // 页面锚点
 const myScroll = ref(null)
 // 定时器
 let timer_2 = ref(null)
-let timer_1 = ref (null)
+let timer_1 = ref(null)
 // 确认取消弹框
 let cancle_confirm_pop_visible = ref(false)
 //要取消的队名
-let teamName =  ref('')
+let teamName = ref('')
 //要取消的订单号
 let orderNumber = ref('')
 //是否在加载中
@@ -104,24 +104,24 @@ const instance = getCurrentInstance()
 //获取预约订单状态
 const change_pre_status = (orderList) => {
     const params = {
-        orderNoList : orderList
+        orderNoList: orderList
     }
-    api_betting.get_pre_status(params).then(res=>{
-        if(res.code == 200){
-        const {data} = res
-        const listObj = lodash.cloneDeep(list_data)
-        for(let key in listObj){
-            let listItem = listObj[key]
-            for(let i = 0;i<listItem.data.length;i++){
-            let tempData = lodash.find(data,(o)=>{return listItem.data[i].orderNo == o.orderNo})
-            if(tempData){
-                listItem.data[i].preOrderStatus = tempData.preOrderStatus
+    api_betting.get_pre_status(params).then(res => {
+        if (res.code == 200) {
+            const { data } = res
+            const listObj = lodash.cloneDeep(list_data)
+            for (let key in listObj) {
+                let listItem = listObj[key]
+                for (let i = 0; i < listItem.data.length; i++) {
+                    let tempData = lodash.find(data, (o) => { return listItem.data[i].orderNo == o.orderNo })
+                    if (tempData) {
+                        listItem.data[i].preOrderStatus = tempData.preOrderStatus
+                    }
+                }
             }
-            }
+            list_data.value = listObj
         }
-        list_data.value = listObj
-        }
-    }).catch(()=>{
+    }).catch(() => {
         //不处理
     })
 }
@@ -133,20 +133,20 @@ const show_cancle_pop = (params) => {
 }
 //判断是否当前日期所有已失效订单状态
 const expired_all_flag = (param) => {
-    if(!selected_expired.value){
+    if (!selected_expired.value) {
         return true
-    }else{
-        return lodash.find(param.data,(data)=>{
-        return [2,3,4].includes(data.preOrderStatus)
+    } else {
+        return lodash.find(param.data, (data) => {
+            return [2, 3, 4].includes(data.preOrderStatus)
         }) ? true : false
     }
 }
 //判断当前订单是否是已失效
 const expired_flag = (data) => {
-    if(!selected_expired.value){
+    if (!selected_expired.value) {
         return false
-    }else{
-        return ![2,3,4].includes(data.preOrderStatus)
+    } else {
+        return ![2, 3, 4].includes(data.preOrderStatus)
     }
 }
 //显示已失效订单
@@ -158,25 +158,28 @@ const show_cancle_order = () => {
 *@param {String} orderNumer 订单号
 */
 const cancle_pre_order = () => {
-    api_betting.cancle_pre_order({orderNo:orderNumber.value}).then((res)=>{
-    if(res.code == 200){
-        store.dispatch({
+    api_betting.cancle_pre_order({ orderNo: orderNumber.value }).then((res) => {
+        if (res.code == 200) {
+            store.dispatch({
                 'txt': t('pre_record.canceled'),
-                 hide_time: 3000 })
-        cancle_confirm_pop_visible.value = false
-        timer_2.value = setTimeout(()=>{ change_pre_status([{
-        orderNo: orderNumber.value
-        }])},1000)
-        init_data(true)
-    }else if(['0400546','0400547'].includes(res.code)){
-        cancle_confirm_pop_visible.value = false
-        store.dispatch({
-                'txt':res.code == '0400546'? t('pre_record.cancle_fail_tips'):t('pre_record.cancle_fail_tips2'),
-                 hide_time: 3000
+                hide_time: 3000
             })
-    }
-    }).catch(()=>{
-    cancle_confirm_pop_visible.value = false
+            cancle_confirm_pop_visible.value = false
+            timer_2.value = setTimeout(() => {
+                change_pre_status([{
+                    orderNo: orderNumber.value
+                }])
+            }, 1000)
+            init_data(true)
+        } else if (['0400546', '0400547'].includes(res.code)) {
+            cancle_confirm_pop_visible.value = false
+            store.dispatch({
+                'txt': res.code == '0400546' ? t('pre_record.cancle_fail_tips') : t('pre_record.cancle_fail_tips2'),
+                hide_time: 3000
+            })
+        }
+    }).catch(() => {
+        cancle_confirm_pop_visible.value = false
     })
 }
 /**
@@ -201,41 +204,41 @@ const refreshOrderList = () => {
 */
 const init_data = (flag) => {
     var params = {
-        preOrderStatusList: [0,2,3,4]
+        preOrderStatusList: [0, 2, 3, 4]
     }
     is_loading.value = !flag
     //第一次加载时的注单数
     let size = 0
-    api_betting.get_preOrderList_news(params).then(result=>{
+    api_betting.get_preOrderList_news(params).then(result => {
         let res = {}
         if (result.status) {
             res = result.data
         } else {
             res = result
         }
-        if(res.code == 200 && res.data){
-        is_loading.value = false
-        let { record, hasNext } = lodash.get(res, "data");
+        if (res.code == 200 && res.data) {
+            is_loading.value = false
+            let { record, hasNext } = lodash.get(res, "data");
             is_hasnext.value = hasNext
             if (lodash.isEmpty(record)) {
+                return;
+            }
+            // 合并数据
+            let obj = lodash.cloneDeep(list_data.value)
+            list_data.value = lodash.merge(obj, record)
+            for (let item of Object.values(list_data.value)) {
+                item.open = true
+                for (var i = 0; i < item.data.length; i++) {
+                    item.data[i].orderVOS = item.data[i].detailList
+                }
+                size += item.data.length
+            }
+            last_record.value = lodash.findLastKey(record);
+        } else {
+            is_loading.value = false;
             return;
-            }
-        // 合并数据
-        let obj = lodash.cloneDeep(list_data.value)
-        list_data.value = lodash.merge(obj, record)
-        for (let item of Object.values(list_data.value)) {
-            item.open = true
-            for(var i = 0;i<item.data.length;i++){
-            item.data[i].orderVOS = item.data[i].detailList
-            }
-            size += item.data.length
         }
-        last_record.value = lodash.findLastKey(record);
-        }else {
-        is_loading.value = false;
-        return;
-        }
-    }).catch((err)=>{
+    }).catch((err) => {
         is_loading.value = false;
     })
 
@@ -252,7 +255,7 @@ const onPull = () => {
         return;
     }
     var params = {
-        preOrderStatusList: [0,2,3,4],
+        preOrderStatusList: [0, 2, 3, 4],
         searchAfter: last_record.value || undefined,
     };
     //加载中
@@ -260,30 +263,30 @@ const onPull = () => {
     api_betting.get_preOrderList_news(params).then(res => {
         // 为 null 时容错处理
         if (!res.data) {
-        is_hasnext.value = false
-        //没有更多
-        ele.setState(7);
-        return
+            is_hasnext.value = false
+            //没有更多
+            ele.setState(7);
+            return
         }
         //加载完成
         ele.setState(5);
         let { record, hasNext } = lodash.get(res, "data", {});
         is_hasnext.value = hasNext
-        if(res.code == 200 && res.data){
-        last_record.value = lodash.findLastKey(record);
-        // 合并数据
-        let obj = lodash.cloneDeep(list_data);
-        list_data.value = lodash.merge(obj, record)
-        for (let item of Object.values(list_data)) {
-            item.open = true
-            for(var i = 0;i<item.data.length;i++){
-            item.data[i].orderVOS = item.data[i].detailList
+        if (res.code == 200 && res.data) {
+            last_record.value = lodash.findLastKey(record);
+            // 合并数据
+            let obj = lodash.cloneDeep(list_data);
+            list_data.value = lodash.merge(obj, record)
+            for (let item of Object.values(list_data)) {
+                item.open = true
+                for (var i = 0; i < item.data.length; i++) {
+                    item.data[i].orderVOS = item.data[i].detailList
+                }
             }
-        }
 
-        }else {
+        } else {
             //没有更多
-        ele.setState(7);
+            ele.setState(7);
         }
     }).catch(err => { console.error(err) });
 }
@@ -304,34 +307,35 @@ watch(() => props.main_item, (newVal) => {
     if (newVal == 2) {
         lodash.isEmpty(list_data.value) && init_data()
     }
-    })
-watch(() => list_data,  () => {
+})
+watch(() => list_data, () => {
     //监听预约记录数据，是否有预约中的订单，并轮询获取
-    handler = function(newVal){
-        if(lodash.isEmpty(newVal))return
+    handler = function (newVal) {
+        if (lodash.isEmpty(newVal)) return
         let orderNumber = []
-        lodash.forIn(newVal,(item,key)=>{
-        const tempOrderList = lodash.filter(item.data,(o)=>{
-            return o.preOrderStatus === 0
+        lodash.forIn(newVal, (item, key) => {
+            const tempOrderList = lodash.filter(item.data, (o) => {
+                return o.preOrderStatus === 0
+            })
+            orderNumber = lodash.concat(orderNumber, tempOrderList);
         })
-        orderNumber = lodash.concat(orderNumber,tempOrderList);
-        })
-        if(orderNumber.length>0){
-        const orderList = []
-        orderNumber.map((item)=>{
-            orderList.push(item.orderNo)
-        })
-        clearTimeout(timer_1.value)
-        timer_1.value = setTimeout(()=>{
-            if(store_cathectic.value.main_item.value == 2 && document.visibilityState == 'visible'){
-            change_pre_status(orderList)
-            }
-            },5000)
-        }else{
-        clearTimeout(timer_1.value)
+        if (orderNumber.length > 0) {
+            const orderList = []
+            orderNumber.map((item) => {
+                orderList.push(item.orderNo)
+            })
+            clearTimeout(timer_1.value)
+            timer_1.value = setTimeout(() => {
+                if (store_cathectic.value.main_item.value == 2 && document.visibilityState == 'visible') {
+                    change_pre_status(orderList)
+                }
+            }, 5000)
+        } else {
+            clearTimeout(timer_1.value)
         }
-    }})
-    // 组件销毁后执行的操作
+    }
+})
+// 组件销毁后执行的操作
 onUnmounted(() => {
     clearTimeout(timer_1.value)
     timer_1.value = null

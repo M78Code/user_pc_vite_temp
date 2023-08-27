@@ -74,7 +74,6 @@ const props = defineProps({
 
 
   onUnmounted(() => {
-    console.error(store_data);
     clearTimeout(timer)
     timer = null
   })
@@ -85,7 +84,6 @@ const props = defineProps({
   //   ])
   // },
   const cancleOrder = () => {
-    console.error('取消吗');
     useMittOn(MITT_TYPES.EMIT_SHOW_CANCLE_POP,{
       orderNo: props.orderNumber,
       name: props.top_.matchInfo

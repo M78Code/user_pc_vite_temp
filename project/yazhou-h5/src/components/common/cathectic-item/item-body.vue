@@ -10,7 +10,7 @@
       <template v-for="(item, key) in data_b.orderVOS">
         <div v-if="item.isBoolean" :key="key">
           <!-- 非冠军玩法的单关 -->
-          <!-- <body-top :top_="item" :preOrder="data_b.preOrder"  v-if="item.matchType != 3 && data_b.seriesType == '1'" class="mx-12 body_top half-border-bottom"></body-top> -->
+          <body-top :top_="item" :preOrder="data_b.preOrder"  v-if="item.matchType != 3 && data_b.seriesType == '1'" class="mx-12 body_top half-border-bottom"></body-top>
           <!-- 中间主体区域 -->
           <body-main :main="item" :marketType="data_b.marketType" :type_="data_b" :box_bool="box_bool" :index_="key" :len="data_b.orderVOS.length"></body-main>
         </div>
@@ -44,8 +44,6 @@ import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
 import { t } from "src/boot/i18n";;
 
-// 国际化
-let { t } = useI18n()
   //按钮名字
   let btn_text = ref('')
   //按钮图标的方向

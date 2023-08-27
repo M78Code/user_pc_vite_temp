@@ -24,7 +24,7 @@
             hideCurrencySymbol: true
           }" :precision="{
   min: 0,
-  max: 2
+max: 2
 }" :valueRange="{
   min: 0,
   max: input_max

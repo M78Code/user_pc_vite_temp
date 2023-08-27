@@ -317,7 +317,7 @@ class MatchListDataClass {
 	compute_match_all_handicap_data(match) {
 		let { tpl_id, csid, mmp } = match;
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${tpl_id}`] || {};
+		let play_config = match_list_play_config[`template_${tpl_id}_config`] || {};
 
 		// 是否角球菜单
 		let is_corner_menu = $menu.is_corner_menu();
@@ -379,7 +379,7 @@ class MatchListDataClass {
 		//  15分钟主盘口列表
 		else if (tpl_id == 24 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				match_list_play_config.template_0.hps15Minutes
+				match_list_play_config.template_0_config.hps15Minutes
 			);
 			type = 4;
 			this.set_min15(match, match.mst);
@@ -387,7 +387,7 @@ class MatchListDataClass {
 		//  罚牌主盘口列表
 		else if (tpl_id == 25 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				match_list_play_config.template_0.hpsPunish
+				match_list_play_config.template_0_config.hpsPunish
 			);
 		}
 		match.main_handicap_list = this.merge_template_data({
@@ -454,7 +454,7 @@ class MatchListDataClass {
 		if (match.tpl_21_hpids.includes(341)) {
 			list_name = list_name.replace("20", "341");
 		}
-		return this.clone_arr(match_list_play_config.template_21[list_name]);
+		return this.clone_arr(match_list_play_config.template_21_config[list_name]);
 	}
 	/**
 	 * @Description ws推送合并冠军玩法结束时间
@@ -472,7 +472,7 @@ class MatchListDataClass {
 	 */
 	set_match_cur_handicap_data(match, is_ws_call) {
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${match.tpl_id}`] || {};
+		let play_config = match_list_play_config[`template_${match.tpl_id}_config`] || {};
 		// 当前局盘口列表
 		let cur_handicap_list = this.get_cur_handicap_list(match, play_config);
 		cur_handicap_list = this.merge_template_data({
@@ -595,7 +595,7 @@ class MatchListDataClass {
 	 */
 	set_match_add_handicap_data(match) {
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${match.tpl_id}`] || {};
+		let play_config = match_list_play_config[`template_${match.tpl_id}_config`] || {};
 
 		// 附加盘1盘口列表
 		let add1_handicap_list = this.clone_arr(play_config.add_handicap_list);
@@ -625,7 +625,7 @@ class MatchListDataClass {
 		this.set_tab_play_keys(match);
 		//当前选中玩法
 		let cur_other_play = match.play_current_key;
-		let template_name = `template_${tpl_id}`;
+		let template_name = `template_${tpl_id}_config`;
 		// 其他玩法盘口列表
 		let other_handicap_list = this.clone_arr(
 			match_list_play_config[template_name][cur_other_play]
@@ -715,7 +715,7 @@ class MatchListDataClass {
 		let hpid = utils.get_match_status(ms, [110]) ? "362" : "361";
 		let tpl_name = `hps5Minutes_${hpid}`;
 		let slice_index = Math.min(hSpecial5min - 1, 3);
-		lodash.each(match_list_play_config[`template_${tpl_id}`][tpl_name], (col) => {
+		lodash.each(match_list_play_config[`template_${tpl_id}_config`][tpl_name], (col) => {
 			other_handicap_list.push({ ols: col.ols.slice(slice_index) });
 		});
 		return this.clone_arr(other_handicap_list);
@@ -989,7 +989,7 @@ class MatchListDataClass {
 		let match = this.mid_obj["mid_" + mid] || {};
 		this.set_match_play_current_index(match, play_key);
 		let { tpl_id } = match;
-		let template_name = `template_${tpl_id}`;
+		let template_name = `template_${tpl_id}_config`;
 		let other_handicap_list = this.clone_arr(
 			match_list_play_config[template_name][play_key]
 		);

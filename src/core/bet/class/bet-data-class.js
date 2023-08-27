@@ -13,9 +13,9 @@ class BetData {
     // 押注信息对象
     this.bet_obj = {};
     //是否接受更好赔率
-    this.is_accept = false;
+    this.bet_is_accept = false;
     // 是否串关
-    this.is_mix = false;
+    this.bet_is_mix = false;
     // 押注信息列表
     this.bet_list = [];
     // 押注扁平化对象扁平
@@ -333,6 +333,17 @@ this.bet_appoint_ball_head= null */
   set_dianjing_bet_obj(obj) {
     this.dianjing_bet_obj[obj.custom_id] = obj
   }
+   /*
+  设置 是否接受更好赔率
+  */
+  set_is_accept(value) {
+    value = Number(value)
+    if (isNaN(value)) {
+      this.is_accept = value == 1 ? 2 : 1
+    } else {
+      this.is_accept = value;
+    }
+  },
 
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData

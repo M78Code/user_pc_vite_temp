@@ -9,7 +9,7 @@
       <img  src="image/wwwassets/bw3/svg/copy.svg" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 t('bet_record.bet_time')   .Format(t('time4'))-->
-    <div class="text-right">{{t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(format_time_zone_time(+data_o.betTime)))}}</span></div>
+    <div class="text-right">{{t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
-import { format_time_zone_time } from 'src/core/formart/index.js'
+import { formatTime } from 'src/core/formart/index.js'
 import { t } from "src/boot/i18n";;
 //国际化
 

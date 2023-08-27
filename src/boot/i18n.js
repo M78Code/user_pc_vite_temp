@@ -36,7 +36,7 @@ function loadLanguageAsync(lang) {
   // 语言映射路径
 
   return import(
-    /* webpackChunkName: "lang-[request]" */ `project_path/src/i18n/${map_lang[lang]}`
+    /* webpackChunkName: "lang-[request]" */ `project_path/src/i18n/${map_lang[lang]}/index.json`
   ).then((langfile) => {
     // 动态加载对应的语言包
     let langFile = langfile.default;
@@ -45,6 +45,8 @@ function loadLanguageAsync(lang) {
     // 设置语种
     i18n.locale = lang;
     return lang;
+  }).catch(error => {
+    console.log('lockie_test_consolee', error);
   });
 }
 // 新增

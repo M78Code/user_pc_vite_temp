@@ -1,5 +1,5 @@
 import { isDate } from "lodash";
-import { i18n } from "src/boot/i18n.js"
+import { t } from "src/boot/i18n"
 
 export const format_Y_M_D_H_M = function (payload) {
   if (!payload) return "";
@@ -22,13 +22,20 @@ export const formcht_Y_M_D_H_M = function (payload) {
   return `${y}年${M}月${d}日  ${h}:${m}`;
 };
 // 示例： 1 月 2 日
+/**
+ * 日期格式化
+ * @param {String} val 时间戳
+ * @return {String}
+ */
 export const format_M_D = function (payload, that) {
+  // TODO:payload 如果非时间戳无法正常转换
   if (!payload) return "";
   let time = new Date(parseInt(payload));
   let m = time.getMonth();
   let d = time.getDate() + "";
-  let monthes = i18n.t("time.monthes");
-  let format = i18n.t("time.time_date_1");
+  // TODO: time.monthes  国际化不是字符串无法读取[] ----> "[]"
+  let monthes = JSON.parse(t("time.monthes"));
+  let format = t("time.time_date_1");
   format = format.replace("%date", d);
   format = format.replace("%month", monthes[m]);
   return format;
@@ -176,6 +183,7 @@ export const format_time_zone_millisecond = (time, offset = 8) => {
  * @return {int} 转换后的时区的时间戳
  */
 export const format_time_zone_time = (time, offset = 8) => {
+  debugger
   var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
   var localTime = d.getTime(); //获取的是毫秒级
   var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
@@ -219,6 +227,7 @@ export const format_date_base = (value) => {
  * @return {String} 格式好的时间
  */
 export const formatTime = (timestamp, fmt) => {
+
   try {
     // const date = new Date(parseInt(timestamp))
     const date = new Date(
