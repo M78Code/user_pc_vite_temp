@@ -1,7 +1,7 @@
 
 import { ref, onMounted, defineComponent } from "vue"
 
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import { useMittEmit,useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import store from "src/store-redux/index.js";
 
@@ -81,19 +81,19 @@ export default defineComponent({
 
     onMounted(() => {
       //网络错误时设置默认最大最小值
-      useMittEmit(MITT_TYPES.EMIT_NET_ERR, net_err_fun)
+      useMittOn(MITT_TYPES.EMIT_NET_ERR, net_err_fun)
       // 串关的校验金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, check_money)
+      useMittOn(MITT_TYPES.EMIT_BET_MIX_CHECK_MONEY_CMD, check_money)
       // 触发清除串关输入框金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, bet_clear_handle)
+      useMittOn(MITT_TYPES.EMIT_BET_MIX_CLEAR_HANDLE_CMD, bet_clear_handle)
       // 设置金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, set_money)
+      useMittOn(MITT_TYPES.EMIT_BET_MIX_SET_MONEY_CMD, set_money)
       // 设置输入框的最大金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, set_input_max)
+      useMittOn(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY, set_input_max)
       // 设置最小金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, set_min_money)
+      useMittOn(MITT_TYPES.EMIT_BET_MIX_MIN_MONEY, set_min_money)
       // 更新键盘按键状态
-      useMittEmit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD, update_keyboard_status)
+      useMittOn(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_CMD, update_keyboard_status)
       // 若为串关的额第一个输入投注项
       if (props.index == 0) {
         // 计算第一个输入投注项显示的赔率(各个投注项赔率进行相乘)
