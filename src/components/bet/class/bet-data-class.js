@@ -33,12 +33,12 @@ class BetData {
     this.bet_obj = {} //押注信息对象
     this.temp_obj = {} //bet_obj的临时存储
     this.temp_list = [] //bet_list的临时存储
-    this.s_count_data = [] //统计串关数数据
+    this.is_count_data = [] //统计串关数数据
     this.bet_status = 0 //押注状态0-隐藏状态 1-初始弹出状态2-注单处理中状态3-投注成功4-投注失败(bet接口没返回200)5-盘口变化、失效，赔率变化，6-注单确认中（提交成功）7-有投注项锁盘，8-单关投注失败(bet接口返回200)
     this.active_index = 0 // 处于活动的投注项子项
-    this.money_total = 0 //串关总金额
+    this.bet_money_total = 0 //串关总金额
     this.is_mix = false //是否在串关页面里
-    this.is_combine = false // 是否选中合并投注项
+    this.bet_is_combine = false // 是否选中合并投注项
     this.is_spread = false //是否展开过关投注选项
     this.accept_show = false //自动接受更好赔率规则是否显示
     this.combine_tips_show = false // 合并投注项弹框提示是否显示
@@ -74,7 +74,7 @@ class BetData {
   set_is_spread(val) {
     this.is_spread = val;
   }
-  
+
   // 是否投注成功状态
   is_bet_success_status() {
 
@@ -82,6 +82,30 @@ class BetData {
 
     return arr.includes(this.bet_status)
 
+  }
+  /**
+   *@description 投注框选中的赛事id集合
+   */
+  get_mids() {
+    let arr = [];
+    _.forIn(this.bet_obj, function (val, ) {
+      let _mid = val.mid || val.cs.mid;
+      if (_mid) {
+        arr.push(_mid)
+      }
+    });
+    return arr
+  }
+
+  // 普通赛事不支持串关的投注项数量
+  get_cannot_mix_len() {
+    let len = 0;
+    for (const item of Object.values(this.bet_obj)) {
+      if (item.bs.hps[0].hids == 0) {
+        len++
+      }
+    }
+    return this.is_mix ? len : 0
   }
 }
 
