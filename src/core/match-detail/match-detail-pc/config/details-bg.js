@@ -10,105 +10,105 @@ const detail_csid_config= {
     csid: '2',
     mark: '篮球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/basketball.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/png/basketball.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_003: {
     csid: '3',
     mark: '棒球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/baseball.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/png/baseball.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_004: {
     csid: '4',
     mark: '冰球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/ice_hockey.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/jpg/ice_hockey.jpg" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_005: {
     csid: '5',
     mark: '网球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/tennis.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/png/tennis.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_006: {
     csid: '6',
     mark: '美式足球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/american_football.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/png/usa_football.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_007: {
     csid: '7',
     mark: '斯诺克',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/snooker_pool.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/jpg/snooker.jpg" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_008: {
     csid: '8',
     mark: '乒乓球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/ping_pong.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/jpg/ping_pong.jpg" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_009: {
     csid: '9',
     mark: '排球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/volleyball.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/png/volleyball.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_010: {
     csid: '10',
     mark: '羽毛球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/badminton.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/jpg/badminton.jpg" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_011: {
     csid: '11',
     mark: '手球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/handball.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/handball.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_012: {
     csid: '12',
     mark: '拳击',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/boxing.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/boxing.png"" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_013: {
     csid: '13',
     mark: '沙滩排球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/beach_volleyball.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/beach_volleyball.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_014: {
     csid: '14',
     mark: '联合式橄榄球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/rugby.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/rugby.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_015: {
     csid: '15',
     mark: '曲棍球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/hockey.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/hockey.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_016: {
     csid: '16',
     mark: '水球',
     detail: {
-      B: 'background: url("../../public/yazhou-h5/image/jpg/details/water_polo.jpg" ) no-repeat center center/100%  content-box content-box;'
+      B: 'background: url("/yazhou-pc/image/common/png/polo.png" ) no-repeat center center/100%  content-box content-box;'
     }
   },
   CSID_017: { csid: '17', mark: '田径' },
