@@ -49,12 +49,11 @@ const store_state = store.getState()
 
 const get_cur_odd = ref(store_state.get_cur_odd)
 const get_bet_list = ref(store_state.get_bet_list)
-const get_money_total = ref(store_state.get_money_total)
 const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
-const BetData.active_index = ref(store_state.BetData.active_index)
+const active_index = ref(store_state.BetData.active_index)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -83,7 +82,7 @@ onMounted(() => {
   timer4 = null;
   flicker_timer = null  //光标闪动计时器
 
-  money.value = get_money_total && view_ctr_obj[name_].money || ''
+  money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
   // 同步程序走完后再处理逻辑
   $nextTick(() => {
@@ -181,7 +180,7 @@ const obj_bet_money = computed(() => {
       get_used_money > 0 &&
       get_bet_list.length == 1 &&
       money.value < 0.01 &&
-      !get_money_total &&
+      !BetData.bet_money_total &&
       new_
     ) {
       money.value = (get_used_money > max_money.value ? max_money.value : get_used_money).toString()
@@ -221,7 +220,7 @@ const obj_bet_money = computed(() => {
   // 多注单项，删除投注项时，需要清空金额
   watch(() => get_bet_list.length, (newVal, oldVal) => {
     if (newVal < oldVal) {
-      money.value = get_money_total && view_ctr_obj[name_].money || ''
+      money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
       is_watch.value = false
       $nextTick(() => {
@@ -229,7 +228,7 @@ const obj_bet_money = computed(() => {
       })
     }
   })
-  watch(() => get_money_total, (new_) => {
+  watch(() => BetData.bet_money_total, (new_) => {
     if (newVal == 0) {
       money.value = ''
       send_money_to_keyboard()

@@ -53,8 +53,6 @@ const get_bet_status = ref(store_state.get_bet_status)
 const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
 // const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
 // const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
-const get_is_mix = ref(store_state.get_is_mix) // 是否串关
-const get_money_total = ref(store_state.get_money_total)  // 总金额
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -96,10 +94,10 @@ const menu_click = () => {
   if (
     get_is_combine.value &&
     ![3000, 900, 11].includes(+get_menu_type.value) &&
-    !get_is_mix.value
+    !BetData.bet_is_mix.value
   ) {
     let _money = 0,
-      _money_total = get_money_total.value
+      _money_total = BetData.bet_money_total.value
     lodash.forIn(view_ctr_obj, function (item, key) {
       if (+item.money > 0.01) {
         _money = _money + +item.money
@@ -124,7 +122,7 @@ const get_balance = () => {
 }
 
 const mix_sum_odds = computed(() => {
-  if (get_is_mix.value) {
+  if (BetData.bet_is_mix.value) {
     const mix_data = get_s_count_data.value
     let S = ''
     if (mix_data.length == 0 || mix_data.length == 1 && this.get_bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率

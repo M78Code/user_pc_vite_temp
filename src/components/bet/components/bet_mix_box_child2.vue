@@ -19,8 +19,8 @@
             class="yb_mr4 img1" />{{ i18n.t('bet.delete_all') }}</span>
         <!-- 右 自动接受跟好赔率 -->
         <span>
-          <i class="img2" :class="{ 'img3': get_is_accept != 2 }" @click="toggle_accept"></i>
-          <span :class="{ 'auto-text': get_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
+          <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
+          <span :class="{ 'auto-text': BetData.bet_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ i18n.t("ac_rules.auto") }}</span>
           <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
             v-if="get_theme.includes('theme01')" />
@@ -53,7 +53,7 @@
         </template>
 
         <!-- 多项单注 金额输入框-->
-        <template v-if="!get_is_mix && get_bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
+        <template v-if="!BetData.bet_is_mix && get_bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
           <bet-mix-single-detail :tips_msg.sync="tips_msg"></bet-mix-single-detail>
         </template>
 
@@ -82,7 +82,7 @@
         </div>
         <div class="row justify-between items-center content-t yb_mb6 yb_mt8">
           <div class="yellow-color yb_fontsize16">{{ (award_total) }}</div>
-          <div class="yb_fontsize16 bet-mix-show">{{ get_money_total.toFixed(2) }}</div>
+          <div class="yb_fontsize16 bet-mix-show">{{ BetData.bet_money_total.toFixed(2) }}</div>
         </div>
       </div>
       <!-- 提示信息  分3种情况-->
@@ -126,7 +126,7 @@
                 i18n.t('bet.used_money2') }}</span>
             </span>
             <!-- 更多串关类型 -->
-            <span v-else-if="get_is_mix" @click.stop="spread_options"
+            <span v-else-if="BetData.bet_is_mix" @click.stop="spread_options"
               :class="{ 'opacity-m': get_bet_list.length == 2 || get_s_count_data.length == 1, 'col-8 text-right': get_bet_list.length > 1 }">
               {{ get_is_spread ? i18n.t('bet.msg04') : i18n.t('bet.msg05') }}
               <i class="arrow" :class="{ 'arrow2': !get_is_spread }"></i>
@@ -146,7 +146,7 @@
         <div class="add-box add-box2" :class="{ 'add-box2': BetData.is_bet_success_status, 'add-box3': calc_class }"
           @click.stop="pack_up(4)" v-if="BetData.is_bet_success_status">{{ i18n.t('bet.save') }}</div>
         <!-- 单关 -->
-        <div v-else-if="get_is_mix" class="bet-add-box text-bold display_center one_text_color"
+        <div v-else-if="BetData.bet_is_mix" class="bet-add-box text-bold display_center one_text_color"
           :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
           <div class="bet-add-new bet_margin_left"></div>
           <div class="bet_text_left bet-one">{{ i18n.t('bet.kushikatsu') }}</div>
@@ -167,7 +167,7 @@
             <!-- 投注 -->
             <div class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ get_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
             </div>
           </template>
           <template v-else>
@@ -175,12 +175,12 @@
             <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': get_money_notok_list.length }"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ get_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ get_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
             </div>
             <!-- 确定 -->
             <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ i18n.t('common.ok') }}</p>

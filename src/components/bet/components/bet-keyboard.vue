@@ -54,10 +54,9 @@ const store_state = store.getState()
 const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-const BetData.active_index = ref(store_state.BetData.active_index)
+const active_index = ref(store_state.BetData.active_index)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_menu_type = ref(store_state.get_menu_type)
-const get_is_mix = ref(store_state.get_is_mix)
 
 const unsubscribe = store.subscribe(() => {
   update_state()

@@ -54,7 +54,6 @@ const get_order_los = ref(store_state.get_order_los)
 const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
-const get_money_total = ref(store_state.get_money_total)
 
 const update_state = () => {
   const new_state = store.getState()
@@ -67,7 +66,6 @@ const update_state = () => {
   get_user.value = new_state.get_user
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
-  get_money_total.value = new_state.get_money_total
 }
 
 const unsubscribe = store.subscribe(() => {

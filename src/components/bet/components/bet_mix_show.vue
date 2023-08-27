@@ -60,7 +60,7 @@
               <template v-else>{{ value_show | calc_bifen }}</template>
             </template>
           </span>
-          <template v-if="BetData.is_bet_success_status && !(get_is_mix && get_bet_list.length > 1)">
+          <template v-if="BetData.is_bet_success_status && !(BetData.bet_is_mix && get_bet_list.length > 1)">
             <template v-if="(pre_or_bet === 0 || pre_or_bet) && pre_order_status">
               <!-- 预约成功 -->
               <span class="color1"><img src="image/wwwassets/bw3/svg/bet_chengg.svg" class="img0">{{
@@ -115,7 +115,7 @@
     </p>
 
     <!-- 预约投注相关 -->
-    <div class="subscribe-wrap" v-if="!get_is_mix && show_pre && pre_switch">
+    <div class="subscribe-wrap" v-if="!BetData.bet_is_mix && show_pre && pre_switch">
       <div class="operation-line" v-if="is_show_market"></div>
       <!-- 调整盘口 -->
       <div class="subscribe-operation" v-if="is_show_market">
@@ -169,9 +169,9 @@
     <!-- 对应单关多个注单样式 -->
     <template v-if="![11, 100, 900, 3000].includes(+get_menu_type)">
       <!-- 单关金额输入框 -->
-      <bet-single-detail ref="bet_single_detail" v-if="!(BetData.is_bet_success_status || get_is_mix)" v-bind="$attrs" :name_="name_"
+      <bet-single-detail ref="bet_single_detail" v-if="!(BetData.is_bet_success_status || BetData.bet_is_mix)" v-bind="$attrs" :name_="name_"
         :index_="index_"></bet-single-detail>
-      <template v-if="BetData.is_bet_success_status && !get_is_mix && bet_success_obj">
+      <template v-if="BetData.is_bet_success_status && !BetData.bet_is_mix && bet_success_obj">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bottom-bar row justify-between yb_px14 yb_fontsize14 yb_mb8 ">
           <!--左边， 最高可赢 -->
@@ -274,7 +274,7 @@ const props = defineProps({
 watch(() => score, (new_) => {
   const ol_obj = _.get(value_show, 'hps[0].hl[0].ol[0]')
   const hps_obj = _.get(value_show, 'hps[0]')
-  if (!get_is_mix.value && show_pre && pre_switch.value && new_) {
+  if (!BetData.bet_is_mix.value && show_pre && pre_switch.value && new_) {
     const method_type = ol_obj.ot
     const new_arr = new_.replace(/\(/, '').replace(/\)/, '').split('-') || []
     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
@@ -447,7 +447,7 @@ watch(() => bet_obj_on, (new_) => {
     }
   }, 3000);
 
-  if (get_is_mix.value) {    //串关盘口值变更后拉取最新限额
+  if (BetData.bet_is_mix.value) {    //串关盘口值变更后拉取最新限额
     fetch_limit_money();
   }
 })
@@ -478,13 +478,13 @@ watch(() => bet_obj_ov, (new_, old_) => {
 
   if (get_bet_status.value == 6) {   //提交成功状态，如果选择的是自动接受任何赔率变动跟着变，如果选的是接受更好的赔率，当赔率更好了跟着变
     if (
-      [1, 3].includes(+get_is_accept) &&
+      [1, 3].includes(+BetData.bet_is_accept) &&
       old_ && new_ - old_ >= 1000
     ) {
       odds_change.value = 1;
     }
 
-    if (get_is_accept == 2) {
+    if (BetData.bet_is_accept == 2) {
       if (old_ && new_ - old_ >= 1000) {
         odds_change.value = 1;
       } else if (old_ - new_ >= 1000) {
@@ -581,7 +581,7 @@ const show_market_shadow_max = computed(() => {
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!get_is_mix.value) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre)
+  return (!BetData.bet_is_mix.value) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
@@ -637,8 +637,8 @@ const has_pre = computed(() => {
 const is_show_successed_item = computed(() => {
   let flag = get_bet_list.length == 1
     || !BetData.is_bet_success_status
-    || get_is_mix.value
-    || BetData.is_bet_success_status && !get_is_mix.value && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
+    || BetData.bet_is_mix.value
+    || BetData.is_bet_success_status && !BetData.bet_is_mix.value && get_bet_list.length > 1 && bet_obj_item.money >= 0.01 && bet_success_obj
   return flag
 })
 //将赔率映射为计算属性
@@ -651,10 +651,10 @@ const bet_obj_on = computed(() => {
 })
 // 将 普通赛事是否支持串关 映射为计算属性
 const hids = computed(() => {
-  return (get_is_mix.value && _.get(bet_obj_item, 'cs.cds') == "C01") || (_.get(value_show, 'hps[0].hids') == 0 &&
+  return (BetData.bet_is_mix.value && _.get(bet_obj_item, 'cs.cds') == "C01") || (_.get(value_show, 'hps[0].hids') == 0 &&
     get_bet_list.length > 1 &&
     get_menu_type.value != 3000 &&
-    get_is_mix.value)
+    BetData.bet_is_mix.value)
 })
 //将赛事级别盘口状态映射为计算属性
 const bet_obj_mhs = computed(() => {
@@ -677,7 +677,7 @@ const bet_obj_os = computed(() => {
 })
 //是否显示下边线
 const show_border = computed(() => {
-  return get_bet_list[get_bet_list.length - 1] != name_ && get_is_mix.value
+  return get_bet_list[get_bet_list.length - 1] != name_ && BetData.bet_is_mix.value
 })
 // 每个投注项赔率和盘口状态是否正常
 const status_normal = computed(() => {
@@ -836,7 +836,7 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
 */
 const remove_ = (id_) => {
   //校验是否是串关，并且删除后是否小于最小串关数量
-  if (get_is_mix.value && !vilidata_mix_count(true)) { return }
+  if (BetData.bet_is_mix.value && !vilidata_mix_count(true)) { return }
   let _money = view_ctr_obj[id_].money
   if (_money >= 0.01 && get_bet_list.length > 1) {
     set_money_total(0 - _money)
@@ -1099,7 +1099,7 @@ const query_order_obj_handle = (val) => {
     // 去2个地方找注单号
     if (
       !([bet_obj_item.orderno + '', get_order_no.value + ''].includes(item.orderNo + '') ||
-        get_is_mix.value && get_bet_list.length > 1
+        BetData.bet_is_mix.value && get_bet_list.length > 1
       )
     ) {
       continue

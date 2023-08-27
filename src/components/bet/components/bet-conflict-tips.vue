@@ -29,8 +29,8 @@
                 <template v-if="tips_msg"><span class="text-center yb_py4">{{ (tips_msg) }}</span></template>
                 <template v-else-if="!tips_msg && [1, 2, 7].includes(+get_bet_status)">
                     <!-- 左 -->
-                    <i class="img2" :class="{ 'img3': get_is_accept != 2 }" @click="toggle_accept"></i>
-                    <span :class="{ 'auto-text': get_is_accept == 2, 'ac-rules': get_bet_list.length > 1 }" class="yb_mx4"
+                    <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
+                    <span :class="{ 'auto-text': BetData.bet_is_accept == 2, 'ac-rules': get_bet_list.length > 1 }" class="yb_mx4"
                         style="max-width:1.6rem" @click="toggle_accept">{{ i18n.t("ac_rules.auto") }}</span>
                     <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
                         v-if="get_theme.includes('theme01')" />
@@ -83,7 +83,7 @@ const nothing = () =>{
  * 切换是否接受更好赔率
  */
  const toggle_accept = () => {
-  set_is_accept()
+    BetData.set_is_accept()
 }
 
 /**

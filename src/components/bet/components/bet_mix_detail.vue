@@ -95,7 +95,7 @@ onMounted(() => {
 
 
   // 总金额为0时，初始化设置串关各项的金额为0
-  if (+get_money_total == 0) {
+  if (+BetData.bet_money_total == 0) {
     money.value = ''
     set_s_money(index_, 0);
   }
