@@ -12,29 +12,7 @@ export default {
     };
   },
   methods: {
-    /**
-     * @description: 用户金额格式化
-     * @param {Number} value 用户金额
-     * @param {Number} min 最小值
-     * @return {Object} 
-     */    
-    amount_format(value,min){
-      let param = {};
-      min = min || 100000;
-      let k = 10000, sizes = ['',i18n.t("bet.wan"),i18n.t("bet.wanwan"),i18n.t("bet.wanyi")], i;
-      if(value < min ){
-        param.value = value;
-        param.unit = '';
-      }else{
-        i = Math.floor(Math.log(value)/ Math.log(k));
-        param.value = ((value/Math.pow(k,i))).toFixed(3).slice(0,-1);
-        param.unit = sizes[i];
-      }
-      return {
-        value:param.value + '',
-        unit:param.unit
-      };
-    },
+  
     /**
      * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
      * @param {Number} value 需要转换的值
