@@ -17,7 +17,8 @@
  * @return:可能组合的对象
  * @Date 2019/12/21 15:15:50
  */
- import BetCountJointNumber from "src/public/utils/bet/betCountJointNumber.js"
+import mathjs from "./mathjs"
+ import BetCountJointNumber from ".bet-countjoint-number.js"
 export function get_max_win_money(bet_list, bet_obj, bet_s_list, series_values, bet_amount, that) {
   if(isNaN(bet_amount) || bet_amount == 0)
   {
@@ -70,7 +71,7 @@ export function get_max_win_money(bet_list, bet_obj, bet_s_list, series_values, 
         if (cs) {
           let odds_value_ = cs.odds_value;
           if (odds_value_ && odds_value_ != '') {
-            odds_value *= odds_float_format2(that.$mathjs.divide(parseFloat(odds_value_),100000));
+            odds_value *= odds_float_format2(mathjs.divide(parseFloat(odds_value_),100000));
           }
         }
 
@@ -81,8 +82,8 @@ export function get_max_win_money(bet_list, bet_obj, bet_s_list, series_values, 
       // max_win_money = (odds_value * bet_amount - bet_amount)//押注金额*赔率-押注金额
       // max_win_money = (odds_value*100000 * bet_amount - bet_amount*100000)//押注金额*赔率-押注金额
       // max_win_money = max_win_money/100000;
-      max_win_money = (that.$mathjs.multiply(odds_value,100000) * bet_amount - that.$mathjs.multiply(bet_amount,100000))//押注金额*赔率-押注金额
-      max_win_money =  that.$mathjs.divide(max_win_money,100000);
+      max_win_money = (mathjs.multiply(odds_value,100000) * bet_amount - mathjs.multiply(bet_amount,100000))//押注金额*赔率-押注金额
+      max_win_money =  mathjs.divide(max_win_money,100000);
 
       if(!isNaN(max_win_money))
       {
