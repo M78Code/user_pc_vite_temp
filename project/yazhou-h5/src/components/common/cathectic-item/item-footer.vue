@@ -63,8 +63,6 @@
 import { ref, onUnmounted, computed } from 'vue'
 import { t } from "src/boot/i18n";
 
-let { t } = useI18n()
-
   const props = defineProps({
     data_f: {
       type: Object
@@ -149,9 +147,9 @@ let { t } = useI18n()
           let betresult = props.data_f.orderVOS[0].betResult;
           let canceltype = props.data_f.orderVOS[0].cancelType;
           if (betstatus == 1) {
-            return bet_result_1[betresult] || '';
+            return bet_result_1.value[betresult] || '';
           } else if (betstatus == 3 || betstatus == 4) {
-            return bet_result_3[canceltype] || '';
+            return bet_result_3.value[canceltype] || '';
           } else {
             return '';
           }
@@ -180,13 +178,13 @@ let { t } = useI18n()
               // 赢
               if (difference > 0) {
                 class_foter.value = 'red'
-                is_win = true
-                res = bet_result[4]
+                is_win.value = true
+                res = bet_result.value[4]
               } else if (difference < 0) {
                  // 输
-                res = bet_result[3]
+                res = bet_result.value[3]
               } else {  // 走水
-                res = bet_result[2]
+                res = bet_result.value[2]
               }
               break;
             }
@@ -198,7 +196,7 @@ let { t } = useI18n()
                 class_foter.value = 'red'
                 is_win.value = true
               }
-              res =  bet_result[betresult] || '';
+              res =  bet_result.value[betresult] || '';
             }
           } else {
             //串关

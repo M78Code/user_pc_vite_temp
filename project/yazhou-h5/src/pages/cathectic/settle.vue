@@ -14,20 +14,16 @@
               t('bet_record.30day') }}</span>
           </div>
           <div class="sort relative-position" @click.stop="change_sort($event)">
-            <i :class="'sort-' + sort_active"></i>
-            <span>{{ sort_active == 2 ? t('bet_record.sort0') : sort_active == 1 ? t('bet_record.sort1') :
-              t('bet_record.sort2') }}</span><span></span>
+            <i :class="'sort-'+sort_active"></i>
+            <span>{{sort_active == 2 ? t('bet_record.sort0') : sort_active == 1 ? t('bet_record.sort1') : t('bet_record.sort2')}}</span><span></span>
             <!-- 默認排序 -->
             <!-- 按投注时间排序 -->
             <!-- 按开赛时间排序 -->
-            <p v-if="is_sort_show && 0" class="absolute">
-              <span class="sort-text" :class="{ 'select': sort_active == 2 }" data-num='2'><i class="sort0"
-                  :class="{ 'sort-2': sort_active == 2 }"></i>{{ i$root$t('bet_record.sort3') }}</span>
-              <span class="sort-text" :class="{ 'select': sort_active == 1 }" data-num='1'><i class="sort1"
-                  :class="{ 'sort-1': sort_active == 1 }"></i>{{ t('bet_record.sort4') }}</span>
-              <span class="sort-text" :class="{ 'select': sort_active == 3 }" data-num='3'><i class="sort2"
-                  :class="{ 'sort-3': sort_active == 3 }"></i>{{ t('bet_record.sort5') }}</span>
-            </p>
+            <!-- <p v-if="is_sort_show && 0" class="absolute">
+              <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ $root.$t('bet_record.sort3') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ $root.$t('bet_record.sort4') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ $root.$t('bet_record.sort5') }}</span>
+            </p> -->
           </div>
           <div>
             <!-- 提前结算 -->
@@ -46,7 +42,7 @@
                 <!-- 时间和输赢统计  .Format(t('time2')) -->
                 <p class="tittle-p row justify-between yb_px4" :class="{ 'tittle-p2': index == 0 }"
                   @click="toggle_show(value)">
-                  <span>{{ (new Date(name)) }}</span>
+                  <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                   <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{
                     t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
                       t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
@@ -86,7 +82,8 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
-import { t } from "src/boot/i18n";;
+import { format_M_D } from 'src/core/formart/index.js'
+import { t } from "src/boot/i18n";
 //国际化
 
 
@@ -159,6 +156,7 @@ const clac_is_early = (value = []) => {
 */
 const clac_all_is_early = () => {
   const data = lodash.values(list_data.value)
+
   return lodash.find(data, (item) => {
     return lodash.some(item.data, { is_show_early_settle: true })
   }) ? false : true
@@ -193,7 +191,7 @@ const change_sort = (evt) => {
 */
 const change_early = () => {
   is_early.value = !is_early.value
-
+  // console.error(is_early.value);
 }
 /**
  *@description 初始请求注单记录数据
@@ -247,7 +245,7 @@ const init_data = (flag) => {
         return;
       }
       //容错处理，接口再调一次
-      if (size < 5 && size > 0 && hasNext == true) {
+      if (size < 5 && size > 0 && lodash.get(res, 'data.hasNext') == true) {
         init_data()
       }
     })
@@ -326,7 +324,8 @@ const toggle_show = (val) => {
  * @param {undefined} undefined
  * @return {undefined} undefined
  */
-watch(() => is_early, (_new) => {
+watch(() => is_early.value, (_new) => {
+  console.error(_new, is_all_early_flag.value, clac_all_is_early());
   is_all_early_flag.value = _new ? clac_all_is_early() : false
 })
 onUnmounted(() => {

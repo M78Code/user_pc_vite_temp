@@ -99,6 +99,8 @@ export const get_orderstatus = (params, config, url = "/v1/betOrder/queryOrderSt
 export const getPreSettleOrderDetail = (params, config, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix}${url}`, params, config)
 // 提交提前结算接口（joken）
 export const orderPreSettle = (params, config, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config)
+// 提交提前结算接口（joken）
+export const orderPreSettleH5 = (params, config, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix3}${url}`, params, config)
 // 查询待确认中的提前结算单（joken）
 export const queryOrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix}${url}`, params, config)
 // 查询待确认中的提前结算单（joken）
