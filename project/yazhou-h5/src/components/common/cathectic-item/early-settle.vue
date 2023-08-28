@@ -105,8 +105,8 @@
                 &ensp;<img  src="image/wwwassets/bw3/svg/copy.svg" style="width:0.1rem;vertical-align:-2px" alt="" @click="copy($event, item.preOrderNo)">
               </span>
               <span class="order-num" v-else>{{t('early.list6')}}</span>
-
-              <span>{{(new Date(utils.format_time_zone_time(+item.createTime))).Format(t('time4'))}}</span>
+              <!-- .Format(t('time4')) -->
+              <span>{{(new Date(format_time_zone_time(+item.createTime)))}}</span>
             </p>
             <!-- 取消原因 -->
             <div class="row yb_px10 yb_py4" v-if="item.orderStatus == 2">
@@ -145,6 +145,7 @@
 import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
+import { format_time_zone_time } from "src/core/formart/index.js"
 import utils from 'src/core/utils/utils.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
