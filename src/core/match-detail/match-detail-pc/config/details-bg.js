@@ -162,5 +162,62 @@ const detail_csid_config= {
     detail: {
      
     }
-  }
+  },
+  CSID_1001: {
+    csid: '1001',
+    mark: 'VR足球',
+    detail: {
+
+    }
+  },
+  
+  CSID_1002: {
+    csid: '1002',
+    mark: 'VR赛狗',
+    detail: {
+     
+    }
+  },
+  CSID_1007: {
+    csid: '1007',
+    mark: 'VR泥地赛车',
+    detail: {
+     
+    }
+  },
+  CSID_1008: {
+    csid: '1008',
+    mark: 'VR卡丁车',
+    detail: {
+     
+    }
+  },
+  CSID_1009: {
+    csid: '1009',
+    mark: 'VR泥地摩托车',
+    detail: {
+     
+    }
+  },
+  CSID_1010: {
+    csid: '1010',
+    mark: 'VR摩托车',
+    detail: {
+     
+    }
+  },
+  CSID_1011: {
+    csid: '1011',
+    mark: 'VR赛马',
+    detail: {
+     
+    }
+  },
+  CSID_1012: {
+    csid: '1012',
+    mark: 'VR马车赛',
+    detail: {
+     
+    }
+  },
 }
