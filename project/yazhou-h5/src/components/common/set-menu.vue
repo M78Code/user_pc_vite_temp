@@ -201,7 +201,7 @@ import { useRoute, useRouter } from "vue-router"
     cancel_loading_balance = debounce(cancel_loading_balance,200)
     calc_width = window.innerWidth * 100 * 2.6 / 375
     // set_is_show_menu(false)
-    $root.$on(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle);
+    useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle).on;
     onUnmounted(() => {
       clearTimeout(balance_timer);
     balance_timer = null;

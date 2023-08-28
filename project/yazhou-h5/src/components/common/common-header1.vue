@@ -39,11 +39,11 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n";;
-//国际化
+import { t } from "src/boot/i18n";
+import { useRoute } from "vue-router"
 
 
-
+const route = useRoute()
 export default {
   name: "common_header",
   data() {
@@ -184,7 +184,7 @@ export default {
 
       // 赛果详情页
       const curr_tab = view_tab
-      if ($route.name === 'match_result') {
+      if (route.name === 'match_result') {
         // 刷新 盘口赔率信息
         useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事

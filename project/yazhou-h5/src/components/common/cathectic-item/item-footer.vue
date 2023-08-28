@@ -19,8 +19,8 @@
         <p class="top-p">{{t('bet_record.go_back')}}</p>
         <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
         <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
-          <template v-if="data_f.backAmount !== null">{{data_f.backAmount | format_money2}}</template>
-          <template v-else>{{data_f.orderAmountTotal | format_money2}}</template>
+          <template v-if="data_f.backAmount !== null">{{format_money2(data_f.backAmount)}}</template>
+          <template v-else>{{format_money2(data_f.orderAmountTotal)}}</template>
         </p>
       </template>
       <template v-else>
@@ -32,20 +32,20 @@
           <!-- 留空处理 -->
           <!-- <template v-if="data_f.acCode">- -</template> -->
           <!-- 返还金额 -->
-          <!-- <template v-else>{{data_f.backAmount | format_money2}}</template> -->
+          <!-- <template v-else>{{format_money2(data_f.backAmount)}}</template> -->
         </p>
         <p class="yb_fontsize14 money-p" v-else>
           <!-- 留空处理 -->
           <template v-if="data_f.acCode">- -</template>
           <!-- 最高金额 -->
-          <template v-else>{{data_f.maxWinAmount | format_money2}}</template>
+          <template v-else>{{format_money2(data_f.maxWinAmount)}}</template>
         </p>
       </template>
     </div>
     <!-- 已结算页面 -->
     <div v-else>
       <p class="top-p">{{ t('bet_record.go_back') }}</p>
-      <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{data_f.backAmount | format_money2}}</p>
+      <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{format_money2(data_f.backAmount)}}</p>
     </div>
 
     <!-- 右 -->
@@ -60,6 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
+import { format_money2 } from "src/core/formart/index.js"
 import { ref, onUnmounted, computed } from 'vue'
 import { t } from "src/boot/i18n";
 

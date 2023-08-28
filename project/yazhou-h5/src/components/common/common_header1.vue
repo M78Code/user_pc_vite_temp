@@ -41,9 +41,10 @@ import utils from 'src/core/utils/utils.js'
 import lodash from 'lodash'
 import { t } from "src/boot/i18n";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRoute } from "vue-router"
 //国际化
 
-
+const route = useRoute()
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名
@@ -74,7 +75,7 @@ const props = defineProps({
   let timer2_ = ref(null)
   cancel_ref = debounce(cancel_ref,200)
   go_to_back = debounce(go_to_back, 500, {leading: true})
-  $root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+  useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).on
 
     // ...mapMutations(["set_is_matchpage","set_toast","set_is_show_settle_tab","set_godetailpage",
     // "set_detail_data","set_details_changing_favorite"]),
@@ -109,7 +110,13 @@ const props = defineProps({
       // 更新收藏状态
       set_details_changing_favorite(1)
 
-      api_common.add_or_cancel_match( params ).then( res => {
+      api_common.add_or_cancel_match( params ).then( result => {
+        let res = {}
+        if (result.status) {
+            res = result.data
+        } else {
+            res = result
+        }
         favorite_loading = false;
         if (res.code == 200) {
           let cloneData = lodash.clone(get_detail_data)
@@ -130,7 +137,7 @@ const props = defineProps({
 
       // 赛果详情页
       const curr_tab = view_tab
-      if ($route.name === 'match_result') {
+      if (route.name === 'match_result') {
         // 刷新 盘口赔率信息
         useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
