@@ -1,5 +1,5 @@
 /**
- * @description 球种赛程
+ * @description 赛程
  */
 
 export default {
