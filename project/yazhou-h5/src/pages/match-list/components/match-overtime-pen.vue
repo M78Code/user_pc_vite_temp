@@ -83,12 +83,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-<<<<<<< HEAD
-import { format_msc_handle } from 'src/core/formart/module/format-msc'
-
-=======
 import { format_msc_handle } from "src/core/formart/index.js"
->>>>>>> 141776a5aab0e817cf83e4a31f9901fc4aed8cd8
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
 

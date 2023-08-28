@@ -128,11 +128,7 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
-<<<<<<< HEAD
-import { format_time_zone } from 'src/core/formart/module/format-date'
-=======
 import { format_time_zone_time } from "src/core/formart/index.js"
->>>>>>> 141776a5aab0e817cf83e4a31f9901fc4aed8cd8
 
 const props = defineProps({
   match_of_list: Object,
