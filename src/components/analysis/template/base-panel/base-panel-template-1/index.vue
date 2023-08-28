@@ -1,195 +1,461 @@
-<!--
- * @Date: 2022-07-06 18:31:56
- * @FilePath: /user-pc1/src/public/components/analysis/template/article_details.vue
- * @Description: 打开 猜你喜欢 文章
- * @Author: 
--->
-
 <template>
-  <div class="wrap relative-position">
-    <q-scroll-area class="rule-scroll-area" :visible="true" :style="{ height: '100%' }">
-      <div class="article_detail">
-        <p class="article_title">{{ articleDetail.articleTittle }}</p>
-        <p class="author">
-          <span class="author_name">{{ articleDetail.authorName }}</span>
-          <span class="time">{{ articleDetail.updateTime }}</span>
-          <span class="read_count">{{ articleDetail.readCounts }} 阅读</span>
-        </p>
-        <div class="article" v-html="articleDetail.articleContent"></div>
+  <div class="base_panel">
+    <!-- 杯赛积分 -->
+    <div class="panel integrate" :class="{ 'show_all_rank': flag }">
+      <div class="panel-title">
+        <!-- 联赛积分(无数字) 杯赛积分(有数字) -->
+        <span
+          v-if="tournamentTypeFinish">{{ t(`analysis.cup_points${_.get(vs_info, '[0].tournamentType') == 2 ? '1' : ''}`) }}</span>
+        <!-- 查看更多 -->
+        <span class="ranking-more" v-if="_.get(vs_info, '[0].tournamentType') == 1"
+          @click="show_more">{{ t('analysis.show_more') }}</span>
       </div>
-    </q-scroll-area>
+      <div class="d-header d-tr">
+        <!-- 排名 -->
+        <div class="d-td">{{ t('analysis.ranking') }}</div>
+        <!-- 球队 -->
+        <div class="d-td">{{ t('analysis.team') }}</div>
+        <!-- 足球 -->
+        <template v-if="match.csid == '1'">
+          <!-- 联赛 -->
+          <div class="d-td">{{ t('analysis.league') }}</div>
+          <!-- 场数 -->
+          <div class="d-td">{{ t('analysis.game') }}</div>
+          <!-- 胜 -->
+          <div class="d-td">{{ t('analysis.victory') }}</div>
+          <!-- 负 -->
+          <div class="d-td">{{ t('analysis.negative') }}</div>
+          <!-- 平 -->
+          <div class="d-td">{{ t('analysis.flat') }}</div>
+          <!-- 进/失 -->
+          <div class="d-td">{{ t('analysis.gain_loss') }}</div>
+          <!-- 净胜 -->
+          <div class="d-td">{{ t('analysis.net_win') }}</div>
+          <!-- 积分 -->
+          <div class="d-td">{{ t('analysis.integral') }}</div>
+        </template>
+        <!-- 篮球 -->
+        <template v-else>
+          <!-- 胜 -->
+          <div class="d-td">{{ t('analysis.victory') }}</div>
+          <!-- 负 -->
+          <div class="d-td">{{ t('analysis.negative') }}</div>
+          <!-- 赢盘率 -->
+          <div class="d-td">{{ t('analysis.Win_rate') }}</div>
+        </template>
+      </div>
+      <div class="d-body d-tr" v-for="(item, index) in vs_info" :key="index">
+        <div class="d-td">
+          <div class="ranking">{{ item.positionTotal }}</div>
+        </div>
+        <div class="d-td"
+          :style="{ 'fontWeight': (item.teamName == match.mhn || item.teamName == match.man) ? 'bold' : 'unset', 'color': '#191C24' }">
+          {{ item.teamName }}</div>
+        <!-- 足球 -->
+        <template v-if="match.csid == '1'">
+          <div class="d-td" style="color: #191C24;">{{ item.tournamentName }}</div>
+          <div class="d-td">{{ item.matchCount }}</div>
+          <div class="d-td">{{ item.winTotal }}</div>
+          <div class="d-td">{{ item.lossTotal }}</div>
+          <div class="d-td">{{ item.drawTotal }}</div>
+          <div class="d-td">{{ item.goalsForTotal + '/' + item.goalsAgainstTotal }}</div>
+          <div class="d-td">{{ item.goalDiffTotal }}</div>
+          <div class="d-td">{{ item.pointsTotal }}</div>
+        </template>
+        <!-- 篮球 -->
+        <template v-else>
+          <div class="d-td">{{ item.winTotal }}</div>
+          <div class="d-td">{{ item.lossTotal }}</div>
+          <div class="d-td">{{ (item.winTotal / item.matchCount * 100).toFixed(2) }}%</div>
+        </template>
+      </div>
+    </div>
+
+    <!-- 历史交战 -->
+    <div class="panel history before">
+      <div class="panel-title">
+        <!-- 历史交战 -->
+        <span>{{ t('analysis.historical_war') }}</span>
+        <m-select name="vs" @click="selectedFn(arguments)" />
+      </div>
+      <div class="content">
+        <div class="title">
+          <div class="both home">
+            <div class="team-name">
+              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <span>{{ match.mhn }}</span>
+            </div>
+            <div class="socre">
+              <span class="label">
+                {{ _.get(team_vs_history_result, 'home.win') }}
+                <!-- 胜 -->
+                {{ t('analysis.victory') }}
+                {{ _.get(team_vs_history_result, 'home.dogfall') }}
+                <!-- 平 -->
+                {{ t('analysis.flat') }}
+                {{ _.get(team_vs_history_result, 'home.lose') }}
+                <!-- 负 -->
+                {{ t('analysis.negative') }}
+              </span>
+            </div>
+          </div>
+          <div class="vs">vs</div>
+          <div class="both away">
+            <div class="team-name">
+              <span>{{ match.man }}</span>
+              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+            </div>
+            <div class="socre">
+              <span class="label">
+                {{ _.get(team_vs_history_result, 'away.win') }}
+                <!-- 胜 -->
+                {{ t('analysis.victory') }}
+                {{ _.get(team_vs_history_result, 'away.dogfall') }}
+                <!-- 平 -->
+                {{ t('analysis.flat') }}
+                {{ _.get(team_vs_history_result, 'away.lose') }}
+                <!-- 负 -->
+                {{ t('analysis.negative') }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="d-title">
+          <div>
+            <!-- 赛果 -->
+            <span>{{ t("results.result") }}</span>
+            <!-- 盘口 -->
+            <span>{{ t("analysis.picks") }}</span>
+            <!-- 大小 -->
+            <span>{{ t("analysis.size") }}</span>
+          </div>
+        </div>
+        <div class="d-tr" v-for="(item, index) in team_vs_history" :key="index">
+          <div class="home">
+            <div class="match-time">
+              <span>{{ formatTime(item.beginTime, 'yy-mm-dd') }}</span>
+              <span>{{ item.tournamentName }}</span>
+            </div>
+            <div :class="{ 'fontBold': match.mhn == item.homeTeamName, 'font999': match.mhn != item.homeTeamName }">
+              {{ item.homeTeamName }}</div>
+          </div>
+          <div class="score">
+            <span>{{ item.homeTeamScore }}</span>
+            <span class="line">-</span>
+            <span>{{ item.awayTeamScore }}</span>
+          </div>
+          <div class="away">
+            <div :class="{ 'fontBold': match.mhn == item.awayTeamName, 'font999': match.mhn != item.awayTeamName }">
+              {{ item.awayTeamName }}</div>
+            <div class="result">
+              <span :class="result_filter('cls', item.result)">{{ result_filter('resultwinlose', item.result) }}</span>
+              <span
+                :class="result_filter('cls', item.handicapResult)">{{ result_filter('resultwinlose', item.handicapResult) }}</span>
+              <span
+                :class="result_filter('cls', item.overunderResult)">{{ result_filter('overunderLabel', item.overunderResult) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 近期战绩 -->
+    <div class="panel history near">
+      <div class="panel-title">
+        <!-- 近期战绩 -->
+        <span>{{ t('analysis.recent_record') }}</span>
+        <m-select name="other" @click="selectedFn(arguments)" />
+      </div>
+      <div class="content">
+        <div class="title">
+          <div class="both home">
+            <div class="team-name">
+              <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+              <span>{{ match.mhn }}</span>
+            </div>
+            <div class="socre">
+              <span class="label">
+                {{ _.get(team_vs_other_team_result, 'home.win') }}
+                <!-- 胜 -->
+                {{ t('analysis.victory') }}
+                {{ _.get(team_vs_other_team_result, 'home.dogfall') }}
+                <!-- 平 -->
+                {{ t('analysis.flat') }}
+                {{ _.get(team_vs_other_team_result, 'home.lose') }}
+                <!-- 负 -->
+                {{ t('analysis.negative') }}
+              </span>
+            </div>
+          </div>
+          <div class="both away">
+            <div class="team-name">
+              <span>{{ match.man }}</span>
+              <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+            </div>
+            <div class="socre">
+              <span class="label">
+                {{ _.get(team_vs_other_team_result, 'away.win') }}
+                <!-- 胜 -->
+                {{ t('analysis.victory') }}
+                {{ _.get(team_vs_other_team_result, 'away.dogfall') }}
+                <!-- 平 -->
+                {{ t('analysis.flat') }}
+                {{ _.get(team_vs_other_team_result, 'away.lose') }}
+                <!-- 负 -->
+                {{ t('analysis.negative') }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="t-body">
+          <div class="home">
+            <div class="d-title">
+              <div>
+                <!-- 赛果 -->
+                <span>{{ t("results.result") }}</span>
+                <!-- 盘口 -->
+                <span>{{ t("analysis.picks") }}</span>
+                <!-- 大小 -->
+                <span>{{ t("analysis.size") }}</span>
+              </div>
+            </div>
+            <div class="d-tr" v-for="(item, index) in team_vs_other_team.home" :key="index">
+              <div class="info">
+                <div class="match-time ellipsis" v-tooltip="{ content: item.tournamentName, overflow: 1 }">
+                  <span>{{ formatTime(item.beginTime, 'yy-mm-dd') }}</span><br>
+                  <span>{{ item.tournamentName }}</span>
+                </div>
+                <div class="both">
+                  <span class="ellipsis"
+                    :class="{ 'fontBold': match.mhn == item.homeTeamName, 'font999': match.mhn != item.homeTeamName }"
+                    v-tooltip="{ content: item.homeTeamName, overflow: 1 }">{{ item.homeTeamName }}</span>
+                  <div class="score">
+                    <span>{{ item.homeTeamScore }}</span>
+                    <span class="line">-</span>
+                    <span>{{ item.awayTeamScore }}</span>
+                  </div>
+                  <span class="ellipsis"
+                    :class="{ 'fontBold': match.mhn == item.awayTeamName, 'font999': match.mhn != item.awayTeamName }"
+                    v-tooltip="{ content: item.awayTeamName, overflow: 1 }">{{ item.awayTeamName }}</span>
+                </div>
+              </div>
+              <div class="result">
+                <span :class="result_filter('cls', item.result)">{{ result_filter('resultwinlose', item.result) }}</span>
+                <span :class="result_filter('cls', item.handicapResult)">
+                  {{ result_filter('resultwinlose', item.handicapResult) }}
+                </span>
+                <span :class="result_filter('cls', item.overunderResult)">
+                  {{ result_filter('overunderLabel', item.overunderResult) }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="away">
+            <div class="d-title">
+              <div>
+                <!-- 赛果 -->
+                <span>{{ t("results.result") }}</span>
+                <!-- 盘口 -->
+                <span>{{ t("analysis.picks") }}</span>
+                <!-- 大小 -->
+                <span>{{ t("analysis.size") }}</span>
+              </div>
+            </div>
+            <div class="d-tr" v-for="(item, index) in team_vs_other_team.away" :key="index">
+              <div class="info">
+                <div class="match-time ellipsis" v-tooltip="{ content: item.tournamentName, overflow: 1 }">
+                  <span>{{ formatTime(item.beginTime, 'yy-mm-dd') }}</span><br>
+                  <span>{{ item.tournamentName }}</span>
+                </div>
+                <div class="both">
+                  <span class="ellipsis"
+                    :class="{ 'fontBold': match.man == item.homeTeamName, 'font999': match.man != item.homeTeamName }"
+                    v-tooltip="{ content: item.homeTeamName, overflow: 1 }">{{ item.homeTeamName }}</span>
+                  <div class="score">
+                    <span>{{ item.homeTeamScore }}</span>
+                    <span class="line">-</span>
+                    <span>{{ item.awayTeamScore }}</span>
+                  </div>
+                  <span class="ellipsis"
+                    :class="{ 'fontBold': match.man == item.awayTeamName, 'font999': match.man != item.awayTeamName }"
+                    v-tooltip="{ content: item.awayTeamName, overflow: 1 }">{{ item.awayTeamName }}</span>
+                </div>
+              </div>
+              <div class="result">
+                <span :class="result_filter('cls', item.result)">{{ result_filter('resultwinlose', item.result) }}</span>
+                <span :class="result_filter('cls', item.handicapResult)">
+                  {{ result_filter('resultwinlose', item.handicapResult) }}
+                </span>
+                <span :class="result_filter('cls', item.overunderResult)">
+                  {{ result_filter('overunderLabel', item.overunderResult) }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 未来赛程 -->
+    <div class="panel future details" v-if="match.csid == '1'">
+      <!-- 未来赛程 -->
+      <div class="panel-title">{{ t('analysis.Future_schedule') }}</div>
+      <div class="simple-title">
+        <div class="home">
+          <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+          <span>{{ match.mhn }}</span>
+        </div>
+        <div class="away">
+          <span>{{ match.man }}</span>
+          <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+        </div>
+      </div>
+      <!-- 有内容的情况才渲染，方便调整样式 -->
+      <div class="content"
+        v-if="(_.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1') && _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1').length) && (_.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2') && _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2').length)">
+        <div class="wrap-home">
+          <div class="future-item" v-for="(item, index) in _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.1')"
+            :key="index">
+            <div class="match-time ellipsis">
+              <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
+              <!-- X天后 -->
+              <span>{{ item.intervalDay || '-' }} {{ t("analysis.day_later") }}</span><br>
+              <span>{{ item.tournamentName || '-' }}</span>
+            </div>
+            <div class="both">
+              <div class="home-name">
+                <span class="ellipsis"
+                  :class="{ 'fontBold': match.mhn == item.homeTeamName, 'font999': match.mhn != item.homeTeamName }"
+                  v-tooltip="{ content: item.homeTeamName, overflow: 1 }">
+                  <img v-img="(['m'])" class="team_logo logo" alt />
+                  {{ item.homeTeamName || '-' }}
+                </span>
+              </div>
+              <div class="vs">vs</div>
+              <div class="away-name">
+                <span class="ellipsis"
+                  :class="{ 'fontBold': match.mhn == item.awayTeamName, 'font999': match.mhn != item.awayTeamName }"
+                  v-tooltip="{ content: item.awayTeamName, overflow: 1 }">
+                  <img v-img="(['m'])" class="team_logo logo" alt />
+                  {{ item.awayTeamName || '-' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap-away">
+          <div class="future-item" v-for="(item, index) in _.get(baseData, 'sThirdMatchFutureStatisticsDTOMap.2')"
+            :key="index">
+            <div class="match-time ellipsis">
+              <span>{{ item.beginTime ? formatTime(item.beginTime, 'yy-mm-dd') : '-' }}</span>
+              <!-- 天后 -->
+              <span>{{ item.intervalDay || '-' }} {{ t("analysis.day_later") }}</span><br>
+              <span>{{ item.tournamentName || '-' }}</span>
+            </div>
+            <div class="both">
+              <div class="home-name">
+                <span class="ellipsis"
+                  :class="{ 'fontBold': match.man == item.homeTeamName, 'font999': match.man != item.homeTeamName }"
+                  v-tooltip="{ content: item.homeTeamName, overflow: 1 }">
+                  <img v-img="(['m'])" class="team_logo logo" alt />
+                  {{ item.homeTeamName || '-' }}
+                </span>
+              </div>
+              <div class="vs">vs</div>
+              <div class="away-name">
+                <span class="ellipsis"
+                  :class="{ 'fontBold': match.man == item.awayTeamName, 'font999': match.man != item.awayTeamName }"
+                  v-tooltip="{ content: item.awayTeamName, overflow: 1 }">
+                  <img v-img="(['m'])" class="team_logo logo" alt />
+                  {{ item.awayTeamName || '-' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 伤停情况 -->
+    <div class="panel hurt details" v-if="match.csid == '1'">
+      <!-- 伤停情况 -->
+      <div class="panel-title">{{ t('analysis.injury') }}</div>
+      <div class="simple-title "
+        :class="{ 'simple-team': (_.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (_.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length) }">
+        <div class="home">
+          <img v-img="([_.get(match, 'mhlu[0]'), _.get(match, 'frmhn[0]')])" class="logo" alt />
+          <span>{{ match.mhn }}</span>
+        </div>
+        <div class="away">
+          <span>{{ match.man }}</span>
+          <img v-img="([_.get(match, 'malu[0]'), _.get(match, 'frman[0]')])" class="logo" alt />
+        </div>
+      </div>
+      <!-- 有内容的情况才渲染，方便调整样式 -->
+      <div class="content"
+        v-if="(_.get(baseData, 'sThirdMatchSidelinedDTOMap.1') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.1').length) && (_.get(baseData, 'sThirdMatchSidelinedDTOMap.2') && _.get(baseData, 'sThirdMatchSidelinedDTOMap.2').length)">
+        <div class="wrap-home">
+          <div class="item" v-for="(item, index) in _.get(baseData, 'sThirdMatchSidelinedDTOMap.1')" :key="index">
+            <div class="player-name">
+              <span>{{ item.positionName }}</span>
+              <span>{{ item.playerName }}</span>
+            </div>
+            <div>{{ item.reason }}</div>
+          </div>
+        </div>
+
+        <div class="wrap-away">
+          <div class="item" v-for="(item, index) in _.get(baseData, 'sThirdMatchSidelinedDTOMap.2')" :key="index">
+            <div class="player-name">
+              <span>{{ item.positionName }}</span>
+              <span>{{ item.playerName }}</span>
+            </div>
+            <div>{{ item.reason }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="content no_data" v-else>
+        <div class="wrap-home">{{ t('analysis.no_data') }}</div>
+        <div class="wrap-away">{{ t('analysis.no_data') }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 
-import { ref, onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, onUnmounted, defineEmits } from 'vue';
+import { t } from "src/boot/i18n";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { api_analysis } from 'src/public/api/index'
+import { formatTime, result_filter } from 'src/core/format/index.js'
+import { MSelectFullVersionWapper as MSelect } from 'src/components/analysis/template/m-select/index.js'
 
-const route = useRoute();
-const articleDetail = ref({});
-const start_article_tiem = ref(new Date().getTime());
-
-loadArticle()
-window.addEventListener('beforeunload', close_win)
+//杯赛数据
+const vs_info_data = ref([]);
+//默认：空，  flag= 0  排名榜全量展示 
+const flag = ref(false);
+const emits = defineEmits(["selectedFn", "get_all_vsInfo"])
 
 /**
- * @Description 加载文章,优先读缓存
+* @description: 历史交战、近期战绩下拉框
 */
-const loadArticle = () => {
-  let articleCache = localStorage.getItem('_article_obj');
-  if (articleCache) {
-    let article = JSON.parse(articleCache)
-    if (article && article.id == route.params.id) {
-      articleDetail.value = article
-      setReadCounts.value()
-    }
-  }
-  //无缓存则调用api
-  if (!articleDetail.value.id) {
-    get_article()
-  }
+const selectedFn = (data) => {
+  emits("selectedFn", data)
 }
 /**
- * @Description 设置最新阅读数
+* @description: 杯赛积分查看更多
 */
-const setReadCounts = () => {
-  if (route.params.count) {
-    let count = Number(route.params.count)
-    if (!count) return
-    articleDetail.value.readCounts = route.params.count;
-  }
-}
-const close_win = () => {
-  if (articleDetail.value.id) {
-    let end_tiem = new Date().getTime()
-    let info = {
-      "文章ID": articleDetail.value.id,
-      "页面停留时长": parseInt((end_tiem - start_article_tiem.value) / 1000)
-    }
-    window.opener.postMessage({ name: 'close_win', info }, '*')
-  }
-}
-/**
- * @Description 获取文章详情
-*/
-const get_article = () => {
-  // matchId文章id type2猜你喜欢详情
-  const params = {
-    matchId: route.params.id,//Number(
-    type: 2,
-  }
-  api_analysis.getArticlePB(params).then(res => {
-    const _data = _.get(res, 'data.data');
-    const _code = _.get(res, 'data.code');
-
-    if (_code == 200 && !_.isEmpty(_data)) {
-      let _item = typeof (_data) == 'string' ? JSON.parse(_data) : _.cloneDeep(_data);
-      // 替换图片域名
-      let domain = this.get_file_path('getArticle').replace('getArticle', '')
-      if (_item.articleContent) {
-        _item.articleContent = _item.articleContent.replace(/IMAGE_DOMAIN_YUNYING_PLACEHOLDER\//g, domain)
-      }
-      // 格式化时间
-      _item.updateTime = formatDate(_item.updateTime)
-      document.getElementById('loading-root-ele').style.visibility = 'hidden';
-      articleDetail.value = _item
-      setReadCounts()
-    } else { console.debug('fail') }
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-/**
- * 处理时间戳
- */
-const formatDate = (date) => {
-  let _date = ''
-  if (date) {
-    if ((new Date() - parseInt(date)) >= 86400000) {
-      _date = `${new Date(parseInt(date)).getMonth() + 1}月 ${new Date(parseInt(date)).getDate()}日`
-    } else if ((new Date() - parseInt(date)) >= 3600000) {
-      _date = `${Math.floor((new Date() - parseInt(date)) / 3600000)}小时前`
-    } else {
-      _date = `${Math.floor((new Date() - parseInt(date)) / 60000)}分钟前`
-    }
-  }
-  return _date;
+const show_more = () => {
+  flag.value = flag.value
+  emits("get_all_vsInfo", flag.value)
 }
 onUnmounted(() => {
-  window.removeEventListener('beforeunload', close_win)
+  vs_info_data.value = null
 })
 
 </script>
 
-<style lang="scss" scoped>
-.wrap {
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  padding-bottom: 20px;
-}
-
-.article_detail {
-  background: var(--qq--analysis-bg-color-1);
-  border: 1px solid var(--qq--analysis-bd-color-4);
-  border-radius: 8px;
-  height: 100%;
-  padding: 15px 38px;
-  margin-bottom: 20px;
-
-  p {
-    margin-bottom: 16px;
-  }
-
-  .article_title {
-    font-size: 16px;
-    color: var(--qq--analysis-text-color-10);
-    font-weight: 600;
-  }
-
-  .author {
-    color: var(--qq--analysis-text-color-11);
-
-    .author_name {
-      font-weight: 500;
-    }
-
-    .time {
-      margin: 0 30px 0 10px;
-    }
-  }
-
-  .article {
-    ::v-deep {
-      * {
-        max-width: 100%;
-        color: var(--qq--analysis-text-color-10);
-      }
-
-      p {
-        font-family: PingFangSC-Regular;
-        font-size: 12px;
-        color: var(--qq--analysis-text-color-2);
-        letter-spacing: 0;
-        text-align: justify;
-        line-height: 24px;
-      }
-
-      img {
-        max-width: 100%;
-      }
-    }
-
-  }
-}
-
-/*  内容区 */
-.rule-scroll-area {
-  flex: 1;
-}</style>
+<style lang="scss" scoped>@import url('./index.scss');</style>

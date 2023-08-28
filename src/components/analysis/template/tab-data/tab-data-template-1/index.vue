@@ -225,10 +225,11 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 
+import { format_result } from 'src/core/format/index.js'
+
 import { MSelectFullVersionWapper as basePanel } from 'src/components/analysis/template/m-select/index.js'
 import { api_analysis } from 'src/public/api/index'
 
-const route = useRoute();
 const tabIndex = ref(1); // 当前 tab 所在下标
 const baseData = ref({}); //基本面数据
 const vs_info = ref([]); //杯赛积分
@@ -366,27 +367,6 @@ const get_team_vs_other_team = () => {
       }
     }
   })
-}
-
-/**
-* @description: 计算胜平负次数
-*/
-const format_result = (data) => {
-  let obj = {
-    win: 0,
-    dogfall: 0,
-    lose: 0
-  }
-  data.forEach(item => {
-    if (item.result == 2) {
-      obj.dogfall += 1
-    } else if (item.result == 3) {
-      obj.lose += 1
-    } else if (item.result == 4) {
-      obj.win += 1
-    }
-  })
-  return obj
 }
 
 /**

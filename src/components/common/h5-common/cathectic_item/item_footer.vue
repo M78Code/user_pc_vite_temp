@@ -8,7 +8,7 @@
     <!-- 左 -->
     <div class="col-4">
       <p class="top-p">{{ is_pre ?  i18n.t('pre_record.book_bet_amount') : i18n.t('bet_record.bet_val2') }}</p>
-      <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{data_f.orderAmountTotal | format_money2}}</p>
+      <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{ format_money2(data_f.orderAmountTotal)}}</p>
     </div>
 
     <!-- 中 -->
@@ -19,8 +19,8 @@
         <p class="top-p">{{i18n.t('bet_record.go_back')}}</p>
         <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
         <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
-          <template v-if="data_f.backAmount !== null">{{data_f.backAmount | format_money2}}</template>
-          <template v-else>{{data_f.orderAmountTotal | format_money2}}</template>
+          <template v-if="data_f.backAmount !== null">{{ format_money2(data_f.backAmount)}}</template>
+          <template v-else>{{ format_money2(data_f.orderAmountTotal)}}</template>
         </p>
       </template>
       <template v-else>
@@ -38,14 +38,14 @@
           <!-- 留空处理 -->
           <template v-if="data_f.acCode">- -</template>
           <!-- 最高金额 -->
-          <template v-else>{{data_f.maxWinAmount | format_money2}}</template>
+          <template v-else>{{ format_money2(data_f.maxWinAmount)}}</template>
         </p>
       </template>
     </div>
     <!-- 已结算页面 -->
     <div v-else>
       <p class="top-p">{{ i18n.t('bet_record.go_back') }}</p>
-      <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{data_f.backAmount | format_money2}}</p>
+      <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{ format_money2(data_f.backAmount)}}</p>
     </div>
 
     <!-- 右 -->

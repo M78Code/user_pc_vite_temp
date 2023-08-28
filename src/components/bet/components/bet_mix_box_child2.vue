@@ -167,7 +167,7 @@
             <!-- 投注 -->
             <div class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
           </template>
           <template v-else>
@@ -175,12 +175,12 @@
             <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': get_money_notok_list.length }"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ i18n.t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{ BetData.bet_money_total.toFixed(2) | format_money2 }}</p>
+              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 确定 -->
             <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ i18n.t('common.ok') }}</p>

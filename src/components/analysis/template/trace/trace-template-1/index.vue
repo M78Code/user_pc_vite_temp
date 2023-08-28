@@ -24,19 +24,10 @@
 
 <script setup>
 
-// import time_format from 'src/public/mixins/common/time_format'
-// mixins:[time_format],
-
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-// 格式化时间
-const format_time = (seconds) => {
-  let m = parseInt(seconds / 60).toString().padStart(2, 0)
-  let s = (seconds % 60).toString().padStart(2, 0)
-  return `${m}'${s}"`
-}
-
+import { formatTime } from 'src/core/format/index.js'
 </script>
 
 <style lang="scss" scoped>

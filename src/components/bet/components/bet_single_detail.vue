@@ -11,8 +11,7 @@
       <p>{{ i18n.t('bet.bet') }}</p>
       <p>{{ i18n.t('bet.total_win2') }}
         <span :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }">{{
-          max_win_money |
-          four_five_six_double(2) | format_money2 }}</span>
+          format_money2(max_win_money) }}</span>
       </p>
     </div>
 
@@ -20,7 +19,7 @@
     <div class="content-b"
       :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index === index_ && [1, 7].includes(+get_bet_status)) }"
       @click.stop="input_click">
-      <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
+      <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
       <span class="money-span" ref="money_span"
         :style="{ opacity: BetData.active_index === index_ && [1, 7].includes(+get_bet_status) ? '1' : '0' }"></span>
       <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
