@@ -55,7 +55,7 @@
         </span>
         <!-- 返还 -->
         <template v-if="[2, 3, 4, 5, 6].includes(+bet_data.outcome)">
-          <span class="label">{{ t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ bet_data.settleAmount | format_currency }}</span></span>
+          <span class="label">{{ t('bet_record.go_back') }}: <span :class="[4, 5].includes(+bet_data.outcome) ? 'highlight' : null">{{ format_currency(bet_data.settleAmount) }}</span></span>
         </template>
         <!-- 最高可赢 -->
         <template v-else-if="msgInfo.status == 1">
@@ -76,6 +76,7 @@ import { api_common } from 'src/project/api/index.js'
 // import { mapGetters, mapMutations } from "vuex";
 // import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import { uid } from "quasar";
+import { format_currency, format_odds,  } from "src/core/formart/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n";;
 //国际化
@@ -234,50 +235,6 @@ export default defineComponent({
         console.log(err);
       });
     };
-    //赔率展示格式化
-    const format_odds = (val) => {
-      if (val == '' || val == undefined) {
-        return '';
-      }
-      val = (val || '0').toString();
-      let ret = val;
-      if (val.includes('.')) {
-        if (val >= 100) {
-          if (val.split('.')[1] == '00') {
-            ret = val.split('.')[0];
-          } else {
-            let len = val.length;
-            if (val.indexOf('.0') == (len - 2)) {
-              ret = val.substring(0, len - 2);
-            } else {
-              ret = val;
-            }
-          }
-        } else if (val >= 10) {
-          if (val.split('.')[1][1] == '0') {
-            ret = val.slice(0, val.length - 1);
-          } else {
-            ret = val;
-          }
-        }
-      }
-      return ret;
-    };
-    /**
-     * @description: 金额格式化带货币符号
-     * @param {Number} num 金额
-     * @return {String} 转换后的金额
-     */
-    const format_currency = (num) => {
-      if (num) {
-        let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/);
-        // 保留两位小数
-        let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00";
-        let _num = _split[1] + '.' + decimal;
-        return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
-      }
-      return '0.00';
-    };
     return {
       ...toRefs(data),
       bet_data,
@@ -285,8 +242,6 @@ export default defineComponent({
       hasLiked,
       handle_bet,
       likeMessage,
-      format_odds,
-      format_currency
     }
   }
 })
