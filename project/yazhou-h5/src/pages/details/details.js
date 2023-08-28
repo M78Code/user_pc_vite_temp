@@ -1,4 +1,5 @@
 import lodash from "lodash";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {api_common, api_result} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
@@ -133,7 +134,7 @@ const route = useRoute();
     get_user: "get_user",
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
-    get_access_config: "get_access_config",
+    GlobalAccessConfig: "GlobalAccessConfig",
     // 聊天室ID
     // 'get_chatroom_id',
     // 获取语言
@@ -148,7 +149,7 @@ const route = useRoute();
   const show_match_analysis_tab = computed(() => {
     return (
       [1, 2].includes(+data.get_detail_data.csid) &&
-      // lodash.get(get_access_config, "statisticsSwitch")
+      // GlobalAccessConfig.get_statisticsSwitch()
       true
     );
   });

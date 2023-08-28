@@ -25,7 +25,7 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="get_access_config.collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <div v-if="GlobalAccessConfig.get_collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{t('footer_menu.collect')}}</div>
       </div>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
@@ -56,7 +57,7 @@ export default {
       'get_uid',
       // 投注成功的赛事id
       'get_match_id_bet_success',
-      'get_access_config',
+      'GlobalAccessConfig',
       'get_lang',// 当前语言
     ]),
     // 展示lvs 图标
@@ -95,8 +96,7 @@ export default {
      * @return {String}
      */
     details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( _.get(this.get_access_config,'collectSwitch'),this ) ) return
-
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
       // 如果还在请求中则return
       if ( this.favorite_loading ) return;
       let txt = 0;

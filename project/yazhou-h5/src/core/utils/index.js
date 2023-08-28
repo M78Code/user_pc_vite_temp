@@ -857,7 +857,7 @@ const utils = {
         return false
       }
       // 世界杯后恢复
-      // if(!lodash.get(this.get_access_config,'collectSwitch')){
+      // if(!GlobalAccessConfig.get_collectSwitch()){
       //   this.$toast(i18n.t(`common.temporarily_unavailable`), 2000)
       //   return false
       // }
