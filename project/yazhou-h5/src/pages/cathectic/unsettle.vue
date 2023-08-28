@@ -8,11 +8,7 @@
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-<<<<<<< HEAD
         <div class="filter-button" v-if="store_user.user.settleSwitch == 1">
-=======
-        <div class="filter-button" v-if="lodash.get(get_user, 'settleSwitch') == 1">
->>>>>>> 4073cb8f18f42bc5878a5612d6f420b22499d630
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
@@ -24,12 +20,8 @@
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
               <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
-<<<<<<< HEAD
                 <!-- (new Date(name)).Format(t('time2')) -->
                 <span>{{ format_M_D(new Date(name).getTime())}}</span>
-=======
-                <span>{{(new Date(name)).Format($root.$t('time2'))}}</span>
->>>>>>> 4073cb8f18f42bc5878a5612d6f420b22499d630
                 <span v-if="!value.open && index != 0"><img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" /></span>
               </p>
               <!--线-->
