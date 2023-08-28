@@ -12,7 +12,8 @@ import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import * as play_mapping from "src/core/bet/config/play-mapping.js";
+import * as play_mapping from "src/core/constant/config/play-mapping.js";
+import { play_name_mapping_csid } from "src/core/constant/config/csid.js";
 import _ from "lodash";
 
  
@@ -25,37 +26,7 @@ import _ from "lodash";
  * @return {Object} 映射的对象
  */
 export const play_name_mapping = (csid) => {
-  let obj = {
-    1: "足球",
-    2: "篮球",
-    3: "棒球",
-    4: "冰球",
-    5: "网球",
-    6: "美式足球",
-    7: "斯诺克",
-    8: "乒乓球",
-    9: "排球",
-    10: "羽毛球",
-    11: "手球",
-    12: "拳击",
-    13: "沙滩排球",
-    14: "橄榄球",
-    15: "曲棍球",
-    16: "水球",
-    100: "英雄联盟",
-    101: "dota2",
-    102: "csgo",
-    103: "王者荣耀",
-    1001: "VR足球",
-    1002: "VR赛狗",
-    1007: "VR泥地赛车",
-    1008: "VR卡丁车",
-    1009: "VR泥地摩托车",
-    1010: "VR摩托车",
-    1011: "VR赛马",
-    1012: "VR马车赛",
-  };
-  return obj[csid];
+  return play_name_mapping_csid[csid];
 };
 /**
  * @description: 获取盘口值

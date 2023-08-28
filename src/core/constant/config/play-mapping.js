@@ -1,64 +1,62 @@
-/*
- * @Author: 
- * @Date: 2022-02-11 19:22:44
- * @Description: 球类配置映射文件
- * @Path: 
- */
-// 球种与玩法标题种类的映射
-// 与国际化中的球种头部玩法种类映射，次出 key为球种id value为 国际化sport_head_play_category对象下的key值通过映射可以拿到球种头部信息
-const SPORT_PLAY_TITLE_CATEGORY = {
-    "1": "1", // 足球
-    "2": "12", // 篮球
-    "3": "4", // 棒球
-    "4": "4", // 冰球
-    "5": "2", // 网球
-    "6": "6", // 美式足球
-    "7": "8", // 斯诺克 
-    "8": "3", // 乒乓球  
-    "9": "3", // 排球
-    "10":"3", // 羽毛球 
-    "11":"11", // 手球  
-    "12":"7", // 拳击
-    "13":"5", // 沙滩排球
-    "14":"11", // 橄榄球  
-    "15":"1", // 曲棍球
-    "16":"11", // 水球  
-    "101":"9",//Dota2
-    "100":"10",//英雄联盟
-    "103":"10", //王者荣耀
-    "102":"10"//CS.GO
-}
-// 球种id 在精灵图中的位置
-const SPORT_ID_TO_NUMBER_MAPPING = {
-    "1":  "1", // 足球
-    "2":  "3", // 篮球
-    "3":  "28", // 棒球
-    "4":  "2", // 冰球
-    "5":  "19", // 网球
-    "6":  "20", // 美式足球
-    "7":  "15", // 斯诺克 
-    "8":  "7", // 乒乓球  
-    "9":  "6", // 排球
-    "10": "22", // 羽毛球 
-    "11": "13", // 手球  
-    "12": "10", // 拳击
-    "13": "12", // 沙滩排球
-    "14": "20", // 橄榄球  
-    "15": "23", // 曲棍球
-    "16": "24", // 水球
-    "17": "17", // 田径
-    "18": "26", // 冠军
-    "19": "21", // 游泳
-    "21": "18", // 跳水
-    "26": "46", //冰壶
-    "28": "36", // 高尔夫
-    "29": "35",  // 自行车
-    "33": "48",  // 赛车
-    "38": "53",  // 飞镖
-    "50": "55" // 趣味
-    
-}
-export default {
-    SPORT_PLAY_TITLE_CATEGORY,
-    SPORT_ID_TO_NUMBER_MAPPING 
-}
+
+
+
+export * from "./play-mapping/csid-1.js"
+export * from "./play-mapping/csid-2.js"     
+export * from "./play-mapping/csid-3.js"     
+export * from "./play-mapping/csid-8.js"     
+export * from "./play-mapping/csid-9.js"     
+export * from "./play-mapping/esports.js"    
+export * from "./play-mapping/market.js"     
+export * from "./play-mapping/menu-sport.js" 
+export * from "./play-mapping/other.js"      
+export * from "./play-mapping/play-scroe.js" 
+export * from "./play-mapping/play.js"       
+export * from "./play-mapping/stage-score.js"
+export * from "./play-mapping/vr.js"
+
+// export default {
+//   BASKETBALL_BY_APPOINTMENT_total,
+//   BASKETBALL_BY_APPOINTMENT_let,
+//   BASKETBALL_BY_APPOINTMENT,
+//   MARKET_RANG_FLAG_LIST,
+//   MARKET_FLAG_LIST,
+//   PLAY_TODAY_SCORE,
+//   SCORE_BASE_KEY,
+//   PLAY_LET_BALL,
+//   PLAY_RESULT,
+//   FOOTBALL_PLAY_LET_BALL,
+//   PLAY_GOAL,
+//   PLAYER_ID,
+//   PLAY_ALL_KINDS,
+//   BETTING_USED_PLAY,
+//   CANCEL_TYPE,
+//   VIURTUAL_SPORT,
+//   VIRTUAL_SPORT_ID,
+//   VIRTUAL_PLAY_LET_BALL,
+//   VIRTUAL_PLAY_GOAL,
+//   VIRTUAL_PLAY_ALL_KINDS,
+//   VIRTUAL_PLAY_NUMBER,
+//   VIRTUAL_PLAY_NOT_NUMBER,
+//   VIRTUAL_PLAY_NOT_NUMBER2,
+//   NO_MERAGE_MARKETVALUE,
+//   MENU_TO_SPORT,
+//   SPORT_TO_MENU,
+//   ESPORTS_SPORT,
+//   ESPORTS_SPORT_ID,
+//   ESPORTS_PLAY_LET_BALL,
+//   SPORT_TO_MENU_TYPE,
+//   PLAY_VIRTUAL_IDS,
+//   PLAY_ESPORTS_IDS,
+//   FOOTBALL_TIMERLY_SCORE_HPID,
+//   BASKETBALL_TIMERLY_SCORE_HPID,
+//   BASEBALL_TIMERLY_SCORE_HPID,
+//   TENNIS_TIMERLY_SCORE_HPID,
+//   VOLLEYBALL_TIMERLY_SCORE_HPID,
+//   SPORT_PLAY_TO_SCROE,
+//   SPORT_PLAY_TO_STAGE_SCROE,
+//   MARKET_BIG_SMALL_PLAY_LIST,
+//   MARKET_HOME_PLAY_LIST,
+//   MARKET_AWAY_PLAY_LIST,
+//   MARKET_NO_SCORE_LIST
+// }

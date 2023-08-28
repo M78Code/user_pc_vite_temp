@@ -12,7 +12,7 @@ import { uid } from "quasar";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import {NO_MERAGE_MARKETVALUE} from "src/core/bet/config/play-mapping.js";
+import {NO_MERAGE_MARKETVALUE} from "src/core/constant/config/play-mapping.js";
 
  
 // import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
