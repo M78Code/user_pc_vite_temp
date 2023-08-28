@@ -57,3 +57,6 @@ export const format_odds_2 = (val) => {
   }
   return ret;
 };
+
+
+ 

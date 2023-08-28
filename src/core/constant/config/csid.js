@@ -48,5 +48,14 @@ export const CSID_CONST = {
   CSID_101:{csid:"101",mark:"Dota2"},
   CSID_102:{csid:"102",mark:"CS.GO"},
   CSID_103:{csid:"103",mark:"王者荣耀"},
+  CSID_1001:{csid:"1001",mark:"VR足球"},
+  CSID_1002:{csid:"1002",mark:"VR赛狗"},
+  CSID_1007:{csid:"1007",mark:"VR泥地赛车"},
+  CSID_1008:{csid:"1008",mark:"VR卡丁车"},
+  CSID_1009:{csid:"1009",mark:"VR泥地摩托车"},
+  CSID_1010:{csid:"1010",mark:"VR摩托车"},
+  CSID_1011:{csid:"1011",mark:"VR赛马"},
+  CSID_1012:{csid:"1012",mark:"VR马车赛"},
+ 
  
   };
