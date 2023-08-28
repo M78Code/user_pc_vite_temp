@@ -7,7 +7,7 @@ import lodash from 'lodash'
 import { uid, date } from "quasar";
 import { api_common, api_admin } from 'src/api/index';
 import play_mapping from 'src/core/match-constant/config/play-mapping.js';
-
+import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // let BUILD_VERSION =  process.env.NODE_ENV=='development'?'':   require('app/version.js').BUILD_VERSION;
 
 const BUILD_VERSION = 'development'
@@ -73,7 +73,7 @@ const utils = {
             video_src,
             animation_src
           }
-          window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC,obj)
+          useMittEmit( MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC,obj)
         }
       }).catch(err => {
         console.log(err)
@@ -670,23 +670,7 @@ const utils = {
     }
     return sport_name
   },
-  /**
-   * @description: 获取y0 样式对应的后缀
-   * @param {needDiff  是否需要区分theme0}
-   * @return {string}
-   */
-  get_y0_suffix(needDiff= false){
-    // const theme=localStorage.getItem("theme");
-    const theme=window.vue.$store.getters.get_theme;
-    let suffix='';
-    if (theme && theme.includes("y0")){
-      suffix="_y0";
-    }
-    if(needDiff){  // 如果需要区分黑白主题
-      suffix+=  theme.includes("01")?"_01" :"_02";
-    }
-    return  suffix;
-  },
+ 
   /**
    * @description: axios_api轮询调用方法
    *
@@ -764,10 +748,10 @@ const utils = {
   upload_url_info(params) {
     return false
     api_admin.upload_url_info(params).then(() => {
-      window.vue.original_url = '';
+      
       console.log('URL上报成功');
     }).catch(error => {
-      window.vue.original_url = '';
+   
       console.log('URL上报失败');
       console.log(error);
     })
