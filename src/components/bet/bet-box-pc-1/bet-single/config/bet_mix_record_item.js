@@ -5,7 +5,7 @@
  */
 
 import betting from "src/public/mixins/betting/betting.js";
-import { format_str } from "src/core/formart/index.js";
+import { format_str } from "src/core/format/index.js";
 
 export default {
   name: "bet-mix-item",

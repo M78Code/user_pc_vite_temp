@@ -27,7 +27,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router';
 
 import { RefreshWapper as Refresh } from "src/components/common/refresh"
-// import { mx_get_remote_time } from "src/core/formart/module/format-date.js";
+// import { get_remote_time } from "src/core/format/index.js"
 
 const props = defineProps({
     /** 刷新按钮动画开关 */
@@ -63,7 +63,7 @@ onUnmounted(() => {
  * @return {undefined} undefined
  */
 function get_date_time() {
-    let time = mx_get_remote_time();
+    let time = get_remote_time();
     date_time.value = utc_to_gmt_no_8_ms2(time);
     timer_id.value = setInterval(() => {
         time += 1000;

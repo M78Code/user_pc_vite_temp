@@ -1,5 +1,5 @@
 import { api_betting } from "src/api/index";
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 import {
   reactive,
   toRefs,

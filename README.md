@@ -34,7 +34,7 @@
 | pb-decode      | pb解密       |                                                              | lampson                          |
 | file-path      | 文件路径     | 图片域名 地址问题                                            | lane                             |
 | media          | 音频         | 视频动画音频 ，                                              | tyrone                           |
-| formart        | 格式化       | 时间格式化   赔率格式化 ，赛事阶段 ，赛事状态 计算 等 格式化 | nico                             |
+| format        | 格式化       | 时间格式化   赔率格式化 ，赛事阶段 ，赛事状态 计算 等 格式化 | nico                             |
 | uuid           | 唯一id       | 盘口的 唯一 id 算法  和解析                                  | lane                             |
 | menu           | 菜单         | 菜单映射 算法关系                                            | lane                             |
 | match-list     | 赛事列表     | 源数据 ，模板计算  ， 高度计算 ，滚动逻辑  ，列表参数计算  ，冠军算法，全局热门赛事 | lockie/dolphin                   |

@@ -68,10 +68,10 @@ import {
   get_match_status,
   counting_time_ctr_show_format,
 } from "src/core/utils/match-list-utils.js";
-import { format_second_ms } from "src/core/formart/index.js";
+import { format_second_ms } from "src/core/format/index.js";
 import { t } from "src/boot/i18n";;
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import { mx_get_remote_time,format_date_base_obj } from "src/core/formart/module/format-date.js";
+import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
 // const licia_format = require("licia/format");
 
 export default {
@@ -337,7 +337,7 @@ export default {
      * @return {undefined} undefined
      */
     before_start_timer_change(obj) {
-      let now_time = mx_get_remote_time();
+      let now_time = get_remote_time();
       let match_start_time =
         parseInt(obj.tconfig.time) + parseInt(obj.timer_tmp);
       // 判断是否已开赛

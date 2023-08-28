@@ -52,7 +52,7 @@
 import { ref, getCurrentInstance, watch, onUnmounted, onMounted } from 'vue'
 import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
-import { format_M_D } from 'src/core/formart/index.js'
+import { format_M_D } from 'src/core/format/index.js'
 // 合并投注项提示弹框
 import cancleConfirmPop from 'project_path/src/pages/cathectic/cancle-confirm-pop.vue';
 import settleVoid from "project_path/src/pages/cathectic/settle-void.vue";

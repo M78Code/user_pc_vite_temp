@@ -66,7 +66,7 @@
 
 <script>
 // import { mapGetters } from "vuex"
-import { format_datas } from "src/core/formart/index.js"
+import { format_datas } from "src/core/format/index.js"
 export default {
   data() {
     return {

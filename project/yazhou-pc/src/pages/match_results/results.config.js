@@ -29,9 +29,9 @@ import { useRoute, useRouter } from "vue-router";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import { pre_load_video } from "src/core/pre-load/index";
-import { format_plays, format_sort_data } from "src/core/formart/index";
-import { formatTime } from "src/core/formart/module/format-date.js";
-// import { uid } from "quasar";
+import { format_plays, format_sort_data } from "src/core/format/index";
+import { formatTime } from "src/core/format/index.js"
+// import uid from "src/core/uuid/index.js";
 import { t } from "src/boot/i18n";
 
 export const useGetResultConfig = () => {
@@ -283,26 +283,7 @@ export const useGetResultConfig = () => {
         }
       });
     };
-    /**
-     * @description: 获取服务器时间
-     */
-    const get_serverTime = ()=> {
-      api_common.get_server_time().then((res) => {
-        let code = lodash.get(res, "data.code");
-        if (code == 200) {
-          this.day_time =
-            parseInt(lodash.get(res, "data.data")) - 1000 * 60 * 60 * 24;
-          this._date = new Date(this.day_time);
-          this.year = this._date.getFullYear();
-          this.mouth = this._date.getMonth() + 1;
-          this.day = this._date.getDate();
-          this.showDate(null, null);
-          this.get_sportType(); //获取球种
-        } else {
-          this.load_data_state = "empty";
-        }
-      });
-    };
+ 
     /**
      * 计算要展示的时间，越南语格式单独区分
      * @param start 开始时间

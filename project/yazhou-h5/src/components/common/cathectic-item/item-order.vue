@@ -18,7 +18,7 @@ import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
-import { formatTime } from 'src/core/formart/index.js'
+import { formatTime } from 'src/core/format/index.js'
 import { t } from "src/boot/i18n";;
 //国际化
 

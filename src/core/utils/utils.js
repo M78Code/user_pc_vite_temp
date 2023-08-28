@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 公共方法对象定义
  */
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 const utils = {
   // 是否内嵌

@@ -91,7 +91,7 @@ import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { ss, ls } from 'src/core/utils/web-storage.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
-import { format_money2 } from "src/core/formart/index.js"
+import { format_money2 } from "src/core/format/index.js"
 
 /** api */
 import { api_account } from "src/api/index.js";

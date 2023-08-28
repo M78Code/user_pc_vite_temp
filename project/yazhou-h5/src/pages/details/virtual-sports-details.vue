@@ -340,7 +340,7 @@ export default defineComponent({
      */
     const get_local_match_process_data = () => {
       // #TODO vue 
-      // let match = window.vue.process_changing_match;
+     
       let match = "";
       if(match && match.mid == route.query.mid){
         current_match = match;

@@ -60,7 +60,7 @@
 
 <script setup>
 // import { mapGetters } from "vuex";
-import { format_money2 } from "src/core/formart/index.js"
+import { format_money2 } from "src/core/format/index.js"
 import { ref, onUnmounted, computed } from 'vue'
 import { t } from "src/boot/i18n";
 

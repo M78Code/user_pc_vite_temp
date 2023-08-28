@@ -15,7 +15,7 @@ import PageSourceData from "src/core/page-source-h5/page-source-h5.js"
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 
 import { ref } from "vue"
 

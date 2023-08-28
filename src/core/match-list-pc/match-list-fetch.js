@@ -131,12 +131,7 @@ export const fetch_match_list = (is_socket = false, cut) => {
 		send_match_list_request();
 	}
 };
-export const mx_get_remote_time = () => {
-	let { local_time, remote_time } = this.vx_get_timestamp;
-	let now = new Date().getTime();
-	let time = remote_time + (now - local_time);
-	return time;
-};
+
 /**
  * @Description 每30秒检查一次可视区域赛事数据最后更新时间，如果超过1分钟未更新数据  调用bymids接口更新数据
  * @param {undefined} undefined
@@ -147,7 +142,7 @@ export const check_match_last_update_time = () => {
 		return;
 	}
 	let mids = [];
-	let now_time = this.mx_get_remote_time();
+	let now_time = this.get_remote_time();
 	// 遍历可视区域赛事ID
 	this.$matchlist.show_mids.forEach((mid) => {
 		// 更新时间间隔

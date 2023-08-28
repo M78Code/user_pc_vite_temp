@@ -2,7 +2,7 @@
  * @Description: 用户信息
  */
 
-import { uid } from 'quasar';
+import uid from "src/core/uuid/index.js"
 import lodash from 'lodash'
 import userCtr from 'src/core/user-config/user-ctr.js';
 import { api_admin } from "src/api/index.js";

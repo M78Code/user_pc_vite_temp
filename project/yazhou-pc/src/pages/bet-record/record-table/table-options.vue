@@ -510,7 +510,7 @@ import {
   format_balance,
   formatTime,
   format_btn_balance,
-} from "src/core/formart.index.js";
+} from "src/core/format.index.js";
 import vueSlider from "vue-slider-component";
 import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";

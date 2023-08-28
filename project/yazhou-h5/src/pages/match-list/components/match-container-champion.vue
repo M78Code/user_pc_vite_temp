@@ -140,7 +140,7 @@ const update_state = () => {
 }
 
 // TODO: 其他模块得 store  待添加
-// mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
+// mixins: [formatmixin, odd_convert, bettings, match_list_mixin,msc, common],
 
 const collapsed = computed(() => {
   let result = true;

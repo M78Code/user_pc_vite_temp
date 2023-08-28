@@ -1,6 +1,9 @@
 import { isDate } from "lodash";
 import { t } from "src/boot/i18n"
-
+import {format_time_zone_millisecond} from './format-date'
+import ServerTime from  "src/core/server-time/server-time.js"
+ 
+ 
 export const format_Y_M_D_H_M = function (payload) {
   if (!payload) return "";
   let time = new Date(parseInt(payload));
@@ -279,12 +282,7 @@ export const formatTime = (timestamp, fmt) => {
     return fmt;
   } catch (error) {}
 };
-export const mx_get_remote_time = () => {
-  let { local_time, remote_time } = this.vx_get_timestamp;
-  let now = new Date().getTime();
-  let time = remote_time + (now - local_time);
-  return time;
-};
+ 
 export const format_date_by_manage = (value) => {
   let time = new Date(parseInt(value));
   let y = time.getFullYear();
@@ -509,3 +507,21 @@ export const formatDate = (date) => {
   }
   return _date;
 }
+
+ 
+
+/**
+ * 获取与服务器的修正时间
+ */
+export const get_remote_time =  () => {
+
+  return  ServerTime.get_remote_time()
+};
+
+// 格式化时间
+export const format_time = (seconds) => {
+  let m = parseInt(seconds / 60).toString().padStart(2, 0)
+  let s = (seconds % 60).toString().padStart(2, 0)
+  return `${m}'${s}"`
+}
+

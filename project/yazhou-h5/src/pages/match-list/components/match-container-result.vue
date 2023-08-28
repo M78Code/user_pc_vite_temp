@@ -128,7 +128,7 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { format_time_zone_time } from "src/core/formart/index.js"
+import { format_time_zone_time } from "src/core/format/index.js"
 
 const props = defineProps({
   match_of_list: Object,
@@ -170,7 +170,7 @@ const update_state = () => {
 }
 
 // TODO: 其他模块得 store  待添加
-// mixins: [formartmixin, odd_convert, bettings, match_list_mixin,msc, common],
+// mixins: [formatmixin, odd_convert, bettings, match_list_mixin,msc, common],
 
 onMounted(() => {
   is_first_coming.value = true;

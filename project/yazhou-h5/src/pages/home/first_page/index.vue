@@ -172,7 +172,7 @@
 
 <script setup>
 import { api_home } from "src/project/api/index";
-import { format_time_zone_time, format_balance, format_total_score } from "src/core/formart/index.js"
+import { format_time_zone_time, format_balance, format_total_score } from "src/core/format/index.js"
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
@@ -195,7 +195,7 @@ import base_data from "src/public/utils/base_data.js";
 import { common_menu_list, secondary_menu } from "src/public/config/common_menu.js"
 //  api1.5 菜单 本地化假数据
 import menu_data  from "src/public/config/menu_new_data.js"
-import { uid } from "quasar"
+import uid from "src/core/uuid/index.js"
 import { db } from "src/public/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"

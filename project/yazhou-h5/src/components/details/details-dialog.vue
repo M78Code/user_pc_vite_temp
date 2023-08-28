@@ -96,7 +96,7 @@ import match_dialog_stage from 'src/project/components/match/match_dialog_stage.
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
 import { t } from "src/boot/i18n";;
 import { useRouter, useRoute } from "vue-router"
-import { format_total_score } from 'src/core/formart'
+import { format_total_score } from 'src/core/format'
 
 const router = useRouter()
 const route = useRoute()

@@ -124,9 +124,9 @@
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_betting } from "src/project/api/index";
 import userCtr from "src/core/user-config/user-ctr.js"
-import { format_money2 } from "src/core/formart/index.js"
+import { format_money2 } from "src/core/format/index.js"
 import lodash from 'lodash'
-import { format_money2 } from "src/core/formart/index.js"
+import { format_money2 } from "src/core/format/index.js"
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"

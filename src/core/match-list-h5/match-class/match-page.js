@@ -1,5 +1,5 @@
 
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'

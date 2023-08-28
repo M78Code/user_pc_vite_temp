@@ -13,7 +13,7 @@ export const virtual_sport_format = (match_list_input) => {
 	let pre_index = 0;
 	// 赛事显示状态 1：进行中 2： 停止投注 3：停留1分后移除
 	let _show_status = 1;
-	let remote_time = mx_get_remote_time();
+	let remote_time = get_remote_time();
 	/** 第1场赛事的特殊处理 ***************/
 	let first_match = match_list[0] || {};
 	// 篮球 && 赛前赛事

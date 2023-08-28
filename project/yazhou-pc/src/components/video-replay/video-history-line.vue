@@ -29,7 +29,7 @@
 <script>
 import { api_details } from "src/api/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_second_ms } from "src/core/formart/index.js"
+import { format_second_ms } from "src/core/format/index.js"
 // TODO hanmar后续处理--S
 // import time_format_mixin from "src/public/mixins/common/time_format";
 // import video from "src/public/utils/video/video.js"

@@ -19,6 +19,7 @@ const PAGE_SOURCE_POOL =  [
   'match-early-common' ,
   'match-early-fliter' ,
   'match-early-collect' ,
+  "virtual_details"
  
 ]
    

@@ -124,7 +124,7 @@ import SLive from "src/project/components/skeleton/live"
 import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'
 import counting_down from 'src/project/components/common/counting-down'
-import { format_total_score } from "src/core/formart/index.js"
+import { format_total_score } from "src/core/format/index.js"
 
 
   //右侧菜单内容

@@ -75,8 +75,8 @@ import { api_common } from 'src/project/api/index.js'
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 // import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
-import { uid } from "quasar";
-import { format_currency, format_odds,  } from "src/core/formart/index.js"
+import uid from "src/core/uuid/index.js";
+import { format_currency, format_odds,  } from "src/core/format/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n";;
 //国际化

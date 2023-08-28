@@ -7,7 +7,7 @@ import BetData from "../class/bet-data-class.js";
 import { http_upd_data } from "./upd_data.js";
 import mathjs from "src/core/utils/mathjs.js";
 import yabo_common from "src/core/bet/common-helper/index.js";
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";

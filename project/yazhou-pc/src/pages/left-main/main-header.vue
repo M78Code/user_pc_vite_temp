@@ -40,7 +40,7 @@ import { ref, onBeforeUnmount, computed, onMounted, reactive } from "vue";
 import { get } from "lodash";
 import store from "src/store-redux/index.js";
 import { get_balance } from "src/store-redux/module/user-info.js";
-import { format_balance } from "src/core/formart/";
+import { format_balance } from "src/core/format/";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
 
 const { userReducer } = store.getState();

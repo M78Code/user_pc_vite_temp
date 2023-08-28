@@ -7,7 +7,7 @@
  *
  */
 import { get } from "lodash";
-import { DateForMat } from "../formart/";
+import { DateForMat } from "../format/";
 import { deepMerge, GetUrlParams } from "../utils";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 

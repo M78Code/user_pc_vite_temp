@@ -215,7 +215,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import utils from "src/core/utils/utils.js"
-import { format_mgt_time, format_total_score } from "src/core/formart/index.js"
+import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 

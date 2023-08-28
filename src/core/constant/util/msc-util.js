@@ -1,5 +1,5 @@
 import { t } from "src/boot/i18n";
-import { format_msc } from '../../formart/module/format-msc'
+import { format_msc } from '../../format/module/format-msc'
 
 const mmp_map = () => {
   return t("mmp") || "";

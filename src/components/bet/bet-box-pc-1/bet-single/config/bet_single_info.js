@@ -7,7 +7,7 @@ import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
 
 import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
-import { format_str } from "src/core/formart/index.js";
+import { format_str } from "src/core/format/index.js";
 
 export default {
   name: "bet-single-info",

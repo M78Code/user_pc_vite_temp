@@ -4,7 +4,7 @@
  * @Description: ws通信日志功能类
  */
 import { GetUrlParams } from "../utils";
-import { DateForMat } from "../formart";
+import { DateForMat } from "../format";
 import { ss } from "../utils/web-storage";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {

@@ -85,7 +85,7 @@ import team_img from 'src/project/components/details/team_img.vue'
 import match_stage from 'src/project/components/match/match_stage.vue';
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
-import { format_total_score } from 'src/core/formart'
+import { format_total_score } from 'src/core/format'
 import { useRoute, useRouter } from "vue-router"
 let route = useRoute()
 let router = useRouter()

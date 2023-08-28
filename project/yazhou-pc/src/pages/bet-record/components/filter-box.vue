@@ -153,7 +153,7 @@ import { ref, reactive, onMounted,watch,onUnmounted } from "vue";
 import icon from "src/components/icon/icon.vue";
 import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
 import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
-import { formatTime } from "src/core/formart/index";
+import { formatTime } from "src/core/format/index";
 const props = defineProps({
   toolSelected: Number,
   time_sort_record_item: Object,

@@ -69,13 +69,13 @@ import { useGetResultConfig } from "./results.config.js";
 // import normalSelect from "src/public/components/select/normal_select.vue";
 // import normalSelect2 from "src/public/components/select/normal_select.vue";
 // import Calendar from "src/project/yabo/components/bet_record/calendar.vue";
-// import formartmixin from "src/public/mixins/common/time_format";
+// import formatmixin from "src/public/mixins/common/time_format";
 // import { api_common, api_results } from "src/public/api/index";
 // import fliterCheckbox from "src/project/yabo/components/match_list/filter_checkbox.vue";
 // import moveVideo from "project_path/src/components/video-replay/move_video.vue";
 // import resultHeader from './components/result-header.vue'
 // import { mapGetters } from "vuex";
-  // mixins: [formartmixin],
+  // mixins: [formatmixin],
   const {
     results_data,
     tips

@@ -4,7 +4,7 @@
  * @Description: 公共的动画模板
  */
 // import format from "src/project/yabo/mixins/match_details/index";
-import { formatTime } from "src/core/formart/module/format-time.js";
+import { formatTime } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;
 import utils from "src/core/utils/utils";
 import lodash from 'lodash'

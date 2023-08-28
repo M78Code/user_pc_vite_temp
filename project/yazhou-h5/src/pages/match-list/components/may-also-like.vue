@@ -91,7 +91,7 @@ import team_img from "src/project/components/details/team_img";   // 详情页�
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 import betting from "src/project/mixins/betting/betting.js";    // 押注动作相关的所有方法写到这里
 import {mapMutations, mapGetters} from "vuex";
-import { format_total_score } from "src/core/formart/index.js"
+import { format_total_score } from "src/core/format/index.js"
 import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'

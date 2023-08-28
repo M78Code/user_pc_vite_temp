@@ -300,7 +300,7 @@
 </template>
 
 <script>
-import formartmixin from "src/public/mixins/common/time_format";
+import formatmixin from "src/public/mixins/common/time_format";
 import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
 import { mapGetters } from "vuex";
 import VueSlider from 'vue-slider-component'
@@ -311,7 +311,7 @@ export default {
     VueSlider,
     Pagination,
   },
-  mixins: [formartmixin],
+  mixins: [formatmixin],
   props: {
     record_obj: {
       type: Object,

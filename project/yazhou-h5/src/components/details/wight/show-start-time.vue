@@ -17,7 +17,7 @@
 
 <script>
 import utils from "src/public/utils/utils.js";
-import { format_time_zone_time, format_H_M } from "src/core/formart/index.js"
+import { format_time_zone_time, format_H_M } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 

@@ -148,7 +148,7 @@ import { TeamNameWapper } from "src/components/details/team-name";   // 详情�
 import utils from "src/core/utils/utils.js";    // 公共方法
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
-import { format_time_zone_time, format_H_M,format_total_score } from "src/core/formart/index.js"
+import { format_time_zone_time, format_H_M,format_total_score } from "src/core/format/index.js"
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

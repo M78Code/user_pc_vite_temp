@@ -57,12 +57,12 @@ export default class SearchHotPush {
         }
       }
       // TODO:
-      // this.hot_push_name = this.view.i18n.t('common.search')
+      // this.hot_push_name = i18n.t('common.search')
       this.is_hot_push = false
     }).catch(err => {
       console.error(err)
       // TODO:
-      // this.hot_push_name = this.view.i18n.t('common.search')
+      // this.hot_push_name = i18n.t('common.search')
       this.is_hot_push = false
     });
   }

@@ -33,7 +33,7 @@ import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
-import { format_str } from "src/core/formart/index.js";
+import { format_str } from "src/core/format/index.js";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

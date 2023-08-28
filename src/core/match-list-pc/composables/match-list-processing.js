@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 
-import { virtual_sport_format } from 'src/core/formart/index.js'
+import { virtual_sport_format } from 'src/core/format/index.js'
 
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构

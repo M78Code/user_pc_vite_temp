@@ -915,7 +915,7 @@ const match_list = {
 					return;
 				}
 				let mids = [];
-				let now_time = this.mx_get_remote_time();
+				let now_time = this.get_remote_time();
 				// 遍历可视区域赛事ID
 				match_scroll_utils.show_mids.forEach((mid) => {
 					// 更新时间间隔

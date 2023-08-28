@@ -82,7 +82,7 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
-import { format_M_D } from 'src/core/formart/index.js'
+import { format_M_D } from 'src/core/format/index.js'
 import { t } from "src/boot/i18n";
 //国际化
 

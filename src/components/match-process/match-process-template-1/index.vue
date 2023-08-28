@@ -123,7 +123,7 @@
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
 import utils from "src/core/utils/utils";
 import matchDate from "src/components/match-date/match_date.vue";
-// import { format_second_ms } from "src/core/formart/index.js";
+// import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
   numberToChinese,

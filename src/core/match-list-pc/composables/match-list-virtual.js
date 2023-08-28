@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { mx_get_remote_time } from "src/core/formart/module/format-date.js";
+import { get_remote_time } from "src/core/format/index.js"
 import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 // vr 请求次数
 const is_vr_numer = ref(0);

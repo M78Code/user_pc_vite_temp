@@ -120,9 +120,7 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
  
-// import * as formatUtils from "src/core/formart/module/format-date.js"; // 时间格式化处理
-
-
+ 
 const props = defineProps({
   // 赛事列表无数据
   data_get_empty: Boolean, 

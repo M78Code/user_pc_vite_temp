@@ -88,7 +88,7 @@ import { api_account, api_common } from "src/api/index.js";
 
 import utils from "src/core/utils/utils.js"
 import store from "src/store-redux/index.js";
-import { format_money2 } from "src/core/formart/index.js"
+import { format_money2 } from "src/core/format/index.js"
 
 import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
 import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
@@ -247,7 +247,7 @@ function getFestivalBanner() {
     api_common.queryFestivalBanner().then(res => {
         const data = lodash.get(res, 'data.data') || {}
         // 服务器时间
-        // let stime = proxy.mx_get_remote_time();
+        // let stime = proxy.get_remote_time();
         let _time = data.startTime && data.endTime;
         // 当前时间处于开始时间和结束时间中间时才展示图片
         // if (Object.keys(data).length && _time && (data.startTime <= stime && stime <= data.endTime)) {

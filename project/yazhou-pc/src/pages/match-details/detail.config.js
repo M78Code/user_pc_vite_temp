@@ -24,10 +24,10 @@ import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
-import { format_plays, format_sort_data } from "src/core/formart/index";
-import { formatTime } from "src/core/formart/module/format-time.js";
+import { format_plays, format_sort_data } from "src/core/format/index";
+import { formatTime } from "src/core/format/index.js"
 
-import { uid } from "quasar";
+import uid from "src/core/uuid/index.js";
 
 export const useGetConfig = () => {
   const route = useRoute();

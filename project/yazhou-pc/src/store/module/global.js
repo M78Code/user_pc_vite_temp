@@ -14,12 +14,7 @@ const initialState = {
   },
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   match_sort: 1,
-  // 远程服务器时间
-  timestamp: {
-    remote_time: 0,
-    local_time: 0,
-  },
-  remote_server_time: 0,
+ 
 
   //全局点击事件数
   global_click: 0,
@@ -61,16 +56,7 @@ export default function globalReducer(state = initialState, action) {
     // //设置非常规菜单选择（搜索关键词点击）
     case "SET_MENU_SPECIAL_CHOOSE":
       return { ...state, menu_special_choose: action.data };
-    // //设置服务器时间
-    case "SET_REMOTE_SERVER_TIME":
-      console.log("set_remote_server_time----", action);
-      return {
-        ...state,
-        timestamp: {
-          local_time: Date.now(),
-          remote_time: action.data,
-        },
-      };
+ 
     // //初始化盘口偏好
     case "SET_INIT_ODD":
       let pre_odds = localStorage.getItem("pre_odds") || state.odds.cur_odds;
@@ -161,17 +147,4 @@ export default function globalReducer(state = initialState, action) {
       return { ...state };
   }
 }
-//获取服务器时间
-export const set_remote_server_time = () => {
-  return async (dispatch) => {
-    const res = await api_common.get_server_time();
-    let code = get(res, "data.code");
-    if (code == 200) {
-      let serverTime = Number(get(res, "data.data"));
-      dispatch({
-        type: "SET_REMOTE_SERVER_TIME",
-        data: serverTime,
-      });
-    }
-  };
-};
+ 

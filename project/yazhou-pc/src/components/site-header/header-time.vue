@@ -14,7 +14,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, defineComponent } from 'vue'
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
-// import { mx_get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/formart/module/format-date.js";
+// import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/index.js"
 
 /** 日期时间 */
 const date_time = ref('')
@@ -27,7 +27,7 @@ const time = ref({
 
 /** 获取系统时间 = 日期时间 */
 function get_date_time() {
-    // time.value = mx_get_remote_time();
+    // time.value = get_remote_time();
     time_local.value = new Date().getTime();
     // date_time.value = utc_to_gmt_no_8_ms2(time.value);
 }

@@ -1,15 +1,21 @@
 import { api_virtual } from "src/public/api/index.js"
 import VSport from "src/public/utils/vsport/vsport.js"
+import {i18n } from  "src/boot/i18n.js"
+import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"
+import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
+import { useRouter, useRoute } from 'vue-router'
+import {msc_array_obj} from "src/core/formart/index.js"
+import { throttle } from "lodash";
+const router = useRouter()
+const route = useRoute()
 let video_voice = false
 export default class VsportCtr {
   /**
    * @description: 构造函数
-   * @param {Object} view Vue实例
    * @return {undefined} undefined
    */
-  constructor(view) {
-    // 视图对象
-    this.view = view
+  constructor( ) {
+   
     // 数据加载状态
     this.load_data_state = 'loading'
     // 联赛积分榜
@@ -37,10 +43,10 @@ export default class VsportCtr {
     // 淘汰赛tab
     this.elimination_tab = ''
     this.elimination_tabs = [
-      {key:'q8',value:this.view.i18n.t('vsport.etab1')}, // 16强
-      {key:'q4',value:this.view.i18n.t('vsport.etab2')}, // 1/4决赛
-      {key:'semifinal',value:this.view.i18n.t('vsport.etab3')}, // 半决赛
-      {key:'final',value:this.view.i18n.t('vsport.etab4')}, // 决赛
+      {key:'q8',value:i18n.t('vsport.etab1')}, // 16强
+      {key:'q4',value:i18n.t('vsport.etab2')}, // 1/4决赛
+      {key:'semifinal',value:i18n.t('vsport.etab3')}, // 半决赛
+      {key:'final',value:i18n.t('vsport.etab4')}, // 决赛
     ]
     // 禁用的淘汰赛tab
     this.elimination_disable = []
@@ -75,13 +81,15 @@ export default class VsportCtr {
     // 组件key值
     this.vue_key = 0
     // 刷新视频节流
-    this.reload_video = this.view.throttle(this.reload_video,5000)
+    this.reload_video =  throttle(this.reload_video,5000)
     // 定时器运行次数
     this.timer_count = 0
     // 篮球进度线宽度
     this.basketball_line_width = 0
     // 篮球赛前盘已开赛时间
     this.basketball_strat_time = ''
+    //
+    this.get_vsport_params={}
   }
 
   // 销毁函数
@@ -105,12 +113,16 @@ export default class VsportCtr {
     this.destroy_vsport()
     this.get_replay()
   }
+
+  set_get_vsport_params(obj){
+   this.get_vsport_params={...obj}
+  }
   /**
    * @Description 获取赛事进程数据 
    * @param {undefined} undefined
   */
   get_replay(){
-    let params = _.clone(this.view.get_vsport_params)
+    let params = _.clone(this.get_vsport_params)
     delete params.id
     // 虚拟足球  虚拟篮球
     if([1001,1004].includes(params.csid*1)){
@@ -166,13 +178,13 @@ export default class VsportCtr {
             },2000)
           }
           status = 1
-          this.video_url = _.get(replay_data,`${this.view.get_vsport_params.mid}.thirdMatchVideoUrl`) || new Date() * 1
+          this.video_url = _.get(replay_data,`${this.get_vsport_params.mid}.thirdMatchVideoUrl`) || new Date() * 1
         }
         this.set_status(status)
         // 足球
         if([1001,1004].includes(this.info.csid*1)){
           this.set_footbal_replay(res)
-          this.mid_change(this.view.get_vsport_params.mid)
+          this.mid_change(this.get_vsport_params.mid)
           if(status==1){
           this.get_basketball_score()
           }
@@ -291,7 +303,7 @@ export default class VsportCtr {
       }
       if(this.status == 2){
         // 如果赛事已结束  给足球添加比分
-        let score = this.view.yabo_common.msc_array_obj(item.score);
+        let score =  msc_array_obj(item.score);
         if(score.S1){
           item.home = score.S1.home
           item.away = score.S1.away
@@ -336,7 +348,7 @@ export default class VsportCtr {
       key = 'vsport.xqi'
     }
     if(no){
-      no = this.view.i18n.t(key).replace('%s',no)  
+      no = i18n.t(key).replace('%s',no)  
     }
     return no
   }
@@ -362,7 +374,7 @@ export default class VsportCtr {
         // 赛事结束 并且视频不是加载完成状态 或者当前播放的不是此赛事
         if(res.match_status == 2){
           match.score_end = true
-          if(this.video_load_state != 'done' || this.view.get_vsport_params.mid != match.mid){
+          if(this.video_load_state != 'done' || this.get_vsport_params.mid != match.mid){
             if(this.VSport_obj_list[index]){
               this.VSport_obj_list[index].destroy()
             }
@@ -458,7 +470,8 @@ export default class VsportCtr {
     if(this.info.csid == 1004){
       return
     }
-    this.view.$store.dispatch('set_vsport_params_mid',mid)
+     
+    this.get_vsport_params.mid =mid
   }
   /**
    * @Description 刷新视频   
@@ -591,9 +604,9 @@ export default class VsportCtr {
   */
   set_video_show_type(no_start_animation){
     this.video_show_type = this.get_video_show_type(no_start_animation)
-     if((this.video_show_type == 'result' || this.video_show_type == 'basketball_result') && this.view.$route.name=='virtual_details'){
+     if((this.video_show_type == 'result' || this.video_show_type == 'basketball_result') && PageSourceData.page_source=='virtual_details'){
        // 赛事结束
-       this.view.useMittEmit("virtual_match_done")
+      useMittEmit("virtual_match_done")
      }
     // 如果不是视频类型  销毁视频
     if(this.video_show_type != 'video'){
@@ -655,7 +668,7 @@ export default class VsportCtr {
    * @param {undefined} undefined
   */
   set_match_result(mid,index){
-    mid = mid || this.view.get_vsport_params.mid
+    mid = mid || this.get_vsport_params.mid
     api_virtual.get_match_result({mid}).then( res => {
       let code = _.get(res,'data.code')
       if(code == 200){
@@ -710,7 +723,7 @@ export default class VsportCtr {
   */
   set_group_rank_list(){
     let params = {
-      tid:this.view.get_vsport_params.tid
+      tid:this.get_vsport_params.tid
     }
     api_virtual.post_group_ranking(params).then( res => {
       let code = _.get(res,'data.code')
@@ -743,8 +756,8 @@ export default class VsportCtr {
       this.video_url = this.replay_list[this.replay_index].thirdMatchVideoUrl || new Date() * 1
     }
     // 如果是详情页  切换详情赛事
-    if(this.view.$route.name == 'virtual_details'){
-      this.view.$router.push({
+    if(PageSourceData.page_source == 'virtual_details'){
+       router.push({
         name: 'virtual_details',
         params: {
           mid,
@@ -820,7 +833,7 @@ export default class VsportCtr {
   */
   set_elimination_rank(is_init){
     let params = {
-      tid:this.view.get_vsport_params.tid,
+      tid:this.get_vsport_params.tid,
       batchNo:this.info.batchNo,
       lod:this.info.lod || 1,
       beginTime:this.info.mgt,
@@ -829,9 +842,9 @@ export default class VsportCtr {
     api_virtual.get_elimination_rank(params).then( res => {
       let code = _.get(res,'data.code')
       if(code == 200){
-        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),this.view.i18n.t('vsport.etab2'))
-        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),this.view.i18n.t('vsport.etab3'))
-        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),this.view.i18n.t('vsport.etab4'))
+        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),i18n.t('vsport.etab2'))
+        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),i18n.t('vsport.etab3'))
+        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),i18n.t('vsport.etab4'))
         this.final = _.get(res,'data.data.FINAL[0]') || {}
         if(is_init){
           this.info.mmp && (this.elimination_tab = this.info.mmp.toLowerCase())
@@ -959,7 +972,7 @@ export default class VsportCtr {
   */
   set_league_rank_list(){
     let params = {
-      tid:this.view.get_vsport_params.tid
+      tid:this.get_vsport_params.tid
     }
     api_virtual.post_league_ranking(params).then( res => {
       let code = _.get(res,'data.code')
@@ -985,7 +998,7 @@ export default class VsportCtr {
       let t2 = _.get(item,'totalTime') || 0
       if(t2 > t) t = t2
     })
-    let default_time = this.view.get_vsport_params.mid ? 90 : 20
+    let default_time = this.get_vsport_params.mid ? 90 : 20
     t = t == 0 ? default_time : t 
     t *= 1000
     return t
@@ -1145,11 +1158,5 @@ export default class VsportCtr {
   to_fixed(number){
     return parseInt(number * 1000) / 1000
   }
-  /**
-   * @Description 获取服务器时间戳 
-   * @param {number} 
-  */
-  get_remote_time(){
-    return new Date() * 1 - this.view.get_timestamp.local_time + this.view.get_timestamp.remote_time 
-  }
+ 
 }
