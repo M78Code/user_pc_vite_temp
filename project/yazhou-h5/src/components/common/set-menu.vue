@@ -218,11 +218,11 @@ import { useRoute, useRouter } from "vue-router"
     let old_odd = ''
     if(split_new){
       old_odd = get_cur_odd
-        set_cur_odd('EU');
+      BetData.set_cur_odd('EU');
       }
       // 从冠军切到其他
       if(old && old_odd){
-        set_cur_odd(old_odd);
+        BetData.set_cur_odd(old_odd);
       }
   })
 
@@ -231,7 +231,6 @@ import { useRoute, useRouter } from "vue-router"
     //   'set_theme',
     // ]),
     // ...mapMutations({
-    //   set_cur_odd:"set_cur_odd",
     //   set_sort_type: 'set_sort_type',
     //   set_is_accept:'set_is_accept',
     //   set_newer_standard_edition:'set_newer_standard_edition',
@@ -320,7 +319,7 @@ import { useRoute, useRouter } from "vue-router"
       let odd = get_cur_odd == 'EU' ? 'HK' : 'EU'
       // 将盘口偏好记录到服务端
       api_betting.record_user_preference({userMarketPrefer:odd}).then().catch(err=>console.error(err))
-      set_cur_odd(odd);
+      BetData.set_cur_odd(odd);
       set_user({userMarketPrefer:odd})
     }
     /**
