@@ -18,14 +18,11 @@ export const format_msc = (str) => {
   if (!str) {
     return [];
   }
-  if (!window.msc_map) {
-    window.msc_map = i18n.t('msc')
-  }
   let list_ = str.split(/[:|]/);
   for (let i = 0, l = 3 - list_.length; i < l; i++) {
     list_.push('');
   }
-  list_.push(window.msc_map[list_[0]]);
+  list_.push(i18n.t('msc')[list_[0]]);
 
   return list_;
 }
@@ -625,7 +622,7 @@ export const basket_ball_score_handle = (match) => {
   }
   else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = window.msc_map[dic];
+      let title = i18n.t('msc')[dic];
       return [dic, '', '', title];
     });
   }
@@ -716,7 +713,7 @@ export const foot_ball_score_handle = (match) => {
     match.msc_s_format = sorted;
   } else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = window.msc_map[dic];
+      let title = i18n.t('msc')[dic];
       return [dic, '', '', title];
     });
   }
