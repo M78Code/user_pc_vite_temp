@@ -97,6 +97,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { format_msc_handle } from 'src/core/formart/module/format-msc'
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
@@ -874,30 +875,7 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
     any_unfold.value = tab_list.value.filter(t => t.unfold == 1).length;
   }
 }
-/**
- * @Description:格式化比分数据
- * @param: key   (S151)
- * @return: 返回分隔后的数组
- */
-const format_msc_handle = (str) => {
-  if (!str) {
-    return [];
-  }
-  if(!window.msc_map)
-  {
-    window.msc_map = i18n.t('msc')
-  }
-  if(!str.split){
-    return [];
-  }
-  let list_ = str.split(/[:|]/);
-  for(let i = 0,l = 3 - list_.length; i < l;i++){
-    list_.push('');
-  }
-  list_.push(window.msc_map[list_[0]]);
 
-  return list_;
-}
 /**
  * 篮球阶段变化处理
  * 当篮球玩法id为'43,19,18'时, 次要玩法要显示为"上半场"

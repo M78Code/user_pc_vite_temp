@@ -1,5 +1,6 @@
 import { t } from "src/boot/i18n";
-;
+import { format_msc } from '../../formart/module/format-msc'
+
 const mmp_map = () => {
   return t("mmp") || "";
 };
@@ -223,46 +224,7 @@ const state_convert_dict = Object.freeze({
   },
 });
 
-/**
- * @Description:格式化比分数据
- * @Author success
- * @param: key   (S151)
- * @return: 返回分隔后的数组
- * @Date 2020/02/03 21:44:58
- */
-const format_msc = (str) => {
-  if (!str) {
-    return [];
-  }
 
-  let list_ = str.split(/[:|]/);
-  for (let i = 0, l = 3 - list_.length; i < l; i++) {
-    list_.push("");
-  }
-  list_.push(this.msc_map[list_[0]]);
-  return list_;
-};
-
-/**
- * @Description:格式化比赛阶段名称
- * @Author success
- * @param: sport_id
- * @param: mmp
- * @return: 比赛阶段名称
- * @Date 2020/02/03 21:44:58
- */
-const get_mmp_name = (sport_id, mmp) => {
-  try {
-    if (!sport_id) {
-      return "";
-    }
-    if (mmp) {
-      return _.get(this.mmp_map, `${parseInt(sport_id)}.${mmp}`, "");
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
 /**
  * @description: 设置基准分key值
  * @param {Object} match
@@ -380,7 +342,7 @@ const score_switch_handle = (match) => {
     let remote_score = Object.create(null);
 
     match.msc.map((score) => {
-      let _score = this.format_msc(score);
+      let _score = format_msc(score);
 
       let _key = _score[0];
       remote_score[_key] = _score;
