@@ -40,7 +40,7 @@
               <!-- .Format(t('time3')) -->
               {{format_time_zone(+detail_data.mgt)}}
             </div>
-            <!-- <span class="sj-time-soon">{{format_time_zone_time(+detail_data.mgt) | format_H_M(+detail_data.mgt) }}</span> -->
+            <!-- <span class="sj-time-soon">{{ format_H_M(format_time_zone_time(+detail_data.mgt), +detail_data.mgt) }}</span> -->
           </template>
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -71,7 +71,7 @@
           {{t("list.after_time_start",[longTime])}}
         </span>
         <span v-else>
-          <!-- {{format_time_zone_time(+detail_data.mgt) | format_H_M(+detail_data.mgt) }} -->
+          <!-- {{ format_H_M(format_time_zone_time(+detail_data.mgt), +detail_data.mgt) }} -->
         </span>
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
@@ -82,7 +82,7 @@
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'home'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
       <span class="score1" v-if="[1,2,3,4].includes(+detail_data.ms)">
         <!-- 引入相对应的formatUtil,使用其中的方法; -->
-        <!-- {{format_total_score(detail_data) | format_total_score(0)}} - {{format_total_score(detail_data) | format_total_score(1)}} -->
+        <!-- {{ format_total_score(detail_data, 0)}} - {{ format_total_score(detail_data, 1)}} -->
       </span>
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'away'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
 

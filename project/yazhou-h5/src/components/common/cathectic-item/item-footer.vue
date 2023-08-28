@@ -8,7 +8,7 @@
     <!-- 左 -->
     <div class="col-4">
       <p class="top-p">{{ is_pre ?  t('pre_record.book_bet_amount') : t('bet_record.bet_val2') }}</p>
-      <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{data_f.orderAmountTotal | format_money2}}</p>
+      <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{format_money2(data_f.orderAmountTotal)}}</p>
     </div>
 
     <!-- 中 -->

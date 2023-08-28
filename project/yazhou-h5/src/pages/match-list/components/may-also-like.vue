@@ -39,7 +39,7 @@
                 </template>
                 <span class="ellipsis">{{ item.mhn }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(0)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{ format_total_score(item, 0)}}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,0,normal_(item, 0))" :class="selected_(item,0) && 'Handicap2'">
                 <template v-if="normal_(item, 0)">
                   <!-- 盘口 -->
@@ -61,7 +61,7 @@
                 </template>
                 <span class="ellipsis">{{ item.man }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(1)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{ format_total_score(item, 1) }}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,1,normal_(item, 1))" :class="selected_(item,1) && 'Handicap2'">
                 <template v-if="normal_(item, 1)">
                   <!-- 盘口 -->
