@@ -3,11 +3,10 @@ import {
 	match_list_play_config,
 	history_score_dict,
 	match_state_convert_score_dict,
-	handicap_highlight_paly_id,
 	other_play_name_to_playid,
 	let_ball_play_tpl,
 	has_cur_handicap_tpl_ids,
-} from "src/core/match-list-pc/data-class-ctr/conifg/index.js";
+} from "src/core/constant/config/data-class-ctr/index.js";
 import utils from "src/core/utils/utils.js";
 import lodash from 'lodash';
 
