@@ -12,6 +12,7 @@ const detail_csid_config= {
     detail: {
       B: 'background: url("/yazhou-pc/image/png/basketball.png" ) no-repeat center center/100%  content-box content-box;'
     }
+    
   },
   CSID_3: {
     csid: '3',

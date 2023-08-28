@@ -368,34 +368,7 @@ const utils = {
     let font_size = innerWidth * 100 / 375;
     return Math.ceil(value * font_size);
   },
-  /**
-   * @description: 获取指定时区的Date对象(默认使用东八区)
-   * @param {int} time 时间毫秒数
-   * @param {int} offset 时区, 默认东八区
-   * @return {Date} 转换后的时区Date对象
-   */
-  format_time_zone(time,offset=8){
-    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-    var localTime = d.getTime();//获取的是毫秒级
-    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-    var wishTime= utc + (3600000*offset);
-    return new Date(wishTime);
-  },
-  /**
-   * @description: 获取指定时区的时间戳(默认使用东八区)
-   * @param {int} time 时间毫秒数
-   * @param {int} offset 时区, 默认东八区
-   * @return {int} 转换后的时区的时间戳
-   */
-  format_time_zone_time(time,offset=8){
-    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-    var localTime = d.getTime();//获取的是毫秒级
-    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-    var wishTime= utc + (3600000*offset);
-    return wishTime;
-  },
+ 
   /**
    * @description: 埋点Google Analytics GA_TRACKING_ID config配置
    * @param {*} user_id 用户id

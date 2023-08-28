@@ -40,36 +40,6 @@ const oddsTable = {
 
 const vx_odds_coversion_map = {}
 
-//赔率展示格式化
-const format_odds = val => {
-    if (val == '' || val == undefined) {
-        return '';
-    }
-    val = (val || '0').toString();
-    let ret = val;
-    if (val.includes('.')) {
-        if (val >= 100) {
-            if (val.split('.')[1] == '00') {
-                ret = val.split('.')[0];
-            } else {
-                let len = val.length;
-                if (val.indexOf('.0') == (len - 2)) {
-                    ret = val.substring(0, len - 2);
-                } else {
-                    ret = val;
-                }
-            }
-        } else if (val >= 10) {
-            if (val.split('.')[1][1] == '0') {
-                ret = val.slice(0, val.length - 1);
-            } else {
-                ret = val;
-            }
-        }
-    }
-    
-    return ret;
-}
 
 
 //返回字符串保留两位小数,csid-赛种ID
