@@ -296,7 +296,7 @@ import {
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "src/store-redux/index.js";
 
-import base_data from "src/core/utils/base-data/base-data.js";
+import base_data from "src/core/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
 import new_menu from "src/core/menu-pc/menu-data-class.js";

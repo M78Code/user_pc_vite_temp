@@ -22,7 +22,7 @@ import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { ss } from "src/core/utils/web-storage";
 import { loadLanguageAsync } from "src/boot/i18n";
-import base_data from "src/core/utils/base-data/base-data.js";
+import base_data from "src/core/base-data/base-data.js";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const token_key = STANDARD_KEY.get("token"); //token键
 const init_load = ref(false); //用于加载是否完成

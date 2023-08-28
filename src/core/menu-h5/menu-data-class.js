@@ -3,7 +3,7 @@
  */
 
 import lodash from "lodash";
-import base_data_instance from "src/core/utils/base-data/base-data.js";
+import base_data_instance from "src/core/base-data/base-data.js";
 class MenuData {
   constructor() {
     //================主列表用的  开始==================

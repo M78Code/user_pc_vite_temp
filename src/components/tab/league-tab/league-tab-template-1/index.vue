@@ -63,7 +63,7 @@
 // ...mapGetters([
 //   'get_layout_list_size',
 // ]),
-import base_data from "src/core/utils/base-data/base-data.js";
+import base_data from "src/core/base-data/base-data.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 import { nextTick, ref, computed, defineEmits, watch, onMounted, onBeforeUnmount } from "vue";
