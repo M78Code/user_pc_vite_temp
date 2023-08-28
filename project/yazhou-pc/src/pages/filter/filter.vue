@@ -18,15 +18,15 @@
                     <load-data :state="search_filter_data" class="full-height"></load-data>
                 </div>
                 <div class="filter-list" v-for="(item, index) in filter_list" :key="index" v-show="item.id">
-                    <template v-for="(sportVO, i) in item.sportVOs">
-                        <div class="filter-title" :key="`title-${i}`">
+                    <template v-for="(sportVO, i) in item.sportVOs" :key="`-${i}`">
+                        <div class="filter-title" >
                             <div @click.stop="group_click(sportVO)" class="yb-flex-center cursor-pointer">
                                 <fliter-checkbox :checked="sportVO.select" />
                                 <div class="country-name">{{ is_play ? sportVO.nameText : item.introduction }}</div>
                             </div>
                         </div>
 
-                        <div class="filter-item-content" :key="i">
+                        <div class="filter-item-content"  >
                             <div class="filter-item cursor-pointer" :class="items.select && 'active'"
                                 v-for="(items, i_) in sportVO.tournamentList" :key="`items_${index}_${i}_${i_}`"
                                 @click.stop="redio_checked(items)">
