@@ -5,6 +5,7 @@
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
 import { i18n } from "src/boot/i18n";
 import { ref } from "vue";
+import { dianjing_sublist } from "src/core/constant/config/csid.js"
 //   约定 四个 值
 
 // 100 常规球类
@@ -16,22 +17,11 @@ import { ref } from "vue";
 import userCtr from "src/core/user-config/user-ctr.js";
 import _ from "lodash";
 // indexeDb
-import { db } from "src/core/utils/base-data/config/indexedPB.js";
+import { db } from "src/core/base-data/config/indexedPB.js";
 
 import { api_base_data, api_common } from "src/api/index.js";
 
 // import VrMiConfig from "./config/vr-mi.js";
-
-//电竞子菜单
-const dianjing_sublist = [
-  { ct: 0, mi: "2100", st: 1, csid: "100" },
-  { ct: 0, mi: "2101", st: 2, csid: "101" },
-  { ct: 0, mi: "2103", st: 3, csid: "103" },
-  { ct: 0, mi: "2102", st: 4, csid: "102" },
-];
-
-// 虚拟体育 赛种ID
-const vr_csid_list = [1001, 1004, 1011, 1002, 1010, 1009];
 
 // 默认数据引入
 // 新旧的 菜单 映射 含 模板 以及 玩法

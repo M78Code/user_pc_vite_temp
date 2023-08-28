@@ -6,6 +6,9 @@
 
 import betting from "src/public/mixins/betting/betting.js";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
+
+import { format_str } from "src/core/formart/index.js";
+
 export default {
   name: "bet-single-record",
   mixins: [betting], // 押注相关功能
@@ -147,7 +150,6 @@ export default {
       //是不是个普通对象
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        let format_str = BetCommonHelper.format_str;
         //冠军
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));

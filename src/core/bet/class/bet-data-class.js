@@ -343,7 +343,7 @@ this.bet_appoint_ball_head= null */
     } else {
       this.is_accept = value;
     }
-  },
+  }
 
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData

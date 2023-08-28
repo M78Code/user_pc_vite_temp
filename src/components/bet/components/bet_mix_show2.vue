@@ -47,10 +47,10 @@
         <div class="col-3 row justify-end items-center">
           <span class="yb_fontsize22">
             <template v-if="get_bet_status == 3">
-              <template v-if="BetData.bet_list.length == 1">{{ odds_value2 | format_odds(value_show.csid) }}</template>
+              <template v-if="BetData.bet_list.length == 1">{{  format_odds(value_show.csid,odds_value2) }}</template>
               <template v-else>{{ odds_after }}</template>
             </template>
-            <template v-else>{{ odds_value | format_odds(value_show.csid) }}</template>
+            <template v-else>{{  format_odds(odds_value,value_show.csid) }}</template>
           </span>
           <span class="odd-change yb_ml4" v-if="!BetData.is_bet_success_status"></span>
         </div>
@@ -102,6 +102,7 @@
 
 import odd_convert from "src\core\odds_conversion\compute_max_win_money.js";
 import timer from "src/project/components/bet/timer.vue";
+import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘

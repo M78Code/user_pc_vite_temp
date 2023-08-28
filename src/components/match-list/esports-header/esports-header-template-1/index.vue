@@ -26,7 +26,7 @@ import DateTab from "src/public/components/tab/date-tab.vue";
 import sportIcon from "src/public/components/sport_icon/sport_icon.vue";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import BaseData from 'src/core/utils/base-data/base-data.js'
+import BaseData from 'src/core/base-data/base-data.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import { t } from "src/boot/i18n";
 import menu_config from "src/core/menu-pc/menu-data-class.js";

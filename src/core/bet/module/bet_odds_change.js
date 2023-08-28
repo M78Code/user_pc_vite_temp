@@ -7,8 +7,10 @@
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
+import { esports_csid } from "../../constant/config/csid"
 
-const float_3_csid = [100, 101, 102, 103] // 需要显示三位小数点的,赛种编号(电竞)
+
+const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
 const all_odds_arr = [] //所有的赔率数组
 const cur_odds_arr = [] // 当前允许的赔率数组
 let cur_odd = "EU" // 当前赔率
@@ -37,39 +39,8 @@ const oddsTable = {
     US: '5',
     ID: '6',
 }
+ 
 
-const vx_odds_coversion_map = {}
-
-//赔率展示格式化
-const format_odds = val => {
-    if (val == '' || val == undefined) {
-        return '';
-    }
-    val = (val || '0').toString();
-    let ret = val;
-    if (val.includes('.')) {
-        if (val >= 100) {
-            if (val.split('.')[1] == '00') {
-                ret = val.split('.')[0];
-            } else {
-                let len = val.length;
-                if (val.indexOf('.0') == (len - 2)) {
-                    ret = val.substring(0, len - 2);
-                } else {
-                    ret = val;
-                }
-            }
-        } else if (val >= 10) {
-            if (val.split('.')[1][1] == '0') {
-                ret = val.slice(0, val.length - 1);
-            } else {
-                ret = val;
-            }
-        }
-    }
-    
-    return ret;
-}
 
 
 //返回字符串保留两位小数,csid-赛种ID

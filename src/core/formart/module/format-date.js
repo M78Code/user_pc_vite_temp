@@ -479,3 +479,19 @@ export const format_second_ms = (second, model = "default") => {
         }
       });
     }
+/**
+ * 处理时间戳
+ */
+export const formatDate = (date) => {
+  let _date = ''
+  if (date) {
+    if ((new Date() - parseInt(date)) >= 86400000) {
+      _date = `${new Date(parseInt(date)).getMonth() + 1}月 ${new Date(parseInt(date)).getDate()}日`
+    } else if ((new Date() - parseInt(date)) >= 3600000) {
+      _date = `${Math.floor((new Date() - parseInt(date)) / 3600000)}小时前`
+    } else {
+      _date = `${Math.floor((new Date() - parseInt(date)) / 60000)}分钟前`
+    }
+  }
+  return _date;
+}

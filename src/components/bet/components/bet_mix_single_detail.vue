@@ -9,16 +9,19 @@
       <!-- 左 -->
       <div class="content-t">
         <p class="yb_fontsize16 black-color">{{ i18n.t('bet.single_more') }}</p>
+        <!-- <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
+            :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
+            class="yb_fontsize12">&thinsp;{{ max_win_money | four_five_six_double | format_money2 }}</span></p> -->
         <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
-            class="yb_fontsize12">&thinsp;{{ max_win_money | four_five_six_double | format_money2 }}</span></p>
+            class="yb_fontsize12">&thinsp;{{  format_money2(four_five_six_double(max_win_money) ) }}</span></p>
       </div>
       <!-- 右 -->
       <div class="content-b"
         :class="{ 'red-color': !money_ok, 'content-b2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"
         @click="change_kbdshow">
         <span class="intro-other yb_fontsize16">{{ BetData.bet_list.length }}&nbsp;X</span>
-        <span v-if="money" class="yb_fontsize20 money-number">{{ money | format_money3 }}</span>
+        <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
         <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>

@@ -296,7 +296,7 @@ import {
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "src/store-redux/index.js";
 
-import base_data from "src/core/utils/base-data/base-data.js";
+import base_data from "src/core/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
 import new_menu from "src/core/menu-pc/menu-data-class.js";
@@ -554,7 +554,7 @@ const show_move_video = computed(() => {
  *映射store内部的方法
  */
 const methods_map_store = [
-  "set_odds_coversion_map",
+ 
   "SET_INIT_ODD",
   "SET_INIT_MATCH_SORT",
   // 设置单关是否正在投注处理中
@@ -580,8 +580,7 @@ const methods_map_store = [
   "SET_LAYOUT_LIST_WIDTH",
   "set_is_bet_merge",
   "set_is_bet_single",
-  //设置全局开关
-  "set_global_switch",
+ 
   // 设置左侧布局
   "set_layout_left_show",
   //设置多列玩法状态
@@ -592,59 +591,7 @@ const methods_map_store = [
   };
   return obj;
 }, {});
-/**
- * @Description 获取全局配置开关
- * @param {undefined} undefined
- */
-function get_access_config() {
-  api_common
-    .get_access_config()
-    .then((res) => {
-      let data = get(res, "data.data", {});
-      if (!data) return;
-      let {
-        //热门推荐
-        hotRecommend: hot_recommend = true,
-        //统计
-        statisticsSwitch: statistics_switch = true,
-        //收藏
-        collectSwitch: collect_switch = true,
-        //近期
-        recentSwitch: recent_switch = true,
-        //活动
-        activitySwitch: activity_switch = true,
-        //搜索
-        searchSwitch: search_switch = true,
-        //联赛筛选
-        filterSwitch: filter_switch = true,
-        //盘口数量
-        handicapNum: handicap_num = true,
-        //热门赛事
-        hotMatchNum: hot_match_num = true,
-        //排序
-        sortCut: sort_cut = true,
-        //滚球全部
-        playAllShow: play_all_show = true,
-        //多列
-        multiColumn: multi_column = true,
-      } = data;
-      methods_map_store["set_global_switch"]({
-        hot_recommend,
-        statistics_switch,
-        collect_switch,
-        recent_switch,
-        activity_switch,
-        search_switch,
-        filter_switch,
-        handicap_num,
-        hot_match_num,
-        sort_cut,
-        play_all_show,
-        multi_column,
-      });
-    })
-    .catch((err) => console.error(err));
-}
+ 
 /**
  * @Description 列表滚动
  * @param {undefined} undefined
@@ -677,19 +624,7 @@ function list_on_scroll(obj) {
   }
 }
 
-/**
- * @description 赔率转换
- * @return {undefined} undefined
- */
-function get_odds_conversion() {
-  api_common.get_fetch_odds_conversion().then((res) => {
-    let code = get(res, "data.code") || "";
-    if (code == 200) {
-      let data = get(res, "data.data") || "";
-      methods_map_store["set_odds_coversion_map"](data);
-    }
-  });
-}
+ 
 
 /**
  * 投注框转开和折叠

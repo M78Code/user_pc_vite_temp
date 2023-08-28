@@ -51,7 +51,7 @@ export default {
     //   "get_fewer",
     //   "get_current_league",
     //   "get_detail_data",
-    //   'get_access_config',
+   
     // ]),
     // ...mapGetters({
     //   matchid: "get_goto_detail_matchid",
@@ -61,7 +61,9 @@ export default {
     // }),
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
-      return lodash.get(get_access_config, 'statisticsSwitch') && route.name != 'virtual_sports' && get_detail_data.csid != 1004
+      return 
+      
+      GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
     }
   },
   watch: {

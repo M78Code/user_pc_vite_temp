@@ -63,42 +63,8 @@ const utils = {
       }
     }
   },
-  /**
-   * @description: 将赛事数据列表/对象转换成c8命令结构体
-   * @param {Array/Object} match_any 赛事数据列表/对象
-   * @return {Object} 转换后的C8 对象
-   */
-  ws_c8_obj_format(match_any){
-    let ret = {};
-    if(match_any){
-      if(Array.isArray(match_any)){
-        match_any.map(match => {
-          if(match.mid){
-            ret[match.mid] = {mid:match.mid, ms:match.ms, csid:match.csid, mess:match.mess, mmp:match.mmp, hpids:[]};
-          }
-        })
-      } else{
-        if(match_any.mid){
-          ret[match_any.mid] = {mid:match_any.mid, ms:match_any.ms,  csid:match_any.csid, mess:match_any.mess, mmp:match_any.mmp, hpids:[]};
-        }
-      }
-    }
-    return ret;
-  },
-  /**
-   * @description: url地址增加参数
-   * @param {String} url
-   * @param {String} param_key
-   * @param {String} param_val
-   * @return {String}
-   */
-  url_add_param(url,param_key,param_val){
-    let ret = url;
-    if(ret && typeof(ret)=='string'){
-      ret = `${ret}${((ret.indexOf('?') == -1)?'?':'&')}${param_key}=${param_val}`;
-    }
-    return ret;
-  },
+
+
   /**
    * @description: 是否显示sr标志入口图标
    * @param {Object} match 赛事信息
@@ -150,22 +116,8 @@ const utils = {
     }
     return value;
   },
-  /**
-   * @Description 是否电竞的球种ID
-   * @param {undefined} undefined
-  */
-  is_eports_csid(csid){
-    // 英雄联盟100  dota2 101 csgo 102 王者荣耀103
-    return [100,101,102,103].includes(+csid)
-  },
-  /**
-   * @Description 是否虚拟体育的球种ID
-   * @param {undefined} undefined
-  */
-  is_virtual_csid(csid){
-    // 虚拟足球1001  虚拟赛狗1002  虚拟篮球1004 虚拟摩托1010 虚拟赛马1011 泥地摩托车1009
-    return [1001,1002,1004,1010,1011,1009].includes(+csid)
-  },
+ 
+ 
   /**
    * @Description 获取滚动条宽度  quasar源码复制的
    * @param {undefined} undefined

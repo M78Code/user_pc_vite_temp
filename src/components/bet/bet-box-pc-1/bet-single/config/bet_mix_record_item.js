@@ -5,6 +5,8 @@
  */
 
 import betting from "src/public/mixins/betting/betting.js";
+import { format_str } from "src/core/formart/index.js";
+
 export default {
   name: "bet-mix-item",
   mixins: [betting],
@@ -132,7 +134,6 @@ export default {
       let obj_bs = _.get(this.BetData.bet_obj,`${this.id}.bs`);
       if(_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        let format_str = BetCommonHelper.format_str;
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份

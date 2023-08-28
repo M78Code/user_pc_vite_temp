@@ -49,7 +49,7 @@ import { useRouter } from "vue-router";
 
 import store from "src/store-redux/index.js";
 import menu_config from 'src/core/menu-pc/menu-data-class.js'
-import base_data_instance from 'src/core/utils/base-data/base-data.js'
+import base_data_instance from 'src/core/base-data/base-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 import play_match from "/public/yazhou-pc/image/png/play-match.png";

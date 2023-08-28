@@ -4,6 +4,7 @@ import { ref, onMounted, defineComponent } from "vue"
 import { useMittEmit,useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import store from "src/store-redux/index.js";
+import keyboard from "src/core/constant/config/keyword";
 
 import * as bet_utils from "./bet_utils.js";
 import _ from "lodash"
@@ -14,38 +15,7 @@ const {
   userReducer
 } = store.getState()
 
-const keyboard = [
-  {
-    text: "5",
-    value: 5,
-    disabled: false
-  },
-  {
-    text: "10",
-    value: 10, // 数值
-    disabled: false // 禁用
-  },
-  {
-    text: "25",
-    value: 25,
-    disabled: false
-  },
-  {
-    text: "50",
-    value: 50,
-    disabled: false
-  },
-  {
-    text: "100",
-    value: 100,
-    disabled: false
-  },
-  {
-    text: "200",
-    value: 200,
-    disabled: false
-  }
-]
+
 
 export default defineComponent({
   components: {

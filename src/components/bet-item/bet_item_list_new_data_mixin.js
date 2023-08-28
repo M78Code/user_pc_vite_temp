@@ -177,6 +177,7 @@ const bet_item = {
         this.odds_lift = ''
       })
     },
+    
     /**
      * 赔率转换
      * @param  {number} ov - 赔率值

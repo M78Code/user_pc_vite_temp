@@ -71,6 +71,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { ss, ls } from "../utils/web-storage";
+import { formart_api_to_obj } from "src/core/formart/index.js"
 import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create();
@@ -390,7 +391,7 @@ class AllDomain {
     //当前这个可用的 api
     let use_api = c_url.origin;
     // 当前唯一 已知可用的 api
-    let objapi = this.formart_api_to_obj(use_api);
+    let objapi = formart_api_to_obj(use_api);
     // 确保初始化
     !ossobj.api && (ossobj.api = []);
     if (!Array.isArray(ossobj.api)) {
@@ -571,16 +572,16 @@ class AllDomain {
     let new_get_api_obj_arr = [];
     // 变形
     // new_get_api.map((x) => {
-    //   new_get_api_obj_arr.push(this.formart_api_to_obj(x));
+    //   new_get_api_obj_arr.push(formart_api_to_obj(x));
     // });
 
     getuserinfo_oss_api.map((x) => {
       new_get_api_obj_arr.push(
-        this.formart_api_to_obj(x, this.GETUSERINFO_OSS.gr)
+        formart_api_to_obj(x, this.GETUSERINFO_OSS.gr)
       );
     });
     oss_file_api.map((x) => {
-      new_get_api_obj_arr.push(this.formart_api_to_obj(x));
+      new_get_api_obj_arr.push(formart_api_to_obj(x));
     });
     new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr, "api");
     //   前端本地旧的   api配置  删除新的 认为新进来的数据
@@ -676,7 +677,7 @@ class AllDomain {
       for (let gr in obj) {
         // console.log(gr);
         // 增加内测域名
-        arr.unshift(this.formart_api_to_obj(obj[gr], gr));
+        arr.unshift(formart_api_to_obj(obj[gr], gr));
       }
     }
     return arr;
@@ -890,7 +891,7 @@ class AllDomain {
       let c_url = new URL(res.config.url);
       // console.log("c_url------", c_url);
       //最快的域名对象
-      fastest_api_obj = this.formart_api_to_obj(
+      fastest_api_obj = formart_api_to_obj(
         c_url.origin,
         this.compute_exact_group_by_str(res.data || "")
       );
