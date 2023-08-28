@@ -11,6 +11,7 @@
     vsport.destroy();
  *
  */
+import Vue from 'vue'
 import { api_v_sports } from "src/project/api/index.js";
 import LoopCallback from "src/public/utils/loop_callback.js";
 
@@ -133,10 +134,10 @@ export default class VSport {
    * @description: 实时同步最新时间
    */
   upd_current_time() {
-    if (this.sport_data && window.vue) {
+    if (this.sport_data && Vue) {
       let mgt = Number(this.sport_data.mgt);
-      let remote_time = Number(window.vue.get_local_server_time.server_time);
-      let local_time = Number(window.vue.get_local_server_time.local_time_init);
+      let remote_time = Number(Vue.get_local_server_time.server_time);
+      let local_time = Number(Vue.get_local_server_time.local_time_init);
       this.current_time = (remote_time + (new Date().getTime() - local_time) - mgt);
     }
   }

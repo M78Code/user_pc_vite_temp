@@ -98,7 +98,7 @@ export const get_match_video_process = (match) => {
         video_process_obj = new VSport(match,res => {
           match.show_time = res.show_time;
           match.match_status = res.match_status;
-          window.vue.process_changing_match = match;
+          Vue.process_changing_match = match;
 
           //当赛事结束,检查所有赛事是否结束
           if(match.match_status == 2){

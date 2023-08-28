@@ -117,6 +117,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import utils from '../../core/utils/index.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 // import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
@@ -135,6 +136,13 @@ const route = useRoute()
 const router = useRouter()
 const store_state = store.getState()
 // const websocket_store = use_websocket_store()
+
+// 当前主菜单menu_type
+const menu_type = ref(MenuData.get_current_lv_1_menu_type())  
+// 当前选中的二级菜单id
+const get_current_sub_menuid = ref(MenuData.get_current_sub_menuid()) 
+// 页脚子菜单id
+const footer_sub_menu_id = ref(MenuData.get_footer_sub_menu_id())  
 
 const enter_time = ref('')
 const match_main = ref(null)
@@ -172,17 +180,14 @@ const timer_super9 = ref(null)
 const subscription_timer1 = ref(null)
 
 const get_uid = ref(store_state.get_uid)        
-// 当前选中的二级菜单id
-const get_current_sub_menuid = ref(store_state.get_current_sub_menuid) 
-// 当前主菜单menu_type
-const menu_type = ref(store_state.menu_type)                      
+
+                    
 const get_bet_status = ref(store_state.get_bet_status)  
 // 显示收藏弹窗
 const show_favorite_list = ref(store_state.show_favorite_list) 
 // 显示筛选頁面
 const get_show_match_filter = ref(store_state.get_show_match_filter) 
-// 页脚子菜单id
-const footer_sub_menu_id = ref(store_state.footer_sub_menu_id)    
+  
 //新手版标准版 1 2
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition) 
 // 详情页的数据
@@ -191,7 +196,6 @@ const get_detail_data = ref(store_state.get_detail_data)
 const get_details_changing_favorite = ref(store_state.get_details_changing_favorite) 
 // 右侧设置菜单显示时 , 不显示骨架屏
 const get_is_show_menu = ref(store_state.get_is_show_menu)   
-const get_menu_type = ref(store_state.get_menu_type || 1)
 // 次要玩法展开映射
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map) 
 const get_list_scroll_top = ref(store_state.get_list_scroll_top)
@@ -465,7 +469,7 @@ const match_detail_m_list_init = () => {
   if(['detail_match_list'].includes(props.invok_source)){
     // 列表页全局获取 请求参数
     MatchPage.get_match_data_list();
-  } else if([1,3,30,100].includes(get_menu_type.value)){
+  } else if([1,3,30,100].includes(menu_type.value)){
     MatchPage.get_match_data_list()
   }
 }
@@ -484,17 +488,13 @@ const unsubscribe = store.subscribe(() => {
 const update_state = () => {
   const new_state = store.getState()
   get_uid.value = new_state.get_uid
-  get_current_sub_menuid.value = new_state.get_current_sub_menuid
-  menu_type.value = new_state.menu_type                 
   get_bet_status.value = new_state.get_bet_status
   show_favorite_list.value = new_state.show_favorite_list
   get_show_match_filter.value = new_state.get_show_match_filter
-  footer_sub_menu_id.value = new_state.footer_sub_menu_id
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_detail_data.value = new_state.get_detail_data
   get_details_changing_favorite.value = new_state.get_details_changing_favorite
   get_is_show_menu.value = new_state.get_is_show_menu
-  get_menu_type.value = new_state.get_menu_type
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
   get_list_scroll_top.value = new_state.get_list_scroll_top
   get_preload_animation_url.value = new_state.get_preload_animation_url
