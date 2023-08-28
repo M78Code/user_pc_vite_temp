@@ -1,11 +1,12 @@
  
 /**
  * 球种id枚举
- *
+ * H5/PC  对应配置文件 新增 csid_map_name 对应以下国际化
+ * 例： name: i18n.t('csid_map_name.xxx')
  */
 export const CSID_CONST = {
  
-  CSID_1:{csid:"1",mark:"足球"},
+  CSID_1:{csid:"1",mark:"足球", name: ''},
   CSID_2:{csid:"2",mark:"篮球"},
   CSID_3:{csid:"3",mark:"棒球"},
   CSID_4:{csid:"4",mark:"冰球"},
@@ -94,3 +95,48 @@ export const play_name_mapping_csid = {
   1011: "VR赛马",
   1012: "VR马车赛",
 }
+
+
+/**
+ * 电子竞技
+ */
+export const esports_csid = [100,101,103,102]
+
+/**
+ * 电竞子菜单
+ */
+// { ct: 0, mi: "2100", st: 1, csid: "100" },
+// { ct: 0, mi: "2101", st: 2, csid: "101" },
+// { ct: 0, mi: "2103", st: 3, csid: "103" },
+// { ct: 0, mi: "2102", st: 4, csid: "102" },
+export const dianjing_sublist = () => {
+  let esport = esports_csid.map((item,index) =>{
+    return { ct: 0, mi: `2${item}`, st: index+1 , csid: item }
+  })
+  return esport
+}
+
+
+/**
+ * H5 赛事 csid 映射二级菜单 menu_type
+ */
+export const csid_map_sub_menu_type = {
+  1: 5 ,// 足球"
+  2: 7 ,// 篮球"
+  3: 19 ,// 棒球"
+  4: 18 ,// 冰球"
+  5: 13 ,// 网球"
+  6: 20 ,// 美式足球"
+  7: 14 ,// 斯诺克"
+  8: 16 ,// 乒乓球"
+  9: 17 ,// 排球"
+  10: 15 ,// 羽毛球"
+  11: 43 ,// 手球"
+  12: 44 ,// 拳击"
+  13: 45 ,// 沙滩排球"
+  14: 22 ,// 联合式橄榄球"
+  // 14: 45 ,// 橄榄球"
+  15: 23 ,// 曲棍球"
+  16: 24 ,// 水球"
+}
+

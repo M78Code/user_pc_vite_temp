@@ -208,3 +208,13 @@ export const four_five_six_double = (num, digit = 2) => {
     return ((integer % 2 === 0 ? integer : integer + 1) / ratio).toFixed(2);
   }
 };
+
+
+/**
+ * @Description:格式化字符串 小于10的数字 前面补0
+ * @param {string} str 格式化前的字符串
+ * @return {string} 格式化后的字符串
+ */
+const format_str = (str) => {
+  return str < 10 ? "0" + str : str;
+}

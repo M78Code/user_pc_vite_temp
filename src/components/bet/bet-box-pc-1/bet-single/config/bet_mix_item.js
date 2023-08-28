@@ -8,7 +8,7 @@ import betting from "src/public/mixins/betting/betting.js";
 import { ref, reactive, onMounted, defineComponent, computed } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetDataCtr from "src/core/bet/bet-data-ctr-class.js";
-
+import { format_str } from "src/core/formart/index.js";
 
 export default defineComponent({
   name: "bet-mix-item",
@@ -246,7 +246,6 @@ export default defineComponent({
       let obj_bs = _.get(BetData.bet_obj, `${props.id}.bs`);
       if (_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        let format_str = BetCommonHelper.format_str;
         if (match_type.value == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份

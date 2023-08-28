@@ -88,15 +88,6 @@ export const get_operate_type = (bet_custom_id) => {
 };
 
 /**
- * @Description:格式化字符串 小于10的数字 前面补0
- * @param {string} str 格式化前的字符串
- * @return {string} 格式化后的字符串
- */
-export const format_str = (str) => {
-  return str < 10 ? "0" + str : str;
-};
-
-/**
  * @description:更新赛事列表以及赛事详情的赔率(前端模拟C105进行发送) 目的: 解决赔率不同步问题export const 
  * @return {undefined} undefined
  */

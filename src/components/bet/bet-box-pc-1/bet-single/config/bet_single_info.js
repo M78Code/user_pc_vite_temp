@@ -7,6 +7,7 @@ import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
 import play_mapping from "src/public/config/mapping/play_mapping.js";
 
 import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
+import { format_str } from "src/core/formart/index.js";
 
 export default {
   name: "bet-single-info",
@@ -453,7 +454,6 @@ this.handle_generat_emitters()
 
         // 赛事时间显示日期，月份，天，小时，分钟
         let date, month, day, hour, minute;
-        let format_str = BetCommonHelper.format_str;
         if(this.match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份
