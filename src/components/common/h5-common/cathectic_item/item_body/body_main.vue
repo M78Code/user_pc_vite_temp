@@ -42,7 +42,7 @@
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
-          <template v-if="main.scoreBenchmark && !is_pre">({{main.scoreBenchmark | format_score}})</template>&thinsp;
+          <template v-if="main.scoreBenchmark && !is_pre">({{ format_score(main.scoreBenchmark)}})</template>&thinsp;
           <span v-if="!type_.acCode">[{{i18n_data.mtype}}]</span>
         </span>
       </p>
@@ -69,7 +69,7 @@
           </template>
         </span>
         <!-- 优化后的赔率 -->
-        <span class="oddfinally" v-if="!type_.acCode"><span>&nbsp;@&thinsp;{{main.oddFinally | format_odds(main.sportId)}}</span></span>
+        <span class="oddfinally" v-if="!type_.acCode"><span>&nbsp;@&thinsp;{{ format_odds(main.sportId,main.oddFinally)}}</span></span>
       </p>
       <!-- managerCode=4 代表电竞 orderStatus=1 是已结算 -->
       <p class="col-8 text-left yb_fontsize10 item-order" v-if="type_.managerCode == 4&&type_.orderStatus == 1">
