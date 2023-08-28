@@ -1,99 +1,125 @@
+/*
+ * @Author: success
+ * @Date: 2020-08-04 17:13:55
+ * @Description: 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
+ * 
+ * 使用  {{ compute_value_by_cur_odd_type(val}}
+ * 实现 匹配不到 后 向下 取值
+ */
+import BetData from "src/core/bet/class/bet-data-class.js";
 
-
-import { esports_csid } from "../../constant/config/csid"
-
-
-const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
+// import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
+const float_3_csid = [100, 101, 102, 103], // 需要显示三位小数点的,赛种编号(电竞)
 const all_odds_arr = [] //所有的赔率数组
 const cur_odds_arr = [] // 当前允许的赔率数组
-let cur_odd = "EU" // 当前赔率
-let vx_get_chat_room_type = "EU"  // 聊天室赔率
-// arr.push([`${EU}`, HK, MY, GB, US, ID]);
-// 欧洲赔率  1  
-// 香港赔率  2  
-// 马来赔率  3  
-// 英式赔率  4  
-// 美式赔率  5  
-// 印尼赔率  6
-const odds_constant = [
-    { label: 'EU', value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
-    { label: "ID", value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
-    { label: "US", value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
-    { label: "MY", value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
-    { label: "GB", value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
-    { label: "HK", value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
-]
 
 const oddsTable = {
-    EU: '1',
-    HK: '2',
-    MY: '3',
-    GB: '4',
-    US: '5',
-    ID: '6',
+  EU: '1',
+  HK: '2',
+  MY: '3',
+  GB: '4',
+  US: '5',
+  ID: '6',
 }
-
+/** 赔率映射表 */
 const vx_odds_coversion_map = {}
+/** 聊天室来源跟单盘口状况eu */
+const vx_get_chat_room_type = {}
 
 
 
-//返回字符串保留两位小数,csid-赛种ID
-const calc_odds = (val, csid) => {
-    let N = val.toString();
-    if (float_3_csid.includes(1 * csid)) {
-        //3位小数点处理
-        if (N.includes(".")) {
-            let S = N.split('.');
-            if (S[1][2]) {
-                val = S[0] + "." + S[1][0] + S[1][1] + S[1][2];
-            } else if (S[1][1]) {
-                val = S[0] + "." + S[1][0] + S[1][1] + "0";
-            } else {
-                val = S[0] + "." + S[1][0] + "00";
-            }
-        } else {
-            val = N + ".000";
-        }
+
+// created() {
+//   BetData.vx_odds_coversion_map = store.getState().odds_coversion_map || {}
+//   BetData.vx_get_chat_room_type = store.getState().chat_room_type || {}
+// },
+const compute_value_by_cur_odd_type = (val, breakVal, arr, csid)=> {
+    /**
+     * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
+     * 是 对全局 赔率转换的 基础设定
+     * arr: 当前盘口 支持的赔率转换类型的 全部值
+     * csid ：赛种ID
+     */
+    if (!val) {
+      return;
+    }
+    // PS-9881赔率优化
+    let str = "";
+    breakVal = ""; // 断档值废弃
+    let _route = BetData.$route.name
+    BetData.cur_odd = BetData.vx_cur_odd;
+    // 从欧盘转到港盘
+    if (!arr || ['2'].includes(BetData.oddsTable[BetData.cur_odd]) && BetData.vx_cur_odd == 'HK') {
+      str = BetData.calc_odds(val, csid);
+      //聊天室跟单特殊处理
+      if (arr && arr.includes(BetData.oddsTable[BetData.cur_odd]) || BetData.vx_get_chat_room_type == "HK") {
+        str = BetData.change_EU_HK(str);
+      }
+      return str;
+    }
+
+    if (!arr || arr.includes(BetData.oddsTable[BetData.cur_odd]) && BetData.cur_odd) {
+      BetData.cur_odd == 'EU' ? str = BetData.calc_odds(val, csid) : str = BetData.compute_value_by_odd_type(breakVal ? breakVal : val, BetData.cur_odd, csid);
     } else {
-        if (N.includes(".")) {
-            let S = N.split('.');
-            if (S[1][1]) {
-                val = S[0] + "." + S[1][0] + S[1][1];
-            } else {
-                val = S[0] + "." + S[1][0] + "0";
-            }
-        } else {
-            val = N + ".00";
-        }
-    }
-    return val;
-}
-
-const change_EU_HK = val => {
-    if (val) {
-        val = val.toString();
-        // 小数点的位置
-        let index_dot = val.indexOf('.');
-        // 整数部分
-        let int_part = val.substring(0, index_dot);
-        // 小数部分
-        let small_part = val.substring(index_dot, val.length);
-        return `${int_part - 1}${small_part}`
-    }
-    return val;
-}
-
-const get_accuracy = str => {
-    if (str >= 10 && str < 100) {
-        str = str.substring(0, str.length - 1);
-    } else if (str >= 100) {
-        str = str.substring(0, str.length - 3);
+      str = BetData.calc_odds(val, csid);
     }
     return str;
-}
-
-//非欧盘时计算赔率转换
-const compute_value_by_odd_type = (val, odd_type, csid) => {
+    // return BetData.get_accuracy(str);
+  }
+  //返回字符串保留两位小数,csid-赛种ID
+  const calc_odds = (val, csid) =>{
+    let N = val.toString();
+    if (float_3_csid.includes(1 * csid)) {
+      //3位小数点处理
+      if (N.includes(".")) {
+        let S = N.split('.');
+        if (S[1][2]) {
+          val = S[0] + "." + S[1][0] + S[1][1] + S[1][2];
+        } else if (S[1][1]) {
+          val = S[0] + "." + S[1][0] + S[1][1] + "0";
+        } else {
+          val = S[0] + "." + S[1][0] + "00";
+        }
+      } else {
+        val = N + ".000";
+      }
+    } else {
+      if (N.includes(".")) {
+        let S = N.split('.');
+        if (S[1][1]) {
+          val = S[0] + "." + S[1][0] + S[1][1];
+        } else {
+          val = S[0] + "." + S[1][0] + "0";
+        }
+      } else {
+        val = N + ".00";
+      }
+    }
+    return val;
+  }
+  const change_EU_HK = (val) =>{
+    if (val) {
+      val = val.toString();
+      // 小数点的位置
+      let index_dot = val.indexOf('.');
+      // 整数部分
+      let int_part = val.substring(0, index_dot);
+      // 小数部分
+      let small_part = val.substring(index_dot, val.length);
+      return `${int_part-1}${small_part}`
+    }
+    return val;
+  }
+ const  get_accuracy = (str) =>{
+    if (str >= 10 && str < 100) {
+      str = str.substring(0, str.length - 1);
+    } else if (str >= 100) {
+      str = str.substring(0, str.length - 3);
+    }
+    return str;
+  }
+  //非欧盘时计算赔率转换
+  const compute_value_by_odd_type = (val, odd_type, csid) =>{
     /**
      * val  : 原始欧洲赔率的 值
      * odd_type ： 需要转换到的赔率类型的 键名
@@ -125,159 +151,95 @@ const compute_value_by_odd_type = (val, odd_type, csid) => {
      *
      */
     /**
-           * 1	1.01-2.50，以0.01为单位，相应赔率转换
-              2	2.5-5.0，以0.05为单位，相应赔率转换
-              3	5.0-10，以x.2，x.5，x.7，x.0展示，相应赔率转化
-              4   10-20，以0.5为单位，相应赔率转换
-              5	20-30，以1为单位，相应赔率转换
-              6	30-100，以5为单位，相应赔率转换
+         * 1	1.01-2.50，以0.01为单位，相应赔率转换
+            2	2.5-5.0，以0.05为单位，相应赔率转换
+            3	5.0-10，以x.2，x.5，x.7，x.0展示，相应赔率转化
+            4   10-20，以0.5为单位，相应赔率转换
+            5	20-30，以1为单位，相应赔率转换
+            6	30-100，以5为单位，相应赔率转换
 
-              和 产品确认， 负数 小于 -10 的 .5 不显示  ，正数 大于20的 .5 不显示
-           */
+            和 产品确认， 负数 小于 -10 的 .5 不显示  ，正数 大于20的 .5 不显示
+          */
     // console.log(`转换赔率：val : ${val}  odd_type: ${odd_type}`);
     if (!val) {
-        return "";
+      return "";
     }
 
     if (!odd_type) {
-        return val;
+      return val;
     }
     // 如果是香港赔率直接减1
     if (odd_type == 'HK') {
-        return val - 1;
+      return val - 1;
     }
 
     // 赔率类型错误
-    let index = _.findIndex(odds_constant, o => {
-        return o.value == odd_type;
+    let index = _.findIndex(BetData.odds_constant, o => {
+      return o.value == odd_type;
     });
-    val = calc_odds(val, csid);
+    val = BetData.calc_odds(val, csid);
     if (index < 0) {
-        return val;
+      return val;
     }
 
     if (val <= 1) {
-        return val;
+      return val;
     }
     // 正常情况
     let obj = ``;
     let real = "";
-    obj = vx_odds_coversion_map[`EU_${val}`];
+    obj = BetData.vx_odds_coversion_map[`EU_${val}`];
     if (val <= 2.5) {
-        // 1	1.01-2.50，以0.01为单位，相应赔率转换
+      // 1	1.01-2.50，以0.01为单位，相应赔率转换
     } else if (val <= 5) {
-        // 2.5-5.0，以0.05为单位，相应赔率转换  3.478
-        if (!obj) {
-            real = (Math.floor(val * 100) - (val)) / 100;
-            obj = vx_odds_coversion_map[`EU_${real}`];
-        }
+      // 2.5-5.0，以0.05为单位，相应赔率转换  3.478
+      if (!obj) {
+        real = (Math.floor(val * 100) - (val)) / 100;
+        obj = BetData.vx_odds_coversion_map[`EU_${real}`];
+      }
     } else if (val <= 10) {
-        // 5.0-10，以x.2，x.5，x.7，x.0展示，相应赔率转化 5.478
-        if (!obj) {
-            let nnn = Math.floor(val * 10);
-            let nnn_y = nnn % 10;
-            if (nnn_y >= 0 && nnn_y < 2) {
-                nnn_y = 0;
-            } else if (nnn_y < 5) {
-                nnn_y = 2;
-            } else if (nnn_y < 7) {
-                nnn_y = 5;
-            } else if (nnn_y <= 9) {
-                nnn_y = 7;
-            }
-            real = Math.floor(val) + nnn_y / 10;
-            // console.log(" real" + real);
-            obj = vx_odds_coversion_map[`EU_${real}`];
+      // 5.0-10，以x.2，x.5，x.7，x.0展示，相应赔率转化 5.478
+      if (!obj) {
+        let nnn = Math.floor(val * 10);
+        let nnn_y = nnn % 10;
+        if (nnn_y >= 0 && nnn_y < 2) {
+          nnn_y = 0;
+        } else if (nnn_y < 5) {
+          nnn_y = 2;
+        } else if (nnn_y < 7) {
+          nnn_y = 5;
+        } else if (nnn_y <= 9) {
+          nnn_y = 7;
         }
+        real = Math.floor(val) + nnn_y / 10;
+        // console.log(" real" + real);
+        obj = BetData.vx_odds_coversion_map[`EU_${real}`];
+      }
     } else if (val <= 20) {
-        // 4   10-20，以0.5为单位，相应赔率转换   10.476
-        // 10.476%5=0.47600000000000087
-        if (!obj) {
-            // real = (Math.floor(val * 10) - (Math.floor(val * 10) % 5)) / 10;
-            obj = vx_odds_coversion_map[`EU_${real}`];
-        }
+      // 4   10-20，以0.5为单位，相应赔率转换   10.476
+      // 10.476%5=0.47600000000000087
+      if (!obj) {
+        // real = (Math.floor(val * 10) - (Math.floor(val * 10) % 5)) / 10;
+        obj = BetData.vx_odds_coversion_map[`EU_${real}`];
+      }
     } else if (val <= 30) {
-        // 5	20-30，以1为单位，相应赔率转换
-        if (!obj) {
-            real = Math.floor(val);
-            obj = vx_odds_coversion_map[`EU_${real}`];
-        }
+      // 5	20-30，以1为单位，相应赔率转换
+      if (!obj) {
+        real = Math.floor(val);
+        obj = BetData.vx_odds_coversion_map[`EU_${real}`];
+      }
     } else if (val <= 100) {
-        // 6	30-100，以5为单位，相应赔率转换
-        if (!obj) {
-            real = Math.floor(val) - (val);
-            obj = vx_odds_coversion_map[`EU_${real}`];
-        }
+      // 6	30-100，以5为单位，相应赔率转换
+      if (!obj) {
+        real = Math.floor(val) - (val);
+        obj = BetData.vx_odds_coversion_map[`EU_${real}`];
+      }
     }
     // console.log("转换赔率数值所用的对象");
     // console.log(obj);
     if (obj) {
-        return obj[odd_type];
+      return obj[odd_type];
     } else {
-        return val;
+      return val;
     }
-}
-
-export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
-    /**
-     * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
-     * 是 对全局 赔率转换的 基础设定
-     * arr: 当前盘口 支持的赔率转换类型的 全部值
-     * csid ：赛种ID
-     */
-    if (!val) {
-        return;
-    }
-    // PS-9881赔率优化
-    let str = "";
-    breakVal = ""; // 断档值废弃
-    // 从欧盘转到港盘
-    if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
-        str = calc_odds(val, csid);
-        //聊天室跟单特殊处理 
-        // 当前不存在聊天室
-        // if(arr && arr.includes( oddsTable[cur_odd]) || vx_get_chat_room_type=="HK") {
-        //   str = change_EU_HK(str);
-        // }
-        return str;
-    }
-
-    if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
-        cur_odd == 'EU' ? str = calc_odds(val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd, csid);
-    } else {
-        str = calc_odds(val, csid);
-    }
-    return str;
-}
-
-   //赔率展示格式化
-   const format_odds_value = (val) => {
-    if (val == "" || val == undefined) {
-      return "";
-    }
-    val = (val || "0").toString();
-    let ret = val;
-    if (val.includes(".")) {
-      if (val >= 100) {
-        if (val.split(".")[1] == "00") {
-          ret = val.split(".")[0];
-        } else {
-          let len = val.length;
-          if (val.indexOf(".0") == len - 2) {
-            ret = val.substring(0, len - 2);
-          } else {
-            ret = val;
-          }
-        }
-      } else if (val >= 10) {
-        if (val.split(".")[1][1] == "0") {
-          ret = val.slice(0, val.length - 1);
-        } else {
-          ret = val;
-        }
-      }
-    }
-    return ret;
-  };
-
-   
+  }
