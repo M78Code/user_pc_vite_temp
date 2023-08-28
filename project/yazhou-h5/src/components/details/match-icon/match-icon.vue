@@ -298,7 +298,13 @@ export default {
       send_gcuuid = uid();
       params.gcuuid = send_gcuuid;
 
-      api_common.videoAnimationUrl(params).then((res) => {
+      api_common.videoAnimationUrl(params).then((result) => {
+        let res = {}
+        if (result.status) {
+          res = result.data
+        } else {
+          res = result
+        }
         const { data } = res
         if(send_gcuuid != res.gcuuid) return;
         let animationUrl = ''

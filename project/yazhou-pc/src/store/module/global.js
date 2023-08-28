@@ -36,33 +36,7 @@ const initialState = {
     status: false,
     height: 0,
   },
-  //全局开关
-  global_switch: {
-    //热门推荐
-    hot_recommend: true,
-    //统计
-    statistics_switch: true,
-    //收藏
-    collect_switch: true,
-    //近期
-    recent_switch: true,
-    //活动
-    activity_switch: true,
-    //搜索
-    search_switch: true,
-    //联赛筛选
-    filter_switch: true,
-    //盘口数量
-    handicap_num: true,
-    //热门赛事
-    hot_match_num: true,
-    //排序
-    sort_cut: true,
-    //滚球全部
-    play_all_show: true,
-    //多列
-    multi_column: true,
-  },
+ 
   //视频是否展开状态
   is_fold_status: true,
   champion_fold_obj: {},
@@ -79,8 +53,7 @@ export default function globalReducer(state = initialState, action) {
     case "SET_RETAIN_SCROLL_OBJ":
       return { ...state, retain_scroll_obj: action.data };
     //全局开关
-    case "SET_GLOBAL_SWITCH":
-      return { ...state, retain_scroll_obj: action.data };
+  
     // //是否展开多列玩法
     case "SET_UNFOLD_MULTI_COLUMN":
       return { ...state, is_unfold_multi_column: action.data };

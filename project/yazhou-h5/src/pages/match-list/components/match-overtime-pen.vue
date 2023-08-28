@@ -4,91 +4,77 @@
 <template>
   <div class="m-o-p-wrapper" v-show="show_tab_by_data">
     <span v-if="wsl_flag" class="wsl_flag_777">
-      {{'csid:'+match.csid+ '---mid:'+match.mid+ '---tid:'+match.tid}}---{{get_secondary_unfold_map[match.mid]}}
+      {{ 'csid:' + match.csid + '---mid:' + match.mid + '---tid:' + match.tid }}---{{ get_secondary_unfold_map[match.mid] }}
     </span>
     <!--次要玩法 标题主名称-->
     <div class="tab-m-o-w row items-center" ref="sub_play_scroller">
-      <div
-        v-for="(t_item, i) of tab_list.filter(x=>x.show_tab)" :key="i"
-        ref="sub_play_scroll_item"
-        class="tab-item-h row items-center" :class="{'collapsed':t_item.unfold == 1}"
-        @click="overtime_tab_handle(t_item,undefined,'is-user', i)"
-          >
+      <div v-for="(t_item, i) of tab_list.filter(x => x.show_tab)" :key="i" ref="sub_play_scroll_item"
+        class="tab-item-h row items-center" :class="{ 'collapsed': t_item.unfold == 1 }"
+        @click="overtime_tab_handle(t_item, undefined, 'is-user', i)">
         <div>
-          {{t_item.title}}
+          {{ t_item.title }}
         </div>
         <!--折叠得箭头图标-->
-        <img class="league-collapse-dir" :class="{'collapsed':t_item.unfold  == 1 }"
-              :src="(`${ $g_image_preffix }/image/wwwassets/bw3/list/league-collapse-icon${get_theme.includes('theme02')?'-black':''}${t_item.unfold== 1?(get_theme.includes('y0')?'-collapse-y0':'-collapse'):''}.svg`)" />
+        <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
+          :src="(`${$g_image_preffix}/image/wwwassets/bw3/list/league-collapse-icon${get_theme.includes('theme02') ? '-black' : ''}${t_item.unfold == 1 ? (get_theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
-    <div class="transition-w-odd" :mid="match.mid" v-if="current_tab_item.hps" 
-         :class="{
-          expanded:any_unfold && any_unfold != '0', 
-          bodan_wanfa: [18].includes(+ lodash.get(current_tab_item,'id')) && bold_gaodu_css > 3,
-          bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item,'id')) && bold_gaodu_css <= 3,
-          five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item,'id')),
-        }"
-    >
+    <div class="transition-w-odd" :mid="match.mid" v-if="current_tab_item.hps" :class="{
+      expanded: any_unfold && any_unfold != '0',
+      bodan_wanfa: [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css > 3,
+      bodan_wanfa_small: any_unfold && [18].includes(+ lodash.get(current_tab_item, 'id')) && bold_gaodu_css <= 3,
+      five_minutes_wanfa: any_unfold && any_unfold != '0' && [19].includes(+ lodash.get(current_tab_item, 'id')),
+    }">
       <!--次要玩法标 队名 和 比分 和 盘口-->
       <div class="row justify-between" v-if="any_unfold">
         <!--次要玩法标 队名 和 比分  次要玩法 左边的 区域    波胆，5分钟玩法  不显示-->
-        <div class="team-title-container" v-if="![18,19].includes(+ lodash.get(current_tab_item, 'id'))">
+        <div class="team-title-container" v-if="![18, 19].includes(+ lodash.get(current_tab_item, 'id'))">
           <!--主队名 和 比分-->
           <div class="team-t-title-w" :class="{
-            'is-handicap':current_tab_handicap_index == 1,
-            'is-handicap-1':current_tab_handicap_index == 2,
-            }">
+            'is-handicap': current_tab_handicap_index == 1,
+            'is-handicap-1': current_tab_handicap_index == 2,
+          }">
             <div class='team-title'>
-              {{match.mhn}}
+              {{ match.mhn }}
             </div>
             <!--显示次要玩法比分-->
-            <div class="way-score"
-              v-if="[1,5,7,8,9].includes(+current_tab_item.id) && match.ms == 1">
-              {{home_score}}<!--7,8,9 网,乒,斯-->
+            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1">
+              {{ home_score }}<!--7,8,9 网,乒,斯-->
             </div>
           </div>
           <!--副队名 和 比分-->
           <div class="team-t-title-w" :class="{
-            'is-handicap':current_tab_handicap_index == 2,
-            'is-handicap-1':current_tab_handicap_index == 1,
-            }">
+            'is-handicap': current_tab_handicap_index == 2,
+            'is-handicap-1': current_tab_handicap_index == 1,
+          }">
             <div class='team-title'>
-              {{match.man}}
+              {{ match.man }}
             </div>
             <!--显示次要玩法比分-->
-            <div class="way-score"
-              v-if="[1,5,7,8,9].includes(+current_tab_item.id) && match.ms == 1">
-              {{away_score}}<!--7,8,9 网,乒,斯-->
+            <div class="way-score" v-if="[1, 5, 7, 8, 9].includes(+current_tab_item.id) && match.ms == 1">
+              {{ away_score }}<!--7,8,9 网,乒,斯-->
             </div>
           </div>
           <!--  玩法描述图标显示  -->
-          <div class="team-t-title-w fight-type" v-if="[1,3,5,7,8,9].includes(+match.csid)"> <!--csid 7斯诺克-->
+          <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match.csid)"> <!--csid 7斯诺克-->
             <!--csid 1足球-->
-            <img v-if="[2,5,17].includes(+current_tab_item.id)"
-                 @click="info_icon_click($event,match.mid)"
-                 :src="show_tips ? (get_theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
-                (get_theme.includes('theme01') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
-            {{match.csid == 1  ? current_tab_item.title : mmp_map_title}}
+            <img v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match.mid)"
+              :src="show_tips ? (get_theme.includes('y0') ? `${$g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${$g_image_preffix}/image/bw3/svg/match-list/information-icon.svg`) :
+                (get_theme.includes('theme01') ? `${$g_image_preffix}/image/bw3/svg/match-list/information-icon-gray.svg` : `${$g_image_preffix}/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
+            {{ match.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
         <!--次要玩法 盘口 右边的 区域-->
-        <odd-list-wrap
-          :main_source="main_source"
-          :match="matchCtr.list[i]"
-          :hps="current_tab_item.hps"
-          :current_tab_item="current_tab_item"
-          :invoke_source="'attached'"
-          :bold_all_list="bold_all_list"
-          :five_minutes_all_list="five_minutes_all_list"
-        />
+        <odd-list-wrap :main_source="main_source" :match="matchCtr.list[i]" :hps="current_tab_item.hps"
+          :current_tab_item="current_tab_item" :invoke_source="'attached'" :bold_all_list="bold_all_list"
+          :five_minutes_all_list="five_minutes_all_list" />
       </div>
     </div>
 
   </div>
 </template>
- 
+
 <script setup>
 import { computed, onDeactivated, onMounted, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from 'vue-router'
@@ -97,8 +83,12 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+<<<<<<< HEAD
 import { format_msc_handle } from 'src/core/formart/module/format-msc'
 
+=======
+import { format_msc_handle } from "src/core/formart/index.js"
+>>>>>>> 141776a5aab0e817cf83e4a31f9901fc4aed8cd8
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
 
@@ -624,7 +614,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
   $nextTick(()=>{
     $utils.tab_move(sub_i, $refs.sub_play_scroller, $refs.sub_play_scroll_item)
   })
-  
+
   if(item && item.title && item.id && operate_type !=='is-auto') {   // 解决bug 24153
     current_tab_item.value.title = item.title
     current_tab_item.value.id = item.id
@@ -1023,7 +1013,7 @@ const change_status_by_any_unfold = (c_v) => {
       let set_dict = {};
       set_dict[match.mid] = `${tab_id}-0`;
       store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: set_dict })
-      
+
     } else{
       let v_k = {};
       let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
@@ -1117,7 +1107,7 @@ const on_listeners = () => {
   // c105  盘口/投注项
   // c303  滚球新赛事通知
   // c305  赛事订阅(C8)-玩法tab(C305)
- 
+
   emitters.value = {
     // 封盘事件
     emitter_1: useMittOn.on(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
@@ -1141,7 +1131,7 @@ onDeactivated(() => {
 })
 
 </script>
- 
+
 <style scoped lang="scss">
   @import "../styles/match-overtime-pen";
 </style>

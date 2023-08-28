@@ -43,7 +43,7 @@
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
-          <template v-if="main.scoreBenchmark && !is_pre">({{main.scoreBenchmark | format_score}})</template>&thinsp;
+          <template v-if="main.scoreBenchmark && !is_pre">({{main.scoreBenchmark | format_score(main.scoreBenchmark)}})</template>&thinsp;
           <!-- i18n_data.mtype -->
           <span v-if="!type_.acCode">[{{'i18n_data.mtype'}}]</span>
         </span>
@@ -103,7 +103,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
 import utils from "src/core/utils/utils.js"
-import { format_time_zone_time, format_odds } from 'src/core/formart'
+import { format_time_zone_time, format_odds, format_score } from 'src/core/formart'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n";;
@@ -133,59 +133,59 @@ const props =defineProps({
       type: Boolean
     }
   })
-  // const bet_result = ref({
-  //   //'未结算',
-  //   // "0": t("bet_record.bet_no_status00"),
-  //   //'走水',
-  //   "2": t("bet_record.bet_no_status02"),
-  //   //'输',
-  //   "3": t("bet_record.bet_no_status03"),
-  //   //'赢',
-  //   "4": t("bet_record.bet_no_status04"),
-  //    //'赢半',
-  //   "5": t("bet_record.bet_no_status05"),
-  //   //'输半',
-  //   "6": t("bet_record.bet_no_status06"),
-  //   //'比赛取消',
-  //   "7": t("bet_record.bet_no_status07"),
-  //   //'比赛延期',
-  //   "8": t("bet_record.bet_no_status08"),
-  //   // '比赛延迟',
-  //   "11": t("bet_record.bet_no_status11"),
-  //   // '比赛中断',
-  //   "12": t("bet_record.bet_no_status12"),
-  //   // '比赛放弃'
-  //   "15": t("bet_record.bet_no_status15")
-  // })
-  // const bet_result_1 = ref({
-  //   //'比赛取消',
-  //   "7": t("bet_record.bet_no_status07"),
-  //   //'比赛延期',
-  //   "8": t("bet_record.bet_no_status08"),
-  //   // '比赛延迟',
-  //   "11": t("bet_record.bet_no_status11"),
-  //   // '比赛中断',
-  //   "12": t("bet_record.bet_no_status12"),
-  //   // '比赛放弃'
-  //   "15": t("bet_record.bet_no_status15")
-  // })
+  const bet_result = ref({
+    //'未结算',
+    "0": t("bet_record.bet_no_status00"),
+    //'走水',
+    "2": t("bet_record.bet_no_status02"),
+    //'输',
+    "3": t("bet_record.bet_no_status03"),
+    //'赢',
+    "4": t("bet_record.bet_no_status04"),
+     //'赢半',
+    "5": t("bet_record.bet_no_status05"),
+    //'输半',
+    "6": t("bet_record.bet_no_status06"),
+    //'比赛取消',
+    "7": t("bet_record.bet_no_status07"),
+    //'比赛延期',
+    "8": t("bet_record.bet_no_status08"),
+    // '比赛延迟',
+    "11": t("bet_record.bet_no_status11"),
+    // '比赛中断',
+    "12": t("bet_record.bet_no_status12"),
+    // '比赛放弃'
+    "15": t("bet_record.bet_no_status15")
+  })
+  const bet_result_1 = ref({
+    //'比赛取消',
+    "7": t("bet_record.bet_no_status07"),
+    //'比赛延期',
+    "8": t("bet_record.bet_no_status08"),
+    // '比赛延迟',
+    "11": t("bet_record.bet_no_status11"),
+    // '比赛中断',
+    "12": t("bet_record.bet_no_status12"),
+    // '比赛放弃'
+    "15": t("bet_record.bet_no_status15")
+  })
   //手动取消订单的原因展示
-  // const bet_result_3 = ref({
-  //   "1": t("bet_record.cancel_type_1"),
-  //   "2": t("bet_record.cancel_type_2"),
-  //   "3": t("bet_record.cancel_type_3"),
-  //   "4": t("bet_record.cancel_type_4"),
-  //   "5": t("bet_record.cancel_type_5"),
-  //   "6": t("bet_record.cancel_type_6"),
-  //   "17": t("bet_record.cancel_type_17"),
-  //   "20": t("bet_record.cancel_type_20")
-  // })
+  const bet_result_3 = ref({
+    "1": t("bet_record.cancel_type_1"),
+    "2": t("bet_record.cancel_type_2"),
+    "3": t("bet_record.cancel_type_3"),
+    "4": t("bet_record.cancel_type_4"),
+    "5": t("bet_record.cancel_type_5"),
+    "6": t("bet_record.cancel_type_6"),
+    "17": t("bet_record.cancel_type_17"),
+    "20": t("bet_record.cancel_type_20")
+  })
   // 3个需要特殊对应的国际化数据写到这里
-  // const i18n_data = ref({
-  //   sport_name: t(`common_lang.${lang}.sport2`)[main.sportId],
-  //   type: t(`common_lang.${lang}.matchtype`)[main.matchType],
-  //   mtype: t(`common_lang.${lang}.odds`)[main.marketType]
-  // })
+  const i18n_data = ref({
+    sport_name: t(`common_lang.${lang}.sport2`)[main.sportId],
+    type: t(`common_lang.${lang}.matchtype`)[main.matchType],
+    mtype: t(`common_lang.${lang}.odds`)[main.marketType]
+  })
   let lang = ref(props.type_.langCode ? (props.type_.langCode == 'zs' ? 'zh': props.type_.langCode) : 'zh')
   // 路由
   const route = useRoute()

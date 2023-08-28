@@ -50,9 +50,9 @@
           <div class="icon set-icon-2"></div>
           <div class="name">{{i18n.t("setting_menu.handicap")}}</div>
           <div class="option" @click="change_odd">
-            <div class="op-item active">{{get_cur_odd == 'EU'?i18n.t("setting_menu.odd_europe2"):i18n.t("setting_menu.odd_hong_kong2")}}</div>
+            <div class="op-item active">{{BetData.set_cur_odd == 'EU'?i18n.t("setting_menu.odd_europe2"):i18n.t("setting_menu.odd_hong_kong2")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_cur_odd == 'EU'?i18n.t("setting_menu.odd_hong_kong2"):i18n.t("setting_menu.odd_europe2")}}</div>
+            <div class="op-item">{{BetData.set_cur_odd == 'EU'?i18n.t("setting_menu.odd_hong_kong2"):i18n.t("setting_menu.odd_europe2")}}</div>
           </div>
         </div>
         <!-- 赔率 -->
@@ -145,7 +145,6 @@ import { computed, onUnmounted, watch } from "vue";
     //   get_is_accept:'get_is_accept',         // 1最佳赔率  2任何赔率
     //   get_newer_standard_edition:'get_newer_standard_edition',// 1新手版 2标准版
     //   get_lang:"get_lang",
-    //   get_cur_odd:"get_cur_odd",
     //   get_virtual_data_loading:"get_virtual_data_loading",
     //   get_is_show_menu:"get_is_show_menu",
     //   get_theme:'get_theme',
@@ -212,12 +211,12 @@ import { computed, onUnmounted, watch } from "vue";
     // 冠军玩法只支持欧洲盘
     let old_odd = ''
     if(split_new){
-      old_odd = get_cur_odd
-        set_cur_odd('EU');
+      old_odd = BetData.cur_odd
+      BetData.set_cur_odd('EU');
       }
       // 从冠军切到其他
       if(old && old_odd){
-        set_cur_odd(old_odd);
+        BetData.set_cur_odd(old_odd);
       }
   })
     
@@ -312,7 +311,7 @@ import { computed, onUnmounted, watch } from "vue";
     */
   const change_odd = () => {
       if(get_is_champion()) return;  //冠军玩法点不动
-      let odd = get_cur_odd == 'EU' ? 'HK' : 'EU'
+      let odd = BetData.cur_odd == 'EU' ? 'HK' : 'EU'
       // 将盘口偏好记录到服务端
       api_betting.record_user_preference({userMarketPrefer:odd}).then().catch(err=>console.error(err))
       set_cur_odd(odd);

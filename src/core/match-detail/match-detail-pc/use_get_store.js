@@ -12,7 +12,6 @@ export const useGetStore = () => {
     vx_get_virtual_bet_list: betInfoReducer.virtual_bet_list, // 虚拟投注列表
     vx_get_bet_single_list: betInfoReducer.bet_single_list, // 单关投注列表
     vx_get_bet_list: betInfoReducer.bet_list, // 串关投注列表
-    vx_get_cur_odd: globalReducer.odds.cur_odds, // 当前赔率
     vx_get_bet_category: betInfoReducer.bet_category,
     vx_get_bet_mode: betInfoReducer.bet_mode, //  投注模式 -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
     vx_get_bet_item_lock: betInfoReducer.bet_item_lock, // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
@@ -27,7 +26,6 @@ export const useGetStore = () => {
     state.vx_is_bet_single = betInfoReducer.is_bet_single;
     state.vx_get_bet_single_list = betInfoReducer.bet_single_list;
     state.vx_get_bet_list = betInfoReducer.bet_list;
-    state.vx_get_cur_odd = globalReducer.odds.cur_odds;
     state.vx_get_bet_category = betInfoReducer.bet_category;
   });
 

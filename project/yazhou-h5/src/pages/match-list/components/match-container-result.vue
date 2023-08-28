@@ -84,8 +84,8 @@
                     ></image-cache-load>
                   </div>
                   <div class='team-t-title-w ellipsis-2-lines name' :class="{
-                      'is-handicap':match.handicap_index == 1,
-                      'is-handicap-1':match.handicap_index == 2,
+                      'is-handicap': match.handicap_index == 1,
+                      'is-handicap-1': match.handicap_index == 2,
                       }">
                     {{ match.tournamentName }}
                   </div>
@@ -93,15 +93,15 @@
               </div>
               <div class='team-title-container'
                 :class="{
-                  simple:show_newer_edition,
-                  standard:!show_newer_edition && !is_show_result(),
+                  simple: show_newer_edition,
+                  standard: !show_newer_edition && !is_show_result(),
                   result:is_show_result()
                 }"
                 >
                 <div class="team-title-inner-con">
                   <div class='team-t-title-w result_style' :class="{
-                      'is-handicap':match.handicap_index == 2,
-                      'is-handicap-1':match.handicap_index == 1,
+                      'is-handicap': match.handicap_index == 2,
+                      'is-handicap-1': match.handicap_index == 1,
                       }">
                     {{ getMatchResult(match.scoreResult) }}
                   </div>
@@ -110,7 +110,8 @@
               <div class="row" v-if="is_show_result()">
                 <!--赛果开赛时间-->
                 <div class="m-result-time date-time">
-                    {{ format_time_zone(+match.matchTime).Format(i18n.t("time4")) }}
+                  <!-- .Format(i18n.t("time4")) -->
+                    {{ format_time_zone(+match.matchTime) }}
                 </div>
               </div>
             </div>
@@ -127,7 +128,11 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
+<<<<<<< HEAD
 import { format_time_zone } from 'src/core/formart/module/format-date'
+=======
+import { format_time_zone_time } from "src/core/formart/index.js"
+>>>>>>> 141776a5aab0e817cf83e4a31f9901fc4aed8cd8
 
 const props = defineProps({
   match_of_list: Object,
@@ -327,7 +332,7 @@ onUnmounted(() => {
 })
 
 </script>
- 
+
 <style scoped lang="scss">
  @import "../styles/match-container-result";
 </style>

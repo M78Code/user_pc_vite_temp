@@ -145,7 +145,8 @@
                 <div class="date-time" v-show="match.ms != 110 &&
                   !show_start_counting_down(match) &&
                   !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
+                  <!-- .Format(i18n.t('time4')) -->
+                  {{ format_time_zone(+match.mgt) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -283,7 +284,8 @@
                   </div>
                   <!--赛果开赛时间-->
                   <div class="m-result-time date-time">
-                    {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
+                    <!-- .Format(i18n.t('time4')) -->
+                    {{ format_time_zone(+match.mgt) }}
                   </div>
                   <div class="flex play-icon" v-if="match_of_list.playBack&&is_replay_switch">
                     <!-- <img src="image/bw3/svg/details/replay_y0.svg" /> -->
@@ -393,7 +395,8 @@
                 <div class="date-time" v-show="match.ms != 110 &&
                   !show_start_counting_down(match) &&
                   !show_counting_down(match)">
-                  {{ format_time_zone(+match.mgt).Format(i18n.t('time4')) }}
+                  <!-- .Format(i18n.t('time4')) -->
+                  {{ format_time_zone(+match.mgt) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
@@ -455,7 +458,7 @@
   </div>
 </template>
 
- 
+
 <script setup name="match-container">
 
 import { computed, onMounted, onUnmounted } from 'vue'
@@ -469,8 +472,13 @@ import score_list from './score-list.vue';
 import odd_list_wrap from './odd-list-wrap.vue';
 import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
+<<<<<<< HEAD
 import { i18n } from 'src/boot/i18n.js'
 import { format_how_many_days, format_week, format_time_zone } from 'src/core/formart/module/format-date'
+=======
+import { t } from 'src/boot/i18n.js'
+import { format_time_zone_time, format_how_many_days, format_week } from "src/core/formart/index.js"
+>>>>>>> 141776a5aab0e817cf83e4a31f9901fc4aed8cd8
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
@@ -815,7 +823,7 @@ const is_it_popular = computed(() => {
 const time_change = computed(() => {
   if (props.match_of_list) {
         let time_stamp = +props.match_of_list.mgt
-        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n.t('time2')) + '  ' + format_week(time_stamp)
+        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(t('time2')) + '  ' + format_week(time_stamp)
   }
 })
 
@@ -1630,7 +1638,7 @@ onUnmounted(() => {
 })
 
 </script>
- 
+
 <style scoped lang="scss">
   @import "../styles/match-container";
 </style>

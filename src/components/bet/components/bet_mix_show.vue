@@ -724,7 +724,7 @@ const bet_success_obj = computed(() => {
 // 展示欧洲盘还是香港盘
 const hptype = computed(() => {
   let type = 'EU'
-  if (get_cur_odd.value == 'HK' && _.get(value_show, 'hps[0].hsw').includes('2')) {
+  if (BetData.cur_odd == 'HK' && _.get(value_show, 'hps[0].hsw').includes('2')) {
     type = 'HK'
   }
   return i18n.t(`odds.${type}`)
@@ -779,7 +779,7 @@ let  obj  =  useMittEmitterGenerator(event_pairs)
 const change_odds_handle = (new_odds) => {
   pre_odds.value = new_odds || 0
   const hswObj = value_show.hps[0].hsw
-  if (get_cur_odd.value == 'HK' && hswObj && hswObj.split(',').includes('2')) {
+  if (BetData.cur_odd == 'HK' && hswObj && hswObj.split(',').includes('2')) {
     pre_ov.value = Number($mathjs.multiply(acc_add(1, new_odds), 100000))
   } else {
     pre_ov.value = Number($mathjs.multiply(new_odds, 100000))
@@ -904,7 +904,7 @@ const add_odd = () => {
     set_active_index('pre' + index_)
   }
   const hswObj = value_show.hps[0].hsw
-  if (get_cur_odd.value == 'HK' && hswObj && hswObj.split(',').includes('2')) {//香港盘的最大赔率
+  if (BetData.cur_odd == 'HK' && hswObj && hswObj.split(',').includes('2')) {//香港盘的最大赔率
     if (pre_ov.value >= 35600000) { return }
   } else {//欧洲盘的的最大赔率
     if (pre_ov.value >= 35500000) { return }

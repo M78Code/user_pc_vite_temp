@@ -24,8 +24,10 @@
             <template v-else-if="[1011, 1002, 1010, 1009].includes(+item.sportId)">{{item.batchNo}}</template>
             <template v-else-if="data.seriesType == '3'">{{item.matchName}}</template>
             <template v-else>{{item.matchInfo}}</template>
-            <p class="text-right begintime" v-if="!data.acCode">{{(new
-            Date(utils.format_time_zone_time(+item.beginTime))).Format(t('time4'))}}</p>
+            <p class="text-right begintime" v-if="!data.acCode">
+              <!-- .Format(t('time4')) -->
+              {{(newDate(format_time_zone_time(+item.beginTime)))}}
+            </p>
           </div>
           <div class="row box-main yb_py4">
             <p class="col-8">
@@ -37,7 +39,7 @@
                   v-if="(item.sportId == 1001 || item.sportId == 1004) && data.seriesType != '1'">&ensp;{{item.matchName}}{{item.matchDay}}&ensp;{{item.batchNo}}</template>
                 {{item.playName}}
                 <!-- 基准分 -->
-                <template v-if="item.scoreBenchmark">({{item.scoreBenchmark | format_score}})</template>&thinsp;
+                <template v-if="item.scoreBenchmark">({{format_score(item.scoreBenchmark)}})</template>&thinsp;
                 <span v-if="!data.acCode">[{{i18n_data((item)).mtype}}]</span>
               </span>
             </p>
@@ -60,7 +62,7 @@
             <p class="col-9"
               :class="{'dog': [1002, 1010].includes(+item.sportId),'moto': [1010].includes(+item.sportId),'nidi-moto':+item.sportId == 1009}">
               <!-- 优化后的赔率 -->
-              <span class="oddfinally" v-if="!data.acCode"><span>&nbsp;@&thinsp;{{item.oddFinally |
+              <span class="oddfinally" v-if="!data.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally) |
               format_odds(item.sportId)}}</span></span>
             </p>
           </div>
@@ -79,8 +81,8 @@
             <p class="top-p">{{t('bet_record.go_back')}}</p>
             <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
             <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
-              <template v-if="data.backAmount !== null">{{data.backAmount | format_money2}}</template>
-              <template v-else>{{data.orderAmountTotal | format_money2}}</template>
+              <template v-if="data.backAmount !== null">{{format_money2(data.backAmount)}}</template>
+              <template v-else>{{format_money2(data.orderAmountTotal)}}</template>
             </p>
           </template>
           <template v-else>
@@ -89,7 +91,7 @@
               <!-- 留空处理 -->
               <template v-if="data.acCode">- -</template>
               <!-- 最高金额 -->
-              <template v-else>{{data.maxWinAmount | format_money2}}</template>
+              <template v-else>{{format_money2(data.maxWinAmount)}}</template>
             </p>
           </template>
         </div>
@@ -106,8 +108,13 @@
             class="yb_mr4 orderno">{{data.orderNo}}</span>
         </div>
         <!-- 时间 -->
-        <div class="text-right">{{t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new
-        Date(utils.format_time_zone_time(+data.betTime))).Format(t('time4'))}}</span></div>
+        <div class="text-right">
+          {{t('bet_record.bet_time')}}
+            <span class="orderno">
+              <!-- .Format(t('time4')) -->
+               &thinsp;{{(new Date(format_time_zone_time(+data.betTime)))}}
+           </span>
+        </div>
       </div>
     </div>
   </div>
@@ -117,6 +124,7 @@
 // import { mapGetters } from "vuex";
 import utils from 'src/core/utils/utils.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { format_time_zone_time, format_money2,format_odds, format_score } from "src/core/formart/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 

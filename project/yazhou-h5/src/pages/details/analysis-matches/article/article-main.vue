@@ -115,7 +115,6 @@ const get_favorite_article = () => {
    * @param {String} matchId 赛事id
    */
 const get_article = (matchId) => {
-  console.error(matchId);
     // type 1-matchId是赛事id 2-matchId是文章id
     api_common.getArticle({ matchId, type: 1 }).then(reslut => {
       let res = ''
