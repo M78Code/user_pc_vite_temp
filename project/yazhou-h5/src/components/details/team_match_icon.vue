@@ -96,7 +96,7 @@ export default {
      * @return {String}
      */
     details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch,this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
       // 如果还在请求中则return
       if ( this.favorite_loading ) return;
       let txt = 0;
