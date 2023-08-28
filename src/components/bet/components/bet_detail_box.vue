@@ -19,7 +19,7 @@
           <div class="left">{{i18n.t("bet.bet_record")}}</div>
           <div class="right">
             <span class="yb_fontsize10">{{i18n.t('common.money')}}：</span>
-            <span class="money-span">{{get_user.balance | format_money2}}</span>
+            <span class="money-span">{{ format_money2(get_user.balance)}}</span>
           </div>
         </template>
       </div>
@@ -46,7 +46,7 @@
               <i class="yb_mr8" v-if="!BetData.is_bet_success_status"></i>
               <span>
                 <template v-if="get_bet_status == 3">
-                  {{odds_value2 | format_odds(value_show.csid)}}
+                  {{ format_odds(value_show.csid,odds_value2)}}
                 </template>
                 <template v-else>{{odds_value}}</template>
               </span>
@@ -102,7 +102,7 @@
 
           </template>
           <template v-if="money">
-            <span v-if="money" class="yb_fontsize14">{{money | format_money3}}</span>
+            <span v-if="money" class="yb_fontsize14">{{ format_money3(money)}}</span>
             <i class="cursor" ref="cursor_line" :style="{opacity:get_bet_status == 1 ? '1':'0'}"></i>
           </template>
         </div>
@@ -110,7 +110,8 @@
         <!-- 最高可赢和常用金额 -->
         <div class="win row justify-between yb_mb6">
           <div>{{i18n.t('bet.total_win2')}}
-            <span :class="{'color2':money_ok && money}">{{max_win_money | four_five_six_double(2) | format_money2}}</span>
+            <!-- <span :class="{'color2':money_ok && money}">{{max_win_money | four_five_six_double(2) | format_money2}}</span> -->
+            <span :class="{'color2':money_ok && money}">{{ format_money2(max_win_money)}}</span>
           </div>
           <div class="usedmoney">
             <i class="select" :class="{'select2':get_used_money != 0}" @click="set_used_money(null)"></i>

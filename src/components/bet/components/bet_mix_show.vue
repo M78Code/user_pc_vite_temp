@@ -191,7 +191,7 @@
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 // import betting from 'src/project/mixins/betting/betting.js';
 import store from "src/store-redux/index.js";
-import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src\core\bet\bet-config_data.js";
+import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降

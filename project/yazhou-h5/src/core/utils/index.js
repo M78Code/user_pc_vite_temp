@@ -267,79 +267,7 @@ const utils = {
     }
     return ret;
   },
-
-  /**
-   * @description: 数字转中文
-   * @param {Integer} number 形如123的数字
-   * @return {String} 返回转换成的形如 一百二十三 的字符串
-   */
-  numberToChinese: function (number) {
-    // // 单位 字符
-    let t = {units: '个十百千万@#%亿^&~', chars: '零一二三四五六七八九',}
-    let a = (number + '').split(''), s = [];
-    if (a.length > 12) {
-      throw new Error('too big');
-    } else {
-      for (var i = 0, j = a.length - 1; i <= j; i++) {
-        if (j == 1 || j == 5 || j == 9) {//两位数 处理特殊的 1*
-          if (i == 0) {
-            if (a[i] != '1') s.push(t.chars.charAt(a[i]));
-          } else {
-            s.push(t.chars.charAt(a[i]));
-          }
-        } else {
-          s.push(t.chars.charAt(a[i]));
-        }
-        if (i != j) {
-          s.push(t.units.charAt(j - i));
-        }
-      }
-    }
-    //return s;
-    return s.join('').replace(/零([十百千万亿@#%^&~])/g, function (m, d, b) {//优先处理 零百 零千 等
-      b = t.units.indexOf(d);
-      if (b != -1) {
-        if (d == '亿') return d;
-        if (d == '万') return d;
-        if (a[j - b] == '0') return '零'
-      }
-      return '';
-    }).replace(/零+/g, '零').replace(/零([万亿])/g, function (m, b) {// 零百 零千处理后 可能出现 零零相连的 再处理结尾为零的
-      return b;
-    }).replace(/亿[万千百]/g, '亿').replace(/[零]$/, '').replace(/[@#%^&~]/g, function (m) {
-      return { '@': '十', '#': '百', '%': '千', '^': '十', '&': '百', '~': '千' }[m];
-    }).replace(/([亿万])([一-九])/g, function (m, d, b, c) {
-      c = t.units.indexOf(d);
-      if (c != -1) {
-        if (a[j - c] == '0') return d + '零' + b
-      }
-      return m;
-    });
-  },
-  /**
-   * @description: 将赛事数据列表/对象转换成c8命令结构体
-   * @param {Array/Object} match_any 赛事数据列表/对象
-   * @return {Object} 转换后的C8 对象
-   */
-  ws_c8_obj_format(match_any){
-    let ret = {};
-    if(match_any){
-      if(Array.isArray(match_any)){
-        match_any.map(match => {
-          if(match){
-            if(match.mid){
-              ret[match.mid] = {mid:match.mid, ms:match.ms, csid:match.csid, mess:match.mess, mmp:match.mmp, hpids:[]};
-            }
-          }
-        })
-      } else{
-        if(match_any.mid){
-          ret[match_any.mid] = {mid:match_any.mid, ms:match_any.ms,  csid:match_any.csid, mess:match_any.mess, mmp:match_any.mmp, hpids:[]};
-        }
-      }
-    }
-    return ret;
-  },
+ 
   /**
    *@description 根据result 的值返回是否赢钱
          "0": '未知',
@@ -368,34 +296,7 @@ const utils = {
     let font_size = innerWidth * 100 / 375;
     return Math.ceil(value * font_size);
   },
-  /**
-   * @description: 获取指定时区的Date对象(默认使用东八区)
-   * @param {int} time 时间毫秒数
-   * @param {int} offset 时区, 默认东八区
-   * @return {Date} 转换后的时区Date对象
-   */
-  format_time_zone(time,offset=8){
-    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-    var localTime = d.getTime();//获取的是毫秒级
-    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-    var wishTime= utc + (3600000*offset);
-    return new Date(wishTime);
-  },
-  /**
-   * @description: 获取指定时区的时间戳(默认使用东八区)
-   * @param {int} time 时间毫秒数
-   * @param {int} offset 时区, 默认东八区
-   * @return {int} 转换后的时区的时间戳
-   */
-  format_time_zone_time(time,offset=8){
-    var d=new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
-    var localTime = d.getTime();//获取的是毫秒级
-    var localOffset=d.getTimezoneOffset()*60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的
-    var utc = localTime + localOffset; //utc即GMT时间,世界时,格林威治时间
-    var wishTime= utc + (3600000*offset);
-    return wishTime;
-  },
+ 
   /**
    * @description: 埋点Google Analytics GA_TRACKING_ID config配置
    * @param {*} user_id 用户id

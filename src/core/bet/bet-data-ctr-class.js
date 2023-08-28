@@ -437,4 +437,14 @@ class BetDataCtr {
   init_bet_single_data(){
     init_bet_single_data()
   }
+
+  /**
+   * @description: 设置 押注扁平化对象扁平
+   * @param {*}BetData.
+   * @param {*} obj 要设置的数据
+  */
+  set_bet_obj_add_attr(obj) {
+    BetData.bet_obj = obj;
+  }
+
 }
