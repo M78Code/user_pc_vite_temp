@@ -32,7 +32,7 @@
           </div>
         </div>
         <!-- 排序 -->
-        <div class="set-item" v-if="lodash.get(get_access_config, 'sortCut') &&route.name != 'virtual_sports' && route.name != 'virtual_sports_details' && menu_type !== 3000">
+        <div class="set-item" v-if="GlobalAccessConfig.get_sortCut() &&route.name != 'virtual_sports' && route.name != 'virtual_sports_details' && menu_type !== 3000">
           <div class="icon set-icon-1"></div>
           <div class="name">{{t("setting_menu.footer_t_sort")}}</div>
           <div class="option" @click="sort_type_changed">
@@ -121,11 +121,11 @@
 
 <script setup>
 // import {mapGetters, mapMutations, mapActions} from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_betting } from "src/project/api/index";
 import userCtr from "src/core/user-config/user-ctr.js"
 import { format_money2 } from "src/core/formart/index.js"
 import lodash from 'lodash'
-
 import { format_money2 } from "src/core/formart/index.js"
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
@@ -158,7 +158,6 @@ import { useRoute, useRouter } from "vue-router"
     //   get_is_champion:'get_is_champion',
     //   get_v_pre_menu_type:'get_v_pre_menu_type',
     //   get_secondary_unfold_map:'get_secondary_unfold_map',
-    //   get_access_config:'get_access_config',
     // }),
     // 语言选项
   const lang_obj = computed(() => {
@@ -297,7 +296,7 @@ import { useRoute, useRouter } from "vue-router"
      * @param {Number} status 2时间排序 1热门排序
     */
   const sort_type_changed = () => {
-      if(!lodash.get(get_access_config,'sortCut')){
+      if(!GlobalAccessConfig.get_sortCut()){
         $toast(t(`common.temporarily_unavailable`), 2000)
         return
       }
