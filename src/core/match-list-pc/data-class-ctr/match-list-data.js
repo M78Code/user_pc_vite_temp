@@ -4,8 +4,9 @@
  * @Description: 列表数据仓库，列表页所有数据的仓库
  */
 
-import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, handicap_highlight_paly_id, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from './conifg/index.js'
+import{ sport_match_count as sport_match_count_template, match_list_play_config, history_score_dict, match_state_convert_score_dict, other_play_name_to_playid, let_ball_play_tpl, has_cur_handicap_tpl_ids } from './conifg/index.js'
 import utils from "src/core/utils/index.js"
+import { handicap_highlight_paly_id } from 'src/core/constant/config/highlight-paly-id.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 // TODO hanmar后续处理--S
 // import { store } from "src/store/index.js"

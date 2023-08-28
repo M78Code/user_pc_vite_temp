@@ -6,5 +6,6 @@
 export { sport_match_count } from './sport-count.js'
 export { history_score_dict, match_state_convert_score_dict } from './score-keys.js'
 export { other_play_name_to_playid } from './other-play-id.js'
-export { MATCH_LIST_TEMPLATE_CONFIG as match_list_play_config } from '../../list-template/index.js'
+export { MATCH_LIST_TEMPLATE_CONFIG as match_list_play_config } from 'src/core/match-list-pc/list-template/index.js'
 export { let_ball_play_tpl, has_cur_handicap_tpl_ids } from './play-tpl-id.js'
+export { handicap_highlight_paly_id, } from './highlight-paly-id.js'
