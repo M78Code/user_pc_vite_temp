@@ -263,9 +263,7 @@ export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menu
 // 菜单实时统计玩法数量
 export const post_menu_play_count = (params, config={}, url = "/v2/w/menu/queryPlayCountPB") => http.post(`${prefix}${url}`, params, config);
 
-//赔率转换
-export const get_fetch_odds_conversion = (params, config={}, url = "/v1/odds/getOddsConversion") => http.get(`${prefix}${url}`, params, config);
-
+ 
 //从服务器获取时间戳
 export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`, params, config);
 

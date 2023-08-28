@@ -39,8 +39,7 @@ const oddsTable = {
     US: '5',
     ID: '6',
 }
-
-const vx_odds_coversion_map = {}
+ 
 
 
 
