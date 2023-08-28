@@ -7,8 +7,10 @@
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 
+import { esports_csid } from "../../constant/config/csid"
 
-const float_3_csid = [100, 101, 102, 103] // 需要显示三位小数点的,赛种编号(电竞)
+
+const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
 const all_odds_arr = [] //所有的赔率数组
 const cur_odds_arr = [] // 当前允许的赔率数组
 let cur_odd = "EU" // 当前赔率
