@@ -182,7 +182,7 @@ export default {
   },
   created () {
     // 用户登录失效时,直接关闭loading中动画
-    this.no_user = this.vx_get_is_invalid;
+    this.no_user = UserCtr.is_invalid;
     // 绑定接收用户失效事件
     // this.$root.$on(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
@@ -190,7 +190,7 @@ export default {
   // computed: {
   //   ...mapGetters({
   //     // 登录是否失效
-  //     vx_get_is_invalid: "get_is_invalid",
+ 
   //     //获取当前菜单类型
   //     vx_cur_menu_type: "get_cur_menu_type",
   //   }),

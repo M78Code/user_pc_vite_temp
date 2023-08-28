@@ -93,7 +93,7 @@ export default {
       // 设置用户信息,用户金额,userId 需要监听变化
       "set_user",
     ]),
-    ...mapActions(['fetch_balance']),
+    ...mapActions(['get_balance']),
       /**
    * @description:是否隐藏串关按钮
    * @param {undefined} undefined
@@ -1551,7 +1551,7 @@ export default {
         } else {
           callbackfn(2, i18n.t(`error_msg_info.${code}.client_msg`));
           if (code == '0400455') {  // 提示余额不足时拉接口更新余额
-            this.fetch_balance && this.fetch_balance()
+            this.get_balance && this.get_balance()
           }
         }
 

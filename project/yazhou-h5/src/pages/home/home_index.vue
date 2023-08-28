@@ -92,18 +92,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
         res = tabList_
       return res;
     })
-  // computed: {
-  //   // ...mapGetters({
-  //   //   get_home_tab_item: "get_home_tab_item", // 首页选项卡选中的记录
-  //   //   get_hot_tab_item: "get_hot_tab_item", // 热门页面选中的 二级菜单选择框
-  //   //   get_theme: "get_theme", // 是否黑夜版
-  //   //   vx_get_user: "get_user", // 当前登录的用户信息
-  //   //   get_lang:'get_lang', // 当前语言
-  //   //   get_global_click_count: 'get_global_click_count', // 全局点击次数
-  //   //   get_access_config: 'get_access_config', // 全局点击次数
-  //   // }),
-
-  // },
+ 
 
   watch(() => tabIndex, (n) => {
     // 首页、视频直播以及热门下精选不显示背景

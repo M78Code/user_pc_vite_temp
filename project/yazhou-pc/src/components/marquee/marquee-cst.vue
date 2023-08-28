@@ -191,11 +191,7 @@ const global_switch = ref(globalReducer.global_switch)
 */
 const global_click = ref(globalReducer.global_click)
 
-/** 用户信息修改 */
-const set_user_info = (data) => store.dispatch({
-    type: 'SET_USER',
-    data
-})
+
 
 watch(
     () => global_click.value,

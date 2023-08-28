@@ -18,7 +18,7 @@ let api_cmd_data;
 const resetApiDemo = throttle(
   (data) => {
     // 如果用户失效,ws停止请求
-    //vx_get_is_invalid
+   
     //let token = ss.get(token_key);
     if (data && !ss.get(token_key)) {
       return;

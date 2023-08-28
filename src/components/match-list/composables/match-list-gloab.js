@@ -162,7 +162,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 const show_fail_alert = () => {
 	let ret = false;
 	let callbackUrl = this.vx_get_user.callbackUrl;
-	if (this.vx_get_is_invalid) {
+	if ( UserCtr.is_invalid) {
 		//是否失效
 		// if ((!callbackUrl) && (callbackUrl != undefined)) {
 		//   // 弹出提示消息、登录层

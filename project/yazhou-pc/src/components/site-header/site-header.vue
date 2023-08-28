@@ -283,11 +283,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
     }
 }
 
-/** 保存显示搜索组件状态 */
-const set_user = (data) => store.dispatch({
-    type: 'SET_USER',
-    data
-})
+ 
 /**
  * 导航栏菜单点击
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
@@ -318,9 +314,9 @@ function tab_click(obj) {
         if (pathObj.path.includes('/activity')) {
             if (token.value) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
-                // 记录用户点击活动入口，每点击一次计算一次，不在活动内计算
-                // gtag_event_send('PC_activity_click', 'PC_活动', 'PC_活动中心', new Date().getTime())
-                set_user({ token: token.value, view: this });
+              
+              
+           
             }
         }
 
@@ -460,11 +456,7 @@ const set_menu_collapse_status = (data) => store.dispatch({
 function handle_menu_collapse() {
     set_menu_collapse_status(!menu_collapse_status.value)
 }
-/** 设置用户余额是否展示状态 */
-const set_amount = (data) => store.dispatch({
-    type: 'SET_AMOUNT',
-    data
-})
+ 
 /** 设置用户余额是否展示状态 */
 const set_show_balance = (data) => store.dispatch({
     type: 'SET_SHOW_BALANCE',
@@ -482,7 +474,7 @@ function get_balance() {
         const result = lodash.get(res, "data.data");
         const code = lodash.get(res, "data.code");
         data_loaded.value = true;
-        if (code == 200) set_amount(result.amount);
+        if (code == 200){ UserCtr.set_balance(result.amount)};
         userCtr.show_fail_alert()
     }).catch(err => {
         console.error(err)

@@ -117,7 +117,7 @@ const get_balance = () => {
     is_loading_balance.value = false;
   }, 800);
 
-  fetch_balance()
+  get_balance()
 }
 
 const mix_sum_odds = computed(() => {

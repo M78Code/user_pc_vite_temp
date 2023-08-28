@@ -177,18 +177,12 @@ const set_theme = (data) => store.dispatch({
     type: 'set_theme',
     data
 })
-const set_lang = (data) => store.dispatch({
-    type: 'SET_LANG',
-    data
-})
+ 
 const set_lang_change = (data) => store.dispatch({
     type: 'SET_LANGUAGE_CHANGING',
     data
 })
-const set_user_assign = (data) => store.dispatch({
-    type: 'SET_USER',
-    data
-})
+ 
 const set_pre_odd = (data) => store.dispatch({
     type: 'SET_PRE_ODD',
     data
@@ -306,7 +300,7 @@ function on_click_lang(lang_) {
         api_account.set_user_lang({ token: user.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
-                set_user_assign({ languageName: lang_ })
+                UserCtr.set_lang(lang_)
                 set_lang(lang_);
                 // TODO: 
                 window.reset_lang = lang_;

@@ -90,11 +90,7 @@ const set_lang_change = (data) => store.dispatch({
     type: 'SET_LANGUAGE_CHANGING',
     data
 })
-/** 更新用户信息 */
-const set_user = (data) => store.dispatch({
-    type: 'SET_USER',
-    data
-})
+ 
 /** 即将开赛筛选时间 */
 const set_open_select_time = (data) => store.dispatch({
     type: 'set_open_select_time',

@@ -110,7 +110,7 @@
 
     <!-- 跑马灯、余额 -->
     <div class="wrap-notice">
-      <div class="money-wrap" @click="fetch_balance">
+      <div class="money-wrap" @click="get_balance">
         <div class="balance-wrap">
           <i class="icon-balance"></i>
           <span class="balance">{{ t('common.money') }}</span>
@@ -285,7 +285,7 @@ import lodash from "lodash"
   //   "set_home_menu_index",
   //   // 设置首页菜单数据
   //   "save_home_data",
-  //   "fetch_balance",
+  //   "get_balance",
   // ])
   // ...mapMutations([
   //   // 设置当前选中日期菜单索引

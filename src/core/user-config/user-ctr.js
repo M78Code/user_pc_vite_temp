@@ -13,6 +13,7 @@ import { infoUpload } from "src/core/http/";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/api/index";
+import { api_account } from "src/api/";
 import store from "../../store-redux/";
 // #TODO 还有使用到的loadash,如果全局配置则无需引入，或者按需引入，等正是开发组件决定,  _  (lodash)
 import lodash from "lodash";
@@ -48,8 +49,8 @@ class UserCtr {
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
 
-    // 用户id
-    this.user = ref({});
+    // 用户详情
+    this.user_info = ref({});
     // 登录用户的id
     this.user_logined_id = ref("");
     // 用户是否长时间未操作
@@ -63,6 +64,17 @@ class UserCtr {
     this.lang = ref(langReducer.lang);
     // 用户主题
     this.theme = ref(themeReducer.theme);
+    // 用户 token 失效
+    this.is_invalid = false;
+    // 用户 余额
+    this.balance = 0;
+    //  用户余额是否展示状态
+    this.show_balance = false;
+    
+    //登录弹窗状态
+    this.show_login_popup = false;
+    // 是否首次登录
+    this.is_new_user = false;
   }
   /**
    * 用户 id
@@ -77,7 +89,7 @@ class UserCtr {
   }
   set_lang(data) {
     this.lang.value = data;
-    store.dispatch({ type: "SET_LANG", data });
+    this.user_info.languageName = data;
   }
   set_theme(lang) {
     this.theme.value = lang;
@@ -86,13 +98,13 @@ class UserCtr {
   }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId
-    return this.user && this.user.userId ? this.user.userId : this.uid;
+    return this.user_info && this.user.userId ? this.user.userId : this.uid;
   }
   get_loaded_user_id() {
     return this.user_logined_id;
   }
   get_user() {
-    return this.user;
+    return this.user_info;
   }
   //用户是否长时间未操作
   get_is_user_no_handle() {
@@ -104,28 +116,47 @@ class UserCtr {
   get_user_info_data() {
     return this.user_info_data;
   }
-  set_user(user_obj) {
+  set_user_info(user_obj) {
     if (!user_obj) {
       return;
     }
     if (user_obj.balance === null) delete user_obj.balance;
-    if (this.user) {
-      Object.assign(this.user, user_obj);
+    if (this.user_info) {
+      Object.assign(this.user_info, user_obj);
     } else {
-      this.user = user_obj;
+      this.user_info = user_obj;
     }
     // 设置用户信息，存入localStorage中
-    this.set_user_base_info(this.user);
+    this.set_user_base_info(this.user_info);
+    this.is_invalid = false;
   }
   clear_user({ commit }) {
-    this.user = "";
+    this.user_info = "";
+    this.is_invalid = true;
   }
   //设置用户是否长时间未操作
   set_is_user_no_handle({ commit }, val) {
     this.is_user_no_handle = val;
   }
+
+  async get_user_info(token) {
+    return async (dispatch) => {
+      try {
+        let res = await api_account.get_user_info({
+          token: this.token,
+        });
+        let obj = res?.data?.data || {};
+        console.log("obj", obj);
+
+        this.set_user_info(obj);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  }
+
   // 获取用户余额
-  fetch_balance() {
+  get_balance() {
     return lodash.debounce(
       function () {
         api_admin
@@ -133,7 +164,7 @@ class UserCtr {
           .then((res) => {
             if (res.code == 200) {
               let amount = lodash.get(res, "data.amount");
-              commit("set_balance", +amount);
+              this.set_balance(amount);
             }
           })
           .catch((err) => {
@@ -145,6 +176,9 @@ class UserCtr {
     );
   }
 
+  set_balance(balance) {
+    this.balance = 1 * balance;
+  }
   /**
    * 获取  和 调用 getuserinfo 接口 data 实体 数据
    * 这里 是经过加工的 标准化的数据 也可能是缓存下来的数据
@@ -290,8 +324,7 @@ class UserCtr {
       if (this.all_expired_count >= this.all_expired_count_max) {
         // 设置登录无效
 
-        // #TODO
-        // window.vue.$store.commit("set_is_invalid", true);
+        this.is_invalid = true;
 
         //显示登录失效弹窗
         setTimeout(() => {
@@ -729,7 +762,7 @@ class UserCtr {
     let ret = false;
     let callbackUrl = this.vx_get_user.callbackUrl;
 
-    if (this.vx_get_is_invalid) {
+    if (this.is_invalid) {
       //是否失效
       // if ((!callbackUrl) && (callbackUrl != undefined)) {
       //   // 弹出提示消息、登录层

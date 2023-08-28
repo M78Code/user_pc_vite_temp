@@ -221,7 +221,7 @@ import { computed, onUnmounted, watch } from "vue";
   })
     
     // ...mapActions([
-    //   'fetch_balance',
+    //   'get_balance',
     //   'set_theme',
     // ]),
     // ...mapMutations({
@@ -342,7 +342,7 @@ import { computed, onUnmounted, watch } from "vue";
       balance_timer = setTimeout(() => {
         cancel_loading_balance();
       },500);
-      fetch_balance()
+      get_balance()
     }
     /**
      * @Description 取消余额loading
