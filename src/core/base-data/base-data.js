@@ -16,7 +16,7 @@ import { ref } from "vue";
 import userCtr from "src/core/user-config/user-ctr.js";
 import _ from "lodash";
 // indexeDb
-import { db } from "src/core/utils/base-data/config/indexedPB.js";
+import { db } from "src/core/base-data/config/indexedPB.js";
 
 import { api_base_data, api_common } from "src/api/index.js";
 

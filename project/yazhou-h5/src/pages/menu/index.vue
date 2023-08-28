@@ -5,7 +5,7 @@
 </template>
 <script setup>
 // import { onMounted,onBeforeMount } from "vue";
-// import base_data_instance from 'src/core/utils/base-data/base-data.js'
+// import base_data_instance from 'src/core/base-data/base-data.js'
 import { MenuWapper } from "src/components/menu";
 // onBeforeMount(()=>{
 //   base_data_instance.init()

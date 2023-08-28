@@ -1,4 +1,4 @@
-import base_data_instance from "src/core/utils/base-data/base-data.js";
+import base_data_instance from "src/core/base-data/base-data.js";
 import utils from "src/core/utils/utils.js";
 import store from "src/store-redux/index.js";
 
