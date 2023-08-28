@@ -193,6 +193,8 @@ this.bet_appoint_ball_head= null */
     this.show_bet_custom_id_arr = [];
     //ids 变更  ， 用这个监听 或者 发事件  
     this.show_bet_custom_id_arr_change = 1
+    // 从服务器拉取到的 赔率转换表
+    this.odds_coversion_map = []
 
   }
 
@@ -430,7 +432,16 @@ this.bet_appoint_ball_head= null */
    * @param {*} value 需要存储的值
    */
   set_bet_s_obj(win_money,value){
-    this.set_bet_s_obj[win_money] = value
+    this.bet_s_obj[win_money] = value
   }
+  /**
+ * @description: 存储 赔率转换表
+ * @param {*} value 需要存储的值
+ */
+  set_odds_coversion_map(value){
+    this.odds_coversion_map = value
+  }
+
+  
 }
 export default new BetData();

@@ -30,6 +30,8 @@ class MenuData {
     this.menus_i18n_map = {};
     this.menu_list = [];
     this.menu_original_data = {};
+    // 页脚菜单
+    this.footer_sub_menu_id = '';
     this.lv_1_menu_map={
       1:"滚球",
       2:"今日",
@@ -492,7 +494,13 @@ class MenuData {
    * 一级菜单顶层菜单的 菜单类型  ，没有则是0
    */
   get_current_lv_1_menu_type() {
-    return this.current_menu || "0";
+    return this.current_menu || "1";
+  }
+  /**
+   * 获取当前选中得页脚子菜单
+   */
+  get_footer_sub_menu_id () {
+    return this.footer_sub_menu_id || '1'
   }
 }
 export default new MenuData();

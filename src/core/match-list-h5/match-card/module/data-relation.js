@@ -1,6 +1,6 @@
 
 
-
+import { useRoute } from 'vue-router'
 import MatchListData from "src/core/match-data-class/match-list-data-class.js";
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
@@ -9,6 +9,8 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-3.js"
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+
+const route = useRoute()
 
 const MenuData = {
   menu_data: {},
@@ -128,7 +130,7 @@ const reset_all_card_data = () => {
 export const compute_match_list_style_obj_and_match_list_mapping_relation_obj = (match_list, is_ws_call, is_remove_call) => {
 
   // 虚拟体育 不走卡片逻辑
-  if (MenuData.menu_data.is_virtual_sport && window.vue.$route.name !== 'search') {
+  if (MenuData.menu_data.is_virtual_sport && route.name !== 'search') {
     MatchListCardData.is_run_card_function = false
     return
   } else {

@@ -16,6 +16,8 @@
     import MatchListCardData from "./match-list-card-data-class.js";
     import lodash from "lodash";
 
+    import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+
     import {get_league_title_card_height,compute_style_template_by_matchinfo } from  "./compute-style-template.js"
     import {set_new_sport_title_card_fold} from "./add-and-remove.js"
     import {set_new_league_fold} from  "./fold-tid.js"
@@ -64,7 +66,7 @@ import { template_3 } from "../template/module/template-3.js";
         mids: update_mids_arr,
       };
       // 拉取http请求
-      window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS,params)
+      useMittEmit(MITT_TYPES.EMIT_API_BYMIDS,params)
     }
   }
 
