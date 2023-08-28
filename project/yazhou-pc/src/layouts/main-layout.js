@@ -8,7 +8,7 @@
 import { api_common } from "src/api/";
 import store from "src/store-redux/index.js";
 const methods_map_store = [
-  "set_odds_coversion_map",
+ 
   "SET_INIT_ODD",
   "SET_INIT_MATCH_SORT",
   "SET_SHOW_FILTER_POPUP",
@@ -20,19 +20,7 @@ const methods_map_store = [
   };
   return obj;
 }, {});
-/**
- * @description 获取赔率转换表数据
- * @return {undefined} undefined
- */
-(function () {
-  api_common.get_fetch_odds_conversion().then((res) => {
-    let code = get(res, "data.code") || "";
-    if (code == 200) {
-      let data = get(res, "data.data") || "";
-      methods_map_store["set_odds_coversion_map"](data);
-    }
-  });
-});
+ 
 //初始化盘口偏好
 methods_map_store["SET_INIT_ODD"]();
 //初始化列表排序

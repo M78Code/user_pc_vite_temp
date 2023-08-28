@@ -554,7 +554,7 @@ const show_move_video = computed(() => {
  *映射store内部的方法
  */
 const methods_map_store = [
-  "set_odds_coversion_map",
+ 
   "SET_INIT_ODD",
   "SET_INIT_MATCH_SORT",
   // 设置单关是否正在投注处理中
@@ -677,19 +677,7 @@ function list_on_scroll(obj) {
   }
 }
 
-/**
- * @description 赔率转换
- * @return {undefined} undefined
- */
-function get_odds_conversion() {
-  api_common.get_fetch_odds_conversion().then((res) => {
-    let code = get(res, "data.code") || "";
-    if (code == 200) {
-      let data = get(res, "data.data") || "";
-      methods_map_store["set_odds_coversion_map"](data);
-    }
-  });
-}
+ 
 
 /**
  * 投注框转开和折叠
