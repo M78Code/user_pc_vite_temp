@@ -6,7 +6,8 @@
 
 import betting from "src/public/mixins/betting/betting.js";
 import { ref, reactive, onMounted, defineComponent, computed } from "vue"
-
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetDataCtr from "src/core/bet/bet-data-ctr-class.js";
 
 
 export default defineComponent({
@@ -67,6 +68,7 @@ export default defineComponent({
             if (obj.cs) {
               obj.cs.match_update = false;
             }
+            // 添加投注项 todo
             BetDataCtr.bet_obj_add_attr(obj);
           }
         }, 3000);
@@ -390,7 +392,7 @@ export default defineComponent({
       () => active,
       (new_) => {
         // 当前是单关时不做任何处理
-        if (BetDataCtr.is_bet_single) return;
+        if (BetData.is_bet_single) return;
         // 是否有效
         let is_effect;
         // 如果投注项状态是开盘或者是锁盘
@@ -588,9 +590,9 @@ export default defineComponent({
         let index = _.findIndex(BetData.bet_list, item => item == props.id);
         if (index > -1) {
           //移除对应的键值对
-          BetDataCtr.set_bet_obj_remove_attr(props.id);
+          BetDataCtr.bet_obj_remove_attr(props.id);
           //移除对应的数据
-          BetDataCtr.bet_list_remove(index);
+          // BetDataCtr.bet_list_remove(index);
         }
       } else {
         //初始化提示信息
