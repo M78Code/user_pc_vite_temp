@@ -41,9 +41,9 @@
               <div class="socre">
                 <div class="vs-wrap" v-if="item.ms != 110 && show_counting_down(item)">
                   <div class="score-wrap">
-                    <span class="both-score">{{ lodash.get(carousel_data, `obj[${item.mid}]`) | format_total_score(0) }}</span>
+                    <span class="both-score">{{ format_total_score(lodash.get(carousel_data, `obj[${item.mid}]`), 0) }}</span>
                     <span class="crossing"></span>
-                    <span class="both-score">{{ lodash.get(carousel_data, `obj[${item.mid}]`) | format_total_score(1) }}</span>
+                    <span class="both-score">{{ format_total_score(lodash.get(carousel_data, `obj[${item.mid}]`), 1) }}</span>
                   </div>
                 </div>
                 <div class="both-timer relative-position"

@@ -26,7 +26,7 @@
             <template v-else>{{item.matchInfo}}</template>
             <p class="text-right begintime" v-if="!data.acCode">
               <!-- .Format(t('time4')) -->
-              {{(newDate(format_time_zone_time(+item.beginTime)))}}
+              {{(format_time_zone_time(+item.beginTime))}}
             </p>
           </div>
           <div class="row box-main yb_py4">
@@ -62,8 +62,7 @@
             <p class="col-9"
               :class="{'dog': [1002, 1010].includes(+item.sportId),'moto': [1010].includes(+item.sportId),'nidi-moto':+item.sportId == 1009}">
               <!-- 优化后的赔率 -->
-              <span class="oddfinally" v-if="!data.acCode"><span>&nbsp;@&thinsp;{{format_odds(item.oddFinally) |
-              format_odds(item.sportId)}}</span></span>
+              <span class="oddfinally" v-if="!data.acCode"><span>&nbsp;@&thinsp;{{ format_odds(item.oddFinally, item.sportId)}}</span></span>
             </p>
           </div>
         </div>
@@ -71,7 +70,7 @@
       <div class="item-footer yb_mx10 yb_px14 yb_mt10 yb_pt8 row yb_fontsize12">
         <div class="col-4">
           <p class="top-p">{{ t('bet_record.bet_val2') }}</p>
-          <p class="yb_fontsize14 money-p" v-if="data.orderAmountTotal">{{data.orderAmountTotal | format_money2}}</p>
+          <p class="yb_fontsize14 money-p" v-if="data.orderAmountTotal">{{ format_money2(data.orderAmountTotal) }}</p>
         </div>
         <!-- 中 -->
         <!-- 未结算页面 -->
@@ -112,7 +111,7 @@
           {{t('bet_record.bet_time')}}
             <span class="orderno">
               <!-- .Format(t('time4')) -->
-               &thinsp;{{(new Date(format_time_zone_time(+data.betTime)))}}
+               &thinsp;{{format_time_zone_time(+data.betTime)}}
            </span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <!--
- * @Author: 
- * @Date: 
+ * @Author:
+ * @Date:
  * @Description: 视频直播 列表文件
 -->
 <template>
@@ -64,13 +64,13 @@
                   <img  src="image/bw3/svg/home/play.svg" alt="">
                   <span>{{ item.plnum | money_filter}}</span>
                 </div>
-                <img 
+                <img
                     v-if="_.get(get_access_config,'collectSwitch')"
                     :src="item.mf ? (!_.get(get_user, 'favoriteButton') && get_theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
                 <div class="video-describe">
-                  <span v-if="item.ms != 110">{{ item | format_total_score(0)}}-{{ item | format_total_score(1)}}</span>
+                  <span v-if="item.ms != 110">{{ format_total_score(item, 0)}}-{{ format_total_score(item, 1)}}</span>
                   {{ item.mhn }} v {{ item.man }}
                 </div>
                 <div class="score-time">
@@ -97,10 +97,10 @@
       </div>
     </template>
     <SLive v-if="loading"/>
-    
+
     <!-- 没有数据 组件 -->
     <no-data v-if="noMenu" :which='no_menu_txt' height='500' class="no-list"></no-data>
-    
+
     <!-- 回到顶部按钮组件 -->
     <scroll-top
         v-show="!get_is_show_menu && list_scroll_top > 0"
@@ -124,28 +124,30 @@ import SLive from "src/project/components/skeleton/live"
 import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'
 import counting_down from 'src/project/components/common/counting-down'
+import { format_total_score } from "src/core/formart/index.js"
+
 
   //右侧菜单内容
-  const carousel_data = ref({list:[],obj:{}}) 
+  const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
-  const tab_Index = ref(1)  
+  const tab_Index = ref(1)
   // tab选项卡内容
-  const tabList = ref([])  
-  // 左侧菜单选中项 
-  const menu_index = ref(0)  
+  const tabList = ref([])
+  // 左侧菜单选中项
+  const menu_index = ref(0)
   // 有没有菜单数据
-  const noMenu = ref(false)  
+  const noMenu = ref(false)
   //没有数据展示
-  const no_menu_txt = ref("nolive")  
+  const no_menu_txt = ref("nolive")
   // 代表 是否在收藏菜单下
-  const is_collect = ref(false)  
+  const is_collect = ref(false)
   // 加载动画
-  const loading = ref(true) 
+  const loading = ref(true)
   // 代表的是联赛id  tid
-  const field_tid = ref('') 
-  const y0_img_favorite_black = ref("image/wwwassets/bw3/common/m-list-favorite-s-y0.svg") 
+  const field_tid = ref('')
+  const y0_img_favorite_black = ref("image/wwwassets/bw3/common/m-list-favorite-s-y0.svg")
   // 赛事列表滑动高度
-  const list_scroll_top = ref(0)  
+  const list_scroll_top = ref(0)
   // 锚点
   let scrollArea = ref(null)
 
@@ -159,7 +161,7 @@ import counting_down from 'src/project/components/common/counting-down'
   //   SLive
   // },
   get_init(1)
-  
+
   watch(() => tab_Index, (index) => {
       utils.tab_move2(index, $refs.scrollBox)
       if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事

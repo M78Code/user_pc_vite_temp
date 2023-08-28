@@ -10,7 +10,7 @@
       {{t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
-      {{format_time_zone_time(+detail_data.mgt) | format_H_M(+detail_data.mgt) }}
+      {{ format_H_M(format_time_zone_time(+detail_data.mgt)) }}
     </span>
   </span>
 </template>

@@ -56,7 +56,7 @@
                         ******
                     </div>
                     <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                        {{ format_balance }}
+                        {{ format_money2(user_info.balance) }}
                     </div>
                 </div>
             </div>
@@ -91,6 +91,7 @@ import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { ss, ls } from 'src/core/utils/web-storage.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
+import { format_money2 } from "src/core/formart/index.js"
 
 /** api */
 import { api_account } from "src/api/index.js";
@@ -496,19 +497,6 @@ const collapse_style = computed(() => {
     } else {
         return menu_collapse_status.value ? 'collapse-open' : 'collapse-hide'
     }
-})
-
-/** 格式和金额 */
-const format_balance = computed(() => {
-    const num = user_info.value.balance
-    if (num && num > 0) {
-        let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-        // 保留两位小数
-        let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-        let _num = _split[1] + '.' + decimal
-        return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-    }
-    return '0.00';
 })
 
 /**

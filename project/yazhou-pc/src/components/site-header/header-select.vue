@@ -45,7 +45,7 @@
                         ******
                     </div>
                     <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                        {{ format_balance }}
+                        {{ format_money2(user_info.balance) }}
                     </div>
                     <refresh v-show="show_balance" icon_name="icon-balance_refresh" class="refresh-btn"
                         :loaded="data_loaded" :disable="!user_info" @click="get_balance" />
@@ -88,6 +88,7 @@ import { api_account, api_common } from "src/api/index.js";
 
 import utils from "src/core/utils/utils.js"
 import store from "src/store-redux/index.js";
+import { format_money2 } from "src/core/formart/index.js"
 
 import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
 import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
@@ -236,18 +237,6 @@ function menu_change(side) {
     zhugeTag.send_zhuge_event('TY_PC_首页_节庆UI挂件点击', obj)
 }
 
-
-const format_balance = computed(() => {
-    const num = user_info.value.balance
-    if (num && num > 0) {
-        let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/)
-        // 保留两位小数
-        let decimal = _split[2] ? _split[2].padEnd(2, "0") : "00"
-        let _num = _split[1] + '.' + decimal
-        return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
-    }
-    return '0.00';
-})
 
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)

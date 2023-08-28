@@ -29,6 +29,7 @@
 <script>
 import { api_details } from "src/api/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { format_second_ms } from "src/core/formart/index.js"
 // TODO hanmar后续处理--S
 // import time_format_mixin from "src/public/mixins/common/time_format";
 // import video from "src/public/utils/video/video.js"
@@ -213,26 +214,7 @@ export default {
                 }
             }).catch(err => console.error(err))
         },
-       /**
-        * 将秒格式化为：分：秒
-        * @param  {number} second  秒
-        * @params {string} model 分隔符类型
-        * @return {string} 分：秒
-        */
-        format_second_ms(second, model = "default") {
-            if (second) {
-                // let h = (Math.floor(second / 3600).toString()).padStart(2, 0);
-                let m = (parseInt((second / 60)).toString()).padStart(2, 0);
-                let s = (parseInt((second % 60)).toString()).padStart(2, 0);
-
-                let date = model == 'default' ? `${m}:${s}` : `${m}'${s}"`;
-                if(model == 'minute'){
-                date =  parseInt(m)+"'";
-                }
-                //date = h > 0 ? (date = h + ":" + date) : date
-                return date
-            }
-        },
+      
         // 格式化历史事件数据
         formatHistoryMatchEventData(data) {
             const _eventsHistory = [] // 零时事件数据
