@@ -101,18 +101,18 @@ function on_click_handicap(row) {
 function set_user_preference(curr_odd) {
     if (curr_odd) {
         set_pre_odd(curr_odd);
-        set_cur_odd(curr_odd);
+        BetData.set_cur_odd(curr_odd);
         // 设置用户偏好    
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
             let code = _.get(res, 'data.code');
             if (code != 200) {
                 set_pre_odd(pre_odd.value);
-                set_cur_odd(cur_odd.value);
+                BetData.set_cur_odd(cur_odd.value);
             }
         }).catch(err => {
             console.error(err);
             set_pre_odd(pre_odd.value);
-            set_cur_odd(cur_odd.value);
+            BetData.set_cur_odd(cur_odd.value);
         });
     }
 }
@@ -127,7 +127,7 @@ watch(
         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
         if (new_ == 'winner_top') {
             if (cur_odd.value !== 'EU') {
-                set_cur_odd(cur_odd);
+                BetData.set_cur_odd(cur_odd);
             }
         }
     }
@@ -144,12 +144,6 @@ watch(
         is_active.value = false
     }
 )
-
-/** 设置当前赔率 */
-const set_cur_odd = (data) => store.dispatch({
-    type: 'set_cur_odd',
-    data
-})
 
 /** 设置上次盘口偏好 */
 const set_pre_odd = (data) => store.dispatch({

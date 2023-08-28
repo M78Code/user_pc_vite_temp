@@ -99,7 +99,6 @@ import store from 'src/store'
      * @returns {null} null
      */
   watch(() => is_early.value, (_new) => {
-    console.error(_new);
     /**判断所有订单是否有结算注单*/
       is_all_early_flag.value = _new ? clac_all_is_early() : false
   })
@@ -115,7 +114,7 @@ import store from 'src/store'
         search_early_money()
       }
     },10000)
-    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).on;
   })
     // ...mapMutations(['set_early_moey_data']),
   /**
@@ -151,7 +150,13 @@ import store from 'src/store'
   const search_early_money = () => {
     let params = {orderNo:orderNumberItemList.join(',')}
     // if(orderNumberItemList.length === 0){return}
-    api_betting.oderPreSettleMoney(params).then(res=>{
+    api_betting.oderPreSettleMoney(params).then(reslut=>{
+      let res = {}
+      if (reslut.status) {
+        res = reslut.data
+      } else {
+        res = reslut
+      }
       if(res.code == 200 && res.data){
         set_early_moey_data( res.data)
       }

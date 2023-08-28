@@ -325,7 +325,6 @@ const toggle_show = (val) => {
  * @return {undefined} undefined
  */
 watch(() => is_early.value, (_new) => {
-  console.error(_new, is_all_early_flag.value, clac_all_is_early());
   is_all_early_flag.value = _new ? clac_all_is_early() : false
 })
 onUnmounted(() => {

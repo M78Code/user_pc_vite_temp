@@ -1,7 +1,6 @@
 /*
- * @Description: 比分处理
+ * @Description: H5 各球种比分处理
  */
-import { ref } from "vue"
 import { i18n } from "src/boot/i18n.js"
 
 // TODO: 待替换菜单模块 store
@@ -19,14 +18,11 @@ export const format_msc = (str) => {
   if (!str) {
     return [];
   }
-  if (!window.msc_map) {
-    window.msc_map = i18n.t('msc')
-  }
   let list_ = str.split(/[:|]/);
   for (let i = 0, l = 3 - list_.length; i < l; i++) {
     list_.push('');
   }
-  list_.push(window.msc_map[list_[0]]);
+  list_.push(i18n.t('msc')[list_[0]]);
 
   return list_;
 }
@@ -42,10 +38,7 @@ export const get_mmp_name = (sport_id, mmp) => {
   if (!sport_id) {
     return '';
   }
-  if (!window.mmp_map) {
-    window.mmp_map = i18n.t('mmp')
-  }
-  return window.mmp_map[parseInt(sport_id)][mmp];
+  return i18n.t('mmp')[parseInt(sport_id)][mmp];
 }
 /**
  * @description: 获取S1比分
@@ -629,7 +622,7 @@ export const basket_ball_score_handle = (match) => {
   }
   else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = window.msc_map[dic];
+      let title = i18n.t('msc')[dic];
       return [dic, '', '', title];
     });
   }
@@ -720,7 +713,7 @@ export const foot_ball_score_handle = (match) => {
     match.msc_s_format = sorted;
   } else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = window.msc_map[dic];
+      let title = i18n.t('msc')[dic];
       return [dic, '', '', title];
     });
   }
@@ -1229,3 +1222,29 @@ export const score_switch_handle = (match) => {
   }
   return res;
 }
+ /**
+ *@description msc比分数组转化为对象
+  *@param {Undefined}  val 赛事对象
+  *@return {Undefined} undefined
+  */
+export const transform_score = (val) => {
+  if (!val.msc) return;
+  try {
+    let api_msc = val.msc,
+      obj = {};
+    if (api_msc.length > 0) {
+      for (let i in api_msc) {
+        let format = api_msc[i].split("|");
+        if (format[1] && format[1].split(":")) {
+          obj[format[0]] = {
+            home: format[1].split(":")[0],
+            away: format[1].split(":")[1],
+          };
+        }
+      }
+    }
+    val.msc = obj;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -106,7 +106,13 @@ const change_pre_status = (orderList) => {
     const params = {
         orderNoList: orderList
     }
-    api_betting.get_pre_status(params).then(res => {
+    api_betting.get_pre_status(params).then(result => {
+        let res = {}
+        if (result.status) {
+            res = result.data
+        } else {
+            res = result
+        }
         if (res.code == 200) {
             const { data } = res
             const listObj = lodash.cloneDeep(list_data)
@@ -158,7 +164,13 @@ const show_cancle_order = () => {
 *@param {String} orderNumer 订单号
 */
 const cancle_pre_order = () => {
-    api_betting.cancle_pre_order({ orderNo: orderNumber.value }).then((res) => {
+    api_betting.cancle_pre_order({ orderNo: orderNumber.value }).then((result) => {
+        let res = {}
+        if (result.status) {
+            res = result.data
+        } else {
+            res = result
+        }
         if (res.code == 200) {
             store.dispatch({
                 'txt': t('pre_record.canceled'),
@@ -260,7 +272,13 @@ const onPull = () => {
     };
     //加载中
     ele.setState(4);
-    api_betting.get_preOrderList_news(params).then(res => {
+    api_betting.get_preOrderList_news(params).then(result => {
+        let res = {}
+        if (result.status) {
+            res = result.data
+        } else {
+            res = result
+        }
         // 为 null 时容错处理
         if (!res.data) {
             is_hasnext.value = false

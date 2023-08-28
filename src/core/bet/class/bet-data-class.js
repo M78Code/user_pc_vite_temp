@@ -344,6 +344,12 @@ this.bet_appoint_ball_head= null */
       this.is_accept = value;
     }
   }
+   /*
+  设置 赔率类型
+  */
+  set_cur_odd(cur_odd) {
+    this.cur_odd = cur_odd;
+  }
 
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData

@@ -39,7 +39,7 @@
                 </template>
                 <span class="ellipsis">{{ item.mhn }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(0)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{ format_total_score(item, 0)}}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,0,normal_(item, 0))" :class="selected_(item,0) && 'Handicap2'">
                 <template v-if="normal_(item, 0)">
                   <!-- 盘口 -->
@@ -61,7 +61,7 @@
                 </template>
                 <span class="ellipsis">{{ item.man }}</span>
               </div>
-              <span v-if="is_match_playing(item.ms)">{{item || format_total_score(1)}}</span>
+              <span v-if="is_match_playing(item.ms)">{{ format_total_score(item, 1) }}</span>
               <div class="Handicap" v-if="item.hps[0]" @click.stop="bet_click_(item,1,normal_(item, 1))" :class="selected_(item,1) && 'Handicap2'">
                 <template v-if="normal_(item, 1)">
                   <!-- 盘口 -->
@@ -81,7 +81,7 @@
     </div>
   </div>
 </template>
- 
+
 <script setup>
 import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue"
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";  // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
@@ -91,7 +91,7 @@ import team_img from "src/project/components/details/team_img";   // 详情页�
 import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 import betting from "src/project/mixins/betting/betting.js";    // 押注动作相关的所有方法写到这里
 import {mapMutations, mapGetters} from "vuex";
-import { format_total_score } from '../../../boot/global-filters'
+import { format_total_score } from "src/core/formart/index.js"
 import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -232,9 +232,9 @@ const normal_ = computed(() => {
   onUnmounted(() => {
     unsubscribe()
   })
- 
+
 </script>
- 
+
 <style scoped lang="scss">
  .may_also_like {
   padding-bottom: 0.06rem;

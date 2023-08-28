@@ -89,47 +89,11 @@ const bet_item = {
         this.set_odds_lift(cur, old);
       }
     },
+ 
 
-    // 监控串关切换时设置投注项的选中
-    vx_get_bet_list: {
-      handler() {
-        if (this.ol_data) {
-          let { _mhs, _hs, os } = this.ol_data;
-          this.odds_state = this.get_odds_state(_mhs, _hs, os);
-        }
-      },
-      immediate: true
-    },
+ 
 
-    // 监控单关列表的投注项选中
-    vx_is_bet_single() {
-      if (this.ol_data) {
-        let { _mhs, _hs, os } = this.ol_data;
-        this.odds_state = this.get_odds_state(_mhs, _hs, os);
-      }
-    },
-
-    // 监控单关列表的投注项选中
-    vx_get_bet_single_list: {
-      handler() {
-        if (this.ol_data) {
-          let { _mhs, _hs, os } = this.ol_data;
-          this.odds_state = this.get_odds_state(_mhs, _hs, os);
-        }
-      },
-      immediate: true
-    },
-
-    // 监控串关切换时设置投注项的选中
-    vx_get_virtual_bet_list: {
-      handler() {
-        if (this.ol_data) {
-          let { _mhs, _hs, os } = this.ol_data;
-          this.odds_state = this.get_odds_state(_mhs, _hs, os);
-        }
-      },
-      immediate: true
-    },
+ 
     vx_get_bet_category(new_) {
       if([2,3].includes(new_*1)) {
         this.vx_set_is_virtual_bet(true);

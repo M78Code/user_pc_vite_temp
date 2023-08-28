@@ -203,7 +203,6 @@ export default defineComponent({
     });
     // #TODO vuex 
     //   computed: {
-    //   ...mapGetters(["get_bet_list", "get_cur_odd","get_detail_data"])
     // },
     onUnmounted(() => {
       for (const key in $data) {

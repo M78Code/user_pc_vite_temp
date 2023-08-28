@@ -49,7 +49,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { get_match_status, is_eports_csid } from 'src/core/utils/index'
 import details from 'src/core/match-list/details-class/details.js'
-import { other_play_name_to_playid } from 'src/core/match-list/data-class-ctr/conifg/other-play-id.js';
+import { other_play_name_to_playid } from 'src/core/constant/config/data-class-ctr/index.js';
 import store from 'src/store-redux/index.js';
 import { t } from "src/boot/i18n";
 import menu_config from "src/core/menu-pc/menu-data-class.js";

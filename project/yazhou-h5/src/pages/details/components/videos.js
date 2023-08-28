@@ -4,7 +4,7 @@ import { uid } from "quasar"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { format_total_score } from "src/core/formart/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export const video_info = () => {
     const router = useRouter();
@@ -207,8 +207,8 @@ export const video_info = () => {
       return {
         home: "",
         away: ""
-        // home: global_filters.format_total_score(this.detail_data, 0),
-        // away: global_filters.format_total_score(this.detail_data, 1)
+        // home: format_total_score(this.detail_data, 0),
+        // away: format_total_score(this.detail_data, 1)
       }
     });
     const eports_scoring = computed(() => {

@@ -189,10 +189,6 @@ const set_user_assign = (data) => store.dispatch({
     type: 'SET_USER',
     data
 })
-const set_cur_odd = (data) => store.dispatch({
-    type: 'SET_CUR_ODD',
-    data
-})
 const set_pre_odd = (data) => store.dispatch({
     type: 'SET_PRE_ODD',
     data
@@ -223,18 +219,18 @@ function set_user_preference(curr_odd) {
         let old_odd = vx_cur_odd.value
         let old_pre_odd = vx_get_pre_odd.value
         set_pre_odd(curr_odd);
-        set_cur_odd(curr_odd);
+        BetData.set_cur_odd(curr_odd);
         // 设置用户偏好
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
             let code = lodash.get(res, 'data.code');
             if (code != 200) {
                 set_pre_odd(old_pre_odd);
-                set_cur_odd(old_odd);
+                BetData.set_cur_odd(old_odd);
             }
         }).catch(err => {
             console.error(err);
             set_pre_odd(old_pre_odd);
-            set_cur_odd(old_odd);
+            BetData.set_cur_odd(old_odd);
         });
     }
 }

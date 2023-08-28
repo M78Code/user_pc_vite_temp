@@ -5,7 +5,7 @@
         {{ data_list.mhn }} v {{ data_list.man }}
       </span>
       <span>
-        {{ data_list | format_total_score(0)}}-{{ data_list | format_total_score(1)}}
+        {{ format_total_score(data_list, 0)}}-{{ format_total_score(data_list, 1)}}
       </span>
     </div>
     <!-- 描述比赛进度相关start -->
@@ -22,6 +22,7 @@
 import lodash from "lodash";
 // import msc from "src/public/mixins/common/msc.js";  // 国际化比赛阶段比分转换工具
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+import { format_total_score } from "src/core/formart/index.js"
 export default defineComponent({
   // #TODO vuex
   // mixins: [msc],

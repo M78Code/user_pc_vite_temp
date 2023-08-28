@@ -30,9 +30,9 @@
               <!-- 左 -->
               <div class="home">
                 <div class="wrap-logo">
-                  <img v-img="([_.get(item, 'mhlu[0]'), _.get(item, 'frmhn[0]'), _.get(item, 'csid'),{data:item,name:'_t11_img'}])" alt />
-                  <img v-if="_.get(item, 'mhlu').length > 1"
-                    v-img="([_.get(item, 'mhlu[1]'), _.get(item, 'frmhn[1]'), _.get(item, 'csid'),{data:item,name:'_t12_img'}])" alt
+                  <img v-img="([lodash.get(item, 'mhlu[0]'), lodash.get(item, 'frmhn[0]'), lodash.get(item, 'csid'),{data:item,name:'_t11_img'}])" alt />
+                  <img v-if="lodash.get(item, 'mhlu').length > 1"
+                    v-img="([lodash.get(item, 'mhlu[1]'), lodash.get(item, 'frmhn[1]'), lodash.get(item, 'csid'),{data:item,name:'_t12_img'}])" alt
                     class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.mhn }}</div>
@@ -41,16 +41,16 @@
               <div class="socre">
                 <div class="vs-wrap" v-if="item.ms != 110 && show_counting_down(item)">
                   <div class="score-wrap">
-                    <span class="both-score">{{ _.get(carousel_data, `obj[${item.mid}]`) | format_total_score(0) }}</span>
+                    <span class="both-score">{{ format_total_score(lodash.get(carousel_data, `obj[${item.mid}]`), 0) }}</span>
                     <span class="crossing"></span>
-                    <span class="both-score">{{ _.get(carousel_data, `obj[${item.mid}]`) | format_total_score(1) }}</span>
+                    <span class="both-score">{{ format_total_score(lodash.get(carousel_data, `obj[${item.mid}]`), 1) }}</span>
                   </div>
                 </div>
                 <div class="both-timer relative-position"
                   :style="{ 'height': item.ms != 110 && show_counting_down(item) ? 'auto' : '100%' }">
                   <!--即将开赛 ms = 110-->
                   <template v-if="item.ms == 110">
-                    <div>{{ i18n.t(`ms[${item.ms}]`) }}</div>
+                    <div>{{ t(`ms[${item.ms}]`) }}</div>
                   </template>
 
                   <!--一小时内开赛 -->
@@ -61,13 +61,16 @@
 
                   <!--开赛日期(早盘) ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
                   <template v-if="item.ms != 110 && !show_start_counting_down(item) && !show_counting_down(item)">
-                    <div>{{ i18n.t('list.match_no_start') }}</div>
-                    <div>{{ utils.format_time_zone(+item.mgt).Format(i18n.t('time4')) }}</div>
+                    <div>{{ t('list.match_no_start') }}</div>
+                    <div>
+                      <!-- .Format(t('time4')) -->
+                      {{ format_time_zone(+item.mgt) }}
+                      </div>
                   </template>
 
                   <!--倒计时或正计时-->
                   <template v-if="item.ms != 110 && show_counting_down(item)">
-                    <counting-down-second :title="item.ms == 0 ? i18n.t('list.match_no_start') : match_period_map(item)"
+                    <counting-down-second :title="item.ms == 0 ? t('list.match_no_start') : match_period_map(item)"
                       :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item"
                       :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" home />
                   </template>
@@ -76,9 +79,9 @@
               <!-- 右 -->
               <div class="away">
                 <div class="wrap-logo">
-                  <img v-img="([_.get(item, 'malu[0]'), _.get(item, 'frman[0]'), _.get(item, 'csid'),{data:item,name:'_t21_img'}])" alt />
-                  <img v-if="_.get(item, 'malu').length > 1"
-                    v-img="([_.get(item, 'malu[1]'), _.get(item, 'frman[1]'), _.get(item, 'csid'),{data:item,name:'_t22_img'}])" alt
+                  <img v-img="([lodash.get(item, 'malu[0]'), lodash.get(item, 'frman[0]'), lodash.get(item, 'csid'),{data:item,name:'_t21_img'}])" alt />
+                  <img v-if="lodash.get(item, 'malu').length > 1"
+                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'}])" alt
                     class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.man }}</div>
@@ -110,7 +113,7 @@
       <div class="money-wrap" @click="fetch_balance">
         <div class="balance-wrap">
           <i class="icon-balance"></i>
-          <span class="balance">{{ i18n.t('common.money') }}</span>
+          <span class="balance">{{ t('common.money') }}</span>
         </div>
         <div class="money">
           <span class="int">{{ balance_obj.int || '0' }}</span>
@@ -137,7 +140,7 @@
             <div class="item" :class="{ 'active': index == menu_index }" v-for="(item, index) in new_menu"
               :key="`menu-${index}`" @click="change_menu(index)"  v-show="calc_show2(item)">
               <span class="label" :class="{ is_chinise: ['zh', 'tw'].includes(get_lang) }">{{
-                i18n.t(`new_menu.${item.mi}`) }}</span>
+                t(`new_menu.${item.mi}`) }}</span>
               <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{ count_menu(item.sl)||'' }}</span>
             </div>
           </q-scroll-area>
@@ -150,10 +153,10 @@
               <div class="item-bg" :class="format_type(item)"></div>
               <div class="item-info" :class="{ 'is-english': get_lang == 'en' }">
                 <div class="column items-center">
-                  <!-- <span class="match-type">{{i18n.t(`new_menu.${filter_meunu_desc(item.mi)}`) }}</span> -->
+                  <!-- <span class="match-type">{{t(`new_menu.${filter_meunu_desc(item.mi)}`) }}</span> -->
                   <span class="match-type">{{ filter_meunu_desc(item.mi)}}</span>
                   <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
-                  <span class="match-label ellipsis-2-lines">{{ i18n.t('home.can_bet') }}</span>
+                  <span class="match-label ellipsis-2-lines">{{ t('home.can_bet') }}</span>
                 </div>
               </div>
             </div>
@@ -169,6 +172,7 @@
 
 <script setup>
 import { api_home } from "src/project/api/index";
+import { format_time_zone_time, format_balance, format_total_score } from "src/core/formart/index.js"
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
@@ -194,6 +198,8 @@ import menu_data  from "src/public/config/menu_new_data.js"
 import { uid } from "quasar"
 import { db } from "src/public/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { t } from "src/boot/i18n"
+import lodash from "lodash"
 
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
@@ -394,18 +400,18 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
     */
   const banner_img_updata = (new_) => {
     if (!new_ || !new_.length) return
-    new_ = _.cloneDeep(new_)
+    new_ = lodash.cloneDeep(new_)
     new_.forEach(item => {
       item.imgUrl = get_file_path(item.imgUrl)
     })
 
     if (carousel_data) {
-      let arr = _.cloneDeep(_.get(carousel_data, 'list'))
+      let arr = lodash.cloneDeep(_.get(carousel_data, 'list'))
       let arr1 = arr.filter(item => {
         return !item.imgUrl
       })
       // 去重轮播赛事mid
-      arr1 = _.uniqBy(arr1, 'mid')
+      arr1 = lodash.uniqBy(arr1, 'mid')
       // 加入banner
       arr1.unshift(...new_)
 
@@ -450,8 +456,8 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
    */
   const get_carousel = (callback) => {
     return api_home.hot_ulike_recommendation({ isHot: 101 }).then(res => {
-      const code = _.get(res, "code");
-      let data = _.get(res, "data");
+      const code = lodash.get(res, "code");
+      let data = lodash.get(res, "data");
       if (code == 200 && data.length) {
         if (callback) {
           callback(data);
@@ -509,29 +515,29 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
     $forceUpdate()
   }
 
-  /**
-   * @description: 余额换算
-   * @return {String} 转化后的金额 比如 '64,464.95'
-   */
-  const format_balance = () => {
-    let num = user_info.balance
-    if (!num || num < 0) {
-      num = 0
-    }
-    let balance = (num).toString();
-    let result = '';
-    let [num1, num2 = '00'] = balance.split('.');
-    num2 = num2.padEnd(2, '0')
-    while (num1.length > 3) {
-      result = ',' + num1.slice(-3) + result;
-      num1 = num1.slice(0, num1.length - 3);
-    }
-    if (num1) { num1 = num1 + result; }
-    balance_obj = {
-      int: num1,
-      dec: '.' + num2
-    }
-  }
+  // /**
+  //  * @description: 余额换算
+  //  * @return {String} 转化后的金额 比如 '64,464.95'
+  //  */
+  // const format_balance = () => {
+  //   let num = user_info.balance
+  //   if (!num || num < 0) {
+  //     num = 0
+  //   }
+  //   let balance = (num).toString();
+  //   let result = '';
+  //   let [num1, num2 = '00'] = balance.split('.');
+  //   num2 = num2.padEnd(2, '0')
+  //   while (num1.length > 3) {
+  //     result = ',' + num1.slice(-3) + result;
+  //     num1 = num1.slice(0, num1.length - 3);
+  //   }
+  //   if (num1) { num1 = num1 + result; }
+  //   balance_obj = {
+  //     int: num1,
+  //     dec: '.' + num2
+  //   }
+  // }
   const chang_index = (data) => {
     if([1,2,3].includes(get_home_menu_index)){
       data.forEach((item,index) =>{
@@ -564,7 +570,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
   }
   // 主内容 菜单数据处理
   const menu_data_loaded = (data) => {
-    data = _.cloneDeep(data)
+    data = lodash.cloneDeep(data)
     let newData =  base_data.recombine_menu(data);
     save_home_data(data)
     menu_data_config(newData);
@@ -653,9 +659,9 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
       // axios中then回调方法
       fun_then: res => {
         if (send_gcuuid != res.gcuuid) return;
-        let code = _.get(res, "code");
+        let code = lodash.get(res, "code");
         if (code == 200) {
-          let data = _.get(res, "data");
+          let data = lodash.get(res, "data");
           remove_crosstalk(data)
           loading_done = true
           //DB插入数据 缓存menu数据
@@ -740,10 +746,10 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
     let _obj = {
       [objKey.eventLabel]: "",
       [objKey.clickTime]: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-      [objKey.userName]: _.get(user_info, 'userName'),
-      [objKey.userId]: _.get(user_info, 'userId'),
-      [objKey.merchantId]: _.get(user_info, 'mId'),
-      [objKey.languageVersion]: _.get(user_info, 'languageName'),
+      [objKey.userName]: lodash.get(user_info, 'userName'),
+      [objKey.userId]: lodash.get(user_info, 'userId'),
+      [objKey.merchantId]: lodash.get(user_info, 'mId'),
+      [objKey.languageVersion]: lodash.get(user_info, 'languageName'),
       [objKey.terminal]: "H5",
     };
     //====================menu router
@@ -801,7 +807,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
     } else if (410 == menu[index].menuId) {
       _obj[objKey.eventLabel] = "H5_首页_电子竞技";
       $utils.zhuge_event_send("H5_首页_电子竞技", user_info);
-      let s = _.get(menu[index], 'subList[0].menuId').slice(-2)
+      let s = lodash.get(menu[index], 'subList[0].menuId').slice(-2)
       $router.push({
         name: 'matchList',
         query: {
@@ -825,18 +831,18 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
         // 设置左边菜单选中下标
         set_home_menu_index(index)
       } else {
-        $toast(i18n.t('home.match_no_has'), 800)
+        $toast(t('home.match_no_has'), 800)
       }
     }
   }
-  /**
-   * @description: 球类id转化背景
-   * @param {String} id 球类id
-   * @return {}
-   */
-  const format_type = (id) => {
-    return base_data.recombine_menu_bg(id)
-  }
+  // /**
+  //  * @description: 球类id转化背景
+  //  * @param {String} id 球类id
+  //  * @return {}
+  //  */
+  // const format_type = (id) => {
+  //   return base_data.recombine_menu_bg(id)
+  // }
 
   /**
    * @description 跳转列表页
@@ -857,7 +863,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
         }
       });
     }else{
-      $toast(i18n.t('home.match_no_has'), 800)
+      $toast(t('home.match_no_has'), 800)
     }
     return;
     if (item.count) {
@@ -894,7 +900,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
           }
         });
       } else {
-        $toast(i18n.t('home.match_no_has'), 800)
+        $toast(t('home.match_no_has'), 800)
       }
     }
   }
@@ -911,8 +917,8 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
     // 计算左边菜单按钮是否展示
   const calc_show2 = (item) => {
     if(item?.mi){
-      if( item.mi == 7) return _.get(user_info, 'openEsport') && _.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
-      if( item.mi == 8) return _.get(user_info, 'openVrSport') // VRtob后台关闭隐藏
+      if( item.mi == 7) return lodash.get(user_info, 'openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
+      if( item.mi == 8) return lodash.get(user_info, 'openVrSport') // VRtob后台关闭隐藏
       return true
     }
   }

@@ -52,7 +52,7 @@
                       {{calc_score(item)}}
                     </template>
                     <template v-else>
-                      {{item | format_total_score(0)}} - {{item | format_total_score(1)}}
+                      {{format_total_score(item, 0)}} - {{format_total_score(item, 1)}}
                     </template>
                   </span>
                 </div>
@@ -85,6 +85,7 @@ import team_img from 'src/project/components/details/team_img.vue'
 import match_stage from 'src/project/components/match/match_stage.vue';
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
+import { format_total_score } from 'src/core/formart'
 import { useRoute, useRouter } from "vue-router"
 let route = useRoute()
 let router = useRouter()
@@ -132,8 +133,8 @@ export default {
     },
     is_eports_scoring(item) {
       //计算主分和客分，用全局的分支处理方法进行处理
-      const home = global_filters.format_total_score(item, 0)
-      const away = global_filters.format_total_score(item, 1)
+      const home = format_total_score(item, 0)
+      const away = format_total_score(item, 1)
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理

@@ -27,7 +27,7 @@
         <div class="user-info border-bottom">
           <div class="user-name">Hi,{{user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{ format_money2(user_info.balance) }}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{format_money2(user_info.balance)}}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -126,7 +126,7 @@ import userCtr from "src/core/user-config/user-ctr.js"
 import { format_money2 } from "src/core/formart/index.js"
 import lodash from 'lodash'
 
-
+import { format_money2 } from "src/core/formart/index.js"
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -202,7 +202,7 @@ import { useRoute, useRouter } from "vue-router"
     cancel_loading_balance = debounce(cancel_loading_balance,200)
     calc_width = window.innerWidth * 100 * 2.6 / 375
     // set_is_show_menu(false)
-    $root.$on(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle);
+    useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE,window_resize_handle).on;
     onUnmounted(() => {
       clearTimeout(balance_timer);
     balance_timer = null;

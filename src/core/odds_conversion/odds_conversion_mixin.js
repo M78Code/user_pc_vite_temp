@@ -47,8 +47,7 @@ export default {
         US: '5',
         ID: '6',
       },
-      /** 赔率映射表 */
-      vx_odds_coversion_map: {},
+ 
       /** 聊天室来源跟单盘口状况eu */
       vx_get_chat_room_type: {}
     };

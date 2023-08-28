@@ -610,7 +610,13 @@ export const category_info = () => {
     return new Promise((resolve, reject) => {
       //调用接口数据
       axios_api(params)
-        .then((res) => {
+        .then((result) => {
+          let res = {}
+          if (result.status) {
+            res = result.data
+          } else {
+            res = result
+          }
           clearTimeout(timer);
           resolve(res);
         })
@@ -697,7 +703,13 @@ export const category_info = () => {
       component_data.send_gcuuid = uid();
     params.gcuuid = component_data.send_gcuuid;
     http(params)
-      .then((res) => {
+      .then((result) => {
+        let res = {}
+          if (result.status) {
+            res = result.data
+          } else {
+            res = result
+          }
         if (component_data.send_gcuuid != res.gcuuid) return;
         component_data.is_loading = false;
         if (!res.data || res.data.length == 0) {
@@ -863,9 +875,7 @@ export const category_info = () => {
       useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
         .off,
     ];
-    // useMittOn(MITT_TYPES.EMIT_CATEGORY_SKT, sendSocketInitCmd);
-    // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
-    // useMittOn(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, hide_detail_match_list)
+
   };
   // 移除相应监听事件
   const off_listeners = () => {

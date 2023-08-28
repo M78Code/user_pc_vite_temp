@@ -52,7 +52,7 @@
                       {{calc_score(item)}}
                     </template>
                     <template v-else>
-                      {{item | format_total_score(0)}} - {{item | format_total_score(1)}}
+                      {{format_total_score(item, 0)}} - {{format_total_score(item, 1)}}
                     </template>
                   </span>
                 </div>
@@ -95,9 +95,11 @@ import match_dialog_stage from 'src/project/components/match/match_dialog_stage.
  // 详情页同联赛的赛事即将开赛显示时间
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
 import { t } from "src/boot/i18n";;
-//国际化
+import { useRouter, useRoute } from "vue-router"
+import { format_total_score } from 'src/core/formart'
 
-
+const router = useRouter()
+const route = useRoute()
 export default {
   name: "details_dialog",
   props:['detail_data','math_list_data'],
@@ -123,7 +125,7 @@ export default {
       'get_theme'
     ]),
     is_match_result(){
-      return ['result_details', 'match_result'].includes($route.name)
+      return ['result_details', 'match_result'].includes(route.name)
     }
   },
   created () {
@@ -140,8 +142,8 @@ export default {
     },
     is_eports_scoring(item) {
       //计算主分和客分，用全局的分支处理方法进行处理
-      const home = global_filters.format_total_score(item, 0)
-      const away = global_filters.format_total_score(item, 1)
+      const home = format_total_score(item, 0)
+      const away = format_total_score(item, 1)
       //比分判断处理
       let scoring = false
       //如果是电竞，则进行比分判定处理
@@ -173,10 +175,10 @@ export default {
       set_goto_detail_matchid(item.mid); //设置mid;
       set_event_list([])
 
-      if(!(_.get(get_current_menu,'sub.menuType') == '5' && ['result_details', 'match_result'].includes($route.name))) {
+      if(!(_.get(get_current_menu,'sub.menuType') == '5' && ['result_details', 'match_result'].includes(route.name))) {
         set_details_item(get_details_tabs_list[0].id); // 选中的tab的item项;
       }
-      $router.replace({ name: "category", params: {mid: item.mid,index: '1' }}); // todo 优化此处
+      router.replace({ name: "category", params: {mid: item.mid,index: '1' }}); // todo 优化此处
       useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS); // 刷新详情页头部信息;
       useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB); // 将tab的滚动距离回复到初始点;
       useMittEmit(MITT_TYPES.EMIT_CATEGORY_SKT); // 底部信息skt连接

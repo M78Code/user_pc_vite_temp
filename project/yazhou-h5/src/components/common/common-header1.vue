@@ -23,7 +23,7 @@
         <div
           class="collect-icon"
           :class="{active:get_detail_data.mf}"
-          v-if="_.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28"
+          v-if="GlobalAccessConfig.get_collectSwitch()&& is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -35,15 +35,16 @@
 
 <script>
 // import { mapMutations, mapGetters } from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n";;
-//国际化
+import { t } from "src/boot/i18n";
+import { useRoute } from "vue-router"
 
 
-
+const route = useRoute()
 export default {
   name: "common_header",
   data() {
@@ -110,7 +111,6 @@ export default {
     //   // 商户是否直接跳到的赛事详情页
     //   'get_godetailpage',
     //   'get_curr_sub_menu_type',
-    //   'get_access_config',
     // ]),
     // 是否是电竞
     is_DJ_show() {
@@ -140,8 +140,7 @@ export default {
      * @return {String}
      */
     details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
-
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
       // 如果还在请求中则return
       if ( favorite_loading ) return;
       let txt = 0;
@@ -184,7 +183,7 @@ export default {
 
       // 赛果详情页
       const curr_tab = view_tab
-      if ($route.name === 'match_result') {
+      if (route.name === 'match_result') {
         // 刷新 盘口赔率信息
         useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事

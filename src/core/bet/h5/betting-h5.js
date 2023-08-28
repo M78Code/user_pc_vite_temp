@@ -1237,7 +1237,7 @@ export default {
         temp.betAmount = String(money);
         //最终盘口类型(冠军玩法固定传 EU)
         let oddsTable = { EU: '1', HK: '2', MY: '3', GB: '4', US: '5', ID: '6', };
-        temp.marketTypeFinally = hps_obj.hsw && !hps_obj.hsw.includes(oddsTable[this.get_cur_odd]) || this.get_is_champion() ? "EU" : this.get_cur_odd;
+        temp.marketTypeFinally = hps_obj.hsw && !hps_obj.hsw.includes(oddsTable[BetData.cur_odd]) || this.get_is_champion() ? "EU" : BetData.cur_odd;
         //赛事id
         temp.matchId = bet_obj.mid;
         //对阵信息

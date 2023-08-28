@@ -10,13 +10,14 @@
       {{t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
-      {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}
+      {{ format_H_M(format_time_zone_time(+detail_data.mgt)) }}
     </span>
   </span>
 </template>
 
 <script>
 import utils from "src/public/utils/utils.js";
+import { format_time_zone_time, format_H_M } from "src/core/formart/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 

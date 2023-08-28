@@ -34,7 +34,8 @@
 import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import { format_total_score } from "src/core/formart/index.js"
 //国际化
 
 
@@ -68,8 +69,8 @@ export default defineComponent({
     });
     const score = computed(() => {
       return {
-        // home: global_filters.format_total_score(props.detail_data, 0),
-        // away: global_filters.format_total_score(props.detail_data, 1)
+        // format_total_score(props.detail_data, 0),
+        // format_total_score(props.detail_data, 1)
         home: '',
         away: '',
       }

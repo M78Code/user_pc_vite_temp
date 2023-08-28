@@ -20,10 +20,11 @@
         </template>
       </div>
       <div class="row common-header-right" >
+       
         <div
           class="collect-icon"
           :class="{active:get_detail_data.mf}"
-          v-if="lodash.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28"
+          v-if="GlobalAccessConfig.get_collectSwitch()&& is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -35,15 +36,17 @@
 
 <script setup>
 // import { mapMutations, mapGetters } from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/project/api";
 import utils from 'src/core/utils/utils.js'
 import lodash from 'lodash'
 import { t } from "src/boot/i18n";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useRoute } from "vue-router"
 //国际化
 
-
+const route = useRoute()
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名
@@ -74,7 +77,7 @@ const props = defineProps({
   let timer2_ = ref(null)
   cancel_ref = debounce(cancel_ref,200)
   go_to_back = debounce(go_to_back, 500, {leading: true})
-  $root.$on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh)
+  useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).on
 
     // ...mapMutations(["set_is_matchpage","set_toast","set_is_show_settle_tab","set_godetailpage",
     // "set_detail_data","set_details_changing_favorite"]),
@@ -84,7 +87,7 @@ const props = defineProps({
      * @return {String}
      */
   const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( lodash.get(get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch()   ,this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;
@@ -109,7 +112,13 @@ const props = defineProps({
       // 更新收藏状态
       set_details_changing_favorite(1)
 
-      api_common.add_or_cancel_match( params ).then( res => {
+      api_common.add_or_cancel_match( params ).then( result => {
+        let res = {}
+        if (result.status) {
+            res = result.data
+        } else {
+            res = result
+        }
         favorite_loading = false;
         if (res.code == 200) {
           let cloneData = lodash.clone(get_detail_data)
@@ -130,7 +139,7 @@ const props = defineProps({
 
       // 赛果详情页
       const curr_tab = view_tab
-      if ($route.name === 'match_result') {
+      if (route.name === 'match_result') {
         // 刷新 盘口赔率信息
         useMittEmit(MITT_TYPES.EMIT_REF_API, 'details_refresh')
         // 触发列表页监听事件，调接口拉取指定赛事
@@ -227,7 +236,7 @@ const props = defineProps({
     //   // 商户是否直接跳到的赛事详情页
     //   'get_godetailpage',
     //   'get_curr_sub_menu_type',
-    //   'get_access_config',
+    
     // ]),
     // 是否是电竞
   let is_DJ_show = computed(() => {

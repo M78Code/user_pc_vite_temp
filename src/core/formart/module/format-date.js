@@ -21,6 +21,20 @@ export const formcht_Y_M_D_H_M = function (payload) {
   let m = (time.getMinutes() + "").padStart(2, 0);
   return `${y}年${M}月${d}日  ${h}:${m}`;
 };
+ // 判断是 今天 或者 明天，还是距离多少天，后面扩展
+export const format_how_many_days = (val) => {
+  let date_begin_time = new Date(new Date(val).Format("yyyy-MM-dd")).getTime()
+  let date_end_time  = new Date().getTime()
+  let dateDiff_time = date_end_time - date_begin_time;//时间差的毫秒数
+  let difValue_time = Math.floor(dateDiff_time / (24 * 3600 * 1000));
+  let day_value;
+  if(difValue_time == 0){
+    day_value = t('today')
+  }else if(difValue_time == '-1'){
+    day_value = t('tomorrow')
+  }
+  return day_value
+}
 // 示例： 1 月 2 日
 /**
  * 日期格式化
