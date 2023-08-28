@@ -5,7 +5,7 @@
         {{ data_list.mhn }} v {{ data_list.man }}
       </span>
       <span>
-        {{ format_total_score(data_list) | format_total_score(0)}}-{{ format_total_score(data_list) | format_total_score(1)}}
+        {{ format_total_score(data_list, 0)}}-{{ format_total_score(data_list, 1)}}
       </span>
     </div>
     <!-- 描述比赛进度相关start -->

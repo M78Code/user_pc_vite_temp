@@ -114,7 +114,7 @@ import store from 'src/store'
         search_early_money()
       }
     },10000)
-    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
+    useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).on;
   })
     // ...mapMutations(['set_early_moey_data']),
   /**
