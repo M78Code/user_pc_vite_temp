@@ -33,6 +33,7 @@ import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
+import { format_str } from "src/core/formart/index.js";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -85,14 +86,6 @@ function tabs_click(item, index) {
     announce_list = index
         ? class_list[index - 1].mtl
         : res_list;
-}
-/**
-* @Description:格式化字符串 小于10的数字 前面补0
-* @param {string} str 格式化前的字符串
-* @return {string} 格式化后的字符串
-*/
-function format_str(str) {
-    return str < 10 ? "0" + str : str;
 }
 /**
 * @Description:时间戳转字符串时间格式
