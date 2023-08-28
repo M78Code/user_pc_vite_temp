@@ -30,6 +30,7 @@ import { api_common } from "src/project/api/index.js";
 import { useRoute, useRouter } from "vue-router"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import lodash from "lodash"
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const route = useRoute()
 const router = useRouter()
 
@@ -61,9 +62,9 @@ export default {
     // }),
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
-      return 
       
-      GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
+      
+      return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
     }
   },
   watch: {
