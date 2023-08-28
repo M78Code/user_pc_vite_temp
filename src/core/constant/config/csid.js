@@ -94,3 +94,25 @@ export const play_name_mapping_csid = {
   1011: "VR赛马",
   1012: "VR马车赛",
 }
+
+
+/**
+ * 电子竞技
+ */
+export const esports_csid = [100,101,103,102]
+
+/**
+ * 电竞子菜单
+ */
+// { ct: 0, mi: "2100", st: 1, csid: "100" },
+// { ct: 0, mi: "2101", st: 2, csid: "101" },
+// { ct: 0, mi: "2103", st: 3, csid: "103" },
+// { ct: 0, mi: "2102", st: 4, csid: "102" },
+export const dianjing_sublist = () => {
+  let esport = esports_csid.map((item,index) =>{
+    return { ct: 0, mi: `2${item}`, st: index+1 , csid: item }
+  })
+  return esport
+}
+
+

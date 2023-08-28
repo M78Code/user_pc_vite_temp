@@ -29,7 +29,7 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import { api_analysis } from 'src/public/api/index'
-
+import { formatDate } from 'src/core/format/index.js'
 const route = useRoute();
 const articleDetail = ref({});
 const start_article_tiem = ref(new Date().getTime());
@@ -104,22 +104,7 @@ const get_article = () => {
     console.error(e)
   })
 }
-/**
- * 处理时间戳
- */
-const formatDate = (date) => {
-  let _date = ''
-  if (date) {
-    if ((new Date() - parseInt(date)) >= 86400000) {
-      _date = `${new Date(parseInt(date)).getMonth() + 1}月 ${new Date(parseInt(date)).getDate()}日`
-    } else if ((new Date() - parseInt(date)) >= 3600000) {
-      _date = `${Math.floor((new Date() - parseInt(date)) / 3600000)}小时前`
-    } else {
-      _date = `${Math.floor((new Date() - parseInt(date)) / 60000)}分钟前`
-    }
-  }
-  return _date;
-}
+
 onUnmounted(() => {
   window.removeEventListener('beforeunload', close_win)
 })

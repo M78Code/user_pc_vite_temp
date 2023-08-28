@@ -27,6 +27,14 @@ export const get_remote_time = () => {
   return time;
 };
 
+// 格式化时间
+export const format_time = (seconds) => {
+  let m = parseInt(seconds / 60).toString().padStart(2, 0)
+  let s = (seconds % 60).toString().padStart(2, 0)
+  return `${m}'${s}"`
+}
+
+
 //   /**
 //    * @description: 格式化时间
 //    * @param {Number} timestamp 时间戳

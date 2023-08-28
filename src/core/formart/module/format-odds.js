@@ -58,5 +58,38 @@ export const format_odds_2 = (val) => {
   return ret;
 };
 
-
- 
+/**
+    * @description: 胜平负、大小走水格式化
+    * @return {}
+    */
+export const result_filter = (type, value) =>{
+  //  2平3输4赢, 2走水3小4大
+  if( type == 'cls'){
+    switch(value){
+      case 2: return 'dogfall';
+      case 3: return 'lose';
+      case 4: return 'win';
+      default: return 'default';
+    }
+  } else if(type == 'resultLabel'){
+    switch(value){
+      case 2: return this.$root.$t("analysis.level");
+      case 3: return this.$root.$t("analysis.lose");
+      case 4: return this.$root.$t("analysis.win");
+    }
+  } else if(type == 'resultwinlose'){
+    switch(value){
+      case 2: return this.$root.$t("analysis.flat");
+      case 3: return this.$root.$t("analysis.negative");
+      case 4: return this.$root.$t("analysis.victory");
+      default: return this.$root.$t("analysis.no_data")
+    }
+  } else if(type == 'overunderLabel'){
+    switch(value){
+      case 2: return this.$root.$t("analysis.level");
+      case 3: return this.$root.$t("analysis.small");
+      case 4: return this.$root.$t("analysis.big");
+      default: return this.$root.$t("analysis.no_data")
+    }
+  }
+}

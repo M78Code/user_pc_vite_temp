@@ -1,5 +1,6 @@
 import lodash from 'lodash';
 
+import { virtual_sport_format } from 'src/core/formart/index.js'
 
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
@@ -166,7 +167,7 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 	//虚拟体育 接口数据结构转换
 	if (is_virtual && !is_search) {
 		// 格式化
-		match_list = this.virtual_sport_format(match_list);
+		match_list = virtual_sport_format(match_list);
 	}
 	if (code == 200 && match_list.length > 0) {
 		this.mx_use_list_res_when_code_200_and_list_length_gt_0();
