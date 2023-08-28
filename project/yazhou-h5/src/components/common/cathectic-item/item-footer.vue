@@ -19,7 +19,7 @@
         <p class="top-p">{{t('bet_record.go_back')}}</p>
         <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
         <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
-          <template v-if="data_f.backAmount !== null">{{data_f.backAmount | format_money2}}</template>
+          <template v-if="data_f.backAmount !== null">{{data_f.backAmount | format_money2()}}</template>
           <template v-else>{{data_f.orderAmountTotal | format_money2}}</template>
         </p>
       </template>
