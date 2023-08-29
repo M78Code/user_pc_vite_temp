@@ -27,7 +27,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
 import {utils } from 'src/core/index.js'
-import { SessionStorage  } from 'src/core/utils/web-storage.js'
+import { SessionStorage  } from 'src/core/index.js.js'
 import { get_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 

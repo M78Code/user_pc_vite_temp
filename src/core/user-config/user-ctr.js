@@ -1150,6 +1150,10 @@ class UserCtr {
     // let theme = lodash.get(window, 'vue.$store.getters.get_theme', 'theme01')
     // window.vue.$store.dispatch('set_theme',theme)
   }
+  // 设置 用户token
+  set_user_token(token) {
+    this.user_token = token
+  }
 }
 
 const instance = new UserCtr();

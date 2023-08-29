@@ -1,6 +1,6 @@
 import { http, AllDomain } from "src/core/http/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { LocalStorage, SessionStorage  } from "src/core/utils/web-storage";
+import { LocalStorage, SessionStorage  } from "src/core/index.js";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
