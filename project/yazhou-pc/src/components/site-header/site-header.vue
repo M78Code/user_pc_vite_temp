@@ -89,9 +89,10 @@ import store from "src/store-redux/index.js";
 import utils from "src/core/utils/utils.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { ss, ls } from 'src/core/utils/web-storage.js'
+import { ss } from 'src/core/utils/web-storage.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
 import { format_money2 } from "src/core/format/index.js"
+
 
 /** api */
 import { api_account } from "src/api/index.js";
@@ -153,8 +154,7 @@ const dayClickType = reactive({ typeL: 0, urlL: null })
 const nightClickType = reactive({ typeL: 0, urlL: null })
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)
-/** 用户token */
-const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
+
 
 /** stroe仓库 */
 const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store.getState()
@@ -312,11 +312,8 @@ function tab_click(obj) {
         let pathObj = menu;
         // 如果点击的是活动入口，就更新一下用户信息
         if (pathObj.path.includes('/activity')) {
-            if (token.value) {
+            if (userCtr.get_user_token()) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
-              
-              
-           
             }
         }
 

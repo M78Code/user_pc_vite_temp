@@ -1,5 +1,5 @@
 <template>
-  <div class="yb-site-left-width" v-if="global_switch.search_switch" :class="`${main_menu_toggle}`">
+  <div class="yb-site-left-width" v-if="globalAccessConfig.get_searchSwitch()" :class="`${main_menu_toggle}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
     <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
@@ -39,6 +39,9 @@ import utils from "src/core/utils/utils.js";
 
 import icon from "src/components/icon/icon.vue";
 
+import userCtr from 'src/core/user-config/user-ctr.js'
+import globalAccessConfig  from  "src/core/access-config/access-config.js"
+
 import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";
 import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.svg";
 
@@ -48,20 +51,14 @@ import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.sv
 const is_iframe = ref(utils.is_iframe);
 
 /** stroe仓库 */
-const { globalReducer, searchReducer, themeReducer, menuReducer } = store.getState();
+const { searchReducer, themeReducer, menuReducer } = store.getState();
 const unsubscribe = store.subscribe(() => {
-  global_switch.value = globalReducer.global_switch
   search_isShow.value = searchReducer.search_isShow
   theme.value = themeReducer.theme
   menu_collapse_status.value = menuReducer.menu_collapse_status
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
-/**
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const global_switch = ref(globalReducer.global_switch)
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -98,7 +95,7 @@ const set_search_status = (data) => (store.dispatch({
 
 /** 展开搜索 */
 function show_search() {
-  if (!global_switch.value.search_switch) {
+  if (!globalAccessConfig.get_searchSwitch()) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   }
   set_search_status(true);

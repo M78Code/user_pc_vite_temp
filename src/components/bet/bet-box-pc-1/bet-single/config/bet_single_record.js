@@ -4,8 +4,8 @@
  * @Description: 单关投注记录 正常
  */
 
-import betting from "src/public/mixins/betting/betting.js";
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+// import betting from "src/public/mixins/betting/betting.js";
+import play_mapping from "src/core/constant/config/play_mapping/index.js";
 
 import { format_str } from "src/core/format/index.js";
 

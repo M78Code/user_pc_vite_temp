@@ -21,7 +21,7 @@
 <script setup>
 import { computed } from 'vue'
 // TODO: 
-import { invalid_url } from 'src/public/utils/base64_url'
+// import { invalid_url } from 'src/utils/index.js'
 
 const emit = defineEmits(['isgo_vender_url'])
 // TODO: 改为真实的store替换
