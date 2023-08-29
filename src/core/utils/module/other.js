@@ -3,7 +3,7 @@
  * @Date: 2023-07-30 14:41:55
  * @Description:
  */
-import { cloneDeep, isObject } from "lodash";
+import  lodash from "lodash";
 /**
  * 获取url参数的方法 默认返回全部 {name:value}
  * @param {string} name 获取单个
@@ -27,9 +27,9 @@ export function GetUrlParams(name) {
  * */
 export function deepMerge(src, target) {
   let key;
-  const res = cloneDeep(src);
+  const res = lodash.cloneDeep(src);
   for (key in target) {
-    res[key] = isObject(res[key])
+    res[key] = lodash.isObject(res[key])
       ? deepMerge(res[key], target[key])
       : target[key];
   }
@@ -44,7 +44,7 @@ export function deepMerge(src, target) {
    * @return {Array} 国际化字符串信息
    */
 export const get_match_tpl_title = (t_path, csid) => {
-  let ret = cloneDeep(window.vue.i18n.t(t_path));
+  let ret = lodash.cloneDeep(window.vue.i18n.t(t_path));
   try {
     if(csid){
       if(localStorage.getItem('lang') == 'en'){
@@ -93,7 +93,7 @@ export const get_match_tpl_title = (t_path, csid) => {
           case 'list.match_tpl_title.tpl0.bet_col':
             if(ret){
               if(csid == 11) { //11-手球
-                // ret = cloneDeep(window.vue.i18n.t('list.match_tpl_title.tpl0.bet_col_csid_11'));
+                // ret = lodash.cloneDeep(window.vue.i18n.t('list.match_tpl_title.tpl0.bet_col_csid_11'));
               }
             }
             break;

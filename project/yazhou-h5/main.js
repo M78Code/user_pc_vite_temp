@@ -12,7 +12,7 @@ import "quasar/src/css/index.sass";
 
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
 
-console.log("BUILDIN_CONFIG-----------h5---", BUILDIN_CONFIG);
+console.error("BUILDIN_CONFIG-----------h5---", BUILDIN_CONFIG);
 
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 

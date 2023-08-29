@@ -11,7 +11,7 @@ const PROJECT_NAME= BUILDIN_CONFIG.TARGET_PROJECT_NAME
 
 //通用
 
-// import lodash from "lodash";
+import lodash from "lodash";
 // import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 
 

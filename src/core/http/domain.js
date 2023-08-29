@@ -102,7 +102,7 @@ const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG;
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG  ;
 
 import lodash from "lodash";
 

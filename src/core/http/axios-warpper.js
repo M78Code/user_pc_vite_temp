@@ -8,7 +8,7 @@ import { get } from "lodash";
 import { wslog } from "../log/";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
-import { usePageVisibilityChange } from "src/core/index.js";
+import { usePageVisibilityChange } from "src/core/utils/module/event-hook.js";
 import domain from "./domain";
 import { SessionStorage  } from "src/core/index.js";
 // import ws from "../ws/ws.js";
