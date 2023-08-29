@@ -94,7 +94,7 @@ const change_background = computed(() => {
 //   UserCtr.theme:"UserCtr.theme",
 //   get_hot_tab_item:"get_hot_tab_item",
 //   get_bet_obj:"get_bet_obj",
-//   GlobalAccessConfig: "GlobalAccessConfig",
+//   get_access_config,
 // })
 
 
