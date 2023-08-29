@@ -678,7 +678,7 @@ const match_list = {
 				let _params = lodash.clone(match_list_api_config.params) || {};
 				let params = {
 					mids: mids.join(","),
-					cuid: this.vx_get_uid,
+					cuid: UserCtr.get_uid(),
 					euid: _params.euid,
 					orpt: _params.orpt,
 					sort: vx_match_sort.value,
@@ -703,7 +703,7 @@ const match_list = {
 					params = {
 						mids: mids.join(","),
 						csid: _params.csid,
-						cuid: this.vx_get_uid,
+						cuid: UserCtr.get_uid(),
 					};
 					if (MenuData.is_esports_champion()) {
 						params.category = 2;
