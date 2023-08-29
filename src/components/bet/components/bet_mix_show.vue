@@ -75,7 +75,7 @@
                   class="img0">{{ i18n.t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="order_status == 2" class="color2"><img
-                  :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)"
+                  :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
                   class="img0 img1">{{ i18n.t('bet.submitted_successfully') }}</span>
             </template>
           </template>
@@ -123,7 +123,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_market">
@@ -133,7 +133,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>
@@ -146,7 +146,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_odds">
@@ -157,7 +157,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>

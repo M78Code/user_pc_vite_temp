@@ -10,7 +10,7 @@
         high_scrolling:  set_ishigh_scrolling &&!(lodash.get(get_current_menu, 'date_menu.menuType') == 100)  && !(get_menu_type == 28 && [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type))&& get_menu_type != 100,
         detail_list:main_source == 'detail_match_list',
         simple:get_newer_standard_edition == 1,
-        theme02:get_theme.includes('theme02'),
+        theme02:UserCtr.theme.includes('theme02'),
       }"
       :style="{'min-height':`${
          get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem`
@@ -51,6 +51,8 @@
 <script setup>
 // import {mapGetters,mapMutations} from 'vuex';
 import lodash from 'lodash'
+
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 
 // 避免定时器每次滚动总是触发
@@ -196,7 +198,6 @@ const props = defineProps({
     //   'get_menu_type',
     //   'get_curr_sub_menu_type',
     //   'get_list_scroll_top',
-    //   'get_theme',
     //   'get_secondary_unfold_map',
     //   'get_hide_skeleton_screen',
     //   'get_current_menu',
