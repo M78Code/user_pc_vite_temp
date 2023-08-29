@@ -301,7 +301,7 @@
 
 <script>
 import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 import { format_score ,format_odds, formatTime  } from "src/core/index.js";
@@ -388,11 +388,11 @@ export default {
     this.recordData = this.order_list;
   },
   computed: {
-    ...mapGetters({
-      // 用户信息
-      vx_get_user: "get_user",
-      vx_get_theme: "get_theme"
-    })
+    // ...mapGetters({
+    //   // 用户信息
+    //   get_user: "get_user",
+    //   get_theme: "get_theme"
+    // })
   },
   watch: {
     order_list: {
