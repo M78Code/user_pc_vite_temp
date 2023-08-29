@@ -62,7 +62,6 @@ const update_state = () => {
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_collapse_csid_map.value = new_state.get_collapse_csid_map
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
-  get_lang.value = new_state.get_lang
   get_theme.value = new_state.get_theme
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_current_menu.value = new_state.get_current_menu
