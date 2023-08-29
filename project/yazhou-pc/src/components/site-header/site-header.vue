@@ -553,7 +553,7 @@ watch(
     }
 )
 /** 清除虚拟投注数据 */
-const vx_virtual_bet_clear = (data) => store.dispatch({
+const virtual_bet_clear = (data) => store.dispatch({
     type: 'virtual_bet_clear',
     data
 })
@@ -562,7 +562,7 @@ watch(
     () => {
         set_current_index();
         // 清除虚拟体育和电竞的投注项
-        vx_virtual_bet_clear();
+        virtual_bet_clear();
     }
 )
 watch(
