@@ -48,7 +48,7 @@ import { api_betting } from "src/api/index.js";
 import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
 import settleVoid from "./settle-void.vue";
 import scroll from "project_path/src/components/common/record-scroll/scroll.vue";
-// import skt_order from "src/public/mixins/websocket/data/skt-data-order.js"
+// import skt_order from "project_path/src/mixins/websocket/data/skt-data-order.js"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'

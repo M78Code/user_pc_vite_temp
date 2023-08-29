@@ -12,7 +12,7 @@
         <div class="lock" v-if="match.mhs == 1">
           <img src="image/wwwassets/bw3/common/match-icon-lock.svg" class="icon-lock">
         </div>
-        <div v-else 
+        <div v-else
           class="odds-value"
           :class="{
             focus:ol_item.result == 4 || ol_item.result == 5,
@@ -26,13 +26,13 @@
 </template>
 
 <script>
-// #TODO VUEX 
+// #TODO VUEX
 // import { mapGetters } from "vuex";
-// import odds_conversion from "src/public/mixins/odds_conversion/odds_conversion.js"
+// import odds_conversion from "project_path/src/mixins/odds_conversion/odds_conversion.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_odd_item",
-  // #TODO MIXINS 
+  // #TODO MIXINS
   // mixins:[odds_conversion],
 
   props:{
@@ -42,13 +42,13 @@ export default defineComponent({
     // mhs 0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
     match:Object
   },
-  
-  
+
+
   setup(props, evnet) {
     const get_odd_value = (ol_item) => {
       let r = "";
       if(ol_item.result === "0" || ol_item.result === 0 || ol_item.result){
-        // #TODO EMIT 
+        // #TODO EMIT
         // r = i18n.t(`virtual_sports.result[${ol_item.result}]`);
       }
       else{
@@ -56,7 +56,7 @@ export default defineComponent({
       }
       return r;
     };
-    // #TODO VUEX GETTERS 
+    // #TODO VUEX GETTERS
     // ...mapGetters(['get_bet_list']),
     const get_bet_list = computed(() => {
       return ""

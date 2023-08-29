@@ -115,9 +115,9 @@
 import { api_common } from "src/project/api/index";
 // import { mapGetters, mapMutations } from "vuex";
 import match_list_mixin from "src/project/mixins/match-list/match-list-mixin";
-import skt_live_bw3 from "src/public/mixins/websocket/data/skt-live-bw3.js";
-import msc from "src/public/mixins/common/msc.js";
-import ListMap from "src/public/utils/list-map";
+// import skt_live_bw3 from "project_path/src/mixins/websocket/data/skt-live-bw3.js";
+// import msc from "project_path/src/mixins/common/msc.js";
+// import ListMap from "project_path/src/utils/list-map";
 import common from "src/project/mixins/constant";
 import utils from "src/core/utils/utils.js";
 import SLive from "src/project/components/skeleton/live"
