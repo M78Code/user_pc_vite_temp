@@ -95,29 +95,7 @@ export default {
     ]),
     ...mapActions(['get_balance']),
       /**
-   * @description:是否隐藏串关按钮
-   * @param {undefined} undefined
-   * @return {undefined} undefined
-   */
-    hide_bet_series_but(){
-      let res = false;
-      // 单关时,获取投注列表数据
-      if(!this.get_is_mix && _.get('get_bet_list.length')){
-        // 遍历投注列表数据,检测是否C01赛事
-        for (let i = 0; i < this.get_bet_list.length; i++) {
-          // 获取投注项id
-          let id = _.get(`get_bet_list[${i}]`);
-          // 获取投注项的数据源
-          let cds = _.get(`get_bet_obj[${id}].bs.cds`);
-          if(cds == "C01"){
-            // C01赛事时,隐藏串关按钮
-            res=true;
-            break;
-          }
-        }
-      }
-      return res;
-    },
+   
     /**
      *@description 校验串关投注项数量是否小于最小串关数量
      * @param {*} value 不为空表示是删除某个投注项，undefined表示校验所有

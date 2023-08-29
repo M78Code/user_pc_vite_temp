@@ -8,7 +8,7 @@
  */
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { esports_csid } from "../../constant/config/csid"
-import { useRoute } from "vue-router"
+// import { useRoute } from "vue-router"
 
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
@@ -26,7 +26,7 @@ const oddsTable = {
 /** 赔率映射表 */
 const odds_coversion_map = {}
 /** 聊天室来源跟单盘口状况eu */
-const vx_get_chat_room_type = {}
+// const vx_get_chat_room_type = {}
 
 
 
@@ -53,7 +53,7 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
   if (!arr || ['2'].includes(BetData.oddsTable[BetData.cur_odd]) && BetData.cur_odd == 'HK') {
     str = BetData.calc_odds(val, csid);
     //聊天室跟单特殊处理
-    if (arr && arr.includes(BetData.oddsTable[BetData.cur_odd]) || BetData.vx_get_chat_room_type == "HK") {
+    if (arr && arr.includes(BetData.oddsTable[BetData.cur_odd]) || BetData.bet_chat_room_type == "HK") {
       str = BetData.change_EU_HK(str);
     }
     return str;
