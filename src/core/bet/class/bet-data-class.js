@@ -472,7 +472,7 @@ get_bet_obj(id) {
 
 }
 /**
- * @description: 获取玩法名称
+ * @description: 获取玩法id
  * @return {String} 玩法名称
  */
 get_play_id() {
