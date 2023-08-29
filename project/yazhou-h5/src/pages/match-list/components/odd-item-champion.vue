@@ -32,7 +32,7 @@
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
   ol_item:Object,

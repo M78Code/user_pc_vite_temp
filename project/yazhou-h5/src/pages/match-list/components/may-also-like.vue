@@ -97,8 +97,8 @@ import { useRouter } from 'vue-router'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
-// import skt_may_like from "src/public/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
+// import skt_may_like from "/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
+// import odd_convert from "/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 
 const { from_where, show_ } = defineProps({
   from_where: {
