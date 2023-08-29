@@ -23,7 +23,7 @@
         <div 
           class="collect-icon" 
           :class="{active:get_detail_data.mf}" 
-          v-if="_.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28" 
+          v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && get_menu_type !== 28" 
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -35,6 +35,7 @@
 
 <script>
 // import { mapMutations, mapGetters } from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js';
@@ -136,7 +137,7 @@ export default {
      * @return {String}
      */
     details_collect(match_obj) {
-      if( !utils.judge_collectSwitch( _.get(this.get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( this.favorite_loading ) return;
