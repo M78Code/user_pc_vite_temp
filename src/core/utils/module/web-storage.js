@@ -129,6 +129,5 @@ const SessionStorage = createStorage({
 export {
   SessionStorage,
   LocalStorage,
-  LocalStorage as ls,
-  SessionStorage as ss,
+ 
 };

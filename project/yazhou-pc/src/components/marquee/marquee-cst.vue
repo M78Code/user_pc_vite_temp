@@ -63,7 +63,7 @@ import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
 import {utils } from 'src/core/index.js'
-import { ls } from 'src/core/utils/web-storage.js'
+import { LocalStorage } from 'src/core/utils/web-storage.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
@@ -202,7 +202,7 @@ const wrapRef = ref(null)
 /** 初始化 */
 function init() {
     is_destroy.value = false
-    const announceData = ls.get("announceData") || 'false'
+    const announceData = LocalStorage.get("announceData") || 'false'
     let today = new Date().getTime()
     let saveTime = 0
     if (JSON.parse(announceData)) {
