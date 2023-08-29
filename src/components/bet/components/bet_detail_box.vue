@@ -71,7 +71,7 @@
               <!-- 投注失败 -->
               <span v-if="get_bet_status == 8" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ i18n.t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
-              <span v-if="get_bet_status == 6" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)">{{ i18n.t('bet.submitted_successfully') }}</span>
+              <span v-if="get_bet_status == 6" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{ i18n.t('bet.submitted_successfully') }}</span>
             </template>
             <template v-else-if="pankou_change == 2">
               <!-- 失效 -->
@@ -194,6 +194,7 @@
   import BetData from "../class/bet-data-class";
   import UserCtr from "src/core/user-config/user-ctr.js"; 
   import { format_odds ,calc_bifen } from'src\core\format\index.js'
+  
 
  
 
@@ -224,7 +225,6 @@
   const store_state = store.getState()
   const get_odds_change = ref(store_state.get_odds_change)
   const get_bet_status = ref(store_state.get_bet_status)
-  const get_theme = ref(store_state.get_theme)
   const get_detail_data = ref(store_state.get_detail_data)
   const get_is_show_settle_tab = ref(store_state.get_is_show_settle_tab)
   const get_change_list = ref(store_state.get_change_list)
@@ -242,7 +242,6 @@
     const new_state = store.getState()
     get_odds_change.value = new_state.get_odds_change
     get_bet_status.value = new_state.get_bet_status
-    get_theme.value = new_state.get_theme
     get_detail_data.value = new_state.get_detail_data
     get_is_show_settle_tab.value = new_state.get_is_show_settle_tab
     get_change_list.value = new_state.get_change_list
