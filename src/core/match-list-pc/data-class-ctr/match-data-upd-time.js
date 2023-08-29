@@ -142,6 +142,6 @@ export default class MatchDataUpdTime
 // console.log(aa.match_many_obj)
 // aa.check_can_upd_data(55,'ms',90000)
 
-// let SessionStorage =aa.get_need_upd_obj(55,{ms:12,mmp:3234}, 1000)
+// let ss=aa.get_need_upd_obj(55,{ms:12,mmp:3234}, 1000)
 // console.log(JSON.stringify(ss))
 

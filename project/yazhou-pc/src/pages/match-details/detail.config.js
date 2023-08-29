@@ -27,7 +27,7 @@ import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
 
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 
 export const useGetConfig = () => {
   const route = useRoute();

@@ -127,7 +127,7 @@ import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标

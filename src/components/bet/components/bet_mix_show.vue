@@ -192,9 +192,9 @@ import {odd_convert} from "src\core\format\index.js";
 import betting from 'src\core\bet\common-helper\index.js';
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
  
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降

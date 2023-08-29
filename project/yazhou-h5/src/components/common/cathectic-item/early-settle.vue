@@ -153,7 +153,7 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import {UserCtr } from "src/core/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 
 
 let store_cathectic = store.getState().cathecticReducer

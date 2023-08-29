@@ -11,11 +11,11 @@ import {
   get_match_result_api,
   get_virtual_result,
 } from "src/api/module/common/index.js";
-import { PageSourceData  } from "src/core/index.js"
-import { MenuData  } from "src/core/index.js"
-import {UserCtr } from "src/core/index.js"
-import {MatchDetailCtr} from "src/core/index.js"
-import { uid } from "src/core/index.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
+import UserCtr from "src/core/user-config/user-ctr.js"
+import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
+import uid from "src/core/uuid/index.js";
 
 import { ref } from "vue"
 
@@ -167,7 +167,7 @@ const get_detail_params_by_invoke_source = (params, main_menu_type) => {
   // 赛果详情页 或者 详情页仅请求两个参数
   else if (['result_details', 'match_result', 'category'].includes(PageSourceData.page_source)) {
     params = {
-      sportId: MatchDetailCtr.get_csid(),
+      sportId: MatchInfoCtr.get_csid(),
       cuid: params.cuid
     }
   }

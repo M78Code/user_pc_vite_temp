@@ -801,7 +801,7 @@ class UserCtr {
         callback: () => {
           location.href = callbackUrl;
           // 清除旧的登录信息
-          this.clear_user();
+          this.vx_clear_user();
         },
       });
       // }

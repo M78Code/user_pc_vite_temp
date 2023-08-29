@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: ws消息发送管理
  */
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default class WsSendManger {
   // 链接异常次数
   static err_count = 0;

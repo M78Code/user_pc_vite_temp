@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";

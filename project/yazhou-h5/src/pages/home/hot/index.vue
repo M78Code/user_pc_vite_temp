@@ -60,7 +60,8 @@ import may_also_like from "src/project/pages/match-list/components/may_also_like
 import sports_balls_tab from "./sports_balls_tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 const tabList = ref([])  // tab选项卡内容
@@ -92,7 +93,6 @@ const change_background = computed(() => {
 // mapGetters({
 //   UserCtr.theme:"UserCtr.theme",
 //   get_hot_tab_item:"get_hot_tab_item",
-//   get_bet_obj:"get_bet_obj",
 //   get_access_config,
 // })
 
@@ -194,7 +194,7 @@ const get_list = (first) => {
 const checkClearBet = (obj) => {
   let flag = false
   const dj_csid_list = [100, 101, 102, 103]
-  _.forIn(get_bet_obj, function (item, key) {
+  _.forIn(BetData.bet_obj, function (item, key) {
     const csid = _.get(item, 'bs.csid')
     if (dj_csid_list.includes(obj.field1 * 1)) {//切换的菜单是电竞
       if (!dj_csid_list.includes(csid * 1)) {

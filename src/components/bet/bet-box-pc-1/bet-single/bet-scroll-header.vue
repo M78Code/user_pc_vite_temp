@@ -133,7 +133,7 @@
 
 <script setup>
 import { onMounted } from "vue"
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 const props = defineProps({
   bet_recode_this: Object,
   //是不是内嵌框,默认不是
@@ -146,7 +146,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  if (MenuData.cur_menu_type.pre_name == 'virtual_sport' && MenuData.cur_menu_type.type_name == 'play' && BetData.bet_single_list.length == 0) {
+  if (vx_cur_menu_type.pre_name == 'virtual_sport' && vx_cur_menu_type.type_name == 'play' && BetData.bet_single_list.length == 0) {
     BetDataCtr.set_is_bet_single(true)
   }
   console.log('is_free===', is_free);
@@ -156,6 +156,8 @@ onMounted(() => {
 // BetData.cur_odd: "get_cur_odd",
 // // 左侧布局
 // vx_layout_left_show: "get_layout_left_show",
+// // 菜单类型
+// vx_cur_menu_type: "get_cur_menu_type",
 // // 是否为单关
 // BetDataCtr.is_bet_single: 'is_bet_single',
 // // 单关列表
@@ -177,7 +179,7 @@ onMounted(() => {
  * @return {undefined} undefined
 */
 const computed_show_btn = () => {
-  let type_name = MenuData.cur_menu_type.type_name;
+  let type_name = vx_cur_menu_type.type_name;
   if (!BetData.is_bet_merge) {
     // 获取单关id
     let id = BetData.bet_single_list[0];
@@ -220,7 +222,7 @@ const bet_count = () => {
  */
 const show_series_btn = () => {
   // 获取当前菜单类型
-  let { type_name } = MenuData.cur_menu_type;
+  let { type_name } = vx_cur_menu_type;
   // 获取单关id
   let id = BetData.bet_single_list[0];
   // 是否为冠军投注

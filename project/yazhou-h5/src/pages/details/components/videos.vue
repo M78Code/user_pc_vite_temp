@@ -280,7 +280,7 @@ import matchScore from 'src/project/components/match/match_score.vue' // 比分�
 import footballEvents from "project_path/src/pages/details/football_events.vue";
 import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
 import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";  // 详情页 或者 赛果  篮球赛事分析
-import { uid } from "src/core/index.js"
+import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 
 import { useRouter, useRoute } from "vue-router";
@@ -289,7 +289,7 @@ import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import { t } from "src/boot/i18n";
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 //国际化
 

@@ -33,7 +33,7 @@ import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
-import { MenuData  } from "src/core/index.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 const props = defineProps(['detail_data'])
 
@@ -47,13 +47,13 @@ const get_search_term = ref(store_state.get_search_term)
 const get_current_menu = MenuData.current_menu
 const get_curr_sub_menu_type = MenuData.current_lv_2_menu.type
 const get_sport_all_selected = ref(store_state.get_sport_all_selected)
-const GlobalAccessConfig = ref(GlobalAccessConfig.init())
+const get_access_config = ref(store_state.get_access_config)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_search_for_choose.value = new_state.get_search_for_choose
   get_search_term.value = new_state.get_search_term
-  GlobalAccessConfig.value = GlobalAccessConfig.init()
+  get_access_config.value = new_state.get_access_config
   get_sport_all_selected.value = new_state.get_sport_all_selected
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
 })

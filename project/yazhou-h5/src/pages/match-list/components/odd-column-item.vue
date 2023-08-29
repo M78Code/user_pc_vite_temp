@@ -63,7 +63,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import { MenuData  } from "src/core/index.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 

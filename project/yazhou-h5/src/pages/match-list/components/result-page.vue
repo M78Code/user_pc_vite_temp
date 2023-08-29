@@ -90,7 +90,7 @@
 import { onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { MenuData  } from "src/core/index.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],

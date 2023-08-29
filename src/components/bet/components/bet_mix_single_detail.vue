@@ -34,7 +34,7 @@ import {compute_max_win_money} from "src\core\format\index.js";
 import betting from 'src\core\bet\common-helper\index.js';
 const licia_format = require('licia/format');
 import store from "src/store-redux/index.js";
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { format_money3,format_money2 } from'src\core\format\index.js'
 

@@ -3,7 +3,7 @@
  * 这个类是多个 实例 ，每一个投注对象 就是一个实例
  *
  */
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 const gongyong_status_1 = ref("");
 // const gongyong_status_1= ref('')

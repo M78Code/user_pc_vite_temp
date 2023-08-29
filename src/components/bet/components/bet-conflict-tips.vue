@@ -56,7 +56,7 @@
 
 <script setup>
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const props = defineProps({
     is_show_conflict: {

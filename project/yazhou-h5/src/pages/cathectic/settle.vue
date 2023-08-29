@@ -83,7 +83,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
-import {UserCtr } from "src/core/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 import { t } from "src/boot/i18n";
 //国际化
 

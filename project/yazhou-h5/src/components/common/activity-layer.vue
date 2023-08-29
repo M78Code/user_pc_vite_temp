@@ -15,7 +15,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import lodash from 'lodash'
-import {UserCtr } from "src/core/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 
   const props = defineProps({
     activity_layerimg: {

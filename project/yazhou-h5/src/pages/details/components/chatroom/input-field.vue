@@ -76,7 +76,7 @@ import { muteType } from "project_path/src/pages/details/components/chatroom/con
 // import chatroom_mixin from "project_path/src/pages/details/components/chatroom/chatroom_mixin";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n";
-import {UserCtr } from "src/core/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 //国际化
 
 

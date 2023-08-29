@@ -46,7 +46,7 @@ import store  from "src/store-redux"
 import { t } from "src/boot/i18n";;
 =======
 import { t } from "src/boot/i18n";
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 >>>>>>> 1609d524ffa16c510ec17773d27bed977fa8d068
 //国际化
 

@@ -1,19 +1,19 @@
     
 
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
 import {get_bet_amount_param} from  "./bet-amount.js"
 import {http_upd_data ,bet_obj_add_attr} from  "./upd_data.js"
 import mathjs from "src/core/utils/mathjs.js"
 import yabo_common from "src/core/common-helper/index.js"
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
 import {i18n} from "src/boot/i18n.js"
-import {UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
     
 
 
@@ -24,7 +24,7 @@ import {UserCtr } from "src/core/index.js";
 const hide_bet_series_but = () =>{
     let res = false;
     // 单关时,获取投注列表数据
-    if(!get_is_mix && _.get(get_bet_list,'get_bet_list.length')){
+    if(!BetData.bet_is_mix && _.get(get_bet_list,'get_bet_list.length')){
       // 遍历投注列表数据,检测是否红猫赛事
       for (let i = 0; i < get_bet_list.length; i++) {
         // 获取投注项id

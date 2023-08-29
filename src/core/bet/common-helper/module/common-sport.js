@@ -1,13 +1,13 @@
-// import { MenuData  } from "src/core/index.js";
-// import { PageSourceData  } from "src/core/index.js";
-// import {UserCtr } from "src/core/index.js";
+// import MenuData from "src/core/menu-pc/menu-data-class.js";
+// import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+// import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import { compute_value_by_cur_odd_type } from "src/core/bet/model/bet_odds_change.js";
 // import { get_bet_amount_param } from "src/core/bet/model/bet-amount.js";
 // import { http_upd_data } from "src/core/bet/model/upd_data.js";
 // import mathjs from "src/core/utils/mathjs.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
-// import { uid } from "src/core/index.js";
+// import uid from "src/core/uuid/index.js";
 // import { ref } from "vue";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 

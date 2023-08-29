@@ -474,7 +474,7 @@ import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n } from 'src/boot/i18n.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData  } from "src/core/index.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
