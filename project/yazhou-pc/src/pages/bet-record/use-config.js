@@ -415,7 +415,7 @@ export const useConfig = ({ getOrderList }) => {
             status: data_info.status,
             refuse_code: data_info.refuseCode,
           };
-          this.vx_set_order_status(order_status);
+          this.set_order_status(order_status);
 
           if (code == 200 && data) {
             _.forEach(data, (item) => {
