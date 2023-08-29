@@ -126,8 +126,7 @@ const route = useRoute();
     get_golistpage: "get_golistpage",
     get_godetailpage: "get_godetailpage",
     get_betbar_show: true,
-    // 是否显示全屏下投注弹窗
-    get_bet_show: "get_bet_show",
+
     get_is_hengping: false,
     get_is_dp_video_full_screen: "get_is_dp_video_full_screen",
     get_match_base_info_obj: "get_match_base_info_obj",

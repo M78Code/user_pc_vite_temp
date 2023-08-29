@@ -127,9 +127,6 @@ const detailsSlice = createSlice({
         set_hd_sd(state,value){
           state.hd_sd = value;
         },
-        set_bet_show(state, value) {
-          state.bet_show = value;
-        },
         set_analyze_show(state, value) {
           state.analyze_show = value;
         },

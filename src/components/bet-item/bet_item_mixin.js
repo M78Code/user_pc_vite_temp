@@ -23,6 +23,9 @@ import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
 import {get_odds_active}from 'src/core/bet/module/status.js'
 
+import BetData from "src/core/bet/class/bet-data-class.js";
+import SetData from "src/core/bet/bet-data-ctr-class.js";
+
 export const useGetItem = ({ props }) => {
   const route = useRoute();
   const state = reactive({
@@ -111,7 +114,7 @@ export const useGetItem = ({ props }) => {
       let id =
         lodash.get(props.bet_data, "_hn") || lodash.get(props.bet_data, "oid");
       let selected;
-      if (vx_get_is_virtual_bet.value) {
+      if (BetData.is_virtual_bet) {
         selected = virtual_bet_item_select(id);
       } else {
         selected = bet_item_select(id);
@@ -138,7 +141,7 @@ export const useGetItem = ({ props }) => {
    */
   const virtual_bet_item_select = (id) => {
     // 检查是否存在投注列表中
-    return vx_get_virtual_bet_list.value.includes(id);
+    return BetData.virtual_bet_list.includes(id);
   };
 
   /**
@@ -147,12 +150,12 @@ export const useGetItem = ({ props }) => {
    * @return {Boolean} 是否包含
    */
   const bet_item_select = (id) => {
-    if (vx_is_bet_single.value) {
+    if (BetData.is_bet_single) {
       // 检查单关是否选中
-      return vx_get_bet_single_list.value.includes(id);
+      return BetData.bet_single_list.includes(id);
     } else {
       // 检查串关是否选中
-      return vx_get_bet_list.value.includes(id);
+      return BetData.bet_list.includes(id);
     }
   };
 
@@ -282,7 +285,7 @@ export const useGetItem = ({ props }) => {
       state_ = STATE[_active];
     } else {
       let selected_class;
-      if (vx_get_is_virtual_bet.value) {
+      if (BetData.is_virtual_bet) {
         selected_class = virtual_bet_item_select(id);
       } else {
         selected_class = bet_item_select(id);
@@ -307,9 +310,9 @@ export const useGetItem = ({ props }) => {
     console.log("chat_match_info", bet_item_info);
     // 新的投注流程确认中时不让点击
     if (
-      !vx_get_is_virtual_bet.value &&
-      vx_get_bet_mode.value === 1 &&
-      vx_get_bet_item_lock.value &&
+      !BetData.is_virtual_bet &&
+      BetData.bet_mode === 1 &&
+      BetData.bet_item_lock &&
       !is_chat_room
     ) {
       return;
@@ -407,7 +410,7 @@ export const useGetItem = ({ props }) => {
         bet_source: is_chat_room ? "is_chat_room" : this.bet_source, // 投注项来源
         row_index: this.row_index, // tpl2 行 index
       };
-      if (this.vx_get_is_virtual_bet) {
+      if (BetData.is_virtual_bet) {
         //点击押注按钮操作 (虚拟体育)
         this.virtual_bat_click(obj);
       } else {
@@ -462,7 +465,7 @@ export const useGetItem = ({ props }) => {
   );
 
   watch(
-    vx_get_cur_odd,
+    BetData.cur_odd,
     (cur) => {
       // 投注项赔率值处理
       let ov = lodash.get(state.ol_data_item, "ov");
@@ -518,7 +521,7 @@ export const useGetItem = ({ props }) => {
   );
   // 监控串关切换时设置投注项的选中
   watch(
-    vx_get_bet_list,
+    BetData.bet_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;
@@ -529,7 +532,7 @@ export const useGetItem = ({ props }) => {
   );
 
   // 监控串关切换时设置投注项的选中
-  watch(vx_is_bet_single, (val) => {
+  watch(BetData.is_bet_single, (val) => {
     if (state.ol_data_item) {
       let { _mhs, _hs, os } = state.ol_data_item;
       state.odds_state = get_odds_state(_mhs, _hs, os);
@@ -538,7 +541,7 @@ export const useGetItem = ({ props }) => {
 
   // 监控单关列表的投注项选中
   watch(
-    vx_get_bet_single_list,
+    BetData.bet_single_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;
@@ -550,7 +553,7 @@ export const useGetItem = ({ props }) => {
 
   // 监控串关切换时设置投注项的选中
   watch(
-    vx_get_virtual_bet_list,
+    BetData.virtual_bet_list,
     (val) => {
       if (state.ol_data_item) {
         let { _mhs, _hs, os } = state.ol_data_item;

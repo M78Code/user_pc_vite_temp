@@ -86,6 +86,8 @@ class BetViewData {
     this.bet_special_pc = {
       //
     };
+    // 是否显示全屏下投注弹窗
+    bet_show = false
   }
   /**
    * 计算确定按钮显示

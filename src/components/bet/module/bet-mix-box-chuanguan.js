@@ -16,7 +16,7 @@ const spread_options = () => {
         return
     }
 
-    if (get_bet_list.value.length == 2) {
+    if (BetData.bet_list.length == 2) {
         return
     };
 
@@ -24,10 +24,10 @@ const spread_options = () => {
         sh = ele.scrollHeight,
         rem_1 = window.innerWidth * 100 / 375;
 
-    set_is_spread(!get_is_spread.value);
+    set_is_spread(!BetData.is_spread);
     //设置投注项滚动距离，同步程序走完后再处理逻辑
     $nextTick(() => {
-        if (get_is_spread.value) {
+        if (BetData.is_spread) {
             ele.scrollTop = sh + 0.56 * rem_1 - ch;
         } else {
             ele.scrollTop = sh - ch;
@@ -77,7 +77,7 @@ const mix_bet = () => {
                 timer_count_2 = setTimeout(() => { //25秒还是有订单在确认中，直接给状态让去注单记录中查看
                     if (get_new_bet.value) {
                         mixnew_bet = true
-                        set_bet_status(1);
+                        BetData.set_bet_status(1);
                         tips_msg = i18n.t('bet.err_msg08');
                         clearInterval(timer_count);
                         timer_count = null;
@@ -96,7 +96,7 @@ const mix_bet = () => {
                             api_betting.get_orderstatus({
                                 orderNos: param
                             }).then(res => {
-                                if (res.code == 200 && get_bet_status.value != 1 && res.data) {
+                                if (res.code == 200 && BetData.bet_status.value != 1 && res.data) {
                                     query_order_obj.value = res.data
 
                                     query_order_obj.value.forEach(item => {
@@ -119,7 +119,7 @@ const mix_bet = () => {
 
             } else { //老流程
                 if (order_ing_.length) {
-                    set_bet_status(6);
+                    BetData.set_bet_status(6);
                     tips_msg = i18n.t('bet.err_msg07');
 
                     clearTimeout(timer_count_1)
@@ -142,7 +142,7 @@ const mix_bet = () => {
                         }, 2000);
                     }, 5000);
                 } else {
-                    set_bet_status(3);
+                    BetData.set_bet_status(3);
                 }
                 // collect_match()
             }
@@ -163,22 +163,22 @@ const mix_bet = () => {
                         // 同步程序走完后再处理逻辑
                         $nextTick(() => {
                             if (!get_odds_change.value) {
-                                set_bet_status(1);
+                                BetData.set_bet_status(1);
                             }
                         })
 
                         break;
                     case 2: //对应红色提示语的情况,点击确定移除投注项
-                        set_bet_status(4);
+                    BetData.set_bet_status(4);
                         tips_msg = msg;
                         break;
                     case 3:
-                        set_bet_status(1);
+                        BetData. set_bet_status(1);
                         tips_msg = msg;
                         break;
                     case 4:
                         need_bet_again.value = true
-                        set_bet_status(1);
+                        BetData.set_bet_status(1);
                         break;
                     default:
                         break;
