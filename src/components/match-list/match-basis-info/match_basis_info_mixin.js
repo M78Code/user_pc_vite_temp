@@ -7,6 +7,7 @@
 import { reactive, computed } from 'vue';
 import details from "src/core/match-list/details-class/details.js";
 import { t } from "src/boot/i18n";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { is_eports_csid } from "src/core/utils/utils";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from 'src/store-redux/index.js'
@@ -23,11 +24,9 @@ export default {
     },
   },
   setup(props) {
-    //全局开关
-    const get_global_switch = reactive(state.globalReducer.global_switch)
     
     const handicap_num = computed(() => {
-      if(get_global_switch.value.handicap_num){
+      if(GlobalAccessConfig.get_handicapNum()){
         return `+${ props.match.mc || 0}`
       }else{
         return t('match_info.more')
@@ -52,7 +51,6 @@ export default {
     }
 
     return {
-      get_global_switch,
       handicap_num,
       collect,
       on_go_detail

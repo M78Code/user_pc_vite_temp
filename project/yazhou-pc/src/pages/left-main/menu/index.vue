@@ -18,7 +18,7 @@
     </div>
 
     <!-- 热门赛事 -->
-    <div v-if="menu_config.add_mi_introduce.mi_500.label && get_global_switch.hot_match_num" @click="new_menu_click(500)"
+    <div v-if="menu_config.add_mi_introduce.mi_500.label && GlobalAccessConfig.get_hotMatchNum()" @click="new_menu_click(500)"
       class="menu-item menu-top menu-play menu-border" :class="menu_config.menu_root == 500 && 'active'"
       :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
@@ -51,6 +51,7 @@ import store from "src/store-redux/index.js";
 import menu_config from 'src/core/menu-pc/menu-data-class.js'
 import base_data_instance from 'src/core/base-data/base-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import play_match from "/public/yazhou-pc/image/png/play-match.png";
 import hot_svg from "/public/yazhou-pc/image/svg/hot.svg"
@@ -74,8 +75,6 @@ const props = defineProps({
 
 // 菜单布局信息
 const layout_left_show = reactive(layoutReducer.layout_left_show)
-// 当前菜单类型
-const get_global_switch = ref(globalReducer.global_switch)
 /**
  * 新菜单点击
  */

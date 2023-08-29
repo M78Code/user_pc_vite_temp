@@ -1,4 +1,4 @@
-import { api_virtual } from "src/public/api/index.js"
+import { api_virtual } from "src/api/index.js"
 import VSport from "src/public/utils/vsport/vsport.js"
 import {i18n } from  "src/boot/i18n.js"
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"

@@ -5,7 +5,7 @@
 // 美式赔率  5  
 // 印尼赔率  6
 
-export const odds_export constant = [{
+export const odds_constant = [{
         label: i18n.t('odds.EU'),
         value: "EU",
         icon: 'panda-icon-contryEU',

@@ -51,7 +51,7 @@
         </div>
     
         <!-- 是否收藏 -->
-        <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="get_global_switch.collect_switch">
+        <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
           <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
         </span>
         <!-- 统计分析 -->
@@ -78,8 +78,10 @@ import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import lodash from 'lodash';
+
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
 import { t } from "src/boot/i18n";
-  ;
 </script>
 <style lang="scss" scoped>
 .basic-col {

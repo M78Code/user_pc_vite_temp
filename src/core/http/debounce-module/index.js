@@ -21,7 +21,7 @@
  *            一种前端主动取消的请求 一般很快单不一定 总之 一定小于 第一种的时长
  */
 
-import { UUID } from "../../uuid";
+import { uid } from "src/core/index.js";
 import menu_init from "./menu_init.js";
 import match_odds_Info2 from "./match_odds_Info2.js";
 import get_match_base_info_by_mids from "./get_match_base_info_by_mids.js";
@@ -70,7 +70,7 @@ export function compute_request_config_by_config(ParseUrl, config, params) {
       }
       let hash_code = instance.hash_code(params);
       instance.last_request_info.send_time = new Date().getTime();
-      let uuid = UUID();
+      let uuid = uid();
       instance.last_request_info.hash_code = hash_code;
       instance.last_request_info.uuid = uuid;
       instance.last_request_info.state = "going";

@@ -6,7 +6,7 @@
 
 import betting from "src/public/mixins/betting/betting.js"; // 押注相关功能
 import skt_data_single_order from "src/public/mixins/websocket/data/skt_data_single_order.js";  //websocket数据页面数据接入 ---- 单关投注订单
-import { api_betting } from "src/public/api/index.js";  //API 共通入口 
+import { api_betting } from "src/api/index.js";  //API 共通入口 
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 export default {
   name: "bet-single",
