@@ -23,7 +23,7 @@
         <div 
           class="collect-icon" 
           :class="{active:get_detail_data.mf}" 
-          v-if="lodash.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28" 
+          v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -80,7 +80,7 @@ const props = defineProps({
      * @return {String}
      */
   const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( lodash.get(get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;
