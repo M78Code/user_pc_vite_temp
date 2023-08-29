@@ -6,7 +6,7 @@
 <template>
   <div class="settle-void" @touchmove.prevent>
     <div class="main">
-      <div class="img-s" :class="{ 'img-s2': store_theme.theme.includes('theme02') }"></div>
+      <div class="img-s" :class="{ 'img-s2': userCtr.theme.includes('theme02') }"></div>
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
@@ -22,9 +22,9 @@ import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
 import { t } from "src/boot/i18n";;
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
+import userCtr from "src/core/user-config/user-ctr.js"
 let { themeReducer, cathecticReducer } = store.getState()
 let store_cathectic = cathecticReducer
-let store_theme = themeReducer
 
 const props = defineProps({
   // 提前结算图标是否选中
