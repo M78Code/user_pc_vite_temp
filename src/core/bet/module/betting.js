@@ -13,7 +13,7 @@ import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
 import {i18n} from "src/boot/i18n.js"
-
+import UserCtr from "src/core/user-config/user-ctr.js";
     
 
 
@@ -51,7 +51,7 @@ const vilidata_mix_count = (value) =>{
     if(value && bet_length <= 2){
         return true
     }
-    const min_num = _.get(get_user, 'configVO.minSeriesNum', 2)
+    const min_num = _.get(UserCtr.user_info, 'configVO.minSeriesNum', 2)
     if((bet_length - (value ? 1 : 0)) < min_num){
         set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
         return false

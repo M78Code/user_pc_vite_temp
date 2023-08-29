@@ -114,7 +114,7 @@ import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
 // //球种对应的 icon
 // import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 // import refresh from "src/public/components/refresh/refresh.vue";
-// import { api_betting } from "src/public/api/index.js";
+// import { api_betting } from "src/api/index.js";
 
 
 

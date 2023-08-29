@@ -47,11 +47,11 @@
         <!-- 右边设置按钮 -->
         <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(userCtr, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
-            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
+            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="get_theme.includes('theme01')"  alt="">
+            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('theme01')"  alt="">
             <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
           </template>
 
@@ -153,7 +153,7 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // const store_data = ref(store.getState())
 let store_cathectic = store.getState().cathecticReducer
@@ -198,7 +198,6 @@ const props = defineProps({
 
     // ...mapGetters([
       //当前皮肤
-    //   "get_theme",
     //用户信息
     // 0未结算/筛选 1已结算/搜索
     //   "get_main_item",

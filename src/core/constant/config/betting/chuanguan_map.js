@@ -16,4 +16,3 @@ export const chuanguan_map = {
   10: { "data": [{ "count": 1, "id": "10001", "name": "10串1","type":10 }, { "count": 45, "id": "2001", "name": "2串1","type":2 }, { "count": 120, "id": "3001", "name": "3串1" ,"type":3}, { "count": 210, "id": "4001", "name": "4串1","type":4 }, { "count": 252, "id": "5001", "name": "5串1" ,"type":5}, { "count": 210, "id": "6001", "name": "6串1","type":6 }, { "count": 120, "id": "7001", "name": "7串1" ,"type":7}, { "count": 45, "id": "8001", "name": "8串1" ,"type":8}, { "count": 10, "id": "9001", "name": "9串1" ,"type":9}, { "count": 1013, "id": "10001013", "name": "10串1013","type":10 }] }
 }
 
-export default chuanguan_map
