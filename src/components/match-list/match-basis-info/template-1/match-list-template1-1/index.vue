@@ -70,7 +70,7 @@
 
           <!-- 是否收藏 -->
          
-          <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="get_global_switch.collect_switch">
+          <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="is_collect && 'active'"></i>
           </span>
           <!-- 统计分析 -->
@@ -98,6 +98,8 @@ import  { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
 import { t } from "src/boot/i18n";
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 ;
