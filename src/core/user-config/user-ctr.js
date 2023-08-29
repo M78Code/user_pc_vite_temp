@@ -50,7 +50,7 @@ class UserCtr {
     this.local_storage_key = "h5_user_base_info";
 
     // 用户详情
-    this.user_info = ref({});
+    this.user_info = {};
     // 登录用户的id
     this.user_logined_id = ref("");
     // 用户是否长时间未操作
@@ -62,8 +62,16 @@ class UserCtr {
 
     // 用户语言
     this.lang = ref(langReducer.lang);
-    // 用户主题
+    // 用户主题  日间版本 ，夜间版本 
     this.theme = ref(themeReducer.theme);
+     
+    // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 
+    this. odds= {
+      // 上次赔率
+      pre_odds: "EU",
+      // 当前赔率
+      cur_odds: "EU",
+    },
     // 用户 token 失效
     this.is_invalid = false;
     // 用户 余额
@@ -75,6 +83,7 @@ class UserCtr {
     this.show_login_popup = false;
     // 是否首次登录
     this.is_new_user = false;
+
   }
   /**
    * 用户 id
@@ -96,6 +105,12 @@ class UserCtr {
     store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
+  set_cur_odds(odd){
+   this.odds.cur_odds =odd 
+  }
+  set_pre_odds(odd){
+    this.odds.pre_odds =odd 
+   }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId
     return this.user_info && this.user.userId ? this.user.userId : this.uid;
