@@ -60,17 +60,17 @@ import { UserCtr } from "src/core/index.js";  // mixins: [router_mixins],
       let res = [];
         let tabList_ = [{
             index: 0,
-            name: i18n.t('home.home'),
+            name: i18n_t('home.home'),
             component: 'home'
           },
           {
             index: 1,
-            name: i18n.t('home.hot'),
+            name: i18n_t('home.hot'),
             component: 'hot'
           },
           {
             index: 2,
-            name: i18n.t('home.live_video'),
+            name: i18n_t('home.live_video'),
             component: 'live_video'
           }
         ];
@@ -79,12 +79,12 @@ import { UserCtr } from "src/core/index.js";  // mixins: [router_mixins],
           tabList_ = [
             {
               index: 0,
-              name: i18n.t('home.home'),
+              name: i18n_t('home.home'),
               component: 'home'
             },
             {
               index: 1,
-              name: i18n.t('home.live_video'),
+              name: i18n_t('home.live_video'),
               component: 'live_video'
             }
           ]

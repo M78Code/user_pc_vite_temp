@@ -5,11 +5,11 @@
 <template>
   <div class="item-order row mx-16 justify-between">
     <!-- 订单号 -->
-    <div class="text-left ellipsis"  @click="copy">{{i18n.t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
+    <div class="text-left ellipsis"  @click="copy">{{ $t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
       <img  src="image/wwwassets/bw3/svg/copy.svg" alt=""  style="width:0.1rem" />
     </div>
     <!-- 时间 -->
-    <div class="text-right">{{i18n.t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(utils.format_time_zone_time(+data_o.betTime))).Format(i18n.t('time4'))}}</span></div>
+    <div class="text-right">{{ $t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{(new Date(utils.format_time_zone_time(+data_o.betTime))).Format(i18n_t('time4'))}}</span></div>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ import {utils } from 'src/core/index.js';
       })
       clipboard.on('success', () => {
         set_toast({
-          txt: i18n.t("bet_record.copy_suc"),
+          txt: i18n_t("bet_record.copy_suc"),
         });
 
         // h5嵌入时Safari阻止弹窗

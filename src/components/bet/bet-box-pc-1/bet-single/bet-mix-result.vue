@@ -30,10 +30,10 @@
       <div class="row bet-win-info">
         <div class="col yb-fontsize12">
           <!--投注额-->
-          {{i18n.t('common.bets_val')}}
+          {{ $t('common.bets_val')}}
         </div>
          <div class="col-auto yb-fontsize12">
-          {{i18n.t('common.maxn_amount_val')}}
+          {{ $t('common.maxn_amount_val')}}
           <!-- 最高可赢额-->
         </div>
       </div>

@@ -8,7 +8,7 @@
 import details from 'src/core/match-detail-pc/match-detail.js'
 import { api_search } from "src/api/index.js";
 import  store  from "src/store-redux/index.js"
-import { i18n } from "src/boot/i18n.js"
+import { i18n_t} from "src/boot/i18n.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
 
@@ -82,7 +82,7 @@ export default {
     //滚球数据
     if(bowling_list.length > 0){
       let bowling = {
-        type_name:i18n.t('list.match_doing'),
+        type_name:i18n_t('list.match_doing'),
         is_active:true,
         is_inplay:true,
         children:[{
@@ -110,7 +110,7 @@ export default {
     if(team_list.length > 0){
       let team = this.get_league_data(team_list,csid)
       if(team.children.length > 0){
-        team.type_name = i18n.t('search.team'),
+        team.type_name = i18n_t('search.team'),
         list.push(team)
       }
     }
@@ -118,7 +118,7 @@ export default {
     if(league_list.length > 0){
       let league = this.get_league_data(league_list,csid)
       if(league.children.length > 0){
-        league.type_name = i18n.t('search.league'),
+        league.type_name = i18n_t('search.league'),
         list.push(league)
       }
     }

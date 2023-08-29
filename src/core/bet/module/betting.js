@@ -53,7 +53,7 @@ const vilidata_mix_count = (value) =>{
     }
     const min_num = _.get(UserCtr.user_info, 'configVO.minSeriesNum', 2)
     if((bet_length - (value ? 1 : 0)) < min_num){
-        set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
+        set_toast({ 'txt': i18n_t('bet.match_min', [min_num]) });
         return false
     }else{
         return true

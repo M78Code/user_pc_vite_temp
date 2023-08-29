@@ -9,7 +9,7 @@
       <img class="hot-icon" :src="play_match" />
       <div class="col">
         现场滚球盘
-        <!-- {{ i18n.t("common.in_plays") }} -->
+        <!-- {{ $t("common.in_plays") }} -->
       </div>
 
       <div class="col-right">
@@ -25,7 +25,7 @@
       <img class="hot-icon" :src="hot_svg" />
       <div class="col">
         热门赛事
-        <!-- {{ i18n.t("menu.match_hot") }} -->
+        <!-- {{ $t("menu.match_hot") }} -->
       </div>
       <div class="col-right">
         <!-- 热门赛事数量 -->

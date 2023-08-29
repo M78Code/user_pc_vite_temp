@@ -98,10 +98,10 @@ export default defineComponent({
     const data = reactive({
       tabs: [
         // #TODO EMIT 
-        {name: i18n.t('virtual_sports.top_16'), key: 'Q8'},
-        {name: i18n.t('virtual_sports.quarter_finals'), key: 'Q4'},
-        {name: i18n.t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
-        {name: i18n.t('virtual_sports.finals'), key: 'FINAL'}
+        {name: i18n_t('virtual_sports.top_16'), key: 'Q8'},
+        {name: i18n_t('virtual_sports.quarter_finals'), key: 'Q4'},
+        {name: i18n_t('virtual_sports.semifinals'), key: 'SEMIFINAL'},
+        {name: i18n_t('virtual_sports.finals'), key: 'FINAL'}
       ],
       tab_index: -1,
       visible: false,
@@ -120,7 +120,7 @@ export default defineComponent({
       if(tab_index == i) return
       // 判断选项卡里边有没有数据
       if (!Object.keys(check_if_there_tab).includes(item.key)) {
-        $toast(i18n.t('virtual_sports.no_data') + i18n.t(`${item.name}`), 1000)
+        $toast(i18n_t('virtual_sports.no_data') + i18n_t(`${item.name}`), 1000)
         return
       }
       knockout_list_filter(i)

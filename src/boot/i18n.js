@@ -61,4 +61,9 @@ function t(key, args, options) {
   if (!i18n) return key;
   return i18n.global.t(key, args, options);
 }
-export { i18n, loadLanguageAsync, map_lang, t };
+// 新增
+function i18n_t(key, args, options) {
+  if (!i18n) return key;
+  return i18n.global.t(key, args, options);
+}
+export { i18n, loadLanguageAsync, map_lang, t,i18n_t };

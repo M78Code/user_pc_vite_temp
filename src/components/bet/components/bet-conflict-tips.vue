@@ -9,7 +9,7 @@
         <template v-if="is_conflict">
             <div class="yb_px14 row items-center yb_fontsize12 justify-center err-msg" style="min-height:0.3rem"
                 @touchmove.prevent>
-                <span class="text-center yb_py4">{{ i18n.t('bet.msg10') }}</span>
+                <span class="text-center yb_py4">{{ $t('bet.msg10') }}</span>
             </div>
         </template>
         <!-- 不支持串关提示 -->
@@ -17,7 +17,7 @@
             <div class="err-msg3 yb_px14 text-center" @touchmove.prevent @click="reomve_invalid">
                 <i class="close yb_mr4"></i>
                 <!-- 移除无效投注 -->
-                {{ i18n.t('bet.msg11') }}
+                {{ $t('bet.msg11') }}
             </div>
         </template>
         <!-- 失效和赔率变化 或者 正常状态 -->
@@ -31,7 +31,7 @@
                     <!-- 左 -->
                     <i class="img2" :class="{ 'img3': BetData.bet_is_accept != 2 }" @click="toggle_accept"></i>
                     <span :class="{ 'auto-text': BetData.bet_is_accept == 2, 'ac-rules': BetData.bet_list.length > 1 }" class="yb_mx4"
-                        style="max-width:1.6rem" @click="toggle_accept">{{ i18n.t("ac_rules.auto") }}</span>
+                        style="max-width:1.6rem" @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
                     <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
                         v-if="UserCtr.theme.includes('theme01')" />
                     <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
@@ -39,12 +39,12 @@
                     <span v-if="BetData.bet_list.length == 1">
                         <i class="img2" :class="{ 'img3': get_used_money != 0 }" @click="change_used_money"></i>
                         <span class="yb_ml4" :class="get_used_money == 0 && 'auto-text'"
-                            @click="change_used_money">{{ i18n.t('bet.used_money2') }}</span>
+                            @click="change_used_money">{{ $t('bet.used_money2') }}</span>
                     </span>
                     <span @click.stop="spread_options"
                         :class="{ 'opacity-m': BetData.bet_list.length == 2 || get_s_count_data.length == 1, 'col-5 text-right': BetData.bet_list.length > 1 }"
                         v-else>
-                        {{ get_is_spread ? i18n.t('bet.msg04') : i18n.t('bet.msg05') }}
+                        {{ get_is_spread ? i18n_t('bet.msg04') : i18n_t('bet.msg05') }}
                         <i class="arrow" :class="{ 'arrow2': !get_is_spread }"></i>
                     </span>
                 </template>

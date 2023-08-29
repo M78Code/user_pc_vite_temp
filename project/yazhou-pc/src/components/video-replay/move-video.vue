@@ -258,7 +258,7 @@ export default {
       // 获取命令
       let cmd = _.get(obj, 'cmd');
       let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr.user_info,'oss.live_pc');
-      let lang_obj={full_screen:i18n.t('video.full_screen_mode'), back:i18n.t('common.back'), back_live:i18n.t('video.back_live')};
+      let lang_obj={full_screen:i18n_t('video.full_screen_mode'), back:i18n_t('common.back'), back_live:i18n_t('video.back_live')};
       switch (cmd) {
         case 'play': // 播放
           // window.BUILDIN_CONFIG.live_domains[0]='http://127.0.0.1:5500/video/pc/final'

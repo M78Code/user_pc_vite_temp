@@ -3,7 +3,7 @@
     <div class="wrap-select">
       <div class="r-select">
         <!-- 体育 -->
-        <span class="label">{{ i18n.t("results.sport") }}</span>
+        <span class="label">{{ $t("results.sport") }}</span>
         <normal-select
           :value="sport"
           :options="sport_type"
@@ -14,7 +14,7 @@
       <div class="r-select ball-games" v-if="current_sport_id == '0'">
         <!-- 球种 -->
         <span class="label ball-games-label">{{
-          i18n.t("results.ball_games")
+          i18n_t("results.ball_games")
         }}</span>
         <normal-select
           :value="champion_sport"
@@ -26,7 +26,7 @@
       <!-- 日期 -->
       <div class="r-select">
         <div class="label time-search-label">
-          {{ i18n.t("results.date") }}
+          {{ $t("results.date") }}
         </div>
         <div class="search-date-wrapper">
           <div class="date-wrap" @click.stop="startTimeShowFunc">
@@ -55,7 +55,7 @@
       <div class="condition">
         <div class="r-select ml-30" style="margin-right: 5px">
           <!-- 联赛 -->
-          <span class="label">{{ i18n.t("results.league") }}</span>
+          <span class="label">{{ $t("results.league") }}</span>
           <y-select
             @to_hide_select="hideSelect"
             :list="api_league_type"
@@ -74,11 +74,11 @@
           v-if="!pournament_params.champion && Number(sport_id) < 17"
         >
           <!-- 赛事 -->
-          <span class="label">{{ i18n.t("results.match") }}</span>
+          <span class="label">{{ $t("results.match") }}</span>
           <!-- 请输入 -->
           <input
             class="ipt"
-            :placeholder="i18n.t('results.placeholder')"
+            :placeholder="i18n_t('results.placeholder')"
             @focus="cancel = new Date().getTime()"
             v-model="results_params.matchNameStr"
             maxlength="150"
@@ -93,7 +93,7 @@
           >
             <fliter-checkbox :checked="is_bowls" />
             <!-- 滚球 -->
-            <span>{{ i18n.t("results.roll_ball") }}</span>
+            <span>{{ $t("results.roll_ball") }}</span>
           </div>
           <div
             class="checkbox"
@@ -102,7 +102,7 @@
           >
             <fliter-checkbox :checked="is_highlights" />
             <!-- 精彩回放筛选 -->
-            <span>{{ i18n.t("video.video_event_history") }}</span>
+            <span>{{ $t("video.video_event_history") }}</span>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@
         <!-- 提示语 -->
         <q-tooltip v-model="is_show" anchor="top middle" self="bottom middle">
           <template>
-            <div>{{ i18n.t("results.tips") }}</div>
+            <div>{{ $t("results.tips") }}</div>
           </template>
         </q-tooltip>
         <div
@@ -122,7 +122,7 @@
         </div>
         <!-- 搜索 -->
         <div class="search-btn" @click="sub_search">
-          {{ i18n.t("results.search") }}
+          {{ $t("results.search") }}
         </div>
       </div>
     </div>

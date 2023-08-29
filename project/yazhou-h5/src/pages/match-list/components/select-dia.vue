@@ -32,7 +32,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/boot/i18n.js'
 import {MenuData } from "src/core/index.js"
 
 const props = defineProps(['detail_data'])
@@ -40,7 +40,7 @@ const props = defineProps(['detail_data'])
 const get_menu_type = MenuData.get_menu_type()
 const store_state = store.getState()
 const change_show = ref(true)
-const search_tab = ref([i18n.t('footer_menu.filter'), i18n.t('search.search_title')])
+const search_tab = ref([i18n_t('footer_menu.filter'), i18n_t('search.search_title')])
 
 const get_search_for_choose = ref(store_state.get_search_for_choose)
 const get_search_term = ref(store_state.get_search_term)
@@ -67,17 +67,17 @@ onMounted(() => {
   }
   // 如果是赛果虚拟体育赛事，则显示 筛选
   if(results_of_the_virtual_display){
-    search_tab.value = [i18n.t('search.search_title')]
+    search_tab.value = [i18n_t('search.search_title')]
     change_show.value = false
   }
   // 筛选
   if(!GlobalAccessConfig.get_filterSwitch()) {
-    search_tab.value = [i18n.t('search.search_title')]
+    search_tab.value = [i18n_t('search.search_title')]
     change_show.value = false
   }
   // 搜索
   if(!GlobalAccessConfig.get_searchSwitch()) {
-    search_tab.value = [i18n.t('footer_menu.filter')]
+    search_tab.value = [i18n_t('footer_menu.filter')]
     change_show.value = true
   }
 })

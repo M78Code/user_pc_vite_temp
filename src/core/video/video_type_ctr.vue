@@ -24,7 +24,7 @@
       <img class="close-btn" @click="is_show_type_list = false" src="~public/image/common/png/close_white.png">
     </div>
     <!-- 画中画提示框 -->
-      <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{i18n.t('video.open_pip')}}</div>
+      <div v-show="pip_mouseover&&$route.name == 'home'" class="pip_mouseover">{{ $t('video.open_pip')}}</div>
     <!-- 大屏 -->
     <div class="full-screen-wrap" :class="{esports:is_esports}" v-if="$route.params.video_size !=1 && !is_esports">
       <!-- 退出中屏 -->
@@ -35,7 +35,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
-      >{{i18n.t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
+      >{{ $t($route.name == 'video' ? 'common.back' : 'video.big_screen_mode')}}</q-tooltip>
     </div>
     <!-- 全屏 -->
     <div class="xl-screen-wrap" v-if="$route.params.play_type != 2" :class="{esports:is_esports, disabled: video_fullscreen_disabled}">
@@ -47,7 +47,7 @@
         anchor="top middle"
         self="center middle"
         :content-style="tooltip_style + ';white-space: nowrap;'"
-      >{{i18n.t(($route.name == 'video') && ($route.params.video_size == 1 || is_esports) ? 'common.back' : 'video.full_screen_mode')}}</q-tooltip>
+      >{{ $t(($route.name == 'video') && ($route.params.video_size == 1 || is_esports) ? 'common.back' : 'video.full_screen_mode')}}</q-tooltip>
     </div>
   </div>
 </template>
@@ -114,16 +114,16 @@ export default {
       let text = ""
         if(type == 1){
           if(this.ctr_data.video_type == 1){
-            text=  i18n.t('video.flv')
+            text=  i18n_t('video.flv')
           }else{
-            text=  i18n.t('video.m3u8')
+            text=  i18n_t('video.m3u8')
           }
             
         }else{
            if(this.ctr_data.video_type == 1){
-            text=  i18n.t('video.clarity1')
+            text=  i18n_t('video.clarity1')
           }else{
-            text=  i18n.t('video.clarity2')
+            text=  i18n_t('video.clarity2')
           }
         }
         return text
@@ -133,15 +133,15 @@ export default {
       let text = ""
         if(type == 1){
           if(num == 1){
-            text = i18n.t('video.flv')
+            text = i18n_t('video.flv')
           }else{
-            text = i18n.t('video.m3u8')
+            text = i18n_t('video.m3u8')
           }
         }else{
           if(num == 1){
-            text = i18n.t('video.clarity1')
+            text = i18n_t('video.clarity1')
           }else{
-            text = i18n.t('video.clarity2') 
+            text = i18n_t('video.clarity2') 
           }
         }
         return text

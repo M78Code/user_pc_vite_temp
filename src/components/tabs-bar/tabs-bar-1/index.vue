@@ -25,7 +25,7 @@
           anchor="top middle"
           self="center middle"
           :content-style="tooltip_style"
-        >{{handicap_this.panel_status =='hide'?i18n.t('icon_tips.unfold'):i18n.t('icon_tips.fold')}}</q-tooltip>
+        >{{handicap_this.panel_status =='hide'?i18n_t('icon_tips.unfold'):i18n_t('icon_tips.fold')}}</q-tooltip>
         <!-- 展开：收起 -->
       </div>
       <!-- 一栏/两栏布局按钮在页面宽度 < 1680 的时候和内嵌版里不展示 -->
@@ -46,7 +46,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{i18n.t('icon_tips.column')}}</q-tooltip>
+          >{{ $t('icon_tips.column')}}</q-tooltip>
           <!-- 一栏布局 -->
         </span>
         <span>
@@ -62,7 +62,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{i18n.t('icon_tips.multicolumn')}}</q-tooltip>
+          >{{ $t('icon_tips.multicolumn')}}</q-tooltip>
           <!-- 两栏布局 -->
         </span>
       </div>

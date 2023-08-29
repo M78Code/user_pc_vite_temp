@@ -5,7 +5,7 @@
   <div class="bet-mix-record">
     <!--串关-->
     <!-- <div class="bet-record-title">
-      {{i18n.t('bet.bet_series')}}
+      {{ $t('bet.bet_series')}}
     </div> -->
     <!--投注记录项部分-->
     <bet-mix-record-item

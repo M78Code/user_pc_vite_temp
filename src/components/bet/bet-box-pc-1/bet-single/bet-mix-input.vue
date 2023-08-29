@@ -7,7 +7,7 @@
         <div class="line"></div>
         <div class="col bet-mix-info">
           <!--单注-->
-          {{ i18n.t('bet')[`bet_${id}`] }}
+          {{ $t('bet')[`bet_${id}`] }}
         </div>
         <span v-if="index == 0" class="odds-value yb-number-bold">
           <!--串关赔率(欧赔)-->
@@ -19,7 +19,7 @@
         <!--金额输入区-->
         <currency-input :ref="'input-money-' + id" class="bet-input input-border"
           :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.input_money_state) && money != null) || view_ctr_obj.error_code == 'M400005' }"
-          :placeholder="`${i18n.t('bet.money_range')} ${min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
+          :placeholder="`${i18n_t('bet.money_range')} ${min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
           v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
             hideCurrencySymbol: true
           }" :precision="{
@@ -41,7 +41,7 @@ max: 2
         <div class="row bet-win yb-fontsize12">
           <div class="col df-jb">
             <!--最高可赢额-->
-            {{ i18n.t('common.maxn_amount_val') }}
+            {{ $t('common.maxn_amount_val') }}
           </div>
           <!--最高可赢金额-->
           <div class="col-auto bet-win-money yb-number-bold">{{ get_max_win_money() || four_five_six_double(2) ||

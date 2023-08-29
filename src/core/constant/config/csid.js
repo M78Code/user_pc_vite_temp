@@ -2,7 +2,7 @@
 /**
  * 球种id枚举
  * H5/PC  对应配置文件 新增 csid_map_name 对应以下国际化
- * 例： name: i18n.t('csid_map_name.xxx')
+ * 例： name: i18n_t('csid_map_name.xxx')
  */
 export const CSID_CONFIG= {
 

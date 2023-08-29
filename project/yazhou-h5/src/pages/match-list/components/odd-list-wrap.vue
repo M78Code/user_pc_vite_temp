@@ -84,12 +84,12 @@
       <div class="correct_style_title">
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{i18n.t('football_playing_way.full_time_draw')}}</span>
+          <span>{{ $t('football_playing_way.full_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
         <div>
           <span>{{match.mhn}}</span>
-          <span>{{i18n.t('football_playing_way.half_time_draw')}}</span>
+          <span>{{ $t('football_playing_way.half_time_draw')}}</span>
           <span>{{match.man}}</span>
         </div>
       </div>
@@ -144,7 +144,7 @@
              :src="show_tips ? (get_theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
                   (get_theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
         <span class="ellipsis">
-          {{[1,2,7,10].includes(+match['ms']) ? i18n.t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n.t('football_playing_way.any_goal')}}
+          {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
       </div>
       
@@ -157,7 +157,7 @@
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/boot/i18n.js'
 // import odd_column_item from "./components/odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

@@ -11,7 +11,7 @@
     <p class="font_match_results">1</p>
     <simple-header @refresh="sub_search" :data_loaded="refresh_finish">
       <!-- 赛果 -->
-      <span>{{ i18n.t("common.amidithion") }}</span>
+      <span>{{ $t("common.amidithion") }}</span>
     </simple-header>
 
     <!-- 中间内容 S-->
@@ -60,7 +60,7 @@
 
 <script setup>
 
-import { i18n } from "src/core/index.js";
+import { i18n_t} from "src/core/index.js";
 import { useGetResultConfig } from "./results.config.js";
 import results from "./components/results.vue";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";

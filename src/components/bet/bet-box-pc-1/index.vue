@@ -3,14 +3,14 @@
   <template>
     <div class="bet-mode-zone" v-if="is_bet_single">
       <div class="left">
-        <span>{{ i18n.t("bet.bet_one_") }}</span>
+        <span>{{ $t("bet.bet_one_") }}</span>
         <span class="bet-single-count">
           {{ BetData.bet_single_list.length }}
         </span>
       </div>
       <div class="right">
         <span class="check-box" :class="{ 'checked': BetData.is_bet_merge }" @click.stop="toggle_merge">
-          <!-- <check-box :checked="BetData.is_bet_merge" /> <span>{{ i18n.t('bet.merge') }}</span> -->
+          <!-- <check-box :checked="BetData.is_bet_merge" /> <span>{{ $t('bet.merge') }}</span> -->
         </span>
         <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
           <!-- <icon id="merge-info" name="icon-tips" class="bet-info" size="14px" /> -->

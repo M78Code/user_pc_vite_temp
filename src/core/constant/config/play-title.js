@@ -2,7 +2,7 @@
 export const play_title = (title = 'coming song') => {
   return [
     { // 5分钟
-      title:i18n.t('football_playing_way.hps5Minutes'),
+      title:i18n_t('football_playing_way.hps5Minutes'),
       id:19,
       unfold:0,
       show_tab:false,
@@ -14,7 +14,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1009,
     },
     {  // 十五分钟玩法
-      title:i18n.t('football_playing_way.hps15Minutes'),
+      title:i18n_t('football_playing_way.hps15Minutes'),
       id:17,
       unfold:0,
       show_tab:false,
@@ -26,7 +26,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1007,
     },
     { // 波胆
-      title:i18n.t('football_playing_way.hpsBold'),
+      title:i18n_t('football_playing_way.hpsBold'),
       id:18,
       unfold:0,
       show_tab:false,
@@ -38,7 +38,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1008,
     },
     { // 角球
-      title:i18n.t('football_playing_way.corner'),
+      title:i18n_t('football_playing_way.corner'),
       id:1,
       unfold:0,
       show_tab:false,
@@ -50,7 +50,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1001,
     },
     {// 罚牌
-      title:i18n.t('football_playing_way.penalty_cards'),
+      title:i18n_t('football_playing_way.penalty_cards'),
       id:5,
       unfold:0,
       show_tab:false,
@@ -62,7 +62,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1003,
     },
     {// 晋级
-      title:i18n.t('football_playing_way.promotion'),
+      title:i18n_t('football_playing_way.promotion'),
       id:3,
       unfold:0,
       show_tab:false,
@@ -74,7 +74,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1005,
     },
     {
-      title:i18n.t('football_playing_way.champion'),
+      title:i18n_t('football_playing_way.champion'),
       id:30,
       unfold:0,
       show_tab:false,
@@ -86,7 +86,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1006,
     },
     {
-      title:i18n.t('football_playing_way.overtime'),
+      title:i18n_t('football_playing_way.overtime'),
       id:4,
       unfold:0,
       show_tab:false,
@@ -98,7 +98,7 @@ export const play_title = (title = 'coming song') => {
       play_id:1002,
     },
     {
-      title:i18n.t('football_playing_way.penalty_shootout'),
+      title:i18n_t('football_playing_way.penalty_shootout'),
       id:2,
       unfold:0,
       show_tab:false,
@@ -111,7 +111,7 @@ export const play_title = (title = 'coming song') => {
     },
     // 篮球
     {
-      title:i18n.t('basketball_playing_way.quarter'),
+      title:i18n_t('basketball_playing_way.quarter'),
       id:6,
       unfold:0,
       show_tab:false,

@@ -78,7 +78,7 @@ const mix_bet = () => {
                     if (get_new_bet.value) {
                         mixnew_bet = true
                         BetData.set_bet_status(1);
-                        tips_msg = i18n.t('bet.err_msg08');
+                        tips_msg = i18n_t('bet.err_msg08');
                         clearInterval(timer_count);
                         timer_count = null;
                     }
@@ -120,7 +120,7 @@ const mix_bet = () => {
             } else { //老流程
                 if (order_ing_.length) {
                     BetData.set_bet_status(6);
-                    tips_msg = i18n.t('bet.err_msg07');
+                    tips_msg = i18n_t('bet.err_msg07');
 
                     clearTimeout(timer_count_1)
                     timer_count_1 = setTimeout(() => { //5秒socket没有返回订单状态的话，调接口拉取
@@ -149,7 +149,7 @@ const mix_bet = () => {
 
         } else {
             set_toast({
-                'txt': i18n.t('bet.bet_err'),
+                'txt': i18n_t('bet.bet_err'),
                 hide_time: 3000
             });
             back_msg({

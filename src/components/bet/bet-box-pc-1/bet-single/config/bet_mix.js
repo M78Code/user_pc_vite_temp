@@ -1433,11 +1433,11 @@ export default {
       }
       // 重新初始化错误信息
       BetCommonHelper.init_message();
-      let msg = i18n.t(`error_msg_info.${code}`);
+      let msg = i18n_t(`error_msg_info.${code}`);
       // 若msg为空则显示投注失败处理
       if (msg == `error_msg_info.${code}`) {
         // 异常码无对应的消息是显示默认的提示
-        msg = i18n.t('error_msg_info.XXXXXX');
+        msg = i18n_t('error_msg_info.XXXXXX');
         code = 'XXXXXX';
       }
       // 设置错误码
@@ -2045,7 +2045,7 @@ export default {
         if(count > 0 && !['0400477','0400478'].includes(this.view_ctr_obj.error_code)) {
           this.view_ctr_obj.error_code = "0402049";
           //投注项违反比分检查规则,禁止投注
-          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.0402049.client_msg2`);
+          this.view_ctr_obj.error_message = i18n_t(`error_msg_info.0402049.client_msg2`);
         }
       });
     });

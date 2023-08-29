@@ -3,7 +3,7 @@
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
-        <!-- {{ i18n.t('common.menu_title') }} -->
+        <!-- {{ $t('common.menu_title') }} -->
         体育菜单
         <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
@@ -15,7 +15,7 @@
           @click="handle_click_jinri_zaopan(2)"
         >
           今日
-          <!-- {{ i18n.t("menu.match_today") }} -->
+          <!-- {{ $t("menu.match_today") }} -->
         </div>
         <div
           class="item yb-flex-center"
@@ -23,7 +23,7 @@
           @click="handle_click_jinri_zaopan(3)"
         >
           早盘
-          <!-- {{ i18n.t("menu.match_early") }} -->
+          <!-- {{ $t("menu.match_early") }} -->
         </div>
       </div>
     </div>

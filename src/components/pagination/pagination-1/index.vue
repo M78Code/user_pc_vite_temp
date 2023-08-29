@@ -3,13 +3,13 @@
   <div>
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
-        {{ i18n.t('bet_record.total_count') }}
+        {{ $t('bet_record.total_count') }}
         <!-- 总计单数 -->
         ：
         <span class="footer-text">{{ count }}</span>
       </span>
       <span>
-        {{ toolSelected == 2 ? i18n.t('bet.bet_book_total') : i18n.t('bet_record.total_v') }}
+        {{ toolSelected == 2 ? i18n_t('bet.bet_book_total') : i18n_t('bet_record.total_v') }}
         <!-- 总投注额/预约总投资额 -->
         ：
         <span class="footer-text">{{  format_balance(betTotalAmount)   }}</span>
@@ -17,12 +17,12 @@
       <template v-if="recordType">
         <!-- 目前屏蔽有效流水展示 -->
         <span v-if="0">
-          {{ i18n.t('bet_record.effective_water') }}
+          {{ $t('bet_record.effective_water') }}
           <!-- 有效流水 -->
           ：{{ effectiveFlow }}
         </span>
         <span>
-          {{ profit.indexOf("-") != -1 ? i18n.t('bet_record.lose') : i18n.t('bet_record.win') }}：
+          {{ profit.indexOf("-") != -1 ? i18n_t('bet_record.lose') : i18n_t('bet_record.win') }}：
           <span class="footer-text">{{ profit }}</span>
         </span>
         <!-- <span>{{profit.indexOf("-")!=-1?'输':'赢'}}：{{profit}}</span> -->
@@ -43,19 +43,19 @@
           </template>
         </q-select>
         <span>
-          {{ i18n.t('common.page_') }}
+          {{ $t('common.page_') }}
           <!-- 条/页 -->
         </span>
       </div>
 
       <div class="pagination-link">
         <span>
-          {{ i18n.t('common.goto') }}
+          {{ $t('common.goto') }}
           <!-- 跳转至 -->
         </span>
         <input type="text" v-model="goPage" @blur="goToPage(goPage)" @keyup.enter="goToPage(goPage)" :max="max" />
         <span v-show="lang != 'vi'">
-          {{ i18n.t('common.page') }}
+          {{ $t('common.page') }}
           <!-- 页 -->
         </span>
       </div>

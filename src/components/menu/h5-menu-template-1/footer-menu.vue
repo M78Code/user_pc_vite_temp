@@ -383,7 +383,7 @@ import { UserCtr } from "src/core/index.js";
       //筛选     
       else if(item.id === 3){
         if(!GlobalAccessConfig.get_filterSwitch()  && !GlobalAccessConfig.get_searchSwitch()){
-          $toast(i18n.t(`common.temporarily_unavailable`), 2000)
+          $toast(i18n_t(`common.temporarily_unavailable`), 2000)
           return
         }
         set_show_match_filter(true);
@@ -481,8 +481,8 @@ import { UserCtr } from "src/core/index.js";
         footer_menulist = [
           // 玩法菜单(独赢|大小|让球|角球等)
           {
-            title:i18n.t('footer_menu.win_alone'),
-            title1:get_lang == 'en'?"":i18n.t('footer_menu.play_way_f'),
+            title:i18n_t('footer_menu.win_alone'),
+            title1:get_lang == 'en'?"":i18n_t('footer_menu.play_way_f'),
             icon:'f-icon-sub-duying.svg',
             icon_black:'f-icon-sub-duying-black.svg',
             id:0,
@@ -490,7 +490,7 @@ import { UserCtr } from "src/core/index.js";
           },
           // 关注
           {
-            title:i18n.t('footer_menu.follow'),
+            title:i18n_t('footer_menu.follow'),
             icon0:'f-icon-follow.svg',
             icon:get_show_favorite_list ? 'f-icon-follow1.svg' : 'f-icon-follow.svg',
             icon1:'f-icon-follow1.svg',
@@ -502,7 +502,7 @@ import { UserCtr } from "src/core/index.js";
           },
           // 注单
           {
-            title:i18n.t('footer_menu.bet_order'),
+            title:i18n_t('footer_menu.bet_order'),
             icon:'f-icon-bet-order.svg',
             icon_black:'f-icon-bet-order-black.svg',
             id:2,
@@ -510,7 +510,7 @@ import { UserCtr } from "src/core/index.js";
           },
           //筛选
           {
-            title:i18n.t('footer_menu.filter'),
+            title:i18n_t('footer_menu.filter'),
             icon:'f-icon-filter.svg',
             icon_black:'f-icon-filter-black.svg',
             id:3,
@@ -518,7 +518,7 @@ import { UserCtr } from "src/core/index.js";
           },
           // 刷新
           {
-            title:i18n.t('footer_menu.refresh'),
+            title:i18n_t('footer_menu.refresh'),
             icon:'f-icon-refresh.svg',
             icon_black:'f-icon-refresh-black.svg',
             id:4,
@@ -593,8 +593,8 @@ import { UserCtr } from "src/core/index.js";
     const footer_sub_m_list = computed(() => {
       return [
         {
-          title:['en','th','ms','ad'].includes(get_lang)?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.win_alone'),
+          title:['en','th','ms','ad'].includes(get_lang)?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.win_alone'),
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
           icon1:'f-icon-sub-duying-black.svg',
@@ -602,8 +602,8 @@ import { UserCtr } from "src/core/index.js";
           id:1
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.rangqiu'),
+          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.rangqiu'),
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
           icon1:'f-icon-sub-rang-black.svg',
@@ -611,8 +611,8 @@ import { UserCtr } from "src/core/index.js";
           id:4
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.daxiao'),
+          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.daxiao'),
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',
           icon1:'f-icon-sub-daxiao-black.svg',
@@ -620,8 +620,8 @@ import { UserCtr } from "src/core/index.js";
           id:2
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n.t('footer_menu.corner_kick'),
-          title1:i18n.t('footer_menu.corner'),
+          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.corner_kick'),
+          title1:i18n_t('footer_menu.corner'),
           icon0:'f-icon-sub-jiaoqiu0.svg',
           icon:'f-icon-sub-jiaoqiu.svg',
           icon1:'f-icon-sub-jiaoqiu-black.svg',

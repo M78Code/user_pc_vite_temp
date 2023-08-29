@@ -292,13 +292,13 @@ export default {
       switch (type) {
         case 0:
           // 投注失败
-          return i18n.t('bet.bet_fail');
+          return i18n_t('bet.bet_fail');
         case 1:
           // 投注成功
-          return i18n.t('bet.bet_suc');
+          return i18n_t('bet.bet_suc');
         case 2:
           // 确认中
-          return i18n.t('bet.bet_confirm');
+          return i18n_t('bet.bet_confirm');
       }
     }    
   },

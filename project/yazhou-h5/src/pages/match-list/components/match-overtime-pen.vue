@@ -81,7 +81,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/core/match-constant/config/play-title'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc_handle } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -820,9 +820,9 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
       // 滚球阶段，小节名称：下一个进球
       if (tab.id === 19) {
         if ([1,2,7,10].includes(+match.ms)) {
-          tab_list.value[i].title = i18n.t('football_playing_way.hps_next_goal')
+          tab_list.value[i].title = i18n_t('football_playing_way.hps_next_goal')
         } else {
-          tab_list.value[i].title = i18n.t('football_playing_way.hps5Minutes')
+          tab_list.value[i].title = i18n_t('football_playing_way.hps5Minutes')
         }
       }
       tab_list.value[i].show_tab = id_show_map[tab.id];
@@ -890,7 +890,7 @@ const basketball_mmp_change = (mmp) => {
       get_data = true;
       quater_tab_item.pids = '60,58,57';
       quater_tab_item.play_id = '2005';
-      // quater_tab_item.title = i18n.t('basketball_playing_way.quarter');
+      // quater_tab_item.title = i18n_t('basketball_playing_way.quarter');
     }
     //当收到16阶段(第四节)时，移除‘小节’玩法TAB以及对应的玩法赔率行，仅展示全场玩法数据
     else if([31,16,100,1001,1002].includes(+mmp)){
@@ -1032,7 +1032,7 @@ const apply_15min_title = () => {
     if(hSpecial<0){
       hSpecial = 0
     }
-    current_tab_item.value.title =  i18n.t(`football_playing_way.hps15_title[${hSpecial}]`)
+    current_tab_item.value.title =  i18n_t(`football_playing_way.hps15_title[${hSpecial}]`)
   }
 }
 // 批量清除定时器

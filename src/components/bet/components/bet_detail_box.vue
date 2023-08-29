@@ -12,13 +12,13 @@
       <!-- 投注单和金额 -->
       <div class="title row justify-between yb_fontsize14">
         <template v-if="BetData.is_bet_success_status">
-          <span>{{i18n.t("bet.bet_information")}}</span>
+          <span>{{ $t("bet.bet_information")}}</span>
           <img  src="image/wwwassets/bw3/svg/bet_close.svg" alt="" @click.stop="remove">
         </template>
         <template v-else>
-          <div class="left">{{i18n.t("bet.bet_record")}}</div>
+          <div class="left">{{ $t("bet.bet_record")}}</div>
           <div class="right">
-            <span class="yb_fontsize10">{{i18n.t('common.money')}}：</span>
+            <span class="yb_fontsize10">{{ $t('common.money')}}：</span>
             <span class="money-span">{{ format_money2(UserCtr.balance)}}</span>
           </div>
         </template>
@@ -57,7 +57,7 @@
             <!-- 左 -->
             <span class="col-7">
               <!-- 滚球 -->
-              <template v-if="hl0.hmt == 0">{{ i18n.t('bet_record.ing') }}&thinsp;</template>
+              <template v-if="hl0.hmt == 0">{{ $t('bet_record.ing') }}&thinsp;</template>
               <!-- 投注成功后的玩法名称用接口返回的 -->
               <template v-if="playname && [3, 6].includes(+get_bet_status)">{{playname}}</template>
               <template v-else>{{value_show.hps[0].hpnb || value_show.hps[0].hpn}}</template>
@@ -67,15 +67,15 @@
             <!-- 右 -->
             <template v-if="[3, 6, 8].includes(+get_bet_status)">
               <!-- 投注成功 -->
-              <span v-if="get_bet_status == 3" class="color1"><img  src="image/wwwassets/bw3/svg/bet_chengg.svg">{{ i18n.t('bet.bet_suc') }}</span>
+              <span v-if="get_bet_status == 3" class="color1"><img  src="image/wwwassets/bw3/svg/bet_chengg.svg">{{ $t('bet.bet_suc') }}</span>
               <!-- 投注失败 -->
-              <span v-if="get_bet_status == 8" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ i18n.t('bet.bet_err') }}</span>
+              <span v-if="get_bet_status == 8" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ $t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
-              <span v-if="get_bet_status == 6" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{ i18n.t('bet.submitted_successfully') }}</span>
+              <span v-if="get_bet_status == 6" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{ $t('bet.submitted_successfully') }}</span>
             </template>
             <template v-else-if="pankou_change == 2">
               <!-- 失效 -->
-              <span class="invalidation">{{i18n.t('bet.invalidation')}}</span>
+              <span class="invalidation">{{ $t('bet.invalidation')}}</span>
             </template>
           </div>
           <!-- 下 -->
@@ -89,8 +89,8 @@
       <template v-if="BetData.is_bet_success_status">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bet-after row justify-between yb_fontsize12">
-          <p><span>{{ i18n.t('bet_record.bet_max_win') }}:</span><span class="color3 yb_ml8">{{ (max_winmoney / 100).toFixed(2) }}</span></p>
-          <p><span>{{ i18n.t('bet.bet_val') }}:</span><span class="color4 yb_ml8">{{ (bet_money / 100).toFixed(2) }}</span></p>
+          <p><span>{{ $t('bet_record.bet_max_win') }}:</span><span class="color3 yb_ml8">{{ (max_winmoney / 100).toFixed(2) }}</span></p>
+          <p><span>{{ $t('bet.bet_val') }}:</span><span class="color4 yb_ml8">{{ (bet_money / 100).toFixed(2) }}</span></p>
         </div>
       </template>
       <template v-else>
@@ -109,13 +109,13 @@
 
         <!-- 最高可赢和常用金额 -->
         <div class="win row justify-between yb_mb6">
-          <div>{{i18n.t('bet.total_win2')}}
+          <div>{{ $t('bet.total_win2')}}
           
             <span :class="{'color2':money_ok && money}">{{ format_money2(max_win_money)}}</span>
           </div>
           <div class="usedmoney">
             <i class="select" :class="{'select2':get_used_money != 0}" @click="set_used_money(null)"></i>
-            {{i18n.t('bet.used_money2')}}
+            {{ $t('bet.used_money2')}}
           </div>
         </div>
 
@@ -142,7 +142,7 @@
         <!-- 自动接受更好赔率 -->
         <div class="accept yb_my4">
           <i class="select" :class="{'select2':BetData.bet_is_accept == 2}" @click="BetData.bet_is_accept"></i>
-          <span class="yb_mx4">{{i18n.t("ac_rules.auto")}}</span>
+          <span class="yb_mx4">{{ $t("ac_rules.auto")}}</span>
           <img  src="image/wwwassets/bw3/svg/bd_xuanzhong2.svg" alt="" @click="change_accept">
         </div>
       </template>
@@ -157,29 +157,29 @@
 
         <!-- 左边 -->
         <div class="save yb_mr10 row text-center" @click.stop="bet_save" v-if="BetData.is_bet_success_status">
-          <span>{{i18n.t('bet.save')}}</span>
+          <span>{{ $t('bet.save')}}</span>
         </div>
         <!-- 右边 -->
         <div class="btn row" :class="{'btn2':btn_show == 5}">
           <!-- 投注 -->
           <div v-if="btn_show == 0" @click="submit_order" style="flex:1" class="text-center">
-            <p class="yb_fontsize12">{{i18n.t('common.bet')}}</p>
+            <p class="yb_fontsize12">{{ $t('common.bet')}}</p>
           </div>
           <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
           <div v-if="btn_show == 5">
-            <p class="yb_fontsize12">{{i18n.t('common.bet')}}</p>
+            <p class="yb_fontsize12">{{ $t('common.bet')}}</p>
           </div>
           <!-- 确定 -->
-          <div v-if="btn_show == 1" @click="bet_end" style="flex:1" class="text-center">{{i18n.t('common.ok')}}</div>
+          <div v-if="btn_show == 1" @click="bet_end" style="flex:1" class="text-center">{{ $t('common.ok')}}</div>
           <!-- 处理中 -->
           <div v-if="btn_show == 2" class="row justify-center items-center">
-            <p class="yb_mr8">{{i18n.t('bet_record.submitting_bet')}} </p>
+            <p class="yb_mr8">{{ $t('bet_record.submitting_bet')}} </p>
             <ball-spin />
           </div>
           <!-- 接受变化 -->
-          <p v-if="btn_show == 3" @click="agree_change" style="flex:1" class="text-center">{{i18n.t('bet.agree_change')}}</p>
+          <p v-if="btn_show == 3" @click="agree_change" style="flex:1" class="text-center">{{ $t('bet.agree_change')}}</p>
           <!-- 接受变化并投注 -->
-          <p v-if="btn_show == 4" @click="submit_order" style="flex:1" class="text-center">{{i18n.t('bet.agree_change2')}}</p>
+          <p v-if="btn_show == 4" @click="submit_order" style="flex:1" class="text-center">{{ $t('bet.agree_change2')}}</p>
         </div>
       </div>
 
@@ -338,12 +338,12 @@
         msg && (tips_msg.value = msg)
         check_odds_beforebet2();  //重新拉取投注前校验盘口信息接口
         need_bet_again.value = true
-        set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+        set_toast({ 'txt': i18n_t('bet.bet_err'), hide_time: 3000 });
       } else if (emit_http == 2) {
         msg && (tips_msg.value = msg)
         check_odds_beforebet2();  //重新拉取投注前校验盘口信息接口
         need_bet_again.value = true
-        set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+        set_toast({ 'txt': i18n_t('bet.bet_err'), hide_time: 3000 });
         fetch_limit_money() // 更新单关查询最大最小金额
       } else {
         max_winmoney.value = newTotalMaxWinAmount * 100;
@@ -380,20 +380,20 @@
         if (!money_ok.value) { return }
       }
       if (get_bet_status.value == 7) {   //锁盘
-        set_toast({ 'txt': i18n.t('bet.odd_upd') });
+        set_toast({ 'txt': i18n_t('bet.odd_upd') });
         return;
       }
 
       if (Number(money.value) < 0.01) {  //请输入金额
-        set_toast({ 'txt': i18n.t('bet.input_v') })
+        set_toast({ 'txt': i18n_t('bet.input_v') })
         return;
       }
       if (Number(money.value) > +UserCtr.balance) {    //弹窗提示：“余额不足，请您先充值”
-        set_toast({ 'txt': i18n.t('bet.err_msg05') });
+        set_toast({ 'txt': i18n_t('bet.err_msg05') });
         return;
       }
       if (!max_money.value) {   // 5秒内限额接口没有返回的话，提示 限额获取中,请稍后
-        set_toast({ 'txt': i18n.t('bet.err_msg06') });
+        set_toast({ 'txt': i18n_t('bet.err_msg06') });
         return
       }
 
@@ -402,7 +402,7 @@
         if (!is_exist_code.value) {
           is_exist_code.value = true
           set_bet_status(1);
-          tips_msg.value = i18n.t('bet.err_msg08');
+          tips_msg.value = i18n_t('bet.err_msg08');
         }
       }, 25000);
 
@@ -434,13 +434,13 @@
                 timer_25000 = setTimeout(() => {   //25秒还是有订单在确认中，直接给状态让去注单记录中查看
                   if (get_new_bet.value) {
                     set_bet_status(1);
-                    tips_msg.value = i18n.t('bet.err_msg08');
+                    tips_msg.value = i18n_t('bet.err_msg08');
                     clearInterval(timer_2000)
                   }
                 }, 25000);
               } else {
                 set_bet_status(6);
-                tips_msg.value = i18n.t('bet.err_msg07');
+                tips_msg.value = i18n_t('bet.err_msg07');
               }
               // 隔5秒后，每2秒调用异常接口
               timer_5000 = setTimeout(() => {
@@ -465,7 +465,7 @@
             useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET)
           }
         } else {  // 投注失败在 back_msg 方法中查看注释
-          set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+          set_toast({ 'txt': i18n_t('bet.bet_err'), hide_time: 3000 });
           back_msg({ code, data, msg }, (status, msg) => {
             switch (status) {
               case 1:
@@ -507,7 +507,7 @@
       //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
       if (+val > +UserCtr.balance) {
         money.value = UserCtr.balance.toString()
-        tips_msg.value = i18n.t('bet.err_msg09')
+        tips_msg.value = i18n_t('bet.err_msg09')
         clearTimeout(timer_3000)
         // 3秒后重置样式
         timer_3000 = setTimeout(() => {
@@ -525,7 +525,7 @@
      const check_moneyok2 = (val) => {
       if ((val > max_money.value) && (val >= 0.01 || val === '0.00') && max_money.value) {
         // 已转换为最大可投注金额
-        tips_msg.value = i18n.t('bet_record.bet_amount_betting_limit')
+        tips_msg.value = i18n_t('bet_record.bet_amount_betting_limit')
         clearTimeout(timer_3000)
         timer_3000 = setTimeout(() => {
           tips_msg.value = ''
@@ -534,7 +534,7 @@
         money_ok.value = false
       } else if ((val < min_money.value) && (val >= 0.01 || val === '0.00') && max_money.value) {
         // 最小单笔投注金额为 xxx
-        tips_msg.value = i18n.t('bet.err_msg10', [min_money.value])
+        tips_msg.value = i18n_t('bet.err_msg10', [min_money.value])
         clearTimeout(timer_3000)
         timer_3000 = setTimeout(() => {
           tips_msg.value = ''
@@ -570,7 +570,7 @@
     const get_money_format = () =>{
       let mi = global_filters.format_money3(min_money.value)
       let ma = global_filters.format_money3(max_money.value)
-      return licia_format(i18n.t('bet.money_limit2'), mi, ma);
+      return licia_format(i18n_t('bet.money_limit2'), mi, ma);
     }
 
     // 单关5秒后还是在确认中状态的话，轮询查询订单信息
@@ -604,12 +604,12 @@
               set_bet_status(1);
 
               if (data.refuseCode == '0400532') {
-                tips_msg.value = i18n.t('error_msg_info.0400532.client_msg')
+                tips_msg.value = i18n_t('error_msg_info.0400532.client_msg')
               } else {
-                tips_msg.value = i18n.t('bet.err_msg03')  //单关新流程失败后的 对应queryOrderStatus接口的红字提示
+                tips_msg.value = i18n_t('bet.err_msg03')  //单关新流程失败后的 对应queryOrderStatus接口的红字提示
               }
 
-              set_toast({ 'txt': i18n.t('bet.bet_err'), hide_time: 3000 });
+              set_toast({ 'txt': i18n_t('bet.bet_err'), hide_time: 3000 });
             } else {
               set_bet_status(8);
             }

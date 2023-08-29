@@ -53,7 +53,7 @@
             </div>
             <!-- 玩法数量 -->
             <div v-if="match_item.mc">
-              {{GlobalAccessConfig.get_handicapNum() ? `${match_item.mc}+`: i18n.t('footer_menu.more')}}
+              {{GlobalAccessConfig.get_handicapNum() ? `${match_item.mc}+`: i18n_t('footer_menu.more')}}
             </div>
           </div>
         </div>

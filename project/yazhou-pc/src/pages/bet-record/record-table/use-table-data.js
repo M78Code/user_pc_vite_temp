@@ -101,12 +101,12 @@ export const useTableData = ({ props, emit }) => {
   const marketType = (type, langCode = "zh") => {
     var res = "";
     const obj = {
-      EU: i18n.t(`common_lang.${langCode}.odds.EU`), //"欧洲盘";
-      HK: i18n.t(`common_lang.${langCode}.odds.HK`), //"欧洲盘";
-      US: i18n.t(`common_lang.${langCode}.odds.US`), //"欧洲盘";
-      ID: i18n.t(`common_lang.${langCode}.odds.ID`), //"欧洲盘";
-      MY: i18n.t(`common_lang.${langCode}.odds.MY`), //"欧洲盘";
-      GB: i18n.t(`common_lang.${langCode}.odds.GB`), //"欧洲盘";
+      EU: i18n_t(`common_lang.${langCode}.odds.EU`), //"欧洲盘";
+      HK: i18n_t(`common_lang.${langCode}.odds.HK`), //"欧洲盘";
+      US: i18n_t(`common_lang.${langCode}.odds.US`), //"欧洲盘";
+      ID: i18n_t(`common_lang.${langCode}.odds.ID`), //"欧洲盘";
+      MY: i18n_t(`common_lang.${langCode}.odds.MY`), //"欧洲盘";
+      GB: i18n_t(`common_lang.${langCode}.odds.GB`), //"欧洲盘";
     };
     if (type && langCode) {
       res = obj[type];
@@ -171,13 +171,13 @@ export const useTableData = ({ props, emit }) => {
     if (type && langCode) {
       switch (parseInt(type)) {
         case 1:
-          res = i18n.t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+          res = i18n_t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
           break;
         case 2:
-          res = i18n.t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
+          res = i18n_t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
           break;
         case 3:
-          res = i18n.t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+          res = i18n_t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
           break;
       }
     }
@@ -1112,7 +1112,7 @@ export const useTableData = ({ props, emit }) => {
 
 
   // mounted() {
-  //   this.toolWords = i18n.t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
+  //   this.toolWords = i18n_t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
   // },
   // beforeUnmount() {
   //   // 关闭设置提前结算状态事件

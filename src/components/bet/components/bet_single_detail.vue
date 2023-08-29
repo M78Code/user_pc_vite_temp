@@ -8,8 +8,8 @@
   <div class="bet-single-detail yb_px14 row items-center" ref="bet_single_detail">
     <!-- 左 -->
     <div class="yb_fontsize16 content-t">
-      <p>{{ i18n.t('bet.bet') }}</p>
-      <p>{{ i18n.t('bet.total_win2') }}
+      <p>{{ $t('bet.bet') }}</p>
+      <p>{{ $t('bet.total_win2') }}
         <span :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }">{{
           format_money2(max_win_money) }}</span>
       </p>
@@ -133,7 +133,7 @@ const obj_bet_money = computed(() => {
     if (!newVal) { return }
     if (+money.value > +newVal) {
       money.value = newVal
-      tips_msg_update(i18n.t('bet_record.bet_amount_betting_limit'))
+      tips_msg_update(i18n_t('bet_record.bet_amount_betting_limit'))
     }
     max_money.value = +newVal
     min_money.value = +view_ctr_obj[name_].minBet
@@ -199,7 +199,7 @@ const obj_bet_money = computed(() => {
         money.value = min_money.value.toString()
       }
 
-      tips_msg_update(i18n.t('bet.err_msg10', [min_money.value]))
+      tips_msg_update(i18n_t('bet.err_msg10', [min_money.value]))
 
       clearTimeout(timer1)
       // 3秒后重置样式
@@ -243,7 +243,7 @@ const obj_bet_money = computed(() => {
   const get_money_format = () => {
     let mi = global_filters.format_money3(min_money.value)
     let ma = global_filters.format_money3(max_money.value)
-    return licia_format(i18n.t('bet.money_limit2'), mi, ma);
+    return licia_format(i18n_t('bet.money_limit2'), mi, ma);
   },
   /**
    *@description 光标闪动，animation有兼容问题，用函数替代
@@ -287,7 +287,7 @@ const obj_bet_money = computed(() => {
     // 当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
     if (+val > +UserCtr.balance) {
       money.value = UserCtr.balance.toString()
-      tips_msg_update(i18n.t('bet.err_msg09'))
+      tips_msg_update(i18n_t('bet.err_msg09'))
 
       clearTimeout(timer4)
       // 3秒后重置样式

@@ -8,9 +8,9 @@
     <div class="content-box2 yb_px14 row items-center">
       <!-- 左 -->
       <div class="content-t">
-        <p class="yb_fontsize16 black-color">{{ i18n.t('bet.single_more') }}</p>
+        <p class="yb_fontsize16 black-color">{{ $t('bet.single_more') }}</p>
  
-        <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
+        <p style="font-size:0.11rem">{{ $t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{  format_money2(four_five_six_double(max_win_money) ) }}</span></p>
       </div>
@@ -153,7 +153,7 @@ watch(() => money, (new_) => {
       money.value = min_money.value.toString()
 
       useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
-      tips_msg_update(i18n.t('bet.err_msg10', [min_money.value]))
+      tips_msg_update(i18n_t('bet.err_msg10', [min_money.value]))
 
       clearTimeout(timer2)
       // 提示信息展示3秒
@@ -260,7 +260,7 @@ const clear_money = () => {
 const get_money_format = () => {
   let mi = global_filters.format_money3(min_money.value)
   let ma = global_filters.format_money3(max_money)
-  return licia_format(i18n.t('bet.money_limit2'), mi, ma);
+  return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
 const flicker_ = () => {    //光标闪动，animation有兼容问题，用函数替代
   flicker_timer = setInterval(() => {
@@ -320,7 +320,7 @@ const check_moneyok = (val) => {
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
 
-    tips_msg = i18n.t('bet.err_msg09')
+    tips_msg = i18n_t('bet.err_msg09')
 
     clearTimeout(timer2)
     // 3秒后取消提示信息

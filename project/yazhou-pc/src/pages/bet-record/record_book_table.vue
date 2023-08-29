@@ -12,37 +12,37 @@
       <div class="row head">
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet_record.number')}}
+          {{ $t('bet_record.number')}}
           <!-- 编号 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet_record.betting_details')}}
+          {{ $t('bet_record.betting_details')}}
           <!-- 投注详情 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet_record.betting_play')}}
+          {{ $t('bet_record.betting_play')}}
           <!-- 投注玩法 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet_record.options')}}
+          {{ $t('bet_record.options')}}
           <!-- 选项 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet.bet_book_stake')}}
+          {{ $t('bet.bet_book_stake')}}
           <!-- 预约投注额 -->
         </div>
         <!--列-->
         <div class="ceil" v-if="is_book_status[0]==='0'">
-          {{i18n.t('common.maxn_amount_val')}}
+          {{ $t('common.maxn_amount_val')}}
           <!--最高可赢 -->
         </div>
         <!--列-->
         <div class="ceil">
-          {{i18n.t('bet_record.status')}}
+          {{ $t('bet_record.status')}}
           <!-- 状态 -->
         </div>
       </div>
@@ -170,7 +170,7 @@
                             >
                               {{item_cancelType(item.cancelType)}}
                             </span>
-                            <span v-else class="bet-result lose-color">{{i18n.t("bet.invalid")}}</span>
+                            <span v-else class="bet-result lose-color">{{ $t("bet.invalid")}}</span>
                           </template>
                           <!-- 其他 -->
                           <span
@@ -209,7 +209,7 @@
                             >
                               {{item_cancelType(item.cancelType)}}
                             </span>
-                            <span v-else class="bet-result lose-color">{{data.seriesType =='1'?'':`${i18n.t("bet.invalid")}`}}</span>
+                            <span v-else class="bet-result lose-color">{{data.seriesType =='1'?'':`${i18n_t("bet.invalid")}`}}</span>
                           </template>
                           <template v-if="item.betStatus ==1">
                             <span
@@ -219,7 +219,7 @@
                             <span
                               v-else
                               class="bet-result lose-color"
-                            >{{data.seriesType =='1'?'':`${i18n.t("bet.invalid")}`}}</span>
+                            >{{data.seriesType =='1'?'':`${i18n_t("bet.invalid")}`}}</span>
                           </template>
                         </template>
                         <!-- 已结算注单无效 -->
@@ -243,16 +243,16 @@
                   appoint_status(0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注) -->
                   <div class="ceil">
                       <span v-if="data.preOrderStatus==0" class="book_status">
-                        {{i18n.t('bet.bet_booking')}}
+                        {{ $t('bet.bet_booking')}}
                       </span>
                       <span v-if="data.preOrderStatus==0" class="book_cancel cursor-pointer" @click.stop="cancel_appoint(data)">
-                        {{i18n.t('select.cancel')}}
+                        {{ $t('select.cancel')}}
                       </span>
                       <span v-if="[2, 3].includes(data.preOrderStatus)" class="book_status book_failed">
-                        {{i18n.t('bet.bet_book_failed')}}
+                        {{ $t('bet.bet_book_failed')}}
                       </span>
                       <span v-if="data.preOrderStatus==4" class="book_status">
-                        {{i18n.t('bet.bet_book_canceled')}}
+                        {{ $t('bet.bet_book_canceled')}}
                       </span>
                   </div>
                 </div>
@@ -281,17 +281,17 @@
     <q-dialog v-model="bookShow" persistent>
         <q-card class="book-dialog">
           <q-card-section class="row items-center">
-            <div class="book-msg">{{ cancel_book_msg(matchInfo, i18n.t('bet.bet_book_cancel_msg')) }}</div>
+            <div class="book-msg">{{ cancel_book_msg(matchInfo, i18n_t('bet.bet_book_cancel_msg')) }}</div>
           </q-card-section>
 
           <q-card-actions align="center">
             <div class="cursor-pointer book-record book-record-cancel" :disabled="book_loading" @click="close_book_dialog">
               <!--确认中-->
-              {{i18n.t('select.cancel')}}
+              {{ $t('select.cancel')}}
             </div>
             <div class="cursor-pointer book-record book-record-submit" :disabled="book_loading" @click="cancel_book_handle">
               <!--确认中-->
-              {{i18n.t('select.confirm')}}
+              {{ $t('select.confirm')}}
             </div>
           </q-card-actions>
         </q-card>
@@ -462,22 +462,22 @@ export default {
       if(type && langCode) {
         switch (type) {
           case "EU":
-            res = i18n.t(`common_lang.${langCode}.odds.EU`); //"欧洲盘";
+            res = i18n_t(`common_lang.${langCode}.odds.EU`); //"欧洲盘";
             break;
           case "HK":
-            res = i18n.t(`common_lang.${langCode}.odds.HK`); //"香港盘";
+            res = i18n_t(`common_lang.${langCode}.odds.HK`); //"香港盘";
             break;
           case "US":
-            res = i18n.t(`common_lang.${langCode}.odds.US`); //"美式盘";
+            res = i18n_t(`common_lang.${langCode}.odds.US`); //"美式盘";
             break;
           case "ID":
-            res = i18n.t(`common_lang.${langCode}.odds.ID`); //"印尼盘";
+            res = i18n_t(`common_lang.${langCode}.odds.ID`); //"印尼盘";
             break;
           case "MY":
-            res = i18n.t(`common_lang.${langCode}.odds.MY`); //"马来盘";
+            res = i18n_t(`common_lang.${langCode}.odds.MY`); //"马来盘";
             break;
           case "GB":
-            res = i18n.t(`common_lang.${langCode}.odds.GB`); //"英式盘";
+            res = i18n_t(`common_lang.${langCode}.odds.GB`); //"英式盘";
             break;
           default:
             res = "";
@@ -494,29 +494,29 @@ export default {
     item_status(type) {
       switch (parseInt(type)) {
         case 2:
-          return i18n.t("bet_record.effective_water_"); //"走水";
+          return i18n_t("bet_record.effective_water_"); //"走水";
         case 3:
-          return i18n.t("bet_record.lose"); //输
+          return i18n_t("bet_record.lose"); //输
         case 4:
-          return i18n.t("bet_record.win"); //赢
+          return i18n_t("bet_record.win"); //赢
         case 5:
-          return i18n.t("bet_record.win_half"); //"赢半";
+          return i18n_t("bet_record.win_half"); //"赢半";
         case 6:
-          return i18n.t("bet_record.lose_half"); //"输半";
+          return i18n_t("bet_record.lose_half"); //"输半";
         case 7:
-          return i18n.t("bet_record.match_cancel2"); //"赛事取消";
+          return i18n_t("bet_record.match_cancel2"); //"赛事取消";
         case 8:
-          return i18n.t("bet_record.match_delay"); //"赛事延期";
+          return i18n_t("bet_record.match_delay"); //"赛事延期";
         case 11:
-          return i18n.t("bet_record.match_delay2"); //"比赛延迟";
+          return i18n_t("bet_record.match_delay2"); //"比赛延迟";
         case 12:
-          return i18n.t("bet_record.match_interrupt"); //"比赛中断";
+          return i18n_t("bet_record.match_interrupt"); //"比赛中断";
         case 13:
-          return i18n.t("bet.invalid"); //"无效";
+          return i18n_t("bet.invalid"); //"无效";
         case 16:
-          return i18n.t("bet.invalid"); //"无效";
+          return i18n_t("bet.invalid"); //"无效";
         case 15:
-          return i18n.t("bet_record.match_give_up"); //"比赛放弃";
+          return i18n_t("bet_record.match_give_up"); //"比赛放弃";
         default:
           return '';
       }
@@ -530,31 +530,31 @@ export default {
       let str = '';
       switch (parseInt(cancelType)) {
         case 1:
-          str =  i18n.t("bet_record.match_cancel2"); //"比赛取消";
+          str =  i18n_t("bet_record.match_cancel2"); //"比赛取消";
           break;
         case 2:
-          str = i18n.t("bet_record.match_delay"); //"比赛延期";
+          str = i18n_t("bet_record.match_delay"); //"比赛延期";
           break;
         case 3:
-          str = i18n.t("bet_record.match_interrupt"); //"比赛中断";
+          str = i18n_t("bet_record.match_interrupt"); //"比赛中断";
           break;
         case 4:
-          str = i18n.t("bet_record.match_rematch"); //比赛重赛
+          str = i18n_t("bet_record.match_rematch"); //比赛重赛
           break;
         case 5:
-          str = i18n.t("bet_record.match_waist"); //"比赛腰斩";
+          str = i18n_t("bet_record.match_waist"); //"比赛腰斩";
           break;
         case 6:
-          str = i18n.t("bet_record.match_give_up"); //"比赛放弃";
+          str = i18n_t("bet_record.match_give_up"); //"比赛放弃";
           break;
         case 17:
-          str = i18n.t("bet_record.match_advance"); //"赛事提前";
+          str = i18n_t("bet_record.match_advance"); //"赛事提前";
           break;
         case 20:
-         str = i18n.t("bet_record.match_delay2"); //"比赛延迟";
+         str = i18n_t("bet_record.match_delay2"); //"比赛延迟";
          break;
         default: 
-          str = i18n.t("bet.invalid") //注单无效
+          str = i18n_t("bet.invalid") //注单无效
           break;
       }
       return str;
@@ -614,15 +614,15 @@ export default {
     order_status(orderStatus) {
       switch (parseInt(orderStatus)) {
         case 0:
-          return i18n.t("bet.bet_suc"); //"投注成功";
+          return i18n_t("bet.bet_suc"); //"投注成功";
         case 1:
-          return i18n.t("bet.bet_suc"); //"投注成功";
+          return i18n_t("bet.bet_suc"); //"投注成功";
         case 2:
-          return i18n.t("bet.betting_cancel"); //"注单无效";
+          return i18n_t("bet.betting_cancel"); //"注单无效";
         case 3:
-          return i18n.t("bet.bet_loading"); //"确认中";
+          return i18n_t("bet.bet_loading"); //"确认中";
         case 4:
-          return i18n.t("bet.bet_fail"); //"投注失败";
+          return i18n_t("bet.bet_fail"); //"投注失败";
         default:
           return '';
       }
@@ -657,13 +657,13 @@ export default {
       if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
-            res = i18n.t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+            res = i18n_t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
             break;
           case 2:
-            res = i18n.t(`common_lang.${langCode}.bet.bowls`);//"滚球盘赛事";
+            res = i18n_t(`common_lang.${langCode}.bet.bowls`);//"滚球盘赛事";
             break;
           case 3:
-            res = i18n.t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+            res = i18n_t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
             break;
         }
       }
@@ -689,7 +689,7 @@ export default {
       oInput.value = data;
       document.body.appendChild(oInput);
       oInput.select();
-      let msg = i18n.t("bet_record.copyed")
+      let msg = i18n_t("bet_record.copyed")
       this.toast_tips(msg)
       this.toast = true;
       document.execCommand("Copy");
@@ -754,16 +754,16 @@ export default {
       const params = { orderNo: this.orderNo }
       this.cancel_book_record_order(params, (code, data, msg) => {
         if (code == 200) {
-          this.toast_tips(i18n.t('bet.bet_book_canceled'))
+          this.toast_tips(i18n_t('bet.bet_book_canceled'))
           this.$emit('delete_book_record', this.orderNo, this.bookShow)
           this.bookShow = false
           this.orderNo = ''
           this.matchInfo = ''
         } else if (code == '0400546') {
-          this.toast_tips(i18n.t('bet.bet_book_error_msg_0400546'))
+          this.toast_tips(i18n_t('bet.bet_book_error_msg_0400546'))
           this.close_book_dialog()
         } else if (code == '0400547') {
-          this.toast_tips(i18n.t('bet.bet_book_error_msg_0400547'))
+          this.toast_tips(i18n_t('bet.bet_book_error_msg_0400547'))
           this.close_book_dialog()
         } else {
           this.toast_tips(msg)

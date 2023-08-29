@@ -82,7 +82,7 @@
       </no-data>
       <no-data
         v-else-if="['all_empty', 'new_empty'].includes(cur_state) && is_eports"
-        :msg="i18n.t('common.no_data')"
+        :msg="i18n_t('common.no_data')"
         :type_name="'esports-size'"
         :marginBottom="'0px'"
         width="203px"
@@ -92,7 +92,7 @@
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
-            {{i18n.t('common.go_now')}}
+            {{ $t('common.go_now')}}
            </div>
         </div> -->
       </no-data>

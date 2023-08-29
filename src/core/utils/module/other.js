@@ -33,17 +33,17 @@ export function GetUrlParams(name) {
  * @returns {object} 返回深度合并后的对象
  * */
 export const deepMerge=(src, target)=>{
-  console.error('lodash-',lodash);
-  let key;
-  const res = lodash.cloneDeep(src);
-  for (key in target) {
-    res[key] = lodash.isObject(res[key])
-      ? deepMerge(res[key], target[key])
-      : target[key];
-  }
-  return res;
+
+  console.error(' 自己实现 -', );
+ 
+
+
+  return {};
 }
  
+ 
+ 
+
 
 /**
    * @description: 获取国际化模板信息,进行二次操作
@@ -52,7 +52,7 @@ export const deepMerge=(src, target)=>{
    * @return {Array} 国际化字符串信息
    */
 export const get_match_tpl_title = (t_path, csid) => {
-  let ret = lodash.cloneDeep(window.vue.i18n.t(t_path));
+  let ret = lodash.cloneDeep(window.vue.i18n_t(t_path));
   try {
     if(csid){
       if(localStorage.getItem('lang') == 'en'){
@@ -61,7 +61,7 @@ export const get_match_tpl_title = (t_path, csid) => {
           case 'list.match_tpl_title.tpl7.bet_col':
             if(ret && ret[2] && ret[2] == '1X2'){
               if(csid == 2) { //2-篮球
-                // ret[2] = window.vue.i18n.t('list.play_name_other_name.play_capot_name2');
+                // ret[2] = window.vue.i18n_t('list.play_name_other_name.play_capot_name2');
               }
             }
             break;
@@ -69,11 +69,11 @@ export const get_match_tpl_title = (t_path, csid) => {
           case 'list.match_tpl_title.tpl16.bet_col':
             if(ret){
               if(csid == 2 || csid == 6) { //2-篮球
-                // let cur_title =  window.vue.i18n.t('list.play_name_other_name.play_capot_name2')
+                // let cur_title =  window.vue.i18n_t('list.play_name_other_name.play_capot_name2')
                 ret[0] = cur_title;
                ret[3] &&  (ret[3] = ret[3].replace('1x2',cur_title))
               } else if(!(csid == 4 || csid == 1)){
-                // ret[0] = window.vue.i18n.t('list.play_name_other_name.play_capot_name1');
+                // ret[0] = window.vue.i18n_t('list.play_name_other_name.play_capot_name1');
               }
             }
 
@@ -88,7 +88,7 @@ export const get_match_tpl_title = (t_path, csid) => {
           case 'list.match_tpl_title.tpl9.bet_col':
             if(ret && ret[0] && ret[0] == '1X2'){
               if(csid == 5) { //5-网球
-                // ret[0] = window.vue.i18n.t('list.play_name_other_name.play_capot_name1');
+                // ret[0] = window.vue.i18n_t('list.play_name_other_name.play_capot_name1');
               }
             }
             break;
@@ -101,7 +101,7 @@ export const get_match_tpl_title = (t_path, csid) => {
           case 'list.match_tpl_title.tpl0.bet_col':
             if(ret){
               if(csid == 11) { //11-手球
-                // ret = lodash.cloneDeep(window.vue.i18n.t('list.match_tpl_title.tpl0.bet_col_csid_11'));
+                // ret = lodash.cloneDeep(window.vue.i18n_t('list.match_tpl_title.tpl0.bet_col_csid_11'));
               }
             }
             break;

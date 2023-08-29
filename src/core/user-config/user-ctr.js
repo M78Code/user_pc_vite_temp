@@ -792,12 +792,12 @@ class UserCtr {
       //   // 弹出提示消息、登录层
       //   useMittEmit(
       //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-      //     window.vue.i18n.t("login.login_timeout")
+      //     window.vue.i18n_t("login.login_timeout")
       //   );
       // } else {
       // 登录失效直接展示 alert
       useMittEmit(MITT_TYPES.EMIT_SHOW_ALERT_CMD, {
-        text: i18n.t("login.login_timeout"),
+        text: i18n_t("login.login_timeout"),
         callback: () => {
           location.href = callbackUrl;
           // 清除旧的登录信息

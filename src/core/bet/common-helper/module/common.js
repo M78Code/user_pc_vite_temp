@@ -285,7 +285,7 @@ export const get_handicap = (bet_custom_id) => {
         ((handicap.includes("-") &&
           !handicap.startsWith("-") &&
           !handicap.endsWith("-")) ||
-          i18n.t("list.other") == handicap)) ||
+          i18n_t("list.other") == handicap)) ||
       (handicap && item_cs.source == "is_chat_room")
     ) {
       if (item_cs.source == "is_chat_room") {
@@ -641,7 +641,7 @@ export const check_result_msg = (type, money) => {
       break;
   }
   if (BetViewData.error_code == "M400010" && money) {
-    let msg = i18n.t(
+    let msg = i18n_t(
       `error_msg_info.${BetViewData.error_code}`
     ).client_msg1;
     BetViewData.error_message = msg.replace(
@@ -650,7 +650,7 @@ export const check_result_msg = (type, money) => {
     );
   } else if (BetViewData.error_code) {
     // 校验串关金额
-    BetViewData.error_message = i18n.t(
+    BetViewData.error_message = i18n_t(
       `error_msg_info.${BetViewData.error_code}`
     ).client_msg1;
   } else {

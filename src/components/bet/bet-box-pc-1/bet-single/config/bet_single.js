@@ -16,7 +16,7 @@ export default {
 
       timer_obj: {}, // 定时器对象
       code_exist: false, //是否有返回code码
-      button_text: i18n.t('bet.accept_change'), // 接受变化
+      button_text: i18n_t('bet.accept_change'), // 接受变化
       bet_delete_over: false,
       // 单关主题文件路径
       valid_money_obj: {},
@@ -819,7 +819,7 @@ handle_generat_emitters(){
                   let cs = _.get(this.BetData.bet_single_obj, `${bet_appoint_id}.cs`);
                   if(cs) {
                     let {home, away, play_name} = cs;
-                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${home} v ${away} - ${play_name} ${i18n.t('bet.bet_booked')}`);
+                    useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${home} v ${away} - ${play_name} ${i18n_t('bet.bet_booked')}`);
                   }
                 }
               } else if(code=='0400532'){
@@ -925,7 +925,7 @@ handle_generat_emitters(){
           this.reset_bet_single();
         }
         this.view_ctr_obj.error_code = code;
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${code}`).client_msg1;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${code}`).client_msg1;
       } else {
         // 说明对应的id变化了(业务提示:坑位已发生改变，投注失败)
         if(['0402010','0400467'].includes(code)) {
@@ -1118,11 +1118,11 @@ handle_generat_emitters(){
       if(count > 0) return;
 
       BetCommonHelper.init_message();
-      let msg = i18n.t(`error_msg_info.${code}`);
+      let msg = i18n_t(`error_msg_info.${code}`);
       // 若msg为空则显示投注失败处理
       if (msg == `error_msg_info.${code}`) {
         // 异常码无对应的消息是显示默认的提示
-        msg = i18n.t('error_msg_info.XXXXXX');
+        msg = i18n_t('error_msg_info.XXXXXX');
         code = 'XXXXXX';
       }
       //console.log('==================set_message=========================' + JSON.stringify(msg));
@@ -1173,10 +1173,10 @@ handle_generat_emitters(){
     get_button_text(data) {
       if (data && this.view_ctr_obj.is_effect) {
         // 接受变化并投注
-        this.button_text = i18n.t('bet.accept_change_bet');
+        this.button_text = i18n_t('bet.accept_change_bet');
       } else {
         // 接受变化
-        this.button_text = i18n.t('bet.accept_change');
+        this.button_text = i18n_t('bet.accept_change');
         this.view_ctr_obj.is_effect = true;
       }
     },
@@ -1629,7 +1629,7 @@ handle_generat_emitters(){
             if(parseFloat(max_money) == 0) {
               this.view_ctr_obj.bet_order_status = 5;  //投注项失败
               this.view_ctr_obj.error_code = "M400009"; //"该选项当前不可投注，请选择其他选项"
-              this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
+              this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
             }
             // 最小值
             obj.cs.min_money = min_money;
@@ -1687,7 +1687,7 @@ handle_generat_emitters(){
       // 如果存在无效项需要提示
       if(count > 0) {
         this.view_ctr_obj.error_code = "0402049"; //已失效
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.0402049.client_msg1`);
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.0402049.client_msg1`);
       }
     });
   }

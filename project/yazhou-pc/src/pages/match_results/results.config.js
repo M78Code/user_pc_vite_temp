@@ -116,35 +116,35 @@ export const useGetResultConfig = () => {
       _date: null, // 根据服务器时间计算的日期
       // 日期控件多语言配置
       locale: {
-        days: i18n.t("time.time_date_week"),
-        daysShort: i18n.t("time.time_date_week"),
+        days: i18n_t("time.time_date_week"),
+        daysShort: i18n_t("time.time_date_week"),
         months: [
-          i18n.t("time.month_1"),
-          i18n.t("time.month_2"),
-          i18n.t("time.month_3"),
-          i18n.t("time.month_4"),
-          i18n.t("time.month_5"),
-          i18n.t("time.month_6"),
-          i18n.t("time.month_7"),
-          i18n.t("time.month_8"),
-          i18n.t("time.month_9"),
-          i18n.t("time.month_10"),
-          i18n.t("time.month_11"),
-          i18n.t("time.month_12"),
+          i18n_t("time.month_1"),
+          i18n_t("time.month_2"),
+          i18n_t("time.month_3"),
+          i18n_t("time.month_4"),
+          i18n_t("time.month_5"),
+          i18n_t("time.month_6"),
+          i18n_t("time.month_7"),
+          i18n_t("time.month_8"),
+          i18n_t("time.month_9"),
+          i18n_t("time.month_10"),
+          i18n_t("time.month_11"),
+          i18n_t("time.month_12"),
         ],
         monthsShort: [
-          i18n.t("time.month_1"),
-          i18n.t("time.month_2"),
-          i18n.t("time.month_3"),
-          i18n.t("time.month_4"),
-          i18n.t("time.month_5"),
-          i18n.t("time.month_6"),
-          i18n.t("time.month_7"),
-          i18n.t("time.month_8"),
-          i18n.t("time.month_9"),
-          i18n.t("time.month_10"),
-          i18n.t("time.month_11"),
-          i18n.t("time.month_12"),
+          i18n_t("time.month_1"),
+          i18n_t("time.month_2"),
+          i18n_t("time.month_3"),
+          i18n_t("time.month_4"),
+          i18n_t("time.month_5"),
+          i18n_t("time.month_6"),
+          i18n_t("time.month_7"),
+          i18n_t("time.month_8"),
+          i18n_t("time.month_9"),
+          i18n_t("time.month_10"),
+          i18n_t("time.month_11"),
+          i18n_t("time.month_12"),
         ],
         // 每周的第一天
         firstDayOfWeek: 7,
@@ -356,9 +356,9 @@ export const useGetResultConfig = () => {
               }
             }
             // 添加【全部】选项
-            state.champion_sport_type.unshift(i18n.t("select.all"));
+            state.champion_sport_type.unshift(i18n_t("select.all"));
             state.api_sport_type = data;
-            const _name = i18n.t("select.all");
+            const _name = i18n_t("select.all");
             // 如果求种id存在，则显示对应的求种id
             if (state.sport_id) {
               let sport_obj = lodash.find(data, (item) => item.id == state.sport_id);
@@ -532,8 +532,8 @@ export const useGetResultConfig = () => {
         state.results_params.isESport = "";
       }
       if (!state.league_type.length) {
-        state.league_type = [i18n.t("common.all")];
-        state.league = i18n.t("common.all");
+        state.league_type = [i18n_t("common.all")];
+        state.league = i18n_t("common.all");
       }
       api_analysiss.post_results_list(state.results_params).then((res) => {
         const code = lodash.get(res, "data.code");
@@ -834,7 +834,7 @@ export const useGetResultConfig = () => {
       state.results_params.tournamentId = "";
       let index;
       let id,
-        _name = i18n.t("select.all"); // 全部
+        _name = i18n_t("select.all"); // 全部
       // 0体育下拉框 1冠军球种下拉框
       if (n == 0) {
         index = state.sport_type.indexOf(state.sport);
@@ -894,8 +894,8 @@ export const useGetResultConfig = () => {
         },
       });
       state.page_random = Math.random();
-      state.league_type = [i18n.t("common.all")]; // 全部
-      state.league = i18n.t("common.all"); // 全部
+      state.league_type = [i18n_t("common.all")]; // 全部
+      state.league = i18n_t("common.all"); // 全部
       //重置筛选条件
       state.pournament_params.tournamentId = "";
       state.pournament_params.nameStr = "";
@@ -1064,25 +1064,25 @@ export const useGetResultConfig = () => {
       ).getTime(); //当时间
 
       if (end_day - start_day > 86400000 * 7) {
-        state.toast(i18n.t("results.error_time")); //日期区间最多跨度为7天
+        state.toast(i18n_t("results.error_time")); //日期区间最多跨度为7天
         statu = false;
         return statu;
       }
 
       if (end_day < start_day) {
-        state.toast(i18n.t("results.early_time")); //请选择晚于开始的结束时间
+        state.toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
         statu = false;
         return statu;
       }
 
       if (start_day > end_day) {
-        state.toast(i18n.t("results.late_time")); //请选择早于结束的开始时间
+        state.toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
         statu = false;
         return statu;
       }
 
       if (current - start_day > 86400000 * 35) {
-        state.toast(i18n.t("results.max_time")); //最多可以查询近35天的历史比赛
+        state.toast(i18n_t("results.max_time")); //最多可以查询近35天的历史比赛
         statu = false;
         return statu;
       }

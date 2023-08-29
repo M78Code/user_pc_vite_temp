@@ -152,9 +152,9 @@ export default {
       };
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
-        txt = i18n.t('common.cancel');//'取消';
+        txt = i18n_t('common.cancel');//'取消';
       } else {
-        txt = i18n.t('collect.betted_title');//'收藏';
+        txt = i18n_t('collect.betted_title');//'收藏';
       }
       this.favorite_loading = true;
       // 更新收藏状态

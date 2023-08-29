@@ -1,6 +1,6 @@
 import { api_virtual } from "src/api/index";
 import VSport from "./vsport.js"
-import {i18n } from  "src/boot/i18n.js"
+import { i18n_t} from  "src/boot/i18n.js"
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"
 import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
 import { useRouter, useRoute } from 'vue-router'
@@ -43,10 +43,10 @@ export default class VsportCtr {
     // 淘汰赛tab
     this.elimination_tab = ''
     this.elimination_tabs = [
-      {key:'q8',value:i18n.t('vsport.etab1')}, // 16强
-      {key:'q4',value:i18n.t('vsport.etab2')}, // 1/4决赛
-      {key:'semifinal',value:i18n.t('vsport.etab3')}, // 半决赛
-      {key:'final',value:i18n.t('vsport.etab4')}, // 决赛
+      {key:'q8',value:i18n_t('vsport.etab1')}, // 16强
+      {key:'q4',value:i18n_t('vsport.etab2')}, // 1/4决赛
+      {key:'semifinal',value:i18n_t('vsport.etab3')}, // 半决赛
+      {key:'final',value:i18n_t('vsport.etab4')}, // 决赛
     ]
     // 禁用的淘汰赛tab
     this.elimination_disable = []
@@ -348,7 +348,7 @@ export default class VsportCtr {
       key = 'vsport.xqi'
     }
     if(no){
-      no = i18n.t(key).replace('%s',no)  
+      no = i18n_t(key).replace('%s',no)  
     }
     return no
   }
@@ -842,9 +842,9 @@ export default class VsportCtr {
     api_virtual.get_elimination_rank(params).then( res => {
       let code = _.get(res,'data.code')
       if(code == 200){
-        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),i18n.t('vsport.etab2'))
-        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),i18n.t('vsport.etab3'))
-        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),i18n.t('vsport.etab4'))
+        this.q8 = this.get_elimination_arr(_.get(res,'data.data.Q8'),i18n_t('vsport.etab2'))
+        this.q4 = this.get_elimination_arr(_.get(res,'data.data.Q4'),i18n_t('vsport.etab3'))
+        this.semifinal = this.get_elimination_arr(_.get(res,'data.data.SEMIFINAL'),i18n_t('vsport.etab4'))
         this.final = _.get(res,'data.data.FINAL[0]') || {}
         if(is_init){
           this.info.mmp && (this.elimination_tab = this.info.mmp.toLowerCase())
