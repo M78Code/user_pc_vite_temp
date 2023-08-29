@@ -11,7 +11,7 @@
     <p class="font_match_results">1</p>
     <simple-header @refresh="sub_search" :data_loaded="refresh_finish">
       <!-- 赛果 -->
-      <span>{{ t("common.amidithion") }}</span>
+      <span>{{ i18n.t("common.amidithion") }}</span>
     </simple-header>
 
     <!-- 中间内容 S-->
@@ -59,26 +59,33 @@
 </template>
 
 <script setup>
-import { t } from "src/boot/i18n";
-console.log(t,'t111');
+
+import { i18n } from "src/core/index.js";
 import { useGetResultConfig } from "./results.config.js";
-// import results from "src/public/components/results/index.vue";
-// import simpleHeader from "src/project/yabo/components/site_/header/simple_header";
-// import Pagination from "src/project/yabo/components/bet_record/Pagination";
-// import ySelect from "src/public/components/select/y_select";
-// import normalSelect from "src/public/components/select/normal_select.vue";
-// import normalSelect2 from "src/public/components/select/normal_select.vue";
-// import Calendar from "src/project/yabo/components/bet_record/calendar.vue";
-// import formatmixin from "src/public/mixins/common/time_format";
-// import { api_common, api_analysiss } from "src/api/index";
-// import fliterCheckbox from "src/project/yabo/components/match_list/filter_checkbox.vue";
-// import moveVideo from "project_path/src/components/video-replay/move_video.vue";
-// import resultHeader from './components/result-header.vue'
-// import { mapGetters } from "vuex";
-  // mixins: [formatmixin],
+import results from "./components/results.vue";
+import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+import Pagination from "src/pagination-1/index.vue";
+import moveVideo from "project_path/src/components/video-replay/move_video.vue";
+import resultHeader from './components/result-header.vue'
   const {
     results_data,
-    tips
+    tips,
+    results_table_style,
+    sport_id,
+    load_data_state,
+    details_load,
+    results_list,
+    results_order_list,
+    results_playback_list,
+    is_sortUp,
+    activeIndex,
+    reset_pagination,
+    sub_search,
+    refresh_finish,
+    get_tr_detail,
+    change_sort,
+    change_playback_type,
+    changePage
 } = useGetResultConfig();
 </script>
 
