@@ -75,7 +75,8 @@ import { muteType } from "project_path/src/pages/details/components/chatroom/con
 // #TODO mixins
 // import chatroom_mixin from "project_path/src/pages/details/components/chatroom/chatroom_mixin";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -113,7 +114,7 @@ export default defineComponent({
     // ...mapGetters([
     //   'get_is_block_msg',  // 是否屏蔽消息
     //   'get_can_send_msg',   // 是否可以发送消息(达标用户可以发送消息)
-    //   'get_user_mute_info',    // 用户禁言信息
+    //   'userCtr.mute_info',    // 用户禁言信息
     //   'get_chatroom_mute_info', // 聊天室禁言信息
     //   'get_chatroom_userinfo', // 聊天室用户信息
     //   'get_send_msg_count', // 用户发送消息次数
@@ -145,7 +146,7 @@ export default defineComponent({
         return ''
       }
 
-      const {banTime = 0, banType = 1} = get_user_mute_info
+      const {banTime = 0, banType = 1} = userCtr.mute_info
 
       // 禁言时间-提示映射
       const time_map = {
@@ -182,7 +183,7 @@ export default defineComponent({
       if (get_chatroom_mute_info && get_chatroom_mute_info.disableSpeak == 1) {
         return muteType.global_mute;
       }
-      if (get_user_mute_info) {
+      if (userCtr.mute_info) {
         return muteType.self_mute;
       }
       return muteType.unmute;

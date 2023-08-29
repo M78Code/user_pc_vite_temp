@@ -200,6 +200,7 @@ import { db } from "src/public/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
+import userCtr from "src/core/user-config/user-ctr.js";
 
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
@@ -778,14 +779,14 @@ import lodash from "lodash"
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.token
         }
       }
     }
@@ -801,7 +802,7 @@ import lodash from "lodash"
         name: 'matchList',
         query: {
           m: menu[index].menuId,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else if (410 == menu[index].menuId) {
@@ -813,7 +814,7 @@ import lodash from "lodash"
         query: {
           m: '410',
           // s,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else {
@@ -859,7 +860,7 @@ import lodash from "lodash"
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     }else{
@@ -883,7 +884,7 @@ import lodash from "lodash"
         query: {
           m: menuId,
           s: subId,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else {
@@ -896,7 +897,7 @@ import lodash from "lodash"
           query: {
             m: menuId,
             s: subId,
-            token: get_user_token
+            token: userCtr.token
           }
         });
       } else {
@@ -957,13 +958,13 @@ import lodash from "lodash"
     // ...mapGetters({
     //   get_ball_seed_menu: 'get_ball_seed_menu',
     //   // 用户信息,用户金额,userId 需要监听变化
-    //   user_info: "get_user",
+    //   user_info: "userCtr",
     //   // 当前语言
     //   get_lang: 'get_lang',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   uid: "get_uid",
     //   // 用户令牌信息
-    //   get_user_token: "get_user_token",
+    //   userCtr.token: "userCtr.token",
     //   // 左边菜单选中下标
     //   get_home_menu_index: "get_home_menu_index",
     //   // 首页菜单数据

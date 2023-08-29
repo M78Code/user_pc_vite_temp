@@ -59,7 +59,8 @@ import notice_bar from 'project_path/src/pages/details/components/chatroom/notic
 import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -98,8 +99,8 @@ export default defineComponent({
     //     'get_post_bet_show',  // 晒单弹窗显隐
     //     'get_mute_type',  // 禁言类型
     //     'get_details_chatroom_data', // 聊天室相关数据信息
-    //     'get_user',
-    //     'get_user_mute_info',    // 用户禁言信息
+    //     'userCtr',
+    //     'userCtr_mute_info',    // 用户禁言信息
     //     'get_chatroom_userinfo', // 聊天室用户信息
     //     'get_chatroom_mute_info', // 聊天室禁言信息
     //     'get_chatroom_http_url',
@@ -144,7 +145,7 @@ export default defineComponent({
     // ]),
     // 轮询拉取增量消息，防止消息丢失率
     const intervalUpdateMsg = () => {
-      let { pullMsgRate } = get_user;  // 消息拉取频率
+      let { pullMsgRate } = userCtr;  // 消息拉取频率
       if (!pullMsgRate || pullMsgRate < 5) {
         pullMsgRate = pullMsgRate || 10;
       }
@@ -164,7 +165,7 @@ export default defineComponent({
           chatRoomId: get_chatroom_id,
         })
         if (res && res.code == 200) {
-          const chatroom_http_url = await get_valid_api(get_user);
+          const chatroom_http_url = await get_valid_api(userCtr);
           // console.log(chatroom_http_url);
           set_chatroom_http_url(chatroom_http_url);
           get_chatroom_bulletin_info('init_load');

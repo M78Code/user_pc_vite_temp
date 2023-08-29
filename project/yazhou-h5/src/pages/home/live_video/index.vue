@@ -66,7 +66,7 @@
                 </div>
                 <img
                     v-if="GlobalAccessConfig.get_collectSwitch()"
-                    :src="item.mf ? (!_.get(get_user, 'favoriteButton') && get_theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
+                    :src="item.mf ? (!_.get(userCtr, 'favoriteButton') && get_theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
                 <div class="video-describe">
@@ -127,6 +127,7 @@ import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
+import userCtr from "src/core/user-config/user-ctr.js";
 
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
@@ -433,7 +434,7 @@ import {money_filter} from "src/core/index.js"
     }
     // 没有网络的情况下，初始化页面数据
     const no_wifi = () => {
-      if(!get_user_token){
+      if(!userCtr_token){
         no_menu_txt = "noMatch"
         useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
       }else{
@@ -447,8 +448,8 @@ import {money_filter} from "src/core/index.js"
   //   ...mapGetters({
   //     uid: "get_uid",
   //     get_theme: "get_theme",
-  //     get_user: "get_user",
-  //     get_user_token:'get_user_token',
+  //     userCtr: "userCtr",
+  //     userCtr_token:'userCtr_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
   //     GlobalAccessConfig:'GlobalAccessConfig',
