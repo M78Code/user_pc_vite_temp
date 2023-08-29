@@ -68,7 +68,7 @@ const PageSourceData = IS_PC? PageSourceData_PC:PageSourceData_H5
 
 //=================================     数据仓库=================================
 
-import  MatchDataBase from "./match-ctr/match-ctr.js"
+import  MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 
 
 

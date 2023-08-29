@@ -6,7 +6,7 @@ import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import store from "src/store-redux/index.js";
 import utils from "project_path/src/core/utils/index.js";
-import { get_handicap_w_id } from "../match-utils/other-util"
+import { get_handicap_w_id  } from "src/core/index.js";
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 import MatchListCardClass from '../match-card/match-list-card-class'
 import pageSourceData from "src/core/page-source-h5/page-source-h5.js";
