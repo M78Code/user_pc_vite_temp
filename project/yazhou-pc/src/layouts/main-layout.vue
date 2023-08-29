@@ -421,7 +421,6 @@ const computed_data = reactive({
   cur_odd: globalReducer.odds.cur_odds,
   left_menu_toggle: layoutReducer.left_menu_toggle,
   // 当前菜单类型
-  vx_cur_menu_type: menuReducer.cur_menu_type,
   vx_main_menu_toggle: menuReducer.main_menu_toggle,
   // 获取项目主题
   // theme:userReducer.theme,
@@ -456,7 +455,6 @@ const unsubscribe = store.subscribe(() => {
   computed_data.cur_odd = globalReducer.odds.cur_odds;
   computed_data.left_menu_toggle = layoutReducer.left_menu_toggle;
   // 当前菜单类型
-  computed_data.vx_cur_menu_type = menuReducer.cur_menu_type;
   computed_data.vx_main_menu_toggle = menuReducer.main_menu_toggle;
   // 获取项目主题
   // theme:userReducer.theme,

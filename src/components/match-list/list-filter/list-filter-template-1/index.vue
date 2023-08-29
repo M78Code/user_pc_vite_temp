@@ -10,7 +10,7 @@
     <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
       <!-- 收藏 -->
       <div
-        v-if="menu_config.is_esports() && (!['play', 'hot'].includes(vx_cur_menu_type.type_name)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
+        v-if="menu_config.is_esports() && (!['play', 'hot'].includes(MenuData.cur_menu_type.type_name)) && route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
         class="yb-flex-center yb-hover-bg play-count-wrap" @click.stop="collect">
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
@@ -60,8 +60,6 @@ let state = store.getState();
 const vx_detail_params = ref(state.matchesReducer.params)
 //视屏播放类型
 const vx_play_media = ref(state.matchesReducer.play_media)
-//获取当前菜单信息
-const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 //视频是否展开状态
 const vx_get_is_fold_status = ref(state.globalReducer.is_fold_status)
 
