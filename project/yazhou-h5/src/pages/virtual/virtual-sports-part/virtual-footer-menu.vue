@@ -31,7 +31,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapMutations} from "vuex";
-import { PageSourceData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_footer_menu",

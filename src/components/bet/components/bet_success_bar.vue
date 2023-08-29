@@ -32,7 +32,7 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 // mixins: [bettinglist],
 
 const order_tatus =  ref(1)   //1-投注成功  2-投注确认中  0-投注失败

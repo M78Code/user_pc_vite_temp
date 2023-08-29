@@ -1,6 +1,6 @@
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 import BetData from "./class/bet-data-class.js";
 import {init_bet_single_data} from  "./module/bet-model-single.js"
 

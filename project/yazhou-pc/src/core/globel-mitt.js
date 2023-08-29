@@ -1,11 +1,11 @@
 import { http, AllDomain } from "src/core/http/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { LocalStorage , SessionStorage  } from "src/core/utils/web-storage";
+import { ls, ss } from "src/core/utils/web-storage";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
 import STANDARD_KEY from "src/core/standard-key/";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 const token_key = STANDARD_KEY.get("token");
 // import store from "src/store-redux-vuex/index.js";
@@ -20,7 +20,7 @@ const resetApiDemo = throttle(
   (data) => {
     // 如果用户失效,ws停止请求
    
-    //let token = SessionStorage .get(token_key);
+    //let token = ss.get(token_key);
     if (data && !ss.get(token_key)) {
       return;
     }
@@ -55,7 +55,7 @@ const send_user_pro_info = () => {
     return;
   }
   // 获取用户上次发消息的时间
-  let time = LocalStorage .get("s_user_info_time");
+  let time = ls.get("s_user_info_time");
   // 24小时内只发送一次消息,到服务器
   if (time && new Date().getTime() - time * 1 < 1 * 24 * 60 * 60 * 1000) {
     return;
@@ -96,7 +96,7 @@ const send_user_pro_info = () => {
     projectHref: location.href, // 当前项目的 url  , 例如 https://user-pc.35ri3g.com/#/home  ，有什么 拿什么 不一定带token ,页面的 哈希路径一定 要带上  location.href
     projectInfo: { final_type: project_name }, // 项目信息对象内 必须有一个字段 final_type :  取值范围 ： [  'pc-zhuanye',  'h5-xinban', 'h5-jiuban' ]
     userInfo: userInfo, // 用户信息 对象   user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-    userToken: SessionStorage .get("pc_token"), // 用户的token
+    userToken: ss.get("pc_token"), // 用户的token
     tag: TAG, // 项目的tag版本号
     lang: lang, // 当前用户的选择的页面展示语言
     description: "", // 描述自己附加的描述信息,便于分析问题
@@ -108,7 +108,7 @@ const send_user_pro_info = () => {
   // 发送数据到服务器
   axios_instance.post(http.HTTP_PRO_INFO_API, data).then((res) => {
     // 更新本次次发消息的时间
-    LocalStorage .set("s_user_info_time", new Date().getTime());
+    ls.set("s_user_info_time", new Date().getTime());
     console.log("发送成功");
   });
 };
@@ -167,7 +167,7 @@ const send_api_error_data = throttle(
       }
 
       // 获取api域名信息
-      apiStatus = object || LocalStorage .get(AllDomain.DOMAIN_API);
+      apiStatus = object || ls.get(AllDomain.DOMAIN_API);
     }
     // 拼装需要提交的数据
     let data = {
@@ -177,7 +177,7 @@ const send_api_error_data = throttle(
       projectInfo: PRO_ARR, // 项目信息 对象
       config: window.BUILDIN_CONFIG, // 所有配置信息
       userInfo: userInfo, // 用户信息 对象  ，  //  user/getUserInfo  这个接口返回的 对象  ，包含商户的一些配置
-      userToken: SessionStorage .get("pc_token"), //用户 的  token
+      userToken: ss.get("pc_token"), //用户 的  token
       apiStatus: apiStatus, // 目前页面上 允许的请求 域对象  以及   各自目前的  状态 延迟信息
       lang: lang, // 当前用户的 选择 的 页面展示语言
       description: "", // 描述  ，自己 附加的  描述信息 ，便于分析问题

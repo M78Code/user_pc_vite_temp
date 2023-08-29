@@ -31,9 +31,9 @@ import none_league_icon from "public/yazhou-h5/image/common/match_cup.svg"
 // 无联赛logo图标黑色版
 import none_league_icon_black from "public/yazhou-h5/image/common/match_cup_black.svg"
 
-import image_panda_placeholder from 'public/yazhou-h5/image/panda_placeholder.jpg'
+// import image_panda_placeholder from '/public/yazhou-h5/image/panda_placeholder.jpg'
 
-
+const image_panda_placeholder=''
 export {
   img1, img2, img3, img4, Y0_img_white, match_icon_lock, normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black,
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,

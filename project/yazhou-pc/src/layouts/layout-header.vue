@@ -27,7 +27,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
 import {utils } from 'src/core/index.js'
-import { SessionStorage  } from 'src/core/utils/web-storage.js'
+import { ss } from 'src/core/utils/web-storage.js'
 import { get_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 
@@ -239,7 +239,7 @@ function activity_dialog() {
               }
             } else {
               isShow = true
-              SessionStorage .set('showActivityTime', new Date().getTime())
+              ss.set('showActivityTime', new Date().getTime())
             }
             // 获取图片地址
             site_header_data.img_url = get_file_path(item.imgUrl);
@@ -390,7 +390,7 @@ function navigate(obj) {
   let url = "";
   if (_path == "/bet_record") {
     url = _path;
-    let hide_logo_icon = SessionStorage .get('hide_logo_icon');
+    let hide_logo_icon = ss.get('hide_logo_icon');
     url = router.resolve({ path: url }).href
     const searchParams = new URLSearchParams('');
     if (hide_logo_icon) {
@@ -413,7 +413,7 @@ function navigate(obj) {
   }
 
   // 增加参数
-  let hide_logo_icon = SessionStorage .get('hide_logo_icon');
+  let hide_logo_icon = ss.get('hide_logo_icon');
   if (_path.includes("http")) {
     url = _path;
     if (hide_logo_icon) {

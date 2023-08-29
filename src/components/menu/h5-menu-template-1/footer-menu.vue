@@ -95,7 +95,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
 import { useRoute, useRouter } from 'vue-router'
 
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 // import { Platform } from 'quasar'
 
@@ -539,7 +539,6 @@ import {UserCtr } from "src/core/index.js";
   // computed:{
     // ...mapGetters([
     //   "get_user",
-    //   "get_is_mix",
     //   "get_bet_list",
     //   "get_settle_dialog_bool",
     //   "get_curr_sub_menu_type",

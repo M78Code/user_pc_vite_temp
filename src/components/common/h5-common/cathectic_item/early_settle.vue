@@ -149,7 +149,7 @@ import {utils } from 'src/core/index.js';
 import { Platform } from "quasar";
 import { inject } from 'vue'
 
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 const props = defineProps({
   item_data: {

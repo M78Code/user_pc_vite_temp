@@ -24,7 +24,7 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
 // import { invalid_url } from 'src/core/utils/index.js'
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 
 export default defineComponent({

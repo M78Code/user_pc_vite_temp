@@ -39,7 +39,7 @@ import { ref, reactive } from 'vue'
 import { format_money2 } from 'src/core/utils/global-filters.js'
 import lodash from "lodash"
 import store from "src/store-redux/index.js";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 
 let balance_timer = null // 延时器

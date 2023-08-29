@@ -1,7 +1,7 @@
 
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 import BetData from "./class/bet-data-class.js";
 import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
 import { get_bet_amount_param } from "./bet-amount.js";
@@ -9,7 +9,7 @@ import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";
 import mathjs from "src/core/utils/mathjs.js";
 import yabo_common from "src/core/common-helper/index.js";
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
@@ -23,7 +23,7 @@ import play_mapping from "src/core/constant/config/play_mapping/index.js";
 const get_team_name = ( ) => {
 
     //获取当前下注对象数据
-    let bet_obj = BetData.is_bet_single? _.get(  BetData.bet_single_obj,`bet_single_obj.${BetData.item_cs_id}`):_.get( BetData.bet_ob,`get_bet_obj.${BetData.item_cs_id}`),      team_name = '',hpid='', handicap='';
+    let bet_obj = BetData.is_bet_single? _.get(  BetData.bet_single_obj,`bet_single_obj.${BetData.item_cs_id}`):_.get( BetData.bet_ob,`bet_obj.${BetData.item_cs_id}`),      team_name = '',hpid='', handicap='';
     if(_.has(bet_obj,'bs') && _.has(bet_obj,'cs')) {
       // target_side值为T1是主队 T2是客队
       let item_cs = bet_obj.cs,item_bs = bet_obj.bs,target_side =  _.get(item_cs, 'target_side');

@@ -89,7 +89,7 @@ import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { SessionStorage  } from 'src/core/utils/web-storage.js'
+import { ss } from 'src/core/utils/web-storage.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
 import { format_money2 } from "src/core/format/index.js"
 
@@ -262,7 +262,7 @@ onBeforeMount(clear_timer)
 
 /** 初始化 */
 function init() {
-    is_hide_icon.value = SessionStorage .get('hide_logo_icon') === "1";
+    is_hide_icon.value = ss.get('hide_logo_icon') === "1";
     set_current_index()
 }
 onMounted(init)

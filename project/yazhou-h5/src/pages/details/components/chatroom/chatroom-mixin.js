@@ -6,7 +6,7 @@ import {
   mapGetters,
   mapMutations
 } from "vuex";
-import {UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/index.js"
 
 export default {
   computed: {

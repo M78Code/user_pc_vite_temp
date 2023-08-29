@@ -8,7 +8,7 @@ import WsMan from "src/core/ws/ws-man.js";
 import WsSendManger from "src/core/ws/ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key/index.js";
 import { uniq } from "lodash";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;

@@ -216,7 +216,7 @@ import betBar from "src\components\bet\components\bet-bar.vue";
 // import { api_betting } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 // 此文件需抽离重构
 

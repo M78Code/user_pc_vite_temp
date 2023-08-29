@@ -1,6 +1,6 @@
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 import * as FILEDS_MAP from "../config/fileds-map.js"
 class BetData {
