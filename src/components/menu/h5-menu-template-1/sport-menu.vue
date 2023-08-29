@@ -10,9 +10,9 @@
       <div class="main-wrap flex" :class="{esport:menu_1_type == 7}">
         <!--  返回按鈕  -->
         <div class="goback-icon-wrapper column justify-center" @click="go_home" :class="get_golistpage && 'goback-icon-wrapper2'">
-          <img class="theme01" v-if="get_theme.includes('theme01') && menu_1_type != 7"
+          <img class="theme01" v-if="UserCtr.theme.includes('theme01') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon-theme02.svg"  />
-          <img class="theme02" v-if="get_theme.includes('theme02') && menu_1_type != 7"
+          <img class="theme02" v-if="UserCtr.theme.includes('theme02') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon.svg"  />
           <img class="esport" v-if="menu_1_type == 7"
                src="image/wwwassets/bw3/svg/go-back-icon-esport.svg"  />
@@ -44,7 +44,7 @@
                 </span>
                 <i v-if="m_m_i === 1"
                    class="dir-triangle"
-                   :class="{open:show_selector_s2,arrow_esport:menu_1_type == 7 || get_theme == 'theme02'}">
+                   :class="{open:show_selector_s2,arrow_esport:menu_1_type == 7 || UserCtr.theme == 'theme02'}">
                 </i>
               </div>
             </div>
@@ -180,14 +180,16 @@ import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
 import utils from "utils/utils";
 import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
-import { api_result} from "src/project/api/index.js";
-import { activity_task_api } from "src/public/api";
+import { api_analysis} from "src/project/api/index.js";
+import { activity_task_api } from "src/api";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
 import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js" 
 import { watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
+
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // import{ date }  from 'quasar'
 
@@ -528,7 +530,7 @@ import { useRoute } from 'vue-router'
           result_sub_menu_api_handle(JSON.parse(cache_data_str), type);
         }else{ // 每次点击一级菜单时，都触发赛果  获取赛果二级菜单  接口
           // 如果当前主菜单是赛果, 获取赛果二级菜单
-          let {code, data} = await api_result.get_result_menu()
+          let {code, data} = await api_analysis.get_result_menu()
           if (code == 200 && Array.isArray(data)) {
             if(lodash.get(data,'[0].menuType')==29){
               // 当是我的投注时菜单进行时间排序
@@ -917,7 +919,7 @@ import { useRoute } from 'vue-router'
        let cache_data_str = sessionStorage.getItem('result_sub_menu_cache')
       try {
         // 如果当前主菜单是赛果, 获取赛果二级菜单
-      let {code, data} = await api_result.get_result_menu()
+      let {code, data} = await api_analysis.get_result_menu()
       if (code == 200 && Array.isArray(data)) {
         if(lodash.get(data,'[0].menuType')==29){
           // 当是我的投注时菜单进行时间排序

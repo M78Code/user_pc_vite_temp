@@ -146,12 +146,10 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
     });
   });
 };
-// 详情页赛事结束自动切换赛事接口(业务:yk)
-export const get_detail_video = (params, config, url = "/v1/w/getDetailVideo") => http.get(`${prefix}${url}`, params, config)
+ 
 // 详情页下拉列表
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
-// 置顶接口
-export const get_category_playTop = (params, config, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params, config)
+
 // 赛事详情页面接口（christion）
 export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix}${url}`, params, config)
 // 赛果详情页面接口（christion）

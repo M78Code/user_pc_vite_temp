@@ -71,7 +71,7 @@
           <div
             class="yb-flex-center yb-hover-bg"
             @click.stop="collect"
-            v-if="get_global_switch.collect_switch"
+            v-if="GlobalAccessConfig.get_collectSwitch()"
           >
             <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
             
@@ -107,6 +107,7 @@ import { t } from "src/boot/i18n";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import { get_match_status, is_show_sr_flg } from 'src/core/utils/index.js'
@@ -116,13 +117,10 @@ let state = store.getState()
 
 const hv = ref('');
 const hv_ol = ref({_hid: -1});
-//全局开关
-const get_global_switch = reactive(state.globalReducer.global_switch)
-
 hv_ol.value = this.match.main_handicap_list[0].ols[1]
 // 其他玩法标题
 const handicap_num = computed(() => {
-  if(this.get_global_switch.handicap_num){
+  if(GlobalAccessConfig.get_handicapNum()){
     return `+${ this.match.mc || 0}`
   }else{
     return  t('match_info.more')

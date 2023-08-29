@@ -7,7 +7,7 @@ import SetData from "src\core\bet\bet-data-ctr-class.js";
 
 // 去注单记录页查看
 const go_record = () => {
-    set_bet_list([])
+    BetData.set_bet_list([])
     useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, true);
 }
 
@@ -16,7 +16,7 @@ const go_record = () => {
  *@param {Number} val 点击的哪个按钮，2代表是投注框左下角按钮
  */
 const pack_up = (val) => {
-    if ([0, 2].includes(+get_bet_status.value)) {
+    if ([0, 2].includes(+BetData.bet_status)) {
         return
     }; //投注提交中不能点击
 
@@ -25,12 +25,12 @@ const pack_up = (val) => {
     }
 
     // 保留选项
-    if (val == 2 && get_bet_success.value) {
+    if (val == 2 && BetData.bet_success) {
         set_keyboard_show(true)
-        set_is_spread(false);
+        BetData.set_is_spread(false);
         tips_msg = ''
         clear_single_money()
-        set_bet_status(1)
+        BetData.set_bet_status(1)
         set_money_total('clear_')
         set_active_index(0)
         clearInterval(timer_count)
@@ -40,35 +40,35 @@ const pack_up = (val) => {
 
     // 冠军玩法没有串关，清空数据处理
     if (get_is_champion.value()) {
-        set_bet_list([]);
+        BetData.set_bet_list([]);
         return
     }
 
     // 删除全部
-    if (val == 2 && get_bet_list.value.length >= 2) {
-        set_bet_list([]);
+    if (val == 2 && BetData.bet_list.length >= 2) {
+        BetData.set_bet_list([]);
         return
     }
 
     //串关+
-    if (val == 2 && get_bet_list.value.length == 1) {
-        set_bet_status(0);
+    if (val == 2 && BetData.bet_list.length == 1) {
+        BetData.set_bet_status(0);
         set_is_mix(true)
     }
 
     if (
-        get_is_mix.value && [1, 5, 7].includes(+get_bet_status.value)
+        get_is_mix.value && [1, 5, 7].includes(+BetData.bet_status)
     ) {
-        set_bet_status(0);
+        BetData.set_bet_status(0);
         return
     }
 
     // 投注后点击蒙层，X ，或者确定直接删除，或者单关点蒙层
     if (
-        [3, 4, 6, 8].includes(+get_bet_status.value) ||
-        get_bet_list.value.length == 1 && val != 2
+        [3, 4, 6, 8].includes(+BetData.bet_status) ||
+        BetData.bet_list.length == 1 && val != 2
     ) {
-        set_bet_list([]);
+        BetData.set_bet_list([]);
         return
     }
 }
@@ -108,7 +108,7 @@ const submit_order = () => {
     };
 
     // 这种情况放过，让钱投注出去
-    let _flag2 = get_money_total.value == get_user.value.balance
+    let _flag2 = get_money_total.value == UserCtr.balance
     if (get_money_notok_list2.value.length && !_flag2) {
         //点击投注后当输入金额小于最低限额时，默认转化为最低限额。并提示“最小单笔投注金额为 xx.” 3s消失。
         set_money_notok_list({
@@ -119,14 +119,14 @@ const submit_order = () => {
 
     set_active_index(-1);
 
-    if (get_bet_status.value == 7) { //锁盘
+    if (BetData.bet_status.value == 7) { //锁盘
         set_toast({
             'txt': i18n.t('bet.odd_upd')
         });
         return;
     }
 
-    if (get_money_total.value > +get_user.value.balance || get_user.value.balance == 0) { //弹窗提示：“余额不足，请您先充值”
+    if (get_money_total.value > +UserCtr.balance || UserCtr.balance == 0) { //弹窗提示：“余额不足，请您先充值”
         set_toast({
             'txt': i18n.t('bet.err_msg05')
         });
@@ -167,7 +167,7 @@ const submit_order = () => {
  */
 const agree_change = (val) => {
     set_odds_change(false);
-    set_bet_status(1);
+    BetData.set_bet_status(1);
     set_change_list({
         status: 0
     });

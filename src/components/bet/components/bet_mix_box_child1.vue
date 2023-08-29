@@ -138,9 +138,10 @@ import keyBoard from './keyboard.vue';
 import ballSpin from './ball_spin.vue';
 import betBar from "./bet_bar.vue";
 import betConflictTips from './bet-conflict-tips'
-import utils from 'src/public/utils/utils.js';
+import utils from 'src/core/utils/utils.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import BetData from "../class/bet-data-class";
+import { format_money2 } from'src\core\format\index.js'
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
 const exist_code = ref(0)    //投注后是否返回code码
@@ -156,7 +157,7 @@ const playname2 = ref('')  //单关投注成功后接口返回的玩法名称
 const bet_money = ref(0)   //单关投注成功后接口返回的投注金额
 const play_optionname = ref('')   //单关投注成功后接口返回的playOptionName
 const max_height1 = ref(230)   //滚动区域的最大高
-const is_new_bet = ref(false)   //get_orderstatus 接口返回是否是新流程
+const is_new_bet = ref(false)   //query_order_status 接口返回是否是新流程
 const need_bet_again = ref(false)  //是否需要重新发起投注
 const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
 const scroll_box_ele = ref(null)   // dom元素

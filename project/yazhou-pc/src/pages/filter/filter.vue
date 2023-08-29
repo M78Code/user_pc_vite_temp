@@ -79,7 +79,7 @@
 </template>
 <script setup>
 import { onMounted, ref, onUnmounted, watch } from "vue";
-// import { api_filter } from "src/public/api/index";
+// import { api_filter } from "src/api/index";
 // import global_mixin from "src/public/mixins/global/global_mixin.js"; 需替换
 // import { mapGetters, mapActions } from "vuex"; 需替换
 // import LoadData from "src/public/components/load_data/load_data.vue";

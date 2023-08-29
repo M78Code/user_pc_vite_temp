@@ -9,9 +9,7 @@
       <!-- 左 -->
       <div class="content-t">
         <p class="yb_fontsize16 black-color">{{ i18n.t('bet.single_more') }}</p>
-        <!-- <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
-            :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
-            class="yb_fontsize12">&thinsp;{{ max_win_money | four_five_six_double | format_money2 }}</span></p> -->
+ 
         <p style="font-size:0.11rem">{{ i18n.t('bet.total_win2') }} <span
             :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }"
             class="yb_fontsize12">&thinsp;{{  format_money2(four_five_six_double(max_win_money) ) }}</span></p>
@@ -24,7 +22,7 @@
         <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
-        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
+        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ BetData.bet_money_format() }}</span>
         <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
     </div>
@@ -37,6 +35,9 @@
 const licia_format = require('licia/format');
 // import global_filters from 'src/boot/global-filters.js';
 import store from "src/store-redux/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { format_money3,format_money2 } from'src\core\format\index.js'
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -48,22 +49,17 @@ const index_ = ref(-1)//光标默认索引
 
 const store_state = store.getState()
 
-const get_is_spread = ref(store_state.get_is_spread)
 const get_s_count_data = ref(store_state.get_s_count_data)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_order_los = ref(store_state.get_order_los)
-const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
 
 const update_state = () => {
   const new_state = store.getState()
-  BetData.active_index = new_state.BetData.active_index
-  get_is_spread.value = new_state.get_is_spread
   get_s_count_data.value = new_state.get_s_count_data
   get_bet_status.value = new_state.get_bet_status
   get_order_los.value = new_state.get_order_los
-  get_user.value = new_state.get_user
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
 }
@@ -222,7 +218,7 @@ onmounted(() => {
     if (!max_money_back.value) {
       max_money = 8888;
       // 获取接口返回的单关最小投注金额
-      min_money.value = _.get(get_user.value, 'cvo.single.min', 10)
+      min_money.value = _.get(UserCtr, 'cvo.single.min', 10)
 
       if (max_money < min_money.value) {
         min_money.value = max_money
@@ -320,8 +316,8 @@ const change_money_ = (new_money) => {
  */
 const check_moneyok = (val) => {
   //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-  if (val > +get_user.value.balance) {
-    money.value = get_user.value.balance.toString()
+  if (val > +UserCtr.balance) {
+    money.value = UserCtr.balance.toString()
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money })
 

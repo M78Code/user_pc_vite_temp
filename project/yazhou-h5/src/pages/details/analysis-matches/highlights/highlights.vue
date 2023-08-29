@@ -22,7 +22,7 @@
             <div class="dot-game-over"></div>
             <div class="item-flag icon-flag-game-over"></div>
             <div class="item-content real-time-contv-ifent hairline-border">
-              <!-- <span class="time">{{ lodash.get(get_detail_data, 'mststr', 0) | format_mgt_time}}</span> -->
+
               <span class="time" v-if="get_detail_data.mmp==31">{{ t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
               <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
@@ -210,13 +210,14 @@ import {
 } from 'vue'
 import lodash from 'lodash'
 // TODO: 后续修改调整
-import {api_common, api_result} from "src/api/index.js";
+import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import utils from "src/core/utils/utils.js"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -495,7 +496,7 @@ const get_football_replay = (event_code) => {
     device: 'H5',
     eventCode: event_code
   }
-  api_result.get_replay_football(params)
+  api_analysis.post_playback_video_url(params)
     .then(res => {
       if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
         events_list.value = res.data.eventList
@@ -660,7 +661,7 @@ const exit_browser_full_screen = () => {
   }
 }
 // 精彩回播配置信息
-watch(() => get_user.merchantEventSwitchVO, (res) => {
+watch(() => userCtr.merchantEventSwitchVO, (res) => {
   // handler = (res) => {
   // tab按钮开关
   // TODO:  国际化后续修改调整
@@ -745,8 +746,8 @@ const slider_events_list = computed(() => {
 })
 // 鉴权域名 + 回放视频url（拼接后的最终url）
 const replay_video_src = computed(() => {
-  // TODO:  get_user  get_lang 后续修改调整
-  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(get_user, 'oss.live_h5')
+  // TODO:  userCtr  get_lang 后续修改调整
+  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(userCtr, 'oss.live_h5')
   return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 })
 // slider列表长度是否小于屏幕横屏宽度
@@ -781,7 +782,7 @@ onUnmounted(() => {
   //     'get_is_full_screen',
   //     'get_is_dp_video_full_screen',
   //     'get_match_real_time',
-  //     'get_user',
+  //     'userCtr',
   //     'get_lang',
   //   ]),
 

@@ -52,7 +52,7 @@
                       {{calc_score(item)}}
                     </template>
                     <template v-else>
-                      {{item | format_total_score(0)}} - {{item | format_total_score(1)}}
+                      {{  format_total_score(item,0)}} - {{   format_total_score(item,1)}}
                     </template>
                   </span>
                 </div>
@@ -71,7 +71,7 @@
             </div>
             <div v-if="index != math_list_data.length-1" class="new-dialog-item-line details-border1-bottom"></div>
 
-            <img v-if="show_lvs(item)" :src="get_theme.includes('theme01') ? icon_video :
+            <img v-if="show_lvs(item)" :src="UserCtr.theme.includes('theme01') ? icon_video :
             icon_video_black" alt=""
                  class="icon-style">
           </div>
@@ -89,6 +89,8 @@ import team_img from 'src/project/components/details/team_img.vue'    // 详情�
 import match_stage from 'src/project/components/match/match_stage.vue';   // 下拉列表赛事时间展示
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';   // 详情点击下拉显示当前赛事的时间
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'   // 详情页同联赛的赛事即将开赛显示时间
+
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   name: "details_dialog",
@@ -112,7 +114,6 @@ export default {
       'get_lang',
       'get_current_menu',
       'get_details_tabs_list',
-      'get_theme'
     ]),
     is_match_result(){
       return ['result_details', 'match_result'].includes(this.$route.name)

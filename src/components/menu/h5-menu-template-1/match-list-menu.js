@@ -483,7 +483,7 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
         let api_func = null,params = {"euid":this.get_current_sub_menuid};
         if(3000 == this.menu_type){
-          api_func = api_home.esport_date_menu_api;
+          api_func = api_common. get_esports_date_menu;
           let value = item.mi.slice(1,4)
           params = {csid:value};
           if(!params.csid){
@@ -491,7 +491,7 @@ export default {
           }
         }
         else{
-          api_func = api_home.post_date_menulist;
+          api_func = api_match.post_date_menu;
         }
         await api_func(params).then(res => {
           if(res.code == 200){
@@ -685,7 +685,6 @@ export default {
       get_lang:"get_lang",
       cuid: "get_uid",                      // 获取当前uuid或用户id
       show_favorite_list:"get_show_favorite_list", // 显示收藏列表
-      user_info: "get_user",                   // 当前登录的用户信息
       get_current_menu: "get_current_menu",    // 获取当前主菜单
       current_esport_csid:'get_current_esport_csid',  // 电竞游戏csid
       get_list_scroll_direction:'get_list_scroll_direction',

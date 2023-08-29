@@ -32,7 +32,7 @@
       </div>
   
       <!-- 是否收藏 -->
-      <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="get_global_switch.collect_switch">
+      <span @click.stop="collect" class="yb-flex-center yb-hover-bg m-star-wrap-match" v-if="GlobalAccessConfig.get_collectSwitch()">
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
       </span>
       <!-- 统计分析 -->
@@ -58,9 +58,11 @@ import { computed, defineProps } from 'vue';
 import lodash from 'lodash';
 import { t } from "src/boot/i18n";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-;
+
 
 const team_names = computed(() => {
   let { mhn = '', man = '', up_half_text = '' } = this.match

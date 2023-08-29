@@ -311,6 +311,7 @@
 </template>
 <script setup>
 // import bet_single_info from "src/public/mixins/bet/bet_single_info";
+import { format_odds } from'src\core\format\index.js'
 const props = defineProps({
   is_forward: {
       type:Number,

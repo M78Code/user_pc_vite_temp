@@ -31,12 +31,7 @@ export const get_basketball_score = (params, config={}, url  = "/v1/w/virtual/ge
 
 
 
-//虚拟体育菜单
-export const get_virtual_menus = (params, config={}, url = "/v1/w/virtual/menus") => {
-    if(!params) params = {};
-    params.device = 'V1_H5';
-    return http.get(`${prefix}${url}`, params, config);
-  };
+ 
   
   //获取虚拟赛事视频进程
   export const get_virtual_video_process = (params, config={}, url = "/v1/w/virtualReplay") => {

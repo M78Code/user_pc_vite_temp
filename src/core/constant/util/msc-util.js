@@ -1,17 +1,17 @@
 import { t } from "src/boot/i18n";
 import { format_msc } from 'src/core/format/index.js'
 
-const mmp_map = () => {
+export const mmp_map = () => {
   return t("mmp") || "";
 };
-const mmp_map_v2 = () => {
+export const mmp_map_v2 = () => {
   return t("mmp_v2") || "";
 };
-const msc_map = () => {
+export const msc_map = () => {
   return t("msc") || "";
 };
 
-const score_dict = Object.freeze({
+export const score_dict = Object.freeze({
   // 【足球】下半场，点球大战比分
   1: ["S7", "S170"],
   // 【篮球半场】上半场，下半场，加时赛比分
@@ -40,7 +40,7 @@ const score_dict = Object.freeze({
   16: ["S19", "S20", "S21", "S22", "S7", "S170"],
 });
 /** 根据mmp 或是 mct 匹配比分*/
-const state_convert_dict = Object.freeze({
+export const state_convert_dict = Object.freeze({
   //【篮球】——根据mmp
   2: {
     // 上半场比分
@@ -230,7 +230,7 @@ const state_convert_dict = Object.freeze({
  * @param {Object} match
  * @return {type}
  */
-const set_basic_key = (match) => {
+export const set_basic_key = (match) => {
   let key = "S1";
   // 足球 | 手球
   if ([1, 11].includes(Number(match.csid))) {
@@ -251,7 +251,7 @@ const set_basic_key = (match) => {
  * @param  {object} match  当场赛事信息
  * @return {undefined} undefined
  */
-const set_main_score = (match) => {
+export const set_main_score = (match) => {
   let _home_score = "";
   let _away_score = "";
   if (this.$utils.get_match_status(match.ms)) {
@@ -289,7 +289,7 @@ const set_main_score = (match) => {
  * @param  {object} match  当场赛事信息
  * @return {undefined} undefined
  */
-const get_match_score = (match) => {
+export const get_match_score = (match) => {
   let _home_score = "";
   let _away_score = "";
   if (this.$utils.get_match_status(match.ms)) {
@@ -322,8 +322,8 @@ const get_match_score = (match) => {
  * @param  {object} match  当场赛事信息
  * @return {undefined} undefined
  */
-const score_switch_handle = (match) => {
-  const csid = Number(match.csid);
+export const score_switch_handle = (match) => {
+  export const csid = Number(match.csid);
   if (!_.has(match, "home_red_score")) {
     match.home_red_score = "";
   }

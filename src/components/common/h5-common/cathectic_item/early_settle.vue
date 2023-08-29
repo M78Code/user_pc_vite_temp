@@ -47,11 +47,11 @@
         <!-- 右边设置按钮 -->
         <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && get_user.pcs" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
-            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
+            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="get_theme.includes('theme01')"  alt="">
+            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('theme01')"  alt="">
             <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
           </template>
 
@@ -149,6 +149,8 @@ import utils from "src/public/utils/utils.js";
 import { Platform } from "quasar";
 import { inject } from 'vue'
 
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 const props = defineProps({
   item_data: {
     type: Object
@@ -188,7 +190,6 @@ const props = defineProps({
 
     // ...mapGetters([
       //当前皮肤
-    //   "get_theme",  
     //用户信息
     //   "get_user",   
     // 0未结算/筛选 1已结算/搜索
@@ -347,7 +348,7 @@ const props = defineProps({
     //       "msg":"成功",
     //       "ts":1640154455939
     //     } */
-    //     api_betting.queryOrderPreSettleConfirm().then((res) => {
+    //     api_betting.query_order_pre_settle_confirm().then((res) => {
     //       if (!(status == 3 && res.code == 200 && lodash.isArray(res) && res.length > 0)) return
     //       for (const item of res.data) {
     //         if (item.orderNo != item_data.orderNo) continue
@@ -478,7 +479,7 @@ const props = defineProps({
       if (details_show) {
         details_show = false;
       } else {
-        api_betting.getPreSettleOrderDetail({ orderNo: item_data.orderNo }).then((res) => {
+        api_betting.get_pre_settle_order_detail({ orderNo: item_data.orderNo }).then((res) => {
           let { code, data = [] } = res || {};
           if (code == 200) {
             presettleorderdetail_data = data;
@@ -506,7 +507,7 @@ const props = defineProps({
         frontSettleAmount: String(front_settle_amount || expected_profit), 
       };
       // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
-      api_betting.orderPreSettle(params).then((res) => {
+      api_betting.post_pre_bet_order(params).then((res) => {
         if (res.code == 200) {
           status = 4;
         } else if (res.code == "0400524") {

@@ -1,6 +1,6 @@
 import { reactive, computed } from "vue";
 // 引入接口封装文件
-import { api_common, api_result } from "src/api/index.js";
+import { api_common, api_analysis } from "src/api/index.js";
 //  无数据显示组件
 // import no_data from "project_path/src/components/common/no-data.vue"
 
@@ -345,7 +345,7 @@ export const category_info = () => {
     // 调用: /v1/m/matchDetail/getMatchOddsInfoPB接口
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
-      ? api_result.get_match_result
+      ? api_analysis.get_match_result
       : get_menu_type.value == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;
@@ -696,7 +696,7 @@ export const category_info = () => {
     }
     //赛果页面调用赛果玩法详情接口
     let http = ["result_details", "match_result"].includes(route.name)
-      ? api_result.get_match_result
+      ? api_analysis.get_match_result
       : get_menu_type == 3000
       ? api_common.get_DJ_matchDetail_getMatchOddsInfo
       : api_common.get_matchDetail_getMatchOddsInfo;

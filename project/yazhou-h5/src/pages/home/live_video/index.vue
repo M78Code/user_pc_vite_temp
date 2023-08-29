@@ -62,11 +62,11 @@
               <div class="video_list_left" :style="{backgroundImage: 'url(' + (item.mgif ? item.mgif : `${ $g_image_preffix }/image/bw3/png/live_loading.png`) + ')'}">
                 <div class="player">
                   <img  src="image/bw3/svg/home/play.svg" alt="">
-                  <span>{{ item.plnum | money_filter}}</span>
+                  <span>{{ money_filter(item.plnum)    }}</span>
                 </div>
                 <img
                     v-if="GlobalAccessConfig.get_collectSwitch()"
-                    :src="item.mf ? (!_.get(get_user, 'favoriteButton') && get_theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
+                    :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
                 <div class="video-describe">
@@ -126,7 +126,8 @@ import scroll_top from 'src/project/components/record-scroll/scroll-top'
 import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-
+import {money_filter} from "src/core/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
@@ -203,7 +204,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) =>{
-      if(get_theme.includes('theme02')){
+      if(UserCtr.theme.includes('theme02')){
         $event.target.src = 'image/bw3/svg/match_cup_black.svg'
       } else {
         $event.target.src = 'image/bw3/svg/match_cup.svg'
@@ -432,7 +433,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
     }
     // 没有网络的情况下，初始化页面数据
     const no_wifi = () => {
-      if(!get_user_token){
+      if(!UserCtr_token){
         no_menu_txt = "noMatch"
         useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
       }else{
@@ -445,9 +446,8 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
   // computed: {
   //   ...mapGetters({
   //     uid: "get_uid",
-  //     get_theme: "get_theme",
-  //     get_user: "get_user",
-  //     get_user_token:'get_user_token',
+  //     UserCtr: "UserCtr",
+  //     UserCtr_token:'UserCtr_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
   //     GlobalAccessConfig:'GlobalAccessConfig',

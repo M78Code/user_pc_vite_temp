@@ -12,7 +12,7 @@
         <span v-else-if="top_.sportId == 103" style="--num:40"></span>
         <span v-else-if="top_.sportId == 102" style="--num:41"></span>
         <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="get_theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
+        <img v-if="UserCtr.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
         <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
       </p>
       <p class="col league-title-w ellipsis">
@@ -40,6 +40,8 @@
 
 <script setup>
 import { api_betting } from 'src/project/api';
+
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import { mapGetters } from "vuex";
 
 const props = defineProps({
@@ -71,7 +73,6 @@ const props = defineProps({
   })
   // computed: {
   //   ...mapGetters([
-  //     'get_theme',
   //     'get_combine_tips_show'
   //   ])
   // },

@@ -14,7 +14,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(store_data, `get_theme.includes('theme01')`)"><img  src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
+          <template v-if="lodash.get(UserCtr, `theme.includes('theme01')`)"><img  src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
           <template v-else><img  src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>
       </div>
@@ -40,9 +40,11 @@ import unsettle from "./unsettle.vue"
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import lodash from 'lodash'
 import store  from "src/store-redux"
+import userCtr from "src/core/user-config/user-ctr.js";
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
   // provide(){
@@ -56,14 +58,14 @@ import { t } from "src/boot/i18n";;
   let _provided = ref({})
   // 锚点
   let unsettleChild = ref(null)
-  let store_data = ref(store.getState())
+  let userCtr = ref(store.getState())
   // computed: {
-  //   ...mapGetters(['get_main_item','get_theme','get_user']),
+  //   ...mapGetters(['get_main_item',,'userCtr']),
 
   // },
   //判断该商户是否有权限预约投注
   // const authorityFlag = computed(() => {
-  //     const bookBet = lodash.get(get_user, 'configVO.bookBet')
+  //     const bookBet = lodash.get(userCtr, 'configVO.bookBet')
   //     return bookBet == 1
   // })
 
@@ -73,7 +75,7 @@ import { t } from "src/boot/i18n";;
   //   TODO: 后续修改调整
   //   window.onresize = height_calc
       // 查询待确认中的提前结算单
-  //   api_betting.queryOrderPreSettleConfirm().then(res => {
+  //   api_betting.query_order_pre_settle_confirm().then(res => {
   //     let {code,data} = res || {}
   //     if(code == 200 && data) {
         // 待确认中的提前结算单

@@ -15,7 +15,7 @@ import lodash from "lodash";
 import * as play_mapping from "src/core/constant/config/play-mapping.js";
 
 
-const  post_submit_Bet_list_gcuuid = ref(uid())
+const  post_submit_bet_list_gcuuid = ref(uid())
 
 
    /**
@@ -426,16 +426,16 @@ const  post_submit_Bet_list_gcuuid = ref(uid())
             return;
           }
         }
-        post_submit_Bet_list_gcuuid.value = uid();
-        parm.gcuuid = post_submit_Bet_list_gcuuid.value ;
-        // console.log('post_submit_Bet_list====',parm);
+        post_submit_bet_list_gcuuid.value = uid();
+        parm.gcuuid = post_submit_bet_list_gcuuid.value ;
+        // console.log('post_submit_bet_list====',parm);
         // debugger
         // 押注项调用提交接口
-        api_betting.post_submit_Bet_list(parm).then(res => {
+        api_betting.post_submit_bet_list(parm).then(res => {
         
   
           let gcuuid = _.get(res,'config.gcuuid')
-          if( gcuuid && post_submit_Bet_list_gcuuid.value  != gcuuid) {
+          if( gcuuid && post_submit_bet_list_gcuuid.value  != gcuuid) {
             return;
           }
           let code = _.get(res, "data.code");

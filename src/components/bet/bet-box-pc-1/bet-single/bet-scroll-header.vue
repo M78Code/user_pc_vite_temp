@@ -62,7 +62,7 @@
           <template v-if="BetDataCtr.is_bet_single">
             <!--复式串关已改为串关-->
             <span class="series_style"
-              :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(get_lang) }">{{ i18n.t('bet.bet_series') }}</span>
+              :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(UserCtr.lang) }">{{ i18n.t('bet.bet_series') }}</span>
             <span>+</span>
           </template>
           <!--单关-->
@@ -133,6 +133,7 @@
 
 <script setup>
 import { onMounted } from "vue"
+import UserCtr from "src/core/user-config/user-ctr.js";
 const props = defineProps({
   bet_recode_this: Object,
   //是不是内嵌框,默认不是
@@ -171,8 +172,6 @@ onMounted(() => {
 // BetData.is_bet_merge: "get_is_bet_merge",
 // // 被预约的投注项id
 // BetData.bet_appoint_obj: "get_bet_appoint_obj",
-// get_lang: 'get_lang'  ,
-// BetData.theme: "get_theme",
 
 /**
  * @description:是否显示右边的单关或者复式串关按钮

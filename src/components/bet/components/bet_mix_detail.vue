@@ -20,7 +20,7 @@
         <span v-if="money" class="yb_fontsize20 money-number">{{  format_money3(money) }}</span>
         <span class="money-span" ref="money_span"
           :class="{ 'money-span2': !(BetData.active_index == index_ && [1, 7].includes(+get_bet_status)) }"></span>
-        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ get_money_format() }}</span>
+        <span v-if="!money && max_money_back" class="yb_fontsize14 limit-txt">{{ BetData.bet_money_format() }}</span>
         <span @click.stop="clear_money" class="money-close" :style="{ opacity: money > 0 ? '1' : '0' }">x</span>
       </div>
     </div>
@@ -34,6 +34,9 @@
 import store from "src/store-redux/index.js";
 import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { format_money2 , format_money3} from'src\core\format\index.js'
+
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -47,12 +50,11 @@ emitters.value = ref({
 
 
 const store_state = store.getState()
-const BetData.active_index = ref(store_state.BetData.active_index)
+const active_index = ref(store_state.BetData.active_index)
 const get_is_spread = ref(store_state.get_is_spread)
 const get_s_count_data = ref(store_state.get_s_count_data)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_order_los = ref(store_state.get_order_los)
-const get_user = ref(store_state.get_user)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 const get_menu_type = ref(store_state.get_menu_type)
 
@@ -67,7 +69,6 @@ const update_state = () => {
   get_s_count_data.value = new_state.get_s_count_data
   get_bet_status.value = new_state.get_bet_status
   get_order_los.value = new_state.get_order_los
-  get_user.value = new_state.get_user
   get_money_notok_list2.value = new_state.get_money_notok_list2
   get_menu_type.value = new_state.get_menu_type
 }
@@ -112,7 +113,7 @@ onMounted(() => {
     if (!max_money_back.value) {
       max_money.value = 8888;
       // 获取接口返回的串关最小投注金额
-      min_money.value = _.get(get_user.value, 'cvo.series.min', 5)
+      min_money.value = _.get(UserCtr, 'cvo.series.min', 5)
       if (max_money.value < min_money.value) {
         min_money.value = max_money.value
       }
@@ -213,7 +214,7 @@ watch(() => BetData.bet_list.value.length, (new_) => {
     if (!max_money_back.value) {
       max_money.value = 8888;
       // 获取接口返回的串关最小投注金额
-      min_money.value = _.get(get_user.value, 'cvo.series.min', 5)
+      min_money.value = _.get(UserCtr, 'cvo.series.min', 5)
       if (max_money.value < min_money.value) {
         min_money.value = max_money.value
       }
@@ -353,8 +354,8 @@ const set_money_change = (money) => {
  */
 const check_moneyok = (val) => {
   //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-  if (val > +get_user.value.balance && BetData.bet_list.value.length == 2) {
-    money.value = get_user.value.balance.toString()
+  if (val > +UserCtr.balance && BetData.bet_list.value.length == 2) {
+    money.value = UserCtr.balance.toString()
 
     useMittEmit(MITT_TYPES.EMIT_SEND_VALUE, { money: money.value, max_money: max_money.value })
     tips_msg_update(i18n.t('bet.err_msg09'))

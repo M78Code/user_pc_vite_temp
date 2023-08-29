@@ -1,12 +1,13 @@
 import lodash from "lodash";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {api_common, api_result} from "src/api/index.js";  // API 公共入口
+import {api_common, api_analysis} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick } from "vue";
+import userCtr from "src/core/user-config/user-ctr.js";
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
@@ -126,12 +127,11 @@ const route = useRoute();
     get_golistpage: "get_golistpage",
     get_godetailpage: "get_godetailpage",
     get_betbar_show: true,
-    // 是否显示全屏下投注弹窗
-    get_bet_show: "get_bet_show",
+
     get_is_hengping: false,
     get_is_dp_video_full_screen: "get_is_dp_video_full_screen",
     get_match_base_info_obj: "get_match_base_info_obj",
-    get_user: "get_user",
+    userCtr: "userCtr",
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
     GlobalAccessConfig: "GlobalAccessConfig",
@@ -157,7 +157,7 @@ const route = useRoute();
   const show_chatroom_tab = computed(() => {
     // 中文，繁体并且聊天室ID不为空才显示聊天室Tab, crs 0关闭1打开
     const { crs } = data.get_details_chatroom_data || {};
-    const { chatRoomSwitch } = data.get_user || {};
+    const { chatRoomSwitch } = data.userCtr || {};
     return (
       ["zh", "tw"].includes(data.get_lang) && crs == 1 && chatRoomSwitch == 1
     );
@@ -186,7 +186,7 @@ const route = useRoute();
   // 重播图标
   const icon_replay = computed(() => {
     const { configValue, eventSwitch } = lodash.get(
-      data.get_user,
+      data.userCtr,
       "merchantEventSwitchVO",
       {}
     );
@@ -442,7 +442,7 @@ const route = useRoute();
     //       device: 'H5',
     //       eventCode: event_code
     //     }
-    //     api_result.get_replay_football(params)
+    //     api_analysis.post_playback_video_url(params)
     //         .then(res => {
     //           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
     //             set_event_list(res.data.eventList)
@@ -778,7 +778,7 @@ const route = useRoute();
       mid: matchid.value,
     };
 
-    api_common.get_detail_video(params).then((res) => {
+    api_details.get_detail_video(params).then((res) => {
       let event_data = lodash.get(res, "data", {});
       if (event_data && event_data.mid) {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型

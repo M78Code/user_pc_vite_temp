@@ -83,7 +83,7 @@ export const useGetConfig = () => {
   // 获取右侧布局类型
   const cur_expand_layout = ref(store_state.layoutReducer.cur_expand_layout);
   // //播放类型
-  const vx_play_media = ref(store_state.matchesReducer.play_media);
+  const play_media = ref(store_state.matchesReducer.play_media);
   // 玩法集对应玩法缓存数据
   const get_details_data_cache = ref(
     store_state.matchesReducer.details_data_cache
@@ -200,7 +200,7 @@ export const useGetConfig = () => {
    */
   const back_to = (is_back = true) => {
     // 重新请求相应接口
-    if (vx_play_media.value.media_type === "topic") {
+    if (play_media.value.media_type === "topic") {
       video.send_message({
         cmd: "record_play_info",
         val: {

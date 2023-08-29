@@ -120,7 +120,7 @@
                 </span>
               </div>
               <!--赛事列表收藏-->
-              <div v-if="lodash.get(get_access_config, 'collectSwitch')" class="favorite-icon-top match list-m"
+              <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
                 @click.stop="toggle_collect(match, i, 'mf')">
                 <!-- 未收藏图标 -->
                 <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="not_favorited_computing_icon" alt="">
@@ -305,7 +305,7 @@
                       </div>
                       <!-- 足篮球展示赛事分析图标 -->
                       <div class="column justify-center yb_px4"
-                        v-if="[1, 2].includes(+match.csid) && lodash.get(get_access_config, 'statisticsSwitch')"
+                        v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
                         <img src="image/bw3/svg/match_analysis.svg" alt="" style="width:0.12rem"
                           v-if="get_theme.includes('theme01')">
@@ -320,10 +320,10 @@
                       <div class="goto-detail" @click='goto_details(match)'>
                         <span class="count_span" :class="{ esports: 3000 == menu_type }">
                           <span class="mc-n">
-                            {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) :
+                            {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) :
                               i18n.t('footer_menu.more') }}
                           </span>
-                          <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
+                          <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                         </span>
                       </div>
                     </div>
@@ -368,13 +368,13 @@
             v-if="show_newer_edition && !is_show_result()">
             <div class='l test-match-mf'>
               <!--收藏图标-->
-              <div v-if="!lodash.get(get_access_config, 'collectSwitch')" class="go-container-w flex no-wrap favorite">
+              <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
                 <div class="fav-i-wrap-match row items-center" @click.stop="toggle_collect(match, i, 'mf')">
                   <div class="favorite-icon match">
                     <!-- 未收藏图标 -->
                     <img v-if="!match_of_list.mf" :src="not_favorited_computing_icon" alt="">
                     <!-- 收藏图标 -->
-                    <img :src="(!lodash.get(get_user, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
+                    <img :src="(!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
                       v-if='match_of_list.mf' />
                   </div>
                 </div>
@@ -430,9 +430,9 @@
                 <div class='goto-detail' @click='goto_details(match)'>
                   <div class="count_span">
                     <span class="mc-n">
-                      {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) : i18n.t('footer_menu.more') }}
+                      {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n.t('footer_menu.more') }}
                     </span>
-                    <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
+                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                   </div>
                 </div>
               </div>
@@ -460,7 +460,7 @@
 
 
 <script setup name="match-container">
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
@@ -474,6 +474,7 @@ import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { t } from 'src/boot/i18n.js'
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
+import userCtr from "src/core/user-config/user-ctr.js";
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
@@ -542,7 +543,7 @@ const is_on_go_detail = ref(false)
 const footer_sub_menu_id = ref(store_state.get_footer_sub_menu_id)
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
-const get_user = ref(store_state.get_user)
+const userCtr = ref(store_state.userCtr)
 const get_uid = ref(store_state.get_uid)
 const get_lang = ref(store_state.get_lang)
 const get_current_menu = ref(store_state.get_current_menu)
@@ -564,8 +565,7 @@ const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
 const get_not_found_target_dom_count = ref(store_state.get_not_found_target_dom_count)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const get_access_config = ref(store_state.get_access_config)
-
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 onMounted(() => {
   is_first_coming.value = true;
   //赛事切换时钟
@@ -682,7 +682,7 @@ watch(() => footer_sub_menu_id, (curr) => {
 
 // 精彩回放视频开关是否开启
 const is_replay_switch = computed(() => {
-  const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+  const { configValue, eventSwitch } = lodash.get(userCtr, 'merchantEventSwitchVO', {})
   return configValue == 1 && eventSwitch == 1
 })
 //  动画按钮
@@ -739,7 +739,7 @@ const get_sport_show = computed(() => {
 // 显示收藏 图标
 const favorited_computing_icon = computed(() => {
   let flag = null
-  if (!lodash.get(get_user, 'favoriteButton') && get_theme.includes('y0')) {
+  if (!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) {
     flag = y0_img_favorite_black
   } else {
     flag = normal_img_is_favorite
@@ -1601,7 +1601,7 @@ const unsubscribe = store.subscribe(() => {
   footer_sub_menu_id.value = new_state.get_footer_sub_menu_id
   get_hot_tab_item.value = new_state.get_hot_tab_item
   get_footer_sub_changing.value = new_state.get_footer_sub_changing
-  get_user.value = new_state.get_user
+  userCtr.value = new_state.userCtr
   get_uid.value = new_state.get_uid
   get_lang.value = new_state.get_lang
   get_current_menu.value = new_state.get_current_menu
@@ -1623,7 +1623,7 @@ const unsubscribe = store.subscribe(() => {
   get_goto_detail_match_info.value = new_state.get_goto_detail_match_info
   get_not_found_target_dom_count.value = new_state.get_not_found_target_dom_count
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
 })
 
 onUnmounted(() => {

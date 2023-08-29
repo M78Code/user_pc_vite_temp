@@ -44,7 +44,7 @@
               'up-red': odds_change_up, 
               'down-green': odds_change_down
             }"
-          ><span class="odds-value yb-number-bold"><span>@</span>{{odds_value | format_odds}}</span></div>
+          ><span class="odds-value yb-number-bold"><span>@</span>{{  format_odds(odds_value) }}</span></div>
         </div>
       </div>
     </q-card-section>
@@ -52,7 +52,7 @@
 </template>
 <script setup>
 // import bet_mix_record_item from "src/public/mixins/bet/bet_mix_record_item.js";
-
+import { format_odds  } from "src/core/index.js";
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 */

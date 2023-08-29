@@ -68,7 +68,6 @@
 import { ref,onMounted } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-console.error('ssssssaaaaaaaaaaaaa')
 // 单关混入js
 // import bet_single from "src/public/mixins/bet/bet_single.js";
 // 单关投注信息

@@ -79,7 +79,6 @@ const props = defineProps({
   })
   // computed: {
   //   ...mapGetters([
-  //     'get_theme',
   //     'get_combine_tips_show'
   //   ])
   // },

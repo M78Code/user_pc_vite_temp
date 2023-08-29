@@ -42,7 +42,7 @@ const fetch_limit_money = (res_obj) => {
     }
 
     this.fetch_limit_money_params()
-        .then(api_betting.post_maxminmoney)
+        .then(api_betting.post_getBetMinAndMaxMoney)
         .then(result_handle.bind())
         .catch(err => {
             console.error('fetch_limit_money', err)

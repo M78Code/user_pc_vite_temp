@@ -36,7 +36,7 @@ const reset_hadicap_change = (that, delay) => {
         that.odds_change_down = false;
         that.handicap_change = false;
         that.odds_status_change = false;
-        let bet_obj = _.cloneDeep(_.get(that,`vx_get_virtual_bet_obj.${that.id}`)); 
+        let bet_obj = _.cloneDeep(_.get(BetData,`virtual_bet_obj.${that.id}`)); 
         if(bet_obj && bet_obj.cs) {
           bet_obj.key = that.id;
           bet_obj.cs.hv_ov_change = false;
@@ -113,7 +113,7 @@ const reset_hadicap_change = (that, delay) => {
         that.handicap_change = false;
         that.odds_status_change = false;
 
-        let bet_obj = that.vx_is_bet_single?_.cloneDeep(_.get(that,`vx_get_bet_single_obj.${that.id}`,{})):_.cloneDeep(_.get(that,`vx_get_bet_obj.${that.id}`,{}));
+        let bet_obj = BetData.is_bet_single?_.cloneDeep(_.get(BetData,`bet_single_obj.${that.id}`,{})):_.cloneDeep(_.get(BetData,`bet_obj.${that.id}`,{}));
         
         if(_.has(bet_obj,'cs')) {
           bet_obj.key = that.id;
@@ -138,7 +138,7 @@ const reset_hadicap_change = (that, delay) => {
     that.handicap_change = false;
     that.odds_status_change = false;
     // 恢复盘口值和赔率一起变化的标志
-    let bet_obj = that.vx_is_bet_single?_.cloneDeep(_.get(that,`vx_get_bet_single_obj.${that.id}`)):_.cloneDeep(_.get(that,`vx_get_bet_obj.${that.id}`));
+    let bet_obj = BetData.is_bet_single?_.cloneDeep(_.get(BetData,`bet_single_obj.${that.id}`)):_.cloneDeep(_.get(BetData,`bet_obj.${that.id}`));
   
     if(_.has(bet_obj,'cs') && !_.isUndefined(bet_obj,'cs')) {
       bet_obj.key = that.id;

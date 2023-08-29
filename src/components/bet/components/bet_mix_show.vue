@@ -33,8 +33,8 @@
 
           <div class="col-3 row justify-end items-center">
             <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
-              <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{ bet_success_obj.oddsValues |
-                format_odds(value_show.csid) }}</template>
+              <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{
+                format_odds(value_show.csid,bet_success_obj.oddsValues ) }}</template>
               <template v-else>{{ odds_value() }}</template>
             </span>
             <!-- 红升绿降 -->
@@ -45,7 +45,7 @@
 
         <!-- 中 -->
         <div class="row justify-between yb_my4 yb_fontsize14">
-          <span :class="get_lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
+          <span :class="UserCtr.lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
             <template v-if="_.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ i18n.t('bet_record.ing')
             }}&thinsp;</template>
             <template v-if="get_is_champion()">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
@@ -55,9 +55,9 @@
             <!-- 基准分 -->
             <template
               v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">&ensp;
-              <template v-if="bet_success_obj.scoreBenchmark">{{ bet_success_obj.scoreBenchmark | calc_bifen2
+              <template v-if="bet_success_obj.scoreBenchmark">{{  calc_bifen2( bet_success_obj.scoreBenchmark  )
               }}</template>
-              <template v-else>{{ value_show | calc_bifen }}</template>
+              <template v-else>{{  calc_bifen(value_show)  }}</template>
             </template>
           </span>
           <template v-if="BetData.is_bet_success_status && !(BetData.bet_is_mix && BetData.bet_list.length > 1)">
@@ -75,7 +75,7 @@
                   class="img0">{{ i18n.t('bet.bet_err') }}</span>
               <!-- 提交成功 -->
               <span v-if="order_status == 2" class="color2"><img
-                  :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)"
+                  :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
                   class="img0 img1">{{ i18n.t('bet.submitted_successfully') }}</span>
             </template>
           </template>
@@ -123,7 +123,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_market">
@@ -133,7 +133,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>
@@ -146,7 +146,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_odds">
@@ -157,7 +157,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
-            <img v-if="get_theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>
@@ -193,6 +193,10 @@
 import store from "src/store-redux/index.js";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+ 
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
@@ -543,8 +547,8 @@ const pre_shadow_flag = computed(() => {
 })
 // 计算是否展示盘口预约功能
 const is_show_market = computed(() => {
-  let bookMarketSwitch = _.get(get_user.value, 'configVO.bookMarketSwitch')
-  let bookMarketSwitchBasketball = _.get(get_user.value, 'configVO.bookMarketSwitchBasketball', 0)
+  let bookMarketSwitch = _.get(UserCtr, 'configVO.bookMarketSwitch')
+  let bookMarketSwitchBasketball = _.get(UserCtr, 'configVO.bookMarketSwitchBasketball', 0)
   if (value_show.csid == 1) {
     return market_flag_list.includes(value_show.hps[0].hpid) && bookMarketSwitch == 1
   } else {
@@ -585,8 +589,8 @@ const authorityOptionFlag = computed(() => {
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
-  const bookBet = _.get(get_user.value, 'configVO.bookBet')
-  const marketConfigValue = _.get(get_user.value, 'configVO.marketConfigValue')
+  const bookBet = _.get(UserCtr, 'configVO.bookBet')
+  const marketConfigValue = _.get(UserCtr, 'configVO.marketConfigValue')
   return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
 })
 //判断投注成功后是否是预约投注

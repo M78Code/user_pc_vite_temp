@@ -59,7 +59,7 @@ const mx_collect_match = (match) => {
     cuid: vx_get_uid.value,
     cf: cur_collect_state,
   };
-  api_match.post_collect_match(_params).then((res) => {
+  api_common. add_or_cancel_match(_params).then((res) => {
     let code = lodash.get(res, "data.code");
     let data = lodash.get(res, "data.data");
     if (code == 200 && data == 1) {

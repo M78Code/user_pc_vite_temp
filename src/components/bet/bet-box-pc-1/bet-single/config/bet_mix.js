@@ -6,7 +6,7 @@
 
  
  
-import { api_betting } from "src/public/api/index.js"; // 投注api
+import { api_betting } from "src/api/index.js"; // 投注api
 
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 import BetDataCtr from  "src/core/bet/bet-data-ctr-class.js"

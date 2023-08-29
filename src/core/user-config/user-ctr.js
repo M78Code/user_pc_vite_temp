@@ -66,7 +66,7 @@ class UserCtr {
     this.theme = ref(themeReducer.theme);
      
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 
-    this. odds= {
+    this.odds= {
       // 上次赔率
       pre_odds: "EU",
       // 当前赔率
@@ -174,8 +174,8 @@ class UserCtr {
   get_balance() {
     return lodash.debounce(
       function () {
-        api_admin
-          .get_amount({ uid: this.user.userId })
+        api_account
+          .check_balance({ uid: this.user.userId })
           .then((res) => {
             if (res.code == 200) {
               let amount = lodash.get(res, "data.amount");

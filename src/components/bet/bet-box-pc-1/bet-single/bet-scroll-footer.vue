@@ -155,7 +155,7 @@
                   </template>
                 </div>
                 <div class="col-auto bet-total-right">
-                  {{ bet_this.bet_total_money || format_currency }}
+                  {{ format_currency(bet_this.bet_total_money) }}
                 </div>
               </div>
               <div class="row bet-total">
@@ -164,7 +164,7 @@
                   {{ i18n.t('bet.total_income') }}
                 </div>
                 <div class="col-auto bet-total-right bet-gold-text">
-                  {{ bet_this.bet_total_win_money || format_currency }}
+                  {{ format_currency(bet_this.bet_total_win_money) }}
                 </div>
               </div>
               <q-separator class="bet-mix-separator"></q-separator>
@@ -316,6 +316,7 @@
 import { ref, onMounted } from "vue"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
+import { format_currency } from'src\core\format\index.js'
 
 
 const props = defineProps({

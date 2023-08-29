@@ -3,6 +3,8 @@
  * @Date: 2021-08-04 17:14:23
  * @Description: 赛列表列投注项
  */
+import BetData from "src/core/bet/class/bet-data-class.js";
+import SetData from "src/core/bet/bet-data-ctr-class.js";
 
 
 const bet_item = {
@@ -96,11 +98,11 @@ const bet_item = {
  
     vx_get_bet_category(new_) {
       if([2,3].includes(new_*1)) {
-        this.vx_set_is_virtual_bet(true);
+        BetData.set_is_virtual_bet(true);
       } else {
-        this.vx_set_is_virtual_bet(false);
+        BetData.set_is_virtual_bet(false);
       }
-      this.vx_virtual_bet_clear();
+      BetData.virtual_bet_clear();
     },
     /**
      * 监听预约投注计算球头字段
@@ -110,9 +112,9 @@ const bet_item = {
       let { _mhs, _hs, os } = this.ol_data;
       this.odds_state = this.get_odds_state(_mhs, _hs, os);
       // 如果为单关
-      if(this.vx_is_bet_single) {
+      if(BetData.is_bet_single) {
         // 获取球头是否与盘口相等字段
-        let is_head_eq_hadicap = _.get(this.vx_get_bet_appoint_obj, 'is_head_eq_hadicap');
+        let is_head_eq_hadicap = _.get(BetData.bet_appoint_obj, 'is_head_eq_hadicap');
         // 当预约投注的球头与盘口值不相等并且此时投注项处于选中状态则取消选中
         if(!is_head_eq_hadicap && this.odds_state == "active") {
           this.odds_state = "";
@@ -254,7 +256,7 @@ const bet_item = {
         state = STATE[_active];
       } else {
         let selected_class;
-        if(this.vx_get_is_virtual_bet) {
+        if(BetData.is_virtual_bet) {
           selected_class = this.virtual_bet_item_select(id)
         } else {
           selected_class = this.bet_item_select(id)
@@ -271,7 +273,7 @@ const bet_item = {
      */
     bet_click() {
       // 新的投注流程确认中时不让点击
-      if(!this.vx_get_is_virtual_bet && this.vx_get_bet_mode === 1 && this.vx_get_bet_item_lock) {
+      if(!BetData.is_virtual_bet && BetData.bet_mode === 1 && BetData.bet_item_lock) {
         return;
       }
        //显示token失效弹窗
@@ -332,7 +334,7 @@ const bet_item = {
         };
         this.$utils.send_zhuge_event("PC_首页_投注点击分类", {"详情区域": "中间列表"});
         // 判断是否为虚拟体育
-        if(this.vx_get_is_virtual_bet) {
+        if(BetData.is_virtual_bet) {
           //点击押注按钮操作 (虚拟体育)
           this.virtual_bat_click(obj);
         } else {

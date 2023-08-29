@@ -24,7 +24,7 @@
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
         <p class="text-right account-p">{{}}</p>
-        <p class="yb_fontsize16">{{ format_money2(get_user.balance) }}</p>
+        <p class="yb_fontsize16">{{ format_money2(UserCtr.balance) }}</p>
       </div>
       <!-- 金额刷新按钮 -->
       <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
@@ -39,6 +39,7 @@ import { ref, reactive } from 'vue'
 import { format_money2 } from 'src/core/utils/global-filters.js'
 import lodash from "lodash"
 import store from "src/store-redux/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 
 let balance_timer = null // 延时器
@@ -46,7 +47,6 @@ let balance_timer = null // 延时器
 
 const store_state = store.getState()
 const get_s_count_data = ref(store_state.get_s_count_data)
-const get_lang = ref(store_state.get_lang)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
@@ -62,16 +62,16 @@ const unsubscribe = store.subscribe(() => {
 // 悬浮条点击 
 const menu_click = () => {
   // 至少选择几场比赛
-  let min_num = lodash.get(get_user.value, 'configVO.minSeriesNum', 2)
+  let min_num = lodash.get(UserCtr, 'configVO.minSeriesNum', 2)
   // 投注数组信息
-  let bet_list = BetData.bet_list.value
+  let bet_list = BetData.bet_list
 
   if (get_mix_bet_flag.value && bet_list.length < min_num) {
     set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
     return
   }
 
-  if (get_bet_status.value.value != 0) {
+  if (get_bet_status.value != 0) {
     return
   }
 
@@ -85,7 +85,7 @@ const menu_click = () => {
   if (bet_list.length == 1) {
     // 单关时若金额不合要求，则清除金额
     let _money = +lodash.get(view_ctr_obj[BetData.bet_list[0]], 'money')
-    if (!_money || _money < 0.01 || _money > +get_user.value.balance) {
+    if (!_money || _money < 0.01 || _money > +UserCtr.balance) {
       set_money_total('clear_')
     }
   }

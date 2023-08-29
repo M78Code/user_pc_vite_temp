@@ -102,9 +102,9 @@
 
   </div>
 </template>
- 
-<script setup>
 
+<script setup>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -119,15 +119,15 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 // import match_container_result from "./match-container-result.vue" // 赛果冠军
 import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
- 
- 
+
+
 const props = defineProps({
   // 赛事列表无数据
-  data_get_empty: Boolean, 
-  // 6 收藏页, 
-  menu_type: Number | String, 
+  data_get_empty: Boolean,
+  // 6 收藏页,
+  menu_type: Number | String,
   //处理赛事列表数据的类型封装
-  matchCtr:Object,                
+  matchCtr:Object,
   source:String,
   window_scrolly:Number | String,
   match_list_wrapper_height:Number,
@@ -137,7 +137,7 @@ const emitters = ref({})
 const store_state = store.getState();
 const timer_super12 = ref(null)
 // 默认箭头向上
-const arr_top_down = ref('arr-top') 
+const arr_top_down = ref('arr-top')
 // 收藏|取消收藏是否请求中
 const favorite_loading = ref(false)
 // 罚牌 玩法信息展示
@@ -167,7 +167,7 @@ const get_theme = ref(store_state.get_theme)
 // 当用户未登录时返回uuid, 当用户登录时返回userId
 const get_uid = ref(store_state.get_uid)
 // 用户信息,用户金额,userId 需要监听变化
-const get_user = ref(store_state.get_user)
+const userCtr = ref(userCtr)
 // 当前选中的菜单
 const get_current_menu = ref(store_state.get_current_menu)
 // 滚到顶部
@@ -178,7 +178,7 @@ const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 //二级菜单type
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 
 onMounted(() => {
   console.log(props.matchCtr)
@@ -325,8 +325,7 @@ const info_icon_click_h = (e,mid,menu,match) => {
  * @return {Undefined} Undefined
  */
 const toggle_collect = ($event) => {
-  if( !utils.judge_collectSwitch( lodash.get(get_access_config.value,'collectSwitch'),this ) ) return
-
+  if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this ) ) return
   if(favorite_loading.value) {
     clearTimeout(timer_super12.value);
     timer_super12.value = setTimeout(() => {
@@ -339,7 +338,7 @@ const toggle_collect = ($event) => {
 
   let api, txt, number = 0;
   let params = {
-    cuid: get_user.value ? get_user.value.userId:get_uid.value,
+    cuid: userCtr.value ? userCtr.value.userId:get_uid.value,
   };
   if (item == 'tf') {
     //联赛收藏或取消收藏
@@ -428,12 +427,12 @@ const unsubscribe = store.subscribe(() => {
   get_match_id_bet_success.value = new_state.get_match_id_bet_success
   get_theme.value = new_state.get_theme
   get_uid.value = new_state.get_uid
-  get_user.value = new_state.get_user
+  userCtr.value = userCtr
   get_current_menu.value = new_state.get_current_menu
   get_goto_list_top.value = new_state.get_goto_list_top
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 
@@ -442,7 +441,7 @@ onUnmounted(() => {
 })
 
 </script>
- 
+
 <style scoped lang="scss">
   @import "../styles//match-list";
 </style>

@@ -19,7 +19,7 @@
       @click="toggle_collapse_state(match_of_list);">
       <div class="league-wrapper champion flex items-center">
         <div
-          v-if="menu_type === 100 && get_access_config.collectSwitch"
+           v-if="menu_type === 100 && GlobalAccessConfig.get_collectSwitch()"
           class="favorite" :class="[{favorited:match_of_list.tf},get_theme]"
           @click.self.stop="toggle_collect(match_of_list)"></div>
             <div class="league-title">
@@ -30,7 +30,7 @@
             </div>
             <div
                 class="league-title-text row justify-between"
-                :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !get_access_config.collectSwitch)}"
+                :class="{'without-collect': menu_type !== 100 || (menu_type === 100 && !GlobalAccessConfig.get_collectSwitch())}"
             >{{menu_type == 100 ? match_of_list.onTn : match_of_list.tn}}</div>
         </div>
 
@@ -96,7 +96,7 @@ import common from "src/project/mixins/constant";
 import msc from 'src/public/mixins/common/msc.js';
 import store from "src/store-redux/index.js";
 import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
@@ -119,7 +119,7 @@ const get_lang = ref(store_state.get_lang)
 const get_theme = ref(store_state.get_theme)
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 const get_current_menu = ref(store_state.get_current_menu)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(store_state.GlobalAccessConfig())
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -136,7 +136,7 @@ const update_state = () => {
   get_theme.value = new_state.get_theme
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_current_menu.value = new_state.get_current_menu
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = new_state.GlobalAccessConfig()
 }
 
 // TODO: 其他模块得 store  待添加

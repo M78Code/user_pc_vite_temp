@@ -59,7 +59,8 @@ import notice_bar from 'project_path/src/pages/details/components/chatroom/notic
 import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -98,12 +99,11 @@ export default defineComponent({
     //     'get_post_bet_show',  // 晒单弹窗显隐
     //     'get_mute_type',  // 禁言类型
     //     'get_details_chatroom_data', // 聊天室相关数据信息
-    //     'get_user',
-    //     'get_user_mute_info',    // 用户禁言信息
+    //     'userCtr',
+    //     'userCtr_mute_info',    // 用户禁言信息
     //     'get_chatroom_userinfo', // 聊天室用户信息
     //     'get_chatroom_mute_info', // 聊天室禁言信息
     //     'get_chatroom_http_url',
-    //     'get_theme',
     //   ]),
     // },
     onMounted(() => {
@@ -144,7 +144,7 @@ export default defineComponent({
     // ]),
     // 轮询拉取增量消息，防止消息丢失率
     const intervalUpdateMsg = () => {
-      let { pullMsgRate } = get_user;  // 消息拉取频率
+      let { pullMsgRate } = userCtr;  // 消息拉取频率
       if (!pullMsgRate || pullMsgRate < 5) {
         pullMsgRate = pullMsgRate || 10;
       }
@@ -164,7 +164,7 @@ export default defineComponent({
           chatRoomId: get_chatroom_id,
         })
         if (res && res.code == 200) {
-          const chatroom_http_url = await get_valid_api(get_user);
+          const chatroom_http_url = await get_valid_api(userCtr);
           // console.log(chatroom_http_url);
           set_chatroom_http_url(chatroom_http_url);
           get_chatroom_bulletin_info('init_load');
@@ -184,7 +184,7 @@ export default defineComponent({
     };
     // 获取公告信息
     const get_chatroom_bulletin_info = (init_load) => {
-      api_chatroom.get_bulletin_info({}, { base_url: get_chatroom_http_url })
+      api_chatroom.post_chat_bulletin({}, { base_url: get_chatroom_http_url })
         .then((res) => {
           if (res.code == 0 && _.get(res,'data', [])) {
             bulletin_info = ''
@@ -216,7 +216,7 @@ export default defineComponent({
       if (isIncrementMsg) {
         params = { ...params, messageSize: 30 }
       }
-      api_chatroom.pullMsgList(params, { base_url: get_chatroom_http_url }).then((res) => {
+      api_chatroom.get_chat_history_message(params, { base_url: get_chatroom_http_url }).then((res) => {
         if (res.code == 0 && res.data) {
           const resMsgList = res.data || [];
           resMsgList.reverse();  // 列表反转
@@ -250,7 +250,7 @@ export default defineComponent({
     };
     // 获取聊天室信息(主要用户获取全体禁言)(CP)
     const onGetchatroom = () => {
-      api_chatroom.getchatroom({ chatRoomId: get_chatroom_id }, { base_url: get_chatroom_http_url }).then((res) => {
+      api_chatroom.get_chatroom({ chatRoomId: get_chatroom_id }, { base_url: get_chatroom_http_url }).then((res) => {
         if (res.code == 0 && res.data) {
           set_chatroom_mute_info(res.data);
           // console.log(res.data);
@@ -261,7 +261,7 @@ export default defineComponent({
     };
     // 获取用户禁言信息
     const onGetbansendinfo = () => {
-      api_chatroom.getbansendinfo(null, { base_url: get_chatroom_http_url }).then((res) => {
+      api_chatroom.get_ban_send_info(null, { base_url: get_chatroom_http_url }).then((res) => {
         if (res.code == 0 && res.data) {
           set_user_mute_info(res.data);
           setBanUserTimer(res.data);
@@ -272,7 +272,7 @@ export default defineComponent({
     };
     // 获取用户点赞信息
     const onGetlikeinfo = () => {
-      api_chatroom.getlikeinfo(null, { base_url: get_chatroom_http_url }).then((res) => {
+      api_chatroom.get_bet_like_info(null, { base_url: get_chatroom_http_url }).then((res) => {
         if (res.code == 0 && res.data) {
           set_like_info(res.data);
         }

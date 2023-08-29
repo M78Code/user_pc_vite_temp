@@ -45,13 +45,13 @@
         </div>
 
         <!-- 右边设置按钮 -->
-        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(store_user, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
+        <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(userCtr, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
-            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
+            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="get_theme.includes('theme01')"  alt="">
+            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('theme01')"  alt="">
             <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
           </template>
 
@@ -85,7 +85,7 @@
       <!-- 注单剩余本金 -->
       <p class="yb_mb4">{{t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
       <!-- 提前结算可用次数 -->
-      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(store_user,'pcs')==1  && lodash.get(store_user,'settleSwitch')">{{t('early.info9')}}：{{ remaining_num }}</p>
+      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(userCtr,'pcs')==1  && lodash.get(userCtr,'settleSwitch')">{{t('early.info9')}}：{{ remaining_num }}</p>
     </div>
 
     <!-- 提前结算详情 -->
@@ -152,10 +152,10 @@ import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from '
 import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // const store_data = ref(store.getState())
-let store_user = store.getState().userInfoReducer
 let store_cathectic = store.getState().cathecticReducer
 // console.error(store_data);
 const props = defineProps({
@@ -198,9 +198,7 @@ const props = defineProps({
 
     // ...mapGetters([
       //当前皮肤
-    //   "get_theme",
     //用户信息
-    //   "get_user",
     // 0未结算/筛选 1已结算/搜索
     //   "get_main_item",
     //提前结算金额集合
@@ -280,11 +278,11 @@ const props = defineProps({
     })
     // 单关最低投注金额
   const min_bet_money = computed(() => {
-      return lodash.get(store_user, "cvo.single.min") || 10;
+      return lodash.get(userCtr, "cvo.single.min") || 10;
     })
     // 计算提前结算按钮是否显示
   const calc_show = computed(() => {
-      return /10true[1-6]+/.test("" + lodash.get(store_user.user, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
+      return /10true[1-6]+/.test("" + lodash.get(userCtr, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
     })
     watch(() => expected_profit, (_new, _old) => {
         // 小于 1 时暂停提前结算
@@ -408,7 +406,7 @@ const props = defineProps({
       if (details_show) {
         details_show = false;
       } else {
-        api_betting.getPreSettleOrderDetail({ orderNo: props.item_data.orderNo }).then((res) => {
+        api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
           let { code, data = [] } = res || {};
           if (code == 200) {
             presettleorderdetail_data = data;
@@ -436,7 +434,7 @@ const props = defineProps({
         frontSettleAmount: String(front_settle_amount.value || expected_profit.value),
       };
       // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
-      api_betting.orderPreSettleH5(params).then((reslut) => {
+      api_betting.post_pre_bet_order(params).then((reslut) => {
         let res = {}
         if (reslut.status) {
           res = reslut.data

@@ -2,7 +2,7 @@
 
 
 import BetData from "./class/bet-data-class.js";
-import SetData from "src\core\bet\bet-data-ctr-class.js";
+import SetData from "src/core/bet/bet-data-ctr-class.js";
 
 
 
@@ -16,7 +16,7 @@ const query_order = () => {
         return
     }
 
-    api_betting.get_orderstatus(param).then(res => {
+    api_betting.query_order_status(param).then(res => {
         if (!(BetData.get_bet_status == 6 || BetData.get_new_bet)) {
             return
         }
