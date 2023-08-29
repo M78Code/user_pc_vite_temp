@@ -3,11 +3,11 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 串关投注结果
  */
-import betting from "src/public/mixins/betting/betting.js";
+// import betting from "src/public/mixins/betting/betting.js";
 
 export default {
   name: "bet-mix-result",
-  mixins: [betting],
+  // mixins: [betting],
   data() {
     return {
       bet_result: '' // 投注结果

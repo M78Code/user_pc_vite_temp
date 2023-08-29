@@ -23,7 +23,7 @@
           <span :class="{ 'auto-text': BetData.bet_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ i18n.t("ac_rules.auto") }}</span>
           <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
-            v-if="get_theme.includes('theme01')" />
+            v-if="UserCtr.theme.includes('theme01')" />
           <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
         </span>
       </div>
@@ -115,7 +115,7 @@
               <span class="yb_mx4" :class="{ 'auto-text': !view_ctr_obj.bet_is_combine }" @click="change_is_combine">{{
                 i18n.t("tips.msg1") }}</span>
               <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_tips_show" class="img1"
-                v-if="get_theme.includes('theme01')" />
+                v-if="UserCtr.theme.includes('theme01')" />
               <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_tips_show" class="img1" v-else />
             </span>
             <!-- 右 -->
@@ -212,10 +212,11 @@
 // import ballSpin from 'src/project/components/bet/ball_spin.vue';
 // import betBar from "src/project/components/bet/bet_bar.vue";
 
-// import utils from 'src/public/utils/utils.js';
+// import utils from 'src/core/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // 此文件需抽离重构
 

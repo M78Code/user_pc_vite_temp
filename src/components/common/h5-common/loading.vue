@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="loading" :style="`top:${top}`">
-    <div class="la-line-scale" :class="{'y0_bg': get_theme.includes('y0')}">
+    <div class="la-line-scale" :class="{'y0_bg': UserCtr.theme.includes('y0')}">
       <div></div>
       <div></div>
       <div></div>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-// import { mapGetters } from "vuex";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
   const props = defineProps({
     top: {
@@ -24,16 +24,7 @@
       default: '46%',
     },
   })
-  computed(() => {
-    // ...mapGetters({
-    //   get_theme: "get_theme",
-    // })
-  })
-  // computed: {
-  //   ...mapGetters({
-  //     get_theme: "get_theme",
-  //   })
-  // },
+  
 </script>
 
 <style lang="scss" scoped>

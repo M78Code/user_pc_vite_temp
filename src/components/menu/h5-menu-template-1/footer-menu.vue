@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="container-menu-w" :class="{
-      'black2':get_theme.includes('theme02'),
+      'black2':UserCtr.theme.includes('theme02'),
       'scrolling-up':scroll_dir > 0,
       'scrolling-down':scroll_dir < 0,
   }">
@@ -34,7 +34,7 @@
             <span class="menu-item-img" :class="[item.icon.slice(0,-4), menu_item_img(item),(lodash.get(get_user, 'favoriteButton')?'favoriteButton':'')]"></span>
           </div>
           <div class="menu-item-title"
-               :class="{'theme02-focus':get_show_favorite_list && get_theme.includes('theme02') && item.id == 1,}"
+               :class="{'theme02-focus':get_show_favorite_list && UserCtr.theme.includes('theme02') && item.id == 1,}"
                v-show="item.id != 5"
           >
             <span class="title-p1" :class="{'title-p2': item.title1}">
@@ -45,7 +45,7 @@
               {{item.title1}}
             </span>
           </div>
-          <img v-if="item.id == 0 && get_theme.includes('y0')" class="play-w-change-icon"
+          <img v-if="item.id == 0 && UserCtr.theme.includes('y0')" class="play-w-change-icon"
                src="image/wwwassets/bw3/common/f-icon-pay-change-y0.svg"/>
           <img v-else-if="item.id == 0" class="play-w-change-icon"
                src="image/wwwassets/bw3/common/f-icon-pay-change.svg"/>
@@ -94,6 +94,8 @@ import { computed, onBeforeUnmount, onMounted, watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
 import { useRoute, useRouter } from 'vue-router'
+
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // import { Platform } from 'quasar'
 
@@ -320,7 +322,7 @@ import { useRoute, useRouter } from 'vue-router'
       footer_menulist[0].title = sub_menu.title;
       footer_menulist[0].title1 = sub_menu.title1;
       footer_menulist[0].icon = sub_menu.icon;
-      footer_menulist[0].icon_black = get_theme.includes('theme01') ? sub_menu.icon: sub_menu.icon1;
+      footer_menulist[0].icon_black = UserCtr.theme.includes('theme01') ? sub_menu.icon: sub_menu.icon1;
       set_footer_sub_menu_id(sub_menu.id);
       set_footer_sub_changing(true);
       clearTimeout(timer_object.timer_super9);
@@ -547,7 +549,6 @@ import { useRoute, useRouter } from 'vue-router'
     //   "get_current_menu",
     //   "get_lang",
     //   "get_bet_status",
-    //   "get_theme",
     //   'get_list_scroll_direction',
     //   'get_bet_list',
     //   'get_betbar_show',
@@ -568,7 +569,7 @@ import { useRoute, useRouter } from 'vue-router'
     })
 
     const calc_resources_obj = computed(() => {
-      if (get_theme.includes('theme01')) {
+      if (UserCtr.theme.includes('theme01')) {
         return get_resources_obj.theme01
       } else {
         return get_resources_obj.theme02
@@ -586,7 +587,7 @@ import { useRoute, useRouter } from 'vue-router'
     const menu_item_img = computed(() => {
       return function (item) {
         let obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
-        if(get_theme.includes('y0')) obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
+        if(UserCtr.theme.includes('y0')) obj = item.id ==3  && typeof get_filter_list == "object" && Object.keys(get_filter_list).length && 'fillter-high-light';
         return obj;
       }
     })
@@ -672,10 +673,10 @@ import { useRoute, useRouter } from 'vue-router'
         item.icon_black = item.icon1;
       }
       else{
-        if(get_theme.includes('theme01')){
+        if(UserCtr.theme.includes('theme01')){
           item.icon = item.icon0;
         }
-        else if(get_theme.includes('theme02')){
+        else if(UserCtr.theme.includes('theme02')){
           item.icon_black = item.icon2;
         }
       }

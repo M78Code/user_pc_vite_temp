@@ -38,17 +38,17 @@
             </template>
             <template v-else>
                 <div class="user-info">
-                    <div class="user-name">Hi,{{ lodash.get(user_info, "uname") }}</div>
+                    <div class="user-name">Hi,{{ lodash.get(userCtr.get_user(), "uname") }}</div>
                     <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
                         @click="set_show_balance(!show_balance)"></span>
                     <div v-show="!show_balance" class="balance-text-hide">
                         ******
                     </div>
                     <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                        {{ format_money2(user_info.balance) }}
+                        {{ format_money2(userCtr.get_balance()) }}
                     </div>
                     <refresh v-show="show_balance" icon_name="icon-balance_refresh" class="refresh-btn"
-                        :loaded="data_loaded" :disable="!user_info" @click="get_balance" />
+                        :loaded="data_loaded" :disable="!userCtr.get_user()" @click="get_balance" />
                 </div>
             </template>
             <!-- 左边运营广告图 点击占位盒子 -->
@@ -89,6 +89,7 @@ import { api_account, api_common } from "src/api/index.js";
 import utils from "src/core/utils/utils.js"
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
+import userCtr from 'src/core/user-config/user-ctr.js'
 
 import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
 import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
@@ -105,7 +106,6 @@ const unsubscribe = store.subscribe(() => {
     main_menu_toggle.value = menuReducer.main_menu_toggle
     menu_collapse_status.value = menuReducer.menu_collapse_status
     left_menu_toggle.value = betInfoReducer.left_menu_toggle
-    user_info.value = userReducer.user_info
     show_balance.value = userReducer.show_balance
     theme.value = themeReducer.theme
 })
@@ -130,16 +130,14 @@ const menu_collapse_status = ref(menuReducer.menu_collapse_status)
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
+
+//  TODO: 没找到
 const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
-/** 
- * 用户信息 default: {}
- * 路径: src\store-redux\module\user-info.js
- */
- const user_info = ref(userReducer.user_info)
 /** 
  * 用户余额是否展示状态 default: true
  * 路径: src\store-redux\module\user-info.js
  */
+//  TODO: 没又get
 const show_balance = ref(userReducer.show_balance)
 /** 
 /** 
@@ -150,26 +148,6 @@ const theme = ref(themeReducer.theme)
 
 /** 刷新组件loading */
 const data_loaded = ref(false)
-/**
- * @description 获取用户余额
- * @return {undefined} undefined
- */
-function get_balance() {
-    data_loaded.value = false;
-    // let uid = user.value.uid;
-    api_account.check_balance({ uid, t: new Date().getTime() }).then(res => {
-        const result = lodash.get(res, "data.data");
-        const code = lodash.get(res, "data.code");
-        data_loaded.value = true;
-        if (code == 200) {
-            set_user_balance(result.amount);
-        }
-        // proxy.show_fail_alert()
-    }).catch(err => {
-        console.error(err)
-        data_loaded.value = true;
-    });
-}
 
 /** 是否切换到上一张图片 */
 const isPre = ref(false)

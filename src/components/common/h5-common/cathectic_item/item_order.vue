@@ -17,7 +17,7 @@
 import ClipboardJS from "clipboard";
 // import { mapMutations } from "vuex";
 import { Platform } from "quasar";
-import utils from 'src/public/utils/utils.js';
+import utils from "src/utils/index.js";
 
   const props = defineProps({
     data_o: {

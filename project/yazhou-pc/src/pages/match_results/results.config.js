@@ -14,15 +14,8 @@ import {
 import utils from "src/core/utils/utils";
 import { api_common } from "src/api/";
 // api文件
-import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
-// import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
-// import details from "src/core/match-detail-pc/match-detail";
-// // 搜索操作相关控制类
-// import search from "src/core/search-class/search.js";
-// // 赛事详情页面信息操作类
-// import MatchInfoCtr from "src/core/match-list-pc/data-class-ctr/match-info-ctr";
 import store from "src/store-redux/index.js";
 // import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
@@ -32,8 +25,8 @@ import { useRoute, useRouter } from "vue-router";
 import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
 // import uid from "src/core/uuid/index.js";
-import { t } from "src/boot/i18n";
-
+import { i18n } from "src/boot/i18n";
+// import fliterCheckbox from "src/project/yabo/components/match_list/filter_checkbox.vue";
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -131,35 +124,35 @@ export const useGetResultConfig = () => {
       _date: null, // 根据服务器时间计算的日期
       // 日期控件多语言配置
       locale: {
-        days: t("time.time_date_week"),
-        daysShort: t("time.time_date_week"),
+        days: i18n.t("time.time_date_week"),
+        daysShort: i18n.t("time.time_date_week"),
         months: [
-          t("time.month_1"),
-          t("time.month_2"),
-          t("time.month_3"),
-          t("time.month_4"),
-          t("time.month_5"),
-          t("time.month_6"),
-          t("time.month_7"),
-          t("time.month_8"),
-          t("time.month_9"),
-          t("time.month_10"),
-          t("time.month_11"),
-          t("time.month_12"),
+          i18n.t("time.month_1"),
+          i18n.t("time.month_2"),
+          i18n.t("time.month_3"),
+          i18n.t("time.month_4"),
+          i18n.t("time.month_5"),
+          i18n.t("time.month_6"),
+          i18n.t("time.month_7"),
+          i18n.t("time.month_8"),
+          i18n.t("time.month_9"),
+          i18n.t("time.month_10"),
+          i18n.t("time.month_11"),
+          i18n.t("time.month_12"),
         ],
         monthsShort: [
-          t("time.month_1"),
-          t("time.month_2"),
-          t("time.month_3"),
-          t("time.month_4"),
-          t("time.month_5"),
-          t("time.month_6"),
-          t("time.month_7"),
-          t("time.month_8"),
-          t("time.month_9"),
-          t("time.month_10"),
-          t("time.month_11"),
-          t("time.month_12"),
+          i18n.t("time.month_1"),
+          i18n.t("time.month_2"),
+          i18n.t("time.month_3"),
+          i18n.t("time.month_4"),
+          i18n.t("time.month_5"),
+          i18n.t("time.month_6"),
+          i18n.t("time.month_7"),
+          i18n.t("time.month_8"),
+          i18n.t("time.month_9"),
+          i18n.t("time.month_10"),
+          i18n.t("time.month_11"),
+          i18n.t("time.month_12"),
         ],
         // 每周的第一天
         firstDayOfWeek: 7,
@@ -371,9 +364,9 @@ export const useGetResultConfig = () => {
               }
             }
             // 添加【全部】选项
-            this.champion_sport_type.unshift(t("select.all"));
+            this.champion_sport_type.unshift(i18n.t("select.all"));
             this.api_sport_type = data;
-            const _name = t("select.all");
+            const _name = i18n.t("select.all");
             // 如果求种id存在，则显示对应的求种id
             if (this.sport_id) {
               let sport_obj = lodash.find(data, (item) => item.id == this.sport_id);
@@ -547,8 +540,8 @@ export const useGetResultConfig = () => {
         this.results_params.isESport = "";
       }
       if (!this.league_type.length) {
-        this.league_type = [t("common.all")];
-        this.league = t("common.all");
+        this.league_type = [i18n.t("common.all")];
+        this.league = i18n.t("common.all");
       }
       api_analysiss.post_results_list(this.results_params).then((res) => {
         const code = lodash.get(res, "data.code");
@@ -849,7 +842,7 @@ export const useGetResultConfig = () => {
       this.results_params.tournamentId = "";
       let index;
       let id,
-        _name = t("select.all"); // 全部
+        _name = i18n.t("select.all"); // 全部
       // 0体育下拉框 1冠军球种下拉框
       if (n == 0) {
         index = this.sport_type.indexOf(this.sport);
@@ -909,8 +902,8 @@ export const useGetResultConfig = () => {
         },
       });
       this.page_random = Math.random();
-      this.league_type = [t("common.all")]; // 全部
-      this.league = t("common.all"); // 全部
+      this.league_type = [i18n.t("common.all")]; // 全部
+      this.league = i18n.t("common.all"); // 全部
       //重置筛选条件
       this.pournament_params.tournamentId = "";
       this.pournament_params.nameStr = "";
@@ -1079,25 +1072,25 @@ export const useGetResultConfig = () => {
       ).getTime(); //当时间
 
       if (end_day - start_day > 86400000 * 7) {
-        this.toast(t("results.error_time")); //日期区间最多跨度为7天
+        this.toast(i18n.t("results.error_time")); //日期区间最多跨度为7天
         statu = false;
         return statu;
       }
 
       if (end_day < start_day) {
-        this.toast(t("results.early_time")); //请选择晚于开始的结束时间
+        this.toast(i18n.t("results.early_time")); //请选择晚于开始的结束时间
         statu = false;
         return statu;
       }
 
       if (start_day > end_day) {
-        this.toast(t("results.late_time")); //请选择早于结束的开始时间
+        this.toast(i18n.t("results.late_time")); //请选择早于结束的开始时间
         statu = false;
         return statu;
       }
 
       if (current - start_day > 86400000 * 35) {
-        this.toast(t("results.max_time")); //最多可以查询近35天的历史比赛
+        this.toast(i18n.t("results.max_time")); //最多可以查询近35天的历史比赛
         statu = false;
         return statu;
       }
