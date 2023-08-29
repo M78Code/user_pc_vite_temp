@@ -147,7 +147,7 @@
           <template
             v-if="
               tool_selected == 0 &&
-              vx_get_user.settleSwitch &&
+              get_user.settleSwitch &&
               data.enablePreSettle &&
               data.initPresettleWs &&
               data.cash_out_status != -2 &&
@@ -237,7 +237,7 @@
                     @mouseover.stop="bet_pre_over(i)"
                     @mouseout.stop="bet_pre_out(i)"
                     class="bet-pre-handle"
-                    v-if="vx_get_user.pcs == '1'"
+                    v-if="get_user.pcs == '1'"
                   >
                     <icon
                       name="icon-bet_pre"
@@ -254,7 +254,7 @@
                   <!-- <div @click.stop="show_bet_pre(data, i)"
                                   :ref="`bet_pre_${data.orderNo}`"
                                   class="bet-pre-handle"
-                                  v-if="vx_get_user.pcs=='1'">
+                                  v-if="get_user.pcs=='1'">
                                     <icon name="icon-bet_pre" :class="['bet-pre-info','bet-pre-over']"  size="14px"/>
                                 </div> -->
                 </div>
@@ -380,7 +380,7 @@
                     <!-- 已提前结算 -->
                     <div class="bet-row-1">
                       {{ $t("bet_record.finish_bet_pre") }}
-                    </div>
+                    </div>/src/core/match-constant/config/play-mapping.js
                     <div class="bet-row-2">
                       {{ format_btn_balance(data.computed_bet_amount) }}
                     </div>
@@ -405,7 +405,7 @@
                   <div
                     :ref="`bet_pre_${data.orderNo}`"
                     class="bet-pre-handle"
-                    v-if="vx_get_user.pcs == '1'"
+                    v-if="get_user.pcs == '1'"
                   >
                     <icon
                       name="icon-bet_pre"
@@ -532,7 +532,7 @@ const props = defineProps({
     default: 0,
   },
   matchType: Function,
-  vx_get_user:Object
+  get_user:Object
 });
 
 const show_score_info = ref(false); //比分提示默认隐藏

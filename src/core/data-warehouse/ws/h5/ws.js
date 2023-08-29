@@ -6,7 +6,7 @@
 // import WsQueue from "src/public/utils/ws/wsQueue.js";
 // import { WsRev } from "src/public/utils/ws/wsCtr.js";
 // import WsSendManger from "src/public/utils/ws/ws_send_manger.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;

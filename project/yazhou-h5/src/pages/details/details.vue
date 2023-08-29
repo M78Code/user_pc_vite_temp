@@ -122,7 +122,7 @@
   </div>
 </template>
 <script>
-import utils from 'src/core/utils/utils.js';  // 公共方法
+import {utils } from 'src/core/index.js';  // 公共方法
 
 // #TODO vuex
 // import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -151,7 +151,7 @@ import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 //国际化
 
 

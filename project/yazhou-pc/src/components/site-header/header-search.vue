@@ -35,7 +35,7 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 
 import icon from "src/components/icon/icon.vue";
 

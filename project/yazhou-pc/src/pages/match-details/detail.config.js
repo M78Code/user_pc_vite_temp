@@ -7,7 +7,7 @@ import {
   onMounted,
   watch,
 } from "vue";
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
@@ -27,7 +27,7 @@ import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
 
-import uid from "src/core/uuid/index.js";
+import { uid } from "src/core/index.js";
 
 export const useGetConfig = () => {
   const route = useRoute();

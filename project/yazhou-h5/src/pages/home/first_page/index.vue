@@ -189,18 +189,18 @@ import counting_down_start from 'project_path/src/components/common/counting_dow
 import ListMap from "project_path/src/utils/list_map";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import base_data from "project_path/src/utils/base_data.js";
 //  一二级菜单 本地化假数据
 import { common_menu_list, secondary_menu } from "project_path/src/config/common_menu.js"
 //  api1.5 菜单 本地化假数据
 import menu_data  from "project_path/src/config/menu_new_data.js"
-import uid from "src/core/uuid/index.js"
+import { uid } from "src/core/index.js"
 import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
-import userCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
   const slide = ref(0)

@@ -19,7 +19,7 @@ import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
-import uid from "src/core/uuid/index.js";
+import { uid } from "src/core/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";

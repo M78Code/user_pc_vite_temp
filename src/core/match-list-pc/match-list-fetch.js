@@ -138,7 +138,7 @@ export const fetch_match_list = (is_socket = false, cut) => {
  */
 export const check_match_last_update_time = () => {
 	// 非滚球 今日 不检查
-	if (!["play", "today"].includes(this.vx_cur_menu_type.type_name)) {
+	if (!["play", "today"].includes(MenuData.cur_menu_type.type_name)) {
 		return;
 	}
 	let mids = [];

@@ -9,12 +9,12 @@
  *  th-泰国语
  */
 import { nextTick } from "vue";
-import { ls, ss } from "src/core/utils/web-storage.js";
+import { LocalStorage , SessionStorage  } from "src/core/utils/web-storage.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {
   /** 语言 */
-  lang: ls.get("lang", "zh"),
+  lang: LocalStorage .get("lang", "zh"),
   /** 语言种类 */
   lang_obj: {
     zh: [{ zh: "中文" }, { en: "EN" }],
@@ -31,13 +31,13 @@ export default function langReducer(state = initialState, action) {
     /** 设置语言 */
     case "SET_LANG":
       // 设置永久持久化语言信息
-      ss.set("lang", data);
-      ls.set("lang", data);
+      SessionStorage .set("lang", data);
+      LocalStorage .set("lang", data);
       return { ...state, lang: data };
     /** 初始化语言 */
     case "INIT_LANG":
-      const key = ss.get("lang", state.lang);
-      if (!key) ss.set("lang", data);
+      const key = SessionStorage .get("lang", state.lang);
+      if (!key) SessionStorage .set("lang", data);
       return { ...state, lang: key };
     /** 设置语言变化 */
     case "SET_LANG_CHANGE":

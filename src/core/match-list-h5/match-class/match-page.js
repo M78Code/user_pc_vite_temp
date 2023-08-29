@@ -1,20 +1,20 @@
 
-import uid from "src/core/uuid/index.js";
+import { uid } from "src/core/index.js";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import store from "src/store-redux/index.js";
-import utils from "project_path/src/core/utils/index.js";
+import {utils } from 'src/core/index.js'
 import { get_handicap_w_id  } from "src/core/index.js";
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import { MenuData  } from "src/core/index.js"
 import MatchListCardClass from '../match-card/match-list-card-class'
-import pageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import { PageSourceData  } from "src/core/index.js";
 import matchListParams from '../composables/match-list-params'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 class MatchPage {
   //当前调用的赛事列表接口方法

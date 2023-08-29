@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import pageSourceData from "src/core/page-source-pc/page-source-pc.js";
+import { PageSourceData  } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { send_zhuge_event } from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
@@ -63,7 +63,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 	// 查找参数:1赛事列表，2现场滚球盘，3赛事筛选，4赛事搜索，如果不传，默认赛事列表
 	let sm = 1;
 	// 当前页面为详情 && 菜单节点为 滚球
-	if (page_source.page_source == "details" && this.vx_cur_menu_type.type_name == "play") {
+	if (page_source.page_source == "details" && MenuData.cur_menu_type.type_name == "play") {
 		sm = 2;
 		// 当前页面为详情 || 来源页面为详情
 	} else if (page_source.page_source == "search" || page_source.from_page_source == "search") {
@@ -88,7 +88,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 	let params_1 =
 		_.get(NewMenu, "match_list_api_config.match_list.params") || {};
 	let md = "";
-	if (["early"].includes(this.vx_cur_menu_type.type_name)) {
+	if (["early"].includes(MenuData.cur_menu_type.type_name)) {
 		md = params_1.md;
 	}
 	/** 自动选择 */
@@ -104,7 +104,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		mid: remove_mid,
 	};
 	// 如果是聚合冠军页面
-	if (this.vx_cur_menu_type.type_name == "winner_top") {
+	if (MenuData.cur_menu_type.type_name == "winner_top") {
 		_params.euid = "";
 		delete _params.tid;
 		delete _params.keyword;

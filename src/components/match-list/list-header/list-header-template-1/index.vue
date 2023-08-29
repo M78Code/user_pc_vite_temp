@@ -111,7 +111,6 @@ const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
 // 获取当前菜单类型
-const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
 // 收起右侧详情 展开多列玩法
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
@@ -144,7 +143,7 @@ const sort_option = computed(() => {
 })
 // 是否显示刷新 btn
 const computed_show_refresh = computed(() => {
-  let _show = !["hot_all"].includes(vx_cur_menu_type.value.type_name) &&
+  let _show = !["hot_all"].includes(MenuData.cur_menu_type.type_name) &&
     vx_show_filter_popup.value == false &&
     vx_layout_cur_page.value.cur != "search"
   return _show

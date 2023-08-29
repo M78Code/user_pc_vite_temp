@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import utils from 'src/core/utils/utils.js'
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {utils } from 'src/core/index.js'
+import {UserCtr } from "src/core/index.js";
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
 

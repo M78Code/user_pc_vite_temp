@@ -47,7 +47,6 @@ export default {
       // 左侧详情参数
       vx_detail_params: "get_match_details_params",
       //获取当前菜单信息
-      vx_cur_menu_type: "get_cur_menu_type",
       vx_layout_cur_page: "get_layout_cur_page",
     }),
   },
@@ -56,7 +55,7 @@ export default {
     'menu_data.cur_level3_menu':{
       handler(){
         let csid = $menu.get_match_list_api_params().csid
-        if(this.$utils.is_eports_csid(csid) && !['hot','play'].includes(this.vx_cur_menu_type.type_name)){
+        if(this.$utils.is_eports_csid(csid) && !['hot','play'].includes(MenuData.cur_menu_type.type_name)){
           this.get_match_list()
         }
       },
@@ -65,7 +64,7 @@ export default {
     // 监听滚球电竞 球种变化
     'menu_data.cur_level2_menu':{
       handler(){
-        if(['hot','play'].includes(this.vx_cur_menu_type.type_name)){
+        if(['hot','play'].includes(MenuData.cur_menu_type.type_name)){
           let csid = $menu.get_match_list_api_params().csid
           if(this.$utils.is_eports_csid(csid)){
             this.get_match_list()

@@ -25,7 +25,6 @@ let state = store.getState();
 
 const route = useRoute()
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 const cur_title_info = computed(() => {
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
@@ -34,7 +33,7 @@ const cur_title_info = computed(() => {
     sport_title: {
       name: csna,
       match_count: lodash.get(this.match_list_data, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
-      show_num: vx_cur_menu_type.type_name != "winner_top" && route.name != "search",
+      show_num:  MenuData.cur_menu_type.type_name != "winner_top" && route.name != "search",
       func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
     },
     //滚球标题

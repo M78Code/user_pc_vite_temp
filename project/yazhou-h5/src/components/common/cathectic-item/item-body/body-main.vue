@@ -102,12 +102,12 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import { format_time_zone_time, format_odds, format_score } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 //国际化
 
 

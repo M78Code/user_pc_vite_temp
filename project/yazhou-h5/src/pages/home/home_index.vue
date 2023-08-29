@@ -33,11 +33,11 @@ import hot from "src/project/pages/home/hot/index";    // 热门页入口主页�
 import live_video from "src/project/pages/home/live_video/index.vue";
 import { loadLanguageAsync } from "boot/i18n";
 import router_mixins from "src/project/mixins/router_mixins.js";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import { onUnmounted, watch } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import UserCtr from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
+import {UserCtr } from "src/core/index.js";  // mixins: [router_mixins],
 
   // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标

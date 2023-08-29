@@ -45,7 +45,7 @@
 <script>
 import { defineComponent, ref } from 'vue'
 // import { useRoute } from 'vue-router'
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 // TODO:
 
 const arr_const = {

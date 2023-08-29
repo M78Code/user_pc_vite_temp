@@ -30,6 +30,7 @@
 
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 import { format_money3,format_money2 } from'src\core\format\index.js'
@@ -61,7 +62,7 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_current_menu.value = new_state.get_current_menu
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
 }
 
 
