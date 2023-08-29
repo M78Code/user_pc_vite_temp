@@ -25,7 +25,7 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="get_access_config.collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <div v-if="GlobalAccessConfig.collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{i18n.t('footer_menu.collect')}}</div>
       </div>
@@ -93,7 +93,7 @@ export default defineComponent({
      * @return {String}
      */
     const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;
