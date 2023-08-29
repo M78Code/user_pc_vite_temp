@@ -32,7 +32,7 @@
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
 const props = defineProps({
   ol_item:Object,
@@ -44,7 +44,6 @@ const props = defineProps({
 const store_state = store.getState()
 const timer_ = ref(null)
 const red_green_status = ref(0)
-const get_menu_type = ref(store_state.get_menu_type)
 const get_theme = ref(store_state.get_theme)
 
 // TODO: 其他模块得 store  待添加
@@ -53,7 +52,6 @@ const get_theme = ref(store_state.get_theme)
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_theme.value = new_state.get_theme
-  get_menu_type.value = new_state.get_menu_type
 })
 
 onMounted(() => {

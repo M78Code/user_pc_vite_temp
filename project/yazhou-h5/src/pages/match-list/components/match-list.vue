@@ -102,7 +102,7 @@
 
   </div>
 </template>
-
+ 
 <script setup>
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
@@ -119,15 +119,16 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 // import match_container_result from "./match-container-result.vue" // 赛果冠军
 import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
-
-
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
+ 
 const props = defineProps({
   // 赛事列表无数据
-  data_get_empty: Boolean,
-  // 6 收藏页,
-  menu_type: Number | String,
+  data_get_empty: Boolean, 
+  // 6 收藏页, 
+  menu_type: Number | String, 
   //处理赛事列表数据的类型封装
-  matchCtr:Object,
+  matchCtr:Object,                
   source:String,
   window_scrolly:Number | String,
   match_list_wrapper_height:Number,
@@ -137,7 +138,7 @@ const emitters = ref({})
 const store_state = store.getState();
 const timer_super12 = ref(null)
 // 默认箭头向上
-const arr_top_down = ref('arr-top')
+const arr_top_down = ref('arr-top') 
 // 收藏|取消收藏是否请求中
 const favorite_loading = ref(false)
 // 罚牌 玩法信息展示
@@ -164,12 +165,6 @@ const curr_play_info = ref({
 const get_match_id_bet_success = ref(store_state.get_match_id_bet_success)
 // 当前主题
 const get_theme = ref(store_state.get_theme)
-// 当用户未登录时返回uuid, 当用户登录时返回userId
-const get_uid = ref(store_state.get_uid)
-// 用户信息,用户金额,userId 需要监听变化
-const userCtr = ref(userCtr)
-// 当前选中的菜单
-const get_current_menu = ref(store_state.get_current_menu)
 // 滚到顶部
 const get_goto_list_top = ref(store_state.get_goto_list_top)
 // 显示收藏列表
@@ -247,7 +242,7 @@ watch(() => get_newer_standard_edition.value, (newValue) => {
 
 // 当前为冠军或电竞冠军
 const is_champion = computed(() => {
-  let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(get_current_menu.value, 'date_menu.menuType') == 100); //电竞冠军
+  let flag = 100 == props.menu_type || (3000 == props.menu_type && lodash.get(MenuData.current_menu, 'date_menu.menuType') == 100); //电竞冠军
   return flag;
 })
 // 是否显示无第 {X} 个进球 title----次要玩法tips(5分钟次要玩法)
@@ -338,7 +333,7 @@ const toggle_collect = ($event) => {
 
   let api, txt, number = 0;
   let params = {
-    cuid: userCtr.value ? userCtr.value.userId:get_uid.value,
+    cuid: UserCtr.user.userId,
   };
   if (item == 'tf') {
     //联赛收藏或取消收藏
@@ -426,9 +421,6 @@ const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_match_id_bet_success.value = new_state.get_match_id_bet_success
   get_theme.value = new_state.get_theme
-  get_uid.value = new_state.get_uid
-  userCtr.value = userCtr
-  get_current_menu.value = new_state.get_current_menu
   get_goto_list_top.value = new_state.get_goto_list_top
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
@@ -441,7 +433,7 @@ onUnmounted(() => {
 })
 
 </script>
-
+ 
 <style scoped lang="scss">
   @import "../styles//match-list";
 </style>

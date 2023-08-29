@@ -7,7 +7,7 @@
         <!-- 加载中 -->
         <SRecord v-if="is_loading" />
         <scroll ref="myScroll" :on-pull="onPull" v-else>
-            <div class="filter-button" v-if="store_user.user.settleSwitch == 1">
+            <div class="filter-button" v-if="userCtr.user_info.settleSwitch == 1">
                 <!-- 已失效按钮 -->
                 <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{ 'select': selected_expired }">
                     {{ t('pre_record.expired') }}
@@ -62,12 +62,12 @@ import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js"
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 
 // 仓库数据
 let { cathecticReducer, userInfoReducer } = store.getState()
-let store_user = userInfoReducer
 const store_cathectic = ref(cathecticReducer)
 
 const props = defineProps({

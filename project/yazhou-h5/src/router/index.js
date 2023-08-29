@@ -26,7 +26,7 @@ const router = createRouter({
         //   {
         //     path: "/activity_task",
         //     name: "activity_task",
-        //     component: () => import("src/public/activity_page/activity_task/index.vue")
+        //     component: () => import("project_path/src/activity_page/activity_task/index.vue")
         //   },
         {
           path: "/virtual",

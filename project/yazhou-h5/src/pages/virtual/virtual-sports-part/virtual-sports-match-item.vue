@@ -53,7 +53,7 @@
             </div>
             <!-- 玩法数量 -->
             <div v-if="match_item.mc">
-              {{lodash.get(get_access_config,'handicapNum') ? `${match_item.mc}+`: i18n.t('footer_menu.more')}}
+              {{GlobalAccessConfig.get_handicapNum() ? `${match_item.mc}+`: i18n.t('footer_menu.more')}}
             </div>
           </div>
         </div>
@@ -156,6 +156,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapActions, mapMutations } from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import v_s_odd_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "project_path/pages/match-list/components/odd_column_item.vue"
@@ -542,7 +543,7 @@ export default defineComponent({
     //   get_n_s_changed_loaded:"get_n_s_changed_loaded",
     //   get_curr_sub_menu_type:"get_curr_sub_menu_type",
     //   get_theme:'get_theme',
-    //   get_access_config:'get_access_config',
+    //   get_access_config,
     // }),
     const footer_sub_menu_id = computed(() => {
       return ""
@@ -563,7 +564,7 @@ export default defineComponent({
      * @Description 获取全局配置开关
      * @param {undefined} undefined
      */
-    const get_access_config = computed(() => {
+     const GlobalAccessConfig = computed(() => {
     });
     const show_debugger_line = computed(() => {
       let wsl = sessionStorage.getItem('wsl');
@@ -605,7 +606,7 @@ export default defineComponent({
       get_n_s_changed_loaded,
       get_curr_sub_menu_type,
       get_theme,
-      get_access_config,
+      GlobalAccessConfig,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,

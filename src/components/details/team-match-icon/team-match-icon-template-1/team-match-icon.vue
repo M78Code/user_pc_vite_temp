@@ -33,11 +33,11 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
-import utils from "src/public/utils/utils";
+// import utils from "/utils/utils";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "team_match_icon",
@@ -49,7 +49,7 @@ export default defineComponent({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed:{
     // ...mapGetters([
     //   'get_detail_data',
@@ -78,7 +78,7 @@ export default defineComponent({
         set_detail_data(m_detail_data);
       }
     );
-    // #TODO vuex 
+    // #TODO vuex
     // methods: {
     // ...mapMutations([
     //   "set_detail_data",

@@ -6,7 +6,7 @@ import { api_common, api_analysis } from "src/api/index.js";
 
 // #TODO mixins
 // 引入skt_data_info
-// import websocket_data from "src/public/mixins/websocket/data/skt_data_info.js";
+// import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";
 

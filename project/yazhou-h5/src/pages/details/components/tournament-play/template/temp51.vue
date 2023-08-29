@@ -75,10 +75,10 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -88,14 +88,14 @@ export default defineComponent({
   components: {
     oddsNew,
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
     const data = reactive({
       utils
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list"])
     // },
@@ -103,7 +103,7 @@ export default defineComponent({
       return []
     });
     onUnmounted(() => {
-      // #TODO $data 
+      // #TODO $data
       // for (const key in $data) {
       //   $data[key] = null
       // }

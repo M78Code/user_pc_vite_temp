@@ -149,6 +149,7 @@ import { computed, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 const props = defineProps({
   match: Object,
@@ -166,13 +167,12 @@ const last_list_score = ref('')
 const msc_converted = ref([])     
 const show_left_triangle = ref(false)
 const show_right_triangle = ref(false)
+const get_menu_type = MenuData.get_menu_type()
 
-const get_menu_type = ref(store_state.get_menu_type)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  get_menu_type.value = new_state.get_menu_type
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 

@@ -20,11 +20,11 @@
               <template v-if="[1001,1011].includes(vsport_ctr.info.csid*1)">
                 &nbsp;{{vsport_ctr.info.no}}
               </template>
-            </template>  
+            </template>
           </div>
-          
+
           <div class="icon"></div>
-         
+
         </div>
         <!-- 视频区域 -->
         <virtual-video :vsport_ctr="vsport_ctr" />
@@ -49,13 +49,13 @@
         <!-- 赛马赛果 -->
         <horse-result v-else :vsport_ctr="vsport_ctr" />
       </template>
-      
+
       <!-- 足球 、篮球-->
       <template v-if="[1001,1004].includes(vsport_ctr.info.csid*1)">
-        <footbal-replay 
-          :vsport_ctr="vsport_ctr" 
-          v-for="(match,match_index) in vsport_ctr.replay_list" :key="match_index" 
-          :match="match" 
+        <footbal-replay
+          :vsport_ctr="vsport_ctr"
+          v-for="(match,match_index) in vsport_ctr.replay_list" :key="match_index"
+          :match="match"
           :match_index="match_index"
         />
         <!-- 足球杯赛排行榜 -->
@@ -63,12 +63,12 @@
           <!-- 排行榜标题 -->
           <div class="rank-title">
             <!-- 小组赛 -->
-            <div class="item" 
+            <div class="item"
               :class="{active:vsport_ctr.cup_tab == 'group'}"
               @click="vsport_ctr.set_cup_tab('group')"
             >{{i18n.t('vsport.group')}}</div>
             <!-- 淘汰赛 -->
-            <div class="item" 
+            <div class="item"
               :class="{active:vsport_ctr.cup_tab == 'elimination',disable:vsport_ctr.info.mmp == 'GROUPS'}"
               @click="vsport_ctr.set_cup_tab('elimination')"
             >{{i18n.t('vsport.elimination')}}</div>
@@ -83,12 +83,12 @@
         :vsport_ctr="vsport_ctr"
         :titleFixed="isFixed" />
       </template>
-    
+
     </v-scroll-area>
   </load-data>
 </template>
 <script>
-import loadData from "src/public/components/load_data/load_data.vue"
+// import loadData from "/components/load_data/load_data.vue"
 import eliminationRank from "src/project/yabo/components/virtual_right/elimination_rank.vue"
 import groupRank from "src/project/yabo/components/virtual_right/group_rank.vue"
 import leagueRank from "src/project/yabo/components/virtual_right/league_rank.vue"
@@ -96,9 +96,9 @@ import virtualVideo from "src/project/yabo/components/virtual_right/virtual_vide
 import horseResult from "src/project/yabo/components/virtual_right/horse_result.vue"
 import horseReplay from "src/project/yabo/components/virtual_right/horse_replay.vue"
 import footbalReplay from "src/project/yabo/components/virtual_right/footbal_replay.vue"
-import vScrollArea from "src/public/components/v_scroll_area/v_scroll_area.vue";
-import vsport_ctr from "src/public/utils/vsport/vsport_ctr.js"
-// #TODO vuex 
+// import vScrollArea from "/components/v_scroll_area/v_scroll_area.vue";
+// import vsport_ctr from "/utils/vsport/vsport_ctr.js"
+// #TODO vuex
 // import { mapGetters } from "vuex"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
@@ -118,14 +118,14 @@ export default defineComponent({
     const component_data = reactive({
       // 虚拟体育操作类
       vsport_ctr: new vsport_ctr(),
-      // 是否显示视频提示内容 
+      // 是否显示视频提示内容
       is_show_content:false,
       // 赛事对阵列表高度
       listsHeight: 0,
       // title 排行榜是否吸顶
       isFixed: false,
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed:{
     //   ...mapGetters({
     //     // 获取右侧参数
@@ -172,15 +172,15 @@ export default defineComponent({
       $utils.load_player_js()
       useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
 
-      // 原mounted 
+      // 原mounted
       vsport_ctr.set_result_style()
-      
+
     })
     onUnmounted(() => {
       useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, timer);
     });
     /**
-     * @Description 计时器 
+     * @Description 计时器
      * @param {undefined} undefined
     */
     const timer = () => {

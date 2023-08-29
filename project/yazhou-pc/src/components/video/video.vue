@@ -58,9 +58,9 @@
 
 <script setup>
 
-import LoadData from "src/public/components/load_data/load_data.vue"
+import LoadData from "project_path/src/components/load_data/load_data.vue"
 // 视屏头部
-import VideoHeader from "src/public/components/video/video_header.vue"
+import VideoHeader from "project_path/src/components/video/video_header.vue"
 // 视频组件
 import VideoIframe from "src/project/yabo/components/video/video_iframe.vue"
 // 比分板足球模板
@@ -80,11 +80,11 @@ import Stats from "src/project/yabo/components/match_details/panel/stats.vue"
 // 精彩回放组件
 import VideoHistoryLine from "src/project/yabo/components/video/video_history_line.vue";
 // 视频操作相关工具库
-import video from "src/public/utils/video/video.js"
+// import video from "project_path/src/utils/video/video.js"
 // websocket数据页面数据接入
-import skt_data_video from "src/public/mixins/websocket/data/skt_data_video.js"
+// import skt_data_video from "project_path/src/mixins/websocket/data/skt_data_video.js"
 // 赛事详情页面信息操作类
-import MatchInfoCtr from "src/public/utils/dataClassCtr/match_info_ctr.js"
+// import MatchInfoCtr from "project_path/src/utils/dataClassCtr/match_info_ctr.js"
 //  直播聊天室相关
 import live_chatroom from "src/project/yabo/mixins/live_chatroom/live_chatroom";
 // import { mapGetters, mapActions } from "vuex"
