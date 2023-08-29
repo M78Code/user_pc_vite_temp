@@ -17,7 +17,7 @@
           <!-- 投注失败 -->
           <span v-if="order_tatus == 0" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{i18n.t('bet.bet_err')}}</span>
            <!-- 提交成功 -->
-          <span v-if="order_tatus == 2" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)">{{i18n.t('bet.submitted_successfully')}}</span>
+          <span v-if="order_tatus == 2" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{i18n.t('bet.submitted_successfully')}}</span>
         </p>
       </div>
       <!-- 下 -->
@@ -32,8 +32,8 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
+import UserCtr from "src/core/user-config/user-ctr.js";
 // mixins: [bettinglist],
-import store from "src/store-redux/index.js";
 
 const order_tatus =  ref(1)   //1-投注成功  2-投注确认中  0-投注失败
 const max_win_money2 = ref()  //订单确认后的最高可赢或者自己计算的最高可赢
@@ -42,7 +42,6 @@ const counter_= ref()   //计时器
 
 const store_state = store.getState()
 
-const get_theme = ref(store_state.get_theme)
 const get_s_count_data = ref(store_state.get_s_count_data)
 
 const unsubscribe = store.subscribe(() => {
@@ -51,7 +50,6 @@ const unsubscribe = store.subscribe(() => {
 
 const update_state = () => {
   const new_state = store.getState()
-  const get_theme = new_state.get_theme
   const get_s_count_data = new_state.get_s_count_data
 }
 

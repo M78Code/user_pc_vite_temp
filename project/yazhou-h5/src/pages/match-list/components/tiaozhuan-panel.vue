@@ -20,11 +20,12 @@
       </template>
     </q-carousel>
     <!-- 猜你喜欢 -->
-    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
+    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="GlobalAccessConfig.get_hotRecommend()"></may-also-like>
   </div>
 </template>
 
 <script setup>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
@@ -51,7 +52,7 @@ const get_banner_obj = ref(store_state.get_banner_obj)
 const userCtr = ref(store_state.get_curr_sub_menu_type)
 const get_golistpage = ref(userCtr.get_golistpage)
 const get_hot_list_item = ref(store_state.get_hot_list_item)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 // 当前选中的二级菜单id
 const get_curr_sub_menu_type = ref(userCtr)
 
@@ -61,7 +62,7 @@ const unsubscribe = store.subscribe(() => {
   userCtr.value = userCtr
   get_golistpage.value = new_state.get_golistpage
   get_hot_list_item.value = new_state.get_hot_list_item
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
 })
 
