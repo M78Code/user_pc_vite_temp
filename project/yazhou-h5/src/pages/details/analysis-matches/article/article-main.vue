@@ -42,7 +42,6 @@ import articleMaylike from "project_path/src/pages/details/analysis-matches/arti
 import { onMounted, onUnmounted, watch, ref } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-import userCtr from "src/core/user-config/user-ctr.js";
 
   // 弹框是否显示
   const is_show_dialog = ref(false)
@@ -236,7 +235,7 @@ const handle_stay_duration = (article_id) => {
       return
     }
     // TODO: $utils 后续修改调整
-    $utils.zhuge_event_send(EVENT_NAME, userCtr, zhuge_obj)
+    $utils.zhuge_event_send(EVENT_NAME, get_user, zhuge_obj)
     enter_article_time = Date.now()
   }
   /**

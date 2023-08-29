@@ -1,5 +1,5 @@
 <!--
- * @Author:
+ * @Author: 
  * @Description: 为商户定制的活动页弹层,只在home页展示
 -->
 <template>
@@ -15,8 +15,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import lodash from 'lodash'
-import userCtr from "src/core/user-config/user-ctr.js";
-
+  
   const props = defineProps({
     activity_layerimg: {
       type: String,
@@ -28,7 +27,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
     },
   })
   // computed: {
-  //   ...mapGetters(['get_banner_obj',  'get_golistpage', 'get_hot_list_item'])
+  //   ...mapGetters(['get_banner_obj', 'get_user', 'get_golistpage', 'get_hot_list_item'])
   // },
     // ...mapMutations(['set_menu_type', 'set_goto_detail_matchid', 'set_details_item', 'set_home_tab_item', 'set_hot_tab_item']),
   const handle_img_load_error = (e) => {
@@ -52,7 +51,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
           set_details_item(0);
           $router.push({name:'category', params: {mid, csid}});
           }
-        } else if (_url == 'act' && userCtr.activityList) {
+        } else if (_url == 'act' && get_user.activityList) {
           $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         }  else if (_url.startsWith('hot') && !get_golistpage) {
             let tid = _url.split('/')[1]

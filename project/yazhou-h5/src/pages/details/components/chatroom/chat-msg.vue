@@ -29,8 +29,6 @@ import { msgType } from 'project_path/src/pages/details/components/chatroom/cons
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import userCtr from "src/core/user-config/user-ctr.js";
-
 export default defineComponent({
   name: 'chat_msg',
   components: { bet_info },
@@ -49,7 +47,7 @@ export default defineComponent({
     // #TODO vuex
     // computed: {
     // ...mapGetters([
-    //   'userCtr', // 当前登录的用户信息
+    //   'get_user', // 当前登录的用户信息
     // ]),
     const computed_name = computed(() => {
       const { nickName } = msgItem || '';
@@ -65,7 +63,7 @@ export default defineComponent({
     });
     // 是否是自己发送的消息
     const is_self_msg = computed(() => {
-      const { userId } = userCtr || {};
+      const { userId } = get_user || {};
       const { userId: msgUserId } = msgItem;
       return userId == msgUserId;
     });

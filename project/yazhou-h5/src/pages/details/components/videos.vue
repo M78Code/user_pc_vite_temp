@@ -289,7 +289,6 @@ import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import { t } from "src/boot/i18n";;
-import userCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 const route = useRoute()
@@ -412,7 +411,7 @@ export default defineComponent({
       return ""
     });
     // 用户令牌信息
-    const userCtr_token = computed(() => {
+    const get_user_token = computed(() => {
       return ""
     });
     // 视频单页是否已加载     作用：防止白屏
@@ -428,7 +427,7 @@ export default defineComponent({
       return ""
     });
     // 用户信息,用户金额,userId 需要监听变化
-    const userCtr = computed(() => {
+    const get_user = computed(() => {
       return ""
     });
     // 是否全屏
@@ -463,7 +462,7 @@ export default defineComponent({
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(userCtr,'oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(get_user,'oss.live_h5')
       return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -476,8 +475,8 @@ export default defineComponent({
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
       // letian = 乐天  oubao = 欧宝
-      if(userCtr.merchantCode){
-        return userCtr.merchantCode == 'letian'
+      if(get_user.merchantCode){
+        return get_user.merchantCode == 'letian'
       }
     });
     const iframe_show = computed(() => {
@@ -549,7 +548,7 @@ export default defineComponent({
     });
     // 精彩回放视频开关是否开启
     const is_replay_switch = computed(() => {
-      const { configValue, eventSwitch } = _.get(userCtr, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(get_user, 'merchantEventSwitchVO', {})
       return configValue == 1 && eventSwitch == 1
     });
     // slider列表长度是否小于屏幕横屏宽度

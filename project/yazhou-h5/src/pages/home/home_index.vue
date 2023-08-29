@@ -37,7 +37,6 @@ import utils from "src/core/utils/utils.js";
 import { onUnmounted, watch } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import userCtr from "src/core/user-config/user-ctr.js";
   // mixins: [router_mixins],
 
   // 首页头部 tab 选项卡内容
@@ -93,7 +92,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
         res = tabList_
       return res;
     })
-
+ 
 
   watch(() => tabIndex, (n) => {
     // 首页、视频直播以及热门下精选不显示背景
@@ -294,7 +293,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
       calc_tab_select(tab)
       // 埋点采集热门赛事点击
       if (tab.index === 1) {
-        $utils.zhuge_event_send('H5_热门赛事', userCtr);
+        $utils.zhuge_event_send('H5_热门赛事', vx_get_user);
       }
     }
     //计算选中居中偏移值

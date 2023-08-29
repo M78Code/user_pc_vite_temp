@@ -55,7 +55,6 @@ import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 // import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
-import userCtr from "src/core/user-config/user-ctr.js";
 import { t } from "src/boot/i18n";;
 //国际化
 import store from 'src/store'
@@ -91,7 +90,7 @@ import store from 'src/store'
   let timer_1 = ref(null)
   let timer_2 = ref(null)
   // computed: {
-  //   ...mapGetters(['get_main_item'])
+  //   ...mapGetters(['get_user', 'get_main_item'])
   // },
 
   /**
@@ -167,7 +166,7 @@ import store from 'src/store'
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
   const check_early_order = () => {
-    if(!userCtr.settleSwitch){
+    if(!get_user.settleSwitch){
       orderNumberItemList = []
       return;
     }

@@ -23,7 +23,7 @@
     <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
   </div>
 </template>
-
+ 
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
@@ -31,7 +31,6 @@ import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
-import userCtr from "src/core/user-config/user-ctr.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -48,17 +47,17 @@ const carousel_src = ref([])
 // 商户配置的图片地址和弹框信息
 const get_banner_obj = ref(store_state.get_banner_obj)
 // 用户信息,用户金额,userId 需要监听变化
-const userCtr = ref(store_state.get_curr_sub_menu_type)
-const get_golistpage = ref(userCtr.get_golistpage)
+const get_user = ref(store_state.get_curr_sub_menu_type)
+const get_golistpage = ref(store_state.get_golistpage)
 const get_hot_list_item = ref(store_state.get_hot_list_item)
 const get_access_config = ref(store_state.get_access_config)
 // 当前选中的二级菜单id
-const get_curr_sub_menu_type = ref(userCtr)
+const get_curr_sub_menu_type = ref(store_state.get_user)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_banner_obj.value = new_state.get_banner_obj
-  userCtr.value = userCtr
+  get_user.value = new_state.get_user
   get_golistpage.value = new_state.get_golistpage
   get_hot_list_item.value = new_state.get_hot_list_item
   get_access_config.value = new_state.get_access_config
@@ -103,7 +102,7 @@ const confirm = (val) => {
   let _url = lodash.get(val, 'hostUrl')
   let _type = lodash.get(val, 'urlType')
   if (!_url) return
-  if (val.comfirmTxt && userCtr.value.activityList) {
+  if (val.comfirmTxt && get_user.value.activityList) {
     store.dispatch({ type: 'matchReducer/set_activity_msg',  payload: val });
   } else if (_url.startsWith('http') && _type === '2') {
       window.open(_url, '_blank')
@@ -118,7 +117,7 @@ const confirm = (val) => {
       store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 0 })
       router.push({name:'category', params: {mid, csid}});
       }
-    } else if (_url == 'act' && userCtr.value.activityList) {
+    } else if (_url == 'act' && get_user.value.activityList) {
       router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
     } else if (_url.startsWith('hot') && !get_golistpage.value) {
       let tid = _url.split('/')[1]
@@ -135,7 +134,7 @@ const confirm = (val) => {
         }
       }
     }
-  }
+  }      
 }
 /**
  *@description 重置计时器
@@ -157,7 +156,7 @@ onUnmounted(() => {
   }
 })
 </script>
-
+ 
 <style scoped lang="scss">
  .tiaozhuan-panel {
   width: 3.6rem;
