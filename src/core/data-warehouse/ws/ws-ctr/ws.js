@@ -7,6 +7,7 @@ import { WsRev } from "./ws-ctr.js";
 import WsMan from  "./ws-man.js"
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
@@ -280,7 +281,7 @@ export default class Ws {
         // 对特殊命令进行统一管理处理发送
         if(window.vue) {
           try {
-            msg.requestId = window.vue.$store.getters.get_user.token || sessionStorage.getItem(STANDARD_KEY.token);
+            msg.requestId = UserCtr.user_token || sessionStorage.getItem(STANDARD_KEY.token);
           } catch (error) {
             console.error(error)
           }

@@ -6,6 +6,7 @@
 import WsQueue from "src/public/utils/ws/wsQueue.js";
 import { WsRev } from "src/public/utils/ws/wsCtr.js";
 import WsSendManger from "src/public/utils/ws/ws_send_manger.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
@@ -282,7 +283,7 @@ export default class Ws {
     }
     try {
       if (this.ws && this.ws.readyState == 1) {
-        let mkLevel = _.get(window, 'vue.$store.getters.get_user.marketLevel');
+        let mkLevel = _.get(UserCtr.user_info, 'marketLevel');
         switch (msg.cmd) {
           case 'C8':
             // 是否一条一条发送
@@ -301,12 +302,8 @@ export default class Ws {
         }
         if (!msg) return
         try {
-          if (window.vue) {
-            if (typeof (window.vue.$store.getters.get_user_token) == 'object') {
-              msg.requestId = window.vue.$store.getters.get_user_token.token;
-            } else {
-              msg.requestId = window.vue.$store.getters.get_user_token;
-            }
+          if (UserCtr.user_token) {
+              msg.requestId = UserCtr.user_token
           }
         } catch (e) {
           console.error(e)

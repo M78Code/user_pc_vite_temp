@@ -5,6 +5,7 @@ import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
 import STANDARD_KEY from "src/core/standard-key/";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const token_key = STANDARD_KEY.get("token");
 // import store from "src/store-redux-vuex/index.js";
@@ -70,14 +71,14 @@ const send_user_pro_info = () => {
     }
     // 获取token
     try {
-      accessToken = window.vue.$store.getters.get_user_token.token;
+      accessToken = UserCtr.user_token;
     } catch (e) {
       console.error(e);
     }
     if (!accessToken) accessToken = "";
     // 获取用户信息
     try {
-      userInfo = window.vue.$store.getters.get_user;
+      userInfo = UserCtr.user_info;
     } catch (e) {
       console.error(e);
     }
@@ -142,14 +143,14 @@ const send_api_error_data = throttle(
       // 获取token
       try {
         // 从用户信息中获取token
-        accessToken = window.vue.$store.getters.get_user_token.token;
+        accessToken = UserCtr.user_token
       } catch (e) {
         console.error(e);
       }
       if (!accessToken) accessToken = "";
       // 获取用户信息
       try {
-        userInfo = window.vue.$store.getters.get_user;
+        userInfo = UserCtr.user_info
       } catch (e) {
         console.error(e);
       }
