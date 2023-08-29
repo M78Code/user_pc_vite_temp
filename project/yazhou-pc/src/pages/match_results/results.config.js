@@ -11,7 +11,6 @@ import {
   onMounted,
   watch,
 } from "vue";
-import utils from "src/core/utils/utils";
 import { api_common } from "src/api/";
 // api文件
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
@@ -22,10 +21,7 @@ import { useRoute, useRouter } from "vue-router";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import { pre_load_video } from "src/core/pre-load/index";
-import { format_plays, format_sort_data } from "src/core/format/index";
-import { formatTime } from "src/core/format/index.js"
-// import uid from "src/core/uuid/index.js";
-import { i18n } from "src/boot/i18n";
+import { i18n,useMittEmit,useMittEmitterGenerator,formatTime,uid,format_plays,format_sort_data,utils } from "src/core/index.js";
 // import fliterCheckbox from "src/project/yabo/components/match_list/filter_checkbox.vue";
 export const useGetResultConfig = () => {
   const route = useRoute();
@@ -340,7 +336,7 @@ export const useGetResultConfig = () => {
                   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
                   1001, 1004, 1002, 1011, 1010, 1009, 18, 28, 29, 33,
                 ].includes(data[i].id * 1) ||
-                this.$utils.is_eports_csid(data[i].id * 1)
+               utils.is_eports_csid(data[i].id * 1)
               ) {
                 // 18-娱乐,28-高尔夫,29-自行车,33-赛车运动
                 if ([18, 28, 29, 33].includes(data[i].id * 1)) {
@@ -353,7 +349,7 @@ export const useGetResultConfig = () => {
                   ![0, 1001, 1002, 1004, 1011, 1010, 1009].includes(
                     data[i].id * 1
                   ) &&
-                  !this.$utils.is_eports_csid(data[i].id * 1)
+                  !utils.is_eports_csid(data[i].id * 1)
                 ) {
                   this.champion_sport_type.push(data[i].name);
                 }
@@ -534,7 +530,7 @@ export const useGetResultConfig = () => {
       this.results_params.matchNameStr =
         this.results_params.matchNameStr.trim();
       // 判断是否是电竞
-      if (this.$utils.is_eports_csid(this.sport_id)) {
+      if (utils.is_eports_csid(this.sport_id)) {
         this.results_params.isESport = "1";
       } else {
         this.results_params.isESport = "";
@@ -631,7 +627,7 @@ export const useGetResultConfig = () => {
         eventCode: 0,
       };
       // 如果当前是电竞,就增加对应的请求参数
-      if (this.$utils.is_eports_csid(this.current_sport_id)) {
+      if (utils.is_eports_csid(this.current_sport_id)) {
         params.isESport = "1";
       }
       // 清空上一次的请求结果
@@ -688,7 +684,7 @@ export const useGetResultConfig = () => {
                 }
               });
               // 电竞赛事不展示输的详情，返回数据不同
-              if (this.$utils.is_eports_csid(this.current_sport_id)) {
+              if (utils.is_eports_csid(this.current_sport_id)) {
                 // 判断赛果详情里是否有空数据
                 let notEmpty = data.some((i) => i.posrList.length > 0);
                 if (!notEmpty) {
