@@ -1,9 +1,14 @@
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 import pageSourceData from "src/core/page-source-pc/page-source-pc.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { send_zhuge_event } from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
+import details from "src/core/match-list-pc/details-class/details.js";
 const latest_match_params_pre = ref("");
 const default_select_all = ref(true);
+const route = useRoute()
+const page_source = pageSourceData;
 const get_full_sr_url = (match) => {
 	return details.get_full_sr_url(match);
 };
@@ -11,9 +16,9 @@ const get_full_sr_url = (match) => {
 const sr_click_handle = (match, type) => {
 	if (type == "details") {
 		// 发送埋点事件
-		this.$utils.send_zhuge_event("PC_情报分析");
+		send_zhuge_event("PC_情报分析");
 	} else if (type == 1) {
-		this.$utils.send_zhuge_event("PC_热门推荐_赛事分析点击");
+		send_zhuge_event("PC_热门推荐_赛事分析点击");
 	}
 	details.sr_click_handle(match);
 };
@@ -24,13 +29,14 @@ const sr_click_handle = (match, type) => {
 const mx_filter_select_ids = () => {
 	return this.vx_filter_select_obj.join(",");
 };
+
 /**
  * 设置赛事列表/详情选中赛事
  * @param  {number} remove_mid - 被移除赛事的ID
  * @return {undefined} undefined
  */
 const mx_autoset_active_match = (params = { mid: 0 }) => {
-	let { name: route_name, params: cur_parmas } = this.$route;
+	let { name: route_name, params: cur_parmas } = route;
 	let return_status =
 		(route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
 		(route_name === "details" &&
@@ -53,19 +59,20 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 	}
 	details.auto_swich_match = true;
 	let { mid: remove_mid, tid } = params;
-	let { cur: cur_page, from: from_page } = this.vx_layout_cur_page;
 	// 查找参数:1赛事列表，2现场滚球盘，3赛事筛选，4赛事搜索，如果不传，默认赛事列表
 	let sm = 1;
-	if (cur_page == "details" && this.vx_cur_menu_type.type_name == "play") {
+	// 当前页面为详情 && 菜单节点为 滚球
+	if (page_source.page_source == "details" && this.vx_cur_menu_type.type_name == "play") {
 		sm = 2;
-	} else if (cur_page == "search" || from_page == "search") {
+		// 当前页面为详情 || 来源页面为详情
+	} else if (page_source.page_source == "search" || page_source.from_page_source == "search") {
 		sm = 4;
 	} else if (mx_filter_select_ids()) {
 		sm = 3;
 	}
 	let csid = 0;
-	if (cur_page == "details") {
-		let { tid: _tid, csid: _csid } = this.$route.params;
+	if (page_source.page_source == "details") {
+		let { tid: _tid, csid: _csid } = route.params;
 		if (_tid) {
 			tid = _tid;
 			csid = _csid;
@@ -126,7 +133,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 			if (cur_page == "details" || cur_page == "video") {
 				if (mid && mid != -1) {
 					if (cur_page == "details") {
-						this.$router.push({
+						router.push({
 							name: "details",
 							params: {
 								mid,
