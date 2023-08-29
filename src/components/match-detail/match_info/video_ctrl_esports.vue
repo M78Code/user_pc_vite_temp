@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "/components/sport_icon/sport_icon.vue"
 export default {
   components:{
     sportIcon

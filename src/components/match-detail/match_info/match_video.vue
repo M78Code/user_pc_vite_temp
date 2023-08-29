@@ -37,7 +37,7 @@
       <div class="label" v-if="is_limited">{{i18n.t('common.limited')}}</div>
       <div class="label" v-else>{{i18n.t('common.account_invalid')}}<br/>{{i18n.t('common.account_invalid2')}}</div>
     </div>
- 
+
     <!-- 有直播可放 3-->
     <div class="load-data-wrap fit video-loading loading-wrap yb-flex-center relative-position" v-if="show_type == 'play-video'&&(vx_get_is_fold_status || is_esports) && !is_video_pause"
       @mouseenter="video_enter"
@@ -48,10 +48,10 @@
         {{i18n.t('common.loading')}}
         <!-- 数据加载中... 请稍后 -->
       </div>
-  
+
       <iframe
         id="video-iframe"
-        class="video-iframe fit"  
+        class="video-iframe fit"
         :src="media_src"
         frameborder="0"
         marginwidth="0"
@@ -99,9 +99,9 @@
           </template>
         </slider-x>
       </template>
-      <video-type-ctr 
-        @mouseenter="video_enter" 
-        v-show="is_video_hover && !current_replay && ((['video','studio','anchor','topic'].includes(vx_play_media.media_type) && is_video_load_done) || is_esports)" 
+      <video-type-ctr
+        @mouseenter="video_enter"
+        v-show="is_video_hover && !current_replay && ((['video','studio','anchor','topic'].includes(vx_play_media.media_type) && is_video_load_done) || is_esports)"
         :ctr_data="ctr_data"
         :is_video_hover="is_video_hover"
         :video_fullscreen_disabled="video_fullscreen_disabled"
@@ -126,11 +126,11 @@
       <div class="pause-icon" @click="on_play_video"></div>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
 import match_video from "src/project/yabo/mixins/match_details/match_info/match_video";
-import video_type_ctr from "src/public/utils/video/video_type_ctr.vue";
+// import video_type_ctr from "/utils/video/video_type_ctr.vue";
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
 import videoReplayError from "src/project/yabo/components/video/video_replay_error.vue"
 export default {
@@ -325,7 +325,7 @@ export default {
       flex: 1;
     }
   }
-  
+
   :deep(.slider-x) {
     position: absolute;
     bottom: 46px;
@@ -418,7 +418,7 @@ export default {
       line-height: 20px;
       padding: 0 10px;
     }
-    
+
   }
   /*============精彩回放 end===============*/
 }

@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import utils from "src/public/utils/utils.js";
+// import utils from "/utils/utils.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import { format_H_M  } from "src/core/index.js";
 
 export default defineComponent({
   name: "show_start_time",
   props: ["detail_data"],
-  
+
   setup(props, evnet) {
     const data = reactive({
       // 赛事进行时间
@@ -34,7 +34,7 @@ export default defineComponent({
     });
     onMounted(() => {
       // 时间延时器
-      // 原 created 
+      // 原 created
       timerInterval = '';
       initEvent();
     });
@@ -42,7 +42,7 @@ export default defineComponent({
       let now = new Date().getTime();
       let bool = Number(detail_data.mgt) - now < 3600 * 1000;
       let longTime = Math.floor( (+detail_data.mgt -now ) / 1000 / 60 );
-      if( longTime == 0 ){ 
+      if( longTime == 0 ){
         longTime += 1;
       }
       // 判断开始时间小于本地时间 则不显示具体时间
