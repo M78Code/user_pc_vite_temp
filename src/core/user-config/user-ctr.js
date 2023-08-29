@@ -83,6 +83,12 @@ class UserCtr {
     this.show_login_popup = false;
     // 是否首次登录
     this.is_new_user = false;
+    //  当前用户开启的活动
+    this.activity = {
+      id: '',
+      // 详细信息
+      list: []
+    }
 
   }
   /**
@@ -144,6 +150,9 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
+  }
+  set_user_activity (activity) {
+    this.activity = { ...activity }
   }
   clear_user({ commit }) {
     this.user_info = "";

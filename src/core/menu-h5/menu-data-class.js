@@ -18,7 +18,11 @@ class MenuData {
     //上一次的菜单 lv2
     this.previous_lv_2_menu = {};
     //当前的菜单 lv2
-    this.current_lv_2_menu = {};
+    this.current_lv_2_menu = {
+      id: '',
+      type: '',
+      name: ''
+    };
     //上一次的菜单 lv3
     this.previous_lv_3_menu = {};
     //当前的菜单 lv3
@@ -32,6 +36,8 @@ class MenuData {
     this.menu_original_data = {};
     // 页脚菜单
     this.footer_sub_menu_id = '';
+    // 上一次选择的页脚菜单
+    this.prev_footer_sub_menu_id = '';
     this.lv_1_menu_map={
       1:"滚球",
       2:"今日",
@@ -59,6 +65,10 @@ class MenuData {
     return menu_list.reduce((pre, cur) => {
       return pre + cur.ct;
     }, 0);
+  }
+  // 当前选中的菜单type
+  get_menu_type () {
+    return ''
   }
   async get_db_mids(mi) {
     //返回mi 筛选赛事 获取mid 用于筛选列表赛事

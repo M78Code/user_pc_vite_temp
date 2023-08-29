@@ -33,28 +33,27 @@ import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 const props = defineProps(['detail_data'])
 
+const get_menu_type = MenuData.get_menu_type()
 const store_state = store.getState()
 const change_show = ref(true)
 const search_tab = ref([i18n.t('footer_menu.filter'), i18n.t('search.search_title')])
 
 const get_search_for_choose = ref(store_state.get_search_for_choose)
 const get_search_term = ref(store_state.get_search_term)
-const get_menu_type = ref(store_state.get_menu_type)
-const get_current_menu = ref(store_state.get_current_menu)
+const get_current_menu = MenuData.current_menu
+const get_curr_sub_menu_type = MenuData.current_lv_2_menu.type
 const get_sport_all_selected = ref(store_state.get_sport_all_selected)
-const GlobalAccessConfig = ref(GlobalAccessConfig.init())
-const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
+const get_access_config = ref(store_state.get_access_config)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  get_menu_type.value = new_state.get_menu_type
   get_search_for_choose.value = new_state.get_search_for_choose
   get_search_term.value = new_state.get_search_term
-  get_current_menu.value = new_state.get_current_menu
-  GlobalAccessConfig.value = GlobalAccessConfig.init()
+  get_access_config.value = new_state.get_access_config
   get_sport_all_selected.value = new_state.get_sport_all_selected
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
 })
@@ -85,7 +84,7 @@ onMounted(() => {
 
 // 监听 get_curr_sub_menu_type，如果 是在赛果下边的 虚拟赛事，就默认是 筛选弹出
 watch(() => get_curr_sub_menu_type, () => {
-  if([1001,1002,1004,1010,1011,1009].includes(+n) && get_menu_type == 28){
+  if([1001,1002,1004,1010,1011,1009].includes(+n) && get_menu_type.value == 28){
     change_record(0)
   }
 }, {immediate: true, deep: true})
@@ -97,7 +96,7 @@ const bounced_high = computed(() => {
 })
 
 // 是赛果虚拟体育赛事
-const results_of_the_virtual_display = computed(() => ([1001,1002,1004,1010,1011,1009].includes(get_curr_sub_menu_type) && get_menu_type == 28))
+const results_of_the_virtual_display = computed(() => ([1001,1002,1004,1010,1011,1009].includes(get_curr_sub_menu_type) && get_menu_type.value == 28))
 
 const change_record = (key) => {
   // 搜索返回时，保持搜索原来的页面

@@ -84,6 +84,10 @@ import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc_handle } from "src/core/format/index.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import utils from 'project_path/src/core/utils'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
+
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
 
@@ -125,8 +129,6 @@ const compute_list_dom_time = ref(null)
 
 const get_theme = ref(store_state.get_theme)
 const get_uid = ref(store_state.get_uid)
-const get_user = ref(store_state.get_user)
-const get_menu_type = ref(store_state.get_menu_type)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_c303_data_change = ref(store_state.get_c303_data_change)
 const get_corner_oc_change = ref(store_state.get_corner_oc_change)
@@ -134,7 +136,6 @@ const get_c305_data_change = ref(store_state.get_c305_data_change)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
 const get_is_user_change_status = ref(store_state.get_is_user_change_status)
 const get_match_top_map_dict = ref(store_state.get_match_top_map_dict)
-const get_current_sub_menuid = ref(store_state.get_current_sub_menuid)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -143,9 +144,7 @@ const unsubscribe = store.subscribe(() => {
 const update_state = () => {
   const new_state = store.getState()
   get_uid.value = new_state.get_uid
-  get_user.value = new_state.get_user
   get_theme.value = new_state.get_theme
-  get_menu_type.value = new_state.get_menu_type
   get_standard_odd_status.value = new_state.get_standard_odd_status
   get_c303_data_change.value = new_state.get_c303_data_change
   get_c305_data_change.value = new_state.get_c305_data_change
@@ -153,7 +152,6 @@ const update_state = () => {
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
   get_is_user_change_status.value = new_state.get_is_user_change_status
   get_match_top_map_dict.value = new_state.get_match_top_map_dict
-  get_current_sub_menuid.value = new_state.get_current_sub_menuid
 }
 
 onMounted(() => {
@@ -205,7 +203,7 @@ watch(() => get_c303_data_change.value, (curr) => {
     // 匹配mid
     if(mid && hpid && mid == match.mid){
       // 指定页面屏蔽该功能
-      if(['category','virtual_sports'].includes(route.name) || 900 == get_menu_type.value){
+      if(['category','virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type()){
         return;
       }
       // 检测是否有子tab打开状态
@@ -329,17 +327,17 @@ watch(() => get_standard_odd_status.value, () => {
   apply_15min_title();
 })
 // 一级菜单切换，次要玩法，默认折叠
-watch(() => get_menu_type.value, () => {
+watch(() => MenuData.get_menu_type(), () => {
   tab_list.value.forEach(t => {
     t.unfold = 0;
   });
 })
 // 二级菜单切换，次要玩法，默认折叠
-watch(() => get_current_sub_menuid.value, () => {
+watch(() => MenuData.current_lv_2_menu, () => {
   tab_list.value.forEach(t => {
     t.unfold = 0;
   });
-})
+}, { deep: true })
 
 watch(() => mmp_map_title, (value) => {
   tab_list.value = play_title(value)
@@ -601,13 +599,13 @@ const get_hps_key_by = (item) => {
  * @return {Undefined}
  */
 const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
-  if(['category','virtual_sports'].includes(route.name) || 900 == get_menu_type.value || !item){
+  if(['category','virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type() || !item){
     return;
   }
 
   // 滚动次要玩法选中项到屏幕显示区域
   $nextTick(()=>{
-    $utils.tab_move(sub_i, $refs.sub_play_scroller, $refs.sub_play_scroll_item)
+    utils.tab_move(sub_i, $refs.sub_play_scroller, $refs.sub_play_scroll_item)
   })
 
   if(item && item.title && item.id && operate_type !=='is-auto') {   // 解决bug 24153
@@ -704,7 +702,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
       "玩法集ID": '',
       "区域位置": "主列表"
     }
-    $utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', get_user.value, zhugeObj)
+    utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
   }
   save_second_play_mid_map_unfold_status(item);
   if(item.id==17){
