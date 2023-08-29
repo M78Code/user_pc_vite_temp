@@ -122,7 +122,7 @@
   </div>
 </template>
 <script>
-import utils from 'src/core/utils/utils.js';  // 公共方法
+import {utils } from 'src/core/index.js';  // 公共方法
 
 // #TODO vuex
 // import { mapGetters, mapActions, mapMutations } from "vuex";

@@ -145,7 +145,7 @@
 import ClipboardJS from "clipboard";
 import { api_betting } from "src/project/api/index.js";
 // import { mapGetters, mapMutations } from "vuex";
-import utils from "src/core/utils/index.js";
+import {utils } from 'src/core/index.js';
 import { Platform } from "quasar";
 import { inject } from 'vue'
 

@@ -189,7 +189,7 @@ import counting_down_start from 'project_path/src/components/common/counting_dow
 import ListMap from "project_path/src/utils/list_map";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import base_data from "project_path/src/utils/base_data.js";
 //  一二级菜单 本地化假数据
 import { common_menu_list, secondary_menu } from "project_path/src/config/common_menu.js"

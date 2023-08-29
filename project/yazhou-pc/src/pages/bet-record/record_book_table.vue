@@ -58,8 +58,8 @@
           <!--表格内容-->
             <div class="r-table">
               <!--early_settlement_data用于预约的数据-->
-              <template>
-                <div class="row" v-for="(data, i) of early_settlement_data" :key="i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
+              <template  v-for="(data, i) of early_settlement_data">
+                <div class="row" :key="i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
                   <!-- 编号 -->
                   <div class="ceil">{{recordData.size*(recordData.current-1) + i + 1}}</div>
                   <!-- 投注详情 -->
@@ -300,17 +300,19 @@
 </template>
 
 <script>
+import formatmixin from "src/public/mixins/common/time_format";
 import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
-// import { mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
-import { format_score ,format_odds, formatTime  } from "src/core/index.js";
+import { format_score ,format_odds  } from "src/core/index.js";
 export default {
   name: "RecordTable",
   components: {
     VueSlider,
     Pagination,
   },
+  mixins: [formatmixin],
   props: {
     record_obj: {
       type: Object,
@@ -382,17 +384,59 @@ export default {
       matchInfo: ""
     };
   },
+  filters: {
+    //赔率展示格式化
+    format_odds(val) {
+      if(val=='' || val == undefined){
+        return '';
+      }
+      val = (val || '0').toString();
+      let ret = val;
+      if (val.includes('.')){
+        if (val >= 100) {
+          if (val.split('.')[1] == '00') {
+            ret = val.split('.')[0];
+          } else {
+            let len = val.length;
+            if(val.indexOf('.0') == (len-2)){
+              ret = val.substring(0,len-2);
+            } else {
+              ret = val;
+            }
+          }
+        } else if (val >= 10) {
+          if (val.split('.')[1][1] == '0') {
+            ret = val.slice(0,val.length-1);
+          } else {
+            ret = val;
+          }
+        }
+      }
+      return ret;
+    },
+    /**
+     * 比分格式设置
+     */
+    format_score(res) {
+      let str = "";
+      if (res.indexOf("|") != -1) {
+        let arr = res.split("|");
+        str = arr[1].split(":");
+      } else if (res.indexOf(":") != -1) {
+        str = res.split(":");
+      }
+      return `${str[0]} - ${str[1]}`;
+    }
+  },
   created() {
     // 防抖
     this.cancel_book_handle = this.debounce(this.cancel_book_handle,100)
     this.recordData = this.order_list;
   },
   computed: {
-    // ...mapGetters({
-    //   // 用户信息
-    //   get_user: "get_user",
-    //   get_theme: "get_theme"
-    // })
+    ...mapGetters({
+   
+    })
   },
   watch: {
     order_list: {

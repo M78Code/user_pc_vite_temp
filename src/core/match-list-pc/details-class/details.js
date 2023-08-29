@@ -7,7 +7,7 @@
 // import { store } from "src/store/index.js"
 import { api_details } from "src/api/index";
 // import { update_match_time } from "src/core/common-helper/common.js"
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 export default {
   //统计分析URL
   signal_url:'https://s5.sir.swiftscore.com',

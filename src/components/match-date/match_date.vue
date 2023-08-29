@@ -62,7 +62,7 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import {
   get_match_status,

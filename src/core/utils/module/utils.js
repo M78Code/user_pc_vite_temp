@@ -5,7 +5,7 @@
  */
 import uid from "src/core/uuid/index.js";
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
-const utils = {
+export const utils = {
   // 是否内嵌
   is_iframe: window.frames.length != parent.frames.length,
   /**
@@ -195,4 +195,4 @@ const utils = {
     return Math.ceil(value * font_size);
   },
 };
-export default utils;
+ 

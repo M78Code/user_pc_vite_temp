@@ -7,7 +7,7 @@ import {
   onMounted,
   watch,
 } from "vue";
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";

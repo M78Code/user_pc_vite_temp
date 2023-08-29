@@ -1,5 +1,5 @@
 import base_data_instance from "src/core/base-data/base-data.js";
-import utils from "src/core/utils/utils.js";
+import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
 
 import { ref } from "vue";
