@@ -30,7 +30,7 @@ app.use(Quasar, {
 });
 
 
-import { i18n } from "src/boot/i18n.js";
+import { i18n } from "src/core/index.js";
 app.use(i18n).use(router);
 
 app.mount("#ty-app");

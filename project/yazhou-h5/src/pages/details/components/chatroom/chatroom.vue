@@ -59,7 +59,7 @@ import notice_bar from 'project_path/src/pages/details/components/chatroom/notic
 import marquee_bulletin from 'project_path/src/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { UserCtr } from "src/core/index.js"
 //国际化
 

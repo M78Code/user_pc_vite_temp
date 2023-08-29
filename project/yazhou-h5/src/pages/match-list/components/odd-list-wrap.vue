@@ -157,7 +157,7 @@
 import { computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 // import odd_column_item from "./components/odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

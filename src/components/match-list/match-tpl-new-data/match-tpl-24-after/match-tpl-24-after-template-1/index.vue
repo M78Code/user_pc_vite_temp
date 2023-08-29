@@ -48,7 +48,7 @@
 import { computed } from 'vue';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 ;
 

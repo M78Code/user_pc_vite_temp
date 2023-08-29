@@ -41,7 +41,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 //国际化

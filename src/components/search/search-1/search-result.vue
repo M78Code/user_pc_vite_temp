@@ -57,7 +57,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"

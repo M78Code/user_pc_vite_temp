@@ -61,7 +61,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 import {MenuData } from "src/core/index.js"
 

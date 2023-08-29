@@ -94,7 +94,7 @@ import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 // import skt_may_like from "/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理

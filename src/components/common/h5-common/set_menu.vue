@@ -126,7 +126,7 @@ import { UserCtr } from "src/core/index.js"
 import lodash from 'lodash'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { format_money2  } from "src/core/index.js";
-import { i18n, loadLanguageAsync } from 'src/boot/i18n'
+import { i18n, loadLanguageAsync } from 'src/core/index.js'
 import { computed, onUnmounted, watch } from "vue";
 
 import { UserCtr } from "src/core/index.js";

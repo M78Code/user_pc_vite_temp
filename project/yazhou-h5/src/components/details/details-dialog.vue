@@ -94,7 +94,7 @@ import match_stage from 'src/project/components/match/match_stage.vue';
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
  // 详情页同联赛的赛事即将开赛显示时间
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { useRouter, useRoute } from "vue-router"
 import { format_total_score } from 'src/core/format'
 import { UserCtr } from "src/core/index.js";

@@ -21,7 +21,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 国际化 */

@@ -65,7 +65,7 @@ import {api_analysis} from "src/api/index.js";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

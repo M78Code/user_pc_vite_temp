@@ -91,7 +91,7 @@ import match_list_global from 'src/components/match-list/composables/match-list-
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import BaseData from "src/public/utils/base_data/base-data.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { defineProps, ref, computed, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"

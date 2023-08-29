@@ -5,7 +5,7 @@ import { UserCtr } from "src/core/index.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 ;
 
 

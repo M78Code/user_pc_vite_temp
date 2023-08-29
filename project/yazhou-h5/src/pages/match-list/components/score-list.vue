@@ -148,7 +148,7 @@ import { computed, onMounted, onUnmounted, watch } from "vue";
 // import { score_format } from 'project_path/src/boot/global-filters.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import {MenuData } from "src/core/index.js"
 
 const props = defineProps({

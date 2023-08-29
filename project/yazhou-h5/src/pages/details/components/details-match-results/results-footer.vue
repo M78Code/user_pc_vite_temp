@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { ref } from "vue"
 
 const footer_list = ref([

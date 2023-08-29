@@ -10,7 +10,7 @@ import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
 import  store  from "src/store-redux/index.js"
 
-import { i18n_t} from "src/boot/i18n.js"
+import { i18n_t} from "src/core/index.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import {utils } from 'src/core/index.js'
 import { UserCtr } from "src/core/index.js";

@@ -134,7 +134,7 @@ import {
 import { component_symbol, need_register_props } from "../config/index.js";
 useRegistPropsHelper(component_symbol, need_register_props);
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import lodash from "lodash";
 import { get_mmp_name } from "src/core/match-list-h5/match-utils/handle-score.js";
 

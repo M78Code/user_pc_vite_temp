@@ -100,7 +100,7 @@ import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 ;
 

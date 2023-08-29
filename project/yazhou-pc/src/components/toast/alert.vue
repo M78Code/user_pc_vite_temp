@@ -37,7 +37,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 

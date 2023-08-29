@@ -39,7 +39,7 @@ import { computed, defineProps} from 'vue';
 import lodash from 'lodash';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
 // import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")

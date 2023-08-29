@@ -89,12 +89,12 @@
 import { ref, } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 
 import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "project_path/src/i18n/langs/index.mjs";
-import { loadLanguageAsync } from "/src/boot/i18n";
+import { loadLanguageAsync } from "/src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
 

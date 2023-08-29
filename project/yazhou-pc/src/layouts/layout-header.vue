@@ -22,7 +22,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'

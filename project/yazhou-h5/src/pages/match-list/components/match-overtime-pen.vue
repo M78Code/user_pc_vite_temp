@@ -81,7 +81,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/core/match-constant/config/play-title'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc_handle } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'

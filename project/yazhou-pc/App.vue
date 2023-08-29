@@ -21,7 +21,7 @@ import store from "src/store-redux/index.js";
 import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { SessionStorage  } from "src/core/index.js";
-import { loadLanguageAsync } from "src/boot/i18n";
+import { loadLanguageAsync } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const token_key = STANDARD_KEY.get("token"); //token键

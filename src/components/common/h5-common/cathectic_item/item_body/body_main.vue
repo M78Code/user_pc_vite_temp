@@ -101,7 +101,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/project/api/index.js";
 import {utils } from 'src/core/index.js';
-// import { i18n_t} from 'src/boot/i18n'
+// import { i18n_t} from 'src/core/index.js'
 
     
   const bet_result = ref({

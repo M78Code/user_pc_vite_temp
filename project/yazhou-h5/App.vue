@@ -6,15 +6,14 @@
 
 <template>
   <div id="q-app">
+    {{ init_load }}
     <appload v-if="init_load"></appload>
   </div>
 </template>
 <script>
-import BUILDIN_CONFIG from "app/job/output/env/final.js";
+ 
 
-console.error("BUILDIN_CONFIG-----------h5---", BUILDIN_CONFIG);
-
-window.BUILDIN_CONFIG = BUILDIN_CONFIG;
+ 
 import _ from  "lodash";
 import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";

@@ -75,7 +75,7 @@
 import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 /** 组件 */
 import maintenanceTip from 'project_path/src/components/site-header/maintenance-tip.vue'
 import { TabWapper as Tab } from "src/components/common/tab"

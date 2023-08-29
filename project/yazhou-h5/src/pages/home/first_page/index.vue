@@ -198,7 +198,7 @@ import menu_data  from "project_path/src/config/menu_new_data.js"
 import uid from "src/core/uuid/index.js"
 import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n"
+import { t } from "src/core/index.js"
 import lodash from "lodash"
 import { UserCtr } from "src/core/index.js";
   // mixins: [skt_home_bw3, match_list_mixin],

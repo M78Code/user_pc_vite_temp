@@ -26,7 +26,7 @@ import { ref, reactive, watch, onUnmounted } from 'vue'
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
 /** 国际化 */
 ;

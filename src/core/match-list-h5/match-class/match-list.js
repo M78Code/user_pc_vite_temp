@@ -5,7 +5,7 @@
 // TODO: get_lang
 
 import MatchCtr from './match-ctr'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 
 class matchListClass {
   /**

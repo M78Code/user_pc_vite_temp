@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { UserCtr } from "src/core/index.js";
-import { i18n_t} from "src/boot/i18n.js";
+import { i18n_t} from "src/core/index.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";

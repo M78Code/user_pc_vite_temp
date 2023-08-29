@@ -126,7 +126,7 @@
 import { computed, onUnmounted, onMounted } from "vue"
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { format_time_zone_time } from "src/core/format/index.js"
 import {MenuData } from "src/core/index.js"

@@ -304,7 +304,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { useEventListener } from "src/core/utils/event-hook";
 import {utils } from 'src/core/index.js';
 import { useRoute } from "vue-router";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";

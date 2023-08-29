@@ -107,7 +107,7 @@
 // mixins: [match_item_mixin],
 import { ref, computed, watch } from 'vue';
 import lodash from 'lodash';
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)

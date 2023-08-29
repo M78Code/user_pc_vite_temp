@@ -10,7 +10,7 @@ window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // Import Quasar css
 import "quasar/src/css/index.sass";
 import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
-import { i18n } from "src/boot/i18n.js";
+import { i18n } from "src/core/index.js";
 import router from './src/router/index.js'
 // Assumes your root component is App.vue
 // and placed in same folder as main.js

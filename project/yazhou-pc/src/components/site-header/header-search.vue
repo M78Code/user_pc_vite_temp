@@ -24,7 +24,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch, onUnmounted } from "vue";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRoute } from "vue-router";
 import {
   main_menu_toggle,

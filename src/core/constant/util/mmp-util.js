@@ -1,6 +1,6 @@
 
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
 // 获取比赛阶段是否需要查询接口
 export const get_phase_result = (csid, mmp) => {

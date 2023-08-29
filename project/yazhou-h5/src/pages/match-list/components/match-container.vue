@@ -472,7 +472,7 @@ import score_list from './score-list.vue';
 import odd_list_wrap from './odd-list-wrap.vue';
 import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {MenuData } from "src/core/index.js"
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

@@ -23,7 +23,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 const props = defineProps({
   // 菜单配置

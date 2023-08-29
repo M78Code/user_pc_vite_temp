@@ -12,7 +12,7 @@ import yabo_common from "src/core/common-helper/index.js"
 import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
-import {i18n} from "src/boot/i18n.js"
+import {i18n} from "src/core/index.js"
 import { UserCtr } from "src/core/index.js";
     
 

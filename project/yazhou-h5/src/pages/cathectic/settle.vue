@@ -84,7 +84,7 @@ import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
 import { UserCtr } from "src/core/index.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 //国际化
 
 

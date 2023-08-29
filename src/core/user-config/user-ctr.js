@@ -9,7 +9,7 @@
 import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
-// import { loadLanguageAsync } from "src/boot/i18n";
+// import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/api/index";

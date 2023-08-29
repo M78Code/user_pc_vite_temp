@@ -19,7 +19,7 @@ import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

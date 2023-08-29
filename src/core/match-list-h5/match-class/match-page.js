@@ -3,7 +3,7 @@ import uid from "src/core/uuid/index.js";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'
 import { get_handicap_w_id  } from "src/core/index.js";

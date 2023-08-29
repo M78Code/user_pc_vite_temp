@@ -57,7 +57,7 @@
 import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 // api接口
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';

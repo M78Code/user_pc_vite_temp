@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";

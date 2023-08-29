@@ -108,7 +108,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import {utils } from 'src/core/index.js'
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';

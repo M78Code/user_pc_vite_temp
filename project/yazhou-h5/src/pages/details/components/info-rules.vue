@@ -24,7 +24,7 @@
 // #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, defineComponent } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

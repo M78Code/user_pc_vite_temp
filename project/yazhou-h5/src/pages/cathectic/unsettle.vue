@@ -54,7 +54,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import { format_M_D } from 'src/core/format/index.js'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { UserCtr } from "src/core/index.js"
 //国际化
 import store from 'src/store'

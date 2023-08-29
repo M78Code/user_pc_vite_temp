@@ -88,7 +88,7 @@ import { computed } from "vue";
 import lodash from 'lodash'
 import EMITTER from  "src/global/mitt.js"
 import { defineComponent } from 'vue'
-import { i18n_t} from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 // import msc from '/mixins/common/msc.js';
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 // import bettings from "src/project/mixins/betting/betting";

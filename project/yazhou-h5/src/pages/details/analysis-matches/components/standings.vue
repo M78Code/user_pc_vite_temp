@@ -68,7 +68,7 @@ import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 // TODO: 临时用
 let get_detail_data = ref({
   mid: '1',

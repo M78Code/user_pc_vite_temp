@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, watch, onUnmounted, computed } from 'vue'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
 import userCtr from 'src/core/user-config/user-ctr.js'

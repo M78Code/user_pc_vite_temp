@@ -20,16 +20,16 @@ import lodash from "lodash";
 // const router = useRouter();
 // const route = useRoute();
 
-console.error('-------------LocalStorage------3---',)
+ 
 
 export  * from "src/core/format/index.js";
 export  * from "src/core/constant/index.js";
 export  * from "src/core/utils/index.js";
-console.error('-------------LocalStorage------4---',)
+ 
 
 // ==============================   间接转出     项目无差异的        ======================================
 import { i18n, loadLanguageAsync, map_lang ,t,i18n_t } from  "src/boot/i18n.js";
-console.error('-------------LocalStorage------5---',)
+ 
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
 import VrSportCtr from  "src/core/vr-sport/index.js";

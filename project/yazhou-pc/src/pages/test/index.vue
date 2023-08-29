@@ -8,7 +8,7 @@
 <script setup>
 import { useOpenWithPostMessage } from "src/core/utils/event-hook";
 import { onBeforeMount } from "vue";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 ;
 console.log('lockie_test_console', t('match_info.more'));
 let remove_list = [];

@@ -152,7 +152,7 @@ import { format_time_zone_time, format_H_M,format_total_score } from "src/core/f
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { UserCtr } from "src/core/index.js";
 
 //国际化
