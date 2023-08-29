@@ -28,7 +28,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import userCtr from "src/core/user-config/user-ctr.js"
 
 

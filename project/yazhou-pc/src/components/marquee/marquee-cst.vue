@@ -62,7 +62,7 @@ import { t } from "src/boot/i18n";;
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import { ls } from 'src/core/utils/web-storage.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'

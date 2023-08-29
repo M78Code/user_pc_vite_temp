@@ -61,7 +61,7 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_current_menu.value = new_state.get_current_menu
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
 }
 
 

@@ -7,7 +7,7 @@ import {
 	let_ball_play_tpl,
 	has_cur_handicap_tpl_ids,
 } from "src/core/constant/config/data-class-ctr/index.js";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import lodash from 'lodash';
 
 class MatchListDataClass {

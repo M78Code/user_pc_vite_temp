@@ -302,7 +302,7 @@ import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-t
 import new_menu from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { useEventListener } from "src/core/utils/event-hook";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import { useRoute } from "vue-router";
 import { t } from "src/boot/i18n";;
 import { api_account, api_common } from "src/api/";

@@ -85,7 +85,7 @@ import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc_handle } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import utils from 'project_path/src/core/utils'
+import {utils } from 'src/core/index.js'
 import MenuData from "src/core/menu-h5/menu-data-class.js"
 
  // TODO: 其他模块得 store  待添加

@@ -121,7 +121,7 @@
 <script>
 // #TODO vuex
 // import { mapGetters } from "vuex";
-import utils from 'src/core/utils/utils.js'
+import {utils } from 'src/core/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_time_zone_time, format_money2,format_odds, format_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;

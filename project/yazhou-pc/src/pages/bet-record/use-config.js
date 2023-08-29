@@ -5,7 +5,7 @@
 // -->
 import lodash from "lodash";
 import { ref, watch, onMounted, reactive, toRefs, onUnmounted } from "vue";
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 import { format_day } from "src/core/format/index.js";
 import { api_common, api_betting, api_account } from "src/api/index";
 import { t } from "src/boot/i18n";;

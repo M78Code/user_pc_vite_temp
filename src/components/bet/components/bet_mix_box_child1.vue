@@ -138,7 +138,7 @@ import keyBoard from './keyboard.vue';
 import ballSpin from './ball_spin.vue';
 import betBar from "./bet_bar.vue";
 import betConflictTips from './bet-conflict-tips'
-import utils from 'src/core/utils/utils.js';
+import {utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import BetData from "../class/bet-data-class";
 import { format_money2 } from'src\core\format\index.js'

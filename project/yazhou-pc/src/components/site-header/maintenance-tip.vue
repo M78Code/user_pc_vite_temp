@@ -17,7 +17,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { t } from "src/boot/i18n";
 
 import store from "src/store-redux/index.js";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import { get_remote_time } from "src/core/format/index.js"
 
 
