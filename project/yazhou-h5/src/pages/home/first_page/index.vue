@@ -81,7 +81,7 @@
                 <div class="wrap-logo">
                   <img v-img="([lodash.get(item, 'malu[0]'), lodash.get(item, 'frman[0]'), lodash.get(item, 'csid'),{data:item,name:'_t21_img'}])" alt />
                   <img v-if="lodash.get(item, 'malu').length > 1"
-                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'}])" alt
+                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'})" alt
                     class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.man }}</div>
@@ -200,7 +200,7 @@ import { db } from "src/public/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
-
+import UserCtr from "src/core/user-config/user-ctr.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
   const slide = ref(0)
@@ -488,7 +488,7 @@ import lodash from "lodash"
    * @param {Object} $event 错误事件对象
    */
   const league_icon_error = ($event) => {
-    $event.target.src = get_theme.includes('y0') ? "image/bw3/png/banner_bg_y0.png" : "image/bw3/png/banner_bg.png";
+    $event.target.src = UserCtr.theme.includes('y0') ? "image/bw3/png/banner_bg_y0.png" : "image/bw3/png/banner_bg.png";
     $event.srcElement.onerror = null
   }
   /**
@@ -931,7 +931,7 @@ import lodash from "lodash"
     if (url) {
       banner_bg = get_file_path(url)
     } else {
-      banner_bg = `image/bw3/png/home_carousel_bg_${get_theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
+      banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
     }
     sessionStorage.setItem('banner_bg', banner_bg)
   }
@@ -941,7 +941,7 @@ import lodash from "lodash"
   }
   // 若线上图片加载错误，则使用本地默认banner
   const handleBannerError = (e) => {
-    banner_bg = `image/bw3/png/home_carousel_bg_${get_theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
+    banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
   }
   onMounted(() => {
     // 初始化菜单状态
@@ -969,7 +969,7 @@ import lodash from "lodash"
     //   // 首页菜单数据
     //   get_home_data: "get_home_data",
     //   // 当前主题
-    //   get_theme: "get_theme",
+    //   UserCtr.theme: "UserCtr.theme",
     //   // 商户配置的图片地址和弹框信息
     //   get_banner_obj: "get_banner_obj",
     //   get_is_language_changing: "get_is_language_changing",
@@ -980,7 +980,7 @@ import lodash from "lodash"
     // }),
 
     const banner_loading_url = computed(() => {
-      if (get_theme.includes('y0')) {
+      if (UserCtr.theme.includes('y0')) {
         return "image/wwwassets/bw3/home/banner_loading_y0.gif"
       } else {
         return "image/wwwassets/bw3/home/banner_loading.gif"

@@ -25,7 +25,7 @@
 
 import { ref, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router'
-import { api_analysis } from 'src/public/api/index'
+import { api_analysis } from 'src/api/index'
 
 const route = useRoute();
 const articleDetail = ref({});

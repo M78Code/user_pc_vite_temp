@@ -28,7 +28,7 @@ import { useRoute } from 'vue-router';
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { api_analysis } from 'src/public/api/index'
+import { api_analysis } from 'src/api/index'
 import { formatDate } from 'src/core/format/index.js'
 const route = useRoute();
 const articleDetail = ref({});

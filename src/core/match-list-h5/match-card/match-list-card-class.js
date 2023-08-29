@@ -9,7 +9,7 @@ import store from "src/store-redux/index.js";
 import { get_template_config } from "./template/template-config.js";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 class MatchListCard {
   constructor() {
     this.init();
@@ -293,7 +293,7 @@ class MatchListCard {
     }
     this.is_close_load();
     if (cb) cb();
-    if (!this.get_user_token) {
+    if (! UserCtr.user_token) {
       this.no_menu_txt = "noMatch";
       // useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
     }

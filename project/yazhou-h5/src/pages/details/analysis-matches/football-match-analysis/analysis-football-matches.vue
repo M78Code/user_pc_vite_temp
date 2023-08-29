@@ -211,7 +211,6 @@ let {  userInfoReducer } = store.getState()
   //     // 详情页的数据
   //     'get_detail_data',
   //     // 主题
-  //     'get_theme',
   //     // 赛事id
   //     'get_goto_detail_matchid',
   //     // 用户信息

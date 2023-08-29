@@ -12,13 +12,11 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
 import mathjs from "src/core/utils/mathjs.js";
 import lodash from "lodash";
-import store from "src/store-redux/index.js";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 export const useTableData = ({ props, emit }) => {
-  const store_state = store.getState();
-  // 用户信息
-  const vx_get_user = store_state.userReducer.user_info;
 
   const state = reactive({
     toolIndex: 0,
@@ -632,7 +630,7 @@ export const useTableData = ({ props, emit }) => {
     if (props.tool_selected) {
       emit("clear_timer_get_cashout");
       this.get_init_data();
-    } else if (props.tool_selected == 0 && vx_get_user.settleSwitch) {
+    } else if (props.tool_selected == 0 && UserCtr.user_info.settleSwitch) {
       let param = {};
       let send_gcuuid = uid();
       param.gcuuid = send_gcuuid;
@@ -674,7 +672,7 @@ export const useTableData = ({ props, emit }) => {
     let min_money = 10;
     if (lodash.isEmpty(state.setup_single_info)) {
       // 获取用户的配置
-      state.setup_single_info = lodash.get(vx_get_user, "cvo.single");
+      state.setup_single_info = lodash.get(UserCtr.user_info, "cvo.single");
     }
     // 从用户配置中获取配置的最小金额
     if (
@@ -774,7 +772,7 @@ export const useTableData = ({ props, emit }) => {
     let min_money = 10;
     if (lodash.isEmpty(state.setup_single_info)) {
       // 获取用户的配置
-      state.setup_single_info = lodash.get(vx_get_user, "cvo.single");
+      state.setup_single_info = lodash.get(UserCtr.user_info, "cvo.single");
     }
     // 从用户配置中获取配置的最小金额
     if (
@@ -1163,7 +1161,6 @@ export const useTableData = ({ props, emit }) => {
   });
   return {
     ...toRefs(state),
-    vx_get_user,
     changePage,
     copy,
     show_bet_pre_info,

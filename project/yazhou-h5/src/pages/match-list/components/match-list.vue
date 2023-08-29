@@ -104,7 +104,7 @@
 </template>
 
 <script setup>
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { ref, computed, onActivated, onDeactivated, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -178,7 +178,7 @@ const get_show_favorite_list = ref(store_state.get_show_favorite_list)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 //二级菜单type
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 
 onMounted(() => {
   console.log(props.matchCtr)
@@ -325,8 +325,7 @@ const info_icon_click_h = (e,mid,menu,match) => {
  * @return {Undefined} Undefined
  */
 const toggle_collect = ($event) => {
-  if( !utils.judge_collectSwitch( lodash.get(get_access_config.value,'collectSwitch'),this ) ) return
-
+  if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this ) ) return
   if(favorite_loading.value) {
     clearTimeout(timer_super12.value);
     timer_super12.value = setTimeout(() => {
@@ -433,7 +432,7 @@ const unsubscribe = store.subscribe(() => {
   get_goto_list_top.value = new_state.get_goto_list_top
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 

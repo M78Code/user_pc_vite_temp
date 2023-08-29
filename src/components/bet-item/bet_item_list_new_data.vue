@@ -43,11 +43,11 @@
 </template>
 
 <script>
-import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
+// import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
 
 export default {
   name: "BetItem",
-  mixins: [bet_item_mixin],
+  // mixins: [bet_item_mixin],
 };
 
 </script>

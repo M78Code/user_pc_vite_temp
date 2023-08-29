@@ -103,7 +103,6 @@ export default defineComponent({
     //     'get_chatroom_userinfo', // 聊天室用户信息
     //     'get_chatroom_mute_info', // 聊天室禁言信息
     //     'get_chatroom_http_url',
-    //     'get_theme',
     //   ]),
     // },
     onMounted(() => {

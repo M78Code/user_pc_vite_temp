@@ -13,6 +13,8 @@ import  store  from "src/store-redux/index.js"
 import { i18n } from "src/boot/i18n.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import utils from "src/core/utils/utils.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 export default {
 
   /**
@@ -868,7 +870,7 @@ export default {
     // } else {
       url = `${refer_url}?mid=${mid}&domain=${request_domain}&style=${store.getters.get_theme}`
     // }
-    url += `&load_error=${i18n.t('video.load_error')}&refresh=${i18n.t('common.refresh')}&pause=${i18n.t('video.pause')}&play=${i18n.t('video.play')}&mute=${i18n.t('video.mute')}&cancel_mute=${i18n.t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n.t('video.open_pip')}&token=${store.getters.get_user.token}&rdm=${new Date().getTime()}`
+    url += `&load_error=${i18n.t('video.load_error')}&refresh=${i18n.t('common.refresh')}&pause=${i18n.t('video.pause')}&play=${i18n.t('video.play')}&mute=${i18n.t('video.mute')}&cancel_mute=${i18n.t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n.t('video.open_pip')}&token=${UserCtr.user_token}&rdm=${new Date().getTime()}`
     url = encodeURI(url)
     //本地代码连生产时放开可播放大视频
     //url = 'https:' + url

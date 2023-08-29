@@ -5,7 +5,7 @@ import lodash from "lodash";
 import PageSourceData from "src/core/page-source-pc/page-source-pc.js";
 // import { api_match } from "src/api/index.js";
 // import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
-// import * as api_websocket from "src/public/api/module/socket/socket_api.js";
+// import * as api_websocket from "src/api/module/socket/socket_api.js";
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";

@@ -32,6 +32,8 @@ import { ref, watch, onUnmounted, computed } from 'vue'
 import { t } from "src/boot/i18n";
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
+import userCtr from 'src/core/user-config/user-ctr.js'
+
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
 
@@ -42,11 +44,10 @@ const hits = ref(0)
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, userReducer, themeReducer, langReducer } = store_data
+const { globalReducer, themeReducer, langReducer } = store_data
 const unsubscribe = store.subscribe(() => {
     global_click.value = globalReducer.global_click
     theme.value = langReducer.theme
-    user_info.value = userReducer.user_info || {}
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
@@ -60,11 +61,7 @@ const global_click = ref(globalReducer.global_click)
 * 路径: project_path/src/store/module/theme.js
 */
 const theme = ref(themeReducer.theme)
-/** 
- * 用户信息 default: {}
- * 路径: src\store-redux\module\user-info.js
- */
-const user_info = ref(userReducer.user_info)
+
 
 /** 设置语言 */
 const set_lang = (data) => store.dispatch({
@@ -113,7 +110,7 @@ function on_click_version(type) {
  */
 async function on_click_lang(lang_) {
     set_lang(lang_);
-    api_account.get_lang({ token: user_info.value.token, languageName: lang_ })
+    api_account.get_lang({ token: userCtr.get_user_token(), languageName: lang_ })
 
 }
 // 设置主题

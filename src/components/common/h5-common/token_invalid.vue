@@ -23,7 +23,8 @@ import { defineComponent, computed } from 'vue';
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 // TODO:
 // import { mapMutations, mapGetters } from 'vuex';
-import { invalid_url } from 'src/public/utils/base64_url'
+// import { invalid_url } from 'src/utils/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 
 export default defineComponent({
@@ -31,7 +32,8 @@ export default defineComponent({
   setup() {
     const emit = defineEmits(['isgo_vender_url'])
     // TODO: 改为真实的store替换
-    const { get_settle_dialog_bool, get_lang } = useStore()
+    // const { get_settle_dialog_bool, get_lang } = useStore()
+    const get_lang = UserCtr.lang
 
     /** 失效国际化背景图对应 */
     const token_bg = computed(() => {

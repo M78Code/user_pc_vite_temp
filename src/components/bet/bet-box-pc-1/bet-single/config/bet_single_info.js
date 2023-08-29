@@ -1,18 +1,18 @@
  
 
-import odds_conversion from "src/public/mixins/odds_conversion/compute_max_win_money";
-import betting from "src/public/mixins/betting/betting.js";
-import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
+// import odds_conversion from "src/public/mixins/odds_conversion/compute_max_win_money";
+// import betting from "src/public/mixins/betting/betting.js";
+// import BetKeyboard from "src/public/components/bet/bet_keyboard.vue";
 
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import play_mapping from "src/core/constant/config/play_mapping/index.js";
 
-import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
+// import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
 import { format_str } from "src/core/format/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   name: "bet-single-info",
-  mixins: [odds_conversion, betting],
+  // mixins: [odds_conversion, betting],
   data() {
     return {
       sport_id: '', // 球种id

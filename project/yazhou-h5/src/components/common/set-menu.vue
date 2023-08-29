@@ -7,8 +7,8 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" v-if="get_theme.includes('theme01') && 3000 != menu_type"></div>
-      <div class="img theme2" v-if="get_theme.includes('theme02') && 3000 != menu_type"></div>
+      <div class="img" v-if="UserCtr.theme.includes('theme01') && 3000 != menu_type"></div>
+      <div class="img theme2" v-if="UserCtr.theme.includes('theme02') && 3000 != menu_type"></div>
       <div class="img esports" v-if="3000 == menu_type"></div>
     </div>
     <!--
@@ -153,7 +153,6 @@ import { useRoute, useRouter } from "vue-router"
     //   get_cur_odd:"get_cur_odd",
     //   get_virtual_data_loading:"get_virtual_data_loading",
     //   get_is_show_menu:"get_is_show_menu",
-    //   get_theme:'get_theme',
     //   get_is_champion:'get_is_champion',
     //   get_v_pre_menu_type:'get_v_pre_menu_type',
     //   get_secondary_unfold_map:'get_secondary_unfold_map',
@@ -275,7 +274,7 @@ import { useRoute, useRouter } from "vue-router"
     }
     // 设置主题
   const handle_set_theme = (theme) => {
-      const curr_theme = get_theme
+      const curr_theme = UserCtr.theme
 
       if (curr_theme.includes('y0')) {
         set_theme(theme + '_y0')

@@ -46,7 +46,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { api_match } from "src/public/api/index";
+import { api_match } from "src/api/index.js";
 import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";
 import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 export default {

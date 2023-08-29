@@ -37,7 +37,7 @@ import utils from "src/core/utils/utils.js";
 import { onUnmounted, watch } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-  // mixins: [router_mixins],
+import UserCtr from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
 
   // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
@@ -92,6 +92,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
         res = tabList_
       return res;
     })
+    const theme = ref(UserCtr.theme)
 
 
   watch(() => tabIndex, (n) => {
@@ -192,29 +193,29 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
       // 热门菜单背景图类名数组列表
       if(['idc_online', 'idc_lspre', 'idc_ylcs'].includes(current_env)){
         calculation_category = [
-          {filed2:'180',value: `home_page_yc_${get_theme}`},
-          {filed2:'320',value: `home_page_xj_${get_theme}`},
-          {filed2:'239',value: `home_page_yj_${get_theme}`},
-          {filed2:'276',value: `home_page_dj_${get_theme}`},
-          {filed2:'122',value: `home_page_og_${get_theme}`},
-          {filed2:'132',value: `home_page_NBA_${get_theme}`},
-          {filed2:'208',value: `home_page_hll_${get_theme}`},
-          {filed2:'146',value: `home_page_CBA_${get_theme}`},
-          {filed2:'79',value: `home_page_fj_${get_theme}`},
+          {filed2:'180',value: `home_page_yc_${theme.value}`},
+          {filed2:'320',value: `home_page_xj_${theme.value}`},
+          {filed2:'239',value: `home_page_yj_${theme.value}`},
+          {filed2:'276',value: `home_page_dj_${theme.value}`},
+          {filed2:'122',value: `home_page_og_${theme.value}`},
+          {filed2:'132',value: `home_page_NBA_${theme.value}`},
+          {filed2:'208',value: `home_page_hll_${theme.value}`},
+          {filed2:'146',value: `home_page_CBA_${theme.value}`},
+          {filed2:'79',value: `home_page_fj_${theme.value}`},
           {filed2:'3169',value: `home_page_world_cup`},
           {filed2:'error',value: 'ball_error'},
         ]
       }else if(current_env === 'local_test'){
         calculation_category = [
-          {filed2:'821797',value: `home_page_yc_${get_theme}`},
-          {filed2:'821912',value: `home_page_xj_${get_theme}`},
-          {filed2:'821361',value: `home_page_yj_${get_theme}`},
-          {filed2:'821395',value: `home_page_dj_${get_theme}`},
-          {filed2:'821866',value: `home_page_og_${get_theme}`},
-          {filed2:'821596',value: `home_page_NBA_${get_theme}`},
-          {filed2:'208',value: `home_page_hll_${get_theme}`},
-          {filed2:'821549',value: `home_page_CBA_${get_theme}`},
-          {filed2:'821866',value: `home_page_fj_${get_theme}`},
+          {filed2:'821797',value: `home_page_yc_${theme.value}`},
+          {filed2:'821912',value: `home_page_xj_${theme.value}`},
+          {filed2:'821361',value: `home_page_yj_${theme.value}`},
+          {filed2:'821395',value: `home_page_dj_${theme.value}`},
+          {filed2:'821866',value: `home_page_og_${theme.value}`},
+          {filed2:'821596',value: `home_page_NBA_${theme.value}`},
+          {filed2:'208',value: `home_page_hll_${theme.value}`},
+          {filed2:'821549',value: `home_page_CBA_${theme.value}`},
+          {filed2:'821866',value: `home_page_fj_${theme.value}`},
           {filed2:'822548',value: `home_page_world_cup`},
           {filed2:'error',value: 'ball_error'},
         ]
@@ -225,7 +226,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
       // for(let i=0,len = calculation_category.length; i<len; i++) {
       //   // 加个jz_666 是用作首页 竞彩足球 背景墙用的
       //   if(newVal.chinaBetting && newVal.jz_666){
-      //     return home_class = `home_page_jz_${get_theme}`
+      //     return home_class = `home_page_jz_${theme.value}`
       //   }
       //   // 对应calculation_category 映射 关系，赋值给 home_class 名称作背景图显示用
       //   if(newVal.field2 == calculation_category[i].filed2){

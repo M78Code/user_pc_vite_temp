@@ -113,7 +113,7 @@
       <!-- 活动返回按钮 及 标题 -->
       <!-- <div class="head yb_px14 yb_fontsize14">
         <img
-            :src="get_theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
+            :src="UserCtr.theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
         />
       </div> -->

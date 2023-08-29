@@ -42,7 +42,12 @@ import lodash from 'lodash'
 import store  from "src/store-redux"
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
+<<<<<<< HEAD
 import { t } from "src/boot/i18n";;
+=======
+import { t } from "src/boot/i18n";
+import UserCtr from "src/core/user-config/user-ctr.js";
+>>>>>>> 1609d524ffa16c510ec17773d27bed977fa8d068
 //国际化
 
   // provide(){
@@ -58,7 +63,11 @@ import { t } from "src/boot/i18n";;
   let unsettleChild = ref(null)
   let store_data = ref(store.getState())
   // computed: {
+<<<<<<< HEAD
   //   ...mapGetters(['get_main_item','get_theme','get_user']),
+=======
+  //   ...mapGetters(['get_main_item',,'userCtr']),
+>>>>>>> 1609d524ffa16c510ec17773d27bed977fa8d068
 
   // },
   //判断该商户是否有权限预约投注
