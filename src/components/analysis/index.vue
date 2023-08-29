@@ -68,8 +68,7 @@ import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/temp
 import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
-import { mapGetters } from 'vuex'
-import time_format from 'src/public/mixins/common/time_format'
+import { formatTime } from 'src/core/format/index.js'
 import store from 'src/store-redux/index.js'
 
 const route = useRoute();
