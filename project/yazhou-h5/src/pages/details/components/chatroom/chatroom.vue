@@ -56,7 +56,7 @@ import { api_chatroom } from "src/project/api/index.js";
 // import mqtt_mixin from 'project_path/src/pages/details/components/chatroom/mqtt_mixin'
 import { get_valid_api } from 'project_path/src/pages/details/components/chatroom/check_domain.js'
 import notice_bar from 'project_path/src/pages/details/components/chatroom/notice_bar.vue';
-import marquee_bulletin from 'src/public/components/marquee/marquee_bulletin.vue'
+import marquee_bulletin from 'project_path/src/components/marquee/marquee_bulletin.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n";;

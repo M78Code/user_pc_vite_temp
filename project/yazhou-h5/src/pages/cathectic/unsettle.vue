@@ -8,7 +8,7 @@
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-        <div class="filter-button" v-if="store_user.user.settleSwitch == 1">
+        <div class="filter-button" v-if="userCtr.user_info.settleSwitch == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
@@ -53,9 +53,9 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
-// import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js"
 //国际化
 import store from 'src/store'
 
@@ -90,7 +90,7 @@ import store from 'src/store'
   let timer_1 = ref(null)
   let timer_2 = ref(null)
   // computed: {
-  //   ...mapGetters(['get_user', 'get_main_item'])
+  //   ...mapGetters(['userCtr', 'get_main_item'])
   // },
 
   /**
@@ -166,7 +166,7 @@ import store from 'src/store'
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
   const check_early_order = () => {
-    if(!get_user.settleSwitch){
+    if(!userCtr.user_info.settleSwitch){
       orderNumberItemList = []
       return;
     }

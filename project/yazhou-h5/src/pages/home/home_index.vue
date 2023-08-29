@@ -92,7 +92,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
         res = tabList_
       return res;
     })
- 
+
 
   watch(() => tabIndex, (n) => {
     // 首页、视频直播以及热门下精选不显示背景

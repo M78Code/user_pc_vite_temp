@@ -142,7 +142,7 @@
 import { TeamImgWapper } from "src/components/details/team-img";   // 详情页蓝色背景上的大型字母图标
 import { TeamTextWapper } from "src/components/details/team-text";   // 中立场赛事展示
 import { TeamNameWapper } from "src/components/details/team-name";   // 详情页背景上的队伍名称
-// import msc from "src/public/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
+// import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
 import utils from "src/core/utils/utils.js";    // 公共方法

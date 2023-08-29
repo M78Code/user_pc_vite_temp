@@ -25,9 +25,9 @@
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
-          <div class="user-name">Hi,{{user_info.userName}}</div>
+          <div class="user-name">Hi,{{userCtr.user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{format_money2(user_info.balance)}}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.user_info.balance)}}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -146,7 +146,6 @@ import { useRoute, useRouter } from "vue-router"
 
     // ...mapGetters({
     //   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
-    //   user_info: "get_user",                // 当前登录的用户信息
     //   sort_type: 'get_sort_type',            // 排序 2 时间排序  1  热门排序
     //   get_is_accept:'get_is_accept',         // 1最佳赔率  2任何赔率
     //   get_newer_standard_edition:'get_newer_standard_edition',// 1新手版 2标准版
@@ -177,7 +176,7 @@ import { useRoute, useRouter } from "vue-router"
       }
       let obj2 = {}
       try {
-        let lang_str = user_info.languageList
+        let lang_str = userCtr.user_info.languageList
         if (lang_str) {
           let lang_arr = lang_str.split(',')
           Object.keys(obj).forEach(item => {
@@ -336,7 +335,7 @@ import { useRoute, useRouter } from "vue-router"
       let zhuge_obj = {
         "版本类型": edition == 1 ? '简易' : '标准',
       }
-      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', user_info, zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr.user_info, zhuge_obj);
     }
     /**
      * @description 获取用户余额

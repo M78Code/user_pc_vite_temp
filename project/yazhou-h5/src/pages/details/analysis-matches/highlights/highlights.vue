@@ -22,7 +22,7 @@
             <div class="dot-game-over"></div>
             <div class="item-flag icon-flag-game-over"></div>
             <div class="item-content real-time-contv-ifent hairline-border">
-      
+
               <span class="time" v-if="get_detail_data.mmp==31">{{ t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
               <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
@@ -213,6 +213,7 @@ import lodash from 'lodash'
 import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import utils from "src/core/utils/utils.js"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
@@ -248,7 +249,7 @@ directives(
 })
 
 // 仓库数据
-let { languageReducer, userInfoReducer } = store.getState()
+let { languageReducer } = store.getState()
 
 // 定时器
 let get_football_replay_timer = ref(null)
@@ -660,7 +661,7 @@ const exit_browser_full_screen = () => {
   }
 }
 // 精彩回播配置信息
-watch(() => get_user.merchantEventSwitchVO, (res) => {
+watch(() => userCtr.user_info.merchantEventSwitchVO, (res) => {
   // handler = (res) => {
   // tab按钮开关
   // TODO:  国际化后续修改调整
@@ -745,8 +746,8 @@ const slider_events_list = computed(() => {
 })
 // 鉴权域名 + 回放视频url（拼接后的最终url）
 const replay_video_src = computed(() => {
-  // TODO:  get_user  get_lang 后续修改调整
-  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(get_user, 'oss.live_h5')
+  // TODO:    get_lang 后续修改调整
+  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(userCtr, 'user_info.oss.live_h5')
   return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 })
 // slider列表长度是否小于屏幕横屏宽度
@@ -781,7 +782,6 @@ onUnmounted(() => {
   //     'get_is_full_screen',
   //     'get_is_dp_video_full_screen',
   //     'get_match_real_time',
-  //     'get_user',
   //     'get_lang',
   //   ]),
 

@@ -23,7 +23,7 @@
     <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
   </div>
 </template>
- 
+
 <script setup>
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
@@ -134,7 +134,7 @@ const confirm = (val) => {
         }
       }
     }
-  }      
+  }
 }
 /**
  *@description 重置计时器
@@ -156,7 +156,7 @@ onUnmounted(() => {
   }
 })
 </script>
- 
+
 <style scoped lang="scss">
  .tiaozhuan-panel {
   width: 3.6rem;

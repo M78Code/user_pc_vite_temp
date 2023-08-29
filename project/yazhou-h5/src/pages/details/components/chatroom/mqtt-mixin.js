@@ -10,7 +10,7 @@ import {
 
 import mqtt from 'mqtt';
 import uniqid from 'uniqid';
-import ChatroomMsgType from 'src/public/utils/ws/chatroom/chatroom_msgtype.js';
+import ChatroomMsgType from 'project_path/src/utils/ws/chatroom/chatroom_msgtype.js';
 
 export default {
   computed: {

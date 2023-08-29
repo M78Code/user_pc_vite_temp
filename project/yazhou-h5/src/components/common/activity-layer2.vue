@@ -1,5 +1,5 @@
 <!--
- * @Author: 
+ * @Author:
  * @Description: 跳活动页的确认弹框
 -->
 <template>
@@ -20,7 +20,8 @@
 <script setup>
 // import { mapGetters, mapMutations } from 'vuex'
 import lodash from 'lodash'
-  
+import userCtr from "src/core/user-config/user-ctr.js"
+
   const props = defineProps({
     activity_layerimg: {
       type: String,
@@ -28,12 +29,12 @@ import lodash from 'lodash'
     },
   })
   const name = computed(() => {
-    // ...mapGetters(['get_activity_msg', 'get_user', 'get_golistpage', 'get_hot_list_item']),
+    // ...mapGetters(['get_activity_msg', 'userCtr', 'get_golistpage', 'get_hot_list_item']),
     // this.data
       // return data
-    
+
   })
- 
+
 
     // ...mapMutations(['set_activity_msg', 'set_goto_detail_matchid', 'set_details_item', 'set_home_tab_item', 'set_hot_tab_item']),
     /**
@@ -58,7 +59,7 @@ import lodash from 'lodash'
           set_details_item(0);
           $router.push({name:'category', params: {mid, csid}});
           }
-        } else if (_url == 'act' && get_user.activityList) {
+        } else if (_url == 'act' && userCtr.activityList) {
           $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         } else if (_url.startsWith('hot') && !get_golistpage) {  // 跳热门联赛
             let tid = _url.split('/')[1]

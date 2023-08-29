@@ -1,11 +1,13 @@
 import {api_common, api_analysis} from 'src/project/api/index.js';
-import video from "src/public/utils/video/video.js"   // 视频相关公共方法
+import video from "project_path/src/utils/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_total_score } from "src/core/format/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import userCtr from "src/core/user-config/user-ctr.js"
+
 export const video_info = () => {
     const router = useRouter();
     const route = useRoute();
@@ -107,9 +109,9 @@ export const video_info = () => {
       return ""
     });
     // 用户令牌信息
-    const get_user_token = computed(() => {
-      return ""
-    });
+    // const get_user_token = computed(() => {
+    //   return ""
+    // });
     // 视频单页是否已加载     作用：防止白屏
     const get_iframe_onload = computed(() => {
       return ""
@@ -123,9 +125,9 @@ export const video_info = () => {
       return ""
     });
     // 用户信息,用户金额,userId 需要监听变化
-    const get_user = computed(() => {
-      return ""
-    });
+    // const get_user = computed(() => {
+    //   return ""
+    // });
     // 是否全屏
     const get_is_full_screen = computed(() => {
       return ""
@@ -158,7 +160,7 @@ export const video_info = () => {
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.get_user,'oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.userCtr,'user_info.oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -171,8 +173,8 @@ export const video_info = () => {
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
       // letian = 乐天  oubao = 欧宝
-      if(this.get_user.merchantCode){
-        return this.get_user.merchantCode == 'letian'
+      if(this.userCtr.user_info.merchantCode){
+        return this.userCtr.user_info.merchantCode == 'letian'
       }
     });
     const iframe_show = computed(() => {
@@ -244,7 +246,7 @@ export const video_info = () => {
     });
     // 精彩回放视频开关是否开启
     const is_replay_switch = computed(() => {
-      const { configValue, eventSwitch } = _.get(this.get_user, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(this.userCtr, 'user_info.merchantEventSwitchVO', {})
       return configValue == 1 && eventSwitch == 1
     });
     // slider列表长度是否小于屏幕横屏宽度
@@ -858,7 +860,7 @@ export const video_info = () => {
       this.get_msc()
     };
     const get_replay_video = () => {
-      const { configValue, eventSwitch } = _.get(this.get_user, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(this.userCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && _.get(this.get_detail_data, 'csid') == '1') {
         this.get_football_replay(0)
         this.$utils.load_player_js()

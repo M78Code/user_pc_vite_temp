@@ -90,7 +90,7 @@
 <script setup>
 import lodash from "lodash";
  // 国际化比赛阶段比分转换工具
-// import msc from "src/public/mixins/common/msc.js";
+// import msc from "project_path/src/mixins/common/msc.js";
 import { onUnmounted, ref, watch } from "vue";
   // mixins: [ msc ],
   const props = defineProps({

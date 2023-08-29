@@ -25,7 +25,8 @@ import {api_betting, api_analysis} from 'src/project/api/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js"
 //国际化
 
 const router = useRouter()
@@ -71,10 +72,10 @@ export default {
     // 监听 刷新 注单记录----请求
     useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list).on
   },
-  computed:{
-    ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", 'get_user']),
-    ...mapGetters({ matchid: "get_goto_detail_matchid" }),
-  },
+  // computed:{
+  //   ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", ]),
+  //   ...mapGetters({ matchid: "get_goto_detail_matchid" }),
+  // },
   methods:{
     ...mapMutations(['set_fewer','set_note_sheet_records_data']),
     /**
@@ -150,7 +151,7 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
         tab_data_init()
       } finally {
-        const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+        const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
         if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
           get_football_replay(0)
         }
