@@ -33,7 +33,6 @@ export default {
   computed: {
     ...mapGetters({
       vx_get_layout_size: "get_layout_size",
-      vx_get_user: "get_user",
     }),
   },
   created() {

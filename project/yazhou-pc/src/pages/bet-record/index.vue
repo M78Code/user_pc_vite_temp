@@ -87,7 +87,6 @@ import store from "src/store-redux/index.js";
 import { ref } from "vue";
 import { useConfig } from "./use-config";
 // 用户信息
-const vx_get_user = store.getState().userReducer.user_info;
 const toolSelected = ref(0);
 const is_pre_bet = ref(false); // 提前结算勾选
 const betRecord = ref(null);
@@ -340,7 +339,7 @@ const getOrderList = (isScoket, callback) => {
             data_state.value.load_data_state = "empty";
           } else {
             // 订阅为结算注单
-            if (toolSelected.value == 0 && vx_get_user.settleSwitch) {
+            if (toolSelected.value == 0 && UserCtr.user_info.settleSwitch) {
               // this.SCMD_C21();   //todo
               // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
               get_order_no();

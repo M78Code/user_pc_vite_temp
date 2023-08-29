@@ -136,7 +136,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 //   // 是否显示 统计/聊天室
 //   show_chatroom() {
 //     return (
-//         this.vx_get_user.chatRoomSwitch &&
+//         UserCtr.user_info.chatRoomSwitch &&
 //         this.vx_get_chatroom_available &&
 //         ['zh', 'tw'].includes(this.get_lang) &&
 //         this.$route.params.video_size === '0'
@@ -145,7 +145,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 //   // 是否显示精彩回播
 //   show_video_replay() {
 //     // 配置信息
-//     const replayInfo = this.vx_get_user.merchantEventSwitchVO
+//     const replayInfo = UserCtr.user_info.merchantEventSwitchVO
 //     console.log('this.$route.params.video_size', this.$route.params.video_size)
 //     return replayInfo && replayInfo.eventSwitch && this.vx_play_media.media_type === 'video' && Number(this.$route.params.video_size) !== 1
 //   },
@@ -298,7 +298,7 @@ const refresh_data = () => {
   // 刷新前 先关闭聊天室
   this.set_chatroom_available(0)
   // 聊天室开关开启后才显示聊天室
-  if (this.vx_get_user.chatRoomSwitch) {
+  if (UserCtr.user_info.chatRoomSwitch) {
     // 获取直播、聊天室信息
     this.get_live_chat_info()
   }
