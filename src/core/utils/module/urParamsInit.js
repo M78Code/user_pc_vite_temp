@@ -1,4 +1,4 @@
-import { ls } from "src/public/utils/web-storage";
+import { ls } from "src/core/utils/web-storage.js";
 export function initData() {
   try {
     //解析URL参数

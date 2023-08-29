@@ -1,10 +1,3 @@
-<!--
- * @Date: 2022-07-06 18:31:56
- * @FilePath: /user-pc1/src/public/components/analysis/template/article_details.vue
- * @Description: 打开 猜你喜欢 文章
- * @Author: 
--->
-
 <template>
   <div class="wrap relative-position">
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{ height: '100%' }">

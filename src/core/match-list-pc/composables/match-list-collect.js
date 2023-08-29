@@ -56,7 +56,7 @@ const mx_collect_match = (match) => {
   let cur_collect_state = Number(!match.mf);
   let _params = {
     mid: match.mid,
-    cuid: vx_get_uid.value,
+    cuid: UserCtr.get_uid(),
     cf: cur_collect_state,
   };
   api_common. add_or_cancel_match(_params).then((res) => {
@@ -147,14 +147,14 @@ const mx_collect_leagues = (match, is_champion) => {
   let cur_collect_state = Number(!match.tf);
   let _params = {
     tid: match.tid,
-    cuid: vx_get_uid.value,
+    cuid: UserCtr.get_uid(),
     cf: cur_collect_state,
   };
   //冠军收藏
   if (is_champion) {
     _params = {
       mid: match.mids,
-      cuid: vx_get_uid.value,
+      cuid: UserCtr.get_uid(),
       cf: cur_collect_state,
     };
   }

@@ -131,7 +131,7 @@ class  MatchListDetailMiddleware{
           tid,
           sort: this.vx_match_sort,
           keyword: this.vx_related_keyword.substr(5),
-          cuid: this.vx_get_uid,
+          cuid: UserCtr.get_uid(),
           mid: remove_mid,
         }
   
