@@ -474,7 +474,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
         device: 'H5',
         eventCode: event_code
       }
-      api_analysis.get_replay_football(params)
+      api_analysis.post_playback_video_url(params)
         .then(res => {
           if (res.code == 200 && loadsh.get(res.data, 'eventList.length')) {
             events_list = res.data.eventList

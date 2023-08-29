@@ -483,7 +483,7 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
         let api_func = null,params = {"euid":this.get_current_sub_menuid};
         if(3000 == this.menu_type){
-          api_func = api_home.esport_date_menu_api;
+          api_func = api_common. get_esports_date_menu;
           let value = item.mi.slice(1,4)
           params = {csid:value};
           if(!params.csid){
@@ -491,7 +491,7 @@ export default {
           }
         }
         else{
-          api_func = api_home.post_date_menulist;
+          api_func = api_match.post_date_menu;
         }
         await api_func(params).then(res => {
           if(res.code == 200){

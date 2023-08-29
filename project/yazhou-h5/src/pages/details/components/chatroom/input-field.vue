@@ -245,7 +245,7 @@ export default defineComponent({
       }
       sendFrequencyLimit = true;
       // 发送数据到服务端
-      api_chatroom.sendMessage({
+      api_chatroom.post_chat_sendmessage({
         chatRoomId: get_chatroom_id,
         content: inputText
       }, { base_url: get_chatroom_http_url }).then((res) => {

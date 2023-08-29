@@ -408,7 +408,7 @@ const props = defineProps({
       if (details_show) {
         details_show = false;
       } else {
-        api_betting.getPreSettleOrderDetail({ orderNo: props.item_data.orderNo }).then((res) => {
+        api_betting.get_pre_settle_order_detail({ orderNo: props.item_data.orderNo }).then((res) => {
           let { code, data = [] } = res || {};
           if (code == 200) {
             presettleorderdetail_data = data;

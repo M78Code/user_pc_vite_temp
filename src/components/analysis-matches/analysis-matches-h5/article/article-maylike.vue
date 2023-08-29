@@ -10,7 +10,7 @@
       <div class="content row justify-between yb_pt12 yb_pb10" :key="index" @click="show_details(index)" v-if="item.id != dialog_article_id">
         <div class="column justify-between col">
           <div class="detail ellipsis-2-lines yb_fontsize14"><span class="label yb_mr4 yb_px4 yb_pt2" v-if="item.tagName" :style="{'background-color': item.tagColor}">{{item.tagName}}</span><span>{{item.articleTittle}}</span></div>
-          <div class="detail2 row"><span class="author-name ellipsis">{{item.authorName}}</span><span class="yb_ml6">{{item.readCounts}}阅读</span><span style="margin-left: auto;">{{ item.updateTime | formete_date }}</span></div>
+          <div class="detail2 row"><span class="author-name ellipsis">{{item.authorName}}</span><span class="yb_ml6">{{item.readCounts}}阅读</span><span style="margin-left: auto;">{{ formete_date(item.updateTime )  }}</span></div>
         </div>
         <img :src="img_src(item.thumbnails)" alt="" @error="handle_img_load_error" class="yb_ml12" />
       </div> 
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+   import { formete_date  } from "src/core/index.js";
   
   const props = defineProps({
     // 接口响应数据

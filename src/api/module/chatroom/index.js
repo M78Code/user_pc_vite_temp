@@ -38,24 +38,13 @@ export const liveChatLogin = (params, config={}, url = "/v1/activity/liveChatLog
 //获取晒单列表(TY)
 export const roomBetRecord = (params, config={}, url = "/v1/order/getLiveOrderList") => http.post(`${prefix2}${url}`, params||{}, config);
 
-// 发送消息(CP)
-export const sendMessage = (params, config={}, url = "/livechat/sendmessage") => http.post(`${config.base_url}${url}`, params||{}, {
-  type: 1
-});
+ 
 
-
-// 点赞消息(CP)
-export const likeMessage = (params, config={}, url = "/livechat/likemessage") => http.post(`${config.base_url}${url}`, params||{}, {
-  type: 1
-});
-
+ 
 // 发布晒单(CP)
 export const shareOrder = (params, config={}, url = "/livechat/shareorder") => http.post(`${config.base_url}${url}`, params||{}, config);
 
-// 拉取全量、增量消息(messageId为空为全量，不为空则拉取messageId之后的消息.)(CP)
-export const pullMsgList = (params, config={}, url = "/livechat/message/pull") => http.post(`${config.base_url}${url}`, params||{}, {
-  type: 1
-});
+ 
 
 // 获取用户聊天室VIP信息(CP)
 export const getvipinfo = (params, config={}, url = "/user/getvipinfo") => http.post(`${config.base_url}${url}`, params||{}, config);
@@ -65,20 +54,7 @@ export const getSharedOrderList = (params, config={}, url = "/livechat/message/o
   type: 1
 });
 
-// 获取用户禁言信息(CP)
-export const getbansendinfo = (params, config={}, url = "/user/getbansendinfo") => http.post(`${config.base_url}${url}`, params||{}, config);
-
-// 获取用户点赞信息(CP)
-export const getlikeinfo = (params, config={}, url = "/user/getlikeinfo") => http.post(`${config.base_url}${url}`, params||{}, config);
-
-// 获取聊天室信息(主要用户获取全体禁言)(CP)
-export const getchatroom = (params, config={}, url = "/livechat/getchatroom") => http.post(`${config.base_url}${url}`, params||{}, {
-  type: 1
-});
-
-// 获取聊天室公告信息
-export const get_bulletin_info = (params, config={}, url = "/livechat/bulletin/list") => http.post(`${config.base_url}${url}`, params||{}, {
-  type: 1
-});
-
-
+ 
+ 
+ 
+ 

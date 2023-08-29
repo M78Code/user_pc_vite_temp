@@ -103,6 +103,7 @@
 import odd_convert from "src\core\odds_conversion\compute_max_win_money.js";
 import timer from "src/project/components/bet/timer.vue";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
@@ -184,8 +185,8 @@ const pre_shadow_flag = computed(() => {
 })
 // 计算是否展示盘口预约功能
 const is_show_market = computed(() => {
-  let bookMarketSwitch = _.get(get_user, 'configVO.bookMarketSwitch')
-  let bookMarketSwitchBasketball = _.get(get_user, 'configVO.bookMarketSwitchBasketball', 0)
+  let bookMarketSwitch = _.get(UserCtr, 'configVO.bookMarketSwitch')
+  let bookMarketSwitchBasketball = _.get(UserCtr, 'configVO.bookMarketSwitchBasketball', 0)
   if (value_show.csid == 1) {
     return market_flag_list.includes(value_show.hps[0].hpid) && bookMarketSwitch == 1
   } else {
@@ -226,8 +227,8 @@ const authorityOptionFlag = computed(() => {
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
-  const bookBet = _.get(get_user, 'configVO.bookBet')
-  const marketConfigValue = _.get(get_user, 'configVO.marketConfigValue')
+  const bookBet = _.get(UserCtr, 'configVO.bookBet')
+  const marketConfigValue = _.get(UserCtr, 'configVO.marketConfigValue')
   return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
 })
 //判断投注成功后是否是预约投注

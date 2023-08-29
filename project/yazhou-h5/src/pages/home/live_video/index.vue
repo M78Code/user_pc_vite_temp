@@ -62,7 +62,7 @@
               <div class="video_list_left" :style="{backgroundImage: 'url(' + (item.mgif ? item.mgif : `${ $g_image_preffix }/image/bw3/png/live_loading.png`) + ')'}">
                 <div class="player">
                   <img  src="image/bw3/svg/home/play.svg" alt="">
-                  <span>{{ item.plnum | money_filter}}</span>
+                  <span>{{ money_filter(item.plnum)    }}</span>
                 </div>
                 <img
                     v-if="GlobalAccessConfig.get_collectSwitch()"
@@ -126,6 +126,7 @@ import scroll_top from 'src/project/components/record-scroll/scroll-top'
 import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import {money_filter} from "src/core/index.js"
 
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})

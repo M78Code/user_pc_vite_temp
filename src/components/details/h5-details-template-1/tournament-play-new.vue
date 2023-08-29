@@ -635,7 +635,7 @@ export default defineComponent({
      *@return {Undefined}
      */
     const handle_zhiding = (params) => {
-      api_common
+      api_details
           .get_category_playTop(params)
           .then(() => {})
           .catch((err) => console.error(err));

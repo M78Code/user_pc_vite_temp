@@ -68,12 +68,7 @@ export const get_3hot_matches = (params, config = {}, url = "/v1/w/standard3HotM
   return http.post(`${prefix}${url}`, params);
 };
 
-// 获取热门联赛
-export const get_league_hot_list = (params, config = {}, url = "/v2/w/menu/hotListPB") => {
-  if(!params) params = {};
-  params.menuType = 12;
-  return http.get(`${prefix}${url}`, params);
-};
+ 
 
 //赛事收藏列表查询接口
 export const post_fetch_collect_list = (params, config = {}, url = "/v1/w/v2collectPc") => {
@@ -98,9 +93,7 @@ export const post_collect_count_es = (params, config = {}, url = "/v1/w/menu/esc
 //联赛收藏 | 取消收藏
 export const post_collect_leagues = (params, config = {}, url = "/v1/userCollection/addOrCancelTournament") => http.post(`${prefix_user}${url}`, params);
 
-//赛事收藏 | 取消收藏    params:{用户id，赛事id，所属联赛id}
-export const post_collect_match = (params, config = {}, url = "/v1/userCollection/addOrCancelMatch") => http.post(`${prefix_user}${url}`, params);
-
+ 
 //赛事详情 联赛关联的赛事
 export const get_fetch_detail_match = (params, config = {}, url = "/v1/w/matchDetail/getMatchDetailByTournamentIdPB") => {
   return http.get(`${prefix}${url}`, params);
@@ -116,10 +109,7 @@ export const get_ranking_by_league_id = (params, config = {}, url="/v1/tournamen
   return http.get(`${prefix}${url}`, params);
 };
 
-//热门猜你喜欢赛事
-export const get_hotRecommendation = (params, config = {}, url="/v1/m/hotUlikeRecommendationPB") => {
-  return http.get(`${prefix}${url}`, params);
-};
+ 
 
 //电竞右侧5场赛事列表
 export const get_esports_match = (params, config = {}, url="/v1/w/5esportsMatches") => {
