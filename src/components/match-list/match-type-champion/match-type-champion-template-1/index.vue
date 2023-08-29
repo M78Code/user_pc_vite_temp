@@ -42,7 +42,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import lodash from 'lodash';
-import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
+// import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"

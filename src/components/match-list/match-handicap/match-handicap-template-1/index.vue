@@ -33,7 +33,7 @@ import { utils_info } from 'src/core/utils/match-list-utils.js';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
-import betItem from "src/public/components/bet_item/bet_item_list_new_data.vue"
+// import betItem from "src/public/components/bet_item/bet_item_list_new_data.vue"
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from ( /* webpackChunkName: "pc-mini-chunks" */ "src/components/match-list/match-footer-score/index.js")
 import store from 'src/store-redux/index.js'
