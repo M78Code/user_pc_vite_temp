@@ -122,14 +122,14 @@
 <script setup>
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import { api_betting } from "src/project/api/index";
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 import lodash from 'lodash'
 
 import { format_money2  } from "src/core/index.js";
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
  
   // 是否显示设置菜单
   let is_show_menu = ref(false)

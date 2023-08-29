@@ -133,7 +133,7 @@
 
 <script setup>
 import { onMounted } from "vue"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 const props = defineProps({
   bet_recode_this: Object,
   //是不是内嵌框,默认不是

@@ -189,7 +189,7 @@ import { watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 // import{ date }  from 'quasar'
 

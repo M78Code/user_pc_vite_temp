@@ -84,6 +84,8 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = ref(false);
+    //  左侧列表显示形式normal：展开 mini：收起
+    this.main_menu_toggle = 'mini'
   }
 
   /**

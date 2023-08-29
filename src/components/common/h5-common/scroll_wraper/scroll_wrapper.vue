@@ -52,7 +52,7 @@
 // import {mapGetters,mapMutations} from 'vuex';
 import lodash from 'lodash'
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 
 // 避免定时器每次滚动总是触发

@@ -25,7 +25,7 @@ import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virt
 import virtual_sports_match_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_item.vue";
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
-import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import { PageSourceData  } from "src/core/index.js";
 import SVirtual from "project_path/components/skeleton/virtual_sports/virtual"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({

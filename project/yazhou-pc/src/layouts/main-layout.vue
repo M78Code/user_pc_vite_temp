@@ -65,11 +65,11 @@
         <!-- 小于 1440 时显示折叠按钮  -->
         <div
           v-if="route.params.video_size != 1"
-          v-show="computed_data.vx_main_menu_toggle != 'normal'"
+          v-show="MenuData.main_menu_toggle != 'normal'"
           @click="on_main_menu_toggle"
           class="menu_toggle-btn yb-flex-center"
           :class="[
-            computed_data.vx_main_menu_toggle,
+            MenuData.main_menu_toggle,
             data_ref.bet_loadding ? 'disable-toggle' : '',
           ]"
         >
@@ -421,7 +421,7 @@ const computed_data = reactive({
   cur_odd: globalReducer.odds.cur_odds,
   left_menu_toggle: layoutReducer.left_menu_toggle,
   // 当前菜单类型
-  vx_main_menu_toggle: menuReducer.main_menu_toggle,
+  MenuData.main_menu_toggle: menuReducer.main_menu_toggle,
   // 获取项目主题
   // theme:userReducer.theme,
   // 全局点击事件
@@ -455,7 +455,7 @@ const unsubscribe = store.subscribe(() => {
   computed_data.cur_odd = globalReducer.odds.cur_odds;
   computed_data.left_menu_toggle = layoutReducer.left_menu_toggle;
   // 当前菜单类型
-  computed_data.vx_main_menu_toggle = menuReducer.main_menu_toggle;
+  MenuData.main_menu_toggle = menuReducer.main_menu_toggle;
   // 获取项目主题
   // theme:userReducer.theme,
   // 全局点击事件
@@ -897,10 +897,10 @@ function on_main_menu_toggle() {
     return;
   }
   let cur =
-    computed_data.vx_main_menu_toggle == "mini" ? "mini-normal" : "mini";
+    MenuData.main_menu_toggle == "mini" ? "mini-normal" : "mini";
   methods_map_store["set_main_menu_toggle"](cur);
   methods_map_store["set_left_menu_toggle"](
-    computed_data.vx_main_menu_toggle != "mini"
+    MenuData.main_menu_toggle != "mini"
   );
   update_bet_data();
 }
@@ -972,8 +972,8 @@ function resize() {
     main_menu_toggle = "normal";
   } else {
     // 已选择了，则用之前的选择
-    if (["mini-normal", "mini"].includes(computed_data.vx_main_menu_toggle)) {
-      main_menu_toggle = computed_data.vx_main_menu_toggle;
+    if (["mini-normal", "mini"].includes(MenuData.main_menu_toggle)) {
+      main_menu_toggle = MenuData.main_menu_toggle;
     } else {
       // 判断地址栏是否收起菜单
       main_menu_toggle = route.query.toggle ? "mini" : "mini-normal";
@@ -1255,7 +1255,7 @@ watch(
     new_menu.set_multi_column();
     if (width < 1440) {
       methods_map_store["set_unfold_multi_column"](false);
-      if (computed_data.vx_main_menu_toggle != "mini" && !data_ref.first_load) {
+      if (MenuData.main_menu_toggle != "mini" && !data_ref.first_load) {
         on_main_menu_toggle();
       }
     }
