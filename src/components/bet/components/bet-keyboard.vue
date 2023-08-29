@@ -51,7 +51,6 @@ const pre_odds_value = ref("") //预约输入赔率或者盘口
 
 
 const store_state = store.getState()
-const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
 const active_index = ref(store_state.BetData.active_index)
@@ -226,9 +225,9 @@ const prevent_click = computed(() => {
 
 const addnum = computed(() => {
   if (get_mix_bet_flag) {
-    return _.get(get_user, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
+    return _.get(UserCtr, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
   } else {
-    return _.get(get_user, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
+    return _.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
   }
 })
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开

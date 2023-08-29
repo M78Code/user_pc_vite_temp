@@ -108,7 +108,7 @@ const submit_order = () => {
     };
 
     // 这种情况放过，让钱投注出去
-    let _flag2 = get_money_total.value == get_user.value.balance
+    let _flag2 = get_money_total.value == UserCtr.balance
     if (get_money_notok_list2.value.length && !_flag2) {
         //点击投注后当输入金额小于最低限额时，默认转化为最低限额。并提示“最小单笔投注金额为 xx.” 3s消失。
         set_money_notok_list({
@@ -126,7 +126,7 @@ const submit_order = () => {
         return;
     }
 
-    if (get_money_total.value > +get_user.value.balance || get_user.value.balance == 0) { //弹窗提示：“余额不足，请您先充值”
+    if (get_money_total.value > +UserCtr.balance || UserCtr.balance == 0) { //弹窗提示：“余额不足，请您先充值”
         set_toast({
             'txt': i18n.t('bet.err_msg05')
         });

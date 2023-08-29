@@ -1299,7 +1299,7 @@ watch(
 // //虚拟体育
 
 watch(
-  () => computed_data.virtual_bet_list.length,
+  () => BetData.virtual_bet_list.length,
   (count) => {
     if (count > 1) {
       methods_map_store["set_is_bet_single"](false);

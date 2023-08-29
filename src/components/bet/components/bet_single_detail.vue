@@ -47,11 +47,9 @@ const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 const store_state = store.getState()
 
 const get_cur_odd = ref(store_state.get_cur_odd)
-const get_user = ref(store_state.get_user)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
-const active_index = ref(store_state.BetData.active_index)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -93,7 +91,7 @@ onMounted(() => {
     if (!max_money_back.value) {
       max_money.value = 8888;
       // 获取接口返回的单关最小投注金额
-      min_money.value = _.get(get_user, 'cvo.single.min', 10)
+      min_money.value = _.get(UserCtr, 'cvo.single.min', 10)
 
       if (max_money.value < min_money.value) {
         min_money.value = max_money.value
@@ -291,8 +289,8 @@ const obj_bet_money = computed(() => {
    */
   const check_moneyok = (val) => {
     // 当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-    if (+val > +get_user.balance) {
-      money.value = get_user.balance.toString()
+    if (+val > +UserCtr.balance) {
+      money.value = UserCtr.balance.toString()
       tips_msg_update(i18n.t('bet.err_msg09'))
 
       clearTimeout(timer4)
