@@ -374,7 +374,7 @@
                     <!-- 未收藏图标 -->
                     <img v-if="!match_of_list.mf" :src="not_favorited_computing_icon" alt="">
                     <!-- 收藏图标 -->
-                    <img :src="(!lodash.get(get_user, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
+                    <img :src="(!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
                       v-if='match_of_list.mf' />
                   </div>
                 </div>
@@ -474,6 +474,7 @@ import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { t } from 'src/boot/i18n.js'
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
+import userCtr from "src/core/user-config/user-ctr.js";
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
@@ -542,7 +543,7 @@ const is_on_go_detail = ref(false)
 const footer_sub_menu_id = ref(store_state.get_footer_sub_menu_id)
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
-const get_user = ref(store_state.get_user)
+const userCtr = ref(store_state.userCtr)
 const get_uid = ref(store_state.get_uid)
 const get_lang = ref(store_state.get_lang)
 const get_current_menu = ref(store_state.get_current_menu)
@@ -681,7 +682,7 @@ watch(() => footer_sub_menu_id, (curr) => {
 
 // 精彩回放视频开关是否开启
 const is_replay_switch = computed(() => {
-  const { configValue, eventSwitch } = lodash.get(get_user, 'merchantEventSwitchVO', {})
+  const { configValue, eventSwitch } = lodash.get(userCtr, 'merchantEventSwitchVO', {})
   return configValue == 1 && eventSwitch == 1
 })
 //  动画按钮
@@ -738,7 +739,7 @@ const get_sport_show = computed(() => {
 // 显示收藏 图标
 const favorited_computing_icon = computed(() => {
   let flag = null
-  if (!lodash.get(get_user, 'favoriteButton') && get_theme.includes('y0')) {
+  if (!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) {
     flag = y0_img_favorite_black
   } else {
     flag = normal_img_is_favorite
@@ -1600,7 +1601,7 @@ const unsubscribe = store.subscribe(() => {
   footer_sub_menu_id.value = new_state.get_footer_sub_menu_id
   get_hot_tab_item.value = new_state.get_hot_tab_item
   get_footer_sub_changing.value = new_state.get_footer_sub_changing
-  get_user.value = new_state.get_user
+  userCtr.value = new_state.userCtr
   get_uid.value = new_state.get_uid
   get_lang.value = new_state.get_lang
   get_current_menu.value = new_state.get_current_menu

@@ -66,7 +66,7 @@ class UserCtr {
     this.theme = ref(themeReducer.theme);
      
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 
-    this. odds= {
+    this.odds= {
       // 上次赔率
       pre_odds: "EU",
       // 当前赔率

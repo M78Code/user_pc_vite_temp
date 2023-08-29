@@ -33,9 +33,9 @@
               <span v-for="(item, index) in calc_num" :key="index" :class="'num' + item" class="num yb_mr4"></span>
             </template>
             <!-- 投注成功后的展示值用接口返回的 -->
-            <template v-if="(play_optionname2 || play_optionname) && [3, 6].includes(+get_bet_status) && calc_show2">{{
-              play_optionname2
-              || play_optionname }} </template>
+            <template v-if="(play_optionname2 || play_optionname) && [3, 6].includes(+get_bet_status) && calc_show2">
+              {{play_optionname2 || play_optionname }}
+            </template>
             <template v-else>
               <span v-show="value_show.value1" class="yb_mr4">{{ value_show.value1 }}</span><span v-show="calc_show2">{{
                 value_show.value2 }}</span>

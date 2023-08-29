@@ -39,6 +39,7 @@ import { ref, reactive } from 'vue'
 import { format_money2 } from 'src/core/utils/global-filters.js'
 import lodash from "lodash"
 import store from "src/store-redux/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 
 let balance_timer = null // 延时器
@@ -46,7 +47,6 @@ let balance_timer = null // 延时器
 
 const store_state = store.getState()
 const get_s_count_data = ref(store_state.get_s_count_data)
-const get_lang = ref(store_state.get_lang)
 const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
 const get_bet_status = ref(store_state.get_bet_status)
 const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type

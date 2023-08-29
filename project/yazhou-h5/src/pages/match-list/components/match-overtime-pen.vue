@@ -84,6 +84,7 @@ import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc_handle } from "src/core/format/index.js"
+import userCtr from "src/core/user-config/user-ctr.js";
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
 
@@ -125,7 +126,7 @@ const compute_list_dom_time = ref(null)
 
 const get_theme = ref(store_state.get_theme)
 const get_uid = ref(store_state.get_uid)
-const get_user = ref(store_state.get_user)
+const userCtr = ref(userCtr)
 const get_menu_type = ref(store_state.get_menu_type)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_c303_data_change = ref(store_state.get_c303_data_change)
@@ -143,7 +144,7 @@ const unsubscribe = store.subscribe(() => {
 const update_state = () => {
   const new_state = store.getState()
   get_uid.value = new_state.get_uid
-  get_user.value = new_state.get_user
+  userCtr.value = userCtr
   get_theme.value = new_state.get_theme
   get_menu_type.value = new_state.get_menu_type
   get_standard_odd_status.value = new_state.get_standard_odd_status
@@ -704,7 +705,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
       "玩法集ID": '',
       "区域位置": "主列表"
     }
-    $utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', get_user.value, zhugeObj)
+    $utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', userCtr.value, zhugeObj)
   }
   save_second_play_mid_map_unfold_status(item);
   if(item.id==17){
