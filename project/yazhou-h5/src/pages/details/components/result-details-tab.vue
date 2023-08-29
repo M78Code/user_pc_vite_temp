@@ -26,7 +26,7 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js"
+import { UserCtr } from "src/core/index.js"
 //国际化
 
 const router = useRouter()

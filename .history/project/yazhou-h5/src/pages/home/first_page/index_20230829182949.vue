@@ -200,7 +200,7 @@ import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
   const slide = ref(0)

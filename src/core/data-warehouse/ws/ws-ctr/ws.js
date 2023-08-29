@@ -7,7 +7,7 @@ import { WsRev } from "./ws-ctr.js";
 import WsMan from  "./ws-man.js"
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;

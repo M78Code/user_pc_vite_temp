@@ -120,7 +120,7 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import {MenuData } from "src/core/index.js"
  
 const props = defineProps({
   // 赛事列表无数据

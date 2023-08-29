@@ -2,7 +2,7 @@ import { Qs } from "../utils/Qs";
 import { ls } from "src/core/utils/web-storage.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 class EnterParamsYazhouH5 {
   constructor() {
     this.url = "";

@@ -97,7 +97,7 @@ import show_start_time from 'src/project/components/details/wight/show_start_tim
 import { t } from "src/boot/i18n";;
 import { useRouter, useRoute } from "vue-router"
 import { format_total_score } from 'src/core/format'
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
 
 const router = useRouter()

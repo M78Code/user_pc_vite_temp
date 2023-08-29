@@ -7,8 +7,8 @@ import lodash from "lodash";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 } from "./data-relation-type-1.js"
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2 } from "./data-relation-type-2.js"
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5 } from "./data-relation-type-3.js"
-import MenuData from "src/core/menu-pc/menu-data-class.js";
-import PageSourceData from "src/core/page-source-h5/page-source-h5.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
 
 const route = useRoute()
 

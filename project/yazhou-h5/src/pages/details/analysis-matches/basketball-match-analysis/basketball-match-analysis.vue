@@ -27,7 +27,7 @@ import articleMain from 'src/project/pages/details/analysis-matches/article/arti
 import { watch, nextTick, onMounted } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js"
+import { UserCtr } from "src/core/index.js"
 //国际化
 
 

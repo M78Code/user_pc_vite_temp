@@ -129,7 +129,7 @@ import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { format_time_zone_time } from "src/core/format/index.js"
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import {MenuData } from "src/core/index.js"
 
 const props = defineProps({
   match_of_list: Object,

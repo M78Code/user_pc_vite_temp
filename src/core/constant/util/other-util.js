@@ -1,7 +1,7 @@
 
 
 import csid_map_concede_points_id from '../config/csid'
-import MenuData from "src/core/menu-pc/menu-data-class.js"
+import {  MenuData  } from "src/core/index.js"
 import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
 
 /**

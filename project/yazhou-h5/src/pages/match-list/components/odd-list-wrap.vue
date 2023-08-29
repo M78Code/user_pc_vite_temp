@@ -161,7 +161,7 @@ import { i18n } from 'src/boot/i18n.js'
 // import odd_column_item from "./components/odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import {MenuData } from "src/core/index.js"
 
 const props = defineProps({
   // 赛事信息

@@ -8,7 +8,7 @@ import play_mapping from "src/core/constant/config/play_mapping/index.js";
 
 // import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
 import { format_str } from "src/core/format/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
 export default {
   name: "bet-single-info",

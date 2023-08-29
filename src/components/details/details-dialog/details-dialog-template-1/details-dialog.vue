@@ -90,7 +90,7 @@ import match_stage from 'src/project/components/match/match_stage.vue';   // 下
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';   // 详情点击下拉显示当前赛事的时间
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'   // 详情页同联赛的赛事即将开赛显示时间
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
 export default {
   name: "details_dialog",

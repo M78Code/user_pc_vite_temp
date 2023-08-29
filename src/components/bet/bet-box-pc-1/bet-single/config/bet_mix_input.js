@@ -3,7 +3,7 @@ import { ref, onMounted, defineComponent } from "vue"
 
 import { useMittEmit,useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import userCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 import keyboard from "src/core/constant/config/keyword";
 
 import * as bet_utils from "./bet_utils.js";

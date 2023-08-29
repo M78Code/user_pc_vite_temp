@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
   const props = defineProps({
     top: {

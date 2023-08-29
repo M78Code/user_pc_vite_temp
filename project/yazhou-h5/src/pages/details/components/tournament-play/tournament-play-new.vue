@@ -173,7 +173,7 @@ import temp18 from "./template/temp0.vue"
 import temp51 from "./template/temp0.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
 import { t } from "src/boot/i18n";;
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
 //国际化
 

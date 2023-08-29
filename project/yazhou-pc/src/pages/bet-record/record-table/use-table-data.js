@@ -14,7 +14,7 @@ import mathjs from "src/core/utils/mathjs.js";
 import lodash from "lodash";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import { UserCtr } from "src/core/index.js";
 
 export const useTableData = ({ props, emit }) => {
 

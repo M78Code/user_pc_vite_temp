@@ -95,7 +95,7 @@ import { i18n } from 'src/boot/i18n.js'
 // import common from "src/project/mixins/constant";
 import store from "src/store-redux/index.js";
 import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import {MenuData } from "src/core/index.js"
 import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const props = defineProps({
