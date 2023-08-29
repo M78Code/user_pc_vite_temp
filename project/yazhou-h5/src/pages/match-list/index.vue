@@ -314,10 +314,10 @@ watch(() => get_newer_standard_edition, () => {
 // 投注栏弹层显示非0否则0
 watch(() => get_bet_status, () => {
   if(c_status == 0){
-    const has_pre = lodash.findKey(get_bet_obj, function(o) { return o.show_pre })
+    const has_pre = lodash.findKey(BetData.bet_obj, function(o) { return o.show_pre })
     if(has_pre){
       //当投注框收起时，清空预约相关信息
-      let temp_bet_obj = lodash.cloneDeep(get_bet_obj)
+      let temp_bet_obj = lodash.cloneDeep(BetData.bet_obj)
       temp_bet_obj[has_pre].show_pre = false
       delete temp_bet_obj[has_pre].pre_odds
       delete temp_bet_obj[has_pre].pre_market_value

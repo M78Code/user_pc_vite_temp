@@ -24,7 +24,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 const hide_bet_series_but = () =>{
     let res = false;
     // 单关时,获取投注列表数据
-    if(!get_is_mix && _.get(get_bet_list,'get_bet_list.length')){
+    if(!BetData.bet_is_mix && _.get(get_bet_list,'get_bet_list.length')){
       // 遍历投注列表数据,检测是否红猫赛事
       for (let i = 0; i < get_bet_list.length; i++) {
         // 获取投注项id

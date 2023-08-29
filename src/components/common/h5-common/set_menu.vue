@@ -60,9 +60,9 @@
           <div class="icon set-icon-4"></div>
           <div class="name">{{i18n.t("setting_menu.footer_t_odds")}}</div>
           <div class="option" @click="set_is_accept">
-            <div class="op-item active">{{get_is_accept == 2?i18n.t("setting_menu.odd_any2"):i18n.t("setting_menu.odd_optimal2")}}</div>
+            <div class="op-item active">{{BetData.bet_is_accept == 2?i18n.t("setting_menu.odd_any2"):i18n.t("setting_menu.odd_optimal2")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_is_accept == 2?i18n.t("setting_menu.odd_optimal2"):i18n.t("setting_menu.odd_any2")}}</div>
+            <div class="op-item">{{BetData.bet_is_accept == 2?i18n.t("setting_menu.odd_optimal2"):i18n.t("setting_menu.odd_any2")}}</div>
           </div>
         </div>
         <div class="line"></div>
@@ -130,6 +130,7 @@ import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
  
   // 是否显示设置菜单
   let is_show_menu = ref(false)
@@ -144,7 +145,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     //   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
     //   user_info: "get_user",                // 当前登录的用户信息
     //   sort_type: 'get_sort_type',            // 排序 2 时间排序  1  热门排序
-    //   get_is_accept:'get_is_accept',         // 1最佳赔率  2任何赔率
     //   get_newer_standard_edition:'get_newer_standard_edition',// 1新手版 2标准版
     //   get_lang:"get_lang",
     //   get_virtual_data_loading:"get_virtual_data_loading",

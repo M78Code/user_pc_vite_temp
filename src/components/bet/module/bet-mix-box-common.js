@@ -57,7 +57,7 @@ const pack_up = (val) => {
     }
 
     if (
-        get_is_mix.value && [1, 5, 7].includes(+BetData.bet_status)
+        BetData.bet_is_mix && [1, 5, 7].includes(+BetData.bet_status)
     ) {
         BetData.set_bet_status(0);
         return
@@ -88,7 +88,7 @@ const submit_order = () => {
     }
     exist_code.value = ''
     //校验是否是串关，并且删除后是否小于最小串关数量
-    if (get_is_mix.value && !vilidata_mix_count()) {
+    if (BetData.bet_is_mix && !vilidata_mix_count()) {
         return
     }
     set_order_los([]);
@@ -141,8 +141,8 @@ const submit_order = () => {
 
     //限额获取中,请稍后
     let bet_dom = $refs.bet_single_detail
-    let flag = (get_is_mix.value && get_s_count_data.value[0] && !get_s_count_data.value[0].orderMaxPay ||
-        !get_is_mix.value && bet_dom && !bet_dom.max_money_back) && !is_5s.value
+    let flag = (BetData.bet_is_mix && get_s_count_data.value[0] && !get_s_count_data.value[0].orderMaxPay ||
+        !BetData.bet_is_mix && bet_dom && !bet_dom.max_money_back) && !is_5s.value
     if (flag) {
         set_toast({
             'txt': i18n.t('bet.err_msg06')

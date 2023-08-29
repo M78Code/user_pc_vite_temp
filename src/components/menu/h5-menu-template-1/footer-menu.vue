@@ -539,7 +539,6 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   // computed:{
     // ...mapGetters([
     //   "get_user",
-    //   "get_is_mix",
     //   "get_bet_list",
     //   "get_settle_dialog_bool",
     //   "get_curr_sub_menu_type",
