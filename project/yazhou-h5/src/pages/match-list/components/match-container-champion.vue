@@ -89,12 +89,13 @@ import lodash from 'lodash'
 import EMITTER from  "src/global/mitt.js"
 import { defineComponent } from 'vue'
 import { i18n } from 'src/boot/i18n.js'
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
-import bettings from "src/project/mixins/betting/betting";
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
-import common from "src/project/mixins/constant";
-import msc from 'src/public/mixins/common/msc.js';
+// import msc from 'src/public/mixins/common/msc.js';
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import bettings from "src/project/mixins/betting/betting";
+// import common from "src/project/mixins/constant";
 import store from "src/store-redux/index.js";
+import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const props = defineProps({
@@ -117,8 +118,6 @@ const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
 const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_lang = ref(store_state.get_lang)
 const get_theme = ref(store_state.get_theme)
-const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
-const get_current_menu = ref(store_state.get_current_menu)
 const GlobalAccessConfig = ref(store_state.GlobalAccessConfig())
 
 const unsubscribe = store.subscribe(() => {
@@ -134,8 +133,6 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_lang.value = new_state.get_lang
   get_theme.value = new_state.get_theme
-  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
-  get_current_menu.value = new_state.get_current_menu
   GlobalAccessConfig.value = new_state.GlobalAccessConfig()
 }
 
@@ -209,7 +206,8 @@ const is_show_league = (i) => {
  * @returns {Boolean}
  */
 const get_sport_show = (i) => {
-  if (!lodash.get(get_current_menu, 'main.menuType')) {
+  const menu_type = lodash.get(MenuData.current_menu, 'main.menuType')
+  if (!menu_type) {
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];
       if (p && c) {
@@ -218,7 +216,7 @@ const get_sport_show = (i) => {
     } else {
       return true;
     }
-  } else if ([1, 2, 3, 4, 11, 12,100].includes(lodash.get(get_current_menu, 'main.menuType'))) {
+  } else if ([1, 2, 3, 4, 11, 12,100].includes(menu_type)) {
 
     if (i > 0) {
       let p = props.matchCtr.list[i - 1], c = props.matchCtr.list[i];

@@ -90,6 +90,7 @@
 import { onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert],
@@ -111,11 +112,10 @@ const best_middle_list = ref([])
 // 赛果最后二项
 const last_three_list = ref([])
 
-const sub_menu_type = ref(store_state.sub_menu_type)
+const sub_menu_type = MenuData.current_lv_2_menu.type
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  sub_menu_type.value = new_state.sub_menu_type
 })
 
 onMounted(() => {

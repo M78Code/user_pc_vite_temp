@@ -56,7 +56,6 @@
 </template>
  
 <script setup>
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 import betting from 'src/project/mixins/betting/betting.js';
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { match_icon_lock } from 'src/boot/local-image'
@@ -64,6 +63,9 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
+
+// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
 
 // TODO: 其他模块得 store  待添加
 // mixins:[odd_convert,betting],
@@ -96,14 +98,11 @@ const is_local_lock = ref(0)
 const dom_id_show = ref('')
 
 const get_bet_list = ref(store_state.get_bet_list)
-const get_current_menu = ref(store_state.get_current_menu)
 const get_cur_odd = ref(store_state.get_cur_odd)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
-const get_menu_type = ref(store_state.get_menu_type)
 const get_theme = ref(store_state.get_theme)
 const get_foot_ball_screen_changing = ref(store_state.get_foot_ball_screen_changing)
 const get_lang = ref(store_state.get_lang)
-const footer_sub_menu_id = ref(store_state.footer_sub_menu_id)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
@@ -111,9 +110,6 @@ const unsubscribe = store.subscribe(() => {
   get_theme.value = new_state.get_theme
   get_cur_odd.value = new_state.get_cur_odd
   get_bet_list.value = new_state.get_bet_list
-  get_menu_type.value = new_state.get_menu_type
-  get_current_menu.value = new_state.get_current_menu
-  footer_sub_menu_id.value = new_state.footer_sub_menu_id
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_foot_ball_screen_changing.value = new_state.get_foot_ball_screen_changing
 })
@@ -189,7 +185,7 @@ const odds_class_object = computed(() => {
     'is-standard':get_newer_standard_edition === 2,
     'first-radius': odd_item.value_i === 0,
     'last-radius': odd_item.value_i > 1,
-    'is-jiaoqiu':footer_sub_menu_id == 114,
+    'is-jiaoqiu':MenuData.footer_sub_menu_id == 114,
     'mred':  red_green_status.value === 1 && no_lock() && (!is_selected),
     'mgreen': red_green_status.value === -1 && no_lock() && (!is_selected),
   };
@@ -205,7 +201,7 @@ const odds_value = computed(() => {
   if(!props.odd_field) return 0;
   let ov = odd_item.value.ov,hsw = props.odd_field.hsw;
   let csid = null;
-  if(get_menu_type == 3000){
+  if(MenuData.get_menu_type() == 3000){
     csid = props.match.csid;
   }
   let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
@@ -238,7 +234,7 @@ const odd_s = computed(() => {
 // 投注项是否被选中
 const is_selected = computed(() => {
   let flag;
-  if (get_menu_type == 900) {  //虚拟体育
+  if (MenuData.get_menu_type() == 900) {  //虚拟体育
     flag = get_bet_list.includes(odd_item.value.oid);
   } else {
     let id_ = lodash.get(props.odd_field,'hl[0].hn')? `${props.match.mid}_${props.odd_field.chpid || props.odd_field.hpid}_${odd_item.value.ot}_${props.odd_field.hl[0].hn}` : odd_item.value.oid
@@ -445,7 +441,7 @@ const item_click3 = () => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   let flag = $common.odds.get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
-    if (get_menu_type == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
+    if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return
       bet_click3(props.match, props.odd_field, odd_item.value);
     } else { //正常赛事走这里逻辑
