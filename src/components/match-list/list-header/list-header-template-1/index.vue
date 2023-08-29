@@ -85,11 +85,11 @@
   </div>
 </template>
 <script setup>
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+// import global_mixin from "src/public/mixins/global/global_mixin.js";
 import match_list_global from 'src/components/match-list/composables/match-list-gloab.js'
-import comSelect from "src/public/components/select";
+// import comSelect from "src/public/components/select";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import BaseData from "src/public/utils/base_data/base-data.js";
+// import BaseData from "src/public/utils/base_data/base-data.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'

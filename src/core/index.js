@@ -203,6 +203,7 @@ const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDa
 
 export  * from "src/core/format/index.js";
 export  * from "src/core/constant/index.js";
+export  * from "src/core/utils/index.js";
 
 export {
     i18n, loadLanguageAsync, map_lang, 

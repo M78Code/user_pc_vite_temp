@@ -4,7 +4,7 @@
  * @Description:
  */
 import { mapGetters, mapMutations} from "vuex";
-import VSport from "src/public/utils/vsport/vsport.js"
+import VSport from "../../vr-sport-pc/vsport.js"
 
 export default {
   methods:{

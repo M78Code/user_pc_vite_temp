@@ -43,7 +43,7 @@ const unsubscribe = store.subscribe(() => {
 onUnmounted(unsubscribe)
 /** 
  * 左侧列表显示形式 normal：展开 mini：收起
- * 路径: project_path\src\store\module\menu.js
+* 路径: project_path\src\store\module\menu.js
  */
 const main_menu_toggle = ref(menuReducer.main_menu_toggle)
 

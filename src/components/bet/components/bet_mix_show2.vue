@@ -74,7 +74,7 @@
             i18n.t('bet.bet_err') }}</span>
           <!-- 提交成功 -->
           <span v-if="get_bet_status == 6" class="color2"><img
-              :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${get_theme.includes('y0') ? '2' : ''}.svg`)"
+              :src="(`${$g_image_preffix}/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)"
               class="img0">{{ i18n.t('bet.submitted_successfully') }}</span>
         </template>
         <template v-else>
@@ -105,6 +105,7 @@ import timer from "src/project/components/bet/timer.vue";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_odds } from'src\core\format\index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
