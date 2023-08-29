@@ -992,7 +992,7 @@ export default {
     //     //   sm ='888'
     //     // }
     // }
-    api_details.get_videos({sm,isAnimation}).then( res => {
+    api_common.get_videos({sm,isAnimation}).then( res => {
       let data = _.get(res,'data.data') || []
       // 根据商户过滤篮球赛事
       // if(store.getters.get_user.mId == '1443742662615240704'){

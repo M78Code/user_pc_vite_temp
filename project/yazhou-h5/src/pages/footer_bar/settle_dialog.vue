@@ -73,7 +73,7 @@ import { t } from "src/boot/i18n";;
   //   TODO: 后续修改调整
   //   window.onresize = height_calc
       // 查询待确认中的提前结算单
-  //   api_betting.queryOrderPreSettleConfirm().then(res => {
+  //   api_betting.query_order_pre_settle_confirm().then(res => {
   //     let {code,data} = res || {}
   //     if(code == 200 && data) {
         // 待确认中的提前结算单

@@ -441,7 +441,7 @@ const route = useRoute();
     //       device: 'H5',
     //       eventCode: event_code
     //     }
-    //     api_analysis.get_replay_football(params)
+    //     api_analysis.post_playback_video_url(params)
     //         .then(res => {
     //           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
     //             set_event_list(res.data.eventList)
@@ -777,7 +777,7 @@ const route = useRoute();
       mid: matchid.value,
     };
 
-    api_common.get_detail_video(params).then((res) => {
+    api_details.get_detail_video(params).then((res) => {
       let event_data = lodash.get(res, "data", {});
       if (event_data && event_data.mid) {
         // 普通赛事跳电竞赛事，或者电竞赛事跳普通赛事，就需要重置菜单类型

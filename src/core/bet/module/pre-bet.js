@@ -112,7 +112,7 @@ const post_book_list_gcuuid = ref(uid())
      * @return {undefined} undefined
      */
    const  cancel_book_record_order=(params, callback)=> {
-        api_betting.cancel_book_order(params).then(res => {
+        api_betting.cancle_pre_order(params).then(res => {
           let code = _.get(res, "data.code");
           let msg = _.get(res, "data.msg");
           let data = _.get(res, "data.data");

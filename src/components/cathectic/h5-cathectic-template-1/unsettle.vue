@@ -150,7 +150,7 @@ import store from 'src/store-redux'
   // const search_early_money = () => {
   //   let params = {orderNo:orderNumberItemList.join(',')}
   //   // if(orderNumberItemList.length === 0){return}
-  //   api_betting.oderPreSettleMoney(params).then(res=>{
+  //   api_betting.get_cashout_max_amount_list(params).then(res=>{
   //     if(res.code == 200 && res.data){
   //       set_early_moey_data( res.data)
   //     }

@@ -878,7 +878,7 @@ export const video_info = () => {
         device: 'H5',
         eventCode: event_code
       }
-      api_analysis.get_replay_football(params)
+      api_analysis.post_playback_video_url(params)
           .then(res => {
             if (res.code == 200 && _.get(res.data, 'eventList.length')) {
               this.events_list = res.data.eventList

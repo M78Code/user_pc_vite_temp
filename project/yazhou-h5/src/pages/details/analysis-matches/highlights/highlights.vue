@@ -495,7 +495,7 @@ const get_football_replay = (event_code) => {
     device: 'H5',
     eventCode: event_code
   }
-  api_analysis.get_replay_football(params)
+  api_analysis.post_playback_video_url(params)
     .then(res => {
       if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
         events_list.value = res.data.eventList

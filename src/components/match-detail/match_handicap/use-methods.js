@@ -384,7 +384,7 @@ export const useMethods = ({ props,emit }) => {
       topKey: handicap[index].topKey,
       status: type ? 1 : 0,
     };
-    api_details.set_playTop(params).then((res) => {
+    api_details.get_category_playTop(params).then((res) => {
       const code = lodash.get(res, "data.code");
       if (code == 200) {
         if (!params.status) {

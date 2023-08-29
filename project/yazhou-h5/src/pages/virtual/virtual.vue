@@ -319,7 +319,7 @@ export default defineComponent({
       component_data.sub_menu_list =lodash.cloneDeep(base_data.vr_menu())
       let obj_ = {
         // axios api对象
-        axios_api:api_virtual.get_virtual_menus,
+        axios_api:api_common. get_virtual_menu,
         // axios api对象参数
         params:{},
         // axios中then回调方法
