@@ -105,7 +105,7 @@
         <!-- 进球动画 -->
         <div class="goal-wrap" v-if="is_show_home_goal">
           <div class="inner yb-flex-center left">
-            <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
+            <div class="yb-goal-gif" :class="{'yb-goal-yo':UserCtr.theme.includes('y0')}"></div>
             <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
@@ -120,7 +120,7 @@
         <!-- 进球动画 -->
         <div class="goal-wrap" v-if="is_show_away_goal">
           <div class="inner yb-flex-center right">
-            <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
+            <div class="yb-goal-gif" :class="{'yb-goal-yo':UserCtr.theme.includes('y0')}"></div>
             <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
@@ -153,6 +153,8 @@ import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n";;
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 //国际化
 
 
@@ -208,7 +210,6 @@ export default defineComponent({
     // ...mapGetters([
     //   "get_menu_type",
     //   'get_goto_detail_matchid',
-    //   'get_theme',
     // ]),
     /**
      * @Description get_menu_type
@@ -225,12 +226,10 @@ export default defineComponent({
       return ''
     })
     /**
-     * @Description get_theme
+     * @Description UserCtr.theme
      * @param {object} undefined
     */
-    const get_theme = computed(() => {
-      return ''
-    })
+    
     /**
      * @Description 主比分
      * @param {object} undefined
@@ -556,7 +555,6 @@ export default defineComponent({
       eports_scoring,
       get_menu_type,
       get_goto_detail_matchid,
-      get_theme,
       formatTotalScore,
       hide_home_goal,
       hide_away_goal,

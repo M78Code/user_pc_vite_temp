@@ -14,7 +14,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(userCtr, `get_theme.includes('theme01')`)"><img  src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
+          <template v-if="lodash.get(UserCtr, `theme.includes('theme01')`)"><img  src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
           <template v-else><img  src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>
       </div>
@@ -44,7 +44,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
   // provide(){
@@ -60,7 +60,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
   let unsettleChild = ref(null)
   let userCtr = ref(store.getState())
   // computed: {
-  //   ...mapGetters(['get_main_item','get_theme','userCtr']),
+  //   ...mapGetters(['get_main_item',,'userCtr']),
 
   // },
   //判断该商户是否有权限预约投注

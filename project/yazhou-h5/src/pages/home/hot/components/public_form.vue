@@ -30,7 +30,7 @@
           <div class="group-item">
             <div class="team-item" :class="{'font-bold': i < 3}" v-for="(item, i) in liat_data" :key="i" >
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : get_theme.includes('theme02') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : UserCtr.theme.includes('theme02') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -60,7 +60,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_file_path(item.playerLogo) : get_theme.includes('theme02') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.playerLogo ? get_file_path(item.playerLogo) : UserCtr.theme.includes('theme02') ? none_league_icon_black: default_url" @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -92,7 +92,7 @@
           <div class="group-item">
             <div class="team-item" v-for="(item, i) in liat_data" :key="i" :class="{ 'black-font':  i<3}">
               <div class="col1">
-                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : get_theme.includes('theme02') ? none_league_icon_black: default_url"  @error="league_icon_error" alt="">
+                <img v-if="i<3" class="img-Avatar" :src=" item.teamLogo ? get_file_path(item.teamLogo) : UserCtr.theme.includes('theme02') ? none_league_icon_black: default_url"  @error="league_icon_error" alt="">
                 <span v-else class="number" :class="`calculation_color${+i+ 1}`">{{ +i+ 1 }}</span>
               </div>
               <!-- 球队 -->
@@ -115,8 +115,9 @@
 </template>
 
 <script setup>
-// import {mapGetters} from "vuex";
 // import no_data from "src/project/components/common/no_data.vue";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+
 
 const props = defineProps({
     allianc_list_index: {
@@ -157,23 +158,19 @@ const default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地
 // 无联赛logo图标黑色版
 const none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
 
-// computed: {
-//     ...mapGetters({
-//       get_theme:"get_theme",
-//     })
-// }
+
 
  // 东西部联盟切换
  const alliancTab = (tab, index) => {
-      this.$emit('allianc-tab', {tab, index})
+      $emit('allianc-tab', {tab, index})
   }
     /**
      * @description: 联赛联赛图标出错
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) => {
-      if(this.get_theme.includes('theme02')){
-        $event.target.src = this.none_league_icon_black;
+      if(UserCtr.theme.includes('theme02')){
+        $event.target.src = none_league_icon_black;
       } else {
         $event.target.src = default_url.value;
       }

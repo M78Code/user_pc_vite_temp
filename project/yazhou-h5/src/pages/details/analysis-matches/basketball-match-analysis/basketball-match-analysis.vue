@@ -60,7 +60,6 @@ import { t } from "src/boot/i18n";;
   //     // 详情页的数据
   //     'get_detail_data',
   //     // 主题
-  //     'get_theme',
   //     'get_is_hengping',
   //     'get_analyze_show',
   //     'get_lang',

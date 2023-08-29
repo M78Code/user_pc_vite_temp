@@ -1,7 +1,7 @@
 <template>
     <div id="box" ref="box">
       <div class="marquee-box" ref="marquee" @mouseover="menter" @mouseleave="mleave">
-        <img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/icon-notice${get_theme.includes('y0') ? '-y0' : ''}.svg`)" alt="">
+        <img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/icon-notice${UserCtr.theme.includes('y0') ? '-y0' : ''}.svg`)" alt="">
 
         <p ref="notice_list" id="pWidth">
           <span ref="notice_content">{{text}}</span>
@@ -28,12 +28,7 @@ export default defineComponent({
       value: 0,
       pwidth:0,//公告文本的宽度
     });
-    // #TODO vuex
-    // computed: {
-    //   ...mapGetters([
-    //     'get_theme',
-    //   ])
-    // },
+    
     onMounted(() => {
       let element = $refs.notice_content;
       pwidth = element.clientWidth;

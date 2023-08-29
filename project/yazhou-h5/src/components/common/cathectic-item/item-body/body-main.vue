@@ -14,7 +14,7 @@
         <span v-else-if="main.sportId == 103" style="--num:40"></span>
         <span v-else-if="main.sportId == 102" style="--num:41"></span>
         <img :src="get_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="get_theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
+        <img v-if="UserCtr.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
         <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
       </p>
       <p class="col-9" :style="{'font-weight':$q.platform.is.ios ? '500':'bold'}">
@@ -106,7 +106,8 @@ import utils from "src/core/utils/utils.js"
 import { format_time_zone_time, format_odds, format_score } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -190,7 +191,7 @@ const props =defineProps({
   // 路由
   const route = useRoute()
 
-    // ...mapGetters(["get_main_item", "get_theme", "get_menu_type", "get_lang"]),
+    // ...mapGetters(["get_main_item",  "get_menu_type", "get_lang"]),
     //单关已结算投注成功（orderStatus == 1）时，不在此位置显示结算比分
   const calc_settle_score = computed(() => {
       if (props.type_.orderStatus == 1 && props.type_.seriesType == '1') {

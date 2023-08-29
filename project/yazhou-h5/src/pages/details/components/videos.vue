@@ -229,7 +229,7 @@
           </div>
           <div class="img-wrap" v-if="[1,2].includes(+get_detail_data.csid) && get_is_full_screen && get_video_url.active == 'muUrl' && get_is_hengping">
             <!-- 分析弹窗 -->
-            <img :src="select_item == 3 ? (!get_theme.includes('y0')?analyze2:analyze2_y0) : (!get_theme.includes('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/>
+            <img :src="select_item == 3 ? (!UserCtr.theme.includes('y0')?analyze2:analyze2_y0) : (!UserCtr.theme.includes('y0')?analyze:analyze_yo)" @click.stop="change_analyze"/>
           </div>
         </div>
         <!-- 声音按钮 -->
@@ -289,7 +289,8 @@ import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 import { t } from "src/boot/i18n";;
-import userCtr from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 //国际化
 
 const route = useRoute()
@@ -447,10 +448,10 @@ export default defineComponent({
     const get_analyze_show = computed(() => {
       return ""
     });
-    // 获取当前主题颜色
-    const get_theme = computed(() => {
-      return ""
-    });
+    // // 获取当前主题颜色
+    // const UserCtr.theme = computed(() => {
+    //   return ""
+    // });
     // 标清0 高清1
     const get_hd_sd = computed(() => {
       return ""
