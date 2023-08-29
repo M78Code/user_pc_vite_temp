@@ -300,9 +300,9 @@
 </template>
 
 <script>
-import formatmixin from "src/public/mixins/common/time_format";
+// import formatmixin from "src//mixins/common/time_format";
 import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 import { format_score ,format_odds  } from "src/core/index.js";
@@ -312,7 +312,7 @@ export default {
     VueSlider,
     Pagination,
   },
-  mixins: [formatmixin],
+  // mixins: [formatmixin],
   props: {
     record_obj: {
       type: Object,
@@ -434,11 +434,11 @@ export default {
     this.recordData = this.order_list;
   },
   computed: {
-    ...mapGetters({
-      // 用户信息
-      vx_get_user: "get_user",
-      vx_get_theme: "get_theme"
-    })
+    // ...mapGetters({
+    //   // 用户信息
+    //   get_user: "get_user",
+    //   get_theme: "get_theme"
+    // })
   },
   watch: {
     order_list: {
