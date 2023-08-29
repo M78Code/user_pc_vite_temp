@@ -192,8 +192,10 @@
   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   import store from "src/store-redux/index.js";
   import BetData from "../class/bet-data-class";
-  import UserCtr from "src/core/user-config/user-ctr.js";
-  import { calc_bifen  } from "src/core/index.js";
+  import UserCtr from "src/core/user-config/user-ctr.js"; 
+  import { format_odds ,calc_bifen } from'src\core\format\index.js'
+
+ 
 
 
   const money = ref('')//金额
