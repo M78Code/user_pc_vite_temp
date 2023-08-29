@@ -38,7 +38,7 @@
     <div :class="[tab_Index == 0 && 'quiz']">
       <div>
         <!--猜你喜欢  模块-->
-        <may-also-like :from_where="101" v-if="tab_Index == 0 && _.get(get_access_config, 'hotRecommend')" />
+        <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" />
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
           <div class="title" v-if="tab_Index == 0">
@@ -59,7 +59,7 @@
 // import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏 炸锅巴土豆 大鸡排 * 2 椰奶冰粉 * 3 690 400 230
 import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
 import sports_balls_tab from "./sports_balls_tab.vue"
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const tabList = ref([])  // tab选项卡内容
 const tab_Index = ref(0) //  tab 选项卡的下标位置
 const featured_loading = ref(true) // 精选骨架屏
@@ -91,7 +91,7 @@ const change_background = computed(() => {
 //   get_theme:"get_theme",
 //   get_hot_tab_item:"get_hot_tab_item",
 //   get_bet_obj:"get_bet_obj",
-//   get_access_config: "get_access_config",
+//   GlobalAccessConfig: "GlobalAccessConfig",
 // })
 
 
