@@ -172,19 +172,7 @@ const refresh = () => {
   }
   console.log(111111111111)
 
-  // 重新请求相应接口
-  // emit("init", { is_refresh: true });
-
-  // 重新请求相应接口
-  // this.init({ is_refresh: true });
-
-  // 刷新前 先关闭聊天室 TODO
-  // this.set_chatroom_available(0);
-  // // 聊天室开关开启后才显示聊天室
-  // if (this.vx_get_user.chatRoomSwitch) {
-  //   // 获取直播、聊天室信息
-  //   this.get_live_chat_info();
-  // }
+ 
 };
 
 onUnmounted(() => {

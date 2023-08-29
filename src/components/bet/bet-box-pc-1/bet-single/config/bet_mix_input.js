@@ -3,7 +3,7 @@ import { ref, onMounted, defineComponent } from "vue"
 
 import { useMittEmit,useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
-import store from "src/store-redux/index.js";
+import userCtr from "src/core/user-config/user-ctr.js";
 import keyboard from "src/core/constant/config/keyword";
 
 import * as bet_utils from "./bet_utils.js";
@@ -11,9 +11,6 @@ import _ from "lodash"
 
 import BetKeyboard from "../common/bet-keyboard.vue";
 
-const {
-  userReducer
-} = store.getState()
 
 
 
@@ -46,7 +43,6 @@ export default defineComponent({
       input_max: null, // 可输入的最大值
       setup_mix_info: {}, // 串关设置信息
       timer_input_focus: null, // 获得焦点定时器
-      vx_get_user:userReducer.user_info
     });
 
     onMounted(() => {
@@ -72,7 +68,7 @@ export default defineComponent({
         });
       }
       // 获取串关配置信息
-      setup_mix_info.value = _.get(vx_get_user, 'cvo.series');
+      setup_mix_info.value = _.get(userCtr.user_info, 'cvo.series');
       // 串关配置信息存在且是一个对象
       if (!_.isEmpty(setup_mix_info.value) && _.isObject(setup_mix_info.value)) {
         // 重新获取键盘数据集合
@@ -205,7 +201,7 @@ export default defineComponent({
      * 投注列表变化
      */
     watch(
-      () => vx_get_bet_list,
+      () => BetData.bet_list,
       (new_) => {
         if (money.value) {
           BetData.set_bet_s_obj('money', parseFloat(money.value));
@@ -378,7 +374,7 @@ export default defineComponent({
           }
         }
       }
-      let user = vx_get_user.value;
+      let user = userCtr.user_info.value;
       // 用户存在以及用户有输入金额并且输入金额大于用户账户金额，并且串关投注项为两个(2串1)时
       if (user && money.value > parseFloat(user.balance) && BetData.bet_list.length == 2) {
         // 转换输入金额为用户账户余额
@@ -505,7 +501,7 @@ export default defineComponent({
             // 投注框金额给输入金额
             input_amount = parseFloat(money.value);
           }
-          let user = vx_get_user;
+          let user = userCtr.user_info;
           // 当账户金额为0时
           if (parseFloat(user.balance) == 0.00) {
           } else if (parseFloat(min_money.value) > input_amount) { // 当输入金额比输入框最小限额时
@@ -645,7 +641,7 @@ export default defineComponent({
      */
     const update_keyboard_status = () => {
       //用户信息
-      let user = vx_get_user;
+      let user = userCtr.user_info;
       // 用户余额获取
       let init_money = parseFloat(user.balance) || 0.00;
       // 输入金额存在并且用户账户有钱

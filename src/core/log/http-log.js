@@ -7,7 +7,7 @@
  * @Description: http方法次数统计
  */
 import { ss, ls } from "../utils/web-storage";
-import { DateForMat } from "../format/";
+import { DateForMat } from "src/core/format/index.js";
 import { throttle } from "lodash";
 class HttpLog {
   /**
