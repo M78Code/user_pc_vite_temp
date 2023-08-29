@@ -29,7 +29,6 @@ const card_style_obj = ref(match_list_card.all_card_obj[props.card_key])
 const is_mounted = ref(false);
 const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 const match_list_card = inject('match_list_card')
-console.log('lockie_test_console', match_list_card);
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
