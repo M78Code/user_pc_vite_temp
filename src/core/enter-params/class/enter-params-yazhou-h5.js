@@ -1,5 +1,5 @@
 import { Qs } from "src/core/index.js";
-import { LocalStorage } from "src/core/utils/index.js";
+import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { UserCtr } from "src/core/index.js";

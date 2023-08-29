@@ -1,4 +1,4 @@
-import { LocalStorage } from "src/core/utils/index.js";
+import { LocalStorage } from "./web-storage.js";
 export function initData() {
   try {
     //解析URL参数

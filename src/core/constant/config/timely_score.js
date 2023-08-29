@@ -251,5 +251,4 @@ export const baseball_score_map = {
 
 }
 
-export { football_score_map, basketball_score_map, table_tennis_score_map, volleyball_score_map, baseball_score_map }
-
+ 

@@ -100,7 +100,7 @@ const export_env_config = (env) => {
     if (!all_env) {
       write_file(
         final_file_path,
-        `export default window.BUILDIN_CONFIG= ` + JSON.stringify(final_config)
+        `export default ` + JSON.stringify(final_config)
       );
     }
   });

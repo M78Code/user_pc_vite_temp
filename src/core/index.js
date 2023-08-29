@@ -2,8 +2,11 @@
 
 
 
+ const  BUILDIN_CONFIG =  window.BUILDIN_CONFIG;
 
-import {PROJECT_NAME} from "../../dev-target-env.js"
+
+// import {PROJECT_NAME} from "../../dev-target-env.js"
+const PROJECT_NAME= BUILDIN_CONFIG.TARGET_PROJECT_NAME
 
 
 //通用
@@ -17,13 +20,16 @@ import {PROJECT_NAME} from "../../dev-target-env.js"
 // const router = useRouter();
 // const route = useRoute();
 
+console.error('-------------LocalStorage------3---',)
 
-
-
-
+export  * from "src/core/format/index.js";
+export  * from "src/core/constant/index.js";
+export  * from "src/core/utils/index.js";
+console.error('-------------LocalStorage------4---',)
 
 // ==============================   间接转出     项目无差异的        ======================================
 import { i18n, loadLanguageAsync, map_lang  } from  "src/boot/i18n.js";
+console.error('-------------LocalStorage------5---',)
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
 import VrSportCtr from  "src/core/vr-sport/index.js";
@@ -202,9 +208,7 @@ const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDa
  */
 
 
-export  * from "src/core/format/index.js";
-export  * from "src/core/constant/index.js";
-export  * from "src/core/utils/index.js";
+
 
 export {
     //

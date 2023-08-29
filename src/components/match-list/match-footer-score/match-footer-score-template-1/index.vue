@@ -66,7 +66,7 @@ import { t } from "src/boot/i18n";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
-import { get_match_status } from 'src/core/utils/index.js'
+import { get_match_status } from 'src/core/index.js'
 import lodash from 'lodash';
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
