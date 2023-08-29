@@ -30,6 +30,7 @@
 
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 import { format_money3,format_money2 } from'src\core\format\index.js'

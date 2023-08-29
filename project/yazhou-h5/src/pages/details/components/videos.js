@@ -1,12 +1,12 @@
 import {api_common, api_analysis} from 'src/project/api/index.js';
 import video from "project_path/src/utils/video/video.js"   // 视频相关公共方法
-import uid from "src/core/uuid/index.js"
+import { uid } from "src/core/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_total_score } from "src/core/format/index.js"
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 
 export const video_info = () => {
     const router = useRouter();

@@ -95,7 +95,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
 import { useRoute, useRouter } from 'vue-router'
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 // import { Platform } from 'quasar'
 
