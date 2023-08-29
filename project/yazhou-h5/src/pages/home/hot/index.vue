@@ -19,9 +19,9 @@
             </template>
             <template v-else>
               <!-- 精选的tab图标 -->
-              <!-- <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black${get_theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
+              <!-- <img v-if='tab.index == 0' :src="(`${ $g_image_preffix }/image/wwwassets/bw3/home/hot_jx_black${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)" alt=""> -->
               <img v-if='tab.index == 0'
-                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_black2${get_theme.includes('y0') ? '_y0' : ''}.svg`)"
+                :src="(`${$g_image_preffix}/image/wwwassets/bw3/home/hot_jx_black2${UserCtr.theme.includes('y0') ? '_y0' : ''}.svg`)"
                 alt="">
               <!-- 电竞类的tab图标 -->
               <img v-else-if="[100, 101, 102, 103].includes(+tab.field1)"
@@ -60,13 +60,16 @@
 import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
 import sports_balls_tab from "./sports_balls_tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+
 const tabList = ref([])  // tab选项卡内容
 const tab_Index = ref(0) //  tab 选项卡的下标位置
 const featured_loading = ref(true) // 精选骨架屏
 const first_loading = ref(true) // 精选是否第一次加载骨架屏
 const can_click_tab = ref(false) // 可以点击菜单tab 选项卡
 const wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 onmounted(() => {
   timer2.value = null;
@@ -88,10 +91,10 @@ const change_background = computed(() => {
 })
 
 // mapGetters({
-//   get_theme:"get_theme",
+//   UserCtr.theme:"UserCtr.theme",
 //   get_hot_tab_item:"get_hot_tab_item",
 //   get_bet_obj:"get_bet_obj",
-//   GlobalAccessConfig: "GlobalAccessConfig",
+//   get_access_config,
 // })
 
 
@@ -127,7 +130,7 @@ const wrapper_scrolling = ($event) => {
   * @param {Object} $event 错误事件对象
   */
 const league_icon_error = ($event) => {
-  if (get_theme.includes('theme02')) {
+  if (UserCtr.theme.includes('theme02')) {
     $event.target.src = "image/bw3/svg/match_cup_black.svg";
   } else {
     $event.target.src = "image/bw3/svg/match_cup.svg";

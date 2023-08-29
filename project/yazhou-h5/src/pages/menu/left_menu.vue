@@ -76,7 +76,7 @@ import { defineComponent, reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
-import { api_match } from "src/public/api/index";
+import { api_match } from "src/api/index.js";
 export default defineComponent({
   name: "leftMenu",
   components: { sport_icon },

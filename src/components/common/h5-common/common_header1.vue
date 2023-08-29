@@ -37,7 +37,7 @@
 // import { mapMutations, mapGetters } from "vuex";
 import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/project/api";
-import utils from "src/public/utils/utils";
+import utils from "src/core/utils/index.js";
 import lodash from 'lodash'
 
 // 接受父组件传递的数据

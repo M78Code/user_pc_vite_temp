@@ -175,7 +175,7 @@ export const get_now_server = () => {
  */
 export const get_file_path = (path, csid = 0) => {
   // 目前环境信息
-  export const current_env = window.BUILDIN_CONFIG.current_env;
+  const current_env = window.BUILDIN_CONFIG.current_env;
   if (!path || path == 'undefined') {
     return '';
   }

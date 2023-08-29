@@ -228,7 +228,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 import { format_result } from 'src/core/format/index.js'
 
 import { MSelectFullVersionWapper as basePanel } from 'src/components/analysis/template/m-select/index.js'
-import { api_analysis } from 'src/public/api/index'
+import { api_analysis } from 'src/api/index'
 
 const tabIndex = ref(1); // 当前 tab 所在下标
 const baseData = ref({}); //基本面数据

@@ -29,6 +29,7 @@ import { t } from "src/boot/i18n";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import utils from "src/core/utils/utils.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 
 
   // 资讯页
@@ -45,8 +46,7 @@ import utils from "src/core/utils/utils.js"
   const analysisOdds = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
   // 精彩回放
   const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
-  import userCtr from "src/core/user-config/user-ctr.js";
-    // 国际化
+      // 国际化
 
     // 锚点
     let analysis_football_matches = ref(null)
@@ -55,6 +55,7 @@ import utils from "src/core/utils/utils.js"
     // 当前选中tab
     let currentContent = ref('match-result')
     // 仓库数据
+let {  userInfoReducer } = store.getState()
     // TODO: 临时用
     let get_detail_data = ref({
       mid: '2',
@@ -82,9 +83,9 @@ import utils from "src/core/utils/utils.js"
       })
     })
     watch(() => get_event_list, (event_list) => {
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 get_user  get_event_list
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 userCtr  get_event_list
       const highlights_component = tabList.value.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(userCtr, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabList.value.unshift(
             {
@@ -141,9 +142,9 @@ import utils from "src/core/utils/utils.js"
           }
         )
       }
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list get_user 后续修改调整
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list userCtr 后续修改调整
       const highlights_component = tabs.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(userCtr, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabs.unshift(
             {
@@ -157,7 +158,7 @@ import utils from "src/core/utils/utils.js"
     const close_analysis = () => {
       useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
-    // 点击一级tab 菜单切换 // TODO: $utils  后续修改调整
+    // 点击一级tab 菜单切换 // TODO: $utils userCtr 后续修改调整
     const tab_click = ([tab, type]) => {
       console.error(tab.component, type);
       switch(tab.component) {
@@ -201,7 +202,7 @@ import utils from "src/core/utils/utils.js"
         } else if (tab.component == 'article-main') {
           eventLabel = 'H5_情报分析_资讯'
         }
-        zhuge.send_zhuge_event(eventLabel, userCtr);
+        zhuge.send_zhuge_event(eventLabel, userCtr.user_info);
       }
     }
   // TODO: 后续修改调整
@@ -210,10 +211,10 @@ import utils from "src/core/utils/utils.js"
   //     // 详情页的数据
   //     'get_detail_data',
   //     // 主题
-  //     'get_theme',
   //     // 赛事id
   //     'get_goto_detail_matchid',
   //     // 用户信息
+//     "userCtr",
   //     'get_analyze_show',
   //     'get_lang',
   //     'get_event_list',

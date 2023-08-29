@@ -47,11 +47,11 @@
         <!-- 右边设置按钮 -->
         <div class="btn-r text-center" @click="change_slider_show" v-if="(status == 1 || status == 5 || status == 6) && lodash.get(userCtr, 'pcs')" :style="{opacity:status == 5||status == 6?0.3:1}">
           <template v-if="slider_show">
-            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="get_theme.includes('y0')">
+            <img  src="image/wwwassets/bw3/record/set4.svg" alt="" v-if="UserCtr.theme.includes('y0')">
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="get_theme.includes('theme01')"  alt="">
+            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('theme01')"  alt="">
             <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
           </template>
 
@@ -85,7 +85,7 @@
       <!-- 注单剩余本金 -->
       <p class="yb_mb4">{{t('early.info8')}}：{{(+item_data.preSettleBetAmount).toFixed(2)}}</p>
       <!-- 提前结算可用次数 -->
-      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(userCtr,'pcs')==1  && lodash.get(userCtr,'settleSwitch')">{{t('early.info9')}}：{{ remaining_num }}</p>
+      <p v-if="item_data.enablePreSettle  && item_data.initPresettleWs && lodash.get(userCtr,'pcs')==1  && lodash.get(userCtr,'user_info.settleSwitch')">{{t('early.info9')}}：{{ remaining_num }}</p>
     </div>
 
     <!-- 提前结算详情 -->
@@ -153,11 +153,10 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js";
+import userCtr from "src/core/user-config/user-ctr.js"
 
-// const store_data = ref(store.getState())
+
 let store_cathectic = store.getState().cathecticReducer
-// console.error(store_data);
 const props = defineProps({
   item_data: {
     type: Object
@@ -194,11 +193,9 @@ const props = defineProps({
   let timer3 = ref(null)
   let timer4 = ref(null)
   let timer5 = ref(null)
-  // const {  } = toRefs(store_data.userReducer)
 
     // ...mapGetters([
       //当前皮肤
-    //   "get_theme",
     //用户信息
     // 0未结算/筛选 1已结算/搜索
     //   "get_main_item",
@@ -283,7 +280,7 @@ const props = defineProps({
     })
     // 计算提前结算按钮是否显示
   const calc_show = computed(() => {
-      return /10true[1-6]+/.test("" + lodash.get(userCtr, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
+      return /10true[1-6]+/.test("" + lodash.get(userCtr.user_info, 'settleSwitch') + store_cathectic.main_item + props.item_data.enablePreSettle + status.value);
     })
     watch(() => expected_profit, (_new, _old) => {
         // 小于 1 时暂停提前结算

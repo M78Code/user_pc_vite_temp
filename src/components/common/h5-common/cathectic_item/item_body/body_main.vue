@@ -100,7 +100,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/project/api/index.js";
-import utils from 'src/public/utils/utils.js'
+import utils from "src/core/utils/index.js";
 // import { i18n } from 'src/boot/i18n'
 
     

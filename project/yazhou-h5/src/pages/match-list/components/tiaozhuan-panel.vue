@@ -20,11 +20,12 @@
       </template>
     </q-carousel>
     <!-- 猜你喜欢 -->
-    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="lodash.get(get_access_config,'hotRecommend')"></may-also-like>
+    <may-also-like v-show="!show_banner2" :from_where="101" :show_="Boolean(show_banner2)" v-if="GlobalAccessConfig.get_hotRecommend()"></may-also-like>
   </div>
 </template>
  
 <script setup>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'

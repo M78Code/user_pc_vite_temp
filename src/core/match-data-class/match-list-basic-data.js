@@ -4,7 +4,7 @@
  * @Description: 列表基础数据仓库  只保存主客队信息和赛事logo基础数据  一天拉一次接口更新数据
  */
 import MatchListData from "src/core/match-data-class/match-list-data-class.js";
-import { api_match } from "src/public/api/index.js";
+import { api_match } from "src/api/index.js";
 import lodash from "lodash";
 class MatchListBasicDataClass {
   /**

@@ -113,7 +113,7 @@
       <!-- 活动返回按钮 及 标题 -->
       <!-- <div class="head yb_px14 yb_fontsize14">
         <img
-            :src="get_theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
+            :src="UserCtr.theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
         />
       </div> -->
@@ -128,7 +128,7 @@ import utils from 'src/core/utils/utils.js';  // 公共方法
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 
 // #TODO mixins
-// import websocket_data from "src/public/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
+// import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
 import { t } from "src/boot/i18n";;
@@ -151,6 +151,7 @@ import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import userCtr from "src/core/user-config/user-ctr.js"
 //国际化
 
 

@@ -105,7 +105,7 @@
         <!-- 进球动画 -->
         <div class="goal-wrap" v-if="is_show_home_goal">
           <div class="inner yb-flex-center left">
-            <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
+            <div class="yb-goal-gif" :class="{'yb-goal-yo':UserCtr.theme.includes('y0')}"></div>
             <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
@@ -120,7 +120,7 @@
         <!-- 进球动画 -->
         <div class="goal-wrap" v-if="is_show_away_goal">
           <div class="inner yb-flex-center right">
-            <div class="yb-goal-gif" :class="{'yb-goal-yo':get_theme.includes('y0')}"></div>
+            <div class="yb-goal-gif" :class="{'yb-goal-yo':UserCtr.theme.includes('y0')}"></div>
             <div class="gif-text">{{t('match_result.goal')}}</div>
           </div>
         </div>
@@ -142,7 +142,7 @@
 import { TeamImgWapper } from "src/components/details/team-img";   // 详情页蓝色背景上的大型字母图标
 import { TeamTextWapper } from "src/components/details/team-text";   // 中立场赛事展示
 import { TeamNameWapper } from "src/components/details/team-name";   // 详情页背景上的队伍名称
-// import msc from "src/public/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
+// import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
 import utils from "src/core/utils/utils.js";    // 公共方法
@@ -153,6 +153,8 @@ import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n";;
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 //国际化
 
 
@@ -208,7 +210,6 @@ export default defineComponent({
     // ...mapGetters([
     //   "get_menu_type",
     //   'get_goto_detail_matchid',
-    //   'get_theme',
     // ]),
     /**
      * @Description get_menu_type
@@ -225,12 +226,10 @@ export default defineComponent({
       return ''
     })
     /**
-     * @Description get_theme
+     * @Description UserCtr.theme
      * @param {object} undefined
     */
-    const get_theme = computed(() => {
-      return ''
-    })
+    
     /**
      * @Description 主比分
      * @param {object} undefined
@@ -556,7 +555,6 @@ export default defineComponent({
       eports_scoring,
       get_menu_type,
       get_goto_detail_matchid,
-      get_theme,
       formatTotalScore,
       hide_home_goal,
       hide_away_goal,

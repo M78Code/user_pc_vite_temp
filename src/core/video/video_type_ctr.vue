@@ -54,7 +54,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex"
-import video from "src/public/utils/video/video.js"
+import video from "src/core/video/video.js"
 export default {
   props: {
     ctr_data: {

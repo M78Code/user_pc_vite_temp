@@ -7,8 +7,8 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" v-if="get_theme.includes('theme01') && 3000 != menu_type"></div>
-      <div class="img theme2" v-if="get_theme.includes('theme02') && 3000 != menu_type"></div>
+      <div class="img" v-if="UserCtr.theme.includes('theme01') && 3000 != menu_type"></div>
+      <div class="img theme2" v-if="UserCtr.theme.includes('theme02') && 3000 != menu_type"></div>
       <div class="img esports" v-if="3000 == menu_type"></div>
     </div>
     <!--
@@ -25,9 +25,9 @@
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
-          <div class="user-name">Hi,{{userCtr.userName}}</div>
+          <div class="user-name">Hi,{{userCtr.user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.balance)}}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.user_info.balance)}}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -131,7 +131,6 @@ import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute, useRouter } from "vue-router"
-import userCtr from "src/core/user-config/user-ctr.js";
 
   let route = useRoute()
   let router = useRouter()
@@ -154,7 +153,6 @@ import userCtr from "src/core/user-config/user-ctr.js";
     //   get_cur_odd:"get_cur_odd",
     //   get_virtual_data_loading:"get_virtual_data_loading",
     //   get_is_show_menu:"get_is_show_menu",
-    //   get_theme:'get_theme',
     //   get_is_champion:'get_is_champion',
     //   get_v_pre_menu_type:'get_v_pre_menu_type',
     //   get_secondary_unfold_map:'get_secondary_unfold_map',
@@ -177,7 +175,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
       }
       let obj2 = {}
       try {
-        let lang_str = userCtr.languageList
+        let lang_str = userCtr.user_info.languageList
         if (lang_str) {
           let lang_arr = lang_str.split(',')
           Object.keys(obj).forEach(item => {
@@ -276,7 +274,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
     }
     // 设置主题
   const handle_set_theme = (theme) => {
-      const curr_theme = get_theme
+      const curr_theme = UserCtr.theme
 
       if (curr_theme.includes('y0')) {
         set_theme(theme + '_y0')
@@ -336,7 +334,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
       let zhuge_obj = {
         "版本类型": edition == 1 ? '简易' : '标准',
       }
-      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr, zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr.user_info, zhuge_obj);
     }
     /**
      * @description 获取用户余额

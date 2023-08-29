@@ -79,7 +79,7 @@ const route = useRoute();
 
 /** stroe仓库 */
 const store_data = store.getState();
-const { searchReducer, userReducer, layoutReducer, menuReducer, globalReducer } = store_data;
+const { searchReducer, layoutReducer, menuReducer, globalReducer } = store_data;
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -96,11 +96,6 @@ onUnmounted(off)
  * 路径: project_path\src\store\module\menu.js
  */
 const { main_menu_toggle } = menuReducer
-/** 
- * 用户信息 default: {}
- * 路径: src\store-redux\module\user-info.js
- */
-const { user_info } = userReducer
 /** 
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
@@ -123,9 +118,6 @@ function set_sports_list() {
     if (lodash.get(res, 'data.code') == 200) {
       const list = lodash.get(res, 'data.data') || []
       // 根据商户过滤篮球赛事
-      // if(user_info.mId == '1443742662615240704'){
-      //   lodash.remove(sports_list, item => item.id == 2)
-      // }
       sports_list = list
       // 默认第一个 足球被禁用后 默认值不是1
       search_csid.value = (list[0] || {}).id

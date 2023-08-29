@@ -85,11 +85,12 @@
   </div>
 </template>
 <script setup>
-import global_mixin from "src/public/mixins/global/global_mixin.js";
+// import global_mixin from "src/public/mixins/global/global_mixin.js";
 import match_list_global from 'src/components/match-list/composables/match-list-gloab.js'
-import comSelect from "src/public/components/select";
+// import comSelect from "src/public/components/select";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import BaseData from "src/public/utils/base_data/base-data.js";
+// import BaseData from "src/public/utils/base_data/base-data.js";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { t } from "src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { defineProps, ref, computed, reactive } from 'vue';
@@ -98,7 +99,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
 let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-;
+
 
 // 列表显示内容  match:赛事 collect:收藏 search:搜索
 const vx_layout_list_type = ref(state.layoutReducer.layout_list_type);
@@ -110,8 +111,6 @@ const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
 const vx_filter_checked_all = ref(state.filterReducer.filter_checked_all);
 // 获取当前菜单类型
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
-// 全局开关
-const get_global_switch = ref(state.globalReducer.global_switch);
 // 收起右侧详情 展开多列玩法
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
@@ -139,7 +138,7 @@ const sort_option = computed(() => {
       icon: "icon-sort_date"
     }
   ]
-  if (!get_global_switch.value.sort_cut) {
+  if (!GlobalAccessConfig.get_sortCut()) {
     option = []
   }
   return option
@@ -257,7 +256,7 @@ const reset_filter = () => {
  * @return {undefined} undefined
  */
 const on_click_sort = (row) => {
-  if (!get_global_switch.value.sort_cut) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
+  if (!GlobalAccessConfig.get_sortCut()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
   match_sort_show.value = false
   store.dispatch({
     type: 'SET_MATCH_SORT',
@@ -269,7 +268,7 @@ const on_click_sort = (row) => {
  * @return {undefined} undefined
  */
 const toggle_filter_popup = () => {
-  if (!get_global_switch.value.filter_switch) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+  if (!GlobalAccessConfig.get_filterSwitch()) return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
   if ((props.load_data_state != 'data' && !vx_show_filter_popup.value)) {
     return
   }
@@ -326,7 +325,7 @@ const on_change_list_type = (type) => {
     // 前端开    后台关       >关
     // 前端关    后台开       >关
     // 前端关    后台关       >关
-    if (!enable_collect_api || !get_global_switch.value.collect_switch) {
+    if (!enable_collect_api || !GlobalAccessConfig.get_collectSwitch()) {
       return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
     }
     apiType = 2

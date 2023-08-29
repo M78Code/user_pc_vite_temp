@@ -71,7 +71,7 @@
             </div>
             <div v-if="index != math_list_data.length-1" class="new-dialog-item-line details-border1-bottom"></div>
 
-            <img v-if="show_lvs(item)" :src="get_theme.includes('theme01') ? icon_video :
+            <img v-if="show_lvs(item)" :src="UserCtr.theme.includes('theme01') ? icon_video :
             icon_video_black" alt=""
                  class="icon-style">
           </div>
@@ -97,6 +97,8 @@ import show_start_time from 'src/project/components/details/wight/show_start_tim
 import { t } from "src/boot/i18n";;
 import { useRouter, useRoute } from "vue-router"
 import { format_total_score } from 'src/core/format'
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 
 const router = useRouter()
 const route = useRoute()
@@ -122,7 +124,6 @@ export default {
       'get_lang',
       'get_current_menu',
       'get_details_tabs_list',
-      'get_theme'
     ]),
     is_match_result(){
       return ['result_details', 'match_result'].includes(route.name)

@@ -60,10 +60,10 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
@@ -72,7 +72,7 @@ export default defineComponent({
   components: {
     oddsNew,
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
@@ -81,7 +81,7 @@ export default defineComponent({
       name_: '',  //计算类名
       len: 0,  //有效的ol的个数
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(["get_bet_list","get_detail_data"]),
     const get_bet_list = computed(() => {

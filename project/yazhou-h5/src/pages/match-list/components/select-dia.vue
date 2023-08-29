@@ -19,15 +19,16 @@
         </div>
       </div>
     </div>
-    <template v-if="change_show && lodash.get(get_access_config,'filterSwitch')">
+    <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
       <filter_old v-if="lodash.get(get_current_menu,'main.menuType')==1 && get_sport_all_selected"/>
       <filter_new v-else/>
     </template>
-    <search v-if="!change_show && lodash.get(get_access_config,'searchSwitch')"></search>
+    <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
 </template>
  
 <script setup>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -70,12 +71,12 @@ onMounted(() => {
     change_show.value = false
   }
   // 筛选
-  if(!lodash.get(get_access_config,'filterSwitch')) {
+  if(!GlobalAccessConfig.get_filterSwitch()) {
     search_tab.value = [i18n.t('search.search_title')]
     change_show.value = false
   }
   // 搜索
-  if(!lodash.get(get_access_config,'searchSwitch')) {
+  if(!GlobalAccessConfig.get_searchSwitch()) {
     search_tab.value = [i18n.t('footer_menu.filter')]
     change_show.value = true
   }

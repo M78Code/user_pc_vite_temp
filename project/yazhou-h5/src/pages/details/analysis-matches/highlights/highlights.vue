@@ -213,11 +213,11 @@ import lodash from 'lodash'
 import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
+import userCtr from "src/core/user-config/user-ctr.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import utils from "src/core/utils/utils.js"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
-import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js";
+import { t } from "src/boot/i18n";;
 //国际化
 
 
@@ -249,7 +249,7 @@ directives(
 })
 
 // 仓库数据
-let { languageReducer, userInfoReducer } = store.getState()
+let { languageReducer } = store.getState()
 
 // 定时器
 let get_football_replay_timer = ref(null)
@@ -661,7 +661,7 @@ const exit_browser_full_screen = () => {
   }
 }
 // 精彩回播配置信息
-watch(() => userCtr.merchantEventSwitchVO, (res) => {
+watch(() => userCtr.user_info.merchantEventSwitchVO, (res) => {
   // handler = (res) => {
   // tab按钮开关
   // TODO:  国际化后续修改调整
@@ -746,8 +746,8 @@ const slider_events_list = computed(() => {
 })
 // 鉴权域名 + 回放视频url（拼接后的最终url）
 const replay_video_src = computed(() => {
-  // TODO:  userCtr  get_lang 后续修改调整
-  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(userCtr, 'oss.live_h5')
+  // TODO:    get_lang 后续修改调整
+  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(userCtr, 'user_info.oss.live_h5')
   return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 })
 // slider列表长度是否小于屏幕横屏宽度
@@ -782,7 +782,6 @@ onUnmounted(() => {
   //     'get_is_full_screen',
   //     'get_is_dp_video_full_screen',
   //     'get_match_real_time',
-  //     'userCtr',
   //     'get_lang',
   //   ]),
 

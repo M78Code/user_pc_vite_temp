@@ -1,7 +1,7 @@
 /*
  * @Description: H5 主菜单 逻辑
  */
-import utils from 'src/public/utils/utils.js';
+import utils from 'src/core/utils/index.js';
 import { api_home } from "src/project/api/index.js";
 //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
 import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js"
@@ -685,7 +685,6 @@ export default {
       get_lang:"get_lang",
       cuid: "get_uid",                      // 获取当前uuid或用户id
       show_favorite_list:"get_show_favorite_list", // 显示收藏列表
-      user_info: "get_user",                   // 当前登录的用户信息
       get_current_menu: "get_current_menu",    // 获取当前主菜单
       current_esport_csid:'get_current_esport_csid',  // 电竞游戏csid
       get_list_scroll_direction:'get_list_scroll_direction',

@@ -67,7 +67,7 @@
                       <img
                           @click="info_icon_close"
                           style="margin-top:-0.04rem"
-                          :src="`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close${get_theme.includes('02') ? '_2' : ''}.svg`"
+                          :src="`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close${UserCtr.theme.includes('02') ? '_2' : ''}.svg`"
                       >
                     </div>
                     <!-- 角球说明文本 -->
@@ -136,6 +136,8 @@ import { api_common } from "src/api/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 export default defineComponent({
   name: "tournament_play_new",
   props: {
@@ -279,7 +281,6 @@ export default defineComponent({
     // #TODO vuex 
     // computed: {
     // ...mapGetters([
-    //   "get_theme",
     //   "get_uid",
     //   "get_detail_data",
     //   "get_fewer",
@@ -290,9 +291,7 @@ export default defineComponent({
     //   'get_hshow_map',
     //   'get_details_data_cache',
     // ]),
-    const get_theme = computed(() => {
-      return "";
-    });
+
     const get_uid = computed(() => {
       return "";
     });
@@ -703,7 +702,6 @@ export default defineComponent({
     })
     return {
       ...toRefs(component_data),
-      get_theme,
       get_uid,
       get_detail_data,
       get_fewer,

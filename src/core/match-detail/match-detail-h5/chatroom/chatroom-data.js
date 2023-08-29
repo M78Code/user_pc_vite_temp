@@ -9,7 +9,6 @@ export const useGetStore = () => {
   const state = reactive({
      // 聊天室用户信息
     get_chatroom_userinfo: "",
-    get_user: "",
     get_chatroom_id: "",
      // 聊天室用户信息
     get_chatroom_userinfo: "",
