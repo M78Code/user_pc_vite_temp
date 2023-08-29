@@ -81,7 +81,6 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
     })
   // computed:{
   //   ...mapGetters({
-  //     get_theme:'get_theme',
   //     get_list_scroll_direction:'get_list_scroll_direction',
   //   }),
   //   // 获取图片主题图标
