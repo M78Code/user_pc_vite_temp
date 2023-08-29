@@ -39,7 +39,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js';
 import lodash from 'lodash'
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名

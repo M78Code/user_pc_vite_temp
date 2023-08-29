@@ -25,7 +25,7 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="get_access_config.collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <div v-if="GlobalAccessConfig.collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{i18n.t('footer_menu.collect')}}</div>
       </div>
@@ -35,6 +35,7 @@
 <script>
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex"
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
 import {utils } from 'src/core/index.js'
@@ -93,7 +94,7 @@ export default defineComponent({
      * @return {String}
      */
     const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;
