@@ -25,7 +25,7 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="GlobalAccessConfig.get_collectSwitch" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{t('footer_menu.collect')}}</div>
       </div>

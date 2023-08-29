@@ -12,7 +12,7 @@
           <div class="tabs-bar-nav a3" ref="scrollBox">
             <template v-for="(tab, index) in tabList">
               <div class="tabs-tab"
-                   v-if="tab.field1 == -6 && _.get(get_access_config,'collectSwitch') || tab.field1 != -6"
+                  v-if="tab.field1 == -6 && GlobalAccessConfig.get_collectSwitch() || tab.field1 != -6"
                    :key="index"
                    ref="scrollItem"
                    :class="[tab_Index == index ? 'tabs-active' : '']"
@@ -65,7 +65,7 @@
                   <span>{{ item.plnum | money_filter}}</span>
                 </div>
                 <img
-                    v-if="_.get(get_access_config,'collectSwitch')"
+                    v-if="GlobalAccessConfig.get_collectSwitch()"
                     :src="item.mf ? (!_.get(get_user, 'favoriteButton') && get_theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
@@ -86,8 +86,8 @@
                     />
                   </div>
                   <div class="score">
-                    <span>{{ _.get(get_access_config, 'handicapNum') ? item.mc: i18n.t('footer_menu.more') }}</span>
-                    <span v-if="_.get(get_access_config,'handicapNum')">+</span>
+                    <span>{{GlobalAccessConfig.get_handicapNum()? item.mc: i18n.t('footer_menu.more') }}</span>
+                    <span v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                   </div>
                 </div>
               </div>
@@ -125,7 +125,7 @@ import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'
 import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
@@ -253,7 +253,7 @@ import { format_total_score } from "src/core/format/index.js"
     }
     // 收藏 接口
     const on_collection = (item) => {
-      if( !utils.judge_collectSwitch( _.get(get_access_config,'collectSwitch'),this) ) return
+      if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this) ) return
 
       let params = {
         cuid: uid, //用户ID/或UUid
@@ -450,7 +450,7 @@ import { format_total_score } from "src/core/format/index.js"
   //     get_user_token:'get_user_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
-  //     get_access_config:'get_access_config',
+  //     GlobalAccessConfig:'GlobalAccessConfig',
   //     get_is_show_menu:"get_is_show_menu",
   //   })
   // },
