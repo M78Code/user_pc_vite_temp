@@ -42,7 +42,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/boot/i18n";
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/match-list-utils.js';
-import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
+// import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/tips1.vue")
 
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 ;
