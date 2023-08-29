@@ -13,7 +13,7 @@ import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import lodash from "lodash";
-import play_mapping from "src/public/config/mapping/play_mapping.js";
+import play_mapping from "src/core/constant/config/play_mapping/index.js";
 
 
 /**
