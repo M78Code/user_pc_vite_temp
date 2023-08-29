@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { api_result } from "src/project/api";
+import { api_analysis } from "src/project/api";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
@@ -80,7 +80,7 @@ import { t } from "src/boot/i18n";;
           parentMenuId: 4,
           sonMenuId: radio_button_index + 1
         }
-        let { code, data } = await api_result.get_match_analysise_data(parameter)
+        let { code, data } = await api_analysis.get_match_analysise_data(parameter)
         if (code == 200 && data.sThirdMatchInformationDTOList && data.sThirdMatchInformationDTOList.length) {
           let msg0 = { label: 0, msg: [] }, msg1 = { label: 1, msg: [] }, msg2 = { label: 2, msg: [] };
           data.sThirdMatchInformationDTOList.forEach(item => {

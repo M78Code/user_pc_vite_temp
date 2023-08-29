@@ -332,7 +332,7 @@ export const useGetResultConfig = () => {
       let params = {
         langType: "zh", //默认zh
       };
-      api_results
+      api_analysiss
         .get_sportType(params)
         .then((res) => {
           const code = lodash.get(res, "data.code");
@@ -444,7 +444,7 @@ export const useGetResultConfig = () => {
         this.cancel = new Date().getTime();
         return;
       }
-      api_results
+      api_analysiss
         .post_results_pournament(this.pournament_params)
         .then((res) => {
           const code = lodash.get(res, "data.code");
@@ -550,7 +550,7 @@ export const useGetResultConfig = () => {
         this.league_type = [t("common.all")];
         this.league = t("common.all");
       }
-      api_results.post_results_list(this.results_params).then((res) => {
+      api_analysiss.post_results_list(this.results_params).then((res) => {
         const code = lodash.get(res, "data.code");
         const data = lodash.get(res, "data.data");
         this.refresh_finish = true;
@@ -651,7 +651,7 @@ export const useGetResultConfig = () => {
       } else {
         // 展开新的赛果项
         this.activeIndex = index;
-        api_results
+        api_analysiss
           .post_results_order(params)
           .then((res) => {
             const code = lodash.get(res, "data.code");
@@ -730,7 +730,7 @@ export const useGetResultConfig = () => {
         this.paramsVideo.eventCode = data.code - 0;
       }
 
-      api_results
+      api_analysiss
         .post_playback_video_url(this.paramsVideo)
         .then((res) => {
           const code = lodash.get(res, "data.code");

@@ -61,7 +61,7 @@ import historyEngagement from "project_path/src/pages/details/analysis-matches/c
 // import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import {api_result} from "src/api/index.js";
+import {api_analysis} from "src/api/index.js";
  // 加载中
 // import loading from "project_path/src/components/common/loading.vue";
 import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
@@ -139,7 +139,7 @@ let get_detail_data = ref({
           parentMenuId: 2,
           sonMenuId: tabIndex.value + 1
         }
-        let results = await api_result.get_match_analysise_data(parameter)
+        let results = await api_analysis.get_match_analysise_data(parameter)
         let res = {}
         if (results.status) {
           res = results.data

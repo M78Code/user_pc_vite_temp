@@ -94,7 +94,7 @@
 
 <script setup>
 import { defineComponent, ref, nextTick, onUnmounted } from 'vue'
-import { api_result } from "src/api/index.js";
+import { api_analysis } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n";;
@@ -139,7 +139,7 @@ import { t } from "src/boot/i18n";;
           parentMenuId: 5,  //父菜单类型:(2数据;3阵容4情报;5赔率)
           sonMenuId: tabIndex + 1
         }
-        let { code, data } = await api_result.get_match_analysise_data(parameter)
+        let { code, data } = await api_analysis.get_match_analysise_data(parameter)
         if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
           data_list = data.sThirdMatchHistoryOddsDTOList
         }

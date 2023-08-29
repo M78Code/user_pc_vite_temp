@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { api_result } from "src/project/api";
+import { api_analysis } from "src/project/api";
 import { computed, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
@@ -67,7 +67,7 @@ import { t } from "src/boot/i18n";;
   }
   const get_list = async () => {
     try {
-      let {code , data} = await api_result.get_live_event({mid: match_id})
+      let {code , data} = await api_analysis.get_live_event({mid: match_id})
       if(code == 200 && data.length > 0) {
 
         event_data = data

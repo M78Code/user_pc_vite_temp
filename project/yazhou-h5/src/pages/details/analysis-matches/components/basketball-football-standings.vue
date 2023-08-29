@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import {api_result} from "src/api/index.js";
+import {api_analysis} from "src/api/index.js";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
@@ -115,7 +115,7 @@ let get_detail_data = ref({
         mid: match_id, //2282708 1925928
         flag: flag == 0 ? 0 : ''
       }
-      let {code, data} = await api_result.get_vs_info(parameter)
+      let {code, data} = await api_analysis.get_vs_info(parameter)
       if (code == 200 && data.length > 0) {
         ranking_data = data
         no_data.value = false

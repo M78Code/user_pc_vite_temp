@@ -4,7 +4,7 @@
  * @Description 串关组合列表
  */
 
-const chuanguan_map = {
+export const chuanguan_map = {
   2: { "data": [{ "count": 1, "id": "2001", "name": "2串1","type":2 }] },
   3: { "data": [{ "count": 1, "id": "3001", "name": "3串1","type":3 }, { "count": 3, "id": "2001", "name": "2串1","type":2 }, { "count": 4, "id": "3004", "name": "3串4","type":3 }] },
   4: { "data": [{ "count": 1, "id": "4001", "name": "4串1","type":4 }, { "count": 6, "id": "2001", "name": "2串1","type":2 }, { "count": 4, "id": "3001", "name": "3串1","type":3 }, { "count": 11, "id": "40011", "name": "4串11","type":4 }] },

@@ -567,7 +567,7 @@ export default {
       //判断是否有预约投注单
       this.fetch_limit_money_params(1)
         .then(res => {
-          return api_betting.queryPreBetAmount(res)
+          return api_betting.query_pre_bet_amount(res)
         })
         .then(res => {
           let res2 = {
@@ -582,7 +582,7 @@ export default {
     fetch_limit_money_and_odd_info() {
       this.fetch_limit_money_params(1)
         .then(res => {
-          return api_betting.queryBetAmount(res)
+          return api_betting.query_bet_amount(res)
         })
         .then(res => {
           if (res && res.data) {
@@ -732,7 +732,7 @@ export default {
 
       if (_.get(param, 'idList.length')) {
         result_promise = new Promise((resolve) => {
-          api_betting.post_verify_odds_before(param).then((res) => {
+          api_betting.query_last_market_info(param).then((res) => {
             result_handle.bind()(res)
             resolve()
           })
@@ -926,7 +926,7 @@ export default {
       }
 
       this.fetch_limit_money_params()
-        .then(api_betting.post_maxminmoney)
+        .then(api_betting.post_getBetMinAndMaxMoney)
         .then(result_handle.bind())
         .catch(err => {
           console.error('fetch_limit_money', err)
@@ -1015,7 +1015,7 @@ export default {
         }
       }
       this.set_bet_status(2);
-      let http_bet = api_betting.post_submitbetlist;
+      let http_bet = api_betting.post_submit_bet_list;
       http_bet(param).then(res => {
         let code = _.get(res, "code"),
             msg = _.get(res, "msg"),
