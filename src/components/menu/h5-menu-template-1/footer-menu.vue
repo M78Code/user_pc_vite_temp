@@ -89,7 +89,7 @@
 
 import common from "src/project/mixins/constant";
 import betBar from 'src/project/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
-import utils from "src/public/utils/utils";
+import utils from "src/core/utils/index.js";
 import { computed, onBeforeUnmount, onMounted, watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
