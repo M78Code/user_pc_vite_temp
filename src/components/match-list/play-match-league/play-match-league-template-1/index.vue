@@ -71,7 +71,7 @@
       <div class="yb-flex-center" :style="`width:${match_list_tpl_size.media_width - 3}px !important;`">
         <!-- 联赛是否收藏 -->
         <div @click.stop="match_list_card.view.mx_collect({ type: 'leagues', match: card_style_obj.league_obj })"
-          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && get_global_switch.collect_switch">
+          class="icon-wrap m-star-wrap-league" v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch">
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
         </div>
       </div>
@@ -100,6 +100,7 @@ import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/boot/i18n";
 import { get_match_tpl_title } from 'src/core/utils/index.js';
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
@@ -113,8 +114,6 @@ const tpl_id = ref('')
 const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
 // 获取菜单类型
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
-//全局开关
-const get_global_switch = reactive(state.globalReducer.global_switch)
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }

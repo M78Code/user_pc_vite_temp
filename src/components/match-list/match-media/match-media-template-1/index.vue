@@ -10,7 +10,7 @@
     <div class="yb-flex-center" :class="{ 'flex-center': menu_config.is_esports() }">
       <!-- 收藏 -->
       <div
-        v-if="menu_config.is_esports() && (!['play', 'hot'].includes(vx_cur_menu_type.type_name)) && $route.name != 'search' && get_global_switch.collect_switch"
+        v-if="menu_config.is_esports() && (!['play', 'hot'].includes(vx_cur_menu_type.type_name)) && $route.name != 'search' && GlobalAccessConfig.get_collectSwitch()"
         class="yb-flex-center yb-hover-bg play-count-wrap" @click.stop="collect">
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="{ 'active': (match.mf == 1 || match.mf == true) }"></i>
       </div>
@@ -66,15 +66,13 @@ const vx_detail_params = reactive(state.matchesReducer.params)
 const vx_play_media = reactive(state.matchesReducer.play_media)
 //获取当前菜单信息
 const vx_cur_menu_type = reactive(state.menusReducer.cur_menu_type)
-//全局开关
-const get_global_switch = reactive(state.globalReducer.global_switch)
 const lang = ref(state.languagesReducer.lang)
 // 视频是否展开状态
 const vx_get_is_fold_status = ref(state.globalReducer.is_fold_status)
 
 // 盘口数量
 const handicap_num = computed(() => {
-  if (get_global_switch.handicap_num) {
+  if (GlobalAccessConfig.get_handicapNum()) {
     return `+${props.match.mc || 0}`
   } else {
     return t('match_info.more')
