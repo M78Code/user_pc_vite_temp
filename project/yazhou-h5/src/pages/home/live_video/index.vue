@@ -450,7 +450,7 @@ import { UserCtr } from "src/core/index.js";
   //     UserCtr_token:'UserCtr_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
-  //     GlobalAccessConfig:'GlobalAccessConfig',
+  //     get_access_config,
   //     get_is_show_menu:"get_is_show_menu",
   //   })
   // },

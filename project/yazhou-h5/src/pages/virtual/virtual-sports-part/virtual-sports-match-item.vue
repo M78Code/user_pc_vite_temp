@@ -606,7 +606,7 @@ export default defineComponent({
       get_n_s_changed_loaded,
       get_curr_sub_menu_type,
       get_theme,
-      GlobalAccessConfig,
+      get_access_config,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,

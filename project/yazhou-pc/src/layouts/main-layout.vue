@@ -295,7 +295,7 @@ import {
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "src/store-redux/index.js";
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import base_data from "src/core/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";

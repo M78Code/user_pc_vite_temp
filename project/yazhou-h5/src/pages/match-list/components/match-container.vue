@@ -460,7 +460,7 @@
 
 
 <script setup name="match-container">
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
