@@ -9,7 +9,7 @@
  *  th-泰国语
  */
 import { nextTick } from "vue";
-import { ls, ss } from "src/core/utils/web-storage.js";
+import { ls, ss } from "src/core/utils/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {

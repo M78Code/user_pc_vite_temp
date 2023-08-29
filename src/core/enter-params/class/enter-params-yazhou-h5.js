@@ -1,5 +1,5 @@
 import { Qs } from "../utils/Qs";
-import { ls } from "src/core/utils/web-storage.js";
+import { ls } from "src/core/utils/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { UserCtr } from "src/core/index.js";

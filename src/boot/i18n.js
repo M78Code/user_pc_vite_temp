@@ -1,5 +1,5 @@
 import { createI18n } from "vue-i18n";
-import { ls, ss } from "src/core/utils/web-storage.js";
+import { ls, ss } from "src/core/utils/index.js";
 
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
