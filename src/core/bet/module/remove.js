@@ -89,9 +89,9 @@ import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
 const del_bet_item = ( ) => {
   let bet_obj;
   let item_cs_id = BetData.item_cs_id
-  if(BetData.vx_is_bet_single) {
-    bet_obj = _.get(BetData,`vx_get_bet_single_obj.${item_cs_id}`);
-    if(_.has(bet_obj,'bs') && _.isArray(BetData.vx_get_bet_single_list)) {
+  if(BetData.is_bet_single) {
+    bet_obj = _.get(BetData,`bet_single_obj.${item_cs_id}`);
+    if(_.has(bet_obj,'bs') && _.isArray(BetData.bet_single_list)) {
       let index = BetData.bet_single_list.findIndex(it => it === item_cs_id);
       //移除对应的键值对
       bet_single_obj_remove_attr(item_cs_id);
@@ -101,8 +101,8 @@ const del_bet_item = ( ) => {
     }
   } else {
     bet_obj = _.get(BetData,`bet_obj.${item_cs_id}`);
-    if(_.has(bet_obj,'bs') && _.isArray(that.vx_get_bet_list)) {
-      let index = BetData.vx_get_bet_list.findIndex(it => it === item_cs_id);
+    if(_.has(bet_obj,'bs') && _.isArray(BetData.bet_list)) {
+      let index = BetData.bet_list.findIndex(it => it === item_cs_id);
       //移除对应的键值对
       BetData.bet_obj_remove_attr(item_cs_id);
       //移除对应的数据

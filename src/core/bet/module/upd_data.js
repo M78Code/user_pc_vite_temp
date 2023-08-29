@@ -612,7 +612,7 @@ const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
       }
     });
     if (BetData.is_bet_single) {
-      BetData.vx_bet_single_obj_attr(obj);
+      BetData.bet_single_obj_attr(obj);
       // console.log('单关合并数据:', { obj });
     } else {
       // console.log('串关合并数据:', { obj });
@@ -632,18 +632,18 @@ const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
 const upd_bet_obj = ( timestap, mid) => {
   // return;
   // 如果是单关并且单关正在处理投注阻止数据合并 或者如果是串关且串关正在投注中,阻止数据合并
-  if ((!mid || BetData.is_bet_single &&BetData.get_is_single_handle) || (!BetData.is_bet_single && BetData.vx_get_is_handle)) {
+  if ((!mid || BetData.is_bet_single &&BetData.get_is_single_handle) || (!BetData.is_bet_single && BetData.is_handle)) {
     return;
   }
   // 新流程正在锁住投注项的时候不允许更新投注栏赔率
-  if(BetData.vx_get_bet_mode==1 && BetData.vx_get_bet_item_lock) {
+  if(BetData.bet_mode==1 && BetData._bet_item_lock) {
     return;
   }
   let bet_obj;
-  if(BetData.vx_is_bet_single) {
-    _.forEach(BetData.vx_get_bet_single_list, item=>{
+  if(BetData.is_bet_single) {
+    _.forEach(BetData.bet_single_list, item=>{
       if(item) {
-        bet_obj = _.get(BetData,'vx_get_bet_single_obj');
+        bet_obj = _.get(BetData,'bet_single_obj');
         let match_id = _.get(bet_obj, `${item}.cs.match_id`, '');
         // 为同一场赛事则进行投注项更新
         if(match_id==mid) {
@@ -652,9 +652,9 @@ const upd_bet_obj = ( timestap, mid) => {
       }
     });
   } else {
-    _.forEach(BetData.vx_get_bet_list, item=>{
+    _.forEach(BetData.bet_list, item=>{
       if(item) {
-        bet_obj = _.get(BetData,'vx_get_bet_obj');
+        bet_obj = _.get(BetData,'bet_obj');
         let match_id = _.get(bet_obj, `${item}.cs.match_id`, '');
         // 为同一场赛事则进行投注项更新
         if(match_id==mid) {
@@ -676,7 +676,7 @@ const upd_bet_obj = ( timestap, mid) => {
  */
 const update_bet_score = ( match,  mid, socket_name, score_obj) => {
   let home_score, away_score, bet_obj, id, msc, obj, msc_obj;
-  obj = BetData.vx_is_bet_single? 'vx_get_bet_single_obj':'vx_get_bet_obj';
+  obj = BetData.is_bet_single? 'bet_single_obj':'bet_obj';
   if(BetData[obj]) {
     for(let key of Object.keys(BetData[obj])) {
        id = key || "";
@@ -748,12 +748,12 @@ const update_bet_score = ( match,  mid, socket_name, score_obj) => {
 const set_bet_obj_value = (that, obj) => {
   if (_.isPlainObject(obj)) {
     obj.key = _.get(obj,'cs.id','');
-    if(that.vx_is_bet_single) {
+    if(BetData.is_bet_single) {
       //添加单关投注项对象
-      that.vx_bet_single_obj_attr(obj);
+      BetData.bet_single_obj_attr(obj);
     } else {
       //添加串关投注项对象
-      that.vx_bet_obj_add_attr(obj);
+      BetData.bet_obj_add_attr(obj);
     }
   }
 }

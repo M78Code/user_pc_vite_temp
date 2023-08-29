@@ -31,7 +31,7 @@
 
                                     <!-- 盘口/多语言 -->
                                     <div class="curr-item" v-if="settings.type === 'select'">
-                                        <template v-if="settings.id === 1">{{ t('odds')[vx_cur_odd] }}</template>
+                                        <template v-if="settings.id === 1">{{ t('odds')[cur_odd] }}</template>
                                         <template v-else-if="settings.id === 2">{{ langs[lang] }}</template>
                                     </div>
 
@@ -52,9 +52,9 @@
                                     <template v-for="(item, index) in settings.value_arr">
                                         <div v-if="['EU', 'HK'].includes(item.value)" :key="index"
                                             class="child-item item-odds relative-position"
-                                            :class="vx_cur_odd == item.value && 'active'" @click="on_click_handicap(item)">
+                                            :class="cur_odd == item.value && 'active'" @click="on_click_handicap(item)">
                                             {{ item.label }}
-                                            <i v-if="vx_cur_odd == item.value"
+                                            <i v-if="cur_odd == item.value"
                                                 class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
@@ -91,13 +91,11 @@ import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
 import { t } from "src/boot/i18n";;
 
-// import store from "project_path/src/store";
 import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "project_path/src/i18n/langs/index.mjs";
 import { loadLanguageAsync } from "/src/boot/i18n";
-import { useMittEmit, useMittOn } from 'src/core/mitt/index.js'
-import * as MITT_TYPES from 'project_path/src/core/mitt/mitt-keys.js'
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
@@ -135,41 +133,39 @@ const theme = ref('')
 /** 用户信息 */
 const get_user = ref({})
 /** 上次赔率 */
-const vx_cur_odd = ref('EU')
+const cur_odd = ref('EU')
 /** 上次赔率 */
-const vx_get_pre_odd = ref('EU')
+const pre_odds = ref('EU')
 /** 语言 */
 const lang = ref('zh')
 /** true: 单关投注 false: 串关投注 */
-const vx_is_bet_single = ref(false)
+const is_bet_single = ref(false)
 /** 单关投注对象 */
-const vx_get_bet_single_obj = ref({})
+const bet_single_obj = ref({})
 /** 串关投注对象 */
-const vx_get_bet_obj = ref({})
+const bet_obj = ref({})
 /** 串关投注对象 */
-const vx_get_is_virtual_bet = ref(true)
+const is_virtual_bet = ref(true)
 /** 虚拟投注列表对象 */
-const vx_get_virtual_bet_obj = ref({})
+const cur_menu_type = ref({})
 /** 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 */
-const vx_cur_menu_type = ref('')
-/** 全局点击数 */
-const get_global_click = ref(0)
+const left_menu_toggle = ref('')
 
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
     const new_state = store.getState()
     theme.value = new_state.theme
     get_user.value = new_state.user
-    vx_cur_odd.value = new_state.cur_odds
-    vx_get_pre_odd.value = new_state.pre_odds
+    cur_odd.value = new_state.cur_odds
+    pre_odds.value = new_state.pre_odds
     lang.value = new_state.lang
-    vx_is_bet_single.value = new_state.is_invalid
-    vx_get_bet_single_obj.value = new_state.bet_single_obj
-    vx_get_bet_obj.value = new_state.bet_obj
-    vx_get_is_virtual_bet.value.value = new_state.is_virtual_bet
-    vx_get_virtual_bet_obj.value = new_state.cur_menu_type
-    vx_cur_menu_type.value = new_state.left_menu_toggle
-    vx_get_layout_size.value = new_state.layout_size
+    is_bet_single.value = new_state.is_invalid
+    bet_single_obj.value = new_state.bet_single_obj
+    bet_obj.value = new_state.bet_obj
+    is_virtual_bet.value.value = new_state.is_virtual_bet
+    cur_menu_type.value = new_state.cur_menu_type
+    left_menu_toggle.value = new_state.left_menu_toggle
+    layout_size.value = new_state.layout_size
 })
 onUnmounted(unsubscribe)
 
@@ -198,7 +194,7 @@ const languageList = computed(() => lodash.get(get_user.value, 'languageList', [
  * @return {undefined} undefined
  */
 function on_click_handicap(row) {
-    if (vx_cur_odd.value != row.value) {
+    if (cur_odd.value != row.value) {
         set_user_preference(row.value);
     }
     emit('auto_close')
@@ -210,8 +206,8 @@ function on_click_handicap(row) {
  */
 function set_user_preference(curr_odd) {
     if (curr_odd) {
-        let old_odd = vx_cur_odd.value
-        let old_pre_odd = vx_get_pre_odd.value
+        let old_odd = cur_odd.value
+        let old_pre_odd = pre_odds.value
         set_pre_odd(curr_odd);
         BetData.set_cur_odd(curr_odd);
         // 设置用户偏好
@@ -247,14 +243,14 @@ function on_click_lang(lang_) {
             set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
-            let type = vx_get_is_virtual_bet.value ? 1 : 0;
+            let type = is_virtual_bet.value ? 1 : 0;
             let ids = [], bet_type;
-            if (vx_get_is_virtual_bet.value) {
-                bet_type = vx_get_virtual_bet_obj.value;
-            } else if (vx_is_bet_single.value) {
-                bet_type = vx_get_bet_single_obj.value;
+            if (is_virtual_bet.value) {
+                bet_type = cur_menu_type.value;
+            } else if (is_bet_single.value) {
+                bet_type = bet_single_obj.value;
             } else {
-                bet_type = vx_get_bet_obj.value;
+                bet_type = bet_obj.value;
             }
             for (let obj of Object.values(bet_type)) {
                 let match_id = lodash.get(obj, 'cs.match_id', '');
@@ -280,7 +276,7 @@ function on_click_lang(lang_) {
                 api_details.get_bet_olds(params).then(res => {
                     let data = lodash.get(res, 'data.data');
                     if (lodash.isArray(data) && data.length > 0) {
-                        if (vx_get_is_virtual_bet.value) {
+                        if (is_virtual_bet.value) {
                             // TODO: this?
                             // virtual_common_update_bet_item_info( data);
                         } else {
