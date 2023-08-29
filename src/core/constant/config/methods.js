@@ -2,7 +2,7 @@
  * @description 球种玩法
  */
 
-const playMethods = [
+export const playMethods = [
   {
     "names": {
       "zs": "足球",

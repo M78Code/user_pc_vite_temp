@@ -579,7 +579,7 @@
         let param = {
           orderNos: get_order_no.value
         }
-        api_betting.get_orderstatus(param).then(res => {
+        api_betting.query_order_status(param).then(res => {
           if (!(get_bet_status.value == 6 || get_new_bet.value)) {return}
 
           let data = _.get(res, 'data[0]');

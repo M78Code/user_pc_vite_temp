@@ -1,4 +1,4 @@
-import {api_common, api_result} from 'src/project/api/index.js';
+import {api_common, api_analysis} from 'src/project/api/index.js';
 import video from "src/public/utils/video/video.js"   // 视频相关公共方法
 import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
@@ -878,7 +878,7 @@ export const video_info = () => {
         device: 'H5',
         eventCode: event_code
       }
-      api_result.get_replay_football(params)
+      api_analysis.get_replay_football(params)
           .then(res => {
             if (res.code == 200 && _.get(res.data, 'eventList.length')) {
               this.events_list = res.data.eventList

@@ -33,7 +33,7 @@
 
 <script setup>
 // import {mapGetters} from "vuex";
-import {api_result} from "src/api/index.js";
+import {api_analysis} from "src/api/index.js";
  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
 // import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
  // 无网络展示组件
@@ -99,7 +99,7 @@ import { t } from "src/boot/i18n";
         // 显示数量： 5场，10场，15场。
         cps: cps
       }
-      let {code , data} = await api_result.get_team_vs_history(parameter)
+      let {code , data} = await api_analysis.get_team_vs_history(parameter)
       if(code == 200 && data ) {
         records_list = [
           // TODO: 国际化修改后调整

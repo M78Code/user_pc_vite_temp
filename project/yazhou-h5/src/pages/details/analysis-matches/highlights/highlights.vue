@@ -210,7 +210,7 @@ import {
 } from 'vue'
 import lodash from 'lodash'
 // TODO: 后续修改调整
-import {api_common, api_result} from "src/api/index.js";
+import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import { load_player_js } from "src/core/pre-load/index.js"
@@ -495,7 +495,7 @@ const get_football_replay = (event_code) => {
     device: 'H5',
     eventCode: event_code
   }
-  api_result.get_replay_football(params)
+  api_analysis.get_replay_football(params)
     .then(res => {
       if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
         events_list.value = res.data.eventList

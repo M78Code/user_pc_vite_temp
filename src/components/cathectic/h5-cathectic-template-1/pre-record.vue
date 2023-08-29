@@ -89,7 +89,7 @@ const change_pre_status = (orderList) => {
     const params = {
         orderNoList : orderList
     }
-    api_betting.get_pre_status(params).then(res=>{
+    api_betting.get_book_status_record(params).then(res=>{
         if(res.code == 200){
         const {data} = res
         const listObj = lodash.cloneDeep(list_data)
@@ -230,7 +230,7 @@ const onPull = () => {
     };
     //加载中
     ele.setState(4);
-    api_betting.get_preOrderList(params).then(res => {
+    api_betting.post_book_list(params).then(res => {
         // 为 null 时容错处理
         if (!res.data) {
         is_hasnext.value = false

@@ -17,7 +17,7 @@ class BetData {
     this.bet_money = 0 //单关投注成功后接口返回的投注金额
     this.play_optionname = '' //单关投注成功后接口返回的playOptionName
     this.max_height1 = 230 //滚动区域的最大高
-    this.is_new_bet = false //get_orderstatus 接口返回是否是新流程
+    this.is_new_bet = false //query_order_status 接口返回是否是新流程
     this.need_bet_again = false //是否需要重新发起投注
     this.check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
     this.scroll_box_ele = null // dom元素

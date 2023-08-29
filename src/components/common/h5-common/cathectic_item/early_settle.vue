@@ -506,7 +506,7 @@ const props = defineProps({
         frontSettleAmount: String(front_settle_amount || expected_profit), 
       };
       // 响应码【0000000 成功（仅在测试模式出现） | 0400524 确认中（仅在非测试模式出现）| 0400500 提交申请失败，提示msg信息】
-      api_betting.orderPreSettle(params).then((res) => {
+      api_betting.post_pre_bet_order(params).then((res) => {
         if (res.code == 200) {
           status = 4;
         } else if (res.code == "0400524") {

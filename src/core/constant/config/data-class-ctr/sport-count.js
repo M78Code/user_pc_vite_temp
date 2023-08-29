@@ -1,7 +1,7 @@
 /**
  * 球种数量模板
  */
-const sport_match_count = {
+export const sport_match_count = {
     csid_100:{count:0},
     csid_101:{count:0},
     csid_102:{count:0},

@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import {api_result} from "src/project/api";
+import {api_analysis} from "src/project/api";
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "src/project/components/details/team-img";   
@@ -136,7 +136,7 @@ import { useRoute } from 'vue-router'
         // 显示数量： 5场，10场，15场。
         cps: cps 
       }
-      let {code , data} = await api_result.get_team_vs_other_team(parameter)
+      let {code , data} = await api_analysis.get_team_vs_other_team(parameter)
       if(code == 200 && data != null) {
         let grouped_collection = [
           {

@@ -16,7 +16,7 @@ const query_order = () => {
         return
     }
 
-    api_betting.get_orderstatus(param).then(res => {
+    api_betting.query_order_status(param).then(res => {
         if (!(BetData.get_bet_status == 6 || BetData.get_new_bet)) {
             return
         }

@@ -55,7 +55,7 @@
 
 <script setup>
 // TODO: store数据未处理
-import { api_result } from "src/api/index.js";
+import { api_analysis } from "src/api/index.js";
 // import { mapGetters } from "vuex";
   // 赛果详情 事件 组件
 import matchResultsStage from 'project_path/src/pages/details/components/details-match-results/match-results-stage.vue'
@@ -127,7 +127,7 @@ import lodash from "lodash"
   const get_list = async () => {
      // {mid: match_id} TODO: 待处理
       try {
-        let reslut = await api_result.get_event_result({mid: route.params.mid || get_detail_data.mid})
+        let reslut = await api_analysis.get_event_result({mid: route.params.mid || get_detail_data.mid})
         let res = ''
       if (lodash.get(reslut, 'status')) {
         res = reslut.data

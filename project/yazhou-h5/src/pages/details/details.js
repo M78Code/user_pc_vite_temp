@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {api_common, api_result} from "src/api/index.js";  // API 公共入口
+import {api_common, api_analysis} from "src/api/index.js";  // API 公共入口
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -442,7 +442,7 @@ const route = useRoute();
     //       device: 'H5',
     //       eventCode: event_code
     //     }
-    //     api_result.get_replay_football(params)
+    //     api_analysis.get_replay_football(params)
     //         .then(res => {
     //           if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
     //             set_event_list(res.data.eventList)
