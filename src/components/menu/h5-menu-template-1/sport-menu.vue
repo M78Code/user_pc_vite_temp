@@ -180,7 +180,7 @@ import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
 import utils from "utils/utils";
 import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
-import { api_result} from "src/project/api/index.js";
+import { api_analysis} from "src/project/api/index.js";
 import { activity_task_api } from "src/public/api";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
@@ -528,7 +528,7 @@ import { useRoute } from 'vue-router'
           result_sub_menu_api_handle(JSON.parse(cache_data_str), type);
         }else{ // 每次点击一级菜单时，都触发赛果  获取赛果二级菜单  接口
           // 如果当前主菜单是赛果, 获取赛果二级菜单
-          let {code, data} = await api_result.get_result_menu()
+          let {code, data} = await api_analysis.get_result_menu()
           if (code == 200 && Array.isArray(data)) {
             if(lodash.get(data,'[0].menuType')==29){
               // 当是我的投注时菜单进行时间排序
@@ -917,7 +917,7 @@ import { useRoute } from 'vue-router'
        let cache_data_str = sessionStorage.getItem('result_sub_menu_cache')
       try {
         // 如果当前主菜单是赛果, 获取赛果二级菜单
-      let {code, data} = await api_result.get_result_menu()
+      let {code, data} = await api_analysis.get_result_menu()
       if (code == 200 && Array.isArray(data)) {
         if(lodash.get(data,'[0].menuType')==29){
           // 当是我的投注时菜单进行时间排序

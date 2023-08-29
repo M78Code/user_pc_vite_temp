@@ -61,7 +61,7 @@ import standingsTechnical from "src/project/pages/details/analysis-matches/footb
 import standingsDisk from "src/project/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-import {api_result} from "src/project/api";
+import {api_analysis} from "src/project/api";
  // 加载中
 import loading from "src/project/components/common/loading";
 import { computed, ref, nextTick, onUnmounted } from 'vue'
@@ -132,7 +132,7 @@ import { useRoute } from 'vue-router'
           parentMenuId: 2,
           sonMenuId: tabIndex + 1
         }
-        let {code , data} = await api_result.get_match_analysise_data(parameter)
+        let {code , data} = await api_analysis.get_match_analysise_data(parameter)
         loading = false
         if(code == 200 && Object.keys(data).length > 0) {
           future_schedule_data = loadsh.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})

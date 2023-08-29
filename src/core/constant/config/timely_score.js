@@ -2,7 +2,7 @@
  * @Author: lampson
  * @Description: 投注框对阵信息后面需要展示及时比分，不同的玩法取不同的比分，此文件用于对应映射关系
  */
-const football_score_map = {
+export const football_score_map = {
   20: "S2",
   21: "S2",
   22: "S2",
@@ -131,7 +131,7 @@ const football_score_map = {
   270: 1,
 }
 
-const basketball_score_map = {
+export const basketball_score_map = {
   44: "S19",
   45: "S19",
   46: "S19",
@@ -182,7 +182,7 @@ const basketball_score_map = {
   215: 1,
 }
 // 乒乓球
-const table_tennis_score_map = {
+export const table_tennis_score_map = {
   153: "S1",
   172: "S1",
   173: "S1",
@@ -197,7 +197,7 @@ const table_tennis_score_map = {
   203: 1,
 }
 // 排球
-const volleyball_score_map = {
+export const volleyball_score_map = {
   153: "S1",
   159: "S1",
   204: "S1",
@@ -212,7 +212,7 @@ const volleyball_score_map = {
 
 }
 // 棒球
-const baseball_score_map = {
+export const baseball_score_map = {
   242: "S1",
   243: "S1",
   244: "S1",

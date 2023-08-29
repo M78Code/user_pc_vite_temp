@@ -9,7 +9,7 @@ import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
  * @param {Object} match
  * @return {Number} 0未找到让球方 1主队为让球方 2客队为让球方
  */
-const get_handicap_index_by = (match) => {
+export const get_handicap_index_by = (match) => {
   let result = 0;
   if (match && match.hps) {
     let hpid = get_handicap_w_id(match.csid);
@@ -175,7 +175,7 @@ export const get_now_server = () => {
  */
 export const get_file_path = (path, csid = 0) => {
   // 目前环境信息
-  const current_env = window.BUILDIN_CONFIG.current_env;
+  export const current_env = window.BUILDIN_CONFIG.current_env;
   if (!path || path == 'undefined') {
     return '';
   }

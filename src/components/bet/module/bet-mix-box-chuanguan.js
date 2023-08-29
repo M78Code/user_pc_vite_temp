@@ -93,7 +93,7 @@ const mix_bet = () => {
                     timer_count = setInterval(() => {
                         if (get_order_ing.value.length) {
                             let param = get_order_ing.value.toString();
-                            api_betting.get_orderstatus({
+                            api_betting.query_order_status({
                                 orderNos: param
                             }).then(res => {
                                 if (res.code == 200 && BetData.bet_status.value != 1 && res.data) {
@@ -128,7 +128,7 @@ const mix_bet = () => {
                         timer_count = setInterval(() => {
                             if (get_order_ing.value.length) {
                                 let param = get_order_ing.value.toString();
-                                api_betting.get_orderstatus({
+                                api_betting.query_order_status({
                                     orderNos: param
                                 }).then(res => {
                                     if (res.code == 200 && res.data) {

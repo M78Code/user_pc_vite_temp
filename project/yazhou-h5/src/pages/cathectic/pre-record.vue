@@ -106,7 +106,7 @@ const change_pre_status = (orderList) => {
     const params = {
         orderNoList: orderList
     }
-    api_betting.get_pre_status(params).then(result => {
+    api_betting.get_book_status_record(params).then(result => {
         let res = {}
         if (result.status) {
             res = result.data

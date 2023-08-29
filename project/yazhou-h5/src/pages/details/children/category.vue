@@ -76,7 +76,7 @@
 // import { mapGetters, mapMutations } from "vuex"
 import tournament_play_new from "project_path/src/pages/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
-import { api_common, api_result} from 'src/api/index.js'
+import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
 import { t } from "src/boot/i18n";;
 //  无数据显示组件

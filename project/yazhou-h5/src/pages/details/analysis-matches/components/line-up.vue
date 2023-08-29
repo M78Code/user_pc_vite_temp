@@ -160,7 +160,7 @@
 </template>
 
 <script setup>
-import { api_result } from "src/api/index.js";
+import { api_analysis } from "src/api/index.js";
 import { computed, nextTick, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
@@ -239,7 +239,7 @@ import { t } from "src/boot/i18n";;
         // 主客队标识(1主队，2客队)
         homeAway: radio_button_index + 1
       }
-      let {code , data} = await api_result.get_match_lineup_list(parameter)
+      let {code , data} = await api_analysis.get_match_lineup_list(parameter)
       if(code == 200 && Object.keys(data).length > 0) {
         // 如果是足球赛事
         line_up_data = data

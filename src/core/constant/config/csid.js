@@ -4,7 +4,7 @@
  * H5/PC  对应配置文件 新增 csid_map_name 对应以下国际化
  * 例： name: i18n.t('csid_map_name.xxx')
  */
-export const CSID_CONST = {
+export const CSID_export const = {
 
   CSID_1: { csid: "1", mark: "足球", name: '' },
   CSID_2: { csid: "2", mark: "篮球" },

@@ -8,11 +8,11 @@ import * as api_announce from "./module/announce/index.js"; //bruce
 import * as api_virtual from "./module/virtual/index.js"; //bruce
 import * as api_analysis from "./module/analysis/analysis.js"; //bruce
 import * as api_chatroom from "./module/chatroom/index.js"; //bruce
-import * as api_admin from "./module/admin/index.js"; // router
+ 
 import * as api_common from "./module/common/index.js"; // router
 import * as api_home from "./module/home/home.js"; // router
 import * as api_global from "./module/global/index.js"; // router
-import * as api_result from "./module/result/index.js"; //hellojay
+ 
 import * as api_base_data from "./module/base_data/base_data.js"; //nico
 import * as api_activity from "./module/activity/index.js"; //activity
 
@@ -41,16 +41,14 @@ export {
   api_analysis,
   // 聊天室相关
   api_chatroom,
-  // 用户操作api接口定义
-  api_admin,
+ 
   // 全局使用接口定义
   api_global,
   // // 联赛筛选api接口定义
   // api_filter,
   // 首页api接口定义
   api_home,
-  // 赛果api接口
-  api_result,
+ 
   // 活动api接口
   api_activity,
 };

@@ -174,8 +174,8 @@ class UserCtr {
   get_balance() {
     return lodash.debounce(
       function () {
-        api_admin
-          .get_amount({ uid: this.user.userId })
+        api_account
+          .check_balance({ uid: this.user.userId })
           .then((res) => {
             if (res.code == 200) {
               let amount = lodash.get(res, "data.amount");

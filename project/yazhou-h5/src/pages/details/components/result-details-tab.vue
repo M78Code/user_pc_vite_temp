@@ -21,7 +21,7 @@
 
 <script>
 import { mapGetters,mapMutations } from "vuex"
-import {api_betting, api_result} from 'src/project/api/index.js'
+import {api_betting, api_analysis} from 'src/project/api/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
@@ -166,7 +166,7 @@ export default {
         device: 'H5',
         eventCode: event_code
       }
-      api_result.get_replay_football(params)
+      api_analysis.get_replay_football(params)
           .then(res => {
             if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
               // 足球类型赛果需添加精彩回放菜单
