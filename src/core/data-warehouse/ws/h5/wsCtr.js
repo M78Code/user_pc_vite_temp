@@ -3,7 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: ws通信接收消息类
  */
-import WsCmd from "src/public/utils/ws/wsCmd.js";
+import WsCmd from "src/core/data-warehouse/ws/h5/wsCmd.js";
 
 /**
  * @Description:ws接收消息类

@@ -116,7 +116,7 @@ const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
 const vx_get_checked_count = ref(state.filterReducer.checked_count);
 // 获取用户id
-const vx_get_uid = reactive(state.userReducer.user_info)
+const UserCtr.get_uid() = reactive(state.userReducer.user_info)
 const vx_match_sort = ref(state.globalReducer.match_sort)
 // mixins: [global_mixin],
 const match_sort_show = ref(false) //切换排序是否显示
@@ -427,7 +427,7 @@ const on_change_list_type = (type) => {
     match_list: {
       api_name,
       params: {
-        "cuid": vx_get_uid.uid || '',
+        "cuid": UserCtr.get_uid() || '',
         "sort": vx_match_sort.value,
         "selectionHour": open_select_time.value,
         ...lv2_mi_info,

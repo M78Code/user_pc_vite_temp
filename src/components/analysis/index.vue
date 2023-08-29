@@ -68,8 +68,7 @@ import { TabOddsFullVersionWapper as tabOdds} from 'src/components/analysis/temp
 import { TabNewssFullVersionWapper as news} from 'src/components/analysis/template/table-news/index.js'
 import { MatchProcessFullVersionWapper as matchDate } from "src/components/match-process/index.js";
 import {api_analysis} from 'src/api/index.js' 
-import { mapGetters } from 'vuex'
-import time_format from 'src/public/mixins/common/time_format'
+import { formatTime } from 'src/core/format/index.js'
 import store from 'src/store-redux/index.js'
 
 const route = useRoute();
@@ -84,7 +83,7 @@ export default {
       allScore:['S1','S11','S12','S5','S8','S105','S104','S1101',"S17", "S18",'S106','S109','S12345','S12346','S111','S108','S107','S110'],
       line: ['S1101',"S17", "S18",'S108','S107','S110']
     })
-    const hasNews = ref(false)
+    const hasNews = ref(false)                                                                                                                                                                                                                                                                                                                                                                                                       
     const articleDetail = ref({})
     const newsTabName = ref(null)
     const active_detail = ref(state.matchesReducer.active_detail)

@@ -63,16 +63,12 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   let unsettleChild = ref(null)
   let store_data = ref(store.getState())
   // computed: {
-<<<<<<< HEAD
-  //   ...mapGetters(['get_main_item','get_theme','get_user']),
-=======
   //   ...mapGetters(['get_main_item',,'userCtr']),
->>>>>>> 1609d524ffa16c510ec17773d27bed977fa8d068
 
   // },
   //判断该商户是否有权限预约投注
   // const authorityFlag = computed(() => {
-  //     const bookBet = lodash.get(get_user, 'configVO.bookBet')
+  //     const bookBet = lodash.get(userCtr, 'user_info.configVO.bookBet')
   //     return bookBet == 1
   // })
 

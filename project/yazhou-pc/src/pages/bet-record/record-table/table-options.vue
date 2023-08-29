@@ -147,7 +147,7 @@
           <template
             v-if="
               tool_selected == 0 &&
-              vx_get_user.settleSwitch &&
+              get_user.settleSwitch &&
               data.enablePreSettle &&
               data.initPresettleWs &&
               data.cash_out_status != -2 &&
@@ -237,7 +237,7 @@
                     @mouseover.stop="bet_pre_over(i)"
                     @mouseout.stop="bet_pre_out(i)"
                     class="bet-pre-handle"
-                    v-if="vx_get_user.pcs == '1'"
+                    v-if="get_user.pcs == '1'"
                   >
                     <icon
                       name="icon-bet_pre"
@@ -254,7 +254,7 @@
                   <!-- <div @click.stop="show_bet_pre(data, i)"
                                   :ref="`bet_pre_${data.orderNo}`"
                                   class="bet-pre-handle"
-                                  v-if="vx_get_user.pcs=='1'">
+                                  v-if="get_user.pcs=='1'">
                                     <icon name="icon-bet_pre" :class="['bet-pre-info','bet-pre-over']"  size="14px"/>
                                 </div> -->
                 </div>
@@ -357,16 +357,16 @@
                   </div>
                   <div class="bet-pre-right" v-if="data.bet_confirm">
                     <template
-                      v-if="['theme01', 'theme02'].includes(vx_get_theme)"
+                      v-if="['theme01'   ].includes(UserCtr.get_theme)"
                     >
                       <img
-                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_confirming.gif`"
+                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_confirming.gif`"
                         style="height: 18px; width: 18px"
                       />
                     </template>
                     <template v-else>
                       <img
-                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${vx_get_theme}/${vx_get_theme}_pre_confirming.gif`"
+                        :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_pre_confirming.gif`"
                         style="height: 18px; width: 18px"
                       />
                     </template>
@@ -405,7 +405,7 @@
                   <div
                     :ref="`bet_pre_${data.orderNo}`"
                     class="bet-pre-handle"
-                    v-if="vx_get_user.pcs == '1'"
+                    v-if="get_user.pcs == '1'"
                   >
                     <icon
                       name="icon-bet_pre"
@@ -532,7 +532,7 @@ const props = defineProps({
     default: 0,
   },
   matchType: Function,
-  vx_get_user:Object
+  get_user:Object
 });
 
 const show_score_info = ref(false); //比分提示默认隐藏
