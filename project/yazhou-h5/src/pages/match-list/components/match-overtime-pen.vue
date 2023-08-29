@@ -78,7 +78,7 @@
 <script setup>
 import { computed, onDeactivated, onMounted, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from 'vue-router'
-import { play_title } from 'src/core/match-constant/config/play-title'
+import { play_title } from 'src/core/constant/config/util/play-title'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'

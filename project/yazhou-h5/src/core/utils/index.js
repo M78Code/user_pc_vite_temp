@@ -6,7 +6,7 @@
 import lodash from 'lodash'
 import { uid, date } from "quasar";
 import { api_common, api_account } from 'src/api/index';
-import play_mapping from 'src/core/match-constant/config/play-mapping.js';
+import * as play_mapping from "src/core/constant/config/play-mapping.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 // let BUILD_VERSION =  process.env.NODE_ENV=='development'?'':   require('app/version.js').BUILD_VERSION;
 

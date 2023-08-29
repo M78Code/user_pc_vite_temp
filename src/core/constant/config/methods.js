@@ -2,7 +2,7 @@
  * @description 球种玩法
  */
 
-export const playMethods = [
+export const PLAY_METHODS = [
   {
     "names": {
       "zs": "足球",
@@ -460,5 +460,3 @@ export const playMethods = [
     "id": "1013"
   }
 ]
-
-export default playMethods
