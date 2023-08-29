@@ -2,7 +2,7 @@ import { api_virtual } from "src/api/index";
 import VSport from "./vsport.js"
 import { i18n_t} from  "src/boot/i18n.js"
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"
-import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
+import PageSourceData  from  "src/core/page-source/page-source.js"
 import { useRouter, useRoute } from 'vue-router'
 import {msc_array_obj} from "src/core/format/index.js"
 import { throttle } from "lodash";

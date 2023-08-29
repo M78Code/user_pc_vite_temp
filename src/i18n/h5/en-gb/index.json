@@ -842,6 +842,7 @@
   },
   "list_title": {
     "1": {
+      
       "title": [
         "1X2",
         "Handicap",
@@ -852,33 +853,43 @@
       ]
     },
     "2": {
+      
       "title": ["Moneyline", "Handicap", "Total Points"]
     },
     "3": {
+      
       "title": ["Winner", "Handicap", "Total Points"]
     },
     "4": {
+      
       "title": ["1X2", "Handicap", "Total Goals"]
     },
     "5": {
+      
       "title": ["Winner", "Set Handicap", "Game Handicap"]
     },
     "6": {
+      
       "title": ["Moneyline", "Handicap", "Total Goals"]
     },
     "7": {
+      
       "title": ["Winner", "Frame Handicap", "Total Frames"]
     },
     "8": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "9": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "10": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "11": {
+      
       "title": [
         "1X2",
         "Handicap",
@@ -889,12 +900,15 @@
       ]
     },
     "12": {
+      
       "title": ["1X2", "Total Rounds"]
     },
     "13": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "14": {
+      
       "title": [
         "1x2",
         "Handicap",
@@ -905,6 +919,7 @@
       ]
     },
     "15": {
+      
       "title": [
         "1X2",
         "Handicap",
@@ -915,6 +930,7 @@
       ]
     },
     "16": {
+      
       "title": [
         "1x2",
         "Handicap",
@@ -924,21 +940,27 @@
       ]
     },
     "100": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "101": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "102": {
+      
       "title": ["Match Winner", "Map Handicap", "Total  Maps"]
     },
     "103": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "1001": {
+      
       "title": ["1X2", "Handicap", "Total Goals"]
     },
     "1004": {
+      
       "title": ["Moneyline", "Handicap", "Total Points", "Race to 21"]
     }
   },
@@ -1342,6 +1364,7 @@
       "304": "Game 5",
       "999": "Ended"
     },
+    
     "11": {
       "0": "1H",
       "6": "1H",
@@ -1360,7 +1383,11 @@
       "120": "PEN Ended",
       "999": "FT Ended"
     },
-    "12": {},
+    
+    "12": {
+      
+    },
+    
     "13": {
       "0": "Not Started",
       "8": "Set 1",
@@ -1389,6 +1416,7 @@
       "442": "Set 7",
       "999": "Ended"
     },
+    
     "14": {
       "0": "Not Started",
       "6": "1H",
@@ -1411,6 +1439,7 @@
       "444": "ET Ended",
       "999": "FT"
     },
+    
     "15": {
       "0": "Not Started",
       "6": "1H",
@@ -1439,6 +1468,7 @@
       "444": "OT Ended",
       "999": "FT"
     },
+    
     "16": {
       "0": "Not Started",
       "13": "Q1",
@@ -1456,6 +1486,7 @@
       "303": "Q4",
       "999": "Ended"
     },
+    
     "100": {
       "0": "Game 1",
       "1": "Game 1",
@@ -1470,7 +1501,7 @@
       "10": "Game 10",
       "11": "Game 11"
     },
-
+    
     "101": {
       "0": "Game 1",
       "1": "Game 1",
@@ -1485,6 +1516,7 @@
       "10": "Game 10",
       "11": "Game 11"
     },
+    
     "102": {
       "0": "Game 1",
       "1": "Game 1",
@@ -1499,6 +1531,7 @@
       "10": "Game 10",
       "11": "Game 11"
     },
+    
     "103": {
       "0": "Game 1",
       "1": "Game 1",
@@ -1955,7 +1988,9 @@
     "1010": "VR-Motorbike",
     "1011": "VR-horse racing"
   },
+  
   "sport_head_play_category": {
+    
     "1": [
       "1x2",
       "Handicap",
@@ -1964,15 +1999,25 @@
       "Handicap - HT",
       "Over/Under - HT"
     ],
+    
     "2": ["1x2", "Set handicap", "Game handicap"],
+    
     "3": ["1x2", "Handicap", "Total points"],
+    
     "4": ["1x2", "Handicap", "Over/Under "],
+    
     "5": ["1x2", "Handicap", "Total points"],
+    
     "6": ["1x2", "Handicap", "Over/Under"],
+    
     "7": ["1x2", "Total rounds"],
+    
     "8": ["1x2", "Handicap", "Total frames"],
+    
     "9": ["Victory", "Map handicap", "Map total score"],
+    
     "10": ["Victory", "Map handicap", "Total map"],
+    
     "11": [
       "1X2",
       "Handicap",
@@ -1981,6 +2026,7 @@
       "1st Half Handicap",
       "1st Half Total Goals"
     ],
+    
     "12": [
       "1x2",
       "Handicap",
@@ -2047,6 +2093,16 @@
     "sorry": "Sorry, it can't be loaded now.",
     "nohandle": "You have been inactive for too long, the video is paused, pls click play to continue watching",
     "video_line": "Video Line"
+  },
+  "new_menu": {
+    "1": "In-Play",
+    "2": "Today",
+    "3": "Early",
+    "4": "Parlay",
+    "7": "Esports",
+    "8": "VR",
+    "30": "Lottery",
+    "28": "Results"
   },
   "virtual_sports": {
     "advance": "GF",

@@ -18,8 +18,8 @@ import { api_v_sports } from "src/project/api/index.js";
 
 
 
-
-const sleep = require('licia/sleep');
+import sleep from  "licia/sleep"  
+import Queue from  "licia/Queue"  
 export default class VSport {
   /**
    * @Description:构造函数

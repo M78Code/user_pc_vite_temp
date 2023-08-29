@@ -5,7 +5,7 @@
 // 美式赔率  5  
 // 印尼赔率  6
 
-import  {t } from  "src/boot/i18n.js"
+import  { i18n_t } from  "src/boot/i18n.js"
  
 export const odds_constant = [{
         label: i18n_t('odds.EU'),

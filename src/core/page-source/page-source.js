@@ -14,7 +14,8 @@
 
 import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-top.js"
 
-const PAGE_SOURCE_POOL =  [
+
+const PAGE_SOURCE_POOL_H5 =  [
   "details",
   "home",
   "hot-chosen",
@@ -27,6 +28,17 @@ const PAGE_SOURCE_POOL =  [
   "matchList-collect",
   "detail_match_list",
   "hot-foot-racing",
+]
+
+const PAGE_SOURCE_POOL_PC =  [
+  "details",
+  'match-play-common' ,
+  'match-play-fliter' ,
+  'match-play-collect' ,
+  'match-early-common' ,
+  'match-early-fliter' ,
+  'match-early-collect' ,
+  "virtual_details"
 ]
 
 class PageSourceData {
@@ -45,6 +57,10 @@ class PageSourceData {
     // this.get_newer_standard_edition =2 
     // 列表 搜素 文字 
     this.get_search_txt =''
+
+     //路由名字 
+     this.router_name = '';
+
     // 列表查询额外辅助参数
     this.list_query_other_params={
       // batchNo  ： 虚拟体育期号，
@@ -120,6 +136,9 @@ class PageSourceData {
   set_from_page(from_page_source) {
     this.from_page_source = from_page_source;
   }
+  set_route_name(name){
+    this.router_name = name
+   }
 
   is_search(){
     return   this.page_source.includes('search')
@@ -144,7 +163,9 @@ const PageSourceDataProxy =new Proxy(instance, {
   set: function (target, key, value, receiver) {
     console.log(`setting : key: ${key} value:${value} , `)
     if(key=='page_source'){
-      if(PAGE_SOURCE_POOL.includes(value)){
+
+      let check =  PAGE_SOURCE_POOL_H5.includes(value) || PAGE_SOURCE_POOL_PC.includes(value)
+      if(check){
         return Reflect.set(target, key, value, receiver);
       }else{
         console.error('page_source 必须在 PAGE_SOURCE_POOL 内录入');

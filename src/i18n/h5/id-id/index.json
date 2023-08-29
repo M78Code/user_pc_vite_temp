@@ -869,6 +869,7 @@
   },
   "list_title": {
     "1": {
+      
       "title": [
         "1x2",
         "Handicap",
@@ -879,33 +880,43 @@
       ]
     },
     "2": {
+      
       "title": ["Moneyline", "Handicap", "Total Points"]
     },
     "3": {
+      
       "title": ["Winner", "Handicap", "Total Points"]
     },
     "4": {
+      
       "title": ["1x2", "Handicap", "Total Goals"]
     },
     "5": {
+      
       "title": ["Winner", "Set Handicap", "Game Handicap"]
     },
     "6": {
+      
       "title": ["Moneyline", "Handicap", "Total Goals"]
     },
     "7": {
+      
       "title": ["Winner", "Frame Handicap", "Total Frames"]
     },
     "8": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "9": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "10": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "11": {
+      
       "title": [
         "1X2",
         "Handicap",
@@ -916,12 +927,15 @@
       ]
     },
     "12": {
+      
       "title": ["1X2", "Total Rounds"]
     },
     "13": {
+      
       "title": ["Winner", "Point Handicap", "Total Points"]
     },
     "14": {
+      
       "title": [
         "1x2",
         "Handicap",
@@ -932,6 +946,7 @@
       ]
     },
     "15": {
+      
       "title": [
         "1X2",
         "Handicap",
@@ -942,6 +957,7 @@
       ]
     },
     "16": {
+      
       "title": [
         "1x2",
         "Handicap",
@@ -951,21 +967,27 @@
       ]
     },
     "100": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "101": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "102": {
+      
       "title": ["Match  Winner", "Map Handicap", "Total Maps"]
     },
     "103": {
+      
       "title": ["Match Winner", "Map Handicap", "Total Maps"]
     },
     "1001": {
+      
       "title": ["1x2", "Handicap", "Total Goals"]
     },
     "1004": {
+      
       "title": ["Moneyline", "Handicap", "Total Points", "Race to 21"]
     }
   },
@@ -2111,6 +2133,18 @@
     "show_hide": "Tampilkan/Sembunyikan",
     "sorry": "Maaf, tdk bisa loading sementara",
     "video_line": "Saluran video"
+  },
+  "new_menu": {
+    "1": "InPlay",
+    "2": "Hari ini",
+    "3": "Awal",
+    "4": "Juara",
+    "5": "即将开赛",
+    "6": "Parlay",
+    "7": "Esports",
+    "8": "VR",
+    "30": "SB Sepak bola",
+    "28": "Hasil laga"
   },
   "virtual_sports": {
     "advance": "Gol",

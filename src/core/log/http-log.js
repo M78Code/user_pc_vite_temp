@@ -21,7 +21,7 @@ class HttpLog {
     if (location.href.indexOf("httplog=1") != -1) {
       SessionStorage .set("httplog", "1");
     }
-    if (ss.get("httplog")) {
+    if (SessionStorage.get("httplog")) {
       this.run = true;
     }
     // 初始化数据

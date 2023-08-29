@@ -2182,6 +2182,18 @@
     "vitality_performance": "Performance",
     "win_tie_loss": "W/D/L"
   },
+  "new_menu": {
+    "1": "InPlay",
+    "2": "Hari ini",
+    "3": "Early",
+    "4": "Outrights",
+    "5": "即将开赛",
+    "6": "Parlay",
+    "7": "Esports",
+    "8": "VR",
+    "30": "SB Football",
+    "28": "Result"
+  },
   "highlights": {
     "title": "Sorotan",
     "collapse_replay": "Tutup replay",

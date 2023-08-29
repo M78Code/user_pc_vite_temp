@@ -5,9 +5,8 @@
  */
 // import  lodash from "lodash";
 
-const  lodash =require("lodash")
-
-console.error('lodash-',lodash);
+ 
+ import lodash from  "lodash"
 /**
  * 获取url参数的方法 默认返回全部 {name:value}
  * @param {string} name 获取单个

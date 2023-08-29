@@ -47,7 +47,7 @@ export default {
   watch: {
     '$route.name': {
       handler () {
-        pageSourceData.set_route_name(this.$route.name)
+        PageSourceData.set_route_name(this.$route.name)
       },
       immediate: true,
     }

@@ -842,7 +842,6 @@
   },
   "list_title": {
     "1": {
-      
       "title": [
         "1X2",
         "Kèo chấp",
@@ -853,43 +852,33 @@
       ]
     },
     "2": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Trên/Dưới"]
     },
     "3": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Trên/Dưới"]
     },
     "4": {
-      
       "title": ["1X2", "Kèo chấp", "Trên/Dưới"]
     },
     "5": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp set", "Kèo chấp game"]
     },
     "6": {
-      
       "title": ["Moneyline", "Kèo chấp", "Trên/Dưới"]
     },
     "7": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp ván", "Tổng số ván"]
     },
     "8": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm"]
     },
     "9": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm"]
     },
     "10": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm"]
     },
     "11": {
-      
       "title": [
         "1X2",
         "Kèo chấp",
@@ -900,15 +889,12 @@
       ]
     },
     "12": {
-      
       "title": ["1X2", "Tổng số hiệp"]
     },
     "13": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm"]
     },
     "14": {
-      
       "title": [
         "1x2",
         "Kèo chấp",
@@ -919,7 +905,6 @@
       ]
     },
     "15": {
-      
       "title": [
         "1x2",
         "Kèo chấp",
@@ -930,7 +915,6 @@
       ]
     },
     "16": {
-      
       "title": [
         "1x2",
         "Kèo chấp",
@@ -940,27 +924,21 @@
       ]
     },
     "100": {
-      
       "title": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"]
     },
     "101": {
-      
       "title": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"]
     },
     "102": {
-      
       "title": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"]
     },
     "103": {
-      
       "title": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"]
     },
     "1001": {
-      
       "title": ["1x2", "Kèo chấp", "Trên/Dưới"]
     },
     "1004": {
-      
       "title": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm", "Đạt 21 điểm"]
     }
   },
@@ -1364,7 +1342,6 @@
       "304": "Hiệp 5",
       "999": "Đã kết thúc"
     },
-    
     "11": {
       "0": "1H",
       "6": "1H",
@@ -1383,11 +1360,7 @@
       "120": "Kết thúc đá luân lưu",
       "999": "Kết thúc trận đấu"
     },
-    
-    "12": {
-      
-    },
-    
+    "12": {},
     "13": {
       "0": "Chưa bắt đầu",
       "8": "Hiệp 1",
@@ -1416,7 +1389,6 @@
       "442": "Hiệp 7",
       "999": "Đã kết thúc"
     },
-    
     "14": {
       "0": "Chưa bắt đầu",
       "6": "1H",
@@ -1439,7 +1411,6 @@
       "444": "Kết thúc hiệp phụ",
       "999": "Kết thúc trận đấu"
     },
-    
     "15": {
       "0": "Chưa bắt đầu",
       "6": "1H",
@@ -1468,7 +1439,6 @@
       "444": "Hiệp phụ kết thúc",
       "999": "Kết thúc trận đấu"
     },
-    
     "16": {
       "0": "Chưa bắt đầu",
       "13": "Q1",
@@ -1486,7 +1456,6 @@
       "303": "Q4",
       "999": "Kết thúc trận đấu"
     },
-    
     "100": {
       "0": "Hiệp 1",
       "1": "Hiệp 1",
@@ -1501,7 +1470,6 @@
       "10": "Hiệp 10",
       "11": "Hiệp 11"
     },
-    
     "101": {
       "0": "Hiệp 1",
       "1": "Hiệp 1",
@@ -1516,7 +1484,6 @@
       "10": "Hiệp 10",
       "11": "Hiệp 11"
     },
-    
     "102": {
       "0": "Hiệp 1",
       "1": "Hiệp 1",
@@ -1531,7 +1498,6 @@
       "10": "Hiệp 10",
       "11": "Hiệp 11"
     },
-    
     "103": {
       "0": "Hiệp 1",
       "1": "Hiệp 1",
@@ -1988,9 +1954,7 @@
     "1010": "Đua Mô Tô VR",
     "1011": "Đua Mô Tô Đường Đất VR"
   },
-  
   "sport_head_play_category": {
-    
     "1": [
       "1X2",
       "Kèo chấp",
@@ -1999,25 +1963,15 @@
       "Hiệp 1-Kèo chấp",
       "Hiệp 1-Trên/Dưới"
     ],
-    
     "2": ["Đội chiến thắng", "Kèo chấp set", "Kèo chấp game"],
-    
     "3": ["Đội chiến thắng", "Kèo chấp", "Tổng điểm"],
-    
     "4": ["1X2", "Kèo chấp", "Trên/Dưới"],
-    
     "5": ["1X2", "Kèo chấp", "Trên/Dưới"],
-    
     "6": ["1X2", "Kèo chấp", "Trên/Dưới"],
-    
     "7": ["Đội chiến thắng", "Tổng số hiệp"],
-    
     "8": ["Đội chiến thắng", "Kèo chấp", "Tổng số ván"],
-    
     "9": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"],
-    
     "10": ["Đội thắng", "Chấp bản đồ", "Tổng bản đồ"],
-    
     "11": [
       "1x2",
       "Kèo chấp",
@@ -2026,7 +1980,6 @@
       "Hiệp 1-Kèo chấp",
       "Hiệp 1-Trên/Dưới"
     ],
-    
     "12": [
       "1X2",
       "Kèo chấp",
@@ -2159,6 +2112,18 @@
     "top_64": "Vòng 64 đội",
     "vitality_performance": "Sức sống ảo",
     "win_tie_loss": "T/H/B"
+  },
+  "new_menu": {
+    "1": "Trong Trận",
+    "2": "Hôm Nay",
+    "3": "Cược Sớm",
+    "4": "Chung Cuộc",
+    "5": "即将开赛",
+    "6": "Cược Xâu",
+    "7": "Esports",
+    "8": "VR",
+    "30": "Lottery",
+    "28": "Kết Quả"
   },
   "highlights": {
     "title": "Đặc sắc",
