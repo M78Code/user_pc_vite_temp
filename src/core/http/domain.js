@@ -70,7 +70,7 @@
 
 import { ref } from "vue";
 import axios from "axios";
-import { SessionStorage , LocalStorage  } from "src/core/index.js";
+import { SessionStorage , LocalStorage } from "src/core/index.js";
 import { format_api_to_obj } from "src/core/format/index.js"
 import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例
@@ -542,7 +542,7 @@ class AllDomain {
     let gr = SessionStorage .get("gr");
     // console.log('sessionStorage.getItem("gr")---', gr);
     // 获取持久化数据
-    return LocalStorage .get(key, []);
+    return LocalStorage.get(key, []);
   }
 
   /**
@@ -1050,7 +1050,7 @@ class AllDomain {
     let key = DOMAIN_API_STORAGE_KEY;
     // let str = JSON.stringify(val);
     // 设置持久化字符串
-    LocalStorage .set(key, val);
+    LocalStorage.set(key, val);
   }
   /**
    * @description: 获取本地的oss文件路径(增加本域名的oss url地址)

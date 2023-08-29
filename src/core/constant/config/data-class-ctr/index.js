@@ -9,3 +9,5 @@ export  *  from './other-play-id.js'
 export  *  from 'src/core/match-list-pc/list-template/index.js'
 export  *  from './play-tpl-id.js'
 export  *  from './highlight-paly-id.js'
+
+export const MATCH_LIST_TEMPLATE_CONFIG={}

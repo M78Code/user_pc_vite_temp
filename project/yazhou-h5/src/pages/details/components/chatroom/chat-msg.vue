@@ -29,7 +29,7 @@ import { msgType } from 'project_path/src/pages/details/components/chatroom/cons
 // #TODO vuex
 // import { mapGetters } from "vuex";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 export default defineComponent({
   name: 'chat_msg',

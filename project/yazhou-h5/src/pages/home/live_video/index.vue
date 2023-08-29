@@ -127,7 +127,7 @@ import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
@@ -450,7 +450,7 @@ import {UserCtr } from "src/core/index.js";
   //     UserCtr_token:'UserCtr_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
-  //     GlobalAccessConfig:'GlobalAccessConfig',
+  //     get_access_config,
   //     get_is_show_menu:"get_is_show_menu",
   //   })
   // },

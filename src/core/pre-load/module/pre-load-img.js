@@ -1,4 +1,10 @@
-const img_key_map = {};
+const img_key_map = {
+  xsxa :''
+};
+
+const arr=[
+  "yazhou-h5/image/list/m_list_jiaoqiu_icon.svg"
+]
 /**
  * 预加载图片
  * @param []

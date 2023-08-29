@@ -50,9 +50,9 @@
             </div>
           </template>
         </div>
-        <!-- 活动图标 -->
+        <!-- 活动图标 -->   
         <img class="activity-logo animate-bounce-up" :src="get_file_path(user_info.activityList[0].h5Url) || activity_default"
-             v-if="lodash.get(get_access_config,'activitySwitch') && user_info.inActivity && get_lang == 'zh'" @click="openActivity" @error="activity_icon_error" alt="">
+             v-if="GlobalAccessConfig.get_activitySwitch()&& user_info.inActivity && get_lang == 'zh'" @click="openActivity" @error="activity_icon_error" alt="">
         <!-- 活动图标红点 -->
         <div class="red-dot" v-show="task_list > 0 && user_info.inActivity && get_lang == 'zh' && !user_info.maintaining"></div>
         <!-- 右边设置菜单 -->
@@ -74,13 +74,13 @@
           }">
           <!--二级菜单 球类和运动类-->
           <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->   
             <sub-menu-specially
               @click="select_all_sub_menu_handle"
-              v-show="lodash.get(get_access_config,'playAllShow') && menu_1_type == 1"
+              v-show=" GlobalAccessConfig.get_playAllShow() && menu_1_type == 1"
               :count="all_sport_count_calc()"
               :title="i18n.t('footer_menu.all')"
-              v-if="lodash.get(get_access_config,'playAllShow')"
+              v-if=" GlobalAccessConfig.get_playAllShow()"
             >
               <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
             </sub-menu-specially>
@@ -176,6 +176,7 @@
 <script setup>
 // TODO: 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
 import {utils } from 'src/core/index.js';
@@ -189,7 +190,7 @@ import { watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 // import{ date }  from 'quasar'
 
@@ -847,10 +848,10 @@ import {UserCtr } from "src/core/index.js";
       return ![7,8,28].includes(menu_1_type) && !mi_list.includes(+sub.mi)
     }
     /**
-     * 进入活动页
+     * 进入活动页  
      */
     const openActivity = () => {
-      if(!lodash.get(get_access_config,'activitySwitch')){
+      if(! GlobalAccessConfig.get_activitySwitch() ){
         // TODO: $toast 后续修改调整
         $toast(i18n.t(`common.temporarily_unavailable`), 2000)
         return
@@ -1000,14 +1001,14 @@ import {UserCtr } from "src/core/index.js";
       }
     })
     // 监听滚球全部菜单，如果关闭，并且在滚球下，则隐藏全部，调整到第一个位置
-    watch(() => get_access_config.playAllShow, (n, o) => {
+    watch(() =>  GlobalAccessConfig.get_playAllShow() , (n, o) => {
         if(!n && menu_type == 1){
           sub_menu_changed(0,'dir_click');
         }
     })
   
     /**
-     * 列表滚动
+     * 列表滚动    
      */
     watch(() => get_list_scroll_top, (sc,o_sc) => {
       let scroll_y = +sc.split('-')[0];

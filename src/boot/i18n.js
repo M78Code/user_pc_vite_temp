@@ -1,10 +1,18 @@
-import { createI18n } from "vue-i18n";
-import { LocalStorage , SessionStorage  } from "src/core/utils/web-storage.js";
+
+ import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
+//  import { LocalStorage, SessionStorage  } from "src/core/utils/module/web-storage.js";
+
+ import { createI18n } from "vue-i18n";
+
+ import  * as xxxxxxxxx from "src/core/utils/index.js";
+ console.error('-------------LocalStorage------2---',xxxxxxxxx   )
+ console.error('-------------LocalStorage------2--1-',  LocalStorage   )
+ 
 
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
-  locale: LocalStorage .get("lang", "zh"),
+  locale: LocalStorage.get("lang", "zh"),
   fallbackLocale: "zh",
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},

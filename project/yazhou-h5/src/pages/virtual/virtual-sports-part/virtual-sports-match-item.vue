@@ -164,8 +164,8 @@ import odd_column_item from "project_path/pages/match-list/components/odd_column
 // #TODO MIXINS 
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
-import { PageSourceData  } from "src/core/index.js";
-import { MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import {MenuData } from "src/core/index.js";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
@@ -606,7 +606,7 @@ export default defineComponent({
       get_n_s_changed_loaded,
       get_curr_sub_menu_type,
       get_theme,
-      GlobalAccessConfig,
+      get_access_config,
       pre_counting_end_handle,
       get_hl_hs,
       get_ol_length,

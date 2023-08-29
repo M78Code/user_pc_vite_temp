@@ -36,14 +36,16 @@ import { get_match_status } from 'src/core/utils/index'
 // import betItem from "src/public/components/bet_item/bet_item_list_new_data.vue"
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from ( /* webpackChunkName: "pc-mini-chunks" */ "src/components/match-list/match-footer-score/index.js")
+import store from 'src/store-redux/index.js'
 
+let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 // 赛事模板宽度
 const match_list_tpl_size = ref(match_list_tpl_size['template' + props.match.tpl_id] || {})
 // 组件是否已挂载
 const is_mounted = ref(false)
-
+const vx_cur_esports_mode = ref(state.betInfoReducer.cur_esports_mode);
 onMounted(() => {
   // 异步设置组件是否挂载完成
   setTimeout(() => {
@@ -145,7 +147,7 @@ const get_bet_style = (col_index, length, ol_data) => {
  * @return {undefined} undefined
  */
 const getCurState = (hipo) => {
-  if (BetData.cur_esports_mode) {
+  if (vx_cur_esports_mode.value) {
     //判断盘口是否支持
     return hipo == 1
   } else {

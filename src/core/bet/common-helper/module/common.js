@@ -1,6 +1,6 @@
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewData from "src/core/bet/class/bet-view-data-class.js";
 import { compute_value_by_cur_odd_type } from "../../module/bet_odds_change.js";
@@ -8,7 +8,7 @@ import { compute_value_by_cur_odd_type } from "../../module/bet_odds_change.js";
 // import { http_upd_data } from "./upd_data.js";
 // import mathjs from "src/core/utils/mathjs.js";
 // import yabo_common from "src/core/common-helper/common.js";
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 

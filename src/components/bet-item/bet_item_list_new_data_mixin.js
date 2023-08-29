@@ -69,7 +69,7 @@ const bet_item = {
       this.clear_odds_lift()
     },    
     // 监听赔率切换
-    get_cur_odd: {
+    vx_get_cur_odd: {
       handler(cur) {
         // 投注项赔率值处理
         let ov = _.get(this.ol_data, "ov");
@@ -96,7 +96,7 @@ const bet_item = {
  
 
  
-    get_bet_category(new_) {
+    vx_get_bet_category(new_) {
       if([2,3].includes(new_*1)) {
         BetData.set_is_virtual_bet(true);
       } else {
@@ -107,7 +107,7 @@ const bet_item = {
     /**
      * 监听预约投注计算球头字段
      */
-    "get_bet_appoint_obj.computed_appoint_ball_head"() {
+    "vx_get_bet_appoint_obj.computed_appoint_ball_head"() {
       return;
       let { _mhs, _hs, os } = this.ol_data;
       this.odds_state = this.get_odds_state(_mhs, _hs, os);

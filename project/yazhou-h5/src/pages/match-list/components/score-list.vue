@@ -149,7 +149,7 @@ import { computed, onMounted, onUnmounted, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
-import { MenuData  } from "src/core/index.js"
+import {MenuData } from "src/core/index.js"
 
 const props = defineProps({
   match: Object,

@@ -7,7 +7,7 @@ import {
   mapGetters,
   mapMutations
 } from "vuex";
-import {UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/index.js"
 import mqtt from 'mqtt';
 import uniqid from 'uniqid';
 import ChatroomMsgType from 'project_path/src/utils/ws/chatroom/chatroom_msgtype.js';

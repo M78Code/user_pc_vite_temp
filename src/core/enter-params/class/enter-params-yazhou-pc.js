@@ -16,7 +16,7 @@
 // 例子：?gotohash=sports-2267075-239-1
 
 import { Qs } from "src/core/index.js";
-import { LocalStorage  } from "src/core/utils/web-storage.js";
+import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 class EnterParamsYazhouPc {
@@ -49,30 +49,30 @@ class EnterParamsYazhouPc {
   }
   init() {
     // 设置商户信息
-    let gr = LocalStorage .get("gr");
+    let gr = LocalStorage.get("gr");
     // 首屏loading动画是否显示使用的延时器
     this.loading_is_show_timer = 0;
     try {
       let qsInfo = new URLSearchParams(location.search);
       //解析URL参数
       //计算token
-      let token = qsInfo.get("token") || LocalStorage .get("TOKEN") || "";
+      let token = qsInfo.get("token") || LocalStorage.get("TOKEN") || "";
       if (token) {
-        LocalStorage .set("TOKEN", token);
+        LocalStorage.set("TOKEN", token);
       }
       // 是否解除pb压缩开关: pb=1时表示数据不进行加密接口请求
-      let pb = LocalStorage .get("pb") || qsInfo.get("pb") || "";
+      let pb = LocalStorage.get("pb") || qsInfo.get("pb") || "";
       if (pb) {
-        LocalStorage .set("pb", "1");
+        LocalStorage.set("pb", "1");
       }
       // 设置商户分组信息
       let gr = (
-        LocalStorage .get("gr") ||
+        LocalStorage.get("gr") ||
         qsInfo.get("gr") ||
         "COMMON"
       ).toLocaleUpperCase();
       if (gr) {
-        LocalStorage .set("gr", gr);
+        LocalStorage.set("gr", gr);
       }
     } catch (error) {
       console.error(error);
@@ -124,7 +124,7 @@ class EnterParamsYazhouPc {
   analyze() {
     //设置国际化
     if (Qs.lang) {
-      LocalStorage .set("lang", Qs.lang);
+      LocalStorage.set("lang", Qs.lang);
     }
     // gotohash={体育类型}-{赛事id}-{联赛tid}-{球种csid}
     const gotohashList = (Qs.gotohash || "sports-2267075-239-1").split("-");
@@ -142,7 +142,7 @@ class EnterParamsYazhouPc {
     }
     // 用户token
     if (Qs.token) {
-      LocalStorage .set("token", Qs.token);
+      LocalStorage.set("token", Qs.token);
     }
     //是否展示首页页面1 代表去掉H5页面首页模块 不传则代表需要使用H5 页面的首页模块
     if (Qs.sy) {

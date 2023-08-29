@@ -24,7 +24,7 @@
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
-import { PageSourceData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
 
 window.wslog = wslog;
 

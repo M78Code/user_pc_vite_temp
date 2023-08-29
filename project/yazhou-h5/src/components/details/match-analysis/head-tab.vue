@@ -28,7 +28,7 @@
 import { ref, nextTick, computed, onUnmounted, onMounted } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import {utils } from 'src/core/index.js';
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 
   const props = defineProps({

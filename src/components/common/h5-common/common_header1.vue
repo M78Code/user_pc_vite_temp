@@ -23,7 +23,7 @@
         <div 
           class="collect-icon" 
           :class="{active:get_detail_data.mf}" 
-          v-if="lodash.get(get_access_config,'collectSwitch') && is_DJ_show && get_menu_type !== 28" 
+          v-if="GlobalAccessConfig.get_collectSwitch() && is_DJ_show && get_menu_type !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
         <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
@@ -39,7 +39,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js';
 import lodash from 'lodash'
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名
@@ -80,7 +80,7 @@ const props = defineProps({
      * @return {String}
      */
   const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( lodash.get(get_access_config,'collectSwitch'),this ) ) return
+      if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;

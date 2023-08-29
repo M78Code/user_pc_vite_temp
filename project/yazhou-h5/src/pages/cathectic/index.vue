@@ -44,7 +44,7 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
-import {UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 

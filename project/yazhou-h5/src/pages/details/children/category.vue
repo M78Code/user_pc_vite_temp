@@ -93,7 +93,7 @@ import { t } from "src/boot/i18n";;
 // import loading from "project_path/src/components/common/loading.vue"
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
-import { uid } from "src/core/index.js"
+import uid from "src/core/uuid/index.js"
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"

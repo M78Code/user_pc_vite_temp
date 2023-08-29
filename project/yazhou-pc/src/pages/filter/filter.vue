@@ -133,7 +133,7 @@ const is_suck_down = ref(false)
 //     // 是否滚球
 //     is_play(){
 //       let { sportId, euid } = $menu.match_list_api_params
-//       let type_name = MenuData.cur_menu_type.type_name
+//       let type_name = this.vx_cur_menu_type.type_name
 //       if(type_name == 'play' || (type_name == 'winner_top' && sportId == '') || (type_name == 'hot' && euid == 30199)){
 //         return true
 //       }else{
@@ -298,7 +298,7 @@ const get_filter_list = (res) => {
  */
 const ok_click = () => {
     if (!is_active.value) return
-    let type_name = MenuData.cur_menu_type.type_name
+    let type_name = this.vx_cur_menu_type.type_name
     // 今日早盘串关 全选的时候 不做筛选
     if (['today', 'early'].includes(type_name) && this.vx_filter_checked_all) {
         this.vx_set_filter_select_obj([]);
@@ -430,7 +430,7 @@ const fetch_filter_match = () => {
     let params = {
         euid: $menu.match_list_api_params.euid,
     };
-    let _menu_type_name = MenuData.cur_menu_type.type_name;
+    let _menu_type_name = this.vx_cur_menu_type.type_name;
 
     if (["early"].includes(_menu_type_name)) {
         params.md = $menu.match_list_api_params.md
@@ -453,7 +453,7 @@ const fetch_filter_match = () => {
     let api = api_filter.get_fetch_filter_matchall_filter_list
 
     // 如果是冠军页面
-    if (MenuData.cur_menu_type.type_name == 'winner_top') {
+    if (this.vx_cur_menu_type.type_name == 'winner_top') {
         api = api_filter.get_fetch_filter_match_winner
         let sportId = $menu.match_list_api_params.sportId
         params = {

@@ -13,13 +13,13 @@ import { api_common, api_analysis } from "src/api/index.js";
 // 引入加载中的组件
 // import loading from "project_path/src/components/common/loading.vue"
 // 引入处理数据的封装方法
-import MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js";
+import { MatchDetailCtr } from "src/core/index.js";
 // 引入redux
 import store from "src/store-redux/index.js";
 // import { Level_one_detail_odd_info } from "../category-list.js";
 // 精选赛事
 // import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue';
-import { uid } from "src/core/index.js";
+import uid from "src/core/uuid/index.js";
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";

@@ -1,8 +1,8 @@
-import { MenuData  } from "src/core/index.js";
-import { PageSourceData  } from "src/core/index.js";
-import {UserCtr } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
+import {  PageSourceData  } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
-import * as FILEDS_MAP from "../config/fileds-map.js"
+import   {fileds_map_common}  from "src/core/index.js"
 class BetData {
   constructor() { }
   init_core() {
@@ -200,7 +200,7 @@ this.bet_appoint_ball_head= null */
 
   // 通过  mount_point_key 计算 取值字段映射
   get_fields_map_by_mount_point_type(type) {
-    let obj = FILEDS_MAP['fileds_map_common']
+    let obj = fileds_map_common
     return obj
   }
 

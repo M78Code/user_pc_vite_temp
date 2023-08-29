@@ -14,7 +14,7 @@ import { dianjing_sublist } from "src/core/constant/config/csid.js"
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 import _ from "lodash";
 // indexeDb
 import { db } from "src/core/base-data/config/indexedPB.js";

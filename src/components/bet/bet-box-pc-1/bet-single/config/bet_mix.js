@@ -514,9 +514,9 @@ export default {
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-    'MenuData.main_menu_toggle':{
+    vx_main_menu_toggle:{
       handler() {
-        this.user_bet_prefer = _.get(userCtr.user_info,'userBetPrefer')==1;
+        this.user_bet_prefer = _.get(this.BetData.user,'userBetPrefer')==1;
       }
     }
   },

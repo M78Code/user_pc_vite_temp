@@ -99,7 +99,7 @@ import { ref, computed, defineProps, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/boot/i18n";
-import { get_match_tpl_title } from 'src/core/utils/index.js';
+import { get_match_tpl_title } from 'src/core/index.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
@@ -113,6 +113,7 @@ const props = useRegistPropsHelper(component_symbol, defineProps(need_register_p
 const tpl_id = ref('')
 const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
 // 获取菜单类型
+const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
 }
@@ -244,7 +245,7 @@ const is_highlighted = (csid) => {
  * @Description 设置联赛折叠
 */
 const set_fold = () => {
-  let type_name = MenuData.cur_menu_type.type_name;
+  let type_name =vx_cur_menu_type.value.type_name;
   // 如果当前联赛是折叠的 并且是今日、早盘、串关  调用bymids接口拉数据
   if (this.card_style_obj.is_league_fold && (['today', 'early', 'bet'].includes(type_name) || menu_config.is_esports())) {
     // 设置赛事基础数据

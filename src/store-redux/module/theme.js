@@ -3,12 +3,12 @@
  *
  */
 import { nextTick } from "vue";
-import { LocalStorage , SessionStorage  } from "src/core/utils/web-storage.js";
+import { LocalStorage, SessionStorage  } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {
   /** 语言 */
-  theme: LocalStorage .get("theme", "day"),
+  theme: LocalStorage.get("theme", "day"),
 };
 
 export default function themeReducer(state = initialState, action) {
@@ -19,7 +19,7 @@ export default function themeReducer(state = initialState, action) {
     case "SET_THEME":
       // 设置永久持久化主题信息
       SessionStorage .set("theme", data);
-      LocalStorage .set("theme", data);
+      LocalStorage.set("theme", data);
       return { ...state, theme: data };
     /** 初始化主题 */
     case "INIT_THEME":

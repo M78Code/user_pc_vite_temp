@@ -6,7 +6,7 @@
  * @FilePath: \user-pc-vite\src\core\http\http-log.js
  * @Description: http方法次数统计
  */
-import { SessionStorage , LocalStorage  } from "src/core/index.js";
+import { SessionStorage , LocalStorage } from "src/core/index.js";
 import { DateForMat } from "src/core/format/index.js";
 import { throttle } from "lodash";
 class HttpLog {
@@ -157,7 +157,7 @@ class HttpLog {
    * @return {object} 日志对象
    */
   get_local_log_obj() {
-    return LocalStorage .get("http_log", { data: {} });
+    return LocalStorage.get("http_log", { data: {} });
   }
 
   /**
@@ -165,7 +165,7 @@ class HttpLog {
    */
   set_local_log_obj() {
     if (this.log_obj) {
-      LocalStorage .set("http_log", this.log_obj);
+      LocalStorage.set("http_log", this.log_obj);
     }
   }
 }

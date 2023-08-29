@@ -35,7 +35,7 @@
         "type": "js",
         "descriptions": [
           "共有的 web storage 操作方法",
-          "导出 LocalStorage | LocalStorage , SessionStorage | SessionStorage  ",
+          "导出 LocalStorage | LocalStorage, SessionStorage | SessionStorage  ",
           "提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法"
         ]
       },

@@ -1,5 +1,5 @@
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";
-import { MenuData  } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
 import  PageSourceData from  "src/core/page-source-h5/page-source-h5.js"
 
 

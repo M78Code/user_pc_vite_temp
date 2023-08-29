@@ -1,11 +1,11 @@
 import { http, AllDomain } from "src/core/http/";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { LocalStorage , SessionStorage  } from "src/core/utils/web-storage";
+import { LocalStorage, SessionStorage  } from "src/core/utils/web-storage";
 import { onBeforeMount } from "vue";
 import { throttle } from "lodash";
 const { NODE_ENV, TAG, PRO_ARR } = window.BUILDIN_CONFIG;
 import STANDARD_KEY from "src/core/standard-key/";
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
 
 const token_key = STANDARD_KEY.get("token");
 // import store from "src/store-redux-vuex/index.js";
@@ -55,7 +55,7 @@ const send_user_pro_info = () => {
     return;
   }
   // 获取用户上次发消息的时间
-  let time = LocalStorage .get("s_user_info_time");
+  let time = LocalStorage.get("s_user_info_time");
   // 24小时内只发送一次消息,到服务器
   if (time && new Date().getTime() - time * 1 < 1 * 24 * 60 * 60 * 1000) {
     return;
@@ -108,7 +108,7 @@ const send_user_pro_info = () => {
   // 发送数据到服务器
   axios_instance.post(http.HTTP_PRO_INFO_API, data).then((res) => {
     // 更新本次次发消息的时间
-    LocalStorage .set("s_user_info_time", new Date().getTime());
+    LocalStorage.set("s_user_info_time", new Date().getTime());
     console.log("发送成功");
   });
 };
@@ -167,7 +167,7 @@ const send_api_error_data = throttle(
       }
 
       // 获取api域名信息
-      apiStatus = object || LocalStorage .get(AllDomain.DOMAIN_API);
+      apiStatus = object || LocalStorage.get(AllDomain.DOMAIN_API);
     }
     // 拼装需要提交的数据
     let data = {

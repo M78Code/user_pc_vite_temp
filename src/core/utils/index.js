@@ -12,3 +12,8 @@ export  *  from './module/urParamsInit.js'
 export  *  from './module/utils.doc.json'
 export  *  from './module/utils.js'
 export  *  from './module/web-storage.js'
+
+export * from "./module/web-storage.js"
+
+
+export const  aa1 =99

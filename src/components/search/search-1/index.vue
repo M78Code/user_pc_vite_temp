@@ -60,7 +60,7 @@ import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
 import { api_search } from "src/api/index.js";
 // import search from "src/core/search-class/search.js"
-import { MenuData  } from "src/core/index.js";
+import {  MenuData  } from "src/core/index.js";
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);

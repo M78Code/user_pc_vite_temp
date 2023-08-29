@@ -30,11 +30,10 @@
 
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 import { format_money3,format_money2 } from'src\core\format\index.js'
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
 const min_money = ref(10)   //最低投注金额

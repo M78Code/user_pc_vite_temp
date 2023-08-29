@@ -20,7 +20,7 @@ import {utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router"
-import {UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/index.js"
 
 const route = useRoute()
 const router = useRouter()

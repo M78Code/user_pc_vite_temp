@@ -9,7 +9,7 @@
         
         <!-- 显示玩法名称 -->
         <div class="play-info row items-center yb-flex-between">
-          <div class="ellipsis" :class="MenuData.main_menu_toggle=='mini'?'max2':'max1'" v-tooltip="{content:hl_data.hpn, overflow:1}">
+          <div class="ellipsis" :class="vx_main_menu_toggle=='mini'?'max2':'max1'" v-tooltip="{content:hl_data.hpn, overflow:1}">
             {{hl_data.hpn}}
           </div>
           <!--盘口结束时间-->

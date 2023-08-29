@@ -32,7 +32,7 @@
           </div>
         </div>
         <!-- 排序 -->
-        <div class="set-item" v-if="lodash.get(get_access_config, 'sortCut') &&$route.name != 'virtual_sports' && $route.name != 'virtual_sports_details' && menu_type !== 3000">
+        <div class="set-item" v-if="GlobalAccessConfig.get_sortCut() &&$route.name != 'virtual_sports' && $route.name != 'virtual_sports_details' && menu_type !== 3000">
           <div class="icon set-icon-1"></div>
           <div class="name">{{i18n.t("setting_menu.footer_t_sort")}}</div>
           <div class="option" @click="sort_type_changed">
@@ -60,9 +60,9 @@
           <div class="icon set-icon-4"></div>
           <div class="name">{{i18n.t("setting_menu.footer_t_odds")}}</div>
           <div class="option" @click="set_is_accept">
-            <div class="op-item active">{{get_is_accept == 2?i18n.t("setting_menu.odd_any2"):i18n.t("setting_menu.odd_optimal2")}}</div>
+            <div class="op-item active">{{BetData.bet_is_accept == 2?i18n.t("setting_menu.odd_any2"):i18n.t("setting_menu.odd_optimal2")}}</div>
             <div class="op-icon"></div>
-            <div class="op-item">{{get_is_accept == 2?i18n.t("setting_menu.odd_optimal2"):i18n.t("setting_menu.odd_any2")}}</div>
+            <div class="op-item">{{BetData.bet_is_accept == 2?i18n.t("setting_menu.odd_optimal2"):i18n.t("setting_menu.odd_any2")}}</div>
           </div>
         </div>
         <div class="line"></div>
@@ -122,14 +122,15 @@
 <script setup>
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import { api_betting } from "src/project/api/index";
-import {UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/index.js"
 import lodash from 'lodash'
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { format_money2  } from "src/core/index.js";
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 
-import {UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
  
   // 是否显示设置菜单
   let is_show_menu = ref(false)
@@ -144,7 +145,6 @@ import {UserCtr } from "src/core/index.js";
     //   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
     //   user_info: "get_user",                // 当前登录的用户信息
     //   sort_type: 'get_sort_type',            // 排序 2 时间排序  1  热门排序
-    //   get_is_accept:'get_is_accept',         // 1最佳赔率  2任何赔率
     //   get_newer_standard_edition:'get_newer_standard_edition',// 1新手版 2标准版
     //   get_lang:"get_lang",
     //   get_virtual_data_loading:"get_virtual_data_loading",
@@ -152,7 +152,7 @@ import {UserCtr } from "src/core/index.js";
     //   get_is_champion:'get_is_champion',
     //   get_v_pre_menu_type:'get_v_pre_menu_type',
     //   get_secondary_unfold_map:'get_secondary_unfold_map',
-    //   get_access_config:'get_access_config',
+    //   get_access_config,
     // }),
     // 语言选项
   const lang_obj = computed(() => {
@@ -291,7 +291,7 @@ import {UserCtr } from "src/core/index.js";
      * @param {Number} status 2时间排序 1热门排序
     */
   const sort_type_changed = () => {
-      if(!lodash.get(get_access_config,'sortCut')){
+    if(!GlobalAccessConfig.get_sortCut()){
         $toast(i18n.t(`common.temporarily_unavailable`), 2000)
         return
       }
