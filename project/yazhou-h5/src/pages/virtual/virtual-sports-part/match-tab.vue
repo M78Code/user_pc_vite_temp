@@ -1,7 +1,7 @@
 <template>
   <div class="match-tab row justify-end">
     <!-- 足球联赛league_type 0 -->
-    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': lodash.get(get_access_config, 'statisticsSwitch') && sub_menu_type != 1004}">
+    <div class="row items-center part-nav" ref="scrollBox" :class="{'part-nav-full': GlobalAccessConfig.get_statisticsSwitch() && sub_menu_type != 1004}">
       <div ref="scrollItem" v-for="(item,i) in no_list" class="row sub-nav-item" @click="sub_nav_click_handle(item.batchNo, true)"
         :class="{focus:item.batchNo === sub_focus_batch_no,footbal:[1001,1004].includes(sub_menu_type)}"
         v-show="sub_menu_type != '1004' || item.mmp != 'PREGAME' || !pre_to_playing || i != 0"
@@ -10,7 +10,7 @@
       </div>
     </div>
     <!-- 分析icon显示 -->
-    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="lodash.get(get_access_config,'statisticsSwitch') && sub_menu_type != 1004">
+    <div class="sr-icon-wrapper row justify-center items-center" @click.stop="trend_event"  v-if="GlobalAccessConfig.get_statisticsSwitch()&& sub_menu_type != 1004">
       <img class="sub-item-trend-icon2" v-if="[1002, 1011, 1010, 1009].includes(sub_menu_type) && trend_is_show"
             src="image/wwwassets/bw3/common/analyse_icon.svg" alt="" />
       <img class="sub-item-trend-icon1" v-if="[1001,1004].includes(sub_menu_type) && trend_is_show"
@@ -24,6 +24,7 @@
 <script>
 // #TODO VUEX 
 // import { mapGetters, mapMutations } from "vuex"
+
 import utils from "utils/utils";
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
@@ -69,7 +70,7 @@ export default defineComponent({
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
     //   current_batch:'get_current_batch',
-    //   get_access_config: 'get_access_config',
+    //   get_access_config
     // }),
     // 联赛的类型 field3: 空:不是杯赛 不为空:是杯赛
     const league_type = computed(() => {

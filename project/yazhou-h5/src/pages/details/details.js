@@ -134,7 +134,7 @@ const route = useRoute();
     userCtr: "userCtr",
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
-    GlobalAccessConfig: "GlobalAccessConfig",
+    get_access_config,
     // 聊天室ID
     // 'get_chatroom_id',
     // 获取语言
