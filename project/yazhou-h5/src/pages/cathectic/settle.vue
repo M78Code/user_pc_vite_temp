@@ -28,7 +28,7 @@
           <div>
             <!-- 提前结算 -->
             <span class="yb_fontsize12" @click.stop="change_early"
-              :class="{ 'select': is_early, 'is-show': store_user.user.settleSwitch != 1 }">
+              :class="{ 'select': is_early, 'is-show': userCtr.user_info.settleSwitch != 1 }">
               {{ t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
             </span>
           </div>
@@ -83,6 +83,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
+import userCtr from "src/core/user-config/user-ctr.js"
 import { t } from "src/boot/i18n";
 //国际化
 
@@ -96,7 +97,6 @@ const props = defineProps({
 })
 // 仓库数据
 let { cathecticReducer, userInfoReducer } = store.getState()
-let store_user = userInfoReducer
 let store_cathectic = cathecticReducer
 
 // 锚点

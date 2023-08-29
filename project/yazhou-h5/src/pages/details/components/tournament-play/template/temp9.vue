@@ -25,10 +25,10 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import store from "src/store-redux/index.js";
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp9",
@@ -42,7 +42,7 @@ export default defineComponent({
       // 赔率切换数据
       hsw_obj: null
     })
-    // #TODO vuex 
+    // #TODO vuex
     // ...mapGetters(['get_bet_list']),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',

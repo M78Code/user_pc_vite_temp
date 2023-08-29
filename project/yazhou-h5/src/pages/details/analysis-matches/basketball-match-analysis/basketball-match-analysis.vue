@@ -26,7 +26,8 @@ import head_tab from 'src/project/components/details/match-analysis/head-tab.vue
 import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';
 import { watch, nextTick, onMounted } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
+import userCtr from "src/core/user-config/user-ctr.js"
 //国际化
 
 
@@ -110,7 +111,7 @@ const tab_click = ([tab, type]) => {
     } else if (tab.component == 'article-main') {
       eventLabel = 'H5_情报分析_资讯'
     }
-    this.$utils.zhuge_event_send(eventLabel, this.get_user);
+    this.$utils.zhuge_event_send(eventLabel, this.userCtr);
   }
 }
 
