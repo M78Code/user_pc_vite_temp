@@ -6,18 +6,17 @@
 //   mapGetters,
 //   mapMutations
 // } from "vuex";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   computed: {
     // ...mapGetters([
     //   'get_chatroom_userinfo', // 聊天室用户信息
-    //   'get_user',
     //   'get_chatroom_id'
     // ]),
     chattroom_url() {
       const {
         oss = {}
-      } = (this.get_user || {});
+      } = (UserCtr.user_info || {});
       const {
         chatroomUrl
       } = (oss || {});

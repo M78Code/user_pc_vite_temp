@@ -2,6 +2,7 @@ import { Qs } from "../utils/Qs";
 import { ls } from "src/core/utils/web-storage.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
+import UserCtr from "src/core/user-config/user-ctr.js";
 class EnterParamsYazhouH5 {
   constructor() {
     this.url = "";
@@ -281,7 +282,7 @@ class EnterParamsYazhouH5 {
           this.set_details_item(0);
           this.$router.push({ name: "category", params: { mid, csid } });
         }
-      } else if (_url == "act" && this.get_user.activityList) {
+      } else if (_url == "act" && UserCtr.user_info.activityList) {
         this.$router.push({
           name: "activity_task",
           query: { rdm: new Date().getTime() },
