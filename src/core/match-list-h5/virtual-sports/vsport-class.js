@@ -13,11 +13,11 @@
  */
 import Vue from 'vue'
 import { api_v_sports } from "src/project/api/index.js";
-<<<<<<< HEAD
+
 // import LoopCallback from "/utils/loop_callback.js";
-=======
- 
->>>>>>> b73b9b09af84388e6f80e553053bb67c13e0ef42
+
+
+
 
 const sleep = require('licia/sleep');
 export default class VSport {
