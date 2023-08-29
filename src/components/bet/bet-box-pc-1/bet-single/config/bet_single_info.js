@@ -8,6 +8,7 @@ import play_mapping from "src/public/config/mapping/play_mapping.js";
 
 import * as bet_utils from "src/public/mixins/bet/bet_utils.js";
 import { format_str } from "src/core/format/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   name: "bet-single-info",
@@ -2096,14 +2097,14 @@ handle_generat_emitters(){
      * @return {undefined} undefined
      */
     getArr() {
-      // console.log('this.get_lang ==', this.get_lang);
-      if(this.get_lang == 'zh' || this.get_lang == 'tw') {
+      // console.log('UserCtr.lang ==', UserCtr.lang);
+      if(UserCtr.lang == 'zh' || UserCtr.lang == 'tw') {
         return [-45, 133]
       }
-      if(this.get_lang == 'th') {
+      if(UserCtr.lang == 'th') {
         return [-45, 190]
       } 
-      if(this.get_lang == 'en' || this.get_lang == 'ad') {
+      if(UserCtr.lang == 'en' || UserCtr.lang == 'ad') {
         return [-45, 253]
       } 
       return [-45, 210]

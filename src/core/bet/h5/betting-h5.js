@@ -8,6 +8,7 @@
 // import { HANDICAP_ODDS, HANDICAP_PLACEHOLDER, TIPS_INFO1, TIPS_INFO2, MOCK_C105_C106 } from "src/project/mixins/betting/status_code_map";
 // import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 // import { WsRev } from "src/public/utils/ws/wsCtr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default {
   mixins: [odd_convert],
   data() {
@@ -33,10 +34,6 @@ export default {
       "get_bet_obj",
       // 当前选中的一级菜单, 二级菜单, 三级菜单对象
       "get_current_menu",
-      // 当前赔率
-      "get_cur_odd",
-      // 用户信息
-      "get_user",
       // 统计串关数数据
       "get_s_count_data",
       // 是否接受更好赔率
@@ -106,7 +103,7 @@ export default {
       if(value && bet_length <= 2){
         return true
       }
-      const min_num = _.get(this.get_user, 'configVO.minSeriesNum', 2)
+      const min_num = _.get(UserCtr.user_info, 'configVO.minSeriesNum', 2)
       if((bet_length - (value ? 1 : 0)) < min_num){
         this.set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
         return false
@@ -140,7 +137,7 @@ export default {
       }
 
       // 投注项数量已达上限
-      let _maxunm = _.get(this.get_user, 'configVO.maxSeriesNum', 10)
+      let _maxunm = _.get(UserCtr.user_info, 'configVO.maxSeriesNum', 10)
       if (this.get_bet_list.length >= _maxunm) {
         this.set_toast({ 'txt': i18n.t('bet.match_max2') });
         return;
@@ -391,7 +388,7 @@ export default {
       }
 
       // 投注项数量已达上限
-      let _maxunm = _.get(this.get_user, 'configVO.maxSeriesNum', 10)
+      let _maxunm = _.get(UserCtr.user_info, 'configVO.maxSeriesNum', 10)
       if (this.get_bet_list.length >= _maxunm) {
         this.set_toast({ 'txt': i18n.t('bet.match_max2') });
         return;
@@ -535,7 +532,7 @@ export default {
         eventLabel = '列表'
       }
       if (eventLabel) {
-        this.$utils.zhuge_event_send('H5_列表页_投注点击分类', this.get_user, {'详情区域': eventLabel});
+        this.$utils.zhuge_event_send('H5_列表页_投注点击分类', UserCtr.user_info, {'详情区域': eventLabel});
       }
     },
     /**
@@ -817,7 +814,7 @@ export default {
         //商户ID
         param.tenantId = '1';
         //用户id 未登录不填，登录必填
-        param.userId = this.get_user ? this.get_user.userId : "";
+        param.userId = UserCtr.user_info ? UserCtr.user_info.userId : "";
         //联赛级别（风控使用）
         param.tournamentLevel = bet_obj.tlev;
         //联赛id（风控使用）
@@ -935,7 +932,7 @@ export default {
       // 是否开启 多单关投注模式，1：是 0 否
       param.openMiltSingle = this.get_is_combine && !this.get_is_mix ? 1 : 0;
       //用户id
-      param.userId = this.get_user ? this.get_user.userId : "";
+      param.userId = UserCtr.user_info ? UserCtr.user_info.userId : "";
       // 设置注单集合列表数组 seriesOrders
       param.seriesOrders = [];
       // 浏览器指纹id
@@ -1385,7 +1382,7 @@ export default {
     calc_mixcount(flag) {
       let res = this.calc_mixcount_data(this.get_bet_list.length)
       let data = _.get(res, "data");
-      let _minunm = _.get(this.get_user, 'configVO.minSeriesNum', 2)
+      let _minunm = _.get(UserCtr.user_info, 'configVO.minSeriesNum', 2)
 
       if (!data || !data[0]) {return};
       const bet_obj = this.get_bet_obj || {}
@@ -2138,7 +2135,7 @@ export default {
      *@description 诸葛埋点跟踪
      */
     zhuge_track_is_combine() {
-      this.$utils.zhuge_event_send('H5_合并', this.get_user);
+      this.$utils.zhuge_event_send('H5_合并', UserCtr.user_info);
     }
   },
 

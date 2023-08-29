@@ -45,7 +45,7 @@
 
         <!-- 中 -->
         <div class="row justify-between yb_my4 yb_fontsize14">
-          <span :class="get_lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
+          <span :class="UserCtr.lang == 'vi' && BetData.is_bet_success_status ? 'col-6' : 'col-7'">
             <template v-if="_.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ i18n.t('bet_record.ing')
             }}&thinsp;</template>
             <template v-if="get_is_champion()">{{ _.get(value_show, 'hps[0].hl[0].hps') }}</template>
@@ -195,6 +195,7 @@ import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_
 import betSingleDetail from './bet_single_detail.vue';
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
  
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降

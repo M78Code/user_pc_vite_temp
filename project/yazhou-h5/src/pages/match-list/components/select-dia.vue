@@ -19,15 +19,16 @@
         </div>
       </div>
     </div>
-    <template v-if="change_show && lodash.get(get_access_config,'filterSwitch')">
+    <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
       <filter_old v-if="lodash.get(get_current_menu,'main.menuType')==1 && get_sport_all_selected"/>
       <filter_new v-else/>
     </template>
-    <search v-if="!change_show && lodash.get(get_access_config,'searchSwitch')"></search>
+    <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
 </template>
  
 <script setup>
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
@@ -44,7 +45,7 @@ const get_search_term = ref(store_state.get_search_term)
 const get_menu_type = ref(store_state.get_menu_type)
 const get_current_menu = ref(store_state.get_current_menu)
 const get_sport_all_selected = ref(store_state.get_sport_all_selected)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 
 const unsubscribe = store.subscribe(() => {
@@ -53,7 +54,7 @@ const unsubscribe = store.subscribe(() => {
   get_search_for_choose.value = new_state.get_search_for_choose
   get_search_term.value = new_state.get_search_term
   get_current_menu.value = new_state.get_current_menu
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
   get_sport_all_selected.value = new_state.get_sport_all_selected
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
 })
@@ -71,12 +72,12 @@ onMounted(() => {
     change_show.value = false
   }
   // 筛选
-  if(!lodash.get(get_access_config,'filterSwitch')) {
+  if(!GlobalAccessConfig.get_filterSwitch()) {
     search_tab.value = [i18n.t('search.search_title')]
     change_show.value = false
   }
   // 搜索
-  if(!lodash.get(get_access_config,'searchSwitch')) {
+  if(!GlobalAccessConfig.get_searchSwitch()) {
     search_tab.value = [i18n.t('footer_menu.filter')]
     change_show.value = true
   }

@@ -200,7 +200,7 @@ import { db } from "src/public/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
-
+import UserCtr from "src/core/user-config/user-ctr.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
   const slide = ref(0)
@@ -488,7 +488,7 @@ import lodash from "lodash"
    * @param {Object} $event 错误事件对象
    */
   const league_icon_error = ($event) => {
-    $event.target.src = get_theme.includes('y0') ? "image/bw3/png/banner_bg_y0.png" : "image/bw3/png/banner_bg.png";
+    $event.target.src = UserCtr.theme.includes('y0') ? "image/bw3/png/banner_bg_y0.png" : "image/bw3/png/banner_bg.png";
     $event.srcElement.onerror = null
   }
   /**
@@ -778,14 +778,14 @@ import lodash from "lodash"
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.token
         }
       }
     }
@@ -801,7 +801,7 @@ import lodash from "lodash"
         name: 'matchList',
         query: {
           m: menu[index].menuId,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else if (410 == menu[index].menuId) {
@@ -813,7 +813,7 @@ import lodash from "lodash"
         query: {
           m: '410',
           // s,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else {
@@ -859,7 +859,7 @@ import lodash from "lodash"
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     }else{
@@ -883,7 +883,7 @@ import lodash from "lodash"
         query: {
           m: menuId,
           s: subId,
-          token: get_user_token
+          token: userCtr.token
         }
       });
     } else {
@@ -896,7 +896,7 @@ import lodash from "lodash"
           query: {
             m: menuId,
             s: subId,
-            token: get_user_token
+            token: userCtr.token
           }
         });
       } else {
@@ -931,7 +931,7 @@ import lodash from "lodash"
     if (url) {
       banner_bg = get_file_path(url)
     } else {
-      banner_bg = `image/bw3/png/home_carousel_bg_${get_theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
+      banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
     }
     sessionStorage.setItem('banner_bg', banner_bg)
   }
@@ -941,7 +941,7 @@ import lodash from "lodash"
   }
   // 若线上图片加载错误，则使用本地默认banner
   const handleBannerError = (e) => {
-    banner_bg = `image/bw3/png/home_carousel_bg_${get_theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
+    banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes('y0') ? 'y0_' : ''}${get_lang}.png`
   }
   onMounted(() => {
     // 初始化菜单状态
@@ -957,19 +957,19 @@ import lodash from "lodash"
     // ...mapGetters({
     //   get_ball_seed_menu: 'get_ball_seed_menu',
     //   // 用户信息,用户金额,userId 需要监听变化
-    //   user_info: "get_user",
+    //   user_info: "userCtr",
     //   // 当前语言
     //   get_lang: 'get_lang',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   uid: "get_uid",
     //   // 用户令牌信息
-    //   get_user_token: "get_user_token",
+    //   userCtr.token: "userCtr.token",
     //   // 左边菜单选中下标
     //   get_home_menu_index: "get_home_menu_index",
     //   // 首页菜单数据
     //   get_home_data: "get_home_data",
     //   // 当前主题
-    //   get_theme: "get_theme",
+    //   UserCtr.theme: "UserCtr.theme",
     //   // 商户配置的图片地址和弹框信息
     //   get_banner_obj: "get_banner_obj",
     //   get_is_language_changing: "get_is_language_changing",
@@ -980,7 +980,7 @@ import lodash from "lodash"
     // }),
 
     const banner_loading_url = computed(() => {
-      if (get_theme.includes('y0')) {
+      if (UserCtr.theme.includes('y0')) {
         return "image/wwwassets/bw3/home/banner_loading_y0.gif"
       } else {
         return "image/wwwassets/bw3/home/banner_loading.gif"

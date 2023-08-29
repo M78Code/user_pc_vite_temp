@@ -20,6 +20,7 @@ import utils from "src/core/utils/utils";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router"
+import userCtr from "src/core/user-config/user-ctr.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -53,7 +54,7 @@ export default defineComponent({
     //   // 一键收起状态: 1.全展开 2.全收起 3.部分展开 1和3箭头向上
     //   "get_fewer",
     //   "get_detail_data",
-    //   "get_user",
+    //   "userCtr",
     // ]),
     // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
     const get_details_item = computed(() => {
@@ -74,7 +75,7 @@ export default defineComponent({
     const get_detail_data = computed(() => {
       return ""
     });
-    const get_user = computed(() => {
+    const userCtr = computed(() => {
       return ""
     });
     const match_id = computed(() => {
@@ -134,7 +135,7 @@ export default defineComponent({
         "玩法集ID": item.id,
         "球种名称": $utils.csid_to_sport_name(get_detail_data.csid)
       }
-      $utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', get_user,zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', userCtr,zhuge_obj);
     };
     /**
      * @Description 获取当前选中详情玩法集

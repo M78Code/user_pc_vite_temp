@@ -10,7 +10,7 @@
       <div class="item-body" :key="index" v-for="(item,index) in detailList">
         <div class="row items-center body-top yb_fontsize12 mx-12 body_top">
           <p class="p1 yb_mr4">
-            <img v-if="get_theme.includes('theme01')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
+            <img v-if="UserCtr.theme.includes('theme01')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
               class="beif_src">
             <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
           </p>
@@ -125,6 +125,8 @@ import utils from 'src/core/utils/utils.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { format_time_zone_time, format_money2,format_odds, format_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 //国际化
 
 
@@ -192,9 +194,7 @@ export default defineComponent({
     };
     // #TODO vuex
     // computed: {
-    // ...mapGetters([
-    //   'get_theme'
-    // ]),
+    
     // 该订单已晒单
     const hasShared = computed(() => {
       const { orderNo } = data || {};

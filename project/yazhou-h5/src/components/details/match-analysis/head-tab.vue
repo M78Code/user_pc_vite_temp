@@ -28,6 +28,8 @@
 import { ref, nextTick, computed, onUnmounted, onMounted } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import utils from "src/core/utils/utils";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 
   const props = defineProps({
     tabList: {
@@ -44,7 +46,6 @@ let get_detail_data = ref({
       mid: '',
       cds: ''
     })
-    let get_theme = ref('')
     let get_lang = ref('zh')
     let get_current_menu = ref('')
   onMounted(() => {
@@ -66,8 +67,7 @@ let get_detail_data = ref({
   //     // 详情页的数据
   //     'get_detail_data',
   //     // 主题
-  //     'get_theme',
-  //     // 当前选中的菜单
+=  //     // 当前选中的菜单
   //     "get_current_menu",
   //     // 当前语言
   //     'get_lang'

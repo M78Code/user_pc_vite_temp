@@ -8,6 +8,7 @@ import WsMan from "src/core/ws/ws-man.js";
 import WsSendManger from "src/core/ws/ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key/index.js";
 import { uniq } from "lodash";
+import UserCtr from "src/core/user-config/user-ctr.js";
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
@@ -293,8 +294,7 @@ export default class Ws {
         // 对特殊命令进行统一管理处理发送
         if (window.vue) {
           try {
-            msg.requestId =
-              window.vue.$store.getters.get_user.token ||
+            msg.requestId = UserCtr.user_info ||
               sessionStorage.getItem(STANDARD_KEY.token);
           } catch (error) {
             console.error(error);

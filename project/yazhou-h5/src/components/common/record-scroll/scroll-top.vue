@@ -15,6 +15,7 @@
 
 <script setup>
 import utils from 'src/core/utils/utils.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 // import { mapGetters } from "vuex";
 import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
 
@@ -47,13 +48,13 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
         // 没获取到的情况
       let suffix="__";
       // TODO: 待调整
-        //  if(get_theme.includes('theme01')){
+        //  if(UserCtr.theme.includes('theme01')){
         //     suffix='01'
         //  }
-        //  if(get_theme.includes('theme02')){
+        //  if(UserCtr.theme.includes('theme02')){
         //     suffix='02'
         //  }
-        //  if(get_theme.includes('y0')){
+        //  if(UserCtr.theme.includes('y0')){
         //     suffix+='_y0';
         //  }
         return  `image/wwwassets/bw3/list/scroll_top_${suffix}.svg`
@@ -81,19 +82,18 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
     })
   // computed:{
   //   ...mapGetters({
-  //     get_theme:'get_theme',
   //     get_list_scroll_direction:'get_list_scroll_direction',
   //   }),
   //   // 获取图片主题图标
   //   scroll_img(){
   //     let suffix="__"; // 没获取到的情况
-  //        if(get_theme.includes('theme01')){
+  //        if(UserCtr.theme.includes('theme01')){
   //           suffix='01'
   //        }
-  //        if(get_theme.includes('theme02')){
+  //        if(UserCtr.theme.includes('theme02')){
   //           suffix='02'
   //        }
-  //        if(get_theme.includes('y0')){
+  //        if(UserCtr.theme.includes('y0')){
   //           suffix+='_y0';
   //        }
   //       return  `image/wwwassets/bw3/list/scroll_top_${suffix}.svg`

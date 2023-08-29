@@ -122,3 +122,41 @@ export const result_filter = (type, value) =>{
     }
   }
 }
+
+
+/**
+ * @description: 比分格式处理(投注时用到)
+ * @param {Array} msc 比分
+ * @param {Integer} csid 球种id
+ * @param {Integer} ms 赛事状态
+ * @param {Integer} hpid 玩法id
+ * @return {String} 比分格式为: (主队比分-客队比分)
+ */
+export const calc_bifen = (msc, csid, ms, hpid) => {   
+  //只有足球滚球展示基准分
+  if (!msc[0] || csid != 1 || !ms || ms == 0) return "";
+  let S;
+  if (hpid == 128) {
+    S = msc.toString().match(/S7\|[0-9]+\:[0-9]+/);
+  }
+  if(hpid == 130) {
+    S = msc.toString().match(/S701\|[0-9]+\:[0-9]+/);
+  }
+  if (hpid == 143) {
+    S = msc.toString().match(/S3\|[0-9]+\:[0-9]+/);
+  }
+  if (['4','27','29','269','336'].includes(`${hpid}`)) {
+    S = msc.toString().match(/S1\|[0-9]+\:[0-9]+/);
+  }
+  if(hpid == 19) {
+    S = msc.toString().match(/S2\|[0-9]+\:[0-9]+/);
+  }
+  if(hpid == 113) {
+    S = msc.toString().match(/S5\|[0-9]+\:[0-9]+/);
+  }
+  if(hpid == 121) {
+    S = msc.toString().match(/S15\|[0-9]+\:[0-9]+/);
+  }
+  if (S) return S[0].split('|')[1];
+  return "";
+}
