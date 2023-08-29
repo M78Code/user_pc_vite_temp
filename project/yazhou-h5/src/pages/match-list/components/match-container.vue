@@ -120,7 +120,7 @@
                 </span>
               </div>
               <!--赛事列表收藏-->
-              <div v-if="lodash.get(get_access_config, 'collectSwitch')" class="favorite-icon-top match list-m"
+              <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
                 @click.stop="toggle_collect(match, i, 'mf')">
                 <!-- 未收藏图标 -->
                 <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="not_favorited_computing_icon" alt="">
@@ -305,7 +305,7 @@
                       </div>
                       <!-- 足篮球展示赛事分析图标 -->
                       <div class="column justify-center yb_px4"
-                        v-if="[1, 2].includes(+match.csid) && lodash.get(get_access_config, 'statisticsSwitch')"
+                      v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
                         <img src="image/bw3/svg/match_analysis.svg" alt="" style="width:0.12rem"
                           v-if="get_theme.includes('theme01')">
@@ -320,10 +320,10 @@
                       <div class="goto-detail" @click='goto_details(match)'>
                         <span class="count_span" :class="{ esports: 3000 == menu_type }">
                           <span class="mc-n">
-                            {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) :
+                            {{GlobalAccessConfig.get_handicapNum()? get_match_mc(match) :
                               i18n.t('footer_menu.more') }}
                           </span>
-                          <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
+                          <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                         </span>
                       </div>
                     </div>
@@ -368,7 +368,7 @@
             v-if="show_newer_edition && !is_show_result()">
             <div class='l test-match-mf'>
               <!--收藏图标-->
-              <div v-if="!lodash.get(get_access_config, 'collectSwitch')" class="go-container-w flex no-wrap favorite">
+              <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
                 <div class="fav-i-wrap-match row items-center" @click.stop="toggle_collect(match, i, 'mf')">
                   <div class="favorite-icon match">
                     <!-- 未收藏图标 -->
@@ -430,9 +430,9 @@
                 <div class='goto-detail' @click='goto_details(match)'>
                   <div class="count_span">
                     <span class="mc-n">
-                      {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) : i18n.t('footer_menu.more') }}
+                      {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n.t('footer_menu.more') }}
                     </span>
-                    <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
+                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                   </div>
                 </div>
               </div>
@@ -562,8 +562,7 @@ const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
 const get_not_found_target_dom_count = ref(store_state.get_not_found_target_dom_count)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const get_access_config = ref(store_state.get_access_config)
-
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 onMounted(() => {
   is_first_coming.value = true;
   //赛事切换时钟
@@ -1617,7 +1616,7 @@ const unsubscribe = store.subscribe(() => {
   get_goto_detail_match_info.value = new_state.get_goto_detail_match_info
   get_not_found_target_dom_count.value = new_state.get_not_found_target_dom_count
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
 })
 
 onUnmounted(() => {
