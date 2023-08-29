@@ -3,7 +3,11 @@
  * @Date: 2023-07-30 14:41:55
  * @Description:
  */
-import  lodash from "lodash";
+// import  lodash from "lodash";
+
+const  lodash =require("lodash")
+
+console.error('lodash-',lodash);
 /**
  * 获取url参数的方法 默认返回全部 {name:value}
  * @param {string} name 获取单个
@@ -19,13 +23,17 @@ export function GetUrlParams(name) {
   if (name) return obj[name];
   return obj;
 }
+
+
+ 
 /**
  * 深度合并方法 和lodash Merge不一样
  * @param {object} src 源
  * @param {object} target 目标
  * @returns {object} 返回深度合并后的对象
  * */
-export function deepMerge(src, target) {
+export const deepMerge=(src, target)=>{
+  console.error('lodash-',lodash);
   let key;
   const res = lodash.cloneDeep(src);
   for (key in target) {
