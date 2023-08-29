@@ -136,7 +136,7 @@
               </template>
             </div>
             <!--滚动条头部-->
-            <template v-if="computed_data.is_virtual_bet">
+            <template v-if="BetData.is_virtual_bet">
               <virtual-bet-scroll-header
                 ref="resizeable_header"
                 :is_free="false"
@@ -170,7 +170,7 @@
                 }"
               >
                 <!--虚拟体育部分-->
-                <template v-if="computed_data.is_virtual_bet">
+                <template v-if="BetData.is_virtual_bet">
                   <!-- 虚拟单关 -->
                   <virtual-bet-single
                     ref="embedded_single"
@@ -189,22 +189,22 @@
                   <div
                     ref="bet_mode_zone"
                     class="bet-mode-zone"
-                    v-if="computed_data.vx_is_bet_single"
+                    v-if="BetData.is_bet_single"
                   >
                     <div class="left">
                       <span>{{ $t("bet.bet_one_") }}</span>
                       <span class="bet-single-count">
-                        {{ computed_data.bet_single_list.length }}
+                        {{ BetData.bet_single_list.length }}
                       </span>
                     </div>
                     <div class="right">
                       <span
                         class="check-box"
-                        :class="{ checked: computed_data.is_bet_merge }"
+                        :class="{ checked: BetData.is_bet_merge }"
                         @click.stop="toggle_merge"
                       >
                         <check-box
-                          :checked="computed_data.is_bet_merge"
+                          :checked="BetData.is_bet_merge"
                         /><span>{{ $t("bet.merge") }}</span>
                       </span>
                       <span
@@ -224,19 +224,19 @@
                   <bet-single
                     ref="embedded_single"
                     @set_scroll_this="set_scroll_this"
-                    v-if="computed_data.vx_is_bet_single"
+                    v-if="BetData.is_bet_single"
                   />
                   <!--内嵌的串关-->
                   <bet-mix
                     ref="embedded_mix"
                     @set_scroll_this="set_scroll_this"
-                    v-if="!computed_data.vx_is_bet_single"
+                    v-if="!BetData.is_bet_single"
                   />
                 </template>
               </q-scroll-area>
               <!-- 滚动：尾部 --------------------------------->
               <!--滚动条底部-->
-              <template v-if="computed_data.is_virtual_bet">
+              <template v-if="BetData.is_virtual_bet">
                 <virtual-bet-scroll-footer
                   ref="resizeable_footer"
                   :bet_this="data_ref.bet_this"
@@ -416,21 +416,7 @@ const computed_data = reactive({
   get_user: userReducer.user_info,
   // 当前语言
   lang: langReducer.lang,
-  // 单关部分 是否为串关
-  vx_is_bet_single: betInfoReducer.is_bet_single,
-  // 串关是否正在处理中
-  is_handle: betInfoReducer.is_handle,
-  // 单关是否正在处理中
-  is_single_handle: betInfoReducer.is_single_handle,
-  // 是否为虚拟体育投注
-  is_virtual_bet: betInfoReducer.is_virtual_bet,
-  // 虚拟投注是否正在进行
-  is_virtual_handle: betInfoReducer.is_virtual_handle,
-  // 获取虚拟投注列表
-  virtual_bet_list: betInfoReducer.virtual_bet_list,
-  bet_list: betInfoReducer.bet_list,
-  bet_single_list: betInfoReducer.bet_single_list,
-  bet_single_obj: betInfoReducer.bet_single_obj,
+
   vx_layout_left_show: layoutReducer.layout_left_show,
   cur_odd: globalReducer.odds.cur_odds,
   left_menu_toggle: layoutReducer.left_menu_toggle,
@@ -442,7 +428,6 @@ const computed_data = reactive({
   // 全局点击事件
   get_global_click: globalReducer.global_click,
   layout_size: layoutReducer.layout_size,
-  is_bet_merge: betInfoReducer.is_bet_merge,
   menu_collapse_status: menuReducer.menu_collapse_status,
   //收起右侧详情 展开多列玩法
   get_unfold_multi_column: globalReducer.is_unfold_multi_column,
@@ -456,7 +441,6 @@ const unsubscribe = store.subscribe(() => {
     menuReducer,
     layoutReducer,
     globalReducer,
-    betInfoReducer,
     detailsReducer,
     langReducer,
   } = store.getState();
@@ -468,21 +452,6 @@ const unsubscribe = store.subscribe(() => {
   computed_data.get_user = userReducer.user;
   // 当前语言
   computed_data.lang = langReducer.lang;
-  // 单关部分 是否为串关
-  computed_data.vx_is_bet_single = betInfoReducer.is_bet_single;
-  // 串关是否正在处理中
-  computed_data.is_handle = betInfoReducer.is_handle;
-  // 单关是否正在处理中
-  computed_data.is_single_handle = betInfoReducer.is_single_handle;
-  // 是否为虚拟体育投注
-  computed_data.is_virtual_bet = betInfoReducer.is_virtual_bet;
-  // 虚拟投注是否正在进行
-  computed_data.is_virtual_handle = betInfoReducer.is_virtual_handle;
-  // 获取虚拟投注列表
-  computed_data.virtual_bet_list = betInfoReducer.virtual_bet_list;
-  computed_data.bet_list = betInfoReducer.bet_list;
-  computed_data.bet_single_list = betInfoReducer.bet_single_list;
-  computed_data.bet_single_obj = betInfoReducer.bet_single_obj;
   computed_data.vx_layout_left_show = layoutReducer.layout_left_show;
   computed_data.cur_odd = globalReducer.odds.cur_odds;
   computed_data.left_menu_toggle = layoutReducer.left_menu_toggle;
@@ -494,7 +463,6 @@ const unsubscribe = store.subscribe(() => {
   // 全局点击事件
   computed_data.get_global_click = globalReducer.global_click;
   computed_data.layout_size = layoutReducer.layout_size;
-  computed_data.is_bet_merge = betInfoReducer.is_bet_merge;
   computed_data.menu_collapse_status = menuReducer.menu_collapse_status;
   //收起右侧详情 展开多列玩法
   computed_data.get_unfold_multi_column = globalReducer.is_unfold_multi_column;
@@ -506,15 +474,15 @@ const unsubscribe = store.subscribe(() => {
 const show_bet_zone = computed(() => {
   //是不是可以显示内嵌框
   if (
-    !computed_data.is_virtual_bet &&
-    ((computed_data.vx_is_bet_single &&
-      computed_data.bet_single_list.length > 0) ||
-      (!computed_data.vx_is_bet_single && computed_data.bet_list.length > 0))
+    !BetData.is_virtual_bet &&
+    ((BetData.is_bet_single &&
+    BetData.bet_single_list.length > 0) ||
+      (!BetData.is_bet_single && BetData.bet_list.length > 0))
   ) {
     return true;
   } else if (
-    computed_data.is_virtual_bet &&
-    computed_data.virtual_bet_list.length > 0
+    BetData.is_virtual_bet &&
+    BetData.virtual_bet_list.length > 0
   ) {
     return true;
   }
@@ -557,13 +525,6 @@ const methods_map_store = [
  
   "SET_INIT_ODD",
   "SET_INIT_MATCH_SORT",
-  // 设置单关是否正在投注处理中
-  "set_is_single_handle",
-  // 设置串关是否正在处理
-  "set_is_handle",
-  // 虚拟投注正在处理中
-  "set_is_virtual_handle",
-  "virtual_bet_clear",
   "set_cur_odd",
   // 左侧菜单展开折叠状态
   "set_left_menu_toggle",
@@ -578,8 +539,6 @@ const methods_map_store = [
   "SET_LAYOUT_LIST_SIZE",
   // 保存列表的宽度
   "SET_LAYOUT_LIST_WIDTH",
-  "set_is_bet_merge",
-  "set_is_bet_single",
  
   // 设置左侧布局
   "set_layout_left_show",
@@ -662,10 +621,10 @@ let bet_is_handle_status_timer;
 function open_menu_loadding() {
   data_ref.data_ref = true;
   // 投注正在处理中
-  if (computed_data.is_virtual_bet) {
+  if (BetData.is_virtual_bet) {
     true;
     methods_map_store["set_is_virtual_handle"];
-  } else if (computed_data.vx_is_bet_single) {
+  } else if (BetData.is_bet_single) {
     methods_map_store["set_is_single_handle"](true);
   } else {
     methods_map_store["set_is_handle"](true);
@@ -676,9 +635,9 @@ function open_menu_loadding() {
   clearTimeout(bet_is_handle_status_timer);
   bet_is_handle_status_timer = setTimeout(() => {
     // 投注中状态初始化
-    if (computed_data.is_virtual_bet) {
+    if (BetData.is_virtual_bet) {
       methods_map_store["set_is_virtual_handle"](false);
-    } else if (computed_data.vx_is_bet_single) {
+    } else if (BetData.is_bet_single) {
       methods_map_store["set_is_single_handle"](false);
     } else {
       methods_map_store["set_is_handle"](false);
@@ -691,9 +650,9 @@ function open_menu_loadding() {
 function close_menu_loadding() {
   data_ref.data_ref = false;
   // 取消投注处理中
-  if (computed_data.is_virtual_bet) {
+  if (BetData.is_virtual_bet) {
     methods_map_store["set_is_virtual_handle"](false);
-  } else if (computed_data.vx_is_bet_single) {
+  } else if (BetData.is_bet_single) {
     methods_map_store["set_is_single_handle"](false);
   } else {
     methods_map_store["set_is_handle"](false);
@@ -708,8 +667,8 @@ function close_menu_loadding() {
 function computed_bet_height() {
   if (computed_data.left_menu_toggle) return;
   if (
-    (!computed_data.is_virtual_bet && computed_data.vx_is_bet_single) ||
-    (computed_data.is_virtual_bet && computed_data.virtual_bet_list.length == 1)
+    (!BetData.is_virtual_bet && BetData.is_bet_single) ||
+    (BetData.is_virtual_bet && BetData.virtual_bet_list.length == 1)
   ) {
     if (timeOutIds.timer3) {
       clearTimeout(timeOutIds.timer3);
@@ -727,14 +686,14 @@ function computed_bet_height() {
         data_ref.max_height =
           left_height - header.$el.clientHeight - footer.$el.clientHeight;
         // 若为合并模式
-        if (computed_data.is_bet_merge) {
+        if (BetData.is_bet_merge) {
           // 获取投注区域
           embedded_merge = bet_mode_zone.value;
         }
         let merge_height = 0;
         if (embedded_merge) {
           merge_height = embedded_merge.clientHeight;
-        } else if (!computed_data.is_virtual_bet && !new_menu.is_esports()) {
+        } else if (!BetData.is_virtual_bet && !new_menu.is_esports()) {
           merge_height = 35;
         }
         // 内容计算 内嵌单关高度 + 合并区域的高度
@@ -743,15 +702,15 @@ function computed_bet_height() {
         if (data_ref.content_height) {
           data_ref.single_height = data_ref.content_height;
         } else {
-          data_ref.content_height = computed_data.is_virtual_bet
+          data_ref.content_height = BetData.is_virtual_bet
             ? data_ref.single_height + 24
             : data_ref.single_height;
         }
         if (
-          computed_data.bet_list.length > 1 &&
+          BetData.bet_list.length > 1 &&
           embedded_single.value.$data.view_ctr_obj.order_confirm_complete ==
             0 &&
-          !computed_data.vx_is_bet_single
+          !BetData.is_bet_single
         ) {
           data_ref.content_height += 90;
         }
@@ -780,7 +739,7 @@ function computed_bet_height() {
         data_ref.content_height = embedded_mix.value.clientHeight;
 
         if (
-          computed_data.bet_list.length > 1 &&
+          BetData.bet_list.length > 1 &&
           embedded_mix.value.$data.view_ctr_obj.order_confirm_complete == 0
         ) {
           data_ref.content_height += 90;
@@ -1000,7 +959,7 @@ function resize() {
   let center_width = parseInt(main_width - left_width - right_width);
   // 头部高度
   let header_height = utils.is_iframe
-    ? computed_data.computed_data.menu_collapse_status
+    ? computed_data.menu_collapse_status
       ? 36
       : 86
     : 96;
@@ -1067,38 +1026,38 @@ function closeLoading(state) {
   }, 600);
 }
 function toggle_merge() {
-  methods_map_store["set_is_bet_merge"](!computed_data.is_bet_merge);
+  methods_map_store["set_is_bet_merge"](!BetData.is_bet_merge);
 
-  if (computed_data.is_bet_merge) {
+  if (BetData.is_bet_merge) {
     // utils.send_zhuge_event("PC_合并");
   }
-  let len = computed_data.bet_single_list.length;
+  let len = BetData.bet_single_list.length;
   // 取消合并
-  if (!computed_data.is_bet_merge && len > 1) {
-    let id = computed_data.bet_single_list[len - 1];
-    let bet_single_obj = cloneDeep(get(computed_data.bet_single_obj, `${id}`));
-    this.vx_bet_single_clear();
-    this.vx_set_bet_single_list([id]);
+  if (!BetData.is_bet_merge && len > 1) {
+    let id = BetData.bet_single_list[len - 1];
+    let bet_single_obj = cloneDeep(get(BetData.bet_single_obj, `${id}`));
+    BetData.bet_single_clear();
+    BetData.set_bet_single_list([id]);
     bet_single_obj.key = id;
     // mode为清除原有的添加最新的
     bet_single_obj.mode = "clear_and_add";
-    this.vx_bet_single_obj_attr(bet_single_obj);
+    BetData.bet_single_obj_attr(bet_single_obj);
   }
 }
 function update_bet_data() {
   /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
       type:0表示普通赛事(默认值)，1虚拟赛事 */
-  let type = computed_data.is_virtual_bet ? 1 : 0;
+  let type = BetData.is_virtual_bet ? 1 : 0;
   let ids = [],
     bet_type;
-  if (computed_data.is_virtual_bet) {
+  if (BetData.is_virtual_bet) {
     bet_type = "virtual_bet_obj";
-  } else if (computed_data.vx_is_bet_single) {
+  } else if (BetData.is_bet_single) {
     bet_type = "bet_single_obj";
   } else {
     bet_type = "bet_obj";
   }
-  for (let obj of Object.values(computed_data[bet_type])) {
+  for (let obj of Object.values(BetData[bet_type])) {
     let match_id = get(obj, "cs.match_id", "");
     let handicap_id = get(obj, "cs.handicap_id", "");
     let play_id = get(obj, "cs.play_id", "");
@@ -1126,12 +1085,12 @@ function update_bet_data() {
       .then((res) => {
         let data = get(res, "data.data");
         if (isArray(data) && data.length > 0) {
-          if (computed_data.is_virtual_bet) {
+          if (BetData.is_virtual_bet) {
             this.virtual_common.update_bet_item_info( data);
           } else {
             yabo_common.update_bet_item_info( data);
           }
-          if (computed_data.vx_is_bet_single) {
+          if (BetData.is_bet_single) {
             useMittEmit(MITT_TYPES[EMIT_INIT_BET_LIST_ITEM_CMD]);
           } else {
             useMittEmit(MITT_TYPES[EMIT_UPDATE_HOME_AWAY_CMD]);
@@ -1325,9 +1284,9 @@ watch(
 
 watch(
   () => [
-    computed_data.vx_is_bet_single, //单关
-    computed_data.bet_list?.length, //串关长度
-    computed_data.bet_single_list?.length, //单关长度
+    BetData.is_bet_single, //单关
+    BetData.bet_list?.length, //串关长度
+    BetData.bet_single_list?.length, //单关长度
   ],
   () => {
     //计算一遍投注框高度
@@ -1358,17 +1317,17 @@ watch(
   () => data_ref.bet_this.bet_flag,
   (new_) => {
     data_ref.bet_flag = new_;
-    if (computed_data.vx_is_bet_single) {
+    if (BetData.is_bet_single) {
       nextTick(() => {
         if (bet_scroll_area.value) {
           let embedded_merge;
-          if (computed_data.is_bet_merge) {
+          if (BetData.is_bet_merge) {
             embedded_merge = bet_mode_zone.value;
           }
           let merge_height = 0;
           if (embedded_merge) {
             merge_height = embedded_merge.clientHeight;
-          } else if (!computed_data.is_virtual_bet && !new_menu.is_esports()) {
+          } else if (!BetData.is_virtual_bet && !new_menu.is_esports()) {
             merge_height = 40;
           }
           bet_scroll_area.value.style.height = `${

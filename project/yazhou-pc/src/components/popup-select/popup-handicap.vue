@@ -76,7 +76,7 @@ function on_popup() {
     if (is_single_handle.value || is_handle.value) return; // 单关或者串关投注正在进行中，禁止切换
     // 冠军
     // let is_winner = $menu.menu_data.match_tpl_number == 18
-    let type_name = vx_cur_menu_type.type_name;
+    let type_name = cur_menu_type.type_name;
     // 串关 && 冠军 不能切换赔率 电竞冠军菜单
     // if (["winner_top"].includes(type_name) ||
     //     (is_winner && type_name != 'virtual_sport') ||
@@ -118,11 +118,11 @@ function set_user_preference(curr_odd) {
 }
 
 /** 获取当前菜单类型 */
-let vx_cur_menu_type = reactive({
+let cur_menu_type = reactive({
     type_name: ''
 })
 watch(
-    () => vx_cur_menu_type.type_name,
+    () => cur_menu_type.type_name,
     (new_, old_) => {
         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
         if (new_ == 'winner_top') {
