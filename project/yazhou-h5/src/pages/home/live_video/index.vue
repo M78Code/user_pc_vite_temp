@@ -119,7 +119,7 @@ import match_list_mixin from "src/project/mixins/match-list/match-list-mixin";
 // import msc from "project_path/src/mixins/common/msc.js";
 // import ListMap from "project_path/src/utils/list-map";
 import common from "src/project/mixins/constant";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import SLive from "src/project/components/skeleton/live"
 import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'

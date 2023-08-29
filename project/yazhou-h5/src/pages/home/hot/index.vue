@@ -54,7 +54,6 @@
 
 <script setup>
 // import { api_home } from "src/project/api/index";
-// import utils from "/utils/utils";
 // import hot_featured from "src/project/components/skeleton/home_hot/hot_featured"    // 热门精选 骨架屏
 // import hot_schedule from "src/project/components/skeleton/home_hot/hot_schedule";   // 热门赛程 骨架屏 炸锅巴土豆 大鸡排 * 2 椰奶冰粉 * 3 690 400 230
 import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢

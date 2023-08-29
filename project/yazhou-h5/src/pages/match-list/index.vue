@@ -116,7 +116,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import utils from '../../core/utils/index.js'
+import {utils } from 'src/core/index.js'
 
 // import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'

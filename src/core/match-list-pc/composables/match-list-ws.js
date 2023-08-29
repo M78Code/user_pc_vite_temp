@@ -6,7 +6,7 @@ import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 
 //  订阅所需 赛事ID
 

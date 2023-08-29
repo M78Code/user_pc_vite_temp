@@ -145,7 +145,7 @@ import { TeamNameWapper } from "src/components/details/team-name";   // 详情�
 // import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
-import utils from "src/core/utils/utils.js";    // 公共方法
+import {utils } from 'src/core/index.js';    // 公共方法
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
 import { format_time_zone_time, format_H_M,format_total_score } from "src/core/format/index.js"

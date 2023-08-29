@@ -32,7 +32,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

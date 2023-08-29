@@ -121,7 +121,7 @@
 
 <script setup>
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 import matchDate from "src/components/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {

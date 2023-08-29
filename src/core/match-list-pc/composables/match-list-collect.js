@@ -16,8 +16,7 @@ const collect_count = ref(0);
 const enable_collect_api = ref(false);
 // 服务器端设置的 三级服务开关
 const collect_switch = ref(true);
-// 用户ID
-const vx_get_uid = UserCtr.uid;
+ 
 // 数据请求状态
 const load_data_state = ref("loading");
 /**

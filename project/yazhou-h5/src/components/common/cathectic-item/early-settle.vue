@@ -146,7 +146,7 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import utils from 'src/core/utils/utils.js'
+import {utils } from 'src/core/index.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'

@@ -86,7 +86,7 @@ import popupLanguage from "project_path/src/components/popup-select/popup-langua
 /* api */
 import { api_account, api_common } from "src/api/index.js";
 
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
 import userCtr from 'src/core/user-config/user-ctr.js'

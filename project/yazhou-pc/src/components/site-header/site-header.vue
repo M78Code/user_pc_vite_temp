@@ -86,7 +86,7 @@ import headerAdvertisement from "project_path/src/components/site-header/header-
 /** 工具.js */
 import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { ss } from 'src/core/utils/web-storage.js'
