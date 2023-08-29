@@ -40,7 +40,7 @@
   import { onMounted, onUnmounted, ref, computed } from 'vue'
   import lodash from 'lodash'
   import store  from "src/store-redux"
-  import UserCtr from "src/core/user-config/user-ctr.js";
+  import {UserCtr } from "src/core/index.js";
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
   

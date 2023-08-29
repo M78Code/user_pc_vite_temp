@@ -124,7 +124,7 @@ import {utils } from 'src/core/index.js'
 import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";  
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";  
 import MatchPage from 'src/core/match-list-h5/match-class/match-page.js'
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import { MenuData  } from "src/core/index.js"
 import MatchListComponents from "./components/match-list.vue"; 
 
 const props = defineProps({

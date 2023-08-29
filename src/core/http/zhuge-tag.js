@@ -10,7 +10,7 @@ import { get } from "lodash";
 import { DateForMat } from "src/core/format/index.js";
 import { deepMerge, GetUrlParams } from "../utils";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 class ZhuGe {
   config = {
     enable: LOCAL_FUNCTION_SWITCH.LOG,

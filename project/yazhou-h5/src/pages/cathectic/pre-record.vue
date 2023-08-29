@@ -62,7 +62,7 @@ import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
 

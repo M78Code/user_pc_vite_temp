@@ -34,7 +34,7 @@
 import store from "src/store-redux/index.js";
 import { useMittOn , useMittEmit , MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 import { format_money2 , format_money3} from'src\core\format\index.js'
 
 

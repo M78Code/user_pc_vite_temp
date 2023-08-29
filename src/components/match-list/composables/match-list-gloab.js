@@ -1,6 +1,6 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
-import pageSourceData from "src/core/page-source-pc/page-source-pc.js";
+import { PageSourceData  } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { send_zhuge_event } from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
