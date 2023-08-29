@@ -48,7 +48,7 @@ import simpleHeader from "project_path/src/components/site-head/simple-header.vu
 import tabs from "./tab.vue";
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { ss, ls } from 'src/core/utils/web-storage.js'
+import userCtr from 'src/core/user-config/user-ctr.js'
 
 /** 国际化 */
 
@@ -141,7 +141,7 @@ function get_list() {
         console.error(err);
         loading_page.value = false
         has_data_list()
-        if (!token.value) {
+        if (!userCtr.get_user_token()) {
             useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER)
         }
     })
@@ -153,17 +153,11 @@ onMounted(get_list)
 const store_data = store.getState()
 const unsubscribe = store.subscribe(() => {
     lang.value = store_data.langReducer.lang
-    // user_info.value = store_data.userReducer.user_info
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 /** 国际化语言 default: zh */
 const lang = ref(store_data.langReducer.lang)
-// const user_info = ref(store_data.userReducer.user_info)
-
-/** 用户token */
-const token = ref(ss.get("TOKEN") || ls.get("TOKEN"))
-
 
 </script>
   

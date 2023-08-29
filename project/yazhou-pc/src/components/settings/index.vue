@@ -96,6 +96,7 @@ import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "project_path/src/i18n/langs/index.mjs";
 import { loadLanguageAsync } from "/src/boot/i18n";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import userCtr from 'src/core/user-config/user-ctr.js'
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
@@ -130,8 +131,6 @@ const show_g_settings = ref(props.show_settings)
 
 /** 主题 */
 const theme = ref('')
-/** 用户信息 */
-const get_user = ref({})
 /** 上次赔率 */
 const cur_odd = ref('EU')
 /** 上次赔率 */
@@ -155,7 +154,6 @@ const left_menu_toggle = ref('')
 const unsubscribe = store.subscribe(() => {
     const new_state = store.getState()
     theme.value = new_state.theme
-    get_user.value = new_state.user
     cur_odd.value = new_state.cur_odds
     pre_odds.value = new_state.pre_odds
     lang.value = new_state.lang
@@ -185,7 +183,7 @@ const set_pre_odd = (data) => store.dispatch({
 })
 
 /** 语言列表 */
-const languageList = computed(() => lodash.get(get_user.value, 'languageList', []))
+const languageList = computed(() => lodash.get(userCtr.get_user(), 'languageList', []))
 
 
 /**
@@ -292,7 +290,7 @@ function on_click_lang(lang_) {
         }
     }
     if (lang.value != lang_) {
-        let user = get_user.value
+        let user = userCtr.get_user()
         api_account.set_user_lang({ token: user.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
