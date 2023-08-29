@@ -24,7 +24,6 @@ import { useRoute, useRouter } from "vue-router";
 import {get_odds_active}from 'src/core/bet/module/status.js'
 
 import BetData from "src/core/bet/class/bet-data-class.js";
-import SetData from "src/core/bet/bet-data-ctr-class.js";
 
 export const useGetItem = ({ props }) => {
   const route = useRoute();
@@ -57,19 +56,6 @@ export const useGetItem = ({ props }) => {
     DOM_ID_SHOW:''
   });
 
-  // ===========================store====================
-  const {
-    vx_cur_menu_type,
-    vx_is_bet_single,
-    vx_get_is_virtual_bet,
-    vx_get_virtual_bet_list,
-    vx_get_bet_single_list,
-    vx_get_bet_list,
-    vx_get_cur_odd,
-    vx_get_bet_category,
-    vx_get_bet_mode,
-    vx_get_bet_item_lock,
-  } = useGetStore();
   // ===========================computed===================================
   // 投注项信息 ++
   const ol_data = computed(() => {
@@ -564,7 +550,7 @@ export const useGetItem = ({ props }) => {
   );
 
   //  投注类别 1: 普通赛事 2: 虚拟体育 3: 电竞
-  watch(vx_get_bet_category, (new_) => {
+  watch(BetData.bet_category, (new_) => {
     if ([2, 3].includes(new_ * 1)) {
       store.dispatch({
         type: "set_is_virtual_bet",
@@ -576,21 +562,21 @@ export const useGetItem = ({ props }) => {
         data: false,
       });
     }
-    // this.vx_virtual_bet_clear();  //TODO
+    // BetData.bet_clear();  //TODO
   });
 
   /**
    * 监听预约投注计算球头字段
    */
-  // "vx_get_bet_appoint_obj.computed_appoint_ball_head"() {
+  // "BetData.bet_appoint_obj.computed_appoint_ball_head"() {
   //   return;
   //   let { _mhs, _hs, os } = this.ol_data_item;
   //   this.odds_state = this.get_odds_state(_mhs, _hs, os);
   //   // 如果为单关
-  //   if (this.vx_is_bet_single) {
+  //   if (BetData.is_bet_single) {
   //     // 获取球头是否与盘口相等字段
   //     let is_head_eq_hadicap = lodash.get(
-  //       this.vx_get_bet_appoint_obj,
+  //       BetData.bet_appoint_obj,
   //       "is_head_eq_hadicap"
   //     );
   //     // 当预约投注的球头与盘口值不相等并且此时投注项处于选中状态则取消选中
