@@ -170,40 +170,7 @@ export const useGetResultConfig = () => {
       paramsVideo: {}, //精彩回放参数
 
   });
-  //todo 
-    // computed: {
-  //   ...mapGetters({
-  //     lang: "get_lang",
-  //     // 全局点击事件
-  //     get_global_click: "get_global_click",
-  //     vx_get_user: "get_user",
-  //   }),
-  //   show_play_back() {
-  //     return !!(
-  //       this.vx_get_user.merchantEventSwitchVO &&
-  //       this.vx_get_user.merchantEventSwitchVO.eventSwitch
-  //     );
-  //   },
-  // },
-  //todo
-  // watch: {
-  //   model: {
-  //     handler(n) {
-  //       if (n) {
-  //         this.startTimeShow = false;
-  //         // 判断是单日期还是范围日期
-  //         if (n.from) {
-  //           this.showDate(n.from, n.to);
-  //         } else {
-  //           this.showDate(n, n);
-  //         }
-  //       }
-  //     },
-  //   },
-  //   get_global_click() {
-  //     this.hideSelect();
-  //   },
-  // };
+ 
   onMounted(() => {
     // 从链接获取参数
     let { csid, matchEnd } = route.query;
