@@ -15,7 +15,6 @@
 <script setup>
 // import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 
-console.log('lockie_test_console', match_list_card);
 import { computed, defineProps, onMounted, onUnmounted, inject } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
@@ -29,7 +28,6 @@ const card_style_obj = ref(match_list_card.all_card_obj[props.card_key])
 const is_mounted = ref(false);
 const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 const match_list_card = inject('match_list_card')
-console.log('lockie_test_console', match_list_card);
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
