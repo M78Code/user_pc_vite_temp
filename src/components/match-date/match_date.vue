@@ -58,9 +58,9 @@
 </template>
 
 <script>
-// import global_mixin from "src/public/mixins/global/global_mixin.js";
-// import msc_mixin from "src/public/mixins/common/msc.js";
-// import time_format_mixin from "src/public/mixins/common/time_format";
+// import global_mixin from "src//mixins/global/global_mixin.js";
+// import msc_mixin from "src//mixins/common/msc.js";
+// import time_format_mixin from "src//mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
 import utils from "src/core/utils/utils";
 import lodash from "lodash";

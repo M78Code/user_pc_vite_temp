@@ -93,7 +93,7 @@
 
 <script>
 import video_ctrl from "src/project/yabo/mixins/match_details/match_info/video_ctrl";
-import refresh from "src/public/components/refresh/refresh.vue";
+// import refresh from "src//components/refresh/refresh.vue";
 export default {
   mixins: [video_ctrl],
   components: {refresh},
