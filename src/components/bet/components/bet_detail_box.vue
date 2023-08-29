@@ -62,7 +62,7 @@
               <template v-if="playname && [3, 6].includes(+get_bet_status)">{{playname}}</template>
               <template v-else>{{value_show.hps[0].hpnb || value_show.hps[0].hpn}}</template>
               <!-- 基准分 -->
-              <template v-if="value_show.csid == 1">&ensp;{{value_show | calc_bifen}}</template>
+              <template v-if="value_show.csid == 1">&ensp;{{  calc_bifen(value_show) }}</template>
             </span>
             <!-- 右 -->
             <template v-if="[3, 6, 8].includes(+get_bet_status)">
@@ -193,7 +193,7 @@
   import store from "src/store-redux/index.js";
   import BetData from "../class/bet-data-class";
   import UserCtr from "src/core/user-config/user-ctr.js";
-
+  import { calc_bifen  } from "src/core/index.js";
 
 
   const money = ref('')//金额

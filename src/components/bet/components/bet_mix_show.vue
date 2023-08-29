@@ -33,8 +33,8 @@
 
           <div class="col-3 row justify-end items-center">
             <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
-              <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{ bet_success_obj.oddsValues |
-                format_odds(value_show.csid) }}</template>
+              <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{ bet_success_obj.oddsValues 
+                 }}</template>
               <template v-else>{{ odds_value() }}</template>
             </span>
             <!-- 红升绿降 -->
@@ -55,9 +55,9 @@
             <!-- 基准分 -->
             <template
               v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">&ensp;
-              <template v-if="bet_success_obj.scoreBenchmark">{{ bet_success_obj.scoreBenchmark | calc_bifen2
+              <template v-if="bet_success_obj.scoreBenchmark">{{  calc_bifen2( bet_success_obj.scoreBenchmark  )
               }}</template>
-              <template v-else>{{ value_show | calc_bifen }}</template>
+              <template v-else>{{  calc_bifen(value_show)  }}</template>
             </template>
           </span>
           <template v-if="BetData.is_bet_success_status && !(BetData.bet_is_mix && BetData.bet_list.length > 1)">
@@ -194,6 +194,7 @@ import store from "src/store-redux/index.js";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { calc_bifen,calc_bifen2  } from "src/core/index.js";
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
