@@ -4,7 +4,7 @@
  * @Description: 串关投注项组件minxin 正常
  */
 
-import betting from "src/public/mixins/betting/betting.js";
+// import betting from "src/public/mixins/betting/betting.js";
 import { ref, reactive, onMounted, defineComponent, computed } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetDataCtr from "src/core/bet/bet-data-ctr-class.js";
