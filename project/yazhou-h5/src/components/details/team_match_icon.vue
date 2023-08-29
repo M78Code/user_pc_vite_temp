@@ -38,7 +38,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {mapGetters, mapMutations} from "vuex"
 import { api_common } from "src/project/api/index.js";
 import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
-import utils from "src/public/utils/utils";
+import utils from "src/core/utils/index.js";
 import { t } from "src/boot/i18n";;
 //国际化
 

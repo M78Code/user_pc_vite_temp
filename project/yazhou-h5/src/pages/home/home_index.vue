@@ -294,7 +294,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";  // mixins: [router_mixi
       calc_tab_select(tab)
       // 埋点采集热门赛事点击
       if (tab.index === 1) {
-        $utils.zhuge_event_send('H5_热门赛事', userCtr);
+        $utils.zhuge_event_send('H5_热门赛事', vx_get_user);
       }
     }
     //计算选中居中偏移值

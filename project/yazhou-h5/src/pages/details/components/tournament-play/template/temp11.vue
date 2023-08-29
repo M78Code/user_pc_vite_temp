@@ -29,19 +29,19 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp10",
   props:{
     item_data:Object
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
@@ -51,7 +51,7 @@ export default defineComponent({
       // hsw切换赔率的值
       hsw_single: ''
     });
-    // #TODO vuex 
+    // #TODO vuex
     // ...mapGetters(['get_bet_list']),
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',

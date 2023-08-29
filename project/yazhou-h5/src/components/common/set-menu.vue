@@ -25,9 +25,9 @@
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
-          <div class="user-name">Hi,{{userCtr.userName}}</div>
+          <div class="user-name">Hi,{{userCtr.user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.balance)}}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.user_info.balance)}}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -131,7 +131,6 @@ import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute, useRouter } from "vue-router"
-import userCtr from "src/core/user-config/user-ctr.js";
 
   let route = useRoute()
   let router = useRouter()
@@ -176,7 +175,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
       }
       let obj2 = {}
       try {
-        let lang_str = userCtr.languageList
+        let lang_str = userCtr.user_info.languageList
         if (lang_str) {
           let lang_arr = lang_str.split(',')
           Object.keys(obj).forEach(item => {
@@ -335,7 +334,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
       let zhuge_obj = {
         "版本类型": edition == 1 ? '简易' : '标准',
       }
-      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr, zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr.user_info, zhuge_obj);
     }
     /**
      * @description 获取用户余额

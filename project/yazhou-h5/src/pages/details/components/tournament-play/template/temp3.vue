@@ -102,10 +102,10 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import oddsNew from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
@@ -119,7 +119,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list","get_detail_data", 'get_is_hengping'])
     // },
@@ -136,7 +136,7 @@ export default defineComponent({
       return ['result_details', 'match_result'].includes($route.name)
     });
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
+      // #TODO emit
       // this.$emit("bet_click_", {ol_item});
     };
     return {

@@ -81,7 +81,7 @@
                 <div class="wrap-logo">
                   <img v-img="([lodash.get(item, 'malu[0]'), lodash.get(item, 'frman[0]'), lodash.get(item, 'csid'),{data:item,name:'_t21_img'}])" alt />
                   <img v-if="lodash.get(item, 'malu').length > 1"
-                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'}])" alt
+                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'})" alt
                     class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.man }}</div>
@@ -778,14 +778,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.token
+          token: get_user_token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.token
+          token: get_user_token
         }
       }
     }
@@ -801,7 +801,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: menu[index].menuId,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else if (410 == menu[index].menuId) {
@@ -813,7 +813,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: '410',
           // s,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else {
@@ -859,7 +859,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     }else{
@@ -883,7 +883,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: menuId,
           s: subId,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else {
@@ -896,7 +896,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
           query: {
             m: menuId,
             s: subId,
-            token: userCtr.token
+            token: get_user_token
           }
         });
       } else {
@@ -957,13 +957,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     // ...mapGetters({
     //   get_ball_seed_menu: 'get_ball_seed_menu',
     //   // 用户信息,用户金额,userId 需要监听变化
-    //   user_info: "userCtr",
+    //   user_info: "get_user",
     //   // 当前语言
     //   get_lang: 'get_lang',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   uid: "get_uid",
     //   // 用户令牌信息
-    //   userCtr.token: "userCtr.token",
+    //   get_user_token: "get_user_token",
     //   // 左边菜单选中下标
     //   get_home_menu_index: "get_home_menu_index",
     //   // 首页菜单数据

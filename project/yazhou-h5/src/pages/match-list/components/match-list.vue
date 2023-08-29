@@ -167,7 +167,7 @@ const get_theme = ref(store_state.get_theme)
 // 当用户未登录时返回uuid, 当用户登录时返回userId
 const get_uid = ref(store_state.get_uid)
 // 用户信息,用户金额,userId 需要监听变化
-const userCtr = ref(userCtr)
+const get_user = ref(store_state.get_user)
 // 当前选中的菜单
 const get_current_menu = ref(store_state.get_current_menu)
 // 滚到顶部
@@ -338,7 +338,7 @@ const toggle_collect = ($event) => {
 
   let api, txt, number = 0;
   let params = {
-    cuid: userCtr.value ? userCtr.value.userId:get_uid.value,
+    cuid: get_user.value ? get_user.value.userId:get_uid.value,
   };
   if (item == 'tf') {
     //联赛收藏或取消收藏
@@ -427,7 +427,7 @@ const unsubscribe = store.subscribe(() => {
   get_match_id_bet_success.value = new_state.get_match_id_bet_success
   get_theme.value = new_state.get_theme
   get_uid.value = new_state.get_uid
-  userCtr.value = userCtr
+  get_user.value = new_state.get_user
   get_current_menu.value = new_state.get_current_menu
   get_goto_list_top.value = new_state.get_goto_list_top
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type

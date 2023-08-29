@@ -352,10 +352,10 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-// import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
 import utils from 'src/core/utils/utils.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
@@ -370,7 +370,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list","get_cur_odd","get_flag_get_ol_list", "get_menu_type","get_detail_data"]),
     //   change_ms(){
@@ -392,13 +392,13 @@ export default defineComponent({
     const get_detail_data = computed(() => {
       return store_state.detailsReducer.details_data || {}
     });
-    
+
 
     const change_ms = computed(() => {
       return lodash.get(item_data,'hl[0].ol[0].os')
     });
     const go_to_bet = (ol_item) => {
-      // #TODO emit 
+      // #TODO emit
       // $emit("bet_click_", {ol_item});
     };
     watch(

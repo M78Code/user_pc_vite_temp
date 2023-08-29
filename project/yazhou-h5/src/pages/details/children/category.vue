@@ -38,12 +38,12 @@
     <!-- <div style="position: fixed; top: 0;color: red">11{{ is_no_data }}</div> -->
     <div v-if="!is_no_data && !is_loading" style="width:100%;height:auto;padding-bottom: 0.18rem;">
       <!-- <div slot="scrollList"> -->
-        
+
       <slot name="scrollList">
         <!-- 置顶操作时增加动画 -->
         <transition-group name="transition-play-list" tag="div" class="transition-zhiding">
           <!-- 置顶 -->
-          
+
           <template v-for="(item,keyscorll) in match_list_new">
             <template v-if="item.hton!=0">
               <tournament-play-new @change_show="change_show" :key="item.topKey + item.hpid" :list="matchInfoCtr.list" :item_data="item" :scorllIndex="keyscorll"></tournament-play-new>
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters, mapMutations } from "vuex"
 import tournament_play_new from "project_path/src/pages/details/components/tournament-play/tournament-play-new.vue"
 // 引入接口封装文件
@@ -84,7 +84,7 @@ import { t } from "src/boot/i18n";;
 
 // #TODO mixins
 // 引入skt_data_info
-// import websocket_data from "src/public/mixins/websocket/data/skt_data_info.js";
+// import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info.js";
 // 引入投注逻辑mixin
 // import betting from "project_path/src/mixins/betting/betting.js";
 
@@ -102,7 +102,7 @@ import { category_info } from "./category.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "category",
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[websocket_data, betting],
   components: {
     'tournament-play-new': tournament_play_new,
@@ -216,7 +216,7 @@ export default defineComponent({
       // #TODO 测试假数据
 
       // console.log("match_list_new", match_list_normal.value)
-      // 原created 
+      // 原created
       on_listeners();
 
       // 满足刷新页面保持向上展开的状态
@@ -248,12 +248,12 @@ export default defineComponent({
         cache_limiting_throttling_get_list(params, socket_upd_list, 'match_detail_odds_info')*/
       }
 
-      // 原mounted 
+      // 原mounted
       // $nextTick(() => {
       //   change_minheight()
       // })
     })
-    
+
     /**
     *@description: 销毁前:清除回调函数
     *@param {Undefined}
