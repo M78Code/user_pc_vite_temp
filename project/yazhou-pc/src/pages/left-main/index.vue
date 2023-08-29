@@ -41,7 +41,7 @@
         </div>
         <!-- 返回菜单|单关串关按钮切换 -->
         <template v-if="['bet_list', 'bet_history'].includes(layout_left_show)">
-          <template v-if="get_is_virtual_bet">
+          <template v-if="BetData.is_virtual_bet">
             <!-- <virtual-bet-scroll-header :bet_recode_this="bet_recode_this"/> -->
           </template>
           <template v-else>
@@ -63,7 +63,7 @@
       
       <!-- 滚动：尾部 --------------------------------->
       <template v-slot:footer v-if="!['bet_history'].includes(layout_left_show)">
-        <template v-if="get_is_virtual_bet">
+        <template v-if="BetData.is_virtual_bet">
           <!-- <virtual-bet-scroll-footer
           v-show="layout_left_show != 'menu'"
           :bet_recode_this="bet_recode_this"
@@ -142,23 +142,6 @@ const layout_left_show = ref(state.layoutReducer.layout_left_show)
 // 当前菜单类型
 const cur_menu_type = ref(state.menuReducer.cur_menu_type)
 
-// 获取是否为虚拟投注
-const is_virtual_bet = ref(state.betInfoReducer.is_virtual_bet)
-// 串关列表
-const bet_list = ref(state.betInfoReducer.bet_list)
-// 是否单关投注
-const is_bet_single = ref(state.betInfoReducer.is_bet_single)
-
-// 单关投注列表
-const bet_single_list = ref(state.betInfoReducer.bet_single_list)
-
-// 获取虚拟投注列表
-const virtual_bet_list = ref(state.betInfoReducer.virtual_bet_list)
-// 上次盘口类型
-const get_pre_odd = ref(state.globalReducer.odds.pre_odds)
-// 当前盘口类型
-const get_cur_odd = ref(state.globalReducer.odds.cur_odds)
-
 
 onMounted(() => {
   get_unsettle_tickets_count_config();
@@ -168,10 +151,10 @@ onMounted(() => {
 const show_bet_menu = () => {
   if (layout_left_show != 'bet_list' && bet_count > 0) {
     // today今日 play滚球 early早盘 hot_one热门赛事  winner_top冠军  hot热门赛事
-    if (is_bet_single &&
+    if (BetData.is_bet_single &&
       ['today', 'play', 'early', 'hot_one', 'winner_top', 'hot'].includes(cur_menu_type.type_name)) {
       return true;
-    } else if (bet_list.length > 0) {
+    } else if (BetData.bet_list.length > 0) {
       return true;
     }
     /**
@@ -185,14 +168,14 @@ const show_bet_menu = () => {
 // 投注数量
 const bet_count = () => {
   // 是否虚拟体育投注
-  if (is_virtual_bet) {
-    return virtual_bet_list.length;
+  if (BetData.is_virtual_bet) {
+    return BetData.virtual_bet_list.length;
   }
   // 是否单关投注
-  if (is_bet_single) {
-    return bet_single_list.length;
+  if (BetData.is_bet_single) {
+    return BetData.bet_single_list.length;
   }
-  return bet_list.length;
+  return BetData.bet_list.length;
 }
 /**
  * @description 左侧菜单与投注栏切换时调用
@@ -223,9 +206,9 @@ const set_user_preference = (cur, old) => {
   if (cur == 18) {
     userMarketPrefer = 'EU'
   } else if (old == 18) {
-    userMarketPrefer = get_pre_odd;
+    userMarketPrefer = UserCtr.odds.pre_odds;
   }
-  if (!userMarketPrefer || userMarketPrefer == get_cur_odd) {
+  if (!userMarketPrefer || userMarketPrefer == UserCtr.odds.cur_odds) {
     return
   }
   // 设置用户偏好
