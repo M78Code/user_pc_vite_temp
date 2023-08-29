@@ -193,6 +193,7 @@
   import store from "src/store-redux/index.js";
   import BetData from "../class/bet-data-class";
   import UserCtr from "src/core/user-config/user-ctr.js";
+  import { format_odds } from'src\core\format\index.js'
 
 
 

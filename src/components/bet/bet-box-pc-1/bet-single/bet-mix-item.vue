@@ -101,7 +101,7 @@
   </q-card>
 </template>
 <script setup>
-
+import {format_odds} from'src\core\format\index.js'
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 总的*/

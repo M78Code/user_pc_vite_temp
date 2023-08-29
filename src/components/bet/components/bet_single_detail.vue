@@ -35,6 +35,7 @@
 // const licia_format = require('licia/format');
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
+import { format_money3,format_money2 } from'src\core\format\index.js'
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适

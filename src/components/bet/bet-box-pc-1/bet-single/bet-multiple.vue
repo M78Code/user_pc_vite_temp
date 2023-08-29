@@ -76,6 +76,7 @@
 <script setup>
 // import betting from "src/public/mixins/betting/betting.js";
 import BetKeyboard from "../common/bet-keyboard.vue";
+import { format_currency } from'src\core\format\index.js'
 
 </script>
 <style scoped lang="stylus">
