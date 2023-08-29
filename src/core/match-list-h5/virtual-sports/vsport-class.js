@@ -1,6 +1,6 @@
 /*
  * @Description: 虚拟体育公共工具类(自动下发实时数据工具类,部分公共函数)
- * 
+ *
  * 使用demo
     let data={"csid":"1001","mgt":"1609469351434","mid":"9218879570202626","thirdMatchVideoUrl":"https://hls.mixmoon.net/hls-service/gg/master/spain2020/254/478/65-0-1/86-0-1/26-0-1/130-0-0/113-1-1/11-0-0.m3u8/-/CMYnwnJz9MHd-RJY3UWWvQ/1609469521","list":[{"away":"0","awayName":"osasuna","home":"1","homeName":"athletic_bilbao","updateTime":"10"},{"away":"0","awayName":"osasuna","home":"2","homeName":"athletic_bilbao","updateTime":"20"},{"away":"0","awayName":"osasuna","home":"3","homeName":"athletic_bilbao","updateTime":"30"}]};
     data.mgt = new Date().getTime()
@@ -13,13 +13,17 @@
  */
 import Vue from 'vue'
 import { api_v_sports } from "src/project/api/index.js";
- 
+
+// import LoopCallback from "/utils/loop_callback.js";
+
+
+
 
 const sleep = require('licia/sleep');
 export default class VSport {
   /**
    * @Description:构造函数
-   * @param {Object} sport_data // 虚拟体育赛事信息  
+   * @param {Object} sport_data // 虚拟体育赛事信息
    * @param {Function} callback // 回调函数
    */
   constructor(sport_data, callback) {
@@ -33,7 +37,7 @@ export default class VSport {
     this.interval_current_time = null;
     // 比赛的总时长 默认20s
     this.total_time = 20;
-    // 更新数据列表 
+    // 更新数据列表
     this.upd_list = null;
     // 赛事播放中联赛所有信息
     this.match_play_data_obj = {};
@@ -98,7 +102,7 @@ export default class VSport {
 
   /**
    * @Description:重新设置数据信息,重新启动定时器
-   * @param {Object} sport_data // 虚拟体育赛事信息  
+   * @param {Object} sport_data // 虚拟体育赛事信息
    * @param {Function} callback // 回调函数
    */
   set_data(sport_data, callback) {
@@ -214,7 +218,7 @@ export default class VSport {
    * @param {*} list 所有需要刷新的数据信息集合(本函数会自行删掉过期的无用数据)
    * @param {*} upd_time 更新的时间戳
    * @return {Object} 数据结构{index, item_obj, upd_time, upd},
-   *                  index为-1时upd_time间戳比list中最小的时间戳还小, 
+   *                  index为-1时upd_time间戳比list中最小的时间戳还小,
    *                  index为-2时,upd_time时间戳比list中最大的时间戳还大,
    *                  index值大于-1时,为正常的list中的索引位置
    *                  upd标识item_obj返回的数据是否较上次有变化

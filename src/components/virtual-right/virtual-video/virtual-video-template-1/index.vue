@@ -91,7 +91,7 @@
   </div>
 </template>
 <script>
-import loadData from "src/public/components/load_data/load_data.vue"
+// import loadData from "/components/load_data/load_data.vue"
 import arcProgress from "src/project/yabo/components/virtual_right/arc_progress.vue"
 import basketballResult from "src/project/yabo/components/virtual_right/basketball_result.vue"
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
