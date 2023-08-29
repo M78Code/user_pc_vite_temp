@@ -212,7 +212,7 @@
 // import ballSpin from 'src/project/components/bet/ball_spin.vue';
 // import betBar from "src/project/components/bet/bet_bar.vue";
 
-// import utils from 'src/public/utils/utils.js';
+// import utils from 'src/core/utils/utils.js';
 // import { api_betting } from "src/project/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
