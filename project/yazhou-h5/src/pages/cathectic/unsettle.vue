@@ -150,7 +150,7 @@ import store from 'src/store'
   const search_early_money = () => {
     let params = {orderNo:orderNumberItemList.join(',')}
     // if(orderNumberItemList.length === 0){return}
-    api_betting.oderPreSettleMoney(params).then(reslut=>{
+    api_betting.get_cashout_max_amount_list(params).then(reslut=>{
       let res = {}
       if (reslut.status) {
         res = reslut.data

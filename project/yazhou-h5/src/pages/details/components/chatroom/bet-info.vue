@@ -224,7 +224,7 @@ export default defineComponent({
         return;
       }
       const { messageId } = msgInfo || {};
-      api_chatroom.likeMessage({ chatRoomId: get_chatroom_id, messageId }, {base_url:get_chatroom_http_url}).then((res) => {
+      api_chatroom.post_chat_likemessage({ chatRoomId: get_chatroom_id, messageId }, {base_url:get_chatroom_http_url}).then((res) => {
         if (res && res.code == 0) {
           set_like_info([...get_like_info, messageId]);
         }

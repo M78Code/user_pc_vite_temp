@@ -166,7 +166,7 @@ export default {
         device: 'H5',
         eventCode: event_code
       }
-      api_analysis.get_replay_football(params)
+      api_analysis.post_playback_video_url(params)
           .then(res => {
             if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
               // 足球类型赛果需添加精彩回放菜单

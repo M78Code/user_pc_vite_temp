@@ -10,7 +10,7 @@
       {{i18n.t("list.after_time_start",[longTime])}}
     </span>
     <span v-else>
-      {{utils.format_time_zone_time(+detail_data.mgt) | format_H_M }}
+      {{   format_H_M(   utils.format_time_zone_time(+detail_data.mgt)     ) }}
     </span>
   </span>
 </template>
@@ -18,6 +18,8 @@
 <script>
 import utils from "src/public/utils/utils.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { format_H_M  } from "src/core/index.js";
+
 export default defineComponent({
   name: "show_start_time",
   props: ["detail_data"],
@@ -69,7 +71,8 @@ export default defineComponent({
     })
     return {
       ...toRefs(data),
-      initEvent
+      initEvent,
+      format_H_M,
     }
   }
 })

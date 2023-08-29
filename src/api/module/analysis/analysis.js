@@ -88,11 +88,6 @@ export const get_result_match_care_list = (params, config={}, url = "/v1/m/match
     return http.post(`${prefix}${url}`, params, config);
   };
   
-  // 精彩回放（足球）
-  export const get_replay_football = (params, config={}, url = "/v1/w/playbackVideoUrl") => {
-    return http.post(`${prefix}${url}`, params, config);
-  };
-  
   
   
   //赛果获取球类

@@ -442,6 +442,49 @@ this.bet_appoint_ball_head= null */
     this.odds_coversion_map = value
   }
 
+    /**
+ * @description: 根据oid或者坑位id获取投注项id
+ * @param {String} okid oid或者坑位id
+ * @return {String} 投注项id
+ */
+ get_id(okid) {
+}
+/**
+ * @description: 根据投注项id获取投注项的oid
+ * @param {String} id 投注项id
+ * @return {String} 投注项oid
+ */
+get_oid(id) {
+}
+/**
+ * @description: 根据投注项id获取投注项的坑位id(kid)
+ * @param {String} id 投注项id
+ * @return {String} 投注项坑位id(kid)
+ */
+get_kid(id){
+}
+/**
+ * @description: 根据投注项id,获取投注项对象
+ * @param {String} id 投注项id
+ * @return {Object} 投注项
+ */
+get_bet_obj(id) {
+
+}
+/**
+ * @description: 获取玩法id
+ * @return {String} 玩法名称
+ */
+get_play_id() {
+
+}
+/**
+ * @description: 获取玩法名称
+ * @return {String} 玩法名称
+ */
+get_play_name() {
+ 
+}
   
 }
 export default new BetData();

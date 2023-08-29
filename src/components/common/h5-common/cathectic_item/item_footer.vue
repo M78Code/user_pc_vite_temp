@@ -29,10 +29,7 @@
         </p>
         <p class="top-p" v-else>{{i18n.t('bet_record.bet_max_win')}}</p>
         <p class="yb_fontsize14 money-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
-          <!-- 留空处理 -->
-          <!-- <template v-if="data_f.acCode">- -</template> -->
-          <!-- 返还金额 -->
-          <!-- <template v-else>{{data_f.backAmount | format_money2}}</template> -->
+          
         </p>
         <p class="yb_fontsize14 money-p" v-else>
           <!-- 留空处理 -->

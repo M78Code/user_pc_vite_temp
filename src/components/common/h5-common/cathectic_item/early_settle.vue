@@ -347,7 +347,7 @@ const props = defineProps({
     //       "msg":"成功",
     //       "ts":1640154455939
     //     } */
-    //     api_betting.queryOrderPreSettleConfirm().then((res) => {
+    //     api_betting.query_order_pre_settle_confirm().then((res) => {
     //       if (!(status == 3 && res.code == 200 && lodash.isArray(res) && res.length > 0)) return
     //       for (const item of res.data) {
     //         if (item.orderNo != item_data.orderNo) continue
@@ -478,7 +478,7 @@ const props = defineProps({
       if (details_show) {
         details_show = false;
       } else {
-        api_betting.getPreSettleOrderDetail({ orderNo: item_data.orderNo }).then((res) => {
+        api_betting.get_pre_settle_order_detail({ orderNo: item_data.orderNo }).then((res) => {
           let { code, data = [] } = res || {};
           if (code == 200) {
             presettleorderdetail_data = data;

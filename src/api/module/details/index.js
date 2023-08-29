@@ -34,9 +34,7 @@ export const get_match_detail_MatchInfo = function(params, config = {}, url = "/
   return pre_get_match_detail_res
 }
 
-// 直播地址相关信息
-export const get_live_video_info = (params, config = {}, url = "/v1/w/liveVideoUrl") => http.post(`${prefix}${url}`, params)
-
+ 
 // 精彩回放相关地址
 export const get_live_video_playback_info = (params, config = {}, url = "/v1/w/playbackVideoUrl") => http.post(`${prefix}${url}`, params)
 
@@ -58,8 +56,9 @@ export const get_match_odds_info = (params, config = {}, url = "/v1/w/matchDetai
 //赛事盘口详情 （视频页，调用H5接口）PB
 export const get_match_detail_m = (params, config = {}, url = "/v1/m/matchDetail/getMatchOddsInfoPB") => http.get(`${prefix}${url}`, params)
 
-//玩法置顶
-export const set_playTop = (params, config = {}, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params)
+ 
+// 置顶接口
+export const get_category_playTop = (params, config, url = "/v1/m/category/playTop") => http.get(`${prefix}${url}`, params, config)
 
 //获取直播url
 export const post_video_url = (params, config = {}, url = "/v1/w/videoAnimationUrlPB") => {
@@ -76,10 +75,7 @@ export const post_check_login = (params, config = {}, url = "/v1/w/isLogin") => 
 //获取视频直播 iframe 域名
 export const post_video_refer = (params, config = {}, url = "/v1/w/videoReferUrlPB") => http.post(`${prefix}${url}??device=PC`, params);
 
-//获取滚球有视频直播的赛事
-export const get_videos = (params={}, config = {}, url = "/v1/w/getVideos") => {
-  return http.get(`${prefix}${url}`, params)
-}
+ 
 
 //赛事列表页返回一场赛事信息
 export const post_fetch_list_latest_match = (params, config = {}, url = "/v1/w/getLatestVideo") => {
@@ -92,9 +88,7 @@ export const get_history = (params, config = {}, url = "/v1/w/matchDetail/getVis
 //添加近期关注
 export const add_visit_history = (params, config = {}, url = "/v1/w/matchDetail/addVisitHistory") => http.get(`${prefix}${url}`, params)
 
-//查询热门推荐
-export const get_hots = (params, config = {}, url = "/v1/m/hotUlikeRecommendationPB?isHot=101") => http.get(`${prefix}${url}`, params)
-
+ 
 //查询热门推荐---电竞
 export const get_hots_es = (params, config = {}, url = "/v1/w/hotEsportsMatches") => http.get(`${prefix}${url}`, params)
 
@@ -112,12 +106,5 @@ export const get_match_virtual_plays = (params, config = {}, url = "/v1/w/matchD
 // 获取vuex中投注项最新数据
 export const get_bet_olds = (params, config = {}, url = "/v1/w/matchDetail/getOls") => http.get(`${prefix}${url}`, params)
 
-//获取晒单列表
-export const roomBetRecord = (params, config = {}, url = "/v1/order/getLiveOrderList") => http.post(`${prefix2}${url}`, params);
-
-// 发布晒单
-export const shareOrder = (params, config = {}, url = "/livechat/shareorder") => http.post(`${window.CURRENT_LIVECHAT_API}${prefix3}${url}`, params);
-
-// 拉取聊天室已晒单列表(CP)
-// export const getSharedOrderList = (params, config = {}, url = "/livechat/message/order") => http.post(`${window.CURRENT_LIVECHAT_API}${prefix3}${url}`, params, {type:1} );
-
+ 
+ 

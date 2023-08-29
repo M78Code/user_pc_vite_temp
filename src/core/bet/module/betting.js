@@ -31,7 +31,7 @@ const hide_bet_series_but = () =>{
         let id = _.get(BetData,`bet_list[${i}]`);
         // 获取投注项的数据源
         let cds = _.get(BetData,`bet_obj[${id}].bs.cds`);
-        if(cds == "RC"){
+        if(cds == "C01"){
           // C301赛事时,隐藏串关按钮
           res = true;
           break;

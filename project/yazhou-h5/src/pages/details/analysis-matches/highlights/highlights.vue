@@ -22,7 +22,7 @@
             <div class="dot-game-over"></div>
             <div class="item-flag icon-flag-game-over"></div>
             <div class="item-content real-time-contv-ifent hairline-border">
-              <!-- <span class="time">{{ lodash.get(get_detail_data, 'mststr', 0) | format_mgt_time}}</span> -->
+      
               <span class="time" v-if="get_detail_data.mmp==31">{{ t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
               <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>
@@ -495,7 +495,7 @@ const get_football_replay = (event_code) => {
     device: 'H5',
     eventCode: event_code
   }
-  api_analysis.get_replay_football(params)
+  api_analysis.post_playback_video_url(params)
     .then(res => {
       if (res.code == 200 && lodash.get(res.data, 'eventList.length')) {
         events_list.value = res.data.eventList

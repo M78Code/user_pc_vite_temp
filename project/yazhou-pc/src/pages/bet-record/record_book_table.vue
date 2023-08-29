@@ -89,7 +89,7 @@
                           <span
                             v-if="item.matchType != 1 && item.scoreBenchmark"
                             :key="index"
-                          >({{item.scoreBenchmark | format_score}})</span>
+                          >({{format_score(item.scoreBenchmark )   }})</span>
                         </template>
                       </template>
                     </div>
@@ -128,7 +128,7 @@
                               'text-orange': (item.oddFinally.indexOf('-')>-1)&&(data.marketType=='MY'||data.marketType=='ID'),
                             }"
                           >
-                            <span>{{item.oddFinally | format_odds}}</span>
+                            <span>{{ format_odds(item.oddFinally)  }}</span>
                           </span>
                         </div>
                         <!-- 赛前 全场赛果 -->
@@ -137,7 +137,7 @@
                           <!-- 玩法名称 -->
                           <span>{{item.playName}}</span>
                           <!-- （1-1） -->
-                          <span v-if="item.matchType != 1 && item.scoreBenchmark">({{item.scoreBenchmark | format_score}})</span>
+                          <span v-if="item.matchType != 1 && item.scoreBenchmark">({{  format_score(item.scoreBenchmark) }})</span>
                           <!-- [欧洲盘]-->
                           <span>[{{marketType(item.marketType, data.langCode)}}]</span>
                         </div>
@@ -305,6 +305,7 @@ import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
 import { mapGetters } from "vuex";
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
+import { format_score ,format_odds  } from "src/core/index.js";
 export default {
   name: "RecordTable",
   components: {

@@ -62,8 +62,7 @@ export const post_book_list = (params, config={}, url = "/order/betRecord/getPre
 // 5秒预约投注拉单
 export const get_book_status_record = (params, config={}, url = "/order/betRecord/getPreOrderStatus") => http.post(`${prefix}${url}`, params, config);
  
-//预投投注取消
-export const cancel_book_order = (params, config={}, url = "/v1/betOrder/cancelPreBetOrder") => http.get(`${prefix}${url}`, params, config);
+ 
 //查询提前结算详情
 /* export const get_pre_bet_order_info = (params, config={}, url = "/v1/betOrder/orderPreSettleList") => http.get(`${prefix}${url}`, params, config); */
 
@@ -87,16 +86,8 @@ export const query_order_pre_settle_confirm = (params, config={}, url = "/v1/bet
 // 轮询获取订单状态和最新赔率最高可盈（joken）
 export const query_order_status = (params, config, url = "/v1/betOrder/queryOrderStatus") => http.get(`${prefix}${url}`, params, config)
 
-// 查询提前结算订单记录(valar)
-export const getPreSettleOrderDetail = (params, config, url = "/order/betRecord/getPreSettleOrderDetail") => http.get(`${prefix}${url}`, params, config)
  
-// 查询待确认中的提前结算单（joken）
-export const queryOrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix}${url}`, params, config)
-// 查询待确认中的提前结算单（joken）
-export const queryH5OrderPreSettleConfirm = (params, config, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix3}${url}`, params, config)
  
-// 获取提前结算金额（valar）
-export const oderPreSettleMoney = (params, config, url = "/order/betRecord/getCashoutMaxAmountList") => http.get(`${prefix}${url}`, params, config)
  
 // 获取预约投注列表2（david）
 export const get_preOrderList_news = (params, config, url = "/order/betRecord/getH5PreBetOrderlist") => http.post(`${prefix3}${url}`, params, config)

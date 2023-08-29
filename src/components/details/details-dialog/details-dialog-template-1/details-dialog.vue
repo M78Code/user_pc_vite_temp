@@ -52,7 +52,7 @@
                       {{calc_score(item)}}
                     </template>
                     <template v-else>
-                      {{item | format_total_score(0)}} - {{item | format_total_score(1)}}
+                      {{  format_total_score(item,0)}} - {{   format_total_score(item,1)}}
                     </template>
                   </span>
                 </div>

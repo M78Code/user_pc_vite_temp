@@ -19,7 +19,7 @@
           <div class="left">{{i18n.t("bet.bet_record")}}</div>
           <div class="right">
             <span class="yb_fontsize10">{{i18n.t('common.money')}}：</span>
-            <span class="money-span">{{ format_money2(get_user.balance)}}</span>
+            <span class="money-span">{{ format_money2(UserCtr.balance)}}</span>
           </div>
         </template>
       </div>
@@ -62,7 +62,7 @@
               <template v-if="playname && [3, 6].includes(+get_bet_status)">{{playname}}</template>
               <template v-else>{{value_show.hps[0].hpnb || value_show.hps[0].hpn}}</template>
               <!-- 基准分 -->
-              <template v-if="value_show.csid == 1">&ensp;{{value_show | calc_bifen}}</template>
+              <template v-if="value_show.csid == 1">&ensp;{{  calc_bifen(value_show) }}</template>
             </span>
             <!-- 右 -->
             <template v-if="[3, 6, 8].includes(+get_bet_status)">
@@ -110,7 +110,7 @@
         <!-- 最高可赢和常用金额 -->
         <div class="win row justify-between yb_mb6">
           <div>{{i18n.t('bet.total_win2')}}
-            <!-- <span :class="{'color2':money_ok && money}">{{max_win_money | four_five_six_double(2) | format_money2}}</span> -->
+          
             <span :class="{'color2':money_ok && money}">{{ format_money2(max_win_money)}}</span>
           </div>
           <div class="usedmoney">
@@ -192,7 +192,10 @@
   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   import store from "src/store-redux/index.js";
   import BetData from "../class/bet-data-class";
+  import UserCtr from "src/core/user-config/user-ctr.js"; 
+  import { format_odds ,calc_bifen } from'src\core\format\index.js'
 
+ 
 
 
   const money = ref('')//金额
@@ -219,7 +222,6 @@
 
 
   const store_state = store.getState()
-  const get_user = ref(store_state.get_user)
   const get_odds_change = ref(store_state.get_odds_change)
   const get_bet_status = ref(store_state.get_bet_status)
   const get_theme = ref(store_state.get_theme)
@@ -238,7 +240,6 @@
 
   const update_state = () => {
     const new_state = store.getState()
-    get_user.value = new_state.get_user
     get_odds_change.value = new_state.get_odds_change
     get_bet_status.value = new_state.get_bet_status
     get_theme.value = new_state.get_theme
@@ -272,7 +273,7 @@
       if (!max_money.value) {
         max_money.value = 8888;
         // 获取接口返回的单关最小投注金额
-        min_money = _.get(get_user.value, 'cvo.single.min', 10)
+        min_money = _.get(UserCtr, 'cvo.single.min', 10)
         if (max_money.value < min_money.value) {
           min_money.value = max_money.value
         }
@@ -373,7 +374,7 @@
       is_exist_code.value = false
 
       // 这种情况放过，让钱投注出去
-      let _flag2 = money.value == get_user.value.balance
+      let _flag2 = money.value == UserCtr.balance
 
       if (!_flag2) {
         check_moneyok2(money.value)
@@ -388,7 +389,7 @@
         set_toast({ 'txt': i18n.t('bet.input_v') })
         return;
       }
-      if (Number(money.value) > +get_user.value.balance) {    //弹窗提示：“余额不足，请您先充值”
+      if (Number(money.value) > +UserCtr.balance) {    //弹窗提示：“余额不足，请您先充值”
         set_toast({ 'txt': i18n.t('bet.err_msg05') });
         return;
       }
@@ -505,8 +506,8 @@
      */
      const check_moneyok = (val) =>{
       //当输入金额超出用户余额时，默认转化为用户余额；并提示“余额不足，已转换为最大可投注金额” 3s消失
-      if (+val > +get_user.value.balance) {
-        money.value = get_user.value.balance.toString()
+      if (+val > +UserCtr.balance) {
+        money.value = UserCtr.balance.toString()
         tips_msg.value = i18n.t('bet.err_msg09')
         clearTimeout(timer_3000)
         // 3秒后重置样式
@@ -671,7 +672,7 @@
     }
     // 小键盘 MAX键
     const _handmaxKey = ()=> {
-      money.value = max_money.value >= +get_user.value.balance ? get_user.value.balance.toFixed(2) : max_money.value.toFixed(2);
+      money.value = max_money.value >= +UserCtr.balance ? UserCtr.balance.toFixed(2) : max_money.value.toFixed(2);
     }
     // 小键盘 处理数字
     const _handleNumberKey = (num) => {

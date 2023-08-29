@@ -25,7 +25,8 @@ const router = useRouter();
 
   const store_state = store.getState();
 
-  const vx_get_uid = store_state.userReducer.uuid;
+  const get_uid = store_state.userReducer.uuid;
+    // 获取当前页路由信息
   const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
   const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
   // 获取当前菜单类型
@@ -33,12 +34,12 @@ const router = useRouter();
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   const match_sort = ref(store_state.globalReducer.match_sort);
     // //播放类型
-    const vx_play_media = ref(store_state.matchesReducer.play_media);
+    const play_media = ref(store_state.matchesReducer.play_media);
 
-      // 获取当前页路由信息
-  const vx_layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
+    
+ 
 // 保存联想搜索关键字
-  const vx_related_keyword =  ref(store_state.searchReducer.related_keyword);
+  const related_keyword =  ref(store_state.searchReducer.related_keyword);
 
   // 监听状态变化
   let un_subscribe = store.subscribe(() => {
@@ -47,9 +48,8 @@ const router = useRouter();
     filter_select_obj.value = state_data.filterReducer.filter_select_obj;
     cur_menu_type.value = state_data.menuReducer.cur_menu_type;
     match_sort.value = state_data.globalReducer.match_sort;
-    vx_play_media.value = state_data.matchesReducer.play_media
-    vx_layout_cur_page.value = state_data.layoutReducer.layout_cur_page
-    vx_related_keyword.value = state_data.searchReducer.related_keyword
+    play_media.value = state_data.matchesReducer.play_media
+    related_keyword.value = state_data.searchReducer.related_keyword
   });
 
   onUnmounted(() => {
@@ -68,7 +68,7 @@ const router = useRouter();
       (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
       (route_name === "details" &&
         ["studio", "topic", "anchor"].includes(
-          vx_play_media.value.media_type
+          play_media.value.media_type
         )) ||
       menu_config.is_esports();
     // 电竞不用调自动切右侧接口
@@ -92,7 +92,7 @@ const router = useRouter();
 
     details.auto_swich_match = true;
     let { mid: remove_mid, tid } = params;
-    let { cur: cur_page, from: from_page } = vx_layout_cur_page.value;
+    let { cur: cur_page, from: from_page } = layout_cur_page.value;
 
     // 查找参数:1赛事列表，2现场滚球盘，3赛事筛选，4赛事搜索，如果不传，默认赛事列表
     let sm = 1;
@@ -134,8 +134,8 @@ const router = useRouter();
       csid,
       tid,
       sort: match_sort.value,
-      keyword: vx_related_keyword.value.substr(5),
-      cuid: vx_get_uid,
+      keyword: related_keyword.value.substr(5),
+      cuid: get_uid,
       mid: remove_mid,
     };
 

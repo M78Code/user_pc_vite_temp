@@ -50,6 +50,7 @@
 </template>
 <script>
 // import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
+import { format_currency } from'src\core\format\index.js'
 
 </script>
 <style lang="scss" scoped>

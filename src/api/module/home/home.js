@@ -16,16 +16,8 @@ export const get_menu_init = (params) => {
   return http.get(`${prefix}/v1/m/menu/initPB`, params, {axios_debounce_cache_key:'menu_init'});
 };
 
-//电竞日期菜单api(jeffrey)
-export const esport_date_menu_api = (params, config, url = "/v1/w/esports/getDateMenuList") => {
-  params.device = 'H5';
-  return http.post(`${prefix}${url}`, params, config);
-};
-
-//早盘串关动态获取日期(jeffrey)
-export const post_date_menulist = (params, config, url = "/v2/menu/getDateMenuListPB") => {
-  return http.post(`${prefix}${url}`, params, config);
-};
+ 
+ 
 
 //获取轮播图数据（用PC热门直播接口）
 export const get_carousel_data = (params, config, url = "/v1/w/getHotMatchs") => http.get(`${prefix}${url}`, params, config);
