@@ -4,7 +4,7 @@ import {i18n } from  "src/boot/i18n.js"
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js"
 import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
 import { useRouter, useRoute } from 'vue-router'
-import {msc_array_obj} from "src/core/formart/index.js"
+import {msc_array_obj} from "src/core/format/index.js"
 import { throttle } from "lodash";
 const router = useRouter()
 const route = useRoute()
