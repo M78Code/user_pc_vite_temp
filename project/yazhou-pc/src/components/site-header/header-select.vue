@@ -40,7 +40,7 @@
                 <div class="user-info">
                     <div class="user-name">Hi,{{ lodash.get(user_info, "uname") }}</div>
                     <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
-                        @click="vx_set_show_balance(!show_balance)"></span>
+                        @click="set_show_balance(!show_balance)"></span>
                     <div v-show="!show_balance" class="balance-text-hide">
                         ******
                     </div>
@@ -156,13 +156,13 @@ const data_loaded = ref(false)
  */
 function get_balance() {
     data_loaded.value = false;
-    let uid = vx_get_user.value.uid;
+    // let uid = user.value.uid;
     api_account.check_balance({ uid, t: new Date().getTime() }).then(res => {
         const result = lodash.get(res, "data.data");
         const code = lodash.get(res, "data.code");
         data_loaded.value = true;
         if (code == 200) {
-            vx_set_user_balance(result.amount);
+            set_user_balance(result.amount);
         }
         // proxy.show_fail_alert()
     }).catch(err => {
