@@ -30,7 +30,7 @@
         <div
           class="icon-wrap"
           :class="card_style_obj.league_obj.tf && 'active'"
-          v-if="!menu_config.is_esports() && get_global_switch.collect_switch"
+          v-if="!menu_config.is_esports() && GlobalAccessConfig.get_collectSwitch()"
           @click.stop="match_list_card.view.mx_collect({type: menu_config.is_esports() ? 'leagues' : 'champion', match: card_style_obj.league_obj})"
         >
           <i class="icon-star q-icon c-icon" :class="card_style_obj.league_obj.tf && 'active'"></i>
@@ -45,10 +45,10 @@ import lodash from 'lodash';
 import sportIcon from "src/public/components/sport_icon/sport_icon.vue"
 import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 //   inject:['match_list_card'],
 let state = store.getState();
 
-const get_global_switch = reactive(state.globalReducer.global_switch)
 
 </script>
 <style lang="scss" scoped>

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { api_match } from "src/public/api/index.js";
+import { api_match } from "src/api/index.js";
 import details from "src/public/utils/detailsClass/details.js";
 import MatchCtr from "src/public/utils/dataClassCtr/match_ctr.js";
 import skt_data_esports_score from "src/public/mixins/websocket/data/skt_data_esports_score.js";

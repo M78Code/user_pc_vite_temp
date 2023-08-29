@@ -181,7 +181,7 @@ import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.
 import utils from "utils/utils";
 import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
 import { api_analysis} from "src/project/api/index.js";
-import { activity_task_api } from "src/public/api";
+import { activity_task_api } from "src/api";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
 import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js" 
