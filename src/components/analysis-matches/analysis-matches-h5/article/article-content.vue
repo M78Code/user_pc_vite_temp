@@ -12,7 +12,7 @@
       <img  src="image/bw3/svg/touxiang.svg" alt="" class="touxiang yb_mr4" />
       <span class="category-name ellipsis">{{article_detail.categoryName}}</span>
       <span class="yb_ml12">{{article_detail.readCounts}}阅读</span>
-      <span style="margin-left: auto">{{ article_detail.updateTime | formete_date }}</span>
+      <span style="margin-left: auto">{{ formete_date( article_detail.updateTime)    }}</span>
     </div>
     <hr />
 
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+ import { formete_date  } from "src/core/index.js";
   const props = defineProps({
     article_detail: {
       type: Object,

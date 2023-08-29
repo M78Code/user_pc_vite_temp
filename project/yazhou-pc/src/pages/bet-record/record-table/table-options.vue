@@ -65,7 +65,7 @@
                   (data.marketType == 'MY' || data.marketType == 'ID'),
               }"
             >
-              <span>{{ item.oddFinally | format_odds }}</span>
+              <span>{{ format_odds(item.oddFinally)   }}</span>
             </span>
           </div>
           <!-- 赛前 全场赛果 -->
@@ -510,7 +510,9 @@ import {
   format_balance,
   formatTime,
   format_btn_balance,
-} from "src/core/format.index.js";
+  formete_date,
+  format_odds
+} from "src/core/index.js";
 import vueSlider from "vue-slider-component";
 import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";
