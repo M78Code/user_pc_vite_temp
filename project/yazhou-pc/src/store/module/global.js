@@ -6,12 +6,7 @@ const initialState = {
   version_name: "zhuanye",
   // 当前网站是否处于后台运行中
   vue_hidden_run: false,
-  odds: {
-    // 上次赔率
-    pre_odds: "EU",
-    // 当前赔率
-    cur_odds: "EU",
-  },
+ 
   // 赛事列表排序 1:按联赛排序 2:按时间排序
   match_sort: 1,
  
@@ -57,32 +52,6 @@ export default function globalReducer(state = initialState, action) {
     case "SET_MENU_SPECIAL_CHOOSE":
       return { ...state, menu_special_choose: action.data };
  
-    // //初始化盘口偏好
-    case "SET_INIT_ODD":
-      let pre_odds = localStorage.getItem("pre_odds") || state.odds.cur_odds;
-      let cur_odds = localStorage.getItem("cur_odds") || state.odds.cur_odds;
-      localStorage.setItem("pre_odds", pre_odds);
-      localStorage.setItem("cur_odds", cur_odds);
-      return {
-        ...state,
-        odds: { pre_odds, cur_odds },
-      };
-    // // 设置上次盘口偏好
-    case "SET_PRE_ODD":
-      localStorage.setItem("pre_odds", action.data);
-      return {
-        ...state,
-        odds: { pre_odds: action.data, cur_odds: state.odds.cur_odds },
-      };
-    // // 设置盘口偏好
-    case "SET_CUR_ODD":
-      if (!action.data) return state;
-      BaseUserInfo.assign({ userMarketPrefer: action.data });
-      localStorage.setItem("cur_odds", action.data);
-      return {
-        ...state,
-        odds: { pre_odds: state.odds.pre_odds, cur_odds: action.data },
-      };
     // //初始化列表排序
     case "SET_INIT_MATCH_SORT":
       // let match_sort = localStorage.getItem("match_sort") || state.match_sort
