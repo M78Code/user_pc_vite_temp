@@ -29,10 +29,7 @@
 </template>
 
 <script setup>
-// import compute_max_win_money from 'src/public/mixins/odds_conversion/compute_max_win_money.js';
 // import betting from 'src/project/mixins/betting/betting.js';
-// import global_filters from 'src/boot/global-filters.js';
-// const licia_format = require('licia/format');
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 import { format_money3,format_money2 } from'src\core\format\index.js'

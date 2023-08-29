@@ -30,10 +30,9 @@
 </template>
 
 <script setup>
-// import compute_max_win_money from 'src/public/mixins/odds_conversion/compute_max_win_money.js';
-// import betting from 'src/project/mixins/betting/betting.js';
+import {compute_max_win_money} from "src\core\format\index.js";
+import betting from 'src\core\bet\common-helper\index.js';
 const licia_format = require('licia/format');
-// import global_filters from 'src/boot/global-filters.js';
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";

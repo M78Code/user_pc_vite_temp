@@ -1,4 +1,4 @@
-import BaseUserInfo from "src/public/utils/user/base_user_info.js"
+import BaseUserInfo from "src/core/user-config/base-user-info.js";
 
 const initialState = {
   //即将开赛筛选时间
