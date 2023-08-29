@@ -189,18 +189,18 @@ import counting_down_start from 'project_path/src/components/common/counting_dow
 import ListMap from "project_path/src/utils/list_map";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import base_data from "project_path/src/utils/base_data.js";
 //  一二级菜单 本地化假数据
 import { common_menu_list, secondary_menu } from "project_path/src/config/common_menu.js"
 //  api1.5 菜单 本地化假数据
 import menu_data  from "project_path/src/config/menu_new_data.js"
-import uid from "src/core/uuid/index.js"
+import { uid } from "src/core/index.js"
 import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
   // mixins: [skt_home_bw3, match_list_mixin],
   //轮播
   const slide = ref(0)
@@ -264,7 +264,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     get_list();
     get_lang_v3()
 
-  watch(() => user_info.balance, () => {
+  watch(() => userCtr.user_info.balance, () => {
     handler= 'format_balance'
   })
   watch(() => uid, () => {
@@ -360,7 +360,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     */
   const confirm = (val) => {
     if (!val.imgUrl) return
-    if (val.comfirmTxt && user_info.activityList) {
+    if (val.comfirmTxt && userCtr.user_info.activityList) {
       // 设置跳转活动的确认信息
       set_activity_msg(val)
     } else {
@@ -377,7 +377,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
             set_details_item(0);
             $router.push({ name: 'category', params: { mid, csid } });
           }
-        } else if (val.hostUrl == 'act' && user_info.activityList) {
+        } else if (val.hostUrl == 'act' && userCtr.user_info.activityList) {
           $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         } else if (val.hostUrl.startsWith('hot') && !get_golistpage) {
           let tid = val.hostUrl.split('/')[1]
@@ -520,7 +520,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   //  * @return {String} 转化后的金额 比如 '64,464.95'
   //  */
   // const format_balance = () => {
-  //   let num = user_info.balance
+  //   let num = userCtr.user_info.balance
   //   if (!num || num < 0) {
   //     num = 0
   //   }
@@ -746,10 +746,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     let _obj = {
       [objKey.eventLabel]: "",
       [objKey.clickTime]: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-      [objKey.userName]: lodash.get(user_info, 'userName'),
-      [objKey.userId]: lodash.get(user_info, 'userId'),
-      [objKey.merchantId]: lodash.get(user_info, 'mId'),
-      [objKey.languageVersion]: lodash.get(user_info, 'languageName'),
+      [objKey.userName]: lodash.get(userCtr, 'user_info.userName'),
+      [objKey.userId]: lodash.get(userCtr, 'user_info.userId'),
+      [objKey.merchantId]: lodash.get(userCtr, 'user_info.mId'),
+      [objKey.languageVersion]: lodash.get(userCtr, 'user_info.languageName'),
       [objKey.terminal]: "H5",
     };
     //====================menu router
@@ -778,21 +778,21 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.user_token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: get_user_token
+          token: userCtr.user_token
         }
       }
     }
     $router.push(newMeuRouter[mi])
     return;
     if (407 == menu[index].menuId) {
-      $utils.zhuge_event_send("H5_首页_虚拟体育", user_info);
+      $utils.zhuge_event_send("H5_首页_虚拟体育", userCtr.user_info);
       $router.push({ name: 'virtual_sports', query: { home: 'home' } })
       return;
     }
@@ -801,19 +801,19 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: menu[index].menuId,
-          token: get_user_token
+          token: userCtr.user_token
         }
       });
     } else if (410 == menu[index].menuId) {
       _obj[objKey.eventLabel] = "H5_首页_电子竞技";
-      $utils.zhuge_event_send("H5_首页_电子竞技", user_info);
+      $utils.zhuge_event_send("H5_首页_电子竞技", userCtr.user_info);
       let s = lodash.get(menu[index], 'subList[0].menuId').slice(-2)
       $router.push({
         name: 'matchList',
         query: {
           m: '410',
           // s,
-          token: get_user_token
+          token: userCtr.user_token
         }
       });
     } else {
@@ -859,7 +859,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: get_user_token
+          token: userCtr.user_token
         }
       });
     }else{
@@ -872,9 +872,9 @@ import UserCtr from "src/core/user-config/user-ctr.js";
       // 首页今日足篮
       if (item.parentId == '402') { // 今日
         if (item.menuType == 5) { // 足球
-          $utils.zhuge_event_send('H5_首页_今日_足球_点击', user_info);
+          $utils.zhuge_event_send('H5_首页_今日_足球_点击', userCtr.user_info);
         } else if (item.menuType == 7) { // 篮球
-          $utils.zhuge_event_send('H5_首页_今日_篮球_点击', user_info);
+          $utils.zhuge_event_send('H5_首页_今日_篮球_点击', userCtr.user_info);
         }
       }
 
@@ -883,7 +883,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: menuId,
           s: subId,
-          token: get_user_token
+          token: userCtr.user_token
         }
       });
     } else {
@@ -896,7 +896,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
           query: {
             m: menuId,
             s: subId,
-            token: get_user_token
+            token: userCtr.user_token
           }
         });
       } else {
@@ -917,8 +917,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     // 计算左边菜单按钮是否展示
   const calc_show2 = (item) => {
     if(item?.mi){
-      if( item.mi == 7) return lodash.get(user_info, 'openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
-      if( item.mi == 8) return lodash.get(user_info, 'openVrSport') // VRtob后台关闭隐藏
+      if( item.mi == 7) return lodash.get(userCtr, 'user_info.openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
+      if( item.mi == 8) return lodash.get(userCtr, 'user_info.openVrSport') // VRtob后台关闭隐藏
       return true
     }
   }
@@ -957,13 +957,12 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     // ...mapGetters({
     //   get_ball_seed_menu: 'get_ball_seed_menu',
     //   // 用户信息,用户金额,userId 需要监听变化
-    //   user_info: "get_user",
     //   // 当前语言
     //   get_lang: 'get_lang',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   uid: "get_uid",
     //   // 用户令牌信息
-    //   get_user_token: "get_user_token",
+    //   userCtr.user_token: "userCtr.user_token",
     //   // 左边菜单选中下标
     //   get_home_menu_index: "get_home_menu_index",
     //   // 首页菜单数据

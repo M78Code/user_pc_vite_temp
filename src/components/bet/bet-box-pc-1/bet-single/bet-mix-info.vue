@@ -40,7 +40,7 @@
   </div>
 </template>
 <script setup>
-// import bet_mix_info from "src/public/mixins/bet/bet_mix_info.js";
+import bet_mix_info from "./config/bet_mix_info.js";
 import BetMixItem from "./bet-mix-item.vue";
 import BetMixInput from "./bet-mix-input.vue";
 import BetMixResult from "./bet-mix-result.vue";

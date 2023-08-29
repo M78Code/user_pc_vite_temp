@@ -92,7 +92,7 @@ class  MatchListDetailMiddleware{
   
         // 查找参数:1赛事列表，2现场滚球盘，3赛事筛选，4赛事搜索，如果不传，默认赛事列表
         let sm = 1
-        if (page_source == "details" && this.vx_cur_menu_type.type_name == "play") {
+        if (page_source == "details" && MenuData.cur_menu_type.type_name == "play") {
           sm = 2
         } else if (page_source == "search" || from_page_source == "search") {
           sm = 4
@@ -118,7 +118,7 @@ class  MatchListDetailMiddleware{
         }
   
         let md = ""
-        if (["early"].includes(this.vx_cur_menu_type.type_name)) {
+        if (["early"].includes(MenuData.cur_menu_type.type_name)) {
           md = $menu.match_list_api_params.md
         }
   
@@ -131,12 +131,12 @@ class  MatchListDetailMiddleware{
           tid,
           sort: this.vx_match_sort,
           keyword: this.vx_related_keyword.substr(5),
-          cuid: this.vx_get_uid,
+          cuid: UserCtr.get_uid(),
           mid: remove_mid,
         }
   
         // 如果是聚合冠军页面
-        if(this.vx_cur_menu_type.type_name == 'winner_top'){
+        if(MenuData.cur_menu_type.type_name == 'winner_top'){
           _params.euid = ''
           delete _params.tid
           delete _params.keyword

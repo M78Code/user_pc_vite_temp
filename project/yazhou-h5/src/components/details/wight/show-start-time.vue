@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import utils from "src/core/utils/index.js";
+import {utils } from 'src/core/index.js';
 import { format_time_zone_time, format_H_M } from "src/core/format/index.js"
 import { t } from "src/boot/i18n";;
 //国际化

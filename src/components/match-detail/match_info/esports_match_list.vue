@@ -5,10 +5,10 @@
 -->
 <template>
   <div class="c-esports-match-list">
-    <div 
-      class="match-item" 
-      v-for="(match,index) in match_list" :key="index" 
-      :class="{active:vx_detail_params.mid == match.mid}" 
+    <div
+      class="match-item"
+      v-for="(match,index) in match_list" :key="index"
+      :class="{active:vx_detail_params.mid == match.mid}"
       v-show="index < 5"
       @click="match_switch(match)"
     >
@@ -23,10 +23,10 @@
 
 <script>
 import { api_match } from "src/api/index.js";
-// import details from "src//utils/detailsClass/details.js";
-// import MatchCtr from "src//utils/dataClassCtr/match_ctr.js";
-// import skt_data_esports_score from "src//mixins/websocket/data/skt_data_esports_score.js";
-import { mapGetters, mapActions } from "vuex"
+// import details from "/utils/detailsClass/details.js";
+// import MatchCtr from "/utils/dataClassCtr/match_ctr.js";
+// import skt_data_esports_score from "/mixins/websocket/data/skt_data_esports_score.js";
+// import { mapGetters, mapActions } from "vuex"
 export default {
   name:'esportsMatchList',
   mixins: [skt_data_esports_score],
@@ -47,7 +47,6 @@ export default {
       // 左侧详情参数
       vx_detail_params: "get_match_details_params",
       //获取当前菜单信息
-      vx_cur_menu_type: "get_cur_menu_type",
       vx_layout_cur_page: "get_layout_cur_page",
     }),
   },
@@ -55,8 +54,8 @@ export default {
     // 监听球种变化
     'menu_data.cur_level3_menu':{
       handler(){
-        let csid = $menu.get_match_list_api_params().csid 
-        if(this.$utils.is_eports_csid(csid) && !['hot','play'].includes(this.vx_cur_menu_type.type_name)){
+        let csid = $menu.get_match_list_api_params().csid
+        if(this.$utils.is_eports_csid(csid) && !['hot','play'].includes(MenuData.cur_menu_type.type_name)){
           this.get_match_list()
         }
       },
@@ -65,13 +64,13 @@ export default {
     // 监听滚球电竞 球种变化
     'menu_data.cur_level2_menu':{
       handler(){
-        if(['hot','play'].includes(this.vx_cur_menu_type.type_name)){
-          let csid = $menu.get_match_list_api_params().csid 
+        if(['hot','play'].includes(MenuData.cur_menu_type.type_name)){
+          let csid = $menu.get_match_list_api_params().csid
           if(this.$utils.is_eports_csid(csid)){
             this.get_match_list()
           }
         }
-        
+
       },
       immediate: true
     }
@@ -90,7 +89,7 @@ export default {
     ...mapActions({
       set_is_pause_video:"set_is_pause_video"
     }),
-    // 是否展示为比分判定中 
+    // 是否展示为比分判定中
     get_score_text(match_info) {
       const { mmp } = match_info
       const home_score = _.get(match_info,'msc[S1].home')
@@ -105,7 +104,7 @@ export default {
       return score_text
     },
     /**
-     * @Description 获取赛事列表 
+     * @Description 获取赛事列表
      * @param {undefined} undefined
     */
     get_match_list(){
@@ -173,7 +172,7 @@ export default {
       })
     },
     /**
-     * @Description 赛事切换 
+     * @Description 赛事切换
      * @param {undefined} undefined
     */
     match_switch(match){

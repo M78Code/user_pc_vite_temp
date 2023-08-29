@@ -25,10 +25,11 @@ import {PROJECT_NAME} from "../../dev-target-env.js"
 // ==============================   间接转出     项目无差异的        ======================================
 import { i18n, loadLanguageAsync, map_lang  } from  "src/boot/i18n.js";
 import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
-import uid from "src/core/uuid/index.js";
+import { uid } from "src/core/index.js";
 import VrSportCtr from  "src/core/vr-sport/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import MatchDetailCtr from  "src/core/match-detail/match-detail-class.js";
+import { http, axios_loop, infoUpload, zhuge, AllDomain } from "src/core/http/index.js"
  
 
 
@@ -206,6 +207,7 @@ export  * from "src/core/constant/index.js";
 export  * from "src/core/utils/index.js";
 
 export {
+    http, axios_loop, infoUpload, zhuge, AllDomain ,
     i18n, loadLanguageAsync, map_lang, 
     useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES,
     uid,

@@ -32,7 +32,7 @@ import { useRouter, useRoute } from 'vue-router'
 import store from "src/store-redux/index.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import { MenuData  } from "src/core/index.js"
 import mayAlsoLike from "src/project/pages/match-list/components/may_also_like.vue";  // 列表页猜你喜欢
 
 const route = useRoute()
@@ -53,14 +53,14 @@ const get_banner_obj = ref(store_state.get_banner_obj)
 const get_curr_sub_menu_type = ref(MenuData.current_lv_2_menu.type)
 const get_golistpage = ref(store_state.get_golistpage)
 const get_hot_list_item = ref(store_state.get_hot_list_item)
-const get_access_config = ref(store_state.get_access_config)
+const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_banner_obj.value = new_state.get_banner_obj
   get_golistpage.value = new_state.get_golistpage
   get_hot_list_item.value = new_state.get_hot_list_item
-  get_access_config.value = new_state.get_access_config
+  GlobalAccessConfig.value = GlobalAccessConfig.init()
 })
 
 onMounted(() => {

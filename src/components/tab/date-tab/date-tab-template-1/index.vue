@@ -52,7 +52,7 @@
 //   // 赛事列表排序 1:按联赛排序 2:按时间排序
 //   vx_match_sort: "get_match_sort",
 //   // 获取用户 Id
-//   vx_get_uid: "get_uid",
+//   UserCtr.get_uid(): "get_uid",
 //   vx_cur_menu_type: "get_cur_menu_type", //选中菜单类型
 //   get_layout_list_type: "get_layout_list_type",
 //   //获取当前主题
@@ -201,7 +201,7 @@ const compute_get_date_menu_list_params = () => {
     // 早盘的 其他 常规赛种
     params = {
       apiType: 1,
-      cuid: this.vx_get_uid, //用户 id
+      cuid: UserCtr.get_uid(), //用户 id
       device: "PC",
       ...mi_info,
       euid: mi_euid.euid || euid, // lv2_mi 找到 euid
@@ -252,7 +252,7 @@ const handle_click_menu_mi_3_date = (detail = {}) => {
   };
 
   let base_params = {
-    cuid: this.vx_get_uid,
+    cuid: UserCtr.get_uid(),
     selectionHour: this.$store.state.filter.open_select_time,
     sort: this.vx_match_sort,
   }

@@ -28,8 +28,8 @@
 <script>
 import {mapGetters, mapMutations} from "vuex"
 import {api_common} from 'src/project/api/index.js';
-import video from "src/public/utils/video/video.js"   // 视频相关公共方法
-import uid from "src/core/uuid/index.js"
+// import video from "/utils/video/video.js"   // 视频相关公共方法
+import { uid } from "src/core/index.js"
 
 export default {
   name: 'match_icon',

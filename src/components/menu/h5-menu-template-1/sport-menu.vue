@@ -178,7 +178,7 @@
 // import { mapMutations, mapGetters} from "vuex";
 import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
-import utils from "utils/utils";
+import {utils } from 'src/core/index.js';
 import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
 import { api_analysis} from "src/project/api/index.js";
 import { activity_task_api } from "src/api";
@@ -189,7 +189,7 @@ import { watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 // import{ date }  from 'quasar'
 

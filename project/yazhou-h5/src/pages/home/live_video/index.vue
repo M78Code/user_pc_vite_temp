@@ -119,7 +119,7 @@ import match_list_mixin from "src/project/mixins/match-list/match-list-mixin";
 // import msc from "project_path/src/mixins/common/msc.js";
 // import ListMap from "project_path/src/utils/list-map";
 import common from "src/project/mixins/constant";
-import utils from "src/core/utils/utils.js";
+import {utils } from 'src/core/index.js';
 import SLive from "src/project/components/skeleton/live"
 import no_data from 'src/project/components/common/no-data'
 import scroll_top from 'src/project/components/record-scroll/scroll-top'
@@ -127,7 +127,7 @@ import counting_down from 'src/project/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标

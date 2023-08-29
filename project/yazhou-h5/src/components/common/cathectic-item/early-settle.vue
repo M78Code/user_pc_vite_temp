@@ -146,14 +146,14 @@ import ClipboardJS from "clipboard";
 import { api_betting } from "src/api/index.js"
 // import { mapGetters, mapMutations } from "vuex";
 import { format_time_zone_time } from "src/core/format/index.js"
-import utils from 'src/core/utils/utils.js'
+import {utils } from 'src/core/index.js'
 import { Platform } from "quasar";
 import { inject, ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js"
 import {useMittOn, MITT_TYPES, useMittEmit} from  "src/core/mitt/"
 import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 
 
 let store_cathectic = store.getState().cathecticReducer

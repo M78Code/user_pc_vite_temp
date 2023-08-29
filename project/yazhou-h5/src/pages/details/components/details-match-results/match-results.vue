@@ -39,7 +39,7 @@ import mathcResultsVisuals from "project_path/src/pages/details/components/detai
  // 赛果详情 事件 组件
 import timeLine from 'project_path/src/pages/details/components/details-match-results/time-line.vue';
 import { t } from "src/boot/i18n";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 
 import { ref, onMounted } from "vue";
 

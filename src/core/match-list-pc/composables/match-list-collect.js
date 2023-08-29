@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import lodash from 'lodash';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 import PageSourceData from "src/core/page-source/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
@@ -16,8 +16,7 @@ const collect_count = ref(0);
 const enable_collect_api = ref(false);
 // 服务器端设置的 三级服务开关
 const collect_switch = ref(true);
-// 用户ID
-const vx_get_uid = UserCtr.uid;
+ 
 // 数据请求状态
 const load_data_state = ref("loading");
 /**
@@ -56,7 +55,7 @@ const mx_collect_match = (match) => {
   let cur_collect_state = Number(!match.mf);
   let _params = {
     mid: match.mid,
-    cuid: vx_get_uid.value,
+    cuid: UserCtr.get_uid(),
     cf: cur_collect_state,
   };
   api_common. add_or_cancel_match(_params).then((res) => {
@@ -147,14 +146,14 @@ const mx_collect_leagues = (match, is_champion) => {
   let cur_collect_state = Number(!match.tf);
   let _params = {
     tid: match.tid,
-    cuid: vx_get_uid.value,
+    cuid: UserCtr.get_uid(),
     cf: cur_collect_state,
   };
   //冠军收藏
   if (is_champion) {
     _params = {
       mid: match.mids,
-      cuid: vx_get_uid.value,
+      cuid: UserCtr.get_uid(),
       cf: cur_collect_state,
     };
   }

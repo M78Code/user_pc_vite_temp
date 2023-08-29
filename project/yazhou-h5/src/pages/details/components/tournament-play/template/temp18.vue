@@ -187,7 +187,7 @@
 // #TODO vuex 
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
-import utils from 'src/core/utils/utils.js';
+import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

@@ -7,7 +7,7 @@ import {
   mapGetters,
   mapMutations
 } from "vuex";
-
+import {UserCtr } from "src/core/index.js"
 import mqtt from 'mqtt';
 import uniqid from 'uniqid';
 import ChatroomMsgType from 'project_path/src/utils/ws/chatroom/chatroom_msgtype.js';
@@ -17,7 +17,6 @@ export default {
     ...mapGetters([
       'get_chatroom_userinfo', // 聊天室用户信息
       'get_chatroom_mute_info', // 聊天室禁言信息
-      'get_user'
     ]),
   },
   data() {
@@ -106,7 +105,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.get_user;
+            } = this.userCtr
             if (userId == msgUserId) {
               this.set_user_mute_info(data);
               this.setBanUserTimer(data);
@@ -119,7 +118,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.get_user;
+            } = this.userCtr
             if (userId == msgUserId) {
               this.set_user_mute_info(null);
             }

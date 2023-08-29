@@ -2,7 +2,7 @@ import { ref, provide, computed, reactive, watch, onMounted, onUnmounted } from 
 import { useRoute } from "vue-router";
 import lodash from "lodash";
 
-import PageSourceData from "src/core/page-source-pc/page-source-pc.js";
+import { PageSourceData  } from "src/core/index.js";
 // import { api_match } from "src/api/index.js";
 // import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 // import * as api_websocket from "src/api/module/socket/socket_api.js";
@@ -14,7 +14,7 @@ import MatchListData from "src/core/match-data-class/match-list-data-class.js";
 // import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
 // import video from "src/core/video/video.js";
 // import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData  } from "src/core/index.js";
 // import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
 // import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
 // import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
@@ -40,8 +40,6 @@ const match_list = {
 		const is_show_hot = ref(false);
 		// 是否继续请求
 		const is_loading = ref(true);
-		// 获取当前菜单类型
-		const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
 		// 赛事列表排序 1:按联赛排序 2:按时间排序
 		const vx_match_sort = ref(state.filterReducer.show_filter_popup);
 		// 筛选是否全选
@@ -177,7 +175,6 @@ const match_list = {
 			match_list,
 			match_list_card,
 			match_list_data,
-			vx_cur_menu_type,
 			vx_show_filter_popup,
 			vx_match_sort,
 			vx_filter_checked_all,
@@ -466,7 +463,7 @@ const match_list = {
 						// 非虚拟体育——设置赛事列表选中赛事
 						if (
 							MenuData.is_guanjun() ||
-							vx_cur_menu_type.value.type_name == "winner_top"
+							MenuData.cur_menu_type.type_name == "winner_top"
 						) {
 							this.mx_autoset_active_match();
 						}
@@ -678,7 +675,7 @@ const match_list = {
 				let _params = lodash.clone(match_list_api_config.params) || {};
 				let params = {
 					mids: mids.join(","),
-					cuid: this.vx_get_uid,
+					cuid: UserCtr.get_uid(),
 					euid: _params.euid,
 					orpt: _params.orpt,
 					sort: vx_match_sort.value,
@@ -703,7 +700,7 @@ const match_list = {
 					params = {
 						mids: mids.join(","),
 						csid: _params.csid,
-						cuid: this.vx_get_uid,
+						cuid: UserCtr.get_uid(),
 					};
 					if (MenuData.is_esports_champion()) {
 						params.category = 2;
@@ -807,7 +804,7 @@ const match_list = {
 						});
 				};
 				// 虚拟体育不用拉最新信息合并
-				if (vx_cur_menu_type.value.type_name !== "virtual_sport") {
+				if (MenuData.cur_menu_type.type_name !== "virtual_sport") {
 					const by_mids_debounce_cache =
 						axios_debounce_cache.get_match_base_info_by_mids;
 					if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {
@@ -911,7 +908,7 @@ const match_list = {
 			 */
 			check_match_last_update_time() {
 				// 非滚球 今日 不检查
-				if (!["play", "today"].includes(vx_cur_menu_type.value.type_name)) {
+				if (!["play", "today"].includes(MenuData.cur_menu_type.type_name)) {
 					return;
 				}
 				let mids = [];

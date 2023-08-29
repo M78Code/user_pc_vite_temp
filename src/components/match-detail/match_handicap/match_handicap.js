@@ -25,7 +25,7 @@ import goTop from "src/components/go-top/go-top.vue";
 
 // import { api_details } from "src/api/index";
 // import format from "src/project/yabo/mixins/match_details/index";
-// import time_format_mixin from "src//mixins/common/time_format";
+// import time_format_mixin from "/mixins/common/time_format";
 
 export default {
   // mixins: [format, time_format_mixin],

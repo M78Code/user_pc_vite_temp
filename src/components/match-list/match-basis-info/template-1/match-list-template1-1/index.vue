@@ -55,7 +55,7 @@
        <!-- 提前结算 -->
        <div @click.stop="">
          <div
-          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12 && vx_cur_menu_type.type_name!='bet'"
+          v-if="lodash.get(match, 'mearlys', 0) && match.tpl_id != 12 && MenuData.cur_menu_type.type_name!='bet'"
           class="icon-wrap settlement-pre relative-position"
           v-tooltip="{content: t('bet_record.settlement_pre')}"
         >

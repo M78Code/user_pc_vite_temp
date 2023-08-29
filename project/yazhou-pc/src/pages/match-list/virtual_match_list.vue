@@ -61,20 +61,23 @@
 </template>
 
 <script>
-import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js"; //模板引入及主要业务逻辑
+// import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js"; //模板引入及主要业务逻辑
+import { VirtualMatchTpl1FullVersionWapper as virtualMatchTpl1} from 'src/components/match-list/match-tpl-new-data/virtual-match-tpl-1/index.js'
+import { VirtualMatchTpl2FullVersionWapper as virtualMatchTpl2} from 'src/components/match-list/match-tpl-new-data/virtual-match-tpl-2/index.js'
 export default {
   name: "VirtualMatchList",
 
-  mixins: [match_list_version_mixin],
+  // mixins: [match_list_version_mixin],
   components: {
-    // 虚拟体育头部  赛事列表
-    VirtualListHeader: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/virtual_list_header.vue"),
-    // 虚拟体育 赛事列表 赛事头
-    VirtualMatchType: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/virtual_match_type.vue"),
     // 虚拟足球 、 虚拟篮球
-    virtualMatchTpl1: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl1.vue"),
+    virtualMatchTpl1,
     // 虚拟赛马 、 虚拟赛狗
-    virtualMatchTpl2: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/project/yabo/components/match_list/match_tpl_new_data/virtual_match_tpl2.vue"),
+    virtualMatchTpl2,
+    
+    // 虚拟体育头部  赛事列表
+    // VirtualListHeader: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/virtual_list_header.vue"),
+    // 虚拟体育 赛事列表 赛事头
+    // VirtualMatchType: () => import( /* webpackChunkName: "pc-mini-chunks" */ "src/public/components/match_list/virtual_match_type.vue"),
   },
 };
 </script>

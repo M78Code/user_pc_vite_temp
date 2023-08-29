@@ -548,7 +548,7 @@ const lv_2_click_wapper_1 = (detail = {}) => {
     let is_collect = false; // get_layout_list_type == "collect";
     //基础参数
     let base_params = {
-      cuid: "", // vx_get_uid, // ????
+      cuid: "", // UserCtr.get_uid(), // ????
       selectionHour: "", // $store.state.filter.open_select_time,
       sort: "", //vx_match_sort, // ????
     };
@@ -626,7 +626,7 @@ const lv_2_click_wapper_2 = (detail = {}) => {
   // 如果
   if (jinri_zaopan_.value != 3) {
     let base_params = {
-      cuid: "", // vx_get_uid, // ??????
+      cuid: "", // UserCtr.get_uid(), // ??????
       selectionHour: "", // $store.state.filter.open_select_time,
       sort: "", // vx_match_sort,
       apiType: 1,

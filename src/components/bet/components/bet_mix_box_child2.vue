@@ -202,21 +202,21 @@
 </template>
 
 <script setup>
-// import betMixShow from 'src/project/components/bet/bet_mix_show.vue';
-// import betMixShow2 from 'src/project/components/bet/bet_mix_show2.vue';
-// import betMixDetail from 'src/project/components/bet/bet_mix_detail.vue';
-// import betMixSingleDetail from 'src/project/components/bet/bet_mix_single_detail';
-// import betSuccessBar from 'src/project/components/bet/bet_success_bar.vue';
-// import betting from 'src/project/mixins/betting/betting.js';
-// import keyBoard from 'src/project/components/bet/keyboard.vue';
-// import ballSpin from 'src/project/components/bet/ball_spin.vue';
-// import betBar from "src/project/components/bet/bet_bar.vue";
+import betMixShow from 'src\components\bet\components\bet_mix_show.vue';
+import betMixShow2 from 'src\components\bet\components\bet_mix_show2.vue';
+import betMixDetail from 'src\components\bet\components\bet_mix_detail.vue';
+import betMixSingleDetail from 'src\components\bet\components\bet_mix_single_detail.vue';
+import betSuccessBar from 'src\components\bet\components\bet_success_bar.vue';
+// import betting from 'src/mixins/betting/betting.js';
+import keyBoard from 'src\components\bet\components\bet-keyboard.vue';
+import ballSpin from 'src\components\bet\components\ball_spin.vue';
+import betBar from "src\components\bet\components\bet-bar.vue";
 
-// import utils from 'src/core/utils/utils.js';
-// import { api_betting } from "src/project/api/index.js";
+// import {utils } from 'src/core/index.js';
+// import { api_betting } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "../class/bet-data-class";
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 // 此文件需抽离重构
 

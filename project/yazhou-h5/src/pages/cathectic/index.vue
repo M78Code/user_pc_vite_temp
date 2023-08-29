@@ -16,7 +16,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(store_theme, 'theme').includes('theme01')"><img
+          <template v-if="lodash.get(userCtr, 'theme').includes('theme01')"><img
               src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
           <template v-else><img src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>
@@ -44,14 +44,13 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 import { t } from "src/boot/i18n";;
 //国际化
 
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
 let store_cathectic = ref(cathecticReducer)
-let store_theme = ref(themeReducer)
 
 // 待确认中的提前结算订单
 provide('queryorderpresettleconfirm_data', '')

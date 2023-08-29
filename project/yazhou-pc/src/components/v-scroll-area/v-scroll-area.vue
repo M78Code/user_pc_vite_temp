@@ -40,7 +40,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
 import store from "src/store-redux/index.js";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 

@@ -1,6 +1,6 @@
 /***/
 //  应有引入的方法
-import { ss } from "../utils/web-storage";
+import { SessionStorage  } from "src/core/index.js";
 const { htmlVariables } = window.BUILDIN_CONFIG;
 function gtag_config_send(user_id) {
   // 设置默认启动参数
@@ -23,10 +23,10 @@ function gtag_config_send(user_id) {
   }
   if (user_id) {
     // 设置用户ID持久化
-    ss.set("user_id", user_id);
+    SessionStorage .set("user_id", user_id);
   } else {
     // user_id无效时情况上次的缓存
-    ss.set("user_id", "");
+    SessionStorage .set("user_id", "");
     return;
   }
   if (!window.INIT_GTAG && window.gtag_run) {
@@ -53,7 +53,7 @@ function gtag_config_send(user_id) {
  * @return {*}
  */
 function gtag_view_send(title, path) {
-  let user_id = ss.get("user_id");
+  let user_id = SessionStorage .get("user_id");
   if (user_id && window.gtag_run) {
     // 初始化埋点Google Analytics GA_TRACKING_ID config配置
     if (!window.INIT_GTAG) {
@@ -79,7 +79,7 @@ function gtag_view_send(title, path) {
  * @return {*}
  */
 function gtag_event_send(action, category, label, value) {
-  let user_id = ss.get("user_id");
+  let user_id = SessionStorage .get("user_id");
   if (user_id && window.gtag_run) {
     // 初始化埋点Google Analytics GA_TRACKING_ID config配置
     if (!window.INIT_GTAG) {

@@ -14,8 +14,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	let callback_func = null;
-	let type_name = this.vx_cur_menu_type.type_name;
-	let pre_name = this.vx_cur_menu_type.pre_name;
+	let type_name = MenuData.cur_menu_type.type_name;
+	let pre_name = MenuData.cur_menu_type.pre_name;
 	clearTimeout(this.virtual_list_timeout_id);
 	// 所有联赛列表
 	let all_league_list = [];
@@ -152,7 +152,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
  */
 const mx_use_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
-	let type_name = this.vx_cur_menu_type.type_name;
+	let type_name = MenuData.cur_menu_type.type_name;
 	clearTimeout(this.virtual_list_timeout_id);
 	// 是否虚拟体育
 	let is_virtual = MenuData.is_virtual_sport();

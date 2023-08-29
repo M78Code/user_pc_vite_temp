@@ -41,7 +41,7 @@
 <script setup>
 import { api_betting } from 'src/project/api';
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 // import { mapGetters } from "vuex";
 
 const props = defineProps({
