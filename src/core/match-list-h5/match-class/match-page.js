@@ -14,6 +14,7 @@ import matchListParams from '../composables/match-list-params'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -771,7 +772,7 @@ class MatchPage {
 
   get_base_params(main_menu_type){
     return {
-      cuid: this.get_user ? this.get_user.userId:this.get_uid,
+      cuid: UserCtr.user_info ? UserCtr.user_info .userId : UserCtr.uid,
       euid: this.get_current_sub_menuid,
       // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
       type: main_menu_type,

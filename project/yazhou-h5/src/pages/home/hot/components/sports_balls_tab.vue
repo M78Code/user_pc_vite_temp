@@ -89,7 +89,6 @@ const wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
 //       // 首页 热门当前选中的菜单
 //       get_hot_tab_item:"get_hot_tab_item",
 //       // 主题
-//       get_theme:"get_theme",
 //     })
 //   }
 

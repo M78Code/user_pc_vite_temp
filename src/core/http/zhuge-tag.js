@@ -10,7 +10,7 @@ import { get } from "lodash";
 import { DateForMat } from "src/core/format/index.js";
 import { deepMerge, GetUrlParams } from "../utils";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 class ZhuGe {
   config = {
     enable: LOCAL_FUNCTION_SWITCH.LOG,
@@ -139,7 +139,7 @@ class ZhuGe {
    * @param {undefined} eventPropsObj 要加的参数
    */
   send_zhuge_event(eventLabel, eventPropsObj = {}) {
-    let vx_get_user = store.getters.get_user;
+    let user_info = UserCtr.user_info
     let objKey = {
       clickTime: "点击时间",
       userName: "用户名",
@@ -152,10 +152,10 @@ class ZhuGe {
     let _obj = {
       [objKey.eventLabel]: eventLabel,
       [objKey.clickTime]: DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss"),
-      [objKey.userName]: get(vx_get_user, "userName"),
-      [objKey.userId]: get(vx_get_user, "userId"),
-      [objKey.merchantId]: get(vx_get_user, "mId"),
-      [objKey.languageVersion]: get(vx_get_user, "languageName"),
+      [objKey.userName]: get(user_info, "userName"),
+      [objKey.userId]: get(user_info, "userId"),
+      [objKey.merchantId]: get(user_info, "mId"),
+      [objKey.languageVersion]: get(user_info, "languageName"),
       [objKey.terminal]: "PC",
     };
     Object.assign(_obj, eventPropsObj);

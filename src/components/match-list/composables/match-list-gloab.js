@@ -98,8 +98,8 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		md,
 		csid,
 		tid,
-		sort: this.vx_match_sort,
-		keyword: this.vx_related_keyword.substr(5),
+		sort: 1,
+		keyword: '这是测试的关键字！！！！！'.substr(5),
 		cuid: UserCtr.uid,
 		mid: remove_mid,
 	};

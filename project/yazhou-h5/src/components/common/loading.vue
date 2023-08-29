@@ -16,10 +16,10 @@
 </template>
 
 <script setup>
-// import { mapGetters } from "vuex";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
 // TODO: 临时
-const get_theme = ref('y0')
+const UserCtr.theme = ref('y0')
 
   const props = defineProps({
     top: {
@@ -28,16 +28,6 @@ const get_theme = ref('y0')
     },
   })
 console.error(props.top);
-  computed(() => {
-    // ...mapGetters({
-    //   get_theme: "get_theme",
-    // })
-  })
-  // computed: {
-  //   ...mapGetters({
-  //     get_theme: "get_theme",
-  //   })
-  // },
 </script>
 
 <style lang="scss" scoped>

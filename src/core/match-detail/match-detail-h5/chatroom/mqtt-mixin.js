@@ -11,13 +11,13 @@
 import mqtt from 'mqtt';
 import uniqid from 'uniqid';
 import ChatroomMsgType from 'src/core/ws/chatroom/chatroom-msgtype.js';
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 export default {
   computed: {
     // ...mapGetters([
     //   'get_chatroom_userinfo', // 聊天室用户信息
     //   'get_chatroom_mute_info', // 聊天室禁言信息
-    //   'get_user'
     // ]),
   },
   data() {
@@ -106,7 +106,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.get_user;
+            } = UserCtr.user_info;
             if (userId == msgUserId) {
               this.set_user_mute_info(data);
               this.setBanUserTimer(data);
@@ -119,7 +119,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.get_user;
+            } =  UserCtr.user_info;
             if (userId == msgUserId) {
               this.set_user_mute_info(null);
             }
