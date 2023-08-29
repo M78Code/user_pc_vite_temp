@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount, defineComponent, getCurrentInstance, onMounted } from 'vue'
-import { ss } from 'src/core/utils/index.js'
+import { SessionStorage  } from "src/core/utils/web-storage";
 // import menu_stay_time from "/utils/menuClass/menu_stay_time.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
@@ -55,7 +55,7 @@ function init() {
 onMounted(init)
 
 /**
- * @Description 全局一秒钟定时器
+ * @Description 全局一秒钟定时器 
  * @param {undefined} undefined
 */
 function global_one_second_timer() {
@@ -67,7 +67,7 @@ function global_one_second_timer() {
     // proxy.statistical_stay_time()
 }
 /**
- * @Description 设置时间
+ * @Description 设置时间 
  * @param {undefined} undefined
 */
 function set_time_str() {
@@ -75,7 +75,7 @@ function set_time_str() {
 }
 
 </script>
-
+  
 <style lang="scss" scoped>
 .test-info {
     position: fixed;
@@ -88,3 +88,4 @@ function set_time_str() {
     transform: translateX(100px);
 }
 </style>
+  

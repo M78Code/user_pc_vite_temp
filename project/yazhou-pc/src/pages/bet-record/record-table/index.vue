@@ -138,7 +138,7 @@
                       :data="data"
                       :money_obj="money_obj"
                       :tool_selected="tool_selected"
-                      :vx_get_user="vx_get_user"
+                      :get_user="UserCtr.user_info"
                       :matchType="matchType"
                       @start_bet_pre="start_bet_pre"
                       @bet_pre_over="bet_pre_over"
@@ -483,7 +483,6 @@ const {
   pre_order_list_obj,
   money_obj,
   color_list,
-  vx_get_user,
   changePage,
   copy,
   show_bet_pre_info,

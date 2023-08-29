@@ -109,7 +109,7 @@ export default {
       }
       let params = {
         device: "PC",
-        cuid: this.vx_get_uid,
+        cuid: UserCtr.get_uid(),
         keyword: keyword.replace(/_g_/g, "/"),
         searchSportType: this.$route.query.csid,
       };

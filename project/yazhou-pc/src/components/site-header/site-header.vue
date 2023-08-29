@@ -86,10 +86,10 @@ import headerAdvertisement from "project_path/src/components/site-header/header-
 /** 工具.js */
 import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { ss } from 'src/core/utils/index.js'
+import { SessionStorage  } from 'src/core/utils/web-storage.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
 import { format_money2 } from "src/core/format/index.js"
 
@@ -172,52 +172,52 @@ const unsubscribe = store.subscribe(() => {
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
-/**
+/** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
 const theme = ref(themeReducer.theme)
-/**
+/** 
  * 全局开关 default: object
  * 路径: project_path\src\store\module\global.js
  */
 const global_switch = ref(globalReducer.global_switch)
-/**
+/** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
 const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
-/**
+/** 
  * 判断是否是登录状态 default: false
  * 路径: project_path\src\store\module\betInfo.js
  */
 const is_invalid = ref(betInfoReducer.is_invalid)
-/**
+/** 
  * 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
 const user_info = ref(userReducer.user_info)
-/**
+/** 
  * 用户余额是否展示状态 default: true
  * 路径: src\store-redux\module\user-info.js
  */
 const show_balance = ref(userReducer.show_balance)
-/**
+/** 
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
  */
 const main_menu_toggle = ref(menuReducer.main_menu_toggle)
-/**
+/** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref(menuReducer.menu_collapse_status)
-/**
+/** 
  * 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 default：Object
  * 路径: project_path\src\store\module\menu.js
  */
 const cur_menu_type = ref(menuReducer.cur_menu_type)
-/**
+/** 
  * 语言
  * 路径: src\store-redux\module\languages.js
  */
@@ -262,7 +262,7 @@ onBeforeMount(clear_timer)
 
 /** 初始化 */
 function init() {
-    is_hide_icon.value = ss.get('hide_logo_icon') === "1";
+    is_hide_icon.value = SessionStorage .get('hide_logo_icon') === "1";
     set_current_index()
 }
 onMounted(init)
@@ -283,7 +283,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
     }
 }
 
-
+ 
 /**
  * 导航栏菜单点击
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
@@ -412,7 +412,7 @@ function show_record(
 /**
  * @Description 打开注单历史
  * @param {undefined} undefined
- * @return {boolean}
+ * @return {boolean} 
 */
 function open_history_fun() {
     console.log('打开注单历史');
@@ -453,7 +453,7 @@ const set_menu_collapse_status = (data) => store.dispatch({
 function handle_menu_collapse() {
     set_menu_collapse_status(!menu_collapse_status.value)
 }
-
+ 
 /** 设置用户余额是否展示状态 */
 const set_show_balance = (data) => store.dispatch({
     type: 'SET_SHOW_BALANCE',

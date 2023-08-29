@@ -5,7 +5,7 @@
  */
 import axios from "axios";
 import device from "current-device";
-import { ss } from 'src/core/utils/index.js'
+import { SessionStorage  } from "src/core/index.js";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 
 class infoUpload {
@@ -83,7 +83,7 @@ class infoUpload {
    */
   upload_data(data) {
     if (!data || !this.enable) return;
-    let original_url = ss.get("original_url", "");
+    let original_url = SessionStorage .get("original_url", "");
     let { mId = -1, userId = -1, loginUrl = "" } = data;
     // url中包含token时再调用URL上报接口(刷新页面不进行上报URL)
     if (original_url.includes("token=")) {
@@ -109,7 +109,7 @@ class infoUpload {
         }, 10000);
       }
     }
-    ss.remove("original_url");
+    SessionStorage .remove("original_url");
   }
 }
 const info_upload = new infoUpload(true);

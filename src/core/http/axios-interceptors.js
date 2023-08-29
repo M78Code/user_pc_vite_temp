@@ -5,8 +5,8 @@ import STANDARD_KEY from "../standard-key";
 import axios_debounce_cache from "./debounce-module/index";
 import { uid } from "src/core/index.js";
 import domain from "./domain";
-import { ss, ls, Qs } from "src/core/utils/index.js";
-// import {Qs} from "../utils/Qs";
+import { SessionStorage , LocalStorage  } from "src/core/index.js";
+import {Qs} from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "../mitt";
 // import userCtr from "../user-config/user-ctr";
 const token_key = STANDARD_KEY.get("token"); //token键
@@ -49,7 +49,7 @@ const requestHook = {
     }
     //请求token
     const requestId = "8dba39ba7a01fe9a4227c06619fc56e9ad62de8f"
-    // const requestId = ss.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+    // const requestId = SessionStorage .get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "zh"; // 语言调整
@@ -331,7 +331,7 @@ function match_fix_mst(match, http_data) {
 }
 /**
  *  解析判定 url
- * @param {string} [url=""]
+ * @param {string} [url=""] 
  * @returns{ is_full_url,
     is_other_api,
     new_url_temp,

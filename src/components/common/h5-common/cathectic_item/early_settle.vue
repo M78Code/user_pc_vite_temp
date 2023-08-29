@@ -145,11 +145,11 @@
 import ClipboardJS from "clipboard";
 import { api_betting } from "src/project/api/index.js";
 // import { mapGetters, mapMutations } from "vuex";
-import utils from "src/core/utils/index.js";
+import {utils } from 'src/core/index.js';
 import { Platform } from "quasar";
 import { inject } from 'vue'
 
-import UserCtr from "src/core/user-config/user-ctr.js";
+import {UserCtr } from "src/core/index.js";
 
 const props = defineProps({
   item_data: {

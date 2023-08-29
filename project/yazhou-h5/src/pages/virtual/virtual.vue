@@ -80,7 +80,7 @@ import virtualSports from "project_path/src/pages/virtual/virtual-sports-part/vi
 // import setMenu from "src/project/components/common/set_menu.vue"    // 设置菜单
 import { api_virtual } from "src/api/index";
 // 公共方法
-import utils from 'src/core/utils/utils.js';
+import {utils } from 'src/core/index.js';
 // import { axios_api_loop } from "src/core/http"
 import axios_api_loop from "src/core/http/axios-loop.js"
 // import scroll_top from "src/project/components/record_scroll/scroll_top";

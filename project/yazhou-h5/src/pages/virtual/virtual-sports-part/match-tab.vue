@@ -25,7 +25,7 @@
 // #TODO VUEX 
 // import { mapGetters, mapMutations } from "vuex"
 
-import utils from "utils/utils";
+import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";

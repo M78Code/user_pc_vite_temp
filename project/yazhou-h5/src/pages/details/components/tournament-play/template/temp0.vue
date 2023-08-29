@@ -191,7 +191,7 @@ import odds_new from "project_path/src/pages/details/components/tournament-play/
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 // import odd_convert from "project_path/src/mixins/odds_conversion/odds_conversion.js";
-import utils from 'src/core/utils/utils.js';
+import {utils } from 'src/core/index.js';
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute } from "vue-router"
 import { t } from "src/boot/i18n";;

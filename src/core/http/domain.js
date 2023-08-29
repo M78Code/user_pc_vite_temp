@@ -70,7 +70,7 @@
 
 import { ref } from "vue";
 import axios from "axios";
-import { ss, ls } from "src/core/utils/index.js";
+import { SessionStorage , LocalStorage  } from "src/core/index.js";
 import { format_api_to_obj } from "src/core/format/index.js"
 import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例
@@ -271,7 +271,7 @@ class AllDomain {
     let url_api = this.url_api || [];
     // 获取token
     let sessionStorage = window.sessionStorage;
-    let token = sessionStorage.getItem("token"); // ss.get("pc_token");
+    let token = sessionStorage.getItem("token"); // SessionStorage .get("pc_token");
 
     // 并发请求
     let reqs = [];
@@ -539,10 +539,10 @@ class AllDomain {
   get_save_domain_api() {
     let key = this.DOMAIN_API_STORAGE_KEY;
     // console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
-    let gr = ss.get("gr");
+    let gr = SessionStorage .get("gr");
     // console.log('sessionStorage.getItem("gr")---', gr);
     // 获取持久化数据
-    return ls.get(key, []);
+    return LocalStorage .get(key, []);
   }
 
   /**
@@ -829,7 +829,7 @@ class AllDomain {
     if (!api_x) {
       let cgr = "COMMON";
       BUILDIN_CONFIG.DOMAIN_RESULT.gr = cgr;
-      ss.set("gr", cgr);
+      SessionStorage .set("gr", cgr);
       api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
       // console.log(
       //   "分组信息错误,分组强制设置为COMMON组 api_x:" + JSON.stringify(api_x)
@@ -1036,7 +1036,7 @@ class AllDomain {
     let api = obj.api;
     // console.log("首次加载,已经找到最快的域名:", api);
     // 写入可用api
-    ss.set("best_api", api);
+    SessionStorage .set("best_api", api);
     // 挂载当前 环境能使用的 api 数组
     BUILDIN_CONFIG.DOMAIN_RESULT.first_one = api;
     isFunction(this.callback)&& this.callback();
@@ -1050,7 +1050,7 @@ class AllDomain {
     let key = DOMAIN_API_STORAGE_KEY;
     // let str = JSON.stringify(val);
     // 设置持久化字符串
-    ls.set(key, val);
+    LocalStorage .set(key, val);
   }
   /**
    * @description: 获取本地的oss文件路径(增加本域名的oss url地址)

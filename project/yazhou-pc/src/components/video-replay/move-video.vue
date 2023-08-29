@@ -97,7 +97,6 @@ export default {
   computed: {
     ...mapGetters({
       vx_get_layout_size: "get_layout_size",
-      vx_get_user: "get_user",
     }),
     // 拖拽区域的样式  计算属性用于计算拖拽位置
     draggable_style() {
@@ -258,7 +257,7 @@ export default {
       const lang = window.reset_lang || window.vue.lang || "zh";
       // 获取命令
       let cmd = _.get(obj, 'cmd');
-      let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(vx_get_user,'oss.live_pc');
+      let live_domains = window.BUILDIN_CONFIG.live_domains[0] || _.get(UserCtr.user_info,'oss.live_pc');
       let lang_obj={full_screen:i18n.t('video.full_screen_mode'), back:i18n.t('common.back'), back_live:i18n.t('video.back_live')};
       switch (cmd) {
         case 'play': // 播放

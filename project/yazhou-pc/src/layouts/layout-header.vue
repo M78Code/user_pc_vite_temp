@@ -26,8 +26,8 @@ import { t } from "src/boot/i18n";;
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
-import utils from "src/core/utils/utils.js"
-import { ss } from 'src/core/utils/index.js'
+import {utils } from 'src/core/index.js'
+import { SessionStorage  } from 'src/core/utils/web-storage.js'
 import { get_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 
@@ -39,7 +39,7 @@ import headerSelect from 'project_path/src/components/site-header/header-select.
 // import timer from "project_path/src/components/site-header/timer.vue"
 
 const props = defineProps({
-  /**
+  /** 
    * 是否有小红点提示
    */
   has_bonus_type: {
@@ -62,27 +62,27 @@ const router = useRouter()
 const store_data = store.getState()
 const { globalReducer, searchReducer, userReducer, langReducer, betReducer } = store_data
 
-/**
+/** 
  * 全局开关 default: object
  * 路径: project_path\src\store\module\global.js
  */
 const { global_switch } = globalReducer
-/**
+/** 
 * 是否显示搜索组件 default: false
 * 路径: project_path\src\store\module\search.js
 */
 const { search_isShow } = searchReducer
-/**
+/** 
  * user_info 用户信息 default: {}
  * 路径: src\store-redux\module\user-info.js
  */
 const { user_info } = userReducer
-/**
+/** 
  * 语言 languages
  * 路径: src\store-redux\module\languages.js
  */
 const { lang } = langReducer
-/**
+/** 
  * 选择的选项 menu_obj
  * 路径: src\store-redux\module\betInfo.js
  */
@@ -91,27 +91,27 @@ const { lang } = langReducer
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)
 
-/**
+/** 
  * siteHeader组件props数据
  */
 const site_header_data = reactive({
-  /**
+  /** 
  * 菜单数据
  * 从菜单类拿 get
  */
   nav_list: [],
-  /**
+  /** 
    * 专题页图片url
    * 取 special_img_url
    */
   img_url: "",
-  /**
+  /** 
    * 专题页判断跳转到哪个链接
    * 取 special_host_url
    */
   host_url: "",
-  /**
-   * 专题页0：无连接，1：内部导航，2：弹窗连接
+  /** 
+   * 专题页0：无连接，1：内部导航，2：弹窗连接 
    * 取 special_url_type
    */
   url_type: "",
@@ -239,7 +239,7 @@ function activity_dialog() {
               }
             } else {
               isShow = true
-              ss.set('showActivityTime', new Date().getTime())
+              SessionStorage .set('showActivityTime', new Date().getTime())
             }
             // 获取图片地址
             site_header_data.img_url = get_file_path(item.imgUrl);
@@ -333,7 +333,7 @@ function init_site_header(type = null) {
     activity_timer.value = setTimeout(() => getActivityLists({ id: 1, type: "init_nav" }), 1000)
   }
   if (type != 2) {
-    // 运营位专题页
+    // 运营位专题页 
     special_page()
   }
 
@@ -390,7 +390,7 @@ function navigate(obj) {
   let url = "";
   if (_path == "/bet_record") {
     url = _path;
-    let hide_logo_icon = ss.get('hide_logo_icon');
+    let hide_logo_icon = SessionStorage .get('hide_logo_icon');
     url = router.resolve({ path: url }).href
     const searchParams = new URLSearchParams('');
     if (hide_logo_icon) {
@@ -413,7 +413,7 @@ function navigate(obj) {
   }
 
   // 增加参数
-  let hide_logo_icon = ss.get('hide_logo_icon');
+  let hide_logo_icon = SessionStorage .get('hide_logo_icon');
   if (_path.includes("http")) {
     url = _path;
     if (hide_logo_icon) {

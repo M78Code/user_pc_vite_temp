@@ -110,7 +110,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import utils from "project_path/src/core/utils/index.js";
+import {utils } from 'src/core/index.js'
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
 
 import match_container from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
@@ -120,7 +120,7 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import MenuData from "src/core/menu-h5/menu-data-class.js"
+import { MenuData  } from "src/core/index.js"
  
 const props = defineProps({
   // 赛事列表无数据

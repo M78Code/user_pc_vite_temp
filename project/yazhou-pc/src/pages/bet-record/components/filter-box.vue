@@ -7,7 +7,7 @@
 <template>
   <div>
     <!-- 勾选框 和 提前结算-->
-    <div v-if="toolSelected === 0 && vx_get_user.settleSwitch">
+    <div v-if="toolSelected === 0 && UserCtr.user_info.settleSwitch">
       <!-- 勾选框 -->
       <div class="date-time-choice checkbox" @click="search_pre_record">
         <FilterCheckboxFullVersionWapper
@@ -41,7 +41,7 @@
       <div
         class="date-time-choice checkbox"
         @click="search_pre_record"
-        v-if="vx_get_user.settleSwitch"
+        v-if="UserCtr.user_info.settleSwitch"
       >
         <FilterCheckboxFullVersionWapper
           :checked="is_pre_bet"
@@ -133,7 +133,7 @@
       </div>
     </div>
     <!-- 预约注单tab 进行中 已取消 预约失败  勾选框 -->
-    <div v-if="toolSelected === 2 && vx_get_user.settleSwitch">
+    <div v-if="toolSelected === 2 && UserCtr.user_info.settleSwitch">
       <!-- 勾选框 -->
       <div class="checkbox">
         <!--联赛筛选单选框组件-->

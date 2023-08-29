@@ -402,9 +402,9 @@ this.handle_generat_emitters()
      * @param {Boolean} new_ 新的菜单开关标识
      * @return {undefined} undefined
      */
-    vx_main_menu_toggle:{
+    "MenuData.main_menu_toggle":{
       handler() {
-        this.user_bet_prefer = _.get(this.BetData.user,'userBetPrefer')==1;
+        this.user_bet_prefer = _.get(userCtr.user_info,'userBetPrefer')==1;
       }
     }
   },

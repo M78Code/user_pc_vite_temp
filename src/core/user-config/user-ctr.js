@@ -784,7 +784,7 @@ class UserCtr {
   //显示token失效弹窗
   show_fail_alert() {
     let ret = false;
-    let callbackUrl = this.vx_get_user.callbackUrl;
+    let callbackUrl = UserCtr.user_info.callbackUrl;
 
     if (this.is_invalid) {
       //是否失效
@@ -801,7 +801,7 @@ class UserCtr {
         callback: () => {
           location.href = callbackUrl;
           // 清除旧的登录信息
-          this.vx_clear_user();
+          this.clear_user();
         },
       });
       // }

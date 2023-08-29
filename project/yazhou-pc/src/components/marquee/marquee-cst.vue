@@ -62,8 +62,8 @@ import { t } from "src/boot/i18n";;
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "project_path/src/i18n/langs/index.mjs";
-import utils from "src/core/utils/utils.js"
-import { ls } from 'src/core/utils/index.js'
+import {utils } from 'src/core/index.js'
+import { LocalStorage  } from 'src/core/utils/web-storage.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
@@ -165,17 +165,17 @@ const unsubscribe = store.subscribe(() => {
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
-/**
+/** 
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
 const theme = ref(themeReducer.theme)
-/**
+/** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref(menuReducer.menu_collapse_status)
-/**
+/** 
 * 全局点击事件数 default: 0
 * 路径: project_path\src\store\module\global.js
 */
@@ -202,7 +202,7 @@ const wrapRef = ref(null)
 /** 初始化 */
 function init() {
     is_destroy.value = false
-    const announceData = ls.get("announceData") || 'false'
+    const announceData = LocalStorage .get("announceData") || 'false'
     let today = new Date().getTime()
     let saveTime = 0
     if (JSON.parse(announceData)) {
@@ -233,7 +233,7 @@ function init() {
 }
 onMounted(init)
 
-/**
+/** 
  * @description  内嵌版右侧菜单图标显示
  * @params {number} tab切换索引
  * @return {boolean}
@@ -385,7 +385,7 @@ function clear_timer() {
 }
 onUnmounted(clear_timer)
 </script>
-
+  
 <style lang="scss" scoped>
 .marquee-wrap {
     height: 100%;
@@ -487,3 +487,4 @@ onUnmounted(clear_timer)
     }
 }
 </style>
+  

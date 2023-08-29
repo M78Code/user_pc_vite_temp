@@ -89,7 +89,7 @@ export const useGetItem = ({ props }) => {
     // 如果是 锁盘状态  或者是虚拟体育  不显示悬浮气泡
     return (
       ["seal", "disable"].includes(state.odds_state) ||
-      vx_cur_menu_type.value.type_name == "virtual_sport"
+      MenuData.cur_menu_type.type_name == "virtual_sport"
     );
   });
 

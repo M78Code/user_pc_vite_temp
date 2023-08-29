@@ -32,7 +32,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import utils from "src/core/utils/utils.js"
+import {utils } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -60,7 +60,7 @@ import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
 import { api_search } from "src/api/index.js";
 // import search from "src/core/search-class/search.js"
-import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { MenuData  } from "src/core/index.js";
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);

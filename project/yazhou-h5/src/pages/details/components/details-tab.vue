@@ -16,11 +16,11 @@
 <script>
 // #TODO vuex
 // import { mapGetters, mapActions,mapMutations } from "vuex"
-import utils from "src/core/utils/utils";
+import {utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router"
-import userCtr from "src/core/user-config/user-ctr.js"
+import {UserCtr } from "src/core/index.js"
 
 const route = useRoute()
 const router = useRouter()

@@ -1,7 +1,7 @@
 /*
  * @Description: H5 主菜单 逻辑
  */
-import utils from 'src/core/utils/index.js';
+import {utils } from 'src/core/index.js'
 import { api_home } from "src/project/api/index.js";
 //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
 import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js"

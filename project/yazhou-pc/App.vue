@@ -20,7 +20,7 @@ import { get_user_info } from "src/store-redux/module/user-info.js";
 import store from "src/store-redux/index.js";
 import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { ss } from 'src/core/utils/index.js'
+import { SessionStorage  } from "src/core/utils/web-storage";
 import { loadLanguageAsync } from "src/boot/i18n";
 import base_data from "src/core/base-data/base-data.js";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
@@ -32,13 +32,13 @@ const url_params = GetUrlParams(); //获取url参数
  * 获取用户信息
  */
 const handle_user_tryPlay = async () => {
-  let token = ss.get(token_key, url_params.token);
+  let token = SessionStorage .get(token_key, url_params.token);
   if (!token) {
     //试玩登录
     let res = await api_match.handle_user_tryPlay();
     let obj = res?.data?.data || {};
     token = obj.token;
-    ss.set(token_key, token);
+    SessionStorage .set(token_key, token);
     store.dispatch(get_user_info(token));
   } else {
     store.dispatch(get_user_info(token));
@@ -48,17 +48,17 @@ const handle_user_tryPlay = async () => {
   try {
     // 设置是否是内嵌iframe
     // 设置商户分割信息
-    BUILDIN_CONFIG.DOMAIN_RESULT.gr = ss.get("gr", "COMMON");
+    BUILDIN_CONFIG.DOMAIN_RESULT.gr = SessionStorage .get("gr", "COMMON");
     // 设置商户样式
     if (top.location != location) {
       if (
         DEFAULT_VERSION_NAME == "zhuanye" &&
         url_params.ignore_iframe_pc == 1
       ) {
-        ss.set("hide_logo_icon", "1");
+        SessionStorage .set("hide_logo_icon", "1");
       }
     } else {
-      ss.set("hide_logo_icon", "0");
+      SessionStorage .set("hide_logo_icon", "0");
     }
     // 这里最好是 url 内的 语种 ，不过 兜底语言是中文 因此 这里设置中文
     // 后面如果确实有需要就自己处理 。目前这个是兼容某些异常场景下 接口先返回来回

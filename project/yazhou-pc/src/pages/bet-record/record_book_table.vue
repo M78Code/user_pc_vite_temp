@@ -435,9 +435,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      // 用户信息
-      vx_get_user: "get_user",
-      vx_get_theme: "get_theme"
+   
     })
   },
   watch: {
