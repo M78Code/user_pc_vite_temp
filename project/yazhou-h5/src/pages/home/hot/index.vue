@@ -239,7 +239,7 @@ const show_hot_schedule_loading = (is_true) => {
   } else {
     featured_loading.value = false
   }
-},
+}
 // 刷新列表数据
 const refresh_list = () => {
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
