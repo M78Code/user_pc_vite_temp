@@ -1198,7 +1198,7 @@ methods_map_store["set_match_details_params"]({});
 //gtag打点
 // utils.gtag_view_send('PC_home', '/home')
 data_ref.first_load = true;
-get_access_config();
+GlobalAccessConfig();
 
 //----------------------created结束----------------------
 /*销毁组件*/
