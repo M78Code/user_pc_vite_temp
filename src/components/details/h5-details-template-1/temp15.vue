@@ -63,7 +63,7 @@
 // #TODO vuex 
 // import { mapGetters} from "vuex";
 import { colors } from 'quasar';
-import odd_convert from "src/public/mixins/odds_conversion/odds_conversion.js";
+// import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 export default defineComponent({
   name: "temp15",

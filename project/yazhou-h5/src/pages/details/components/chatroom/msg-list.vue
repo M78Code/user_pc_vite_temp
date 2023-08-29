@@ -23,8 +23,7 @@ import chat_msg from 'project_path/src/pages/details/components/chatroom/chat_ms
 import { msgType, muteType } from 'project_path/src/pages/details/components/chatroom/constant.js'
 
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { t } from "src/boot/i18n";
-import userCtr from "src/core/user-config/user-ctr.js";
+import { t } from "src/boot/i18n";;
 //国际化
 
 
@@ -87,10 +86,10 @@ export default defineComponent({
     // computed: {
     // ...mapGetters([
     //   'get_post_bet_show',  // 晒单弹窗显隐
-    //   'userCtr',
+    //   'get_user',
     //   'get_chatroom_id',  // 聊天室ID
     //   'get_is_block_msg',  // 是否屏蔽消息
-    //   'userCtr.mute_info',   // 用户禁言信息
+    //   'get_user_mute_info',   // 用户禁言信息
     //   'get_chatroom_mute_info', // 聊天室禁言信息
     //   'get_send_msg_count', // 用户发送消息次数
     // ]),
@@ -121,7 +120,7 @@ export default defineComponent({
       if (get_is_block_msg) {   // 屏蔽普通消息
         fitlerList = fitlerList.filter((item) => item.type != msgType.normal);
       }
-      const { userId } = userCtr;
+      const { userId } = get_user;
       // isVisible 是否仅自己可见 0普通消息 1仅自己可见
       // isSensitive 是否是敏感消息，是敏感消息要过滤
       // status 1普通消息 2撤回消息
@@ -141,7 +140,7 @@ export default defineComponent({
       if (get_chatroom_mute_info && get_chatroom_mute_info.disableSpeak == 1) {
         return muteType.global_mute;
       }
-      if (userCtr_mute_info) {
+      if (get_user_mute_info) {
         return muteType.self_mute;
       }
       return muteType.unmute;

@@ -275,7 +275,7 @@
 // import {mapGetters, mapMutations} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
 import {api_common, api_analysis} from 'src/project/api/index.js';
-import video from "src/public/utils/video/video.js"   // 视频相关公共方法
+import video from "project_path/src/utils/video/video.js"   // 视频相关公共方法
 import matchScore from 'src/project/components/match/match_score.vue' // 比分组件
 import footballEvents from "project_path/src/pages/details/football_events.vue";
 import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches.vue"; // 详情页  足球赛事分析
@@ -288,7 +288,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/boot/i18n";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 //国际化
@@ -412,10 +412,10 @@ export default defineComponent({
     const get_detail_data = computed(() => {
       return ""
     });
-    // 用户令牌信息
-    const userCtr_token = computed(() => {
-      return ""
-    });
+    // // 用户令牌信息
+    // const get_user_token = computed(() => {
+    //   return ""
+    // });
     // 视频单页是否已加载     作用：防止白屏
     const get_iframe_onload = computed(() => {
       return ""
@@ -429,9 +429,9 @@ export default defineComponent({
       return ""
     });
     // 用户信息,用户金额,userId 需要监听变化
-    const userCtr = computed(() => {
-      return ""
-    });
+    // const get_user = computed(() => {
+    //   return ""
+    // });
     // 是否全屏
     const get_is_full_screen = computed(() => {
       return ""
@@ -464,7 +464,7 @@ export default defineComponent({
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(userCtr,'oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(userCtr,'user_info.oss.live_h5')
       return `${host_url}/videoReplay.html?src=${replay_url}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -477,8 +477,8 @@ export default defineComponent({
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
       // letian = 乐天  oubao = 欧宝
-      if(userCtr.merchantCode){
-        return userCtr.merchantCode == 'letian'
+      if(userCtr.user_info.merchantCode){
+        return userCtr.user_info.merchantCode == 'letian'
       }
     });
     const iframe_show = computed(() => {
@@ -550,7 +550,7 @@ export default defineComponent({
     });
     // 精彩回放视频开关是否开启
     const is_replay_switch = computed(() => {
-      const { configValue, eventSwitch } = _.get(userCtr, 'merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(userCtr, 'user_info.merchantEventSwitchVO', {})
       return configValue == 1 && eventSwitch == 1
     });
     // slider列表长度是否小于屏幕横屏宽度

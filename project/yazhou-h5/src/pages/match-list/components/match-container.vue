@@ -75,8 +75,8 @@
             <image-cache-load :csid="match_of_list.csid" :path="match_of_list.lurl" type="league"></image-cache-load>
           </div>
           <span class="league-title-text row justify-between">
-            <span class="league-t-wrapper" :class="{ 'league-t-main-wrapper': get_menu_type !== 28 }">
-              <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': get_menu_type !== 28 }">
+            <span class="league-t-wrapper" :class="{ 'league-t-main-wrapper': MenuData.current_menu !== 28 }">
+              <span class="match-league ellipsis-2-lines" :class="{ 'match-main-league': MenuData.current_menu !== 28 }">
                 {{ match.tn }}
               </span>
             </span>
@@ -120,7 +120,7 @@
                 </span>
               </div>
               <!--赛事列表收藏-->
-              <div v-if="GlobalAccessConfig.get_collectSwitch()" class="favorite-icon-top match list-m"
+              <div v-if="lodash.get(get_access_config, 'collectSwitch')" class="favorite-icon-top match list-m"
                 @click.stop="toggle_collect(match, i, 'mf')">
                 <!-- 未收藏图标 -->
                 <img v-if="!match_of_list.mf && !get_show_favorite_list" :src="not_favorited_computing_icon" alt="">
@@ -293,7 +293,7 @@
                 </div>
                 <!--  左边收藏  视频动画 图标 玩法数量  赛事分析图标 提前结算图标  -->
                 <div class="score-wrapper flex items-center" v-if="!show_newer_edition && !is_show_result()"
-                  v-show="footer_sub_menu_id != 114">
+                  v-show="MenuData.footer_sub_menu_id != 114">
                   <div class="r row no-wrap">
                     <div class="go-container-w flex no-wrap new-standard">
                       <!-- 直播 主播 视频 动画  icon 栏目   -->
@@ -305,7 +305,7 @@
                       </div>
                       <!-- 足篮球展示赛事分析图标 -->
                       <div class="column justify-center yb_px4"
-                        v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
+                        v-if="[1, 2].includes(+match.csid) && lodash.get(get_access_config, 'statisticsSwitch')"
                         @click='goto_details(match, 1)'>
                         <img src="image/bw3/svg/match_analysis.svg" alt="" style="width:0.12rem"
                           v-if="get_theme.includes('theme01')">
@@ -320,10 +320,10 @@
                       <div class="goto-detail" @click='goto_details(match)'>
                         <span class="count_span" :class="{ esports: 3000 == menu_type }">
                           <span class="mc-n">
-                            {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) :
+                            {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) :
                               i18n.t('footer_menu.more') }}
                           </span>
-                          <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
+                          <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
                         </span>
                       </div>
                     </div>
@@ -368,13 +368,13 @@
             v-if="show_newer_edition && !is_show_result()">
             <div class='l test-match-mf'>
               <!--收藏图标-->
-              <div v-if="!GlobalAccessConfig.get_collectSwitch()" class="go-container-w flex no-wrap favorite">
+              <div v-if="!lodash.get(get_access_config, 'collectSwitch')" class="go-container-w flex no-wrap favorite">
                 <div class="fav-i-wrap-match row items-center" @click.stop="toggle_collect(match, i, 'mf')">
                   <div class="favorite-icon match">
                     <!-- 未收藏图标 -->
                     <img v-if="!match_of_list.mf" :src="not_favorited_computing_icon" alt="">
                     <!-- 收藏图标 -->
-                    <img :src="(!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
+                    <img :src="(!lodash.get(UserCtr, 'favoriteButton') && get_theme.includes('y0')) ? y0_img_favorite_black : normal_img_is_favorite"
                       v-if='match_of_list.mf' />
                   </div>
                 </div>
@@ -430,16 +430,16 @@
                 <div class='goto-detail' @click='goto_details(match)'>
                   <div class="count_span">
                     <span class="mc-n">
-                      {{ GlobalAccessConfig.get_handicapNum() ? get_match_mc(match) : i18n.t('footer_menu.more') }}
+                      {{ lodash.get(get_access_config, 'handicapNum') ? get_match_mc(match) : i18n.t('footer_menu.more') }}
                     </span>
-                    <span class="add_text" v-if="GlobalAccessConfig.get_handicapNum()">+</span>
+                    <span class="add_text" v-if="lodash.get(get_access_config, 'handicapNum')">+</span>
                   </div>
                 </div>
               </div>
             </div>
             <!--比分栏-->
             <div class="r row no-wrap">
-              <div class="score-wrapper flex" v-show="match.ms != 0 && (match.csid != 1 || footer_sub_menu_id != 114)">
+              <div class="score-wrapper flex" v-show="match.ms != 0 && (match.csid != 1 || MenuData.footer_sub_menu_id != 114)">
                 <score-list :main_source="main_source" :match="match"></score-list>
               </div>
             </div>
@@ -460,7 +460,7 @@
 
 
 <script setup name="match-container">
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
@@ -472,9 +472,10 @@ import score_list from './score-list.vue';
 import odd_list_wrap from './odd-list-wrap.vue';
 import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { t } from 'src/boot/i18n.js'
+import { i18n } from 'src/boot/i18n.js'
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
-import userCtr from "src/core/user-config/user-ctr.js";
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
@@ -540,13 +541,10 @@ const is_new_init2 = ref(false)
 // 防抖 防止急速状态下点击两次
 const is_on_go_detail = ref(false)
 
-const footer_sub_menu_id = ref(store_state.get_footer_sub_menu_id)
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
-const userCtr = ref(store_state.userCtr)
 const get_uid = ref(store_state.get_uid)
 const get_lang = ref(store_state.get_lang)
-const get_current_menu = ref(store_state.get_current_menu)
 const get_local_server_time = ref(store_state.get_local_server_time)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
@@ -555,7 +553,6 @@ const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 const get_sport_all_selected = ref(store_state.get_sport_all_selected)
 const get_last_ball_csid = ref(store_state.get_last_ball_csid)
-const get_menu_type = ref(store_state.get_menu_type)
 const get_theme = ref(store_state.get_theme)
 const get_sort_type = ref(store_state.get_sort_type)
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
@@ -565,7 +562,8 @@ const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
 const get_not_found_target_dom_count = ref(store_state.get_not_found_target_dom_count)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const GlobalAccessConfig = ref(GlobalAccessConfig.init())
+const get_access_config = ref(store_state.get_access_config)
+
 onMounted(() => {
   is_first_coming.value = true;
   //赛事切换时钟
@@ -665,24 +663,24 @@ watch(() => match.mmp, () => {
 })
 
 // 监听客队红牌比分变化
-watch(() => footer_sub_menu_id, (curr) => {
+watch(() => MenuData.footer_sub_menu_id, (curr) => {
   // 简版玩法之间切换3秒内阻止赔率变化
   is_new_init2.value = false;
   clearTimeout(is_new_init_timer2.value)
   is_new_init_timer2.value = setTimeout(() => {
     is_new_init2.value = true
   }, 3000)
-  if ((prev_footer_sub_menu_id.value != curr && curr == 114) ||
-    (prev_footer_sub_menu_id.value != curr && prev_footer_sub_menu_id.value == 114)
+  if ((MenuData.prev_footer_sub_menu_id != curr && curr == 114) ||
+    (MenuData.prev_footer_sub_menu_id != curr && MenuData.prev_footer_sub_menu_id == 114)
   ) {
     score_value();
   }
-  prev_footer_sub_menu_id.value = curr;
+  MenuData.prev_footer_sub_menu_id = curr;
 })
 
 // 精彩回放视频开关是否开启
 const is_replay_switch = computed(() => {
-  const { configValue, eventSwitch } = lodash.get(userCtr, 'merchantEventSwitchVO', {})
+  const { configValue, eventSwitch } = lodash.get(UserCtr, 'merchantEventSwitchVO', {})
   return configValue == 1 && eventSwitch == 1
 })
 //  动画按钮
@@ -715,7 +713,7 @@ const muUrl_icon = computed(() => {
 const get_sport_show = computed(() => {
   if (['detail_match_list'].includes(props.main_source)) { return false }
   // 代表是首页模块
-  if (!lodash.get(get_current_menu, 'main')) {
+  if (!lodash.get(MenuData.current_menu, 'main')) {
     if (props.i > 0) {
       let p = props.matchCtr.list[props.i - 1], c = props.matchCtr.list[props.i];
       if (p && c) {
@@ -739,7 +737,7 @@ const get_sport_show = computed(() => {
 // 显示收藏 图标
 const favorited_computing_icon = computed(() => {
   let flag = null
-  if (!lodash.get(userCtr, 'favoriteButton') && get_theme.includes('y0')) {
+  if (!lodash.get(UserCtr, 'favoriteButton') && get_theme.includes('y0')) {
     flag = y0_img_favorite_black
   } else {
     flag = normal_img_is_favorite
@@ -802,7 +800,7 @@ const show_newer_edition = computed(() => {
 
 // 是否是 拳击 或者其他球种
 const match_of_list_ascertain = computed(() => {
-  if (get_menu_type != 28 && props.match_of_list.csid == 12 && props.match_of_list.hps.length > 1) {
+  if (MenuData.current_menu != 28 && props.match_of_list.csid == 12 && props.match_of_list.hps.length > 1) {
         return props.match_of_list.hps.slice(0, 2)
   } else {
     return props.match_of_list.hps
@@ -818,7 +816,7 @@ const is_it_popular = computed(() => {
 const time_change = computed(() => {
   if (props.match_of_list) {
         let time_stamp = +props.match_of_list.mgt
-        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(t('time2')) + '  ' + format_week(time_stamp)
+        return (format_how_many_days(time_stamp) ? `${format_how_many_days(time_stamp)}   ` : '') + (new Date(time_stamp)).Format(i18n.t('time2')) + '  ' + format_week(time_stamp)
   }
 })
 
@@ -1002,7 +1000,7 @@ const leaderboard_switch = () => {
 }
 const is_show_result = () => {
   let r = false;
-  const menu_type =  lodash.get(get_current_menu, 'main')||get_menu_type
+  const menu_type =  lodash.get(MenuData.current_menu, 'main')|| MenuData.current_menu
   if(menu_type== 28){
     r = !['detail_match_list', 'home_hot_page_schedule'].includes(props.main_source)
   }
@@ -1269,7 +1267,7 @@ const goto_details = (match, flag) => {
   is_on_go_detail.value = true;
 
   // 如果是非赛果电竞赛事，需要设置菜单类型
-  if (get_menu_type !== 28 && [100, 101, 102, 103].includes(+match.csid)) {
+  if (MenuData.current_menu !== 28 && [100, 101, 102, 103].includes(+match.csid)) {
     store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 });
   }
   // console.log({msg:'测试在极度快速的点几下,可以打印两次此消息,证明执行了两次'})
@@ -1286,7 +1284,7 @@ const goto_details = (match, flag) => {
   // 进入详情前，将当前赛事信息存入仓库
   store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: match });
 
-  if (get_current_menu && get_current_menu.main && is_show_result()) {
+  if (MenuData.current_menu && MenuData.current_menu.main && is_show_result()) {
     router.push(`/result_details/${match.mid}/0`);
   }
   else {
@@ -1347,7 +1345,7 @@ const get_m_status_show = (i) => {
   if (![3, 11].includes(+props.menu_type)) {
     return result;
   } else if (props.menu_type == 11) {
-    let third_m_id = lodash.get(get_current_menu, 'date_menu.field1');
+    let third_m_id = lodash.get(MenuData.current_menu, 'date_menu.field1');
     //串关今日id为0或'0'
     if (third_m_id !== 0 && third_m_id !== '0') {
       return result;
@@ -1466,7 +1464,7 @@ const score_value = () => {
     away_yellow_score.value = match.away_yellow_score;
   }
 
-  if(get_menu_type !=28 && match.csid==1 && match.cds=='1500' && get_newer_standard_edition == 1 && footer_sub_menu_id == 114){
+  if(MenuData.current_menu !=28 && match.csid==1 && match.cds=='1500' && get_newer_standard_edition == 1 && MenuData.footer_sub_menu_id == 114){
     // 红猫足球赛事,简版,角球菜单时屏蔽角球比分显示
     home_score.value = '';
     away_score.value = '';
@@ -1490,7 +1488,7 @@ const set_scroll_top = (scrollTop) => {
         const top = mid_dom.getBoundingClientRect().top
         // 目标赛事视图top阈值
         let view_top = lodash.get(get_goto_detail_match_info, 'top', 0)
-        // view_top = get_menu_type === 4 ? 160 : 120
+        // view_top = MenuData.current_menu === 4 ? 160 : 120
 
         if (view_top) {
           // 滚动容器
@@ -1598,13 +1596,10 @@ const clear_timer = () => {
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
-  footer_sub_menu_id.value = new_state.get_footer_sub_menu_id
   get_hot_tab_item.value = new_state.get_hot_tab_item
   get_footer_sub_changing.value = new_state.get_footer_sub_changing
-  userCtr.value = new_state.userCtr
   get_uid.value = new_state.get_uid
   get_lang.value = new_state.get_lang
-  get_current_menu.value = new_state.get_current_menu
   get_local_server_time.value = new_state.get_local_server_time
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
@@ -1613,7 +1608,6 @@ const unsubscribe = store.subscribe(() => {
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_sport_all_selected.value = new_state.get_sport_all_selected
   get_last_ball_csid.value = new_state.get_last_ball_csid
-  get_menu_type.value = new_state.get_menu_type
   get_theme.value = new_state.get_theme
   get_sort_type.value = new_state.get_sort_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
@@ -1623,7 +1617,7 @@ const unsubscribe = store.subscribe(() => {
   get_goto_detail_match_info.value = new_state.get_goto_detail_match_info
   get_not_found_target_dom_count.value = new_state.get_not_found_target_dom_count
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  GlobalAccessConfig.value = GlobalAccessConfig.init()
+  get_access_config.value = new_state.get_access_config
 })
 
 onUnmounted(() => {

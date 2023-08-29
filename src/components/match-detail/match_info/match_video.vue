@@ -130,7 +130,7 @@
 
 <script>
 import match_video from "src/project/yabo/mixins/match_details/match_info/match_video";
-import video_type_ctr from "src/public/utils/video/video_type_ctr.vue";
+// import video_type_ctr from "src//utils/video/video_type_ctr.vue";
 import noVideo from "src/project/yabo/components/match_details/match_info/no_video.vue"
 import videoReplayError from "src/project/yabo/components/video/video_replay_error.vue"
 export default {

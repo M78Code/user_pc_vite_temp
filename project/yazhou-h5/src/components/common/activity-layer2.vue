@@ -20,7 +20,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from 'vuex'
 import lodash from 'lodash'
-import userCtr from "src/core/user-config/user-ctr.js";
+import userCtr from "src/core/user-config/user-ctr.js"
 
   const props = defineProps({
     activity_layerimg: {
@@ -29,7 +29,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
     },
   })
   const name = computed(() => {
-    // ...mapGetters(['get_activity_msg',  'get_golistpage', 'get_hot_list_item']),
+    // ...mapGetters(['get_activity_msg', 'userCtr', 'get_golistpage', 'get_hot_list_item']),
     // this.data
       // return data
 

@@ -20,7 +20,7 @@
      @click="ball_folding_click(match_of_list.csid)"
      >
        <span class="score-inner-span">
-         {{match_of_list.csna || get_current_menu.sub.menuName}}
+         {{match_of_list.csna || MenuData.current_menu.sub.name}}
        </span>
      </div>
     <div class="match-inner-container">
@@ -129,6 +129,7 @@ import lodash from 'lodash'
 import { i18n } from 'src/boot/i18n.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { format_time_zone_time } from "src/core/format/index.js"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 const props = defineProps({
   match_of_list: Object,
@@ -146,13 +147,11 @@ const store_state = store.getState()
 const timer_super11 = ref(null)
 const is_first_coming = ref(false)
 
-const get_current_menu = ref(store_state.get_current_menu)
 const get_collapse_map_match = ref(store_state.get_collapse_map_match)
 const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
 const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 const get_theme = ref(store_state.get_theme)
-const get_current_main_menu = ref(store_state.get_current_main_menu)
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -160,13 +159,11 @@ const unsubscribe = store.subscribe(() => {
 
 const update_state = () => {
   const new_state = store.getState()
-  get_current_menu.value = new_state.get_current_menu
   get_collapse_map_match.value = new_state.get_collapse_map_match
   get_collapse_csid_map.value = new_state.get_collapse_csid_map
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_theme.value = new_state.get_theme
-  get_current_main_menu.value = get_current_main_menu.get_theme
 }
 
 // TODO: 其他模块得 store  待添加
@@ -219,9 +216,10 @@ const getMatchResult = (value) => {
   return str;
 }
 const is_show_result = () => {
+  const main_menu_type = MenuData.current_menu.main.menuType
   let r = false;
-  if(get_current_menu && get_current_menu.main){
-    r = get_current_menu.main.menuType == 28 && props.main_source != 'detail_match_list' && props.main_source != 'home_hot_page_schedule';
+  if(main_menu_type){
+    r = main_menu_type == 28 && props.main_source != 'detail_match_list' && props.main_source != 'home_hot_page_schedule';
   }
   return r;
 }
@@ -268,7 +266,7 @@ const league_l_clicked = () => {
   if(![3,11].includes(+props.menu_type)){
     return result;
   }else if(props.menu_type == 11){
-    let third_m_id = lodash.get(get_current_menu,'date_menu.field1');
+    let third_m_id = lodash.get(MenuData.current_menu,'date_menu.field1');
     //串关今日id为0或'0'
     if(third_m_id !== 0 && third_m_id !== '0'){
       return result;

@@ -18,7 +18,7 @@
         :src="calculate_color" />
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
-        :style="{display:match.csid == 1 && footer_sub_menu_id == 114 ? 'block':'none'}"
+        :style="{display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none'}"
         :src="get_theme.includes('theme01')?img1:img3" />
       <odd-column-item
         v-for="(ol_item,i) of ol_list"
@@ -161,6 +161,7 @@ import { i18n } from 'src/boot/i18n.js'
 // import odd_column_item from "./components/odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import MenuData from "src/core/menu-h5/menu-data-class.js"
 
 const props = defineProps({
   // 赛事信息
@@ -196,10 +197,7 @@ const screen_changing_timer = ref(0);
 const get_lang = ref(store_state.get_lang)
 const get_theme = ref(store_state.get_theme)
 const get_bet_list = ref(store_state.get_bet_list)
-const get_menu_type = ref(store_state.get_menu_type)
-const footer_sub_menu_id = ref(store_state.get_footer_sub_menu_id)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 const get_n_s_changed_loaded = ref(store_state.get_n_s_changed_loaded)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
@@ -209,10 +207,7 @@ const unsubscribe = store.subscribe(() => {
   get_lang.value = new_state.get_lang
   get_theme.value = new_state.get_theme
   get_bet_list.value = new_state.get_bet_list
-  get_menu_type.value = new_state.get_menu_type
-  footer_sub_menu_id.value = new_state.footer_sub_menu_id
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
   get_newer_standard_edition.value = new_state.get_newer_standard_edition
@@ -303,93 +298,93 @@ const ol_list = computed(() => {
   switch (sport_id) {
     // 网球
     case 5:
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 153; //独赢
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 154; //让盘
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 169; // 大小
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 153; //角球变独赢
       }
       break;
     // 羽毛球
     case 10:
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 153; //独赢
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 172; //让盘
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 173; // 大小
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 153; //角球变独赢
       }
       break;
     case 8: // 乒乓球
     case 9: //排
     case 13: { // 沙滩排球
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 153;
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 172;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 173;
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 153; //角球独赢
       }
       break;
     }
     // 斯诺克
     case 7:
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 153;
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 181;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 182;
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 153; //角球独赢
       }
       break;
     // 篮球
     case 2:
     case 6: //美
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 37;
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 39;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 38;
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 37; //角球独赢
       }
       break;
     // 足球
     case 1: // hpid 1(独赢) 4(让球) 2(大小) 114(角球)
-      sport_id_convert = footer_sub_menu_id;
+      sport_id_convert = MenuData.footer_sub_menu_id;
       break;
     // 3、4、6、9棒冰美排
     case 3: //棒
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 242;
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 243;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 244;
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 242; //角球独赢
       }
       break;
     case 4: //冰
-      sport_id_convert = footer_sub_menu_id;
-      if (footer_sub_menu_id == 114) {
+      sport_id_convert = MenuData.footer_sub_menu_id;
+      if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 1; //角球独赢
       }
       break;
     case 12: // 拳击
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 153;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 2;
       }
       break;
@@ -397,18 +392,18 @@ const ol_list = computed(() => {
     case 100: //电竞lol
     case 102: //CS GO
     case 103: //王者荣耀1
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 30001; //独赢
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 30002; //让盘
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 30003; // 大小
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 30001; //角球变独赢
       }
       break;
     default:
-      sport_id_convert = footer_sub_menu_id;
+      sport_id_convert = MenuData.footer_sub_menu_id;
       break;
   }
 
@@ -452,13 +447,13 @@ const ol_list = computed(() => {
   if (sport_id == 1) {
     if ([32, 33, 41, 42].includes(+props.match.mmp)) {
       // hpid 1(独赢) 4(让球) 2(大小) 114(角球)
-      if (footer_sub_menu_id == 1) {
+      if (MenuData.footer_sub_menu_id == 1) {
         sport_id_convert = 126;
-      } else if (footer_sub_menu_id == 4) {
+      } else if (MenuData.footer_sub_menu_id == 4) {
         sport_id_convert = 128;
-      } else if (footer_sub_menu_id == 2) {
+      } else if (MenuData.footer_sub_menu_id == 2) {
         sport_id_convert = 127;
-      } else if (footer_sub_menu_id == 114) {
+      } else if (MenuData.footer_sub_menu_id == 114) {
         sport_id_convert = 114; //角球独赢
       }
     }
@@ -758,7 +753,7 @@ const get_ol_length = (hp_item_obj, hp_i_i) => {
   let ol_list = [];
   if (lodash.get(hp_item_obj, "hl[0].ol")) {
     ol_list = hp_item_obj.hl[0].ol;
-    if (get_menu_type == 3000) {
+    if (MenuData.get_menu_type() == 3000) {
       return 2;
     }
   } else {
@@ -822,7 +817,7 @@ const select_column_change_handle = ($event) => {
     }
   });
   if (flag) {
-    flag = footer_sub_menu_id == 114;
+    flag = MenuData.footer_sub_menu_id == 114;
   }
   show_lock_selected.value = flag;
 };
@@ -842,7 +837,7 @@ const modify_overtime_status = (vuex_status) => {
  */
 const show_3_space = () => {
   let r = false;
-  if (footer_sub_menu_id == 1) {
+  if (MenuData.footer_sub_menu_id == 1) {
     r = [1, 4, 11, 16].includes(props.match.csid * 1);
   }
   if (props.main_source == "detail_match_list") {

@@ -51,8 +51,8 @@ import loading from "src/project/components/common/loading.vue"
  // 引入quasar
 import { dom, useQuasar } from 'quasar'
  // 引入处理数据的封装方法
-import MatchInfoCtr from "src/public/utils/dataClassCtr/matchInfoCtr.js";
-import VSport from 'src/public/utils/vsport/vsport.js';
+import MatchInfoCtr from "project_path/src/utils/dataClassCtr/matchInfoCtr.js";
+import VSport from 'project_path/src/utils/vsport/vsport.js';
 import axios_debounce_cache from "utils/http/axios_debounce_cache";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";

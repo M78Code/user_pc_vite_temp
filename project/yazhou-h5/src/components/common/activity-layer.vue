@@ -15,7 +15,7 @@
 <script setup>
 // import { mapGetters, mapMutations } from "vuex";
 import lodash from 'lodash'
-import userCtr from "src/core/user-config/user-ctr.js";
+import userCtr from "src/core/user-config/user-ctr.js"
 
   const props = defineProps({
     activity_layerimg: {
@@ -28,7 +28,7 @@ import userCtr from "src/core/user-config/user-ctr.js";
     },
   })
   // computed: {
-  //   ...mapGetters(['get_banner_obj',  'get_golistpage', 'get_hot_list_item'])
+  //   ...mapGetters(['get_banner_obj', 'userCtr', 'get_golistpage', 'get_hot_list_item'])
   // },
     // ...mapMutations(['set_menu_type', 'set_goto_detail_matchid', 'set_details_item', 'set_home_tab_item', 'set_hot_tab_item']),
   const handle_img_load_error = (e) => {

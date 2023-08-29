@@ -81,7 +81,7 @@
                 <div class="wrap-logo">
                   <img v-img="([lodash.get(item, 'malu[0]'), lodash.get(item, 'frman[0]'), lodash.get(item, 'csid'),{data:item,name:'_t21_img'}])" alt />
                   <img v-if="lodash.get(item, 'malu').length > 1"
-                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'}])" alt
+                    v-img="(lodash.get(item, 'malu[1]'), lodash.get(item, 'frman[1]'), lodash.get(item, 'csid'),{data:item,name:'_t22_img'})" alt
                     class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.man }}</div>
@@ -176,27 +176,27 @@ import { format_time_zone_time, format_balance, format_total_score } from "src/c
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
-import skt_home_bw3 from "src/public/mixins/websocket/data/skt_home_bw3.js";
+// import skt_home_bw3 from "project_path/src/mixins/websocket/data/skt_home_bw3.js";
 // 公告栏跑马灯
-import marquee from 'src/public/components/marquee/marquee.vue'
+// import marquee from 'project_path/src/components/marquee/marquee.vue'
 // 无网络展示组件
-import no_data from "src/project/components/common/no_data.vue";
+import no_data from "project_path/src/components/common/no_data.vue";
 // 赛事进行中每秒变化的计时器
-import counting_down from 'src/project/components/common/counting-down.vue';
+import counting_down from 'project_path/src/components/common/counting-down.vue';
 // 一小时以内的开赛计时器（累加计时|倒计时）
-import counting_down_start from 'src/project/components/common/counting_down_start.vue';
+import counting_down_start from 'project_path/src/components/common/counting_down_start.vue';
 // 列表数据和对象结合操作类-实现快速检索,修改等功能
-import ListMap from "src/public/utils/list_map";
+import ListMap from "project_path/src/utils/list_map";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";
+// import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
 import utils from "src/core/utils/utils.js";
-import base_data from "src/public/utils/base_data.js";
+import base_data from "project_path/src/utils/base_data.js";
 //  一二级菜单 本地化假数据
-import { common_menu_list, secondary_menu } from "src/public/config/common_menu.js"
+import { common_menu_list, secondary_menu } from "project_path/src/config/common_menu.js"
 //  api1.5 菜单 本地化假数据
-import menu_data  from "src/public/config/menu_new_data.js"
+import menu_data  from "project_path/src/config/menu_new_data.js"
 import uid from "src/core/uuid/index.js"
-import { db } from "src/public/utils/db/index.js";
+import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n"
 import lodash from "lodash"
@@ -778,14 +778,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.token
+          token: get_user_token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.token
+          token: get_user_token
         }
       }
     }
@@ -801,7 +801,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         name: 'matchList',
         query: {
           m: menu[index].menuId,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else if (410 == menu[index].menuId) {
@@ -813,7 +813,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: '410',
           // s,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else {
@@ -859,7 +859,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     }else{
@@ -883,7 +883,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
         query: {
           m: menuId,
           s: subId,
-          token: userCtr.token
+          token: get_user_token
         }
       });
     } else {
@@ -896,7 +896,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
           query: {
             m: menuId,
             s: subId,
-            token: userCtr.token
+            token: get_user_token
           }
         });
       } else {
@@ -957,13 +957,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     // ...mapGetters({
     //   get_ball_seed_menu: 'get_ball_seed_menu',
     //   // 用户信息,用户金额,userId 需要监听变化
-    //   user_info: "userCtr",
+    //   user_info: "get_user",
     //   // 当前语言
     //   get_lang: 'get_lang',
     //   // 当用户未登录时返回uuid, 当用户登录时返回userId
     //   uid: "get_uid",
     //   // 用户令牌信息
-    //   userCtr.token: "userCtr.token",
+    //   get_user_token: "get_user_token",
     //   // 左边菜单选中下标
     //   get_home_menu_index: "get_home_menu_index",
     //   // 首页菜单数据

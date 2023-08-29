@@ -44,12 +44,12 @@ import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
+import userCtr from "src/core/user-config/user-ctr.js"
 import { t } from "src/boot/i18n";;
 //国际化
 
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
-let store_user = ref(userInfoReducer)
 let store_cathectic = ref(cathecticReducer)
 let store_theme = ref(themeReducer)
 
@@ -78,7 +78,7 @@ const up_store_data = () => {
 
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
-  const bookBet = lodash.get(store_user.value.user, 'configVO.bookBet')
+  const bookBet = lodash.get(userCtr, 'user_info.configVO.bookBet')
   return bookBet == 1
 })
 // watch(() => unsubscribe, () =>{

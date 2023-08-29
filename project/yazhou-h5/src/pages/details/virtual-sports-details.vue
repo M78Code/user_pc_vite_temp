@@ -43,9 +43,9 @@
   </div>
 </template>
 <script>
-// #TODO VUEX 
+// #TODO VUEX
 // import { mapGetters,mapMutations } from "vuex"
-// #TODO MIXINS 
+// #TODO MIXINS
 // import common from 'src/project/mixins/constant/module/common.js';
 // import virtual_sports_mixin from "src/project/mixins/virtual_sports/virtual_sports_mixin.js"
 import virtual_sports_tab from 'project_path/src/pages/details/components/virtual_sports_tab.vue'
@@ -53,7 +53,7 @@ import virtual_sports_category from "project_path/src/pages/details/children/vir
 import virtual_match_statistic from 'project_path/src/pages/details/components/virtual_match_statistic.vue'
 import {api_v_sports} from 'src/project/api/index.js'
 import virtual_sports_stage from 'src/project/pages/virtual/virtual_sports_part/virtual_sports_stage.vue'
-import VSport from 'src/public/utils/vsport/vsport.js';
+import VSport from 'project_path/src/utils/vsport/vsport.js';
 
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
@@ -62,7 +62,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_details",
-  // #TODO MIXINS 
+  // #TODO MIXINS
   // mixins:[common,virtual_sports_mixin],
   components: {
     'virtual-sports-tab': virtual_sports_tab,
@@ -70,7 +70,7 @@ export default defineComponent({
     'virtual-sports-stage': virtual_sports_stage,
     'virtual-sports-category': virtual_sports_category,
   },
-  
+
   setup(props, evnet) {
     const router = useRouter()
     const route = useRoute()
@@ -87,7 +87,7 @@ export default defineComponent({
       refreshing:false,
     });
 
-    // #TODO VUEX 
+    // #TODO VUEX
     // computed: {
     //   ...mapGetters({
     //     is_show_analyse: 'get_is_show_details_analyse',
@@ -103,7 +103,7 @@ export default defineComponent({
     //   }),
     // },
 
-    // #TODO WATCH vuex 
+    // #TODO WATCH vuex
     // watch(
     //   () => video_process_data,
     //   (_new) => {
@@ -112,7 +112,7 @@ export default defineComponent({
     // );
 
     onMounted(() => {
-      // 原created 
+      // 原created
 
       timer_super28=0;
       //首页跳转虚拟体育设置menu_type为900
@@ -122,7 +122,7 @@ export default defineComponent({
       }, 500)
       // 延时器
       timer1_ = null;
-      // #TODO vue 
+      // #TODO vue
       // if(window.vue.process_changing_match){
       //   if(sub_menu_type == 1004){
 
@@ -339,8 +339,8 @@ export default defineComponent({
      * 获取本地传递的赛事视频进程
      */
     const get_local_match_process_data = () => {
-      // #TODO vue 
-     
+      // #TODO vue
+
       let match = "";
       if(match && match.mid == route.query.mid){
         current_match = match;
