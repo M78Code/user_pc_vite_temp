@@ -1,15 +1,13 @@
 import { ref } from "vue";
 import { useRoute } from "vue-router";
 import { PageSourceData  } from "src/core/index.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { send_zhuge_event } from 'src/core/http/zhuge-tag.js'
 import NewMenu from "src/core/menu-pc/menu-data-class.js";
 import details from "src/core/match-list-pc/details-class/details.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
-const latest_match_params_pre = ref("");
-const default_select_all = ref(true);
 const route = useRoute()
-const page_source = pageSourceData;
+const page_source = PageSourceData;
+
 const get_full_sr_url = (match) => {
 	return details.get_full_sr_url(match);
 };
@@ -171,6 +169,7 @@ const gloab_composable_fn = () => {
   return {
     // sr 分析数据点击跳转
     sr_click_handle,
+		get_full_sr_url,
   }
 }
 

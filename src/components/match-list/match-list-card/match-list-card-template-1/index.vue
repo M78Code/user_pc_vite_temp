@@ -15,7 +15,6 @@
 <script setup>
 // import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 
-console.log('lockie_test_console', match_list_card);
 import { computed, defineProps, onMounted, onUnmounted, inject } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
