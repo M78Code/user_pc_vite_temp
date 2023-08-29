@@ -52,7 +52,7 @@
                       {{calc_score(item)}}
                     </template>
                     <template v-else>
-                      {{item | format_total_score(0)}} - {{item | format_total_score(1)}}
+                      {{  format_total_score(item,0)}} - {{  format_total_score(item,1)}}
                     </template>
                   </span>
                 </div>
@@ -87,6 +87,7 @@ import match_stage from 'src/project/components/match/match_stage.vue';
 import match_dialog_stage from 'src/project/components/match/match_dialog_stage.vue';
 import show_start_time from 'src/project/components/details/wight/show_start_time.vue'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { format_total_score  } from "src/core/index.js";
 export default defineComponent({
   name: "result_details_dialog",
   props:['detail_data','math_list_data'],

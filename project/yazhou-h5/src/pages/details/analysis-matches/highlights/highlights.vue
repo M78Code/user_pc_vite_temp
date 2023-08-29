@@ -22,7 +22,7 @@
             <div class="dot-game-over"></div>
             <div class="item-flag icon-flag-game-over"></div>
             <div class="item-content real-time-contv-ifent hairline-border">
-              <!-- <span class="time">{{ lodash.get(get_detail_data, 'mststr', 0) | format_mgt_time}}</span> -->
+      
               <span class="time" v-if="get_detail_data.mmp==31">{{ t('mmp.1.31') }}</span>
               <span class="time" v-else>{{ format_mgt_time(lodash.get(get_detail_data, 'mststr'))}}</span>
               <span class="score">[{{ format_total_score(get_detail_data, 0) }}-{{ format_total_score(get_detail_data, 1) }}]</span>

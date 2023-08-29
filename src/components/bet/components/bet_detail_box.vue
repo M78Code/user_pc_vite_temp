@@ -110,7 +110,7 @@
         <!-- 最高可赢和常用金额 -->
         <div class="win row justify-between yb_mb6">
           <div>{{i18n.t('bet.total_win2')}}
-            <!-- <span :class="{'color2':money_ok && money}">{{max_win_money | four_five_six_double(2) | format_money2}}</span> -->
+          
             <span :class="{'color2':money_ok && money}">{{ format_money2(max_win_money)}}</span>
           </div>
           <div class="usedmoney">

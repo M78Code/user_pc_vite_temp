@@ -27,7 +27,7 @@
         <div class="user-info border-bottom">
           <div class="user-name">Hi,{{user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{user_info.balance | format_money2}}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{ format_money2(user_info.balance)   }}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -125,7 +125,7 @@ import { api_betting } from "src/project/api/index";
 import userCtr from "src/core/user-config/user-ctr.js"
 import lodash from 'lodash'
 
-
+import { format_money2  } from "src/core/index.js";
 import { i18n, loadLanguageAsync } from 'src/boot/i18n'
 import { computed, onUnmounted, watch } from "vue";
  
