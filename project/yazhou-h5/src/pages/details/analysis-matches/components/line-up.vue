@@ -164,7 +164,7 @@ import { api_analysis } from "src/api/index.js";
 import { computed, nextTick, onUnmounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 

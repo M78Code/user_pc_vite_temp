@@ -20,7 +20,7 @@
         </template>
       </div>
       <div class="row common-header-right" >
-       
+
         <div
           class="collect-icon"
           :class="{active:get_detail_data.mf}"
@@ -41,7 +41,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js'
 import lodash from 'lodash'
-import { t } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 //国际化
@@ -236,7 +236,7 @@ const props = defineProps({
     //   // 商户是否直接跳到的赛事详情页
     //   'get_godetailpage',
     //   'get_curr_sub_menu_type',
-    
+
     // ]),
     // 是否是电竞
   let is_DJ_show = computed(() => {

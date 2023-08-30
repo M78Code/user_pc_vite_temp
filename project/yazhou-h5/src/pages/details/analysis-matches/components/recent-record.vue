@@ -62,7 +62,7 @@ import teamImg from "src/project/components/details/team-img";
 import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 

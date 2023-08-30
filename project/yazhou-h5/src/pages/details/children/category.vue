@@ -78,7 +78,7 @@ import tournament_play_new from "project_path/src/pages/details/components/tourn
 // 引入接口封装文件
 import { api_common, api_analysis} from 'src/api/index.js'
 // 引入国际化
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //  无数据显示组件
 // import no_data from "project_path/src/components/common/no-data.vue"
 

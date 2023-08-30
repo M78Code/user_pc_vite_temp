@@ -14,13 +14,13 @@ import searchReducer from "./module/search";
 
 
 export {
-  todosReducer,
-  counterReducer,
-  betReducer,
-  betInfoReducer,
+  // todosReducer,
+  // counterReducer,
+  // betReducer,
+  // betInfoReducer,
   matchesReducer,
   menuReducer,
-  detailsReducer,
+  // detailsReducer,
   layoutReducer,
   globalReducer,
   filterReducer,

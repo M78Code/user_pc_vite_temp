@@ -5,19 +5,15 @@
 -->
 <template>
   <div class="live-video">
-    <template v-if="tabList.length>0">
+    <template v-if="tabList.length > 0">
       <!--  上方tab选项卡  -->
       <div class="video-tabs">
         <div class="tabs-bar">
           <div class="tabs-bar-nav a3" ref="scrollBox">
             <template v-for="(tab, index) in tabList">
-              <div class="tabs-tab"
-                  v-if="tab.field1 == -6 && GlobalAccessConfig.get_collectSwitch() || tab.field1 != -6"
-                   :key="index"
-                   ref="scrollItem"
-                   :class="[tab_Index == index ? 'tabs-active' : '']"
-                   @click="changeTab(tab, index)"
-              >
+              <div class="tabs-tab" v-if="tab.field1 == -6 && GlobalAccessConfig.get_collectSwitch() || tab.field1 != -6"
+                :key="index" ref="scrollItem" :class="[tab_Index == index ? 'tabs-active' : '']"
+                @click="changeTab(tab, index)">
                 <div>
                   {{ tab.name }}
                 </div>
@@ -30,20 +26,13 @@
       <!-- 视频主列表内容 -->
       <div class="match-warp" v-if="carousel_data.list.length">
         <!-- 左侧侧边栏菜单 -->
-        <div class="left-menu" >
+        <div class="left-menu">
           <q-scroll-area :thumb-style="{ display: 'none' }">
-            <div
-              class="item"
-              :class="{'active': index == menu_index}"
-              v-for="(item, index) in tabList[tab_Index].subList"
-              :key="index"
-              @click="change_menu(index, item.field1)"
-            >
+            <div class="item" :class="{ 'active': index == menu_index }" v-for="(item, index) in tabList[tab_Index].subList"
+              :key="index" @click="change_menu(index, item.field1)">
               <!-- 联赛icon -->
-              <img class="match_logo" v-if="index != 0"
-                   :src=" item.field2 && get_file_path(item.field2)"
-                   @error="league_icon_error"
-              />
+              <img class="match_logo" v-if="index != 0" :src="item.field2 && get_file_path(item.field2)"
+                @error="league_icon_error" />
               <!--<img class="match_logo" v-else  src="image/wwwassets/bw3/svg/home/all.svg" alt="">-->
               <i v-else class="match_logo"></i>
               <span class="label">{{ item.name }}</span>
@@ -53,40 +42,32 @@
         <!-- 右侧主列表页 -->
         <div class="match-content">
           <div class="right_main_list" ref="scrollArea" @scroll="wrapper_scroll_handler">
-            <div class="video_list"
-                 v-for="(item, index) in carousel_data.list"
-                 :key="index"
-                 :ref="'mid-' + item.mid"
-                 @click="goto_detail_video(item)"
-            >
-              <div class="video_list_left" :style="{backgroundImage: 'url(' + (item.mgif ? item.mgif : `${ $g_image_preffix }/image/bw3/png/live_loading.png`) + ')'}">
+            <div class="video_list" v-for="(item, index) in carousel_data.list" :key="index" :ref="'mid-' + item.mid"
+              @click="goto_detail_video(item)">
+              <div class="video_list_left"
+                :style="{ backgroundImage: 'url(' + (item.mgif ? item.mgif : `${$g_image_preffix}/image/bw3/png/live_loading.png`) + ')' }">
                 <div class="player">
-                  <img  src="image/bw3/svg/home/play.svg" alt="">
-                  <span>{{ money_filter(item.plnum)    }}</span>
+                  <img src="image/bw3/svg/home/play.svg" alt="">
+                  <span>{{ money_filter(item.plnum) }}</span>
                 </div>
-                <img
-                    v-if="GlobalAccessConfig.get_collectSwitch()"
-                    :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black:`${ $g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${ $g_image_preffix }/image/bw3/svg/home/pentagram.svg`" @click.stop="on_collection(item)">
+                <img v-if="GlobalAccessConfig.get_collectSwitch()"
+                  :src="item.mf ? (!_.get(UserCtr, 'favoriteButton') && UserCtr.theme.includes('y0') ? y0_img_favorite_black : `${$g_image_preffix}/image/bw3/svg/home/pentagram_s.svg`) : `${$g_image_preffix}/image/bw3/svg/home/pentagram.svg`"
+                  @click.stop="on_collection(item)">
               </div>
               <div class="video-list-right">
                 <div class="video-describe">
-                  <span v-if="item.ms != 110">{{ format_total_score(item, 0)}}-{{ format_total_score(item, 1)}}</span>
+                  <span v-if="item.ms != 110">{{ format_total_score(item, 0) }}-{{ format_total_score(item, 1) }}</span>
                   {{ item.mhn }} v {{ item.man }}
                 </div>
                 <div class="score-time">
                   <div class="time relative-position">
                     <!-- 倒计时组件 -->
-                    <counting-down
-                      :title="item.ms == 0? i18n_t('list.match_no_start') :match_period_map(item)"
-                      :mmp="item.mmp"
-                      :m_id="item.mid"
-                      :second="item.mst"
-                      :match="item"
-                      :is_add="[1,4,11,14,100,101,102,103].includes(+item.csid)"
-                    />
+                    <counting-down :title="item.ms == 0 ? i18n_t('list.match_no_start') : match_period_map(item)"
+                      :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item"
+                      :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)" />
                   </div>
                   <div class="score">
-                    <span>{{GlobalAccessConfig.get_handicapNum()? item.mc: i18n_t('footer_menu.more') }}</span>
+                    <span>{{ GlobalAccessConfig.get_handicapNum() ? item.mc : i18n_t('footer_menu.more') }}</span>
                     <span v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                   </div>
                 </div>
@@ -96,38 +77,34 @@
         </div>
       </div>
     </template>
-    <SLive v-if="loading"/>
+    <SLive v-if="loading" />
 
     <!-- 没有数据 组件 -->
     <no-data v-if="noMenu" :which='no_menu_txt' height='500' class="no-list"></no-data>
 
     <!-- 回到顶部按钮组件 -->
-    <scroll-top
-        v-show="!get_is_show_menu && list_scroll_top > 0"
-        ref="scroll_top"
-        :list_scroll_top="list_scroll_top"
-        @back-top="scroll_top"
-    />
+    <scroll-top v-show="!get_is_show_menu && list_scroll_top > 0" ref="scroll_top" :list_scroll_top="list_scroll_top"
+      @back-top="scroll_top" />
   </div>
 </template>
 
 <script setup>
-import { api_common } from "src/project/api/index";
+import { api_common } from "src/core/api/index.js";
 // import { mapGetters, mapMutations } from "vuex";
-import match_list_mixin from "src/project/mixins/match-list/match-list-mixin";
+// import match_list_mixin from "project_path/src/mixins/match-list/match-list-mixin";
 // import skt_live_bw3 from "project_path/src/mixins/websocket/data/skt-live-bw3.js";
 // import msc from "project_path/src/mixins/common/msc.js";
 // import ListMap from "project_path/src/utils/list-map";
-import common from "src/project/mixins/constant";
+// import common from "project_path/src/mixins/constant";
 import {utils } from 'src/core/index.js';
-import SLive from "src/project/components/skeleton/live"
-import no_data from 'src/project/components/common/no-data'
-import scroll_top from 'src/project/components/record-scroll/scroll-top'
-import counting_down from 'src/project/components/common/counting-down'
+import SLive from "project_path/src/components/skeleton/live"
+import no_data from 'project_path/src/components/common/no-data'
+import scroll_top from 'project_path/src/components/record-scroll/scroll-top'
+import counting_down from 'project_path/src/components/common/counting-down'
 import { format_total_score } from "src/core/format/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
-import { UserCtr } from "src/core/index.js";
+import { UserCtr } from "src/core/user-config/user-ctr.js";
   //右侧菜单内容
   const carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
@@ -417,7 +394,7 @@ import { UserCtr } from "src/core/index.js";
     }
     // 回到顶部
     const scroll_top = () => {
-      $refs.scrollArea && ($refs.scrollArea.scrollTop = 0)
+      // $refs.scrollArea && ($refs.scrollArea.scrollTop = 0)
     }
     // 由详情返回后，列表滚动至之前位置
     const set_match_scroll_top = (mid, top) => {
