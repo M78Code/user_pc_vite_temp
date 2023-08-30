@@ -454,6 +454,6 @@ function navigate(obj) {
 
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 @import 'project_path/src/components/site-header/site-header.scss';
-</style>
+</style> -->

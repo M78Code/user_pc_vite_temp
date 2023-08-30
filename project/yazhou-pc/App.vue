@@ -20,7 +20,7 @@ import { GetUrlParams } from "src/core/utils/";
 import store from "src/store-redux/index.js";
 import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { SessionStorage  } from "src/core/index.js";
+import { SessionStorage,UserCtr } from "src/core/index.js";
 import { loadLanguageAsync } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
@@ -39,9 +39,9 @@ const handle_user_tryPlay = async () => {
     let obj = res?.data?.data || {};
     token = obj.token;
     SessionStorage .set(token_key, token);
-    store.dispatch(UserCre.set_user_token(token));
+    store.dispatch(UserCtr.set_user_token(token));
   } else {
-    store.dispatch(UserCre.set_user_token(token));
+    store.dispatch(UserCtr.set_user_token(token));
   }
 };
 (async () => {
