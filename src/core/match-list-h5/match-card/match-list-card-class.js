@@ -9,7 +9,9 @@ import store from "src/store-redux/index.js";
 import { get_template_config } from "./template/template-config.js";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { UserCtr } from "src/core/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import MatchListCardScroll from './match-list-card-scroll'
+
 class MatchListCard {
   constructor() {
     this.init();
@@ -264,7 +266,7 @@ class MatchListCard {
         // 记录路由信息
         const { fullPath, hash, name, params, path, query } = this.$route;
         this.set_last_route_info({ fullPath, hash, name, params, path, query });
-        this.subscription();
+        MatchPage.subscription();
       }, 10);
     } else {
       // 如果是赛果返回的，则 计算滚动距离
@@ -485,7 +487,7 @@ class MatchListCard {
       return;
     }
     // scroll_top 是 滚动的距离
-    let scroll_top = this.get_scroll_wrapper_top(scroll_obj);
+    let scroll_top = MatchListCardScroll.get_scroll_wrapper_top(scroll_obj);
 
     let page_count = 18;
     // 新手版
@@ -605,10 +607,10 @@ class MatchListCard {
         this.foot_ball_screen_changing=0
     }, 500);
     // 赛事对象对应的dom 的 top 值的 映射
-    this.set_match_top_map_dict(mid_top_map);
+    store.dispatch({ type: 'matchReducer/set_match_top_map_dict',  payload: mid_top_map })
     // 订阅新赛事列表
     if (scroll_obj != "ciyao_bold") {
-      this.subscription();
+      MatchPage.subscription();
     }
   }
   // 浏览器得到焦点

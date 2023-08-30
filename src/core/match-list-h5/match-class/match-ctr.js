@@ -3,6 +3,9 @@
 /*
  * @Description:列表页面赛事信息操作类-实现快速检索,修改等功能
  */
+
+import lodash from 'lodash'
+
 class MatchCtr {
   /**
    * @description: 构造函数
@@ -118,7 +121,7 @@ class MatchCtr {
     let obj = {}
     match_res_data.map(item => {
       Object.assign(obj, { [item.tid]: {} })
-      if (_.get(item, 'hps') && item.hps.length > 0 && item.hps[0].hid) {
+      if (lodash.get(item, 'hps') && item.hps.length > 0 && item.hps[0].hid) {
         item.hps.map(_item => {
           Object.assign(obj[item.tid], { [_item.hid]: 0 })
 
@@ -208,15 +211,15 @@ class MatchCtr {
    * @return {Object} 返回操作后的列表 {add:{}, del:{}, upd:{}}
    */
   setList(sortList, is_append) {
-    let temp = _.cloneDeep(this.list);
+    let temp = lodash.cloneDeep(this.list);
     if (sortList && (sortList instanceof Array)) {
       let old_mid_list = this.list.map(m => m.mid).join(',');
       let new_mid_list = sortList.map(m => m.mid).join(',');
       if (new_mid_list != old_mid_list) {
         this.flex_index(sortList, temp)
-        this.list = _.cloneDeep(sortList);
+        this.list = lodash.cloneDeep(sortList);
       } else {
-        this.list = _.cloneDeep(sortList);
+        this.list = lodash.cloneDeep(sortList);
       }
     }
   }
@@ -446,7 +449,7 @@ class MatchCtr {
         if (match.mid == skt_data.mid) {
           // hls 判断为undefined 执行下次循环
           if (!skt_data.hls) break;
-          skt_data = _.cloneDeep(skt_data)
+          skt_data = lodash.cloneDeep(skt_data)
           skt_data.hls.forEach(hl_ws => {
             if (!match[type_name]) return;
             // 更新盘口级别hs
@@ -525,7 +528,7 @@ class MatchCtr {
       Object.assign(this.hl_obj[hid], { hs: status });
       if (ols && (ols instanceof Array)) {
         // 设置新盘口信息(新增和修改)
-        ols = _.cloneDeep(ols)
+        ols = lodash.cloneDeep(ols)
         // ols.forEach(item_ols => {
         //   let ol_obj = this.ol_obj;
         //   if(item_ols && item_ols.oid && ol_obj[item_ols.oid])
@@ -563,7 +566,7 @@ class MatchCtr {
     const _this = this;
     if (obj.mid) {
       this.hps_15_minutes_arr_format(obj);
-      let item = _.cloneDeep(obj);
+      let item = lodash.cloneDeep(obj);
       // 增加新盘口和押注项对象
       let fun = (item, type_name = 'hps') => {
         if (item && item[type_name] && item[type_name].length) {
@@ -650,13 +653,13 @@ class MatchCtr {
 
     //  两组特几的场次数据
     let hSpecial_sort = []
-    let arr_ = _.sortBy(arr, ['hSpecial']);
+    let arr_ = lodash.sortBy(arr, ['hSpecial']);
     let _msc_n = this.get_hSpecial_by_msc(Number(match.mst)); // 根据msc获取的正确的阶段 特几场次
     // 中场加时判断 mmp 是超时字段
     if (Number(match.mst) >= 1800 && (Number(match.mst) < 2700 || [6, 41].includes(Number(match.mmp)))) {
       _msc_n = 3
     }
-    let n_ = Number(_.get(arr_, '[0].hSpecial'));
+    let n_ = Number(lodash.get(arr_, '[0].hSpecial'));
     if (n_ > _msc_n) { // 如果后端返回的数据中没有当前场次,只有+1场次
       hSpecial_sort = [_msc_n, n_]
     } else {
@@ -700,7 +703,7 @@ class MatchCtr {
         let hpid = hpid_sort[j];
         let obj = {
           "hSpecial": hSpecial + '',
-          "mid": _.get(match, 'mid'),
+          "mid": lodash.get(match, 'mid'),
           "hpid": hpid + '',
           "hpon": 0,
           "hshow": "No",
@@ -743,7 +746,7 @@ class MatchCtr {
   updMatchInfoByMatch(obj, match) {
     const _this = this;
 
-    let item = _.cloneDeep(this.hps_15_minutes_arr_format(obj));
+    let item = lodash.cloneDeep(this.hps_15_minutes_arr_format(obj));
     /**
      *
      * @param {Object} match_inner 旧赛事数据
@@ -944,7 +947,7 @@ class MatchCtr {
             });
           }
 
-          // let play_ = _.cloneDeep(obj);
+          // let play_ = lodash.cloneDeep(obj);
           // 修改玩法信息
           if (obj && obj.hl && (obj.hl instanceof Array)) {
             obj.hl.forEach(item_hl => {
@@ -970,7 +973,7 @@ class MatchCtr {
               }
             });
           }
-          let play_ = _.cloneDeep(obj);
+          let play_ = lodash.cloneDeep(obj);
           Object.assign(play, play_);
           play_.hl.forEach(item_hl => {
             if (item_hl) {
@@ -1011,7 +1014,7 @@ class MatchCtr {
               }
             });
           }
-          play_ = _.cloneDeep(play_);
+          play_ = lodash.cloneDeep(play_);
           if (play_ && play_.hl && (play_.hl instanceof Array)) {
             play_.hl.forEach(item_hl => {
               if (item_hl) {
