@@ -3,7 +3,7 @@
     <div class="notice_main">
         <!-- 公共标题 -->
         <simple-header>
-            {{ t('common.notice') }}
+            {{ i18n_t('common.notice') }}
         </simple-header>
         <!-- tab 组件 及 下边内容 滚动部分 -->
         <tabs :tabList="tabList" :tabIndex="index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
@@ -14,10 +14,10 @@
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="flex justify-between align_items">
                             <div class="ann-title">[{{ current_title }}]</div>
-                            <div class="ann-time">{{ (new Date(+item.sendTimeOther)).Format(t('time6')) }}</div>
+                            <div class="ann-time">{{ (new Date(+item.sendTimeOther)).Format(('time6')) }}</div>
 
                         </div>
-                        <div class="ann-content" v-html="item.context" :class="{ is_long_word: ['en'].includes(lang) }">
+                        <div class="ann-content" v-html="item.context" :class="{ is_long_word: ['en'].includes(UserCtr.lang) }">
                         </div>
                     </div>
                     <!-- 没有数据 组件 -->
@@ -32,26 +32,24 @@
   
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
+
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "../config/index.js"
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/announce/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({ ...useProps })
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 import { api_home } from "src/api/index";
 import { LoadingWapper as loadPage } from "src/components/common/loading";
 import { NoDataWapper as noData } from "src/components/common/no-data";
-import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
+import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
 import tabs from "./tab.vue";
-import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import userCtr from 'src/core/user-config/user-ctr.js'
-
-/** 国际化 */
-
+import UserCtr from 'src/core/user-config/user-ctr.js'
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -109,7 +107,7 @@ onUnmounted(() => {
 function get_list() {
     api_home.post_announce_list().then(({ code, data }) => {
         if (code == 200 && data) {
-            data.nt.unshift({ id: 0, type: t('common.all_notice') });
+            data.nt.unshift({ id: 0, type: i18n_t('common.all_notice') });
             for (let i in data.nt) {
                 data.nt[i].name = data.nt[i].type
                 data.nt[i].index = Number(i)
@@ -141,23 +139,13 @@ function get_list() {
         console.error(err);
         loading_page.value = false
         has_data_list()
-        if (!userCtr.get_user_token()) {
+        if (!UserCtr.get_user_token()) {
             useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER)
         }
     })
 }
 /** 钩子触发 */
 onMounted(get_list)
-
-/** stroe仓库 */
-const store_data = store.getState()
-const unsubscribe = store.subscribe(() => {
-    lang.value = store_data.langReducer.lang
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
-/** 国际化语言 default: zh */
-const lang = ref(store_data.langReducer.lang)
 
 </script>
   

@@ -29,13 +29,12 @@ import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
 
-import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+import simpleHeader from "app/project/yazhou-pc/src/components/site-header/simple-header.vue";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
-import { api_announce } from "src/api/index"
-import store from "src/store-redux/index.js";
+import { api_announce } from "src/api/index.js"
 import { format_str } from "src/core/format/index.js";
-
+import UserCtr from 'src/core/user-config/user-ctr.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -46,9 +45,6 @@ const props = defineProps({})
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
-/** 国际化 */
-
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -64,17 +60,6 @@ const current_title = ref('')
 const index = ref(0)
 /** 接口请求完成 */
 const loadd_finish = ref(false)
-
-
-/** stroe仓库 */
-const store_data = store.getState()
-const unsubscribe = store.subscribe(() => {
-    lang.value = store_data.langReducer.lang
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
-/** 国际化语言 default: zh */
-const lang = ref(store_data.langReducer.lang)
 
 /**
 * @Description:切换菜单
@@ -98,7 +83,7 @@ function timestr(time1) {
     time1 = parseInt(time1);
     if (!time1) return "";
     let time = new Date(time1);
-    if (['vi', 'en', 'th', 'ms', 'ad'].includes(lang)) {
+    if (['vi', 'en', 'th', 'ms', 'ad'].includes(UserCtr.lang)) {
         return (
             format_str(time.getHours()) +
             ":" +
