@@ -37,12 +37,7 @@ import {utils } from 'src/core/index.js';
 import { onUnmounted, watch, ref, computed, onMounted } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-<<<<<<< HEAD
 import UserCtr from "src/core/user-config/user-ctr.js";;  // mixins: [router_mixins],
-=======
-import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
-import lodash from "lodash"
->>>>>>> 6e7ad38b62117aae54deff59c99a7b643da7c345
 
   // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标

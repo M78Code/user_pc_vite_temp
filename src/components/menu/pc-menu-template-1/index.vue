@@ -839,7 +839,7 @@ const lv_1_num = (mi) => {
   // console.warn("mi", mi);
   if (mi == 2000) {
     //电竞
-    let sub_list = props.base_data.dianjing_sublist;
+    let sub_list = props.base_data.dianjing_sublist || [];
     let num = 0;
     sub_list.map((x) => {
       //  1  滚球  3 早盘  4 冠军  合计得出总数

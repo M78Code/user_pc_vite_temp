@@ -194,12 +194,8 @@ import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js"
 import lodash from "lodash"
-<<<<<<< HEAD
-import UserCtr from "src/core/user-config/user-ctr.js";;
-=======
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute, useRouter } from "vue-router"
->>>>>>> 6e7ad38b62117aae54deff59c99a7b643da7c345
   // mixins: [skt_home_bw3, match_list_mixin],
 
   // 路由
