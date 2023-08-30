@@ -84,14 +84,14 @@
 
 <script setup>
 import { ref, defineExpose, onUnmounted } from "vue";
-import utils  from "src/core/utils/utils";
-import ZhuGe from "src/core/http/zhuge-tag";
-import details from "src/core/match-detail-pc/match-detail";
-import info from 'src/components/match-detail/match_info/info.vue'
-// 玩法tab条
-import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
+import {utils}  from "src/core/index";
+// import ZhuGe from "src/core/http/zhuge-tag";
+// import details from "src/core/match-detail-pc/match-detail";
+// import info from 'src/components/match-detail/match_info/info.vue'
+// // 玩法tab条
+// import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import { useRoute, useRouter } from "vue-router";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
+// import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
 
 import store from "src/store-redux/index.js";
 

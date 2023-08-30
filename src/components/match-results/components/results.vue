@@ -20,7 +20,7 @@
       :versions="versions"
     />
     <!-- 足球 -->
-    <soccer
+    <!-- <soccer
       v-if="['1'].includes(sportType)"
       :load_data_state="load_data_state"
       :details_load="details_load"
@@ -34,7 +34,7 @@
       @change_sort="change_sort"
       :versions="versions"
       ref="soccer_ref"
-    />
+    /> -->
     <!-- 篮球 -->
     <basketball
       v-if="sportType == '2'"
@@ -212,7 +212,8 @@
 <script>
 import { is_eports_csid } from 'src/core/index.js'
 
-// import soccer from "src/components/match-results/template/soccer";
+import soccer from "src/components/match-results/template/soccer";
+console.log(soccer,'soccer');
 // import basketball from "src/components/match-results/template/basketball";
 // import tennis from "src/components/match-results/template/tennis";
 // import badminton from "src/components/match-results/template/badminton";
@@ -232,7 +233,7 @@ import { is_eports_csid } from 'src/core/index.js'
 // import dota2 from "src/components/match-results/template/dota2";
 export default {
   components: {
-    // soccer,
+    soccer,
     // basketball,
     // tennis,
     // badminton,

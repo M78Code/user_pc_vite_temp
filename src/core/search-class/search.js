@@ -5,11 +5,11 @@
  */
 
 
-import details from 'src/core/match-detail-pc/match-detail.js'
+// import details from 'src/core/match-detail-pc/match-detail.js'
 import { api_search } from "src/api/index.js";
 import  store  from "src/store-redux/index.js"
 import { i18n_t} from "src/core/index.js"
-import BetCommonHelper from "src/core/bet/common-helper/index.js"
+// import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
 
 export default {

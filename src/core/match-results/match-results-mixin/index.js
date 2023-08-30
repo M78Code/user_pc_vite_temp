@@ -4,11 +4,10 @@
  * @Date: 2020-08-04 17:14:23
  * @Description: src/public/mixins/results/index
  */
-
-import formartmixin from "src/public/mixins/common/time_format";
-import { mapGetters } from "vuex";
+import lodash from 'lodash'
+import { i18n_t} from 'src/core/index.js'
 export default {
-  mixins: [formartmixin],
+
   data() {
     return {
       timer: null,
@@ -104,11 +103,8 @@ export default {
     this.play_id = playId;
   },
   computed: {
-    ...mapGetters({
-      lang: "get_lang"
-    }),
     cur_row() {
-      return _.findIndex(this.results_order_list, item =>item.playId==this.play_id);
+      return lodash.findIndex(this.results_order_list, item =>item.playId==this.play_id);
     } 
   },
   watch: {
@@ -136,16 +132,16 @@ export default {
       switch (res) {
         // "2", "4", "5", "6"
         case "2":
-          str = {class: 'lose-color', name: this.$root.$t("bet_record.effective_water_")}//走水
+          str = {class: 'lose-color', name:i18n_t("bet_record.effective_water_")}//走水
           break;
         case "4":
-          str = {class: 'win-color', name: this.$root.$t("bet_record.win")}//赢
+          str = {class: 'win-color', name:i18n_t("bet_record.win")}//赢
           break;
         case "5":
-          str = {class: 'win-color', name: this.$root.$t("bet_record.win_half")}//赢半
+          str = {class: 'win-color', name:i18n_t("bet_record.win_half")}//赢半
           break;
         case "6":
-          str = {class: 'lose-color', name: this.$root.$t("bet_record.lose_half")}//输半
+          str = {class: 'lose-color', name:i18n_t("bet_record.lose_half")}//输半
           break;
       }
       return str;
@@ -176,23 +172,23 @@ export default {
       let match_stage = ""
       if([61, 80, 90].includes(matchPeriodId)){
         switch (matchPeriodId){
-          case 61: match_stage = this.$root.$t("bet_record.match_delay2");break;//比赛延迟
-          case 80: match_stage = this.$root.$t("bet_record.match_interrupt");break;//比赛中断
-          case 90: match_stage = this.$root.$t("bet_record.match_give_up");break;//比赛放弃
+          case 61: match_stage =i18n_t("bet_record.match_delay2");break;//比赛延迟
+          case 80: match_stage =i18n_t("bet_record.match_interrupt");break;//比赛中断
+          case 90: match_stage =i18n_t("bet_record.match_give_up");break;//比赛放弃
         }
         return match_stage
       }
 
       if([1, 2, 5, 7, 8, 9, 10, 11].includes(matchStatus)){
         switch (matchStatus){
-          case 1: match_stage = this.$root.$t("menu.match_playing");break;//滚球
-          case 2: match_stage = this.$root.$t("bet_record.match_pause");break;//比赛暂停
-          case 5: match_stage = this.$root.$t("bet_record.match_cancel2");break;//比赛取消
-          case 7: match_stage = this.$root.$t("bet_record.match_delay2");break;//比赛延迟
-          case 8: match_stage = this.$root.$t("bet_record.match_unknown");break;//未知状态
-          case 9: match_stage = this.$root.$t("bet_record.match_delay3");break;//比赛延期
-          case 10: match_stage = this.$root.$t("bet_record.match_interrupt");break;//比赛中断
-          case 11: match_stage = this.$root.$t("bet_record.match_unknown");break;//未知状态
+          case 1: match_stage =i18n_t("menu.match_playing");break;//滚球
+          case 2: match_stage =i18n_t("bet_record.match_pause");break;//比赛暂停
+          case 5: match_stage =i18n_t("bet_record.match_cancel2");break;//比赛取消
+          case 7: match_stage =i18n_t("bet_record.match_delay2");break;//比赛延迟
+          case 8: match_stage =i18n_t("bet_record.match_unknown");break;//未知状态
+          case 9: match_stage =i18n_t("bet_record.match_delay3");break;//比赛延期
+          case 10: match_stage =i18n_t("bet_record.match_interrupt");break;//比赛中断
+          case 11: match_stage =i18n_t("bet_record.match_unknown");break;//未知状态
         }
         return match_stage
       }
