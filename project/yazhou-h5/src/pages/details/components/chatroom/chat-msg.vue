@@ -49,7 +49,7 @@ export default defineComponent({
     // #TODO vuex
     // computed: {
     // ...mapGetters([
-    //   'userCtr', // 当前登录的用户信息
+    //   'UserCtr', // 当前登录的用户信息
     // ]),
     const computed_name = computed(() => {
       const { nickName } = msgItem || '';
@@ -65,7 +65,7 @@ export default defineComponent({
     });
     // 是否是自己发送的消息
     const is_self_msg = computed(() => {
-      const { userId } = userCtr || {};
+      const { userId } = UserCtr || {};
       const { userId: msgUserId } = msgItem;
       return userId == msgUserId;
     });

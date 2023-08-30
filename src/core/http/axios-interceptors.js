@@ -48,8 +48,8 @@ const requestHook = {
         break;
     }
     //请求token
-    const requestId = "68e6c351022cec470f7cc3195fbabda7adb46a8d"
-    // const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+    // const requestId = "68e6c351022cec470f7cc3195fbabda7adb46a8d"
+    const requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "zh"; // 语言调整
@@ -328,7 +328,7 @@ function match_fix_mst(match, http_data) {
 }
 /**
  *  解析判定 url
- * @param {string} [url=""] 
+ * @param {string} [url=""]
  * @returns{ is_full_url,
     is_other_api,
     new_url_temp,

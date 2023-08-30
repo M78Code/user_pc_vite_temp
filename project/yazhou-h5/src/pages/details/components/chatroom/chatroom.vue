@@ -142,7 +142,7 @@ export default defineComponent({
     // ]),
     // 轮询拉取增量消息，防止消息丢失率
     const intervalUpdateMsg = () => {
-      let { pullMsgRate } = userCtr.user_info;  // 消息拉取频率
+      let { pullMsgRate } = UserCtr.user_info;  // 消息拉取频率
       if (!pullMsgRate || pullMsgRate < 5) {
         pullMsgRate = pullMsgRate || 10;
       }
@@ -162,7 +162,7 @@ export default defineComponent({
           chatRoomId: get_chatroom_id,
         })
         if (res && res.code == 200) {
-          const chatroom_http_url = await get_valid_api(userCtr);
+          const chatroom_http_url = await get_valid_api(UserCtr);
           // console.log(chatroom_http_url);
           set_chatroom_http_url(chatroom_http_url);
           get_chatroom_bulletin_info('init_load');

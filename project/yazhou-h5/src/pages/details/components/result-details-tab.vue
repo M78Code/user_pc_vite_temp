@@ -151,7 +151,7 @@ export default {
         useMittEmit(MITT_TYPES.EMIT_RESULT_LIST_LOADING, false)
         tab_data_init()
       } finally {
-        const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
+        const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
         if (configValue == 1 && eventSwitch == 1 && lodash.get(result_detail_data, 'csid') == 1) {
           get_football_replay(0)
         }

@@ -28,7 +28,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     },
   })
   // computed: {
-  //   ...mapGetters(['get_banner_obj', 'userCtr', 'get_golistpage', 'get_hot_list_item'])
+  //   ...mapGetters(['get_banner_obj', 'UserCtr', 'get_golistpage', 'get_hot_list_item'])
   // },
     // ...mapMutations(['set_menu_type', 'set_goto_detail_matchid', 'set_details_item', 'set_home_tab_item', 'set_hot_tab_item']),
   const handle_img_load_error = (e) => {
@@ -52,7 +52,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
           set_details_item(0);
           $router.push({name:'category', params: {mid, csid}});
           }
-        } else if (_url == 'act' && userCtr.activityList) {
+        } else if (_url == 'act' && UserCtr.activityList) {
           $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         }  else if (_url.startsWith('hot') && !get_golistpage) {
             let tid = _url.split('/')[1]

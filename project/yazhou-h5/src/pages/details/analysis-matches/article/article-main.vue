@@ -236,7 +236,7 @@ const handle_stay_duration = (article_id) => {
       return
     }
     // TODO: $utils 后续修改调整
-    $utils.zhuge_event_send(EVENT_NAME, userCtr, zhuge_obj)
+    $utils.zhuge_event_send(EVENT_NAME, UserCtr, zhuge_obj)
     enter_article_time = Date.now()
   }
   /**

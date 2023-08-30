@@ -160,7 +160,7 @@ export const video_info = () => {
     });
     // 鉴权域名 + 回放视频url（拼接后的最终url）
     const replay_video_src = computed(() => {
-      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.userCtr,'user_info.oss.live_h5')
+      const host_url = window.BUILDIN_CONFIG.live_domains[0] || _.get(this.UserCtr,'user_info.oss.live_h5')
       return `${host_url}/videoReplay.html?src=${this.replay_url}&lang=${this.get_lang}&volume=${this.is_user_voice ? 1 : 0}`
 
       // const host_url = 'http://localhost:4000/videoReplay.html?'
@@ -173,8 +173,8 @@ export const video_info = () => {
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
       // letian = 乐天  oubao = 欧宝
-      if(this.userCtr.user_info.merchantCode){
-        return this.userCtr.user_info.merchantCode == 'letian'
+      if(this.UserCtr.user_info.merchantCode){
+        return this.UserCtr.user_info.merchantCode == 'letian'
       }
     });
     const iframe_show = computed(() => {
@@ -246,7 +246,7 @@ export const video_info = () => {
     });
     // 精彩回放视频开关是否开启
     const is_replay_switch = computed(() => {
-      const { configValue, eventSwitch } = _.get(this.userCtr, 'user_info.merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(this.UserCtr, 'user_info.merchantEventSwitchVO', {})
       return configValue == 1 && eventSwitch == 1
     });
     // slider列表长度是否小于屏幕横屏宽度
@@ -860,7 +860,7 @@ export const video_info = () => {
       this.get_msc()
     };
     const get_replay_video = () => {
-      const { configValue, eventSwitch } = _.get(this.userCtr, 'user_info.merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = _.get(this.UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && _.get(this.get_detail_data, 'csid') == '1') {
         this.get_football_replay(0)
         this.$utils.load_player_js()

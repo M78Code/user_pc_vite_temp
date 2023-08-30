@@ -119,7 +119,7 @@ export default defineComponent({
       if (get_is_block_msg) {   // 屏蔽普通消息
         fitlerList = fitlerList.filter((item) => item.type != msgType.normal);
       }
-      const { userId } = userCtr;
+      const { userId } = UserCtr;
       // isVisible 是否仅自己可见 0普通消息 1仅自己可见
       // isSensitive 是否是敏感消息，是敏感消息要过滤
       // status 1普通消息 2撤回消息

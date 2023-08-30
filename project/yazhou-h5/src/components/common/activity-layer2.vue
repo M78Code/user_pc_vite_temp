@@ -29,7 +29,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     },
   })
   const name = computed(() => {
-    // ...mapGetters(['get_activity_msg', 'userCtr', 'get_golistpage', 'get_hot_list_item']),
+    // ...mapGetters(['get_activity_msg', 'UserCtr', 'get_golistpage', 'get_hot_list_item']),
     // this.data
       // return data
 
@@ -59,7 +59,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
           set_details_item(0);
           $router.push({name:'category', params: {mid, csid}});
           }
-        } else if (_url == 'act' && userCtr.activityList) {
+        } else if (_url == 'act' && UserCtr.activityList) {
           $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         } else if (_url.startsWith('hot') && !get_golistpage) {  // 跳热门联赛
             let tid = _url.split('/')[1]
