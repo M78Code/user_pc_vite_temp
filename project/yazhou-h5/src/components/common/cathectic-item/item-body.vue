@@ -42,7 +42,7 @@ import bodyTop from "project_path/src/components/common/cathectic-item/item-body
 import bodyMain from "project_path/src/components/common/cathectic-item/item-body/body-main.vue";
 import lodash from 'lodash'
 import { ref, onMounted, onUnmounted} from 'vue'
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 
   //按钮名字
   let btn_text = ref('')

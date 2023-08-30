@@ -64,7 +64,7 @@ import resultsFooter from 'project_path/src/pages/details/components/details-mat
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import { computed, onUnmounted, ref, onMounted } from "vue";
-import { t } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";
 import lodash from "lodash"
 
   // components: {
@@ -72,7 +72,7 @@ import lodash from "lodash"
   //   'results-footer': results_footer
   // },
   // 国际化
-  
+
   // 图片
   const yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
   const red_img = ref('image/bw3/svg/match-results/red.svg')

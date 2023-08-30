@@ -33,7 +33,7 @@ import { useRoute } from 'vue-router'
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
 import { ref, nextTick } from 'vue'
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 

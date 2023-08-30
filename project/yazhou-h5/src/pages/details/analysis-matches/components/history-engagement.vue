@@ -40,14 +40,14 @@ import {api_analysis} from "src/api/index.js";
 // import noData from "project_path/src/components/common/no-data.vue";
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";
 
   // components: {
   //   "public-form": public_form,
   //   "no-data": no_data,
   // },
   // 国际化
-  
+
   const tab_index = ref(-1)
   const radio_button_index = ref(0)
   const isoptions = ref(false)
