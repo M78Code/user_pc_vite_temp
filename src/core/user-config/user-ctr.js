@@ -97,17 +97,17 @@ class UserCtr {
    */
 
   set_uid(uid) {
-    this.uid.value = uid;
+    this.uid = uid;
   }
   get_cuid() {
-    return this.uid.value;
+    return this.uid;
   }
   set_lang(data) {
-    this.lang.value = data;
+    this.lang = data;
     this.user_info.languageName = data;
   }
   set_theme(lang) {
-    this.theme.value = lang;
+    this.theme = lang;
     store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -151,7 +151,7 @@ class UserCtr {
     this.user_info.token = this.user_token
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
-    this.user_logined_id.value = user_obj.userId
+    this.user_logined_id = user_obj.userId
   }
   set_user_activity (activity) {
     this.activity = { ...activity }
@@ -1117,7 +1117,7 @@ class UserCtr {
     //计算 后的  设置 网页 基础信息的 最终配置
     let config = this.compute_set_web_meta_config();
     let dom_ = document;
-    let lang = this.lang.value;
+    let lang = this.lang;
     // 设置标题
     let title_el = dom_.createElement("title");
     let title_str = this.get_web_title(lang);
@@ -1148,7 +1148,7 @@ class UserCtr {
   }
   // 设置 用户token
   set_user_token(token) {
-    this.user_token.value = token
+    this.user_token = token
   }
 }
 

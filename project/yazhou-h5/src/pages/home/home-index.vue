@@ -3,8 +3,9 @@
  * @Description: 首页入口文件
 -->
 <template>
+  <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div class="home home-page" :class="[home_class && `${home_class} white-font`,
-  GlobalAccessConfig.get_hotMatchNum()&& tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
+  handicapNum && tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
@@ -26,19 +27,22 @@
 </template>
 
 <script>
-// import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
+import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import hot from "project_path/src/pages/home/hot/index.vue";    // 热门页入口主页面
 // import live_video from "project_path/src/pages/home/live-video/index.vue";
 import { loadLanguageAsync } from "src/boot/i18n.js";
 // import router_mixins from "project_path/src/mixins/router-mixins.js";
-import {utils } from 'src/core/index.js';
+import { utils } from 'src/core/utils/index.js';
 import { onUnmounted, watch, ref, computed, onMounted, defineComponent } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
 import lodash from "lodash"
-console.error(GlobalAccessConfig.get_hotMatchNum());
+// console.error(GlobalAccessConfig);
+
+const handicapNum = lodash.get(GlobalAccessConfig,'config_default.handicapNum')
+
 export default defineComponent({
   beforeRouteEnter (to,from,next) {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
@@ -66,13 +70,15 @@ export default defineComponent({
   const add_animation = ref(true)
   const theme = ref(UserCtr.theme)
 
+  
+
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，
      * 否则每次进入到首页路由（home/hot/live_video）都会先创建'home'组件，
      * 从而发起不必要的http请求
      */
      onMounted(() => {
-      currentContent = _.get(get_home_tab_item, 'component', 'home')
+      currentContent = lodash.get(get_home_tab_item, 'component', 'home')
       set_menu_type('');
       //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
       // to_corresponding_route()

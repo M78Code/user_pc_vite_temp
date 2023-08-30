@@ -456,13 +456,14 @@ const special_hps_load_handle = (match,key) => {
   }
 }
 const match_detail_m_list_init = () => {
-  // 赛果详情页的列表，数据请求
-  if(['detail_match_list'].includes(props.invok_source)){
-    // 列表页全局获取 请求参数
-    MatchPage.get_match_data_list();
-  } else if([1,3,30,100].includes(MenuData.current_menu)){
-    MatchPage.get_match_data_list()
-  }
+  // // 赛果详情页的列表，数据请求
+  // if(['detail_match_list'].includes(props.invok_source)){
+  //   // 列表页全局获取 请求参数
+  //   MatchPage.get_match_data_list();
+  // } else if([1,3,30,100].includes(MenuData.current_menu)){
+  //   MatchPage.get_match_data_list()
+  // }
+  MatchPage.get_match_data_list()
 }
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();

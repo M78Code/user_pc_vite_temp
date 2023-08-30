@@ -3,18 +3,19 @@ import uid from "src/core/uuid/index.js";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'
 import { get_handicap_w_id  } from "src/core/index.js";
-import {MenuData } from "src/core/index.js"
 import MatchListCardClass from '../match-card/match-list-card-class'
-import {  PageSourceData  } from "src/core/index.js";
 import matchListParams from '../composables/match-list-params'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache"
 import { get_esports_match_by_mids, get_match_base_info_by_mids } from "src/api/module/common/index.js";
-import { UserCtr } from "src/core/index.js";
+
+import { i18n_t } from  "src/boot/i18n.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import MenuData from  "src/core/menu-h5/menu-data-class.js";
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -152,7 +153,7 @@ class MatchPage {
       } else {
         this.footer_refresh_match_list();
       }
-      if (pageSourceData.route_name !== 'match_result') {
+      if (PageSourceData.route_name !== 'match_result') {
         useMittEmit(MITT_TYPES.EMIT_RE_STATISTICS_MATCH_COUNT);
       }
     }
@@ -254,7 +255,7 @@ class MatchPage {
   subscription(){
     //赛果
     if( this.menu_type == 28 && !["detail_match_list"].includes(this.invok_source)
-        || ['category'].includes(pageSourceData.route_name)) {
+        || ['category'].includes(PageSourceData.route_name)) {
       return;
     }
     clearTimeout(this.sub_list_timeout);
@@ -349,7 +350,7 @@ class MatchPage {
    */
   get_match_info_upd_when_other(mid,is_subscribe,other){
     if( [100].includes(+this.menu_type) ||        // menu_type 100 冠军下 不再刷新接口
-        (['category','virtual_sports'].includes(pageSourceData.route_name) || [4,900].includes(+this.menu_type)) && is_subscribe != "is-subscribe")
+        (['category','virtual_sports'].includes(PageSourceData.route_name) || [4,900].includes(+this.menu_type)) && is_subscribe != "is-subscribe")
     {
       return;
     }
@@ -695,7 +696,7 @@ class MatchPage {
    */
   get_match_list_req(callback,call_source,mid) {
     // 如果没有mid  或者是 虚拟体育  或者 (不在 首页 或者 不在列表页)
-    if(!mid || this.menu_type == 900 || (!['home', 'matchList'].includes(pageSourceData.route_name))) {
+    if(!mid || this.menu_type == 900 || (!['home', 'matchList'].includes(PageSourceData.route_name))) {
       return;
     }
     let params = this.get_match_list_params_all();
@@ -786,7 +787,7 @@ class MatchPage {
   get_detail_params_by_invoke_source(params,main_menu_type){
     //第一步根据路由名判断,第二步根据invoke_source或菜单进行分流 清晰化来龙去脉
     // 如果是在首页中
-    if(pageSourceData.route_name == 'home'){
+    if(PageSourceData.route_name == 'home'){
       if (this.get_hot_tab_item) { // 其他菜单
         //  菜单id
         params.euid = this.get_hot_tab_item.menuId;
@@ -807,14 +808,14 @@ class MatchPage {
       }
     }
     // 赛果详情页 或者 详情页仅请求两个参数
-    if(['result_details', 'match_result', 'category'].includes(pageSourceData.route_name)){
+    if(['result_details', 'match_result', 'category'].includes(PageSourceData.route_name)){
       params={
         sportId: lodash.get(this.get_detail_data, 'csid'),
         cuid: params.cuid
       }
     }
     // 如果是在列表中
-    if(pageSourceData.route_name == 'matchList'){
+    if(PageSourceData.route_name == 'matchList'){
       // 处于列表页时的详细计算
       params = this.get_match_params_detail(params,main_menu_type)
     }
