@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
   name: 'normalSelect',
   props: {
@@ -48,9 +48,9 @@ export default {
       sport: this.value
     }
   },
-  computed:{
-    ...mapGetters(['get_global_click'])
-  },
+  // computed:{
+  //   ...mapGetters(['get_global_click'])
+  // },
   created() {
     this.$root.$on('hideSportSelect', this.showOption)
   },
