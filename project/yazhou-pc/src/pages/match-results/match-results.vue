@@ -11,7 +11,7 @@
     <p class="font_match_results">1</p>
     <simple-header @refresh="sub_search" :data_loaded="refresh_finish">
       <!-- 赛果 -->
-      <span>{{ $t("common.amidithion") }}</span>
+      <span>{{ i18n_t("common.amidithion") }}</span>
     </simple-header>
 
     <!-- 中间内容 S-->

@@ -10,7 +10,7 @@ import lodash from  "lodash"
  
 import {csid_map_concede_points_id } from 'src/core/index.js'
 import {  MenuData  } from "src/core/index.js"
-import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
+// import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
 
 /**
  * 获取url参数的方法 默认返回全部 {name:value}
@@ -249,7 +249,7 @@ export const rem_height = (value) => {
  * @return {String} 
  */
 export const compute_image_src = (str) => {
-  return str ? get_file_path(str) : image_panda_placeholder
+  return str ? get_file_path(str) : ''
 }
 /**
  * @description: 判断是否为低端机
