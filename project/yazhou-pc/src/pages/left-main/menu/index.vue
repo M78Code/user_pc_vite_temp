@@ -1,6 +1,6 @@
 <template>
   <!-- 菜单项 -->
-  <div v-show="layout_left_show == 'menu'" class="menu-wrap">
+  <div v-show="MenuData.layout_left_show == 'menu'" class="menu-wrap">
 
     <!-- 现场滚球盘 -->
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
@@ -68,8 +68,6 @@ const props = defineProps({
   },
 })
 
-// 菜单布局信息
-const layout_left_show = reactive(MenuData.layout_left_show)
 /**
  * 新菜单点击
  */

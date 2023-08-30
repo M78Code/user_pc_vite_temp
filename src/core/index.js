@@ -195,6 +195,11 @@ const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDa
  const   MatchDataWarehouse_H5_Detail_Jingxuan =new MatchDataBase({name_code:"MatchDataWarehouse_H5_Detail_Jingxuan"})
 
 
+/**
+ * PC  布局
+ */
+
+ import LayOutMain_pc from  "src/core/layout/index.js";
 
 
 
@@ -233,7 +238,7 @@ export {
     MatchDataWarehouse_H5_List_Hot_Main,
     MatchDataWarehouse_H5_List_Jingxuan,
     MatchDataWarehouse_H5_Detail_Jingxuan,
-
+    LayOutMain_pc,
 }
 
 

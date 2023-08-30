@@ -148,6 +148,7 @@ class UserCtr {
       this.user_info = user_obj;
     }
     // 设置用户信息，存入localStorage中
+    this.user_info.token = this.user_token
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId

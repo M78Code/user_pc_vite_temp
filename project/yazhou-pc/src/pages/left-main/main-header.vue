@@ -1,16 +1,17 @@
 <template>
   <!-- 昵称、余额 -->
   <div class="header-wrap scroll-fixed-bg" :class="UserCtr.is_invalid && 'invalid'">
-    <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'user_token')}`">
+    <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'token')}`" :user-id="UserCtr.user_logined_id">
       <!-- 昵称 -->
+    {{ UserCtr.user_logined_id }}
       <div class="ellipsis">Hi, {{ get(UserCtr.user_info, "nickName") }}</div>
     </div>
     <div class="balance-wrap row justify-between relative-position">
       <div class="row items-center">
         <!-- 余额隐藏 -->
-        <div v-show="!UserCtr.show_balance" class="balance-text-hide">******</div>
+        <div v-show="UserCtr.show_balance" class="balance-text-hide">******</div>
         <!-- 余额 -->
-        <div v-show="show_balance" class="balance-text-show yb-family-odds">
+        <div v-show="!UserCtr.show_balance" class="balance-text-show yb-family-odds">
           {{ format_balance(UserCtr.user_balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->

@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+// import { mapGetters } from "vuex";
 export default {
 	data () {
 		return {
@@ -280,7 +280,7 @@ export default {
 		},
 	},
 	computed:{
-		...mapGetters(['get_global_click']),
+		// ...mapGetters(['get_global_click']),
 		versions_class(){
 			return `versions-${window.env.config.DEFAULT_VERSION_NAME}`
 		}

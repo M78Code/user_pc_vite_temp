@@ -9,18 +9,17 @@
     <div class="content">
       <div class="flex1"></div>
       <div class="box">
-        <div><img src="../../../../css/pro/yabo/img/svg/replay_video_no_line.svg"/></div>
+        <div><img :src="replay_video_no_line"/></div>
         <div class="txt">{{ $t('replay_video.iframe_err') }}</div>
       </div>
       <div class="flex1"></div>
     </div>
   </div>
 </template>
-
 <script>
-import { mapGetters} from "vuex";
-import http from "src/core/http/axios-warpper.js";
 
+import http from "src/core/http/axios-warpper.js";
+import replay_video_no_line from 'app/public/yazhou-pc/image/svg/replay_video_no_line.svg'
 export default {
   props:{
     url: String
@@ -29,11 +28,6 @@ export default {
     return {
       show:false,
     }
-  },
-  computed: {
-    ...mapGetters({
-      vx_get_layout_size: "get_layout_size",
-    }),
   },
   created() {
     // let url = 'http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4';
