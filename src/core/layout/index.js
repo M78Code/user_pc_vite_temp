@@ -77,7 +77,6 @@ class LayOutMain {
 
   // 设置页面布局更新
   set_layout_version(){
-    console.error('ssssssssssssssss')
     this.layout_version.value = Date.now()
   }
 }
