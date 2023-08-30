@@ -40,8 +40,7 @@ const handle_user_tryPlay = async () => {
     token = obj.token;
     SessionStorage .set(token_key, token);
   }
-
-  UserCtr.set_user_token(token)
+  UserCtr.get_user_info(token)
 };
 (async () => {
   try {
