@@ -33,7 +33,7 @@
 
 export default {
   name: "HotMatchList",
-  mixins: [match_list_version_mixin,skt_data_list],
+  // mixins: [match_list_version_mixin,skt_data_list],
   mounted() {
     //同步热门接口
     useMittEmit(MITT_TYPES.EMIT_HOT_COLLECT)
