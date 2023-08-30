@@ -17,7 +17,7 @@
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
                                 <i class="icon settings-icon"
-                                    :style="`background: url('${theme.includes('theme01') ? settings.icon.day : settings.icon.night}') no-repeat center`"></i>
+                                    :style="`background: url('${UserCtr.theme.includes('theme01') ? settings.icon.day : settings.icon.night}') no-repeat center`"></i>
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -31,8 +31,8 @@
 
                                     <!-- 盘口/多语言 -->
                                     <div class="curr-item" v-if="settings.type === 'select'">
-                                        <template v-if="settings.id === 1">{{ t('odds')[cur_odd] }}</template>
-                                        <template v-else-if="settings.id === 2">{{ langs[lang] }}</template>
+                                        <template v-if="settings.id === 1">{{ i18n_t('odds')[cur_odd] }}</template>
+                                        <template v-else-if="settings.id === 2">{{ i18n_langs[UserCtr.lang] }}</template>
                                     </div>
 
                                     <!-- 主题设置 -->
@@ -65,9 +65,9 @@
                                     <template v-for="(language, index) in settings.value_arr">
                                         <div v-if="languageList.includes(language)" :key="index"
                                             class="child-item ellipsis relative-position"
-                                            :class="[{ active: lang == language }]" @click="on_click_lang(language)">
-                                            <span :class="['flag', language]"></span>{{ langs[language] }}
-                                            <i v-if="lang == language" class="icon-triangle3 q-icon c-icon arrow-show"></i>
+                                            :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
+                                            <span :class="['flag', language]"></span>{{ i18n_langs[language] }}
+                                            <i v-if="UserCtr.lang == language" class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
                                 </template>
@@ -75,11 +75,8 @@
                             </q-card-section>
                         </q-card>
                     </q-expansion-item>
-
                 </div>
-
             </q-list>
-
         </q-menu>
 
     </div>
@@ -89,14 +86,16 @@
 import { ref, } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import lodash from 'lodash'
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/boot/i18n.js"
 
 import store from "src/store-redux/index.js";
 import { api_account, api_betting, api_details } from "src/api";
-import i18n_langs from "project_path/src/i18n/langs/index.mjs";
-import { loadLanguageAsync } from "/src/core/index.js";
+import i18n_langs from "src/i18n/pc/langs/index.mjs";
+import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import userCtr from 'src/core/index.js'
+// import userCtr from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
@@ -118,25 +117,17 @@ const props = defineProps({
 
 const emit = defineEmits(['auto_close'])
 
-/** 国际化 */
-;
-
 const route = useRoute()
 const router = useRouter()
 
 const skin = ref(false)
-const langs = ref(i18n_langs)
 
 const show_g_settings = ref(props.show_settings)
 
-/** 主题 */
-const theme = ref('')
 /** 上次赔率 */
 const cur_odd = ref('EU')
 /** 上次赔率 */
 const pre_odds = ref('EU')
-/** 语言 */
-const lang = ref('zh')
 /** true: 单关投注 false: 串关投注 */
 const is_bet_single = ref(false)
 /** 单关投注对象 */
@@ -153,10 +144,8 @@ const left_menu_toggle = ref('')
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
     const new_state = store.getState()
-    theme.value = new_state.theme
     cur_odd.value = new_state.cur_odds
     pre_odds.value = new_state.pre_odds
-    lang.value = new_state.lang
     is_bet_single.value = new_state.is_invalid
     bet_single_obj.value = new_state.bet_single_obj
     bet_obj.value = new_state.bet_obj
@@ -183,7 +172,7 @@ const set_pre_odd = (data) => store.dispatch({
 })
 
 /** 语言列表 */
-const languageList = computed(() => lodash.get(userCtr.get_user(), 'languageList', []))
+const languageList = computed(() => lodash.get(UserCtr.get_user(), 'languageList', []))
 
 
 /**
@@ -229,15 +218,15 @@ function set_user_preference(curr_odd) {
  * @return {undefined} undefined
  */
 function on_click_lang(lang_) {
-    if ($route.name == "search") {
-        $router.push("/home")
+    if (route.name == "search") {
+        router.push("/home")
     }
     // 冠军菜单不支持语言切换投注项名称国际化
     // TODO:
     // let is_winner = $menu.menu_data.match_tpl_number == 18;
     let is_winner = false
     let fun = () => {
-        if (!is_winner && lang.value != lang_) {
+        if (!is_winner && UserCtr.lang != lang_) {
             set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
@@ -289,8 +278,8 @@ function on_click_lang(lang_) {
             }
         }
     }
-    if (lang.value != lang_) {
-        let user = userCtr.get_user()
+    if (UserCtr.lang != lang_) {
+        let user = UserCtr.get_user()
         api_account.set_user_lang({ token: user.token, languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
@@ -307,7 +296,7 @@ function on_click_lang(lang_) {
                     window.reset_lang = '';
                 })
             } else if (code == '0401038') {
-                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("common.code_empty"))
+                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
             }
         })
     }
@@ -318,7 +307,7 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
-    if (theme.value.includes('theme01')) {
+    if (UserCtr.theme.includes('theme01')) {
         handle_set_theme('theme02')
     } else {
         handle_set_theme('theme01')

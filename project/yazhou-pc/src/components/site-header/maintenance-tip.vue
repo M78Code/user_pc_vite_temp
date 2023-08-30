@@ -7,23 +7,16 @@
         <div class="content-wrap relative-position">
             <div class="yb-icon-triangle"></div>
             <!-- 此版面现实的所有直播内容仅供参考........ -->
-            <div class="content">{{ t('tips.tips_site').replace('%s', minute) }}</div>
+            <div class="content">{{ i18n_t('tips.tips_site').replace('%s', minute) }}</div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { t } from "src/core/index.js";
-
-import store from "src/store-redux/index.js";
-import {utils } from 'src/core/index.js'
+import { i18n_t } from "src/boot/i18n.js"
+import { utils, UserCtr } from 'src/core/index.js'
 import { get_remote_time } from "src/core/format/index.js"
-
-
-
-/** 国际化 */
-;
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)
@@ -53,18 +46,6 @@ function set_colse_tips_status(state = false) {
 
 /** 维护提示时间 */
 const minute = ref(0)
-/** stroe仓库 */
-const store_data = store.getState()
-const unsubscribe = store.subscribe(() => {
-    user_info.value = store_data.userReducer.user_info
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
-/** 
- * 用户信息
- * src/store-redux/module/user-info.js
- */
-const user_info = ref(store_data.userReducer.user_info)
 
 /**
  * 计算维护提示时间
@@ -72,7 +53,7 @@ const user_info = ref(store_data.userReducer.user_info)
 function compute_colse_tips_time() {
     /** 获取与服务器的修正时间 */
     const curTime = get_remote_time()
-    const { maintainTime } = user_info.value
+    const { maintainTime } = UserCtr.get_user()
     if (maintainTime) {
         const serverTimer = Number(maintainTime),
             countDown = Math.floor((serverTimer - curTime) / 1000 / 60);
