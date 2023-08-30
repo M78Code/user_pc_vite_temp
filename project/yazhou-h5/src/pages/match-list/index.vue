@@ -199,7 +199,6 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  console.log(utils)
   if(props.invok_source){
     ws_invoke_key.value = props.invok_source;
   }
