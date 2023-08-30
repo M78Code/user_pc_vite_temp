@@ -109,7 +109,7 @@ let get_detail_data = ref({
 
   onMounted(() => {
     //   // 添加监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     if(get_detail_data.csid == 1) {
       get_data_list()

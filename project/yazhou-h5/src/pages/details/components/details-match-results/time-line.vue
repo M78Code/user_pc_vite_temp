@@ -90,7 +90,7 @@ import lodash from "lodash"
 
   onMounted(() => {
     // 添加监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).on
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
 
     get_list()
   })

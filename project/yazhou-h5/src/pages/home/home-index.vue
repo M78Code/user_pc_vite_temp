@@ -91,7 +91,7 @@ export default defineComponent({
           tab_click(lodash.get(homeReducer, 'home_tab_item'), false,false)
         })
       }
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).on
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
     })
     onUnmounted(() => {
       clearTimeout(lang_timer)
