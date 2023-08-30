@@ -159,8 +159,11 @@ export default {
     ListFilterHot,
     // EsportsHeader
   },
-  setup() {
-    console.log('lockie_test_console', 11111);
+  data() {
+    return {
+      menu_config,
+      match_list_card,
+    }
   },
   // mixins: [match_list_mixin]
 }
