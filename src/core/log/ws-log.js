@@ -6,11 +6,9 @@
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "src/core/format/index.js";
 import { SessionStorage  } from "src/core/utils/module/web-storage.js";
-<<<<<<< HEAD
-=======
-
->>>>>>> 217ad2d89130bd5ec7badd2b641cb8ba7579f73d
+// const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
+
 class WsLog {
   /**
    * @Description:构造函数

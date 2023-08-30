@@ -9,7 +9,7 @@
  *  th-泰国语
  */
 import { nextTick } from "vue";
-import { LocalStorage, SessionStorage  } from "src/core/index.js";
+import { LocalStorage, SessionStorage  } from "src/core/utils/module/web-storage.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 const initialState = {
