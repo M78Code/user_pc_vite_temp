@@ -9,6 +9,7 @@ import { date } from "quasar";
 import { api_common, api_account } from 'src/api/index';
 import * as play_mapping from "src/core/constant/config/play-mapping.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { DateForMat } from "src/core/format/index.js"
 
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
@@ -132,8 +133,8 @@ export const utils = {
     }
     return value;
   },
- 
- 
+
+
   /**
    * @Description 获取滚动条宽度  quasar源码复制的
    * @param {undefined} undefined
@@ -456,7 +457,7 @@ export const utils = {
     }
     return ret;
   },
- 
+
   /**
    *@description 根据result 的值返回是否赢钱
          "0": '未知',
@@ -476,7 +477,7 @@ export const utils = {
       return false
     }
   },
- 
+
   /**
    * @description: 埋点Google Analytics GA_TRACKING_ID config配置
    * @param {*} user_id 用户id
@@ -637,7 +638,7 @@ export const utils = {
     }
     let _obj = {
       [objKey.eventLabel]: name,
-      [objKey.clickTime]: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+      [objKey.clickTime]: DateForMat(new Date(), 'yyyy-MM-dd hh:mm:ss'),
       [objKey.userName]: lodash.get(user_info, 'userName'),
       [objKey.userId]: lodash.get(user_info, 'userId'),
       [objKey.merchantId]: lodash.get(user_info, 'mId'),
@@ -850,7 +851,7 @@ export const utils = {
     }
     return sport_name
   },
- 
+
   /**
    * @description: axios_api轮询调用方法
    *
@@ -928,10 +929,10 @@ export const utils = {
   upload_url_info(params) {
     return false
     api_account.upload_url_info(params).then(() => {
-      
+
       console.log('URL上报成功');
     }).catch(error => {
-   
+
       console.log('URL上报失败');
       console.log(error);
     })
@@ -1005,7 +1006,7 @@ export const utils = {
     /**
      * 计算图片 路径  用于  img 标签
      * //当
-     *  src\css\pro\bw3\variable.js  主题内 有用这张图片 （相当于 public 目录内的静态复制 ）
+     *  src/css/pro/bw3/variable.js  主题内 有用这张图片 （相当于 public 目录内的静态复制 ）
      *  并且 img 标签内有有用这张图片 的时候 打包方式最终 （webpack 托管哈希打包）是两张
      * 此事可以 使用此方法 让  img 标签 的 src 计算 路径 最终  和 主题内  图片一样 用  public 目录内的静态复制
      *
@@ -1106,4 +1107,4 @@ export const utils = {
       return res;
     }
 };
- 
+
