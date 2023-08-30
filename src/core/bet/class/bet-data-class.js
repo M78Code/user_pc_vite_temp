@@ -283,7 +283,7 @@ this.bet_appoint_ball_head= null */
     }
 
     // 根据投注类型 设置投注分类
-    switch(bet_type){
+    switch(obj.bet_type){
       // vr
       case 'vr_bet' :
         this.set_vrtual_bet_obj({custom_id,...obj})

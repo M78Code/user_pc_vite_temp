@@ -107,7 +107,7 @@ import { format_time_zone_time, format_odds, format_score } from 'src/core/forma
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
 import { t } from "src/boot/i18n.js";
-import { UserCtr } from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";;
 //国际化
 
 

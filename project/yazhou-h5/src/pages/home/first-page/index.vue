@@ -7,12 +7,6 @@
   <div class="home-wrap">
     <!-- 轮播 -->
     <div class="slide">
-      <!-- Banner Loading -->
-      <!--      <img-->
-      <!--          v-if="get_is_language_changing || show_banner_loading"-->
-      <!--          :src="banner_loading_url"-->
-      <!--          class="banner-loading"-->
-      <!--      >-->
       <!-- 猜你喜欢赛事轮播 -->
       <q-carousel animated swipeable v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite
         v-if="_.get(carousel_data, 'list.length')" :autoplay="7000">
@@ -171,7 +165,7 @@
 </template>
 
 <script setup>
-import { api_home } from "src/project/api/index";
+import { api_home } from "src/core/api/index";
 import { format_time_zone_time, format_balance, format_total_score } from "src/core/format/index.js"
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -180,28 +174,37 @@ import { format_time_zone_time, format_balance, format_total_score } from "src/c
 // 公告栏跑马灯
 // import marquee from 'project_path/src/components/marquee/marquee.vue'
 // 无网络展示组件
-import no_data from "project_path/src/components/common/no-data.vue";
+// import no_data from "project_path/src/components/common/no-data.vue";
 // 赛事进行中每秒变化的计时器
-import counting_down from 'project_path/src/components/common/counting-down.vue';
+// import counting_down from 'project_path/src/components/common/counting-down.vue';
 // 一小时以内的开赛计时器（累加计时|倒计时）
-import counting_down_start from 'project_path/src/components/common/counting-down-start.vue';
+// import counting_down_start from 'project_path/src/components/common/counting-down-start.vue';
 // 列表数据和对象结合操作类-实现快速检索,修改等功能
-import ListMap from "project_path/src/utils/list-map";
+import ListMap from "src/core/match-list-h5/match-class/list-map.js";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
 import {utils } from 'src/core/utils/index.js';
-import base_data from "project_path/src/utils/base-data.js";
+import base_data from "src/core/utils/base-data.js";
 //  一二级菜单 本地化假数据
-import { common_menu_list, secondary_menu } from "project_path/src/config/common-menu.js"
+// import { common_menu_list, secondary_menu } from "project_path/src/config/common-menu.js"
 //  api1.5 菜单 本地化假数据
 import menu_data  from "project_path/src/config/menu-new-data.js"
 import uid from "src/core/uuid/index.js"
 import { db } from "project_path/src/utils/db/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/boot/i18n/index.js"
+import { t } from "src/boot/i18n.js"
 import lodash from "lodash"
-import { UserCtr } from "src/core/user-config/user-ctr.js";
+<<<<<<< HEAD
+import UserCtr from "src/core/user-config/user-ctr.js";;
+=======
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { useRoute, useRouter } from "vue-router"
+>>>>>>> 6e7ad38b62117aae54deff59c99a7b643da7c345
   // mixins: [skt_home_bw3, match_list_mixin],
+
+  // 路由
+  const route = useRoute()
+  const router = useRouter()
   //轮播
   const slide = ref(0)
   //轮播图数据，init是数据加载中的标识
@@ -235,7 +238,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
   const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
   //右边内容默认高度
   const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
-  const utils = ref('')
   // 定时器
   const home_timer1_ = ref(null)
   // 默认banner初始不显示
@@ -280,48 +282,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
   const get_lang_v3 = () => {
     base_data.get_load_lang_v3(get_lang)
   }
-  // ...mapActions([
-  //   // 设置左边菜单选中下标
-  //   "set_home_menu_index",
-  //   // 设置首页菜单数据
-  //   "save_home_data",
-  //   "get_balance",
-  // ])
-  // ...mapMutations([
-  //   // 设置当前选中日期菜单索引
-  //   'set_date_menu_curr_i',
-  //   // 设置主菜单下拉选择器选中的赛事下标
-  //   'set_selector_w_m_i',
-  //   // 押注信息对象
-  //   'set_bet_obj',
-  //   // 投注项id集合
-  //   'set_bet_list',
-  //   // 显示收藏列表
-  //   'set_show_favorite_list',
-  //   // 赛事id
-  //   'set_goto_detail_matchid',
-  //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-  //   'set_details_item',
-  //   // 当前选中的二级菜单id
-  //   'set_current_sub_menuid',
-  //   // 当前选中的二级菜单type
-  //   'set_curr_sub_menu_type',
-  //   // 更新菜单
-  //   'upd_home_data',
-  //   // 设置跳转活动的确认信息
-  //   'set_activity_msg',
-  //   // ---未使用
-  //   'get_local_server_time',
-  //   // 轮播请求的更新时间
-  //   'updateHotReqTime',
-  //   // 是否正在切换语言
-  //   'set_is_language_changing',
-  //   'set_menu_type',
-  //   'set_hot_tab_item',
-  //   'set_home_tab_item',
-  //   'set_current_first_menu', //设置默认菜单
-  //   'set_new_two_menu'  // 右侧球种下标
-  // ])
 
   /**
    * @description: 多少分钟后开赛显示
@@ -367,7 +327,7 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
       if (val.hostUrl.startsWith('http') && val.urlType === '2') {
         window.open(val.hostUrl, '_blank')
       } else if (val.urlType === '1') {
-        if (/#*\/*details/.test(val.hostUrl) && $route.name != 'category') {
+        if (/#*\/*details/.test(val.hostUrl) && route.name != 'category') {
           const { groups: { mid, csid } } = /#*\/*details\/(?<mid>\d+)\/(?<csid>\d+)/.exec(val.hostUrl) || { groups: {} }
           if (mid && csid) {
             if ([100, 101, 102, 103].includes(+csid)) {  // 如果是电竞赛事，需要设置菜单类型
@@ -375,10 +335,10 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
             }
             set_goto_detail_matchid(mid);
             set_details_item(0);
-            $router.push({ name: 'category', params: { mid, csid } });
+            router.push({ name: 'category', params: { mid, csid } });
           }
         } else if (val.hostUrl == 'act' && userCtr.user_info.activityList) {
-          $router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
+          router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         } else if (val.hostUrl.startsWith('hot') && !get_golistpage) {
           let tid = val.hostUrl.split('/')[1]
           let is_existtid = get_hot_list_item && get_hot_list_item.subList && get_hot_list_item.subList.find(item => {
@@ -515,29 +475,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
     $forceUpdate()
   }
 
-  // /**
-  //  * @description: 余额换算
-  //  * @return {String} 转化后的金额 比如 '64,464.95'
-  //  */
-  // const format_balance = () => {
-  //   let num = userCtr.user_info.balance
-  //   if (!num || num < 0) {
-  //     num = 0
-  //   }
-  //   let balance = (num).toString();
-  //   let result = '';
-  //   let [num1, num2 = '00'] = balance.split('.');
-  //   num2 = num2.padEnd(2, '0')
-  //   while (num1.length > 3) {
-  //     result = ',' + num1.slice(-3) + result;
-  //     num1 = num1.slice(0, num1.length - 3);
-  //   }
-  //   if (num1) { num1 = num1 + result; }
-  //   balance_obj = {
-  //     int: num1,
-  //     dec: '.' + num2
-  //   }
-  // }
   const chang_index = (data) => {
     if([1,2,3].includes(get_home_menu_index)){
       data.forEach((item,index) =>{
@@ -575,59 +512,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
     save_home_data(data)
     menu_data_config(newData);
     return;
-    // 今日和 滚球 位置互换
-    let menu_index1 = -1, menu_index2 = -1;
-    for (let i = data.length - 1; i >= 0; i--) {
-      // 如果是串关去除串关
-      if (data[i].menuType == 11) {
-        data.splice(i, 1)
-      }
-      if (data[i].menuType == 1) { menu_index1 = i }
-      if (data[i].menuType == 3) { menu_index2 = i }
-      // 解构赋值数组内元素交换
-      if (menu_index1 >= 0 && menu_index2 >= 0 && menu_index1 < menu_index2) { // 滚球放到后面去
-        [data[menu_index1], data[menu_index2]] = [data[menu_index2], data[menu_index1]];
-      }
-    }
-    save_home_data(data)
-
-    let subList = [], save_index = get_home_menu_index;
-    //如果选中的menu存在，则对save_index进行处理
-    let firstMenu = get_current_first_menu
-    let extraMenuIds = ['407', '410'] //排除VR和电竞
-    if (firstMenu && firstMenu.menuId && !extraMenuIds.includes(firstMenu.menuId)) {
-      save_index = data.findIndex(item => item.menuId == firstMenu.menuId)
-      set_current_first_menu(null)
-    }
-    for (let i = data.length - 1; i >= 0; i--) {
-      if (data[save_index] && data[save_index].count) {
-        subList = data[save_index].subList
-        menu_index = save_index
-      } else {
-        if (data[i] && data[i].count) {
-          subList = data[i].subList
-          menu_index = i
-        }
-      }
-    }
-    menu = data
-    match_list = subList
-    // 设置左边菜单选中下标
-    set_home_menu_index(menu_index)
-
-    if (!menu.length) {
-      noMenu = true
-      no_menu_txt = "noMatch"
-    } else {
-      noMenu = false
-    }
-
-    if (!match_list.length) {
-      noData = true
-      no_data_txt = "noMatch"
-    } else {
-      noData = false
-    }
   }
   /**
    * @description: 获取列表数据
@@ -789,51 +673,8 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
         }
       }
     }
-    $router.push(newMeuRouter[mi])
+    router.push(newMeuRouter[mi])
     return;
-    if (407 == menu[index].menuId) {
-      $utils.zhuge_event_send("H5_首页_虚拟体育", userCtr.user_info);
-      $router.push({ name: 'virtual_sports', query: { home: 'home' } })
-      return;
-    }
-    if (408 == menu[index].menuId) {
-      $router.push({
-        name: 'matchList',
-        query: {
-          m: menu[index].menuId,
-          token: userCtr.user_token
-        }
-      });
-    } else if (410 == menu[index].menuId) {
-      _obj[objKey.eventLabel] = "H5_首页_电子竞技";
-      $utils.zhuge_event_send("H5_首页_电子竞技", userCtr.user_info);
-      let s = lodash.get(menu[index], 'subList[0].menuId').slice(-2)
-      $router.push({
-        name: 'matchList',
-        query: {
-          m: '410',
-          // s,
-          token: userCtr.user_token
-        }
-      });
-    } else {
-      if (menu[index].count >= 0) {
-        if (menu_index == index) return false
-
-        $refs.list_area.setScrollPosition(0)
-        animation = false
-        if (home_timer1_) clearTimeout(home_timer1_)
-        home_timer1_ = setTimeout(() => {
-          animation = true
-          menu_index = index
-          match_list = menu[index].subList
-        }, 50)
-        // 设置左边菜单选中下标
-        set_home_menu_index(index)
-      } else {
-        $toast(t('home.match_no_has'), 800)
-      }
-    }
   }
   // /**
   //  * @description: 球类id转化背景
@@ -854,7 +695,7 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
       const euid = base_data.get_euid(item.mi)
       set_current_sub_menuid(euid);
       set_current_first_menu(new_menu[menu_index].mi)
-      $router.push({
+      router.push({
         name: 'matchList',
         query: {
           m: new_menu[menu_index].mi,
@@ -866,43 +707,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
       $toast(t('home.match_no_has'), 800)
     }
     return;
-    if (item.count) {
-      let menuId = String(menu[menu_index].menuId),
-        subId = String(item.menuId).replace(menuId, '');
-      // 首页今日足篮
-      if (item.parentId == '402') { // 今日
-        if (item.menuType == 5) { // 足球
-          $utils.zhuge_event_send('H5_首页_今日_足球_点击', userCtr.user_info);
-        } else if (item.menuType == 7) { // 篮球
-          $utils.zhuge_event_send('H5_首页_今日_篮球_点击', userCtr.user_info);
-        }
-      }
-
-      $router.push({
-        name: 'matchList',
-        query: {
-          m: menuId,
-          s: subId,
-          token: userCtr.user_token
-        }
-      });
-    } else {
-      // 如果菜单 没有加载成功，则点击也可以跳转到列表
-      if (!loading_done) {
-        let menuId = String(menu[menu_index].menuId),
-          subId = String(item.menuId).replace(menuId, '');
-        $router.push({
-          name: 'matchList',
-          query: {
-            m: menuId,
-            s: subId,
-            token: userCtr.user_token
-          }
-        });
-      } else {
-        $toast(t('home.match_no_has'), 800)
-      }
-    }
   }
 
   /**
@@ -912,7 +716,7 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
   const to_details = (item) => {
     set_goto_detail_matchid(item.mid);
     set_details_item(0);
-    $router.push({ name: 'category', params: { mid: item.mid, csid: item.csid } });
+    router.push({ name: 'category', params: { mid: item.mid, csid: item.csid } });
   }
     // 计算左边菜单按钮是否展示
   const calc_show2 = (item) => {
@@ -954,29 +758,6 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
     // 保证赛事框初始高度正确
     window_resize_on()
   })
-    // ...mapGetters({
-    //   get_ball_seed_menu: 'get_ball_seed_menu',
-    //   // 用户信息,用户金额,userId 需要监听变化
-    //   // 当前语言
-    //   get_lang: 'get_lang',
-    //   // 当用户未登录时返回uuid, 当用户登录时返回userId
-    //   uid: "get_uid",
-    //   // 用户令牌信息
-    //   userCtr.user_token: "userCtr.user_token",
-    //   // 左边菜单选中下标
-    //   get_home_menu_index: "get_home_menu_index",
-    //   // 首页菜单数据
-    //   get_home_data: "get_home_data",
-    //   // 当前主题
-    //   UserCtr.theme: "UserCtr.theme",
-    //   // 商户配置的图片地址和弹框信息
-    //   get_banner_obj: "get_banner_obj",
-    //   get_is_language_changing: "get_is_language_changing",
-    //   get_last_home_tab_item: "get_last_home_tab_item",
-    //   get_golistpage: 'get_golistpage',
-    //   get_hot_list_item: 'get_hot_list_item',
-    //   get_current_first_menu: 'get_current_first_menu' //用于获取选中的
-    // }),
 
     const banner_loading_url = computed(() => {
       if (UserCtr.theme.includes('y0')) {
@@ -1011,523 +792,12 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";
     match_list = []
     clearTimeout(timer_1)
     timer_1 = null
-
-    // for (const key in $data) {
-    //   $data[key] = null
-    // }
   })
 
 </script>
 
-<style lang="scss" scoped>
-.home-wrap {
-  padding: 0 0.1rem;
-
-  /*  轮播 */
-  .slide {
-    margin-top: 0.11rem;
-    border-radius: 0.16rem;
-    -webkit-appearance: none;
-    overflow: hidden;
-    height: 1.6rem;
-
-    .banner-loading {
-      display: block;
-      width: .5rem;
-      margin: .55rem auto;
-    }
-
-    ::v-deep.q-carousel {
-      height: 100%;
-      background: transparent;
-
-      &.q-panel-parent {
-        border-radius: .16rem;
-        z-index: 9;
-      }
-
-      .q-carousel__slide {
-        background: var(--q-color-img-bg-11) no-repeat center / cover;
-        padding: 0;
-      }
-
-      .q-carousel__control {
-        bottom: 0.08rem;
-        margin: 0 !important;
-      }
-    }
-
-    .act-banner.q-carousel__slide {
-      background: none;
-    }
-
-    .info {
-
-      height: 1.6rem;
-      text-align: center;
-      border-radius: 0.16rem 0.16rem 0 0;
-      overflow: hidden;
-
-      .info-wrap {
-        font-size: 0.16rem;
-        color: var(--q-color-com-fs-color-24);
-        line-height: 0.2rem;
-        padding: 0 0.2rem;
-        align-items: center;
-        justify-content: center;
-        height: 0.56rem;
-        flex-wrap: nowrap;
-      }
-
-      .sport-icon-wrap {
-        --per: -0.24rem;
-        width: auto;
-        height: 0.16rem;
-        width: 0.16rem;
-        margin-right: 0.04rem;
-        background: var(--q-color-com-img-bg-209) no-repeat 0 0 / 0.16rem 14.16rem;
-      }
-
-      .info-title {
-        max-width: 2.9rem;
-      }
-
-      // 16个常规赛种和4个电竞赛种
-      @each $csid,
-      $y in (s1, 1),
-      (s2, 3),
-      (s3, 28),
-      (s4, 2),
-      (s5, 19),
-      (s6, 4),
-      (s7, 15),
-      (s8, 7),
-      (s9, 6),
-      (s10, 22),
-      (s11, 13),
-      (s12, 10),
-      (s13, 12),
-      (s14, 20),
-      (s15, 8),
-      (s16, 14),
-      (s101, 39),
-      (s103, 40),
-      (s102, 41),
-      (s100, 42) {
-        .#{$csid} {
-          background-position-y: calc(var(--per) * #{$y});
-        }
-      }
-
-      .info-more {
-        display: flex;
-        justify-content: center;
-        padding: 0 0.08rem;
-
-        /*  .home */
-        .wrap-logo {
-          height: 0.46rem;
-          margin-bottom: 0.1rem;
-          pointer-events: none;
-
-          img {
-            /* iPhone 11下需去掉宽高 */
-            //width: 0.46rem;
-            //height: 0.46rem;
-            min-width: 0.46rem;
-            min-height: 0.46rem;
-            max-width: 0.46rem;
-            max-height: 0.46rem;
-          }
-
-          .logo-double {
-            margin-left: -0.14rem;
-          }
-        }
-
-        .both-item {
-          color: var(--q-color-com-fs-color-8);
-          font-size: 0.14rem;
-          /*line-height: 1;*/
-          width: 1.1rem;
-          text-align: center;
-          padding-top: 1px;
-
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          line-clamp: 2;
-          -webkit-box-orient: vertical;
-        }
-
-        .socre {
-          min-width: 1rem;
-          flex: 1;
-        }
-
-        .vs-wrap {
-          .score-wrap {
-            font-size: 0.36rem;
-            color: var(--q-color-com-fs-color-8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            .both-score {
-              flex: 1;
-              text-align: left;
-
-              &:first-child {
-                text-align: right;
-              }
-            }
-
-            .crossing {
-              flex: 0 0 0.1rem;
-              height: 0.04rem;
-              background: var(--q-color-com-fs-color-8);
-              margin: 0 0.06rem;
-            }
-          }
-        }
-
-        .both-timer {
-          flex: 1;
-          height: 100%;
-          color: var(--q-color-com-fs-color-8);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          ::v-deep.counting-down-wrap {
-            left: 50%;
-            transform: translate3d(-50%, 0, 0);
-            max-width: 1rem;
-            width: 1rem !important;
-            height: 0.32rem;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            line-height: 1;
-            font-size: 0.12rem;
-            color: var(--q-color-com-fs-color-8);
-
-            .title-space-1 {
-              margin: 0;
-            }
-
-            .counting,
-            .special {
-              font-size: 0.12rem;
-              line-height: 0.16rem;
-              color: var(--q-color-com-fs-color-8);
-            }
-          }
-
-          ::v-deep.counting-down-start {
-            color: var(--q-color-com-fs-color-8);
-          }
-        }
-      }
-    }
-
-    /* ************** 轮播icon *************** -S */
-    .control {
-      display: flex;
-      justify-content: center;
-
-      .control-item {
-        margin-right: 0.06rem;
-        width: 0.04rem;
-        height: 0.01rem;
-        border-radius: 0.03rem;
-        background: var(--q-color-com-bg-color-27);
-        cursor: pointer;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-
-      .active {
-        width: 0.1rem;
-        background: var(--q-color-com-bg-color-12);
-      }
-    }
-
-    .carousel_bg {
-      width: 100%;
-      height: 1.6rem;
-    }
-  }
-
-  /* ************** 轮播icon *************** -E */
-  /* 跑马灯、余额 */
-  .wrap-notice {
-    display: flex;
-    align-items: center;
-    margin: 0.14rem 0 0.1rem 0;
-
-    .money-wrap {
-      margin-right: 0.2rem;
-
-      .balance-wrap {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.04rem;
-
-        .icon-balance {
-          width: 0.14rem;
-          height: 0.14rem;
-        }
-
-        .balance {
-          font-size: 0.12rem;
-
-          margin: 0.03rem 0 0 0.05rem;
-          line-height: 0.17rem;
-        }
-      }
-
-      .money {
-
-        line-height: 0.12rem;
-
-        .int {
-          font-size: 0.14rem;
-        }
-
-        .dec {
-          font-size: 0.12rem;
-        }
-      }
-    }
-
-    .wrap-marquee {
-      flex: 1;
-      height: 0.3rem;
-      border-radius: 0.15rem;
-
-      display: flex;
-      align-items: center;
-      padding: 0 0.13rem 0 0.04rem;
-      overflow: hidden;
-      position: relative;
-
-      .marquee-left-wrap {
-        border-right-radius: 50%;
-      }
-
-      .marquee-icon {
-        width: 0.24rem;
-        height: 0.24rem;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0.24rem;
-        margin-right: 0.04rem;
-
-        .icon-notice {
-          width: 0.14rem;
-          height: 0.14rem;
-        }
-      }
-
-      .marquee {
-        flex: 1;
-        height: 0.3rem;
-        overflow: hidden;
-      }
-    }
-  }
-
-  /*  赛事框 */
-  .main-content-match {
-    .match-warp {
-      display: flex;
-      height: 100%;
-      margin: 0 0.1rem;
-
-      ::v-deep.q-scrollarea {
-        height: 100%;
-      }
-    }
-
-    .left-menu {
-      padding-top: 0.08rem;
-      width: 0.55rem;
-      margin-right: 0.13rem;
-      overflow-x: hidden;
-      /* 兼容火狐 */
-      scrollbar-width: none;
-      /* 兼容IE10+ */
-      -ms-overflow-style: none;
-
-      /* 使用伪类选择器 ::-webkit-scrollbar ,兼容chrome和safari浏览器 */
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      .item {
-        width: 0.53rem;
-        height: 0.63rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        margin-bottom: 0.05rem;
-        position: relative;
-
-        .label {
-          width: 100%;
-          font-size: 0.11rem;
-          line-height: 0.16rem;
-          text-align: center;
-          font-weight: bold;
-
-          &.is_chinise {
-            font-size: 0.14rem;
-            width: 0.36rem;
-          }
-        }
-
-        .num {
-          font-size: 0.16rem;
-          line-height: 0.19rem;
-        }
-      }
-    }
-
-    .match-content {
-
-      flex: 1;
-
-      .item {
-        width: 100%;
-        height: 1.22rem;
-        padding-left: 0.2rem;
-        background-repeat: no-repeat;
-        margin-bottom: -0.03rem;
-        display: flex;
-        position: relative;
-
-        .item-bg {
-          width: 2.67rem;
-          height: 1.028rem;
-          position: absolute;
-          left: 0;
-          top: 0.11rem;
-          z-index: -1;
-          overflow: hidden;
-        }
-
-        .item-info {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          width: 1rem;
-          height: 100%;
-          text-align: center;
-
-          &.is-english {
-            width: auto;
-            align-items: flex-start;
-          }
-
-          .match-type {
-            font-size: 0.18rem;
-            width: 1rem;
-            font-weight: bold;
-            white-space: nowrap;
-          }
-
-          .match-num {
-            width: 1rem;
-            font-size: 0.4rem;
-            height: 0.44rem;
-            line-height: 0.44rem;
-          }
-
-          .match-label {
-
-            font-size: 0.12rem;
-
-            display: flex;
-            align-items: center;
-            line-height: 1;
-            min-height: 0.15rem;
-
-            &:before,
-            &:after {
-              content: "";
-              width: 0.15rem;
-              height: 0.01rem;
-
-              position: relative;
-            }
-
-            &:before {
-              margin-right: 0.04rem;
-            }
-
-            &:after {
-              margin-left: 0.04rem;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  ::v-deep.q-scrollarea__thumb {
-    opacity: 0 !important;
-  }
-
-  .fadeInUp {
-    -webkit-animation: fadeInUp 1s;
-    animation: fadeInUp 1s;
-    animation-fill-mode: both;
-  }
-
-  @include keyframes(fadeInUp) {
-    0% {
-      -webkit-transform: translate3d(0, 5%, 0);
-      transform: translate3d(0, 5%, 0);
-    }
-
-    10% {
-      -webkit-transform: translate3d(0, 10%, 0);
-      transform: translate3d(0, 10%, 0);
-    }
-
-    30% {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-
-    100% {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-    }
-  }
-
-  .wrap-loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(var(--vh, 1vh) * 100);
-  }
-}
+<style lang="less" scoped>
+  @import "./index.scss";
 </style>
 
 

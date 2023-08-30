@@ -199,6 +199,7 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
+  console.log(utils)
   if(props.invok_source){
     ws_invoke_key.value = props.invok_source;
   }
@@ -226,7 +227,7 @@ watch(() => match_is_empty, () => {
 })
 
 // 早盘时，并且是 足球时，执行下边操作
-watch(() => MenuData.current_menu.mi, () => {
+watch(() => MenuData.current_menu, () => {
   if(MenuData.current_menu == 4 && val == '40303'){
     clearTimeout(subscription_timer1.value)
     subscription_timer1.value = setTimeout(()=>{
@@ -234,7 +235,7 @@ watch(() => MenuData.current_menu.mi, () => {
       subscription();
     },3000)
   }
-})
+}, { deep: true })
 
 // 罚牌说明展开后会跟随列表滑动，且切换页面再次进入依旧显示在列表页
 watch(() => props.wrapper_scroll_top, () => {

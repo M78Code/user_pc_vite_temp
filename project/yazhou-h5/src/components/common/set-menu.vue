@@ -123,7 +123,7 @@
 // import {mapGetters, mapMutations, mapActions} from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_betting } from "src/project/api/index";
-import { UserCtr } from "src/core/user-config/user-ctr.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_money2 } from "src/core/format/index.js"
 import lodash from 'lodash'
 import { format_money2 } from "src/core/format/index.js"
