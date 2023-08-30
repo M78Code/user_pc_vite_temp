@@ -182,11 +182,14 @@
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 
 import MenuItem from "./menu-item.vue";
 
+const route = useRoute();
+const router = useRouter();
 // 今日  2 早盘   3
 const jinri_zaopan_ = ref(2);
 // 当前的一级菜单ID
@@ -900,9 +903,11 @@ const compute_num = (mi, mif) => {
  * 详情页回首页
  */
 const set_route_url = () => {
-  let { name } = $route;
+  let { name } = route;
   if (["details", "search", "video", "virtual_details"].includes(name)) {
-    $router.push("/home");
+    router.push({
+      name: 'home'
+    });
   }
   vx_set_layout_list_type("match");
   set_filter_select_obj([]);

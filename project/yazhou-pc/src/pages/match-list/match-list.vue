@@ -159,14 +159,9 @@ export default {
     ListFilterHot,
     // EsportsHeader
   },
-  data() {
-    return {
-      menu_config,
-      match_list_card,
-    }
+  setup() {
+    console.log('lockie_test_console', 11111);
   },
-  created() {
-  }
   // mixins: [match_list_mixin]
 }
 // 赛事列表筛选：滚球-球种、早盘-日期
