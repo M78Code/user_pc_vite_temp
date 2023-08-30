@@ -1,4 +1,4 @@
-import MatchListData from "src/core/match-data-class/match-list-data-class.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 import MatchListCardData from "./match-list-card-data-class.js";
 import lodash from "lodash";
 

@@ -60,7 +60,7 @@ import marquee_bulletin from 'project_path/src/components/marquee/marquee_bullet
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js";
-import { UserCtr } from "src/core/user-config/user-ctr.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 

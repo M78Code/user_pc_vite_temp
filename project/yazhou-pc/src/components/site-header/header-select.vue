@@ -89,7 +89,7 @@ import { api_account, api_common } from "src/api/index.js";
 import {utils } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 
 import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
 import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'

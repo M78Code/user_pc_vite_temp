@@ -10,7 +10,7 @@ import {  PageSourceData  } from "src/core/index.js";
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListData from "src/core/match-data-class/match-list-data-class.js";
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from 'src/core/index.js'
 // import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
 // import video from "src/core/video/video.js";
 // import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'

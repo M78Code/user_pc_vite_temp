@@ -61,14 +61,14 @@ import { t } from "src/core/index.js";;
 // api接口
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
-import langs from "project_path/src/i18n/langs/index.mjs";
+// import langs from "project_path/src/i18n/langs/index.mjs";
 import {utils } from 'src/core/index.js'
 import { LocalStorage } from 'src/core/index.js.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 import globalAccessConfig  from  "src/core/access-config/access-config.js"
 
 const emit = defineEmits(['navigate'])

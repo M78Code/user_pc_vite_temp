@@ -1,12 +1,16 @@
 /*
  * @Description: H5 各球种比分处理
  */
-import { i18n_t} from "src/core/index.js"
+import { ref } from 'vue'
+
+import { i18n_t } from  "src/boot/i18n.js";
+import MenuData from  "src/core/menu-h5/menu-data-class.js";
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 // TODO: 待替换菜单模块 store
-const get_current_menu = ref(null)
-const footer_sub_menu_id = ref('')
-const get_newer_standard_edition = ref(2)
+const get_current_menu = ref(MenuData.current_menu)
+const footer_sub_menu_id = ref(MenuData.footer_sub_menu_id)
+const get_newer_standard_edition = ref(PageSourceData.get_newer_standard_edition())
 /**
  * @Description:格式化比分数据
  * @Author success

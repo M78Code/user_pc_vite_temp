@@ -12,11 +12,7 @@ import "quasar/src/css/index.sass";
 
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
 
-// console.error("BUILDIN_CONFIG-----------h5---", BUILDIN_CONFIG);
-
 window.BUILDIN_CONFIG = BUILDIN_CONFIG;
-
-
 
 // Assumes your root component is App.vue
 // and placed in same folder as main.js

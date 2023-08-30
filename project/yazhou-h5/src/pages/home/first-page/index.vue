@@ -234,7 +234,6 @@ import { useRoute, useRouter } from "vue-router"
   const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
   //右边内容默认高度
   const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
-  const utils = ref('')
   // 定时器
   const home_timer1_ = ref(null)
   // 默认banner初始不显示

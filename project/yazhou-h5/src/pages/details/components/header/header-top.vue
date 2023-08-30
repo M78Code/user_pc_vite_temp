@@ -153,7 +153,7 @@ import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n.js";;
-import { UserCtr } from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";;
 
 //国际化
 

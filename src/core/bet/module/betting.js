@@ -2,7 +2,7 @@
 
 import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
+import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
 import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
 import {get_bet_amount_param} from  "./bet-amount.js"
@@ -13,7 +13,7 @@ import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
 import {i18n} from "src/core/index.js"
-import { UserCtr } from "src/core/index.js";
+import UserCtr from  "src/core/user-config/user-ctr.js";
     
 
 

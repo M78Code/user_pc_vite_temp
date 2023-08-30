@@ -60,7 +60,7 @@ import may_also_like from "src/project/pages/match-list/components/may_also_like
 import sports_balls_tab from "./sports_balls_tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { UserCtr } from "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";;
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 

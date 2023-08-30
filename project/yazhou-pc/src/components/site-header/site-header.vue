@@ -90,7 +90,7 @@ import {utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
 import { SessionStorage  } from 'src/core/index.js.js'
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 import { format_money2 } from "src/core/format/index.js"
 
 

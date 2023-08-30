@@ -96,7 +96,7 @@ import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "project_path/src/i18n/langs/index.mjs";
 import { loadLanguageAsync } from "/src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
