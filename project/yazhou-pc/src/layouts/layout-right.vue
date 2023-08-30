@@ -20,7 +20,7 @@
       "
     /> -->
     <!-- 常规竞猜 -->
-    <match-details class="page-match-detail fit" />
+    <!-- <match-details class="page-match-detail fit" /> -->
   </div>
   </div>
 </template>
@@ -28,7 +28,7 @@
 import { ref,onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-import matchDetails  from "project_path/src/pages/match-details/match-details.vue"
+// import matchDetails  from "project_path/src/pages/match-details/match-details.vue"
 import { LayOutMain_pc } from "src/core/index.js";
 import { useRoute, useRouter } from "vue-router"
 
