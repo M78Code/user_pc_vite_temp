@@ -178,6 +178,7 @@ import { NoDataWapper} from "src/components/common/no-data/index";
 import { onMounted,computed,ref,onUnmounted } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import UserCtr from "src/core/user-config/user-ctr.js";
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
@@ -226,10 +227,10 @@ const no_user = ref(false)   // 用户失效标志位
 
 // 用户信息是否失效
 const store_state = store.getState();
-const is_invalid = ref(store_state.userReducer.is_invalid);
+const is_invalid = ref(UserCtr.is_invalid);
 
 const unsubscribe = store.subscribe(() => {
-  is_invalid.value = store.getState().userReducer.is_invalid
+  is_invalid.value = UserCtr.is_invalid
 })
 
 onMounted(() => {

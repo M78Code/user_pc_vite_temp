@@ -8,11 +8,11 @@
   <div class="wrap-table">
     <div class="table-header">
       <div class="table-col cursor" @click="change_sort">
-        <span>{{ $root.$t("results.date") }}</span>
+        <span>{{ i18n_t("results.date") }}</span>
         <div class="sort icon" :class="{ up: is_sortUp }"></div>
       </div>
-      <div class="table-col">{{ $root.$t("results.league") }}</div>
-      <div class="table-col">{{ $root.$t("results.competition") }}</div>
+      <div class="table-col">{{ i18n_t("results.league") }}</div>
+      <div class="table-col">{{ i18n_t("results.competition") }}</div>
       <!-- 黄牌上 -->
       <div class="table-col">
         <div class="yellow_card_up icon">
@@ -20,7 +20,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.yellow_card_up") }}</q-tooltip
+            >{{ i18n_t("icon_tips.yellow_card_up") }}</q-tooltip
           >
         </div>
       </div>
@@ -31,7 +31,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.yellow_card_down") }}</q-tooltip
+            >{{ i18n_t("icon_tips.yellow_card_down") }}</q-tooltip
           >
         </div>
       </div>
@@ -41,7 +41,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.yellow_card") }}</q-tooltip
+            >{{ i18n_t("icon_tips.yellow_card") }}</q-tooltip
           >
         </div>
       </div>
@@ -52,7 +52,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.red_card_up") }}</q-tooltip
+            >{{ i18n_t("icon_tips.red_card_up") }}</q-tooltip
           >
         </div>
       </div>
@@ -63,7 +63,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.red_card_down") }}</q-tooltip
+            >{{ i18n_t("icon_tips.red_card_down") }}</q-tooltip
           >
         </div>
       </div>
@@ -74,7 +74,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.red_card") }}</q-tooltip
+            >{{ i18n_t("icon_tips.red_card") }}</q-tooltip
           >
         </div>
       </div>
@@ -85,7 +85,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.first_half_corner") }}</q-tooltip
+            >{{ i18n_t("icon_tips.first_half_corner") }}</q-tooltip
           >
         </div>
       </div>
@@ -96,7 +96,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.second_half_corner") }}</q-tooltip
+            >{{ i18n_t("icon_tips.second_half_corner") }}</q-tooltip
           >
         </div>
       </div>
@@ -111,7 +111,7 @@
             <template v-if="lang == 'vi'"> Phạt góc cả trận </template>
             <!-- 全场角球 -->
             <template v-else>
-              {{ $root.$t("icon_tips.overall") }} {{ $root.$t("list.corner") }}
+              {{ i18n_t("icon_tips.overall") }} {{ i18n_t("list.corner") }}
             </template>
           </q-tooltip>
         </div>
@@ -123,7 +123,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.first_half_goal") }}</q-tooltip
+            >{{ i18n_t("icon_tips.first_half_goal") }}</q-tooltip
           >
         </div>
       </div>
@@ -134,7 +134,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.second_half_goal") }}</q-tooltip
+            >{{ i18n_t("icon_tips.second_half_goal") }}</q-tooltip
           >
         </div>
       </div>
@@ -149,8 +149,8 @@
             <template v-if="lang == 'vi'"> Bàn thắng cả trận </template>
             <!-- 全场进球 -->
             <template v-else>
-              {{ $root.$t("icon_tips.overall")
-              }}{{ $root.$t("icon_tips.goal") }}
+              {{ i18n_t("icon_tips.overall")
+              }}{{ i18n_t("icon_tips.goal") }}
             </template>
           </q-tooltip>
           <!-- <icon name="icon-rs_jin_quan" size="16px" /> -->
@@ -163,7 +163,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.overtime_goal") }}</q-tooltip
+            >{{ i18n_t("icon_tips.overtime_goal") }}</q-tooltip
           >
         </div>
       </div>
@@ -174,7 +174,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $root.$t("icon_tips.penalty_shootout") }}</q-tooltip
+            >{{ i18n_t("icon_tips.penalty_shootout") }}</q-tooltip
           >
         </div>
       </div>
@@ -578,16 +578,19 @@
 </template>
 
 <script>
+debugger
 // import results from "src/core/match-results/match-results-mixin/index";
+
+console.log(results,'results');
 // import Tabs from "../components/playback_tabs.vue";
 // import SliderX from "../components/playback_slider.vue";
 // import no_data from "src/components/no_data/no_data";
 export default {
   mixins: [results],
   components: {
-    Tabs,
-    SliderX,
-    "no-data": no_data
+    // Tabs,
+    // SliderX,
+    // "no-data": no_data
   },
   computed:{
     // ...mapGetters({
@@ -600,10 +603,10 @@ export default {
   data() {
     return {
       tab_list: [
-        // { title: this.$root.$t("replay_video.all"), code: "0" },
-        // { title: this.$root.$t("replay_video.goal"), code: "1" },
-        // { title: this.$root.$t("replay_video.corner_kick"), code: "2" },
-        // { title: this.$root.$t("replay_video.punish"), code: "3" },
+        // { title: i18n_t("replay_video.all"), code: "0" },
+        // { title: i18n_t("replay_video.goal"), code: "1" },
+        // { title: i18n_t("replay_video.corner_kick"), code: "2" },
+        // { title: i18n_t("replay_video.punish"), code: "3" },
       ],
       // 当前精彩事件类型
       current_events_type: "0",
@@ -637,19 +640,19 @@ export default {
       let event_name;
       switch (type) {
         case "goal":
-          event_name = this.$root.$t("replay_video.goal");
+          event_name = i18n_t("replay_video.goal");
           break; // 进球
         case "corner":
-          event_name = this.$root.$t("replay_video.corner_kick");
+          event_name = i18n_t("replay_video.corner_kick");
           break; // 角球
         case "red_card":
-          event_name = this.$root.$t("icon_tips.red_card");
+          event_name = i18n_t("icon_tips.red_card");
           break; // 红牌
         case "yellow_card":
-          event_name = this.$root.$t("icon_tips.yellow_card");
+          event_name = i18n_t("icon_tips.yellow_card");
           break; // 黄牌
         case "yellow_red_card":
-          event_name = this.$root.$t("icon_tips.red_card");
+          event_name = i18n_t("icon_tips.red_card");
           break; // 黄红牌
         default:
           event_name = "";
@@ -682,14 +685,14 @@ export default {
         handler(res) {
           // tab按钮开关
           let _tab_list = [
-            {title: this.$root.$t('replay_video.all'), code: '0'},
-            {title:this.$root.$t('replay_video.goal'), code: '1'},
+            {title: i18n_t('replay_video.all'), code: '0'},
+            {title:i18n_t('replay_video.goal'), code: '1'},
           ]
           if (res.cornerEvent) {
-            _tab_list.push({title:this.$root.$t('replay_video.corner_kick'), code: '2'})
+            _tab_list.push({title:i18n_t('replay_video.corner_kick'), code: '2'})
           }
           if (res.penaltyEvent) {
-            _tab_list.push({title:this.$root.$t('replay_video.punish'), code: '3'})
+            _tab_list.push({title:i18n_t('replay_video.punish'), code: '3'})
           }
           // 当角球和罚牌都没有时不显示tab
           if (!res.cornerEvent && !res.penaltyEvent) {

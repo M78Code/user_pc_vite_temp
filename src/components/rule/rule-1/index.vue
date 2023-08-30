@@ -9,9 +9,9 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { i18n_t } from "src/boot/i18n.js"
 import lodash from 'lodash'
-import store from "src/store-redux/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import { i18n_t } from "src/boot/i18n.js"
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
@@ -23,29 +23,6 @@ const props = defineProps({})
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-
-/** 国际化 */
-
-
-/** stroe仓库 */
-const { langReducer, themeReducer } = store.getState()
-const unsubscribe = store.subscribe(() => {
-    theme.value = themeReducer.theme
-    lang.value = userReducer.lang
-   
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
-/** 
-* 用户余额是否展示状态 default: theme01
-* 路径: project_path/src/store/module/theme.js
-*/
-const theme = ref(themeReducer.theme)
-/** 
- * 语言
- * 路径: src\store-redux\module\languages.js
- */
- const lang = ref(langReducer.lang)
 
 // TODO: 环境变量怎么获取
 /** 环境变量 */
@@ -63,10 +40,10 @@ const get_pc_rule_url = () => {
         'ms': 'ms_my',
         'ad': 'id_id',
     }
-    const lang2 = lang_map[lang.value] || 'zh_cn';
-    console.error(`================lang:${lang2}`, lang.value);
+    const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
+    console.error(`================lang:${lang2}`, UserCtr.lang);
     let url = '';
-    const [theme2, get_merchant_style] = theme.value.split('_')
+    const [theme2, get_merchant_style] = UserCtr.theme.split('_')
     // TODO: 环境变量待修改
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {

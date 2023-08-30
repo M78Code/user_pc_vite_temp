@@ -89,7 +89,7 @@
     <template v-if="!no_data">
       <!-- 首发阵容-->
       <div class="title" >
-        {{t('analysis_football_matches.starting_lineup') }}
+        {{i18n_t('analysis_football_matches.starting_lineup') }}
         <template v-if="get_detail_data.csid == 1">
           {{radio_button_index == 0 ? line_up_data.homeFormation : line_up_data.awayFormation}}
         </template>
@@ -98,9 +98,9 @@
         <!-- 头部 -->
         <div class="header">
           <div class="col1"></div>
-          <div class="col2">{{t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="t('analysis_football_matches.name')"></div>
-          <div class="col4">{{t('analysis_football_matches.number') }}</div>
+          <div class="col2">{{i18n_t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="i18n_t('analysis_football_matches.name')"></div>
+          <div class="col4">{{i18n_t('analysis_football_matches.number') }}</div>
         </div>
         <!-- 主内容 -->
         <div class="team-item" v-for="(item, i) in line_up_data.up" :key="i+'a'">
@@ -121,19 +121,19 @@
           </div>
         </div>
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ t('common.no_data') }}</div>
+        <div v-if="line_up_data.up.length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
       </div>
       <!-- 替补阵容-->
       <div class="title">
-        <span>{{t('analysis_football_matches.bench_lineup') }}</span>
+        <span>{{i18n_t('analysis_football_matches.bench_lineup') }}</span>
       </div>
       <div class="public_form football_standings">
         <!-- 头部 -->
         <div class="header">
           <div class="col1"></div>
-          <div class="col2">{{t('analysis_football_matches.position') }}</div>
-          <div class="col3" v-html="t('analysis_football_matches.name')"></div>
-          <div class="col4">{{t('analysis_football_matches.number') }}</div>
+          <div class="col2">{{i18n_t('analysis_football_matches.position') }}</div>
+          <div class="col3" v-html="i18n_t('analysis_football_matches.name')"></div>
+          <div class="col4">{{i18n_t('analysis_football_matches.number') }}</div>
         </div>
         <!-- 主内容 -->
         <div class="team-item" v-for="(item, i) in line_up_data.down" :key="i+'b'">
@@ -153,7 +153,7 @@
           </div>
         </div>
         <!-- 没有数据 组件 -->
-        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ t('common.no_data') }}</div>
+        <div v-if="line_up_data.down.length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
       </div>
     </template>
   </div>
@@ -161,10 +161,10 @@
 
 <script setup>
 import { api_analysis } from "src/api/index.js";
-import { computed, nextTick, onUnmounted } from "vue";
+import { ref, computed, nextTick, onUnmounted, onMounted } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 
@@ -189,11 +189,13 @@ import { t } from "src/boot/i18n.js";;
   // 篮球的 背景图的 数据
   const basketball_data = ref([])
   const route = useRoute()
-
-  //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
+  onMounted(() => {
+    //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
   useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
   get_list()
-  tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
+  tab_radio_button.value = [get_detail_data.mhn, get_detail_data.man]
+  })
+
   const match_id = computed(() => {
     // 赛事id
     return route.params.mid || get_detail_data.mid

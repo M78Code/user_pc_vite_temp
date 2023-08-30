@@ -18,13 +18,13 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 // import common_header from "project_path/src/components/common/common-header1.vue";  // 详情页头部置顶title
-import header_top from "project_path/src/pages/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
+import headerTop from "project_path/src/pages/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
 // import header_bottom from "project_path/src/pages/details/components/header/header-bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
 // import match_results_header_top from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
-import base64 from "src/core/match-detail-h5/until/details-bg.js";  // 球类背景图background路径
+// import base64 from "src/core/match-detail-h5/until/details-bg.js";  // 球类背景图background路径
 import {utils } from 'src/core/index.js';
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
@@ -45,7 +45,7 @@ export default defineComponent({
   },
   components: {
     // "common-header": common_header,
-    "header-top": header_top,
+    "header-top": headerTop,
     // "header-bottom": header_bottom,
     // "match-results-header-top": match_results_header_top,
   },
@@ -61,7 +61,7 @@ export default defineComponent({
       // 详情页的数据
       get_detail_data: []
     });
-    // #TODO VUEX 
+    // #TODO VUEX
     // computed: {
     //   ...mapGetters([
     //     // 收藏菜单为6

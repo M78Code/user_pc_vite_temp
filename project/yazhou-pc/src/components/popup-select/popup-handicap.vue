@@ -23,11 +23,12 @@
   
 <script setup>
 import { ref, reactive, watch, onUnmounted } from 'vue'
+import lodash from 'lodash'
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
-import store from "src/store-redux/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 const odds_constant = [
     { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -42,17 +43,6 @@ const odds_constant = [
 const hits = ref(0)
 /** 盘口切换弹窗是否激活 */
 const is_active = ref(false)
-/** stroe仓库 */
-const { globalReducer, betInfoReducer } = store.getState();
-const unsubscribe = store.subscribe(() => {
-    // is_single_handle.value = betInfoReducer.is_single_handle
-    // is_handle.value = betInfoReducer.is_handle
-    // is_bet_singl.value = betInfoReducer.is_bet_singl
-    // cur_odd.value = globalReducer.cur_odd
-    // pre_odd.value = globalReducer.pre_odd
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
 
 /** 当前赔率 */
 const cur_odd = ref(UserCtr.odds.cur_odd || 'EU')
@@ -102,7 +92,7 @@ function set_user_preference(curr_odd) {
         BetData.set_cur_odd(curr_odd);
         // 设置用户偏好    
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
-            let code = _.get(res, 'data.code');
+            let code = lodash.get(res, 'data.code');
             if (code != 200) {
                 set_pre_odd(pre_odd.value);
                 BetData.set_cur_odd(cur_odd.value);
@@ -130,25 +120,6 @@ watch(
         }
     }
 )
-/** 全局点击事件数 */
-const global_click = ref(0)
-watch(
-    () => global_click.value,
-    () => {
-        if (hits.value % 2 == 1) {
-            hits.value++;
-            return;
-        }
-        is_active.value = false
-    }
-)
-
-/** 设置上次盘口偏好 */
-const set_pre_odd = (data) => store.dispatch({
-    type: 'set_pre_odd',
-    data
-})
-
 
 </script>
 

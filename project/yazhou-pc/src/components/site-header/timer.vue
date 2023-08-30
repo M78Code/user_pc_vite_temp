@@ -16,7 +16,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 /** 时间 */
 const time_str = ref('')
 /** 是否调试 */
-const is_test = ref(ss.get('wsl'))
+const is_test = ref(SessionStorage.get('wsl'))
 /** 定时器 */
 const upd_time_refresh_timer = ref(null)
 /** 清除定时器 */
@@ -59,7 +59,6 @@ onMounted(init)
  * @param {undefined} undefined
 */
 function global_one_second_timer() {
-    // useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,{time:new Date().getTime(), step:1000});
     /** 广播事件 */
     useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime() })
     // 统计各个菜单停留时间 每秒执行一次

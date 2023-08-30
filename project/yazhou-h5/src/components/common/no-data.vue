@@ -45,9 +45,22 @@
 <script setup>
 import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";
+
+import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
+// const noMatch2 = () => import("public/image/png/noMatch2.png")
+
+// ==========图片===============
+import noMatchSvg from 'public/image/svg/noMatch.svg'
+import noMatch2Png from 'public/image/png/noMatch2.png'
+import noShoucSvg from 'public/image/svg/no_shouc.svg'
+import noShouc2Svg from 'public/image/svg/no_shouc2.svg'
+import noMatchNewPng from 'public/image/png/noMatch_new.png'
+import noMatch2NewPng from 'public/image/png/noMatch2_new.png'
+import noLivedataSvg from 'public/image/svg/no_livedata.svg'
+import no_livedata2Svg from 'public/image/svg/no_livedata2.svg'
+import nowifiSvg from 'public/image/svg/nowifi.svg'
 // TODO:
 
 
@@ -55,39 +68,39 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 
 const arr_const = {
     collect: {
-        url: "image/bw3/svg/no_shouc.svg",
-        url2: "image/bw3/svg/no_shouc2.svg",
+        url: noShoucSvg,
+        url2: noShouc2Svg,
         // '暂无关注的赛事哦',
-        txt: t('msg.msg_nodata_08'),
+        txt: i18n_t('msg.msg_nodata_08'),
     },
     noWifi: {
-        url: "image/bw3/svg/nowifi.svg",
+        url: nowifiSvg,
         //'网络不给力',
-        txt: t('msg.msg_nodata_09'),
+        txt: i18n_t('msg.msg_nodata_09'),
     },
     noMatch: {
-        url: "image/bw3/svg/noMatch.svg",
-        url2: "image/bw3/png/noMatch2.png",
+        url: noMatchSvg,
+        url2: noMatch2Png,
         //'空空如也~',
-        txt: t('msg.msg_nodata_02'),
+        txt: i18n_t('msg.msg_nodata_02'),
     },
     noMatchNew: {
-        url: "image/bw3/png/noMatch_new.png",
-        url2: "image/bw3/png/noMatch2_new.png",
+        url: noMatchNewPng,
+        url2: noMatch2NewPng,
         //'数组 对应 标题 提示文字 刷新',
-        txt: t('msg.msg_nodata_02_new'),
+        txt: i18n_t('msg.msg_nodata_02_new'),
     },
     noMessage: {
-        url: "image/bw3/svg/noMatch.svg",
-        url2: "image/bw3/png/noMatch2.png",
+        url: noMatchSvg,
+        url2: noMatch2Png,
         //'暂无消息记录~',
-        txt: t('msg.msg_nodata_17'),
+        txt: i18n_t('msg.msg_nodata_17'),
     },
     nolive: {
-        url: "image/bw3/svg/no_livedata.svg",
-        url2: "image/bw3/svg/no_livedata2.svg",
+        url: noLivedataSvg,
+        url2: no_livedata2Svg,
         //'暂无直播的赛事哦',
-        txt: t('msg.msg_nodata_14'),
+        txt: i18n_t('msg.msg_nodata_14'),
     }
 }
 

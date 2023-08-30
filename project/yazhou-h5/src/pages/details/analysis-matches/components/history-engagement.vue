@@ -6,7 +6,7 @@
 <template>
   <div class="history_engagement" v-if="historical_engagement_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ t('analysis_football_matches.historical_war') }}</span>
+      <span class="title ellipsis">{{ i18n_t('analysis_football_matches.historical_war') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index"
            :class="{active:if_the_selected[index]}"
@@ -40,7 +40,7 @@ import {api_analysis} from "src/api/index.js";
 // import noData from "project_path/src/components/common/no-data.vue";
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 
   // components: {
   //   "public-form": public_form,
@@ -53,19 +53,19 @@ import { t } from "src/boot/i18n.js";
   const isoptions = ref(false)
   const progress_bar = ref(false)
   const tab_radio_button = ref([
-    {name: `${t('analysis_football_matches.near')}5`, index: 5 },
-    {name: `${t('analysis_football_matches.near')}10`, index: 10 },
-    {name: `${t('analysis_football_matches.near')}15`, index: 15 },
+    {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
+    {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
+    {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
   ])
   const records_list = ref([
-    {success: 0, name: t('analysis_football_matches.victory')},
-    {flat: 0, name: t('analysis_football_matches.flat')},
-    {lose: 0, name: t('analysis_football_matches.negative')},
+    {success: 0, name: i18n_t('analysis_football_matches.victory')},
+    {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+    {lose: 0, name: i18n_t('analysis_football_matches.negative')},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
-    t('analysis_football_matches.same_game'),
-    t('analysis_football_matches.same_host_guest')
+    i18n_t('analysis_football_matches.same_game'),
+    i18n_t('analysis_football_matches.same_host_guest')
   ])
   const flag = ref(0)
   const cps = ref(5)
@@ -103,9 +103,9 @@ import { t } from "src/boot/i18n.js";
       if(code == 200 && data ) {
         records_list = [
           // TODO: 国际化修改后调整
-          {success: 0, name: t('analysis_football_matches.victory')},
-          {flat: 0, name: t('analysis_football_matches.flat')},
-          {lose: 0, name: t('analysis_football_matches.negative')},
+          {success: 0, name: i18n_t('analysis_football_matches.victory')},
+          {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+          {lose: 0, name: i18n_t('analysis_football_matches.negative')},
         ]
         data.forEach( (item) => {
           if(item.result == 4){
@@ -117,12 +117,12 @@ import { t } from "src/boot/i18n.js";
           }
         })
         historical_engagement_data = data
-        no_data = false
+        no_data.value = false
       } else {
-        no_data = true
+        no_data.value = true
       }
     } catch (error) {
-      no_data = true
+      no_data.value = true
       console.error(error);
     }
   }
@@ -155,29 +155,29 @@ import { t } from "src/boot/i18n.js";
     // $forceUpdate()
   }
   onUnmounted(() => {
-    tab_index = -1
-    radio_button_index = 0
-    isoptions = false
-    progress_bar = false
-    tab_radio_button = [
-      {name: `${t('analysis_football_matches.near')}5`, index: 5 },
-      {name: `${t('analysis_football_matches.near')}10`, index: 10 },
-      {name: `${t('analysis_football_matches.near')}15`, index: 15 },
+    tab_index.value = -1
+    radio_button_index.value = 0
+    isoptions.value = false
+    progress_bar.value = false
+    tab_radio_button.value = [
+      {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
+      {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
+      {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
     ]
-    records_list = [
-      {success: 0, name: t('analysis_football_matches.victory')},
-      {flat: 0, name: t('analysis_football_matches.flat')},
-      {lose: 0, name: t('analysis_football_matches.negative')},
+    records_list.value = [
+      {success: 0, name: i18n_t('analysis_football_matches.victory')},
+      {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+      {lose: 0, name: i18n_t('analysis_football_matches.negative')},
     ]
-    if_the_selected = [false, false]
-    tab_check_box = [
-      t('analysis_football_matches.same_game'),
-      t('analysis_football_matches.same_host_guest')
+    if_the_selected.value = [false, false]
+    tab_check_box.value = [
+      i18n_t('analysis_football_matches.same_game'),
+      i18n_t('analysis_football_matches.same_host_guest')
     ]
-    flag = 0
-    cps = 5
-    historical_engagement_data = []
-    no_data = false
+    flag.value = 0
+    cps.value = 5
+    historical_engagement_data.value = []
+    no_data.value = false
   })
 </script>
 

@@ -168,7 +168,7 @@ export const useGetResultConfig = () => {
       state.input_radio();
     }
     state.is_first_load = true;
-    get_serverTime(); //获取服务器时间
+    // get_serverTime(); //获取服务器时间
 
     
     //生成事件监听

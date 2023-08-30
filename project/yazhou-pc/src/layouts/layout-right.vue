@@ -2,16 +2,15 @@
   <div class="layout-right" :class="{ mini_hide: right_status }">
     <button @click="handle_click">隐藏右侧</button>
     <!-- 右侧区域 -->
-    <!-- <div
+    <div
     class="page-right"
-    :class="data_ref.screen_width"
     :style="
       route.params.video_size == 1
         ? ''
-        : `width:${computed_data.layout_size.right_width}px  !important; height:${computed_data.layout_size.content_height}px  !important;`
+        : `width:${LayOutMain_pc.layout_right_width}px  !important; height:${LayOutMain_pc.layout_content_height}px  !important;`
     "
-    v-if="computed_data.layout_size.right_width > 0"
-  > -->
+    v-if="LayOutMain_pc.layout_right_width > 0"
+  >
     <!-- 虚拟体育 -->
     <!-- <virtual-right
       v-if="
@@ -21,22 +20,21 @@
       "
     /> -->
     <!-- 常规竞猜 -->
-    <!-- <match-details v-else class="page-match-detail fit" /> -->
+    <match-details class="page-match-detail fit" />
+  </div>
   </div>
 </template>
 <script setup>
 import { ref,onBeforeUnmount } from "vue";
 import store from "src/store-redux/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
-const { layoutReducer } = store.getState();
-//右侧状态
-const right_status = ref(layoutReducer.layout_right_status);
-//监听是否展示右侧
-const list_emit = [
-  useMittOn(MITT_TYPES.EMIT_LAYOUT_RIGHT_STATUS, (v) => {
-    right_status.value = v;
-  }).off,
-];
+import matchDetails  from "project_path/src/pages/match-details/match-details.vue"
+import { LayOutMain_pc } from "src/core/index.js";
+import { useRoute, useRouter } from "vue-router"
+
+const route = useRoute()
+
+
 onBeforeUnmount(() => {
   list_emit.forEach((i) => i());
 });

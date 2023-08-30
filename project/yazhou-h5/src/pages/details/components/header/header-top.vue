@@ -38,7 +38,7 @@
           <template v-else>
             <div class="sj-time-day">
               <!-- .Format(t('time3')) -->
-              {{format_time_zone(+detail_data.mgt)}}
+              {{format_time_zone_time(+detail_data.mgt)}}
             </div>
             <!-- <span class="sj-time-soon">{{ format_H_M(format_time_zone_time(+detail_data.mgt), +detail_data.mgt) }}</span> -->
           </template>
@@ -139,18 +139,18 @@
 </template>
 <script>
 // 1-足球 2-篮球 3-棒球 4冰球 5-网球 6-美式足球 7-斯诺克 8-乒乓球 9-排球 10-羽毛球
-import { TeamImgWapper } from "src/components/details/team-img";   // 详情页蓝色背景上的大型字母图标
-import { TeamTextWapper } from "src/components/details/team-text";   // 中立场赛事展示
-import { TeamNameWapper } from "src/components/details/team-name";   // 详情页背景上的队伍名称
+import TeamImgWapper from "project_path/src/components/details/team-img.vue";   // 详情页蓝色背景上的大型字母图标
+// import TeamTextWapper from "project_path/src/components/details/team-text.vue";   // 中立场赛事展示
+// import TeamNameWapper from "project_path/src/components/details/team-name.vue";   // 详情页背景上的队伍名称
 // import msc from "project_path/src/mixins/common/msc.js";    // 国际化比赛阶段比分转换工具
 // import match_between_score from 'src/project/components/match/match_between_score.vue'  // 详情页显示赛事当前局比分以及绿色小圆点显示发球方
 // import counting_down from 'src/project/components/common/counting-down'   // 赛事进行中每秒变化的计时器
-import {utils } from 'src/core/index.js';    // 公共方法
+import {utils } from 'src/core/utils/index.js';    // 公共方法
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex";
 import { format_time_zone_time, format_H_M,format_total_score } from "src/core/format/index.js"
 import lodash from "lodash";
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
 import { t } from "src/boot/i18n.js";;
 import UserCtr from "src/core/user-config/user-ctr.js";;
@@ -171,9 +171,9 @@ export default defineComponent({
     // 队徽
     "team-img": TeamImgWapper,
     // 状态描述
-    "team-text": TeamTextWapper,
+    // "team-text": TeamTextWapper,
     // // 队名
-    "team-name": TeamNameWapper,
+    // "team-name": TeamNameWapper,
     // 局间比分
     // "match-between-score": match_between_score,
     // "counting-down": counting_down,

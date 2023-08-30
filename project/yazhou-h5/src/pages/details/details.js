@@ -133,7 +133,7 @@ const route = useRoute();
     get_match_base_info_obj: "get_match_base_info_obj",
     // 'get_analyze_show',
     // 'get_goto_detail_matchid',
-    get_access_config,
+    get_access_config:GlobalAccessConfig.config,
     // 聊天室ID
     // 'get_chatroom_id',
     // 获取语言

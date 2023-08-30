@@ -13,27 +13,27 @@
     </div>
     <div class="content yb_mt10" v-for="(item,index) in data_list" :key="index">
       <p class="tittle"><span :class="{'color0': item.label == 0,'color1': item.label == 1,'color2': item.label == 2}"></span>&ensp;
-        <template v-if="item.label == 0">{{ t('analysis_football_matches.Neutral_Information') }}</template>
-        <template v-if="item.label == 1">{{ t('analysis_football_matches.Favorable_information') }}</template>
-        <template v-if="item.label == 2">{{ t('analysis_football_matches.Unfavorable_information') }}</template>
+        <template v-if="item.label == 0">{{ i18n_t('analysis_football_matches.Neutral_Information') }}</template>
+        <template v-if="item.label == 1">{{ i18n_t('analysis_football_matches.Favorable_information') }}</template>
+        <template v-if="item.label == 2">{{ i18n_t('analysis_football_matches.Unfavorable_information') }}</template>
       </p>
       <template v-for="(item2,index2) in item.msg">
         <p class="item">{{item2}}</p>
       </template>
     </div>
-    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ t('common.no_data') }}</div>
+    <div v-if="!data_list.length && is_done" class="yb_py18 text-center no-list">{{ i18n_t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
-import { api_analysis } from "src/project/api";
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
+import { api_analysis } from "src/api/index.js";
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { useRoute } from 'vue-router'
 
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
-import { ref, nextTick } from 'vue'
-import { t } from "src/boot/i18n.js";;
+import { ref, nextTick, onMounted, onUnmounted, computed } from 'vue'
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 
@@ -48,12 +48,14 @@ import { t } from "src/boot/i18n.js";;
     let is_done = ref(false)
     // 路由
     const route = useRoute()
+    onMounted(() => {
+        // 添加监听 赛事分析刷新事件 TODO: get_detail_data   后续修改调整
+      useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
-    // 添加监听 赛事分析刷新事件 TODO: get_detail_data   后续修改调整
-    useMittEmit(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+      tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
+      get_list()
+    })
 
-    tab_radio_button = [get_detail_data.mhn, get_detail_data.man]
-    get_list()
 
     const match_id = computed(() => {
       // 赛事id

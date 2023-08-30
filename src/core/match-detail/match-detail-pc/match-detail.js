@@ -6,27 +6,27 @@
  */
 import lodash from "lodash";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import football from "app/public/yazhou-pc/image/png/football.png"; //足球
-// import football from "app/public/yazhou-pc/image/png/football.png"); //足球
-import basketball from "app/public/yazhou-pc/image/png/basketball.png"; //篮球
-import baseball from "app/public/yazhou-pc/image/png/baseball.png"; //棒球
-import ice_hockey from "app/public/yazhou-pc/image/jpg/ice_hockey.jpg"; //冰球
-import tennis from "app/public/yazhou-pc/image/png/tennis.png"; //网球
-import usa_football from "app/public/yazhou-pc/image/png/usa_football.png"; // 美足
-import snooker from "app/public/yazhou-pc/image/jpg/snooker.jpg"; //斯诺克
-import ping_pong from "app/public/yazhou-pc/image/jpg/ping_pong.jpg"; //乒乓球
-import volleyball from "app/public/yazhou-pc/image/png/volleyball.png"; // 排球
-import badminton from "app/public/yazhou-pc/image/jpg/badminton.jpg"; //羽毛球
-import handball from "app/public/yazhou-pc/image/common/png/handball.png"; //手球
-import boxing from "app/public/yazhou-pc/image/common/png/boxing.png"; //拳击
-import beach_volleyball from "app/public/yazhou-pc/image/common/png/beach_volleyball.png"; //沙滩排球
-import rugby from "app/public/yazhou-pc/image/common/png/rugby.png"; //橄榄球
-import hockey from "app/public/yazhou-pc/image/common/png/hockey.png"; //曲棍球
-import polo from "app/public/yazhou-pc/image/common/png/polo.png"; //水球
-import virtual_dog from "app/public/yazhou-pc/image/png/virtual_dog.png"; //赛狗
-import virtual_racing from "app/public/yazhou-pc/image/png/virtual_racing.png"; //赛马
-import motorcycle from "app/public/yazhou-pc/image/png/motorcycle.png"; // 虚拟摩托车
-import virtual_dirt_bike_details from "app/public/yazhou-pc/image/png/virtual_dirt_bike_details.png"; // 虚拟泥地摩托车
+import football from "public/image/png/football.png"; //足球
+// import football from "public/image/png/football.png"); //足球
+import basketball from "public/image/png/basketball.png"; //篮球
+import baseball from "public/image/png/baseball.png"; //棒球
+import ice_hockey from "public/image/jpg/ice_hockey.jpg"; //冰球
+import tennis from "public/image/png/tennis.png"; //网球
+import usa_football from "public/image/png/usa_football.png"; // 美足
+import snooker from "public/image/jpg/snooker.jpg"; //斯诺克
+import ping_pong from "public/image/jpg/ping_pong.jpg"; //乒乓球
+import volleyball from "public/image/png/volleyball.png"; // 排球
+import badminton from "public/image/jpg/badminton.jpg"; //羽毛球
+import handball from "public/image/common/png/handball.png"; //手球
+import boxing from "public/image/common/png/boxing.png"; //拳击
+import beach_volleyball from "public/image/common/png/beach_volleyball.png"; //沙滩排球
+import rugby from "public/image/common/png/rugby.png"; //橄榄球
+import hockey from "public/image/common/png/hockey.png"; //曲棍球
+import polo from "public/image/common/png/polo.png"; //水球
+import virtual_dog from "public/image/png/virtual_dog.png"; //赛狗
+import virtual_racing from "public/image/png/virtual_racing.png"; //赛马
+import motorcycle from "public/image/png/motorcycle.png"; // 虚拟摩托车
+import virtual_dirt_bike_details from "public/image/png/virtual_dirt_bike_details.png"; // 虚拟泥地摩托车
 
 //统计分析URL
 const signal_url = "https://s5.sir.swiftscore.com";

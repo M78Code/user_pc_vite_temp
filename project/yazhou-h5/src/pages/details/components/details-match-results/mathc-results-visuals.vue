@@ -5,7 +5,7 @@
 -->
 <template>
   <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
-    <div class="title" v-if="!get_analyze_show">{{ t('match_result.statistics') }}</div>
+    <div class="title" v-if="!get_analyze_show">{{ i18n_t('match_result.statistics') }}</div>
     <div class="designation">
       <span class="ellipsis">{{ statistics_table.mhn }}</span>
       <span class="ellipsis">{{ statistics_table.man }}</span>
@@ -89,6 +89,7 @@
 
 <script setup>
 import lodash from "lodash";
+import { i18n_t } from "src/boot/i18n.js"
  // 国际化比赛阶段比分转换工具
 // import msc from "project_path/src/mixins/common/msc.js";
 import { onUnmounted, ref, watch } from "vue";
