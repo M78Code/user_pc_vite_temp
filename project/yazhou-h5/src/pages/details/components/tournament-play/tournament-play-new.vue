@@ -172,8 +172,8 @@ import temp18 from "./template/temp0.vue"
 // 模板id=51
 import temp51 from "./template/temp0.vue"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick, defineAsyncComponent, markRaw } from "vue";
-import { t } from "src/core/index.js";;
-import { UserCtr } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";;
+import { UserCtr } from "src/core/user-config/user-ctr.js";
 
 //国际化
 
@@ -310,7 +310,7 @@ export default defineComponent({
     //   'get_hshow_map',
     //   'get_details_data_cache',
     // ]),
-    
+
     const get_uid = computed(() => {
       return "";
     });

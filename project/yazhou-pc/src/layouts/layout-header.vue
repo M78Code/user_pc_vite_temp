@@ -60,7 +60,7 @@ const router = useRouter()
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, searchReducer, userReducer, langReducer, betReducer } = store_data
+const { globalReducer, searchReducer, userReducer, langReducer } = store_data
 
 /** 
  * 全局开关 default: object
@@ -86,7 +86,8 @@ const { lang } = langReducer
  * 选择的选项 menu_obj
  * 路径: src\store-redux\module\betInfo.js
  */
- const { menu_obj } = betReducer
+ const  menu_obj  = ref({})
+//  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)
@@ -277,13 +278,13 @@ function activity_dialog() {
 function menu_init_done() {
   // 如果有电竞
   // TODO: 菜单
-  if (menu_obj.esports.menuId) {
+  if (menu_obj.value.esports.menuId) {
     if (site_header_data.nav_list.findIndex(i => i.id == 5) == -1) {
       site_header_data.nav_list.splice(1, 0, { id: 5, tab_name: t("common.e_sports"), path: "/e_sport" });
     }
   }
   // 如果有虚拟体育
-  if (menu_obj.virtual_sport.menuId) {
+  if (menu_obj.value.virtual_sport.menuId) {
     if (site_header_data.nav_list.findIndex(i => i.id == 3) == -1) {
       let e_index = site_header_data.nav_list.findIndex(i => i.id == 5)
       if (e_index == -1) {
@@ -453,6 +454,6 @@ function navigate(obj) {
 
 </script>
 
-<style lang="scss" scoped>
+<!-- <style lang="scss" scoped>
 @import 'project_path/src/components/site-header/site-header.scss';
-</style>
+</style> -->

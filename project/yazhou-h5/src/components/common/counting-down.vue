@@ -23,7 +23,7 @@ import { ref, watch, onMounted, computed, nextTick, onActivated } from 'vue'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 

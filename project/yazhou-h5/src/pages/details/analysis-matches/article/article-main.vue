@@ -42,7 +42,7 @@ import articleMaylike from "project_path/src/pages/details/analysis-matches/arti
 import { onMounted, onUnmounted, watch, ref } from "vue";
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-import { UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/user-config/user-ctr.js"
 
   // 弹框是否显示
   const is_show_dialog = ref(false)

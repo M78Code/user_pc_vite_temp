@@ -17,7 +17,7 @@
 
 <script setup>
 import store from "src/store-redux/index.js"
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 

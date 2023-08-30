@@ -69,7 +69,7 @@
 */
 
 // 引入国际化
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs } from "vue";
 
 // #TODO vuex更改
@@ -119,7 +119,7 @@ export default defineComponent({
     ;
     // 路由
     const component_data = reactive({
-      // dom 
+      // dom
       virtual_menu_list_dom: null,
       // 事件集合
       emitters: [],
@@ -148,7 +148,7 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      // 原 created 
+      // 原 created
       //虚拟体育刷新赛事
       let timer_super27 = null;
       let timer_super28 = null;
@@ -161,8 +161,8 @@ export default defineComponent({
       //   set_menu_type(900);
       // }, 500)
       // cancel_ref = debounce(cancel_ref,200)
-      
-      // 原mounted 
+
+      // 原mounted
       // console.error(get_home_data,"get_home_data====")
       // 浏览器窗口变化事件监听
       component_data.emitters = [
@@ -179,7 +179,7 @@ export default defineComponent({
       //   history.replaceState(null,'',`${location.pathname}${location.hash}`)    //地址栏优化
       // }
     });
-  
+
   /**
    * @description: 触发本组件销毁之前回调
    * @param {Undefined} Undefined
@@ -259,7 +259,7 @@ export default defineComponent({
      * @description: 赛事列表回到顶部
      */
     const back_top = () => {
-      // #TODO 
+      // #TODO
       // $refs.scrollArea && $refs.scrollArea.scrollTo(0,0)
     };
     /**
@@ -345,7 +345,7 @@ export default defineComponent({
               //   set_virtual_current_sub_menuid(component_data.sub_menu_list[component_data.sub_menu_i].menuId);
               // }
               // set_curr_sub_menu_type(component_data.sub_menu_list[component_data.sub_menu_i].menuId);
-              
+
               virtual_menus_loaded(component_data.sub_menu_list);
             }else{
               virtual_menus_loaded(component_data.sub_menu_list);
@@ -364,7 +364,7 @@ export default defineComponent({
         // 异常调用时延时时间,毫秒数,默认1000
         timers:1100
       }
-      // #TODO 
+      // #TODO
       // axios_api轮询调用方法
       axios_api_loop(obj_);
     };
@@ -450,7 +450,7 @@ export default defineComponent({
       }
 
       /*  刷新按钮 */
-      // #TODO 
+      // #TODO
       // @include keyframes(loading-ring-animate) {
       //   0% {
       //     transform: rotate(0deg);
@@ -549,7 +549,7 @@ export default defineComponent({
             font-size: 0.1rem;
             text-align: center;
           }
-          
+
         }
       }
     }

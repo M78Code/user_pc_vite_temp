@@ -4,7 +4,7 @@
 
     <!-- 现场滚球盘 -->
     <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border" style="margin-bottom:0px"
-      :class="menu_config.menu_root == 1 && 'active'">
+      :class="MenuData.menu_root == 1 && 'active'">
       <!-- 现场滚球盘 -->
       <img class="hot-icon" :src="play_match" />
       <div class="col">
@@ -13,14 +13,14 @@
       </div>
 
       <div class="col-right">
-        <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_1 }}</span>
+        <span class="match-count yb-family-odds">{{ MenuData.menu_root_count.mi_1 }}</span>
       </div>
     </div>
 
     <!-- 热门赛事 -->
-    <div v-if="menu_config.add_mi_introduce.mi_500.label && GlobalAccessConfig.get_hotMatchNum()" @click="new_menu_click(500)"
-      class="menu-item menu-top menu-play menu-border" :class="menu_config.menu_root == 500 && 'active'"
-      :id="DOM_ID_SHOW && `menu-${menu_config.add_mi_introduce.mi_500.label}`">
+    <div v-if="MenuData.add_mi_introduce.mi_500.label && GlobalAccessConfig.get_hotMatchNum()" @click="new_menu_click(500)"
+      class="menu-item menu-top menu-play menu-border" :class="MenuData.menu_root == 500 && 'active'"
+      :id="DOM_ID_SHOW && `menu-${MenuData.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
       <img class="hot-icon" :src="hot_svg" />
       <div class="col">
@@ -29,7 +29,7 @@
       </div>
       <div class="col-right">
         <!-- 热门赛事数量 -->
-        <span class="match-count yb-family-odds">{{ menu_config.menu_root_count.mi_500 }}</span>
+        <span class="match-count yb-family-odds">{{ MenuData.menu_root_count.mi_500 }}</span>
       </div>
     </div>
 
@@ -47,21 +47,16 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from "vue-router";
 
-import store from "src/store-redux/index.js";
-import menu_config from 'src/core/menu-pc/menu-data-class.js'
 import base_data_instance from 'src/core/base-data/base-data.js'
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import { MenuData } from "src/core/index.js";
 
 import play_match from "/public/yazhou-pc/image/png/play-match.png";
 import hot_svg from "/public/yazhou-pc/image/svg/hot.svg"
 
 import { MenuWapper } from "src/components/menu";
 
-const {
-  layoutReducer,
-  globalReducer
-} = store.getState()
 
 const router = useRouter()
 
@@ -74,7 +69,7 @@ const props = defineProps({
 })
 
 // 菜单布局信息
-const layout_left_show = reactive(layoutReducer.layout_left_show)
+const layout_left_show = reactive(MenuData.layout_left_show)
 /**
  * 新菜单点击
  */
@@ -110,10 +105,10 @@ const new_menu_click = root => {
     guanjun: "",
   };
   // 设置 中间 菜单输出
-  menu_config.set_mid_menu_result(params);
+  MenuData.set_mid_menu_result(params);
 
   // 设置 左侧菜单 
-  menu_config.set_left_menu_result({
+  MenuData.set_left_menu_result({
     root: root,
     lv1_mi: '',
     lv2_mi,

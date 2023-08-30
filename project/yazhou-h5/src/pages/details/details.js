@@ -7,7 +7,7 @@ import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick } from "vue";
-import { UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/user-config/user-ctr.js"
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();

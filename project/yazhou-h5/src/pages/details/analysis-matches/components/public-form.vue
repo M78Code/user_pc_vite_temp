@@ -77,13 +77,13 @@
 
 <script setup>
 import { onUnmounted, watch } from 'vue'
-import { t } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 
    // 国际化
-   
+
   const props = defineProps({
     liat_data: {
       type: Number | String,

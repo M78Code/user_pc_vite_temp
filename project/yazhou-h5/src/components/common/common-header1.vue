@@ -40,7 +40,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { t } from "src/core/index.js";
+import { t } from "src/boot/i18n.js";
 import { useRoute } from "vue-router"
 
 

@@ -21,12 +21,12 @@ const router = createRouter({
           {
             path: "/home",
             name: "home",
-            component: () => import("project_path/src/pages/home/home_index.vue")
+            component: () => import("project_path/src/pages/home/home-index.vue")
           },
           {
             path: "/activity_task",
             name: "activity_task",
-            component: () => import("project_path/src/activity_page/activity_task/index.vue")
+            component: () => import("project_path/src/activity-page/activity-task/index.vue")
           },
         {
           path: "/virtual",
@@ -66,7 +66,7 @@ const router = createRouter({
         //   {
         //     path: '/category_loading/:mid',
         //     name: 'category_loading',
-        //     component: () => import("project_path/pages/details/category_loading.vue")
+        //     component: () => import("project_path/pages/details/category-loading.vue")
         //   },
         //   // 常规赛事和电竞赛事详情页,赛事id必传，玩法集id可选
         {
