@@ -30,14 +30,15 @@ import { compute_sport_id  } from 'src/core/constant/index.js'
 // import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
 // import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
 // import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
-// import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
+import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 import store from "src/store-redux/index.js";
 
 const route = useRoute() || {};
 let state = store.getState();
 const { page_source } = PageSourceData;
-
+const { mx_use_list_res, mx_list_res } = process_composable_fn;
+console.log('process_composable_fn', process_composable_fn.mx_use_list_res);
 // 赛事主列表容器卡片逻辑处理类
 const match_list_card = reactive(MatchListCardClass);
 // 赛事主列表容器卡片逻辑处理类
@@ -336,6 +337,7 @@ const set_base_data_init = () => {
  */
 
 const fetch_match_list = (is_socket = false, cut) => {
+	console.log('lockie_test_console', 11111);
 	// 设置当前为赛事列表
 	// 如果有拉列表定时器 清除定时器
 	if (!is_socket && get_match_list_timeid.value) {
@@ -375,7 +377,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// console.error('match_api',JSON.stringify(match_api))
 	// 设置列表接口 和 参数
-	let api = api_match['post_fetch_match_list'];
+	let api = api_match['post_league_list'];
 	let _params = lodash.clone(match_api.params) || {};
 	// 切换是 排序后 设置当前的排序
 	_params.sort = vx_match_sort.value;
@@ -397,17 +399,10 @@ const fetch_match_list = (is_socket = false, cut) => {
 	// return
 	let send_match_list_request = () => {
 		/**返回数据处理************/
-		console.log('lockie_test_console', api_match , MenuData.match_list_api_config);
 		api && api(_params)
 			.then((res) => {
-				console.log('lockie_test_console', res);
-				// 组件和路由不匹配 菜单id不匹配
-				if (
-					(route.name == "details" && page_source != "details") ||
-					this.destroyed ||
-					_params.euid != match_api.params.euid
-				)
-					return;
+				// 组件和路由不匹配 菜单id不匹配aa
+				if ((route.name == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
 				let data = lodash.get(res, "data", {});
 				api_error_count.value = 0;
 				if (data.code == 200) {
@@ -441,9 +436,9 @@ const fetch_match_list = (is_socket = false, cut) => {
 					api_error_count.value++;
 					// 重复拉列表的次数小于5   3秒后再次拉接口
 					if (api_error_count.value < 5) {
-						get_match_list_timeid.value = setTimeout(() => {
-							fetch_match_list();
-						}, 3000);
+						// get_match_list_timeid.value = setTimeout(() => {
+						// 	fetch_match_list();
+						// }, 3000);
 					} else {
 						load_data_state.value = "refresh";
 					}
@@ -471,6 +466,34 @@ const fetch_match_list = (is_socket = false, cut) => {
 		send_match_list_request();
 	}
 };
+
+const handle_destroyed = () => {
+	clearTimeout(this.axios_debounce_timer);
+	clearTimeout(axios_debounce_timer2.value);
+	clearInterval(check_match_last_update_timer_id.value);
+	for (let key in timer_obj.value) {
+		clearTimeout(timer_obj.value[key]);
+	}
+	//热门推荐定时器
+	if (hot_match_list_timeout.value) {
+		clearTimeout(hot_match_list_timeout.value);
+	}
+	this.debounce_throttle_cancel();
+	useMittOn("match_list_show_mids_change", show_mids_change()).off();
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off();
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
+	// 站点 tab 休眠状态转激活
+	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
+	clearTimeout(this.virtual_list_timeout_id);
+	clearTimeout(this.switch_timer_id);
+	clearTimeout(get_match_list_timeid.value);
+	// 调用列表接口
+	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
+	match_list_card = {};
+	timer_obj.value = {};
+}
 
 onMounted(() => {
 	// 开启自动化测试功能
@@ -524,32 +547,7 @@ watch(MenuData.match_list_api_config.version, (cur) => {
 );
 
 onUnmounted(() => {
-	clearTimeout(this.axios_debounce_timer);
-	clearTimeout(axios_debounce_timer2.value);
-	clearInterval(check_match_last_update_timer_id.value);
-	for (let key in timer_obj.value) {
-		clearTimeout(timer_obj.value[key]);
-	}
-	//热门推荐定时器
-	if (hot_match_list_timeout.value) {
-		clearTimeout(hot_match_list_timeout.value);
-	}
-	this.debounce_throttle_cancel();
-	this.$root.$off("match_list_show_mids_change", show_mids_change());
-	this.destroyed = true;
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
-	// 站点 tab 休眠状态转激活
-	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
-	clearTimeout(this.virtual_list_timeout_id);
-	clearTimeout(this.switch_timer_id);
-	clearTimeout(get_match_list_timeid.value);
-	// 调用列表接口
-	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
-	match_list_card = {};
-	timer_obj.value = {};
+	handle_destroyed()
 });
 
 /**
@@ -557,6 +555,7 @@ onUnmounted(() => {
  */
 const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 	// console.warn('daya',data)
+	console.log('lockie_test_console', data, is_socket, cut);
 	let {
 		match_list_api_config,
 		menu_root,
@@ -585,6 +584,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		//  今日早盘   常规球种下的   常规球种下的 冠军
 		// 虚拟体育 单页 的  所有赛种
 		// 收藏
+		
 		mx_use_list_res(data, is_socket, cut, collect);
 	}
 };
@@ -607,7 +607,7 @@ const get_hot_match_list = (backend_run = false) => {
 			if (route.name == "details" && page_source != "details") {
 				return;
 			}
-			if (this.destroyed) {
+			if (handle_destroyed()) {
 				return;
 			}
 			show_refresh_mask.value = false;
@@ -660,124 +660,6 @@ const get_hot_match_list = (backend_run = false) => {
 		});
 };
 
-/***
- * @description 当接口状态为成功且有数据时 调用此方法
- */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = (match_list) => {
-	is_show_hot.value = false;
-	// 设置列表数据仓库
-	match_list_data.value.compute_match_list_all_data(
-		match_list,
-		backend_run,
-		true
-	);
-	// 计算赛事卡片
-	match_list_card.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-		match_list,
-		backend_run
-	);
-	// 设置收藏数量
-	// 只有预加载会穿 true
-	if (!collect) {
-		mx_collect_count();
-	}
-	if (!backend_run) {
-		if (!is_virtual || is_search) {
-			// 非虚拟体育——设置赛事列表选中赛事
-			if (
-				MenuData.is_guanjun() ||
-				MenuData.cur_menu_type.type_name == "winner_top"
-			) {
-				this.mx_autoset_active_match();
-			}
-			// 非详情页 切换右侧为列表第一场赛事
-			else if (route.name != "details") {
-				let first_match = match_list[0];
-				let params = {
-					media_type: "auto",
-					mid: first_match.mid,
-					tid: first_match.tid,
-					sportId: first_match.csid,
-				};
-				this.regular_events_set_match_details_params(cut, params);
-			}
-		}
-	} else {
-		// 更新可视区域赛事盘口数据
-		show_mids_change();
-	}
-	// 首次拉列表调用bymids 拉取所有赛事盘口数据
-	if (
-		this.vx_layout_list_type == "match" &&
-		["play", "hot"].includes(type_name) &&
-		!backend_run
-	) {
-		// 调用bymids接口
-		api_bymids({ is_first_load: true, inner_param: true });
-	}
-	load_data_state.value = "data";
-};
-/***
- * 当接口状态为异常状态时  调用此方法
- */
-const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
-	if (is_virtual && !is_search) {
-		// 右侧切换
-		MatchListDetailMiddleware.set_vsport_params({
-			csid: 0,
-			tid: 0,
-		});
-		// 用来计算拉取接口的次数
-		is_vr_numer.value++;
-		// 重复拉列表的次数小于5   3秒后再次拉接口
-		if (is_vr_numer.value < 5) {
-			this.virtual_list_timeout_id = setTimeout(
-				() => fetch_match_list(true),
-				3000
-			);
-		}
-		load_data_state.value = "empty";
-	}
-	// 非静默拉取时
-	else if (!backend_run) {
-		// load_data_state.value = "empty";
-		// 如果是滚球并且不是全部  把当前菜单数量设为0  并自动切换菜单
-		let match_list_api_config = MenuData.match_list_api_config;
-		if (
-			route.name == "home" &&
-			MenuData.menu_root == "1" &&
-			match_list_api_config.sports != "quanbu-gunqiu"
-		) {
-			let obj = {
-				menuId: (match_list_api_config.match_list || {}).params.euid,
-				count: 0,
-			};
-			MenuData.set_current_mi_0_and_change_menu();
-		} else if (
-			route.name == "home" &&
-			MenuData.menu_root != "500" &&
-			this.vx_layout_list_type !== "collect"
-		) {
-			get_hot_match_list();
-			//TODO
-		} else {
-			load_data_state.value = "empty";
-		}
-	} else {
-		load_data_state.value = "empty";
-		// 设置列表数据仓库
-		match_list_data.value.compute_match_list_all_data(
-			match_list,
-			backend_run,
-			true
-		);
-		// 计算赛事卡片
-		match_list_card.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-			match_list,
-			backend_run
-		);
-	}
-};
 /**
  * @Description 合并连续相同的联赛
  * @param {undefined} undefined
@@ -837,7 +719,7 @@ const api_bymids = (
 	callback
 ) => {
 	if (
-		((this.destroyed || MenuData.is_virtual_sport()) &&
+		((handle_destroyed() || MenuData.is_virtual_sport()) &&
 			route.name !== "search") ||
 		(this.$options.name !== "HotMatchList" &&
 			["details", "video"].includes(route.name))
@@ -941,7 +823,7 @@ const api_bymids = (
 				// 组件和路由不匹配
 				if (
 					(route.name == "details" && page_source != "details") ||
-					this.destroyed
+					handle_destroyed()
 				)
 					return;
 				//更新电竞右侧视频
@@ -1223,8 +1105,6 @@ const match_list_mx_fn = () => {
 		vx_pre_filter_select_obj,
 		vx_show_filter_popup,
 		match_tpl_component,
-		mx_use_list_res_when_code_200_and_list_length_gt_0,
-		mx_use_list_res_when_code_error_or_list_length_0,
 		merge_same_league,
 		on_go_top,
 		on_refresh,

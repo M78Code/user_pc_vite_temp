@@ -70,7 +70,12 @@ class MenuData {
     };
     // 中间 菜单的 点击之后的 列表请求 参数 配置
     this.match_list_api_config = {
-      match_list: {},
+      match_list: {
+        //lockie
+        params: {
+          euid: '3020101'
+        }
+      },
       bymids: {},
     };
 
