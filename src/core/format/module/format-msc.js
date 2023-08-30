@@ -2,9 +2,10 @@
  * @Description: H5 各球种比分处理
  */
 import { ref } from 'vue'
-import { i18n_t, MenuData, PageSourceData } from "src/core/index.js"
 
-console.log(MenuData)
+import { i18n_t } from  "src/boot/i18n.js";
+import MenuData from  "src/core/menu-h5/menu-data-class.js";
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 // TODO: 待替换菜单模块 store
 const get_current_menu = ref(MenuData.current_menu)
