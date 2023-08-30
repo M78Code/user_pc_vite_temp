@@ -223,7 +223,6 @@
 
 
   const store_state = store.getState()
-  const get_odds_change = ref(store_state.get_odds_change)
   const get_bet_status = ref(store_state.get_bet_status)
   const get_detail_data = ref(store_state.get_detail_data)
   const get_is_show_settle_tab = ref(store_state.get_is_show_settle_tab)
@@ -240,7 +239,6 @@
 
   const update_state = () => {
     const new_state = store.getState()
-    get_odds_change.value = new_state.get_odds_change
     get_bet_status.value = new_state.get_bet_status
     get_detail_data.value = new_state.get_detail_data
     get_is_show_settle_tab.value = new_state.get_is_show_settle_tab
@@ -472,7 +470,7 @@
                 need_bet_again.value = true
                 // 同步程序走完后再处理逻辑
                 $nextTick(() => {
-                  if (!get_odds_change.value) {
+                  if (!BetData.odds_change) {
                     set_bet_status(1);
                   }
                 })

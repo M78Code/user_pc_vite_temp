@@ -287,7 +287,7 @@ watch(() => get_order_ing.value.length, (new_, old_) => {
   }
 })
 
-watch(() => get_odds_change.value, (new_) => {
+watch(() => BetData.odds_change, (new_) => {
   if (new_) {
     set_bet_status(5);
     tips_msg = i18n_t('bet.msg08')

@@ -460,7 +460,7 @@ watch(() => BetData.bet_list.length, (newVal, oldVal) => {
 })
 //将赛事级别盘口状态映射为计算属性
 watch(() => bet_obj_mhs, (new_) => {
-  return this.value_show.mhs;
+  return BetData.value_show.mhs;
 })
 //监听盘口级别盘口状态（0:active 开盘, 1:suspended 封盘, 2:deactivated 关盘,11:锁盘状态）
 watch(() => bet_obj_hs, (new_) => {

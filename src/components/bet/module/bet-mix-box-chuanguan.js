@@ -162,7 +162,7 @@ const mix_bet = () => {
                         need_bet_again.value = true
                         // 同步程序走完后再处理逻辑
                         $nextTick(() => {
-                            if (!get_odds_change.value) {
+                            if (!BetData.odds_change) {
                                 BetData.set_bet_status(1);
                             }
                         })

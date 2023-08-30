@@ -42,9 +42,9 @@ export default defineComponent({
 
     onMounted(() => {
       // 通过投注项oid获取投注项id
-      this.id = BetData.get_id(props.oid);
-      this.play_id = BetData.get_play_id();
-      // console.log('this.play_id======', this.play_id);
+      id = BetData.get_id(props.oid);
+      play_id = BetData.get_play_id();
+      // console.log('play_id======', play_id);
       // 获取赛季
       season.value = BetData.get_season();
       let item_obj = props.item_obj;
@@ -69,12 +69,12 @@ export default defineComponent({
         // 投注项名称
         let playOptionName = _.trim(props.item_obj.playOptionName);
         //全场独赢不用分为两部分，直接过滤掉
-        if (props.item_obj.playOptionName && _.trim(playOptionName).includes(" ") && !['1', '17'].includes(this.play_id)) {
+        if (props.item_obj.playOptionName && _.trim(playOptionName).includes(" ") && !['1', '17'].includes(play_id)) {
           let spliter = playOptionName.lastIndexOf(' ');
-          this.part1 = playOptionName.substring(0, spliter);
-          this.part2 = playOptionName.substring(spliter, playOptionName.length + 1);
+          part1 = playOptionName.substring(0, spliter);
+          part2 = playOptionName.substring(spliter, playOptionName.length + 1);
         } else {
-          this.part1 = _.trim(playOptionName);
+          part1 = _.trim(playOptionName);
         }
       }
     })
@@ -112,10 +112,10 @@ export default defineComponent({
      */
     const icon_id = computed(() => {
       let icon_id_ = '';
-      if (this.id && this.id.includes(':')) {
-        icon_id_ = this.id.replace(/:/g, '_');
+      if (id && id.includes(':')) {
+        icon_id_ = id.replace(/:/g, '_');
       } else {
-        icon_id_ = this.id;
+        icon_id_ = id;
       }
       return icon_id_;
     })
@@ -133,10 +133,10 @@ export default defineComponent({
      * @return {undefined} 
      */
     const match_time = computed(() => {
-      let obj_bs = _.get(this.BetData.bet_obj, `${this.id}.bs`);
+      let obj_bs = _.get(BetData.bet_obj, `${id}.bs`);
       if (_.isPlainObject(obj_bs)) {
         let date, month, day, hour, minute;
-        if (this.match_type == 3 && obj_bs.med) { // 赛事结束时间
+        if (match_type == 3 && obj_bs.med) { // 赛事结束时间
           date = new Date(parseInt(obj_bs.med));
           // 获取显示月份
           month = format_str(date.getMonth() + 1);
@@ -158,7 +158,7 @@ export default defineComponent({
           minute = format_str(date.getMinutes());
         }
         // 中文简体或者繁体时显示时间格式
-        if (['zh', 'tw'].includes(this.lang)) {
+        if (['zh', 'tw'].includes(lang)) {
           return `${month}月${day}日 ${hour}:${minute}`;
         } else {
           // 非中文时显示时间格式

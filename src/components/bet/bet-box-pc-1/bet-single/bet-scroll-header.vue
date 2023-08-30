@@ -170,8 +170,6 @@ onMounted(() => {
 // BetData.bet_obj: "get_bet_obj",
 // // 是否合并
 // BetData.is_bet_merge: "get_is_bet_merge",
-// // 被预约的投注项id
-// BetData.bet_appoint_obj: "get_bet_appoint_obj",
 
 /**
  * @description:是否显示右边的单关或者复式串关按钮
