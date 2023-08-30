@@ -460,7 +460,6 @@
 
 
 <script setup name="match-container">
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { computed, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { useRouter, useRoute } from 'vue-router'
@@ -474,7 +473,8 @@ import match_overtime_pen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n_t} from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import {MenuData } from "src/core/index.js"
+import { MenuData } from "src/core/index.js"
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -562,7 +562,6 @@ const get_goto_detail_matchid = ref(store_state.get_goto_detail_matchid)
 const get_goto_detail_match_info = ref(store_state.get_goto_detail_match_info)
 const get_not_found_target_dom_count = ref(store_state.get_not_found_target_dom_count)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const GlobalAccessConfig = ref(GlobalAccessConfig.init())
 onMounted(() => {
   is_first_coming.value = true;
   //赛事切换时钟
@@ -1616,7 +1615,6 @@ const unsubscribe = store.subscribe(() => {
   get_goto_detail_match_info.value = new_state.get_goto_detail_match_info
   get_not_found_target_dom_count.value = new_state.get_not_found_target_dom_count
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  GlobalAccessConfig.value = GlobalAccessConfig.init()
 })
 
 onUnmounted(() => {
