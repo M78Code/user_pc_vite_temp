@@ -16,6 +16,7 @@ import{set_sticky_top}  from  "src/core/match-list-pc/match-card/module/sticky-t
 
 
 const PAGE_SOURCE_POOL_H5 =  [
+  "match",
   "details",
   "home",
   "hot-chosen",
