@@ -45,27 +45,27 @@ class UserCtr {
     // getUserInfo 原始数据备份 备份数据
     this.getuserinfo_res_backup = null;
     // uid
-    this.uid = ref("");
+    this.uid = "";
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
 
     // 用户详情
     this.user_info = {};
     // 登录用户的id
-    this.user_logined_id = ref("");
+    this.user_logined_id = "";
     // 用户是否长时间未操作
-    this.is_user_no_handle = ref(false);
+    this.is_user_no_handle = false;
     // 用户令牌信息
-    this.user_token = ref("");
+    this.user_token = "";
     // 用户信息数据
-    this.user_info_data = ref("");
+    this.user_info_data = "";
 
     // 用户语言
-    this.lang = ref(langReducer.lang);
-    // 用户主题  日间版本 ，夜间版本 
-    this.theme = ref(themeReducer.theme);
-     
-    // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关 
+    this.lang = langReducer.lang;
+    // 用户主题  日间版本 ，夜间版本
+    this.theme = themeReducer.theme;
+
+    // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds= {
       // 上次赔率
       pre_odds: "EU",
@@ -78,7 +78,7 @@ class UserCtr {
     this.balance = 0;
     //  用户余额是否展示状态
     this.show_balance = false;
-    
+
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录
@@ -112,10 +112,10 @@ class UserCtr {
     // loadLanguageAsync(lang);//加载语言
   }
   set_cur_odds(odd){
-   this.odds.cur_odds =odd 
+   this.odds.cur_odds =odd
   }
   set_pre_odds(odd){
-    this.odds.pre_odds =odd 
+    this.odds.pre_odds =odd
    }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId

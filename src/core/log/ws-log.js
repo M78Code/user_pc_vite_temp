@@ -6,7 +6,6 @@
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "src/core/format/index.js";
 import { SessionStorage  } from "src/core/utils/module/web-storage.js";
-debugger
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
