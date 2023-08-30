@@ -111,7 +111,7 @@ const tab_click = ([tab, type]) => {
     } else if (tab.component == 'article-main') {
       eventLabel = 'H5_情报分析_资讯'
     }
-    this.$utils.zhuge_event_send(eventLabel, this.userCtr);
+    this.$utils.zhuge_event_send(eventLabel, this.UserCtr);
   }
 }
 

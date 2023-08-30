@@ -262,7 +262,7 @@ import { useRoute, useRouter } from "vue-router"
     get_list();
     get_lang_v3()
 
-  watch(() => userCtr.user_info.balance, () => {
+  watch(() => UserCtr.user_info.balance, () => {
     handler= 'format_balance'
   })
   watch(() => uid, () => {
@@ -316,7 +316,7 @@ import { useRoute, useRouter } from "vue-router"
     */
   const confirm = (val) => {
     if (!val.imgUrl) return
-    if (val.comfirmTxt && userCtr.user_info.activityList) {
+    if (val.comfirmTxt && UserCtr.user_info.activityList) {
       // 设置跳转活动的确认信息
       set_activity_msg(val)
     } else {
@@ -333,7 +333,7 @@ import { useRoute, useRouter } from "vue-router"
             set_details_item(0);
             router.push({ name: 'category', params: { mid, csid } });
           }
-        } else if (val.hostUrl == 'act' && userCtr.user_info.activityList) {
+        } else if (val.hostUrl == 'act' && UserCtr.user_info.activityList) {
           router.push({ name: 'activity_task', query: { rdm: new Date().getTime() } })
         } else if (val.hostUrl.startsWith('hot') && !get_golistpage) {
           let tid = val.hostUrl.split('/')[1]
@@ -626,10 +626,10 @@ import { useRoute, useRouter } from "vue-router"
     let _obj = {
       [objKey.eventLabel]: "",
       [objKey.clickTime]: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-      [objKey.userName]: lodash.get(userCtr, 'user_info.userName'),
-      [objKey.userId]: lodash.get(userCtr, 'user_info.userId'),
-      [objKey.merchantId]: lodash.get(userCtr, 'user_info.mId'),
-      [objKey.languageVersion]: lodash.get(userCtr, 'user_info.languageName'),
+      [objKey.userName]: lodash.get(UserCtr, 'user_info.userName'),
+      [objKey.userId]: lodash.get(UserCtr, 'user_info.userId'),
+      [objKey.merchantId]: lodash.get(UserCtr, 'user_info.mId'),
+      [objKey.languageVersion]: lodash.get(UserCtr, 'user_info.languageName'),
       [objKey.terminal]: "H5",
     };
     //====================menu router
@@ -658,14 +658,14 @@ import { useRoute, useRouter } from "vue-router"
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.user_token
+          token: UserCtr.user_token
         }
       },
       7:{//H5_首页_电子竞技
         name: 'matchList',
         query: {
           m: mi,
-          token: userCtr.user_token
+          token: UserCtr.user_token
         }
       }
     }
@@ -696,7 +696,7 @@ import { useRoute, useRouter } from "vue-router"
         query: {
           m: new_menu[menu_index].mi,
           s: index,
-          token: userCtr.user_token
+          token: UserCtr.user_token
         }
       });
     }else{
@@ -717,8 +717,8 @@ import { useRoute, useRouter } from "vue-router"
     // 计算左边菜单按钮是否展示
   const calc_show2 = (item) => {
     if(item?.mi){
-      if( item.mi == 7) return lodash.get(userCtr, 'user_info.openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
-      if( item.mi == 8) return lodash.get(userCtr, 'user_info.openVrSport') // VRtob后台关闭隐藏
+      if( item.mi == 7) return lodash.get(UserCtr, 'user_info.openEsport') && lodash.get(item, 'sl').length > 0 // 电竞tob后台关闭隐藏
+      if( item.mi == 8) return lodash.get(UserCtr, 'user_info.openVrSport') // VRtob后台关闭隐藏
       return true
     }
   }
@@ -727,7 +727,7 @@ import { useRoute, useRouter } from "vue-router"
    * @return {}
    */
   const get_banner_url = () => {
-    let url = userCtr.get_banner_url_first_page()
+    let url = UserCtr.get_banner_url_first_page()
     if (url) {
       banner_bg = get_file_path(url)
     } else {

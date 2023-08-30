@@ -17,7 +17,7 @@ export default {
     chattroom_url() {
       const {
         oss = {}
-      } = (userCtr.user_info || {});
+      } = (UserCtr.user_info || {});
       const {
         chatroomUrl
       } = (oss || {});

@@ -661,7 +661,7 @@ const exit_browser_full_screen = () => {
   }
 }
 // 精彩回播配置信息
-watch(() => userCtr.user_info.merchantEventSwitchVO, (res) => {
+watch(() => UserCtr.user_info.merchantEventSwitchVO, (res) => {
   // handler = (res) => {
   // tab按钮开关
   // TODO:  国际化后续修改调整
@@ -747,7 +747,7 @@ const slider_events_list = computed(() => {
 // 鉴权域名 + 回放视频url（拼接后的最终url）
 const replay_video_src = computed(() => {
   // TODO:    get_lang 后续修改调整
-  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(userCtr, 'user_info.oss.live_h5')
+  const host_url = window.BUILDIN_CONFIG.live_domains[0] || lodash.get(UserCtr, 'user_info.oss.live_h5')
   return `${host_url}/videoReplay.html?src=${replay_url.value}&lang=${get_lang}&volume=${is_user_voice ? 1 : 0}`
 })
 // slider列表长度是否小于屏幕横屏宽度

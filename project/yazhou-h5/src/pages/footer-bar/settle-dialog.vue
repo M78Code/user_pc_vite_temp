@@ -58,12 +58,12 @@ src/boot/i18n.js;
   let unsettleChild = ref(null)
   let store_data = ref(store.getState())
   // computed: {
-  //   ...mapGetters(['get_main_item',,'userCtr']),
+  //   ...mapGetters(['get_main_item',,'UserCtr']),
 
   // },
   //判断该商户是否有权限预约投注
   // const authorityFlag = computed(() => {
-  //     const bookBet = lodash.get(userCtr, 'user_info.configVO.bookBet')
+  //     const bookBet = lodash.get(UserCtr, 'user_info.configVO.bookBet')
   //     return bookBet == 1
   // })
 

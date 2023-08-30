@@ -75,7 +75,7 @@ export default defineComponent({
       return ""
     });
     // TODO:待修改
-    const userCtr = computed(() => {
+    const UserCtr = computed(() => {
       return ""
     });
     const match_id = computed(() => {
@@ -135,7 +135,7 @@ export default defineComponent({
         "玩法集ID": item.id,
         "球种名称": $utils.csid_to_sport_name(get_detail_data.csid)
       }
-      $utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', userCtr,zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_详情页/大屏_玩法分类导航_点击', UserCtr,zhuge_obj);
     };
     /**
      * @Description 获取当前选中详情玩法集

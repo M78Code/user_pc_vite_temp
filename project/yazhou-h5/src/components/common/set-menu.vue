@@ -25,9 +25,9 @@
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
-          <div class="user-name">Hi,{{userCtr.user_info.userName}}</div>
+          <div class="user-name">Hi,{{UserCtr.user_info.userName}}</div>
           <div class="balance-wrap">
-            <div class="balance yb_mr4" @click="get_balance">{{format_money2(userCtr.user_info.balance)}}</div>
+            <div class="balance yb_mr4" @click="get_balance">{{format_money2(UserCtr.user_info.balance)}}</div>
             <div class="refesh" :class="{rotate:is_loading_balance}" @click="get_balance"></div>
           </div>
         </div>
@@ -175,7 +175,7 @@ import { useRoute, useRouter } from "vue-router"
       }
       let obj2 = {}
       try {
-        let lang_str = userCtr.user_info.languageList
+        let lang_str = UserCtr.user_info.languageList
         if (lang_str) {
           let lang_arr = lang_str.split(',')
           Object.keys(obj).forEach(item => {
@@ -264,7 +264,7 @@ import { useRoute, useRouter } from "vue-router"
         is_show_lang = false;
 
         // 更新网站title
-        const web_site_title = userCtr.get_web_title(key)
+        const web_site_title = UserCtr.get_web_title(key)
         document.title = web_site_title
       }).catch((err)=>{
         $toast(t('pre_record.cancle_fail_tips'), 2000);
@@ -334,7 +334,7 @@ import { useRoute, useRouter } from "vue-router"
       let zhuge_obj = {
         "版本类型": edition == 1 ? '简易' : '标准',
       }
-      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', userCtr.user_info, zhuge_obj);
+      $utils.zhuge_event_send('TY_H5_菜单_版本_点击', UserCtr.user_info, zhuge_obj);
     }
     /**
      * @description 获取用户余额

@@ -1,8 +1,8 @@
 import { isDate } from "lodash";
-import { t } from "src/core/index.js"
+import { i18n_t } from "src/core/index.js"
 import ServerTime from  "src/core/server-time/server-time.js"
- 
- 
+
+
 export const format_Y_M_D_H_M = function (payload) {
   if (!payload) return "";
   let time = new Date(parseInt(payload));
@@ -50,8 +50,8 @@ export const format_M_D = function (payload, that) {
   let m = time.getMonth();
   let d = time.getDate() + "";
   // TODO: time.monthes  国际化不是字符串无法读取[] ----> "[]"
-  let monthes = JSON.parse(t("time.monthes"));
-  let format = t("time.time_date_1");
+  let monthes = JSON.parse(i18n_t("time.monthes"));
+  let format = i18n_t("time.time_date_1");
   format = format.replace("%date", d);
   format = format.replace("%month", monthes[m]);
   return format;
@@ -281,7 +281,7 @@ export const formatTime = (timestamp, fmt) => {
     return fmt;
   } catch (error) {}
 };
- 
+
 export const format_date_by_manage = (value) => {
   let time = new Date(parseInt(value));
   let y = time.getFullYear();
@@ -507,7 +507,7 @@ export const formatDate = (date) => {
   return _date;
 }
 
- 
+
 
 /**
  * 获取与服务器的修正时间

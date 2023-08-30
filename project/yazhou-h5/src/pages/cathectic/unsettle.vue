@@ -57,7 +57,6 @@ import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 import store from 'src/store-redux/index.js'
-console.error(UserCtr);
     // mixins: [skt_order]
 
     let store_data = ref(store.getState())
@@ -89,7 +88,7 @@ console.error(UserCtr);
   let timer_1 = ref(null)
   let timer_2 = ref(null)
   // computed: {
-  //   ...mapGetters(['userCtr', 'get_main_item'])
+  //   ...mapGetters(['UserCtr', 'get_main_item'])
   // },
 
   /**
@@ -198,7 +197,7 @@ console.error(UserCtr);
       searchAfter: last_record.value || undefined,
       orderStatus: 0,
     }
-    is_loading = !flag
+    is_loading.value = !flag
     //请求注单记录接口
     get_order_list(params)
 
@@ -225,7 +224,7 @@ console.error(UserCtr);
         is_hasnext.value = hasNext
         // record为空时
         if (lodash.isEmpty(record)) {
-          is_loading = false;
+          is_loading.value = false;
           no_data.value = false;
           return;
         }
@@ -234,7 +233,7 @@ console.error(UserCtr);
           item.open = true
           size += item.data.length
         }
-        last_record = lodash.findLastKey(record);
+        last_record.value = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1)
         // console.error(record);

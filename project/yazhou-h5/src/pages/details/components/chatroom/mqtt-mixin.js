@@ -105,7 +105,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.userCtr
+            } = this.UserCtr
             if (userId == msgUserId) {
               this.set_user_mute_info(data);
               this.setBanUserTimer(data);
@@ -118,7 +118,7 @@ export default {
             } = data;
             const {
               userId
-            } = this.userCtr
+            } = this.UserCtr
             if (userId == msgUserId) {
               this.set_user_mute_info(null);
             }

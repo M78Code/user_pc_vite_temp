@@ -7,7 +7,7 @@
         <!-- 加载中 -->
         <SRecord v-if="is_loading" />
         <scroll ref="myScroll" :on-pull="onPull" v-else>
-            <div class="filter-button" v-if="userCtr.user_info.settleSwitch == 1">
+            <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
                 <!-- 已失效按钮 -->
                 <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{ 'select': selected_expired }">
                     {{ t('pre_record.expired') }}

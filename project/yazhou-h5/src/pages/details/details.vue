@@ -366,7 +366,7 @@ export default defineComponent({
       () => data.viewTab,
       () => {
         // #TODO $utils
-        // $utils.zhuge_event_send('H5_情报分析', data.userCtr);
+        // $utils.zhuge_event_send('H5_情报分析', data.UserCtr);
       }
     );
     // 赛事分析三级服务开关开启后，视图切换到投注tab

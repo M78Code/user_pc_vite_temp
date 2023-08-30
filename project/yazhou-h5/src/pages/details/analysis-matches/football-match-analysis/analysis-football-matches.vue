@@ -83,9 +83,9 @@ let {  userInfoReducer } = store.getState()
       })
     })
     watch(() => get_event_list, (event_list) => {
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 userCtr  get_event_list
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 UserCtr  get_event_list
       const highlights_component = tabList.value.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabList.value.unshift(
             {
@@ -142,9 +142,9 @@ let {  userInfoReducer } = store.getState()
           }
         )
       }
-      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list userCtr 后续修改调整
+      // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list UserCtr 后续修改调整
       const highlights_component = tabs.find(item => item.component === 'highlights')
-      const { configValue, eventSwitch } = lodash.get(userCtr, 'user_info.merchantEventSwitchVO', {})
+      const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
       if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
         tabs.unshift(
             {
@@ -158,7 +158,7 @@ let {  userInfoReducer } = store.getState()
     const close_analysis = () => {
       useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
-    // 点击一级tab 菜单切换 // TODO: $utils userCtr 后续修改调整
+    // 点击一级tab 菜单切换 // TODO: $utils UserCtr 后续修改调整
     const tab_click = ([tab, type]) => {
       console.error(tab.component, type);
       switch(tab.component) {
@@ -202,7 +202,7 @@ let {  userInfoReducer } = store.getState()
         } else if (tab.component == 'article-main') {
           eventLabel = 'H5_情报分析_资讯'
         }
-        zhuge.send_zhuge_event(eventLabel, userCtr.user_info);
+        zhuge.send_zhuge_event(eventLabel, UserCtr.user_info);
       }
     }
   // TODO: 后续修改调整
@@ -214,7 +214,7 @@ let {  userInfoReducer } = store.getState()
   //     // 赛事id
   //     'get_goto_detail_matchid',
   //     // 用户信息
-//     "userCtr",
+//     "UserCtr",
   //     'get_analyze_show',
   //     'get_lang',
   //     'get_event_list',

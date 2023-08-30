@@ -146,7 +146,7 @@ export default defineComponent({
         return ''
       }
 
-      const {banTime = 0, banType = 1} = userCtr_mute_info
+      const {banTime = 0, banType = 1} = UserCtr_mute_info
 
       // 禁言时间-提示映射
       const time_map = {
