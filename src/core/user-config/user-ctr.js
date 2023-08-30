@@ -89,7 +89,8 @@ class UserCtr {
       // 详细信息
       list: []
     }
-
+    // 用户信息版本
+    this.user_version = ref('0')
   }
   /**
    * 用户 id
@@ -135,7 +136,7 @@ class UserCtr {
     return this.user_token;
   }
   get_user_info_data() {
-    return this.user_info_data;
+    return this.user_info;
   }
   set_user_info(user_obj) {
     if (!user_obj) {
@@ -173,6 +174,7 @@ class UserCtr {
     console.log("obj", obj);
     this.set_user_token(token);
     this.set_user_info(obj);
+    this.user_version.value = Date.now()
   }
 
   // 获取用户余额

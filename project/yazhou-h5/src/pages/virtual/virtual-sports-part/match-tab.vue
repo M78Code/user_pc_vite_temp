@@ -22,7 +22,7 @@
 </template>
 
 <script>
-// #TODO VUEX 
+// #TODO VUEX
 // import { mapGetters, mapMutations } from "vuex"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {utils } from 'src/core/index.js';
@@ -50,7 +50,7 @@ export default defineComponent({
     is_basket_ball_next_no:Number,
     before_match_tab_trend:Number,
   },
-  
+
   setup(props, evnet) {
     const data = reactive({
       // 事件集合
@@ -65,7 +65,7 @@ export default defineComponent({
       pre_to_playing:false,
       timer1_: null,
     })
-    // #TODO VUEX COMPUTED 
+    // #TODO VUEX COMPUTED
     // computed: {
     // ...mapGetters({
     //   sub_menu_type: 'get_curr_sub_menu_type',
@@ -77,11 +77,11 @@ export default defineComponent({
       return current_league ? current_league.field3 : ''
     })
     onMounted(() => {
-      // #TODO EMIT 
+      // #TODO EMIT
       emitters = [
-        useMittOn.on(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED, basket_ball_time_handle).off,
-        useMittOn.on(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
-        useMittOn.on(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
+        useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED, basket_ball_time_handle).off,
+        useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL, end_playing_basketball_handle).off,
+        useMittOn(MITT_TYPES.EMIT_INGAME_RESULT_SHOW_END, ingame_result_show_end).off,
       ]
       // useMittOn(MITT_TYPES.EMIT_BASKETBALL_TIME_ARRIVED,basket_ball_time_handle);
       // useMittOn(MITT_TYPES.EMIT_FORCE_END_PLAYING_BASKETBALL,end_playing_basketball_handle);
@@ -170,7 +170,7 @@ export default defineComponent({
       }
     );
 
-    // #TODO VUEX ACTIONS 
+    // #TODO VUEX ACTIONS
     // ...mapMutations(['set_current_mid','set_detail_data']),
     /**
      * 篮球倒计时到达
@@ -179,7 +179,7 @@ export default defineComponent({
      */
     const basket_ball_time_handle = () => {
       if(current_batch.mmp == 'INGAME'){
-        // #TODO EMIT 
+        // #TODO EMIT
         // $emit('time_ended','is_basketball_playing');
       }
       else if(current_batch.mmp == 'PREGAME'){
@@ -189,7 +189,7 @@ export default defineComponent({
           pre_to_playing = true;
         }else{
           timer1_ = setTimeout(() => {
-            // #TODO EMIT 
+            // #TODO EMIT
             // $emit('update_next_batch_match');
           },8000);
         }
@@ -210,7 +210,7 @@ export default defineComponent({
       utils.tab_move2(sub_nav_focus_i, $refs.scrollBox)
       let current_sub_nav = no_list[sub_nav_focus_i];
 
-      // #TODO EMIT 
+      // #TODO EMIT
       // $emit('sub_nav_change',{
       //   nav:current_sub_nav,
       //   i:sub_nav_focus_i
@@ -240,7 +240,7 @@ export default defineComponent({
       if(!no_list || !no_list.length) return;
       set_i_by_batch_no();
       let selected = no_list[sub_nav_focus_i];
-      // #TODO EMIT 
+      // #TODO EMIT
       // $emit('sub_nav_change', {
       //   nav:selected,
       //   i:sub_nav_focus_i
@@ -265,7 +265,7 @@ export default defineComponent({
      */
     const trend_event = () => {
       trend_is_show = !trend_is_show
-      // #TODO EMIT 
+      // #TODO EMIT
       // $emit('trend_event_change', !trend_is_show)
     };
     /**
@@ -346,11 +346,11 @@ export default defineComponent({
   padding-right: 0.2rem;
   padding-left: 0.08rem;
   flex-wrap: nowrap;
-  
+
   &.part-nav-full {
     width: 3.25rem;
   }
-  
+
   &:after {
     content: ' ';
     display: block;

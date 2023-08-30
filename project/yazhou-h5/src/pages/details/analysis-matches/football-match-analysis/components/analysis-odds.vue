@@ -116,7 +116,7 @@ import { t } from "src/boot/i18n.js";;
     let is_done = ref(false)
 
     // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).on
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
     get_list()
 

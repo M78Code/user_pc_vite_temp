@@ -49,7 +49,7 @@ let get_detail_data = ref({
     let get_lang = ref('zh')
     let get_current_menu = ref('')
   onMounted(() => {
-    // useMittOn(MITT_TYPES.EMIT_EVENT_DATA, change_show_tab).on
+    // useMittOn(MITT_TYPES.EMIT_EVENT_DATA, change_show_tab)
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
     nextTick(()=> {
       let i = 0

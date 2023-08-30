@@ -26,7 +26,7 @@
                     <div class="menu-collapse-btn btn-collapse" @click="handle_menu_collapse">
                         <q-tooltip anchor="top middle" self="center middle"
                             :content-style="tooltip_style + ';transform:translateY(40px)'">{{
-                                t('common.menu_collapsed',
+                                i18n_t('common.menu_collapsed',
                                     ['&nbsp;']) }}</q-tooltip>
                     </div>
                 </template>
@@ -91,6 +91,7 @@ import zhugeTag from "src/core/http/zhuge-tag.js"
 import { SessionStorage, utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_money2 } from "src/core/format/index.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 
 /** api */
@@ -258,7 +259,7 @@ function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
     if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"))
     }
     // 电竞
     if (menu.id == 5) {

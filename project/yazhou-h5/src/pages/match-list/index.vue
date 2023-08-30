@@ -24,7 +24,7 @@
       <!-- 列表骨架屏 -->
       <SList v-if="show_skeleton_screen" :loading_body="true"/>
       <!-- 列表页主内容 -->
-      <MatchListComponents
+      <match-list
         ref="match_list"
         :matchCtr="matchCtr"
         :menu_type="MenuData.current_menu"
@@ -35,7 +35,7 @@
         @unfold_changed="unfold_changed_handle"
         @change_favorite_state="change_favorite_state">
         <!--        @unfold_league="unfold_league_handle"-->
-      </MatchListComponents>
+      </match-list>
       <!-- 到底了容器原加载更多容器-->
       <!-- <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
@@ -121,11 +121,11 @@ import {utils } from 'src/core/index.js'
 // import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
-import MatchCtr from "src/core/match-list-h5/match-class/match-ctr.js";  
+import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";  
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";  
 import MatchPage from 'src/core/match-list-h5/match-class/match-page.js'
 import {MenuData } from "src/core/index.js"
-import MatchListComponents from "./components/match-list.vue"; 
+import matchList from "./components/match-list.vue"; 
 
 const props = defineProps({
   invok_source: String,
@@ -150,7 +150,7 @@ const requesting_timeout = ref(null)
 // 赛事列表无数据
 const match_is_empty = ref(false)
 // 赛事操作工具类
-const matchCtr = ref(null)
+const matchCtr = ref(MatchCtrClass)
 // 赛事列表接口请求中提示
 const is_data_requesting = ref(true)
 //窗口向上滚动距离
@@ -203,7 +203,6 @@ onMounted(() => {
     ws_invoke_key.value = props.invok_source;
   }
   // 初始化赛事列表操作工具类
-  matchCtr.value = MatchCtr;
   standard_edition_type.value = get_newer_standard_edition;
   if(get_newer_standard_edition == 2){
     newer_standard_changing.value = true;
@@ -345,6 +344,7 @@ watch(() => get_show_match_filter, () => {
   // store.dispatch({ type: 'matchReducer/set_collapse_csid_map',  payload: {} })
 })
 
+
 // 筛选过滤弹层消失
 watch(() => matchCtr.value, (match_list) => {
   // 进入列表后，若preload_animation_url为未缓存状态，则执行动画资源预加载逻辑
@@ -463,7 +463,7 @@ const match_detail_m_list_init = () => {
   // } else if([1,3,30,100].includes(MenuData.current_menu)){
   //   MatchPage.get_match_data_list()
   // }
-  MatchPage.get_match_data_list()
+  console.log(MatchPage.get_match_data_list())
 }
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();

@@ -10,24 +10,24 @@
         <!-- <icon class="close" name="icon-close" @click="close_alert" size="10px" color="#99A3B1"></icon> -->
 
         <div class="row items-center  relative-position">
-          <div class="text">{{ t("login.login_out_dear_user") }}</div>
+          <div class="text">{{ i18n_t("login.login_out_dear_user") }}</div>
           <!-- 域名错误弹窗 -->
           <template v-if="is_domain_error">
             <div class="page-lost">
               <img src="app/public/yazhou-pc/image/common/png/page_lost.png" alt="">
-              <div class="text1">{{ t('common.user_api_limited1') }}</div>
-              <div class="text2">{{ t('common.user_api_limited2') }}</div>
+              <div class="text1">{{ i18n_t('common.user_api_limited1') }}</div>
+              <div class="text2">{{ i18n_t('common.user_api_limited2') }}</div>
             </div>
-            <div class="btn" @click="refresh">{{ t("common.refresh") }}</div>
+            <div class="btn" @click="refresh">{{ i18n_t("common.refresh") }}</div>
           </template>
           <!-- 正确弹窗 -->
           <template v-else>
             <ul class="text-left  relative-position">
-              <li>{{ t("login.login_out_text1") }}</li>
-              <li>{{ t("login.login_out_text2") }}</li>
-              <li>{{ t("login.login_out_text3") }}</li>
+              <li>{{ i18n_t("login.login_out_text1") }}</li>
+              <li>{{ i18n_t("login.login_out_text2") }}</li>
+              <li>{{ i18n_t("login.login_out_text3") }}</li>
             </ul>
-            <div class="btn" @click="confirm">{{ t("login.logout_alert_close") }}</div>
+            <div class="btn" @click="confirm">{{ i18n_t("login.logout_alert_close") }}</div>
           </template>
         </div>
       </div>
@@ -37,7 +37,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/core/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
 
@@ -133,7 +133,7 @@ function show_alert(data) {
   if (text.value == "" || is_show.value) return;
   is_show.value = true;
 
-  btn_text.value = data.btn_text || t('common.confirm')
+  btn_text.value = data.btn_text || i18n_t('common.confirm')
   // 弹框时,关闭视频播放窗口
   useMittEmit(MITT_TYPES.EMIT_VIDEO_ZONE_EVENT_CMD, { cmd: "colse" })
 }

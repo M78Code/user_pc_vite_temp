@@ -8,17 +8,17 @@
     <scroll-wrapper ref="scroll_wrapper" :matchCtr="matchCtr" :data_source="matchCtr.list" :class="{'data-get-empty':data_get_empty}"
       v-if="matchCtr" :main_source="source" :is_goto_top_random="is_goto_top_random"
       :match_list_wrapper_height="match_list_wrapper_height">
-      <template v-slot="{ item: match_item, index:i}">
+      <template v-slot="{ match_item, index}">
         <!--虚拟体育(赛果)-->
         <v-match-container :match="match_item"
-          :i_list="i"
+          :i_list="index"
           :match_list="matchCtr.list"
           :sport_id="match_item.sportId"
           v-if="[1001,1002,1004,1011,1010,1009].includes(+match_item.sportId)">
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
-          <!-- <match_container_result
+          <match_container_result
             v-if="menu_type ==28 && 100 == get_curr_sub_menu_type"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
@@ -28,14 +28,14 @@
             @unfold_changed="unfold_changed_handle"
             @toggle_collect_league="toggle_collect"
             @toggle_collect_match="toggle_collect"
-          /> -->
+          />
           <!--真实体育玩法 -->
           <match-container
             v-if="(lodash.get(get_current_menu, 'main.menuType') == 28 ||
             !is_champion && match_item.ms != 3 ) && !(menu_type ==28 && 100 == get_curr_sub_menu_type)"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
-            :i="i"
+            :i="index"
             :menu_type="menu_type"
             :main_source="source"
             @unfold_changed="unfold_changed_handle"
@@ -43,15 +43,15 @@
             @toggle_collect_match="toggle_collect">
           </match-container>
           <!--冠军玩法-->
-          <!-- <match_container_champion
+          <match_container_champion
             :match_of_list="match_item"
             :matchCtr="matchCtr"
-            :i="i"
+            :i="index"
             :menu_type="menu_type"
-            :key="i"
+            :key="index"
             @toggle_collect_league="toggle_collect"
             v-if="is_champion">
-          </match_container_champion> -->
+          </match_container_champion>
         </div>
       </template>
     </scroll-wrapper>
@@ -110,14 +110,15 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import {utils } from 'src/core/index.js'
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import match_container from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
+import matchContainer from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
 import v_match_container from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
 // import match_container_champion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
 // import match_container_result from "./match-container-result.vue" // 赛果冠军
-import scroll_wrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
+import scrollWrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import {MenuData } from "src/core/index.js"
+import { MenuData } from "src/core/index.js"
+import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
  
 const props = defineProps({
   // 赛事列表无数据
@@ -172,7 +173,6 @@ const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 
 onMounted(() => {
-  GlobalAccessConfig.init()
   timer_super12.value = null;
 })
 

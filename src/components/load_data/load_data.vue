@@ -121,7 +121,8 @@
 
 <script>
 import { NoDataWapper as noData } from "src/components/common/no-data";
-// import { mapGetters,mapActions } from "vuex";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 export default {
   name: "loadData",
 

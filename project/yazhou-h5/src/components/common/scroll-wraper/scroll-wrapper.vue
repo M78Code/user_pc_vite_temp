@@ -15,7 +15,8 @@
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template
             当要v-for与v-if同时使用在一个dom上时,可以使用template
       -->
-      <template v-for="(scrollItem, index) of data_source">
+      <template v-for="(scrollItem, index) of data_list">
+        {{ scrollItem }}
         <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
           :class="{ static: is_static_item, last: index == data_source.length - 1 }" :style="{
             transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
@@ -35,8 +36,7 @@
             </span>
           </div>
           <div class="s-w-i-inner">
-            {{ scrollItem }}
-            <slot :item="scrollItem" :index="index"></slot>
+            <!-- <slot :match_item="scrollItem" :index="index"></slot> -->
           </div>
         </div>
       </template>
@@ -45,11 +45,12 @@
 </template>
 
 <script setup>
-// import {mapGetters,mapMutations} from 'vuex';
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue' 
 import lodash from 'lodash'
-import UserCtr from "src/core/user-config/user-ctr.js";;
-
-
+import store from "src/store-redux/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
+import MenuData from  "src/core/menu-h5/menu-data-class.js";
 
 // 避免定时器每次滚动总是触发
 let is_on_check_time_out = false;
@@ -62,6 +63,7 @@ const props = defineProps({
   matchCtr: Object,
 })
 
+const store_state = store.getState();
 // 调试信息
 let test = ref('')
 let prev_frame_time = ref(0)
@@ -73,12 +75,19 @@ let target_scroll_obj = ref(null)
 let scroll_frame_timer = ref(0)
 let scroll_frame_timer_2 = ref(0)
 
+const get_menu_type = ref(MenuData.get_menu_type())
+const get_current_menu = ref(MenuData.current_menu)
+const get_curr_sub_menu_type = ref(MenuData.current_lv_2_menu.type)
+
+const data_list = ref([])
+
 onMounted(() => {
-  console.log(11111111)
-  console.log(props.data_source)
-  test = sessionStorage.getItem('wsl') == '9999';
+  setTimeout(() => {
+    data_list.value = props.matchCtr.list
+  }, 1000)
+  test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
-  if (main_source !== 'detail_match_list') {
+  if (props.main_source !== 'detail_match_list') {
     list_wrap_height = 8;
   }
 })
@@ -87,7 +96,7 @@ onMounted(() => {
 //   'set_list_scroll_direction',
 // ]),
 const get_index_f_data_source = (mid) => {
-  return lodash.findIndex(matchCtr.match_list_data_sources, { mid });
+  return lodash.findIndex(props.matchCtr.match_list_data_sources, { mid });
 }
 /**
  * 滚动是否到达底部(非节流)
@@ -112,7 +121,7 @@ const get_to_bottom_space_syn = () => {
  * @return {Undefined} Undefined
  */
 const window_scrolling = () => {
-  let splited = get_list_scroll_top.split('-');
+  let splited = store_state.matchReducer.list_scroll_top.split('-');
   target_scroll_obj = {
     scroll_y: +splited[0],
     client_height: +splited[1],
@@ -152,7 +161,7 @@ const window_scrolling = () => {
  */
 const get_is_show_footer_animate = () => {
   let scroll_top = null;
-  scroll_top = get_list_scroll_top.split('-')[0]
+  scroll_top = store_state.matchReducer.list_scroll_top.split('-')[0]
   let scroll_dir = scroll_top - prev_frame_poi;
   if (scroll_dir > 0) {
     scroll_dir = 1;
@@ -176,40 +185,36 @@ const goto_top = () => {
 // 计算每个赛事id 对应的 容器高度 top 值
 const get_match_top_by_mid = (mid) => {
   let r = 0;
-  if (mid in get_match_top_map_dict) {
-    r = get_match_top_map_dict[mid];
+  if (mid in store_state.matchReducer.match_top_map_dict) {
+    r = store_state.matchReducer.match_top_map_dict[mid];
     r = +r.toFixed(6);
   }
   return r;
 }
 
-watch(() => get_list_scroll_top, (top) => {
+watch(() => store_state.matchReducer.list_scroll_top, (top) => {
   window_scrolling();
 })
-watch(() => is_goto_top_random, () => {
+watch(() => props.is_goto_top_random, () => {
   //回到顶部
   goto_top();
 })
 // ...mapGetters([
-//   'get_match_top_map_dict',
 //   'get_newer_standard_edition',
-//   'get_menu_type',
-//   'get_curr_sub_menu_type',
-//   'get_list_scroll_top',
+//   'store_state.matchReducer.list_scroll_top',
 //   'get_secondary_unfold_map',
 //   'get_hide_skeleton_screen',
-//   'get_current_menu',
 // ]),
 // 设置是否快速滚动显示骨架屏背景
 const set_ishigh_scrolling = computed(() => {
   // 滚动过程中，是否显示  骨架屏背景图片
   let flag = false;
-  if (["home_hot_page_schedule"].includes(main_source) || data_source.length <= 0) {
+  if (["home_hot_page_schedule"].includes(props.main_source) || (props.data_source && props.data_source.length <= 0)) {
     flag = false;
   } else {
     flag = get_to_bottom_space > 350 && !is_champion
     // 一般热门推荐赛事长度为4，详情页内需过滤掉
-    if (main_source !== 'detail_match_list' && lodash.get(target_scroll_obj, 'scroll_height') > 1800) {
+    if (props.main_source !== 'detail_match_list' && lodash.get(target_scroll_obj, 'scroll_height') > 1800) {
       flag = true
     }
     // 如果是隐藏骨架屏
@@ -227,7 +232,7 @@ const get_to_bottom_space = computed(() => {
   let delta = 0
   let list_scroll_top = target_scroll_obj
   //容器的滚动数据
-  if (list_scroll_top && data_source) {
+  if (list_scroll_top && props.data_source) {
     delta = list_scroll_top.scroll_height - (list_scroll_top.scroll_y + list_scroll_top.client_height);
   } else {
     //window的滚动数据
@@ -239,7 +244,7 @@ const get_to_bottom_space = computed(() => {
 const is_static_item = computed(() => {
   let flag = false;
   if (get_menu_type == 100 || lodash.get(get_current_menu, 'date_menu.menuType') == 100 || 100 == get_curr_sub_menu_type ||
-    ["detail_match_list", "home_hot_page_schedule"].includes(main_source) ||
+    ["detail_match_list", "home_hot_page_schedule"].includes(props.main_source) ||
     (get_menu_type == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type))
   ) {
     flag = true;
@@ -254,15 +259,8 @@ const is_champion = computed(() => {
   return get_menu_type == 100 || (get_menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100);
 })
 
-onBeforeUnmount(() => {
-  clearTimeout(scroll_frame_timer_2);
-  scroll_frame_timer_2 = null;
-  clearTimeout(scroll_frame_timer);
-  scroll_frame_timer = null;
-})
-
 // 触发本组件销毁之前回调
-onUnmount(() => {
+onUnmounted(() => {
   clearTimeout(scroll_frame_timer_2);
   scroll_frame_timer_2 = null;
   clearTimeout(scroll_frame_timer);

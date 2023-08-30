@@ -29,6 +29,7 @@
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 
 /** api */
 import { api_account } from "src/api/index.js";
@@ -208,10 +209,10 @@ function change(index) {
       if (data_ref.showActivity) {
         // 5秒后自动消失
         let time = 5;
-        data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
+        data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
         let timer = setInterval(() => {
           time--;
-          data_ref.userBannerTimer = t("common.auto_close").replace("%s", time);
+          data_ref.userBannerTimer = i18n_t("common.auto_close").replace("%s", time);
           if (time == 0) {
             data_ref.showActivity = false;
             clearInterval(timer);
