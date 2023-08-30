@@ -18,7 +18,7 @@ import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
-import { set_remote_server_time } from "./src/store/module/global";
+// import { set_remote_server_time } from "./src/store/module/global";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
@@ -50,7 +50,7 @@ store.dispatch({
   data: t("isoName"),
 });
 //获取服务器时间
-store.dispatch(set_remote_server_time());
+// store.dispatch(set_remote_server_time());
 // 发送日志s
 // window.wslog.sendMsg('xxx');
 // timeCheck();

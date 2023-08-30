@@ -2,7 +2,7 @@
 
 import {csid_map_concede_points_id} from '../config/csid'
 import {  MenuData  } from "src/core/index.js"
-import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
+// import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
 
 /**
  * @description: 获取赛事的让球方
@@ -136,7 +136,8 @@ export const rem_height = (value) => {
  * @return {String} 
  */
 export const compute_image_src = (str) => {
-  return str ? get_file_path(str) : image_panda_placeholder
+  // return str ? get_file_path(str) : image_panda_placeholder
+  return str ? get_file_path(str) : ''
 }
 /**
  * @description: 判断是否为低端机
