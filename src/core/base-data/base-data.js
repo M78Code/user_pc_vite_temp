@@ -74,7 +74,7 @@ class BaseData {
     //当前的 菜单 id
     this.current_mi = "";
     // 电竞赛事根节点
-    this.dianjing_sublist = dianjing_sublist;
+    this.dianjing_sublist = dianjing_sublist();
 
     // VR 体育的 配置
     this.vr_mi_config = vr_menu_info;
@@ -403,7 +403,7 @@ class BaseData {
         }
 
         // 设置电竞竞技的菜单
-        let obj = dianjing_sublist.find((page) => page.mi == item.mi) || {};
+        let obj = dianjing_sublist().find((page) => page.mi == item.mi) || {};
 
         if (obj.mi) {
           // mid

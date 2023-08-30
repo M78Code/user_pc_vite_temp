@@ -150,6 +150,7 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
+    this.user_logined_id.value = user_obj.userId
   }
   set_user_activity (activity) {
     this.activity = { ...activity }
@@ -164,19 +165,13 @@ class UserCtr {
   }
 
   async get_user_info(token) {
-    return async (dispatch) => {
-      try {
-        let res = await api_account.get_user_info({
-          token: this.token,
-        });
-        let obj = res?.data?.data || {};
-        console.log("obj", obj);
-
-        this.set_user_info(obj);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    let res = await api_account.get_user_info({
+      token,
+    });
+    let obj = res?.data?.data || {};
+    console.log("obj", obj);
+    this.set_user_token(token);
+    this.set_user_info(obj);
   }
 
   // 获取用户余额
@@ -1152,7 +1147,7 @@ class UserCtr {
   }
   // 设置 用户token
   set_user_token(token) {
-    this.user_token = token
+    this.user_token.value = token
   }
 }
 
