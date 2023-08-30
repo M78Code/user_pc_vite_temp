@@ -8,11 +8,11 @@
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
         <p class="yb_mr10" @click="change_record(0)" :class="main_item == 0 && 'active-p'">
-          {{ t('bet_record.no_account') }}<span></span></p>
+          {{ i18n_t('bet_record.no_account') }}<span></span></p>
         <p class="yb_ml10 yb_mr10" @click="change_record(1)" :class="main_item == 1 && 'active-p'">
-          {{ t('bet_record.account') }}<span></span></p>
+          {{ i18n_t('bet_record.account') }}<span></span></p>
         <p class="yb_ml10" v-if="authorityFlag" @click="change_record(2)"
-          :class="main_item == 2 && 'active-p'">{{ t('pre_record.book') }}<span></span></p>
+          :class="main_item == 2 && 'active-p'">{{ i18n_t('pre_record.book') }}<span></span></p>
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
@@ -37,15 +37,15 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 //   import { mapGetters, mapMutations } from "vuex"
-// import unsettle from "./unsettle.vue"
-// import settle from "./settle.vue"
-// import preRecord from "./pre-record.vue"
+import unsettle from "./unsettle.vue"
+import settle from "./settle.vue"
+import preRecord from "./pre-record.vue"
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()

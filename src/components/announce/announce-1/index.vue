@@ -2,7 +2,7 @@
 <template>
     <div class="announce-wrap">
         <simple-header>
-            <span>{{ t('common.notice') }}</span>
+            <span>{{ i18n_t('common.notice') }}</span>
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
@@ -16,7 +16,7 @@
                         <div class="ann-content" v-html="item.context"></div>
                         <div class="ann-time">{{ timestr(item.sendTimeOther) }}</div>
                     </div>
-                    <load-data state="notice-empty" :no_data_msg="t('common.notice_no_data')"
+                    <load-data state="notice-empty" :no_data_msg="i18n_t('common.notice_no_data')"
                         v-if="lodash.get(announce_list, 'length', 0) <= 0 && loadd_finish"></load-data>
                 </div>
             </q-scroll-area>
@@ -27,13 +27,15 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
+
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index"
 import store from "src/store-redux/index.js";
 import { format_str } from "src/core/format/index.js";
+
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -80,11 +82,11 @@ const lang = ref(store_data.langReducer.lang)
 * @param {number} index 切换的菜单索引
 * @return {undefined} undefined
 */
-function tabs_click(item, index) {
-    index.value = index;
-    current_title.value = announce_title.value[index].type;
-    announce_list = index
-        ? class_list[index - 1].mtl
+function tabs_click(item, i) {
+    index.value = i;
+    current_title.value = announce_title.value[i].type;
+    announce_list = i
+        ? class_list[i - 1].mtl
         : res_list;
 }
 /**
@@ -133,7 +135,7 @@ function get_list() {
         if (code == 200 && status && data) {
             data.nt.unshift({
                 id: 0,
-                type: t('common.all_notice'),
+                type: i18n_t('common.all_notice'),
             });
             for (let i in data.nt) {
                 data.nt[i].title = data.nt[i].type;

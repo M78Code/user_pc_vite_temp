@@ -6,7 +6,7 @@
 <template>
   <div class="settle-void" @touchmove.prevent>
     <div class="main">
-      <div class="img-s" :class="{ 'img-s2': userCtr.theme.includes('theme02') }"></div>
+      <div class="img-s" :class="{ 'img-s2': UserCtr.theme.includes('theme02') }"></div>
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
