@@ -6,14 +6,14 @@
 
 <template>
   <div id="q-app">
-    {{ init_load }}
+    <!-- {{ init_load }} -->
     <appload v-if="init_load"></appload>
   </div>
 </template>
 <script>
- 
 
- 
+
+
 import _ from  "lodash";
 import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";

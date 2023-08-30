@@ -21,9 +21,9 @@
 // import { mapMutations, mapGetters } from "vuex";
 import chat_msg from 'project_path/src/pages/details/components/chatroom/chat_msg.vue';
 import { msgType, muteType } from 'project_path/src/pages/details/components/chatroom/constant.js'
-import { UserCtr } from "src/core/index.js"
+import { UserCtr } from "src/core/user-config/user-ctr.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent, nextTick } from "vue";
-import { t } from "src/core/index.js";;
+import { t } from "src/boot/i18n.js";;
 //国际化
 
 
