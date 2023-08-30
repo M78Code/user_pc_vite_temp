@@ -9,7 +9,7 @@ import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_USER:prefix_prefix_user,API_PREFIX_BAT:prefix_yewu13} = API_PREFIX;
 
-const prefix = 'http://sit-api-1.sportxxxifbdxm2.com/yewu11'
+const prefix = 'http://api.sportxxxw1box.com/yewu11'
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {

@@ -98,7 +98,7 @@ const mx_autoset_active_match = (params = { mid: 0 }) => {
 		tid,
 		sort: 1,
 		keyword: '这是测试的关键字！！！！！'.substr(5),
-		cuid: UserCtr.uid,
+		cuid: UserCtr.get_uid(),
 		mid: remove_mid,
 	};
 	// 如果是聚合冠军页面

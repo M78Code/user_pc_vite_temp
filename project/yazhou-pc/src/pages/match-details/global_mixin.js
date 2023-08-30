@@ -25,7 +25,7 @@ const router = useRouter();
 
   const store_state = store.getState();
 
-  const get_uid = store_state.userReducer.uuid;
+  const get_uid = UserCtr.get_uid();
     // 获取当前页路由信息
   const layout_cur_page = ref(store_state.layoutReducer.layout_cur_page);
   const filter_select_obj = ref(store_state.filterReducer.filter_select_obj); // 选择的筛选数据
