@@ -1,7 +1,7 @@
 <template>
     <div class="rule-wrap">
         <simple-header>
-            <span>{{ t("common.sports_betting_rules") }}</span>
+            <span>{{ i18n_t("common.sports_betting_rules") }}</span>
         </simple-header>
         <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
     </div>
@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";

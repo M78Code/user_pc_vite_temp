@@ -1,9 +1,12 @@
 /**
  * 赛事滚动相关
  */
+import store from "src/store-redux/index.js";
 import MatchListCardClass from './match-list-card-class'
 
 // TODO: set_list_scroll_top vuex
+
+const state = store.getState()
 
 class MatchListCardScroll {
   //滚动位置
@@ -115,7 +118,7 @@ class MatchListCardScroll {
       }
     }
     // 容器滚动距离
-    let scroll_splited = this.get_list_scroll_top.split("-");
+    let scroll_splited = state.matchReducer.list_scroll_top.split("-");
     if (scroll_splited[0]) {
       scroll_top = +scroll_splited[0];
     }

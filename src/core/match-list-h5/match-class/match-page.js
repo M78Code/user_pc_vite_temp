@@ -4,7 +4,7 @@ import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
-import {utils } from 'src/core/index.js'
+import { utils } from 'src/core/index.js'
 import { get_handicap_w_id  } from "src/core/index.js";
 import MatchListCardClass from '../match-card/match-list-card-class'
 import matchListParams from '../composables/match-list-params'
@@ -16,6 +16,7 @@ import { i18n_t } from  "src/boot/i18n.js";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
+import { ws_c8_obj_format } from 'src/core/data-warehouse/util/index.js'
 
 class MatchPage {
   //当前调用的赛事列表接口方法
@@ -269,7 +270,7 @@ class MatchPage {
       this.prev_invoke_match_details_time = now;
       let sliced = MatchCtr.list;
       //数组转对象
-      this.matchIds = utils.ws_c8_obj_format(sliced);
+      this.matchIds = ws_c8_obj_format(sliced);
       //列表除了电竞外，调用详情数据
       if(this.get_menu_type != 3000){
         this.get_match_info_upd(sliced.map(match => match.mid),'is-subscribe');

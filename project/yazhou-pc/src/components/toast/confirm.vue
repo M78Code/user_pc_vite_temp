@@ -12,7 +12,7 @@
             <li>{{ text }}</li>
           </ul>
           <!-- 关闭按钮 -->
-          <div class="btn" @click="confirm">{{ t("login.logout_alert_close") }}</div>
+          <div class="btn" @click="confirm">{{ i18n_t("login.logout_alert_close") }}</div>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/core/index.js";;
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 国际化 */
@@ -58,7 +58,7 @@ function show_confirm(data) {
   if (text.value == "" || is_show.value) return;
   is_show.value = true;
 
-  btn_text.value = data.btn_text || t('common.confirm')
+  btn_text.value = data.btn_text || i18n_t('common.confirm')
 }
 
 /**
