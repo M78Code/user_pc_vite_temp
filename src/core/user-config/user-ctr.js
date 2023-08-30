@@ -97,10 +97,10 @@ class UserCtr {
    */
 
   set_uid(uid) {
-    this.uid.value = uid;
+    this.uid = uid;
   }
   get_cuid() {
-    return this.uid.value;
+    return this.uid;
   }
   set_lang(data) {
     this.lang.value = data;
@@ -119,7 +119,7 @@ class UserCtr {
    }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId
-    return this.user_info && this.user.userId ? this.user.userId : this.uid;
+    return this.user_info && this.user_info.userId ? this.user_info.userId : this.uid;
   }
   get_loaded_user_id() {
     return this.user_logined_id;
@@ -150,7 +150,7 @@ class UserCtr {
     // 设置用户信息，存入localStorage中
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
-    this.user_logined_id.value = user_obj.userId
+    this.user_logined_id = user_obj.userId
   }
   set_user_activity (activity) {
     this.activity = { ...activity }
@@ -179,7 +179,7 @@ class UserCtr {
     return lodash.debounce(
       function () {
         api_account
-          .check_balance({ uid: this.user.userId })
+          .check_balance({ uid: this.user_info.userId })
           .then((res) => {
             if (res.code == 200) {
               let amount = lodash.get(res, "data.amount");
@@ -1147,7 +1147,7 @@ class UserCtr {
   }
   // 设置 用户token
   set_user_token(token) {
-    this.user_token.value = token
+    this.user_token = token
   }
 }
 

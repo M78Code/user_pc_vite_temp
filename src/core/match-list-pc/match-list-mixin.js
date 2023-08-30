@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 import lodash from "lodash";
 
 import {  PageSourceData  } from "src/core/index.js";
-// import { api_match } from "src/api/index.js";
+import { api_match } from "src/api/index.js";
 // import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 // import * as api_websocket from "src/api/module/socket/socket_api.js";
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
@@ -63,7 +63,7 @@ const match_list = {
 		// 注入依赖
 		provide("match_list_data", match_list_data);
 		provide("match_list_card", match_list_card);
-
+		fetch_match_list();
 		const match_tpl_component = computed(() => {
 			let match_tpl;
 			let lv2_mi;
@@ -113,6 +113,7 @@ const match_list = {
 		useMittOn("match_list_show_mids_change", show_mids_change());
 
 		watch(MenuData.match_list_api_config.version, (cur) => {
+			console.log('lockie_test_console', cur);
 			// bug 版本没有变化 也可以进入
 			if (MenuData.api_config_version != cur) {
 				MenuData.set_api_config_version(cur);

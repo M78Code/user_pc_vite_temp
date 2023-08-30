@@ -53,7 +53,7 @@ const requestHook = {
     config.headers["requestId"] = requestId;
     //请求语言
     config.headers["lang"] = "zh"; // 语言调整
-    config.headers["checkId"] = `pc-${requestId}-${(UserCtr.uid.value).replace(/-/g,"")}-${Date.now()}`;
+    config.headers["checkId"] = `pc-${requestId}-${(UserCtr.get_uid()).replace(/-/g,"")}-${Date.now()}`;
     // config.url 后面是不带 ？的  会被 axios 解析掉参数放在其他地方
     if (SessionStorage.get(STANDARD_KEY.get("pb"))) {
       if (endsWith(config.url, "PB")) {

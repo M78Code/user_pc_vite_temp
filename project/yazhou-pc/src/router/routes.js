@@ -13,8 +13,8 @@ const routes = [
       {
         path: "/home",
         name: "home",
-        component: () => import(`../pages/test/index.vue`),
-        // component: () => import(`../pages/match-list/match-list.vue`),
+        // component: () => import(`../pages/test/index.vue`),
+        component: () => import(`../pages/match-list/match-list.vue`),
         meta: {
           keepAlive: true, // 需要缓存
         },
@@ -46,12 +46,12 @@ const routes = [
       //       },
     ],
   },
-  // //赛事分析
-  // {
-  //   path: "/analysis_header/:csid/:mid",
-  //   name: "analysis_header",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
+  //赛事分析
+  {
+    path: "/analysis_header/:csid/:mid",
+    name: "analysis_header",
+    component: () => import(`../pages/test/index.vue`),
+  },
   // //投注记录
   // {
   //   path: "/bet_record",
