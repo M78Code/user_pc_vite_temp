@@ -10,7 +10,7 @@
  */
 
 
-import { api_common } from "src/api/";
+import { api_common } from "src/api/index.js";
 class GlobalAccessConfig {
   constructor() {
     this.config = "";
@@ -30,7 +30,7 @@ class GlobalAccessConfig {
     };
   }
   async init() {
-    try {
+    return new Promise(async(resolve, reject) => {
       let res = await api_common.get_access_config();
       let data = res?.data?.data || "";
       if (data) {
@@ -40,11 +40,12 @@ class GlobalAccessConfig {
           ...this.config_default,
         };
       }
-    } catch (error) {
+      resolve()
+    }).catch(() => {
       this.config = {
         ...this.config_default,
       };
-    }
+    })
   }
   get_activitySwitch() {
     return this.config?.activitySwitch;

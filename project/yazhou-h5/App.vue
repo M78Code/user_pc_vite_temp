@@ -18,6 +18,7 @@ import _ from  "lodash";
 import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";
 import { useRouter } from "vue-router";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 export default {
   name: 'App',
   components: {
@@ -26,10 +27,12 @@ export default {
   mixins: [apiDomain],
    data() {
     return {
-      init_load: true
+      init_load: false
     };
   },
-  created() {
+  async created() {
+    await GlobalAccessConfig.init()
+    this.init_load = true
     // 检测目前的系统类型ios,android,h5
     window.platform_type = (this.$q.platform.is.ios?'ios':'') || (this.$q.platform.is.android?'android':'') || 'h5';
   }
