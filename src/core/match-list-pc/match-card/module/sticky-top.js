@@ -1,13 +1,9 @@
-
+import { useRoute } from 'vue-router'
 
 import PageSourceData  from  "src/core/page-source/page-source.js"
 import MatchListCardData from "./match-list-card-data-class.js";
-
-    
-const MenuData ={
-    menu_data:{},
- 
-  }
+import MenuData from 'src/core/menu-pc/menu-data-class.js'
+const route = useRoute() || {}
   
    /**
      * @Description 设置吸顶高度
@@ -22,7 +18,7 @@ const MenuData ={
     }
 
     // 搜索页面
-    if(this.$route.name == 'search'){
+    if(route.name == 'search'){
       obj = {
         type:36,
         league:74
@@ -118,7 +114,7 @@ const MenuData ={
       }
     }
     // 收藏页面
-    if(this.vx_layout_list_type == 'collect'){
+    if(page_source == 'collect'){
       obj = {
         type:36,
         league:74

@@ -773,7 +773,7 @@ class MatchPage {
 
   get_base_params(main_menu_type){
     return {
-      cuid: UserCtr.user_info ? UserCtr.user_info .userId : UserCtr.uid,
+      cuid: UserCtr.user_info ? UserCtr.user_info .userId : UserCtr.get_uid(),
       euid: this.get_current_sub_menuid,
       // 一级菜单筛选类型 1滚球 2 即将开赛 3今日赛事 4早盘 11串关
       type: main_menu_type,

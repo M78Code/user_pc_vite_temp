@@ -77,7 +77,7 @@ export const useGetConfig = () => {
   // 当前所选的玩法集子项id
   const tabs_active_index = ref(store_state.matchesReducer.tabs_active_index);
   // 当前所选的玩法集子项id
-  const uuid = store_state.userReducer.uuid;
+  const uuid = UserCtr.get_uid();
   /** 语言变化 */
   const get_lang_change = ref(store_state.langReducer.lang_change);
   // 获取右侧布局类型

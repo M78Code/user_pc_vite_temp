@@ -47,7 +47,7 @@ export const useMethods = ({ props,emit }) => {
   // 详情页玩法列表单双列 0单列， 1双列
   const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
   // 获取用户uid
-  const get_uid = store_state.userReducer.uuid;
+  const get_uid = UserCtr.get_uid();
   // 当前所选的玩法集子项id
   const get_tabs_active_id = ref(store_state.matchesReducer.tabs_active_index);
   // 获取当前页路由信息

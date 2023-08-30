@@ -59,8 +59,8 @@ const [_, PROJECT_NUM] = PROJECT.split("_");
 let PROJECT_NAME = project_map[PROJECT_NUM];
 //本地环境
 
-// PROJECT_NAME = "yazhou-pc";
-PROJECT_NAME = "yazhou-h5";
+PROJECT_NAME = "yazhou-pc";
+// PROJECT_NAME = "yazhou-h5";
 
 // --------------------------------
 // 所有  目标环境标识
