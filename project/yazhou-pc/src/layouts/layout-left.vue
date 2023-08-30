@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-// import leftMain from "../pages/left-main/index.vue";
+import leftMain from "../pages/left-main/index.vue";
 // import leftMainMin from "../pages/left-main/index-min.vue";
 
 import { is_mini_menu, list_emit } from "../core/layout/left-menu";

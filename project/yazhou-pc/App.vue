@@ -17,7 +17,7 @@ import { ref } from "vue";
 import { http, AllDomain } from "src/core/http/";
 import { GetUrlParams } from "src/core/utils/";
 // import { get_user_info } from "src/store-redux/module/user-info.js";
-import store from "src/store-redux/index.js";
+// import store from "src/store-redux/index.js";
 import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { SessionStorage,UserCtr } from "src/core/index.js";
@@ -39,10 +39,9 @@ const handle_user_tryPlay = async () => {
     let obj = res?.data?.data || {};
     token = obj.token;
     SessionStorage .set(token_key, token);
-    store.dispatch(UserCtr.set_user_token(token));
-  } else {
-    store.dispatch(UserCtr.set_user_token(token));
   }
+
+  UserCtr.set_user_token(token)
 };
 (async () => {
   try {

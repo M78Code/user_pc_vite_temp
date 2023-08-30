@@ -127,20 +127,17 @@ import _ from "lodash"
 import MainHeader from "./main-header.vue"
 import LeftMainMenu from "./menu/index.vue"
 // import betRecordView from "../bet-record/index.vue";
-
-
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { MenuData } from "src/core/index.js";
 import { BetBoxWapper } from "src/components/bet";
-
-import store from "src/store-redux/index.js";
 
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
-const state = store.getState()
 
 // 菜单布局信息
-const layout_left_show = ref(state.layoutReducer.layout_left_show)
+const layout_left_show = ref(MenuData.layout_left_show)
 // 当前菜单类型
-const cur_menu_type = ref(state.menuReducer.cur_menu_type)
+const cur_menu_type = ref(MenuData.cur_menu_type)
 
 
 onMounted(() => {

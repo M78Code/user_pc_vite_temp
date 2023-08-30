@@ -46,44 +46,44 @@ class BetData {
     //==============================================投注之前 无注单ID=============
     // 虚拟投注对象  VR 菜单下的那种 
     this.vrtual_bet_obj = {
-      [betcustom_id]: {
-        c_id, // 投注项id
-        c_oid, // 投注项oid
-        c_kid, // 坑位id
-        c_mid, // 赛事id
-        c_hid, //盘口id
-        c_play_id, //玩法id
-        c_csid, //球种
-        c_mhs, //赛事盘口状态
-        c_handicap_value, // 盘口
-        c_hs, //盘口状态
-        c_odds_value, //赔率
-        c_os, // 投注项状态
-        c_play_name, //玩法名称
-        c_hsw, //支持的赔率转换模板
-        c_obv, //断档赔率
-        c_target_side, //T1,T2
-        c_score_type,
-        cmhid, // 主队id
-        c_mhn, //主队
-        c_home_score, // 主队得分
-        c_maid, // 客队id
-        c_man, //客队
-        c_away_score, // 客队得分
-        c_effect, // 是否有效
-        c_full_bet, //是否满额投注，1：是，0：否
-        c_money, // 投注额
-        c_win_money, // 可赢额
-        c_min_money: // 最大值
-          c_max_money, // 最小值
-        c_source,
-        c_match_type, // 赛事类型
-        c_market_type, // 盘口类型
-        c_hv_ov_change, // 盘口值与赔率是否一起变化
-        c_handle_time,
-        c_serial_type, // 是否可以进行串关
-        c_match_update
-      }
+      // [betcustom_id]: {
+      //   c_id, // 投注项id
+      //   c_oid, // 投注项oid
+      //   c_kid, // 坑位id
+      //   c_mid, // 赛事id
+      //   c_hid, //盘口id
+      //   c_play_id, //玩法id
+      //   c_csid, //球种
+      //   c_mhs, //赛事盘口状态
+      //   c_handicap_value, // 盘口
+      //   c_hs, //盘口状态
+      //   c_odds_value, //赔率
+      //   c_os, // 投注项状态
+      //   c_play_name, //玩法名称
+      //   c_hsw, //支持的赔率转换模板
+      //   c_obv, //断档赔率
+      //   c_target_side, //T1,T2
+      //   c_score_type,
+      //   cmhid, // 主队id
+      //   c_mhn, //主队
+      //   c_home_score, // 主队得分
+      //   c_maid, // 客队id
+      //   c_man, //客队
+      //   c_away_score, // 客队得分
+      //   c_effect, // 是否有效
+      //   c_full_bet, //是否满额投注，1：是，0：否
+      //   c_money, // 投注额
+      //   c_win_money, // 可赢额
+      //   c_min_money: // 最大值
+      //     c_max_money, // 最小值
+      //   c_source,
+      //   c_match_type, // 赛事类型
+      //   c_market_type, // 盘口类型
+      //   c_hv_ov_change, // 盘口值与赔率是否一起变化
+      //   c_handle_time,
+      //   c_serial_type, // 是否可以进行串关
+      //   c_match_update
+      // }
     }
     // 常规体育 含一部分电子赛事 
     this.common_bet_obj = {
