@@ -1,6 +1,6 @@
 import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
+import UserCtr from  "src/core/user-config/user-ctr.js";
 
 import   {fileds_map_common}  from "src/core/index.js"
 class BetData {

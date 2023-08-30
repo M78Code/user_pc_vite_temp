@@ -78,12 +78,12 @@
 <script setup>
 import { computed, onDeactivated, onMounted, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from 'vue-router'
-import { play_title } from 'src/core/match-constant/config/play-title'
+import { play_title } from 'src/core/utils/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import { format_msc_handle } from "src/core/format/index.js"
+import { format_msc } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {utils } from 'src/core/index.js'
 import {MenuData } from "src/core/index.js"
@@ -957,7 +957,7 @@ const get_score_second = (index) => {
       match.msc.forEach(f_score => {
         split.forEach(spl_str => {
           if(f_score.indexOf(spl_str) > -1){
-            let sliced = format_msc_handle(f_score);
+            let sliced = format_msc(f_score);
             found_score_list.push(sliced);
           }
         });
@@ -970,7 +970,7 @@ const get_score_second = (index) => {
     {
       match.msc.forEach(f_score => {
         if(f_score.indexOf(split) > -1){
-          let sliced = format_msc_handle(f_score);
+          let sliced = format_msc(f_score);
           r = sliced[index];
         }
       });

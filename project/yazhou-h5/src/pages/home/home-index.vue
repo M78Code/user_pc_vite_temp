@@ -21,25 +21,39 @@
     </div>
 
     <!-- 顶部切换 下边的内容组件 -->
-    <component :is='currentContent' @hook:mounted="get_hot_tab_item_handle"></component>
+    <!-- <component :is='currentContent' @hook:mounted="get_hot_tab_item_handle"></component> -->
   </div>
 </template>
 
-<script setup>
-
+<script>
 // import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import hot from "project_path/src/pages/home/hot/index.vue";    // 热门页入口主页面
 // import live_video from "project_path/src/pages/home/live-video/index.vue";
-import { loadLanguageAsync } from "src/boot/i18n/index.js";
+import { loadLanguageAsync } from "src/boot/i18n.js";
 // import router_mixins from "project_path/src/mixins/router-mixins.js";
 import {utils } from 'src/core/index.js';
-import { onUnmounted, watch } from "vue";
+import { onUnmounted, watch, ref, computed, onMounted, defineComponent } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
-
-  // 首页头部 tab 选项卡内容
+import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
+import lodash from "lodash"
+console.error(GlobalAccessConfig.get_hotMatchNum());
+export default defineComponent({
+  beforeRouteEnter (to,from,next) {
+    // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
+      next(() => {
+        // 通过 `_this` 访问组件实例
+        // beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。
+        _set_main_menu_dom_i(0);
+        _set_current_sub_menuid('');
+        _set_curr_sub_menu_type('');
+        _set_current_esport_csid('');
+        _set_current_menu(null);
+      });
+  },
+  setup() {
+     // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
   const tabIndex = ref(0)
   // 当前选中的组件
@@ -50,6 +64,46 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_
   const tianzhuan = ref(false)
   // 下划线是否 要动画
   const add_animation = ref(true)
+  const theme = ref(UserCtr.theme)
+
+    /**
+     * 动态组件在创建时指定，不能在data中默认为'home'，
+     * 否则每次进入到首页路由（home/hot/live_video）都会先创建'home'组件，
+     * 从而发起不必要的http请求
+     */
+     onMounted(() => {
+      currentContent = _.get(get_home_tab_item, 'component', 'home')
+      set_menu_type('');
+      //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
+      // to_corresponding_route()
+      // 从列表页或者详情页返回首页时, 下划线判断是否要动画
+      if(Object.keys(get_home_tab_item).length > 0){
+        $nextTick(() => {
+          // 如果本地有记录，则跳转到本地记录的原来的位置
+          tab_click(get_home_tab_item, false,false)
+        })
+      }
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).on
+    })
+    onUnmounted(() => {
+      clearTimeout(lang_timer)
+      lang_timer = null
+       // 遍历vm.$data,清空组件data()内所有对象
+      for (const key in $data) {
+        $data[key] = null
+      }
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off
+    })
+    // watch(() => tabIndex, (n) => {
+  //   // 首页、视频直播以及热门下精选不显示背景
+  //     if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
+  //       home_class = ''
+  //     }
+  // })
+ // 监听 热门的tab 变化 home_class 名称作背景图
+  // watch(() => get_hot_tab_item, () => {
+  //   handler = 'get_hot_tab_item_handle'
+  // })
   // components: {
   //   "home": home, // 内嵌版菜单
   //   "hot": hot,
@@ -92,88 +146,8 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_
         res = tabList_
       return res;
     })
-    const theme = ref(UserCtr.theme)
 
 
-  watch(() => tabIndex, (n) => {
-    // 首页、视频直播以及热门下精选不显示背景
-      if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
-        home_class = ''
-      }
-  })
- // 监听 热门的tab 变化 home_class 名称作背景图
-  watch(() => get_hot_tab_item, () => {
-    handler = 'get_hot_tab_item_handle'
-  })
-    /**
-     * 动态组件在创建时指定，不能在data中默认为'home'，
-     * 否则每次进入到首页路由（home/hot/live_video）都会先创建'home'组件，
-     * 从而发起不必要的http请求
-     */
-    currentContent = _.get(get_home_tab_item, 'component', 'home')
-
-    set_menu_type('');
-    //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
-    // to_corresponding_route()
-    // 从列表页或者详情页返回首页时, 下划线判断是否要动画
-    if(Object.keys(get_home_tab_item).length > 0){
-      $nextTick(() => {
-        // 如果本地有记录，则跳转到本地记录的原来的位置
-        tab_click(get_home_tab_item, false,false)
-      })
-    }
-    useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
-  onBeforeRouteEnter((to,from,next) => {
-    // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
-    next(() => {
-      // 通过 `_this` 访问组件实例
-      // beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。
-      _set_main_menu_dom_i(0);
-      _set_current_sub_menuid('');
-      _set_curr_sub_menu_type('');
-      _set_current_esport_csid('');
-      _set_current_menu(null);
-    });
-  })
-    // ...mapMutations([
-    //   // 赛事id
-    //   'set_goto_detail_matchid',
-    //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
-    //   'set_details_item',
-    //   // 商户是否需要直接跳到列表页（url地址有label参数）
-    //   'set_golistpage',
-    //   // 当前选中的二级菜单id
-    //   'set_current_sub_menuid',
-    //   // 当前选中的二级菜单menu_type
-    //   'set_curr_sub_menu_type',
-    //   // 设置当前菜单类型，收藏菜单为6
-    //   'set_menu_type',
-    //   // 电竞游戏csid
-    //   'set_current_esport_csid',
-    //   // 当前选中的菜单
-    //   'set_current_menu',
-    //   // 主菜单选中项下标 (非展开的)
-    //   'set_main_menu_dom_i',
-    //   // 折叠展开与赛事对应
-    //   'set_collapse_map_match',
-    //   // 商户是否直接跳到的赛事详情页
-    //   'set_godetailpage',
-    //   // 全局路由菜单参数
-    //   'set_global_route_menu_param',
-    //   // 是否切换语言中
-    //   'set_is_language_changing',
-    //   // 设置用户信息
-    //   'set_user',
-    //   // 设置语言
-    //   'set_lang',
-    //   'set_last_home_tab_item',
-    // ]),
-    // ...mapActions({
-    //   // 首页选中的下标
-    //   set_home_tab_item: "set_home_tab_item",
-    //   // 首页 热门当前选中的菜单
-    //   set_hot_tab_item: "set_hot_tab_item",
-    // }),
     const home_tab_change = () => {
       tab_click(get_home_tab_item, false,false)
     }
@@ -181,8 +155,8 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_
      *@description 监听器处理函数 热门菜单下顶部背景图切换
      *@param {Object} newVal 新值
      */
-    const get_hot_tab_item_handle = (newVal) => {
-      newVal = newVal || get_hot_tab_item
+     const get_hot_tab_item_handle = (newVal) => {
+      newVal = newVal //|| get_hot_tab_item
       if(!Object.keys(newVal).length) return
 
       // home_class = ''
@@ -271,7 +245,7 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_
      *@param {Boolean} need_animation 是否需要动画
      *@param {Boolean} hand 是否手动点击触发
      */
-    const tab_click = (tab, need_animation,hand) => {
+     const tab_click = (tab, need_animation,hand) => {
       if(tab.index == tabIndex  || utils.is_time_limit(800)) {
         // 切换多语言需处理选中效果 样式
         if(tab.index == 0){
@@ -311,15 +285,74 @@ import { UserCtr } from "src/core/user-config/user-ctr.js";  // mixins: [router_
         doc.style.left = `${left}`;
       }
     }
-    onUnmounted(() => {
-      clearTimeout(lang_timer)
-      lang_timer = null
-       // 遍历vm.$data,清空组件data()内所有对象
-      for (const key in $data) {
-        $data[key] = null
-      }
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off
-    })
+    return {
+      theme,
+      tabList,
+      add_animation,
+      tianzhuan,
+      home_class,
+      currentContent,
+      tabIndex,
+      // 方法
+      home_tab_change,
+      get_hot_tab_item_handle,
+      tab_click,
+      calc_tab_select,
+    }
+  },
+
+})
+
+
+
+
+
+
+
+    // ...mapMutations([
+    //   // 赛事id
+    //   'set_goto_detail_matchid',
+    //   // 玩法tab 所有投注 - 进球 - 上半场 - 球队 - 让球&大小
+    //   'set_details_item',
+    //   // 商户是否需要直接跳到列表页（url地址有label参数）
+    //   'set_golistpage',
+    //   // 当前选中的二级菜单id
+    //   'set_current_sub_menuid',
+    //   // 当前选中的二级菜单menu_type
+    //   'set_curr_sub_menu_type',
+    //   // 设置当前菜单类型，收藏菜单为6
+    //   'set_menu_type',
+    //   // 电竞游戏csid
+    //   'set_current_esport_csid',
+    //   // 当前选中的菜单
+    //   'set_current_menu',
+    //   // 主菜单选中项下标 (非展开的)
+    //   'set_main_menu_dom_i',
+    //   // 折叠展开与赛事对应
+    //   'set_collapse_map_match',
+    //   // 商户是否直接跳到的赛事详情页
+    //   'set_godetailpage',
+    //   // 全局路由菜单参数
+    //   'set_global_route_menu_param',
+    //   // 是否切换语言中
+    //   'set_is_language_changing',
+    //   // 设置用户信息
+    //   'set_user',
+    //   // 设置语言
+    //   'set_lang',
+    //   'set_last_home_tab_item',
+    // ]),
+    // ...mapActions({
+    //   // 首页选中的下标
+    //   set_home_tab_item: "set_home_tab_item",
+    //   // 首页 热门当前选中的菜单
+    //   set_hot_tab_item: "set_hot_tab_item",
+    // }),
+
+
+
+
+
 </script>
 
 <style lang="scss" scoped>
