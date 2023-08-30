@@ -1,7 +1,7 @@
 <template>
   <div class="injury-situation football_standings recent_record">
     <div class="title">
-      {{ i18n.t('analysis_football_matches.Injury_situation') }}
+      {{ $t('analysis_football_matches.Injury_situation') }}
     </div>
 
     <template v-for="(item, index) in injury_situation_data" :key="index">
@@ -22,7 +22,7 @@
       <injury-form :list_data="item"/>
     </template>
     <!-- 没有数据 组件 -->
-    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ i18n.t('common.no_data') }}</div>
+    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ $t('common.no_data') }}</div>
   </div>
 </template>
 

@@ -359,7 +359,7 @@ const  post_submit_bet_list_gcuuid = ref(uid())
               // 串关类型
               temp_bat.seriesType = seriesType;
               // 串关值
-              temp_bat.seriesValues = (seriesType == 1) ?  i18n.t('bet.bet_one_') : i18n.t('bet.bet_winner');//'单关' , 冠军
+              temp_bat.seriesValues = (seriesType == 1) ?  i18n_t('bet.bet_one_') : i18n_t('bet.bet_winner');//'单关' , 冠军
               temp_bat.fullBet = _.get(cs,'full_bet',0);
               //赔率没变，球头没变的情况视为普通注单 preBet传0
               if(BetData.bet_appoint_obj.appoint_init_odds_value == BetData.bet_appoint_obj.appoint_odds_value && BetData.bet_appoint_obj.is_head_eq_hadicap) {
@@ -381,7 +381,7 @@ const  post_submit_bet_list_gcuuid = ref(uid())
                 // 串关类型
                 temp_bat.seriesType = seriesType;
                 // 串关值
-                temp_bat.seriesValues = (seriesType==1)? i18n.t('bet.bet_one_') :  i18n.t('bet.bet_winner');//'单关' , 冠军
+                temp_bat.seriesValues = (seriesType==1)? i18n_t('bet.bet_one_') :  i18n_t('bet.bet_winner');//'单关' , 冠军
   
                 temp_bat.fullBet = _.get(cs,'full_bet',0);
                 //设置注单集合

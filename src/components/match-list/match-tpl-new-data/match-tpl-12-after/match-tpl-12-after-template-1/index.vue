@@ -103,14 +103,14 @@
 
 
 import { ref, computed, watch, reactive } from 'vue';
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { is_eports_csid } from 'src/core/utils/match-list-utils.js';
-import { get_match_status, is_show_sr_flg } from 'src/core/utils/index.js'
+import { get_match_status, is_show_sr_flg } from 'src/core/index.js'
 import store from 'prject_path/src/store/index.js'
 let state = store.getState()
 ;

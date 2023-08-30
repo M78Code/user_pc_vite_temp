@@ -55,9 +55,9 @@ const typeSelected = ref(0);
 const timer = ref(null);
 
 // 最近5场 最近10场 最近15场
-timeData.value = [i18n.t("analysis.record_clashes_1"),i18n.t("analysis.record_clashes_2"),i18n.t("analysis.record_clashes_3")]
+timeData.value = [i18n_t("analysis.record_clashes_1"),i18n_t("analysis.record_clashes_2"),i18n_t("analysis.record_clashes_3")]
 // '默认'，'同赛事','同主客','同赛事+同主客'
-typeData.value = [i18n.t("analysis.original"),i18n.t("analysis.same_game"),i18n.t("analysis.same_host_guest"),i18n.t("analysis.same_all")]
+typeData.value = [i18n_t("analysis.original"),i18n_t("analysis.same_game"),i18n_t("analysis.same_host_guest"),i18n_t("analysis.same_all")]
 
 // computed:{
 //   ...mapGetters(['get_global_click']),

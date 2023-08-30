@@ -32,7 +32,7 @@
   
 <script setup>
 import { ref, nextTick, onMounted, onUnmounted } from 'vue'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"

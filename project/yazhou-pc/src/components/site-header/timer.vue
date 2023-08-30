@@ -9,7 +9,7 @@
 
 <script setup>
 import { ref, onBeforeUnmount, defineComponent, getCurrentInstance, onMounted } from 'vue'
-import { ss } from "src/core/utils/web-storage";
+import { SessionStorage  } from "src/core/index.js";
 // import menu_stay_time from "/utils/menuClass/menu_stay_time.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 

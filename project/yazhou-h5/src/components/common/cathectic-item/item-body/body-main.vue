@@ -106,7 +106,7 @@ import {utils } from 'src/core/index.js'
 import { format_time_zone_time, format_odds, format_score } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { UserCtr } from "src/core/index.js";
 //国际化
 

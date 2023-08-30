@@ -77,7 +77,7 @@
                   <div class="time relative-position">
                     <!-- 倒计时组件 -->
                     <counting-down
-                      :title="item.ms == 0? i18n.t('list.match_no_start') :match_period_map(item)"
+                      :title="item.ms == 0? i18n_t('list.match_no_start') :match_period_map(item)"
                       :mmp="item.mmp"
                       :m_id="item.mid"
                       :second="item.mst"
@@ -86,7 +86,7 @@
                     />
                   </div>
                   <div class="score">
-                    <span>{{GlobalAccessConfig.get_handicapNum()? item.mc: i18n.t('footer_menu.more') }}</span>
+                    <span>{{GlobalAccessConfig.get_handicapNum()? item.mc: i18n_t('footer_menu.more') }}</span>
                     <span v-if="GlobalAccessConfig.get_handicapNum()">+</span>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ import { UserCtr } from "src/core/index.js";
     // 切换头部菜单选项卡
     const changeTab = (tab, index) => {
       if(tab.count === 0) {
-        $toast(i18n.t('home.no_favorite_events'), 1000)
+        $toast(i18n_t('home.no_favorite_events'), 1000)
         return
       }
       if (tab_Index == index) return
@@ -336,7 +336,7 @@ import { UserCtr } from "src/core/index.js";
                 if(item.subList.length) {
                   item.subList.unshift({
                     field1: '',
-                    name: i18n.t('footer_menu.all'),
+                    name: i18n_t('footer_menu.all'),
                   });
                 }
               })
@@ -450,7 +450,7 @@ import { UserCtr } from "src/core/index.js";
   //     UserCtr_token:'UserCtr_token',
   //     get_goto_detail_match_info:'get_goto_detail_match_info',
   //     get_home_tab_item:'get_home_tab_item',
-  //     GlobalAccessConfig:'GlobalAccessConfig',
+  //     get_access_config,
   //     get_is_show_menu:"get_is_show_menu",
   //   })
   // },

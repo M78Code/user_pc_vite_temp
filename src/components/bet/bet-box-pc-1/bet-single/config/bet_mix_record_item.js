@@ -85,7 +85,7 @@ export default defineComponent({
     * @return {String} 
     */
     const handicap_name = computed(() => {
-      return `[${i18n.t('odds')[props.item_obj.marketType]}]`;
+      return `[${i18n_t('odds')[props.item_obj.marketType]}]`;
     })
 
 

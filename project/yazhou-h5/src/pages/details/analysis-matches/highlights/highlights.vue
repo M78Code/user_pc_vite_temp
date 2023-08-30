@@ -217,7 +217,7 @@ import { UserCtr } from "src/core/index.js"
 import { load_player_js } from "src/core/pre-load/index.js"
 import {utils } from 'src/core/index.js'
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

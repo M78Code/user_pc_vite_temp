@@ -9,7 +9,7 @@
 import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
-// import { loadLanguageAsync } from "src/boot/i18n";
+// import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 // #TODO 接口统一管理的文件，后续替换
 import { api_details } from "src/api/index";
@@ -792,12 +792,12 @@ class UserCtr {
       //   // 弹出提示消息、登录层
       //   useMittEmit(
       //     MITT_TYPES.EMIT_SHOW_TOAST_CMD,
-      //     window.vue.i18n.t("login.login_timeout")
+      //     window.vue.i18n_t("login.login_timeout")
       //   );
       // } else {
       // 登录失效直接展示 alert
       useMittEmit(MITT_TYPES.EMIT_SHOW_ALERT_CMD, {
-        text: i18n.t("login.login_timeout"),
+        text: i18n_t("login.login_timeout"),
         callback: () => {
           location.href = callbackUrl;
           // 清除旧的登录信息
@@ -1149,6 +1149,10 @@ class UserCtr {
       config.default_theme[window.BUILDIN_CONFIG.DEFAULT_VERSION_NAME];
     // let theme = lodash.get(window, 'vue.$store.getters.get_theme', 'theme01')
     // window.vue.$store.dispatch('set_theme',theme)
+  }
+  // 设置 用户token
+  set_user_token(token) {
+    this.user_token = token
   }
 }
 

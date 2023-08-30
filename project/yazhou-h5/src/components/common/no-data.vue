@@ -45,7 +45,7 @@
 <script setup>
 import { watch, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr } from "src/core/index.js";
 // TODO:

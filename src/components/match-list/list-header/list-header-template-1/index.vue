@@ -91,10 +91,11 @@ import match_list_global from 'src/components/match-list/composables/match-list-
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import BaseData from "src/public/utils/base_data/base-data.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { defineProps, ref, computed, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js';
 let state = store.getState();
@@ -115,8 +116,6 @@ const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type);
 const get_unfold_multi_column = ref(state.globalReducer.is_unfold_multi_column);
 // 获取选中的赛事数量(列表右上角赛选功能)
 const vx_get_checked_count = ref(state.filterReducer.checked_count);
-// 获取用户id
-const UserCtr.get_uid() = reactive(state.userReducer.user_info)
 const vx_match_sort = ref(state.globalReducer.match_sort)
 // mixins: [global_mixin],
 const match_sort_show = ref(false) //切换排序是否显示
@@ -427,7 +426,7 @@ const on_change_list_type = (type) => {
     match_list: {
       api_name,
       params: {
-        "cuid": UserCtr.get_uid() || '',
+        "cuid": UserCtr.get_uid || '',
         "sort": vx_match_sort.value,
         "selectionHour": open_select_time.value,
         ...lv2_mi_info,

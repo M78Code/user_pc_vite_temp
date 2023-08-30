@@ -11,6 +11,7 @@
 </template>
   <script setup>
 import "./src/core/globel-mitt";
+import {  PageSourceData  } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
 import { GetUrlParams } from "src/core/utils/";
@@ -18,7 +19,7 @@ import { copyToClipboard } from "quasar";
 import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import { set_remote_server_time } from "./src/store/module/global";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();

@@ -39,7 +39,7 @@
 // import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
 // mixins: [match_item_mixin],
 import lodash from 'lodash';
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 ;
 </script>
 

@@ -11,7 +11,7 @@
   >
     <div class="detais-hot-head">
       <img src="~public/image/yabo/svg/hot.svg" />
-      <div>{{i18n.t('list.hot_match')}}</div>
+      <div>{{ $t('list.hot_match')}}</div>
     </div>
      <!-- 列表容器 -->
     <load-data :state="load_data_state">

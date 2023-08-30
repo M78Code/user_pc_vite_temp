@@ -98,8 +98,8 @@ import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { t } from "src/boot/i18n";
-import { get_match_tpl_title } from 'src/core/utils/index.js';
+import { t } from "src/core/index.js";
+import { get_match_tpl_title } from 'src/core/index.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';

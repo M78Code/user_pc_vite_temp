@@ -6,7 +6,7 @@
  * @FilePath: \user-pc-vite\src\core\http\http-log.js
  * @Description: http方法次数统计
  */
-import { ss, ls } from "../utils/web-storage";
+import { SessionStorage , LocalStorage } from "src/core/index.js";
 import { DateForMat } from "src/core/format/index.js";
 import { throttle } from "lodash";
 class HttpLog {
@@ -19,9 +19,9 @@ class HttpLog {
     this.run = false;
     // 检测是否有httpLog开关
     if (location.href.indexOf("httplog=1") != -1) {
-      ss.set("httplog", "1");
+      SessionStorage .set("httplog", "1");
     }
-    if (ss.get("httplog")) {
+    if (SessionStorage.get("httplog")) {
       this.run = true;
     }
     // 初始化数据
@@ -157,7 +157,7 @@ class HttpLog {
    * @return {object} 日志对象
    */
   get_local_log_obj() {
-    return ls.get("http_log", { data: {} });
+    return LocalStorage.get("http_log", { data: {} });
   }
 
   /**
@@ -165,7 +165,7 @@ class HttpLog {
    */
   set_local_log_obj() {
     if (this.log_obj) {
-      ls.set("http_log", this.log_obj);
+      LocalStorage.set("http_log", this.log_obj);
     }
   }
 }

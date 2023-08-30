@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="basketball-incident" v-if="no_data">
-    <div class="title">{{ i18n.t('match_result.event') }}</div>
+    <div class="title">{{ $t('match_result.event') }}</div>
     <div class="tabs">
       <div v-for="(item, index) in event_data" :key="index"
         :class="{active: tab_index == index}"
@@ -16,7 +16,7 @@
     </div>
     <div class="basketball-incident-content">
       <div v-for="(item, index) in event_data[tab_index].value" :key="index">
-        <span>{{(new Date(+item.createTime)).Format(i18n.t('time4'))}}</span>
+        <span>{{(new Date(+item.createTime)).Format(i18n_t('time4'))}}</span>
         <i class="Glow" :class="{noLine: +event_data[tab_index].value.length -1 == index,home:item.team ==1, away: item.team == 2}"></i>
         <div class="ellipsis-2-lines">
           <span>{{ item.scores }} </span>

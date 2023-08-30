@@ -1,7 +1,7 @@
 /*
  * @Description: H5 各球种比分处理
  */
-import { i18n } from "src/boot/i18n.js"
+import { i18n_t} from "src/core/index.js"
 
 // TODO: 待替换菜单模块 store
 const get_current_menu = ref(null)
@@ -22,7 +22,7 @@ export const format_msc = (str) => {
   for (let i = 0, l = 3 - list_.length; i < l; i++) {
     list_.push('');
   }
-  list_.push(i18n.t('msc')[list_[0]]);
+  list_.push(i18n_t('msc')[list_[0]]);
 
   return list_;
 }
@@ -38,7 +38,7 @@ export const get_mmp_name = (sport_id, mmp) => {
   if (!sport_id) {
     return '';
   }
-  return i18n.t('mmp')[parseInt(sport_id)][mmp];
+  return i18n_t('mmp')[parseInt(sport_id)][mmp];
 }
 /**
  * @description: 获取S1比分
@@ -622,7 +622,7 @@ export const basket_ball_score_handle = (match) => {
   }
   else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = i18n.t('msc')[dic];
+      let title = i18n_t('msc')[dic];
       return [dic, '', '', title];
     });
   }
@@ -713,7 +713,7 @@ export const foot_ball_score_handle = (match) => {
     match.msc_s_format = sorted;
   } else {
     match.msc_s_format = msc_dict.map(dic => {
-      let title = i18n.t('msc')[dic];
+      let title = i18n_t('msc')[dic];
       return [dic, '', '', title];
     });
   }

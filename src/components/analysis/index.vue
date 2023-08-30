@@ -18,7 +18,7 @@
         <div style="color:#83838A;margin-bottom: 6px;">{{formatTime(matchDetail.mgt,'yyyy/mm/dd hh:MM:ss')}}</div>
         <div>{{matchDetail.tn}}</div>
         <!-- 未开始 -->
-        <span v-if="[0,110].includes(matchDetail.ms)">{{i18n.t("analysis.not_start")}}</span>
+        <span v-if="[0,110].includes(matchDetail.ms)">{{ $t("analysis.not_start")}}</span>
         <match-date v-else :match_props="{match: matchDetail}" style="justify-content:center;"></match-date>
       </div>
       <div class="both away">
@@ -37,7 +37,7 @@
       class="item"
       :class="{'active':index == activeTab}"
       @click="switchTabs(index)"
-      >{{item == 'news' ? newsTabName : i18n.t(`analysis.${item}`)}}</span>
+      >{{item == 'news' ? newsTabName : i18n_t(`analysis.${item}`)}}</span>
     </div>
 
     <q-scroll-area class="rule-scroll-area" :visible="true" :style="{height:'100%',margin: hasNews && activeTab == 0 ? '0' : '0 20px'}">

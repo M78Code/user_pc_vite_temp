@@ -9,15 +9,15 @@
     <div class="horn"></div>
     <div class="horn2"></div>
     <div class="option-wrap row no-wrap">
-      <span class="info ellipsis">{{ i18n.t('time.gongli') }}</span>
+      <span class="info ellipsis">{{ $t('time.gongli') }}</span>
       <div class="year-wrap date row no-wrap">
         <div class="btn-wrap" @click="changeYear(1)">
           <div class="btn btn-left"></div>
         </div>
         <q-carousel class="text-wrap" v-model="year" transition-prev="slide-right" transition-next="slide-left" animated>
           <q-carousel-slide class="text" :name="val" v-for="(val, key) in years" :key="key">
-            <template v-if="get_lang == 'vi'">{{ i18n.t('time.year') }} {{ val }}</template>
-            <template v-else>{{ val }}{{ i18n.t('time.year') }}</template>
+            <template v-if="get_lang == 'vi'">{{ $t('time.year') }} {{ val }}</template>
+            <template v-else>{{ val }}{{ $t('time.year') }}</template>
           </q-carousel-slide>
         </q-carousel>
         <div class="btn-wrap" @click="changeYear(2)">
@@ -41,20 +41,20 @@
     </div>
     <div class="item-wrap row">
       <!--周日-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[0]') }}<div class="bg"></div>
+      <div class="item border1">{{ $t('time.time_date_week[0]') }}<div class="bg"></div>
       </div>
       <!--周一-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[1]') }}</div>
+      <div class="item border1">{{ $t('time.time_date_week[1]') }}</div>
       <!--周二-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[2]') }}</div>
+      <div class="item border1">{{ $t('time.time_date_week[2]') }}</div>
       <!--周三-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[3]') }}</div>
+      <div class="item border1">{{ $t('time.time_date_week[3]') }}</div>
       <!--周四-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[4]') }}</div>
+      <div class="item border1">{{ $t('time.time_date_week[4]') }}</div>
       <!--周五-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[5]') }}</div>
+      <div class="item border1">{{ $t('time.time_date_week[5]') }}</div>
       <!--周六-->
-      <div class="item border1">{{ i18n.t('time.time_date_week[6]') }}<div class="bg bg2"></div>
+      <div class="item border1">{{ $t('time.time_date_week[6]') }}<div class="bg bg2"></div>
       </div>
       <!--日期列表-->
       <div class="item" v-for="(val, key) in dates" :key="key" @click="onchange(val)">

@@ -50,15 +50,15 @@
         }">
         <template v-if="[1,4].includes(view_ctr_obj.order_confirm_complete)">
           <!--订单确认中的提示:订单需要系统审核,请关注投注记录-->
-          {{i18n.t('bet.bet_order_info1')}}
+          {{ $t('bet.bet_order_info1')}}
         </template>
         <template v-else-if="view_ctr_obj.order_confirm_complete==2">
            <!--投注成功的提示:您的订单已确认-->
-          {{i18n.t('bet.bet_order_info2')}}
+          {{ $t('bet.bet_order_info2')}}
         </template>
         <template v-else-if="view_ctr_obj.order_confirm_complete==3">
           <!--投注失败的提示:投注失败-->
-          {{i18n.t('bet.bet_order_info3')}}
+          {{ $t('bet.bet_order_info3')}}
         </template>
       </div>
     </template>

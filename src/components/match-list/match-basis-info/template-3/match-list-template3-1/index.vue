@@ -56,7 +56,7 @@
 
 import { computed, defineProps } from 'vue';
 import lodash from 'lodash';
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 

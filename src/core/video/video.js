@@ -10,7 +10,7 @@ import User from "src/core/user-config/user-ctr.js"
 import { api_details } from "src/api/index"
 import  store  from "src/store-redux/index.js"
 
-import { i18n } from "src/boot/i18n.js"
+import { i18n_t} from "src/core/index.js"
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import {utils } from 'src/core/index.js'
 import { UserCtr } from "src/core/index.js";
@@ -122,17 +122,17 @@ export default {
       details.init_score(match.msc,['S4011','S4012','S4013'],true)
       let progress_list = [
         {
-          name:i18n.t('common.big_penalty'),                  //大罚
+          name:i18n_t('common.big_penalty'),                  //大罚
           score:'S4011',
           nocale:false
         },
         // {
-        //   name:i18n.t('common.shot_num'),                //射门
+        //   name:i18n_t('common.shot_num'),                //射门
         //   score:'S4013',
         //   nocale:false
         // },
         {
-          name:i18n.t('common.micro_penalty'),  //小罚
+          name:i18n_t('common.micro_penalty'),  //小罚
           score:'S4012',
           nocale:false
         },
@@ -145,17 +145,17 @@ export default {
       details.init_score(match.msc,['S4','S103','S202','S114'],true)
       let progress_list = [
         {
-          name:i18n.t('common.ace'),                  //发球得分
+          name:i18n_t('common.ace'),                  //发球得分
           score:'S4',
           nocale:false
         },
         {
-          name:i18n.t('common.fault'),                //双发失误
+          name:i18n_t('common.fault'),                //双发失误
           score:'S202',
           nocale:false
         },
         {
-          name:i18n.t('common.break_point_success'),  //破发成功率
+          name:i18n_t('common.break_point_success'),  //破发成功率
           score:'S114',
           nocale:true
         },
@@ -168,22 +168,22 @@ export default {
       details.init_score(match.msc,['S6011','S6012','S6013','S6014'],true)
       let progress_list = [
         // {
-        //   name:i18n.t('common.rushing_num'),                  //冲球数
+        //   name:i18n_t('common.rushing_num'),                  //冲球数
         //   score:'S6011',
         //   nocale:false
         // },
         {
-          name:i18n.t('common.shot_num'),                //射门
+          name:i18n_t('common.shot_num'),                //射门
           score:'S6012',
           nocale:false
         },
         // {
-        //   name:i18n.t('common.offense_num'),      //进攻数
+        //   name:i18n_t('common.offense_num'),      //进攻数
         //   score:'S6013',
         //   nocale:false
         // },
         {
-          name:i18n.t('common.touchdown'),        //达阵
+          name:i18n_t('common.touchdown'),        //达阵
           score:'S6014',
           nocale:false
         },
@@ -196,19 +196,19 @@ export default {
       details.init_score(match.msc,['S118','S119','S1190'],true)
       let progress_list = [
         {
-          name:i18n.t('common.max_bureau'),                    //单杆最高
-          name2:`(${i18n.t('common.bureau')})`,                    //局
+          name:i18n_t('common.max_bureau'),                    //单杆最高
+          name2:`(${i18n_t('common.bureau')})`,                    //局
           score:'S1190',
           nocale:false
         },
         {
-          name:i18n.t('common.max_bureau'),   //单杆最高
-          name2:`(${i18n.t('video.total')})`,                    //总
+          name:i18n_t('common.max_bureau'),   //单杆最高
+          name2:`(${i18n_t('video.total')})`,                    //总
           score:'S119',
           nocale:false
         },
         {
-          name:i18n.t('common.foul'),             //犯规
+          name:i18n_t('common.foul'),             //犯规
           score:'S118',
           nocale:false
         },
@@ -221,12 +221,12 @@ export default {
       details.init_score(match.msc,['S4','S113'],true)
       let progress_list = [
         {
-          name:i18n.t('common.ace'),                    //发球得分
+          name:i18n_t('common.ace'),                    //发球得分
           score:'S4',
           nocale:false
         },
         {
-          name:i18n.t('common.sigle_fault'),   //发球失误
+          name:i18n_t('common.sigle_fault'),   //发球失误
           score:'S113',
           nocale:false
         },
@@ -239,17 +239,17 @@ export default {
       details.init_score(match.msc,['S115','S116','S117'],true)
       let progress_list = [
         {
-          name:i18n.t('common.score_'),                    //得分
+          name:i18n_t('common.score_'),                    //得分
           score:'S115',
           nocale:false
         },
         {
-          name:i18n.t('common.receiving_point_score'),   //接收点得分
+          name:i18n_t('common.receiving_point_score'),   //接收点得分
           score:'S116',
           nocale:true
         },
         {
-          name:i18n.t('common.ace'),             //发球得分
+          name:i18n_t('common.ace'),             //发球得分
           score:'S117',
           nocale:true
         },
@@ -263,19 +263,19 @@ export default {
       details.init_score(match.msc,['S107','S108','S110','S106'],true)
       let progress_list = [
         {
-          name:i18n.t('video.score2'),                    //2分
+          name:i18n_t('video.score2'),                    //2分
           score:'S107',
           class:'',
           nocale:false
         },
         {
-          name:i18n.t('video.score3'),                    //3分
+          name:i18n_t('video.score3'),                    //3分
           score:'S108',
           class:'home-wrap',
           nocale:false
         },
         {
-          name:i18n.t('common.penalty_kick'),             //罚球
+          name:i18n_t('common.penalty_kick'),             //罚球
           score:'S110',
           class:'',
           nocale:false
@@ -536,7 +536,7 @@ export default {
           score:'S20',
         },
         {
-          name:i18n.t('common.half_'),    //半场
+          name:i18n_t('common.half_'),    //半场
           score:'S2',
         },
         {
@@ -564,22 +564,22 @@ export default {
     let arr = [
       {
         class:'rs_jiao_quan',
-        tooltip:i18n.t('list.corner'),            //角球
+        tooltip:i18n_t('list.corner'),            //角球
         score:'S5',
       },
       {
         class:'rs_huang',
-        tooltip:i18n.t('icon_tips.yellow_card'),  //黄牌
+        tooltip:i18n_t('icon_tips.yellow_card'),  //黄牌
         score:'S12',
       },
       {
         class:'rs_hong',
-        tooltip:i18n.t('icon_tips.red_card'),     //红牌
+        tooltip:i18n_t('icon_tips.red_card'),     //红牌
         score:'S11',
       },
       {
         class:'rs_dian',
-        tooltip:i18n.t('icon_tips.penalty_kick'), //点球
+        tooltip:i18n_t('icon_tips.penalty_kick'), //点球
         score:'S10',
       },
     ]
@@ -601,19 +601,19 @@ export default {
       arr[0] = [
         // {
         //   class: "up_half",
-        //   name: i18n.t('common.up_half'), // 上半场
+        //   name: i18n_t('common.up_half'), // 上半场
         //   score: "S2",
         //   current_mmp: 6
         // },
         {
           class: "overall",
-          name: i18n.t('icon_tips.overall'), // 全场
+          name: i18n_t('icon_tips.overall'), // 全场
           score: "S1",
           current_mmp: null
         },
         {
           class: "add_time",
-          name: i18n.t('common.add_time'),
+          name: i18n_t('common.add_time'),
           score: "S7",
           current_mmp: 13
         }
@@ -622,22 +622,22 @@ export default {
       arr[1] = [
         {
           class:'rs_hong',
-          tooltip:i18n.t('icon_tips.red_card'),     //红牌
+          tooltip:i18n_t('icon_tips.red_card'),     //红牌
           score:'S11',
         },
         {
           class:'rs_huang',
-          tooltip:i18n.t('icon_tips.yellow_card'),  //黄牌
+          tooltip:i18n_t('icon_tips.yellow_card'),  //黄牌
           score:'S12',
         },
         {
           class:'rs_jiao_quan',
-          tooltip:i18n.t('list.corner'),            //角球
+          tooltip:i18n_t('list.corner'),            //角球
           score:'S5',
         },
         {
           class:'rs_quan',
-          tooltip:i18n.t('icon_tips.overall') + i18n.t('icon_tips.goal'), // 全场进球
+          tooltip:i18n_t('icon_tips.overall') + i18n_t('icon_tips.goal'), // 全场进球
           score:'S1',
         }
       ]
@@ -648,43 +648,43 @@ export default {
       arr[0] = [
         {
           class: "q1",
-          name: i18n.t('mmp_v2.2.13'),
+          name: i18n_t('mmp_v2.2.13'),
           score: "S19",
           current_mmp: 13
         },
         {
           class: "q2",
-          name: i18n.t('mmp_v2.2.14'),
+          name: i18n_t('mmp_v2.2.14'),
           score: "S20",
           current_mmp: 14
         },
         {
           class: "q3",
-          name: i18n.t('mmp_v2.2.15'),
+          name: i18n_t('mmp_v2.2.15'),
           score: "S21",
           current_mmp: 15
         },
         {
           class: "q4",
-          name: i18n.t('mmp_v2.2.16'),
+          name: i18n_t('mmp_v2.2.16'),
           score: "S22",
           current_mmp: 16
         },
         {
           class: "add_time",
-          name: i18n.t('common.add_time'),
+          name: i18n_t('common.add_time'),
           score: "S7",
           current_mmp: 40
         },
         {
           class: "half_",
-          name: i18n.t('common.half_'),
+          name: i18n_t('common.half_'),
           score: "S2",
           current_mmp: 1
         },
         {
           class: "total",
-          name: i18n.t('common.total'),
+          name: i18n_t('common.total'),
           score: "S1",
           current_mmp: null
         }
@@ -692,24 +692,24 @@ export default {
       // 右侧顶部比分
       arr[1] = [
         {
-          name:i18n.t('video.score2'),                    //2分
+          name:i18n_t('video.score2'),                    //2分
           score:'S107'
         },
         {
-          name:i18n.t('video.score3'),                    //3分
+          name:i18n_t('video.score3'),                    //3分
           score:'S108'
         },
         {
-          name:i18n.t('common.pause'), // 暂停
+          name:i18n_t('common.pause'), // 暂停
           score: 'S109',
         },
         {
-          name:i18n.t('common.penalty_kick'),             //罚球
+          name:i18n_t('common.penalty_kick'),             //罚球
           score:'S110',
           class: "penalty_kick"
         },
         {
-          name: i18n.t('common.foul'), // 犯规
+          name: i18n_t('common.foul'), // 犯规
           score: 'S106'
         }
       ]
@@ -870,7 +870,7 @@ export default {
     // } else {
       url = `${refer_url}?mid=${mid}&domain=${request_domain}&style=${store.getters.get_theme}`
     // }
-    url += `&load_error=${i18n.t('video.load_error')}&refresh=${i18n.t('common.refresh')}&pause=${i18n.t('video.pause')}&play=${i18n.t('video.play')}&mute=${i18n.t('video.mute')}&cancel_mute=${i18n.t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n.t('video.open_pip')}&token=${UserCtr.user_token}&rdm=${new Date().getTime()}`
+    url += `&load_error=${i18n_t('video.load_error')}&refresh=${i18n_t('common.refresh')}&pause=${i18n_t('video.pause')}&play=${i18n_t('video.play')}&mute=${i18n_t('video.mute')}&cancel_mute=${i18n_t('video.cancel_mute')}&refresh-icon=0&controls=1&is_client=1&open_pip=${i18n_t('video.open_pip')}&token=${UserCtr.user_token}&rdm=${new Date().getTime()}`
     url = encodeURI(url)
     //本地代码连生产时放开可播放大视频
     //url = 'https:' + url

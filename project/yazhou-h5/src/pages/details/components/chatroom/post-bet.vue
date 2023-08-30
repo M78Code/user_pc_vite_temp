@@ -44,7 +44,7 @@ import { api_chatroom } from "src/project/api/index.js";
 import chatroom_mixin from 'project_path/src/pages/details/components/chatroom/chatroom_mixin'
 import no_data from "src/project/components/common/no_data.vue";   // 无数据展示组件
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

@@ -1,6 +1,6 @@
 
 
-import PageSourceData  from  "src/core/page-source-pc/page-source-pc.js"
+import PageSourceData  from  "src/core/page-source/page-source.js"
 import MatchListCardData from "./match-list-card-data-class.js";
 
     

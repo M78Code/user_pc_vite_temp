@@ -17,7 +17,7 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import ZhuGe from "src/core/http/zhuge-tag";
 import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";

@@ -5,7 +5,7 @@
  */
 import { GetUrlParams } from "../utils";
 import { DateForMat } from "src/core/format/index.js";
-import { ss } from "../utils/web-storage";
+import { SessionStorage  } from "src/core/index.js";
 const { LOCAL_FUNCTION_SWITCH } = window.BUILDIN_CONFIG;
 class WsLog {
   /**
@@ -19,9 +19,9 @@ class WsLog {
     this.ws_run = ws_run;
     // 项目名
     this.name = name;
-    if (GetUrlParams("wsl") == 9999 || ss.get("wsl") == "9999" || this.ws_run) {
+    if (GetUrlParams("wsl") == 9999 || SessionStorage .get("wsl") == "9999" || this.ws_run) {
       this.ws_run = true;
-      ss.set("wsl", "9999");
+      SessionStorage .set("wsl", "9999");
     }
     if (this.ws_run) {
       // WS操作对象

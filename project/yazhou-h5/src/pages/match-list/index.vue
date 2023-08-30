@@ -40,7 +40,7 @@
       <!-- <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
         <div style="color:#AAAEB8;font-size:.12rem;">
-          {{i18n.t("scroll_wrapper.is_footer")}}
+          {{ $t("scroll_wrapper.is_footer")}}
         </div>
       </div> -->
       
@@ -56,7 +56,7 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";  
 export default defineComponent({

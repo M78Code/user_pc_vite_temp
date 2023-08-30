@@ -31,7 +31,7 @@
             >
               <div class="i-title" :class="first_level_menu_subscript_css">
               {{
-                i18n.t(`new_menu.${main_m.mi}`) }}
+                i18n_t(`new_menu.${main_m.mi}`) }}
               </div>
               <div class="m-menu-count">
                 <span class="count" :class="{is_unit:main_m.count < 10 && m_m_i == 1,
@@ -50,9 +50,9 @@
             </div>
           </template>
         </div>
-        <!-- 活动图标 -->
+        <!-- 活动图标 -->   
         <img class="activity-logo animate-bounce-up" :src="get_file_path(user_info.activityList[0].h5Url) || activity_default"
-             v-if="lodash.get(get_access_config,'activitySwitch') && user_info.inActivity && get_lang == 'zh'" @click="openActivity" @error="activity_icon_error" alt="">
+             v-if="GlobalAccessConfig.get_activitySwitch()&& user_info.inActivity && get_lang == 'zh'" @click="openActivity" @error="activity_icon_error" alt="">
         <!-- 活动图标红点 -->
         <div class="red-dot" v-show="task_list > 0 && user_info.inActivity && get_lang == 'zh' && !user_info.maintaining"></div>
         <!-- 右边设置菜单 -->
@@ -74,20 +74,20 @@
           }">
           <!--二级菜单 球类和运动类-->
           <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->   
             <sub-menu-specially
               @click="select_all_sub_menu_handle"
-              v-show="lodash.get(get_access_config,'playAllShow') && menu_1_type == 1"
+              v-show=" GlobalAccessConfig.get_playAllShow() && menu_1_type == 1"
               :count="all_sport_count_calc()"
-              :title="i18n.t('footer_menu.all')"
-              v-if="lodash.get(get_access_config,'playAllShow')"
+              :title="i18n_t('footer_menu.all')"
+              v-if=" GlobalAccessConfig.get_playAllShow()"
             >
               <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
             </sub-menu-specially>
             <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
             <!--
               :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)),`${'s'+format_type(sub)}`]"
-              :data-type="format_type(sub)+i18n.t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
+              :data-type="format_type(sub)+i18n_t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
              -->
             <template v-if="new_main_menu_list_items[new_main_menu_index]">
               <template   v-for="(sub,sub_i) of new_main_menu_list_items[new_main_menu_index].sl||[]" >
@@ -161,7 +161,7 @@
             >
               <div class="m-menu-name-m">
                 {{
-                i18n.t(`new_menu.${m_items.mi}`) }}</div>
+                i18n_t(`new_menu.${m_items.mi}`) }}</div>
               <div class="m-count-match" v-if=" !show_favorite_list">
                 {{count_menu(m_items)}}
               </div>
@@ -176,6 +176,7 @@
 <script setup>
 // TODO: 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import setMenu from "src/project/components/common/set-menu";
 import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
 import {utils } from 'src/core/index.js';
@@ -355,7 +356,7 @@ import { UserCtr } from "src/core/index.js";
       if(menu_1_type == 28){
         return item.menuId + item.name
       }
-      return format_type(item)+i18n.t(`new_menu.${filter_meunu_desc(item.mi)}`)
+      return format_type(item)+i18n_t(`new_menu.${filter_meunu_desc(item.mi)}`)
     }
     // 进入主列表页 主菜单时，立即触发方法
     const enter_page_immediately = () => {
@@ -847,12 +848,12 @@ import { UserCtr } from "src/core/index.js";
       return ![7,8,28].includes(menu_1_type) && !mi_list.includes(+sub.mi)
     }
     /**
-     * 进入活动页
+     * 进入活动页  
      */
     const openActivity = () => {
-      if(!lodash.get(get_access_config,'activitySwitch')){
+      if(! GlobalAccessConfig.get_activitySwitch() ){
         // TODO: $toast 后续修改调整
-        $toast(i18n.t(`common.temporarily_unavailable`), 2000)
+        $toast(i18n_t(`common.temporarily_unavailable`), 2000)
         return
       }
       // TODO: router $utils 后续修改调整
@@ -1000,14 +1001,14 @@ import { UserCtr } from "src/core/index.js";
       }
     })
     // 监听滚球全部菜单，如果关闭，并且在滚球下，则隐藏全部，调整到第一个位置
-    watch(() => get_access_config.playAllShow, (n, o) => {
+    watch(() =>  GlobalAccessConfig.get_playAllShow() , (n, o) => {
         if(!n && menu_type == 1){
           sub_menu_changed(0,'dir_click');
         }
     })
   
     /**
-     * 列表滚动
+     * 列表滚动    
      */
     watch(() => get_list_scroll_top, (sc,o_sc) => {
       let scroll_y = +sc.split('-')[0];

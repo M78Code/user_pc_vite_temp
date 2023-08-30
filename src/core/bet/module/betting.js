@@ -12,7 +12,7 @@ import yabo_common from "src/core/common-helper/index.js"
 import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES  } from  "src/core/mitt/index.js"
-import {i18n} from "src/boot/i18n.js"
+import {i18n} from "src/core/index.js"
 import { UserCtr } from "src/core/index.js";
     
 
@@ -53,7 +53,7 @@ const vilidata_mix_count = (value) =>{
     }
     const min_num = _.get(UserCtr.user_info, 'configVO.minSeriesNum', 2)
     if((bet_length - (value ? 1 : 0)) < min_num){
-        set_toast({ 'txt': i18n.t('bet.match_min', [min_num]) });
+        set_toast({ 'txt': i18n_t('bet.match_min', [min_num]) });
         return false
     }else{
         return true

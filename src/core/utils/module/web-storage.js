@@ -4,131 +4,118 @@
  * @Description: 本地存储方法 提供 get(key)  set(key,value,过期时间秒) remove(key) clear 方法
  */
 import { isNumber, isNull, isUndefined } from "lodash";
+
 /**
- * 创建一个 web Storage
- * @param {*}
- * prefixKey 存储前戳 ;
- * storage localStorage||sessionStorage;
- * timeout 超时时间 秒;
- * hasEncrypt 是否加密 加密暂时没有 写 AES加密
+ * Cache class
+ * Construction parameters can be passed into sessionStorage, localStorage,
+ * @class Cache
+ * @example
  */
-export const createStorage = ({
-  prefixKey = "",
-  storage = sessionStorage,
-  timeout = null,
-  hasEncrypt = false,
-}) => {
+const WebStorage = class WebStorage {
   /**
-   * Cache class
-   * Construction parameters can be passed into sessionStorage, localStorage,
-   * @class Cache
-   * @example
+   *
+   * @param {*} storage
    */
-  const WebStorage = class WebStorage {
-    storage;
-    prefixKey;
-    encryption;
-    hasEncrypt;
-    /**
-     *
-     * @param {*} storage
-     */
-    constructor() {
-      this.storage = storage;
-      this.prefixKey = prefixKey;
-      this.encryption = {
-        encryptByAES: (e) => e,
-        decryptByAES: (e) => e,
-      };
-      this.hasEncrypt = hasEncrypt;
-    }
-    getKey(key) {
-      return `${this.prefixKey}${key}`.toUpperCase();
+  constructor({
+    prefixKey = "",
+    storage = sessionStorage,
+    timeout = null,
+    hasEncrypt = false,
+  }) {
+    this.storage = storage;
+    this.prefixKey = prefixKey;
+    this.encryption = {
+      encryptByAES: (e) => e,
+      decryptByAES: (e) => e,
+    };
+    this.hasEncrypt = hasEncrypt;
+    this.timeout = timeout;
+  }
+  getKey(key) {
+    return `${this.prefixKey}${key}`.toUpperCase();
+  }
+
+  /**
+   * Set cache
+   * @param {string} key
+   * @param {*} value
+   * @param {*} expire Expiration time in seconds
+   * @memberof Cache
+   */
+  set(key, value, expire) {
+    if (!expire) {
+      expire = this.timeout;
     }
 
-    /**
-     * Set cache
-     * @param {string} key
-     * @param {*} value
-     * @param {*} expire Expiration time in seconds
-     * @memberof Cache
-     */
-    set(key, value, expire = timeout) {
-      const stringData = JSON.stringify({
-        value,
-        time: Date.now(),
-        expire: isNumber(expire) ? new Date().getTime() + expire * 1000 : null,
-      });
-      const stringifyValue = this.hasEncrypt
-        ? this.encryption.encryptByAES(stringData)
-        : stringData;
-      this.storage.setItem(this.getKey(key), stringifyValue);
-    }
+    const stringData = JSON.stringify({
+      value,
+      time: Date.now(),
+      expire: isNumber(expire) ? new Date().getTime() + expire * 1000 : null,
+    });
+    const stringifyValue = this.hasEncrypt
+      ? this.encryption.encryptByAES(stringData)
+      : stringData;
+    this.storage.setItem(this.getKey(key), stringifyValue);
+  }
 
-    /**
-     * Read cache
-     * @param {string} key
-     * @param {*} def
-     * @memberof Cache
-     */
-    get(key, def) {
-      const val = this.storage.getItem(this.getKey(key));
-      if (!val) return def;
-      try {
-        const decVal = this.hasEncrypt
-          ? this.encryption.decryptByAES(val)
-          : val;
-        const data = JSON.parse(decVal);
-        const { value, expire } = data;
-        if (
-          isNull(expire) ||
-          isUndefined(expire) ||
-          expire >= new Date().getTime()
-        ) {
-          return value;
-        }
-        this.remove(key);
-        return def;
-      } catch (e) {
-        return def;
+  /**
+   * Read cache
+   * @param {string} key
+   * @param {*} def
+   * @memberof Cache
+   */
+  get(key, def) {
+    const val = this.storage.getItem(this.getKey(key));
+    if (!val) return def;
+    try {
+      const decVal = this.hasEncrypt ? this.encryption.decryptByAES(val) : val;
+      const data = JSON.parse(decVal);
+      const { value, expire } = data;
+      if (
+        isNull(expire) ||
+        isUndefined(expire) ||
+        expire >= new Date().getTime()
+      ) {
+        return value;
       }
+      this.remove(key);
+      return def;
+    } catch (e) {
+      return def;
     }
+  }
 
-    /**
-     * Delete cache based on key
-     * @param {string} key
-     * @memberof Cache
-     */
-    remove(key) {
-      this.storage.removeItem(this.getKey(key));
-    }
+  /**
+   * Delete cache based on key
+   * @param {string} key
+   * @memberof Cache
+   */
+  remove(key) {
+    this.storage.removeItem(this.getKey(key));
+  }
 
-    /**
-     * Delete all caches of this instance
-     */
-    clear() {
-      this.storage.clear();
-    }
-  };
-  return new WebStorage();
+  /**
+   * Delete all caches of this instance
+   */
+  clear() {
+    this.storage.clear();
+  }
 };
+ 
 /**
  * localStorage
  */
-const LocalStorage = createStorage({
+export const LocalStorage =  new WebStorage({
   storage: localStorage,
   prefixKey: "__",
 });
 /**
  * sessionStorage
  */
-const SessionStorage = createStorage({
+export const SessionStorage = new WebStorage({
   storage: sessionStorage,
   prefixKey: "__",
 });
-export {
-  SessionStorage,
-  LocalStorage,
-  LocalStorage as ls,
-  SessionStorage as ss,
-};
+
+ 
+ 

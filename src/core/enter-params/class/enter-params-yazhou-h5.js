@@ -1,5 +1,5 @@
-import { Qs } from "../utils/Qs";
-import { ls } from "src/core/utils/web-storage.js";
+import { Qs } from "src/core/index.js";
+import { LocalStorage } from "src/core/index.js";
 import menu_obj from "src/core/menu-h5/menu-data-class.js";
 import lodash from "lodash";
 import { UserCtr } from "src/core/index.js";
@@ -34,7 +34,7 @@ class EnterParamsYazhouH5 {
   }
   init() {
     // 设置商户信息
-    let gr = ls.get("gr");
+    let gr = LocalStorage.get("gr");
     // 首屏loading动画是否显示使用的延时器
     this.loading_is_show_timer = 0;
     this.app_init_loading = true;
@@ -308,7 +308,7 @@ class EnterParamsYazhouH5 {
   analyze() {
     //设置国际化
     if (Qs.lang) {
-      ls.set("lang", Qs.lang);
+      LocalStorage.set("lang", Qs.lang);
     }
     // gotohash={体育类型}-{赛事id}-{联赛tid}-{球种csid}
     const gotohashList = (Qs.gotohash || "sports-2267075-239-1").split("-");
@@ -326,7 +326,7 @@ class EnterParamsYazhouH5 {
     }
     // 用户token
     if (Qs.token) {
-      ls.set("token", Qs.token);
+      LocalStorage.set("token", Qs.token);
     }
     //是否展示首页页面1 代表去掉H5页面首页模块 不传则代表需要使用H5 页面的首页模块
     if (Qs.sy) {

@@ -3,8 +3,10 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: ws 消息队列
  */
-const Queue = require('licia/Queue');
-const sleep = require('licia/sleep');
+ 
+
+import sleep from  "licia/sleep"  
+import Queue from  "licia/Queue"  
 export default class WsQueue {
   /**
    * @Description:构造函数

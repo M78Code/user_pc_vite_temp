@@ -17,7 +17,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
-import { i18n } from "src/boot/i18n";
+import { i18n_t} from "src/core/index.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 let get_accept_show = ref(false); // 接受更好赔率变化 弹窗

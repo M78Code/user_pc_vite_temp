@@ -2,53 +2,53 @@
   <div class="odds q-pb-md">
     <div class="tab">
       <!-- 让球 -->
-      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ i18n.t('analysis.rangqiu') }}</span>
+      <span :class="{ 'active': tabIndex == 1 }" @click="tabClick(1)">{{ $t('analysis.rangqiu') }}</span>
       <!-- 欧指 -->
-      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ i18n.t('analysis.European_Finger') }}</span>
+      <span :class="{ 'active': tabIndex == 2 }" @click="tabClick(2)">{{ $t('analysis.European_Finger') }}</span>
       <!-- 大小 -->
-      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ i18n.t('analysis.size') }}</span>
+      <span :class="{ 'active': tabIndex == 3 }" @click="tabClick(3)">{{ $t('analysis.size') }}</span>
     </div>
 
     <div class="panel">
       <!-- 大小  胜平负  让球 -->
-      <div class="panel-title">{{ tabIndex == 3 ? i18n.t('analysis.size') : tabIndex == 2 ?
-        i18n.t('analysis.odds_title') : i18n.t('analysis.rangqiu') }}</div>
+      <div class="panel-title">{{ tabIndex == 3 ? i18n_t('analysis.size') : tabIndex == 2 ?
+        i18n_t('analysis.odds_title') : i18n_t('analysis.rangqiu') }}</div>
       <div class="d-header d-tr  relative-position">
         <template v-if="tabIndex == 1">
           <!-- 公司 -->
-          <div class="d-td">{{ i18n.t('analysis.company') }}</div>
+          <div class="d-td">{{ $t('analysis.company') }}</div>
           <!-- 主胜 -->
-          <div class="d-td">{{ i18n.t('analysis.Main_win') }}</div>
+          <div class="d-td">{{ $t('analysis.Main_win') }}</div>
           <!-- 盘口 -->
-          <div class="d-td">{{ i18n.t('analysis.handicap') }}</div>
+          <div class="d-td">{{ $t('analysis.handicap') }}</div>
           <!-- 客胜 -->
-          <div class="d-td">{{ i18n.t('analysis.away_win') }}</div>
+          <div class="d-td">{{ $t('analysis.away_win') }}</div>
         </template>
         <template v-if="tabIndex == 2">
           <!-- 公司 -->
-          <div class="d-td">{{ i18n.t('analysis.company') }}</div>
+          <div class="d-td">{{ $t('analysis.company') }}</div>
           <!-- 主胜 -->
-          <div class="d-td">{{ i18n.t('analysis.Main_win') }}</div>
+          <div class="d-td">{{ $t('analysis.Main_win') }}</div>
           <!-- 平 -->
-          <div class="d-td">{{ i18n.t('analysis.flat') }}</div>
+          <div class="d-td">{{ $t('analysis.flat') }}</div>
           <!-- 客胜 -->
-          <div class="d-td">{{ i18n.t('analysis.away_win') }}</div>
+          <div class="d-td">{{ $t('analysis.away_win') }}</div>
           <!-- 主胜率 -->
-          <div class="d-td">{{ i18n.t('analysis.Main_win_rate') }}</div>
+          <div class="d-td">{{ $t('analysis.Main_win_rate') }}</div>
           <!-- 客胜率 -->
-          <div class="d-td">{{ i18n.t('analysis.Customer_win_rate') }}</div>
+          <div class="d-td">{{ $t('analysis.Customer_win_rate') }}</div>
           <!-- 返还率 -->
-          <div class="d-td">{{ i18n.t('analysis.Return_rate') }}</div>
+          <div class="d-td">{{ $t('analysis.Return_rate') }}</div>
         </template>
         <template v-if="tabIndex == 3">
           <!-- 公司 -->
-          <div class="d-td">{{ i18n.t('analysis.company') }}</div>
+          <div class="d-td">{{ $t('analysis.company') }}</div>
           <!-- 大 -->
-          <div class="d-td">{{ i18n.t('analysis.big') }}</div>
+          <div class="d-td">{{ $t('analysis.big') }}</div>
           <!-- 盘口 -->
-          <div class="d-td">{{ i18n.t('analysis.handicap') }}</div>
+          <div class="d-td">{{ $t('analysis.handicap') }}</div>
           <!-- 小 -->
-          <div class="d-td">{{ i18n.t('analysis.small') }}</div>
+          <div class="d-td">{{ $t('analysis.small') }}</div>
         </template>
       </div>
 
@@ -58,7 +58,7 @@
         <div class="content">
           <div class="handicap-before">
             <!-- 初盘 -->
-            <span class="d-td timer">{{ i18n.t('analysis.Initial_offer') }}</span>
+            <span class="d-td timer">{{ $t('analysis.Initial_offer') }}</span>
             <span class="d-td">{{ _.get(item, "handicapOddsDTOList[0].value0") }}</span>
             <span class="d-td">{{ _.get(item, "handicapOddsDTOList[0].handicapVal") }}</span>
             <span class="d-td">{{ _.get(item, "handicapOddsDTOList[0].value") }}</span>
@@ -70,7 +70,7 @@
           </div>
           <div class="handicap-now">
             <!-- 即时 -->
-            <p class="d-td timer">{{ i18n.t('analysis.immediate') }}</p>
+            <p class="d-td timer">{{ $t('analysis.immediate') }}</p>
             <p class="d-td" :class="stateClass(item, 'value0')">
               <span>{{ _.get(item, "handicapOddsDTOList[1].value0") }}</span>
             </p>

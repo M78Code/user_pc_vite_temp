@@ -27,7 +27,7 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"

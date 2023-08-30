@@ -23,7 +23,7 @@
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
 import store from "src/store-redux/index.js";
 // import search from "src/core/search-class/search.js"

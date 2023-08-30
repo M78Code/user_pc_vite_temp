@@ -1,5 +1,5 @@
 import { isDate } from "lodash";
-import { t } from "src/boot/i18n"
+import { t } from "src/core/index.js"
 import ServerTime from  "src/core/server-time/server-time.js"
  
  
@@ -292,11 +292,11 @@ export const format_date_by_manage = (value) => {
   let h = (time.getHours() + "").padStart(2, 0);
   let mm = (time.getMinutes() + "").padStart(2, 0);
   let s = (time.getSeconds() + "").padStart(2, 0);
-  let arr = i18n.t("time.time_date_week"); // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  let arr = i18n_t("time.time_date_week"); // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   let i = time.getDay();
   let weekday = arr[i];
   // return `${m}月${d}日 (${weekday})`;
-  return licia_format(i18n.t("time.time_date_2"), m, d, arr[i]);
+  return licia_format(i18n_t("time.time_date_2"), m, d, arr[i]);
 };
 export const format_day = (value, separator = "/") => {
   if (!value) {
@@ -336,7 +336,7 @@ export const format_week = (value) => {
   // let arr = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
   let i = new Date(parseInt(value)).getDay();
   // return a[i];
-  return i18n.t("time.time_date_week")[i];
+  return i18n_t("time.time_date_week")[i];
 };
 /**
  * @Description 时间戳转星期
@@ -345,7 +345,7 @@ export const format_week = (value) => {
  */
 export const format_week2 = (value) => {
   let i = new Date(parseInt(value)).getDay();
-  return i18n.t("time.time_date_week_3")[i];
+  return i18n_t("time.time_date_week_3")[i];
 };
 export const utc_to_gmt_8 = (value) => {
   if (!value) {
@@ -404,9 +404,9 @@ export const utc_to_label_show = (value) => {
   let time_local = new Date().getTime();
   if (time > time_local) {
     let cha_m = Math.floor((time - time_local) / (60 * 1000));
-    str = `${cha_m}` + i18n.t("match_info.after_start"); //分钟后开始
+    str = `${cha_m}` + i18n_t("match_info.after_start"); //分钟后开始
   } else {
-    str = i18n.t("match_info.match_playing"); //`已开赛`
+    str = i18n_t("match_info.match_playing"); //`已开赛`
   }
   return str;
 };
@@ -419,9 +419,9 @@ export const gmt_to_label_show = (value) => {
   let time_local = new Date().getTime();
   if (time > time_local) {
     let cha_m = Math.floor((time - time_local) / (60 * 1000));
-    str = `${cha_m}` + i18n.t("match_info.after_start"); //分钟后开始
+    str = `${cha_m}` + i18n_t("match_info.after_start"); //分钟后开始
   } else {
-    str = i18n.t("match_info.match_playing"); //`已开赛`
+    str = i18n_t("match_info.match_playing"); //`已开赛`
   }
   return str;
 };

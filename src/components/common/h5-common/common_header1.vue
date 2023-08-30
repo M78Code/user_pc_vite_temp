@@ -39,7 +39,7 @@ import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'
 import {api_common} from "src/project/api";
 import {utils } from 'src/core/index.js';
 import lodash from 'lodash'
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 // 接受父组件传递的数据
 const props = defineProps({
     // 联赛名
@@ -96,10 +96,10 @@ const props = defineProps({
       // 收藏赛事或取消收藏
       if (match_obj.mf) {
         //'取消';
-        txt = i18n.t('common.cancel');
+        txt = i18n_t('common.cancel');
       } else {
         //'收藏';
-        txt = i18n.t('collect.betted_title');
+        txt = i18n_t('collect.betted_title');
       }
       favorite_loading = true;
       // 更新收藏状态

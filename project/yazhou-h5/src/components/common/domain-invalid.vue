@@ -21,8 +21,8 @@
 <script setup>
 import { computed } from 'vue'
 // TODO:
-import { invalid_url } from 'src/core/utils/index.js'
-import { t } from "src/boot/i18n";;
+import { invalid_url } from 'src/core/index.js'
+import { t } from "src/core/index.js";;
 //国际化
 
 

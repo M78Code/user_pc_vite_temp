@@ -40,7 +40,7 @@ import {api_analysis} from "src/api/index.js";
 // import noData from "project_path/src/components/common/no-data.vue";
 import { ref, computed, onUnmounted, onMounted } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
   // components: {
   //   "public-form": public_form,

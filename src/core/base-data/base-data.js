@@ -3,7 +3,7 @@
 // 电竞球种 menu_id 规则 ：2000  +对应球种 id   csid  2000 + 100   =2100   英雄联盟
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
-import { i18n } from "src/boot/i18n";
+import { i18n_t} from "src/core/index.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 //   约定 四个 值

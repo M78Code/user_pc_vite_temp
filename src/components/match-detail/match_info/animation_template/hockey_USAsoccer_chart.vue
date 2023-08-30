@@ -22,7 +22,7 @@
             <span class="text-blue">{{chart_left.away}}</span>
           </div>
           <!-- 大罚 ：冲球数 -->
-          <div class="text-c"> {{is_hockey?i18n.t('common.big_penalty'):i18n.t('common.rushing_num')}}</div>
+          <div class="text-c"> {{is_hockey?i18n_t('common.big_penalty'):i18n_t('common.rushing_num')}}</div>
         </div>
 
         <div class="round-item">
@@ -40,7 +40,7 @@
             <span class="text-blue">{{chart_center.away}}</span>
           </div>
           <!-- 射门 -->
-          <div class="text-c"> {{i18n.t('common.shot_num')}}</div>
+          <div class="text-c"> {{ $t('common.shot_num')}}</div>
         </div>
 
         <div class="round-item">
@@ -58,13 +58,13 @@
             <span class="text-blue">{{chart_right.away}}</span>
           </div>
           <!-- 小罚：进攻数 -->
-          <div class="text-c"> {{is_hockey?i18n.t('common.micro_penalty'):i18n.t('common.offense_num')}}</div>
+          <div class="text-c"> {{is_hockey?i18n_t('common.micro_penalty'):i18n_t('common.offense_num')}}</div>
         </div>
       </div>
       <!-- 达阵比分 -->
       <div class="wrap-down" v-if="!is_hockey">
         <!-- 达阵 -->
-        <div class="text-c"> {{i18n.t('common.touchdown')}}</div>
+        <div class="text-c"> {{ $t('common.touchdown')}}</div>
         <div class="chart-bar">
           <span class="text-orange">{{_.get(match_info, 'msc.S6014.home')||0}}</span>
           <div class="bar-progress relative-position">

@@ -32,7 +32,7 @@ import { defineComponent, ref } from 'vue'
 import teamImg from "src/project/components/details/team-img";
  // 伤停情况列表
 import injuryForm from "src/project/pages/details/analysis-matches/components/injury-form";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

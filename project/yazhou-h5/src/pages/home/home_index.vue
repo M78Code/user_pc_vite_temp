@@ -26,12 +26,12 @@
 </template>
 
 <script setup>
-import {mapActions, mapGetters,mapMutations} from "vuex";
-import home from "src/project/pages/home/first_page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
+ 
+import home from "./first_page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 import setMenu from "src/project/components/common/set_menu"; // 设置
 import hot from "src/project/pages/home/hot/index";    // 热门页入口主页面
 import live_video from "src/project/pages/home/live_video/index.vue";
-import { loadLanguageAsync } from "boot/i18n";
+import { loadLanguageAsync } from "src/core/index.js";
 import router_mixins from "src/project/mixins/router_mixins.js";
 import {utils } from 'src/core/index.js';
 import { onUnmounted, watch } from "vue";
@@ -60,17 +60,17 @@ import { UserCtr } from "src/core/index.js";  // mixins: [router_mixins],
       let res = [];
         let tabList_ = [{
             index: 0,
-            name: i18n.t('home.home'),
+            name: i18n_t('home.home'),
             component: 'home'
           },
           {
             index: 1,
-            name: i18n.t('home.hot'),
+            name: i18n_t('home.hot'),
             component: 'hot'
           },
           {
             index: 2,
-            name: i18n.t('home.live_video'),
+            name: i18n_t('home.live_video'),
             component: 'live_video'
           }
         ];
@@ -79,12 +79,12 @@ import { UserCtr } from "src/core/index.js";  // mixins: [router_mixins],
           tabList_ = [
             {
               index: 0,
-              name: i18n.t('home.home'),
+              name: i18n_t('home.home'),
               component: 'home'
             },
             {
               index: 1,
-              name: i18n.t('home.live_video'),
+              name: i18n_t('home.live_video'),
               component: 'live_video'
             }
           ]

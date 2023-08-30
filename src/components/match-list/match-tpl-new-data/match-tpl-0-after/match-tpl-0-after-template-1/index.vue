@@ -107,11 +107,11 @@
 // mixins: [match_item_mixin],
 import { ref, computed, watch } from 'vue';
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { get_match_status } from 'src/core/utils/index.js'
+import { get_match_status } from 'src/core/index.js'
 import { utils_info } from 'src/core/utils/match-list-utils.js';
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(this.match_list_card, `all_card_obj.mid_${this.mid}`, {}));

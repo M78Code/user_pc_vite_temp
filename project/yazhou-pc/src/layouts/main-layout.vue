@@ -295,7 +295,7 @@ import {
 } from "vue";
 import { get, isEmpty, cloneDeep, isArray } from "lodash";
 import store from "src/store-redux/index.js";
-
+import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import base_data from "src/core/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
 import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
@@ -304,7 +304,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { useEventListener } from "src/core/utils/event-hook";
 import {utils } from 'src/core/index.js';
 import { useRoute } from "vue-router";
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";

@@ -11,7 +11,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 //国际化
 
 

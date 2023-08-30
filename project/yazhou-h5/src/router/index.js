@@ -4,9 +4,9 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      // redirect: {
-      //   name: 'router_url'
-      // },
+      redirect: {
+        name: 'home'
+      },
       name: "main",
       component: () => import("project_path/src/layouts/MainLayout.vue"),
       children: [
@@ -18,16 +18,16 @@ const router = createRouter({
               keepAlive: true // 需要缓存
             },
           },
-        //   {
-        //     path: "/home",
-        //     name: "home",
-        //     component: () => import("project/yazhou-h5/src/pages/home/home_index.vue")
-        //   },
-        //   {
-        //     path: "/activity_task",
-        //     name: "activity_task",
-        //     component: () => import("project_path/src/activity_page/activity_task/index.vue")
-        //   },
+          {
+            path: "/home",
+            name: "home",
+            component: () => import("project_path/src/pages/home/home_index.vue")
+          },
+          {
+            path: "/activity_task",
+            name: "activity_task",
+            component: () => import("project_path/src/activity_page/activity_task/index.vue")
+          },
         {
           path: "/virtual",
           name: "virtual_sports",

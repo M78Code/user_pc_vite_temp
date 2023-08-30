@@ -91,7 +91,7 @@
           <!-- 已完赛 -->
           <div :style="{visibility: ![1002, 1011, 1010, 1009].includes(sub_menu_type) ? 'hidden':'visible'}"
             v-if="source != 'detail'"
-            class="match-over">{{i18n.t('collect.match_end')}}</div>
+            class="match-over">{{ $t('collect.match_end')}}</div>
           <div v-for="(score,i) in get_score_list()" :key="i">
             <div class="score-box row justify-center items-center" :class="get_rank_background(score,sub_menu_type)"></div>
           </div>
@@ -103,7 +103,7 @@
             <img v-img="([lodash.get(current_match,'mhlu'), lodash.get(current_match,'frmhn')])" />
           </div>
           <div class="msc-wrap yb-flex-center">
-            <div class="match-end">{{i18n.t('collect.match_end')}}</div>
+            <div class="match-end">{{ $t('collect.match_end')}}</div>
             <div class="match-msc">
               <span>{{home_score}}</span>
               <span class="heng">-</span>
@@ -115,7 +115,7 @@
                 class="match-msc match-penalty"
             >
               <!--<span>-->
-              <!--  {{i18n.t('mmp[1][50]')}}:&nbsp;-->
+              <!--  {{ $t('mmp[1][50]')}}:&nbsp;-->
               <!--</span>-->
               <i class="icon icon-penalty"></i>
               <div class="penalty-score">
@@ -261,9 +261,9 @@ export default defineComponent({
       // 下一轮赛事开赛倒计时时钟
     next_match_timer = 0;
     // 轮号国际化字符串
-    next_batch_no = i18n.t('virtual_sports.next_batch_no');
+    next_batch_no = i18n_t('virtual_sports.next_batch_no');
     // 期号国际化字符串
-    next_date_no = i18n.t('virtual_sports.next_date_no');
+    next_date_no = i18n_t('virtual_sports.next_date_no');
 
     // #TODO EMIT 事件
     emitters = [

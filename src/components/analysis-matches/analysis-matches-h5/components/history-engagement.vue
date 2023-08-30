@@ -6,7 +6,7 @@
 <template>
   <div class="history_engagement" v-if="historical_engagement_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ i18n.t('analysis_football_matches.historical_war') }}</span>
+      <span class="title ellipsis">{{ $t('analysis_football_matches.historical_war') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index"
            :class="{active:if_the_selected[index]}"
@@ -27,7 +27,7 @@
     </div>
     <!--<div class="team-recent ellipsis">
       <span class="ellipsis">{{ get_detail_data.mhn }}</span>
-      <span>{{i18n.t(`analysis_football_matches.record_clashes[${tab_radio_button[radio_button_index].index}]`)}}</span>
+      <span>{{ $t(`analysis_football_matches.record_clashes[${tab_radio_button[radio_button_index].index}]`)}}</span>
       <span class="ellipsis">{{ get_detail_data.man }}</span>
     </div>
     <div class="success_or_failure">
@@ -64,19 +64,19 @@ import { useRoute } from 'vue-router'
   const isoptions = ref(false)
   const progress_bar = ref(false)
   const tab_radio_button = ref([
-    {name: `${i18n.t('analysis_football_matches.near')}5`, index: 5 },
-    {name: `${i18n.t('analysis_football_matches.near')}10`, index: 10 },
-    {name: `${i18n.t('analysis_football_matches.near')}15`, index: 15 },
+    {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
+    {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
+    {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
   ])
   const records_list = ref([
-    {success: 0, name: i18n.t('analysis_football_matches.victory')},
-    {flat: 0, name: i18n.t('analysis_football_matches.flat')},
-    {lose: 0, name: i18n.t('analysis_football_matches.negative')},
+    {success: 0, name: i18n_t('analysis_football_matches.victory')},
+    {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+    {lose: 0, name: i18n_t('analysis_football_matches.negative')},
   ])
   const if_the_selected = ref([false, false])
   const tab_check_box = ref([
-    i18n.t('analysis_football_matches.same_game'),
-    i18n.t('analysis_football_matches.same_host_guest')
+    i18n_t('analysis_football_matches.same_game'),
+    i18n_t('analysis_football_matches.same_host_guest')
   ])
   const flag = ref(0)
   const cps = ref(5)
@@ -108,9 +108,9 @@ import { useRoute } from 'vue-router'
       if(code == 200 && data ) {
         records_list = [
           // TODO: 国际化修改后调整
-          {success: 0, name: i18n.t('analysis_football_matches.victory')},
-          {flat: 0, name: i18n.t('analysis_football_matches.flat')},
-          {lose: 0, name: i18n.t('analysis_football_matches.negative')},
+          {success: 0, name: i18n_t('analysis_football_matches.victory')},
+          {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+          {lose: 0, name: i18n_t('analysis_football_matches.negative')},
         ]
         data.forEach( (item) => {
           if(item.result == 4){
@@ -165,19 +165,19 @@ import { useRoute } from 'vue-router'
     isoptions = false
     progress_bar = false
     tab_radio_button = [
-      {name: `${i18n.t('analysis_football_matches.near')}5`, index: 5 },
-      {name: `${i18n.t('analysis_football_matches.near')}10`, index: 10 },
-      {name: `${i18n.t('analysis_football_matches.near')}15`, index: 15 },
+      {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
+      {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
+      {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
     ]
     records_list = [
-      {success: 0, name: i18n.t('analysis_football_matches.victory')},
-      {flat: 0, name: i18n.t('analysis_football_matches.flat')},
-      {lose: 0, name: i18n.t('analysis_football_matches.negative')},
+      {success: 0, name: i18n_t('analysis_football_matches.victory')},
+      {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+      {lose: 0, name: i18n_t('analysis_football_matches.negative')},
     ]
     if_the_selected = [false, false]
     tab_check_box = [
-      i18n.t('analysis_football_matches.same_game'),
-      i18n.t('analysis_football_matches.same_host_guest')
+      i18n_t('analysis_football_matches.same_game'),
+      i18n_t('analysis_football_matches.same_host_guest')
     ]
     flag = 0
     cps = 5

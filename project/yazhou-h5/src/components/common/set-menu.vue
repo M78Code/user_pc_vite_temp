@@ -127,7 +127,7 @@ import { UserCtr } from "src/core/index.js"
 import { format_money2 } from "src/core/format/index.js"
 import lodash from 'lodash'
 import { format_money2 } from "src/core/format/index.js"
-import { i18n, loadLanguageAsync } from 'src/boot/i18n'
+import { i18n, loadLanguageAsync } from 'src/core/index.js'
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute, useRouter } from "vue-router"

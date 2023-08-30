@@ -75,7 +75,7 @@
 import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lodash from 'lodash'
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 /** 组件 */
 import maintenanceTip from 'project_path/src/components/site-header/maintenance-tip.vue'
 import { TabWapper as Tab } from "src/components/common/tab"
@@ -89,7 +89,7 @@ import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { ss } from 'src/core/utils/web-storage.js'
+import { SessionStorage  } from 'src/core/index.js.js'
 import userCtr from 'src/core/user-config/user-ctr.js'
 import { format_money2 } from "src/core/format/index.js"
 
@@ -262,7 +262,7 @@ onBeforeMount(clear_timer)
 
 /** 初始化 */
 function init() {
-    is_hide_icon.value = ss.get('hide_logo_icon') === "1";
+    is_hide_icon.value = SessionStorage .get('hide_logo_icon') === "1";
     set_current_index()
 }
 onMounted(init)

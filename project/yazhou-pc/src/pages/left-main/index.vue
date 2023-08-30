@@ -18,7 +18,7 @@
             <!-- <img class="hot-icon"  src="~public/image/yabo/png/bet-record.png" /> -->
             <div class="col">
               投注记录
-              <!-- {{ i18n.t("common.betting_record") }} -->
+              <!-- {{ $t("common.betting_record") }} -->
             </div>
             <span class="bet-count" v-show="count > 0">{{ count }}</span>
           </div>
@@ -26,14 +26,14 @@
           <template v-if="show_bet_menu && !['bet_history'].includes(layout_left_show)">
             <div @click="change_left_menu('bet_list')" class="menu-item menu-top item-bet menu-border">
               <span class="text">
-                <!-- {{i18n.t("bet.bet_my_count")}} -->
+                <!-- {{ $t("bet.bet_my_count")}} -->
               </span>
               <!-- <span class="bet-count">{{ bet_count }}</span> -->
               <!-- <span class="text">
               <template v-if="is_bet_single && ['today','play','early','hot_one','winner_top','hot'].includes(cur_menu_type.type_name)">{{
-                i18n.t("bet.bet_one")
+                i18n_t("bet.bet_one")
               }}</template>
-              <template v-else-if="cur_menu_type.type_name=='bet'">{{ i18n.t("bet.bet_n") }}</template>
+              <template v-else-if="cur_menu_type.type_name=='bet'">{{ $t("bet.bet_n") }}</template>
             </span>
             <span class="bet-count">{{ bet_count }}</span> -->
             </div>
@@ -83,7 +83,7 @@
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]" target="#merge-info"
       v-if="show_merge_info">
       <div style="width:170px;min-height:60px;padding-top:5px;padding-bottom:10px;padding-left:5px;word-break:break-all;">
-        <!-- {{i18n.t('bet.merge_info')}} -->
+        <!-- {{ $t('bet.merge_info')}} -->
       </div>
     </q-tooltip>
   </div>

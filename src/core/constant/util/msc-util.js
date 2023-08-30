@@ -1,4 +1,4 @@
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { format_msc } from 'src/core/format/index.js'
 
 export const mmp_map = () => {

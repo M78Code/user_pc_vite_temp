@@ -8,9 +8,9 @@ import { get } from "lodash";
 import { wslog } from "../log/";
 import AxiosiInterceptors, { ParseUrl } from "./axios-interceptors"; //拦截器
 import { compute_request_config_by_config } from "./debounce-module/";
-import { usePageVisibilityChange } from "../utils/event-hook";
+import { usePageVisibilityChange } from "src/core/utils/module/event-hook.js";
 import domain from "./domain";
-import { ss } from "../utils/web-storage";
+import { SessionStorage  } from "src/core/index.js";
 // import ws from "../ws/ws.js";
 
 import STANDARD_KEY from "src/core/standard-key";
@@ -134,23 +134,23 @@ class AxiosHttp {
     console.log("api_domain", api_domain);
     if (!api_domain) {
       //session 缓存的 是否 因为设置页面API 域名错误 刷新过
-      let has_reload = ss.get("set_root_domain_error_force_reload");
+      let has_reload = SessionStorage .get("set_root_domain_error_force_reload");
       console.log("has_reload", has_reload);
       //不清楚，页面强缓存，唤醒的时候 session 是否还存在
       if (!has_reload) {
         // 只做一次尝试  ，直接走OSS 文件 流程  ，刷新页面  ，不能多次 避免 异常情况下 无限刷新
-        ss.set("set_root_domain_error_force_reload", "1");
+        SessionStorage .set("set_root_domain_error_force_reload", "1");
         force_current_api_flow_use_oss_file_api_reload();
       } else {
         //如果有缓存过刷新
         //session 缓存 有东西 缓存说刷新过
         // session  缓存的 最快域名
-        let best_api = ss.get("best_api") || "";
-        let gr = ss.get("gr");
+        let best_api = SessionStorage .get("best_api") || "";
+        let gr = SessionStorage .get("gr");
         let domain_api = domain.get_save_domain_api();
         if (!gr) {
           gr = BUILDIN_CONFIG.DOMAIN_RESULT.gr || "COMMON";
-          ss.set("gr", gr);
+          SessionStorage .set("gr", gr);
         }
         if (best_api) {
           // 缓存   有  最快域名
@@ -170,7 +170,7 @@ class AxiosHttp {
           } else {
             // 什么都没有的 补偿刷新一次  或者两次
             if (has_reload < 4) {
-              ss.set("set_root_domain_error_force_reload", has_reload + 1);
+              SessionStorage .set("set_root_domain_error_force_reload", has_reload + 1);
               force_current_api_flow_use_oss_file_api_reload();
             } else {
               // 正常的走到 释放页面 的步骤 ，就是 wifi 图标 必须刷新页面才行的 那种
@@ -181,7 +181,7 @@ class AxiosHttp {
     } else {
       // 有 api_domain
       // 去除垃圾数据  ，避免长时间 挂机或者 safari 的 强缓存机制 再次影响到 页面 流程
-      ss.get("set_root_domain_error_force_reload");
+      SessionStorage .get("set_root_domain_error_force_reload");
     }
     this.axios_instance.defaults.baseURL = api_domain;
     this.axios_instance.prototype.HTTP_ROOT_DOMAIN = api_domain;

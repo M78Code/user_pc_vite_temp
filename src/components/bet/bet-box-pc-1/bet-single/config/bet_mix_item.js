@@ -164,11 +164,11 @@ export default defineComponent({
         // 盘口名称值存在
         if (hsw.includes(odds_table[BetData.cur_odd])) {
           // 盘口类型
-          return `[${i18n.t('odds')[BetData.cur_odd]}]`;
+          return `[${i18n_t('odds')[BetData.cur_odd]}]`;
         }
       }
       // 欧洲盘
-      return `[${i18n.t('odds')['EU']}]`;
+      return `[${i18n_t('odds')['EU']}]`;
     })
     /**
      * @description: 盘口值
@@ -507,7 +507,7 @@ export default defineComponent({
         // 设置错误码
         this.view_ctr_obj.error_code = "0400477";
         // 设置提示信息
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
       }
     },
       {
@@ -548,7 +548,7 @@ export default defineComponent({
           // 设置错误码
           this.view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         }
       },
       {
@@ -674,7 +674,7 @@ export default defineComponent({
       // 可以串关并且为不是封盘或者关盘状态且没有无效的投注项
       if (is_serial && active != 2 && active != 3 && count == 0) {
         // 设置错误信息
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         // 获取错误信息延迟显示的时间
         let delay = this.error_mapping.ERROR_CODE_DELAY[this.view_ctr_obj.error_code];
         // console.log(`===============333333333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
@@ -699,7 +699,7 @@ export default defineComponent({
           this.view_ctr_obj.error_code = "0402022";
         }
         // 设置提示信息
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
         // console.log(`===============44444444=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);   
         // 3s后取消提示信息    
         timer_obj['message'].value = setTimeout(() => {

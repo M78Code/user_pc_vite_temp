@@ -48,9 +48,9 @@ const query_order = () => {
             if (BetData.get_new_bet) {
                 SetData.set_bet_status(1);
                 BetData.mixnew_bet = true;
-                BetData.tips_msg = i18n.t('bet.err_msg03') //单关新流程失败后的 对应queryOrderStatus接口的红字提示
+                BetData.tips_msg = i18n_t('bet.err_msg03') //单关新流程失败后的 对应queryOrderStatus接口的红字提示
                 SetData.set_toast({
-                    'txt': i18n.t('bet.bet_err'),
+                    'txt': i18n_t('bet.bet_err'),
                     hide_time: 3000
                 });
             } else {

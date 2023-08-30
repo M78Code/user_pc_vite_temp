@@ -109,24 +109,24 @@ export default defineComponent({
     const footer_sub_m_list = computed(() => {
       return [
         {
-          title:this.get_lang=='en'?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.win_alone'),
+          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.win_alone'),
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
           icon1:'f-icon-sub-duying-black.svg',
           id:1   // hpid 独赢
         },
         {
-          title:this.get_lang=='en'?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.rangqiu'),
+          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.rangqiu'),
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
           icon1:'f-icon-sub-rang-black.svg',
           id:4    // hpid 让球
         },
         {
-          title:this.get_lang=='en'?'':i18n.t('footer_menu.full_time'),
-          title1:i18n.t('footer_menu.daxiao'),
+          title:this.get_lang=='en'?'':i18n_t('footer_menu.full_time'),
+          title1:i18n_t('footer_menu.daxiao'),
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',
           icon1:'f-icon-sub-daxiao-black.svg',

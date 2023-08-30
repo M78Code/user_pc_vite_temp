@@ -7,8 +7,8 @@
  *
  */
 import { onBeforeUnmount, ref, watch, unref } from "vue";
-import { isFunction } from "lodash";
-import { debounce, throttle } from "lodash";
+import  lodash from "lodash";
+ 
 /**
  * 劫持tab页 visibilityChange显示事件
  * @param {function} visible
@@ -21,10 +21,10 @@ function usePageVisibilityChange(visible, hidden) {
     listener: () => {
       switch (document.visibilityState) {
         case "visible":
-          isFunction(visible) && visible();
+          lodash.isFunction(visible) && visible();
           break;
         case "hidden":
-          isFunction(hidden) && hidden();
+          lodash.isFunction(hidden) && hidden();
           break;
       }
     },
@@ -70,7 +70,7 @@ function useOpenWithPostMessage({
     // 我们能相信信息的发送者吗？(也许这个发送者和我们最初打开的不是同一个页面).
     //只有当前才可以通讯
     if (event.origin !== this_origin) return;
-    isFunction(message) && message(event);
+    lodash.isFunction(message) && message(event);
   }
   const remove = useEventListener({
     name: "message",
@@ -79,14 +79,14 @@ function useOpenWithPostMessage({
   });
   instance.onload = function () {
     console.log("window.open loaded");
-    isFunction(load) && load();
+    lodash.isFunction(load) && load();
   };
   instance.onunload = function () {
-    isFunction(unload) && unload();
+    lodash.isFunction(unload) && unload();
     remove();
   };
   instance.onerror = function () {
-    isFunction(error) && error();
+    lodash.isFunction(error) && error();
     remove();
   };
   return { postMessage: instance.postMessage, instance, remove };
@@ -120,9 +120,14 @@ function useEventListener({
     const handler =
       wait == 0
         ? listener
-        : isDebounce
-        ? debounce(listener, wait, config)
-        : throttle(listener, wait, config);
+        : (isDebounce
+          ? lodash.debounce(listener, wait, config)
+          : lodash.throttle(listener, wait, config)
+          );
+
+
+
+
     const realHandler = wait ? handler : listener;
     const removeEventListener = (e) => {
       isAddRef.value = true;

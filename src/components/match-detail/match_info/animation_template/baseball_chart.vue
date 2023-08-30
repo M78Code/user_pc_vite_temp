@@ -16,7 +16,7 @@
 						<div class="round-item" :class="{'is_get':_.get(match_info,'mbkn')>=4}"></div>
 					</div>
 					<!-- 坏球 S3012-->
-					<div class="desc">{{i18n.t('common.worse')}} {{_.get(match_info,"mbkn")}}</div>
+					<div class="desc">{{ $t('common.worse')}} {{_.get(match_info,"mbkn")}}</div>
 				</div>
 
 				<!-- 菱形 -->
@@ -30,7 +30,7 @@
 						<div class="rhombus-item" :class="{'is_get':_.get(match_info,'mbthlp')*1}"></div>
 					</div>
 					<!-- 上垒 S3013-->
-					<div class="desc">{{i18n.t('common.on_base')}}</div>
+					<div class="desc">{{ $t('common.on_base')}}</div>
 				</div>
 
 				<div class="chart-round">
@@ -40,7 +40,7 @@
 						<div class="round-item" :class="{'is_get':_.get(match_info,'mbhn')>=3}"></div>
 					</div>
 					<!-- 好球 S3011-->
-					<div class="desc">{{i18n.t('common.good_shot')}} {{_.get(match_info,"mbhn")}}</div>
+					<div class="desc">{{ $t('common.good_shot')}} {{_.get(match_info,"mbhn")}}</div>
 				</div>
 			</div>
 			<!-- 上部分 E-->
@@ -53,7 +53,7 @@
 					<div class="line-item" :class="{'is_get':_.get(match_info,'mbcn')>=3}"></div>
 				</div>
 				<!-- 出局 S3014-->
-				<div class="desc">{{i18n.t('common.out')}} {{_.get(match_info,"mbcn")}}</div>
+				<div class="desc">{{ $t('common.out')}} {{_.get(match_info,"mbcn")}}</div>
 			</div>
 			<!-- 下部分 E-->
     </div>

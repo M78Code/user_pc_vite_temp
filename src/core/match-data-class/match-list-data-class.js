@@ -1,6 +1,6 @@
 import {
 	sport_match_count as sport_match_count_template,
-	match_list_play_config,
+	MATCH_LIST_TEMPLATE_CONFIG,
 	history_score_dict,
 	match_state_convert_score_dict,
 	other_play_name_to_playid,
@@ -316,7 +316,7 @@ class MatchListDataClass {
 	compute_match_all_handicap_data(match) {
 		let { tpl_id, csid, mmp } = match;
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${tpl_id}_config`] || {};
+		let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`] || {};
 
 		// 是否角球菜单
 		let is_corner_menu = $menu.is_corner_menu();
@@ -378,7 +378,7 @@ class MatchListDataClass {
 		//  15分钟主盘口列表
 		else if (tpl_id == 24 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				match_list_play_config.template_0_config.hps15Minutes
+				MATCH_LIST_TEMPLATE_CONFIG.template_0_config.hps15Minutes
 			);
 			type = 4;
 			this.set_min15(match, match.mst);
@@ -386,7 +386,7 @@ class MatchListDataClass {
 		//  罚牌主盘口列表
 		else if (tpl_id == 25 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				match_list_play_config.template_0_config.hpsPunish
+				MATCH_LIST_TEMPLATE_CONFIG.template_0_config.hpsPunish
 			);
 		}
 		match.main_handicap_list = this.merge_template_data({
@@ -453,7 +453,7 @@ class MatchListDataClass {
 		if (match.tpl_21_hpids.includes(341)) {
 			list_name = list_name.replace("20", "341");
 		}
-		return this.clone_arr(match_list_play_config.template_21_config[list_name]);
+		return this.clone_arr(MATCH_LIST_TEMPLATE_CONFIG.template_21_config[list_name]);
 	}
 	/**
 	 * @Description ws推送合并冠军玩法结束时间
@@ -471,7 +471,7 @@ class MatchListDataClass {
 	 */
 	set_match_cur_handicap_data(match, is_ws_call) {
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${match.tpl_id}_config`] || {};
+		let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`] || {};
 		// 当前局盘口列表
 		let cur_handicap_list = this.get_cur_handicap_list(match, play_config);
 		cur_handicap_list = this.merge_template_data({
@@ -512,7 +512,7 @@ class MatchListDataClass {
 				col.ols.forEach((ol) => {
 					// 非投注项关盘
 					if (ol.oid && ol._hs != 2 && ol.os != 3) {
-						match.up_half_text = "-" + window.vue.i18n.t("common.up_half");
+						match.up_half_text = "-" + window.vue.i18n_t("common.up_half");
 						is_show_cur_handicap = true;
 					}
 				});
@@ -520,11 +520,11 @@ class MatchListDataClass {
 		} else {
 			//第一节        刚开赛
 			if (mmp == 13 || mmp == 0) {
-				match.up_half_text = "-" + window.vue.i18n.t("mmp.2.13");
+				match.up_half_text = "-" + window.vue.i18n_t("mmp.2.13");
 			}
 			//第三节   第二节休息
 			if (mmp == 15 || mmp == 302) {
-				match.up_half_text = "-" + window.vue.i18n.t("mmp.2.15");
+				match.up_half_text = "-" + window.vue.i18n_t("mmp.2.15");
 			}
 			is_show_cur_handicap = true;
 		}
@@ -594,7 +594,7 @@ class MatchListDataClass {
 	 */
 	set_match_add_handicap_data(match) {
 		// 模板玩法配置
-		let play_config = match_list_play_config[`template_${match.tpl_id}_config`] || {};
+		let play_config = MATCH_LIST_TEMPLATE_CONFIG[`template_${match.tpl_id}_config`] || {};
 
 		// 附加盘1盘口列表
 		let add1_handicap_list = this.clone_arr(play_config.add_handicap_list);
@@ -627,7 +627,7 @@ class MatchListDataClass {
 		let template_name = `template_${tpl_id}_config`;
 		// 其他玩法盘口列表
 		let other_handicap_list = this.clone_arr(
-			match_list_play_config[template_name][cur_other_play]
+			MATCH_LIST_TEMPLATE_CONFIG[template_name][cur_other_play]
 		);
 		// 波胆
 		if (cur_other_play == "hpsBold") {
@@ -640,7 +640,7 @@ class MatchListDataClass {
 
 		if (!cur_other_play) {
 			other_handicap_list = this.clone_arr(
-				match_list_play_config[template_name].hpsCorner
+				MATCH_LIST_TEMPLATE_CONFIG[template_name].hpsCorner
 			);
 		}
 		// 4：15分钟玩法 1：其他玩法
@@ -714,7 +714,7 @@ class MatchListDataClass {
 		let hpid = utils.get_match_status(ms, [110]) ? "362" : "361";
 		let tpl_name = `hps5Minutes_${hpid}`;
 		let slice_index = Math.min(hSpecial5min - 1, 3);
-		lodash.each(match_list_play_config[`template_${tpl_id}_config`][tpl_name], (col) => {
+		lodash.each(MATCH_LIST_TEMPLATE_CONFIG[`template_${tpl_id}_config`][tpl_name], (col) => {
 			other_handicap_list.push({ ols: col.ols.slice(slice_index) });
 		});
 		return this.clone_arr(other_handicap_list);
@@ -990,7 +990,7 @@ class MatchListDataClass {
 		let { tpl_id } = match;
 		let template_name = `template_${tpl_id}_config`;
 		let other_handicap_list = this.clone_arr(
-			match_list_play_config[template_name][play_key]
+			MATCH_LIST_TEMPLATE_CONFIG[template_name][play_key]
 		);
 		if (play_key === "hpsBold") {
 			other_handicap_list = this.get_21_bold_template(match);

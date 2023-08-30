@@ -288,7 +288,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 import { UserCtr } from "src/core/index.js";
 
 //国际化

@@ -121,20 +121,20 @@ const submit_order = () => {
 
     if (BetData.bet_status.value == 7) { //锁盘
         set_toast({
-            'txt': i18n.t('bet.odd_upd')
+            'txt': i18n_t('bet.odd_upd')
         });
         return;
     }
 
     if (get_money_total.value > +UserCtr.balance || UserCtr.balance == 0) { //弹窗提示：“余额不足，请您先充值”
         set_toast({
-            'txt': i18n.t('bet.err_msg05')
+            'txt': i18n_t('bet.err_msg05')
         });
         return;
     }
     if (get_money_total.value < 0.01) { //请输入金额
         set_toast({
-            'txt': i18n.t('bet.input_v')
+            'txt': i18n_t('bet.input_v')
         })
         return;
     }
@@ -145,7 +145,7 @@ const submit_order = () => {
         !BetData.bet_is_mix && bet_dom && !bet_dom.max_money_back) && !is_5s.value
     if (flag) {
         set_toast({
-            'txt': i18n.t('bet.err_msg06')
+            'txt': i18n_t('bet.err_msg06')
         });
         return
     }

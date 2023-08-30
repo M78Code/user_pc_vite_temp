@@ -9,11 +9,13 @@
     :class="['bw3', { rightMenu: right_menu_show }]"
     @click.stop="appclick($event)"
   >
+  页面路由开始 页面路由开始 页面路由开始
     <div v-if="time_str" class="time-show">
       <div>{{ server_env }}-{{ time_str }}</div>
     </div>
     <!-- 页面路由开始 -->
     <router-view />
+  
   </div>
 </template>
 
@@ -47,7 +49,7 @@ export default {
   watch: {
     '$route.name': {
       handler () {
-        pageSourceData.set_route_name(this.$route.name)
+        PageSourceData.set_route_name(this.$route.name)
       },
       immediate: true,
     }

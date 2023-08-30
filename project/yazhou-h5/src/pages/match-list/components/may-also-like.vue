@@ -5,7 +5,7 @@
 <template>
   <div class="may_also_like" v-if="slide_list.length">
     <div class="title">
-      {{ i18n.t('home_popular.you_may_also_like') }}
+      {{ $t('home_popular.you_may_also_like') }}
     </div>
     <div class="scroll-list">
       <div class="card2" :key="i" v-for="(item, i) in slide_list" @click="goto_detail_video(item)">
@@ -14,10 +14,10 @@
             <span class="ellipsis">{{ item.tnjc }}</span>
             <div class="right-time" :class="{'no-timer-card': [0, 31].includes(+item.mmp)}">
               <!-- 开赛时间 -->
-              <div v-show="item.ms != 110 && !show_counting_down(item)">{{(new Date(+item.mgt)).Format(i18n.t('time3'))}}</div>
+              <div v-show="item.ms != 110 && !show_counting_down(item)">{{(new Date(+item.mgt)).Format(i18n_t('time3'))}}</div>
               <!-- 倒计时 -->
               <counting-down
-                :title="item.ms == 0? i18n.t('list.match_no_start') :match_period_map(item)"
+                :title="item.ms == 0? i18n_t('list.match_no_start') :match_period_map(item)"
                 :mmp="item.mmp"
                 :m_id="item.mid"
                 :second="item.mst"
@@ -94,7 +94,7 @@ import {api_home} from "src/project/api";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 // import skt_may_like from "/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理

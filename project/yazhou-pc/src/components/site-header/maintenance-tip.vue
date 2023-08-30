@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 
 import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'

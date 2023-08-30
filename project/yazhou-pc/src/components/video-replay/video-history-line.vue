@@ -1,7 +1,7 @@
 <template>
     <div ref="video_history_line" class="video-history-line" :class="[mode]">
         <div class="block-header">
-            <div class="block-title">{{ i18n.t('video.video_event_history') }}</div>
+            <div class="block-title">{{ $t('video.video_event_history') }}</div>
         </div>
         <div class="video-history-main">
             <div class="progress-container">
@@ -58,12 +58,12 @@ export default {
     },
     data() {
         eventNameMap = {
-            corner: i18n.t('replay_video.corner_kick'), // 角球
-            goal: i18n.t('replay_video.goal'), // 进球
-            yellow_card: i18n.t('icon_tips.yellow_card'), // 黄牌
-            red_card: i18n.t('icon_tips.red_card'), // 红牌
+            corner: i18n_t('replay_video.corner_kick'), // 角球
+            goal: i18n_t('replay_video.goal'), // 进球
+            yellow_card: i18n_t('icon_tips.yellow_card'), // 黄牌
+            red_card: i18n_t('icon_tips.red_card'), // 红牌
             // 红黄牌，就是一个球员当收到第二张黄牌的时候变成红牌，其实就是红牌
-            yellow_red_card: i18n.t('icon_tips.red_card') // 黄红牌
+            yellow_red_card: i18n_t('icon_tips.red_card') // 黄红牌
         }
         historyPlayTimer = null // 历史数据轮询定时器
         return {

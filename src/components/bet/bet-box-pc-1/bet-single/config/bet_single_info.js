@@ -393,14 +393,14 @@ this.handle_generat_emitters()
       if(this.source == 'is_chat_room'){
         _odd = this.BetData.chat_room_type;
         BetDataCtr.set_cur_odd(_odd);
-        return `[${i18n.t('odds')[_odd]}]`;
+        return `[${i18n_t('odds')[_odd]}]`;
       }
       // 根据odds_switch字段显示对应的盘口名称
       if(cs && cs.odds_switch && cs.odds_switch.includes(odds_table[this.BetData.cur_odd])) {
-        return `[${i18n.t('odds')[this.BetData.cur_odd]}]`;
+        return `[${i18n_t('odds')[this.BetData.cur_odd]}]`;
       }
       // 默认显示欧洲盘
-      return `[${i18n.t('odds')['EU']}]`
+      return `[${i18n_t('odds')['EU']}]`
     },
     /**
      * @description: 当前金额是否为空字符串
@@ -866,7 +866,7 @@ this.handle_generat_emitters()
     appoint_odds_value(new_) {
       //  赔率大于355给个提示
        if (this.appoint_odds_value>355) {
-        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_max_booked_odds')}`);
+        useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_max_booked_odds')}`);
       }
       let obj = _.cloneDeep(this.BetData.bet_appoint_obj);
       if(obj) {
@@ -985,7 +985,7 @@ handle_generat_emitters(){
             if(parseFloat(max_money) == 0) {
               this.view_ctr_obj.bet_order_status = 5;  //投注项失败
               this.view_ctr_obj.error_code = "M400009"; //"该选项当前不可投注，请选择其他选项"
-              this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
+              this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
             }
             obj.cs.min_money = min_money;
             obj.cs.max_money = max_money;
@@ -1380,7 +1380,7 @@ handle_generat_emitters(){
       // 当投注项状态不为封盘和关盘并且没有无效投注项时
       if(this.active != 2 && this.active != 3 && count == 0) {
         // 设置提示信息
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
         // 获取错误码需要显示的时长
         let delay = this.error_mapping.ERROR_CODE_DELAY[this.view_ctr_obj.error_code];
         //console.log('==================delay=========================' + delay);
@@ -1418,7 +1418,7 @@ handle_generat_emitters(){
           this.view_ctr_obj.error_code = "0402022";
         }
         // 设置错误提示信息
-        this.view_ctr_obj.error_message = i18n.t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
+        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg1;
         // 3s后重置赔率，盘口，投注项状态变化的标识
         this.timer_obj[`timer_${this.id}`] = setTimeout(() => {
           // 重重置单关组件标志
@@ -1789,13 +1789,13 @@ handle_generat_emitters(){
             if(this.appoint_ball_head >= max_rang){
               this.appoint_ball_head = max_rang
             //给出弹框提示（已为最高预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_hight_adjust')}`);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`);
             }
           }else{//大小球
             if(this.appoint_ball_head >= max_big){
               this.appoint_ball_head = max_big
             //给出弹框提示（已为最高预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_hight_adjust')}`);//
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`);//
             }
           }
         //篮球
@@ -1806,13 +1806,13 @@ handle_generat_emitters(){
             if(this.appoint_ball_head >= max_let){
               this.appoint_ball_head = max_let
             //给出弹框提示（已为最高预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_hight_adjust')}`);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`);
             }
           }else {
             if(this.appoint_ball_head >= max_small){
               this.appoint_ball_head = max_small
             //给出弹框提示（已为最高预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_hight_adjust')}`);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_hight_adjust')}`);
             }
           }
         }
@@ -1844,7 +1844,7 @@ handle_generat_emitters(){
           if(input) input.focus();
         }else{
            //给出弹框提示（已为最低预约盘口值，请重新调整）
-           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('error_msg_info.0400540.client_msg1')}`);
+           useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('error_msg_info.0400540.client_msg1')}`);
         }
       }
         // useMittEmit(MITT_TYPES.EMIT_BET_SINGLE_RECALL_MONEY_CMD, this.id);
@@ -1886,11 +1886,11 @@ handle_generat_emitters(){
             console.log('this.appoint_ball_head====', this.appoint_ball_head);
             console.log('basic_score===', this.basic_score);
             //给出弹框提示（已为最低预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_adjust')}`);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);
           }else if(this.play_mapping.FOOTBALL_PLAY_LET_BALL.includes(this.play_id)){
               if(this.appoint_ball_head <= mix_rang) {
                 this.appoint_ball_head = mix_rang
-                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_adjust')}`);
+                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);
               }
           }
           else
@@ -1904,13 +1904,13 @@ handle_generat_emitters(){
             if(this.appoint_ball_head < mix_let){
               this.appoint_ball_head = mix_let
             //给出弹框提示（已为最低预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_adjust')}`);
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);
             }
           }else {
             if(this.appoint_ball_head < mix_small){
               this.appoint_ball_head = mix_small
             //给出弹框提示（已为最低预约盘口值，请重新调整）
-            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n.t('bet.bet_header_adjust')}`);//
+            useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD,`${i18n_t('bet.bet_header_adjust')}`);//
             }
           }
         }

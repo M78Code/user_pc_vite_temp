@@ -1,7 +1,7 @@
 <template>
   <div class="ranking_list_satrt">
     <template v-if="!no_data">
-      <span class="navigation-title">{{ i18n.t('virtual_sports.leaderboard') }}</span>
+      <span class="navigation-title">{{ $t('virtual_sports.leaderboard') }}</span>
       <div class="ranking-item hairline-border" v-for="(item, index) in ranking_data" :key="index">
       <div class="ranking-item-top">
         <div class="left ellipsis">
@@ -9,7 +9,7 @@
           <span class="ellipsis">{{ item.name }}</span>
         </div>
         <div class="right">
-          <span>{{ i18n.t('virtual_sports.vitality_performance') }}</span>
+          <span>{{ $t('virtual_sports.vitality_performance') }}</span>
           <!-- <q-linear-progress :value="Number(item.form/100)" color="warning" class="q-mt-sm"/> -->
           <div class="virtual-progress-bg">
             <div class="virtual-progress-bar" :style="{width:`${item.form}%`}">
@@ -20,13 +20,13 @@
       </div>
       <div class="ranking-item-bottom">
         <div class="left">
-          <span>{{ i18n.t('virtual_sports.results_previous') }}</span>
+          <span>{{ $t('virtual_sports.results_previous') }}</span>
           <div v-for="(results, i) in item.forecast" :key="i">
             <span :class="results != 0 ? 'score-number' : 'score-x'">{{results != 0 ? results : 'X'}}</span>
           </div>
         </div>
         <div class="right">
-          <span>{{i18n.t('virtual_sports.comprehensive_rating')}}</span>
+          <span>{{ $t('virtual_sports.comprehensive_rating')}}</span>
           <q-rating
             style="min-width:.85rem"
             :value="Number(item.star)"

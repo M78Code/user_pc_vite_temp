@@ -1,4 +1,4 @@
-import { t } from "src/boot/i18n";;
+import { t } from "src/core/index.js";;
 
   // 表格头部分
 const lineList = [

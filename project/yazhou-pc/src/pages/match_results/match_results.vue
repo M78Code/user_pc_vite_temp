@@ -11,7 +11,7 @@
     <p class="font_match_results">1</p>
     <simple-header @refresh="sub_search" :data_loaded="refresh_finish">
       <!-- 赛果 -->
-      <span>{{ i18n.t("common.amidithion") }}</span>
+      <span>{{ $t("common.amidithion") }}</span>
     </simple-header>
 
     <!-- 中间内容 S-->
@@ -60,7 +60,7 @@
 
 <script setup>
 
-import { i18n } from "src/core/index.js";
+import { i18n_t} from "src/core/index.js";
 import { useGetResultConfig } from "./results.config.js";
 import results from "./components/results.vue";
 import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
@@ -68,6 +68,8 @@ import Pagination from "src/pagination-1/index.vue";
 import moveVideo from "project_path/src/components/video-replay/move_video.vue";
 import resultHeader from './components/result-header.vue'
   const {
+    //变量
+    refresh_finish,
     results_data,
     tips,
     results_table_style,
@@ -81,7 +83,7 @@ import resultHeader from './components/result-header.vue'
     activeIndex,
     reset_pagination,
     sub_search,
-    refresh_finish,
+    //函数
     get_tr_detail,
     change_sort,
     change_playback_type,

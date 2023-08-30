@@ -81,7 +81,7 @@ import lodash from 'lodash';
 
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
-import { t } from "src/boot/i18n";
+import { t } from "src/core/index.js";
 </script>
 <style lang="scss" scoped>
 .basic-col {

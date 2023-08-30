@@ -3,7 +3,7 @@ import uid from "src/core/uuid/index.js";
 import MatchCtr from './match-ctr'
 import { useRoute } from 'vue-router'
 import lodash from 'lodash'
-import { i18n } from 'src/boot/i18n.js'
+import { i18n_t} from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import {utils } from 'src/core/index.js'
 import { get_handicap_w_id  } from "src/core/index.js";
@@ -516,7 +516,7 @@ class MatchPage {
             return
           }
           if(lodash.get(res,'code')=='0401038'){
-            const msg_nodata_22 = i18n.t('msg.msg_nodata_22')
+            const msg_nodata_22 = i18n_t('msg.msg_nodata_22')
             this.$toast(msg_nodata_22, 1500)
           }
             // 一.接口返回后页面逻辑与数据处理
@@ -638,18 +638,18 @@ class MatchPage {
     for (let i =0; i < arr.length; i++) {
       // 如果数组只有一个的话
       if(arr.length == 1) {
-        return arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n.t('time2'))
+        return arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n_t('time2'))
       }
       // 如果数组大于一个以上
       for(let j = 1; j < arr.length; j++){
         // 如果下标是第1个之后才执行下边
         if(i > 0){
           // 如果第一个和后边的其中一个相等，并且 第一个和上一个相比，不一样，time_title 塞进当前元素
-          if((new Date(+arr[i].mgt)).Format(i18n.t('time2')) == (new Date(+arr[j].mgt)).Format(i18n.t('time2')) && ((new Date(+arr[i].mgt)).Format(i18n.t('time2')) !== new Date(+arr[i-1].mgt).Format(i18n.t('time2')))) {
-            arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n.t('time2'))
+          if((new Date(+arr[i].mgt)).Format(i18n_t('time2')) == (new Date(+arr[j].mgt)).Format(i18n_t('time2')) && ((new Date(+arr[i].mgt)).Format(i18n_t('time2')) !== new Date(+arr[i-1].mgt).Format(i18n_t('time2')))) {
+            arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n_t('time2'))
           }
         } else { // 代表第0个元素
-            arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n.t('time2'))
+            arr[i].time_title = (new Date(+arr[i].mgt)).Format(i18n_t('time2'))
         }
       }
     }
@@ -877,7 +877,7 @@ class MatchPage {
     //如果是在筛选的过程中
     if (this.is_in_filtering()) {
       // 如果筛选不是全部，并且 当前主菜单 等于(上一次 选择的主菜单，或者上一次选中的主菜单 不是 今日，早盘，串关），则执行下边代码块
-      if(this.get_filter_list != i18n.t('footer_menu.all')){
+      if(this.get_filter_list != i18n_t('footer_menu.all')){
         // 过滤出 tid（联赛id）
         let current_tids = [];
         for (let f_tid in this.get_filter_list){
