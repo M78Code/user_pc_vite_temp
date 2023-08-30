@@ -215,7 +215,7 @@ const handleMessage = (e) => {
           }
         })
         clearTimeout(close_video_timer);
-        close_video_timer = setTimeout(() => {
+        close_video_timer.value = setTimeout(() => {
           close_video();
         }, 1000);
       }
@@ -283,14 +283,14 @@ const video_zone_event = (obj) => {
       let body_w = document.body.clientWidth;
       let body_h = document.body.clientHeight;
       // 按照ui设置当前视频窗口宽高
-      width = 502;
-      height = 280;
+      width.value = 502;
+      height.value = 280;
       // 设置当前视频窗口居中位置
-      x = body_w / 2 - width / 2;
-      y = body_h / 2 - height / 2;
-      video_url = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${_.get(obj, 'url')}&title=${_.get(obj, 'title', '')}`;
+      x.value = body_w / 2 - width.value / 2;
+      y.value = body_h / 2 - height.value / 2;
+      video_url.value = `${live_domains}/videoReplay.html?lang=${lang}&head=2&src=${_.get(obj, 'url')}&title=${_.get(obj, 'title', '')}`;
       //video_url = `http://127.0.0.1:5500/video/pc/final/videoReplay.html?src=https://www.runoob.com/try/demo_source/movie.mp4&head=1&title=${_.get(obj, 'title','')}`
-      video_url = `${video_url}&txt=${JSON.stringify(lang_obj)}`;
+      video_url.value = `${video_url.value}&txt=${JSON.stringify(lang_obj)}`;
       show.value = true;
       // 清除自动编辑组件
       mouseout('no_set_timeout');
@@ -496,7 +496,7 @@ const capture_video_error = () => {
     // 致命错误  无法播放
     if (data.fatal) {
       destroy_video()
-      video_load_state = 'error'
+      video_load_state.value = 'error'
     }
   })
 };
@@ -546,12 +546,12 @@ const play_video = () => {
     player.volume(val, true, false)
     player.play();
     // video_duration = player.video.duration
-    video_load_state = 'done'
+    video_load_state.value = 'done'
   });
   // 监听视频播放完毕
   player.on('ended', () => {
     console.log('监听视频播放完毕');
-    video_load_state = 'play_end'
+    video_load_state.value = 'play_end'
   })
 }
 
