@@ -28,7 +28,7 @@
           <div>
             <!-- 提前结算 -->
             <span class="yb_fontsize12" @click.stop="change_early"
-              :class="{ 'select': is_early, 'is-show': userCtr.user_info.settleSwitch != 1 }">
+              :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
               {{ t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
             </span>
           </div>

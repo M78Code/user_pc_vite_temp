@@ -8,14 +8,13 @@
     <SRecord v-if="is_loading"/>
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
-        <div class="filter-button" v-if="userCtr.user_info.settleSwitch == 1">
+        <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
           <!-- 提前结算筛选按钮 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
-            {{ $root.$t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
+            {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
         </div>
         <!-- 订单内容 -->
-        {{is_all_early_flag + '-----' + is_early}}
         <template v-if="!is_all_early_flag">
           <div v-for="(value,name,index) in list_data" :key="index">
             <template v-if="!is_early|| (is_early && clac_is_early(value.data))">
@@ -52,13 +51,13 @@ import scroll from "project_path/src/components/common/record-scroll/scroll.vue"
 import SRecord from "project_path/src/components/skeleton/record.vue";
 // import { mapGetters, mapMutations } from 'vuex';
 import { ref, watch, onMounted, onUnmounted } from 'vue'
-import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
+import {useMittOn, MITT_TYPES} from  "src/core/mitt/index.js"
 import { format_M_D } from 'src/core/format/index.js'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
-import store from 'src/store'
-
+import store from 'src/store-redux/index.js'
+console.error(UserCtr);
     // mixins: [skt_order]
 
     let store_data = ref(store.getState())
@@ -166,8 +165,8 @@ import store from 'src/store'
    * @description 检查订单中是否存在符合条件的提前结算订单号
    */
   const check_early_order = () => {
-    if(!userCtr.user_info.settleSwitch){
-      orderNumberItemList = []
+    if(!UserCtr.user_info.settleSwitch){
+      orderNumberItemList.value = []
       return;
     }
     let tempList = []
@@ -178,7 +177,7 @@ import store from 'src/store'
         }
       })
     })
-    orderNumberItemList = tempList
+    orderNumberItemList.value = tempList
   }
   /**
      * @description 重新请求主单记录数据
@@ -220,18 +219,17 @@ import store from 'src/store'
       } else {
         res = reslut
       }
-
       is_limit = false
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
-        is_hasnext = hasNext
+        is_hasnext.value = hasNext
         // record为空时
         if (lodash.isEmpty(record)) {
           is_loading = false;
-          no_data = false;
+          no_data.value = false;
           return;
         }
-        no_data = true;
+        no_data.value = true;
         for (let item of Object.values(record)) {
           item.open = true
           size += item.data.length
@@ -243,25 +241,25 @@ import store from 'src/store'
         timer_1 = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
-            is_loading = false;
+            is_loading.value = false;
           }
           // 合并数据
           let obj = lodash.cloneDeep(list_data)
-          list_data = lodash.merge(obj, record)
+          list_data.value = lodash.merge(obj, record)
           // console.error(list_data);
         }, 380);
 
       }else if(res.code == '0401038'){
         is_limit = true
-        no_data = false
-        is_loading = false
+        no_data.value = false
+        is_loading.value = false
         return
       } else if (res.code == '0401013') {
-        is_loading = false;
-        no_data = false
+        is_loading.value = false;
+        no_data.value = false
         return;
       } else {
-        is_loading = false;
+        is_loading.value = false;
         return;
       }
       //容错处理，接口再调一次
@@ -269,8 +267,8 @@ import store from 'src/store'
         init_data()
       }
     }).catch(err => {
-      is_loading = false;
-      no_data = false;
+      is_loading.value = false;
+      no_data.value = false;
       console.error(err)
       return;
     });
@@ -282,11 +280,11 @@ import store from 'src/store'
      */
   const onPull = () => {
     var params = {
-      searchAfter: last_record || undefined,
+      searchAfter: last_record.value || undefined,
       orderStatus: 0,
     };
     let ele = myScroll
-    if (!is_hasnext || last_record === undefined) {
+    if (!is_hasnext || last_record.value === undefined) {
       //没有更多
       ele.setState(7);
       return;
@@ -302,11 +300,11 @@ import store from 'src/store'
         for (let item of Object.values(record)) {
           item.open = true
         }
-        last_record = lodash.findLastKey(record);
+        last_record.value = lodash.findLastKey(record);
 
         // 合并数据
         let obj = lodash.cloneDeep(list_data);
-        list_data = lodash.merge(obj, record)
+        list_data.value = lodash.merge(obj, record)
       } else {
         //没有更多
         ele.setState(7);
