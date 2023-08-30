@@ -13,11 +13,13 @@ import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
-import details from "src/core/match-detail-pc/match-detail";
+// import details from "src/core/match-detail-pc/match-detail";
+// console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
-// 赛事详情页面信息操作类
-import MatchInfoCtr from "src/core/match-list-pc/data-class-ctr/match-info-ctr";
+console.log(search,'search');
+// 赛事详情页面信息操作类 这个类暂时不知道从哪里来
+// import MatchInfoCtr from "src/core/match-list-pc/data-class-ctr/match-info-ctr";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
@@ -37,7 +39,7 @@ export const useGetConfig = () => {
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
-    match_info_ctr: new MatchInfoCtr(),
+    match_info_ctr: "",
     mid: "", //赛事id
     sportId: "", //球类id
     match_infoData: {}, //赛事状态比分信息

@@ -8,12 +8,12 @@ import { reactive,ref, toRefs, onUnmounted } from "vue";
 // api文件
 import { api_details } from "src/api/index";
 import lodash from "lodash";
-import details from "src/core/match-detail-pc/match-detail";
-import video from "src/core/video/video.js";
-import menu_config from "src/core/menu-pc/menu-data-class.js";
+// import details from "src/core/match-detail-pc/match-detail";
+// import video from "src/core/video/video.js";
+// import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useRouter,useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 export const useGetGlobal = ({ details_params, back_to }) => {
 
   const route = useRoute();

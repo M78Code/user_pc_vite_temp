@@ -27,7 +27,7 @@
                 @mouseleave="hide_gif($event, tab, index)">
                 <!--  v-if="show_menu_icon(tab.id)"  -->
                 <img v-show="tab.is_show" :ref="theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
-                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
+                    :src="`/public/yazhou-pc/image/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t(tab.tab_name) }}</q-tooltip>
@@ -45,7 +45,7 @@
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t('common.set') }}</q-tooltip>
                 <!-- hover显示gif -->
                 <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
-                    :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
+                    :src="`/public/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
                     class="tab-icon-img">
 
             </div>

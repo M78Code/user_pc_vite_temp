@@ -68,12 +68,12 @@
               </div>
             </div>
             <!-- 强力推荐，关盘状态下展示TODO -->
-            <!-- <match-list-hot
+            <match-list-hot
               class="match_list_hot"
               page_source="details"
               :class="is_esports ? 'esport-list' : ''"
               v-if="['all_empty', 'new_empty'].includes(handicap_state)"
-            /> -->
+            />
           </div>
         </v-scroll-area>
       </div>
@@ -87,7 +87,8 @@ import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area
 import detailHeader from "./components/detail-header.vue";
 // 组件
 // 盘口模板
-// import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
+import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
+import matchListHot from "project_path/src/pages/match-list/match_list_hot.vue";
 import { useGetConfig } from "./detail.config";
 
 const {
