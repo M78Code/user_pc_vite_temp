@@ -39,7 +39,7 @@ import {utils } from 'src/core/index.js';
 
 import icon from "src/components/icon/icon.vue";
 
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 import globalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";

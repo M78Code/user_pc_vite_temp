@@ -32,7 +32,7 @@ import { ref, watch, onUnmounted, computed } from 'vue'
 import { t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
-import userCtr from 'src/core/user-config/user-ctr.js'
+import userCtr from 'src/core/index.js'
 
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
