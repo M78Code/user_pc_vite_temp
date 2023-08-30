@@ -18,7 +18,7 @@ import { useRoute, useRouter } from "vue-router";
 // import { axios_loop } from "src/core/http/index.js";
 // import menu_config from "src/core/menu-pc/menu-data-class.js";
 // import { pre_load_video } from "src/core/pre-load/index";
-import { i18n,useMittEmit,useMittEmitterGenerator,formatTime,uid,format_plays,format_sort_data,utils } from "src/core/index.js";
+import { i18n_t,useMittEmit,useMittEmitterGenerator,formatTime,uid,format_plays,format_sort_data,utils } from "src/core/index.js";
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
