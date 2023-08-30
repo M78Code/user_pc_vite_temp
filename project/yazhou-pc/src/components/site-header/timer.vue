@@ -16,7 +16,7 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 /** 时间 */
 const time_str = ref('')
 /** 是否调试 */
-const is_test = ref(ss.get('wsl'))
+const is_test = ref(SessionStorage.get('wsl'))
 /** 定时器 */
 const upd_time_refresh_timer = ref(null)
 /** 清除定时器 */

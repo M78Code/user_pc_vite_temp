@@ -68,6 +68,7 @@
             </div>
         </div>
 
+        <timer />
     </div>
 </template>
 
@@ -81,6 +82,7 @@ import { TabWapper as Tab } from "src/components/common/tab"
 import { RefreshWapper as refresh } from "src/components/common/refresh";
 import headerTime from "project_path/src/components/site-header/header-time.vue"
 import headerAdvertisement from "project_path/src/components/site-header/header-advertisement.vue"
+import timer from "project_path/src/components/site-header/timer.vue"
 
 /** 工具.js */
 import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
