@@ -28,13 +28,17 @@
 
 <script setup>
 import leftMain from "../pages/left-main/index.vue";
-import leftMainMin from "../pages/left-main/index-min.vue";
+// import leftMainMin from "../pages/left-main/index-min.vue";
 
 import { is_mini_menu, list_emit } from "../core/layout/left-menu";
 import { useRoute } from "vue-router";
+import { UserCtr } from "src/core/index.js";
+
 import { onBeforeUnmount, ref } from "vue";
 const route = useRoute();
 const bet_loadding = ref(false);
+const layout_menu_width = '234px'
+const layout_menu_width_mini = '64px'
 
 onBeforeUnmount(() => {
   list_emit.forEach((i) => i());
@@ -42,9 +46,9 @@ onBeforeUnmount(() => {
 </script>
 <style scoped lang="scss">
 .layout-left {
-  width: $layout_menu_width;
+  width:  v-bind('layout_menu_width');
   &.mini {
-    width: $layout_menu_width_mini;
+    width: v-bind('layout_menu_width_mini');
   }
 }
 </style>
