@@ -459,9 +459,10 @@
 </template>
 
 
-<script setup name="match-container">
-import { computed, onMounted, onUnmounted } from 'vue'
+<script setup>
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import lodash from 'lodash'
+import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import counting_timer from 'project_path/src/components/common/counting-down.vue';
@@ -475,7 +476,7 @@ import { i18n_t} from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
+import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
   animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
@@ -540,6 +541,8 @@ const counting_down_up_wrapper_width = ref(.8)
 const is_new_init2 = ref(false)
 // 防抖 防止急速状态下点击两次
 const is_on_go_detail = ref(false)
+
+const match = props.match_of_list
 
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
@@ -824,12 +827,13 @@ const collapsed = computed(() => {
 })
 
 // 当前显示的赛事数据
-const match = computed(() => {
-  let result = {};
-  result = props.matchCtr.list[props.i];
-  if (!result) result = {};
-  return result;
-})
+// const match = computed(() => {
+//   debugger
+//   let result = {};
+//   result = props.matchCtr.list[props.i];
+//   if (!result) result = {};
+//   return result;
+// })
 const eports_scoring = computed(() => {
   //比分判断处理
   let scoring = false
