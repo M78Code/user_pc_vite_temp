@@ -5,7 +5,7 @@
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div class="home home-page" :class="[home_class && `${home_class} white-font`,
-  tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
+  handicapNum && tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
@@ -71,6 +71,8 @@ export default defineComponent({
   const add_animation = ref(true)
   const theme = ref(UserCtr.theme)
   const tabs_active_bar = ref(null)
+
+
 
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，

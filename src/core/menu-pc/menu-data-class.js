@@ -215,13 +215,13 @@ class MenuData {
   set_left_menu_result(obj) {
     this.menu_root = obj.root;
     this.menu_root_show_shoucang = obj.root;
-
     // 设置 列表接口类型
     this.set_match_list_api_type(obj);
 
     // 是否有中间菜单 ，
     // 有则 需要显示中间菜单组件,需要 走中间菜单渲染 ，中间菜单负责输出 列表请求参数
     // 如果没有 需要逻辑分流计算 列表请求参数
+
     if (obj.has_mid_menu) {
       this.left_menu_result = {
         ...obj,

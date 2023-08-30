@@ -60,13 +60,13 @@
 
 <script setup>
 
-import { i18n_t} from "src/core/index.js";
+import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "./results.config.js";
-import results from "./components/results.vue";
-import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
-import Pagination from "src/pagination-1/index.vue";
-import moveVideo from "project_path/src/components/video-replay/move-video.vue";
-import resultHeader from './components/result-header.vue'
+import results from "src/components/match-results/components/results.vue";
+// import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+// import Pagination from "src/pagination-1/index.vue";
+// import moveVideo from "project_path/src/components/video-replay/move-video.vue";
+// import resultHeader from './components/result-header.vue'
   const {
     //变量
     refresh_finish,

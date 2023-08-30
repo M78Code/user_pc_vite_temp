@@ -119,7 +119,7 @@ class UserCtr {
    }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId
-    return this.user_info && this.user.userId ? this.user.userId : this.uid;
+    return this.user_info && this.user_info.userId ? this.user_info.userId : this.uid;
   }
   get_loaded_user_id() {
     return this.user_logined_id;
@@ -180,7 +180,7 @@ class UserCtr {
     return lodash.debounce(
       function () {
         api_account
-          .check_balance({ uid: this.user.userId })
+          .check_balance({ uid: this.user_info.userId })
           .then((res) => {
             if (res.code == 200) {
               let amount = lodash.get(res, "data.amount");

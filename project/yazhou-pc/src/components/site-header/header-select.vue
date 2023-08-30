@@ -18,11 +18,11 @@
                     :class="{ mini: main_menu_toggle == 'mini' }" @mouseenter="stop" @mouseleave="go"
                     @click="menu_change('R')" ref="adv_box"
                     :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-                    <p v-show="theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                    <p v-show="UserCtr.theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
-                    <p v-show="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+                    <p v-show="UserCtr.theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                         <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
@@ -38,24 +38,24 @@
             </template>
             <template v-else>
                 <div class="user-info">
-                    <div class="user-name">Hi,{{ lodash.get(userCtr.get_user(), "uname") }}</div>
-                    <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
-                        @click="set_show_balance(!show_balance)"></span>
-                    <div v-show="!show_balance" class="balance-text-hide">
+                    <div class="user-name">Hi,{{ lodash.get(UserCtr.get_user(), "uname") }}</div>
+                    <span class="balance-btn-eye" :class="UserCtr.show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
+                        @click="set_show_balance(!UserCtr.show_balance)"></span>
+                    <div v-show="!UserCtr.show_balance" class="balance-text-hide">
                         ******
                     </div>
-                    <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                        {{ format_money2(userCtr.get_balance()) }}
+                    <div v-show="UserCtr.show_balance" class="balance-text-show yb-family-odds">
+                        {{ format_money2(UserCtr.get_balance()) }}
                     </div>
-                    <refresh v-show="show_balance" icon_name="icon-balance_refresh" class="refresh-btn"
-                        :loaded="data_loaded" :disable="!userCtr.get_user()" @click="get_balance" />
+                    <refresh v-show="UserCtr.show_balance" icon_name="icon-balance_refresh" class="refresh-btn"
+                        :loaded="data_loaded" :disable="!UserCtr.get_user()" @click="get_balance" />
                 </div>
             </template>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(theme.includes('theme01') && dayClickType.typeL) || (theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(UserCtr.theme.includes('theme01') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (theme.includes('theme01') && dayClickType.urlL) || (theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (UserCtr.theme.includes('theme01') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </template>
 
@@ -89,7 +89,8 @@ import { api_account, api_common } from "src/api/index.js";
 import {utils } from 'src/core/index.js'
 import store from "src/store-redux/index.js";
 import { format_money2 } from "src/core/format/index.js"
-import userCtr from 'src/core/index.js'
+// import userCtr from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
 import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
@@ -100,14 +101,13 @@ import night_right from 'app/public/yazhou-pc/image/svg/night_right.svg'
 const is_iframe = ref(utils.is_iframe)
 
 /** stroe仓库 */
-const { layoutReducer, menuReducer, betInfoReducer, userReducer, themeReducer } = store.getState()
+const { layoutReducer, menuReducer } = store.getState()
 const unsubscribe = store.subscribe(() => {
     layout_size.value = layoutReducer.layout_size
     main_menu_toggle.value = menuReducer.main_menu_toggle
     menu_collapse_status.value = menuReducer.menu_collapse_status
-    left_menu_toggle.value = betInfoReducer.left_menu_toggle
-    show_balance.value = userReducer.show_balance
-    theme.value = themeReducer.theme
+    // left_menu_toggle.value = betInfoReducer.left_menu_toggle
+
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
@@ -130,21 +130,7 @@ const menu_collapse_status = ref(menuReducer.menu_collapse_status)
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-
-//  TODO: 没找到
-const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
-/** 
- * 用户余额是否展示状态 default: true
- * 路径: src\store-redux\module\user-info.js
- */
-//  TODO: 没又get
-const show_balance = ref(userReducer.show_balance)
-/** 
-/** 
- * 用户余额是否展示状态 default: theme01
- * 路径: project_path/src/store/module/theme.js
- */
-const theme = ref(themeReducer.theme)
+const left_menu_toggle = ref(true)
 
 /** 刷新组件loading */
 const data_loaded = ref(false)
@@ -163,7 +149,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(theme.value)) {
+    if (['theme01', 'theme01_y0'].includes(UserCtr.theme)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL
@@ -259,10 +245,10 @@ function getFestivalBanner() {
         //         nightSwipper.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
         //     }
         //     // 根据日间或者夜间来判断用哪个数据
-        //     if (theme.value.includes('theme01') && daySwipper.length > 0) {
+        //     if (UserCtr.theme.includes('theme01') && daySwipper.length > 0) {
         //         currentSwipperArr = daySwipper;
         //     }
-        //     if (theme.value.includes('theme02') && nightSwipper.length > 0) {
+        //     if (UserCtr.theme.includes('theme02') && nightSwipper.length > 0) {
         //         currentSwipperArr = nightSwipper;
         //     }
         //     // 图片大于一张的时候触发轮播

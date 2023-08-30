@@ -74,7 +74,6 @@
 <script>
 import { defineComponent, reactive, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import { api_match } from "src/api/index.js";
 export default defineComponent({
@@ -83,7 +82,7 @@ export default defineComponent({
   setup(props, event) {
     let menu_obj = reactive({});
     let menu_list = reactive({});
-    let state = store.getState();
+    // let state = store.getState();
     const router = useRouter();
     const route = useRoute();
     const sportsGenre = reactive([
@@ -126,11 +125,11 @@ export default defineComponent({
             ![5000, 500, 400, 300, 118].includes(parseInt_mi)
           );
         });
-        //存储menu list数据
-        store.dispatch({
-          type: "SET_MENU_LIST",
-          data: menu_list,
-        });
+        // //存储menu list数据
+        // store.dispatch({
+        //   type: "SET_MENU_LIST",
+        //   data: menu_list,
+        // });
       }
     };
     // 点击菜单item触发方法
@@ -143,18 +142,14 @@ export default defineComponent({
         ...m_data,
         euid,
       };
-      //存储menu选中数据
-      store.dispatch({
-        type: "SET_MENU",
-        data: current_menu,
-      });
+      // //存储menu选中数据
+      // store.dispatch({
+      //   type: "SET_MENU",
+      //   data: current_menu,
+      // });
       // 跳赛事列表页面
       route.path !== "/menu_list" && router.push("/menu_list");
     };
-    // 监听变化
-    let unsubscribe = store.subscribe(() => {
-      menu_list.value = state.menu_list
-    });
     return {
       change_current_menu,
       init_menu_list,
