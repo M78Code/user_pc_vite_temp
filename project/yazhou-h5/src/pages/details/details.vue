@@ -133,18 +133,18 @@ import {utils } from 'src/core/index.js';  // 公共方法
 // 引入国际化
 import { t } from "src/boot/i18n.js";;
 import lodash from "lodash";
-import details_header from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
-import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
+import detailsHeader from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
+// import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
-import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
+// import change_header from "project_path/src/pages/details/components/header/change-header.vue";  // 详情页下拉置顶title
 // // import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue"; // 详情页  足球赛事分析
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-import analysisMatches from './analysis-matches/index.vue';
-import category from "project_path/src/pages/details/children/category.vue";
+// import analysisMatches from './analysis-matches/index.vue';
+// import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
@@ -159,18 +159,18 @@ export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
   components: {
-    analysisMatches,
-    "details-header": details_header,
+    // analysisMatches,
+    "details-header": detailsHeader,
 //     // "details-dialog": details_dialog,
-    "change-header": change_header,
-    "details-tab": details_tab,
+    // "change-header": change_header,
+    // "details-tab": details_tab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
 //     // videos: videos,
 //     // "analysis-football-matches": analysis_football_matches,
 //     // "basketball-match-analysis": basketball_match_analysis,
 //     // SDetails,
-    category,
+    // category,
 //     // chatroom
   },
   // 从首页轮播区域跳转到详情页 增加判断

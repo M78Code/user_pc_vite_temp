@@ -6,7 +6,7 @@
 <template>
   <div class="time_line">
     <template v-if="!no_data">
-      <div class="title">{{ t('match_result.event') }}</div>
+      <div class="title">{{ i18n_t('match_result.event') }}</div>
       <div class="incident_event" v-for="(item, index) in event_data" :key="index">
         <div
           class="incident_event_title"
@@ -64,7 +64,7 @@ import resultsFooter from 'project_path/src/pages/details/components/details-mat
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
 import { computed, onUnmounted, ref, onMounted } from "vue";
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import lodash from "lodash"
 
   // components: {
@@ -171,8 +171,8 @@ import lodash from "lodash"
     }
     // 赛事标题说明
   const title_calculation = (item) => {
-      return item.matchPeriodId == 999 ? t('match_result.finish') : item.matchPeriodId == 120 ? t('match_result.penalty_kick_ended') : item.matchPeriodId == 110 ? t('match_result.overtime_is_over') :
-              item.matchPeriodId == 100 ? t('match_result.end_of_regular_season') : item.matchPeriodId == 31 ? t('match_result.midfield') : item.matchPeriodId == 0 ? t('match_result.start') : ''
+      return item.matchPeriodId == 999 ? i18n_t('match_result.finish') : item.matchPeriodId == 120 ? i18n_t('match_result.penalty_kick_ended') : item.matchPeriodId == 110 ? i18n_t('match_result.overtime_is_over') :
+              item.matchPeriodId == 100 ? i18n_t('match_result.end_of_regular_season') : item.matchPeriodId == 31 ? i18n_t('match_result.midfield') : item.matchPeriodId == 0 ? i18n_t('match_result.start') : ''
     }
     // 中间的图片转换
   const picture_conversion = (item) => {
@@ -203,18 +203,18 @@ import lodash from "lodash"
       if(get_lang == 'en'){
         switch (number) {
           case 1:
-            return number + 'st ' + t('match_result.corner')
+            return number + 'st ' + i18n_t('match_result.corner')
           case 2:
-            return number + 'nd ' + t('match_result.corner')
+            return number + 'nd ' + i18n_t('match_result.corner')
           case 3:
-            return number + 'rd ' + t('match_result.corner')
+            return number + 'rd ' + i18n_t('match_result.corner')
           default:
-            return number + 'th ' + t('match_result.corner')
+            return number + 'th ' + i18n_t('match_result.corner')
         }
       }else if(get_lang == 'vi'){
-        return t('match_result.corner') + number
+        return i18n_t('match_result.corner') + number
       } else{
-        return t('match_result.which_number') + number + t('match_result.corner')
+        return i18n_t('match_result.which_number') + number + i18n_t('match_result.corner')
       }
     }
   onUnmounted(() => {

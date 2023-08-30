@@ -26,8 +26,8 @@
 <script setup>
 // import {mapGetters, mapMutations} from "vuex";
 import { ref, nextTick, computed, onUnmounted, onMounted } from "vue"
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import {utils } from 'src/core/index.js';
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import {utils } from 'src/core/utils/index.js';
 import UserCtr from "src/core/user-config/user-ctr.js";;
 
 
@@ -62,22 +62,9 @@ let get_detail_data = ref({
       child_tab_click(props.tabList[0], 0)
     })
   })
-  // computed: {
-  //   ...mapGetters([
-  //     // 详情页的数据
-  //     'get_detail_data',
-  //     // 主题
-=  //     // 当前选中的菜单
-  //     "get_current_menu",
-  //     // 当前语言
-  //     'get_lang'
-  //   ])
-  // },
-    // ...mapMutations([
-    //   'set_curr_tab_info',
-    // ]),
+
   const close_analysis = () => {
-      // useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
+      useMittEmit(MITT_TYPES.EMIT_ANA_SHOW, false)
     }
   const child_tab_click = (tab, i, type, text) => {
     console.error(tab, i, type, text);
