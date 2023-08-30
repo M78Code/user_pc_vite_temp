@@ -70,7 +70,7 @@ export default {
   },
   created() {
     // 监听 刷新 注单记录----请求
-    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list).on
+    useMittOn(MITT_TYPES.EMIT_UPDATE_ORDER_LIST, update_order_list)
   },
   // computed:{
   //   ...mapGetters(["get_fewer","get_menu_type", "get_current_menu", ]),

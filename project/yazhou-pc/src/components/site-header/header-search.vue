@@ -1,11 +1,12 @@
 <template>
-  <div class="yb-site-left-width" v-if="globalAccessConfig.get_searchSwitch()" :class="`${main_menu_toggle}`">
+  <!--  v-if="globalAccessConfig.get_searchSwitch()" -->
+  <div class="yb-site-left-width" v-if="globalAccessConfig.config_default.searchSwitch" :class="`${main_menu_toggle}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
     <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
-        {{ search_hot_push.hot_push_name || t("common.search") }}
+        {{ search_hot_push.hot_push_name || i18n_t("common.search") }}
       </div>
-      <icon class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(theme)
+      <icon class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme)
         ? `img:${img_search_icon}`
         : `img:${img_search_icon_y0}`
         " size="14px" />
@@ -14,9 +15,9 @@
 
   <!-- 内嵌版 菜单状态切换按钮 -->
   <template v-if="is_iframe && is_mini_menu && !search_isShow">
-    <div class="menu-collapse-btn" :class="collapse_style" @click="handle_menu_collapse">
+    <div class="menu-collapse-btn" @click="handle_menu_collapse">
       <q-tooltip anchor="top middle" self="center middle"
-        :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t("common.menu_expand") }}</q-tooltip>
+        :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t("common.menu_expand") }}</q-tooltip>
     </div>
     <i class="icon-triangle3 q-icon c-icon menu-collapse-triangle"></i>
   </template>
@@ -24,7 +25,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch, onUnmounted } from "vue";
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 import { useRoute } from "vue-router";
 import {
   main_menu_toggle,
@@ -35,12 +36,12 @@ import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
-import {utils } from 'src/core/index.js';
+import { utils } from 'src/core/index.js';
 
 import icon from "src/components/icon/icon.vue";
 
-import userCtr from 'src/core/index.js'
-import globalAccessConfig  from  "src/core/access-config/access-config.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+import globalAccessConfig from "src/core/access-config/access-config.js"
 
 import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";
 import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.svg";
@@ -51,10 +52,9 @@ import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.sv
 const is_iframe = ref(utils.is_iframe);
 
 /** stroe仓库 */
-const { searchReducer, themeReducer, menuReducer } = store.getState();
+const { searchReducer, menuReducer } = store.getState();
 const unsubscribe = store.subscribe(() => {
   search_isShow.value = searchReducer.search_isShow
-  theme.value = themeReducer.theme
   menu_collapse_status.value = menuReducer.menu_collapse_status
 })
 /** 销毁监听 */
@@ -65,24 +65,10 @@ onUnmounted(unsubscribe)
  */
 const search_isShow = ref(searchReducer.search_isShow)
 /** 
- * 用户余额是否展示状态 default: theme01
- * 路径: project_path/src/store/module/theme.js
- */
-const theme = ref(themeReducer.theme)
-/** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref(menuReducer.menu_collapse_status)
-
-/** 计算菜单状态切换按钮 */
-const collapse_style = computed(() => {
-  if (theme.value.includes("y0")) {
-    return is_mini_menu.value ? "collapse-open-y0" : "collapse-hide-y0";
-  } else {
-    return is_mini_menu.value ? "collapse-open" : "collapse-hide";
-  }
-});
 
 /** 搜索热推赛事 */
 const search_hot_push = ref(new SearchHotPush());
@@ -95,8 +81,9 @@ const set_search_status = (data) => (store.dispatch({
 
 /** 展开搜索 */
 function show_search() {
-  if (!globalAccessConfig.get_searchSwitch()) {
-    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+  // if (!globalAccessConfig.get_searchSwitch()) {
+  if (!globalAccessConfig.config_default.searchSwitch) {
+    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
   set_search_status(true);
 }

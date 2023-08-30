@@ -167,18 +167,18 @@ export default {
     // 默认加载赛事详情页面接口getMatchDetail
     get_match_detail_info()
     // 监听是否下拉联赛列表
-    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool).on;
+    useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, changge_bool);
     // 监听调用赛事详情页面接口
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info).on;
-    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show).on;
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, get_match_detail_info);
+    useMittOn(MITT_TYPES.EMIT_ANA_SHOW,ana_show);
 
     useMittOn(MITT_TYPES.EMIT_RESULT_LIST_LOADING,()=>{
       skeleton.list = true
-    }).on;
+    });
 
     useMittOn(MITT_TYPES.EMIT_CHANGE_TAB, ()=>{
       skeleton.changeTab = true
-    }).on;
+    });
 
   },
   methods: {

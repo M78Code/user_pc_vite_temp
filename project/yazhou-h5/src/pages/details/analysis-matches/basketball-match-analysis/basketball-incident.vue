@@ -53,7 +53,7 @@ import { t } from "src/boot/i18n.js";;
   const route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list).on
+  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
   get_list()
   const match_id = computed(() => {
     // 赛事id TODO: route get_detail_data后续修改调整

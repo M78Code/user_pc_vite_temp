@@ -11,6 +11,7 @@ import languageReducer from "./module/languages";
 import commonReducer from "./module/common";
 import toastReducer from "./module/toast"
 import topMenuReducer from "./module/topmenu"
+import homeReducer from "./module/home"
 export {
   betInfoReducer,
   menuReducer,
@@ -25,4 +26,5 @@ export {
   commonReducer,
   toastReducer,
   topMenuReducer,
+  homeReducer,
 };

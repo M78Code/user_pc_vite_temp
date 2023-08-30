@@ -165,8 +165,6 @@ export default {
       match_list_card,
     }
   },
-  created() {
-  }
   // mixins: [match_list_mixin]
 }
 // 赛事列表筛选：滚球-球种、早盘-日期

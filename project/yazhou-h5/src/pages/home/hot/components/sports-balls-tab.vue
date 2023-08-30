@@ -197,9 +197,9 @@ const on_listeners = () =>{
     }
 
 onmounted(()=>{
-  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading).on
-    useMittOn(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,leaderboard_switch).on
-    useMittOn(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,set_data_update_handle).on
+  useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
+    useMittOn(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,leaderboard_switch)
+    useMittOn(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,set_data_update_handle)
 })
 
 onUnmounted(()=>{

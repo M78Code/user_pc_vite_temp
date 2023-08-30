@@ -166,8 +166,8 @@ export default defineComponent({
       // console.error(get_home_data,"get_home_data====")
       // 浏览器窗口变化事件监听
       component_data.emitters = [
-        // useMittOn.on(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off,
-        // useMittOn.on(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
+        // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off,
+        // useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, counting_down_start_ended_on).off,
       ]
       // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
       // 不让浏览器记住上次的滚动位置

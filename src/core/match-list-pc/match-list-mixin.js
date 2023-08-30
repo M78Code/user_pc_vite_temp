@@ -1,10 +1,10 @@
-import { ref, provide, computed, reactive, watch, onMounted, onUnmounted } from "vue";
+import { ref, provide, computed, reactive, watch, onMounted, onUnmounted, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
 
 import {  PageSourceData  } from "src/core/index.js";
-// import { api_match } from "src/api/index.js";
-// import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
+import { api_match } from "src/api/index.js";
+import { useMittEmit, MITT_TYPES, useMittOn } from 'src/core/mitt/index.js'
 // import * as api_websocket from "src/api/module/socket/socket_api.js";
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
@@ -25,12 +25,13 @@ import store from "src/store-redux/index.js";
 const route = useRoute();
 let state = store.getState();
 const { page_source } = PageSourceData;
-// 赛事主列表容器卡片逻辑处理类
-const match_list_card = reactive(MatchListCardClass);
-// 赛事主列表容器卡片逻辑处理类
-const match_list_data = reactive(MatchListData);
-const match_list = {
+export default defineComponent ({
 	setup() {
+		console.log('lockie_test_console', 1);
+		// 赛事主列表容器卡片逻辑处理类
+		const match_list_card = reactive(MatchListCardClass);
+		// 赛事主列表容器卡片逻辑处理类
+		const match_list_data = reactive(MatchListData);
 		// 菜单数据
 		// 数据请求状态
 		const load_data_state = ref("loading");
@@ -63,7 +64,8 @@ const match_list = {
 		// 注入依赖
 		provide("match_list_data", match_list_data);
 		provide("match_list_card", match_list_card);
-
+		console.log('lockie_test_console', 11111);
+		
 		const match_tpl_component = computed(() => {
 			let match_tpl;
 			let lv2_mi;
@@ -111,8 +113,8 @@ const match_list = {
 		useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids());
 		useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match());
 		useMittOn("match_list_show_mids_change", show_mids_change());
-
 		watch(MenuData.match_list_api_config.version, (cur) => {
+			console.log('lockie_test_console', cur);
 			// bug 版本没有变化 也可以进入
 			if (MenuData.api_config_version != cur) {
 				MenuData.set_api_config_version(cur);
@@ -1237,5 +1239,4 @@ const match_list = {
 		// scrollList,
 		MatchListCard,
 	},
-};
-export default match_list;
+});

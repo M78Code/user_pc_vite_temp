@@ -773,7 +773,7 @@ export default defineComponent({
       reload_create_fun();
       // iframe视频参数时间戳
       iframe_rdm = new Date().getTime()
-      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume).on;
+      useMittOn(MITT_TYPES.IFRAME_VIDEO_VOLUME, video_volume);
 
       // 监听精彩回放iframe传来的消息
       window.addEventListener("message", handle_replay_message);
@@ -784,7 +784,7 @@ export default defineComponent({
       // 原mounted
       set_zhiding_info( false )
       set_video_zhiding( false )
-      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,icon_click_lvs).on;
+      useMittOn(MITT_TYPES.EMIT_VIDEO_SWITCHING,icon_click_lvs);
       mapFrame = $refs.iframe
     });
     onUnmounted(() => {

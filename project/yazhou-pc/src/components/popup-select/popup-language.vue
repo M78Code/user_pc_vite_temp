@@ -23,14 +23,16 @@
 import { ref, reactive, onMounted, onUnmounted, watch, computed, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 
 import store from "src/store-redux/index.js";
 import { api_account, api_details } from 'src/api/index';
-import langs_mjs from "project_path/src/i18n/langs/index.mjs";
+import langs_mjs from "src/i18n/pc/langs/index.mjs";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync } from 'src/core/index.js'
-import userCtr from 'src/core/index.js'
+// import userCtr from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
 // import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
@@ -62,15 +64,15 @@ const { globalReducer, betInfoReducer, langReducer } = store.getState()
  * 单关投注 false: 串关投注 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-const is_bet_single = ref(betInfoReducer.is_bet_single)
+const is_bet_single = ref(true)
 /* 单关投注对象 default: {} */
-const bet_single_obj = ref(betInfoReducer.bet_single_obj)
+const bet_single_obj = ref({})
 /* 押注扁平化对象扁平 default: {} */
-const bet_obj = ref(betInfoReducer.bet_obj)
+const bet_obj = ref({})
 /* 当前是否为虚拟投注 default: true */
-const is_virtual_bet = ref(betInfoReducer.is_virtual_bet)
+const is_virtual_bet = ref(true)
 /* 虚拟投注对象 default: {} */
-const virtual_bet_obj = ref(betInfoReducer.virtual_bet_obj)
+const virtual_bet_obj = ref({})
 
 /** 
  * 语言 languages
@@ -97,18 +99,18 @@ const set_open_select_time = (data) => store.dispatch({
 const unsubscribe = store.subscribe(() => {
     global_click.value = globalReducer.global_click
     lang.value = langReducer.lang
-    is_bet_single.value = betInfoReducer.is_bet_single
-    bet_single_obj.value = betInfoReducer.bet_single_obj || {}
-    bet_obj.value = betInfoReducer.bet_obj || {}
-    is_virtual_bet.value = betInfoReducer.is_virtual_bet
-    virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
+    // is_bet_single.value = betInfoReducer.is_bet_single
+    // bet_single_obj.value = betInfoReducer.bet_single_obj || {}
+    // bet_obj.value = betInfoReducer.bet_obj || {}
+    // is_virtual_bet.value = betInfoReducer.is_virtual_bet
+    // virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 
 /** 语言列表 */
 const languageList = ref([])
-onMounted(() => languageList.value = lodash.get(userCtr.get_user(), 'languageList') || [])
+onMounted(() => languageList.value = lodash.get(UserCtr.get_user(), 'languageList') || [])
 onUnmounted(() => languageList.value = [])
 
 /** 路由对象 */
@@ -181,7 +183,7 @@ function on_click_lang(lang_) {
         }
     }
     if (lang.value != lang_) {
-        api_account.set_user_lang({ token: userCtr.get_user_token(), languageName: lang_ }).then(res => {
+        api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
                 set_user({ languageName: lang_ })
@@ -197,7 +199,7 @@ function on_click_lang(lang_) {
                     window.reset_lang = '';
                 })
             } else if (code == '0401038') {
-                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("common.code_empty"))
+                useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
             }
         })
     }
@@ -210,7 +212,7 @@ function on_click_lang(lang_) {
 function toggle_popup() {
     hits.value++;
     if (lodash.isEmpty(languageList.value)) {
-        languageList.value = lodash.get(userCtr.get_user(), 'languageList') || [];
+        languageList.value = lodash.get(UserCtr.get_user(), 'languageList') || [];
     }
     show_popup.value = !show_popup.value
 }

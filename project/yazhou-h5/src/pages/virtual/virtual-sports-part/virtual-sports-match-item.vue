@@ -154,14 +154,14 @@
 </template>
 
 <script>
-// #TODO VUEX 
+// #TODO VUEX
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import v_s_odd_item from "project_path/pages/virtual/virtual_sports_part/virtual_sports_odd_item.vue"
 import v_s_match_timer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_match_timer.vue"
 import odd_column_item from "project_path/pages/match-list/components/odd_column_item.vue"
 
-// #TODO MIXINS 
+// #TODO MIXINS
 // import betting from 'project_path/mixins/betting/betting.js';
 // import virtual_sports_m_item_mixin from 'project_path/mixins/virtual_sports/virtual_sports_m_item_mixin.js'
 import {  PageSourceData  } from "src/core/index.js";
@@ -171,7 +171,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({
   name: "virtual_sports_match_item",
-  // #TODO MIXINS 
+  // #TODO MIXINS
   // mixins:[common],
 
   components:{
@@ -191,7 +191,7 @@ export default defineComponent({
   setup(props, evnet) {
     const { match_item, match_selected_i, other_status } = toRefs(props);
     const data = reactive({
-      // 事件集合 
+      // 事件集合
       emitters: [],
       curr_match_map_time:{},
       vsports:null,
@@ -202,12 +202,12 @@ export default defineComponent({
       arrows_reverse: "image/wwwassets/bw3/common/slide_icon_reverse_y0.svg",
       arrows_default_balck:"image/wwwassets/bw3/common/slide_icon_r.svg"
     })
-    // #TODO EMIT 
+    // #TODO EMIT
       // created(){
       //   useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT,video_process_init_video);
       // },
 
-      
+
       // #TODO VUEX
       // ...mapActions([
       //     // 设置玩法项默认选中
@@ -215,16 +215,16 @@ export default defineComponent({
       //   ]),
       // ...mapMutations(['set_current_gotodetail_match','set_toast']),
     onMounted(() => {
-      // #TODO EMIT 
+      // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN,pre_counting_end_handle)
       video_process_init_video()
-      // #TODO EMIT 
+      // #TODO EMIT
       // useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS,xu_ni_ty_standard_odd_status);
 
       emitters = [
-        useMittOn.on(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
-        useMittOn.on(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
-        useMittOn.on(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
+        useMittOn(MITT_TYPES.EMIT_VIDEO_PROCESS_DATA_GOT, video_process_init_video).off,
+        useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+        useMittOn(MITT_TYPES.EMIT_XU_NI_TY_STANDARD_ODD_STATUS, xu_ni_ty_standard_odd_status).off,
       ]
     })
 
@@ -534,7 +534,7 @@ export default defineComponent({
       bet_click3(match_item, hl_item, ol_item);
     }
 
-    // #TODO VUEX GETEERES 
+    // #TODO VUEX GETEERES
     // computed:{
     // ...mapGetters({
     //   footer_sub_menu_id:"get_footer_sub_menu_id",
@@ -593,7 +593,7 @@ export default defineComponent({
       if(vsports){
         vsports.destroy();
       }
-      // #TODO EMIT 
+      // #TODO EMIT
       emitters.map((x) => x())
     });
     return {

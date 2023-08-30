@@ -308,20 +308,20 @@ export default defineComponent({
         if (!is_change_odds.value) {
           change_odds_value(new_, old_);
           // console.log(`===============new:${new_}==============old:${old_}`);
-          if (this.view_ctr_obj.is_submit_result) return;
-          this.view_ctr_obj.bet_data_change = true;
+          if (view_ctr_obj.is_submit_result) return;
+          view_ctr_obj.bet_data_change = true;
           let count = BetCommonHelper.get_deactive_count();
           // console.log(`===========odds_value==============count:${count}`);   
-          if (count == 0 && is_serial.value && this.view_ctr_obj.error_code != '0400532') {
-            this.view_ctr_obj.error_code = "0402027";
+          if (count == 0 && is_serial.value && view_ctr_obj.error_code != '0400532') {
+            view_ctr_obj.error_code = "0402027";
           }
-          // console.log(`===============error_code:${this.view_ctr_obj.error_code}==============is_serial:${is_serial}`);
+          // console.log(`===============error_code:${view_ctr_obj.error_code}==============is_serial:${is_serial}`);
           set_message(count);
           // console.log(`=====================11111111======================odds_value================${new_}`);
-          // console.log(`====odds_value===========11111=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+          // console.log(`====odds_value===========11111=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
           // 重新计算最高可赢额
           useMittEmit(MITT_TYPES.EMIT_MAX_WIN_MONEY_CMD);
-          // console.log(`====odds_value===========33333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+          // console.log(`====odds_value===========33333=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
         }
       },
       {
@@ -363,19 +363,19 @@ export default defineComponent({
         // 新的盘口值存在并且有变化
         if (!isNaN(Number(new_)) && new_ != old_) {
           handicap_change.valueOf = true;
-          if (this.view_ctr_obj.is_submit_result) return;
-          this.view_ctr_obj.bet_data_change = true;
+          if (view_ctr_obj.is_submit_result) return;
+          view_ctr_obj.bet_data_change = true;
           // 获取失效的投注项数量
           let count = BetCommonHelper.get_deactive_count();
           // console.log(`===========handicap==============count:${count}`);
           // 没有失效的投注项并且支持串关
           if (count == 0 && is_serial.value) {
             // 盘口变化错误码
-            this.view_ctr_obj.error_code = "0402010";
+            view_ctr_obj.error_code = "0402010";
           }
           // 设置提示信息        
-          this.set_message(count);
-          // console.log(`====handicap===========22222=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+          set_message(count);
+          // console.log(`====handicap===========22222=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
         }
       },
       {
@@ -423,25 +423,25 @@ export default defineComponent({
           // 盘口是否变化
           handicap_change.value = false;
           // 投注项数据有变化标识
-          this.view_ctr_obj.bet_data_change = true;
+          view_ctr_obj.bet_data_change = true;
         } else {
           // 盘口状态有变化
           odds_status_change.value = true;
           // 如果提交中则不处理
-          if (this.view_ctr_obj.is_submit_result) return;
+          if (view_ctr_obj.is_submit_result) return;
           // 投注项数据有变化标识 
-          this.view_ctr_obj.bet_data_change = true;
+          view_ctr_obj.bet_data_change = true;
           // 锁盘状态并且可以串关
           if (new_ == 4 && is_serial.value) {
             // 对应提示错误码
-            this.view_ctr_obj.error_code = "M400004";
+            view_ctr_obj.error_code = "M400004";
           }
           // 获取失效的投注项数量
           let count = BetCommonHelper.get_deactive_count();
           // console.log(`============active=========count:${count}`); 
           // 设置提示信息
           set_message(count);
-          //console.log(`====active===========22222=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+          //console.log(`====active===========22222=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
         }
       },
       {
@@ -458,7 +458,7 @@ export default defineComponent({
       () => hv_ov_change,
       (new_) => {
         // 投注项数据有变化标识
-        this.view_ctr_obj.bet_data_change = true;
+        view_ctr_obj.bet_data_change = true;
         // 盘口有变化
         handicap_change.value = true;
         // 获取失效的投注项数量
@@ -467,11 +467,11 @@ export default defineComponent({
         // 可以串关并且没有失效的投注项
         if (is_serial.value && count == 0) {
           // 设置对应的错误码
-          this.view_ctr_obj.error_code = "0402028";
+          view_ctr_obj.error_code = "0402028";
         }
         // 设置提示信息
         set_message(count);
-        // console.log(`===================hv_ov_change===========error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+        // console.log(`===================hv_ov_change===========error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
       },
       {
         immediate: true,
@@ -505,9 +505,9 @@ export default defineComponent({
       // 不能进行串关时
       if (!new_) {
         // 设置错误码
-        this.view_ctr_obj.error_code = "0400477";
+        view_ctr_obj.error_code = "0400477";
         // 设置提示信息
-        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+        view_ctr_obj.error_message = i18n_t(`error_msg_info.${view_ctr_obj.error_code}`).client_msg2;
       }
     },
       {
@@ -546,9 +546,9 @@ export default defineComponent({
         // 不支持串关时
         if (!new_) {
           // 设置错误码
-          this.view_ctr_obj.error_code = "0400477";
+          view_ctr_obj.error_code = "0400477";
           // 设置提示信息
-          this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+          view_ctr_obj.error_message = i18n_t(`error_msg_info.${view_ctr_obj.error_code}`).client_msg2;
         }
       },
       {
@@ -574,7 +574,7 @@ export default defineComponent({
       let { emitters_off } = useMittEmitterGenerator(event_pairs)
       emitters_off.value = emitters_off
       //移除相应监听事件 //视图销毁钩子函数内执行
-      // if(this.emitters_off){this.emitters_off()}  
+      // if(emitters_off){emitters_off()}  
     }
 
 
@@ -615,7 +615,7 @@ export default defineComponent({
           BetDataCtr.bet_single_clear();
         }
         if (BetDataCtr.cur_menu_type.type_name != 'bet') {
-          this.$nextTick(() => {
+          $nextTick(() => {
             BetDataCtr.set_is_bet_merge(false);    //是否合并
             BetDataCtr.set_is_bet_single(true);    //是否单关
           });
@@ -646,7 +646,7 @@ export default defineComponent({
      */
     const set_message = (count = 0) => {
       // 处理串关冲突时，赔率或者盘口的变化样式持续时间
-      if (!is_serial || ["0400477", "0400478"].includes(this.view_ctr_obj.error_code)) {
+      if (!is_serial || ["0400477", "0400478"].includes(view_ctr_obj.error_code)) {
         let code;
         if (odds_change_up.value || odds_change_down.value) {
           code = "0402027"; // 赔率变化
@@ -674,48 +674,48 @@ export default defineComponent({
       // 可以串关并且为不是封盘或者关盘状态且没有无效的投注项
       if (is_serial && active != 2 && active != 3 && count == 0) {
         // 设置错误信息
-        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
+        view_ctr_obj.error_message = i18n_t(`error_msg_info.${view_ctr_obj.error_code}`).client_msg2;
         // 获取错误信息延迟显示的时间
-        let delay = this.error_mapping.ERROR_CODE_DELAY[this.view_ctr_obj.error_code];
-        // console.log(`===============333333333=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+        let delay = error_mapping.ERROR_CODE_DELAY[view_ctr_obj.error_code];
+        // console.log(`===============333333333=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
         // 获取到延迟时间
         if (delay) {
           // 调用延迟后恢复消息的方法
           BetCommonHelper.delay_reset_message(delay, () => {
             // 如果投注失败
-            if (this.view_ctr_obj.bet_fail_flag) {
+            if (view_ctr_obj.bet_fail_flag) {
               // 设置订单确认标识为默认值
-              this.view_ctr_obj.order_confirm_complete = 0;
+              view_ctr_obj.order_confirm_complete = 0;
             }
           });
         }
       } else if ((is_serial && (active == 2 || active == 3)) || count > 0) { // 可以串关并且投注项为失效状态2或者有无效的投注项3
         // 错误码时空的并且支持串关
-        if (this.view_ctr_obj.error_code == "" && serial_type) {
+        if (view_ctr_obj.error_code == "" && serial_type) {
           // 失效提示的错误码
-          this.view_ctr_obj.error_code = "0402049";
-        } else if (!this.error_mapping.ERROR_CODE_ODDS_CLOSE.includes(this.view_ctr_obj.error_code)) { // 错误码不是失效错误提示信息
+          view_ctr_obj.error_code = "0402049";
+        } else if (!error_mapping.ERROR_CODE_ODDS_CLOSE.includes(view_ctr_obj.error_code)) { // 错误码不是失效错误提示信息
           // 设置为失效错误码
-          this.view_ctr_obj.error_code = "0402022";
+          view_ctr_obj.error_code = "0402022";
         }
         // 设置提示信息
-        this.view_ctr_obj.error_message = i18n_t(`error_msg_info.${this.view_ctr_obj.error_code}`).client_msg2;
-        // console.log(`===============44444444=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);   
+        view_ctr_obj.error_message = i18n_t(`error_msg_info.${view_ctr_obj.error_code}`).client_msg2;
+        // console.log(`===============44444444=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);   
         // 3s后取消提示信息    
         timer_obj['message'].value = setTimeout(() => {
           bet_mix_reset();
-          if (this.view_ctr_obj.bet_fail_flag) {
-            this.view_ctr_obj.order_confirm_complete = 0;
+          if (view_ctr_obj.bet_fail_flag) {
+            view_ctr_obj.order_confirm_complete = 0;
           }
         }, 3 * 1000);
       } else {
-        // console.log(`===============5555555=====error_code:${this.view_ctr_obj.error_code}========error_message:${this.view_ctr_obj.error_message}`);
+        // console.log(`===============5555555=====error_code:${view_ctr_obj.error_code}========error_message:${view_ctr_obj.error_message}`);
         timer_obj['message'].value = setTimeout(() => {
           bet_mix_reset();
           // 如果投注失败
-          if (this.view_ctr_obj.bet_fail_flag) {
+          if (view_ctr_obj.bet_fail_flag) {
             // 设置订单确认标识为默认值
-            this.view_ctr_obj.order_confirm_complete = 0;
+            view_ctr_obj.order_confirm_complete = 0;
           }
         }, 3 * 1000);
       }
@@ -744,12 +744,12 @@ export default defineComponent({
       // console.log(`=========bet_mix_reset_flag===========code:${code}`);
       clearTimeout(timer_obj[`timer_${props.id}`].value);
       // 获取错误码对应消息提示的时长
-      let delay = this.error_mapping.ERROR_CODE_DELAY[code];
+      let delay = error_mapping.ERROR_CODE_DELAY[code];
       // 时长存在
       if (delay) {
         // 在delay时长后对标识进行复位
         timer_obj[`timer_${props.id}`].value = setTimeout(() => {
-          // console.log(`=========bet_mix_reset===========timer_:${this.timer_obj[`timer_${props.id}`]}`);
+          // console.log(`=========bet_mix_reset===========timer_:${timer_obj[`timer_${props.id}`]}`);
           //重置串关投注项组件的标志
           bet_mix_reset();
           // 清除对应的定时器

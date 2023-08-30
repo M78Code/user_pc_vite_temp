@@ -115,7 +115,7 @@ export default defineComponent({
         set_toast({ txt: '聊天室未开启' });
       }
       // #TODO emit
-      useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin).on
+      useMittOn(MITT_TYPES.EMIT_REFRESH_CHATROOM, onLiveChatLogin)
 
       // 原 mounted
       const { offsetTop } = $refs.chatroom || {};

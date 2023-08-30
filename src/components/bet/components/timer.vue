@@ -30,11 +30,11 @@ const props = defineProps({
      * @param {Number} remaining_time
      */
 const timer_format_handle = () =>{
-  let now = this.get_now_server();
+  let now = get_now_server();
   let remaining_time = props.mgt - now;
 
   if (remaining_time < 0) {
-    this.$emit('time_over');
+    // this.$emit('time_over');
     return
   }
 
@@ -54,14 +54,14 @@ const timer_format_handle = () =>{
   }
 
   if ((minutes_format == '00') && seconds_f_format < 11) {  //小于10秒
-    this.$emit('time_over');
+    // this.$emit('time_over');
   }
 
   time.value = `${minutes_format}'${seconds_f_format}"`;
 
   if (remaining_time > 0) {
-    this.timer_ = setTimeout(() => {
-      this.timer_format_handle();
+    timer_ = setTimeout(() => {
+      timer_format_handle();
     }, 1000);
   }
 }

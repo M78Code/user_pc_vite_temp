@@ -3,8 +3,9 @@
  * @Description: 首页入口文件
 -->
 <template>
+  <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div class="home home-page" :class="[home_class && `${home_class} white-font`,
-  GlobalAccessConfig.get_hotMatchNum()&& tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
+  handicapNum && tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
@@ -26,36 +27,40 @@
 </template>
 
 <script>
-// import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
+import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import hot from "project_path/src/pages/home/hot/index.vue";    // 热门页入口主页面
 // import live_video from "project_path/src/pages/home/live-video/index.vue";
 import { loadLanguageAsync } from "src/boot/i18n.js";
 // import router_mixins from "project_path/src/mixins/router-mixins.js";
-import {utils } from 'src/core/index.js';
-import { onUnmounted, watch, ref, computed, onMounted, defineComponent } from "vue";
+import { utils } from 'src/core/utils/index.js';
+import { onUnmounted, watch, ref, computed, onMounted, defineComponent, nextTick } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
 import lodash from "lodash"
-console.error(GlobalAccessConfig.get_hotMatchNum());
+import { i18n_t } from "src/boot/i18n.js"
+import store from "src/store-redux/index.js"
+
+console.error(store.getState());
+const { homeReducer } = store.getState()
 export default defineComponent({
   beforeRouteEnter (to,from,next) {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
       next(() => {
         // 通过 `_this` 访问组件实例
         // beforeRouteEnter 是支持给 next 传递回调的唯一守卫。对于 beforeRouteUpdate 和 beforeRouteLeave 来说，this 已经可用了，所以不支持传递回调，因为没有必要了。
-        _set_main_menu_dom_i(0);
-        _set_current_sub_menuid('');
-        _set_curr_sub_menu_type('');
-        _set_current_esport_csid('');
-        _set_current_menu(null);
+        // _set_main_menu_dom_i(0);
+        // _set_current_sub_menuid('');
+        // _set_curr_sub_menu_type('');
+        // _set_current_esport_csid('');
+        // _set_current_menu(null);
       });
   },
   setup() {
      // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
-  const tabIndex = ref(0)
+  const tabIndex = ref(lodash.get(homeReducer, 'home_tab_item.index'))
   // 当前选中的组件
   const currentContent = ref('')
   // 热门页面的背景图样式
@@ -65,6 +70,9 @@ export default defineComponent({
   // 下划线是否 要动画
   const add_animation = ref(true)
   const theme = ref(UserCtr.theme)
+  const tabs_active_bar = ref(null)
+
+
 
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，
@@ -72,18 +80,18 @@ export default defineComponent({
      * 从而发起不必要的http请求
      */
      onMounted(() => {
-      currentContent = _.get(get_home_tab_item, 'component', 'home')
-      set_menu_type('');
+      currentContent.value = lodash.get(homeReducer, 'home_tab_item.component')
+      // set_menu_type('');
       //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
       // to_corresponding_route()
       // 从列表页或者详情页返回首页时, 下划线判断是否要动画
-      if(Object.keys(get_home_tab_item).length > 0){
-        $nextTick(() => {
+      if(Object.keys(lodash.get(homeReducer, 'home_tab_item')).length > 0){
+        nextTick(() => {
           // 如果本地有记录，则跳转到本地记录的原来的位置
-          tab_click(get_home_tab_item, false,false)
+          tab_click(lodash.get(homeReducer, 'home_tab_item'), false,false)
         })
       }
-      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).on
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
     })
     onUnmounted(() => {
       clearTimeout(lang_timer)
@@ -94,13 +102,13 @@ export default defineComponent({
       }
       useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off
     })
-    // watch(() => tabIndex, (n) => {
-  //   // 首页、视频直播以及热门下精选不显示背景
-  //     if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
-  //       home_class = ''
-  //     }
-  // })
- // 监听 热门的tab 变化 home_class 名称作背景图
+    watch(() => tabIndex.value, (n) => {
+    // 首页、视频直播以及热门下精选不显示背景
+      if (lodash.get(homeReducer, 'home_tab_item.index') === 0 || lodash.get(homeReducer, 'home_tab_item.index') !== 1) {
+        home_class.value = ''
+      }
+  })
+//  监听 热门的tab 变化 home_class 名称作背景图
   // watch(() => get_hot_tab_item, () => {
   //   handler = 'get_hot_tab_item_handle'
   // })
@@ -253,35 +261,53 @@ export default defineComponent({
         }
         return
       }
-      set_collapse_map_match({});
+      // set_collapse_map_match({});
       // need_animation 是否需要下划线的动画
-      add_animation = !!need_animation
-      tabIndex = tab.index
+      add_animation.value = !!need_animation
+      tabIndex.value = tab.index
 
       // 更新last_home_tab_item
-      set_last_home_tab_item(get_home_tab_item)
+      store.dispatch({
+        type: "SET_LAST_HOME_TAB_ITEM",
+        data: {
+          component: tab.component,
+          index: tab.index,
+          name: tab.name
+        },
+      })
+      // set_last_home_tab_item(get_home_tab_item)
 
-      set_home_tab_item(tab)
-      hand && set_hot_tab_item({index:0})
-      currentContent = tab.component
+      // set_home_tab_item(tab)
+      store.dispatch({
+        type: "SET_HOME_TAB_ITEM",
+        data: tab,
+      })
+      hand && store.dispatch({
+        type: "SET_HOME_TAB_ITEM",
+        data: {
+          component: tab.component,
+          index: 0,
+          name: tab.name
+        },
+      })
+      currentContent.value = tab.component
 
       calc_tab_select(tab)
       // 埋点采集热门赛事点击
       if (tab.index === 1) {
-        $utils.zhuge_event_send('H5_热门赛事', userCtr);
+        utils.zhuge_event_send('H5_热门赛事', UserCtr);
       }
     }
     //计算选中居中偏移值
     const calc_tab_select = (tab) => {
-      let dom_ = $refs
-      let doc = dom_.tabs_active_bar;
-      let dom_lable = dom_.label[tab.index]
-      let width = (dom_lable.clientWidth * 0.7) + "px"; //	在页面上返回内容的可视宽度（不包括边框，边距或滚动条）
+      let doc = tabs_active_bar.value;
+      // let dom_lable = tabs_active_bar.value.label
+      let width = (doc.clientWidth * 0.7) + "px"; //	在页面上返回内容的可视宽度（不包括边框，边距或滚动条）
       doc.style.width = `${width}`;
-      if (tabIndex == 0) {
-        doc.style.left = dom_.label[0].clientWidth *0.15 + "px";
+      if (tabIndex.value == 0) {
+        doc.style.left = doc.clientWidth *0.15 + "px";
       }else {
-        let left = (dom_lable.offsetLeft) + dom_lable.clientWidth *0.15 + "px"; // 返回当前元素的相对水平偏移位置的偏移容器
+        let left = (doc.offsetLeft) + doc.clientWidth *0.15 + "px"; // 返回当前元素的相对水平偏移位置的偏移容器
         doc.style.left = `${left}`;
       }
     }
@@ -293,6 +319,7 @@ export default defineComponent({
       home_class,
       currentContent,
       tabIndex,
+      tabs_active_bar,
       // 方法
       home_tab_change,
       get_hot_tab_item_handle,
