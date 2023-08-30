@@ -8,7 +8,7 @@ import SetData from "src\core\bet\bet-data-ctr-class.js";
  *@param {Object} res_obj 有值时表示是从合并的接口调用的
  */
 const fetch_limit_money = (res_obj) => {
-    if (this.get_bet_list.length == 0) {
+    if (BetData.get_bet_list.length == 0) {
         return
     }
 
@@ -24,7 +24,7 @@ const fetch_limit_money = (res_obj) => {
         }
 
         if (BetData.mix_bet_flag) { // 串关
-            let S = _.cloneDeep(this.get_s_count_data);
+            let S = _.cloneDeep(BetData.get_s_count_data);
             S.forEach(item => {
                 res.data.forEach(item2 => {
                     if (item.id == item2.type) {
@@ -35,13 +35,13 @@ const fetch_limit_money = (res_obj) => {
             })
             BetData.set_s_count_data(S);
         } else { // 单关
-            this.set_http_update({
+            BetData.set_http_update({
                 money_obj: res.data
             })
         }
     }
 
-    this.fetch_limit_money_params()
+    fetch_limit_money_params()
         .then(api_betting.post_getBetMinAndMaxMoney)
         .then(result_handle.bind())
         .catch(err => {
@@ -59,10 +59,10 @@ const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg]) => {
     if (emit_http == 1) {
         msg && (BetData.tips_msg = msg)
         // 重新拉取投注前校验盘口信息接口
-        if (this.check_odds_beforebet2) {
-            this.check_odds_beforebet2()
+        if (BetData.check_odds_beforebet2) {
+            check_odds_beforebet2()
         } else {
-            this.check_odds_beforebet()
+            check_odds_beforebet()
         }
         BetData.need_bet_again = true
         SetData.set_toast({
@@ -73,18 +73,18 @@ const c201_update_handler1 = ([newTotalMaxWinAmount, ov, emit_http, msg]) => {
         msg && (BetData.tips_msg = msg)
         // 重新拉取投注前校验盘口信息接口
         if (BetData.check_odds_beforebet2) {
-            this.check_odds_beforebet2()
+            check_odds_beforebet2()
         } else {
-            this.check_odds_beforebet()
+            check_odds_beforebet()
         }
         BetData.need_bet_again = true
         SetData.set_toast({
             'txt': i18n_t('bet.bet_err'),
             hide_time: 3000
         });
-        this.fetch_limit_money(); // 更新单关查询最大最小金额
+        fetch_limit_money(); // 更新单关查询最大最小金额
     } else {
-        this.max_winmoney = newTotalMaxWinAmount * 100;
+        BetData.max_winmoney = newTotalMaxWinAmount * 100;
         BetData.odds_value2 = ov;
     }
     clearInterval(BetData.timer_count);
@@ -101,9 +101,9 @@ const c201_update_handler2 = ([emit_http, msg]) => {
     if (emit_http == 1) {
         msg && (BetData.tips_msg = msg)
         if (BetData.check_odds_beforebet2) {
-            this.check_odds_beforebet2()
+            check_odds_beforebet2()
         } else {
-            this.check_odds_beforebet()
+            check_odds_beforebet()
         }
         BetData.need_bet_again = true
         SetData.set_toast({
@@ -113,16 +113,16 @@ const c201_update_handler2 = ([emit_http, msg]) => {
     } else if (emit_http == 2) {
         msg && (BetData.tips_msg = msg)
         if (BetData.check_odds_beforebet2) {
-            this.check_odds_beforebet2()
+            check_odds_beforebet2()
         } else {
-            this.check_odds_beforebet()
+            check_odds_beforebet()
         }
         BetData.need_bet_again = true
         SetData.set_toast({
             'txt': i18n_t('bet.bet_err'),
             hide_time: 3000
         });
-        this.fetch_limit_money();
+        fetch_limit_money();
     }
     clearInterval(BetData.timer_count);
     BetData.timer_count = null;

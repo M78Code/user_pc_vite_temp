@@ -5,7 +5,7 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ t(`set.${handicap_theme == 'theme01' ?
+            <div class="popup-text" :class="{ active: is_active }">{{ i18n_t(`set.${handicap_theme == 'theme01' ?
                 'day_' : 'night_'}`) }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -14,12 +14,12 @@
                 <div class="triangle"></div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme01' }"
                     @click="handle_set_theme('theme01')">
-                    {{ t('set.day_') }}
+                    {{ i18n_t('set.day_') }}
                     <!-- 日间版 -->
                 </div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme02' }"
                     @click="handle_set_theme('theme02')">
-                    {{ t('set.night_') }}
+                    {{ i18n_t('set.night_') }}
                     <!-- 夜间版 -->
                 </div>
             </div>
@@ -29,10 +29,11 @@
 
 <script setup>
 import { ref, watch, onUnmounted, computed } from 'vue'
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import { api_account } from 'src/api/index'
-import userCtr from 'src/core/index.js'
+// import userCtr from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 /** 组件没有使用 */
 // import template0 from 'src/project/yabo/components/match_details/list/template0.vue';
@@ -110,7 +111,7 @@ function on_click_version(type) {
  */
 async function on_click_lang(lang_) {
     set_lang(lang_);
-    api_account.get_lang({ token: userCtr.get_user_token(), languageName: lang_ })
+    api_account.get_lang({ token: UserCtr.get_user_token(), languageName: lang_ })
 
 }
 // 设置主题

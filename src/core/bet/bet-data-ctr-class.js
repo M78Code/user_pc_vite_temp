@@ -448,3 +448,4 @@ class BetDataCtr {
   }
 
 }
+export default BetDataCtr();

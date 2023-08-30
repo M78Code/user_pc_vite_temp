@@ -7,12 +7,13 @@
                 {{ tab.tab_name }}
             </div>
         </div>
-        <div class="label line-height">{{ t('common.notice') }}</div>
+        <div class="label line-height">{{ i18n_t('common.notice') }}</div>
         <div class="content col cursor-pointer  relative-position" ref="wrap"
             @click="emit('navigate', { path: '/announce', _blank: true })">
             <!--谷歌浏览器  -->
             <marquee v-if="$q.platform.is.name == 'chrome'" class="line-height fit" scrollAmount="40"
-                :onmouseout="onmouseout" :onmouseover="onmouseover" v-html="notice_info.data" scrolldelay="1000" truespeed="1000">
+                :onmouseout="onmouseout" :onmouseover="onmouseover" v-html="notice_info.data" scrolldelay="1000"
+                truespeed="1000">
             </marquee>
             <!-- 火狐浏览器 -->
             <div v-else class="animation-wrap line-height" ref="marquee_ref" @mouseenter="animation_pause"
@@ -29,7 +30,7 @@
                     :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
                 <q-tooltip anchor="top middle" self="center middle"
-                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t(tab.tab_name) }}</q-tooltip>
+                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t(tab.tab_name) }}</q-tooltip>
             </div>
             <div class="iframe-settings"
                 :class="theme.includes('y0') ? `tab-icon-item-y0-settings` : `tab-icon-item-settings`"
@@ -41,7 +42,7 @@
                     :settings_items="settings_items" @auto_close="show_g_settings = !show_g_settings"></g-settings>
                 <!-- 设置tip -->
                 <q-tooltip anchor="top middle" self="center middle"
-                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ t('common.set') }}</q-tooltip>
+                    :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t('common.set') }}</q-tooltip>
                 <!-- hover显示gif -->
                 <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
                     :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
@@ -57,24 +58,22 @@
 import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/boot/i18n.js"
+
 // api接口
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
-// import langs from "project_path/src/i18n/langs/index.mjs";
-import {utils } from 'src/core/index.js'
-import { LocalStorage } from 'src/core/index.js.js'
+import langs from "src/i18n/pc/langs/index.mjs";
+import { utils, LocalStorage } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import userCtr from 'src/core/index.js'
-import globalAccessConfig  from  "src/core/access-config/access-config.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
+import globalAccessConfig from "src/core/access-config/access-config.js"
 
 const emit = defineEmits(['navigate'])
 const $q = useQuasar()
-/** 国际化 */
-;
 
 /** 公告栏信息集合 */
 const notice_info = reactive({
@@ -99,37 +98,37 @@ const is_iframe = ref(utils.is_iframe)
 
 /** 内嵌版 收起左侧菜单 */
 const left_tabs = [
-    { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
-    { id: 4, tab_name: t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
+    { id: 2, tab_name: i18n_t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
+    { id: 4, tab_name: i18n_t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
 ]
 /** 内嵌版 收起右侧菜单 */
 const right_tabs = reactive([
-    { id: 7, icon_name: 'sports_rules', tab_name: t("common.sports_betting_rules"), path: "/rule", is_show: false, _blank: true }, //体育竞猜规则
+    { id: 7, icon_name: 'sports_rules', tab_name: i18n_t("common.sports_betting_rules"), path: "/rule", is_show: false, _blank: true }, //体育竞猜规则
     { id: 9, icon_name: 'task_center', tab_name: "任务中心", icon: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", is_show: false, _blank: true },  // 任务中心
-    { id: 99, icon_name: 'settings', tab_name: t("common.set"), is_show: false },  // 设置
+    { id: 99, icon_name: 'settings', tab_name: i18n_t("common.set"), is_show: false },  // 设置
 ])
 
 const settings_items = [
     {
         id: 1,
-        name: t('common.odds_set'),
+        name: i18n_t('common.odds_set'),
         icon: {
             day: () => import('app/public/yazhou-pc/image/svg/icon-odds.svg'),
             night: () => import('app/public/yazhou-pc/image/svg/icon-odds-night.svg')
         },
         value_arr: [
-            { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
-            { label: t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
-            { label: t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
-            { label: t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
-            { label: t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
-            { label: t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
+            { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
+            { label: i18n_t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
+            { label: i18n_t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
+            { label: i18n_t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
+            { label: i18n_t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
+            { label: i18n_t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
         ],
         type: 'select'
     },
     {
         id: 2,
-        name: t('common.change_lang'),
+        name: i18n_t('common.change_lang'),
         icon: {
             day: () => import('app/public/yazhou-pc/image/svg/icon-lang.svg'),
             night: () => import('app/public/yazhou-pc/image/svg/icon-lang-night.svg')
@@ -141,14 +140,14 @@ const settings_items = [
     },
     {
         id: 3,
-        name: t('common.change_skin'),
+        name: i18n_t('common.change_skin'),
         icon: {
             day: () => import('app/public/yazhou-pc/image/svg/icon-skin.svg'),
             night: () => import('app/public/yazhou-pc/image/svg/icon-skin-night.svg')
             // day: require('public/image/yabo/svg/icon-skin.svg'),
             // night: require('public/image/yabo/svg/icon-skin-night.svg'),
         },
-        value_arr: [/*t('odds.HK'), t('odds.EU')*/],
+        value_arr: [/*i18n_t('odds.HK'), i18n_t('odds.EU')*/],
         type: 'switch'
     },
 ]
@@ -252,7 +251,7 @@ function show_menu_icon(icon_id) {
  */
 function menu_change(menu) {
     if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
-        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
+        return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"))
     }
     if (menu.path.includes('/activity')) {
         if (userCtr.get_user_token()) {

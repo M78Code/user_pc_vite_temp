@@ -1160,7 +1160,7 @@ handle_generat_emitters(){
       if(this.$route.params.video_size=='1') {
         BetDataCtr.set_is_show_full_bet(false);
       }
-      if(this.BetData.bet_appoint_obj) { // 被预约的投注项id
+      if(this.BetData.bet_appoint_obj) { // 被预约的投注项id 
         //清除球头数据
         BetDataCtr.set_bet_appoint_obj(null);
       }

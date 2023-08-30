@@ -43,7 +43,7 @@
             <!--投注是的错误提示信息-->
             <!--这个错误提示信息一般预约状态时不显示除了0400540和0400483这个两个错误码-->
             <div class="bet-message text-center"
-              v-if="!lock_btn || (this.BetData.bet_appoint_obj && (bet_this.view_ctr_obj.error_code == '0400483' || bet_this.view_ctr_obj.error_code == '0400540' || bet_this.view_ctr_obj.error_code == 'M400004'))">
+              v-if="!lock_btn || (BetData.bet_appoint_obj && (bet_this.view_ctr_obj.error_code == '0400483' || bet_this.view_ctr_obj.error_code == '0400540' || bet_this.view_ctr_obj.error_code == 'M400004'))">
               {{ bet_this.view_ctr_obj.error_message }}
             </div>
             <div class="full-width">

@@ -7,12 +7,12 @@
         <maintenance-tip></maintenance-tip>
 
         <div class="header-item item1 row items-stretch relative-position"
-            :class="[lang, main_menu_toggle, { 'iframe-header-item1-hide': is_iframe && menu_collapse_status }]">
+            :class="[UserCtr.lang, main_menu_toggle, { 'iframe-header-item1-hide': is_iframe && menu_collapse_status }]">
             <!-- logo -->
             <div v-if="is_hide_icon || is_iframe" class="icon-layout"></div>
             <!-- 当前是日间版并且有日间版配图就展示日间版图片，夜间版也一样 -->
             <a v-else class="row items-center  img-logo-wrap"
-                :style="{ 'background-image': theme.includes('theme01') && pcDaytimeLink ? `url(${pcDaytimeLink})` : theme.includes('theme02') && pcNightLink ? `url(${pcNightLink})` : 'none' }">
+                :style="{ 'background-image': UserCtr.theme.includes('theme01') && pcDaytimeLink ? `url(${pcDaytimeLink})` : UserCtr.theme.includes('theme02') && pcNightLink ? `url(${pcNightLink})` : 'none' }">
                 <div class="img-logo custom-format-img-logo-01"></div>
             </a>
             <!-- 运营位专题页 -->
@@ -23,7 +23,7 @@
                 :class="{ 'iframe-mini-site-nav-hide': is_iframe && menu_collapse_status }">
                 <!-- 内嵌版 菜单状态切换按钮 -->
                 <template v-if="is_iframe && !menu_collapse_status">
-                    <div class="menu-collapse-btn btn-collapse" :class="collapse_style" @click="handle_menu_collapse">
+                    <div class="menu-collapse-btn btn-collapse" @click="handle_menu_collapse">
                         <q-tooltip anchor="top middle" self="center middle"
                             :content-style="tooltip_style + ';transform:translateY(40px)'">{{
                                 t('common.menu_collapsed',
@@ -45,26 +45,26 @@
                 <div class="row">
                     <div class="refresh-icon-wrap yb-flex-center">
                         <refresh icon_name="icon-balance_refresh" class="refresh-btn" :loaded="data_loaded"
-                            :disable="!user_info" @click="get_balance" />
+                            :disable="!UserCtr.get_user()" @click="get_balance" />
                     </div>
-                    <div class="user-name">Hi,{{ lodash.get(user_info, "uname") }}</div>
+                    <div class="user-name">Hi,{{ lodash.get(UserCtr.get_user(), "uname") }}</div>
                 </div>
                 <div class="row">
-                    <span class="balance-btn-eye" :class="show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
-                        @click="set_show_balance(!show_balance)"></span>
-                    <div v-show="!show_balance" class="balance-text-hide">
+                    <span class="balance-btn-eye" :class="get_show_balance ? 'icon-eye_show' : 'icon-eye_hide2'"
+                        @click="set_show_balance(!UserCtr.show_balance)"></span>
+                    <div v-show="!UserCtr.show_balance" class="balance-text-hide">
                         ******
                     </div>
-                    <div v-show="show_balance" class="balance-text-show yb-family-odds">
-                        {{ format_money2(user_info.balance) }}
+                    <div v-show="UserCtr.show_balance" class="balance-text-show yb-family-odds">
+                        {{ format_money2(UserCtr.get_balance()) }}
                     </div>
                 </div>
             </div>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(theme.includes('theme01') && dayClickType.typeL) || (theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(UserCtr.theme.includes('theme01') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (theme.includes('theme01') && dayClickType.urlL) || (theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (UserCtr.theme.includes('theme01') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </div>
 
@@ -75,7 +75,6 @@
 import { ref, reactive, onMounted, computed, onUnmounted, onBeforeMount, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lodash from 'lodash'
-import { t } from "src/core/index.js";;
 /** 组件 */
 import maintenanceTip from 'project_path/src/components/site-header/maintenance-tip.vue'
 import { TabWapper as Tab } from "src/components/common/tab"
@@ -86,11 +85,11 @@ import headerAdvertisement from "project_path/src/components/site-header/header-
 /** 工具.js */
 import { useMittEmit, useMittEmitterGenerator, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
-import {utils } from 'src/core/index.js'
+import globalAccessConfig from "src/core/access-config/access-config.js"
 import zhugeTag from "src/core/http/zhuge-tag.js"
 // import { gtag_event_send } from "src/core/http/gtag-tag.js"
-import { SessionStorage  } from 'src/core/index.js.js'
-import userCtr from 'src/core/index.js'
+import { SessionStorage, utils } from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_money2 } from "src/core/format/index.js"
 
 
@@ -131,9 +130,6 @@ const props = defineProps({
     }
 })
 
-/** 国际化 */
-;
-
 /** 菜单数据 */
 const menu_data = reactive({})
 /** 地址栏隐藏logo */
@@ -157,51 +153,26 @@ const currentSwipperIndex = ref(0)
 
 
 /** stroe仓库 */
-const { globalReducer, betInfoReducer, userReducer, langReducer, menuReducer, themeReducer } = store.getState()
+const { menuReducer } = store.getState()
 const unsubscribe = store.subscribe(() => {
-    theme.value = themeReducer.theme
-    global_switch.value = globalReducer.global_switch
-    user_info.value = userReducer.user_info || {}
-    is_invalid.value = betInfoReducer.is_invalid
+    // is_invalid.value = betInfoReducer.is_invalid
+    // left_menu_toggle.value = betInfoReducer.left_menu_toggle
     cur_menu_type.value = menuReducer.cur_menu_type || {}
     menu_collapse_status.value = menuReducer.menu_collapse_status
-    show_balance.value = userReducer.show_balance
-    lang.value = langReducer.lang
-    left_menu_toggle.value = betInfoReducer.left_menu_toggle
     main_menu_toggle.value = menuReducer.main_menu_toggle
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 /** 
-* 用户余额是否展示状态 default: theme01
-* 路径: project_path/src/store/module/theme.js
-*/
-const theme = ref(themeReducer.theme)
-/** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const global_switch = ref(globalReducer.global_switch)
-/** 
  * 左侧菜单的切换状态 true: 展开 false: 收缩 default: true
  * 路径: project_path\src\store\module\betInfo.js
  */
-const left_menu_toggle = ref(betInfoReducer.left_menu_toggle)
+const left_menu_toggle = ref(true)
 /** 
  * 判断是否是登录状态 default: false
  * 路径: project_path\src\store\module\betInfo.js
  */
-const is_invalid = ref(betInfoReducer.is_invalid)
-/** 
- * 用户信息 default: {}
- * 路径: src\store-redux\module\user-info.js
- */
-const user_info = ref(userReducer.user_info)
-/** 
- * 用户余额是否展示状态 default: true
- * 路径: src\store-redux\module\user-info.js
- */
-const show_balance = ref(userReducer.show_balance)
+const is_invalid = ref(false)
 /** 
  * 左侧列表显示形式 -- normal：展开 mini：收起 default: 'normal'
  * 路径: project_path\src\store\module\menu.js
@@ -217,11 +188,6 @@ const menu_collapse_status = ref(menuReducer.menu_collapse_status)
  * 路径: project_path\src\store\module\menu.js
  */
 const cur_menu_type = ref(menuReducer.cur_menu_type)
-/** 
- * 语言
- * 路径: src\store-redux\module\languages.js
- */
-const lang = ref(langReducer.lang)
 
 /** 批量注册mitt */
 const { emitters_off } = useMittEmitterGenerator([
@@ -262,7 +228,7 @@ onBeforeMount(clear_timer)
 
 /** 初始化 */
 function init() {
-    is_hide_icon.value = SessionStorage .get('hide_logo_icon') === "1";
+    is_hide_icon.value = SessionStorage.get('hide_logo_icon') === "1";
     set_current_index()
 }
 onMounted(init)
@@ -283,7 +249,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
     }
 }
 
- 
+
 /**
  * 导航栏菜单点击
  * @param {obj} 菜单路由对象 {id: 唯一id, tab_name: 菜单名, path: 跳转路径, _blank: 是否打开单独的窗口} 具体参考 vue init_site_header() 方法
@@ -291,7 +257,7 @@ function show_activity_page(n, urlType) { // 首页弹窗跳转判断
 function tab_click(obj) {
     // 埋点配置
     let menu = props.nav_list[obj.index]
-    if (menu.path.includes('/activity') && !global_switch.value.activity_switch) {
+    if (menu.path.includes('/activity') && !globalAccessConfig.get_activitySwitch()) {
         return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"))
     }
     // 电竞
@@ -312,7 +278,7 @@ function tab_click(obj) {
         let pathObj = menu;
         // 如果点击的是活动入口，就更新一下用户信息
         if (pathObj.path.includes('/activity')) {
-            if (userCtr.get_user_token()) {
+            if (UserCtr.get_user_token()) {
                 zhugeTag.send_zhuge_event("PC_任务中心");
             }
         }
@@ -391,11 +357,11 @@ function show_record(
     _window_offset_top,
     _window_offset_left
 ) {
-    userCtr.show_fail_alert();
+    UserCtr.show_fail_alert();
     if (is_invalid.value) {
         return;
     }
-    if (!user_info.value) {
+    if (!UserCtr.get_user()) {
         set_show_login_popup({
             isShow: true,
             redirect: "bet_order_history",
@@ -453,7 +419,7 @@ const set_menu_collapse_status = (data) => store.dispatch({
 function handle_menu_collapse() {
     set_menu_collapse_status(!menu_collapse_status.value)
 }
- 
+
 /** 设置用户余额是否展示状态 */
 const set_show_balance = (data) => store.dispatch({
     type: 'SET_SHOW_BALANCE',
@@ -466,27 +432,18 @@ const set_show_balance = (data) => store.dispatch({
  */
 function get_balance() {
     data_loaded.value = false;
-    let uid = user_info.value.uid;
+    let uid = UserCtr.get_uid();
     api_account.check_balance({ uid, t: new Date().getTime() }).then(res => {
         const result = lodash.get(res, "data.data");
         const code = lodash.get(res, "data.code");
         data_loaded.value = true;
-        if (code == 200){ UserCtr.set_balance(result.amount)};
-        userCtr.show_fail_alert()
+        if (code == 200) { UserCtr.set_balance(result.amount) };
+        UserCtr.show_fail_alert()
     }).catch(err => {
         console.error(err)
         data_loaded.value = true;
     });
 }
-
-/** 计算菜单状态切换按钮 */
-const collapse_style = computed(() => {
-    if (theme.value.includes('y0')) {
-        return menu_collapse_status.value ? 'collapse-open-y0' : 'collapse-hide-y0'
-    } else {
-        return menu_collapse_status.value ? 'collapse-open' : 'collapse-hide'
-    }
-})
 
 /**
 * @Description 节庆资源图片点击
@@ -496,7 +453,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(theme.value)) {
+    if (['theme01', 'theme01_y0'].includes(UserCtr.theme)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL

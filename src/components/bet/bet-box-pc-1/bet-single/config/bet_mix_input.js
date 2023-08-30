@@ -185,7 +185,7 @@ export default defineComponent({
     watch(
       () => max_money,
       (new_) => {
-        let input = '' // this.$refs[`input-money-${this.id}`];
+        let input = '' // $refs[`input-money-${id}`];
         if (new_ && input && input.value) {
           // 存储输入金额
           BetData.set_bet_s_obj("money", parseFloat(input.value));
@@ -265,7 +265,7 @@ export default defineComponent({
          * @return {Number} 赔率值
          */
     const get_odds_value = (id) => {
-      return this.yabo_common.get_odds_value(this, id);
+      return yabo_common.get_odds_value(this, id);
     }
     /**
      * @description: 设置串关投注额对象
@@ -306,13 +306,13 @@ export default defineComponent({
       // 获取当前输入投注项的索引
       let index = BetData.bet_s_list.findIndex(item => item === props.id);
       // 设置当前键盘所在的输入投注项索引
-      this.view_ctr_obj.cur_keyboard_index = index;
+      view_ctr_obj.cur_keyboard_index = index;
       clearTimeout(timer_input_focus.value);
       timer_input_focus.value = setTimeout(() => {
         // 是否为第一个输入投注项
         if (props.index == 0) {
           // 获取投注额输入框
-          let input = this.$refs[`input-money-${props.id}`];
+          let input = $refs[`input-money-${props.id}`];
           if (input) {
             // 投注项获取焦点
             input.$el.focus();
@@ -333,9 +333,9 @@ export default defineComponent({
      */
     const keyup_handle = (event) => {
       // 重置输入为空的提示信息
-      this.reset_input_empty_message();
+      reset_input_empty_message();
       // 是否满额投注设置默认 0:非满额投注 1:满额投注
-      this.set_bet_s_obj("full_bet", 0);
+      set_bet_s_obj("full_bet", 0);
       // 获取键盘输入的值
       let value = event.target.value;
       if (value && value.startsWith('-')) {
@@ -349,9 +349,9 @@ export default defineComponent({
       // 暂时还没有最高限额时
       if (max_money.value == "") {
         // 设置串关最大最小值正在获取中
-        this.view_ctr_obj.mix_range_money = -3;
+        view_ctr_obj.mix_range_money = -3;
         // 校验并提示
-        this.yabo_common.check_result_msg(this, 'mix');
+        yabo_common.check_result_msg(this, 'mix');
       }
       // 最高限额存在并且输入的金额大于等于最高限额
       if (max_money.value != "" && _.gte(money.value, parseFloat(max_money.value))) {
@@ -363,14 +363,14 @@ export default defineComponent({
       // 输入金额大于最高限额时
       if (_.gt(money.value, max_money.value)) {
         // 获取无效的投注项个数
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = yabo_common.get_deactive_count(this);
         // 错误码不是不可串关的错误码并且没有失效的投注项
-        if (!['0400477', '0400478'].includes(this.view_ctr_obj.error_code) && count == 0) {
+        if (!['0400477', '0400478'].includes(view_ctr_obj.error_code) && count == 0) {
           // 金额存在时
           if (money.value) {
             // 重置提示的错误码和错误信息
-            this.view_ctr_obj.error_code = "";
-            this.view_ctr_obj.error_message = "";
+            view_ctr_obj.error_code = "";
+            view_ctr_obj.error_message = "";
           }
         }
       }
@@ -380,11 +380,11 @@ export default defineComponent({
         // 转换输入金额为用户账户余额
         money.value = parseFloat(user.balance);
         // 串关金额范围设置为输入最大金额
-        this.view_ctr_obj.mix_range_money = 2;
+        view_ctr_obj.mix_range_money = 2;
         // 存储输入的金额
         set_bet_s_obj("money", money.value);
         // 提示信息
-        this.yabo_common.check_result_msg(this, 'mix');
+        yabo_common.check_result_msg(this, 'mix');
       } else {
         // 存储输入金额
         et_bet_s_obj("money", money.value);
@@ -437,9 +437,9 @@ export default defineComponent({
         // 最高限额未拿到时
         if (max_money.value == "") {
           // 最大最小值正在获取中
-          this.view_ctr_obj.mix_range_money = -3;
+          view_ctr_obj.mix_range_money = -3;
           // 进行提示
-          this.yabo_common.check_result_msg(this, 'mix');
+          yabo_common.check_result_msg(this, 'mix');
         }
         // 更新键盘按键状态
         update_keyboard_status();
@@ -459,23 +459,23 @@ export default defineComponent({
     const check_money = value => {
       try {
         // 统计无效投注项
-        let count = this.yabo_common.get_deactive_count(this);
+        let count = yabo_common.get_deactive_count(this);
         // 如果不能串关结合 或者有无效的投注项则不做任何处理
-        if (['0400477', '0400478'].includes(this.view_ctr_obj.error_code) || count > 0) {
+        if (['0400477', '0400478'].includes(view_ctr_obj.error_code) || count > 0) {
           return;
         }
         // 正在获取限额时
-        if (this.view_ctr_obj.input_max_flag == 1) {
+        if (view_ctr_obj.input_max_flag == 1) {
           // 最大最小值正在获取中设置
-          this.view_ctr_obj.mix_range_money = -3;
+          view_ctr_obj.mix_range_money = -3;
           // 设置提示信息
-          this.yabo_common.check_result_msg(this, 'mix');
+          yabo_common.check_result_msg(this, 'mix');
           return;
         }
         // 统计未输入金额的输入投注项
         let empty_count = 0;
-        this.view_ctr_obj.error_code = "";
-        this.view_ctr_obj.mix_range_money = 0;
+        view_ctr_obj.error_code = "";
+        view_ctr_obj.mix_range_money = 0;
         BetData.bet_s_list.forEach(item => {
           let cs = _.get(BetData.bet_s_obj, `${item}.cs`);
           // 金额为空
@@ -487,9 +487,9 @@ export default defineComponent({
         // 为空的投注项个数和未输入投注项数量相等时
         if (empty_count == BetData.bet_s_list.length) {
           //-2: 输入金额全部为空
-          this.view_ctr_obj.mix_range_money = -2;
+          view_ctr_obj.mix_range_money = -2;
           // 设置输入金额为空的标识
-          this.view_ctr_obj.is_empty_money = true;
+          view_ctr_obj.is_empty_money = true;
         } else {
           // 输入金额
           let input_amount = null;
@@ -506,21 +506,21 @@ export default defineComponent({
           if (parseFloat(user.balance) == 0.00) {
           } else if (parseFloat(min_money.value) > input_amount) { // 当输入金额比输入框最小限额时
             // 设置串关输入金额标识为小于最小限额
-            this.view_ctr_obj.mix_range_money = -4;
+            view_ctr_obj.mix_range_money = -4;
           } else if (parseFloat(max_money.value) < input_amount) { // 当输入金额大于输入框最大限额时
             // 输入金额超出最大限额时
-            this.view_ctr_obj.mix_range_money = 1;
+            view_ctr_obj.mix_range_money = 1;
           } else {
             // 设置为默认值
-            this.view_ctr_obj.mix_range_money = 0;
+            view_ctr_obj.mix_range_money = 0;
           }
           // 输入金额是否为空设置为false
-          this.view_ctr_obj.is_empty_money = false;
+          view_ctr_obj.is_empty_money = false;
         }
         // 检查校验结果(需要显示提示信息时会提示)
-        this.yabo_common.check_result_msg(this, 'mix');
+        yabo_common.check_result_msg(this, 'mix');
         // 转换成最大金额
-        if (this.view_ctr_obj.error_code == "M400011") {
+        if (view_ctr_obj.error_code == "M400011") {
           // 输入金额转换最大限额
           money.value = parseFloat(max_money.value);
           // 存储输入金额
@@ -558,7 +558,7 @@ export default defineComponent({
     const check_all_money_empty = () => {
       let check_result = true;
       // 不能够串关结合是返回校验结果
-      if (['0400477', '0400478'].includes(this.view_ctr_obj.error_code)) {
+      if (['0400477', '0400478'].includes(view_ctr_obj.error_code)) {
         return check_result;
       }
       // 当投注项输入框有金额时校验是否为空设置为false
@@ -576,7 +576,7 @@ export default defineComponent({
      * @return {undefined} undefined
      */
     const set_money = (obj) => {
-      // console.log(`===bet_mix_input=========set_money===id:${obj.id}=====this.id:${this.id}`);
+      // console.log(`===bet_mix_input=========set_money===id:${obj.id}=====id:${id}`);
       if (obj.id == props.id) {
         // console.log(`=================bet_mix_input======id:${obj.id}=====money:${obj.money}`);
         // 获取金额
@@ -617,11 +617,11 @@ export default defineComponent({
         // 转换输入金额为最小限额
         money.value = parseFloat(min_money.value);
         // 输入金额小于最小限额标识
-        this.view_ctr_obj.mix_range_money = -1;
+        view_ctr_obj.mix_range_money = -1;
         // 存储输入金额
-        this.set_bet_s_obj("money", money.value);
+        set_bet_s_obj("money", money.value);
         // 设置提示信息
-        this.yabo_common.check_result_msg(this, 'mix', money.value);
+        yabo_common.check_result_msg(this, 'mix', money.value);
       }
     }
     /**
@@ -656,7 +656,7 @@ export default defineComponent({
       // 计算输入后还剩下多少钱
       init_money = init_money - money.value;
       // 更新键盘数据
-      this.update_keyboard(init_money);
+      update_keyboard(init_money);
     }
     /**
      * @description: 清除输入为空的提示
@@ -666,10 +666,10 @@ export default defineComponent({
     const reset_input_empty_message = () => {
       let timer = setTimeout(() => {
         clearTimeout(timer);
-        if (money.value != null && this.view_ctr_obj.error_code == "M400005") {
+        if (money.value != null && view_ctr_obj.error_code == "M400005") {
           // 复位提示语
-          this.yabo_common.reset_message_info(this);
-          this.view_ctr_obj.mix_range_money = 0;
+          yabo_common.reset_message_info(this);
+          view_ctr_obj.mix_range_money = 0;
         }
       }, 0);
     }

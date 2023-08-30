@@ -9,7 +9,7 @@
     <div class="slide">
       <!-- 猜你喜欢赛事轮播 -->
       <q-carousel animated swipeable v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite
-        v-if="_.get(carousel_data, 'list.length')" :autoplay="7000">
+        v-if="lodash.get(carousel_data, 'list.length')" :autoplay="7000">
         <q-carousel-slide :name="index" v-for="(item, index) in carousel_data.list" :key="index" @click="to_details(item)"
           :class="{ 'act-banner': !item.mhn }">
           <!-- 是赛事数据的轮播 -->
@@ -139,11 +139,11 @@
             </div>
           </q-scroll-area>
         </div>
-        <div class="match-content" :class="{ 'fadeInUp': animation }" v-if="!_.isEmpty(new_menu[menu_index])">
+        <div class="match-content" :class="{ 'fadeInUp': animation }" v-if="!lodash.isEmpty(new_menu[menu_index])">
           <q-scroll-area ref="list_area" :style="`height:${el_height}px`" :thumb-style="thumbStyle">
             <div class="item" :style="{ 'z-index': item.field1 * 3, position: 'relative' }"
               v-for="(item, index) in new_menu[menu_index].sl||[]" :key="index" @click="to_list(item,index)"
-              v-show="!loading_done || item.ct >= 0 || (_.get(menu, '[menu_index].count') <= 0 && [5, 7].includes(+item.menuType))">
+              v-show="!loading_done || item.ct >= 0 || (lodash.get(menu, '[menu_index].count') <= 0 && [5, 7].includes(+item.menuType))">
               <div class="item-bg" :class="format_type(item)"></div>
               <div class="item-info" :class="{ 'is-english': get_lang == 'en' }">
                 <div class="column items-center">
@@ -165,7 +165,7 @@
 </template>
 
 <script setup>
-import { api_home } from "src/core/api/index";
+import { api_home } from "src/api/index.js";
 import { format_time_zone_time, format_balance, format_total_score } from "src/core/format/index.js"
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -184,13 +184,13 @@ import ListMap from "src/core/match-list-h5/match-class/list-map.js";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
 import {utils } from 'src/core/utils/index.js';
-import base_data from "src/core/utils/base-data.js";
+import base_data from "src/core/base-data/base-data.js";
 //  一二级菜单 本地化假数据
 // import { common_menu_list, secondary_menu } from "project_path/src/config/common-menu.js"
 //  api1.5 菜单 本地化假数据
-import menu_data  from "project_path/src/config/menu-new-data.js"
+// import menu_data  from "project_path/src/config/menu-new-data.js"
 import uid from "src/core/uuid/index.js"
-import { db } from "project_path/src/utils/db/index.js";
+import { db } from "src/core/menu-h5/common/db.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js"
 import lodash from "lodash"
@@ -362,7 +362,7 @@ import { useRoute, useRouter } from "vue-router"
     })
 
     if (carousel_data) {
-      let arr = lodash.cloneDeep(_.get(carousel_data, 'list'))
+      let arr = lodash.cloneDeep(lodash.get(carousel_data, 'list'))
       let arr1 = arr.filter(item => {
         return !item.imgUrl
       })
@@ -424,11 +424,11 @@ import { useRoute, useRouter } from "vue-router"
     }).catch(err => {
     }).finally(() => {
       //添加活动banner图
-      if (_.get(get_banner_obj, 'type1')) {
+      if (lodash.get(get_banner_obj, 'type1')) {
         banner_img_updata(get_banner_obj.type1)
       }
       //获取无轮播赛事背景图片
-      if (!(_.get(carousel_data, 'list.length'))) {
+      if (!(lodash.get(carousel_data, 'list.length'))) {
         get_banner_url()
       }
     })
@@ -545,7 +545,7 @@ import { useRoute, useRouter } from "vue-router"
           remove_crosstalk(data)
           loading_done = true
           //DB插入数据 缓存menu数据
-          if (!_.isEmpty(data)) {
+          if (!lodash.isEmpty(data)) {
             //mi 作为主键
             db.menus_info.bulkAdd(data, 'mi')
             loading_done = true
@@ -556,7 +556,7 @@ import { useRoute, useRouter } from "vue-router"
             history.replaceState(null, '', `${location.pathname}${location.hash}`)
           }
         } else {
-          menu_data_loaded(menu_data);
+          // menu_data_loaded(menu_data);
           noMenu = true
           no_menu_txt = "noMatch"
         }
@@ -779,7 +779,7 @@ import { useRoute, useRouter } from "vue-router"
       home_timer1_ = null
     }
 
-    if (_.get(carousel_data, 'list.length')) {
+    if (lodash.get(carousel_data, 'list.length')) {
       carousel_data.destroy && carousel_data.destroy()
     }
     //左侧菜单
@@ -792,8 +792,8 @@ import { useRoute, useRouter } from "vue-router"
 
 </script>
 
-<style lang="less" scoped>
-  @import "./index.scss";
+<style lang="scss" scoped>
+  // @import "./index.scss";
 </style>
 
 

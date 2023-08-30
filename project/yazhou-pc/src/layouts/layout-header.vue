@@ -5,7 +5,7 @@
     :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }">
     <site-header v-bind="site_header_data" @navigate="navigate" />
     <!-- 第二行 -->
-    <div :class="['header-item item2 row items-center', { 'search-off': !global_switch.search_switch }]"
+    <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
       :style="search_isShow ? 'z-index:900;' : ''">
       <!-- 搜索 -->
       <header-search />
@@ -22,12 +22,13 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import lodash from 'lodash'
-import { t } from "src/core/index.js";;
 import { useRoute, useRouter } from "vue-router";
 
 import store from 'src/store-redux/index.js'
-import {utils } from 'src/core/index.js'
-import { SessionStorage  } from 'src/core/index.js.js'
+import { SessionStorage, utils } from 'src/core/index.js'
+import UserCtr from "src/core/user-config/user-ctr.js";
+import globalAccessConfig from "src/core/access-config/access-config.js"
+import { i18n_t } from "src/boot/i18n.js"
 import { get_file_path } from "src/core/file-path/file-path.js"
 import { api_activity, api_account } from "src/api/index";
 
@@ -51,7 +52,6 @@ const props = defineProps({
 const emit = defineEmits(['close_home_loading'])
 
 /** 国际化 */
-;
 
 /** 路由对象 */
 const route = useRoute()
@@ -60,33 +60,17 @@ const router = useRouter()
 
 /** stroe仓库 */
 const store_data = store.getState()
-const { globalReducer, searchReducer, userReducer, langReducer } = store_data
-
-/** 
- * 全局开关 default: object
- * 路径: project_path\src\store\module\global.js
- */
-const { global_switch } = globalReducer
+const { searchReducer } = store_data
 /** 
 * 是否显示搜索组件 default: false
 * 路径: project_path\src\store\module\search.js
 */
 const { search_isShow } = searchReducer
 /** 
- * user_info 用户信息 default: {}
- * 路径: src\store-redux\module\user-info.js
- */
-const { user_info } = userReducer
-/** 
- * 语言 languages
- * 路径: src\store-redux\module\languages.js
- */
-const { lang } = langReducer
-/** 
  * 选择的选项 menu_obj
  * 路径: src\store-redux\module\betInfo.js
  */
- const  menu_obj  = ref({})
+const menu_obj = ref({})
 //  const { menu_obj } = betReducer
 
 /** 是否内嵌 */
@@ -134,7 +118,7 @@ function getActivityLists({ id = 1, type }) {
     isFirstLoadPage.value = false;
     return;
   }
-  let isMaintaining = lodash.get(user_info, 'maintaining');
+  let isMaintaining = lodash.get(UserCtr.get_user(), 'maintaining');
   // 如果活动处于维护状态，直接去掉小红点
   if (isMaintaining == true) {
     if (hasBonusType3.value == true) {
@@ -143,9 +127,9 @@ function getActivityLists({ id = 1, type }) {
     return
   };
   // 判断是否有活动
-  let activityList = lodash.get(user_info, 'activityList');
+  let activityList = lodash.get(UserCtr.get_user(), 'activityList');
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && lang == 'zh') {
+  if (activityList && activityList.length > 0 && UserCtr.lang == 'zh') {
     let param = new FormData();
     // 检测两个活动是否存在以及活动状态不能是未开始和已结束
     let daily = activityList.find(item => item.activityId == '10007' && item.period == 2) || null;
@@ -182,7 +166,7 @@ const activity_timer = ref(null)
  * 运营位专题页
  */
 function special_page() {
-  let token = lodash.get(user_info, "token");
+  let token = UserCtr.get_user_token();
   api_account.get_BannersUrl({ 'type': 7, token }).then(res => {
     let code = lodash.get(res, 'data.code');
     let data = lodash.get(res, 'data.data');
@@ -213,17 +197,17 @@ function newVersion() {
 /**  存储 setTimeOut id 方便统一销毁 */
 const timeOutIds = reactive({})
 /** 上一次打开弹窗的时间 */
-const showActivityTime = ref(ss.get('showActivityTime'))
+const showActivityTime = ref(SessionStorage.get('showActivityTime'))
 /** 弹窗图片是否可以点击跳转 */
 const allowClick = ref(false)
 /** 活动弹框显隐 */
 const showActivity = ref(false)
-const userBannerTimer = reactive(t('common.auto_close').replace('%s', 5))
+const userBannerTimer = reactive(i18n_t('common.auto_close').replace('%s', 5))
 /***
  * 运营位活动弹窗
  */
 function activity_dialog() {
-  let token = lodash.get(user_info, "token");
+  let token = UserCtr.get_user_token()
   api_account.get_BannersUrl({ 'type': 5, token }).then(res => {
     let code = lodash.get(res, 'data.code');
     let data = lodash.get(res, 'data.data');
@@ -240,7 +224,7 @@ function activity_dialog() {
               }
             } else {
               isShow = true
-              SessionStorage .set('showActivityTime', new Date().getTime())
+              SessionStorage.set('showActivityTime', new Date().getTime())
             }
             // 获取图片地址
             site_header_data.img_url = get_file_path(item.imgUrl);
@@ -257,10 +241,10 @@ function activity_dialog() {
       if (showActivity.value) {
         // 5秒后自动消失
         let time = 5;
-        userBannerTimer.value = t('common.auto_close').replace('%s', time);
+        userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
         let timer = setInterval(() => {
           time--;
-          userBannerTimer.value = t('common.auto_close').replace('%s', time);
+          userBannerTimer.value = i18n_t('common.auto_close').replace('%s', time);
           if (time == 0) {
             showActivity.value = false;
             clearInterval(timer);
@@ -270,6 +254,7 @@ function activity_dialog() {
     }
   })
 }
+
 /**
  * @Description 菜单初始化完成
  * @param {undefined} undefined
@@ -280,7 +265,7 @@ function menu_init_done() {
   // TODO: 菜单
   if (menu_obj.value.esports.menuId) {
     if (site_header_data.nav_list.findIndex(i => i.id == 5) == -1) {
-      site_header_data.nav_list.splice(1, 0, { id: 5, tab_name: t("common.e_sports"), path: "/e_sport" });
+      site_header_data.nav_list.splice(1, 0, { id: 5, tab_name: i18n_t("common.e_sports"), path: "/e_sport" });
     }
   }
   // 如果有虚拟体育
@@ -292,7 +277,7 @@ function menu_init_done() {
       } else {
         e_index++
       }
-      site_header_data.nav_list.splice(e_index, 0, { id: 3, tab_name: t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
+      site_header_data.nav_list.splice(e_index, 0, { id: 3, tab_name: i18n_t("common.virtuals"), path: "", class: 'tab_virtaul_sport' });
     }
   }
 }
@@ -302,19 +287,19 @@ function menu_init_done() {
  */
 function init_site_header(type = null) {
   let nav_list = [
-    { id: 1, tab_name: t("common.sports_betting"), path: "/home" }, //体育投注
-    { id: 2, tab_name: t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
-    // { id: 8, tab_name: t("common.e_sports"), path: "" }, //电子竞技
-    //{ id: 3, tab_name: t("common.winning_champions"), path: "" }, //优胜冠军
-    { id: 4, tab_name: t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
-    // { id: 5, tab_name: t("common.score_center"), path: "" }, //比分中心
-    // { id: 6, tab_name: t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
-    { id: 7, tab_name: t("common.sports_betting_rules"), path: "/rule", _blank: true }, //体育竞猜规则
+    { id: 1, tab_name: i18n_t("common.sports_betting"), path: "/home" }, //体育投注
+    { id: 2, tab_name: i18n_t('common.note_single_history'), path: "/bet_record", _blank: true }, //注单历史
+    // { id: 8, tab_name: i18n_t("common.e_sports"), path: "" }, //电子竞技
+    //{ id: 3, tab_name: i18n_t("common.winning_champions"), path: "" }, //优胜冠军
+    { id: 4, tab_name: i18n_t("common.amidithion"), path: "/match_results", _blank: true }, //赛果
+    // { id: 5, tab_name: i18n_t("common.score_center"), path: "" }, //比分中心
+    // { id: 6, tab_name: i18n_t("common.statistic_analysis"), path: `${details.signal_url}/kaihongman/${src_lang}`,_blank:true }, //统计分析
+    { id: 7, tab_name: i18n_t("common.sports_betting_rules"), path: "/rule", _blank: true }, //体育竞猜规则
   ];
   // 判断是否有活动
-  let activityList = lodash.get(user_info, 'activityList');
+  let activityList = lodash.get(UserCtr.get_user(), 'activityList');
   // 多语言屏蔽活动入口
-  if (activityList && activityList.length > 0 && lang == 'zh' && global_switch.activity_switch) {
+  if (activityList && activityList.length > 0 && UserCtr.lang == 'zh' && globalAccessConfig.get_activitySwitch()) {
     site_header_data.hasActivity = true;
     // 向顶部导航栏添加活动入口
     let tab = { id: 9, tab_name: "任务中心", img_src: '', class: "activity_center animate-activity-entry activity_dot_bonus", path: "/activity", _blank: true };
@@ -380,7 +365,7 @@ function navigate(obj) {
   let _window_height = 650;
   if (['/activity', '/activity_aegis'].includes(_path)) {
     _window_height = 800;
-    let maintaining = lodash.get(user_info, "maintaining");
+    let maintaining = lodash.get(UserCtr.get_user(), "maintaining");
     if (maintaining && maintaining == true) {
       _path = '/activity_aegis';
     }
@@ -391,7 +376,7 @@ function navigate(obj) {
   let url = "";
   if (_path == "/bet_record") {
     url = _path;
-    let hide_logo_icon = SessionStorage .get('hide_logo_icon');
+    let hide_logo_icon = SessionStorage.get('hide_logo_icon');
     url = router.resolve({ path: url }).href
     const searchParams = new URLSearchParams('');
     if (hide_logo_icon) {
@@ -414,7 +399,7 @@ function navigate(obj) {
   }
 
   // 增加参数
-  let hide_logo_icon = SessionStorage .get('hide_logo_icon');
+  let hide_logo_icon = SessionStorage.get('hide_logo_icon');
   if (_path.includes("http")) {
     url = _path;
     if (hide_logo_icon) {

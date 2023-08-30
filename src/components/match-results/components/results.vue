@@ -195,7 +195,7 @@
     />
     <!-- 电竞赛种 -->
     <dota2
-      v-if="$utils.is_eports_csid(sportType)"
+      v-if="getCsid(sportType)"
       :load_data_state="load_data_state"
       :details_load="details_load"
       :results_list="results_list"
@@ -210,42 +210,44 @@
 </template>
 
 <script>
-// import soccer from "src/components/results/template/soccer";
-// import basketball from "src/components/results/template/basketball";
-// import tennis from "src/components/results/template/tennis";
-// import badminton from "src/components/results/template/badminton";
-// import snooker from "src/components/results/template/snooker";
-// import pingpang from "src/components/results/template/pingpang";
-// import baseball from "src/components/results/template/baseball";
-// import hockey from "src/components/results/template/hockey";
-// import usa_football from "src/components/results/template/usa_football";
-// import volleyball from "src/components/results/template/volleyball";
-// import handball from "src/components/results/template/handball";
-// import champion from "src/components/results/template/champion"
+import { is_eports_csid } from 'src/core/index.js'
 
-// import virtual_soccer from "src/components/results/template/virtual_soccer";
-// import virtual_race_dog from "src/components/results/template/virtual_race_dog";
-// import virtualBasketball from "src/components/results/template/virtual_soccer";
+// import soccer from "src/components/match-results/template/soccer";
+// import basketball from "src/components/match-results/template/basketball";
+// import tennis from "src/components/match-results/template/tennis";
+// import badminton from "src/components/match-results/template/badminton";
+// import snooker from "src/components/match-results/template/snooker";
+// import pingpang from "src/components/match-results/template/pingpang";
+// import baseball from "src/components/match-results/template/baseball";
+// import hockey from "src/components/match-results/template/hockey";
+// import usa_football from "src/components/match-results/template/usa_football";
+// import volleyball from "src/components/match-results/template/volleyball";
+// import handball from "src/components/match-results/template/handball";
+// import champion from "src/components/match-results/template/champion"
 
-// import dota2 from "src/components/results/template/dota2";
+// import virtual_soccer from "src/components/match-results/template/virtual_soccer";
+// import virtual_race_dog from "src/components/match-results/template/virtual_race_dog";
+// import virtualBasketball from "src/components/match-results/template/virtual_soccer";
+
+// import dota2 from "src/components/match-results/template/dota2";
 export default {
   components: {
-    soccer,
-    basketball,
-    tennis,
-    badminton,
-    snooker,
-    pingpang,
-    baseball,
-    "usa-football": usa_football,
-    hockey,
-    volleyball,
-    "virtual-soccer": virtual_soccer,
-    "virtual-race-dog": virtual_race_dog,
-    virtualBasketball,
-    handball,
-    champion,
-    dota2,
+    // soccer,
+    // basketball,
+    // tennis,
+    // badminton,
+    // snooker,
+    // pingpang,
+    // baseball,
+    // "usa-football": usa_football,
+    // hockey,
+    // volleyball,
+    // "virtual-soccer": virtual_soccer,
+    // "virtual-race-dog": virtual_race_dog,
+    // virtualBasketball,
+    // handball,
+    // champion,
+    // dota2,
   },
   props:{
     sportType: {//球类id
@@ -277,6 +279,9 @@ export default {
     versions: String,//版本
   },
   methods: {
+    getCsid (val){
+      is_eports_csid(val)
+    },
     /**
      * @description: 获取父组件点击行详情
      * @param {Array} data

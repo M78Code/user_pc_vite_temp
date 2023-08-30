@@ -5,7 +5,7 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ t(`odds.${cur_odd}`) }}</div>
+            <div class="popup-text" :class="{ active: is_active }">{{ i18n_t(`odds.${cur_odd}`) }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
         <div class="relative-position">
@@ -26,18 +26,16 @@ import { ref, reactive, watch, onUnmounted } from 'vue'
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import store from "src/store-redux/index.js";
-import { t } from "src/core/index.js";
-
-/** 国际化 */
-;
+import { i18n_t } from "src/boot/i18n.js"
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 const odds_constant = [
-    { label: t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
-    { label: t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
-    { label: t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
-    { label: t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
-    { label: t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
-    { label: t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
+    { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
+    { label: i18n_t('odds.ID'), value: "ID", icon: 'panda-icon-contryYN', id: 6 },//印尼盘
+    { label: i18n_t('odds.US'), value: "US", icon: 'panda-icon-contryUS', id: 5 },//美式盘
+    { label: i18n_t('odds.MY'), value: "MY", icon: 'panda-icon-contryML', id: 3 },//马来盘
+    { label: i18n_t('odds.GB'), value: "GB", icon: 'panda-icon-contryUK', id: 4 },//英式盘
+    { label: i18n_t('odds.HK'), value: "HK", icon: 'panda-icon-contryHK', id: 2 },//香港盘
 ]
 
 /** 点击数 */
@@ -47,25 +45,25 @@ const is_active = ref(false)
 /** stroe仓库 */
 const { globalReducer, betInfoReducer } = store.getState();
 const unsubscribe = store.subscribe(() => {
-    is_single_handle.value = betInfoReducer.is_single_handle
-    is_handle.value = betInfoReducer.is_handle
-    is_bet_singl.value = betInfoReducer.is_bet_singl
-    cur_odd.value = globalReducer.cur_odd
-    pre_odd.value = globalReducer.pre_odd
+    // is_single_handle.value = betInfoReducer.is_single_handle
+    // is_handle.value = betInfoReducer.is_handle
+    // is_bet_singl.value = betInfoReducer.is_bet_singl
+    // cur_odd.value = globalReducer.cur_odd
+    // pre_odd.value = globalReducer.pre_odd
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 
 /** 当前赔率 */
-const cur_odd = ref(globalReducer.odds.cur_odds)
-/** 单关 是否正在处理中 */
-const is_single_handle = ref(betInfoReducer.is_single_handle)
-/** 是否正在处理投注 */
-const is_handle = ref(betInfoReducer.is_handle)
-/** true: 单关投注 false: 串关投注 */
-const is_bet_singl = ref(betInfoReducer.is_bet_singl)
+const cur_odd = ref(UserCtr.odds.cur_odd || 'EU')
 /** 获取上次选择的盘口类型(盘口切换时使用) */
-const pre_odd = ref(globalReducer.pre_odds)
+const pre_odd = ref(UserCtr.odds.pre_odds || 'EU')
+/** 单关 是否正在处理中 */
+const is_single_handle = ref(false)
+/** 是否正在处理投注 */
+const is_handle = ref(false)
+/** true: 单关投注 false: 串关投注 */
+const is_bet_singl = ref(false)
 
 /**
 * @Description:显示切换盘口弹层

@@ -103,11 +103,11 @@ class UserCtr {
     return this.uid;
   }
   set_lang(data) {
-    this.lang.value = data;
+    this.lang = data;
     this.user_info.languageName = data;
   }
   set_theme(lang) {
-    this.theme.value = lang;
+    this.theme = lang;
     store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -1117,7 +1117,7 @@ class UserCtr {
     //计算 后的  设置 网页 基础信息的 最终配置
     let config = this.compute_set_web_meta_config();
     let dom_ = document;
-    let lang = this.lang.value;
+    let lang = this.lang;
     // 设置标题
     let title_el = dom_.createElement("title");
     let title_str = this.get_web_title(lang);
