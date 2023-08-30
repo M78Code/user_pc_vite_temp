@@ -5,7 +5,7 @@
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div class="home home-page" :class="[home_class && `${home_class} white-font`,
-  tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
+  handicapNum && tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
@@ -39,8 +39,10 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
 import lodash from "lodash"
-import { i18n_t } from "src/boot/i18n.js"
-// console.error(GlobalAccessConfig.get_hotMatchNum());
+// console.error(GlobalAccessConfig);
+
+const handicapNum = lodash.get(GlobalAccessConfig,'config_default.handicapNum')
+
 export default defineComponent({
   beforeRouteEnter (to,from,next) {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
@@ -67,6 +69,8 @@ export default defineComponent({
   // 下划线是否 要动画
   const add_animation = ref(true)
   const theme = ref(UserCtr.theme)
+
+  
 
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，
