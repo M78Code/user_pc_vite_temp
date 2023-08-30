@@ -1,5 +1,6 @@
 <template>
-  <div class="yb-site-left-width" v-if="globalAccessConfig.get_searchSwitch()" :class="`${main_menu_toggle}`">
+  <!--  v-if="globalAccessConfig.get_searchSwitch()" -->
+  <div class="yb-site-left-width" v-if="globalAccessConfig.config_default.searchSwitch" :class="`${main_menu_toggle}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
     <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
@@ -80,8 +81,9 @@ const set_search_status = (data) => (store.dispatch({
 
 /** 展开搜索 */
 function show_search() {
-  if (!globalAccessConfig.get_searchSwitch()) {
-    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, t("msg.msg_09"));
+  // if (!globalAccessConfig.get_searchSwitch()) {
+  if (!globalAccessConfig.config_default.searchSwitch) {
+    return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
   set_search_status(true);
 }
