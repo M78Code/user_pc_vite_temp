@@ -84,6 +84,8 @@ class MenuData {
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
     this.is_multi_column = ref(false);
+    // 左侧菜单显示 menu bet history
+    this.layout_left_show = 'menu'
   }
 
   /**

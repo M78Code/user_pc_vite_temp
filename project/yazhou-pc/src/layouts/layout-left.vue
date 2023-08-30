@@ -1,13 +1,12 @@
 <template>
   <!-- 左侧 菜单区域 -->
-  <div
-    v-show="route.params.video_size != 1"
+  <div v-show="route.params.video_size != 1"
     class="layout-left row relative-position full-height"
-    :class="{
-      mini: is_mini_menu,
-    }"
-  >
-    <div class="cathectic-shade" v-show="bet_loadding && is_mini_menu">
+    :style="`width:${LayOutMain_pc.layout_left_width}`" >
+  
+   <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
+
+    <div class="cathectic-shade" v-show="bet_loadding && LayOutMain_pc.layout_left_menu_status == 'normal'">
       <div class="shade-fixed">
         <!-- 确认中转圈圈 -->
         <div class="loading-wrap">
@@ -20,9 +19,9 @@
       </div>
     </div>
     <!-- 左侧 mini -->
-    <left-main-min v-show="is_mini_menu" />
+    <left-main-min v-show="LayOutMain_pc.layout_left_menu_status == 'mini'" />
     <!-- 左侧 -->
-    <left-main v-show="!is_mini_menu" />
+    <left-main v-show="LayOutMain_pc.layout_left_menu_status == 'normal'" />
   </div>
 </template>
 
@@ -30,25 +29,17 @@
 import leftMain from "../pages/left-main/index.vue";
 // import leftMainMin from "../pages/left-main/index-min.vue";
 
-import { is_mini_menu, list_emit } from "../core/layout/left-menu";
 import { useRoute } from "vue-router";
-import { UserCtr } from "src/core/index.js";
+import { LayOutMain_pc } from "src/core/index.js";
 
 import { onBeforeUnmount, ref } from "vue";
 const route = useRoute();
 const bet_loadding = ref(false);
-const layout_menu_width = '234px'
-const layout_menu_width_mini = '64px'
+
 
 onBeforeUnmount(() => {
   list_emit.forEach((i) => i());
 });
+
+
 </script>
-<style scoped lang="scss">
-.layout-left {
-  width:  v-bind('layout_menu_width');
-  &.mini {
-    width: v-bind('layout_menu_width_mini');
-  }
-}
-</style>

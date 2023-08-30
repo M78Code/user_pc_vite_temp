@@ -21,7 +21,7 @@ import { GetUrlParams } from "src/core/utils/";
 import { api_match } from "src/api/index.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { SessionStorage,UserCtr } from "src/core/index.js";
-import { loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync,LayOutMain_pc } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const token_key = STANDARD_KEY.get("token"); //token键
@@ -77,6 +77,8 @@ const handle_user_tryPlay = async () => {
       handle_user_tryPlay();
       // 元数据初始化
       base_data.init();
+      // 布局初始化
+      LayOutMain_pc.init();
       init_load.value = true;
     });
     AllDomain.run();
