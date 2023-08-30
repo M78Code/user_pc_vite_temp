@@ -3,7 +3,7 @@
   <div class="header-wrap scroll-fixed-bg" :class="UserCtr.is_invalid && 'invalid'">
     <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'user_token')}`">
       <!-- 昵称 -->
-      <div class="ellipsis">Hi, {{ get(get_user, "nickName") }}</div>
+      <div class="ellipsis">Hi, {{ get(UserCtr.user_info, "nickName") }}</div>
     </div>
     <div class="balance-wrap row justify-between relative-position">
       <div class="row items-center">
@@ -28,7 +28,7 @@
         :other_icon="true"
         icon_name="icon-balance_refresh"
         :loaded="data_loaded"
-        :disable="!get_user"
+        :disable="!UserCtr.user_info"
         @click="set_balance_refresh()"
       />
     </div>
@@ -51,7 +51,7 @@ const { off, emit: set_balance_refresh } = useMittOn(
     UserCtr.get_balance()
   }
 );
-console.log(UserCtr.user_info);
+console.error(UserCtr.user_info);
 //默认进来获取一次用户余额
 set_balance_refresh();
 

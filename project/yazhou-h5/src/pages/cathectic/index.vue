@@ -16,7 +16,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(userCtr, 'theme').includes('theme01')"><img
+          <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')"><img
               src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
           <template v-else><img src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>
@@ -37,9 +37,9 @@
 <script setup>
 import { api_betting } from "src/api/index.js";
 //   import { mapGetters, mapMutations } from "vuex"
-import unsettle from "./unsettle.vue" // project\yazhou-h5\src\pages\cathectic\unsettle.vue
-import settle from "./settle.vue"
-import preRecord from "./pre-record.vue"
+// import unsettle from "./unsettle.vue"
+// import settle from "./settle.vue"
+// import preRecord from "./pre-record.vue"
 import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
@@ -47,7 +47,6 @@ import store from 'src/store-redux/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { t } from "src/boot/i18n.js";;
 //国际化
-
 
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
 let store_cathectic = ref(cathecticReducer)
@@ -77,7 +76,7 @@ const up_store_data = () => {
 
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
-  const bookBet = lodash.get(userCtr, 'user_info.configVO.bookBet')
+  const bookBet = lodash.get(UserCtr, 'user_info.configVO.bookBet')
   return bookBet == 1
 })
 // watch(() => unsubscribe, () =>{

@@ -21,7 +21,7 @@
     </div>
 
     <!-- 顶部切换 下边的内容组件 -->
-    <component :is='currentContent' @hook:mounted="get_hot_tab_item_handle"></component>
+    <!-- <component :is='currentContent' @hook:mounted="get_hot_tab_item_handle"></component> -->
   </div>
 </template>
 
@@ -31,13 +31,18 @@
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import hot from "project_path/src/pages/home/hot/index.vue";    // 热门页入口主页面
 // import live_video from "project_path/src/pages/home/live-video/index.vue";
-import { loadLanguageAsync } from "src/boot/i18n/index.js";
+import { loadLanguageAsync } from "src/boot/i18n.js";
 // import router_mixins from "project_path/src/mixins/router-mixins.js";
 import {utils } from 'src/core/index.js';
-import { onUnmounted, watch } from "vue";
+import { onUnmounted, watch, ref, computed, onMounted } from "vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+<<<<<<< HEAD
 import UserCtr from "src/core/user-config/user-ctr.js";;  // mixins: [router_mixins],
+=======
+import UserCtr  from "src/core/user-config/user-ctr.js";  // mixins: [router_mixins],
+import lodash from "lodash"
+>>>>>>> 6e7ad38b62117aae54deff59c99a7b643da7c345
 
   // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
@@ -95,35 +100,37 @@ import UserCtr from "src/core/user-config/user-ctr.js";;  // mixins: [router_mix
     const theme = ref(UserCtr.theme)
 
 
-  watch(() => tabIndex, (n) => {
-    // 首页、视频直播以及热门下精选不显示背景
-      if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
-        home_class = ''
-      }
-  })
+  // watch(() => tabIndex, (n) => {
+  //   // 首页、视频直播以及热门下精选不显示背景
+  //     if (get_hot_tab_item.index === 0 || get_home_tab_item.index !== 1) {
+  //       home_class = ''
+  //     }
+  // })
  // 监听 热门的tab 变化 home_class 名称作背景图
-  watch(() => get_hot_tab_item, () => {
-    handler = 'get_hot_tab_item_handle'
-  })
+  // watch(() => get_hot_tab_item, () => {
+  //   handler = 'get_hot_tab_item_handle'
+  // })
     /**
      * 动态组件在创建时指定，不能在data中默认为'home'，
      * 否则每次进入到首页路由（home/hot/live_video）都会先创建'home'组件，
      * 从而发起不必要的http请求
      */
-    currentContent = _.get(get_home_tab_item, 'component', 'home')
+    onMounted(() => {
+      currentContent = _.get(get_home_tab_item, 'component', 'home')
+      set_menu_type('');
+      //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
+      // to_corresponding_route()
+      // 从列表页或者详情页返回首页时, 下划线判断是否要动画
+      if(Object.keys(get_home_tab_item).length > 0){
+        $nextTick(() => {
+          // 如果本地有记录，则跳转到本地记录的原来的位置
+          tab_click(get_home_tab_item, false,false)
+        })
+      }
+      useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).on
+    })
 
-    set_menu_type('');
-    //地址栏带有菜单和赛事id参数的话，跳转到对应的列表或者赛事详情页
-    // to_corresponding_route()
-    // 从列表页或者详情页返回首页时, 下划线判断是否要动画
-    if(Object.keys(get_home_tab_item).length > 0){
-      $nextTick(() => {
-        // 如果本地有记录，则跳转到本地记录的原来的位置
-        tab_click(get_home_tab_item, false,false)
-      })
-    }
-    useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
-  onBeforeRouteEnter((to,from,next) => {
+    onBeforeRouteEnter((to,from,next) => {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
     next(() => {
       // 通过 `_this` 访问组件实例
@@ -182,7 +189,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;  // mixins: [router_mix
      *@param {Object} newVal 新值
      */
     const get_hot_tab_item_handle = (newVal) => {
-      newVal = newVal || get_hot_tab_item
+      newVal = newVal //|| get_hot_tab_item
       if(!Object.keys(newVal).length) return
 
       // home_class = ''

@@ -19,7 +19,7 @@ export const login = (params, config={}, url = `/api/user/loginBak?userName=${pa
 export const check_balance = (params, config={}, url = "/user/amount") => http.get(`${prefix_user}${url}`, params, config);
 
 // 根据 token 获取用户信息
-export const get_user_info = (params, config={}, url = "/user/getUserInfoPB") => http.get(`${prefix_user}${url}`, params, config);
+export const get_user_info = (params, config={}, url = "/user/getUserInfo") => http.get(`${prefix_user}${url}`, params, config);
 
 // 设置以及获取用户设置的语言
 export const set_user_lang = (params, config={}, url = "/user/setUserLanguage") => http.get(`${prefix_user}${url}`, params, config);
