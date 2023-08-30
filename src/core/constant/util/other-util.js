@@ -2,8 +2,9 @@
 
 import {csid_map_concede_points_id} from '../config/csid'
 import {  MenuData  } from "src/core/index.js"
-import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
+// import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
 
+const image_panda_placeholder = {}
 /**
  * @description: 获取赛事的让球方
  * @param {Object} match
