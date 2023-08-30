@@ -529,7 +529,7 @@ export default defineComponent({
       data.emitters = [
         useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).off,
       ]
-      useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent).on;
+      useMittOn(MITT_TYPES.EMIT_MATCH_TIME_SHOW_INIT, initEvent);
     })
     onUnmounted(() => {
       debounce_throttle_cancel(hide_home_goal);

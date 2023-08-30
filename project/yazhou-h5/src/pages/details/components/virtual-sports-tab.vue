@@ -52,7 +52,7 @@ export default {
     //   "get_fewer",
     //   "get_current_league",
     //   "get_detail_data",
-   
+
     // ]),
     // ...mapGetters({
     //   matchid: "get_goto_detail_matchid",
@@ -62,8 +62,8 @@ export default {
     // }),
     // 历史战绩：标准赛事详情页的时候不显示,只在虚拟体育详情显示历史战绩(其中篮球不显示历史战绩)
     anlyse_show(){
-      
-      
+
+
       return   GlobalAccessConfig.get_statisticsSwitch()&& route.name != 'virtual_sports' && get_detail_data.csid != 1004
     }
   },
@@ -80,8 +80,8 @@ export default {
     // 延时器
     timer1_ = null;
     timer_ = null;
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent).on
-    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent).on
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB, initEvent)
+    useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS_TAB_BET, initEvent)
 
     initEvent();
     play_list()

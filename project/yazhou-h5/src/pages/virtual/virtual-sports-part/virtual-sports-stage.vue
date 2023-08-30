@@ -156,7 +156,7 @@
 </template>
 
 <script>
-// #TODO 
+// #TODO
 // import {mapGetters,mapMutations} from 'vuex';
 import virtualSportsTimer from "project_path/pages/virtual/virtual_sports_part/virtual_sports_timer.vue";
 import common from "project_path/mixins/constant/module/common.js";
@@ -202,7 +202,7 @@ export default defineComponent({
       }
     },
   },
-  
+
   setup(props, evnet) {
     const component_data = reactive({
       // 事件集合
@@ -267,12 +267,12 @@ export default defineComponent({
 
     // #TODO EMIT 事件
     emitters = [
-      useMittOn.on(MITT_TYPES.EMIT_IS_ALL_END_NOTICE, all_ended_handle).off,
-      useMittOn.on(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, sync_video_data_handle).off,
-      useMittOn.on(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, set_init_video_on).off,
-      useMittOn.on(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, set_loading_state).off,
-      useMittOn.on(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
-      useMittOn.on(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
+      useMittOn(MITT_TYPES.EMIT_IS_ALL_END_NOTICE, all_ended_handle).off,
+      useMittOn(MITT_TYPES.EMIT_SYNC_VIDEO_DATA, sync_video_data_handle).off,
+      useMittOn(MITT_TYPES.EMIT_CURRENT_VIDEO_PROCESS_INITED, set_init_video_on).off,
+      useMittOn(MITT_TYPES.EMIT_VIRTUAL_MATCH_LOADING, set_loading_state).off,
+      useMittOn(MITT_TYPES.EMIT_PRE_COUNTING_EDN, pre_counting_end_handle).off,
+      useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, visibilitychange_handle).off,
     ]
     // useMittOn(MITT_TYPES.EMIT_IS_ALL_END_NOTICE,all_ended_handle);
     // useMittOn(MITT_TYPES.EMIT_SYNC_VIDEO_DATA,sync_video_data_handle);
@@ -291,7 +291,7 @@ export default defineComponent({
     onUnmounted(() => {
       emitters.map((x) => x())
     })
-    // #TODO VUEX ACTIONS 
+    // #TODO VUEX ACTIONS
     // ...mapMutations([
     //   'set_settle_dialog_bool',
     //   'set_prev_v_sports_params',
@@ -550,7 +550,7 @@ export default defineComponent({
         if(n_no){
           if(next_batch_no){
             result = next_batch_no.replace('%s',video_process_data.nextNo);
-          } 
+          }
         }
         //展示下一期号
         else{
@@ -792,13 +792,13 @@ export default defineComponent({
       }
     );
 
-    // #TODO watch vuex 
+    // #TODO watch vuex
     // watch(
       // if(current_match){
       //   video_process_init_video();
       // }
     // );
-    // #TODO watch vuex 
+    // #TODO watch vuex
     // watch(
     //   () => props.right_menu_show,
     //   (val) => {

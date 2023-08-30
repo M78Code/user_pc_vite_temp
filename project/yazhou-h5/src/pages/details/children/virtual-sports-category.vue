@@ -237,7 +237,7 @@ export default defineComponent({
       set_fewer(1);
       // #TODO emit
       emitters.push(useMittOn(MITT_TYPES.EMIT_REF_API, sendSocketInitCmd).off);
-      // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent).on;
+      // useMittOn(MITT_TYPES.EMIT_REF_API, initEvent);
 
       if(route.query.mid || route.name == 'virtual_sports'){
         init_vsport();
