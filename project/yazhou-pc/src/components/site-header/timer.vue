@@ -59,7 +59,6 @@ onMounted(init)
  * @param {undefined} undefined
 */
 function global_one_second_timer() {
-    // useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,{time:new Date().getTime(), step:1000});
     /** 广播事件 */
     useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime() })
     // 统计各个菜单停留时间 每秒执行一次

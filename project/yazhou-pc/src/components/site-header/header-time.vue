@@ -14,7 +14,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, defineComponent } from 'vue'
 import { useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
-// import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/index.js"
+import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/module/format-date.js"
 
 /** 日期时间 */
 const date_time = ref('')
@@ -27,9 +27,9 @@ const time = ref({
 
 /** 获取系统时间 = 日期时间 */
 function get_date_time() {
-    // time.value = get_remote_time();
+    time.value = get_remote_time();
     time_local.value = new Date().getTime();
-    // date_time.value = utc_to_gmt_no_8_ms2(time.value);
+    date_time.value = utc_to_gmt_no_8_ms2(time.value);
 }
 /** 钩子触发 */
 onMounted(get_date_time)
@@ -37,7 +37,7 @@ onMounted(get_date_time)
 /** 更新当前时间显示 */
 function set_date_time(data) {
     const now_ = new Date().getTime();
-    // date_time.value = utc_to_gmt_no_8_ms2(time.value + (now_ - time_local.value) + (now_ - data.time));
+    date_time.value = utc_to_gmt_no_8_ms2(time.value + (now_ - time_local.value) + (now_ - data.time));
 }
 /** 监听和销毁 页面右上角服务器时间展示 */
 const { off: off_set_date_time } = useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, set_date_time)

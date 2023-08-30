@@ -2,7 +2,7 @@
     <div class="popup-wrap relative-position " :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
-                <span :class="['flag lang-active', lang]"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
+                <span :class="['flag lang-active', UserCtr.lang]"></span><span class="lang-label ellipsis">{{ langs[UserCtr.lang] }}</span>
             </div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -11,7 +11,7 @@
             <div class="triangle"></div>
             <template v-for="(language, index) in language_arr">
                 <div v-if="languageList.includes(language)" :key="index" class="item ellipsis"
-                    :class="[{ active: lang == language }]" @click="on_click_lang(language)">
+                    :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
                     <span :class="['flag', language]"></span>{{ langs[language] }}
                 </div>
             </template>
@@ -20,7 +20,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, watch, computed, toRefs } from 'vue'
+import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
@@ -74,17 +74,6 @@ const is_virtual_bet = ref(true)
 /* 虚拟投注对象 default: {} */
 const virtual_bet_obj = ref({})
 
-/** 
- * 语言 languages
- * 路径: src\store-redux\module\languages.js
- */
-const lang = ref(langReducer.lang)
-
-/** 设置语言 */
-const set_lang = (data) => store.dispatch({
-    type: 'SET_LANG',
-    data
-})
 /** 设置语言变化 */
 const set_lang_change = (data) => store.dispatch({
     type: 'SET_LANGUAGE_CHANGING',
@@ -98,7 +87,6 @@ const set_open_select_time = (data) => store.dispatch({
 })
 const unsubscribe = store.subscribe(() => {
     global_click.value = globalReducer.global_click
-    lang.value = langReducer.lang
     // is_bet_single.value = betInfoReducer.is_bet_single
     // bet_single_obj.value = betInfoReducer.bet_single_obj || {}
     // bet_obj.value = betInfoReducer.bet_obj || {}
@@ -131,7 +119,7 @@ function on_click_lang(lang_) {
     // const is_winner = $menu.menu_data.match_tpl_number == 18;
     const is_winner = false
     let fun = () => {
-        if (!is_winner && lang.value != lang_) {
+        if (!is_winner && UserCtr.lang != lang_) {
             set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
@@ -182,14 +170,13 @@ function on_click_lang(lang_) {
             }
         }
     }
-    if (lang.value != lang_) {
+    if (UserCtr.lang != lang_) {
         api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
-                set_user({ languageName: lang_ })
-                set_lang(lang_);
+                UserCtr.set_lang(lang_);
                 // TODO: 
-                window.reset_lang = lang_;
+                // window.reset_lang = lang_;
                 // 设置即将开赛筛选默认值为全部
                 set_open_select_time(null)
                 // $store.state.filter.open_select_time = null;
