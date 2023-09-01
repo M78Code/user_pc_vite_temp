@@ -24,8 +24,9 @@ dist-ssr
 *.sw?
 .env?
 
-job/output/
+job/output/*
 .VSCodeCounter/*
 .VSCodeCounter
 
 .history
+.env* 
