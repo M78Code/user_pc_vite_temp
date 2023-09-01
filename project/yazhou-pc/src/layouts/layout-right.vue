@@ -47,7 +47,7 @@ function handle_click() {
 </script>
 <style scoped lang="scss">
 .layout-right {
-  width: $layout_right_width;
+  // width: $layout_right_width;
   &.mini_hide {
     width: 0px !important;
     display: none;

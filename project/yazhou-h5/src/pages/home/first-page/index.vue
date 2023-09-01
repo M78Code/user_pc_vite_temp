@@ -204,45 +204,45 @@ import { useRoute, useRouter } from "vue-router"
   //轮播
   const slide = ref(0)
   //轮播图数据，init是数据加载中的标识
-  const carousel_data = ref({ list: [], obj: {} })
+  let carousel_data = ref({ list: [], obj: {} })
   //余额
-  const balance_obj = ref({})
+  let balance_obj = ref({})
    // 代表接口加载结束
-  const loading_done =ref(false)
+   let loading_done =ref(false)
   //左侧菜单选中项
-  const menu_index = ref(0)
+  let menu_index = ref(0)
   //左侧菜单
-  const menu = ref(common_menu_list())
+  let menu = ref(common_menu_list())
   //右边内容
-  const match_list = ref(secondary_menu())
+  let match_list = ref(secondary_menu())
   //右侧无数据
-  const noData = ref(false)
-  const no_data_txt = ref("moMatch")
+  let noData = ref(false)
+  let no_data_txt = ref("moMatch")
   //菜单无数据
-  const noMenu = ref(false)
-  const no_menu_txt = ref("moMatch")
+  let noMenu = ref(false)
+  let no_menu_txt = ref("moMatch")
   //点击动画
-  const animation = ref(false)
+  let animation = ref(false)
   //滚动中的位置
-  const clientY = ref(0)
+  let clientY = ref(0)
   //开始滚动的位置
-  const start_move_clientY = ref(0)
-  const thumbStyle = ref({
+  let start_move_clientY = ref(0)
+  let thumbStyle = ref({
     background: "transparent"
   })
   //轮播背景图片,
-  const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
+  let banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
   //右边内容默认高度
-  const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
+  let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
   // 定时器
-  const home_timer1_ = ref(null)
+  let home_timer1_ = ref(null)
   // 默认banner初始不显示
-  const defaultBannerShow = ref(false)
+  let defaultBannerShow = ref(false)
   // 定时器变量
-  const timer_1 = ref(null)
+  let timer_1 = ref(null)
   // 展示banner loading
-  const show_banner_loading = ref(true)
-  const new_menu = ref([])
+  let show_banner_loading = ref(true)
+  let new_menu = ref([])
     // 展示banner loading
     show_banner_loading = true
     get_carousel((data) => {

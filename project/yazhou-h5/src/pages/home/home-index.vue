@@ -60,17 +60,17 @@ export default defineComponent({
   setup() {
      // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
-  const tabIndex = ref(lodash.get(homeReducer, 'home_tab_item.index'))
+  let tabIndex = ref(lodash.get(homeReducer, 'home_tab_item.index'))
   // 当前选中的组件
-  const currentContent = ref('')
+  let currentContent = ref('')
   // 热门页面的背景图样式
-  const home_class = ref('')
+  let home_class = ref('')
   //是否要跳转到列表或者详情页
-  const tianzhuan = ref(false)
+  let tianzhuan = ref(false)
   // 下划线是否 要动画
-  const add_animation = ref(true)
-  const theme = ref(UserCtr.theme)
-  const tabs_active_bar = ref(null)
+  let add_animation = ref(true)
+  let theme = ref(UserCtr.theme)
+  let tabs_active_bar = ref(null)
 
 
 

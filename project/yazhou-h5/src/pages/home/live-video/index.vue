@@ -106,26 +106,26 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import {money_filter} from "src/core/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";;
   //右侧菜单内容
-  const carousel_data = ref({list:[],obj:{}})
+  let carousel_data = ref({list:[],obj:{}})
   // 头部选项卡下标
-  const tab_Index = ref(1)
+  let tab_Index = ref(1)
   // tab选项卡内容
-  const tabList = ref([])
+  let tabList = ref([])
   // 左侧菜单选中项
-  const menu_index = ref(0)
+  let menu_index = ref(0)
   // 有没有菜单数据
-  const noMenu = ref(false)
+  let noMenu = ref(false)
   //没有数据展示
-  const no_menu_txt = ref("nolive")
+  let no_menu_txt = ref("nolive")
   // 代表 是否在收藏菜单下
-  const is_collect = ref(false)
+  let is_collect = ref(false)
   // 加载动画
-  const loading = ref(true)
+  let loading = ref(true)
   // 代表的是联赛id  tid
-  const field_tid = ref('')
-  const y0_img_favorite_black = ref("image/wwwassets/bw3/common/m-list-favorite-s-y0.svg")
+  let field_tid = ref('')
+  let y0_img_favorite_black = ref("image/wwwassets/bw3/common/m-list-favorite-s-y0.svg")
   // 赛事列表滑动高度
-  const list_scroll_top = ref(0)
+  let list_scroll_top = ref(0)
   // 锚点
   let scrollArea = ref(null)
 
