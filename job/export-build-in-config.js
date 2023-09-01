@@ -8,8 +8,22 @@ import {
 } from "./write-folder-file.js";
 import { compute_build_in_config } from "./build-in-config-fn.js";
 import { write_env_file } from "./write-env-file.js";
+import {  DEV_TARGET_VERSION ,DEV_TARGET_ENV } from "../dev-target-env.js";
 
-import { DEV_TARGET_ENV, ALL_ENV_ARR } from "../dev-target-env.js";
+
+// --------------------------------
+// 所有  目标环境标识
+const ALL_ENV_ARR = [
+  "local_local",
+  "local_dev",
+  "local_test",
+  "idc_lspre",
+  "idc_pre",
+  "idc_sandbox",
+  "idc_ylcs",
+  "idc_online",
+];
+
 console.log("----process.argv---", process.argv);
 // 输出所有环境
 let all_env = false;
@@ -66,6 +80,40 @@ const recompute_current_env_when_FRONT_WEB_ENV = () => {
   current_env = FRONT_WEB_ENV;
   return current_env;
 };
+
+
+
+
+/**
+ * 重新计算  current_env  当    DEV_TARGET_VERSION   构建 zip
+ * 本地指定 打包指定版本  重置 本地指定环境
+ */
+const recompute_current_env_when_DEV_TARGET_VERSION = () => {
+ 
+  let current_env = DEV_TARGET_ENV;
+  //模块化 打包目标环境代码 定向 指定环境
+  console.log(
+    "当前 已指定 试玩环境SDK打包 专用版本号 ， DEV_TARGET_VERSION : " +
+    DEV_TARGET_VERSION
+  );
+  if (DEV_TARGET_VERSION.includes("shiwan")) {
+    current_env = "idc_sandbox";
+  }
+  if (DEV_TARGET_VERSION.includes("online")) {
+    current_env = "idc_online";
+  }
+  console.log(
+    "当前 已指定 试玩环境SDK打包 专用版本号 ， 重定向打包输出的目标环境 :" +
+      current_env
+  );
+  return current_env;
+
+};
+
+
+
+
+
 // 输出目录
 let write_folder = "./job/output/env/module";
 let final_file_path = `./job/output/env/final.js`;
@@ -106,6 +154,8 @@ const export_env_config = (env) => {
   });
 };
 
+
+
 console.log(
   "输出 环境相关的最终植入配置 脚本执行，脚本名字 ： export-build-in-config  "
 );
@@ -128,7 +178,8 @@ if (all_env) {
     let current_env = recompute_current_env_when_FRONT_WEB_ENV();
     export_env_config(current_env);
   } else {
+    let current_env = recompute_current_env_when_DEV_TARGET_VERSION()  ;
     //  开发人员本地开发
-    export_env_config(DEV_TARGET_ENV);
+    export_env_config(current_env);
   }
 }
