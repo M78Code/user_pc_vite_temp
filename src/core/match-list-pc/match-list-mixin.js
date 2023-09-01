@@ -40,9 +40,9 @@ const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res } = process_composable_fn;
 console.log('process_composable_fn', process_composable_fn.mx_use_list_res);
 // 赛事主列表容器卡片逻辑处理类
-const match_list_card = reactive(MatchListCardClass);
+const match_list_card = ref(MatchListCardClass);
 // 赛事主列表容器卡片逻辑处理类
-const match_list_data = reactive(MatchListData);
+const match_list_data = ref(MatchListData);
 // 菜单数据
 // 数据请求状态
 const load_data_state = ref("loading");
@@ -491,7 +491,7 @@ const handle_destroyed = () => {
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list).off();
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
-	match_list_card = {};
+	match_list_card.value = {};
 	timer_obj.value = {};
 }
 

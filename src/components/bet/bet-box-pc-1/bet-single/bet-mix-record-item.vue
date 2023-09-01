@@ -56,7 +56,7 @@ import { format_odds  } from "src/core/index.js";
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 */
-::v-deep .q-card {
+:deep(.q-card) {
   border: 0px;
 }
 /**串关投注项信息组件卡片*/
@@ -64,7 +64,7 @@ import { format_odds  } from "src/core/index.js";
   padding: 15px 10px;
 
   /* *卡片组件样式重写* */
-  ::v-deep .q-card__section {
+  :deep(.q-card__section ) {
     margin: 0;
     padding: 0;
     line-height: 1;

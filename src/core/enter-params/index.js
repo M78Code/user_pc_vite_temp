@@ -1,6 +1,7 @@
 import { GetUrlParams } from "src/core/utils/";
 import STANDARD_KEY from "src/core/standard-key";
 import { SessionStorage } from "src/core/utils/module/web-storage.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 //获取url参数
 //token键
@@ -16,4 +17,5 @@ export const enter_params = () => {
   if (url_token) {
     SessionStorage.set(token_key, url_token || token);
   }
+  UserCtr.get_user_info(url_token || token)
 };

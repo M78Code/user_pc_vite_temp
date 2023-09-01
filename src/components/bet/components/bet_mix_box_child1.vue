@@ -493,7 +493,7 @@ onUnmounted(() => {
 }
 
 /* ************** 底部按钮 ************** -E */
-.mix-show-box:nth-last-child(1) ::v-deep .content_box {
+.mix-show-box:nth-last-child(1) :deep( .content_box) {
   border-bottom: 1px solid transparent !important;
 }
 

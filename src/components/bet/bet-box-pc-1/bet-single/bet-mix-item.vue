@@ -109,7 +109,7 @@ import {format_odds} from'src\core\format\index.js'
   padding: 15px 10px;
   padding-bottom: 0px;
   /* *卡片组件样式重写* */
-  ::v-deep .q-card__section {
+  :deep(.q-card__section){
     margin: 0;
     padding: 0;
     line-height: 1;

@@ -139,7 +139,7 @@ import { format_odds } from'src\core\format\index.js'
 /*  卡片失去焦点时的样式 */
 .bet-single-record {
   padding: 0 15px 15px;
-  ::v-deep .q-card__actions {
+  :deep(.q-card__actions) {
     display: flex;
     flex-wrap: nowrap;
     padding: 0;
@@ -161,7 +161,7 @@ import { format_odds } from'src\core\format\index.js'
     }
   }
   /*  卡片组件样式重写 */
-  ::v-deep .q-card__section {
+  :deep( .q-card__section) {
     margin: 0;
     padding: 0;
     border: 0;
@@ -180,9 +180,9 @@ import { format_odds } from'src\core\format\index.js'
       padding: 0;
       margin: 0;
     }
-    ::v-deep i.con-bet_fail,
-    ::v-deep i.icon-bet_success,
-    ::v-deep i.icon-bet_confirm {
+    :deep(i.con-bet_fail ),
+    :deep(i.icon-bet_success),
+    :deep(i.icon-bet_confirm ) {
       margin-left: -20px;
     }
 

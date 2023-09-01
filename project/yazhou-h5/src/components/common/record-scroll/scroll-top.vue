@@ -17,7 +17,7 @@
 import {utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";;
 // import { mapGetters } from "vuex";
-import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
+import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } from 'vue'
 
   const props = defineProps({
     // 父组件滚动高度
@@ -30,7 +30,7 @@ import { defineComponent, ref, watch, onDeactivated, onUnmounted} from 'vue'
     let is_show_back_top_btn = ref(true)
     let scroll_timer = ref(null)
 
-  watch(() => list_scroll_top, (curr_top, prev_top) => {
+  watch(() => props.list_scroll_top, (curr_top, prev_top) => {
     // 滑动停止5s后 隐藏回到顶部按钮
       if (!is_show_back_top_btn.value) {
         is_show_back_top_btn.value = true

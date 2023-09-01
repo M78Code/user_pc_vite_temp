@@ -62,7 +62,7 @@ import { format_currency } from'src\core\format\index.js'
   border: 0;
 
   /* *卡片组件样式重写* */
-  ::v-deep .q-card__section {
+  :deep(.q-card__section){
     margin: 0;
     padding: 0;
     line-height: 0;
@@ -78,7 +78,7 @@ import { format_currency } from'src\core\format\index.js'
     &.bet-fail-bg {
       background: rgba(255, 0, 0, 0.15);
     }
-    ::v-deep .icon-bet_fail.q-icon.c-icon {
+    :deep(.icon-bet_fail.q-icon.c-icon ) {
       margin-top: -1px;
     }
     /*  投注图标  */
