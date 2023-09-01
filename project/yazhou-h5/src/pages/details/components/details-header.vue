@@ -107,7 +107,7 @@ export default defineComponent({
     padding-top: 0.28rem;
   }
 
-  ::v-deep.results_header_bottom {
+  :deep(.results_header_bottom) {
     &.header-bottom {
       height: unset;
     }

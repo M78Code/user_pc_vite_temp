@@ -354,7 +354,7 @@ const props = defineProps({
 }
 /* *卡片获取焦点时的样式background #FFD9D9 * */
 /* *卡片组件样式重写* */
-::v-deep .q-card__section {
+:deep(.q-card__section) {
   margin: 0;
   padding: 0;
   line-height: 1;

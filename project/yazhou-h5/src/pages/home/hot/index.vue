@@ -55,9 +55,10 @@
 <script setup>
 // import { api_home } from "src/project/api/index";
 
-import hotFeatured from "src/components/skeleton/home-hot/hot-featured.vue"    // 热门精选 骨架屏
+import hotFeatured from "project_path/src/components/skeleton/home-hot/hot-featured.vue"    // 热门精选 骨架屏
 
-import hotSchedule from "src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
+import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
+
 
 // import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
 
