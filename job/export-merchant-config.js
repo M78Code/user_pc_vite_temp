@@ -87,8 +87,7 @@ let MERCHANT_CONFIG_INFO = {};
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/config.json`;
-//开启 ，关闭本地测试  ,这个 上线必须设置false
-let ENABLE_TEST = false;
+ 
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -121,9 +120,10 @@ const get_config_info = async () => {
     console.log("获取 服务器上 当前商户的 版本配置 出错");
   }
 };
-if (ENABLE_TEST) {
-  merge_and_output_final_config({});
+if (MODULE_SDK_VERSION) {
+    // 获取 服务器上 当前商户的 版本配置
+    get_config_info();
+
 } else {
-  // 获取 服务器上 当前商户的 版本配置
-  get_config_info();
+  merge_and_output_final_config({});
 }

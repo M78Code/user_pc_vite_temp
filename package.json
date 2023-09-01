@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev-self-use-version-inner": "vite    --config  ./entries/self-use-version/self-use-version.vite.config.js",
-    "dev-self-use-version": "run-s  export-merchant-config  export-build-in-config export-server-resource export-css-config export-full-version-close  dev-self-use-version-inner",
+    "dev-self-use-version": "run-s  remove-dist export-build-version    copy-oss  export-merchant-config  export-build-in-config export-server-resource export-css-config export-full-version-close  dev-self-use-version-inner",
     "build-self-use-version-inner": "vite  build  --config  ./entries/self-use-version/self-use-version.vite.config.js   --mode  production",
     "copy-oss": "node ./job/copy-oss.js",
     "copy-oss-2": "node ./job/copy-oss.js dist",

@@ -25,12 +25,10 @@ let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/server-resource.json`;
 
 // 图片输出到项目的 目录
-let img_folder = `./project/${PROJECT_NAME}/public/server-resource/`;
-let project_path = `public/server-resource/`;//项目index.html 访问图片的路径
+let img_folder = `./public/${PROJECT_NAME}/server-resource/`;
+let project_path = `${PROJECT_NAME}/server-resource/`;//项目index.html 访问图片的路径
 
-//开启 ，关闭本地测试  ,这个 上线必须设置false
-let ENABLE_TEST = false;
-
+ 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
 remove_file(img_folder); //删除输出文件夹
@@ -38,7 +36,7 @@ remove_file(img_folder); //删除输出文件夹
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
-const download_file_to_local = async (srcs) => {
+const download_file_to_local = async (srcs={}) => {
   try {
     //确保配置 输出目录存在
     ensure_write_folder_exist(img_folder);
@@ -61,9 +59,7 @@ const download_file_to_local = async (srcs) => {
   }
 };
  
-if (ENABLE_TEST) {
-  download_file_to_local({});
-} else {
+ 
   // 获取 服务器上 当前商户的 版本配置
   download_file_to_local(final_merchant_config.assets);
-}
+ 

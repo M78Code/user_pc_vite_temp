@@ -28,9 +28,7 @@ let file_path = write_folder + `${PROJECT_NAME}.js`;
 
 //本地scss目录
 let scss_folder = `./project/${PROJECT_NAME}/src/css/`;
-
-//开启 ，关闭本地测试  ,这个 上线必须设置false
-let ENABLE_TEST = true;
+ 
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -59,7 +57,7 @@ const getAllFile = function (dir) {
 /**
  * 计算并写入 最终配置到文件 ，这里可能需要合并一些默认配置或者一些配置重写覆盖
  */
-const get_css_config = async (css_params) => {
+const get_css_config = async (css_params={}) => {
   try {
     let merchant_css_config = {};
     for (const key in css_params) {
@@ -102,19 +100,7 @@ const diff_css_local = (merchant_css_config) => {
   });
 };
  
-if (ENABLE_TEST) {
-  get_css_config({
-    global: {
-      "text-color": "#fff",
-    },
-    activity: { "text-color": "#fff" },
-    analysis: { "text-color": "#fff" },
-    chatroom: { "text-color": "#fff" },
-    match: { "text-color": "#fff" },
-    media: { "text-color": "#fff" },
-    "text-color": { "text-color": "#fff" },
-  });
-} else {
+ 
   // 获取 服务器上 当前商户的 版本配置
   get_css_config(final_merchant_config.css);
-}
+ 
