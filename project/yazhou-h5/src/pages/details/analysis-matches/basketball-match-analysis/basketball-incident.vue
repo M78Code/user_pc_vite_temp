@@ -63,20 +63,20 @@ import { t } from "src/boot/i18n.js";;
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
   // },
   const change_tab = (i) => {
-    tab_index = i
+    tab_index.value = i
   }
   const get_list = async () => {
     try {
       let {code , data} = await api_analysis.get_live_event({mid: match_id})
       if(code == 200 && data.length > 0) {
 
-        event_data = data
-        no_data = true
+        event_data.value = data
+        no_data.value = true
       } else {
-        this.no_data = false
+        no_data.value = false
       }
     } catch (error) {
-      no_data = false
+      no_data.value = false
       console.error(error);
     }
   }

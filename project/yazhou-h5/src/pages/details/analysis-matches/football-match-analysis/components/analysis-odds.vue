@@ -152,9 +152,9 @@ const route = useRoute()
         }
         let { code, data } = res
         if (code == 200 && data && data.sThirdMatchHistoryOddsDTOList.length) {
-          data_list = data.sThirdMatchHistoryOddsDTOList
+          data_list.value = data.sThirdMatchHistoryOddsDTOList
         }
-        is_done = true
+        is_done.value = true
       } catch (error) {
         console.error(error);
       }

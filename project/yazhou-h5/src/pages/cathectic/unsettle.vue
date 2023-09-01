@@ -105,9 +105,9 @@ import store from 'src/store-redux/index.js'
     // 首次进入获取数据
     init_data()
     /**先清除计时器，再使用*/
-    clearInterval(timer_2)
-    timer_2 = setInterval(()=>{
-      if (store_data.main_item == 0 && document.visibilityState == 'visible') {
+    clearInterval(timer_2.value)
+    timer_2.value = setInterval(()=>{
+      if (store_data.value.main_item == 0 && document.visibilityState == 'visible') {
         check_early_order()
         search_early_money()
       }
@@ -137,7 +137,7 @@ import store from 'src/store-redux/index.js'
      * @returns {boolean} 是否有结算注单
      */
   const clac_all_is_early = () => {
-    const data = lodash.values(list_data)
+    const data = lodash.values(list_data.value)
     return lodash.find(data,(item)=>{
       return lodash.some(item.data,{is_show_early_settle:true})
     }) ? false : true
@@ -146,7 +146,7 @@ import store from 'src/store-redux/index.js'
    * @description 查询提前结算金额
    */
   const search_early_money = () => {
-    let params = {orderNo:orderNumberItemList.join(',')}
+    let params = {orderNo:orderNumberItemList.value.join(',')}
     // if(orderNumberItemList.length === 0){return}
     api_betting.get_cashout_max_amount_list(params).then(reslut=>{
       let res = {}
@@ -169,7 +169,7 @@ import store from 'src/store-redux/index.js'
       return;
     }
     let tempList = []
-    lodash.forEach(list_data, (value, key)=> {
+    lodash.forEach(list_data.value, (value, key)=> {
       lodash.forEach(value.data,(item)=>{
         if(item.enablePreSettle){
           tempList.push(item.orderNo)
@@ -184,7 +184,7 @@ import store from 'src/store-redux/index.js'
      * @return {Undefined} undefined
      */
   const refreshOrderList = () => {
-    last_record = ''
+    last_record.value = ''
     init_data(true)
   }
   /**
@@ -218,7 +218,7 @@ import store from 'src/store-redux/index.js'
       } else {
         res = reslut
       }
-      is_limit = false
+      is_limit.value = false
       if (res.code == 200) {
         let { record, hasNext } = lodash.get(res, "data");
         is_hasnext.value = hasNext
@@ -235,21 +235,21 @@ import store from 'src/store-redux/index.js'
         }
         last_record.value = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
-        clearTimeout(timer_1)
+        clearTimeout(timer_1.value)
         // console.error(record);
-        timer_1 = setTimeout(() => {
+        timer_1.value = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
             is_loading.value = false;
           }
           // 合并数据
-          let obj = lodash.cloneDeep(list_data)
+          let obj = lodash.cloneDeep(list_data.value)
           list_data.value = lodash.merge(obj, record)
           // console.error(list_data);
         }, 380);
 
       }else if(res.code == '0401038'){
-        is_limit = true
+        is_limit.value = true
         no_data.value = false
         is_loading.value = false
         return
@@ -282,8 +282,8 @@ import store from 'src/store-redux/index.js'
       searchAfter: last_record.value || undefined,
       orderStatus: 0,
     };
-    let ele = myScroll
-    if (!is_hasnext || last_record.value === undefined) {
+    let ele = myScroll.value
+    if (!is_hasnext.value || last_record.value === undefined) {
       //没有更多
       ele.setState(7);
       return;
@@ -294,7 +294,7 @@ import store from 'src/store-redux/index.js'
       //加载完成
       ele.setState(5);
       let { record, hasNext } = lodash.get(res, "data", {});
-      is_hasnext = hasNext
+      is_hasnext.value = hasNext
       if (res.code == 200 && res.data && lodash.isPlainObject(record) && lodash.keys(record).length>0) {
         for (let item of Object.values(record)) {
           item.open = true
@@ -302,7 +302,7 @@ import store from 'src/store-redux/index.js'
         last_record.value = lodash.findLastKey(record);
 
         // 合并数据
-        let obj = lodash.cloneDeep(list_data);
+        let obj = lodash.cloneDeep(list_data.value);
         list_data.value = lodash.merge(obj, record)
       } else {
         //没有更多
@@ -326,10 +326,10 @@ import store from 'src/store-redux/index.js'
      */
   const clear_timer = () => {
 
-    clearTimeout(timer_1)
-    clearTimeout(timer_2)
-    clearInterval(timer_1)
-    clearInterval(timer_2)
+    clearTimeout(timer_1.value)
+    clearTimeout(timer_2.value)
+    clearInterval(timer_1.value)
+    clearInterval(timer_2.value)
   }
   onUnmounted(() => {
     clear_timer();

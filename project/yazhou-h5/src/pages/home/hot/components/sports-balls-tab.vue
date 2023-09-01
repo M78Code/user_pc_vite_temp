@@ -65,23 +65,23 @@ const props = defineProps({
 })
 
 // 篮球 西部联盟8     东部联盟9
-const  allianc_list = ref([])
-const  balls_list= ref([]) // 排行榜 得分榜 表格的数据
+let  allianc_list = ref([])
+let  balls_list= ref([]) // 排行榜 得分榜 表格的数据
   // 0 代表 积分榜  否则 是 赛事列表
-const  guess_standings = ref(true)
+let  guess_standings = ref(true)
   // 当前榜单选择的下标
-const  tabIndex = ref(0)
+let  tabIndex = ref(0)
 // 西部联盟8 东部联盟9 选择的下标
-const allianc_list_index=  ref(0)
+let allianc_list_index=  ref(0)
 // 积分榜的 切换 下标
-const tab_name_index= ref(1)
+let tab_name_index= ref(1)
 // 积分榜 的接口数据
-const liat_data= ref(null)
-const public_form_title= ref(null)
-const loading_standings_data= ref(false) // 有没有积分榜数据
-const list_loading= ref(false) // 榜单 骨架屏
-const schedule_loading= ref(false) // 热门赛程 骨架屏,
-const wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
+let liat_data= ref(null)
+let public_form_title= ref(null)
+let loading_standings_data= ref(false) // 有没有积分榜数据
+let list_loading= ref(false) // 榜单 骨架屏
+let schedule_loading= ref(false) // 热门赛程 骨架屏,
+let wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
 
 // computed:{
 //     ...mapGetters({
@@ -91,7 +91,7 @@ const wrapper_scroll_top= ref(0) //当列表滚动时隐藏罚牌说明
 //     })
 //   }
 
-watch(()=> balls_list,(n,o)=>{
+watch(()=> balls_list.value,(n,o)=>{
   if(n.length>0) {
     changeTab(n[0])
    }

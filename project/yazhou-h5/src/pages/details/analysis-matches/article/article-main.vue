@@ -207,7 +207,7 @@ const back = () => {
     if (matchids.value.length) {
       article_detail2.value = favorite_article_data.value[matchids.value.pop()]
     } else {
-      is_show_dialog = false
+      is_show_dialog.value = false
       matchids.value.length = 0
     }
     calc_height()
@@ -237,7 +237,7 @@ const handle_stay_duration = (article_id) => {
     }
     // TODO: $utils 后续修改调整
     $utils.zhuge_event_send(EVENT_NAME, UserCtr, zhuge_obj)
-    enter_article_time = Date.now()
+    enter_article_time.value = Date.now()
   }
   /**
    * 点击顶部遮罩 退出 猜你喜欢 时触发埋点

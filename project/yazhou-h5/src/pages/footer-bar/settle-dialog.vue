@@ -77,12 +77,12 @@ src/boot/i18n.js;
   //     let {code,data} = res || {}
   //     if(code == 200 && data) {
         // 待确认中的提前结算单
-      //   _provided = {queryorderpresettleconfirm_data:data}
+      //   _provided.value = {queryorderpresettleconfirm_data:data}
       // }
       // 弹窗显示接口获取列表后延迟
-  //     timer_1 = setTimeout(() => {
-  //       unsettleChild.check_early_order()
-  //       unsettleChild.search_early_money()
+  //     timer_1.value = setTimeout(() => {
+  //       unsettleChild.value.check_early_order()
+  //       unsettleChild.value.search_early_money()
   //     }, 800);
 
 
@@ -130,7 +130,7 @@ src/boot/i18n.js;
     // 清除当前组件所有定时器
   // const clear_timer = () => {
   //     clearTimeout(timer_1)
-  //     timer_1= null
+  //     timer_1.value= null
   //   }
   // onUnmounted(() => {
   //   over_body(false)

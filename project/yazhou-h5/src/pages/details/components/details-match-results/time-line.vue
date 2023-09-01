@@ -74,17 +74,17 @@ import lodash from "lodash"
   // 国际化
 
   // 图片
-  const yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
-  const red_img = ref('image/bw3/svg/match-results/red.svg')
-  const corner_img = ref('image/bw3/svg/match-results/corner.svg')
-  const substitution_img = ref('image/bw3/svg/match-results/substitution.svg')
-  const goal_img = ref('image/bw3/svg/match-results/goal.svg')
-  const penalty_img = ref('image/bw3/svg/match-results/penalty.svg')
-  const penalty_missed_img = ref('image/bw3/svg/match-results/penalty_missed.svg')
-  const own_goals_img = ref('image/bw3/svg/match-results/own_goals.svg')
+  let yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
+  let red_img = ref('image/bw3/svg/match-results/red.svg')
+  let corner_img = ref('image/bw3/svg/match-results/corner.svg')
+  let substitution_img = ref('image/bw3/svg/match-results/substitution.svg')
+  let goal_img = ref('image/bw3/svg/match-results/goal.svg')
+  let penalty_img = ref('image/bw3/svg/match-results/penalty.svg')
+  let penalty_missed_img = ref('image/bw3/svg/match-results/penalty_missed.svg')
+  let own_goals_img = ref('image/bw3/svg/match-results/own_goals.svg')
 
-  const event_data = ref([])
-  const no_data = ref(true)
+  let event_data = ref([])
+  let no_data = ref(true)
   // 路由
   const route = useRoute()
 
@@ -152,7 +152,7 @@ import lodash from "lodash"
               arr[i-1].intermission = true
             }
           })
-          event_data = data
+          event_data.value = data
           no_data.value = false
         } else {
           no_data.value = true
@@ -178,21 +178,21 @@ import lodash from "lodash"
   const picture_conversion = (item) => {
     switch (item.eventCode) {
       case 'yellow_card':
-        return yellow_img
+        return yellow_img.value
       case 'red_card':
-        return red_img
+        return red_img.value
       case 'corner':
-        return corner_img
+        return corner_img.value
       case 'substitution':
-        return substitution_img
+        return substitution_img.value
       case 'goal':
-        return goal_img
+        return goal_img.value
       case 'goal_penalty':
-        return penalty_img
+        return penalty_img.value
       case 'penalty_missed':
-        return penalty_missed_img
+        return penalty_missed_img.value
       case 'goal_own':
-        return own_goals_img
+        return own_goals_img.value
       default:
         return ''
     }

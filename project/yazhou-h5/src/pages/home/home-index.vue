@@ -69,7 +69,6 @@ export default defineComponent({
   let tianzhuan = ref(false)
   // 下划线是否 要动画
   let add_animation = ref(true)
-  let theme = ref(UserCtr.theme)
   let tabs_active_bar = ref(null)
 
 
@@ -108,6 +107,7 @@ export default defineComponent({
         home_class.value = ''
       }
   })
+
 //  监听 热门的tab 变化 home_class 名称作背景图
   // watch(() => get_hot_tab_item, () => {
   //   handler = 'get_hot_tab_item_handle'
@@ -175,29 +175,29 @@ export default defineComponent({
       // 热门菜单背景图类名数组列表
       if(['idc_online', 'idc_lspre', 'idc_ylcs'].includes(current_env)){
         calculation_category = [
-          {filed2:'180',value: `home_page_yc_${theme.value}`},
-          {filed2:'320',value: `home_page_xj_${theme.value}`},
-          {filed2:'239',value: `home_page_yj_${theme.value}`},
-          {filed2:'276',value: `home_page_dj_${theme.value}`},
-          {filed2:'122',value: `home_page_og_${theme.value}`},
-          {filed2:'132',value: `home_page_NBA_${theme.value}`},
-          {filed2:'208',value: `home_page_hll_${theme.value}`},
-          {filed2:'146',value: `home_page_CBA_${theme.value}`},
-          {filed2:'79',value: `home_page_fj_${theme.value}`},
+          {filed2:'180',value: `home_page_yc_${UserCtr.theme}`},
+          {filed2:'320',value: `home_page_xj_${UserCtr.theme}`},
+          {filed2:'239',value: `home_page_yj_${UserCtr.theme}`},
+          {filed2:'276',value: `home_page_dj_${UserCtr.theme}`},
+          {filed2:'122',value: `home_page_og_${UserCtr.theme}`},
+          {filed2:'132',value: `home_page_NBA_${UserCtr.theme}`},
+          {filed2:'208',value: `home_page_hll_${UserCtr.theme}`},
+          {filed2:'146',value: `home_page_CBA_${UserCtr.theme}`},
+          {filed2:'79',value: `home_page_fj_${UserCtr.theme}`},
           {filed2:'3169',value: `home_page_world_cup`},
           {filed2:'error',value: 'ball_error'},
         ]
       }else if(current_env === 'local_test'){
         calculation_category = [
-          {filed2:'821797',value: `home_page_yc_${theme.value}`},
-          {filed2:'821912',value: `home_page_xj_${theme.value}`},
-          {filed2:'821361',value: `home_page_yj_${theme.value}`},
-          {filed2:'821395',value: `home_page_dj_${theme.value}`},
-          {filed2:'821866',value: `home_page_og_${theme.value}`},
-          {filed2:'821596',value: `home_page_NBA_${theme.value}`},
-          {filed2:'208',value: `home_page_hll_${theme.value}`},
-          {filed2:'821549',value: `home_page_CBA_${theme.value}`},
-          {filed2:'821866',value: `home_page_fj_${theme.value}`},
+          {filed2:'821797',value: `home_page_yc_${UserCtr.theme}`},
+          {filed2:'821912',value: `home_page_xj_${UserCtr.theme}`},
+          {filed2:'821361',value: `home_page_yj_${UserCtr.theme}`},
+          {filed2:'821395',value: `home_page_dj_${UserCtr.theme}`},
+          {filed2:'821866',value: `home_page_og_${UserCtr.theme}`},
+          {filed2:'821596',value: `home_page_NBA_${UserCtr.theme}`},
+          {filed2:'208',value: `home_page_hll_${UserCtr.theme}`},
+          {filed2:'821549',value: `home_page_CBA_${UserCtr.theme}`},
+          {filed2:'821866',value: `home_page_fj_${UserCtr.theme}`},
           {filed2:'822548',value: `home_page_world_cup`},
           {filed2:'error',value: 'ball_error'},
         ]
@@ -208,18 +208,18 @@ export default defineComponent({
       // for(let i=0,len = calculation_category.length; i<len; i++) {
       //   // 加个jz_666 是用作首页 竞彩足球 背景墙用的
       //   if(newVal.chinaBetting && newVal.jz_666){
-      //     return home_class = `home_page_jz_${theme.value}`
+      //     return home_class.value = `home_page_jz_${UserCtr.theme}`
       //   }
       //   // 对应calculation_category 映射 关系，赋值给 home_class 名称作背景图显示用
       //   if(newVal.field2 == calculation_category[i].filed2){
-      //     return home_class = calculation_category[i].value
+      //     return home_class.value = calculation_category[i].value
       //   }
       // }
 
       // if(newVal.index != 0) {
       //   // 如果是电子
       //   if(['100','101','102','103'].includes(newVal.field1)){
-      //     home_class = 'home_page_esport_'+newVal.field1;
+      //     home_class.value = 'home_page_esport_'+newVal.field1;
       //     return ;
       //   }
 
@@ -244,7 +244,7 @@ export default defineComponent({
         //   home_page_random_obj[newVal.index] = 'home_page_random_0' + home_page_random
         // }
 
-        // home_class = home_page_random_obj[newVal.index]
+        // home_class.value = home_page_random_obj[newVal.index]
       // }
     }
     /**
@@ -254,7 +254,7 @@ export default defineComponent({
      *@param {Boolean} hand 是否手动点击触发
      */
      const tab_click = (tab, need_animation,hand) => {
-      if(tab.index == tabIndex  || utils.is_time_limit(800)) {
+      if(tab.index == tabIndex.value  || utils.is_time_limit(800)) {
         // 切换多语言需处理选中效果 样式
         if(tab.index == 0){
           calc_tab_select(tab)

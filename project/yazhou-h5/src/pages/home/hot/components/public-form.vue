@@ -170,7 +170,7 @@ let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
      */
     const league_icon_error = ($event) => {
       if(UserCtr.theme.includes('theme02')){
-        $event.target.src = none_league_icon_black;
+        $event.target.src = none_league_icon_black.value;
       } else {
         $event.target.src = default_url.value;
       }

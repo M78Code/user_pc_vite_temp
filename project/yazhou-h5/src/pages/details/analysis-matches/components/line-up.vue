@@ -209,11 +209,11 @@ import { i18n_t } from "src/boot/i18n.js";
   }
   const calculatelast = (item) => {
     let how_many_bits
-    if(number == 1) {
+    if(number.value == 1) {
       how_many_bits = 'how_many_bits1'
-    }else if(number == 2){
+    }else if(number.value == 2){
       how_many_bits = 'how_many_bits2'
-    }else if(number == 3){
+    }else if(number.value == 3){
       how_many_bits = 'how_many_bits3'
     }
     return how_many_bits
@@ -223,73 +223,73 @@ import { i18n_t } from "src/boot/i18n.js";
    * @param {Object} $event 错误事件对象
    */
   const league_icon_error = ($event) => {
-    $event.target.src = default_url;
+    $event.target.src = default_url.value;
     $event.target.onerror = null
   }
   const radioButton = (item, index) => {
-    if(radio_button_index == index) return
-    radio_button_index = index
-    basketball_data = []
+    if(radio_button_index.value == index) return
+    radio_button_index.value = index
+    basketball_data.value = []
     get_list()
   }
   const get_list = async () => {
-    no_data = true
+    no_data.value = true
     try {
       let parameter = {
         // 2079863足球测试id  2185843篮球测试id
         matchInfoId: match_id,
         // 主客队标识(1主队，2客队)
-        homeAway: radio_button_index + 1
+        homeAway: radio_button_index.value + 1
       }
       let {code , data} = await api_analysis.get_match_lineup_list(parameter)
       if(code == 200 && Object.keys(data).length > 0) {
         // 如果是足球赛事
-        line_up_data = data
+        line_up_data.value = data
         if(get_detail_data.csid == 1){
-          if(radio_button_index == 0){
-            filter_numbers(line_up_data.homeFormation)
+          if(radio_button_index.value == 0){
+            filter_numbers(line_up_data.value.homeFormation)
             // filter_numbers('4-2-3-1')
           }else{
-            filter_numbers(line_up_data.awayFormation)
+            filter_numbers(line_up_data.value.awayFormation)
           }
         }else if(get_detail_data.csid == 2){
           //  如果是 篮球赛事
-          basketball_data = data.up
+          basketball_data.value = data.up
         }
-        no_data = false
+        no_data.value = false
       } else {
-        no_data = true
+        no_data.value = true
       }
     } catch (error) {
-      no_data = true
+      no_data.value = true
       console.error(error);
     }
   }
   // 过滤 首发阵容的最后一位数字 和  首发阵容的队列数字
   const filter_numbers = (data) => {
     if(!data ) return
-    number = data.slice(-1)
+    number.value = data.slice(-1)
     number_columns = data.split('-').join('').slice(0,-1)
     let [number1, number2] = [+number_columns[0], +number_columns[1]]
     if(number_columns.length == 2){
-      football_filtered_data = [{},{}]
-      football_filtered_data[0].data = line_up_data.up.slice(1, number1 + 1)
-      football_filtered_data[1].data = line_up_data.up.slice(number1 + 1, number1 + number2 + 1)
+      football_filtered_data.value = [{},{}]
+      football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1 + 1)
+      football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
     }else if(number_columns.length == 3){
       football_filtered_data = [{},{},{}]
       let [number3] = [+number_columns[2]]
-      football_filtered_data[0].data = line_up_data.up.slice(1, number1+1)
-      football_filtered_data[1].data = line_up_data.up.slice(number1 + 1, number1 + number2 + 1)
-      football_filtered_data[2].data = line_up_data.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
+      football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1+1)
+      football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
+      football_filtered_data.value[2].data = line_up_data.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)
     }
   }
   // 刷新 当前赛事分析信息
   const refresh_match_analysis = () => {
-    const clone_radio_button_index = radio_button_index
-    radio_button_index = -1
+    const clone_radio_button_index = radio_button_index.value
+    radio_button_index.value = -1
 
     nextTick(() => {
-      radioButton(tab_radio_button[clone_radio_button_index], clone_radio_button_index)
+      radioButton(tab_radio_button.value[clone_radio_button_index], clone_radio_button_index)
     })
   }
   onUnmounted(() => {

@@ -202,7 +202,7 @@ import { useRoute, useRouter } from "vue-router"
   const route = useRoute()
   const router = useRouter()
   //轮播
-  const slide = ref(0)
+  let slide = ref(0)
   //轮播图数据，init是数据加载中的标识
   let carousel_data = ref({ list: [], obj: {} })
   //余额
@@ -246,7 +246,7 @@ import { useRoute, useRouter } from "vue-router"
     // 展示banner loading
     show_banner_loading = true
     get_carousel((data) => {
-      carousel_data = new ListMap("mid", data)
+      carousel_data.value = new ListMap("mid", data)
     }).then(() => {
       show_banner_loading = false
     });
@@ -361,8 +361,8 @@ import { useRoute, useRouter } from "vue-router"
       item.imgUrl = get_file_path(item.imgUrl)
     })
 
-    if (carousel_data) {
-      let arr = lodash.cloneDeep(lodash.get(carousel_data, 'list'))
+    if (carousel_data.value) {
+      let arr = lodash.cloneDeep(lodash.get(carousel_data.value, 'list'))
       let arr1 = arr.filter(item => {
         return !item.imgUrl
       })
@@ -372,11 +372,11 @@ import { useRoute, useRouter } from "vue-router"
       arr1.unshift(...new_)
 
       // 1. carousel_data不为ListMap实例则进行实例化 2. 否则合并数据
-      if (!(carousel_data instanceof ListMap)) {
-        carousel_data = new ListMap("mid", arr1)
+      if (!(carousel_data.value instanceof ListMap)) {
+        carousel_data.value = new ListMap("mid", arr1)
       } else {
         // 去重轮播赛事imgUrl
-        carousel_data.list = arr1
+        carousel_data.value.list = arr1
       }
     }
   }
@@ -398,7 +398,7 @@ import { useRoute, useRouter } from "vue-router"
     // 展示banner loading
     show_banner_loading = true
     get_carousel((data) => {
-      carousel_data.merge_list(carousel_data, new ListMap("mid", data))
+      carousel_data.merge_list(carousel_data.value, new ListMap("mid", data))
     }).then(() => {
       // 语言切换完成
       set_is_language_changing(false)
@@ -428,7 +428,7 @@ import { useRoute, useRouter } from "vue-router"
         banner_img_updata(get_banner_obj.type1)
       }
       //获取无轮播赛事背景图片
-      if (!(lodash.get(carousel_data, 'list.length'))) {
+      if (!(lodash.get(carousel_data.value, 'list.length'))) {
         get_banner_url()
       }
     })
@@ -437,7 +437,7 @@ import { useRoute, useRouter } from "vue-router"
    * @description: 清空轮播图数据
    */
   const clear_carousel_data = () => {
-    $set(carousel_data, 'list', [])
+    $set(carousel_data.value, 'list', [])
   }
   /**
    * @description: 图标出错时
@@ -779,8 +779,8 @@ import { useRoute, useRouter } from "vue-router"
       home_timer1_ = null
     }
 
-    if (lodash.get(carousel_data, 'list.length')) {
-      carousel_data.destroy && carousel_data.destroy()
+    if (lodash.get(carousel_data.value, 'list.length')) {
+      carousel_data.value.destroy && carousel_data.destroy()
     }
     //左侧菜单
     menu = []

@@ -80,7 +80,7 @@ onmounted(() => {
 })
 
 // 选项切换
-watch(() => tab_Index, (newval) => {
+watch(() => tab_Index.value, (newval) => {
   first_loading.value = false
 })
 
@@ -150,7 +150,7 @@ const host = (item) => {
 }
 // tab 初始化数据
 const get_list = (first) => {
-  first ? first_loading = true : first_loading = false
+  first ? first_loading.value = true : first_loading.value = false
   let parameter = {
     menuType: 12, // 菜单类型  12热门赛事
     disabled: 1, // 是否移除三级菜单  默认：(null)空=展开 ,1=移除

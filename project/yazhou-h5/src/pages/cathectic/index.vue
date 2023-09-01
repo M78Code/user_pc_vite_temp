@@ -95,7 +95,7 @@ onMounted(() => {
       provided_.value = { queryorderpresettleconfirm_data: data }
     }
     // 弹窗显示接口获取列表后延迟
-    timer_1 = setTimeout(() => {
+    timer_1.value = setTimeout(() => {
       unsettleChild.value.check_early_order()
       unsettleChild.value.search_early_money()
     }, 800);
@@ -109,7 +109,7 @@ onMounted(() => {
  *@return {Undefined} undefined
  */
 const height_calc = () => {
-  let ele = record_box
+  let ele = record_box.value
   if (!ele) return
   let rem_1 = window.innerWidth * 100 / 375;
   ele.value.style['height'] = window.innerHeight - rem_1 + 'px';
@@ -124,15 +124,15 @@ const close_show = () => {
 }
 const change_record = (key) => {
   //已选中状态下不能点击
-  if (main_item === key) return;
+  if (main_item.value === key) return;
   main_item.value = key
   store.dispatch({ type: "SET_MAIN_ITEM", data: key })
 
 }
 // 清除当前组件所有定时器
 const clear_timer = () => {
-  clearTimeout(timer_1)
-  timer_1 = null
+  clearTimeout(timer_1.value)
+  timer_1.value = null
 }
 onUnmounted(() => {
   store.dispatch({ type: "SET_MAIN_ITEM", data: 0 })

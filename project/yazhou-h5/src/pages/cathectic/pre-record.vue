@@ -115,7 +115,7 @@ const change_pre_status = (orderList) => {
         }
         if (res.code == 200) {
             const { data } = res
-            const listObj = lodash.cloneDeep(list_data)
+            const listObj = lodash.cloneDeep(list_data.value)
             for (let key in listObj) {
                 let listItem = listObj[key]
                 for (let i = 0; i < listItem.data.length; i++) {
@@ -326,20 +326,20 @@ watch(() => props.main_item, (newVal) => {
         lodash.isEmpty(list_data.value) && init_data()
     }
 })
-watch(() => list_data, () => {
+watch(() => list_data.value, () => {
     //监听预约记录数据，是否有预约中的订单，并轮询获取
     handler = function (newVal) {
         if (lodash.isEmpty(newVal)) return
-        let orderNumber = []
+        let new_orderNumber = []
         lodash.forIn(newVal, (item, key) => {
             const tempOrderList = lodash.filter(item.data, (o) => {
                 return o.preOrderStatus === 0
             })
-            orderNumber = lodash.concat(orderNumber, tempOrderList);
+            orderNumber.value = lodash.concat(mew_orderNumber, tempOrderList);
         })
-        if (orderNumber.length > 0) {
+        if (mew_orderNumber.length > 0) {
             const orderList = []
-            orderNumber.map((item) => {
+            new_orderNumber.map((item) => {
                 orderList.push(item.orderNo)
             })
             clearTimeout(timer_1.value)

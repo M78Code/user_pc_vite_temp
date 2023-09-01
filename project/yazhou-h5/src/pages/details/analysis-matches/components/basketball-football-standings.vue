@@ -96,11 +96,11 @@ let get_detail_data = ref({
 
   const show_btn = computed(() => {
     // 是否展示按钮
-    return ranking_data.length > 1
+    return ranking_data.value.length > 1
   })
   const match_id = computed( () => {
     // 赛事id
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   // computed: {
     // TODO: 后续修改调整
@@ -117,7 +117,7 @@ let get_detail_data = ref({
       }
       let {code, data} = await api_analysis.get_vs_info(parameter)
       if (code == 200 && data.length > 0) {
-        ranking_data = data
+        ranking_data.value = data
         no_data.value = false
         if(flag != 0){
           rules_normal();
@@ -125,12 +125,12 @@ let get_detail_data = ref({
           rules_b();
           rules_c()
         }else{
-          box_bool = !box_bool;
-          if (box_bool == true) {
-            [btn_text, direction] = [t("bet_record.pack_down"), "down"];
+          box_bool.value = !box_bool.value;
+          if (box_bool.value == true) {
+            [btn_text.value, direction.value] = [t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
-            [btn_text, direction] = [t("bet_record.pack_up"), ""];
+            [btn_text.value, direction.value] = [t("bet_record.pack_up"), ""];
             toggle_rule_a();
           }
         }
@@ -144,14 +144,14 @@ let get_detail_data = ref({
   }
   //切换是否展开
   const toggle_box = () => {
-    if(direction === ''){
+    if(direction.value === ''){
       get_list()
     }else{
       get_list(0)
     }
   }
   const rules_normal = () => {
-    [btn_text, direction, box_bool] = [
+    [btn_text.value, direction.value, box_bool.value] = [
       t("bet_record.pack_up"),
       "",
       false
@@ -159,8 +159,8 @@ let get_detail_data = ref({
   }
   //表格数据长度大于等于2,默认收起,展示一条;
   const rules_a = () => {
-    if (ranking_data.length >= 2)
-      [btn_text, direction, box_bool] = [
+    if (ranking_data.value.length >= 2)
+      [btn_text.value, direction.value, box_bool.value] = [
         t("bet_record.pack_down"),
         "down",
         true
@@ -168,21 +168,21 @@ let get_detail_data = ref({
   }
 
   const rules_b = () => {
-    if (ranking_data.length < 2) toggle_rule_a();
+    if (ranking_data.value.length < 2) toggle_rule_a();
   }
   const rules_c = () => {
-    if (ranking_data.length >= 2) toggle_rule_b();
+    if (ranking_data.value.length >= 2) toggle_rule_b();
   }
   //小于2个时都展开
   const toggle_rule_a = () => {
-    lodash.map(ranking_data, (item, index) => {
+    lodash.map(ranking_data.value, (item, index) => {
       item.isBoolean = true;
       return item;
     });
   }
   //大于等于2个时，第一个和第二个展开
   const toggle_rule_b = () => {
-    lodash.map(ranking_data, (item, index) => {
+    lodash.map(ranking_data.value, (item, index) => {
       item.isBoolean = false;
       if (index == 0 || index == 1) {
         item.isBoolean = true;

@@ -140,13 +140,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
   // },
   get_init(1)
 
-  watch(() => tab_Index, (index) => {
+  watch(() => tab_Index.value, (index) => {
       utils.tab_move2(index, $refs.scrollBox)
       if (index == 0) {   //收藏时显示暂无收藏,非收藏时显示暂无直播赛事
-        no_menu_txt = 'collect'
+        no_menu_txt.value = 'collect'
       } else {
         // 显示暂无直播赛事
-        no_menu_txt = 'nolive'
+        no_menu_txt.value = 'nolive'
       }
     })
     // ...mapMutations([
@@ -194,7 +194,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
         mid: match.mid,
         top: $refs['mid-' + match.mid][0].getBoundingClientRect().top,
         sport_id: match.csid,
-        is_collect: is_collect
+        is_collect: is_collect.value
       }
       set_goto_detail_matchid(match.mid);
       // 进入详情页前，记录目标赛事信息
@@ -212,22 +212,22 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
         $toast(i18n_t('home.no_favorite_events'), 1000)
         return
       }
-      if (tab_Index == index) return
-      tab_Index = index
-      noMenu = false
+      if (tab_Index.value == index) return
+      tab_Index.value = index
+      noMenu.value = false
       scroll_top()
       // tab.sportId -6代表是 收藏选项卡
       if (tab.sportId == -6) {
-        is_collect = true // 是在收藏菜单下
+        is_collect.value = true // 是在收藏菜单下
         // 调用 收藏列表接口
         video_collect_list(api_common.get_collect_live_matchs)
       } else {
-        is_collect = false // 不在收藏菜单下
+        is_collect.value = false // 不在收藏菜单下
         // 调用 直播视频列表接口
         video_collect_list(api_common.get_videos, tab.field1)
       }
 
-      menu_index = 0
+      menu_index.value = 0
     }
     // 收藏 接口
     const on_collection = (item) => {
@@ -244,14 +244,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
           item.mf = !item.mf
           get_menu_videos_list().then(() => {
             // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
-            if (is_collect) {
+            if (is_collect.value) {
               // 如果在收藏菜单栏,左侧 不是在全部菜单下, 调用收藏部分列表接口
-              if (menu_index != 0){
+              if (menu_index.value != 0){
                 video_collect_list(api_common.get_collect_live_matchs,'', item.tid).then( data => {
                   //  没有数据的时候，再去调用全部的菜单栏接口
                   if(!data.list.length ) {
-                    menu_index = 0
-                    noMenu = false
+                    menu_index.value = 0
+                    noMenu.value = false
                     video_collect_list(api_common.get_collect_live_matchs)
                   }
                 })
@@ -281,17 +281,17 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
         url(params).then(({code, data}) => {
           if (code === 200) {
             if (!data.length) {
-              noMenu = true
-              carousel_data = []
+              noMenu.value = true
+              carousel_data.value = []
             }
-            carousel_data = new ListMap("mid", data)
-            resolve(carousel_data)
+            carousel_data.value = new ListMap("mid", data)
+            resolve(carousel_data.value)
           }
         }).catch(err => {
           reject(err)
           no_wifi()
         }).finally(() => {
-          loading = false
+          loading.value = false
         });
       })
     }
@@ -301,7 +301,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     const get_menu_videos_list = (item) => {
       return new Promise((resolve, reject) => {
         if (!uid) return
-        item == 1 ? loading = true : loading = false
+        item == 1 ? loading.value = true : loading.value = false
         api_common.get_menu_videos({cuid: uid}).then(res => {
           const code = _.get(res,'code');
           const data = _.get(res,'data');
@@ -317,19 +317,19 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
                   });
                 }
               })
-              tabList = data
-              noMenu = false
+              tabList.value = data
+              noMenu.value = false
               $forceUpdate()
-              resolve(tabList)
+              resolve(tabList.value)
             }else{
-              noMenu = true
-              tabList = []
-              loading = false
+              noMenu.value = true
+              tabList.value = []
+              loading.value = false
             }
           }
         }).catch(err => {
           no_wifi()
-          loading = false
+          loading.value = false
           reject(err)
         });
       })
@@ -345,17 +345,17 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
 
           // 存在mid时，才更新tab_Index
           if (mid) {
-            let tab_index = tabList.findIndex(item => item.field1 === sport_id)
-            tab_Index = tab_index > -1 ? tab_index : 1
+            let new_tab_index = tabList.value.findIndex(item => item.field1 === sport_id)
+            tab_Index.value = new_tab_index > -1 ? new_tab_index : 1
           }
 
           // 若之前是收藏下的列表，则更新相应状态
           if (is_collect) {
-            tab_Index = 0
-            is_collect = true
+            tab_Index.value = 0
+            is_collect.value = true
           }
           // is_collect 代表是 在收藏菜单栏下, 调用收藏列表接口
-          if (is_collect) {
+          if (is_collect.value) {
             video_collect_list(api_common.get_collect_live_matchs, '', field_tid ? field_tid : '')
                 .then(res => {
                   set_match_scroll_top(mid, top)
@@ -363,7 +363,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
                 })
           } else {
             // !is_collect 不是在收藏菜单选项卡时，调用 直播视频列表
-            video_collect_list(api_common.get_videos, data[tab_Index].field1, field_tid ? field_tid : '')
+            video_collect_list(api_common.get_videos, data[tab_Index.value].field1, field_tid ? field_tid : '')
                 .then(res => {
                   set_match_scroll_top(mid, top)
                   set_goto_detail_match_info({})
@@ -382,14 +382,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     const change_menu = (index, field1) => {
       scroll_top()
       // 如果点击的左侧菜单下标相等，则return 不再执行下边方法
-      if (menu_index == index) return
-      field_tid = field1 ? field1 : ''
-      menu_index = index
+      if (menu_index.value == index) return
+      field_tid.value = field1 ? field1 : ''
+      menu_index.value = index
       // 代表是 在收藏菜单栏下
-      if(is_collect){
+      if(is_collect.value){
         video_collect_list(api_common.get_collect_live_matchs, '', field1)
       } else { // 不是收藏菜单时，调用 直播视频列表
-        video_collect_list(api_common.get_videos, tabList[tab_Index].field1, field1)
+        video_collect_list(api_common.get_videos, tabList[tab_Index.value].field1, field1)
       }
     }
     // 回到顶部
@@ -411,14 +411,14 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
     // 没有网络的情况下，初始化页面数据
     const no_wifi = () => {
       if(!UserCtr_token){
-        no_menu_txt = "noMatch"
+        no_menu_txt.value = "noMatch"
         useMittEmit(MITT_TYPES.EMIT_GO_TO_VENDER);
       }else{
-        no_menu_txt = "noMatch"
+        no_menu_txt.value = "noMatch"
       }
-      carousel_data = []
-      tabList = []
-      noMenu = true
+      carousel_data.value = []
+      tabList.value = []
+      noMenu.value = true
     }
   // computed: {
   //   ...mapGetters({
@@ -433,7 +433,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
   // },
   // 如果有视频列表数据，则页面销毁时，清除内存
   onUnmounted(() => {
-    if(_.get(carousel_data, 'list.length')) {carousel_data.destroy()}
+    if(_.get(carousel_data.value, 'list.length')) {carousel_data.value.destroy()}
 
     // 不是跳转到详情则清除赛事信息
     if (get_home_tab_item.index !== 2) {

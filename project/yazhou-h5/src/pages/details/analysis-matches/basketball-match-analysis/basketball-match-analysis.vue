@@ -68,21 +68,21 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   // },
   // 详情顶部切换赛事后 更新相应赛事数据
   watch(() => get_detail_data.mid, () => {
-    const clone_currentCont = currentContent
-      currentContent = ''
+    const clone_currentCont = currentContent.value
+      currentContent.value = ''
       nextTick(() => {
-        currentContent = clone_currentCont
+        currentContent.value = clone_currentCont
       })
   })
   onMounted(() => {
     nextTick(() => {
       // TODO: 后续修改调整 $refs $utils
-      if (analysis_basketball_matches) {
-        analysis_basketball_matches.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
+      if (analysis_basketball_matches.value) {
+        analysis_basketball_matches.value.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
       }
     })
     if (['zh', 'tw'].includes(get_lang)) {
-      tabList.unshift(
+      tabList.value.unshift(
         {
           // TODO: 国际化
           name: get_lang == 'zh' ? '资讯' : '資訊',
@@ -96,7 +96,7 @@ const close_analysis = () => {
 }
 // 点击一级tab 菜单切换
 const tab_click = ([tab, type]) => {
-  currentContent = tab.component
+  currentContent.value = tab.component
   if (type == 'is_click') {
     let eventLabel = '';
     // 赛况

@@ -156,11 +156,11 @@ let get_detail_data = ref({
         }
       } catch (error) {
         console.error(error);
-        loading = false
+        loading.value = false
       }
     }
   const tab_click = (item, i) => {
-      if(loading || tabIndex.value == i) return
+      if(loading.value || tabIndex.value == i) return
         tabIndex.value = i
         future_schedule_data.value = {}
         injury_situation_data.value = {init: null}
