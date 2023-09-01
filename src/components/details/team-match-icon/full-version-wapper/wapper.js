@@ -1,5 +1,5 @@
 import TeamMatchIcon from "../team-match-icon-template-1/team-match-icon.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   TeamMatchIcon,
 };

@@ -1,6 +1,6 @@
 import SkeletonDetails from "../skeleton-template-1/skeleton-details.vue";
 import MatchResult from "../skeleton-template-1/match-result.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   SkeletonDetails,
   MatchResult,

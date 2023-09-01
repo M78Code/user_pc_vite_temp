@@ -1,5 +1,5 @@
 import Loading_1 from "../loading-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   Loading_1,
 };

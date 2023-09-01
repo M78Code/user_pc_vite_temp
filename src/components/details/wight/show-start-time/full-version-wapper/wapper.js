@@ -1,5 +1,5 @@
 import ShowStartTime from "../show-start-time-template-1/show-start-time.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   ShowStartTime,
 };

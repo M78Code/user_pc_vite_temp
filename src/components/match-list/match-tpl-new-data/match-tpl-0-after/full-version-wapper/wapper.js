@@ -1,5 +1,5 @@
 import MatchTpl0After from "../match-tpl-0-after-template-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   MatchTpl0After,
 };

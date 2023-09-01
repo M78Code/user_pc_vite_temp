@@ -1,5 +1,5 @@
 import VirtualMatchTpl1FullVersionWapper from "../virtual-match-tpl-1-template-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   VirtualMatchTpl1FullVersionWapper,
 };

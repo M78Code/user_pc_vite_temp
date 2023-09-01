@@ -1,6 +1,6 @@
 import H5CathecticTemplate1 from "../h5-cathectic-template-1/index.vue";
 // import TestComponent_2 from "../test-component-2/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   H5CathecticTemplate1,
   // TestComponent_2,

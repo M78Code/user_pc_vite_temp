@@ -1,5 +1,5 @@
 import NoData_1 from "../no-data-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   NoData_1,
 };

@@ -1,5 +1,5 @@
 import H5DetailsTemplate from "../h5-details-template-1/tournament-play-new.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   H5DetailsTemplate,
 };

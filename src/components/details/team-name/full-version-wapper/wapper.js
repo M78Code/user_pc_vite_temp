@@ -1,5 +1,5 @@
 import TeamName from "../team-name-template-1/team-name.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   TeamName,
 };

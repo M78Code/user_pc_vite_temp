@@ -1,6 +1,6 @@
 import Announce_1 from "../announce-1/index.vue";
 import Announce_h5 from "../announce-h5/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 
 const all_components_obj = {
   Announce_1,

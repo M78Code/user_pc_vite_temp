@@ -1,5 +1,5 @@
 import DetailTemp10_1 from "../detail-template10-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   DetailTemp10_1,
 };

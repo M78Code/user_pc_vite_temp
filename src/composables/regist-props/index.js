@@ -3,7 +3,7 @@
  */
 
 import { computed, ref } from "vue";
-import { get_input_config } from "app/job/output/merchant/index.js";
+import { get_input_config } from "app/job/use-output/index.js";
 
 export const useRegistPropsHelper1 = (params) => {
   let { useProps, useComputed, component_symbol, need_register_props } = params;

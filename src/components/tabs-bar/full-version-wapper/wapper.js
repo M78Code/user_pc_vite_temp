@@ -1,5 +1,5 @@
 import tabs_bar_1 from "../tabs-bar-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   tabs_bar_1,
 };

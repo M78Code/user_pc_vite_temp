@@ -1,5 +1,5 @@
 import bet_box_pc_1 from "../bet-box-pc-1/index.vue";
-import { compute_component_wapper_config } from "app/job/output/merchant/index.js";
+import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   bet_box_pc_1,
 };

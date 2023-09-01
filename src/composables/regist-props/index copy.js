@@ -3,7 +3,7 @@
  */
 
 import { computed, ref } from "vue";
-import { get_input_config } from "app/job/output/merchant/index.js";
+import { get_input_config } from "app/job/use-output/index.js";
 // 组件注册的 组件名字
 let component_symbol = ref("component_symbol");
 let set_component_symbol = (val) => (component_symbol.value = val);
