@@ -9,15 +9,15 @@
     <div class="horn"></div>
     <div class="horn2"></div>
     <div class="option-wrap row no-wrap">
-      <span class="info ellipsis">{{ $t('time.gongli') }}</span>
+      <span class="info ellipsis">{{ i18n_t('time.gongli') }}</span>
       <div class="year-wrap date row no-wrap">
         <div class="btn-wrap" @click="changeYear(1)">
           <div class="btn btn-left"></div>
         </div>
         <q-carousel class="text-wrap" v-model="year" transition-prev="slide-right" transition-next="slide-left" animated>
           <q-carousel-slide class="text" :name="val" v-for="(val, key) in years" :key="key">
-            <template v-if="get_lang == 'vi'">{{ $t('time.year') }} {{ val }}</template>
-            <template v-else>{{ val }}{{ $t('time.year') }}</template>
+            <template v-if="get_lang == 'vi'">{{ i18n_t('time.year') }} {{ val }}</template>
+            <template v-else>{{ val }}{{ i18n_t('time.year') }}</template>
           </q-carousel-slide>
         </q-carousel>
         <div class="btn-wrap" @click="changeYear(2)">
@@ -41,20 +41,20 @@
     </div>
     <div class="item-wrap row">
       <!--周日-->
-      <div class="item border1">{{ $t('time.time_date_week[0]') }}<div class="bg"></div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[0]') }}<div class="bg"></div>
       </div>
       <!--周一-->
-      <div class="item border1">{{ $t('time.time_date_week[1]') }}</div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[1]') }}</div>
       <!--周二-->
-      <div class="item border1">{{ $t('time.time_date_week[2]') }}</div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[2]') }}</div>
       <!--周三-->
-      <div class="item border1">{{ $t('time.time_date_week[3]') }}</div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[3]') }}</div>
       <!--周四-->
-      <div class="item border1">{{ $t('time.time_date_week[4]') }}</div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[4]') }}</div>
       <!--周五-->
-      <div class="item border1">{{ $t('time.time_date_week[5]') }}</div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[5]') }}</div>
       <!--周六-->
-      <div class="item border1">{{ $t('time.time_date_week[6]') }}<div class="bg bg2"></div>
+      <div class="item border1">{{ i18n_t('time.time_date_week[6]') }}<div class="bg bg2"></div>
       </div>
       <!--日期列表-->
       <div class="item" v-for="(val, key) in dates" :key="key" @click="onchange(val)">
@@ -66,6 +66,8 @@
 
 <script setup>
 import { onMounted, ref, onUnmounted, watch } from "vue";
+import { i18n_t } from "src/boot/i18n.js"
+
 const props = defineProps({
   default: {
     type: String
@@ -82,51 +84,51 @@ const day = ref(7)
 const years = ref([])
 const months = ref([
   {
-    label: $t('time.month_1'),
+    label: i18n_t('time.month_1'),
     value: 1
   },
   {
-    label: $t('time.month_2'),
+    label: i18n_t('time.month_2'),
     value: 2
   },
   {
-    label: $t('time.month_3'),
+    label: i18n_t('time.month_3'),
     value: 3
   },
   {
-    label: $t('time.month_4'),
+    label: i18n_t('time.month_4'),
     value: 4
   },
   {
-    label: $t('time.month_5'),
+    label: i18n_t('time.month_5'),
     value: 5
   },
   {
-    label: $t('time.month_6'),
+    label: i18n_t('time.month_6'),
     value: 6
   },
   {
-    label: $t('time.month_7'),
+    label: i18n_t('time.month_7'),
     value: 7
   },
   {
-    label: $t('time.month_8'),
+    label: i18n_t('time.month_8'),
     value: 8
   },
   {
-    label: $t('time.month_9'),
+    label: i18n_t('time.month_9'),
     value: 9
   },
   {
-    label: $t('time.month_10'),
+    label: i18n_t('time.month_10'),
     value: 10
   },
   {
-    label: $t('time.month_11'),
+    label: i18n_t('time.month_11'),
     value: 11
   },
   {
-    label: $t('time.month_12'),
+    label: i18n_t('time.month_12'),
     value: 12
   },
 ])

@@ -14,7 +14,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n_t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
     </div>
@@ -47,7 +47,7 @@
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
-        <span>{{ $t("bet_record.settlement_pre") }}</span>
+        <span>{{ i18n_t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
       <!-- 默认排序 -->
@@ -127,7 +127,7 @@
         </div>
         <!-- 查询按钮 -->
         <div class="search-btn" @click="submit()">
-          {{ $t("bet_record.query") }}
+          {{ i18n_t("bet_record.query") }}
           <!-- 查询 -->
         </div>
       </div>
@@ -150,10 +150,12 @@
 
 <script setup>
 import { ref, reactive, onMounted,watch,onUnmounted } from "vue";
-import icon from "src/components/icon/icon.vue";
-import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
-import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
+import icon from "project_path/src/components/icon/icon.vue";
+import { FilterRadioFullVersionWapper } from "sproject_path/src/components/match-list/filter-radio/index.js";
+import { FilterCheckboxFullVersionWapper } from "project_path/src/components/match-list/filter-checkbox/index.js";
 import { formatTime } from "src/core/format/index";
+import { i18n_t } from "src/boot/i18n.js"
+
 const props = defineProps({
   toolSelected: Number,
   time_sort_record_item: Object,
@@ -223,7 +225,7 @@ const endTimeShow = ref(false); // 结束时间展示
   const default_value= ref('0')
 
 onMounted(() => {
-  toolWords.value = $t("time.time_date_list_1"); //["今天", "昨天", "七天内", "一个月内"];
+  toolWords.value = i18n_t("time.time_date_list_1"); //["今天", "昨天", "七天内", "一个月内"];
 });
 
 onUnmounted(()=>{
