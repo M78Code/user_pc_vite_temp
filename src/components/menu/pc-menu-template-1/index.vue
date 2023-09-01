@@ -29,7 +29,6 @@
     </div>
 
     <div style="display: none;">{{ base_data.base_data_version }}</div>
-
     <div
       v-for="item1 in base_data.left_menu_base_mi_arr"
       :key="`${jinri_zaopan}_${item1}`"

@@ -16,7 +16,7 @@
                 [{{ item.sportName }}]{{ item.matchName }}&nbsp;&nbsp;
               </div>
               <div v-if="data.preOrder" class="col text-right">
-                {{ $t("bet.bet_book_confirm") }}
+                {{ i18n_t("bet.bet_book_confirm") }}
               </div>
             </div>
 
@@ -91,7 +91,7 @@
             <span>[{{ marketType(item.marketType, data.langCode) }}]</span>
             <!--冠军玩法 截止投注 -->
             <!-- <div v-show="item.matchType === 3">
-                            <span>{{ $t("list.bet_close") }}:</span>
+                            <span>{{ i18n_t("list.bet_close") }}:</span>
                             <span style="margin:0 5px">
                             {{
                               formatTime(
@@ -124,7 +124,7 @@
                 v-if="show_score_info == true"
               >
                 <div class="score_info_style">
-                  {{ $t("bet.score_info") }}
+                  {{ i18n_t("bet.score_info") }}
                 </div>
               </q-tooltip>
             </span>
@@ -192,7 +192,7 @@
                           "
                         >
                           <!--功能暂停中，请稍后再试-->
-                          {{ $t("bet_record.pre_suspend") }}
+                          {{ i18n_t("bet_record.pre_suspend") }}
                         </template>
                         <template
                           v-else-if="
@@ -201,17 +201,17 @@
                           "
                         >
                           <!--提前结算金额调整中，请再试一次-->
-                          {{ $t("bet_record.pre_amount_change") }}
+                          {{ i18n_t("bet_record.pre_amount_change") }}
                         </template>
                         <template v-else>
                           <!--提前结算申请未通过-->
-                          {{ $t("bet_record.pre_not_approved") }}
+                          {{ i18n_t("bet_record.pre_not_approved") }}
                         </template>
                       </span>
                     </template>
                     <template v-else>
                       <!--提前结算金额已包含本金-->
-                      <span>{{ $t("bet_record.pre_bet_include_money") }}</span>
+                      <span>{{ i18n_t("bet_record.pre_bet_include_money") }}</span>
                     </template>
                   </div>
                 </template>
@@ -223,7 +223,7 @@
                   <div class="bet-pre-btn" @click.stop="start_bet_pre(i)">
                     <!-- 提前结算 -->
                     <div class="bet-row-1">
-                      {{ $t("bet_record.settlement_pre") }}
+                      {{ i18n_t("bet_record.settlement_pre") }}
                     </div>
                     <!--提前结算金额展示-->
                     <div class="bet-row-2">
@@ -271,7 +271,7 @@
                   >
                     <!-- 结算投注额 -->
                     <div>
-                      {{ $t("bet_record.settlement_bet_money")
+                      {{ i18n_t("bet_record.settlement_bet_money")
                       }}<span class="bet-money">{{
                         format_balance(lodash.get(money_obj, `${i}.money`))
                       }}</span>
@@ -310,12 +310,12 @@
                   <template>
                     <div class="mt5">
                       <!-- 注单剩余本金 -->
-                      {{ $t("bet_record.settlement_bet_remaining") }}:
+                      {{ i18n_t("bet_record.settlement_bet_remaining") }}:
                       {{ format_balance(betPreRemaining(data)) }}
                     </div>
                     <div class="mt10">
                       <!-- 提前结算可用次数 -->
-                      {{ $t("bet_record.settlement_bet_count") }}:
+                      {{ i18n_t("bet_record.settlement_bet_count") }}:
                       {{ betPreCount(data, i) }}
                     </div>
                     <div
@@ -329,7 +329,7 @@
                       <span class="tips-info">
                         <template>
                           <!--仅支持全额结算-->
-                          {{ $t("bet_record.settlement_only_full") }}
+                          {{ i18n_t("bet_record.settlement_only_full") }}
                         </template>
                       </span>
                     </div>
@@ -346,8 +346,8 @@
                     <div class="bet-row-1">
                       {{
                         data.bet_confirm
-                          ? $t("bet_record.confirm")
-                          : $t("bet_record.confirm_bet_pre")
+                          ? i18n_t("bet_record.confirm")
+                          : i18n_t("bet_record.confirm_bet_pre")
                       }}
                     </div>
                     <!--data.amount存在的话优先使用，否则使用计算后的-->
@@ -379,7 +379,7 @@
                   <div class="bet-pre-left">
                     <!-- 已提前结算 -->
                     <div class="bet-row-1">
-                      {{ $t("bet_record.finish_bet_pre") }}
+                      {{ i18n_t("bet_record.finish_bet_pre") }}
                     </div>/src/core/match-constant/config/play-mapping.js
                     <div class="bet-row-2">
                       {{ format_btn_balance(data.computed_bet_amount) }}
@@ -400,7 +400,7 @@
                 <!--暂停提前结算-->
                 <div class="bet-pre-wrap bet-pre-stop">
                   <div class="bet-pre-btn">
-                    {{ $t("bet_record.pre_bet_stop") }}
+                    {{ i18n_t("bet_record.pre_bet_stop") }}
                   </div>
                   <div
                     :ref="`bet_pre_${data.orderNo}`"
@@ -441,7 +441,7 @@
                 {{ item_cancelType(item.cancelType) }}
               </span>
               <span v-else class="bet-result lose-color">{{
-                $t("bet.invalid")
+                i18n_t("bet.invalid")
               }}</span>
             </template>
             <!-- 其他 -->
@@ -483,7 +483,7 @@
                 {{ item_cancelType(item.cancelType) }}
               </span>
               <span v-else class="bet-result lose-color">{{
-                data.seriesType == "1" ? "" : `${$t("bet.invalid")}`
+                data.seriesType == "1" ? "" : `${i18n_t("bet.invalid")}`
               }}</span>
             </template>
             <template v-if="item.betStatus == 1">
@@ -493,7 +493,7 @@
                 >{{ item_status(item.betResult) }}</span
               >
               <span v-else class="bet-result lose-color">{{
-                data.seriesType == "1" ? "" : `${$t("bet.invalid")}`
+                data.seriesType == "1" ? "" : `${i18n_t("bet.invalid")}`
               }}</span>
             </template>
           </template>
@@ -518,6 +518,8 @@ import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";
 import "vue-slider-component/theme/default.css";
 import lodash from "lodash";
+import { i18n_t } from "src/boot/i18n.js"
+
 const props = defineProps({
   data: {
     type: Object,

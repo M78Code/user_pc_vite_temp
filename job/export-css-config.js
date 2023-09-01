@@ -1,7 +1,7 @@
 /**
  * 合并输出商户配置
  */
-import axios from "axios";
+ 
 import * as path from "node:path";
 import fs from "node:fs";
 import lodash from "lodash";
@@ -10,8 +10,12 @@ import {
   write_file,
   remove_file,
 } from "./write-folder-file.js";
-// 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
-import { FILE_PATH, PROJECT_NAME } from "../dev-target-env.js";
+ 
+
+// 商户版本 最终配置
+import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+const PROJECT_NAME = final_merchant_config.project
+
 console.log("export-css-config.js----------server-resource ----");
 console.log("process.argv----------------------0---");
 console.log("process.argv----------------------1---");
@@ -97,23 +101,7 @@ const diff_css_local = (merchant_css_config) => {
     });
   });
 };
-/**
- * 获取 服务器上 当前商户的 版本配置
- */
-const get_config_info = async () => {
-  // API 对外文档 的 单个 版本的详情 获取地址
-  try {
-    console.log(FILE_PATH);
-    let res = await axios.get(FILE_PATH);
-    let { data } = res;
-    if (data) {
-      //此处1 应该是配置的与后台相对应
-      get_css_config(data.css);
-    }
-  } catch (error) {
-    console.log("获取 服务器上 当前商户的 版本配置 出错");
-  }
-};
+ 
 if (ENABLE_TEST) {
   get_css_config({
     global: {
@@ -128,5 +116,5 @@ if (ENABLE_TEST) {
   });
 } else {
   // 获取 服务器上 当前商户的 版本配置
-  get_config_info();
+  get_css_config(final_merchant_config.css);
 }

@@ -1,6 +1,6 @@
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
-// import {PROJECT_NAME} from "../../dev-target-env.js"
+ 
 const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME;
 
 //通用

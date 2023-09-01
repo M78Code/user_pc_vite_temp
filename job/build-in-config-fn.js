@@ -9,7 +9,7 @@ let BUILD_VERSION = BUILD_VERSION_CONFIG.BUILD_VERSION;
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 // 商户版本号
-const { MERCHANT_CONFIG_VERSION } = final_merchant_config;
+const { MERCHANT_CONFIG_VERSION    } = final_merchant_config;
 
 // 模块化打包 构建 zip 版本参数
 let MODULE_SDK_VERSION =   ( process.env.SHIWAN_MODULE_SDK_VERSION|| "").trim()   ;
@@ -43,7 +43,7 @@ export const compute_build_in_config = (current_env) => {
   // 当前环境代码内内置 写入的兜底 oss
   current_env_build_in_oss = compute_build_in_oss_by_current_env(current_env);
   //  项目名称   yazhou-h5 yazhou-pc
-  let TARGET_PROJECT_NAME = "yazhou-pc";
+  let TARGET_PROJECT_NAME =   final_merchant_config.project ;
   // 埋点Google Analytics GA_TRACKING_ID
   let GA_TRACKING_ID = "G-3SFG732R1J"; // 生产环境
   // 最终项目配置信息

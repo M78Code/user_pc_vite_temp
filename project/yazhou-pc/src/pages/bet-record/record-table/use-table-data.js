@@ -15,6 +15,7 @@ import lodash from "lodash";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr } from "src/core/index.js";
+import { i18n_t } from "src/boot.i18n.js"
 
 export const useTableData = ({ props, emit }) => {
 

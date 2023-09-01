@@ -7,9 +7,8 @@
 
 import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
-const { API_PREFIX_USER:prefix_prefix_user,API_PREFIX_BAT:prefix_yewu13} = API_PREFIX;
+const { API_PREFIX_USER:prefix,API_PREFIX_BAT:prefix_yewu13,API_PREFIX_JOB:prefix_job} = API_PREFIX;
 
-const prefix = 'http://api.sportxxxw1box.com/yewu11'
 
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
@@ -229,7 +228,7 @@ export const  addArticleCount = (params, config, url="/v1/art/addArticleCount") 
 export const  getAccessConfig = (params, config, url="/v1/art/getAccessConfig") => http.get(`${prefix}${url}`,params, config)
 
 // 节日资源图片(资源配置)接口 （mack-远程）
-export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBanner") => http.get(`${prefix}${url}`, params, config);
+export const queryFestivalBanner = (params, config, url = "/v2/festival/queryBanner") => http.get(`${prefix_job}${url}`, params, config);
 
 
 
@@ -254,7 +253,7 @@ export const get_esports_date_menu = (params, config={}, url = "/v1/w/esports/ge
 
 //虚拟体育菜单接口
 export const get_virtual_menu = (params={}, config={}, url = "/v1/w/virtual/menus") => {
-  return http.get(`${prefix}${url}`, params, config);
+  return http.get(`${prefix_job}${url}`, params, config);
 };
 
 
