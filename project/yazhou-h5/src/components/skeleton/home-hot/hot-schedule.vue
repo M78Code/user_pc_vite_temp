@@ -82,10 +82,8 @@
 </template>
 
 <script setup>
-import skeleton from 'src/project/components/skeleton/index.vue'
-// import { mapGetters } from "vuex"
+// import skeleton from 'src/project/components/skeleton/index.vue'
 
-// ...mapGetters(["get_newer_standard_edition"]),
 
 </script>
 

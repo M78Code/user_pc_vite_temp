@@ -40,7 +40,7 @@ const toggleLeftDrawer = () => {
 const touchstart_event_fun = (event) => {
   if (event.touches.length > 0) {
     // 记录用户最后操作时间
-    event.preventDefault();
+    // event.preventDefault();
     // alert('禁止')
   }
 };
@@ -50,7 +50,7 @@ const touchstart_event_fun = (event) => {
 const touchend_event_fun = (event) => {
   var now = Date.now();
   if (parseInt(now - lastTouchEnd.value) < 300) {
-    event.preventDefault();
+    // event.preventDefault();
   }
   lastTouchEnd.value = now;
 };

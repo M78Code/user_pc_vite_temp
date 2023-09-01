@@ -110,7 +110,7 @@
       </div>
     </template>
 
-    <no-data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no-data>
+    <!-- <no-data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no-data> -->
   </div>
 </template>
 

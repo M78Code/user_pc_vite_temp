@@ -86,9 +86,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/project/components/skeleton/index.vue'
-// import { mapGetters } from "vuex"
-// ...mapGetters(["get_newer_standard_edition"]),
+// import skeleton from 'src/project/components/skeleton/index.vue'
 
 const props = defineProps({
   first: Boolean,
