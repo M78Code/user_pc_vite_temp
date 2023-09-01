@@ -3,7 +3,7 @@
   <div class="header-wrap scroll-fixed-bg" :class="UserCtr.is_invalid && 'invalid'">
     <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'token')}`" :user-version="UserCtr.user_version">
       <!-- 昵称 -->
-      <div style="display: none;"> {{ UserCtr.user_logined_id }}</div>
+      <div style="display: none;"> {{ UserCtr.user_version }}</div>
       <div class="ellipsis">Hi, {{ get(UserCtr.get_user_info_data(), "nickName") }}</div>
     </div>
     <div class="balance-wrap row justify-between relative-position">

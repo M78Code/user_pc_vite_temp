@@ -70,11 +70,19 @@
 
 import { ref } from "vue";
 import axios from "axios";
-import { SessionStorage , LocalStorage } from "src/core/index.js";
-import { format_api_to_obj } from "src/core/format/index.js"
+import {
+  SessionStorage,
+  LocalStorage,
+  format_api_to_obj,
+} from "src/core/index.js";
+// import {  } from "src/core/format/index.js"
+import STANDARD_KEY from "src/core/standard-key";
 import { isFunction } from "lodash";
 // 域名计算逻辑所用的 单独的 axios 实例
 const axios_instance = axios.create();
+
+//token键
+const token_key = STANDARD_KEY.get("token");
 
 // 域名计算结果
 let DOMAIN_RESULT = {
@@ -94,15 +102,13 @@ let DOMAIN_RESULT = {
   img_domains: [],
 };
 
-import STANDARD_KEY from "../standard-key/index.js";
-
 // 域名计算  本地存错 挂载键
 const DOMAIN_API_STORAGE_KEY = STANDARD_KEY.get("domain_api_01");
 // 引入 当前 计算出的植入配置
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 //当前目标环境
-const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG  ;
+const { CURRENT_ENV, NODE_ENV, OSS_FILE_ARR, OSS_FILE_NAME } = BUILDIN_CONFIG;
 
 import lodash from "lodash";
 
@@ -269,9 +275,9 @@ class AllDomain {
    */
   begin_process_when_use_url_api() {
     let url_api = this.url_api || [];
+
     // 获取token
-    let sessionStorage = window.sessionStorage;
-    let token = sessionStorage.getItem("token"); // SessionStorage .get("pc_token");
+    let token = SessionStorage.get(token_key);
 
     // 并发请求
     let reqs = [];
@@ -539,7 +545,7 @@ class AllDomain {
   get_save_domain_api() {
     let key = this.DOMAIN_API_STORAGE_KEY;
     // console.log("key = this.DOMAIN_API_STORAGE_KEY--", key);
-    let gr = SessionStorage .get("gr");
+    let gr = SessionStorage.get("gr");
     // console.log('sessionStorage.getItem("gr")---', gr);
     // 获取持久化数据
     return LocalStorage.get(key, []);
@@ -576,9 +582,7 @@ class AllDomain {
     // });
 
     getuserinfo_oss_api.map((x) => {
-      new_get_api_obj_arr.push(
-        format_api_to_obj(x, this.GETUSERINFO_OSS.gr)
-      );
+      new_get_api_obj_arr.push(format_api_to_obj(x, this.GETUSERINFO_OSS.gr));
     });
     oss_file_api.map((x) => {
       new_get_api_obj_arr.push(format_api_to_obj(x));
@@ -829,7 +833,7 @@ class AllDomain {
     if (!api_x) {
       let cgr = "COMMON";
       BUILDIN_CONFIG.DOMAIN_RESULT.gr = cgr;
-      SessionStorage .set("gr", cgr);
+      SessionStorage.set("gr", cgr);
       api_x = lodash.get(oss_data, "GA" + cgr + ".api") || [];
       // console.log(
       //   "分组信息错误,分组强制设置为COMMON组 api_x:" + JSON.stringify(api_x)
@@ -1036,10 +1040,10 @@ class AllDomain {
     let api = obj.api;
     // console.log("首次加载,已经找到最快的域名:", api);
     // 写入可用api
-    SessionStorage .set("best_api", api);
+    SessionStorage.set("best_api", api);
     // 挂载当前 环境能使用的 api 数组
     BUILDIN_CONFIG.DOMAIN_RESULT.first_one = api;
-    isFunction(this.callback)&& this.callback();
+    isFunction(this.callback) && this.callback();
   }
 
   /**
