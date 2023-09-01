@@ -31,6 +31,9 @@ DEV_TARGET_ENV = "local_test";
 // PROJECT_NAME = "yazhou-pc";
 let DEV_PROJECT_NAME = "yazhou-h5";
 
+
+
+
 // 这里不一般配置为空 
 //代码内配置死的    构建 zip 版本参数    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程 
 let  DEV_TARGET_VERSION ="";

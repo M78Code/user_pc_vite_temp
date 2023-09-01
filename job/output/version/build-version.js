@@ -1,1 +1,0 @@
-export default {"BUILD_VERSION": '2023-08-01-14-31-09'  } 
