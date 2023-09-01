@@ -53,11 +53,11 @@ const routes = [
     component: () => import(`../pages/test/index.vue`),
   },
   // //投注记录
-  // {
-  //   path: "/bet_record",
-  //   name: "bet_record",
-  //   component: () => import(`../pages/test/index.vue`),
-  // },
+  {
+    path: "/bet_record",
+    name: "bet_record",
+    component: () => import("../pages/bet-record/index.vue"),//project/yazhou-pc/src/pages/bet-record/index.vue
+  },
   // 赛果
   // {
   //   path: "/match_results",

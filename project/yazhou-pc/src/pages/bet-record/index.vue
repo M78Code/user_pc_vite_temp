@@ -74,18 +74,18 @@
 </template>
 
 <script setup>
-import { SimpleHeaderWapper } from "src/components/simple-header";
-import btTab from "./components/btn-tab.vue";
-import filterBox from "./components/filter-box.vue";
-import recordTable from "./record-table/index.vue";
-import recordBookTable from "./record_book_table.vue";
+// import { SimpleHeaderWapper } from "project_path/src/components/simple-header";
+// import btTab from "./components/btn-tab.vue";
+// import filterBox from "./components/filter-box.vue";
+// import recordTable from "./record-table/index.vue";
+// import recordBookTable from "./record_book_table.vue";
 import lodash from "lodash";
 import { api_betting } from "src/api/index";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 
 import { ref } from "vue";
-import { useConfig } from "./use-config";
+import { useConfig } from "./use-config.js";
 // 用户信息
 const toolSelected = ref(0);
 const is_pre_bet = ref(false); // 提前结算勾选

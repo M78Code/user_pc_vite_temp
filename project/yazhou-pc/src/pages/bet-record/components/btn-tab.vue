@@ -9,7 +9,7 @@
         @click="toolClicked(0)"
         :class="{ active: toolSelected === 0 }"
       >
-        {{ $t("bet_record.outstanding_notes") }}
+        {{ i18n_t("bet_record.outstanding_notes") }}
       </div>
       <!-- 已结算注单按钮 -->
       <div
@@ -17,7 +17,7 @@
         @click="toolClicked(1)"
         :class="{ active: toolSelected === 1 }"
       >
-        {{ $t("bet_record.settled_note") }}
+        {{ i18n_t("bet_record.settled_note") }}
       </div>
       <!-- 预约注单按钮 -->
       <div
@@ -25,7 +25,7 @@
         @click="toolClicked(2)"
         :class="{ active: toolSelected === 2 }"
       >
-        {{ $t("bet_record.book_note") }}
+        {{ i18n_t("bet_record.book_note") }}
       </div>
     </div>
     <!-- 按钮后面的描述 -->
@@ -34,29 +34,29 @@
       <div class="point"></div>
       <!--未结算文字描述-->
       <div class="text" v-if="toolSelected == 0">
-        {{ $t("bet_record.msg_1") }}
+        {{ i18n_t("bet_record.msg_1") }}
       </div>
       <!--已结算文字描述-->
       <div class="text" v-if="toolSelected == 1">
         <template v-if="toolIndex === 0">
           <!--此记录将显示今天所有已派奖彩的投注-->
-          {{ $t("bet_record.msg_2") }}
+          {{ i18n_t("bet_record.msg_2") }}
         </template>
         <template v-else-if="toolIndex == 1">
           <!--此记录将显示昨天所有已派奖彩的投注-->
-          {{ $t("bet_record.msg_3") }}
+          {{ i18n_t("bet_record.msg_3") }}
         </template>
         <template v-else-if="toolIndex == 2">
           <!--此记录将显示7天内所有已派奖彩的投注-->
-          {{ $t("bet_record.msg_4") }}
+          {{ i18n_t("bet_record.msg_4") }}
         </template>
         <template v-else-if="toolIndex == 3">
           <!--此记录将显示30天内所有已派奖彩的投注-->
-          {{ $t("bet_record.msg_5") }}
+          {{ i18n_t("bet_record.msg_5") }}
         </template>
         <template v-else>
           <!-- 此记录将显示所选范围内所有已派彩的投注 -->
-          {{ $t("bet_record.msg_6") }}
+          {{ i18n_t("bet_record.msg_6") }}
         </template>
       </div>
     </div>
@@ -65,6 +65,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
+import { i18n_t } from "src/boot/i18n.js"
 const toolSelected = ref(0);
 
 const props = defineProps({

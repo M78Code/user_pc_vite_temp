@@ -14,7 +14,7 @@
       limit_height: limit_height,
     }"
   >
-  {{ cur_state+'11111111111111111' }}
+  {{ cur_state}}
     <div
       v-if="cur_state == 'data' || limit_height"
       class="fit"

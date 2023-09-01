@@ -82,7 +82,7 @@
                         @click="show_bet_pre_info(data.orderNo, i)"
                       >
                         <!--提前结算详情-->
-                        <span>{{ $t("bet_record.settlement_pre_info") }}</span>
+                        <span>{{ i18n_t("bet_record.settlement_pre_info") }}</span>
                         <span>
                           <!--详情展示部分箭头-->
                           <icon
@@ -182,10 +182,10 @@
                     <!--显示部分提前结算或者全额提前结算-->
                     <span v-if="tool_selected == 1" class="bet-pre-color">
                       <template v-if="data.settleType == 4">{{
-                        $t("bet_record.settlement_pre_part2")
+                        i18n_t("bet_record.settlement_pre_part2")
                       }}</template>
                       <template v-else-if="data.settleType == 5">{{
-                        $t("bet_record.settlement_pre_all2")
+                        i18n_t("bet_record.settlement_pre_all2")
                       }}</template>
                     </span>
                   </div>
@@ -212,13 +212,13 @@
                     <div class="ceil"></div>
                     <div class="ceil"></div>
                     <div class="ceil">
-                      {{ $t("bet_record.settlement_money") }}
+                      {{ i18n_t("bet_record.settlement_money") }}
                     </div>
                     <div class="ceil">
-                      {{ $t("common.donate_win") }}
+                      {{ i18n_t("common.donate_win") }}
                     </div>
                     <div class="ceil">
-                      {{ $t("bet_record.lose_win") }}
+                      {{ i18n_t("bet_record.lose_win") }}
                     </div>
                   </div>
                   <!--详情数据显示-->
@@ -290,17 +290,17 @@
                         <template v-if="obj.orderStatus == 2">
                           <template v-if="obj.type == 1">
                             <span
-                              >{{ $t("bet_record.settlement_pre_part")
+                              >{{ i18n_t("bet_record.settlement_pre_part")
                               }}<span class="red-bg">{{
-                                $t("common.cancel")
+                                i18n_t("common.cancel")
                               }}</span></span
                             >
                           </template>
                           <template v-else-if="obj.type == 2">
                             <span
-                              >{{ $t("bet_record.settlement_pre_all")
+                              >{{ i18n_t("bet_record.settlement_pre_all")
                               }}<span class="red-bg">{{
-                                $t("common.cancel")
+                                i18n_t("common.cancel")
                               }}</span></span
                             >
                           </template>
@@ -311,10 +311,10 @@
                               <!---部分结算金额--->
                               <template v-if="obj.type == 1">
                                 <div>
-                                  {{ $t("bet_record.settlement_pre_part") }}
+                                  {{ i18n_t("bet_record.settlement_pre_part") }}
                                 </div>
                                 <div>
-                                  [{{ $t("bet_record.surplus")
+                                  [{{ i18n_t("bet_record.surplus")
                                   }}{{
                                     format_balance(obj.remainingBetAmount)
                                   }}]
@@ -323,13 +323,13 @@
                               <!--全额结算-->
                               <template v-else-if="obj.type == 2">
                                 <div>
-                                  {{ $t("bet_record.settlement_pre_all") }}
+                                  {{ i18n_t("bet_record.settlement_pre_all") }}
                                 </div>
                               </template>
                               <!--剩余本金结算-->
                               <template v-else-if="obj.type == 3">
                                 <div>
-                                  {{ $t("bet_record.settlement_pre_surplus") }}
+                                  {{ i18n_t("bet_record.settlement_pre_surplus") }}
                                 </div>
                               </template>
                             </span></span
@@ -400,19 +400,19 @@
     </template>
     <!--复制样式 已复制-->
     <div class="toast fit-center" v-if="toast">
-      {{ $t("bet_record.copyed") }}
+      {{ i18n_t("bet_record.copyed") }}
     </div>
   </div>
 </template>
 
 <script setup>
 import tableOptions from ".table-options.vue"; // 选项组件
-import { PaginationWapper } from "src/components/pagination/indes.js";
+// import { PaginationWapper } from "src/components/pagination/indes.js";
 import { useTableData } from "./use-table-data";
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/core/index.js";;
 import { formatTime,format_balance,format_score_t } from "src/core/format/index";
-import {defineExpose} from 'vue'
-;
+import {defineExpose} from 'vue';
+
 
 const props = defineProps({
   record_obj: {
