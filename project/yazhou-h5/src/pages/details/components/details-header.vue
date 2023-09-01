@@ -24,11 +24,12 @@
 import headerTop from "project_path/src/pages/details/components/header/header-top.vue";   // 详情页视频区域中部(主副队logo+主副队名+赛事[阶段+时间+比分])
 // import header_bottom from "project_path/src/pages/details/components/header/header-bottom.vue";   // 详情页视频区域(视频+动画按钮)+底部(赛事比分或者是足球犯规显示)
 // import match_results_header_top from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";  // 整个赛果详情页的上部比分
-// import base64 from "src/core/match-detail-h5/until/details-bg.js";  // 球类背景图background路径
-import {utils } from 'src/core/index.js';
+import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";  // 球类背景图background路径
+import { utils } from 'src/core/utils/index.js';
 import lodash from "lodash";
 import { useRouter, useRoute } from "vue-router";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+
 export default defineComponent({
   name: "details_header",
   props: {
@@ -55,7 +56,7 @@ export default defineComponent({
     const data = reactive({
       utils,
       // 此处空对象请勿删除;
-      URL:base64,
+      URL:detail_csid_config,
       // 收藏菜单为6
       get_menu_type: "get_menu_type",
       // 详情页的数据

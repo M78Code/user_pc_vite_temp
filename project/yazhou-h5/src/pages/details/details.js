@@ -156,7 +156,7 @@ const route = useRoute();
   const show_chatroom_tab = computed(() => {
     // 中文，繁体并且聊天室ID不为空才显示聊天室Tab, crs 0关闭1打开
     const { crs } = data.get_details_chatroom_data || {};
-    const { chatRoomSwitch } = userCtr.user_info || {};
+    const { chatRoomSwitch } = UserCtr.user_info || {};
     return (
       ["zh", "tw"].includes(data.get_lang) && crs == 1 && chatRoomSwitch == 1
     );
@@ -185,7 +185,7 @@ const route = useRoute();
   // 重播图标
   const icon_replay = computed(() => {
     const { configValue, eventSwitch } = lodash.get(
-      userCtr,
+      UserCtr,
       "user_info.merchantEventSwitchVO",
       {}
     );

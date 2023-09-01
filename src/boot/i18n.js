@@ -9,7 +9,7 @@
 
  const PROJECT_NAME= BUILDIN_CONFIG.TARGET_PROJECT_NAME
 
- const IS_PC = PROJECT_NAME.includes('pc')
+ const IS_PC = PROJECT_NAME.includes('h5')
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
