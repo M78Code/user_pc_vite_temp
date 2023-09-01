@@ -6,6 +6,7 @@
 import { i18n_t, i18n} from "src/boot/i18n.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
+
 //   约定 四个 值
 
 // 100 常规球类
@@ -152,7 +153,7 @@ class BaseData {
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
       // 5分钟一次
-      this.set_menu_init_time(300000);
+      this.set_menu_init_time(3000);
     }, 2000);
   }
 
@@ -212,7 +213,7 @@ class BaseData {
     // console.warn("init_user_info",res.data)
     // let user_info = _.get(res,'data.data',{})
     // let user_info = _.get(res,'data.data',{})
-    let user_info = _.get(userCtr.get_getuserinfo_data(), "data");
+    let user_info = userCtr.get_user_info_data()
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
       // let new_user = JSON.stringify(user_info)

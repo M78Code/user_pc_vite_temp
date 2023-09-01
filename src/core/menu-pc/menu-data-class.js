@@ -88,9 +88,14 @@ class MenuData {
     // 热门足球
     this.hot_500_sport_1 = false;
     //是否可以多列玩法的菜单
-    this.is_multi_column = ref(false);
+    this.is_multi_column = false;
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
+  }
+
+  // 设置左侧显示内容
+  set_layout_left_show(val){
+    this.layout_left_show = val
   }
 
   /**
@@ -553,7 +558,7 @@ class MenuData {
       is_multi_column = false;
     }
     // is_unfold_multi_column: false, //是否展开多列玩法
-    this.is_multi_column.value =
+    this.is_multi_column =
       is_multi_column &&
       !utils.is_iframe &&
       state.layoutReducer.is_unfold_multi_column;
@@ -697,7 +702,7 @@ class MenuData {
       r = "esports";
     }
     //搜索13列玩法
-    if (this.is_multi_column.value && state.configReducer.config.multi_column) {
+    if (this.is_multi_column && state.configReducer.config.multi_column) {
       r = 13;
     }
     // console.error( 'get_match_tpl_number----------get_match_tpl_number----',r );
