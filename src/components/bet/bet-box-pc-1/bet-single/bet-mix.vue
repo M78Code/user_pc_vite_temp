@@ -81,12 +81,12 @@ import BetMixRecord from "./bet-mix-record.vue"; // 下注混入记录
       min-height: 0;
       max-height: 100%;
       overflow: hidden;
-      ::v-deep .scroll {
+      :deep(.scroll )  {
         height: auto !important;
         min-height: 100px;
         max-height: 100%;
       }
-      ::v-deep .absolute {
+      :deep(.absolute) {
         position: static;
       }
     }

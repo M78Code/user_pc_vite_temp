@@ -126,6 +126,7 @@ import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-cla
 import MatchPage from 'src/core/match-list-h5/match-class/match-page.js'
 import {MenuData } from "src/core/index.js"
 import matchList from "./components/match-list.vue"; 
+import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 
 const props = defineProps({
   invok_source: String,
@@ -265,7 +266,7 @@ watch(() => props.wrapper_scroll_top, () => {
 // 菜单类型变化时，如果是收藏则以动画方式显示或隐藏页面
 watch(() => MenuData.current_menu, () => {
   // 切换一级菜单时记录最新时间戳
-  enter_time = Date.now()
+  enter_time.value = Date.now()
   // 切换一级菜单时 goto_detail_matchid置为空
   // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
   // matchCtr.value.clearData();
@@ -337,7 +338,7 @@ watch(() => get_bet_status, () => {
 // 筛选过滤弹层消失
 watch(() => get_show_match_filter, () => {
   // 切换球种时，记录最新时间戳
-  enter_time = Date.now()
+  enter_time.value = Date.now()
   // 切换球种时 goto_detail_matchid置为空
   // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
   // 切换球种时 清空赛种折叠状态
@@ -499,9 +500,9 @@ const clear_timer = () => {
       timer_super9.value,
   ]
 
-  for (const timer of timer_arr) {
-    clearTimeout(this[timer])
-    this[timer] = null
+  for (let timer of timer_arr) {
+    clearTimeout(timer)
+    timer = null
   }
 }
 // 绑定相关事件监听

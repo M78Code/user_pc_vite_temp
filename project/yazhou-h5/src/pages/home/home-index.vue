@@ -22,7 +22,7 @@
     </div>
 
     <!-- 顶部切换 下边的内容组件  @hook:mounted="get_hot_tab_item_handle" -->
-    <component is='hot'></component>
+    <component :is=currentContent></component>
   </div>
 </template>
 
@@ -319,7 +319,6 @@ export default defineComponent({
       }
     }
     return {
-      theme,
       tabList,
       add_animation,
       tianzhuan,

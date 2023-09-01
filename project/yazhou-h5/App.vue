@@ -6,7 +6,6 @@
 
 <template>
   <div id="q-app">
-    <!-- {{ init_load }} -->
     <appload v-if="init_load"></appload>
   </div>
 </template>

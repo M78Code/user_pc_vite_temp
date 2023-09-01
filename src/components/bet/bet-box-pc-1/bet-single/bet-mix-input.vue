@@ -65,7 +65,7 @@ max: 2
   padding: 17px 10px 15px 10px;
 
   /*  卡片组件样式重写 */
-  ::v-deep .q-card__section {
+  :deep(.q-card__section ){
     margin: 0;
     padding: 0;
     line-height: 0;

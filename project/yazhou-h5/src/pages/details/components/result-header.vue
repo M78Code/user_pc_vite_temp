@@ -75,7 +75,7 @@ export default {
   }
 }
 
-::v-deep.results_header_bottom {
+:deep(.results_header_botto)m {
   &.header-bottom {
     height: unset;
   }

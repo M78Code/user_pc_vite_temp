@@ -99,7 +99,7 @@ onMounted(()=>{
     display: flex;
     align-items: center;
 
-    ::v-deep.skeleton {
+    :deep( .skeleton) {
       margin: 0 0.15rem;
     }
   }

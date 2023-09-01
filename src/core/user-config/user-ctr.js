@@ -109,7 +109,7 @@ class UserCtr {
   }
   set_theme(lang) {
     this.theme = lang;
-    store.dispatch({ type: "SET_THEME", data });
+    // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
   set_cur_odds(odd){

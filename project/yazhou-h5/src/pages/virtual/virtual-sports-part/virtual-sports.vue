@@ -287,7 +287,7 @@ export default defineComponent({
     watch(
       () => props.v_menu_changed,
       (change_str) => {
-        const { tab_item_i } = data;
+        let { tab_item_i } = data;
         tab_item_i = 0;
         component_data.ranking_list_change = is_show_analyse;
         // 根据 足蓝标识设置二级菜单切换状态
