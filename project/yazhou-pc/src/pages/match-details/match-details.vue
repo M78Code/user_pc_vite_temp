@@ -49,7 +49,7 @@
             >
               <div class="column fit">
                 <!-- 盘口模板start -->
-                <match-handicap
+                <!-- <match-handicap
                   :match_info="match_infoData"
                   :category_list="category_list"
                   :plays_list="plays_list"
@@ -63,17 +63,17 @@
                   @on_go_top="on_go_top"
                   load_type="details"
                   @set_handicap_state="set_handicap_state"
-                ></match-handicap>
+                ></match-handicap> -->
                 <!-- 盘口模板end -->
               </div>
             </div>
             <!-- 强力推荐，关盘状态下展示TODO -->
-            <match-list-hot
+            <!-- <match-list-hot
               class="match_list_hot"
               page_source="details"
               :class="is_esports ? 'esport-list' : ''"
               v-if="['all_empty', 'new_empty'].includes(handicap_state)"
-            />
+            /> -->
           </div>
         </v-scroll-area>
       </div>

@@ -13,7 +13,7 @@
         <icon name="icon-back" class="back" color="#ABBAC8" />
       </div>
       <!-- 联赛标题 -->
-      <div class="title ellipsis allow-user-select">
+      <div class="title ellipsis allow-user-select">222
         {{ match_infoData.tn }}  {{ toggle_panel }} {{ utils.is_show_sr_flg(match_infoData) }}
       </div>
       <div class="right-icon">
@@ -87,7 +87,7 @@ import { ref, defineExpose, onUnmounted } from "vue";
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import {utils}  from "src/core/index";
 // import ZhuGe from "src/core/http/zhuge-tag";
-// import details from "src/core1/match-detail-pc/match-detail.js";
+import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 // import info from 'src/components/match-detail/match_info/info.vue'
 // // 玩法tab条
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
