@@ -33,7 +33,7 @@ import { compute_sport_id  } from 'src/core/constant/index.js'
 import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 import store from "src/store-redux/index.js";
-
+console.error('MatchListData', MatchListData);
 const route = useRoute() || {};
 let state = store.getState();
 const { page_source } = PageSourceData;
@@ -95,7 +95,7 @@ const match_tpl_component = computed(() => {
 // 使用元数据默认显示 后面替换
 const set_base_data_init = () => {
 	// 列表数据仓库
-	match_list_data.init();
+	match_list_data.value.init();
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -369,7 +369,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		return false;
 	}
 	if (!is_socket) {
-		match_list_data.init();
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
 		route.name != "details" && match_scroll_utils.set_scroll_top(0);

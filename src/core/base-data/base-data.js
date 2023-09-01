@@ -153,7 +153,7 @@ class BaseData {
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
       // 5分钟一次
-      this.set_menu_init_time(3000);
+      this.set_menu_init_time(300000);
     }, 2000);
   }
 
