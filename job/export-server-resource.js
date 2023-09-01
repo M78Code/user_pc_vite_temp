@@ -9,8 +9,7 @@ import {
 } from "./write-folder-file.js";
 import fs from "node:fs";
 
-// 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
-import { FILE_PATH, PROJECT_NAME } from "../dev-target-env.js";
+ 
 // 商户版本 最终配置
 import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
 const PROJECT_NAME = final_merchant_config.project
