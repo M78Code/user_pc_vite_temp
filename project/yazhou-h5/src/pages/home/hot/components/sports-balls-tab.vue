@@ -54,10 +54,10 @@
 <script setup>
 // import match_main from "src/project/pages/match-list/match_main";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 // import {api_home} from "src/project/api";
-import hotList from "src/components/skeleton/home-hot/hot_list.vue";   // 热门榜单 骨架屏
-import hotSchedule from "src/components/skeleton/home-hot/hot_schedule.vue"     // 热门赛程 骨架屏
+import hotList from "src/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
+import hotSchedule from "src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
 import no_data from "src/components/common/no-data.vue";    // 无网络展示组件
-import public_form from "./public_form.vue";    // 首页热门足球和 篮球的 公共榜单表格
+import public_form from "./public-form.vue";    // 首页热门足球和 篮球的 公共榜单表格
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 const props = defineProps({
