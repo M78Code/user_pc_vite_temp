@@ -5,7 +5,7 @@ import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
   local_dev: "bet-menu-icon",
-  local_test: "bet-menu-icon",
+  local_test: "bet-menu-icon-2",
   local_ylcs: "bet-menu-icon",
   idc_pre: "bet-menu-icon",
   idc_sandbox: "bet-menu-icon",
@@ -24,7 +24,7 @@ const item = {
   item_5: 5,
   item_6: 6,
   item_7: 7,
-  item_8: 8,
+  logic: 8,
 };
 
 /**

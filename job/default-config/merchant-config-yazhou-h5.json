@@ -11,5 +11,11 @@
       "tableClass":"bg-deep-purple-14"
      }
   },
-  "server_resource":{}
+  "server_resource":{},
+  "css":{
+    "cathectic-text-color-4":{
+      "day":"",
+      "night":""
+    }
+  }
 }

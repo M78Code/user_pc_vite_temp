@@ -11,6 +11,10 @@ import fs from "node:fs";
 
 // 代码内 配置的   商户版本号       ，一般是  本地测试 打包指定版本用
 import { FILE_PATH, PROJECT_NAME } from "../dev-target-env.js";
+// 商户版本 最终配置
+import final_merchant_config from "./output/merchant/config.json" assert { type: "json" };
+const PROJECT_NAME = final_merchant_config.project
+
 console.log("export-server-resource----------server-resource ----");
 console.log("process.argv----------------------0---");
 console.log("process.argv----------------------1---");
@@ -57,25 +61,10 @@ const download_file_to_local = async (srcs) => {
     console.log("下载文件错误");
   }
 };
-/**
- * 获取 服务器上 当前商户的 版本配置
- */
-const get_config_info = async () => {
-  // API 对外文档 的 单个 版本的详情 获取地址
-  try {
-    let res = await axios.get(FILE_PATH);
-    let { data } = res;
-    if (data) {
-      //此处1 应该是配置的与后台相对应
-      download_file_to_local(data.assets);
-    }
-  } catch (error) {
-    console.log("获取 服务器上 当前商户的 版本配置 出错");
-  }
-};
+ 
 if (ENABLE_TEST) {
   download_file_to_local({});
 } else {
   // 获取 服务器上 当前商户的 版本配置
-  get_config_info();
+  download_file_to_local(final_merchant_config.assets);
 }

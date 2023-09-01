@@ -18,3 +18,11 @@ const compute_css = ({ key, label }) => {
 };
 
 export { compute_css };
+
+
+/**
+ * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， label 是 精灵图内 item 单个元素的 标识键
+ *  
+ * 对于 非 精灵图  key  统一 :'other-image'  ， label 是  单个素材资源的 标识键
+ * 
+ */
