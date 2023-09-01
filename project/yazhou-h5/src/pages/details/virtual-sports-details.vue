@@ -74,7 +74,7 @@ export default defineComponent({
   setup(props, evnet) {
     const router = useRouter()
     const route = useRoute()
-    const data = reactive({
+    let data = reactive({
       vsport_operate:null,
       match_of_video:null,
       show_debug:sessionStorage.getItem('wsl') == '9999',

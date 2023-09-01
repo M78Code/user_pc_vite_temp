@@ -153,10 +153,10 @@ const props = defineProps({
     }
 })
 
-const default_index = ref(0)
-const default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
+let default_index = ref(0)
+let default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
+let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
 
 
 

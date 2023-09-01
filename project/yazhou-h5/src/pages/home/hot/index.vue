@@ -55,7 +55,7 @@
 <script setup>
 // import { api_home } from "src/project/api/index";
 
-import hotFeatured from "src/components/skeleton/home-hot/hot_featured.vue"    // 热门精选 骨架屏 
+import hotFeatured from "src/components/skeleton/home-hot/hot_featured.vue"    // 热门精选 骨架屏
 import hotSchedule from "src/components/skeleton/home-hot/hot_schedule.vue"     // 热门赛程 骨架屏
 // import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
 import sports_balls_tab from "./sports_balls_tab.vue"
@@ -65,12 +65,12 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
-const tabList = ref([])  // tab选项卡内容
-const tab_Index = ref(0) //  tab 选项卡的下标位置
-const featured_loading = ref(true) // 精选骨架屏
-const first_loading = ref(true) // 精选是否第一次加载骨架屏
-const can_click_tab = ref(false) // 可以点击菜单tab 选项卡
-const wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
+let tabList = ref([])  // tab选项卡内容
+let tab_Index = ref(0) //  tab 选项卡的下标位置
+let featured_loading = ref(true) // 精选骨架屏
+let first_loading = ref(true) // 精选是否第一次加载骨架屏
+let can_click_tab = ref(false) // 可以点击菜单tab 选项卡
+let wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
 
 onmounted(() => {
   timer2.value = null;

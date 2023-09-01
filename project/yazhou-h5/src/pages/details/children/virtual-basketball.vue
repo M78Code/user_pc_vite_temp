@@ -71,7 +71,7 @@ export default defineComponent({
     basketball_status:Number,
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       playing: false,
       // 篮球线性进度宽度
       basketball_line_width: current_match.mmp == 'INGAME' ? 100 : 0,

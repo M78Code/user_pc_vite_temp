@@ -20,7 +20,7 @@
       <div class="footer-menu-item" @click="menu_item_click(item,k)"
            v-for="(item,k) of footer_menulist" :key="k" v-show="bottom_option_show(item)"
            :class="{
-            'f-disabled-m':k == 0 && menu_type == 100,           
+            'f-disabled-m':k == 0 && menu_type == 100,
             'sub-menu-first':k == 0,
             'is-hidden':is_sub_first_hidden && k == 0 || !GlobalAccessConfig.get_collectSwitch() && item.id == 1 || !GlobalAccessConfig.get_filterSwitch()  && ! GlobalAccessConfig.get_searchSwitch()  && item.id == 3,
             'effect-show':is_sub_first_effect && k == 0,
@@ -100,49 +100,49 @@ import { UserCtr } from "src/core/index.js";
 // import { Platform } from 'quasar'
 
   // mixins:[common],
-  const is_effecting_ref = ref(true)
-  const is_refreshing = ref(false)
+  let is_effecting_ref = ref(true)
+  let is_refreshing = ref(false)
   // 子菜单是否显示
-  const sub_menu_l_show = ref(false)
+  let sub_menu_l_show = ref(false)
   // 渐进式显示\隐藏子菜单
-  const sub_menu_l_show_slow = ref(false)
+  let sub_menu_l_show_slow = ref(false)
   // 选中的子菜单下标
-  const sub_footer_menu_i = ref(0)
+  let sub_footer_menu_i = ref(0)
   // 返回顶部按钮显示
-  const scroll_to_top_show = ref(false)
+  let scroll_to_top_show = ref(false)
   // 返回顶部时钟对象
-  const scroll_to_top_timeout = ref(0)
+  let scroll_to_top_timeout = ref(0)
   // 拖拽x坐标
-  const init_poi_y = ref(0)
+  let init_poi_y = ref(0)
   // 拖拽过程中上一帧的鼠标x坐标
-  const prev_x = ref(null)
+  let prev_x = ref(null)
   // 拖拽过程中上一帧的鼠标y坐标
-  const prev_y = ref(null)
+  let prev_y = ref(null)
   // 是否拖拽到上方限制区
-  const flat_topped = ref(false)
+  let flat_topped = ref(false)
   // 滚动时点击返回顶部无效
-  const list_scroll_timeout = ref(0)
+  let list_scroll_timeout = ref(0)
   //列表滚动距离
-  const scroll_h = ref(0)
+  let scroll_h = ref(0)
   //上次记录的滚动方向 1向上滚  -1向下滚
-  const scroll_prev_dir = ref(-1)
+  let scroll_prev_dir = ref(-1)
   //上一帧滚动位置
-  const prev_frame_poi = ref(0)
+  let prev_frame_poi = ref(0)
   //处理中
-  const footer_clicked_handleing = ref(false)
+  let footer_clicked_handleing = ref(false)
   //上一次的
-  const prev_floating_sub = ref('prev-floating-sub-i')
+  let prev_floating_sub = ref('prev-floating-sub-i')
   //页脚数据
-  const footer_menulist = ref([])
+  let footer_menulist = ref([])
   //子菜单显示/隐藏渐进效果
-  const is_sub_first_effect = ref(false)
+  let is_sub_first_effect = ref(false)
   //子菜单隐藏
-  const is_sub_first_hidden = ref(false)
+  let is_sub_first_hidden = ref(false)
   //投注栏弹层显示非0否则0
-  const local_bet_status = ref(0)
+  let local_bet_status = ref(0)
   //小于0显示页脚,大于0隐藏页脚
-  const scroll_dir = ref(0)
-  const timer_object = ref({
+  let scroll_dir = ref(0)
+  let timer_object = ref({
     timer1_: null,
     timer2_: null,
     timer3_: null,
@@ -355,7 +355,7 @@ import { UserCtr } from "src/core/index.js";
           sub_menu_l_show_slow = true;
         },50);
       }
-      //关注   
+      //关注
       else if(item.id === 1){
         if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch() ,this ) ) return
         if(footer_clicked_handleing) return;
@@ -380,7 +380,7 @@ import { UserCtr } from "src/core/index.js";
       else if(item.id === 2){
         useMittEmit(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW,true);
       }
-      //筛选     
+      //筛选
       else if(item.id === 3){
         if(!GlobalAccessConfig.get_filterSwitch()  && !GlobalAccessConfig.get_searchSwitch()){
           $toast(i18n_t(`common.temporarily_unavailable`), 2000)
@@ -457,7 +457,7 @@ import { UserCtr } from "src/core/index.js";
               f_m.is_disabled = false
             }
           }
-          // 电竞放开 筛选     
+          // 电竞放开 筛选
           if(f_m.id === 3 && menu_type === 3000){
             f_m.is_disabled = true
           }

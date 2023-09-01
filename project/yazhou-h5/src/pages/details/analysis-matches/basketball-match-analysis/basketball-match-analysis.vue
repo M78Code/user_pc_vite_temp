@@ -39,7 +39,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   //   articleMain: articleMain,
   // },
   // TODO: 国际化后续修改调整
-  const tabList = ref([
+  let tabList = ref([
     {
       name: t('analysis_football_matches.match'),
       component: 'match'
@@ -53,8 +53,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
       component: 'line_up'
     }
   ])
-  const currentContent = ref('match')
-  const analysis_basketball_matches = ref(null)
+  let currentContent = ref('match')
+  let analysis_basketball_matches = ref(null)
   // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([

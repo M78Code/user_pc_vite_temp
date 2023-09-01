@@ -315,7 +315,7 @@ export default defineComponent({
   ],
 
   setup(props, evnet) {
-    const component_data = reactive({
+    let component_data = reactive({
       tips_def: "image/wwwassets/bw3/svg/video_b.svg",
       tips_act: "image/wwwassets/bw3/svg/video_a.svg",
       voice_def: "image/wwwassets/bw3/svg/video_i.svg",

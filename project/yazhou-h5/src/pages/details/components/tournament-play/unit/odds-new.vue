@@ -37,7 +37,7 @@ export default defineComponent({
   props: ['ol_data','item_data'],
   name: 'odds_new',
   setup(props, evnet) {
-    const component_data = reactive({
+    let component_data = reactive({
       clear_status_timeout: null,
       cacheData: [],
       status: '',

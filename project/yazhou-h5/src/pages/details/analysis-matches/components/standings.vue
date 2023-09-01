@@ -90,21 +90,21 @@ let get_detail_data = ref({
   // },
   // 国际化
 
-  const tab_list = ref([
+  let tab_list = ref([
         {name: t('analysis_football_matches.Fundamentals')},
         {name: t('analysis_football_matches.Disk')},
         {name: t('analysis_football_matches.Technical_side')}
       ])
-  const tabIndex = ref(0)
+  let tabIndex = ref(0)
   // 基本面的数据
-  const future_schedule_data = ref({})
+  let future_schedule_data = ref({})
   // 伤停情况
-  const injury_situation_data = ref({init: null})
+  let injury_situation_data = ref({init: null})
   // 盘面的数据
-  const matchHistory_battle_dto_map = ref({init: null})
+  let matchHistory_battle_dto_map = ref({init: null})
   // 技术面的数据
-  const homeAwayGoal_and_coach_map = ref({init: null})
-  const loading = ref(false)
+  let homeAwayGoal_and_coach_map = ref({init: null})
+  let loading = ref(false)
   const route = useRoute()
 
   onMounted(() => {

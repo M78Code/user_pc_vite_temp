@@ -37,7 +37,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [chatroom_mixin],
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       data_list: ''
     });
     watch(

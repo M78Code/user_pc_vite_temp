@@ -46,7 +46,7 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       maxMsgLen: 50,    // 列表最大容纳消息数量
       listScrollTop: null,   // 聊天室列表滚动scrollTop，用于判断是否显示更多消息等
       listScrollHeight: null,   // 聊天室scrollHeight

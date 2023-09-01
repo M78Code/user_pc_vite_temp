@@ -43,7 +43,7 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       msgType
     });
     // #TODO vuex

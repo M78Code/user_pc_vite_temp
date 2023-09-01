@@ -204,45 +204,45 @@ import { useRoute, useRouter } from "vue-router"
   //轮播
   const slide = ref(0)
   //轮播图数据，init是数据加载中的标识
-  const carousel_data = ref({ list: [], obj: {} })
+  let carousel_data = ref({ list: [], obj: {} })
   //余额
-  const balance_obj = ref({})
+  let balance_obj = ref({})
    // 代表接口加载结束
-  const loading_done =ref(false)
+   let loading_done =ref(false)
   //左侧菜单选中项
-  const menu_index = ref(0)
+  let menu_index = ref(0)
   //左侧菜单
-  const menu = ref(common_menu_list())
+  let menu = ref(common_menu_list())
   //右边内容
-  const match_list = ref(secondary_menu())
+  let match_list = ref(secondary_menu())
   //右侧无数据
-  const noData = ref(false)
-  const no_data_txt = ref("moMatch")
+  let noData = ref(false)
+  let no_data_txt = ref("moMatch")
   //菜单无数据
-  const noMenu = ref(false)
-  const no_menu_txt = ref("moMatch")
+  let noMenu = ref(false)
+  let no_menu_txt = ref("moMatch")
   //点击动画
-  const animation = ref(false)
+  let animation = ref(false)
   //滚动中的位置
-  const clientY = ref(0)
+  let clientY = ref(0)
   //开始滚动的位置
-  const start_move_clientY = ref(0)
-  const thumbStyle = ref({
+  let start_move_clientY = ref(0)
+  let thumbStyle = ref({
     background: "transparent"
   })
   //轮播背景图片,
-  const banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
+  let banner_bg = ref(localStorage.getItem('home_banner_default') || sessionStorage.getItem('banner_bg') || '')
   //右边内容默认高度
-  const el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
+  let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75))
   // 定时器
-  const home_timer1_ = ref(null)
+  let home_timer1_ = ref(null)
   // 默认banner初始不显示
-  const defaultBannerShow = ref(false)
+  let defaultBannerShow = ref(false)
   // 定时器变量
-  const timer_1 = ref(null)
+  let timer_1 = ref(null)
   // 展示banner loading
-  const show_banner_loading = ref(true)
-  const new_menu = ref([])
+  let show_banner_loading = ref(true)
+  let new_menu = ref([])
     // 展示banner loading
     show_banner_loading = true
     get_carousel((data) => {
@@ -255,7 +255,7 @@ import { useRoute, useRouter } from "vue-router"
     set_bet_obj({});
     set_bet_list([]);
     set_show_favorite_list(false);
-    menu_index = 0;
+    menu_index.value = 0;
     useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
     useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
 
@@ -475,7 +475,7 @@ import { useRoute, useRouter } from "vue-router"
     if([1,2,3].includes(get_home_menu_index)){
       data.forEach((item,index) =>{
         if(item.mi == get_home_menu_index){
-          menu_index = index
+          menu_index.value = index
           change_menu(index)
         }
       })
@@ -488,17 +488,17 @@ import { useRoute, useRouter } from "vue-router"
 
     // 处理无数据的情况
     if (!new_menu.length) {
-      noMenu = true
-      no_menu_txt = "noMatch"
+      noMenu.value = true
+      no_menu_txt.value = "noMatch"
     } else {
-      noMenu = false
+      noMenu.value = false
     }
 
-    if(new_menu.length && !new_menu[menu_index].sl.length){
-      noData = true
+    if(new_menu.length && !new_menu[menu_index.value].sl.length){
+      noData.value = true
       no_data_txt = "noMatch"
     }else{
-      noData = false
+      noData.value = false
     }
   }
   // 主内容 菜单数据处理
@@ -557,14 +557,14 @@ import { useRoute, useRouter } from "vue-router"
           }
         } else {
           // menu_data_loaded(menu_data);
-          noMenu = true
-          no_menu_txt = "noMatch"
+          noMenu.value = true
+          no_menu_txt.value = "noMatch"
         }
       },
       // axios中catch回调方法
       fun_catch: err => {
-        noMenu = true
-        no_menu_txt = "noMatch"
+        noMenu.value = true
+        no_menu_txt.value = "noMatch"
         loading_done = false
       },
       // 最大循环调用次数(异常时会循环调用),默认3次
@@ -633,10 +633,10 @@ import { useRoute, useRouter } from "vue-router"
       [objKey.terminal]: "H5",
     };
     //====================menu router
-    if(menu_index == index) return
+    if(menu_index.value == index) return
     let mi = new_menu[index].mi;
-    menu_index = index
-    set_home_menu_index(menu_index)
+    menu_index.value = index
+    set_home_menu_index(menu_index.value)
     $refs.list_area.setScrollPosition(0)
     animation = false
     // 动画效果
@@ -690,11 +690,11 @@ import { useRoute, useRouter } from "vue-router"
       set_new_two_menu(index)
       const euid = base_data.get_euid(item.mi)
       set_current_sub_menuid(euid);
-      set_current_first_menu(new_menu[menu_index].mi)
+      set_current_first_menu(new_menu[menu_index.value].mi)
       router.push({
         name: 'matchList',
         query: {
-          m: new_menu[menu_index].mi,
+          m: new_menu[menu_index.value].mi,
           s: index,
           token: UserCtr.user_token
         }

@@ -97,7 +97,7 @@ import { t } from "src/boot/i18n.js";
       type: Number | String
     }
   })
-  const default_index = ref(0)
+  let default_index = ref(0)
 
  watch(() => liat_data, (n) => {
   liat_data.value = n

@@ -92,7 +92,7 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       utils
     });
     // #TODO vuex

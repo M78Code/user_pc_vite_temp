@@ -25,7 +25,7 @@ export default defineComponent({
 
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       emitters: [],
       is_shoe: false,  // 是否显示
       obj: {

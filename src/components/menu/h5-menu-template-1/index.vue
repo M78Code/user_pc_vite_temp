@@ -36,11 +36,11 @@ const props = defineProps({
     default: () => {},
   },
 });
-const current_menu = ref("101");
+let current_menu = ref("101");
 //选中的球类
-const current_menu_item = ref("");
-const menu_list = ref([]);
-const e_uid = ref("");
+let current_menu_item = ref("");
+let menu_list = ref([]);
+let e_uid = ref("");
 onMounted(() => {
   menu_list.value = menu_obj.recombine_menu(props.base_data.mew_menu_list_res);
   setMenu(menu_list.value[0]);

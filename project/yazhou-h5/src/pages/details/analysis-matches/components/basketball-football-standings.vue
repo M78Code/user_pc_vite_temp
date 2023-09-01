@@ -76,16 +76,16 @@ let get_detail_data = ref({
 })
 
 
-  const ranking_data = ref([])
+  let ranking_data = ref([])
   //按钮名字
-  const btn_text =ref('')
+  let btn_text =ref('')
   //按钮图标的方向
-  const direction =ref('')
+  let direction =ref('')
   //是否展开
-  const box_bool =ref('')
-  const no_data =ref(false)
+  let box_bool =ref('')
+  let no_data =ref(false)
   // 路由
-  const route = useRoute()
+  let route = useRoute()
   //
 
 

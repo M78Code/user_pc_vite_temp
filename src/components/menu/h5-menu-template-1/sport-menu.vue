@@ -50,7 +50,7 @@
             </div>
           </template>
         </div>
-        <!-- 活动图标 -->   
+        <!-- 活动图标 -->
         <img class="activity-logo animate-bounce-up" :src="get_file_path(user_info.activityList[0].h5Url) || activity_default"
              v-if="GlobalAccessConfig.get_activitySwitch()&& user_info.inActivity && get_lang == 'zh'" @click="openActivity" @error="activity_icon_error" alt="">
         <!-- 活动图标红点 -->
@@ -74,7 +74,7 @@
           }">
           <!--二级菜单 球类和运动类-->
           <div class="s-menu-container flex" ref="sub_menu_scroller">
-            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->   
+            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
             <sub-menu-specially
               @click="select_all_sub_menu_handle"
               v-show=" GlobalAccessConfig.get_playAllShow() && menu_1_type == 1"
@@ -185,7 +185,7 @@ import { api_analysis} from "src/project/api/index.js";
 import { activity_task_api } from "src/api";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
-import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js" 
+import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js"
 import { watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
@@ -196,60 +196,60 @@ import { UserCtr } from "src/core/index.js";
 
   // TODO: 后续修改调整
   // mixins: [ list_menu_mixin_new ],
-  
+
   //主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据，真正渲染到页面数据的是下面的 main_menu_list_items  =================
-  const main_menu_list = ref([]) 
+  let main_menu_list = ref([])
   //主菜单 一级主菜单 下边的四个菜单（滚球， 今日， 电竞， 虚拟体育）, 真正渲染到 页面的数据    =================
   // Level_one_menu_list() || 后续修改调整
-  const main_menu_list_items = ref([]) 
+  let main_menu_list_items = ref([])
   //二级菜单项目 TODO: second_sub_list() ||  后续修改调整
-  const sub_menu_list = ref([]) 
+  let sub_menu_list = ref([])
   // 二级菜单选中项下标
-  const sub_menu_i = ref(0) 
+  let sub_menu_i = ref(0)
   //选中的子菜单下标集合
-  const selected_sub_menu_i_list = ref([0])
+  let selected_sub_menu_i_list = ref([0])
   //二级菜单 全部菜单赛事数量
-  const all_sport_count = ref(0)
+  let all_sport_count = ref(0)
   //三级菜单 早盘日期菜单项
-  const date_menu_list = ref([])
+  let date_menu_list = ref([])
   // 四级菜单  虚拟体育赛果 的当前下标
-  const virtual_sports_results_tab_item_i = ref(0) 
+  let virtual_sports_results_tab_item_i = ref(0)
   // 四级菜单信息
-  const four_menu_item = ref(null) 
+  let four_menu_item = ref(null)
   //一级主菜单 选择项菜单  中间下拉弹框
-  const main_select_items = ref([])
+  let main_select_items = ref([])
   //菜单容器是否收起
-  const menu_wrap_simple = ref(false)
+  let menu_wrap_simple = ref(false)
   //菜单容器二级菜单是否收起
-  const sport_container_simple = ref(false)
+  let sport_container_simple = ref(false)
   //渐进显示子菜单选择器
-  const show_selector_s2 = ref(false)
+  let show_selector_s2 = ref(false)
   //弹出框的 中间选择器
-  const show_selector_inner = ref(false)
+  let show_selector_inner = ref(false)
   //是否显示子菜单选择器
-  const show_selector_sub = ref(false)
+  let show_selector_sub = ref(false)
   //上次选择的主菜单
-  const prev_main_menu_i =ref(-1)
+  let prev_main_menu_i =ref(-1)
   //活动是否有可领取的任务
-  const task_list = ref(0) 
+  let task_list = ref(0)
   // 定时器
-  const timer_super1 = ref(0)
-  const timer_super2 = ref(0)
-  const timer_super3 = ref(0)
+  let timer_super1 = ref(0)
+  let timer_super2 = ref(0)
+  let timer_super3 = ref(0)
   // 隐藏一级菜单下标
-  const show_one_menu_index = ref(false) 
-  const route_enter_timeout = ref(0)
-  const route_enter_timer = ref(null) 
+  let show_one_menu_index = ref(false)
+  let route_enter_timeout = ref(0)
+  let route_enter_timer = ref(null)
   // 出错时，活动默认图片
-  const activity_default = ref(`image/wwwassets/activity/activity_entrance.png`) 
+  let activity_default = ref(`image/wwwassets/activity/activity_entrance.png`)
   // 一级菜单mi
-  const menu_1_type = ref(1)
-  const dj_back_type= ref('lol')
-  const new_main_menu_list_items = ref([])
-  const new_main_menu_index = ref(0)
+  let menu_1_type = ref(1)
+  let dj_back_type= ref('lol')
+  let new_main_menu_list_items = ref([])
+  let new_main_menu_index = ref(0)
   // 锚点
-  const scrollItem = ref(null)
-  const sub_menu_scroller = ref(null)
+  let scrollItem = ref(null)
+  let sub_menu_scroller = ref(null)
   // 路由
   const route = useRoute()
 
@@ -271,53 +271,53 @@ import { UserCtr } from "src/core/index.js";
 
   // 从活动页面返回时，执行方法, 活动是否有可领取的任务数量，中文并且不是维护，有活动数据时，才调用是否有红点的接口
   get_task_list()
-  
+
     // ...mapMutations({
       // 主菜单选中项下标 (非展开的)
-    //   set_main_menu_dom_i:'set_main_menu_dom_i', 
+    //   set_main_menu_dom_i:'set_main_menu_dom_i',
     //设置当前二级菜单menu_type
-    //   set_curr_sub_menu_type: "set_curr_sub_menu_type", 
+    //   set_curr_sub_menu_type: "set_curr_sub_menu_type",
     //设置三级菜单id
     //   set_curr_third_menu_id: "set_curr_third_menu_id",
-    // 设置首页菜单数据 
+    // 设置首页菜单数据
     //   save_home_data:"save_home_data",
     // 主菜单下拉选择器选中的赛事下标
-    //   set_selector_w_m_i:'set_selector_w_m_i',  
+    //   set_selector_w_m_i:'set_selector_w_m_i',
     // 当前选中的一级菜单
-    //   set_current_first_menu:'set_current_first_menu',  
+    //   set_current_first_menu:'set_current_first_menu',
     // 当前选中的二级菜单
-    //   set_current_second_menu:'set_current_second_menu',  
+    //   set_current_second_menu:'set_current_second_menu',
     // 当前选中的二级菜单
-    //   set_current_three_menu:'set_current_three_menu',  
+    //   set_current_three_menu:'set_current_three_menu',
     // 当前选中的菜单
-    //   set_current_menu:'set_current_menu', 
-    // 当前选中的菜单   
-    //   set_md:'set_md',    
+    //   set_current_menu:'set_current_menu',
+    // 当前选中的菜单
+    //   set_md:'set_md',
      // 设置当前主菜单menu_type
-    //   set_menu_type: "set_menu_type",  
-    // 当前选中日期菜单索引    
-    //   set_date_menu_curr_i:'set_date_menu_curr_i', 
-    // 设置当前二级菜单id  
+    //   set_menu_type: "set_menu_type",
+    // 当前选中日期菜单索引
+    //   set_date_menu_curr_i:'set_date_menu_curr_i',
+    // 设置当前二级菜单id
     //   set_current_sub_menuid: "set_current_sub_menuid",
-    // 设置当前电竞二级菜单id 
-    //   set_current_esport_csid: "set_current_esport_csid", 
+    // 设置当前电竞二级菜单id
+    //   set_current_esport_csid: "set_current_esport_csid",
     //   set_sport_all_selected:'set_sport_all_selected',
     // 早盘 和 串关和 电竞的  日期菜单数据
-    //   set_current_date_menu:'set_current_date_menu', 
+    //   set_current_date_menu:'set_current_date_menu',
      // 是否收藏
     //   set_show_favorite_list:'set_show_favorite_list',
      // 首页跳转菜单参数
-    //   set_global_route_menu_param: 'set_global_route_menu_param', 
+    //   set_global_route_menu_param: 'set_global_route_menu_param',
     // 筛选弹出框是否显示设置
-    //   set_show_match_filter:'set_show_match_filter', 
+    //   set_show_match_filter:'set_show_match_filter',
      // 进入列表页时 触发
     //   set_global_match_route_enter:'set_global_match_route_enter',
     //上次选中的主菜单type
-    //   set_prev_menu_type:'set_prev_menu_type', 
+    //   set_prev_menu_type:'set_prev_menu_type',
     // 四级菜单信息
-    //   set_level_four_menu:'set_level_four_menu',   
+    //   set_level_four_menu:'set_level_four_menu',
     // 存储赛事折叠/展示状态
-    //   set_ball_current_csid_object: 'set_ball_current_csid_object', 
+    //   set_ball_current_csid_object: 'set_ball_current_csid_object',
     // }),
   /**
      * @description: 球类id转化背景
@@ -363,11 +363,11 @@ import { UserCtr } from "src/core/index.js";
       // 初始化 路由的参数 TODO: route后续修改调整
       if (route.query.m) {
         //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
-        let { m, s, t } = route.query; 
+        let { m, s, t } = route.query;
         set_global_route_menu_param({ m, s, t });
       } else if (route.query.mt1) {
         //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
-        let { mt1, mt2 } = route.query; 
+        let { mt1, mt2 } = route.query;
         set_global_route_menu_param({ mt1, mt2 });
       } else {
         set_global_route_menu_param({});
@@ -438,7 +438,7 @@ import { UserCtr } from "src/core/index.js";
         main_item_clicked(get_main_menu_dom_i, type || 'init_data')
       }
     }
-    
+
     /**
      * 一级菜单点击事件
      * @param {Number} main_index 一级菜单下标
@@ -492,16 +492,16 @@ import { UserCtr } from "src/core/index.js";
       // 首页进来不应清除2级菜单
       if(is_selected != 'first' || main_m.mi == 7){
         // 默认值
-        set_new_two_menu(0)  
+        set_new_two_menu(0)
       }
       // 筛选搜素下的Bat默认传1
-      set_useid_ievname(0) 
+      set_useid_ievname(0)
       if(main_m.mi == 1){
         if(is_selected != 'first'){
           clearTimeout(timer_super3)
           timer_super3 = setTimeout(() => {
             // 头部点击滚球进入列表  默认 全部
-            select_all_sub_menu_handle() 
+            select_all_sub_menu_handle()
           }, 100);
         }
       }
@@ -590,9 +590,9 @@ import { UserCtr } from "src/core/index.js";
       if(is_dir_click == 'dir_click' && sub_menu_i == index) return
       if(!menu_item) return
       // 置空上一次筛选tid
-      set_filter_list({})  
+      set_filter_list({})
       // 全部按钮
-      set_sport_all_selected(false); 
+      set_sport_all_selected(false);
       // 竟足处理 50101
       if(menu_1_type == 30){
         const euid = base_data.get_euid('50101',menu_1_type)||40603; // 获取euid
@@ -613,14 +613,14 @@ import { UserCtr } from "src/core/index.js";
       let euid_mi = item.mi || item.menuId;
       sub_menu_i = index;
       // 选中赛种
-      selected_sub_menu_i_list = [index] 
-      // 二级菜单下标 
-      set_new_two_menu(index) 
+      selected_sub_menu_i_list = [index]
+      // 二级菜单下标
+      set_new_two_menu(index)
       // 获取euid
-      let euid = base_data.get_euid(euid_mi,menu_1_type); 
+      let euid = base_data.get_euid(euid_mi,menu_1_type);
       set_current_sub_menuid(euid);
       // 当前选中二级菜单
-      set_current_second_menu(euid);  
+      set_current_second_menu(euid);
       // 传给筛选里面的搜索下Bat选中
       if(item?.mi) { set_useid_ievname(item.mi.substr(1,2)) }
 
@@ -745,7 +745,7 @@ import { UserCtr } from "src/core/index.js";
      */
     const selector_m_clicked = (i, type, m_items) => {
       // 筛选搜素下的Bat默认传1
-      set_useid_ievname(1) 
+      set_useid_ievname(1)
       // new_main_menu_index = i+1;
       if(m_items.mi == 30){
         set_menu_type(m_items.mi);
@@ -801,11 +801,11 @@ import { UserCtr } from "src/core/index.js";
       let data_list = new_main_menu_list_items[new_main_menu_index].sl
       let changeSubmenu = null
       // 重置上一次储存二级菜单下标
-      sub_menu_i = null;  
+      sub_menu_i = null;
       let selected_sub_menu_i_list = [];
       let euid_list = [];
       // 重置上次储存二级菜单muid
-      set_useid_ievname(0) 
+      set_useid_ievname(0)
       // 二级菜单 下标
       data_list.forEach((sub_m,sub_i) => {
         if(sub_m.ct){
@@ -848,7 +848,7 @@ import { UserCtr } from "src/core/index.js";
       return ![7,8,28].includes(menu_1_type) && !mi_list.includes(+sub.mi)
     }
     /**
-     * 进入活动页  
+     * 进入活动页
      */
     const openActivity = () => {
       if(! GlobalAccessConfig.get_activitySwitch() ){
@@ -946,7 +946,7 @@ import { UserCtr } from "src/core/index.js";
         }
         lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
       }
-      
+
       } catch (error) {
         // 接口异常时逻辑处理
         lodash.useMittEmit(lodash.MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {type:'result',event:{cmd:'list_empty'}})
@@ -977,7 +977,7 @@ import { UserCtr } from "src/core/index.js";
         skip_menu_type();
       }
     })
-    
+
     //监听路由跳转 信息
     watch(() => route, (to, from) => {
       if( from.name != 'matchList' && to.name == 'matchList'){
@@ -994,7 +994,7 @@ import { UserCtr } from "src/core/index.js";
           if(get_sport_all_selected){
             setTimeout(() => {
               // 虚拟体育进入滚球列表 上一次在滚球列表没有选择球类就默认全部
-              select_all_sub_menu_handle() 
+              select_all_sub_menu_handle()
             }, 100);
           }
         }
@@ -1006,9 +1006,9 @@ import { UserCtr } from "src/core/index.js";
           sub_menu_changed(0,'dir_click');
         }
     })
-  
+
     /**
-     * 列表滚动    
+     * 列表滚动
      */
     watch(() => get_list_scroll_top, (sc,o_sc) => {
       let scroll_y = +sc.split('-')[0];
@@ -1038,7 +1038,7 @@ import { UserCtr } from "src/core/index.js";
         }
       }
     })
-    
+
     // 切换关注与非关注时，更新菜单接口数据
     watch(() => show_favorite_list, () => {
       call_the_interface_to_update_the_menu_data('follow');

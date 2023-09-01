@@ -184,7 +184,7 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
 import {utils } from 'src/core/index.js';
@@ -197,14 +197,14 @@ export default defineComponent({
   components: {
     "odds-new": odds_new
   },
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       utils
     });
-    // #TODO vuex 
+    // #TODO vuex
     //   computed: {
     //   ...mapGetters(["get_bet_list", "get_cur_odd","get_detail_data"])
     // },
