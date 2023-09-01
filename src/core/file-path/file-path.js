@@ -9,7 +9,7 @@
 // 电竞赛种csid
 import _ from 'lodash'
 
-const { NODE_ENV } = window.BUILDIN_CONFIG;
+const NODE_ENV = process.env.NODE_ENV
 const e_sport_csids = [101, 100, 102, 103];
 
 
@@ -49,22 +49,15 @@ const letter_num = {
  * @return {String} csid 球种类型
  */
 const get_file_path = (path, csid = 0) => {
-  // oss返回的有效图片域名地址
-  const oss_img_domains = [];
-  // 电竞图片域名
-  const e_sports_img = "";
-  // 图片域名地址
-  const img_domain = {};
-  // 域名地址
-  const current_domain = {};
   // 目前环境信息
-  const current_env = "local_test";
-  if (!path || path == "undefined") {
-    return "";
+  // const current_env = config.current_env;
+  const current_env = "idc_online";
+  if (!path || path == 'undefined') {
+    return '';
   }
   // 如果是http开头 直接返回地址
-  if (_.toString(path).indexOf("http") == 0) {
-    return path;
+  if (_.toString(path).indexOf('http') == 0) {
+    return path
   }
   // // 电竞菜单下如果type没有传值，默认为2
   // let _menutype = _.get(window,'vue.$store.getters.get_menu_type')
@@ -73,48 +66,43 @@ const get_file_path = (path, csid = 0) => {
   // }
   // 电竞图片域名模式
   if (e_sport_csids.includes(1 * csid)) {
-    return `${e_sports_img}/${path}`;
+    return `${config.e_sports.domain_img}/${path}`;
   }
   // 优先使用oss返回的有效图片域名地址
-  let domain_img_str = "";
-  if (oss_img_domains) {
-    domain_img_str = oss_img_domains[0];
+  let domain_img_str = '';
+  if (config.oss_img_domains) {
+    domain_img_str = config.oss_img_domains[0];
   }
   if (domain_img_str) {
     return `${domain_img_str}/${path}`;
   }
 
-  domain_img_str = img_domain[current_env];
+  domain_img_str = config.domain_img[current_env];
   if (domain_img_str) {
     return `${domain_img_str}/${path}`;
   }
 
-  if (
-    current_env == "idc_sandbox" ||
-    current_env == "idc_pre" ||
-    current_env == "idc_ylcs"
-  ) {
-    let api_domain = current_domain[current_env][0];
+  if (current_env == 'idc_sandbox' || current_env == 'idc_pre' || current_env == 'idc_ylcs') {
+    let api_domain = config.domain[current_env][0];
     // 试玩环境使用生产api图片
-    api_domain = current_domain["idc_online"][0];
-    api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
+    api_domain = config.domain['idc_online'][0];
+    api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }
 
-  if (NODE_ENV == "development") {
-    let api_domain = current_domain[current_env][0];
-    api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
+  if ((NODE_ENV == 'development')) {
+    let api_domain = config.domain[current_env][0];
+    api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }
 
   let arr = location.host.split(".");
-  let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${
-    arr[arr.length - 1]
-  }`;
+  let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]}`;
 
   // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
   return `${api_domain_2}/${path}`;
-};
+}
+
 /**
  * @Description 加载图片
  * @param {object} el dom元素
@@ -129,9 +117,9 @@ const load_img_src = function (el) {
       : get_file_path(self_img, el.getAttribute("data-csid"));
   if (img_url) {
     if (img_url.indexOf("?") == -1) {
-      img_url = img_url + "?rdm=" + window.src_rdm;
+      img_url = img_url + "?rdm=" + src_rdm;
     } else {
-      img_url = img_url + "&rdm=" + window.src_rdm;
+      img_url = img_url + "&rdm=" + src_rdm;
     }
   }
   image_is_exist(img_url, el).then((res) => {

@@ -87,6 +87,7 @@ import { format_msc } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import {utils } from 'src/core/index.js'
 import {MenuData } from "src/core/index.js"
+import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
@@ -159,7 +160,7 @@ onMounted(() => {
     return;
   }
   // mmp映射赛事阶段名，国际化语言
-  match_period_map(match, 'replace');
+  matchListClass.match_period_map(match, 'replace');
 
   //自动展开次要玩法
   init_unfold_play_way('mounted');
@@ -320,7 +321,7 @@ watch(() => match.mmp, () => {
   not_show_overtime_play()
   //篮球赛事阶段变化处理
   basketball_mmp_change(curr);
-  match_period_map(match, 'replace');
+  matchListClass.match_period_map(match, 'replace');
 })
 // 15分钟 次要玩法模块  左下角的 小标
 watch(() => get_standard_odd_status.value, () => {
@@ -844,11 +845,11 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
   if(match.csid == 7){
     tab_list.value.filter(t => t.id == 9)[0].show_tab = match.hpsAdd && match.hpsAdd.length > 0;
   }
-  match_period_map(match, 'replace');
+  matchListClass.match_period_map(match, 'replace');
   if(match.csid != 1){
     tab_list.value.forEach(tab => {
       if([6,7,8,9].includes(+tab.id)){
-        match_period_map(match, 'replace');
+        matchListClass.match_period_map(match, 'replace');
         tab.title = mmp_map_title.value;
       }
     });

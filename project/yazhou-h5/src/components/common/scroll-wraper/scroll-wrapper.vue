@@ -248,7 +248,7 @@ const is_static_item = computed(() => {
   ) {
     flag = true;
   }
-  return flag;
+  return !flag;
 })
 /**
  * 是否为冠军

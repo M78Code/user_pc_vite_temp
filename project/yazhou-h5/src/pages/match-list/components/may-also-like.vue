@@ -17,7 +17,7 @@
               <div v-show="item.ms != 110 && !show_counting_down(item)">{{(new Date(+item.mgt)).Format(i18n_t('time3'))}}</div>
               <!-- 倒计时 -->
               <counting-down
-                :title="item.ms == 0? i18n_t('list.match_no_start') :match_period_map(item)"
+                :title="item.ms == 0? i18n_t('list.match_no_start') : matchListClass.match_period_map(item)"
                 :mmp="item.mmp"
                 :m_id="item.mid"
                 :second="item.mst"
@@ -96,6 +96,7 @@ import lodash from 'lodash'
 import { useRouter } from 'vue-router'
 import { i18n_t} from 'src/core/index.js'
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 
 // import skt_may_like from "/mixins/websocket/data/skt_may_like";   // 猜你喜欢模块ws相关逻辑处理
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)

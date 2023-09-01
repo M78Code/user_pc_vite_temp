@@ -68,7 +68,7 @@ class MenuData {
   }
   // 当前选中的菜单type
   get_menu_type () {
-    return ''
+    return 1
   }
   async get_db_mids(mi) {
     //返回mi 筛选赛事 获取mid 用于筛选列表赛事

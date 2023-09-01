@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
-import { t } from "src/boot/i18n.js";;
+import { t } from "src/boot/i18n.js";
 //国际化
 
 
@@ -42,7 +42,10 @@ const show = ref(false)
  * get_local_server_time -> 当前时间
  * get_lang -> 当前语言
  */
-const { get_current_menu, get_local_server_time, get_lang } = useStroe()
+
+const get_lang = ref('')
+const get_current_menu = ref('')
+const get_local_server_time = ref('')
 
 const timeout = ref(null)
 onBeforeUnmount(() => {
@@ -60,8 +63,8 @@ function counting_down() {
   if (props.mgt_time) {
     let start_time = props.mgt_time * 1;
 
-    let init_server = get_local_server_time.server_time * 1;
-    let init_local = get_local_server_time.local_time_init;
+    let init_server = get_local_server_time.value.server_time * 1;
+    let init_local = get_local_server_time.value.local_time_init;
     let now_local = new Date().getTime();
     let sub_local_time = now_local - init_local;
     let now_server_time = init_server + sub_local_time;

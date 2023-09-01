@@ -465,17 +465,18 @@ import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import counting_timer from 'project_path/src/components/common/counting-down.vue';
-import counting_down_start from 'project_path/src/components/common/counting-down-start.vue';
-import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
-import score_list from './score-list.vue';
-import odd_list_wrap from './odd-list-wrap.vue';
-import match_overtime_pen from './match-overtime-pen.vue'
+import countingTimer from 'project_path/src/components/common/counting-down.vue';
+import countingDownStart from 'project_path/src/components/common/counting-down-start.vue';
+import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
+// import scoreList from './score-list.vue';
+// import oddListWrap from './odd-list-wrap.vue';
+// import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n_t} from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
@@ -483,7 +484,7 @@ import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_im
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],
-
+const emits = defineEmits(['unfold_changed', 'toggle_collect_league', 'toggle_collect_match'])
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
   match_of_list: Object,
@@ -580,13 +581,13 @@ onMounted(() => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
   }
-  match_period_map(match);
+  matchListClass.match_period_map(match);
   media_button_button_type_check()
 })
 
 watch(() => match, (c_match) => {
   media_button_button_type_check()
-  match_period_map(c_match);
+  matchListClass.match_period_map(c_match);
 })
 
 watch(() => match.mid, (mid_new,mid_old) => {
@@ -600,7 +601,7 @@ watch(() => match.mid, (mid_new,mid_old) => {
     match_change_timer.value = setTimeout(() => {
       match_changing.value = false;
     }, 300);
-    match_period_map(match);
+    matchListClass.match_period_map(match);
   }
 })
 
@@ -661,7 +662,7 @@ watch(() => match.msc, () => {
 })
 
 watch(() => match.mmp, () => {
-  match_period_map(match);
+  matchListClass.match_period_map(match);
 })
 
 // 监听客队红牌比分变化
@@ -1068,7 +1069,7 @@ const league_l_clicked = () => {
 
   // set_collapse_map_match控制赛事dom显示隐藏
   store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: map_collapse });
-  $emit('unfold_changed', props.match_of_list);
+  emits('unfold_changed', props.match_of_list)
 
   // 今日下目标联赛展开后（赛事dom显示后计算）
   if (props.menu_type === 3 && ms === 0 && map_collapse[tid] === 0) {
@@ -1250,10 +1251,10 @@ const away_avatar = (match, is_second) => {
 const toggle_collect = (match, index, item) => {
   if (item == 'tf') {
     //联赛收藏或取消收藏
-    $emit('toggle_collect_league', { match, index, type: 'tf' });
+    emits('toggle_collect_league', { match, index, type: 'tf' })
   } else {
     //赛事收藏或取消收藏
-    $emit('toggle_collect_match', { match, index, type: 'mf' });
+    emits('toggle_collect_match', { match, index, type: 'mf' })
   }
 }
 /**
@@ -1277,7 +1278,7 @@ const goto_details = (match, flag) => {
 
   // 跳转详情页时需清空赛种折叠状态
   store.dispatch({ type: 'matchReducer/set_collapse_csid_map',  payload: {} });
-  set_collapse_map_match({})
+  store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: {} });
 
   store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: match.mid });
   // 进入详情页前，记录目标赛事top值
