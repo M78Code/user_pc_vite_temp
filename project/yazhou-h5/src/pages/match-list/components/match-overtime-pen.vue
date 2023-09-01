@@ -1038,14 +1038,15 @@ const apply_15min_title = () => {
 // 批量清除定时器
 const clear_timer = () => {
   const timer_arr = [
-    'init_tab_timer',
-    'compute_list_dom_time',
+    'init_tab_timer.value',
+    'compute_list_dom_time.value',
   ]
-  for (const timer of timer_arr) {
-    clearTimeout(this[timer])
-    this[timer] = null
+  for (let timer of timer_arr) {
+    clearTimeout(timer)
+    timer = null
   }
 }
+
 // 波胆玩法 数据加工处理
 const corrective_action_data_processing = (data, match) => {
   let arr = []

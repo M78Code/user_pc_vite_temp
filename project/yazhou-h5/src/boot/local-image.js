@@ -55,9 +55,12 @@ let muUrl_theme02_y0 =''
 let none_league_icon =''
 let none_league_icon_black =''
 let image_panda_placeholder =''
+let default_league_icon =''
+let away_default_avatar =''
+let home_default_avatar =''
  
 export {
   img1, img2, img3, img4, Y0_img_white, match_icon_lock, normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black,
   lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01, animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0,
-  none_league_icon, none_league_icon_black, image_panda_placeholder
+  none_league_icon, none_league_icon_black, image_panda_placeholder, default_league_icon, home_default_avatar, away_default_avatar
 }

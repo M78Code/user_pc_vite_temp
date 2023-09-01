@@ -16,7 +16,6 @@
             当要v-for与v-if同时使用在一个dom上时,可以使用template
       -->
       <template v-for="(scrollItem, index) of data_list">
-        {{ scrollItem }}
         <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
           :class="{ static: is_static_item, last: index == data_source.length - 1 }" :style="{
             transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
@@ -36,7 +35,7 @@
             </span>
           </div>
           <div class="s-w-i-inner">
-            <!-- <slot :match_item="scrollItem" :index="index"></slot> -->
+            <slot :match_item="scrollItem" :index="index"></slot>
           </div>
         </div>
       </template>
