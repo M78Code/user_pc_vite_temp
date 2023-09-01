@@ -2,9 +2,11 @@ import { api_common } from "src/api/";
 import lodash from "lodash";
 class ServerTime {
   constructor() {
-    this.timestamp=
-    this.remote_time = 0;
-    this.local_time = 0;
+ 
+    //远程服务器时间 
+    this.remote_time =  Date.now() +100;
+    // 用户本机 时间戳
+    this.local_time =  Date.now();
   }
    
   /**
@@ -28,7 +30,9 @@ class ServerTime {
       this.remote_time = Date.now();
     }
   }
-
+/***
+ * 获取当前服务器时间 时间戳
+ */
   get_remote_time() {
     let now = Date.now();
     let time = this.remote_time + (now - this.local_time);
