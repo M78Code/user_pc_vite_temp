@@ -1,21 +1,19 @@
+import { GetUrlParams } from "src/core/utils/";
+import STANDARD_KEY from "src/core/standard-key";
+import { SessionStorage } from "src/core/utils/module/web-storage.js";
 
+//获取url参数
+//token键
+const token_key = STANDARD_KEY.get("token");
 
-
-import EnterParamsYazhouH5 from "./class/enter-params-yazhou-h5.js"
-import EnterParamsYazhouPc from "./class/enter-params-yazhou-pc.js"
-
-
-
-
-let  EnterParams=''
-
-
-
-
-
-
-export default EnterParams
-
-
-
-
+// 初始化
+export const enter_params = () => {
+  // 获取 缓存token
+  let token = SessionStorage.get(token_key);
+  // 获取 参数token
+  let url_token = GetUrlParams("token");
+  // 优先使用 参数token
+  if (url_token) {
+    SessionStorage.set(token_key, url_token || token);
+  }
+};

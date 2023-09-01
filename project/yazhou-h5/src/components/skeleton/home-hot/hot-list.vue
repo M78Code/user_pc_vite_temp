@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/components/skeleton/index.vue'
+// import skeleton from 'src/components/skeleton/index.vue'
 
 </script>
 

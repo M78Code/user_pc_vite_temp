@@ -17,7 +17,8 @@ import STANDARD_KEY from "src/core/standard-key";
 
 const { API_PREFIX = {} } = window.BUILDIN_CONFIG;
 const { API_PREFIX_WBSOCKET } = API_PREFIX;
-const token_key = STANDARD_KEY.get("token"); //token键
+//token键
+const token_key = STANDARD_KEY.get("token"); 
 
 /**
  * 页面隐藏时间 纪录

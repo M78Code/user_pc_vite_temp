@@ -101,11 +101,11 @@ const WebStorage = class WebStorage {
     this.storage.clear();
   }
 };
- 
+
 /**
  * localStorage
  */
-export const LocalStorage =  new WebStorage({
+export const LocalStorage = new WebStorage({
   storage: localStorage,
   prefixKey: "__",
 });
@@ -116,6 +116,3 @@ export const SessionStorage = new WebStorage({
   storage: sessionStorage,
   prefixKey: "__",
 });
-
- 
- 

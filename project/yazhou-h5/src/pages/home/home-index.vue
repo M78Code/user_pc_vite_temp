@@ -21,15 +21,16 @@
 
     </div>
 
-    <!-- 顶部切换 下边的内容组件 -->
-    <!-- <component :is='currentContent' @hook:mounted="get_hot_tab_item_handle"></component> -->
+    <!-- 顶部切换 下边的内容组件  @hook:mounted="get_hot_tab_item_handle" -->
+    <component is='hot'></component>
   </div>
 </template>
 
 <script>
 import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
-// import hot from "project_path/src/pages/home/hot/index.vue";    // 热门页入口主页面
+// import hot from "src/pages/home/hot/index.vue";    // 热门页入口主页面
+import hot from "./hot/index.vue";    // 热门页入口主页面
 // import live_video from "project_path/src/pages/home/live-video/index.vue";
 import { loadLanguageAsync } from "src/boot/i18n.js";
 // import router_mixins from "project_path/src/mixins/router-mixins.js";
@@ -42,8 +43,12 @@ import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js"
 
+
+
 console.error(store.getState());
 const { homeReducer } = store.getState()
+
+const lang_timer = null
 export default defineComponent({
   beforeRouteEnter (to,from,next) {
     // 在渲染该组件的对应路由被 confirm 前调用，也就是进入新的组件时不能获取组件实例 `this`，因为当守卫执行前，组件实例还没被创建
@@ -255,12 +260,14 @@ export default defineComponent({
      */
      const tab_click = (tab, need_animation,hand) => {
       if(tab.index == tabIndex.value  || utils.is_time_limit(800)) {
+        console.error('ssss',tab)
         // 切换多语言需处理选中效果 样式
         if(tab.index == 0){
           calc_tab_select(tab)
         }
         return
       }
+
       // set_collapse_map_match({});
       // need_animation 是否需要下划线的动画
       add_animation.value = !!need_animation
