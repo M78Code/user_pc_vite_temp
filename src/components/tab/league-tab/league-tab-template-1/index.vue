@@ -123,8 +123,6 @@ const right_btn_show = computed(() => {
 })
 
 onMounted(() => {
-  // 给 tabs 加上防抖
-  tabs_hover = this.debounce(tabs_hover,100)
   nextTick(()=>{
     init()
   })
@@ -276,7 +274,7 @@ const tabs_leave = (index) =>{
  * @param {string} type  类型 in 移入  out 移出
  * @return {undefined} undefined
  */
-const tabs_hover = (index, type) => {
+const tabs_hover = debounce((index, type) => {
   // 顶部导航栏的任务中心不展示下划线
   let _index;
   let last_tabitem = this.list[index];
@@ -308,7 +306,7 @@ const tabs_hover = (index, type) => {
     left.value = left.value + (width.value - this.line_width) / 2
     width.value = this.line_width
   }
-}
+})
 
 const init = () => {
   if(this.init_timer){
