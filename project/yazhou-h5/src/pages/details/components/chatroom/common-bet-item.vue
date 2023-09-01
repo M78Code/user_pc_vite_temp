@@ -148,7 +148,7 @@ export default defineComponent({
   },
   components: {},
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       utils,
       is_win: false,   //这一单是否赢钱了
       class_foter: '',//订单状态的颜色类名

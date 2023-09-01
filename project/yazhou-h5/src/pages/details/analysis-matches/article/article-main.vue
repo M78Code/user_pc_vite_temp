@@ -45,21 +45,21 @@ import lodash from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
   // 弹框是否显示
-  const is_show_dialog = ref(false)
+  let is_show_dialog = ref(false)
   // 详情页文章标签下的文章详情
-  const article_detail = ref({})
+  let article_detail = ref({})
   // 详情页弹框里面的文章详情
-  const article_detail2 = ref({})
+  let article_detail2 = ref({})
   // 猜你喜欢
-  const favorite_article_data = ref([])
+  let favorite_article_data = ref([])
   // 记录点击过的赛事id
-  const matchids = ref([])
+  let matchids = ref([])
   // 内容加载中？
-  const is_loading = ref(true)
+  let is_loading = ref(true)
   // 进入文章页面时间
-  const enter_article_time = ref(0)
-  const route = useRoute()
-  const top = ref('58%')
+  let enter_article_time = ref(0)
+  let route = useRoute()
+  let top = ref('58%')
 
 
   onMounted(() => {

@@ -48,31 +48,31 @@ import { i18n_t } from "src/boot/i18n.js";
   // },
   // 国际化
 
-  const tab_index = ref(-1)
-  const radio_button_index = ref(0)
-  const isoptions = ref(false)
-  const progress_bar = ref(false)
-  const tab_radio_button = ref([
+  let tab_index = ref(-1)
+  let radio_button_index = ref(0)
+  let isoptions = ref(false)
+  let progress_bar = ref(false)
+  let tab_radio_button = ref([
     {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
     {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
     {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
   ])
-  const records_list = ref([
+  let records_list = ref([
     {success: 0, name: i18n_t('analysis_football_matches.victory')},
     {flat: 0, name: i18n_t('analysis_football_matches.flat')},
     {lose: 0, name: i18n_t('analysis_football_matches.negative')},
   ])
-  const if_the_selected = ref([false, false])
-  const tab_check_box = ref([
+  let if_the_selected = ref([false, false])
+  let tab_check_box = ref([
     i18n_t('analysis_football_matches.same_game'),
     i18n_t('analysis_football_matches.same_host_guest')
   ])
-  const flag = ref(0)
-  const cps = ref(5)
+  let flag = ref(0)
+  let cps = ref(5)
   // 数据集合
-  const historical_engagement_data = ref([])
+  let historical_engagement_data = ref([])
   // 无数据
-  const no_data = ref(false)
+  let no_data = ref(false)
   // 路由
   const route = useRoute()
 

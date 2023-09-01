@@ -74,25 +74,25 @@ import { t } from "src/boot/i18n.js";;
   //   "no-data": no_data,
   //   "team-img": team_img,
   // },
-  const tab_index = ref(-1)
-  const radio_button_index = ref(0)
-  const progress_bar = ref(false)
-  const tab_radio_button = ref([
+  let tab_index = ref(-1)
+  let radio_button_index = ref(0)
+  let progress_bar = ref(false)
+  let tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
     {name: `${t('analysis_football_matches.near')}5`, index: 5},
     {name: `${t('analysis_football_matches.near')}10`, index: 10},
     {name: `${t('analysis_football_matches.near')}15`, index: 15},
   ])
-  const if_the_selected = ref([false, false])
-  const tab_check_box = ref([
+  let if_the_selected = ref([false, false])
+  let tab_check_box = ref([
     // TODO: 国际化 后续修改调整
     t('analysis_football_matches.same_game'),
     t('analysis_football_matches.same_host_guest')
   ])
-  const flag = ref(0)
-  const cps = ref(5)
-  const recent_record_data = ref([])
-  const no_data = ref(false)
+  let flag = ref(0)
+  let cps = ref(5)
+  let recent_record_data = ref([])
+  let no_data = ref(false)
   const route = useRoute()
 
   get_list()

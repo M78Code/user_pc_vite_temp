@@ -13,7 +13,7 @@ const router = useRouter();
 const route = useRoute();
   // console.log("Store", store)
   // const state = store.getState()
-  const data = reactive({
+  let data = reactive({
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']

@@ -100,7 +100,7 @@ let { cathecticReducer, userInfoReducer } = store.getState()
 let store_cathectic = cathecticReducer
 
 // 锚点
-const myScroll = ref(null)
+let myScroll = ref(null)
 //是否加载中
 let is_loading = ref(true)
 //列表数据集合

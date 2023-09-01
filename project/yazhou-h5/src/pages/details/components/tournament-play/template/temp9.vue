@@ -36,7 +36,7 @@ export default defineComponent({
     item_data:Object
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       // 冠军投注项集合
       champion_list:[],
       // 赔率切换数据

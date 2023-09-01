@@ -32,7 +32,7 @@ export default defineComponent({
   },
   components: {},
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       value: 0,
       pwidth:0,//公告文本的宽度
     });

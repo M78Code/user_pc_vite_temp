@@ -44,46 +44,46 @@ import {utils } from 'src/core/index.js'
 import { ref, onMounted } from "vue";
 
 // TODO: 临时
-const get_detail_data = ref({
+let get_detail_data = ref({
   csid: 1
 })
-const get_is_hengping = ref(true)
-const get_analyze_show = ref(false)
+let get_is_hengping = ref(true)
+let get_analyze_show = ref(false)
 
   // 图片
-  const yellow_img = ref("image/bw3/svg/match-results/yellow.svg")
-  const red_img = ref("image/bw3/svg/match-results/red.svg")
-  const corner_img = ref("image/bw3/svg/match-results/corner.svg")
-  const Whistle_img = ref("image/bw3/svg/match-results/Whistle.svg")
-  const time_out_img = ref("image/bw3/svg/match-results/time_out.svg")
+  let yellow_img = ref("image/bw3/svg/match-results/yellow.svg")
+  let red_img = ref("image/bw3/svg/match-results/red.svg")
+  let corner_img = ref("image/bw3/svg/match-results/corner.svg")
+  let Whistle_img = ref("image/bw3/svg/match-results/Whistle.svg")
+  let time_out_img = ref("image/bw3/svg/match-results/time_out.svg")
   // 锚点
-  const analysis_detail = ref(null)
+  let analysis_detail = ref(null)
   // 国际化
 
   //    S104 进攻, S8 危险进攻, S105 球权/控球率
-  const football_ring_statistics = ref([
+  let football_ring_statistics = ref([
       // {score_type:'S104', text: t('match_result.attack'), home: 0, away: 0, proportion: 50},
       {score_type:'S8', text: t('match_result.dangerous_offense'), home: 0, away: 0, proportion: 0},
       {score_type:'S105', text: t('match_result.ball_possession'), home: 0, away: 0, proportion: 0}
     ])
     //    S1088 三分命中率, S1235 投篮命中率, S111 罚球命中率
-  const basketball_ring_statistics = ref([
+  let basketball_ring_statistics = ref([
     {score_type:'S1088', text: t('match_result.three_point_shooting'), home: 0, away: 0, proportion: 0},
     {score_type:'S1235', text: t('match_result.Field_goal_percentage'), home: 0, away: 0, proportion: 0},
     {score_type:'S111', text: t('match_result.Free_throw_percentage'), home: 0, away: 0, proportion: 0}
   ])
     //    S104 进攻, S8 危险进攻
-  const football_card_corner_list = ref([
+  let football_card_corner_list = ref([
     {score_type:'S12', text: t('match_result.yellow_card'), home: 0, away: 0, img: yellow_img},
     {score_type:'S11', text: t('match_result.red_card'), home: 0, away: 0, img: red_img},
     {score_type:'S5', text: t('match_result.corner_kick'), home: 0, away: 0, img: corner_img}
   ])
     //    S106 犯规数, S11 剩余暂停
-  const basketball_card_corner_list = ref([
+  let basketball_card_corner_list = ref([
     {score_type:'S106', text: t('match_result.Fouls'), home: 0, away: 0, img: Whistle_img},
     {score_type:'S109', text: t('match_result.Remaining_pause'), home: 0, away: 0, img: time_out_img},
   ])
-  const football_progress_graph = ref( [
+  let football_progress_graph = ref( [
     //    S104 进攻
     {score_type:'S104', text: t('match_result.attack'), home: 0, away: 0, proportion: 0 },
     //    S1101 射门        S12 黄牌比分
@@ -93,7 +93,7 @@ const get_analyze_show = ref(false)
     //    S17   射偏        S5	角球比分
     {score_type:'S17', text: t('match_result.shot_off'), home: 0, away: 0, proportion: 0 }
   ])
-  const basketball_progress_graph = ref([
+  let basketball_progress_graph = ref([
     //    S108 三分球得分
     {score_type:'S108', text: t('match_result.Three_pointer'), home: 0, away: 0, proportion: 0 },
     //    S107 两分球得分

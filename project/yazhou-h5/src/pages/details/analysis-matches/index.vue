@@ -10,7 +10,7 @@
     import { ref } from "vue"
     import analysisFootballMatches from "./football-match-analysis/analysis-football-matches.vue"
     // import basketballMatchesAnalysis from "./basketball-match-analysis/basketball-match-analysis.vue"
-        const get_detail_data = ref({
+        let get_detail_data = ref({
         csid: '1'
     })
 

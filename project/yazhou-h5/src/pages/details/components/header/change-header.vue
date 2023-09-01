@@ -48,7 +48,7 @@ export default defineComponent({
     // "match-stage":match_stage
   },
   setup(props, evnet) {
-    const component_data = reactive({
+    let component_data = reactive({
       // 背景图片引入
       URL: base64,
       // 顶部赛事阶段及时间 显示控制

@@ -76,7 +76,7 @@ const props = defineProps({
     }
 })
 // 页面锚点
-const myScroll = ref(null)
+let myScroll = ref(null)
 // 定时器
 let timer_2 = ref(null)
 let timer_1 = ref(null)
@@ -99,7 +99,7 @@ let orderNumberItemList = ref([])
 //已失效按钮选装状态，默认不选中
 let selected_expired = ref(false)
 // 强制更新DOM
-const instance = getCurrentInstance()
+let instance = getCurrentInstance()
 
 //获取预约订单状态
 const change_pre_status = (orderList) => {

@@ -17,8 +17,8 @@
 
 <script setup>
 import { ref } from "vue"
-  const tab_index = ref(0)
-  const props =defineProps({
+  let tab_index = ref(0)
+  let props =defineProps({
     tabs: {
       type: Array,
       default: () => ([])

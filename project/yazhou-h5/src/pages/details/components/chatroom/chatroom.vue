@@ -81,7 +81,7 @@ export default defineComponent({
 
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       isBlockMsg: false,  //是否屏蔽聊天消息
       list_height: null,  // 聊天室列表高度
       chatroomWs: null,

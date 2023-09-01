@@ -179,7 +179,7 @@ export default defineComponent({
     // "counting-down": counting_down,
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       timer1_: null,
       timerInterval: null,
       emitters: [],
