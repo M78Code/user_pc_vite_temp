@@ -214,9 +214,9 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
-// 引入redux 
+// 引入redux
 import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import odds_new from "project_path/src/pages/details/components/tournament_play/unit/odds_new.vue";
@@ -225,19 +225,19 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 export default defineComponent({
   name: "temp13",
   props:{},
-  // #TODO mixins 
+  // #TODO mixins
   // mixins:[odd_convert],
   components: {
     "odds-new": odds_new
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       utils,
       // 滑动left
       left: 0
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     // ...mapGetters(["get_bet_list", "get_detail_data", 'get_is_hengping']),
     const get_bet_list = computed(() => {
@@ -375,7 +375,7 @@ export default defineComponent({
       $emit("bet_click_", { ol_item });
     };
     onMounted(() => {
-      // 原created 
+      // 原created
       touch_pan = debounce(touch_pan, 50)
     })
     onUnmounted(() => {

@@ -108,8 +108,8 @@ import { onUnmounted, ref, watch } from "vue";
       type: Array
     }
   })
-  const statistics_table = ref([])
-  const timer1_ = ref(null)
+  let statistics_table = ref([])
+  let timer1_ = ref(null)
 
   // watch: {
   //   'get_detail_data':{
@@ -134,13 +134,13 @@ import { onUnmounted, ref, watch } from "vue";
     let cloneData = lodash.cloneDeep(get_detail_data);
     if(cloneData && cloneData.msc){
       transform_score(cloneData)
-      statistics_table = cloneData
+      statistics_table.value = cloneData
       // 环形比分图形表
-      score_processing(ring_statistics, statistics_table.msc)
+      score_processing(ring_statistics, statistics_table.value.msc)
       // 黄牌 红牌 角球
-      score_processing(card_corner_list, statistics_table.msc)
+      score_processing(card_corner_list, statistics_table.value.msc)
       // 进度条比分图形表
-      score_processing(progress_graph, statistics_table.msc)
+      score_processing(progress_graph, statistics_table.value.msc)
     }
   }
   // msc 比分处理成 图形界面数据格式

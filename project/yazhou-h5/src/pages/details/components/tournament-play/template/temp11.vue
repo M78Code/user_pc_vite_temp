@@ -45,7 +45,7 @@ export default defineComponent({
   // mixins:[odd_convert],
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       // 五列居中数据
       odds_list:[],
       // hsw切换赔率的值

@@ -220,7 +220,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins: [betting],
   setup(props, evnet) {
-    const component_data = reactive({
+    let component_data = reactive({
       emitters: [],
       wsl_flag:sessionStorage.getItem('wsl') == 9999,
       // 玩法集合

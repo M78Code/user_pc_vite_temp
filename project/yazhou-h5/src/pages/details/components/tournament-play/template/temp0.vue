@@ -208,7 +208,7 @@ export default defineComponent({
   props: ["item_data", "title"],
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       utils,
       // 最大显示行数
       show_more_max:5,

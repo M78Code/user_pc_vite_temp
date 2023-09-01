@@ -74,25 +74,25 @@ import { t } from "src/boot/i18n.js";;
   //   "no-data": no_data,
   //   "team-img": team_img,
   // },
-  const tab_index = ref(-1)
-  const radio_button_index = ref(0)
-  const progress_bar = ref(false)
-  const tab_radio_button = ref([
+  let tab_index = ref(-1)
+  let radio_button_index = ref(0)
+  let progress_bar = ref(false)
+  let tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
     {name: `${t('analysis_football_matches.near')}5`, index: 5},
     {name: `${t('analysis_football_matches.near')}10`, index: 10},
     {name: `${t('analysis_football_matches.near')}15`, index: 15},
   ])
-  const if_the_selected = ref([false, false])
-  const tab_check_box = ref([
+  let if_the_selected = ref([false, false])
+  let tab_check_box = ref([
     // TODO: 国际化 后续修改调整
     t('analysis_football_matches.same_game'),
     t('analysis_football_matches.same_host_guest')
   ])
-  const flag = ref(0)
-  const cps = ref(5)
-  const recent_record_data = ref([])
-  const no_data = ref(false)
+  let flag = ref(0)
+  let cps = ref(5)
+  let recent_record_data = ref([])
+  let no_data = ref(false)
   const route = useRoute()
 
   get_list()
@@ -104,19 +104,19 @@ import { t } from "src/boot/i18n.js";;
   })
   // 复选框 点击事件
   const checkBox_click = (index) => {
-      if_the_selected[index] = !if_the_selected[index]
-      for (let i=0; i < if_the_selected.length; i++) {
-        if(if_the_selected[0] && if_the_selected[1]){
-          flag = 3;
+      if_the_selected.value[index] = !if_the_selected.value[index]
+      for (let i=0; i < if_the_selected.value.length; i++) {
+        if(if_the_selected.value[0] && if_the_selected.value[1]){
+          flag.value = 3;
           break
-        }else if(index==0 && if_the_selected[index] || index==1 && if_the_selected[0]){
-          flag = 1;
+        }else if(index==0 && if_the_selected.value[index] || index==1 && if_the_selected.value[0]){
+          flag.value = 1;
           break
-        }else if(index==1 && if_the_selected[index] || index==0 && if_the_selected[1]){
-          flag = 2;
+        }else if(index==1 && if_the_selected.value[index] || index==0 && if_the_selected.value[1]){
+          flag.value = 2;
           break
         }else{
-          flag = 0;
+          flag.value = 0;
         }
       }
       get_list()
@@ -124,8 +124,8 @@ import { t } from "src/boot/i18n.js";;
       $forceUpdate()
     }
   const radioButton = (item, index) => {
-      radio_button_index = index
-      cps = item.index
+      radio_button_index.value = index
+      cps.value = item.index
       get_list()
     }
     // 初始化获得数据
@@ -133,11 +133,11 @@ import { t } from "src/boot/i18n.js";;
     try {
       let parameter = {
         // 1940891  赛事ID
-        mid: match_id,
+        mid: match_id.value,
         // 0 = 默认，1=同联赛, 2= 同主客
-        flag: flag,
+        flag: flag.value,
         // 显示数量： 5场，10场，15场。
-        cps: cps
+        cps: cps.value
       }
       let {code , data} = await api_analysis.get_team_vs_other_team(parameter)
       if(code == 200 && data != null) {
@@ -169,13 +169,13 @@ import { t } from "src/boot/i18n.js";;
           }
         })
         processing_score(grouped_collection)
-        recent_record_data = grouped_collection
-        no_data = false
+        recent_record_data.value = grouped_collection
+        no_data.value = false
       } else {
-        no_data = true
+        no_data.value = true
       }
     } catch (error) {
-      no_data = true
+      no_data.value = true
       console.error(error);
     }
   }

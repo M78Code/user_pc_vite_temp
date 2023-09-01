@@ -40,12 +40,15 @@ let ARGV = (env_version || argv_version || TEST_ARGV).trim();
 
 //分割字符串先 第一个项目  版本号 时间戳 环境 1全量/2差量
 const [PROJECT, MERCHANT_CONFIG_VERSION, TIMESTAMP, ENV] = ARGV.split("-");
+
+
 console.log(process);
 
 //获取命令行的 打包环境
-if (ENV_MAP[ENV]) {
-  DEV_TARGET_ENV = ENV_MAP[ENV];
-}
+// if (ENV_MAP[ENV]) {
+//   DEV_TARGET_ENV = ENV_MAP[ENV];
+// }
+
 //数字对应的项目
 const project_map = {
   1: "-", //亚洲版 H5（旧版）
@@ -59,8 +62,8 @@ const [_, PROJECT_NUM] = PROJECT.split("_");
 let PROJECT_NAME = project_map[PROJECT_NUM];
 //本地环境
 
-PROJECT_NAME = "yazhou-pc";
-// PROJECT_NAME = "yazhou-h5";
+// PROJECT_NAME = "yazhou-pc";
+PROJECT_NAME = "yazhou-h5";
 
 // --------------------------------
 // 所有  目标环境标识
@@ -93,3 +96,6 @@ export {
   PROJECT_NAME,
   PROJECT_NUM,
 };
+
+
+

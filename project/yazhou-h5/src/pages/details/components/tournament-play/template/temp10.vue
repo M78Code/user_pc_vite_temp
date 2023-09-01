@@ -53,7 +53,7 @@ export default defineComponent({
     const get_curr_sub_menu_type = computed(() => {
       return ""
     });
-    const data = reactive({
+    let data = reactive({
       odds_list: [],
       // hsw切换赔率的值
       hsw_single: ''

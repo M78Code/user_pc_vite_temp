@@ -110,7 +110,7 @@
       </div>
     </template>
 
-    <no-data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no-data>
+    <!-- <no-data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no-data> -->
   </div>
 </template>
 
@@ -153,10 +153,10 @@ const props = defineProps({
     }
 })
 
-const default_index = ref(0)
-const default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
+let default_index = ref(0)
+let default_url =  ref("image/bw3/png/home_page/Avatar.png") //默认图片地址
 // 无联赛logo图标黑色版
-const none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
+let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
 
 
 
@@ -170,7 +170,7 @@ const none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
      */
     const league_icon_error = ($event) => {
       if(UserCtr.theme.includes('theme02')){
-        $event.target.src = none_league_icon_black;
+        $event.target.src = none_league_icon_black.value;
       } else {
         $event.target.src = default_url.value;
       }

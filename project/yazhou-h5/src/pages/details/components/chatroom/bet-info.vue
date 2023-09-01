@@ -95,7 +95,7 @@ export default defineComponent({
     }
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       outcome2: {
         // #TODO $root
         // "2": t("bet_record.bet_no_status02"), //'走水',

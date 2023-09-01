@@ -1,83 +1,67 @@
-
-
-
-
- const  BUILDIN_CONFIG =  window.BUILDIN_CONFIG;
-
+const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
 // import {PROJECT_NAME} from "../../dev-target-env.js"
-const PROJECT_NAME= BUILDIN_CONFIG.TARGET_PROJECT_NAME
-
+const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME;
 
 //通用
 
 import lodash from "lodash";
 // import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 
-
-
 // import { useRouter, useRoute } from 'vue-router';
 // const router = useRouter();
 // const route = useRoute();
 
- 
-
-export  * from "src/core/format/index.js";
-export  * from "src/core/constant/index.js";
-export  * from "src/core/utils/index.js";
- 
+export * from "src/core/format/index.js";
+export * from "src/core/constant/index.js";
+export * from "src/core/utils/index.js";
+export * from "src/core/enter-params/index.js";
 
 // ==============================   间接转出     项目无差异的        ======================================
-import { i18n, loadLanguageAsync, map_lang ,t,i18n_t } from  "src/boot/i18n.js";
- 
-import { useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES  } from "src/core/mitt/index.js";
+import { i18n, loadLanguageAsync, map_lang, t, i18n_t } from "src/boot/i18n.js";
+
+import {
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/mitt/index.js";
 import uid from "src/core/uuid/index.js";
-import VrSportCtr from  "src/core/vr-sport/index.js";
-import UserCtr from  "src/core/user-config/user-ctr.js";
-import MatchDetailCtr from  "src/core/match-detail/match-detail-class.js";
-import { http, axios_loop, infoUpload, zhuge, AllDomain } from "src/core/http/index.js"
+import VrSportCtr from "src/core/vr-sport/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import MatchDetailCtr from "src/core/match-detail/match-detail-class.js";
+import {
+  http,
+  axios_loop,
+  infoUpload,
+  zhuge,
+  AllDomain,
+} from "src/core/http/index.js";
 
-import PageSourceData  from  "src/core/page-source/page-source.js";
-
+import PageSourceData from "src/core/page-source/page-source.js";
 
 // ==============================  间接转出     默认输出   项目有差异的    ======================================
 
 // pc
 
-import MenuData_PC from  "src/core/menu-pc/menu-data-class.js";
-import MatchListCard_PC from  "src/core/match-list-h5/match-card/match-list-card-class.js";
+import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
+import MatchListCard_PC from "src/core/match-list-h5/match-card/match-list-card-class.js";
 import MatchListCardData_PC from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
- 
-
-
-
 
 // h5
 
-import MenuData_H5 from  "src/core/menu-h5/menu-data-class.js";
-import MatchListCard_H5 from  "src/core/match-list-pc/match-card/match-list-card-class.js";
+import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
+import MatchListCard_H5 from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import MatchListCardData_H5 from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
-
-
-const IS_PC = PROJECT_NAME.includes('pc')
-const MenuData = IS_PC? MenuData_PC:MenuData_H5
-const MatchListCard = IS_PC? MatchListCard_PC:MatchListCard_H5
-const MatchListCardData = IS_PC? MatchListCardData_PC:MatchListCardData_H5
- 
-
-
-
-
-
-
-
+const IS_PC = PROJECT_NAME.includes("pc");
+const MenuData = IS_PC ? MenuData_PC : MenuData_H5;
+const MatchListCard = IS_PC ? MatchListCard_PC : MatchListCard_H5;
+const MatchListCardData = IS_PC ? MatchListCardData_PC : MatchListCardData_H5;
 
 //=================================     数据仓库=================================
 
-import  MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
-
-
+import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
 
 /**
  * 1. 数据仓库会存在多个实例 ，
@@ -106,8 +90,6 @@ import  MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
 // 或者  推荐
 // import {MatchDataWarehouse_PC_List_Common  } from "src/core/data-warehouse/index.js"
 
-
-
 /**
  *
  * PC 的电竞列表 ，虚拟体育的 足蓝 ，以及其他虚拟体育 的 列表 和 详情 在开发过程中确认  备注清楚
@@ -119,30 +101,21 @@ import  MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js"
  *
  */
 
-
-
-
 /**
  * PC  数据仓库 常规赛事   通用列表
  */
 
-const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDataWarehouse_PC_List_Common"})
+const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_PC_List_Common",
+});
 
 /**
  * PC  数据仓库  常规赛事  通用详情
  */
 
- const   MatchDataWarehouse_PC_Detail_Common =new MatchDataBase({name_code:"MatchDataWarehouse_PC_Detail_Common"})
-
-
-
-
-
-
-
-
-
-
+const MatchDataWarehouse_PC_Detail_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_PC_Detail_Common",
+});
 
 //============================================ H5 ,PC 分割线  ====================================================
 
@@ -157,51 +130,51 @@ const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDa
  * 甚至是 H5 的猜你喜欢 轮播区域也一样
  */
 
-
-
-
-
-
 /**
  * H5  数据仓库 常规赛事   通用列表
  */
 
- const   MatchDataWarehouse_H5_List_Common =new MatchDataBase({name_code:"MatchDataWarehouse_H5_List_Common"})
+const MatchDataWarehouse_H5_List_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_H5_List_Common",
+});
 
 /**
  * H5  数据仓库  常规赛事  通用详情
  */
 
- const   MatchDataWarehouse_H5_Detail_Common =new MatchDataBase({name_code:"MatchDataWarehouse_H5_Detail_Common"})
-
+const MatchDataWarehouse_H5_Detail_Common = new MatchDataBase({
+  name_code: "MatchDataWarehouse_H5_Detail_Common",
+});
 
 /**
  * H5  数据仓库 热门页面的    竞足 和其他热门联赛 不含精选赛事 /如果竞足需要拆分就拆分出去 ，应该不需要
  */
 
- const   MatchDataWarehouse_H5_List_Hot_Main =new MatchDataBase({name_code:"MatchDataWarehouse_H5_List_Hot_Main"})
+const MatchDataWarehouse_H5_List_Hot_Main = new MatchDataBase({
+  name_code: "MatchDataWarehouse_H5_List_Hot_Main",
+});
 
 /**
  * H5  数据仓库 热门页面 和 所有常规赛事页面显示 的 精选赛事   ，不含 详情页的精选推荐  , 这个会跨页 因此不推荐销毁
  */
 
- const   MatchDataWarehouse_H5_List_Jingxuan =new MatchDataBase({name_code:"MatchDataWarehouse_H5_List_Jingxuan"})
-
+const MatchDataWarehouse_H5_List_Jingxuan = new MatchDataBase({
+  name_code: "MatchDataWarehouse_H5_List_Jingxuan",
+});
 
 /**
  * H5  数据仓库   详情页的精选推荐 ，比如赛果页面 的精选推荐 ，或者详情页 没赔率显示的 依据当前赛事计算的精选推荐
  */
 
- const   MatchDataWarehouse_H5_Detail_Jingxuan =new MatchDataBase({name_code:"MatchDataWarehouse_H5_Detail_Jingxuan"})
-
+const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
+  name_code: "MatchDataWarehouse_H5_Detail_Jingxuan",
+});
 
 /**
  * PC  布局
  */
 
- import LayOutMain_pc from  "src/core/layout/index.js";
-
-
+import LayOutMain_pc from "src/core/layout/index.js";
 
 /**
  *
@@ -212,38 +185,39 @@ const   MatchDataWarehouse_PC_List_Common =new MatchDataBase({name_code:"MatchDa
  *
  */
 
-
-
-
 export {
-    //
-    http, axios_loop, infoUpload, zhuge, AllDomain ,
-    // 国际化相关
-    i18n, loadLanguageAsync, map_lang,t,i18n_t,
-    // emit相关
-    useMittOn, useMittEmit, useMittEmitterGenerator,MITT_TYPES,
-    uid,
-    VrSportCtr,
-    MatchDetailCtr,
-    UserCtr,
-    IS_PC,
-    MenuData,
-    MatchListCard,
-    MatchListCardData,
-    PageSourceData,
-    MatchDataWarehouse_PC_List_Common,
-    MatchDataWarehouse_PC_Detail_Common,
-    MatchDataWarehouse_H5_List_Common,
-    MatchDataWarehouse_H5_Detail_Common,
-    MatchDataWarehouse_H5_List_Hot_Main,
-    MatchDataWarehouse_H5_List_Jingxuan,
-    MatchDataWarehouse_H5_Detail_Jingxuan,
-    LayOutMain_pc,
-}
-
-
-
-
-
-
-
+  //
+  http,
+  axios_loop,
+  infoUpload,
+  zhuge,
+  AllDomain,
+  // 国际化相关
+  i18n,
+  loadLanguageAsync,
+  map_lang,
+  t,
+  i18n_t,
+  // emit相关
+  useMittOn,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+  uid,
+  VrSportCtr,
+  MatchDetailCtr,
+  UserCtr,
+  IS_PC,
+  MenuData,
+  MatchListCard,
+  MatchListCardData,
+  PageSourceData,
+  MatchDataWarehouse_PC_List_Common,
+  MatchDataWarehouse_PC_Detail_Common,
+  MatchDataWarehouse_H5_List_Common,
+  MatchDataWarehouse_H5_Detail_Common,
+  MatchDataWarehouse_H5_List_Hot_Main,
+  MatchDataWarehouse_H5_List_Jingxuan,
+  MatchDataWarehouse_H5_Detail_Jingxuan,
+  LayOutMain_pc,
+};

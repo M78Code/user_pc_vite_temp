@@ -298,7 +298,7 @@ export default defineComponent({
   },
   setup(props, evnet) {
     const store_state = store.getState()
-    const data = reactive({
+    let data = reactive({
       show_more:true,
     })
     // #TODO vuex

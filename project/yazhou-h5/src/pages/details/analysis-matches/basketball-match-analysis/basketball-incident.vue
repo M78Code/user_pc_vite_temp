@@ -40,17 +40,17 @@ import { t } from "src/boot/i18n.js";;
 // import {mapGetters} from "vuex";
   // name: "basketball_incident",
 
-  const event_data = ref([
+  let event_data = ref([
         {key: '第一节'},
         {key: '第二节'},
         {key: '第三节'},
         {key: '第四节'},
         {key: '++赛'},
       ])
-  const tab_index = ref(0)
-  const no_data = ref(false)
+  let tab_index = ref(0)
+  let no_data = ref(false)
   // 路由
-  const route = useRoute()
+  let route = useRoute()
 
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
   useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
@@ -63,20 +63,20 @@ import { t } from "src/boot/i18n.js";;
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
   // },
   const change_tab = (i) => {
-    tab_index = i
+    tab_index.value = i
   }
   const get_list = async () => {
     try {
       let {code , data} = await api_analysis.get_live_event({mid: match_id})
       if(code == 200 && data.length > 0) {
 
-        event_data = data
-        no_data = true
+        event_data.value = data
+        no_data.value = true
       } else {
-        this.no_data = false
+        no_data.value = false
       }
     } catch (error) {
-      no_data = false
+      no_data.value = false
       console.error(error);
     }
   }

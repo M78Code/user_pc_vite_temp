@@ -20,7 +20,7 @@ import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineCompon
 export default defineComponent({
   name: 'emoji_selector',
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       emojiList: [],
     });
     onMounted(() => {
@@ -33,7 +33,7 @@ export default defineComponent({
       emojiList = tempEmojiList;
     })
     const onEmojiSelect = (emoji) => {
-      // #TODO emit 
+      // #TODO emit
       // $emit('emoji_select', emoji);
     }
     return {

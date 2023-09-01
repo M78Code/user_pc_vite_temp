@@ -48,31 +48,31 @@ import { i18n_t } from "src/boot/i18n.js";
   // },
   // 国际化
 
-  const tab_index = ref(-1)
-  const radio_button_index = ref(0)
-  const isoptions = ref(false)
-  const progress_bar = ref(false)
-  const tab_radio_button = ref([
+  let tab_index = ref(-1)
+  let radio_button_index = ref(0)
+  let isoptions = ref(false)
+  let progress_bar = ref(false)
+  let tab_radio_button = ref([
     {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
     {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
     {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
   ])
-  const records_list = ref([
+  let records_list = ref([
     {success: 0, name: i18n_t('analysis_football_matches.victory')},
     {flat: 0, name: i18n_t('analysis_football_matches.flat')},
     {lose: 0, name: i18n_t('analysis_football_matches.negative')},
   ])
-  const if_the_selected = ref([false, false])
-  const tab_check_box = ref([
+  let if_the_selected = ref([false, false])
+  let tab_check_box = ref([
     i18n_t('analysis_football_matches.same_game'),
     i18n_t('analysis_football_matches.same_host_guest')
   ])
-  const flag = ref(0)
-  const cps = ref(5)
+  let flag = ref(0)
+  let cps = ref(5)
   // 数据集合
-  const historical_engagement_data = ref([])
+  let historical_engagement_data = ref([])
   // 无数据
-  const no_data = ref(false)
+  let no_data = ref(false)
   // 路由
   const route = useRoute()
 
@@ -95,13 +95,13 @@ import { i18n_t } from "src/boot/i18n.js";
         //  1940891  赛事ID match_id
         mid: route.params.mid || get_detail_data.mid,
         // 0 = 默认，1=同联赛, 2= 同主客
-        flag: flag,
+        flag: flag.value,
         // 显示数量： 5场，10场，15场。
-        cps: cps
+        cps: cps.value
       }
       let {code , data} = await api_analysis.get_team_vs_history(parameter)
       if(code == 200 && data ) {
-        records_list = [
+        records_list.value = [
           // TODO: 国际化修改后调整
           {success: 0, name: i18n_t('analysis_football_matches.victory')},
           {flat: 0, name: i18n_t('analysis_football_matches.flat')},
@@ -109,14 +109,14 @@ import { i18n_t } from "src/boot/i18n.js";
         ]
         data.forEach( (item) => {
           if(item.result == 4){
-            records_list[0].success = ++records_list[0].success
+            records_list.value[0].success = ++records_list.value[0].success
           }else if(item.result == 3){
-            records_list[2].lose = ++records_list[2].lose
+            records_list.value[2].lose = ++records_list.value[2].lose
           }else{
-            records_list[1].flat = ++records_list[1].flat
+            records_list.value[1].flat = ++records_list.value[1].flat
           }
         })
-        historical_engagement_data = data
+        historical_engagement_data.value = data
         no_data.value = false
       } else {
         no_data.value = true
@@ -128,19 +128,19 @@ import { i18n_t } from "src/boot/i18n.js";
   }
   // 复选框 点击事件
   const checkBox_click = (index) => {
-    if_the_selected[index] = !if_the_selected[index]
-    for (let i=0; i < if_the_selected.length; i++) {
-      if(if_the_selected[0] && if_the_selected[1]){
-        flag = 3;
+    if_the_selected.value[index] = !if_the_selected.value[index]
+    for (let i=0; i < if_the_selected.value.length; i++) {
+      if(if_the_selected.value[0] && if_the_selected.value[1]){
+        flag.value = 3;
         break
-      }else if(index==0 && if_the_selected[index] || index==1 && if_the_selected[0]){
-        flag = 1;
+      }else if(index==0 && if_the_selected.value[index] || index==1 && if_the_selected.value[0]){
+        flag.value = 1;
         break
-      }else if(index==1 && if_the_selected[index] || index==0 && if_the_selected[1]){
-        flag = 2;
+      }else if(index==1 && if_the_selected.value[index] || index==0 && if_the_selected.value[1]){
+        flag.value = 2;
         break
       }else{
-        flag = 0;
+        flag.value = 0;
       }
     }
     // TODO:  后续修改调整
@@ -148,8 +148,8 @@ import { i18n_t } from "src/boot/i18n.js";
     get_list()
   }
   const radio_button = (item, index) => {
-    radio_button_index = index
-    cps = item.index
+    radio_button_index.value = index
+    cps.value = item.index
     get_list()
     // TODO:  后续修改调整
     // $forceUpdate()

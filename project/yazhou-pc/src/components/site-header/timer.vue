@@ -8,26 +8,14 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount, defineComponent, getCurrentInstance, onMounted } from 'vue'
+import { ref, onBeforeUnmount, getCurrentInstance, onMounted } from 'vue'
 import { SessionStorage  } from "src/core/index.js";
 // import menu_stay_time from "/utils/menuClass/menu_stay_time.js"
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 
 /** 时间 */
 const time_str = ref('')
 /** 是否调试 */
 const is_test = ref(SessionStorage.get('wsl'))
-/** 定时器 */
-const upd_time_refresh_timer = ref(null)
-/** 清除定时器 */
-function clear_upd_time_refresh_timer() {
-    if (upd_time_refresh_timer.value) {
-        clearInterval(upd_time_refresh_timer.value)
-        upd_time_refresh_timer.value = null
-    }
-}
-/** 钩子触发 */
-onBeforeUnmount(clear_upd_time_refresh_timer)
 
 /** 定时器2 */
 const timer = ref(null)
@@ -41,13 +29,9 @@ function clear_timer() {
 /** 钩子触发 */
 onBeforeUnmount(clear_timer)
 
-/** 获取mixins */
-const { proxy } = getCurrentInstance()
-
 /** 初始化 */
 function init() {
     // 全局一秒钟定时器
-    upd_time_refresh_timer.value = setInterval(global_one_second_timer, 1000);
     if (is_test.value) {
         timer.value = setInterval(set_time_str, 100);
     }
@@ -59,9 +43,6 @@ onMounted(init)
  * @param {undefined} undefined
 */
 function global_one_second_timer() {
-    /** 广播事件 */
-    useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, { time: new Date().getTime() })
-    // 统计各个菜单停留时间 每秒执行一次
     // TODO: menu_stay_time.js
     // proxy.statistical_stay_time()
 }
@@ -70,7 +51,7 @@ function global_one_second_timer() {
  * @param {undefined} undefined
 */
 function set_time_str() {
-    time_str.value = (new Date()).Format("yyyy-MM-dd hh:mm:ss.S");
+    time_str.value = (new Date()).Format("yyyy-MM-dd hh:mm:ss");
 }
 
 </script>

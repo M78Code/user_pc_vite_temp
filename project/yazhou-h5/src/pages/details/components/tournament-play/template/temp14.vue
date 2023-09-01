@@ -184,7 +184,7 @@
   </div>
 </template>
 <script>
-// #TODO vuex 
+// #TODO vuex
 // import { mapGetters } from "vuex";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
@@ -205,7 +205,7 @@ export default defineComponent({
       // 滑动left
       left: 0
     });
-    // #TODO vuex 
+    // #TODO vuex
     // computed: {
     //   ...mapGetters(["get_bet_list", "get_cur_odd","get_detail_data"])
     // },

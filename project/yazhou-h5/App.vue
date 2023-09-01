@@ -38,12 +38,19 @@ export default {
       init_load: false
     };
   },
-  async created() {
-    this.handle_user_tryPlay()
+  created() {
+
+ 
+
     // 检测目前的系统类型ios,android,h5
     window.platform_type = (this.$q.platform.is.ios?'ios':'') || (this.$q.platform.is.android?'android':'') || 'h5';
   },
   methods:{
+
+    init_all(){
+      
+
+    },
     /**
  * 获取用户信息
  */
@@ -62,6 +69,9 @@ export default {
         await GlobalAccessConfig.init()
         this.init_load = true
     }
+
+
+
   }
 }
 </script>

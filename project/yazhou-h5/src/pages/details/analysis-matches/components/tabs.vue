@@ -17,8 +17,8 @@
 
 <script setup>
 import { ref } from "vue"
-  const tab_index = ref(0)
-  const props =defineProps({
+  let tab_index = ref(0)
+  let props =defineProps({
     tabs: {
       type: Array,
       default: () => ([])
@@ -31,13 +31,13 @@ import { ref } from "vue"
   // TODO: $emit 后续修改调整
   const handle_item_click = (tab, index) => {
       if(!isChange){
-        tab_index = index
+        tab_index.value = index
       }
       $emit('click', {tab, index})
     }
     // TODO: 暂时注释
   const changeTabIndex = (index) => {
-      tab_index = index
+      tab_index.value = index
     }
 </script>
 

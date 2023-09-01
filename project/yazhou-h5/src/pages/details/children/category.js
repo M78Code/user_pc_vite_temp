@@ -27,7 +27,7 @@ export const category_info = () => {
   const router = useRouter();
   const route = useRoute();
   const store_state = store.getState()
-  const component_data = reactive({
+  let component_data = reactive({
     // 测试数据
     match_info_list: [],
     // uid

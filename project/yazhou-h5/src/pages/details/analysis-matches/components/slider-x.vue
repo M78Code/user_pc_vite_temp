@@ -7,7 +7,7 @@
         'active': i === item_index,
         'bg-default': backgroundImage && !item[image_key]
       }"
-      v-for="(item, i) in slider_list" 
+      v-for="(item, i) in slider_list"
       :key="i"
       @click="handle_item_click(item, i)"
       :style="backgroundImage && item[image_key] ? {background: `url(${item[image_key]}) no-repeat center / cover`} : {}"
@@ -31,19 +31,19 @@
     image_key: {
       type: String,
     }
-  }) 
-  const item_index = ref(0)
-  const item_wrapper = ref(null)
+  })
+  let item_index = ref(0)
+  let item_wrapper = ref(null)
   const handle_item_click = (item, index) => {
-    item_index = index
+    item_index.value = index
     // TODO: emit后续修改调整
     $emit('click', {item, index})
   }
   const handle_img_load_error = (e, index) => {
-    item_wrapper[index].classList.add('bg-default')
+    item_wrapper.value[index].classList.add('bg-default')
     e.target.onerror = null
   }
-  
+
 </script>
 
 <style scoped lang="scss">

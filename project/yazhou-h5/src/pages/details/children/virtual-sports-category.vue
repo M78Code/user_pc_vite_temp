@@ -87,7 +87,7 @@ export default defineComponent({
   // #TODO mixins
   // mixins:[betting],
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       // 事件集合
       emitters: [],
       // 加载数据的效果

@@ -31,7 +31,7 @@ export default defineComponent({
     // "match-score": match_score,
   },
   setup(props, evnet) {
-    const data = reactive({
+    let data = reactive({
       get_menu_type: "",
     });
     // #TODO vuex

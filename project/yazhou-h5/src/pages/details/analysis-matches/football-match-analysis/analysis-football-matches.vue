@@ -82,11 +82,11 @@ let {  userInfoReducer } = store.getState()
         currentContent.value = currentCont
       })
     })
-    watch(() => get_event_list, (event_list) => {
+    watch(() => get_event_list.value, (event_list) => {
       // 精彩回放开关开启后，显示精彩回放视图 TODO: 后续调整 UserCtr  get_event_list
       const highlights_component = tabList.value.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
+      if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
         tabList.value.unshift(
             {
               name: t('highlights.title'),
@@ -97,7 +97,7 @@ let {  userInfoReducer } = store.getState()
     })
     onUnmounted(() => {
       // TODO: $data 后续修改调整
-      analysis_football_matches = null
+      analysis_football_matches.value = null
       tabList.value = []
       currentContent.value = 'match-result'
     })
@@ -126,7 +126,7 @@ let {  userInfoReducer } = store.getState()
         },
       ]
       // 红猫tab特殊处理  TODO: get_detail_data  get_lang 后续修改调整
-      if (get_detail_data.cds === '1500') {
+      if (get_detail_data.value.cds === '1500') {
         tabs = [
           {
             name: t('analysis_football_matches.analysis_data'),
@@ -145,7 +145,7 @@ let {  userInfoReducer } = store.getState()
       // 精彩回放开关开启后，显示精彩回放视图 TODO: get_event_list UserCtr 后续修改调整
       const highlights_component = tabs.find(item => item.component === 'highlights')
       const { configValue, eventSwitch } = lodash.get(UserCtr, 'user_info.merchantEventSwitchVO', {})
-      if (configValue == 1 && eventSwitch == 1 && get_event_list.length && !highlights_component) {
+      if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
         tabs.unshift(
             {
               name: t('highlights.title'),

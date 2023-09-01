@@ -16,7 +16,7 @@
 import { t } from "src/boot/i18n.js";
 import { ref } from "vue"
 
-const footer_list = ref([
+let footer_list = ref([
   {text: t('match_result.yellow_card')},
   {text: t('match_result.red_card')},
   {text: t('match_result.corner_kick')},

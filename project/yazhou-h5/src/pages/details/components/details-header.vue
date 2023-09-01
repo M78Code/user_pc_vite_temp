@@ -53,7 +53,7 @@ export default defineComponent({
   setup(props, evnet) {
     const router = useRouter()
     const route = useRoute();
-    const data = reactive({
+    let data = reactive({
       utils,
       // 此处空对象请勿删除;
       URL:detail_csid_config,
