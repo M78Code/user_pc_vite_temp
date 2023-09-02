@@ -43,8 +43,9 @@ import icon from "src/components/icon/icon.vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
 
-import img_search_icon from "app/public/yazhou-pc/image/svg/search-icon.svg";
-import img_search_icon_y0 from "app/public/yazhou-pc/image/svg/y0-search-icon.svg";
+const img_search_icon = '/public/yazhou-pc/image/svg/search-icon.svg'
+const img_search_icon_y0 = '/public/yazhou-pc/image/svg/y0-search-icon.svg'
+
 
 /** 国际化 */
 

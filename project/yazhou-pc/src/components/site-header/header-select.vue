@@ -92,10 +92,10 @@ import { format_money2 } from "src/core/format/index.js"
 // import userCtr from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-import day_left from 'app/public/yazhou-pc/image/svg/day_left.svg'
-import day_right from 'app/public/yazhou-pc/image/svg/day_right.svg'
-import night_left from 'app/public/yazhou-pc/image/svg/night_left.svg'
-import night_right from 'app/public/yazhou-pc/image/svg/night_right.svg'
+const day_left = '/public/yazhou-pc/image/svg/day_left.svg'
+const day_right = '/public/yazhou-pc/image/svg/day_right.svg'
+const night_left = '/public/yazhou-pc/image/svg/night_left.svg'
+const night_right = '/public/yazhou-pc/image/svg/night_right.svg'
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe)

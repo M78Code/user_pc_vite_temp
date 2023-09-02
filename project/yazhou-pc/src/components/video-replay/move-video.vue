@@ -14,7 +14,7 @@
     <div class="col-auto col-delete" @click.stop="close_video">
       <icon size="12px" name="icon-del" class="bet-del" />
     </div>
-    <img class="replay-icon2" src="~public/image/yabo/svg/replay_icon2.svg" />
+    <img class="replay-icon2" src="public/yazhou-pc/image/svg/replay_icon2.svg" />
     <div id="dplayer-video-zone" :style="{ width: width + 'px', height: height + 'px' }" @click.stop="" @mouseover="mouseover"
       @mouseout="mouseout">
       <iframe @load="send_message_xywh" id="dplayer-video-zone-iframe" class="iframe" :width="width" :height="height"

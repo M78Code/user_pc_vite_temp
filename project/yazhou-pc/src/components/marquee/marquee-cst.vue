@@ -113,8 +113,8 @@ const settings_items = [
         id: 1,
         name: i18n_t('common.odds_set'),
         icon: {
-            day: () => import('app/public/yazhou-pc/image/svg/icon-odds.svg'),
-            night: () => import('app/public/yazhou-pc/image/svg/icon-odds-night.svg')
+            day: '/public/yazhou-pc/image/svg/icon-odds.svg',
+            night: '/public/yazhou-pc/image/svg/icon-odds-night.svg'
         },
         value_arr: [
             { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -130,10 +130,8 @@ const settings_items = [
         id: 2,
         name: i18n_t('common.change_lang'),
         icon: {
-            day: () => import('app/public/yazhou-pc/image/svg/icon-lang.svg'),
-            night: () => import('app/public/yazhou-pc/image/svg/icon-lang-night.svg')
-            // day: require('public/image/yabo/svg/icon-lang.svg'),
-            // night: require('public/image/yabo/svg/icon-lang-night.svg'),
+            day: '/public/yazhou-pc/image/svg/icon-lang.svg',
+            night: '/public/yazhou-pc/image/svg/icon-lang-night.svg'
         },
         value_arr: Object.keys(langs),
         type: 'select'
@@ -142,10 +140,8 @@ const settings_items = [
         id: 3,
         name: i18n_t('common.change_skin'),
         icon: {
-            day: () => import('app/public/yazhou-pc/image/svg/icon-skin.svg'),
-            night: () => import('app/public/yazhou-pc/image/svg/icon-skin-night.svg')
-            // day: require('public/image/yabo/svg/icon-skin.svg'),
-            // night: require('public/image/yabo/svg/icon-skin-night.svg'),
+            day: '/public/yazhou-pc/image/svg/icon-skin.svg',
+            night: '/public/yazhou-pc/image/svg/icon-skin-night.svg'
         },
         value_arr: [/*i18n_t('odds.HK'), i18n_t('odds.EU')*/],
         type: 'switch'
@@ -429,34 +425,34 @@ onUnmounted(clear_timer)
 
         .tab-icon-item {
             &-sports_rules {
-                background-image: url("app/yazhou-pc/image/svg/sports_rules.svg");
+                background-image: url("/public/yazhou-pc/image/svg/sports_rules.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("app/yazhou-pc/image/svg/task_center.svg");
+                background-image: url("/public/yazhou-pc/image/svg/task_center.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("app/yazhou-pc/image/svg/settings.svg");
+                background-image: url("/public/yazhou-pc/image/svg/settings.svg");
                 background-size: cover;
             }
         }
 
         .tab-icon-item-y0 {
             &-sports_rules {
-                background-image: url("app/yazhou-pc/image/svg/sports_rules_y0.svg");
+                background-image: url("/public/yazhou-pc/image/svg/sports_rules_y0.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("app/yazhou-pc/image/svg/task_center_y0.svg");
+                background-image: url("/public/yazhou-pc/image/svg/task_center_y0.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("app/yazhou-pc/image/svg/settings_y0.svg");
+                background-image: url("/public/yazhou-pc/image/svg/settings_y0.svg");
                 background-size: cover;
             }
         }
