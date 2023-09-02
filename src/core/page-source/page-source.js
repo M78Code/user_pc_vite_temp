@@ -92,7 +92,7 @@ class PageSourceData {
       { value:2, label:"v2_h5_st", text:"标准版" },
     ]
 
-    return  arr[1]
+    return this.newer_standard_edition || arr[1]
   }
 
 
