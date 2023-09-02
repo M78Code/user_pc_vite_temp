@@ -2,7 +2,7 @@
     <div class="popup-wrap relative-position " :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
-                <span :class="['flag lang-active', UserCtr.lang]"></span><span class="lang-label ellipsis">{{ langs[UserCtr.lang] }}</span>
+                <span :class="['flag lang-active', lang]"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
             </div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -11,7 +11,7 @@
             <div class="triangle"></div>
             <template v-for="(language, index) in language_arr">
                 <div v-if="languageList.includes(language)" :key="index" class="item ellipsis"
-                    :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
+                    :class="[{ active: lang == language }]" @click="on_click_lang(language)">
                     <span :class="['flag', language]"></span>{{ langs[language] }}
                 </div>
             </template>
@@ -32,10 +32,10 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { loadLanguageAsync } from 'src/core/index.js'
 // import userCtr from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-
-
-// import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
-// import { update_bet_item_info as yabo_common_update_bet_item_info } from 'src/core/common-helper/common.js'
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BaseData from "src/core/base-data/base-data.js"
+import { update_bet_item_info } from "src/core/bet/common-helper/module/common.js";
 
 /** 是否展示 */
 const show_popup = ref(false)
@@ -44,9 +44,12 @@ const language_arr = ref(Object.keys(langs_mjs))
 /** 点击数 */
 const hits = ref(0)
 const langs = ref(langs_mjs)
+const lang = ref(UserCtr.lang)
 
+/** stroe仓库 */
+const { globalReducer } = store.getState()
 /** 全局点击事件数 */
-const global_click = ref(0)
+const global_click = ref(globalReducer.global_click)
 watch(
     () => global_click.value,
     () => {
@@ -57,41 +60,9 @@ watch(
         show_popup.value = false;
     }
 )
-
-/** stroe仓库 */
-const { globalReducer, betInfoReducer, langReducer } = store.getState()
-/** 
- * 单关投注 false: 串关投注 default: true
- * 路径: project_path\src\store\module\betInfo.js
- */
-const is_bet_single = ref(true)
-/* 单关投注对象 default: {} */
-const bet_single_obj = ref({})
-/* 押注扁平化对象扁平 default: {} */
-const bet_obj = ref({})
-/* 当前是否为虚拟投注 default: true */
-const is_virtual_bet = ref(true)
-/* 虚拟投注对象 default: {} */
-const virtual_bet_obj = ref({})
-
-/** 设置语言变化 */
-const set_lang_change = (data) => store.dispatch({
-    type: 'SET_LANGUAGE_CHANGING',
-    data
-})
- 
-/** 即将开赛筛选时间 */
-const set_open_select_time = (data) => store.dispatch({
-    type: 'set_open_select_time',
-    data
-})
 const unsubscribe = store.subscribe(() => {
-    global_click.value = globalReducer.global_click
-    // is_bet_single.value = betInfoReducer.is_bet_single
-    // bet_single_obj.value = betInfoReducer.bet_single_obj || {}
-    // bet_obj.value = betInfoReducer.bet_obj || {}
-    // is_virtual_bet.value = betInfoReducer.is_virtual_bet
-    // virtual_bet_obj.value = betInfoReducer.virtual_bet_obj || {}
+    const { globalReducer: new_globalReducer } = store.getState()
+    global_click.value = new_globalReducer.global_click
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
@@ -105,6 +76,11 @@ onUnmounted(() => languageList.value = [])
 const route = useRoute()
 /** 路由实例 */
 const router = useRouter()
+/** 即将开赛筛选时间 */
+const set_open_select_time = (data) => store.dispatch({
+    type: 'set_open_select_time',
+    data
+})
 /**
  * @Description:切换语言
  * @param {string} lang_ 语言
@@ -115,20 +91,27 @@ function on_click_lang(lang_) {
         router.push("/home")
     }
     // 冠军菜单不支持语言切换投注项名称国际化
-    // TODO: $menu
-    // const is_winner = $menu.menu_data.match_tpl_number == 18;
-    const is_winner = false
+    const is_winner = MenuData.get_match_tpl_number() == 18;
     let fun = () => {
-        if (!is_winner && UserCtr.lang != lang_) {
-            set_lang_change(true);
-            /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
-            type:0表示普通赛事(默认值)，1虚拟赛事 */
-            let type = is_virtual_bet.value ? 1 : 0;
-            let ids = [], bet_type = bet_obj.value;
-            if (is_virtual_bet.value) {
-                bet_type = virtual_bet_obj.value
-            } else if (is_bet_single.value) {
-                bet_type = bet_single_obj.value;
+        if (!is_winner && lang.value != lang_) {
+            /**
+             * bet-data-class.js 
+             * is_virtual_bet 当前是否为虚拟投注
+             * bet_obj 押注扁平化对象扁平
+             * virtual_bet_obj 虚拟投注对象
+             * is_bet_single 单关投注
+             * bet_single_obj 单关投注对象
+             */
+            const { is_virtual_bet, bet_obj, virtual_bet_obj, is_bet_single, bet_single_obj } = BetData
+            let type = is_virtual_bet ? 1 : 0;
+            /**
+             * ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...type:0表示普通赛事(默认值)，1虚拟赛事
+             */
+            let ids = [], bet_type = bet_obj;
+            if (is_virtual_bet ) {
+                bet_type = virtual_bet_obj
+            } else if (is_bet_single) {
+                bet_type = bet_single_obj
             }
             for (let obj of Object.values(bet_type)) {
                 let match_id = lodash.get(obj, 'cs.match_id', '');
@@ -143,8 +126,7 @@ function on_click_lang(lang_) {
                 }
             }
             if (!lodash.isEmpty(ids)) {
-                // TODO: $menu
-                if ($menu.menu_data.is_esports) {
+                if (MenuData.is_esports()) {
                     type = 2;
                 }
                 let params = {
@@ -154,15 +136,13 @@ function on_click_lang(lang_) {
                 api_details.get_bet_olds(params).then(res => {
                     let data = lodash.get(res, 'data.data');
                     if (lodash.isArray(data) && data.length > 0) {
-                        if (is_virtual_bet.value) {
-                            // TODO: this
+                        update_bet_item_info(data)
+                        if (is_virtual_bet) {
                             // virtual_common_update_bet_item_info( data);
                         } else {
-                            // TODO: this
                             // yabo_common_update_bet_item_info( data);
                         }
                         useMittEmit(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, {})
-                        set_lang_change(false);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -170,20 +150,19 @@ function on_click_lang(lang_) {
             }
         }
     }
-    if (UserCtr.lang != lang_) {
+    if (lang.value != lang_) {
         api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang_ }).then(res => {
             let code = lodash.get(res, 'data.code');
             if (code == 200) {
                 UserCtr.set_lang(lang_);
-                // TODO: 
-                // window.reset_lang = lang_;
+                lang.value = lang_
                 // 设置即将开赛筛选默认值为全部
                 set_open_select_time(null)
-                // $store.state.filter.open_select_time = null;
                 // 设置国际化语言
                 loadLanguageAsync(lang_).then().finally(() => {
                     fun();
-                    window.reset_lang = '';
+                    UserCtr.set_lang(lang_);
+                    BaseData.init()
                 })
             } else if (code == '0401038') {
                 useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("common.code_empty"))
