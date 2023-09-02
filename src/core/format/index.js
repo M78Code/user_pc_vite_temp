@@ -8,6 +8,7 @@ export * from "./module/format-max-win-money.js";
 export * from "./module/format-match.js";
 export * from "./module/format-api";
 export * from "./module/format-msc";
+export * from "./module/format-odds-conversion-mixin.js";
 
 // export * from "./module/format-odds-conversion-mixin.js";
 
