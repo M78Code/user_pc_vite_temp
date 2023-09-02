@@ -170,7 +170,6 @@ export default {
       
   //   }
   // },
-  // mixins: [match_list_mixin]
 }
 // 赛事列表筛选：滚球-球种、早盘-日期
 // 列表视图滚动容器

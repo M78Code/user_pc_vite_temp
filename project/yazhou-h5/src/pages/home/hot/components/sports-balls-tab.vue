@@ -47,17 +47,17 @@
       </template>
     </div>
     <!-- 没有数据 组件 -->
-    <!-- <no_data v-if="loading_standings_data" which='noMatch' height='500' class="no-list"></no_data> -->
+    <no_data v-if="loading_standings_data" which='noMatch' height='500' class="no-list"></no_data>
   </div>
 </template>
 
 <script setup>
-// import match_main from "src/project/pages/match-list/match_main";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
+import matchMain from "project_path/src/pages/match-list/index.vue";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 import { api_home } from "src/api/index.js";
 import hotList from "project_path/src/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
 import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
 
-// import no_data from "src/components/common/no-data.vue";    // 无网络展示组件
+import no_data from "project_path/src/components/common/no-data.vue";    // 无网络展示组件
 import publicForm from "./public-form.vue";    // 首页热门足球和 篮球的 公共榜单表格
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';

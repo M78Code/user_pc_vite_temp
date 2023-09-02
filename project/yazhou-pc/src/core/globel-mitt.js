@@ -21,7 +21,7 @@ const resetApiDemo = throttle(
     // 如果用户失效,ws停止请求
    
     //let token = SessionStorage .get(token_key);
-    if (data && !ss.get(token_key)) {
+    if (data && !SessionStorage.get(token_key)) {
       return;
     }
     console.log("触发切网络api域名动作", data);

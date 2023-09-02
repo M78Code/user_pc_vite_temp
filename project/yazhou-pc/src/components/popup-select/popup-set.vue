@@ -44,14 +44,7 @@ const is_active = ref(false)
 const hits = ref(0)
 
 /** stroe仓库 */
-const store_data = store.getState()
-const { globalReducer, themeReducer, langReducer } = store_data
-const unsubscribe = store.subscribe(() => {
-    global_click.value = globalReducer.global_click
-    theme.value = langReducer.theme
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
+const { globalReducer } = store.getState()
 /** 
 * 全局点击事件数 default: 0
 * 路径: project_path\src\store\module\global.js
@@ -59,26 +52,14 @@ onUnmounted(unsubscribe)
 const global_click = ref(globalReducer.global_click)
 /** 
 * 用户余额是否展示状态 default: theme01
-* 路径: project_path/src/store/module/theme.js
 */
-const theme = ref(themeReducer.theme)
-
-
-/** 设置语言 */
-const set_lang = (data) => store.dispatch({
-    type: 'SET_LANG',
-    data
+const theme = ref(UserCtr.theme)
+const unsubscribe = store.subscribe(() => {
+    const { globalReducer: new_globalReducer } = store.getState()
+    global_click.value = new_globalReducer.global_click
 })
-/** 设置版本 */
-const set_version_name = (data) => store.dispatch({
-    type: 'set_version_name',
-    data
-})
-/** 设置主题 */
-const set_theme = (data) => store.dispatch({
-    type: 'set_theme',
-    data
-})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
@@ -94,33 +75,10 @@ function on_popup() {
     is_active.value = !is_active.value
 }
 
-/**
- * @Description:切换版本
- * @param {string} type 版本
- * @return {undefined} undefined
- */
-function on_click_version(type) {
-    if (!type) return;
-    set_version_name(type);
-}
-
-/**
- * @Description:切换语言
- * @param {string} lang_ 语言
- * @return {undefined} undefined
- */
-async function on_click_lang(lang_) {
-    set_lang(lang_);
-    api_account.get_lang({ token: UserCtr.get_user_token(), languageName: lang_ })
-
-}
 // 设置主题
-function handle_set_theme(theme) {
-    if (theme.includes('y0')) {
-        set_theme(theme + '_y0')
-    } else {
-        set_theme(theme)
-    }
+function handle_set_theme(new_theme) {
+    theme.value = new_theme
+    UserCtr.set_theme(new_theme)
 }
 
 /** 点击任何地方关闭弹窗 */
