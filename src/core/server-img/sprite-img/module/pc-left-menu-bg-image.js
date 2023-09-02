@@ -4,19 +4,19 @@ import server_resource from "app/job/output/merchant/server-resource.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  local_dev: "image01",
-  local_test: "image01",
-  local_ylcs: "image01",
-  idc_pre: "image01",
-  idc_sandbox: "image01",
-  idc_lspre: "image01",
-  idc_online: "image01",
-  night: "图片地址",
-  day: "图片地址",
+  default:"pc-left-menu-bg-image",
+  // local_dev: "pc-left-menu-bg-image",
+  // local_test: "pc-left-menu-bg-image",
+  // local_ylcs: "pc-left-menu-bg-image",
+  // idc_pre: "pc-left-menu-bg-image",
+  // idc_sandbox: "pc-left-menu-bg-image",
+  // idc_lspre: "pc-left-menu-bg-image",
+  // idc_online: "pc-left-menu-bg-image",
+ 
 };
-
+// x y 
 const item = {
-  item_0: 5, //下标从0开始
+  item_0_8: [0,8], //下标从0开始
   item_1: 0,
 };
 
@@ -48,7 +48,7 @@ function compute_position(key) {
  */
 function compute_css({ key, theme }) {
   //从打包的 环境拿 图片地址
-  let url = get(server_resource, `${config[CURRENT_ENV]}.${theme}`);
+  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
   if (!url) {
     //从本地拿
     url = get(config, theme);

@@ -17,5 +17,11 @@
       "day":"",
       "night":""
     }
+  },
+  "assets":{
+    "pc-left-menu-bg-image":{
+      "day":"日间版素材地址",
+      "night":"夜间版素材地址"
+    }
   }
 }

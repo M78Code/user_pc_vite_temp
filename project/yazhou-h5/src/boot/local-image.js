@@ -34,7 +34,7 @@
 // // import image_panda_placeholder from '/public/yazhou-h5/image/panda_placeholder.jpg'
 
 
-let img1 =''
+let img1 ='yazhou-h5/image/list/m_list_jiaoqiu_icon.svg'
 let img2 =''
 let img3 =''
 let img4 =''

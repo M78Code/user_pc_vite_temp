@@ -12,13 +12,16 @@ useMittOn(MITT_TYPES.EMIT_THEME_CHANGE, (_v) => {
 const compute_css = ({ key, label }) => {
   return computed(() => {
     // img-bg-menu-live
-    const func = key ? sprite_compute[label] : other_compute[label];
+    const func = key ? sprite_compute[label] : other_compute;
     return func({ key, label, theme: theme.value });
   }).value;
 };
 
 export { compute_css };
 
+
+// compute_css({key:"pc-left-menu-bg-image",label:"item_1"})
+// compute_css({key:"other-image",label:"pc-img-bg-menu-live"})
 
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， label 是 精灵图内 item 单个元素的 标识键
