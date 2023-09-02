@@ -49,7 +49,7 @@
             >
               <div class="column fit">
                 <!-- 盘口模板start -->
-                <!-- <match-handicap
+                <match-handicap
                   :match_info="match_infoData"
                   :category_list="category_list"
                   :plays_list="plays_list"
@@ -63,7 +63,7 @@
                   @on_go_top="on_go_top"
                   load_type="details"
                   @set_handicap_state="set_handicap_state"
-                ></match-handicap> -->
+                ></match-handicap>
                 <!-- 盘口模板end -->
               </div>
             </div>
@@ -90,7 +90,6 @@ import detailHeader from "./components/detail-header.vue";
 import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
 import matchListHot from "project_path/src/pages/match-list/match_list_hot.vue";
 import { useGetConfig } from "./detail.config";
-
 const {
   load_detail_statu,
   match_infoData,
@@ -153,114 +152,7 @@ const {
     }
   }
   /* ************** 顶部标题 *************** -S */
-  .wrap-title {
-    display: flex;
-    align-items: center;
-    padding: 0 10px 0 15px;
-    height: 36px;
-    font-size: 14px;
-    border-radius: 6px 6px 0 0;
-    .group-back {
-      display: flex;
-      align-items: center;
-      .back {
-        margin-right: 11px;
-      }
-      .before_active {
-        margin-left: 3px;
-        color: #d2ac46;
-      }
-    }
-    .title {
-      flex: 1;
-      text-align: center;
-    }
-    .sr-link-icon-w {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 5px;
-      width: 24px;
-      height: 24px;
-      border-radius: 13px;
-      cursor: pointer;
-
-      i.icon-signal {
-        display: block;
-        width: 14px;
-        height: 13px;
-        &:before {
-          color: #abbac8;
-        }
-        &.focus-icon {
-          display: none;
-        }
-      }
-    }
-    .right-icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      ::v-deep .icon-wrap {
-        // height: 15px;
-        .icon-refresh {
-          position: relative;
-          top: -2px;
-        }
-      }
-      & > span {
-        margin-right: 15px;
-        color: var(--qq--color-card-wrap-title);
-        font-size: 12px;
-        cursor: pointer;
-      }
-    }
-    .refresh {
-      width: 24px;
-      height: 24px;
-      border-radius: 13px;
-      .refresh_icon {
-        .icon-balance_refresh {
-          span {
-            font-size: 18px;
-            &::before {
-              color: #999;
-            }
-          }
-        }
-      }
-    }
-    .i-refresh {
-      width: 17px;
-    }
-    .title-label {
-      color: #d1d1d1;
-    }
-    .mr-10 {
-      margin-right: 10px;
-    }
-    .score {
-      color: #b1987f;
-    }
-    .live-source {
-      display: flex;
-      .icon {
-        padding-right: 8px;
-      }
-      .wrap_source {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        &:first-child {
-          margin-right: 15px;
-        }
-        .active {
-          color: #b1987f;
-        }
-      }
-    }
-  }
-
+ 
   /* ************** 顶部标题 *************** -E */
   /* ************** 比分扳 *************** -S */
   .head-info {
