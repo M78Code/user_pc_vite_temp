@@ -52,15 +52,15 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // const noMatch2 = () => import("public/image/png/noMatch2.png")
 
 // ==========图片===============
-import noMatchSvg from 'public/image/svg/noMatch.svg'
-import noMatch2Png from 'public/image/png/noMatch2.png'
-import noShoucSvg from 'public/image/svg/no_shouc.svg'
-import noShouc2Svg from 'public/image/svg/no_shouc2.svg'
-import noMatchNewPng from 'public/image/png/noMatch_new.png'
-import noMatch2NewPng from 'public/image/png/noMatch2_new.png'
-import noLivedataSvg from 'public/image/svg/no_livedata.svg'
-import no_livedata2Svg from 'public/image/svg/no_livedata2.svg'
-import nowifiSvg from 'public/image/svg/nowifi.svg'
+const noMatchSvg = 'public/image/svg/noMatch.svg'
+const noMatch2Png = 'public/image/png/noMatch2.png'
+const noShoucSvg = 'public/image/svg/no_shouc.svg'
+const noShouc2Svg = 'public/image/svg/no_shouc2.svg'
+const noMatchNewPng = 'public/image/png/noMatch_new.png'
+const noMatch2NewPng = 'public/image/png/noMatch2_new.png'
+const noLivedataSvg = 'public/image/svg/no_livedata.svg'
+const no_livedata2Svg = 'public/image/svg/no_livedata2.svg'
+const nowifiSvg = 'public/image/svg/nowifi.svg'
 // TODO:
 
 
