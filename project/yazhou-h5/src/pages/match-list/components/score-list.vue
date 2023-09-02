@@ -148,13 +148,14 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 // import { score_format } from 'project_path/src/boot/global-filters.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
-import { MenuData } from "src/core/index.js"
+import { MenuData, score_switch_handle } from "src/core/index.js"
 
-const props = defineProps({
+const { match, main_source } = defineProps({
   match: Object,
   main_source: String,
 })
+
+const scoreWrapScroller = ref(null)
 
 const store_state = store.getState()
 const timer_1 = ref(null)   
@@ -226,7 +227,6 @@ const score_sub_win_faild = computed(() => {
 
 // 所有盘/局加起来的总比分
 const get_total_scores = computed(() => {
-  let match = match;
   let msc_format = get_msc_converted();
   //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
   let csid = Number(match.csid);
@@ -350,10 +350,9 @@ const score_inner2_scrolling = ($event) => {
  * @return {Undefined} Undefined
  */
 const score_layout_init = () => {
-  const scroller= $refs['scoreWrapScroller'];
-  if(scroller){
+  if(scoreWrapScroller.value){
     // 根据dom 判断 初始值是否应该显示三角
-    show_right_triangle.value = scroller.scrollWidth>scroller.clientWidth;
+    show_right_triangle.value = scoreWrapScroller.value.scrollWidth>scoreWrapScroller.value.clientWidth;
   }
 }
 /**
@@ -400,7 +399,6 @@ const get_msc_converted = () => {
  */
 const get_match_total_score = () => {
   let result = {};
-  let match = match;
   let msc_format = get_msc_converted();
   //4冰球 8乒乓球 9排球 10羽毛球 13 16不统计S1
   let csid = Number(match.csid);

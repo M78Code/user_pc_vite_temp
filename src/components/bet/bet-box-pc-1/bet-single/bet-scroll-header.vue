@@ -134,6 +134,7 @@
 <script setup>
 import { onMounted } from "vue"
 import { UserCtr } from "src/core/index.js";
+import lodash from 'lodash'
 const props = defineProps({
   bet_recode_this: Object,
   //是不是内嵌框,默认不是
@@ -182,7 +183,7 @@ const computed_show_btn = () => {
     // 获取单关id
     let id = BetData.bet_single_list[0];
     // 是否为冠军投注
-    let match_type = _.get(BetData.bet_single_obj, `${id}.cs.match_type`, 1);
+    let match_type = lodash.get(BetData.bet_single_obj, `${id}.cs.match_type`, 1);
     // 冠军不显示按钮
     if (match_type == 3) {
       return false;
@@ -224,9 +225,9 @@ const show_series_btn = () => {
   // 获取单关id
   let id = BetData.bet_single_list[0];
   // 是否为冠军投注
-  let has_winner = _.get(BetData.bet_single_obj, `${id}.cs.match_type`, 3) != 3;
+  let has_winner = lodash.get(BetData.bet_single_obj, `${id}.cs.match_type`, 3) != 3;
   // 数据来源
-  let source = _.get(BetData.bet_single_obj, `${id}.cs.source`, 'match_list');
+  let source = lodash.get(BetData.bet_single_obj, `${id}.cs.source`, 'match_list');
   // 数据是从投注列表并且为单关并且为冠军
   return BetDataCtr.is_bet_single &&
     has_winner &&
@@ -257,7 +258,7 @@ const iocn_img_fold = () => {
  */
 const change_series = () => {
   // 恢复预约投注项id为初始值
-  if (!_.isNull(BetData.bet_appoint_obj)) {
+  if (!lodash.isNull(BetData.bet_appoint_obj)) {
     // 置空预约投注项
     BetDataCtr.set_bet_appoint_obj(null);
   }
@@ -271,9 +272,9 @@ const change_series = () => {
       let bet_single_obj = { ...BetData.bet_obj };
       // 设置拷贝出来的数据放到单关投注项列表中
       BetDataCtr.set_bet_single_list(bet_single_list);
-      _.forEach(bet_single_list, item => {
+      lodash.forEach(bet_single_list, item => {
         // 根绝单关列表中的投注项id，获取拷贝出来的对象
-        let obj = _.get(bet_single_obj, `${item}`);
+        let obj = lodash.get(bet_single_obj, `${item}`);
         // 设置key值为投注项id
         obj.key = item;
         // 存储对象到单关对象中
@@ -286,9 +287,9 @@ const change_series = () => {
       let bet_obj = { ...BetData.bet_single_obj };
       // 设置拷贝出来的数据放到串关投注项列表中
       BetDataCtr.set_bet_list(bet_list);
-      _.forEach(bet_list, item => {
+      lodash.forEach(bet_list, item => {
         // 根绝串关列表中的投注项id，获取拷贝出来的对象
-        let obj = _.get(bet_obj, `${item}`);
+        let obj = lodash.get(bet_obj, `${item}`);
         // 设置key值为投注项id
         obj.key = item;
         // 存储对象到串关对象中
@@ -301,7 +302,7 @@ const change_series = () => {
     // 克隆单关列表以及单关对象
     let id = BetData.bet_single_list[0];
     let bet_single_obj = { ...BetData.bet_single_obj };
-    let obj = _.get(bet_single_obj, `${id}`);
+    let obj = lodash.get(bet_single_obj, `${id}`);
     // 设置拷贝出来的数据放到串关投注项列表中
     BetDataCtr.set_bet_list([id]);
     obj.key = id;

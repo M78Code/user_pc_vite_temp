@@ -26,6 +26,7 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 const status = ref({

@@ -117,6 +117,7 @@
 <script setup>
 // import no_data from "src/project/components/common/no_data.vue";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { ref} from 'vue';
 
 
 const props = defineProps({
@@ -134,7 +135,7 @@ const props = defineProps({
       require: true
     },
     public_form_title:{
-      type: Number | String,
+      type: Number | String | Array | Object,
       default: null,
       require: true
     },

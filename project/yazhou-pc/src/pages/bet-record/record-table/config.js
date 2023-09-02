@@ -1,4 +1,4 @@
-import { i18n_t } from "src/core/index.js";;
+import { i18n_t } from "src/core/index.js";
 
   // 表格头部分
 const lineList = [

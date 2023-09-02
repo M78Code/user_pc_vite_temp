@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="">
+  <div class="detail-header-box">
     <!-- 顶部栏 -->
     <div class="wrap-title" ref="wrap_title">
       <!-- 返回按钮 -->
@@ -13,7 +13,7 @@
         <icon name="icon-back" class="back" color="#ABBAC8" />
       </div>
       <!-- 联赛标题 -->
-      <div class="title ellipsis allow-user-select">222
+      <div class="title ellipsis allow-user-select">
         {{ match_infoData.tn }}  {{ toggle_panel }} {{ utils.is_show_sr_flg(match_infoData) }}
       </div>
       <div class="right-icon">
@@ -93,7 +93,7 @@ import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import { useRoute, useRouter } from "vue-router";
 // import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-
+import icon from "src/components/icon/icon.vue";
 import store from "src/store-redux/index.js";
 
 const props = defineProps({
@@ -182,3 +182,116 @@ onUnmounted(() => {
   un_subscribe();
 });
 </script>
+<style lang="scss" scoped>
+.detail-header-box{
+
+}
+ .wrap-title {
+    display: flex;
+    align-items: center;
+    padding: 0 10px 0 15px;
+    height: 36px;
+    font-size: 14px;
+    border-radius: 6px 6px 0 0;
+    .group-back {
+      display: flex;
+      align-items: center;
+      .back {
+        margin-right: 11px;
+      }
+      .before_active {
+        margin-left: 3px;
+        color: #d2ac46;
+      }
+    }
+    .title {
+      flex: 1;
+      text-align: center;
+    }
+    .sr-link-icon-w {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 13px;
+      cursor: pointer;
+
+      i.icon-signal {
+        display: block;
+        width: 14px;
+        height: 13px;
+        &:before {
+          color: #abbac8;
+        }
+        &.focus-icon {
+          display: none;
+        }
+      }
+    }
+    .right-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      ::v-deep .icon-wrap {
+        // height: 15px;
+        .icon-refresh {
+          position: relative;
+          top: -2px;
+        }
+      }
+      & > span {
+        margin-right: 15px;
+        color: var(--qq--color-card-wrap-title);
+        font-size: 12px;
+        cursor: pointer;
+      }
+    }
+    .refresh {
+      width: 24px;
+      height: 24px;
+      border-radius: 13px;
+      .refresh_icon {
+        .icon-balance_refresh {
+          span {
+            font-size: 18px;
+            &::before {
+              color: #999;
+            }
+          }
+        }
+      }
+    }
+    .i-refresh {
+      width: 17px;
+    }
+    .title-label {
+      color: #d1d1d1;
+    }
+    .mr-10 {
+      margin-right: 10px;
+    }
+    .score {
+      color: #b1987f;
+    }
+    .live-source {
+      display: flex;
+      .icon {
+        padding-right: 8px;
+      }
+      .wrap_source {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        &:first-child {
+          margin-right: 15px;
+        }
+        .active {
+          color: #b1987f;
+        }
+      }
+    }
+  }
+
+</style>

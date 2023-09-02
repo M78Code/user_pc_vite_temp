@@ -30,10 +30,14 @@
 
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
+
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
 import { format_money3,format_money2 } from'src\core\format\index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
 const min_money = ref(10)   //最低投注金额
@@ -87,7 +91,7 @@ onMounted(() => {
     if (!max_money_back.value) {
       max_money.value = 8888;
       // 获取接口返回的单关最小投注金额
-      min_money.value = _.get(UserCtr, 'cvo.single.min', 10)
+      min_money.value = lodash.get(UserCtr, 'cvo.single.min', 10)
 
       if (max_money.value < min_money.value) {
         min_money.value = max_money.value
@@ -108,8 +112,8 @@ const item_ = computed(() => {
 })
 // 计算单关最高可赢
 const max_win_money = computed(() => {
-  let ov = (view_ctr_obj[name_].show_pre ? view_ctr_obj[name_].pre_odds : _.get(item_, 'hps[0].hl[0].ol[0].ov')) / 100000
-  return compute_money_by_cur_odd_type(ov, null, _.get(item_, 'hps[0].hsw'), money.value, item_.csid)
+  let ov = (view_ctr_obj[name_].show_pre ? view_ctr_obj[name_].pre_odds : lodash.get(item_, 'hps[0].hl[0].ol[0].ov')) / 100000
+  return compute_money_by_cur_odd_type(ov, null, lodash.get(item_, 'hps[0].hsw'), money.value, item_.csid)
 })
 // 转化过后的坑位id
 const hn_id = computed(() => {
@@ -122,6 +126,7 @@ const obj_max_money = computed(() => {
 // 单关监听多项单关输入值
 const obj_bet_money = computed(() => {
   return view_ctr_obj[name_].money
+})
 
   /**   ----------------computed 开始-----------------*/
 
@@ -191,10 +196,10 @@ const obj_bet_money = computed(() => {
             .keys(view_ctr_obj)
             .map((key) => {
               return {
-                minBet: _.toNumber(view_ctr_obj[key].minBet),
+                minBet: lodash.toNumber(view_ctr_obj[key].minBet),
               }
             })
-        money.value = _.maxBy(tempNew, (item) => { return item.minBet }).minBet * 1
+        money.value = lodash.maxBy(tempNew, (item) => { return item.minBet }).minBet * 1
       } else {
         money.value = min_money.value.toString()
       }
@@ -233,7 +238,7 @@ const obj_bet_money = computed(() => {
    *@description 点击删除按钮，清空金额
    *@return {Undefined} undefined
    */
-  const clear_money = () {
+  const clear_money = () => {
     money.value = 0
   }
   /**
@@ -244,7 +249,7 @@ const obj_bet_money = computed(() => {
     let mi = global_filters.format_money3(min_money.value)
     let ma = global_filters.format_money3(max_money.value)
     return licia_format(i18n_t('bet.money_limit2'), mi, ma);
-  },
+  }
   /**
    *@description 光标闪动，animation有兼容问题，用函数替代
    *@return {Undefined} undefined
@@ -317,7 +322,7 @@ const obj_bet_money = computed(() => {
     else {
       money_ok.value = true; set_money_notok_list({ value: BetData.bet_list[0], status: 2 });
     }
-  },
+  }
   /**
    *@description 金额输入框点击
    *@param {Undefined}
@@ -348,7 +353,7 @@ const obj_bet_money = computed(() => {
   onUnmounted(() => {
     clear_timer()
 
-    useMittOn.on(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
+    useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
 
     for (const key in $data) {
       $data[key] = null

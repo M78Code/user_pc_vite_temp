@@ -142,6 +142,8 @@ import {utils } from 'src/core/index.js';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import BetData from "../class/bet-data-class";
 import { format_money2 } from'src\core\format\index.js'
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
 
 const btn_show = ref(0)  //右下角显示状态，0投注，1确定（知道了），2注单处理中...,3接受变化  4 接受变化并投注 5 有投注项失效后点击接受变化的置灰样式
 const exist_code = ref(0)    //投注后是否返回code码

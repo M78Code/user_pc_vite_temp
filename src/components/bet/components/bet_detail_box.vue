@@ -194,6 +194,7 @@
   import BetData from "../class/bet-data-class";
   import { UserCtr } from "src/core/index.js"; 
   import { format_odds ,calc_bifen } from'src\core\format\index.js'
+  import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
   
 
  
@@ -252,7 +253,7 @@
   // mixins: [odd_convert, betting, compute_max_win_money],
   // onmounted开始
   /**            onmounted开始              */
-  onmounted(()=>{ 
+  onMounted(()=>{ 
     flicker()
     // 调用合并后接口还是分开调用
     if (is_exist_pa_operate()) {

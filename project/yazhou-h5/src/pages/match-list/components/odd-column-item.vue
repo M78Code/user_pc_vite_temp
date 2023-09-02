@@ -56,14 +56,12 @@
 </template>
  
 <script setup>
-import betting from 'src/project/mixins/betting/betting.js';
-import { computed, onMounted, onUnmounted, ref } from "vue";
-import { match_icon_lock } from 'src/boot/local-image'
+// import betting from 'src/project/mixins/betting/betting.js';
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import {MenuData } from "src/core/index.js"
+import  { MenuData, i18n_t } from "src/core/index.js"
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
@@ -81,6 +79,8 @@ const props = defineProps({
   n_s:Number,    // 1新手版 2标准版
   column_ceil:Number, //列数量
 })
+
+const match_icon_lock = '/yazhou-h5/image/common/match-icon-lock.svg'
 
 const store_state = store.getState()
 const timer_ = ref(null)
@@ -120,34 +120,21 @@ onMounted(() => {
   get_odd_data();
   emitters.value = {
     // 封盘事件
-    emitter_1: useMittOn.on(MITT_TYPES.EMIT_ARRIVED10, arrived10_handle).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_ARRIVED10, arrived10_handle).off,
      // c105更新
-    emitter_2: useMittOn.on(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MATCH_RESULT_DATA_LOADED, match_result_data_loaded).off,
   }
-  // 点击事件防抖处理
-  item_click3 = debounce(item_click3, 450, {'leading': true, trailing: false});
+})
+
+// 当前玩法ID
+const hpid = computed(() => {
+  return lodash.get(props.odd_field,'hpid');
 })
 
 // 监听玩法变化
-watch(() => hpid, () => {
+watch(() => hpid.value, () => {
   get_odd_data();
 })
-
-watch(() => match, () => {
-  let ol_list = get_ollist_no_close(props.odd_field);
-  if(ol_list){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
-      odd_item.value = props.ol_list_item
-    }else{
-      if(odd_item.value)
-      {
-        Object.assign(odd_item.value, ol_list[odd_item.value_i]);
-      } else{
-        odd_item.value = ol_list[odd_item.value_i];
-      }
-    }
-  }
-}, { deep:true })
 
 // 监听赔率变化实现红升绿降
 watch(() => odd_item.ov, (v1,v0) => {
@@ -168,15 +155,38 @@ watch(() => odd_item.ov, (v1,v0) => {
   },3000);
 }, {  deep: true})
 
+// 计算最终显示的赔率
+const odds_value = computed(() => {
+  if(!props.odd_field) return 0;
+  let ov = odd_item.value.ov,hsw = props.odd_field.hsw;
+  let csid = null;
+  if(MenuData.get_menu_type() == 3000){
+    csid = props.match.csid;
+  }
+  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
+  return r1 || 0;
+})
+
 // 监听玩法变化
-watch(() => odds_value, () => {
+watch(() => odds_value.value, () => {
   get_odd_append_value(odd_item.value);
 })
 
-// 当前玩法ID
-const hpid = computed(() => {
-  return lodash.get(props.odd_field,'hpid');
-})
+watch(() => props.match, () => {
+  let ol_list = get_ollist_no_close(props.odd_field);
+  if(ol_list){
+    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+      odd_item.value = props.ol_list_item
+    }else{
+      if(odd_item.value)
+      {
+        Object.assign(odd_item.value, ol_list[odd_item.value_i]);
+      } else{
+        odd_item.value = ol_list[odd_item.value_i];
+      }
+    }
+  }
+}, { deep:true })
 
 // 判断边框border-radius样式
 const odds_class_object = computed(() => {
@@ -194,18 +204,6 @@ const odds_class_object = computed(() => {
     delete result['last-radius'];
   }
   return result;
-})
-
-// 计算最终显示的赔率
-const odds_value = computed(() => {
-  if(!props.odd_field) return 0;
-  let ov = odd_item.value.ov,hsw = props.odd_field.hsw;
-  let csid = null;
-  if(MenuData.get_menu_type() == 3000){
-    csid = props.match.csid;
-  }
-  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
-  return r1 || 0;
 })
 
 /**
@@ -437,7 +435,7 @@ const is_close = (odd_s) => {
  * @param {Undefined} Undefined
  * @return {Undefined} undefined
  */
-const item_click3 = () => {
+const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   let flag = $common.odds.get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
@@ -448,12 +446,11 @@ const item_click3 = () => {
       bet_click(props.match, props.odd_field, odd_item.value);
     }
   }
-}
+}, 450, {'leading': true, trailing: false})
 
 onUnmounted(() => {
   unsubscribe()
   Object.values(emitters.value).map((x) => x())
-  debounce_throttle_cancel(item_click3);
   clearTimeout(timer_.value);
   timer_.value = null;
   clearTimeout(timer1_.value);

@@ -60,11 +60,11 @@
           <div class="col bet-play-team">
             <!--卡赫利赛哈特 -0.5-->
             <label class="bet-team-handicap">
-              <template v-if="handicap!==''">{{_.trim(team_name)}}<template v-if="team_name!=handicap"><label class="handicap yb-number-bold bet-text-nowrap" :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change}">{{handicap}}</label></template>
+              <template v-if="handicap!==''">{{lodash.trim(team_name)}}<template v-if="team_name!=handicap"><label class="handicap yb-number-bold bet-text-nowrap" :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change}">{{handicap}}</label></template>
               </template>
               <template v-else>
                 <!--所选的投注项名称-->
-                {{_.trim(team_name)}}
+                {{lodash.trim(team_name)}}
               </template>
             </label>
           </div>
@@ -102,6 +102,7 @@
 </template>
 <script setup>
 import {format_odds} from'src\core\format\index.js'
+import lodash from 'lodash'
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 总的*/

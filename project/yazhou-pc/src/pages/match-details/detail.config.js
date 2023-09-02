@@ -7,13 +7,13 @@ import {
   onMounted,
   watch,
 } from "vue";
-import {utils } from 'src/core/index.js';
+import { is_eports_csid } from 'src/core/index.js'
 // api文件
 import { api_details } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
-// import details from "src/core/match-detail-pc/match-detail";
+import details from "src/core/match-detail/match-detail-pc/match-detail";
 // console.log(details,);
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
@@ -28,7 +28,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-
+import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
 import uid from "src/core/uuid/index.js";
 
 export const useGetConfig = () => {
@@ -36,10 +36,11 @@ export const useGetConfig = () => {
   const router = useRouter();
 
   const store_state = store.getState();
+  const match_info_ctr = ref(MatchCtrClass)
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
-    match_info_ctr: "",
+    // match_info_ctr: "",
     mid: "", //赛事id
     sportId: "", //球类id
     match_infoData: {}, //赛事状态比分信息
@@ -174,6 +175,7 @@ export const useGetConfig = () => {
    *
    */
   const init = (param = { is_ws: false }) => {
+    
     console.log(11111111);
     let { mid, is_ws } = param;
     clearTimeout(state.get_match_details_timer);
@@ -253,10 +255,11 @@ export const useGetConfig = () => {
    * @param {string} cuid 用户id
    */
   const get_matchInfo = () => {
+    
     let params = { mid: state.mid, cuid: state.get_uid };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
-    if (utils.is_eports_csid(state.sportId)) {
+    if (is_eports_csid(state.sportId)) {
       api_ = api_details.get_match_detail_ESMatchInfo;
     } else {
       api_ = api_details.get_match_detail_MatchInfo;
@@ -318,8 +321,8 @@ export const useGetConfig = () => {
              */
             data.msc = details.build_msc(data);
             // 设置赛事信息
-            state.match_info_ctr.init_match_obj(data, timestap);
-            state.match_infoData = state.match_info_ctr.match_obj;
+            match_info_ctr.value.init()
+            state.match_infoData = match_info_ctr.value.match_obj;
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -378,7 +381,7 @@ export const useGetConfig = () => {
     };
     let api_ = null;
     // 判断是电竞还是其他赛种玩法
-    if (utils.is_eports_csid(state.sportId)) {
+    if (is_eports_csid(state.sportId)) {
       // 动态配置玩法集单局玩法的请求字段
       Object.assign(params, { round: state.currentRound });
       // 电竞赛事详情页玩法投注项
@@ -426,7 +429,7 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              state.match_info_ctr.init_plays_data([]);
+              match_info_ctr.value.init_plays_data([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
@@ -504,7 +507,7 @@ export const useGetConfig = () => {
         }
       }
       // 电竞的数据不用 format_sort_data() 做排序处理
-      let flag = data && utils.is_eports_csid(state.sportId);
+      let flag = data && is_eports_csid(state.sportId);
 
       data.forEach((item, index) => {
         if (flag) {
@@ -540,7 +543,7 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        state.match_info_ctr.init_plays_data([]);
+        match_info_ctr.value.init_plays_data([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
@@ -646,7 +649,7 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        if (!state.match_info_ctr) {
+        if (!match_info_ctr.value) {
           return;
         }
         const code = lodash.get(res, "data.code");
@@ -659,7 +662,7 @@ export const useGetConfig = () => {
           state.category_list = data;
           state.handicap_this['category_list'] = data
           // 初始化玩法列表
-          state.match_info_ctr.init_play_menu_list(data);
+          match_info_ctr.value.init_play_menu_list(data);
           if (callback) {
             callback();
           }
@@ -735,13 +738,13 @@ export const useGetConfig = () => {
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    state.match_info_ctr.init_plays_data(data);
-    match_details_data_set(state.match_info_ctr.list);
+    match_info_ctr.value.init_plays_data(data);
+    match_details_data_set(match_info_ctr.value.list);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
       if (
-        utils.is_eports_csid(route.params.csid) ||
+        is_eports_csid(route.params.csid) ||
         menu_config.is_virtual_sport()
       ) {
         this.virtual_common.upd_bet_obj( timestap, this.mid); //TODO
@@ -876,12 +879,14 @@ export const useGetConfig = () => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
     // 从链接上获取赛事id 赛种 id 联赛id
-    if (Object.keys(route.params).length) {
-      let { mid, csid: sportId, tid } = route.params;
-      state.mid = mid; // 赛事id
-      state.sportId = sportId; // 赛种 id
+    // 2701074/24/1
+    // if (Object.keys(route.params).length) {
+    //   let { mid, csid: sportId, tid } = route.params;
+    // path: "/details/:mid/:tid/:csid",
+      state.mid = 2701074; // 赛事id
+      state.sportId = 24; // 赛种 id
       // 电竞不用切右侧
-      if (!utils.is_eports_csid(sportId)) {
+      if (!is_eports_csid(24)) {
         // 设置赛事详情的请求参数
         // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
       }
@@ -890,7 +895,7 @@ export const useGetConfig = () => {
       init();
       // 添加近期访问
       // add_visit_history();
-    }
+    // }
 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();
@@ -966,7 +971,7 @@ export const useGetConfig = () => {
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
 
     // 销毁前清空数据
-    state.match_info_ctr.destroy();
+    match_info_ctr.value.destroy();
     state.match_infoData = null;
     state.category_list = null;
     state.match_details = null;

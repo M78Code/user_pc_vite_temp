@@ -33,6 +33,10 @@
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
 import { UserCtr } from "src/core/index.js";
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
+
+
 // mixins: [bettinglist],
 
 const order_tatus =  ref(1)   //1-投注成功  2-投注确认中  0-投注失败
@@ -56,10 +60,10 @@ const update_state = () => {
  //串关总赔率
  const mix_odds = computed(() =>{//当前串关赔率
     const s_count_data = get_s_count_data.value
-    const has_sum_odds = _.find(s_count_data,(o)=>{//判断串关列表中是否有总赔率
+    const has_sum_odds = lodash.find(s_count_data,(o)=>{//判断串关列表中是否有总赔率
       return o.orderno == item_.orderNo
     })
-    return _.get(has_sum_odds,'odds') || ''
+    return lodash.get(has_sum_odds,'odds') || ''
   })
   const calc_color = computed(()=>{
     if (order_tatus.value == 1) {

@@ -2,7 +2,7 @@
  * @Description: H5 各球种比分处理
  */
 import { ref } from 'vue'
-
+import lodash from 'lodash'
 import { i18n_t } from  "src/boot/i18n.js";
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
@@ -476,7 +476,7 @@ export const foot_ball_score_type = (match) => {
   let penalty_shoot = 'S170|', is_penalty = false;
   let is_overtime_f = 'S7|', is_overtime = false;
   if (match.csid == 1 || match.csid == 11) {
-    if (_.get(get_current_menu.value, 'main.menuType') == 28) {
+    if (lodash.get(get_current_menu.value, 'main.menuType') == 28) {
       //有点球大战 S170
       match.msc.forEach(f_score => {
         if (f_score.indexOf(penalty_shoot) > -1) is_penalty = true;
@@ -511,7 +511,7 @@ export const foot_basket_ball = (match) => {
       if (footer_sub_menu_id.value == 114) { // 角球玩法
         split = 'S5|';
       }
-      if (_.get(get_current_menu.value, 'main.menuType') == 28) { //赛果只显示S1 单号8410
+      if (lodash.get(get_current_menu.value, 'main.menuType') == 28) { //赛果只显示S1 单号8410
         split = 'S1|';
       }
     }
@@ -694,7 +694,7 @@ export const foot_ball_score_handle = (match) => {
     msc_dict = ['S19', "S20", "S21", "S22", "S7", "S170"];
   }
   // 赛果
-  if (_.get(get_current_menu.value, 'main.menuType') == 28) {
+  if (lodash.get(get_current_menu.value, 'main.menuType') == 28) {
     let splited_type = foot_ball_score_type(match);
     if (splited_type == "S1|") { //无点球大战无加时赛
       msc_dict = ["S5", "S2"];

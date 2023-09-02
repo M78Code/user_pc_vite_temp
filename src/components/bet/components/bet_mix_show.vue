@@ -194,7 +194,9 @@ import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_
 import betSingleDetail from './bet_single_detail.vue';
 import { UserCtr } from "src/core/index.js";
 import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
+
  
 
 const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降

@@ -11,18 +11,17 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js"
 // import { ref } from "vue";
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
-import {PLAY_TODAY_SCORE} from "src/core/bet/config/play-mapping";
-import _ from "lodash";
-
+import {PLAY_TODAY_SCORE} from "src/core/constant/config/play-mapping.js"; 
+import {lodash} from "lodash";
 /**
  * @description: 获取比赛分数 格式: (主队比分-客队比分)export const 
  * @return {String} 比分的格式
  */
 export const get_score_info = (bet_custom_id) => {
     let bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
-  if (_.has(bet_obj, "bs") && _.has(bet_obj, "cs")) {
-    let bet_bs = _.get(bet_obj, "bs", {});
-    let bet_cs = _.get(bet_obj, "cs", {});
+  if (lodash.has(bet_obj, "bs") && lodash.has(bet_obj, "cs")) {
+    let bet_bs = lodash.get(bet_obj, "bs", {});
+    let bet_cs = lodash.get(bet_obj, "cs", {});
     let ms = bet_bs.ms; // 赛事状态
     let sport_id = bet_bs.csid;
     let play_id = bet_cs.play_id;
@@ -37,7 +36,7 @@ export const get_score_info = (bet_custom_id) => {
       sport_id == "1" &&
       PLAY_TODAY_SCORE.includes(`${play_id}`)
     ) {
-      return `${_.get(bet_cs, "home_score", 0)}-${_.get(
+      return `${lodash.get(bet_cs, "home_score", 0)}-${lodash.get(
         bet_cs,
         "away_score",
         0
@@ -53,12 +52,12 @@ export const get_score_info = (bet_custom_id) => {
  */
 export const get_timerly_score_info = (bet_custom_id) => {
     let bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
-  if (_.has(bet_obj, "bs") && _.has(bet_obj, "cs")) {
-    let bet_bs = _.get(bet_obj, "bs", {});
-    let bet_cs = _.get(bet_obj, "cs", {});
+  if (lodash.has(bet_obj, "bs") && lodash.has(bet_obj, "cs")) {
+    let bet_bs = lodash.get(bet_obj, "bs", {});
+    let bet_cs = lodash.get(bet_obj, "cs", {});
     let ms = bet_bs.ms; // 赛事状态
-    let timerly_home_score = _.get(bet_cs, "timerly_home_score");
-    let timerly_away_score = _.get(bet_cs, "timerly_away_score");
+    let timerly_home_score = lodash.get(bet_cs, "timerly_home_score");
+    let timerly_away_score = lodash.get(bet_cs, "timerly_away_score");
     let market_type = bet_cs.market_type;
     if (
       ms != 0 &&
@@ -74,7 +73,7 @@ export const get_timerly_score_info = (bet_custom_id) => {
 
 export const get_serial_type = ( ) => {
     let bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
-  return _.get(bet_obj, "cs.serial_type", false);
+  return lodash.get(bet_obj, "cs.serial_type", false);
 };
 
 /**
@@ -83,7 +82,7 @@ export const get_serial_type = ( ) => {
  */
 export const get_operate_type = (bet_custom_id) => {
     let bet_obj =   BetData. get_bet_obj_by_bet_custom_id(bet_custom_id)
-  let operate_type = _.get(bet_obj, "cs.operate_type", "") || "";
+  let operate_type = lodash.get(bet_obj, "cs.operate_type", "") || "";
   return operate_type;
 };
 
@@ -93,7 +92,7 @@ export const get_operate_type = (bet_custom_id) => {
  */
 export const update_odds_info2 = (obj) => {
   return;
-  if (window.ws && !_.isUndefined(obj.mid) && !_.isNull(obj.mid)) {
+  if (window.ws && !lodash.isUndefined(obj.mid) && !lodash.isNull(obj.mid)) {
     // console.log(`=========is_bet_single:${BetData.is_bet_single}=========bet_obj:${JSON.stringify(bet_obj)}`);
     // 模拟发送C105用来同步项目各模块的投注项信息
     let cmd_obj = {
@@ -104,32 +103,32 @@ export const update_odds_info2 = (obj) => {
       cmd: "C105",
     };
     // 赛事盘口状态
-    if (!_.isUndefined(obj.mhs) && !_.isNull(obj.mhs)) {
+    if (!lodash.isUndefined(obj.mhs) && !lodash.isNull(obj.mhs)) {
       cmd_obj.cd.mhs = obj.mhs;
     }
-    if (_.isArray(obj.marketList)) {
+    if (lodash.isArray(obj.marketList)) {
       let hls = [];
-      _.forEach(obj.marketList, (item) => {
+      lodash.forEach(obj.marketList, (item) => {
         let { marketType, placeNum, status, marketOddsList, score } = item,
           hl_item = { mid: obj.mid };
         // 盘口id
-        if (!_.isUndefined(item.id) && !_.isNull(item.id)) {
+        if (!lodash.isUndefined(item.id) && !lodash.isNull(item.id)) {
           hl_item.hid = item.id;
         }
         // 玩法id
-        if (!_.isUndefined(obj.playId) && !_.isNull(obj.playId)) {
+        if (!lodash.isUndefined(obj.playId) && !lodash.isNull(obj.playId)) {
           hl_item.hpid = obj.playId;
         }
         // 盘口类型
-        if (!_.isUndefined(marketType) && !_.isNull(marketType)) {
+        if (!lodash.isUndefined(marketType) && !lodash.isNull(marketType)) {
           hl_item.hmt = marketType;
         }
         // 盘口状态
-        if (!_.isUndefined(status) && !_.isNull(status)) {
+        if (!lodash.isUndefined(status) && !lodash.isNull(status)) {
           hl_item.hs = status;
         }
         // 坑位
-        if (!_.isUndefined(placeNum) && !_.isNull(placeNum)) {
+        if (!lodash.isUndefined(placeNum) && !lodash.isNull(placeNum)) {
           hl_item.hn = placeNum;
         }
         // 对应玩法比分处理
@@ -142,8 +141,8 @@ export const update_odds_info2 = (obj) => {
         ) {
           // console.log(`===========111=====>>>>score:${score}`);
           let scoreBenchmark = score.split("|");
-          let score_type = _.trim(scoreBenchmark[0]);
-          if (!_.isEmpty(score_type)) {
+          let score_type = lodash.trim(scoreBenchmark[0]);
+          if (!lodash.isEmpty(score_type)) {
             let scroe_array = scoreBenchmark[1].split(":");
             let home_score = scroe_array[0] || "0";
             let away_score = scroe_array[1] || "0";
@@ -151,39 +150,39 @@ export const update_odds_info2 = (obj) => {
           }
         }
         // 投注项部分处理
-        if (_.isArray(marketOddsList)) {
+        if (lodash.isArray(marketOddsList)) {
           let ol = [];
-          _.forEach(marketOddsList, (ite) => {
+          lodash.forEach(marketOddsList, (ite) => {
             let { oddsStatus, oddsType, oddsValue } = ite,
               ol_obj = {};
             // 投注项oid
-            if (!_.isUndefined(ite.id) && !_.isNull(ite.id)) {
+            if (!lodash.isUndefined(ite.id) && !lodash.isNull(ite.id)) {
               ol_obj.oid = ite.id;
             }
             // 投注项状态
-            if (!_.isUndefined(oddsStatus) && !_.isNull(oddsStatus)) {
+            if (!lodash.isUndefined(oddsStatus) && !lodash.isNull(oddsStatus)) {
               ol_obj.os = oddsStatus;
             }
             // 投注项类型
-            if (!_.isUndefined(oddsType) && !_.isNull(oddsType)) {
+            if (!lodash.isUndefined(oddsType) && !lodash.isNull(oddsType)) {
               ol_obj.ot = oddsType;
             }
             // 投注项类型
-            if (!_.isUndefined(oddsValue) && !_.isNull(oddsValue)) {
+            if (!lodash.isUndefined(oddsValue) && !lodash.isNull(oddsValue)) {
               ol_obj.ov = oddsValue;
             }
             ol.push(ol_obj);
           });
-          if (!_.isEmpty(ol)) {
+          if (!lodash.isEmpty(ol)) {
             hl_item.ol = ol;
           }
         }
         // 盘口项不为空，则加入盘口hls数组中
-        if (!_.isEmpty(hl_item)) {
+        if (!lodash.isEmpty(hl_item)) {
           hls.push(hl_item);
         }
       });
-      if (!_.isEmpty(hls)) {
+      if (!lodash.isEmpty(hls)) {
         cmd_obj.cd.hls = hls;
       }
       // console.log(`模拟发送的C105:${JSON.stringify(cmd_obj)}`);
@@ -198,7 +197,7 @@ export const update_odds_info2 = (obj) => {
  * @return {undefined} undefined
  */
 export const update_handicap = (obj) => {
-  if (window.ws && !_.isUndefined(obj.mid) && !_.isNull(obj.mid)) {
+  if (window.ws && !lodash.isUndefined(obj.mid) && !lodash.isNull(obj.mid)) {
     // 模拟发送C303用来同步项目各模块的投注项信息
     let cmd_obj = {
       cd: {
@@ -220,18 +219,18 @@ export const update_handicap = (obj) => {
  */
 export const update_match_score = ( data_source, ctsp = 0, mid) => {
   if (window.ws) {
-    let cur_match = _.get(data_source, `mid_obj.mid_${mid}`, {});
+    let cur_match = lodash.get(data_source, `mid_obj.mid_${mid}`, {});
     // console.log(`==================msc_ctsp:${msc_ctsp}==============ctsp:${ctsp}`);
     // 当比分存在且是最新的数据则更新比分
-    if (_.isArray(cur_match.msc) && !_.isEmpty(cur_match.msc)) {
+    if (lodash.isArray(cur_match.msc) && !lodash.isEmpty(cur_match.msc)) {
       // 模拟发送C103 用来同步赛事列表,赛事详情等模块的比分
       let cmd_obj = {
         cd: {
           mid: mid,
           send: "my_self",
-          csid: _.get(cur_match, "csid"),
+          csid: lodash.get(cur_match, "csid"),
           msc: cur_match.msc,
-          mpid: _.get(cur_match, "mmp"),
+          mpid: lodash.get(cur_match, "mmp"),
         },
         cmd: "C103",
         ts: ctsp,
@@ -289,7 +288,7 @@ export const merge_msc_array = (msc, skt_data) => {
       let mcs_item_arr = msc[i].split("|");
       // 将比分转换成 score_obj={"S1": "0:0"} 的格式(可以进行去重)
       score_obj[mcs_item_arr[0]] = mcs_item_arr[1];
-      if (_.isArray(skt_data.msc)) {
+      if (lodash.isArray(skt_data.msc)) {
         skt_data.msc.forEach((skt_item) => {
           if (skt_item && skt_item.includes("|")) {
             let skt_item_arr = skt_item.split("|");
@@ -321,7 +320,7 @@ export const merge_msc_array = (msc, skt_data) => {
  * @return {Array} msc 合并后的新比分对象
  */
 export const msc_obj_arry = (msc) => {
-  if (_.isArray(msc)) return msc;
+  if (lodash.isArray(msc)) return msc;
   let arr = [],
     is_s1 = false;
   if (msc) {
@@ -384,41 +383,41 @@ export const calc_bifen = (msc, csid, ms, hpid) => {
  * @param {String} socket_name 接入的是那个地方的socket
  */
 export const match_fill_time = (data_source, skt_data, socket_name) => {
-  if (_.isArray(skt_data)) {
+  if (lodash.isArray(skt_data)) {
     let len = skt_data.length;
     for (let i = 0; i < len; i++) {
-      let item = _.get(skt_data, `[${i}]`, {});
+      let item = lodash.get(skt_data, `[${i}]`, {});
       let cur_match;
       if (
         socket_name == "match_list" &&
-        _.get(data_source, `mid_obj.mid_${item.mid}`, false)
+        lodash.get(data_source, `mid_obj.mid_${item.mid}`, false)
       ) {
         // 赛事列表
-        cur_match = _.get(data_source, `mid_obj.mid_${item.mid}`, {});
+        cur_match = lodash.get(data_source, `mid_obj.mid_${item.mid}`, {});
         if (item.msc) {
-          let msc = _.cloneDeep(_.get(cur_match, "msc", []));
+          let msc = lodash.cloneDeep(lodash.get(cur_match, "msc", []));
           cur_match.msc = merge_msc_array(msc, skt_data);
           score_switch_handle(cur_match);
         }
       } else if (
         ["details", "match_details"].includes(socket_name) &&
-        _.get(data_source, "match_obj.mid") == _.get(item, "mid")
+        lodash.get(data_source, "match_obj.mid") == lodash.get(item, "mid")
       ) {
         // 赛事详情
-        cur_match = _.get(data_source, `mid_obj.${item.mid}`, {});
-        if (!_.isEmpty(item.msc)) {
-          let score_obj = _.cloneDeep(_.get(cur_match, "msc", {}));
+        cur_match = lodash.get(data_source, `mid_obj.${item.mid}`, {});
+        if (!lodash.isEmpty(item.msc)) {
+          let score_obj = lodash.cloneDeep(lodash.get(cur_match, "msc", {}));
           score_obj =BetCommonHelper. msc_array_obj(item.msc);
           item.msc = score_obj;
         }
       } else if (
         ["hot", "recent"].includes(socket_name) &&
-        _.get(data_source, `mid_obj.${item.mid}`, false)
+        lodash.get(data_source, `mid_obj.${item.mid}`, false)
       ) {
         // 热门推荐，最近关注(专业版)
-        cur_match = _.get(data_source, `mid_obj.${item.mid}`, {});
-        let score_obj = _.cloneDeep(
-          _.get(data_source, `mid_obj.${item.mid}.msc`, {})
+        cur_match = lodash.get(data_source, `mid_obj.${item.mid}`, {});
+        let score_obj = lodash.cloneDeep(
+          lodash.get(data_source, `mid_obj.${item.mid}.msc`, {})
         );
         item.msc.forEach((msc_item) => {
           let check_msc_item =
@@ -491,7 +490,7 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
     hl_fields = ["hid", "hmt", "hs", "ad2", "hv", "hn", "ol"],
     // ol_fields 投注项上的字段
     ol_fields = ["oid", "on", "ov", "obv", "otd", "otv", "ott"];
-  item_obj = _.clone(bet_obj);
+  item_obj = lodash.clone(bet_obj);
   // 构建bet_omit_obj对象
   for (let [key, value] of Object.entries(item_obj)) {
     if (fields.includes(key)) {
@@ -499,12 +498,12 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
     }
   }
   // 玩法对象
-  hps = _.cloneDeep([item_obj.play]);
+  hps = lodash.cloneDeep([item_obj.play]);
   // 盘口对象
-  hl = _.cloneDeep(hps[0].hl);
+  hl = lodash.cloneDeep(hps[0].hl);
   // 投注项对象
-  ol = _.cloneDeep(hps[0].hl[0].ol);
-  bet_omit_obj.hps = _.cloneDeep([item_obj.play]);
+  ol = lodash.cloneDeep(hps[0].hl[0].ol);
+  bet_omit_obj.hps = lodash.cloneDeep([item_obj.play]);
   for (let [key, value] of Object.entries(item_obj)) {
     if (fields.includes(key)) {
       bet_omit_obj[key] = value;
@@ -533,13 +532,13 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
     // 删除玩法层级title
     delete bet_omit_obj.hps[0].title;
     // vuex对象的主队名称
-    let cur_home = _.trim(_.get(cur_obj, "bs.mhn"));
+    let cur_home = lodash.trim(lodash.get(cur_obj, "bs.mhn"));
     // vuex对象的客队名称
-    let cur_away = _.trim(_.get(cur_obj, "bs.man"));
+    let cur_away = lodash.trim(lodash.get(cur_obj, "bs.man"));
     // vuex对象的投注项显示值
-    let cur_on = _.trim(_.get(cur_obj, "bs.hps[0].hl[0].ol[0].on", ""));
+    let cur_on = lodash.trim(lodash.get(cur_obj, "bs.hps[0].hl[0].ol[0].on", ""));
     // vuex对象的盘口值
-    let hv = _.get(cur_obj, "bs.hps[0].hl[0].hv");
+    let hv = lodash.get(cur_obj, "bs.hps[0].hl[0].hv");
     // 盘口值并字段不包含‘/’
     if ((hv || hv == "0") && !hv.includes("/")) {
       // 取绝对值
@@ -552,12 +551,12 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
     // 投注项显示值跟主队名称一样
     if (cur_on == cur_home) {
       // on值为主队
-      bet_omit_obj.hps[0].hl[0].ol[0].on = _.get(item_obj, "mhn");
+      bet_omit_obj.hps[0].hl[0].ol[0].on = lodash.get(item_obj, "mhn");
       bet_omit_obj.hps[0].hl[0].ol[0].ots = "T1";
       // 投注项等于客队
     } else if (cur_on == cur_away) {
       // on值为客队
-      bet_omit_obj.hps[0].hl[0].ol[0].on = _.get(item_obj, "man");
+      bet_omit_obj.hps[0].hl[0].ol[0].on = lodash.get(item_obj, "man");
       bet_omit_obj.hps[0].hl[0].ol[0].ots = "T2";
       // 投注项等于盘口值
     } else if (cur_on == hv || cur_on == `+${hv}` || cur_on == `-${hv}`) {
@@ -570,7 +569,7 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
       let arr = cur_on.split(" "),
         len = arr.length;
       // 投注数据的投注项显示值以客队和盘口值拼接
-      bet_omit_obj.hps[0].hl[0].ol[0].on = `${_.get(item_obj, "mhn")} ${
+      bet_omit_obj.hps[0].hl[0].ol[0].on = `${lodash.get(item_obj, "mhn")} ${
         arr[len - 1]
       }`;
       // 有盘口值，而且投注项显示值以客队开头，以盘口值结尾
@@ -579,12 +578,12 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
       let arr = cur_on.split(" "),
         len = arr.length;
       // 投注数据的投注项显示值以主队和盘口值拼接
-      bet_omit_obj.hps[0].hl[0].ol[0].on = `${_.get(item_obj, "man")} ${
+      bet_omit_obj.hps[0].hl[0].ol[0].on = `${lodash.get(item_obj, "man")} ${
         arr[len - 1]
       }`;
     } else {
-      let otv = _.get(ol, "0.otv", ""),
-        ott = _.get(ol, "0.ott", "");
+      let otv = lodash.get(ol, "0.otv", ""),
+        ott = lodash.get(ol, "0.ott", "");
       if (otv != ott) {
         // 投注时所需展示的信息
         if (otv.includes(ott)) {
@@ -595,15 +594,15 @@ export const tidy_bet_item_info = (cur_obj, bet_obj, source) => {
       }
     }
   } else {
-    bet_omit_obj.hps[0].hl[0].ol[0].otv = _.get(ol, "0.otv", "");
-    bet_omit_obj.hps[0].hl[0].ol[0].ott = _.get(ol, "0.ott", "");
-    bet_omit_obj.hps[0].hl[0].ol[0].on = _.get(ol, "0.on", "");
+    bet_omit_obj.hps[0].hl[0].ol[0].otv = lodash.get(ol, "0.otv", "");
+    bet_omit_obj.hps[0].hl[0].ol[0].ott = lodash.get(ol, "0.ott", "");
+    bet_omit_obj.hps[0].hl[0].ol[0].on = lodash.get(ol, "0.on", "");
   }
   Object.assign(obj.bs, { ...bet_omit_obj });
   obj.cs = {
-    play_name: _.get(bet_omit_obj, "hps[0].hpn"), //玩法名称
-    home: _.get(bet_omit_obj, "mhn"), //主队
-    away: _.get(bet_omit_obj, "man"), //客队
+    play_name: lodash.get(bet_omit_obj, "hps[0].hpn"), //玩法名称
+    home: lodash.get(bet_omit_obj, "mhn"), //主队
+    away: lodash.get(bet_omit_obj, "man"), //客队
   };
   return obj;
 };
