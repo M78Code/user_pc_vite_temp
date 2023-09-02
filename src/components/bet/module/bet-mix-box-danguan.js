@@ -3,6 +3,7 @@
 
 import BetData from "./class/bet-data-class.js";
 import SetData from "src/core/bet/bet-data-ctr-class.js";
+import lodash from 'lodash'
 
 
 
@@ -23,8 +24,8 @@ const query_order = () => {
 
         BetData.query_order_obj = res.data
 
-        let data = _.get(res, 'data[0]');
-        let code = _.get(res, 'code');
+        let data = lodash.get(res, 'data[0]');
+        let code = lodash.get(res, 'code');
 
         if (code != 200 || !res.data) {
             return
@@ -38,7 +39,7 @@ const query_order = () => {
             if (data.orderNo && data.orderNo == get_order_no.value) {
             BetData.timer_count = null;
             BetData.max_winmoney = data.newMaxWinAmount;
-                let oid = _.get(BetData.single_item, 'hps[0].hl[0].ol[0].oid', '')
+                let oid = lodash.get(BetData.single_item, 'hps[0].hl[0].ol[0].oid', '')
                 if (data.oddsChangeList && data.oddsChangeList[0] && data.oddsChangeList[0].playOptionsId == oid) {
                     odds_value2.value = data.oddsChangeList[0].usedOdds;
                 }

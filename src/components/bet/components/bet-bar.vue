@@ -35,11 +35,13 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
 import { format_money2 } from 'src/core/utils/global-filters.js'
 import lodash from "lodash"
 import store from "src/store-redux/index.js";
 import { UserCtr } from "src/core/index.js";
+import { ref,computed,onUnmounted } from 'vue';
+
+
 
 
 let balance_timer = null // 延时器
@@ -125,9 +127,9 @@ const mix_sum_odds = computed(() => {
     const mix_data = get_s_count_data.value
     let S = ''
     if (mix_data.length == 0 || mix_data.length == 1 && this.BetData.bet_list.length == 1) {//串关，但是投注项数量为1，取当前投注项赔率
-      const odds = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
-      const hsw = _.get(_.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
-      const csid = _.get(_.values(this.view_ctr_obj)[0], 'bs.csid') || 0
+      const odds = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps.0.hl.0.ol.0.ov')
+      const hsw = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.hps[0].hsw') || 0
+      const csid = lodash.get(lodash.values(this.view_ctr_obj)[0], 'bs.csid') || 0
       S = this.compute_value_by_cur_odd_type(odds / 100000, null, hsw, null, csid)
     } else {
       S = mix_data.length > 0 ? mix_data[0].odds : ''

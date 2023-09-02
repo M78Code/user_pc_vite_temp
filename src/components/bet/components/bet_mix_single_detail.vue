@@ -196,9 +196,9 @@ watch(() => BetData.active_index, (new_) => {
 /**   ----------------watch 结束-----------------*/
 
 
-/**   ----------------onmounted 开始-----------------*/
+/**   ----------------onMounted 开始-----------------*/
 
-onmounted(() => {
+onMounted(() => {
   timer = null  // 计时器
   timer2 = null  // 计时器2
   flicker_timer = undefined     //光标闪动计时器
@@ -246,7 +246,7 @@ onmounted(() => {
     }
   })
 })
-/**   ----------------onmounted 结束-----------------*/
+/**   ----------------onMounted 结束-----------------*/
 // ...mapMutations(["set_active_index", "set_bet_obj", "set_money_notok_list", "set_keyboard_show", "set_money_notok_list2"]),
 
 /**

@@ -44,7 +44,6 @@
 
 <script setup>
 import skeleton from 'src/components/skeleton/index.vue'
-// import {mapGetters} from "vuex";
 
 
 // ...mapGetters([
