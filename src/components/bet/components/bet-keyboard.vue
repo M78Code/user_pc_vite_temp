@@ -41,7 +41,10 @@
 </template>
   
 <script setup>
-import { ref, reactive, provide, onMounted, computed, onUnmounted } from 'vue'
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
+
+
 import store from "src/store-redux/index.js";
 
 const money = ref('') //用户输入金额
@@ -83,7 +86,7 @@ watch(() => pre_odds_value, (new_) => {
       }
       let index = BetData.active_index.toString().split('market')[1]
       let value_show = view_ctr_obj[BetData.bet_list[index]].bs
-      const isdaxiao = ['Over', 'Under'].includes(_.get(value_show, 'hps[0].hl[0].ol[0].ot'));
+      const isdaxiao = ['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot'));
       if (isdaxiao) {
         if (+pre_odds_value.value > 400) {
           pre_odds_value.value = '400'
@@ -225,9 +228,9 @@ const prevent_click = computed(() => {
 
 const addnum = computed(() => {
   if (get_mix_bet_flag) {
-    return _.get(UserCtr, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
+    return lodash.get(UserCtr, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
   } else {
-    return _.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
+    return lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
   }
 })
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开

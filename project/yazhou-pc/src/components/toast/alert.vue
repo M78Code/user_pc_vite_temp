@@ -281,7 +281,7 @@ function confirm() {
     border-radius: 22px;
     cursor: pointer;
     font-size: 18px;
-    background-image: url("/public/yazhou-pc/image/image/btn.svg");
+    background-image: url("/yazhou-pc/image/image/btn.svg");
     margin: 0 auto;
     background-size: contain;
     background-color: transparent !important;

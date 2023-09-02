@@ -36,7 +36,7 @@
         </div>
 
         <!-- 榜单公共表格 -->
-        <public_form
+        <publicForm
           :allianc_list_index="allianc_list_index"
           :allianc_list="allianc_list"
           :tab_name_index="tab_name_index"
@@ -47,21 +47,23 @@
       </template>
     </div>
     <!-- 没有数据 组件 -->
-    <no_data v-if="loading_standings_data" which='noMatch' height='500' class="no-list"></no_data>
+    <!-- <no_data v-if="loading_standings_data" which='noMatch' height='500' class="no-list"></no_data> -->
   </div>
 </template>
 
 <script setup>
 // import match_main from "src/project/pages/match-list/match_main";   // 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
-// import {api_home} from "src/project/api";
-import hotList from "src/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
-import hotSchedule from "src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
-import no_data from "src/components/common/no-data.vue";    // 无网络展示组件
-import public_form from "./public-form.vue";    // 首页热门足球和 篮球的 公共榜单表格
+import { api_home } from "src/api/index.js";
+import hotList from "project_path/src/components/skeleton/home-hot/hot-list.vue";   // 热门榜单 骨架屏
+import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
+
+// import no_data from "src/components/common/no-data.vue";    // 无网络展示组件
+import publicForm from "./public-form.vue";    // 首页热门足球和 篮球的 公共榜单表格
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 
 const props = defineProps({
-  tab_Index:null,
+  tab_Index:Number | String | Array | Object,
 })
 
 // 篮球 西部联盟8     东部联盟9
@@ -195,7 +197,7 @@ const on_listeners = () =>{
       liat_data.value = tab.value
     }
 
-onmounted(()=>{
+onMounted(()=>{
   useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING,show_hot_schedule_loading)
     useMittOn(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH,leaderboard_switch)
     useMittOn(MITT_TYPES.EMIT_SET_SPORTS_BALLS_TAB,set_data_update_handle)

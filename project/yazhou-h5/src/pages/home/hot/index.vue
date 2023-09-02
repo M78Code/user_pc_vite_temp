@@ -38,7 +38,7 @@
     <div :class="[tab_Index == 0 && 'quiz']">
       <div>
         <!--猜你喜欢  模块-->
-        <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" />
+        <!-- <may-also-like :from_where="101" v-if="tab_Index == 0 && GlobalAccessConfig.get_hotRecommend()" /> -->
         <!-- 精选赛事  标题-->
         <div class="may_also_like">
           <div class="title" v-if="tab_Index == 0">
@@ -46,15 +46,15 @@
           </div>
         </div>
         <!-- 精选赛事  标题-->
-        <sports-balls-tab ref="sports_balls_tab" :tab_Index="tab_Index"></sports-balls-tab>
+        <sportsBallsTab ref="sports_balls_tab" :tab_Index="tab_Index"></sportsBallsTab>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// import { api_home } from "src/project/api/index";
-
+import { api_home } from "src/api/index.js";
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import hotFeatured from "project_path/src/components/skeleton/home-hot/hot-featured.vue"    // 热门精选 骨架屏
 
 import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
@@ -62,21 +62,24 @@ import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-sched
 
 // import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
 
-import sportsBallsTab from "./components/public-form.vue"
+import sportsBallsTab from "./components/sports-balls-tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 import UserCtr from "src/core/user-config/user-ctr.js";;
-import BetData from "src/core/bet/class/bet-data-class.js";
+// import BetData from "src/core/bet/class/bet-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import lodash from 'lodash'
 
-let tabList = ref([])  // tab选项卡内容
+const tabList = ref()  // tab选项卡内容
 let tab_Index = ref(0) //  tab 选项卡的下标位置
 let featured_loading = ref(true) // 精选骨架屏
 let first_loading = ref(true) // 精选是否第一次加载骨架屏
 let can_click_tab = ref(false) // 可以点击菜单tab 选项卡
 let wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
 
-onmounted(() => {
+const timer2 = ref()
+
+onMounted(() => {
   timer2.value = null;
   get_list('first_loading')
   // emit 后补充
@@ -146,7 +149,7 @@ const host = (item) => {
   let url = ''
   let domain = window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0]
   let prefix_job = window.BUILDIN_CONFIG.api.API_PREFIX_JOB
-  let is_jing_cai = _.get(item, 'chinaBetting') == 1
+  let is_jing_cai = lodash.get(item, 'chinaBetting') == 1
   if (is_jing_cai && item.field3) {
     url = `${domain}/${prefix_job}/${item.field3}`
   }
@@ -161,8 +164,8 @@ const get_list = (first) => {
     lang: 'JC'  // 名称简称传：JC  ，默认为空
   }
   api_home.get_hot_list(parameter).then((res) => {
-    const data = _.get(res, "data")
-    const code = _.get(res, "code")
+    const data = lodash.get(res, "data")
+    const code = lodash.get(res, "code")
     console.error('data', data)
     if (code == 200 && data.length > 0) {
       // 过滤掉赛事场数为0的二级联赛菜单
@@ -179,8 +182,8 @@ const get_list = (first) => {
           tab_Index.value = index
           // 滑动tab动画操作
           let dom_ = $refs
-          clearTimeout(timer2)
-          timer2 = setTimeout(() => {
+          clearTimeout(timer2.value)
+          timer2.value = setTimeout(() => {
             dom_.scrollBox && utils.tab_move2(index, dom_.scrollBox, true)
             changeTab(tabList.value[index], index)
           }, 80);
@@ -199,8 +202,8 @@ const get_list = (first) => {
 const checkClearBet = (obj) => {
   let flag = false
   const dj_csid_list = [100, 101, 102, 103]
-  _.forIn(BetData.bet_obj, function (item, key) {
-    const csid = _.get(item, 'bs.csid')
+  lodash.forIn(BetData.bet_obj, function (item, key) {
+    const csid = lodash.get(item, 'bs.csid')
     if (dj_csid_list.includes(obj.field1 * 1)) {//切换的菜单是电竞
       if (!dj_csid_list.includes(csid * 1)) {
         flag = true
@@ -258,13 +261,13 @@ const refresh_list = () => {
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_SHOW_HOT_SCHEDULE_LOADING, show_hot_schedule_loading).off
   useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, refresh_list).off
-  if (timer2) {
-    clearTimeout(timer2)
-    timer2 = null
+  if (timer2.value) {
+    clearTimeout(timer2.value)
+    timer2.value = null
   }
-  for (const key in $data) {
-    $data[key] = null
-  }
+  // for (const key in $data) {
+  //   $data[key] = null
+  // }
 })
 
 </script>

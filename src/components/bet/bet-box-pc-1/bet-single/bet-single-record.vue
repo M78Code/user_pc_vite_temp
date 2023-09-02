@@ -59,11 +59,11 @@
         <div class="row">
           <div class="col bet-play-team yb-fontsize14">
             <!--投注项名称(可能待盘口值或者比分等)-->
-            <template v-if="!_.isEmpty(single_record_obj.playOptionName)">
+            <template v-if="!lodash.isEmpty(single_record_obj.playOptionName)">
               <div class="bet-team-handicap">
-                {{part1}} {{_.trim(part2)}}
+                {{part1}} {{lodash.trim(part2)}}
               </div>
-              <!-- <span class="part-one">{{part1}}</span><span class="part-two">{{_.trim(part2)}}</span> -->
+              <!-- <span class="part-one">{{part1}}</span><span class="part-two">{{lodash.trim(part2)}}</span> -->
             </template>
           </div>
         </div>
@@ -121,6 +121,7 @@
 <script>
 // import bet_single_record from "src/public/mixins/bet/bet_single_record";
 import { format_odds } from'src\core\format\index.js'
+import lodash from 'lodash'
 
 </script>
 <style lang="scss" scoped>

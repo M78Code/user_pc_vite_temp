@@ -45,7 +45,7 @@
                         </div>
                         <!-- 点点点 -->
                         <div class="point-wrap" v-if="league.league_total > 3 && !league.is_active">
-                            <img src="/public/yazhou-pc/image/svg/point.svg">
+                            <img src="/yazhou-pc/image/svg/point.svg">
                         </div>
                     </div>
                 </div>

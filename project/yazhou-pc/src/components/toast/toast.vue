@@ -8,7 +8,7 @@
         <q-card-section>
           <div class="text-h6">
             <slot name="img">
-              <img src="/public/yazhou-pc/image/svg/warn.svg" />
+              <img src="/yazhou-pc/image/svg/warn.svg" />
             </slot>
           </div>
           <slot name="msg">{{ text }}</slot>

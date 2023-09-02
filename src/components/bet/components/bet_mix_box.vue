@@ -13,6 +13,7 @@
 
 <script setup>
 
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 

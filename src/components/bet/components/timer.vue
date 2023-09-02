@@ -12,12 +12,16 @@
 
 <script setup>
 // import common from "src/project/mixins/constant/module/common.js"
+import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import lodash from 'lodash'
+
+
 
 const time = ref('')  //时间
 const less_min = ref(false)  //是否小于1分钟
 const timer_ = null
 
-onmounted(() => {
+onMounted(() => {
   timer_format_handle()
 })
 

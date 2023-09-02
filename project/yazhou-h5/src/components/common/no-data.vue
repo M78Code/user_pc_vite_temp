@@ -49,18 +49,18 @@ import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-// const noMatch2 = () => import("public/image/png/noMatch2.png")
+// const noMatch2 = () => import("/yazhou-h5/image/png/noMatch2.png")
 
 // ==========图片===============
-import noMatchSvg from 'public/image/svg/noMatch.svg'
-import noMatch2Png from 'public/image/png/noMatch2.png'
-import noShoucSvg from 'public/image/svg/no_shouc.svg'
-import noShouc2Svg from 'public/image/svg/no_shouc2.svg'
-import noMatchNewPng from 'public/image/png/noMatch_new.png'
-import noMatch2NewPng from 'public/image/png/noMatch2_new.png'
-import noLivedataSvg from 'public/image/svg/no_livedata.svg'
-import no_livedata2Svg from 'public/image/svg/no_livedata2.svg'
-import nowifiSvg from 'public/image/svg/nowifi.svg'
+const noMatchSvg = '/yazhou-h5/image/svg/noMatch.svg'
+const noMatch2Png = '/yazhou-h5/image/png/noMatch2.png'
+const noShoucSvg = '/yazhou-h5/image/svg/no_shouc.svg'
+const noShouc2Svg = '/yazhou-h5/image/svg/no_shouc2.svg'
+const noMatchNewPng = '/yazhou-h5/image/png/noMatch_new.png'
+const noMatch2NewPng = '/yazhou-h5/image/png/noMatch2_new.png'
+const noLivedataSvg = '/yazhou-h5/image/svg/no_livedata.svg'
+const no_livedata2Svg = '/yazhou-h5/image/svg/no_livedata2.svg'
+const nowifiSvg = '/yazhou-h5/image/svg/nowifi.svg'
 // TODO:
 
 
