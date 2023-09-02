@@ -578,7 +578,6 @@
 </template>
 
 <script>
-debugger
 // import results from "src/core/match-results/match-results-mixin/index";
 
 console.log(results,'results');

@@ -28,7 +28,7 @@ import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
 import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
+import {MatchDataWarehouse_PC_Detail_Common} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 
 export const useGetConfig = () => {
@@ -36,11 +36,11 @@ export const useGetConfig = () => {
   const router = useRouter();
 
   const store_state = store.getState();
-  const match_info_ctr = ref(MatchCtrClass)
+  const MatchDataWarehouseInstance = ref(MatchDataWarehouse_PC_Detail_Common)
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
-    // match_info_ctr: "",
+    // MatchDataWarehouseInstance: "",
     mid: "", //赛事id
     sportId: "", //球类id
     match_infoData: {}, //赛事状态比分信息
@@ -124,6 +124,7 @@ export const useGetConfig = () => {
   watch(
     () => state.sportId,
     (res) => {
+      
       let img = details.computed_background(String(res));
       if (img) state.background_img = img;
     }
@@ -264,16 +265,19 @@ export const useGetConfig = () => {
     } else {
       api_ = api_details.get_match_detail_MatchInfo;
     }
+    console.log(api_,'api_');
     let send_request = () => {
       state.is_request = true;
       api_(params)
         .then((res) => {
+          
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
           useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           // useMittEmit("get_history");
           const code = lodash.get(res, "data.code");
           const data = lodash.cloneDeep(lodash.get(res, "data.data"));
+          console.log(res,'data');
           if (code == "0400500" || !data || Object.keys(data).length == 0) {
             // 自动切换赛事
             emit_autoset_match(0);
@@ -321,8 +325,11 @@ export const useGetConfig = () => {
              */
             data.msc = details.build_msc(data);
             // 设置赛事信息
-            match_info_ctr.value.init()
-            state.match_infoData = match_info_ctr.value.match_obj;
+            console.log(data,'data.msc ');
+            MatchDataWarehouseInstance.value.set_list_from_match_details(data )  
+            // state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj.mid_obj;
+            state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj.mid_obj[state.mid+'_'];
+            console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
             countMatchDetail();
@@ -429,7 +436,7 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              match_info_ctr.value.init_plays_data([]);
+              MatchDataWarehouseInstance.value.init_plays_data([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
@@ -543,7 +550,7 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        match_info_ctr.value.init_plays_data([]);
+        MatchDataWarehouseInstance.value.init_plays_data([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
@@ -649,7 +656,7 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        if (!match_info_ctr.value) {
+        if (!MatchDataWarehouseInstance.value) {
           return;
         }
         const code = lodash.get(res, "data.code");
@@ -662,7 +669,7 @@ export const useGetConfig = () => {
           state.category_list = data;
           state.handicap_this['category_list'] = data
           // 初始化玩法列表
-          match_info_ctr.value.init_play_menu_list(data);
+          MatchDataWarehouseInstance.value.init_play_menu_list(data);
           if (callback) {
             callback();
           }
@@ -738,8 +745,8 @@ export const useGetConfig = () => {
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    match_info_ctr.value.init_plays_data(data);
-    match_details_data_set(match_info_ctr.value.list);
+    MatchDataWarehouseInstance.value.init_plays_data(data);
+    match_details_data_set(MatchDataWarehouseInstance.value.list);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
@@ -879,14 +886,15 @@ export const useGetConfig = () => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
     // 从链接上获取赛事id 赛种 id 联赛id
-    // 2701074/24/1
+    // 3531410/1110402/1
     // if (Object.keys(route.params).length) {
     //   let { mid, csid: sportId, tid } = route.params;
     // path: "/details/:mid/:tid/:csid",
-      state.mid = 2701074; // 赛事id
-      state.sportId = 24; // 赛种 id
+    
+      state.mid = 3531410; // 赛事id
+      state.sportId = 1; // 赛种 id
       // 电竞不用切右侧
-      if (!is_eports_csid(24)) {
+      if (!is_eports_csid(1)) {
         // 设置赛事详情的请求参数
         // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
       }
@@ -971,7 +979,7 @@ export const useGetConfig = () => {
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
 
     // 销毁前清空数据
-    match_info_ctr.value.destroy();
+    MatchDataWarehouseInstance.value.destroy();
     state.match_infoData = null;
     state.category_list = null;
     state.match_details = null;

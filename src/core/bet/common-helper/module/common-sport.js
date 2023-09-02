@@ -12,7 +12,7 @@ import BetCommonHelper from "src/core/bet/common-helper/index.js"
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 import {PLAY_TODAY_SCORE} from "src/core/constant/config/play-mapping.js"; 
-import {lodash} from "lodash";
+import lodash from "lodash";
 /**
  * @description: 获取比赛分数 格式: (主队比分-客队比分)export const 
  * @return {String} 比分的格式
