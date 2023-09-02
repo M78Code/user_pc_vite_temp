@@ -22,10 +22,10 @@ const item = {
 
 /**
  * 根据item 计算雪碧图位置
- * @param {*} key 下标从0开始
+ * @param {*} position 下标从0开始
  * @returns
  */
-function compute_position(key) {
+function compute_position(position) {
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
@@ -33,7 +33,7 @@ function compute_position(key) {
 
   const height = 40; //表示是 纵 向
   const y_space = 10; //每张图的间距 y
-  const _v = item[key];
+  const _v = item[position];
   if (_v > -1) {
     const x = x_space * _v + _v * width + left;
     const y = y_space * _v + _v * height + top;
@@ -46,7 +46,7 @@ function compute_position(key) {
  * @param {*} param0
  * @returns
  */
-function compute_css({ key, theme }) {
+function compute_css({ position, theme }) {
   //从打包的 环境拿 图片地址
   let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
   if (!url) {
@@ -55,7 +55,7 @@ function compute_css({ key, theme }) {
   }
   return {
     "background-image": `url(${url})`,
-    "background-position": compute_position(key),
+    "background-position": compute_position(position),
   };
 }
 

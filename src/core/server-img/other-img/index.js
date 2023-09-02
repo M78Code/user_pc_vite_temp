@@ -17,8 +17,8 @@ Object.keys(modules).forEach((key) => {
  * @param {*} param0
  * @returns
  */
-function compute_css({ key = "other-image", label, theme }) {
-  let config = all_other_image[label] || {};
+function compute_css({ key    , theme }) {
+  let config = all_other_image[key] || {};
 
   console.log(CURRENT_ENV, "CURRENT_ENV");
   //从打包的 环境拿 图片地址
