@@ -24,11 +24,13 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted } from 'vue'
 import lodash from 'lodash'
+import store from "src/store-redux/index.js";
 // import odds_conversion_mixin from "src/core/odds_conversion/odds_conversion_mixin.js";
 import { api_betting } from "src/api/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 
 const odds_constant = [
     { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -48,12 +50,30 @@ const is_active = ref(false)
 const cur_odd = ref(UserCtr.odds.cur_odd || 'EU')
 /** 获取上次选择的盘口类型(盘口切换时使用) */
 const pre_odd = ref(UserCtr.odds.pre_odds || 'EU')
-/** 单关 是否正在处理中 */
-const is_single_handle = ref(false)
-/** 是否正在处理投注 */
-const is_handle = ref(false)
-/** true: 单关投注 false: 串关投注 */
-const is_bet_singl = ref(false)
+
+/** stroe仓库 */
+const { globalReducer, menuReducer } = store.getState()
+/** 获取当前菜单类型 */
+let cur_menu_type = reactive(menuReducer.cur_menu_type)
+
+/** 全局点击事件数 */
+const global_click = ref(globalReducer.global_click)
+watch(
+    () => global_click.value,
+    () => {
+        if (hits.value % 2 == 1) {
+            hits.value++;
+            return;
+        }
+        is_active.value = false;
+    }
+)
+const unsubscribe = store.subscribe(() => {
+    const { globalReducer: new_globalReducer } = store.getState()
+    global_click.value = new_globalReducer.global_click
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /**
 * @Description:显示切换盘口弹层
@@ -61,17 +81,23 @@ const is_bet_singl = ref(false)
 */
 function on_popup() {
     hits.value++;
-    if (is_single_handle.value || is_handle.value) return; // 单关或者串关投注正在进行中，禁止切换
+    // 单关或者串关投注正在进行中，禁止切换
+    if (BetData.is_single_handle || BetData.is_handle) return; // 单关或者串关投注正在进行中，禁止切换
     // 冠军
-    // let is_winner = $menu.menu_data.match_tpl_number == 18
-    let type_name = cur_menu_type.type_name;
+    const is_winner = MenuData.get_match_tpl_number() == 18;
+    const { type_name } = cur_menu_type;
     // 串关 && 冠军 不能切换赔率 电竞冠军菜单
-    // if (["winner_top"].includes(type_name) ||
-    //     (is_winner && type_name != 'virtual_sport') ||
-    //     ($menu.menu_data.is_esports && !is_bet_singl.value) ||
-    //     $menu.menu_data.is_esports_champion) {
-    //     return;
-    // }
+    if (
+        ["winner_top"].includes(type_name) ||
+        (is_winner && type_name != 'virtual_sport') ||
+        /** 判断是电竞 */
+        (MenuData.is_esports() &&
+        /** true: 单关投注 false: 串关投注 */
+        !BetData.is_bet_single) ||
+        MenuData.is_esports_champion()
+    ) {
+        return;
+    }
     is_active.value = !is_active.value
 }
 
@@ -88,35 +114,31 @@ function on_click_handicap(row) {
 
 function set_user_preference(curr_odd) {
     if (curr_odd) {
-        set_pre_odd(curr_odd);
-        BetData.set_cur_odd(curr_odd);
+        UserCtr.set_pre_odds(curr_odd);
+        UserCtr.set_cur_odds(curr_odd);
         // 设置用户偏好    
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
             let code = lodash.get(res, 'data.code');
             if (code != 200) {
-                set_pre_odd(pre_odd.value);
-                BetData.set_cur_odd(cur_odd.value);
+                UserCtr.set_pre_odds(pre_odd.value);
+                UserCtr.set_cur_odds(cur_odd.value);
             }
+            cur_odd.value = curr_odd
+            pre_odd.value = curr_odd
         }).catch(err => {
             console.error(err);
-            set_pre_odd(pre_odd.value);
-            BetData.set_cur_odd(cur_odd.value);
+            UserCtr.set_pre_odds(pre_odd.value);
+            UserCtr.set_cur_odds(cur_odd.value);
         });
     }
 }
 
-/** 获取当前菜单类型 */
-let cur_menu_type = reactive({
-    type_name: ''
-})
 watch(
     () => cur_menu_type.type_name,
     (new_, old_) => {
         // console.log(`=======type_name========new:${new_}=========old:${old_}`);
-        if (new_ == 'winner_top') {
-            if (cur_odd.value !== 'EU') {
-                BetData.set_cur_odd(cur_odd);
-            }
+        if (new_ == 'winner_top' && cur_odd.value !== 'EU') {
+            UserCtr.set_cur_odds(cur_odd);
         }
     }
 )
