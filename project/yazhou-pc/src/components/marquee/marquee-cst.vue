@@ -27,7 +27,7 @@
                 @mouseleave="hide_gif($event, tab, index)">
                 <!--  v-if="show_menu_icon(tab.id)"  -->
                 <img v-show="tab.is_show" :ref="theme.includes('y0') ? tab.icon_name + '_y0' : tab.icon_name"
-                    :src="`/public/yazhou-pc/image/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
+                    :src="`/yazhou-pc/image/gif/${tab.icon_name}${theme.includes('y0') ? '_y0' : ''}.gif`"
                     class="tab-icon-img">
                 <q-tooltip anchor="top middle" self="center middle"
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t(tab.tab_name) }}</q-tooltip>
@@ -45,7 +45,7 @@
                     :content-style="tooltip_style + ';transform:translateY(34px)'">{{ i18n_t('common.set') }}</q-tooltip>
                 <!-- hover显示gif -->
                 <img v-show="right_tabs[2].is_show" :ref="theme.includes('y0') ? 'settings_y0' : 'settings'"
-                    :src="`/public/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
+                    :src="`/yazhou-pc/image/gif/${theme.includes('y0') ? 'settings_y0' : 'settings'}.gif`"
                     class="tab-icon-img">
 
             </div>
@@ -113,8 +113,8 @@ const settings_items = [
         id: 1,
         name: i18n_t('common.odds_set'),
         icon: {
-            day: '/public/yazhou-pc/image/svg/icon-odds.svg',
-            night: '/public/yazhou-pc/image/svg/icon-odds-night.svg'
+            day: '/yazhou-pc/image/svg/icon-odds.svg',
+            night: '/yazhou-pc/image/svg/icon-odds-night.svg'
         },
         value_arr: [
             { label: i18n_t('odds.EU'), value: "EU", icon: 'panda-icon-contryEU', id: 1 },//欧洲盘
@@ -130,8 +130,8 @@ const settings_items = [
         id: 2,
         name: i18n_t('common.change_lang'),
         icon: {
-            day: '/public/yazhou-pc/image/svg/icon-lang.svg',
-            night: '/public/yazhou-pc/image/svg/icon-lang-night.svg'
+            day: '/yazhou-pc/image/svg/icon-lang.svg',
+            night: '/yazhou-pc/image/svg/icon-lang-night.svg'
         },
         value_arr: Object.keys(langs),
         type: 'select'
@@ -140,8 +140,8 @@ const settings_items = [
         id: 3,
         name: i18n_t('common.change_skin'),
         icon: {
-            day: '/public/yazhou-pc/image/svg/icon-skin.svg',
-            night: '/public/yazhou-pc/image/svg/icon-skin-night.svg'
+            day: '/yazhou-pc/image/svg/icon-skin.svg',
+            night: '/yazhou-pc/image/svg/icon-skin-night.svg'
         },
         value_arr: [/*i18n_t('odds.HK'), i18n_t('odds.EU')*/],
         type: 'switch'
@@ -425,34 +425,34 @@ onUnmounted(clear_timer)
 
         .tab-icon-item {
             &-sports_rules {
-                background-image: url("/public/yazhou-pc/image/svg/sports_rules.svg");
+                background-image: url("/yazhou-pc/image/svg/sports_rules.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("/public/yazhou-pc/image/svg/task_center.svg");
+                background-image: url("/yazhou-pc/image/svg/task_center.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("/public/yazhou-pc/image/svg/settings.svg");
+                background-image: url("/yazhou-pc/image/svg/settings.svg");
                 background-size: cover;
             }
         }
 
         .tab-icon-item-y0 {
             &-sports_rules {
-                background-image: url("/public/yazhou-pc/image/svg/sports_rules_y0.svg");
+                background-image: url("/yazhou-pc/image/svg/sports_rules_y0.svg");
                 background-size: cover;
             }
 
             &-task_center {
-                background-image: url("/public/yazhou-pc/image/svg/task_center_y0.svg");
+                background-image: url("/yazhou-pc/image/svg/task_center_y0.svg");
                 background-size: cover;
             }
 
             &-settings {
-                background-image: url("/public/yazhou-pc/image/svg/settings_y0.svg");
+                background-image: url("/yazhou-pc/image/svg/settings_y0.svg");
                 background-size: cover;
             }
         }
