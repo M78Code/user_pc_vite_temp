@@ -62,7 +62,7 @@ import hotFeatured from "project_path/src/components/skeleton/home-hot/hot-featu
 import hotSchedule from "project_path/src/components/skeleton/home-hot/hot-schedule.vue"     // 热门赛程 骨架屏
 
 
-// import may_also_like from "src/project/pages/match-list/components/may_also_like"   // 列表页猜你喜欢
+// import may_also_like from "project_path/src/pages/match-list/components/may-also-like.vue"   // 列表页猜你喜欢
 
 import sportsBallsTab from "./components/sports-balls-tab.vue"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -75,16 +75,16 @@ import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from 'lodash'
 import {utils } from 'src/core/index.js';
 
-const tabList = ref()  // tab选项卡内容
+let tabList = ref()  // tab选项卡内容
 let tab_Index = ref(0) //  tab 选项卡的下标位置
 let featured_loading = ref(true) // 精选骨架屏
 let first_loading = ref(true) // 精选是否第一次加载骨架屏
 let can_click_tab = ref(false) // 可以点击菜单tab 选项卡
 let wrapper_scroll_top = ref(0) //当列表滚动时隐藏罚牌说明
 
-const scrollBox = ref()  // scrollBox DOM
+let scrollBox = ref()  // scrollBox DOM
 
-const timer2 = ref()
+let timer2 = ref()
 
 onMounted(() => {
   timer2.value = null;
