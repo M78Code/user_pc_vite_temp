@@ -49,18 +49,18 @@ import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-// const noMatch2 = () => import("public/image/png/noMatch2.png")
+// const noMatch2 = () => import("image/png/noMatch2.png")
 
 // ==========图片===============
-const noMatchSvg = 'public/image/svg/noMatch.svg'
-const noMatch2Png = 'public/image/png/noMatch2.png'
-const noShoucSvg = 'public/image/svg/no_shouc.svg'
-const noShouc2Svg = 'public/image/svg/no_shouc2.svg'
-const noMatchNewPng = 'public/image/png/noMatch_new.png'
-const noMatch2NewPng = 'public/image/png/noMatch2_new.png'
-const noLivedataSvg = 'public/image/svg/no_livedata.svg'
-const no_livedata2Svg = 'public/image/svg/no_livedata2.svg'
-const nowifiSvg = 'public/image/svg/nowifi.svg'
+const noMatchSvg = 'image/svg/noMatch.svg'
+const noMatch2Png = 'image/png/noMatch2.png'
+const noShoucSvg = 'image/svg/no_shouc.svg'
+const noShouc2Svg = 'image/svg/no_shouc2.svg'
+const noMatchNewPng = 'image/png/noMatch_new.png'
+const noMatch2NewPng = 'image/png/noMatch2_new.png'
+const noLivedataSvg = 'image/svg/no_livedata.svg'
+const no_livedata2Svg = 'image/svg/no_livedata2.svg'
+const nowifiSvg = 'image/svg/nowifi.svg'
 // TODO:
 
 
