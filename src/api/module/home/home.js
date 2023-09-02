@@ -29,7 +29,8 @@ export const post_marquee_data = (params, config, url = "/v2/notice/headListPB")
 export const post_announce_list = (params, config, url = "/v2/notice/frontListPB") => http.post(`${prefix}${url}`, params, config);
 
 //热门联赛-赛事菜单接口(jeffrey)
-export const get_hot_list = (params, config, url = "/v2/w/menu/hotListPB") => http.get(`${prefix}${url}`, params, config);
+// export const get_hot_list = (params, config, url = "/v2/w/menu/hotListPB") => http.get(`${prefix}${url}`, params, config);
+export const get_hot_list = (params, config, url = "/v2/w/menu/hotList") => http.get(`${prefix}${url}`, params, config);
 
 //根据联赛id查找排行榜(antonio)
 export const get_ranking_by_tournamentId = (params, config, url = "/v1/tournamentRanking/getRankingByTournamentId") => http.get(`${prefix}${url}`, params, config);

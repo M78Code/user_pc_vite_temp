@@ -67,7 +67,7 @@ export const get_match_result_api = (params, config, url = "/v1/m/matcheResultPB
 };
 
 //根据赛事id获取赛事列表
-export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMidsPB") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
+export const get_match_base_info_by_mids = (params, config, url = "/v1/m/getMatchBaseInfoByMids") => http.post(`${prefix_job}${url}`, params, {axios_debounce_cache_key:'get_match_base_info_by_mids',type:2});
 
 //根据赛事id获取电竞赛事详情列表
 export const get_esports_match_by_mids = (params, config, url = "/v1/m/esportsMatchInfoByMids") => http.post(`${prefix}${url}`, params, {axios_debounce_cache_key:'get_esports_match_by_mids', type: 2});

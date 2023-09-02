@@ -191,6 +191,14 @@ export const useGetGlobal = ({ details_params, back_to }) => {
         }
 
         // 切换右侧赛事
+        // let playId = details_params.play_id;
+        // store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
+        //   mid,
+        //   tid,
+        //   sportId,
+        //   playId,
+        //   media_type: "auto",
+        // });
         let playId = details_params.play_id;
         store.dispatch(
           { type: "SET_MATCH_DETAILS_PARAMS" },

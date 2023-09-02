@@ -61,7 +61,9 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useMittOn, MITT_TYPES } from  "src/core/mitt"
-import  { MenuData, i18n_t } from "src/core/index.js"
+import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type } from "src/core/index.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
@@ -82,6 +84,8 @@ const props = defineProps({
 
 const match_icon_lock = '/yazhou-h5/image/common/match-icon-lock.svg'
 
+const emits = defineEmits(['select_change'])
+
 const store_state = store.getState()
 const timer_ = ref(null)
 const timer1_ = ref(null)
@@ -99,18 +103,14 @@ const dom_id_show = ref('')
 
 const get_bet_list = ref(store_state.get_bet_list)
 const get_cur_odd = ref(store_state.get_cur_odd)
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
-const get_theme = ref(store_state.get_theme)
 const get_foot_ball_screen_changing = ref(store_state.get_foot_ball_screen_changing)
 const get_lang = ref(store_state.get_lang)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_lang.value = new_state.get_lang
-  get_theme.value = new_state.get_theme
   get_cur_odd.value = new_state.get_cur_odd
   get_bet_list.value = new_state.get_bet_list
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
   get_foot_ball_screen_changing.value = new_state.get_foot_ball_screen_changing
 })
 
@@ -137,7 +137,7 @@ watch(() => hpid.value, () => {
 })
 
 // 监听赔率变化实现红升绿降
-watch(() => odd_item.ov, (v1,v0) => {
+watch(() => odd_item.value.ov, (v1,v0) => {
   if(get_foot_ball_screen_changing){
     return;
   }
@@ -192,14 +192,14 @@ watch(() => props.match, () => {
 const odds_class_object = computed(() => {
   let result = {
     'odd-column-item2':is_selected,
-    'is-standard':get_newer_standard_edition === 2,
+    'is-standard':PageSourceData.get_newer_standard_edition() === 2,
     'first-radius': odd_item.value_i === 0,
     'last-radius': odd_item.value_i > 1,
     'is-jiaoqiu':MenuData.footer_sub_menu_id == 114,
     'mred':  red_green_status.value === 1 && no_lock() && (!is_selected),
     'mgreen': red_green_status.value === -1 && no_lock() && (!is_selected),
   };
-  if(get_newer_standard_edition == 2){
+  if(PageSourceData.get_newer_standard_edition() == 2){
     delete result['first-radius'];
     delete result['last-radius'];
   }
@@ -226,7 +226,7 @@ const odd_s = computed(() => {
   else if(props.hl_hs == 3){
     return 4
   }
-  return $common.odds.get_odds_active(odd_item.value.ms,odd_item.value.hs,odd_item.value.os);
+  return get_odds_active(odd_item.value.ms,odd_item.value.hs,odd_item.value.os);
 })
 
 // 投注项是否被选中
@@ -238,7 +238,7 @@ const is_selected = computed(() => {
     let id_ = lodash.get(props.odd_field,'hl[0].hn')? `${props.match.mid}_${props.odd_field.chpid || props.odd_field.hpid}_${odd_item.value.ot}_${props.odd_field.hl[0].hn}` : odd_item.value.oid
     flag = get_bet_list.includes(id_);
   }
-  $emit('select_change',{flag,i:odd_item.value_i});
+  emits('select_change',{flag,i:odd_item.value_i});
   return flag;
 })
 
@@ -309,7 +309,7 @@ const get_odd_status = () => {
   else if(props.hl_hs == 3){
     return 4
   }
-  return $common.odds.get_odds_active(odd_item.value.ms,odd_item.value.hs,odd_item.value.os);
+  return get_odds_active(odd_item.value.ms,odd_item.value.hs,odd_item.value.os);
 }
 // on转换html
 const transfer_on = (odd_item) => {
@@ -324,8 +324,8 @@ const transfer_on = (odd_item) => {
     }
   }
   let color = ''
-  if(is_fengpan(odd_s) || get_obv_is_lock(odd_item.value)){
-    if(get_theme.includes('theme01')){
+  if(is_fengpan(odd_s) || get_obv_is_lock(odd_item)){
+    if(UserCtr.theme.includes('theme01')){
       // color = '#d1d1d1';
     }
     else{
@@ -379,7 +379,7 @@ const get_odd_data = () => {
       odd_item.value = ol[odd_item.value_i];
     }
   } else {
-    odd_item.value = {"oid":"","mid":lodash.get(props.odd_field,'mid')}
+    odd_item.value = {"oid":"","mid": lodash.get(props.odd_field,'mid')}
   }
 }
 /**
@@ -437,7 +437,7 @@ const is_close = (odd_s) => {
  */
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
-  let flag = $common.odds.get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
+  let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return

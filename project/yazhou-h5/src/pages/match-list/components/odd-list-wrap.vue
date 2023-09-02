@@ -119,7 +119,7 @@
     <!-- 标准版 5分钟 盘口赔率组件 -->
     <div v-else-if="[19].includes(+lodash.get(current_tab_item, 'id'))" class="five-minutes-to-play">
       <div class="odd-wrap-hps-bold-other" 
-           :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(props.five_minutes_all_list)"
+           :key="ol_item_i_five+'ol_item_i_five'" v-for="(ol_item,ol_item_i_five) of get_five_minutes_ol_list(five_minutes_all_list)"
            :class="{
              lastBestTwoOddWraps:[1172,1192].includes(+lodash.get(ol_item, 'otd')),
              lastFiveOddWraps:[1173,1193].includes(+lodash.get(ol_item, 'otd')),
@@ -177,7 +177,7 @@ const props = defineProps({
     default: {
       hps:[ {hl:[{}]} ],
       title:'',
-      id: 19,
+      id: 0,
     }
   },
   hps: Array,
@@ -207,7 +207,7 @@ const get_newer_standard_edition = ref(PageSourceData.get_newer_standard_edition
 const get_lang = ref(store_state.get_lang)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
-const get_n_s_changed_loaded = ref(store_state.get_n_s_changed_loaded)
+const get_n_s_changed_loaded = ref(true)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
 
 const unsubscribe = store.subscribe(() => {
@@ -215,11 +215,13 @@ const unsubscribe = store.subscribe(() => {
   get_lang.value = new_state.get_lang
   get_bet_list.value = new_state.get_bet_list
   get_standard_odd_status.value = new_state.get_standard_odd_status
-  get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
+  // TODO:
+  // get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
 })
 
 onMounted(() => {
+  standard_odd_status.value = get_standard_odd_status.value
   modify_overtime_status(get_standard_odd_status.value); // 初始化时也调用
   emitters.value = {
     emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
@@ -801,6 +803,7 @@ const get_ol_list = (hp_item, hp_i_i) => {
       }
     }
   }
+  console.log(ol_list)
   return ol_list;
 };
 // 简版投注项选中时角球标志

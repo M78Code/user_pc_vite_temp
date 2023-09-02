@@ -45,7 +45,7 @@ import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
 
 const route = useRoute();
-
+console.error(route);
 //重新计算高度
 const mitt_offs = [
   // useMittOn(MITT_TYPES.EMIT_LAYOUT_RESIZE, debounce(resize, 150)).off,

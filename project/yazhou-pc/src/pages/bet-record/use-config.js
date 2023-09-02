@@ -6,31 +6,31 @@
 import lodash from "lodash";
 import { ref, watch, onMounted, reactive, toRefs, onUnmounted } from "vue";
 import {utils } from 'src/core/index.js';
-import { format_day } from "src/core/format/index.js";
+import { format_day,DateForMat } from "src/core/format/index.js";
 import { api_common, api_betting, api_account } from "src/api/index";
-import { t } from "src/core/boot/index.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 ;
 
-export const useConfig = ({ getOrderList }) => {
+export const useConfig = (getOrderList) => {
   //时间排序数据
   const record_time_sort = [
     {
       id: 2,
-      name: t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
+      name: i18n_t("bet_record.sort_by_settled_time"), //"默认排序(结算时间)",
       icon: "icon-sort_settle_time",
       check_name: "bet_record.settled_time",
     },
     {
       id: 1,
-      name: t("bet_record.sort_by_bet_time"), //"按投注时间排序",
+      name: i18n_t("bet_record.sort_by_bet_time"), //"按投注时间排序",
       icon: "icon-sort_bet_time",
       check_name: "bet_record.bet_time",
     },
     {
       id: 3,
-      name: t("bet_record.sort_by_match_time"), //"按开赛时间排序",
+      name: i18n_t("bet_record.sort_by_match_time"), //"按开赛时间排序",
       icon: "icon-sort_match_time",
       check_name: "bet_record.match_time",
     },
@@ -69,8 +69,8 @@ export const useConfig = ({ getOrderList }) => {
     time_sort_record_item: {},
     toolIndex: null, // 当前选中 tab 的下标
     model: {
-      from: new Date(new Date() - 86400000).Format("yyyy/MM/dd"),
-      to: new Date().Format("yyyy/MM/dd"),
+      from: DateForMat((new Date() - 86400000), "yyyy/MM/dd"),
+      to: DateForMat(new Date(), "yyyy/MM/dd"),
     },
     old_page_size: 0,
     random: 0,

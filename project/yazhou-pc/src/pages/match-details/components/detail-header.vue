@@ -14,7 +14,7 @@
       </div>
       <!-- 联赛标题 -->
       <div class="title ellipsis allow-user-select">
-        {{ match_infoData.tn }}  {{ toggle_panel }} {{ utils.is_show_sr_flg(match_infoData) }}
+        {{ match_infoData.tn }}  {{ match_infoData }}
       </div>
       <div class="right-icon">
         <!-- 显示比分栏 -->
@@ -88,7 +88,7 @@ import {is_eports_csid}  from "src/core/constant/util/csid-util";
 import {utils}  from "src/core/index";
 // import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-// import info from 'src/components/match-detail/match_info/info.vue'
+import info from 'src/components/match-detail/match_info/info.vue'  
 // // 玩法tab条
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import { useRoute, useRouter } from "vue-router";
@@ -101,7 +101,8 @@ const props = defineProps({
   background_img: String,
   handicap_this: Object,  // 传给玩法集 tabs 的数据
   handicap_state: String, //玩法加载状态状态
-  is_request:Boolean //详情接口 是否请求中
+  is_request:Boolean, //详情接口 是否请求中
+  sportId:Number  //球类id
 });
 
 const toggle_panel = ref(true); //比分扳显示|隐藏
@@ -293,5 +294,39 @@ onUnmounted(() => {
       }
     }
   }
-
+  /* ************** 顶部标题 *************** -S */
+ 
+  /* ************** 顶部标题 *************** -E */
+  /* ************** 比分扳 *************** -S */
+  .head-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 190px;
+    background-size: cover !important;
+    color: #fff;
+    .info-upd {
+      z-index: 90;
+      justify-content: center;
+      ::v-deep .match_time {
+        .timer-layout2 {
+          width: 100%;
+          min-width: 42px;
+        }
+      }
+    }
+    .hide-btn {
+      position: absolute;
+      top: 13px;
+      right: 13px;
+      padding: 5px 6px;
+      border-radius: 13px;
+      background: rgba(31, 33, 41, 0.6);
+      cursor: pointer;
+      &:hover {
+        background: rgba(31, 33, 41, 0.8);
+        color: #fff;
+      }
+    }
+  }
 </style>
