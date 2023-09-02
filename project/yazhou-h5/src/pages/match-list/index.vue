@@ -464,7 +464,8 @@ const match_detail_m_list_init = () => {
   // } else if([1,3,30,100].includes(MenuData.current_menu)){
   //   MatchPage.get_match_data_list()
   // }
-  console.log(MatchPage.get_match_data_list())
+  // TODO: 逻辑待添加
+  MatchPage.get_match_data_list()
 }
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();

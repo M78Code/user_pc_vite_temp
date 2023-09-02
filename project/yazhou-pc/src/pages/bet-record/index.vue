@@ -12,7 +12,7 @@
     <!-- 注单历史 以及时间  注单历史头 -->
     <simple-header-wapper>
       <!-- 注单历史 -->
-      <span>{{ $t("common.note_single_history") }}</span>
+      <span>{{ i18n_t("common.note_single_history") }}</span>
     </simple-header-wapper>
     <div class="wrap-records" ref="record">
       <!--表格头部分 未结算已结算预约注单按钮tab-->
@@ -21,7 +21,7 @@
       <!-- 表格内容部分 包含勾选框-->
       <div class="bet-records col">
         <!-- 筛选框 -->
-        <filter-box
+        <!-- <filter-box
           :toolSelected="toolSelected"
           :time_sort_record_item="time_sort_record_item"
           :record_time_sort="record_time_sort"
@@ -32,10 +32,10 @@
           @chooseTime="chooseTime"
           @time_sort="time_sort"
           @check_change="check_change"
-        ></filter-box>
+        ></filter-box> -->
 
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
-        <template v-if="[0, 1].includes(toolSelected)">
+        <!-- <template v-if="[0, 1].includes(toolSelected)">
           <record-table
             ref="betRecord"
             :order_list="order_list"
@@ -50,9 +50,9 @@
             :random="random"
             :lang="lang"
           ></record-table>
-        </template>
+        </template> -->
         <!-- 预约记录表单 -->
-        <template v-else>
+        <!-- <template v-else>
           <record-book-table
             :order_list="order_list"
             :record_obj="record_obj"
@@ -64,18 +64,18 @@
             :random="random"
             :lang="lang"
           ></record-book-table>
-        </template>
+        </template> -->
       </div>
     </div>
 
     <!--选择时间的提示-->
-    <div class="tips" v-if="tips.statu">{{ tips.message }}</div>
+    <!-- <div class="tips" v-if="tips.statu">{{ tips.message }}</div> -->
   </div>
 </template>
 
 <script setup>
 // import { SimpleHeaderWapper } from "project_path/src/components/simple-header";
-// import btTab from "./components/btn-tab.vue";
+import btTab from "./components/btn-tab.vue";
 // import filterBox from "./components/filter-box.vue";
 // import recordTable from "./record-table/index.vue";
 // import recordBookTable from "./record_book_table.vue";
@@ -83,43 +83,17 @@ import lodash from "lodash";
 import { api_betting } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
-
-import { ref } from "vue";
+import { i18n_t } from "src/boot/i18n.js"
+import { onMounted, ref } from "vue";
 import { useConfig } from "./use-config.js";
 // 用户信息
 const toolSelected = ref(0);
 const is_pre_bet = ref(false); // 提前结算勾选
 const betRecord = ref(null);
 
-const {
-  params,
-  order_list,
-  is_book_status,
-  toolIndex,
-  old_page_size,
-  random,
-  time_sort_record_item,
-  record_time_sort,
-  startDateSearch,
-  endDateSearch,
-  model,
-  orderNo_data_obj,
-  orderNo_data_list,
-  data_state,
-  tips,
-  record_obj,
-  get_cashout_num,
-  send_cashout,
-  clear_timer_get_cashout,
-  clear_timer_get_book,
-  set_search_time,
-  res_timer_get_cashout,
-  clear_send_cashout,
-  check_confirm_complete,
-  get_order_no,
-  uid
-} = useConfig({ getOrderList });
 
+// useConfig({ getOrderList })
+// onMounted(() => useConfig(getOrderList))
 /**
  * @description:记录切换 结算、未结算
  * @param f 0:未结算 1:已结算 2:预约注单
@@ -373,7 +347,34 @@ const getOrderList = (isScoket, callback) => {
       }
     });
 };
-
+const {
+  params,
+  order_list,
+  is_book_status,
+  toolIndex,
+  old_page_size,
+  random,
+  time_sort_record_item,
+  record_time_sort,
+  startDateSearch,
+  endDateSearch,
+  model,
+  orderNo_data_obj,
+  orderNo_data_list,
+  data_state,
+  tips,
+  record_obj,
+  get_cashout_num,
+  send_cashout,
+  clear_timer_get_cashout,
+  clear_timer_get_book,
+  set_search_time,
+  res_timer_get_cashout,
+  clear_send_cashout,
+  check_confirm_complete,
+  get_order_no,
+  uid
+} = useConfig(getOrderList );
 /**
  * @description:预约
  * @param {callback} callback 回调方法

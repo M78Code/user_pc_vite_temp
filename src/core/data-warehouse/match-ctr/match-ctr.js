@@ -19,7 +19,7 @@
  * 
  * 
  */
-import _ from 'lodash'
+import lodash from "lodash";
 export default class MatchDataBase
 {
   /**
@@ -458,7 +458,7 @@ export default class MatchDataBase
    * @return {undefined} undefined
    */
   list_item_to_many_obj(item, many_obj){
-    if(_.get(item,'mid'))
+    if(lodash.get(item,'mid'))
     {
       // 快速查询对象mid_obj增加数据
       many_obj.mid_obj[this.get_format_quick_query_key(item.mid,item.mid,'mid')] = item;
@@ -468,7 +468,7 @@ export default class MatchDataBase
       let hps_data_arr = null
       hps_key_arr.forEach(hps_key_str => {
         // 设置投注项赛事列表数据
-        hps_data_arr = _.get(item, hps_key_str)
+        hps_data_arr = lodash.get(item, hps_key_str)
         switch (hps_key_str) {
           // 主玩副盘口数据时
           case 'hpsData[0].hpsAdd':
@@ -476,11 +476,11 @@ export default class MatchDataBase
           case 'hpsAdd':
           // 赛事详情所有玩法数据时
           case 'odds_info':
-            if (_.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
+            if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 // 检查是否有盘口数据
-                if (_.get(item2,'hl.length')) {
+                if (lodash.get(item2,'hl.length')) {
                   // 遍历盘口数据
                   item2.hl.forEach(item3 => {
                     if (item3) {
@@ -492,7 +492,7 @@ export default class MatchDataBase
                         // 快速查询对象hl_obj增加数据
                         many_obj.hl_obj[this.get_format_quick_query_key(item.mid,item3.hid,'hl')] = item3;
                       }
-                      if (_.get(item3, 'ol.length')) {
+                      if (lodash.get(item3, 'ol.length')) {
                         // 遍历投注项数据
                         item3.ol.forEach(item4 => {
                           // 处理ot是小数的情况,进行数据修正
@@ -528,13 +528,13 @@ export default class MatchDataBase
             }
             break;
           default:
-            if (_.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
+            if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
                 // 检查是否有盘口数据
-                if (_.get(item2,'hl.ol.length')) {
+                if (lodash.get(item2,'hl.ol.length')) {
                   // if(item2.hl.ol.forEach(item3 => {
-                  if(_.get(item2,'hl')){
+                  if(lodash.get(item2,'hl')){
                     let item3 = item2.hl;
                     if (item3) {
                       if (item3.hid) {
@@ -545,7 +545,7 @@ export default class MatchDataBase
                         // 快速查询对象hl_obj增加数据
                         many_obj.hl_obj[this.get_format_quick_query_key(item.mid,item3.hid,'hl')] = item3;
                       }
-                      if (_.get(item3, 'ol.length')) {
+                      if (lodash.get(item3, 'ol.length')) {
                         // 遍历投注项数据
                         item3.ol.forEach(item4 => {
                           // 处理ot是小数的情况,进行数据修正
@@ -591,10 +591,11 @@ export default class MatchDataBase
    * @return
    */
   set_list_from_match_details(match_details, is_merge){
+    
     if(match_details){
       if(is_merge){
         // 合并模式时,获取赛事信息
-        const match=_.get(this.list,'[0]');
+        const match=lodash.get(this.list,'[0]');
         if(match){
           // 进行数据合并
           this.merge_with(match,match_details);
@@ -618,14 +619,14 @@ export default class MatchDataBase
   set_quick_query_list_from_match_details(odds_info, is_merge){
     if(odds_info){
       if(is_merge){  // 合并模式时
-        const obj = _.get(this.quick_query_list,'[0].odds_info');
+        const obj = lodash.get(this.quick_query_list,'[0].odds_info');
         if(obj){
           this.merge_with(obj,odds_info);
           // 将要显示的赛事同步到快捷操作对象中
           this.list_to_quick_query_obj(this.quick_query_list);
         }
       } else {
-        const obj = _.get(this.quick_query_list,'[0]');
+        const obj = lodash.get(this.quick_query_list,'[0]');
         if(obj){
           obj.odds_info = odds_info;
           // 将要显示的赛事同步到快捷操作对象中
@@ -833,7 +834,7 @@ clear(any) {
       // 普通类型不做处理
     }
   }
-  _.mergeWith(old_obj, new_obj,customizer);
+  lodash.mergeWith(old_obj, new_obj,customizer);
 }
 
   /**

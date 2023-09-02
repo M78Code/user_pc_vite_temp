@@ -51,7 +51,7 @@
 
       <!-- 显示:00:00 || 节制  -->
       <span v-show="[0, 2].includes(inplay_match_type)">{{
-        counting_time_ctr_show_format(match_props.match, inplay_match_content)
+       utils.counting_time_ctr_show_format(match_props.match, inplay_match_content)
       }}</span>
     </template>
   </div>
@@ -62,15 +62,12 @@
 // import msc_mixin from "/mixins/common/msc.js";
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
-import {utils } from 'src/core/index.js';
+import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES} from 'src/core/index.js';
 import lodash from "lodash";
-import {
-  get_match_status,
-  counting_time_ctr_show_format,
-} from "src/core/utils/match-list-utils.js";
-import { format_second_ms } from "src/core/format/index.js";
-import { t } from "src/core/index.js";;
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+
+// import { format_second_ms } from "src/core/format/index.js";
+// import { t } from "src/core/index.js";;
+// import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { get_remote_time,format_date_base_obj } from "src/core/format/index.js"
 // const licia_format = require("licia/format");
 
@@ -99,7 +96,6 @@ export default {
       t:useI18n(),
       get_match_status,
       format_second_ms,
-      counting_time_ctr_show_format,
       // 滚球显示类型 -1：不显示, 0：00:00, 1：计时器, 2：节制  3：不显示
       inplay_match_type: 1,
       // 滚球显示00:00 || 节制

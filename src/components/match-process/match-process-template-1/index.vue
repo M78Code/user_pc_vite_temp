@@ -121,22 +121,21 @@
 
 <script setup>
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
-import {utils } from 'src/core/index.js';
 import matchDate from "src/components/match-date/match_date.vue";
 // import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
-  numberToChinese,
-} from "src/core/utils/match-list-utils.js";
+  utils,
+  i18n_t
+} from "src/core/index"
 import {
   useRegistPropsHelper,
 } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 useRegistPropsHelper(component_symbol, need_register_props);
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { t } from "src/core/index.js";;
+// import { i18n_t } from "src/core/index.js";;
 import lodash from "lodash";
-import { get_mmp_name } from "src/core/match-list-h5/match-utils/handle-score.js";
 
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
 
@@ -181,39 +180,39 @@ init_fill_time();
 // 获取阶段名称
 const computed_process_name = computed(() => {
   let { match } = this.match_props;
-  let process_name = get_mmp_name(match.csid, match.mmp) || "";
+  let process_name =utils.get_mmp_name(match.csid, match.mmp) || "";
 
   // 即将开赛
   if (match.ms == 110) {
-    process_name = t("common.match_soon");
+    process_name = i18n_t("common.match_soon");
   }
   // 滚球 && 未开赛
   else if (get_match_status(match.ms) && match.mmp == 0) {
     switch (Number(match.csid)) {
       // 足
       case 1:
-        process_name = t("common.up_half");
+        process_name = i18n_t("common.up_half");
         break;
       // 篮
       case 2:
         process_name =
-          match.mle == 17 ? t("common.up_half") : t("common.first_match");
+          match.mle == 17 ? i18n_t("common.up_half") : i18n_t("common.first_match");
         break;
       //棒球
       case 3:
-        process_name = t("mmp.3.401");
+        process_name = i18n_t("mmp.3.401");
         break;
       //冰球
       case 4:
-        process_name = t("mmp.4.1");
+        process_name = i18n_t("mmp.4.1");
         break;
       // 网球
       case 5:
-        process_name = t("mmp.5.8");
+        process_name = i18n_t("mmp.5.8");
         break;
       // 美式足球
       case 6:
-        process_name = t("mmp.6.13");
+        process_name = i18n_t("mmp.6.13");
         break;
       // 斯诺克
       case 7:
@@ -225,18 +224,18 @@ const computed_process_name = computed(() => {
       case 9:
       // 羽毛球
       case 10:
-        process_name = t("mmp.10.8");
+        process_name = i18n_t("mmp.10.8");
         break;
     }
 
     // 电竞
     if (utils.is_eports_csid(match.csid)) {
-      process_name = t("mmp.100.1");
+      process_name = i18n_t("mmp.100.1");
     }
   } else {
     // 篮球(2) && 赛制为 17分钟 && 第四节(100) ====> 阶段名称显示 "下半场"
     if (match.csid == 2 && match.mle == 17 && match.mmp == 100) {
-      process_name = t("mmp.2.2");
+      process_name = i18n_t("mmp.2.2");
     }
 
     // 斯诺克(7) 的滚球(21)
@@ -246,7 +245,7 @@ const computed_process_name = computed(() => {
   }
   // 篮球3X3滚球时显示"全场"
   if (match.csid == 2 && match.mle == 73 && get_match_status(match.ms)) {
-    process_name = t("mmp.2.21");
+    process_name = i18n_t("mmp.2.21");
   }
   //是否列表页棒球第X局，换行显示
   if (
@@ -363,10 +362,10 @@ const covert_mct = ({ mct, mmp, ms }) => {
   let new_num = mct;
 
   if (lang == "zh") {
-    new_num = numberToChinese(mct);
+    new_num = utils.numberToChinese(mct);
   }
   const licia_format = require("licia/format");
-  let rs = licia_format(t("mmp.7.x"), new_num);
+  let rs = licia_format(i18n_t("mmp.7.x"), new_num);
   return rs;
 };
 

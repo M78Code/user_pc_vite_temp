@@ -8,7 +8,7 @@
  */
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { esports_csid } from "../../constant/config/csid"
-// import { useRoute } from "vue-router"
+import { useRoute } from "vue-router"
 
 // import global_mixin from "project_path/src/pages/match-details/global_mixin.js";
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
@@ -28,14 +28,15 @@ const odds_coversion_map = {}
 /** 聊天室来源跟单盘口状况eu */
 // const vx_get_chat_room_type = {}
 
+const bet_chat_room_type = ''
 
 
 
 // created() {
-//   BetData.odds_coversion_map = store.getState().odds_coversion_map || {}
-//   BetData.vx_get_chat_room_type = store.getState().chat_room_type || {}
+//   odds_coversion_map = store.getState().odds_coversion_map || {}
+//   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
-export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
+export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
    * 是 对全局 赔率转换的 基础设定
@@ -48,24 +49,23 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr, csid) => {
   // PS-9881赔率优化
   let str = "";
   breakVal = ""; // 断档值废弃
-  let _route = useRoute.name
   // 从欧盘转到港盘
-  if (!arr || ['2'].includes(BetData.oddsTable[BetData.cur_odd]) && BetData.cur_odd == 'HK') {
-    str = BetData.calc_odds(val, csid);
+  if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
+    str = calc_odds(val, csid);
     //聊天室跟单特殊处理
-    if (arr && arr.includes(BetData.oddsTable[BetData.cur_odd]) || BetData.bet_chat_room_type == "HK") {
-      str = BetData.change_EU_HK(str);
+    if (arr && arr.includes(oddsTable[cur_odd]) || bet_chat_room_type == "HK") {
+      str = change_EU_HK(str);
     }
     return str;
   }
 
-  if (!arr || arr.includes(BetData.oddsTable[BetData.cur_odd]) && BetData.cur_odd) {
-    BetData.cur_odd == 'EU' ? str = BetData.calc_odds(val, csid) : str = BetData.compute_value_by_odd_type(breakVal ? breakVal : val, BetData.cur_odd, csid);
+  if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
+    cur_odd == 'EU' ? str = calc_odds(val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd, csid);
   } else {
-    str = BetData.calc_odds(val, csid);
+    str = calc_odds(val, csid);
   }
   return str;
-  // return BetData.get_accuracy(str);
+  // return get_accuracy(str);
 }
 //返回字符串保留两位小数,csid-赛种ID
 const calc_odds = (val, csid) => {
@@ -175,10 +175,10 @@ export const compute_value_by_odd_type = (val, odd_type, csid) => {
   }
 
   // 赔率类型错误
-  let index = _.findIndex(BetData.odds_constant, o => {
+  let index = _.findIndex(odds_constant, o => {
     return o.value == odd_type;
   });
-  val = BetData.calc_odds(val, csid);
+  val = calc_odds(val, csid);
   if (index < 0) {
     return val;
   }
@@ -189,14 +189,14 @@ export const compute_value_by_odd_type = (val, odd_type, csid) => {
   // 正常情况
   let obj = ``;
   let real = "";
-  obj = BetData.odds_coversion_map[`EU_${val}`];
+  obj = odds_coversion_map[`EU_${val}`];
   if (val <= 2.5) {
     // 1	1.01-2.50，以0.01为单位，相应赔率转换
   } else if (val <= 5) {
     // 2.5-5.0，以0.05为单位，相应赔率转换  3.478
     if (!obj) {
       real = (Math.floor(val * 100) - (val)) / 100;
-      obj = BetData.odds_coversion_map[`EU_${real}`];
+      obj = odds_coversion_map[`EU_${real}`];
     }
   } else if (val <= 10) {
     // 5.0-10，以x.2，x.5，x.7，x.0展示，相应赔率转化 5.478
@@ -214,26 +214,26 @@ export const compute_value_by_odd_type = (val, odd_type, csid) => {
       }
       real = Math.floor(val) + nnn_y / 10;
       // console.log(" real" + real);
-      obj = BetData.odds_coversion_map[`EU_${real}`];
+      obj = odds_coversion_map[`EU_${real}`];
     }
   } else if (val <= 20) {
     // 4   10-20，以0.5为单位，相应赔率转换   10.476
     // 10.476%5=0.47600000000000087
     if (!obj) {
       // real = (Math.floor(val * 10) - (Math.floor(val * 10) % 5)) / 10;
-      obj = BetData.odds_coversion_map[`EU_${real}`];
+      obj = odds_coversion_map[`EU_${real}`];
     }
   } else if (val <= 30) {
     // 5	20-30，以1为单位，相应赔率转换
     if (!obj) {
       real = Math.floor(val);
-      obj = BetData.odds_coversion_map[`EU_${real}`];
+      obj = odds_coversion_map[`EU_${real}`];
     }
   } else if (val <= 100) {
     // 6	30-100，以5为单位，相应赔率转换
     if (!obj) {
       real = Math.floor(val) - (val);
-      obj = BetData.odds_coversion_map[`EU_${real}`];
+      obj = odds_coversion_map[`EU_${real}`];
     }
   }
   // console.log("转换赔率数值所用的对象");

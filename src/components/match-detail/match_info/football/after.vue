@@ -197,9 +197,7 @@
 // import format from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import {
-  get_match_status
-} from "src/core/utils/match-list-utils.js";
+import { get_match_status } from 'src/core/utils/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import rs_hong from 'app/public/yazhou-pc/image/svg/rs_hong.svg'
 export default {
