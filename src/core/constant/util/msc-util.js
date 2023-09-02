@@ -323,7 +323,7 @@ export const get_match_score = (match) => {
  * @return {undefined} undefined
  */
 export const score_switch_handle = (match) => {
-  export const csid = Number(match.csid);
+  const csid = Number(match.csid);
   if (!_.has(match, "home_red_score")) {
     match.home_red_score = "";
   }

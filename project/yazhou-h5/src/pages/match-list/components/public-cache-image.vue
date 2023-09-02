@@ -9,7 +9,7 @@
  
 <script setup>
 import lodash from 'lodash'
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { get_file_path } from "src/core/file-path/file-path.js";
 // 默认联赛图标
@@ -104,7 +104,7 @@ const load_image_first_time = (params) => {
     image_src.value = full_path.value;
     show_image.value = true;
     load_img_success(params);
-    $nextTick(() => {
+    nextTick (() => {
       myImage = null;
     });
   };
@@ -113,7 +113,7 @@ const load_image_first_time = (params) => {
     image_src.value = default_url.value;
     show_image.value = true;
     load_img_error(params);
-    $nextTick(() => {
+    nextTick (() => {
       myImage = null;
     });
   };

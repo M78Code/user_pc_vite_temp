@@ -19,7 +19,7 @@
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
         :style="{display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none'}"
-        :src="get_theme.includes('theme01')?img1:img3" />
+        :src="UserCtr.theme.includes('theme01')?img1:img3" />
       <odd-column-item
         v-for="(ol_item,i) of ol_list"
         :key="i"
@@ -69,11 +69,11 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="get_theme.includes('theme02')">
+      <template v-if="UserCtr.theme.includes('theme02')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
-      <template v-if="get_theme.includes('theme01')">
+      <template v-if="UserCtr.theme.includes('theme01')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
@@ -141,8 +141,8 @@
       <!--  5分钟 图标  -->
       <div class="team-t-title-w" v-if="[1,3,5,7,8,9].includes(+match.csid) && lodash.size(lodash.get(five_minutes_all_list, 'hl[0].ol'))">
         <img @click="info_icon_click($event,match.mid)"
-             :src="show_tips ? (get_theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
-                  (get_theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
+             :src="show_tips ? (UserCtr.theme.includes('y0') ? `${ $g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon.svg`):
+                  (UserCtr.theme.includes('02') ? `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray2.svg` : `${ $g_image_preffix }/image/bw3/svg/match-list/information-icon-gray.svg`)" alt="">
         <span class="ellipsis">
           {{[1,2,7,10].includes(+match['ms']) ? i18n_t('football_playing_way.minutes_of_the_Xth_goal', {goalnr: minutes_of_the_Xth_goal}) : i18n_t('football_playing_way.any_goal')}}
         </span>
@@ -154,14 +154,16 @@
 </template>
  
 <script setup>
-import { computed, onMounted, onUnmounted } from "vue";
+import { ref, watch, computed, onMounted, onUnmounted } from "vue";
 import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
-// import odd_column_item from "./components/odd-column-item.vue";
+import oddColumnItem from "./odd-column-item.vue";
 import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import {MenuData } from "src/core/index.js"
+import { MenuData } from "src/core/index.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import PageSourceData  from  "src/core/page-source/page-source.js";
 
 const props = defineProps({
   // 赛事信息
@@ -170,7 +172,14 @@ const props = defineProps({
   main_source: String,
   invoke_source: String,
   // 当前选中的小节玩法
-  current_tab_item: Object,
+  current_tab_item: {
+    type: Object,
+    default: {
+      hps:[ {hl:[{}]} ],
+      title:'',
+      id: 19,
+    }
+  },
   hps: Array,
   // 波胆玩法的数据
   bold_all_list: null,
@@ -193,48 +202,38 @@ const show_lock_selected = ref(false);
 // 简版投注项选中时角球标志
 const index_show_map = ref({});
 const screen_changing_timer = ref(0);
+const get_newer_standard_edition = ref(PageSourceData.get_newer_standard_edition())
 
 const get_lang = ref(store_state.get_lang)
-const get_theme = ref(store_state.get_theme)
 const get_bet_list = ref(store_state.get_bet_list)
 const get_standard_odd_status = ref(store_state.get_standard_odd_status)
 const get_n_s_changed_loaded = ref(store_state.get_n_s_changed_loaded)
 const get_secondary_unfold_map = ref(store_state.get_secondary_unfold_map)
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_lang.value = new_state.get_lang
-  get_theme.value = new_state.get_theme
   get_bet_list.value = new_state.get_bet_list
   get_standard_odd_status.value = new_state.get_standard_odd_status
   get_n_s_changed_loaded.value = new_state.get_n_s_changed_loaded
   get_secondary_unfold_map.value = new_state.get_secondary_unfold_map
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 
 onMounted(() => {
-  standard_odd_status.value = get_standard_odd_status;
-  modify_overtime_status(get_standard_odd_status); // 初始化时也调用
+  modify_overtime_status(get_standard_odd_status.value); // 初始化时也调用
   emitters.value = {
-    emitter_2: useMittOn.on(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
   }
 });
 
 // 左右tab切换也要计算赔率
-watch(
-  () => hps,
-  (status) => {
-    modify_overtime_status(get_standard_odd_status);
-  }
-);
+watch( () => props.hps, (status) => {
+  modify_overtime_status(get_standard_odd_status.value);
+});
 
-watch(
-  () => get_standard_odd_status,
-  (status) => {
-    modify_overtime_status(status);
-  }
-);
+watch( () => get_standard_odd_status.value, (status) => {
+  modify_overtime_status(status);
+});
 
 // 5分钟第X个进球时分tips文本提示
 const minutes_of_the_Xth_goal = computed(() => {
@@ -271,19 +270,16 @@ const minutes_of_the_Xth_goal = computed(() => {
 
 // 显示新手版
 const show_newer_edition = computed(() => {
-  return (
-    get_newer_standard_edition == 1 ||
-    props.main_source == "detail_match_list"
-  );
+  return get_newer_standard_edition.value == 1 || props.main_source == "detail_match_list"
 });
 
 // 黑白色版，商户，图片显示判断
 const calculate_color = computed(() => {
   let flag = null;
-  if (get_theme.includes("y0")) {
+  if (UserCtr.theme.includes("y0")) {
     flag = Y0_img_white;
   } else {
-    get_theme.includes("theme01")
+    UserCtr.theme.includes("theme01")
       ? (flag = img2)
       : (flag = img4);
   }
@@ -642,7 +638,7 @@ const supplementary_spaces = (
   bodan_len
 ) => {
   for (let j = 0; j < all_bold_list_length; j++) {
-    if (all_bold_list[j].length < bodan_len) {current_tab_item
+    if (all_bold_list[j].length < bodan_len) {
       for (let x = all_bold_list[j].length; x < bodan_len; x++) {
         all_bold_list[j].push({ placeholder: 1 });
       }
@@ -710,11 +706,11 @@ const odd_wrapper_pan = ({ direction }) => {
 const get_hp_list = (type) => {
   if (type == 0) {
     let hps = [];
-    if (props.match && finally_ol_list) {
+    if (props.match && finally_ol_list.value) {
       if (props.match.csid == 12) {
-        hps = finally_ol_list.slice(0, 2);
+        hps = finally_ol_list.value.slice(0, 2);
       } else {
-        hps = finally_ol_list.slice(0, 3);
+        hps = finally_ol_list.value.slice(0, 3);
         for (let i = 3 - hps.length; i > 0; i--) {
           hps.push({
             hl: [{}],
@@ -725,11 +721,11 @@ const get_hp_list = (type) => {
     return hps;
   } else if (type == 1) {
     let hps = []; //
-    if (props.match && lodash.size(finally_ol_list) > 3) {
+    if (props.match && lodash.size(finally_ol_list.value) > 3) {
       if (props.match.csid == 12) {
-        hps = finally_ol_list.slice(3, 5);
+        hps = finally_ol_list.value.slice(3, 5);
       } else {
-        hps = finally_ol_list.slice(3, 6);
+        hps = finally_ol_list.value.slice(3, 6);
       }
     }
     return hps;

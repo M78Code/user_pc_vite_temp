@@ -408,8 +408,8 @@ onDeactivated(() => {
 
 onActivated(() => {
   emitters.value = {
-    emitter_1: useMittOn.on(MITT_TYPES.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
-    emitter_2: useMittOn.on(MITT_TYPES.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_INFO_ICON_CLICK, info_icon_click_h).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, tab_changing_handle).off,
   }
 })
 

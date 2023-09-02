@@ -348,7 +348,7 @@ const obj_bet_money = computed(() => {
   onUnmounted(() => {
     clear_timer()
 
-    useMittOn.on(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
+    useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
 
     for (const key in $data) {
       $data[key] = null
