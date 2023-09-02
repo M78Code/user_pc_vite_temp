@@ -62,7 +62,6 @@ const router = useRouter();
    * @return {undefined} undefined
    */
   const mx_autoset_active_match = (params = { mid: 0 }) => {
-    console.log(1111111111111111,menu_config)
     let { name: route_name, params: cur_parmas } = route;
     let return_status =
       (route_name === "video" && [3, 4, 5].includes(+cur_parmas.play_type)) ||
@@ -196,14 +195,14 @@ const router = useRouter();
         }
 
         // 切换右侧赛事
-        let playId = details_params.play_id;
-        store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
-          mid,
-          tid,
-          sportId,
-          playId,
-          media_type: "auto",
-        });
+        // let playId = details_params.play_id;
+        // store.dispatch("matchesReducer/SET_MATCH_DETAILS_PARAMS", {
+        //   mid,
+        //   tid,
+        //   sportId,
+        //   playId,
+        //   media_type: "auto",
+        // });
       });
     }
   };

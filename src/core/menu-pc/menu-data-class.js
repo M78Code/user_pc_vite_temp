@@ -2,7 +2,7 @@ import base_data_instance from "src/core/base-data/base-data.js";
 import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
 
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 
 const state = store.getState();
 // 热门除了50199-30199  赛事、50101-30101 竞足外，
@@ -69,16 +69,11 @@ class MenuData {
       esports_header: false, //电竞 菜单
     };
     // 中间 菜单的 点击之后的 列表请求 参数 配置
-    this.match_list_api_config = {
+    this.match_list_api_config = reactive({
       match_list: {
-        //lockie
-        params: {
-          euid: '3020101'
-        }
       },
       bymids: {},
-    };
-
+    })
     // 列表接口类型为赛事列表
     this.match_list_api_type = "match_list";
 
@@ -103,7 +98,7 @@ class MenuData {
    * @param {undefined} undefined
    */
   set_api_config_version(version) {
-    this.api_config_version.value = version;
+    this.api_config_version = version;
   }
 
   /**
@@ -629,7 +624,7 @@ class MenuData {
     //  //菜单切换是筛选数据置空
     // store.dispatch("set_filter_select_obj", []);
     this.match_list_api_config = match_list_api_config;
-
+    console.log('this.match_list_api_config', this.match_list_api_config);
     // 更新列表数据类型
     this.set_match_list_api_type(config);
 

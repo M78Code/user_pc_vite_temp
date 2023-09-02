@@ -28,8 +28,8 @@ let DEV_TARGET_ENV = "local_test";
 
  
 //本地开发 目标项目
-// let DEV_PROJECT_NAME = "yazhou-pc";
-let DEV_PROJECT_NAME = "yazhou-h5";
+let DEV_PROJECT_NAME = "yazhou-pc";
+// let DEV_PROJECT_NAME = "yazhou-h5";
 
 
 

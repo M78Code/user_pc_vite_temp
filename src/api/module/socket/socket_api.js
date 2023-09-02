@@ -16,7 +16,7 @@ export const get_socket_match_odds_info = (params, config={}, url = "/v1/w/getMa
 export const get_socket_handicap_by_hid = (params, config={}, url = "/v1/w/getHandicapByHid") => http.post(`${prefix}${url}`, params, config);
 
 // 根据赛事id 集查询赛事信息  PB
-let match_base_info_url = '/v1/w/structureMatchBaseInfoByMidsPB'
+let match_base_info_url = '/v1/w/structureMatchBaseInfoByMids'
 export const get_match_base_info_by_mids = (params, config={}, url = match_base_info_url) => 
 {
     config.axios_debounce_cache_key = 'get_match_base_info_by_mids';
