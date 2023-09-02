@@ -403,7 +403,7 @@ function handle_set_theme(theme) {
             width: 14px;
             height: 10px;
             display: inline-block !important;
-            background-image: url('public/image/png/lang_flag.png');
+            background-image: url('/public/yazhou-pc/image/png/lang_flag.png');
             background-position-x: 0;
             background-repeat: no-repeat;
             background-size: 100%;

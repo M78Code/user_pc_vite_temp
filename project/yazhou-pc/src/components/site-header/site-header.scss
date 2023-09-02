@@ -723,19 +723,19 @@
             }
 
             &.collapse-open {
-                background: url("~public/image/yabo/svg/collapse_up.svg") no-repeat center / cover;
+                background: url("public/image/svg/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide {
-                background: url("~public/image/yabo/svg/collapse_down.svg") no-repeat center / cover;
+            background: url("public/image/svg/collapse_down.svg") no-repeat center / cover;
             }
 
             &.collapse-open-y0 {
-                background: url("~public/image/yabo/svg/collapse_up.svg") no-repeat center / cover;
+                background: url("public/image/collapse_up.svg") no-repeat center / cover;
             }
 
             &.collapse-hide-y0 {
-                background: url("~public/image/yabo/svg/collapse_down_y0.svg") no-repeat center / cover;
+                background: url("public/image/yabo/collapse_down_y0.svg") no-repeat center / cover;
             }
         }
     }

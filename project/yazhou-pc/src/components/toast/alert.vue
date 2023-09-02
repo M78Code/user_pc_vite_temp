@@ -6,7 +6,7 @@
   <q-dialog v-model="is_show" :persistent="backDrop">
     <div class="dialog_content">
       <div class="alert-wrap">
-        <img :src="imgSrcp[lang]" alt="" width="100%">
+        <img :src="imgSrc[lang]" alt="" width="100%">
         <!-- <icon class="close" name="icon-close" @click="close_alert" size="10px" color="#99A3B1"></icon> -->
 
         <div class="row items-center  relative-position">
@@ -14,7 +14,7 @@
           <!-- 域名错误弹窗 -->
           <template v-if="is_domain_error">
             <div class="page-lost">
-              <img src="app/public/yazhou-pc/image/common/png/page_lost.png" alt="">
+              <img src="/public/yazhou-pc/image/common/png/page_lost.png" alt="">
               <div class="text1">{{ i18n_t('common.user_api_limited1') }}</div>
               <div class="text2">{{ i18n_t('common.user_api_limited2') }}</div>
             </div>
@@ -42,15 +42,15 @@ import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/
 import store from "src/store-redux/index.js";
 
 /* 退出登录通知-中文 */
-import logout_notice from 'app/public/yazhou-pc/image/logout_notice.png'
+const logout_notice = '/public/yazhou-pc/image/image/logout_notice.png'
 /* 退出登录通知-英文 */
-import logout_notice_en from 'app/public/yazhou-pc/image/logout_notice_en.png'
+const logout_notice_en = '/public/yazhou-pc/image/image/logout_notice_en.png'
 /* 退出登录通知-越南语 */
-import logout_notice_vi from 'app/public/yazhou-pc/image/logout_notice_vi.png'
+const logout_notice_vi = '/public/yazhou-pc/image/image/logout_notice_vi.png'
 /* 退出登录通知-泰语 */
-import logout_notice_th from 'app/public/yazhou-pc/image/logout_notice_th.png'
+const logout_notice_th = '/public/yazhou-pc/image/image/logout_notice_th.png'
 /* 退出登录通知-马来语 */
-import logout_notice_ma from 'app/public/yazhou-pc/image/logout_notice_ma.png'
+// const logout_notice_ma = '/public/yazhou-pc/image/image/logout_notice_ma.png'
 
 /** 国际化 */
 
@@ -70,7 +70,7 @@ const imgSrc = reactive({
   en: logout_notice_en,
   vi: logout_notice_vi,
   th: logout_notice_th,
-  ma: logout_notice_ma,
+  // ma: logout_notice_ma,
 })
 /* 是否域名错误弹窗 */
 const is_domain_error = ref(false)
@@ -281,7 +281,7 @@ function confirm() {
     border-radius: 22px;
     cursor: pointer;
     font-size: 18px;
-    background-image: url("~public/image/wwwassets/yabo/image/btn.svg");
+    background-image: url("/public/yazhou-pc/image/image/btn.svg");
     margin: 0 auto;
     background-size: contain;
     background-color: transparent !important;

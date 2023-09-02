@@ -5,11 +5,11 @@
 -->
 <template>
   <div class="video-zone-layout-err " v-if="show">
-    <!-- <img src="~/public/image/common/png/replay_icon.png" class="video-replay-icon" /> -->
+    <!-- <img src="/public/yazhou-pc/image/common/png/replay_icon.png" class="video-replay-icon" /> -->
     <div class="content">
       <div class="flex1"></div>
       <div class="box">
-        <div><img :src="replay_video_no_line"/></div>
+        <div><img src="/public/yazhou-pc/image/svg/replay_video_no_line.svg"/></div>
         <div class="txt">{{ $t('replay_video.iframe_err') }}</div>
       </div>
       <div class="flex1"></div>
@@ -19,7 +19,6 @@
 <script>
 
 import http from "src/core/http/axios-warpper.js";
-import replay_video_no_line from 'app/public/yazhou-pc/image/svg/replay_video_no_line.svg'
 export default {
   props:{
     url: String
