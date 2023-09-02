@@ -16,7 +16,7 @@ import { PageSourceData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
-// import * as api_websocket from "src/api/module/socket/socket_api.js";
+import * as api_websocket from "src/api/module/socket/socket_api.js";
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";
@@ -24,11 +24,11 @@ import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-car
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
 // import video from "src/core/video/video.js";
-// import { load_video_resources } from 'src/core/pre-load/module/pre-load-video.js'
+import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { compute_sport_id  } from 'src/core/constant/index.js'
-// import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
-// import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
+import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
+import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
 // import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
 import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
@@ -38,9 +38,10 @@ import store from "src/store-redux/index.js";
 const route = useRoute() || {};
 let state = store.getState();
 const { page_source } = PageSourceData;
-const { mx_use_list_res, mx_list_res } = process_composable_fn;
-
-
+const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
+const { update_collect_data, mx_collect_count } = collect_composable_fn;
+const { show_mids_change } = ws_composable_fn();
+const { load_video_resources } = pre_load_video
 // 赛事主列表容器卡片逻辑处理类
 const match_list_card = ref(MatchListCardClass);
 // 赛事主列表容器卡片逻辑处理类
@@ -72,7 +73,10 @@ let get_match_list_timeid;
 let hot_match_list_timeout;
 let show_refresh_mask;
 let current_hash_code;
+let axios_debounce_timer;
 let axios_debounce_timer2;
+let virtual_list_timeout_id;
+let switch_timer_id
 
 const match_tpl_component = computed(() => {
 	let match_tpl;
@@ -373,7 +377,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 		route.name != "details" && match_scroll_utils.set_scroll_top(0);
 	}
 	let match_api = MenuData.match_list_api_config.match_list || {};
-	console.log('match_api.api_name', match_api.api_name);
 	// 设置列表接口 和 参数
 	let api = api_match['post_league_list'];
 	let _params = lodash.clone(match_api.params) || {};
@@ -466,7 +469,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 };
 
 const handle_destroyed = () => {
-	clearTimeout(this.axios_debounce_timer);
+	clearTimeout(axios_debounce_timer);
 	clearTimeout(axios_debounce_timer2);
 	clearInterval(check_match_last_update_timer_id);
 	for (let key in timer_obj.value) {
@@ -476,28 +479,28 @@ const handle_destroyed = () => {
 	if (hot_match_list_timeout) {
 		clearTimeout(hot_match_list_timeout);
 	}
-	this.debounce_throttle_cancel();
-	useMittOn("match_list_show_mids_change", show_mids_change()).off();
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data).off();
+	// this.debounce_throttle_cancel();
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change()).off();
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data()).off();
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count()).off();
 	// 站点 tab 休眠状态转激活
 	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active()).off();
-	clearTimeout(this.virtual_list_timeout_id);
-	clearTimeout(this.switch_timer_id);
+	clearTimeout(virtual_list_timeout_id);
+	clearTimeout(switch_timer_id);
 	clearTimeout(get_match_list_timeid);
 	// 调用列表接口
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off();
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids()).off();
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off();
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
 	match_list_card.value = {};
 	timer_obj.value = {};
 }
 
-onMounted(() => {
-	// 开启自动化测试功能
+const mounted_fn = () => {
+// 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
-	match_list_data.init();
+	match_list_data.value.init();
 	check_match_last_update_timer_id = setInterval(
 		check_match_last_update_time(),
 		30000
@@ -512,42 +515,41 @@ onMounted(() => {
 		data: false,
 	});
 	api_error_count.value = 0;
-	is_vr_numer.value = 0;
+	// is_vr_numer.value = 0;
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT_CMD, update_collect_data);
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_COUNT2_CMD, mx_collect_count());
 	// 站点 tab 休眠状态转激活
 	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active());
 	// 调用列表接口
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
-	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids());
-	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match());
-	useMittOn("match_list_show_mids_change", show_mids_change());
+	// useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
+	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change());
 	load_video_resources();
-});
+}
 
+// watch(MenuData.match_list_api_config.version, (cur) => {
+// 		// bug 版本没有变化 也可以进入
+// 		if (MenuData.api_config_version != cur) {
+// 			MenuData.set_api_config_version(cur);
+// 			// is_loading.value = false
+// 			// 清除过滤条件
+// 			// this.vx_set_remove_filter_condition()
+// 			// 获取赛事列表数据、check_match_last_update_timer_id = setInterval(
+// 			fetch_match_list();
+// 			// 设置联赛吸顶高度
+// 			set_sticky_top();
+// 			// setTimeout(()=>{
+// 			//   is_loading.value = true
+// 			// },100)
+// 		}
+// 	},
+// 	{ deep: true }
+// );
 
-watch(MenuData.match_list_api_config.version, (cur) => {
-		// bug 版本没有变化 也可以进入
-		if (MenuData.api_config_version != cur) {
-			MenuData.set_api_config_version(cur);
-			// is_loading.value = false
-			// 清除过滤条件
-			// this.vx_set_remove_filter_condition()
-			// 获取赛事列表数据、check_match_last_update_timer_id = setInterval(
-			fetch_match_list();
-			// 设置联赛吸顶高度
-			set_sticky_top();
-			// setTimeout(()=>{
-			//   is_loading.value = true
-			// },100)
-		}
-	},
-	{ deep: true }
-);
-
-onUnmounted(() => {
-	handle_destroyed()
-});
+// onUnmounted(() => {
+// 	handle_destroyed()
+// });
 
 /**
  * // 处理服务器返回的 列表 数据   fetch_match_list
@@ -713,16 +715,11 @@ const on_refresh = () => {
  * @param  {function} callback 回调函数
  * @return {undefined} undefined
  */
-const api_bymids = (
-	{ is_first_load, is_show_mids_change, is_league_first, mids, inner_param },
-	callback
-) => {
-	if (
-		((handle_destroyed() || MenuData.is_virtual_sport()) &&
-			route.name !== "search") ||
-		(this.$options.name !== "HotMatchList" &&
-			["details", "video"].includes(route.name))
-	) {
+const api_bymids = ({ is_first_load = true, is_show_mids_change, is_league_first, mids, inner_param }, callback) => {
+	debugger;
+  let panduan_1 = (handle_destroyed() || MenuData.is_virtual_sport())
+  let panduan_2 = (this.$options.name !== "HotMatchList" && ["details", "video"].includes(route.name))
+	if (( panduan_1 && route.name !== "search") || panduan_2 ) {
 		return;
 	}
 	// 联赛结构类型列表 首次加载拉前12场赛事
@@ -898,7 +895,7 @@ const api_bymids = (
 			});
 	};
 	// 虚拟体育不用拉最新信息合并
-	if (MenuData.cur_menu_type.type_name !== "virtual_sport") {
+	if (page_source !== "virtual_sport") {
 		const by_mids_debounce_cache =
 			axios_debounce_cache.get_match_base_info_by_mids;
 		if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {
@@ -913,8 +910,8 @@ const api_bymids = (
 			} else {
 				// 记录timer
 				current_hash_code = 0;
-				clearTimeout(this.axios_debounce_timer);
-				this.axios_debounce_timer = setTimeout(() => {
+				clearTimeout(axios_debounce_timer);
+				axios_debounce_timer = setTimeout(() => {
 					//直接发请求    单次数 请求的方法
 					by_mids_fun();
 					current_hash_code = 0;
@@ -1001,10 +998,8 @@ const set_load_data_state = (data) => {
  * @param {undefined} undefined
  */
 const check_match_last_update_time = () => {
-	console.log(111);
-
 	// 非滚球 今日 不检查
-	if (!["play", "today"].includes(MenuData.cur_menu_type.type_name)) {
+	if (!["play", "today"].includes(page_source)) {
 		return;
 	}
 	let mids = [];
@@ -1098,7 +1093,7 @@ const get_match_list_by_mid_for_base_data_res = (mid, csid, type) => {
 	return matchs_list;
 };
 
-const match_list_mx_fn = () => {
+const useMatchListMx = () => {
 	return {
 		match_list,
 		is_loading,
@@ -1116,7 +1111,9 @@ const match_list_mx_fn = () => {
 		check_match_last_update_time,
 		set_home_loading_time_record,
 		get_match_list_by_mid_for_base_data_res,
+		mounted_fn,
+		api_bymids,
 	};
 };
 
-export default match_list_mx_fn();
+export default useMatchListMx;

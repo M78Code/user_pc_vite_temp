@@ -1,3 +1,5 @@
+import { ref } from 'vue';
+
 import lodash from 'lodash';
 
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
@@ -10,7 +12,7 @@ import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from
 let is_virtual = MenuData.is_virtual_sport;
 //
 let is_search = PageSourceData.is_search();
-
+let is_show_hot = ref(false);
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
  * @param {object} data   服务器返回数据
@@ -31,7 +33,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
 	if (code == 200 && all_league_list.length > 0) {
-		this.is_show_hot = false;
+		is_show_hot.value = false;
 		// 设置收藏数量
 		if (this.vx_filter_select_obj.length > 0) {
 			// 只有预加载会传 true
@@ -101,7 +103,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			// 静默拉取列表 设置数据加载状态
 			this.load_data_state = "data";
 			// 更新可视区域赛事盘口数据
-			this.show_mids_change();
+			show_mids_change();
 		} else {
 			if (MenuData.is_guanjun()) {
 				// 冠军玩法 调用接口切换右侧
@@ -120,9 +122,9 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					this.regular_events_set_match_details_params(cut, params);
 				};
 			}
-			this.load_data_state = "data";
+			console.log(11111111);
 			// 调用bymids更新前12场赛事
-			this.api_bymids(
+			api_bymids(
 				{ is_league_first: true, inner_param: true },
 				callback_func
 			);
@@ -278,11 +280,11 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
  * @return {undefined} undefined
  */
 const mx_use_list_res = (data, backend_run, cut, collect) => {
-	console.log('lockie_test_console', MenuData.is_virtual_sport);
+	console.log('lockie_test_console', data);
 	let code = lodash.get(data, "code");
 	clearTimeout(virtual_composable_fn.virtual_list_timeout_id);
 	// 赛事列表
-	let match_list = lodash.get(data, "data.data.livedata");
+	let match_list = lodash.get(data, "data.livedata");
 	if (!match_list) {
 		match_list = lodash.get(data, "data");
 	}
@@ -310,8 +312,8 @@ const process_composable_fn = () => {
 
   }
 }
-export default {
-	mx_use_list_res,
-	mx_list_res,
-}
-// export default process_composable_fn
+// export default {
+// 	mx_use_list_res,
+// 	mx_list_res,
+// }
+export default process_composable_fn

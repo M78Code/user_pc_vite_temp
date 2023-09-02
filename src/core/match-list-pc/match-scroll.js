@@ -63,7 +63,7 @@ const matchlist = {
    * @param {undefined} undefined
   */
   show_mids_change(){
-    window.vue.useMittEmit('match_list_show_mids_change')
+    useMittEmit('EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE')
   },
   /**
    * @Description 初始化列表加载时间 

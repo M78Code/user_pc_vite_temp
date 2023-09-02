@@ -1,12 +1,15 @@
+import { ref } from 'vue';
 import { api_details } from "src/api/index";
 import lodash from 'lodash'
 import { MITT_TYPES, useMittEmit } from "../../mitt";
 const { DOMAIN_RESULT, BUILD_VERSION } = window.BUILDIN_CONFIG;
+  // 是否已加载视频动画资源
+let is_load_video_resources = ref(false)
+let timer_load_video = null
+
 let pre_load_video = {
   // 是否加载播放器js
   is_load_player_js: false,
-  // 是否已加载视频动画资源
-  is_load_video_resources: false,
   /**
    * @Description 加载视频播放器js
    * @param {undefined} undefined
@@ -29,13 +32,13 @@ let pre_load_video = {
    * @param {undefined} undefined
    */
   load_video_resources() {
-    if (this.is_load_video_resources) return;
-    this.is_load_video_resources = true;
-    if (this.timer_load_video) {
-      clearTimeout(this.timer_load_video);
-      this.timer_load_video = null;
+    if (is_load_video_resources.value) return;
+    is_load_video_resources.value = true;
+    if (timer_load_video) {
+      clearTimeout(timer_load_video);
+      timer_load_video = null;
     }
-    this.timer_load_video = setTimeout(() => {
+    timer_load_video = setTimeout(() => {
       api_details.post_video_refer().then((res) => {
         // 获取视频动画域名
         let video_src =

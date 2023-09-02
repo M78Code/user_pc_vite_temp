@@ -4,7 +4,7 @@ import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { UserCtr } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
+// import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import { t } from "src/core/index.js";
 
 // 收藏数量
@@ -309,5 +309,21 @@ const collect_composable_fn =(props)=>{
 
     }
 }
+export default {
+  // 收藏数量
+  collect_count,
+  // 数据请求状态
+  load_data_state,
+  // 设置收藏数量
+  set_collect_count,
+  //赛事收藏数量
+  mx_collect_count,
+  //联赛收藏
+  mx_collect_leagues,
+  //更新收藏数据
+  update_collect_data,
+  //收藏联赛、赛事
+  mx_collect
+}
 
-export default  collect_composable_fn
+// export default  collect_composable_fn

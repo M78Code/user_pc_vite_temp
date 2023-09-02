@@ -1,10 +1,5 @@
 import { ref } from "vue";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { UserCtr } from "src/core/index.js";
-import { i18n_t} from "src/core/index.js";
-import {  PageSourceData  } from "src/core/index.js";
-import MatchListCard from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
+// import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 
 import {utils } from 'src/core/index.js';
 
@@ -17,6 +12,8 @@ const show_mids = ref([]);
 const socket_name = ref("match_list");
 // 是否静默运行(socket、refresh按钮)
 const backend_run = ref(false);
+
+const load_data_state = ref(null);
 // 订阅所需 盘口ID
 const skt_hpid = ref("");
 const ws_c8_subscribe = () => {
@@ -103,12 +100,12 @@ const refresh_c8_subscribe = () => {
 		 */
 const show_mids_change = () => {
 	// 列表没加载完 不执行
-	if (this.load_data_state != "data") {
+	if (load_data_state != "data") {
 		return;
 	}
 	// 重新订阅C8
-	this.refresh_c8_subscribe();
-	this.api_bymids({ is_show_mids_change: true });
+	refresh_c8_subscribe();
+	// api_bymids({ is_show_mids_change: true });
 }
 
 const ws_composable_fn = () => {

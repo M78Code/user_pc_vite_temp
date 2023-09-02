@@ -5,7 +5,7 @@
  */
 
 import {http} from "src/core/http/index.js";
-let prefix = window.BUILDIN_CONFIG.api.API_PREFIX_JOB;
+let prefix = 'yewu11';
 let project_name = window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME
 
 // 赛事详情玩法信息
