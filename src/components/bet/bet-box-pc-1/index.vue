@@ -27,6 +27,7 @@
 import { ref,onMounted } from "vue"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
+import lodash from 'lodash'
 // import BetDataCtrClass from "src/core/bet/bet-data-ctr-class.js";
 // import BetUpdData from "src/core/bet/module/upd_data.js";
 
@@ -67,7 +68,7 @@ const toggle_merge = () => {
   // 取消合并
   if (!BetData.is_bet_merge && len > 1) {
     let id = BetData.bet_single_list[len - 1];
-    let bet_single_obj = _.cloneDeep(_.get(BetData.bet_single_obj, `${id}`));
+    let bet_single_obj = lodashcloneDeep(lodashget(BetData.bet_single_obj, `${id}`));
     BetDataCtrClass.bet_single_clear();
     BetDataCtrClass.set_bet_single_list([id]);
     bet_single_obj.key = id;

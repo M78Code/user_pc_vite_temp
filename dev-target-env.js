@@ -9,7 +9,7 @@ let DEV_TARGET_ENV = "local_test";
 // 局域网  压力测试环境
 // DEV_TARGET_ENV = "local_ylcs";
 // 局域网  测试环境
-DEV_TARGET_ENV = "local_test";
+// DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
@@ -28,8 +28,8 @@ DEV_TARGET_ENV = "local_test";
 
  
 //本地开发 目标项目
-let DEV_PROJECT_NAME = "yazhou-pc";
-// let DEV_PROJECT_NAME = "yazhou-h5";
+// let DEV_PROJECT_NAME = "yazhou-pc";
+let DEV_PROJECT_NAME = "yazhou-h5";
 
 
 

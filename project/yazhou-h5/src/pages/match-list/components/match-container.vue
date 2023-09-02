@@ -451,7 +451,10 @@
           <!-- cisd:1 足球， 2 篮球， 5 网球， 7 斯诺克， 8 乒乓球 -->
           <match-overtime-pen v-if="!['detail_match_list', 'home_hot_page_schedule'].includes(main_source) &&
             [1, 2, 5, 7, 8].includes(+match.csid) &&
-            get_newer_standard_edition != 1" :main_source="main_source" :matchCtr="matchCtr" :i="i" />
+            get_newer_standard_edition != 1" 
+            :main_source="main_source" 
+            :matchCtr="matchCtr" 
+            :i="i" />
         </div>
       </div>
     </div>
@@ -460,19 +463,19 @@
 
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import { useRouter, useRoute } from 'vue-router'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import countingTimer from 'project_path/src/components/common/counting-down.vue';
+import countingDownSecond from 'project_path/src/components/common/counting-down.vue';
 import countingDownStart from 'project_path/src/components/common/counting-down-start.vue';
 import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
-// import scoreList from './score-list.vue';
-// import oddListWrap from './odd-list-wrap.vue';
-// import matchOvertimePen from './match-overtime-pen.vue'
+import scoreList from './score-list.vue';
+import oddListWrap from './odd-list-wrap.vue';
+import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t } from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
@@ -1482,7 +1485,7 @@ const gen_collapse_key = (match) => {
  */
 const set_scroll_top = (scrollTop) => {
   clearTimeout(scroll_top_timer)
-  $nextTick(() => {
+  nextTick (() => {
     scroll_top_timer = setTimeout(() => {
       let matchId = 'mid-' + get_goto_detail_matchid
       const mid_dom = $refs[matchId]

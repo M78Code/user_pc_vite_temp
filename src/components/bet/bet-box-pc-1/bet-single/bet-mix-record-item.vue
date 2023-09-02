@@ -24,15 +24,15 @@
         <div class="row">
           <div class="col bet-play-game">
             <!--玩法名称以及盘口-->
-            <label class="bet-play-text"><template v-if="match_type===2"><label class="bet-match-playing">[{{ $t('menu.match_playing')}}]</label></template>{{_.trim(item_obj.playName)}}<template v-if="item_obj.scoreBenchmark!='' && match_type===2">({{item_obj.scoreBenchmark.replace(':','-')}})</template><label class="bet-handicap-name">[{{ $t('odds')[item_obj.marketType]}}]</label></label>
+            <label class="bet-play-text"><template v-if="match_type===2"><label class="bet-match-playing">[{{ $t('menu.match_playing')}}]</label></template>{{lodash.trim(item_obj.playName)}}<template v-if="item_obj.scoreBenchmark!='' && match_type===2">({{item_obj.scoreBenchmark.replace(':','-')}})</template><label class="bet-handicap-name">[{{ $t('odds')[item_obj.marketType]}}]</label></label>
           </div>
           <div class="col-auto"></div>
         </div>
         <div class="row no-wrap">
           <div class="col bet-play-team yb-fontsize14">
             <!--投注项名称(可能待盘口值或者比分等)-->
-            <template v-if="!_.isEmpty(item_obj.playOptionName)">
-              <span class="part-one">{{part1}}</span><span class="part-two">{{_.trim(part2)}}</span>
+            <template v-if="!lodash.isEmpty(item_obj.playOptionName)">
+              <span class="part-one">{{part1}}</span><span class="part-two">{{lodash.trim(part2)}}</span>
             </template>
           </div>
         </div>
@@ -53,6 +53,7 @@
 <script setup>
 // import bet_mix_record_item from "src/public/mixins/bet/bet_mix_record_item.js";
 import { format_odds  } from "src/core/index.js";
+import lodash from 'lodash'
 </script>
 <style lang="scss" scoped>
 /*  卡片样式 */

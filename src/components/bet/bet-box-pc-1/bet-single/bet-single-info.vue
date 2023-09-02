@@ -6,7 +6,7 @@
   <q-card flat class="relative-position bet-card bet-single-item-card"
     :class="{'bet-no-effect':!(active == 1 || active == 4)}">
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <div class="cathectic-appoint" v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div>
+    <div class="cathectic-appoint" v-if="!lodash.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->
@@ -80,14 +80,14 @@
             <!--卡赫利赛哈特 -->
             <div class="bet-team-handicap">
               <template v-if="handicap!==''">
-                {{_.trim(team_name)}}
+                {{lodash.trim(team_name)}}
                 <template v-if="team_name != handicap && !['225','224','235','27','362'].includes(play_id)">
-                  <label class="yb-number-bold " :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change ,'handicap': !(['341','342','7','20','102','13'].includes(play_id))}">{{_.trim(handicap)}}
+                  <label class="yb-number-bold " :class="{'margin-left-0': team_name=='','bet-handicap': handicap_change ,'handicap': !(['341','342','7','20','102','13'].includes(play_id))}">{{lodash.trim(handicap)}}
                   </label>
                 </template>
               </template>
               <template v-else>
-                {{_.trim(team_name)}}
+                {{lodash.trim(team_name)}}
               </template>
               <!--【预约】-->
               <label v-if="active == 1 && (sport_id == 1 || sport_id == 2)&& pending_order_status == 1 && appoint">{{`[${i18n_t('bet.bet_book2')}]`}}</label>
@@ -124,7 +124,7 @@
             </div>
           </div>
         </template>
-        <template v-else-if="(play_mapping.MARKET_FLAG_LIST.includes(play_id) || play_mapping.BASKETBALL_BY_APPOINTMENT.includes(play_id)) && (appoint && (_.trim(team_name)!='' && handicap != '' ) || handicap=='0') && get_open_value">
+        <template v-else-if="(play_mapping.MARKET_FLAG_LIST.includes(play_id) || play_mapping.BASKETBALL_BY_APPOINTMENT.includes(play_id)) && (appoint && (lodash.trim(team_name)!='' && handicap != '' ) || handicap=='0') && get_open_value">
           <div class="row yb-flex-center book-content">
             <!--预-->
             <div class="col-2">{{ $t('bet.bet_dish')}}</div> 
@@ -312,6 +312,7 @@
 <script setup>
 // import bet_single_info from "src/public/mixins/bet/bet_single_info";
 import { format_odds } from'src\core\format\index.js'
+import lodash from 'lodash'
 const props = defineProps({
   is_forward: {
       type:Number,

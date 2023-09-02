@@ -1,5 +1,6 @@
 import BetData from "./class/bet-data-class.js";
 import SetData from "src\core\bet\bet-data-ctr-class.js";
+import lodash from 'lodash'
 
 
 
@@ -19,12 +20,12 @@ const fetch_limit_money = (res_obj) => {
 
     function result_handle(res) {
 
-        if (!_.get(res, 'data[0]') || res.code != 200) {
+        if (!lodash.get(res, 'data[0]') || res.code != 200) {
             return
         }
 
         if (BetData.mix_bet_flag) { // 串关
-            let S = _.cloneDeep(BetData.get_s_count_data);
+            let S = lodash.cloneDeep(BetData.get_s_count_data);
             S.forEach(item => {
                 res.data.forEach(item2 => {
                     if (item.id == item2.type) {

@@ -5,7 +5,7 @@
 	<q-card flat class="relative-position bet-multiple bet-card"
   >
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <div class="cathectic-appoint" v-if="!_.isEmpty(BetData.bet_appoint_obj)"></div>
+    <div class="cathectic-appoint" v-if="!lodash.isEmpty(BetData.bet_appoint_obj)"></div>
 		<q-card-section>
       <!--竖线以及多项单注-->
 			<div class="row">
@@ -77,6 +77,7 @@
 // import betting from "src/public/mixins/betting/betting.js";
 import BetKeyboard from "../common/bet-keyboard.vue";
 import { format_currency } from'src\core\format\index.js'
+import lodash from 'lodash'
 
 </script>
 <style scoped lang="stylus">

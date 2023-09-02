@@ -5,7 +5,7 @@
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div class="home home-page" :class="[home_class && `${home_class} white-font`,
-  handicapNum && tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
+ tabIndex == 1 && 'white-background hot-bg', tabIndex == 2 && 'live-bg']" v-if="!tianzhuan">
     <!-- 头部tab 选项卡 -->
     <div class="flex justify-between align_items home-tab">
       <ul>
@@ -22,12 +22,13 @@
     </div>
 
     <!-- 顶部切换 下边的内容组件  @hook:mounted="get_hot_tab_item_handle" -->
-    <component :is=currentContent></component>
+    <!-- <component :is='currentContent'></component> -->
+    <hot />
   </div>
 </template>
 
 <script>
-import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）
+import home from "./first-page/index.vue";  // 包网3首页下边（轮播 + 跑马灯 + 赛事框）  榴莲千层盒子（小）300p
 // import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import hot from "src/pages/home/hot/index.vue";    // 热门页入口主页面
 import hot from "./hot/index.vue";    // 热门页入口主页面
@@ -45,7 +46,6 @@ import store from "src/store-redux/index.js"
 
 
 
-console.error(store.getState());
 const { homeReducer } = store.getState()
 
 
@@ -62,6 +62,10 @@ export default defineComponent({
         // _set_current_menu(null);
       });
   },
+  components:{
+    home,
+    hot,
+  },
   setup() {
      // 首页头部 tab 选项卡内容
   // 选项卡选择中的下标
@@ -75,6 +79,13 @@ export default defineComponent({
   // 下划线是否 要动画
   let add_animation = ref(true)
   let tabs_active_bar = ref(null)
+
+
+
+  const compList = ref({
+    home,
+    hot,
+  })
 
 
 

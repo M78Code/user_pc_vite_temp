@@ -5,7 +5,7 @@
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetDataCtr.is_bet_single }">
     <!-- 投注记录 ------------------------->
     <div
-      v-if="bet_recode_this && vx_layout_left_show == 'bet_history' && _.get(bet_recode_this, 'record_data.records.length') > 0">
+      v-if="bet_recode_this && vx_layout_left_show == 'bet_history' && lodash.get(bet_recode_this, 'record_data.records.length') > 0">
       <template v-if="bet_recode_this.total_page > bet_recode_this.cur_page">
         <div class="row cursor-pointer" style="padding-top: 10px">
           <div class="col text-center load-more" @click="bet_recode_this.load_more">
@@ -317,6 +317,7 @@ import { ref, onMounted } from "vue"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
 import { format_currency } from'src\core\format\index.js'
+import lodash from 'lodash'
 
 
 const props = defineProps({
