@@ -34,7 +34,7 @@ const PROJECT_MAP = {
 
 
 //提取项目名称对应是数字
-const   PROJECT_NUM  = PROJECT.split("_")[1];
+const   PROJECT_NUM  = PROJECT.split("-")[1];
 
 
 
@@ -74,7 +74,11 @@ function get_date_format() {
 }
 //服务器端 配置文件 路径 
 //暂时取全量-1.json  差量的 -2.json
-const SERVER_CONFIG_FILE_PATH = `https://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${final_version}-1.json`;
+// const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/20230903/project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan-1.json`;
+const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${final_version}-1.json`;
+// console.log(get_date_format(),'get_date_formatget_date_format');
+// console.log(final_version,'final_versionfinal_version');
+// console.log(SERVER_CONFIG_FILE_PATH,'SERVER_CONFIG_FILE_PATH');
 
 
  
