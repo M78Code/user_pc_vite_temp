@@ -78,7 +78,7 @@
 import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
 import recordTable from "./record-table/index.vue";
-// import recordBookTable from "./record_book_table.vue";
+import recordBookTable from "./record-book-table.vue";
 import lodash from "lodash";
 import { api_betting } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
@@ -372,7 +372,8 @@ const {
   clear_send_cashout,
   check_confirm_complete,
   get_order_no,
-  uid
+  uid,
+  getBook_gcuuid,
 } = useConfig(getOrderList );
 /**
  * @description:预约
@@ -395,15 +396,15 @@ const getBookList = (callback) => {
     jumpFrom: 2,
     preOrderStatusList: preOrderStatusList,
   };
-  getBook_gcuuid = uid();
-  param.gcuuid = getBook_gcuuid;
+  getBook_gcuuid.value = uid();
+  param.gcuuid = getBook_gcuuid.value;
   // console.log('get_book_record_data==getBookList==',JSON.stringify(param));
   api_betting
     .post_book_list(param)
     .then((res) => {
       // console.log('get_book_record_data==getBookList==res===', getBook_gcuuid == res.config.gcuuid);
       let gcuuid = lodash.get(res, "config.gcuuid");
-      if (gcuuid && getBook_gcuuid != gcuuid) {
+      if (gcuuid && getBook_gcuuid.value != gcuuid) {
         return;
       }
       let code = lodash.get(res, "data.code");

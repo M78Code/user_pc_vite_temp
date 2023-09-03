@@ -131,17 +131,18 @@
         </div>
       </div>
     </div>
+    {{toolSelected + '-+-' + UserCtr.user_info.settleSwitch}}
     <!-- 预约注单tab 进行中 已取消 预约失败  勾选框 -->
     <div v-if="toolSelected === 2 && UserCtr.user_info.settleSwitch">
       <!-- 勾选框 -->
       <div class="checkbox">
         <!--联赛筛选单选框组件-->
-        <!-- <FilterRadioFullVersionWapper
+        <filter-radio-full-version-wapper
           :check_list="check_list"
           :default_value="default_value"
           :checkbox_style="checkbox_style"
           @check_change="check_change"
-        /> -->
+        />
       </div>
     </div>
   </div>

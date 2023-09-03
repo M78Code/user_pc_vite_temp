@@ -84,6 +84,7 @@ export const useConfig = (getOrderList) => {
       message: "",
     },
     has_confirm_status: "", //设置确认中状态为true
+    getBook_gcuuid: '',
   });
   watch(
     () => state.model,

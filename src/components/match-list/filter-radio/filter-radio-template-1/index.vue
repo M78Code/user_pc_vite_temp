@@ -8,17 +8,35 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import { ref, defineProps } from 'vue';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  check_list: {
+    type: Array,
+    default: () => [],
+  },
+  //初始化选中
+  default_value: {
+    type: String,
+    default: () => "",
+  },
+  //赛果单选框样式
+  checkbox_style: {
+    type: Object,
+    default: () => {},
+  },
+})
+
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+console.error(props);
 const check_value = ref('');
 check_value.value = props.default_value || '';
-
+// console.error(check_list);
 const check_change = (value) => {
   check_value.value = value
   useMittEmit(MITT_TYPES.EMIT_CHANGE_CHECK, check_value.value)
