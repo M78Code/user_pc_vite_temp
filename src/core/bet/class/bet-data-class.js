@@ -1,8 +1,8 @@
-import {  MenuData  } from "src/core/index.js";
-import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 
-import   {fileds_map_common}  from "src/core/index.js"
+import { fileds_map_common }  from "src/core/constant/config/fileds-map.js"
 class BetData {
   constructor() { }
   init_core() {

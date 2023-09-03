@@ -83,7 +83,7 @@ const data_list = ref([])
 onMounted(() => {
   setTimeout(() => {
     data_list.value = props.matchCtr.list
-  }, 1000)
+  }, 500)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
