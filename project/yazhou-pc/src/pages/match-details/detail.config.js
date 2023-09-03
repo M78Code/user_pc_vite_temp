@@ -268,7 +268,6 @@ export const useGetConfig = () => {
       state.is_request = true;
       api_(params)
         .then((res) => {
-          
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
           useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
@@ -889,7 +888,7 @@ export const useGetConfig = () => {
     //   let { mid, csid: sportId, tid } = route.params;
     // path: "/details/:mid/:tid/:csid",
     
-      state.mid = '236831945881759745'; // 赛事id
+      state.mid = '3531447'; // 赛事id
       state.sportId = 1; // 赛种 id
       // 电竞不用切右侧
       if (!is_eports_csid(1)) {

@@ -16,9 +16,9 @@
     </div>
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <!-- 内嵌版时间信息显示 -->
-    <template v-if="is_iframe">
+    <template v-if="utils.is_iframe">
       <template v-if="right">
-        <div :class="is_iframe ? 'show_row' : ''">
+        <div :class="utils.is_iframe ? 'show_row' : ''">
           <div
             v-show="
               get_match_status(match_props.match.ms) ||
@@ -72,7 +72,7 @@
     </template>
     <!-- 非内嵌版时间信息显示 -->
     <div
-      v-if="!is_iframe"
+      v-if="!utils.is_iframe"
       v-show="
         get_match_status(match_props.match.ms) ||
         [3, 4].includes(1 * match_props.match.ms) ||
@@ -90,7 +90,7 @@
     </div>
     <match-date
       :rows="date_rows"
-      v-if="computed_show_date && !is_iframe"
+      v-if="computed_show_date && !utils.is_iframe"
       :match_props="match_props"
       :match_list_data="match_list_data"
       class="date-wrap"
@@ -126,15 +126,16 @@ import matchDate from "src/components/match-date/match_date.vue";
 import {
   get_match_status,
   utils,
-  i18n_t
+  i18n_t,
+  score_switch_handle
 } from "src/core/index"
+import {get_mmp_name} from "src/core/format/module/format-msc.js"
 import {
   useRegistPropsHelper,
 } from "src/composables/regist-props/index.js";
 import { component_symbol, need_register_props } from "../config/index.js";
 useRegistPropsHelper(component_symbol, need_register_props);
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-// import { i18n_t } from "src/core/index.js";;
 import lodash from "lodash";
 
 // mixins: [global_mixin, msc_mixin, time_format_mixin],
@@ -161,6 +162,7 @@ const props = defineProps({
   right: Boolean,
 });
 ;
+console.log(props.match_props.match,'match_props');
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {
@@ -174,14 +176,44 @@ const cur_mmp_time = ref(0); // 当前阶段时间(秒数)
 const cur_fill_time = ref(0); // 补充时间(秒数)
 const cur_fill_second = ref(0); // 补充的分钟
 
+/**
+ * 显示补时时间
+ */
+ const show_fill_time = computed(() => {
+  let { match, source } = props.match_props;
+  // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
+  let football_mmp = ["6", "7", "41", "42"];
+  return (
+    source &&
+    match.csid == 1 &&
+    get_match_status(match.ms, [110]) &&
+    football_mmp.includes(match.mmp) &&
+    match.mststs == 1
+  );
+});
+
+/**
+ * 初始化补充时间
+ */
+ const init_fill_time = (skt_mid) => {
+  let { mid, mmp, csid } = props.match_props.match;
+  if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
+    return;
+  }
+  // 补充时间(倒计时部分)
+  cur_fill_time.value = lodash.get(props.match_props, "match.mstst") || 0;
+  // 当前阶段对应的正常时间(在第多少分钟时结束)
+  cur_mmp_time.value = mmp_time_obj.value[csid][mmp];
+  // 补充时间(+分钟部分) (补时多少分钟)
+  cur_fill_second.value = lodash.get(props.match_props, "match.mststi") || 0;
+};
 useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
 init_fill_time();
 
 // 获取阶段名称
 const computed_process_name = computed(() => {
-  let { match } = this.match_props;
-  let process_name =utils.get_mmp_name(match.csid, match.mmp) || "";
-
+  let { match } = props.match_props;
+  let process_name =get_mmp_name(match.csid, match.mmp) || "";
   // 即将开赛
   if (match.ms == 110) {
     process_name = i18n_t("common.match_soon");
@@ -289,21 +321,7 @@ const computed_show_date = computed(() => {
   return show;
 });
 
-/**
- * 显示补时时间
- */
-const show_fill_time = computed(() => {
-  let { match, source } = props.match_props;
-  // 足球需要显示不是时间的阶段 6:上半场 7:下半场 41:加时赛上半场 42:加时赛下半场
-  let football_mmp = ["6", "7", "41", "42"];
-  return (
-    source &&
-    match.csid == 1 &&
-    get_match_status(match.ms, [110]) &&
-    football_mmp.includes(match.mmp) &&
-    match.mststs == 1
-  );
-});
+
 
 const mstst = computed(() => {
   return props.match_props.match.mstst;
@@ -381,21 +399,7 @@ const count_down_change = (obj) => {
   }
 };
 
-/**
- * 初始化补充时间
- */
-const init_fill_time = (skt_mid) => {
-  let { mid, mmp, csid } = props.match_props.match;
-  if ((skt_mid && skt_mid != mid) || !show_fill_time.value) {
-    return;
-  }
-  // 补充时间(倒计时部分)
-  cur_fill_time.value = lodash.get(props.match_props, "match.mstst") || 0;
-  // 当前阶段对应的正常时间(在第多少分钟时结束)
-  cur_mmp_time.value = mmp_time_obj.value[csid][mmp];
-  // 补充时间(+分钟部分) (补时多少分钟)
-  cur_fill_second.value = lodash.get(props.match_props, "match.mststi") || 0;
-};
+
 
 onUnmounted(() => {
   mmp_time_obj.value = {};
