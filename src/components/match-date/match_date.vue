@@ -10,7 +10,7 @@
       v-if="
         ([3, 4].includes(Number(match_props.match.mcg)) ||
           before_timeout ||
-          utils.is_eports_csid(match_props.match.csid)) &&
+          is_eports_csid(match_props.match.csid)) &&
         !get_match_status(match_props.match.ms)
       "
     >
@@ -63,6 +63,8 @@
 // import time_format_mixin from "/mixins/common/time_format";
 import timer from "src/components/timer/timer.vue";
 import {utils,get_match_status,i18n_t,format_second_ms ,t,useMittEmit, useMittOn, MITT_TYPES} from 'src/core/index.js';
+import {is_eports_csid}  from "src/core/constant/util/csid-util";
+console.log(is_eports_csid,'is_eports_csid');
 import lodash from "lodash";
 
 // import { format_second_ms } from "src/core/format/index.js";
@@ -93,7 +95,7 @@ export default {
   data() {
     return {
       utils,
-      t:useI18n(),
+      is_eports_csid,
       get_match_status,
       format_second_ms,
       // 滚球显示类型 -1：不显示, 0：00:00, 1：计时器, 2：节制  3：不显示
@@ -120,7 +122,7 @@ export default {
         Number(this.match_props.match.mgt)
       );
       var date_obj = format_date_base_obj(_mgt);
-      let rs_date = this.t("time.time_date_5")
+      let rs_date = i18n_t("time.time_date_5")
         .replace("mm", date_obj.m)
         .replace("dd", date_obj.d)
         .replace("hh", date_obj.h)
@@ -228,7 +230,7 @@ export default {
           break;
       }
       // 电竞
-      if (this.utils.is_eports_csid(csid)) {
+      if (is_eports_csid(csid)) {
         // 第一节 第二节 第三节 第四节 .....
         mmps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         if (mmps.includes(mmp)) {
@@ -313,7 +315,7 @@ export default {
       // 水球（16）显示为  < X分钟
       if (csid == 16) {
         let mins = _cur_time / 60;
-        obj.time_str = this.t("match_info.match_date_format").replace("%s", mins);
+        obj.time_str = i18n_t("match_info.match_date_format").replace("%s", mins);
       }
       // 足球计算15分钟玩法阶段 根据倒计时计算15分钟玩法阶段 避免时间改变赛事阶段切换延迟
       if (
@@ -347,13 +349,13 @@ export default {
       let time_tmp = (match_start_time - now_time) / 1000;
       if (time_tmp < 60) {
         //一分钟之内
-        obj.time_str = 1 + this.t("list.after_time_start2");
+        obj.time_str = 1 + i18n_t("list.after_time_start2");
       } else {
         //大于一分钟的提示
         obj.time_str =
           Math.floor(parseInt(time_tmp / 60)) +
           " " +
-          this.t("list.after_time_start2");
+          i18n_t("list.after_time_start2");
       }
     },
 
@@ -367,7 +369,7 @@ export default {
       let { match } = this.match_props;
       let csid = Number(match.csid);
       /** 足球 | 手球 | 橄榄球************************************* */
-      if (this.utils.get_match_status(match.ms)) {
+      if (get_match_status(match.ms)) {
         if ([1, 11, 14].includes(csid)) {
           // [中场休息,即将加时,加时中场休息,点球大战,准备点球大战,比赛中断,比赛放弃时,	第四节结束,加时赛结束,点球大战结束]——不显示
           if ([31, 32, 33, 34, 50, 80, 90, 110, 120].includes(mmp)) {
@@ -411,7 +413,7 @@ export default {
           } else {
             this.inplay_match_type = 1;
           }
-        } else if (this.utils.is_eports_csid(csid)) {
+        } else if (is_eports_csid(csid)) {
           //  未开赛    开赛时间为 0
           if (mmp == 0 || match.mst == 0) {
             this.inplay_match_type = 0;

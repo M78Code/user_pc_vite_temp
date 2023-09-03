@@ -42,7 +42,7 @@ export const get_mmp_name = (sport_id, mmp) => {
   if (!sport_id) {
     return '';
   }
-  return i18n_t('mmp')[parseInt(sport_id)][mmp];
+  return i18n_t(`mmp.${parseInt(sport_id)}.${mmp}`);
 }
 /**
  * @description: 获取S1比分
@@ -706,7 +706,7 @@ export const foot_ball_score_handle = (match) => {
       msc_dict = ["S5", "S2", "S1", "S7"];
     }
   }
-  full_msc(match, msc_dict);
+  // full_msc(match, msc_dict);
   let result = foot_basket_ball(match);
   if (match.msc_s_format) {
     let sorted = [];

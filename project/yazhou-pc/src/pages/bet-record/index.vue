@@ -21,7 +21,7 @@
       <!-- 表格内容部分 包含勾选框-->
       <div class="bet-records col">
         <!-- 筛选框 -->
-        <!-- <filter-box
+        <filter-box
           :toolSelected="toolSelected"
           :time_sort_record_item="time_sort_record_item"
           :record_time_sort="record_time_sort"
@@ -32,10 +32,10 @@
           @chooseTime="chooseTime"
           @time_sort="time_sort"
           @check_change="check_change"
-        ></filter-box> -->
+        ></filter-box>
 
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
-        <!-- <template v-if="[0, 1].includes(toolSelected)">
+        <template v-if="[0, 1].includes(toolSelected)">
           <record-table
             ref="betRecord"
             :order_list="order_list"
@@ -50,7 +50,7 @@
             :random="random"
             :lang="lang"
           ></record-table>
-        </template> -->
+        </template>
         <!-- 预约记录表单 -->
         <!-- <template v-else>
           <record-book-table
@@ -74,10 +74,10 @@
 </template>
 
 <script setup>
-// import { SimpleHeaderWapper } from "project_path/src/components/simple-header";
+// import SimpleHeaderWapper from "project_path/src/components/site-header/simple-header.vue";
 import btTab from "./components/btn-tab.vue";
-// import filterBox from "./components/filter-box.vue";
-// import recordTable from "./record-table/index.vue";
+import filterBox from "./components/filter-box.vue";
+import recordTable from "./record-table/index.vue";
 // import recordBookTable from "./record_book_table.vue";
 import lodash from "lodash";
 import { api_betting } from "src/api/index";
