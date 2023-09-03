@@ -70,7 +70,7 @@ function get_date_format() {
   const _y = _date.getFullYear();
   const _m = _date.getMonth() + 1;
   const _d = _date.getDate();
-  return `${_y}${_m > 9 ? _m : "0" + _m}${_d}`;
+  return `${_y}${_m > 9 ? _m : "0" + _m}${_d > 9 ?_d: "0"+_d }`;
 }
 //服务器端 配置文件 路径 
 //暂时取全量-1.json  差量的 -2.json
@@ -91,6 +91,8 @@ let MERCHANT_CONFIG_INFO = {};
 // 商户配置 输出目录
 let write_folder = "./job/output/merchant";
 let file_path = `${write_folder}/config.json`;
+//本地商户配置
+let local_file_path = `./job/default-config/merchant-config-${DEV_PROJECT_NAME}.json`;
  
 
 //确保配置 输出目录存在
@@ -104,8 +106,11 @@ const merge_and_output_final_config = (scg) => {
     project: PROJECT_NAME,
     write_file_date: Date.now(),
   };
+  console.log(add_obj,'add_objadd_obj');
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);
   write_file(file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
+  // 写入本地对应的商户配置
+  write_file(local_file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
 };
 /**
  * 获取 服务器上 当前商户的 版本配置
@@ -113,21 +118,22 @@ const merge_and_output_final_config = (scg) => {
 const get_config_info = async () => {
   // API 对外文档 的 单个 版本的详情 获取地址
   try {
-    console.log(SERVER_CONFIG_FILE_PATH)
     let res = await axios.get(SERVER_CONFIG_FILE_PATH);
     let { data } = res;
     if (data) {
-      
       merge_and_output_final_config(data);
     }
   } catch (error) {
     console.log("获取 服务器上 当前商户的 版本配置 出错");
   }
 };
-if (MODULE_SDK_VERSION) {
-    // 获取 服务器上 当前商户的 版本配置
-    get_config_info();
+// 暂时都获取服务器上 当前商户的 版本配置 写入本地
+get_config_info();
+// if (MODULE_SDK_VERSION) {
+//   // 获取 服务器上 当前商户的 版本配置
+//   get_config_info();
 
-} else {
-  merge_and_output_final_config({});
-}
+// } else {
+
+//   merge_and_output_final_config({});
+// }

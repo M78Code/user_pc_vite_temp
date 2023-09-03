@@ -36,7 +36,7 @@ let DEV_PROJECT_NAME = "yazhou-pc";
 
 // 这里不一般配置为空 
 //代码内配置死的    构建 zip 版本参数    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程 
-let  DEV_TARGET_VERSION ="project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan-3.zip";
+let  DEV_TARGET_VERSION ="project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan";
 
 // 打包 亚洲版 PC（新版)   试玩环境  
 // DEV_TARGET_VERSION ="project_4-0b1d5ec0284611eea47c132df8d8e15d-1691927205605-shiwan";
