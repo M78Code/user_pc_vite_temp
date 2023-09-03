@@ -222,13 +222,13 @@ import { t } from "src/boot/i18n.js";;
 
 
 // 队标视图
-let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))
+// let teamImg = defineAsyncComponent(() => import("project_path/src/pages/details/team-img.vue"))
 // 全屏播放时，顶部title
-let titleX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/title-x.vue"))
+// let titleX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/title-x.vue"))
 // 事件类型菜单
-let tab = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/tabs.vue"))
+// let tab = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/tabs.vue"))
 // 精彩回放视频滚动列表
-let sliderX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/slider-x.vue"))
+// let sliderX = defineAsyncComponent(() => import("project_path/src/pages/analysis-matches/components/slider-x.vue"))
 
 directives(
   // 对阵文案过长时，无限滚动展示
