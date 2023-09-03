@@ -42,7 +42,7 @@ import { LayOutMain_pc } from "src/core/index.js";
 import "./main-layout.js"; //初始化数据
 // import { debounce } from "lodash";
 /**组件*/
-// import { SearchWapper } from 'src/components/search'
+import { SearchWapper } from 'src/components/search'
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";

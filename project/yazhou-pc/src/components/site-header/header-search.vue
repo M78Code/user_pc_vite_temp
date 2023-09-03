@@ -54,12 +54,6 @@ const is_iframe = ref(utils.is_iframe);
 
 /** stroe仓库 */
 const { searchReducer, menuReducer } = store.getState();
-const unsubscribe = store.subscribe(() => {
-  search_isShow.value = searchReducer.search_isShow
-  menu_collapse_status.value = menuReducer.menu_collapse_status
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -70,6 +64,13 @@ const search_isShow = ref(searchReducer.search_isShow)
  * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+const unsubscribe = store.subscribe(() => {
+  const { searchReducer: new_searchReducer, menuReducer: new_menuReducer} = store.getState();
+  search_isShow.value = new_searchReducer.search_isShow
+  menu_collapse_status.value = new_menuReducer.menu_collapse_status
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /** 搜索热推赛事 */
 const search_hot_push = ref(new SearchHotPush());
@@ -83,7 +84,6 @@ const set_search_status = (data) => (store.dispatch({
 /** 展开搜索 */
 function show_search() {
   // if (!globalAccessConfig.get_searchSwitch()) {
-  console.error('totototottotot');
   if (!globalAccessConfig.config_default.searchSwitch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
