@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/components/skeleton/index.vue'
+import skeleton from './index.vue'
 import { useRouter } from "vue-router"
 let router = useRouter()
 const props = defineProps({

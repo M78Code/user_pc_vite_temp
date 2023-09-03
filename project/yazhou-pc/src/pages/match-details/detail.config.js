@@ -18,17 +18,15 @@ import details from "src/core/match-detail/match-detail-pc/match-detail";
 // 搜索操作相关控制类
 import search from "src/core/search-class/search.js";
 console.log(search,'search');
-// 赛事详情页面信息操作类 这个类暂时不知道从哪里来
-// import MatchInfoCtr from "src/core/match-list-pc/data-class-ctr/match-info-ctr";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache";
 import { useRoute, useRouter } from "vue-router";
 import { axios_loop } from "src/core/http/index.js";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { pre_load_video } from "src/core/pre-load/index";
-import { format_plays, format_sort_data } from "src/core/format/index";
+// import { format_plays, format_sort_data } from "src/core/format/index";
 import { formatTime } from "src/core/format/index.js"
-import {MatchDataWarehouse_PC_Detail_Common} from "src/core/index"; 
+import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 
 export const useGetConfig = () => {
@@ -270,7 +268,6 @@ export const useGetConfig = () => {
       state.is_request = true;
       api_(params)
         .then((res) => {
-          
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
           useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
@@ -891,7 +888,7 @@ export const useGetConfig = () => {
     //   let { mid, csid: sportId, tid } = route.params;
     // path: "/details/:mid/:tid/:csid",
     
-      state.mid = 3531410; // 赛事id
+      state.mid = '3531447'; // 赛事id
       state.sportId = 1; // 赛种 id
       // 电竞不用切右侧
       if (!is_eports_csid(1)) {

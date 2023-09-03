@@ -40,7 +40,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue"
 import { useRouter } from "vue-router";
 
 import store from "src/store-redux/index.js";
-import {utils } from 'src/core/index.js'
+import {utils,LayOutMain_pc } from 'src/core/index.js'
 
 import { useMittEmit, useMittOn, MITT_TYPES } from 'src/core/mitt/index.js'
 
@@ -73,15 +73,6 @@ const bet_item_position_timer = ref(0);
 const emits = defineEmits([
   "on_scroll",
 ]);
-
-
-
-const {
-  vx_layout_list_size,
-} = store.getState();
-
-
-
 
 /**
  * @description 响应 头部尺寸变化
@@ -136,7 +127,7 @@ const on_footer_change = ({ height }) => {
 const set_footer_position = () => {
   // 监听滚动变化触发逻辑
   if (props.observer_middle) {
-    let left_height = vx_layout_list_size.height;
+    let left_height = LayOutMain_pc.layout_content_height;
     //mac上面
     let dis = 5;
     if (/macintosh|mac os x/i.test(navigator.userAgent)) {

@@ -20,7 +20,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('list.corner')}}</q-tooltip>
+          >{{i18n_t('list.corner')}}</q-tooltip>
           <!-- 角球 -->
           <div class="result-icon rs_jiao_quan"></div>
         </div>
@@ -30,7 +30,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.yellow_card')}}</q-tooltip>
+          >{{i18n_t('icon_tips.yellow_card')}}</q-tooltip>
           <!-- 黄牌 -->
           <div class="result-icon yellow_card"></div>
         </div>
@@ -40,7 +40,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.red_card')}}</q-tooltip>
+          >{{i18n_t('icon_tips.red_card')}}</q-tooltip>
           <!-- 红牌 -->
           <div class="result-icon red_card"></div>
         </div>
@@ -50,7 +50,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.penalty_kick')}}</q-tooltip>
+          >{{i18n_t('icon_tips.penalty_kick')}}</q-tooltip>
           <!-- 点球 -->
           <div class="result-icon rs_dian"></div>
         </div>
@@ -62,7 +62,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('common.half_1')}}</q-tooltip>
+          >{{i18n_t('common.half_1')}}</q-tooltip>
           <!-- 上半场 -->
           <div class="result-icon rs_jin_shang"></div>
         </div>
@@ -72,7 +72,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.overall')}}</q-tooltip>
+          >{{i18n_t('icon_tips.overall')}}</q-tooltip>
           <!-- 全场 -->
           <div class="result-icon rs_jin_quan"></div>
         </div>
@@ -82,7 +82,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.overtime_goal')}}</q-tooltip>
+          >{{i18n_t('icon_tips.overtime_goal')}}</q-tooltip>
           <!-- 加时赛进球 -->
           <div class="result-icon add_time"></div>
         </div>
@@ -91,7 +91,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-          >{{$t('icon_tips.penalty_shootout')}}</q-tooltip>
+          >{{i18n_t('icon_tips.penalty_shootout')}}</q-tooltip>
           <!-- 点球大战进球 -->
           <icon class="result-icon" name="icon-jia-dian" size="15px"></icon>
         </div>
@@ -111,7 +111,7 @@
           <div class="yb-flex-center" v-if="is_show_home_goal">
             <div class="yb-goal-gif"></div>
             <!-- 进球 -->
-            <div class="gif-text">{{$t('common.goal')}}</div>
+            <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
           <img class="red-flash" :class="{active:is_show_home_red}" style="margin-left:5px" :src="rs_hong">
@@ -156,10 +156,10 @@
           <div class="yb-flex-center" v-if="is_show_away_goal">
             <div class="yb-goal-gif"></div>
             <!-- 进球 -->
-            <div class="gif-text">{{$t('common.goal')}}</div>
+            <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌动画 -->
-          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="app/public/yazhou-pc/image/svg/rs_hong.svg">
+          <img class="red-flash" :class="{active:is_show_away_red}" style="margin-left:5px" src="/yazhou-pc/image/svg/rs_hong.svg">
         </div>
         <div class="info-data">
           <!-- 角球总比分 -->
@@ -197,9 +197,9 @@
 // import format from "src/project/yabo/mixins/match_details/index";
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status } from 'src/core/utils/index'
+import { get_match_status,i18n_t } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
-import rs_hong from 'app/public/yazhou-pc/image/svg/rs_hong.svg'
+import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
 export default {
   components: {
     "match-date":MatchProcessFullVersionWapper,
@@ -212,6 +212,7 @@ export default {
   },
   data() {
     return {
+      i18n_t,
       lodash,
       rs_hong,
       timestamp: 0,//当前时间戳
@@ -464,7 +465,7 @@ export default {
       }
       .result-icon {
         // 这里改成用精灵图
-        background-image: url('~public/image/common/png/sports_play_icon.png');
+        background-image: url('/yazhou-pc/image/common/png/sports_play_icon.png');
         background-repeat: no-repeat;
         width: 14px;
         height: 14px;

@@ -6,6 +6,7 @@
     class="c-main-menu column"
     :class="{ 'bet-menu-upd': MenuData.layout_left_show == 'bet_history' }"
   >
+ 
     <v-scroll-area
       ref="ref_bet_scroll_area"
       position="menu"
@@ -17,6 +18,10 @@
       <template v-slot:header>
         <!-- 昵称、余额 -->
         <main-header />
+
+        {{ MenuData.menu_data_version }}
+
+        {{ MenuData.layout_left_show  }} ---  {{ bet_count }} -- {{ bet_record_count }} --
 
         <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
           <!-- 投注记录 入口 -->
@@ -31,15 +36,10 @@
               投注记录
               <!-- {{ $t("common.betting_record") }} -->
             </div>
-            <span class="bet-count" v-show="count > 0">{{ count }}</span>
+            <span class="bet-count" v-show="bet_record_count > 0">{{ bet_record_count }}</span>
           </div>
           <!-- 单/串关投注栏 入口 -->
-          <template
-            v-if="
-              show_bet_menu &&
-              !['bet_history'].includes(MenuData.layout_left_show)
-            "
-          >
+          <template v-if=" bet_count && !['bet_history'].includes(MenuData.layout_left_show) ">
             <div
               @click="change_left_menu('bet_list')"
               class="menu-item menu-top item-bet menu-border"
@@ -63,16 +63,9 @@
           </template>
         </div>
         <!-- 返回菜单|单关串关按钮切换 -->
-        <template
-          v-if="['bet_list', 'bet_history'].includes(MenuData.layout_left_show)"
-        >
-          <template v-if="BetData.is_virtual_bet">
-            <!-- <virtual-bet-scroll-header :bet_recode_this="bet_recode_this"/> -->
-          </template>
-
-          <template v-else>
-            <!-- <bet-scroll-header :bet_recode_this="bet_recode_this"/> -->
-          </template>
+        <template v-if="['bet_list', 'bet_history'].includes(MenuData.layout_left_show)">
+          <!-- 投注栏 -->
+          <bet-box-wapper use_component_key="bet_box_pc_1" />
         </template>
       </template>
 
@@ -84,30 +77,7 @@
       <div v-if="MenuData.layout_left_show == 'bet_history'" class="col">
         <bet-record-view @set_scroll_this="set_scroll_this" />
       </div>
-      <!-- 投注栏 -->
-      <bet-box-wapper use_component_key="bet_box_pc_1" />
-
-      <!-- 滚动：尾部 --------------------------------->
-      <template
-        v-slot:footer
-        v-if="!['bet_history'].includes(MenuData.layout_left_show)"
-      >
-        <template v-if="BetData.is_virtual_bet">
-          <!-- <virtual-bet-scroll-footer
-                      v-show="MenuData.layout_left_show != 'menu'"
-                      :bet_recode_this="bet_recode_this"
-                      :bet_this="bet_this"
-                    /> -->
-        </template>
-
-        <template v-else>
-          <!-- <bet-scroll-footer
-                      v-show="MenuData.layout_left_show != 'menu'"
-                      :bet_recode_this="bet_recode_this"
-                      :bet_this="bet_this"
-                    /> -->
-        </template>
-      </template>
+    
     </v-scroll-area>
     <!--提示区域-->
     <q-tooltip
@@ -135,20 +105,19 @@
 </template>
 
 <script setup>
-
-// // 通屏垂直滚动
-import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
-
 import { ref, onMounted, computed } from "vue";
 import _ from "lodash";
 
 import MainHeader from "./main-header.vue";
 import LeftMainMenu from "./menu/index.vue";
+import { BetBoxWapper } from "src/components/bet";
+// // 通屏垂直滚动
+import vScrollArea from "../../components/v-scroll-area/v-scroll-area.vue";
+
 // import betRecordView from "../bet-record/index.vue";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { MenuData } from "src/core/index.js";
-import { BetBoxWapper } from "src/components/bet";
-
+import { api_betting } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 import bet_record from "/public/yazhou-pc/image/png/bet-record.png";
@@ -157,31 +126,10 @@ onMounted(() => {
   get_unsettle_tickets_count_config();
 });
 
-// 是否显示投注菜单
-const show_bet_menu = computed(() => {
-  if (MenuData.layout_left_show != "bet_list" && bet_count > 0) {
-    // today今日 play滚球 early早盘 hot_one热门赛事  winner_top冠军  hot热门赛事
-    if (
-      BetData.is_bet_single &&
-      ["today", "play", "early", "hot_one", "winner_top", "hot"].includes(
-        MenuData.cur_menu_type.type_name
-      )
-    ) {
-      return true;
-    } else if (BetData.bet_list.length > 0) {
-      return true;
-    }
-    /**
-          else if(MenuData.cur_menu_type.type_name=='bet' && bet_series_list.length>0) {
-          return true;
-        }
-         */
-  }
-  return false;
-});
+const bet_record_count = ref(0)
 
 // 投注数量
-const bet_count = () => {
+const bet_count = computed(()=>{
   // 是否虚拟体育投注
   if (BetData.is_virtual_bet) {
     return BetData.virtual_bet_list.length;
@@ -190,16 +138,17 @@ const bet_count = () => {
   if (BetData.is_bet_single) {
     return BetData.bet_single_list.length;
   }
-  return BetData.bet_list.length;
-};
+  return BetData.bet_s_list.length;
+}) 
+
 /**
  * @description 左侧菜单与投注栏切换时调用
  * @param  {string} page  类似类型
  * @return {undefined} undefined
  */
-const change_left_menu = (page) => {
+const change_left_menu = page => {
   // 设置左侧显示
-  useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, page);
+  MenuData.set_layout_left_show(page)
 };
 
 //诸葛埋点事件
@@ -251,14 +200,11 @@ const set_scroll_this = ({ type, _this }) => {
 const get_unsettle_tickets_count_config = () => {
   let param = {};
   // console.log('get_unsettle_tickets_count====',param);
-  return;
-  api_betting
-    .get_unsettle_tickets_count(param)
-    .then((response) => {
+  api_betting.get_unsettle_tickets_count(param).then((response) => {
       let count = _.get(response, "data.data") || 0;
       let status = _.get(response, "status");
       if (status == 200) {
-        count = count;
+        bet_record_count.value = count;
       }
     })
     .catch((error) => {

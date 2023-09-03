@@ -512,11 +512,11 @@ import {
   format_btn_balance,
   formete_date,
   format_odds
-} from "src/core/index.js";
-import vueSlider from "vue-slider-component";
+} from "src/core/format/index.js";
+// import vueSlider from "vue-slider-component";
 import { CANCEL_TYPE } from "./config";
 import { ref } from "vue";
-import "vue-slider-component/theme/default.css";
+// import "vue-slider-component/theme/default.css";
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
 
@@ -591,7 +591,7 @@ const bet_handle = (arg) => {
 };
 /**
  * @description: 取消原因
- * @param {srting} cancelType: 取消类型
+ * @param {Srting} cancelType: 取消类型
  * @return {string}
  */
 const item_cancelType = (cancelType) => {

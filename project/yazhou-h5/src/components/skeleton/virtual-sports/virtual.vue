@@ -72,8 +72,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/components/skeleton/index.vue'
-// import { mapGetters } from "vuex"
+import skeleton from '../index.vue'
 
 const thumbStyle = ref({background: "transparent"})
 // ...mapGetters(["get_newer_standard_edition"]),

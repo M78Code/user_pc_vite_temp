@@ -11,7 +11,7 @@
       <div class="menu-item menu-tab disable-hover double">
         <div
           class="item yb-flex-center"
-          :class="jinri_zaopan == 2 ? 'active' : ''"
+          :class="jinri_zaopan_ == 2 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)"
         >
           今日
@@ -19,7 +19,7 @@
         </div>
         <div
           class="item yb-flex-center"
-          :class="jinri_zaopan == 3 ? 'active' : ''"
+          :class="jinri_zaopan_ == 3 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(3)"
         >
           早盘
@@ -946,4 +946,11 @@ const handle_click_jinri_zaopan = (val) => {
     padding: 0 !important;
   }
 }
+// 后续删掉
+.yb-flex-center{
+  .active{
+    color: #ff0000;
+  }
+}
+
 </style>

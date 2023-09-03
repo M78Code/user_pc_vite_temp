@@ -15,6 +15,7 @@ const routes = [
         name: "home",
         component: () => import(`../pages/test/index.vue`),
         // component: () => import(`../pages/match-list/match-list.vue`),
+        // component: () =>import(`../pages/match-details/details_main.vue`),
         meta: {
           keepAlive: true, // 需要缓存
         },

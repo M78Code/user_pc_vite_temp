@@ -19,23 +19,23 @@
         <!-- 上部纯展示组件 -->
         <div v-for="(value, name) in view_ctr_obj" :key="name" class="mix-show-box">
           <!-- 虚拟体育 -->
-          <template v-if="get_menu_type == 900">
+          <!-- <template v-if="get_menu_type == 900">
             <bet-mix-show2 :name_="name" :order_detail_resp_list="order_detail_resp_list" :odds_value2="odds_value2"
               :play_optionname2="play_optionname" :playname2="playname2"></bet-mix-show2>
-          </template>
+          </template> -->
           <!-- 非虚拟体育 -->
-          <template v-else>
+          <!-- <template v-else>
             <bet-mix-show :name_="name" :order_detail_resp_list="order_detail_resp_list"
               :query_order_obj="query_order_obj"></bet-mix-show>
-          </template>
+          </template> -->
         </div>
 
         <!-- 串关投注成功组件 -->
         <template v-if="btn_show == 1 || mixnew_bet || part_bet">
           <div v-show="btn_show == 1 && !mixnew_bet || part_bet">
             <div v-for="(item, index) in series_order_respList" :key="index">
-              <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
-                :len='series_order_respList.length'></betSuccessBar>
+              <!-- <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
+                :len='series_order_respList.length'></betSuccessBar> -->
             </div>
           </div>
         </template>
@@ -129,19 +129,19 @@
 </template>
 
 <script setup>
-import betMixShow from './bet_mix_show.vue';
-import betMixShow2 from './bet_mix_show2.vue';
-import betMixDetail from './bet_mix_detail.vue';
-import betSingleDetail from './bet_single_detail.vue';
-import betSuccessBar from './bet_success_bar.vue';
-import keyBoard from './keyboard.vue';
-import ballSpin from './ball_spin.vue';
-import betBar from "./bet_bar.vue";
-import betConflictTips from './bet-conflict-tips'
-import {utils } from 'src/core/index.js';
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-import BetData from "../class/bet-data-class";
-import { format_money2 } from'src\core\format\index.js'
+// import betMixShow from './bet_mix_show.vue';
+// import betMixShow2 from './bet_mix_show2.vue';
+// import betMixDetail from './bet_mix_detail.vue';
+// import betSingleDetail from './bet_single_detail.vue';
+// import betSuccessBar from './bet_success_bar.vue';
+// import keyBoard from './keyboard.vue';
+// import ballSpin from './ball_spin.vue';
+// import betBar from "./bet_bar.vue";
+// import betConflictTips from './bet-conflict-tips'
+// import {utils } from 'src/core/index.js';
+// import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
+// import BetData from "../class/bet-data-class";
+// import { format_money2 } from'src/core/format/index.js'
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
@@ -206,7 +206,7 @@ const single_item = computed(() => {
 })
 //是否有重复的球员id或者球队id
 const is_conflict = computed(() => {
-  return !(_.uniq(get_m_id_list.value).length == get_m_id_list.value.length)
+  return !(lodash.uniq(get_m_id_list.value).length == get_m_id_list.value.length)
 })
 
 // 是否展示不支持串关提示
@@ -228,8 +228,8 @@ const calc_class = computed(() => {
   let flag = [2, 4].includes(+get_bet_status.value)
     || get_is_champion.value() && !BetData.is_bet_success_status
     || get_bet_status.value == 5 && BetData.bet_list.length == 1
-    || get_menu_type == 3000 && _.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
-    || get_menu_type != 3000 && _.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
+    || get_menu_type == 3000 && lodash.get(single_item, 'hps[0].hl[0].hipo') != 1 && !BetData.is_bet_success_status
+    || get_menu_type != 3000 && lodash.get(single_item, 'hps[0].hids') == 0 && !BetData.is_bet_success_status
     || btn_show.value == 5;
   return flag
 })

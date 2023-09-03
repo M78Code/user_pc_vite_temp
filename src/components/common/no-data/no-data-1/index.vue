@@ -43,13 +43,16 @@
 </template>
   
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, defineProps, watch } from 'vue'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt"
 import store from "src/store-redux/index.js";
-import { t } from "src/core/index.js";;
+import { i18n_t } from "src/core/index.js";
+import { useRoute } from "vue-router"
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
+
+
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {
@@ -60,7 +63,7 @@ const props = defineProps({
     required: true
   },
 })
-const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  --------------------
@@ -69,31 +72,31 @@ const arr_const = {
   collect: {
     url: "image/bw3/svg/no_shouc.svg",
     url2: "image/bw3/svg/no_shouc2.svg",
-    txt: t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+    txt: i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
   },
   noWifi: {
     url: "image/bw3/svg/nowifi.svg",
-    txt: t('msg.msg_nodata_09'),//'网络不给力',
+    txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
     url: "image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
-    txt: t('msg.msg_nodata_02'),//'空空如也~',
+    txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
   },
   noMatchNew: {
     url: "image/bw3/png/noMatch_new.png",
     url2: "image/bw3/png/noMatch2_new.png",
-    txt: t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+    txt: i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
   },
   noMessage: {
     url: "image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
-    txt: t('msg.msg_nodata_17'),//'暂无消息记录~',
+    txt: i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
   },
   nolive: {
     url: "image/bw3/svg/no_livedata.svg",
     url2: "image/bw3/svg/no_livedata2.svg",
-    txt: t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+    txt: i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
   }
 }
 
@@ -119,7 +122,7 @@ onMounted(init)
 
 // 监听国际化语种变化,一旦变化修正国际化字符串
 watch(
-  () => $i18n.locale,
+  () => i18n_t.locale,
   () => arr.value = arr_const
 )
 
