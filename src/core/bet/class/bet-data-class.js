@@ -262,23 +262,23 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_read_write_refer_obj(obj) {
     let custom_id = Date.now()
-    console.error('sssss', obj)
     const bet_refer_obj = {
       // mount_point_key:'virtual_bet_obj',
       // shuju_laiyuan: 'xiangqing',       //  
       // shuju_laiyuan_obj:  data_souce,       //  
-      c_csid: obj.csid,
-      c_tid: obj.tid,
-      c_mid: obj.mid,
-      c_hid: obj.hid,
-      c_kid: obj.kid,
-      c_hn: obj.hn,
-      c_topKey: obj.topKey,
-      is_guanjun: obj.is_guanjun,
-      is_dianjing: obj.is_dianjing,
-      is_common: obj.is_common,
-      is_vr: obj.is_vr,
-      virtual_bet_mode: obj.virtual_bet_mode, //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+      // c_csid: obj.csid,
+      // c_tid: obj.tid,
+      // c_mid: obj.mid,
+      // c_hid: obj.hid,
+      // c_kid: obj.kid,
+      // c_hn: obj.hn,
+      // c_topKey: obj.topKey,
+      is_guanjun: false,
+      is_dianjing: false,
+      is_common: false,
+      is_vr: false,
+      ...obj,
+      // virtual_bet_mode: obj.virtual_bet_mode || -1, //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球 bet后接口返回
 
     }
 
@@ -287,18 +287,22 @@ this.bet_appoint_ball_head= null */
       // vr
       case 'vr_bet' :
         this.set_vrtual_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_vr = true
         break;
       // 常规体育
       case 'common_bet' :
         this.set_common_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_common = true
         break;
       // 冠军  
       case 'guanjun_bet' :
         this.set_guanjun_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_guanjun = true
         break;
       // 电竞
       case 'esports_bet' :
         this.set_dianjing_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_dianjing = true
         break;
 
     }

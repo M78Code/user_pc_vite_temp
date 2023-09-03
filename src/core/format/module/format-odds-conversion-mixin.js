@@ -46,12 +46,13 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   if (!val) {
     return;
   }
+  let odds_val = (Math.floor(val / 1000) / 100)
   // PS-9881赔率优化
   let str = "";
   breakVal = ""; // 断档值废弃
   // 从欧盘转到港盘
   if (!arr || ['2'].includes(oddsTable[cur_odd]) && cur_odd == 'HK') {
-    str = calc_odds(val, csid);
+    str = calc_odds(odds_val, csid);
     //聊天室跟单特殊处理
     if (arr && arr.includes(oddsTable[cur_odd]) || bet_chat_room_type == "HK") {
       str = change_EU_HK(str);
@@ -60,9 +61,9 @@ export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
   }
 
   if (!arr || arr.includes(oddsTable[cur_odd]) && cur_odd) {
-    cur_odd == 'EU' ? str = calc_odds(val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : val, cur_odd, csid);
+    cur_odd == 'EU' ? str = calc_odds(odds_val, csid) : str = compute_value_by_odd_type(breakVal ? breakVal : odds_val, cur_odd, csid);
   } else {
-    str = calc_odds(val, csid);
+    str = calc_odds(odds_val, csid);
   }
   return str;
   // return get_accuracy(str);
