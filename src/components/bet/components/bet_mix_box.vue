@@ -5,16 +5,17 @@
 <template>
   <div class="bet-mix-box fullscreen">
     <!-- 冠军、虚拟体育、电竞菜单 -->
-    <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1>
+    <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
-    <betMixBoxChild2 v-else></betMixBoxChild2>
+    <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
+    <betMixBoxChild2></betMixBoxChild2>
   </div>
 </template>
 
 <script setup>
 
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
-import betMixBoxChild1 from "./bet_mix_box_child1.vue";
+// import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 
 
