@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="12px" viewBox="0 0 24 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>矩形</title>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="0%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FFB001" offset="0%"></stop>
+            <stop stop-color="#FF7000" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="滚球" transform="translate(-158.000000, -798.000000)">
+            <g id="编组-130" transform="translate(0.000000, 516.000000)">
+                <g id="编组" transform="translate(158.000000, 282.000000)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="24" height="12" rx="6"></rect>
+                    <path d="M7.54108068,9 L7.54108068,8.1488764 L5.32642487,8.1488764 L5.32642487,3 L4,3 L4,9 L7.54108068,9 Z M9.8623242,9 L9.8623242,3 L8.53589933,3 L8.53589933,9 L9.8623242,9 Z M13.8415988,9 L15.7009623,3 L14.2442635,3 L13.1547002,7.5505618 L12.07698,3 L10.6202813,3 L12.4678016,9 L13.8415988,9 Z M20,9 L20,8.1488764 L17.7853442,8.1488764 L17.7853442,6.40449438 L19.6920799,6.40449438 L19.6920799,5.55337079 L17.7853442,5.55337079 L17.7853442,3.8511236 L20,3.8511236 L20,3 L16.4589193,3 L16.4589193,9 L20,9 Z" id="LIVE" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

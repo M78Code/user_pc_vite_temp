@@ -130,7 +130,7 @@
 
 <script>
 
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 
 import { LeagueTabFullVersionWapper as LeagueTab } from "src/components/tab/league-tab/index.js";//联赛菜单
 import { ListFilterFullVersionWapper as listFilter } from "src/components/match-list/list-filter/index.js";//赛事列表筛选：滚球-球种、早盘-日期
@@ -148,9 +148,11 @@ import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-c
 // import match_list_version_mixin from "src/project/yabo/mixins/match_list/match_list_version_mixin.js";//模板引入及主要业务逻辑
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import menu_config from "src/core/menu-pc/menu-data-class.js";
-import match_list_mixin from 'src/core/match-list-pc/match-list-mixin.js'
+import useMatchListMx from 'src/core/match-list-pc/match-list-composition.js'
+
+const { mounted_fn } = useMatchListMx()
+
 export default {
-  mixins: [match_list_mixin],
   components: {
     LeagueTab,
     listFilter,
@@ -160,6 +162,9 @@ export default {
     // EsportsHeader
   },
   setup() {
+    onMounted(() => {
+      mounted_fn()
+    })
     return {
       menu_config,
       match_list_card,

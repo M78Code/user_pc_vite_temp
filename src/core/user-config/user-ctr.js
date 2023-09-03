@@ -107,8 +107,8 @@ class UserCtr {
     this.lang = data;
     this.user_info.languageName = data;
   }
-  set_theme(lang) {
-    this.theme = lang;
+  set_theme(theme) {
+    this.theme = theme;
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }

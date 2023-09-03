@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import skeleton from 'project_path/src/components/skeleton/index.vue'
+import skeleton from './index.vue'
 
 const thumbStyle = ref({
   background: "transparent"

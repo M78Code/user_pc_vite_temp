@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/components/skeleton/index.vue'
+import skeleton from '../index.vue'
 
 const thumbStyle = ref({background: "transparent"})
 </script>

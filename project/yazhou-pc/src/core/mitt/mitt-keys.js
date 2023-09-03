@@ -251,7 +251,8 @@ export const EMIT_OPEN_SINGLE_BET = "EMIT_OPEN_SINGLE_BET";
 export const EMIT_OPEN_MAERGE_BET = "EMIT_OPEN_MAERGE_BET";
 //左侧 菜单/投注/投注记录切换
 export const EMIT_LAYOUT_LIST_TYPE = "EMIT_LAYOUT_LIST_TYPE";
-
+// 可视区域id变更
+export const EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE = "EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE";
 //按钮失效
 export const EMIT_BTN_CHANGE = "EMIT_BTN_CHANGE";
 
