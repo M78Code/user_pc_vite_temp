@@ -1,5 +1,6 @@
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
+// 
 import server_resource from "app/job/output/merchant/server-resource.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
