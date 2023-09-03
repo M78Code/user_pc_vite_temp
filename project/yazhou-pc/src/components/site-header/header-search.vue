@@ -34,7 +34,7 @@ import {
 
 import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import { utils } from 'src/core/index.js';
 
@@ -83,6 +83,7 @@ const set_search_status = (data) => (store.dispatch({
 /** 展开搜索 */
 function show_search() {
   // if (!globalAccessConfig.get_searchSwitch()) {
+  console.error('totototottotot');
   if (!globalAccessConfig.config_default.searchSwitch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }

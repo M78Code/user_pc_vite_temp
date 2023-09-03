@@ -29,7 +29,10 @@
         <layout-right />
       </div>
     </div>
-    
+    <!-- toast 消息提示 -->
+    <toast-components />
+    <confirm-components />
+    <alert-components />
   </div>
 </template>
 <script setup>
@@ -43,6 +46,10 @@ import "./main-layout.js"; //初始化数据
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
+
+import toastComponents from "project_path/src/components/toast/toast.vue";
+import alertComponents from "project_path/src/components/toast/alert.vue";
+import confirmComponents from "project_path/src/components/toast/confirm.vue";
 
 const route = useRoute();
 console.error(route);
