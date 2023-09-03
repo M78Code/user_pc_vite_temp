@@ -7,10 +7,12 @@
 <template>
   <div>
     <!-- 勾选框 和 提前结算-->
+    {{toolSelected + '-+-' + UserCtr.user_info.settleSwitch}}
+    
     <div v-if="toolSelected === 0 && UserCtr.user_info.settleSwitch">
       <!-- 勾选框 -->
       <div class="date-time-choice checkbox" @click="search_pre_record">
-        <FilterCheckboxFullVersionWapper
+        <filter-checkbox-full-version-wapper
           :checked="is_pre_bet"
           :style="checkbox_style"
         />
@@ -43,10 +45,11 @@
         @click="search_pre_record"
         v-if="UserCtr.user_info.settleSwitch"
       >
-        <FilterCheckboxFullVersionWapper
+      {{UserCtr.user_info.settleSwitch}}
+        <!-- <FilterCheckboxFullVersionWapper
           :checked="is_pre_bet"
           :style="checkbox_style"
-        />
+        /> -->
         <span>{{ i18n_t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
@@ -111,18 +114,17 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
+            <!-- v-model="model" -->
             <q-date
               v-icon="{
-                chevron_left: 'icon-arrow-left',
-                chevron_right: 'icon-arrow-right',
-              }"
-              v-model="model"
+                'chevron_left': 'icon-arrow-left',
+                'chevron_right': 'icon-arrow-right',
+              }"             
               @click.stop
               range
               v-if="startTimeShow"
               minimal
-              :locale="locale"
-            />
+              :locale="locale" />
           </div>
         </div>
         <!-- 查询按钮 -->
@@ -137,25 +139,26 @@
       <!-- 勾选框 -->
       <div class="checkbox">
         <!--联赛筛选单选框组件-->
-        <FilterRadioFullVersionWapper
+        <!-- <FilterRadioFullVersionWapper
           :check_list="check_list"
           :default_value="default_value"
           :checkbox_style="checkbox_style"
           @check_change="check_change"
-        />
+        /> -->
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted,watch,onUnmounted } from "vue";
-import icon from "project_path/src/components/icon/icon.vue";
-import { FilterRadioFullVersionWapper } from "sproject_path/src/components/match-list/filter-radio/index.js";
-import { FilterCheckboxFullVersionWapper } from "project_path/src/components/match-list/filter-checkbox/index.js";
-import { formatTime } from "src/core/format/index";
+import { ref, reactive, onMounted,watch,onUnmounted, nextTick, inject } from "vue";
+// import icon from "project_path/src/components/icon/icon.vue";
+import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
+import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
+import { formatTime } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
-
+import UserCtr from "src/core/user-config/user-ctr.js"
+console.error(UserCtr.user_info);
 const props = defineProps({
   toolSelected: Number,
   time_sort_record_item: Object,
@@ -164,6 +167,7 @@ const props = defineProps({
   endDateSearch: String,
   model: Object,
 });
+const reload = inject('reload')
 // 日历多语言配置
 const locale = {
   days: i18n_t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];

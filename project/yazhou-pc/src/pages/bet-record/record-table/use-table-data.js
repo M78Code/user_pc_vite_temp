@@ -7,15 +7,16 @@ import {
   watch,
   nextTick,
   getCurrentInstance,
+  onMounted,
 } from "vue";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
-import mathjs from "src/core/utils/mathjs.js";
+import { order_pre_settle_confirm } from "src/core/bet/module/pre-settle.js";//src/core/bet/module/pre-settle.js
+// import math from "src/core/utils/index.js";
 import lodash from "lodash";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr } from "src/core/index.js";
-import { i18n_t } from "src/boot.i18n.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 export const useTableData = ({ props, emit }) => {
 
@@ -63,10 +64,10 @@ export const useTableData = ({ props, emit }) => {
 
   //   ====================watch======================================
 
+const {order_list} = props
+console.error(order_list);
   watch(
     () => props.order_list,
-
-
     (val) => {
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
@@ -79,9 +80,10 @@ export const useTableData = ({ props, emit }) => {
       state.recordData = val;
       init_data();
     },
-    { immediate: true }
   );
-
+  onMounted(() => {
+    init_data()
+  })
   watch(
     () => props.orderNo_data_list,
     (val) => {
@@ -95,8 +97,8 @@ export const useTableData = ({ props, emit }) => {
   //   ====================methods======================================
   /**
    * @description:盘口类型
-   * @param {sting} type: records.marketType字段
-   * @param {sting} langCode: 多语言 默认是中文
+   * @param {Sting} type: records.marketType字段
+   * @param {Sting} langCode: 多语言 默认是中文
    * @return{string} 盘口类型
    */
   const marketType = (type, langCode = "zh") => {
@@ -556,7 +558,7 @@ export const useTableData = ({ props, emit }) => {
       state.early_settlement_data[index].preSettleBetAmount;
     let money = state.money_obj[index].money;
     state.early_settlement_data[index]["pre_settle_bet_amount_2"] =
-      mathjs.subtract(preSettleBetAmount, money || 0);
+      math.subtract(preSettleBetAmount, money || 0);
   };
   /**
    * 部分结算后显示提前结算详情
@@ -1093,7 +1095,7 @@ export const useTableData = ({ props, emit }) => {
             state.early_settlement_data[index].maxCashout = maxCashout;
             // 注单剩余本金
             state.early_settlement_data[index].preSettleBetAmount =
-              mathjs.subtract(
+              math.subtract(
                 orderAmountTotal,
                 preBetAmount_ || preBetAmount || 0
               );
@@ -1146,16 +1148,16 @@ export const useTableData = ({ props, emit }) => {
   // },
 
   onBeforeMount(() => {
-    this.recordData = this.order_list;
+    state.recordData = props.order_list;
     // 提前结算订单设施
-    this.$root.$on(
+    useMittOn(
       MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
-      this.set_pre_order_status
+      set_pre_order_status
     );
     // 提前结算ws推送的数据设置
-    this.$root.$on(
+    useMittOn(
       MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
-      this.set_ws_info_data
+      set_ws_info_data
     );
     // 统计未结算订单数量
     useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);

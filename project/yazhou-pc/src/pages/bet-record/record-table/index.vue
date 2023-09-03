@@ -406,11 +406,12 @@
 </template>
 
 <script setup>
-import tableOptions from ".table-options.vue"; // 选项组件
+import tableOptions from "./table-options.vue"; // 选项组件
 // import { PaginationWapper } from "src/components/pagination/indes.js";
-import { useTableData } from "./use-table-data";
-import { i18n_t } from "src/core/index.js";;
+import { useTableData } from "./use-table-data.js";
+import { i18n_t } from "src/core/index.js";
 import { formatTime,format_balance,format_score_t } from "src/core/format/index";
+import loadData from "project_path/src/components/load-data/load-data.vue"
 import {defineExpose} from 'vue';
 
 
@@ -460,21 +461,21 @@ const emit = defineEmits([
 ]);
 // 表格头部分
 const lineList = [
-  { label: t("bet_record.number"), id: 1 },
-  { label: 't("bet_record.betting_details")', id: 2 },
-  { label: t("bet_record.betting_play"), id: 3 },
-  { label: t("bet_record.options"), id: 4 },
-  { label: t("bet_record.bets_forehead"), id: 5 },
+  { label: i18n_t("bet_record.number"), id: 1 },
+  { label: i18n_t("bet_record.betting_details"), id: 2 },
+  { label: i18n_t("bet_record.betting_play"), id: 3 },
+  { label: i18n_t("bet_record.options"), id: 4 },
+  { label: i18n_t("bet_record.bets_forehead"), id: 5 },
   {
     label:
       props.tool_selected === 0
-        ? t("common.maxn_amount_val")
-        : t("common.donate_win"),
+        ? i18n_t("common.maxn_amount_val")
+        : i18n_t("common.donate_win"),
     id: 6,
   },
-  { label: t("bet_record.status"), id: 7 },
+  { label: i18n_t("bet_record.status"), id: 7 },
 ];
-
+console.error(props);
 const {
   recordData,
   toast,

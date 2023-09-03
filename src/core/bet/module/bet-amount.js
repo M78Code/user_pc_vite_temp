@@ -4,10 +4,10 @@ import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
+import {compute_value_by_cur_odd_type} from  "src/core/format/index.js"
 // import {get_bet_amount_param} from  "./bet-amount.js"
 import {http_upd_data} from  "./upd_data.js"
-import mathjs from "src/core/utils/mathjs.js"
+// import math from "src/core/utils/index.js"
 import yabo_common from "src/core/bet/common-helper/index.js"
 import uid from "src/core/uuid/index.js";
 import {ref} from "vue"
@@ -248,8 +248,8 @@ const query_bet_amount_gcuuid = ref(uid())
           temp.marketId = _.get(obj, 'bs.hps[0].hl[0].hid') || _.get(obj, 'bs.hps[0].hl[0].ol.hid');
           // 赛事id
           temp.matchId = _.get(obj, 'bs.mid');
-          let odds_js = mathjs.divide(_.get(obj, 'cs.odds_value'), 100000);
-          let break_js = mathjs.divide(_.get(obj, 'cs.break_odds_value'), 100000);
+          let odds_js = math.divide(_.get(obj, 'cs.odds_value'), 100000);
+          let break_js = math.divide(_.get(obj, 'cs.break_odds_value'), 100000);
           // 最终赔率
           temp.oddsFinally =  compute_value_by_cur_odd_type(odds_js, break_js);
           // 赔率

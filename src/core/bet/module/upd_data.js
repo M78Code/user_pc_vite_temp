@@ -6,7 +6,7 @@ import BetData from "../class/bet-data-class.js";
 // import { get_bet_amount_param } from "./bet-amount.js";
 // import { http_upd_data } from "./upd_data.js";
 // import { set_submit_status } from "./status.js";
-import mathjs from "src/core/utils/mathjs.js";
+// import mathjs from "src/core/utils/index.js";
 import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
@@ -16,7 +16,7 @@ import {NO_MERAGE_MARKETVALUE} from "src/core/constant/config/play-mapping.js";
 
  
 // import  MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js"
-import  MatchInfoCtr from "src/core/match-detail-h5/match-info-ctr.js"
+import  MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr-ws.js"
 
 /**
  * @description: 调用queryLatestMarketInfo完接口后的回调方法用来更新vuex中投注项的数据
@@ -518,7 +518,7 @@ const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
     item_obj.hps[0].hl[0].ol = _.cloneDeep([ol_obj]);
     handicap_value = _.get(hl_obj,'hv');
     if(['match_details','details'].includes(PageSourceData.page_source)) {
-      let play_obj = _.get(MatchInfoCtr,`pl_obj.${play_id}`, {});
+      let play_obj = _.get(MatchDataBase,`pl_obj.${play_id}`, {});
       if(_.has(play_obj,'hps') && play_obj.hps.includes('|')) {
         score_type = play_obj.hps.split('|')[0];
       }
