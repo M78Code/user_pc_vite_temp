@@ -12,7 +12,6 @@ const props = defineProps({
   width: Boolean,
   height: Boolean,
   radius: Boolean,
-  radius: Boolean,
 })
 
 const skeleton_style = computed(()=>{

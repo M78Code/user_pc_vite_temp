@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-// import skeleton from 'src/project/components/skeleton/index.vue'
+import skeleton from '../index.vue'
 
 const props = defineProps({
   first: Boolean,

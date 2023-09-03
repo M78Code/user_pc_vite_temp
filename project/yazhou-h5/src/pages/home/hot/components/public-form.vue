@@ -110,12 +110,12 @@
       </div>
     </template>
 
-    <!-- <no-data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no-data> -->
+    <no_data class="no-list" v-if="!_.get(liat_data, 'length', 0)" which='noMatch' height='400'></no_data>
   </div>
 </template>
 
 <script setup>
-// import no_data from "src/project/components/common/no_data.vue";
+import no_data from "project_path/src/components/common/no-data.vue";    // 无网络展示组件
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { ref} from 'vue';
 

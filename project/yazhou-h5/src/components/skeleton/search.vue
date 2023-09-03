@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import skeleton from 'src/project/components/skeleton/index.vue'
+import skeleton from './index.vue'
 import { ref, onMounted} from 'vue';
 
 const thumbStyle = ref({
