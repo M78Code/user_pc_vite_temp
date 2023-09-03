@@ -43,14 +43,14 @@
           {{parseFloat(series_obj.seriesBetAmount/100) ||format_currency}}
         </div>
         <!--最高可赢额(值)-->
-        <div class="col-auto bet-win-value text-right yb-fontsize12">{{parseFloat(max_win_amount) || format_currency}}</div>
+        <div class="col-auto bet-win-value text-right yb-fontsize12">{{parseFloat(max_win_amount)}}</div>
       </div>
     </q-card-section>
   </q-card>
 </template>
 <script>
 // import bet_mix_result from "src/public/mixins/bet/bet_mix_result.js";
-import { format_currency } from'src\core\format\index.js'
+// import { format_currency } from 'src/core/index.js'
 
 </script>
 <style lang="scss" scoped>

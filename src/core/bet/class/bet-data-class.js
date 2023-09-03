@@ -1,5 +1,7 @@
-import {  PageSourceData, MenuData,fileds_map_common  } from "src/core/index.js";
+import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
+
 
 class BetData {
   constructor() { }
@@ -321,7 +323,6 @@ this.bet_appoint_ball_head= null */
       this.bet_s_list.push(bet_refer_obj) 
     }
    
-    debugger
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
   }
@@ -369,6 +370,11 @@ this.bet_appoint_ball_head= null */
   */
   set_cur_odd(cur_odd) {
     this.cur_odd = cur_odd;
+  }
+
+  // 设置单关 串关
+  set_is_single_handle(val){
+    this.is_single_handle = val
   }
 
   /**

@@ -17,6 +17,8 @@ class LayOutMain {
    * @param {undefined} undefined
    */
   constructor() {
+      // 是否内嵌
+    this.is_iframe = window.frames.length != parent.frames.length,
     // 主内容最小宽度出现滚动条
     this.layout_min_width = 1440
     // 左侧菜单宽度

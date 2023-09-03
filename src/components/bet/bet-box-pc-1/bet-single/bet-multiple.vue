@@ -53,7 +53,7 @@
 					<!--最高可赢额-->
 					{{ $t('common.maxn_amount_val')}}
 				</div>
-				<div class="col-auto bet-win-money yb-number-bold">{{win_money || four_five_six_double(2) || format_currency}}</div>
+				<div class="col-auto bet-win-money yb-number-bold">{{win_money || four_five_six_double(2) }}</div>
 			</div>
       <!--键盘-->
 			<div class="row bet-keyboard bet-keyboard-content">
@@ -76,11 +76,11 @@
 <script setup>
 // import betting from "src/public/mixins/betting/betting.js";
 import BetKeyboard from "../common/bet-keyboard.vue";
-import { format_currency } from'src\core\format\index.js'
+// import { format_currency } from 'src/core/index.js'
 import lodash from 'lodash'
 
 </script>
-<style scoped lang="stylus">
+<style scoped lang="scss">
 /**遮罩层**/
 .mask-appointment {
   background: #F0F5FC !important;
@@ -94,15 +94,4 @@ import lodash from 'lodash'
   opacity: 0.6;
 }
 /**多项单注投注整体**/
-.bet-card
-  line-height 0 !important
-  /* *卡片组件样式重写* */
-  >>>.q-card__section
-    margin 0
-    padding 0
-    line-height 1
-.ie-browser
-  .bet-input-close
-    top 9.5px
-
 </style>
