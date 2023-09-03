@@ -59,7 +59,7 @@
             <div class="r-table">
               <!--early_settlement_data用于预约的数据-->
               <template  v-for="(data, i) of early_settlement_data">
-                <div class="row" :key="i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
+                <div class="row" :key?="i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
                   <!-- 编号 -->
                   <div class="ceil">{{recordData.size*(recordData.current-1) + i + 1}}</div>
                   <!-- 投注详情 -->
@@ -264,7 +264,7 @@
     </div>
     <template v-if="parseInt(recordData.total)">
       <!--分页组件-->
-      <Pagination
+      <pagination-wapper
         class="record-pagination"
         :count="recordData.total"
         :betTotalAmount="recordData.betTotalAmount"
@@ -273,7 +273,7 @@
         :toolSelected="tool_selected"
         :random="random"
         @pageChange="changePage(arguments)"
-      ></Pagination>
+      ></pagination-wapper>
     </template>
     <!--复制样式 已复制-->
     <div class="toast fit-center" v-if="toast">{{toast_msg}}</div>
@@ -299,23 +299,20 @@
   </div>  
 </template>
 
-<script>
-import formatmixin from "src/public/mixins/common/time_format";
-// import Pagination from "src/project/yabo/components/bet_record/Pagination.vue";
-import { mapGetters } from "vuex";
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
+<script setup>
+
+// import formatmixin from "src/public/mixins/common/time_format";
+// import Pagination from "project_path/src/components/bet_record/Pagination.vue";
+import { PaginationWapper } from "src/components/pagination/index.js";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+// import VueSlider from 'vue-slider-component'
+// import 'vue-slider-component/theme/default.css'
+import lodash from "lodash";
 import { format_score ,format_odds  } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 
-export default {
-  name: "RecordTable",
-  components: {
-    VueSlider,
-    Pagination,
-  },
-  mixins: [formatmixin],
-  props: {
+  // mixins: [formatmixin],
+  const props = defineProps({
     record_obj: {
       type: Object,
       default: {}
@@ -349,14 +346,12 @@ export default {
     //   type: String,
     //   default: "zh"
     // }
-  },
-  data() {
-    return {
-      toolIndex: 0,
-      recordData: {},
-      current: 1,
-      toPage: 1,
-      selectOptions: [
+  })
+    const toolIndex = ref(0)
+    const recordData = ref({})
+    const current = ref(1)
+    const toPage = ref(1)
+    const selectOptions = ref([
         {
           label: "10",
           value: 10,
@@ -369,97 +364,41 @@ export default {
           label: "50",
           value: 50,
         },
-      ],
-      toast: false,
-      toast_msg: '',
-      isShow: true,
-      timeout_toast:null, // 定时器
-      early_settlement_data: [], // 用于预约的数据
-      pup_data: {},//赛事信息数据
-      moreStyle: {
+      ]) 
+    const toast = ref(false) 
+    const toast_msg = ref('') 
+    const isShow = ref(true) 
+    const timeout_toast = ref(null) // 定时器
+    const early_settlement_data = ref([])  // 用于预约的数据
+    const pup_data = ref({}) //赛事信息数据
+    const moreStyle = ref({
 				left: 0,
 				top: 0
-			},
-      bookShow: false, // 取消预约投注弹窗
-      orderNo: '', // 取消预约投注订单号
-      book_loading: false, // 取消预约投注确认中
-      matchInfo: ""
-    };
-  },
-  filters: {
-    //赔率展示格式化
-    format_odds(val) {
-      if(val=='' || val == undefined){
-        return '';
-      }
-      val = (val || '0').toString();
-      let ret = val;
-      if (val.includes('.')){
-        if (val >= 100) {
-          if (val.split('.')[1] == '00') {
-            ret = val.split('.')[0];
-          } else {
-            let len = val.length;
-            if(val.indexOf('.0') == (len-2)){
-              ret = val.substring(0,len-2);
-            } else {
-              ret = val;
-            }
-          }
-        } else if (val >= 10) {
-          if (val.split('.')[1][1] == '0') {
-            ret = val.slice(0,val.length-1);
-          } else {
-            ret = val;
-          }
-        }
-      }
-      return ret;
-    },
-    /**
-     * 比分格式设置
-     */
-    format_score(res) {
-      let str = "";
-      if (res.indexOf("|") != -1) {
-        let arr = res.split("|");
-        str = arr[1].split(":");
-      } else if (res.indexOf(":") != -1) {
-        str = res.split(":");
-      }
-      return `${str[0]} - ${str[1]}`;
-    }
-  },
-  created() {
-    // 防抖
-    this.cancel_book_handle = this.debounce(this.cancel_book_handle,100)
-    this.recordData = this.order_list;
-  },
-  computed: {
-    ...mapGetters({
-   
-    })
-  },
-  watch: {
-    order_list: {
-      handler(val) {
-        let scroll_area =  BetCommonHelper.get_refs_info('scrollArea', null, this);
+			})
+    const bookShow = ref(false) // 取消预约投注弹窗
+    const orderNo = ref('') // 取消预约投注订单号
+    const book_loading = ref(false) // 取消预约投注确认中
+    const matchInfo = ref("") 
+onMounted(() => {
+      // 防抖
+    cancel_book_handle.value = lodash.debounce(cancel_book_handle,100)
+    recordData.value = props.order_list;
+})
+ watch(() => props.order_list, (val) => {
+  let scroll_area =  BetCommonHelper.get_refs_info('scrollArea', null, this);
         if (scroll_area && scroll_area.setScrollPosition) {
           scroll_area.setScrollPosition(0);
         }
-        this.recordData = val;
-        this.init_data();
+        recordData.value = val;
+        init_data();
 
-      },
-      immediate: true,
-    },
-  },
-  methods: {
+ })
+
     /**
      * @盘口类型
      * @param type: records.marketType字段
      */
-    marketType(type, langCode='zh') {
+    const marketType = (type, langCode='zh') => {
       var res = "";
       if(type && langCode) {
         switch (type) {
@@ -487,13 +426,13 @@ export default {
         }
       }      
       return res;
-    },
+    }
 
     /**
      * @输赢状态
      * @param type: records.detailList.betResult
      */
-    item_status(type) {
+    const item_status = (type) => {
       switch (parseInt(type)) {
         case 2:
           return i18n_t("bet_record.effective_water_"); //"走水";
@@ -522,13 +461,13 @@ export default {
         default:
           return '';
       }
-    },
+    }
 
     /**
     * @description: 取消原因
     * @return {}
     */
-    item_cancelType(cancelType){
+    const item_cancelType = (cancelType)=> {
       let str = '';
       switch (parseInt(cancelType)) {
         case 1:
@@ -560,13 +499,13 @@ export default {
           break;
       }
       return str;
-    },
+    }
 
     /**
      * @输赢状态calss
      * @param betResult: records.detailList.betResult
      */
-    item_class(betResult) {
+    const item_class = (betResult) => {
       let str = '';
       switch (parseInt(betResult)) {
         case 2:
@@ -607,13 +546,13 @@ export default {
           break;
       }
       return str;
-    },
+    }
 
     /**
      * @订单状态
      * @param orderStatus: records.orderStatus
      */
-    order_status(orderStatus) {
+    const order_status = (orderStatus) => {
       switch (parseInt(orderStatus)) {
         case 0:
           return i18n_t("bet.bet_suc"); //"投注成功";
@@ -628,13 +567,12 @@ export default {
         default:
           return '';
       }
-    },
-
+    }
     /**
      * @订单状态class
      * @param orderStatus: records.orderStatus
      */
-    status_class(orderStatus) {
+    const status_class = (orderStatus) => {
       switch (parseInt(orderStatus)) {
         case 0:
           return ""; //"投注成功";
@@ -648,13 +586,13 @@ export default {
           return "win-color"; //投注失败
       }
       return "";
-    },
+    }
 
     /**
      * @下注赛事阶段
      * @param type: records.matchType
      */
-    matchType(type, langCode=this.$i18n.locale) {
+    const matchType = (type, langCode=$i18n.locale) => {
       let res = "";
       if(type && langCode) {
         switch (parseInt(type)) {
@@ -670,7 +608,7 @@ export default {
         }
       }
       return res;
-    },
+    }
 
     /**
      * @翻页
@@ -678,50 +616,50 @@ export default {
      * size：每页条数
      * page：当前页码
      */
-    changePage(data) {
-      this.$emit("choosePage", data);
-    },
+    const changePage = (data) => {
+      $emit("choosePage", data);
+    }
 
     /**
      * @点击复制单号
      * @param data：单号
      */
-    copy(data) {
+    const copy = (data) => {
       let oInput = document.createElement("input");
       oInput.value = data;
       document.body.appendChild(oInput);
       oInput.select();
       let msg = i18n_t("bet_record.copyed")
-      this.toast_tips(msg)
-      this.toast = true;
+      toast_tips(msg)
+      toast.value = true;
       document.execCommand("Copy");
       oInput.remove();
-    },
+    }
     // 提示弹出窗
-    toast_tips(msg) {
-      this.toast_msg = msg
-      this.toast = true;
-      clearTimeout(this.timeout_toast);
-      this.timeout_toast = setTimeout(() => {
-        this.toast = false;
+    const toast_tips = (msg) => {
+      toast_msg.value = msg
+      toast = true;
+      clearTimeout(timeout_toast.value);
+      timeout_toast.value = setTimeout(() => {
+        toast = false;
       }, 1500);
-    },
+    }
     /**
      * 初始化滑块以及预约数据
      */
-    init_data() {
+    const init_data = () => {
       // 预约数据获取
-      this.early_settlement_data = _.get(this.recordData, 'records', []);
+      early_settlement_data.value = _.get(recordData.value, 'records', []);
       // 重置显示操作
-      if(this.early_settlement_data.length>0) {
+      if(early_settlement_data.value.length>0) {
         // 设置页面加载状态
-        this.data_state.load_data_state = "data";
+        data_state.load_data_state = "data";
       }
-    },
+    }
     /**
      * 金额格式设置
      */
-    format_balance(num) {
+    const format_balance = (num) => {
       if(num) {
 				let _split = num.toString().match(/^(-?\d+)(?:\.(\d{0,2}))?/);
 				// 保留两位小数
@@ -730,66 +668,64 @@ export default {
 				return _num.replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
 			}
 			return '0.00';
-    },
+    }
     /**
     /**
      * 打开弹窗，关闭预约中定时器
      */
-     cancel_appoint(item) {
-      this.bookShow = true
-      this.orderNo = item.orderNo || ''
-      this.matchInfo = item.detailList[0].matchInfo
-      this.$emit('delete_book_record', 0, this.bookShow)
-      },
+     const cancel_appoint = (item) => {
+      bookShow.value = true
+      orderNo.value = item.orderNo || ''
+      matchInfo.value = item.detailList[0].matchInfo
+      $emit('delete_book_record', 0, bookShow.value)
+      }
     /**
      * 关闭弹窗，重启预约中定时器
      */
-      close_book_dialog() {
-        this.bookShow = false
-        this.orderNo = ''
-        this.matchInfo = ''
-        this.$emit('delete_book_record', 0, this.bookShow)
-      },
-      cancel_book_handle() {
+      const close_book_dialog = () => {
+        bookShow.value = false
+        orderNo.value = ''
+        matchInfo.value = ''
+        $emit('delete_book_record', 0, bookShow.value)
+      }
+      const cancel_book_handle = () => {
       // 调用接口取消注单后在回调投注记录接口
-      this.book_loading = true
-      const params = { orderNo: this.orderNo }
-      this.cancel_book_record_order(params, (code, data, msg) => {
+      book_loading.value = true
+      const params = { orderNo: orderNo.value }
+      cancel_book_record_order(params, (code, data, msg) => {
         if (code == 200) {
-          this.toast_tips(i18n_t('bet.bet_book_canceled'))
-          this.$emit('delete_book_record', this.orderNo, this.bookShow)
-          this.bookShow = false
-          this.orderNo = ''
-          this.matchInfo = ''
+          toast_tips(i18n_t('bet.bet_book_canceled'))
+          $emit('delete_book_record', orderNo.value, bookShow.value)
+          bookShow.value = false
+          orderNo.value = ''
+          matchInfo.value = ''
         } else if (code == '0400546') {
-          this.toast_tips(i18n_t('bet.bet_book_error_msg_0400546'))
-          this.close_book_dialog()
+          toast_tips(i18n_t('bet.bet_book_error_msg_0400546'))
+          close_book_dialog()
         } else if (code == '0400547') {
-          this.toast_tips(i18n_t('bet.bet_book_error_msg_0400547'))
-          this.close_book_dialog()
+          toast_tips(i18n_t('bet.bet_book_error_msg_0400547'))
+          close_book_dialog()
         } else {
-          this.toast_tips(msg)
-          this.close_book_dialog()
+          toast_tips(msg)
+          close_book_dialog()
         }
-        this.book_loading = false
+        book_loading.value = false
       })
-    },
-    cancel_book_msg(match, msg) {
+    }
+      const cancel_book_msg = (match, msg) => {
         if(match) {
           let match_ = match.replace(/ v /i, ' VS ')
           const arr = msg.split('[x]')
           return arr[0] + match_ + arr[1];
         }
       }
-  },
-  beforeUnmount(){
-    this.debounce_throttle_cancel(this.cancel_book_handle)
+  onUnmounted(() => {
+    debounce_throttle_cancel(cancel_book_handle)
     // 清除定时器
-    clearTimeout(this.timeout_toast);
+    clearTimeout(timeout_toast.value);
     // 恢复预约数据
-    this.early_settlement_data = null;
-  }
-};
+    early_settlement_data.value = null;
+  })
 </script>
 
 <style lang="scss" scoped>

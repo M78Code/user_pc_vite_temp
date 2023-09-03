@@ -14,6 +14,7 @@ import { useRoute } from "vue-router"
 const float_3_csid = esports_csid // 需要显示三位小数点的,赛种编号(电竞)
 const all_odds_arr = [] //所有的赔率数组
 const cur_odds_arr = [] // 当前允许的赔率数组
+const cur_odd = "EU" // 当前赔率
 
 const oddsTable = {
   EU: '1',

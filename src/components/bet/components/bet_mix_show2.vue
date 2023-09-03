@@ -21,7 +21,7 @@
 
     <div class="yb_mr12 dele-left" v-if="!BetData.is_bet_success_status">
       <!-- 删除按钮 -->
-      <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_">
+      <img src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_bet_id">
     </div>
     <div style="flex:1">
       <!-- 上 -->
@@ -100,11 +100,10 @@
 
 <script setup>
 
-import odd_convert from "src\core\odds_conversion\compute_max_win_money.js";
-import timer from "src\components\bet\components\timer.vue";
+import odd_convert from "src/core/odds_conversion/compute_max_win_money.js";
+import timer from "src/components/bet/components/timer.vue";
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
-import { format_odds } from 'src/core/index.js'
-import { UserCtr } from "src/core/index.js";
+import { format_odds,UserCtr } from 'src/core/index.js'
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
@@ -233,8 +232,8 @@ const authorityOptionFlag = computed(() => {
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
   const bookBet = _.get(UserCtr, 'configVO.bookBet')
-  const marketConfigValue = _.get(UserCtr, 'configVO.marketConfigValue')
-  return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
+  // const marketConfigValue = _.get(UserCtr, 'configVO.marketConfigValue')
+  // return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
 })
 //判断投注成功后是否是预约投注
 const pre_order_status = computed(() => {
@@ -387,7 +386,7 @@ watch(() => score, (new_) => {
   const hps_obj = _.get(value_show, 'hps[0]')
   if (!BetData.bet_is_mix && show_pre && pre_switch.value && new_) {
     const method_type = ol_obj.ot
-    const new_arr = new_.replace(/\(/, '').replace(/\)/, '').split('-') || []
+    const new_arr = new_.replace(/\(/,'').replace(/\)/,'').split('-') || []
     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
       const homeTeamMethodList = [ //主队进球大小玩法
         '10', '87', '88', '115', '123', '314', '316'
@@ -539,7 +538,7 @@ watch(() => bet_obj_on, (new_) => {
 })
 //监听赔率变化  get_bet_status == 2在C106的地方做了一层过滤
 watch(() => bet_obj_ov, (new_, old_) => {
-  calc_mixcount(false)
+  // calc_mixcount(false)
   if (
     [2, 3].includes(+get_bet_status) &&
     _.get(value_show, 'hps[0].hl[0].ol[0].ov2')
@@ -594,6 +593,7 @@ watch(() => bet_obj_ov, (new_, old_) => {
     odds_change.value = 2;
     set_odds_change(true);
   }
+})
 
 // 记录投注项失效的id_集合
 watch(() => pankou_change, (new_) => {
@@ -602,17 +602,17 @@ watch(() => pankou_change, (new_) => {
   }
 })
 
-watch(() => query_order_obj, (new_) => {
-  query_order_obj_handle()
-})
+// watch(() => props.query_order_obj,(new_) => {
+//   query_order_obj_handle()
+// })
 
-/** --------------------------  watch 结束---------------*/
 
-/** --------------------------  事件 开始---------------*/
 
 // ...mapMutations(["set_pre_market_data","set_keyboard_show","set_odds_change","set_active_index", "set_bet_status", "set_change_list", "set_invalid_ids", "set_order_ing", "set_order_los", "set_money_total"]),
 
-
+const calc_mixcount = ()=>{
+  console.error(111)
+}
 //长按事件（起始）
 const gtouchstart = (type) => {
   if (type == 1) {
@@ -686,13 +686,13 @@ const flicker_ = () => {    //光标闪动，animation有兼容问题，用函�
       ele.classList.toggle('money-span3')
     }
   }, 700);
-},
+}
 /**
 *@description 删除一个投注项
 *@param {String} id_ 投注项id或者坑位id
 *@return {Undefined} undefined
 */
-const remove_ = (id_) => {
+const remove_bet_id = (id_) => {
   //校验是否是串关，并且删除后是否小于最小串关数量
   if (BetData.bet_is_mix && !vilidata_mix_count(true)) { return }
   let _money = view_ctr_obj[id_].money
@@ -702,7 +702,7 @@ const remove_ = (id_) => {
   set_change_list({ value: id_, status: 2 });
   set_invalid_ids({ type: 2, val: value_show.mid })
   remove_item(id_);
-},
+}
 /**
  *@description 点击预约投注icon事件
  *@param del 当为false时表示删除，默认为true
@@ -918,7 +918,7 @@ const reomve_invalid_handle = () => {
     bet_obj_ov < 101000 ||
     hids
   ) {
-    remove_(value_show.id_)
+    remove_bet_id(value_show.id_)
   }
 }
 // 单关单注成功和单关多注消息处理

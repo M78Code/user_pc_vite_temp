@@ -1,6 +1,5 @@
 import { createApp } from "vue";
 import { Quasar } from "quasar";
-
 // Import icon libraries
 import "@quasar/extras/roboto-font/roboto-font.css";
 import "@quasar/extras/material-icons/material-icons.css";
@@ -14,8 +13,13 @@ import { i18n } from "src/core/index.js";
 import router from './src/router/index.js'
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
+//引入自定义指令
+import useDirective from "src/core/directives"
 import App from "./App.vue";
 const myApp = createApp(App);
+// 使用自定义指令
+useDirective(myApp)
+console.log(myApp,'myApp');
 myApp.use(i18n);
 myApp.use(router);
 myApp.use(Quasar, {

@@ -17,6 +17,7 @@ const initialState = {
   pre_filter_checked_all: true,
   // 获取选中的赛事数量(列表右上角赛选功能)
   checked_count: 0,
+  collect_count:0  //收藏数量
 };
 export default function filterReducer(state = initialState, action) {
   switch (action.type) {

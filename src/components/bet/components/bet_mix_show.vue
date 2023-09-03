@@ -53,11 +53,11 @@
             <!--<template v-else-if="bet_success_obj.playName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playName}}</template>-->
             <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
             <!-- 基准分 -->
-            <template
-              v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">&ensp;
-              <template v-if="bet_success_obj.scoreBenchmark">{{  calc_bifen2( bet_success_obj.scoreBenchmark  )
-              }}</template>
-              <template v-else>{{  calc_bifen(value_show)  }}</template>
+            <template v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">
+             <div>
+              <template v-if="bet_success_obj.scoreBenchmark">{{ calc_bifen2( bet_success_obj.scoreBenchmark)}}</template>
+              <template v-else>{{ calc_bifen(value_show) }}</template>
+             </div>
             </template>
           </span>
           <template v-if="BetData.is_bet_success_status && !(BetData.bet_is_mix && BetData.bet_list.length > 1)">
@@ -95,7 +95,7 @@
           <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
             <template v-if="get_is_champion()">{{ value_show.onTn || value_show.tn }}</template>
             <template v-else-if="BetData.is_bet_success_status && bet_success_obj.matchInfo">{{ bet_success_obj.matchInfo }}</template>
-            <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }} {{ score }}</template>
+            <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man}}{{ score }}</template>
           </div>
           <div v-if="authorityOptionFlag" class="col-3 row subscribe-button" @click.stop="handlePre(true)">
             +{{ $t('pre_record.book') }}</div>
@@ -188,8 +188,8 @@
 
 <script setup>
 
-import {odd_convert} from "src/core/index.js";
-import betting from 'src\core\bet\common-helper\index.js';
+// import {odd_convert} from "src/core/format/index.js";
+// import betting from 'src/core/bet/common-helper/index.js';
 import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
 import betSingleDetail from './bet_single_detail.vue';
 import { UserCtr } from "src/core/index.js";
@@ -199,22 +199,22 @@ import lodash from 'lodash'
 
  
 
-const odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
-const pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
-const is_suspend_watch = ref(false) // 是否暂停监听赔率盘口变化
-const order_status = ref(1)  //1-投注成功  2-投注确认中  0-投注失败
-const pre_ov = ref(0) // 预约投注赔率(原始的欧洲赔率)
-const pre_odds = ref('') //键盘带过来的预约值
-const pre_market_value = ref('') //预约投注盘
-const pre_switch = ref(0)//当前投注项预约开关
-const flicker_timer = ref(null)     //光标闪动计时器
-const low_odds = ref(0)//最低赔率
-const daxiao_market_value = ref(0.5) //大小玩法最低盘口值，初始最低0.5
-const daxiao_market_value_max = ref(30) //大小玩法最大盘口值
-const rq_market_value_max = ref(10)  //让球类玩法最大盘口值
-const rq_market_value_min = ref(-10) //让球类玩法最小盘口值
-const market_value_unit = ref(0.25)//盘口变动值，默认足球0.25，篮球是0.5
-const focus_type = ref(0) // 光标聚焦到哪里
+let odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
+let pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
+let is_suspend_watch = ref(false) // 是否暂停监听赔率盘口变化
+let order_status = ref(1)  //1-投注成功  2-投注确认中  0-投注失败
+let pre_ov = ref(0) // 预约投注赔率(原始的欧洲赔率)
+let pre_odds = ref('') //键盘带过来的预约值
+let pre_market_value = ref('') //预约投注盘
+let pre_switch = ref(0)//当前投注项预约开关
+let flicker_timer = ref(null)     //光标闪动计时器
+let low_odds = ref(0)//最低赔率
+let daxiao_market_value = ref(0.5) //大小玩法最低盘口值，初始最低0.5
+let daxiao_market_value_max = ref(30) //大小玩法最大盘口值
+let rq_market_value_max = ref(10)  //让球类玩法最大盘口值
+let rq_market_value_min = ref(-10) //让球类玩法最小盘口值
+let market_value_unit = ref(0.25)//盘口变动值，默认足球0.25，篮球是0.5
+let focus_type = ref(0) // 光标聚焦到哪里
 
 
 onMounted(() => {
@@ -281,7 +281,7 @@ watch(() => score, (new_) => {
   const hps_obj = _.get(value_show, 'hps[0]')
   if (!BetData.bet_is_mix.value && show_pre && pre_switch.value && new_) {
     const method_type = ol_obj.ot
-    const new_arr = new_.replace(/\(/, '').replace(/\)/, '').split('-') || []
+    const new_arr = new_.replace(//(/, '').replace(//)/, '').split('-') || []
     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
       const homeTeamMethodList = [ //主队进球大小玩法
         '10', '87', '88', '115', '123', '314', '316'
@@ -740,7 +740,9 @@ const hptype = computed(() => {
 /** --------------------------事件开始 ---------------*/
 
 // ...mapMutations(["set_pre_market_data","set_keyboard_show","set_odds_change","set_active_index", "set_bet_status", "set_change_list", "set_invalid_ids", "set_order_ing", "set_order_los", "set_money_total"]),
-
+const calc_mixcount = ()=>{
+  console.error(111)
+}
 //长按事件（起始）
 const gtouchstart = (type) => {
   if (type == 1) {

@@ -475,7 +475,6 @@ const lineList = [
   },
   { label: i18n_t("bet_record.status"), id: 7 },
 ];
-console.error(props);
 const {
   recordData,
   toast,

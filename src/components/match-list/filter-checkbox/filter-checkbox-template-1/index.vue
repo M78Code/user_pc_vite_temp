@@ -10,7 +10,17 @@
 import { defineProps } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  checked: {
+    type: Boolean,
+    default: () => false,
+  },
+  results_checkbox_style: {
+    type: Object,
+    default: () => {},
+  }
+})
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 
 

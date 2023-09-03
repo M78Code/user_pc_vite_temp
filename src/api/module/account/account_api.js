@@ -4,7 +4,7 @@
  * @Description: 用户模块相关api定义
  */
 
-import {http} from "src/core/http/";
+import http from "src/core/http/axios-warpper.js";
 
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix_user} = API_PREFIX;

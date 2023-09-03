@@ -67,7 +67,7 @@
             ? no_data_msg
             : 'code_empty' == cur_state
             ?i18n_t('common.code_empty')
-            : $store.state.filter.open_select_time
+            : filter_store.open_select_time
             ?i18n_t('filter.empty')
             :i18n_t('common.no_data')
         "
@@ -77,7 +77,7 @@
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{ filter_img: $store.state.filter.open_select_time }"
+        :class="{ filter_img: filter_store.open_select_time }"
       >
       </no-data>
       <no-data
@@ -180,7 +180,8 @@ import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
-
+const filter_store = store.getState().filterReducer
+console.error(store.getState());
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中
