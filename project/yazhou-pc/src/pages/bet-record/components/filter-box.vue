@@ -6,9 +6,7 @@
 
 <template>
   <div>
-    <!-- 勾选框 和 提前结算-->
-    {{toolSelected + '-+-' + UserCtr.user_info.settleSwitch}}
-    
+    <!-- 勾选框 和 提前结算-->    
     <div v-if="toolSelected === 0 && UserCtr.user_info.settleSwitch">
       <!-- 勾选框 -->
       <div class="date-time-choice checkbox" @click="search_pre_record">
@@ -45,11 +43,10 @@
         @click="search_pre_record"
         v-if="UserCtr.user_info.settleSwitch"
       >
-      {{UserCtr.user_info.settleSwitch}}
-        <!-- <FilterCheckboxFullVersionWapper
+        <filter-checkbox-full-version-wapper
           :checked="is_pre_bet"
           :style="checkbox_style"
-        /> -->
+        />
         <span>{{ i18n_t("bet_record.settlement_pre") }}</span>
         <!-- 提前结算 -->
       </div>
@@ -158,7 +155,6 @@ import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filte
 import { formatTime } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
-console.error(UserCtr.user_info);
 const props = defineProps({
   toolSelected: Number,
   time_sort_record_item: Object,
@@ -170,9 +166,10 @@ const props = defineProps({
 const reload = inject('reload')
 // 日历多语言配置
 const locale = {
-  days: i18n_t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-  daysShort: i18n_t("time.time_date_week"),
-  // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  // TODO: 后续再处理国际化
+  days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], // i18n_t("time.time_date_week"), // ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  daysShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],// i18n_t("time.time_date_week"),
+  
   months: [
     i18n_t("time.month_1"),
     i18n_t("time.month_2"),
@@ -229,7 +226,7 @@ const endTimeShow = ref(false); // 结束时间展示
   const default_value= ref('0')
 
 onMounted(() => {
-  toolWords.value = i18n_t("time.time_date_list_1"); //["今天", "昨天", "七天内", "一个月内"];
+  toolWords.value = ["今天", "昨天", "七天内", "一个月内"] //JSON.parse(i18n_t("time.time_date_list_1")); 
 });
 
 onUnmounted(()=>{
@@ -373,4 +370,88 @@ const time_sort = (sort) => {
   justify-content: flex-start;
   align-items: center;
 }
+/**
+*七天时间
+*/
+.wrap_success {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    ::v-deep .material-icons {
+      font-family: "Material Icons";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+    }
+    .tool-time {
+      display: flex;
+      user-select: none;
+      .tool-item {
+        padding: 0 18px;
+        height: 28px;
+        line-height: 26px;
+        cursor: pointer;
+      }
+    }
+    .sort-content {
+      flex: 1;
+      height: 28px;
+      display: flex;
+      justify-content: flex-end;
+      .select-btn {
+        margin-left: 5px;
+        height: 28px;
+        width: 150px;
+        border-radius: 2px;
+        cursor: pointer;
+        position relative {
+          &.sort-btn {
+            .yb-hover-bg {
+              padding: 0 5px 0 8px;
+            }
+            .icon-sort {
+              margin-left: 3px;
+            }
+          }
+        }
+        .yb-hover-bg {
+          justify-content: space-between;
+          padding: 0 8px;
+          .text_check {
+            flex: 1;
+            margin-left: 7px;
+          }
+        }
+      }
+      .item-wrap-time {
+        position: absolute;
+        top: 28px;
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--qq--y0-text-color0);
+        width: 150px;
+        z-index: 10;
+        .item {
+          padding: 0 9px;
+          height: 30px;
+          justify-content: flex-start;
+          border-radius: 4px;
+          .text {
+            margin-left: 7px;
+          }
+        }
+      }
+    }
+  }
 </style>
