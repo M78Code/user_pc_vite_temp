@@ -1,6 +1,7 @@
 <template>
   <!--当前投注-->
   <template>
+    是撒啊撒打算大
     <div class="bet-mode-zone" v-if="is_bet_single">
       <div class="left">
         <span>{{ $t("bet.bet_one_") }}</span>

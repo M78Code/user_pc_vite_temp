@@ -18,6 +18,8 @@ import { http, AllDomain } from "src/core/http/";
 import { SessionStorage,enter_params } from "src/core/index.js";
 import { loadLanguageAsync, LayOutMain_pc } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 
 const init_load = ref(false); //用于加载是否完成
@@ -56,6 +58,8 @@ const init_load = ref(false); //用于加载是否完成
       http.setApiDomain();
       // 元数据初始化
       base_data.init();
+      // 投注信息 初始化
+      BetData.init_core();
       // 布局初始化
       LayOutMain_pc.init();
       init_load.value = true;

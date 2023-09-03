@@ -89,13 +89,21 @@ class MenuData {
     this.is_multi_column = false;
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
+    // 菜单版本变更
+    this.menu_data_version = ref('12')
   }
 
   // 设置左侧显示内容
   set_layout_left_show(val){
+    debugger
+    console.error('ssssss',val)
     this.layout_left_show = val
+    this.set_layout_left_show()
   }
-
+  // 设置 菜单的版本变化
+  set_layout_left_show(){
+    this.menu_data_version.value = Date.now()
+  }
   /**
    * @Description 设置 api参数的版本
    * @param {undefined} undefined
