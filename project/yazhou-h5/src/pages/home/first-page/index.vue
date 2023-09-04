@@ -166,7 +166,8 @@
 
 <script setup>
 import { api_home } from "src/api/index.js";
-import { format_time_zone_time, format_balance, format_total_score } from "src/core/format/index.js"
+import {ref,watch,onMounted,computed ,onUnmounted } from 'vue'
+import { format_time_zone_time, format_balance,DateForMat, format_total_score } from "src/core/format/index.js"
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
@@ -184,20 +185,27 @@ import ListMap from "src/core/match-list-h5/match-class/list-map.js";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
 import {utils } from 'src/core/utils/index.js';
-import base_data from "src/core/base-data/base-data.js";
+import base_data from "src/core/menu-h5/menu-data-class.js";
+
 //  一二级菜单 本地化假数据
 // import { common_menu_list, secondary_menu } from "project_path/src/config/common-menu.js"
 //  api1.5 菜单 本地化假数据
-// import menu_data  from "project_path/src/config/menu-new-data.js"
-import uid from "src/core/uuid/index.js"
+import menu_data  from "src/core/base-data/config/mew_menu_res"
+import uid,{quid} from "src/core/uuid/index.js"
+import {axios_loop} from 'src/core/http/'
 import { db } from "src/core/menu-h5/common/db.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js"
 import lodash from "lodash"
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useRoute, useRouter } from "vue-router"
+import store from "src/store-redux/index.js";
+
+const { langReducer } = store.getState();
+
   // mixins: [skt_home_bw3, match_list_mixin],
 
+  const get_lang=ref(langReducer.lang)
   // 路由
   const route = useRoute()
   const router = useRouter()
@@ -212,9 +220,9 @@ import { useRoute, useRouter } from "vue-router"
   //左侧菜单选中项
   let menu_index = ref(0)
   //左侧菜单
-  let menu = ref(common_menu_list())
+  let menu = ref([])//common_menu_list()
   //右边内容
-  let match_list = ref(secondary_menu())
+  let match_list = ref([])//secondary_menu()
   //右侧无数据
   let noData = ref(false)
   let no_data_txt = ref("moMatch")
@@ -243,25 +251,35 @@ import { useRoute, useRouter } from "vue-router"
   // 展示banner loading
   let show_banner_loading = ref(true)
   let new_menu = ref([])
-    // 展示banner loading
-    show_banner_loading = true
-    get_carousel((data) => {
-      carousel_data.value = new ListMap("mid", data)
-    }).then(() => {
-      show_banner_loading = false
-    });
+    const list_area=ref(null)
+    const content=ref(null)
 
-    //首页加载时初始化数据
-    set_bet_obj({});
-    set_bet_list([]);
-    set_show_favorite_list(false);
-    menu_index.value = 0;
-    useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
-    useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
-
-    get_list();
-    get_lang_v3()
-
+    const get_home_menu_index=1
+  // ...mapGetters({
+  //     get_ball_seed_menu: 'get_ball_seed_menu',
+  //     // 用户信息,用户金额,userId 需要监听变化
+  //     user_info: "get_user",
+  //     // 当前语言
+  //     get_lang: 'get_lang',
+  //     // 当用户未登录时返回uuid, 当用户登录时返回userId
+  //     uid: "get_uid",
+  //     // 用户令牌信息
+  //     get_user_token: "get_user_token",
+  //     // 左边菜单选中下标
+  //     get_home_menu_index: "get_home_menu_index",
+  //     // 首页菜单数据
+  //     get_home_data: "get_home_data",
+  //     // 当前主题
+  //     get_theme: "get_theme",
+  //     // 商户配置的图片地址和弹框信息
+  //     get_banner_obj: "get_banner_obj",
+  //     get_is_language_changing: "get_is_language_changing",
+  //     get_last_home_tab_item: "get_last_home_tab_item",
+  //     get_golistpage: 'get_golistpage',
+  //     get_hot_list_item: 'get_hot_list_item',
+  //     get_current_first_menu: 'get_current_first_menu' //用于获取选中的
+  //   }),
+  const get_banner_obj=ref({})
   watch(() => UserCtr.user_info.balance, () => {
     handler= 'format_balance'
   })
@@ -276,7 +294,7 @@ import { useRoute, useRouter } from "vue-router"
   }
   // 请求国际化
   const get_lang_v3 = () => {
-    base_data.get_load_lang_v3(get_lang)
+    // base_data.get_load_lang_v3(get_lang.value)
   }
 
   /**
@@ -387,7 +405,7 @@ import { useRoute, useRouter } from "vue-router"
   const window_resize_on = () => {
     clearTimeout(timer_1)
     timer_1 = setTimeout(() => {
-      el_height = window.innerHeight - $refs.content.getBoundingClientRect().top
+      el_height = window.innerHeight -content.value.getBoundingClientRect().top
     }, 1000);
   }
   /**
@@ -505,7 +523,7 @@ import { useRoute, useRouter } from "vue-router"
   const menu_data_loaded = (data) => {
     data = lodash.cloneDeep(data)
     let newData =  base_data.recombine_menu(data);
-    save_home_data(data)
+    // save_home_data(data)
     menu_data_config(newData);
     return;
   }
@@ -526,10 +544,10 @@ import { useRoute, useRouter } from "vue-router"
     //   menu_data_loaded(get_home_data);  // 先用缓存数据
     // }
     let params = {
-      cuid: uid ? uid : '0', //用户ID/或UUid
+      cuid: uid ? uid() : '0', //用户ID/或UUid
       sys: 7 //1 panda 体育 ;3 188体育
     };
-    send_gcuuid = uid();
+    const send_gcuuid = uid();
     params.gcuuid = send_gcuuid;
     let obj_ = {
       // axios api对象
@@ -538,6 +556,7 @@ import { useRoute, useRouter } from "vue-router"
       params: params,
       // axios中then回调方法
       fun_then: res => {
+        console.log("test",res)
         if (send_gcuuid != res.gcuuid) return;
         let code = lodash.get(res, "code");
         if (code == 200) {
@@ -556,7 +575,7 @@ import { useRoute, useRouter } from "vue-router"
             history.replaceState(null, '', `${location.pathname}${location.hash}`)
           }
         } else {
-          // menu_data_loaded(menu_data);
+          menu_data_loaded(menu_data);
           noMenu.value = true
           no_menu_txt.value = "noMatch"
         }
@@ -573,7 +592,7 @@ import { useRoute, useRouter } from "vue-router"
       timers: 1000
     }
     // axios_api轮询调用方法
-    const res = await $utils.axios_api_loop(obj_);
+    const res = await axios_loop(obj_);
   }
   // 去除串关
   const remove_crosstalk = (data) => {
@@ -625,7 +644,7 @@ import { useRoute, useRouter } from "vue-router"
     }
     let _obj = {
       [objKey.eventLabel]: "",
-      [objKey.clickTime]: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+      [objKey.clickTime]: DateForMat(new Date(),'yyyy-MM-dd hh:mm:ss'),
       [objKey.userName]: lodash.get(UserCtr, 'user_info.userName'),
       [objKey.userId]: lodash.get(UserCtr, 'user_info.userId'),
       [objKey.merchantId]: lodash.get(UserCtr, 'user_info.mId'),
@@ -637,7 +656,7 @@ import { useRoute, useRouter } from "vue-router"
     let mi = new_menu[index].mi;
     menu_index.value = index
     set_home_menu_index(menu_index.value)
-    $refs.list_area.setScrollPosition(0)
+  list_area.value.setScrollPosition(0)
     animation = false
     // 动画效果
     if (home_timer1_) clearTimeout(home_timer1_)
@@ -745,10 +764,10 @@ import { useRoute, useRouter } from "vue-router"
   }
   onMounted(() => {
     // 初始化菜单状态
-    set_selector_w_m_i(0);
-    set_date_menu_curr_i(0);
-    set_current_sub_menuid('');
-    set_curr_sub_menu_type('');
+    // set_selector_w_m_i(0);
+    // set_date_menu_curr_i(0);
+    // set_current_sub_menuid('');
+    // set_curr_sub_menu_type('');
     // 浏览器窗口变化事件监听
     useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
     // 保证赛事框初始高度正确
@@ -789,6 +808,25 @@ import { useRoute, useRouter } from "vue-router"
     clearTimeout(timer_1)
     timer_1 = null
   })
+
+  // 展示banner loading
+  show_banner_loading = true
+    get_carousel((data) => {
+      carousel_data.value = new ListMap("mid", data)
+    }).then(() => {
+      show_banner_loading = false
+    });
+
+    //首页加载时初始化数据
+    // set_bet_obj({});
+    // set_bet_list([]);
+    // set_show_favorite_list(false);
+    menu_index.value = 0;
+    useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
+    useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data)
+
+    get_list();
+    get_lang_v3()
 
 </script>
 

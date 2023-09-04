@@ -454,6 +454,8 @@ const props = defineProps({
   //   default: "zh"
   // }
 });
+
+console.error(props, props.record_obj);
 const emit = defineEmits([
   "choosePage",
   "clear_timer_get_cashout",

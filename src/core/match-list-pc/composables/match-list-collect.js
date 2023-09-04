@@ -174,7 +174,7 @@ const mx_collect_leagues = (match, is_champion) => {
           )
         );
         mids_arr.forEach((mid) => {
-          let match_item = MatchListData.mid_obj["mid_" + mid] || {};
+          let match_item = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
           match_item.tf = cur_collect_state;
           match_item.mf = cur_collect_state;
           // 在收藏列表页 移除收藏
@@ -238,7 +238,7 @@ const update_collect_data = (params) => {
         let mids = params.mids;
         for (let i = 0; i < mids.length; i++) {
           let mid = mids[i];
-          let match = MatchListData.mid_obj["mid_" + mid] || {};
+          let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
           //冠军联赛收藏
           if (MenuData.is_guanjun()) {
             MatchListCard.update_league_collect_data(mid);
@@ -251,7 +251,7 @@ const update_collect_data = (params) => {
       break;
     // 设置收藏状态
     case "set_status":
-      let match = MatchListData.mid_obj["mid_" + params.mid] || {};
+      let match = MatchListData.quick_query_obj.mid_obj["mid_" + params.mid] || {};
       if (match.mid) {
         match.mf = params.mf;
         set_collect_count({ type: "inc", count: params.mf ? 1 : -1 });
@@ -309,21 +309,5 @@ const collect_composable_fn =(props)=>{
 
     }
 }
-export default {
-  // 收藏数量
-  collect_count,
-  // 数据请求状态
-  load_data_state,
-  // 设置收藏数量
-  set_collect_count,
-  //赛事收藏数量
-  mx_collect_count,
-  //联赛收藏
-  mx_collect_leagues,
-  //更新收藏数据
-  update_collect_data,
-  //收藏联赛、赛事
-  mx_collect
-}
 
-// export default  collect_composable_fn
+export default  collect_composable_fn

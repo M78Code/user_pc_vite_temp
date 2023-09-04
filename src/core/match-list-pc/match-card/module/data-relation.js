@@ -8,8 +8,9 @@ import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1} 
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type2} from  "./data-relation-type-2.js"
 import {compute_match_list_style_obj_and_match_list_mapping_relation_obj_type5} from  "./data-relation-type-3.js"
 import PageSourceData  from  "src/core/page-source/page-source.js"
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+import {conpute_match_list_card_offset } from  "./card-show-offset.js"
 
-    
 const MenuData ={
     menu_data:{},
  
@@ -143,8 +144,8 @@ const MenuData ={
     if(!is_ws_call){
         MatchListCardData.match_list_render_key++
        // 重置 赛事模板配置  开始
-       let template_id = MenuData.menu_data.match_tpl_number
-       let reset_template_config_fn = MATCH_LIST_TEMPLATE_CONFIG['template_'+template_id]['reset_match_template_config']
+      //  let template_id = MenuData.menu_data.match_tpl_number
+       let reset_template_config_fn = MATCH_LIST_TEMPLATE_CONFIG['template_'+1+'_config']['reset_match_template_config']
        if(reset_template_config_fn){reset_template_config_fn()}
       // 重置 赛事模板配置  结束
       reset_all_card_data()
@@ -160,6 +161,7 @@ const MenuData ={
      * 7. 列表数据类型为赛事列表   只有联赛
      */
     if([1,3].includes(MatchListCardData.match_list_mapping_relation_obj_type)){
+      console.log('match_listmatch_listmatch_list', match_list);
      compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1(match_list,is_ws_call,is_remove_call)
     }
     else if([2,4,7].includes(MatchListCardData.match_list_mapping_relation_obj_type)){

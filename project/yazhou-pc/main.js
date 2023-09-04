@@ -14,7 +14,7 @@ import router from './src/router/index.js'
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 //引入自定义指令
-import useDirective from "src/core/directives"
+import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 const myApp = createApp(App);
 // 使用自定义指令

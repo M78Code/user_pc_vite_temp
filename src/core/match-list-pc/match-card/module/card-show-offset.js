@@ -5,7 +5,10 @@
  * */ 
 import MatchListCardData from "./match-list-card-data-class.js";
 import PageSourceData  from  "src/core/page-source/page-source.js"
-    
+import store from "src/store-redux/index.js"
+import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+
+let state = store.getState();
 const MenuData ={
   is_show_hot :false
 }
@@ -55,9 +58,7 @@ const get_show_level = (card_obj) => {
  */
 export const set_card_show_level = (scroll_top) => {
   // 列表高度
-  let list_content_height = JSON.parse(
-    localStorage.getItem("get_layout_size")
-  ).content_height;
+  let list_content_height = state.layoutReducer.layout_size;
   // 一级区域offset_top
   show_level_refer.level1_offset_top = scroll_top;
   // 一级区域offset_bottom
@@ -100,6 +101,7 @@ export const set_card_show_level = (scroll_top) => {
       card_obj.show_level = 1;
     }
   });
+  MatchListScrollClass.set_show_mids(show_mids_arr)
   return show_mids_arr;
 };
 

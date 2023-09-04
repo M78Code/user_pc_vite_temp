@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="before" v-if="isRouterAlive" >
-    <div class="content" :style="{'background-color': utils.is_eports_csid(match_info.csid) ? 'transparent' : '', 'box-shadow': utils.is_eports_csid(match_info.csid) ? 'none' : '0 1px 15px 0 rgba(0, 0, 0, 0.3)'}" :class="{'dota-resize': utils.is_eports_csid(match_info.csid)}">
+    <div class="content" :style="{'background-color': is_eports_csid(match_info.csid) ? 'transparent' : '', 'box-shadow': is_eports_csid(match_info.csid) ? 'none' : '0 1px 15px 0 rgba(0, 0, 0, 0.3)'}" :class="{'dota-resize': is_eports_csid(match_info.csid)}">
       <div class="team">
         <!-- 主队 开始-->
         <div class="home">
@@ -20,7 +20,7 @@
             />
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-if="!utils.is_eports_csid(match_info.csid) && (lodash.get(match_info,'mhlu') && lodash.get(match_info,'mhlu').length>1)"
+              v-if="!is_eports_csid(match_info.csid) && (lodash.get(match_info,'mhlu') && lodash.get(match_info,'mhlu').length>1)"
               v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt
@@ -48,7 +48,7 @@
             />
             <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-if="!utils.is_eports_csid(match_info.csid) && lodash.get(match_info,'malu') && lodash.get(match_info,'malu').length>1"
+              v-if="!is_eports_csid(match_info.csid) && lodash.get(match_info,'malu') && lodash.get(match_info,'malu').length>1"
               v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt

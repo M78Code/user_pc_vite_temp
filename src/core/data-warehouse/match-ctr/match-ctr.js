@@ -255,13 +255,14 @@ export default class MatchDataBase
    */
   set_list(list,is_merge){
     let obj = this.list_comparison(this.list,list);
-    console.error(obj);
+
     if(is_merge){
       // {add:{}, del:{}, upd:{}}
       // 需要更新的
       for (let i = 0; i < list.length; i++) {
         const item = list[i];
         const mid = item.mid;
+        console.log('listlist', mid);
         if(obj.upd[mid]){
          // 需要更新的赛事
          const match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));

@@ -101,11 +101,14 @@
     <div class="info-both">
       <div class="both-home">
         <div class="wrap-logo">
-          <img
+          <!-- <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
             v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
+            :style="all_fn.team_logo({position:2, theme :'locationUrl'})"
             class="both-logo"
-          />
+          /> -->
+          <div :style="all_fn.team_logo({position:[lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')], theme :'locationUrl'})"
+            class="both-logo"></div>
           <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:1}">{{lodash.get(match_info,'mhn')}}</span>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_home_goal">
@@ -146,11 +149,13 @@
       </div>
       <div class="both-away">
         <div class="wrap-logo">
-          <img
+          <!-- <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
             v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
             class="both-logo"
-          />
+          /> -->
+          <div :style="all_fn.team_logo({position:[lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')], theme :'locationUrl'})"
+            class="both-logo"></div>
           <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'man'),overflow:1}">{{lodash.get(match_info,'man')}}</span>
           <!-- 进球动画 -->
           <div class="yb-flex-center" v-if="is_show_away_goal">
@@ -194,7 +199,8 @@
 </template>
 
 <script>
-// import format from "src/project/yabo/mixins/match_details/index";
+// import  {compute_css}  from   "src/core/server-img/sprite-img/module/team_logo.js"
+import  all_fn  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
 import { get_match_status,i18n_t } from 'src/core/index'
@@ -212,6 +218,7 @@ export default {
   },
   data() {
     return {
+      all_fn,
       i18n_t,
       lodash,
       rs_hong,
@@ -264,7 +271,7 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop)
+      useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop)
     },
     start_timer_loop() {
       let date = this.timestamp++;
@@ -525,6 +532,8 @@ export default {
       flex-shrink: 0;
       margin-right: 11px;
       width: 28px;
+      height: 28px;
+     
     }
     .info-data {
       span {

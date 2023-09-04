@@ -2,7 +2,7 @@ import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+// import { compute_value_by_cur_odd_type } from "src/core/format/index.js";
 // import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";
@@ -25,7 +25,7 @@ const  post_submit_bet_list_gcuuid = ref(uid())
      * @param {Number} is_pre  是不是预约投注 默认false
      * @return {undefined} undefined
      */
-  const bet_submit_data_template=(seriesType, seriesBetAmount, item, is_pre=false)=> {
+   export const bet_submit_data_template=(seriesType, seriesBetAmount, item, is_pre=false)=> {
     console.log('正常投注参数playOptionName处理------------1', );
     let tempList = [];
     let bet_list_array = BetData.is_bet_single ? [item] : _.get(BetData,'get_bet_list',[]);
@@ -312,7 +312,7 @@ const  post_submit_bet_list_gcuuid = ref(uid())
      * @param {Function} callback 回调函数
      * @return {undefined} undefined
      */
-   const bet_submit_data=(seriesType, callback)=> {
+    export const bet_submit_data=(seriesType, callback)=> {
         if (BetData.is_bet_single) {
           if (!_.isArray(BetData.bet_single_list)) return;
         } else {

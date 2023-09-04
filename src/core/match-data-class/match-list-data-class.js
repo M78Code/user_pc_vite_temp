@@ -1,14 +1,15 @@
 import {
 	sport_match_count as sport_match_count_template,
-	MATCH_LIST_TEMPLATE_CONFIG,
 	history_score_dict,
 	match_state_convert_score_dict,
 	other_play_name_to_playid,
 	let_ball_play_tpl,
 	has_cur_handicap_tpl_ids,
 } from "src/core/constant/config/data-class-ctr/index.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import {utils } from 'src/core/index.js';
 import lodash from 'lodash';
+import { MITT_TYPES } from "../mitt";
 
 class MatchListDataClass {
 	/**
@@ -1008,7 +1009,7 @@ class MatchListDataClass {
 			play_key,
 		});
 		this.coverage_match_data({ other_handicap_list }, mid);
-		window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, {
+		useMittEmit(MITT_TYPES.MITT_TYPES.EMIT_API_BYMIDS, {
 			mids: [mid],
 		});
 	}

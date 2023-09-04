@@ -6,9 +6,9 @@ import {
 } from "./card-show-offset.js";
 import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie } from "./fold-csid.js";
 import { recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie } from "./fold-kaisai-weikaisi.js";
-const MenuData = {
-	which_list: 1,
-};
+import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+
 /**
  * 联赛 折叠
  * click_card_obj 点击的联赛卡片对象
@@ -118,7 +118,7 @@ export const unfold_all_league = () => {
 						mids: card_obj.league_obj.mids.split(","),
 					};
 					// 拉取http请求
-					window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS, params);
+					useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params);
 				}
 				card_obj.is_league_fold = true;
 				recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(

@@ -88,7 +88,7 @@ class EnterParamsYazhouH5 {
   delete_params() {
     let url = window.location.href;
     // 删除参数
-    url = this.$utils.remove_url_param(["mt1", "m", "s", "mt2"]);
+    url = this.remove_url_param(["mt1", "m", "s", "mt2"]);
     // 设置最新url地址
     history.replaceState(null, null, url);
   }
@@ -352,5 +352,9 @@ class EnterParamsYazhouH5 {
     return this.url + "&t=" + t || "";
   }
 }
-
+//任何时候外联 提供方法 组装参数  fun({})return 'url?'
+//any enter  1.场馆 
+// {
+//   back:false,
+// }
 export default new EnterParamsYazhouH5();

@@ -13,13 +13,13 @@ const socket_name = ref("match_list");
 // 是否静默运行(socket、refresh按钮)
 const backend_run = ref(false);
 
-const load_data_state = ref(null);
+const load_data_state = ref('data');
 // 订阅所需 盘口ID
 const skt_hpid = ref("");
 const ws_c8_subscribe = () => {
 	let match_list = [];
 	show_mids.value.forEach((mid) => {
-		let match = MatchListData.mid_obj["mid_" + mid];
+		let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid];
 		if (match) {
 			match_list.push(match);
 		}

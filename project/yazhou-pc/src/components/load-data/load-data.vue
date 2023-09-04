@@ -256,7 +256,6 @@ const cur_state = computed(()=>{
     */
 const no_user_event = () => {
   // 设置用户失效
-  console.log(1111111111111)
   no_user.value = true;
 
 }

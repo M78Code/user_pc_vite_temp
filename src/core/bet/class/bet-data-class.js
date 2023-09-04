@@ -1,6 +1,7 @@
 import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
+import { ref } from "vue"
 
 
 class BetData {
@@ -189,6 +190,8 @@ this.bet_appoint_ball_head= null */
     this.show_bet_custom_id_arr_change = 1
     // 从服务器拉取到的 赔率转换表
     this.odds_coversion_map = []
+    // 版本变更
+    this.bet_data_class_version = ref('123')
 
   }
 
@@ -322,9 +325,12 @@ this.bet_appoint_ball_head= null */
       // 同场赛事不能串 部分数据源赛事不能串 
       this.bet_s_list.push(bet_refer_obj) 
     }
-   
+    
+    console.error('bet_single_list',this.bet_single_list[0].playOptionsId)
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
+    
+    this.bet_data_class_version.value = Date.now()
   }
 
   /*

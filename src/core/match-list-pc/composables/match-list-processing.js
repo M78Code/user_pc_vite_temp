@@ -4,10 +4,25 @@ import lodash from 'lodash';
 
 import { virtual_sport_format } from 'src/core/format/module/format-match.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import virtual_composable_fn from 'src/core/match-list-pc/composables/match-list-virtual.js'
+import collect_composable_fn from "./match-list-collect.js";
+import virtual_composable_fn from './match-list-virtual.js'
+import use_featch_fn from "./match-list-featch.js";
+import ws_composable_fn from "./match-list-ws.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from 'src/core/match-list-pc/match-card/module/data-relation.js'
+import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
+// const { api_bymids } = useMatchListMx();
+
+const { mx_collect_count } = collect_composable_fn();
+const { virtual_list_timeout_id } = virtual_composable_fn();
+const { show_mids_change } = ws_composable_fn();
+const { api_bymids } = use_featch_fn();
+
+const load_data_state = ref(null);
+let hot_match_list_timeout;
+let vx_layout_list_type = 'match'
 // 是否虚拟体育
 let is_virtual = MenuData.is_virtual_sport;
 //
@@ -25,9 +40,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
 	let callback_func = null;
-	let type_name = MenuData.cur_menu_type.type_name;
-	let pre_name = MenuData.cur_menu_type.pre_name;
-	clearTimeout(virtual_composable_fn.virtual_list_timeout_id);
+	clearTimeout(virtual_list_timeout_id);
 	// 所有联赛列表
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
@@ -38,7 +51,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		if (this.vx_filter_select_obj.length > 0) {
 			// 只有预加载会传 true
 			if (!collect) {
-				this.mx_collect_count();
+				mx_collect_count();
 			}
 		} else {
 			this.set_collect_count({
@@ -49,8 +62,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 如果是专业版 && 今日、早盘、串关之间的切换 && 之前有筛选 && 并且当前没有筛选
 		if (
 			!backend_run &&
-			["today", "early", "bet"].includes(type_name) &&
-			["today", "early", "bet"].includes(pre_name) &&
+			[2, 3].includes(MenuData.menu_root) &&
+			[2, 3].includes(MenuData.menu_root) &&
 			this.vx_pre_filter_select_obj.length > 0 &&
 			this.vx_filter_select_obj.length == 0
 		) {
@@ -85,7 +98,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			}
 			MenuData.set_filter_select_obj(new_filter);
 		}
-		if (!["today", "early", "bet"].includes(pre_name) && pre_name) {
+		if (![2, 3].includes(MenuData.menu_root) && pre_name) {
 			this.remove_pre_filter_select_obj();
 		}
 		// 设置数据仓库 联赛列表对象
@@ -93,7 +106,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 计算列表卡片样式
 		compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
-			backend_run
 		);
 		if (lodash.isFunction(this.SCMD_C9)) {
 			// C9订阅
@@ -101,7 +113,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		if (backend_run) {
 			// 静默拉取列表 设置数据加载状态
-			this.load_data_state = "data";
+			load_data_state = "data";
 			// 更新可视区域赛事盘口数据
 			show_mids_change();
 		} else {
@@ -122,7 +134,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 					this.regular_events_set_match_details_params(cut, params);
 				};
 			}
-			console.log(11111111);
 			// 调用bymids更新前12场赛事
 			api_bymids(
 				{ is_league_first: true, inner_param: true },
@@ -136,38 +147,35 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			sessionStorage.removeItem("is_select_time");
 		}
 		// this.load_data_state = "empty";
-		this.hot_match_list_timeout = setTimeout(() => {
+		hot_match_list_timeout = setTimeout(() => {
 			if (this.load_data_state !== "data") {
 				this.get_hot_match_list();
-				clearTimeout(this.hot_match_list_timeout);
+				clearTimeout(hot_match_list_timeout);
 			}
 		}, delay);
 	} else {
-		this.load_data_state = "empty";
+		load_data_state = "empty";
 		// 设置数据仓库 联赛列表对象
 		this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
-		compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
-			backend_run
 		);
 	}
 };
 /***
  * @description 当接口状态为成功且有数据时 调用此方法
  */
-const mx_use_list_res_when_code_200_and_list_length_gt_0 = (match_list) => {
+const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
 	// 设置列表数据仓库
-	match_list_data.value.compute_match_list_all_data(
+	MatchListData.set_list(
 		match_list,
-		backend_run,
 		true
 	);
 	// 计算赛事卡片
-	match_list_card.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
-		backend_run
 	);
 	// 设置收藏数量
 	// 只有预加载会穿 true
@@ -179,7 +187,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = (match_list) => {
 			// 非虚拟体育——设置赛事列表选中赛事
 			if (
 				MenuData.is_guanjun() ||
-				MenuData.cur_menu_type.type_name == "winner_top"
+				MenuData.menu_root == 400
 			) {
 				this.mx_autoset_active_match();
 			}
@@ -192,7 +200,7 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = (match_list) => {
 					tid: first_match.tid,
 					sportId: first_match.csid,
 				};
-				this.regular_events_set_match_details_params(cut, params);
+				regular_events_set_match_details_params(cut, params);
 			}
 		}
 	} else {
@@ -201,8 +209,8 @@ const mx_use_list_res_when_code_200_and_list_length_gt_0 = (match_list) => {
 	}
 	// 首次拉列表调用bymids 拉取所有赛事盘口数据
 	if (
-		this.vx_layout_list_type == "match" &&
-		["play", "hot"].includes(type_name) &&
+		vx_layout_list_type == "match" &&
+		[1, 500].includes(MenuData.menu_root) &&
 		!backend_run
 	) {
 		// 调用bymids接口
@@ -249,7 +257,7 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 		} else if (
 			route.name == "home" &&
 			MenuData.menu_root != "500" &&
-			this.vx_layout_list_type !== "collect"
+			vx_layout_list_type !== "collect"
 		) {
 			get_hot_match_list();
 			//TODO
@@ -259,15 +267,14 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
 	} else {
 		load_data_state.value = "empty";
 		// 设置列表数据仓库
-		match_list_data.value.compute_match_list_all_data(
+		MatchListData.compute_match_list_all_data(
 			match_list,
 			backend_run,
 			true
 		);
 		// 计算赛事卡片
-		match_list_card.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			match_list,
-			backend_run
 		);
 	}
 };
@@ -280,24 +287,23 @@ const mx_use_list_res_when_code_error_or_list_length_0 = (match_list) => {
  * @return {undefined} undefined
  */
 const mx_use_list_res = (data, backend_run, cut, collect) => {
-	console.log('lockie_test_console', data);
 	let code = lodash.get(data, "code");
-	clearTimeout(virtual_composable_fn.virtual_list_timeout_id);
+	clearTimeout(virtual_list_timeout_id);
 	// 赛事列表
-	let match_list = lodash.get(data, "data.livedata");
+	let match_list = lodash.get(data, "data.data");
 	if (!match_list) {
 		match_list = lodash.get(data, "data");
 	}
 	match_list = match_list || [];
-	console.log('lockie_test_console1111', is_virtual && !is_search);
+	console.log('lockie_test_console1111', match_list);
 	//虚拟体育 接口数据结构转换
 	// lockie
 	if (is_virtual && !is_search && false) {
 		// 格式化
 		match_list = virtual_sport_format(match_list);
 	}
-	if (code == 200 && match_list.length > 0) {
-		mx_use_list_res_when_code_200_and_list_length_gt_0();
+	if (code == 200 && match_list) {
+		mx_use_list_res_when_code_200_and_list_length_gt_0({match_list, collect, backend_run});
 	} else {
 		mx_use_list_res_when_code_error_or_list_length_0();
 	}
@@ -312,8 +318,4 @@ const process_composable_fn = () => {
 
   }
 }
-// export default {
-// 	mx_use_list_res,
-// 	mx_list_res,
-// }
 export default process_composable_fn

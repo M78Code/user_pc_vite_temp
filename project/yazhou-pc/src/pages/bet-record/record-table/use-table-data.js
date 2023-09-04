@@ -65,7 +65,7 @@ export const useTableData = ({ props, emit }) => {
   //   ====================watch======================================
 
 const {order_list} = props
-console.error(order_list);
+console.error(props,props.order_list);
   watch(
     () => props.order_list,
     (val) => {
@@ -766,7 +766,7 @@ console.error(order_list);
     reset_show_operate();
     if (state.early_settlement_data.length > 0) {
       // 设置页面加载状态
-      prorps.data_state.load_data_state = "data";
+      props.data_state.load_data_state = "data";
     }
   };
   // 提前结算实时查询最高返还批量后初始化数据
