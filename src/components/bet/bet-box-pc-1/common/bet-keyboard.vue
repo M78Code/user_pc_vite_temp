@@ -21,6 +21,8 @@ import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 
 const is_keydown = ref(false)
 
+
+
 const props = defineProps({
   // 键盘数据以及默认键盘数据
   keyboard_data: {
@@ -28,33 +30,33 @@ const props = defineProps({
     default: () => {
       return [
         {
-          text: "10",
-          value: 10,
-          disabled: false
-        },
-        {
-          text: "50",
-          value: 50,
-          disabled: false
-        },
-        {
           text: "100",
           value: 100,
           disabled: false
         },
         {
-          text: "200",
-          value: 200,
-          disabled: false
-        },
-        {
-          text: "300",
-          value: 300,
-          disabled: false
-        },
-        {
           text: "500",
           value: 500,
+          disabled: false
+        },
+        {
+          text: "1000",
+          value: 1000,
+          disabled: false
+        },
+        {
+          text: "2000",
+          value: 2000,
+          disabled: false
+        },
+        {
+          text: "5000",
+          value: 5000,
+          disabled: false
+        },
+        {
+          text: "MAX",
+          value: '',
           disabled: false
         }
       ]
@@ -81,7 +83,6 @@ const props = defineProps({
  */
 const keypress_handle = (obj, e) => {
   //投注按钮是否失效事件
-  useMittEmit(MITT_TYPES.EMIT_BTN_CHANGE,false)
   // 如果是enter键按下则不执行
   if (e.qKeyEvent) {
     // 触发enter键执行
