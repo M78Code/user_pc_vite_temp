@@ -361,7 +361,7 @@ class BaseData {
     this.menu_type_old_or_new = "new";
     // 判断新旧菜单
     // menuId 旧菜单才有
-    console.error(menu_info,"menu_info")
+    // console.error(menu_info,"menu_info")
     if ((menu_info.length && menu_info[0].menuId) || "") {
       this.menu_type_old_or_new = "old";
       menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info);
@@ -469,7 +469,7 @@ class BaseData {
       this.set_mi_gunqiu();
       // }
 
-      console.error("left_menu_base_mi_arr", this.left_menu_base_mi_arr);
+      // console.error("left_menu_base_mi_arr", this.left_menu_base_mi_arr);
 
       // 更新版本
       this.base_data_version.value = Date.now();

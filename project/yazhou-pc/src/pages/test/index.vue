@@ -7,22 +7,23 @@
       <div v-for="(page,index) in item.hpsData" :key="index"> 
         <div>主盘口
           <div v-for="obj in page.hps" :key="obj.chpid">
-            {{ play_id[obj.hpid] }}
+            <div> 玩法ID：{{ obj.hpid }} - {{ play_id[obj.hpid] }}</div>
             <ul v-if="obj.hl.ol">
-              <div> {{ obj.hl.hid }} </div>
-              <li v-for="obj_ol in obj.hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_oid(item,'master')">
-                {{ obj_ol.oid }} - {{ obj_ol.onb }} -  {{ compute_value_by_cur_odd_type(obj_ol.ov/100000,'','',item.csid) }}
+              <div> 盘口id: {{ obj.hl.hid }} - {{ obj.hl.hv }}</div>
+              <li v-for="obj_ol in obj.hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_oid(item,obj,obj.hl,obj_ol)">
+               投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} - 1 - {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
               </li>
             </ul>
           </div>
         </div>
         <div>副盘口
           <div v-for="obj in page.hpsAdd" :key="obj.chpid">
-            {{ obj.hpid }}
+            <div>玩法ID：  {{ obj.hpid }}  - {{ play_id[obj.hpid] }}</div>
               <template v-if="obj.hl.length">
                   <ul v-for="obj_hl in obj.hl" :key="obj_hl.hid">
-                    <li v-for="obj_ol in obj_hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_oid(item,'vice')">
-                      {{ obj_ol.oid }} - {{ obj_ol.onb }} - {{ compute_value_by_cur_odd_type(obj_ol.ov/100000,'','',item.csid) }}
+                    <div> 盘口id: {{ obj_hl.hid }} - {{ obj_hl.hv }} </div>
+                    <li v-for="obj_ol in obj_hl.ol" :key="obj_ol.oid" class="ty-li" @click="set_bet_oid(item,obj,obj_hl,obj_ol)">
+                      投注项： {{ obj_ol.oid }} - {{ obj_ol.onb }} -  {{ obj_ol.ov }} - {{ compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid) }}
                       <!-- obj_ol.ov,'','', -->
                     </li>
                   </ul>
@@ -38,13 +39,19 @@
 import { api_match,socket_api } from "src/api/index.js";
 import { ref, reactive, onMounted,computed } from "vue"
 import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
+import BetData from "src/core/bet/class/bet-data-class.js"
 
     onMounted(()=>{
       api_list_data()
     })
 
     const play_id = ref({
-      '1':"全场独赢"
+      '1':"全场独赢",
+      '4':"全场让球",
+      '2':"全场大小",
+      '17':"半场独赢",
+      '19':"半场让球",
+      '18':"半场大小",
     })
 
     const match_list_s = ref([])
@@ -75,8 +82,40 @@ import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
       })
     }
 
-    const set_bet_oid = (item,type) => {
-
+    const set_bet_oid = (item,obj_hp,obj_hl,obj_ol) => {
+      // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
+      let matchType = 2 
+      if( [1,2].includes(Number(item.ms)) ){
+        matchType = 2
+      }
+      const bet_obj = {
+        sportId: item.csid, // 球种id
+        matchId: item.mid,  // 赛事id
+        tournamentId: item.tid,  // 联赛id
+        scoreBenchmark: item.msc[0],  //比分
+        marketId: obj_hl.hid, //盘口ID
+        marketValue: obj_hl.hv,
+        playOptionsId: obj_ol.oid, //投注项id
+        marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
+        odds: obj_ol.ov,  //十万位赔率
+        oddFinally: compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid), //最终赔率
+        sportName: item.csna, //球种名称
+        matchType,  //赛事类型
+        matchName: item.tn, //赛事名称
+        playOptionName: obj_ol.on, // 投注项名称
+        playOptions: obj_ol.on,   // 投注项id
+        tournamentLevel: item.tlev, //联赛级别
+        playId: obj_hp.hpid, //玩法ID
+        playName: play_id.value[obj_hp.hpid], //玩法名称
+        dataSource: item.cds, //数据源
+        home: item.mhn, //主队名称
+        away: item.man, //客队名称
+        ot: obj_ol.ot, //投注項类型
+        placeNum: null, //盘口坑位
+        // 以下为 投注显示或者逻辑计算用到的参数
+        bet_type: 'common_bet', // 投注类型
+      }
+      BetData.set_bet_read_write_refer_obj(bet_obj)
     }
 
 
@@ -87,6 +126,7 @@ import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
     width: 90%;
     height: 90%;
     overflow-y: auto;
+    margin-left: 5%;
   }
   .ty-li{
     cursor: pointer;

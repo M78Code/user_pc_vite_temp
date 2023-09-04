@@ -3,17 +3,14 @@
 -->
 <template>
   <div class="c-bet-mix-info">
-    <template v-for="(item, index) in BetData.bet_list">
       <!---串关投注项部分-->
       <bet-mix-item
-        
         :id="item"
         :item_obj="item"
-        :key="`${item}_${index}`"
+        :key="`${item}-${index}`"
         :class="{'bet-mix-item-first': (index==0 && BetData.bet_list.length>1), 'bet-mix-item-one': (index==0 && BetData.bet_list.length==1)}"
-        :ref="`bet-mix-item-${index}`"
+        :ref="`bet-mix-item-${index}`" v-for="(item, index) in BetData.bet_list"
       ></bet-mix-item>
-    </template>
     <template v-if="view_ctr_obj.bet_order_success_success && view_ctr_obj.bet_order_success_success.length>0">
       <!--投注结果部分-->
       <bet-mix-result 

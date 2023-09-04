@@ -14,7 +14,7 @@
       limit_height: limit_height,
     }"
   >
-  {{ cur_state}}
+  <!-- {{ cur_state}} -->
     <div
       v-if="cur_state == 'data' || limit_height"
       class="fit"
@@ -45,7 +45,7 @@
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px"
             >抽盒中......</span
           >
-          <span v-else>{{$t("common.loading") }}</span>
+          <span v-else>{{i18n_t("common.loading") }}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
@@ -56,7 +56,7 @@
       >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{$t("common.loading") }}</span>
+          <span>{{i18n_t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
@@ -66,10 +66,10 @@
           no_data_msg
             ? no_data_msg
             : 'code_empty' == cur_state
-            ?$t('common.code_empty')
-            : $store.state.filter.open_select_time
-            ?$t('filter.empty')
-            :$t('common.no_data')
+            ?i18n_t('common.code_empty')
+            : filter_store.open_select_time
+            ?i18n_t('filter.empty')
+            :i18n_t('common.no_data')
         "
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
@@ -77,7 +77,7 @@
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{ filter_img: $store.state.filter.open_select_time }"
+        :class="{ filter_img: filter_store.open_select_time }"
       >
       </no-data>
       <no-data
@@ -92,7 +92,7 @@
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
-            {{ $t('common.go_now')}}
+            {{ i18n_t('common.go_now')}}
            </div>
         </div> -->
       </no-data>
@@ -101,7 +101,7 @@
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
       >
         <div class="img"></div>
-        <span>{{$t(`common.${cur_state}`) }}</span>
+        <span>{{i18n_t(`common.${cur_state}`) }}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
@@ -117,15 +117,15 @@
         />
         <!-- 网络不给力 -->
         <div v-if="cur_state == 'refresh'" class="text1">
-          {{$t("common.no_network2") }}
+          {{i18n_t("common.no_network2") }}
         </div>
         <div v-if="cur_state == '404'" class="img img404" :class="color"></div>
         <!-- 哦豁~页面不见了 -->
         <div v-if="cur_state == '404'" class="text1">
-          {{$t("common.page404") }}
+          {{i18n_t("common.page404") }}
         </div>
-        <div class="text2">{{$t("common.nervous") }}</div>
-        <div class="btn" @click="refresh">{{$t("common.refresh") }}</div>
+        <div class="text2">{{i18n_t("common.nervous") }}</div>
+        <div class="btn" @click="refresh">{{i18n_t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -134,13 +134,13 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{$t("common.user_api_limited1") }}</span
+          <span>{{i18n_t("common.user_api_limited1") }}</span
           ><br />
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{$t("common.user_api_limited2") }}</span>
+          <span>{{i18n_t("common.user_api_limited2") }}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{$t("common.refresh") }}</div>
+        <div class="btn" @click="refresh">{{i18n_t("common.refresh") }}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
@@ -152,7 +152,7 @@
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{$t("common.limited") }}</span>
+          <span>{{i18n_t("common.limited") }}</span>
         </div>
       </div>
     </div>
@@ -166,7 +166,7 @@
         />
         <!-- 网络不给力 -->
         <div v-if="cur_state == 'record_refresh'" class="text1">
-          {{$t("common.limited") }}
+          {{i18n_t("common.limited") }}
         </div>
       </div>
     </div>
@@ -179,6 +179,9 @@ import { onMounted,computed,ref,onUnmounted } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { i18n_t } from "src/boot/i18n.js"
+const filter_store = store.getState().filterReducer
+console.error(store.getState());
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中

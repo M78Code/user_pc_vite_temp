@@ -1,7 +1,7 @@
-import MatchProcess from "../match-process-template-1/index.vue";
+import MatchProcess_1 from "../match-process-template-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchProcess,
+  MatchProcess_1,
 };
 const component_config = {
   registered_component_key: "MatchProcess",

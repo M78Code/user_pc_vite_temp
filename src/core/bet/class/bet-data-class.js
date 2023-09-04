@@ -1,33 +1,27 @@
-import {  MenuData  } from "src/core/index.js";
-import {  PageSourceData  } from "src/core/index.js";
+import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 
-import   {fileds_map_common}  from "src/core/index.js"
+
 class BetData {
   constructor() { }
   init_core() {
     // 当前赔率
     this.cur_odd = "eu";
     // 投注项id集合
-    this.bet_list = [];
-    // 押注信息对象
-    this.bet_obj = {};
+    // this.bet_list = [];
     //是否接受更好赔率
     this.bet_is_accept = false;
-    // 是否串关
-    this.bet_is_mix = false;
     // 押注信息列表
-    this.bet_list = [];
+    // this.bet_list = [];
     // 押注扁平化对象扁平
-    this.bet_obj = {};
-    // 串关信息列表
+    // this.bet_obj = {};
+    // 串关投注列表
     this.bet_s_list = [];
-    // 串关对象扁平化
-    this.bet_s_obj = {};
+    // 单关投注信息
     this.bet_single_list = [];
-    //单关投注对象
-    this.bet_single_obj = {};
-    this.is_bet_single = true; // true= 单关投注 false= 串关投注
+    // true= 单关投注 false= 串关投注
+    this.is_bet_single = true; 
     // 是否正在处理投注
     this.is_handle = false;
     // 单关 是否正在处理投注
@@ -39,7 +33,7 @@ class BetData {
     // 是否锁住投注项不让点，默认为不锁住(针对新的投注流程)
     this.bet_item_lock = false;
     // 当前是否为虚拟投注
-    this.is_virtual_bet = true;
+    this.is_virtual_bet = false;
     // 虚拟投注是否正在进行
     this.is_virtual_handle = false;
 
@@ -262,50 +256,75 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_read_write_refer_obj(obj) {
     let custom_id = Date.now()
-    console.error('sssss', obj)
     const bet_refer_obj = {
       // mount_point_key:'virtual_bet_obj',
       // shuju_laiyuan: 'xiangqing',       //  
       // shuju_laiyuan_obj:  data_souce,       //  
-      c_csid: obj.csid,
-      c_tid: obj.tid,
-      c_mid: obj.mid,
-      c_hid: obj.hid,
-      c_kid: obj.kid,
-      c_hn: obj.hn,
-      c_topKey: obj.topKey,
-      is_guanjun: obj.is_guanjun,
-      is_dianjing: obj.is_dianjing,
-      is_common: obj.is_common,
-      is_vr: obj.is_vr,
-      virtual_bet_mode: obj.virtual_bet_mode, //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
+      // c_csid: obj.csid,
+      // c_tid: obj.tid,
+      // c_mid: obj.mid,
+      // c_hid: obj.hid,
+      // c_kid: obj.kid,
+      // c_hn: obj.hn,
+      // c_topKey: obj.topKey,
+      is_guanjun: false,
+      is_dianjing: false,
+      is_common: false,
+      is_vr: false,
+      ...obj,
+      // virtual_bet_mode: obj.virtual_bet_mode || -1, //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球 bet后接口返回
 
     }
-
+    // 是否虚拟投注
+    let is_virtual_bet = false
     // 根据投注类型 设置投注分类
     switch(obj.bet_type){
       // vr
       case 'vr_bet' :
         this.set_vrtual_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_vr = true
+        is_virtual_bet = true
         break;
       // 常规体育
       case 'common_bet' :
         this.set_common_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_common = true
         break;
       // 冠军  
       case 'guanjun_bet' :
         this.set_guanjun_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_guanjun = true
         break;
       // 电竞
       case 'esports_bet' :
         this.set_dianjing_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_dianjing = true
         break;
-
     }
 
+    // 设置是否为 虚拟投注
+    this.is_virtual_bet = is_virtual_bet
+    // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
-    console.error(' this.bet_read_write_refer_obj', this.bet_read_write_refer_obj)
+    // 单关/串关 投注
+    if(this.is_bet_single ){
+      // 单关 不合并 只有一条 
+      // 单关 合并 多条
+      if(this.is_bet_merge){
+        this.bet_single_list.push(bet_refer_obj)
+      }else{
+        this.bet_single_list = [bet_refer_obj]
+      }
+    }else{
+      // 串关
+      // 串关逻辑 TODO
+      // 同场赛事不能串 部分数据源赛事不能串 
+      this.bet_s_list.push(bet_refer_obj) 
+    }
+   
+    // 显示 投注信息窗口
+    MenuData.set_layout_left_show('bet_list')
   }
 
   /*
@@ -351,6 +370,11 @@ this.bet_appoint_ball_head= null */
   */
   set_cur_odd(cur_odd) {
     this.cur_odd = cur_odd;
+  }
+
+  // 设置单关 串关
+  set_is_single_handle(val){
+    this.is_single_handle = val
   }
 
   /**

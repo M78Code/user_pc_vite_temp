@@ -21,7 +21,7 @@
       <!-- 表格内容部分 包含勾选框-->
       <div class="bet-records col">
         <!-- 筛选框 -->
-        <!-- <filter-box
+        <filter-box
           :toolSelected="toolSelected"
           :time_sort_record_item="time_sort_record_item"
           :record_time_sort="record_time_sort"
@@ -32,10 +32,10 @@
           @chooseTime="chooseTime"
           @time_sort="time_sort"
           @check_change="check_change"
-        ></filter-box> -->
+        ></filter-box>
 
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
-        <!-- <template v-if="[0, 1].includes(toolSelected)">
+        <template v-if="[0, 1].includes(toolSelected)">
           <record-table
             ref="betRecord"
             :order_list="order_list"
@@ -50,9 +50,9 @@
             :random="random"
             :lang="lang"
           ></record-table>
-        </template> -->
+        </template>
         <!-- 预约记录表单 -->
-        <!-- <template v-else>
+        <template v-else>
           <record-book-table
             :order_list="order_list"
             :record_obj="record_obj"
@@ -64,7 +64,7 @@
             :random="random"
             :lang="lang"
           ></record-book-table>
-        </template> -->
+        </template>
       </div>
     </div>
 
@@ -74,11 +74,11 @@
 </template>
 
 <script setup>
-// import { SimpleHeaderWapper } from "project_path/src/components/simple-header";
+// import SimpleHeaderWapper from "project_path/src/components/site-header/simple-header.vue";
 import btTab from "./components/btn-tab.vue";
-// import filterBox from "./components/filter-box.vue";
-// import recordTable from "./record-table/index.vue";
-// import recordBookTable from "./record_book_table.vue";
+import filterBox from "./components/filter-box.vue";
+import recordTable from "./record-table/index.vue";
+import recordBookTable from "./record-book-table.vue";
 import lodash from "lodash";
 import { api_betting } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
@@ -90,7 +90,6 @@ import { useConfig } from "./use-config.js";
 const toolSelected = ref(0);
 const is_pre_bet = ref(false); // 提前结算勾选
 const betRecord = ref(null);
-
 
 // useConfig({ getOrderList })
 // onMounted(() => useConfig(getOrderList))
@@ -109,7 +108,7 @@ const toolClicked = (f) => {
   if (f == 2) {
     // 初始化预约筛选条件
     is_book_status.value = ["0"];
-    this.getBookList();
+    getBookList();
   } else if (f == 0) {
     params.value = lodash.omit(params.value, "timeType");
     resetParams("clearDate");
@@ -193,7 +192,7 @@ const resetParams = (type) => {
 const time_sort = () => {
   localStorage.setItem("time_sort_record", JSON.stringify(sort));
   let od_page = params.value.page;
-  // this.match_sort_show = false;
+  // match_sort_show = false;
   time_sort_record_item.value = sort;
   params.value.page = 1;
   params.value.orderBy = sort.id;
@@ -233,7 +232,7 @@ const changePage = (tableData) => {
 
 /**  TODO
  * @description:获取表格数据
- * @param this.params
+ * @param params
  * @return {undefined} undefined
  */
 const getOrderList = (isScoket, callback) => {
@@ -247,12 +246,12 @@ const getOrderList = (isScoket, callback) => {
   }
   const send_gcuuid = uid();
   params.value.gcuuid = send_gcuuid;
-  // console.log('getOrderList===', JSON.stringify(this.params));
+  // console.log('getOrderList===', JSON.stringify(params));
 
   api_betting
     .post_order_list(params.value)
     .then((res) => {
-      // console.log('getOrderList===', this.send_gcuuid === res.config.gcuuid);
+      // console.log('getOrderList===', send_gcuuid === res.config.gcuuid);
       //检查gcuuid
       let gcuuid = lodash.get(res, "config.gcuuid");
       if (gcuuid && send_gcuuid != gcuuid) {
@@ -314,17 +313,17 @@ const getOrderList = (isScoket, callback) => {
           } else {
             // 订阅为结算注单
             if (toolSelected.value == 0 && UserCtr.user_info.settleSwitch) {
-              // this.SCMD_C21();   //todo
+              // SCMD_C21();   //todo
               // 提前结算实时查询，取里面orderNo，做提前结算实时查询最新数据处理
               get_order_no();
             }
           }
-          this.get_balance();
+          get_balance();
           if (lodash.isFunction(callback)) {
             callback();
           }
         } else {
-          this.data_state.load_data_state = "record_refresh";
+          data_state.load_data_state = "record_refresh";
         }
       }
     })
@@ -335,12 +334,12 @@ const getOrderList = (isScoket, callback) => {
           lodash.isPlainObject(err) ||
           lodash.get(err, "response.status") == 404
         ) {
-          this.data_state.load_data_state = "404";
+          data_state.load_data_state = "404";
         } else {
-          this.data_state.load_data_state = "record_refresh";
+          data_state.load_data_state = "record_refresh";
         }
       } else {
-        this.data_state.load_data_state = "record_refresh";
+        data_state.load_data_state = "record_refresh";
       }
       if (lodash.isFunction(callback)) {
         callback();
@@ -373,7 +372,8 @@ const {
   clear_send_cashout,
   check_confirm_complete,
   get_order_no,
-  uid
+  uid,
+  getBook_gcuuid,
 } = useConfig(getOrderList );
 /**
  * @description:预约
@@ -381,68 +381,68 @@ const {
  * @return {undefined} undefined
  */
 const getBookList = (callback) => {
-  if (this.record_obj) {
-    for (let key in this.record_obj) {
-      delete this.record_obj[key];
+  if (record_obj) {
+    for (let key in record_obj) {
+      delete record_obj[key];
     }
   }
-  this.data_state.load_data_state = "loading";
-  let preOrderStatusList = this.is_book_status;
+  data_state.load_data_state = "loading";
+  let preOrderStatusList = is_book_status;
   //0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注
   // jumpFrom跳转来源(非空 1.详情投注界面   2.注单界面)
   let param = {
-    page: this.params.page,
-    size: this.params.size,
+    page: params.page,
+    size: params.size,
     jumpFrom: 2,
     preOrderStatusList: preOrderStatusList,
   };
-  this.getBook_gcuuid = uid();
-  param.gcuuid = this.getBook_gcuuid;
+  getBook_gcuuid.value = uid();
+  param.gcuuid = getBook_gcuuid.value;
   // console.log('get_book_record_data==getBookList==',JSON.stringify(param));
   api_betting
     .post_book_list(param)
     .then((res) => {
-      // console.log('get_book_record_data==getBookList==res===', this.getBook_gcuuid == res.config.gcuuid);
+      // console.log('get_book_record_data==getBookList==res===', getBook_gcuuid == res.config.gcuuid);
       let gcuuid = lodash.get(res, "config.gcuuid");
-      if (gcuuid && this.getBook_gcuuid != gcuuid) {
+      if (gcuuid && getBook_gcuuid.value != gcuuid) {
         return;
       }
       let code = lodash.get(res, "data.code");
       let status = lodash.get(res, "status");
       if (code == 200 && status) {
         const data = lodash.get(res, "data.data");
-        // data.orderStatus = this.params.orderStatus;
+        // data.orderStatus = params.orderStatus;
         let record_list = data.records;
         if (!record_list) {
-          this.clear_timer_get_book();
-          this.data_state.load_data_state = "empty";
+          clear_timer_get_book();
+          data_state.load_data_state = "empty";
           return;
         }
-        let record_obj = this.get_obj(record_list, data);
+        let record_obj = get_obj(record_list, data);
         delete record_obj.list;
-        this.record_obj = record_obj;
+        record_obj = record_obj;
 
         if (
-          !this.order_list ||
-          !this.order_list.records ||
-          this.order_list.records.length == 0
+          !order_list ||
+          !order_list.records ||
+          order_list.records.length == 0
         ) {
-          this.clear_timer_get_book();
-          this.data_state.load_data_state = "empty";
+          clear_timer_get_book();
+          data_state.load_data_state = "empty";
         } else {
           // 预约中开启定时器，不是则关闭
-          if (this.is_book_status.includes("0")) {
-            this.orderNo_book = lodash.map(this.order_list.records, "orderNo");
-            this.res_timer_get_book();
+          if (is_book_status.includes("0")) {
+            orderNo_book = lodash.map(thorder_list.records, "orderNo");
+            res_timer_get_book();
           } else {
-            this.orderNo_book = "";
-            this.clear_timer_get_book();
+            orderNo_book = "";
+            clear_timer_get_book();
           }
         }
       }
       if ("0401038" == code) {
-        this.clear_timer_get_book();
-        this.data_state.load_data_state = "code_empty";
+        clear_timer_get_book();
+        data_state.load_data_state = "code_empty";
         return;
       }
     })
@@ -453,12 +453,12 @@ const getBookList = (callback) => {
           lodash.isPlainObject(err) ||
           lodash.get(err, "response.status") == 404
         ) {
-          this.data_state.load_data_state = "404";
+          data_state.load_data_state = "404";
         } else {
-          this.data_state.load_data_state = "record_refresh";
+          data_state.load_data_state = "record_refresh";
         }
       } else {
-        this.data_state.load_data_state = "record_refresh";
+        data_state.load_data_state = "record_refresh";
       }
       if (lodash.isFunction(callback)) {
         callback();
@@ -475,9 +475,9 @@ const get_obj = (record_list, data) => {
   }
   if (obj.list) {
     delete data.records;
-    this.order_list = data;
-    let temp = this.order_list.records;
-    this.order_list.records = obj.list;
+    order_list = data;
+    let temp = order_list.records;
+    order_list.records = obj.list;
     if (temp && temp.length) {
       for (let i = 0; i < temp.length; i++) {
         temp.splice(i, 1);

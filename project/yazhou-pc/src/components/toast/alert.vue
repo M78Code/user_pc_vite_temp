@@ -40,20 +40,19 @@ import { onMounted, onUnmounted, reactive, ref } from 'vue';
 import { i18n_t } from "src/core/index.js";
 import { useMittEmitterGenerator, useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from "src/store-redux/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+import { utils } from "src/core/index.js";
 
 /* 退出登录通知-中文 */
-const logout_notice = '/public/yazhou-pc/image/image/logout_notice.png'
+const logout_notice = '/yazhou-pc/image/image/logout_notice.png'
 /* 退出登录通知-英文 */
-const logout_notice_en = '/public/yazhou-pc/image/image/logout_notice_en.png'
+const logout_notice_en = '/yazhou-pc/image/image/logout_notice_en.png'
 /* 退出登录通知-越南语 */
-const logout_notice_vi = '/public/yazhou-pc/image/image/logout_notice_vi.png'
+const logout_notice_vi = '/yazhou-pc/image/image/logout_notice_vi.png'
 /* 退出登录通知-泰语 */
-const logout_notice_th = '/public/yazhou-pc/image/image/logout_notice_th.png'
+const logout_notice_th = '/yazhou-pc/image/image/logout_notice_th.png'
 /* 退出登录通知-马来语 */
-// const logout_notice_ma = '/public/yazhou-pc/image/image/logout_notice_ma.png'
-
-/** 国际化 */
-
+// const logout_notice_ma = '/yazhou-pc/image/image/logout_notice_ma.png'
 
 /* 是否展示 */
 const is_show = ref(false)
@@ -75,26 +74,21 @@ const imgSrc = reactive({
 /* 是否域名错误弹窗 */
 const is_domain_error = ref(false)
 
-/** stroe仓库 */
-const store_data = store.getState()
-const { langReducer } = store_data
 /** 
  * 语言
- * 路径: src\store-redux\module\languages.js
  */
-const lang = ref(langReducer.lang)
+const lang = ref(UserCtr.lang)
 function lang_change(data) {
   lang.value = data
+  UserCtr.set_lang(data)
 }
 /** 
- * is_invalid 判断是否是登录状态 default: false
- * 路径: project_path\src\store\module\betInfo.js
+ * 判断是否是登录状态 default: false
  */
-const is_invalid = ref(betInfoReducer.is_invalid)
+const is_invalid = ref(UserCtr.is_invalid)
 onMounted(() => {
   is_show.value = is_invalid.value
-  // TODO: 待确定
-  if (window.frames.length == parent.frames.length) {
+  if (utils.is_iframe) {
     console.log('非内嵌')
     backDrop.value = true;
   }

@@ -101,7 +101,7 @@
   </q-card>
 </template>
 <script setup>
-import {format_odds} from'src\core\format\index.js'
+import {format_odds} from 'src/core/index.js'
 import lodash from 'lodash'
 </script>
 <style lang="scss" scoped>

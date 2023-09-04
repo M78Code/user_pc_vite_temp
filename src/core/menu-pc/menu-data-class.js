@@ -28,28 +28,28 @@ class MenuData {
     // 原因是这些东西  在 菜单逻辑设计上   位于左侧菜单的时候 不区分滚球早盘
     // this.left_menu_spl = [2000, 118, 400, 300];
     // 添加的自定义 的 mi 的 信息说明
-    this.add_mi_introduce = {
-      mi_11: { text: "滚球", label: "play" },
-      mi_12: { text: "今日", label: "today" },
-      mi_13: { text: "早盘", label: "early" },
-      mi_14: { text: "冠军", label: "winner_top" },
-      mi_15: { text: "即将开赛", label: "jjks" },
-      mi_16: { text: "串关", label: "bet" },
-      mi_300: { text: "虚拟体育", label: "virtual_sport" },
-      mi_400: { text: "冠军", label: "winner_top" },
-      mi_500: { text: "热门赛事", label: "hot" },
-      mi_100: { text: "常规球类", label: "common_sports" },
-      // "mi_400":'常规球类 的冠军',
-      mi_2000: { text: "电竞球类", label: "esports" },
-      // "mi_30000":'虚拟赛事',
-    };
+    // this.add_mi_introduce = {
+    //   mi_11: { text: "滚球", label: "play" },
+    //   mi_12: { text: "今日", label: "today" },
+    //   mi_13: { text: "早盘", label: "early" },
+    //   mi_14: { text: "冠军", label: "winner_top" },
+    //   mi_15: { text: "即将开赛", label: "jjks" },
+    //   mi_16: { text: "串关", label: "bet" },
+    //   mi_300: { text: "虚拟体育", label: "virtual_sport" },
+    //   mi_400: { text: "冠军", label: "winner_top" },
+    //   mi_500: { text: "热门赛事", label: "hot" },
+    //   mi_100: { text: "常规球类", label: "common_sports" },
+    //   // "mi_400":'常规球类 的冠军',
+    //   mi_2000: { text: "电竞球类", label: "esports" },
+    //   // "mi_30000":'虚拟赛事',
+    // };
     //顶层  标签 ， 早盘  今日  串关  热门 滚球
-    this.top_category_label = "play";
+    // this.top_category_label = "play";
     //左侧菜单的 整体输出
-    this.left_menu_result = {
-      lv1_mi: "", //一级菜单
-      lv2_mi: "", // 二级菜单
-    };
+    // this.left_menu_result = {
+    //   lv1_mi: "", //一级菜单
+    //   lv2_mi: "", // 二级菜单
+    // };
     // 左侧菜单的 root 节点   root ：  1 滚球  2 今日   3  早盘   500 热门赛事  400 冠军   300 VR  电竞 2000
     this.menu_root = 1;
     // 与 menu_root  类似，主要用于收藏按钮的显示隐藏，使用menu_root  由于这个值被监听，会有其他情况发生
@@ -78,7 +78,7 @@ class MenuData {
     };
 
     // 列表接口类型为赛事列表
-    this.match_list_api_type = "match_list";
+    // this.match_list_api_type = "match_list";
 
     // api参数的版本
     this.api_config_version = ref("123");
@@ -89,13 +89,20 @@ class MenuData {
     this.is_multi_column = false;
     // 左侧菜单显示 menu bet history
     this.layout_left_show = 'menu'
+    // 菜单版本变更
+    this.menu_data_version = ref('12')
   }
 
   // 设置左侧显示内容
   set_layout_left_show(val){
+    console.error('ssssss',val)
     this.layout_left_show = val
+    this.set_menu_data_version()
   }
-
+  // 设置 菜单的版本变化
+  set_menu_data_version(){
+    this.menu_data_version.value = Date.now()
+  }
   /**
    * @Description 设置 api参数的版本
    * @param {undefined} undefined
@@ -634,42 +641,13 @@ class MenuData {
 
     //当前 列表的  体育标签
     this.match_list_sports_label = match_list_api_config.sports;
-    // 设置 vuex   cur_menu_type
-    this.set_vuex_cur_menu_type({
-      type_name: this.convert_mi_to_label(this.menu_root),
-    });
+ 
 
     // 设置投注类别
     this.set_bet_category();
 
     // 菜单数据缓存
     this.set_local_1_500_count();
-  }
-
-  /**
-   * 设置 vuex   cur_menu_type  lable 转换
-   * @param {*} mi
-   * @returns
-   */
-  convert_mi_to_label(mi) {
-    let str = "";
-
-    let obj = {
-      1: "play",
-      500: "hot",
-      300: "virtual_sport",
-      400: "winner_top",
-      2: "today",
-      3: "early",
-    };
-    str = obj[mi];
-    return str;
-  }
-  /**
-   * 设置 vuex   cur_menu_type
-   */
-  set_vuex_cur_menu_type(obj) {
-    // store.dispatch("set_cur_menu_type", obj);
   }
 
   /**

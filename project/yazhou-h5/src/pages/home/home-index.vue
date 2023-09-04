@@ -109,10 +109,6 @@ export default defineComponent({
       useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change)
     })
     onUnmounted(() => {
-       // 遍历vm.$data,清空组件data()内所有对象
-      for (const key in $data) {
-        $data[key] = null
-      }
       useMittOn(MITT_TYPES.EMIT_HOME_TAB, home_tab_change).off
     })
     watch(() => tabIndex.value, (n) => {
@@ -122,16 +118,6 @@ export default defineComponent({
       }
   })
 
-//  监听 热门的tab 变化 home_class 名称作背景图
-  // watch(() => get_hot_tab_item, () => {
-  //   handler = 'get_hot_tab_item_handle'
-  // })
-  // components: {
-  //   "home": home, // 内嵌版菜单
-  //   "hot": hot,
-  //   "live_video": live_video,
-  //   'set-menu': setMenu,
-  // },
   const tabList = computed(() => {
       let res = [];
         let tabList_ = [{
@@ -151,7 +137,7 @@ export default defineComponent({
           }
         ];
         // 如果在后台系统 关闭 热门赛事，则前端手动 删掉 热门赛事
-          if(!GlobalAccessConfig.get_hotMatchNum()){
+          if(GlobalAccessConfig.get_hotMatchNum()){
           tabList_ = [
             {
               index: 0,

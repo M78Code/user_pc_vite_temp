@@ -34,7 +34,7 @@ import {
 
 import store from "src/store-redux/index.js";
 import SearchHotPush from "src/core/search-class/search_hot_push.js";
-import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import { utils } from 'src/core/index.js';
 
@@ -54,12 +54,6 @@ const is_iframe = ref(utils.is_iframe);
 
 /** stroe仓库 */
 const { searchReducer, menuReducer } = store.getState();
-const unsubscribe = store.subscribe(() => {
-  search_isShow.value = searchReducer.search_isShow
-  menu_collapse_status.value = menuReducer.menu_collapse_status
-})
-/** 销毁监听 */
-onUnmounted(unsubscribe)
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -70,6 +64,13 @@ const search_isShow = ref(searchReducer.search_isShow)
  * 路径: project_path\src\store\module\menu.js
  */
 const menu_collapse_status = ref(menuReducer.menu_collapse_status)
+const unsubscribe = store.subscribe(() => {
+  const { searchReducer: new_searchReducer, menuReducer: new_menuReducer} = store.getState();
+  search_isShow.value = new_searchReducer.search_isShow
+  menu_collapse_status.value = new_menuReducer.menu_collapse_status
+})
+/** 销毁监听 */
+onUnmounted(unsubscribe)
 
 /** 搜索热推赛事 */
 const search_hot_push = ref(new SearchHotPush());

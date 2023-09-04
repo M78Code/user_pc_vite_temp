@@ -25,11 +25,14 @@
         </keep-alive>
       </div>
       <!-- 右侧 视频  动画 比分板 详情 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width }">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_right_width - 15 +'px' }">
         <layout-right />
       </div>
     </div>
-    
+    <!-- toast 消息提示 -->
+    <toast-components />
+    <confirm-components />
+    <alert-components />
   </div>
 </template>
 <script setup>
@@ -39,10 +42,14 @@ import { LayOutMain_pc } from "src/core/index.js";
 import "./main-layout.js"; //初始化数据
 // import { debounce } from "lodash";
 /**组件*/
-// import { SearchWapper } from 'src/components/search'
+import { SearchWapper } from 'src/components/search'
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
 import layoutRight from "./layout-right.vue";
+
+import toastComponents from "project_path/src/components/toast/toast.vue";
+import alertComponents from "project_path/src/components/toast/alert.vue";
+import confirmComponents from "project_path/src/components/toast/confirm.vue";
 
 const route = useRoute();
 console.error(route);

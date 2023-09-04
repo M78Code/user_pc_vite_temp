@@ -1,21 +1,4 @@
-import { i18n_t } from "src/core/index.js";
-
-  // 表格头部分
-const lineList = [
-    { label: i18n_t("bet_record.number"), id: 1 },
-    { label: i18n_t("bet_record.betting_details"), id: 2 },
-    { label: i18n_t("bet_record.betting_play"), id: 3 },
-    { label: i18n_t("bet_record.options"), id: 4 },
-    { label: i18n_t("bet_record.bets_forehead"), id: 5 },
-    {
-      label:
-        props.tool_selected === 0
-          ? i18n_t("common.maxn_amount_val")
-          : i18n_t("common.donate_win"),
-      id: 6,
-    },
-    { label: i18n_t("bet_record.status"), id: 7 },
-  ];
+import { i18n_t } from "src/boot/i18n.js";
 
 
 // 输赢状态

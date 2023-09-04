@@ -2,7 +2,7 @@
 
 <template>
   <div v-if="search_isShow" v-show="route.params.video_size != 1" class="serach-wrap column"
-    :style="{ right: `${(MenuData.is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
+    :style="{ right: `${(is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
     :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
     <search-input @set_show_type="set_show_type" :show_type="show_type" />
     <div class="bottom-wrap col search-result relative-position">
@@ -32,7 +32,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import {utils } from 'src/core/index.js'
+import { utils, MenuData } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -59,11 +59,13 @@ import searchResult from "./search-result.vue"
 import { TabWapper as Tab } from "src/components/common/tab"
 // 搜索模块js
 import { api_search } from "src/api/index.js";
-// import search from "src/core/search-class/search.js"
-import {  MenuData  } from "src/core/index.js";
 
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);
+/** 左侧列表显示形式 normal：展开 mini：收起 */
+ const main_menu_toggle = ref(MenuData.main_menu_toggle)
+ /** 是否可以多列玩法的菜单 */
+ const is_multi_column = ref(MenuData.is_multi_column)
 
 /** 显示类型 */
 const show_type = ref('init')
@@ -78,34 +80,43 @@ const search_csid = ref(1)
 const route = useRoute();
 
 /** stroe仓库 */
-const store_data = store.getState();
-const { searchReducer, layoutReducer, menuReducer, globalReducer } = store_data;
+const { searchReducer, layoutReducer,  globalReducer } = store.getState();
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
  */
-// const search_isShow = ref(searchReducer.search_isShow)
-const search_isShow = ref(false)
+const search_isShow = ref(searchReducer.search_isShow)
+/** 保存显示搜索组件状态 */
+const set_search_status = (data) => (store.dispatch({
+  type: "SET_SEARCH_STATUS",
+  data,
+}))
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
+  console.error('EMIT_LAYOUT_HEADER_SEARCH_ISSHOW', bool);
   search_isShow.value = bool
 })
 onUnmounted(off)
+// TODO:
+onMounted(() => document.addEventListener('click', () => set_search_status(false)))
+onMounted(() => document.removeEventListener('click', () => set_search_status(false)))
 
-/** 
- * 左侧列表显示形式 normal：展开 mini：收起
- * 路径: project_path\src\store\module\menu.js
- */
-const { main_menu_toggle } = menuReducer
 /** 
  * 浏览器 宽高等数据 default: object
  * 路径: project_path\src\store\module\layout.js
  */
-const { layout_size } = layoutReducer
+const layout_size = ref(layoutReducer.layout_size)
 /** 
 * 是否展开多列玩法 default: object
 * 路径: project_path\src\store\module\global.js
 */
-const { is_unfold_multi_column } = globalReducer
+const is_unfold_multi_column = ref(globalReducer.is_unfold_multi_column)
+const unsubscribe = store.subscribe(() => {
+    const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
+    search_isShow.value = new_searchReducer.search_isShow
+    layout_size.value = new_layoutReducer.layout_size
+    is_unfold_multi_column.value = new_globalReducer.is_unfold_multi_column
+})
+onUnmounted(unsubscribe)
 
 /**
  * @Description:设置搜索球种列表

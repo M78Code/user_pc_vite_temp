@@ -74,7 +74,7 @@ import { format_balance  } from "src/core/index.js";
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps(
   {
-    ...useProps,
+    // ...useProps,
     count: {
       type: Number,
       default: 0,
@@ -108,7 +108,7 @@ const props = defineProps(
       default: true,
     },
     results_table: {
-      type: onBlur,
+      type: Object,
       default: () => { },
     },
     reset_pagination: {

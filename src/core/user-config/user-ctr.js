@@ -6,6 +6,7 @@
  *  商户相关
  */
 // #TODO 等后续get_file_path、http、infoUpload和pako_pb公共模块开发后再替换
+import { ref } from "vue";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import pako_pb from "src/core/pb-decode/custom_pb_pako.js";
 import { infoUpload } from "src/core/http/";
@@ -20,7 +21,6 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 const axios_instance = axios.create();
-import { ref } from "vue";
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
   constructor() {

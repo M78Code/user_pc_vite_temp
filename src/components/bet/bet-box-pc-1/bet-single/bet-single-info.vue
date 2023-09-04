@@ -311,13 +311,15 @@
 </template>
 <script setup>
 // import bet_single_info from "src/public/mixins/bet/bet_single_info";
-import { format_odds } from'src\core\format\index.js'
+import { format_odds } from 'src/core/index.js'
 import lodash from 'lodash'
+
 const props = defineProps({
-  is_forward: {
-      type:Number,
-      default: -1
-    }
+  index: {
+    type:Number,
+    default: 0
+  },
+  item:{}
 })
 </script>
 <style lang="scss" scoped>

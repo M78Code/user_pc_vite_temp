@@ -7,15 +7,16 @@ import {
   watch,
   nextTick,
   getCurrentInstance,
+  onMounted,
 } from "vue";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
-import { order_pre_settle_confirm } from "src/core/bet/betting-pc.js";
-import mathjs from "src/core/utils/mathjs.js";
+import { order_pre_settle_confirm } from "src/core/bet/module/pre-settle.js";//src/core/bet/module/pre-settle.js
+// import math from "src/core/utils/index.js";
 import lodash from "lodash";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { UserCtr } from "src/core/index.js";
-import { i18n_t } from "src/boot.i18n.js"
+import { i18n_t } from "src/boot/i18n.js"
 
 export const useTableData = ({ props, emit }) => {
 
@@ -63,10 +64,10 @@ export const useTableData = ({ props, emit }) => {
 
   //   ====================watch======================================
 
+const {order_list} = props
+console.error(order_list);
   watch(
     () => props.order_list,
-
-
     (val) => {
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
@@ -79,9 +80,10 @@ export const useTableData = ({ props, emit }) => {
       state.recordData = val;
       init_data();
     },
-    { immediate: true }
   );
-
+  onMounted(() => {
+    init_data()
+  })
   watch(
     () => props.orderNo_data_list,
     (val) => {
@@ -95,8 +97,8 @@ export const useTableData = ({ props, emit }) => {
   //   ====================methods======================================
   /**
    * @description:盘口类型
-   * @param {sting} type: records.marketType字段
-   * @param {sting} langCode: 多语言 默认是中文
+   * @param {Sting} type: records.marketType字段
+   * @param {Sting} langCode: 多语言 默认是中文
    * @return{string} 盘口类型
    */
   const marketType = (type, langCode = "zh") => {
@@ -167,7 +169,7 @@ export const useTableData = ({ props, emit }) => {
    * @下注赛事阶段
    * @param type: records.matchType
    */
-  const matchType = (type, langCode = this.$i18n.locale) => {
+  const matchType = (type, langCode = $i18n.locale) => {
     let res = "";
     if (type && langCode) {
       switch (parseInt(type)) {
@@ -205,7 +207,7 @@ export const useTableData = ({ props, emit }) => {
     document.body.appendChild(oInput);
     oInput.select();
     state.toast = true;
-    clearTimeout(this.timeout_toast);
+    clearTimeout(timeout_toast);
     state.timeout_toast = setTimeout(() => {
       state.toast = false;
     }, 1500);
@@ -556,7 +558,7 @@ export const useTableData = ({ props, emit }) => {
       state.early_settlement_data[index].preSettleBetAmount;
     let money = state.money_obj[index].money;
     state.early_settlement_data[index]["pre_settle_bet_amount_2"] =
-      mathjs.subtract(preSettleBetAmount, money || 0);
+      math.subtract(preSettleBetAmount, money || 0);
   };
   /**
    * 部分结算后显示提前结算详情
@@ -592,32 +594,32 @@ export const useTableData = ({ props, emit }) => {
   //     api_betting.query_pre_settle_order_status({ orderNo }).then((res) => {
   //       const code = _.get(res, "data.code");
   //       // 回复按钮状态
-  //       this.$set(this.early_settlement_data[index], "bet_status", "default");
+  //       $set(early_settlement_data[index], "bet_status", "default");
   //       // 重置过滤未结算和是提前结算定时器
-  //       this.$emit("res_timer_get_cashout");
+  //       $emit("res_timer_get_cashout");
   //       // 恢复确认按钮状态
-  //       this.$set(this.early_settlement_data[index], "bet_confirm", false);
+  //       $set(early_settlement_data[index], "bet_confirm", false);
   //       // 设置结算状态码(页面会根据状态码显示对应的提示信息)
   //       if (code == 200) {
   //         // 设置提前结算code码
-  //         this.$set(this.cur_bet_pre, `${index}.bet_pre_code`, 1);
+  //         $set(cur_bet_pre, `${index}.bet_pre_code`, 1);
   //         // 设置按钮提前结算状态为结束提前结算
-  //         this.$set(
-  //           this.early_settlement_data[index],
+  //         $set(
+  //           early_settlement_data[index],
   //           "bet_status",
   //           "end_bet_pre"
   //         );
   //         // 重置过滤未结算和是提前结算定时器
-  //         this.$emit("res_timer_get_cashout");
-  //         this.show_bet_slide(index);
-  //         this.re_settlement(orderNo, index);
+  //         $emit("res_timer_get_cashout");
+  //         show_bet_slide(index);
+  //         re_settlement(orderNo, index);
   //         // 拉取用户金额接口
   //         useMittEmit(MITT_TYPES.EMIT_GET_BALANCE_CMD);
   //       } else if (["0400525", "0400526"].includes(code)) {
-  //         this.$set(this.cur_bet_pre, `${index}.bet_pre_code`, code);
-  //         this.$set(this.early_settlement_data[index], "bet_status", "default");
+  //         $set(cur_bet_pre, `${index}.bet_pre_code`, code);
+  //         $set(early_settlement_data[index], "bet_status", "default");
   //         // 重置过滤未结算和是提前结算定时器
-  //         this.$emit("res_timer_get_cashout");
+  //         $emit("res_timer_get_cashout");
   //       }
   //       // 调用回复状态码(5s后才会回复)
   //       reset_bet_code(`${index}_bet_pre_${code}`);
@@ -630,7 +632,7 @@ export const useTableData = ({ props, emit }) => {
     // 提前结算开关打开时处理
     if (props.tool_selected) {
       emit("clear_timer_get_cashout");
-      this.get_init_data();
+      get_init_data();
     } else if (props.tool_selected == 0 && UserCtr.user_info.settleSwitch) {
       let param = {};
       let send_gcuuid = uid();
@@ -639,8 +641,8 @@ export const useTableData = ({ props, emit }) => {
 
       //获取提前结算确认中的数据
       api_betting.query_order_pre_settle_confirm(param).then((res) => {
-        // console.log('init_data====res===', this.send_gcuuid == res.config.gcuuid);
-        // if(this.send_gcuuid != res.config.gcuuid) return;
+        // console.log('init_data====res===', send_gcuuid == res.config.gcuuid);
+        // if(send_gcuuid != res.config.gcuuid) return;
 
         let gcuuid = lodash.get(res, "config.gcuuid");
         if (gcuuid && send_gcuuid != gcuuid) {
@@ -825,7 +827,7 @@ export const useTableData = ({ props, emit }) => {
     };
     // 设置金额对象(最小值，最大值，滑块金额的步长, 此单金额对应的滑块数据)
     state.money_obj[`${num}`] = money_obj_;
-    // this.$forceUpdate();
+    // $forceUpdate();
   };
   /**
    * 推送后根据订单号设置提前结算按钮转台
@@ -871,7 +873,7 @@ export const useTableData = ({ props, emit }) => {
         // 获取提前结算code吗
         let code = lodash.get(state.cur_bet_pre, `${index}.bet_pre_code`);
         // 5S后恢复默认code
-        this.reset_bet_code(index, `${index}_bet_pre_${code}`);
+        reset_bet_code(index, `${index}_bet_pre_${code}`);
       }
     }
   };
@@ -913,7 +915,7 @@ export const useTableData = ({ props, emit }) => {
           }
         }
       }
-      //   this.$forceUpdate();
+      //   $forceUpdate();
     }
   };
   /**
@@ -1093,7 +1095,7 @@ export const useTableData = ({ props, emit }) => {
             state.early_settlement_data[index].maxCashout = maxCashout;
             // 注单剩余本金
             state.early_settlement_data[index].preSettleBetAmount =
-              mathjs.subtract(
+              math.subtract(
                 orderAmountTotal,
                 preBetAmount_ || preBetAmount || 0
               );
@@ -1113,49 +1115,49 @@ export const useTableData = ({ props, emit }) => {
 
 
   // mounted() {
-  //   this.toolWords = i18n_t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
+  //   toolWords = i18n_t("time.time_date_list_1"); // ["今天", "昨天", "七天内", "一个月内"]
   // },
   // beforeUnmount() {
   //   // 关闭设置提前结算状态事件
-  //   this.useMittOn(
+  //   useMittOn(
   //     MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
-  //     this.set_pre_order_status
+  //     set_pre_order_status
   //   ),off;
   //   // 关闭ws推送数据事件
-  //   this.useMittOn(
+  //   useMittOn(
   //     MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
-  //     this.set_ws_info_data
+  //     set_ws_info_data
   //   ),off;
   //   // 清除定时器
-  //   clearTimeout(this.timeout_toast);
-  //   this.money_obj = {};
-  //   for (let key in this.timer_obj) {
-  //     clearTimeout(this.timer_obj[key]);
+  //   clearTimeout(timeout_toast);
+  //   money_obj = {};
+  //   for (let key in timer_obj) {
+  //     clearTimeout(timer_obj[key]);
   //   }
   //   // 恢复提前结算订单对象
-  //   this.pre_order_list_obj = {};
+  //   pre_order_list_obj = {};
   //   // 恢复操作天前结算对象
-  //   this.cur_bet_pre = {};
+  //   cur_bet_pre = {};
   //   // 恢复单关设置对象
-  //   this.setup_single_info = {};
+  //   setup_single_info = {};
   //   // 恢复定时器对象
-  //   this.timer_obj = {};
-  //   this.color_list = null;
+  //   timer_obj = {};
+  //   color_list = null;
   //   // 恢复提前结算数据
-  //   this.early_settlement_data = null;
+  //   early_settlement_data = null;
   // },
 
   onBeforeMount(() => {
-    this.recordData = this.order_list;
+    state.recordData = props.order_list;
     // 提前结算订单设施
-    this.$root.$on(
+    useMittOn(
       MITT_TYPES.EMIT_SET_PRE_ORDER_STATUS_CMD,
-      this.set_pre_order_status
+      set_pre_order_status
     );
     // 提前结算ws推送的数据设置
-    this.$root.$on(
+    useMittOn(
       MITT_TYPES.EMIT_SET_WS_INFO_DATA_CMD,
-      this.set_ws_info_data
+      set_ws_info_data
     );
     // 统计未结算订单数量
     useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);

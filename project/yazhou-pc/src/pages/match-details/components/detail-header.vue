@@ -14,19 +14,19 @@
       </div>
       <!-- 联赛标题 -->
       <div class="title ellipsis allow-user-select">
-        {{ match_infoData.tn }}  {{ match_infoData }}
+        {{ match_infoData.tn }}  
       </div>
       <div class="right-icon">
         <!-- 显示比分栏 -->
         <span v-if="!toggle_panel" @click="toggle_panel = true">{{
-          $t("common.show_score_panel")
+          i18n_t("common.show_score_panel")
         }}</span>
         <!-- 打开赛事分析窗口 -->
         <div
           class="sr-link-icon-w"
           v-if="utils.is_show_sr_flg(match_infoData)"
           @click.stop="sr_click_handle(match_infoData, 'details')"
-          v-tooltip="{ content: $t('common.analysis') }"
+          v-tooltip="{ content: i18n_t('common.analysis') }"
         >
           <icon name="icon-signal" color="#ABBAC8" />
         </div>
@@ -60,7 +60,7 @@
           class="hide-btn"
           @click="toggle_panel = false"
         >
-          {{ $t("common.hide_score_panel") }}
+          {{ i18n_t("common.hide_score_panel") }}
         </div>
       </div>
     </template>
@@ -85,7 +85,7 @@
 <script setup>
 import { ref, defineExpose, onUnmounted } from "vue";
 import {is_eports_csid}  from "src/core/constant/util/csid-util";
-import {utils}  from "src/core/index";
+import {utils,i18n_t}  from "src/core/index";
 // import ZhuGe from "src/core/http/zhuge-tag";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import info from 'src/components/match-detail/match_info/info.vue'  

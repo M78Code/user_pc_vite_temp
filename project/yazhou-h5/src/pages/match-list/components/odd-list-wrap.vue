@@ -44,11 +44,11 @@
         <!--标准版-->
         <div class="standard-odd-list row" 
              :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
-          <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status"
-               :class="{'boxing':match.csid == 12 } "
-               v-for="(hp_item_obj,hp_i_i) of fill_empty_hps(get_hp_list(standard_odd_status))">
+          <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
+               v-for="(hp_item_obj,hp_i_i) in odd_hps_data">
+               <!-- {{ hp_item_obj }} -->
             <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_item_obj,hp_i_i)}`"
-                :key="ol_item_i" v-for="(ol_item,ol_item_i) of get_ol_list(hp_item_obj,hp_i_i)">
+                :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
                 :placeholder="ol_item.placeholder"
                 :n_s="get_newer_standard_edition"
@@ -500,6 +500,12 @@ const finally_ol_list = computed(() => {
   return data;
 });
 
+// 赔率
+const odd_hps_data = computed(() => {
+  // TODO: get_hp_list(standard_odd_status.value)
+  return fill_empty_hps(get_hp_list(0))
+})
+
 // 占位,填充三个空元素
 const fill_empty_hps = (hpsArr) => {
   if ((hpsArr || []).length == 0) {
@@ -706,8 +712,8 @@ const odd_wrapper_pan = ({ direction }) => {
  * @param {Number} type 0 第一部分; 1 第二部分
  */
 const get_hp_list = (type) => {
+  let hps = [];
   if (type == 0) {
-    let hps = [];
     if (props.match && finally_ol_list.value) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.value.slice(0, 2);
@@ -722,7 +728,6 @@ const get_hp_list = (type) => {
     }
     return hps;
   } else if (type == 1) {
-    let hps = []; //
     if (props.match && lodash.size(finally_ol_list.value) > 3) {
       if (props.match.csid == 12) {
         hps = finally_ol_list.value.slice(3, 5);
@@ -803,7 +808,6 @@ const get_ol_list = (hp_item, hp_i_i) => {
       }
     }
   }
-  console.log(ol_list)
   return ol_list;
 };
 // 简版投注项选中时角球标志

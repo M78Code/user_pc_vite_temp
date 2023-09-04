@@ -131,70 +131,13 @@ const hpid = computed(() => {
   return lodash.get(props.odd_field,'hpid');
 })
 
-// 监听玩法变化
-watch(() => hpid.value, () => {
-  get_odd_data();
-})
-
-// 监听赔率变化实现红升绿降
-watch(() => odd_item.value.ov, (v1,v0) => {
-  if(get_foot_ball_screen_changing){
-    return;
-  }
-  let curr = Number(v1);
-  let old = Number(v0);
-
-  clearTimeout(timer_.value);
-  if(curr > old){
-    red_green_status.value = 1;
-  }else if(curr < old){
-    red_green_status.value = -1;
-  }
-  timer_.value = setTimeout(() => {
-    red_green_status.value = 0;
-  },3000);
-}, {  deep: true})
-
-// 计算最终显示的赔率
-const odds_value = computed(() => {
-  if(!props.odd_field) return 0;
-  let ov = odd_item.value.ov,hsw = props.odd_field.hsw;
-  let csid = null;
-  if(MenuData.get_menu_type() == 3000){
-    csid = props.match.csid;
-  }
-  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
-  return r1 || 0;
-})
-
-// 监听玩法变化
-watch(() => odds_value.value, () => {
-  get_odd_append_value(odd_item.value);
-})
-
-watch(() => props.match, () => {
-  let ol_list = get_ollist_no_close(props.odd_field);
-  if(ol_list){
-    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
-      odd_item.value = props.ol_list_item
-    }else{
-      if(odd_item.value)
-      {
-        Object.assign(odd_item.value, ol_list[odd_item.value_i]);
-      } else{
-        odd_item.value = ol_list[odd_item.value_i];
-      }
-    }
-  }
-}, { deep:true })
-
 // 判断边框border-radius样式
 const odds_class_object = computed(() => {
   let result = {
     'odd-column-item2':is_selected,
     'is-standard':PageSourceData.get_newer_standard_edition() === 2,
-    'first-radius': odd_item.value_i === 0,
-    'last-radius': odd_item.value_i > 1,
+    'first-radius': props.odd_item_i === 0,
+    'last-radius': props.odd_item_i > 1,
     'is-jiaoqiu':MenuData.footer_sub_menu_id == 114,
     'mred':  red_green_status.value === 1 && no_lock() && (!is_selected),
     'mgreen': red_green_status.value === -1 && no_lock() && (!is_selected),
@@ -238,9 +181,67 @@ const is_selected = computed(() => {
     let id_ = lodash.get(props.odd_field,'hl[0].hn')? `${props.match.mid}_${props.odd_field.chpid || props.odd_field.hpid}_${odd_item.value.ot}_${props.odd_field.hl[0].hn}` : odd_item.value.oid
     flag = get_bet_list.includes(id_);
   }
-  emits('select_change',{flag,i:odd_item.value_i});
+  emits('select_change',{flag,i:props.odd_item_i});
   return flag;
 })
+
+
+// 计算最终显示的赔率
+const odds_value = computed(() => {
+  if(!props.odd_field) return 0;
+  let ov = odd_item.value?.ov
+  let hsw = props.odd_field?.hsw;
+  let csid = null;
+  if(MenuData.get_menu_type() == 3000){
+    csid = props.match.csid;
+  }
+  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
+  return r1 || 0;
+})
+
+// 监听玩法变化
+watch(() => hpid.value, () => {
+  get_odd_data();
+})
+
+// 监听赔率变化实现红升绿降
+watch(() => odd_item.value?.ov, (v1,v0) => {
+  if(get_foot_ball_screen_changing.value){
+    return;
+  }
+  let curr = Number(v1);
+  let old = Number(v0);
+
+  clearTimeout(timer_.value);
+  if(curr > old){
+    red_green_status.value = 1;
+  }else if(curr < old){
+    red_green_status.value = -1;
+  }
+  timer_.value = setTimeout(() => {
+    red_green_status.value = 0;
+  },3000);
+})
+
+// 监听玩法变化
+watch(() => odds_value.value, () => {
+  get_odd_append_value(odd_item.value);
+})
+
+watch(() => props.match, () => {
+  let ol_list = get_ollist_no_close(props.odd_field);
+  if(ol_list){
+    if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
+      odd_item.value = props.ol_list_item
+    }else{
+      if(odd_item.value) {
+        Object.assign(odd_item.value, ol_list[props.odd_item_i]);
+      } else{
+        odd_item.value = ol_list[props.odd_item_i];
+      }
+    }
+  }
+}, { deep:true })
 
 /**
  * @description: 不是锁
@@ -376,7 +377,7 @@ const get_odd_data = () => {
     if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
-      odd_item.value = ol[odd_item.value_i];
+      odd_item.value = ol[props.odd_item_i];
     }
   } else {
     odd_item.value = {"oid":"","mid": lodash.get(props.odd_field,'mid')}
