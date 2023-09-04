@@ -2,9 +2,9 @@
  * @Description: H5 主菜单 逻辑
  */
 import {utils } from 'src/core/index.js'
-import { api_home } from "src/project/api/index.js";
+import { api_home } from "src/api/index.js";
 //  菜单 和接口返回一样格式的本地假数据（一整个菜单的数据）
-import { local_menu_data } from "src/project/pages/sport_menu/config/common_menu.js"
+import { local_menu_data } from "./config/common-menu.js"
 // import {mapGetters} from "vuex";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
@@ -470,7 +470,7 @@ export default {
         });
       } else {
         // 应该需要url回传参数才对
-        useRoute()r.push({name: 'home'});
+        useRoute().push({name: 'home'});
         this.set_sport_all_selected(false);
       }
     },
@@ -673,32 +673,32 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      get_main_menu_dom_i:"get_main_menu_dom_i",        // 主菜单选中下标
-      selector_w_m_i:"get_selector_w_m_i",  // 主菜单选择器的下标
-      get_theme: "get_theme",
-      get_current_first_menu: "get_current_first_menu",    // 当前选中的一级菜单
-      get_current_second_menu: "get_current_second_menu",    // 当前选中的二级菜单
-      get_current_three_menu: "get_current_three_menu",    // 当前选中的三级菜单
-      menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
-      get_golistpage: "get_golistpage",      // 商户是否需要直接跳到列表页（url地址有 label=1 或者 sy=1 参数）
-      get_lang:"get_lang",
-      cuid: "get_uid",                      // 获取当前uuid或用户id
-      show_favorite_list:"get_show_favorite_list", // 显示收藏列表
-      get_current_menu: "get_current_menu",    // 获取当前主菜单
-      current_esport_csid:'get_current_esport_csid',  // 电竞游戏csid
-      get_list_scroll_direction:'get_list_scroll_direction',
-      date_menu_curr_i: "get_date_menu_curr_i",   //早盘选中项下标
-      get_current_sub_menuid:"get_current_sub_menuid", // 当前选中的二级菜单id
-      get_current_date_menu:"get_current_date_menu", // 早盘和串关当前球类的日期菜单数据
-      get_home_data:"get_home_data", // 首页菜单数据
-      get_list_scroll_top:'get_list_scroll_top',
-      get_global_match_route_enter:'get_global_match_route_enter',
-      get_global_route_menu_param:'get_global_route_menu_param',
-      get_sport_all_selected:'get_sport_all_selected',
-      get_newer_standard_edition:'get_newer_standard_edition',// 新手版与标准版
-      get_prev_menu_type:'get_prev_menu_type',// 新手版与标准版
-    }),
+    // ...mapGetters({
+    //   get_main_menu_dom_i:"get_main_menu_dom_i",        // 主菜单选中下标
+    //   selector_w_m_i:"get_selector_w_m_i",  // 主菜单选择器的下标
+    //   get_theme: "get_theme",
+    //   get_current_first_menu: "get_current_first_menu",    // 当前选中的一级菜单
+    //   get_current_second_menu: "get_current_second_menu",    // 当前选中的二级菜单
+    //   get_current_three_menu: "get_current_three_menu",    // 当前选中的三级菜单
+    //   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
+    //   get_golistpage: "get_golistpage",      // 商户是否需要直接跳到列表页（url地址有 label=1 或者 sy=1 参数）
+    //   get_lang:"get_lang",
+    //   cuid: "get_uid",                      // 获取当前uuid或用户id
+    //   show_favorite_list:"get_show_favorite_list", // 显示收藏列表
+    //   get_current_menu: "get_current_menu",    // 获取当前主菜单
+    //   current_esport_csid:'get_current_esport_csid',  // 电竞游戏csid
+    //   get_list_scroll_direction:'get_list_scroll_direction',
+    //   date_menu_curr_i: "get_date_menu_curr_i",   //早盘选中项下标
+    //   get_current_sub_menuid:"get_current_sub_menuid", // 当前选中的二级菜单id
+    //   get_current_date_menu:"get_current_date_menu", // 早盘和串关当前球类的日期菜单数据
+    //   get_home_data:"get_home_data", // 首页菜单数据
+    //   get_list_scroll_top:'get_list_scroll_top',
+    //   get_global_match_route_enter:'get_global_match_route_enter',
+    //   get_global_route_menu_param:'get_global_route_menu_param',
+    //   get_sport_all_selected:'get_sport_all_selected',
+    //   get_newer_standard_edition:'get_newer_standard_edition',// 新手版与标准版
+    //   get_prev_menu_type:'get_prev_menu_type',// 新手版与标准版
+    // }),
     // 当前选择的 一级菜单的 menuId
     main_menu_id_c(){
       let id = -1
