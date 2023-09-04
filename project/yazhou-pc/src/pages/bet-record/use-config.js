@@ -11,6 +11,7 @@ import { api_common, api_betting, api_account } from "src/api/index";
 import { i18n_t } from "src/boot/i18n.js";;
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 
 
 export const useConfig = () => {
@@ -35,7 +36,7 @@ export const useConfig = () => {
       check_name: "bet_record.match_time",
     },
   ];
-
+  const betRecord = ref(null)
   const state = reactive({
     day_time: "", //今日时间
     startDateSearch: "", // 开始时间
@@ -86,9 +87,8 @@ export const useConfig = () => {
     has_confirm_status: "", //设置确认中状态为true
     getBook_gcuuid: '',
     // 用户信息
-    toolSelected: '0',
+    toolSelected: 0,
     is_pre_bet: 'false', // 提前结算勾选
-    betRecord: 'null',
   });
   watch(
     () => state.model,
@@ -681,7 +681,6 @@ const changePage = (tableData) => {
  * @return {undefined} undefined
  */
 const getOrderList = (isScoket, callback) => {
-  console.error(state.params);
   if (state.record_obj) {
     for (let key in state.record_obj) {
       delete state.record_obj[key];
@@ -718,7 +717,6 @@ const getOrderList = (isScoket, callback) => {
           orderStatus: "0",
           initPresettleWs: true,
         });
-        console.error(records_);
         let maxcashout_list = lodash.map(records_, "maxCashout");
         // 判断提前结算实时查询返回集合数据的投注额有null
         if (lodash.includes(maxcashout_list, null)) {
@@ -742,7 +740,7 @@ const getOrderList = (isScoket, callback) => {
           let record_list = data.records;
           if (!record_list) {
             state.data_state.load_data_state = "empty";
-            state.betRecord.recordData.total = "0";
+            // betRecord.value.recordData.total = "0";
             return;
           }
           let new_record_obj = get_obj(record_list, data);
@@ -781,12 +779,12 @@ const getOrderList = (isScoket, callback) => {
           lodash.isPlainObject(err) ||
           lodash.get(err, "response.status") == 404
         ) {
-          data_state.load_data_state = "404";
+          state.data_state.load_data_state = "404";
         } else {
-          data_state.load_data_state = "record_refresh";
+          state.data_state.load_data_state = "record_refresh";
         }
       } else {
-        data_state.load_data_state = "record_refresh";
+        state.data_state.load_data_state = "record_refresh";
       }
       if (lodash.isFunction(callback)) {
         callback();
@@ -800,13 +798,13 @@ const getOrderList = (isScoket, callback) => {
  * @return {undefined} undefined
  */
 const getBookList = (callback) => {
-  if (record_obj) {
-    for (let key in record_obj) {
-      delete record_obj[key];
+  if (state.record_obj) {
+    for (let key in state.record_obj) {
+      delete state.record_obj[key];
     }
   }
-  data_state.load_data_state = "loading";
-  let preOrderStatusList = is_book_status;
+  state.data_state.load_data_state = "loading";
+  let preOrderStatusList = state.is_book_status;
   //0预约中 ;1预约成功;2.风控预约失败;3.风控取消预约注单.4.用户手动取消预约投注
   // jumpFrom跳转来源(非空 1.详情投注界面   2.注单界面)
   let param_obj = {
@@ -951,6 +949,6 @@ const get_obj = (record_list, data) => {
     toolClicked,
 
     uid,
-
+    betRecord,
   };
 };

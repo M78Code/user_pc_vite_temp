@@ -3,7 +3,7 @@
   <div>
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
-        {{ $t('bet_record.total_count') }}
+        {{ i18n_t('bet_record.total_count') }}
         <!-- 总计单数 -->
         ：
         <span class="footer-text">{{ count }}</span>

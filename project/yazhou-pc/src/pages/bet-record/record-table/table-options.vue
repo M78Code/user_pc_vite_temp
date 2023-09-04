@@ -88,7 +88,7 @@
               >({{ format_score_t(item.scoreBenchmark) }})</span
             >
             <!-- [欧洲盘]-->
-            <span>[{{ marketType(item.marketType, data.langCode) }}]</span>
+            <!-- <span>{{ '[' + marketType(item.marketType, data.langCode) + ']' }}</span> -->
             <!--冠军玩法 截止投注 -->
             <!-- <div v-show="item.matchType === 3">
                             <span>{{ i18n_t("list.bet_close") }}:</span>
@@ -464,12 +464,14 @@
             >
           </template>
           <template v-else>
+            <!-- :class="item_class(item.betResult)" -->
             <span
               v-if="data.orderStatus == '1' && data.seriesType == '1'"
               class="bet-result"
               :class="item_class(item.betResult)"
               >{{ item_status(item.betResult) }}</span
             >
+            <!-- item_status(item.betResult) -->
           </template>
           <!-- 已结算 单关 betresult字段显示(2-走水，3-输，4-赢，5-半赢，6-半输) -->
 
@@ -533,7 +535,18 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
-  matchType: Function,
+  matchType:{
+    type: Function,
+    default: () => {}
+  },
+  item_class:{
+    type: Function,
+    default: () => {}
+  },
+  item_status:{
+    type: Function,
+    default: () => {}
+  },
   get_user:Object
 });
 

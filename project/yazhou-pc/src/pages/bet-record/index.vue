@@ -33,7 +33,6 @@
           @time_sort="time_sort"
           @check_change="check_change"
         ></filter-box>
-
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
         <template v-if="[0, 1].includes(toolSelected)">
           <record-table
@@ -84,7 +83,7 @@ import { api_betting } from "src/api/index";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import store from "src/store-redux/index.js";
 import { i18n_t } from "src/boot/i18n.js"
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useConfig } from "./use-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
@@ -131,6 +130,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   uid,
   getBook_gcuuid,
 } = useConfig();
+console.error(order_list);
 
 </script>
 
