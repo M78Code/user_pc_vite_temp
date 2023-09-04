@@ -99,7 +99,6 @@ export const useRegistPropsHelper1 = (params) => {
  * useComputedProps.value.title
  */
 export function useRegistPropsHelper(component_symbol, props) {
-  console.error(props);
   let input_config = get_input_config(component_symbol);
   return computed(() => {
     const obj = {};

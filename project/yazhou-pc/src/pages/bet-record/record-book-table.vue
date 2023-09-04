@@ -58,10 +58,10 @@
           <!--表格内容-->
             <div class="r-table">
               <!--early_settlement_data用于预约的数据-->
-              <template >
-                <div v-for="(data, i) of early_settlement_data" class="row" :key= "i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
+              <template v-for="(data, index_) in early_settlement_data" :key= "index_">
+                <div class="row" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
                   <!-- 编号 -->
-                  <div class="ceil">{{recordData.size*(recordData.current-1) + i + 1}}</div>
+                  <div class="ceil">{{recordData.size*(recordData.current-1) + index_ + 1}}</div>
                   <!-- 投注详情 -->
                   <div class="ceil">
                     <div>{{formatTime(data.betTime, lang=='vi'?'hh:MM:ss dd/mm/yyyy':'yyyy-mm-dd hh:MM:ss')}}</div>
@@ -81,6 +81,7 @@
                   <div class="ceil c134 play-name">
                     <div>
                       <!-- 串关 -->
+                      {{data.seriesType}}
                       <template v-if="data.seriesType != '1' || data.seriesType == '3'">{{data.seriesValue}}</template>
                       <!-- 单关 -->
                       <template v-else>
