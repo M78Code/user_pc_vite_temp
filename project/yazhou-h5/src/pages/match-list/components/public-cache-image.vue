@@ -2,9 +2,8 @@
  * @Description: 图片缓存 加载组件
 -->
 <template v-if="show_image">
-  <!-- 有缓存图片优先使用缓存图片 -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error"/>
-  <!-- <img class="team-icon row no-wrap" :src="image_src" alt=""> -->
+  <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" />
 </template>
  
 <script setup>

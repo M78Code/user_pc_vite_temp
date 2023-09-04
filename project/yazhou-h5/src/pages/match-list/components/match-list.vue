@@ -118,7 +118,6 @@ import scrollWrapper from 'project_path/src/components/common/scroll-wraper/scro
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData } from "src/core/index.js"
-import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
  
 const props = defineProps({
   // 赛事列表无数据
@@ -131,6 +130,8 @@ const props = defineProps({
   window_scrolly:Number | String,
   match_list_wrapper_height:Number,
 })
+
+const emits = defineEmits(['change_favorite_state', 'unfold_changed'])
 
 const emitters = ref({})
 const store_state = store.getState();
@@ -379,7 +380,7 @@ const toggle_collect = ($event) => {
     number: number,
     sportId: match.csid,
   };
-  $emit('change_favorite_state', changedParam);
+  emits('change_favorite_state', changedParam);
 
   favorite_loading.value = true;
   api(params).then(res => {
@@ -395,7 +396,7 @@ const toggle_collect = ($event) => {
  * 折叠状态变化
  */
 const unfold_changed_handle = ($event) => {
-  $emit('unfold_changed',$event);
+  emits('unfold_changed',$event);
 }
 
 onDeactivated(() => {

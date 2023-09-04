@@ -37,12 +37,12 @@
         <!--        @unfold_league="unfold_league_handle"-->
       </match-list>
       <!-- 到底了容器原加载更多容器-->
-      <!-- <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
+      <div class="loading-more-container" v-if="!match_is_empty && lodash.size(matchCtr.match_list_data_sources)>3" 
            :class="{home_hot:invok_source == 'home_hot_page_schedule'}">
         <div style="color:#AAAEB8;font-size:.12rem;">
           {{ $t("scroll_wrapper.is_footer")}}
         </div>
-      </div> -->
+      </div>
       
       <!-- 回到顶部按钮组件 -->
       <scroll-top
@@ -151,7 +151,7 @@ const requesting_timeout = ref(null)
 // 赛事列表无数据
 const match_is_empty = ref(false)
 // 赛事操作工具类
-const matchCtr = ref(MatchCtrClass)
+const matchCtr = ref()
 // 赛事列表接口请求中提示
 const is_data_requesting = ref(true)
 //窗口向上滚动距离
@@ -217,6 +217,10 @@ onMounted(() => {
   // 事件初始化
   event_init()
 })
+
+watch(() => MatchCtrClass, () => {
+  matchCtr.value = MatchCtrClass
+}, { deep: true, immediate: true })
 
 // 详情若无热门推荐赛事，则隐藏相应内容
 watch(() => match_is_empty, () => {

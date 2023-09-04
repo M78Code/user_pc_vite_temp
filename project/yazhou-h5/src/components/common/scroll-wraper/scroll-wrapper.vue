@@ -12,9 +12,7 @@
       simple: get_newer_standard_edition == 1,
       theme02: UserCtr.theme.includes('theme02'),
     }" :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
-      <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template
-            当要v-for与v-if同时使用在一个dom上时,可以使用template
-      -->
+      <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
       <template v-for="(scrollItem, index) of data_list">
         <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
           :class="{ static: is_static_item, last: index == data_source.length - 1 }" :style="{
@@ -48,7 +46,6 @@ import { ref, onMounted, watch, computed, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import store from "src/store-redux/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js"; 
 import MenuData from  "src/core/menu-h5/menu-data-class.js";
 
 // 避免定时器每次滚动总是触发
@@ -83,13 +80,16 @@ const data_list = ref([])
 onMounted(() => {
   setTimeout(() => {
     data_list.value = props.matchCtr.list
-  }, 500)
+  }, 1000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
     list_wrap_height = 8;
   }
 })
+watch(() => props.matchCtr, () => {
+  data_list.value = props.matchCtr.list
+}, { immediate: true, deep: true })
 
 // ...mapMutations([
 //   'set_list_scroll_direction',
