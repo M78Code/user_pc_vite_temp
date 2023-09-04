@@ -325,11 +325,12 @@ this.bet_appoint_ball_head= null */
       // 同场赛事不能串 部分数据源赛事不能串 
       this.bet_s_list.push(bet_refer_obj) 
     }
-   
+    
+    console.error('bet_single_list',this.bet_single_list[0].playOptionsId)
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
     
-    this.bet_data_class_version = Date.now()
+    this.bet_data_class_version.value = Date.now()
   }
 
   /*

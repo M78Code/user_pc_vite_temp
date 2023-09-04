@@ -19,6 +19,7 @@ import { SessionStorage,enter_params } from "src/core/index.js";
 import { loadLanguageAsync, LayOutMain_pc } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 const { DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 
@@ -52,7 +53,7 @@ const init_load = ref(false); //用于加载是否完成
     AllDomain.create(() => {
       enter_params()
       // 首次进入,发现最快的域名
-      console.log(" init_domain -- 回调执行:");
+      console.error(" init_domain -- 回调执行:");
       // http初始化方法 会调用 setApiDomain
       // ws和http域名切换逻辑
       http.setApiDomain();
@@ -60,6 +61,9 @@ const init_load = ref(false); //用于加载是否完成
       base_data.init();
       // 投注信息 初始化
       BetData.init_core();
+      console.error('111111111')
+      BetViewDataClass.init();
+      console.error('ssasssss')
       // 布局初始化
       LayOutMain_pc.init();
       init_load.value = true;
