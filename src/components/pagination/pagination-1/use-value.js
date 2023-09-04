@@ -60,7 +60,7 @@ export const useGetValue = ({ count }) => {
   });
   const max = computed(() => {
     // 最大页数，总数/每页显示数量，向上取整
-    return Math.ceil(count / this.perPageNum);
+    return Math.ceil(count / perPageNum);
   });
 
    /**
@@ -69,7 +69,7 @@ export const useGetValue = ({ count }) => {
      */
   const setInitPage = ()=> {
     page.value = 1; //当前第一页
-    this.goPage = 1; //跳转第一页
+    state.goPage = 1; //跳转第一页
   }
  const setPageSize=(val)=> {
     state.pagination.limit = val;
