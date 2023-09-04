@@ -3,7 +3,8 @@
  * 菜单接口  缓存、限频、节流
  */
 
- import AxiosDebounceCache from "./axios-debounce-cache.js"
+ import { LocalStorage } from "../../utils/";
+import AxiosDebounceCache from "./axios-debounce-cache.js"
 
 
 
@@ -25,7 +26,7 @@ instance.random_debounce_time_max=  10000;
 // 自定义哈希算法
 instance.hash_code=function(params){
 // 把参数传进来 核心参数拼接 ，注意需要自己去掉非 _ 下划线之外的特殊符号
-  let str = `sys_${params.sys||7}_disabled_${params.disabled}_lang_${window.reset_lang || window.vue.lang || 'zh'}`
+  let str = `sys_${params.sys||7}_disabled_${params.disabled}_lang_${  LocalStorage.get("lang",'zh')}`
   return str
 }
 

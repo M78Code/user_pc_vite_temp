@@ -45,16 +45,17 @@ export default async function axios_api_loop(opts = {}) {
     max_loop = 3,
     timers = 1000,
     error_codes = [],
+    loop_count = 0,
   } = opts;
+  opts.loop_count = (loop_count || 0) + 1;
   try {
-     const res = await axios_api(params);
+    const res = await axios_api(params);
     //timer其实没啥用哦 因为下一次进来是已经执行了  也没有缓存
     //又没有取消方法 不知道以前为什么加
     clearTimeout(opts.timer);
     let code = get(res, "data.code");
-    opts.loop_count = (opts.loop_count || 0) + 1;
     if (error_codes.includes(code)) {
-      if (opts.loop_count >= max_loop) {
+      if (loop_count >= max_loop) {
         fun_catch && fun_catch(res);
       } else {
         opts.timer = setTimeout(() => {
@@ -62,12 +63,12 @@ export default async function axios_api_loop(opts = {}) {
         }, timers);
       }
     } else {
-      fun_then && fun_then(res);
+      fun_then && fun_then(res.data,res);
     }
   } catch (e) {
+    console.log("axios_loop test catch", e);
     clearTimeout(opts.timer);
-    opts.loop_count++;
-    if (opts.loop_count >= max_loop) {
+    if (loop_count >= max_loop) {
       fun_catch && fun_catch(e);
     } else {
       opts.timer = setTimeout(() => {

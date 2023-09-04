@@ -1,16 +1,13 @@
- 
 import { uid as quid } from "quasar";
- 
+
 /**
  * 获取 uid 生成一个不重复的字符串 区分大小写
  * @returns string
  */
 
-
- function uid(num = 18) {
-
-let   StrAry =
-"1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+function uid(num = 18) {
+  let StrAry =
+    "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   const len = StrAry.length;
   let uuid = quid();
   for (let index = 0; index < num; index++) {
@@ -19,5 +16,5 @@ let   StrAry =
   return uuid;
 }
 
-
-export default uid
+export default uid;
+export { quid };

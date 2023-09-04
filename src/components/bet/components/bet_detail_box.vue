@@ -213,7 +213,8 @@
   const is_exist_code = ref('false')   //投注后是否返回code码
   const tips_msg = ref('')  // 提示信息
   const need_bet_again = ref('false')  //是否需要重新发起投注
-  const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
+  // const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
+  let check_odds_beforebet2 = ref('')
 
   const max_winmoney = ref('0')   //单关投注成功后接口返回的最高可赢
   const odds_value2 = ref('')  //单关投注成功后接口返回的赔率

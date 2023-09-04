@@ -354,7 +354,7 @@
                 </div>
               </div>
               <!-- 右边盘口组件 -->
-              <odd-list-wrap v-else :main_source="main_source" :match="matchCtr.list[i]" />
+              <odd-list-wrap v-else :main_source="main_source" :match="match_of_list" />
             </div>
             <!-- 比分组件 -->
             <div class="w-score-result row justify-end">
@@ -461,7 +461,6 @@
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import lodash from 'lodash'
@@ -548,8 +547,6 @@ const is_on_go_detail = ref(false)
 
 const global_theme = UserCtr.theme
 
-const match = props.match_of_list
-
 const get_hot_tab_item = ref(store_state.get_hot_tab_item)
 const get_footer_sub_changing = ref(store_state.get_footer_sub_changing)
 const get_uid = ref(store_state.get_uid)
@@ -581,19 +578,24 @@ onMounted(() => {
   clear_timer();
   run_new_init_timer();
   score_value();
+  matchListClass.match_period_map(props.match_of_list);
+  media_button_button_type_check()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
   }
-  matchListClass.match_period_map(match);
-  media_button_button_type_check()
 })
 
-watch(() => match, (c_match) => {
+// 当前显示的赛事数据
+const match = computed(() => {
+  return props.match_of_list;
+})
+
+watch(() => props.match_of_list, (c_match) => {
   media_button_button_type_check()
   matchListClass.match_period_map(c_match);
 })
 
-watch(() => match.mid, (mid_new,mid_old) => {
+watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
   if (mid_new) {
     match_changing.value = true;
     /*
@@ -604,14 +606,14 @@ watch(() => match.mid, (mid_new,mid_old) => {
     match_change_timer.value = setTimeout(() => {
       match_changing.value = false;
     }, 300);
-    matchListClass.match_period_map(match);
+    matchListClass.match_period_map(props.match_of_list);
   }
 })
 
 // 监听主队比分变化
 watch(() => home_score.value, (new_,old_) => {
   if (is_first_coming.value) return;
-  if (match.csid != 1) return;
+  if (props.match_of_list.csid != 1) return;
   if (get_footer_sub_changing) return;
   if (match_changing.value) return;
 
@@ -624,7 +626,7 @@ watch(() => home_score.value, (new_,old_) => {
 // 监听客队比分变化
 watch(() => away_score.value, (new_,old_) => {
   if (is_first_coming.value) return;
-  if (match.csid != 1) return;
+  if (props.match_of_list.csid != 1) return;
   if (get_footer_sub_changing) return;
   if (match_changing.value) return;
 
@@ -635,7 +637,7 @@ watch(() => away_score.value, (new_,old_) => {
 })
 // 监听主队红牌比分变化
 watch(() => home_red_score.value, () => {
-  if (match.csid != 1) return
+  if (props.match_of_list.csid != 1) return
   if (home_red_first_change.value) {
     home_red_first_change.value = false;
     return;
@@ -647,7 +649,7 @@ watch(() => home_red_score.value, () => {
 })
 // 监听客队红牌比分变化
 watch(() => away_red_score.value, (new_,old_) => {
-  if (match.csid != 1) return
+  if (props.match_of_list.csid != 1) return
   if (away_red_first_change.value) {
     away_red_first_change.value = false;
     return;
@@ -659,13 +661,13 @@ watch(() => away_red_score.value, (new_,old_) => {
 })
 
 // 监听比分变化
-watch(() => match.msc, () => {
-  score_switch_handle(match);
+watch(() => props.match_of_list.msc, () => {
+  score_switch_handle(props.match_of_list);
   score_value();
 })
 
-watch(() => match.mmp, () => {
-  matchListClass.match_period_map(match);
+watch(() => props.match_of_list.mmp, () => {
+  matchListClass.match_period_map(props.match_of_list);
 })
 
 // 监听客队红牌比分变化
@@ -730,7 +732,7 @@ const get_sport_show = computed(() => {
       return true;
     }
   } else if ([1, 2, 3, 4, 11, 12, 28, 30, 3000].includes(+props.menu_type)) {
-    if (match.show_sport_type) {
+    if (props.match_of_list.show_sport_type) {
       return true
     } else {
       return false
@@ -772,14 +774,14 @@ const is_show_video_icon = computed(() => {
     let ua = navigator.userAgent.toLowerCase();
     let isIos = (ua.indexOf('iphone') != -1) || (ua.indexOf('ipad') != -1);
     if (isIos) {
-      ios_Android = match.vurl
+      ios_Android = props.match_of_list.vurl
     } else {
-      ios_Android = match.varl || match.vurl
+      ios_Android = props.match_of_list.varl || props.match_of_list.vurl
     }
-    r = match.mms > 1 && ios_Android && [1, 2, 7, 10, 110].includes(+match.ms)
+    r = props.match_of_list.mms > 1 && ios_Android && [1, 2, 7, 10, 110].includes(+props.match_of_list.ms)
   }
   else {
-    r = match.mms > 1 && [1, 2, 7, 10, 110].includes(+match.ms);
+    r = props.match_of_list.mms > 1 && [1, 2, 7, 10, 110].includes(+props.match_of_list.ms);
   }
       return r;
 })
@@ -787,7 +789,7 @@ const is_show_video_icon = computed(() => {
 // 未开赛赛事数量
 const no_start_total = computed(() => {
   let r = [];
-  if (match.is_show_no_play) {
+  if (props.match_of_list.is_show_no_play) {
     r = lodash.filter(props.matchCtr.match_list_data_sources, item => {
       return !item.ms
     })
@@ -831,20 +833,12 @@ const collapsed = computed(() => {
   return get_collapse_map_match[props.match_of_list.tid];
 })
 
-// 当前显示的赛事数据
-// const match = computed(() => {
-//   debugger
-//   let result = {};
-//   result = props.matchCtr.list[props.i];
-//   if (!result) result = {};
-//   return result;
-// })
 const eports_scoring = computed(() => {
   //比分判断处理
   let scoring = false
   //如果是电竞，则进行比分判定处理
   if (props.menu_type == 3000) {
-    const { mmp, home_score, away_score } = match
+    const { mmp, home_score, away_score } = props.match_of_list
     const mmp_state = mmp || 1
     if (mmp_state != (Number(home_score) + Number(away_score) + 1)) {
       scoring = true
@@ -922,7 +916,7 @@ const media_button_handle = () => {
       break;
   }
   store.dispatch({ type: 'matchReducer/set_is_in_play',  payload: final_button_type });
-  goto_details(match);
+  goto_details(props.match_of_list);
 }
 /**
  * 计算真正回落的点击按钮   直播 视频  动画
@@ -930,19 +924,19 @@ const media_button_handle = () => {
  */
 const media_button_button_type_check = (button_type = 'lvs') => {
   let state_obj = {
-    lvs: match["lvs"] && match["lvs"] != -1,
+    lvs: props.match_of_list["lvs"] && props.match_of_list["lvs"] != -1,
     muUrl: is_show_video_icon,
-    animationUrl: match.mms <= 1 && match.mvs > -1,
+    animationUrl: props.match_of_list.mms <= 1 && props.match_of_list.mvs > -1,
     icon_path: '',
     final_button_type: '',
   }
   // 正常的 优先级 ： lvs 直播   muUrl 视频  animationUrl 动画
   if (button_type == "lvs") {
-    if (state_obj.lvs && ['string', 'number'].includes(typeof lodash.get(match, 'lss'))) {
+    if (state_obj.lvs && ['string', 'number'].includes(typeof lodash.get(props.match_of_list, 'lss'))) {
       // 赛前图标
-      if (lodash.get(match, 'lss') == 1) {
+      if (lodash.get(props.match_of_list, 'lss') == 1) {
         state_obj.icon_path = lvs_icon_theme01
-      } else if (lodash.get(match, 'lss') == 0 && lodash.get(match, 'ms') != 1) {
+      } else if (lodash.get(props.match_of_list, 'lss') == 0 && lodash.get(props.match_of_list, 'ms') != 1) {
         // 正在直播的图标
         state_obj.icon_path = lvs_icon_theme02
       }
@@ -989,9 +983,9 @@ const media_button_handle_when_muUrl = () => {
     let ua = navigator.userAgent.toLowerCase();
     let isIos = ua.indexOf("iphone") != -1 || ua.indexOf("ipad") != -1;
     if (isIos) {
-      video_url.media_src = match.vurl;
+      video_url.media_src = props.match_of_list.vurl;
     } else {
-      video_url.media_src = match.varl || match.vurl;
+      video_url.media_src = props.match_of_list.varl || props.match_of_list.vurl;
     }
     store.dispatch({ type: 'matchReducer/set_video_url',  payload: video_url });
   }
@@ -1000,7 +994,7 @@ const media_button_handle_when_muUrl = () => {
   //在 match_icon.vue 组件 watch 监听
   store.dispatch({ type: 'matchReducer/set_play_video',  payload: true });
   store.dispatch({ type: 'matchReducer/set_show_video',  payload: true });
-  goto_details(match);
+  goto_details(props.match_of_list);
 }
 const leaderboard_switch = () => {
   useMittEmit(MITT_TYPES.EMIT_HOT_LEADERBOARD_SWITCH)
@@ -1043,7 +1037,7 @@ const hide_away_red = () => {
 }
 /**
  * @description: 联赛点击事件，折叠或展开联赛赛事
- * @param {Object} match 点击的赛事
+ * @param {Object} item 点击的赛事
  */
 const league_l_clicked = () => {
   // 首页热门，详情页，不需要用到折叠
@@ -1154,23 +1148,23 @@ const get_match_dom_height_by_matchdata = (match_height_map) => {
 }
 /**
  * @description: 设置发球方绿点显示
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @param {Object} side 'home'主队  'away'客队
  * @return {Boolean} 是否显示发球方
  */
-const set_serving_side = (match, side) => {
+const set_serving_side = (item, side) => {
   if (props.menu_type == 28 && !["detail_match_list"].includes(props.main_source)) { //赛果不显示发球方绿点
     return false
   }
-  return match.ms == 1 && match.mat == side;
+  return item.ms == 1 && item.mat == side;
 }
 /**
  * @description: 获取玩法数量
- * @param {Object} match 赛事
+ * @param {Object} item 赛事
  * @return {Number}
  */
-const get_match_mc = (match) => {
-  return (match.mc * 1) < 1 ? 0 : match.mc;
+const get_match_mc = (item) => {
+  return (item.mc * 1) < 1 ? 0 : item.mc;
 }
 /**
  * 包装获取图片路径的方法
@@ -1180,17 +1174,17 @@ const get_file_path_local = (path, csid) => {
 }
 /**
  * @description: 主队队徽
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @return {Number} is_second 0:不是双打  1:双打
  */
-const home_avatar = (match, is_second) => {
-  if (get_img_error_map_mid[match.mid] && get_img_error_map_mid[match.mid].home) {
-    return get_img_error_map_mid[match.mid].home;
+const home_avatar = (item, is_second) => {
+  if (get_img_error_map_mid[item.mid] && get_img_error_map_mid[item.mid].home) {
+    return get_img_error_map_mid[item.mid].home;
   }
   // 获取双打第二个头像
   if (is_second) {
-    if (Array.isArray(match.mhlu) && match.mhlu.length > 1)
-      return get_file_path_local(match.mhlu[1], match.csid);
+    if (Array.isArray(item.mhlu) && item.mhlu.length > 1)
+      return get_file_path_local(item.mhlu[1], item.csid);
     // 如果是字母logo，则返回雪碧图
     return false
   }
@@ -1198,31 +1192,31 @@ const home_avatar = (match, is_second) => {
   else {
     // 真实logo
     let match_logo;
-    if (Array.isArray(match.mhlu) && match.mhlu.length) {
-      match_logo = match.mhlu[0];
+    if (Array.isArray(item.mhlu) &&item.mhlu.length) {
+      match_logo = item.mhlu[0];
     }
     else {
-      match_logo = match.mhlu;
+      match_logo = item.mhlu;
     }
     if (match_logo)
-      return get_file_path_local(match_logo, match.csid);
+      return get_file_path_local(match_logo, item.csid);
     // 如果是字母logo，则返回雪碧图
     return false
   }
 }
 /**
  * @description: 客队队徽
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @return {Number} is_second 0:不是双打  1:双打
  */
-const away_avatar = (match, is_second) => {
-  if (get_img_error_map_mid[match.mid] && get_img_error_map_mid[match.mid].away) {
-    return get_img_error_map_mid[match.mid].away;
+const away_avatar = (item, is_second) => {
+  if (get_img_error_map_mid[item.mid] && get_img_error_map_mid[item.mid].away) {
+    return get_img_error_map_mid[item.mid].away;
   }
   // 获取双打第二个头像
   if (is_second) {
-    if (Array.isArray(match.malu) && match.malu.length > 1)
-      return get_file_path_local(match.malu[1], match.csid);
+    if (Array.isArray(item.malu) && item.malu.length > 1)
+      return get_file_path_local(item.malu[1], item.csid);
     // 如果是字母logo，则返回雪碧图
     return false
   }
@@ -1231,14 +1225,14 @@ const away_avatar = (match, is_second) => {
 
     // 真实logo
     let match_logo;
-    if (Array.isArray(match.malu) && match.malu.length) {
-      match_logo = match.malu[0];
+    if (Array.isArray(item.malu) && item.malu.length) {
+      match_logo = item.malu[0];
     }
     else {
-      match_logo = match.malu;
+      match_logo = item.malu;
     }
     if (match_logo)
-      return get_file_path_local(match_logo, match.csid);
+      return get_file_path_local(match_logo, item.csid);
     // 如果是字母logo，则返回雪碧图
     return false
   }
@@ -1252,7 +1246,7 @@ const away_avatar = (match, is_second) => {
  * @return {String}
  */
 const toggle_collect = (match, index, item) => {
-  if (item == 'tf') {
+  if (match == 'tf') {
     //联赛收藏或取消收藏
     emits('toggle_collect_league', { match, index, type: 'tf' })
   } else {
@@ -1262,19 +1256,19 @@ const toggle_collect = (match, index, item) => {
 }
 /**
  * @description: 跳转至详情
- * @param {Object} match 赛事
+ * @param {Object} item 赛事
  * @param {*} flag 有值时候代表要去到赛事分析页
  * @return {String}
  */
-const goto_details = (match, flag) => {
-  if (!match || !match.mid) return;
+const goto_details = (item, flag) => {
+  if (!item || !item.mid) return;
   if (is_on_go_detail.value) {
     return; //  防止急速点击两次
   }
   is_on_go_detail.value = true;
 
   // 如果是非赛果电竞赛事，需要设置菜单类型
-  if (MenuData.current_menu !== 28 && [100, 101, 102, 103].includes(+match.csid)) {
+  if (MenuData.current_menu !== 28 && [100, 101, 102, 103].includes(+item.csid)) {
     store.dispatch({ type: 'matchReducer/set_menu_type',  payload: 3000 });
   }
   // console.log({msg:'测试在极度快速的点几下,可以打印两次此消息,证明执行了两次'})
@@ -1283,41 +1277,41 @@ const goto_details = (match, flag) => {
   store.dispatch({ type: 'matchReducer/set_collapse_csid_map',  payload: {} });
   store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: {} });
 
-  store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: match.mid });
+  store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: item.mid });
   // 进入详情页前，记录目标赛事top值
-  store.dispatch({ type: 'matchReducer/set_goto_detail_match_info',  payload: { top: $refs['mid-' + match.mid].getBoundingClientRect().top } });
+  store.dispatch({ type: 'matchReducer/set_goto_detail_match_info',  payload: { top: $refs['mid-' + item.mid].getBoundingClientRect().top } });
   store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: 0 });
   store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
   // 进入详情前，将当前赛事信息存入仓库
-  store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: match });
+  store.dispatch({ type: 'matchReducer/set_match_base_info_obj',  payload: item });
 
   if (MenuData.current_menu && MenuData.current_menu.main && is_show_result()) {
-    router.push(`/result_details/${match.mid}/0`);
+    router.push(`/result_details/${item.mid}/0`);
   }
   else {
     if (route.name == "category") {
-      router.push({ name: 'category_loading', params: { mid: match.mid } });
+      router.push({ name: 'category_loading', params: { mid: item.mid } });
     }
     else {
-      router.push({ name: 'category', params: { analysis: flag ? true : false, mid: match.mid, csid: match.csid } });
+      router.push({ name: 'category', params: { analysis: flag ? true : false, mid: item.mid, csid: item.csid } });
     }
   }
 }
 /**
  * @description: 多少分钟后开赛显示
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @return {String}
  */
-const show_start_counting_down = (match) => {
-  if (typeof match.mcg == 'undefined') {
+const show_start_counting_down = (item) => {
+  if (typeof item.mcg == 'undefined') {
     return false;
   }
   let r = false;
   // 滚球中不需要显示多少分钟后开赛
-  if (match && match.ms == 1) {
+  if (item && item.ms == 1) {
     return r;
   }
-  let start_time = match.mgt * 1;
+  let start_time = item.mgt * 1;
   let init_server = get_local_server_time.server_time * 1;
   let init_local = get_local_server_time.local_time_init;
   let now_local = new Date().getTime();
@@ -1326,24 +1320,25 @@ const show_start_counting_down = (match) => {
   let sub_time = start_time - now_server_time;
 
   // mcg 1:滚球 2:即将开赛 3:今日赛事 4:早盘
-  r = match.mcg != 1 && 0 < sub_time && sub_time < 60 * 60 * 1000;
+  r = item.mcg != 1 && 0 < sub_time && sub_time < 60 * 60 * 1000;
   return r;
 }
 // 赛事状态  0、赛事未开始 1、滚球阶段 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断
 /**
  * @description: 进行中(但不是收藏页)的赛事显示累加计时|倒计时
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @return {Boolean}
  */
-const show_counting_down = (match) => {
-  return [1, 2, 10].includes(match.ms * 1);
+const show_counting_down = (item) => {
+  return [1, 2, 10].includes(item.ms * 1);
 }
 /**
  * 判断是否显示进行中|未开赛
- * @param {Object} match 赛事对象
+ * @param {Object} item 赛事对象
  * @returns {Boolean}
  */
 const get_m_status_show = (i) => {
+  let item = props.matchCtr.list[i];
   let result = false;
   if (props.main_source == 'detail_match_list') {
     return false
@@ -1358,17 +1353,17 @@ const get_m_status_show = (i) => {
       return result;
     }
   }
-  let match = props.matchCtr.list[i];
-  if (match) {
+  
+  if (item) {
     if (i > 0) {
       let prev_match = props.matchCtr.list[i - 1];
-      if ([1, 110].includes(+match.ms)) {
+      if ([1, 110].includes(+item.ms)) {
         result = false;
       }
-      else if (![1, 110].includes(+match.ms) && [1, 110].includes(+prev_match.ms)) {
+      else if (![1, 110].includes(+item.ms) && [1, 110].includes(+prev_props.match_of_list.ms)) {
         result = true;
       }
-    } else if (i == 0 && ![1, 110].includes(+match.ms)) {
+    } else if (i == 0 && ![1, 110].includes(+item.ms)) {
       result = true;
     }
   }
@@ -1397,7 +1392,7 @@ const get_league_show = (i) => {
   else {
     flag = true;
   }
-  if (match.is_show_no_play) {
+  if (props.match_of_list.is_show_no_play) {
     flag = true;
   }
   return flag;
@@ -1413,7 +1408,7 @@ const favorite_un_start_title = (i, ms) => {
     return false;
   }
   if (props.menu_type == 6) {
-    if (match.is_show_no_play && ms == 0) {
+    if (props.match_of_list.is_show_no_play && ms == 0) {
       return true;
     }
   }
@@ -1425,7 +1420,7 @@ const favorite_un_start_title = (i, ms) => {
  * @return {Undefined}
  */
 const score_value = () => {
-  if (!match) {
+  if (!props.match_of_list.value) {
     home_score.value = 0;
     away_score.value = 0;
     home_red_score.value = 0;
@@ -1436,49 +1431,49 @@ const score_value = () => {
   }
 
   //比分
-  if (!match.home_score && match.home_score != 0) {
+  if (!props.match_of_list.home_score && props.match_of_list.home_score != 0) {
     home_score.value = 0;
   } else {home_yellow_score
-    home_score.value = match.home_score;
+    home_score.value = props.match_of_list.home_score;
   }
-  if (!match.away_score && match.away_score != 0) {
+  if (!props.match_of_list.away_score && props.match_of_list.away_score != 0) {
     away_score.value = 0;
   } else {
-    away_score.value = match.away_score;
+    away_score.value = props.match_of_list.away_score;
   }
 
   //红牌
-  if (!match.home_red_score && match.home_red_score != 0) {
+  if (!props.match_of_list.home_red_score && props.match_of_list.home_red_score != 0) {
     home_red_score.value = 0;
   } else {
-    home_red_score.value = match.home_red_score;
+    home_red_score.value = props.match_of_list.home_red_score;
   }
-  if (!match.away_red_score && match.away_red_score != 0) {
+  if (!props.match_of_list.away_red_score && props.match_of_list.away_red_score != 0) {
     away_red_score.value = 0;
   } else {
-    away_red_score.value = match.away_red_score;
+    away_red_score.value = props.match_of_list.away_red_score;
   }
 
   //黄牌
-  if (!match.home_yellow_score && match.home_yellow_score != 0) {
+  if (!props.match_of_list.home_yellow_score && props.match_of_list.home_yellow_score != 0) {
     home_yellow_score.value = 0;
   } else {
-    home_yellow_score.value = match.home_yellow_score;
+    home_yellow_score.value = props.match_of_list.home_yellow_score;
   }
-  if (!match.away_yellow_score && match.away_yellow_score != 0) {
+  if (!props.match_of_list.away_yellow_score && props.match_of_list.away_yellow_score != 0) {
     away_yellow_score.value = 0;
   } else {
-    away_yellow_score.value = match.away_yellow_score;
+    away_yellow_score.value = props.match_of_list.away_yellow_score;
   }
 
-  if(MenuData.current_menu !=28 && match.csid==1 && match.cds=='1500' && get_newer_standard_edition == 1 && MenuData.footer_sub_menu_id == 114){
+  if(MenuData.current_menu !=28 && props.match_of_list.csid==1 && props.match_of_list.cds=='1500' && get_newer_standard_edition == 1 && MenuData.footer_sub_menu_id == 114){
     // 红猫足球赛事,简版,角球菜单时屏蔽角球比分显示
     home_score.value = '';
     away_score.value = '';
   }
 }
-const gen_collapse_key = (match) => {
-  return match.tid;
+const gen_collapse_key = (item) => {
+  return item.tid;
 }
 /**
  * @description 设置scrollTop最终滚动距离, 保证详情返回的赛事出现在视图窗口内
@@ -1593,14 +1588,12 @@ const clear_timer = () => {
     'need_scroll_height_timer.value',
   ]
 
-
   // 批量清除timeout定时器
   for (let timer of timeout_timer_arr) {
     clearTimeout(timer)
     timer = null
   }
 }
-
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_hot_tab_item.value = new_state.get_hot_tab_item
@@ -1632,6 +1625,7 @@ onUnmounted(() => {
 })
 
 </script>
+
 
 <style scoped lang="scss">
   @import "../styles/match-container";
