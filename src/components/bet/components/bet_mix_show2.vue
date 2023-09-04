@@ -737,7 +737,7 @@ const handlePre = (del) => {
   }
   set_bet_obj(bet_obj)
   set_active_index(index_)
-},
+}
 /**
  *@description 预约投注点击减号减少赔率
  */

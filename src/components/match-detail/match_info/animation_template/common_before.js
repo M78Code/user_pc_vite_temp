@@ -3,10 +3,7 @@
  * @Date: 2020-08-04 17:13:55
  * @Description: 公共的动画模板
  */
-// import format from "src/project/yabo/mixins/match_details/index";
-import { formatTime } from "src/core/format/index.js"
-import { t } from "src/core/index.js";;
-import {utils } from 'src/core/index.js';
+import {utils,formatTime,is_eports_csid,i18n_t } from 'src/core/index.js';
 import lodash from 'lodash'
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 // const licia_format = require('licia/format');
@@ -16,12 +13,12 @@ export default {
     "match-date": MatchProcessFullVersionWapper
   },
   name: "football_before",
-  // mixins: [, format],
   data() {
     return {
       utils,
       lodash,
-      t:t,
+      i18n_t,
+      is_eports_csid,
       background_img: "", // 球种背景图片
     };
   },

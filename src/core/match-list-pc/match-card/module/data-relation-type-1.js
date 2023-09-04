@@ -27,14 +27,8 @@
       league_container_card_template,
    
     } from "../config/card-template-config.js"
-  //引入菜单类
-  const MenuData ={
-    menu_data:{
-      is_show_hot :false
-    },
-   
-  }
-
+    import MenuData from "src/core/menu-pc/menu-data-class.js";
+    import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
   /**
    * @Description 更新所有未折叠 但是赛事没数据的 赛事
@@ -51,7 +45,7 @@
         // 遍历联赛下 所有赛事
         mids_arr.forEach(mid => {
           // 判断数据仓库是否有数据  没有数据 就更新
-          if(!MatchListData.mid_obj['mid_'+mid]){
+          if(!MatchListData.quick_query_obj.mid_obj['mid_'+mid]){
             update_mids_arr.push(...mids_arr)
           }
         })
@@ -63,7 +57,7 @@
         mids: update_mids_arr,
       };
       // 拉取http请求
-      window.vue.useMittEmit(window.vue.MITT_TYPES.EMIT_API_BYMIDS,params)
+      useMittEmit(MITT_TYPES.MITT_TYPES.EMIT_API_BYMIDS,params)
     }
   }
 
@@ -75,14 +69,14 @@
   */
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj_type1 =(all_league_obj,is_ws_call,is_remove_call)=>{
     // 赛事模板ID
-    let template_id = MenuData.menu_data.match_tpl_number
-    if(MenuData.menu_data.is_esports_champion){
-      // 电竞冠军玩法
-      template_id = 18
-    }else if(MenuData.menu_data.is_esports){
-      // 电竞常规玩法
-      template_id = 'esports'
-    }
+    let template_id = 1
+    // if(MenuData.menu_data.is_esports_champion){
+    //   // 电竞冠军玩法
+    //   template_id = 18
+    // }else if(MenuData.menu_data.is_esports){
+    //   // 电竞常规玩法
+    //   template_id = 'esports'
+    // }
 
     // 已开赛 到卡片key的 映射对象
     let play_to_card_key_arr = ['play_title']
@@ -113,7 +107,8 @@
     let temp_match_status_title_card_obj = {}
 
     // 联赛标题卡片类型
-    let league_title_card_type = MenuData.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
+    // let league_title_card_type = MenuData.menu_data.is_esports_champion ? 'champion_league_title' : 'league_title'
+    let league_title_card_type = false ? 'champion_league_title' : 'league_title'
 
     // 同样联赛出现次数  用于生成自定义联赛ID
     let league_repeat_count_obj = {}
@@ -128,6 +123,7 @@
 
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
+      console.log('league_list', all_league_obj, match_status_type);
       league_list.forEach( (league_obj,league_index) => {
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
@@ -144,6 +140,8 @@
           // 已开赛、未开赛标题卡片处理
           card_index += 1
           card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
+          console.log('card_key', card_key);
+
           match_list_card_key_arr.push(card_key)
 
           // 打入已开赛、未开赛标题卡片特征
@@ -223,11 +221,10 @@
 
         // 联赛容器卡片总高度
         let league_card_total_height = 0
-
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.match_list_data.mid_obj['mid_'+mid]
+          let match = MatchListData.quick_query_obj.mid_obj['mid_'+mid]
           let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
           all_card_obj['mid_'+mid] = match_style_obj
           league_card_total_height += match_style_obj.total_height

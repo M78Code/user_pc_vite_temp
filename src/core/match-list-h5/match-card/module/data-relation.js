@@ -141,7 +141,7 @@ export const compute_match_list_style_obj_and_match_list_mapping_relation_obj = 
   if (!is_ws_call) {
     MatchListCardData.match_list_render_key++
     // 重置 赛事模板配置  开始
-    let template_id = MenuData.menu_data.match_tpl_number
+    let template_id = MenuData.menu_data.match_tpl_number || 1
     let reset_template_config_fn = MATCH_LIST_TEMPLATE_CONFIG['template_' + template_id]['reset_match_template_config']
     if (reset_template_config_fn) { reset_template_config_fn() }
     // 重置 赛事模板配置  结束

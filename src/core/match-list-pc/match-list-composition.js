@@ -1,12 +1,6 @@
 import {
 	ref,
-	provide,
 	computed,
-	reactive,
-	watch,
-	onMounted,
-	onUnmounted,
-	defineComponent,
 } from "vue";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
@@ -16,36 +10,34 @@ import { PageSourceData } from "src/core/index.js";
 import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
-import * as api_websocket from "src/api/module/socket/socket_api.js";
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
 import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";
-import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
-import match_scroll_utils from 'src/core/match-list-pc/match-scroll.js'
+import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
+import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 // import video from "src/core/video/video.js";
 import { pre_load_video } from 'src/core/pre-load/module/pre-load-video.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { compute_sport_id  } from 'src/core/constant/index.js'
-import collect_composable_fn from "src/core/match-list-pc/composables/match-list-collect.js";
-import ws_composable_fn from "src/core/match-list-pc/composables/match-list-ws.js";
-// import virtual_composable_fn from "src/core/match-list-pc/composables/match-list-virtual.js";
-import process_composable_fn from 'src/core/match-list-pc/composables/match-list-processing.js'
+import collect_composable_fn from "./composables/match-list-collect.js";
+import ws_composable_fn from "./composables/match-list-ws.js";
+import use_featch_fn from "./composables/match-list-featch.js";
+// import virtual_composable_fn from "./composables/match-list-virtual.js";
+import process_composable_fn from './composables/match-list-processing.js'
 // import MatchListDetailMiddleware from "src/core/match-list-detail-pc/index.js";
 import store from "src/store-redux/index.js";
+import ServerTime from 'src/core/server-time/server-time.js';
 
 
 const route = useRoute() || {};
 let state = store.getState();
 const { page_source } = PageSourceData;
 const { mx_use_list_res, mx_list_res, mx_collect_match } = process_composable_fn();
-const { update_collect_data, mx_collect_count } = collect_composable_fn;
+const { update_collect_data, mx_collect_count } = collect_composable_fn();
 const { show_mids_change } = ws_composable_fn();
+const { api_bymids } = use_featch_fn();
 const { load_video_resources } = pre_load_video
-// 赛事主列表容器卡片逻辑处理类
-const match_list_card = ref(MatchListCardClass);
-// 赛事主列表容器卡片逻辑处理类
-const match_list_data = ref(MatchListData);
 // 数据请求状态
 const load_data_state = ref("loading");
 // 列表数据
@@ -64,8 +56,7 @@ const vx_pre_filter_select_obj = ref(state.filterReducer.show_filter_popup);
 const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态
 const vx_show_filter_popup = ref(state.filterReducer.show_filter_popup);
-// 是否展开多列玩法
-const get_unfold_multi_column = ref(state.filterReducer.show_filter_popup);
+
 const timer_obj = ref({});
 const api_error_count = ref(0);
 let check_match_last_update_timer_id;
@@ -99,7 +90,7 @@ const match_tpl_component = computed(() => {
 // 使用元数据默认显示 后面替换
 const set_base_data_init = () => {
 	// 列表数据仓库
-	match_list_data.value.init();
+	MatchListData.init();
 	// return
 	// 当前的分类 左侧菜单数据 中间件数据
 	const {
@@ -356,7 +347,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	// 	is_socket = false;
 	// 	video.is_video_end = false;
 	// }
-	match_scroll_utils.fetch_match_list_time = new Date().getTime();
+	MatchListScrollClass.fetch_match_list_time = new Date().getTime();
 	// 组件和路由不匹配
 	if (route.name == "details" && page_source != "details") {
 		return;
@@ -374,7 +365,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 	if (!is_socket) {
 		load_data_state.value = "loading";
 		// 设置列表滚动条scrollTop
-		route.name != "details" && match_scroll_utils.set_scroll_top(0);
+		route.name != "details" && MatchListScrollClass.set_scroll_top(0);
 	}
 	let match_api = MenuData.match_list_api_config.match_list || {};
 	// 设置列表接口 和 参数
@@ -492,7 +483,6 @@ const handle_destroyed = () => {
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list()).off();
 	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({})).off();
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match()).off();
-	match_list_card.value = {};
 	timer_obj.value = {};
 }
 
@@ -500,7 +490,7 @@ const mounted_fn = () => {
 // 开启自动化测试功能
 	// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 	// 列表数据仓库
-	match_list_data.value.init();
+	MatchListData.init();
 	check_match_last_update_timer_id = setInterval(
 		check_match_last_update_time(),
 		30000
@@ -522,9 +512,9 @@ const mounted_fn = () => {
 	useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active());
 	// 调用列表接口
 	useMittOn(MITT_TYPES.EMIT_FETCH_MATCH_LIST, fetch_match_list);
-	// useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
+	useMittOn(MITT_TYPES.EMIT_API_BYMIDS, api_bymids({}));
 	useMittOn(MITT_TYPES.EMIT_MX_COLLECT_MATCH, mx_collect_match);
-	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change());
+	useMittOn(MITT_TYPES.EMIT_MiMATCH_LIST_SHOW_MIDS_CHANGE, show_mids_change);
 	load_video_resources();
 }
 
@@ -621,13 +611,12 @@ const get_hot_match_list = (backend_run = false) => {
 			if (code == 200 && match_list.length > 0) {
 				is_show_hot.value = true;
 				// 设置列表数据仓库
-				match_list_data.value.compute_match_list_all_data(
+				MatchListData.set_list(
 					match_list,
-					backend_run,
 					true
 				);
 				// 计算赛事卡片
-				match_list_card.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+				MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 					match_list,
 					backend_run
 				);
@@ -706,258 +695,16 @@ const on_refresh = () => {
 	show_refresh_mask = true;
 };
 
-/**
- * @description 调用列表bymids接口
- * @param  {boolean} is_first_load 是否用户切换菜单  第一次加载调用
- * @param  {boolean} is_show_mids_change 是否可视区域赛事改变 调用
- * @param  {boolean} is_league_first 是否联赛结构类型列表 首次加载拉前12场赛事
- * @param  {array} mids 指定拉取的mids
- * @param  {function} callback 回调函数
- * @return {undefined} undefined
- */
-const api_bymids = ({ is_first_load = true, is_show_mids_change, is_league_first, mids, inner_param }, callback) => {
-	debugger;
-  let panduan_1 = (handle_destroyed() || MenuData.is_virtual_sport())
-  let panduan_2 = (this.$options.name !== "HotMatchList" && ["details", "video"].includes(route.name))
-	if (( panduan_1 && route.name !== "search") || panduan_2 ) {
-		return;
-	}
-	// 联赛结构类型列表 首次加载拉前12场赛事
-	if (is_league_first) {
-		mids = match_list_data.value.get_first_unfold_mids();
-	}
-	// 第一次加载拉取所有赛事
-	else if (is_first_load) {
-		// mids = []
-		// match_list_data.value.match_list.forEach( match => {
-		//   mids.push(match.mid)
-		// })
-		mids = match_scroll_utils.show_mids;
-	}
-	// 是否可视区域赛事改变
-	else if (is_show_mids_change) {
-		mids = match_scroll_utils.show_mids;
-	}
-	// 是否用户切换菜单 第一次调用bymids接口
-	if (is_league_first || is_first_load) {
-		this.first_load_time = new Date().getTime();
-	} else {
-		let _time = new Date().getTime() - this.first_load_time;
-		// 距离第一次全量加载时间小于2秒 不请求接口
-		if (_time < 2000) {
-			return;
-		}
-	}
-	// 非滚球第一次加载  mid数量最多24个
-	if (mids.length > 24) {
-		mids.splice(24);
-	}
-	if (mids.length == 0) return;
-	is_show_mids_change &&
-		mids.forEach((mid) => {
-			// 从列表触发详情接口同步数据
-			if (this.vx_details_params.mid == mid) {
-				useMittEmit("match_detail_base", {
-					isWs: true,
-					mid,
-					is_bymids: true,
-				});
-			}
-		});
-	// 获取足球tab玩法参数
-	let tabs = match_list_data.value.get_tab_param_build(mids);
-	let match_list_api_config = MenuData.match_list_api_config.match_list;
-	let _params = lodash.clone(match_list_api_config.params) || {};
-	let params = {
-		mids: mids.join(","),
-		cuid: UserCtr.get_uid(),
-		euid: _params.euid,
-		orpt: _params.orpt,
-		sort: vx_match_sort.value,
-	};
-	if (tabs.length > 0) {
-		params.tabs = tabs;
-	}
-	// 非滚球传 玩法ID
-	if (MenuData.menu_root != "1" && route.name != "search") {
-		params.pids = _params.pids;
-	}
-	//today：今日  early：早盘 角球玩法
-	params.cos = MenuData.is_corner_menu() || params.orpt == 25 ? 1 : 0;
-	// 冠军去参数
-	if (MenuData.menu_root == 400) {
-		delete params.euid;
-	}
-	let api;
-	// 电竞
-	if (MenuData.is_esports() && route.name !== "search") {
-		api = api_websocket.get_esports_by_mids;
-		params = {
-			mids: mids.join(","),
-			csid: _params.csid,
-			cuid: UserCtr.get_uid(),
-		};
-		if (MenuData.is_esports_champion()) {
-			params.category = 2;
-		}
-	} else {
-		api = api_websocket.get_match_base_info_by_mids;
-	}
-	//添加内部参数
-	if (inner_param) params.inner_param = inner_param;
-	//当点击足球 赛种,并收起右侧详情面版orpt参数为13
-	if (get_unfold_multi_column.value && MenuData.is_multi_column) {
-		params.orpt = 13;
-	}
-	// return
-	let by_mids_fun_count = 0;
-	let by_mids_fun = () => {
-		// HTTP拉取最新信息合并
-		api(params)
-			.then((res) => {
-				this.set_home_loading_time_record("ok");
-				// 组件和路由不匹配
-				if (
-					(route.name == "details" && page_source != "details") ||
-					handle_destroyed()
-				)
-					return;
-				//更新电竞右侧视频
-				if (
-					MenuData.is_esports() &&
-					route.name !== "search" &&
-					!is_first_load
-				) {
-					useMittEmit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);
-				}
-				let code = lodash.get(res, "data.code");
-				let match_list = lodash.get(res, "data.data.data") || [];
-				let ts1 = lodash.get(res, "data.ts");
-				let mids_arr = [];
-				match_list.forEach((match) => {
-					mids_arr.push(String(match.mid));
-					match.api_update_time = ts1;
-				});
-				// 展开联赛数据加载状态
-				let league_load_status = "";
-				// 检查赛事是否移除
-				if (code == 200) {
-					mids.forEach((mid) => {
-						if (!mids_arr.includes(String(mid))) {
-							this.remove_match_data(mid);
-						}
-					});
-				}
-				if (code == 200 && match_list.length > 0) {
-					this.set_match_base_info_by_mids_info(match_list, mids_arr, ts1);
-				} else if (code == "0400500" && by_mids_fun_count++ < 3) {
-					by_mids_fun();
-					league_load_status = "empty";
-				} else if (code == "0401038") {
-					// 限流
-					league_load_status = "api_limited";
-				} else {
-					league_load_status = "empty";
-				}
-				if (league_load_status && callback) {
-					// 回调无数据状态
-					callback(league_load_status);
-				}
-				// 如果是第一次加载设置数据加载状态
-				if (is_league_first) {
-					load_data_state.value = "data";
-				}
-				// 回调函数
-				if (callback) {
-					callback();
-				}
-			})
-			.catch((err) => {
-				this.set_home_loading_time_record("err");
-				// console.error(err)
-				// 如果是第一次加载设置数据加载状态
-				if (is_league_first) {
-					load_data_state.value = "data";
-				}
-				// 展开联赛数据加载状态
-				let league_load_status = "";
-				if (lodash.get(err, "response.status") == 503) {
-					// 限流
-					league_load_status = "user_api_limited";
-				} else {
-					// 无数据
-					league_load_status = "empty";
-				}
-				if (callback) {
-					// 回调无数据状态
-					callback(league_load_status);
-				}
-			});
-	};
-	// 虚拟体育不用拉最新信息合并
-	if (page_source !== "virtual_sport") {
-		const by_mids_debounce_cache =
-			axios_debounce_cache.get_match_base_info_by_mids;
-		if (by_mids_debounce_cache && by_mids_debounce_cache["ENABLED"]) {
-			let scroll = is_show_mids_change ? Date.now() : "";
-			let info = by_mids_debounce_cache.can_send_request({
-				...params,
-				scroll,
-			});
-			if (info.can_send) {
-				//直接发请求    单次数 请求的方法
-				by_mids_fun();
-			} else {
-				// 记录timer
-				current_hash_code = 0;
-				clearTimeout(axios_debounce_timer);
-				axios_debounce_timer = setTimeout(() => {
-					//直接发请求    单次数 请求的方法
-					by_mids_fun();
-					current_hash_code = 0;
-				}, info.delay_time || 1000);
-			}
-		} else {
-			//直接发请求    多 次数  循环请求 的方法
-			by_mids_fun();
-		}
-	}
-};
-/**
- * get_match_base_info_by_mids 数据解析
- */
-const set_match_base_info_by_mids_info = (match_list, mids_arr, ts1) => {
-	// 设置列表数据仓库
-	match_list_data.value.compute_match_list_all_data(match_list, true);
-	// 重新计算赛事样式
-	match_list_card.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_by_matchs(
-		mids_arr
-	);
-	match_list.forEach((match) => {
-		// bymid数据同步投注项 1508要改的
-		BetCommonHelper.upd_bet_obj(ts1, match.mid);
-		// 同步比分到右侧
-		if (vx_detail_params.value.mid == match.mid) {
-			BetCommonHelper.update_match_score(0, match.mid);
-		}
-	});
-	//热门赛事 提取足球赛事
-	if (MenuData.menu_root == 500) {
-		let obj = match_list.find((item) => item.csid == 1) || {};
-		MenuData.hot_500_sport_1 = !!obj.csid;
-		// 更新 展开/收起 按钮显示隐藏
-		MenuData.set_multi_column();
-	}
-};
+
 /**
  * @Description 删除赛事数据 卡片
  * @param {*} mid 删除赛事id
  */
 const remove_match_data = (mid) => {
 	// 移除卡片
-	match_list_card.remove_match(mid);
+	MatchListCardClass.remove_match(mid);
 	//清除数据仓库数据
-	match_list_data.value.remove_match_data(mid);
+	MatchListData.remove_match_data(mid);
 	//切换右侧
 	if (this.vx_details_params.mid == mid) {
 		// 赛事移除时右侧赛事自动切换
@@ -977,7 +724,7 @@ const socket_remove_match = (match) => {
 		return;
 	}
 	// 移除卡片
-	match_list_card.remove_match(match.mid);
+	MatchListCardClass.remove_match(match.mid);
 	// 更新收藏数量
 	update_collect_data({ type: "remove", match });
 	if (this.vx_details_params.mid == match.mid) {
@@ -999,17 +746,18 @@ const set_load_data_state = (data) => {
  */
 const check_match_last_update_time = () => {
 	// 非滚球 今日 不检查
-	if (!["play", "today"].includes(page_source)) {
+	if (![1, 2].includes(MenuData.menu_root)) {
 		return;
 	}
 	let mids = [];
-	let now_time = this.get_remote_time();
+	let now_time = ServerTime.get_remote_time();
+	console.log('now_timenow_time', now_time, MatchListScrollClass.show_mids);
 	// 遍历可视区域赛事ID
-	match_scroll_utils.show_mids.forEach((mid) => {
+	MatchListScrollClass.show_mids.forEach((mid) => {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-		let match = match_list_data.value.mid_obj["mid_" + mid] || {};
+		let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;
 		}
@@ -1032,38 +780,6 @@ const check_match_last_update_time = () => {
  */
 const emit_site_tab_active = () => {
 	fetch_match_list(true);
-};
-// 自动化测试页面加载时间时使用
-const set_home_loading_time_record = (status) => {
-	if (
-		window.init_loading_time_obj &&
-		lodash.get(window, "env.config.DOM_ID_SHOW")
-	) {
-		if (!window.init_loading_time_obj.list_end_time) {
-			window.init_loading_time_obj.list_end_time = new Date().getTime();
-		}
-		let time_obj = window.init_loading_time_obj;
-		if (!time_obj.start) {
-			time_obj.start = new Date(time_obj.start_time).Format(
-				"yyyy-MM-dd hh:mm:ss"
-			);
-		}
-		if (time_obj.list_end_time && time_obj.right_details_end_time) {
-			let end_time =
-				time_obj.list_end_time > time_obj.right_details_end_time
-					? time_obj.list_end_time
-					: time_obj.right_details_end_time;
-			(time_obj.end = new Date(end_time).Format("yyyy-MM-dd hh:mm:ss")),
-				(time_obj.end_time = end_time);
-			time_obj.status = status;
-			time_obj.duration = time_obj.end_time - time_obj.start_time;
-			sessionStorage.setItem(
-				"home_loading_time_record",
-				JSON.stringify(time_obj)
-			);
-			window.init_loading_time_obj = null;
-		}
-	}
 };
 
 // 根据 mid 获取 联赛列表数据
@@ -1104,12 +820,10 @@ const useMatchListMx = () => {
 		merge_same_league,
 		on_go_top,
 		on_refresh,
-		set_match_base_info_by_mids_info,
 		remove_match_data,
 		socket_remove_match,
 		set_load_data_state,
 		check_match_last_update_time,
-		set_home_loading_time_record,
 		get_match_list_by_mid_for_base_data_res,
 		mounted_fn,
 		api_bymids,

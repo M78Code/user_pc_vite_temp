@@ -281,7 +281,7 @@ watch(() => score, (new_) => {
   const hps_obj = _.get(value_show, 'hps[0]')
   if (!BetData.bet_is_mix.value && show_pre && pre_switch.value && new_) {
     const method_type = ol_obj.ot
-    const new_arr = new_.replace(//(/, '').replace(//)/, '').split('-') || []
+    const new_arr = new_.replace(/\(/,'').replace(/\)/,'').split('-') || []
     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
       const homeTeamMethodList = [ //主队进球大小玩法
         '10', '87', '88', '115', '123', '314', '316'

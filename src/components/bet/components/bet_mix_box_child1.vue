@@ -141,7 +141,7 @@
 // import {utils } from 'src/core/index.js';
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import BetData from "../class/bet-data-class";
-// import { format_money2 } from'src/core/format/index.js'
+import { format_money2 } from  "src/core/mitt/"
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
