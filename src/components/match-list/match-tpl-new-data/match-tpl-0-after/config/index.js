@@ -2,14 +2,10 @@
 export  const  component_symbol = 'MatchTpl0After'
 //公用的 需要注册的一些对接参数
 export  const need_register_props = {
-  match: {
-    type: Object,
-    default: {  },
+  mid: {
+    type: String | Number,
+    default: null,
   },
-  NewMenu: {
-    type: Object,
-    default: {  },
-  }
 }
 
 

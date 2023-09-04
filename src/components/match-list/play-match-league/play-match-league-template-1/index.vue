@@ -98,12 +98,11 @@ import lodash from 'lodash';
 import { ref, computed, defineProps, reactive } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
-import { t } from "src/core/index.js";
-import { get_match_tpl_title } from 'src/core/index.js';
+import { t, get_match_tpl_title } from "src/core/index.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import { utils_info, is_eports_csid } from 'src/core/utils/match-list-utils.js';
-import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js"
+import { utils_info } from 'src/core/utils/module/match-list-utils.js';
+// import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import store from 'src/store-redux/index.js'
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 let state = store.getState();
@@ -111,7 +110,7 @@ let state = store.getState();
 const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 const tpl_id = ref('')
-const match_list_tpl_size = ref(match_list_tpl_size['template' + tpl_id.value] || {});
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template' + tpl_id.value+'_config'] || {});
 // 获取菜单类型
 const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
@@ -235,7 +234,7 @@ const get_bet_width = (index) => {
  * @param {String} csid 球种id
 */
 const is_highlighted = (csid) => {
-  if (is_HDP || is_eports_csid(csid)) {
+  if (is_HDP || menu_config.is_eports_csid(csid)) {
     return true
   } else {
     return false

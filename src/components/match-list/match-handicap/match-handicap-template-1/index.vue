@@ -29,7 +29,7 @@
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
 import lodash from 'lodash';
-import { utils_info } from 'src/core/utils/match-list-utils.js';
+import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
