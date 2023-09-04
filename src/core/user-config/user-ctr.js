@@ -66,14 +66,14 @@ class UserCtr {
     this.theme = themeReducer.theme;
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
-    this.odds= {
+    this.odds = {
       // 上次赔率
       pre_odds: "EU",
       // 当前赔率
       cur_odds: "EU",
     },
-    // 用户 token 失效
-    this.is_invalid = false;
+      // 用户 token 失效
+      this.is_invalid = false;
     // 用户 余额
     this.balance = 0;
     //  用户余额是否展示状态
@@ -112,12 +112,12 @@ class UserCtr {
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
-  set_cur_odds(odd){
-   this.odds.cur_odds =odd
+  set_cur_odds(odd) {
+    this.odds.cur_odds = odd
   }
-  set_pre_odds(odd){
-    this.odds.pre_odds =odd
-   }
+  set_pre_odds(odd) {
+    this.odds.pre_odds = odd
+  }
   get_uid() {
     // 当用户未登录时返回uuid, 当用户登录时返回userId
     return this.user_info && this.user_info.userId ? this.user_info.userId : this.uid;
@@ -154,7 +154,7 @@ class UserCtr {
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
   }
-  set_user_activity (activity) {
+  set_user_activity(activity) {
     this.activity = { ...activity }
   }
   clear_user({ commit }) {
@@ -175,31 +175,28 @@ class UserCtr {
     this.set_user_token(token);
     this.set_user_info(obj);
     this.user_version.value = Date.now()
+    this.get_balance()
   }
 
   // 获取用户余额
   get_balance() {
-    return lodash.debounce(
-      function () {
-        api_account
-          .check_balance({ uid: this.user_info.userId })
-          .then((res) => {
-            if (res.code == 200) {
-              let amount = lodash.get(res, "data.amount");
-              this.set_balance(amount);
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      },
-      1000,
-      { leading: true, trailing: false }
-    );
+    api_account
+      .check_balance({ uid: this.user_info.userId })
+      .then((res) => {
+        if (res.data.code == 200) {
+          let amount = lodash.get(res.data, "data.amount");
+          this.set_balance(amount);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   set_balance(balance) {
+    
     this.balance = 1 * balance;
+    this.user_version.value = Date.now()
   }
   /**
    * 获取  和 调用 getuserinfo 接口 data 实体 数据

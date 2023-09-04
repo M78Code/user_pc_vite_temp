@@ -42,10 +42,8 @@
           lose:[0,1,2,3,6].includes(+odd_item.result),
           standard:n_s == 2,
         }">
-        {{odd_append_value}}<!--获取赔率或赛果-->
-        <span class="change-icon" v-show="red_green_status"
-              :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}">
-        </span>
+        {{ odd_append_value }}<!--获取赔率或赛果-->
+        <span class="change-icon" v-show="red_green_status" :class="{'icon-red':red_green_status === 1,'icon-green':red_green_status === -1}"></span>
       </div>
       <!-- 半封(显示盘口值on) -->
       <img class="icon-lock" :class="{standard:n_s}" v-if="(is_fengpan(get_odd_status()) || get_obv_is_lock(odd_item))"
@@ -195,7 +193,8 @@ const odds_value = computed(() => {
   if(MenuData.get_menu_type() == 3000){
     csid = props.match.csid;
   }
-  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
+  //  let r1 = compute_value_by_cur_odd_type(ov / 100000,null, hsw, false ,csid);
+  let r1 = ov / 100000
   return r1 || 0;
 })
 
@@ -228,9 +227,11 @@ watch(() => odds_value.value, () => {
   get_odd_append_value(odd_item.value);
 })
 
-watch(() => props.match, () => {
+watch(() => props.match, (newValue) => {
+  // console.log(newValue.hps)
+  // console.log(props.odd_field)
   let ol_list = get_ollist_no_close(props.odd_field);
-  if(ol_list){
+  if(ol_list.length > 0){
     if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
       odd_item.value = props.ol_list_item
     }else{
@@ -289,7 +290,7 @@ const get_odd_append_value = (ol_item) => {
     if(dict_result === "0" || dict_result){
       r = i18n_t(`virtual_sports.result[${dict_result}]`);
     } else{
-      r = odds_value;
+      r = odds_value.value;
     }
   }
   odd_append_value.value = r;

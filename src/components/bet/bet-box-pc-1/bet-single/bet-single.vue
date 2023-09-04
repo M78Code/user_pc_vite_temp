@@ -6,6 +6,7 @@
 <template>
   <!-- 单关组件 -->
   <div class="bet-single" data-container="single-container" ref="single-container">
+    {{ bet_flag }} --- {{ BetData.bet_data_class_version }}
     <!--未投注-->
     <template v-if="bet_flag">
       <!--投注信息-->
@@ -23,7 +24,7 @@
   </div>
 </template>
 <script setup>
-import { ref,onMounted } from "vue"
+import { ref,onMounted,computed } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // 单关混入js
@@ -35,9 +36,13 @@ import BetMultiple from "./bet-multiple.vue";
 // 单关投注记录
 import BetSingleRecord from "./bet-single-record.vue";
 
+const get_lock_index = (val) =>{
+  console.error('sa',val)
+}
 
-const view_ctr_obj = ref(view_ctr_obj_config)
-
+const get_button_text = (val) =>{
+  console.error('get_button_text',val)
+}
 /**
  * @description: 这里预约投注成功后处理页面跳转
  * @param {undefined} undefined

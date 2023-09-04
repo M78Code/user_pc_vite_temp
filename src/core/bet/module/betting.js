@@ -4,7 +4,7 @@ import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import {compute_value_by_cur_odd_type} from  "./bet_odds_change.js"
+import {compute_value_by_cur_odd_type} from  "src/core/format/index.js"
 import {get_bet_amount_param} from  "./bet-amount.js"
 import {http_upd_data ,bet_obj_add_attr} from  "./upd_data.js"
 import mathjs from "src/core/utils/mathjs.js"
@@ -21,7 +21,7 @@ import UserCtr from  "src/core/user-config/user-ctr.js";
  * @Description: 押注动作相关的方法
  */
 
-const hide_bet_series_but = () =>{
+export const hide_bet_series_but = () =>{
     let res = false;
     // 单关时,获取投注列表数据
     if(!BetData.bet_is_mix && _.get(get_bet_list,'get_bet_list.length')){
@@ -46,7 +46,7 @@ const hide_bet_series_but = () =>{
 *  @param {*} value 不为空表示是删除某个投注项，undefined表示校验所有
 *  @returns
 */
-const vilidata_mix_count = (value) =>{
+export const vilidata_mix_count = (value) =>{
     const bet_length  = get_bet_list.length
     if(value && bet_length <= 2){
         return true
@@ -65,7 +65,7 @@ const vilidata_mix_count = (value) =>{
     * @param {*} value 需要更新的内容
     * @returns
 */
-const tips_msg_update = (value) =>{
+export const tips_msg_update = (value) =>{
     set_update_tips(value||'')
 }   
 
@@ -73,7 +73,7 @@ const tips_msg_update = (value) =>{
  *@description 是否存在PA操盘的赛事
 *@return {Boolean} flag
 */
-const is_exist_pa_operate = ()=> {
+export const is_exist_pa_operate = ()=> {
     let flag = false;
     _.forIn(get_bet_obj, function(item) {
     if (item.bs.mprmc == 'PA') {
@@ -81,12 +81,4 @@ const is_exist_pa_operate = ()=> {
     }
     });
     return flag
-}
-
-
-export {
-    hide_bet_series_but,
-    vilidata_mix_count,
-    tips_msg_update,
-    is_exist_pa_operate,
 }

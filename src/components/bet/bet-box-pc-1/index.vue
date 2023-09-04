@@ -1,19 +1,19 @@
 <template>
   <!--当前投注-->
   <div>
-
     <bet-scroll-header />
-    
-    <div class="bet-mode-zone" v-if="is_bet_single">
+
+    <div style="display:none;"> {{ BetData.bet_data_class_version }} </div>
+
+    <div class="bet-mode-zone" v-if="BetData.is_bet_single">
       <div class="left">
         <span>{{ $t("bet.bet_one_") }}</span>
-        <span class="bet-single-count">
+        <span class="bet-single-count" style="color:blue">
           {{ BetData.bet_single_list.length }}
         </span>
       </div>
       <div class="right">
         <span class="check-box" :class="{ 'checked': BetData.is_bet_merge }" @click.stop="toggle_merge"> 
-          <!-- <check-box :checked="BetData.is_bet_merge" /> <span>{{ $t('bet.merge') }}</span> -->
         </span>
         <span @mouseover="show_merge_info = true" @mouseout="show_merge_info = false">
           <icon id="merge-info" name="icon-tips" class="bet-info" size="14px" />
@@ -23,7 +23,7 @@
     <!-- 正常入口的单关 -->
     <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
     <!-- 正常入口的串关 -->
-    <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" />
+    <!-- <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" /> -->
   </div>
 </template>
 

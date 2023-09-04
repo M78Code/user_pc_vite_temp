@@ -54,7 +54,7 @@ export const bet_single_obj_attr = (obj) => {
  * @param {*}BetData.
  * @param {*} key 要移除的投注项的键值
  */
-const bet_single_obj_remove_attr = (key) => {
+export const bet_single_obj_remove_attr = (key) => {
   deleteBetData.bet_single_obj[`${key}`];
 };
 
@@ -63,7 +63,7 @@ const bet_single_obj_remove_attr = (key) => {
  * @param {*}BetData.
  * @param {*} i 要移除的位置
  */
-const bet_single_list_remove = (i) => {
+export const bet_single_list_remove = (i) => {
   let temp = Object.assign([], BetData.bet_single_list);
   temp.splice(i, 1);
   BetData.bet_single_list = temp;
@@ -74,7 +74,7 @@ const bet_single_list_remove = (i) => {
  * @param {undefined} undefined
  * @return {undefined} undefined
  */
-const clear_bet_single_list = () => {
+export const clear_bet_single_list = () => {
   let len = BetData.bet_single_list.length;
   for (let index = 0; index < len; index++) {
     let id =  BetData.bet_single_list[index]  ;

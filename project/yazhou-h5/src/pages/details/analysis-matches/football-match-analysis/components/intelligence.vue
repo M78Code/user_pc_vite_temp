@@ -69,7 +69,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
     const radio_button = (index) => {
       if(radio_button_index == index) return
-      radio_button_index = index
+      radio_button_index.value = index
       data_list = []
       get_list()
     }
@@ -110,7 +110,7 @@ import { i18n_t } from "src/boot/i18n.js";
     // 刷新 当前赛事分析信息
     const refresh_match_analysis = () => {
       const radio_button_index = radio_button_index
-      radio_button_index = -1
+      radio_button_index.value = -1
 
       nextTick(() => {
         radio_button(radio_button_index)

@@ -140,8 +140,9 @@
 // import betConflictTips from './bet-conflict-tips'
 // import {utils } from 'src/core/index.js';
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
-// import BetData from "../class/bet-data-class";
-import { format_money2 } from  "src/core/mitt/"
+// import BetData from "src/core/bet/class/bet-data-class.js";
+import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
+import { format_money2 } from "src/core/format/index.js"
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
@@ -161,11 +162,13 @@ const play_optionname = ref('')   //单关投注成功后接口返回的playOpti
 const max_height1 = ref(230)   //滚动区域的最大高
 const is_new_bet = ref(false)   //query_order_status 接口返回是否是新流程
 const need_bet_again = ref(false)  //是否需要重新发起投注
-const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
+// const check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
+const check_odds_beforebet2 = ref('') //防抖处理
 const scroll_box_ele = ref(null)   // dom元素
 
 /** --------------------------onmounted开始 ---------------*/
 onMounted(() => {
+  console.error('1213ssssssss',BetData)
   timer = null;
   timer2 = null;
   timer3 = null;
@@ -240,7 +243,7 @@ const part_bet = computed(() => {
 
 /** --------------------------watch开始 ---------------*/
 
-watch(() => get_money_notok_list2.value.length, (new_) => {
+watch(() => BetData_H5.money_notok_list2.value.length, (new_) => {
   if (!new_ && !get_money_notok_list.value.length && BetData.bet_list.length > 2) {
     tips_msg = ''
   }
