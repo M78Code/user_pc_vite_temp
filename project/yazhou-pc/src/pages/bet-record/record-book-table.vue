@@ -58,8 +58,8 @@
           <!--表格内容-->
             <div class="r-table">
               <!--early_settlement_data用于预约的数据-->
-              <template  v-for="(data, i) of early_settlement_data">
-                <div class="row" :key?="i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
+              <template >
+                <div v-for="(data, i) of early_settlement_data" class="row" :key= "i" :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`">
                   <!-- 编号 -->
                   <div class="ceil">{{recordData.size*(recordData.current-1) + i + 1}}</div>
                   <!-- 投注详情 -->
@@ -308,8 +308,10 @@ import { onMounted, onUnmounted, ref, watch } from "vue";
 // import VueSlider from 'vue-slider-component'
 // import 'vue-slider-component/theme/default.css'
 import lodash from "lodash";
-import { format_score ,format_odds  } from "src/core/format/index.js";
+import { format_score ,format_odds,formatTime  } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
+
 
   // mixins: [formatmixin],
   const props = defineProps({
@@ -385,10 +387,10 @@ onMounted(() => {
     recordData.value = props.order_list;
 })
  watch(() => props.order_list, (val) => {
-  let scroll_area =  BetCommonHelper.get_refs_info('scrollArea', null, this);
-        if (scroll_area && scroll_area.setScrollPosition) {
-          scroll_area.setScrollPosition(0);
-        }
+  // let scroll_area =  BetCommonHelper.get_refs_info('scrollArea', null, this);
+  //       if (scroll_area && scroll_area.setScrollPosition) {
+  //         scroll_area.setScrollPosition(0);
+  //       }
         recordData.value = val;
         init_data();
 
@@ -649,11 +651,11 @@ onMounted(() => {
      */
     const init_data = () => {
       // 预约数据获取
-      early_settlement_data.value = _.get(recordData.value, 'records', []);
+      early_settlement_data.value = lodash.get(recordData.value, 'records', []);
       // 重置显示操作
       if(early_settlement_data.value.length>0) {
         // 设置页面加载状态
-        data_state.load_data_state = "data";
+        props.data_state.load_data_state = "data";
       }
     }
     /**
@@ -720,7 +722,7 @@ onMounted(() => {
         }
       }
   onUnmounted(() => {
-    debounce_throttle_cancel(cancel_book_handle)
+    // debounce_throttle_cancel(cancel_book_handle)
     // 清除定时器
     clearTimeout(timeout_toast.value);
     // 恢复预约数据
