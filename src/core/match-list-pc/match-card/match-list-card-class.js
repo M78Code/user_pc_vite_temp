@@ -58,7 +58,11 @@ import {
   update_match_cur_card_style,
   fold_tab_play,
 } from "./module/compute-style-template.js";
-import { fold_all_league, unfold_all_league, recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie } from "./module/fold-tid.js";
+import {
+  fold_all_league,
+  unfold_all_league,
+  recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie,
+} from "./module/fold-tid.js";
 import { test_log_data } from "./module/test-log.js";
 import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from "./module/data-relation.js";
 import {
@@ -70,6 +74,8 @@ import {
   remove_match,
   remove_league,
 } from "./module/add-and-remove.js";
+import MenuData from "src/core/menu-pc/menu-data-class.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
 class MatchListCard {
   constructor() {}
@@ -98,24 +104,19 @@ class MatchListCard {
       mids: card_obj.mids.split(","),
     };
     // 拉取http请求
-    window.vue.useMittEmit(
-      window.vue.MITT_TYPES.EMIT_API_BYMIDS,
-      params,
-      (status) => {
-        let league_title_card_obj =
-          MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
-        this.set_league_card_load_data_status(league_title_card_obj, status);
-      }
-    );
+    useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params, (status) => {
+      let league_title_card_obj =
+        MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
+      this.set_league_card_load_data_status(league_title_card_obj, status);
+    });
   }
 
-
-/**
- * 哪种列表类型
- * @returns 
- */  
-get_match_list_mapping_relation_obj_type(){
-    return MatchListCardData.match_list_mapping_relation_obj_type
+  /**
+   * 哪种列表类型
+   * @returns
+   */
+  get_match_list_mapping_relation_obj_type() {
+    return MatchListCardData.match_list_mapping_relation_obj_type;
   }
   /**
    * 联赛 折叠
@@ -165,6 +166,10 @@ get_match_list_mapping_relation_obj_type(){
     fold_all_league();
   }
 
+  get_match_list_card_key_arr() {
+    return MatchListCardData.match_list_card_key_arr
+  }
+
   /**
    *   other_params  其他 附加参数
    * @Description 打印数据  调试用
@@ -175,8 +180,8 @@ get_match_list_mapping_relation_obj_type(){
   /**
    * 计算 当前的 赛事列表 级别 的 卡片 数据
    */
-  compute_match_list_style_obj_and_match_list_mapping_relation_obj() {
-    compute_match_list_style_obj_and_match_list_mapping_relation_obj();
+  compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list) {
+    compute_match_list_style_obj_and_match_list_mapping_relation_obj(match_list);
   }
   /**
    * @Description 冠军投注后跟新 联赛收藏状态

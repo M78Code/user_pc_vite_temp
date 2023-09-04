@@ -17,7 +17,7 @@ import MatchListCardData from "./match-list-card-data-class.js";
     }
     
   export const  get_match_data =(mid)=>{
-    let match =    MatchListData.mid_obj['mid_'+mid]
+    let match =    MatchListData.quick_query_obj.mid_obj['mid_'+mid]
   
     if(!match){
       return false

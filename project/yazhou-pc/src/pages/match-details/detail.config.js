@@ -177,7 +177,6 @@ export const useGetConfig = () => {
    */
   const init = (param = { is_ws: false }) => {
     
-    console.log(11111111);
     let { mid, is_ws } = param;
     clearTimeout(state.get_match_details_timer);
     if (mid && mid != -1) {
@@ -882,7 +881,6 @@ export const useGetConfig = () => {
   };
 
   onMounted(() => {
-    console.log(1111111111111);
     // 加载视频动画资源
     pre_load_video.load_video_resources();
     // 从链接上获取赛事id 赛种 id 联赛id

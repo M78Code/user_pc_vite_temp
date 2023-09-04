@@ -65,6 +65,12 @@
       </div>
     </div>
 
+
+    <template>
+      <match-list-card v-for="card_key in match_list_card.get_match_list_card_key_arr"
+        :key="card_key + match_list_card.match_list_render_key" :card_key="card_key" />
+    </template>
+
     <!-- 列表容器 -->
     <load-data :state="load_data_state">
 
@@ -164,6 +170,7 @@ export default {
   setup() {
     onMounted(() => {
       mounted_fn()
+      console.log('match_list_card', match_list_card.get_match_list_card_key_arr());
     })
     return {
       menu_config,
