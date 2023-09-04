@@ -103,7 +103,7 @@ import BetData from "src/core/bet/class/bet-data-class.js"
         matchType,  //赛事类型
         matchName: item.tn, //赛事名称
         playOptionName: obj_ol.on, // 投注项名称
-        playOptions: obj_ol.on,   // 投注项id
+        playOptions: obj_ol.on,   // 投注项
         tournamentLevel: item.tlev, //联赛级别
         playId: obj_hp.hpid, //玩法ID
         playName: play_id.value[obj_hp.hpid], //玩法名称
@@ -114,6 +114,7 @@ import BetData from "src/core/bet/class/bet-data-class.js"
         placeNum: null, //盘口坑位
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_type: 'common_bet', // 投注类型
+        tid_name: item.tnjc,  // 联赛名称
       }
       BetData.set_bet_read_write_refer_obj(bet_obj)
     }

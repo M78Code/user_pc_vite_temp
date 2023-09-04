@@ -269,15 +269,15 @@ import { i18n_t } from "src/boot/i18n.js";
   const filter_numbers = (data) => {
     if(!data ) return
     number.value = data.slice(-1)
-    number_columns = data.split('-').join('').slice(0,-1)
+    number_columns.value = data.split('-').join('').slice(0,-1)
     let [number1, number2] = [+number_columns[0], +number_columns[1]]
     if(number_columns.length == 2){
       football_filtered_data.value = [{},{}]
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1 + 1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
-    }else if(number_columns.length == 3){
-      football_filtered_data = [{},{},{}]
-      let [number3] = [+number_columns[2]]
+    }else if(number_columns.value.length == 3){
+      football_filtered_data.value = [{},{},{}]
+      let [number3] = [+number_columns.value[2]]
       football_filtered_data.value[0].data = line_up_data.value.up.slice(1, number1+1)
       football_filtered_data.value[1].data = line_up_data.value.up.slice(number1 + 1, number1 + number2 + 1)
       football_filtered_data.value[2].data = line_up_data.value.up.slice(number1 + number2 + 1, number1 + number2 + number3 + 1)

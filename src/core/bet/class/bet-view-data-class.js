@@ -3,16 +3,8 @@
  * 这个类是多个 实例 ，每一个投注对象 就是一个实例
  *
  */
-import uid from "src/core/uuid/index.js";
 import { ref } from "vue";
-const gongyong_status_1 = ref("");
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
-// const gongyong_status_1= ref('')
+
 class BetViewData {
   constructor() {}
   init() {
@@ -87,7 +79,7 @@ class BetViewData {
       //
     };
     // 是否显示全屏下投注弹窗
-    bet_show = false
+    this.bet_show = false
   }
   /**
    * 计算确定按钮显示

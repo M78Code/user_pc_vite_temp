@@ -68,10 +68,12 @@ class MatchListCard {
   tab_changing_handle() {
     // 切换菜单，先清除所有数据仓库的数据
     MatchCtr.init();
-    if (this.scroll_list_wrapper_by) {
-      this.scroll_list_wrapper_by(0);
-    }
-    this.get_match_data_list();
+    // if (this.scroll_list_wrapper_by) {
+    //   this.scroll_list_wrapper_by(0);
+    // }
+    // this.get_match_data_list();
+    MatchPage.get_match_data_list();
+
   }
 
   /**
