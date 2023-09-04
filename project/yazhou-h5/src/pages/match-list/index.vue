@@ -509,15 +509,15 @@ const clear_timer = () => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, MatchPage.footer_event).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, MatchPage.main_menu_change).off,
-    emitter_3: useMittOn(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE, MatchPage.before_load_third_menu_handle).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,()=>  MatchPage.footer_event).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE,()=>  MatchPage.main_menu_change).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,()=>  MatchPage.before_load_third_menu_handle).off,
     emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
-    emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, MatchPage.counting_down_start_ended_on).off,
-    emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, MatchPage.bet_odd_synchronize_handle).off,
-    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, MatchListCard.match_list_scroll_handle).off,
+    emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,()=>  MatchPage.counting_down_start_ended_on).off,
+    emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE,()=>  MatchPage.bet_odd_synchronize_handle).off,
+    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, ()=> MatchListCard.match_list_scroll_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
-    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, MatchListCard.tab_changing_handle).off,
+    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING,()=> MatchListCard.tab_changing_handle()).off,
   }
 }
 // 移除相关事件监听
