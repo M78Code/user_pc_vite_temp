@@ -12,7 +12,7 @@
         <div v-show="UserCtr.show_balance" class="balance-text-hide">******</div>
         <!-- 余额 -->
         <div v-show="!UserCtr.show_balance" class="balance-text-show yb-family-odds">
-          {{ format_balance(UserCtr.user_balance) }}
+          {{ format_balance(UserCtr.balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->
         <icon
@@ -52,7 +52,6 @@ const { off, emit: set_balance_refresh } = useMittOn(
     UserCtr.get_balance()
   }
 );
-console.error(UserCtr.user_info);
 //默认进来获取一次用户余额
 set_balance_refresh();
 
