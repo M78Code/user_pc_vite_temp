@@ -30,13 +30,11 @@
 </template>
 
 <script setup>
-import {compute_max_win_money} from "src/core/format/index.js";
 import betting from 'src/core/bet/common-helper/index.js';
 const licia_format = require('licia/format');
 import store from "src/store-redux/index.js";
-import { UserCtr } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { format_money3,format_money2 } from'src/core/format/index.js'
+import {UserCtr, format_money3,format_money2,compute_max_win_money } from 'src/core/index.js'
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适

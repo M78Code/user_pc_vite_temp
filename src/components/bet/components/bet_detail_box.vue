@@ -193,7 +193,7 @@
   import store from "src/store-redux/index.js";
   import BetData from "../class/bet-data-class";
   import { UserCtr } from "src/core/index.js"; 
-  import { format_odds ,calc_bifen } from'src\core\format\index.js'
+  import { format_odds ,calc_bifen } from 'src/core/index.js'
   import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
   
 

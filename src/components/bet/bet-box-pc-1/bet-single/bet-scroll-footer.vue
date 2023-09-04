@@ -316,7 +316,7 @@
 import { ref, onMounted } from "vue"
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import BetData from "src/core/bet/class/bet-view-data-class.js";
-import { format_currency } from'src\core\format\index.js'
+import { format_currency } from 'src/core/index.js'
 import lodash from 'lodash'
 
 

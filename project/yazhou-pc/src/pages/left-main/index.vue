@@ -62,21 +62,27 @@
             </div>
           </template>
         </div>
-        <!-- 返回菜单|单关串关按钮切换 -->
-        <template v-if="['bet_list', 'bet_history'].includes(MenuData.layout_left_show)">
-          <!-- 投注栏 -->
-          <bet-box-wapper use_component_key="bet_box_pc_1" />
-        </template>
+     
+       
       </template>
 
       <!-- 滚动：内容 --------------------------------->
       <!-- 菜单项 -->
-      <left-main-menu />
+      <template v-if=" MenuData.layout_left_show == 'menu' ">
+        <left-main-menu />
+      </template>
+
+      <!-- 投注栏 -->
+      <template v-if=" MenuData.layout_left_show == 'bet_list' ">
+        <bet-box-wapper use_component_key="bet_box_pc_1" />
+      </template>
 
       <!-- 历史记录 -->
-      <div v-if="MenuData.layout_left_show == 'bet_history'" class="col">
+      <template v-if=" MenuData.layout_left_show == 'bet_history' ">
         <bet-record-view @set_scroll_this="set_scroll_this" />
-      </div>
+      </template>
+
+      
     
     </v-scroll-area>
     <!--提示区域-->

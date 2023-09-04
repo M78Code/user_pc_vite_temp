@@ -35,7 +35,7 @@ import lodash from 'lodash'
 
 import store from "src/store-redux/index.js";
 import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
-import { format_money3,format_money2 } from'src\core\format\index.js'
+import { format_money3,format_money2 } from 'src/core/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 const money = ref('')  //输入框金额

@@ -120,7 +120,7 @@
 </template>
 <script>
 // import bet_single_record from "src/public/mixins/bet/bet_single_record";
-import { format_odds } from'src\core\format\index.js'
+import { format_odds } from 'src/core/index.js'
 import lodash from 'lodash'
 
 </script>

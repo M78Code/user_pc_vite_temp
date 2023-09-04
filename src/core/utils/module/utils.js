@@ -14,8 +14,7 @@ import { DateForMat } from "src/core/format/index.js"
 const   BUILDIN_CONFIG = window.BUILDIN_CONFIG
 
 export const utils = {
-  // 是否内嵌
-  is_iframe: window.frames.length != parent.frames.length,
+
   // 是否加载播放器js
   is_load_player_js:false,
   // 是否已加载视频动画资源
