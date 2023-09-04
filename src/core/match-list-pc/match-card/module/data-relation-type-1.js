@@ -123,7 +123,6 @@
 
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
-      console.log('league_list', all_league_obj, match_status_type);
       league_list.forEach( (league_obj,league_index) => {
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
@@ -140,8 +139,6 @@
           // 已开赛、未开赛标题卡片处理
           card_index += 1
           card_key = match_status_type == 'livedata' ? 'play_title' : 'no_start_title'
-          console.log('card_key', card_key);
-
           match_list_card_key_arr.push(card_key)
 
           // 打入已开赛、未开赛标题卡片特征

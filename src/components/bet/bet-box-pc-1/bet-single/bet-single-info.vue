@@ -4,14 +4,14 @@
 <template>
   <!--单关投注项信息组件-->
   <q-card flat class="relative-position bet-card bet-single-item-card"
-    :class="{ 'bet-no-effect': !(active == 1 || active == 4) }">
+    :class="{ 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) }">
     <!--这个地方是个遮罩层，单关合并只能有一个能预约，其余用遮罩遮住-->
-    <!-- <div class="cathectic-appoint"
+    <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->
-      <div class="row" v-if="match_type != 3">
+      <div class="row" v-if="ref_data.match_type != 3">
         <div class="col bet-league-name">
           <!--联赛名称-->
           {{ item.tid_name }}
@@ -22,31 +22,31 @@
         </div>
       </div>
       <div class="row">
-        <div class="col" :class="{ 'bet-against': match_type != 3, 'bet-outweight': match_type == 3 }">
+        <div class="col" :class="{ 'bet-against': ref_data.match_type != 3, 'bet-outweight': ref_data.match_type == 3 }">
           <!--是冠军且来源是列表-->
           <!-- match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 -->
-          <template v-if="match_type == 3 && source == 'match_list'">
+          <template v-if="ref_data.match_type == 3 && ref_data.source == 'match_list'">
             <!-- 冠军玩法联赛赛季名称 -->
             {{ season }}
           </template>
-          <template v-if="match_type != 3">
+          <template v-if="ref_data.match_type != 3">
             <span class="home-vs-away">
-              {{ item.home }}<span class='bet-pk'>v</span>{{ item.away }}
+              {{ item.home }}<span class='bet-pk'> v </span>{{ item.away }}
             </span>
             <!--足,蓝,棒,乒,排[1,2,3,8,9]-->
-            <span v-if="[1, 2, 3, 8, 9].includes(item.csid * 1) && timerly_basic_score"
-              class="score">({{ timerly_basic_score }})</span>
+            <span v-if="[1, 2, 3, 8, 9].includes(item.csid * 1) && ref_data.timerly_basic_score"
+              class="score">({{ ref_data.timerly_basic_score }})</span>
           </template>
         </div>
         <!--删除按钮-->
-        <div class="col-auto col-delete" v-if="match_type == 3">
+        <div class="col-auto col-delete" v-if="ref_data.match_type == 3">
           <icon size="12px" name="icon-del" class="bet-del" @click="del_bet_item" />
         </div>
       </div>
       <!--不是滚球-->
-      <div class="row" v-if="market_type != 0">
+      <div class="row" v-if="ref_data.market_type != 0">
         <div class="col match-time">
-          {{ match_time }}
+          {{ ref_data.match_time }}
         </div>
       </div>
       <div class="bet-content">
@@ -55,26 +55,26 @@
           <div class="col bet-play-game">
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
-              <template v-if="market_type === 0">
+              <template v-if="ref_data.market_type === 0">
                 <label class="bet-match-playing">[{{ $t('menu.match_playing') }}]</label>
               </template>
-              {{ item.playName }}
-              <label v-if="basic_score" class="score">({{ basic_score }})</label>
-              <label class="bet-handicap-name">[{{ $t('odds')[item.marketTypeFinally]}}] </label>
+              {{ item.playName }} 
+              <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
+              <label class="bet-handicap-name">[{{ odds_type_name[item.marketTypeFinally] }}] </label>
             </label>
           </div>
         </div>
         <!--队名及盘口区域-->
        
-        <template v-if="!appoint">
+        <template v-if="!ref_data.appoint">
           <div class="row">
             <div class="col bet-odds-value" :class="{
-              'up-red': odds_change_up,
-              'down-green': odds_change_down
+              'up-red': ref_data.odds_change_up,
+              'down-green': ref_data.odds_change_down
             }">
               <!--投注赔率1.87-->
               <span class="odds-value yb-number-bold">
-                <span>@</span>{{ format_odds(item.odds,item.csid) }}
+                <span>@</span>{{ format_odds(item.oddFinally,item.csid) }}
               </span>
             </div>
             <div class="auto-col" v-if="!(active == 1 || active == 4)">
@@ -88,18 +88,11 @@
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row bet-single-input">
         <div class="col relative-position" >
-          <template v-if="!(active == 1 || active == 4)">
+          <!-- <template v-if="!(active == 1 || active == 4)">
             <div class="cathectic-shade"></div>
-          </template>
+          </template> -->
           <!--投注金额输入框-->
-          <currency-input :id="DOM_ID_SHOW && `but-bet-single-${index}`" :ref="'input-' + item.custom_id" class="bet-input input-border"
-              :placeholder="`${$t('bet.money_range')} ${min_money} ~ ${max_money}`"
-            v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
-              hideCurrencySymbol: true
-            }" :precision="{
-              min: 0,
-              max: 2
-            }" :currency="null" :valueRange="value_range" autocomplete="off" maxLength="11" locale="zh" />
+          <input v-model="money" type="number" @input="set_win_money" :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" class="bet-input input-border" />
           <!--清除输入金额按钮-->
           <div class="bet-input-close" @click.stop="bet_clear_handle" >
             <icon name="icon-failure" size="12px" />
@@ -112,18 +105,30 @@
           {{ $t('common.maxn_amount_val') }}
         </div>
         <!--金额-->
-        <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(win_money) }}</div>
+        <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.win_money) }}</div>
       </div>
     </q-card-section>
     <q-card-section class="bet-keyboard-zone">
       <!--键盘区域-->
-      <!-- <div class="row bet-keyboard bet-keyboard-content">
+      <div class="row bet-keyboard bet-keyboard-content">
         <div class="col">
           <bet-keyboard ref="bet-keyboard" @keypress_handle="keypress_handle" @update_keyboard="update_keyboard"
-            @input_max_money="input_max_money"  :status="active"></bet-keyboard>
+            @input_max_money="input_max_money" :status="active"></bet-keyboard>
         </div>
-      </div> -->
+      </div>
     </q-card-section>
+
+    <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')" >
+      <template
+        v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(BetViewDataClass.error_code)">
+        <!--确定按钮-->
+        {{ $t('common.confirm') }}
+      </template>
+      <template v-else>
+        <!-- 投注 -->
+        {{ $t('common.betting') }}
+      </template>
+    </div>
 
     <!-- <div class="mask-appointment" v-if="is_forward != index && is_forward != -1"></div> -->
 
@@ -135,6 +140,7 @@ import { ref,toRefs, defineComponent, reactive } from "vue"
 import _ from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds,format_currency } from "src/core/format/index.js"
+import { odds_type_name } from "src/core/constant/index.js"
 
 import BetKeyboard from "../common/bet-keyboard.vue"
 
@@ -145,6 +151,8 @@ const props = defineProps({
     },
     item: {}
 })
+ // 投注金额
+const money = ref('')
 
 const ref_data = reactive({
   DOM_ID_SHOW: false, 
@@ -160,12 +168,29 @@ const ref_data = reactive({
   odds_change_down: false, // 赔率下降
   min_money: 10, // 最小投注金额
   max_money: 8888, // 最大投注金额
-  money: "", // 投注金额
+  win_money:0.00 , // 最高可赢
   value_range: {
     min:0,
     max:0
   }
 })
+
+// 输入判断
+const set_win_money = () =>{
+  // 输入控制 在2位小数 todo
+  if(money.value > ref_data.max_money){
+    // 超出最大限额 使用 最大限额 作为投注金额
+    money.value = ref_data.max_money
+    // 修改页面提示 1: 输入金额超出最大限额时
+    BetViewDataClass.set_input_money_state(1)
+  }
+  // 计算最高可赢金额
+  ref_data.win_money = money.value * props.item.oddFinally
+}
+
+const submit_handle = type => {
+
+}
 
 </script>
 <style lang="scss" scoped>
@@ -399,7 +424,23 @@ const ref_data = reactive({
   }
 }
 
-.appoint {
+.ref_data.appoint {
   height: 50px;
+}
+//谷歌
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {-webkit-appearance: none;
+}//火狐
+input[type="number"]{-moz-appearance: textfield;
+}
+
+.bet-submit{
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+  background: #000;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
 }
 </style>

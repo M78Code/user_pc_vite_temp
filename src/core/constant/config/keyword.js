@@ -1,4 +1,5 @@
- 
+import { i18n_t } from "src/boot/i18n.js";
+
 /**
  * 投注快捷金额
  *
@@ -35,3 +36,13 @@ export const keyboard = [
     disabled: false
   }
 ]
+
+// 盘 对应关系
+export const odds_type_name = {
+  "EU": i18n_t('odds.EU'), //欧洲盘
+  "ID": i18n_t('odds.ID'), //印尼盘
+  "US": i18n_t('odds.US'), //美式盘
+  "MY": i18n_t('odds.MY'), //马来盘
+  "GB": i18n_t('odds.GB'), //英式盘
+  "HK": i18n_t('odds.HK'), //香港盘
+}

@@ -84,15 +84,16 @@ export const set_card_show_level = (scroll_top) => {
       // 设置卡片显示等级
       card_obj.show_level = get_show_level(card_obj);
       // 设置对应的联赛标题卡片显示等级
-      let league_title_card_obj =
-        MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
+      let league_title_card_obj = MatchListCardData.all_card_obj[card_obj.league_title_card_key] || {};
+
       league_title_card_obj.show_level = card_obj.show_level;
       let mids_arr = card_obj.mids.split(",");
+
       // 遍历联赛容器下的赛事卡片  设置显示等级
       mids_arr.forEach((mid) => {
         let match_card_obj = MatchListCardData.all_card_obj["mid_" + mid] || {};
         match_card_obj.show_level = get_show_level(match_card_obj);
-        if (match_card_obj.show_level == 1 && card_obj.is_show_card) {
+        if ((match_card_obj.show_level == 1 && card_obj.is_show_card) || true) {
           show_mids_arr.push(mid);
         }
       });

@@ -167,7 +167,11 @@ class MatchListCard {
   }
 
   get_match_list_card_key_arr() {
-    return MatchListCardData.match_list_card_key_arr
+    return MatchListCardData.match_list_card_key_arr    
+  }
+
+  get_match_all_card_obj() {
+    return MatchListCardData.all_card_obj
   }
 
   /**

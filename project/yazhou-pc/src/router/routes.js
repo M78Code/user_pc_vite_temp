@@ -20,6 +20,15 @@ const routes = [
           keepAlive: true, // 需要缓存
         },
       },
+      //       // 首页
+      {
+        path: "/match",
+        name: "match",
+        component: () => import(`../pages/match-list/match-list.vue`),
+        meta: {
+          keepAlive: true, // 需要缓存
+        },
+      },
       //       // 搜索
       //       {
       //         path: "/search/:keyword/:time?",

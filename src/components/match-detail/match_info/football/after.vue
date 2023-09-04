@@ -199,11 +199,10 @@
 </template>
 
 <script>
-// import  {compute_css}  from   "src/core/server-img/sprite-img/module/team_logo.js"
 import  all_fn  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status,i18n_t } from 'src/core/index'
+import { get_match_status,i18n_t,formatSeconds } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
 export default {
@@ -271,11 +270,13 @@ export default {
       this.is_show_away_red = false
     },
     start_timer() {
-      useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop)
+      this.start_timer_loop()
     },
     start_timer_loop() {
+      debugger
       let date = this.timestamp++;
-      this.format_date = this.formatSeconds(date);
+      this.format_date = formatSeconds(date);
+      useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  this.format_date)
     },
     /**
     * @description: 重载页面
@@ -299,7 +300,7 @@ export default {
     this.debounce_throttle_cancel(this.hide_away_goal);
     this.debounce_throttle_cancel(this.hide_home_red);
     this.debounce_throttle_cancel(this.hide_away_red);
-    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop).off
+    // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop).off
   },
   watch: {
     match_info: {
@@ -325,6 +326,7 @@ export default {
           res.msc.S170 = this.default;
         }
         if (get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
+          debugger
           this.timestamp = parseInt(res.mst);
           this.start_timer();
         }
