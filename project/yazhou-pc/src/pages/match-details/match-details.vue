@@ -67,6 +67,8 @@
                 <!-- 盘口模板end -->
               </div>
             </div>
+
+            <!-- <div all_plays_sort_arr>  pankpo</div> -->
             <!-- 强力推荐，关盘状态下展示TODO -->
             <!-- <match-list-hot
               class="match_list_hot"
