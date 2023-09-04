@@ -19,7 +19,7 @@ const query_last_market_info_gcuuid = ref(uid());
  * @param {*} callback  回调函数
  * @return {undefined} undefined
  */
-const get_exist_match_result = (params, callback) => {
+export const get_exist_match_result = (params, callback) => {
   api_betting.get_exist_match_result(params).then((res) => {
     let code = _.get(res, "data.code");
     let status = _.get(res, "status");
@@ -41,7 +41,7 @@ const get_exist_match_result = (params, callback) => {
  * @param {Founction} callback
  * @return {undefined} undefined
  */
-const check_odds_beforebet = (callback) => {
+export const check_odds_beforebet = (callback) => {
   let param = {
     idList: [],
   };
@@ -132,3 +132,4 @@ const check_odds_beforebet = (callback) => {
     if (_.isFunction(callback)) callback(code);
   });
 };
+ 

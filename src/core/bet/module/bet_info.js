@@ -87,7 +87,7 @@ export const storage_bet_info = async({payload,ol}) => {
 /**
 * 获取 投注限额
 */
-const get_bet_amount = async obj => {
+export const get_bet_amount = async obj => {
   
   let params = {
     orderMaxBetMoney:[{

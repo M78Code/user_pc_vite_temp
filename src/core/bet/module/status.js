@@ -2,7 +2,7 @@ import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "../class/bet-data-class";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+import { compute_value_by_cur_odd_type } from "src/core/format/index.js";
 // import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data, bet_obj_add_attr } from "./upd_data.js";
 import { bet_single_obj_attr } from "./bet-model-single.js";
@@ -104,7 +104,7 @@ export const get_odds_active = (matchHandicapStatus, status, active) => {
  * @param {Object} item_  投注项对象
  * @return {Boolean} undefined
  */
-const get_item_disable = (item_) => {
+export const get_item_disable = (item_) => {
   let ret = false;
   let active = get_odds_active(
     _.get(item_, "mhs"),
@@ -123,7 +123,7 @@ const get_item_disable = (item_) => {
  * @param {*} get_deactive_count
  * @return {*}
  */
-const get_deactive_count = () => {
+export const get_deactive_count = () => {
   let bet_obj,
     count = 0;
   try {
@@ -163,7 +163,7 @@ const get_deactive_count = () => {
 /**
  * 判断是否还有失效的投注项
  */
-const has_disable_item = () => {
+export const has_disable_item = () => {
   let index, mhs, hs, active;
   if (BetData.is_bet_single) {
     index = _.findIndex(BetData.bet_single_list, (item) => {
@@ -189,6 +189,6 @@ const has_disable_item = () => {
   }
   return index > -1;
 };
-const get_bet_scroll_top = (comp, name, index) => {
+export const get_bet_scroll_top = (comp, name, index) => {
   return comp.$refs[name].$children[index].$el.offsetTop;
 };

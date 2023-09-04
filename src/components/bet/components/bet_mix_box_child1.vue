@@ -141,7 +141,7 @@
 // import {utils } from 'src/core/index.js';
 // import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 // import BetData from "src/core/bet/class/bet-data-class.js";
-import BetData_H5 from "src/core/bet/class/bet-data-class-h5 .js";
+import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import { format_money2 } from "src/core/format/index.js"
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
@@ -168,6 +168,7 @@ const scroll_box_ele = ref(null)   // dom元素
 
 /** --------------------------onmounted开始 ---------------*/
 onMounted(() => {
+  console.error('1213ssssssss',BetData)
   timer = null;
   timer2 = null;
   timer3 = null;

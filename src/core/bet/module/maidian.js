@@ -5,7 +5,7 @@
      *  @param {undefined} undefined
      *  @return {undefined} undefined
      */
- const bet_send_zhuge_event=()=>{
+  export const bet_send_zhuge_event=()=>{
     let bet_source =  window.sessionStorage.getItem("_bet_source")
     let lcm_name = ""
     if(bet_source){
