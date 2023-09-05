@@ -11,7 +11,7 @@ const { API_PREFIX_JOB:prefix,API_PREFIX_USER:prefix2,API_PREFIX_BAT:prefix3 } =
 /* export const query_last_market_info = (params, config={}, url = "/v1/betOrder/verifyOddsBeforeBet") => http.post(`${prefix}${url}`, params, config); */
 
 // 押注项提交接口
-export const post_submit_bet_list = (params, config={}, url = "/v1/betOrder/betPB") => http.post(`${prefix}${url}`, params, config);
+export const post_submit_bet_list = (params, config={}, url = "/v1/betOrder/bet") => http.post(`${prefix}${url}`, params, config);
 
 // 订单记录页面接口
 export const post_getOrderList = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);

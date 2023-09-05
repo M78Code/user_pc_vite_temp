@@ -9,6 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
+    <div>{{ BetViewDataClass.bet_view_version }}</div>
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="ref_data.match_type != 3">
@@ -112,8 +113,7 @@
       <!--键盘区域-->
       <div class="row bet-keyboard bet-keyboard-content">
         <div class="col">
-          <bet-keyboard ref="bet-keyboard" @keypress_handle="keypress_handle" @update_keyboard="update_keyboard"
-            @input_max_money="input_max_money" :status="active"></bet-keyboard>
+          <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord"  :input_max_money="ref_data.max_money" :status="active"></bet-keyboard>
         </div>
       </div>
     </q-card-section>
@@ -136,11 +136,12 @@
   </q-card>
 </template>
 <script setup>
-import { ref,toRefs, defineComponent, reactive } from "vue"
+import { ref,toRefs, defineComponent, reactive, onMounted, onUnmounted } from "vue"
 import _ from 'lodash'
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds,format_currency } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
 import BetKeyboard from "../common/bet-keyboard.vue"
 
@@ -151,6 +152,43 @@ const props = defineProps({
     },
     item: {}
 })
+
+onMounted(()=>{
+  // 监听 限额变化
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
+})
+
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+})
+
+
+// 限额改变 修改限额内容
+const set_ref_data_bet_money = () =>{
+  const { min_money,max_money, } = BetViewDataClass.bet_min_max_money[props.item.playOptionsId]
+
+  ref_data.min_money = min_money || 10
+  ref_data.max_money = max_money || 8888
+}
+
+// 快捷金额
+const set_click_keybord = obj => {
+  // 快捷金额 max 使用限额最大金额作为投注金额
+  if(obj.text == 'MAX'){
+    money.value = ref_data.max_money
+  }else{
+    // 投注金额 = 快捷金额 加上 原有的投注金额
+    let max_money =  money.value * 1 + obj.value
+    // 投注金额 大于 最大投注限额 则 使用最大限额作为投注金额
+    if(max_money > ref_data.max_money){
+      money.value = ref_data.max_money
+    }else{
+      money.value = max_money
+    }
+   
+  }
+}
+
  // 投注金额
 const money = ref('')
 

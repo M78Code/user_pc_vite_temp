@@ -170,6 +170,13 @@ export const EMIT_SINGLE_CHECK_VALID_MOENY_CMD =
 // 赛事列表重载
 export const EMIT_RELOAD_MATCH_LIST_CMD = "EMIT_RELOAD_MATCH_LIST_CMD";
 
+
+/******************************************** 投注 开始 *************************************************************************/
+// 限额
+export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
+
+/******************************************** 投注 结束 *************************************************************************/
+
 // 串关金额设置
 export const EMIT_BET_MIX_SET_MONEY_CMD = "EMIT_BET_MIX_SET_MONEY_CMD";
 // 更改串关的match_update字段值

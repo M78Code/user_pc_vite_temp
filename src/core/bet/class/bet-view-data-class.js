@@ -84,8 +84,10 @@ class BetViewData {
 
     // 限额
     this.bet_min_max_money = {
-      min_money: 10,
-      max_money: 8888
+      "11":{
+        min_money: 10,
+        max_money: 8888
+      }
     }
 
     this.bet_view_version = ref('11')
