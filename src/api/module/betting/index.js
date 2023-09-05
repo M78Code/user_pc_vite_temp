@@ -58,9 +58,9 @@ export const post_order_list = (params, config={}, url = "/order/betRecord/getOr
 //提前结算
 export const post_pre_bet_order = (params, config={}, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config);
 //预投住注单记录
-export const post_book_list = (params, config={}, url = "/order/betRecord/getPreBetOrderlist") => http.post(`${prefix}${url}`, params, config);
+export const post_book_list = (params, config={}, url = "/order/betRecord/getPreBetOrderlist") => http.post(`${prefix3}${url}`, params, config);
 // 5秒预约投注拉单
-export const get_book_status_record = (params, config={}, url = "/order/betRecord/getPreOrderStatus") => http.post(`${prefix}${url}`, params, config);
+export const get_book_status_record = (params, config={}, url = "/order/betRecord/getPreOrderStatus") => http.post(`${prefix3}${url}`, params, config);
  
  
 //查询提前结算详情
@@ -75,7 +75,7 @@ export const get_cashout_max_amount_list = (params, config={}, url = "/order/bet
 // 查询提前结算单状态 该接口当发起请求之后310s之内没有收到推送状态还在转圈时，请求一次
 /* export const query_pre_settle_order_status = (params, config={}, url = "/v1/betOrder/queryPreSettleOrderStatus") => http.get(`${prefix}${url}`, params, config); */
 // 查询待确认中的提前结算单
-export const query_order_pre_settle_confirm = (params, config={}, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix}${url}`, params, config);
+export const query_order_pre_settle_confirm = (params, config={}, url = "/v1/betOrder/queryOrderPreSettleConfirm") => http.get(`${prefix3}${url}`, params, config);
 
 
 

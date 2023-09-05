@@ -387,7 +387,6 @@
         </load-data>
       </div>
     </div>
-    {{parseInt(recordData.total)}}
     <template v-if="parseInt(recordData.total)">
       <!--分页组件-->
       <PaginationWapper

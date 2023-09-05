@@ -81,7 +81,6 @@
                   <div class="ceil c134 play-name">
                     <div>
                       <!-- 串关 -->
-                      {{data.seriesType}}
                       <template v-if="data.seriesType != '1' || data.seriesType == '3'">{{data.seriesValue}}</template>
                       <!-- 单关 -->
                       <template v-else>
@@ -406,22 +405,22 @@ onMounted(() => {
       if(type && langCode) {
         switch (type) {
           case "EU":
-            res = i18n_t(`common_lang.${langCode}.odds.EU`); //"欧洲盘";
+            res = i18n_t(`${langCode}.odds.EU`); //"欧洲盘";
             break;
           case "HK":
-            res = i18n_t(`common_lang.${langCode}.odds.HK`); //"香港盘";
+            res = i18n_t(`${langCode}.odds.HK`); //"香港盘";
             break;
           case "US":
-            res = i18n_t(`common_lang.${langCode}.odds.US`); //"美式盘";
+            res = i18n_t(`${langCode}.odds.US`); //"美式盘";
             break;
           case "ID":
-            res = i18n_t(`common_lang.${langCode}.odds.ID`); //"印尼盘";
+            res = i18n_t(`${langCode}.odds.ID`); //"印尼盘";
             break;
           case "MY":
-            res = i18n_t(`common_lang.${langCode}.odds.MY`); //"马来盘";
+            res = i18n_t(`${langCode}.odds.MY`); //"马来盘";
             break;
           case "GB":
-            res = i18n_t(`common_lang.${langCode}.odds.GB`); //"英式盘";
+            res = i18n_t(`${langCode}.odds.GB`); //"英式盘";
             break;
           default:
             res = "";
@@ -600,13 +599,13 @@ onMounted(() => {
       if(type && langCode) {
         switch (parseInt(type)) {
           case 1:
-            res = i18n_t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+            res = i18n_t(`bet.morning_session`); //"早盘赛事";
             break;
           case 2:
-            res = i18n_t(`common_lang.${langCode}.bet.bowls`);//"滚球盘赛事";
+            res = i18n_t(`bet.bowls`);//"滚球盘赛事";
             break;
           case 3:
-            res = i18n_t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+            res = i18n_t(`bet.champion_handicap`); //"冠军盘赛事";
             break;
         }
       }
