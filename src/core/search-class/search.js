@@ -11,6 +11,8 @@ import  store  from "src/store-redux/index.js"
 import { i18n_t} from "src/core/index.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
 import lodash from 'lodash'
+import UserCtr from "src/core/user-config/user-ctr.js";
+
 
 export default {
   //搜索结果数据模板
@@ -45,7 +47,7 @@ export default {
 	get_search_result(keyword,csid,callback){
     let params = {
       keyword,
-      cuid:store.getters.get_uid,
+      cuid:UserCtr.get_uid(),
       pageNumber:1,
       rows:200,
       isPc:true,
@@ -225,10 +227,11 @@ export default {
    */
   get_history(callback) {
     let params = {
-      cuid:store.getters.get_uid,
+      cuid:UserCtr.get_uid(),
       isPc:1
     }
     api_search.get_history_search(params).then( res => {
+      
       let data = lodash.get(res, "data.data") || [];
       if (data.length > 0) {
         callback(data)
@@ -244,7 +247,7 @@ export default {
   delete_histroy(keyword,callback) {
     let params = {
       keyword:keyword || '',
-      cuid:store.getters.get_uid
+      cuid:UserCtr.get_uid()
     }
     api_search.get_delete_history_search(params).then( res => {
       let code = lodash.get(res, "data.code");

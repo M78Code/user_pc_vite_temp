@@ -1,5 +1,4 @@
 import { ref } from "vue";
-
 // 浏览器高度
 let client_height = Math.max(
   document.body.clientHeight,
@@ -43,12 +42,18 @@ class LayOutMain {
     this.layout_content_width = 1440
     // 布局更新
     this.layout_version = ref(0)
+    /** 主内容宽度 */
+    this.layout_main_width = 1440
+    /** 搜索框宽度 */
+    this.layout_search_width = 0
   }
 
   // 初始化
   init(){
     this.set_layout_content_config()
     this.set_layout_left_menu_status()
+    this.set_layout_main_width()
+    this.set_layout_search_width()
   }
 
   // 设置 中间内容区域 宽度 高度
@@ -81,6 +86,22 @@ class LayOutMain {
   set_layout_version(){
     this.layout_version.value = Date.now()
   }
+
+  /** 设置主内容宽度 */
+  set_layout_main_width() {
+    // 浏览器宽度
+    const inner_width = window.innerWidth
+    this.layout_main_width = Math.max(inner_width, this.layout_min_width)
+  }
+
+  /** 计算搜索框宽度 */
+  set_layout_search_width() {
+    this.layout_search_width = parseInt(this.layout_main_width * 0.3)
+    if(this.is_iframe) {
+      this.layout_search_width = 390
+    }
+  }
+
 }
 
 export default new LayOutMain();

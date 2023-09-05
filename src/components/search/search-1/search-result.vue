@@ -4,8 +4,8 @@
     <div class="result-wrap">
         <!-- 无数据 -->
         <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
-            <loadData class="fit" :state="load_data_state" :no_data_msg="t('search.null1')"
-                :no_data_msg2="t('search.null2')" />
+            <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
+                :no_data_msg2="i18n_t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
         <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scroll">
@@ -57,7 +57,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
