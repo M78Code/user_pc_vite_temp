@@ -1,7 +1,10 @@
 <!-- 页面头部容器-->
 <template>
   <div class="yb-h5-layout-header">
-    <menu-wapper v-if="base_data_instance.base_data_version!=1"  use_component_key="H5MenuTemplate1" :base_data="base_data_instance" :version="base_data_instance.base_data_version"></menu-wapper>
+    <div style="display: none;">{{ base_data_instance.base_data_version }}</div>
+    <menu-wapper v-if="base_data_instance.base_data_version!=1" 
+     use_component_key="H5MenuTemplate1" :base_data="base_data_instance"
+      :version="base_data_instance.base_data_version"></menu-wapper>
   </div>
 </template>
 

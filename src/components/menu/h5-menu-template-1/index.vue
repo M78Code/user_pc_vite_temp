@@ -36,7 +36,7 @@ const props = defineProps({
     default: () => {},
   },
 });
-let current_menu = ref("101");
+let current_menu = ref({sl:[],mi:101});
 //选中的球类
 let current_menu_item = ref("");
 let menu_list = ref([]);
