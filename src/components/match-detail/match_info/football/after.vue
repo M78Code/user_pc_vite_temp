@@ -273,7 +273,6 @@ export default {
       this.start_timer_loop()
     },
     start_timer_loop() {
-      debugger
       let date = this.timestamp++;
       this.format_date = formatSeconds(date);
       useMittEmit(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,  this.format_date)

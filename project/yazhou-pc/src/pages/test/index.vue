@@ -2,7 +2,7 @@
   <div class="hiegsada">
     <div v-for="item in match_list_s" :key="item.mid">
       <div>{{ item.tid }} - {{ item.csna }} - {{ item.tnjc }}</div>
-      <div>{{ item.mid }} - {{ item.man }} vs {{ item.mhn }}</div>
+      <div @click="on_go_detail(item) ">{{ item.mid }} - {{ item.man }} vs {{ item.mhn }}</div>
 
       <div v-for="(page,index) in item.hpsData" :key="index"> 
         <div>主盘口
@@ -42,6 +42,8 @@ import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 
+import { useRouter } from "vue-router"
+const router = useRouter()
     onMounted(()=>{
       api_list_data()
     })
@@ -54,7 +56,18 @@ import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.j
       '19':"半场让球",
       '18':"半场大小",
     })
-
+    //跳转到赛事详情
+    const on_go_detail=(item)=>{
+      let {mid,tid,csid} =item
+      router.push({
+            name: "details",
+            params: {
+              mid,
+              tid,
+              csid
+            },
+        })
+    }
     const match_list_s = ref([])
 
     const api_list_data = () => {
