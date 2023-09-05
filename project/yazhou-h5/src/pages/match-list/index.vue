@@ -2,14 +2,6 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
-  <!-- 列表页  菜单头部组件，fixed 布局 -->
-  <sport-menu
-    class="match-main-menu"
-    v-show="$route.name == 'matchList'"
-    v-if="!['notice', 'home'].includes($route.name)"
-    :style="{ 'z-index': right_menu_show ? '503' : '501' }"
-    :class="{ 'hide-menu': $route.name != 'matchList' }"
-  ></sport-menu>
   <div class="match-main no-padding-bottom" ref="match_main">
     <!--赛事列表-->
     <div
@@ -76,16 +68,11 @@
   </div>
 </template>
 <script>
-// import sportMenu from "../sport_menu/sport-menu.vue";
-import { MenuWapper } from "src/components/menu";
 import { defineComponent } from "vue";
 import { i18n_t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 export default defineComponent({
-  components: {
-    sportMenu: MenuWapper,
-  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 由首页进入，就不在此处初始化
