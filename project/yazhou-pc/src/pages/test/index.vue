@@ -40,6 +40,7 @@ import { api_match,socket_api } from "src/api/index.js";
 import { ref, reactive, onMounted,computed } from "vue"
 import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 
     onMounted(()=>{
       api_list_data()
@@ -59,7 +60,7 @@ import BetData from "src/core/bet/class/bet-data-class.js"
     const api_list_data = () => {
       let params ={"apiType":1,"cuid":UserCtr.get_uid(),"euid":"3020101","orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
       api_match.post_league_list(params).then(res=>{
-        const {livedata,nolivedata} = res.data.data
+        const {livedata,nolivedata} = res.data
         let mids = ''
         livedata.forEach(item=>{
           mids += ','+ item.mids
@@ -75,7 +76,7 @@ import BetData from "src/core/bet/class/bet-data-class.js"
       console.error('√',mids)
       let params = {mids,"cuid":UserCtr.get_uid(),"euid":"3020101","orpt":"0","sort":1,"pids":"","cos":0}
       socket_api.get_match_base_info_by_mids(params).then(res=>{
-        let aaa = res.data.data.data.map(item=>{
+        let aaa = res.data.data.map(item=>{
           return item
         })
         match_list_s.value = aaa
@@ -83,6 +84,8 @@ import BetData from "src/core/bet/class/bet-data-class.js"
     }
 
     const set_bet_oid = (item,obj_hp,obj_hl,obj_ol) => {
+
+    
       // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
       let matchType = 2 
       if( [1,2].includes(Number(item.ms)) ){
@@ -115,8 +118,13 @@ import BetData from "src/core/bet/class/bet-data-class.js"
         // 以下为 投注显示或者逻辑计算用到的参数
         bet_type: 'common_bet', // 投注类型
         tid_name: item.tnjc,  // 联赛名称
+        match_ms: item.ms, // 赛事阶段
       }
       BetData.set_bet_read_write_refer_obj(bet_obj)
+
+      // 获取限额 常规
+      get_query_bet_amount_common(bet_obj)
+      
     }
 
 

@@ -21,6 +21,7 @@ import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 
 const is_keydown = ref(false)
 
+const emit = defineEmits(['set_bet_box_state'])
 
 
 const props = defineProps({
@@ -96,11 +97,9 @@ const keypress_handle = (obj, e) => {
         keyboard_object: obj,
         number: parseFloat(num).toFixed(2)
       };
-      // 触发键盘时间
-      useMittEmit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_HANDLE, data)
+    
     } else {
-      // 触发使输入框显示最大的金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY)
+     
     }
   }
 }
