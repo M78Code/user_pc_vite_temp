@@ -42,38 +42,35 @@
   
 <script setup>
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import BetData from "src/core/bet/class/bet-data-class.js";
+// import BetData from "src/core/bet/class/bet-data-class-h5.js";
+import { UserCtr } from "src/core/index.js";
 import lodash from 'lodash'
 
 
-import store from "src/store-redux/index.js";
-
+const active_index = ref(BetData.active_index)
 const money = ref('') //用户输入金额
 const delete_all = ref(false) //键盘出现时，第一次按删除键把金额一次删完
 const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
 
-const store_state = store.getState()
-const get_bet_status = ref(store_state.get_bet_status)
-const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-const active_index = ref(store_state.BetData.active_index)
-const get_menu_type = ref(store_state.get_menu_type)
+// const store_state = store.getState()
+// const get_bet_status = ref(store_state.get_bet_status)
+// const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
+// const active_index = ref(store_state.active_index)
+// const get_menu_type = ref(store_state.get_menu_type)
 
-const unsubscribe = store.subscribe(() => {
-  update_state()
-})
+// const unsubscribe = store.subscribe(() => {
+//   update_state()
+// })
 
 
-const props = defineProps({
-  items: {
-    type: [Object],
-    default: () => { }
-  }
-})
+
 
 // 预约输入赔率或者盘口
 watch(() => pre_odds_value, (new_) => {
-  if (BetData.active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
+  if (active_index.toString().indexOf('market') > -1) {  // 篮球才可以用键盘输入预约盘口
     try {
       pre_odds_value.value = pre_odds_value.value + ''
       if (pre_odds_value.value.indexOf(".") > -1 && pre_odds_value.value.split('.')[1]) {//篮球盘口小数点后面必须是5的倍数，如果非5的倍数，四舍五入
@@ -84,7 +81,7 @@ watch(() => pre_odds_value, (new_) => {
           pre_odds_value.value = Number(pre_odds_value.value.split('.')[0]) + 1 + ''
         }
       }
-      let index = BetData.active_index.toString().split('market')[1]
+      let index = active_index.toString().split('market')[1]
       let value_show = view_ctr_obj[BetData.bet_list[index]].bs
       const isdaxiao = ['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot'));
       if (isdaxiao) {
@@ -113,7 +110,7 @@ watch(() => pre_odds_value, (new_) => {
 watch(() => money, (new_) => {
   useMittEmit(MITT_TYPES.EMIT_CHANGE_MONEY, money.value);
 })
-watch(() => BetData.active_index, (new_) => {
+watch(() => active_index, (new_) => {
   if (money.value) delete_all.value = true;
 })
 
@@ -164,6 +161,32 @@ const _handleDecimalPoint = () => {
   }
   // money_s.value = money.value
 }
+// //处理小数点函数
+// const _handleDecimalPoint = () => {
+//       if(this.has_pre_market){
+//         //如果包含小数点，直接返回
+//         if (this.pre_odds_value.indexOf(".") > -1) {return false};
+        
+//         //如果小数点是第一位，补0
+//         if (!this.pre_odds_value.length) this.pre_odds_value = "0.";
+//         //如果不是，添加一个小数点
+//         else this.pre_odds_value = this.pre_odds_value + ".";
+//         return
+//       }
+//       //超过最大金额时不让输入
+//       if (this.money > this.max_money) {
+//         return
+//       }
+      
+//       //如果包含小数点，直接返回
+//       if (this.money.indexOf(".") > -1) {return false};
+      
+//       //如果小数点是第一位，补0
+//       if (!this.money.length) this.money = "0.";
+//       //如果不是，添加一个小数点
+//       else this.money = this.money + ".";
+//     },
+
 // MAX键
 const _handmaxKey = () => {
   if (+amount.value < +props.items.orderMaxPay) {
@@ -217,9 +240,9 @@ const _handleNumberKey = (num) => {
 
 
 // 左侧+的按钮 置灰
-const prevent_click = computed(() => {
+const prevent_click = computed((value) => {
   return function (v) {
-    if (BetData.active_index.toString().indexOf('pre') > -1) {
+    if (active_index.toString().indexOf('pre') > -1) {
       return true
     }
     if (Number(value) + Number(money.value) > max_money.value) { return true };
@@ -227,7 +250,7 @@ const prevent_click = computed(() => {
 })
 
 const addnum = computed(() => {
-  if (get_mix_bet_flag) {
+  if (BetData.bet_mix_bet_flag) {
     return lodash.get(UserCtr, 'cvo.series', { qon: 100, qtw: 200, qth: 100 })
   } else {
     return lodash.get(UserCtr, 'cvo.single', { qon: 100, qtw: 200, qth: 1000 })
@@ -235,11 +258,10 @@ const addnum = computed(() => {
 })
 // 预约投注赔率值可通过键盘输入 max，左侧三个按钮置灰，输入金额时放开
 const has_pre_market = computed(() => {
-  return BetData.active_index.toString().indexOf('pre') > -1 ||  BetData.active_index.toString().indexOf('market') > -1
+  return active_index.toString().indexOf('pre') > -1 ||  active_index.toString().indexOf('market') > -1
 })
 
 onUnmounted(()=>{
-  unsubscribe()
 })
 
 </script>

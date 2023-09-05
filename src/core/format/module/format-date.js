@@ -199,7 +199,7 @@ export const format_time_zone_millisecond = (time, offset = 8) => {
  * @return {int} 转换后的时区的时间戳
  */
 export const format_time_zone_time = (time, offset = 8) => {
-  debugger
+  
   var d = new Date(time); //创建一个Date对象 time时间 offset 时区 中国为 8
   var localTime = d.getTime(); //获取的是毫秒级
   var localOffset = d.getTimezoneOffset() * 60000; //获得当地时间偏移的毫秒数,时区是以分钟为单位的

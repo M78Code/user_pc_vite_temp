@@ -9,7 +9,7 @@
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
         <router-view />
-        <!-- <betMixBox /> -->
+        <betMixBox />
       </q-page-container>
     </q-layout>
   </div>
@@ -18,7 +18,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
-// import betMixBox from "src/components/bet/components/bet_mix_box.vue"
+import betMixBox from "src/components/bet/components/bet_mix_box.vue"
 // import { i18n } from "src/boot/i18n.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";

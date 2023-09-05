@@ -43,12 +43,13 @@ export default {
     },
   },
   created() {
+    
     // 启动计时器
     this.start();
-    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time);
+    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD,this.set_date_time)
   },
   beforeUnmount() {
-    useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time).off;
+    // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.set_date_time).off;
     this.clear();
   },
   watch: {
@@ -103,7 +104,7 @@ export default {
       }
       return that;
     },
-    set_date_time() {
+    set_date_time(e) {
       if (!this.timer_status) {
         return;
       }

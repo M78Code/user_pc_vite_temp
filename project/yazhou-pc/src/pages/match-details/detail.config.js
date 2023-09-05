@@ -646,7 +646,7 @@ export const useGetConfig = () => {
   const get_category_list = (callback) => {
     //sportId 球类id、mid 赛事id
     let params = { sportId: route.params.csid, mid: route.params.mid };
-
+    
     const _obj = {
       axios_api: api_details.get_category_list,
       error_codes: ["0401038"],
@@ -655,12 +655,13 @@ export const useGetConfig = () => {
         if (!MatchDataWarehouseInstance.value) {
           return;
         }
-        const code = lodash.get(res, "data.code");
+        
+        const code = lodash.get(res, "code");
         if (code == "0400500") {
           emit_autoset_match(0);
           return;
         }
-        const data = lodash.get(res, "data.data");
+        const data = lodash.get(res, "data");
         if (code === 200 && data.length) {
           state.category_list = data;
           state.handicap_this['category_list'] = data
@@ -785,6 +786,7 @@ export const useGetConfig = () => {
    * 传递玩法列表的数据给到玩法集
    */
   const set_handicap_this = (_this) => {
+    
     state.handicap_this = _this;
   };
 
@@ -876,20 +878,20 @@ export const useGetConfig = () => {
     state.handicap_state = n;
     state.match_details = [];
   };
-
+ 
   onMounted(() => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
     // 从链接上获取赛事id 赛种 id 联赛id
     // 3531410/1110402/1
-    // if (Object.keys(route.params).length) {
-    //   let { mid, csid: sportId, tid } = route.params;
+    if (Object.keys(route.params).length) {
+      let { mid, csid: sportId, tid } = route.params;
     // path: "/details/:mid/:tid/:csid",
     
-      state.mid = '3531447'; // 赛事id
-      state.sportId = 1; // 赛种 id
+      state.mid = mid; // 赛事id
+      state.sportId = sportId; // 赛种 id
       // 电竞不用切右侧
-      if (!is_eports_csid(1)) {
+      if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
         // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
       }
@@ -898,7 +900,7 @@ export const useGetConfig = () => {
       init();
       // 添加近期访问
       // add_visit_history();
-    // }
+    }
 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();
@@ -925,6 +927,14 @@ export const useGetConfig = () => {
     // });
     // 返回背景图
     useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg);
+    //获取tab数据
+    useMittOn(MITT_TYPES.EMIT_SET_HANDICAP_THIS, (e)=>{
+      
+      set_handicap_this(e)
+      console.log(e);
+    }
+     
+    )
   });
 
   onUnmounted(() => {

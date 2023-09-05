@@ -34,7 +34,7 @@
           >
             <!---表单内容-->
             <div class="r-table">
-              <template v-for="(data, i) of early_settlement_data" :key="i">
+              <template v-for="(data, i) in early_settlement_data" :key="i">
                 <div
                   class="row"
                   :class="`status-${data.orderStatus} outcome-${data.orderOutCome}`"
@@ -139,7 +139,9 @@
                       :money_obj="money_obj"
                       :tool_selected="tool_selected"
                       :get_user="UserCtr.user_info"
-                      :matchType="matchType"
+                      @item_status="item_status"
+                      @matchType="matchType"
+                      @item_class="item_class"
                       @start_bet_pre="start_bet_pre"
                       @bet_pre_over="bet_pre_over"
                       @bet_pre_out="bet_pre_out"
@@ -385,6 +387,7 @@
         </load-data>
       </div>
     </div>
+    {{parseInt(recordData.total)}}
     <template v-if="parseInt(recordData.total)">
       <!--分页组件-->
       <PaginationWapper
@@ -407,12 +410,13 @@
 
 <script setup>
 import tableOptions from "./table-options.vue"; // 选项组件
-// import { PaginationWapper } from "src/components/pagination/indes.js";
+import { PaginationWapper } from "src/components/pagination/index.js"; // src/components/pagination/index.js
 import { useTableData } from "./use-table-data.js";
 import { i18n_t } from "src/core/index.js";
 import { formatTime,format_balance,format_score_t } from "src/core/format/index";
 import loadData from "project_path/src/components/load-data/load-data.vue"
-import {defineExpose} from 'vue';
+import {defineExpose, watch } from 'vue';
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 
 const props = defineProps({
@@ -454,8 +458,7 @@ const props = defineProps({
   //   default: "zh"
   // }
 });
-
-console.error(props, props.record_obj);
+console.error(props);
 const emit = defineEmits([
   "choosePage",
   "clear_timer_get_cashout",
@@ -470,9 +473,9 @@ const lineList = [
   { label: i18n_t("bet_record.bets_forehead"), id: 5 },
   {
     label:
-      props.tool_selected === 0
-        ? i18n_t("common.maxn_amount_val")
-        : i18n_t("common.donate_win"),
+      // props.tool_selected === 0
+        // ? i18n_t("common.maxn_amount_val")
+      i18n_t("common.donate_win"),
     id: 6,
   },
   { label: i18n_t("bet_record.status"), id: 7 },
@@ -496,9 +499,11 @@ const {
   bet_pre_out,
   change_slider,
   bet_handle,
+  get_init_data,
+  item_class,
+  item_status,
   lodash,
 } = useTableData({ props, emit });
-
 defineExpose({
   recordData
 })

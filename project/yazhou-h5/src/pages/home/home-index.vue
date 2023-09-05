@@ -1,7 +1,3 @@
-<!--
- * @Date: 2020-12-13 11:34:53
- * @Description: 首页入口文件
--->
 <template>
   <!-- GlobalAccessConfig.get_hotMatchNum()&&  -->
   <div

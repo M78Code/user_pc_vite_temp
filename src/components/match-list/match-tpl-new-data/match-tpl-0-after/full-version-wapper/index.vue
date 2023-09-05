@@ -20,7 +20,7 @@
 </template>
 <script>
 import wapper_config from "./wapper.js";
-console.log("wapper_config-", wapper_config);
+
 let {
   all_components,
   is_full_version,
@@ -28,6 +28,7 @@ let {
   components_keys,
   registered_component_key,
 } = wapper_config;
+console.log('all_components', all_components);
 export default {
   inheritAttrs: false,
   //   components:  wapper_config.all_components,
