@@ -238,6 +238,27 @@ class AxiosHttp {
     });
   }
   /**
+   * 接口返回数据的 wapper
+   */
+   set_ses_wapper(res){
+    let result = {};
+    let data = (res || {}).data;
+    if (data && (data.code == "0000000" || data.code == "200")) {
+      result = {
+        code: '200',
+      };
+    }
+    result = {
+      data: data.data,
+      code: data.code,
+      message: data.msg,
+      ...result
+    };
+
+    return result;
+  }
+
+  /**
    * http 请求 通道 关闭  检查
    * @returns
    */
@@ -339,7 +360,7 @@ class AxiosHttp {
         res.data.gcuuid = request_config.gcuuid;
       }
       wslog.send_msg("HTTP-R:", res);
-      return Promise.resolve(res);
+      return Promise.resolve(this.set_ses_wapper(res));
     } catch (err) {
       // console.error('请求错误问题定位---------------------3' , err?.config?.url,err);
       //接口的全局跟踪 检查UID gcuuid   嫁接

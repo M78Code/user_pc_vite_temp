@@ -66,7 +66,7 @@
     </template>
     <!-- 赛事基本信息 end -->
     <!-- 玩法tab条 -->
-    
+    {{ handicap_this }}11
     <handicap-tabs-bar
       ref="handicap_tabs_bar"
       :handicap_this="handicap_this"
@@ -114,7 +114,7 @@ defineExpose({ handicap_tabs_bar });
 const route = useRoute();
 const router = useRouter();
 
-const emit = defineEmits(["init", "back_to", "get_mattch_details",'change_loading_state']);
+const emit = defineEmits(["init", "back_to",'change_loading_state']);
 
 // 监听状态变化
 let un_subscribe = store.subscribe(() => {
@@ -137,6 +137,7 @@ const back_to = (is_back = true) => {
  * 获取具体的玩法集数据
  */
 const get_mattch_details = (arg) => {
+  
   emit("get_mattch_details", arg);
 };
    /**

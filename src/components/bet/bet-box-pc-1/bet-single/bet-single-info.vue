@@ -168,7 +168,7 @@ const ref_data = reactive({
   odds_change_down: false, // 赔率下降
   min_money: 10, // 最小投注金额
   max_money: 8888, // 最大投注金额
-  win_money:0.00 , // 最高可赢
+  win_money: 0.00 , // 最高可赢
   value_range: {
     min:0,
     max:0

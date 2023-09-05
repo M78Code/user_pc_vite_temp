@@ -13,12 +13,11 @@ import {
 } from "vue";
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
-import details from "src/core/match-detail-pc/match-detail.js";
+import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import {utils } from 'src/core/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
-
 export const useMethods = ({ props,emit }) => {
   //  ============================数据===================
   const state = reactive({
@@ -47,7 +46,8 @@ export const useMethods = ({ props,emit }) => {
   // 详情页玩法列表单双列 0单列， 1双列
   const get_layout_statu = ref(store_state.matchesReducer.layout_statu);
   // 获取用户uid
-  const get_uid = UserCtr.get_uid();
+  // const get_uid = UserCtr.get_uid();
+  const get_uid = ref(null);
   // 当前所选的玩法集子项id
   const get_tabs_active_id = ref(store_state.matchesReducer.tabs_active_index);
   // 获取当前页路由信息
@@ -526,13 +526,15 @@ const rang = ref([])
       306, 308, 324, 327, 334, 20003, 20004, 20015,
     ];
 
-    const _this = {
+
+   const _this={
       ...toRefs(state),
       category_list:props.category_list,
       toggele_layout,
       check_half,
     }
-    emit("set_handicap_this", _this);
+    // emit("set_handicap_this", _this);
+    useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, _this)
 
   });
   onUnmounted(() => {

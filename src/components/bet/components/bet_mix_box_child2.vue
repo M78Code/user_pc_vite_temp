@@ -136,7 +136,7 @@
       </template>
 
       <!-- 键盘 -->
-      <key-board v-show="get_keyboard_show"></key-board>
+      <key-board v-show="bet_keyboard_show"></key-board>
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -208,7 +208,7 @@
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
 // import betSuccessBar from 'src/components/bet/components/bet_success_bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
-// import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
+import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
 // import ballSpin from 'src/components/bet/components/ball_spin.vue';
 import betBar from "src/components/bet/components/bet-bar.vue";
 
@@ -222,6 +222,8 @@ import { UserCtr } from "src/core/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
+
+const bet_keyboard_show = ref(true)
 const hide_bet_series_but = () =>{
     let res = false;
     // 单关时,获取投注列表数据

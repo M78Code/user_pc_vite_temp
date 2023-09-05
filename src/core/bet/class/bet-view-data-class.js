@@ -4,6 +4,7 @@
  *
  */
 import { ref } from "vue";
+import _lodash from "lodash"
 
 class BetViewData {
   constructor() {}
@@ -81,6 +82,12 @@ class BetViewData {
     // 是否显示全屏下投注弹窗
     this.bet_show = false
 
+    // 限额
+    this.bet_min_max_money = {
+      min_money: 10,
+      max_money: 8888
+    }
+
     this.bet_view_version = ref('11')
   }
   /**
@@ -106,6 +113,24 @@ class BetViewData {
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
   set_input_money_state(val){
     this.input_money_state = val
+    this.set_bet_view_version()
+  }
+
+  // 设置限额
+  set_bet_min_max_money(obj){
+    let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
+    let bet_amount = {}
+    bet_amount_list.forEach(item=>{
+      // 使用 投注项作为 key值 在投注列表做对应关系
+      bet_amount[item.playOptionsId] = {
+        min_money: item.minBet, // 最小限额
+        max_money: item.orderMaxPay, // 最大限额
+        globalId : item.globalId,  //  风控响应id
+      }
+    })
+
+    this.bet_min_max_money = bet_amount
+
     this.set_bet_view_version()
   }
 }

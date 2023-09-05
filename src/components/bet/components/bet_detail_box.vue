@@ -191,7 +191,7 @@
   import ballSpin from './ball_spin.vue';
   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
   import store from "src/store-redux/index.js";
-  import BetData from "../class/bet-data-class";
+  import BetData from "src/core/bet/class/bet-data-class.js";
   import { UserCtr } from "src/core/index.js"; 
   import { format_odds ,calc_bifen } from 'src/core/index.js'
   import { ref, onMounted,watch,computed,onUnmounted } from 'vue';

@@ -74,16 +74,25 @@
 </template>
 <script>
 import { defineComponent, defineEmits } from "vue";
-// import match_handicap from "src/components/match-detail/match_handicap/match_handicap.js";
+import match_handicap from "src/components/match-detail/match-handicap/match-handicap.js";
 import { useMethods } from "./use-methods";
+
 export default defineComponent({
-  // mixins: [match_handicap], //引入玩法组件
+  mixins: [match_handicap], //引入玩法组件
+  emit :[
+      "set_handicap_state",
+      "on_go_top",
+      "set_handicap_this",
+    ],
   setup(props, context) {
+    console.log(context,'context');
     // const emit = defineEmits([
     //   "set_handicap_state",
     //   "on_go_top",
     //   "set_handicap_this",
     // ]);
+    console.log(context.emit,'emit11');
+ 
     //  ============================数据===================
     const {
       showDetails,
@@ -100,9 +109,8 @@ export default defineComponent({
       lodash
     } = useMethods({
       props,
-      emit:context.emit,
+      // emit:context.emit,
     });
-
     return {
       showDetails,
       reset_toggle,
