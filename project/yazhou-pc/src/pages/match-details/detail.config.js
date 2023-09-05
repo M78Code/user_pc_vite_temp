@@ -253,7 +253,6 @@ export const useGetConfig = () => {
    * @param {string} cuid 用户id
    */
   const get_matchInfo = () => {
-    
     let params = { mid: state.mid, cuid: state.get_uid };
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
@@ -271,8 +270,8 @@ export const useGetConfig = () => {
           // 通知列表右侧详情，获取近期关注数据
           useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           // useMittEmit("get_history");
-          const code = lodash.get(res, "data.code");
-          const data = lodash.cloneDeep(lodash.get(res, "data.data"));
+          const code = lodash.get(res, "code");
+          const data = lodash.cloneDeep(lodash.get(res, "data"));
           console.log(res,'data');
           if (code == "0400500" || !data || Object.keys(data).length == 0) {
             // 自动切换赛事
@@ -280,7 +279,7 @@ export const useGetConfig = () => {
             return;
           }
           const timestap = lodash.get(res, "data.ts");
-          if (code === 200 && Object.keys(data).length) {
+          if (code === '200' && Object.keys(data).length) {
             // 接口拉取成功，错误次数清 0
             state.countMatchDetailErr = 0;
             state.load_data_state = "data";
@@ -299,6 +298,7 @@ export const useGetConfig = () => {
               "15",
               "14",
             ];
+
             if (mmp_list.includes(data.csid)) {
               if (data.ms != 0 && data.mmp == "0") {
                 Object.assign(data, {
@@ -310,7 +310,7 @@ export const useGetConfig = () => {
             // ms=赛事状态 0未开赛，1 进行中 2、暂停 3、结束 4、关闭 5、取消 6、比赛放弃 7、延迟 8、未知 9、延期 10、比赛中断	全量拉取数据
             if ([3, 4, 5, 6, 8, 9].includes(data.ms)) {
               // 赛事移除时右侧赛事自动切换
-              useMittEmit(MITT_TYPES.EMIT_GET_HISTORY, data.mid);
+              // useMittEmit(MITT_TYPES.EMIT_GET_HISTORY, data.mid);
               // 通知列表右侧详情，获取近期关注数据
               // 自动判断是否需要切换右侧赛事数据
               mx_autoset_active_match({ mid: data.mid });
@@ -375,6 +375,7 @@ export const useGetConfig = () => {
    * @param {is_init} 是否需要走初始流程，如第一次进入
    */
   const get_match_detail = ({ is_ws = false, is_init = false } = {}) => {
+    debugger
     let params = {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
@@ -652,21 +653,22 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
+        console.log(res,'res');
         if (!MatchDataWarehouseInstance.value) {
           return;
         }
-        
-        const code = lodash.get(res, "code");
-        if (code == "0400500") {
-          emit_autoset_match(0);
-          return;
-        }
-        const data = lodash.get(res, "data");
-        if (code === 200 && data.length) {
-          state.category_list = data;
-          state.handicap_this['category_list'] = data
+        // const code = lodash.get(res, "code");
+        // if (code == "0400500") {
+        //   emit_autoset_match(0);
+        //   return;
+        // }
+        // const data = lodash.get(res, "data");
+        // if (code === 200 && data.length) {
+        if (res.length) {
+          state.category_list = res;
+          state.handicap_this['category_list'] = res
           // 初始化玩法列表
-          MatchDataWarehouseInstance.value.init_play_menu_list(data);
+          MatchDataWarehouseInstance.value.init_play_menu_list(res);
           if (callback) {
             callback();
           }

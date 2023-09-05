@@ -4,7 +4,6 @@
  * @Description: 详情区--玩法集 Tab 选项
 -->
 <template>
-  {{ category_list_length }}
   <div
     v-if="category_list_length>0"
     class="scroll-fixed-header wrap-tabs"

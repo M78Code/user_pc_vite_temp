@@ -3,6 +3,7 @@
     <div
       class="item-wrap relative-position"
       ref="item_wrap"
+      style="color: #ffffff;"
       :style="{ left: item_wrap_left + 'px' }"
       :key="key"
     >
