@@ -8,7 +8,7 @@
  import BetData from "../class/bet-data-class.js";
  import {
    compute_value_by_cur_odd_type
- } from "src/core/format/index.js"
+ } from "src/core/format/module/format-odds-conversion-mixin.js"
  // import {get_bet_amount_param} from  "./bet-amount.js"
  import {
    http_upd_data

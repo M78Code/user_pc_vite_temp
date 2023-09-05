@@ -3,7 +3,7 @@ import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "./class/bet-data-class.js";
-import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data } from "./upd_data.js";
 import { set_submit_status } from "./status.js";

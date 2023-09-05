@@ -6,7 +6,7 @@
 // import { football_score_map, basketball_score_map, table_tennis_score_map, volleyball_score_map, baseball_score_map } from "src/project/mixins/betting/timely_score.js"
 // import chuanguan_map from "src/project/mixins/betting/chuanguan_map";
 // import { HANDICAP_ODDS, HANDICAP_PLACEHOLDER, TIPS_INFO1, TIPS_INFO2, MOCK_C105_C106 } from "src/project/mixins/betting/status_code_map";
-import {odd_convert} from "src/core/format/index.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
+// import {odd_convert} from "src/core/format/module/format-odds-conversion-mixin.js";   // 此文件 主要是应对 赔率转换(在转换为其他赔率时候，必须做欧洲赔率的配分)
 // import { WsRev } from "src/public/utils/ws/wsCtr.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 export default {
