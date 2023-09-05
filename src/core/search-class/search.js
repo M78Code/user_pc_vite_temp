@@ -214,7 +214,7 @@ export default {
    */
   get_hot_search(callback) {
     api_search.get_hot_search().then(res => {
-      let data = lodash.get(res, "data.data") || [];
+      let data = lodash.get(res, "data") || [];
       if (data.length > 0) {
         callback(data)
       }

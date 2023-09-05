@@ -5,7 +5,7 @@
     <div v-show="route.params.video_size != 1" class="serach-wrap column"
       :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
       :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
-      <search-input @set_show_type="set_show_type" :show_type="show_type" />
+      <search-input :show_type.sync="show_type" />
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
         <div class="sports-tab" @click.stop>
@@ -13,17 +13,15 @@
             @onclick="set_sports_tab_index" :currentIndex="sports_tab_index" ref="tab" />
         </div>
         <!-- 初始化 -->
-        <search-int class="serach-background" v-show="show_type == 'init'" @set_show_type="set_show_type"
-          :show_type="show_type" />
+        <search-int class="serach-background" :show_type.sync="show_type" />
         <!-- 搜索联想-->
-        <!-- <search-related class="serach-background" v-show="show_type == 'related'" @set_show_type="set_show_type" /> -->
+        <!-- <search-related class="serach-background" v-show="show_type == 'related'" /> -->
         <!-- 搜球类 -->
-        <search-sports class="serach-background" v-show="show_type == 'sports'" @set_show_type="set_show_type"
-          ref="sports" />
+        <search-sports class="serach-background" :show_type.sync="show_type" ref="sports" />
         <!-- 搜玩法 -->
-        <search-play class="serach-background" v-show="show_type == 'play'" @set_show_type="set_show_type" />
+        <search-play class="serach-background" :show_type.sync="show_type" />
         <!-- 搜索结果 -->
-        <search-result v-show="show_type == 'result'" @set_show_type="set_show_type" :search_csid="search_csid" />
+        <search-result :show_type.sync="show_type" :search_csid="search_csid" />
       </div>
     </div>
   </div>
@@ -149,14 +147,6 @@ function set_sports_list() {
 onMounted(set_sports_list)
 
 /**
- * @Description:设置显示类型
- * @param {String} type 类型
- * @return {Undefined} Undefined
- */
-function set_show_type(type) {
-  show_type.value = type
-}
-/**
  * @Description 设置球种tab选中索引
  * @param {number} index 索引
  * @param {undefined} undefined
@@ -193,6 +183,7 @@ onUnmounted(() => window.removeEventListener('resize', on_resize))
   top: 0;
   bottom: 0;
   z-index: 10001;
+
   .serach-wrap {
     position: absolute;
     top: 60px;
@@ -432,5 +423,4 @@ onUnmounted(() => window.removeEventListener('resize', on_resize))
     }
   }
 }
-
 </style>
