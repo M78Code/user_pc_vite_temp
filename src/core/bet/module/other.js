@@ -1,7 +1,7 @@
 import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
-import BetData from "./class/bet-data-class.js";
+import BetData from "src/core/bet/class/bet-data-class.js.js";
 import { compute_value_by_cur_odd_type } from "./submit_data.js";
 import { get_bet_amount_param } from "./bet-amount.js";
 import { http_upd_data } from "./upd_data.js";
@@ -19,7 +19,7 @@ const query_last_market_info_gcuuid = ref(uid());
  * @param {*} callback  回调函数
  * @return {undefined} undefined
  */
-const get_exist_match_result = (params, callback) => {
+export const get_exist_match_result = (params, callback) => {
   api_betting.get_exist_match_result(params).then((res) => {
     let code = _.get(res, "data.code");
     let status = _.get(res, "status");
@@ -41,7 +41,7 @@ const get_exist_match_result = (params, callback) => {
  * @param {Founction} callback
  * @return {undefined} undefined
  */
-const check_odds_beforebet = (callback) => {
+export const check_odds_beforebet = (callback) => {
   let param = {
     idList: [],
   };
@@ -132,3 +132,4 @@ const check_odds_beforebet = (callback) => {
     if (_.isFunction(callback)) callback(code);
   });
 };
+ 

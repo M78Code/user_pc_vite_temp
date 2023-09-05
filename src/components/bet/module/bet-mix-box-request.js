@@ -1,5 +1,5 @@
 import BetData from "./class/bet-data-class.js";
-import SetData from "src\core\bet\bet-data-ctr-class.js";
+import SetData from "src/core/bet/bet-data-ctr-class.js";
 import lodash from 'lodash'
 
 

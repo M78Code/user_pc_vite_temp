@@ -3,7 +3,7 @@
   <div>
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
-        {{ $t('bet_record.total_count') }}
+        {{ i18n_t('bet_record.total_count') }}
         <!-- 总计单数 -->
         ：
         <span class="footer-text">{{ count }}</span>
@@ -17,7 +17,7 @@
       <template v-if="recordType">
         <!-- 目前屏蔽有效流水展示 -->
         <span v-if="0">
-          {{ $t('bet_record.effective_water') }}
+          {{ i18n_t('bet_record.effective_water') }}
           <!-- 有效流水 -->
           ：{{ effectiveFlow }}
         </span>
@@ -43,19 +43,19 @@
           </template>
         </q-select>
         <span>
-          {{ $t('common.page_') }}
+          {{ i18n_t('common.page_') }}
           <!-- 条/页 -->
         </span>
       </div>
 
       <div class="pagination-link">
         <span>
-          {{ $t('common.goto') }}
+          {{ i18n_t('common.goto') }}
           <!-- 跳转至 -->
         </span>
         <input type="text" v-model="goPage" @blur="goToPage(goPage)" @keyup.enter="goToPage(goPage)" :max="max" />
         <span v-show="lang != 'vi'">
-          {{ $t('common.page') }}
+          {{ i18n_t('common.page') }}
           <!-- 页 -->
         </span>
       </div>
@@ -68,7 +68,7 @@ import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { useGetValue } from './use-value'
 import { watch } from 'vue'
-
+import { i18n_t } from "src/boot/i18n.js"
 import { format_balance  } from "src/core/index.js";
 
 useRegistPropsHelper(component_symbol, need_register_props)
@@ -118,8 +118,8 @@ const props = defineProps(
 
   }
 )
-const tableClass_computed = useComputed.tableClass_computed(props)
-const title_computed = useComputed.title_computed(props)
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 //-------------------- 组件内ref  -------------------- 

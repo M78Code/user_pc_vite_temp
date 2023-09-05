@@ -1,8 +1,8 @@
 import {  MenuData  } from "src/core/index.js";
 import {  PageSourceData  } from "src/core/index.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
-import BetData from "../class/bet-data-class.js";
-// import { compute_value_by_cur_odd_type } from "./bet_odds_change.js";
+import BetData from "src/core/bet/class/bet-data-class.js.js";
+// import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js";
 // import { get_bet_amount_param } from "./bet-amount.js";
 // import { http_upd_data } from "./upd_data.js";
 // import { set_submit_status } from "./status.js";
@@ -473,7 +473,7 @@ export const http_upd_data = (obj) => {
  * @param {String} item 投注项id
  * @return {undefined} undefined
  */
-const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
+export const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
  
   let mid_obj, msc_obj, id = item, kid, oid,  bs = _.cloneDeep(_.get(bet_obj,`${id}.bs`)), cs = _.cloneDeep(_.get(bet_obj,`${id}.cs`)), obj = {"key":item, "bs":{}, "cs":{} },hl_obj, ol_obj, sport_id, play_id, hn, ot, score_type=_.get(bet_obj,`${id}.cs.score_type`) || 'S1', serial_type, home_score=_.get(cs,'home_score'), away_score=_.get(cs,'away_score');
   if (!bs || !cs ) {
@@ -629,7 +629,7 @@ const upd_bet_obj_item = ( {source_data, bet_obj,item, handle_time}) => {
  * @description: 更新投注项对象
  * @return {undefined} undefined
  */
-const upd_bet_obj = ( timestap, mid) => {
+export const upd_bet_obj = ( timestap, mid) => {
   // return;
   // 如果是单关并且单关正在处理投注阻止数据合并 或者如果是串关且串关正在投注中,阻止数据合并
   if ((!mid || BetData.is_bet_single &&BetData.get_is_single_handle) || (!BetData.is_bet_single && BetData.is_handle)) {
@@ -674,7 +674,7 @@ const upd_bet_obj = ( timestap, mid) => {
  * @param {String} socket_name 视图中socket_name的名字,为推送时注册对象名称
  * @return {undefined} undefined
  */
-const update_bet_score = ( match,  mid, socket_name, score_obj) => {
+export const update_bet_score = ( match,  mid, socket_name, score_obj) => {
   let home_score, away_score, bet_obj, id, msc, obj, msc_obj;
   obj = BetData.is_bet_single? 'bet_single_obj':'bet_obj';
   if(BetData[obj]) {
@@ -745,7 +745,7 @@ const update_bet_score = ( match,  mid, socket_name, score_obj) => {
  * @param {String} id 投注项的id
  * @return {undefined} undefined
  */
-const set_bet_obj_value = (that, obj) => {
+export const set_bet_obj_value = (that, obj) => {
   if (_.isPlainObject(obj)) {
     obj.key = _.get(obj,'cs.id','');
     if(BetData.is_bet_single) {

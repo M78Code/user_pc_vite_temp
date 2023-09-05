@@ -38,10 +38,10 @@ export const fetch_mix_bet_rules = (params, config={}, url = "/v1/betOrder/query
 // 查询最新的盘口数据 /v1/betOrder/queryLatestMarketInfo
 export const query_last_market_info = (params, config={}, url = "/v1/betOrder/queryLatestMarketInfoPB") => http.post(`${prefix}${url}`, params, config);
 //获取额度接口合并
-export const query_bet_amount = (params, config={}, url = "/v1/betOrder/queryBetAmountPB") => http.post(`${prefix}${url}`, params, config);
+export const query_bet_amount = (params, config={}, url = "/v1/betOrder/queryBetAmount") => http.post(`${prefix3}${url}`, params, config);
 
 //获取预约额度接口合并
-export const query_pre_bet_amount = (params, config={}, url = "/v1/betOrder/queryPreBetAmountPB") => http.post(`${prefix}${url}`, params, config);
+export const query_pre_bet_amount = (params, config={}, url = "/v1/betOrder/queryPreBetAmountPB") => http.post(`${prefix3}${url}`, params, config);
 
 
 // 用户偏好设置
@@ -54,7 +54,7 @@ export const record_user_preference = (params, config={}, url = "/v1/betOrder/re
 /* export const post_submit_virtual_bet_list = (params, config={}, url = "/v1/betOrder/virtualBet") => http.post(`${prefix}${url}`, params, config); */
 
 //投注记录（ 新  带提前结算相关字段）
-export const post_order_list = (params, config={}, url = "/order/betRecord/getOrderListPB") => http.post(`${prefix2}${url}`, params, config);
+export const post_order_list = (params, config={}, url = "/order/betRecord/getOrderList") => http.post(`${prefix2}${url}`, params, config);
 //提前结算
 export const post_pre_bet_order = (params, config={}, url = "/v1/betOrder/orderPreSettle") => http.post(`${prefix}${url}`, params, config);
 //预投住注单记录

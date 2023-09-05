@@ -115,6 +115,7 @@
               lodash.get(match_info, 'frmhn[0]'),
             ]"
             class="both-logo"
+
           />
           <span
             class="ellipsis allow-user-select"

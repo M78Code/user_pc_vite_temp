@@ -1,6 +1,6 @@
 import { ref } from "vue";
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
-
+import use_featch_fn from "./match-list-featch.js";
 import {utils } from 'src/core/index.js';
 
 //  订阅所需 赛事ID
@@ -12,10 +12,12 @@ const show_mids = ref([]);
 const socket_name = ref("match_list");
 // 是否静默运行(socket、refresh按钮)
 const backend_run = ref(false);
-
 const load_data_state = ref('data');
 // 订阅所需 盘口ID
 const skt_hpid = ref("");
+const { api_bymids } = use_featch_fn();
+
+
 const ws_c8_subscribe = () => {
 	let match_list = [];
 	show_mids.value.forEach((mid) => {
@@ -105,7 +107,7 @@ const show_mids_change = () => {
 	}
 	// 重新订阅C8
 	refresh_c8_subscribe();
-	// api_bymids({ is_show_mids_change: true });
+	api_bymids({ is_show_mids_change: true });
 }
 
 const ws_composable_fn = () => {

@@ -19,8 +19,8 @@
         </div>
         <div class="main-menu-container" :class="{esport:menu_1_type == 7}">
           <!-- 一级主菜单 下边的四个主图标 v-show="main_m.sl.length > 0  ![2,3,6,7].includes(m_m_i)" -->
-          <template v-for="(main_m, m_m_i) of new_main_menu_list_items">
-            <div class="m-menu-item" v-show="show_dianjing(main_m,m_m_i)" :key="m_m_i"
+          <template v-for="(main_m, m_m_i) of new_main_menu_list_items" :key="m_m_i">
+            <div class="m-menu-item" v-show="show_dianjing(main_m,m_m_i)" 
                  :class="[
                      {current: new_main_menu_index == m_m_i,
                       esport:menu_1_type == 7
@@ -90,8 +90,8 @@
               :data-type="format_type(sub)+i18n_t(`new_menu.${filter_meunu_desc(sub.mi)}`)"
              -->
             <template v-if="new_main_menu_list_items[new_main_menu_index]">
-              <template   v-for="(sub,sub_i) of new_main_menu_list_items[new_main_menu_index].sl||[]" >
-              <div class="sport-menu-item flex justify-center" :key="sub_i" ref="scrollItem"
+              <template   v-for="(sub,sub_i) of new_main_menu_list_items[new_main_menu_index].sl||[]" :key="sub_i">
+              <div class="sport-menu-item flex justify-center"  ref="scrollItem"
                   v-show="menu_1_type !== 7 && menu_1_type !== 28 ? sub.ct > 0: true"
                   @click="sub_menu_changed(sub_i,'dir_click',sub)"
                   :class="{'current':sub_menu_i==sub_i||selected_sub_menu_i_list.includes(sub_i),'champion':menu_type == 100}"
@@ -177,16 +177,16 @@
 // TODO: 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import setMenu from "src/project/components/common/set-menu";
-import sub_menu_specially from "src/project/pages/sport-menu/sub-menu-specially.vue";
+// import setMenu from "project_path/src/components/common/set-menu.vue";
+import sub_menu_specially from "./footer-menu.vue";
 import {utils } from 'src/core/index.js';
-import list_menu_mixin_new from 'src/project/pages/sport-menu/match-list-menu';
-import { api_analysis} from "src/project/api/index.js";
-import { activity_task_api } from "src/api";
+import {ref,onMounted ,watch,onUnmounted} from 'vue'
+import list_menu_mixin_new from './match-list-menu';
+import { api_analysis} from "src/api/index.js";
+// import { activity_task_api } from "src/api/";
 import lodash from 'lodash'
 //  一二级菜单 本地化假数据
-import {Level_one_menu_list, second_sub_list} from "src/project/pages/sport-menu/config/common-menu.js"
-import { watch } from "vue";
+// import {Level_ONe_menu_list, second_sub_list} from "./config/common-menu.js"
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 
@@ -196,7 +196,7 @@ import { UserCtr } from "src/core/index.js";
 
   // TODO: 后续修改调整
   // mixins: [ list_menu_mixin_new ],
-
+  const get_lang =""
   //主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据，真正渲染到页面数据的是下面的 main_menu_list_items  =================
   let main_menu_list = ref([])
   //主菜单 一级主菜单 下边的四个菜单（滚球， 今日， 电竞， 虚拟体育）, 真正渲染到 页面的数据    =================
@@ -252,7 +252,7 @@ import { UserCtr } from "src/core/index.js";
   let sub_menu_scroller = ref(null)
   // 路由
   const route = useRoute()
-
+    
   // computed: {
   //   ...mapGetters([
   //     'get_user',
@@ -260,17 +260,7 @@ import { UserCtr } from "src/core/index.js";
   //     'get_access_config'
   //   ])
   // },
-  // 进入主列表页立即触发  TODO: route 后续修改调整
-  if(route.name == 'matchList'){
-      enter_page_immediately()
-  }
-  // 早盘，串关，电竞日期，缓存数据获取
-  date_cache_initialization()
-  // 初始化 root.$on 事件监听
-  on_listeners()
 
-  // 从活动页面返回时，执行方法, 活动是否有可领取的任务数量，中文并且不是维护，有活动数据时，才调用是否有红点的接口
-  get_task_list()
 
     // ...mapMutations({
       // 主菜单选中项下标 (非展开的)
@@ -361,23 +351,23 @@ import { UserCtr } from "src/core/index.js";
     // 进入主列表页 主菜单时，立即触发方法
     const enter_page_immediately = () => {
       // 初始化 路由的参数 TODO: route后续修改调整
-      if (route.query.m) {
-        //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
-        let { m, s, t } = route.query;
-        set_global_route_menu_param({ m, s, t });
-      } else if (route.query.mt1) {
-        //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
-        let { mt1, mt2 } = route.query;
-        set_global_route_menu_param({ mt1, mt2 });
-      } else {
-        set_global_route_menu_param({});
-      }
+      // if (route.query.m) {
+      //   //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
+      //   let { m, s, t } = route.query;
+      //   set_global_route_menu_param({ m, s, t });
+      // } else if (route.query.mt1) {
+      //   //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
+      //   let { mt1, mt2 } = route.query;
+      //   set_global_route_menu_param({ mt1, mt2 });
+      // } else {
+      //   set_global_route_menu_param({});
+      // }
       // 刚进入页面阻止二级菜单收起
-      set_global_match_route_enter(Math.random());
-      clearTimeout(route_enter_timeout);
-      route_enter_timeout = setTimeout(() => {
-        set_global_match_route_enter(0);
-      }, 2500);
+      // set_global_match_route_enter(Math.random());
+      // clearTimeout(route_enter_timeout);
+      // route_enter_timeout = setTimeout(() => {
+      //   set_global_match_route_enter(0);
+      // }, 2500);
     }
     // 初始化菜单数据
     const initialize_menu_data = async (type) => {
@@ -788,10 +778,11 @@ import { UserCtr } from "src/core/index.js";
       // 调用列表接口
       useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
     }
+    const get_current_date_menu=[]
     // 早盘 和 串关 和 电竞 的日期菜单用缓存的数据初始化
     const date_cache_initialization = () => {
-      if (get_current_date_menu.length && [4, 11, 3000].includes(+menu_type)) {
-        date_menu_list = get_current_date_menu;
+      if (get_current_date_menu&&get_current_date_menu.length && [4, 11, 3000].includes(+menu_type)) {
+        date_menu_list.value = get_current_date_menu;
       }
     }
      /**
@@ -956,7 +947,7 @@ import { UserCtr } from "src/core/index.js";
     }
     const reset_list = (is_favorite=false) => {
       //默认设置
-      lodash.set_menu_type(lodash.menu_type);
+      // lodash.set_menu_type(lodash.menu_type);
       // lodash.skip_menu_type()
       // lodash.get_results_menu()
     }
@@ -969,11 +960,11 @@ import { UserCtr } from "src/core/index.js";
         // 早盘 和 串关 和 电竞 的日期菜单用缓存的数据初始化
         date_cache_initialization()
 
-        if(lodash.get(get_global_route_menu_param, 'm') || lodash.get(get_global_route_menu_param, 'mt1')){
-          initialize_menu_data('first_load');
-        }else{
-          initialize_menu_data('matchBack')
-        }
+        // if(lodash.get(get_global_route_menu_param, 'm') || lodash.get(get_global_route_menu_param, 'mt1')){
+        //   initialize_menu_data('first_load');
+        // }else{
+        //   initialize_menu_data('matchBack')
+        // }
         skip_menu_type();
       }
     })
@@ -1010,40 +1001,40 @@ import { UserCtr } from "src/core/index.js";
     /**
      * 列表滚动
      */
-    watch(() => get_list_scroll_top, (sc,o_sc) => {
-      let scroll_y = +sc.split('-')[0];
-      // 只有在今日  下边的 足球  和 篮球下，滑动 超过100px  才有效果，全局触发一次
-       // TODO: sessionStorage 后续修改调整
-      if (scroll_y >= 100 && !sessionStorage.getItem('matchList_buried_point_time') && [3].includes(+menu_type) && [5, 7].includes(get_curr_sub_menu_type)) {
-        sessionStorage.setItem('matchList_buried_point_time', new Date().getTime())
-        // 今日足球篮球当 滑动超过100px  或者 今日足球停留 20秒  埋点触发方法
-        $utils.zhuge_event_send(get_curr_sub_menu_type == 5 ? 'H5_今日_足球_默认页面滚动超100': 'H5_今日_篮球_页面滚动超100', user_info, {'停留时长分布': '1-5S'});
-      }
-      // 1向上滑,-1向下滑
-      let scroll_dir = get_list_scroll_direction;
-      if(!get_global_match_route_enter){
-        //向下滑
-        if(scroll_dir < 0 || !scroll_y){
-          // 菜单容器是否收起
-          main_menu_state_restore(false)
-        }
-        //向上滑
-        else if(scroll_dir > 0){
-          let menu_distance = [4,11,28].includes(+menu_type) ? rem(.93) : rem(.60);
-          menu_distance -= rem(.04);
-          if(scroll_y > menu_distance){
-            // 菜单容器是否收起
-            main_menu_state_restore(true)
-          }
-        }
-      }
-    })
+    // watch(() => get_list_scroll_top, (sc,o_sc) => {
+    //   let scroll_y = +sc.split('-')[0];
+    //   // 只有在今日  下边的 足球  和 篮球下，滑动 超过100px  才有效果，全局触发一次
+    //    // TODO: sessionStorage 后续修改调整
+    //   if (scroll_y >= 100 && !sessionStorage.getItem('matchList_buried_point_time') && [3].includes(+menu_type) && [5, 7].includes(get_curr_sub_menu_type)) {
+    //     sessionStorage.setItem('matchList_buried_point_time', new Date().getTime())
+    //     // 今日足球篮球当 滑动超过100px  或者 今日足球停留 20秒  埋点触发方法
+    //     $utils.zhuge_event_send(get_curr_sub_menu_type == 5 ? 'H5_今日_足球_默认页面滚动超100': 'H5_今日_篮球_页面滚动超100', user_info, {'停留时长分布': '1-5S'});
+    //   }
+    //   // 1向上滑,-1向下滑
+    //   let scroll_dir = get_list_scroll_direction;
+    //   if(!get_global_match_route_enter){
+    //     //向下滑
+    //     if(scroll_dir < 0 || !scroll_y){
+    //       // 菜单容器是否收起
+    //       main_menu_state_restore(false)
+    //     }
+    //     //向上滑
+    //     else if(scroll_dir > 0){
+    //       let menu_distance = [4,11,28].includes(+menu_type) ? rem(.93) : rem(.60);
+    //       menu_distance -= rem(.04);
+    //       if(scroll_y > menu_distance){
+    //         // 菜单容器是否收起
+    //         main_menu_state_restore(true)
+    //       }
+    //     }
+    //   }
+    // })
 
     // 切换关注与非关注时，更新菜单接口数据
-    watch(() => show_favorite_list, () => {
-      call_the_interface_to_update_the_menu_data('follow');
-      date_menu_clicked(date_menu_curr_i,'')
-    })
+    // watch(() => show_favorite_list, () => {
+    //   call_the_interface_to_update_the_menu_data('follow');
+    //   date_menu_clicked(date_menu_curr_i,'')
+    // })
     watch(() => menu_1_type, (n,o) => {
       if(n != o){
           initialize_menu_data();
@@ -1056,6 +1047,17 @@ import { UserCtr } from "src/core/index.js";
   //   'set-menu': setMenu,
   //   "sub-menu-specially":sub_menu_specially
   // },
+    // 进入主列表页立即触发  TODO: route 后续修改调整
+    if(route.name == 'matchList'){
+      enter_page_immediately()
+  }
+  // 早盘，串关，电竞日期，缓存数据获取
+  date_cache_initialization()
+  // 初始化 root.$on 事件监听
+  // on_listeners()
+
+  // 从活动页面返回时，执行方法, 活动是否有可领取的任务数量，中文并且不是维护，有活动数据时，才调用是否有红点的接口
+  get_task_list()
 </script>
 
 <style scoped lang="scss">

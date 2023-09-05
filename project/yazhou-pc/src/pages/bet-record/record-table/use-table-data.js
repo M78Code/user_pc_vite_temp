@@ -8,6 +8,7 @@ import {
   nextTick,
   getCurrentInstance,
   onMounted,
+  toRaw,
 } from "vue";
 import BetCommonHelper from "src/core/bet/common-helper/index.js";
 import { order_pre_settle_confirm } from "src/core/bet/module/pre-settle.js";//src/core/bet/module/pre-settle.js
@@ -61,14 +62,12 @@ export const useTableData = ({ props, emit }) => {
   });
 
   const { ctx } = getCurrentInstance()
-
+  console.error(props);
   //   ====================watch======================================
-
-const {order_list} = props
-console.error(order_list);
   watch(
     () => props.order_list,
     (val) => {
+      console.error(val);
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,
@@ -81,9 +80,7 @@ console.error(order_list);
       init_data();
     },
   );
-  onMounted(() => {
-    init_data()
-  })
+
   watch(
     () => props.orderNo_data_list,
     (val) => {
@@ -93,7 +90,10 @@ console.error(order_list);
       }
     }
   );
-
+  //   ======================onMounted========================
+  onMounted(() => {
+    init_data()
+  })
   //   ====================methods======================================
   /**
    * @description:盘口类型
@@ -119,7 +119,7 @@ console.error(order_list);
 
   /**
    * @description:输赢状态
-   * @param {srting} type: records.orderVOS.betResult
+   * @param {Srting} type: records.orderVOS.betResult
    * @return{string} 盘口类型
    */
   const item_status = (type) => {
@@ -174,13 +174,13 @@ console.error(order_list);
     if (type && langCode) {
       switch (parseInt(type)) {
         case 1:
-          res = i18n_t(`common_lang.${langCode}.bet.morning_session`); //"早盘赛事";
+          res = i18n_t('bet.morning_session'); //"早盘赛事";
           break;
         case 2:
-          res = i18n_t(`common_lang.${langCode}.bet.bowls`); //"滚球盘赛事";
+          res = i18n_t('bet.bowls'); //"滚球盘赛事";
           break;
         case 3:
-          res = i18n_t(`common_lang.${langCode}.bet.champion_handicap`); //"冠军盘赛事";
+          res = i18n_t('bet.champion_handicap'); //"冠军盘赛事";
           break;
       }
     }
@@ -766,7 +766,7 @@ console.error(order_list);
     reset_show_operate();
     if (state.early_settlement_data.length > 0) {
       // 设置页面加载状态
-      prorps.data_state.load_data_state = "data";
+      props.data_state.load_data_state = "data";
     }
   };
   // 提前结算实时查询最高返还批量后初始化数据
@@ -1162,6 +1162,7 @@ console.error(order_list);
     // 统计未结算订单数量
     useMittEmit(MITT_TYPES.EMIT_UNSETTLE_TICKETS_COUNT_CMD);
   });
+  console.error(state.early_settlement_data);
   return {
     ...toRefs(state),
     changePage,
@@ -1176,6 +1177,9 @@ console.error(order_list);
     bet_pre_out,
     change_slider,
     bet_handle,
+    get_init_data,
+    item_class,
+    item_status,
     lodash
   };
 };

@@ -38,15 +38,14 @@ const bet_chat_room_type = ''
 //   vx_get_chat_room_type = store.getState().chat_room_type || {}
 // },
 export const compute_value_by_cur_odd_type = (val, breakVal, arr=[], csid) => {
+  
   /**
    * 此方法预留  后期 对于 不支持转换赔率的 盘口 做特殊加工
    * 是 对全局 赔率转换的 基础设定
    * arr: 当前盘口 支持的赔率转换类型的 全部值
    * csid ：赛种ID
    */
-  if (!val) {
-    return;
-  }
+  if (!val) return
   let odds_val = (Math.floor(val / 1000) / 100)
   // PS-9881赔率优化
   let str = "";

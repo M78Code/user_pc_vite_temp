@@ -59,8 +59,10 @@
           <span>{{i18n_t("common.loading") }}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
+        
       </div>
-      <no-data
+      
+      <no-data-wapper
         v-else-if="['empty', 'notice-empty', 'code_empty'].includes(cur_state)"
         :msg="
           no_data_msg
@@ -79,8 +81,8 @@
         class="empty-wrap"
         :class="{ filter_img: filter_store.open_select_time }"
       >
-      </no-data>
-      <no-data
+      </no-data-wapper>
+      <no-data-wapper
         v-else-if="['all_empty', 'new_empty'].includes(cur_state) && is_eports"
         :msg="i18n_t('common.no_data')"
         :type_name="'esports-size'"
@@ -95,7 +97,7 @@
             {{ i18n_t('common.go_now')}}
            </div>
         </div> -->
-      </no-data>
+      </no-data-wapper>
       <div
         class="list_right_empty"
         v-else-if="['all_empty', 'new_empty'].includes(cur_state)"
@@ -105,6 +107,7 @@
       </div>
     </div>
     <!-- refresh || 404 -->
+    {{cur_state + '+++++' + is_eports}}
     <div
       class="refresh fit"
       v-if="cur_state == 'refresh' || cur_state == '404'"
@@ -181,7 +184,6 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
 const filter_store = store.getState().filterReducer
-console.error(store.getState());
 const noData = NoDataWapper
 const props = defineProps({
   // 是详情时 loading 与 empty 不居中

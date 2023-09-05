@@ -67,6 +67,8 @@
                 <!-- 盘口模板end -->
               </div>
             </div>
+
+            <!-- <div all_plays_sort_arr>  pankpo</div> -->
             <!-- 强力推荐，关盘状态下展示TODO -->
             <!-- <match-list-hot
               class="match_list_hot"
@@ -87,7 +89,7 @@ import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area
 import detailHeader from "./components/detail-header.vue";
 // 组件
 // 盘口模板
-import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
+// import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
 import matchListHot from "project_path/src/pages/match-list/match_list_hot.vue";
 import { useGetConfig } from "./detail.config";
 const {

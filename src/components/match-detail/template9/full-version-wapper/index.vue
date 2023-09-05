@@ -20,7 +20,7 @@
 </template>
 <script>
 import wapper_config from "./wapper.js";
-console.log("wapper_config-", wapper_config);
+
 let {
   all_components,
   is_full_version,

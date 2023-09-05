@@ -882,14 +882,14 @@ export const useGetConfig = () => {
     pre_load_video.load_video_resources();
     // 从链接上获取赛事id 赛种 id 联赛id
     // 3531410/1110402/1
-    // if (Object.keys(route.params).length) {
-    //   let { mid, csid: sportId, tid } = route.params;
+    if (Object.keys(route.params).length) {
+      let { mid, csid: sportId, tid } = route.params;
     // path: "/details/:mid/:tid/:csid",
     
-      state.mid = '3531447'; // 赛事id
-      state.sportId = 1; // 赛种 id
+      state.mid = mid; // 赛事id
+      state.sportId = sportId; // 赛种 id
       // 电竞不用切右侧
-      if (!is_eports_csid(1)) {
+      if (!is_eports_csid(sportId)) {
         // 设置赛事详情的请求参数
         // store.dispatch("SET_MATCH_DETAILS_PARAMS", { mid, sportId, tid });
       }
@@ -898,7 +898,7 @@ export const useGetConfig = () => {
       init();
       // 添加近期访问
       // add_visit_history();
-    // }
+    }
 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();

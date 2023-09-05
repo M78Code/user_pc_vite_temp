@@ -153,7 +153,7 @@ class BaseData {
     this.reset_menu_init_time = setTimeout(() => {
       this.clear_menu_init_time();
       // 5分钟一次
-      this.set_menu_init_time(300000);
+      this.set_menu_init_time(3000000);
     }, 4000);
   }
 
@@ -255,7 +255,7 @@ class BaseData {
   async init_base_menu_il8n() {
     let res = await api_base_data.post_base_data_menu_i18n({});
 
-    let menu_i18n = this.set_ses_wapper(res, {});
+    let menu_i18n = _.get(res, 'data')
 
     this.resolve_menus(menu_i18n);
   }
@@ -345,7 +345,7 @@ class BaseData {
    */
   set_mi_euid_map_res(res) {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
-    this.mi_euid_map_res = this.set_ses_wapper(res, {});
+    this.mi_euid_map_res = _.get(res, 'data')
 
     localStorage.setItem("is_session_base_data", JSON.stringify());
     this.resolve_mi_euid_map_res();
@@ -355,7 +355,7 @@ class BaseData {
    */
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
-    let menu_info = this.set_ses_wapper(res, []);
+    let menu_info = _.get(res, 'data')
 
     let menu_old_or_nem_data_list = [...menu_info];
     this.menu_type_old_or_new = "new";
@@ -483,7 +483,7 @@ class BaseData {
     let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
-    let mi_300_obj = this.set_ses_wapper(res, []);
+    let mi_300_obj = _.get(res, 'data')
 
     // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
     this.vr_mi_config = mi_300_obj.map((item) => {
@@ -551,23 +551,9 @@ class BaseData {
     }
   }
 
-  /**
-   * 接口返回数据的 wapper
-   */
-  set_ses_wapper(res, default_value) {
-    let result = default_value;
-
-    let data = (res || {}).data;
-    // console.error(" set_ses_wapper(res.data---------", res.data);
-    if (data && (data.code == "0000000" || data.code == "200")) {
-      result = data.data;
-    }
-    // console.error(" set_ses_wapper(result------------", result);
-    return result;
-  }
   // 设置基础数据  res.data 实体
   set_base_data_res(res) {
-    this.base_data_res = this.set_ses_wapper(res, {});
+    this.base_data_res = _.get(res, 'data')
     let mids_info = [],
       menus_i18n = [],
       sp_list = [];
@@ -708,7 +694,7 @@ class BaseData {
    * @param {*} res
    */
   set_mi_tid_mids_res(res) {
-    let data = this.set_ses_wapper(res, {});
+    let data = _.get(res, 'data')
     this.mi_tid_mids_res = data;
     let db_data = [];
     _.each(Object.keys(data), (item) => {

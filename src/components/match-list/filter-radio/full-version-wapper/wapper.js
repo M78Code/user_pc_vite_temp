@@ -11,5 +11,5 @@ const component_config = {
 const wapper_config = compute_component_wapper_config(component_config);
 // const TestComponent = all_components_obj[wapper_config.use_component_key];
 // export { TestComponent };
-console.error(wapper_config);
+// console.error(wapper_config);
 export default wapper_config;

@@ -319,7 +319,6 @@ export default class MatchDataBase
         this.remove_match(mid_);
       }
     }
-    console.error('222222');
   }
 
   set_quick_query_list(list,is_merge){

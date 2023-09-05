@@ -2,25 +2,25 @@ import mitt from "mitt";
 import * as MITT_TYPES_PROJECT from "project_path/src/core/mitt/mitt-keys.js";
 import * as MITT_TYPES_DEFAULT from "./mitt-keys";
 const MITT_TYPES = Object.assign({}, MITT_TYPES_DEFAULT, MITT_TYPES_PROJECT);
-
 const emitter = new mitt();
 /**
  * 使用 mitt on方法
  * @returns {off,emit(data)}
  */
-function useMittOn(...args) {
-  const [key, fun] = args;
-  
+function useMittOn(type,callback) {
  
-  if(String(key).startsWith('EMIT_')&&MITT_TYPES[key]){
-    emitter.on.apply(emitter, args);
+  if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){
+    // console.error("mitt----------useMittOn-----   :", type);
+    emitter.on(type,callback);
     return {
-      off: () => emitter.off(key, fun),
-      emit: (data) => useMittEmit(key, data),
+      off: () => emitter.off(type, callback),
+      emit: (param) => {
+        useMittEmit(type, param)
+      },
     };
 
   }else{
-    console.error("mitt key 未注册 或者 不规范 :", key);
+    console.error("mitt type 未注册 或者 不规范 :", type);
     return{
       off:()=>{},
       emit:()=>{},
@@ -32,12 +32,13 @@ function useMittOn(...args) {
  * 使用 mitt emit方法
  *
  */
-function useMittEmit(key, data) {
-  console.log("useMittEmit", key, data);
-  if(String(key).startsWith('EMIT_')&&MITT_TYPES[key]){
-    emitter.emit(key, data);
+function useMittEmit(type, param) {
+  // console.error("mitt----------useMittEmit-----   :", type,param);
+ 
+  if(String(type).startsWith('EMIT_')&&MITT_TYPES[type]){
+    emitter.emit(type, param);
   }else{
-    console.error("mitt key 未注册 或者 不规范 :", key);
+    console.error("mitt type 未注册 或者 不规范 :", param);
   }
 
 }

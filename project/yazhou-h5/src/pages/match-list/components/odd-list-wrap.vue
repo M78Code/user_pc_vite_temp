@@ -46,7 +46,6 @@
              :class="{'f-child':standard_odd_status == 0,'r-child':standard_odd_status == 1}">
           <div class="odd-column-w" :key="hp_i_i+''+standard_odd_status" :class="{'boxing':match.csid == 12 } "
                v-for="(hp_item_obj,hp_i_i) in odd_hps_data">
-               <!-- {{ hp_item_obj }} -->
             <div class="odd-wrap-min" :class="`hp-${get_ol_length(hp_item_obj,hp_i_i)}`"
                 :key="ol_item_i" v-for="(ol_item,ol_item_i) in get_ol_list(hp_item_obj,hp_i_i)">
               <odd-column-item
@@ -576,7 +575,6 @@ const get_five_minutes_ol_list = (data) => {
       ].concat(ol_list);
     }
   }
-  // console.error(1111, ol_list);
   return ol_list;
 };
 // 罚牌玩法描述显示
@@ -726,7 +724,6 @@ const get_hp_list = (type) => {
         }
       }
     }
-    return hps;
   } else if (type == 1) {
     if (props.match && lodash.size(finally_ol_list.value) > 3) {
       if (props.match.csid == 12) {
@@ -735,8 +732,8 @@ const get_hp_list = (type) => {
         hps = finally_ol_list.value.slice(3, 6);
       }
     }
-    return hps;
   }
+  return hps;
 };
 // 获取hl的hs
 const get_hl_hs = (hp_item_obj) => {

@@ -103,19 +103,20 @@
 </template>
 
 <script setup>
-// import match_item_mixin from "src/project/yabo/mixins/match_list/match_item_mixin_new_data.js";
-// mixins: [match_item_mixin],
+
 import { ref, computed, watch } from 'vue';
 import lodash from 'lodash'
-import { t } from "src/core/index.js";
+import { t, get_match_status } from "src/core/index.js";
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-import { get_match_status } from 'src/core/index.js'
-import { utils_info } from 'src/core/utils/match-list-utils.js';
+import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 const play_name_list = ref([]);
-const match_style_obj = ref(lodash.get(this.match_list_card, `all_card_obj.mid_${this.mid}`, {}));
-;
+const match_style_obj = ref(lodash.get(MatchListCardData, `all_card_obj.mid_${this.mid}`, {}));
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
+
 
 // 其他玩法标题
 const bet_col = computed(() => {
@@ -339,7 +340,7 @@ const play_tab_click = (obj) => {
       "区域位置": "主列表"
     }
   }
-  this.match_list_card && this.match_list_card.update_match_cur_card_style(this.match.mid,play_key)
+  MatchListCardData && MatchListCardData.update_match_cur_card_style(this.match.mid,play_key)
 }
 
 /**
@@ -347,7 +348,7 @@ const play_tab_click = (obj) => {
  * @param {undefined} undefined
 */
 const fold_tab_play = () => {
-  this.match_list_card && this.match_list_card.fold_tab_play(this.match.mid)
+  MatchListCardData && MatchListCardData.fold_tab_play(this.match.mid)
 }
 </script>
 

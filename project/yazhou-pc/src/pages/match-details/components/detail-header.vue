@@ -234,7 +234,7 @@ onUnmounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      ::v-deep .icon-wrap {
+      :v-deep(.icon-wrap)  {
         // height: 15px;
         .icon-refresh {
           position: relative;
@@ -307,7 +307,7 @@ onUnmounted(() => {
     .info-upd {
       z-index: 90;
       justify-content: center;
-      ::v-deep .match_time {
+      :deep(.match_time) {
         .timer-layout2 {
           width: 100%;
           min-width: 42px;
