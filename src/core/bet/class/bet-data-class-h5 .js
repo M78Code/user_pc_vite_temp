@@ -1,8 +1,8 @@
-import {  MenuData  } from "src/core/index.js";
-import {  PageSourceData  } from "src/core/index.js";
-import { UserCtr } from "src/core/index.js";
-import BetDataCore from "src/core/bet/class/bet-data-class.js"
-class BetDataCtr extends BetDataCore {
+// import {  MenuData  } from "src/core/index.js";
+// import {  PageSourceData  } from "src/core/index.js";
+// import { UserCtr } from "src/core/index.js";
+import BetData from "src/core/bet/class/bet-data-class.js"
+class BetDataCtr extends BetData {
   constructor() {
     super()
   }

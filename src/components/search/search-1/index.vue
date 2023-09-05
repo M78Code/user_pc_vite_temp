@@ -1,28 +1,28 @@
 <!-- @Description: 搜索弹层 -->
 
 <template>
-  <div v-if="search_isShow" v-show="route.params.video_size != 1" class="serach-wrap column"
-    :style="{ right: `${(is_multi_column && is_unfold_multi_column) ? parseInt(layout_size.main_width * .3) : layout_size.right_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
-    :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
-    <search-input @set_show_type="set_show_type" :show_type="show_type" />
-    <div class="bottom-wrap col search-result relative-position">
-      <!-- 球类导航 -->
-      <div class="sports-tab" @click.stop>
-        <tab :list="sports_list" :is_show_line="true" :is_show_btn="true" tab_name_key="sportName" :padding="10"
-          @onclick="set_sports_tab_index" :currentIndex="sports_tab_index" ref="tab" />
+  <div v-if="search_isShow" class="search-position">
+    <div v-show="route.params.video_size != 1" class="serach-wrap column"
+      :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
+      :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
+      <search-input :show_type.sync="show_type" />
+      <div class="bottom-wrap col search-result relative-position">
+        <!-- 球类导航 -->
+        <div class="sports-tab" @click.stop>
+          <tab :list="sports_list" :is_show_line="true" :is_show_btn="true" tab_name_key="sportName" :padding="10"
+            @onclick="set_sports_tab_index" :currentIndex="sports_tab_index" ref="tab" />
+        </div>
+        <!-- 初始化 -->
+        <search-int class="serach-background" :show_type.sync="show_type" />
+        <!-- 搜索联想-->
+        <!-- <search-related class="serach-background" v-show="show_type == 'related'" /> -->
+        <!-- 搜球类 -->
+        <search-sports class="serach-background" :show_type.sync="show_type" ref="sports" />
+        <!-- 搜玩法 -->
+        <search-play class="serach-background" :show_type.sync="show_type" />
+        <!-- 搜索结果 -->
+        <search-result :show_type.sync="show_type" :search_csid="search_csid" />
       </div>
-      <!-- 初始化 -->
-      <search-int class="serach-background" v-show="show_type == 'init'" @set_show_type="set_show_type"
-        :show_type="show_type" />
-      <!-- 搜索联想-->
-      <!-- <search-related class="serach-background" v-show="show_type == 'related'" @set_show_type="set_show_type" /> -->
-      <!-- 搜球类 -->
-      <search-sports class="serach-background" v-show="show_type == 'sports'" @set_show_type="set_show_type"
-        ref="sports" />
-      <!-- 搜玩法 -->
-      <search-play class="serach-background" v-show="show_type == 'play'" @set_show_type="set_show_type" />
-      <!-- 搜索结果 -->
-      <search-result v-show="show_type == 'result'" @set_show_type="set_show_type" :search_csid="search_csid" />
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ import { ref, reactive, onMounted, onUnmounted } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
-import { utils, MenuData } from 'src/core/index.js'
+import { utils, MenuData, LayOutMain_pc } from 'src/core/index.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -63,9 +63,7 @@ import { api_search } from "src/api/index.js";
 /** 是否内嵌 */
 const is_iframe = ref(utils.is_iframe);
 /** 左侧列表显示形式 normal：展开 mini：收起 */
- const main_menu_toggle = ref(MenuData.main_menu_toggle)
- /** 是否可以多列玩法的菜单 */
- const is_multi_column = ref(MenuData.is_multi_column)
+const main_menu_toggle = ref(MenuData.main_menu_toggle)
 
 /** 显示类型 */
 const show_type = ref('init')
@@ -80,7 +78,7 @@ const search_csid = ref(1)
 const route = useRoute();
 
 /** stroe仓库 */
-const { searchReducer, layoutReducer,  globalReducer } = store.getState();
+const { searchReducer, layoutReducer, globalReducer } = store.getState();
 /**
  * 是否显示搜索组件 default: false
  * 路径: project_path\src\store\module\search.js
@@ -92,7 +90,6 @@ const set_search_status = (data) => (store.dispatch({
   data,
 }))
 const { off } = useMittOn(MITT_TYPES.EMIT_LAYOUT_HEADER_SEARCH_ISSHOW, (bool) => {
-  console.error('EMIT_LAYOUT_HEADER_SEARCH_ISSHOW', bool);
   search_isShow.value = bool
 })
 onUnmounted(off)
@@ -111,10 +108,10 @@ const layout_size = ref(layoutReducer.layout_size)
 */
 const is_unfold_multi_column = ref(globalReducer.is_unfold_multi_column)
 const unsubscribe = store.subscribe(() => {
-    const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
-    search_isShow.value = new_searchReducer.search_isShow
-    layout_size.value = new_layoutReducer.layout_size
-    is_unfold_multi_column.value = new_globalReducer.is_unfold_multi_column
+  const { searchReducer: new_searchReducer, layoutReducer: new_layoutReducer, globalReducer: new_globalReducer } = store.getState()
+  search_isShow.value = new_searchReducer.search_isShow
+  layout_size.value = new_layoutReducer.layout_size
+  is_unfold_multi_column.value = new_globalReducer.is_unfold_multi_column
 })
 onUnmounted(unsubscribe)
 
@@ -150,14 +147,6 @@ function set_sports_list() {
 onMounted(set_sports_list)
 
 /**
- * @Description:设置显示类型
- * @param {String} type 类型
- * @return {Undefined} Undefined
- */
-function set_show_type(type) {
-  show_type.value = type
-}
-/**
  * @Description 设置球种tab选中索引
  * @param {number} index 索引
  * @param {undefined} undefined
@@ -171,243 +160,267 @@ function set_sports_tab_index(index) {
   search_csid.value = sports_list[index_].id
 }
 
+const search_width = ref(LayOutMain_pc.layout_search_width)
+const main_width = ref(LayOutMain_pc.layout_main_width + 'px')
+/** 窗口变化 */
+function on_resize() {
+  LayOutMain_pc.set_layout_main_width()
+  LayOutMain_pc.set_layout_search_width()
+  search_width.value = LayOutMain_pc.layout_search_width
+  main_width.value = LayOutMain_pc.layout_main_width + 'px'
+}
+onMounted(() => window.addEventListener('resize', on_resize))
+onUnmounted(() => window.removeEventListener('resize', on_resize))
+
 </script>
 
 <style lang="scss" scoped>
-.serach-wrap {
-  position: absolute;
-  top: 60px;
-  left: 0px;
+.search-position {
+  position: fixed;
+  left: 0;
+  width: v-bind(main_width);
+  // right: 0;
+  top: 0;
   bottom: 0;
-  z-index: 999;
+  z-index: 10001;
 
-  .init-wrap .init-row .line,
-  .type-item .type-wrap .line {
-    background-color: var(--qq--search-text-color1);
-  }
+  .serach-wrap {
+    position: absolute;
+    top: 60px;
+    left: 0px;
+    bottom: 0;
+    z-index: 999;
 
-  &.iframe {
-    top: 50px !important;
-  }
-
-  &.hide-search {
-    height: 40px;
-    bottom: auto;
-
-    .bottom-wrap {
-      display: none;
-    }
-  }
-
-  /* 暂无数据 */
-  .load-data-wrap .empty-wrap {
-    .text-center {
-      color: var(--qq--search-text-color2);
+    .init-wrap .init-row .line,
+    .type-item .type-wrap .line {
+      background-color: var(--qq--search-text-color1);
     }
 
-    .nodata-text2 {
-      color: var(--qq--search-text-color3);
-    }
-  }
-
-  /*  搜索框包装器 */
-  .wrap-input {
-    .search-icon-container {
-      background-color: transparent;
+    &.iframe {
+      top: 50px !important;
     }
 
-    .search-icon {
-      color: rgb(171, 186, 200);
-    }
+    &.hide-search {
+      height: 40px;
+      bottom: auto;
 
-    .close-wrap {
-      &:hover {
-        color: var(--qq--search-text-color4);
+      .bottom-wrap {
+        display: none;
       }
     }
 
-    /*  搜索框内部容器 */
-    .input-wrap {
+    /* 暂无数据 */
+    .load-data-wrap .empty-wrap {
+      .text-center {
+        color: var(--qq--search-text-color2);
+      }
 
-      // .search-input {
-      //   color: #fff;
-      // }
-      .clear_input {
-        .clear_input_btn {
-          &::before {
-            color: var(--qq--search-text-color5);
-          }
-        }
+      .nodata-text2 {
+        color: var(--qq--search-text-color3);
+      }
+    }
 
+    /*  搜索框包装器 */
+    .wrap-input {
+      .search-icon-container {
+        background-color: transparent;
+      }
+
+      .search-icon {
+        color: rgb(171, 186, 200);
+      }
+
+      .close-wrap {
         &:hover {
+          color: var(--qq--search-text-color4);
+        }
+      }
+
+      /*  搜索框内部容器 */
+      .input-wrap {
+
+        // .search-input {
+        //   color: #fff;
+        // }
+        .clear_input {
           .clear_input_btn {
             &::before {
-              color: var(--qq--search-text-color6);
+              color: var(--qq--search-text-color5);
+            }
+          }
+
+          &:hover {
+            .clear_input_btn {
+              &::before {
+                color: var(--qq--search-text-color6);
+              }
             }
           }
         }
       }
     }
-  }
 
-  .bottom-wrap {
-    top: -1px;
-    background: var(--qq--search-bg-color2);
+    .bottom-wrap {
+      top: -1px;
+      background: var(--qq--search-bg-color2);
 
-    ::v-deep .serach-background {
-      background-color: var(--qq--search-bg-color3);
-      min-height: 400px;
-      overflow: hidden;
+      ::v-deep .serach-background {
+        background-color: var(--qq--search-bg-color3);
+        min-height: 400px;
+        overflow: hidden;
 
-      .init-wrap {
-        .init-row {
-          color: var(--qq--search-text-color2);
-          border-bottom-color: var(--qq--search-border-color2);
-
-          .clear-history {
+        .init-wrap {
+          .init-row {
             color: var(--qq--search-text-color2);
+            border-bottom-color: var(--qq--search-border-color2);
 
-            &:hover {
+            .clear-history {
               color: var(--qq--search-text-color2);
+
+              &:hover {
+                color: var(--qq--search-text-color2);
+              }
             }
           }
         }
-      }
 
-      .histroy-item {
-        color: var(--qq--search-text-color2);
-
-        .ellipsis {
+        .histroy-item {
           color: var(--qq--search-text-color2);
-        }
-
-        .search_deleteIcon {
-          &:before {
-            color: var(--qq--search-text-color7);
-          }
-        }
-
-        &:hover {
-          background-color: var(--qq--search-bg-color1);
-          color: var(--qq--search-text-color1);
 
           .ellipsis {
-            color: var(--qq--search-text-color1);
+            color: var(--qq--search-text-color2);
           }
 
           .search_deleteIcon {
             &:before {
-              color: var(--qq--search-text-color7-hover);
+              color: var(--qq--search-text-color7);
+            }
+          }
+
+          &:hover {
+            background-color: var(--qq--search-bg-color1);
+            color: var(--qq--search-text-color1);
+
+            .ellipsis {
+              color: var(--qq--search-text-color1);
+            }
+
+            .search_deleteIcon {
+              &:before {
+                color: var(--qq--search-text-color7-hover);
+              }
             }
           }
         }
-      }
 
-      .type-item {
-        .type-wrap {
-          border-bottom-color: var(--qq--search-border-color3);
+        .type-item {
+          .type-wrap {
+            border-bottom-color: var(--qq--search-border-color3);
 
-          .type-name {
-            color: var(--qq--search-text-color2);
-          }
-        }
-
-        .text-wrap {
-          .process-name {
-            color: var(--qq--search-text-color2);
+            .type-name {
+              color: var(--qq--search-text-color2);
+            }
           }
 
-          .score {
-            color: var(--qq--search-text-color1);
+          .text-wrap {
+            .process-name {
+              color: var(--qq--search-text-color2);
+            }
+
+            .score {
+              color: var(--qq--search-text-color1);
+            }
+
+            .timer-layout {
+              color: var(--qq--search-text-color2);
+            }
           }
 
-          .timer-layout {
-            color: var(--qq--search-text-color2);
-          }
-        }
+          .league-item {
+            .league-wrap {
+              .name-wrap {
+                .league-name {
+                  color: var(--qq--search-text-color8); //var(--qq--search-text-color2);
 
-        .league-item {
-          .league-wrap {
-            .name-wrap {
-              .league-name {
-                color: var(--qq--search-text-color8); //var(--qq--search-text-color2);
+                  &:hover {
+                    color: var(--qq--search-text-color1);
+                  }
+                }
+
+                .league-total {
+                  color: var(--qq--search-text-color2);
+                }
+              }
+            }
+
+            .match-item {
+              .team {
+                color: var(--qq--search-text-color2); //var(--qq--color-text-search-team);
 
                 &:hover {
                   color: var(--qq--search-text-color1);
                 }
               }
 
-              .league-total {
-                color: var(--qq--search-text-color2);
-              }
-            }
-          }
-
-          .match-item {
-            .team {
-              color: var(--qq--search-text-color2); //var(--qq--color-text-search-team);
-
-              &:hover {
-                color: var(--qq--search-text-color1);
-              }
-            }
-
-            .text-wrap {
-              .c-match-process {
-                .date-wrap {
-                  color: var(--qq--search-text-color2);
+              .text-wrap {
+                .c-match-process {
+                  .date-wrap {
+                    color: var(--qq--search-text-color2);
+                  }
                 }
               }
             }
           }
         }
       }
-    }
 
-    .c-keyword-related {
-      .item {
-        color: var(--qq--search-text-color2);
-        .highlight {
-          color: var(--qq--search-text-color1);
+      .c-keyword-related {
+        .item {
+          color: var(--qq--search-text-color2);
+
+          .highlight {
+            color: var(--qq--search-text-color1);
+          }
+
+          &:hover {
+            color: var(--qq--search-text-color1);
+          }
         }
-        &:hover {
-          color: var(--qq--search-text-color1);
+      }
+
+      ::v-deep .sports-tab {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        padding: 10px 0 0 30px;
+        z-index: 999;
+        /* 修改此值  需注意是否被滚球倒计时遮挡 */
+        background-color: var(--qq--search-bg-color3);
+        border-bottom: 1px solid var(--qq--search-border-color2);
+
+        .tab-item {
+          height: 38px;
+          line-height: 40px;
+          padding: 0 10px;
+          color: var(--qq--search-text-color2);
+
+          &.active {
+            color: var(--qq--search-text-color2-active);
+          }
         }
       }
     }
 
-    ::v-deep .sports-tab {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50px;
-      padding: 10px 0 0 30px;
-      z-index: 999;
-      /* 修改此值  需注意是否被滚球倒计时遮挡 */
-      background-color: var(--qq--search-bg-color3);
-      border-bottom: 1px solid var(--qq--search-border-color2);
-
-      .tab-item {
-        height: 38px;
-        line-height: 40px;
-        padding: 0 10px;
-        color: var(--qq--search-text-color2);
-
-        &.active {
-          color: var(--qq--search-text-color2-active);
-        }
-      }
+    .search-result {
+      box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
     }
-  }
 
-  .search-result {
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  &.mini {
-    top: 60px;
-    left: 63px;
+    &.mini {
+      top: 60px;
+      left: 63px;
+    }
   }
 }
 </style>

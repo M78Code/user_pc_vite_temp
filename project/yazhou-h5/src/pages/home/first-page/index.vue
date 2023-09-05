@@ -229,88 +229,7 @@
     </div>
     <!-- 跑马灯、余额 -->
 
-    <!-- 赛事框 -->
-    <div
-      class="main-content-match"
-      :style="`height:${el_height}px`"
-      ref="content"
-    >
-      <div class="match-warp" v-if="new_menu.length">
-        <div class="left-menu valid">
-          <q-scroll-area
-            :style="`height:${el_height}px`"
-            :thumb-style="thumbStyle"
-          >
-            <div
-              class="item"
-              :class="{ active: index == menu_index }"
-              v-for="(item, index) in new_menu"
-              :key="`menu-${index}`"
-              @click="change_menu(index)"
-              v-show="calc_show2(item)"
-            >
-              <span
-                class="label"
-                :class="{ is_chinise: ['zh', 'tw'].includes(get_lang) }"
-                >{{ t(`new_menu.${item.mi}`) }}</span
-              >
-              <span class="num" v-if="![407, 408, 410].includes(item.mi * 1)">{{
-                count_menu(item.sl) || ""
-              }}</span>
-            </div>
-          </q-scroll-area>
-        </div>
-        <div
-          class="match-content"
-          :class="{ fadeInUp: animation }"
-          v-if="!lodash.isEmpty(new_menu[menu_index])"
-        >
-          <q-scroll-area
-            ref="list_area"
-            :style="`height:${el_height}px`"
-            :thumb-style="thumbStyle"
-          >
-            <div
-              class="item"
-              :style="{ 'z-index': item.field1 * 3, position: 'relative' }"
-              v-for="(item, index) in new_menu[menu_index].sl || []"
-              :key="index"
-              @click="to_list(item, index)"
-              v-show="
-                !loading_done ||
-                item.ct >= 0 ||
-                (lodash.get(menu, '[menu_index].count') <= 0 &&
-                  [5, 7].includes(+item.menuType))
-              "
-            >
-              <div class="item-bg" :class="format_type(item)"></div>
-              <div
-                class="item-info"
-                :class="{ 'is-english': get_lang == 'en' }"
-              >
-                <div class="column items-center">
-                  <!-- <span class="match-type">{{t(`new_menu.${filter_meunu_desc(item.mi)}`) }}</span> -->
-                  <span class="match-type">{{
-                    filter_meunu_desc(item.mi)
-                  }}</span>
-                  <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
-                  <span class="match-label ellipsis-2-lines">{{
-                    t("home.can_bet")
-                  }}</span>
-                </div>
-              </div>
-            </div>
-            <no-data v-if="noData" :which="no_data_txt" height="500"></no-data>
-          </q-scroll-area>
-        </div>
-      </div>
-      <no-data
-        :which="no_menu_txt"
-        height="500"
-        style="padding-top: 0.6rem"
-        v-if="noMenu"
-      ></no-data>
-    </div>
+    <home_menu />
   </div>
 </template>
 
@@ -323,6 +242,7 @@ import {
   DateForMat,
   format_total_score,
 } from "src/core/format/index.js";
+import home_menu from "./menu.vue";
 // TODO:后续修改调整
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // bw3版首页websocket逻辑处理
@@ -384,8 +304,6 @@ let no_data_txt = ref("moMatch");
 //菜单无数据
 let noMenu = ref(false);
 let no_menu_txt = ref("moMatch");
-//点击动画
-let animation = ref(false);
 //滚动中的位置
 let clientY = ref(0);
 //开始滚动的位置
@@ -405,48 +323,23 @@ let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75));
 let home_timer1_ = ref(null);
 // 默认banner初始不显示
 let defaultBannerShow = ref(false);
-// 定时器变量
-let timer_1 = ref(null);
 // 展示banner loading
 let show_banner_loading = ref(true);
 let new_menu = ref([]);
-const list_area = ref(null);
 const content = ref(null);
-
 const get_home_menu_index = 1;
 const computed_store = reactive({
   get_ball_seed_menu: topMenuReducer.ball_seed_menu,
 });
-const methods_map_store = ["SET_HOME_TAB_ITEM","set_current_first_menu"].reduce((obj, type) => {
+const methods_map_store = [
+  "SET_HOME_TAB_ITEM",
+  "set_current_first_menu",
+].reduce((obj, type) => {
   obj[type] = (data) => {
     store.dispatch({ type, data });
   };
   return obj;
 }, {});
-// ...mapGetters({
-//     get_ball_seed_menu: 'get_ball_seed_menu',
-//     // 用户信息,用户金额,userId 需要监听变化
-//     user_info: "get_user",
-//     // 当前语言
-//     get_lang: 'get_lang',
-//     // 当用户未登录时返回uuid, 当用户登录时返回userId
-//     uid: "get_uid",
-//     // 用户令牌信息
-//     get_user_token: "get_user_token",
-//     // 左边菜单选中下标
-//     get_home_menu_index: "get_home_menu_index",
-//     // 首页菜单数据
-//     get_home_data: "get_home_data",
-//     // 当前主题
-//     get_theme: "get_theme",
-//     // 商户配置的图片地址和弹框信息
-//     get_banner_obj: "get_banner_obj",
-//     get_is_language_changing: "get_is_language_changing",
-//     get_last_home_tab_item: "get_last_home_tab_item",
-//     get_golistpage: 'get_golistpage',
-//     get_hot_list_item: 'get_hot_list_item',
-//     get_current_first_menu: 'get_current_first_menu' //用于获取选中的
-//   }),
 const get_banner_obj = ref({});
 watch(
   () => UserCtr.user_info.balance,
@@ -466,9 +359,6 @@ watch(
     handler = "updata_list";
   }
 );
-const count_menu = (list) => {
-  return base_data.count_menu(list);
-};
 // 请求国际化
 const get_lang_v3 = () => {
   // base_data.get_load_lang_v3(get_lang.value)
@@ -586,16 +476,7 @@ const banner_img_updata = (new_) => {
     }
   }
 };
-/**
- *@description 页面尺寸变化处理
- *@return {Undefined} undefined
- */
-const window_resize_on = () => {
-  clearTimeout(timer_1);
-  timer_1 = setTimeout(() => {
-    el_height = window.innerHeight - content.value.getBoundingClientRect().top;
-  }, 1000);
-};
+
 /**
  *@description 合并轮播图list数据
  *@return {Undefined} undefined
@@ -822,81 +703,6 @@ const sort_data = (data) => {
   }
   return data;
 };
-/**
- * @description: 切换左侧菜单
- * @param {String} index 选中下标
- * @return {}
- */
-const change_menu = (index) => {
-  // 埋点
-  let objKey = {
-    clickTime: "点击时间",
-    userName: "用户名",
-    userId: "用户ID",
-    merchantId: "商户ID",
-    languageVersion: "语言版本",
-    terminal: "访问终端",
-    eventLabel: "事件标签",
-  };
-  let _obj = {
-    [objKey.eventLabel]: "",
-    [objKey.clickTime]: DateForMat(new Date(), "yyyy-MM-dd hh:mm:ss"),
-    [objKey.userName]: lodash.get(UserCtr, "user_info.userName"),
-    [objKey.userId]: lodash.get(UserCtr, "user_info.userId"),
-    [objKey.merchantId]: lodash.get(UserCtr, "user_info.mId"),
-    [objKey.languageVersion]: lodash.get(UserCtr, "user_info.languageName"),
-    [objKey.terminal]: "H5",
-  };
-  //====================menu router
-  if (menu_index.value == index) return;
-  let mi = new_menu.value[index].mi;
-  menu_index.value = index;
-  // methods_map_store["SET_HOME_TAB_ITEM"](menu_index.value);
-  animation = false;
-  // 动画效果
-  if (home_timer1_) clearTimeout(home_timer1_);
-  home_timer1_ = setTimeout(() => {
-    animation = true;
-  }, 50);
-  // console.error(new_menu[index],"mi====")
-  // 电竞，vr一级菜单存储处理
-  if (mi == 7) {
-    methods_map_store['set_current_first_menu'](mi);
-  } else if (mi == 8) {
-    methods_map_store['set_current_first_menu'](0);
-  }
-  let newMeuRouter = {
-    //H5_首页_虚拟体育
-    8: { name: "virtual_sports", query: { home: "home" } },
-    408: {
-      name: "matchList",
-      query: {
-        m: mi,
-        token: UserCtr.user_token,
-      },
-    },
-    7: {
-      //H5_首页_电子竞技
-      name: "matchList",
-      query: {
-        m: mi,
-        token: UserCtr.user_token,
-      },
-    },
-  };
-  newMeuRouter[mi] && router.push(newMeuRouter[mi]);
-  list_area.value.setScrollPosition("vertical",0);
-
-  return;
-};
-// /**
-//  * @description: 球类id转化背景
-//  * @param {String} id 球类id
-//  * @return {}
-//  */
-const format_type = (id) => {
-  return base_data.recombine_menu_bg(id);
-};
 
 /**
  * @description 跳转列表页
@@ -907,7 +713,9 @@ const to_list = (item, index) => {
     set_new_two_menu(index);
     const euid = base_data.get_euid(item.mi);
     set_current_sub_menuid(euid);
-    methods_map_store['set_current_first_menu'](new_menu.value[menu_index.value].mi);
+    methods_map_store["set_current_first_menu"](
+      new_menu.value[menu_index.value].mi
+    );
     router.push({
       name: "matchList",
       query: {
@@ -930,18 +738,6 @@ const to_details = (item) => {
   set_goto_detail_matchid(item.mid);
   set_details_item(0);
   router.push({ name: "category", params: { mid: item.mid, csid: item.csid } });
-};
-// 计算左边菜单按钮是否展示
-const calc_show2 = (item) => {
-  if (item?.mi) {
-    if (item.mi == 7)
-      return (
-        lodash.get(UserCtr, "user_info.openEsport") &&
-        lodash.get(item, "sl").length > 0
-      ); // 电竞tob后台关闭隐藏
-    if (item.mi == 8) return lodash.get(UserCtr, "user_info.openVrSport"); // VRtob后台关闭隐藏
-    return true;
-  }
 };
 /**
  * @description: 无轮播赛事背景图片
@@ -968,18 +764,6 @@ const handleBannerError = (e) => {
     UserCtr.theme.includes("y0") ? "y0_" : ""
   }${get_lang}.png`;
 };
-onMounted(() => {
-  // 初始化菜单状态
-  // set_selector_w_m_i(0);
-  // set_date_menu_curr_i(0);
-  // set_current_sub_menuid('');
-  // set_curr_sub_menu_type('');
-  // 浏览器窗口变化事件监听
-  useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on);
-  // 保证赛事框初始高度正确
-  window_resize_on();
-});
-
 const banner_loading_url = computed(() => {
   if (UserCtr.theme.includes("y0")) {
     return "image/wwwassets/bw3/home/banner_loading_y0.gif";
@@ -1011,8 +795,6 @@ onUnmounted(() => {
   menu = [];
   //右边内容
   match_list = [];
-  clearTimeout(timer_1);
-  timer_1 = null;
 });
 
 // 展示banner loading

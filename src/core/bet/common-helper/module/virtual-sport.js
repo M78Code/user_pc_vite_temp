@@ -9,7 +9,7 @@ import UserCtr from  "src/core/user-config/user-ctr.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 // import {
 //   compute_value_by_cur_odd_type
-// } from "./bet_odds_change.js";
+// } from "src/core/format/module/format-odds-conversion-mixin.js";
 // import {
 //   get_bet_amount_param
 // } from "./bet-amount.js";

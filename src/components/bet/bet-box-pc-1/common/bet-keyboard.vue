@@ -6,7 +6,7 @@
       'key-btn-click': is_keydown,
       'big_keyboard-btn': is_big_vedio,
     }" v-for="(item, index) in keyboard_data" :data-num="item.text" :key="`xs-${index + 1}`"
-      @click.stop="keypress_handle(item, $event)" @keydown="is_keydown = true" @keyup="is_keydown = false">
+      @click="keypress_handle(item, $event)" @keydown="is_keydown = true" @keyup="is_keydown = false">
       <!--键盘按键文本显示 如果无效则置灰 以及MAX按钮文本显示-->
       <div class="keyboard-btn-text" :class="{ 'text-disable': item.disabled }"><template
           v-if="item.text != 'MAX'">+</template>{{ item.text }}</div>
@@ -20,8 +20,6 @@ import { ref } from "vue"
 import { useMittEmit,MITT_TYPES } from 'src/core/mitt/index.js'
 
 const is_keydown = ref(false)
-
-
 
 const props = defineProps({
   // 键盘数据以及默认键盘数据
@@ -74,6 +72,7 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['keypress_handle'])
 
 /**
  * @description: 键盘按下事件
@@ -83,26 +82,7 @@ const props = defineProps({
  */
 const keypress_handle = (obj, e) => {
   //投注按钮是否失效事件
-  // 如果是enter键按下则不执行
-  if (e.qKeyEvent) {
-    // 触发enter键执行
-    useMittEmit(MITT_TYPES.EMIT_ENTER_PRESS_EVENT,{ keyCode: 13 })
-    return;
-  }
-  if (!obj.disabled) {
-    if (obj.text != 'MAX') {
-      let num = obj.value;
-      let data = {
-        keyboard_object: obj,
-        number: parseFloat(num).toFixed(2)
-      };
-      // 触发键盘时间
-      useMittEmit(MITT_TYPES.EMIT_MIX_UPDATE_KEYBOARD_STATUS_HANDLE, data)
-    } else {
-      // 触发使输入框显示最大的金额
-      useMittEmit(MITT_TYPES.EMIT_BET_MIX_INPUT_MAX_MONEY)
-    }
-  }
+  emit('keypress_handle', obj)
 }
 
 </script>

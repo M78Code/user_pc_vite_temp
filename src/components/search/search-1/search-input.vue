@@ -9,24 +9,23 @@
             <!-- 搜索输入框 -->
             <input type="search" v-model="keyword" class="search-input col" v-focus="is_focus"
                 :class="{ 'key-is-empty': !keyword }" @blur="is_focus = false" @keyup.enter="submit" @input="change_txt"
-                @click="input_click" :key="'search-input-0001'" :placeholder="t('common.search')" />
+                @click="input_click" :key="'search-input-0001'" :placeholder="i18n_t('common.search')" />
             <!-- 清空输入框按钮 -->
             <span class="clear_input" @click="clear_input">
                 <icon class="cursor-pointer clear_input_btn" name="icon-failure" v-if="keyword != ''" size="12px" />
             </span>
         </div>
         <!-- 关闭搜索 -->
-        <div class="close-wrap" @click.stop="onClose">{{ t('common.close') }}</div>
+        <div class="close-wrap" @click.stop="on_Close">{{ i18n_t('common.close') }}</div>
     </div>
 </template>
   
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { t } from "src/core/index.js";
-
+import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
-// import search from "src/core/search-class/search.js"
+import search from "src/core/search-class/search.js"
 
 
 export default defineComponent({
@@ -57,7 +56,7 @@ export default defineComponent({
         //监听输入框内容改变
         watch(
             () => keyword.value,
-            () => {
+            (val) => {
                 let trimVal = val.trim();
                 if (is_focus.value) {
                     set_search_type(1)
@@ -97,7 +96,7 @@ export default defineComponent({
         function focusclick() {
             is_focus.value = true
             if (props.show_type == 'none') {
-                emit('set_show_type', 'init')
+                emit('update:set_show_type', 'init')
             }
         }
 
@@ -128,7 +127,7 @@ export default defineComponent({
          * @Description:点击关闭搜索按钮
          * @return {undefined} undefined
          */
-        function onClose() {
+        function on_Close() {
             set_search_status(false)
             // 是搜索结果页时点 关闭 需要返回上一页
             if (route.name == "search") {
@@ -174,8 +173,7 @@ export default defineComponent({
         onMounted(init)
 
         /** stroe仓库 */
-        const store_data = store.getState();
-        const { searchReducer, globalReducer } = store_data;
+        const { searchReducer, globalReducer } = store.getState();
         /** 
          * 点击的关键字 default: ''
          * 路径: project/src/store/module/search.js
@@ -187,28 +185,36 @@ export default defineComponent({
          */
         const global_click = ref(globalReducer.global_click)
 
+        const unsubscribe = store.subscribe(() => {
+            const { searchReducer: new_searchReducer, globalReducer: new_globalReducer } = store.getState();
+            click_keyword.value = new_searchReducer.click_keyword 
+            global_click.value = new_globalReducer.global_click 
+        })
+        /** 销毁监听 */
+        onUnmounted(unsubscribe)
+
         /** 保存显示搜索组件状态 */
-        const set_search_status = (data) => store.dispatch({ type: 'set_search_status', data })
+        const set_search_status = (data) => store.dispatch({ type: 'SET_SEARCH_STATUS', data })
         /** 保存联想搜索关键字 */
-        const set_related_keyword = (data) => store.dispatch({ type: 'set_related_keyword', data })
+        const set_related_keyword = (data) => store.dispatch({ type: 'SET_RELATED_KEYWORD', data })
         /** 保存搜索关键字 */
-        const set_search_keyword = (data) => store.dispatch({ type: 'set_search_keyword', data })
+        const set_search_keyword = (data) => store.dispatch({ type: 'SET_SEARCH_KEYWORD', data })
         /** 保存搜索的联赛名 */
-        const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
+        const set_click_keyword = (data) => store.dispatch({ type: 'SET_CLICK_KEYWORD', data })
         /** 保存搜索类型 */
-        const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data })
+        const set_search_type = (data) => store.dispatch({ type: 'SET_SEARCH_TYPE', data })
         /** 是否展开多列玩法 */
-        const set_unfold_multi_column = (data) => store.dispatch({ type: 'set_unfold_multi_column', data })
+        const set_unfold_multi_column = (data) => store.dispatch({ type: 'SET_UNFOLD_MULTI_COLUMN', data })
 
         //监听点击搜索关键词改变
         watch(
             () => click_keyword.value,
-            () => {
-                let keyword = res.substr(5);
-                if (keyword == keyword.value) {
-                    set_search_keyword(keyword)
+            (val) => {
+                let res = val.substr(5);
+                if (res == keyword.value) {
+                    set_search_keyword(res)
                 } else {
-                    keyword.value = res.substr(5);
+                    keyword.value = res
                 }
             }
         )
@@ -218,13 +224,13 @@ export default defineComponent({
             () => global_click.value,
             () => {
                 if (route.name != 'search') {
-                    onClose()
+                    on_Close()
                 }
             }
         )
 
         return {
-            t,
+            i18n_t,
             keyword,
             is_focus,
             route_name,
@@ -232,7 +238,7 @@ export default defineComponent({
             submit,
             focusclick,
             input_click,
-            onClose,
+            on_Close,
             clear_input
         }
     }

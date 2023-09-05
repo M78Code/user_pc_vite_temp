@@ -335,7 +335,6 @@ export default {
      * @return {undefined} undefined
      */
     before_start_timer_change(obj) {
-      debugger
       let now_time = get_remote_time();
       let match_start_time =
         parseInt(obj.tconfig.time) + parseInt(obj.timer_tmp);

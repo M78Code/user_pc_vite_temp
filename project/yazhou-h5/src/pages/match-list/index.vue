@@ -2,14 +2,6 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
-  <!-- 列表页  菜单头部组件，fixed 布局 -->
-  <sport-menu
-    class="match-main-menu"
-    v-show="$route.name == 'matchList'"
-    v-if="!['notice', 'home'].includes($route.name)"
-    :style="{ 'z-index': right_menu_show ? '503' : '501' }"
-    :class="{ 'hide-menu': $route.name != 'matchList' }"
-  ></sport-menu>
   <div class="match-main no-padding-bottom" ref="match_main">
     <!--赛事列表-->
     <div
@@ -76,16 +68,11 @@
   </div>
 </template>
 <script>
-// import sportMenu from "../sport_menu/sport-menu.vue";
-import { MenuWapper } from "src/components/menu";
 import { defineComponent } from "vue";
 import { i18n_t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 export default defineComponent({
-  components: {
-    sportMenu: MenuWapper,
-  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 由首页进入，就不在此处初始化
@@ -147,29 +134,19 @@ export default defineComponent({
 });
 </script>
 <script setup>
-import {
-  computed,
-  onBeforeMount,
-  onUnmounted,
-  onMounted,
-  watch,
-  onDeactivated,
-  onActivated,
-  ref,
-} from "vue";
+import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, onActivated, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
 import { utils } from "src/core/index.js";
 
-// import { score_switch_handle } from 'src/core/match-list-h5/match-utils/handle-score.js'
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
 import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData } from "src/core/index.js";
+import { MenuData, score_switch_handle } from "src/core/index.js";
 import matchList from "./components/match-list.vue";
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 
@@ -259,19 +236,13 @@ onMounted(() => {
   // 记录埋点，进入列表页
   utils.gtag_view_send("H5_match", "/match");
   // 详情精选赛事页需清空map折叠状态
-  // store.dispatch({ type: 'matchReducer/set_collapse_map_match',  payload: {} })
+  store.dispatch({ type: 'topMenuReducer/set_collapse_map_match',  payload: {} })
   // 事件初始化
   event_init();
 });
 
-watch(() => MatchCtrClass, () => {
-  matchCtr.value = MatchCtrClass
-}, { deep: true, immediate: true })
-
 // 详情若无热门推荐赛事，则隐藏相应内容
-watch(
-  () => match_is_empty,
-  () => {
+watch(() => match_is_empty.value, () => {
     if (props.invok_source === "detail_match_list" && is_empty) {
       useMittEmit(MITT_TYPES.EMIT_HIDE_DETAIL_MATCH_LIST, true);
     }
@@ -279,9 +250,7 @@ watch(
 );
 
 // 早盘时，并且是 足球时，执行下边操作
-watch(
-  () => MenuData.current_menu,
-  () => {
+watch(() => MenuData.current_menu, () => {
     if (MenuData.current_menu == 4 && val == "40303") {
       clearTimeout(subscription_timer1.value);
       subscription_timer1.value = setTimeout(() => {
@@ -294,9 +263,7 @@ watch(
 );
 
 // 罚牌说明展开后会跟随列表滑动，且切换页面再次进入依旧显示在列表页
-watch(
-  () => props.wrapper_scroll_top,
-  () => {
+watch(() => props.wrapper_scroll_top, () => {
     window_scrolly.value = c;
   }
 );
@@ -324,9 +291,7 @@ watch(
 // })
 
 // 菜单类型变化时，如果是收藏则以动画方式显示或隐藏页面
-watch(
-  () => MenuData.current_menu,
-  () => {
+watch( () => MenuData.current_menu, () => {
     // 切换一级菜单时记录最新时间戳
     enter_time.value = Date.now();
     // 切换一级菜单时 goto_detail_matchid置为空
@@ -336,9 +301,7 @@ watch(
 );
 
 // 筛选过滤弹层消失
-watch(
-  () => get_show_match_filter,
-  () => {
+watch( () => get_show_match_filter.value, () => {
     if (!flag) {
       // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
       subscription();
@@ -347,9 +310,7 @@ watch(
 );
 
 // 页脚子菜单
-watch(
-  () => MenuData.footer_sub_menu_id,
-  () => {
+watch( () => MenuData.footer_sub_menu_id, () => {
     if (
       (MenuData.prev_footer_sub_menu_id != curr && curr == 114) ||
       (MenuData.prev_footer_sub_menu_id != curr &&
@@ -367,9 +328,7 @@ watch(
 );
 
 // 新手版标准版切换
-watch(
-  () => get_newer_standard_edition,
-  () => {
+watch( () => get_newer_standard_edition.value, () => {
     if (MenuData.current_menu == 900) {
       //虚拟体育
       return;
@@ -386,9 +345,7 @@ watch(
 );
 
 // 投注栏弹层显示非0否则0
-watch(
-  () => get_bet_status,
-  () => {
+watch( () => get_bet_status.value, () => {
     if (c_status == 0) {
       const has_pre = lodash.findKey(BetData.bet_obj, function (o) {
         return o.show_pre;
@@ -414,15 +371,13 @@ watch(
 );
 
 // 筛选过滤弹层消失
-watch(
-  () => get_show_match_filter,
-  () => {
+watch( () => get_show_match_filter, () => {
     // 切换球种时，记录最新时间戳
     enter_time.value = Date.now();
     // 切换球种时 goto_detail_matchid置为空
-    // store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: '' })
+    store.dispatch({ type: 'detailReducer/set_goto_detail_matchid',  payload: '1111' })
     // 切换球种时 清空赛种折叠状态
-    // store.dispatch({ type: 'matchReducer/set_collapse_csid_map',  payload: {} })
+    store.dispatch({ type: 'topMenuReducer/set_collapse_csid_map',  payload: {} })
   }
 );
 
@@ -466,7 +421,7 @@ watch(
             data.referUrl = `${location.protocol}${data.referUrl}`;
 
             useMittEmit(MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC, data);
-            // store.dispatch({ type: 'matchReducer/set_preload_animation_url',  payload: true })
+            store.dispatch({ type: 'videoReducer/set_preload_animation_url',  payload: true })
           });
           // 获取相应动画加载资源后跳出循环
           break;
@@ -526,7 +481,7 @@ const event_init = () => {
   //获取列表页赛事数据
   match_detail_m_list_init();
   // 图标出错与mid映射，初始化为空
-  // store.dispatch({ type: 'matchReducer/set_img_error_map_mid',  payload: {} })
+  store.dispatch({ type: 'matchReducer/set_img_error_map_mid',  payload: {} })
   // window.vue.scroll_list_wrapper_by = use_router_scroll().scroll_list_wrapper_by
   // 去除参数
   if (!location.search.includes("keep_url")) {
@@ -564,7 +519,7 @@ const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
   MatchPage.del();
   matchCtr.value.init();
-  // store.dispatch({ type: 'matchReducer/set_last_time_sub_menu_type',  payload: '' })
+  store.dispatch({ type: 'topMenuReducer/set_last_time_sub_menu_type',  payload: '' })
 
   clear_timer();
   off_listeners();
