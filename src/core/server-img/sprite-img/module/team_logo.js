@@ -29,13 +29,12 @@ const config = {
  * @returns
  */
 function compute_position(position) {
- 
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
   const x_space = 0; //每张图的间距 x
 
-  const height = 28; //表示是 纵 向
+  const height = position[2]? 46: 28; //表示是 纵 向
   const y_space = 10; //每张图的间距 y
    //如果使用本地图片 position的索引1位真的时候  
   const _v = item[position[1]];
@@ -53,6 +52,7 @@ function compute_position(position) {
  * @returns
  */
 function compute_css({ position, theme }) {
+  console.log(position,'position');
   // debugger
   //从打包的 环境拿 图片地址
   let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);

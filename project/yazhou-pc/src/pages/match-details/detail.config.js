@@ -646,7 +646,7 @@ export const useGetConfig = () => {
   const get_category_list = (callback) => {
     //sportId 球类id、mid 赛事id
     let params = { sportId: route.params.csid, mid: route.params.mid };
-
+    
     const _obj = {
       axios_api: api_details.get_category_list,
       error_codes: ["0401038"],
@@ -655,12 +655,13 @@ export const useGetConfig = () => {
         if (!MatchDataWarehouseInstance.value) {
           return;
         }
-        const code = lodash.get(res, "data.code");
+        
+        const code = lodash.get(res, "code");
         if (code == "0400500") {
           emit_autoset_match(0);
           return;
         }
-        const data = lodash.get(res, "data.data");
+        const data = lodash.get(res, "data");
         if (code === 200 && data.length) {
           state.category_list = data;
           state.handicap_this['category_list'] = data
@@ -785,6 +786,7 @@ export const useGetConfig = () => {
    * 传递玩法列表的数据给到玩法集
    */
   const set_handicap_this = (_this) => {
+    
     state.handicap_this = _this;
   };
 
@@ -876,7 +878,7 @@ export const useGetConfig = () => {
     state.handicap_state = n;
     state.match_details = [];
   };
-
+ 
   onMounted(() => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
@@ -925,6 +927,14 @@ export const useGetConfig = () => {
     // });
     // 返回背景图
     useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg);
+    //获取tab数据
+    useMittOn(MITT_TYPES.EMIT_SET_HANDICAP_THIS, (e)=>{
+      
+      set_handicap_this(e)
+      console.log(e);
+    }
+     
+    )
   });
 
   onUnmounted(() => {

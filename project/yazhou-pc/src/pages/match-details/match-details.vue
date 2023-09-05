@@ -89,7 +89,7 @@ import vScrollArea from "project_path/src/components/v-scroll-area/v-scroll-area
 import detailHeader from "./components/detail-header.vue";
 // 组件
 // 盘口模板
-// import matchHandicap from "src/components/match-detail/match_handicap/match_handicap.vue";
+import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import matchListHot from "project_path/src/pages/match-list/match_list_hot.vue";
 import { useGetConfig } from "./detail.config";
 const {

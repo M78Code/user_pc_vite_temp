@@ -325,7 +325,6 @@ export default {
           res.msc.S170 = this.default;
         }
         if (get_match_status(res.ms) && ["6", "7"].includes(res.mmp)) {
-          debugger
           this.timestamp = parseInt(res.mst);
           this.start_timer();
         }
