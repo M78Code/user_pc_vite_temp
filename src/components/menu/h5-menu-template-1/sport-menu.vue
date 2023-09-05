@@ -177,7 +177,7 @@
 // TODO: 后续修改调整
 // import { mapMutations, mapGetters} from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import setMenu from "project_path/src/components/common/set-menu.vue";
+// import setMenu from "project_path/src/components/common/set-menu.vue";
 import sub_menu_specially from "./footer-menu.vue";
 import {utils } from 'src/core/index.js';
 import {ref,onMounted ,watch,onUnmounted} from 'vue'
