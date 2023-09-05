@@ -34,7 +34,7 @@
       <div
         class="menu-inner"
         @click.stop=""
-        :style="{ width: `${calc_width}px`,background:'#393939' }"
+        :style="{ width: `${calc_width}px`,background:'#fff' }"
       >
         <!-- 关闭按钮 -->
         <div class="close-wrap">

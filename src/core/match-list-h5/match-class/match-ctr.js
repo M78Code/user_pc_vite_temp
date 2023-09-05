@@ -3,7 +3,7 @@
 /*
  * @Description:列表页面赛事信息操作类-实现快速检索,修改等功能
  */
-
+import { ref } from 'vue'
 import lodash from 'lodash'
 
 class MatchCtr {
@@ -1204,4 +1204,7 @@ class MatchCtr {
   }
 }
 
-export default new MatchCtr()
+// export default new MatchCtr()
+
+const MatchCtrResponsive = ref(new MatchCtr())
+export default MatchCtrResponsive.value

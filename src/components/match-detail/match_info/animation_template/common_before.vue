@@ -4,58 +4,158 @@
  * @Description: 公共赛前组件
 -->
 <template>
-  <div class="before" v-if="isRouterAlive" >
-    <div class="content" :style="{'background-color': is_eports_csid(match_info.csid) ? 'transparent' : '', 'box-shadow': is_eports_csid(match_info.csid) ? 'none' : '0 1px 15px 0 rgba(0, 0, 0, 0.3)'}" :class="{'dota-resize': is_eports_csid(match_info.csid)}">
+  <div class="before" v-if="isRouterAlive">
+    <div
+      class="content"
+      :style="{
+        'background-color': is_eports_csid(match_info.csid)
+          ? 'transparent'
+          : '',
+        'box-shadow': is_eports_csid(match_info.csid)
+          ? 'none'
+          : '0 1px 15px 0 rgba(0, 0, 0, 0.3)',
+      }"
+      :class="{ 'dota-resize': is_eports_csid(match_info.csid) }"
+    >
       <div class="team">
         <!-- 主队 开始-->
         <div class="home">
           <!-- 主队名 -->
-          <div class="team_name home-name allow-user-select" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:2}">{{lodash.get(match_info,'mhn')}}</div>
+          <div
+            class="team_name home-name allow-user-select"
+            v-tooltip="{ content: lodash.get(match_info, 'mhn'), overflow: 2 }"
+          >
+            {{ lodash.get(match_info, "mhn") }}
+          </div>
           <div class="img-wrap">
-            <img
+            <!-- <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]'),lodash.get(match_info,'csid')])"
               class="team_logo"
               alt
-            />
-            <img
+            /> -->
+            <div
+              :style="
+                all_fn.team_logo({
+                  position: [
+                    lodash.get(match_info, 'mhlu[0]'),
+                    lodash.get(match_info, 'frmhn[0]'),
+                    lodash.get(match_info, 'csid'),
+                  ],
+                  theme: 'locationUrl',
+                })
+              "
+              class="team_logo"
+            ></div>
+            <!-- <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
               v-if="!is_eports_csid(match_info.csid) && (lodash.get(match_info,'mhlu') && lodash.get(match_info,'mhlu').length>1)"
               v-img="([lodash.get(match_info,'mhlu[1]'),lodash.get(match_info,'frmhn[1]'),lodash.get(match_info,'csid')])"
               class="team_logo logo-double"
               alt
-            />
+            /> -->
+            <div
+              v-if="
+                !is_eports_csid(match_info.csid) &&
+                lodash.get(match_info, 'mhlu') &&
+                lodash.get(match_info, 'mhlu').length > 1
+              "
+              :style="
+                all_fn.team_logo({
+                  position: [
+                    lodash.get(match_info, 'mhlu[1]'),
+                    lodash.get(match_info, 'frmhn[1]'),
+                    lodash.get(match_info, 'csid'),
+                  ],
+                  theme: 'locationUrl',
+                })
+              "
+              class="team_logo logo-double"
+            ></div>
           </div>
         </div>
         <!-- 主队 结束 -->
         <!-- 开赛时间 S-->
         <div class="match_time">
-          <match-date class="match_time-text" :match_props="{match:match_info}"></match-date>
+          <match-date
+            class="match_time-text"
+            :match_props="{ match: match_info }"
+          ></match-date>
           <!-- 中立场 -->
           <div class="neutral-wrap" v-if="match_info.mng">
-            <span class="icon-neutral q-icon c-icon"><span class="path1"></span><span class="path2"></span></span>
+            <span class="icon-neutral q-icon c-icon"
+              ><span class="path1"></span><span class="path2"></span
+            ></span>
           </div>
         </div>
         <!-- 开始时间 E -->
         <!-- 客队 S -->
         <div class="away">
           <div class="img-wrap">
-            <img
+            <!-- <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]'),lodash.get(match_info,'csid')])"
+              v-img="[
+                lodash.get(match_info, 'malu[0]'),
+                lodash.get(match_info, 'frman[0]'),
+                lodash.get(match_info, 'csid'),
+              ]"
               class="team_logo"
               alt
-            />
-            <img
+            /> -->
+            <div
+              :style="
+                all_fn.team_logo({
+                  position: [
+                    lodash.get(match_info, 'malu[0]'),
+                    lodash.get(match_info, 'frman[0]'),
+                    lodash.get(match_info, 'csid'),
+                  ],
+                  theme: 'locationUrl',
+                })
+              "
+              class="team_logo"
+            ></div>
+            <!-- <img
               src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-              v-if="!is_eports_csid(match_info.csid) && lodash.get(match_info,'malu') && lodash.get(match_info,'malu').length>1"
-              v-img="([lodash.get(match_info,'malu[1]'),lodash.get(match_info,'frman[1]'),lodash.get(match_info,'csid')])"
+              v-if="
+                !is_eports_csid(match_info.csid) &&
+                lodash.get(match_info, 'malu') &&
+                lodash.get(match_info, 'malu').length > 1
+              "
+              v-img="[
+                lodash.get(match_info, 'malu[1]'),
+                lodash.get(match_info, 'frman[1]'),
+                lodash.get(match_info, 'csid'),
+              ]"
               class="team_logo logo-double"
               alt
-            />
+            /> -->
+            <div
+              v-if="
+                !is_eports_csid(match_info.csid) &&
+                lodash.get(match_info, 'malu') &&
+                lodash.get(match_info, 'malu').length > 1
+              "
+              :style="
+                all_fn.team_logo({
+                  position: [
+                    lodash.get(match_info, 'malu[1]'),
+                    lodash.get(match_info, 'frman[1]'),
+                    lodash.get(match_info, 'csid'),
+                  ],
+                  theme: 'locationUrl',
+                })
+              "
+              class="team_logo logo-double"
+            ></div>
           </div>
           <!-- 客队名 -->
-          <div class="team_name away-name allow-user-select" v-tooltip="{content:lodash.get(match_info,'man'),overflow:2}">{{lodash.get(match_info,'man')}}</div>
+          <div
+            class="team_name away-name allow-user-select"
+            v-tooltip="{ content: lodash.get(match_info, 'man'), overflow: 2 }"
+          >
+            {{ lodash.get(match_info, "man") }}
+          </div>
         </div>
         <!-- 客队 E -->
       </div>
@@ -64,12 +164,14 @@
 </template>
 
 <script>
+import all_fn from "src/core/server-img/sprite-img/index.js";
 import common_before from "./common_before";
 export default {
   mixins: [common_before],
   data() {
     return {
-      isRouterAlive: true,//重载页面开关
+      all_fn,
+      isRouterAlive: true, //重载页面开关
     };
   },
   methods: {
@@ -135,15 +237,15 @@ export default {
         justify-content: center;
         width: 20%;
         margin: 0 10px;
-        .neutral-wrap{
+        .neutral-wrap {
           display: flex;
           justify-content: center;
         }
-        ::v-deep .c-match-date{
+        ::v-deep .c-match-date {
           min-width: 58px;
           padding: 0 0;
         }
-        .c-match-process{
+        .c-match-process {
           justify-content: center;
         }
       }
@@ -196,6 +298,7 @@ export default {
         .team_logo {
           max-width: 46px;
           max-height: 46px;
+          height: 46px;
           &.logo-double {
             margin-left: -8px;
           }

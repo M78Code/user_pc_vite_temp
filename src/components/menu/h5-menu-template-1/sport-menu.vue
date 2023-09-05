@@ -371,37 +371,39 @@ import { UserCtr } from "src/core/index.js";
     }
     // 初始化菜单数据
     const initialize_menu_data = async (type) => {
+      console.log('test',type)
       if(new_main_menu_index != 1 || type == 'matchBack'){
         prev_main_menu_i = -1
       }
       // 如果所有菜单数据 有缓存，则走缓存
       // 如果有get_home_data 数据，则走缓存, 更快的渲染，或者菜单出错时，可以走得通
-      if(get_home_data.length > 0){
-        await get_results_menu()
-        // await base_data.get_load_lang_v3()
-        let new_menu = base_data.recombine_menu(get_home_data,'sort',sub_menu_list);
-        [new_menu[0],new_menu[1]] = [new_menu[1],new_menu[0]]
-        new_main_menu_list_items = new_menu
-        pop_main_select_items = lodash.filter(new_main_menu_list_items,item=>{return ![1,7,8].includes(item.mi) })
-        // 数据替换
-        if(get_selector_w_m_i){
-          let m_selected = pop_main_select_items[get_selector_w_m_i]
-          let new_menu1 = new_main_menu_list_items
-          new_menu1.forEach((item,index) =>{
-            if(item.mi == m_selected.mi){
-              [new_menu1[1],new_menu1[index]] = [new_menu1[index],new_menu1[1]]
-              new_main_menu_list_items = new_menu1
-            }
-          })
-        }
-      }
-      let menu_2 = get_new_two_menu
-      sub_menu_changed(menu_2)
+      // if(get_home_data.length > 0){
+      //   await get_results_menu()
+      //   // await base_data.get_load_lang_v3()
+      //   let new_menu = base_data.recombine_menu(get_home_data,'sort',sub_menu_list);
+      //   [new_menu[0],new_menu[1]] = [new_menu[1],new_menu[0]]
+      //   new_main_menu_list_items.value = new_menu
+      //   pop_main_select_items = lodash.filter(new_main_menu_list_items.value,item=>{return ![1,7,8].includes(item.mi) })
+      //   // 数据替换
+      //   if(get_selector_w_m_i){
+      //     let m_selected = pop_main_select_items[get_selector_w_m_i]
+      //     let new_menu1 = new_main_menu_list_items.value
+      //     new_menu1.forEach((item,index) =>{
+      //       if(item.mi == m_selected.mi){
+      //         [new_menu1[1],new_menu1[index]] = [new_menu1[index],new_menu1[1]]
+      //         new_main_menu_list_items.value = new_menu1
+      //       }
+      //     })
+      //   }
+      // }
+      // let menu_2 = get_new_two_menu
+      // sub_menu_changed(menu_2)
       // 调用接口，更新菜单数据
-      call_the_interface_to_update_the_menu_data()
+      // call_the_interface_to_update_the_menu_data()
       // TODO: 后续修改调整
-      $forceUpdate()
+      // $forceUpdate()
     }
+    initialize_menu_data('matchBack')
     // 菜单首次加载，一级菜单，二级菜单 数据，都在这里赋值
     const menu_first_load = (res_data, type) => {
       // 主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据
@@ -575,7 +577,7 @@ import { UserCtr } from "src/core/index.js";
     const sub_menu_changed = async (index = 0, is_dir_click,sub) => {
       // console.error('二级菜单点击',menu_1_type)
       utils.modify_dom_classname('scroll-container-w', 'scroll-container-w')
-      const menu_item = new_main_menu_list_items[new_main_menu_index];
+      const menu_item = new_main_menu_list_items.value[new_main_menu_index];
       // 重复点击
       if(is_dir_click == 'dir_click' && sub_menu_i == index) return
       if(!menu_item) return
@@ -767,7 +769,7 @@ import { UserCtr } from "src/core/index.js";
       let m_selected = pop_main_select_items[i];
 
       // 当前选择的面板的值，赋值给 一级菜单 中间位置 “今日”
-      new_main_menu_list_items[1] = lodash.cloneDeep(m_selected)
+      new_main_menu_list_items.value[1] = lodash.cloneDeep(m_selected)
 
       // 调用中间的 主菜单切换逻辑
       main_item_clicked(1, type, 'is_selected',m_items);
@@ -789,7 +791,7 @@ import { UserCtr } from "src/core/index.js";
      * 一级菜单 点击全部
      */
     const select_all_sub_menu_handle = () => {
-      let data_list = new_main_menu_list_items[new_main_menu_index].sl
+      let data_list = new_main_menu_list_items.value[new_main_menu_index].sl
       let changeSubmenu = null
       // 重置上一次储存二级菜单下标
       sub_menu_i = null;
@@ -816,7 +818,7 @@ import { UserCtr } from "src/core/index.js";
     }
     // 计算滚球数量
     const all_sport_count_calc = () => {
-      let data = new_main_menu_list_items[new_main_menu_index]
+      let data = new_main_menu_list_items.value[new_main_menu_index]
       if(data && data.mi == 1){
           let num = 0
           data.sl.forEach(item =>{
@@ -968,7 +970,6 @@ import { UserCtr } from "src/core/index.js";
         skip_menu_type();
       }
     })
-
     //监听路由跳转 信息
     watch(() => route, (to, from) => {
       if( from.name != 'matchList' && to.name == 'matchList'){

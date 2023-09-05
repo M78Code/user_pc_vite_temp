@@ -13,7 +13,7 @@
       theme02: UserCtr.theme.includes('theme02'),
     }" :style="{ 'min-height': `${get_menu_type == 100 ? list_wrap_height : match_list_wrapper_height}rem` }">
       <!-- 循环内部有多个dom时,为了减少最终dom数,可以循环template 当要v-for与v-if同时使用在一个dom上时,可以使用template -->
-      <template v-for="(scrollItem, index) of data_list">
+      <template v-for="(scrollItem, index) of data_source">
         <div v-if="scrollItem" class="s-w-item" :key="scrollItem.flex_index" :index="index"
           :class="{ static: is_static_item, last: index == data_source.length - 1 }" :style="{
             transform: `translateY(${is_static_item ? 0 : get_match_top_by_mid(scrollItem.mid)}rem)`,
@@ -75,45 +75,18 @@ const get_menu_type = ref(MenuData.get_menu_type())
 const get_current_menu = ref(MenuData.current_menu)
 const get_curr_sub_menu_type = ref(MenuData.current_lv_2_menu.type)
 
-const data_list = ref([])
-
 onMounted(() => {
-  setTimeout(() => {
-    data_list.value = props.matchCtr.list
-  }, 1000)
   test.value = sessionStorage.getItem('wsl') == '9999';
   // 详情页以外的列表才设置最小高度
   if (props.main_source !== 'detail_match_list') {
     list_wrap_height = 8;
   }
 })
-watch(() => props.matchCtr, () => {
-  data_list.value = props.matchCtr.list
-}, { immediate: true, deep: true })
 
-// ...mapMutations([
-//   'set_list_scroll_direction',
-// ]),
 const get_index_f_data_source = (mid) => {
   return lodash.findIndex(props.matchCtr.match_list_data_sources, { mid });
 }
-/**
- * 滚动是否到达底部(非节流)
- */
-const get_to_bottom_space_syn = () => {
-  // 距离底部小于100时,认为已滚到底部
-  if (get_to_bottom_space < 100) {
-    if (is_arrived_bottom != 1) {
-      //触发到达底部逻辑
-      is_arrived_bottom = 1;
 
-    } else {
-      //已经在底部,不触发到达底部逻辑
-    }
-  } else {
-    is_arrived_bottom = 0;
-  }
-}
 /**
  * @description: 页面滚动事件处理函数
  * @param {Undefined}
@@ -126,8 +99,6 @@ const window_scrolling = () => {
     client_height: +splited[1],
     scroll_height: +splited[2],
   };
-  // 滚动 是否 到了底部
-  // get_to_bottom_space_syn();
 
   let now = new Date().getTime();
   // 1向上滑,  -1向下滑,滚动方向
@@ -167,7 +138,7 @@ const get_is_show_footer_animate = () => {
   } else if (scroll_dir < 0) {
     scroll_dir = -1;
   }
-  set_list_scroll_direction(scroll_dir);
+  store.dispatch({ type: 'matchReducer/set_list_scroll_direction',  payload: scroll_dir })
   prev_frame_poi = scroll_top;
 }
 /**

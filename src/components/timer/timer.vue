@@ -10,7 +10,7 @@
 <template>
   <div class="timer-layout">
     <span class="timer-layout0">{{ time_str_old }}</span>
-    <span class="timer-layout2">{{ time_str }}===2</span>
+    <span class="timer-layout2">{{ time_str }}</span>
   </div>
 </template>
 <script>
@@ -105,7 +105,6 @@ export default {
       return that;
     },
     set_date_time(e) {
-      debugger
       if (!this.timer_status) {
         return;
       }

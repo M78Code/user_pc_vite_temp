@@ -355,3 +355,6 @@ export const EMIT_SET_MATCH_LIST_SCROLL_TOP = 'EMIT_SET_MATCH_LIST_SCROLL_TOP'
 // ------------------------------------------------------------------视频相关-----------------------------------------------------------------------------------
 /** 关闭视频播放窗口 */
 export const EMIT_VIDEO_ZONE_EVENT_CMD = 'EMIT_VIDEO_ZONE_EVENT_CMD'
+
+/**  详情tab玩法列表数据 */
+export const EMIT_SET_HANDICAP_THIS = 'EMIT_SET_HANDICAP_THIS'
