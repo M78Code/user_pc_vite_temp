@@ -96,7 +96,7 @@ export default defineComponent({
         function focusclick() {
             is_focus.value = true
             if (props.show_type == 'none') {
-                emit('set_show_type', 'init')
+                emit('update:set_show_type', 'init')
             }
         }
 

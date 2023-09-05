@@ -1,7 +1,7 @@
 <!-- @Description: 搜索球类 -->
 
 <template>
-    <div class="sports-wrap" @click.stop>
+    <div v-show="show_type == 'sports'" class="sports-wrap" @click.stop>
         <!-- 球类导航 -->
         <div class="sports-tab">
             <tab :is_show_line="true" :is_show_btn="true" :list="sports_list" :padding="10" @onclick="tab_click"
@@ -21,6 +21,14 @@ import { ref, reactive } from 'vue'
 import { TabWapper as Tab } from "src/components/common/tab"
 
 import store from "src/store-redux/index.js";
+
+const props = defineProps({
+    show_type: {
+        type: String,
+        default: ''
+    }
+})
+// const emit = defineEmits(['update:set_show_type'])
 
 /** 当前球种索引 */
 const tab_index = ref(0)

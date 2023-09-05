@@ -1,7 +1,7 @@
 <!-- @Description: 搜索结果 -->
 
 <template>
-    <div class="result-wrap">
+    <div v-show="show_type == 'result'" class="result-wrap">
         <!-- 无数据 -->
         <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
             <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
@@ -72,7 +72,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['set_show_type'])
+const emit = defineEmits(['update:set_show_type'])
 
 /** 国际化 */
 
@@ -118,7 +118,7 @@ const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data
  */
 function league_click(league) {
     // search.insert_history(league.league_name)
-    emit('set_show_type', 'none')
+    emit('update:set_show_type', 'none')
     router.push({
         name: 'search',
         params: {
@@ -153,17 +153,17 @@ const timer = ref(null)
  */
 function get_search_result(keyword, is_loading) {
     if (!keyword) {
-        emit('set_show_type', 'init')
+        emit('update:set_show_type', 'init')
         return
     }
     //调用接口前先设置加载状态
     if (is_loading) {
         load_data_state.value = 'loading'
     }
-    // emit('set_show_type','result')
+    // emit('update:set_show_type','result')
     //调用接口获取获取搜索结果数据
     // search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
-    //     emit('set_show_type', 'result')
+    //     emit('update:set_show_type', 'result')
     //     load_data_state.value = load_data_state
     //     list.value = list
     //     let _ref_scroll = scroll.value;
@@ -201,7 +201,7 @@ watch(
     () => keyword.value,
     (res) => {
         if (search_type.value == 2) {
-            emit('set_show_type', 'none')
+            emit('update:set_show_type', 'none')
         } else {
             get_search_result(res.substr(5))
         }

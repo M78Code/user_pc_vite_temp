@@ -1,7 +1,7 @@
 <!-- @Description: 搜索面板初始化 -->
 
 <template>
-    <div class="wrap-init" @click.stop>
+    <div v-show="show_type == 'init'" class="wrap-init" @click.stop>
         <div style="height:50px"></div>
         <div class="init-wrap " v-if="histroy_data.length > 0">
             <div class="init-row">
@@ -76,7 +76,7 @@ const props = defineProps({
         default: ''
     }
 })
-const emit = defineEmits(['set_show_type'])
+const emit = defineEmits(['update:set_show_type'])
 
 /** 国际化 */
 
@@ -89,8 +89,8 @@ const hot_data = ref([])
 //显示类型改变
 watch(
     () => props.show_type,
-    (res) => {
-        if (res == 'init') {
+    (bool) => {
+        if (bool == 'init') {
             init()
         }
     }
@@ -163,7 +163,7 @@ function delete_histroy(keyword, index) {
  * @return {undefined} undefined
  */
 function other_search(type) {
-    emit('set_show_type', type)
+    emit('update:set_show_type', type)
 }
 
 /**
