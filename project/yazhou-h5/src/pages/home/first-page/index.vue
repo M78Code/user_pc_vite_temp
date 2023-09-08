@@ -780,7 +780,7 @@ const filter_meunu_desc = computed(() => {
 });
 onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu).off;
-  useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off;
+  // useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_on).off;
   useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data).off;
 
   if (home_timer1_) {
