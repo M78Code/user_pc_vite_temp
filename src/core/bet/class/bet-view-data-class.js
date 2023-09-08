@@ -91,6 +91,7 @@ class BetViewData {
     }
 
     this.bet_view_version = ref('11')
+
   }
   /**
    * 计算确定按钮显示
@@ -109,7 +110,7 @@ class BetViewData {
 
   // 设置当前 投注页面显示 版本
   set_bet_view_version(){
-    this.bet_view_version = Date.now()
+    this.bet_view_version.value = Date.now()
   }
 
   // 设置 金额的范围  -1:输入金额小于最低限额时，1: 输入金额超出最大限额时 2:输入金额超出用户余额时 3:用户余额是小于等于输入金额(转换后)
@@ -134,6 +135,19 @@ class BetViewData {
     this.bet_min_max_money = bet_amount
 
     this.set_bet_view_version()
+  }
+
+  // 设置投注状态
+  // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
+  set_bet_order_status(code){
+    this.bet_order_status = code
+    this.set_bet_view_version()
+  }
+  // 设置提示信息 
+  // code code码
+  // status 成功失败
+  set_bet_error_code({code,status}){
+    
   }
 }
 export default new BetViewData();

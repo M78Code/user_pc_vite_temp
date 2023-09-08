@@ -37,20 +37,21 @@
         </bet-mix-show> -->
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
-        <!-- <template v-if="btn_show == 1 || mixnew_bet || part_bet">
+        <template v-if="btn_show == 1 || mixnew_bet || part_bet">
           <div v-show="btn_show == 1 && !mixnew_bet || part_bet">
             <div v-for="(item, index) in series_order_respList" :key="index">
               <betSuccessBar :item_="item" @update_money="update_money" :query_order_obj="query_order_obj"
                 :len='series_order_respList.length'></betSuccessBar>
             </div>
           </div>
-        </template> -->
+        </template>
 
         <!-- 串关主体 金额输入框-->
-        <!-- <template v-if="get_mix_bet_flag && ![3, 6].includes(+get_bet_status)">
+        <template>
           <bet-mix-detail :value_="item" :index_="index" v-for="(item, index) of get_s_count_data" :key="index"
-            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit"></bet-mix-detail>
-        </template> -->
+            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit">
+          </bet-mix-detail>
+        </template>
 
         <!-- 多项单注 金额输入框-->
         <!-- <template v-if="!BetData.bet_is_mix && BetData.bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
@@ -106,7 +107,8 @@
       <template v-else>
         <div class="yb_px14 row items-center yb_fontsize12"
           :class="tips_msg ? 'justify-center err-msg' : 'justify-end err-msg2'"
-          :style="{ 'min-height': BetData.is_bet_success_status ? '0.38rem' : '0.3rem' }" @touchmove.prevent @click="nothing">
+          :style="{ 'min-height': BetData.is_bet_success_status ? '0.38rem' : '0.3rem' }" @touchmove.prevent
+          @click="nothing">
           <template v-if="tips_msg"><span class="text-center yb_py4">{{ (tips_msg) }}</span></template>
           <template v-else-if="!tips_msg && [1, 2, 7].includes(+get_bet_status)">
             <!-- 左， 合并投注项 -->
@@ -167,7 +169,7 @@
             <!-- 投注 -->
             <div class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
           </template>
           <template v-else>
@@ -175,12 +177,12 @@
             <div v-if="btn_show == 0" @click="submit_order" :class="{ 'set-opacity': get_money_notok_list.length }"
               class="row justify-center items-center content-center">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 投注 有投注项失效后点击接受变化的置灰样式-->
             <div v-if="btn_show == 5" class="row justify-center items-center content-center set-opacity">
               <p class="yb_fontsize12 yb_mr10">{{ $t('bet_record.bet_val') }}</p>
-              <p class="yb_fontsize20">{{  format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
+              <p class="yb_fontsize20">{{ format_money2(BetData.bet_money_total.toFixed(2)) }}</p>
             </div>
             <!-- 确定 -->
             <p v-if="btn_show == 1" @click="pack_up" class="yb_fontsize16">{{ $t('common.ok') }}</p>
@@ -204,9 +206,9 @@
 <script setup>
 // import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
-// import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
+import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
-// import betSuccessBar from 'src/components/bet/components/bet_success_bar.vue';
+import betSuccessBar from 'src/components/bet/components/bet_success_bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
 import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
 // import ballSpin from 'src/components/bet/components/ball_spin.vue';
@@ -219,33 +221,71 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr } from "src/core/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import lodash from 'lodash'
+
+// ...mapGetters(["get_update_tips", "get_odds_change", "get_mix_bet_flag", "get_money_total", "get_s_count_data", "get_bet_list", "get_is_accept", "get_order_ing", "get_is_spread", 
+// "get_is_mix", "get_m_id_list", "get_bet_obj", "get_bet_status",
+//       "get_money_notok_list", "get_user", "get_detail_data", "get_is_show_settle_tab", "get_change_list", "get_active_index", "get_keyboard_show", "get_new_bet", "get_order_los",
+//       "get_order_suc", "get_money_notok_list2", "get_theme", "get_used_money", "get_is_champion", "get_invalid_ids", "get_cannot_mix_len", "get_is_combine", "get_bet_success"]),
 
 
 const bet_keyboard_show = ref(true)
-const hide_bet_series_but = () =>{
-    let res = false;
-    // 单关时,获取投注列表数据
-    if(!BetData.bet_is_mix && lodash.get(BetData,'bet_list.length')){
-      // 遍历投注列表数据,检测是否红猫赛事
-      for (let i = 0; i < BetData.bet_list.length; i++) {
-        // 获取投注项id
-        let id = lodash.get(BetData,`bet_list[${i}]`);
-        // 获取投注项的数据源
-        let cds = lodash.get(BetData,`bet_obj[${id}].bs.cds`);
-        if(cds == "C01"){
-          // C301赛事时,隐藏串关按钮
-          res = true;
-          break;
-        }
+const scroll_box = ref()
+const series_order_respList = ref([])
+const award_total = ref()
+
+const hide_bet_series_but = () => {
+  let res = false;
+  // 单关时,获取投注列表数据
+  if (!BetData.bet_is_mix && lodash.get(BetData, 'bet_list.length')) {
+    // 遍历投注列表数据,检测是否红猫赛事
+    for (let i = 0; i < BetData.bet_list.length; i++) {
+      // 获取投注项id
+      let id = lodash.get(BetData, `bet_list[${i}]`);
+      // 获取投注项的数据源
+      let cds = lodash.get(BetData, `bet_obj[${id}].bs.cds`);
+      if (cds == "C01") {
+        // C301赛事时,隐藏串关按钮
+        res = true;
+        break;
       }
     }
-    return res;
+  }
+  return res;
 }
 
-onMounted(()=>{
-  console.error(',1111111111',BetViewDataClass)
+// 投注成功，最高可赢 滚动条需下拉到底
+const update_scroll_top = () => {
+  if (scroll_box.value) {
+    scrollTop.value = scrollTop.value.scrollHeight
+  }
+}
+
+const max_win_money_emit = (val) => {
+  award_total.value = val
+}
+
+/**
+    * 串关时检查是否有C01赛事
+    */
+const is_bet_check_rc = () => {
+  let res = false;
+  if (this.get_is_mix && this.get_bet_list.length > 1) {
+    // 串关时
+    for (let i = 0; i < this.get_bet_list.length; i++) {
+      // 检测是否C01赛事
+      if (_.get(this.get_bet_obj, `[${this.get_bet_list[i]}].cs.cds`) == "C01") {
+        res = true;
+        break;
+      }
+    }
+  }
+  return res;
+}
+
+onMounted(() => {
+  console.error(',1111111111', BetViewDataClass)
 })
 </script>
 <style lang="scss" scoped>

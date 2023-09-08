@@ -9,7 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div>{{ BetViewDataClass.bet_view_version }}</div>
+   
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="ref_data.match_type != 3">
@@ -118,6 +118,12 @@
       </div>
     </q-card-section>
 
+    <div v-if="BetViewDataClass.bet_order_status == 2">投注中</div>
+    <div v-if="BetViewDataClass.bet_order_status == 3">投注成功</div>
+    <div v-if="BetViewDataClass.bet_order_status == 4">投注失败</div>
+
+    
+
     <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')" >
       <template
         v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(BetViewDataClass.error_code)">
@@ -129,6 +135,8 @@
         {{ $t('common.betting') }}
       </template>
     </div>
+
+    <div style="margin-top:20px">{{ BetViewDataClass.bet_view_version }} -- {{ BetViewDataClass.bet_order_status }}</div>
 
     <!-- <div class="mask-appointment" v-if="is_forward != index && is_forward != -1"></div> -->
 
