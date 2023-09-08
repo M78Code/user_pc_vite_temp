@@ -8,7 +8,7 @@ export  const  component_symbol = 'PlayMatchType'
 export  const need_register_props = {
   card_style_obj: {
     type: Object,
-    default: {  },
+    default: () => {},
   },
 }
 

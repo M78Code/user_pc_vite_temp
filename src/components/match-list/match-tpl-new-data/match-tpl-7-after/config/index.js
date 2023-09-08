@@ -4,11 +4,11 @@ export  const  component_symbol = 'MatchTpl7After'
 export  const need_register_props = {
   match: {
     type: Object,
-    default: {  },
+    default: () => {},
   },
   NewMenu: {
     type: Object,
-    default: {  },
+    default: () => {},
   }
 }
 

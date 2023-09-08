@@ -10,6 +10,7 @@ export * from "./module/format-api";
 export * from "./module/format-msc";
 export * from "./module/format-odds-conversion-mixin.js";
 export * from "./module/format-currency.js";
+export * from "./module/format-i18n.js";
 
 // export * from "./module/format-odds-conversion-mixin.js";
 

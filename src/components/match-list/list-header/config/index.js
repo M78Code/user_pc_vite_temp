@@ -20,7 +20,7 @@ export  const need_register_props = {
   },
   NewMenu: {
     type: Object,
-    default: {  },
+    default: () => {},
   }
 }
 
