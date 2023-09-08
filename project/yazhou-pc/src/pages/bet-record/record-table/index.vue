@@ -412,7 +412,7 @@ import tableOptions from "./table-options.vue"; // 选项组件
 import { PaginationWapper } from "src/components/pagination/index.js"; // src/components/pagination/index.js
 import { useTableData } from "./use-table-data.js";
 import { i18n_t } from "src/core/index.js";
-import { formatTime,format_balance,format_score_t } from "src/core/format/index";
+import { formatTime,format_balance,format_score_t } from "src/core/format/index.js";
 import loadData from "project_path/src/components/load-data/load-data.vue"
 import {defineExpose, watch } from 'vue';
 import UserCtr from "src/core/user-config/user-ctr.js";

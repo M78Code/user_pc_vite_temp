@@ -386,7 +386,9 @@ function navigate(obj) {
     searchParams.set('t', new Date().getTime());
     let url_temp_p = searchParams.toString();
     // 组合url参数
-    url = '/' + (url_temp_p ? ('?' + url_temp_p) : '') + url.substr(url.indexOf('#/'))
+    // TODO: 临时调试用
+    // let win_url = window.location.href.replace('/home', '/bet_record')
+    url = // '/' + (url_temp_p ? ('?' + url_temp_p) : '') + url.substr(url.indexOf('#/'))
 
     show_record(
       url,
@@ -436,7 +438,38 @@ function navigate(obj) {
     location.href = url;
   }
 }
-
+/**
+   * 打开注单历史窗口
+   */
+  const show_record = (
+    path,
+    _window_height,
+    _window_width,
+    _window_offset_top,
+    _window_offset_left
+  ) => {
+    UserCtr.show_fail_alert();
+    if (UserCtr.is_invalid) {
+      return;
+    }
+    if (!UserCtr.get_user()) {
+      set_show_login_popup({
+        isShow: true,
+        redirect: "bet_order_history",
+      });
+    } else {
+      window.open(
+        path,
+        "",
+        `height=${_window_height}, width=${_window_width}, top=${_window_offset_top}, left=${_window_offset_left}, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no,fullscreen=no`
+      );
+    }
+  }
+  /** 保存显示搜索组件状态 */
+const set_show_login_popup = (data) => store.dispatch({
+    type: 'SET_SHOW_LOGIN_POPUP',
+    data
+})
 </script>
 
 <!-- <style lang="scss" scoped>
