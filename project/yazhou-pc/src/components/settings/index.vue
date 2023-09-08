@@ -66,7 +66,7 @@
                                         <div v-if="languageList.includes(language)" :key="index"
                                             class="child-item ellipsis relative-position"
                                             :class="[{ active: UserCtr.lang == language }]" @click="on_click_lang(language)">
-                                            <span :class="['flag', language]"></span>{{ i18n_langs[language] }}
+                                            <span :class="['flag', language]" :style="sprite_img['pc-popup-language-icon-image']({position: language, theme: 'local'})"></span>{{ i18n_langs[language] }}
                                             <i v-if="UserCtr.lang == language" class="icon-triangle3 q-icon c-icon arrow-show"></i>
                                         </div>
                                     </template>
@@ -95,6 +95,7 @@ import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 // import userCtr from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
 // import { update_bet_item_info as virtual_common_update_bet_item_info } from 'src/core/common-helper/virtual_common.js'
@@ -403,51 +404,9 @@ function handle_set_theme(theme) {
             width: 14px;
             height: 10px;
             display: inline-block !important;
-            background-image: url('/public/yazhou-pc/image/png/lang_flag.png');
-            background-position-x: 0;
             background-repeat: no-repeat;
             background-size: 100%;
             margin-right: 6px;
-
-            &.en {
-                background-position-y: -15px;
-            }
-
-            &.tw {
-                background-position-y: -30px;
-            }
-
-            &.vi {
-                background-position-y: -45px;
-            }
-
-            &.ms {
-                background-position-y: -60px;
-            }
-
-            &.th {
-                background-position-y: -75px;
-            }
-
-            &.ad {
-                background-position-y: -90px;
-            }
-
-            &.md {
-                background-position-y: -105px;
-            }
-
-            &.ry {
-                background-position-y: -120px;
-            }
-
-            &.pty {
-                background-position-y: -135px;
-            }
-
-            &.hy {
-                background-position-y: -150px;
-            }
         }
 
         i.arrow-show {
