@@ -9,7 +9,7 @@
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
         <router-view />
-        <betMixBox />
+        <!-- <betMixBox /> -->
       </q-page-container>
     </q-layout>
   </div>

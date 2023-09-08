@@ -114,7 +114,7 @@ import matchContainer from "./match-container.vue";  // 赛事组件，用于赛
 import v_match_container from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
 // import match_container_champion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
 // import match_container_result from "./match-container-result.vue" // 赛果冠军
-import scrollWrapper from 'project_path/src/components/common/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
+import scrollWrapper from 'project_path/src/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { MenuData } from "src/core/index.js"

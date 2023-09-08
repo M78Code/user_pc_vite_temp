@@ -3,7 +3,7 @@
 -->
 <template>
   <MenuWapper></MenuWapper>
-  <div class="match-main no-padding-bottom" ref="match_main">
+  <div class="match-main no-padding-bottom" :style="page_style" ref="match_main">
     <!--赛事列表-->
     <div
       class="match-list-container"
@@ -152,6 +152,8 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MenuData, score_switch_handle } from "src/core/index.js";
 import matchList from "./components/match-list.vue";
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
+import { compute_css_var_style } from 'src/core/theme/index.js'
+import matchCssVariable from 'project_path/src/css/component/match.js'
 
 const props = defineProps({
   invok_source: String,
@@ -167,6 +169,7 @@ const enter_time = ref("");
 const match_main = ref(null);
 const match_list = ref(null);
 const scroll_top = ref(null);
+const page_style = ref(null);
 const match_list_container = ref(null);
 const emitters = ref({});
 
@@ -226,6 +229,10 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+  page_style.value = compute_css_var_style("match")
+  
+  page_style.value = compute_css_var_style(matchCssVariable)
+
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;
   }

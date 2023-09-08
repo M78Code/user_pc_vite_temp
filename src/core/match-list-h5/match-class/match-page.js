@@ -400,8 +400,7 @@ class MatchPage {
     // params.gcuuid = this.send_gcuuid;
     //调用接口
     let fun_temp = () => {
-      api_func(params).then(response => {
-        const res = response.data
+      api_func(params).then(res => {
         // if(this.send_gcuuid != res.gcuuid) return;
         let mid_first = Array.isArray(mid) ? mid[0] : mid;
         if (MatchCtr && MatchCtr.mid_obj && MatchCtr.mid_obj[mid_first] &&
@@ -511,7 +510,7 @@ class MatchPage {
             //   MatchCtr.setList([])
             // }
             MatchListCardClass.is_close_load()
-            MatchListCardClass.set_match_list_page_data(res.data, cb);
+            MatchListCardClass.set_match_list_page_data(res, cb);
             return
           }
           if (lodash.get(res, 'code') == '0401038') {

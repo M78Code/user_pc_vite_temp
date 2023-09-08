@@ -227,9 +227,7 @@ watch(() => odds_value.value, () => {
   get_odd_append_value(odd_item.value);
 })
 
-watch(() => props.match, (newValue) => {
-  // console.log(newValue.hps)
-  // console.log(props.odd_field)
+watch(() => props.match, () => {
   let ol_list = get_ollist_no_close(props.odd_field);
   if(ol_list.length > 0){
     if([18,19].includes(+lodash.get(props.current_tab_item, 'id'))){
