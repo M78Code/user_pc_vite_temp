@@ -48,9 +48,6 @@ export default defineComponent({
     },
     setup(props, { emit }) {
 
-        /** 国际化 */
-        
-
         /** 输入关键字 */
         const keyword = ref('')
         //监听输入框内容改变
@@ -106,9 +103,9 @@ export default defineComponent({
          */
         function input_click() {
             is_focus.value = true
-            const keyword = keyword.value.trim();
+            const val = keyword.value.trim();
             set_search_type(1)
-            set_search_keyword(keyword)
+            set_search_keyword(val)
         }
 
         const route = useRoute()
@@ -155,13 +152,12 @@ export default defineComponent({
             } else {
                 route_name.value = route.name;
             }
-            set_search_type(2)
+            // set_search_type(2)
             set_click_keyword(route.params.keyword || '')
-            // TODO: search.js
-            // if (search.back_keyword.keyword) {
-            //     set_search_type(1)
-            //     set_click_keyword(search.back_keyword.keyword)
-            // }
+            if (search.back_keyword.keyword) {
+                set_search_type(1)
+                set_click_keyword(search.back_keyword.keyword)
+            }
             //输入框获得焦点
             nextTick(() => {
                 if (route.name != 'search') {
@@ -196,7 +192,7 @@ export default defineComponent({
         /** 保存显示搜索组件状态 */
         const set_search_status = (data) => store.dispatch({ type: 'SET_SEARCH_STATUS', data })
         /** 保存联想搜索关键字 */
-        const set_related_keyword = (data) => store.dispatch({ type: 'SET_RELATED_KEYWORD', data })
+        // const set_related_keyword = (data) => store.dispatch({ type: 'SET_RELATED_KEYWORD', data })
         /** 保存搜索关键字 */
         const set_search_keyword = (data) => store.dispatch({ type: 'SET_SEARCH_KEYWORD', data })
         /** 保存搜索的联赛名 */

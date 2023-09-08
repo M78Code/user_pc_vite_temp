@@ -10,8 +10,9 @@ import { api_search } from "src/api/index.js";
 import  store  from "src/store-redux/index.js"
 import { i18n_t} from "src/core/index.js"
 // import BetCommonHelper from "src/core/bet/common-helper/index.js"
-import lodash from 'lodash'
+import lodash, { reject } from 'lodash'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { resolve } from "licia/Promise";
 
 
 export default {
@@ -41,33 +42,28 @@ export default {
   * @Description:获取搜索结果
   * @param {string} keyword 搜索关键词
   * @param {number} csid 球种ID
-  * @param {function} callback 回调函数
   * @return {undefined} undefined
   */
-	get_search_result(keyword,csid,callback){
-    let params = {
-      keyword,
-      cuid:UserCtr.get_uid(),
-      pageNumber:1,
-      rows:200,
-      isPc:true,
-      searchSportType:csid
-    }
-    api_search.get_search_result(params).then( res => {
-      // let sports_list = this.get_result_sports_list(res)
-      // let list = this.get_result_list(lodash.get(sports_list,'[0].id'))
-      let list = this.get_result_data(res)
-      let load_data_state = ''
-      if(list.length == 0){
-        load_data_state = 'empty'
-      }else{
-        load_data_state = 'data'
+	get_search_result(keyword,csid){
+    return new Promise((resolve, reject) => {
+      let params = {
+        keyword,
+        cuid:UserCtr.get_uid(),
+        pageNumber:1,
+        rows:200,
+        isPc:true,
+        searchSportType:csid
       }
-      callback(load_data_state,list)
-    }).catch( err => {
-      console.error(err);
-      callback('empty',[],[])
-    });
+      api_search.get_search_result(params).then( res => {
+        // let sports_list = this.get_result_sports_list(res)
+        // let list = this.get_result_list(lodash.get(sports_list,'[0].id'))
+        const list = this.get_result_data(res)
+        const state = list.length == 0 ? 'empty' : 'data'
+        resolve({state,list})
+      }).catch(() => {
+        reject('empty',[])
+      })
+    })
   },
   /**
   * @Description:接口获取搜索后，重新组装搜索数据
@@ -77,9 +73,9 @@ export default {
   */
   get_result_data(res,csid){
     let list = []
-    let bowling_list = lodash.get(res,'data.data.data.bowling') || []
-    let league_list = lodash.get(res,'data.data.data.league') || []
-    let team_list = lodash.get(res,'data.data.data.team') || []
+    let bowling_list = lodash.get(res,'data.data.bowling', [])
+    let league_list = lodash.get(res,'data.data.league', [])
+    let team_list = lodash.get(res,'data.data.team', [])
 
     //滚球数据
     if(bowling_list.length > 0){
@@ -231,8 +227,7 @@ export default {
       isPc:1
     }
     api_search.get_history_search(params).then( res => {
-      
-      let data = lodash.get(res, "data.data") || [];
+      let data = lodash.get(res, "data") || [];
       if (data.length > 0) {
         callback(data)
       }

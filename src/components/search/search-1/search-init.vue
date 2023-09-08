@@ -1,7 +1,7 @@
 <!-- @Description: 搜索面板初始化 -->
 
 <template>
-    <div v-show="show_type == 'init'" class="wrap-init" @click.stop>
+    <div class="wrap-init" @click.stop>
         <div style="height:50px"></div>
         <div class="init-wrap " v-if="histroy_data.length > 0">
             <div class="init-row">
@@ -135,7 +135,6 @@ function get_hot_search() {
  */
 function get_history() {
     search.get_history(data => {
-        console.error('get_history', data);
         histroy_data.value = data
     })
  
@@ -163,7 +162,7 @@ function delete_histroy(keyword, index) {
  * @return {undefined} undefined
  */
 function other_search(type) {
-    emit('update:set_show_type', type)
+    emit('update:show_type', type)
 }
 
 /**
