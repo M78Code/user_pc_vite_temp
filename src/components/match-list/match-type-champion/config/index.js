@@ -8,11 +8,11 @@ export  const  component_symbol = 'MatchTypeChampion'
 export  const need_register_props = {
   card_style_obj: {
     type: Object,
-    default: {  },
+    default: () => {},
   },
   NewMenu: {
     type: Object,
-    default: {  },
+    default: () => {},
   }
 }
 

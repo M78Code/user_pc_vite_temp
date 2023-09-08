@@ -37,6 +37,7 @@ export const useConfig = () => {
     },
   ];
   const betRecord = ref(null)
+  const filter_box = ref(null)
   const state = reactive({
     day_time: "", //今日时间
     startDateSearch: "", // 开始时间
@@ -81,14 +82,19 @@ export const useConfig = () => {
     orderNo_book: [],
     tips: {
       //自定义提示
-      statu: false, //显隐
+      //显隐
+      statu: false, 
       message: "",
     },
-    has_confirm_status: "", //设置确认中状态为true
+    //设置确认中状态为true
+    has_confirm_status: "", 
     getBook_gcuuid: '',
     // 用户信息
     toolSelected: 0,
-    is_pre_bet: 'false', // 提前结算勾选
+    // 提前结算勾选
+    is_pre_bet: 'false', 
+    // 开始时间展示
+    startTimeShow: false, 
   });
   watch(
     () => state.model,
@@ -112,9 +118,9 @@ export const useConfig = () => {
    * @param {undefined} undefined
    * @returns {undefined}
    */
-  //   get_global_click() {
-  //     this.startTimeShow = false;
-  //     this.show_select_time_sort = false
+  // const get_global_click = () => {
+  //     state.startTimeShow = false;
+  //     state.show_select_time_sort = false
   //   }
 
   /**
@@ -634,7 +640,7 @@ const resetParams = (type) => {
  * @description: 点击时间排序
  * @param {Object} sort 选中时间排序数据对象
  */
-const time_sort = () => {
+const time_sort = (sort) => {
   localStorage.setItem("time_sort_record", JSON.stringify(sort));
   let od_page = state.params.page;
   // match_sort_show = false;
@@ -650,8 +656,10 @@ const time_sort = () => {
   } else {
     getOrderList();
   }
+  console.error(filter_box);
 };
 
+// 点击预约注单方法
 const check_change = (value) => {
   console.log(value);
   let list = value.split(",");
@@ -739,8 +747,9 @@ const getOrderList = (isScoket, callback) => {
           data.orderStatus = state.params.orderStatus;
           let record_list = data.records;
           if (!record_list) {
+            // 已结算注单没有提前结算时的逻辑
             state.data_state.load_data_state = "empty";
-            // betRecord.value.recordData.total = "0";
+            betRecord.value.recordData.total = "0";
             return;
           }
           let new_record_obj = get_obj(record_list, data);
@@ -811,7 +820,7 @@ const getBookList = (callback) => {
     page: state.params.page,
     size: state.params.size,
     jumpFrom: 2,
-    preOrderStatusList: state.preOrderStatusList,
+    preOrderStatusList: preOrderStatusList,
   };
   state.getBook_gcuuid = uid();
   param_obj.gcuuid = state.getBook_gcuuid;
@@ -832,7 +841,7 @@ const getBookList = (callback) => {
         let record_list = data.records;
         if (!record_list) {
           clear_timer_get_book();
-          data_state.load_data_state = "empty";
+          state.data_state.load_data_state = "empty";
           return;
         }
         let record_obj = get_obj(record_list, data);
@@ -845,11 +854,11 @@ const getBookList = (callback) => {
           state.order_list.records.length == 0
         ) {
           clear_timer_get_book();
-          data_state.load_data_state = "empty";
+          state.data_state.load_data_state = "empty";
         } else {
           // 预约中开启定时器，不是则关闭
-          if (is_book_status.includes("0")) {
-            state.orderNo_book = lodash.map(thorder_list.records, "orderNo");
+          if (state.is_book_status.includes("0")) {
+            state.orderNo_book = lodash.map(state.order_list.records, "orderNo");
             res_timer_get_book();
           } else {
             state.orderNo_book = "";
@@ -911,6 +920,9 @@ const get_obj = (record_list, data) => {
   //   ( 待改造)
   onMounted(() => {
     getOrderList()
+    useMittOn(MITT_TYPES.EMIT_CHANGE_CHECK, (val) => {
+      check_change(val)
+    })
   });
 
   onUnmounted(() => {
@@ -926,9 +938,12 @@ const get_obj = (record_list, data) => {
 
   return {
     ...toRefs(state),
+    filter_box,
+    uid,
+    betRecord,
+    record_time_sort,
     clear_timer_get_cashout,
     clear_timer_get_book,
-    record_time_sort,
     set_search_time,
     res_timer_get_cashout,
     delete_book_record,
@@ -936,7 +951,6 @@ const get_obj = (record_list, data) => {
     check_confirm_complete,
     get_order_no,
     get_balance,
-
     getBookList,
     get_obj,
     getOrderList,
@@ -948,7 +962,6 @@ const get_obj = (record_list, data) => {
     search_pre_record,
     toolClicked,
 
-    uid,
-    betRecord,
+    
   };
 };

@@ -13,19 +13,31 @@
   
 <script setup>
 
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import lodash from 'lodash';
+
+import MenuData from 'src/core/menu-pc/menu-data-class.js'
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 import { t } from "src/core/index.js";
 import store from 'src/store-redux/index.js'
 
 let state = store.getState();
+let match_list_data = ref(null);
 
+setTimeout(() => {
+  match_list_data.value = MatchListCardData
+}, 1000)
 const route = useRoute()
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-const vx_cur_menu_type = ref(state.menusReducer.cur_menu_type)
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  card_style_obj: {
+    type: Object,
+    default: () => {},
+  },
+})
 const cur_title_info = computed(() => {
   let { card_type = 'no_start_title', csna, match_count } = props.card_style_obj;
   let func_name = 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_zaopan_gunqiu_zhedie'
@@ -33,8 +45,8 @@ const cur_title_info = computed(() => {
     //球种标题
     sport_title: {
       name: csna,
-      match_count: lodash.get(this.match_list_data, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
-      show_num: vx_cur_menu_type.type_name != "winner_top" && route.name != "search",
+      match_count: lodash.get(match_list_data, `sport_match_count.csid_${props.card_style_obj.csid}.count`),
+      show_num: MenuData.menu_root != 400 && route.name != "search",
       func_name: 'recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_sportid_zhedie'
     },
     //滚球标题

@@ -174,6 +174,10 @@ class MatchListCard {
     return MatchListCardData.all_card_obj
   }
 
+  get_match_card_sticky_top() {
+    return MatchListCardData.sticky_top
+  }
+
   /**
    *   other_params  其他 附加参数
    * @Description 打印数据  调试用

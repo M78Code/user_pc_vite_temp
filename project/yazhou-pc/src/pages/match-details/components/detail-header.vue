@@ -66,7 +66,6 @@
     </template>
     <!-- 赛事基本信息 end -->
     <!-- 玩法tab条 -->
-    {{ handicap_this }}11
     <handicap-tabs-bar
       ref="handicap_tabs_bar"
       :handicap_this="handicap_this"

@@ -107,7 +107,6 @@
       </div>
     </div>
     <!-- refresh || 404 -->
-    {{cur_state + '+++++' + is_eports}}
     <div
       class="refresh fit"
       v-if="cur_state == 'refresh' || cur_state == '404'"

@@ -7,7 +7,7 @@
 <template>
   <div>
     <!-- 勾选框 和 提前结算-->    
-    <div v-if="toolSelected === 0 && UserCtr.user_info.settleSwitch">
+    <div v-if="toolSelected === 0 && settleSwitch">
       <!-- 勾选框 -->
       <div class="date-time-choice checkbox" @click="search_pre_record">
         <filter-checkbox-full-version-wapper
@@ -41,7 +41,7 @@
       <div
         class="date-time-choice checkbox"
         @click="search_pre_record"
-        v-if="UserCtr.user_info.settleSwitch"
+        v-if="settleSwitch"
       >
         <filter-checkbox-full-version-wapper
           :checked="is_pre_bet"
@@ -51,6 +51,7 @@
         <!-- 提前结算 -->
       </div>
       <!-- 默认排序 -->
+      
       <div class="sort-content">
         <div class="select-btn sort-btn yb-flex-center relative-position">
           <div
@@ -89,6 +90,7 @@
         </div>
       </div>
       <!-- 查询和日期选择器 -->
+      {{startDateSearch + '+++' + endDateSearch}}
       <div class="date-time-choice">
         <div class="search-date-wrapper start-time-wrap">
           <div class="date-wrap" @click.stop="startTimeShowFunc">
@@ -111,7 +113,7 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
-            <!-- v-model="model" -->
+            v-model="model"
             <q-date
               v-icon="{
                 'chevron_left': 'icon-arrow-left',
@@ -132,7 +134,7 @@
       </div>
     </div>
     <!-- 预约注单tab 进行中 已取消 预约失败  勾选框 -->
-    <div v-if="toolSelected === 2 && UserCtr.user_info.settleSwitch">
+    <div v-if="toolSelected === 2 && settleSwitch">
       <!-- 勾选框 -->
       <div class="checkbox">
         <!--联赛筛选单选框组件-->
@@ -162,7 +164,8 @@ const props = defineProps({
   startDateSearch: String,
   endDateSearch: String,
   model: Object,
-});
+  settleSwitch: Number
+  });
 const reload = inject('reload')
 // 日历多语言配置
 const locale = {
@@ -260,6 +263,7 @@ const chooseTime = (i) => {
  * @returns {undefined}
  */
 const selectSortShowFunc = () => {
+  
   show_select_time_sort.value = !show_select_time_sort.value;
   startTimeShow.value = false;
   endTimeShow.value = false;
@@ -285,6 +289,8 @@ const startTimeShowFunc = () => {
  * @param {Object} sort 选中时间排序数据对象
  */
 const time_sort = (sort) => {
+  show_select_time_sort.value = !show_select_time_sort.value;
+  endTimeShow.value = !endTimeShow.value;
   emit("time_sort", sort);
 };
 </script>

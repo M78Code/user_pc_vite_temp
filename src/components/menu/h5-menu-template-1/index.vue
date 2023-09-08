@@ -1,20 +1,19 @@
 <template>
   <div class="menu-container">
     <ul class="menu-container-lv1">
-      <li v-for="(item, index) in menu_list">
-        <span @click="setMenu(item)">
-          {{ menu_obj.lv_1_menu_map[item.mi] || item.mi }}
-          {{ t(`new_menu.${item.mi}`)  }}
-          </span
-        >
+      <li v-for="(item, index) in menu_list" :key="item.mi">
+        <span @click="setMenu(item, index)">
+          {{ i18n_t("new_menu." + item.mi) || item.mi }}
+        </span>
       </li>
     </ul>
     <ul class="menu-container-lv2">
-      <li v-for="(item, index) in current_menu.sl">
-        <span @click="setMenuItem(item)">
+      <li v-for="(item, index) in current_menu.sl" :key="item.mi">
+        <span @click="setMenuItem(item, index)">
           {{
-            base_data.menus_i18n_map[menu_obj.recombine_menu_desc(item.mi)] ||
-            ""
+            base_data.menus_i18n_map[
+              menu_h5_data.recombine_menu_desc(item.mi)
+            ] || ""
           }}<i>{{ item.ct }}</i>
         </span>
       </li>
@@ -22,38 +21,41 @@
   </div>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
-import { t } from "src/core/index.js";;
-import menu_obj from "src/core/menu-h5/menu-data-class.js";
+import { onMounted, ref, watch } from "vue";
+import GlobalAccessConfig from "src/core/access-config/access-config.js";
+import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
+import base_data from "src/core/base-data/base-data.js";
+import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
+import lodash from "lodash";
+base_data.init(); //初始化菜单数据
 const props = defineProps({
   // 菜单配置
   menu_config: {
     type: Object,
     default: () => {},
   },
-  base_data: {
-    type: Object,
-    default: () => {},
-  },
 });
-let current_menu = ref({sl:[],mi:101});
-//选中的球类
-let current_menu_item = ref("");
-let menu_list = ref([]);
-let e_uid = ref("");
-onMounted(() => {
-  menu_list.value = menu_obj.recombine_menu(props.base_data.mew_menu_list_res);
-  setMenu(menu_list.value[0]);
+let menu_list = ref(menu_h5_data.menu_list || []);
+let current_menu = ref({});
+watch(base_data.base_data_version, () => {
+  const { mew_menu_list_res } = base_data; //获取主数据
+  menu_list.value = menu_h5_data.recombine_menu(mew_menu_list_res);
+  console.error(111, menu_list.value);
+  current_menu.value = menu_list.value[0];
 });
-//选中二级菜单
-const setMenuItem = (item) => {
-  current_menu_item.value = item;
-  menu_obj.set_current_lv2_menu(item);
-};
-const setMenu = (item) => {
+/**
+ * 一级菜单事件
+ */
+function setMenu(item, index) {
   current_menu.value = item;
-  menu_obj.set_current_menu(item);
-};
+  menu_h5_data.set_current_menu(item);
+}
+/**
+ * 二级菜单事件
+ */
+function setMenuItem(item, index) {
+  menu_h5_data.set_current_lv2_menu(item);
+}
 </script>
 <style lang="scss">
 .menu-container-lv1 {

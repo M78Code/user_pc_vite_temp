@@ -153,7 +153,7 @@ onMounted(get_list)
 .notice_main {
     overflow: hidden;
 
-    ::v-deep.notice_tabs {
+    :deep(.notice_tabs) {
         &.loading {
             opacity: 0;
         }

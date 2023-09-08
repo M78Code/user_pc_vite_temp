@@ -62,9 +62,11 @@ class MenuData {
         return 0;
       }
     }
-    return menu_list.reduce((pre, cur) => {
-      return pre + cur.ct;
-    }, 0);
+    return menu_list&&menu_list.reduce
+      ? menu_list.reduce((pre, cur) => {
+          return pre + cur.ct;
+        }, 0)
+      : 0;
   }
   // 当前选中的菜单type
   get_menu_type() {
@@ -433,15 +435,14 @@ class MenuData {
         }
       });
     });
-    const new_data= [
+    this.menu_list = [
       ...new_menu,
       menu_dianjing,
       { mi: 8 },
       menu_jingzu,
       // result_menu,
-    ]
-    this.menu_list = new_data
-    return new_data;
+    ];
+    return this.menu_list;
   }
   //选中一级menu
   set_current_menu(item) {

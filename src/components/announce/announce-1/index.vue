@@ -159,7 +159,7 @@ onMounted(get_list)
         color: #5a6074;
         padding: 30px;
 
-        ::v-deep .load-data-wrap {
+        :deep(.load-data-wrap ) {
             height: 75vh !important;
 
             .empty-wrap {

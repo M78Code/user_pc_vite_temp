@@ -62,12 +62,10 @@ export const useTableData = ({ props, emit }) => {
   });
 
   const { ctx } = getCurrentInstance()
-  console.error(props);
   //   ====================watch======================================
   watch(
     () => props.order_list,
     (val) => {
-      console.error(val);
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,
@@ -664,6 +662,8 @@ export const useTableData = ({ props, emit }) => {
         }
         // 获取出初始化数据
         get_init_data(confirm_data);
+      }).catch(err => {
+        console.error(err);
       });
     } else {
       // 获取出初始化数据

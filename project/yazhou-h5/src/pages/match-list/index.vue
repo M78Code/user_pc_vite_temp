@@ -2,6 +2,7 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
+  <MenuWapper></MenuWapper>
   <div class="match-main no-padding-bottom" ref="match_main">
     <!--赛事列表-->
     <div
@@ -72,6 +73,8 @@ import { defineComponent } from "vue";
 import { i18n_t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
+import { MenuWapper } from "src/components/menu";
+
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
     next((vm) => {

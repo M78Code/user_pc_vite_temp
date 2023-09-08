@@ -85,7 +85,7 @@ function sub_click(item, index) {
         background-color: var(--qq--announce-left-menu-bg-color2);
     }
 
-    ::v-deep .q-scrollarea__thumb {
+    :deep(.q-scrollarea__thumb) {
         width: 7px;
         right: -11px;
     }

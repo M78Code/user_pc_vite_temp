@@ -80,15 +80,16 @@ const props = defineProps({
   }
 })
 
-setTimeout(() => {
-  console.log('123934324234', MatchListCardData.get_match_all_card_obj()[props.card_key]);
-  card_style_obj.value = MatchListCardData.get_match_all_card_obj()[props.card_key]
-}, 1000)
 // 卡片样式对象
 const card_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.card_key])
+const sticky_top = ref(null)
 // 组件是否加载完成
 const is_mounted = ref(false);
 const vx_get_layout_size = ref(state.layoutReducer.layout_size)
+setTimeout(() => {
+  card_style_obj.value = MatchListCardData.get_match_all_card_obj()[props.card_key]
+  sticky_top.value = MatchListCardData.get_match_card_sticky_top();
+}, 1000)
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
@@ -98,12 +99,12 @@ const card_style = computed(() => {
   let card_style = ''
   // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
   if(['sport_title','play_title','no_start_title'].includes(card_style_obj.value.card_type)){
-    let top = MatchListCardData.sticky_top.type
+    let top = sticky_top.value?.type || 0
     card_style = `top:${top - 0.5}px;`
   }
   // 如果是联赛标题卡片  设置联赛吸顶
   else if(['league_title','champion_league_title'].includes(card_style_obj.value.card_type)){
-    let top = MatchListCardData.sticky_top.league
+    let top = sticky_top.value?.league || ''
     card_style = `top:${top - 0.5}px;`
   }
   return card_style

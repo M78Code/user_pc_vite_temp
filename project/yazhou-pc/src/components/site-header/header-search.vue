@@ -106,7 +106,7 @@ watch(
     if (res == "search") {
       show_search();
     }
-    set_current_index();
+    // set_current_index();
   }
 );
 

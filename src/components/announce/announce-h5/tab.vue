@@ -128,7 +128,7 @@ function changeTab(tab) {
         max-width: 3.78rem;
         margin: 0 auto;
 
-        ::v-deep.q-scrollarea {
+        :deep(.q-scrollarea) {
             height: 100%;
         }
     }
