@@ -142,7 +142,7 @@ const {
     flex-flow: column;
     height: 100%;
     font-size: 12px;
-    ::v-deep .content-wrap {
+    :deep(.content-wrap) {
       border-top: none;
     }
     .match_list_hot {
@@ -167,7 +167,7 @@ const {
     .info-upd {
       z-index: 90;
       justify-content: center;
-      ::v-deep .match_time {
+      :v-deep(.match_time) {
         .timer-layout2 {
           width: 100%;
           min-width: 42px;
@@ -202,7 +202,7 @@ const {
   z-index: 0;
   width: 100%;
   pointer-events: none;
-  ::v-deep .yb-flex-center {
+  :deep(.yb-flex-center) {
     justify-content: unset;
   }
 }
@@ -229,7 +229,7 @@ const {
     background-color: rgba(255, 255, 255, 0.8);
   }
   .match_list_hot {
-    ::v-deep .load-data-wrap {
+    :deep(.load-data-wrap) {
       background-color: #f9fbfc;
     }
   }
@@ -251,7 +251,7 @@ const {
     background-color: rgba(39, 42, 51, 0.5);
   }
   .match_list_hot {
-    ::v-deep .load-data-wrap {
+    :deep(.load-data-wrap) {
       background-color: #181822;
     }
   }

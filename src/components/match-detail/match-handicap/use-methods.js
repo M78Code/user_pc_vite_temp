@@ -15,7 +15,7 @@ import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
 import {utils } from 'src/core/index.js';
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
 export const useMethods = ({ props,emit }) => {
@@ -502,6 +502,20 @@ export const useMethods = ({ props,emit }) => {
     }
   };
 
+
+/** 批量注册mitt */
+const { emitters_off } = useMittEmitterGenerator([
+
+  { type: MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, callback: set_load_state },
+    // 监听用户点击玩法   折叠或收起
+  { type: MITT_TYPES.EMIT_SET_PANEL_STATUS, callback: set_panel_status },
+  { type: MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB, callback: get_active_details_play_tab },
+])
+/** 关闭mitt */
+onUnmounted(emitters_off)
+
+
+  //xioahuji
   onBeforeMount(() => {
     let { csid: sportId } = route.params;
     state.sportId = sportId;
@@ -509,14 +523,6 @@ export const useMethods = ({ props,emit }) => {
     // this.tabs_hover = this.debounce(this.tabs_hover, 100);
     state.reset_toggle = Math.random();
     // this.toggle_play = this.throttle(this.toggle_play, 500);
-    // 监听数据加载状态
-    useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state);
-    // 监听用户点击玩法   折叠或收起
-    useMittOn(MITT_TYPES.EMIT_SET_PANEL_STATUS, set_panel_status);
-    useMittOn(
-      MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,
-      get_active_details_play_tab
-    );
   });
 const rang = ref([])
   onMounted(() => {
@@ -527,23 +533,23 @@ const rang = ref([])
     ];
 
 
-   const _this={
+   const data={
       ...toRefs(state),
       category_list:props.category_list,
       toggele_layout,
       check_half,
     }
-    // emit("set_handicap_this", _this);
-    useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, _this)
+    useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS, data)
 
   });
   onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state).off;
-    useMittOn(
-      MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,
-      get_active_details_play_tab
-    ).off;
-    useMittOn(MITT_TYPES.EMIT_SET_PANEL_STATUS, set_panel_status).off;
+    // useMittOn(MITT_TYPES.EMIT_SET_MATCH_DETAIL_LOAD_STATE, set_load_state).off;
+    // useMittOn(
+    //   MITT_TYPES.EMIT_GET_ACTIVE_DETAILS_PLAY_TAB,
+    //   get_active_details_play_tab
+    // ).off;
+    // useMittOn(MITT_TYPES.EMIT_SET_PANEL_STATUS, set_panel_status).off;
+    // useMittEmit(MITT_TYPES.EMIT_SET_HANDICAP_THIS).off
     state.handle_ = null;
     // this.offsetTop = null;
     state.waterfall = null;

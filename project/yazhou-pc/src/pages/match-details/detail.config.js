@@ -10,7 +10,7 @@ import {
 import { is_eports_csid } from 'src/core/index.js'
 // api文件
 import { api_details } from "src/api/index";
-import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
+import { useMittEmit, useMittOn, MITT_TYPES ,useMittEmitterGenerator} from "src/core/mitt/";
 import { useGetGlobal } from "./global_mixin";
 import lodash from "lodash";
 import details from "src/core/match-detail/match-detail-pc/match-detail";
@@ -28,7 +28,7 @@ import { pre_load_video } from "src/core/pre-load/index";
 import { formatTime } from "src/core/format/index.js"
 import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
-
+import UserCtr from "src/core/user-config/user-ctr.js";
 export const useGetConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -70,7 +70,7 @@ export const useGetConfig = () => {
     details_loading_time_record: [],
     last_tab_data: {},
   });
-  const handicap_this =ref(null)// 传给玩法集 tabs 的数据
+  const handicap_this =ref({category_list:''})// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
   const details_params = ref(store_state.matchesReducer.params);
@@ -254,7 +254,7 @@ export const useGetConfig = () => {
    * @param {string} cuid 用户id
    */
   const get_matchInfo = () => {
-    let params = { mid: state.mid, cuid: state.get_uid };
+    let params = { mid: state.mid, cuid: UserCtr.get_uid(),};
     let api_ = null;
     // 判断是电竞还是其他赛种，区分接口
     if (is_eports_csid(state.sportId)) {
@@ -336,7 +336,7 @@ export const useGetConfig = () => {
           state.is_request = false;
           // 设置错误信息
           store.dispatch({
-            type: "globalReducer/SET_ERROR_DATA",
+            type: "SET_ERROR_DATA",
             data: {
               site: "details--get_matchInfo",
               error: err,
@@ -380,8 +380,9 @@ export const useGetConfig = () => {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
       mid: state.mid, //赛事id
-      cuid: uuid, //用户id
+      cuid: UserCtr.get_uid(), //用户id
       newUser: 0,
+      gcuuid:null
     };
     let api_ = null;
     // 判断是电竞还是其他赛种玩法
@@ -404,9 +405,10 @@ export const useGetConfig = () => {
       max_loop: is_init ? 3 : 1,
       // axios中then回调方法
       fun_then: (res) => {
+        debugger
         set_details_loading_time_record("ok");
         // 检查gcuuid
-        if (state.send_gcuuid != res.config.gcuuid) return;
+        // if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
         get_match_details(res);
       },
@@ -653,7 +655,7 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        
+        debugger
         console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance.value) {
           return;
@@ -886,7 +888,34 @@ export const useGetConfig = () => {
     state.handicap_state = n;
     state.match_details = [];
   };
+    /** 批量注册mitt */
+    const { emitters_off } = useMittEmitterGenerator([
+          //获取tab数据
+      { type: MITT_TYPES.EMIT_SET_HANDICAP_THIS, callback: set_handicap_this },
+      // 自动选择赛事
+      { type: MITT_TYPES.EMIT_AUTOSET_MATCH, callback: emit_autoset_match },
+        // 检查玩法关盘
+      { type: MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, callback: check_plays_show },
+      // 站点 tab 休眠状态转激活
+      { type: MITT_TYPES.EMIT_SITE_TAB_ACTIVE, callback: emit_site_tab_active },
+      // 隐藏tips
+      { type: MITT_TYPES.EMIT_SET_CLOSE_TIPS, callback: close_tips },
+      // 接受 loading 状态
+      { type: MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, callback: getLoading },
+      // 获取详情页头部高度
+      { type: MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, callback: getHeaderHeight },
+        // 返回背景图
+        { type: MITT_TYPES.EMIT_GET_BACKGROUND_IMG, callback: setBg },
+    ])
+
  
+     // 刷新按钮节流
+     // this.refresh = this.throttle(this.refresh, 1000, {
+     //   leading: true,
+     //   trailing: false,
+     // });
+
+  onUnmounted(emitters_off)
   onMounted(() => {
     // 加载视频动画资源
     pre_load_video.load_video_resources();
@@ -912,37 +941,9 @@ export const useGetConfig = () => {
 
     // 初始化进入详情的加载时间
     init_details_loading_time_record();
-    // 自动选择赛事
-    useMittOn(MITT_TYPES.EMIT_AUTOSET_MATCH, emit_autoset_match);
 
-    // 检查玩法关盘
-    useMittOn(MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, check_plays_show);
 
-    // 站点 tab 休眠状态转激活
-    useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active);
-
-    // 隐藏tips
-    useMittOn(MITT_TYPES.EMIT_SET_CLOSE_TIPS, close_tips);
-    // 接受 loading 状态
-    useMittOn(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, getLoading);
-    // 获取详情页头部高度
-    useMittOn(MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, getHeaderHeight);
-
-    // 刷新按钮节流
-    // this.refresh = this.throttle(this.refresh, 1000, {
-    //   leading: true,
-    //   trailing: false,
-    // });
-    // 返回背景图
-    useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg);
-    //获取tab数据
-    useMittOn(MITT_TYPES.EMIT_SET_HANDICAP_THIS, (e)=>{
-      
-      set_handicap_this(e)
-      console.log(e);
-    }
      
-    )
   });
 
   onUnmounted(() => {
@@ -950,12 +951,6 @@ export const useGetConfig = () => {
     clearTimeout(state.axios_debounce_timer);
     clearTimeout(state.get_match_details_timer);
     clearTimeout(state.back_to_timer);
-    useMittOn(MITT_TYPES.EMIT_AUTOSET_MATCH, emit_autoset_match).off;
-    useMittOn(MITT_TYPES.EMIT_CHECK_PLAYS_SHOW, check_plays_show).off;
-    useMittOn(MITT_TYPES.EMIT_SET_CLOSE_TIPS, close_tips).off;
-    useMittOn(MITT_TYPES.EMIT_CHANGE_LOADING_STATUS_DETAILS, getLoading).off;
-    useMittOn(MITT_TYPES.EMIT_GET_DETAILS_HEIGHT_MAIN, getHeaderHeight).off;
-    useMittOn(MITT_TYPES.EMIT_GET_BACKGROUND_IMG, setBg).off;
     // this.debounce_throttle_cancel(this.init);
     // this.debounce_throttle_cancel(this.refresh);
     // for (const key in this.ol_obj) {
