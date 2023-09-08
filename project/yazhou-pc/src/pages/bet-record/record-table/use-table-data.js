@@ -16,7 +16,7 @@ import { order_pre_settle_confirm } from "src/core/bet/module/pre-settle.js";//s
 import lodash from "lodash";
 import { ITEM_STATUS, CANCEL_TYPE, ITEM_CLASS, ORDER_STATUS } from "./config";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js"
 
 export const useTableData = ({ props, emit }) => {
@@ -66,6 +66,7 @@ export const useTableData = ({ props, emit }) => {
   watch(
     () => props.order_list,
     (val) => {
+      // console.error('val---', props.order_list);
       let scroll_area = BetCommonHelper.get_refs_info(
         "scrollArea",
         null,

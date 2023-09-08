@@ -2,7 +2,7 @@
     <div class="popup-wrap relative-position " :class="[versions_class, { active: show_popup }]">
         <div class="langeuage-text popup-text" :class="{ 'active': show_popup }" @click="toggle_popup">
             <div>
-                <span :class="['flag lang-active', lang]"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
+                <span :class="['flag lang-active', lang]" :style="sprite_img['pc-popup-language-icon-image']({position: lang, theme: 'local'})"></span><span class="lang-label ellipsis">{{ langs[lang] }}</span>
             </div>
             <div class="yb-icon-arrow"></div>
         </div>
@@ -12,7 +12,7 @@
             <template v-for="(language, index) in language_arr">
                 <div v-if="languageList.includes(language)" :key="index" class="item ellipsis"
                     :class="[{ active: lang == language }]" @click="on_click_lang(language)">
-                    <span :class="['flag', language]"></span>{{ langs[language] }}
+                    <span :class="['flag', language]" :style="sprite_img['pc-popup-language-icon-image']({position: language, theme: 'local'})"></span>{{ langs[language] }}
                 </div>
             </template>
         </div>
@@ -36,6 +36,7 @@ import MenuData from "src/core/menu-pc/menu-data-class.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BaseData from "src/core/base-data/base-data.js"
 import { update_bet_item_info } from "src/core/bet/common-helper/module/common.js";
+import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 /** 是否展示 */
 const show_popup = ref(false)
@@ -248,51 +249,9 @@ const versions_class = computed(() => {
         width: 14px;
         height: 10px;
         display: inline-block !important;
-        background-image: url('/yazhou-pc/image/png/lang_flag.png');
-        background-position-x: 0;
         background-repeat: no-repeat;
         background-size: 100%;
         margin-right: 6px;
-
-        &.en {
-            background-position-y: -15px;
-        }
-
-        &.tw {
-            background-position-y: -30px;
-        }
-
-        &.vi {
-            background-position-y: -45px;
-        }
-
-        &.ms {
-            background-position-y: -60px;
-        }
-
-        &.th {
-            background-position-y: -75px;
-        }
-
-        &.ad {
-            background-position-y: -90px;
-        }
-
-        &.md {
-            background-position-y: -105px;
-        }
-
-        &.ry {
-            background-position-y: -120px;
-        }
-
-        &.pty {
-            background-position-y: -135px;
-        }
-
-        &.hy {
-            background-position-y: -150px;
-        }
     }
 }
 </style>

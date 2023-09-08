@@ -1,7 +1,7 @@
 <!-- @Description: 搜索球类 -->
 
 <template>
-    <div v-show="show_type == 'sports'" class="sports-wrap" @click.stop>
+    <div class="sports-wrap" @click.stop>
         <!-- 球类导航 -->
         <div class="sports-tab">
             <tab :is_show_line="true" :is_show_btn="true" :list="sports_list" :padding="10" @onclick="tab_click"

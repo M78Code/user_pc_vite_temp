@@ -1,7 +1,7 @@
 <!-- @Description: 搜索结果 -->
 
 <template>
-    <div v-show="show_type == 'result'" class="result-wrap">
+    <div class="result-wrap">
         <!-- 无数据 -->
         <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
             <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
@@ -13,7 +13,7 @@
                 <div style="height:70px"></div>
                 <!-- 赛种 -->
                 <div class="type-item" :class="{ active: type.is_active, inplay: type.is_inplay }"
-                    v-for="(type, type_index) in list" :key="type_index">
+                    v-for="(type, type_index) in res_list" :key="type_index">
                     <div class="type-wrap" @click="type.is_active = !type.is_active">
                         <div class="line"></div>
                         <div class="type-name">
@@ -55,24 +55,29 @@
 </template>
   
 <script setup>
-import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, watch, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
 import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
 import store from "src/store-redux/index.js";
-// import details from "src/core/match-list-pc/details-class/search.js"
-// import search from "src/core/search-class/search.js"
+import details from "src/core/match-list-pc/details-class/details.js"
+import search from "src/core/search-class/search.js"
 
 const props = defineProps({
+    show_type: {
+        type: String,
+        default: ''
+    },
     search_csid: {
         type: [Number, String],
         default: ''
     }
 })
 
-const emit = defineEmits(['update:set_show_type'])
+const emit = defineEmits(['update:show_type'])
+const update_show_type = (data) => emit('update:show_type', data)
 
 /** 国际化 */
 
@@ -80,29 +85,41 @@ const emit = defineEmits(['update:set_show_type'])
 /** 数据加载状态 */
 const load_data_state = ref('data')
 /** 搜索结果数据 */
-const list = reactive([])
+let res_list = reactive([])
 
 const router = useRouter()
 
 /** stroe仓库 */
-const new_state = store.getState()
-const { searchReducer } = new_state
+const { searchReducer } = store.getState()
 /**
  * 获取搜索内容 default: ''
  * 路径: project_path\src\store\module\search.js
  */
 const keyword = ref(searchReducer.keyword)
+// 监听搜索关键词改变
+watch(
+    () => keyword.value,
+    (res) => {
+        console.error('keyword res', res);
+        if (search_type.value == 2) {
+            update_show_type('none')
+        } else {
+            get_search_result(res.substr(5))
+        }
+    }
+)
+
 /**
  * 获取搜索类型 default: 1
  * 路径: project_path\src\store\module\search.js
  */
- const search_type = ref(searchReducer.search_type)
-/**  */
-/**
- * 获取搜索联赛关键字 default: ''
- * 路径: project_path\src\store\module\search.js
- */
- const related_keyword = ref(searchReducer.related_keyword)
+const search_type = ref(searchReducer.search_type)
+const unsubscribe = store.subscribe(() => {
+    const { searchReducer: new_searchReducer } = store.getState();
+    keyword.value = new_searchReducer.keyword
+    search_type.value = new_searchReducer.search_type
+})
+onBeforeUnmount(unsubscribe)
 
 /** 设置搜索联赛关键字 */
 const set_click_keyword = (data) => store.dispatch({ type: 'set_click_keyword', data })
@@ -117,8 +134,8 @@ const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data
  * @return {undefined} undefined
  */
 function league_click(league) {
-    // search.insert_history(league.league_name)
-    emit('update:set_show_type', 'none')
+    search.insert_history(league.league_name)
+    update_show_type('none')
     router.push({
         name: 'search',
         params: {
@@ -139,9 +156,9 @@ const scrollRef = ref(null)
  * @return {undefined} undefined
  */
 function match_click(match) {
-    // search.result_scroll = scroll.value.scrollPosition
-    // search.insert_history(match.name)
-    // details.on_go_detail(match, keyword.value.substr(5))
+    search.result_scroll = scroll.value.scrollPosition
+    search.insert_history(match.name)
+    details.on_go_detail(match, keyword.value.substr(5))
     set_search_status(false)
 }
 
@@ -153,33 +170,34 @@ const timer = ref(null)
  */
 function get_search_result(keyword, is_loading) {
     if (!keyword) {
-        emit('update:set_show_type', 'init')
+        update_show_type('init')
         return
     }
     //调用接口前先设置加载状态
     if (is_loading) {
         load_data_state.value = 'loading'
     }
-    // emit('update:set_show_type','result')
     //调用接口获取获取搜索结果数据
-    // search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
-    //     emit('update:set_show_type', 'result')
-    //     load_data_state.value = load_data_state
-    //     list.value = list
-    //     let _ref_scroll = scroll.value;
-    //     timer.value = setTimeout(() => {
-    //         // 如果是从详情页返回
-    //         if (search.back_keyword.keyword) {
-    //             nextTick(() => {
-    //                 //重新设置滚动高度
-    //                 _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
-    //             })
-    //         } else {
-    //             //重新设置滚动高度
-    //             _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
-    //         }
-    //     })
-    // })
+    search.get_search_result(keyword, props.search_csid).then(res => {
+        const { state, list } = res
+        console.error('get_search_result', state, list);
+        update_show_type('result')
+        load_data_state.value = state
+        res_list = list
+        let _ref_scroll = scroll.value;
+        timer.value = setTimeout(() => {
+            // 如果是从详情页返回
+            if (search.back_keyword.keyword) {
+                nextTick(() => {
+                    //重新设置滚动高度
+                    _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(search.result_scroll, 0);
+                })
+            } else {
+                //重新设置滚动高度
+                _ref_scroll && _ref_scroll.setScrollPosition && _ref_scroll.setScrollPosition(0, 0);
+            }
+        })
+    })
 }
 onBeforeUnmount(() => {
     if (timer.value) {
@@ -196,17 +214,6 @@ watch(
         get_search_result(keword, true)
     }
 )
-// 监听搜索关键词改变
-watch(
-    () => keyword.value,
-    (res) => {
-        if (search_type.value == 2) {
-            emit('update:set_show_type', 'none')
-        } else {
-            get_search_result(res.substr(5))
-        }
-    }
-)
 
 </script>
   
@@ -221,7 +228,7 @@ $hover-color: #FF7000;
         height: 400px !important;
         min-height: 0;
 
-        :deep(.empty-wrap)  {
+        :deep(.empty-wrap) {
             img {
                 margin-bottom: 0;
             }

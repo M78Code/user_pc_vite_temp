@@ -28,12 +28,14 @@
           :record_time_sort="record_time_sort"
           :startDateSearch="startDateSearch"
           :endDateSearch="endDateSearch"
-          :model="model"
+          v-mdel:model="model"
           :settleSwitch="UserCtr.user_info.settleSwitch"
+          :submit="submit"
           @search_pre_record="search_pre_record"
           @chooseTime="chooseTime"
           @time_sort="time_sort"
           @check_change="check_change"
+          :dateChanged="dateChanged"
         ></filter-box>
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
         <template v-if="[0, 1].includes(toolSelected)">
@@ -112,6 +114,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   is_pre_bet,
   betRecord,
   filter_box,
+  uid,
+  getBook_gcuuid,
   clear_timer_get_cashout,
   clear_timer_get_book,
   set_search_time,
@@ -130,10 +134,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   chooseTime,
   search_pre_record,
   toolClicked,
-  uid,
-  getBook_gcuuid,
+  submit,
+  dateChanged,
 } = useConfig();
-console.error(order_list);
+console.error(model);
 
 </script>
 

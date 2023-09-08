@@ -1,11 +1,11 @@
 <!-- @Description: 搜索弹层 -->
 
 <template>
-  <div v-if="search_isShow" class="search-position">
+  <div v-if="search_isShow" class="search-position" style="background: #fff;">
     <div v-show="route.params.video_size != 1" class="serach-wrap column"
       :style="{ right: `${search_width}px`, paddingRight: `${is_iframe ? 10 : 14}px` }"
       :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }">
-      <search-input :show_type.sync="show_type" />
+      <search-input v-model:show_type="show_type" />
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
         <div class="sports-tab" @click.stop>
@@ -13,22 +13,20 @@
             @onclick="set_sports_tab_index" :currentIndex="sports_tab_index" ref="tab" />
         </div>
         <!-- 初始化 -->
-        <search-int class="serach-background" :show_type.sync="show_type" />
-        <!-- 搜索联想-->
-        <!-- <search-related class="serach-background" v-show="show_type == 'related'" /> -->
+        <search-int class="serach-background" v-show="show_type == 'init'" v-model:show_type="show_type" />
         <!-- 搜球类 -->
-        <search-sports class="serach-background" :show_type.sync="show_type" ref="sports" />
+        <search-sports class="serach-background" v-show="show_type == 'sports'" v-model:show_type="show_type" ref="sports" />
         <!-- 搜玩法 -->
-        <search-play class="serach-background" :show_type.sync="show_type" />
+        <search-play class="serach-background" v-show="show_type == 'play'" v-model:show_type="show_type" />
         <!-- 搜索结果 -->
-        <search-result :show_type.sync="show_type" :search_csid="search_csid" />
+        <search-result v-show="show_type == 'result'"  v-model:show_type="show_type" :search_csid="search_csid" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted, defineComponent } from "vue";
 import lodash from "lodash";
 import { useRoute } from "vue-router";
 import { useMittOn, MITT_TYPES } from 'src/core/mitt'
@@ -123,8 +121,8 @@ function set_sports_list() {
   // let csid = search.back_keyword.csid
   let csid = ''
   api_search.get_search_sport().then(res => {
-    if (lodash.get(res, 'data.code') == 200) {
-      const list = lodash.get(res, 'data.data') || []
+    if (lodash.get(res, 'code') == 200) {
+      const list = lodash.get(res, 'data') || []
       // 根据商户过滤篮球赛事
       sports_list = list
       // 默认第一个 足球被禁用后 默认值不是1
@@ -173,6 +171,11 @@ onMounted(() => window.addEventListener('resize', on_resize))
 onUnmounted(() => window.removeEventListener('resize', on_resize))
 
 </script>
+<script>
+export default defineComponent({
+  name: 'search'
+})
+</script>
 
 <style lang="scss" scoped>
 .search-position {
@@ -180,7 +183,7 @@ onUnmounted(() => window.removeEventListener('resize', on_resize))
   left: 0;
   width: v-bind(main_width);
   // right: 0;
-  top: 0;
+  top: 60px;
   bottom: 0;
   z-index: 10001;
 

@@ -798,7 +798,7 @@ clear(any) {
     let res = old_value;
     // 数据类型
     let type = typeof(old_value);
-    console.error('old_value=',type);
+    // console.error('old_value=',type);
     if('object' == type){
       if(Array.isArray(old_value)){
         type = 'array';

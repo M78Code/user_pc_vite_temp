@@ -90,7 +90,6 @@
         </div>
       </div>
       <!-- 查询和日期选择器 -->
-      {{startDateSearch + '+++' + endDateSearch}}
       <div class="date-time-choice">
         <div class="search-date-wrapper start-time-wrap">
           <div class="date-wrap" @click.stop="startTimeShowFunc">
@@ -113,12 +112,12 @@
             <q-icon name="icon-calendar"></q-icon>
           </div>
           <div class="date-picker-wrap relative-position">
-            v-model="model"
             <q-date
               v-icon="{
                 'chevron_left': 'icon-arrow-left',
                 'chevron_right': 'icon-arrow-right',
-              }"             
+              }" 
+              v-model="new_model_value"            
               @click.stop
               range
               v-if="startTimeShow"
@@ -150,7 +149,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted,watch,onUnmounted, nextTick, inject } from "vue";
+import { ref, reactive, onMounted,watch,onUnmounted, nextTick, inject, computed } from "vue";
 // import icon from "project_path/src/components/icon/icon.vue";
 import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
 import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
@@ -158,15 +157,37 @@ import { formatTime } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 const props = defineProps({
-  toolSelected: Number,
-  time_sort_record_item: Object,
-  record_time_sort: Array,
-  startDateSearch: String,
-  endDateSearch: String,
-  model: Object,
-  settleSwitch: Number
+  toolSelected: {
+    type: Number
+  },
+  time_sort_record_item: {
+    type: Object
+  },
+  record_time_sort: {
+    type: Array
+  },
+  startDateSearch: {
+    type: String
+  },
+  endDateSearch: {
+    type: String
+  },
+  model: {
+    type: Object
+  },
+  settleSwitch: {
+    type: Number
+  },
+  submit: {
+    type: Function
+  },
+  dateChanged: {
+    type: Function
+  },
   });
 const reload = inject('reload')
+console.error(props);
+
 // 日历多语言配置
 const locale = {
   // TODO: 后续再处理国际化
@@ -210,7 +231,7 @@ const check_list = [
   { value: "2,3", label: i18n_t("bet.bet_book_failed") },
 ];
 
-const emit = defineEmits(["search_pre_record", "chooseTime", "time_sort",'check_change']);
+const emit = defineEmits(["search_pre_record", "chooseTime", "time_sort",'check_change', 'update:model']);
 const checkbox_style = {
   //单选框样式
   borderColor: "#d0d8de",
@@ -221,24 +242,48 @@ const is_pre_bet = ref(false); // 提前结算勾选
 const toolWords = ref([]);
 
 const hoverIndex = ref(-1);
+const new_model_value =  ref(props.model)
 //选择项下拉显示
 const show_select_time_sort = ref(false);
 const startTimeShow = ref(false); // 开始时间展示
+
 const endTimeShow = ref(false); // 结束时间展示
   // 预约注单默认状态
   const default_value= ref('0')
 
 onMounted(() => {
   toolWords.value = ["今天", "昨天", "七天内", "一个月内"] //JSON.parse(i18n_t("time.time_date_list_1")); 
+  document.addEventListener("click", () => {
+    startTimeShow.value = false
+    show_select_time_sort.value = false
+  })
 });
-
+watch(() => props.startDateSearch, () => {
+  console.error('时间改变了', props);
+})
 onUnmounted(()=>{
    toolWords.value = null;
+   document.removeEventListener("click", () => {
+    startTimeShow.value = !startTimeShow.value
+    show_select_time_sort.value = false
+  })
 })
 
-watch(()=>props.model,n=>{
-    if (n) {
+
+watch(()=>new_model_value.value,n=>{
+    emit('update:model', n)
+      if (n) {
         startTimeShow.value = false;
+        // 这里会存在选中单个日期的情况 ['2021/12/12', from: '2021/01/01', to: '2021/01/07']
+        if (!n.from) {
+          if (lodash.isArray(n)) {
+            props.dateChanged(n[0], n[0]);
+          } else {
+            props.dateChanged(n, n);
+          }
+        } else {
+          props.dateChanged(n.from, n.to);
+        }
       }
   })
 
@@ -258,7 +303,7 @@ const chooseTime = (i) => {
 };
 
 /**
- * @description: 显示开始日期选择
+ * @description: 点击默认排序
  * @param {undefined} undefined
  * @returns {undefined}
  */
