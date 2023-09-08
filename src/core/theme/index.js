@@ -12,7 +12,7 @@
 import merchant_config from "app/job/output/merchant/config.json";
 import all_css_keys from "app/job/output/css/index";
 import { ref, computed } from "vue";
-import store from "src/store-redx/";
+import store from "src/store-redux/index.js"
 
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 const { langReducer } = store.getState();
