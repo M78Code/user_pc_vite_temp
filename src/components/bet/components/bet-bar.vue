@@ -9,7 +9,7 @@
   <div class="bet-bar row justify-between items-center" @touchmove.prevent @click="menu_click"
     :class="{ 'fixed-bottom': $route.name != 'matchList' && get_bet_status == 0 }">
     <div>
-      <span class="bet-num">{{ BetData.bet_list.length }}</span>
+      <span class="bet-num">{{ bet_list}}</span>
       <!-- 投注单 -->
       <span class="yb_fontsize16 yb_ml8">
         <template v-if="get_bet_status != 0"><span>{{}}</span></template>
@@ -25,7 +25,7 @@
       <div class="account-wrap yb_pr16 text-right relative-position" @click.stop="get_balance">
         <!-- 账户余额 -->
         <p class="text-right account-p">{{}}</p>
-        <p class="yb_fontsize16">{{ format_money2(UserCtr.balance) }}</p>
+        <p class="yb_fontsize16">{{ format_money2(BetData.balance) }}</p>
       </div>
       <!-- 金额刷新按钮 -->
       <div class="refesh yb_mr8" :class="{ 'refesh2': is_loading_balance }" @click.stop="get_balance"></div>
@@ -36,10 +36,11 @@
 </template>
 
 <script setup>
-import { format_money2 } from 'src/core/utils/global-filters.js'
 import lodash from "lodash"
-import store from "src/store-redux/index.js";
-import { UserCtr } from "src/core/index.js";
+// import store from "src/store-redux/index.js";
+// import { UserCtr } from "src/core/index.js";
+import { format_money2 } from 'src/core/format/module/format-money.js'
+import BetData from "src/core/bet/class/bet-data-class.js";
 import { ref,computed,onUnmounted } from 'vue';
 
 
@@ -47,18 +48,19 @@ import { ref,computed,onUnmounted } from 'vue';
 
 let balance_timer = null // 延时器
 
+let bet_list = ref(BetData.bet_list)
 
-const store_state = store.getState()
-const get_s_count_data = ref(store_state.get_s_count_data)
-const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-const get_bet_status = ref(store_state.get_bet_status)
-const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
-// const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
-// const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
+// const store_state = store.getState()
+// const get_s_count_data = ref(store_state.get_s_count_data)
+// const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
+// const get_bet_status = ref(store_state.get_bet_status)
+// const get_menu_type = ref(store_state.get_menu_type) // 当前主菜单的menu_type
+// // const get_bet_obj = ref(store_state.get_bet_obj)  // 投注相关对象
+// // const get_is_combine = ref(store_state.get_is_combine)  //是不是冠军
 
-const unsubscribe = store.subscribe(() => {
-  update_state()
-})
+// const unsubscribe = store.subscribe(() => {
+//   update_state()
+// })
 
 
 

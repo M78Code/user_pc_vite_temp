@@ -59,6 +59,8 @@
           {{ i18n_t("bet_record.msg_6") }}
         </template>
       </div>
+      <!-- 预约注单文字描述 此记录将显示所有未派彩的投注 -->
+      <div class="text" v-if="toolSelected == 2">{{i18n_t('bet_record.msg_7')}}</div>
     </div>
   </div>
 </template>

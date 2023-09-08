@@ -1,11 +1,11 @@
 <!-- @Description: 搜索结果 -->
 
 <template>
-    <div class="result-wrap">
+    <div v-show="show_type == 'result'" class="result-wrap">
         <!-- 无数据 -->
         <div class="serach-background" v-show="load_data_state != 'data'" @click.stop>
-            <loadData class="fit" :state="load_data_state" :no_data_msg="t('search.null1')"
-                :no_data_msg2="t('search.null2')" />
+            <loadData class="fit" :state="load_data_state" :no_data_msg="i18n_t('search.null1')"
+                :no_data_msg2="i18n_t('search.null2')" />
         </div>
         <!-- 滚动区域 -->
         <q-scroll-area v-show="load_data_state == 'data'" class="fit rule-scroll-area" ref="scroll">
@@ -57,7 +57,7 @@
 <script setup>
 import { ref, reactive, watch, onUnmounted, onBeforeUnmount } from 'vue'
 import loadData from "src/components/load_data/load_data.vue"
-import { t } from "src/core/index.js";
+import { i18n_t } from "src/boot/i18n.js"
 import { useRouter } from 'vue-router'
 
 import { MatchProcessFullVersionWapper as matchProcess } from "src/components/match-process/index.js"
@@ -72,7 +72,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['set_show_type'])
+const emit = defineEmits(['update:set_show_type'])
 
 /** 国际化 */
 
@@ -118,7 +118,7 @@ const set_search_type = (data) => store.dispatch({ type: 'set_search_type', data
  */
 function league_click(league) {
     // search.insert_history(league.league_name)
-    emit('set_show_type', 'none')
+    emit('update:set_show_type', 'none')
     router.push({
         name: 'search',
         params: {
@@ -153,17 +153,17 @@ const timer = ref(null)
  */
 function get_search_result(keyword, is_loading) {
     if (!keyword) {
-        emit('set_show_type', 'init')
+        emit('update:set_show_type', 'init')
         return
     }
     //调用接口前先设置加载状态
     if (is_loading) {
         load_data_state.value = 'loading'
     }
-    // emit('set_show_type','result')
+    // emit('update:set_show_type','result')
     //调用接口获取获取搜索结果数据
     // search.get_search_result(keyword, props.search_csid, (load_data_state, list) => {
-    //     emit('set_show_type', 'result')
+    //     emit('update:set_show_type', 'result')
     //     load_data_state.value = load_data_state
     //     list.value = list
     //     let _ref_scroll = scroll.value;
@@ -201,7 +201,7 @@ watch(
     () => keyword.value,
     (res) => {
         if (search_type.value == 2) {
-            emit('set_show_type', 'none')
+            emit('update:set_show_type', 'none')
         } else {
             get_search_result(res.substr(5))
         }
@@ -221,7 +221,7 @@ $hover-color: #FF7000;
         height: 400px !important;
         min-height: 0;
 
-        ::v-deep .empty-wrap {
+        :deep(.empty-wrap)  {
             img {
                 margin-bottom: 0;
             }
@@ -233,7 +233,7 @@ $hover-color: #FF7000;
         }
     }
 
-    ::v-deep .q-scrollarea__thumb {
+    :deep(.q-scrollarea__thumb) {
         z-index: 1000;
     }
 
@@ -250,7 +250,7 @@ $hover-color: #FF7000;
                         display: block !important;
                     }
 
-                    .text-wrap .c-match-process ::v-deep .date-wrap {
+                    .text-wrap .c-match-process :deep(.date-wrap) {
                         color: #99a3b1;
                     }
                 }
@@ -376,7 +376,7 @@ $hover-color: #FF7000;
                     }
 
                     .c-match-process {
-                        ::v-deep .date-wrap {
+                        :deep(.date-wrap) {
                             padding: 0;
                             color: #5a6074;
                             display: flex;
@@ -387,15 +387,15 @@ $hover-color: #FF7000;
                             }
                         }
 
-                        ::v-deep .timer-layout2 {
+                        :deep(.timer-layout2) {
                             margin-right: 5px;
                         }
 
-                        ::v-deep .jingcai {
+                        :deep(.jingcai) {
                             display: none;
                         }
 
-                        ::v-deep .process-name {
+                        :deep(.process-name) {
                             margin-right: 5px;
                         }
                     }

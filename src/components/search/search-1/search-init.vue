@@ -1,17 +1,17 @@
 <!-- @Description: 搜索面板初始化 -->
 
 <template>
-    <div class="wrap-init" @click.stop>
+    <div v-show="show_type == 'init'" class="wrap-init" @click.stop>
         <div style="height:50px"></div>
         <div class="init-wrap " v-if="histroy_data.length > 0">
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ t('search.search_record') }}
+                    {{ i18n_t('search.search_record') }}
                     <!-- 搜索记录 -->
                 </div>
                 <div class="clear-history" @click="delete_histroy('')" v-if="histroy_data.length">
-                    {{ t('search.clear_search_history') }}
+                    {{ i18n_t('search.clear_search_history') }}
                     <!-- 清除历史记录 -->
                 </div>
             </div>
@@ -28,11 +28,11 @@
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ t('search.search_hot') }}
+                    {{ i18n_t('search.search_hot') }}
                     <!-- 热词搜索 -->
                 </div>
                 <div class="clear-history" @click="get_hot_search">
-                    {{ t('search.change') }}
+                    {{ i18n_t('search.change') }}
                     <!-- 换一换 -->
                 </div>
             </div>
@@ -46,18 +46,18 @@
             <div class="init-row">
                 <div class="line"></div>
                 <div class="row-title col">
-                    {{ t('search.other') }}
+                    {{ i18n_t('search.other') }}
                     <!-- 其他搜索 -->
                 </div>
             </div>
             <div class="histroy-item other" @click="other_search('sports')">
                 <!-- 搜球类 -->
-                <div>{{ t('search.search_sports') }}</div>
+                <div>{{ i18n_t('search.search_sports') }}</div>
                 <div class="yb-icon-arrow"></div>
             </div>
             <div class="histroy-item other" @click="other_search('play')">
                 <!-- 搜玩法 -->
-                <div>{{ t('search.search_play') }}</div>
+                <div>{{ i18n_t('search.search_play') }}</div>
                 <div class="yb-icon-arrow"></div>
             </div>
         </div>
@@ -65,9 +65,9 @@
 </template>
   
 <script setup>
-import { reactive, watch, onMounted } from 'vue'
-import { t } from "src/core/index.js";
-// import search from "src/core/search-class/search.js"
+import { reactive, ref, watch, onMounted } from 'vue'
+import { i18n_t } from "src/boot/i18n.js"
+import search from "src/core/search-class/search.js"
 import store from "src/store-redux/index.js";
 
 const props = defineProps({
@@ -76,32 +76,32 @@ const props = defineProps({
         default: ''
     }
 })
-const emit = defineEmits(['set_show_type'])
+const emit = defineEmits(['update:set_show_type'])
 
 /** 国际化 */
 
 
 /** 历史搜索数据 */
-let histroy_data = reactive([])
+const histroy_data = ref([])
 /** 热门搜索数据 */
-let hot_data = reactive([])
+const hot_data = ref([])
 
 //显示类型改变
 watch(
     () => props.show_type,
-    (res) => {
-        if (res == 'init') {
+    (bool) => {
+        if (bool == 'init') {
             init()
         }
     }
 )
 
 const set_click_keyword = (data) => store.dispatch({
-    type: 'set_click_keyword',
+    type: 'SET_CLICK_KEYWORD',
     data
 })
 const set_search_type = (data) => store.dispatch({
-    type: 'set_search_type',
+    type: 'SET_SEARCH_TYPE',
     data
 })
 /**
@@ -113,8 +113,7 @@ const set_search_type = (data) => store.dispatch({
 function click_keyword(keyword, is_insert_history) {
     if (!keyword) return
     if (is_insert_history) {
-        // search.js
-        // search.insert_history(keyword)
+        search.insert_history(keyword)
     }
     set_search_type(1)
     set_click_keyword(keyword);
@@ -125,9 +124,9 @@ function click_keyword(keyword, is_insert_history) {
  * @return {Undefined} Undefined
  */
 function get_hot_search() {
-    // search.get_hot_search(res => {
-    //     hot_data = res
-    // })
+    search.get_hot_search(res => {
+        hot_data.value = res
+    })
 }
 
 /**
@@ -135,9 +134,11 @@ function get_hot_search() {
  * @return {Undefined} Undefined
  */
 function get_history() {
-    // search.get_history(res => {
-    //     histroy_data = res
-    // })
+    search.get_history(data => {
+        console.error('get_history', data);
+        histroy_data.value = data
+    })
+ 
 }
 
 /**
@@ -147,13 +148,13 @@ function get_history() {
  * @return {Undefined} Undefined
  */
 function delete_histroy(keyword, index) {
-    // search.delete_histroy(keyword, () => {
-    //     if (keyword) {
-    //         histroy_data.splice(index, 1);
-    //     } else {
-    //         histroy_data = [];
-    //     }
-    // })
+    search.delete_histroy(keyword, () => {
+        if (keyword) {
+            histroy_data.value.splice(index, 1);
+        } else {
+            histroy_data.value = [];
+        }
+    })
 }
 
 /**
@@ -162,7 +163,7 @@ function delete_histroy(keyword, index) {
  * @return {undefined} undefined
  */
 function other_search(type) {
-    emit('set_show_type', type)
+    emit('update:set_show_type', type)
 }
 
 /**

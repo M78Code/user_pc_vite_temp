@@ -90,7 +90,7 @@
       <template v-if="is_conflict">
         <div class="yb_px14 row items-center yb_fontsize12 justify-center err-msg" style="min-height:0.3rem"
           @touchmove.prevent>
-          <span class="text-center yb_py4">{{ $t('bet.msg10') }}</span>
+          <span class="text-center yb_py4">错误</span>
         </div>
       </template>
 
@@ -136,7 +136,7 @@
       </template>
 
       <!-- 键盘 -->
-      <key-board v-show="get_keyboard_show"></key-board>
+      <key-board v-show="bet_keyboard_show"></key-board>
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -208,21 +208,45 @@
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
 // import betSuccessBar from 'src/components/bet/components/bet_success_bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
-// import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
+import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
 // import ballSpin from 'src/components/bet/components/ball_spin.vue';
-// import betBar from "src/components/bet/components/bet-bar.vue";
+import betBar from "src/components/bet/components/bet-bar.vue";
 
 // import {utils } from 'src/core/index.js';
 // import { api_betting } from "src/api/index.js";
 // import {useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/"
 import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr } from "src/core/index.js";
-import { hide_bet_series_but } from "src/core/bet/index.js"
+// import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
 
+const bet_keyboard_show = ref(true)
+const hide_bet_series_but = () =>{
+    let res = false;
+    // 单关时,获取投注列表数据
+    if(!BetData.bet_is_mix && lodash.get(BetData,'bet_list.length')){
+      // 遍历投注列表数据,检测是否红猫赛事
+      for (let i = 0; i < BetData.bet_list.length; i++) {
+        // 获取投注项id
+        let id = lodash.get(BetData,`bet_list[${i}]`);
+        // 获取投注项的数据源
+        let cds = lodash.get(BetData,`bet_obj[${id}].bs.cds`);
+        if(cds == "C01"){
+          // C301赛事时,隐藏串关按钮
+          res = true;
+          break;
+        }
+      }
+    }
+    return res;
+}
 
+onMounted(()=>{
+  console.error(',1111111111',BetViewDataClass)
+})
 </script>
 <style lang="scss" scoped>
 .bet-mix-box-child2 {
@@ -252,6 +276,7 @@ import lodash from 'lodash'
   max-width: 3.78rem;
   -webkit-overflow-scrolling: touch;
   border-radius: 0.158rem 0.158rem 0 0;
+  border: 1px solid;
 
   .yb_pl14 {
     margin-right: 0.01rem;

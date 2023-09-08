@@ -22,12 +22,14 @@
       <div class="bet-records col">
         <!-- 筛选框 -->
         <filter-box
+          ref="filter-box"
           :toolSelected="toolSelected"
           :time_sort_record_item="time_sort_record_item"
           :record_time_sort="record_time_sort"
           :startDateSearch="startDateSearch"
           :endDateSearch="endDateSearch"
           :model="model"
+          :settleSwitch="UserCtr.user_info.settleSwitch"
           @search_pre_record="search_pre_record"
           @chooseTime="chooseTime"
           @time_sort="time_sort"
@@ -36,7 +38,7 @@
         <!-- 押注记录表单 表格内容 如编号和对应值 -->
         <template v-if="[0, 1].includes(toolSelected)">
           <record-table
-            ref="betRecord"
+            ref="filter_box"
             :order_list="order_list"
             :record_obj="record_obj"
             :orderNo_data_obj="orderNo_data_obj"
@@ -73,7 +75,7 @@
 </template>
 
 <script setup>
-// import SimpleHeaderWapper from "project_path/src/components/site-header/simple-header.vue";
+import SimpleHeaderWapper from "project_path/src/components/site-header/simple-header.vue";
 import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
 import recordTable from "./record-table/index.vue";
@@ -109,6 +111,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   toolSelected,
   is_pre_bet,
   betRecord,
+  filter_box,
   clear_timer_get_cashout,
   clear_timer_get_book,
   set_search_time,

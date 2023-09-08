@@ -170,8 +170,8 @@ class UserCtr {
     let res = await api_account.get_user_info({
       token,
     });
-    let obj = res?.data?.data || {};
-    console.log("obj", obj);
+    let obj = lodash.get(res,'data',{});
+    console.error("obj", obj);
     this.set_user_token(token);
     this.set_user_info(obj);
     this.user_version.value = Date.now()
@@ -183,8 +183,8 @@ class UserCtr {
     api_account
       .check_balance({ uid: this.user_info.userId })
       .then((res) => {
-        if (res.data.code == 200) {
-          let amount = lodash.get(res.data, "data.amount");
+        if (res.code == 200) {
+          let amount = lodash.get(res, "data.amount");
           this.set_balance(amount);
         }
       })

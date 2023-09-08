@@ -142,16 +142,13 @@
                 </div>
 
                 <!--开赛日期 ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                <div class="date-time" v-show="match.ms != 110 &&
-                  !show_start_counting_down(match) &&
-                  !show_counting_down(match)">
+                <div class="date-time" v-show="match.ms != 110 && !show_start_counting_down(match) && !show_counting_down(match)">
                   <!-- .Format(i18n_t('time4')) -->
                   {{ format_time_zone(+match.mgt) }}
                 </div>
                 <!--一小时内开赛 -->
                 <div class="start-counting-down" v-show="match.ms != 110 && show_start_counting_down(match)">
-                  <counting-down-start :match="match" :index="i" :mgt_time="match.mgt">
-                  </counting-down-start>
+                  <counting-down-start :match="match" :index="i" :mgt_time="match.mgt"></counting-down-start>
                 </div>
                 <!--倒计时或正计时-->
                 <div class="counting-down-up-container relative-position"
@@ -476,7 +473,7 @@ import matchOvertimePen from './match-overtime-pen.vue'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { i18n_t } from 'src/core/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import { MenuData } from "src/core/index.js"
+import { MenuData, score_switch_handle } from "src/core/index.js"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"

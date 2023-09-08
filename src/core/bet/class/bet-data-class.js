@@ -37,6 +37,8 @@ class BetData {
     this.is_virtual_bet = false;
     // 虚拟投注是否正在进行
     this.is_virtual_handle = false;
+  // 处于活动的投注项子项
+    this.active_index = 0
 
     //==============================================投注之前 无注单ID=============
     // 虚拟投注对象  VR 菜单下的那种 
