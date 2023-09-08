@@ -221,7 +221,7 @@ $hover-color: #FF7000;
         height: 400px !important;
         min-height: 0;
 
-        ::v-deep .empty-wrap {
+        :deep(.empty-wrap)  {
             img {
                 margin-bottom: 0;
             }
@@ -233,7 +233,7 @@ $hover-color: #FF7000;
         }
     }
 
-    ::v-deep .q-scrollarea__thumb {
+    :deep(.q-scrollarea__thumb) {
         z-index: 1000;
     }
 
@@ -250,7 +250,7 @@ $hover-color: #FF7000;
                         display: block !important;
                     }
 
-                    .text-wrap .c-match-process ::v-deep .date-wrap {
+                    .text-wrap .c-match-process :deep(.date-wrap) {
                         color: #99a3b1;
                     }
                 }
@@ -376,7 +376,7 @@ $hover-color: #FF7000;
                     }
 
                     .c-match-process {
-                        ::v-deep .date-wrap {
+                        :deep(.date-wrap) {
                             padding: 0;
                             color: #5a6074;
                             display: flex;
@@ -387,15 +387,15 @@ $hover-color: #FF7000;
                             }
                         }
 
-                        ::v-deep .timer-layout2 {
+                        :deep(.timer-layout2) {
                             margin-right: 5px;
                         }
 
-                        ::v-deep .jingcai {
+                        :deep(.jingcai) {
                             display: none;
                         }
 
-                        ::v-deep .process-name {
+                        :deep(.process-name) {
                             margin-right: 5px;
                         }
                     }

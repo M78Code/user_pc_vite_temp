@@ -264,7 +264,7 @@ onUnmounted(() => window.removeEventListener('resize', on_resize))
       top: -1px;
       background: var(--qq--search-bg-color2);
 
-      ::v-deep .serach-background {
+      :deep(.serach-background) {
         background-color: var(--qq--search-bg-color3);
         min-height: 400px;
         overflow: hidden;
@@ -388,7 +388,7 @@ onUnmounted(() => window.removeEventListener('resize', on_resize))
         }
       }
 
-      ::v-deep .sports-tab {
+      :deep(.sports-tab) {
         position: absolute;
         top: 0;
         left: 0;
