@@ -202,7 +202,7 @@
 import  all_fn  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
-import { get_match_status,i18n_t,formatSeconds } from 'src/core/index'
+import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from 'src/core/index'
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import rs_hong from '/yazhou-pc/image/svg/rs_hong.svg'
 export default {
@@ -295,10 +295,10 @@ export default {
     this.hide_away_red = this.lodash.debounce(this.hide_away_red,5000)
   },
   beforeUnmount() {
-    this.debounce_throttle_cancel(this.hide_home_goal);
-    this.debounce_throttle_cancel(this.hide_away_goal);
-    this.debounce_throttle_cancel(this.hide_home_red);
-    this.debounce_throttle_cancel(this.hide_away_red);
+    // debounce_throttle_cancel(this.hide_home_goal);
+    // debounce_throttle_cancel(this.hide_away_goal);
+    // debounce_throttle_cancel(this.hide_home_red);
+    // debounce_throttle_cancel(this.hide_away_red);
     // useMittOn(MITT_TYPES.EMIT_UPD_TIME_REFRESH_CMD, this.start_timer_loop).off
   },
   watch: {

@@ -163,7 +163,7 @@ const sr_click_handle = (match, type) => {
  * @return {Undefined} Undefined
  */
 const on_go_top = () => {
-  useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
+  // useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
 };
 
 /**

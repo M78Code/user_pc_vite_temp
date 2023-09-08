@@ -56,7 +56,7 @@ export const useGetConfig = () => {
     close_all_handicap: false,
     socket_name: "details",
     autoset_mid: "", //切换新赛事id
-    handicap_this: null, // 传给玩法集 tabs 的数据
+    // handicap_this: null, // 传给玩法集 tabs 的数据
     change_mid: true,
     active_detials: {},
     err_time: 0, //玩法详情接口报错次数
@@ -70,6 +70,7 @@ export const useGetConfig = () => {
     details_loading_time_record: [],
     last_tab_data: {},
   });
+  const handicap_this =ref(null)// 传给玩法集 tabs 的数据
   const detail_header = ref(null); // 头部组件实例
 
   const details_params = ref(store_state.matchesReducer.params);
@@ -268,7 +269,7 @@ export const useGetConfig = () => {
         .then((res) => {
           state.is_request = false;
           // 通知列表右侧详情，获取近期关注数据
-          useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
+          // useMittEmit(MITT_TYPES.EMIT_GET_HISTORY);
           // useMittEmit("get_history");
           const code = lodash.get(res, "code");
           const data = lodash.cloneDeep(lodash.get(res, "data"));
@@ -324,7 +325,7 @@ export const useGetConfig = () => {
             console.log(data,'data.msc ');
             MatchDataWarehouseInstance.value.set_list_from_match_details(data )  
             // state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj.mid_obj;
-            state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj.mid_obj[state.mid+'_'];
+            state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj?.mid_obj[state.mid+'_'];
             console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
@@ -375,7 +376,6 @@ export const useGetConfig = () => {
    * @param {is_init} 是否需要走初始流程，如第一次进入
    */
   const get_match_detail = ({ is_ws = false, is_init = false } = {}) => {
-    debugger
     let params = {
       // mcid: this.mcid, //玩法集id
       mcid: "0", //玩法集id
@@ -653,7 +653,8 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        console.log(res,'res');
+        
+        console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance.value) {
           return;
         }
@@ -666,9 +667,11 @@ export const useGetConfig = () => {
         // if (code === 200 && data.length) {
         if (res.length) {
           state.category_list = res;
-          state.handicap_this['category_list'] = res
+          console.log( handicap_this.value,' state.handicap_this');
+          handicap_this.value['category_list'] = res
+        
           // 初始化玩法列表
-          MatchDataWarehouseInstance.value.init_play_menu_list(res);
+          // MatchDataWarehouseInstance.value.init_play_menu_list(res);
           if (callback) {
             callback();
           }
@@ -677,8 +680,10 @@ export const useGetConfig = () => {
         }
       },
       fun_catch: (err) => {
+        console.log(err,'err');
         // 连续3次请求无响应则返回列表页
-        back_to();
+        
+        // back_to();
       },
     };
 
@@ -787,9 +792,10 @@ export const useGetConfig = () => {
   /**
    * 传递玩法列表的数据给到玩法集
    */
-  const set_handicap_this = (_this) => {
+  const set_handicap_this = (val) => {
     
-    state.handicap_this = _this;
+    handicap_this.value = val;
+    console.log(handicap_this.value,'state.handicap_this');
   };
 
   /**
@@ -797,7 +803,7 @@ export const useGetConfig = () => {
    * @return {Undefined} Undefined
    */
   const on_go_top = () => {
-    useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
+    // useMittEmit(MITT_TYPES.EMIT_SET_SCROLL_POSITION, [0, 0]);
   };
 
   /**
@@ -994,6 +1000,7 @@ export const useGetConfig = () => {
   });
   return {
     ...toRefs(state),
+    handicap_this,
     detail_header,
     cur_expand_layout,
     init,

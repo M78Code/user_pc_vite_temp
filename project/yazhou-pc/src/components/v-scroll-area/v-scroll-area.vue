@@ -183,7 +183,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   // 组件销毁清除设置滚动位置监听
-  useMittOn("set_scroll_position", set_scroll_position).off
+  useMittOn(MITT_TYPES.EMIT_SET_SCROLL_POSITION, set_scroll_position).off
   // 移除窗口监听，优化组件性能
   window.removeEventListener('resize', () => { })
 })
