@@ -56,7 +56,7 @@
           <div class="col bet-play-game">
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
-              <template v-if="ref_data.market_type === 0">
+              <template v-if="ref_data.market_type == 0">
                 <label class="bet-match-playing">[{{ $t('menu.match_playing') }}]</label>
               </template>
               {{ item.playName }} 
@@ -142,8 +142,10 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds,format_currency } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
 
 import BetKeyboard from "../common/bet-keyboard.vue"
+import BetData from "src/core/bet/class/bet-data-class.js";
 
 const props = defineProps({
   index: {
@@ -185,7 +187,8 @@ const set_click_keybord = obj => {
     }else{
       money.value = max_money
     }
-   
+    // 记录投注金额 单关 不合并
+    BetData.set_bet_amount(money.value)
   }
 }
 
@@ -226,9 +229,6 @@ const set_win_money = () =>{
   ref_data.win_money = money.value * props.item.oddFinally
 }
 
-const submit_handle = type => {
-
-}
 
 </script>
 <style lang="scss" scoped>
