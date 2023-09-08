@@ -1,0 +1,24 @@
+{
+  "bet_record": {
+    "level": 2,
+    "menuName": "客户端PC",
+    "sonName": "PC-下拉框"
+  },
+  "category": "Select",
+  "component-name": "Select",
+  "support-customization": "1",
+  "descriptions": ["下拉组件"],
+  "optional-component": [
+    {
+      "component-name": "Select-1",
+      "descriptions": ["下拉组件-版本"]
+    },
+    {
+      "component-name": "Select-n",
+      "descriptions": ["下拉组件-版本n"]
+    },    {
+      "component-name": "Select-y",
+      "descriptions": ["下拉组件-版本y"]
+    }
+  ]
+}
