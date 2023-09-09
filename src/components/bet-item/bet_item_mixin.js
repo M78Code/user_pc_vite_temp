@@ -17,7 +17,7 @@ import store from "src/store-redux/index.js";
 import lodash from "lodash";
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import { t } from "src/core/index.js";;
+import { i18n_t, is_eports_csid } from "src/core/index.js";;
 import ZhuGe from "src/core/http/zhuge-tag";
 // import { useGetStore } from "src/core/match-detail-pc/use_get_store.js";
 import { useRoute, useRouter } from "vue-router";
@@ -55,6 +55,35 @@ export const useGetItem = ({ props }) => {
     },
     DOM_ID_SHOW:''
   });
+
+  const format_odds_value=(val)=> {
+    if(val=='' || val == undefined){
+      return '';
+    }
+    val = (val || '0').toString();
+    let ret = val;
+    if (!is_eports_csid(this.ol_data.csid) && val.includes('.')){
+      if (val >= 100) {
+        if (val.split('.')[1] == '00') {
+          ret = val.split('.')[0];
+        } else {
+          let len = val.length;
+          if(val.indexOf('.0') == (len-2)){
+            ret = val.substring(0,len-2);
+          } else {
+            ret = val;
+          }
+        }
+      } else if (val >= 10) {
+        if (val.split('.')[1][1] == '0') {
+          ret = val.slice(0,val.length-1);
+        } else {
+          ret = val;
+        }
+      }
+    }
+    return ret;
+  };
 
   // ===========================computed===================================
   // 投注项信息 ++
@@ -426,7 +455,7 @@ export const useGetItem = ({ props }) => {
         if (state.ol_data_item.ot.includes(":")) {
           score = state.ol_data_item.ot.replace(":", "-");
         } else if (lodash.toLower(state.ol_data_item.ot) == "other") {
-          score = t("list.other");
+          score = i18n_t("list.other");
         }
       }
     }
@@ -628,6 +657,6 @@ export const useGetItem = ({ props }) => {
   return {
     ...toRefs(state),
     bet_click,
-    format_odds_value
+    // format_odds_value   todo
   };
 };

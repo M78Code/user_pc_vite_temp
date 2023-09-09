@@ -196,7 +196,12 @@ const right_btn_show = computed(() => {
  * @return {undefined} undefined
  */
 const onclick = (index, item) => {
-  set_unfold_multi_column(false);
+    //展开右侧详情
+  store.dispatch({
+    type: 'SET_UNFOLD_MULTI_COLUMN',
+    data: false
+  })
+  // return
   let num = index - props.currentIndex;
   if (!num) return;
   if (props.currentIndex > index) {
@@ -343,7 +348,7 @@ const update_tab_key = () => {
  */
 const mousedown = (e) => {
   clientX.value = e.clientX;
-  last_left.value = tem_wrap_left.value;
+  last_left.value = item_wrap_left.value;
   is_mousedown.value = true;
 };
 
