@@ -12,7 +12,7 @@
         <!--返回菜单-->
         <div class="back-text ellipsis" v-if="BetData.is_bet_single">返回 {{ $t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
-          v-tooltip="{ content: '&nbsp;' + i18n_t('common.return_spo r ts') + '&nbsp;' , overflow:1}" v-else>
+          v-tooltip="{ content: '&nbsp;' + i18n_t('common.return_spo r ts')+'&nbsp;' ,   overflow:1}" v-else>
           {{ $t('common.return_sports') }}</div>
       </div>
       <div v-else>
@@ -22,29 +22,23 @@
           <!--箭头图标-->
           <icon name="icon-back" size="14px" />
           <!--返回菜单-->
-          <div class="back-text ellipsis" v-if="BetData.is_bet_single">{{ $t('common.return_sports') }}</div>
+          <div class="back-text ellipsis">{{ $t('common.return_sports') }}</div>
         </div>
       </div>
     </div>
 
+    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
+
     <!--右边的单关或者复式串关按钮-->
-    <template v-if=" !BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
-      <div class="col-auto bet-series yb-flex-between" >
-        <template v-if="BetData.is_bet_single">
-          <!--复式串关已改为串关-->
-          <span class="series_style" :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(UserCtr.lang) }">{{
-            $t('bet.bet_series') }}</span>
-          <span>+</span>
-        </template>
-        <!--单关-->
-        <template v-else>
-          <span>{{ $t('bet.bet_one_') }}</span>
-          <span class="bet-single-btn">
-            <!--单关数量-->
-            <span class="bet-single-count">{{ bet_count }}</span>
-            <span class="add">+</span>
-          </span>
-        </template>
+    <template v-if="!BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
+      <div class="col-auto bet-series yb-flex-between" @click="set_change_bet_single">
+        <!--复式串关已改为串关-->
+        <span class="series_style" :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(UserCtr.lang) }">
+          {{$t('bet.bet_series') }}
+        </span>
+        <span v-if="BetData.is_bet_single">已关闭</span>
+        <span v-else>已开启</span>
+        <span>+</span>
       </div>
     </template>
 
@@ -69,7 +63,7 @@ import lodash from 'lodash'
  * @param {undefined} undefined
  * @return {undefined} undefined
 */
-const bet_count = () => {
+const bet_count = computed(() => {
   if (BetData.is_virtual_bet) {
     return BetData.virtual_bet_list.length;
   }
@@ -78,12 +72,18 @@ const bet_count = () => {
   } else {
     return BetData.bet_s_list.length;
   }
-}
+})
 
 // 返回菜单列表
 const set_menu_back = val => {
   MenuData.set_layout_left_show(val)
 }
+
+// 切换单关/串关
+const set_change_bet_single = () => {
+  BetData.set_is_bet_single()
+}
+
 
 </script>
 

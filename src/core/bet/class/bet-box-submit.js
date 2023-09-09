@@ -184,6 +184,9 @@ const submit_handle = type => {
             setTimeout(() => {
                 BetViewDataClass.set_bet_order_status(3)
             }, 1000);
+            // 投注成功 更新余额
+            UserCtr.get_balance()
+            BetData.set
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }else{
