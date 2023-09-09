@@ -208,7 +208,7 @@ const cur_fill_second = ref(0); // 补充的分钟
   // 补充时间(+分钟部分) (补时多少分钟)
   cur_fill_second.value = lodash.get(props.match_props, "match.mststi") || 0;
 };
-useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
+// useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time);
 init_fill_time();
 
 // 获取阶段名称
@@ -407,7 +407,7 @@ onUnmounted(() => {
   cur_mmp_time.value = null;
   cur_fill_time.value = null;
   cur_fill_second.value = null;
-  useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time).off;
+  // useMittOn(MITT_TYPES.EMIT_INIT_FILL_TIME_CMD, init_fill_time).off;
 });
 </script>
 

@@ -17,7 +17,7 @@
           <!-- 投注失败 -->
           <span v-if="order_tatus == 0" class="color3"><img  src="image/wwwassets/bw3/svg/bet_shib.svg">{{ $t('bet.bet_err')}}</span>
            <!-- 提交成功 -->
-          <span v-if="order_tatus == 2" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{ $t('bet.submitted_successfully')}}</span>
+          <!-- <span v-if="order_tatus == 2" class="color2"><img :src="(`${ $g_image_preffix }/image/wwwassets/bw3/svg/bet_tijiao${UserCtr.theme.includes('y0') ? '2' : ''}.svg`)">{{ $t('bet.submitted_successfully')}}</span> -->
         </p>
       </div>
       <!-- 下 -->
@@ -32,7 +32,7 @@
 
 <script setup>
 // import bettinglist from 'src/project/mixins/betting/betting.js';
-import { UserCtr } from "src/core/index.js";
+// import { UserCtr } from "src/core/index.js";
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
@@ -48,14 +48,11 @@ const store_state = store.getState()
 
 const get_s_count_data = ref(store_state.get_s_count_data)
 
-const unsubscribe = store.subscribe(() => {
-  update_state()
-})
 
-const update_state = () => {
-  const new_state = store.getState()
-  const get_s_count_data = new_state.get_s_count_data
-}
+// const update_state = () => {
+//   const new_state = store.getState()
+//   const get_s_count_data = new_state.get_s_count_data
+// }
 
  //串关总赔率
  const mix_odds = computed(() =>{//当前串关赔率

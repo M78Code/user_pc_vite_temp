@@ -347,3 +347,13 @@ export const get_file_path = (path, csid = 0) => {
   // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
   return `${api_domain_2}/${path}`;
 };
+/**
+ * @description: 解绑防抖
+ * @param {String} fun 函数
+ * @return {String} 
+ */
+export const  debounce_throttle_cancel=(fun)=> {
+  if (fun && fun.cancel && typeof fun.cancel == "function") {
+    fun.cancel();
+  }
+}

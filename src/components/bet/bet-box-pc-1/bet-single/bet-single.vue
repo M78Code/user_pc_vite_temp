@@ -6,7 +6,6 @@
 <template>
   <!-- 单关组件 -->
   <div class="bet-single" data-container="single-container" ref="single-container">
-    {{ bet_flag }} --- {{ BetData.bet_data_class_version }}
     <!--未投注-->
     <template v-if="bet_flag">
       <!--投注信息-->

@@ -40,6 +40,7 @@ import { api_match,socket_api } from "src/api/index.js";
 import { ref, reactive, onMounted,computed } from "vue"
 import { UserCtr,compute_value_by_cur_odd_type } from "src/core/index.js"
 import BetData from "src/core/bet/class/bet-data-class.js"
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 
 import { useRouter } from "vue-router"
@@ -97,7 +98,7 @@ const router = useRouter()
     }
 
     const set_bet_oid = (item,obj_hp,obj_hl,obj_ol) => {
-
+      BetViewDataClass.set_bet_order_status(1)
     
       // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
       let matchType = 2 

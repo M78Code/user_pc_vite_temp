@@ -1,7 +1,7 @@
 <!--  @Description: 搜索玩法 -->
 
 <template>
-    <div v-show="show_type == 'play'" class="play-wrap" @click.stop>
+    <div class="play-wrap" @click.stop>
 
     </div>
 </template>

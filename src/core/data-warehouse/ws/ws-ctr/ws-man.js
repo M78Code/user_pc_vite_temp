@@ -20,10 +20,10 @@ export default class wsMan {
       url = domain || '';
     } else {
       // 获取默认最快域名
-      url = window.env.config.domain[window.env.config.current_env][0] || '';
+      url = BUILDIN_CONFIG.DOMAIN_RESULT.first_one || '';
     }
     // 组装ws地址
-    url = `${url}/${window.env.config.api.API_PREFIX_WBSOCKET}/push`;
+    url = `${url}/${BUILDIN_CONFIG.API_PREFIX.API_PREFIX_WBSOCKET}/push`;
     url = url.replace("http", "ws");
     console.log('启动ws:'+url);
     // 初始化ws  url=wss://api.mjpu9qew.com/yewuws2/push

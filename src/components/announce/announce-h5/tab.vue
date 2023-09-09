@@ -17,8 +17,9 @@
 </template>
   
 <script setup>
-import { watch } from 'vue'
-// import {utils } from 'src/core/index.js';
+import { ref, watch } from 'vue'
+import { utils } from 'src/core/index.js';
+
 const props = defineProps({
     tabList: {
         type: Array,
@@ -36,14 +37,11 @@ const props = defineProps({
 
 const emit = defineEmits(['changeTab'])
 
-
+const scrollBox = ref(null)
 // 监听 tabIndex 下标变化
 watch(
     () => props.tabIndex,
-    (n, o) => {
-        // TODO: 
-        // utils.tab_move2(n, this.$refs.scrollBox)
-    },
+    (n, o) => utils.tab_move2(n, scrollBox.value),
     {
         immediate: true,
         deep: true

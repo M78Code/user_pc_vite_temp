@@ -49,7 +49,7 @@ let pre_load_video = {
           video_src,
           animation_src,
         };
-        useMittEmit(MITT_TYPES["set_pre_video_src"], obj);
+        useMittEmit(MITT_TYPES.EMIT_SET_PRE_VIDEO_SRC, obj);
       });
     }, 10000);
   },

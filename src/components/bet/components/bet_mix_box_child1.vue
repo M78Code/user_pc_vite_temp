@@ -281,7 +281,7 @@ watch(() => get_order_ing.value.length, (new_, old_) => {
         if (!tips_msg) {
           tips_msg = i18n_t('bet.err_msg03')  //新流程queryOrderStatus 接口返回的投注失败提示语先写死
         }
-        check_odds_beforebet2.value();  //重新拉取投注前校验盘口信息接口
+        check_odds_beforebet();  //重新拉取投注前校验盘口信息接口
         need_bet_again.value = true
         set_toast({ 'txt': i18n_t('bet.bet_err'), hide_time: 3000 });
       }

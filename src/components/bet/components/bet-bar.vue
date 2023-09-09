@@ -154,7 +154,6 @@ const mix_sum_odds = computed(() => {
 onUnmounted(() => {
   clearInterval(balance_timer)
   balance_timer = null
-  unsubscribe()
 })
 
 

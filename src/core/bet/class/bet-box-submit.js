@@ -1,6 +1,6 @@
 import {api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
-import betViewDataClass from "./bet-view-data-class.js"
+import BetViewDataClass from "./bet-view-data-class.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -44,6 +44,13 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
 // bet_list  投注列表
 // is_single 是否单关/串关 
 const set_bet_order_list = ( bet_list,is_single ) =>{
+    
+    // 串关
+    if(is_single){
+
+    }else{
+
+    }
     let order_list = bet_list.map( item =>{
         let obj = {
             "seriesSum": 1,   // 串关数量
@@ -109,7 +116,7 @@ const get_query_bet_amount_common = () =>{
 
     api_betting.query_bet_amount(params).then(res =>{
         if(res.code == 200){
-            betViewDataClass.set_bet_min_max_money(res.data)
+            BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
         }
@@ -131,6 +138,9 @@ const get_query_bet_amount_esports_or_vr = obj =>{
 
 // 提交投注信息 
 const submit_handle = type => {
+    // 设置投注中状态
+    BetViewDataClass.set_bet_order_status(2)
+
     let params = {
         "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
@@ -169,10 +179,17 @@ const submit_handle = type => {
     params.seriesOrders = seriesOrders
 
     api_betting.post_submit_bet_list(params).then(res =>{
+       
         if(res.code == 200){
+            setTimeout(() => {
+                BetViewDataClass.set_bet_order_status(3)
+            }, 1000);
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+        }else{
+            BetViewDataClass.set_bet_order_status(4)
         }
+        
     })
 }
 

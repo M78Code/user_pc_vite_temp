@@ -91,6 +91,7 @@ class UserCtr {
     }
     // 用户信息版本
     this.user_version = ref('0')
+    this.callbackUrl = ''
   }
   /**
    * 用户 id
@@ -779,7 +780,7 @@ class UserCtr {
   //显示token失效弹窗
   show_fail_alert() {
     let ret = false;
-    let callbackUrl = UserCtr.user_info.callbackUrl;
+    let callbackUrl = this.user_info.callbackUrl;
 
     if (this.is_invalid) {
       //是否失效

@@ -4,11 +4,12 @@
       <div class="r-select">
         <!-- 体育 -->
         <span class="label">{{ $t("results.sport") }}</span>
-        <normal-select
+        <Select-Wrapper
           :value="sport"
           :options="sport_type"
           :isChampion="0"
-        ></normal-select>
+          use_component_key="select-n"
+        ></Select-Wrapper>
       </div>
       <!-- 冠军球种才展示这个下拉选择框 -->
       <div class="r-select ball-games" v-if="current_sport_id == '0'">
@@ -16,12 +17,13 @@
         <span class="label ball-games-label">{{
           i18n_t("results.ball_games")
         }}</span>
-        <normal-select
+        <Select-Wrapper
           :value="champion_sport"
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
-        ></normal-select>
+          use_component_key="select-n"
+        ></Select-Wrapper>
       </div>
       <!-- 日期 -->
       <div class="r-select">
@@ -56,7 +58,7 @@
         <div class="r-select ml-30" style="margin-right: 5px">
           <!-- 联赛 -->
           <span class="label">{{ $t("results.league") }}</span>
-          <y-select
+          <Select-Wrapper
             @to_hide_select="hideSelect"
             :list="api_league_type"
             :sport_id="sport_id"
@@ -67,7 +69,8 @@
             @confirm="isSelectConfirm"
             :hideSelect="cancel"
             :isTimeChanged="timeChanged"
-          ></y-select>
+            use_component_key="select-y"
+          ></Select-Wrapper>
         </div>
         <div
           class="search relative-position"
@@ -129,7 +132,8 @@
   </div>
 </template>
 <script setup>
-import ySelect from "src/components/select/y_select";
+// import ySelect from "src/components/select/y_select";
+import SelectWrapper from "src/components/selec1";
 import normalSelect from "src/components/select/normal_select.vue";
 import normalSelect2 from "src/components/select/normal_select.vue";
 import Calendar from "src/project/yabo/components/bet_record/calendar.vue";

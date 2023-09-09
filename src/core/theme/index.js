@@ -12,7 +12,7 @@
 import merchant_config from "app/job/output/merchant/config.json";
 import all_css_keys from "app/job/output/css/index";
 import { ref, computed } from "vue";
-import store from "src/store-redx/";
+import store from "src/store-redux/index.js"
 
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 const { langReducer } = store.getState();
@@ -30,10 +30,11 @@ const css_prefix = "--qq--";
 export const compute_css_var_style = (css_module) => {
   //要看看最后css的解构是如何的
   return computed(() => {
+    if(!all_css_keys[css_module])return {}
     return all_css_keys[css_module].reduce((obj, key) => {
       css_prefix;
       obj[`${css_prefix}${key}`] =
-        merchant_config.css[css_module][current_theme.value];
+        merchant_config.css[key][current_theme.value];
       return obj;
     }, {});
   });

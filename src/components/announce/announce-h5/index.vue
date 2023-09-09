@@ -6,7 +6,7 @@
             {{ i18n_t('common.notice') }}
         </simple-header>
         <!-- tab 组件 及 下边内容 滚动部分 -->
-        <tabs :tabList="tabList" :tabIndex="index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
+        <tabs :tabList="tabList" :tabIndex="tab_index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
             :class="{ loading: loading_page }">
             <!-- 滚动区域组件,切换tab 回到顶部 -->
             <q-scroll-area class="notice_scroll" ref="scrollArea" :thumb-style="{ opacity: 0 }">
@@ -14,7 +14,8 @@
                     <div class="ann-item" v-for="(item, i) of announce_list" :key="i">
                         <div class="flex justify-between align_items">
                             <div class="ann-title">[{{ current_title }}]</div>
-                            <div class="ann-time">{{ (new Date(+item.sendTimeOther)).Format(('time6')) }}</div>
+                            <!-- <div class="ann-time">{{ new Date(+item.sendTimeOther).Format(i18n_t('time6')) }}</div> -->
+                            <div class="ann-time">{{ DateForMat(new Date(+item.sendTimeOther), 'yyyy-MM-dd hh:mm') }}</div>
 
                         </div>
                         <div class="ann-content" v-html="item.context" :class="{ is_long_word: ['en'].includes(UserCtr.lang) }">
@@ -31,8 +32,17 @@
 </template>
   
 <script setup>
-import { ref, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, watch, nextTick, onMounted, onUnmounted, defineComponent } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
+import { useRoute } from "vue-router"
+import { api_home } from "src/api/index";
+import { LoadingWapper as loadPage } from "src/components/common/loading";
+import { NoDataWapper as noData } from "src/components/common/no-data";
+import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
+import tabs from "./tab.vue";
+import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
+import UserCtr from 'src/core/user-config/user-ctr.js'
+import { DateForMat } from 'src/core/format/module/format-date.js'
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -43,13 +53,6 @@ const props = defineProps({})
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
-import { api_home } from "src/api/index";
-import { LoadingWapper as loadPage } from "src/components/common/loading";
-import { NoDataWapper as noData } from "src/components/common/no-data";
-import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
-import tabs from "./tab.vue";
-import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-import UserCtr from 'src/core/user-config/user-ctr.js'
 
 /** 返回的大列表 */
 let res_list = reactive([])
@@ -63,19 +66,20 @@ let class_list = reactive([])
 const current_title = ref('')
 
 /** 当前选中公告分类索引 */
-const index = ref(0)
+const tab_index = ref(0)
 // 监听 index 下标变化
 watch(
-    () => index.value,
-    changeTab(tabList[o])
+    () => tab_index.value,
+    (o) => changeTab(tabList[o])
 )
 const scrollArea = ref(null)
 // 切换tab 选项卡
 function changeTab(tab) {
-    scrollArea.value && scrollArea.value.setScrollPosition(0, 100)
-    index.value = tab.index;
+    // TODO:
+    // if (scrollArea.value) scrollArea.value.setScrollPosition(0, 100)
+    tab_index.value = tab.index;
     current_title.value = tabList[tab.index].type;
-    announce_list = class_list[index.value].mtl
+    announce_list = class_list[tab_index.value].mtl
     has_data_list()
 }
 
@@ -119,13 +123,13 @@ function get_list() {
             current_title.value = data.nt[0].type || "";
             nextTick(() => {
                 if (route.query) {
-                    index.value = $route.query.noticeTypeName
+                    tab_index.value = route.query.noticeTypeName
                     data.nl.forEach((item, i) => {
                         if (item.nen == route.query.noticeTypeName) {
                             let time_out = 1000
-                            index.value = i
-                            if (index.value > 7) time_out = 1000 + ((index.value - 7) * 200)
-                            if (index.value <= 3) time_out = 0
+                            tab_index.value = i
+                            if (tab_index.value > 7) time_out = 1000 + ((tab_index.value - 7) * 200)
+                            if (tab_index.value <= 3) time_out = 0
                             timer1.value = setTimeout(() => {
                                 loading_page.value = false
                             }, time_out)
@@ -147,6 +151,12 @@ function get_list() {
 /** 钩子触发 */
 onMounted(get_list)
 
+</script>
+
+<script>
+export default defineComponent({
+    name: 'announce_h5'
+})
 </script>
   
 <style lang="scss" scoped>

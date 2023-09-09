@@ -4,7 +4,6 @@ import betInfoReducer from "./module/betInfo";
 import detailsReducer from "./module/details";
 import virtualSportsReducer from "./module/virtual-sports";
 import cathecticReducer from "./module/cathectic";
-import userInfoReducer from './module/userinfo';
 import themeReducer from './module/theme';
 import bettingListReducer from "./module/betting_list";
 import languageReducer from "./module/languages";
@@ -13,6 +12,7 @@ import toastReducer from "./module/toast"
 import topMenuReducer from "./module/topmenu"
 import homeReducer from "./module/home"
 import videoReducer from "./module/video"
+import footerMenuReducer from "./module/footer-menu"
 export {
   betInfoReducer,
   menuReducer,
@@ -20,7 +20,6 @@ export {
   detailsReducer,
   virtualSportsReducer,
   cathecticReducer,
-  userInfoReducer,
   themeReducer,
   bettingListReducer,
   languageReducer,
@@ -29,4 +28,5 @@ export {
   topMenuReducer,
   homeReducer,
   videoReducer,
+  footerMenuReducer,
 };

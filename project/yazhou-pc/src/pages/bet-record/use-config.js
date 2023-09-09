@@ -40,8 +40,8 @@ export const useConfig = () => {
   const filter_box = ref(null)
   const state = reactive({
     day_time: "", //今日时间
-    startDateSearch: "", // 开始时间
-    endDateSearch: "", // 结束时间
+    startDateSearch: DateForMat((new Date() - 86400000), "yyyy/MM/dd"), // 开始时间
+    endDateSearch: DateForMat(new Date(), "yyyy/MM/dd"), // 结束时间
     params: {
       page: 1, //当前页
       size: 50, //每页显示大小
@@ -96,32 +96,21 @@ export const useConfig = () => {
     // 开始时间展示
     startTimeShow: false, 
   });
-  watch(
-    () => state.model,
-    (n) => {
-      if (n) {
-        // 这里会存在选中单个日期的情况 ['2021/12/12', from: '2021/01/01', to: '2021/01/07']
-        if (!n.from) {
-          if (lodash.isArray(n)) {
-            dateChanged(n[0], n[0]);
-          } else {
-            dateChanged(n, n);
-          }
-        } else {
-          dateChanged(n.from, n.to);
-        }
-      }
-    }
-  );
+  // watch(
+  //   () => state.model,
+  //   (n) => {
+      
+  //   }
+  // );
   /**
    * @description: 获取全局点击  TODO
    * @param {undefined} undefined
    * @returns {undefined}
    */
-  // const get_global_click = () => {
-  //     state.startTimeShow = false;
-  //     state.show_select_time_sort = false
-  //   }
+  const get_global_click = () => {
+      state.startTimeShow = false;
+      state.show_select_time_sort = false
+    }
 
   /**
    * @description:清除提前结算实时查询定时器
@@ -154,7 +143,7 @@ export const useConfig = () => {
    */
   const set_search_time = (i) => {
     if (i == 0) {
-      let date = format_day(new Date(state.day_time).getTime());
+      let date = format_day(state.day_time ? new Date(state.day_time).getTime() : new Date().getTime());
       state.model = [date];
       dateChanged(date, date);
       return;
@@ -522,7 +511,7 @@ export const useConfig = () => {
    * @param uid ：this.params.userId
    */
   const get_balance = () => {
-    const get_balance_gcuuid = uid();
+    const get_balance_gcuuid = UserCtr.get_uid();
     let gcuuid = get_balance_gcuuid;
     // console.log('get_balance===', JSON.stringify(gcuuid));
     api_account
@@ -682,6 +671,46 @@ const changePage = (tableData) => {
     getOrderList();
   }
 };
+/**
+     * @description:搜索
+     * @param {undefined} undefined
+     * @return {undefined} undefined
+     */
+const submit = () => {
+  if (!test_time()) {
+    return;
+  }
+  state.params.beginTime = new Date(
+    state.startDateSearch.split(" ")
+  ).getTime();
+  state.params.endTime = new Date(
+    `${state.endDateSearch} 23:59:59`
+  ).getTime();
+
+  resetParams("clearTime"); //删除时间tab参数
+  state.toolIndex = ""; //取消标签选中
+  getOrderList();
+  useMittEmit(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD);
+}
+const test_time = () => {
+  let statu = true;
+  const start_day = new Date(`${state.startDateSearch} 00:00:00`).getTime(); //开始时间
+  const end_day = new Date(`${state.endDateSearch} 23:59:59`).getTime(); //结束时间
+
+  if (end_day < start_day) {
+    // toast(i18n_t("results.early_time")); //请选择晚于开始的结束时间
+    statu = false;
+    return statu;
+  }
+
+  if (start_day > end_day) {
+    // toast(i18n_t("results.late_time")); //请选择早于结束的开始时间
+    statu = false;
+    return statu;
+  }
+
+  return statu;
+}
 
 /**  TODO
  * @description:获取表格数据
@@ -697,7 +726,7 @@ const getOrderList = (isScoket, callback) => {
   if (!isScoket) {
     state.data_state.load_data_state = "loading";
   }
-  const send_gcuuid = uid();
+  const send_gcuuid = UserCtr.get_uid();
   state.params.gcuuid = send_gcuuid;
   console.log('getOrderList===', JSON.stringify(state.params));
   // 列表数据接口
@@ -711,14 +740,14 @@ const getOrderList = (isScoket, callback) => {
         return;
       }
 
-      let code = lodash.get(res, "data.code");
+      let code = lodash.get(res, "code");
       let status = lodash.get(res, "status");
       if (code == "0401038") {
         state.data_state.load_data_state = "api_limited";
         clear_timer_get_cashout();
       }
-      if (code == 200 && status) {
-        const data = lodash.get(res, "data.data");
+      if (code == 200) {
+        const data = lodash.get(res, "data");
         // 当maxcashout为null时，定时1秒重新拉次数据，最多查询5次
         let records_ = lodash.filter(data.records, {
           enablePreSettle: true,
@@ -822,7 +851,7 @@ const getBookList = (callback) => {
     jumpFrom: 2,
     preOrderStatusList: preOrderStatusList,
   };
-  state.getBook_gcuuid = uid();
+  state.getBook_gcuuid = UserCtr.get_uid();
   param_obj.gcuuid = state.getBook_gcuuid;
   // console.log('get_book_record_data==getBookList==',JSON.stringify(param));
   api_betting
@@ -833,10 +862,10 @@ const getBookList = (callback) => {
       if (gcuuid && state.getBook_gcuuid != gcuuid) {
         return;
       }
-      let code = lodash.get(res, "data.code");
+      let code = lodash.get(res, "code");
       let status = lodash.get(res, "status");
-      if (code == 200 && status) {
-        const data = lodash.get(res, "data.data");
+      if (code == 200) {
+        const data = lodash.get(res, "data");
         // data.orderStatus = params.orderStatus;
         let record_list = data.records;
         if (!record_list) {
@@ -919,6 +948,7 @@ const get_obj = (record_list, data) => {
 
   //   ( 待改造)
   onMounted(() => {
+    state.params.userId = UserCtr.get_uid();
     getOrderList()
     useMittOn(MITT_TYPES.EMIT_CHANGE_CHECK, (val) => {
       check_change(val)
@@ -961,7 +991,7 @@ const get_obj = (record_list, data) => {
     chooseTime,
     search_pre_record,
     toolClicked,
-
-    
+    submit,
+    dateChanged,
   };
 };

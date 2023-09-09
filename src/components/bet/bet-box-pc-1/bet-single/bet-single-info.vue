@@ -9,7 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    <div>{{ BetViewDataClass.bet_view_version }}</div>
+   
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="ref_data.match_type != 3">
@@ -118,18 +118,7 @@
       </div>
     </q-card-section>
 
-    <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')" >
-      <template
-        v-if="['0400459', '0400475', '0400486', '0400517', '0400519', '0400540'].includes(BetViewDataClass.error_code)">
-        <!--确定按钮-->
-        {{ $t('common.confirm') }}
-      </template>
-      <template v-else>
-        <!-- 投注 -->
-        {{ $t('common.betting') }}
-      </template>
-    </div>
-
+    
     <!-- <div class="mask-appointment" v-if="is_forward != index && is_forward != -1"></div> -->
 
     <!-- <tips v-if='is_show_tip' type="hps15Minutes" :tipstatus="true" :offset="getArr()" /> -->
@@ -142,7 +131,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { format_odds,format_currency } from "src/core/format/index.js"
 import { odds_type_name } from "src/core/constant/index.js"
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { submit_handle } from "src/core/bet/class/bet-box-submit.js"
+
 
 import BetKeyboard from "../common/bet-keyboard.vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
@@ -472,13 +461,4 @@ input::-webkit-inner-spin-button {-webkit-appearance: none;
 input[type="number"]{-moz-appearance: textfield;
 }
 
-.bet-submit{
-  width: 100%;
-  margin-top: 30px;
-  text-align: center;
-  background: #000;
-  height: 40px;
-  line-height: 40px;
-  color: #fff;
-}
 </style>

@@ -7,8 +7,8 @@
  * 
  * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
  * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
- * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
- * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象mids列表数据-初次使用
+ * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象mids列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
  * 
  * h5和pc赛事详情页面使用
@@ -20,6 +20,7 @@
  * 
  */
 import lodash from "lodash";
+import MatchDataBaseWS from  "./match-ctr-ws.js"
 export default class MatchDataBase
 {
   /**
@@ -29,18 +30,16 @@ export default class MatchDataBase
   constructor(params={})
   {
 
-   let { name_code='' } = params
-
-  if(!name_code){
-    console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
-    return false
-
-  }
+    let { name_code='' } = params
+    if(!name_code){
+      console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
+      return false
+    }
 
     // 实例化名字标识
     this.name_code = name_code;
- 
-
+    // 设置ws数据通信实例
+    this.ws_ctr = new MatchDataBaseWS(this);
 
     // 初始化数据
     this.init();
@@ -55,6 +54,8 @@ export default class MatchDataBase
   init(){
     // 所有赛事列表数据
     this.list = [];
+    // 所有赛事列表对象数据(只在)
+    this._list_obj = {};
     // 页面显示的赛事列表数据,this.quick_query_list.list的部分数据
     this.quick_query_list = [];
     // 页面显示赛事快速查询对象
@@ -248,6 +249,18 @@ export default class MatchDataBase
       this.merge_with(hl_obj_old, hl_obj_new);
     }
   }
+
+  
+  /**
+   * @description: 获取快速查询对象中的指定mid赛事对象
+   * @param {String} mid 赛事mid
+   * @return {Object} 赛事
+   */
+  get_quick_mid_obj(mid){
+    // 获取指定mid的赛事
+    return this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
+  }
+
   /**
    * @description: 设置所有列表数据
    * @param {Object} list 所有列表数据
@@ -265,7 +278,7 @@ export default class MatchDataBase
         console.log('listlist', mid);
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+         const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -319,9 +332,31 @@ export default class MatchDataBase
         this.remove_match(mid_);
       }
     }
+    // 列表快速转对象逻辑
+    this._list_obj = {};
+    this.list.forEach(item => {
+      this._list_obj[_.get(item, 'mid')] = item;
+    });
   }
 
-  set_quick_query_list(list,is_merge){
+  /**
+   * @description: 设置快速搜索mids列表数据
+   * @param {Object} list 快速搜索mids列表
+   * @return {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
+   */
+  set_quick_query_list(mids,is_merge){
+    if(!_.get(mids,'length')){
+      // 数据检测
+      return;
+    }
+    let list = [];
+    // 获取快速列表数据
+    for (let i = 0; i < mids.length; i++) {
+      const match_ = this._list_obj[mids[i]]
+      if(match_){
+        list.push(match_);
+      }
+    }
     let obj = this.list_comparison(this.quick_query_list,list);
     if(is_merge){
       // {add:{}, del:{}, upd:{}}
@@ -331,7 +366,7 @@ export default class MatchDataBase
         const mid = item.mid;
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+         const match = this.quick_query_obj.mid_ob[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -788,12 +823,12 @@ clear(any) {
   }
 }
 
- /**
-   * @description: 数据合并优化版函数
-   * @param {*} old_obj 旧数据
-   * @param {*} new_obj 新数据
-   */
- merge_with(old_obj, new_obj){
+/**
+ * @description: 数据合并优化版函数
+ * @param {*} old_obj 旧数据
+ * @param {*} new_obj 新数据
+ */
+merge_with(old_obj, new_obj){
   let customizer = (old_value, new_value) => {
     let res = old_value;
     // 数据类型
@@ -836,6 +871,20 @@ clear(any) {
   }
   lodash.mergeWith(old_obj, new_obj,customizer);
 }
+/**
+ * @description: 更新赛事ms状态
+ * @param {String} mid 赛事mid
+ * @return {Object} obj 赛事状态 {ms:0,hs:0,os:0};
+ */
+upd_match_all_status(mid, obj){
+  // 获取指定mid更新的赛事
+  let match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
+  if(match){
+    // match进行数据更新
+
+    // 同步更新快速查询对象中的数据(非必要)
+  }
+}
 
   /**
    * @description: 清除所有数据
@@ -859,5 +908,8 @@ clear(any) {
     this.clear_quick_query_obj(this.quick_query_obj);
     this.clear(this.quick_query_list);
     this.clear(this.list);
+    this.clear(this._list_obj);
+    // 销毁ws数据通信实例
+    this.ws_ctr && this.ws_ctr.destroy();
   }
 }

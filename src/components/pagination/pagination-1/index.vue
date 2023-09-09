@@ -1,6 +1,7 @@
  
 <template>
   <div>
+   {{perPageNum}}
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
         {{ i18n_t('bet_record.total_count') }}
@@ -32,10 +33,12 @@
       <q-pagination v-model="page" color="#788299" text-color="panda-text-3" :max="max" size="sm" :max-pages="9"
         direction-links ellipses icon-prev="icon-triangle2" icon-next="icon-triangle3" />
       <div class="pagination-select">
+        
         <q-select class="select" :class="{ 'select-page-input': icon_name == 'icon-triangle' }" outlined
           v-model="perPageNum" :options="perPageNumOptions" popup-content-style="border:1px solid #d0d8de;background:#fff"
           @popup-show="icon_name = 'icon-triangle'" @popup-hide="icon_name = 'icon-triangle1'">
           <template v-slot:option="scope">
+            {{ scope}}
             <div class="select-item" v-bind="scope.itemProps" v-on="scope.itemEvents">{{ scope.opt.value }}</div>
           </template>
           <template v-slot:append>
