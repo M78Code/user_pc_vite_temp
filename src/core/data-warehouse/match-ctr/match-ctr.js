@@ -20,6 +20,7 @@
  * 
  */
 import lodash from "lodash";
+import MatchDataBaseWS from  "./match-ctr-ws.js"
 export default class MatchDataBase
 {
   /**
@@ -29,18 +30,16 @@ export default class MatchDataBase
   constructor(params={})
   {
 
-   let { name_code='' } = params
-
-  if(!name_code){
-    console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
-    return false
-
-  }
+    let { name_code='' } = params
+    if(!name_code){
+      console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
+      return false
+    }
 
     // 实例化名字标识
     this.name_code = name_code;
- 
-
+    // 设置ws数据通信实例
+    this.ws_ctr = new MatchDataBaseWS(this);
 
     // 初始化数据
     this.init();
@@ -248,6 +247,18 @@ export default class MatchDataBase
       this.merge_with(hl_obj_old, hl_obj_new);
     }
   }
+
+  
+  /**
+   * @description: 获取快速查询对象中的指定mid赛事对象
+   * @param {String} mid 赛事mid
+   * @return {Object} 赛事
+   */
+  get_quick_mid_obj(mid){
+    // 获取指定mid的赛事
+    return this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+  }
+
   /**
    * @description: 设置所有列表数据
    * @param {Object} list 所有列表数据
@@ -788,12 +799,12 @@ clear(any) {
   }
 }
 
- /**
-   * @description: 数据合并优化版函数
-   * @param {*} old_obj 旧数据
-   * @param {*} new_obj 新数据
-   */
- merge_with(old_obj, new_obj){
+/**
+ * @description: 数据合并优化版函数
+ * @param {*} old_obj 旧数据
+ * @param {*} new_obj 新数据
+ */
+merge_with(old_obj, new_obj){
   let customizer = (old_value, new_value) => {
     let res = old_value;
     // 数据类型
@@ -836,6 +847,20 @@ clear(any) {
   }
   lodash.mergeWith(old_obj, new_obj,customizer);
 }
+/**
+ * @description: 更新赛事ms状态
+ * @param {String} mid 赛事mid
+ * @return {Object} obj 赛事状态 {ms:0,hs:0,os:0};
+ */
+upd_match_all_status(mid, obj){
+  // 获取指定mid更新的赛事
+  let match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+  if(match){
+    // match进行数据更新
+
+    // 同步更新快速查询对象中的数据(非必要)
+  }
+}
 
   /**
    * @description: 清除所有数据
@@ -859,5 +884,7 @@ clear(any) {
     this.clear_quick_query_obj(this.quick_query_obj);
     this.clear(this.quick_query_list);
     this.clear(this.list);
+    // 销毁ws数据通信实例
+    this.ws_ctr && this.ws_ctr.destroy();
   }
 }
