@@ -229,9 +229,9 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  page_style.value = compute_css_var_style("match")
+  // page_style.value = compute_css_var_style("match")
   
-  page_style.value = compute_css_var_style(matchCssVariable)
+  // page_style.value = compute_css_var_style(matchCssVariable)
 
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;

@@ -168,7 +168,7 @@ const last_list_score = ref('')
 const msc_converted = ref([])     
 const show_left_triangle = ref(false)
 const show_right_triangle = ref(false)
-const get_menu_type = MenuData.get_menu_type()
+const get_menu_type = ref(MenuData.get_menu_type())
 
 const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 
