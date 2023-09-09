@@ -1,7 +1,7 @@
 <!-- @Description: 加载中 -->
 <template>
   <div class="loading" :style="`top:${top}`">
-    <div class="la-line-scale" :class="{ 'y0_bg': theme.includes('y0') }">
+    <div class="la-line-scale" :class="{ 'y0_bg': UserCtr.theme.includes('y0') }">
       <div></div>
       <div></div>
       <div></div>
@@ -12,22 +12,14 @@
 </template>
 
 <script setup>
-import { onUnmounted } from 'vue'
-import store from "src/store-redux/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
+
 const props = defineProps({
   top: {
     type: String,
     default: '46%',
   }
 })
-/** 主题 */
-const theme = ref()
-/** stroe仓库 */
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  theme.value = new_state.theme
-})
-onUnmounted(unsubscribe)
 
 </script>
 

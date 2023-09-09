@@ -14,7 +14,7 @@ import {
 import { api_details } from "src/api/index";
 import store from "src/store-redux/index.js";
 import details from "src/core/match-detail/match-detail-pc/match-detail.js";
-import {utils } from 'src/core/index.js';
+import {utils,is_eports_csid } from 'src/core/index.js';
 import { useMittEmit, useMittOn, MITT_TYPES,useMittEmitterGenerator } from "src/core/mitt/";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash";
@@ -160,7 +160,7 @@ export const useMethods = ({ props,emit }) => {
         state.waterfall = [[]];
         return false;
       }
-      change_detail(res);
+      change_detail(res[0].odds_info);
     },
     { immediate: true, deep: true }
   );
@@ -171,6 +171,7 @@ export const useMethods = ({ props,emit }) => {
   //  ============================methods===================
 
   const change_detail = (res) => {
+    console.log(res,'change_detail');
     const obj = {
       1: 2,
       2: 3,
@@ -494,7 +495,7 @@ export const useMethods = ({ props,emit }) => {
 
   const is_component_show = (item) => {
     // 电竞赛事第几局
-    if (utils.is_eports_csid(state.sportId) && !!props.currentRound) {
+    if (is_eports_csid(state.sportId) && !!props.currentRound) {
       return current_list.value.includes(String(item.chpid));
     } else {
       // 常规赛事或电竞非局数
