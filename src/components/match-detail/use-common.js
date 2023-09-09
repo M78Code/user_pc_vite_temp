@@ -5,11 +5,11 @@
 // -->
 import lodash from "lodash";
 import { ref, watch, onMounted, onUnmounted } from "vue";
-import {utils } from 'src/core/index.js';
+import {is_eports_csid} from 'src/core/index.js';
 import store from "src/store-redux/index.js";
 import { HandicapTitle } from "src/components/match-detail/handicap-title/index.js";
 import betItem from "src/components/bet-item/bet_item.vue";
-
+import BetData from "src/core/bet/class/bet-data-class.js";
 export const useCommon = ({ emit, props }) => {
   const isShow = ref(true); //主盘折叠
   const isShow_plus = ref(true); //附加盘折叠
@@ -17,12 +17,12 @@ export const useCommon = ({ emit, props }) => {
   const store_state = store.getState();
 
   //  当前电竞查询的模式 false单关模式
-  const vx_cur_esports_mode = ref(store_state.betInfoReducer.cur_esports_mode);
-  // 监听状态变化
-  let un_subscribe = store.subscribe(() => {
-    let state_ = store.getState();
-    vx_cur_esports_mode.value = ref(state_.betInfoReducer.cur_esports_mode);
-  });
+  const vx_cur_esports_mode = ref(BetData.cur_esports_mode);
+  // 监听状态变化 todo
+  // let un_subscribe = store.subscribe(() => {
+  //   let state_ = store.getState();
+  //   vx_cur_esports_mode.value = ref(state_.betInfoReducer.cur_esports_mode);
+  // });
 
   /**
    * 数据或串关模式更新时，根据串关模式来显示或隐藏玩法
@@ -30,7 +30,7 @@ export const useCommon = ({ emit, props }) => {
    */
   const updateCurMode = (mode) => {
     if (
-      utils.is_eports_csid(lodash.get(props.item_details, "hl[0].ol[0].csid"))
+      is_eports_csid(lodash.get(props.item_details, "hl[0].ol[0].csid"))
     ) {
       // hipo 1 为支持串关 0 为不支持
       // 如果当前是串关模式但是玩法不支持串关，就隐藏不支持串关的玩法
