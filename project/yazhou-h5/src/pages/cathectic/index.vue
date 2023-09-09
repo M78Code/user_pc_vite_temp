@@ -25,7 +25,7 @@
 
     <div class="content-m" ref="record_box">
       <!--未结算  -->
-      <unsettle v-show="main_item == 0" ref="unsettleChild" :main_item="main_item"></unsettle>
+      <unsettle v-show="main_item == 0" ref="unsettle_child" :main_item="main_item"></unsettle>
       <!--已结算-->
       <settle v-show="main_item == 1" :main_item="main_item"></settle>
       <!--预约-->
@@ -58,11 +58,12 @@ provide('queryorderpresettleconfirm_data', '')
 let timer_1 = ref(null)
 // 待确认中的提前结算单
 let provided_ = ref({})
-// 锚点
-let unsettleChild = ref(null)
-let record_box = ref(null)
 // 选中tab的下标
 let main_item = ref(0)
+// 锚点
+let unsettle_child = ref(null)
+let record_box = ref(null)
+
 
 
 
@@ -96,8 +97,11 @@ onMounted(() => {
     }
     // 弹窗显示接口获取列表后延迟
     timer_1.value = setTimeout(() => {
-      unsettleChild.value.check_early_order()
-      unsettleChild.value.search_early_money()
+      let el = unsettle_child.value
+      let ele = record_box.value
+      debugger
+      unsettle_child.value.check_early_order()
+      unsettle_child.value.search_early_money()
     }, 800);
 
 
@@ -112,7 +116,7 @@ const height_calc = () => {
   let ele = record_box.value
   if (!ele) return
   let rem_1 = window.innerWidth * 100 / 375;
-  ele.value.style['height'] = window.innerHeight - rem_1 + 'px';
+  ele.style['height'] = window.innerHeight - rem_1 + 'px';
 }
 
 /**

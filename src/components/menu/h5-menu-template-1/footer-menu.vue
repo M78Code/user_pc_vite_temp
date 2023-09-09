@@ -22,10 +22,10 @@
            :class="{
             'f-disabled-m':k == 0 && menu_type == 100,
             'sub-menu-first':k == 0,
-            'is-hidden':is_sub_first_hidden && k == 0 || !GlobalAccessConfig.get_collectSwitch() && item.id == 1 || !GlobalAccessConfig.get_filterSwitch()  && ! GlobalAccessConfig.get_searchSwitch()  && item.id == 3,
+            'is-hidden':is_sub_first_hidden && k == 0 || !lodash.get(get_access_config, 'collectSwitch') && item.id == 1 || !lodash.get(get_access_config, 'filterSwitch') && !lodash.get(get_access_config, 'searchSwitch') && item.id == 3,
             'effect-show':is_sub_first_effect && k == 0,
             'disabled':item.is_disabled,
-            'is-follow': get_show_favorite_list && item.id == 1,
+            'is-follow': footerMenuReducer.show_favorite_list && item.id == 1,
           }" >
         <div class="m-item-inner">
           <div class="item-img-wrapper"
@@ -34,7 +34,7 @@
             <span class="menu-item-img" :class="[item.icon.slice(0,-4), menu_item_img(item),(lodash.get(get_user, 'favoriteButton')?'favoriteButton':'')]"></span>
           </div>
           <div class="menu-item-title"
-               :class="{'theme02-focus':get_show_favorite_list && UserCtr.theme.includes('theme02') && item.id == 1,}"
+               :class="{'theme02-focus':footerMenuReducer.show_favorite_list && UserCtr.theme.includes('theme02') && item.id == 1,}"
                v-show="item.id != 5"
           >
             <span class="title-p1" :class="{'title-p2': item.title1}">
@@ -63,12 +63,12 @@
         <div v-for="(sub_m,sub_i) of footer_sub_m_list" :key="sub_i"
              @touchstart.prevent.stop="sub_menu_changed(sub_m,sub_i)"
              class="wrapper column justify-center items-center"
-             v-show="((get_curr_sub_menu_type == 5 || sub_m.id != 114) && !([900,3000].includes(menu_type) && sub_m.id == 114)) && !(get_sport_all_selected && menu_type==1 && sub_m.id == 114)"
-             :data-sid="sub_m.id" :data-mtype="get_curr_sub_menu_type" :data-cmtype="menu_type"
+             v-show="((topMenuReducer.curr_sub_menu_type == 5 || sub_m.id != 114) && !([900,3000].includes(menu_type) && sub_m.id == 114)) && !(get_sport_all_selected && menu_type==1 && sub_m.id == 114)"
+             :data-sid="sub_m.id" :data-mtype="topMenuReducer.curr_sub_menu_type" :data-cmtype="menu_type"
              :class="{
             'current_sub_menu':sub_i == sub_footer_menu_i,
-            'is-favorite':get_show_favorite_list,
-            'no-display': get_curr_sub_menu_type == 44 && sub_m.id == 4
+            'is-favorite':footerMenuReducer.show_favorite_list,
+            'no-display': topMenuReducer.curr_sub_menu_type == 44 && sub_m.id == 4
           }">
           <div class="wrapper-inner column items-center justify-center">
             <div class="play-icon-wrap relative-position" :class="sub_m.icon">
@@ -90,13 +90,16 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 // import common from "project_path/project/mixins/constant";
 // import betBar from 'src/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import {utils } from 'src/core/index.js';
-import { computed, onBeforeUnmount, onMounted, watch } from "vue";
+import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import lodash from 'lodash'
 import { useRoute, useRouter } from 'vue-router'
-
+import store from "src/store-redux/index.js"
 import { UserCtr } from "src/core/index.js";
+import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
+import { i18n_t } from "src/boot/i18n.js"
 
+const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
 // import { Platform } from 'quasar'
 
   // mixins:[common],
@@ -155,7 +158,7 @@ import { UserCtr } from "src/core/index.js";
     //简版足球角球图标分割线相关
     timer_super10: null,
   })
-  set_show_match_filter(false)
+  
   // 路由
   const route =  useRoute()
   const router = useRouter()
@@ -163,7 +166,11 @@ import { UserCtr } from "src/core/index.js";
 
   onMounted(() => {
     set_footer_menulist();
-
+    // set_show_match_filter(false)
+    store.dispatch({
+      type: "SET_SHOW_MATCH_FILTER",
+      data: false,
+    })
     // 监听赛事列表数据获取事件
     useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED,update_first_menu).on;
 
@@ -266,7 +273,7 @@ import { UserCtr } from "src/core/index.js";
      * 根据场景切换页脚第一个菜单的显示内容
      */
     const first_sub_menu_changed = () => {
-      let ed = get_newer_standard_edition;
+      let ed = topMenuReducer.newer_standard_edition;
       if(ed == 2){
         is_sub_first_effect = false;
         timer_object.timer2_ = setTimeout(() => {
@@ -284,13 +291,13 @@ import { UserCtr } from "src/core/index.js";
      * 初始化关注图标样式
      */
     const init_follow_icon_style = () => {
-      let item = footer_menulist.filter(f_item => f_item.id === 1)[0];
-      let is_follow = get_show_favorite_list;
+      let item = footer_menulist.value.filter(f_item => f_item.id === 1)[0] || {};
+      let is_follow = footerMenuReducer.show_favorite_list;
       if(is_follow){
-        item.icon = item.icon1;
+        item.icon = lodash.get(item, "icon1");
       }
       else{
-        item.icon = item.icon0;
+        item.icon = lodash.get(item, "icon0")
       }
     }
     /**
@@ -303,12 +310,12 @@ import { UserCtr } from "src/core/index.js";
       // TODO:后续修改调整
       sessionStorage.setItem(prev_floating_sub,i);
       // 非足球选择角球时,选中独赢
-      if((get_curr_sub_menu_type != 5 && sub_menu.id == 114) || (get_curr_sub_menu_type == 44 && sub_menu.id == 4)){
-        sub_footer_menu_i = 0;
+      if((topMenuReducer.curr_sub_menu_type != 5 && sub_menu.id == 114) || (topMenuReducer.curr_sub_menu_type == 44 && sub_menu.id == 4)){
+        sub_footer_menu_i.value = 0;
         sessionStorage.setItem(prev_floating_sub,0);
       }
       else{
-        sub_footer_menu_i = i;
+        sub_footer_menu_i.value = i;
         update_first_menu();
       }
     }
@@ -318,19 +325,28 @@ import { UserCtr } from "src/core/index.js";
      * @return {Undefined} Undefined
      */
     const update_first_menu = () => {
-      let sub_menu = footer_sub_m_list[sub_footer_menu_i];
-      footer_menulist[0].title = sub_menu.title;
-      footer_menulist[0].title1 = sub_menu.title1;
-      footer_menulist[0].icon = sub_menu.icon;
-      footer_menulist[0].icon_black = UserCtr.theme.includes('theme01') ? sub_menu.icon: sub_menu.icon1;
-      set_footer_sub_menu_id(sub_menu.id);
-      set_footer_sub_changing(true);
+      let sub_menu = footer_sub_m_list.value[sub_footer_menu_i.value];
+      footer_menulist.value[0].title = sub_menu.title;
+      footer_menulist.value[0].title1 = sub_menu.title1;
+      footer_menulist.value[0].icon = sub_menu.icon;
+      footer_menulist.value[0].icon_black = UserCtr.theme.includes('theme01') ? sub_menu.icon: sub_menu.icon1;
+      store.dispatch({
+        type: "SET_FOOTER_SUB_MENU_ID",
+        data: lodash.get(sub_menu, "id"),
+      })
+      store.dispatch({
+        type: "SET_FOOTER_SUB_IDCHANGING",
+        data: true,
+      })
       clearTimeout(timer_object.timer_super9);
       timer_object.timer_super9 = setTimeout(() => {
-        set_footer_sub_changing(false);
+        store.dispatch({
+        type: "SET_FOOTER_SUB_IDCHANGING",
+        data: false,
+      })
       },800);
       timer_object.timer4_ = setTimeout(() => {
-        useMittEmit(MITT_TYPES.EMIT_FOOTER_SUB_MENU_ID_CHANGED,sub_menu.id);
+        useMittEmit(MITT_TYPES.EMIT_FOOTER_SUB_MENU_ID_CHANGED,lodash.get(sub_menu, "id"));
       },200);
     }
     /**
@@ -341,12 +357,12 @@ import { UserCtr } from "src/core/index.js";
      */
     const menu_item_click = (item,i) => {
       if(item.is_disabled) return;
-      if(menu_type == 100 && i == 0) return;
+      if(topMenuReducer.menu_type == 100 && i == 0) return;
 
       //独赢
       if(item.id === 0){
         //赛马,摩托车,泥地摩托车不能切换玩法
-        if([1002, 1011, 1010, 1009].includes(get_curr_sub_menu_type)){
+        if([1002, 1011, 1010, 1009].includes(topMenuReducer.curr_sub_menu_type)){
           return;
         }
         sub_menu_l_show = true;
@@ -365,16 +381,19 @@ import { UserCtr } from "src/core/index.js";
         },800);
         useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-follow",
-          before_status:get_show_favorite_list,
+          before_status:footerMenuReducer.show_favorite_list,
         });
-        let is_follow = !get_show_favorite_list;
+        let is_follow = !footerMenuReducer.show_favorite_list;
         if(is_follow){
           item.icon = item.icon1;
         }
         else{
           item.icon = item.icon0;
         }
-        set_show_favorite_list(is_follow);
+        store.dispatch({
+          type: "SET_SHOW_FAVORITE_LIST",
+          data: is_follow
+        })
       }
       //注单
       else if(item.id === 2){
@@ -409,6 +428,9 @@ import { UserCtr } from "src/core/index.js";
      *@return {Undefined} undefined
      */
     const change_to_simple_handle = () => {
+      store.dispatch({
+
+      })
       set_newer_standard_edition(1);
     }
     /**
@@ -416,9 +438,9 @@ import { UserCtr } from "src/core/index.js";
      */
     const virtual_disable_follow_filter = () => {
       // 赛果禁用筛选
-      if(28 == menu_type){
-        footer_menulist.forEach(f_m => {
-          if(f_m.id == 3 && lodash.get(get_current_main_menu,'menuId') == 10000){
+      if(28 == topMenuReducer.menu_type){
+        footer_menulist.value.forEach(f_m => {
+          if(f_m.id == 3 && lodash.get(topMenuReducer.current_main_menu,'menuId') == 10000){
             f_m.is_disabled = true;
           }else{
             f_m.is_disabled = false;
@@ -429,16 +451,16 @@ import { UserCtr } from "src/core/index.js";
           }
         });
         //虚拟体育  暂时注释代码
-        if([1001,1002,1004,1010,1011,1009].includes(get_curr_sub_menu_type)){
-          footer_menulist.forEach(f_m => {
+        if([1001,1002,1004,1010,1011,1009].includes(topMenuReducer.curr_sub_menu_type)){
+          footer_menulist.value.forEach(f_m => {
             if(f_m.id == 1){
               f_m.is_disabled = true;
             }
           });
         }
 
-        if([100].includes(get_curr_sub_menu_type)){
-          footer_menulist.forEach(f_m => {
+        if([100].includes(topMenuReducer.curr_sub_menu_type)){
+          footer_menulist.value.forEach(f_m => {
             if(f_m.id == 3){
               f_m.is_disabled = true;
             }
@@ -446,19 +468,19 @@ import { UserCtr } from "src/core/index.js";
         }
       }
       else{
-        footer_menulist.forEach(f_m => {
+        footer_menulist.value.forEach(f_m => {
           // 电竞下冠军不可点击关注
-          if (f_m.id === 1 && menu_type === 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
+          if (f_m.id === 1 && topMenuReducer.menu_type === 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
             f_m.is_disabled = true
           } else {
-            if(f_m.id == 3&& get_show_favorite_list){
+            if(f_m.id == 3&& footerMenuReducer.show_favorite_list){
 
             }else{
               f_m.is_disabled = false
             }
           }
           // 电竞放开 筛选
-          if(f_m.id === 3 && menu_type === 3000){
+          if(f_m.id === 3 && topMenuReducer.menu_type === 3000){
             f_m.is_disabled = true
           }
           if(f_m.id == 1 && !GlobalAccessConfig.get_collectSwitch()  ){
@@ -467,22 +489,22 @@ import { UserCtr } from "src/core/index.js";
         });
       }
     }
-    /**
+   /**
      * 设置页脚菜单数据
+     *@param init_footer_menulist_data 是否重置footer_menulist数据
      */
-    const set_footer_menulist = () => {
-      let is_virtual = menu_type == 900;
+    const set_footer_menulist = (init_footer_menulist_data = true) => {
+      let is_virtual = topMenuReducer.menu_type == 900;
       // 赛果虚拟体育
-      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(get_curr_sub_menu_type);
-      let is_saiguo_gz = menu_type == 28 && [100].includes(get_curr_sub_menu_type)
-      let is_electronicSports = menu_type == 3000  // 电竞
-      // console.error(is_virtual, is_saiguo_gz,get_show_favorite_list);
+      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(topMenuReducer.curr_sub_menu_type);
+      let is_saiguo_gz = topMenuReducer.menu_type == 28 && [100].includes(topMenuReducer.curr_sub_menu_type)
+      let is_electronicSports = topMenuReducer.menu_type == 3000  // 电竞
       if(init_footer_menulist_data){
-        footer_menulist = [
+        footer_menulist.value = [
           // 玩法菜单(独赢|大小|让球|角球等)
           {
             title:i18n_t('footer_menu.win_alone'),
-            title1:get_lang == 'en'?"":i18n_t('footer_menu.play_way_f'),
+            title1:UserCtr.lang == 'en'?"":i18n_t('footer_menu.play_way_f'),
             icon:'f-icon-sub-duying.svg',
             icon_black:'f-icon-sub-duying-black.svg',
             id:0,
@@ -492,13 +514,13 @@ import { UserCtr } from "src/core/index.js";
           {
             title:i18n_t('footer_menu.follow'),
             icon0:'f-icon-follow.svg',
-            icon:get_show_favorite_list ? 'f-icon-follow1.svg' : 'f-icon-follow.svg',
+            icon: footerMenuReducer.show_favorite_list ? 'f-icon-follow1.svg' : 'f-icon-follow.svg',
             icon1:'f-icon-follow1.svg',
             icon_black:'f-icon-follow-black.svg',
             icon_black_fav:'f-icon-follow1-black.svg',
             icon2:'f-icon-follow-black.svg',
             id:1,
-            is_disabled:is_virtual || is_result_virtual ||  menu_type == 28 ,
+            is_disabled:is_virtual || is_result_virtual ||  topMenuReducer.menu_type == 28 ,
           },
           // 注单
           {
@@ -514,7 +536,7 @@ import { UserCtr } from "src/core/index.js";
             icon:'f-icon-filter.svg',
             icon_black:'f-icon-filter-black.svg',
             id:3,
-            is_disabled:is_virtual || is_saiguo_gz || get_show_favorite_list || is_electronicSports,
+            is_disabled:is_virtual || is_saiguo_gz || footerMenuReducer.show_favorite_list || is_electronicSports,
           },
           // 刷新
           {
@@ -526,7 +548,8 @@ import { UserCtr } from "src/core/index.js";
           }
         ];
       }
-      $forceUpdate()
+      // 强制更新组件
+      // $forceUpdate()
     }
     // 批量清除定时器
     const clear_timer = () => {
@@ -542,11 +565,11 @@ import { UserCtr } from "src/core/index.js";
     //   "get_bet_list",
     //   "get_settle_dialog_bool",
     //   "get_curr_sub_menu_type",
-    //   "get_show_favorite_list",
+    //   "footerMenuReducer.show_favorite_list",
     //   "get_current_main_menu",
     //   "get_filter_list",
     //   "get_current_menu",
-    //   "get_lang",
+    //   "UserCtr.lang",
     //   "get_bet_status",
     //   'get_list_scroll_direction',
     //   'get_bet_list',
@@ -564,7 +587,8 @@ import { UserCtr } from "src/core/index.js";
     //   current_esport_csid:'get_current_esport_csid',
     // }),
     const isshow_bottom_banner = computed(() => {
-      return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
+      // TODO:获取商户信息
+      // return get_resources_obj.is_show && !get_betbar_show && calc_resources_obj.img_src
     })
 
     const calc_resources_obj = computed(() => {
@@ -578,7 +602,7 @@ import { UserCtr } from "src/core/index.js";
     const bottom_option_show = computed(() => {
       return function (item) {
         return !(
-            (menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
+            (topMenuReducer.menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
         )
       }
     })
@@ -593,7 +617,7 @@ import { UserCtr } from "src/core/index.js";
     const footer_sub_m_list = computed(() => {
       return [
         {
-          title:['en','th','ms','ad'].includes(get_lang)?'':i18n_t('footer_menu.full_time'),
+          title:['en','th','ms','ad'].includes(UserCtr.lang)?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.win_alone'),
           icon0:'f-icon-sub-duying0.svg',
           icon:'f-icon-sub-duying.svg',
@@ -602,7 +626,7 @@ import { UserCtr } from "src/core/index.js";
           id:1
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.full_time'),
+          title:['en','th','ms','ad'].includes(UserCtr.lang) ?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.rangqiu'),
           icon0:'f-icon-sub-rang0.svg',
           icon:'f-icon-sub-rang.svg',
@@ -611,7 +635,7 @@ import { UserCtr } from "src/core/index.js";
           id:4
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.full_time'),
+          title:['en','th','ms','ad'].includes(UserCtr.lang) ?'':i18n_t('footer_menu.full_time'),
           title1:i18n_t('footer_menu.daxiao'),
           icon0:'f-icon-sub-daxiao0.svg',
           icon:'f-icon-sub-daxiao.svg',
@@ -620,7 +644,7 @@ import { UserCtr } from "src/core/index.js";
           id:2
         },
         {
-          title:['en','th','ms','ad'].includes(get_lang) ?'':i18n_t('footer_menu.corner_kick'),
+          title:['en','th','ms','ad'].includes(UserCtr.lang) ?'':i18n_t('footer_menu.corner_kick'),
           title1:i18n_t('footer_menu.corner'),
           icon0:'f-icon-sub-jiaoqiu0.svg',
           icon:'f-icon-sub-jiaoqiu.svg',
@@ -646,10 +670,10 @@ import { UserCtr } from "src/core/index.js";
    /**
      * 滚球菜单是否选中全部菜单变化
      */
-    watch(() => get_sport_all_selected, (val) => {
+    watch(() => topMenuReducer.sport_all_selected, (val) => {
       // 简版时滚球菜单选中全部菜单时
-      if(get_newer_standard_edition == 1 &&val && menu_type==1){
-        let sub_menu = footer_sub_m_list[sub_footer_menu_i];
+      if(topMenuReducer.newer_standard_edition == 1 &&val && topMenuReducer.menu_type == 1){
+        let sub_menu = footer_sub_m_list.value[sub_footer_menu_i.value];
         if( lodash.get(sub_menu,'id') == 114){
           // 当时菜单是角球时设置菜单为独赢
           sub_menu_changed(footer_sub_m_list[0],0);
@@ -659,14 +683,14 @@ import { UserCtr } from "src/core/index.js";
     /**
      * 通过列表滚动决定页脚菜单显示/隐藏
      */
-    watch(() => get_list_scroll_direction, (direction) => {
+    watch(() => matchReducer.list_scroll_direction, (direction) => {
       //不显示投注弹层时改变页脚菜单显示状态
       if(local_bet_status == 0){
         scroll_dir = direction;
       }
     })
-    watch(() => get_show_favorite_list, (is_fav) => {
-      let item = footer_menulist.filter(f_item => f_item.id === 1)[0];
+    watch(() => footerMenuReducer.show_favorite_list, (is_fav) => {
+      let item = footer_menulist.value.filter(f_item => f_item.id === 1)[0];
       if(is_fav){
         item.icon = item.icon1;
         item.icon_black = item.icon1;
@@ -682,23 +706,23 @@ import { UserCtr } from "src/core/index.js";
       // 切换关注页面时，初始化底部菜单数据
       set_footer_menulist();
     })
-    watch(() => get_newer_standard_edition, () => {
+    watch(() => topMenuReducer.newer_standard_edition, () => {
       sub_menu_l_show = false;
       first_sub_menu_changed();
     })
-    watch(() => get_current_main_menu.menuId, () => {
+    watch(() => topMenuReducer.current_main_menu.menuId, () => {
       virtual_disable_follow_filter();
     })
-    watch(() => menu_type, () => {
+    watch(() => topMenuReducer.menu_type, () => {
       virtual_disable_follow_filter();
     })
-    watch(() => get_curr_third_menu_id, () => {
+    watch(() => topMenuReducer.curr_third_menu_id, () => {
       virtual_disable_follow_filter();
     })
-    watch(() => get_lang, () => {
+    watch(() => UserCtr.lang, () => {
       set_footer_menulist();
     })
-    watch(() => get_curr_sub_menu_type, (new_v) => {
+    watch(() => topMenuReducer.curr_sub_menu_type, (new_v) => {
       init_play_way_selected();
       // 32014 确定每次点击菜单 都重置为独赢
       // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){
@@ -710,7 +734,7 @@ import { UserCtr } from "src/core/index.js";
       virtual_disable_follow_filter();
     })
     //投注栏弹层显示非0否则0
-    watch(() => get_bet_status, (c_status) => {
+    watch(() => BetDataCtr.bet_status, (c_status) => {
       if(c_status == 0){
         timer7_ = setTimeout(() => {
           local_bet_status = c_status;
