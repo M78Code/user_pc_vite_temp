@@ -4,6 +4,7 @@
  * @Description: 赛事列表页 底部菜单
 -->
 <template>
+  footer
   <div class="container-menu-w" :class="{
       'black2':UserCtr.theme.includes('theme02'),
       'scrolling-up':scroll_dir > 0,
