@@ -252,6 +252,7 @@ class AxiosHttp {
       data: data.data,
       code: data.code,
       message: data.msg,
+      gcuuid: data.gcuuid,
       ...result
     };
 
