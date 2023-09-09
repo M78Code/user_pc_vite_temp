@@ -16,11 +16,13 @@ import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import { wslog, httplog } from "src/core/log/";
 import { GetUrlParams } from "src/core/utils/";
 import { copyToClipboard } from "quasar";
-import { reactive, onBeforeMount, onMounted, ref, watch } from "vue";
+import { reactive, onBeforeMount, onMounted, onUnmounted,ref, watch } from "vue";
 import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
+import wsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
 const router = useRouter();
@@ -170,7 +172,10 @@ const scroll_mitt = useMittOn(
     }
   }
 );
-onMounted(() => {});
+onMounted(() => {
+  // 启动WS操作对象
+  wsMan.run();
+});
 onBeforeMount(() => {
   // 释放日志功能对象
   if (wslog.destroyed) {
@@ -185,6 +190,10 @@ onBeforeMount(() => {
   // 销毁接收父窗口中body标签中的滚动条滚动到顶部事件
   scroll_mitt.off();
   // remove_message();
+});
+onUnmounted(() => {
+  // 销毁WS操作对象
+  wsMan.destroyed();
 });
 </script>
 <style scoped>
