@@ -1,5 +1,5 @@
 <template>
-    <rule-wapper use_component_key="rule-h5"></rule-wapper>
+    <rule-wapper use_component_key="Rule_h5"></rule-wapper>
 </template>
 
 <script setup>

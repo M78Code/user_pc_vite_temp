@@ -243,12 +243,12 @@ export const get_menu_init = (params, config={}, url = "/v2/w/menu/initPB") => {
 
 // 专业版获取----主列表顶部日期菜单
 export const post_date_menu = (params, config={}, url = "/v2/menu/getDateMenuListPB")=>{
-  return http.post(`${prefix}${url}`, params, config);
+  return http.post(`${prefix_job}${url}`, params, config);
 }
 
 // 电竞日期菜单
 export const get_esports_date_menu = (params, config={}, url = "/v1/w/esports/getDateMenuList") => {
-  return http.post(`${prefix}${url}`, params, config);
+  return http.post(`${prefix_job}${url}`, params, config);
 };
 
 //虚拟体育菜单接口

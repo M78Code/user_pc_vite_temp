@@ -22,7 +22,9 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { onMounted } from "vue";
 
 import { enter_params } from "src/core/index.js";
-
+import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 const token_key = STANDARD_KEY.get("token"); //token键
 export default {
@@ -37,6 +39,9 @@ export default {
     };
   },
   created() {
+    BetData.init_core()
+    BetViewDataClass.init()
+    BetDataCtr.init()
 
     enter_params()
 

@@ -27,7 +27,6 @@
   useRegistPropsHelper(component_symbol, need_register_props)
   const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
-console.log('lockie_test_console', props);
   
  </script>
  <style lang="scss" scoped>

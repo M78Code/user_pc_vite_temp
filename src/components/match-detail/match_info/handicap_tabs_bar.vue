@@ -35,8 +35,8 @@
           :content-style="tooltip_style"
           >{{
             handicap_this.panel_status == "hide"
-              ? $t("icon_tips.unfold")
-              : $t("icon_tips.fold")
+              ? i18n_t("icon_tips.unfold")
+              : i18n_t("icon_tips.fold")
           }}</q-tooltip
         >
         <!-- 展开：收起 -->
@@ -62,7 +62,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $t("icon_tips.column") }}</q-tooltip
+            >{{ i18n_t("icon_tips.column") }}</q-tooltip
           >
           <!-- 一栏布局 -->
         </span>
@@ -79,7 +79,7 @@
             anchor="top middle"
             self="center middle"
             :content-style="tooltip_style"
-            >{{ $t("icon_tips.multicolumn") }}</q-tooltip
+            >{{ i18n_t("icon_tips.multicolumn") }}</q-tooltip
           >
           <!-- 两栏布局 -->
         </span>
@@ -105,6 +105,7 @@ import ZhuGe from "src/core/http/zhuge-tag";
 import { CommonTabFullVersionWapper } from "src/components/tab/common-tab/index.js";
 import icon from "src/components/icon/icon.vue";
 import lodash from 'lodash'
+import {i18n_t} from 'src/core/index'
 export default defineComponent({
   name: "HandicapTab",
   components: {
@@ -116,7 +117,7 @@ export default defineComponent({
     match_info: Object,
     whitchDetail: String,
   },
-  setup(props, evnet) {
+  setup(props, {emit}) {
     const store_state = store.getState();
     //当前选中
     const currentIndex = ref(0);
@@ -139,9 +140,7 @@ export default defineComponent({
       get_layout_statu.value = state.matchesReducer.layout_statu;
     });
     const route = useRoute();
-
-    const emit = defineEmits(["get_mattch_details", "on_go_top"]);
-
+    console.log(emit,'emit');
     const is_details = computed(() => {
       return ["details", "virtual_details"].includes(route.name);
     });

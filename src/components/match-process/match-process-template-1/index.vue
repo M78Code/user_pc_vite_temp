@@ -16,9 +16,9 @@
     </div>
     <!-- ms值3-比赛结束 4-比赛关闭 -->
     <!-- 内嵌版时间信息显示 -->
-    <template v-if="utils.is_iframe">
+    <template v-if="utils_info.is_iframe">
       <template v-if="right">
-        <div :class="utils.is_iframe ? 'show_row' : ''">
+        <div :class="utils_info.is_iframe ? 'show_row' : ''">
           <div
             v-show="
               get_match_status(match_props.match.ms) ||
@@ -72,7 +72,7 @@
     </template>
     <!-- 非内嵌版时间信息显示 -->
     <div
-      v-if="!utils.is_iframe"
+      v-if="!utils_info.is_iframe"
       v-show="
         get_match_status(match_props.match.ms) ||
         [3, 4].includes(1 * match_props.match.ms) ||
@@ -90,7 +90,7 @@
     </div>
     <match-date
       :rows="date_rows"
-      v-if="computed_show_date && !utils.is_iframe"
+      v-if="computed_show_date && !utils_info.is_iframe"
       :match_props="match_props"
       :match_list_data="match_list_data"
       class="date-wrap"
@@ -122,6 +122,7 @@
 <script setup>
 import { computed, defineProps, ref, watch, onUnmounted } from "vue";
 import matchDate from "src/components/match-date/match_date.vue";
+import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 // import { format_second_ms } from "src/core/format/index.js";
 import {
   get_match_status,
@@ -162,7 +163,7 @@ const props = defineProps({
   right: Boolean,
 });
 ;
-console.log(props.match_props.match,'match_props');
+console.log(props,'match_props');
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {

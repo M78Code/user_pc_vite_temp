@@ -45,6 +45,8 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
+	console.log('all_league_list', all_league_list);
+
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量
@@ -295,7 +297,6 @@ const mx_use_list_res = (data, backend_run, cut, collect) => {
 		match_list = lodash.get(data, "data");
 	}
 	match_list = match_list || [];
-	console.log('lockie_test_console1111', match_list);
 	//虚拟体育 接口数据结构转换
 	// lockie
 	if (is_virtual && !is_search && false) {

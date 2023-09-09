@@ -256,7 +256,7 @@ export default class MatchDataBase
    */
   get_quick_mid_obj(mid){
     // 获取指定mid的赛事
-    return this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+    return this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
   }
 
   /**
@@ -276,7 +276,7 @@ export default class MatchDataBase
         console.log('listlist', mid);
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+         const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -342,7 +342,7 @@ export default class MatchDataBase
         const mid = item.mid;
         if(obj.upd[mid]){
          // 需要更新的赛事
-         const match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+         const match = this.quick_query_obj.mid_ob[this.get_format_quick_query_key(mid,mid,'mid')];
          if(match){
           // 赛事信息合并
           this.match_assign(match,obj.upd[mid]);
@@ -854,7 +854,7 @@ merge_with(old_obj, new_obj){
  */
 upd_match_all_status(mid, obj){
   // 获取指定mid更新的赛事
-  let match = this.quick_query_obj.mid_obj(this.get_format_quick_query_key(mid,mid,'mid'));
+  let match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
   if(match){
     // match进行数据更新
 

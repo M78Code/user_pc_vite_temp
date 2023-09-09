@@ -4,9 +4,11 @@
 
 import { api_common } from "src/api";
 import lodash from "lodash";
+import { ref } from "vue";
 import base_data_instance from "src/core/base-data/base-data.js";
 class MenuData {
   constructor() {
+    this.update_time=ref(Date.now())
     //================主列表用的  开始==================
     //上一次的 菜单
     this.previous_menu = {};
@@ -224,6 +226,21 @@ class MenuData {
     }
     return flag;
   }
+  // 赛果下边的 虚拟体育 的四级菜单 数据
+  virtual_sports_results_tab() {
+    // // 老逻辑 其实就是拿第二级菜单的sublist 下的 sublist
+    // if(this.sub_menu_list.length　> 0){
+    //   let obj = _.get(this.sub_menu_list[this.sub_menu_i], 'subList')
+    //   return _.get(obj && obj[this.date_menu_curr_i], 'subList')
+    // }
+    // return null
+
+    // 如果有三级菜单
+    if (this.current_lv_3_menu) {
+      return lodash.get(this.current_lv_3_menu, "subList");
+    }
+    return null;
+  }
   /**
    * @description 判断是虚拟体育
    * @param {undefined} undefined
@@ -234,6 +251,21 @@ class MenuData {
       this.current_lv_1_menu.mi == 8 ||
       (this.match_list_api_config || {}).sports == "vr"
     );
+  }
+  // 是赛果虚拟体育
+  is_results_virtual_sports() {
+    const menu_type = this.get_menu_type();
+    // 如果是赛果，并且是 虚拟体育
+    if (
+      menu_type == 28 &&
+      [1001, 1002, 1004, 1010, 1011, 1009].includes(
+        this.get_current_sub_menuid()
+      ) &&
+      this.virtual_sports_results_tab()
+    ) {
+      return true;
+    }
+    return false;
   }
   vr_menu() {
     const vr_list = [
@@ -386,16 +418,25 @@ class MenuData {
       random_minutes,
     };
   }
+  //- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
+
+  get_is_show_three_menu(mi) {
+    return [3, 6, 7, 28].includes(mi || this.current_lv_1_menu?.mi);
+  }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   async get_date_menu_api_when_subchange(item) {
-    console.error(111111)
     // 如果是早盘，串关，电竞的话
     const menu_type = this.get_menu_type();
-    if ([3, 6, 7].includes(menu_type) && this.get_current_sub_menuid()) {
+    //euid
+    const euid = lodash.get(
+      base_data_instance.mi_euid_map_res,
+      this.get_current_sub_menuid()
+    );
+    if ([3, 6, 7].includes(menu_type) && euid) {
       // 三级菜单先显示骨架屏，接口回来后，再隐藏骨架屏
       // this.$root.$emit(this.emit_cmd.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE);
       let api_func = null,
-        params = { euid: this.get_current_sub_menuid() };
+        params = { euid: euid.h };
       if (7 == menu_type) {
         api_func = api_common.get_esports_date_menu;
         let value = item.mi.slice(1, 4);
@@ -416,9 +457,10 @@ class MenuData {
       return;
     } else if ([28].includes(menu_type)) {
       // 如果是赛果
-      // this.date_menu_list = this.sub_menu_list[this.sub_menu_i].subList;
-      // 设置日期选中项 调用三级菜单点击事件，默认第一个
-      // this.select_result_date_menu();
+      // this.date_menu_list = this.current_lv_2_menu.subList;
+      // // 设置日期选中项 调用三级菜单点击事件，默认第一个
+      // // this.select_result_date_menu();
+      return this.current_lv_2_menu.subList;
     } else {
       //  设置三级日期 菜单
       this.set_current_lv3_menu(null);

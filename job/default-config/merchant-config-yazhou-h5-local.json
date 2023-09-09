@@ -1,15 +1,17 @@
 {
-  "TestComponent": {
-    "use_component": "TestComponent_2",
-     "params":{
-      "tableClass":"bg-deep-purple-14"
-     }
-  },
-  "Menu": {
-    "use_component": "H5MenuTemplate1",
-     "params":{
-      "tableClass":"bg-deep-purple-14"
-     }
+  "component":{
+    "TestComponent": {
+      "use_component": "TestComponent_2",
+       "params":{
+        "tableClass":"bg-deep-purple-14"
+       }
+    },
+    "Menu": {
+      "use_component": "H5MenuTemplate1",
+       "params":{
+        "tableClass":"bg-deep-purple-14"
+       }
+    }
   },
   "server_resource":{},
   "css":{

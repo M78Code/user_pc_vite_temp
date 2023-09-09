@@ -2,12 +2,9 @@
 // import {  PageSourceData  } from "src/core/index.js";
 // import { UserCtr } from "src/core/index.js";
 import BetData from "src/core/bet/class/bet-data-class.js"
-class BetDataCtr extends BetData {
-  constructor() {
-    super()
-  }
+class BetDataCtr {
+  
   init() {
-    this.init_core()
 
     /**
      * 押注状态0-隐藏状态 1-初始弹出状态,2-注单处理中状态,3-投注成功,

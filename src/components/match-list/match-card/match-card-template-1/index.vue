@@ -3,12 +3,11 @@
   <div
     class="c-match-card relative-position"
     :id="DOM_ID_SHOW && `list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px  !important;width:${vx_get_layout_size.list_content_width}px  !important;`"
-    v-if="match_style_obj.is_show_card && current_comp"
+    :style="`height:${match_style_obj.total_height}px  !important;width:1920px  !important;`"
   >
     <!-- <component
       v-if="is_mounted && [1,2].includes(match_style_obj.show_level)"
-      :is="current_comp"
+      :is="match_components_name"
       :mid="mid"
       :class="'csid-'+match_style_obj.csid"
     /> -->
@@ -20,6 +19,7 @@
 
 <script setup>
 import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
+import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
@@ -27,7 +27,7 @@ import store from 'src/store-redux/index.js'
 // inject:['match_list_card'],
 
 // 玩法模板 0   足球-让球&大小  、 足球-角球 、 美足-让球&大小 、 手球-让球&大小
-import { MatchTpl0AfterFullVersionWapper as matchTpl0After } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
+import { MatchTpl0AfterFullVersionWapper as MatchTpl0After } from "src/components/match-list/match-tpl-new-data/match-tpl-0-after/index.js";
 // // 玩法模板 2   足球-半/全
 // import { MatchTpl2AfterFullVersionWapper as matchTpl2After } from "src/components/match-list/match-tpl-new-data/match-tpl-2-after/index.js";
 // // 玩法模板 7   篮球-让球&大
@@ -48,19 +48,22 @@ import { MatchTpl0AfterFullVersionWapper as matchTpl0After } from "src/component
 // import { MatchTpl24AfterFullVersionWapper as matchTpl24After } from "src/components/match-list/match-tpl-new-data/match-tpl-24-after/index.js";
 // // 电竞玩法模板
 // import { MatchTplEsportsAfterFullVersionWapper as matchTplesportsAfter } from "src/components/match-list/match-tpl-new-data/match-tpl-esports-after/index.js";
-
 let state = store.getState()
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-console.log('matchTpl0After', matchTpl0After);
+// const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+const props = defineProps({
+  mid: {
+    type: [String, Number],
+    default: () => null,
+  },
+})
 // 赛事样式对象
-const match_style_obj = ref(this.match_list_card.all_card_obj['mid_'+props.mid] || {})
+const match_style_obj = ref(MatchListCardData.get_match_all_card_obj()['mid_'+props.mid] || {})
 // 是否显示调试信息
 const test = ref(sessionStorage.getItem('wsl'))
 // 组件是否加载完成
 const is_mounted = ref(false)
-const current_comp = shallowRef(match_components_name)
 // 显示部分dom ID
-this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
+// this.DOM_ID_SHOW = window.BUILDIN_CONFIG.DOM_ID_SHOW;
 const vx_get_layout_size = ref(state.layoutReducer.layout_size)
 // 赛事模板名称
 const match_components_name = computed(() => {

@@ -74,7 +74,7 @@ const requestHook = {
 const responseHook = {
   resolve: (res) => {
     // console.error('请求错误问题定位---------------------1'  , res.config.url  );
-    console.log("res.config.url------", res.config.url);
+    // console.log("res.config.url------", res.config.url);
     let url_temp = get(res, "config.url");
     // 解析url
     let jiexi_result = ParseUrl(url_temp);
@@ -141,7 +141,7 @@ const responseHook = {
     if (FNANI_STATUS.err_count[url_temp]) {
       FNANI_STATUS.err_count[url_temp] = 0;
     }
-    console.log("httplog--------", httplog);
+    // console.log("httplog--------", httplog);
     httplog.push({ url: url_temp });
     return res;
   },
