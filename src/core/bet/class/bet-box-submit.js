@@ -29,6 +29,7 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+            "userId":UserCtr.user_info ? UserCtr.user_info.userId : UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if(is_single){
@@ -91,7 +92,8 @@ const set_bet_order_list = ( bet_list,is_single ) =>{
 
 // 获取限额 常规 / 冠军
 // obj 投注数据
-const get_query_bet_amount_common = () =>{
+const get_query_bet_amount_common = (obj) =>{
+    // console.error('chufa',obj)
     let params = {
         orderMaxBetMoney: []
     }
