@@ -62,6 +62,7 @@ import { useMittOn, MITT_TYPES } from  "src/core/mitt"
 import  { MenuData, i18n_t, get_odds_active, compute_value_by_cur_odd_type } from "src/core/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData  from  "src/core/page-source/page-source.js";
+import { bet_click } from "src/core/bet/module/bet_info.js"
 
 // import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
 
@@ -438,6 +439,7 @@ const is_close = (odd_s) => {
 const item_click3 = lodash.debounce(() => {
   if (!odd_item.value.ov || odd_item.value.ov < 101000) return;   //对应没有赔率值或者欧赔小于101000
   let flag = get_odds_active(props.match.mhs, props.hl_hs, odd_item.value.os);
+  console.error('flag',flag)
   if (flag == 1 || flag == 4) {   //开盘和锁盘可以点击弹起来
     if (MenuData.get_menu_type() == 900 && $route.name == 'virtual_sports') { //虚拟体育走这里逻辑
       if (props.match.match_status) return

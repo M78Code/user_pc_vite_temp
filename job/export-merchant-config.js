@@ -109,8 +109,8 @@ const merge_and_output_final_config = (scg) => {
   console.log(add_obj,'add_objadd_obj');
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);
   write_file(file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
-  // 写入本地对应的商户配置
-  write_file(local_file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
+  // // 写入本地对应的商户配置
+  // write_file(local_file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
 };
 /**
  * 获取 服务器上 当前商户的 版本配置
@@ -128,12 +128,12 @@ const get_config_info = async () => {
   }
 };
 // 暂时都获取服务器上 当前商户的 版本配置 写入本地
-get_config_info();
-// if (MODULE_SDK_VERSION) {
-//   // 获取 服务器上 当前商户的 版本配置
-//   get_config_info();
+// get_config_info();
+if (MODULE_SDK_VERSION) {
+  // 获取 服务器上 当前商户的 版本配置
+  get_config_info();
 
-// } else {
+} else {
 
-//   merge_and_output_final_config({});
-// }
+  merge_and_output_final_config({});
+}

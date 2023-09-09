@@ -27,7 +27,7 @@ import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
 import {  PageSourceData  } from "src/core/index.js";
-
+import wsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 window.wslog = wslog;
 
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
@@ -101,6 +101,9 @@ export default {
 
       document.head.appendChild(script);
     }
+
+    // 启动WS操作对象
+    wsMan.run();
   },
   methods: {
     // ...mapMutations(["set_global_click_count"]),
@@ -231,6 +234,9 @@ export default {
     this.timer2 = null;
 
     this.off_listeners();
+
+    // 销毁WS操作对象
+    wsMan.destroyed();
   },
 };
 </script>
