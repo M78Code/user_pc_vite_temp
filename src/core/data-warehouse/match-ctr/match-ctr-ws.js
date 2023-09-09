@@ -31,6 +31,8 @@ export default class MatchDataBaseWS
 
     // 初始化数据
     this.init();
+    // 启动ws数据同步
+    this.run();
   }
 
 
@@ -48,7 +50,81 @@ export default class MatchDataBaseWS
    * @return {undefined} undefined
    */
   run(){
+  	if(this.message_fun){
+  		// 移除之前的ws消息监听
+    	window.removeEventListener("message",this.message_fun);
+  	}
+    // 设置动态监听方法(多实例使用)
+    this.message_fun=(obj)=>{
+      this.r_ws_msg(obj);
+    }
+    // 增加ws消息监听
+    window.addEventListener("message",this.message_fun);
+  }
 
+  /**
+   * @description: ws消息监听
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  r_ws_msg(obj){
+    // 获取window.postMessage自定义命令
+    const cmd = _.get(obj, 'data.cmd');
+    if(cmd == 'WS_MSG_REV'){
+      // 是ws推送过来的消息
+      // 获取消息数据体
+      const data = _.get(obj, 'data.data');
+      if(data){
+        // ws推送消息分流
+        const ws_cmd = _.get(data,'cmd')
+        switch (ws_cmd) {
+          case 'C101':
+            this.C101(data);
+            break;
+          case 'C102':
+            this.C102(data);
+            break;
+          case 'C103':
+            this.C103(data);
+            break;
+          case 'C104':
+            this.C104(data);
+            break;
+          case 'C105':
+            this.C105(data);
+            break;
+          case 'C106':
+            this.C106(data);
+            break;
+          case 'C107':
+            this.C107(data);
+            break;
+          case 'C110':
+            this.C110(data);
+            break;
+          case 'C120':
+            this.C120(data);
+            break;
+          case 'C302':
+            this.C302(data);
+            break;
+          case 'C303':
+            this.C303(data);
+            break;
+          case 'C304':
+            this.C304(data);
+            break;
+          case 'C801':
+            this.C801(data);
+            break;
+          case 'C901':
+            this.C901(data);
+            break;
+          default:
+            break;
+        }
+      }
+    }
   }
 
   /**
@@ -615,6 +691,7 @@ export default class MatchDataBaseWS
    * @return {undefined} undefined
    */
   destroy(){
-
+    // 移除ws消息监听
+    window.removeEventListener("message",this.message_fun);
   }
 }

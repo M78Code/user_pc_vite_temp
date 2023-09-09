@@ -1,6 +1,6 @@
 <template>
-    <div class="description-main">
-        <simple-header :source="source">
+    <div class="description-main" :class="{ black_bg: UserCtr.theme == 'theme02' }">
+        <simple-header>
             {{ i18n_t('common.rule_description') }}
         </simple-header>
         <div class="description-content">
@@ -11,19 +11,18 @@
 </template>
 
 <script setup>
+import { ref, onMounted, watch, getCurrentInstance, defineComponent } from 'vue'
+import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-
-//-------------------- 对接参数 prop 注册  开始  -------------------- 
-import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
-import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
-import { computed, onUnmounted, ref, getCurrentInstance } from 'vue'
 import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
 
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/rule/config/index.js"
 useRegistPropsHelper(component_symbol, need_register_props)
-const props = defineProps({
-    ...useProps,
-})
+const props = defineProps({})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
@@ -32,7 +31,6 @@ const props = defineProps({
 const more_lang = ref('')
 /** 获取h5体育规则地址 */
 const get_h5_rule_url = () => {
-    if (props.source.toLocaleUpperCase() != 'H5') return
     //参数对应关系
     let lang_obj = {
         'zh': 'zh-cn',
@@ -41,14 +39,26 @@ const get_h5_rule_url = () => {
         'vi': 'en-gb', //越南文暂时对应英文显示
     }
     let lang = lang_obj[UserCtr.lang] || 'zh-cn'
-    if (current_env == 'idc_online' || current_env == 'idc_sandbox' || current_env == 'idc_pre') {
-        // 生产环境
-        let domain = this.$lodash.get(window, `env.config.static_serve[0]`)
-        more_lang.value = domain + '/sports-rules/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + UserCtr.theme
+    const current_env = window.BUILDIN_CONFIG.current_env
+    // Y0商户  或者  正常的白色  黑色版
+    let merchant_or_black_and_white_version = null
+    if (UserCtr.theme.includes('y0')) {
+        merchant_or_black_and_white_version = `${UserCtr.theme.slice(0, -3)}&sty=${UserCtr.theme.slice(-2)}`
     } else {
-        // 非生产环境
-        more_lang.value = 'http://sports-rules-dev.sportxxx3pk.com/#/' + lang + `/sport/common?v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + UserCtr.theme
+        merchant_or_black_and_white_version = UserCtr.theme
     }
+    let domain = lodash.get(window, `env.config.static_serve[0]`)
+    if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
+        //生产 和压测
+    } else if (current_env == 'idc_sandbox' || current_env == 'idc_pre') {
+        // 试玩环境
+        domain = "https://sports-rules-new-shiwan.sportxxx3pk.com"
+    } else {
+        //  其他环境，测试和开发 等
+        domain = "http://sports-rules-new-test.sportxxx3pk.com"
+    }
+    more_lang.value = domain + '/#/' + lang + `?rdm=${new Date().getTime()}&v=h5_${window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME}&themeColors=` + merchant_or_black_and_white_version
+
     const { ctx } = getCurrentInstance()
     ctx.$forceUpdate()
 }
@@ -57,12 +67,13 @@ onMounted(get_h5_rule_url)
 /** 监听语言变化 */
 watch(UserCtr.lang, get_h5_rule_url)
 
-/** 监听窗口变化 */
-// const client_height = ref(window_resize_handle())
-// const window_resize_handle = () => {
-//     client_height.value = document.documentElement.clientHeight
-// }
 
+</script>
+
+<script>
+export default defineComponent({
+    name: 'rule-h5'
+})
 </script>
   
 <style lang="scss" scoped>

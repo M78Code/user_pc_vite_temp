@@ -3,9 +3,9 @@
  * @Description: 普通赛事的投注弹框
 -->
 <template>
-  <div class="bet-mix-box-child2">
+  <div class="bet-mix-box-child2" v-if="false">
     <!-- 多注顶部蒙层 -->
-    <div class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
+    <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
     <div v-if="get_bet_status == 2" class="fixed full-shadow2" @touchmove.prevent></div>
 
@@ -222,6 +222,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import { UserCtr } from "src/core/index.js";
 // import { hide_bet_series_but } from "src/core/bet/index.js"
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
 
 // ...mapGetters(["get_update_tips", "get_odds_change", "get_mix_bet_flag", "get_money_total", "get_s_count_data", "get_bet_list", "get_is_accept", "get_order_ing", "get_is_spread", 
@@ -284,8 +285,57 @@ const is_bet_check_rc = () => {
   return res;
 }
 
+const set_bet_oid = (item,obj_hp,obj_hl,obj_ol) => {
+      BetViewDataClass.set_bet_order_status(1)
+    
+      // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
+      let matchType = 2 
+      if( [1,2].includes(Number(item.ms)) ){
+        matchType = 2
+      }
+      const bet_obj = {
+        sportId: item.csid, // 球种id
+        matchId: item.mid,  // 赛事id
+        tournamentId: item.tid,  // 联赛id
+        scoreBenchmark: item.msc[0],  //比分
+        marketId: obj_hl.hid, //盘口ID
+        marketValue: obj_hl.hv,
+        playOptionsId: obj_ol.oid, //投注项id
+        marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
+        odds: obj_ol.ov,  //十万位赔率
+        oddFinally: compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid), //最终赔率
+        sportName: item.csna, //球种名称
+        matchType,  //赛事类型
+        matchName: item.tn, //赛事名称
+        playOptionName: obj_ol.on, // 投注项名称
+        playOptions: obj_ol.on,   // 投注项
+        tournamentLevel: item.tlev, //联赛级别
+        playId: obj_hp.hpid, //玩法ID
+        playName: play_id.value[obj_hp.hpid], //玩法名称
+        dataSource: item.cds, //数据源
+        home: item.mhn, //主队名称
+        away: item.man, //客队名称
+        ot: obj_ol.ot, //投注項类型
+        placeNum: null, //盘口坑位
+        // 以下为 投注显示或者逻辑计算用到的参数
+        bet_type: 'common_bet', // 投注类型
+        tid_name: item.tnjc,  // 联赛名称
+        match_ms: item.ms, // 赛事阶段
+      }
+      BetData.set_bet_read_write_refer_obj(bet_obj)
+
+      // 获取限额 常规
+      get_query_bet_amount_common(bet_obj)
+      
+    }
+
+
 onMounted(() => {
   console.error(',1111111111', BetViewDataClass)
+  let munu_type = true
+  if(munu_type){
+    // get_query_bet_amount_common()
+  }
 })
 </script>
 <style lang="scss" scoped>

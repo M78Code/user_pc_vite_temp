@@ -332,7 +332,7 @@ this.bet_appoint_ball_head= null */
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
     
-    this.bet_data_class_version.value = Date.now()
+    this.set_bet_data_class_version()
   }
 
   /*
@@ -372,6 +372,7 @@ this.bet_appoint_ball_head= null */
     } else {
       this.is_accept = value;
     }
+    this.set_bet_data_class_version()
   }
    /*
   设置 赔率类型
@@ -380,11 +381,20 @@ this.bet_appoint_ball_head= null */
     this.cur_odd = cur_odd;
   }
 
-  // 设置单关 串关
+  // 设置单关 串关 投注状态
   set_is_single_handle(val){
     this.is_single_handle = val
   }
-
+  // 设置单关/串关 切换
+  set_is_bet_merge(){
+    this.is_bet_merge = !this.is_bet_merge
+    this.set_bet_data_class_version()
+  }
+  // 设置 投注版本
+  set_bet_data_class_version(){
+    this.bet_data_class_version.value = Date.now()
+  }
+  
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData
    */

@@ -42,7 +42,7 @@ import lodash from 'lodash'
 import store  from "src/store-redux"
 //   import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 // import { useRoute } from 'vue-router'
-src/boot/i18n.js;
+import { t } from "src/boot/i18n.js";
 //国际化
 
   // provide(){

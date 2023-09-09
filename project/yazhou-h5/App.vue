@@ -22,7 +22,7 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { onMounted } from "vue";
 
 import { enter_params } from "src/core/index.js";
-
+import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 
 const token_key = STANDARD_KEY.get("token"); //token键
 export default {
@@ -37,7 +37,7 @@ export default {
     };
   },
   created() {
-
+    BetDataCtr.init()
     enter_params()
 
     // 检测目前的系统类型ios,android,h5
