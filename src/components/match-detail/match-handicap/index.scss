@@ -16,8 +16,7 @@
     z-index: 1;
     flex: 1;
   }
-  ::v-deep {
-    .load-data-wrap {
+   :deep(.load-data-wrap)  {
       width: 100% !important;
       .yb-flex-center {
         justify-content: start;
@@ -29,7 +28,7 @@
         margin-left: 5px;
       }
     }
-  }
+  
 }
 /*  玩法集 */
 .wrap-tabs {
@@ -119,7 +118,7 @@
   }
 }
 /*  玩法模板 title */
-.template ::v-deep .template-title {
+.template :deep(.template-title) {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -156,7 +155,7 @@
     }
   }
 }
-.template ::v-deep {
+:deep(.template ) {
   .template0,
   .template2,
   .template4,
@@ -247,20 +246,20 @@
   flex: 1;
   position: unset;
   /*  加载状态样式 */
-  ::v-deep .load-data-wrap.is-detail .empty-wrap {
+  :deep(.load-data-wrap.is-detail .empty-wrap) {
     padding-top: 100px !important;
     .text-center {
       padding-bottom: 50px;
     }
   }
-  ::v-deep .load-data-wrap.is-detail .loading-wrap {
+  :deep(.load-data-wrap.is-detail .loading-wrap) {
     padding-top: 100px;
     .text-center {
       padding-bottom: 50px;
     }
   }
-  ::v-deep .load-data-wrap.is-detail .refresh.fit {
-    padding-top: 80px;
+  :deep(.load-data-wrap.is-detail .refresh.fit) {
+    padding-top: 80px; 
   }
   .double {
     display: flex;
@@ -285,7 +284,7 @@
         overflow: hidden;
       }
       .template6 {
-        ::v-deep .main-handicap {
+        :deep(.main-handicap) {
           .group {
             &:last-child {
               border-radius: 0 0 8px 8px;
@@ -298,7 +297,7 @@
       .template2,
       .template3,
       .template7 {
-        ::v-deep .main-handicap {
+        :deep(.main-handicap) {
           .handicap:last-child {
             border-radius: 0 0 8px 8px;
             overflow: hidden;
@@ -306,13 +305,13 @@
         }
       }
       .template10 {
-        & > ::v-deep div:last-child {
+        & > :deep(div:last-child) {
           border-radius: 0 0 8px 8px;
           overflow: hidden;
         }
       }
       /*  红升绿降样式 */
-      ::v-deep .c-bet-item {
+      :deep(.c-bet-item) {
         .odds-icon {
           top: auto;
           bottom: auto;
@@ -323,7 +322,7 @@
       }
     }
   }
-  ::v-deep .handicap-wrap {
+  :deep(.handicap-wrap) {
     flex: 1;
     min-width: 1px;
     .bet-item {
@@ -353,7 +352,7 @@
 }
 /*  红升绿降样式 */
 .template {
-  ::v-deep .c-bet-item.up {
+  :deep(.c-bet-item.up) {
     background: rgba(233, 61, 61, 0.05);
     &.normal,
     &.active {
@@ -372,7 +371,7 @@
       }
     }
   }
-  ::v-deep .c-bet-item.down {
+  :deep(.c-bet-item.down) {
     background: rgba(80, 192, 66, 0.05);
     &.normal,
     &.active {
