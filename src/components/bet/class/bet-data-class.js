@@ -19,7 +19,7 @@ class BetData {
     this.max_height1 = 230 //滚动区域的最大高
     this.is_new_bet = false //query_order_status 接口返回是否是新流程
     this.need_bet_again = false //是否需要重新发起投注
-    this.check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
+    // this.check_odds_beforebet2 = debounce(check_odds_beforebet, 200) //防抖处理
     this.scroll_box_ele = null // dom元素
     this.is_loading_balance = false // 金额刷新中？
 
