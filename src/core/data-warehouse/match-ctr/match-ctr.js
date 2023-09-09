@@ -7,8 +7,8 @@
  * 
  * MatchDataWarehouseInstance.set_list(list); 设置全部列表数据-初次使用
  * MatchDataWarehouseInstance.set_list(list,1); 同步更新全部列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
- * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象mids列表数据-初次使用
- * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象mids列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
+ * MatchDataWarehouseInstance.set_quick_query_list(list); 设置快速查询对象列表数据-初次使用
+ * MatchDataWarehouseInstance.set_quick_query_list(list,1); 同步更新快速查询对象列表数据(对部分赛事数据进行删除和更新数据合并逻辑操作)
  * 
  * 
  * h5和pc赛事详情页面使用
@@ -54,8 +54,6 @@ export default class MatchDataBase
   init(){
     // 所有赛事列表数据
     this.list = [];
-    // 所有赛事列表对象数据(只在)
-    this._list_obj = {};
     // 页面显示的赛事列表数据,this.quick_query_list.list的部分数据
     this.quick_query_list = [];
     // 页面显示赛事快速查询对象
@@ -332,31 +330,9 @@ export default class MatchDataBase
         this.remove_match(mid_);
       }
     }
-    // 列表快速转对象逻辑
-    this._list_obj = {};
-    this.list.forEach(item => {
-      this._list_obj[_.get(item, 'mid')] = item;
-    });
   }
 
-  /**
-   * @description: 设置快速搜索mids列表数据
-   * @param {Object} list 快速搜索mids列表
-   * @return {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
-   */
-  set_quick_query_list(mids,is_merge){
-    if(!_.get(mids,'length')){
-      // 数据检测
-      return;
-    }
-    let list = [];
-    // 获取快速列表数据
-    for (let i = 0; i < mids.length; i++) {
-      const match_ = this._list_obj[mids[i]]
-      if(match_){
-        list.push(match_);
-      }
-    }
+  set_quick_query_list(list,is_merge){
     let obj = this.list_comparison(this.quick_query_list,list);
     if(is_merge){
       // {add:{}, del:{}, upd:{}}
@@ -908,7 +884,6 @@ upd_match_all_status(mid, obj){
     this.clear_quick_query_obj(this.quick_query_obj);
     this.clear(this.quick_query_list);
     this.clear(this.list);
-    this.clear(this._list_obj);
     // 销毁ws数据通信实例
     this.ws_ctr && this.ws_ctr.destroy();
   }

@@ -177,6 +177,11 @@ import LayOutMain_pc from "src/core/layout/index.js";
 import { reactive } from "vue";
 
 /**
+ * CSS 变量
+ */
+import  compute_css_variables  from  "src/core/css-var/index.js"
+
+/**
  *
  * 所有的用法 都一样
  * import { xxxx } from "src/core/index.js";
@@ -220,4 +225,5 @@ export {
   MatchDataWarehouse_H5_List_Jingxuan,
   MatchDataWarehouse_H5_Detail_Jingxuan,
   LayOutMain_pc,
+  compute_css_variables
 };
