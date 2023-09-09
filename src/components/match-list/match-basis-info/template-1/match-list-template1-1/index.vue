@@ -99,10 +99,9 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import {MenuData } from "src/core/index.js"
 
 import { t } from "src/core/index.js";
-const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-;
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
@@ -120,7 +119,7 @@ const play_name_obj = computed(() => {
   //滚球
   if (get_match_status(ms, [110]) == 1) {
       //角球后缀
-    if (props.NewMenu.is_corner_menu()) {
+    if (MenuData.is_corner_menu()) {
       play_name_obj = {
         key: 'corner',
         suffix_name: ' - ' + t('list.corner'),
@@ -147,8 +146,8 @@ const play_name_obj = computed(() => {
 
 is_collect.value = Boolean (this.match.mf)
 //进球特效防抖
-hide_home_goal = this.debounce(hide_home_goal,5000);
-hide_away_goal = this.debounce(hide_away_goal,5000);
+// hide_home_goal = this.debounce(hide_home_goal,5000);
+// hide_away_goal = this.debounce(hide_away_goal,5000);
 
 // 监听收藏数量，更新收藏icon 颜色
 watch(get_collect_count, () => {

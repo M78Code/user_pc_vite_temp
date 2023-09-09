@@ -11,7 +11,6 @@ import { api_match } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt/index.js";
 import { set_sticky_top } from 'src/core/match-list-pc/match-card/module/sticky-top.js'
 // import scrollList from "src/components/cus-scroll/scroll_list.vue";
-import { MatchListCardFullVersionWapper as MatchListCard } from "src/components/match-list/match-list-card/index.js";
 import Refresh from "src/components/refresh/refresh.vue";
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListScrollClass from 'src/core/match-list-pc/match-scroll.js'
@@ -395,16 +394,15 @@ const fetch_match_list = (is_socket = false, cut) => {
 			.then((res) => {
 				// 组件和路由不匹配 菜单id不匹配aa
 				if ((route.name == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
-				let data = lodash.get(res, "data", {});
 				api_error_count.value = 0;
-				if (data.code == 200) {
+				if (res.code == 200) {
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
-						JSON.parse(JSON.stringify(data)),
+						JSON.parse(JSON.stringify(res)),
 						is_socket,
 						cut
 					);
-				} else if (data.code == "0401038") {
+				} else if (res.code == "0401038") {
 					// let is_collect = this.vx_layout_list_type == 'collect'
 					// // 收藏列表，遇到限频提示'当前访问人数过多，请稍后再试'
 					// if (is_collect && data.code == '0401038') {
@@ -421,7 +419,6 @@ const fetch_match_list = (is_socket = false, cut) => {
 				show_refresh_mask = false;
 			})
 			.catch((err) => {
-				console.log('lockie_test_console', err);
 				show_refresh_mask = false;
 				// 如果是用户切换菜单
 				if (!is_socket) {
@@ -546,7 +543,6 @@ const mounted_fn = () => {
  */
 const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 	// console.warn('daya',data)
-	console.log('lockie_test_console', data, is_socket, cut);
 	let {
 		match_list_api_config,
 		menu_root,
@@ -751,7 +747,6 @@ const check_match_last_update_time = () => {
 	}
 	let mids = [];
 	let now_time = ServerTime.get_remote_time();
-	console.log('now_timenow_time', now_time, MatchListScrollClass.show_mids);
 	// 遍历可视区域赛事ID
 	MatchListScrollClass.show_mids.forEach((mid) => {
 		// 更新时间间隔

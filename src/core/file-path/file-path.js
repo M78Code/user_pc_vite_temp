@@ -12,7 +12,11 @@ import _ from 'lodash'
 const NODE_ENV = process.env.NODE_ENV
 const e_sport_csids = [101, 100, 102, 103];
 
-
+let config = {
+  domain_img: {
+    idc_online: {}
+  }
+};
 // 字母顺序
 const letter_num = {
   A: 0,

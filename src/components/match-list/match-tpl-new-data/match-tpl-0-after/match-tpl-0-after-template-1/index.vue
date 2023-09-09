@@ -5,10 +5,11 @@
       <!--热门赛事显示hot标识-->
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot" />
       <!-- 比赛进程 -->
-      <match-process v-if="is_mounted && match.api_update_time != 0" :match_props="{ match, source: 'match_list' }"
+      {{ is_mounted , match.api_update_time != 0 }}
+      <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
         show_page="match-list" :rows="2" :match_list_data="match_list_data" />
     </div>
-
+    {{ is_mounted }}
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
       <!-- 主盘 -->
@@ -31,7 +32,7 @@
       <div class="match-handicap-item" v-if="match.has_add1">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
+          <basis-info4 v-if="is_mounted" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match.add1_handicap_list" :match="match" />
@@ -43,7 +44,7 @@
       <div class="match-handicap-item" v-if="match.has_add2">
         <!-- 赛事基础信息 -->
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:70px !important;`">
-          <!-- <basis-info4 v-if="is_mounted" :match="match" /> -->
+          <basis-info4 v-if="is_mounted" :match="match" />
         </div>
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match.add2_handicap_list" :match="match" />
@@ -104,19 +105,36 @@
 
 <script setup>
 
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, defineProps, reactive } from 'vue';
 import lodash from 'lodash'
-import { t, get_match_status } from "src/core/index.js";
+
+import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-useRegistPropsHelper(component_symbol, need_register_props)
+// useRegistPropsHelper(component_symbol, need_register_props)
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
-const play_name_list = ref([]);
-const match_style_obj = ref(lodash.get(MatchListCardData, `all_card_obj.mid_${this.mid}`, {}));
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
 
+import { MatchProcessFullVersionWapper as MatchProcess } from 'src/components/match-process/index.js';
+import { MatchListTem1FullVersionWapper as BasisInfo1 } from 'src/components/match-list/match-basis-info/template-1/index.js'
+import { MatchListTem4FullVersionWapper as BasisInfo4 } from 'src/components/match-list/match-basis-info/template-4/index.js'
+import { MatchHandicapFullVersionWapper as MatchHandicap } from 'src/components/match-list/match-handicap/index.js'
+import { MatchMediaFullVersionWapper as MatchMedia } from 'src/components/match-list/match-media/index.js'
+
+const props = defineProps({
+  mid: {
+    type: [String, Number],
+    default: null,
+  },
+})
+
+const play_name_list = ref([]);
+const match_style_obj = ref(lodash.get(MatchListCardData.get_match_all_card_obj(), `all_card_obj.mid_${props.mid}`, {}));
+const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
+const match = reactive(MatchListData.quick_query_obj.mid_obj[props.mid+'_'] || {});
+
+console.log('1231231231231234234534254543245', props.mid, MatchListData.quick_query_obj.mid_obj, match);
 
 // 其他玩法标题
 const bet_col = computed(() => {
@@ -216,19 +234,6 @@ const bet_col = computed(() => {
   }
   return bet_col
 })
-
-// 监听其他tab玩法标题变化  设置其他玩法tab栏
-watch(match.tab_play_keys, (tab_play_keys) => {
-  set_play_name_list(tab_play_keys)
-}, { immediate: true })
-
-//赛事阶段变化时跟新次要玩法
-watch(match.ms, () => {
-  let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
-  if (tab_play_keys.includes('hps5Minutes')) {
-    set_play_name_list(tab_play_keys)
-  }
-}, { immediate: true })
 
 /**
  * @Description 设置次要玩法 tab
@@ -350,6 +355,19 @@ const play_tab_click = (obj) => {
 const fold_tab_play = () => {
   MatchListCardData && MatchListCardData.fold_tab_play(this.match.mid)
 }
+
+// 监听其他tab玩法标题变化  设置其他玩法tab栏
+watch(match.tab_play_keys, (tab_play_keys) => {
+  set_play_name_list(tab_play_keys)
+}, { immediate: true })
+
+//赛事阶段变化时跟新次要玩法
+watch(match.ms, () => {
+  let tab_play_keys = lodash.get( 'match.tab_play_keys', '') || ''
+  if (tab_play_keys.includes('hps5Minutes')) {
+    set_play_name_list(tab_play_keys)
+  }
+}, { immediate: true })
 </script>
 
 <style lang="scss" scoped>

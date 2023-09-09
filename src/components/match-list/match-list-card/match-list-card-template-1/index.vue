@@ -5,7 +5,7 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:${card_style_obj.card_total_height}px  !important;width:${vx_get_layout_size.list_content_width}px  !important;${card_style}`"
+    :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`"
   >
   <div
       v-if="is_mounted"
@@ -41,6 +41,11 @@
       </div>
       <!-- 赛事卡片 -->
       <template v-else>
+        <match-card
+          v-for="mid in mids_arr"
+          :key="mid"
+          :mid="mid"
+        />
         <!-- 数据加载状态 -->
         <load-data
           v-if="card_style_obj.load_data_status != 'loaded'"
@@ -62,11 +67,12 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, onUnmounted, ref } from 'vue';
+import { computed, defineProps, onMounted, onUnmounted, reactive, ref } from 'vue';
 
 import { PlayMatchTypeFullVersionWapper as PlayMatchType } from 'src/components/match-list/play-match-type/index.js'
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from 'src/components/match-list/play-match-league/index.js'
-// import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from 'src/components/match-list/match-type-champion/index.js'
+import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from 'src/components/match-list/match-type-champion/index.js'
+import { MatchCardFullVersionWapper as MatchCard } from "src/components/match-list/match-card/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
@@ -79,17 +85,16 @@ const props = defineProps({
     default: () => '',
   }
 })
-
 // 卡片样式对象
-const card_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.card_key])
-const sticky_top = ref(null)
+const card_style_obj = reactive(MatchListCardData.get_match_all_card_obj()[props.card_key] || {})
+let sticky_top = ref(null)
 // 组件是否加载完成
-const is_mounted = ref(false);
-const vx_get_layout_size = ref(state.layoutReducer.layout_size)
-setTimeout(() => {
-  card_style_obj.value = MatchListCardData.get_match_all_card_obj()[props.card_key]
-  sticky_top.value = MatchListCardData.get_match_card_sticky_top();
-}, 1000)
+let is_mounted = ref(false);
+let vx_get_layout_size = ref(state.layoutReducer.layout_size)
+// setTimeout(() => {
+//   card_style_obj = MatchListCardData.get_match_all_card_obj()[props.card_key] || ''
+//   sticky_top.value = MatchListCardData.get_match_card_sticky_top();
+// }, 1000)
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
@@ -98,12 +103,12 @@ const card_style = computed(() => {
   // 设置卡片高度
   let card_style = ''
   // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
-  if(['sport_title','play_title','no_start_title'].includes(card_style_obj.value.card_type)){
+  if(['sport_title','play_title','no_start_title'].includes(card_style_obj?.card_type)){
     let top = sticky_top.value?.type || 0
     card_style = `top:${top - 0.5}px;`
   }
   // 如果是联赛标题卡片  设置联赛吸顶
-  else if(['league_title','champion_league_title'].includes(card_style_obj.value.card_type)){
+  else if(['league_title','champion_league_title'].includes(card_style_obj?.card_type)){
     let top = sticky_top.value?.league || ''
     card_style = `top:${top - 0.5}px;`
   }
@@ -115,8 +120,8 @@ const card_style = computed(() => {
 */
 const mids_arr = computed(() => {
   let mids_arr = []
-  if(card_style_obj.value.card_type == 'league_container'){
-    mids_arr = card_style_obj.value.mids.split(',')
+  if(card_style_obj.card_type == 'league_container'){
+    mids_arr = card_style_obj.mids.split(',')
   }
   return mids_arr
 })
@@ -130,7 +135,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  card_style_obj.value = null
+  card_style_obj = null
 })
 </script>
 

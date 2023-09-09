@@ -6,7 +6,6 @@ const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME;
 //通用
 
 import lodash from "lodash";
-// import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 
 // import { useRouter, useRoute } from 'vue-router';
 // const router = useRouter();
@@ -105,9 +104,9 @@ import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
  * PC  数据仓库 常规赛事   通用列表
  */
 
-const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
+const MatchDataWarehouse_PC_List_Common = reactive(new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_List_Common",
-});
+}));
 
 /**
  * PC  数据仓库  常规赛事  通用详情
@@ -175,6 +174,7 @@ const MatchDataWarehouse_H5_Detail_Jingxuan = new MatchDataBase({
  */
 
 import LayOutMain_pc from "src/core/layout/index.js";
+import { reactive } from "vue";
 
 /**
  *

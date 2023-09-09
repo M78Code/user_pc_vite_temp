@@ -3,7 +3,7 @@ import { reactive } from "vue";
 /**
  * 列表表征数据存放实例
  */
-class MatchListCardData {
+class MatchListCardDataClass {
   constructor() {
     this.init();
   }
@@ -65,4 +65,5 @@ class MatchListCardData {
     this.scroll_top = scroll_top;
   }
 }
-export default new MatchListCardData();
+let MatchListCardData = reactive(new MatchListCardDataClass())
+export default MatchListCardData;

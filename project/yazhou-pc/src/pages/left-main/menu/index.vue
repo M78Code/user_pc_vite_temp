@@ -65,7 +65,7 @@ import { MenuData } from "src/core/index.js";
 import play_match from "/public/yazhou-pc/image/png/play-match.png";
 import hot_svg from "/public/yazhou-pc/image/svg/hot.svg";
 
-import { MenuWapper } from "src/components/menu";
+import { MenuWapper } from "src/components/menu/index.js";
 
 const router = useRouter();
 
