@@ -29,6 +29,7 @@ import { formatTime } from "src/core/format/index.js"
 import {MatchDataWarehouse_PC_Detail_Common,format_plays, format_sort_data} from "src/core/index"; 
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BetCommonHelper from "src/core/bet/common-helper/index.js";
 export const useGetConfig = () => {
   const route = useRoute();
   const router = useRouter();
@@ -404,13 +405,14 @@ export const useGetConfig = () => {
       // 轮询次数
       max_loop: is_init ? 3 : 1,
       // axios中then回调方法
-      fun_then: (res) => {
-        debugger
+      fun_then: (res,data) => {
+        
+        
         set_details_loading_time_record("ok");
         // 检查gcuuid
         // if (state.send_gcuuid != res.config.gcuuid) return;
         // 玩法列表数据处理
-        get_match_details(res);
+        get_match_details(data);
       },
       // axios中catch回调方法
       fun_catch: (err) => {
@@ -435,7 +437,7 @@ export const useGetConfig = () => {
               // 处理当前玩法集数据
               handle_match_details_data(tabs_active_data_cache, Date.now());
             } else {
-              MatchDataWarehouseInstance.value.init_plays_data([]);
+              // MatchDataWarehouseInstance.value.init_plays_data([]);
               state.match_details = [];
               set_handicap_state("empty");
             }
@@ -452,17 +454,18 @@ export const useGetConfig = () => {
    * @description 玩法列表数据处理--电竞和其他赛事通用
    */
   const get_match_details = (res) => {
+    
     state.err_time = 0;
     state.match_details = [];
     state.data_loaded = true;
-    const code = lodash.get(res, "data.code");
+    const code = lodash.get(res, "code");
     if (code == "0400500") {
       emit_autoset_match(0);
       return;
     }
-    let data = lodash.get(res, "data.data");
-    let timestap = lodash.get(res, "data.ts");
-    if (code === 200 && data.length && state.match_infoData.mhs != 2) {
+    let data = lodash.get(res, "data");
+    let timestap = lodash.get(res, "ts");
+    if (code == 200 && data.length && state.match_infoData.mhs != 2) {
       data.forEach((item) => {
         // 筛选--删掉已经关盘的投注项
         item = format_plays(item);
@@ -537,10 +540,11 @@ export const useGetConfig = () => {
       // 处理当前玩法集数据
       handle_match_details_data(data, timestap);
       /** 设置语言变化 */
-      store.dispatch({
-        type: "SET_DETAILS_DATA_CACHE",
-        data: false,
-      });
+      UserCtr.set_lang(false);
+      // store.dispatch({
+      //   type: "set_lang_change",
+      //   data: false,
+      // });
     } else {
       const tabs_active_data_cache =
         get_details_data_cache.value[`${state.mid}-${tabs_active_index.value}`];
@@ -549,15 +553,14 @@ export const useGetConfig = () => {
         // 处理当前玩法集数据
         handle_match_details_data(tabs_active_data_cache, timestap);
       } else {
-        MatchDataWarehouseInstance.value.init_plays_data([]);
+        // MatchDataWarehouseInstance.value.init_plays_data([]);
         state.match_details = [];
         set_handicap_state("empty");
       }
     }
-
     // 将当前玩法盘口信息记为上次玩法数据
     const last_tab_data_index =
-      detail_header.value["handicap_tabs_bar"].value.currentIndex || 0;
+      detail_header.value["handicap_tabs_bar"].currentIndex || 0;
     state.last_tab_data = {
       index: last_tab_data_index,
       item: state.category_list[last_tab_data_index],
@@ -568,11 +571,11 @@ export const useGetConfig = () => {
    * @Description 设置盘口状态
    * @param {undefined} undefined
    */
-  const set_handicap_state = (state) => {
-    if (state == "empty") {
-      state = state.mcid == 0 ? "all_empty" : "new_empty";
+  const set_handicap_state = (val) => {
+    if (val == "empty") {
+      val = state.mcid == 0 ? "all_empty" : "new_empty";
     }
-    state.handicap_state = state;
+    state.handicap_state = val;
   };
   /**
    * @description: 弹出报错提示
@@ -655,7 +658,7 @@ export const useGetConfig = () => {
       error_codes: ["0401038"],
       params: params,
       fun_then: (res) => {
-        debugger
+        
         console.log(res,'get_category_list');
         if (!MatchDataWarehouseInstance.value) {
           return;
@@ -751,8 +754,9 @@ export const useGetConfig = () => {
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.value.init_plays_data(data);
-    match_details_data_set(MatchDataWarehouseInstance.value.list);
+    MatchDataWarehouseInstance.value.set_quick_query_list_from_match_details(data);
+    console.log(MatchDataWarehouseInstance.value.list,'quick_query_obj');
+    match_details_data_set(MatchDataWarehouseInstance.value.quick_query_list);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
@@ -760,9 +764,9 @@ export const useGetConfig = () => {
         is_eports_csid(route.params.csid) ||
         menu_config.is_virtual_sport()
       ) {
-        this.virtual_common.upd_bet_obj( timestap, this.mid); //TODO
+        virtual_common.upd_bet_obj( timestap, state.mid); //TODO
       } else {
-        BetCommonHelper.upd_bet_obj( timestap, this.mid); //TODO
+        BetCommonHelper.upd_bet_obj( timestap, state.mid); //TODO
       }
     }
   };
@@ -770,6 +774,7 @@ export const useGetConfig = () => {
    * 玩法列表渲染
    */
   const match_details_data_set = (list) => {
+    
     let match_details_arr = list;
     // 用户折叠/展开了的玩法
     let handle_state = window.sessionStorage.getItem("handle_state") || "";
