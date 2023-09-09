@@ -99,7 +99,6 @@ onMounted(() => {
     timer_1.value = setTimeout(() => {
       let el = unsettle_child.value
       let ele = record_box.value
-      debugger
       unsettle_child.value.check_early_order()
       unsettle_child.value.search_early_money()
     }, 800);
