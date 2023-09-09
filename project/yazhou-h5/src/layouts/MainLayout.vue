@@ -9,7 +9,7 @@
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
         <router-view />
-        <betMixBox />
+        <betMixBox v-show="bet_show"/>
       </q-page-container>
     </q-layout>
   </div>
@@ -19,11 +19,16 @@
 import { ref, onMounted, onUnmounted, reactive } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/";
 import betMixBox from "src/components/bet/components/bet_mix_box.vue"
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewData from "src/core/bet/class/bet-view-data-class.js";
+
 // import { i18n } from "src/boot/i18n.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 let get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 let get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
+
+let bet_show = ref(BetViewData.bet_show)
 let lastTouchEnd = ref(0);
 // 是否展示左侧菜单
 const toggleLeftDrawer = () => {

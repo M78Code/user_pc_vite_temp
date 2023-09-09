@@ -3,7 +3,7 @@
  * @Description: 投注弹框，单关串关切换逻辑与普通赛事不一致，所以组件区分，避免逻辑混乱
 -->
 <template>
-  <div class="bet-mix-box fullscreen" v-if="false">
+  <div class="bet-mix-box fullscreen" v-if="true">
     <!-- 冠军、虚拟体育、电竞菜单 -->
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
@@ -28,7 +28,7 @@ const get_menu_type = computed((val) => {
     return val
 })
 </script>
-
+ 
 <style lang="scss" scoped>
 .bet-mix-box {
   z-index: 541;

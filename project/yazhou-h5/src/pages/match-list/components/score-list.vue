@@ -327,9 +327,9 @@ const show_score_match_line = (match) => {
   let csid = +match.csid;
   let result = false;
   result = match.ms == 1 && [1,2,3,4,5,7,8,9,10,11,12,13,14,15,16].includes(csid);
-  if(get_menu_type.value == 28){
-    result = true;
-  }
+  // if(get_menu_type.value == 28){
+  //   result = true;
+  // }
   return result;
 }
 /**
