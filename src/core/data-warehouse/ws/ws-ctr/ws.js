@@ -44,6 +44,10 @@ export default class Ws {
     this.urls = [];
     // 增加接收内部消息监听
     this.add_event_listener();
+    // 测试ws通信消息使用
+    window.rmsg = (msg)=>{
+      WsRev.ws_rev_msg(this,msg);
+    };
   }
 
 
