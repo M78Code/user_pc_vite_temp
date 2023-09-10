@@ -8,7 +8,7 @@
     <!-- <betMixBoxChild1 v-if="[100, 900, 3000].includes(+get_menu_type)"></betMixBoxChild1> -->
     <!-- 普通赛事菜单 -->
     <!-- <betMixBoxChild2 v-else></betMixBoxChild2> -->
-    <betMixBoxChild2></betMixBoxChild2>
+    <betMixBoxChild2 v-if="bet_show"></betMixBoxChild2>
   </div>
 </template>
 
@@ -18,10 +18,13 @@ import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 // import betMixBoxChild1 from "./bet_mix_box_child1.vue";
 import betMixBoxChild2 from "./bet_mix_box_child2.vue";
 
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js"
+
+const bet_show = ref(BetViewDataClass.bet_show)
 
 // ...mapMutations(['clear_single_money'])
 onUnmounted(() => {
-  clear_single_money(1)
+  // clear_single_money(1)
 })
 
 const get_menu_type = computed((val) => {
