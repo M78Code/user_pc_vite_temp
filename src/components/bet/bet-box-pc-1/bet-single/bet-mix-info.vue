@@ -23,14 +23,14 @@
     <template v-else>
       <div id="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
         <!--第一个输入框的-->
-        <!-- <bet-mix-input
+        <bet-mix-input
           ref="bet-mix-input-0"
           class="bet-input"
           :index="0"
-          :id="BetData.bet_s_list[0]"
-          :key="`0-${BetData.bet_s_list[0]}`"
+          :item="BetData.bet_s_list[0]"
+          :key="`0-${BetData.bet_s_list[0].custom_id}`"
           v-if="BetData.bet_s_list.length>1"          
-        ></bet-mix-input> -->
+        ></bet-mix-input>
       </div>
     </template>
   </div>

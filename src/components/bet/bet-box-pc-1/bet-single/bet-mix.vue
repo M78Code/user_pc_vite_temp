@@ -38,15 +38,14 @@
             <!--金额输入框-->
             <template v-for="(item, index) in BetData.bet_s_list">
               <!--2串1以及输入框-->
-              <!-- <bet-mix-input
-                :ref="`bet-mix-input-${item}`"
+              <bet-mix-input
                 :index="index"
-                :id="item"
-                :key="item"
+                :item="item"
+                :key="item.custom_id"
                 @set_min_max_money="set_min_max_money"
                 v-if="BetViewDataClass.bet_order_success_success && ((BetViewDataClass.bet_order_success_success.length==0 && index>0) || (BetViewDataClass.bet_order_success_success.length>0))"
                 :class="{'bet-mix-input-last': ((index+1)==BetData.bet_s_list.length)}"
-              ></bet-mix-input> -->
+              ></bet-mix-input>
             </template>
           </div>
         </template>

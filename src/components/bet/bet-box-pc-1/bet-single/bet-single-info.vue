@@ -80,7 +80,7 @@
                 <span>@</span>{{ format_odds(item.oddFinally,item.csid) }}
               </span>
             </div>
-            <div class="auto-col" v-if="!(active == 1 || active == 4)">
+            <div class="auto-col" v-if="!(ref_data.active == 1 || ref_data.active == 4)">
               <span class="invalid">
                 {{ $t('common.invalid') }}
               </span>
@@ -115,7 +115,7 @@
       <!--键盘区域-->
       <div class="row bet-keyboard bet-keyboard-content">
         <div class="col">
-          <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord"  :input_max_money="ref_data.max_money" :status="active"></bet-keyboard>
+          <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord"  :input_max_money="ref_data.max_money" :status="ref_data.active"></bet-keyboard>
         </div>
       </div>
     </q-card-section>

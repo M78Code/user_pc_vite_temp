@@ -71,8 +71,10 @@ const router = useRouter()
     }
     const match_list_s = ref([])
 
+    const euid = "3020201"
+
     const api_list_data = () => {
-      let params ={"apiType":1,"cuid":UserCtr.get_uid(),"euid":"3020101","orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
+      let params ={"apiType":1,"cuid":UserCtr.get_uid(),euid,md:'',"orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
       api_match.post_league_list(params).then(res=>{
         const {livedata,nolivedata} = res.data
         let mids = ''
@@ -88,7 +90,7 @@ const router = useRouter()
 
     const api_list_dymids = mids => {
       console.error('√',mids)
-      let params = {mids,"cuid":UserCtr.get_uid(),"euid":"3020101","orpt":"0","sort":1,"pids":"","cos":0}
+      let params = {mids,"cuid":UserCtr.get_uid(),euid,"orpt":"0","sort":1,"pids":"","cos":0}
       socket_api.get_match_base_info_by_mids(params).then(res=>{
         let aaa = res.data.data.map(item=>{
           return item

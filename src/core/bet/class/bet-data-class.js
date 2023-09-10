@@ -331,7 +331,27 @@ this.bet_appoint_ball_head= null */
       // 串关
       // 串关逻辑 TODO
       // 同场赛事不能串 部分数据源赛事不能串 
-      this.bet_s_list.push(bet_refer_obj) 
+      if(this.bet_s_list.length){
+        let obj = this.bet_s_list.find(item=> item.matchId == bet_refer_obj.matchId) || {}
+        // 判断是否选择的同赛事投注项
+        if(obj.matchId){
+          let bet_s_list = this.bet_s_list.map(item => { 
+            if(item.matchId == obj.matchId){
+             return {
+                ...item,
+                ...bet_refer_obj
+              }
+            }else{
+              return item
+            }
+          })
+          this.bet_s_list = bet_s_list
+        }else{
+          this.bet_s_list.push(bet_refer_obj)
+        }
+      }else{
+        this.bet_s_list.push(bet_refer_obj)
+      }
     }
     
     // 显示 投注信息窗口
