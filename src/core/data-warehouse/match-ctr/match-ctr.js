@@ -21,8 +21,8 @@
  * MatchDataWarehouseInstance.remove_match(mid); 删除指定mid的赛事数据并从列表中移除,释放内存
  * 
  * 更新指定赛事数据
- * MatchDataWarehouseInstance.upd_match(mid, match); 更新赛事数据-深度合并数据(有盘口信息合并时使用)
- * MatchDataWarehouseInstance.upd_match(mid, match, 1); 更新赛事数据-简单合并数据(无盘口信息合并时使用)
+ * MatchDataWarehouseInstance.upd_match(match); 更新赛事数据-深度合并数据(有盘口信息合并时使用)
+ * MatchDataWarehouseInstance.upd_match(match, 1); 更新赛事数据-简单合并数据(无盘口信息合并时使用)
  */
 import lodash from "lodash";
 import MatchDataBaseWS from  "./match-ctr-ws.js"
@@ -216,7 +216,7 @@ export default class MatchDataBase
    */
   match_assign(match_old, match_new){
     if(match_old && match_new){
-      this.merge_with(match_old, match_new);
+      this.assign_with(match_old, match_new);
     }
   }
 
@@ -227,7 +227,7 @@ export default class MatchDataBase
    */
   ol_obj_assign(ol_obj_old, ol_obj_new){
     if(ol_obj_old && ol_obj_new){
-      this.merge_with(ol_obj_old, ol_obj_new);
+      this.assign_with(ol_obj_old, ol_obj_new);
     }
   }
 
@@ -238,7 +238,7 @@ export default class MatchDataBase
    */
   hn_obj_assign(hn_obj_old, hn_obj_new){
     if(hn_obj_old && hn_obj_new){
-      this.merge_with(hn_obj_old, hn_obj_new);
+      this.assign_with(hn_obj_old, hn_obj_new);
     }
   }
 
@@ -249,7 +249,7 @@ export default class MatchDataBase
    */
   hl_obj_assign(hl_obj_old, hl_obj_new){
     if(hl_obj_old && hl_obj_new){
-      this.merge_with(hl_obj_old, hl_obj_new);
+      this.assign_with(hl_obj_old, hl_obj_new);
     }
   }
 
@@ -611,7 +611,7 @@ export default class MatchDataBase
         const match=lodash.get(this.list,'[0]');
         if(match){
           // 进行数据合并
-          this.merge_with(match,match_details);
+          this.assign_with(match,match_details);
           // 将要显示的赛事同步到快捷操作对象中
           this.list_to_quick_query_obj(this.list);
         }
@@ -634,7 +634,7 @@ export default class MatchDataBase
       if(is_merge){  // 合并模式时
         const obj = lodash.get(this.quick_query_list,'[0].odds_info');
         if(obj){
-          this.merge_with(obj,odds_info);
+          this.assign_with(obj,odds_info);
           // 将要显示的赛事同步到快捷操作对象中
           this.list_to_quick_query_obj(this.quick_query_list);
         }
@@ -701,8 +701,8 @@ export default class MatchDataBase
   get_mid_index_form_list(mid, list){
     let res = -1;
     if(mid && list) {
-      for (let i = 0; i < this.list.length; i++) {
-        if(this.list[i].mid == mid){
+      for (let i = 0; i < list.length; i++) {
+        if(list[i].mid == mid){
           res = i;
           break;
         }
@@ -744,18 +744,18 @@ export default class MatchDataBase
 
    /**
    * @description: 更新赛事数据(也可更新部分数据)
-   * @param {String} mid 赛事标识
    * @param {Object} match 需要更新的赛事信息
    * @param {Boolean} is_merge 是否数据合并
    */
-   upd_match(mid, match, is_merge){
-    if(mid && match && mid == match.mid){
+   upd_match(match, is_merge){
+    let mid = lodash.get(match,'mid');
+    if(mid){
       let mid_obj_key = this.get_format_quick_query_key(mid, mid,'mid');
       // 快速赛事对象查找赛事
       if(this.quick_query_obj.mid_obj[mid_obj_key]){
         if(is_merge){
           // 数据合并模式
-          this.merge_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
+          this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
         } else {
           const many_obj = this.list_to_many_obj([match]);
           // 快速检索对象数据合并
@@ -831,7 +831,7 @@ clear(any) {
  * @param {*} old_obj 旧数据
  * @param {*} new_obj 新数据
  */
-merge_with(old_obj, new_obj){
+assign_with(old_obj, new_obj){
   let customizer = (old_value, new_value) => {
     let res = old_value;
     // 数据类型
@@ -872,7 +872,7 @@ merge_with(old_obj, new_obj){
       // 普通类型不做处理
     }
   }
-  lodash.mergeWith(old_obj, new_obj,customizer);
+  lodash.assignWith(old_obj, new_obj,customizer);
 }
 /**
  * @description: 更新赛事ms状态
