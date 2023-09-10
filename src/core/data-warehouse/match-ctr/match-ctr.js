@@ -432,11 +432,13 @@ export default class MatchDataBase
         Object.assign(this.quick_query_list, list);
       }
       const many_obj = this.list_to_many_obj(list, timestap);
-      // console.error('list_to_quick_query_obj many_obj:',many_obj);
-      this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
-      this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
-      this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
-      this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
+
+      // 快速检索对象数据合并
+      this._quick_query_obj_assign(this.quick_query_obj, many_obj);
+      // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
+      // this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
+      // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
+      // this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
     }
   }
   /**
@@ -757,137 +759,204 @@ export default class MatchDataBase
           // 数据合并模式
           this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
         } else {
+          this.assign_with(this.quick_query_obj.mid_obj[mid_obj_key], match);
           const many_obj = this.list_to_many_obj([match]);
+
+          
           // 快速检索对象数据合并
-          this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
-          this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
-          this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
-          this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
+          this._quick_query_obj_assign(this.quick_query_obj, many_obj, [mid]);
+          // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);
+          // this.ol_obj_assign(this.quick_query_obj.ol_obj, many_obj.ol_obj);
+          // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
+          // this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
         }
       }
     }
   }
-/**
- * @description: 清空赛事对象
- * @param {String,Number} midAny 赛事mid
- * @return {undefined} undefined
- */
-clear_mid_obj(mid){
-  this.delete_match_from_quick_query_obj(mid,mid,'mid');
-}
+  /**
+   * @description: 快速检索数据对象合并逻辑
+   * @param {Object} many_obj_old 老数据对象
+   * @param {Object} many_obj_new 新数据对象
+   * @param {Array} mids 赛事mid数组(为空时表示取obj所有key值)
+   * @return 
+   */
+  _quick_query_obj_assign(many_obj_old, many_obj_new, mids){
+    // 获取老数据对象keys
+    let old_ol_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_old.ol_obj, mids);
+    let old_hn_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_old.hn_obj, mids);
+    let old_hl_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_old.hl_obj, mids);
 
-/**
- * @description: 清空盘口对象
- * @param {String,Number} hid 盘口编号
- * @return {undefined} undefined
- */
-clear_hl_obj(mid,hid){
-  this.delete_match_from_quick_query_obj(mid,hid,'hl');
-}
-
-/**
- * @description: 清空投注项对象
- * @param {String,Number} oid 投注项编号
- * @return {undefined} undefined
- */
-clear_ol_obj(mid,oid){
-  this.delete_match_from_quick_query_obj(mid,oid,'ol');
-}
-
-/**
- * @description: 清空坑位投注项对象
- * @param {String,Number} hn 坑位投注项编号
- * @return {undefined} undefined
- */
-clear_hn_obj(mid,hn){
-  this.delete_match_from_quick_query_obj(mid,hn,'hn');
-}
-
-/**
- * @description: 清空对象
- * @param {Object,Array} any 要清空的对象和列表
- * @return {undefined} undefined
- */
-clear(any) {
-  if(typeof (any) == "object")
-  {
-    // 对象时
-    for (const key in any) {
-      // 进入递归检测
-      this.clear(any[key]);
-      // 删除挂载点
-      delete any[key];
-    }
-    if(Array.isArray(any))
-    {
-      // 数组时清空数组
-      any.length = 0;
-    }
+    // 获取新数据对象keys
+    let new_ol_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_new.ol_obj, mids);
+    let new_hn_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_new.hn_obj, mids);
+    let new_hl_obj_keys = this._get_quick_query_obj_obj_keys(many_obj_new.hl_obj, mids);
+    // 快速检索对象数据合并
+    this.match_assign(many_obj_old.mid_obj, many_obj_new.mid_obj);
+    this.ol_obj_assign(many_obj_old.ol_obj, many_obj_new.ol_obj);
+    this.hn_obj_assign(many_obj_old.hn_obj, many_obj_new.hn_obj);
+    this.hl_obj_assign(many_obj_old.hl_obj, many_obj_new.hl_obj);
+    // 获取无用数据
+    let ol_obj_keys = lodash.difference(old_ol_obj_keys, new_ol_obj_keys);
+    let hn_obj_keys = lodash.difference(old_hn_obj_keys, new_hn_obj_keys);
+    let hl_obj_keys = lodash.difference(old_hl_obj_keys, new_hl_obj_keys);
+    // 删除无用数据
+    ol_obj_keys.forEach(keys => {
+      delete many_obj_old.ol_obj[keys];
+    });
+    hn_obj_keys.forEach(keys => {
+      delete many_obj_old.hn_obj[keys];
+    });
+    hl_obj_keys.forEach(keys => {
+      delete many_obj_old.hl_obj[keys];
+    });
   }
-}
 
-/**
- * @description: 数据合并优化版函数
- * @param {*} old_obj 旧数据
- * @param {*} new_obj 新数据
- */
-assign_with(old_obj, new_obj){
-  let customizer = (old_value, new_value) => {
-    let res = old_value;
-    // 数据类型
-    let type = typeof(old_value);
-    // console.error('old_value=',type);
-    if('object' == type){
-      if(Array.isArray(old_value)){
-        type = 'array';
+  /**
+   * @description: 获取快速检索对象中指定赛事的所以对象key值
+   * @param {Object} obj 快速检索对象
+   * @param {Array} mids 赛事mids(为空时表示取obj所有key值)
+   * @return {Array} key值列表
+   */
+  _get_quick_query_obj_obj_keys(obj,mids){
+    let res = [];
+    if(obj){
+      if(mids){
+        mids.forEach(item => {
+          const mid = item+'_';
+          for (const key in obj) {
+            const element = obj[key];
+            if(key && key.startsWith(mid)) {
+              res.push(key)
+            }
+          }
+        });
+      } else {
+        res = Object.keys(obj);
       }
     }
-    // console.error(type,'=====>',old_value);
-    // 根据数据类型进行逻辑处理
-    if('object' == type){
-      // 为对象的操作
-      if(!new_value){
-        res = new_value;
-      } else {
-        for (const key in old_value) {
-          if (old_value[key]) {
-            if(new_value[key] == undefined){
-              // 删除右侧没有的对象key数据
-              delete old_value[key]
-            } else {
-              // if(typeof(old_value[key]) == 'object'){
-              //   // this.mergeWith2(old_value[key], new_value[key],0);
-              // }
+    return res;
+  }
+  /**
+   * @description: 清空赛事对象
+   * @param {String,Number} midAny 赛事mid
+   * @return {undefined} undefined
+   */
+  clear_mid_obj(mid){
+    this.delete_match_from_quick_query_obj(mid,mid,'mid');
+  }
+
+  /**
+   * @description: 清空盘口对象
+   * @param {String,Number} hid 盘口编号
+   * @return {undefined} undefined
+   */
+  clear_hl_obj(mid,hid){
+    this.delete_match_from_quick_query_obj(mid,hid,'hl');
+  }
+
+  /**
+   * @description: 清空投注项对象
+   * @param {String,Number} oid 投注项编号
+   * @return {undefined} undefined
+   */
+  clear_ol_obj(mid,oid){
+    this.delete_match_from_quick_query_obj(mid,oid,'ol');
+  }
+
+  /**
+   * @description: 清空坑位投注项对象
+   * @param {String,Number} hn 坑位投注项编号
+   * @return {undefined} undefined
+   */
+  clear_hn_obj(mid,hn){
+    this.delete_match_from_quick_query_obj(mid,hn,'hn');
+  }
+
+  /**
+   * @description: 清空对象
+   * @param {Object,Array} any 要清空的对象和列表
+   * @return {undefined} undefined
+   */
+  clear(any) {
+    if(typeof (any) == "object")
+    {
+      // 对象时
+      for (const key in any) {
+        // 进入递归检测
+        this.clear(any[key]);
+        // 删除挂载点
+        delete any[key];
+      }
+      if(Array.isArray(any))
+      {
+        // 数组时清空数组
+        any.length = 0;
+      }
+    }
+  }
+
+  /**
+   * @description: 数据合并优化版函数
+   * @param {*} old_obj 旧数据
+   * @param {*} new_obj 新数据
+   */
+  assign_with(old_obj, new_obj){
+    let customizer = (old_value, new_value) => {
+      let res = old_value;
+      // 数据类型
+      let type = typeof(old_value);
+      // console.error('old_value=',type);
+      if('object' == type){
+        if(Array.isArray(old_value)){
+          type = 'array';
+        }
+      }
+      // console.error(type,'=====>',old_value);
+      // 根据数据类型进行逻辑处理
+      if('object' == type){
+        // 为对象的操作
+        if(!new_value){
+          res = new_value;
+        } else {
+          for (const key in old_value) {
+            if (old_value[key]) {
+              if(new_value[key] == undefined){
+                // 删除右侧没有的对象key数据
+                delete old_value[key]
+              } else {
+                // if(typeof(old_value[key]) == 'object'){
+                //   // this.mergeWith2(old_value[key], new_value[key],0);
+                // }
+              }
             }
           }
         }
+      } else if('array' == type){
+        // console.error('new_value=',new_value);
+        // 为数组的操作
+        new_value && old_value && (old_value.length = new_value.length)
+        // 删除多余的数组项
+        // old_value.splice(len,old_value.length-len);
+      } else {
+        // 普通类型不做处理
       }
-    } else if('array' == type){
-      // console.error('new_value=',new_value);
-      // 为数组的操作
-      new_value && old_value && (old_value.length = new_value.length)
-      // 删除多余的数组项
-      // old_value.splice(len,old_value.length-len);
-    } else {
-      // 普通类型不做处理
+    }
+    lodash.assignWith(old_obj, new_obj,customizer);
+  }
+  /**
+   * @description: 更新赛事ms状态
+   * @param {String} mid 赛事mid
+   * @return {Object} obj 赛事状态 {ms:0,hs:0,os:0};
+   */
+  upd_match_all_status(mid, obj){
+    // 获取指定mid更新的赛事
+    let match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
+    if(match){
+      // match进行数据更新
+
+      // 同步更新快速查询对象中的数据(非必要)
     }
   }
-  lodash.assignWith(old_obj, new_obj,customizer);
-}
-/**
- * @description: 更新赛事ms状态
- * @param {String} mid 赛事mid
- * @return {Object} obj 赛事状态 {ms:0,hs:0,os:0};
- */
-upd_match_all_status(mid, obj){
-  // 获取指定mid更新的赛事
-  let match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
-  if(match){
-    // match进行数据更新
-
-    // 同步更新快速查询对象中的数据(非必要)
-  }
-}
 
   /**
    * @description: 清除所有数据

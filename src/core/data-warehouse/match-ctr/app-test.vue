@@ -1368,7 +1368,494 @@ let b={"code":"0000000","data":{"data":[{"mcid":"","tnjc":"FIFA 2023 - 土超 (8
     // this.MatchDataWarehouseInstance.set_quick_query_list(b.data.data);
     this.MatchDataWarehouseInstance.set_quick_query_list([b.data.data[0]]);
 	// this.MatchDataWarehouseInstance.remove_match('2675977');
-	this.MatchDataWarehouseInstance.upd_match({mid:'2675977',mct:999},1);
+	return
+	this.MatchDataWarehouseInstance.upd_match({
+	"mcid" : "",
+	"tnjc" : "FIFA 2023 - 土超 (8分钟)",
+	"cos" : false,
+	"hpsBold" : [],
+	"csna" : "足球",
+	"tid" : "29506",
+	"mst" : "14",
+	"srid" : "4931375953932675977",
+	"mcg" : 1,
+	"cosCorner" : false,
+	"cosPunish" : false,
+	"cosOutright" : false,
+	"mdsc" : null,
+	"mc" : 11,
+	"hpsOvertime" : [],
+	"mf" : false,
+	"mgt" : "1692375000000",
+	"maid" : "152454",
+	"hpsPns" : [
+		{
+			"hids" : 0,
+			"hpid" : "1",
+			"hpon" : 7,
+			"hpn" : "全场独赢",
+			"mid" : "2675977",
+			"hmm" : 0,
+			"hshow" : "Yes",
+			"hpnb" : "全场独赢",
+			"hpt" : 1,
+			"hsw" : "1,4,5",
+			"mct" : null
+		},
+		{
+			"hids" : 0,
+			"hpid" : "4",
+			"hpon" : 4,
+			"hpn" : "全场让球",
+			"mid" : "2675977",
+			"hmm" : 1,
+			"hshow" : "Yes",
+			"hpnb" : "全场让球",
+			"hpt" : 2,
+			"hsw" : "1,2,3,4,5,6",
+			"mct" : "0.75"
+		},
+		{
+			"hids" : 0,
+			"hpid" : "2",
+			"hpon" : 3,
+			"hpn" : "全场大小",
+			"mid" : "2675977",
+			"hmm" : 1,
+			"hshow" : "Yes",
+			"hpnb" : "全场大小",
+			"hpt" : 5,
+			"hsw" : "1,2,3,4,5,6",
+			"mct" : null
+		},
+		{
+			"hids" : 0,
+			"hpid" : "17",
+			"hpon" : 8,
+			"hpn" : "上半场独赢",
+			"mid" : "2675977",
+			"hmm" : 0,
+			"hshow" : "Yes",
+			"hpnb" : "上半场独赢",
+			"hpt" : 1,
+			"hsw" : "1,4,5",
+			"mct" : null
+		},
+		{
+			"hids" : 0,
+			"hpid" : "19",
+			"hpon" : 6,
+			"hpn" : "上半场让球",
+			"mid" : "2675977",
+			"hmm" : 1,
+			"hshow" : "Yes",
+			"hpnb" : "上半场让球",
+			"hpt" : 2,
+			"hsw" : "1,2,3,4,5,6",
+			"mct" : "1"
+		},
+		{
+			"hids" : 0,
+			"hpid" : "18",
+			"hpon" : 5,
+			"hpn" : "上半场大小",
+			"mid" : "2675977",
+			"hmm" : 1,
+			"hshow" : "Yes",
+			"hpnb" : "上半场大小",
+			"hpt" : 5,
+			"hsw" : "1,2,3,4,5,6",
+			"mct" : "1"
+		}
+	],
+	"mct" : 0,
+	"tlev" : 16,
+	"mhlut" : "",
+	"mo" : 0,
+	"mp" : 0,
+	"csid" : "1",
+	"ms" : 1,
+	"cmec" : "match_status",
+	"cos5Minutes" : false,
+	"mle" : 71,
+	"lvs" : -1,
+	"malu" : [ "group1/M00/19/3D/CgURt2SG-bqAY0TWAAARTD504cY713.png" ],
+	"hpsData" : [
+		{
+			"hps" : [
+				{
+					"chpid" : "1",
+					"hpid" : "1",
+					"hl" : {
+						"hid" : "149919184365455497-2",
+						"hs" : 0,
+						"hv" : null,
+						"hmt" : 0,
+						"hn" : null,
+						"ol" : [
+							{
+								"oid" : "148443311014782458-2",
+								"os" : 1,
+								"otd" : 47,
+								"ot" : "1",
+								"ov" : 470000,
+								"onb" : "主胜",
+								"on" : "代米尔体育",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "143274614311153176-2",
+								"os" : 1,
+								"otd" : 49,
+								"ot" : "2",
+								"ov" : 166000,
+								"onb" : "客胜",
+								"on" : "加拉塔萨雷",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T2"
+							},
+							{
+								"oid" : "144052386230459543-2",
+								"os" : 1,
+								"otd" : 48,
+								"ot" : "X",
+								"ov" : 340000,
+								"onb" : "平局",
+								"on" : "平局",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : ""
+							}
+						]
+					}
+				},
+				{
+					"chpid" : "4",
+					"hpid" : "4",
+					"hl" : {
+						"hid" : "148075570158540613",
+						"hs" : 0,
+						"hv" : "0.5/1",
+						"hmt" : 0,
+						"hn" : 1,
+						"ol" : [
+							{
+								"oid" : "143104641340024823",
+								"os" : 1,
+								"otd" : 3,
+								"ot" : "1",
+								"ov" : 183000,
+								"onb" : "+0.5/1",
+								"on" : "+0.5/1",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "145000154455984052",
+								"os" : 1,
+								"otd" : 4,
+								"ot" : "2",
+								"ov" : 181000,
+								"onb" : "-0.5/1",
+								"on" : "-0.5/1",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T2"
+							}
+						]
+					}
+				},
+				{
+					"chpid" : "2",
+					"hpid" : "2",
+					"hl" : {
+						"hid" : "141535314503421933",
+						"hs" : 0,
+						"hv" : "3",
+						"hmt" : 0,
+						"hn" : 1,
+						"ol" : [
+							{
+								"oid" : "145091585253123373",
+								"os" : 1,
+								"otd" : 2,
+								"ot" : "Over",
+								"ov" : 185000,
+								"onb" : "3",
+								"on" : "大 3",
+								"onbl" : "大 ",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "145712599134918845",
+								"os" : 1,
+								"otd" : 1,
+								"ot" : "Under",
+								"ov" : 179000,
+								"onb" : "3",
+								"on" : "小 3",
+								"onbl" : "小 ",
+								"cds" : "BE",
+								"ots" : "T2"
+							}
+						]
+					}
+				},
+				{
+					"chpid" : "17",
+					"hpid" : "17",
+					"hl" : {
+						"hid" : "141315441514092641",
+						"hs" : 0,
+						"hv" : null,
+						"hmt" : 0,
+						"hn" : null,
+						"ol" : [
+							{
+								"oid" : "142705543441150036",
+								"os" : 1,
+								"otd" : 101,
+								"ot" : "1",
+								"ov" : 450000,
+								"onb" : "主胜",
+								"on" : "代米尔体育",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "145572049747413025",
+								"os" : 1,
+								"otd" : 103,
+								"ot" : "2",
+								"ov" : 203000,
+								"onb" : "客胜",
+								"on" : "加拉塔萨雷",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T2"
+							},
+							{
+								"oid" : "141539530202217100",
+								"os" : 1,
+								"otd" : 102,
+								"ot" : "X",
+								"ov" : 255000,
+								"onb" : "平局",
+								"on" : "平局",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : ""
+							}
+						]
+					}
+				},
+				{
+					"chpid" : "19",
+					"hpid" : "19",
+					"hl" : {
+						"hid" : "143285122423241435",
+						"hs" : 0,
+						"hv" : "0/0.5",
+						"hmt" : 0,
+						"hn" : 1,
+						"ol" : [
+							{
+								"oid" : "140826445322411492",
+								"os" : 1,
+								"otd" : 146,
+								"ot" : "1",
+								"ov" : 199000,
+								"onb" : "+0/0.5",
+								"on" : "+0/0.5",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "146362155350552524",
+								"os" : 1,
+								"otd" : 147,
+								"ot" : "2",
+								"ov" : 165000,
+								"onb" : "-0/0.5",
+								"on" : "-0/0.5",
+								"onbl" : "",
+								"cds" : "BE",
+								"ots" : "T2"
+							}
+						]
+					}
+				},
+				{
+					"chpid" : "18",
+					"hpid" : "18",
+					"hl" : {
+						"hid" : "144457284406373911",
+						"hs" : 0,
+						"hv" : "1.5",
+						"hmt" : 0,
+						"hn" : 1,
+						"ol" : [
+							{
+								"oid" : "142480547981053850",
+								"os" : 1,
+								"otd" : 96,
+								"ot" : "Over",
+								"ov" : 190000,
+								"onb" : "1.5",
+								"on" : "大 1.5",
+								"onbl" : "大 ",
+								"cds" : "BE",
+								"ots" : "T1"
+							},
+							{
+								"oid" : "141154293325684053",
+								"os" : 1,
+								"otd" : 95,
+								"ot" : "Under",
+								"ov" : 174000,
+								"onb" : "1.5",
+								"on" : "小 1.5",
+								"onbl" : "小 ",
+								"cds" : "BE",
+								"ots" : "T2"
+							}
+						]
+					}
+				}
+			],
+			"hpsAdd" : [
+				{
+					"chpid" : "1",
+					"hpid" : "1",
+					"hlnm" : 0,
+					"hl" : []
+				},
+				{
+					"chpid" : "4",
+					"hpid" : "4",
+					"hlnm" : 0,
+					"hl" : []
+				},
+				{
+					"chpid" : "2",
+					"hpid" : "2",
+					"hlnm" : 0,
+					"hl" : []
+				},
+				{
+					"chpid" : "17",
+					"hpid" : "17",
+					"hlnm" : 0,
+					"hl" : []
+				},
+				{
+					"chpid" : "19",
+					"hpid" : "19",
+					"hlnm" : 0,
+					"hl" : []
+				},
+				{
+					"chpid" : "18",
+					"hpid" : "18",
+					"hlnm" : 0,
+					"hl" : []
+				}
+			]
+		}
+	],
+	"hps15Minutes" : [],
+	"lurl" : "group1/M00/19/48/CgURt2SKnXSAKzpUAAAL8K58qq4986.png",
+	"mprmc" : "BTS",
+	"cosOvertime" : false,
+	"mhn" : "代米尔体育-2",
+	"betAmount" : "0.00",
+	"cds" : "BE",
+	"frmhn" : [ "D" ],
+	"operationTournamentSort" : 200,
+	"cos15Minutes" : false,
+	"mhs" : 0,
+	"mlet" : "null:00",
+	"hps5Minutes" : [],
+	"cosPenalty" : false,
+	"hpsCorner" : [],
+	"mhid" : "152491",
+	"hpsPunish" : [],
+	"mrmc" : "",
+	"mid" : "2675977",
+	"mess" : 1,
+	"cosBold" : false,
+	"lss" : null,
+	"mmp" : "6",
+	"mststi" : "0",
+	"operationHotSortTop" : 0,
+	"mms" : 2,
+	"mbmty" : 2,
+	"regionIdSort" : 9,
+	"mhlu" : [ "group1/M00/19/3D/CgURtmSHFymASm93AAAVRaGPIgs741.png" ],
+	"seid" : "",
+	"mstst" : "0",
+	"malut" : "",
+	"man" : "加拉塔萨雷-2",
+	"frman" : [ "J" ],
+	"mat" : "",
+	"mng" : 1,
+	"mststr" : "14",
+	"mvs" : -1,
+	"hpsPenalty" : [],
+	"mststs" : 0,
+	"mearlys" : 0,
+	"tf" : false,
+	"th" : 0,
+	"cosPromotion" : false,
+	"mfo" : null,
+	"mft" : 0,
+	"tn" : "FIFA 2023 - 土耳其超级联赛 (8分钟)",
+	"msc" : [
+		"S1-2|0:0",
+		"S2|0:0",
+		"S5|0:0",
+		"S555|0:0",
+		"S15|0:0",
+		"S12|0:0",
+		"S12001|0:0",
+		"S11|0:0",
+		"S11001|0:0",
+		"S1101|0:0",
+		"S13|0:0",
+		"S14|0:0",
+		"S10101|0:0",
+		"S10102|0:0",
+		"S10103|0:0",
+		"S1001|0:0",
+		"S1002|0:0",
+		"S1003|0:0",
+		"S1004|0:0",
+		"S1005|0:0",
+		"S1006|0:0",
+		"S5001|0:0",
+		"S5002|0:0",
+		"S5003|0:0",
+		"S5004|0:0",
+		"S5005|0:0",
+		"S5006|0:0",
+		"S104|0:0",
+		"S8|0:0",
+		"S105|0:0",
+		"S18|0:0",
+		"S17|0:0",
+		"S6|0:0",
+		"S10|0:0"
+	],
+	"hpsPromotion" : []
+}
+,0);
 	
 
 
