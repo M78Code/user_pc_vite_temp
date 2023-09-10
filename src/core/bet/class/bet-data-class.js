@@ -2,6 +2,7 @@ import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
+import lodash_ from "lodash"
 
 
 class BetData {
@@ -393,7 +394,13 @@ this.bet_appoint_ball_head= null */
 
   // 设置 切换单关/串关切换
   set_is_bet_single(){
+    // true 单关 false 串关
     this.is_bet_single = !this.is_bet_single
+    // 单关 切换到串关 / 
+    if(!this.is_bet_single){
+      // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list) 
+    }
     this.set_bet_data_class_version()
   }
 
