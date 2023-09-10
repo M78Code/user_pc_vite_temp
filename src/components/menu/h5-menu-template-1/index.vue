@@ -1,5 +1,6 @@
 <template>
   <div class="match-main-menu">
+    {{ is_show_three_menu }}
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <div class="goback-icon-wrapper column justify-center">《</div>
@@ -41,11 +42,12 @@
                 @click="set_menu_lv2(item, index)"
               >
                 <span>
-                  {{ item.mi }}
                   {{
+                    item.name ||
                     base_data.menus_i18n_map[
                       menu_h5_data.recombine_menu_desc(item.mi)
-                    ] || ""
+                    ] ||
+                    ""
                   }}<i>{{ item.ct }}</i>
                 </span>
               </li>
@@ -193,13 +195,19 @@ const menu_1_type = computed(() => {
 });
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
+  console.error("是否展示三级", date_menu_list.value.length);
   return (
     menu_h5_data.get_is_show_three_menu() && date_menu_list.value.length > 0
   );
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
-  return menu_h5_data.is_results_virtual_sports();
+  console.error("是否展示四级", virtual_sports_results_tab.value.length);
+
+  return (
+    menu_h5_data.is_results_virtual_sports() &&
+    virtual_sports_results_tab.value.length > 0
+  );
 });
 const pop_main_items = ref([]); //弹出框数据
 const show_favorite_list = ref(false); //是否收藏
@@ -211,19 +219,28 @@ watch(menu_h5_data.update_time, (update_time) => {
   pop_main_items.value = pop; //pop级
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
+  virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
 });
+setTimeout(() => {
+  set_menu_lv1({ mi: 28 });
+}, 3000);
 /**
  * 一级菜单事件
  */
 function set_menu_lv1(item, index, is_pop) {
   show_selector_sub.value = false;
-  current_menu.value = item.sl;
   //弹出框点击
   if (is_pop) {
     menu_list.value.splice(1, 1, item);
   }
   menu_h5_data.set_current_lv1_menu(item, index);
-  set_menu_lv2(item.sl[0], 0);
+  //赛果
+  if (item.mi == 28) {
+    menu_h5_data.get_results_menu();
+  } else {
+    current_menu.value = item.sl;
+    set_menu_lv2(item.sl[0], 0);
+  }
 }
 /**
  * 二级菜单事件
@@ -260,17 +277,18 @@ function set_menu_lv3(item, index) {
   //设置三级菜单
   menu_h5_data.set_current_lv3_menu(item, index);
   // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
-  if (menu_h5_data.is_virtual_sport()) {
-    // this.virtual_sports_results_click_handle(
-    //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
-    //   this.virtual_sports_results_tab_item_i
-    // );
-  } else {
-    //  是三级菜单
-    // this.four_menu_item = null;
-    // 菜单实例 初始化
-    // this.handle_MenuInfoInstance_init();
-  }
+  // if (menu_h5_data.is_results_virtual_sports()) {
+
+  //   // this.virtual_sports_results_click_handle(
+  //   //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
+  //   //   this.virtual_sports_results_tab_item_i
+  //   // );
+  // } else {
+  //   //  是三级菜单
+  //   // this.four_menu_item = null;
+  //   // 菜单实例 初始化
+  //   // this.handle_MenuInfoInstance_init();
+  // }
 }
 /**
  * 四级菜单事件
