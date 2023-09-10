@@ -21,6 +21,8 @@ class BetData {
     this.bet_s_list = [];
     // 单关投注信息
     this.bet_single_list = [];
+    // 单关串关切换 保留原值
+    this.single_list_copy = []
     // true= 单关投注 false= 串关投注
     this.is_bet_single = true; 
     // 是否正在处理投注
@@ -283,35 +285,36 @@ this.bet_appoint_ball_head= null */
     // 是否虚拟投注
     let is_virtual_bet = false
     // 根据投注类型 设置投注分类
-    switch(obj.bet_type){
-      // vr
-      case 'vr_bet' :
-        this.set_vrtual_bet_obj({custom_id,...obj})
-        bet_refer_obj.is_vr = true
-        is_virtual_bet = true
-        break;
-      // 常规体育
-      case 'common_bet' :
-        this.set_common_bet_obj({custom_id,...obj})
-        bet_refer_obj.is_common = true
-        break;
-      // 冠军  
-      case 'guanjun_bet' :
-        this.set_guanjun_bet_obj({custom_id,...obj})
-        bet_refer_obj.is_guanjun = true
-        break;
-      // 电竞
-      case 'esports_bet' :
-        this.set_dianjing_bet_obj({custom_id,...obj})
-        bet_refer_obj.is_dianjing = true
-        break;
-    }
+    // switch(obj.bet_type){
+    //   // vr
+    //   case 'vr_bet' :
+    //     this.set_vrtual_bet_obj({custom_id,...obj})
+    //     bet_refer_obj.is_vr = true
+    //     is_virtual_bet = true
+    //     break;
+    //   // 常规体育
+    //   case 'common_bet' :
+    //     this.set_common_bet_obj({custom_id,...obj})
+    //     bet_refer_obj.is_common = true
+    //     break;
+    //   // 冠军  
+    //   case 'guanjun_bet' :
+    //     this.set_guanjun_bet_obj({custom_id,...obj})
+    //     bet_refer_obj.is_guanjun = true
+    //     break;
+    //   // 电竞
+    //   case 'esports_bet' :
+    //     this.set_dianjing_bet_obj({custom_id,...obj})
+    //     bet_refer_obj.is_dianjing = true
+    //     break;
+    // }
 
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
+    
     // 单关/串关 投注
     if(this.is_bet_single ){
       // 单关 不合并 只有一条 
@@ -321,6 +324,8 @@ this.bet_appoint_ball_head= null */
       }else{
         this.bet_single_list = [bet_refer_obj]
       }
+      // 单关数据收集器
+      this.single_list_copy.push(bet_refer_obj)
     }else{
       // 串关
       // 串关逻辑 TODO
@@ -328,7 +333,6 @@ this.bet_appoint_ball_head= null */
       this.bet_s_list.push(bet_refer_obj) 
     }
     
-    console.error('bet_single_list',this.bet_single_list[0].playOptionsId)
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
     
@@ -346,6 +350,7 @@ this.bet_appoint_ball_head= null */
   设置 常规 投注分类
   */
   set_common_bet_obj(obj) {
+    console.error('sssss',obj.custom_id)
     this.common_bet_obj[obj.custom_id] = obj
   }
 
@@ -385,14 +390,34 @@ this.bet_appoint_ball_head= null */
   set_is_single_handle(val){
     this.is_single_handle = val
   }
-  // 设置单关/串关 切换
+
+  // 设置 切换单关/串关切换
+  set_is_bet_single(){
+    this.is_bet_single = !this.is_bet_single
+    this.set_bet_data_class_version()
+  }
+
+  // 设置单关/单关合并 切换
   set_is_bet_merge(){
     this.is_bet_merge = !this.is_bet_merge
+    // 设置 投注内容数据
+    if(!this.is_bet_merge){
+       // 不合并的状态下 取最后合并的最后一条数据作为投注内容
+      this.bet_single_list = [this.bet_single_list.pop()]
+    }
     this.set_bet_data_class_version()
   }
   // 设置 投注版本
   set_bet_data_class_version(){
     this.bet_data_class_version.value = Date.now()
+  }
+
+  // 投注成功后 不保留投注项 需要清空投注数据 
+  set_clear_bet_info(){
+    this.bet_s_list = []
+    this.single_list_copy = []
+    this.bet_single_list = []
+    this.bet_read_write_refer_obj = {}
   }
   
   /**

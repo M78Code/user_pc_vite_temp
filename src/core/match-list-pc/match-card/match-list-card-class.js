@@ -76,8 +76,9 @@ import {
 } from "./module/add-and-remove.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import { reactive } from "vue";
 
-class MatchListCard {
+class MatchListCardInfo {
   constructor() {}
   /**
    * @Description 设置联赛容器卡片赛事数据加载状态
@@ -171,7 +172,11 @@ class MatchListCard {
   }
 
   get_match_all_card_obj() {
-    return MatchListCardData.all_card_obj
+    return MatchListCardData.all_card_obj || {}
+  }
+
+  get_match_mid_obj() {
+    return MatchListCardData.mid_obj || {}
   }
 
   get_match_card_sticky_top() {
@@ -240,4 +245,5 @@ class MatchListCard {
     remove_league(remove_tid);
   }
 }
-export default new MatchListCard();
+let MatchListCard = reactive(new MatchListCardInfo())
+export default MatchListCard;

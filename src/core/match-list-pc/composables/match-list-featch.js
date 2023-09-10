@@ -203,10 +203,7 @@ const api_bymids = (
       .then((res) => {
         set_home_loading_time_record("ok");
         // 组件和路由不匹配
-        if (
-          (route.name == "details" && page_source != "details") ||
-          handle_destroyed()
-        )
+        if (route.name == "details" && page_source != "details")
           return;
         //更新电竞右侧视频
         if (
@@ -216,10 +213,13 @@ const api_bymids = (
         ) {
           useMittEmit(MITT_TYPES.GET_ESPORTS_VIDEO_LIST);
         }
-        let code = lodash.get(res, "data.code");
-        let match_list = lodash.get(res, "data.data.data") || [];
-        let ts1 = lodash.get(res, "data.ts");
+        let code = res.code
+        let match_list = lodash.get(res, "data.data") || [];
+        let ts1 = res.ts
+        console.log('match_listmatch_listmatch_list', match_list);
+        MatchListData.set_quick_query_list(match_list, true)
         let mids_arr = [];
+        // set_quick_query_list
         match_list.forEach((match) => {
           mids_arr.push(String(match.mid));
           match.api_update_time = ts1;

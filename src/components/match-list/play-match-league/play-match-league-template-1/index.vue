@@ -19,9 +19,10 @@
         <div class="ellipsis-wrap">
           <div class="absolute-full">
             <!-- 联赛数量 -->
-            <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">{{
-              card_style_obj.league_obj.tn }}</span><span class="league-match-count">{{ card_style_obj.match_count
-  }}</span>
+            <span class="ellipsis allow-user-select" v-tooltip="{ content: card_style_obj.league_obj.tn, overflow: 1 }">
+              {{ card_style_obj.league_obj.tn }}
+            </span>
+            <span class="league-match-count">{{ card_style_obj.match_count}}</span>
           </div>
         </div>
       </div>
@@ -77,7 +78,7 @@
       </div>
     </div>
     <!-- 第二行 玩法名称 -->
-    <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+tpl_id)">
+    <!-- <div class="tr-col-name" v-if="[1, 3, 5, 21, 22].includes(+tpl_id)">
       <div :style="`width:${match_list_tpl_size.process_team_width}px !important;`"></div>
       <div class="play-name row col">
         <div v-for="(item, key) in bet_col" class="col ellipsis"
@@ -87,7 +88,7 @@
         </div>
       </div>
       <div :style="`width:${match_list_tpl_size.media_width}px !important;`"></div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -101,6 +102,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { t } from "src/core/index.js";
 import { get_match_tpl_title } from 'src/core/format/index.js'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import { csid_to_tpl_id } from 'src/core/constant/index.js';
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
@@ -117,7 +119,7 @@ const props = defineProps({
   },
 })
 
-const tpl_id = ref('')
+const tpl_id = ref(menu_config.get_match_tpl_number())
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template' + tpl_id.value+'_config'] || {});
 // 获取菜单类型
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
@@ -151,7 +153,7 @@ const bet_col = computed(() => {
   }
   bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id.value}.${title_name}`, csid), ...bet_col]
 
-  let mft = lodash.get(MatchListCardData.mid_obj, `mid_${props.card_style_obj.mid}.mft`)
+  let mft = lodash.get(MatchListCardData.get_match_mid_obj(), `mid_${props.card_style_obj.mid}.mft`)
 
   // 模板10
   if (tpl_id.value == 10) {
@@ -251,19 +253,19 @@ const is_highlighted = (csid) => {
 */
 const set_fold = () => {
   // 如果当前联赛是折叠的 并且是今日、早盘  调用bymids接口拉数据
-  if (this.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
+  if (props.card_style_obj.is_league_fold && ([2, 3].includes(menu_config.menu_root) || menu_config.is_esports())) {
     // 设置赛事基础数据
-    this.match_list_card.set_match_basic_data(props.card_style_obj)
+    MatchListCardData.set_match_basic_data(props.card_style_obj)
     let params = {
-      mids: this.card_style_obj.league_obj.mids.split(','),
+      mids: props.card_style_obj.league_obj.mids.split(','),
       inner_param: 1
     };
     // 拉取http请求
     useMittEmit(MITT_TYPES.EMIT_API_BYMIDS, params, status => {
-      this.match_list_card.set_league_card_load_data_status(this.card_style_obj, status)
+      MatchListCardData.set_league_card_load_data_status(props.card_style_obj, status)
     })
   }
-  this.match_list_card.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(this.card_style_obj)
+  MatchListCardData.recompute_match_list_style_obj_and_match_list_mapping_relation_obj_when_tid_zhedie(props.card_style_obj)
 }
 
 </script>

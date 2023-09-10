@@ -235,7 +235,6 @@ import { template_3 } from "../template/module/template-3.js";
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
         })
-
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
           ...league_container_card_template,

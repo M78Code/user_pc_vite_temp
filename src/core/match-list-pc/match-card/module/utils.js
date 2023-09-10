@@ -15,7 +15,7 @@ import  MatchListCardData from  "./match-list-card-data-class.js"
     // 父级卡片下的mid列表
     let parent_card_mids_arr = parent_card_obj.mids.split(',')
     parent_card_mids_arr.forEach( mid => {
-      let child_match_card_obj =  all_card_obj['mid_'+mid] || {total_height:0}
+      let child_match_card_obj =  all_card_obj[mid+'_'] || {total_height:0}
       card_total_height += child_match_card_obj.total_height
     })
     // 更新父级卡片高度

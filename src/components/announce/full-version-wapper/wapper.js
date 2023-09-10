@@ -8,7 +8,7 @@ const all_components_obj = {
 };
 const component_config = {
   registered_component_key: "Announce",
-  default_component_key: "Announce_h5",
+  default_component_key: "Announce_1",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

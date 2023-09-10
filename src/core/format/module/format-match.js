@@ -3,7 +3,6 @@
  * @return {undefined} undefined
  */
 export const virtual_sport_format = (match_list_input) => {
-	console.log('lockie_test_console', match_list_input);
 	let match_list = [...match_list_input];
 	match_list_input.forEach((item) => {
 		match_list = match_list.concat(item.matchs);

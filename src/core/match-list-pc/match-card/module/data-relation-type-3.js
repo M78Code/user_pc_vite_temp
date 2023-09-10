@@ -190,7 +190,7 @@
       let mids_arr = league_card_mids_arr[card_key]
       let mids = mids_arr.join(',')
       mids_arr.forEach( mid => {
-        let match_style_obj = MatchListCardData.all_card_obj['mid_'+mid]
+        let match_style_obj = MatchListCardData.all_card_obj[mid+'_']
         // 设置父级卡片key
         match_style_obj.parent_card_key = card_key
         card_total_height += match_style_obj.total_height

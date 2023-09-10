@@ -45,7 +45,7 @@
         // 遍历联赛下 所有赛事
         mids_arr.forEach(mid => {
           // 判断数据仓库是否有数据  没有数据 就更新
-          if(!MatchListData.quick_query_obj.mid_obj['mid_'+mid]){
+          if(!MatchListData.quick_query_obj.mid_obj[mid+'_']){
             update_mids_arr.push(...mids_arr)
           }
         })
@@ -221,13 +221,15 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.quick_query_obj.mid_obj['mid_'+mid]
+          console.log('MatchListData', MatchListData.quick_query_obj.mid_obj);
+          let match = MatchListData.quick_query_obj.mid_obj[mid+'_']
           let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
-          all_card_obj['mid_'+mid] = match_style_obj
+          all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
         })
+        console.log('league_card_total_height', league_card_total_height);
 
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
