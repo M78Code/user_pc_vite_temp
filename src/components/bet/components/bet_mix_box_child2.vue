@@ -12,7 +12,7 @@
     <div class="content-box">
 
       <!-- 头部 -->
-      <bet-bar @click.native="pack_up"></bet-bar>
+      <bet-bar @click.native="pack_up" @click="show_list"></bet-bar>
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)"><img src="image/wwwassets/bw3/svg/close3.svg"
@@ -32,9 +32,9 @@
       <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
         <!-- 上部纯展示组件 展示盘口赔率玩法对阵信息-->
-        <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
+        <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
-        </bet-mix-show> -->
+        </bet-mix-show>
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
         <template v-if="btn_show == 1 || mixnew_bet || part_bet">
@@ -49,7 +49,7 @@
         <!-- 串关主体 金额输入框-->
         <template>
           <bet-mix-detail :value_="item" :index_="index" v-for="(item, index) of get_s_count_data" :key="index"
-            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit">
+            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit" :bet_min_max_money="bet_min_max_money">
           </bet-mix-detail>
         </template>
 
@@ -138,7 +138,7 @@
       </template>
 
       <!-- 键盘 -->
-      <key-board v-show="bet_keyboard_show"></key-board>
+      <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -224,17 +224,17 @@ import { UserCtr } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
-// ...mapGetters(["get_update_tips", "get_odds_change", "get_mix_bet_flag", "get_money_total", "get_s_count_data", "get_bet_list", "get_is_accept", "get_order_ing", "get_is_spread", 
-// "get_is_mix", "get_m_id_list", "get_bet_obj", "get_bet_status",
-//       "get_money_notok_list", "get_user", "get_detail_data", "get_is_show_settle_tab", "get_change_list", "get_active_index", "get_keyboard_show", "get_new_bet", "get_order_los",
-//       "get_order_suc", "get_money_notok_list2", "get_theme", "get_used_money", "get_is_champion", "get_invalid_ids", "get_cannot_mix_len", "get_is_combine", "get_bet_success"]),
 
 
 const bet_keyboard_show = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
+const bet_min_max_money = ref()  // 投注限额
+const bet_list_data = ref([])
+
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -267,6 +267,22 @@ const max_win_money_emit = (val) => {
   award_total.value = val
 }
 
+const show_list = () =>{
+  console.error('BetViewDataClass',BetViewDataClass)
+  let markInfo = lodash.get(BetViewDataClass,'bet_special_h5.latestMarketInfo')
+  markInfo.forEach(item => {
+    let obj = {
+      'playName':item.playName,  // 玩法名称
+      'playId':item.playId,   // 玩法id
+      'away':item.away,  // 客队
+      'home':item.home,  // 主队
+    }
+    bet_list_data.value.push(obj)
+  });
+  bet_min_max_money.value = BetViewDataClass.bet_min_max_money
+  console.error('sss',bet_list_data.value)
+}
+
 /**
     * 串关时检查是否有C01赛事
     */
@@ -285,13 +301,20 @@ const is_bet_check_rc = () => {
   return res;
 }
 
-
 onMounted(() => {
-  console.error(',1111111111', BetViewDataClass)
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
   let munu_type = true
   if(munu_type){
     // get_query_bet_amount_common()
   }
+})
+
+const set_ref_data_bet_money = (obj) =>{
+  console.error(',obj',obj)
+  show_list()
+}
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 })
 </script>
 <style lang="scss" scoped>

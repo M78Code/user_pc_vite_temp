@@ -131,15 +131,10 @@ class EnterParamsYazhouPc {
     //赛事类型
     if (["sports"].includes(gotohashList[0])) {
     }
-    //
-    //一级菜单 设置menu
-    if (Qs.mt1) {
-      menu_obj.set_current_menu(Qs.mt1);
-      //二级菜单 设置menu
-      if (Qs.mt2) {
-        menu_obj.set_current_lv2_menu(Qs.mt2);
-      }
-    }
+    menu_obj.set_query_menu({
+      mt1: Qs.mt1, //一级菜单 设置menu
+      mt2: Qs.mt1, //二级菜单 设置menu
+    });
     // 用户token
     if (Qs.token) {
       LocalStorage.set("token", Qs.token);

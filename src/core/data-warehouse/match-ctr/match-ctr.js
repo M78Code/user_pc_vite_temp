@@ -945,17 +945,103 @@ export default class MatchDataBase
   }
   /**
    * @description: 更新赛事ms状态
-   * @param {String} mid 赛事mid
-   * @return {Object} obj 赛事状态 {ms:0,hs:0,os:0};
+   * @param {Object} mid 赛事状态信息 {mid:'',hid:'',oid:'', mhs:0, hs:0, os:0};
    */
-  upd_match_all_status(mid, obj){
-    // 获取指定mid更新的赛事
-    let match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
-    if(match){
-      // match进行数据更新
+  upd_match_all_status(obj){
+    if(obj && Object.hasOwnProperty.call(obj, 'mid')){
+      const mid = obj.mid;
+      // mhs更新
+      if(Object.hasOwnProperty.call(obj, 'mhs')){
+        this._quick_query_obj_upd_status_mhs(this.quick_query_obj, mid, obj.mhs);
+      }
+      // hs更新
+      if(Object.hasOwnProperty.call(obj, 'hid') && Object.hasOwnProperty.call(obj, 'hs')){
+        this._quick_query_obj_upd_status_hs(this.quick_query_obj, mid, obj.hid, obj.hs);
+      }
 
-      // 同步更新快速查询对象中的数据(非必要)
+      // os更新
+      if(Object.hasOwnProperty.call(obj, 'oid') && Object.hasOwnProperty.call(obj, 'os')){
+        this._quick_query_obj_upd_status_os(this.quick_query_obj, mid, obj.oid, obj.os);
+      }
     }
+  }
+
+  /**
+   * @description:快速检索对象赛事mhs值更新
+   * @param {Object} quick_query_obj 快速检索对象
+   * @param {String} mid 赛事mid
+   * @param {Number} mhs 赛事mhs值
+   * @return {undefined} undefined
+   */
+  _quick_query_obj_upd_status_mhs(quick_query_obj, mid, mhs){
+    if(quick_query_obj && mid){
+      let mid_str = this.get_format_quick_query_key(mid,mid,'mid');
+      // mid_obj对象数据同步
+      let match = quick_query_obj.mid_obj[mid_str];
+      if(match){
+        match.mhs = mhs;
+      }
+      // ol_obj对象数据同步
+      let object = quick_query_obj.ol_obj;
+      for (const key in object) {
+        if (key && key.startsWith(mid_str) && object[key]) {
+          object[key]._mhs = mhs;
+        }
+      }
+
+      // hn_obj对象数据同步
+      object = quick_query_obj.hn_obj;
+      for (const key in object) {
+        if (key && key.startsWith(mid_str) && object[key]) {
+          object[key]._mhs = mhs;
+        }
+      }
+    }
+  }
+
+  /**
+   * @description:快速检索对象赛事玩法hs值更新
+   * @param {Object} quick_query_obj 快速检索对象
+   * @param {String} hid 玩法盘口hid
+   * @param {Number} hs 赛事hs值
+   * @return {undefined} undefined
+   */
+  _quick_query_obj_upd_status_hs(quick_query_obj, mid, hid, hs){
+    if(quick_query_obj && hid){
+      let id_str = this.get_format_quick_query_key(mid,hid,'hl');
+      // 快速获取数据
+      let obj = quick_query_obj.hl_obj[id_str];
+      if(obj){
+        // 设置盘口级别状态
+        obj.hs = hs;
+        let obj_ol = obj.ol;
+        if(obj_ol){
+          obj_ol.forEach(item => {
+            // 设置投注项级别状态
+            item && (item._hs = hs);
+          });
+        }
+      }
+    }
+  }
+
+  /**
+   * @description:快速检索对象赛事玩法os值更新
+   * @param {Object} quick_query_obj 快速检索对象
+   * @param {String} oid 投注项oid
+   * @param {Number} os 赛事os值
+   * @return {undefined} undefined
+   */
+  _quick_query_obj_upd_status_os(quick_query_obj,mid, oid, os){
+    if(quick_query_obj && oid){
+      let id_str = this.get_format_quick_query_key(mid,oid,'ol');
+      // 快速获取数据
+      let obj = quick_query_obj.ol_obj[id_str];
+      if(obj){
+        // 设置盘口级别状态
+        obj.os = os;
+      }
+    } 
   }
 
   /**

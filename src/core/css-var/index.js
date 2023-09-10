@@ -12,8 +12,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 // 处理  演示代码 
 // 全局的   
 // const modules = import.meta.globEager("./module/*.js");
-// const global_modules = import.meta.global(`../../../../project/yazhou-pc/src/css/global/*js`);
-// const component_modules = import.meta.global(`../../../../project/yazhou-pc/src/css/component/*js`);
+const global_modules = {}//import.meta.global(`../../../../project/yazhou-pc/src/css/global/*js`);
+const component_modules = {}//import.meta.global(`../../../../project/yazhou-pc/src/css/component/*js`);
   const conmpute_css_obj =(   modules)=>{
     let css_obj={}
     Object.keys(modules).forEach((key) => {
@@ -26,10 +26,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
       return   css_obj
   }
  
-const all_css=  {
-    // global: conmpute_css_obj(global_modules),
-    // component: conmpute_css_obj(component_modules)
-};
+// const all_css=  {
+//     global: conmpute_css_obj(global_modules),
+//     component: conmpute_css_obj(component_modules)
+// };
 
 //  :style =compute_css_variables()
 /**

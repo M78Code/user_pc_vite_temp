@@ -55,16 +55,13 @@ const max_money = ref()   //最大可投注的金额
 const pre_odds_value = ref("") //预约输入赔率或者盘口
 
 
-// const store_state = store.getState()
-// const get_bet_status = ref(store_state.get_bet_status)
-// const get_mix_bet_flag = ref(store_state.get_mix_bet_flag)
-// const active_index = ref(store_state.active_index)
-// const get_menu_type = ref(store_state.get_menu_type)
-
-// const unsubscribe = store.subscribe(() => {
-//   update_state()
-// })
-
+// bet_min_max_money max_money最大可投注的金额 min_money最小可投注的金额
+const props = defineProps({
+  bet_min_max_money: {
+    type: [Object],
+    default: () => { }
+  }
+})
 
 
 

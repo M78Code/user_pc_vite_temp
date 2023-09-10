@@ -9,7 +9,7 @@
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
         <router-view />
-        <!-- <betMixBox /> -->
+        <betMixBox />
          <!--页脚-->
       <menu-wapper use_component_key="H5FooterMenu" class='m-layout' v-if="['sport_menu', 'matchList', 'sport_menu', ].includes(route.name)">
       </menu-wapper>

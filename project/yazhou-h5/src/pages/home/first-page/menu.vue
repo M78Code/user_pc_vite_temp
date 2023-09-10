@@ -184,7 +184,7 @@ const change_menu = (index) => {
   let mi = menu_list.value[index].mi;
   menu_index.value = index;
   animation.value = false;
-  menu_h5_data.set_current_menu(menu_list.value[index]);
+  menu_h5_data.set_current_lv1_menu(menu_list.value[index],index);
 
   // 动画效果
   //   if (home_timer1_) clearTimeout(home_timer1_);

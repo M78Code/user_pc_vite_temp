@@ -2,8 +2,8 @@
 <template>
    <!-- active 1 开盘 4 锁盘-->
   <q-card flat class="relative-position bet-mix-item-card"
-    :class="{ 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) || !(is_serial && serial_type) || match_update }">
-   
+    :class="{ 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) || !(ref_data.is_serial && ref_data.serial_type) || ref_data.match_update }">
+    <div >1-1--1-1- {{ BetData.bet_data_class_version }} </div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->
@@ -30,7 +30,7 @@
               {{ item.home }}<span class='bet-pk'>v</span>{{ item.away }}
             </span>
             <!--足,蓝,棒,乒,排-->
-            <span v-if="[1, 2, 3, 8, 9].includes(sport_id * 1) && ref_data.timerly_basic_score">({{ ref_data.timerly_basic_score }})</span>
+            <span v-if="[1, 2, 3, 8, 9].includes(item.sport_id * 1) && ref_data.timerly_basic_score">({{ ref_data.timerly_basic_score }})</span>
           </template>
         </div>
       </div>
@@ -63,13 +63,13 @@
           <div class="col bet-play-team">
             <!--卡赫利赛哈特 -0.5-->
             <label class="bet-team-handicap">
-              <template v-if="handicap !== ''">{{ lodash.trim(team_name) }}<template v-if="team_name != handicap"><label
+              <template v-if="item.handicap !== ''">{{ lodash.trim(item.team_name) }}<template v-if="item.team_name != item.handicap"><label
                     class="handicap yb-number-bold bet-text-nowrap"
-                    :class="{ 'margin-left-0': team_name == '', 'bet-handicap': handicap_change }">{{ handicap }}</label></template>
+                    :class="{ 'margin-left-0': item.team_name == '', 'bet-handicap': item.handicap_change }">{{ item.handicap }}</label></template>
               </template>
               <template v-else>
                 <!--所选的投注项名称-->
-                {{ lodash.trim(team_name) }}
+                {{ lodash.trim(item.team_name) }}
               </template>
             </label>
           </div>
@@ -81,7 +81,7 @@
           }">
             <!--@1.87-->
             <span class="odds-value yb-number-bold">
-              <span>@</span>{{ odds_value || format_odds }}
+              <span>@</span>{{ format_odds(item.oddFinally,item.csid) }}
             </span>
           </div>
           <!--右侧无效按钮  当ref_data.active不是激活和锁盘时-->
@@ -91,7 +91,7 @@
               <!-- 无效 -->
             </span>
           </div>
-          <div class="auto-col" v-else-if="!serial_type">
+          <div class="auto-col" v-else-if="!ref_data.serial_type">
             <span class="invalid serial-msg">
               <!--不支持串关-->
               {{ $t('bet.no_support_serial') }}
@@ -103,9 +103,11 @@
   </q-card>
 </template>
 <script setup>
-import { ref, reref_data.active } from "vue"
+import { ref, reactive } from "vue"
 import lodash from 'lodash'
 import { format_odds } from 'src/core/index.js'
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 const props = defineProps({
   index: {
@@ -117,9 +119,9 @@ const props = defineProps({
 
 
 // 投注金额
-const money = ref('')
+const is_close = ref(false)
 
-const ref_data = reref_data.active({
+const ref_data = reactive({
   DOM_ID_SHOW: false,
   match_type: 1,  // match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 
   active: 1,    //投注项状态
@@ -134,11 +136,16 @@ const ref_data = reref_data.active({
   min_money: 10, // 最小投注金额
   max_money: 8888, // 最大投注金额
   win_money: 0.00, // 最高可赢
+  is_serial:"", //
   value_range: {
     min: 0,
     max: 0
   }
 })
+
+const del_bet_item = () => {
+  
+}
 
 
 </script>
