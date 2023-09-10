@@ -36,7 +36,7 @@
             /> -->
             <div
               :style="
-                all_fn.team_logo({
+                sprite_img['pc-team-logo-image']({
                   position: [
                     lodash.get(match_info, 'mhlu[0]'),
                     lodash.get(match_info, 'frmhn[0]'),
@@ -61,7 +61,7 @@
                 lodash.get(match_info, 'mhlu').length > 1
               "
               :style="
-                all_fn.team_logo({
+                sprite_img['pc-team-logo-image']({
                   position: [
                     lodash.get(match_info, 'mhlu[1]'),
                     lodash.get(match_info, 'frmhn[1]'),
@@ -104,7 +104,7 @@
             /> -->
             <div
               :style="
-                all_fn.team_logo({
+                sprite_img['pc-team-logo-image']({
                   position: [
                     lodash.get(match_info, 'malu[0]'),
                     lodash.get(match_info, 'frman[0]'),
@@ -137,7 +137,7 @@
                 lodash.get(match_info, 'malu').length > 1
               "
               :style="
-                all_fn.team_logo({
+                sprite_img['pc-team-logo-image']({
                   position: [
                     lodash.get(match_info, 'malu[1]'),
                     lodash.get(match_info, 'frman[1]'),
@@ -164,13 +164,13 @@
 </template>
 
 <script>
-import all_fn from "src/core/server-img/sprite-img/index.js";
+import sprite_img from "src/core/server-img/sprite-img/index.js";
 import common_before from "./common_before";
 export default {
   mixins: [common_before],
   data() {
     return {
-      all_fn,
+      sprite_img,
       isRouterAlive: true, //重载页面开关
     };
   },

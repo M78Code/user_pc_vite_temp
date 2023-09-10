@@ -2,11 +2,12 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 import server_resource from "app/job/output/merchant/server-resource.json";
+import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  locationUrl:"/src/core/server-img/sprite-img/image/team_logo_day.png",
-  default:"team_logo_day",
+  locationUrl:"/src/core/server-img/sprite-img/image/pc-team-logo-day.png",
+  default:"pc-team-logo-day",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
   // local_ylcs: "pc-left-menu-bg-image",
@@ -29,6 +30,7 @@ const config = {
  * @returns
  */
 function compute_position(position) {
+  console.log(position,'position');
   const top = 0; // 雪碧图 距离顶部的 空白距离
   const left = 0; //左侧
   const width = 0; //表示是 横 向
@@ -52,7 +54,7 @@ function compute_position(position) {
  * @returns
  */
 function compute_css({ position, theme }) {
-  console.log(position,'position');
+ 
   // debugger
   //从打包的 环境拿 图片地址
   let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
@@ -62,6 +64,7 @@ function compute_css({ position, theme }) {
   }
    //如果有服务器图片，使用cdn图片
   if(position[0]){
+    console.log(position,'position',get_file_path(position[0]));
     return {
       "background-image": `url(${position[0]})`,
       "background-position": "0 0",
