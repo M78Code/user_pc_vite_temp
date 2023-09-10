@@ -179,7 +179,7 @@ import { reactive } from "vue";
 /**
  * CSS 变量
  */
-import  { compute_css_variables }  from  "src/core/css-var/index.js"
+// import  compute_css_variables  from  "src/core/css-var/index.js"
 
 /**
  *

@@ -318,7 +318,7 @@ class EnterParamsYazhouH5 {
     //
     //一级菜单 设置menu
     if (Qs.mt1) {
-      menu_obj.set_current_menu(Qs.mt1);
+      menu_obj.set_current_lv1_menu(Qs.mt1);
       //二级菜单 设置menu
       if (Qs.mt2) {
         menu_obj.set_current_lv2_menu(Qs.mt2);

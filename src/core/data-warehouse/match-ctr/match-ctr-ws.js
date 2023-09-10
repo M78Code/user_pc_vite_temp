@@ -152,9 +152,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
-        // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -200,7 +198,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -241,7 +239,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -276,9 +274,9 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:cd_obj.mid,mhs:cd_obj.mhs});
       }
     }
   }
@@ -327,9 +325,10 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // // 同步更新快速查询对象中的赛事状态
         // this.match_ctr.upd_match_all_status(mid, cd_obj);
+        // {mid:cd_obj.mid,mhs:cd_obj.mhs}
       }
     }
   }
@@ -378,7 +377,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // // 同步更新快速查询对象中的赛事状态
         // this.match_ctr.upd_match_all_status(mid, cd_obj);
       }
@@ -416,7 +415,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -447,7 +446,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -482,8 +481,8 @@ export default class MatchDataBaseWS
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
-        // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // 数据同步逻辑
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -515,7 +514,7 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -548,9 +547,9 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:mid, hid:cd_obj.hid, hs:cd_obj.hs});
       }
     }
   }
@@ -582,9 +581,9 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        // this.match_ctr.upd_match_all_status(mid, cd_obj);
       }
     }
   }
@@ -640,9 +639,9 @@ export default class MatchDataBaseWS
         let match = this.match_ctr.get_quick_mid_obj(mid);
         if(match){
           // 数据同步逻辑
-          this.match_ctr.merge_with(match, cd_obj);
+          this.match_ctr.assign_with(match, cd_obj);
           // 同步更新快速查询对象中的赛事状态
-          this.match_ctr.upd_match_all_status(mid, cd_obj);
+          this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
         }
       });
     }
@@ -678,9 +677,9 @@ export default class MatchDataBaseWS
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
       }
     }
   }

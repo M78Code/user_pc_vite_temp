@@ -22,13 +22,14 @@ const component_modules = {}//import.meta.global(`../../../../project/yazhou-pc/
         _key = _key.substring(0,_key.length-3)
         css_obj[_key] = modules[_key].default;
       });
+      debugger
       return   css_obj
   }
  
-const all_css=  {
-    global: conmpute_css_obj(global_modules),
-    component: conmpute_css_obj(component_modules)
-};
+// const all_css=  {
+//     global: conmpute_css_obj(global_modules),
+//     component: conmpute_css_obj(component_modules)
+// };
 
 //  :style =compute_css_variables()
 /**
@@ -38,7 +39,6 @@ const all_css=  {
  */
 
 export const compute_css_variables=( {  category ,module    })=>{
-
    let css_obj=  all_css[category][module] ||{}
 
    let keys = Object.keys(css_obj)
