@@ -17,7 +17,9 @@
         @get_button_text="get_button_text"
         v-for="(item, index) in BetData.bet_single_list"
       ></bet-single-info>
-     
+
+      <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+      
     </template>
 
   </div>

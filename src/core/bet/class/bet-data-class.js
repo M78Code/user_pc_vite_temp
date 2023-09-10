@@ -285,29 +285,29 @@ this.bet_appoint_ball_head= null */
     // 是否虚拟投注
     let is_virtual_bet = false
     // 根据投注类型 设置投注分类
-    // switch(obj.bet_type){
-    //   // vr
-    //   case 'vr_bet' :
-    //     this.set_vrtual_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_vr = true
-    //     is_virtual_bet = true
-    //     break;
-    //   // 常规体育
-    //   case 'common_bet' :
-    //     this.set_common_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_common = true
-    //     break;
-    //   // 冠军  
-    //   case 'guanjun_bet' :
-    //     this.set_guanjun_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_guanjun = true
-    //     break;
-    //   // 电竞
-    //   case 'esports_bet' :
-    //     this.set_dianjing_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_dianjing = true
-    //     break;
-    // }
+    switch(obj.bet_type){
+      // vr
+      case 'vr_bet' :
+        this.set_vrtual_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_vr = true
+        is_virtual_bet = true
+        break;
+      // 常规体育
+      case 'common_bet' :
+        this.set_common_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_common = true
+        break;
+      // 冠军  
+      case 'guanjun_bet' :
+        this.set_guanjun_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_guanjun = true
+        break;
+      // 电竞
+      case 'esports_bet' :
+        this.set_dianjing_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_dianjing = true
+        break;
+    }
 
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet

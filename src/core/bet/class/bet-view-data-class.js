@@ -130,6 +130,7 @@ class BetViewData {
         max_money: item.orderMaxPay, // 最大限额
         globalId : item.globalId,  //  风控响应id
       }
+      console.error('item.playOptionsId',item.playOptionsId)
     })
 
     this.bet_min_max_money = bet_amount

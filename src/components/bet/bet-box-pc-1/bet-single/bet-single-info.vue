@@ -9,7 +9,9 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-   
+    
+    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="ref_data.match_type != 3">
@@ -28,7 +30,7 @@
           <!-- match_type 盘口类型 1:赛前盘，2: 滚球盘 3: 冠军盘 -->
           <template v-if="ref_data.match_type == 3 && ref_data.source == 'match_list'">
             <!-- 冠军玩法联赛赛季名称 -->
-            {{ season }}
+            {{ ref_data.season }}
           </template>
           <template v-if="ref_data.match_type != 3">
             <span class="home-vs-away">
@@ -156,10 +158,10 @@ onUnmounted(()=>{
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () =>{
-  const { min_money,max_money, } = BetViewDataClass.bet_min_max_money[props.item.playOptionsId]
+  const { min_money = 10,max_money = 8888 } = _.get(BetViewDataClass.bet_min_max_money,`${props.item.playOptionsId}`,{})
 
-  ref_data.min_money = min_money || 10
-  ref_data.max_money = max_money || 8888
+  ref_data.min_money = min_money
+  ref_data.max_money = max_money
 }
 
 // 快捷金额
