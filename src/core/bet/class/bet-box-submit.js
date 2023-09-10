@@ -10,11 +10,12 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
+    console.error('ssssss',bet_list)
     let order_min_max_money = bet_list.map( item =>{
         let obj = {
             "sportId": item.sportId,   // 赛种id
             "marketId": item.marketId,  //盘口id
-            "deviceType": 2,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
+            "deviceType": 1,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
             "matchId": item.matchId,  // 赛事id
             "oddsFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
             "oddsValue":  item.odds,  // 赔率 万位
@@ -37,7 +38,6 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
         }
         return obj 
     }) || []
-
     return order_min_max_money
 }
 
