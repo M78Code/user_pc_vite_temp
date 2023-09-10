@@ -145,7 +145,6 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     tournamentId: item.tid,  // 联赛id
     scoreBenchmark: item.msc[0],  //比分
     marketId: obj_hl.hid, //盘口ID
-    // marketValue: obj_hl.hv,
     playOptionsId: obj_hl.oid, //投注项id
     marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
     odds: obj_hl.ov,  //十万位赔率
@@ -164,11 +163,11 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     ot: obj_hl.ot, //投注項类型
     placeNum: null, //盘口坑位
     // 以下为 投注显示或者逻辑计算用到的参数
-    // bet_type: 'common_bet', // 投注类型
     tid_name: item.tnjc,  // 联赛名称
     match_ms: item.ms, // 赛事阶段
   }
   BetData.set_bet_read_write_refer_obj(bet_obj)
   get_query_bet_amount_common(bet_obj)
+  BetViewDataClass.set_bet_show(true)
 }
 

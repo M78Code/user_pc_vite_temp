@@ -3,35 +3,34 @@
 -->
 <template>
   <div class="c-bet-mix-info">
+    <div> ------ {{ BetData.bet_data_class_version }} </div>
       <!---串关投注项部分-->
       <bet-mix-item
-        :id="item"
-        :item_obj="item"
+        :item="item"
         :key="`${item}-${index}`"
-        :class="{'bet-mix-item-first': (index==0 && BetData.bet_list.length>1), 'bet-mix-item-one': (index==0 && BetData.bet_list.length==1)}"
-        :ref="`bet-mix-item-${index}`" v-for="(item, index) in BetData.bet_list"
+        v-for="(item, index) in BetData.bet_s_list"
       ></bet-mix-item>
-    <template v-if="view_ctr_obj.bet_order_success_success && view_ctr_obj.bet_order_success_success.length>0">
+      
+    <template v-if="BetViewDataClass.bet_order_success_success && BetViewDataClass.bet_order_success_success.length>0">
       <!--投注结果部分-->
-      <bet-mix-result 
+      <!-- <bet-mix-result 
         :series_obj="item" 
-        v-for="(item, index) in view_ctr_obj.bet_order_success_success" 
+        v-for="(item, index) in BetViewDataClass.bet_order_success_success" 
         :key="index"
         :class="{'bet-mix-result-first':(index==0)}"
-      ></bet-mix-result>
+      ></bet-mix-result> -->
     </template>
     <template v-else>
       <div id="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
         <!--第一个输入框的-->
-        <bet-mix-input
+        <!-- <bet-mix-input
           ref="bet-mix-input-0"
           class="bet-input"
           :index="0"
-          
           :id="BetData.bet_s_list[0]"
           :key="`0-${BetData.bet_s_list[0]}`"
-          v-if="BetData.bet_list.length>1"          
-        ></bet-mix-input>
+          v-if="BetData.bet_s_list.length>1"          
+        ></bet-mix-input> -->
       </div>
     </template>
   </div>
@@ -42,6 +41,8 @@ import BetMixItem from "./bet-mix-item.vue";
 import BetMixInput from "./bet-mix-input.vue";
 import BetMixResult from "./bet-mix-result.vue";
 
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
  
 
 </script>

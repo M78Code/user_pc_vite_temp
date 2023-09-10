@@ -303,7 +303,7 @@ onUnmounted(() => {
   balance_timer = null;
 
   useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle).off;
-  debounce_throttle_cancel(cancel_loading_balance);
+  // debounce_throttle_cancel(cancel_loading_balance);
 });
 watch(
   () => is_show_menu,

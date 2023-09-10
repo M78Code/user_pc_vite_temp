@@ -134,6 +134,7 @@ const router = useRouter()
         tid_name: item.tnjc,  // 联赛名称
         match_ms: item.ms, // 赛事阶段
       }
+      console.error('playOptionsId',bet_obj.playOptionsId)
       BetData.set_bet_read_write_refer_obj(bet_obj)
 
       // 获取限额 常规

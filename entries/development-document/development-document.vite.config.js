@@ -12,7 +12,7 @@ export default defineConfig({
     }),
 
     quasar({
-      sassVariables: 'src/css/quasar-variables.scss'
+      sassVariables: "app/project/yazhou-pc/src/css/quasar-variables.scss",
     })
   ],
   build: {

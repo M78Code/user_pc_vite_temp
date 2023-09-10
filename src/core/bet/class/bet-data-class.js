@@ -2,6 +2,7 @@ import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import UserCtr from  "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
+import lodash_ from "lodash"
 
 
 class BetData {
@@ -285,29 +286,29 @@ this.bet_appoint_ball_head= null */
     // 是否虚拟投注
     let is_virtual_bet = false
     // 根据投注类型 设置投注分类
-    // switch(obj.bet_type){
-    //   // vr
-    //   case 'vr_bet' :
-    //     this.set_vrtual_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_vr = true
-    //     is_virtual_bet = true
-    //     break;
-    //   // 常规体育
-    //   case 'common_bet' :
-    //     this.set_common_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_common = true
-    //     break;
-    //   // 冠军  
-    //   case 'guanjun_bet' :
-    //     this.set_guanjun_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_guanjun = true
-    //     break;
-    //   // 电竞
-    //   case 'esports_bet' :
-    //     this.set_dianjing_bet_obj({custom_id,...obj})
-    //     bet_refer_obj.is_dianjing = true
-    //     break;
-    // }
+    switch(obj.bet_type){
+      // vr
+      case 'vr_bet' :
+        this.set_vrtual_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_vr = true
+        is_virtual_bet = true
+        break;
+      // 常规体育
+      case 'common_bet' :
+        this.set_common_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_common = true
+        break;
+      // 冠军  
+      case 'guanjun_bet' :
+        this.set_guanjun_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_guanjun = true
+        break;
+      // 电竞
+      case 'esports_bet' :
+        this.set_dianjing_bet_obj({custom_id,...obj})
+        bet_refer_obj.is_dianjing = true
+        break;
+    }
 
     // 设置是否为 虚拟投注
     this.is_virtual_bet = is_virtual_bet
@@ -393,7 +394,13 @@ this.bet_appoint_ball_head= null */
 
   // 设置 切换单关/串关切换
   set_is_bet_single(){
+    // true 单关 false 串关
     this.is_bet_single = !this.is_bet_single
+    // 单关 切换到串关 / 
+    if(!this.is_bet_single){
+      // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list) 
+    }
     this.set_bet_data_class_version()
   }
 
