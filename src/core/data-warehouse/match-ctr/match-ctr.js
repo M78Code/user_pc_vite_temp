@@ -26,6 +26,7 @@
  */
 import lodash from "lodash";
 import MatchDataBaseWS from  "./match-ctr-ws.js"
+import { obj } from "licia/through.js";
 export default class MatchDataBase
 {
   /**
@@ -935,6 +936,9 @@ export default class MatchDataBase
         // console.error('new_value=',new_value);
         // 为数组的操作
         new_value && old_value && (old_value.length = new_value.length)
+        // old_value.forEach(element => {
+        //   this.assign_with(old_value,new_value);
+        // });
         // 删除多余的数组项
         // old_value.splice(len,old_value.length-len);
       } else {
