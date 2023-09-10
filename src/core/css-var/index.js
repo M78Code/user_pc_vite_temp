@@ -25,10 +25,10 @@ const component_modules = {}//import.meta.global(`../../../../project/yazhou-pc/
       return   css_obj
   }
  
-const all_css=  {
-    global: conmpute_css_obj(global_modules),
-    component: conmpute_css_obj(component_modules)
-};
+// const all_css=  {
+//     global: conmpute_css_obj(global_modules),
+//     component: conmpute_css_obj(component_modules)
+// };
 
 //  :style =compute_css_variables()
 /**

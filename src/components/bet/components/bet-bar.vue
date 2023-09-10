@@ -66,6 +66,7 @@ let bet_list = ref(BetData.bet_list)
 
 // 悬浮条点击 
 const menu_click = () => {
+  return
   // 至少选择几场比赛
   let min_num = lodash.get(UserCtr, 'configVO.minSeriesNum', 2)
   // 投注数组信息
