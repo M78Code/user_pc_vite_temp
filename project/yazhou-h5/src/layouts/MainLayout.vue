@@ -11,16 +11,17 @@
         <router-view />
         <!-- <betMixBox /> -->
          <!--页脚-->
-    <menu-wapper use_component_key="H5FooterMenu" class='m-layout' v-if="['sport_menu', 'matchList', 'sport_menu', ].includes(route.name)">
-    </menu-wapper>
+      <menu-wapper use_component_key="H5FooterMenu" class='m-layout' v-if="['sport_menu', 'matchList', 'sport_menu', ].includes(route.name)">
+      </menu-wapper>
 
-    <!-- 投注记录弹层 -->
-    <div v-if="record_show" :class="get_settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
-    <!-- 投注记录弹框（已结算+未结算） -->
-    <div class="bet-record-box" v-if="record_show" :class="get_settle_dialog_bool && 'bet-record-box2'" :style="{bottom:calc_bottom}">
-      <!-- 结算弹窗 -->
-      <settle-dialog></settle-dialog>
-    </div>
+      <!-- 投注记录弹层 -->
+      {{record_show + '---++---' + footerMenuReducer.settle_dialog_bool}}
+      <div v-if="record_show" :class="footerMenuReducer.settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
+      <!-- 投注记录弹框（已结算+未结算） -->
+      <div class="bet-record-box" v-if="record_show" :class="footerMenuReducer.settle_dialog_bool && 'bet-record-box2'" :style="{bottom:calc_bottom}">
+        <!-- 结算弹窗 -->
+        <settle-dialog></settle-dialog>
+      </div>
       </q-page-container>
     </q-layout>
   </div>
@@ -38,15 +39,15 @@ const settleDialog = defineAsyncComponent(() => import("project_path/src/pages/c
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 const route = useRoute()
-let get_accept_show = ref(false); // 接受更好赔率变化 弹窗
-let get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
+const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
+const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false)
-let lastTouchEnd = ref(0);
-
+const lastTouchEnd = ref(0);
+const { footerMenuReducer } = store.getState()
+const timer_3 = ref(null)
 
 let unsubscribe = store.subscribe(() => {
   const { globalReducer: new_globalReducer } = store.getState()
-  record_show.value = true
     
 })
 // 是否展示左侧菜单
@@ -117,7 +118,7 @@ const change_settle_status = (val) => {
         type: "SET_SETTLE_DIALOG_BOOL",
         data: false,
       })
-    timer_3 = setTimeout(() => {
+    timer_3.value = setTimeout(() => {
       record_show.value = false
     }, 300);
   }
@@ -128,12 +129,17 @@ onMounted(() => {
   document.addEventListener("touchend", touchend_event_fun, false);
   // 阻止双指放大
   document.addEventListener("gesturestart", gesturestart_event_fun);
-  useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => record_show.value = val)
+  // 开启注单历史弹窗
+  useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
+    record_show.value = val
+    change_settle_status()
+  })
 });
 onUnmounted(() => {
   document.removeEventListener("touchstart", touchstart_event_fun);
   document.removeEventListener("touchend", touchend_event_fun);
   document.removeEventListener("gesturestart", gesturestart_event_fun);
+  timer_3.value = null
 });
 </script>
 

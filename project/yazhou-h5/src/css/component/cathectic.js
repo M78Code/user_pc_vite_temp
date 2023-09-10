@@ -1,102 +1,30 @@
 export default {
-/**
- * -----字体颜色-----
- **/
-// var(--q-color-fs-color-3)
-"cathectic-text-color-1": "#414655",
-// var(--q-color-com-fs-color-22)
-"cathectic-text-color-2": "#e02020",
-// var(--q-color-fs-color-7)
-"cathectic-text-color-3": "#414655",
-// var(--q-color-fs-color-152)
-"cathectic-text-color-4": "#ffb001",
-// var(--q-color-fs-color-147);
-"cathectic-text-color-5": "#999999",
-// var(--q-color-fs-color-36)
-"cathectic-text-color-6": "#ffffff",
-// var(--q-color-fs-color-13)
-"cathectic-text-color-7": "#999999",
-// var(--q-color-fs-color-122)
-"cathectic-text-color-7": "unset",
-// var(--q-color-fs-color-1)
-"cathectic-text-color-7": "#333333",
-// var(--q-color-fs-color-50)
-"cathectic-text-color-7": "#ffb001",
-// var(--q-color-fs-color-109)
-"cathectic-text-color-7": "#FF7000",
-// var(--q-color-com-fs-color-8)
-"cathectic-text-color-7": "#ffffff",
-// var(--q-color-fs-color-112)
-"cathectic-text-color-7": "#66a754",
-// var(--q-color-com-fs-color-21)
-"cathectic-text-color-7": "#99b8dd",
-// var(--q-color-fs-color-6)
-"cathectic-text-color-7": "rgba(0, 0, 0, 0.25)",
-// var(--q-color-fs-color-113)
-"cathectic-text-color-7": "#e02020",
-// var(--q-color-fs-color-8)
-"cathectic-text-color-7": "#99a3b1",
-// var(--q-color-fs-color-148)
-"cathectic-text-color-7": "#414655",
-// var(--q-color-com-fs-color-9)
-"cathectic-text-color-7": "#ff2a2a",
-// var(--q-color-fs-color-14)
-"cathectic-text-color-7": "#000000",
-
-/**
- * -----背景色-----
- **/
-// var(--q-color-page-bg-color-50)
-"cathectic-page-bg-color-1": "#ffb001",
-// var(--q-color-page-bg-color-13)
-"cathectic-page-bg-color-2": "#ffb001",
-// var(--q-color-page-bg-color-31)
-"cathectic-page-bg-color-3": "#dfe0e8",
-// var(--q-color-page-bg-color-9)
-"cathectic-page-bg-color-4": "#F9FBFF",
-// var(--q-color-page-bg-color-1)
-"cathectic-page-bg-color-5": "#f5f5f5",
-// var(--q-color-page-bg-color-114)
-"cathectic-page-bg-color-6": "#ffffff",
-// var(--q-color-page-bg-color-41)
-"cathectic-page-bg-color-6": "#e6e6e6",
-// var(--q-color-page-bg-color-2)
-"cathectic-page-bg-color-6": "#ffffff",
-// var(--q-color-page-bg-color-29)
-"cathectic-page-bg-color-6": "#F6F7FA",
-
-
-/**
- * -----边框色-----
- **/
-// var(--q-color-border-color-55)
-"cathectic-border-color-1": "#ffb001",
-// var(--q-color-border-color-11)
-"cathectic-border-color-2": "#f5f7fa",
-// var(--q-color-border-color-58)
-"cathectic-border-color-2": "#F5F7FA",
-// var(--q-color-border-color-31)
-"cathectic-border-color-2": "rgba(255,145,36,0.36)",
-// var(--q-color-border-color-7)
-"cathectic-border-color-2": "#eeeeee",
-
-
-
-/**
- * -----渐变色-----
- **/
-// var(--q-color-linear-gradient-bg-16);
-"cathectic-linear-gradient-bg-color-1": "repeating-linear-gradient(180deg, #ffb001 0, #ffb001 6px, #ffffff 6px, #ffffff 8px)",
-// var(--q-color-linear-gradient-bg-1)
-"cathectic-linear-gradient-bg-color-2": "linear-gradient(180deg, rgba(255, 176, 1, 0.2) 0%,rgba(255, 176, 1, 0.02) 99%)",
-// var(--q-color-linear-gradient-bg-2)
-"cathectic-linear-gradient-bg-color-3": "linear-gradient(270deg, #ffb001 0%, #ff7000 100%)",
-// var(--q-color-linear-gradient-bg-9)
-"cathectic-linear-gradient-bg-color-4": "linear-gradient(180deg, rgba(255,176,1,0.20) 0%, rgba(255,176,1,0.02) 99%)",
-// var(--q-color-linear-gradient-bg-6)
-"cathectic-linear-gradient-bg-color-4": "linear-gradient(-34deg,  #F7B500 0%, #FF9124 88%)",
-// var(--q-color-linear-gradient-bg-13)
-"cathectic-linear-gradient-bg-color-4": "linear-gradient(270deg, #FFB001 0%, #FF7000 100%)",
+"cathectic-color-1": "#414655",
+"cathectic-color-2": "#e02020",
+"cathectic-color-4": "#ffb001",
+"cathectic-color-5": "#999999",
+"cathectic-color-6": "#ffffff",
+"cathectic-color-7": "unset",
+"cathectic-color-8": "#333333",
+"cathectic-color-9": "#FF7000",
+"cathectic-color-10": "#66a754",
+"cathectic-color-11": "#99b8dd",
+"cathectic-color-12": "#BFBFBF",  //rgba(0, 0, 0, 0.25) 转16进制#BFBFBF
+"cathectic-color-13": "#99a3b1",
+"cathectic-color-14": "#ff2a2a",
+"cathectic-color-15": "#000000",
+"cathectic-color-16": "#dfe0e8",
+"cathectic-color-17": "#F9FBFF",
+"cathectic-color-18": "#f5f5f5",
+"cathectic-color-19": "#e6e6e6",
+"cathectic-color-20": "#F6F7FA",
+"cathectic-color-21": "#f5f7fa",
+"cathectic-color-22": "#FFD7B0",  // rgba(255,145,36,0.36) 转16进制#FFD7B0
+"cathectic-color-23": "#eeeeee",
+"cathectic-color-24": "repeating-linear-gradient(180deg, #ffb001 0, #ffb001 6px, #ffffff 6px, #ffffff 8px)",
+"cathectic-color-25": "linear-gradient(180deg, rgba(255, 176, 1, 0.2) 0%,rgba(255, 176, 1, 0.02) 99%)",
+"cathectic-color-26": "linear-gradient(270deg, #ffb001 0%, #ff7000 100%)",
+"cathectic-color-27": "linear-gradient(-34deg,  #F7B500 0%, #FF9124 88%)",
 
 
 

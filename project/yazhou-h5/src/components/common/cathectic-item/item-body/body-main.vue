@@ -364,9 +364,8 @@ const props =defineProps({
 }
 .body-main {
   min-height: 0.76rem;
-
+  color:  var(--q-cathectic-color-5);
   position: relative;
-
   margin-right: 0.15rem;
   .box-top {
     position: relative;

@@ -114,7 +114,6 @@ import store from 'src/store-redux/index.js'
     },10000)
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList);
   })
-    // ...mapMutations(['set_early_moey_data']),
   /**
      * @description 筛选所有提前结算注单
      * @param {undefined} undefined
@@ -156,7 +155,10 @@ import store from 'src/store-redux/index.js'
         res = reslut
       }
       if(res.code == 200 && res.data){
-        set_early_moey_data( res.data)
+        store.dispatch({
+          type: "SET_EARLY_MOEY_DATA",
+          data: res,data
+        })
       }
     })
   }
@@ -334,7 +336,10 @@ import store from 'src/store-redux/index.js'
   onUnmounted(() => {
     clear_timer();
     useMittOn(MITT_TYPES.EMIT_GET_ORDER_LIST, refreshOrderList).off;
-    set_early_moey_data([])
+    store.dispatch({
+      type: "SET_EARLY_MOEY_DATA",
+      data: []
+    })
     // for (const key in $data) {
     //   $data[key] = null
     // }
