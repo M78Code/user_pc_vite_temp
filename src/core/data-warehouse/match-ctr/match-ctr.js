@@ -164,8 +164,8 @@ export default class MatchDataBase
     let ret = {add:{}, del:{}, upd:{}}
     let oldObj = this.get_list_obj(oldList);
     let newObj = this.get_list_obj(newList);
-    console.error(JSON.stringify(oldObj))
-    console.error(JSON.stringify(newObj))
+    // console.error(JSON.stringify(oldObj))
+    // console.error(JSON.stringify(newObj))
     let key_ = '';
     let id = 'mid';
     if(newList && (newList instanceof Array))
@@ -321,8 +321,8 @@ export default class MatchDataBase
       Object.assign(this.list,list);
       console.error('1111111');
     }
-    console.error('this.list',JSON.stringify(this.list));
-    console.error('obj',JSON.stringify(obj));
+    // console.error('this.list',JSON.stringify(this.list));
+    // console.error('obj',JSON.stringify(obj));
     // 检测清除快速查询对象里面的垃圾挂载点
     for (const mid_ in obj.del) {
       if (mid_ && obj.del[mid_]) {
