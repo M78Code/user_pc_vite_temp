@@ -6,7 +6,7 @@
         <ul class="main-menu-container">
           <template v-for="(item, index) in menu_list" :key="item.mi">
             <li class="m-menu-item" v-show="show_dianjing(item, index)">
-              <span @click="set_menu_lv1(item, index, 'lv1')">
+              <span @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + item.mi) || item.mi }}
               </span>
               <span
@@ -19,7 +19,6 @@
           </template>
         </ul>
       </div>
-
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_1_type !== 30">
         <!-- :class="{
@@ -35,13 +34,14 @@
           }" -->
           <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
           <ul class="s-menu-container flex">
-            <template v-for="(item, index) in current_menu.sl" :key="item.mi">
+            <template v-for="(item, index) in current_menu" :key="item.mi">
               <li
                 class="sport-menu-item flex justify-center"
                 v-show="[7, 28].includes(menu_1_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)"
               >
                 <span>
+                  {{ item.mi }}
                   {{
                     base_data.menus_i18n_map[
                       menu_h5_data.recombine_menu_desc(item.mi)
@@ -130,9 +130,9 @@
       }"
       style="background: #fff"
     >
-      <template :key="i_m" v-for="(m_items, i_m) in pop_main_select_items">
+      <template :key="i_m" v-for="(m_items, i_m) in pop_main_items">
         <div
-          @click="set_menu_lv1(m_items, i_m)"
+          @click="set_menu_lv1(m_items, i_m, true)"
           class="main-m-select-item flex justify-center items-center"
           v-show="is_menu_show(m_items, i_m)"
         >
@@ -150,7 +150,7 @@
   <footer></footer>
 </template>
 <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, unref } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
 import footer from "./footer-menu.vue";
@@ -170,7 +170,6 @@ import { useRoute } from "vue-router";
 //   "30": "竞足",
 //   "28": "赛果",
 const route = useRoute();
-base_data.init(); //初始化菜单数据
 const props = defineProps({
   // 菜单配置
   menu_config: {
@@ -195,58 +194,50 @@ const menu_1_type = computed(() => {
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   return (
-    menu_h5_data.get_is_show_three_menu(current_menu.value.mi) &&
-    date_menu_list.value.length
+    menu_h5_data.get_is_show_three_menu() && date_menu_list.value.length > 0
   );
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
-  return menu_h5_data.is_results_virtual_sports(current_menu.value.mi);
+  return menu_h5_data.is_results_virtual_sports();
 });
-const pop_main_select_items = ref([]); //弹出框数据
+const pop_main_items = ref([]); //弹出框数据
 const show_favorite_list = ref(false); //是否收藏
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
-watch(base_data.base_data_version, () => {
-  const { mew_menu_list_res } = base_data; //获取主数据
-  const m_list = menu_h5_data.recombine_menu(mew_menu_list_res);
-  menu_list.value = [];
-  pop_main_select_items.value = [];
-  m_list.forEach((m_m) => {
-    // 滚球 虚拟体育 電競 放入一级菜单
-    if ([1, 7, 8].includes(m_m.mi)) {
-      menu_list.value.push(cloneDeep(m_m));
-    } else {
-      pop_main_select_items.value.push(cloneDeep(m_m));
-    } // 中间的 一级菜单
-  });
-  //插入中间项 第二项是  弹出框的
-  menu_list.value.splice(1, 0, pop_main_select_items.value[0]);
-  current_menu.value = menu_list.value[0];
+watch(menu_h5_data.update_time, (update_time) => {
+  console.error(update_time, menu_h5_data.menu_lv3, "1111111111");
+  const [lv1, pop] = menu_h5_data.get_sport_menu();
+  menu_list.value = lv1; //一级
+  pop_main_items.value = pop; //pop级
+  current_menu.value = menu_h5_data.menu_lv2; //2级
+  date_menu_list.value = menu_h5_data.menu_lv3; //三级
 });
 /**
  * 一级菜单事件
  */
-function set_menu_lv1(item, index) {
+function set_menu_lv1(item, index, is_pop) {
   show_selector_sub.value = false;
-  current_menu.value = item;
-  menu_h5_data.set_current_lv1_menu(item);
-  set_menu_lv2(item.sl[0]);
+  current_menu.value = item.sl;
+  //弹出框点击
+  if (is_pop) {
+    menu_list.value.splice(1, 1, item);
+  }
+  menu_h5_data.set_current_lv1_menu(item, index);
+  set_menu_lv2(item.sl[0], 0);
 }
-
 /**
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index) {
-  menu_h5_data.set_current_lv2_menu(item);
-  date_menu_list.value = []; //清空三级菜单
-  // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-  const three_menu = await menu_h5_data.get_date_menu_api_when_subchange();
-  console.error(three_menu);
-  if (three_menu && three_menu.length) {
-    date_menu_list.value = three_menu;
-    // select_result_date_menu();
-    set_menu_lv3(three_menu[0], 0);
-  }
+  menu_h5_data.set_current_lv2_menu(item, index);
+  // // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
+  // const three_menu = await menu_h5_data.get_date_menu_api_when_subchange();
+  // console.error(three_menu);
+  // if (three_menu && three_menu.length) {
+  //   date_menu_list.value = three_menu;
+  //   // select_result_date_menu();
+  //   set_menu_lv3(three_menu[0], 0);
+  // }
   // if ([3, 6, 7].includes(menu_h5_data.get_current_sub_menuid())) {
   //   const threedata =await menu_h5_data.get_date_menu_api_when_subchange();
   //   console.error(threedata);
@@ -267,7 +258,7 @@ function set_menu_lv3(item, index) {
     return;
   }
   //设置三级菜单
-  menu_h5_data.set_current_lv3_menu(item);
+  menu_h5_data.set_current_lv3_menu(item, index);
   // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
   if (menu_h5_data.is_virtual_sport()) {
     // this.virtual_sports_results_click_handle(
@@ -284,27 +275,8 @@ function set_menu_lv3(item, index) {
 /**
  * 四级菜单事件
  */
-function set_menu_lv4(item, index) {}
-// 设置日期选中项
-function select_result_date_menu() {
-  //设置日期选中下标
-  let date_m_c_i;
-  if (
-    this.get_current_menu &&
-    this.get_current_menu.date_menu &&
-    this.get_prev_menu_type == this.menu_type &&
-    this.get_current_menu.sub == this.get_current_sub_menuid
-  ) {
-    date_m_c_i = findIndex(this.date_menu_list, {
-      menuId: this.get_current_menu.date_menu.menuId,
-    });
-    if (date_m_c_i == -1) {
-      date_m_c_i = 0;
-    }
-  } else {
-    date_m_c_i = 0;
-  }
-  this.date_menu_clicked(date_m_c_i, "init_data");
+function set_menu_lv4(item, index) {
+  menu_h5_data.set_current_lv4_menu(item, index);
 }
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
@@ -810,88 +782,7 @@ function is_menu_show(item) {
   /* **************主菜单容器********************************** -End*/
 }
 </style>
-<style lang="scss">
-.menu-container-lv2 {
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding-top: 0.13rem;
-  padding-bottom: 0.05rem;
-  flex-wrap: nowrap;
-  display: flex;
-  list-style: none;
-
-  li {
-    width: 0.7rem;
-    height: 100%;
-    flex-shrink: 0;
-    display: flex;
-
-    &.champion {
-      // width: 0.9rem;
-    }
-
-    &.current {
-      .inner-w {
-        position: relative;
-        font-size: 0.1rem;
-
-        &.favorite {
-          &:after {
-            background: rgba(255, 145, 36, 0.08);
-          }
-        }
-      }
-    }
-
-    .inner-w {
-      height: 0.41rem;
-      flex-direction: column;
-      flex-wrap: nowrap;
-      position: relative;
-
-      .sport-w-icon {
-        height: 0.27rem;
-        position: relative;
-
-        .sport-icon-wrap {
-          --per: -0.32rem;
-          display: block;
-          width: auto;
-          height: 0.22rem;
-          width: 0.22rem;
-        }
-
-        .sport-icon-wrap2 {
-          position: absolute;
-          bottom: 0;
-          right: -0.04rem;
-          width: 0.13rem;
-          height: 0.14rem;
-        }
-
-        .sport-match-count {
-          width: 1px;
-          height: 1px;
-          line-height: 1;
-          position: absolute;
-          right: -0.03rem;
-          top: 0;
-          font-size: 0.11rem;
-        }
-      }
-
-      .s-w-i-title {
-        max-width: 0.7rem;
-        font-size: 0.1rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        position: relative;
-        top: -0.01rem;
-      }
-    }
-  }
-}
+<style lang="scss" scoped>
 /* **************主菜单中间的下拉弹框  容器********************************** -Star*/
 .main-m-selector-w {
   width: 100%;
