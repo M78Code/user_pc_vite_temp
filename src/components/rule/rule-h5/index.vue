@@ -15,7 +15,7 @@ import { ref, onMounted, watch, getCurrentInstance, defineComponent } from 'vue'
 import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import simpleHeader from "project_path/src/components/site-head/simple-header.vue";
+import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

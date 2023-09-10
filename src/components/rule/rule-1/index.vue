@@ -8,11 +8,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import lodash from 'lodash'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t } from "src/boot/i18n.js"
-import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+import simpleHeader from "app/project/yazhou-pc/src/components/site-header/simple-header.vue";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -24,9 +24,8 @@ const props = defineProps({})
 // const title_computed = useComputed.title_computed(props)
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
-// TODO: 环境变量怎么获取
 /** 环境变量 */
-const current_env = ''
+const current_env = window.BUILDIN_CONFIG.current_env
 /** 体育规则地址-PC */
 const rule_url = ref('')
 /** 获取pc体育规则地址 */
@@ -44,7 +43,6 @@ const get_pc_rule_url = () => {
     console.error(`================lang:${lang2}`, UserCtr.lang);
     let url = '';
     const [theme2, get_merchant_style] = UserCtr.theme.split('_')
-    // TODO: 环境变量待修改
     let domain = lodash.get(window, `env.config.static_serve[0]`)
     if (current_env == 'idc_online' || current_env == 'idc_ylcs') {
         // 生产环境

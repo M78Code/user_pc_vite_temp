@@ -22,7 +22,7 @@
       </div>
     </div>
     <!-- 正常入口的单关 -->
-    <bet-single v-show="BetData.is_bet_single" @set_scroll_this="set_scroll_this" />
+    <bet-single @set_scroll_this="set_scroll_this" />
     <!-- 正常入口的串关 -->
     <!-- <bet-mix v-show="!BetData.is_bet_single" class="full-height" @set_scroll_this="set_scroll_this" /> -->
 
