@@ -15,10 +15,9 @@
       </menu-wapper>
 
       <!-- 投注记录弹层 -->
-      {{record_show + '---++---' + footerMenuReducer.settle_dialog_bool}}
-      <div v-if="record_show" :class="footerMenuReducer.settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
+      <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box" @click="change_settle_status(false)" @touchmove.prevent></div>
       <!-- 投注记录弹框（已结算+未结算） -->
-      <div class="bet-record-box" v-if="record_show" :class="footerMenuReducer.settle_dialog_bool && 'bet-record-box2'" :style="{bottom:calc_bottom}">
+      <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'" :style="{bottom:calc_bottom}">
         <!-- 结算弹窗 -->
         <settle-dialog></settle-dialog>
       </div>
@@ -38,16 +37,24 @@ const settleDialog = defineAsyncComponent(() => import("project_path/src/pages/c
 // import { i18n } from "src/boot/i18n.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
+
+const { footerMenuReducer } = store.getState()
 const route = useRoute()
 const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false)
 const lastTouchEnd = ref(0);
-const { footerMenuReducer } = store.getState()
+
 const timer_3 = ref(null)
+// 开启注单历史弹窗及遮罩
+const settle_dialog_bool = ref(footerMenuReducer.settle_dialog_bool)
+
+
 
 let unsubscribe = store.subscribe(() => {
-  const { globalReducer: new_globalReducer } = store.getState()
+  const { footerMenuReducer: new_footer_menu_reducer } = store.getState()
+  settle_dialog_bool.value = new_footer_menu_reducer.settle_dialog_bool
+
     
 })
 // 是否展示左侧菜单
@@ -110,7 +117,6 @@ const change_settle_status = (val) => {
         type: "SET_SETTLE_DIALOG_BOOL",
         data: true,
       })
-      set_settle_dialog_bool(true)
     })
   }
   else {
@@ -131,8 +137,8 @@ onMounted(() => {
   document.addEventListener("gesturestart", gesturestart_event_fun);
   // 开启注单历史弹窗
   useMittOn(MITT_TYPES.EMIT_CHANGE_RECORD_SHOW, (val) => {
-    record_show.value = val
-    change_settle_status()
+    // record_show.value = val
+    change_settle_status(val)
   })
 });
 onUnmounted(() => {
@@ -140,6 +146,7 @@ onUnmounted(() => {
   document.removeEventListener("touchend", touchend_event_fun);
   document.removeEventListener("gesturestart", gesturestart_event_fun);
   timer_3.value = null
+  unsubscribe()
 });
 </script>
 
@@ -171,5 +178,66 @@ onUnmounted(() => {
     // margin-top: 50px;
     padding-top: 0 !important;
   }
+  /* ************** 悬浮按钮 ************** -E */
+    /* **********注单记录********************* *-S*/
+    .shadow-box {
+      background-color: rgba(0, 0, 0, 0.3); //var(--q-color-page-bg-color-4);
+      opacity: 0;
+      transition: opacity 0.3s;
+      backdrop-filter: var(--q-color-backdrop-filter-bg-1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 550;
+      transition: opacity 0.3s;
+    }
+    .bet-record-box2 {
+      bottom: -2px !important;
+    }
+    .shadow-box2 {
+      opacity: 1;
+    }
+    .bet-record-box2 + .shadow-box {
+      opacity: 1;
+    }
+    /* **********注单记录********************* *-S*/
+.bet-record-box {
+  width: 100%;
+  max-width: 7.7rem !important;
+  transition: bottom 0.3s;
+  position: fixed;
+  left: 0;
+  z-index: 600;
+}
+
+.match-main-menu {
+  max-width:3.78rem;
+  width: 100%;
+  position: fixed;
+  top: 0;
+
+  &.hide-menu {
+    display: none;
+  }
+}
+
+.shadow-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 550;
+  transition: opacity 0.3s;
+  background-image: url("");
+}
+
+.bet-record-box2 {
+  bottom: -2px !important;
+}
+
+/* **********注单记录********************* *-E*/
 }
 </style>

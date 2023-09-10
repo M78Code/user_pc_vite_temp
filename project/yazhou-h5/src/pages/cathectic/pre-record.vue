@@ -326,18 +326,17 @@ watch(() => props.main_item, (newVal) => {
         lodash.isEmpty(list_data.value) && init_data()
     }
 })
-watch(() => list_data.value, () => {
+watch(() => list_data.value, (newVal) => {
     //监听预约记录数据，是否有预约中的订单，并轮询获取
-    handler = function (newVal) {
         if (lodash.isEmpty(newVal)) return
         let new_orderNumber = []
         lodash.forIn(newVal, (item, key) => {
             const tempOrderList = lodash.filter(item.data, (o) => {
                 return o.preOrderStatus === 0
             })
-            orderNumber.value = lodash.concat(mew_orderNumber, tempOrderList);
+            orderNumber.value = lodash.concat(new_orderNumber, tempOrderList);
         })
-        if (mew_orderNumber.length > 0) {
+        if (new_orderNumber.length > 0) {
             const orderList = []
             new_orderNumber.map((item) => {
                 orderList.push(item.orderNo)
@@ -351,7 +350,6 @@ watch(() => list_data.value, () => {
         } else {
             clearTimeout(timer_1.value)
         }
-    }
 })
 // 组件销毁后执行的操作
 onUnmounted(() => {
@@ -430,7 +428,7 @@ onUnmounted(() => {
 
     .early {
     display: inline-block;
-    background: var(--q-color-com-img-bg-69) no-repeat center / contain;
+    background: url("public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;

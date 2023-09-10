@@ -5,12 +5,13 @@ const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const modules = import.meta.globEager("./module/*.js");
 let all_other_image = {};
 Object.keys(modules).forEach((key) => {
-  const module_name = key.replace("./module/", "").replace(".js", "");
+  // const module_name = key.replace("./module/", "").replace(".js", "");
   all_other_image = Object.assign(
     all_other_image,
-    modules[module_name].default
+    modules[key].default
   );
 });
+
 
 /**
  * 拿图片地址 和位置

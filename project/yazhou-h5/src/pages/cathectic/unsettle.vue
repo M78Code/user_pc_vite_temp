@@ -59,13 +59,13 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import store from 'src/store-redux/index.js'
     // mixins: [skt_order]
 
-    let store_data = ref(store.getState())
-    // 锚点
-    let myScroll = ref(null)
+  let store_data = ref(store.getState())
+  // 锚点
+  let myScroll = ref(null)
   //是否在加载中
   let is_loading = ref(false)
   //列表数据
-  let list_data = ref([])
+  let list_data = ref({})
   //list_data里面最后的一条数据的日期 '2020-11-17'
   let last_record = ref('')
   //是否没有数据
@@ -238,7 +238,9 @@ import store from 'src/store-redux/index.js'
         last_record.value = lodash.findLastKey(record);
         // 弹框起来需要300毫秒，这期间用骨架图展示
         clearTimeout(timer_1.value)
-        // console.error(record);
+        // let obj = lodash.cloneDeep(list_data.value)
+          // list_data.value = lodash.merge(obj, record)
+        // console.error(lodash.merge(obj, record));
         timer_1.value = setTimeout(() => {
           if (size < 5 && size > 0 && res.data.hasNext == true) {
           } else {
@@ -246,10 +248,9 @@ import store from 'src/store-redux/index.js'
           }
           // 合并数据
           let obj = lodash.cloneDeep(list_data.value)
-          list_data.value = lodash.merge(obj, record)
-          // console.error(list_data);
+          console.error(obj, record);
+          list_data.value = Object.assign(obj, record)
         }, 380);
-
       }else if(res.code == '0401038'){
         is_limit.value = true
         no_data.value = false
@@ -344,7 +345,10 @@ import store from 'src/store-redux/index.js'
     //   $data[key] = null
     // }
   })
-
+  defineExpose({
+    check_early_order,
+    search_early_money
+  })
 </script>
 
 <style lang="scss" scoped>
@@ -393,13 +397,13 @@ import store from 'src/store-redux/index.js'
 /**提前结算默认*/
 .early {
   display: inline-block;
-  background: var(--q-color-com-img-bg-69) no-repeat center / contain;
+  background: url("public/image/svg/select_b.svg") no-repeat center / contain;
   vertical-align: text-bottom;
   width: 0.14rem;
   height: 0.14rem;
 }
 /**提前结算*/
 .early2 {
-  background-image: var(--q-color-com-img-bg-68);
+  background-image: url("public/image/svg/select_a2.svg");
 }
 </style>

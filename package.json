@@ -38,8 +38,6 @@
     "dev-postmessage-test": "vite    --config  ./entries/postmessage-test/postmessage-test.vite.config.js",
     "export-full-version-open": "node ./job/export-full-version-config.js full",
     "export-full-version-close": "node ./job/export-full-version-config.js",
- 
-
     "divider-line": "echo \" 此命令无用,用于分割区块 。 上面的是语义化全命令，下面是简写命令。不要混着写。 \" && exit 0",
     "dev": "npm run dev-self-use-version",
     "build": "npm run build-self-use-version",
