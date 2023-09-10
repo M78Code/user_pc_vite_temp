@@ -114,7 +114,6 @@ class MenuData {
       } // 中间的 一级菜单
     });
     //插入中间项 第二项是  弹出框的
-
     if (this.current_lv_1_menu) {
       const mid_item = pop_main_items.find((item) => {
         return this.current_lv_1_menu && this.current_lv_1_menu.mi == item.mi;
@@ -654,7 +653,7 @@ class MenuData {
       ...new_menu,
       menu_dianjing,
       { mi: 8 },
-      menu_jingzu,
+      menu_jingzu
       // result_menu,
     ];
     return this.menu_list;
@@ -684,7 +683,10 @@ class MenuData {
     }
   }
   update() {
-    this.update_time.value = Date.now();
+    clearTimeout(this._tid);
+    this._tid = setTimeout(() => {
+      this.update_time.value = Date.now();
+    }, 10);
   }
   //选中一级menu
   set_current_lv1_menu(item, index) {

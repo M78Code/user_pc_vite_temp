@@ -1,6 +1,5 @@
 <template>
   <div class="match-main-menu">
-    {{ is_show_three_menu }}
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <div class="goback-icon-wrapper column justify-center">《</div>
@@ -41,6 +40,7 @@
                 v-show="[7, 28].includes(menu_1_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)"
               >
+                {{ item.mi }}
                 <span>
                   {{
                     item.name ||
@@ -190,9 +190,7 @@ let date_menu_list = ref([]);
 let virtual_sports_results_tab = ref([]);
 const show_selector_sub = ref(false); //展示弹出框
 // 一级菜单mi
-const menu_1_type = computed(() => {
-  return current_menu.mi;
-});
+const menu_1_type = ref(0);
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   console.error("是否展示三级", date_menu_list.value.length);
@@ -210,26 +208,25 @@ const is_show_four_menu = computed(() => {
   );
 });
 const pop_main_items = ref([]); //弹出框数据
-const show_favorite_list = ref(false); //是否收藏
+const show_favorite_list = ref(false); //是否显示收藏列表
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(menu_h5_data.update_time, (update_time) => {
-  console.error(update_time, menu_h5_data.menu_lv3, "1111111111");
+  console.error(update_time, menu_h5_data.menu_list, "1111111111");
   const [lv1, pop] = menu_h5_data.get_sport_menu();
+  menu_1_type.value = menu_h5_data.get_menu_type(); //当前菜单的type
   menu_list.value = lv1; //一级
   pop_main_items.value = pop; //pop级
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
   virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
 });
-setTimeout(() => {
-  set_menu_lv1({ mi: 28 });
-}, 3000);
 /**
  * 一级菜单事件
  */
 function set_menu_lv1(item, index, is_pop) {
   show_selector_sub.value = false;
   //弹出框点击
+  menu_1_type.value = item.mi;
   if (is_pop) {
     menu_list.value.splice(1, 1, item);
   }
@@ -306,7 +303,7 @@ const show_dianjing = (item, index) => {
 };
 //弹出框 是否展示
 function is_menu_show(item) {
-  if (item.mi == 28) {
+  if (item.mi == 28 && show_favorite_list.value) {
     return false;
   }
   let reslut = true;
