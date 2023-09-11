@@ -152,8 +152,9 @@ import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import { MenuData, score_switch_handle } from "src/core/index.js";
 import matchList from "./components/match-list.vue";
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
-import { compute_css_var_style } from 'src/core/theme/index.js'
-import matchCssVariable from 'project_path/src/css/component/match.js'
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+import 'project_path/src/css/pages/match-main.scss'
 
 const props = defineProps({
   invok_source: String,
@@ -229,9 +230,9 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  page_style.value = compute_css_var_style("match")
-  
-  page_style.value = compute_css_var_style(matchCssVariable)
+  page_style.value = compute_css_variables({ category: 'component', module: 'match' })
+
+  console.log(page_style.value)
 
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;

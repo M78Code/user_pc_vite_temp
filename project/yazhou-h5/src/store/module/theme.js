@@ -6,7 +6,7 @@
 
 const initialState = {
   // 主题
-  theme:'theme01'
+  theme:'day'
 };
 export default function themeReducer(state = initialState, action) {
   switch (action.type) {

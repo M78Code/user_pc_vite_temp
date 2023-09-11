@@ -12,7 +12,7 @@
     <div class="content-box">
 
       <!-- 头部 -->
-      <bet-bar @click.native="pack_up" @click="show_list"></bet-bar>
+      <bet-bar @click.native="pack_up"></bet-bar>
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)"><img src="image/wwwassets/bw3/svg/close3.svg"
@@ -224,7 +224,7 @@ import { UserCtr } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittOn, useMittEmit,MITT_TYPES } from "src/core/mitt/index.js"
 
 
 
@@ -234,6 +234,7 @@ const series_order_respList = ref([])
 const award_total = ref()
 const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
+const tips_msg = ref('失效')  // 提示信息
 
 
 const hide_bet_series_but = () => {
@@ -267,21 +268,6 @@ const max_win_money_emit = (val) => {
   award_total.value = val
 }
 
-const show_list = () =>{
-  console.error('BetViewDataClass',BetViewDataClass)
-  let markInfo = lodash.get(BetViewDataClass,'bet_special_h5.latestMarketInfo')
-  markInfo.forEach(item => {
-    let obj = {
-      'playName':item.playName,  // 玩法名称
-      'playId':item.playId,   // 玩法id
-      'away':item.away,  // 客队
-      'home':item.home,  // 主队
-    }
-    bet_list_data.value.push(obj)
-  });
-  bet_min_max_money.value = BetViewDataClass.bet_min_max_money
-  console.error('sss',bet_list_data.value)
-}
 
 /**
     * 串关时检查是否有C01赛事
@@ -302,16 +288,26 @@ const is_bet_check_rc = () => {
 }
 
 onMounted(() => {
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY,set_ref_data_bet_money)
   let munu_type = true
   if(munu_type){
     // get_query_bet_amount_common()
   }
 })
 
-const set_ref_data_bet_money = (obj) =>{
-  console.error(',obj',obj)
-  show_list()
+const set_ref_data_bet_money = () =>{
+  console.error('BetViewDataClass',BetViewDataClass)
+  let markInfo = lodash.get(BetViewDataClass,'bet_special_h5.latestMarketInfo')
+  markInfo.forEach(item => {
+    let obj = {
+      'playName':item.playName,  // 玩法名称
+      'playId':item.playId,   // 玩法id
+      'away':item.away,  // 客队
+      'home':item.home,  // 主队
+    }
+    bet_list_data.value.push(obj)
+  });
+  bet_min_max_money.value = BetViewDataClass.bet_min_max_money
 }
 onUnmounted(()=>{
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
@@ -346,7 +342,7 @@ onUnmounted(()=>{
   -webkit-overflow-scrolling: touch;
   border-radius: 0.158rem 0.158rem 0 0;
   border: 1px solid;
-
+  background-color: #ffffff;;
   .yb_pl14 {
     margin-right: 0.01rem;
 

@@ -9,7 +9,6 @@ import {http} from "src/core/http/index.js";
 const { API_PREFIX = {}} = window.BUILDIN_CONFIG;
 const { API_PREFIX_USER:prefix,API_PREFIX_BAT:prefix_yewu13,API_PREFIX_JOB:prefix_job} = API_PREFIX;
 
-
 // 全url   获取  一般用于 视频动画域名检测
 export const get_full_url = (url='') => {
 
@@ -31,7 +30,8 @@ export const post_match_full_list = (params) => {
   if(params.query){
     url += params.query;
   }
-  const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
+  // const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
+  const queryParams = {"cuid":"507915205315200008","euid":"40303","type":4,"sort":1,"device":"v2_h5_st","category":1,"md":"","hpsFlag":0}
   return http.post(`${prefix_job}${url}`, queryParams, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 
@@ -150,7 +150,7 @@ export const get_virtual_matchResult = (params,config, url = "/v1/m/matchDetail/
 export const get_matchDetail_getMatchDetailByTournamentId = (params, config, url = "/v1/m/matchDetail/getMatchDetailByTournamentIdPB") => http.get(`${prefix}${url}`, params, config)
 
 // 赛事详情页面接口（christion）
-export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix}${url}`, params, config)
+export const get_matchDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getMatchDetail") => http.get(`${prefix_job}${url}`, params, config)
 // 赛果详情页面接口（christion）
 export const get_matchResultDetail_MatchInfo = (params, config, url = "/v1/m/matchDetail/getResultMatchDetailPB") => http.get(`${prefix}${url}`, params, config)
 

@@ -107,16 +107,16 @@ const route = useRoute()
 // TODO: 后续修改调整
 // import { mapGetters } from "vuex";
     // 国际化后续修改调整
-    let tab_list = ref([
+    const tab_list = ref([
         { name: i18n_t('footer_menu.rangqiu') },
         { name: i18n_t('analysis_football_matches.European_Finger') },
         { name: i18n_t('analysis_football_matches.size') },
       ])
-    let tabIndex = ref(0)
+    const tabIndex = ref(0)
     //详细赔率数据
-    let data_list = ref([])
+    const data_list = ref([])
     //数据加载完成
-    let is_done = ref(false)
+    const is_done = ref(false)
     onMounted(() => {
         // 添加监听 赛事分析刷新事件 TODO: 后续修改调整 $root emit
       useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
@@ -182,7 +182,7 @@ const route = useRoute()
       // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
       useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
       // 国际化后续修改调整
-     tab_list = ref([
+     tab_list.value = ref([
         { name: i18n_t('footer_menu.rangqiu') },
         { name: i18n_t('analysis_football_matches.European_Finger') },
         { name: i18n_t('analysis_football_matches.size') },

@@ -8,6 +8,9 @@ import WsMan from  "./ws-man.js"
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { UserCtr } from "src/core/index.js";
+import { SessionStorage , LocalStorage } from "src/core/utils/module/web-storage.js";
+import lodash from "lodash";
+const token_key = STANDARD_KEY.get("token"); //token键
 export default class Ws {
   // 链接异常次数
   static err_count = 0;
@@ -260,12 +263,11 @@ export default class Ws {
   /**
    * @Description:发送ws 消息
    * @param: msg 事件消息对象
-   * @param: ws_object WS类对象
    * @return:
    */
-  send_msg(msg, ws_object=WsMan.wsm) {
+  send_msg(msg) {
     try {
-      let ws = WsMan.ws && WsMan.ws.ws;
+      let ws = this.ws;
       if (ws && ws.readyState == 1) {
         switch (msg.cmd) {
           case 'C8':
@@ -283,12 +285,10 @@ export default class Ws {
             break;
         }
         // 对特殊命令进行统一管理处理发送
-        if(window.vue) {
-          try {
-            msg.requestId = UserCtr.user_token || sessionStorage.getItem(STANDARD_KEY.token);
-          } catch (error) {
-            console.error(error)
-          }
+        try {
+          msg.requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+        } catch (error) {
+          console.error(error)
         }
 
         window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
@@ -306,25 +306,30 @@ export default class Ws {
   /**
    * @Description:接收ws内部通信事件
    * @param: event 事件消息对象
-   * @param: ws_object WS类对象
    * @return:
    */
-  rev_event_msg(event, ws_object=WsMan.ws) {
-    if(ws_object && event && event.data && event.data.event == 'WS'){
-      if(ws_object){
-        switch (event.data.cmd) {
-          case 'WS_MSG_SEND': // 发送消息ws服务器
-            ws_object.send_msg(event.data);
-            break;
-          case 'WS_SET_URL':
-            ws_object.send_msg(event.data);
-            break;
-          case 'WS_SET_RET_URL':
-            ws_object.send_msg(event.data);
-            break;
-          default:
-            break;
-        }
+  rev_event_msg(event) {
+    if(event && event.data && event.data.event == 'WS'){
+      switch (event.data.cmd) {
+        case 'WS_MSG_SEND': // 发送消息ws服务器
+          const ws_send_cmd = lodash.get(event,'data.data.cmd');
+          switch (ws_send_cmd) {
+            case 'C8':
+              this.send_msg(event.data.data);
+              break;
+            default:
+              this.send_msg(event.data.data);
+              break;
+          }
+          break;
+        case 'WS_SET_URL':
+          this.send_msg(event.data);
+          break;
+        case 'WS_SET_RET_URL':
+          this.send_msg(event.data);
+          break;
+        default:
+          break;
       }
     }
   }
@@ -334,8 +339,14 @@ export default class Ws {
    * @return:
    */
   add_event_listener(){
+    if(this.message_fun){
+      this.remove_event_listener();
+    }
+    this.message_fun = (event)=>{
+      this.rev_event_msg(event);
+    }
     // 监听message
-    window.addEventListener("message", this.rev_event_msg);
+    window.addEventListener("message", this.message_fun);
   }
   /**
    * @Description:移除接收ws内部通信监听
@@ -344,7 +355,7 @@ export default class Ws {
    */
   remove_event_listener(){
     // 移除监听message
-    window.removeEventListener("message", this.rev_event_msg);
+    window.removeEventListener("message", this.message_fun);
   }
 
   /**

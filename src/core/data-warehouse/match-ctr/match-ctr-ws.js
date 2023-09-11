@@ -17,6 +17,7 @@
  * 
  */
 import lodash from "lodash";
+import WsMan from "src/core/data-warehouse/ws/ws-ctr/ws-man.js";
 export default class MatchDataBaseWS
 {
   /**
@@ -344,27 +345,29 @@ export default class MatchDataBaseWS
             // 获取指定的盘口对象
             const quick_hl_obj = this.match_ctr.quick_query_obj.hl_obj[hid_str];
             ol.forEach(ol_obj => {
-              // 拼接快速查找对象所需的id
-              const oid_str = this.match_ctr.get_format_quick_query_key(mid,ol_obj.oid,'ol');
-              // 获取指定的投注项对象
-              const quick_ol_obj = this.match_ctr.quick_query_obj.ol_obj[oid_str];
-              // 处理ot是小数的情况,进行数据修正
-              let ot = '';
-              if(ol_obj.ot && ol_obj.ot.includes('.')) {
-                ot = ol_obj.ot.replace('.','-');
-              } else {
-                ot = ol_obj.ot;
-              }
-              let chpid = hl_obj.chpid || hl_obj.hpid || '';
-              // 设置坑位信息
-              const _hn = hl_obj.hn?`${mid}_${chpid}_${hl_obj.hn}_${ot}`:'';
-              // 更新投注项附加参数
-              Object.assign(ol_obj, {_hn:_hn, _hs:hl_obj.hs});
+              if(ol_obj){
+                // 拼接快速查找对象所需的id
+                const oid_str = this.match_ctr.get_format_quick_query_key(mid,ol_obj.oid,'ol');
+                // 获取指定的投注项对象
+                const quick_ol_obj = this.match_ctr.quick_query_obj.ol_obj[oid_str];
+                // 处理ot是小数的情况,进行数据修正
+                let ot = '';
+                if(ol_obj.ot && ol_obj.ot.includes('.')) {
+                  ot = ol_obj.ot.replace('.','-');
+                } else {
+                  ot = ol_obj.ot;
+                }
+                let chpid = hl_obj.chpid || hl_obj.hpid || '';
+                // 设置坑位信息
+                const _hn = hl_obj.hn?`${mid}_${chpid}_${hl_obj.hn}_${ot}`:'';
+                // 更新投注项附加参数
+                Object.assign(ol_obj, {_hn:_hn, _hs:hl_obj.hs});
 
-              // 合并投注项数据信息
-              Object.assign(quick_ol_obj, ol_obj);
-              // 更新坑位信息
-              this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_format_quick_query_key(mid,_hn,'hn')] = quick_ol_obj;
+                // 合并投注项数据信息
+                quick_ol_obj && Object.assign(quick_ol_obj, ol_obj);
+                // 更新坑位信息
+                this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_format_quick_query_key(mid,_hn,'hn')] = quick_ol_obj;
+              }
             });
             // 合并投注项数据信息
             this.match_ctr.assign_with(quick_hl_obj, hl_obj);
@@ -708,6 +711,55 @@ export default class MatchDataBaseWS
         // 同步更新快速查询对象中的赛事状态
         this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
       }
+    }
+  }
+
+
+  /**
+   * @description: C8的List部分获取
+   * @param {*}
+   * @return {*}
+   */
+  _get_c8_list(match_list) {
+    let list = [];
+    match_list.forEach(item => {
+      // hpid *为全部玩法订阅      
+      let mid = "", hpid="*";
+      mid = item.mid;
+      if(Array.isArray(item.hpids) && item.hpids.length > 0 && !item.hpids.includes("*")) {
+        hpid = item.hpids.join(',')
+      }
+      let obj = { mid, hpid, level: 3 }; // level：2 值针对C303
+      list.push(obj);
+    });    
+    return list;
+  }
+  /**
+   *  C8 参数说明
+   * `cufm` 赛事列表、详细在同一页面标识，传入"m"。赛事列表、详细不同页面不需要此字段
+   * `marketLevel` 0:默认行情等级，1:信用网等级
+   * `list` 要订阅的赛事玩法对象
+   * `mid` 赛事Id
+   * `hid` 盘口Id，多个玩法Id用逗号分隔。订阅所有玩法用"*"
+   * `说明:` 订阅后会推送C101,C102,C103,C105,C107,C110,C113,C114,C115,C303,C304,C305,C801
+   * @description: 赛事订阅(C1) 
+   * @param {undefined} undefined
+   * @return {undefined} undefined
+   */
+  scmd_c8() {  
+    if(lodash.get(this.match_ctr,'quick_query_list.length')){
+      let obj = {};
+      obj.key = this.match_ctr.name_code;
+      obj.module = 'match-ctr';
+      obj.list = this._get_c8_list(lodash.get(this.match_ctr,'quick_query_list',[]));      
+      obj.one_send = false; 
+      obj.cufm = "L";
+      obj.marketLevel = lodash.get(this.vx_get_user, 'marketLevel', '0');
+      //处理逻辑
+      if(obj.list.length>0) {
+        //发送赛状态订阅息命令C8
+        WsMan.skt_send_match_status(obj);
+      } 
     }
   }
 

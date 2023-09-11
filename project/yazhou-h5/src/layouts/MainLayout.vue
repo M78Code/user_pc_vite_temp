@@ -57,7 +57,7 @@ import store from "src/store-redux/index.js";
 const settleDialog = defineAsyncComponent(() =>
   import("project_path/src/pages/cathectic/index.vue")
 );
-// import { i18n } from "src/boot/i18n.js";
+import BetData from "src/core/bet/class/bet-data-class.js";// import { i18n } from "src/boot/i18n.js";
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 
@@ -158,6 +158,8 @@ onMounted(() => {
     // record_show.value = val
     change_settle_status(val);
   });
+  // 设置设备类型
+  BetData.set_device_type(1)
 });
 onUnmounted(() => {
   document.removeEventListener("touchstart", touchstart_event_fun);

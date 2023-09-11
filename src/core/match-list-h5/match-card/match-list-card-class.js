@@ -357,10 +357,7 @@ class MatchListCard {
   //  更新 赛事列表 进程 综合 控制方法
   run_process_when_need_recompute_container_list(need_pre_process, scroll_obj) {
     // 需要执行前置进程
-    if (
-      !MatchCtr.match_list_data_sources ||
-      !MatchCtr.match_list_data_sources.length
-    ) {
+    if ( !MatchCtr.match_list_data_sources || !MatchCtr.match_list_data_sources.length ) {
       // 如果条件达不到 ，不可以执行主进程 ，或者不需要执行主进程 则 方法终止
       return false;
     }
