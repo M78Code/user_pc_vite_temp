@@ -657,6 +657,6 @@ export const useGetItem = ({ props }) => {
   return {
     ...toRefs(state),
     bet_click,
-    // format_odds_value   todo
+    format_odds_value  
   };
 };

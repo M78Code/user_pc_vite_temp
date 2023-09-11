@@ -42,7 +42,7 @@ const routes = [
         path: "/details/:mid/:tid/:csid",
         name: "details",
         component: () =>
-          import(`../pages/match-details/details_main.vue`),
+          import(`../pages/match-details/details-main.vue`),
       },
       //       {
       //         path: "/virtual_details/:mid/:tid/:csid",

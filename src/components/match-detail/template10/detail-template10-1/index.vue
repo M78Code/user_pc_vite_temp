@@ -238,7 +238,29 @@ const {
 } = useCommon({ emit, props });
 
 const handicap_data = ref([]);
+/**
+ * @description: 投注项补空
+ */
+ const format_handicap = (data) => {
+  const home_length = data[0].length;
+  const away_length = data[2].length;
+  const center_length = data[1].length;
+  const max_length = Math.max(home_length, away_length, center_length);
 
+  for (var i = 0; i < max_length; i++) {
+    if (!data[0][i]) {
+      data[0].push("");
+    }
+    if (!data[2][i]) {
+      data[2].push("");
+    }
+
+    if (!data[1][i]) {
+      data[1].push("");
+    }
+  }
+  return data;
+};
 watch(
   () => props.item_details,
   (res) => {
@@ -278,29 +300,7 @@ watch(
   { immediate: true, deep: true }
 );
 
-/**
- * @description: 投注项补空
- */
-const format_handicap = (data) => {
-  const home_length = data[0].length;
-  const away_length = data[2].length;
-  const center_length = data[1].length;
-  const max_length = Math.max(home_length, away_length, center_length);
 
-  for (var i = 0; i < max_length; i++) {
-    if (!data[0][i]) {
-      data[0].push("");
-    }
-    if (!data[2][i]) {
-      data[2].push("");
-    }
-
-    if (!data[1][i]) {
-      data[1].push("");
-    }
-  }
-  return data;
-};
 </script>
 <style lang="scss" scoped>
 .expand-match-list {
