@@ -135,7 +135,7 @@ import {utils } from 'src/core/index.js';  // 公共方法
 import { i18n_t } from "src/boot/i18n.js";;
 import lodash from "lodash";
 import detailsHeader from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
-import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
+import detailsTab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
@@ -163,7 +163,7 @@ export default defineComponent({
     "details-header": detailsHeader,
 //     // "details-dialog": details_dialog,
     // "change-header": change_header,
-    // "details-tab": details_tab,
+    // "detailsTab": detailsTab,
 //     // "no-data": no_data,
 //     "info-rules": info_rules,
 //     // videos: videos,

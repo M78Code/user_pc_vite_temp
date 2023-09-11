@@ -14,20 +14,25 @@
 <script setup>
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-// 赛果详情 赛况统计 和 事件
-import match_result from 'src/project/pages/details/components/details-match-results/match-results.vue';
-// 详情页  足球赛事分析 战绩 模块
-import standings from 'src/project/pages/details/analysis-matches/components/standings.vue';
-// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
-import line_up from 'src/project/pages/details/analysis-matches/components/line-up.vue';
-// 详情页 或者 赛果 赛事分析 公共tab 组件
-import head_tab from 'src/project/components/details/match-analysis/head-tab.vue';
- // 文章页
-import articleMain from 'src/project/pages/details/analysis-matches/article/article-main.vue';
-import { watch, nextTick, onMounted } from 'vue';
-import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { t } from "src/boot/i18n.js";
+import { ref, watch, nextTick, onMounted, defineAsyncComponent, inject } from 'vue';
+import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+// 文章页
+import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
+// 赛果详情 赛况统计 和 事件
+import matchResult from "project_path/src/pages/details/components/details-match-results/match-results.vue"
+// 详情页  足球赛事分析 战绩 模块
+import standings from "project_path/src/pages/details/analysis-matches/components/standings.vue"
+// 详情页 或者 赛果  篮球足球公共组件，阵容tab页面
+import lineUp from "project_path/src/pages/details/analysis-matches/components/line-up.vue"
+// 详情页 或者 赛果 赛事分析 公共tab 组件
+import headTab from  "project_path/src/components/details/match-analysis/head-tab.vue";
+
+
+// 获取详情数据
+const get_detail_data = inject('get_detail_data', {})
+
 //国际化
 
 
@@ -39,22 +44,27 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   //   articleMain: articleMain,
   // },
   // TODO: 国际化后续修改调整
-  let tabList = ref([
+  const tabList = ref([
     {
-      name: t('analysis_football_matches.match'),
-      component: 'match'
+      name: i18n_t('analysis_football_matches.match'),
+      component: matchResult
     },
     {
-      name: t('analysis_football_matches.standings'),
-      component: 'standings'
+      name: i18n_t('analysis_football_matches.standings'),
+      component: standings
     },
     {
-      name: t('analysis_football_matches.line_up'),
-      component: 'line_up'
+      name: i18n_t('analysis_football_matches.line_up'),
+      component: lineUp
     }
   ])
-  let currentContent = ref('match')
-  let analysis_basketball_matches = ref(null)
+  const currentContent = ref('matchResult')
+  const analysis_basketball_matches = ref(null)
+
+
+  // TODO: 临时调试用
+  const get_is_hengping = ref(false)
+  const get_analyze_show = ref(false)
   // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters([
@@ -78,15 +88,15 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     nextTick(() => {
       // TODO: 后续修改调整 $refs $utils
       if (analysis_basketball_matches.value) {
-        analysis_basketball_matches.value.style.minHeight = window.innerHeight - $utils.rem(0.84) + 'px'; ;
+        analysis_basketball_matches.value.style.minHeight = window.innerHeight - utils.rem(0.84) + 'px'; ;
       }
     })
-    if (['zh', 'tw'].includes(get_lang)) {
+    if (['zh', 'tw'].includes(UserCtr.lang)) {
       tabList.value.unshift(
         {
           // TODO: 国际化
-          name: get_lang == 'zh' ? '资讯' : '資訊',
-          component: 'article-main'
+          name: UserCtr.lang == 'zh' ? '资讯' : '資訊',
+          component: articleMain
         },
       )
     }
@@ -100,18 +110,18 @@ const tab_click = ([tab, type]) => {
   if (type == 'is_click') {
     let eventLabel = '';
     // 赛况
-    if (tab.component == 'match') {
+    if (tab.component == 'matchResult') {
       eventLabel = "H5_情报分析_赛况";
     } else if (tab.component == 'standings') {
       // 数据
       eventLabel = "H5_情报分析_战绩";
-    } else if (tab.component == 'line_up') {
+    } else if (tab.component == 'headTab') {
       // 阵容
       eventLabel = "H5_情报分析_阵容";
-    } else if (tab.component == 'article-main') {
+    } else if (tab.component == 'articleMain') {
       eventLabel = 'H5_情报分析_资讯'
     }
-    this.$utils.zhuge_event_send(eventLabel, this.UserCtr);
+    // this.$utils.zhuge_event_send(eventLabel, this.UserCtr);
   }
 }
 

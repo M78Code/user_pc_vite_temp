@@ -215,7 +215,7 @@ export const existMatchResult = (params, config, url="/order/betRecord/existMatc
 export const get_virtual_result = (params, config, url="/v1/orderScoreResult/queryTournamentScoreResult") =>
 http.post(`${prefix}${url}`,params,config);
 // 获取赛事文章详情(Jeffrey)
-export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix}${url}`,params, config)
+export const getArticle = (params, config, url="/v1/art/getArticle") => http.get(`${prefix_job}${url}`,params, config)
 // 获取赛事文章猜你喜欢接口(Jeffrey)
 export const getFavoriteArticle = (params, config, url="/v1/art/getFavoriteArticle") => http.get(`${prefix}${url}`,params, config)
 // 更新赛事文章浏览记录(Jeffrey)

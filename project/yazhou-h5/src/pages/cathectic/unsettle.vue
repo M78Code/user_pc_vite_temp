@@ -59,34 +59,34 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 import store from 'src/store-redux/index.js'
     // mixins: [skt_order]
 
-  let store_data = ref(store.getState())
+  const store_data = store.getState()
   // 锚点
-  let myScroll = ref(null)
+  const myScroll = ref(null)
   //是否在加载中
-  let is_loading = ref(false)
+  const is_loading = ref(false)
   //列表数据
-  let list_data = ref({})
+  const list_data = ref({})
   //list_data里面最后的一条数据的日期 '2020-11-17'
-  let last_record = ref('')
+  const last_record = ref('')
   //是否没有数据
-  let no_data = ref(true)
+  const no_data = ref(true)
   // 提前结算图标是否选中
-  let is_early = ref(false)
+  const is_early = ref(false)
   // 是否存在下一页
-  let is_hasnext = ref(false)
+  const is_hasnext = ref(false)
   //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
-  let is_all_early_flag = ref(false)
+  const is_all_early_flag = ref(false)
   // 接口是否返回错误码为0401038限频
-  let is_limit = ref(false)
+  const is_limit = ref(false)
   //需要查绚提前结算金额的订单集合
-  let orderNumberItemList = ref([])
+  const orderNumberItemList = ref([])
   //错误码为0401038拉取接口次数
-  let count = ref(0)
+  const count = ref(0)
   //服务器返回错误为0401038拉取接口次数
-  let count2 = ref(0)
+  const count2 = ref(0)
   // 延时器
-  let timer_1 = ref(null)
-  let timer_2 = ref(null)
+  const timer_1 = ref(null)
+  const timer_2 = ref(null)
   // computed: {
   //   ...mapGetters(['UserCtr', 'get_main_item'])
   // },
@@ -107,7 +107,7 @@ import store from 'src/store-redux/index.js'
     /**先清除计时器，再使用*/
     clearInterval(timer_2.value)
     timer_2.value = setInterval(()=>{
-      if (store_data.value.main_item == 0 && document.visibilityState == 'visible') {
+      if (store_data.main_item == 0 && document.visibilityState == 'visible') {
         check_early_order()
         search_early_money()
       }

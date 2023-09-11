@@ -10,26 +10,26 @@
       <scroll ref="myScroll" :on-pull="onPull" v-else>
         <div class="edit row items-center yb_fontsize12">
           <div class="time yb_mr6 relative-position" @click="change_date">
-            <i class="calendar"></i><span>{{ date_limit == 7 ? t('bet_record.7day') :
-              t('bet_record.30day') }}</span>
+            <i class="calendar"></i><span>{{ date_limit == 7 ? i18n_t('bet_record.7day') :
+              i18n_t('bet_record.30day') }}</span>
           </div>
           <div class="sort relative-position" @click.stop="change_sort($event)">
             <i :class="'sort-'+sort_active"></i>
-            <span>{{sort_active == 2 ? t('bet_record.sort0') : sort_active == 1 ? t('bet_record.sort1') : t('bet_record.sort2')}}</span><span></span>
+            <span>{{sort_active == 2 ? i18n_t('bet_record.sort0') : sort_active == 1 ? i18n_t('bet_record.sort1') : i18n_t('bet_record.sort2')}}</span><span></span>
             <!-- 默認排序 -->
             <!-- 按投注时间排序 -->
             <!-- 按开赛时间排序 -->
             <!-- <p v-if="is_sort_show && 0" class="absolute">
-              <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ $root.$t('bet_record.sort3') }}</span>
-              <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ $root.$t('bet_record.sort4') }}</span>
-              <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ $root.$t('bet_record.sort5') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 2}" data-num='2'><i class="sort0" :class="{'sort-2':sort_active == 2}"></i>{{ i18n_t('bet_record.sort3') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 1}" data-num='1'><i class="sort1" :class="{'sort-1':sort_active == 1}"></i>{{ i18n_t('bet_record.sort4') }}</span>
+              <span class="sort-text" :class="{'select': sort_active == 3}" data-num='3'><i class="sort2" :class="{'sort-3':sort_active == 3}"></i>{{ i18n_t('bet_record.sort5') }}</span>
             </p> -->
           </div>
           <div>
             <!-- 提前结算 -->
             <span class="yb_fontsize12" @click.stop="change_early"
               :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
-              {{ t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
+              {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
             </span>
           </div>
         </div>
@@ -39,14 +39,14 @@
           <template v-if="!is_all_early_flag">
             <div v-for="(value, name, index) in list_data" :key="index">
               <template v-if="!is_early || (is_early && clac_is_early(value.data))">
-                <!-- 时间和输赢统计  .Format(t('time2')) -->
+                <!-- 时间和输赢统计  .Format(i18n_t('time2')) -->
                 <p class="tittle-p row justify-between yb_px4" :class="{ 'tittle-p2': index == 0 }"
                   @click="toggle_show(value)">
                   <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                   <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{
-                    t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
-                      t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
-                        t('bet_record.bet_no_status03') }}/{{ t('bet_record.bet_no_status04') }}<span
+                    i18n_t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
+                      i18n_t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
+                        i18n_t('bet_record.bet_no_status03') }}/{{ i18n_t('bet_record.bet_no_status04') }}<span
                       class="color-1" :class="{ 'color-2': value.profit > 0 }"><template
                         v-if="value.profit > 0">+</template>{{ value.profit }}</span>
                   </span>
@@ -84,7 +84,7 @@ import lodash from "lodash"
 import store from 'src/store-redux/index.js'
 import { format_M_D } from 'src/core/format/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 
@@ -100,29 +100,29 @@ let { cathecticReducer, userInfoReducer } = store.getState()
 let store_cathectic = cathecticReducer
 
 // 锚点
-let myScroll = ref(null)
+const myScroll = ref(null)
 //是否加载中
-let is_loading = ref(true)
+const is_loading = ref(true)
 //列表数据集合
-let list_data = ref({})
+const list_data = ref({})
 //list_data里面最后的一条数据的日期 '2020-11-17'
-let last_record = ref('')
+const last_record = ref('')
 //是否没有数据
-let no_data = ref(true)
+const no_data = ref(true)
 // 按什么排序  2-默认排序（结算时间） 1-投注时间  3-开赛时间
-let sort_active = ref(2)
+const sort_active = ref(2)
 // 展示多长时间的注单记录
-let date_limit = ref(7)
+const date_limit = ref(7)
 // 是否存在下一页
-let is_hasnext = ref(false)
+const is_hasnext = ref(false)
 //判断提前结算按钮是否选中，并且选中状态下所有订单是否存在已提前结算
-let is_all_early_flag = ref(false)
+const is_all_early_flag = ref(false)
 // 提前结算图标是否选中
-let is_early = ref(false)
+const is_early = ref(false)
 // 排序设置弹框是否显示
-let is_sort_show = ref(false)
+const is_sort_show = ref(false)
 // 接口是否返回错误码为0401038限频
-let is_limit = ref(false)
+const is_limit = ref(false)
 
 // onMounted(() => {
 //   store_cathectic.main_item == 1 && init_data()

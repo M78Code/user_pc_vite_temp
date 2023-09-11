@@ -8,8 +8,8 @@
         <div class="main-box fixed-center text-center">
             <p class="text-left yb_fontsize14">{{ t("pre_record.confirm_matchinfo", [teamname]) }}</p>
             <footer class="yb_fontsize16">
-                <span class="cancle-button button" @click.self="cancle_handle">{{ t("common.cancel") }}</span>
-                <span class="confirm-button button" @click.self="confirm_handle">{{ t("common.ok") }}</span>
+                <span class="cancle-button button" @click.self="cancle_handle">{{ i18n_t("common.cancel") }}</span>
+                <span class="confirm-button button" @click.self="confirm_handle">{{ i18n_t("common.ok") }}</span>
             </footer>
         </div>
     </div>
@@ -17,7 +17,7 @@
 
 <script setup>
 import store from "src/store-redux/index.js"
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
 //国际化
 
 

@@ -72,13 +72,13 @@ const record_box = ref(null)
 
 
 
-let unsubscribe = store.subscribe(() => {
-    up_store_data()
-})
+// let unsubscribe = store.subscribe(() => {
+//     up_store_data()
+// })
 
-const up_store_data = () => {
-    // console.error('更新数据');
-}
+// const up_store_data = () => {
+//     // console.error('更新数据');
+// }
 
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {

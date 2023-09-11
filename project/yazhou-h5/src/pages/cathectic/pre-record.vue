@@ -10,7 +10,7 @@
             <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
                 <!-- 已失效按钮 -->
                 <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{ 'select': selected_expired }">
-                    {{ t('pre_record.expired') }}
+                    {{ i18n_t('pre_record.expired') }}
                     <i class="early yb_ml4" :class="{ 'early2': selected_expired }"></i>
                 </i>
             </div>
@@ -18,7 +18,7 @@
                 <!-- 订单内容 -->
                 <div v-for="(value, name, index) in list_data" :key="index">
                     <template v-if="expired_all_flag(value)">
-                        <!-- .Format(t('time2')) -->
+                        <!-- .Format(i18n_t('time2')) -->
                         <p class="tittle-p row justify-between yb_px4" :class="index == 0 && 'tittle-p2'" @click="toggle_show(value)">
                             <span>{{ format_M_D(new Date(name).getTime()) }}</span>
                             <span v-if="!value.open && index != 0 && !selected_expired">
@@ -61,7 +61,7 @@ import SRecord from "project_path/src/components/skeleton/record.vue";
 import store from 'src/store-redux/index.js';
 import lodash from "lodash";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/"
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 // TODO vuex 待数据调通后删除
 // import { mapGetters, mapMutations } from 'vuex';
@@ -76,30 +76,30 @@ const props = defineProps({
     }
 })
 // 页面锚点
-let myScroll = ref(null)
+const myScroll = ref(null)
 // 定时器
-let timer_2 = ref(null)
-let timer_1 = ref(null)
+const timer_2 = ref(null)
+const timer_1 = ref(null)
 // 确认取消弹框
-let cancle_confirm_pop_visible = ref(false)
+const cancle_confirm_pop_visible = ref(false)
 //要取消的队名
-let teamName = ref('')
+const teamName = ref('')
 //要取消的订单号
-let orderNumber = ref('')
+const orderNumber = ref('')
 //是否在加载中
-let is_loading = ref(true)
+const is_loading = ref(true)
 //列表数据
-let list_data = ref({})
+const list_data = ref({})
 //list_data里面最后的一条数据的日期 '2020-11-17'
-let last_record = ref('')
+const last_record = ref('')
 // 是否存在下一页
-let is_hasnext = ref(false)
+const is_hasnext = ref(false)
 //需要查绚提前结算金额的订单集合
-let orderNumberItemList = ref([])
+const orderNumberItemList = ref([])
 //已失效按钮选装状态，默认不选中
-let selected_expired = ref(false)
+const selected_expired = ref(false)
 // 强制更新DOM
-let instance = getCurrentInstance()
+const instance = getCurrentInstance()
 
 //获取预约订单状态
 const change_pre_status = (orderList) => {
@@ -173,7 +173,7 @@ const cancle_pre_order = () => {
         }
         if (res.code == 200) {
             store.dispatch({
-                'txt': t('pre_record.canceled'),
+                'txt': i18n_t('pre_record.canceled'),
                 hide_time: 3000
             })
             cancle_confirm_pop_visible.value = false
@@ -186,7 +186,7 @@ const cancle_pre_order = () => {
         } else if (['0400546', '0400547'].includes(res.code)) {
             cancle_confirm_pop_visible.value = false
             store.dispatch({
-                'txt': res.code == '0400546' ? t('pre_record.cancle_fail_tips') : t('pre_record.cancle_fail_tips2'),
+                'txt': res.code == '0400546' ? i18n_t('pre_record.cancle_fail_tips') : i18n_t('pre_record.cancle_fail_tips2'),
                 hide_time: 3000
             })
         }
@@ -293,9 +293,9 @@ const onPull = () => {
         if (res.code == 200 && res.data) {
             last_record.value = lodash.findLastKey(record);
             // 合并数据
-            let obj = lodash.cloneDeep(list_data);
+            let obj = lodash.cloneDeep(list_data.value);
             list_data.value = lodash.merge(obj, record)
-            for (let item of Object.values(list_data)) {
+            for (let item of Object.values(list_data.value)) {
                 item.open = true
                 for (var i = 0; i < item.data.length; i++) {
                     item.data[i].orderVOS = item.data[i].detailList
