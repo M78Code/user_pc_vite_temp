@@ -46,19 +46,20 @@
                 active-color="active-tab"
                 active-bg-color="active-tab"
                 :content-class="curr_active_tab">
-              <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="t('bet.betting')" />
+              <q-tab v-if="show_match_analysis_tab || show_chatroom_tab" name="bet" :content-class="viewTab === 'match_analysis' ? 'tab-bet' : ''" :ripple="false" :label="i18n_t('bet.betting')" />
               <q-tab
                 v-if="show_match_analysis_tab"
                 name="match_analysis"
                 :content-class="viewTab === 'bet' ? 'tab-match-analysis' : 'tab-match-analysis-active'"
                 :ripple="false"
-                :label="t('match_result.match_analysis')"
+                :label="i18n_t('match_result.match_analysis')"
                 alert
                 :alert-icon="icon_replay"/>
               <!-- 根据中文，繁体、聊天室ID不为空以及 chatRoomSwitch 打开 才显示聊天室Tab -->
-              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="t('bet.chatroom')" />
+              <q-tab name="chatroom" :content-class="viewTab === 'chatroom' ? 'tab-chatroom' : ''" v-if="show_chatroom_tab" :ripple="false" :label="i18n_t('bet.chatroom')" />
             </q-tabs>
             <!-- 玩法集展示内容 -->
+            
             <details-tab v-show="viewTab === 'bet' || get_is_hengping" :data_list="data_list" :scroller_scroll_top="scroller_scroll_top"></details-tab>
           </div>
 
@@ -84,8 +85,8 @@
             </div>
           </div>
           <!-- 赛事分析展示内容 -->
-          <template v-if="viewTab === 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
-            <analysis-matches></analysis-matches>
+          <template v-if="viewTab == 'match_analysis' && (!get_is_hengping || get_is_dp_video_full_screen)">
+            <analysis-matches :get_detail_data_csid="detail_data.csid"></analysis-matches>
           </template>
           <!-- 聊天室 -->
           <template v-if="viewTab === 'chatroom'">
@@ -111,13 +112,13 @@
     </div>
     <template v-if="!is_show_detail_header_data">
       <!-- 活动返回按钮 及 标题 -->
-      <!-- <div class="head yb_px14 yb_fontsize14">
-        <img
+      <div class="head yb_px14 yb_fontsize14">
+        <!-- <img
             :src="UserCtr.theme.includes('theme01') ? `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon-theme02.svg` : `${ $g_image_preffix }/image/wwwassets/bw3/svg/go-back-icon.svg`"
             @click="$common.go_where({back_to: 'go_to_back'})"
-        />
-      </div> -->
-      <!-- <no-data which='noMatch' height='500'></no-data> -->
+        /> -->
+      </div>
+      <no-data which='noMatch' height='500'></no-data>
     </template>
   </div>
 </template>
@@ -131,10 +132,10 @@ import {utils } from 'src/core/index.js';  // 公共方法
 // import websocket_data from "project_path/src/mixins/websocket/data/skt_data_info_header.js";  // websocket数据页面数据接入----赛事详情头详细推送处理
 // import common from 'src/project/mixins/constant/module/common.js';    // 公共的常用工具方法
 // 引入国际化
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 import lodash from "lodash";
 import detailsHeader from "project_path/src/pages/details/components/details-header.vue";   // 整个详情页的上部视频区域
-// import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
+import details_tab from "project_path/src/pages/details/components/details-tab.vue";         // 详情页中部玩法集tab
 // // import details_dialog from "src/components/details/details-dialog/details-dialog-template-1/details-dialog.vue";   // 详情赛事下拉,赛事列表组件
 // // import no_data from "src/project/components/common/no-data.vue";   // 无网络展示组件
 // // import videos from "project_path/src/pages/details/components/videos.vue";   // 详情页视频+动画直播区域
@@ -143,23 +144,22 @@ import detailsHeader from "project_path/src/pages/details/components/details-hea
 // // import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis";  // 详情页 或者 赛果  篮球赛事分析
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
-// import analysisMatches from './analysis-matches/index.vue';
+import analysisMatches from './analysis-matches/index.vue';
 // import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 // import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { details_main } from "./details.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { ref, defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, provide } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
-
 
 export default defineComponent({
   name: "details",
   // mixins: [websocket_data,common],
   components: {
-    // analysisMatches,
+    analysisMatches,
     "details-header": detailsHeader,
 //     // "details-dialog": details_dialog,
     // "change-header": change_header,
@@ -184,11 +184,11 @@ export default defineComponent({
 //   },
 
   setup(props, evnet) {
-    ;
     const router = useRouter();
     const route = useRoute();
     const {
-      data,
+      state_data,
+      get_detail_data,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,
@@ -197,6 +197,7 @@ export default defineComponent({
       matchid,
       curr_active_tab,
       icon_replay,
+      is_show_detail_header_data,
       details_click,
       change_go_back,
       details_refresh,
@@ -229,9 +230,8 @@ export default defineComponent({
       off_listeners,
       clear_timer
     } = details_main();
-
     watch(
-      () => data.data_list,
+      () => state_data.data_list,
       (data) => {
         if (!data) {
           return
@@ -246,24 +246,24 @@ export default defineComponent({
           })
         }
         // 玩法个数不及3个时，提前退出
-        if (lodash.get(data.data_list, 'length', 0) < 3) {
+        if (lodash.get(state_data.data_list, 'length', 0) < 3) {
           return
         }
 
         // "所有投注"下标值
-        const all_bet_index = data_list.findIndex(item => item.id === '0')
+        const all_bet_index = state_data.data_list.findIndex(item => item.id === '0')
         if (all_bet_index < 0) {
           return
         }
         // 深拷贝后操作，否则会报store错误
-        const deep_data_list = lodash.cloneDeep(data.data_list)
+        const deep_data_list = lodash.cloneDeep(state_data.data_list)
 
         // 非横屏并且"所有投注"不在最后
         if (!get_is_hengping && all_bet_index !== data.length - 1) {
-          data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
+          state_data.data_list = utils.swapArray(deep_data_list, all_bet_index, deep_data_list.length - 1)
         } else if (get_is_hengping && all_bet_index !== 1) {
           // 横屏并且"所有投注"不在热门后面
-          data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
+          state_data.data_list = utils.swapArray(deep_data_list, 1, all_bet_index)
         }
       },
       { deep: true }
@@ -271,13 +271,13 @@ export default defineComponent({
     // 切换横屏状态时，调整相应玩法集顺序
 
     watch(
-      () => data.get_is_hengping,
+      () => state_data.get_is_hengping,
       () => {
-      if (lodash.get(data.data_list, 'length', 0) < 3) {
+      if (lodash.get(state_data.data_list, 'length', 0) < 3) {
         return
       }
 
-      const deep_data_list = lodash.cloneDeep(data.data_list)
+      const deep_data_list = lodash.cloneDeep(state_data.data_list)
         // 横屏时接口返回数据时“所有投注”已排在最后(接口依据orderNo这个字段来排序返回)，解决42812BUG
         // data_list = utils.swapArray(deep_data_list, 1, deep_data_list.length - 1)
       }
@@ -286,7 +286,7 @@ export default defineComponent({
     // watch(
     //   () => get_detail_data.mid,
     //   () => {
-    //     data.viewTab = 'bet';
+    //     state_data.viewTab = 'bet';
     //     get_chatroom_info();
 
     //     // 切换赛事时，重置玩法集请求次数计数
@@ -295,7 +295,7 @@ export default defineComponent({
     // );
     // 从轮播区域跳转到详情,设置Vuex的值
     watch(
-      () => data.is_banner_jump,
+      () => state_data.is_banner_jump,
       (_new) => {
         if(_new == true){
           set_is_banner_jump(true)
@@ -304,12 +304,12 @@ export default defineComponent({
     );
     // 监听is_dialog_details(控制是否显示联赛列表)
     watch(
-      () => data.is_dialog_details,
+      () => state_data.is_dialog_details,
       (new_value, old_value) => {
         // 新的值等于true的时候也就是点击下三角准备查看联赛列表 此时调用接口:详情页下拉列表接口(/v1/m/matchDetail/getMatchDetailByTournamentIdPB)
         if (new_value) {
           // tid: 联赛id
-          let tId = data.detail_data.tid;
+          let tId = state_data.detail_data.tid;
           let params0 = {tId  };
           get_match_list(params0);
         }
@@ -317,7 +317,7 @@ export default defineComponent({
     );
     // 监听赛事状态mmp的值
     watch(
-      () => data.detail_data.mmp,
+      () => state_data.detail_data.mmp,
       (_new) => {
         // 如果是999赛事结束即调接口切换赛事
         if(_new == '999'){
@@ -331,7 +331,7 @@ export default defineComponent({
     );
     // 监听赛事状态ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛
     watch(
-      () => data.detail_data.ms,
+      () => state_data.detail_data.ms,
       (_new, _old) => {
         let arr_ms = [0, 1, 2, 7, 10, 110];
         if(!arr_ms.includes(Number(_new))){
@@ -356,14 +356,14 @@ export default defineComponent({
     //   }
     // );
     watch(
-      () => data.get_betbar_show,
+      () => state_data.get_betbar_show,
       () => {
         detail_scroller_height()
       }
     );
     // 监听tab状态
     watch(
-      () => data.viewTab,
+      () => state_data.viewTab,
       () => {
         // #TODO $utils
         // $utils.zhuge_event_send('H5_情报分析', data.UserCtr);
@@ -381,10 +381,10 @@ export default defineComponent({
 
     onMounted(() => {
       // 原created
-      data.init_event_timer_count = 0;
+      state_data.init_event_timer_count = 0;
       // 延时器
-      data.timer1_ = null;
-      data.timer2_ = null;
+      state_data.timer1_ = null;
+      state_data.timer2_ = null;
     //   cancel_ref = debounce(cancel_ref,200)
     //   set_is_full_screen(false)
       // 设置info说明弹窗不显示
@@ -407,7 +407,6 @@ export default defineComponent({
 
       on_listeners()
       initEvent()
-
     //   if(!get_play_video){
     //     set_show_video(false);
     //   }
@@ -415,10 +414,10 @@ export default defineComponent({
     //   set_change_count(0);
       detail_scroller_height()
 
-      data.is_creating = true;
-      if(data.timer1_) { clearTimeout(data.timer1_) }
-      data.timer1_ = setTimeout(() => {
-        data.is_creating = false;
+      state_data.is_creating = true;
+      if(state_data.timer1_) { clearTimeout(state_data.timer1_) }
+      state_data.timer1_ = setTimeout(() => {
+        state_data.is_creating = false;
       },500);
 
       // 原mounted
@@ -432,7 +431,7 @@ export default defineComponent({
 
       // 进入详情页直接展示赛事分析
       if (route.params.analysis) {
-        data.viewTab = 'match_analysis'
+        state_data.viewTab = 'match_analysis'
       }
     });
     onUnmounted(() => {
@@ -524,10 +523,10 @@ export default defineComponent({
     //   'set_last_route_info',
     //   'set_event_list',
     // ]),
-
+    provide('get_detail_data', get_detail_data)
     return {
-      ...toRefs(data),
-      t,
+      ...toRefs(state_data),
+      i18n_t,
       is_highlights,
       show_match_analysis_tab,
       show_chatroom_tab,

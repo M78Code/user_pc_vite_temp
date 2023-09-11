@@ -22,7 +22,6 @@ const component_modules = {}//import.meta.global(`../../../../project/yazhou-pc/
         _key = _key.substring(0,_key.length-3)
         css_obj[_key] = modules[_key].default;
       });
-      debugger
       return   css_obj
   }
  

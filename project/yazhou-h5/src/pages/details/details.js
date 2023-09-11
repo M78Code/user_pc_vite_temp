@@ -6,14 +6,15 @@ import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";
 import axios_debounce_cache from "src/core/http/debounce-module/axios-debounce-cache.js";
 // import { Level_one_category_list, Level_one_detail_data } from "./category-list.js";
-import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick } from "vue";
+import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch, nextTick, ref } from "vue";
 import UserCtr from "src/core/user-config/user-ctr.js";
 export const details_main = () => {
 const router = useRouter();
 const route = useRoute();
+const get_detail_data = ref({})
   // console.log("Store", store)
   // const state = store.getState()
-  let data = reactive({
+  let state_data = reactive({
     // 切换赛事时，重置玩法集请求次数计数
     get_category_list_req_count: 0,
     // refs['fixedHeight']
@@ -85,7 +86,6 @@ const route = useRoute();
 
     // #TODO vuex
     get_details_chatroom_data: "",
-    get_theme: "",
     // 视频url信息
     get_video_url: "get_video_url",
     // "get_bet_list",
@@ -120,7 +120,7 @@ const route = useRoute();
     get_current_menu: "get_current_menu",
     // 是否从直播进入详情
     get_play_video: "get_play_video",
-    get_detail_data: {},
+    // get_detail_data: {},
     // 视频是否全屏
     get_is_full_screen: "get_is_full_screen",
     // 商户是否需要直接跳到列表页（url地址有label参数）
@@ -147,7 +147,7 @@ const route = useRoute();
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {
     return (
-      [1, 2].includes(+data.get_detail_data.csid) &&
+      [1, 2].includes(+get_detail_data.value.csid) &&
       // GlobalAccessConfig.get_statisticsSwitch()
       true
     );
@@ -155,31 +155,31 @@ const route = useRoute();
   // 是否显示聊天室tab
   const show_chatroom_tab = computed(() => {
     // 中文，繁体并且聊天室ID不为空才显示聊天室Tab, crs 0关闭1打开
-    const { crs } = data.get_details_chatroom_data || {};
+    const { crs } = state_data.get_details_chatroom_data || {};
     const { chatRoomSwitch } = UserCtr.user_info || {};
     return (
-      ["zh", "tw"].includes(data.get_lang) && crs == 1 && chatRoomSwitch == 1
+      ["zh", "tw"].includes(state_data.get_lang) && crs == 1 && chatRoomSwitch == 1
     );
   });
   // 判断页面滑动的高度 是否显示置顶change-header
   const scroll_visible = computed(() => {
-    return data.scroller_scroll_top >= rem(1.65);
-    // return data.scroller_scroll_top >= 100;
+    return state_data.scroller_scroll_top >= rem(1.65);
+    // return state_data.scroller_scroll_top >= 100;
   });
   //接口请求是否全部完成
   const skeleton_finish = computed(() => {
-    if (data.skeleton.details && data.skeleton.list) {
+    if (state_data.skeleton.details && state_data.skeleton.list) {
       return false;
     } else {
       return true;
     }
   });
   const matchid = computed(() => {
-    return route.params.mid || data.get_detail_data.mid;
+    return route.params.mid || get_detail_data.value.mid;
   });
   // 当前tab
   const curr_active_tab = computed(() => {
-    const tab_name = data.viewTab.replace("_", "-");
+    const tab_name = state_data.viewTab.replace("_", "-");
     return `tab-${tab_name}-wrapper`;
   });
   // 重播图标
@@ -189,15 +189,15 @@ const route = useRoute();
       "user_info.merchantEventSwitchVO",
       {}
     );
-    if (configValue != 1 || eventSwitch != 1 || !get_event_list.length) {
+    if (configValue != 1 || eventSwitch != 1 || !state_data.get_event_list.length) {
       return "";
     }
     // 主题后缀
-    const suffix_theme = get_theme.includes("theme02") ? "2" : "";
+    const suffix_theme = UserCtr.theme.includes("theme02") ? "2" : "";
     // y0后缀
-    const suffix_y0 = get_theme.includes("_y0") ? "_y0" : "";
-
-    return `img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg`;
+    const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
+// img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg
+    return ``;
   });
   /**
    *@description: 点击详情任意地方显示视频对阵信息
@@ -206,8 +206,8 @@ const route = useRoute();
    */
   const details_click = () => {
     // 生成一个随机数
-    data.is_show_text = Math.random();
-    data.show_go_back = true;
+    state_data.is_show_text = Math.random();
+    state_data.show_go_back = true;
   };
   /**
    * 子组件触发父组件方法
@@ -224,7 +224,7 @@ const route = useRoute();
   const details_refresh = () => {
     if (refreshing) return;
 
-    const curr_tab = data.viewTab;
+    const curr_tab = state_data.viewTab;
     if (curr_tab === "bet") {
       // 刷新 盘口赔率信息
       api_interface();
@@ -264,7 +264,7 @@ const route = useRoute();
    *@return {Undefined} undefined
    */
   const set_details_scroll = (val) => {
-    let dom_box = data.details_box;
+    let dom_box = state_data.details_box;
     if (!dom_box) return;
     dom_box.scrollTop = dom_box.scrollTop - val;
   };
@@ -274,7 +274,7 @@ const route = useRoute();
    *@return {Undefined} undefined
    */
   const loading_list = () => {
-    data.skeleton.list = true;
+    state_data.skeleton.list = true;
   };
   /**
    *@description: 足篮显示分析页
@@ -303,13 +303,13 @@ const route = useRoute();
    */
   const tab_changed_handle = () => {
     nextTick(() => {
-      let dom_box = data.details_box;
+      let dom_box = state_data.details_box;
       // 视频和动画播放的时候，点击玩法集要重置滚动距离
-      if (get_show_video && data.scroller_scroll_top > 0) {
+      if (get_show_video && state_data.scroller_scroll_top > 0) {
         dom_box.scrollTop = 0;
       }
       // 切换玩法集后滚动至首个玩法名称处
-      else if (data.scroller_scroll_top > rem(1.65)) {
+      else if (state_data.scroller_scroll_top > rem(1.65)) {
         dom_box.scrollTop = rem(1.67);
       }
       // 当点开视频或者动画时,设置玩法区域的高度
@@ -325,7 +325,7 @@ const route = useRoute();
    *@return {Undefined} undefined
    */
   const detail_scrolling = (event) => {
-    data.scroller_scroll_top = event.target.scrollTop;
+    state_data.scroller_scroll_top = event.target.scrollTop;
 
     // 滚动时隐藏罚牌/角球等说明弹窗
     // #TODO IMIT
@@ -349,7 +349,7 @@ const route = useRoute();
    *@return {undefined} undefined
    */
   const start = (e) => {
-    data.startY = e.targetTouches[0].pageY;
+    state_data.startY = e.targetTouches[0].pageY;
   };
   /**
    * @description: 参考iphone6,7,8窗口宽度(375)模拟rem
@@ -372,19 +372,19 @@ const route = useRoute();
     let px160 = rem(1.6);
     if (
       (!!osTop && osTop + 12 >= px160) ||
-      (data.startY - e.targetTouches[0].pageY) * 1.55 >= px160
+      (state_data.startY - e.targetTouches[0].pageY) * 1.55 >= px160
     ) {
-      data.fixed_status = true;
+      state_data.fixed_status = true;
     } else if (
-      data.fixedHeight.scrollTop == 0 &&
-      (e.targetTouches[0].pageY - data.startY) * 1.5 >= px160
+      state_data.fixedHeight.scrollTop == 0 &&
+      (e.targetTouches[0].pageY - state_data.startY) * 1.5 >= px160
     ) {
-      data.fixed_status = false;
+      state_data.fixed_status = false;
     }
   };
   // 监听reset_set_hton事件(详情页投注项点击置顶),设置详情页玩法集合区域的高度为0
   const scrollMethod = () => {
-    let el_dom = data.fixedHeight;
+    let el_dom = state_data.fixedHeight;
     if (el_dom && el_dom.scrollTop != 0) {
       el_dom.scrollTop = 0;
     }
@@ -397,20 +397,20 @@ const route = useRoute();
   //  赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
   const initEvent = () => {
     // get_uid为空时循环检测进行拉取逻辑处理
-    if (data.get_uid || data.init_event_timer_count > 30) {
+    if (state_data.get_uid || state_data.init_event_timer_count > 30) {
       get_football_replay(0);
       get_match_details({
         // 赛事id
         // mid: '33522226000129832', // matchid,
         mid: matchid.value,
         // 用户id
-        cuid: data.get_uid,
+        cuid: state_data.get_uid,
       });
-      data.init_event_timer_count = 0;
+      state_data.init_event_timer_count = 0;
     } else {
-      data.init_event_timer_count++;
-      clearTimeout(data.init_event_timer);
-      data.init_event_timer = setTimeout(() => {
+      state_data.init_event_timer_count++;
+      clearTimeout(state_data.init_event_timer);
+      state_data.init_event_timer = setTimeout(() => {
         initEvent();
       }, 500);
     }
@@ -435,7 +435,7 @@ const route = useRoute();
    * @param {String} event_code 事件code
    */
   const get_football_replay = (event_code) => {
-    //   if ([route.params.csid, lodash.get(get_detail_data, 'csid')].includes('1')) {
+    //   if ([route.params.csid, lodash.get(get_detail_data.value, 'csid')].includes('1')) {
     //     const params = {
     //       mid: route.params.mid,
     //       device: 'H5',
@@ -458,32 +458,32 @@ const route = useRoute();
    * 赛事详情页面接口(/v1/m/matchDetail/getMatchDetailPB)
    */
   const get_match_details = (params) => {
+    
     let api =
-      data.get_menu_type == 3000
+    state_data.get_menu_type == 3000
         ? api_common.get_DJ_matchDetail_MatchInfo
         : api_common.get_matchDetail_MatchInfo;
     api(params)
-      .then(({ data: {data: res_data}, ts, code }) => {
+      .then((res) => {
+        let { data: res_data, ts, code } = res
         // #TODO
-        code = 200;
-        console.log("code===res_data", res_data, code);
         // 当状态码为0400500, data:null,data:{} 去到列表中的早盘
         if (code == "0400500" || !res_data || Object.keys(res_data).length === 0) {
           // router.push({ name: "matchList" });
-        } else if (code === 200) {
+        } else if (code == 200) {
           if (res_data && Object.keys(res_data).length) {
             match_detail_data_handle(res_data)
           } else {
             // 赛事下发999后, 显示空空如也
-            data.skeleton.details = true
-            data.skeleton.list = true
-            data.is_show_detail_header_data = false
+            state_data.skeleton.details = true
+            state_data.skeleton.list = true
+            state_data.is_show_detail_header_data = false
 
             // 赛事结束后，1.5s后返回主列表页面——bug35360
-            clearTimeout(data.back_main_list_timer)
-            data.back_main_list_timer = setTimeout(() => {
+            clearTimeout(state_data.back_main_list_timer)
+            state_data.back_main_list_timer = setTimeout(() => {
               // 如果不是演播厅的，才有退出回到 列表
-              if(lodash.get(data.get_video_url, 'active') != 'lvs' ){
+              if(lodash.get(state_data.get_video_url, 'active') != 'lvs' ){
                 // $common.go_where({back_to: 'go_to_back'})
               }
             }, 1500)
@@ -492,36 +492,37 @@ const route = useRoute();
       })
       .catch((err) => {
         console.error(err);
-        data.requestCount++;
+        state_data.requestCount++;
         // 兜底处理，若连续5次拉取接口数据失败，则从仓库取基本数据
         // 间隔3s拉取（服务端节流限制）
-        if (data.requestCount < 5) {
-          clearTimeout(data.get_match_detail_timer);
-          data.get_match_detail_timer = setTimeout(() => {
+        if (state_data.requestCount < 5) {
+          clearTimeout(state_data.get_match_detail_timer);
+          state_data.get_match_detail_timer = setTimeout(() => {
             initEvent();
           }, 3000);
         } else {
-          const match_base_info_obj = lodash.cloneDeep(data.get_match_base_info_obj);
+          const match_base_info_obj = lodash.cloneDeep(state_data.get_match_base_info_obj);
           match_detail_data_handle(match_base_info_obj);
         }
       });
   };
   // 当前赛事数据后续处理
   const match_detail_data_handle = (res_data) => {
-    if (data.skeleton) {
-      data.skeleton.details = true;
-      data.skeleton.list = true;
+    if (state_data.skeleton) {
+      state_data.skeleton.details = true;
+      state_data.skeleton.list = true;
       if (!res_data || Object.keys(res_data).length <= 0) {
         router.replace({ name: "category", params: { mid: matchid.value } });
         return false;
       }
 
-      data.requestCount = 0;
-      data.is_show_detail_header_data = true;
-      data.detail_data = res_data;
+      state_data.requestCount = 0;
+      state_data.is_show_detail_header_data = true;
+      state_data.detail_data = res_data;
+      
       // #TODO 暂时使用假数据
-      // data.detail_data = Level_one_detail_data();
-      data.math_list_data = [res_data];
+      // state_data.detail_data = Level_one_detail_data();
+      state_data.math_list_data = [res_data];
       // updateHotReqTime(Date.now())
 
       // 克隆一份;
@@ -533,8 +534,7 @@ const route = useRoute();
       });
       // store.dispatch({ type: 'detailsReducer/set_detail_data',  payload: cloneData })
 
-      data.get_detail_data = cloneData;
-
+      get_detail_data.value = cloneData;
       // 设置赛事盘口状态 赛事关盘状态  0:active 开, 1:suspended 封, 2:deactivated 关, 11:锁
       // let params1 = { sportId: res_data.csid, mid: matchid.value };
       // params1 = params1; // get_odds_list
@@ -551,10 +551,10 @@ const route = useRoute();
     if (sessiong_store) {
       let store_data = JSON.parse(sessiong_store);
       if (store_data.tId == params.tId) {
-        data.math_list_data = store_data.list;
+        state_data.math_list_data = store_data.list;
       }
     }
-    if (data.get_menu_type == 3000) {
+    if (state_data.get_menu_type == 3000) {
       Object.assign(params, { isESport: 1 });
     }
     /**
@@ -584,7 +584,7 @@ const route = useRoute();
           let sessiong_store = JSON.stringify(store_data);
           // 将sessiong_store的值存在sessionStorage里面
           sessionStorage.setItem("match_list_ofdetails", sessiong_store);
-          data.math_list_data = data;
+          state_data.math_list_data = data;
           set_sanjiao_is_bool(true);
         }
       });
@@ -595,10 +595,10 @@ const route = useRoute();
    *@return {obj} init_req 是否是初次进入详情
    */
   const get_odds_list = async (
-    params = { sportId: data.get_detail_data.csid, mid: matchid.value },
+    params = { sportId: get_detail_data.value.csid, mid: matchid.value },
     init_req
   ) => {
-    // data.data_list = Level_one_category_list();
+    // state_data.data_list = Level_one_category_list();
     const _get_category_list = () => {
       // #TODO 暂时使用假数据
 
@@ -606,7 +606,7 @@ const route = useRoute();
         .get_category_list(params)
         .then((res) => {
           const res_data = lodash.get(res, "data.data");
-          data.data_list = res_data;
+          state_data.data_list = res_data;
 
           // 给vuex 设置玩法集数据
           // set_details_tabs_list(res_data);
@@ -615,9 +615,9 @@ const route = useRoute();
             data: res_data
           });
           // 当玩法集存在激活得项，循环找到对用得id，找得到就不管，找不到就赋值为玩法集第一项
-          if (data.get_details_item && res_data.length) {
+          if (state_data.get_details_item && res_data.length) {
             const set_details_item_flag = res_data.some(
-              (item) => item.id === data.get_details_item
+              (item) => item.id === state_data.get_details_item
             );
             // 找不到就赋值为玩法集第一项
             if (!set_details_item_flag) {
@@ -641,22 +641,22 @@ const route = useRoute();
         })
         .finally(() => {
           // 玩法集接口请求结果返回后，再请求盘口信息接口
-          console.log("category", data.category);
+          console.log("category", state_data.category);
           let get_category_list_req_count = ''
           // if ($refs['category']) {
-          if (data.category) {
+          if (state_data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading
-            const flag = data.get_category_list_req_count ? "hide_loading" : "";
+            const flag = state_data.get_category_list_req_count ? "hide_loading" : "";
             // $refs['category'].initEvent(flag, init_req).then(() => {
-            data.category.initEvent(flag, init_req).then(() => {
+              state_data.category.initEvent(flag, init_req).then(() => {
               if (!data.get_category_list_req_count) {
-                data.get_category_list_req_count = 1;
+                state_data.get_category_list_req_count = 1;
               } else {
-                data.get_category_list_req_count++;
+                state_data.get_category_list_req_count++;
               }
 
               // 获取赛果数据后，滑动到顶部
-              if (data.get_menu_type === 28 && route.name === "match_result") {
+              if (state_data.get_menu_type === 28 && route.name === "match_result") {
                 document.querySelector(".match-header-result").scrollTop = 0;
               }
             });
@@ -672,8 +672,8 @@ const route = useRoute();
         _get_category_list();
       }else{
         // 记录timer
-        clearTimeout(data.axios_debounce_timer)
-        data.axios_debounce_timer = setTimeout(() => {
+        clearTimeout(state_data.axios_debounce_timer)
+        state_data.axios_debounce_timer = setTimeout(() => {
           //直接发请求    单次数 请求的方法
           _get_category_list();
         }, info.delay_time || 1000);
@@ -711,17 +711,17 @@ const route = useRoute();
         trans_msc.push([key, obj[key]].join("|"));
       }
       // 有赛事比分存在的情况；
-      data.detail_data.msc = trans_msc;
+      state_data.detail_data.msc = trans_msc;
       if (flag == "c801") {
         //c801有比分，但是也要合并其他数据
-        Object.assign(data.detail_data, payload);
+        Object.assign(state_data.detail_data, payload);
       }
     } else {
       // 合并数据对象
-      Object.assign(data.detail_data, payload);
+      Object.assign(state_data.detail_data, payload);
     }
     // 克隆解决问题
-    let cloneData = lodash.cloneDeep(data.detail_data);
+    let cloneData = lodash.cloneDeep(state_data.detail_data);
     // set_detail_data(cloneData);
     store.dispatch({
       type: 'SET_DETAIL_DATA',
@@ -731,11 +731,11 @@ const route = useRoute();
   const set_native_detail_data = (str) => {
     // 判断是否有相对应的赛事
     let arr_msc = [];
-    lodash.forEach(lodash.get(data.detail_data, "msc"), (item) => {
+    lodash.forEach(lodash.get(state_data.detail_data, "msc"), (item) => {
       arr_msc.push(item.split("|")[0]);
     });
     if (!arr_msc.includes(str.split("|")[0])) {
-      data.detail_data.msc.push(str);
+      state_data.detail_data.msc.push(str);
     }
   };
   /**
@@ -747,7 +747,7 @@ const route = useRoute();
     // mcms = 3 删除玩法集
     // mcms = 2 新增玩法集
     // 无论增减 都重新调用玩法集接口：category/getCategoryList
-    let n_params = { sportId: data.detail_data.csid, mid: matchid.value };
+    let n_params = { sportId: state_data.detail_data.csid, mid: matchid.value };
     get_odds_list(n_params);
   };
   /**
@@ -764,15 +764,15 @@ const route = useRoute();
       // 早盘日期的参数 早盘 和 串关都要加 (字符串)
       md: get_md != -1 ? get_md : "",
       // 赛事种类id
-      csid: data.detail_data.csid,
+      csid: state_data.detail_data.csid,
       // 联赛id
-      tid: data.detail_data.tid,
+      tid: state_data.detail_data.tid,
       // 排序 int 类型 1按热门排序 2按时间排序(整型)
       sort: get_sort_type,
       // 搜索关键词 赛事搜索(字符串)
       keyword: get_search_txt || "",
       // 用户id或者uuid
-      // cuid: data.get_uid,
+      // cuid: state_data.get_uid,
       // 赛事id
       mid: matchid.value,
     };
@@ -823,16 +823,16 @@ const route = useRoute();
    */
   const detail_scroller_height = () => {
     // 投注栏收起后的底部条预留空间
-    if (data.get_betbar_show) {
-      data.scroller_height = window.innerHeight - rem(0.5);
-      // data.scroller_height = window.innerHeight - 100;
+    if (state_data.get_betbar_show) {
+      state_data.scroller_height = window.innerHeight - rem(0.5);
+      // state_data.scroller_height = window.innerHeight - 100;
     } else {
-      data.scroller_height = window.innerHeight;
+      state_data.scroller_height = window.innerHeight;
     }
   };
   const on_listeners = () => {
     // #TODO IMIT
-    data.emitters = [
+    state_data.emitters = [
       // useMittOn(MITT_TYPES.EMIT_IS_BOOL_DIALOG_DETAILS, info_icon_click_h).off,
       // useMittOn(MITT_TYPES.EMIT_RESET_SET_HTON, info_icon_click_h).off,
       // useMittOn(MITT_TYPES.EMIT_REFRESH_DETAILS, info_icon_click_h).off,
@@ -852,7 +852,7 @@ const route = useRoute();
   };
   const off_listeners = () => {
     // #TODO IMIT
-    data.emitters.map((x) => x());
+    state_data.emitters.map((x) => x());
   };
   // 清除当前组件所有定时器
   const clear_timer = () => {
@@ -883,7 +883,7 @@ const route = useRoute();
   };
 
   return {
-    data,
+    state_data,
     is_highlights,
     show_match_analysis_tab,
     show_chatroom_tab,
@@ -892,6 +892,7 @@ const route = useRoute();
     matchid,
     curr_active_tab,
     icon_replay,
+    get_detail_data,
     details_click,
     change_go_back,
     details_refresh,
