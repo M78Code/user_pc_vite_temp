@@ -8,6 +8,7 @@ import lodash_ from "lodash"
 class BetData {
   constructor() { }
   init_core() {
+    this.deviceType = 1  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
     // 当前赔率
     this.cur_odd = "eu";
     // 投注项id集合
@@ -579,6 +580,16 @@ get_play_id() {
 get_play_name() {
  
 }
+
+/**
+ * @description: 设置设备类型
+ * @return {String} 设备类型
+ */
+set_device_type(val) {
+  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
+  this.deviceType = val
+}
+
   
 }
 export default new BetData();
