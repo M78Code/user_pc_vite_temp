@@ -320,6 +320,8 @@
     justify-content: space-between;
     align-items: center;
     height: 0.4rem;
+    background: var(--q-color-page-bg-color-96);
+    border-color: var(--q-color-border-color-5);
 
     &.show-sport {
       border-radius: 0.12rem 0.12rem 0 0;

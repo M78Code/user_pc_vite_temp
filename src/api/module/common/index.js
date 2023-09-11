@@ -31,7 +31,8 @@ export const post_match_full_list = (params) => {
   if(params.query){
     url += params.query;
   }
-  const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
+  // const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
+  const queryParams = {"cuid":"507915205315200008","euid":"40303","type":4,"sort":1,"device":"v2_h5_st","category":1,"md":"","hpsFlag":0}
   return http.post(`${prefix_job}${url}`, queryParams, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 

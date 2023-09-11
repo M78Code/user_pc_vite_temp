@@ -32,6 +32,6 @@ export default {
     /** 阴影 */
     'site-header-box-shadow1': '0 0 4px 2px rgb(0 0 0 / 10%)',
     /** 背景图 */
-    'site-header-bg-img1': url('app/public/yazhou-pc/image/theme01/balance_refresh.svg'),
-    'site-header-bg-img2': url('app/public/yazhou-pc/image/theme01/balance_refresh_hover.svg'),
+    'site-header-bg-img1': `url('app/public/yazhou-pc/image/theme01/balance_refresh.svg')`,
+    'site-header-bg-img2': `url('app/public/yazhou-pc/image/theme01/balance_refresh_hover.svg')`,
 }
