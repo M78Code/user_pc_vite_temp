@@ -1,1 +1,23 @@
-export default {};
+export default {
+         // 主题色通用 背景颜色
+         "bg-common-day":"#FF7000",
+         "bg-common-night":"#FFB001",
+         "yb-bg-color1": "#191c24",
+         "yb-bg-color2": "#ffb001",
+         "yb-bg-color3": "#1f222b",
+         "yb-bg-color4": "#99a3b1",
+         "yb-bg-color5": "#22262f",
+         "yb-bg-color6": "#5a6074",
+         "yb-bg-color7": "#3c3f4c",
+         "yb-bg-color8": "#666b7d",
+         "yb-bg-color9": "#262933",
+         "yb-bg-color10": "#e4ebf1",
+         "yb-bg-color11": "#2b2f38",
+         "yb-bg-color13": "#000000",
+         "yb-bg-color14": "#4d5564",
+         "yb-bg-color15": "#546bec",
+         "yb-bg-color16": "#272a33",
+         "yb-bg-color17": "#181a21",
+         "yb-bg-color18": "#21232d",
+         "yb-bg-color20": "#262c",
+};
