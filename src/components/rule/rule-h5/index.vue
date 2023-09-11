@@ -1,7 +1,7 @@
 <template>
     <div class="description-main" :class="{ black_bg: UserCtr.theme == 'theme02' }">
-        <simple-header>
-            {{ i18n_t('common.rule_description') }}
+        <simple-header :title="i18n_t('common.sports_betting_rules')" use_component_key="SimpleHeader_H5">
+            <!-- {{ i18n_t('common.rule_description') }} -->
         </simple-header>
         <div class="description-content">
             <iframe style="width:100%;height: 100%" allow="autoplay" frameborder="0" scrolling="no" :src="more_lang"
@@ -15,7 +15,7 @@ import { ref, onMounted, watch, getCurrentInstance, defineComponent } from 'vue'
 import lodash from "lodash"
 import { i18n_t } from "src/boot/i18n.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
+import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"

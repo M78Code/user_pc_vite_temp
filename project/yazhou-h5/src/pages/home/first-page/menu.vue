@@ -57,7 +57,7 @@
               <div class="column items-center">
                 <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
                 <span class="match-type">{{
-                  menu_h5_data.menus_i18n_map[item.mi]
+                  base_data.menus_i18n_map[item.mi]
                 }}</span>
                 <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
                 <span class="match-label ellipsis-2-lines">{{

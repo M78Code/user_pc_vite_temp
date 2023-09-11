@@ -9,9 +9,9 @@
     <!-- 视频画中画组件 -->
     <moveVideo></moveVideo>
     <p class="font_match_results">1</p>
-    <simple-header @refresh="sub_search" :data_loaded="refresh_finish">
+    <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')">
       <!-- 赛果 -->
-      <span>{{ i18n_t("common.amidithion") }}</span>
+      <!-- <span>{{ i18n_t("common.amidithion") }}</span> -->
     </simple-header>
 
     <!-- 中间内容 S-->
@@ -63,7 +63,7 @@
 import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "./results.config.js";
 import results from "src/components/match-results/components/results.vue";
-// import simpleHeader from "project_path/src/components/site-header/simple-header.vue";
+// import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
 // import moveVideo from "project_path/src/components/video-replay/move-video.vue";
 // import resultHeader from './components/result-header.vue'

@@ -1368,6 +1368,7 @@ let b={"code":"0000000","data":{"data":[{"mcid":"","tnjc":"FIFA 2023 - 土超 (8
     // this.MatchDataWarehouseInstance.set_quick_query_list(b.data.data);
     this.MatchDataWarehouseInstance.set_quick_query_list([b.data.data[0]]);
 	// this.MatchDataWarehouseInstance.remove_match('2675977');
+	this.MatchDataWarehouseInstance.ws_ctr.C105({});
 	return
 	this.MatchDataWarehouseInstance.upd_match({
 	"mcid" : "",
