@@ -4,7 +4,6 @@
  */
 import WsQueue from "./ws-queue.js";
 import { WsRev } from "./ws-ctr.js";
-import WsMan from  "./ws-man.js"
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
 import { UserCtr } from "src/core/index.js";

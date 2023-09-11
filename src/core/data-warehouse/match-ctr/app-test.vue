@@ -11,7 +11,6 @@
 </template>
 <script>
 import MatchDataBase from "./match-ctr"
-import _ from 'lodash'
 export default {
   // reactive state
   data() {
@@ -68,7 +67,7 @@ export default {
           // 普通类型不做处理
         }
       }
-      _.mergeWith(obj_obj, src_obj,customizer);
+      lodash.mergeWith(obj_obj, src_obj,customizer);
     },
     /**
      * @description: 数据合并优化版函数
@@ -114,7 +113,7 @@ export default {
           // 普通类型不做处理
         }
       }
-      _.mergeWith(obj_obj, src_obj,customizer);
+      lodash.mergeWith(obj_obj, src_obj,customizer);
     },
 
      clear_any_obj(obj) {

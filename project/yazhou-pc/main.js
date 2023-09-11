@@ -16,7 +16,10 @@ import router from './src/router/index.js'
 //引入自定义指令
 import useDirective from "src/directives/index.js"
 import App from "./App.vue";
+import lodash from "lodash";
 const myApp = createApp(App);
+myApp.config.globalProperties.lodash = lodash;
+window.lodash = lodash;
 // 使用自定义指令
 useDirective(myApp)
 console.log(myApp,'myApp');

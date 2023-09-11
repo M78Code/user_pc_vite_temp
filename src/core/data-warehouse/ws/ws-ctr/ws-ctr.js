@@ -2,7 +2,6 @@
  * @Author: hanmar
  * @Description: ws通信接收消息类
  */
-import * as _ from "lodash";
 import WsCmd from "./ws-cmd.js";
 /**
  * @Description:ws接收消息类

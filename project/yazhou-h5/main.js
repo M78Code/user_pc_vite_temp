@@ -18,9 +18,10 @@ window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 // and placed in same folder as main.js
 import App from "./App.vue";
 import router from './src/router/index'
-
+import lodash from "lodash";
 const app = createApp(App);
-
+app.config.globalProperties.lodash = lodash;
+window.lodash = lodash;
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });

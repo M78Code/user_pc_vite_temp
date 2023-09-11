@@ -24,7 +24,6 @@
  * MatchDataWarehouseInstance.upd_match(match); 更新赛事数据-深度合并数据(有盘口信息合并时使用)
  * MatchDataWarehouseInstance.upd_match(match, 1); 更新赛事数据-简单合并数据(无盘口信息合并时使用)
  */
-import lodash from "lodash";
 import MatchDataBaseWS from  "./match-ctr-ws.js"
 export default class MatchDataBase
 {

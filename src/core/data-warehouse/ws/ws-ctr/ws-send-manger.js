@@ -3,7 +3,6 @@
  * @Author: hanmar
  * @Description: ws消息发送管理
  */
-import lodash from "lodash";
 export default class WsSendManger {
   // 链接异常次数
   static err_count = 0;
