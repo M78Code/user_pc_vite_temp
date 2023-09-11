@@ -85,9 +85,10 @@ import { i18n_t} from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_msc } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
-import {utils } from 'src/core/index.js'
+import { utils } from 'src/core/index.js'
 import {MenuData } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
+import { api_common } from "src/api/index.js";
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],
@@ -102,6 +103,9 @@ const route = useRoute()
 const router = useRouter()
 const store_state = store.getState()
 const emitters = ref({})
+
+const sub_play_scroller = ref(null)
+const sub_play_scroll_item = ref(null)
 
 const wsl_flag = ref(sessionStorage.getItem('wsl') == 7777)
 // 罚牌玩法描述显示
@@ -254,7 +258,7 @@ watch(() => get_c303_data_change.value, (curr) => {
         };
         params.is_user = 'ws-user';
         let fun_temp = ()=>{
-          get_match_base_info_by_mids(params).then(res => {
+          api_common.get_match_base_info_by_mids(params).then(res => {
             if(res.data && res.data[0] && res.data[0][o_hps_key]){
               // 根据业务需求，修改冠军小节玩法  1585 单对应
               Object.assign(match_info.value,res.data[0]);
@@ -510,7 +514,7 @@ const fapai_way_tips_status_change_h = (flag) => {
 }
 // 存储次要玩法  赛事id  展开/折叠  状态
 const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_list) => {
-  let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
+  let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value) || {};
   unfold_map[match_info.value.mid] = `${item.id}-${item.unfold}`;
   // 如果是波胆玩法开
   if(item.id == 18){
@@ -614,7 +618,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 
   // 滚动次要玩法选中项到屏幕显示区域
   nextTick (()=>{
-    utils.tab_move(sub_i, $refs.sub_play_scroller, $refs.sub_play_scroll_item)
+    utils.tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
   })
 
   if(item && item.title && item.id && operate_type !=='is-auto') {   // 解决bug 24153
@@ -671,7 +675,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
     if(operate_type == 'is-user' || operate_type == 'mounted'){
       params.is_user = operate_type;
       let fun_temp = ()=>{
-        get_match_base_info_by_mids(params).then(res => {
+        api_common.get_match_base_info_by_mids(params).then(res => {
           if(res.data && res.data[0] && res.data[0][o_hps_key]){
             // 根据业务需求，修改冠军小节玩法  1585 单对应
             Object.assign(match_info.value,res.data[0]);

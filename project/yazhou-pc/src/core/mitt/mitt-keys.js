@@ -358,3 +358,12 @@ export const EMIT_VIDEO_ZONE_EVENT_CMD = 'EMIT_VIDEO_ZONE_EVENT_CMD'
 
 /**  详情tab玩法列表数据 */
 export const EMIT_SET_HANDICAP_THIS = 'EMIT_SET_HANDICAP_THIS'
+
+
+ /**  球种下拉框更新选中球种 */
+ export const EMIT_CHANGE_SPORT = 'EMIT_CHANGE_SPORT'
+ /**  下拉框选择球种 */
+ export const EMIT_SElECT_SPORT = 'EMIT_SElECT_SPORT'
+ /**  监听是否关闭日期选择器 */
+ export const EMIT_STARTTIME_SHOWFUNC = 'EMIT_STARTTIME_SHOWFUNC'
+

@@ -62,7 +62,7 @@
 
 import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "./results.config.js";
-import results from "src/components/match-results/components/results.vue";
+// import results from "src/components/match-results/components/results.vue";
 // import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
 // import moveVideo from "project_path/src/components/video-replay/move-video.vue";

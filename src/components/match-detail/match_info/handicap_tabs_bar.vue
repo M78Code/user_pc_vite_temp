@@ -206,7 +206,7 @@ export default defineComponent({
           玩法集名称: item.marketName,
           玩法集ID: id,
           区域位置:
-            this.whitchDetail && this.whitchDetail == "details"
+            props.whitchDetail && props.whitchDetail == "details"
               ? "详情页"
               : "右侧列表",
         };

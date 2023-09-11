@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div id="q-app">
+  <div id="q-app" class="theme0">
     <appload v-if="init_load"></appload>
   </div>
 </template>
@@ -25,6 +25,9 @@ import { enter_params } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+
+import './src/css/pages/public.scss'
+import './src/css/pages/main-layout.scss'
 
 const token_key = STANDARD_KEY.get("token"); //token键
 export default {
