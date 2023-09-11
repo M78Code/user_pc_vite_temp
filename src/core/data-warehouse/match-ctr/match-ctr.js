@@ -26,7 +26,6 @@
  */
 import lodash from "lodash";
 import MatchDataBaseWS from  "./match-ctr-ws.js"
-import { obj } from "licia/through.js";
 export default class MatchDataBase
 {
   /**
@@ -374,6 +373,8 @@ export default class MatchDataBase
     }
     // 检测清除快速查询对象里面的垃圾挂载点
     this.syn_del_quick_query_obj();
+    // ws命令赛事订阅
+    this.ws_ctr.scmd_c8();
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
