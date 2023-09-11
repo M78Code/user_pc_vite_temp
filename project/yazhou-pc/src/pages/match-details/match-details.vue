@@ -90,7 +90,7 @@ import detailHeader from "./components/detail-header.vue";
 // 组件
 // 盘口模板
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
-import matchListHot from "project_path/src/pages/match-list/match_list_hot.vue";
+import matchListHot from "project_path/src/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
 const {
   load_detail_statu,

@@ -72,7 +72,7 @@ const get_s_count_data = ref(store_state.get_s_count_data)
     }
   })
   const max_win_money = computed(()=>{
-    max_win_money2 = finally_winmoney || (item_.maxWinAmount / 100).toFixed(2);
+    max_win_money2.value = finally_winmoney || (item_.maxWinAmount / 100).toFixed(2);
     return max_win_money2;
   })
 
