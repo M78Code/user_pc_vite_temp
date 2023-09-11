@@ -32,8 +32,8 @@
         <!-- 开赛时间 -->
         <span v-if="detail_data.ms == 0">
           <span v-if="start_time" class="fz_12" style="font-weight:400">
-            <!-- 距离开赛时间小于一小时显示倒计时 -->
-            {{t("list.after_time_start",[longTime])}}
+            <!-- 距离开赛时间小于一小时显示倒计时 TODO:,[longTime]-->
+            {{i18n_t("list.after_time_start")}}
           </span>
           <template v-else>
             <div class="sj-time-day">
@@ -45,10 +45,10 @@
         </span>
         <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
         <span v-else-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-          {{t(`ms[${detail_data.ms}]`)}}
+          {{i18n_t(`ms[${detail_data.ms}]`)}}
         </span>
         <template v-else>
-          <span>{{t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
+          <span>{{i18n_t('mmp')[detail_data.csid][detail_data.mmp]}}</span>
           <!-- 倒/正计时组件 -->
           <!-- <counting-down
             :title="null"
@@ -67,8 +67,8 @@
       <!-- 比赛分数or开赛时间 -->
       <span v-if="detail_data.ms == 0">
         <span v-if="start_time" class="fz_12" style="font-weight:400">
-          <!-- 距离开赛时间小于一小时显示倒计时 -->
-          {{t("list.after_time_start",[longTime])}}
+          <!-- 距离开赛时间小于一小时显示倒计时 TODO:,[longTime]-->
+          {{i18n_t("list.after_time_start")}}
         </span>
         <span v-else>
           <!-- {{ format_H_M(format_time_zone_time(+detail_data.mgt), +detail_data.mgt) }} -->
@@ -76,7 +76,7 @@
       </span>
       <!-- 赛前切滚球 ms=110时:显示即将开赛 -->
       <span v-if="detail_data.ms == 110" class="fz_12" style="font-weight:400">
-        {{t(`ms[${detail_data.ms}]`)}}
+        {{i18n_t(`ms[${detail_data.ms}]`)}}
       </span>
       <!-- 棒球的进攻方绿点在大比分两侧展示 -->
       <span v-if="detail_data.csid == '3' && detail_data.mat" :class="detail_data.mat == 'home'?'s-active-dot':'s-touming'" style="position:relative;bottom:0.05rem;"></span>
@@ -152,7 +152,7 @@ import { format_time_zone_time, format_H_M,format_total_score } from "src/core/f
 import lodash from "lodash";
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt/index.js"
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";;
 
 //国际化
@@ -555,6 +555,8 @@ export default defineComponent({
       eports_scoring,
       get_menu_type,
       get_goto_detail_matchid,
+      i18n_t,
+      UserCtr,
       formatTotalScore,
       hide_home_goal,
       hide_away_goal,

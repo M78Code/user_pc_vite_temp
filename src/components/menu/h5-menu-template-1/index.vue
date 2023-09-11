@@ -25,36 +25,38 @@
         </div>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
-      <div class="sub-menu-date-w" v-if="menu_1_type !== 30">
+      <div class="sub-menu-date-w" v-if="menu_type !== 30">
         <!-- :class="{
-          simple: menu_wrap_simple && menu_1_type != 7,
+          simple: menu_wrap_simple && menu_type != 7,
           zaopan: [4, 11, 28, 3000].includes(+menu_type),
           esport: 3000 == menu_type,
         }" -->
         <!-- 二级菜单, 三级菜单, 四级菜单  -->
         <div class="sport-m-container">
           <!-- :class="{
-            simple: sport_container_simple && menu_1_type != 7,
-            'shadow-down': menu_1_type != 7,
+            simple: sport_container_simple && menu_type != 7,
+            'shadow-down': menu_type != 7,
           }" -->
           <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
           <div class="s-menu-container flex">
-
-             <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
-             <sub-menu-specially
-              v-show=" GlobalAccessConfig.get_playAllShow() && menu_1_type == 1"
+            <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+            <sub-menu-specially
+              v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')"
-              v-if=" GlobalAccessConfig.get_playAllShow()"
+              v-if="GlobalAccessConfig.get_playAllShow()"
             >
-            <!-- :count="all_sport_count_calc()" -->
-            <!-- @click="select_all_sub_menu_handle" -->
+              <!-- :count="all_sport_count_calc()" -->
+              <!-- @click="select_all_sub_menu_handle" -->
 
-              <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
+              <span
+                class="sport-icon-wrap"
+                :class="get_sport_icon(get_sport_all_selected)"
+              ></span>
             </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
               <div
                 class="sport-menu-item flex justify-center"
-                v-show="[7, 28].includes(menu_1_type) ? item.ct > 0 : true"
+                v-show="[7, 28].includes(menu_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)"
               >
                 {{ item.mi }}
@@ -74,13 +76,13 @@
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
           <div
             class="d-c-wrapper"
-            :class="{ esport: menu_1_type == 7 }"
+            :class="{ esport: menu_type == 7 }"
             v-if="is_show_three_menu"
           >
             <div
               class="date-container"
               ref="date_menu_container"
-              :class="{ esport: menu_1_type == 7 }"
+              :class="{ esport: menu_type == 7 }"
             >
               <div
                 class="date-menu-item"
@@ -90,7 +92,7 @@
                   'is-favorite': show_favorite_list,
                   'hidden-champion':
                     show_favorite_list &&
-                    menu_1_type == 7 &&
+                    menu_type == 7 &&
                     date_menu_item.menuId === '-999',
                 }"
                 @click="set_menu_lv3(date_index, 'date_click')"
@@ -205,8 +207,9 @@ let date_menu_list = ref([]);
 // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
 let virtual_sports_results_tab = ref([]);
 const show_selector_sub = ref(false); //展示弹出框
-// 一级菜单mi
-const menu_1_type = ref(0);
+// 一级菜单mi ref
+const { menu_type, update_time } = menu_h5_data;
+
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   console.error("是否展示三级", date_menu_list.value.length);
@@ -226,23 +229,22 @@ const is_show_four_menu = computed(() => {
 const pop_main_items = ref([]); //弹出框数据
 const show_favorite_list = ref(false); //是否显示收藏列表
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
-watch(menu_h5_data.update_time, (update_time) => {
-  console.error(update_time, menu_h5_data.menu_list, "1111111111");
+watch(update_time, (update_time) => {
+  console.error(menu_h5_data.menu_list,update_time)
   const [lv1, pop] = menu_h5_data.get_sport_menu();
-  menu_1_type.value = menu_h5_data.get_menu_type(); //当前菜单的type
   menu_list.value = lv1; //一级
   pop_main_items.value = pop; //pop级
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
   virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
 });
+
 /**
  * 一级菜单事件
  */
 function set_menu_lv1(item, index, is_pop) {
   show_selector_sub.value = false;
   //弹出框点击
-  menu_1_type.value = item.mi;
   if (is_pop) {
     menu_list.value.splice(1, 1, item);
   }
@@ -255,9 +257,6 @@ function set_menu_lv1(item, index, is_pop) {
     set_menu_lv2(item.sl[0], 0);
   }
 }
-setTimeout(() => {
-menu_h5_data.set_query_menu({m:3})
-}, 3300);
 /**
  * 二级菜单事件
  */

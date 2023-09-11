@@ -10,12 +10,11 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
 const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
-    console.error('ssssss',bet_list)
     let order_min_max_money = bet_list.map( item =>{
         let obj = {
             "sportId": item.sportId,   // 赛种id
             "marketId": item.marketId,  //盘口id
-            "deviceType": 1,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
+            "deviceType": BetData.deviceType,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
             "matchId": item.matchId,  // 赛事id
             "oddsFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
             "oddsValue":  item.odds,  // 赔率 万位
@@ -147,7 +146,7 @@ const submit_handle = type => {
         "userId": UserCtr.get_uid(),
         "acceptOdds": 2,  // 接受赔率变化情况
         "tenantId": 1,
-        "deviceType": 2,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
+        "deviceType": BetData.deviceType,  // 设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备
         "currencyCode": "CNY",  // 币种
         "deviceImei": "",   // 设备imei码，只有手机有，没有不添加
         "fpId": "",  // 指纹id 

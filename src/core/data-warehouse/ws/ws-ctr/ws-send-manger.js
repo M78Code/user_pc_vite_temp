@@ -3,6 +3,7 @@
  * @Author: hanmar
  * @Description: ws消息发送管理
  */
+import lodash from "lodash";
 export default class WsSendManger {
   // 链接异常次数
   static err_count = 0;
@@ -79,9 +80,9 @@ export default class WsSendManger {
    */
   get_all_obj_c8(key_module){
     let ret = null;
-    if(!_.isEmpty(this.obj)) {
+    if(!lodash.isEmpty(this.obj)) {
       // 克隆数据
-      let ret_obj = _.cloneDeep(this.obj[key_module]);
+      let ret_obj = lodash.cloneDeep(this.obj[key_module]);
       // 组装数据
       let { cmd, list, cufm, marketLevel } =  ret_obj || {};
       ret = { cmd, list, cufm, marketLevel};

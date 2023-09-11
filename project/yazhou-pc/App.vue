@@ -61,9 +61,9 @@ const init_load = ref(false); //用于加载是否完成
       base_data.init();
       // 投注信息 初始化
       BetData.init_core();
-      console.error('111111111')
+      // 设置设备类型 2 pc
+      BetData.set_device_type(2);
       BetViewDataClass.init();
-      console.error('ssasssss')
       // 布局初始化
       LayOutMain_pc.init();
       init_load.value = true;
