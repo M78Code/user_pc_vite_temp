@@ -103,7 +103,7 @@ import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 
 const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
 // import { Platform } from 'quasar'
-const { menu_type } =menu_h5_data;
+const { menu_type ,update_time} =menu_h5_data;
   // mixins:[common],
   let is_effecting_ref = ref(true)
   let is_refreshing = ref(false)
@@ -441,10 +441,8 @@ const { menu_type } =menu_h5_data;
       // 赛果禁用筛选
       if(28 == menu_type.value){
         footer_menulist.value.forEach(f_m => {
-
-          //TODO： 后续 10000 是什么？ 
-          //  topMenuReducer.current_main_menu 当前选中的主菜单
-          if(f_m.id == 3 && lodash.get(topMenuReducer.current_main_menu,'menuId') == 10000){
+          // 赛果 二级菜单 10000也不知道是什么
+          if(f_m.id == 3 &&  menu_h5_data.get_curr_sub_menu_type() == 10000){
             f_m.is_disabled = true;
           }else{
             f_m.is_disabled = false;
@@ -462,6 +460,7 @@ const { menu_type } =menu_h5_data;
             }
           });
         }
+        // 赛果 二级菜单 100是 gz/国足?
         if([100].includes(menu_h5_data.get_curr_sub_menu_type())){
           footer_menulist.value.forEach(f_m => {
             if(f_m.id == 3){
@@ -473,7 +472,7 @@ const { menu_type } =menu_h5_data;
       else{
         footer_menulist.value.forEach(f_m => {
           // 电竞下冠军不可点击关注
-          if (f_m.id === 1 && menu_type.value === 7 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
+          if (f_m.id === 1 && menu_type.value === 7 && lodash.get(menu_h5_data.current_lv_2_menu, 'date_menu.menuType') == 100) {
             f_m.is_disabled = true
           } else {
             if(f_m.id == 3&& footerMenuReducer.show_favorite_list){
@@ -604,7 +603,7 @@ const { menu_type } =menu_h5_data;
     const bottom_option_show = computed(() => {
       return function (item) {
         return !(
-            (menu_type.value == 7 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
+            (menu_type.value == 7 && lodash.get(menu_h5_data.current_lv_2_menu, 'date_menu.menuType') == 100 && item.id == 0)
         )
       }
     })
@@ -712,18 +711,19 @@ const { menu_type } =menu_h5_data;
       sub_menu_l_show = false;
       first_sub_menu_changed();
     })
-    watch(() => topMenuReducer.current_main_menu.menuId, () => {
-      virtual_disable_follow_filter();
-    })
-    watch(menu_type, () => {
-      virtual_disable_follow_filter();
-    })
-    watch(() => topMenuReducer.curr_third_menu_id, () => {
+    watch(() => [
+    menu_type, //一级菜单变化
+    update_time, //菜单变化
+    // topMenuReducer.current_main_menu.menuId, //二级菜单变化
+    // topMenuReducer.curr_third_menu_id //三级菜单变化
+    ], () => {
       virtual_disable_follow_filter();
     })
     watch(() => UserCtr.lang, () => {
       set_footer_menulist();
     })
+    
+    //二级菜单变化
     watch(() => menu_h5_data.get_curr_sub_menu_type(), (new_v) => {
       init_play_way_selected();
       // 32014 确定每次点击菜单 都重置为独赢

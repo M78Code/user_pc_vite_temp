@@ -8,7 +8,12 @@ import { ref, watch } from "vue";
 import base_data_instance from "src/core/base-data/base-data.js";
 class MenuData {
   constructor() {
+    const that = this;
     this.update_time = ref(Date.now()); //更新触发
+    //通知数据变化 防止调用多次 20毫秒再更新
+    this.update = lodash.debounce(() => {
+      that.update_time.value = Date.now();
+    }, 20);
     // "1": "滚球",
     // "2": "今日",
     // "3": "早盘",
@@ -84,12 +89,16 @@ class MenuData {
   }
   init() {
     base_data_instance.init(); //初始化菜单数据
-    watch(base_data_instance.base_data_version, () => {
-      const { mew_menu_list_res } = base_data_instance; //获取主数据
-      this.recombine_menu(mew_menu_list_res);
-      this.update_time.value = Date.now();
-      // current_menu.value = menu_list.value[0];
-    });
+    //菜单数据有变化
+    watch(
+      base_data_instance.base_data_version,
+      lodash.debounce(() => {
+        const { mew_menu_list_res } = base_data_instance; //获取主数据
+        this.recombine_menu(mew_menu_list_res);
+        this.update_time.value = Date.now();
+        // current_menu.value = menu_list.value[0];
+      }, 50)
+    );
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -676,12 +685,7 @@ class MenuData {
       this.update();
     }
   }
-  update() {
-    clearTimeout(this._tid);
-    this._tid = setTimeout(() => {
-      this.update_time.value = Date.now();
-    }, 10);
-  }
+
   //选中一级menu
   set_current_lv1_menu(item, index) {
     this.current_lv_1_menu = item;
