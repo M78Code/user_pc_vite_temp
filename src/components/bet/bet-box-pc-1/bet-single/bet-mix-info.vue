@@ -23,14 +23,14 @@
     <template v-else>
       <div id="bet_input_defaut_one" v-if="BetData.bet_s_list.length > 0">
         <!--第一个输入框的-->
-        <bet-mix-input
+        <bet-input
           ref="bet-mix-input-0"
           class="bet-input"
           :index="0"
           :item="BetData.bet_s_list[0]"
           :key="`0-${BetData.bet_s_list[0].custom_id}`"
           v-if="BetData.bet_s_list.length>1"          
-        ></bet-mix-input>
+        ></bet-input>
       </div>
     </template>
   </div>
@@ -38,7 +38,7 @@
 <script setup>
 import bet_mix_info from "./config/bet_mix_info.js";
 import BetMixItem from "./bet-mix-item.vue";
-import BetMixInput from "./bet-mix-input.vue";
+import BetInput from "./bet-input.vue";
 import BetMixResult from "./bet-mix-result.vue";
 
 import BetData from "src/core/bet/class/bet-data-class.js";
