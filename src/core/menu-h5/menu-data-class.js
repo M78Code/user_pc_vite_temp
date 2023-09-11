@@ -5,7 +5,11 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { ref, watch } from "vue";
+import { SessionStorage } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
+const Cache_key = {
+  CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
+};
 class MenuData {
   constructor() {
     const that = this;
@@ -41,38 +45,40 @@ class MenuData {
 
     // 上一次的菜单 lv1
     this.previous_lv_1_menu = undefined;
-    this.previous_lv_1_menu_i = 0;
+    this.previous_lv_1_menu_i = undefined;
 
     //当前的菜单 lv1
     this.current_lv_1_menu = undefined;
-    this.current_lv_1_menu_i = 0;
+    this.current_lv_1_menu_i = undefined;
 
     // //上一次的菜单 lv2
     // this.previous_lv_2_menu = undefined;
     // this.previous_lv_2_menu_i = 0;
-    //当前的菜单 lv2
+    //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项
+    this.sport_all_selected = false; //是否选中了全部
+
     this.current_lv_2_menu = {
       id: "",
       type: "",
       name: "",
     };
-    // this.current_lv_2_menu_i = 0;
+    this.current_lv_2_menu_i = undefined;
     // //上一次的菜单 lv3
     // this.previous_lv_3_menu = {};
     // this.previous_lv_3_menu_i = 0;
     //当前的菜单 lv3
-    this.current_lv_3_menu = {};
-    this.current_lv_3_menu_i = 0;
+    this.current_lv_3_menu = null;
+    this.current_lv_3_menu_i = undefined;
     //当前的菜单 lv4
     this.current_lv_4_menu = {};
-    this.current_lv_4_menu_i = 0;
+    this.current_lv_4_menu_i = undefined;
 
     //================主列表用的  结束==================
     //热门的
     this.hot_tab_menu = {};
     //国际化
     this.menus_i18n_map = {};
-    this.menu_list = [];
+    this.menu_list = SessionStorage.get("menu_list", []);
     this.menu_original_data = {};
     // 页脚菜单
     this.footer_sub_menu_id = "";
@@ -95,9 +101,32 @@ class MenuData {
       lodash.debounce(() => {
         const { mew_menu_list_res } = base_data_instance; //获取主数据
         this.recombine_menu(mew_menu_list_res);
-        this.update_time.value = Date.now();
+        this.update();
         // current_menu.value = menu_list.value[0];
       }, 50)
+    );
+    //设置从缓存拿到的数据
+    const cache_data = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+    for (const key in cache_data) {
+      if (Object.hasOwnProperty.call(this, key)) {
+        if (["menu_type"].includes(key)) {
+          this[key].value = cache_data[key];
+        } else {
+          this[key] = cache_data[key];
+        }
+      }
+    }
+    this.update();
+  }
+  /**
+   * 设置缓存
+   * obj [Object] 需要设置的缓存  key要和本类系统哦
+   */
+  set_cache_class(obj) {
+    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+    SessionStorage.set(
+      Cache_key.CACHE_CRRENT_MEN_KEY,
+      lodash.assign({}, current, obj)
     );
   }
   //=============================
@@ -144,8 +173,9 @@ class MenuData {
       menu_list.splice(1, 0, pop_main_items[0]);
     }
     this.menu_lv1 = menu_list;
+    //如果没有设定过菜单
     if (!this.current_lv_1_menu) {
-      this.set_current_lv1_menu(menu_list[0], 0);
+      this.set_current_lv1_menu(this.menu_list[0], 0);
     }
     return [menu_list, pop_main_items];
   }
@@ -543,6 +573,9 @@ class MenuData {
         date_menu.menuName = date_menu.name;
       });
     });
+    this.set_cache_class({
+      menu_lv2: res_data,
+    });
     this.menu_lv2 = res_data;
     // // 如果上次刷新的，则保存上一次的状态，如果是点击的则初始化下标 为 默认第一个 0
     // if (type == "dir_click") {
@@ -658,14 +691,16 @@ class MenuData {
       menu_jingzu,
       // result_menu,
     ];
+    this.set_cache_class({
+      menu_list: this.menu_list,
+    });
     return this.menu_list;
   }
   //根据路由参数 设置菜单信息 选中一级menu
   set_query_menu({ m, s, t, mt1, mt2 }) {
-    console.error(2222222, m, s);
-    if (!m && !mt1) return;
-    //  // 初始化 路由的参数
-
+    if (!m && !mt1) {
+      return;
+    }
     //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
     //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
     const idx = lodash.findIndex(this.menu_list, {
@@ -687,24 +722,43 @@ class MenuData {
   }
 
   //选中一级menu
-  set_current_lv1_menu(item, index) {
-    this.current_lv_1_menu = item;
-    this.current_lv_2_menu_i = index;
-    this.menu_type.value = item.mi; //设置一级菜单menutype
-    if (item.mi != 28) this.menu_lv2 = item.sl || []; //设置二级菜单
+  set_current_lv1_menu(current_lv_1_menu, current_lv_1_menu_i) {
+    this.current_lv_1_menu = current_lv_1_menu;
+    this.current_lv_1_menu_i = current_lv_1_menu_i;
+    this.menu_type.value = current_lv_1_menu.mi; //设置一级菜单menutype
+    this.set_cache_class({
+      current_lv_1_menu,
+      current_lv_1_menu_i,
+      menu_type: current_lv_1_menu.mi,
+    });
+    //设置二级菜单
+    if (current_lv_1_menu.mi != 28) {
+      this.menu_lv2 = current_lv_1_menu.sl || [];
+      this.set_cache_class({
+        menu_lv2: this.menu_lv2,
+      });
+    }
   }
   //选中二级menu
-  async set_current_lv2_menu(item, index) {
-    this.current_lv_2_menu = item;
-    this.current_lv_2_menu_i = index;
+  async set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i) {
+    this.current_lv_2_menu = current_lv_2_menu;
+    this.current_lv_2_menu_i = current_lv_2_menu_i;
     // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
     this.get_date_menu_api_when_subchange();
+
+    this.set_cache_class({
+      current_lv_2_menu,
+      current_lv_2_menu_i,
+    });
   }
   //选中三级menu
-  set_current_lv3_menu(item, index) {
-    this.current_lv_3_menu = item;
-    this.current_lv_3_menu_i = index;
-
+  set_current_lv3_menu(current_lv_3_menu, current_lv_3_menu_i) {
+    this.current_lv_3_menu = current_lv_3_menu;
+    this.current_lv_3_menu_i = current_lv_3_menu_i;
+    this.set_cache_class({
+      current_lv_3_menu,
+      current_lv_3_menu_i,
+    });
     if (this.is_results_virtual_sports()) {
       // 如果有三级菜单
       // 赛果下边的 虚拟体育 的四级菜单 数据
@@ -727,13 +781,17 @@ class MenuData {
     }
   }
   //选中4级menu
-  set_current_lv4_menu(item, index) {
-    this.current_lv_4_menu = item;
-    this.current_lv_4_menu_i = index;
+  set_current_lv4_menu(current_lv_4_menu, current_lv_4_menu_i) {
+    this.current_lv_4_menu = current_lv_4_menu;
+    this.current_lv_4_menu_i = current_lv_4_menu_i;
+    this.set_cache_class({
+      current_lv_4_menu,
+      current_lv_4_menu_i,
+    });
   }
   //根据一级菜单筛选二级菜单列表
   get_current_lv_2_menu_list() {
-    let mi = this.current_menu;
+    let mi = this.menu_type.value;
     return (
       base_data.mew_menu_list_res.find((x) => x.mi == mi) || {
         sl: [],

@@ -43,10 +43,10 @@
             <sub-menu-specially
               v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')"
+              @click="select_all_sub_menu_handle"
               v-if="GlobalAccessConfig.get_playAllShow()"
             >
               <!-- :count="all_sport_count_calc()" -->
-              <!-- @click="select_all_sub_menu_handle" -->
 
               <span
                 class="sport-icon-wrap"
@@ -230,15 +230,14 @@ const pop_main_items = ref([]); //弹出框数据
 const show_favorite_list = ref(false); //是否显示收藏列表
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (update_time) => {
-  console.error(menu_h5_data.menu_list,update_time)
-  const [lv1, pop] = menu_h5_data.get_sport_menu();
+  console.error(menu_h5_data.menu_list, update_time);
+  const [lv1, pop] = menu_h5_data.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
   menu_list.value = lv1; //一级
   pop_main_items.value = pop; //pop级
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
   virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
 });
-
 /**
  * 一级菜单事件
  */
@@ -249,12 +248,18 @@ function set_menu_lv1(item, index, is_pop) {
     menu_list.value.splice(1, 1, item);
   }
   menu_h5_data.set_current_lv1_menu(item, index);
-  //赛果
-  if (item.mi == 28) {
-    menu_h5_data.get_results_menu();
-  } else {
-    current_menu.value = item.sl;
-    set_menu_lv2(item.sl[0], 0);
+
+  switch (item.mi) {
+    case 1://滚球下的全部
+    if(this.sport_all_selected)
+      select_all_sub_menu_handle();
+      break;
+    case 28: //赛果
+      menu_h5_data.get_results_menu();
+      break;
+    default:
+      current_menu.value = item.sl;
+      set_menu_lv2(item.sl[0], 0);
   }
 }
 /**
@@ -277,6 +282,36 @@ async function set_menu_lv2(item, index) {
   // } else {
   //   menu_h5_data.set_current_lv3_menu(null);
   // }
+}
+/**
+
+ /**
+     * 二级菜单 滚球 点击全部
+     */
+function select_all_sub_menu_handle() {
+  let data_list = menu_h5_data.current_lv_1_menu.sl;
+  let changeSubmenu = null;
+  this.sub_menu_i = null; // 重置上一次储存二级菜单下标
+  let selected_sub_menu_i_list = [];
+  let euid_list = [];
+  // this.set_useid_ievname(0); // 重置上次储存二级菜单muid
+  // 二级菜单 下标
+  data_list.forEach((sub_m, sub_i) => {
+    if (sub_m.ct) {
+      let euid = menu_h5_data.get_euid(sub_m.mi);
+      euid_list.push(euid);
+      selected_sub_menu_i_list.push(sub_i);
+    }
+  });
+  // 设置 全部二级菜单euid
+  changeSubmenu = euid_list.join(",");
+
+  // this.set_current_second_menu(changeSubmenu);
+  // this.set_current_sub_menuid(changeSubmenu);
+  // 设置 全部二级菜单下index
+  // this.selected_sub_menu_i_list = selected_sub_menu_i_list;
+  // 设置缓存，代表全部
+  // this.set_sport_all_selected(true);
 }
 /**
  * 三级菜单事件
@@ -332,6 +367,7 @@ function is_menu_show(item) {
   }
   return reslut;
 }
+menu_h5_data.set_query_menu(route.query)
 </script>
 
 <style scoped lang="scss">
