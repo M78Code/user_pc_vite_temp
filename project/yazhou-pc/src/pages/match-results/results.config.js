@@ -170,16 +170,23 @@ export const useGetResultConfig = () => {
     state.is_first_load = true;
     // get_serverTime(); //获取服务器时间
 
-    
     //生成事件监听
-    handle_generat_emitters()
+    let event_pairs=  [
+      // 球种下拉框更新选中球种
+      { type:"change-sport", callback: setSport} ,
+      // 下拉框选择球种
+      { type:"select-sport", callback: choose_sport} ,
+      // 监听是否关闭日期选择器
+      { type:"startTimeShowFunc", callback: startTimeShowFunc} ,
+      
+      ]
+      let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
+      if(emitters_off){emitters_off()}  
 
- 
   });
 
   onMounted(() => {
  //移除相应监听事件 //视图销毁钩子函数内执行
-    if(emitters_off){emitters_off()}  
     /**清除定时器 */
     clearTimeout(state.timer);
     state.timer = null;
@@ -1165,21 +1172,6 @@ export const useGetResultConfig = () => {
     const img_mouseleave=()=> {
       state.is_show = false;
     };
-      //生成事件监听 
-    const handle_generat_emitters=()=>{
-      let event_pairs=  [
-      // 球种下拉框更新选中球种
-      { type:"change-sport", callback: setSport} ,
-      // 下拉框选择球种
-      { type:"select-sport", callback: choose_sport} ,
-      // 监听是否关闭日期选择器
-      { type:"startTimeShowFunc", callback: startTimeShowFunc} ,
-      
-      ]
-      let  { emitters_off } =  useMittEmitterGenerator(event_pairs)
-      // state.emitters_off=emitters_off
-      
-      }
       return {
         ...toRefs(state),
 

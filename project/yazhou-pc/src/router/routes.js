@@ -69,11 +69,11 @@ const routes = [
     component: () => import("../pages/bet-record/index.vue"),//project/yazhou-pc/src/pages/bet-record/index.vue
   },
   // 赛果
-  // {
-  //   path: "/match_results",
-  //   name: "match_results",
-  //   component: () => import('project_path/src/pages/match_results/match_results.vue'),
-  // },
+  {
+    path: "/match_results",
+    name: "match_results",
+    component: () => import('project_path/src/pages/match-results/match-results.vue'),
+  },
   // 公告
   {
     path: "/announce",
