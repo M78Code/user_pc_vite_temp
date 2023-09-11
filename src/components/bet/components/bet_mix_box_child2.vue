@@ -32,8 +32,10 @@
       <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
         <!-- 上部纯展示组件 展示盘口赔率玩法对阵信息-->
-        <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
+        <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
+        </bet-mix-show> -->
+        <bet-mix-show >
         </bet-mix-show>
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
@@ -47,11 +49,11 @@
         </template>
 
         <!-- 串关主体 金额输入框-->
-        <template>
+        <!-- <template>
           <bet-mix-detail :value_="item" :index_="index" v-for="(item, index) of get_s_count_data" :key="index"
             :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit" :bet_min_max_money="bet_min_max_money">
           </bet-mix-detail>
-        </template>
+        </template> -->
 
         <!-- 多项单注 金额输入框-->
         <!-- <template v-if="!BetData.bet_is_mix && BetData.bet_list.length > 1 && view_ctr_obj.bet_is_combine && ![3, 6].includes(+get_bet_status)">
