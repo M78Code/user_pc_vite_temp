@@ -936,11 +936,31 @@ export default class MatchDataBase
         // console.error('new_value=',new_value);
         // 为数组的操作
         new_value && old_value && (old_value.length = new_value.length)
-        // old_value.forEach(element => {
-        //   this.assign_with(old_value,new_value);
-        // });
-        // 删除多余的数组项
-        // old_value.splice(len,old_value.length-len);
+        // console.error('old_value===',JSON.stringify(old_value));
+        // console.error('new_value===',JSON.stringify(new_value));
+        for (let i = 0; i < new_value.length; i++) {
+          const item = new_value[i];
+          let type2 = typeof(item);
+          if('object' == type){
+            if(Array.isArray(item)){
+              type = 'array';
+            }
+          }
+          // console.error(i,'-old_value=item==',JSON.stringify(old_value[i]));
+          // console.error(i,'-new_value=item==',JSON.stringify(item));
+          if('object' == type2){
+            if(item){
+              this.assign_with(old_value[i],item);
+            } else {
+              old_value[i] = new_value[i];
+            }
+          } else if('array' == type2){
+            item && this.assign_with(old_value[i],item);
+          }
+          // console.error(i,'-old_value=item=>>>=',JSON.stringify(old_value[i]));
+          // console.error(i,'-new_value=item=>>>=',JSON.stringify(item));
+        }
+        return old_value;
       } else {
         // 普通类型不做处理
       }
