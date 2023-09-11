@@ -1,7 +1,7 @@
 
 <template>
   <q-card flat class="bet-mix-input-card" @click="click_handle">
-    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+    <div style="display:none;">{{ BetData.bet_data_class_version }}</div>
     {{ BetData.bet_data_class_version }} ------1111-----
     <q-card-section>
       <!--线 2串1 金额-->
@@ -17,52 +17,15 @@
           <!-- {{ '@' + format_odds(item.oddFinally,item.csid) }} -->
         </span>
       </div>
-      <!--金额输入区域包括键盘 -->
-      <div class="row bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
-        <!--金额输入区-->
-        <currency-input class="bet-input input-border"
-          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(BetViewDataClass.input_money_state) && money != null) || BetViewDataClass.error_code == 'M400005' }"
-          :placeholder="`${$t('bet.money_range')} ${ref_data.min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${ref_data.max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
-          v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
-            hideCurrencySymbol: true
-          }" :precision="{
-  min: 0,
-  max: 2
-}" :valueRange="{
-  min: 0,
-  max: input_max
-}" :currency="null" autocomplete="off" maxLength="11" locale="zh" />
-        <!-- 输入框中最右侧 *1-->
-        <div class="bet-max-btn">X{{ count }}</div>
-        <!-- 输入框中最右侧的一个叉叉-->
-        <div :class="`bet-input-close-${count.length}`" @click.stop="bet_clear_handle" v-show="!is_empty_money">
-          <icon name="icon-failure" size="12px" />
-        </div>
-      </div>
-      <!--最高可赢以及金额-->
-      <template v-if="is_show_keyboard">
-        <div class="row bet-win yb-fontsize12">
-          <div class="col df-jb">
-            <!--最高可赢额-->
-            {{ $t('common.maxn_amount_val') }}
-          </div>
-          <!--最高可赢金额-->
-          <div class="col-auto bet-win-money yb-number-bold">
-            {{ format_currency(ref_data.win_money) }}
-          </div>
-          <div class="row input-keyboard">
-            <!--投注键盘-->
-            <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord" :input_max_money="ref_data.max_money"
-              :status="ref_data.active"></bet-keyboard>
-          </div>
-        </div>
-      </template>
+     
+
     </q-card-section>
   </q-card>
 </template>
 <script setup>
 import { ref, reactive, onMounted, onUnmounted, computed } from "vue"
 import BetKeyboard from "../common/bet-keyboard.vue"
+import { useCurrencyInput } from 'vue-currency-input'
 
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
@@ -73,6 +36,7 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
 const is_empty_money = ref(false)
 const money = ref('')
+const input_max = ref(100000)
 
 const ref_data = reactive({
   max_money: "",
@@ -120,7 +84,7 @@ const set_ref_data_bet_money = () => {
 }
 
 // 串关数量
-const count = computed(()=>{
+const count = computed(() => {
   return 1
 })
 
