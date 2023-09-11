@@ -16,25 +16,26 @@
       </div>
     </div>
     <!--  足球背景图片 -->
-    <div class="football_field" v-if="get_detail_data.csid == 1">
-      <!-- 加载第一项 和 最后一项-->
-      <div class="first_and_last"
-           :class="[
-             `location${item.position}`,
-             (number == 3 && item.position > 8) ? calculatelast(item) : '',
-             (number == 2 && item.position > 9) ? calculatelast(item) : '',
-             (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
-           ]"
-           v-for="(item, i) in line_up_data.up"
-           v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
-           (number == 1 && item.position > 10)) && item.position<=11"
-           :key="i+'f_l'"
-      >
-        <div>
-          <span>{{ item.shirtNumber || 0 }}</span>
+    <div class="football_field" v-if="get_detail_data.csid == 1" >
+      <!-- 加载第一项 和 最后一项 -->
+      <template v-for="(item, i) in line_up_data.up" :key="i+'f_l'">
+        <div class="first_and_last"          
+          :class="[
+            `location${item.position}`,
+            (number == 3 && item.position > 8) ? calculatelast(item) : '',
+            (number == 2 && item.position > 9) ? calculatelast(item) : '',
+            (number == 1 && item.position > 10 && item.position <=11) ? calculatelast(item) : '',
+          ]"       
+          v-if="((number == 3 && item.position > 8) || item.position == 1 || (number == 2 && item.position > 9) ||
+          (number == 1 && item.position > 10)) && item.position<=11"
+          
+        >
+          <div>
+            <span>{{ item.shirtNumber || 0 }}</span>
+          </div>
+          <span class="ellipsis">{{ item.thirdPlayerName }}</span>
         </div>
-        <span class="ellipsis">{{ item.thirdPlayerName }}</span>
-      </div>
+      </template>
       <!--  加载中间的内容  -->
       <!--  如果首发阵容是两列，前面有两列 比如 4-2-4 -->
       <template v-if="number_columns.length == 2">
@@ -161,16 +162,17 @@
 
 <script setup>
 import { api_analysis } from "src/api/index.js";
-import { ref, computed, nextTick, onUnmounted, onMounted } from "vue";
+import { ref, computed, nextTick, onUnmounted, onMounted, inject } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
+import lodash from "lodash"
 //国际化
 
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-
+const get_detail_data = inject('get_detail_data', {})
   const radio_button_index = ref(0)
   const tab_radio_button = ref(['曼联', '德联'])
   // 列表数据
@@ -193,15 +195,15 @@ import { i18n_t } from "src/boot/i18n.js";
     //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整
   useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
   get_list()
-  tab_radio_button.value = [get_detail_data.mhn, get_detail_data.man]
+  tab_radio_button.value = [get_detail_data.value.mhn, get_detail_data.value.man]
   })
 
   const match_id = computed(() => {
     // 赛事id
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   // computed: {
-  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data','get_lang']),
+  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data.value','get_lang']),
   // },
   // 当首发阵容 有数值是5列的时候，
   const calculation_radian = (index) => {
@@ -237,7 +239,7 @@ import { i18n_t } from "src/boot/i18n.js";
     try {
       let parameter = {
         // 2079863足球测试id  2185843篮球测试id
-        matchInfoId: match_id,
+        matchInfoId: match_id.value,
         // 主客队标识(1主队，2客队)
         homeAway: radio_button_index.value + 1
       }
@@ -245,14 +247,14 @@ import { i18n_t } from "src/boot/i18n.js";
       if(code == 200 && Object.keys(data).length > 0) {
         // 如果是足球赛事
         line_up_data.value = data
-        if(get_detail_data.csid == 1){
+        if(get_detail_data.value.csid == 1){
           if(radio_button_index.value == 0){
             filter_numbers(line_up_data.value.homeFormation)
             // filter_numbers('4-2-3-1')
           }else{
             filter_numbers(line_up_data.value.awayFormation)
           }
-        }else if(get_detail_data.csid == 2){
+        }else if(get_detail_data.value.csid == 2){
           //  如果是 篮球赛事
           basketball_data.value = data.up
         }

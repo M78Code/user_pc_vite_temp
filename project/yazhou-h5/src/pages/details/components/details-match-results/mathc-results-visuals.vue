@@ -7,6 +7,7 @@
   <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
     <div class="title" v-if="!get_analyze_show">{{ i18n_t('match_result.statistics') }}</div>
     <div class="designation">
+      {{statistics_table}}
       <span class="ellipsis">{{ statistics_table.mhn }}</span>
       <span class="ellipsis">{{ statistics_table.man }}</span>
     </div>
@@ -108,7 +109,7 @@ import { onUnmounted, ref, watch } from "vue";
       type: Array
     }
   })
-  let statistics_table = ref([])
+  let statistics_table = ref({})
   let timer1_ = ref(null)
 
   // watch: {
