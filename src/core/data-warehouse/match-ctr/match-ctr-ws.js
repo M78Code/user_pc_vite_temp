@@ -256,7 +256,7 @@ export default class MatchDataBaseWS
     //   "cd": {
     //       "csid": "1",
     //       "mhs": 1,
-    //       "mid": "1011530",
+    //       "mid": "2675977",
     //       "ms": "0"
     //    },
     //    "cmd": "C104",
@@ -408,22 +408,7 @@ export default class MatchDataBaseWS
     //   "ctsp": "1600152527052",
     //   "ld": "0af5033320200915144846729c7f4853"
     // }
-    if(ws_obj){
-      // ws命令数据信息
-      let cd_obj = lodash.get(ws_obj,'cd');
-      // 赛事标识
-      let mid = lodash.get(ws_obj,'cd.mid');
-      // 实时时间歘
-      let ctsp = lodash.get(ws_obj,'ctsp');
-      // 获取快速查询对象中的mid赛事对象
-      let match = this.match_ctr.get_quick_mid_obj(mid);
-      if(match){
-        // // 数据同步逻辑
-        // this.match_ctr.assign_with(match, cd_obj);
-        // // 同步更新快速查询对象中的赛事状态
-        // this.match_ctr.upd_match_all_status(mid, cd_obj);
-      }
-    }
+    this.C105(ws_obj);
   }
 
   /**
@@ -570,10 +555,10 @@ export default class MatchDataBaseWS
     // C303滚球新赛事通知
     // {
     //     "cd": {
-    //         "hid": "1224279756891123714",
-    //         "hpid": "2",
+    //         "hid": "143285122423241435",
+    //         "hpid": "19",
     //         "hs": 0,
-    //         "mid": "455991"
+    //         "mid": "2675977"
     //     },
     //     "cmd": "C303",
     //     "ctsp": "1580726140231"
