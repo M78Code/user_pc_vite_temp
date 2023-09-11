@@ -263,4 +263,43 @@ onUnmounted(()=>{
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.keyboard {
+  height: 216px;
+  -webkit-overflow-scrolling: touch;
+  font-size: 20px;
+  font-weight: 500;
+  color: #1A1A1A;
+
+}
+.key-cell {
+  flex: 1;
+  box-sizing: border-box;
+  line-height: 54px;
+  text-align: center;
+  border: 1px solid #E9E9E9;
+  background:  #ffffff0D;
+}
+.key-cell {
+  &:first-child { // 左侧第一排MAX的样式
+    background: #F5F5F5;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+  &.del-key {
+    background: cadetblue #ffffff0D no-repeat center center;
+    opacity: 0.9;
+    color: #B8B8B8;
+  }
+  &.shadow-show {
+    color: #595959!important;
+  }
+}
+.del-key{
+  // background: url('../../../assets/images/bet/bet_key_delect.png') no-repeat 50%;
+  background-size: 23px 14px;
+}
+
+
+</style>

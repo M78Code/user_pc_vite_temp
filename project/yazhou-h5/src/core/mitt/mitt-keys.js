@@ -261,4 +261,6 @@ export const EMIT_HOME_TAB = "EMIT_HOME_TAB";
 
 export const IFRAME_VIDEO_VOLUME = "IFRAME_VIDEO_VOLUME";
 export const EMIT_EVENT_DATA = "EMIT_EVENT_DATA";
+// 限额
+export const EMIT_REF_DATA_BET_MONEY = "EMIT_REF_DATA_BET_MONEY"
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------
