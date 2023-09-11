@@ -35,7 +35,10 @@
         <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show> -->
-        <bet-mix-show >
+        <bet-mix-show
+        v-if="bet_view_obj"
+        :bet_view_obj="bet_view_obj"
+        >
         </bet-mix-show>
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
@@ -206,7 +209,7 @@
 </template>
 
 <script setup>
-// import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
+import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
 import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
@@ -226,7 +229,7 @@ import { UserCtr } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
-import { useMittOn, useMittEmit,MITT_TYPES } from "src/core/mitt/index.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 
 
@@ -238,6 +241,7 @@ const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
+const bet_view_obj = ref()  // 单个投注对象 调试
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -290,28 +294,34 @@ const is_bet_check_rc = () => {
 }
 
 onMounted(() => {
-  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY,set_ref_data_bet_money)
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money)
   let munu_type = true
-  if(munu_type){
+  if (munu_type) {
     // get_query_bet_amount_common()
   }
 })
 
-const set_ref_data_bet_money = () =>{
-  console.error('BetViewDataClass',BetViewDataClass)
-  let markInfo = lodash.get(BetViewDataClass,'bet_special_h5.latestMarketInfo')
-  markInfo.forEach(item => {
-    let obj = {
-      'playName':item.playName,  // 玩法名称
-      'playId':item.playId,   // 玩法id
-      'away':item.away,  // 客队
-      'home':item.home,  // 主队
-    }
-    bet_list_data.value.push(obj)
-  });
+const set_ref_data_bet_money = () => {
+ 
+  let markInfo = lodash.get(BetViewDataClass, 'bet_special_h5')
+  console.error('BetViewDataClass', markInfo)
+  // markInfo.forEach(item => {
+  //   let obj = {
+  //     bs: {
+  //       'playName': item.playName,  // 玩法名称
+  //       'playId': item.playId,   // 玩法id
+  //       'away': item.away,  // 客队
+  //       'home': item.home,  // 主队
+  //     }
+  //   }
+  //   bet_list_data.value.push(obj)
+  // });
   bet_min_max_money.value = BetViewDataClass.bet_min_max_money
+  bet_view_obj.value = markInfo
+  console.error('sssssss', bet_view_obj.value)
+
 }
-onUnmounted(()=>{
+onUnmounted(() => {
   useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 })
 </script>
@@ -344,7 +354,9 @@ onUnmounted(()=>{
   -webkit-overflow-scrolling: touch;
   border-radius: 0.158rem 0.158rem 0 0;
   border: 1px solid;
-  background-color: #ffffff;;
+  background-color: #ffffff;
+  ;
+
   .yb_pl14 {
     margin-right: 0.01rem;
 

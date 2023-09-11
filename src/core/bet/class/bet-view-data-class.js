@@ -134,7 +134,6 @@ class BetViewData {
     })
 
     this.bet_min_max_money = bet_amount
-    this.bet_special_h5 = obj
     this.set_bet_view_version()
   }
   // 显示投注框

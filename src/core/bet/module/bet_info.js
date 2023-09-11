@@ -166,8 +166,12 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     tid_name: item.tnjc,  // 联赛名称
     match_ms: item.ms, // 赛事阶段
   }
+  BetViewDataClass.bet_special_h5 = item
+
+
   BetData.set_bet_read_write_refer_obj(bet_obj)
   get_query_bet_amount_common(bet_obj)
   BetViewDataClass.set_bet_show(true)
+  
 }
 

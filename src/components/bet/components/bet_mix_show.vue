@@ -4,7 +4,7 @@
 -->
 
 <template>
-  <div class="bet-mix-show"  @click="handleonmousedown">
+  <div class="bet-mix-show" @click="handleonmousedown">
     <!-- 失效蒙层 -->
     <div class="locked-shadow" v-if="(pankou_change == 2 || hids || has_pre.own_)"></div>
     <div class="row justify-start items-center"
@@ -34,7 +34,7 @@
           <div class="col-3 row justify-end items-center">
             <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
               <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{
-                format_odds(value_show.csid,bet_success_obj.oddsValues ) }}</template>
+                format_odds(value_show.csid, bet_success_obj.oddsValues) }}</template>
               <template v-else>{{ odds_value() }}</template>
             </span>
             <!-- 红升绿降 -->
@@ -48,16 +48,18 @@
           <span :class="UserCtr.lang == 'vi' && BetData_H5.is_bet_success_status ? 'col-6' : 'col-7'">
             <template v-if="lodash.get(value_show, 'hps[0].hl[0].hmt') == 0">{{ $t('bet_record.ing')
             }}&thinsp;</template>
-            <template v-if="get_is_champion()">{{ lodash.get(value_show, 'hps[0].hl[0].hps') }}</template>
+            <template v-if="get_is_champion">{{ lodash.get(value_show, 'hps[0].hl[0].hps') }}</template>
             <!-- 投注成功后的玩法名称用接口返回的 -->
             <!--<template v-else-if="bet_success_obj.playName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playName}}</template>-->
             <template v-else>{{ value_show.hps[0].hpnb || value_show.hps[0].hpn }}</template>
             <!-- 基准分 -->
-            <template v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">
-             <div>
-              <template v-if="bet_success_obj.scoreBenchmark">{{ calc_bifen2( bet_success_obj.scoreBenchmark)}}</template>
-              <template v-else>{{ calc_bifen(value_show) }}</template>
-             </div>
+            <template
+              v-if="(value_show.csid == 1 || value_show.csid == 2) && !((pre_or_bet === 0 || pre_or_bet) && pre_order_status)">
+              <div>
+                <template v-if="bet_success_obj.scoreBenchmark">{{ calc_bifen2(
+                  bet_success_obj.scoreBenchmark) }}</template>
+                <template v-else>{{ calc_bifen(value_show) }}</template>
+              </div>
             </template>
           </span>
           <template v-if="BetData_H5.is_bet_success_status && !(BetData_H5.bet_is_mix && BetData_H5.bet_list.length > 1)">
@@ -88,14 +90,15 @@
         </div>
 
         <!-- 联赛名称 -->
-        <div class="xia" v-if="value_show.tn && !get_is_champion()">{{ value_show.tn }}</div>
+        <div class="xia" v-if="value_show.tn && !get_is_champion">{{ value_show.tn }}</div>
 
         <!-- 下 -->
         <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
           <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
-            <template v-if="get_is_champion()">{{ value_show.onTn || value_show.tn }}</template>
-            <template v-else-if="BetData_H5.is_bet_success_status && bet_success_obj.matchInfo">{{ bet_success_obj.matchInfo }}</template>
-            <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man}}{{ score }}</template>
+            <template v-if="get_is_champion">{{ value_show.onTn || value_show.tn }}</template>
+            <template v-else-if="BetData_H5.is_bet_success_status && bet_success_obj.matchInfo">{{
+              bet_success_obj.matchInfo }}</template>
+            <template v-else>{{ value_show.mhn }}<span class="q-mx-xs">v</span>{{ value_show.man }}{{ score }}</template>
           </div>
           <div v-if="authorityOptionFlag" class="col-3 row subscribe-button" @click.stop="handlePre(true)">
             +{{ $t('pre_record.book') }}</div>
@@ -169,8 +172,8 @@
     <!-- 对应单关多个注单样式 -->
     <template v-if="![11, 100, 900, 3000].includes(900)">
       <!-- 单关金额输入框 -->
-      <bet-single-detail ref="bet_single_detail" v-if="!(BetData_H5.is_bet_success_status || BetData_H5.bet_is_mix)" v-bind="$attrs" :name_="name_"
-        :index_="index_"></bet-single-detail>
+      <bet-single-detail ref="bet_single_detail" v-if="!(BetData_H5.is_bet_success_status || BetData_H5.bet_is_mix)"
+        v-bind="$attrs" :name_="name_" :index_="index_"></bet-single-detail>
       <template v-if="BetData_H5.is_bet_success_status && !BetData_H5.bet_is_mix && bet_success_obj">
         <!-- 单关投注完成后底部的显示（包括投注失败8，投注成功3，提交成功6） -->
         <div class="bottom-bar row justify-between yb_px14 yb_fontsize14 yb_mb8 ">
@@ -197,10 +200,13 @@ import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/core/index.js";
 // import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+
 import lodash from 'lodash'
 
- 
+
 
 let odds_change = ref(0)    //0-正常，1-赔率升，2-赔率降
 let pankou_change = ref(0)   //0-盘口未变化，1-盘口值变化，2-盘口失效(封盘和关盘)，3-锁盘
@@ -223,8 +229,10 @@ const score = ref('ssss')
 const view_ctr_obj = ref({})
 const update_tips = BetData.update_tips
 const bet_list = BetData.bet_list
+const  get_is_champion = ref(true)
 
 onMounted(() => {
+  console.error('props',props)
   timer = null;
   timer2 = null;
   timer3 = null;
@@ -238,11 +246,11 @@ onMounted(() => {
     set_bet_status(7);
   };
 
- 
 
 
 
-  if (value_show.csid != 1) {
+
+  if (value_show.value.csid != 1) {
     daxiao_market_value.value = 0.5//大小玩法最低盘口值，初始最低0.5
     daxiao_market_value_max.value = 400//大小玩法最大盘口值
     rq_market_value_max.value = 99.5 //让球类玩法最大盘口值
@@ -276,6 +284,12 @@ const props = defineProps({
     default: () => {
       return []
     }
+  },
+  bet_view_obj: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   }
 })
 
@@ -285,8 +299,8 @@ const props = defineProps({
 //检测比分，设置大小类玩法最低盘口值
 // watch(() => score, (new_) => {
 //   return '36.5'
-//   const ol_obj = lodash.get(value_show, 'hps[0].hl[0].ol[0]')
-//   const hps_obj = lodash.get(value_show, 'hps[0]')
+//   const ol_obj = lodash.get(value_show.value, 'hps[0].hl[0].ol[0]')
+//   const hps_obj = lodash.get(value_show.value, 'hps[0]')
 //   if (!BetData.bet_is_mix && show_pre && pre_switch.value && new_) {
 //     const method_type = ol_obj.ot
 //     const new_arr = new_.replace(/\(/,'').replace(/\)/,'').split('-') || []
@@ -373,14 +387,14 @@ const props = defineProps({
 //   }
 
 //   if (new_ == 0) {
-//     set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+//     set_invalid_ids({ type: 2, val: value_show.value.mid }) // 删除赛事和盘口级别正常的id
 //     pankou_change.value = 0
 //     set_bet_status(1);
 //     set_odds_change(false);
 //   }
 
 //   if (new_ == 11) {
-//     set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+//     set_invalid_ids({ type: 2, val: value_show.value.mid }) // 删除赛事和盘口级别正常的id
 //     pankou_change.value = 0
 //     set_bet_status(7);
 //     set_odds_change(false);
@@ -388,7 +402,7 @@ const props = defineProps({
 
 //   if ([1, 2].includes(+new_)) {
 //     pankou_change.value = 2;
-//     set_invalid_ids({ type: 1, val: value_show.mid }) // 对应赛事和盘口级别失效时记录id
+//     set_invalid_ids({ type: 1, val: value_show.value.mid }) // 对应赛事和盘口级别失效时记录id
 //     set_odds_change(true);
 //   }
 // })
@@ -402,14 +416,14 @@ const props = defineProps({
 //   }
 
 //   if (new_ == 0) {
-//     set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+//     set_invalid_ids({ type: 2, val: value_show.value.mid }) // 删除赛事和盘口级别正常的id
 //     pankou_change.value = 0
 //     set_bet_status(1);
 //     set_odds_change(false);
 //   }
 
 //   if (new_ == 11) {
-//     set_invalid_ids({ type: 2, val: value_show.mid }) // 删除赛事和盘口级别正常的id
+//     set_invalid_ids({ type: 2, val: value_show.value.mid }) // 删除赛事和盘口级别正常的id
 //     pankou_change.value = 0
 //     set_bet_status(7);
 //     set_odds_change(false);
@@ -417,7 +431,7 @@ const props = defineProps({
 
 //   if ([1, 2].includes(+new_)) {
 //     pankou_change.value = 2;
-//     set_invalid_ids({ type: 1, val: value_show.mid }) // 对应赛事和盘口级别失效时记录id
+//     set_invalid_ids({ type: 1, val: value_show.value.mid }) // 对应赛事和盘口级别失效时记录id
 //     set_odds_change(true);
 //   }
 // }, {
@@ -469,9 +483,9 @@ const props = defineProps({
 //   calc_mixcount(false)
 //   if (
 //     [2, 3].includes(+get_bet_status.value) &&
-//     lodash.get(value_show, 'hps[0].hl[0].ol[0].ov2')
+//     lodash.get(value_show.value, 'hps[0].hl[0].ol[0].ov2')
 //   ) {
-//     bet_success_obj.oddsValues = lodash.get(value_show, 'hps[0].hl[0].ol[0].ov2')
+//     bet_success_obj.oddsValues = lodash.get(value_show.value, 'hps[0].hl[0].ol[0].ov2')
 //     return
 //   }
 
@@ -526,7 +540,7 @@ const props = defineProps({
 // // 记录投注项失效的id_集合
 // watch(() => pankou_change, (new_) => {
 //   if (new_ != 2) {
-//     set_invalid_ids({ type: 2, val: value_show.mid })
+//     set_invalid_ids({ type: 2, val: value_show.value.mid })
 //   }
 // })
 
@@ -540,12 +554,12 @@ const props = defineProps({
 /** --------------------------computed 开始---------------*/
 //足球或者篮球的让球玩法集合
 const rq_play_list = computed(() => {
-  return value_show.csid == 1 ? FOOTBALL_PLAY_LET_BALL : BASKETBALL_PLAY_LET_BALL
+  return value_show.value.csid == 1 ? FOOTBALL_PLAY_LET_BALL : BASKETBALL_PLAY_LET_BALL
 })
 //赛事id或者球员id是否冲突
 const is_conflict = computed(() => {
   return false
-  return get_is_conflict.value([value_show.maid, value_show.mhid])
+  return get_is_conflict.value([value_show.value.maid, value_show.value.mhid])
 })
 //判断调整后的赔率是否小于最低赔率
 const pre_shadow_flag = computed(() => {
@@ -559,15 +573,15 @@ const pre_shadow_flag = computed(() => {
 const is_show_market = computed(() => {
   let bookMarketSwitch = lodash.get(UserCtr, 'configVO.bookMarketSwitch')
   let bookMarketSwitchBasketball = lodash.get(UserCtr, 'configVO.bookMarketSwitchBasketball', 0)
-  if (value_show.csid == 1) {
-    return market_flag_list.includes(value_show.hps[0].hpid) && bookMarketSwitch == 1
+  if (value_show.value.csid == 1) {
+    return market_flag_list.includes(value_show.value.hps[0].hpid) && bookMarketSwitch == 1
   } else {
-    return market_flag_basketball_list.includes(value_show.hps[0].hpid) && bookMarketSwitchBasketball
+    return market_flag_basketball_list.includes(value_show.value.hps[0].hpid) && bookMarketSwitchBasketball
   }
 })
 //判断让球、大小类盘口值是否低于最低盘口值
 const show_market_shadow = computed(() => {
-  if (['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot'))) {
+  if (['Over', 'Under'].includes(lodash.get(value_show.value, 'hps[0].hl[0].ol[0].ot'))) {
     const split_value = lodash.words(pre_market_value.value, /[^+,/ ]+/g)
     if (split_value.length > 1) {
       return (Number(split_value[0]) + Number(split_value[1])) / 2 <= daxiao_market_value.value
@@ -585,7 +599,7 @@ const show_market_shadow = computed(() => {
 })
 //判断大小类,让球盘口值是否高于最大盘口值
 const show_market_shadow_max = computed(() => {
-  const compaire_val = ['Over', 'Under'].includes(lodash.get(value_show, 'hps[0].hl[0].ol[0].ot')) ? daxiao_market_value_max.value : rq_market_value_max.value;
+  const compaire_val = ['Over', 'Under'].includes(lodash.get(value_show.value, 'hps[0].hl[0].ol[0].ot')) ? daxiao_market_value_max.value : rq_market_value_max.value;
   const split_value = lodash.words(pre_market_value.value, /[^+,/ ]+/g)
   if (split_value.length > 1) {
     return (Number(split_value[0]) + Number(split_value[1])) / 2 >= compaire_val
@@ -601,7 +615,7 @@ const authorityOptionFlag = computed(() => {
 const authorityFlag = computed(() => {
   const bookBet = lodash.get(UserCtr, 'configVO.bookBet')
   const marketConfigValue = lodash.get(UserCtr, 'configVO.marketConfigValue')
-  return bookBet == 1 && (value_show.csid == 1 || value_show.csid == 2) && marketConfigValue == 1
+  return bookBet == 1 && (value_show.value.csid == 1 || value_show.value.csid == 2) && marketConfigValue == 1
 })
 //判断投注成功后是否是预约投注
 const pre_order_status = computed(() => {
@@ -619,14 +633,29 @@ const pre_or_bet = computed(() => {
   return status
 })
 const bet_obj_item = computed(() => {
-  return view_ctr_obj[name_]
+  // return view_ctr_obj[name_]
+  return {
+    cds:"LS",
+    dfrom:"check_odds_beforebet",
+    hid:"142241294543806611",
+    hpid:"1",
+    hs:0,
+    id_:"143906561595713553",
+    mid:"2726566",
+    ms:0,
+    oid:"143906561595713553",
+    on:"主胜",
+    onb:"主胜",
+    os:2,
+    ot:"1",
+    otd:47,
+    ots:"T1",
+    ov:0
+  }
 })
 //投注对象数据
 const value_show = computed(() => {
-  // return bet_obj_item.bs;
-  return {
-    
-  }
+  return props.bet_view_obj;
 })
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
@@ -661,37 +690,37 @@ const is_show_successed_item = computed(() => {
 })
 //将赔率映射为计算属性
 const bet_obj_ov = computed(() => {
-  return lodash.get(value_show, 'hps[0].hl[0].ol[0].ov')
+  return lodash.get(value_show.value, 'hps[0].hl[0].ol[0].ov')
 })
 //将列表页盘口值 on  映射为计算属性
 const bet_obj_on = computed(() => {
-  return lodash.get(value_show, 'hps[0].hl[0].ol[0].on')
+  return lodash.get(value_show.value, 'hps[0].hl[0].ol[0].on')
 })
 // 将 普通赛事是否支持串关 映射为计算属性
 const hids = computed(() => {
-  return (BetData.bet_is_mix && lodash.get(bet_obj_item, 'cs.cds') == "C01") || (lodash.get(value_show, 'hps[0].hids') == 0 &&
+  return (BetData.bet_is_mix && lodash.get(bet_obj_item, 'cs.cds') == "C01") || (lodash.get(value_show.value, 'hps[0].hids') == 0 &&
     BetData.bet_list.length > 1 &&
     get_menu_type.value != 3000 &&
     BetData.bet_is_mix)
 })
 //将赛事级别盘口状态映射为计算属性
 const bet_obj_mhs = computed(() => {
-  return value_show.mhs;
+  return value_show.value.mhs;
 })
 //将盘口状态映射为计算属性
 const bet_obj_hs = computed(() => {
-  return value_show.hps[0].hl[0].hs;
+  return value_show.value.hps[0].hl[0].hs;
 })
 //盘口值
 const bet_obj_hv = computed(() => {
-  if (!rq_play_list.includes(lodash.get(value_show, 'hps[0].hpid'))) {
-    return lodash.get(value_show, 'hps[0].hl[0].hv')
+  if (!rq_play_list.includes(lodash.get(value_show.value, 'hps[0].hpid'))) {
+    return lodash.get(value_show.value, 'hps[0].hl[0].hv')
   }
-  return lodash.get(value_show, 'hps[0].hl[0].ol[0].on')
+  return lodash.get(value_show.value, 'hps[0].hl[0].ol[0].on')
 })
 //将投注项状态状态映射为计算属性
 const bet_obj_os = computed(() => {
-  return lodash.get(value_show, 'hps[0].hl[0].ol[0].os')
+  return lodash.get(value_show.value, 'hps[0].hl[0].ol[0].os')
 })
 //是否显示下边线
 const show_border = computed(() => {
@@ -709,15 +738,16 @@ const status_normal = computed(() => {
     *@return {String} 转换后的赔率
     */
 const odds_value = computed(() => {
+  console.error('ssss9988', value_show.value)
   return (is_pre) => {
     let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
-      hsw = value_show.hps[0].hsw;
+      hsw = value_show.value.hps[0].hsw;
 
-    if (get_is_champion.value()) {   //冠军玩法不支持赔率转化
+    if (get_is_champion.value) {   //冠军玩法不支持赔率转化
       hsw = '1'
     }
 
-    let S = compute_value_by_cur_odd_type(val, null, hsw, null, value_show.csid);
+    let S = compute_value_by_cur_odd_type(val, null, hsw, null, value_show.value.csid);
     return S ? S : '';
   }
 })
@@ -742,10 +772,10 @@ const bet_success_obj = computed(() => {
 // 展示欧洲盘还是香港盘
 const hptype = computed(() => {
   let type = 'EU'
-  if (BetData.cur_odd == 'HK' && lodash.get(value_show, 'hps[0].hsw').includes('2')) {
+  if (BetData.cur_odd == 'HK' && lodash.get(value_show.value, 'hps[0].hsw').includes('2')) {
     type = 'HK'
   }
-  return i18n_t(`odds.${type}`)
+  return type
 })
 
 /** --------------------------computed结束 ---------------*/
@@ -753,7 +783,7 @@ const hptype = computed(() => {
 /** --------------------------事件开始 ---------------*/
 
 // ...mapMutations(["set_pre_market_data","set_keyboard_show","set_odds_change","set_active_index", "set_bet_status", "set_change_list", "set_invalid_ids", "set_order_ing", "set_order_los", "set_money_total"]),
-const calc_mixcount = ()=>{
+const calc_mixcount = () => {
   console.error(111)
 }
 //长按事件（起始）
@@ -777,18 +807,18 @@ const handleonmousedown = () => {
 
 let emitters_off
 //生成事件监听 
-const handle_generat_emitters=()=>{
-let event_pairs=  [
+const handle_generat_emitters = () => {
+  let event_pairs = [
 
- 
-{ type:MITT_TYPES.EMIT_REMOVE_INVALID_, callback: reomve_invalid_handle} ,
-{ type:MITT_TYPES.EMIT_C201_UPDATE2, callback: c201_update2_handle} ,     
-{ type:MITT_TYPES.EMIT_CHANGE_ODDS, callback: change_odds_handle} ,       
-{ type:MITT_TYPES.EMIT_CHANGE_MARKET, callback: change_market_handle} ,   
 
-]
-let  obj  =  useMittEmitterGenerator(event_pairs)
- emitters_off= obj.emitters_off
+    { type: MITT_TYPES.EMIT_REMOVE_INVALID_, callback: reomve_invalid_handle },
+    { type: MITT_TYPES.EMIT_C201_UPDATE2, callback: c201_update2_handle },
+    { type: MITT_TYPES.EMIT_CHANGE_ODDS, callback: change_odds_handle },
+    { type: MITT_TYPES.EMIT_CHANGE_MARKET, callback: change_market_handle },
+
+  ]
+  let obj = useMittEmitterGenerator(event_pairs)
+  emitters_off = obj.emitters_off
 
 }
 
@@ -798,7 +828,7 @@ let  obj  =  useMittEmitterGenerator(event_pairs)
  */
 const change_odds_handle = (new_odds) => {
   pre_odds.value = new_odds || 0
-  const hswObj = value_show.hps[0].hsw
+  const hswObj = value_show.value.hps[0].hsw
   if (BetData.cur_odd == 'HK' && hswObj && hswObj.split(',').includes('2')) {
     pre_ov.value = Number($mathjs.multiply(acc_add(1, new_odds), 100000))
   } else {
@@ -818,8 +848,8 @@ const send_market_to_keyboard = () => {
 }
 //点击盘口输入框，光标聚焦
 const focus_market = () => {
-  // if(valu e_show.csid == 2 && ['Over','Under'].includes(lodash.get(value_show,'hps[0].hl[0].ol[0].ot'))){
-  if (value_show.csid == 2) {
+  // if(valu e_show.csid == 2 && ['Over','Under'].includes(lodash.get(value_show.value,'hps[0].hl[0].ol[0].ot'))){
+  if (value_show.value.csid == 2) {
     market_value_unit.value = 1
     set_keyboard_show(true)
     let ele = $refs.bet_mix_detail
@@ -862,7 +892,7 @@ const remove_ = (id_) => {
     set_money_total(0 - _money)
   }
   set_change_list({ value: id_, status: 2 });
-  set_invalid_ids({ type: 2, val: value_show.mid })
+  set_invalid_ids({ type: 2, val: value_show.value.mid })
   remove_item(id_);
 }
 /**
@@ -923,7 +953,7 @@ const add_odd = () => {
     send_odds_to_keyboard()
     set_active_index('pre' + index_)
   }
-  const hswObj = value_show.hps[0].hsw
+  const hswObj = value_show.value.hps[0].hsw
   if (BetData.cur_odd == 'HK' && hswObj && hswObj.split(',').includes('2')) {//香港盘的最大赔率
     if (pre_ov.value >= 35600000) { return }
   } else {//欧洲盘的的最大赔率
@@ -943,7 +973,7 @@ const reduce_market_value = () => {
   }
   let realValue = ''
   //足球让球类盘口值计算
-  if (rq_play_list.includes(value_show.hps[0].hpid)) {
+  if (rq_play_list.includes(value_show.value.hps[0].hpid)) {
     if (pre_market_value.value == '-' || pre_market_value.value == '+' || !pre_market_value.value) {
       pre_market_value.value = '0'
     }
@@ -958,7 +988,7 @@ const reduce_market_value = () => {
     } else {
       if (split_value[0].indexOf('-') > -1) {
         const withValue = (+split_value[0] - 0.5)
-        if (value_show.csid == 1) {
+        if (value_show.value.csid == 1) {
           realValue = split_value[0] + '/' + Math.abs(withValue)
         } else {
           realValue = withValue
@@ -966,14 +996,14 @@ const reduce_market_value = () => {
       } else {
         if (split_value[0] == 0) {
           const withValue = (+split_value[0] - 0.5)
-          if (value_show.csid == 1) {
+          if (value_show.value.csid == 1) {
             realValue = '-0' + '/' + Math.abs(withValue)
           } else {
             realValue = -0.5
           }
         } else {
           const withValue = (+split_value[0] - 0.5)
-          if (value_show.csid == 1) {
+          if (value_show.value.csid == 1) {
             realValue = (withValue >= 0 ? '+' : '') + withValue + '/' + split_value[0]
           } else {
             realValue = (withValue >= 0 ? '+' : '') + withValue
@@ -993,7 +1023,7 @@ const reduce_market_value = () => {
         return
       }
       const withValue = (+split_value[0] - 0.5)
-      if (value_show.csid == 1) {
+      if (value_show.value.csid == 1) {
         realValue = withValue + '/' + split_value[0]
       } else {
         realValue = withValue
@@ -1020,7 +1050,7 @@ const add_market_value = () => {
   if (pre_market_value.value == '-' || pre_market_value.value == '+' || !pre_market_value.value) {
     pre_market_value.value = '0'
   }
-  if (rq_play_list.includes(lodash.get(value_show, 'hps[0].hpid'))) {
+  if (rq_play_list.includes(lodash.get(value_show.value, 'hps[0].hpid'))) {
     const split_value = lodash.words(pre_market_value.value || '0', /[^+,/ ]+/g)
     if (split_value.length > 1) {
       if (split_value[0].indexOf('-') > -1) {
@@ -1032,14 +1062,14 @@ const add_market_value = () => {
     } else {
       if (split_value[0].indexOf('-') > -1) {
         const withValue = acc_add(+split_value[0], 0.5)
-        if (value_show.csid == 1) {
+        if (value_show.value.csid == 1) {
           realValue = (withValue == 0 ? '-' : '') + withValue + '/' + Math.abs(split_value[0])
         } else {
           realValue = (withValue == 0 ? '-' : '') + withValue
         }
       } else {
         const withValue = (+split_value[0] + 0.5)
-        if (value_show.csid == 1) {
+        if (value_show.value.csid == 1) {
           realValue = '+' + split_value[0] + '/' + withValue
         } else {
           realValue = '+' + withValue
@@ -1052,7 +1082,7 @@ const add_market_value = () => {
       realValue = acc_add(((+split_value[0] + (+split_value[1]))) / 2, market_value_unit.value)
     } else {
       const withValue = acc_add(+split_value[0], 0.5)
-      if (value_show.csid == 1) {
+      if (value_show.value.csid == 1) {
         realValue = +split_value[0] + '/' + withValue
       } else {
         realValue = withValue
@@ -1080,7 +1110,7 @@ const reomve_invalid_handle = () => {
     bet_obj_ov < 101000 ||
     hids
   ) {
-    remove_(value_show.id_)
+    remove_(value_show.value.id_)
   }
 }
 // 单关单注成功和单关多注消息处理
@@ -1190,7 +1220,7 @@ const clear_timer = () => {
 onUnmounted(() => {
   clear_timer()
 
- 
+
 
 
 
@@ -1198,10 +1228,10 @@ onUnmounted(() => {
     $data[key] = null
   }
 
-   //移除相应监听事件 //视图销毁钩子函数内执行
- if( emitters_off){emitters_off()}  
+  //移除相应监听事件 //视图销毁钩子函数内执行
+  if (emitters_off) { emitters_off() }
 
- 
+
 })
 
 
