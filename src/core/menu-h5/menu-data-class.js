@@ -611,6 +611,7 @@ class MenuData {
     // "8": "VR",
     // "30": "竞足",
     // "28": "赛果",
+    // 500热门 2000 电竞  400 冠军
     //常规
     let conventional = [
       101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
@@ -653,25 +654,26 @@ class MenuData {
       ...new_menu,
       menu_dianjing,
       { mi: 8 },
-      menu_jingzu
+      menu_jingzu,
       // result_menu,
     ];
     return this.menu_list;
   }
-  //根据mi选中 选中一级menu
+  //根据路由参数 设置菜单信息 选中一级menu
   set_query_menu({ m, s, t, mt1, mt2 }) {
-    if (!m || mt1) return;
+    console.error(2222222, m, s);
+    if (!m && !mt1) return;
     //  // 初始化 路由的参数
+
     //     m表示主菜单id    s表示二级菜单id         （t日期菜单id一般不用）r
     //    mt1 表示主菜单menu_type     mt2 表示子菜单menu_type         记住首页球种r
-    const idx = lodash.findIndex(this.menu_lv1, {
+    const idx = lodash.findIndex(this.menu_list, {
       mi: m || mt1,
     });
     if (idx > -1) {
-      const menu_list = this.menu_lv1[idx];
+      const menu_list = this.menu_list[idx];
       //设置一级菜单
-      this.set_current_lv1_menu(this.menu_lv1, idx);
-      this.menu_lv2 = menu_list.sl || [];
+      this.set_current_lv1_menu(menu_list, idx);
       const idx2 = lodash.findIndex(this.menu_lv2, {
         mi: s || mt2,
       });

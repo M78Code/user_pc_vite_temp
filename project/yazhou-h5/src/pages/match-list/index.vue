@@ -2,7 +2,7 @@
  * @Description: 赛事列表页用于展示滚球、今日、早盘、串关、冠军等赛事
 -->
 <template>
-  <MenuWapper use_component="H5MenuTemplate1"></MenuWapper>
+  <MenuWapper></MenuWapper>
   <div class="match-main no-padding-bottom" :style="page_style" ref="match_main">
     <!--赛事列表-->
     <div

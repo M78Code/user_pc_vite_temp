@@ -2,10 +2,12 @@
   <div class="match-main-menu">
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
-        <div class="goback-icon-wrapper column justify-center">《</div>
-        <ul class="main-menu-container">
+        <slot name="left">
+          <div class="goback-icon-wrapper column justify-center">《</div>
+        </slot>
+        <div class="main-menu-container">
           <template v-for="(item, index) in menu_list" :key="item.mi">
-            <li class="m-menu-item" v-show="show_dianjing(item, index)">
+            <div class="m-menu-item" v-show="show_dianjing(item, index)">
               <span @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + item.mi) || item.mi }}
               </span>
@@ -15,9 +17,12 @@
               >
                 +++</span
               >
-            </li>
+            </div>
           </template>
-        </ul>
+
+          <!-- 右侧活动和弹出设置 -->
+          <slot name="right"></slot>
+        </div>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_1_type !== 30">
@@ -33,9 +38,21 @@
             'shadow-down': menu_1_type != 7,
           }" -->
           <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
-          <ul class="s-menu-container flex">
+          <div class="s-menu-container flex">
+
+             <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
+             <sub-menu-specially
+              v-show=" GlobalAccessConfig.get_playAllShow() && menu_1_type == 1"
+              :title="i18n_t('footer_menu.all')"
+              v-if=" GlobalAccessConfig.get_playAllShow()"
+            >
+            <!-- :count="all_sport_count_calc()" -->
+            <!-- @click="select_all_sub_menu_handle" -->
+
+              <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
+            </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
-              <li
+              <div
                 class="sport-menu-item flex justify-center"
                 v-show="[7, 28].includes(menu_1_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)"
@@ -50,9 +67,9 @@
                     ""
                   }}<i>{{ item.ct }}</i>
                 </span>
-              </li>
+              </div>
             </template>
-          </ul>
+          </div>
 
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
           <div
@@ -149,13 +166,12 @@
       </template>
     </div>
   </div>
-  <footer></footer>
 </template>
 <script setup>
+import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, computed, unref } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
-import footer from "./footer-menu.vue";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
@@ -239,6 +255,9 @@ function set_menu_lv1(item, index, is_pop) {
     set_menu_lv2(item.sl[0], 0);
   }
 }
+setTimeout(() => {
+menu_h5_data.set_query_menu({m:3})
+}, 3300);
 /**
  * 二级菜单事件
  */
