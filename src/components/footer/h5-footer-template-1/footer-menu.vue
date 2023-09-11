@@ -4,7 +4,6 @@
  * @Description: 赛事列表页 底部菜单
 -->
 <template>
-  footer
   <div class="container-menu-w" :class="{
       'black2':UserCtr.theme.includes('theme02'),
       'scrolling-up':scroll_dir > 0,
@@ -64,12 +63,13 @@
         <div v-for="(sub_m,sub_i) of footer_sub_m_list" :key="sub_i"
              @touchstart.prevent.stop="sub_menu_changed(sub_m,sub_i)"
              class="wrapper column justify-center items-center"
-             v-show="((topMenuReducer.curr_sub_menu_type == 5 || sub_m.id != 114) && !([900,3000].includes(menu_type) && sub_m.id == 114)) && !(get_sport_all_selected && menu_type==1 && sub_m.id == 114)"
-             :data-sid="sub_m.id" :data-mtype="topMenuReducer.curr_sub_menu_type" :data-cmtype="menu_type"
+             v-show="((menu_h5_data.get_curr_sub_menu_type() == 5 || sub_m.id != 114) && 
+             !([8,7].includes(menu_type) && sub_m.id == 114)) && !(get_sport_all_selected && menu_type==1 && sub_m.id == 114)"
+             :data-sid="sub_m.id" :data-mtype="menu_h5_data.get_curr_sub_menu_type()" :data-cmtype="menu_type"
              :class="{
             'current_sub_menu':sub_i == sub_footer_menu_i,
             'is-favorite':footerMenuReducer.show_favorite_list,
-            'no-display': topMenuReducer.curr_sub_menu_type == 44 && sub_m.id == 4
+            'no-display': menu_h5_data.get_curr_sub_menu_type() == 44 && sub_m.id == 4
           }">
           <div class="wrapper-inner column items-center justify-center">
             <div class="play-icon-wrap relative-position" :class="sub_m.icon">
@@ -99,10 +99,11 @@ import store from "src/store-redux/index.js"
 import { UserCtr } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import { i18n_t } from "src/boot/i18n.js"
+import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 
 const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
 // import { Platform } from 'quasar'
-
+const { menu_type } =menu_h5_data;
   // mixins:[common],
   let is_effecting_ref = ref(true)
   let is_refreshing = ref(false)
@@ -135,7 +136,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
   //处理中
   let footer_clicked_handleing = ref(false)
   //上一次的
-  let prev_floating_sub = ref('prev-floating-sub-i')
+  let prev_floating_sub ='prev-floating-sub-i'
   //页脚数据
   let footer_menulist = ref([])
   //子菜单显示/隐藏渐进效果
@@ -266,7 +267,6 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
       let p_i = sessionStorage.getItem(prev_floating_sub);
       if(p_i != null){
         p_i = p_i * 1;
-
         sub_menu_changed(footer_sub_m_list[p_i],p_i);
       }
     }
@@ -311,7 +311,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
       // TODO:后续修改调整
       sessionStorage.setItem(prev_floating_sub,i);
       // 非足球选择角球时,选中独赢
-      if((topMenuReducer.curr_sub_menu_type != 5 && sub_menu.id == 114) || (topMenuReducer.curr_sub_menu_type == 44 && sub_menu.id == 4)){
+      if((menu_h5_data.get_curr_sub_menu_type() != 5 && sub_menu.id == 114) || (menu_h5_data.get_curr_sub_menu_type() == 44 && sub_menu.id == 4)){
         sub_footer_menu_i.value = 0;
         sessionStorage.setItem(prev_floating_sub,0);
       }
@@ -358,12 +358,12 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
      */
     const menu_item_click = (item,i) => {
       if(item.is_disabled) return;
-      if(topMenuReducer.menu_type == 100 && i == 0) return;
+      if(menu_type.value == 100 && i == 0) return;
 
       //独赢
       if(item.id === 0){
         //赛马,摩托车,泥地摩托车不能切换玩法
-        if([1002, 1011, 1010, 1009].includes(topMenuReducer.curr_sub_menu_type)){
+        if([1002, 1011, 1010, 1009].includes(menu_h5_data.get_curr_sub_menu_type())){
           return;
         }
         sub_menu_l_show = true;
@@ -439,8 +439,11 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
      */
     const virtual_disable_follow_filter = () => {
       // 赛果禁用筛选
-      if(28 == topMenuReducer.menu_type){
+      if(28 == menu_type.value){
         footer_menulist.value.forEach(f_m => {
+
+          //TODO： 后续 10000 是什么？ 
+          //  topMenuReducer.current_main_menu 当前选中的主菜单
           if(f_m.id == 3 && lodash.get(topMenuReducer.current_main_menu,'menuId') == 10000){
             f_m.is_disabled = true;
           }else{
@@ -451,16 +454,15 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
             f_m.is_disabled = true;
           }
         });
-        //虚拟体育  暂时注释代码
-        if([1001,1002,1004,1010,1011,1009].includes(topMenuReducer.curr_sub_menu_type)){
+        //是赛果 并且是虚拟体育  暂时注释代码
+        if(menu_h5_data.is_results_virtual_sports()){
           footer_menulist.value.forEach(f_m => {
             if(f_m.id == 1){
               f_m.is_disabled = true;
             }
           });
         }
-
-        if([100].includes(topMenuReducer.curr_sub_menu_type)){
+        if([100].includes(menu_h5_data.get_curr_sub_menu_type())){
           footer_menulist.value.forEach(f_m => {
             if(f_m.id == 3){
               f_m.is_disabled = true;
@@ -471,7 +473,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
       else{
         footer_menulist.value.forEach(f_m => {
           // 电竞下冠军不可点击关注
-          if (f_m.id === 1 && topMenuReducer.menu_type === 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
+          if (f_m.id === 1 && menu_type.value === 7 && lodash.get(get_current_menu, 'date_menu.menuType') == 100) {
             f_m.is_disabled = true
           } else {
             if(f_m.id == 3&& footerMenuReducer.show_favorite_list){
@@ -481,7 +483,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
             }
           }
           // 电竞放开 筛选
-          if(f_m.id === 3 && topMenuReducer.menu_type === 3000){
+          if(f_m.id === 3 && menu_type.value === 7 ){
             f_m.is_disabled = true
           }
           if(f_m.id == 1 && !GlobalAccessConfig.get_collectSwitch()  ){
@@ -495,11 +497,11 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
      *@param init_footer_menulist_data 是否重置footer_menulist数据
      */
     const set_footer_menulist = (init_footer_menulist_data = true) => {
-      let is_virtual = topMenuReducer.menu_type == 900;
+      let is_virtual = menu_h5_data.is_virtual_sport(); //虚拟体育
       // 赛果虚拟体育
-      let is_result_virtual = [1001,1002,1004,1011,1010,1009].includes(topMenuReducer.curr_sub_menu_type);
-      let is_saiguo_gz = topMenuReducer.menu_type == 28 && [100].includes(topMenuReducer.curr_sub_menu_type)
-      let is_electronicSports = topMenuReducer.menu_type == 3000  // 电竞
+      let is_result_virtual =menu_h5_data.is_results_virtual_sports()
+      let is_saiguo_gz = menu_type.value == 28 && [100].includes(menu_h5_data.get_curr_sub_menu_type())
+      let is_electronicSports = menu_type.value == 7  // 电竞
       if(init_footer_menulist_data){
         footer_menulist.value = [
           // 玩法菜单(独赢|大小|让球|角球等)
@@ -521,7 +523,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
             icon_black_fav:'f-icon-follow1-black.svg',
             icon2:'f-icon-follow-black.svg',
             id:1,
-            is_disabled:is_virtual || is_result_virtual ||  topMenuReducer.menu_type == 28 ,
+            is_disabled:is_virtual || is_result_virtual ||  menu_type.value == 28 ,
           },
           // 注单
           {
@@ -554,7 +556,6 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
     }
     // 批量清除定时器
     const clear_timer = () => {
-
       for (const timer of timer_object) {
         clearTimeout(timer_object[timer])
         timer_object[timer] = null
@@ -603,7 +604,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
     const bottom_option_show = computed(() => {
       return function (item) {
         return !(
-            (topMenuReducer.menu_type == 3000 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
+            (menu_type.value == 7 && lodash.get(get_current_menu, 'date_menu.menuType') == 100 && item.id == 0)
         )
       }
     })
@@ -673,7 +674,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
      */
     watch(() => topMenuReducer.sport_all_selected, (val) => {
       // 简版时滚球菜单选中全部菜单时
-      if(topMenuReducer.newer_standard_edition == 1 &&val && topMenuReducer.menu_type == 1){
+      if(topMenuReducer.newer_standard_edition == 1 &&val && menu_type.value == 1){
         let sub_menu = footer_sub_m_list.value[sub_footer_menu_i.value];
         if( lodash.get(sub_menu,'id') == 114){
           // 当时菜单是角球时设置菜单为独赢
@@ -714,7 +715,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
     watch(() => topMenuReducer.current_main_menu.menuId, () => {
       virtual_disable_follow_filter();
     })
-    watch(() => topMenuReducer.menu_type, () => {
+    watch(menu_type, () => {
       virtual_disable_follow_filter();
     })
     watch(() => topMenuReducer.curr_third_menu_id, () => {
@@ -723,7 +724,7 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
     watch(() => UserCtr.lang, () => {
       set_footer_menulist();
     })
-    watch(() => topMenuReducer.curr_sub_menu_type, (new_v) => {
+    watch(() => menu_h5_data.get_curr_sub_menu_type(), (new_v) => {
       init_play_way_selected();
       // 32014 确定每次点击菜单 都重置为独赢
       // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){

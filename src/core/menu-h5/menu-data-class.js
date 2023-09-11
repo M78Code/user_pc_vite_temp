@@ -9,6 +9,18 @@ import base_data_instance from "src/core/base-data/base-data.js";
 class MenuData {
   constructor() {
     this.update_time = ref(Date.now()); //更新触发
+    // "1": "滚球",
+    // "2": "今日",
+    // "3": "早盘",
+    // "4": "冠军",
+    // "5": "即将开赛",
+    // "6": "串关",
+    // "7": "电竞",
+    // "8": "VR",
+    // "30": "竞足",
+    // "28": "赛果",
+    // 500热门 2000 电竞  400 冠军
+    this.menu_type = ref(0); //一级菜单 menu_type 很常用所以设定为ref
     this.menu_lv1 = []; //1级菜单列表
     this.menu_lv2 = []; //2级菜单列表
     this.menu_lv3 = []; //3级菜单列表
@@ -276,7 +288,7 @@ class MenuData {
     let flag = true;
     // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
     if (
-      this.menu_type == 28 &&
+      this.menu_type.value == 28 &&
       [1001, 1002, 1011, 1004, 1010].includes(+item.menuType)
     ) {
       flag = false;
@@ -290,27 +302,18 @@ class MenuData {
    */
   is_virtual_sport() {
     return (
-      this.current_lv_1_menu.mi == 8 ||
+      this.current_lv_1_menu?.mi == 8 ||
       (this.match_list_api_config || {}).sports == "vr"
     );
   }
-  // 是赛果虚拟体育
+  // 如果是赛果，并且是 虚拟体育
   is_results_virtual_sports() {
-    const menu_type = this.get_menu_type();
-    console.error("is_results_virtual_sports", this.get_current_sub_menuid());
-    // 如果是赛果，并且是 虚拟体育
     if (
-      menu_type == 28 &&
+      this.menu_type.value == 28 &&
       [1001, 1002, 1004, 1010, 1011, 1009].includes(
-        +this.get_current_sub_menuid()
+        Number(this.get_current_sub_menuid())
       )
     ) {
-      // 如果有三级菜单
-      // 赛果下边的 虚拟体育 的四级菜单 数据
-      if (this.current_lv_3_menu) {
-        this.menu_lv4 = lodash.get(this.current_lv_3_menu, "subList");
-        this.update();
-      }
       return true;
     }
     return false;
@@ -474,7 +477,7 @@ class MenuData {
   }
   // 赛果下数据
   async get_results_menu() {
-    if (this.get_menu_type() !== 28) {
+    if (this.menu_type.value !== 28) {
       return;
     }
     return new Promise(async (resolve) => {
@@ -548,7 +551,7 @@ class MenuData {
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   async get_date_menu_api_when_subchange(item) {
     // 如果是早盘，串关，电竞的话
-    const menu_type = this.get_menu_type();
+    const menu_type = this.menu_type.value;
     //euid
     const euid = lodash.get(
       base_data_instance.mi_euid_map_res,
@@ -601,17 +604,6 @@ class MenuData {
   }
   //setter=======
   recombine_menu(data) {
-    // "1": "滚球",
-    // "2": "今日",
-    // "3": "早盘",
-    // "4": "冠军",
-    // "5": "即将开赛",
-    // "6": "串关",
-    // "7": "电竞",
-    // "8": "VR",
-    // "30": "竞足",
-    // "28": "赛果",
-    // 500热门 2000 电竞  400 冠军
     //常规
     let conventional = [
       101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
@@ -694,6 +686,7 @@ class MenuData {
   set_current_lv1_menu(item, index) {
     this.current_lv_1_menu = item;
     this.current_lv_2_menu_i = index;
+    this.menu_type.value = item.mi; //设置一级菜单menutype
     if (item.mi != 28) this.menu_lv2 = item.sl || []; //设置二级菜单
   }
   //选中二级menu
@@ -707,12 +700,19 @@ class MenuData {
   set_current_lv3_menu(item, index) {
     this.current_lv_3_menu = item;
     this.current_lv_3_menu_i = index;
+
     if (this.is_results_virtual_sports()) {
-      this.set_current_lv4_menu(this.menu_lv4[0], 0);
-      // this.virtual_sports_results_click_handle(
-      //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
-      //   this.virtual_sports_results_tab_item_i
-      // );
+      // 如果有三级菜单
+      // 赛果下边的 虚拟体育 的四级菜单 数据
+      if (this.current_lv_3_menu) {
+        this.menu_lv4 = lodash.get(this.current_lv_3_menu, "subList");
+        // this.virtual_sports_results_click_handle(
+        //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
+        //   this.virtual_sports_results_tab_item_i
+        // );
+        this.set_current_lv4_menu(this.menu_lv4[0], 0);
+        this.update();
+      }
     } else {
       this.menu_lv4 = []; //置空4级
       this.set_current_lv4_menu();
@@ -744,8 +744,9 @@ class MenuData {
   get_level_four_menu() {
     return "";
   }
+  //二级菜单 menu_type  mi || menuId
   get_curr_sub_menu_type() {
-    return "";
+    return this.current_lv_2_menu?.mi || this.current_lv_2_menu.menuId;
   }
   get_current_lv_2_menu_type() {
     return "0";
@@ -778,11 +779,10 @@ class MenuData {
     }
     return "";
   }
-
+  //获取二级菜单 menuid
   get_current_sub_menuid() {
     return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
   }
-
   /**
    * 判断是否为冠军和电竞冠军
    */
