@@ -10,9 +10,9 @@
     <!-- 字体记录弹窗 -->
     <p class="font_records-dialog">1</p>
     <!-- 注单历史 以及时间  注单历史头 -->
-    <simple-header-wapper>
+    <simple-header-wapper :title="i18n_t('common.note_single_history')">
       <!-- 注单历史 -->
-      <span>{{ i18n_t("common.note_single_history") }}</span>
+      <!-- <span>{{ i18n_t("common.note_single_history") }}</span> -->
     </simple-header-wapper>
     <div class="wrap-records" ref="record">
       <!--表格头部分 未结算已结算预约注单按钮tab-->
@@ -77,7 +77,7 @@
 </template>
 
 <script setup>
-import SimpleHeaderWapper from "project_path/src/components/site-header/simple-header.vue";
+import { SimpleHeaderWapper } from "src/components/common/simple-header/index.js";
 import btTab from "./components/btn-tab.vue";
 import filterBox from "./components/filter-box.vue";
 import recordTable from "./record-table/index.vue";

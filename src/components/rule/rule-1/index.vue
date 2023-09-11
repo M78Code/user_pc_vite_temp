@@ -1,7 +1,7 @@
 <template>
     <div class="rule-wrap">
-        <simple-header>
-            <span>{{ i18n_t("common.sports_betting_rules") }}</span>
+        <simple-header :title="i18n_t('common.sports_betting_rules')">
+            <!-- <span>{{ i18n_t("common.sports_betting_rules") }}</span> -->
         </simple-header>
         <iframe class="rule-content" :src="rule_url" frameborder="0"></iframe>
     </div>
@@ -12,7 +12,7 @@ import { ref, onMounted } from 'vue'
 import lodash from 'lodash'
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { i18n_t } from "src/boot/i18n.js"
-import simpleHeader from "app/project/yazhou-pc/src/components/site-header/simple-header.vue";
+import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
@@ -40,7 +40,6 @@ const get_pc_rule_url = () => {
         'ad': 'id_id',
     }
     const lang2 = lang_map[UserCtr.lang] || 'zh_cn';
-    console.error(`================lang:${lang2}`, UserCtr.lang);
     let url = '';
     const [theme2, get_merchant_style] = UserCtr.theme.split('_')
     let domain = lodash.get(window, `env.config.static_serve[0]`)
