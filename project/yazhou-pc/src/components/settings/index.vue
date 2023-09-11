@@ -93,8 +93,8 @@ import { api_account, api_betting, api_details } from "src/api";
 import i18n_langs from "src/i18n/pc/langs/index.mjs";
 import { loadLanguageAsync } from "src/core/index.js";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
-// import userCtr from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 
@@ -126,55 +126,30 @@ const skin = ref(false)
 const show_g_settings = ref(props.show_settings)
 
 /** 上次赔率 */
-const cur_odd = ref('EU')
+const cur_odd = ref(BetData.cur_odd || 'EU')
 /** 上次赔率 */
-const pre_odds = ref('EU')
+const pre_odds = ref(UserCtr.pre_odds || 'EU')
 /** true: 单关投注 false: 串关投注 */
-const is_bet_single = ref(false)
+const is_bet_single = ref(BetData.is_bet_single)
 /** 单关投注对象 */
-const bet_single_obj = ref({})
+const bet_single_obj = ref(BetData.bet_single_obj || {})
 /** 串关投注对象 */
-const bet_obj = ref({})
+const bet_obj = ref(BetData.bet_obj || {})
 /** 串关投注对象 */
-const is_virtual_bet = ref(true)
+const is_virtual_bet = ref(BetData.is_virtual_bet)
+/** 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 */
+const left_menu_toggle = ref(BetData.left_menu_toggle)
+
 /** 虚拟投注列表对象 */
 const cur_menu_type = ref({})
-/** 当前菜单类型 play 滚球  hot热门赛事   virtual_sport虚拟体育   winner_top冠军聚合页 today 今日   early早盘 bet串关 */
-const left_menu_toggle = ref('')
-
 /** stroe仓库 */
 const unsubscribe = store.subscribe(() => {
-    const new_state = store.getState()
-    cur_odd.value = new_state.cur_odds
-    pre_odds.value = new_state.pre_odds
-    is_bet_single.value = new_state.is_invalid
-    bet_single_obj.value = new_state.bet_single_obj
-    bet_obj.value = new_state.bet_obj
-    is_virtual_bet.value.value = new_state.is_virtual_bet
     cur_menu_type.value = new_state.cur_menu_type
-    left_menu_toggle.value = new_state.left_menu_toggle
-    layout_size.value = new_state.layout_size
 })
 onUnmounted(unsubscribe)
 
-const set_theme = (data) => store.dispatch({
-    type: 'set_theme',
-    data
-})
- 
-const set_lang_change = (data) => store.dispatch({
-    type: 'SET_LANGUAGE_CHANGING',
-    data
-})
- 
-const set_pre_odd = (data) => store.dispatch({
-    type: 'SET_PRE_ODD',
-    data
-})
-
 /** 语言列表 */
 const languageList = computed(() => lodash.get(UserCtr.get_user(), 'languageList', []))
-
 
 /**
  * @Description:切换盘口
@@ -196,18 +171,18 @@ function set_user_preference(curr_odd) {
     if (curr_odd) {
         let old_odd = cur_odd.value
         let old_pre_odd = pre_odds.value
-        set_pre_odd(curr_odd);
+        UserCtr.set_pre_odd(curr_odd);
         BetData.set_cur_odd(curr_odd);
         // 设置用户偏好
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
             let code = lodash.get(res, 'data.code');
             if (code != 200) {
-                set_pre_odd(old_pre_odd);
+                UserCtr.set_pre_odd(old_pre_odd);
                 BetData.set_cur_odd(old_odd);
             }
         }).catch(err => {
             console.error(err);
-            set_pre_odd(old_pre_odd);
+            UserCtr.set_pre_odd(old_pre_odd);
             BetData.set_cur_odd(old_odd);
         });
     }
@@ -228,7 +203,6 @@ function on_click_lang(lang_) {
     let is_winner = false
     let fun = () => {
         if (!is_winner && UserCtr.lang != lang_) {
-            set_lang_change(true);
             /* ids:是各种id，格式：赛事id-玩法id-盘口id-投注项id,赛事id-玩法id-盘口id-投注项id,...
             type:0表示普通赛事(默认值)，1虚拟赛事 */
             let type = is_virtual_bet.value ? 1 : 0;
@@ -271,7 +245,6 @@ function on_click_lang(lang_) {
                             // yabo_common_update_bet_item_info( data);
                         }
                         useMittEmit(MITT_TYPES.EMIT_UPDATE_HOME_AWAY_CMD, {})
-                        set_lang_change(false);
                     }
                 }).catch(error => {
                     console.log(error);
@@ -321,9 +294,9 @@ function handle_set_theme(theme) {
     const curr_theme = theme.value
 
     if (curr_theme.includes('y0')) {
-        set_theme(theme + '_y0')
+        UserCtr.set_theme(theme + '_y0')
     } else {
-        set_theme(theme)
+        UserCtr.set_theme(theme)
     }
 }
 </script>

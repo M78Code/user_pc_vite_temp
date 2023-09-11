@@ -6,65 +6,69 @@
   <div class="bet-mix height-full" :class="bet_flag?'bet-layout':''">
     <div class="auto-wrap no-wrap column">
       <!-- 下注标识 -->
-      <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">        
-          <!--未投注就是bet-mix-info组件-->
-          <template v-if="bet_flag">
-            <bet-mix-info ref="bet-mix-info" ></bet-mix-info>
-            <template v-if="BetData.bet_list.length>1 && BetData.bet_s_list.length > 0">
-             <!--复式连串过关投注-->
-              <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
-                <div
-                  class="col bet-toggle-text cursor-pointer" 
-                  :class="{'disabled-toggle': expend_disable}"              
+      <div> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} ---- </div>
+      <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">    
+
+        <!--未投注就是bet-mix-info组件-->
+        <bet-mix-info></bet-mix-info>
+        <template v-if="BetData.bet_s_list.length > 0">
+          <!--复式连串过关投注-->
+          <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_s_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
+            <div
+              class="col bet-toggle-text cursor-pointer" 
+              :class="{'disabled-toggle': expend_disable}"              
+              @click="mix_toggle_handle"
+            >
+              {{ $t('bet.bet_n_')}}
+              <!-- 复式连串过关投注 -->
+            </div>
+            <div class="col-auto">
+              <!--折叠/展开按钮-->
+              <span :class="{'disabled-toggle': expend_disable}">
+                <icon
+                  name="icon-triangle"
+                  size="16px"                     
+                  :class="{'icon-pull-down': !is_expend, 'icon-pull-up': is_expend}"
                   @click="mix_toggle_handle"
-                >
-                  {{ $t('bet.bet_n_')}}
-                  <!-- 复式连串过关投注 -->
-                </div>
-                <div class="col-auto">
-                  <!--折叠/展开按钮-->
-                  <span :class="{'disabled-toggle': expend_disable}">
-                    <icon
-                      name="icon-triangle"
-                      size="16px"                     
-                      :class="{'icon-pull-down': !is_expend, 'icon-pull-up': is_expend}"
-                      @click="mix_toggle_handle"
-                    />
-                  </span>
-                </div>
-              </div>
-              <div v-show="is_expend">
-                <!--金额输入框-->
-                <template v-for="(item, index) in BetData.bet_s_list">
-                 <!--2串1以及输入框-->
-                  <bet-mix-input
-                    :ref="`bet-mix-input-${item}`"
-                    :index="index"
-                    :id="item"
-                    
-                    :key="item"
-                    @set_min_max_money="set_min_max_money"
-                    v-if="view_ctr_obj.bet_order_success_success && ((view_ctr_obj.bet_order_success_success.length==0 && index>0) || (view_ctr_obj.bet_order_success_success.length>0))"
-                    :class="{'bet-mix-input-last': ((index+1)==BetData.bet_list.length)}"
-                  ></bet-mix-input>
-                </template>
-              </div>
+                />
+              </span>
+            </div>
+          </div>
+          <div v-show="is_expend">
+            <!--金额输入框-->
+            <template v-for="(item, index) in BetData.bet_s_list">
+              <!--2串1以及输入框-->
+              <bet-mix-input
+                :index="index"
+                :item="item"
+                :key="item.custom_id"
+                @set_min_max_money="set_min_max_money"
+                v-if="BetViewDataClass.bet_order_success_success && ((BetViewDataClass.bet_order_success_success.length==0 && index>0) || (BetViewDataClass.bet_order_success_success.length>0))"
+                :class="{'bet-mix-input-last': ((index+1)==BetData.bet_s_list.length)}"
+              ></bet-mix-input>
             </template>
-          </template>
-          <!--已投注bet-mix-record组件-->
-          <template v-else>
-            <!--投注结果-->
-            <bet-mix-record ></bet-mix-record>
-          </template> 
+          </div>
+        </template>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import { ref } from "vue"
 // import bet_mix from "src/public/mixins/bet/bet_mix.js"; // 下注混入js
 import BetMixInfo from "./bet-mix-info.vue"; // 下注混入信息组件
 import BetMixInput from "./bet-mix-input.vue"; // 下注输入框
-import BetMixRecord from "./bet-mix-record.vue"; // 下注混入记录
+
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+
+const bet_flag = ref(true)
+const expend_disable = ref('')
+const is_expend = ref(false)
+
+const mix_toggle_handle = () => {
+
+}
 
 </script>
 <style lang="scss" scoped>

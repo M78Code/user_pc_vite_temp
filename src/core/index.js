@@ -104,9 +104,9 @@ import MatchDataBase from "src/core/data-warehouse/match-ctr/match-ctr.js";
  * PC  数据仓库 常规赛事   通用列表
  */
 
-const MatchDataWarehouse_PC_List_Common = reactive(new MatchDataBase({
+const MatchDataWarehouse_PC_List_Common = new MatchDataBase({
   name_code: "MatchDataWarehouse_PC_List_Common",
-}));
+});
 
 /**
  * PC  数据仓库  常规赛事  通用详情
@@ -179,7 +179,7 @@ import { reactive } from "vue";
 /**
  * CSS 变量
  */
-import  compute_css_variables  from  "src/core/css-var/index.js"
+// import  compute_css_variables  from  "src/core/css-var/index.js"
 
 /**
  *
@@ -225,5 +225,5 @@ export {
   MatchDataWarehouse_H5_List_Jingxuan,
   MatchDataWarehouse_H5_Detail_Jingxuan,
   LayOutMain_pc,
-  compute_css_variables
+  // compute_css_variables
 };

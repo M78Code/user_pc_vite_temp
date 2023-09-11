@@ -130,11 +130,16 @@ class BetViewData {
         max_money: item.orderMaxPay, // 最大限额
         globalId : item.globalId,  //  风控响应id
       }
+      console.error('item.playOptionsId',item.playOptionsId)
     })
 
     this.bet_min_max_money = bet_amount
-
+    this.bet_special_h5 = obj
     this.set_bet_view_version()
+  }
+  // 显示投注框
+  set_bet_show(val){
+    this.bet_show = val
   }
 
   // 设置投注状态

@@ -5,7 +5,7 @@ import server_resource from "app/job/output/merchant/server-resource.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-  local: "/src/core/server-img/sprite-img/image/pc-popup-language-icon-image.png",
+  local: "/src/core/server-img/sprite-img/image/pc-popup-language-icon-image-day.png",
   default: "pc-popup-language-icon-image",
 };
 

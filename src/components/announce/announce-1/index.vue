@@ -1,8 +1,8 @@
 <!-- @Description: 公告页面 -->
 <template>
     <div class="announce-wrap">
-        <simple-header>
-            <span>{{ i18n_t('common.notice') }}</span>
+        <simple-header :title="i18n_t('common.notice')">
+            <!-- <span>{{ i18n_t('common.notice') }}</span> -->
         </simple-header>
         <div class="announce-content">
             <!-- 左侧菜单开始 -->
@@ -28,8 +28,7 @@
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
-
-import simpleHeader from "app/project/yazhou-pc/src/components/site-header/simple-header.vue";
+import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 import leftMenu from "./left-menu.vue";
 import loadData from "src/components/load_data/load_data.vue"
 import { api_announce } from "src/api/index.js"

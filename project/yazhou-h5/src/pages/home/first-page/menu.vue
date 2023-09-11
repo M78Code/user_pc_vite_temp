@@ -57,7 +57,7 @@
               <div class="column items-center">
                 <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
                 <span class="match-type">{{
-                  menu_h5_data.menus_i18n_map[item.mi]
+                  base_data.menus_i18n_map[item.mi]
                 }}</span>
                 <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
                 <span class="match-label ellipsis-2-lines">{{
@@ -184,7 +184,7 @@ const change_menu = (index) => {
   let mi = menu_list.value[index].mi;
   menu_index.value = index;
   animation.value = false;
-  menu_h5_data.set_current_menu(menu_list.value[index]);
+  menu_h5_data.set_current_lv1_menu(menu_list.value[index],index);
 
   // 动画效果
   //   if (home_timer1_) clearTimeout(home_timer1_);

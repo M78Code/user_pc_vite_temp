@@ -16,8 +16,10 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')"><img
-              src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
+          <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')">
+            <!-- <img src="image/wwwassets/bw3/svg/bet_close2.svg"> -->
+            <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div>
+            </template>
           <template v-else><img src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>
       </div>
@@ -25,7 +27,7 @@
 
     <div class="content-m" ref="record_box">
       <!--未结算  -->
-      <unsettle v-show="main_item == 0" ref="unsettle_child" :main_item="main_item"></unsettle>
+        <unsettle ref="unsettle_child" v-show="main_item == 0" :main_item="main_item"></unsettle>      
       <!--已结算-->
       <settle v-show="main_item == 1" :main_item="main_item"></settle>
       <!--预约-->
@@ -40,29 +42,32 @@ import { api_betting } from "src/api/index.js";
 import unsettle from "./unsettle.vue"
 import settle from "./settle.vue"
 import preRecord from "./pre-record.vue"
-import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue'
+import { onMounted, onUnmounted, ref, computed, provide, watch, nextTick } from 'vue'
 import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/"
 import store from 'src/store-redux/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { i18n_t } from "src/boot/i18n.js";
+import compute_css from "src/core/server-img/other-img/index.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
 //国际化
-
+console.error(compute_css({key: "h5-img-bet-record-close", theme: "local_dev"}));
 let { cathecticReducer, userInfoReducer, themeReducer } = store.getState()
-let store_cathectic = ref(cathecticReducer)
+const store_cathectic = ref(cathecticReducer)
 
 // 待确认中的提前结算订单
 provide('queryorderpresettleconfirm_data', '')
 
 // 延时器
-let timer_1 = ref(null)
+const timer_1 = ref(null)
 // 待确认中的提前结算单
-let provided_ = ref({})
+const provided_ = ref({})
 // 选中tab的下标
-let main_item = ref(0)
+const main_item = ref(0)
 // 锚点
-let unsettle_child = ref(null)
-let record_box = ref(null)
+const unsettle_child = ref(null)
+const record_box = ref(null)
+// const unsettle = ref(null)
 
 
 
@@ -96,14 +101,11 @@ onMounted(() => {
       provided_.value = { queryorderpresettleconfirm_data: data }
     }
     // 弹窗显示接口获取列表后延迟
-    timer_1.value = setTimeout(() => {
+      timer_1.value = setTimeout(() => {
       let el = unsettle_child.value
-      let ele = record_box.value
-      unsettle_child.value.check_early_order()
-      unsettle_child.value.search_early_money()
-    }, 800);
-
-
+      el.check_early_order()
+      el.search_early_money()
+    }, 800);    
   })
 })
 //   ...mapMutations(['set_main_item']),
@@ -150,8 +152,9 @@ onUnmounted(() => {
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
-  background-color: var(--q-cathectic-page-bg-color);
-  color: var(--q-cathectic-fs-defalut-color)
+  // TODO: 临时调试
+  background-color: #ffffff;//var(--q-cathectic-page-bg-color);
+  color: #414655; // var(--q-cathectic-fs-defalut-color)
 }
 
 .head-top {

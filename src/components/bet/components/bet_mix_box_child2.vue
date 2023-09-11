@@ -3,7 +3,7 @@
  * @Description: 普通赛事的投注弹框
 -->
 <template>
-  <div class="bet-mix-box-child2" v-if="false">
+  <div class="bet-mix-box-child2">
     <!-- 多注顶部蒙层 -->
     <div v-if="false" class="full-shadow" @click.self="pack_up" @touchmove.prevent></div>
     <!-- 投注中的蒙层，所有不能点击 -->
@@ -12,7 +12,7 @@
     <div class="content-box">
 
       <!-- 头部 -->
-      <bet-bar @click.native="pack_up"></bet-bar>
+      <bet-bar @click.native="pack_up" @click="show_list"></bet-bar>
       <div class="dele-wrap yb_px12 yb_py10 row" v-if="!BetData.is_bet_success_status" @touchmove.prevent>
         <!-- 左 删除全部 -->
         <span style="margin-right:auto" @click="pack_up(3)"><img src="image/wwwassets/bw3/svg/close3.svg"
@@ -32,9 +32,9 @@
       <div class="scroll-box" ref="scroll_box" :style="{ 'max-height': `${max_height1}px` }"
         @touchmove="touchmove_handle($event)" @touchstart="touchstart_handle($event)">
         <!-- 上部纯展示组件 展示盘口赔率玩法对阵信息-->
-        <!-- <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
+        <bet-mix-show v-for="(value, name, index1) in view_ctr_obj" :order_detail_resp_list="order_detail_resp_list"
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
-        </bet-mix-show> -->
+        </bet-mix-show>
 
         <!-- 串关投注成功组件 单个几串几的信息展示-->
         <template v-if="btn_show == 1 || mixnew_bet || part_bet">
@@ -49,7 +49,7 @@
         <!-- 串关主体 金额输入框-->
         <template>
           <bet-mix-detail :value_="item" :index_="index" v-for="(item, index) of get_s_count_data" :key="index"
-            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit">
+            :tips_msg.sync="tips_msg" @max-win-money-emit="max_win_money_emit" :bet_min_max_money="bet_min_max_money">
           </bet-mix-detail>
         </template>
 
@@ -138,7 +138,7 @@
       </template>
 
       <!-- 键盘 -->
-      <key-board v-show="bet_keyboard_show"></key-board>
+      <key-board v-show="bet_keyboard_show" :bet_min_max_money="bet_min_max_money"></key-board>
 
       <!-- 底部按钮 -->
       <div class="row yb_px10 yb_pb8 justify-between" @touchmove.prevent>
@@ -224,17 +224,17 @@ import { UserCtr } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { get_query_bet_amount_common } from "src/core/bet/class/bet-box-submit.js"
 import lodash from 'lodash'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 
-// ...mapGetters(["get_update_tips", "get_odds_change", "get_mix_bet_flag", "get_money_total", "get_s_count_data", "get_bet_list", "get_is_accept", "get_order_ing", "get_is_spread", 
-// "get_is_mix", "get_m_id_list", "get_bet_obj", "get_bet_status",
-//       "get_money_notok_list", "get_user", "get_detail_data", "get_is_show_settle_tab", "get_change_list", "get_active_index", "get_keyboard_show", "get_new_bet", "get_order_los",
-//       "get_order_suc", "get_money_notok_list2", "get_theme", "get_used_money", "get_is_champion", "get_invalid_ids", "get_cannot_mix_len", "get_is_combine", "get_bet_success"]),
 
 
 const bet_keyboard_show = ref(true)
 const scroll_box = ref()
 const series_order_respList = ref([])
 const award_total = ref()
+const bet_min_max_money = ref()  // 投注限额
+const bet_list_data = ref([])
+
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -267,6 +267,22 @@ const max_win_money_emit = (val) => {
   award_total.value = val
 }
 
+const show_list = () =>{
+  console.error('BetViewDataClass',BetViewDataClass)
+  let markInfo = lodash.get(BetViewDataClass,'bet_special_h5.latestMarketInfo')
+  markInfo.forEach(item => {
+    let obj = {
+      'playName':item.playName,  // 玩法名称
+      'playId':item.playId,   // 玩法id
+      'away':item.away,  // 客队
+      'home':item.home,  // 主队
+    }
+    bet_list_data.value.push(obj)
+  });
+  bet_min_max_money.value = BetViewDataClass.bet_min_max_money
+  console.error('sss',bet_list_data.value)
+}
+
 /**
     * 串关时检查是否有C01赛事
     */
@@ -285,57 +301,20 @@ const is_bet_check_rc = () => {
   return res;
 }
 
-const set_bet_oid = (item,obj_hp,obj_hl,obj_ol) => {
-      BetViewDataClass.set_bet_order_status(1)
-    
-      // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
-      let matchType = 2 
-      if( [1,2].includes(Number(item.ms)) ){
-        matchType = 2
-      }
-      const bet_obj = {
-        sportId: item.csid, // 球种id
-        matchId: item.mid,  // 赛事id
-        tournamentId: item.tid,  // 联赛id
-        scoreBenchmark: item.msc[0],  //比分
-        marketId: obj_hl.hid, //盘口ID
-        marketValue: obj_hl.hv,
-        playOptionsId: obj_ol.oid, //投注项id
-        marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
-        odds: obj_ol.ov,  //十万位赔率
-        oddFinally: compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid), //最终赔率
-        sportName: item.csna, //球种名称
-        matchType,  //赛事类型
-        matchName: item.tn, //赛事名称
-        playOptionName: obj_ol.on, // 投注项名称
-        playOptions: obj_ol.on,   // 投注项
-        tournamentLevel: item.tlev, //联赛级别
-        playId: obj_hp.hpid, //玩法ID
-        playName: play_id.value[obj_hp.hpid], //玩法名称
-        dataSource: item.cds, //数据源
-        home: item.mhn, //主队名称
-        away: item.man, //客队名称
-        ot: obj_ol.ot, //投注項类型
-        placeNum: null, //盘口坑位
-        // 以下为 投注显示或者逻辑计算用到的参数
-        bet_type: 'common_bet', // 投注类型
-        tid_name: item.tnjc,  // 联赛名称
-        match_ms: item.ms, // 赛事阶段
-      }
-      BetData.set_bet_read_write_refer_obj(bet_obj)
-
-      // 获取限额 常规
-      get_query_bet_amount_common(bet_obj)
-      
-    }
-
-
 onMounted(() => {
-  console.error(',1111111111', BetViewDataClass)
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
   let munu_type = true
   if(munu_type){
     // get_query_bet_amount_common()
   }
+})
+
+const set_ref_data_bet_money = (obj) =>{
+  console.error(',obj',obj)
+  show_list()
+}
+onUnmounted(()=>{
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 })
 </script>
 <style lang="scss" scoped>

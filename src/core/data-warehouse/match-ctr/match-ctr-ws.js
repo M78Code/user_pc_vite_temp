@@ -16,7 +16,7 @@
 
  * 
  */
-import _ from 'lodash'
+import lodash from "lodash";
 export default class MatchDataBaseWS
 {
   /**
@@ -69,14 +69,14 @@ export default class MatchDataBaseWS
    */
   r_ws_msg(obj){
     // 获取window.postMessage自定义命令
-    const cmd = _.get(obj, 'data.cmd');
+    const cmd = lodash.get(obj, 'data.cmd');
     if(cmd == 'WS_MSG_REV'){
       // 是ws推送过来的消息
       // 获取消息数据体
-      const data = _.get(obj, 'data.data');
+      const data = lodash.get(obj, 'data.data');
       if(data){
         // ws推送消息分流
-        const ws_cmd = _.get(data,'cmd')
+        const ws_cmd = lodash.get(data,'cmd')
         switch (ws_cmd) {
           case 'C101':
             this.C101(data);
@@ -143,18 +143,16 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
-        // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -191,16 +189,16 @@ export default class MatchDataBaseWS
 
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -232,16 +230,16 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -258,7 +256,7 @@ export default class MatchDataBaseWS
     //   "cd": {
     //       "csid": "1",
     //       "mhs": 1,
-    //       "mid": "1011530",
+    //       "mid": "2675977",
     //       "ms": "0"
     //    },
     //    "cmd": "C104",
@@ -267,18 +265,18 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:cd_obj.mid,mhs:cd_obj.mhs});
       }
     }
   }
@@ -290,46 +288,89 @@ export default class MatchDataBaseWS
   C105(ws_obj){
     // C105盘口/投注项
     // {
-    //   "cd": {
-    //     "hls": [
+    //   "cd" : {
+    //     "hls" : [
     //       {
-    //           "hid": "1315918111111426050",
-    //           "hpid": "4",
-    //           "hs": 0,
-    //           "mid": "1422839",
-    //           "hn": 1,
-    //           "hps": "S1|2:1",
-    //           "ol": [
-    //             {
-    //                 "obv": "205000",
-    //                 "oid": "1315918126340943874",
-    //                 "os": 1,
-    //                 "ot": "1",
-    //                 "ov": "205000"
-    //               }
-    //           ]
-    //         }
+    //         "hid" : "143285122423241435",
+    //         "hmt" : 0,
+    //         "hn" : 3,
+    //         "hpid" : "19",
+    //         "hs" : 3,
+    //         "mid" : "2675977",
+    //         "ol" : [
+    //           {
+    //             "obv" : "992000",
+    //             "oid" : "140826445322411492",
+    //             "os" : 2,
+    //             "ot" : "1",
+    //             "ov" : "992000"
+    //           },
+    //           {
+    //             "obv" : "8188000",
+    //             "oid" : "146362155350552524",
+    //             "os" : 2,
+    //             "ot" : "2",
+    //             "ov" : "888000"
+    //           }
+    //         ],
+    //         "t" : "1692362283330"
+    //       }
     //     ],
-    //     "mid": "1422839"
+    //     "ld" : "BE_0af40eb520230818203803628fac7813_0_15",
+    //     "marketLevel" : "15",
+    //     "mid" : "2675977",
+    //     "time" : "1692362283330"
     //   },
-    //   "cmd": "C105",
-    //   "ctsp": "1600152527052",
-    //   "ld": "0af5033320200915144846729c7f4853"
+    //   "cmd" : "C105",
+    //   "ctsp" : "1692362283954",
+    //   "ld" : "BE_0af40eb520230818203803628fac7813_0_15"
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
-        // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
-        // // 同步更新快速查询对象中的赛事状态
-        // this.match_ctr.upd_match_all_status(mid, cd_obj);
+        let hls= lodash.get(cd_obj,'hls');
+        if(hls){
+          hls.forEach(hl_obj => {
+            let ol = lodash.get(hl_obj,'ol');
+            // 拼接快速查找对象所需的id
+            const hid_str = this.match_ctr.get_format_quick_query_key(mid,hl_obj.hid,'hl');
+            // 获取指定的盘口对象
+            const quick_hl_obj = this.match_ctr.quick_query_obj.hl_obj[hid_str];
+            ol.forEach(ol_obj => {
+              // 拼接快速查找对象所需的id
+              const oid_str = this.match_ctr.get_format_quick_query_key(mid,ol_obj.oid,'ol');
+              // 获取指定的投注项对象
+              const quick_ol_obj = this.match_ctr.quick_query_obj.ol_obj[oid_str];
+              // 处理ot是小数的情况,进行数据修正
+              let ot = '';
+              if(ol_obj.ot && ol_obj.ot.includes('.')) {
+                ot = ol_obj.ot.replace('.','-');
+              } else {
+                ot = ol_obj.ot;
+              }
+              let chpid = hl_obj.chpid || hl_obj.hpid || '';
+              // 设置坑位信息
+              const _hn = hl_obj.hn?`${mid}_${chpid}_${hl_obj.hn}_${ot}`:'';
+              // 更新投注项附加参数
+              Object.assign(ol_obj, {_hn:_hn, _hs:hl_obj.hs});
+
+              // 合并投注项数据信息
+              Object.assign(quick_ol_obj, ol_obj);
+              // 更新坑位信息
+              this.match_ctr.quick_query_obj.hn_obj[this.match_ctr.get_format_quick_query_key(mid,_hn,'hn')] = quick_ol_obj;
+            });
+            // 合并投注项数据信息
+            this.match_ctr.assign_with(quick_hl_obj, hl_obj);
+          });
+        }
+
       }
     }
   }
@@ -367,22 +408,7 @@ export default class MatchDataBaseWS
     //   "ctsp": "1600152527052",
     //   "ld": "0af5033320200915144846729c7f4853"
     // }
-    if(ws_obj){
-      // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
-      // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
-      // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
-      // 获取快速查询对象中的mid赛事对象
-      let match = this.match_ctr.get_quick_mid_obj(mid);
-      if(match){
-        // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
-        // // 同步更新快速查询对象中的赛事状态
-        // this.match_ctr.upd_match_all_status(mid, cd_obj);
-      }
-    }
+    this.C105(ws_obj);
   }
 
   /**
@@ -407,16 +433,16 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -438,16 +464,16 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -474,16 +500,16 @@ export default class MatchDataBaseWS
 
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
-        // // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // 数据同步逻辑
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -506,16 +532,16 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
       }
     }
   }
@@ -529,28 +555,28 @@ export default class MatchDataBaseWS
     // C303滚球新赛事通知
     // {
     //     "cd": {
-    //         "hid": "1224279756891123714",
-    //         "hpid": "2",
+    //         "hid": "143285122423241435",
+    //         "hpid": "19",
     //         "hs": 0,
-    //         "mid": "455991"
+    //         "mid": "2675977"
     //     },
     //     "cmd": "C303",
     //     "ctsp": "1580726140231"
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:mid, hid:cd_obj.hid, hs:cd_obj.hs});
       }
     }
   }
@@ -573,18 +599,18 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        // this.match_ctr.merge_with(match, cd_obj);
+        // this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        // this.match_ctr.upd_match_all_status(mid, cd_obj);
       }
     }
   }
@@ -629,20 +655,20 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
 
       cd_obj.forEach(item => {
         // 赛事标识
-        let mid = _.get(item,'mid');
+        let mid = lodash.get(item,'mid');
         // 获取快速查询对象中的mid赛事对象
         let match = this.match_ctr.get_quick_mid_obj(mid);
         if(match){
           // 数据同步逻辑
-          this.match_ctr.merge_with(match, cd_obj);
+          this.match_ctr.assign_with(match, cd_obj);
           // 同步更新快速查询对象中的赛事状态
-          this.match_ctr.upd_match_all_status(mid, cd_obj);
+          this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
         }
       });
     }
@@ -669,18 +695,18 @@ export default class MatchDataBaseWS
     // }
     if(ws_obj){
       // ws命令数据信息
-      let cd_obj = _.get(ws_obj,'cd');
+      let cd_obj = lodash.get(ws_obj,'cd');
       // 赛事标识
-      let mid = _.get(ws_obj,'cd.mid');
+      let mid = lodash.get(ws_obj,'cd.mid');
       // 实时时间歘
-      let ctsp = _.get(ws_obj,'ctsp');
+      let ctsp = lodash.get(ws_obj,'ctsp');
       // 获取快速查询对象中的mid赛事对象
       let match = this.match_ctr.get_quick_mid_obj(mid);
       if(match){
         // 数据同步逻辑
-        this.match_ctr.merge_with(match, cd_obj);
+        this.match_ctr.assign_with(match, cd_obj);
         // 同步更新快速查询对象中的赛事状态
-        this.match_ctr.upd_match_all_status(mid, cd_obj);
+        this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
       }
     }
   }

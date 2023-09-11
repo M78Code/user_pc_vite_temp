@@ -1,6 +1,8 @@
 
 <template>
   <q-card flat class="bet-mix-input-card" @click="click_handle">
+    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+    {{ BetData.bet_data_class_version }} ------1111-----
     <q-card-section>
       <!--线 2串1 金额-->
       <div class="odds-wrap row">
@@ -11,20 +13,21 @@
         </div>
         <span v-if="index == 0" class="odds-value yb-number-bold">
           <!--串关赔率(欧赔)-->
-          {{ '@' + get_series_odds }}
+          {{ item.oddFinally }}
+          <!-- {{ '@' + format_odds(item.oddFinally,item.csid) }} -->
         </span>
       </div>
       <!--金额输入区域包括键盘 -->
-      <div class="row bet-mix-input" :data-check-money="view_ctr_obj.input_money_state">
+      <div class="row bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
         <!--金额输入区-->
-        <currency-input :ref="'input-money-' + id" class="bet-input input-border"
-          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(view_ctr_obj.input_money_state) && money != null) || view_ctr_obj.error_code == 'M400005' }"
-          :placeholder="`${i18n_t('bet.money_range')} ${min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
+        <currency-input class="bet-input input-border"
+          :class="{ 'input-money': !is_empty_money, 'input-border-red': (![-4, 0].includes(BetViewDataClass.input_money_state) && money != null) || BetViewDataClass.error_code == 'M400005' }"
+          :placeholder="`${$t('bet.money_range')} ${ref_data.min_money.replace(/\B(?=(\d{3})+$)/g, ',')} ~ ${ref_data.max_money.replace(/\B(?=(\d{3})+$)/g, ',')}`"
           v-model="money" :value="money" @keyup="keyup_handle" :distractionFree="{
             hideCurrencySymbol: true
           }" :precision="{
   min: 0,
-max: 2
+  max: 2
 }" :valueRange="{
   min: 0,
   max: input_max
@@ -44,19 +47,101 @@ max: 2
             {{ $t('common.maxn_amount_val') }}
           </div>
           <!--最高可赢金额-->
-          <div class="col-auto bet-win-money yb-number-bold">{{ get_max_win_money() || four_five_six_double(2) ||
-            format_currency }}</div>
-        </div>
-        <div class="row input-keyboard">
-          <!--投注键盘-->
-          <bet-keyboard ref="bet-keyboard" @keypress_handle="keypress_handle" :keyboard_data="keyboard_data"
-            :number="max_money"></bet-keyboard>
+          <div class="col-auto bet-win-money yb-number-bold">
+            {{ format_currency(ref_data.win_money) }}
+          </div>
+          <div class="row input-keyboard">
+            <!--投注键盘-->
+            <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord" :input_max_money="ref_data.max_money"
+              :status="ref_data.active"></bet-keyboard>
+          </div>
         </div>
       </template>
     </q-card-section>
   </q-card>
 </template>
-<script>
+<script setup>
+import { ref, reactive, onMounted, onUnmounted, computed } from "vue"
+import BetKeyboard from "../common/bet-keyboard.vue"
+
+import lodash_ from 'lodash'
+import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { format_odds, format_currency } from "src/core/format/index.js"
+
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+
+const is_empty_money = ref(false)
+const money = ref('')
+
+const ref_data = reactive({
+  max_money: "",
+  min_money: '',
+  win_money: 0.00,
+})
+
+const props = defineProps({
+  index: {
+    type: Number,
+    default: 0
+  },
+  item: {}
+})
+
+
+onMounted(() => {
+  // 监听 限额变化
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
+})
+
+onUnmounted(() => {
+  useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
+})
+
+// 输入判断
+const set_win_money = () => {
+  // 输入控制 在2位小数 todo
+  if (money.value > ref_data.max_money) {
+    // 超出最大限额 使用 最大限额 作为投注金额
+    money.value = ref_data.max_money
+    // 修改页面提示 1: 输入金额超出最大限额时
+    BetViewDataClass.set_input_money_state(1)
+  }
+  // 计算最高可赢金额
+  ref_data.win_money = money.value * props.item.oddFinally
+}
+
+// 限额改变 修改限额内容
+const set_ref_data_bet_money = () => {
+  const { min_money = 10, max_money = 8888 } = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.item.playOptionsId}`, {})
+
+  ref_data.min_money = min_money
+  ref_data.max_money = max_money
+}
+
+// 串关数量
+const count = computed(()=>{
+  return 1
+})
+
+// 快捷金额
+const set_click_keybord = obj => {
+  // 快捷金额 max 使用限额最大金额作为投注金额
+  if (obj.text == 'MAX') {
+    money.value = ref_data.max_money
+  } else {
+    // 投注金额 = 快捷金额 加上 原有的投注金额
+    let max_money = money.value * 1 + obj.value
+    // 投注金额 大于 最大投注限额 则 使用最大限额作为投注金额
+    if (max_money > ref_data.max_money) {
+      money.value = ref_data.max_money
+    } else {
+      money.value = max_money
+    }
+    // 记录投注金额 单关 不合并
+    BetData.set_bet_amount(money.value)
+  }
+}
 
 </script>
 <style lang="scss" scoped>
@@ -65,7 +150,7 @@ max: 2
   padding: 17px 10px 15px 10px;
 
   /*  卡片组件样式重写 */
-  :deep(.q-card__section ){
+  :deep(.q-card__section) {
     margin: 0;
     padding: 0;
     line-height: 0;

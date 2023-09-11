@@ -104,10 +104,10 @@
           <!-- <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
             v-img="([lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')])"
-            :style="all_fn.team_logo({position:2, theme :'locationUrl'})"
+            :style="sprite_img['pc-team-logo-image']({position:2, theme :'locationUrl'})"
             class="both-logo"
           /> -->
-          <div :style="all_fn.team_logo({position:[lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')], theme :'locationUrl'})"
+          <div :style="sprite_img['pc-team-logo-image']({position:[lodash.get(match_info,'mhlu[0]'),lodash.get(match_info,'frmhn[0]')], theme :'locationUrl'})"
             class="both-logo"></div>
           <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'mhn'),overflow:1}">{{lodash.get(match_info,'mhn')}}</span>
           <!-- 进球动画 -->
@@ -154,7 +154,7 @@
             v-img="([lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')])"
             class="both-logo"
           /> -->
-          <div :style="all_fn.team_logo({position:[lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')], theme :'locationUrl'})"
+          <div :style="sprite_img['pc-team-logo-image']({position:[lodash.get(match_info,'malu[0]'),lodash.get(match_info,'frman[0]')], theme :'locationUrl'})"
             class="both-logo"></div>
           <span class="ellipsis allow-user-select" style="font-weight:400;" v-tooltip="{content:lodash.get(match_info,'man'),overflow:1}">{{lodash.get(match_info,'man')}}</span>
           <!-- 进球动画 -->
@@ -199,7 +199,7 @@
 </template>
 
 <script>
-import  all_fn  from   "src/core/server-img/sprite-img/index.js"
+import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 import lodash from 'lodash'
 import { get_match_status,i18n_t,formatSeconds,debounce_throttle_cancel } from 'src/core/index'
@@ -217,7 +217,7 @@ export default {
   },
   data() {
     return {
-      all_fn,
+      sprite_img,
       i18n_t,
       lodash,
       rs_hong,

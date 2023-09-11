@@ -2,8 +2,8 @@
 <template>
     <div class="notice_main">
         <!-- 公共标题 -->
-        <simple-header>
-            {{ i18n_t('common.notice') }}
+        <simple-header :title="i18n_t('common.notice')" use_component_key="SimpleHeader_H5">
+            <!-- {{ i18n_t('common.notice') }} -->
         </simple-header>
         <!-- tab 组件 及 下边内容 滚动部分 -->
         <tabs :tabList="tabList" :tabIndex="tab_index" :rightDistance="false" class="notice_tabs" @changeTab="changeTab"
@@ -38,7 +38,7 @@ import { useRoute } from "vue-router"
 import { api_home } from "src/api/index";
 import { LoadingWapper as loadPage } from "src/components/common/loading";
 import { NoDataWapper as noData } from "src/components/common/no-data";
-import simpleHeader from "app/project/yazhou-h5/src/components/site-head/simple-header.vue";
+import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 import tabs from "./tab.vue";
 import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import UserCtr from 'src/core/user-config/user-ctr.js'
