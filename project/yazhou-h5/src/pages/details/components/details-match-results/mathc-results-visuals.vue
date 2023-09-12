@@ -7,7 +7,6 @@
   <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
     <div class="title" v-if="!get_analyze_show">{{ i18n_t('match_result.statistics') }}</div>
     <div class="designation">
-      {{statistics_table}}
       <span class="ellipsis">{{ statistics_table.mhn }}</span>
       <span class="ellipsis">{{ statistics_table.man }}</span>
     </div>
@@ -91,9 +90,13 @@
 <script setup>
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
+import { transform_score } from "src/core/format/index.js"
  // 国际化比赛阶段比分转换工具
 // import msc from "project_path/src/mixins/common/msc.js";
-import { onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch, inject } from "vue";
+
+
+const get_detail_data = inject('get_detail_data', {})
   // mixins: [ msc ],
   const props = defineProps({
     // 圆环图形
@@ -111,7 +114,10 @@ import { onUnmounted, ref, watch } from "vue";
   })
   let statistics_table = ref({})
   let timer1_ = ref(null)
-
+  onMounted(() => {
+    get_list()
+    
+  })
   // watch: {
   //   'get_detail_data':{
   //     handler: 'get_list',
@@ -131,17 +137,17 @@ import { onUnmounted, ref, watch } from "vue";
   //   ])
   // },
   const get_list = () => {
-    console.log(card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
-    let cloneData = lodash.cloneDeep(get_detail_data);
+    console.log(props.card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
+    let cloneData = lodash.cloneDeep(get_detail_data.value);
     if(cloneData && cloneData.msc){
       transform_score(cloneData)
       statistics_table.value = cloneData
       // 环形比分图形表
-      score_processing(ring_statistics, statistics_table.value.msc)
+      score_processing(props.ring_statistics, statistics_table.value.msc)
       // 黄牌 红牌 角球
-      score_processing(card_corner_list, statistics_table.value.msc)
+      score_processing(props.card_corner_list, statistics_table.value.msc)
       // 进度条比分图形表
-      score_processing(progress_graph, statistics_table.value.msc)
+      score_processing(props.progress_graph, statistics_table.value.msc)
     }
   }
   // msc 比分处理成 图形界面数据格式

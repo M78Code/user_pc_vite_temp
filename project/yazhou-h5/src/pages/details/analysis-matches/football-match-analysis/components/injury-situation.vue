@@ -1,7 +1,7 @@
 <template>
   <div class="injury-situation football_standings recent_record">
     <div class="title">
-      {{ t('analysis_football_matches.Injury_situation') }}
+      {{ i18n_t('analysis_football_matches.Injury_situation') }}
     </div>
 
     <template v-for="(item, index) in injury_situation_data" :key="index">
@@ -22,17 +22,18 @@
       <injury-form :list_data="item"/>
     </template>
     <!-- 没有数据 组件 -->
-    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ t('common.no_data') }}</div>
+    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ i18n_t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref,inject } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
+import teamImg from "project_path/src/components/details/team-img.vue";
  // 伤停情况列表
-import injuryForm from "src/project/pages/details/analysis-matches/components/injury-form";
-import { t } from "src/boot/i18n.js";;
+import injuryForm from "project_path/src/pages/details/analysis-matches/components/injury-form.vue";
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 //国际化
 
 

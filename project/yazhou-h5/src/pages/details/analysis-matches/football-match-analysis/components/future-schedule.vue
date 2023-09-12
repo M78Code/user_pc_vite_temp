@@ -32,19 +32,20 @@
       </div>
       <public-form :liat_data="item"
         :hm_index_name="index == 1 ? get_detail_data.mhn : index == 2 ? get_detail_data.man : ''"
-        future_schedule="future_schedule" :key="index+'id'" />
+        future_schedule="future_schedule" />
     </template>
   </div>
 </template>
 
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, inject } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
+import teamImg from "project_path/src/components/details/team-img.vue";
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/project/pages/details/analysis-matches/components/public-form";
+import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
+const get_detail_data = inject('get_detail_data', {})
 
   // components: {
   //   "team-img": team_img,

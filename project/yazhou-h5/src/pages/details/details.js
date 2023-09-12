@@ -142,7 +142,7 @@ const get_detail_data = ref({})
     get_curr_tab_info: "get_curr_tab_info",
   });
   const is_highlights = computed(() => {
-    return lodash.get(get_curr_tab_info, "component") === "highlights";
+    return lodash.get(state_data.get_curr_tab_info, "component") === "highlights";
   });
   // 足篮赛种和后台开关开了才显示显示赛事分析tab
   const show_match_analysis_tab = computed(() => {

@@ -11,7 +11,6 @@
     import analysisFootballMatches from "./football-match-analysis/analysis-football-matches.vue"
     import basketballMatchAnalysis from "./basketball-match-analysis/basketball-match-analysis.vue"
     const get_detail_data = inject('get_detail_data', {})
-    console.error(get_detail_data);
 </script>
 
 <style lang="scss" scoped>

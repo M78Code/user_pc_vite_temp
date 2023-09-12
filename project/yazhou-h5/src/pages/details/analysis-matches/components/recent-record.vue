@@ -6,7 +6,7 @@
 <template>
   <div class="recent_record" v-if="recent_record_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ t('analysis_football_matches.recent_record') }}</span>
+      <span class="title ellipsis">{{ i18n_t('analysis_football_matches.recent_record') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index+'box'"
            :class="{active:if_the_selected[index]}"
@@ -54,15 +54,16 @@
 </template>
 
 <script setup>
-import {api_analysis} from "src/project/api";
-// import {mapGetters} from "vuex";
+import {api_analysis} from "src/api/index.js";
+import { onMounted, ref, inject } from "vue";
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
+import teamImg from "project_path/src/components/details/team-img.vue";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";
+import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 //国际化
 
 
@@ -74,33 +75,35 @@ import { t } from "src/boot/i18n.js";;
   //   "no-data": no_data,
   //   "team-img": team_img,
   // },
-  let tab_index = ref(-1)
-  let radio_button_index = ref(0)
-  let progress_bar = ref(false)
-  let tab_radio_button = ref([
+  const tab_index = ref(-1)
+  const radio_button_index = ref(0)
+  const progress_bar = ref(false)
+  const tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
-    {name: `${t('analysis_football_matches.near')}5`, index: 5},
-    {name: `${t('analysis_football_matches.near')}10`, index: 10},
-    {name: `${t('analysis_football_matches.near')}15`, index: 15},
+    {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5},
+    {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10},
+    {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15},
   ])
-  let if_the_selected = ref([false, false])
-  let tab_check_box = ref([
+  const if_the_selected = ref([false, false])
+  const tab_check_box = ref([
     // TODO: 国际化 后续修改调整
-    t('analysis_football_matches.same_game'),
-    t('analysis_football_matches.same_host_guest')
+    i18n_t('analysis_football_matches.same_game'),
+    i18n_t('analysis_football_matches.same_host_guest')
   ])
-  let flag = ref(0)
-  let cps = ref(5)
-  let recent_record_data = ref([])
-  let no_data = ref(false)
+  const flag = ref(0)
+  const cps = ref(5)
+  const recent_record_data = ref([])
+  const no_data = ref(false)
   const route = useRoute()
-
+onMounted(() => {
   get_list()
+})
+  
     // mhid   主队id   mhn 主队名称
     // maid   客队id   man 客队名称
   const match_id = computed(() => {
     // 赛事id TODO: 后续修改调整 route get_detail_data
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   // 复选框 点击事件
   const checkBox_click = (index) => {
@@ -146,17 +149,17 @@ import { t } from "src/boot/i18n.js";;
             recent_record_data:[],
             // TODO: 国际化后续修改调整
             records_list:[
-              {success: 0, name: t('analysis_football_matches.victory')},
-              {flat: 0, name: t('analysis_football_matches.flat')},
-              {lose: 0, name: t('analysis_football_matches.negative')},
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
             ]
           },
           {
             recent_record_data:[],
             records_list:[
-              {success: 0, name: t('analysis_football_matches.victory')},
-              {flat: 0, name: t('analysis_football_matches.flat')},
-              {lose: 0, name: t('analysis_football_matches.negative')},
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
             ]
           }
         ],  // host_team_id

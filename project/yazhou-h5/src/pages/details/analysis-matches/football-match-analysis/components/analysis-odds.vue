@@ -98,7 +98,7 @@ import { api_analysis } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";;
-
+const get_detail_data = inject('get_detail_data', {})
 
 
 //路由
@@ -176,7 +176,7 @@ const route = useRoute()
     // 赛事id
     const match_id = computed(() => {
       // get_detail_data.mid  后续修改调整
-      return route.params.mid || get_detail_data.mid
+      return route.params.mid || get_detail_data.value.mid
     })
     onUnmounted(() => {
       // 移除监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
