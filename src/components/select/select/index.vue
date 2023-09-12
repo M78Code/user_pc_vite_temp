@@ -72,7 +72,7 @@ export default {
      * @param {Object} val 选择的值
      */
     setSelected(val){
-      this.selected = this.options.find(x=> val == (this.valueKey?x[this.valueKey]:x))
+      // this.selected = this.options.find(x=> val == (this.valueKey?x[this.valueKey]:x))
     },
     onPopup() {
       this.visible = !this.visible;
