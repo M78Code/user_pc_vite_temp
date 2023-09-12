@@ -16,7 +16,7 @@ class BetData {
     //是否接受更好赔率
     this.bet_is_accept = false;
     // 押注信息列表
-    // this.bet_list = [];
+    this.bet_list = [];
     // 押注扁平化对象扁平
     // this.bet_obj = {};
     // 串关投注列表

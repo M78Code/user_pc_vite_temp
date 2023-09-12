@@ -262,7 +262,7 @@ export const post_menu_play_count = (params, config={}, url = "/v2/w/menu/queryP
 
  
 //从服务器获取时间戳
-export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`, params, config);
+export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix_job}${url}`, params, config);
 
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);

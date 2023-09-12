@@ -63,10 +63,9 @@
                 <span>
                   {{
                     item.name ||
-                    base_data.menus_i18n_map[
+                    menu_h5_data.get_menus_i18n_map(
                       menu_h5_data.recombine_menu_desc(item.mi)
-                    ] ||
-                    ""
+                    )
                   }}<i>{{ item.ct }}</i>
                 </span>
               </div>
@@ -76,13 +75,13 @@
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
           <div
             class="d-c-wrapper"
-            :class="{ esport: menu_type == 7 }"
+            :class="{ esport }"
             v-if="is_show_three_menu"
           >
             <div
               class="date-container"
               ref="date_menu_container"
-              :class="{ esport: menu_type == 7 }"
+              :class="{ esport }"
             >
               <div
                 class="date-menu-item"
@@ -92,7 +91,7 @@
                   'is-favorite': show_favorite_list,
                   'hidden-champion':
                     show_favorite_list &&
-                    menu_type == 7 &&
+                    esport &&
                     date_menu_item.menuId === '-999',
                 }"
                 @click="set_menu_lv3(date_index, 'date_click')"
@@ -153,7 +152,7 @@
     >
       <template :key="i_m" v-for="(m_items, i_m) in pop_main_items">
         <div
-          @click="set_menu_lv1(m_items, i_m, true)"
+          @click="set_menu_lv1(m_items, i_m)"
           class="main-m-select-item flex justify-center items-center"
           v-show="is_menu_show(m_items, i_m)"
         >
@@ -209,7 +208,9 @@ let virtual_sports_results_tab = ref([]);
 const show_selector_sub = ref(false); //展示弹出框
 // 一级菜单mi ref
 const { menu_type, update_time } = menu_h5_data;
-
+const esport = computed(() => {
+  return menu_type.value == 7;
+});
 //是否显示三级菜单
 const is_show_three_menu = computed(() => {
   console.error("是否展示三级", date_menu_list.value.length);
@@ -230,29 +231,43 @@ const pop_main_items = ref([]); //弹出框数据
 const show_favorite_list = ref(false); //是否显示收藏列表
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (update_time) => {
-  console.error(menu_h5_data.menu_list, update_time);
   const [lv1, pop] = menu_h5_data.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
+  console.error(update_time, lv1);
   menu_list.value = lv1; //一级
   pop_main_items.value = pop; //pop级
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
   virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
 });
+
+//初始化菜单
+function init() {
+  //如果二级菜单有数据缓存
+  if (menu_h5_data.current_lv_2_menu) {
+    set_menu_lv2(
+      menu_h5_data.current_lv_2_menu,
+      menu_h5_data.current_lv_2_menu_i
+    );
+  }
+}
+init();
 /**
  * 一级菜单事件
+ * item [object]当前点击对象
+ * index [number]
+ * type [string] click | init
  */
-function set_menu_lv1(item, index, is_pop) {
+function set_menu_lv1(item, index, type = "click") {
   show_selector_sub.value = false;
-  //弹出框点击
-  if (is_pop) {
-    menu_list.value.splice(1, 1, item);
-  }
   menu_h5_data.set_current_lv1_menu(item, index);
-
   switch (item.mi) {
-    case 1://滚球下的全部
-    if(this.sport_all_selected)
-      select_all_sub_menu_handle();
+    case 1: //滚球下的全部
+      if (type == "click") {
+        menu_h5_data.set_current_lv2_menu(item.sl, -1, ture);
+      } else {
+        current_menu.value = item.sl;
+        set_menu_lv2(item.sl[0], 0);
+      }
       break;
     case 28: //赛果
       menu_h5_data.get_results_menu();
@@ -265,7 +280,7 @@ function set_menu_lv1(item, index, is_pop) {
 /**
  * 二级菜单事件
  */
-async function set_menu_lv2(item, index) {
+async function set_menu_lv2(item, index, type = "click") {
   menu_h5_data.set_current_lv2_menu(item, index);
   // // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   // const three_menu = await menu_h5_data.get_date_menu_api_when_subchange();
@@ -284,39 +299,10 @@ async function set_menu_lv2(item, index) {
   // }
 }
 /**
-
- /**
-     * 二级菜单 滚球 点击全部
-     */
-function select_all_sub_menu_handle() {
-  let data_list = menu_h5_data.current_lv_1_menu.sl;
-  let changeSubmenu = null;
-  this.sub_menu_i = null; // 重置上一次储存二级菜单下标
-  let selected_sub_menu_i_list = [];
-  let euid_list = [];
-  // this.set_useid_ievname(0); // 重置上次储存二级菜单muid
-  // 二级菜单 下标
-  data_list.forEach((sub_m, sub_i) => {
-    if (sub_m.ct) {
-      let euid = menu_h5_data.get_euid(sub_m.mi);
-      euid_list.push(euid);
-      selected_sub_menu_i_list.push(sub_i);
-    }
-  });
-  // 设置 全部二级菜单euid
-  changeSubmenu = euid_list.join(",");
-
-  // this.set_current_second_menu(changeSubmenu);
-  // this.set_current_sub_menuid(changeSubmenu);
-  // 设置 全部二级菜单下index
-  // this.selected_sub_menu_i_list = selected_sub_menu_i_list;
-  // 设置缓存，代表全部
-  // this.set_sport_all_selected(true);
-}
 /**
  * 三级菜单事件
  */
-function set_menu_lv3(item, index) {
+function set_menu_lv3(item, index, type = "click") {
   //点击当前 就不做什么
   if (
     menu_h5_data.current_lv_3_menu &&
@@ -343,7 +329,7 @@ function set_menu_lv3(item, index) {
 /**
  * 四级菜单事件
  */
-function set_menu_lv4(item, index) {
+function set_menu_lv4(item, index, type = "click") {
   menu_h5_data.set_current_lv4_menu(item, index);
 }
 //判断后台是否展示 VR / 电竞
@@ -367,7 +353,70 @@ function is_menu_show(item) {
   }
   return reslut;
 }
-menu_h5_data.set_query_menu(route.query)
+// // 初始化菜单数据
+// async function initialize_menu_data(type) {
+//   if (this.new_main_menu_index != 1 || type == "matchBack") {
+//     this.prev_main_menu_i = -1;
+//   }
+//   // 如果所有菜单数据 有缓存，则走缓存
+//   // 如果有get_home_data 数据，则走缓存, 更快的渲染，或者菜单出错时，可以走得通
+//   if (this.get_home_data.length > 0) {
+//     await this.get_results_menu();
+//     // await base_data.get_load_lang_v3()
+//     let new_menu = base_data.recombine_menu(
+//       this.get_home_data,
+//       "sort",
+//       this.sub_menu_list
+//     );
+//     [new_menu[0], new_menu[1]] = [new_menu[1], new_menu[0]];
+//     this.new_main_menu_list_items = new_menu;
+//     this.pop_main_select_items = _.filter(
+//       this.new_main_menu_list_items,
+//       (item) => {
+//         return ![1, 7, 8].includes(item.mi);
+//       }
+//     );
+//     // 数据替换
+//     if (this.get_selector_w_m_i) {
+//       let m_selected = this.pop_main_select_items[this.get_selector_w_m_i];
+//       let new_menu1 = this.new_main_menu_list_items;
+//       new_menu1.forEach((item, index) => {
+//         if (item.mi == m_selected.mi) {
+//           [new_menu1[1], new_menu1[index]] = [new_menu1[index], new_menu1[1]];
+//           this.new_main_menu_list_items = new_menu1;
+//         }
+//       });
+//     }
+//   }
+//   let menu_2 = this.get_new_two_menu;
+//   this.sub_menu_changed(menu_2);
+//   // 调用接口，更新菜单数据
+//   this.call_the_interface_to_update_the_menu_data();
+//   //初始化 默认选中第一个
+// }
+// // 菜单首次加载，一级菜单，二级菜单 数据，都在这里赋值
+// function menu_first_load(res_data, type) {
+//   // 主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据
+//   this.main_menu_list = base_data.recombine_menu(res_data, "sort");
+//   // 获取主菜单列表
+//   this.get_main_menu_init_data();
+//   return;
+//   // 二级菜单 list渲染数据
+//   this.sub_menu_list =
+//     this.main_menu_list_items[this.get_main_menu_dom_i].subList;
+//   this.show_one_menu_index = true;
+//   // 更新二级菜单  全部菜单 赛事数量
+//   this.update_gunqiu_count(res_data);
+//   //  如果是首页跳转过来的，则跳转到对应的 id 菜单
+//   if (type == "first_load") {
+//     // 获取一级菜单，二级菜单id,跳转到对应的 菜单
+//     this.get_the_first_and_second_level_menu_id();
+//   } else {
+//     // 代表点击一级菜单
+//     // 一级菜单点击事件
+//     this.main_item_clicked(this.get_main_menu_dom_i, type || "init_data");
+//   }
+// }
 </script>
 
 <style scoped lang="scss">

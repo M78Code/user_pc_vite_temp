@@ -5,7 +5,7 @@
  * @Description: src/public/mixins/results/index
  */
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t} from 'src/core/index.js' 
 export default {
 
   data() {
