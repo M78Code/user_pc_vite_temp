@@ -34,7 +34,7 @@ export default class MatchDataBase
   constructor(params={})
   {
 
-    let { name_code='',is_list_to_obj } = params
+    let { name_code='',set_list_to_obj } = params
     if(!name_code){
       console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
       return false
@@ -44,7 +44,7 @@ export default class MatchDataBase
     this.name_code = name_code;
 
     // 是否启动this.list转换this.list_to_obj
-    this.is_list_to_obj = is_list_to_obj;
+    this.set_list_to_obj = set_list_to_obj;
     
     // 设置ws数据通信实例
     this.ws_ctr = new MatchDataBaseWS(this);
@@ -302,6 +302,8 @@ export default class MatchDataBase
             this.quick_query_list.splice(index,1);
             // 赛事所有赛事里面的数据
             this.remove_match(mid);
+            // 删除list_to_obj中无用垃圾数据
+            this.delete_match_from_list_to_obj(mid, mid,'mid');
           }
          }
         }
@@ -335,13 +337,14 @@ export default class MatchDataBase
       if (mid_ && obj.del[mid_]) {
         // 删除已经结束的赛事数据
         this.remove_match(mid_);
+        // 删除list_to_obj中无用垃圾数据
+        this.delete_match_from_list_to_obj(mid_, mid_,'mid');
       }
     }
-
-    if(this.is_list_to_obj){
+    if(this.set_list_to_obj){
       // 合并数据删除多余数据
       let list_to_obj = this.list_to_many_obj(this.list);
-      this.assign_with_list(this.list_to_obj, list_to_obj);
+      this.assign_with(this.list_to_obj, list_to_obj);
       // 删除list_obj之前的无用赛事
     }
   }
@@ -686,12 +689,13 @@ export default class MatchDataBase
    * @param {String} mid 赛事标识
    * @param {String} id 精准查询使用到的id
    * @param {String} type 精准查询id类型(mid/ol/hl/hn)
+   * @param {Array} arr 需求清除的对象数组,默认为快速检索对象数组
    */
-  delete_match_from_quick_query_obj(mid,id,type='mid'){
+  delete_match_from_quick_query_obj(mid,id,type='mid',arr=[this.quick_query_obj]){
     if(mid) {
       const quick_query_str = this.get_format_quick_query_key(mid,id,type);
       //遍历快速查询对象
-      const arr = [this.quick_query_obj,this.list_to_obj];
+      // const arr = [this.quick_query_obj,this.list_to_obj];
       arr.forEach(obj_temp => {
         for (const key in obj_temp) {
           const obj1 = obj_temp[key];
@@ -710,6 +714,16 @@ export default class MatchDataBase
         }
       });
     }
+  }
+
+  /**
+   * @description: 删除list_to_ob中指定赛事和编号的挂载点(不清空赛事数据)
+   * @param {String} mid 赛事标识
+   * @param {String} id 精准查询使用到的id
+   * @param {String} type 精准查询id类型(mid/ol/hl/hn)
+   */
+  delete_match_from_list_to_obj(mid,id,type='mid'){
+    this.delete_match_from_quick_query_obj(mid,id,type,[this.list_to_obj]);
   }
   /**
    * @description: 获取赛事列表中的赛事mid索引位置
