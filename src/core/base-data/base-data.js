@@ -483,13 +483,13 @@ class BaseData {
     let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
-    let mi_300_obj = _.get(res, 'data')
+    // let mi_300_obj = _.get(res, 'data')
 
-    // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
-    this.vr_mi_config = mi_300_obj.map((item) => {
-      item.mi = item.menuId + "1" + item.menuId;
-      return item;
-    });
+    // // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
+    // this.vr_mi_config = mi_300_obj.map((item) => {
+    //   item.mi = item.menuId + "1" + item.menuId;
+    //   return item;
+    // });
 
     //   let mi_300_obj =  this.mew_menu_list_res.find(x=>x.mi==300)
     // let sl= mi_300_obj['sl']||[]
