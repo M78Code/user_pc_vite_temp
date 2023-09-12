@@ -578,9 +578,10 @@
 </template>
 
 <script>
-// import results from "src/core/match-results/match-results-mixin/index";
+debugger
+import results from "src/core/match-results/match-results-mixin/index";
 
-console.log(results,'results');
+// console.log(results,'results');
 // import Tabs from "../components/playback_tabs.vue";
 // import SliderX from "../components/playback_slider.vue";
 // import no_data from "src/components/no_data/no_data";

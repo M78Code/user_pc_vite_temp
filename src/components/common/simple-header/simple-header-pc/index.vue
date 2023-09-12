@@ -32,7 +32,6 @@ import { RefreshWapper as Refresh } from "src/components/common/refresh"
 import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/module/format-date.js"
 
 console.error('useSlots pc', useSlots());
-
 const props = defineProps({
   /** 刷新按钮动画开关 */
   data_loaded: {
@@ -45,7 +44,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['refresh'])
+const emit = defineEmits(['refresh'])
 
 /** 当前路径的名字 */
 const { name: current_route_name } = useRoute()
