@@ -175,16 +175,16 @@ const get_detail_data = inject('get_detail_data', {})
 <style lang="scss" scoped>
 .mathc_results_visuals {
   padding-bottom: 0.31rem;
-
+  border-bottom: 1px solid  var(--q-analysis-matches-color-27);
   .title {
     height: 0.4rem;
     line-height: 0.4rem;
     padding-left: 0.24rem;
-
+    color: var(--q-analysis-matches-color-1);
+    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
+    background:  var(--q-analysis-matches-color-40);
     font-size: 0.14rem;
-
     letter-spacing: 0;
-
     font-weight: bold;
     position: relative;
 
@@ -195,7 +195,7 @@ const get_detail_data = inject('get_detail_data', {})
       position: absolute;
       left: 0.16rem;
       top: 0.14rem;
-
+      background: var(--q-analysis-matches-color-45);
       border-radius: 1.5px;
     }
   }
@@ -204,7 +204,7 @@ const get_detail_data = inject('get_detail_data', {})
     height: 0.34rem;
     line-height: 0.34rem;
     padding-left: 0.15rem;
-
+    color: var(--q-analysis-matches-color-1);
 
     font-weight: bold;
     font-size: 0.12rem;
@@ -218,7 +218,6 @@ const get_detail_data = inject('get_detail_data', {})
 
       &:nth-child(1) {
         padding-left: 0.12rem;
-
         &:after {
           content: '';
           width: 0.06rem;
@@ -227,6 +226,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           left: 0.01rem;
           top: 0.14rem;
+          background: var(--q-analysis-matches-color-14);
         }
       }
 
@@ -242,6 +242,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           right: 0.01rem;
           top: 0.14rem;
+          background: var(--q-analysis-matches-color-12);
         }
       }
     }
@@ -264,7 +265,7 @@ const get_detail_data = inject('get_detail_data', {})
         position: relative;
 
         .number {
-
+          color: var(--q-analysis-matches-color-3);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -272,12 +273,15 @@ const get_detail_data = inject('get_detail_data', {})
           text-align: right;
           line-height: 0.12rem;
         }
+        .text-span {
+            color: var(--q-analysis-matches-color-13);
+          }
 
         .knob-img {
           margin: 0 0.04rem;
         }
 
-        ::v-deep .text-span {
+        ::v-deep(.text-span) {
 
           font-size: 0.12rem;
 
@@ -286,7 +290,7 @@ const get_detail_data = inject('get_detail_data', {})
           line-height: 0.12rem;
           position: absolute;
           top: -0.19rem;
-
+          color: var(--q-analysis-matches-color-13);
           &.vi-top {
             top: -0.28rem;
           }
@@ -312,7 +316,7 @@ const get_detail_data = inject('get_detail_data', {})
         }
 
         .card-title {
-
+          color: var(--q-analysis-matches-color-13);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -324,14 +328,16 @@ const get_detail_data = inject('get_detail_data', {})
         .score {
           display: flex;
           align-items: center;
-
+          color: var(--q-analysis-matches-color-1);
           > span {
             &:nth-child(1) {
               margin-right: 0.13rem;
+              color: var(--q-analysis-matches-color-1);
             }
 
             &:last-child {
               margin-left: 0.13rem;
+              color: var(--q-analysis-matches-color-1);
             }
           }
 
@@ -344,7 +350,7 @@ const get_detail_data = inject('get_detail_data', {})
     }
 
     .linellae {
-
+      background:  var(--q-analysis-matches-color-42);
       height: 0.01rem;
       margin: 0 0.15rem 0.25rem;
     }
@@ -357,7 +363,7 @@ const get_detail_data = inject('get_detail_data', {})
       position: relative;
 
       .progress-text {
-
+        color: var(--q-analysis-matches-color-13);
         font-size: 0.12rem;
 
         letter-spacing: 0;
@@ -383,7 +389,7 @@ const get_detail_data = inject('get_detail_data', {})
         justify-content: flex-end;
 
         span {
-
+          color: var(--q-analysis-matches-color-3);
           font-size: 0.12rem;
 
           text-align: center;
@@ -410,8 +416,8 @@ const get_detail_data = inject('get_detail_data', {})
           margin-right: unset;
         }
 
-        ::v-deep.q-linear-progress__track--light {
-          background: var(--q-color-com-bg-color-23);
+        ::v-deep(.q-linear-progress__track--light) {
+          background: var(--q-analysis-matches-color-45);
 
           &.q-linear-progress__track {
             opacity: 1;
@@ -423,7 +429,7 @@ const get_detail_data = inject('get_detail_data', {})
         display: flex;
         align-items: center;
         width: 0.2rem;
-
+        color: var(--q-analysis-matches-color-3);
         span {
 
           font-size: 0.12rem;
@@ -443,88 +449,100 @@ const get_detail_data = inject('get_detail_data', {})
     }
   }
 
-  ::v-deep.text-orange {
-    color: var(--q-color-com-fs-color-31) !important;
+  ::v-deep(.text-orange) {
+    color: var(--q-analysis-matches-color-15) !important;
   }
 
-  ::v-deep.text-blue {
-    color: var(--q-color-com-fs-color-12) !important;
+  ::v-deep(.text-blue) {
+    color: var(--q-analysis-matches-color-15) !important;
   }
 
-  ::v-deep.q-linear-progress {
+  ::v-deep(.q-linear-progress) {
     color: var(--q-color-com-fs-color-12) !important;
-
+    &.progress-blue {
+        .q-linear-progress__track--light {
+          background: var(--q-analysis-matches-color-15) !important;
+        }
+      }
     &.progress-orange {
-      color: var(--q-color-com-fs-color-27) !important;
+      color: var(--q-analysis-matches-color-15) !important;
+      .q-linear-progress__model {
+          background: var(--q-analysis-matches-color-15) !important;
+        }
     }
   }
-
-&.analyze-show {
-  border: none;
-  background: var(--q-color-com-bg-color-5);
-  opacity: 0.6;
-  width: 3.67rem;
-  height: 2.66rem;
-  .designation {
-    border-bottom: 1px solid rgba(225,225,225, 0.2);
-    margin-bottom: 0.02rem;
-    color: var(--q-color-com-fs-color-8);
+  .ring-zero-css {
+      .text-orange,
+      .text-blue {
+        color:  var(--q-analysis-matches-color-15) !important;
+      }
+    }
+  &.analyze-show {
+    border: none;
+    background: var(--q-color-com-bg-color-5);
+    opacity: 0.6;
+    width: 3.67rem;
+    height: 2.66rem;
+    .designation {
+      border-bottom: 1px solid rgba(225,225,225, 0.2);
+      margin-bottom: 0.02rem;
+      color: var(--q-color-com-fs-color-8);
+    }
+    .visuals {
+      .linellae {
+        background: rgba(242, 243, 247, 0.2);
+      }
+      .circle-part {
+        margin-bottom: 0rem;
+        .circle {
+          margin-top: 0.15rem;
+          .number {
+            color: var(--q-color-com-fs-color-8);
+          }
+          .text-span {
+            font-size: 0.1rem;
+            top: -0.1rem;
+          }
+          .knob-shrink {
+            transform: scale(0.8);
+          }
+        }
+      }
+      .progress {
+        margin-bottom: .15rem;
+        .progress-text {
+          font-size: 0.1rem
+        }
+        .progress-left {
+          span {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+        .progress-right {
+          span {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+      }
+      .yellow-red-card-corner {
+        margin-bottom: .05rem;
+        >div{
+          margin-right: 0;
+          .card-title {
+            font-size: 0.1rem;
+          }
+          .score {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+        div:nth-child(2) {
+          margin: 0 0.1rem
+        }
+      }
+      .linellae {
+        margin: 0 .15rem .15rem;
+      }
+    }
   }
-  .visuals {
-    .linellae {
-      background: rgba(242, 243, 247, 0.2);
-    }
-    .circle-part {
-      margin-bottom: 0rem;
-      .circle {
-        margin-top: 0.15rem;
-        .number {
-          color: var(--q-color-com-fs-color-8);
-        }
-        .text-span {
-          font-size: 0.1rem;
-          top: -0.1rem;
-        }
-        .knob-shrink {
-          transform: scale(0.8);
-        }
-      }
-    }
-    .progress {
-      margin-bottom: .15rem;
-      .progress-text {
-        font-size: 0.1rem
-      }
-      .progress-left {
-        span {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-      .progress-right {
-        span {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-    }
-    .yellow-red-card-corner {
-      margin-bottom: .05rem;
-      >div{
-        margin-right: 0;
-        .card-title {
-          font-size: 0.1rem;
-        }
-        .score {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-      div:nth-child(2) {
-        margin: 0 0.1rem
-      }
-    }
-    .linellae {
-      margin: 0 .15rem .15rem;
-    }
-  }
-}
 }
 </style>

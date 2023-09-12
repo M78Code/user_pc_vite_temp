@@ -186,6 +186,7 @@ const get_detail_data = inject('get_detail_data', {})
 
 <style lang="scss" scoped>
 .history_engagement {
+  background-color: var(--q-analysis-matches-color-4);
   .header {
     height: 0.4rem;
     padding-left: 0.24rem;
@@ -193,7 +194,7 @@ const get_detail_data = inject('get_detail_data', {})
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    // background-color:var(--q-color-page-bg-color-2);
+    background-color:var(--q-analysis-matches-color-4);
     .title {
       font-size: 0.14rem;
       height: 0.2rem;
@@ -201,6 +202,7 @@ const get_detail_data = inject('get_detail_data', {})
       letter-spacing: 0;
       font-weight: bold;
       width: 0.985rem;
+      color: var(--q-analysis-matches-color-1);
       &:before {
         content: '';
         width: 0.03rem;
@@ -208,7 +210,7 @@ const get_detail_data = inject('get_detail_data', {})
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-
+        background-color: var(--q-analysis-matches-color-45);
         border-radius: 1.5px;
       }
     }
@@ -224,6 +226,14 @@ const get_detail_data = inject('get_detail_data', {})
       letter-spacing: 0;
       text-align: center;
       margin-right: 0.1rem;
+      background: var(--q-analysis-matches-color-4);
+      border: 1px solid var(--q-analysis-matches-color-26);
+      color: var(--q-analysis-matches-color-2);
+      &.active {
+        background: var(--q-analysis-matches-color-45);
+        color: var(--q-analysis-matches-color-4);
+        border: 1px solid var(--q-analysis-matches-color-49)!important;
+      }
       &.active, &.progress_bar {
         border: unset;
       }
@@ -238,9 +248,18 @@ const get_detail_data = inject('get_detail_data', {})
       font-size: 0.1rem;
       letter-spacing: 0;
       text-align: center;
+      background: var(--q-analysis-matches-color-4);
+      color: var(--q-analysis-matches-color-2);
+      border: 1px solid var(--q-analysis-matches-color-26)!important;
+      &.active {
+        background: var(--q-analysis-matches-color-45);
+        color: var(--q-analysis-matches-color-4);
+        border: 1px solid var(--q-analysis-matches-color-49)!important;
+      }
       &.tab-radio-button0 {
         border-right: unset;
         border-radius: 0.04rem 0 0 0.04rem;
+        
       }
       &.tab-radio-button2 {
         border-left: unset;
@@ -248,6 +267,8 @@ const get_detail_data = inject('get_detail_data', {})
       }
     }
   }
-
+  ::deep(.public_form) {
+    background-color: var(--q-analysis-matches-color-4);
+  }
 }
 </style>

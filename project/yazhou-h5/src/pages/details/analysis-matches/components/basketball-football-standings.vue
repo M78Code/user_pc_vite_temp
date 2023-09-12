@@ -52,7 +52,7 @@
       <!-- 大于2条时,显示 展开收起按钮-->
       <span class="btn_style" @click="toggle_box" v-if="show_btn">
         <span class="text_c">{{ btn_text }}</span>
-        <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" :class="direction">
+        <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="direction">
       </span>
     </div>
     <!-- 没有数据 组件 -->
@@ -196,7 +196,7 @@ const get_detail_data = inject('get_detail_data', {})
 
 <style lang="scss" scoped>
 .football_standings {
-
+  background: var(--q-analysis-matches-color-23);
   margin-bottom: 0.25rem;
 
   &.football_standings-empty {
@@ -207,7 +207,9 @@ const get_detail_data = inject('get_detail_data', {})
     height: 0.4rem;
     line-height: 0.45rem;
     padding-left: 0.24rem;
-
+    color: var(--q-analysis-matches-color-9);
+    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
+    background-color:var(--q-analysis-matches-color-4);
     font-size: 0.14rem;
 
     letter-spacing: 0;
@@ -222,29 +224,43 @@ const get_detail_data = inject('get_detail_data', {})
       position: absolute;
       left: 0.16rem;
       top: 0.15rem;
-
+      background: var(--q-analysis-matches-color-45);
       border-radius: 1.5px;
     }
   }
 
   .table-score {
     position: relative;
+    background-color: var(--q-analysis-matches-color-4);
     // 头部
     &.backball-table {
       .header {
-
+        color:  var(--q-analysis-matches-color-10);
+        border-bottom: 1px solid var(--q-analysis-matches-color-30);
+        background: var(--q-analysis-matches-color-4);
+        > div {
+          color: var(--q-analysis-matches-color-46);
+        }
       }
 
       .group-item {
-
+        .team-item {
+          border-bottom: 1px solid var(--q-analysis-matches-color-29);
+        }
       }
 
       .col2 {
         width: 1.7rem;
+        color: var(--q-analysis-matches-color-46);
       }
 
       .col3 {
         flex: 1;
+        color: var(--q-analysis-matches-color-11);
+      }
+      .btn_style {
+        background: var(--q-analysis-matches-color-4);
+        border: 1px solid var(--q-analysis-matches-color-22);
       }
     }
 
@@ -254,9 +270,9 @@ const get_detail_data = inject('get_detail_data', {})
       text-align: center;
       line-height: 0.32rem;
       padding: 0 0.1rem;
-
+      color:  var(--q-analysis-matches-color-10);
       > div {
-
+        color: var(--q-analysis-matches-color-2);
         font-size: 0.1rem;
       }
     }
@@ -284,6 +300,10 @@ const get_detail_data = inject('get_detail_data', {})
         align-items: center;
         justify-content: center;
         font-size: 0.12rem;
+        color: var(--q-analysis-matches-color-11);
+          &.col2 {
+            color: var(--q-analysis-matches-color-11);
+          }
       }
 
       .col1 {
@@ -310,20 +330,22 @@ const get_detail_data = inject('get_detail_data', {})
         display: flex;
         align-items: center;
         justify-content: center;
+        background: var(--q-analysis-matches-color-38);
+        color:  var(--q-analysis-matches-color-4) !important;
 
         &.calculation_color1 {
-          background: var(--q-color-com-fs-color-23);
-          color: var(--q-color-com-fs-color-8) !important;
+          background: var(--q-analysis-matches-color-47);
+          color: var(--q-analysis-matches-color-4) !important;
         }
 
         &.calculation_color2 {
           background: var(--q-color-com-bg-color-30);
-          color: var(--q-color-com-fs-color-8) !important;
+          color: var(--q-analysis-matches-color-4) !important;
         }
 
         &.calculation_color3 {
-          background: var(--q-color-com-bg-color-23);
-          color: var(--q-color-com-fs-color-8) !important;
+          background: var(--q-analysis-matches-color-47);
+          color: var(--q-analysis-matches-color-4) !important;
         }
       }
     }
@@ -334,12 +356,12 @@ const get_detail_data = inject('get_detail_data', {})
       display: unset !important;
 
       &.col2_home {
-
+        color: var(--q-analysis-matches-color-1)!important;
         font-weight: bold;
       }
 
       &.col2_away {
-
+        color: var(--q-analysis-matches-color-1)!important;
         font-weight: bold;
       }
     }
@@ -387,9 +409,10 @@ const get_detail_data = inject('get_detail_data', {})
       line-height: 0.18rem;
       font-size: 0.1rem;
       padding: 0 0.08rem;
+      background: var(--q-analysis-matches-color-4);
+      border: 1px solid  var(--q-analysis-matches-color-22);
+      box-shadow: 0 1px 2px 0  var(--q-analysis-matches-color-48);
 
-
-      box-shadow: var(--q-color-com-box-shadow-2);
       border-radius: 0.04rem;
       border-top: 0;
       border-top-left-radius: 0;
@@ -410,7 +433,7 @@ const get_detail_data = inject('get_detail_data', {})
       transform: scale(-1);
 
       .text_c {
-
+        color: var(--q-analysis-matches-color-1);
       }
     }
   }
@@ -420,7 +443,8 @@ const get_detail_data = inject('get_detail_data', {})
     line-height: 0.6rem;
     text-align: center;
     padding-top: 0.05rem !important;
-
+    background-color:var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-2);
 
     font-size: 12px;
   }

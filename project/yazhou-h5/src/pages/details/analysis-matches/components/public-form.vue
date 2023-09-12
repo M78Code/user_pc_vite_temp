@@ -24,7 +24,8 @@
     <!-- 主内容 -->
     <template v-if="liat_data.length">
       <div class="team-item" v-for="(item, i) in liat_data" :key="i">
-        <div class="col1 ellipsis">{{(new Date(+item.beginTime)).Format(i18n_t('time5'))}}</div>
+        <!-- .Format(i18n_t('time5')) -->
+        <div class="col1 ellipsis">{{(DateForMat(+item.beginTime))}}</div>
         <div class="col2 tournamentName">{{ item.tournamentName }}</div>
         <div class="col3 ellipsis">
           <span class="home ellipsis" :class="[item.homeTeamName == hm_index_name ? 'add_bold' :'']">{{ item.homeTeamName }}</span>
@@ -76,9 +77,10 @@
 </template>
 
 <script setup>
-import { onUnmounted, watch } from 'vue'
+import { onUnmounted, watch, ref } from 'vue'
 import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { DateForMat } from "src/core/format/index.js"
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
@@ -87,12 +89,12 @@ import UserCtr from "src/core/user-config/user-ctr.js";
 
   const props = defineProps({
     liat_data: {
-      type: Number | String,
+      type: Array,
       default: null,
       require: true
     },
     hm_index_name: {
-      type: Number | String
+      type: String
     },
     future_schedule: {
       type: Number | String
@@ -100,8 +102,8 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   })
   let default_index = ref(0)
 
- watch(() => liat_data, (n) => {
-  liat_data.value = n
+ watch(() => props.liat_data, (n) => {
+  props.liat_data = n
  })
 
  const change_default_number = () => {
@@ -140,7 +142,10 @@ import UserCtr from "src/core/user-config/user-ctr.js";
     text-align: center;
     align-items: center;
     padding: 0 0.1rem;
-    background:var(--q-color-page-bg-color-62);
+    background:var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-46);
+    border-top: 1px solid var(--q-analysis-matches-color-31);
+    border-bottom: 1px solid var(--q-analysis-matches-color-31);
 
     > div {
 
