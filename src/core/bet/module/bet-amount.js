@@ -5,7 +5,7 @@ import {
   PageSourceData
 } from "src/core/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
-import BetData from "src/core/bet/class/bet-data-class.js.js";
+import BetData from "src/core/bet/class/bet-data-class.js";
 // import {
 //   compute_value_by_cur_odd_type
 // } from src/core/format/module/format-odds-conversion-mixin.js

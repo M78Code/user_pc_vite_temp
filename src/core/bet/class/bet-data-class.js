@@ -5,6 +5,7 @@ import { ref } from "vue"
 import lodash_ from "lodash"
 
 
+
 class BetData {
   constructor() { }
   init_core() {
@@ -21,8 +22,6 @@ class BetData {
     // this.bet_obj = {};
     // 串关投注列表
     this.bet_s_list = [];
-    // 串关数据
-    this.bet_s_obj = {};
     // 单关投注信息
     this.bet_single_list = [];
     // 单关串关切换 保留原值
@@ -150,43 +149,7 @@ this.bet_appoint_ball_head= null */
     //
     this.item_cs_id = 0;
     // 前端点击投注项立马生成的前端索引ID ，每个注单不论什么状态，只管用最初始的前端生成的ID 去参照对象内去转换
-    this.bet_read_write_refer_obj = {
-
-      //  [bet_custom_id]:{
-      // mount_point_key:'virtual_bet_obj',
-      // 
-      // shuju_laiyuan: 'xiangqing',       //  
-      // shuju_laiyuan_obj:  data_souce,       //  
-
-      // fileds_map:{
-      // c_csid,
-      // c_tid,
-      // c_mid,
-      // c_hid,
-      // c_oid,
-      // c_kid,
-      // c_hn,
-      // c_topKey,
-      // },
-
-      // is_type:{
-      // is_guanjun:1,  
-      // is_dianjing:1,
-      // is_common:1,
-
-      // is_vr:1,   // 
-      // is_pre_bet,
-      // }
-
-
-
-      // virtual_bet_mode:1,  //操盘方 投注模式  -1.还不知道使用哪种模式 0.足球PA滚球 1.非足球PA滚球
-
-
-
-      //  }
-
-    };
+    this.bet_read_write_refer_obj = {};
     // 每一个投注对象 的视图控制对象
     this.all_bet_view_ctr_obj = {
       // [bet_custom_id]:new  BetViewData()
