@@ -95,7 +95,7 @@ class MatchListDataClass {
 			let { mid, csid } = match || {};
 			// 处理ws拉取全量数据  列表闪屏
 			// ws拉取全量数据 并且 mid_obj未存有赛事数据 不合并数据
-			if (!(is_ws_call_all && this.mid_obj["mid_" + mid])) {
+			if (!(is_ws_call_all && this.mid_obj[mid+'_'])) {
 				// 设置赛事模板ID
 				match.tpl_id = this.get_match_template_id(match);
 				// 设置赛事默认数据
@@ -105,7 +105,7 @@ class MatchListDataClass {
 				// 设置赛事比分
 				this.set_match_score(match);
 				// 计算单个赛事数据
-				mid_obj["mid_" + mid] = this.compute_match_data(match);
+				mid_obj[mid+'_'] = this.compute_match_data(match);
 			}
 			// 虚拟体育 不需要统计数量
 			if (is_all_match && !utils.is_virtual_csid(csid)) {
@@ -986,7 +986,7 @@ class MatchListDataClass {
 	 * @param {string} mid 赛事id
 	 */
 	switch_other_play(mid, play_key) {
-		let match = this.mid_obj["mid_" + mid] || {};
+		let match = this.mid_obj[mid+'_'] || {};
 		this.set_match_play_current_index(match, play_key);
 		let { tpl_id } = match;
 		let template_name = `template_${tpl_id}_config`;
@@ -1035,7 +1035,7 @@ class MatchListDataClass {
 	get_tab_param_build(mids) {
 		let tabs = [];
 		mids.forEach((mid) => {
-			let match = this.mid_obj["mid_" + mid] || {};
+			let match = this.mid_obj[mid+'_'] || {};
 			// 有其他玩法
 			if (match.has_other_play) {
 				// 添加玩法ID
@@ -1043,7 +1043,7 @@ class MatchListDataClass {
 					mid,
 					playId:
 						other_play_name_to_playid[
-							this.other_play_current_play["mid_" + mid]
+							this.other_play_current_play[mid+'_']
 						],
 				});
 			}
@@ -1205,7 +1205,7 @@ class MatchListDataClass {
 	 * @param {Number} mhs  赛事级别状态
 	 */
 	set_match_mhs_status(mid, mhs) {
-		let match = this.mid_obj["mid_" + mid] || {};
+		let match = this.mid_obj[mid+'_'] || {};
 		match.mhs = mhs;
 		let all_hids = match.all_hids.split(",");
 		// 遍历赛事所有盘口ID

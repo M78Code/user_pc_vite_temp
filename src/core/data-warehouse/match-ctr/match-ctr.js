@@ -63,7 +63,16 @@ export default class MatchDataBase
     // 所有赛事列表数据
     this.list = [];
     // 所有赛事列表数据转obj对象
-    this.list_to_obj = {};
+    this.list_to_obj = {
+      // 页面显示赛事投注项对象
+      ol_obj:{},
+      // 页面显示赛事盘口对象
+      hl_obj:{},
+      // 页面显示赛事坑位对象
+      hn_obj:{},
+      // 页面显示赛事赛事对象
+      mid_obj:{},
+    };
     // 页面显示的赛事列表数据,this.quick_query_list.list的部分数据
     this.quick_query_list = [];
     // 页面显示赛事快速查询对象
@@ -276,7 +285,6 @@ export default class MatchDataBase
    */
   set_list(list,is_merge){
     let obj = this.list_comparison(this.list,list);
-
     if(is_merge){
       // {add:{}, del:{}, upd:{}}
       // 需要更新的

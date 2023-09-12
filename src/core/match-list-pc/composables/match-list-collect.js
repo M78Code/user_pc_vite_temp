@@ -174,7 +174,7 @@ const mx_collect_leagues = (match, is_champion) => {
           )
         );
         mids_arr.forEach((mid) => {
-          let match_item = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
+          let match_item = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
           match_item.tf = cur_collect_state;
           match_item.mf = cur_collect_state;
           // 在收藏列表页 移除收藏
@@ -238,7 +238,7 @@ const update_collect_data = (params) => {
         let mids = params.mids;
         for (let i = 0; i < mids.length; i++) {
           let mid = mids[i];
-          let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
+          let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
           //冠军联赛收藏
           if (MenuData.is_guanjun()) {
             MatchListCard.update_league_collect_data(mid);
@@ -251,7 +251,7 @@ const update_collect_data = (params) => {
       break;
     // 设置收藏状态
     case "set_status":
-      let match = MatchListData.quick_query_obj.mid_obj["mid_" + params.mid] || {};
+      let match = MatchListData.list_to_obj.mid_obj["mid_" + params.mid] || {};
       if (match.mid) {
         match.mf = params.mf;
         set_collect_count({ type: "inc", count: params.mf ? 1 : -1 });

@@ -21,7 +21,7 @@ const { api_bymids } = use_featch_fn();
 const ws_c8_subscribe = () => {
 	let match_list = [];
 	show_mids.value.forEach((mid) => {
-		let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid];
+		let match = MatchListData.list_to_obj.mid_obj[mid+'_'];
 		if (match) {
 			match_list.push(match);
 		}

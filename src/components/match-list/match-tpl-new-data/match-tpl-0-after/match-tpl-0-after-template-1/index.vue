@@ -133,7 +133,7 @@ const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.get_match_all_card_obj(), `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
 console.log('MatchListData', MatchListData);
-const match = reactive(MatchListData.quick_query_obj.mid_obj[props.mid+'_'] || {});
+const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
 
 
 // 其他玩法标题

@@ -62,14 +62,14 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
     mids_arr.forEach((mid) => {
       // 原来的样式数据
       let old_match_style_obj =
-        MatchListCardData.all_card_obj["mid_" + mid] || {};
+        MatchListCardData.all_card_obj[mid+'_'] || {};
       // 判断是否需要动态计算高度
       if (
         old_match_style_obj.is_dynamic_compute_height ||
         !old_match_style_obj.card_total_height
       ) {
         // 更新赛事表征数据
-        let match = MatchListData.match_list_data.mid_obj["mid_" + mid] || {};
+        let match = MatchListData.match_list_data.mid_obj[mid+'_'] || {};
         let match_style_obj = compute_style_template_by_matchinfo(
           match,
           match.tpl_id
