@@ -34,7 +34,7 @@ export default class MatchDataBase
   constructor(params={})
   {
 
-    let { name_code='' } = params
+    let { name_code='',is_list_to_obj } = params
     if(!name_code){
       console.error('MatchDataBase -赛事数据仓库-必须有实例化名字标识---');
       return false
@@ -42,6 +42,10 @@ export default class MatchDataBase
 
     // 实例化名字标识
     this.name_code = name_code;
+
+    // 是否启动this.list转换this.list_to_obj
+    this.is_list_to_obj = is_list_to_obj;
+    
     // 设置ws数据通信实例
     this.ws_ctr = new MatchDataBaseWS(this);
 
@@ -58,6 +62,8 @@ export default class MatchDataBase
   init(){
     // 所有赛事列表数据
     this.list = [];
+    // 所有赛事列表数据转obj对象
+    this.list_to_obj = {};
     // 页面显示的赛事列表数据,this.quick_query_list.list的部分数据
     this.quick_query_list = [];
     // 页面显示赛事快速查询对象
@@ -266,7 +272,7 @@ export default class MatchDataBase
   /**
    * @description: 设置所有列表数据
    * @param {Object} list 所有列表数据
-   * @return {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
+   * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list,is_merge){
     let obj = this.list_comparison(this.list,list);
@@ -317,10 +323,10 @@ export default class MatchDataBase
         }
       }
       this.list.length = 0;
-      Object.assign(this.list,list);
+      this.assign_with_list(this.list,list);
     } else {
       this.list.length = 0;
-      Object.assign(this.list,list);
+      this.assign_with_list(this.list,list);
     }
     // console.error('this.list',JSON.stringify(this.list));
     // console.error('obj',JSON.stringify(obj));
@@ -330,6 +336,13 @@ export default class MatchDataBase
         // 删除已经结束的赛事数据
         this.remove_match(mid_);
       }
+    }
+
+    if(this.is_list_to_obj){
+      // 合并数据删除多余数据
+      let list_to_obj = this.list_to_many_obj(this.list);
+      this.assign_with_list(this.list_to_obj, list_to_obj);
+      // 删除list_obj之前的无用赛事
     }
   }
 
@@ -678,21 +691,24 @@ export default class MatchDataBase
     if(mid) {
       const quick_query_str = this.get_format_quick_query_key(mid,id,type);
       //遍历快速查询对象
-      for (const key in this.quick_query_obj) {
-        const obj1 = this.quick_query_obj[key];
-        if (obj1) {
-          //遍历快速查询中的二级对象
-          for (const key2 in obj1) {
-            const obj2 = obj1[key2];
-            // 找到指定赛事的对象
-            if (key2 && key2.startsWith(quick_query_str)) {
-              // 删除其中的挂载点
-              delete obj1[key2];
+      const arr = [this.quick_query_obj,this.list_to_obj];
+      arr.forEach(obj_temp => {
+        for (const key in obj_temp) {
+          const obj1 = obj_temp[key];
+          if (obj1) {
+            //遍历快速查询中的二级对象
+            for (const key2 in obj1) {
+              const obj2 = obj1[key2];
+              // 找到指定赛事的对象
+              if (key2 && key2.startsWith(quick_query_str)) {
+                // 删除其中的挂载点
+                delete obj1[key2];
+              }
             }
+            
           }
-          
         }
-      }
+      });
     }
   }
   /**
@@ -941,9 +957,9 @@ export default class MatchDataBase
         for (let i = 0; i < new_value.length; i++) {
           const item = new_value[i];
           let type2 = typeof(item);
-          if('object' == type){
+          if('object' == type2){
             if(Array.isArray(item)){
-              type = 'array';
+              type2 = 'array';
             }
           }
           // console.error(i,'-old_value=item==',JSON.stringify(old_value[i]));
@@ -966,6 +982,38 @@ export default class MatchDataBase
       }
     }
     lodash.assignWith(old_obj, new_obj,customizer);
+  }
+
+  /**
+   * @description: 列表数据合并优化版函数
+   * @param {*} old_list 旧数据
+   * @param {*} new_list 新数据
+   */
+  assign_with_list(old_list, new_list){
+    if(old_list && new_list && Array.isArray(new_list)){
+      // 设置长度
+      old_list.length = new_list.length;
+      for (let i = 0; i < old_list.length; i++) {
+        const item_new = old_list[i];
+        // 判断类型
+        let type = typeof(item_new);
+        if('object' == type){
+          if(Array.isArray(item_new)){
+            type = 'array';
+          }
+        }
+        // 当确认是对象时
+        if('object' == type){
+          // 数据合并
+          this.assign_with(item_new, new_list[i]);
+        } else if('array' == type){
+          // 数据合并
+          this.assign_with_list(item_new, new_list[i]);
+        } else {
+          old_list[i] = new_list[i];
+        }
+      }
+    }
   }
   /**
    * @description: 更新赛事ms状态
@@ -1090,6 +1138,7 @@ export default class MatchDataBase
     this.clear_quick_query_obj(this.quick_query_obj);
     this.clear(this.quick_query_list);
     this.clear(this.list);
+    this.clear(this.list_to_obj);
     // 销毁ws数据通信实例
     this.ws_ctr && this.ws_ctr.destroy();
   }
