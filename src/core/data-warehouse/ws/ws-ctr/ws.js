@@ -6,7 +6,7 @@ import WsQueue from "./ws-queue.js";
 import { WsRev } from "./ws-ctr.js";
 import WsSendManger from "./ws-send-manger.js";
 import STANDARD_KEY from "src/core/standard-key";
-import { UserCtr } from "src/core/index.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { SessionStorage , LocalStorage } from "src/core/utils/module/web-storage.js";
 import lodash from "lodash";
 const token_key = STANDARD_KEY.get("token"); //token键
@@ -268,8 +268,10 @@ export default class Ws {
     try {
       let ws = this.ws;
       if (ws && ws.readyState == 1) {
+        let mk_level = lodash.get(UserCtr.user_info, 'marketLevel',0);
         switch (msg.cmd) {
           case 'C8':
+            msg.marketLevel = mk_level;  //行情等级有值的时候传值 其他时候传0
             // 是否一条一条发送
             if(!msg.one_send){
               if(!this.ws_send_manger_objs[msg.cmd])
@@ -277,25 +279,30 @@ export default class Ws {
                 this.ws_send_manger_objs[msg.cmd] = new WsSendManger(msg.cmd);
               }
               // 增加缓存信息,并获取组装后信息
-              msg = this.ws_send_manger_objs[msg.cmd].push_obj(msg.key, msg);
+              msg = this.ws_send_manger_objs[msg.cmd].push_obj(msg.key, msg, msg.ctr_cmd);
             }
             break;
+          case 'C2':
+              msg.marketLevel = mk_level;  //行情等级有值的时候传值 其他时候传0
+              break;
           default:
             break;
         }
-        // 对特殊命令进行统一管理处理发送
-        try {
-          msg.requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
-        } catch (error) {
-          console.error(error)
-        }
+        if(msg){
+          // 对特殊命令进行统一管理处理发送
+          try {
+            msg.requestId = SessionStorage.get(token_key) || sessionStorage.getItem("token") ||Qs.token ||  "";
+          } catch (error) {
+            console.error(error)
+          }
 
-        window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
-        if(window.wslog && window.wslog.send_msg){
-          window.wslog.send_msg('WS---S:', msg)
-        }
-        if(ws){
-          ws.send(JSON.stringify(msg));
+          window.wsmsg && console.log(`WS MSG SEND ---:${JSON.stringify(msg)}`);
+          if(window.wslog && window.wslog.send_msg){
+            window.wslog.send_msg('WS---S:', msg)
+          }
+          if(ws){
+            ws.send(JSON.stringify(msg));
+          }
         }
       }
     } catch (error) {
