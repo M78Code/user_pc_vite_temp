@@ -8,7 +8,7 @@ import { ref, watch, onMounted, reactive, toRefs, onUnmounted } from "vue";
 import {utils } from 'src/core/index.js';
 import { format_day,DateForMat } from "src/core/format/index.js";
 import { api_common, api_betting, api_account } from "src/api/index";
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
 import uid from "src/core/uuid/index.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";

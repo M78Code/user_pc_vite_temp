@@ -3,7 +3,7 @@
   <div>
     <bet-scroll-header />
 
-    <div > {{ BetData.bet_data_class_version }} </div>
+    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
 
     <div class="bet-mode-zone" v-if="BetData.is_bet_single">
       <div class="left">

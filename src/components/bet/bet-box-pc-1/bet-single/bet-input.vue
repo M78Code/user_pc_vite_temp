@@ -122,4 +122,10 @@ input::-webkit-inner-spin-button {-webkit-appearance: none;
 input[type="number"]{-moz-appearance: textfield;
 }
 
+.bet-input{
+    width: 100%;
+    line-height: 40px;
+    margin: 10px 0;
+}
+
 </style>
