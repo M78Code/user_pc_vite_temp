@@ -733,16 +733,21 @@ export default class MatchDataBaseWS
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
-  scmd_c8() {  
+  scmd_c8(ctr_cmd) {  
     if(lodash.get(this.match_ctr,'quick_query_list.length')){
       let obj = {};
       obj.key = this.match_ctr.name_code;
       obj.module = 'match-ctr';
       obj.list = this._get_c8_list(lodash.get(this.match_ctr,'quick_query_list',[]));      
       obj.one_send = false; 
+      obj.ctr_cmd = ctr_cmd;
+      // cufm 详情用LM列表为L
       obj.cufm = "L";
-      obj.marketLevel = lodash.get(this.vx_get_user, 'marketLevel', '0');
-      //处理逻辑
+      // 设置使用类型:类表-list,赛事详情-match
+      if('match' == this.match_ctr.type){
+        obj.cufm = "LM";
+        obj.one_send = true; 
+      }
       if(obj.list.length>0) {
         //发送赛状态订阅息命令C8
         WsMan.skt_send_match_status(obj);

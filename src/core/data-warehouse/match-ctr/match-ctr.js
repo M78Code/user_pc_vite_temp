@@ -49,6 +49,9 @@ export default class MatchDataBase
     // 设置ws数据通信实例
     this.ws_ctr = new MatchDataBaseWS(this);
 
+    // 使用类型:类表-list,赛事详情-match
+    this.type = '';
+
     // 初始化数据
     this.init();
   }
@@ -284,76 +287,80 @@ export default class MatchDataBase
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
    */
   set_list(list,is_merge){
-    let obj = this.list_comparison(this.list,list);
-    if(is_merge){
-      // {add:{}, del:{}, upd:{}}
-      // 需要更新的
-      for (let i = 0; i < list.length; i++) {
-        const item = list[i];
-        const mid = item.mid;
-        console.log('listlist', mid);
-        if(obj.upd[mid]){
-         // 需要更新的赛事
-         const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
-         if(match){
-          // 赛事信息合并
-          this.match_assign(match,obj.upd[mid]);
-          // list列表数据同步
-          list[i] = match;
-         } else if(obj.del[mid]){
-          // 搜索索引
-          let index = this.get_mid_index_form_list(mid,this.quick_query_list);
-          if(index != -1){
-            // 删除快速搜索里面的赛事数据
-            this.delete_match_from_quick_query_obj(mid,mid,'mid');
-            // 同步删除快速查询列表中的数据
-            this.quick_query_list.splice(index,1);
-            // 赛事所有赛事里面的数据
-            this.remove_match(mid);
-            // 删除list_to_obj中无用垃圾数据
-            this.delete_match_from_list_to_obj(mid, mid,'mid');
+    if(list){
+      // 设置使用类型:类表-list,赛事详情-match
+      this.type = 'list';
+      let obj = this.list_comparison(this.list,list);
+      if(is_merge){
+        // {add:{}, del:{}, upd:{}}
+        // 需要更新的
+        for (let i = 0; i < list.length; i++) {
+          const item = list[i];
+          const mid = item.mid;
+          console.log('listlist', mid);
+          if(obj.upd[mid]){
+          // 需要更新的赛事
+          const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
+          if(match){
+            // 赛事信息合并
+            this.match_assign(match,obj.upd[mid]);
+            // list列表数据同步
+            list[i] = match;
+          } else if(obj.del[mid]){
+            // 搜索索引
+            let index = this.get_mid_index_form_list(mid,this.quick_query_list);
+            if(index != -1){
+              // 删除快速搜索里面的赛事数据
+              this.delete_match_from_quick_query_obj(mid,mid,'mid');
+              // 同步删除快速查询列表中的数据
+              this.quick_query_list.splice(index,1);
+              // 赛事所有赛事里面的数据
+              this.remove_match(mid);
+              // 删除list_to_obj中无用垃圾数据
+              this.delete_match_from_list_to_obj(mid, mid,'mid');
+            }
           }
-         }
+          }
         }
-      }
 
-      // 释放快速查询列表中的无效数据
-      for (let j = 0; j < this.quick_query_list.length; j++) {
-        if(this.quick_query_list[j])
-        {
-          let mid_ = this.quick_query_list[j].mid;
-          if(obj.del[mid_])
+        // 释放快速查询列表中的无效数据
+        for (let j = 0; j < this.quick_query_list.length; j++) {
+          if(this.quick_query_list[j])
           {
+            let mid_ = this.quick_query_list[j].mid;
+            if(obj.del[mid_])
+            {
+              this.quick_query_list.splice(j,1);
+              j--;
+            }
+          } else {
             this.quick_query_list.splice(j,1);
             j--;
           }
-        } else {
-          this.quick_query_list.splice(j,1);
-          j--;
+        }
+        this.list.length = 0;
+        this.assign_with_list(this.list,list);
+      } else {
+        this.list.length = 0;
+        this.assign_with_list(this.list,list);
+      }
+      // console.error('this.list',JSON.stringify(this.list));
+      // console.error('obj',JSON.stringify(obj));
+      // 检测清除快速查询对象里面的垃圾挂载点
+      for (const mid_ in obj.del) {
+        if (mid_ && obj.del[mid_]) {
+          // 删除已经结束的赛事数据
+          this.remove_match(mid_);
+          // 删除list_to_obj中无用垃圾数据
+          this.delete_match_from_list_to_obj(mid_, mid_,'mid');
         }
       }
-      this.list.length = 0;
-      this.assign_with_list(this.list,list);
-    } else {
-      this.list.length = 0;
-      this.assign_with_list(this.list,list);
-    }
-    // console.error('this.list',JSON.stringify(this.list));
-    // console.error('obj',JSON.stringify(obj));
-    // 检测清除快速查询对象里面的垃圾挂载点
-    for (const mid_ in obj.del) {
-      if (mid_ && obj.del[mid_]) {
-        // 删除已经结束的赛事数据
-        this.remove_match(mid_);
-        // 删除list_to_obj中无用垃圾数据
-        this.delete_match_from_list_to_obj(mid_, mid_,'mid');
+      if(this.set_list_to_obj){
+        // 合并数据删除多余数据
+        let list_to_obj = this.list_to_many_obj(this.list);
+        this.assign_with(this.list_to_obj, list_to_obj);
+        // 删除list_obj之前的无用赛事
       }
-    }
-    if(this.set_list_to_obj){
-      // 合并数据删除多余数据
-      let list_to_obj = this.list_to_many_obj(this.list);
-      this.assign_with(this.list_to_obj, list_to_obj);
-      // 删除list_obj之前的无用赛事
     }
   }
 
@@ -631,8 +638,9 @@ export default class MatchDataBase
    * @return
    */
   set_list_from_match_details(match_details, is_merge){
-    
     if(match_details){
+      // 设置使用类型:类表-list,赛事详情-match
+      this.type = 'match';
       if(is_merge){
         // 合并模式时,获取赛事信息
         const match=lodash.get(this.list,'[0]');
@@ -1157,6 +1165,8 @@ export default class MatchDataBase
    * @return {undefined} undefined
    */
   destroy(){
+    // ws命令赛事订阅删除
+    this.ws_ctr.scmd_c8('del');
     this.clear_quick_query_obj(this.quick_query_obj);
     this.clear(this.quick_query_list);
     this.clear(this.list);
