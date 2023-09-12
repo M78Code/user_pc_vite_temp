@@ -59,14 +59,7 @@ class BetViewData {
     };
 
     // 串关  专用参数
-    this.bet_special_series = {
-      // 当前键盘所在输入投注项索引
-      cur_keyboard_index: 0,
-      // 提交结果 用来控制code的提示
-      is_submit_result: false,
-      // 无效金额对象收集
-      valid_money_obj: {},
-    };
+    this.bet_special_series = {};
     // 普通单关 专用参数
     this.bet_special_single = {};
     // 合并单关 专用参数
@@ -152,6 +145,12 @@ class BetViewData {
   // status 成功失败
   set_bet_error_code({code,status}){
     
+  }
+
+  // 串关专用参数
+  set_bet_special_series(array){
+    this.bet_special_series = array
+    this.set_bet_view_version()
   }
 }
 export default new BetViewData();
