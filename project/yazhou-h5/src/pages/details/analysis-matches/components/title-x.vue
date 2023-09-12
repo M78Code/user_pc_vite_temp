@@ -19,8 +19,8 @@
 // import { mapGetters } from "vuex";
 import { computed, ref, toRefs } from 'vue'
 import loadsh from 'lodash'
-import matchScore from 'src/project/components/match/match-score.vue' // 比分组件
-
+import matchScore from 'project_path/src/components/match/match-score.vue' // 比分组件
+const get_detail_data = inject('get_detail_data', {})
   // name: "title_x",
   // components: {
   //   matchScore,
@@ -32,7 +32,7 @@ import matchScore from 'src/project/components/match/match-score.vue' // 比分�
   const match_score = computed(() =>{
     // TODO: 后续修改调整 get_detail_data
       let msc = '0 v 0'
-      !loadsh.isEmpty(get_detail_data) && get_detail_data.msc.map(item => {
+      !loadsh.isEmpty(get_detail_data.value) && get_detail_data.value.msc.map(item => {
         if (item.indexOf('S1|') > -1) {
           msc = item.split('|')[1].split(':').join(' v ')
         }

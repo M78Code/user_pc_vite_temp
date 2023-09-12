@@ -15,9 +15,9 @@
       </div>
     </div>
     <div class="basketball-incident-content">
-      <div v-for="(item, index) in event_data[tab_index].value" :key="index">
+      <div v-for="(item, index) in event_data[tab_index]" :key="index">
         <span>{{(new Date(+item.createTime)).Format(i18n_t('time4'))}}</span>
-        <i class="Glow" :class="{noLine: +event_data[tab_index].value.length -1 == index,home:item.team ==1, away: item.team == 2}"></i>
+        <i class="Glow" :class="{noLine: +event_data[tab_index].length -1 == index,home:item.team ==1, away: item.team == 2}"></i>
         <div class="ellipsis-2-lines">
           <span>{{ item.scores }} </span>
           <span class="ellipsis-2-lines">{{item.cnText}}</span>
@@ -29,10 +29,11 @@
 
 <script setup>
 import { api_analysis } from "src/api/index.js";
-import { computed, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, inject } from "vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { useRoute } from 'vue-router'
-import { i18n_t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 //国际化
 
 
@@ -40,24 +41,26 @@ import { i18n_t } from "src/boot/i18n.js";;
 // import {mapGetters} from "vuex";
   // name: "basketball_incident",
 
-  let event_data = ref([
+  const event_data = ref([
         {key: '第一节'},
         {key: '第二节'},
         {key: '第三节'},
         {key: '第四节'},
         {key: '++赛'},
       ])
-  let tab_index = ref(0)
-  let no_data = ref(false)
+  const tab_index = ref(0)
+  const no_data = ref(false)
   // 路由
   let route = useRoute()
-
+  onMounted(() => {
     // 添加监听 赛事分析刷新事件 TODO: $root emit 后续修改调整
-  useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
-  get_list()
+    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, get_list)
+    get_list()
+  })
+    
   const match_id = computed(() => {
     // 赛事id TODO: route get_detail_data后续修改调整
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   // computed: {
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
@@ -67,7 +70,7 @@ import { i18n_t } from "src/boot/i18n.js";;
   }
   const get_list = async () => {
     try {
-      let {code , data} = await api_analysis.get_live_event({mid: match_id})
+      let {code , data} = await api_analysis.get_live_event({mid: match_id.value})
       if(code == 200 && data.length > 0) {
 
         event_data.value = data

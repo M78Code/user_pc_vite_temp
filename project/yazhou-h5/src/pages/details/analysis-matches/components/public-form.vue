@@ -7,16 +7,16 @@
   <div class="public_form">
     <!-- 头部 -->
     <div class="header">
-      <div class="col1">{{t('analysis_football_matches.date')}}</div>
-      <div class="col2">{{t('analysis_football_matches.league')}}</div>
-      <div class="col3">{{future_schedule == 'future_schedule' ? (get_lang === 'zh' ? '比' : '') + t('analysis_football_matches.game') :t('analysis_football_matches.score')}}</div>
+      <div class="col1">{{i18n_t('analysis_football_matches.date')}}</div>
+      <div class="col2">{{i18n_t('analysis_football_matches.league')}}</div>
+      <div class="col3">{{future_schedule == 'future_schedule' ? (UserCtr.ang === 'zh' ? '比' : '') + i18n_t('analysis_football_matches.game') :i18n_t('analysis_football_matches.score')}}</div>
       <div class="col4" v-if="future_schedule == 'future_schedule'">
-        {{ t('analysis_football_matches.Interval_days') }}
+        {{ i18n_t('analysis_football_matches.Interval_days') }}
       </div>
       <div class="col4" @click="change_default_number" v-else>
-        <span v-if="default_index == 0">{{t('analysis_football_matches.results')}}</span>
-        <span v-else-if="default_index == 1">{{t('analysis_football_matches.turn_around')}}</span>
-        <span v-else-if="default_index == 2">{{t('analysis_football_matches.size')}}</span>
+        <span v-if="default_index == 0">{{i18n_t('analysis_football_matches.results')}}</span>
+        <span v-else-if="default_index == 1">{{i18n_t('analysis_football_matches.turn_around')}}</span>
+        <span v-else-if="default_index == 2">{{i18n_t('analysis_football_matches.size')}}</span>
         <i class="icon sort-flag"></i>
         <!--<img src="image/wwwassets/bw3/common/f-icon-pay-change.svg" class="sort-flag">-->
       </div>
@@ -24,7 +24,7 @@
     <!-- 主内容 -->
     <template v-if="liat_data.length">
       <div class="team-item" v-for="(item, i) in liat_data" :key="i">
-        <div class="col1 ellipsis">{{(new Date(+item.beginTime)).Format(t('time5'))}}</div>
+        <div class="col1 ellipsis">{{(new Date(+item.beginTime)).Format(i18n_t('time5'))}}</div>
         <div class="col2 tournamentName">{{ item.tournamentName }}</div>
         <div class="col3 ellipsis">
           <span class="home ellipsis" :class="[item.homeTeamName == hm_index_name ? 'add_bold' :'']">{{ item.homeTeamName }}</span>
@@ -42,7 +42,7 @@
               v-if="default_index == 0"
               :class="item.result == 2 ? 'results_flat' : item.result == 3 ? 'results_lose' : 'results_win'"
           >
-          {{ item.result ==2 ? t('analysis_football_matches.flat') : item.result ==3 ? t('analysis_football_matches.negative') : t('analysis_football_matches.victory') }}
+          {{ item.result ==2 ? i18n_t('analysis_football_matches.flat') : item.result ==3 ? i18n_t('analysis_football_matches.negative') : i18n_t('analysis_football_matches.victory') }}
         </span>
           <!--盘路-->
           <span
@@ -50,10 +50,10 @@
               v-else-if="default_index == 1"
               :class="item.handicapResult ==2 ? 'flat' : item.handicapResult ==3 ? 'no_pan_road' : item.handicapResult ==4 ? 'have_pan_road' : ''"
           >
-           <!-- <template v-if="item.handicapVal">{{ item.handicapVal }}{{ item.handicapResult ==2 ? t('analysis_football_matches.level') : item.handicapResult ==3 ? t('analysis_football_matches.lose')  : item.handicapResult ==4 ? t('analysis_football_matches.win') : '' }}</template> -->
-           <template v-if="item.handicapVal">{{ item.handicapResult ==2 ? t('analysis_football_matches.level') : item.handicapResult ==3 ? t('analysis_football_matches.lose')  : item.handicapResult ==4 ? t('analysis_football_matches.win') : '' }}</template>
+           <!-- <template v-if="item.handicapVal">{{ item.handicapVal }}{{ item.handicapResult ==2 ? i18n_t('analysis_football_matches.level') : item.handicapResult ==3 ? i18n_t('analysis_football_matches.lose')  : item.handicapResult ==4 ? i18n_t('analysis_football_matches.win') : '' }}</template> -->
+           <template v-if="item.handicapVal">{{ item.handicapResult ==2 ? i18n_t('analysis_football_matches.level') : item.handicapResult ==3 ? i18n_t('analysis_football_matches.lose')  : item.handicapResult ==4 ? i18n_t('analysis_football_matches.win') : '' }}</template>
 
-          <template v-else>{{ t('analysis_football_matches.no_data') }}</template>
+          <template v-else>{{ i18n_t('analysis_football_matches.no_data') }}</template>
         </span>
           <!--大小-->
           <span
@@ -61,23 +61,24 @@
               v-else-if="default_index == 2"
               :class="item.overunderResult ==2 ? 'flat' : item.overunderResult ==3 ? 'no_big_small' : item.overunderResult ==4 ? 'have_big_small' : ''"
           >
-           <!-- <template v-if="item.overunderVal">{{ item.overunderVal }}{{ item.overunderResult ==2 ? t('analysis_football_matches.level') : item.overunderResult ==3 ? t('analysis_football_matches.small') : item.overunderResult ==4 ? t('analysis_football_matches.big') : ''}}</template> -->
-           <template v-if="item.overunderVal">{{ item.overunderResult ==2 ? t('analysis_football_matches.level') : item.overunderResult ==3 ? t('analysis_football_matches.small') : item.overunderResult ==4 ? t('analysis_football_matches.big') : ''}}</template>
+           <!-- <template v-if="item.overunderVal">{{ item.overunderVal }}{{ item.overunderResult ==2 ? i18n_t('analysis_football_matches.level') : item.overunderResult ==3 ? i18n_t('analysis_football_matches.small') : item.overunderResult ==4 ? i18n_t('analysis_football_matches.big') : ''}}</template> -->
+           <template v-if="item.overunderVal">{{ item.overunderResult ==2 ? i18n_t('analysis_football_matches.level') : item.overunderResult ==3 ? i18n_t('analysis_football_matches.small') : item.overunderResult ==4 ? i18n_t('analysis_football_matches.big') : ''}}</template>
 
-          <template v-else>{{ t('analysis_football_matches.no_data') }}</template>
+          <template v-else>{{ i18n_t('analysis_football_matches.no_data') }}</template>
         </span>
         </div>
       </div>
     </template>
     <div v-else class="team-item">
-      <div class="col1 ellipsis no-list">{{t('analysis_football_matches.no_data')}}</div>
+      <div class="col1 ellipsis no-list">{{i18n_t('analysis_football_matches.no_data')}}</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onUnmounted, watch } from 'vue'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";

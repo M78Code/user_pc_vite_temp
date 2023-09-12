@@ -35,7 +35,7 @@
 // 赛果详情 统计图形表
 import mathcResultsVisuals from "project_path/src/pages/details/components/details-match-results/mathc-results-visuals.vue";
 // 详情页 或者 赛果  篮球赛事事件
-// import basketballIncident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident.vue";
+import basketballIncident from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-incident.vue";
  // 赛果详情 事件 组件
 import timeLine from 'project_path/src/pages/details/components/details-match-results/time-line.vue';
 import { i18n_t } from "src/boot/i18n.js";

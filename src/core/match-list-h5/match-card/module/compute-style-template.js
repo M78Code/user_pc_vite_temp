@@ -42,7 +42,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../list-template/index.js"
  * @param {string | Number } mid  赛事id
 */
 const get_tab_play_height = (mid) => {
-  let { play_current_key, other_handicap_list = [] } = MatchListData.quick_query_obj.mid_obj['mid_' + mid] || {}
+  let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj['mid_' + mid] || {}
   let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_0_config`]['match_template_config'] || {}
   let length = lodash.get(other_handicap_list, '0.ols.length', 3)
   //5分钟      波胆
@@ -147,7 +147,7 @@ const compute_style_template_by_matchinfo_template7_lanqiu = (match, template_co
  * @param {object} match 赛事
  **/
 const compute_style_template_by_matchinfo_template18 = (match) => {
-  let cur_match = MatchListData.quick_query_obj.mid_obj[`mid_${match.mid}`] || { main_handicap_list: [] }
+  let cur_match = MatchListData.list_to_obj.mid_obj[`mid_${match.mid}`] || { main_handicap_list: [] }
   // 附加盘口高度
   let add_handicap_height = 0
   // 投注项数量

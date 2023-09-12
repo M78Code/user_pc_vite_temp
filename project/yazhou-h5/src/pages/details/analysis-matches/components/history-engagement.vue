@@ -35,12 +35,14 @@
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
  // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-// import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
+import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
  // 无网络展示组件
 // import noData from "project_path/src/components/common/no-data.vue";
-import { ref, computed, onUnmounted, onMounted } from "vue";
+import { ref, computed, onUnmounted, onMounted, inject } from "vue";
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
+// 获取详情数据
+const get_detail_data = inject('get_detail_data', {})
 
   // components: {
   //   "public-form": public_form,
@@ -48,31 +50,31 @@ import { i18n_t } from "src/boot/i18n.js";
   // },
   // 国际化
 
-  let tab_index = ref(-1)
-  let radio_button_index = ref(0)
-  let isoptions = ref(false)
-  let progress_bar = ref(false)
-  let tab_radio_button = ref([
+  const tab_index = ref(-1)
+  const radio_button_index = ref(0)
+  const isoptions = ref(false)
+  const progress_bar = ref(false)
+  const tab_radio_button = ref([
     {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5 },
     {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10 },
     {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15 },
   ])
-  let records_list = ref([
+  const records_list = ref([
     {success: 0, name: i18n_t('analysis_football_matches.victory')},
     {flat: 0, name: i18n_t('analysis_football_matches.flat')},
     {lose: 0, name: i18n_t('analysis_football_matches.negative')},
   ])
-  let if_the_selected = ref([false, false])
-  let tab_check_box = ref([
+  const if_the_selected = ref([false, false])
+  const tab_check_box = ref([
     i18n_t('analysis_football_matches.same_game'),
     i18n_t('analysis_football_matches.same_host_guest')
   ])
-  let flag = ref(0)
-  let cps = ref(5)
+  const flag = ref(0)
+  const cps = ref(5)
   // 数据集合
-  let historical_engagement_data = ref([])
+  const historical_engagement_data = ref([])
   // 无数据
-  let no_data = ref(false)
+  const no_data = ref(false)
   // 路由
   const route = useRoute()
 
@@ -83,7 +85,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
   // 赛事id TODO:  get_detail_data 后续修改调整
   const match_id = computed(() => {
-    route.params.mid || get_detail_data.mid
+    route.params.mid || get_detail_data.value.mid
   })
   // computed: {
   //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data']),
@@ -93,13 +95,14 @@ import { i18n_t } from "src/boot/i18n.js";
     try {
       let parameter = {
         //  1940891  赛事ID match_id
-        mid: route.params.mid || get_detail_data.mid,
+        mid: route.params.mid || get_detail_data.value.mid,
         // 0 = 默认，1=同联赛, 2= 同主客
         flag: flag.value,
         // 显示数量： 5场，10场，15场。
         cps: cps.value
       }
-      let {code , data} = await api_analysis.get_team_vs_history(parameter)
+      let res = await api_analysis.get_team_vs_history(parameter)
+      let {code , data} = res
       if(code == 200 && data ) {
         records_list.value = [
           // TODO: 国际化修改后调整

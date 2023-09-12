@@ -752,7 +752,8 @@ const check_match_last_update_time = () => {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-		let match = MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
+			console.log('MatchListData.list_to_obj', MatchListData.list_to_obj);
+		let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;
 		}

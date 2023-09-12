@@ -39,7 +39,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../../list-template/index.js";
  */
 const get_tab_play_height = (mid) => {
 	let { play_current_key, other_handicap_list = [] } =
-		MatchListData.quick_query_obj.mid_obj["mid_" + mid] || {};
+		MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 	let { tab_play_handicap_height: handicap_height } =
 		MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]["match_template_config"] ||
 		{};
@@ -126,7 +126,7 @@ const compute_style_template_by_matchinfo_template0_zuqiu = (
  * @param {String|Number} mid 赛事id
  */
 export const update_match_cur_card_style = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj["mid_" + mid] || {};
+	let card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
 	if (!card_obj.is_fold_tab_play) {
 		card_obj.tab_play_total_height =
 			card_obj.tab_play_title_height + get_tab_play_height(-1);
@@ -167,7 +167,7 @@ const compute_style_template_by_matchinfo_template7_lanqiu = (
  * @param {object} match 赛事
  **/
 const compute_style_template_by_matchinfo_template18 = (match) => {
-	let cur_match = MatchListData.quick_query_obj.mid_obj[`mid_${match.mid}`] || {
+	let cur_match = MatchListData.list_to_obj.mid_obj[`mid_${match.mid}`] || {
 		main_handicap_list: [],
 	};
 	// 附加盘口高度
@@ -197,7 +197,7 @@ const compute_style_template_by_matchinfo_template18 = (match) => {
  * @param {number} mid 折叠的赛事ID
  */
 export const fold_tab_play = (mid) => {
-	let card_obj = MatchListCardData.all_card_obj["mid_" + mid] || {};
+	let card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
 	card_obj.is_fold_tab_play = !card_obj.is_fold_tab_play;
 	if (card_obj.is_fold_tab_play) {
 		// 角球已折叠  角球区域总高度 等于角球标题高度
