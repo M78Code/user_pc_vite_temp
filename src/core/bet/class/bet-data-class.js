@@ -21,6 +21,8 @@ class BetData {
     // this.bet_obj = {};
     // 串关投注列表
     this.bet_s_list = [];
+    // 串关数据
+    this.bet_s_obj = {};
     // 单关投注信息
     this.bet_single_list = [];
     // 单关串关切换 保留原值

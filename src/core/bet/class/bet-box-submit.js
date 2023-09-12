@@ -44,46 +44,46 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
 // bet_list  投注列表
 // is_single 是否单关/串关 
 const set_bet_order_list = ( bet_list,is_single ) =>{
-    
+    let order_list = []
     // 串关
     if(is_single){
 
     }else{
-
+        order_list = bet_list.map( item =>{
+            let obj = {
+                "seriesSum": 1,   // 串关数量
+                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                "seriesValues": "单关",  // 串关值 2串1 3串1...
+                "fullBet": 0,   // 是否满额投注，1：是，0：否
+                "orderDetailList": [
+                    {
+                        "sportId": item.sportId,   // 赛种id
+                        "matchId": item.matchId,   // 赛事id
+                        "tournamentId": item.tournamentId,   // 联赛id
+                        "scoreBenchmark": "",    // 基准分
+                        "betAmount": BetData.bet_amount,  //投注金额         
+                        "placeNum": null, //盘口坑位
+                        "marketId": item.marketId,  //盘口id
+                        "playOptionsId": item.playOptionsId,   // 投注项id
+                        "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
+                        "odds":  item.odds,  // 赔率 万位
+                        "oddFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
+                        "playName": item.playName, //玩法名称
+                        "sportName": item.sportName,  // 球种名称
+                        "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+                        "matchName": item.matchName,   //赛事名称
+                        "playOptionName": item.playOptionName,   // 投注项名称
+                        "playOptions":  item.playOptions,   // 投注项配置项
+                        "tournamentLevel": item.tournamentLevel,   // 联赛级别
+                        "playId": item.playId,   // 玩法id
+                        "dataSource": item.dataSource,   // 数据源
+                    }
+                ]
+            }
+            return obj 
+        }) || []
     }
-    let order_list = bet_list.map( item =>{
-        let obj = {
-            "seriesSum": 1,   // 串关数量
-            "seriesType": 1,  // 串关类型(单关、串关) 
-            "seriesValues": "单关",  // 串关值 2串1 3串1...
-            "fullBet": 0,   // 是否满额投注，1：是，0：否
-            "orderDetailList": [
-                {
-                    "sportId": item.sportId,   // 赛种id
-                    "matchId": item.matchId,   // 赛事id
-                    "tournamentId": item.tournamentId,   // 联赛id
-                    "scoreBenchmark": "",    // 基准分
-                    "betAmount": BetData.bet_amount,  //投注金额         
-                    "placeNum": null, //盘口坑位
-                    "marketId": item.marketId,  //盘口id
-                    "playOptionsId": item.playOptionsId,   // 投注项id
-                    "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
-                    "odds":  item.odds,  // 赔率 万位
-                    "oddFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
-                    "playName": item.playName, //玩法名称
-                    "sportName": item.sportName,  // 球种名称
-                    "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-                    "matchName": item.matchName,   //赛事名称
-                    "playOptionName": item.playOptionName,   // 投注项名称
-                    "playOptions":  item.playOptions,   // 投注项配置项
-                    "tournamentLevel": item.tournamentLevel,   // 联赛级别
-                    "playId": item.playId,   // 玩法id
-                    "dataSource": item.dataSource,   // 数据源
-                }
-            ]
-        }
-        return obj 
-    }) || []
+
 
     return order_list
 }

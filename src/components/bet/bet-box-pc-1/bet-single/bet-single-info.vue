@@ -10,7 +10,7 @@
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
     
-    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+    <!-- <div>{{ BetData.bet_data_class_version }}</div> -->
 
     <q-card-section>
       <!--不是冠军-->
