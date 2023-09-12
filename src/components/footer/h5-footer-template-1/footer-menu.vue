@@ -105,61 +105,59 @@ const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState()
 // import { Platform } from 'quasar'
 const { menu_type ,update_time} =menu_h5_data;
   // mixins:[common],
-  let is_effecting_ref = ref(true)
-  let is_refreshing = ref(false)
+  const is_effecting_ref = ref(true)
+  const is_refreshing = ref(false)
   // 子菜单是否显示
-  let sub_menu_l_show = ref(false)
+  const sub_menu_l_show = ref(false)
   // 渐进式显示\隐藏子菜单
-  let sub_menu_l_show_slow = ref(false)
+  const sub_menu_l_show_slow = ref(false)
   // 选中的子菜单下标
-  let sub_footer_menu_i = ref(0)
+  const sub_footer_menu_i = ref(0)
   // 返回顶部按钮显示
-  let scroll_to_top_show = ref(false)
+  const scroll_to_top_show = ref(false)
   // 返回顶部时钟对象
-  let scroll_to_top_timeout = ref(0)
+  const scroll_to_top_timeout = ref(0)
   // 拖拽x坐标
-  let init_poi_y = ref(0)
+  const init_poi_y = ref(0)
   // 拖拽过程中上一帧的鼠标x坐标
-  let prev_x = ref(null)
+  const prev_x = ref(null)
   // 拖拽过程中上一帧的鼠标y坐标
-  let prev_y = ref(null)
+  const prev_y = ref(null)
   // 是否拖拽到上方限制区
-  let flat_topped = ref(false)
+  const flat_topped = ref(false)
   // 滚动时点击返回顶部无效
-  let list_scroll_timeout = ref(0)
+  const list_scroll_timeout = ref(0)
   //列表滚动距离
-  let scroll_h = ref(0)
+  const scroll_h = ref(0)
   //上次记录的滚动方向 1向上滚  -1向下滚
-  let scroll_prev_dir = ref(-1)
+  const scroll_prev_dir = ref(-1)
   //上一帧滚动位置
-  let prev_frame_poi = ref(0)
+  const prev_frame_poi = ref(0)
   //处理中
-  let footer_clicked_handleing = ref(false)
+  const footer_clicked_handleing = ref(false)
   //上一次的
-  let prev_floating_sub ='prev-floating-sub-i'
+  const prev_floating_sub = ref('prev-floating-sub-i')
   //页脚数据
-  let footer_menulist = ref([])
+  const footer_menulist = ref([])
   //子菜单显示/隐藏渐进效果
-  let is_sub_first_effect = ref(false)
+  const is_sub_first_effect = ref(false)
   //子菜单隐藏
-  let is_sub_first_hidden = ref(false)
+  const is_sub_first_hidden = ref(false)
   //投注栏弹层显示非0否则0
-  let local_bet_status = ref(0)
+  const local_bet_status = ref(0)
   //小于0显示页脚,大于0隐藏页脚
-  let scroll_dir = ref(0)
-  let timer_object = ref({
-    timer1_: null,
-    timer2_: null,
-    timer3_: null,
-    timer4_: null,
-    timer5_: null,
-    timer6_: null,
-    timer7_: null,
+  const scroll_dir = ref(0)
+  const timer1_ = ref(null)
+  const timer2_ = ref(null)
+  const timer3_ = ref(null)
+  const timer4_ = ref(null)
+  const timer5_ = ref(null)
+  const timer6_ = ref(null)
+  const timer7_ = ref(null)
     //第一个页脚菜单更新相关逻辑
-    timer_super9: null,
+  const timer_super9 = ref(null)
     //简版足球角球图标分割线相关
-    timer_super10: null,
-  })
+  const timer_super10 = ref(null)
   
   // 路由
   const route =  useRoute()
@@ -255,16 +253,16 @@ const { menu_type ,update_time} =menu_h5_data;
      * 隐藏页脚二级菜单
      */
     const hide_sub_menu_l_p = () => {
-      sub_menu_l_show_slow = false;
-      timer_object.timer1_ = setTimeout(() => {
-        sub_menu_l_show = false
+      sub_menu_l_show_slow.value = false;
+      timer1_.value = setTimeout(() => {
+        sub_menu_l_show.value = false
       },300);
     }
     /**
      * 初始化玩法选中项
      */
     const init_play_way_selected = () => {
-      let p_i = sessionStorage.getItem(prev_floating_sub);
+      let p_i = sessionStorage.getItem(prev_floating_sub.value);
       if(p_i != null){
         p_i = p_i * 1;
         sub_menu_changed(footer_sub_m_list[p_i],p_i);
@@ -276,15 +274,15 @@ const { menu_type ,update_time} =menu_h5_data;
     const first_sub_menu_changed = () => {
       let ed = topMenuReducer.newer_standard_edition;
       if(ed == 2){
-        is_sub_first_effect = false;
-        timer_object.timer2_ = setTimeout(() => {
-          is_sub_first_hidden = true;
+        is_sub_first_effect.value = false;
+        timer2_.value = setTimeout(() => {
+          is_sub_first_hidden.value = true;
         },210);
       }
       else{
-        is_sub_first_hidden = false;
-        timer_object.timer3_ = setTimeout(() => {
-          is_sub_first_effect = true;
+        is_sub_first_hidden.value = false;
+       timer3_.value = setTimeout(() => {
+          is_sub_first_effect.value = true;
         },10);
       }
     }
@@ -309,11 +307,11 @@ const { menu_type ,update_time} =menu_h5_data;
      */
     const sub_menu_changed = (sub_menu,i) => {
       // TODO:后续修改调整
-      sessionStorage.setItem(prev_floating_sub,i);
+      sessionStorage.setItem(prev_floating_sub.value,i);
       // 非足球选择角球时,选中独赢
       if((menu_h5_data.get_curr_sub_menu_type() != 5 && sub_menu.id == 114) || (menu_h5_data.get_curr_sub_menu_type() == 44 && sub_menu.id == 4)){
         sub_footer_menu_i.value = 0;
-        sessionStorage.setItem(prev_floating_sub,0);
+        sessionStorage.setItem(prev_floating_sub.value,0);
       }
       else{
         sub_footer_menu_i.value = i;
@@ -339,14 +337,14 @@ const { menu_type ,update_time} =menu_h5_data;
         type: "SET_FOOTER_SUB_IDCHANGING",
         data: true,
       })
-      clearTimeout(timer_object.timer_super9);
-      timer_object.timer_super9 = setTimeout(() => {
+      clearTimeout(timer_super9.value);
+      timer_super9.value = setTimeout(() => {
         store.dispatch({
         type: "SET_FOOTER_SUB_IDCHANGING",
         data: false,
       })
       },800);
-      timer_object.timer4_ = setTimeout(() => {
+      timer4_.value = setTimeout(() => {
         useMittEmit(MITT_TYPES.EMIT_FOOTER_SUB_MENU_ID_CHANGED,lodash.get(sub_menu, "id"));
       },200);
     }
@@ -366,19 +364,18 @@ const { menu_type ,update_time} =menu_h5_data;
         if([1002, 1011, 1010, 1009].includes(menu_h5_data.get_curr_sub_menu_type())){
           return;
         }
-        sub_menu_l_show = true;
-        clearTimeout(timer_object.timer_super10);
-        timer_object.timer_super10 = setTimeout(() => {
-          sub_menu_l_show_slow = true;
+        sub_menu_l_show.value = true;
+        clearTimeout(timer_super10.value);
+        timer_super10.value = setTimeout(() => {
+          sub_menu_l_show_slow.value = true;
         },50);
       }
       //关注
       else if(item.id === 1){
         if( !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch() ,this ) ) return
-        if(footer_clicked_handleing) return;
-        footer_clicked_handleing = true;
-        timer_object.timer5_ = setTimeout(() => {
-          footer_clicked_handleing = false;
+        if(footer_clicked_handleing.value) return;
+        timer5_.value = setTimeout(() => {
+          footer_clicked_handleing.value = false;
         },800);
         useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-follow",
@@ -410,12 +407,12 @@ const { menu_type ,update_time} =menu_h5_data;
       }
       //刷新
       else if(item.id === 4){
-        if(is_refreshing) return
-        is_effecting_ref = true;
-        is_refreshing = true;
-        timer_object.timer6_ = setTimeout(() => {
-          is_effecting_ref = false;
-          is_refreshing = false;
+        if(is_refreshing.value) return
+        is_effecting_ref.value = true;
+        is_refreshing.value = true;
+        timer6_.value = setTimeout(() => {
+          is_effecting_ref.value = false;
+          is_refreshing.value = false;
         },1000);
         useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
           text: "footer-refresh"
@@ -555,9 +552,21 @@ const { menu_type ,update_time} =menu_h5_data;
     }
     // 批量清除定时器
     const clear_timer = () => {
-      for (const timer of timer_object) {
-        clearTimeout(timer_object[timer])
-        timer_object[timer] = null
+      let timeout_timer_arr = [
+      "timer1_.value",
+      "timer2_.value",
+      "timer3_.value",
+      "timer4_.value",
+      "timer5_.value",
+      "timer6_.value",
+      "timer7_.value",
+      "timer_super9.value",
+      "timer_super10.value",
+      ]
+
+      for (let timer of timeout_timer_arr) {
+        clearTimeout(timer)
+        timer = null
       }
     }
   // computed:{
@@ -686,8 +695,8 @@ const { menu_type ,update_time} =menu_h5_data;
      */
     watch(() => matchReducer.list_scroll_direction, (direction) => {
       //不显示投注弹层时改变页脚菜单显示状态
-      if(local_bet_status == 0){
-        scroll_dir = direction;
+      if(local_bet_status.value == 0){
+        scroll_dir.value = direction;
       }
     })
     watch(() => footerMenuReducer.show_favorite_list, (is_fav) => {
@@ -708,7 +717,7 @@ const { menu_type ,update_time} =menu_h5_data;
       set_footer_menulist();
     })
     watch(() => topMenuReducer.newer_standard_edition, () => {
-      sub_menu_l_show = false;
+      sub_menu_l_show.value = false;
       first_sub_menu_changed();
     })
     watch(() => [
@@ -738,12 +747,12 @@ const { menu_type ,update_time} =menu_h5_data;
     //投注栏弹层显示非0否则0
     watch(() => BetDataCtr.bet_status, (c_status) => {
       if(c_status == 0){
-        timer7_ = setTimeout(() => {
-          local_bet_status = c_status;
+        timer7_.value = setTimeout(() => {
+          local_bet_status.value = c_status;
         },400);
       }
       else{
-        local_bet_status = c_status;
+        local_bet_status.value = c_status;
       }
     })
 </script>
