@@ -20,12 +20,12 @@
 <script setup>
 // TODO: vuex 后续修改调整
 // import {mapGetters} from "vuex";
-import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent } from 'vue'
+import { onMounted, onUnmounted, ref, watch, nextTick, defineAsyncComponent, inject } from 'vue'
 import lodash from 'lodash'
 // 详情页 或者 赛果 赛事分析 公共tab 组件
 import headTab from "project_path/src/components/details/match-analysis/head-tab.vue";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import store from "src/store-redux/index.js"
 import zhuge from "src/core/http/zhuge-tag.js"
 import {utils } from 'src/core/index.js'
@@ -46,24 +46,19 @@ import UserCtr from "src/core/user-config/user-ctr.js";
   const analysisOdds = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/football-match-analysis/components/analysis-odds.vue"))
   // 精彩回放
   const highlights = defineAsyncComponent(() => import("project_path/src/pages/details/analysis-matches/highlights/highlights.vue"))
-      // 国际化
-
+      // 详情数据
+    const get_detail_data = inject('get_detail_data', {})
     // 锚点
-    let analysis_football_matches = ref(null)
+    const analysis_football_matches = ref(null)
     // tab 数据
-    let tabList = ref([])
+    const tabList = ref([])
     // 当前选中tab
-    let currentContent = ref('match-result')
+    const currentContent = ref('match-result')
     // 仓库数据
-let {  userInfoReducer } = store.getState()
+    let {  userInfoReducer } = store.getState()
     // TODO: 临时用
-    let get_detail_data = ref({
-      mid: '2',
-      cds: ''
-    })
-    let get_event_list = ref([])
-    let get_lang = ref('zh')
-    let get_analyze_show = ref(false)
+    const get_event_list = ref([])
+    const get_analyze_show = ref(false)
 
     onMounted(() => {
       nextTick(() => {
@@ -74,7 +69,7 @@ let {  userInfoReducer } = store.getState()
     })
     createTabds();
     })
-    watch(() => get_detail_data.mid, () => {
+    watch(() => get_detail_data.value.mid, () => {
       // 详情顶部切换赛事后 更新相应赛事数据
       const currentCont = currentContent.value
       currentContent.value = ''
@@ -89,7 +84,7 @@ let {  userInfoReducer } = store.getState()
       if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
         tabList.value.unshift(
             {
-              name: t('highlights.title'),
+              name: i18n_t('highlights.title'),
               component: 'highlights'
             }
         )
@@ -105,23 +100,23 @@ let {  userInfoReducer } = store.getState()
       // 国际化 后续修改调整
       let tabs = [
         {
-          name: t('analysis_football_matches.match'),
+          name: i18n_t('analysis_football_matches.match'),
           component: 'match-result'
         },
         {
-          name: t('analysis_football_matches.analysis_data'),
+          name: i18n_t('analysis_football_matches.analysis_data'),
           component: 'standings'
         },
         {
-          name: t('analysis_football_matches.line_up'),
+          name: i18n_t('analysis_football_matches.line_up'),
           component: 'line-up'
         },
         {
-          name: t('analysis_football_matches.intelligence'),
+          name: i18n_t('analysis_football_matches.intelligence'),
           component: 'intelligence'
         },
         {
-          name: t('analysis_football_matches.Odds'),
+          name: i18n_t('analysis_football_matches.Odds'),
           component: 'analysis-odds'
         },
       ]
@@ -129,15 +124,15 @@ let {  userInfoReducer } = store.getState()
       if (get_detail_data.value.cds === '1500') {
         tabs = [
           {
-            name: t('analysis_football_matches.analysis_data'),
+            name: i18n_t('analysis_football_matches.analysis_data'),
             component: 'standings'
           }
         ]
       }
-      if (['zh', 'tw'].includes(get_lang.value)) {
+      if (['zh', 'tw'].includes(UserCtr.lang)) {
         tabs.unshift(
           {
-            name: get_lang.value == 'zh' ? '资讯' : '資訊',
+            name: UserCtr.lang == 'zh' ? '资讯' : '資訊',
             component: 'article-main'
           }
         )
@@ -148,7 +143,7 @@ let {  userInfoReducer } = store.getState()
       if (configValue == 1 && eventSwitch == 1 && get_event_list.value.length && !highlights_component) {
         tabs.unshift(
             {
-              name: t('highlights.title'),
+              name: i18n_t('highlights.title'),
               component: 'highlights'
             }
         )
@@ -160,7 +155,6 @@ let {  userInfoReducer } = store.getState()
     }
     // 点击一级tab 菜单切换 // TODO: $utils UserCtr 后续修改调整
     const tab_click = ([tab, type]) => {
-      console.error(tab.component, type);
       switch(tab.component) {
         case "article-main":
         currentContent.value = articleMain
