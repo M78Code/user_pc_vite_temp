@@ -218,6 +218,10 @@ const is_show_three_menu = computed(() => {
     menu_h5_data.get_is_show_three_menu() && date_menu_list.value.length > 0
   );
 });
+//是否选中了全部
+const get_sport_all_selected = computed(() => {
+  return menu_type.value == 1 && menu_h5_data.get_sport_all_selected();
+});
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
   console.error("是否展示四级", virtual_sports_results_tab.value.length);
@@ -246,7 +250,8 @@ function init() {
   if (menu_h5_data.current_lv_2_menu) {
     set_menu_lv2(
       menu_h5_data.current_lv_2_menu,
-      menu_h5_data.current_lv_2_menu_i
+      menu_h5_data.current_lv_2_menu_i,
+      "init"
     );
   }
 }
@@ -263,10 +268,10 @@ function set_menu_lv1(item, index, type = "click") {
   switch (item.mi) {
     case 1: //滚球下的全部
       if (type == "click") {
-        menu_h5_data.set_current_lv2_menu(item.sl, -1, ture);
+        menu_h5_data.set_current_lv2_menu(item.sl, -1, type);
       } else {
         current_menu.value = item.sl;
-        set_menu_lv2(item.sl[0], 0);
+        set_menu_lv2(item.sl[0], 0, type);
       }
       break;
     case 28: //赛果
@@ -274,14 +279,14 @@ function set_menu_lv1(item, index, type = "click") {
       break;
     default:
       current_menu.value = item.sl;
-      set_menu_lv2(item.sl[0], 0);
+      set_menu_lv2(item.sl[0], 0, type);
   }
 }
 /**
  * 二级菜单事件
  */
 async function set_menu_lv2(item, index, type = "click") {
-  menu_h5_data.set_current_lv2_menu(item, index);
+  menu_h5_data.set_current_lv2_menu(item, index, type);
   // // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
   // const three_menu = await menu_h5_data.get_date_menu_api_when_subchange();
   // console.error(three_menu);
@@ -311,7 +316,7 @@ function set_menu_lv3(item, index, type = "click") {
     return;
   }
   //设置三级菜单
-  menu_h5_data.set_current_lv3_menu(item, index);
+  menu_h5_data.set_current_lv3_menu(item, index, type);
   // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
   // if (menu_h5_data.is_results_virtual_sports()) {
 
