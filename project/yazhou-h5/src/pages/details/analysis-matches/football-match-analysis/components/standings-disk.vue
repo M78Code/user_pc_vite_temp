@@ -26,7 +26,7 @@
       </div>
 
       <div>
-        <div class="table-score" v-if="_.get(main, 'matchHistoryBattleDetailDTOList')">
+        <div class="table-score" v-if="lodash.get(main, 'matchHistoryBattleDetailDTOList')">
           <div class="header">
             <div class="item-1st">
               <!--<div class="col1"></div>-->
@@ -88,13 +88,16 @@ import { defineComponent, ref, inject } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
 import { i18n_t } from "src/boot/i18n.js";
-//国际化
+import lodash from "lodash"
+
+
+//详情页面数据
 const get_detail_data = inject('get_detail_data', {})
 
   const props = defineProps({
     // 盘面的数据
     matchHistory_battle_dto_map: {
-      type: Object | Array
+      type: Object
     }
   })
   // components: {
@@ -143,170 +146,187 @@ const get_detail_data = inject('get_detail_data', {})
 </script>
 
 <style lang="scss" scoped>
-.title {
-  height: 0.4rem;
-  line-height: 0.45rem;
-  padding-left: 0.24rem;
-  font-size: 0.14rem;
-  letter-spacing: 0;
-  font-weight: bold;
-  position: relative;
+.football_standings.recent_record {
+  background-color: var(--q-analysis-matches-color-4);
+  .title {
+    height: 0.4rem;
+    line-height: 0.45rem;
+    padding-left: 0.24rem;
+    font-size: 0.14rem;
+    letter-spacing: 0;
+    font-weight: bold;
+    position: relative;
+    color: var(--q-analysis-matches-color-9);
+    border-bottom: 1px solid var(--q-analysis-matches-color-27);
+    background-color: var(--q-analysis-matches-color-4);
 
-  &:before {
-    content: '';
-    width: 0.03rem;
-    height: 0.12rem;
-    position: absolute;
-    left: 0.16rem;
-    top: 0.15rem;
-    border-radius: 1.5px;
+    &:before {
+      content: '';
+      width: 0.03rem;
+      height: 0.12rem;
+      position: absolute;
+      left: 0.16rem;
+      top: 0.15rem;
+      border-radius: 1.5px;
+      background: var(--q-analysis-matches-color-45);
+    }
   }
-}
 
-.standings_technical {
-  .standings-technical-home {
-    .technical-home {
-      height: 0.4rem;
+  .standings_technical {
+    .standings-technical-home {
+      .technical-home {
+        height: 0.4rem;
 
-      display: flex;
-      align-items: center;
-      padding-left: 0.1rem;
+        display: flex;
+        align-items: center;
+        padding-left: 0.1rem;
 
-      ::v-deep .team-img {
-        width: 0.2rem;
-        height: 0.2rem;
-        margin: 0.05rem;
-
-        img {
+        ::v-deep .team-img {
           width: 0.2rem;
           height: 0.2rem;
-          position: relative;
-          border-radius: 50%;
+          margin: 0.05rem;
+
+          img {
+            width: 0.2rem;
+            height: 0.2rem;
+            position: relative;
+            border-radius: 50%;
+          }
+        }
+
+        .team-name {
+          font-size: 0.12rem;
+          color: var(--q-color-fs-color-3);
+          font-weight: bold;
+          line-height: 0.12rem;
         }
       }
 
-      .team-name {
-        font-size: 0.12rem;
-        color: var(--q-color-fs-color-3);
-        font-weight: bold;
-        line-height: 0.12rem;
+      .recent-games {
+        height: 0.3rem;
+        line-height: 0.3rem;
+        display: flex;
+        align-items: center;
+
+
+        border-bottom: 1px solid var(--q-color-border-color-56);
+        padding: 0 0.1rem;
+
+        > span {
+          font-size: 0.12rem;
+        }
+
+        > div {
+          font-size: 0.12rem;
+
+          &.margin-95 {
+            margin-right: 0.95rem;
+          }
+        }
       }
+    }
+
+    .table-score {
+      position: relative;
+
+      .header {
+        height: 0.32rem;
+        display: flex;
+        text-align: center;
+        line-height: 0.32rem;
+        padding: 0 0.1rem;
+      }
+
+      .team-item {
+        display: flex;
+        align-items: center;
+        padding: 0 0.1rem;
+        font-size: 0.12rem;
+        height: 0.48rem;
+        text-align: center;
+        border-bottom: 1px solid var(--q-color-border-color-56);
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.12rem;
+        }
+      }
+
+      .col1 {
+        flex: 1;
+
+        flex: 1;
+      }
+
+      .col3 {
+        width: 0.3rem;
+      }
+
+      .col4 {
+        width: 0.4rem;
+        white-space: nowrap;
+      }
+
+      .col5 {
+        flex: 1;
+      }
+    }
+
+    .no-list {
+      height: 0.6rem;
+      line-height: 0.6rem;
+      text-align: center;
+      padding-top: 0.05rem !important;
+
+
+      font-size: 12px;
+    }
+
+    .item-1st {
+      flex: 0 0 12%;
+      height: 100%;
+    }
+
+    .item-2nd, .item-3rd {
+      display: flex;
+      flex: 0 0 44%;
+      height: 100%;
+    }
+
+    .item-2nd {
+      border-left: 1px solid var(--q-color-border-color-56);
+      border-right: 1px solid var(--q-color-border-color-56);
+      padding: 0 0.05rem;
     }
 
     .recent-games {
-      height: 0.3rem;
-      line-height: 0.3rem;
-      display: flex;
-      align-items: center;
-
-
-      border-bottom: 1px solid var(--q-color-border-color-56);
-      padding: 0 0.1rem;
-
-      > span {
-        font-size: 0.12rem;
-      }
-
-      > div {
-        font-size: 0.12rem;
-
-        &.margin-95 {
-          margin-right: 0.95rem;
+      .item-2nd, .item-3rd {
+        > span {
+          flex: 1;
+          text-align: center;
         }
       }
-    }
-  }
 
-  .table-score {
-    position: relative;
-
-    .header {
-      height: 0.32rem;
-      display: flex;
-      text-align: center;
-      line-height: 0.32rem;
-      padding: 0 0.1rem;
-    }
-
-    .team-item {
-      display: flex;
-      align-items: center;
-      padding: 0 0.1rem;
-      font-size: 0.12rem;
-      height: 0.48rem;
-      text-align: center;
-      border-bottom: 1px solid var(--q-color-border-color-56);
-
-      div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.12rem;
+      .item-3rd {
+        padding-left: 0.05rem;
       }
     }
 
-    .col1 {
-      flex: 1;
-
-      flex: 1;
-    }
-
-    .col3 {
-      width: 0.3rem;
-    }
-
-    .col4 {
-      width: 0.4rem;
-      white-space: nowrap;
-    }
-
-    .col5 {
-      flex: 1;
+    .pad-r5 {
+      padding-right: 0.05rem;
     }
   }
-
   .no-list {
     height: 0.6rem;
     line-height: 0.6rem;
     text-align: center;
     padding-top: 0.05rem !important;
-
-
     font-size: 12px;
-  }
-
-  .item-1st {
-    flex: 0 0 12%;
-    height: 100%;
-  }
-
-  .item-2nd, .item-3rd {
-    display: flex;
-    flex: 0 0 44%;
-    height: 100%;
-  }
-
-  .item-2nd {
-    border-left: 1px solid var(--q-color-border-color-56);
-    border-right: 1px solid var(--q-color-border-color-56);
-    padding: 0 0.05rem;
-  }
-
-  .recent-games {
-    .item-2nd, .item-3rd {
-      > span {
-        flex: 1;
-        text-align: center;
-      }
-    }
-
-    .item-3rd {
-      padding-left: 0.05rem;
-    }
-  }
-
-  .pad-r5 {
-    padding-right: 0.05rem;
+    background-color: var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-2);
   }
 }
+
 </style>

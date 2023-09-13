@@ -63,7 +63,7 @@ import matchResultsStage from 'project_path/src/pages/details/components/details
 import resultsFooter from 'project_path/src/pages/details/components/details-match-results/results-footer.vue' // project\yazhou-h5\src\pages\details\components\details-match-results\results-footer.vue
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
-import { computed, onUnmounted, ref, onMounted } from "vue";
+import { computed, onUnmounted, ref, onMounted, inject } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import lodash from "lodash"
 

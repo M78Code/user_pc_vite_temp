@@ -7,7 +7,7 @@
   <div class="analysis-odds">
     <div class="heade-wrapper">
       <div class="heade">
-        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radioButton(i)">
+        <span v-for="(item,i) in tab_list" :key="i" :class="{'is-active' : tabIndex == i}" @click="radio_button(i)">
           {{ item.name }}
         </span>
       </div>
@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, nextTick, onUnmounted, onMounted, computed } from 'vue'
+import { defineComponent, ref, nextTick, onUnmounted, onMounted, computed, inject } from 'vue'
 import { api_analysis } from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
@@ -129,7 +129,7 @@ const route = useRoute()
      *@param {Undefined}
      *@return {Undefined} undefined
      */
-    const radioButton = (index) => {
+    const radio_button = (index) => {
       if(tabIndex.value == index) return
       tabIndex.value = index
       data_list.value = []
@@ -202,14 +202,14 @@ const route = useRoute()
 
 <style lang="scss" scoped>
 .analysis-odds {
-
+  background: var(--q-analysis-matches-color-42);
   height: calc(100% - 0.5rem);
 
   .heade-wrapper {
     width: 100%;
     height: auto;
     margin: 0 auto;
-
+    background: var(--q-analysis-matches-color-42);
     position: sticky;
     top: 1.21rem;
     padding: 0.15rem 0.48rem;
@@ -217,7 +217,7 @@ const route = useRoute()
 
     .heade {
       position: relative;
-
+      background-color: var(--q-analysis-matches-color-4);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -229,7 +229,7 @@ const route = useRoute()
         position: absolute;
         left: 0;
         top: 0;
-        border: 1px solid var(--q-color-border-color-25);
+        border: 1px solid var(--q-analysis-matches-color-26);
         border-radius: 0.16rem;
         width: 200%;
         height: 200%;
@@ -247,7 +247,8 @@ const route = useRoute()
         text-align: center;
         font-size: 0.14rem;
         border-radius: 0.08rem;
-
+        background: var(--q-analysis-matches-color-4);
+        color: var(--q-analysis-matches-color-1);
         &:nth-child(2) {
           position: relative;
 
@@ -258,6 +259,7 @@ const route = useRoute()
             position: absolute;
             left: 0;
             top: 0.08rem;
+            background: var(--q-analysis-matches-color-35);
           }
 
           &:after {
@@ -267,12 +269,14 @@ const route = useRoute()
             position: absolute;
             right: 0;
             top: 0.08rem;
+            background: var(--q-analysis-matches-color-35);
           }
         }
 
         &.is-active {
           height: 0.29rem;
-
+          background: var(--q-analysis-matches-color-43);
+          color: var(--q-analysis-matches-color-4);
           &:nth-child(2) {
             &:before, &:after {
               display: none;
@@ -286,12 +290,13 @@ const route = useRoute()
   }
 
   .content {
+    color: var(--q-analysis-matches-color-1);
     .tittle {
       position: sticky;
       top: 1.81rem;
       padding: 0 0.05rem 0.1rem 0.2rem;
       z-index: 80;
-
+      background: var(--q-analysis-matches-color-42);
       i {
         font-style: normal;
         flex: 1;
@@ -358,6 +363,14 @@ const route = useRoute()
       -webkit-clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
       clip-path: polygon(50% 29%, 100% 0, 46% 100%, 0 0);
     }
+  }
+  .no-list {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: center;
+    padding-top: 0.05rem !important;
+    font-size: 12px;
+    color: var(--q-analysis-matches-color-2);
   }
 }
 

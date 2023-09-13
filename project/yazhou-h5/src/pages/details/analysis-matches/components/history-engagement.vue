@@ -194,7 +194,7 @@ const get_detail_data = inject('get_detail_data', {})
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color:var(--q-analysis-matches-color-4);
+    background-color: var(--q-analysis-matches-color-4);
     .title {
       font-size: 0.14rem;
       height: 0.2rem;
@@ -267,8 +267,45 @@ const get_detail_data = inject('get_detail_data', {})
       }
     }
   }
-  ::deep(.public_form) {
+  :deep(.public_form) {
     background-color: var(--q-analysis-matches-color-4);
+    .header {
+      > div {
+        color: var(--q-analysis-matches-color-2);
+      }
+    }
+    .team-item {
+      border-bottom: 1px solid var(--q-analysis-matches-color-29);
+      background-color: var(--q-analysis-matches-color-4);
+      div {
+        color: var(--q-analysis-matches-color-1);
+      }
+      .col3 {
+        .home.add_bold {
+          color: var(--q-analysis-matches-color-1);
+        }
+        .away.add_bold {
+          color: var(--q-analysis-matches-color-1);
+        }
+        .home {
+          color: var(--q-analysis-matches-color-46);
+        }
+      }
+      .col4.end-btn {
+        >span.results {
+          color: var(--q-analysis-matches-color-4);
+        }
+        >span.results.results_win {
+          color: var(--q-analysis-matches-color-19);
+        }
+        >span.results.results_lose {
+          color: var(--q-analysis-matches-color-18);
+        }
+      }
+    }
+    .team-item:nth-child(odd) {
+      background-color: var(--q-analysis-matches-color-36);
+    }
   }
 }
 </style>

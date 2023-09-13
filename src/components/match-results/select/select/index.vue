@@ -13,7 +13,6 @@
       <slot name="suffix"/>
       <i class="icon-arrow q-icon c-icon" size="14px"></i>
     </div>    
-
     <div class="list" v-if="visible">
       <div class="triangle"></div>
       <div v-for="(opt, i) in options" :key="i" @click="onClick(opt, i)"

@@ -54,7 +54,7 @@ const get_detail_data = inject('get_detail_data', {})
   const props = defineProps({
     // 基本面的数据
     future_schedule_data: {
-      type: Number | String | Array | Object,
+      type: Object,
       default: null,
       require: true
     },
