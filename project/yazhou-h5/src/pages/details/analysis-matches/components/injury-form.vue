@@ -12,7 +12,7 @@
       <div class="col3">{{ i18n_t('analysis_football_matches.reason') }}</div>
     </div>
     <!-- 主内容 -->
-    <template v-if="_.get(list_data, 'length', 0) > 0">
+    <template v-if="lodash.get(list_data, 'length', 0) > 0">
       <div class="team-item" v-for="(item, i) in list_data" :key="i">
         <div class="col1">{{item.playerName}}</div>
         <div class="col2">{{item.positionName}}</div>
@@ -24,6 +24,7 @@
 
 <script setup>
 import { i18n_t } from "src/boot/i18n.js";;
+import lodash from "lodash"
 //国际化
 
   const props = defineProps({
