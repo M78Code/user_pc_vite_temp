@@ -20,7 +20,7 @@
       :versions="versions"
     />
     <!-- 足球 -->
-    <!-- <soccer
+    <soccer
       v-if="['1'].includes(sportType)"
       :load_data_state="load_data_state"
       :details_load="details_load"
@@ -34,7 +34,7 @@
       @change_sort="change_sort"
       :versions="versions"
       ref="soccer_ref"
-    /> -->
+    />
     <!-- 篮球 -->
     <basketball
       v-if="sportType == '2'"
@@ -211,8 +211,7 @@
 
 <script>
 import { is_eports_csid } from 'src/core/index.js'
-debugger
-import soccer from "src/components/match-results/template/soccer";
+import soccer from "../../template/soccer.vue";
 // console.log(soccer,'soccer');
 // import basketball from "src/components/match-results/template/basketball";
 // import tennis from "src/components/match-results/template/tennis";
@@ -320,14 +319,14 @@ export default {
 .wrap-index {
   flex: 1;
   /*  滚动条样式 */
-  ::v-deep .q-scrollarea__thumb {
+  :deep(.q-scrollarea__thumb) {
     background-color: rgba(60, 63, 76, 0.3);
     z-index: 2;
   }
 
   /* ************** 球类模板穿透 *************** -S */
-  ::v-deep {
-    .table-header {
+ 
+    :deep(.table-header) {
       border-bottom: 1px solid #d0d8de;
       .table-col:first-child {
         padding-left: 20px;
@@ -338,7 +337,7 @@ export default {
         }
       }
     }
-    .tbale-body {
+    :deep( .tbale-body) {
       color: #17191d;
       .active {
         background: #e4ebf1;
@@ -477,7 +476,7 @@ export default {
 
       /* ************** loading *************** -E */
     }
-  }
+  
 
   /* ************** 球类模板穿透 *************** -E */
 }
