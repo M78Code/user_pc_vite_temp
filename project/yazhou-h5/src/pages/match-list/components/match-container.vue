@@ -587,102 +587,6 @@ const match = computed(() => {
   return props.match_of_list;
 })
 
-watch(() => props.match_of_list, (c_match) => {
-  media_button_button_type_check()
-  matchListClass.match_period_map(c_match);
-})
-
-watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
-  if (mid_new) {
-    match_changing.value = true;
-    /*
-    切换赛事时如果足球比分大于0会触发进球动画,
-    变量match_changing延迟置为false可避免触发进球动画
-      */
-    clearTimeout(match_change_timer.value)
-    match_change_timer.value = setTimeout(() => {
-      match_changing.value = false;
-    }, 300);
-    matchListClass.match_period_map(props.match_of_list);
-  }
-})
-
-// 监听主队比分变化
-watch(() => home_score.value, (new_,old_) => {
-  if (is_first_coming.value) return;
-  if (props.match_of_list.csid != 1) return;
-  if (get_footer_sub_changing) return;
-  if (match_changing.value) return;
-
-  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
-    is_show_home_goal.value = true
-    hide_home_goal()
-  }
-})
-
-// 监听客队比分变化
-watch(() => away_score.value, (new_,old_) => {
-  if (is_first_coming.value) return;
-  if (props.match_of_list.csid != 1) return;
-  if (get_footer_sub_changing) return;
-  if (match_changing.value) return;
-
-  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
-    is_show_away_goal.value = true
-    hide_away_goal()
-  }
-})
-// 监听主队红牌比分变化
-watch(() => home_red_score.value, () => {
-  if (props.match_of_list.csid != 1) return
-  if (home_red_first_change.value) {
-    home_red_first_change.value = false;
-    return;
-  }
-  if (new_ > 0 && new_ != old_) {
-    is_show_home_red.value = true
-    hide_home_red()
-  }
-})
-// 监听客队红牌比分变化
-watch(() => away_red_score.value, (new_,old_) => {
-  if (props.match_of_list.csid != 1) return
-  if (away_red_first_change.value) {
-    away_red_first_change.value = false;
-    return;
-  }
-  if (new_ > 0 && new_ != old_) {
-    is_show_away_red.value = true
-    hide_away_red()
-  }
-})
-
-// 监听比分变化
-watch(() => props.match_of_list.msc, () => {
-  score_switch_handle(props.match_of_list);
-  score_value();
-})
-
-watch(() => props.match_of_list.mmp, () => {
-  matchListClass.match_period_map(props.match_of_list);
-})
-
-// 监听客队红牌比分变化
-watch(() => MenuData.footer_sub_menu_id, (curr) => {
-  // 简版玩法之间切换3秒内阻止赔率变化
-  is_new_init2.value = false;
-  clearTimeout(is_new_init_timer2.value)
-  is_new_init_timer2.value = setTimeout(() => {
-    is_new_init2.value = true
-  }, 3000)
-  if ((MenuData.prev_footer_sub_menu_id != curr && curr == 114) ||
-    (MenuData.prev_footer_sub_menu_id != curr && MenuData.prev_footer_sub_menu_id == 114)
-  ) {
-    score_value();
-  }
-  MenuData.prev_footer_sub_menu_id = curr;
-})
-
 // 精彩回放视频开关是否开启
 const is_replay_switch = computed(() => {
   const { configValue, eventSwitch } = lodash.get(UserCtr, 'merchantEventSwitchVO', {})
@@ -1591,6 +1495,103 @@ const clear_timer = () => {
     timer = null
   }
 }
+
+watch(() => props.match_of_list, (c_match) => {
+  media_button_button_type_check()
+  matchListClass.match_period_map(c_match);
+}, { deep: true })
+
+watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
+  if (mid_new) {
+    match_changing.value = true;
+    /*
+    切换赛事时如果足球比分大于0会触发进球动画,
+    变量match_changing延迟置为false可避免触发进球动画
+      */
+    clearTimeout(match_change_timer.value)
+    match_change_timer.value = setTimeout(() => {
+      match_changing.value = false;
+    }, 300);
+    matchListClass.match_period_map(props.match_of_list);
+  }
+})
+
+// 监听主队比分变化
+watch(() => home_score.value, (new_,old_) => {
+  if (is_first_coming.value) return;
+  if (props.match_of_list.csid != 1) return;
+  if (get_footer_sub_changing) return;
+  if (match_changing.value) return;
+
+  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
+    is_show_home_goal.value = true
+    hide_home_goal()
+  }
+})
+
+// 监听客队比分变化
+watch(() => away_score.value, (new_,old_) => {
+  if (is_first_coming.value) return;
+  if (props.match_of_list.csid != 1) return;
+  if (get_footer_sub_changing) return;
+  if (match_changing.value) return;
+
+  if (new_ > 0 && new_ != old_ && old_ !== null && (props.menu_type == 1 || props.menu_type == 3)) {
+    is_show_away_goal.value = true
+    hide_away_goal()
+  }
+})
+// 监听主队红牌比分变化
+watch(() => home_red_score.value, () => {
+  if (props.match_of_list.csid != 1) return
+  if (home_red_first_change.value) {
+    home_red_first_change.value = false;
+    return;
+  }
+  if (new_ > 0 && new_ != old_) {
+    is_show_home_red.value = true
+    hide_home_red()
+  }
+})
+// 监听客队红牌比分变化
+watch(() => away_red_score.value, (new_,old_) => {
+  if (props.match_of_list.csid != 1) return
+  if (away_red_first_change.value) {
+    away_red_first_change.value = false;
+    return;
+  }
+  if (new_ > 0 && new_ != old_) {
+    is_show_away_red.value = true
+    hide_away_red()
+  }
+})
+
+// 监听比分变化
+watch(() => props.match_of_list.msc, () => {
+  score_switch_handle(props.match_of_list);
+  score_value();
+})
+
+watch(() => props.match_of_list.mmp, () => {
+  matchListClass.match_period_map(props.match_of_list);
+})
+
+// 监听客队红牌比分变化
+watch(() => MenuData.footer_sub_menu_id, (curr) => {
+  // 简版玩法之间切换3秒内阻止赔率变化
+  is_new_init2.value = false;
+  clearTimeout(is_new_init_timer2.value)
+  is_new_init_timer2.value = setTimeout(() => {
+    is_new_init2.value = true
+  }, 3000)
+  if ((MenuData.prev_footer_sub_menu_id != curr && curr == 114) ||
+    (MenuData.prev_footer_sub_menu_id != curr && MenuData.prev_footer_sub_menu_id == 114)
+  ) {
+    score_value();
+  }
+  MenuData.prev_footer_sub_menu_id = curr;
+})
+
 const unsubscribe = store.subscribe(() => {
   const new_state = store.getState()
   get_hot_tab_item.value = new_state.get_hot_tab_item

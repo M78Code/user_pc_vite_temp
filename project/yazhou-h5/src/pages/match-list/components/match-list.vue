@@ -107,7 +107,7 @@ import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
-import {utils } from 'src/core/index.js'
+import { utils } from 'src/core/index.js'
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchContainer from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
@@ -117,6 +117,7 @@ import v_match_container from "./virtual-match-container.vue";  // 虚拟体育�
 import scrollWrapper from 'project_path/src/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
 import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
+import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"
  
 const props = defineProps({
@@ -159,6 +160,8 @@ const curr_play_info = ref({
   menu_id: '',
   show_15min_data:false // 15分钟玩法数据
 })
+//新手版标准版 1 2
+const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
 
 // 投注成功的赛事id
 const get_match_id_bet_success = ref(store_state.get_match_id_bet_success)
@@ -168,8 +171,6 @@ const get_theme = ref(store_state.get_theme)
 const get_goto_list_top = ref(store_state.get_goto_list_top)
 // 显示收藏列表
 const get_show_favorite_list = ref(store_state.get_show_favorite_list)
-// 简版还是标准版
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition)
 //二级菜单type
 const get_curr_sub_menu_type = ref(store_state.get_curr_sub_menu_type)
 
@@ -231,7 +232,7 @@ watch(() => get_goto_list_top.value, () => {
   is_goto_top_random.value = Math.random();
 })
 
-watch(() => get_newer_standard_edition.value, (newValue) => {
+watch(() => newer_standard_edition.value, (newValue) => {
   if (newValue == 1) {
     other_way_info_show.value = false
   }
@@ -421,7 +422,6 @@ const unsubscribe = store.subscribe(() => {
   get_goto_list_top.value = new_state.get_goto_list_top
   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
   get_show_favorite_list.value = new_state.get_show_favorite_list
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition
 })
 
 onUnmounted(() => {

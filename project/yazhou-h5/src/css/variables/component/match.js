@@ -16,6 +16,7 @@ export default {
   "color-com-fs-color-8": "#414655",
   "color-fs-color-15": "#6C7BA8",
   "color-fs-color-13": "#ff7373",
+  "color-fs-color-62": "#999999",
 
   // ----背景 img-----
 
