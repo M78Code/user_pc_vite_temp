@@ -14,11 +14,11 @@
             <div class="gif-text">{{t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
-          <span
+          <!-- <span
             v-show="(match.score_obj || {}).S11.home > 0"
             class="red-ball"
             :class="{flash:is_show_home_red}"
-          >{{match.score_obj.S11.home}}</span>
+          >{{match.score_obj.S11.home}}</span> -->
         </div>
       </div>
       <!-- 主比分 -->
@@ -38,11 +38,11 @@
             <div class="gif-text">{{t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
-          <span
+          <!-- <span
             v-show="match.score_obj.S11.away > 0"
             class="red-ball"
             :class="{flash:is_show_away_red}"
-          >{{match.score_obj.S11.away}}</span>
+          >{{match.score_obj.S11.away}}</span> -->
         </div>
       </div>
       <!-- 主比分 -->
@@ -99,9 +99,20 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {MenuData } from "src/core/index.js"
+import {MenuData, serialized_score } from "src/core/index.js"
 
 import { t } from "src/core/index.js";
+
+
+const props = defineProps({
+  match: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+
+console.log('matchmatchmatchmatch', props.match);
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
@@ -115,7 +126,7 @@ const play_name_obj = computed(() => {
     suffix_name: '',
     score_key: ''
   }
-  let {ms,tpl_id,hSpecial}  =  this.match || {}
+  let {ms,tpl_id,hSpecial}  =  props.match || {}
   //滚球
   if (get_match_status(ms, [110]) == 1) {
       //角球后缀
@@ -144,34 +155,34 @@ const play_name_obj = computed(() => {
   return play_name_obj
 })
 
-is_collect.value = Boolean (this.match.mf)
+is_collect.value = Boolean (props.match.mf)
 //进球特效防抖
 // hide_home_goal = this.debounce(hide_home_goal,5000);
 // hide_away_goal = this.debounce(hide_away_goal,5000);
 
 // 监听收藏数量，更新收藏icon 颜色
-watch(get_collect_count, () => {
-  const cur = this.match_list_data.mid_obj
-  is_collect.value = Boolean (cur['mid_'+this.match.mid].mf)
-})
+// watch(get_collect_count, () => {
+//   const cur = props.match_list_data.mid_obj
+//   is_collect.value = Boolean (cur['mid_'+props.match.mid].mf)
+// })
 
 // 监听主比分变化
-watch(match.home_score, (n) => {
+watch(props.match.home_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-this.match.ws_update_time)<3000
+  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
   // 足球 并且已开赛
-  if(this.match.csid == 1 && get_match_status(this.match.ms,[110]) == 1 && n!=0 && is_time_out ){
+  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1 && n!=0 && is_time_out ){
     is_show_home_goal.value = true;
     hide_home_goal();
   }
 })
 
 // 监听主比分变化
-watch(match.away_score, (n) => {
+watch(props.match.away_score, (n) => {
   //推送时间是否过期
-  let is_time_out = (get_remote_time()-this.match.ws_update_time)<3000
+  let is_time_out = (get_remote_time()-props.match.ws_update_time)<3000
   // 足球 并且已开赛
-  if(this.match.csid == 1 && get_match_status(this.match.ms,[110]) == 1  && n!=0 && is_time_out ){
+  if(props.match.csid == 1 && get_match_status(props.match.ms,[110]) == 1  && n!=0 && is_time_out ){
     is_show_away_goal.value = true;
     hide_away_goal();
   }

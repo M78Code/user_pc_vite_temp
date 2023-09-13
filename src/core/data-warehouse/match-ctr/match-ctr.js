@@ -361,6 +361,7 @@ export default class MatchDataBase
         this.assign_with(this.list_to_obj, list_to_obj);
         // 删除list_obj之前的无用赛事
       }
+      console.log('lockie   走完了');
     }
   }
 

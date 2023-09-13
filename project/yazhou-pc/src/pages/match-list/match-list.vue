@@ -45,11 +45,10 @@ export default {
     // EsportsHeader
   },
   setup() {
-    const match_list_info = reactive(MatchListCardData.match_list_card_key_arr)
-    console.log('match_list_infomatch_list_info', match_list_info, MatchListCardData.match_list_card_key_arr);
-    // setTimeout(() => {
-    //   match_list_info.value = match_list_card.get_match_list_card_key_arr();
-    // }, 1000);
+    const match_list_info = ref(MatchListCardData.match_list_card_key_arr)
+    setTimeout(() => {
+      match_list_info.value = MatchListCardData.match_list_card_key_arr;
+    }, 1000);
     onMounted(() => {
       mounted_fn()
     })

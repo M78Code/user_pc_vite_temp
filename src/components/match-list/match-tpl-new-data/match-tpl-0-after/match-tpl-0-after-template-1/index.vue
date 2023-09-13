@@ -105,7 +105,7 @@
 
 <script setup>
 
-import { ref, computed, watch, defineProps, reactive } from 'vue';
+import { ref, computed, watch, defineProps, reactive, onMounted } from 'vue';
 import lodash from 'lodash'
 
 import { t, get_match_status, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
@@ -132,9 +132,8 @@ const props = defineProps({
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.get_match_all_card_obj(), `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
-console.log('MatchListDataMatchListData', MatchListData);
 const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
-
+const is_mounted = ref(false);
 
 // 其他玩法标题
 const bet_col = computed(() => {
@@ -355,6 +354,13 @@ const play_tab_click = (obj) => {
 const fold_tab_play = () => {
   MatchListCardData && MatchListCardData.fold_tab_play(this.match.mid)
 }
+
+onMounted(() => {
+  // 异步设置组件是否挂载完成
+  setTimeout(()=>{
+    is_mounted.value = true
+  })
+})
 
 // 监听其他tab玩法标题变化  设置其他玩法tab栏
 watch(match.tab_play_keys, (tab_play_keys) => {

@@ -28,6 +28,7 @@ export const remove_league = (remove_tid) => {
         }
       });
     });
+    console.log('lockie-111231231');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       all_league_obj,
@@ -40,6 +41,7 @@ export const remove_league = (remove_tid) => {
     lodash.remove(match_list, (match) => {
       return match.tid == remove_tid;
     });
+    console.log('lockie-23131231232222');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       match_list,
@@ -82,6 +84,12 @@ export const recompute_match_list_style_obj_and_match_list_mapping_relation_obj_
         );
       }
     });
+    console.log('lockie-kkkk');
+    // 重新计算卡片样式
+    compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+      match_list,
+      true
+    );
     // 设置列表总高度
     conpute_match_list_card_offset();
   };
@@ -157,6 +165,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_1_3 = (
       callback.length_0_fn();
     }
   } else {
+    console.log('lockie -33433334234324234');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       all_league_obj,
@@ -186,6 +195,7 @@ const remove_match_when_match_list_mapping_relation_obj_type_other = (
       callback.length_0_fn();
     }
   } else {
+    console.log('lockie-  555443432423423423');
     // 重新计算卡片样式
     compute_match_list_style_obj_and_match_list_mapping_relation_obj(
       match_list,

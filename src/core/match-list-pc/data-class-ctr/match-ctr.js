@@ -163,6 +163,7 @@ export default class MatchCtr
         Object.assign(ret.add[mid], obj);
       }
     }
+    console.log('lockie    走完了');
     return ret;
   }
   /**

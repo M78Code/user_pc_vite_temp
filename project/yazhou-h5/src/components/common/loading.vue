@@ -27,7 +27,6 @@ const UserCtr.theme = ref('y0')
       default: '46%',
     },
   })
-console.error(props.top);
 </script>
 
 <style lang="scss" scoped>

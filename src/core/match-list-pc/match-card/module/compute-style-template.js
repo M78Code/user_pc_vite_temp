@@ -47,12 +47,7 @@ const get_tab_play_height = (mid) => {
 	//5分钟      波胆
 	if (["hps5Minutes", "hpsBold"].includes(play_current_key)) {
 		// 计算0号模板次要玩法 盘口+玩法标题高度
-		handicap_height =
-			length * 35 +
-			(40 -
-				(!["en", "ad", "ms"].includes(localStorage.getItem("get_lang"))
-					? 16
-					: 0));
+		handicap_height = length * 35 + (40 - (!["en", "ad", "ms"].includes(localStorage.getItem("get_lang")) ? 16 : 0));
 	}
 	return handicap_height;
 };
@@ -242,7 +237,6 @@ export const get_league_title_card_height = (template_id) => {
  */
 
 export const compute_style_template_by_matchinfo = (match, template_id) => {
-	console.log('match', match);
 	if (template_id == 13) {
 		template_id = 0;
 	}
@@ -323,12 +317,13 @@ export const compute_style_template_by_matchinfo = (match, template_id) => {
 	}
 
 	// 设置卡片总高度 等于主盘口高度 + 当前局盘扣高度 + 附加盘高度 + 角球区域高度 + 赛事间距和边框6px
-	console.log('设置卡片总高度', style_obj);
 	style_obj.total_height =
 		style_obj.main_handicap_height +
 		style_obj.cur_handicap_height +
 		style_obj.add_handicap_height +
 		style_obj.tab_play_total_height +
 		6;
+	console.log('设置卡片总高度', style_obj);
+
 	return style_obj;
 };

@@ -114,6 +114,7 @@
     let league_repeat_count_obj = {}
     // 自定义联赛ID
     let cus_tid = ''
+    console.log('执行了几次');
 
     // 遍历所有赛事数据
     let match_status_type_arr = ['livedata','nolivedata']
@@ -221,13 +222,13 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.list_to_obj.mid_obj[mid+'_']
-          console.log('lockie-2222', JSON.stringify(MatchListData.list));
-          let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
-          all_card_obj[mid+'_'] = match_style_obj
-          league_card_total_height += match_style_obj.total_height
-          // 设置父级卡片key
-          match_style_obj.parent_card_key = card_key
+            let match = MatchListData.list_to_obj.mid_obj[mid+'_']
+            let match_style_obj = compute_style_template_by_matchinfo(match,template_id)
+            all_card_obj[mid+'_'] = match_style_obj
+            league_card_total_height += match_style_obj.total_height
+            // 设置父级卡片key
+            match_style_obj.parent_card_key = card_key
+            
         })
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {

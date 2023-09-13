@@ -310,6 +310,7 @@ const set_base_data_init = () => {
 		data.data = matchs_list;
 	}
 	if (menu_root == 3) return;
+	console.log('lockie-8888888');
 	// 赛事列表 卡片数据
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
@@ -395,6 +396,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 				if ((route.name == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
+					console.log('lockie-999999');
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
 						JSON.parse(JSON.stringify(res)),
@@ -568,7 +570,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		//  今日早盘   常规球种下的   常规球种下的 冠军
 		// 虚拟体育 单页 的  所有赛种
 		// 收藏
-		
+		console.log('lockie-777777');
 		mx_use_list_res(data, is_socket, cut, collect);
 	}
 };
@@ -749,7 +751,6 @@ const check_match_last_update_time = () => {
 		// 更新时间间隔
 		let api_time_dif = 0,
 			ws_time_dif = 0;
-			console.log('MatchListData.list_to_obj', MatchListData.list_to_obj);
 		let match = MatchListData.list_to_obj.mid_obj[mid+'_'] || {};
 		if (match.api_update_time) {
 			api_time_dif = now_time - match.api_update_time;

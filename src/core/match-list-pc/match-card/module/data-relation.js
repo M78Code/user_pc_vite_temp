@@ -131,7 +131,6 @@ const MenuData ={
     
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{
-    
     // 虚拟体育 不走卡片逻辑
     if(MenuData.menu_data.is_virtual_sport && window.vue.$route.name !=='search'){
         MatchListCardData.is_run_card_function = false

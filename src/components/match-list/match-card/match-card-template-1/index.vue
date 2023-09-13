@@ -57,7 +57,12 @@ const props = defineProps({
   },
 })
 // 赛事样式对象
-const match_style_obj = ref(MatchListCardData.get_match_all_card_obj()['mid_'+props.mid] || {})
+const match_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.mid+'_'] || {})
+setTimeout(() => {
+  match_style_obj.value = MatchListCardData.get_match_all_card_obj()[props.mid+'_']
+  console.log('match_style_obj', MatchListCardData.get_match_all_card_obj(), props.mid+'_');
+
+}, 1000)
 // 是否显示调试信息
 const test = ref(sessionStorage.getItem('wsl'))
 // 组件是否加载完成

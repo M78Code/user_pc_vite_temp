@@ -5,7 +5,7 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`"
+    :style="`height:300px  !important;width:1920px  !important;${card_style}`"
   >
   <div
       v-if="is_mounted"
@@ -86,7 +86,8 @@ const props = defineProps({
   }
 })
 // 卡片样式对象
-const card_style_obj = reactive(MatchListCardData.get_match_all_card_obj()[props.card_key] || {})
+const card_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.card_key] || {})
+
 let sticky_top = ref(null)
 // 组件是否加载完成
 let is_mounted = ref(false);
@@ -103,12 +104,12 @@ const card_style = computed(() => {
   // 设置卡片高度
   let card_style = ''
   // 如果卡片类型是球种标题、已开赛、未开赛标题  设置吸顶
-  if(['sport_title','play_title','no_start_title'].includes(card_style_obj?.card_type)){
+  if(['sport_title','play_title','no_start_title'].includes(card_style_obj.value?.card_type)){
     let top = sticky_top.value?.type || 0
     card_style = `top:${top - 0.5}px;`
   }
   // 如果是联赛标题卡片  设置联赛吸顶
-  else if(['league_title','champion_league_title'].includes(card_style_obj?.card_type)){
+  else if(['league_title','champion_league_title'].includes(card_style_obj.value?.card_type)){
     let top = sticky_top.value?.league || ''
     card_style = `top:${top - 0.5}px;`
   }
@@ -120,8 +121,9 @@ const card_style = computed(() => {
 */
 const mids_arr = computed(() => {
   let mids_arr = []
-  if(card_style_obj.card_type == 'league_container'){
-    mids_arr = card_style_obj.mids.split(',')
+  if(card_style_obj.value.card_type == 'league_container'){
+    mids_arr = card_style_obj.value.mids.split(',')
+    return mids_arr
   }
   return mids_arr
 })
@@ -135,7 +137,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  card_style_obj = null
+  card_style_obj.value = null
 })
 </script>
 
