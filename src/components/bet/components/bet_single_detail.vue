@@ -33,10 +33,13 @@
 import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
 
-import store from "src/store-redux/index.js";
-import {useMittOn,useMittEmit,MITT_TYPES} from  "src/core/mitt/"
+import BetData from "src/core/bet/class/bet-data-class.js";
+import { UserCtr } from "src/core/index.js";
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import lodash from 'lodash'
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+
 import { format_money3,format_money2 } from 'src/core/index.js'
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -53,20 +56,6 @@ const get_bet_status = ref(store_state.get_bet_status)
 const get_used_money = ref(store_state.get_used_money)
 const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
 
-const unsubscribe = store.subscribe(() => {
-  update_state()
-})
-
-const update_state = () => {
-  const new_state = store.getState()
-  get_show_favorite_list.value = new_state.get_show_favorite_list
-  get_collapse_map_match.value = new_state.get_collapse_map_match
-  get_collapse_csid_map.value = new_state.get_collapse_csid_map
-  get_collapse_all_ball.value = new_state.get_collapse_all_ball
-  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
-  get_current_menu.value = new_state.get_current_menu
-  GlobalAccessConfig.value = GlobalAccessConfig.init()
-}
 
 
 
@@ -351,14 +340,14 @@ const obj_bet_money = computed(() => {
 
 
   onUnmounted(() => {
-    clear_timer()
+    // clear_timer()
 
-    useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
+    // useMittOn(MITT_TYPES.EMIT_CHANGE_MONEY, change_money_).off;
 
-    for (const key in $data) {
-      $data[key] = null
-    }
-    unsubscribe()
+    // for (const key in $data) {
+    //   $data[key] = null
+    // }
+    // unsubscribe()
   })
 
 

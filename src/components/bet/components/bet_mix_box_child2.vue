@@ -36,8 +36,9 @@
           :query_order_obj="query_order_obj" :key="name" :index_="index1" :name_="name">
         </bet-mix-show> -->
         <bet-mix-show
+        :name_ ="name"
+        v-for="(value, name, index1) in bet_view_obj"
         :bet_view_obj="bet_view_obj"
-        :name_ ="'3532443'"
         >
         </bet-mix-show>
 
@@ -242,7 +243,7 @@ const bet_min_max_money = ref()  // 投注限额
 const bet_list_data = ref([])
 const tips_msg = ref('失效')  // 提示信息
 
-const bet_view_obj = ref()  // 多个投注对象 调试
+const bet_view_obj = ref({})  // 多个投注对象 调试
 
 const hide_bet_series_but = () => {
   let res = false;
@@ -304,8 +305,8 @@ onMounted(() => {
 
 const set_ref_data_bet_money = () => {
  
-  // let markInfo = lodash.get(BetViewDataClass, 'bet_special_h5')
-  let markInfo = lodash.get(BetData, 'bet_list')
+  let markInfo = lodash.get(BetViewDataClass, 'bet_special_h5')
+  // let markInfo = lodash.get(BetData, 'bet_list')
   console.error('BetViewDataClass', markInfo)
   console.error('BetData.bet_list', BetData.bet_list)
   // markInfo.forEach(item => {
@@ -321,7 +322,9 @@ const set_ref_data_bet_money = () => {
   // });
   // bet_min_max_money.value = BetViewDataClass.bet_min_max_money
   bet_view_obj.value = markInfo
-  // console.error('sssssss', bet_view_obj.value)
+  
+  console.error('sssssss888',bet_view_obj.value)
+ 
 
 }
 onUnmounted(() => {

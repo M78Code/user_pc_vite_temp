@@ -7,56 +7,85 @@
   <div class="bet-mix-show" @click="handleonmousedown">
     <!-- 失效蒙层 -->
     <!-- 左边 -->
-    <div class="row justify-start items-center" :class="[get_bet_success ? 'yb_px14':'yb_pl12 yb_pr18',{'bet-mix-show2':is_conflict}]">
+    <div class="row justify-start items-center"
+      :class="[get_bet_success ? 'yb_px14' : 'yb_pl12 yb_pr18', { 'bet-mix-show2': is_conflict }]">
       <!-- 左边 -->
       <!-- <div class="yb_mr12 dele-left" v-if="!get_bet_success">
        <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
      </div> -->
-
-     <!-- 右边 -->
-     <div style="flex:1;">
+      <div>
+        <!-- {{ value_show }} -->
+      </div>
+      <!-- 右边 -->
+      <div style="flex:1;">
         <!-- 上 -->
-       <div class="row justify-between items-center yb_fontsize16 content-t yb_mb6 yb_mt8">
-         <div class="col-9 row">
-           <span class="fw_600">
-             <!-- 投注成功后的展示值用接口返回的 -->
-             <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
-             <template>
-               <span v-show="value_show.value1" class="yb_mr4">{{value_show.value1}}</span>
-               <span :class="pankou_change == 1 ? 'pankou-change': null" v-show="value_show.value2">{{value_show.value2}}</span>
-             </template>
-             [{{ hptype }}]
-           </span>
-         </div>
+        <div class="row justify-between items-center yb_fontsize16 content-t yb_mb6 yb_mt8">
+          <div class="col-9 row">
+            <span class="fw_600">
+              <!-- 投注成功后的展示值用接口返回的 -->
+              <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
+              <template>
+                <span class="yb_mr4">{{ value_show.home }}</span>
+                <span :class="pankou_change == 1 ? 'pankou-change' : null">{{ value_show.away }}</span>
+              </template>
+              [{{ value_show.marketTypeFinally }}]
+            </span>
+          </div>
 
-         <div class="col-3 row justify-end items-center">
-             <span class="yb_fontsize22" :class="{'red':odds_change == 1,'green':odds_change == 2}">
-               <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{bet_success_obj.oddsValues | format_odds(value_show.csid)}}</template>
-               <!-- <template v-else>{{odds_value()}}</template> -->
-             </span>
-             <!-- 红升绿降 -->
-             <span :class="{'red-up':odds_change == 1,'green-down':odds_change == 2}" class="odd-change yb_ml4" v-if="!get_bet_success"></span>
-         </div>
-       </div>
+          <div class="col-3 row justify-end items-center">
+            <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
+              <template>{{ value_show.oddFinally }}</template>
+              <!-- <template v-else>{{odds_value()}}</template> -->
+            </span>
+            <!-- 红升绿降 -->
+            <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }"
+              class="odd-change yb_ml4"></span>
+          </div>
+        </div>
 
-         <!-- 联赛名称 -->
-         <div class="xia" v-if="value_show.tn && !get_is_champion(this)">{{ value_show.tn }}</div>
-     </div>
+        <div class="row justify-between yb_my4 yb_fontsize14">
+          <span :class="get_lang == 'vi' && get_bet_success ? 'col-6' : 'col-7'">
+            <span>{{ value_show.playId }}&thinsp;</span>
+            <span>{{ value_show.playName }}&thinsp;</span>
+            <span>{{ value_show.playOptions }}&thinsp;</span>
+
+          </span>
+        </div>
+        <!-- 联赛名称 -->
+        <div class="xia" v-if="value_show.tn_name">{{ value_show.tn_name }}</div>
+
+        <!-- 下 -->
+        <div class="xia row justify-between flex-end yb_my4" style="min-height: 0.22rem">
+          <div class="col-9 row" :class="{ 'col-12': !(authorityOptionFlag || show_pre) }">
+          <span>
+            {{ value_show.away }}
+            <span>v</span>
+            {{ value_show.home }}
+          </span>
+          </div>
+        </div>
+      </div>
     </div>
-   </div>
+
+     <!-- 对应单关多个注单样式 -->
+     <div>
+       <!-- 单关金额输入框 -->
+      <bet-single-detail ref="bet_single_detail"  v-bind="$attrs" :name_="name_" :index_="index_"></bet-single-detail>
+     </div>
+  </div>
 </template>
 
 <script setup>
 // import {odd_convert} from "src/core/format/index.js";
 // import betting from 'src/core/bet/common-helper/index.js';
 // import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
-import betSingleDetail from './bet_single_detail.vue';
+// import betSingleDetail from './bet_single_detail.vue';
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/core/index.js";
 import { calc_bifen, format_odds } from "src/core/format/index.js";
-import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { ref, onMounted, watch, computed, onUnmounted, watchEffect } from 'vue';
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -64,6 +93,8 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import lodash from 'lodash'
 
 const get_bet_success = ref(true)
+const value_show = ref()
+const value_name = ref()
 
 
 const props = defineProps({
@@ -89,9 +120,19 @@ const props = defineProps({
   }
 })
 
-const value_show = computed(()=>{
-  return props.bet_view_obj
+watchEffect(() => {
+  value_show.value = props.bet_view_obj[props.name_]
+  value_name.value = props.name_
+  console.error('ssss7789', value_show.value)
+  console.error('name_', props.name_)
 })
+
+// const value_show = computed(()=>{
+//   console.error('变化了')
+//   return props.bet_view_obj
+// })
+
+
 
 
 
