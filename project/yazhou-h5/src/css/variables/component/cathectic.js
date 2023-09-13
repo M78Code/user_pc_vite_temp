@@ -25,6 +25,9 @@ export default {
 "cathectic-color-25": "linear-gradient(180deg, rgba(255, 176, 1, 0.2) 0%,rgba(255, 176, 1, 0.02) 99%)",
 "cathectic-color-26": "linear-gradient(270deg, #ffb001 0%, #ff7000 100%)",
 "cathectic-color-27": "linear-gradient(-34deg,  #F7B500 0%, #FF9124 88%)",
+"cathectic-color-28": "transparent",
+"cathectic-color-29": "#4987fb",
+"cathectic-color-30": "#f7f9fe",
 
 
 

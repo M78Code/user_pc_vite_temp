@@ -43,11 +43,11 @@ const props = defineProps(
 
     },
     key2: {
-      type: Number || String
+      type: Number
 
     },
     len: {
-      type: Number || String
+      type: Number
 
     },
     is_early: {
@@ -108,6 +108,7 @@ onUnmounted(() => {
   width: 3.55rem;
   margin: 0.04rem auto;
   border-radius: 0.08rem;
+  background: var(--q-cathectic-color-6);
 }
 .common-cathectic-item2 {
   margin-top: 0;

@@ -4,7 +4,7 @@
  * @Description: bw3新版从底部弹出的投注记录弹框（已结算+未结算+预约）
 -->
 <template>
-  <div class="settle-dialog">
+  <div class="settle-dialog" :style="page_style">
     <div class="row items-center yb_fontsize16 head-top" @touchmove.prevent>
       <div class="row col items-center justify-center">
         <p class="yb_mr10" @click="change_record(0)" :class="main_item == 0 && 'active-p'">
@@ -20,7 +20,10 @@
             <!-- <img src="image/wwwassets/bw3/svg/bet_close2.svg"> -->
             <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div>
             </template>
-          <template v-else><img src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
+          <template v-else>
+            <!-- <img src="image/wwwassets/bw3/svg/bet_close3.svg"> -->
+            <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div>
+          </template>
         </span>
       </div>
     </div>
@@ -68,7 +71,9 @@ const main_item = ref(0)
 const unsettle_child = ref(null)
 const record_box = ref(null)
 // const unsettle = ref(null)
+const page_style = ref('')
 
+page_style.value = compute_css_variables({ category: 'component', module: 'cathectic' })
 
 
 
@@ -153,14 +158,17 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   // TODO: 临时调试
-  background-color: #ffffff;//var(--q-cathectic-page-bg-color);
-  color: #414655; // var(--q-cathectic-fs-defalut-color)
+  background:var(--q-cathectic-color-6);
+  color: var(--q-cathectic-color-1);
+  .content-m {
+      background: var(--q-cathectic-color-30);
+    }
 }
 
 .head-top {
   height: 0.5rem;
   position: relative;
-  border-bottom: 1px solid var(--q-cathectic-border-bottom-color-1);
+  border-bottom: 1px solid var(--q-cathectic-color-28);
 
   .close {
     position: absolute;
@@ -193,17 +201,17 @@ onUnmounted(() => {
       width: 36%;
       height: 0;
       left: 50%;
-
+      border: 0.015rem solid transparent;
       transform: translateX(-50%);
       border-radius: 0.08rem;
     }
 
     &.active-p {
       font-weight: 600;
-      color: var(--q-cathectic-fs-active-color);
+      color: var(--q-cathectic-color-29);
       span {
-        border-color: var(--q-cathectic-underline-border-color);
-        background:var(--q-cathectic-underline-bg-color);
+        border-color: var(--q-cathectic-color-29);
+        background: var(--q-cathectic-color-29);
       }
     }
   }

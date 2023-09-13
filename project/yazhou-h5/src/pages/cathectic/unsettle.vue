@@ -371,6 +371,7 @@ import store from 'src/store-redux/index.js'
     line-height: 0.66rem;
     margin: 0 auto;
     padding: 0 0 0 0.04rem;
+    color: var(--q-cathectic-color-1);
     /**订单内容*/
     span {
       font-size: 0.18rem;
