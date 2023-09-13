@@ -9,10 +9,12 @@ import { SessionStorage } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
+  RESULT_SUB_MENU_CACHE: "RESULT_SUB_MENU_CACHE", //赛果 缓存
 };
 class MenuData {
   constructor() {
     const that = this;
+    this.show_favorite_list = false;
     this.update_time = ref(Date.now()); //更新触发
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash.debounce(() => {
@@ -52,11 +54,9 @@ class MenuData {
     this.current_lv_1_menu_i = undefined;
 
     // //上一次的菜单 lv2
-    // this.previous_lv_2_menu = undefined;
-    // this.previous_lv_2_menu_i = 0;
-    //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项
-    this.sport_all_selected = false; //是否选中了全部
-
+    this.previous_lv_2_menu = undefined;
+    this.previous_lv_2_menu_i = 0;
+    //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {
       id: "",
       type: "",
@@ -100,34 +100,41 @@ class MenuData {
       base_data_instance.base_data_version,
       lodash.debounce(() => {
         const { mew_menu_list_res } = base_data_instance; //获取主数据
-        this.recombine_menu(mew_menu_list_res);
+        this.recombine_menu(mew_menu_list_res, mew_menu_list_res);
         this.update();
         // current_menu.value = menu_list.value[0];
       }, 50)
     );
-    //设置从缓存拿到的数据
-    const cache_data = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
-    for (const key in cache_data) {
-      if (Object.hasOwnProperty.call(this, key)) {
-        if (["menu_type"].includes(key)) {
-          this[key].value = cache_data[key];
-        } else {
-          this[key] = cache_data[key];
-        }
-      }
-    }
+    //设置从缓存拿到的数据 到class
+    this.set_cache_class(
+      SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {}),
+      false
+    );
+    //初始化完成后进行一次数据更新
     this.update();
   }
   /**
-   * 设置缓存
+   * 设置值 并且缓存
    * obj [Object] 需要设置的缓存  key要和本类系统哦
+   * is_cache是否缓存
    */
-  set_cache_class(obj) {
-    const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
-    SessionStorage.set(
-      Cache_key.CACHE_CRRENT_MEN_KEY,
-      lodash.assign({}, current, obj)
-    );
+  set_cache_class(obj, is_cache = true) {
+    for (const key in obj) {
+      if (Object.hasOwnProperty.call(this, key)) {
+        if (["menu_type"].includes(key)) {
+          this[key].value = obj[key];
+        } else {
+          this[key] = obj[key];
+        }
+      }
+    }
+    if (is_cache) {
+      const current = SessionStorage.get(Cache_key.CACHE_CRRENT_MEN_KEY, {});
+      SessionStorage.set(
+        Cache_key.CACHE_CRRENT_MEN_KEY,
+        lodash.assign({}, current, obj)
+      );
+    }
   }
   //=============================
   count_menu(menu_list = [], list) {
@@ -168,15 +175,23 @@ class MenuData {
       const mid_item = pop_main_items.find((item) => {
         return this.current_lv_1_menu && this.current_lv_1_menu.mi == item.mi;
       });
-      menu_list.splice(1, 0, mid_item || this.menu_lv1[1]);
+      menu_list.splice(1, 0, mid_item || this.menu_lv1[1] || pop_main_items[0]);
     } else {
       menu_list.splice(1, 0, pop_main_items[0]);
     }
     this.menu_lv1 = menu_list;
-    //如果没有设定过菜单
-    if (!this.current_lv_1_menu) {
-      this.set_current_lv1_menu(this.menu_list[0], 0);
+    //如果没有设定过1级菜单
+    if (!this.current_lv_1_menu && this.menu_list[0]) {
+      this.set_current_lv1_menu(this.menu_list[0], 0, "init");
     }
+    // //如果有设定过二级菜单 先设置二级菜单加载数据先
+    // if (this.current_lv_2_menu) {
+    //   this.set_current_lv2_menu(
+    //     this.current_lv_2_menu,
+    //     this.current_lv_2_menu_i,
+    //     "init"
+    //   );
+    // }
     return [menu_list, pop_main_items];
   }
   // 当前选中的菜单type
@@ -303,9 +318,43 @@ class MenuData {
   get_menu_list() {
     return base_data_instance.left_menu_base_mi_arr;
   }
+
+  /**
+   * 根据 球类型 获取图标
+   * @param {boolean} is_focus 是否选中
+   */
+  get_sport_icon(is_focus) {
+    let favorite = "";
+    if (is_focus) {
+      if (this.show_favorite_list) {
+        favorite = "f";
+      }
+    }
+    if (this.show_favorite_list) {
+      favorite = "f";
+    }
+    // 赛果 408  sport-match-count
+    if (this.main_menu_id_c == 408) {
+      favorite = "";
+    }
+    //赛果我的投注
+    if (is_focus) {
+      //选中情况下的 关注 和 非关注
+      return favorite
+        ? this.get_theme.includes("y0")
+          ? "focus-e"
+          : "focus-c"
+        : this.get_theme.includes("y0")
+        ? "focus-b"
+        : "focus-a";
+    }
+    //默认黑色版还是白色版
+    return this.get_theme.includes("theme02") ? "focus-d" : "";
+  }
+
   //菜单名称
   get_menus_i18n_map(item) {
-    return base_data.menus_i18n_map[item];
+    return base_data_instance.menus_i18n_map[item];
   }
 
   /**
@@ -521,7 +570,7 @@ class MenuData {
     }
     return new Promise(async (resolve) => {
       // 如果有缓存，则使用缓存
-      let cache_data_str = sessionStorage.getItem("result_sub_menu_cache");
+      let cache_data = SessionStorage.get(Cache_key.RESULT_SUB_MENU_CACHE);
       try {
         // 如果当前主菜单是赛果, 获取赛果二级菜单
         let { code, data } = await api_analysis.get_result_menu({});
@@ -539,14 +588,14 @@ class MenuData {
               });
             }
           }
-          sessionStorage.setItem("result_sub_menu_cache", JSON.stringify(data));
+          SessionStorage.set(Cache_key.RESULT_SUB_MENU_CACHE, data);
           // 赛果二级菜单数据处理
-          this.result_sub_menu_api_handle(data);
+          this.result_sub_menu_api_handle(data, "init");
         } else {
           // 出错时使用缓存数据
-          if (cache_data_str) {
+          if (cache_data) {
             // 赛果二级菜单数据处理
-            this.result_sub_menu_api_handle(JSON.parse(cache_data_str));
+            this.result_sub_menu_api_handle(cache_data, "init");
           }
           // this.$root.$emit(this.emit_cmd.EMIT_MAIN_LIST_MATCH_IS_EMPTY, {
           //   type: "result",
@@ -564,11 +613,12 @@ class MenuData {
     });
   }
   // 赛果二级菜单  数据（名称） 特殊处理 成 menuName
-  result_sub_menu_api_handle(res_data, type) {
+  result_sub_menu_api_handle(res_data, type = "click") {
     console.error(res_data);
     // 赛果二级菜单  name 特殊处理 成 menuName
     res_data.forEach((sub_menu) => {
       sub_menu.menuName = sub_menu.name;
+      sub_menu.ct = sub_menu.count;
       sub_menu.subList.forEach((date_menu) => {
         date_menu.menuName = date_menu.name;
       });
@@ -576,10 +626,9 @@ class MenuData {
     this.set_cache_class({
       menu_lv2: res_data,
     });
-    this.menu_lv2 = res_data;
-    // // 如果上次刷新的，则保存上一次的状态，如果是点击的则初始化下标 为 默认第一个 0
-    // if (type == "dir_click") {
-    //   this.sub_menu_i = 0;
+    // 如果上次刷新的，则保存上一次的状态，如果是点击的则初始化下标 为 默认第一个 0
+    // if (type == "click") {
+    //   this.set_current_lv2_menu(res_data[0],0);
     // }
     // 如果是小于0，则默认展示成 0
     // if (this.current_lv_2_menu_i < 0) {
@@ -587,11 +636,11 @@ class MenuData {
     //   // // 选中的子菜单下标集合
     //   // this.selected_sub_menu_i_list = [this.sub_menu_i];
     // }
-    //设置第三级菜单
+    //设置第二级菜单
     this.set_current_lv2_menu(res_data[0], 0);
   }
   // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-  async get_date_menu_api_when_subchange(item) {
+  async get_date_menu_api_when_subchange(type) {
     // 如果是早盘，串关，电竞的话
     const menu_type = this.menu_type.value;
     //euid
@@ -617,26 +666,40 @@ class MenuData {
       try {
         const res = await api_func(params);
         if (res.code == 200) {
-          this.menu_lv3 = res.data;
+          this.set_cache_class({
+            menu_lv3: res.data,
+          });
           if (this.menu_lv3.length) {
-            this.set_current_lv3_menu(res.data[0], 0);
+            this.set_current_lv3_menu(
+              type == "init" ? this.current_lv_3_menu : res.data[0],
+              type == "init" ? this.current_lv_3_menu_i : 0
+            );
           }
         }
       } catch (error) {
-        this.menu_lv3 = [];
+        this.set_cache_class({
+          menu_lv3: [],
+        });
       }
     } else if ([28].includes(menu_type)) {
       // 如果是赛果
-      this.menu_lv3 = this.current_lv_2_menu.subList;
+      this.set_cache_class({
+        menu_lv3: this.current_lv_2_menu.subList,
+      });
       if (this.menu_lv3.length) {
-        this.set_current_lv3_menu(this.menu_lv3[0], 0);
+        this.set_current_lv3_menu(
+          type == "init" ? this.current_lv_3_menu : res.data[0],
+          type == "init" ? this.current_lv_3_menu_i : 0
+        );
       }
       // this.date_menu_list = this.current_lv_2_menu.subList;
       // // 设置日期选中项 调用三级菜单点击事件，默认第一个
       // // this.select_result_date_menu();
     } else {
       //  设置三级日期 菜单
-      this.menu_lv3 = [];
+      this.set_cache_class({
+        menu_lv3: [],
+      });
       this.set_current_lv3_menu(); //设置空
       // this.set_one_two_three_level_menu_data();
       // 菜单实例 初始化
@@ -645,7 +708,7 @@ class MenuData {
     this.update();
   }
   //setter=======
-  recombine_menu(data) {
+  recombine_menu(data, mew_menu_list_res = []) {
     //常规
     let conventional = [
       101, 102, 105, 107, 110, 108, 103, 109, 111, 112, 113, 116, 115, 114, 104,
@@ -671,7 +734,7 @@ class MenuData {
       }
     });
     // 赛果数据处理
-    // let result_menu = this.init_amidithion(amidithion);
+    let result_menu = this.init_amidithion(mew_menu_list_res);
     let new_menu = [];
     lodash.each(menuRule, (menu_item, index) => {
       new_menu[index] = { mi: menu_item, sl: [] };
@@ -684,15 +747,14 @@ class MenuData {
         }
       });
     });
-    this.menu_list = [
-      ...new_menu,
-      menu_dianjing,
-      { mi: 8 },
-      menu_jingzu,
-      // result_menu,
-    ];
     this.set_cache_class({
-      menu_list: this.menu_list,
+      menu_list: [
+        ...new_menu,
+        menu_dianjing,
+        { mi: 8 },
+        menu_jingzu,
+        result_menu,
+      ],
     });
     return this.menu_list;
   }
@@ -709,61 +771,81 @@ class MenuData {
     if (idx > -1) {
       const menu_list = this.menu_list[idx];
       //设置一级菜单
-      this.set_current_lv1_menu(menu_list, idx);
+      this.set_current_lv1_menu(menu_list, idx, "init");
       const idx2 = lodash.findIndex(this.menu_lv2, {
         mi: s || mt2,
       });
       if (idx2 > -1) {
         //设置二级菜单
-        return this.set_current_lv2_menu(this.menu_lv2[(idx2, idx2)]);
+        this.set_current_lv2_menu(this.menu_lv2[idx2], idx2, "init");
       }
       this.update();
     }
   }
 
-  //选中一级menu
-  set_current_lv1_menu(current_lv_1_menu, current_lv_1_menu_i) {
-    this.current_lv_1_menu = current_lv_1_menu;
-    this.current_lv_1_menu_i = current_lv_1_menu_i;
-    this.menu_type.value = current_lv_1_menu.mi; //设置一级菜单menutype
+  /**
+   * 选中1级menu
+   * item [object]当前点击对象
+   * index [number]
+   * type [string] click | init
+   */
+  set_current_lv1_menu(current_lv_1_menu, current_lv_1_menu_i, type = "click") {
     this.set_cache_class({
       current_lv_1_menu,
       current_lv_1_menu_i,
-      menu_type: current_lv_1_menu.mi,
+      menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
     //设置二级菜单
     if (current_lv_1_menu.mi != 28) {
-      this.menu_lv2 = current_lv_1_menu.sl || [];
       this.set_cache_class({
-        menu_lv2: this.menu_lv2,
+        menu_lv2: current_lv_1_menu.sl || [],
       });
     }
   }
-  //选中二级menu
-  async set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i) {
-    this.current_lv_2_menu = current_lv_2_menu;
-    this.current_lv_2_menu_i = current_lv_2_menu_i;
-    // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-    this.get_date_menu_api_when_subchange();
-
+  /**
+   * 选中二级menu
+   * item [object]当前点击对象
+   * index [number]
+   * type [string] click | init
+   */
+  set_current_lv2_menu(current_lv_2_menu, current_lv_2_menu_i, type = "click") {
     this.set_cache_class({
       current_lv_2_menu,
       current_lv_2_menu_i,
     });
+    if (!current_lv_2_menu) {
+      //2级菜单为空 3级也滞空
+      this.set_current_lv3_menu();
+    }
+    // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
+    this.get_date_menu_api_when_subchange(type);
   }
-  //选中三级menu
-  set_current_lv3_menu(current_lv_3_menu, current_lv_3_menu_i) {
-    this.current_lv_3_menu = current_lv_3_menu;
-    this.current_lv_3_menu_i = current_lv_3_menu_i;
+  //是否选中了全部的二级菜单
+  get_sport_all_selected() {
+    return lodash.isArray(this.current_lv_2_menu);
+  }
+  /**
+   * 选中3级menu
+   * item [object]当前点击对象
+   * index [number]
+   * type [string] click | init
+   */
+  set_current_lv3_menu(current_lv_3_menu, current_lv_3_menu_i, type = "click") {
     this.set_cache_class({
       current_lv_3_menu,
       current_lv_3_menu_i,
     });
+    if (!current_lv_3_menu) {
+      //三级菜单为空 4级也滞空
+      this.set_current_lv4_menu();
+    }
     if (this.is_results_virtual_sports()) {
       // 如果有三级菜单
       // 赛果下边的 虚拟体育 的四级菜单 数据
       if (this.current_lv_3_menu) {
-        this.menu_lv4 = lodash.get(this.current_lv_3_menu, "subList");
+        this.set_cache_class({
+          menu_lv4: lodash.get(this.current_lv_3_menu, "subList"),
+        });
         // this.virtual_sports_results_click_handle(
         //   this.virtual_sports_results_tab[this.virtual_sports_results_tab_item_i],
         //   this.virtual_sports_results_tab_item_i
@@ -772,7 +854,10 @@ class MenuData {
         this.update();
       }
     } else {
-      this.menu_lv4 = []; //置空4级
+      //置空4级
+      this.set_cache_class({
+        menu_lv4: [],
+      });
       this.set_current_lv4_menu();
       //  是三级菜单
       // this.four_menu_item = null;
@@ -780,10 +865,13 @@ class MenuData {
       // this.handle_MenuInfoInstance_init();
     }
   }
-  //选中4级menu
-  set_current_lv4_menu(current_lv_4_menu, current_lv_4_menu_i) {
-    this.current_lv_4_menu = current_lv_4_menu;
-    this.current_lv_4_menu_i = current_lv_4_menu_i;
+  /**
+   * 选中4级menu
+   * item [object]当前点击对象
+   * index [number]
+   * type [string] click | init
+   */
+  set_current_lv4_menu(current_lv_4_menu, current_lv_4_menu_i, type = "click") {
     this.set_cache_class({
       current_lv_4_menu,
       current_lv_4_menu_i,
@@ -805,10 +893,6 @@ class MenuData {
   }
   get_level_four_menu() {
     return "";
-  }
-  //二级菜单 menu_type  mi || menuId
-  get_curr_sub_menu_type() {
-    return this.current_lv_2_menu?.mi || this.current_lv_2_menu.menuId;
   }
   get_current_lv_2_menu_type() {
     return "0";
@@ -843,7 +927,14 @@ class MenuData {
   }
   //获取二级菜单 menuid
   get_current_sub_menuid() {
-    return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
+    //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
+    if (this.get_sport_all_selected()) {
+      return this.current_lv_2_menu.map((item) => {
+        return item.mi || item.menuId;
+      });
+    } else {
+      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
+    }
   }
   /**
    * 判断是否为冠军和电竞冠军

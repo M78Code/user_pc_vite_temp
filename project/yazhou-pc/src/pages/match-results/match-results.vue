@@ -7,8 +7,8 @@
 <template>
   <div class="wrap match_results">
     <!-- 视频画中画组件 -->
-    <moveVideo></moveVideo>
-    <p class="font_match_results">1</p>
+    <!-- <moveVideo></moveVideo> -->
+    <p class="font_match_results">12222</p>
     <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')">
       <!-- 赛果 -->
       <!-- <span>{{ i18n_t("common.amidithion") }}</span> -->
@@ -17,11 +17,11 @@
     <!-- 中间内容 S-->
     <div class="main_wrap">
       <!-- 筛选条件 S-->
-    <result-header></result-header>
+    <result-header :sport_type="sport_type"></result-header>
       <!-- 筛选条件 E-->
 
       <!-- 各球类赛果表格 S-->
-      <results
+      <!-- <results
         :sportType="sport_id"
         :load_data_state="load_data_state"
         :details_load="details_load"
@@ -35,7 +35,7 @@
         @change_playback_type="change_playback_type"
         versions="yabo"
         ref="result_ref"
-      />
+      /> -->
       <!-- 各球类赛果表格 E-->
     </div>
     <!-- 中间内容 E-->
@@ -63,12 +63,13 @@
 import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "./results.config.js";
 // import results from "src/components/match-results/components/results.vue";
-// import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
+import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
-// import moveVideo from "project_path/src/components/video-replay/move-video.vue";
-// import resultHeader from './components/result-header.vue'
+import moveVideo from "project_path/src/components/video-replay/move-video.vue";
+import {   ResultHeader} from 'src/components/match-results/result-header/index.js'
   const {
     //变量
+    sport_type,
     refresh_finish,
     results_data,
     tips,

@@ -41,11 +41,12 @@ export default class WsSendManger {
 
   /**
    * @description: 增加obj缓存对象数据
-   * @param {Sting}  key 模块名称(all:重新发送, clear:清除缓存, 其他:增加缓存)
+   * @param {Sting}  key 模块名称
    * @param {Object}  data 数据
+   * @param {Sting}  ctr_cmd 数据 (del:删除缓存)
    * @return {Object} 组装后的数据
    */
-  push_obj(key, data) {
+  push_obj(key, data, ctr_cmd) {
     if(key == 'data_schedule'){
       this.obj = {};
     }
@@ -54,12 +55,10 @@ export default class WsSendManger {
     }else{
       this.module = ''
     }
-    if(key == 'all')
-    {
-      // 重新发送所有缓存信息.不进行任何操作
-    }else if (key == 'clear') {
+    if (ctr_cmd == 'del') {
       // 清空缓存
-      this.obj = {};
+      delete this.obj[key];
+      return null;
     } else {
       // 增加缓存信息
       this.obj[key] = data;
@@ -77,14 +76,20 @@ export default class WsSendManger {
    * @description: 获取组装后的数据信息进行ws发送(C8的方法)
    * @return {Object} 组装后的数据
    */
-  get_all_obj_c8(key_module){
+  get_all_obj_c8(){
     let ret = null;
     if(!lodash.isEmpty(this.obj)) {
-      // 克隆数据
-      let ret_obj = lodash.cloneDeep(this.obj[key_module]);
-      // 组装数据
-      let { cmd, list, cufm, marketLevel } =  ret_obj || {};
-      ret = { cmd, list, cufm, marketLevel};
+      let keys = Object.keys(this.obj);
+      let list_add = [];
+      keys.forEach(key => {
+        // 克隆数据
+        let ret_obj = lodash.cloneDeep(this.obj[key]);
+        // 组装数据
+        let { cmd, list, cufm, marketLevel } =  ret_obj || {};
+        list && (list_add = list_add.concat(list));
+        ret = { cmd, list, cufm, marketLevel};
+      });
+      ret.list = list_add;
     } else {
       // 组装数据
       ret = { cmd: this.cmd };

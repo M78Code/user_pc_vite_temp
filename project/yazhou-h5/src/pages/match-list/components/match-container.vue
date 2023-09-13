@@ -1180,7 +1180,7 @@ const goto_details = (item, flag) => {
 
   store.dispatch({ type: 'matchReducer/set_goto_detail_matchid',  payload: item.mid });
   // 进入详情页前，记录目标赛事top值
-  store.dispatch({ type: 'matchReducer/set_goto_detail_match_info',  payload: { top: $refs['mid-' + item.mid].getBoundingClientRect().top } });
+  // store.dispatch({ type: 'matchReducer/set_goto_detail_match_info',  payload: { top: refs['mid-' + item.mid].getBoundingClientRect().top } });
   store.dispatch({ type: 'matchReducer/set_not_found_target_dom_count',  payload: 0 });
   store.dispatch({ type: 'matchReducer/set_details_item',  payload: 0 });
   // 进入详情前，将当前赛事信息存入仓库

@@ -110,6 +110,7 @@ export default class wsMan {
     cmd_obj.key = obj.key;
     cmd_obj.module = obj.module;
     cmd_obj.one_send = obj.one_send;
+    cmd_obj.ctr_cmd = obj.ctr_cmd;
     cmd_obj.list = obj.list;
     cmd_obj.cufm = obj.cufm;
     cmd_obj.marketLevel = obj.marketLevel;

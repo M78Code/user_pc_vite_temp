@@ -7,25 +7,25 @@
   <div class="football_standings" :class="{'football_standings-empty': no_data}">
     <div class="title" v-if="ranking_data.length>0">
       <!-- 联赛类别(0:其他,1联赛,2杯赛) -->
-      {{ranking_data[0].tournamentType == 1 ? t('analysis_football_matches.league_points') : t('analysis_football_matches.cup_points') }}
+      {{ranking_data[0].tournamentType == 1 ? i18n_t('analysis_football_matches.league_points') : i18n_t('analysis_football_matches.cup_points') }}
     </div>
-    <div class="title" v-if="ranking_data.length <= 0">{{t('analysis_football_matches.league_points') }}</div>
+    <div class="title" v-if="ranking_data.length <= 0">{{i18n_t('analysis_football_matches.league_points') }}</div>
     <!-- 杯赛积分 联赛积分  二选一 -->
     <div class="table-score" v-if="ranking_data.length>0"
     :class="{'backball-table': get_detail_data.csid == 2}">
       <!-- 头部 -->
       <div class="header">
-        <div class="col1">{{t('analysis_football_matches.rank') }}</div>
-        <div class="col2">{{t('analysis_football_matches.team') }}</div>
-        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{t('analysis_football_matches.league') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.game') }}</div>
-        <div class="col3">{{t('analysis_football_matches.victory') }}</div>
-        <div class="col3">{{t('analysis_football_matches.negative') }}</div>
-        <div class="col3" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.flat') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.gain_loss') }}</div>
-        <div class="col4" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.net_win') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 1">{{t('analysis_football_matches.integral') }}</div>
-        <div class="col5" v-show="get_detail_data.csid == 2">{{t('home_popular.win_rate') }}</div>
+        <div class="col1">{{i18n_t('analysis_football_matches.rank') }}</div>
+        <div class="col2">{{i18n_t('analysis_football_matches.team') }}</div>
+        <div class="league tournamentName" v-if="ranking_data.length>0 && (ranking_data ? ranking_data[0].tournamentName : false) && get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.league') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.game') }}</div>
+        <div class="col3">{{i18n_t('analysis_football_matches.victory') }}</div>
+        <div class="col3">{{i18n_t('analysis_football_matches.negative') }}</div>
+        <div class="col3" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.flat') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.gain_loss') }}</div>
+        <div class="col4" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.net_win') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 1">{{i18n_t('analysis_football_matches.integral') }}</div>
+        <div class="col5" v-show="get_detail_data.csid == 2">{{i18n_t('home_popular.win_rate') }}</div>
       </div>
       <!-- 主内容 -->
       <div class="group-item">
@@ -52,28 +52,24 @@
       <!-- 大于2条时,显示 展开收起按钮-->
       <span class="btn_style" @click="toggle_box" v-if="show_btn">
         <span class="text_c">{{ btn_text }}</span>
-        <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" :class="direction">
+        <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" :class="direction">
       </span>
     </div>
     <!-- 没有数据 组件 -->
-     <div v-if="no_data" class="no-list">{{ t('common.no_data') }}</div>
+     <div v-if="no_data" class="no-list">{{ i18n_t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
 import {api_analysis} from "src/api/index.js";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, inject } from "vue";
 import lodash from 'lodash'
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
-// TODO: 临时
-let get_detail_data = ref({
-  csid: '1',
-  cds: ''
-})
 
 
   let ranking_data = ref([])
@@ -112,7 +108,7 @@ let get_detail_data = ref({
   const get_list = async (flag) => {
     try {
       let parameter = {
-        mid: match_id, //2282708 1925928
+        mid: match_id.value, //2282708 1925928
         flag: flag == 0 ? 0 : ''
       }
       let {code, data} = await api_analysis.get_vs_info(parameter)
@@ -127,10 +123,10 @@ let get_detail_data = ref({
         }else{
           box_bool.value = !box_bool.value;
           if (box_bool.value == true) {
-            [btn_text.value, direction.value] = [t("bet_record.pack_down"), "down"];
+            [btn_text.value, direction.value] = [i18n_t("bet_record.pack_down"), "down"];
             toggle_rule_b();
           } else {
-            [btn_text.value, direction.value] = [t("bet_record.pack_up"), ""];
+            [btn_text.value, direction.value] = [i18n_t("bet_record.pack_up"), ""];
             toggle_rule_a();
           }
         }
@@ -152,7 +148,7 @@ let get_detail_data = ref({
   }
   const rules_normal = () => {
     [btn_text.value, direction.value, box_bool.value] = [
-      t("bet_record.pack_up"),
+      i18n_t("bet_record.pack_up"),
       "",
       false
     ];
@@ -161,7 +157,7 @@ let get_detail_data = ref({
   const rules_a = () => {
     if (ranking_data.value.length >= 2)
       [btn_text.value, direction.value, box_bool.value] = [
-        t("bet_record.pack_down"),
+        i18n_t("bet_record.pack_down"),
         "down",
         true
       ];
@@ -200,7 +196,7 @@ let get_detail_data = ref({
 
 <style lang="scss" scoped>
 .football_standings {
-
+  background: var(--q-analysis-matches-color-23);
   margin-bottom: 0.25rem;
 
   &.football_standings-empty {
@@ -211,7 +207,9 @@ let get_detail_data = ref({
     height: 0.4rem;
     line-height: 0.45rem;
     padding-left: 0.24rem;
-
+    color: var(--q-analysis-matches-color-9);
+    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
+    background-color:var(--q-analysis-matches-color-4);
     font-size: 0.14rem;
 
     letter-spacing: 0;
@@ -226,29 +224,43 @@ let get_detail_data = ref({
       position: absolute;
       left: 0.16rem;
       top: 0.15rem;
-
+      background: var(--q-analysis-matches-color-45);
       border-radius: 1.5px;
     }
   }
 
   .table-score {
     position: relative;
+    background-color: var(--q-analysis-matches-color-4);
     // 头部
     &.backball-table {
       .header {
-
+        color:  var(--q-analysis-matches-color-10);
+        border-bottom: 1px solid var(--q-analysis-matches-color-30);
+        background: var(--q-analysis-matches-color-4);
+        > div {
+          color: var(--q-analysis-matches-color-46);
+        }
       }
 
       .group-item {
-
+        .team-item {
+          border-bottom: 1px solid var(--q-analysis-matches-color-29);
+        }
       }
 
       .col2 {
         width: 1.7rem;
+        color: var(--q-analysis-matches-color-46);
       }
 
       .col3 {
         flex: 1;
+        color: var(--q-analysis-matches-color-11);
+      }
+      .btn_style {
+        background: var(--q-analysis-matches-color-4);
+        border: 1px solid var(--q-analysis-matches-color-22);
       }
     }
 
@@ -258,9 +270,9 @@ let get_detail_data = ref({
       text-align: center;
       line-height: 0.32rem;
       padding: 0 0.1rem;
-
+      color:  var(--q-analysis-matches-color-10);
       > div {
-
+        color: var(--q-analysis-matches-color-2);
         font-size: 0.1rem;
       }
     }
@@ -288,6 +300,10 @@ let get_detail_data = ref({
         align-items: center;
         justify-content: center;
         font-size: 0.12rem;
+        color: var(--q-analysis-matches-color-11);
+          &.col2 {
+            color: var(--q-analysis-matches-color-11);
+          }
       }
 
       .col1 {
@@ -314,20 +330,22 @@ let get_detail_data = ref({
         display: flex;
         align-items: center;
         justify-content: center;
+        background: var(--q-analysis-matches-color-38);
+        color:  var(--q-analysis-matches-color-4) !important;
 
         &.calculation_color1 {
-          background: var(--q-color-com-fs-color-23);
-          color: var(--q-color-com-fs-color-8) !important;
+          background: var(--q-analysis-matches-color-47);
+          color: var(--q-analysis-matches-color-4) !important;
         }
 
         &.calculation_color2 {
           background: var(--q-color-com-bg-color-30);
-          color: var(--q-color-com-fs-color-8) !important;
+          color: var(--q-analysis-matches-color-4) !important;
         }
 
         &.calculation_color3 {
-          background: var(--q-color-com-bg-color-23);
-          color: var(--q-color-com-fs-color-8) !important;
+          background: var(--q-analysis-matches-color-47);
+          color: var(--q-analysis-matches-color-4) !important;
         }
       }
     }
@@ -338,12 +356,12 @@ let get_detail_data = ref({
       display: unset !important;
 
       &.col2_home {
-
+        color: var(--q-analysis-matches-color-1)!important;
         font-weight: bold;
       }
 
       &.col2_away {
-
+        color: var(--q-analysis-matches-color-1)!important;
         font-weight: bold;
       }
     }
@@ -391,9 +409,10 @@ let get_detail_data = ref({
       line-height: 0.18rem;
       font-size: 0.1rem;
       padding: 0 0.08rem;
+      background: var(--q-analysis-matches-color-4);
+      border: 1px solid  var(--q-analysis-matches-color-22);
+      box-shadow: 0 1px 2px 0  var(--q-analysis-matches-color-48);
 
-
-      box-shadow: var(--q-color-com-box-shadow-2);
       border-radius: 0.04rem;
       border-top: 0;
       border-top-left-radius: 0;
@@ -414,7 +433,7 @@ let get_detail_data = ref({
       transform: scale(-1);
 
       .text_c {
-
+        color: var(--q-analysis-matches-color-1);
       }
     }
   }
@@ -424,7 +443,8 @@ let get_detail_data = ref({
     line-height: 0.6rem;
     text-align: center;
     padding-top: 0.05rem !important;
-
+    background-color:var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-2);
 
     font-size: 12px;
   }

@@ -91,7 +91,7 @@ export const set_card_show_level = (scroll_top) => {
 
       // 遍历联赛容器下的赛事卡片  设置显示等级
       mids_arr.forEach((mid) => {
-        let match_card_obj = MatchListCardData.all_card_obj["mid_" + mid] || {};
+        let match_card_obj = MatchListCardData.all_card_obj[mid+'_'] || {};
         match_card_obj.show_level = get_show_level(match_card_obj);
         if ((match_card_obj.show_level == 1 && card_obj.is_show_card) || true) {
           show_mids_arr.push(mid);

@@ -7,7 +7,6 @@
   <div :class="['mathc_results_visuals', get_analyze_show?'analyze-show':'', ]">
     <div class="title" v-if="!get_analyze_show">{{ i18n_t('match_result.statistics') }}</div>
     <div class="designation">
-      {{statistics_table}}
       <span class="ellipsis">{{ statistics_table.mhn }}</span>
       <span class="ellipsis">{{ statistics_table.man }}</span>
     </div>
@@ -91,9 +90,13 @@
 <script setup>
 import lodash from "lodash";
 import { i18n_t } from "src/boot/i18n.js"
+import { transform_score } from "src/core/format/index.js"
  // 国际化比赛阶段比分转换工具
 // import msc from "project_path/src/mixins/common/msc.js";
-import { onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch, inject } from "vue";
+
+
+const get_detail_data = inject('get_detail_data', {})
   // mixins: [ msc ],
   const props = defineProps({
     // 圆环图形
@@ -111,7 +114,10 @@ import { onUnmounted, ref, watch } from "vue";
   })
   let statistics_table = ref({})
   let timer1_ = ref(null)
-
+  onMounted(() => {
+    get_list()
+    
+  })
   // watch: {
   //   'get_detail_data':{
   //     handler: 'get_list',
@@ -131,17 +137,17 @@ import { onUnmounted, ref, watch } from "vue";
   //   ])
   // },
   const get_list = () => {
-    console.log(card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
-    let cloneData = lodash.cloneDeep(get_detail_data);
+    console.log(props.card_corner_list,"card_corner_listcard_corner_listcard_corner_list");
+    let cloneData = lodash.cloneDeep(get_detail_data.value);
     if(cloneData && cloneData.msc){
       transform_score(cloneData)
       statistics_table.value = cloneData
       // 环形比分图形表
-      score_processing(ring_statistics, statistics_table.value.msc)
+      score_processing(props.ring_statistics, statistics_table.value.msc)
       // 黄牌 红牌 角球
-      score_processing(card_corner_list, statistics_table.value.msc)
+      score_processing(props.card_corner_list, statistics_table.value.msc)
       // 进度条比分图形表
-      score_processing(progress_graph, statistics_table.value.msc)
+      score_processing(props.progress_graph, statistics_table.value.msc)
     }
   }
   // msc 比分处理成 图形界面数据格式
@@ -169,16 +175,16 @@ import { onUnmounted, ref, watch } from "vue";
 <style lang="scss" scoped>
 .mathc_results_visuals {
   padding-bottom: 0.31rem;
-
+  border-bottom: 1px solid  var(--q-analysis-matches-color-27);
   .title {
     height: 0.4rem;
     line-height: 0.4rem;
     padding-left: 0.24rem;
-
+    color: var(--q-analysis-matches-color-1);
+    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
+    background:  var(--q-analysis-matches-color-40);
     font-size: 0.14rem;
-
     letter-spacing: 0;
-
     font-weight: bold;
     position: relative;
 
@@ -189,7 +195,7 @@ import { onUnmounted, ref, watch } from "vue";
       position: absolute;
       left: 0.16rem;
       top: 0.14rem;
-
+      background: var(--q-analysis-matches-color-45);
       border-radius: 1.5px;
     }
   }
@@ -198,7 +204,7 @@ import { onUnmounted, ref, watch } from "vue";
     height: 0.34rem;
     line-height: 0.34rem;
     padding-left: 0.15rem;
-
+    color: var(--q-analysis-matches-color-1);
 
     font-weight: bold;
     font-size: 0.12rem;
@@ -212,7 +218,6 @@ import { onUnmounted, ref, watch } from "vue";
 
       &:nth-child(1) {
         padding-left: 0.12rem;
-
         &:after {
           content: '';
           width: 0.06rem;
@@ -221,6 +226,7 @@ import { onUnmounted, ref, watch } from "vue";
           position: absolute;
           left: 0.01rem;
           top: 0.14rem;
+          background: var(--q-analysis-matches-color-14);
         }
       }
 
@@ -236,6 +242,7 @@ import { onUnmounted, ref, watch } from "vue";
           position: absolute;
           right: 0.01rem;
           top: 0.14rem;
+          background: var(--q-analysis-matches-color-12);
         }
       }
     }
@@ -258,7 +265,7 @@ import { onUnmounted, ref, watch } from "vue";
         position: relative;
 
         .number {
-
+          color: var(--q-analysis-matches-color-3);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -266,12 +273,15 @@ import { onUnmounted, ref, watch } from "vue";
           text-align: right;
           line-height: 0.12rem;
         }
+        .text-span {
+            color: var(--q-analysis-matches-color-13);
+          }
 
         .knob-img {
           margin: 0 0.04rem;
         }
 
-        ::v-deep .text-span {
+        ::v-deep(.text-span) {
 
           font-size: 0.12rem;
 
@@ -280,7 +290,7 @@ import { onUnmounted, ref, watch } from "vue";
           line-height: 0.12rem;
           position: absolute;
           top: -0.19rem;
-
+          color: var(--q-analysis-matches-color-13);
           &.vi-top {
             top: -0.28rem;
           }
@@ -306,7 +316,7 @@ import { onUnmounted, ref, watch } from "vue";
         }
 
         .card-title {
-
+          color: var(--q-analysis-matches-color-13);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -318,14 +328,16 @@ import { onUnmounted, ref, watch } from "vue";
         .score {
           display: flex;
           align-items: center;
-
+          color: var(--q-analysis-matches-color-1);
           > span {
             &:nth-child(1) {
               margin-right: 0.13rem;
+              color: var(--q-analysis-matches-color-1);
             }
 
             &:last-child {
               margin-left: 0.13rem;
+              color: var(--q-analysis-matches-color-1);
             }
           }
 
@@ -338,7 +350,7 @@ import { onUnmounted, ref, watch } from "vue";
     }
 
     .linellae {
-
+      background:  var(--q-analysis-matches-color-42);
       height: 0.01rem;
       margin: 0 0.15rem 0.25rem;
     }
@@ -351,7 +363,7 @@ import { onUnmounted, ref, watch } from "vue";
       position: relative;
 
       .progress-text {
-
+        color: var(--q-analysis-matches-color-13);
         font-size: 0.12rem;
 
         letter-spacing: 0;
@@ -377,7 +389,7 @@ import { onUnmounted, ref, watch } from "vue";
         justify-content: flex-end;
 
         span {
-
+          color: var(--q-analysis-matches-color-3);
           font-size: 0.12rem;
 
           text-align: center;
@@ -404,8 +416,8 @@ import { onUnmounted, ref, watch } from "vue";
           margin-right: unset;
         }
 
-        ::v-deep.q-linear-progress__track--light {
-          background: var(--q-color-com-bg-color-23);
+        ::v-deep(.q-linear-progress__track--light) {
+          background: var(--q-analysis-matches-color-45);
 
           &.q-linear-progress__track {
             opacity: 1;
@@ -417,7 +429,7 @@ import { onUnmounted, ref, watch } from "vue";
         display: flex;
         align-items: center;
         width: 0.2rem;
-
+        color: var(--q-analysis-matches-color-3);
         span {
 
           font-size: 0.12rem;
@@ -437,88 +449,100 @@ import { onUnmounted, ref, watch } from "vue";
     }
   }
 
-  ::v-deep.text-orange {
-    color: var(--q-color-com-fs-color-31) !important;
+  ::v-deep(.text-orange) {
+    color: var(--q-analysis-matches-color-15) !important;
   }
 
-  ::v-deep.text-blue {
-    color: var(--q-color-com-fs-color-12) !important;
+  ::v-deep(.text-blue) {
+    color: var(--q-analysis-matches-color-15) !important;
   }
 
-  ::v-deep.q-linear-progress {
+  ::v-deep(.q-linear-progress) {
     color: var(--q-color-com-fs-color-12) !important;
-
+    &.progress-blue {
+        .q-linear-progress__track--light {
+          background: var(--q-analysis-matches-color-15) !important;
+        }
+      }
     &.progress-orange {
-      color: var(--q-color-com-fs-color-27) !important;
+      color: var(--q-analysis-matches-color-15) !important;
+      .q-linear-progress__model {
+          background: var(--q-analysis-matches-color-15) !important;
+        }
     }
   }
-
-&.analyze-show {
-  border: none;
-  background: var(--q-color-com-bg-color-5);
-  opacity: 0.6;
-  width: 3.67rem;
-  height: 2.66rem;
-  .designation {
-    border-bottom: 1px solid rgba(225,225,225, 0.2);
-    margin-bottom: 0.02rem;
-    color: var(--q-color-com-fs-color-8);
+  .ring-zero-css {
+      .text-orange,
+      .text-blue {
+        color:  var(--q-analysis-matches-color-15) !important;
+      }
+    }
+  &.analyze-show {
+    border: none;
+    background: var(--q-color-com-bg-color-5);
+    opacity: 0.6;
+    width: 3.67rem;
+    height: 2.66rem;
+    .designation {
+      border-bottom: 1px solid rgba(225,225,225, 0.2);
+      margin-bottom: 0.02rem;
+      color: var(--q-color-com-fs-color-8);
+    }
+    .visuals {
+      .linellae {
+        background: rgba(242, 243, 247, 0.2);
+      }
+      .circle-part {
+        margin-bottom: 0rem;
+        .circle {
+          margin-top: 0.15rem;
+          .number {
+            color: var(--q-color-com-fs-color-8);
+          }
+          .text-span {
+            font-size: 0.1rem;
+            top: -0.1rem;
+          }
+          .knob-shrink {
+            transform: scale(0.8);
+          }
+        }
+      }
+      .progress {
+        margin-bottom: .15rem;
+        .progress-text {
+          font-size: 0.1rem
+        }
+        .progress-left {
+          span {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+        .progress-right {
+          span {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+      }
+      .yellow-red-card-corner {
+        margin-bottom: .05rem;
+        >div{
+          margin-right: 0;
+          .card-title {
+            font-size: 0.1rem;
+          }
+          .score {
+            color: var(--q-color-com-fs-color-8);
+          }
+        }
+        div:nth-child(2) {
+          margin: 0 0.1rem
+        }
+      }
+      .linellae {
+        margin: 0 .15rem .15rem;
+      }
+    }
   }
-  .visuals {
-    .linellae {
-      background: rgba(242, 243, 247, 0.2);
-    }
-    .circle-part {
-      margin-bottom: 0rem;
-      .circle {
-        margin-top: 0.15rem;
-        .number {
-          color: var(--q-color-com-fs-color-8);
-        }
-        .text-span {
-          font-size: 0.1rem;
-          top: -0.1rem;
-        }
-        .knob-shrink {
-          transform: scale(0.8);
-        }
-      }
-    }
-    .progress {
-      margin-bottom: .15rem;
-      .progress-text {
-        font-size: 0.1rem
-      }
-      .progress-left {
-        span {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-      .progress-right {
-        span {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-    }
-    .yellow-red-card-corner {
-      margin-bottom: .05rem;
-      >div{
-        margin-right: 0;
-        .card-title {
-          font-size: 0.1rem;
-        }
-        .score {
-          color: var(--q-color-com-fs-color-8);
-        }
-      }
-      div:nth-child(2) {
-        margin: 0 0.1rem
-      }
-    }
-    .linellae {
-      margin: 0 .15rem .15rem;
-    }
-  }
-}
 }
 </style>

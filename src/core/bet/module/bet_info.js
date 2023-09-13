@@ -164,9 +164,11 @@ export const bet_click = (item,obj_hp,obj_hl) =>{
     placeNum: null, //盘口坑位
     // 以下为 投注显示或者逻辑计算用到的参数
     tid_name: item.tnjc,  // 联赛名称
+    tn_name: item.tn,  // 联赛名称2
     match_ms: item.ms, // 赛事阶段
   }
-  BetViewDataClass.bet_special_h5 = item
+  BetViewDataClass.bet_special_h5[item.mid] = bet_obj
+  BetData.bet_list[item.mid] = bet_obj
 
 
   BetData.set_bet_read_write_refer_obj(bet_obj)

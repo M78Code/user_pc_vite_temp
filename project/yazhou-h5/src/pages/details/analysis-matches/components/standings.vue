@@ -50,33 +50,31 @@ import footballStandings from "project_path/src/pages/details/analysis-matches/c
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
 import historyEngagement from "project_path/src/pages/details/analysis-matches/components/history-engagement.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-// import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
+import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
 // 详情页 或者 赛果  足球
-// import futureSchedule from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
+import futureSchedule from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
 // 伤停情况
-// import injurySituation from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
+import injurySituation from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
 // 技术面
-// import standingsTechnical from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
+import standingsTechnical from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
 // 盘面
-// import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
+import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
  // 加载中
 // import loading from "project_path/src/components/common/loading.vue";
-import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
+import { computed, ref, nextTick, onUnmounted, onMounted, inject } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
+const get_detail_data = inject('get_detail_data', {})
 // TODO: 临时用
-let get_detail_data = ref({
-  mid: '1',
-  csid: '1',
-  cds: ''
-})
+
     let get_event_list = ref([])
-    let get_lang = ref('zh')
     let get_analyze_show = ref(false)
   // components: {
   //   "football-standings": football_standings,
@@ -91,9 +89,9 @@ let get_detail_data = ref({
   // 国际化
 
   let tab_list = ref([
-        {name: t('analysis_football_matches.Fundamentals')},
-        {name: t('analysis_football_matches.Disk')},
-        {name: t('analysis_football_matches.Technical_side')}
+        {name: i18n_t('analysis_football_matches.Fundamentals')},
+        {name: i18n_t('analysis_football_matches.Disk')},
+        {name: i18n_t('analysis_football_matches.Technical_side')}
       ])
   let tabIndex = ref(0)
   // 基本面的数据
@@ -111,23 +109,23 @@ let get_detail_data = ref({
     //   // 添加监听 赛事分析刷新事件
     useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
-    if(get_detail_data.csid == 1) {
+    if(get_detail_data.value.csid == 1) {
       get_data_list()
     }
   })
 
   const match_id =  computed(() => {
     // TODO: 后续修改调整 'get_detail_data'
-        return route.params.mid || get_detail_data.mid
+        return route.params.mid || get_detail_data.value.mid
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
     useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
     tab_list.value = ref([
-        {name: t('analysis_football_matches.Fundamentals')},
-        {name: t('analysis_football_matches.Disk')},
-        {name: t('analysis_football_matches.Technical_side')}
+        {name: i18n_t('analysis_football_matches.Fundamentals')},
+        {name: i18n_t('analysis_football_matches.Disk')},
+        {name: i18n_t('analysis_football_matches.Technical_side')}
       ])
   })
   const get_data_list = async() => {
@@ -167,7 +165,7 @@ let get_detail_data = ref({
         matchHistory_battle_dto_map.value = {init: null}
         homeAwayGoal_and_coach_map.value = {init: null}
         // TODO: 后续修改调整 'get_detail_data'
-        if(get_detail_data.csid == 1) {
+        if(get_detail_data.value.csid == 1) {
           get_data_list()
         }
     }
@@ -183,7 +181,9 @@ let get_detail_data = ref({
 </script>
 
 <style lang="scss" scoped>
-.heade-wrapper {
+.standings {
+  background: var(--q-analysis-matches-color-42);
+  .heade-wrapper {
   width: 100%;
   height: auto;
   z-index: 100;
@@ -262,4 +262,6 @@ let get_detail_data = ref({
     }
   }
 }
+}
+
 </style>

@@ -211,9 +211,9 @@
 
 <script>
 import { is_eports_csid } from 'src/core/index.js'
-
+debugger
 import soccer from "src/components/match-results/template/soccer";
-console.log(soccer,'soccer');
+// console.log(soccer,'soccer');
 // import basketball from "src/components/match-results/template/basketball";
 // import tennis from "src/components/match-results/template/tennis";
 // import badminton from "src/components/match-results/template/badminton";

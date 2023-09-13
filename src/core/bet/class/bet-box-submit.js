@@ -1,24 +1,25 @@
-import {api_betting } from "src/api/index.js"
+import { api_betting } from "src/api/index.js"
 import BetData from "./bet-data-class.js"
 import BetViewDataClass from "./bet-view-data-class.js"
 import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
 import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
+import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
 // is_merge  是否单关合并
-const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
-    let order_min_max_money = bet_list.map( item =>{
+const set_min_max_money = (bet_list, is_single, is_merge) => {
+    let order_min_max_money = bet_list.map(item => {
         let obj = {
             "sportId": item.sportId,   // 赛种id
             "marketId": item.marketId,  //盘口id
             "deviceType": BetData.deviceType,  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
             "matchId": item.matchId,  // 赛事id
-            "oddsFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
-            "oddsValue":  item.odds,  // 赔率 万位
-            "playId":  item.playId,   // 玩法id
+            "oddsFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+            "oddsValue": item.odds,  // 赔率 万位
+            "playId": item.playId,   // 玩法id
             "playOptionId": item.playOptionsId,   // 投注项id
             "playOptions": item.playOptions,   // 投注项配置项
             "seriesType": is_single ? 1 : 2,  // 串关类型 // 串关类型 1 单关 2串关
@@ -29,13 +30,13 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId":UserCtr.user_info ? UserCtr.user_info.userId : UserCtr.get_uid()
+            "userId": UserCtr.user_info ? UserCtr.user_info.userId : UserCtr.get_uid()
         }
         // 串关没有 这个字段 
-        if(is_single){
+        if (is_single) {
             obj.openMiltSingle = is_merge ? 1 : 0 //是否开启 多单关投注模式，1：是，非1（0或者其他）：否
         }
-        return obj 
+        return obj
     }) || []
     return order_min_max_money
 }
@@ -43,47 +44,93 @@ const set_min_max_money = ( bet_list,is_single,is_merge ) =>{
 // bet 投注订单提交数据 
 // bet_list  投注列表
 // is_single 是否单关/串关 
-const set_bet_order_list = ( bet_list,is_single ) =>{
+const set_bet_order_list = (bet_list, is_single) => {
     
+    let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
-    if(is_single){
-
-    }else{
-
-    }
-    let order_list = bet_list.map( item =>{
-        let obj = {
-            "seriesSum": 1,   // 串关数量
-            "seriesType": 1,  // 串关类型(单关、串关) 
-            "seriesValues": "单关",  // 串关值 2串1 3串1...
-            "fullBet": 0,   // 是否满额投注，1：是，0：否
-            "orderDetailList": [
-                {
+    if (!is_single) {
+        // 获取串关和填写的 金额
+        getSeriesCountJointNumber((code, data) => {
+            if (code == 200) {
+                BetViewDataClass.set_bet_special_series(data)
+                single_bet = data
+            }
+        })
+        order_list = single_bet.map(obj => {
+            let bet_s_list = []
+            bet_list.forEach(item => {
+                let bet_s_obj = {
                     "sportId": item.sportId,   // 赛种id
                     "matchId": item.matchId,   // 赛事id
                     "tournamentId": item.tournamentId,   // 联赛id
                     "scoreBenchmark": "",    // 基准分
-                    "betAmount": BetData.bet_amount,  //投注金额         
+                    "betAmount": obj.bet_amount || 10,  //投注金额         
                     "placeNum": null, //盘口坑位
                     "marketId": item.marketId,  //盘口id
                     "playOptionsId": item.playOptionsId,   // 投注项id
                     "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
-                    "odds":  item.odds,  // 赔率 万位
-                    "oddFinally": compute_value_by_cur_odd_type(item.odds,'','',item.sportId),  //赔率
+                    "odds": item.odds,  // 赔率 万位
+                    "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
                     "playName": item.playName, //玩法名称
                     "sportName": item.sportName,  // 球种名称
                     "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
                     "matchName": item.matchName,   //赛事名称
                     "playOptionName": item.playOptionName,   // 投注项名称
-                    "playOptions":  item.playOptions,   // 投注项配置项
+                    "playOptions": item.playOptions,   // 投注项配置项
                     "tournamentLevel": item.tournamentLevel,   // 联赛级别
                     "playId": item.playId,   // 玩法id
                     "dataSource": item.dataSource,   // 数据源
                 }
-            ]
-        }
-        return obj 
-    }) || []
+                bet_s_list.push(bet_s_obj)
+            })
+
+            let obj_s = {
+                "seriesSum": 1,   // 串关数量
+                "seriesType": obj.id,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                "fullBet": 0,   // 是否满额投注，1：是，0：否
+                "orderDetailList": bet_s_list
+            }
+            return obj_s
+        })
+
+    } else {
+        order_list = bet_list.map((item, index) => {
+            let obj = {
+                "seriesSum": 1,   // 串关数量
+                "seriesType": 1,  // 串关类型(单关、串关)  1-单关, 2-串关 3, 冠军
+                "seriesValues": "单关",  // 串关值 2串1 3串1...
+                "fullBet": 0,   // 是否满额投注，1：是，0：否
+                "orderDetailList": [
+                    {
+                        "sportId": item.sportId,   // 赛种id
+                        "matchId": item.matchId,   // 赛事id
+                        "tournamentId": item.tournamentId,   // 联赛id
+                        "scoreBenchmark": "",    // 基准分
+                        "betAmount": BetData.bet_amount,  //投注金额         
+                        "placeNum": null, //盘口坑位
+                        "marketId": item.marketId,  //盘口id
+                        "playOptionsId": item.playOptionsId,   // 投注项id
+                        "marketTypeFinally": "EU",     // 欧洲版默认是欧洲盘 HK代表香港盘
+                        "odds": item.odds,  // 赔率 万位
+                        "oddFinally": compute_value_by_cur_odd_type(item.odds, '', '', item.sportId),  //赔率
+                        "playName": item.playName, //玩法名称
+                        "sportName": item.sportName,  // 球种名称
+                        "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
+                        "matchName": item.matchName,   //赛事名称
+                        "playOptionName": item.playOptionName,   // 投注项名称
+                        "playOptions": item.playOptions,   // 投注项配置项
+                        "tournamentLevel": item.tournamentLevel,   // 联赛级别
+                        "playId": item.playId,   // 玩法id
+                        "dataSource": item.dataSource,   // 数据源
+                    }
+                ]
+            }
+            return obj
+
+        }) || []
+
+    }
+
 
     return order_list
 }
@@ -91,32 +138,33 @@ const set_bet_order_list = ( bet_list,is_single ) =>{
 
 // 获取限额 常规 / 冠军
 // obj 投注数据
-const get_query_bet_amount_common = (obj) =>{
+const get_query_bet_amount_common = (obj) => {
     // console.error('chufa',obj)
     let params = {
         orderMaxBetMoney: []
     }
     let order_min_max_money = []
     // 单关 
-    if(BetData.is_bet_single){
+    if (BetData.is_bet_single) {
         // 单关 合并 多条数据 
-        if(BetData.is_bet_merge){
+        if (BetData.is_bet_merge) {
             // 参数 投注列表 +  是否单关/串关  + 是否单关合并
-            order_min_max_money = set_min_max_money(BetData.bet_single_list,true,true)
-        }else{
+            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, true)
+        } else {
             // 单关 不合并 只有一条
-            order_min_max_money = set_min_max_money(BetData.bet_single_list,true,false)
+            order_min_max_money = set_min_max_money(BetData.bet_single_list, true, false)
         }
-    }else{
+    } else {
         // 串关数据 
-         // 参数 投注列表 +  是否单关/串关  + 是否单关合并
-        order_min_max_money = set_min_max_money(BetData.bet_s_list,false,false)
+        // 参数 投注列表 +  是否单关/串关  + 是否单关合并
+        order_min_max_money = set_min_max_money(BetData.bet_s_list, false, false)
     }
 
     params.orderMaxBetMoney = order_min_max_money
 
-    api_betting.query_bet_amount(params).then(res =>{
-        if(res.code == 200){
+
+    api_betting.query_bet_amount(params).then(res => {
+        if (res.code == 200) {
             BetViewDataClass.set_bet_min_max_money(res.data)
             // 通知页面更新 
             useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
@@ -127,13 +175,13 @@ const get_query_bet_amount_common = (obj) =>{
 
 // 获取限额 预约投注
 // obj 投注数据
-const get_query_bet_amount_pre = obj =>{
+const get_query_bet_amount_pre = obj => {
 
 }
 
 // 获取限额 电竞/电竞冠军/VR体育
 // obj 投注数据
-const get_query_bet_amount_esports_or_vr = obj =>{
+const get_query_bet_amount_esports_or_vr = obj => {
 
 }
 
@@ -157,31 +205,31 @@ const submit_handle = type => {
     let seriesOrders = []
     let orderDetailList = []
     // 单关 
-    if(BetData.is_bet_single){
+    if (BetData.is_bet_single) {
         // 单关 不合并 只有一条
-        if(BetData.is_bet_merge){
+        if (BetData.is_bet_merge) {
             // 参数 投注列表 +  是否单关/串关  + 是否单关合并
-            seriesOrders = set_bet_order_list(BetData.bet_single_list,true)
-             // 是否为多个单关 0:1个 1:多个
+            seriesOrders = set_bet_order_list(BetData.bet_single_list, true)
+            // 是否为多个单关 0:1个 1:多个
             params.openMiltSingle = 1
-        }else{
+        } else {
             // 单关合并 多条数据 
-            seriesOrders = set_bet_order_list(BetData.bet_single_list,true)
-             // 是否为多个单关 0:1个 1:多个
+            seriesOrders = set_bet_order_list(BetData.bet_single_list, true)
+            // 是否为多个单关 0:1个 1:多个
             params.openMiltSingle = 0
         }
-    }else{
+    } else {
         // 串关数据 
-        seriesOrders = set_bet_order_list(BetData.bet_s_list,false)
+        seriesOrders = set_bet_order_list(BetData.bet_s_list, false)
         // 串关 没有单关字段
         delete params.openMiltSingle
     }
     // 投注内容
     params.seriesOrders = seriesOrders
 
-    api_betting.post_submit_bet_list(params).then(res =>{
-       
-        if(res.code == 200){
+    api_betting.post_submit_bet_list(params).then(res => {
+
+        if (res.code == 200) {
             setTimeout(() => {
                 BetViewDataClass.set_bet_order_status(3)
             }, 1000);
@@ -190,10 +238,10 @@ const submit_handle = type => {
             BetData.set
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-        }else{
+        } else {
             BetViewDataClass.set_bet_order_status(4)
         }
-        
+
     })
 }
 

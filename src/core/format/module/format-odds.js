@@ -1,3 +1,4 @@
+import { i18n_t } from "src/boot/i18n.js";
 /**
  *@description 赔率展示优化，见优化单 13807,电竞不走这个逻辑
  *@param {Number|String} val 最终赔率 30.40 100.00

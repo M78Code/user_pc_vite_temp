@@ -167,6 +167,7 @@ import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
 import lodash from "lodash"
+
 //国际化
 
 
@@ -190,6 +191,7 @@ const get_detail_data = inject('get_detail_data', {})
   ])
   // 篮球的 背景图的 数据
   const basketball_data = ref([])
+  // 页面主题色
   const route = useRoute()
   onMounted(() => {
     //  添加监听 赛事分析刷新事件 TODO: $root get_detail_data 后续修改调整

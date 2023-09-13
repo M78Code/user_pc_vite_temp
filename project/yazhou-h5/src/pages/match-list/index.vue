@@ -73,7 +73,6 @@ import { defineComponent } from "vue";
 import { i18n_t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import { MenuWapper } from "src/components/menu";
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
@@ -141,6 +140,7 @@ import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, 
 import { useRoute, useRouter } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
+import { MenuWapper } from "src/components/menu";
 import store from "src/store-redux/index.js";
 import { utils } from "src/core/index.js";
 

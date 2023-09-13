@@ -1,11 +1,11 @@
-import MatchProcess from "../match-process-template-1/index.vue";
+import ResultHeader from "../result-header-1/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
-  MatchProcess,
+  ResultHeader,
 };
 const component_config = {
-  registered_component_key: "MatchProcess",
-  default_component_key: "MatchProcess_1",
+  registered_component_key: "ResultHeader",
+  default_component_key: "ResultHeader",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);
