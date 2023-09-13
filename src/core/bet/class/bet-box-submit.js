@@ -23,21 +23,31 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "playOptionId": item.playOptionsId,   // 投注项id
             "playOptions": item.playOptions,   // 投注项配置项
             "seriesType": is_single ? 1 : 2,  // 串关类型 // 串关类型 1 单关 2串关
-            "matchProcessId": item.match_ms,  // 赛事阶段
+            "matchProcessId": item.match_ms + '',  // 赛事阶段
             "scoreBenchmark": "",   // 基准分
             "tenantId": 1,   // 商户id
             "tournamentLevel": item.tournamentLevel,   // 联赛级别
             "tournamentId": item.tournamentId,   // 联赛id
             "dataSource": item.dataSource,   // 数据源
             "matchType": item.matchType, // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事
-            "userId": UserCtr.user_info ? UserCtr.user_info.userId : UserCtr.get_uid()
+            "userId": UserCtr.get_uid()
         }
         // 串关没有 这个字段 
         if (is_single) {
             obj.openMiltSingle = is_merge ? 1 : 0 //是否开启 多单关投注模式，1：是，非1（0或者其他）：否
+            
         }
         return obj
     }) || []
+
+    if (!is_single) {
+        // 获取串关 参数显示
+        getSeriesCountJointNumber((code, data) => {
+            if (code == 200) {
+                BetViewDataClass.set_bet_special_series(data)
+            }
+        })
+    }
     return order_min_max_money
 }
 
@@ -49,13 +59,6 @@ const set_bet_order_list = (bet_list, is_single) => {
     let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
     if (!is_single) {
-        // 获取串关和填写的 金额
-        getSeriesCountJointNumber((code, data) => {
-            if (code == 200) {
-                BetViewDataClass.set_bet_special_series(data)
-                single_bet = data
-            }
-        })
         order_list = single_bet.map(obj => {
             let bet_s_list = []
             bet_list.forEach(item => {

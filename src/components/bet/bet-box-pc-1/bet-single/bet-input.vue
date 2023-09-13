@@ -2,6 +2,9 @@
     <!--金额输入区域包括键盘 -->
     <div class="row bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
         <!--金额输入区-->
+        <div v-if="!BetData.is_bet_single">
+            {{ special_series.name }} -- {{ special_series.id }}  -  {{ ref_data.seriesOdds }}
+        </div>
         <!--投注金额输入框-->
         <input v-model="ref_data.money" type="number" @input="set_win_money"
             :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"
@@ -11,6 +14,8 @@
             <icon name="icon-failure" size="12px" />
         </div>
 
+        <!-- <div> {{ special_series }} </div> -->
+
         <div v-show="ref_data.keyborard">
             <div class="row bet-win yb-fontsize12">
                 <div class="col df-jb">
@@ -18,7 +23,7 @@
                     {{ $t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.win_money) }}</div>
+                <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.money * (item.oddFinally || ref_data.seriesOdds) - ref_data.money ) }}</div>
             </div>
 
             <!--键盘区域-->
@@ -53,6 +58,14 @@ const ref_data = reactive({
     win_money: 0.00, // 最高可赢
     money: '', // 投注金额
     keyborard: true, // 是否显示 最高可赢 和 键盘
+    seriesOdds: '', // 赔率
+})
+
+// 复式连串过关投注
+const special_series = reactive({
+    id: '',
+    name: '',
+    count: "",
 })
 
 const props = defineProps({
@@ -75,10 +88,29 @@ onUnmounted(() => {
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
-    const { min_money = 10, max_money = 8888 } = lodash_.get(BetViewDataClass.bet_min_max_money, `${props.item.playOptionsId}`, {})
+    let value = props.item.playOptionsId
+     // 串关获取 复试连串
+     if(!BetData.is_bet_single){
+        
+        // 复式连串关投注
+        const { id,name,count } = BetViewDataClass.bet_special_series[props.index] 
+        special_series.id = id
+        special_series.name = name
+        special_series.count = count
+        // 串关 type
+        value = id
+    }
 
+    const { min_money = 10, max_money = 8888,seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+    // 最小限额
     ref_data.min_money = min_money
+    // 最大限额
     ref_data.max_money = max_money
+    // 复试串关赔率
+    ref_data.seriesOdds = seriesOdds
+
+   
+    
 }
 
 // 快捷金额
@@ -110,7 +142,7 @@ const set_win_money = () => {
         BetViewDataClass.set_input_money_state(1)
     }
     // 计算最高可赢金额
-    ref_data.win_money = ref_data.money * props.item.oddFinally
+    // ref_data.win_money = ref_data.money * props.item.oddFinally
 }
 </script>
 

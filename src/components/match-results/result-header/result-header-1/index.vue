@@ -5,10 +5,10 @@
         <!-- 体育 -->
         <span class="label">{{ i18n_t("results.sport") }}</span>
         <Select-Wrapper
-          :value="sport"
+          :sportType="sport"
           :options="sport_type"
           :isChampion="0"
-          use_component_key="select-n"
+          use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
       <!-- 冠军球种才展示这个下拉选择框 -->
@@ -22,7 +22,7 @@
           :options="champion_sport_type"
           :isChampion="1"
           :showInput="true"
-          use_component_key="select-n"
+          use_component_key="Select_n"
         ></Select-Wrapper>
       </div>
       <!-- 日期 -->
@@ -69,7 +69,7 @@
             @confirm="isSelectConfirm"
             :hideSelect="cancel"
             :isTimeChanged="timeChanged"
-            use_component_key="select-y"
+            use_component_key="Select_y"
           ></Select-Wrapper>
         </div>
         <div
@@ -134,14 +134,18 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { i18n_t } from "src/boot/i18n.js";
-
-import {SelectWrapper} from "src/components/select";
+import { useGetResultConfig } from "../../results-config.js";
+import {SelectWrapper} from "src/components/match-results/select";
 const props = defineProps({
   sport_type: {
     type: Array,
     default: () => [],
   },
+  sport:{
+    type:String
+  }
 });
+
 const pournament_params=ref(
       {
         //联赛入参

@@ -103,7 +103,7 @@ const router = useRouter()
       BetViewDataClass.set_bet_order_status(1)
     
       // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
-      let matchType = 2 
+      let matchType = 1 
       if( [1,2].includes(Number(item.ms)) ){
         matchType = 2
       }

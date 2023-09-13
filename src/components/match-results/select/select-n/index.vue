@@ -5,96 +5,100 @@
  * @Author: Echo
 -->
 <template>
-  <div class="e-select  relative-position" :class="optionsIsShow ? 'up' : 'down'" @click.stop>
-    <input v-if="showInput"
+  <div
+    class="e-select relative-position"
+    :class="optionsIsShow ? 'up' : 'down'"
+    @click.stop
+  >
+    <input
+      v-if="showInput"
       type="text"
       v-model="sport"
       class="select-value select-input handel-select ellipsis"
       @focus="showOption"
-      >
-    <div v-else class="select-value ellipsis" @click.stop="showOption">{{sport}}
+    />
+    <div v-else class="select-value ellipsis" @click.stop="showOption">
+      {{ sport }}
     </div>
     <div class="opitons-wrap" v-if="optionsIsShow">
-      <q-scroll-area ref="scrollArea" class="rule-scroll-area" :style="{height: '100%'}">
+      <q-scroll-area
+        ref="scrollArea"
+        class="rule-scroll-area"
+        :style="{ height: '100%' }"
+      >
         <template v-for="(item, index) in options">
-          <p v-if="item!==''" class="item ellipsis" v-tooltip="{content: item,overflow:1, m_width: 15}" :class="{'active': value == item}" :key="index" @click.stop="selectSport(item)">{{item}}</p>
+          <p
+            v-if="item !== ''"
+            class="item ellipsis"
+            v-tooltip="{ content: item, overflow: 1, m_width: 15 }"
+            :class="{ active: value == item }"
+            :key="index"
+            @click.stop="selectSport(item)"
+          >
+            {{ item }}
+          </p>
         </template>
       </q-scroll-area>
     </div>
   </div>
 </template>
-<script>
+<script setup>
 // import { mapGetters } from "vuex";
-export default {
-  name: 'normalSelect',
-  props: {
-    // 当前选中的球种
-    value: String,
-    // 球种名字列表
-    options: Array,
-    // 是否展示输入框
-    showInput: {
-      type: Boolean,
-      default: false
-    },
-    isChampion: {
-      type: Number,
-      default: 0
-    },
+import { useMittEmit, MITT_TYPES, useMittOn } from "src/core/mitt";
+import { onMounted, onUnmounted, ref,watch } from "vue";
+const props = defineProps({
+  // 当前选中的球种
+  sportType: String,
+  // 球种名字列表
+  options: Array,
+  // 是否展示输入框
+  showInput: {
+    type: Boolean,
+    default: false,
   },
-  data() {
-    return {
-      optionsIsShow: false, // 下拉框选项是否展示
-      sport: this.value
+  isChampion: {
+    type: Number,
+    default: 0,
+  },
+});
+const optionsIsShow = ref(false);
+const sport = ref(props.sportType);
+const { off } = useMittOn("EMIT_HIDE_SPORT_SElECT", ()=>{
+  showOption()
+});
+onUnmounted(off);
+
+
+// 全局点击事件
+// get_global_click(){
+//   this.optionsIsShow = false
+// }
+
+/**
+ * 展示或隐藏下拉框
+ */
+const showOption = (type) => {
+  if (type == "close") {
+    if (optionsIsShow.value == true) {
+      optionsIsShow.value = false;
+      return;
     }
-  },
-  // computed:{
-  //   ...mapGetters(['get_global_click'])
-  // },
-  created() {
-    this.$root.$on('hideSportSelect', this.showOption)
-  },
-  watch: {
-    value: {
-      handler(n) {
-        this.sport = n;
-      }
-    },
-    // 全局点击事件
-    get_global_click(){
-      this.optionsIsShow = false
-    }
-  },
-  methods: {
-    /**
-     * 展示或隐藏下拉框
-     */
-    showOption(type) {
-      if (type == 'close') {
-        if (this.optionsIsShow == true) {
-          this.optionsIsShow = false;
-          return;
-        }
-      } else {
-        this.optionsIsShow = !this.optionsIsShow;
-        this.$root.$emit('startTimeShowFunc', 'close')
-      }
-    },
-    /**
-     * @description 下拉框选择球种
-     * @param String item 球种名称
-     */
-    selectSport(item) {
-      this.sport = item;
-      this.showOption();
-      this.$root.$emit('change-sport', {currentItem: item, isChampion: this.isChampion});
-      this.$root.$emit('select-sport', this.isChampion);
-    },
-  },
-  destroyed() {
-    this.$root.$off('hideSportSelect', this.showOption)
+    
+  } else {
+    optionsIsShow.value = !optionsIsShow.value;
+    useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
   }
-}
+};
+/**
+ * @description 下拉框选择球种
+ * @param String item 球种名称
+ */
+const selectSport = (item) => {
+  sport.value = item;
+  showOption();
+  useMittEmit(MITT_TYPES.EMIT_CHANGE_SPORT,{ currentItem: item, isChampion: props.isChampion })
+  useMittEmit(MITT_TYPES.EMIT_SElECT_SPORT, props.isChampion);
+};
 </script>
 <style lang="scss" scoped>
 .e-select {
@@ -115,7 +119,7 @@ export default {
     border: 1px solid #d0d8de;
     cursor: pointer;
     &:hover {
-      border: 1px solid #FF7000;
+      border: 1px solid #ff7000;
     }
   }
   .select-input {
@@ -183,4 +187,3 @@ export default {
   right: 10px;
 }
 </style>
-

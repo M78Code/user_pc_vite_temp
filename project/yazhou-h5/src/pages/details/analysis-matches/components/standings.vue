@@ -88,21 +88,21 @@ const get_detail_data = inject('get_detail_data', {})
   // },
   // 国际化
 
-  let tab_list = ref([
+  const tab_list = ref([
         {name: i18n_t('analysis_football_matches.Fundamentals')},
         {name: i18n_t('analysis_football_matches.Disk')},
         {name: i18n_t('analysis_football_matches.Technical_side')}
       ])
-  let tabIndex = ref(0)
+  const tabIndex = ref(0)
   // 基本面的数据
-  let future_schedule_data = ref({})
+  const future_schedule_data = ref({})
   // 伤停情况
-  let injury_situation_data = ref({init: null})
+  const injury_situation_data = ref({init: null})
   // 盘面的数据
-  let matchHistory_battle_dto_map = ref({init: null})
+  const matchHistory_battle_dto_map = ref({init: null})
   // 技术面的数据
-  let homeAwayGoal_and_coach_map = ref({init: null})
-  let loading = ref(false)
+  const homeAwayGoal_and_coach_map = ref({init: null})
+  const loading = ref(false)
   const route = useRoute()
 
   onMounted(() => {
@@ -133,17 +133,11 @@ const get_detail_data = inject('get_detail_data', {})
         loading.value = true
         let parameter = {
            //2274159, //2274159 ,//2079863足球测试id
-          standardMatchId: match_id,
+          standardMatchId: match_id.value,
           parentMenuId: 2,
           sonMenuId: tabIndex.value + 1
         }
-        let results = await api_analysis.get_match_analysise_data(parameter)
-        let res = {}
-        if (results.status) {
-          res = results.data
-        } else {
-          res = results
-        }
+        let res = await api_analysis.get_match_analysise_data(parameter)
         let {code , data} = res
         loading.value = false
         if(code == 200 && Object.keys(data).length > 0) {
@@ -188,7 +182,7 @@ const get_detail_data = inject('get_detail_data', {})
   height: auto;
   z-index: 100;
   margin: 0 auto;
-
+  background: var(--q-analysis-matches-color-42);
   position: sticky;
   top: 1.21rem;
   padding: 0.15rem 0.48rem;
@@ -199,14 +193,14 @@ const get_detail_data = inject('get_detail_data', {})
     justify-content: center;
     align-items: center;
     border-radius: 0.08rem;
-
+    background-color: var(--q-analysis-matches-color-4);
     &::after {
       content: "";
       pointer-events: none;
       position: absolute;
       left: 0;
       top: 0;
-      border: 1px solid var(--q-color-border-color-25);
+      border: 1px solid var(--q-analysis-matches-color-26);
       border-radius: 0.16rem;
       width: 200%;
       height: 200%;
@@ -225,7 +219,8 @@ const get_detail_data = inject('get_detail_data', {})
       font-size: 0.14rem;
       border-radius: 0.08rem;
       padding: 0 .15rem;
-
+      background: var(--q-analysis-matches-color-4);
+      color: var(--q-analysis-matches-color-1);
       &:nth-child(2) {
         position: relative;
 
@@ -236,6 +231,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           left: 0;
           top: 0.08rem;
+          background: var(--q-analysis-matches-color-35);
         }
 
         &:after {
@@ -245,12 +241,14 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           right: 0;
           top: 0.08rem;
+          background: var(--q-analysis-matches-color-35);
         }
       }
 
       &.is-active {
         height: 0.29rem;
-
+        background: var(--q-analysis-matches-color-43);
+        color: var(--q-analysis-matches-color-4);
         &:nth-child(2) {
           &:before, &:after {
             display: none;

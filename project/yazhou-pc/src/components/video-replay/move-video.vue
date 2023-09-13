@@ -382,7 +382,7 @@ const close_video = () => {
   show.value = false;
   // 销毁视频
   destroy_video();
-  video_url = '';
+  video_url.value = '';
   useMittEmit('VIDEO_ZONE_EVENT_CMD_END', { cmd: "play_end", val: play_data.value });
   useMittEmit('IFRAME_VIDEO_VOLUME', { volume: 0, src: 'localStorage' });
 };

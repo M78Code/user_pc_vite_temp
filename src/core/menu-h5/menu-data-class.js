@@ -4,7 +4,7 @@
 
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { SessionStorage } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
 const Cache_key = {
@@ -56,6 +56,11 @@ class MenuData {
     // //上一次的菜单 lv2
     this.previous_lv_2_menu = undefined;
     this.previous_lv_2_menu_i = 0;
+
+    // 二级菜单 滚球下边的一个按钮   "全部"按钮
+    this.get_sport_all_selected = computed(() => {
+      lodash.isArray(this.current_lv_2_menu) && this.menu_type.value == 1;
+    });
     //当前的菜单 lv2  注意 滚球 二级菜单 有一个【全部】选项 get_sport_all_selected
     this.current_lv_2_menu = {
       id: "",
@@ -338,18 +343,19 @@ class MenuData {
       favorite = "";
     }
     //赛果我的投注
-    if (is_focus) {
-      //选中情况下的 关注 和 非关注
-      return favorite
-        ? this.get_theme.includes("y0")
-          ? "focus-e"
-          : "focus-c"
-        : this.get_theme.includes("y0")
-        ? "focus-b"
-        : "focus-a";
-    }
-    //默认黑色版还是白色版
-    return this.get_theme.includes("theme02") ? "focus-d" : "";
+    // if (is_focus) {
+    //   //选中情况下的 关注 和 非关注
+    //   return favorite
+    //     ? UserCtr.theme.includes("y0")
+    //       ? "focus-e"
+    //       : "focus-c"
+    //     : UserCtr.theme.includes("y0")
+    //     ? "focus-b"
+    //     : "focus-a";
+    // }
+    // //默认黑色版还是白色版
+    // return UserCtr.theme.includes("theme02") ? "focus-d" : "";
+    return 'focus-d'
   }
 
   //菜单名称
@@ -820,10 +826,7 @@ class MenuData {
     // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
     this.get_date_menu_api_when_subchange(type);
   }
-  //是否选中了全部的二级菜单
-  get_sport_all_selected() {
-    return lodash.isArray(this.current_lv_2_menu);
-  }
+
   /**
    * 选中3级menu
    * item [object]当前点击对象
@@ -928,7 +931,7 @@ class MenuData {
   //获取二级菜单 menuid
   get_current_sub_menuid() {
     //二级菜单可能有个选中 全部 此刻 当前菜单应该是数组
-    if (this.get_sport_all_selected()) {
+    if (this.get_sport_all_selected.value) {
       return this.current_lv_2_menu.map((item) => {
         return item.mi || item.menuId;
       });

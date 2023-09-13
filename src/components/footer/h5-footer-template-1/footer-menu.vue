@@ -121,7 +121,7 @@
           v-show="
             (menu_h5_data.get_current_sub_menuid() == 5 || sub_m.id != 114) &&
             !([8, 7].includes(menu_type) && sub_m.id == 114) &&
-            !(get_sport_all_selected && menu_type == 1 && sub_m.id == 114)
+            !(get_sport_all_selected && sub_m.id == 114)
           "
           :data-sid="sub_m.id"
           :data-mtype="menu_h5_data.get_current_sub_menuid()"
@@ -155,7 +155,7 @@
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 // import common from "project_path/project/mixins/constant";
 // import betBar from 'src/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
-import { utils } from "src/core/index.js";
+import { utils, SessionStorage } from "src/core/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import lodash from "lodash";
@@ -168,7 +168,7 @@ import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 
 const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState();
 // import { Platform } from 'quasar'
-const { menu_type, update_time } = menu_h5_data;
+const { menu_type, update_time, get_sport_all_selected } = menu_h5_data;
 // mixins:[common],
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
@@ -201,7 +201,7 @@ const prev_frame_poi = ref(0);
 //处理中
 const footer_clicked_handleing = ref(false);
 //上一次的
-const prev_floating_sub = ref("prev-floating-sub-i");
+const prev_floating_sub = "prev-floating-sub-i";
 //页脚数据
 const footer_menulist = ref([]);
 //子菜单显示/隐藏渐进效果
@@ -254,6 +254,7 @@ onBeforeUnmount(() => {
   clear_timer();
   useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED, update_first_menu).off;
 });
+
 // ...mapMutations([
 //   'set_goto_list_top', // 设置赛事列表回到顶部
 //   'set_toast',          // 设置提示信息
@@ -320,6 +321,7 @@ const jump = () => {
 const close_banner = () => {
   set_resources_obj({ is_show: false });
 };
+
 /**
  * 隐藏页脚二级菜单
  */
@@ -333,7 +335,7 @@ const hide_sub_menu_l_p = () => {
  * 初始化玩法选中项
  */
 const init_play_way_selected = () => {
-  let p_i = sessionStorage.getItem(prev_floating_sub.value);
+  let p_i = SessionStorage.get(prev_floating_sub);
   if (p_i != null) {
     p_i = p_i * 1;
     sub_menu_changed(footer_sub_m_list[p_i], p_i);
@@ -376,14 +378,16 @@ const init_follow_icon_style = () => {
  */
 const sub_menu_changed = (sub_menu, i) => {
   // TODO:后续修改调整
-  sessionStorage.setItem(prev_floating_sub.value, i);
+  SessionStorage.set(prev_floating_sub, i);
   // 非足球选择角球时,选中独赢
+  const sub_menu_id = menu_h5_data.get_current_sub_menuid();
+
   if (
-    (menu_h5_data.get_current_sub_menuid() != 5 && sub_menu.id == 114) ||
-    (menu_h5_data.get_current_sub_menuid() == 44 && sub_menu.id == 4)
+    (sub_menu_id != 5 && sub_menu?.id == 114) ||
+    (sub_menu_id == 44 && sub_menu?.id == 4)
   ) {
     sub_footer_menu_i.value = 0;
-    sessionStorage.setItem(prev_floating_sub.value, 0);
+    SessionStorage.set(prev_floating_sub, 0);
   } else {
     sub_footer_menu_i.value = i;
     update_first_menu();
@@ -825,7 +829,7 @@ watch(
   }
 );
 watch(
-  () => [
+  [
     menu_type, //一级菜单变化
     update_time, //菜单变化
     // topMenuReducer.current_main_menu.menuId, //二级菜单变化
@@ -833,12 +837,12 @@ watch(
   ],
   () => {
     virtual_disable_follow_filter();
-
     if (menu_h5_data.sport_all_selected) {
       /**
        * 滚球菜单是否选中全部菜单变化
        */
       // 简版时滚球菜单选中全部菜单时
+       // 值为 1简版 2标准版
       if (
         topMenuReducer.newer_standard_edition == 1 &&
         val &&
