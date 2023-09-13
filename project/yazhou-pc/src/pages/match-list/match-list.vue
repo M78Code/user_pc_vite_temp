@@ -31,6 +31,7 @@ import match_list_card from 'src/core/match-list-pc/match-card/match-list-card-c
 // import skt_data_list from "src/public/mixins/websocket/data/skt_data_list_new_data.js";// 发送websocket命令时使用
 import menu_config from "src/core/menu-pc/menu-data-class.js";
 import useMatchListMx from 'src/core/match-list-pc/match-list-composition.js'
+import MatchListCardData from 'src/core/match-list-pc/match-card/module/match-list-card-data-class.js';
 
 const { mounted_fn } = useMatchListMx()
 
@@ -44,10 +45,11 @@ export default {
     // EsportsHeader
   },
   setup() {
-    const match_list_info = ref([]);
-    setTimeout(() => {
-      match_list_info.value = match_list_card.get_match_list_card_key_arr();
-    }, 1000);
+    const match_list_info = reactive(MatchListCardData.match_list_card_key_arr)
+    console.log('match_list_infomatch_list_info', match_list_info, MatchListCardData.match_list_card_key_arr);
+    // setTimeout(() => {
+    //   match_list_info.value = match_list_card.get_match_list_card_key_arr();
+    // }, 1000);
     onMounted(() => {
       mounted_fn()
     })

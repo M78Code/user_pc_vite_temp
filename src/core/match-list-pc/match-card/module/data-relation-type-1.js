@@ -221,15 +221,14 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          console.log('MatchListData.list_to_obj.mid_obj', MatchListData.list_to_obj.mid_obj, [mid+'_']);
           let match = MatchListData.list_to_obj.mid_obj[mid+'_']
+          console.log('lockie-2222', JSON.stringify(MatchListData.list));
           let match_style_obj =  compute_style_template_by_matchinfo(match,template_id)
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
           match_style_obj.parent_card_key = card_key
         })
-        console.log('league_card_total_height', league_card_total_height);
         // 打入联赛容器卡片特征
         all_card_obj[card_key] = {
           ...league_container_card_template,

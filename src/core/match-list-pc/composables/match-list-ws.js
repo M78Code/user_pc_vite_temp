@@ -102,11 +102,11 @@ const refresh_c8_subscribe = () => {
 		 */
 const show_mids_change = () => {
 	// 列表没加载完 不执行
-	if (load_data_state != "data") {
+	if (load_data_state.value != "data") {
 		return;
 	}
 	// 重新订阅C8
-	refresh_c8_subscribe();
+	// refresh_c8_subscribe();
 	api_bymids({ is_show_mids_change: true });
 }
 

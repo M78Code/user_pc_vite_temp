@@ -314,7 +314,6 @@ const set_base_data_init = () => {
 	handle_match_list_request_when_ok(data, true, true, true);
 	let ts1 = Date.now();
 	let mids_arr = [];
-	console.warn("matchs_list", matchs_list);
 	(matchs_list || []).forEach((match) => {
 		mids_arr.push(String(match.mid));
 		match.api_update_time = ts1;
@@ -557,13 +556,11 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 				left_menu_result.guanjun != "common-guanjun")) &&
 		!match_list_api_config.is_collect
 	) {
-		// console.error('mx_list_res-----------------', );
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
 		mx_list_res(data, is_socket, cut, collect);
 	} else {
-		// console.error('mx_use_list_res-----------------', );
 		//  mx_use_list_res
 		// 滚球单页 下所有
 		// 热门 单页下 所有

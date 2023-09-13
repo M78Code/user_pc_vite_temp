@@ -1,6 +1,8 @@
 import lodash from 'lodash'
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
+import ws_composable_fn from "./composables/match-list-ws.js";
 
+const { show_mids_change } = ws_composable_fn();
 class MatchListScrollClass {
   constructor() {
     this.init()
@@ -13,7 +15,7 @@ class MatchListScrollClass {
     // 列表加载时间记录
     this.list_loading_time_record =  []
     // 可视区域赛事ID
-    this.show_mids = ['3532454', '3532450', '3532445', '240143662858637314']
+    this.show_mids = []
   }
 
   /**
@@ -32,7 +34,7 @@ class MatchListScrollClass {
     let old_mids = this.show_mids.join(',')
     this.show_mids = mids
     if(old_mids != mids.join(',')){
-      this.show_mids_change()
+      show_mids_change()
     }
   }
   /**
@@ -44,7 +46,7 @@ class MatchListScrollClass {
     mid = String(mid)
     if(!this.show_mids.includes(mid)){
       this.show_mids.push(mid)
-      this.show_mids_change()
+      show_mids_change()
     }
   }
   /**
@@ -57,7 +59,7 @@ class MatchListScrollClass {
     let index = this.show_mids.findIndex(item => item == mid)
     if(index > -1){
       this.show_mids.splice(index,1)
-      this.show_mids_change()
+      show_mids_change()
     }
   }
   /**

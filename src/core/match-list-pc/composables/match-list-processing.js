@@ -9,7 +9,6 @@ import virtual_composable_fn from './match-list-virtual.js'
 import use_featch_fn from "./match-list-featch.js";
 import ws_composable_fn from "./match-list-ws.js";
 import PageSourceData  from  "src/core/page-source/page-source.js";
-import { compute_match_list_style_obj_and_match_list_mapping_relation_obj } from 'src/core/match-list-pc/match-card/module/data-relation.js'
 import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
 import MatchListCardClass from "src/core/match-list-pc/match-card/match-list-card-class.js";
 
@@ -45,7 +44,6 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
-	console.log('all_league_list', all_league_list);
 
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
@@ -106,7 +104,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		// 设置数据仓库 联赛列表对象
 		this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
-		compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+		MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 			res_data,
 		);
 		if (lodash.isFunction(this.SCMD_C9)) {
@@ -156,7 +154,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 			}
 		}, delay);
 	} else {
-		load_data_state = "empty";
+		load_data_state.value = "empty";
 		// 设置数据仓库 联赛列表对象
 		this.match_list_data.set_league_list_obj(res_data);
 		// 计算列表卡片样式
@@ -171,16 +169,18 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 const mx_use_list_res_when_code_200_and_list_length_gt_0 = ({match_list, collect, backend_run}) => {
 	is_show_hot.value = false;
 	// 设置列表数据仓库
+
 	MatchListData.set_list(
-		match_list,
+		match_list.livedata,
 		true
 	);
+	console.log('match_listmatch_listmatch_list', match_list, MatchListData.list);
 	// 计算赛事卡片
 	MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
 		match_list,
 	);
 	// 设置收藏数量
-	// 只有预加载会穿 true
+	// 只有预加载会传 true
 	if (!collect) {
 		mx_collect_count();
 	}

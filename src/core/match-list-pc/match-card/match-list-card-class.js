@@ -76,7 +76,7 @@ import {
 } from "./module/add-and-remove.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import { reactive } from "vue";
+import { ref } from "vue";
 
 class MatchListCardInfo {
   constructor() {}
@@ -245,5 +245,5 @@ class MatchListCardInfo {
     remove_league(remove_tid);
   }
 }
-let MatchListCard = reactive(new MatchListCardInfo())
+let MatchListCard = ref(new MatchListCardInfo()).value;
 export default MatchListCard;
