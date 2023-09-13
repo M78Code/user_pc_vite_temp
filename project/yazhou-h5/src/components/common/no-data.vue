@@ -21,7 +21,7 @@
 
         <template v-if="['noMatch', 'noWifi', 'noMessage'].includes(which)">
             <div class="empty-favorite-bg"
-                :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
+                :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.noMatch.url2})` : `url(${arr.noMatch.url})` }">
             </div>
             <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt : arr.noMatch.txt }}</p>
         </template>

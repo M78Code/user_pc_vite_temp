@@ -5,6 +5,7 @@
  */
 import { ref } from "vue";
 import _lodash from "lodash"
+import BetData from "./bet-data-class"
 
 class BetViewData {
   constructor() {}
@@ -117,13 +118,15 @@ class BetViewData {
     let bet_amount_list = _lodash.get(obj, 'betAmountInfo')
     let bet_amount = {}
     bet_amount_list.forEach(item=>{
-      // 使用 投注项作为 key值 在投注列表做对应关系
-      bet_amount[item.playOptionsId] = {
+      // 单关 使用 投注项作为 key值 在投注列表做对应关系
+      //  串关使用 type 复连串 30001
+      let value = BetData.is_bet_single ? item.playOptionsId : item.type
+      bet_amount[value] = {
         min_money: item.minBet, // 最小限额
         max_money: item.orderMaxPay, // 最大限额
         globalId : item.globalId,  //  风控响应id
+        seriesOdds: item.seriesOdds, // 赔率
       }
-      console.error('item.playOptionsId',item.playOptionsId)
     })
 
     this.bet_min_max_money = bet_amount
