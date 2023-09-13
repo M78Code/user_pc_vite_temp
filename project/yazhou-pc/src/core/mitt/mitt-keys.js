@@ -371,4 +371,6 @@ export const EMIT_SET_HANDICAP_THIS = 'EMIT_SET_HANDICAP_THIS'
 
 /**   站点 tab 休眠状态转激活 */
  export const EMIT_VISIBILITYCHANGE_EVENT = 'EMIT_VISIBILITYCHANGE_EVENT'
+/**     切换球种时让联赛选择框清除选中热门*/
+ export const EMIT_INIT_SELECT= 'EMIT_INIT_SELECT'
 

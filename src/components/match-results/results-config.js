@@ -860,7 +860,7 @@ export const useGetResultConfig = () => {
     // 重置分页组件
     state.reset_pagination = Math.random();
     // 切换球种时让联赛选择框清除选中热门
-    useMittEmit("init_select", 1);
+    useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1);
     state.results_params.matchNameStr = "";
     state.results_params.tournamentId = "";
     let index;
