@@ -1,0 +1,317 @@
+<!--
+* @Author: Router
+* @Description: 常规赛事的单关和串关投注信息展示组件
+-->
+
+<template>
+  <div class="bet-mix-show" @click="handleonmousedown">
+    <!-- 失效蒙层 -->
+    <!-- 左边 -->
+    <div class="row justify-start items-center" :class="[get_bet_success ? 'yb_px14':'yb_pl12 yb_pr18',{'bet-mix-show2':is_conflict}]">
+      <!-- 左边 -->
+      <!-- <div class="yb_mr12 dele-left" v-if="!get_bet_success">
+       <img  src="image/wwwassets/bw3/svg/bet_xuanx.svg" @click.stop="remove_(value_show.id_)">
+     </div> -->
+
+     <!-- 右边 -->
+     <div style="flex:1;">
+        <!-- 上 -->
+       <div class="row justify-between items-center yb_fontsize16 content-t yb_mb6 yb_mt8">
+         <div class="col-9 row">
+           <span class="fw_600">
+             <!-- 投注成功后的展示值用接口返回的 -->
+             <!-- <template v-if="bet_success_obj.playOptionName && [3, 6].includes(+get_bet_status)">{{bet_success_obj.playOptionName}} </template> -->
+             <template>
+               <span v-show="value_show.value1" class="yb_mr4">{{value_show.value1}}</span>
+               <span :class="pankou_change == 1 ? 'pankou-change': null" v-show="value_show.value2">{{value_show.value2}}</span>
+             </template>
+             [{{ hptype }}]
+           </span>
+         </div>
+
+         <div class="col-3 row justify-end items-center">
+             <span class="yb_fontsize22" :class="{'red':odds_change == 1,'green':odds_change == 2}">
+               <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{bet_success_obj.oddsValues | format_odds(value_show.csid)}}</template>
+               <!-- <template v-else>{{odds_value()}}</template> -->
+             </span>
+             <!-- 红升绿降 -->
+             <span :class="{'red-up':odds_change == 1,'green-down':odds_change == 2}" class="odd-change yb_ml4" v-if="!get_bet_success"></span>
+         </div>
+       </div>
+
+         <!-- 联赛名称 -->
+         <div class="xia" v-if="value_show.tn && !get_is_champion(this)">{{ value_show.tn }}</div>
+     </div>
+    </div>
+   </div>
+</template>
+
+<script setup>
+// import {odd_convert} from "src/core/format/index.js";
+// import betting from 'src/core/bet/common-helper/index.js';
+// import {FOOTBALL_PLAY_LET_BALL,BASKETBALL_PLAY_LET_BALL,market_flag_list,market_flag_basketball_list} from "src/core/constant/config/bet-config-data.js";
+import betSingleDetail from './bet_single_detail.vue';
+import BetData from "src/core/bet/class/bet-data-class.js";
+import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
+import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+// import { UserCtr } from "src/core/index.js";
+import { calc_bifen, format_odds } from "src/core/format/index.js";
+import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
+import UserCtr from 'src/core/user-config/user-ctr.js'
+
+import lodash from 'lodash'
+
+const get_bet_success = ref(true)
+
+
+const props = defineProps({
+  name_: String | Number,
+  index_: Number,
+  order_detail_resp_list: {
+    type: Array,
+    default: () => {
+      return []
+    }
+  },
+  query_order_obj: {
+    type: Array,
+    default: () => {
+      return []
+    }
+  },
+  bet_view_obj: {
+    type: Object,
+    default: () => {
+      return {}
+    }
+  }
+})
+
+const value_show = computed(()=>{
+  return props.bet_view_obj
+})
+
+
+
+</script>
+<style lang="scss" scoped>
+.bet-mix-show {
+  position: relative;
+  line-height: 1.2;
+}
+
+/* ************** 失效蒙层 ************** -S */
+.locked-shadow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+}
+
+/* ************** 失效蒙层 ************** -E */
+
+.content-t {
+  line-height: 0.2rem;
+}
+
+.dele-left {
+  z-index: 2;
+  width: 0.14rem;
+  height: 0.14rem;
+
+  img {
+    width: 99%;
+    height: 99%;
+  }
+}
+
+.pankou-change {
+  border-radius: 2px;
+  padding-left: 0.02rem;
+  padding-right: 0.02rem;
+}
+
+/* ************** 红升绿降 ************** -S */
+.odd-change {
+  display: inline-block;
+  width: 0.06rem;
+  height: 0.1rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &.green-down {
+    background-image: var(--q-color-com-img-bg-18);
+  }
+
+  &.red-up {
+    background-image: var(--q-color-com-img-bg-19);
+  }
+}
+
+/* ************** 红升绿降 ************** -E */
+.invalid-span {
+  border-radius: 2px;
+  text-align: center;
+  width: 0.4rem;
+  line-height: 0.2rem;
+  font-size: 0.13rem;
+  margin-right: 0.1rem;
+  height: min-content;
+}
+
+.invalid-span2 {
+  border-radius: 2px;
+  max-width: 1.1rem;
+  line-height: 0.2rem;
+  font-size: 0.13rem;
+  height: min-content;
+}
+
+.xia {
+  line-height: 1.2;
+  font-size: 0.14rem;
+
+  .pre-text {
+    margin-right: 0.1rem;
+  }
+}
+
+/* ************** 预约投注按钮 ************** -S */
+.flex-end {
+  align-items: flex-end;
+}
+
+.subscribe-button {
+  width: 0.58rem;
+  height: 0.22rem;
+  border-radius: 0.14rem;
+  font-size: 0.13rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-right: 0.1rem;
+}
+
+/* ************** 预约投注按钮 ************** -E */
+
+/* ************** 预约投注操作栏 ************** -S */
+.subscribe-wrap {
+  margin-top: 0.12rem;
+
+  .operation-line {
+    margin: 0 12px 12px 12px;
+    height: 1px;
+  }
+}
+
+.subscribe-operation {
+  display: flex;
+  align-items: center;
+  padding: 0 0.3rem 0.12rem 0.28rem;
+  justify-content: space-between;
+
+  .label {
+    font-size: 14px;
+    width: 0.62rem;
+    max-width: 0.62rem;
+  }
+
+  .operation {
+    width: 1.8rem;
+    height: 0.32rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+
+    .odd {
+      flex: 1;
+      font-size: 18px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .odd_text {
+        height: 0.16rem;
+      }
+
+      .money-span {
+        // position: absolute;
+        // top: 50%;
+        // right: 0.08rem;
+        width: 0.02rem;
+        height: 0.16rem;
+        margin-left: 0.05rem;
+      }
+    }
+
+    .reduce,
+    .add {
+      width: 0.3rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        pointer-events: none;
+        width: 0.11rem;
+        height: auto;
+      }
+    }
+
+    .shadow-show {
+      opacity: 0.4;
+    }
+  }
+
+  .delete {
+    width: 0.13rem;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+}
+
+/* ************** 预约投注操作栏 ************** -E */
+
+/* ************** 投注完成后的颜色展示 ************** -S */
+.img0 {
+  margin-right: 0.06rem;
+  width: 0.158rem;
+  vertical-align: -3px;
+}
+
+.img1 {
+  transform: rotate(0);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* ************** 投注完成后的颜色展示 ************** -E */
+.line {
+  height: 1px;
+  transform: scaleY(0.5);
+}
+</style>
