@@ -4,7 +4,8 @@
  */
 import Ws from "./ws.js";
 import WsCmd from "./ws-cmd.js";
-export default class wsMan {
+import UserCtr from "src/core/user-config/user-ctr.js";
+export default class WsMan {
   // WS对象
   static ws = null;
   // 设置全局桌面对象
@@ -27,12 +28,12 @@ export default class wsMan {
     url = url.replace("http", "ws");
     console.log('启动ws:'+url);
     // 初始化ws  url=wss://api.mjpu9qew.com/yewuws2/push
-    wsMan.ws = new Ws(url);
-    wsMan.ws.ws_status_call = (status) => {
+    WsMan.ws = new Ws(url);
+    WsMan.ws.ws_status_call = (status) => {
       // 设置ws状态
-      // wsMan.ws.set_socket_status(status);
+      // WsMan.ws.set_socket_status(status);
     }
-    wsMan.ws.connect();
+    WsMan.ws.connect();
   }
 
    /**
@@ -60,10 +61,10 @@ export default class wsMan {
    * @return:
    */
   static destroyed() {
-    if (wsMan.ws) {
-      wsMan.ws.destroy();
+    if (WsMan.ws) {
+      WsMan.ws.destroy();
     }
-    wsMan.ws = null;
+    WsMan.ws = null;
   }
 
   /**
@@ -115,7 +116,7 @@ export default class wsMan {
     cmd_obj.cufm = obj.cufm;
     cmd_obj.marketLevel = obj.marketLevel;
     if (cmd_obj.list) {
-      wsMan.send_msg(cmd_obj);
+      WsMan.send_msg(cmd_obj);
     }
   }
 
@@ -132,7 +133,7 @@ export default class wsMan {
     cmd_obj.mid = obj.mid;
     cmd_obj.marketLevel = obj.marketLevel;
     if (cmd_obj.hid != "" && cmd_obj.mid != "") {
-      wsMan.send_msg(cmd_obj);
+      WsMan.send_msg(cmd_obj);
     }
   }
 
@@ -147,7 +148,7 @@ export default class wsMan {
     cmd_obj.cmd = WsCmd.S_CMD_BAT_HANDICAP_ODDS2;
     cmd_obj.list = obj.list;
     if (cmd_obj.list) {
-      wsMan.send_msg(cmd_obj);
+      WsMan.send_msg(cmd_obj);
     }
   }
 
@@ -161,7 +162,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.S_CMD_ORDER;
     cmd_obj.cuid = obj.cuid;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
 
   /**
@@ -174,7 +175,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.S_CMD_INITIATIVE_PUSH;
     cmd_obj.copen = obj.copen;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:菜单推送(C5)
@@ -185,7 +186,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.S_CMD_MENU;
     cmd_obj.cdt = obj.cdt;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:全局开关推送(C7)
@@ -195,7 +196,7 @@ export default class wsMan {
   static skt_send_switch() {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.GLOBAL_SWITCH;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:新版菜单推送(C51)
@@ -206,7 +207,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.S_CMD_MENU2;
     cmd_obj.cpid = obj.cpid;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:热门/直播推送(C6)
@@ -219,7 +220,7 @@ export default class wsMan {
     cmd_obj.hoid = obj.hoid;
     cmd_obj.device = obj.device;
     if(cmd_obj.hoid != "") {
-      wsMan.send_msg(cmd_obj);
+      WsMan.send_msg(cmd_obj);
     }
   }
   /**
@@ -232,7 +233,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.key = 'clear';
     cmd_obj.cmd = cmd;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:赛事列表接口订阅指令
@@ -249,7 +250,7 @@ export default class wsMan {
     } else if(obj.empVO) { // 电竞赛事订阅
       cmd_obj.empVO = obj.empVO;
     }
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
   /**
    * @Description:联赛订阅指令
@@ -261,7 +262,7 @@ export default class wsMan {
     let cmd_obj = {};
     cmd_obj.cmd = WsCmd.S_CMD_LEAGUE_STATUS;
     cmd_obj.tid = obj.tid;
-    wsMan.send_msg(cmd_obj);
+    WsMan.send_msg(cmd_obj);
   }
 
 }
