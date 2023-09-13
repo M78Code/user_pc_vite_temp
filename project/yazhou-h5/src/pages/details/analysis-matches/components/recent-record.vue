@@ -6,7 +6,7 @@
 <template>
   <div class="recent_record" v-if="recent_record_data.length > 0 || if_the_selected.includes(true)">
     <div class="header">
-      <span class="title ellipsis">{{ t('analysis_football_matches.recent_record') }}</span>
+      <span class="title ellipsis">{{ i18n_t('analysis_football_matches.recent_record') }}</span>
       <div class="tab-check-box"
            v-for="(item, index) in tab_check_box" :key="index+'box'"
            :class="{active:if_the_selected[index]}"
@@ -48,21 +48,22 @@
         </div>
       </div>
       <!-- // :key='index' -->
-      <public-form :liat_data="item.recent_record_data" :hm_index_name="index == 0 ? get_detail_data.mhn : get_detail_data.man" ></public-form>
+      <public-form :liat_data="item.new_recent_record_data" :hm_index_name="index == 0 ? get_detail_data.mhn : get_detail_data.man"></public-form>
     </template>
   </div>
 </template>
 
 <script setup>
-import {api_analysis} from "src/project/api";
-// import {mapGetters} from "vuex";
+import {api_analysis} from "src/api/index.js";
+import { onMounted, ref, inject, reactive } from "vue";
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
+import teamImg from "project_path/src/components/details/team-img.vue";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
-import publicForm from "src/project/pages/details/analysis-matches/components/public-form.vue";
+import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
 import { computed } from "vue";
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 //国际化
 
 
@@ -74,33 +75,36 @@ import { t } from "src/boot/i18n.js";;
   //   "no-data": no_data,
   //   "team-img": team_img,
   // },
-  let tab_index = ref(-1)
-  let radio_button_index = ref(0)
-  let progress_bar = ref(false)
-  let tab_radio_button = ref([
+  const tab_index = ref(-1)
+  const radio_button_index = ref(0)
+  const progress_bar = ref(false)
+  const tab_radio_button = ref([
     // TODO: 国际化 后续修改调整
-    {name: `${t('analysis_football_matches.near')}5`, index: 5},
-    {name: `${t('analysis_football_matches.near')}10`, index: 10},
-    {name: `${t('analysis_football_matches.near')}15`, index: 15},
+    {name: `${i18n_t('analysis_football_matches.near')}5`, index: 5},
+    {name: `${i18n_t('analysis_football_matches.near')}10`, index: 10},
+    {name: `${i18n_t('analysis_football_matches.near')}15`, index: 15},
   ])
-  let if_the_selected = ref([false, false])
-  let tab_check_box = ref([
+  const if_the_selected = ref([false, false])
+  const tab_check_box = ref([
     // TODO: 国际化 后续修改调整
-    t('analysis_football_matches.same_game'),
-    t('analysis_football_matches.same_host_guest')
+    i18n_t('analysis_football_matches.same_game'),
+    i18n_t('analysis_football_matches.same_host_guest')
   ])
-  let flag = ref(0)
-  let cps = ref(5)
-  let recent_record_data = ref([])
-  let no_data = ref(false)
+  const flag = ref(0)
+  const cps = ref(5)
+  const recent_record_data = ref([])
+  let arr_ = ref([])
+  const no_data = ref(false)
   const route = useRoute()
-
+onMounted(() => {
   get_list()
+})
+  
     // mhid   主队id   mhn 主队名称
     // maid   客队id   man 客队名称
   const match_id = computed(() => {
     // 赛事id TODO: 后续修改调整 route get_detail_data
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   // 复选框 点击事件
   const checkBox_click = (index) => {
@@ -143,33 +147,39 @@ import { t } from "src/boot/i18n.js";;
       if(code == 200 && data != null) {
         let grouped_collection = [
           {
-            recent_record_data:[],
+            new_recent_record_data:[],
             // TODO: 国际化后续修改调整
             records_list:[
-              {success: 0, name: t('analysis_football_matches.victory')},
-              {flat: 0, name: t('analysis_football_matches.flat')},
-              {lose: 0, name: t('analysis_football_matches.negative')},
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
             ]
           },
           {
-            recent_record_data:[],
+            new_recent_record_data:[],
             records_list:[
-              {success: 0, name: t('analysis_football_matches.victory')},
-              {flat: 0, name: t('analysis_football_matches.flat')},
-              {lose: 0, name: t('analysis_football_matches.negative')},
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
             ]
           }
-        ],  // host_team_id
-        host_team_id = data[0].teamGroup
-        data.forEach( (data_item, index, arr) => {
+        ] // host_team_id
+        let host_team_id = data[0].teamGroup
+        data.map( (data_item) => {
           if(host_team_id == data_item.teamGroup) {
-            grouped_collection[0].recent_record_data.push(data_item)
+            grouped_collection[0].new_recent_record_data.push(data_item)
           }else{
-            grouped_collection[1].recent_record_data.push(data_item)
+            grouped_collection[1].new_recent_record_data.push(data_item)
           }
         })
+        let arr = [
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
+            ]
         processing_score(grouped_collection)
-        recent_record_data.value = grouped_collection
+        recent_record_data.value= grouped_collection
+
         no_data.value = false
       } else {
         no_data.value = true
@@ -182,7 +192,7 @@ import { t } from "src/boot/i18n.js";;
     // 加工 胜 平 负的数量
   const processing_score = (data) => {
     data.forEach((main_item)=>{
-      main_item.recent_record_data.forEach((item)=>{
+      main_item.new_recent_record_data.forEach((item)=>{
         if(item.result == 4){
           main_item.records_list[0].success = ++main_item.records_list[0].success
         }else if(item.result == 3){
@@ -197,18 +207,19 @@ import { t } from "src/boot/i18n.js";;
 
 <style lang="scss" scoped>
 .recent_record {
-
+  background-color: var(--q-analysis-matches-color-4);
   margin-top: 0.1rem;
 
   .header {
     height: 0.4rem;
     padding-left: 0.24rem;
-
+    border-top: 1px solid var(--q-analysis-matches-color-27);
+    border-bottom: 1px solid var(--q-analysis-matches-color-27);
     position: relative;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: var(--q-color-page-bg-color-37) !important;
+    background-color: var(--q-analysis-matches-color-4) !important;
 
     .title {
 
@@ -218,7 +229,7 @@ import { t } from "src/boot/i18n.js";;
       letter-spacing: 0;
       width: 0.985rem;
       font-weight: bold;
-
+      color: var(--q-analysis-matches-color-1);
       &:before {
         content: '';
         width: 0.03rem;
@@ -226,7 +237,7 @@ import { t } from "src/boot/i18n.js";;
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-
+        background-color: var(--q-analysis-matches-color-45);
         border-radius: 1.5px;
       }
     }
@@ -238,7 +249,9 @@ import { t } from "src/boot/i18n.js";;
       display: flex;
       justify-content: center;
       align-items: center;
-
+      background: var(--q-analysis-matches-color-4);
+      border: 1px solid var(--q-analysis-matches-color-26);
+      color: var(--q-analysis-matches-color-46);
 
       border-radius: 0.04rem;
 
@@ -249,8 +262,8 @@ import { t } from "src/boot/i18n.js";;
       margin-right: 0.1rem;
 
       &.active, &.progress_bar {
-
-
+        background: var(--q-analysis-matches-color-45);
+        color: var(--q-analysis-matches-color-4);
         border: unset;
       }
     }
@@ -268,11 +281,13 @@ import { t } from "src/boot/i18n.js";;
 
       letter-spacing: 0;
       text-align: center;
-
+      background: var(--q-analysis-matches-color-4);
+      color: var(--q-analysis-matches-color-2);
+      border: 1px solid var(--q-analysis-matches-color-26)!important;
       &.active {
-
-        color: var(--q-color-com-bg-color-12);
-        //border: unset;
+        background: var(--q-analysis-matches-color-45);
+        color: var(--q-analysis-matches-color-4);
+        border: 1px solid var(--q-analysis-matches-color-49)!important;
       }
 
       &.tab-radio-button0 {
@@ -293,8 +308,8 @@ import { t } from "src/boot/i18n.js";;
     height: 0.4rem;
     align-items: center;
     padding: 0 0.15rem;
-
-    ::v-deep.team-img {
+    background: var(--q-analysis-matches-color-36);
+    :deep(.team-img) {
       width: 0.2rem;
       height: 0.2rem;
       margin-right: 0.05rem;
@@ -317,7 +332,7 @@ import { t } from "src/boot/i18n.js";;
       letter-spacing: 0;
       line-height: 0.12rem;
       font-weight: bold;
-
+      color: var(--q-analysis-matches-color-1);
       &:nth-child(1) {
         display: flex;
         align-items: center;
@@ -330,6 +345,49 @@ import { t } from "src/boot/i18n.js";;
           font-weight: unset;
         }
       }
+    }
+  }
+  :deep(.public_form) {
+    background-color: var(--q-analysis-matches-color-4);
+    .header {
+      > div {
+        color: var(--q-analysis-matches-color-2);
+      }
+    }
+    .team-item {
+      border-bottom: 1px solid var(--q-analysis-matches-color-29);
+      background-color: var(--q-analysis-matches-color-4);
+      div {
+        color: var(--q-analysis-matches-color-1);
+      }
+      .col3 {
+        .home.add_bold {
+          color: var(--q-analysis-matches-color-1);
+        }
+        .away.add_bold {
+          color: var(--q-analysis-matches-color-1);
+        }
+        .home {
+          color: var(--q-analysis-matches-color-46);
+        }
+      }
+      .col4.end-btn {
+        >span.results {
+          color: var(--q-analysis-matches-color-4);
+        }
+        >span.results.results_win {
+          color: var(--q-analysis-matches-color-19);
+        }
+        >span.results.results_flat {
+          color: var(--q-analysis-matches-color-17);
+        }
+        >span.results.results_lose {
+          color: var(--q-analysis-matches-color-18);
+        }
+      }
+    }
+    .team-item:nth-child(odd) {
+      background-color: var(--q-analysis-matches-color-36);
     }
   }
 }

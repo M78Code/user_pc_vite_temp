@@ -1,7 +1,7 @@
 <template>
   <div class="injury-situation football_standings recent_record">
     <div class="title">
-      {{ t('analysis_football_matches.Injury_situation') }}
+      {{ i18n_t('analysis_football_matches.Injury_situation') }}
     </div>
 
     <template v-for="(item, index) in injury_situation_data" :key="index">
@@ -22,17 +22,18 @@
       <injury-form :list_data="item"/>
     </template>
     <!-- 没有数据 组件 -->
-    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ t('common.no_data') }}</div>
+    <div v-if="!Object.keys(injury_situation_data).length" class="no-list">{{ i18n_t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref,inject } from 'vue'
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
+import teamImg from "project_path/src/components/details/team-img.vue";
  // 伤停情况列表
-import injuryForm from "src/project/pages/details/analysis-matches/components/injury-form";
-import { t } from "src/boot/i18n.js";;
+import injuryForm from "project_path/src/pages/details/analysis-matches/components/injury-form.vue";
+import { i18n_t } from "src/boot/i18n.js";
+const get_detail_data = inject('get_detail_data', {})
 //国际化
 
 
@@ -60,7 +61,7 @@ import { t } from "src/boot/i18n.js";;
 <style lang="scss" scoped>
 .injury-situation {
   margin-top: 0.1rem;
-
+  background-color: var(--q-analysis-matches-color-4);
   .title {
     height: 0.4rem;
     line-height: 0.4rem;
@@ -69,7 +70,9 @@ import { t } from "src/boot/i18n.js";;
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-
+    color: var(--q-analysis-matches-color-9);
+    border-bottom: 1px solid var(--q-analysis-matches-color-27);
+    background-color: var(--q-analysis-matches-color-4);
     &:before {
       content: '';
       width: 0.03rem;
@@ -78,6 +81,7 @@ import { t } from "src/boot/i18n.js";;
       left: 0.16rem;
       top: 0.14rem;
       border-radius: 1.5px;
+      background: var(--q-analysis-matches-color-45);
     }
   }
 
@@ -115,6 +119,8 @@ import { t } from "src/boot/i18n.js";;
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
+    background-color: var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-2);
   }
 }
 </style>

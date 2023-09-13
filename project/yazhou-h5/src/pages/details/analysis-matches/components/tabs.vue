@@ -83,7 +83,7 @@ import { ref } from "vue"
       font-weight: bold;
       &.hairline-border {
         &::after {
-          border: 1px solid var(--q-color-border-color-3) !important;
+          border: 1px solid var(--q-color-fs-color-135) !important;
         }
       }
     }

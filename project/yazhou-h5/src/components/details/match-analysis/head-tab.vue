@@ -12,7 +12,7 @@
             v-for="(item,i) in tabList" :key="i" :class="{
             'is-active' : tabIndex == i,
             'remove-margins': +tabList.length - 1 == i,
-            'small-right': (get_lang == 'en' || get_lang == 'vi') && get_detail_data.csid == 1,
+            'small-right': (UserCtr.lang == 'en' || UserCtr.lang == 'vi') && get_detail_data.csid == 1,
           }"
             v-show="handle_show_tab(item, i)"
         >
@@ -25,35 +25,34 @@
 
 <script setup>
 // import {mapGetters, mapMutations} from "vuex";
-import { ref, nextTick, computed, onUnmounted, onMounted } from "vue"
+import { ref, nextTick, computed, onUnmounted, onMounted, inject } from "vue"
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import {utils } from 'src/core/utils/index.js';
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import UserCtr from "src/core/user-config/user-ctr.js";
+let get_detail_data = inject("get_detail_data", {})
 
 
   const props = defineProps({
     tabList: {
-      type: Array
+      type: Array,
+      default: () => [],
     }
   })
+  console.error(props);
   const emit = defineEmits(['tab_click'])
   const tabIndex = ref(0)
   const show_tab = ref(true)
   const tab_ul_scroller = ref(null)
   const tab_item = ref(null)
-// TODO: 临时用
-let get_detail_data = ref({
-      mid: '',
-      cds: ''
-    })
     let get_lang = ref('zh')
     let get_current_menu = ref('')
+    
   onMounted(() => {
-    // useMittOn(MITT_TYPES.EMIT_EVENT_DATA, change_show_tab)
+    
     // 初始化标签选中，足球和篮球在简体中文和繁体中文环境下，下标往后挪动一位,未开赛的赛事，再往后挪动一位
     nextTick(()=> {
       let i = 0
-      if (['zh', 'tw'].includes(get_lang.value)) {
+      if (['zh', 'tw'].includes(UserCtr.lang)) {
         i++
       }
       if (get_detail_data.value.ms != 1) {
@@ -73,7 +72,7 @@ let get_detail_data = ref({
       emit('tab_click',[tab, type]);
       // 滚动目标到屏幕显示区域
       nextTick(()=>{
-        // utils.tab_move(i, tab_ul_scroller, tab_item)
+        utils.tab_move(i, tab_ul_scroller, tab_item)
       })
     }
   const handle_show_tab = (item, index) => {
@@ -89,8 +88,9 @@ let get_detail_data = ref({
         tab_click(tabList.value[1], 1)
       }
     }
+    let { off } = useMittOn(MITT_TYPES.EMIT_EVENT_DATA, change_show_tab)
   onUnmounted(() => {
-    useMittOn(MITT_TYPES.EMIT_EVENT_DATA, change_show_tab).off
+    off()
   })
 
 </script>
@@ -99,6 +99,8 @@ let get_detail_data = ref({
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid var(--q-analysis-matches-color-30);
+    background: var(--q-analysis-matches-color-4);
 
   position: sticky;
   top: 0.82rem;
@@ -132,7 +134,7 @@ let get_detail_data = ref({
         .tabs-label {
           font-weight: 700;
           position: relative;
-
+          color: var(--q-analysis-matches-color-44);
           &:after {
             content: "";
             display: block;
@@ -142,7 +144,7 @@ let get_detail_data = ref({
             width: 90%;
             text-align: center;
             height: 0.03rem;
-            background-color: var(--q-color-page-bg-color-50);
+            background-color: var(--q-analysis-matches-color-45);
             border-radius: 0.08rem;
           }
         }

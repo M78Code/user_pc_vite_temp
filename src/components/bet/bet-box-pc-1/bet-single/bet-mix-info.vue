@@ -3,7 +3,7 @@
 -->
 <template>
   <div class="c-bet-mix-info">
-    <div> ------ {{ BetData.bet_data_class_version }} </div>
+    <div style="display:none"> {{ BetData.bet_data_class_version }} </div>
       <!---串关投注项部分-->
       <bet-mix-item
         :item="item"

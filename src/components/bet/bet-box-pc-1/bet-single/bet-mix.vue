@@ -6,7 +6,7 @@
   <div class="bet-mix height-full" :class="bet_flag?'bet-layout':''">
     <div class="auto-wrap no-wrap column">
       <!-- 下注标识 -->
-      <div> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} ---- </div>
+      <div style="display:none"> ------ {{ BetData.bet_data_class_version }} -- {{  BetData.bet_s_list.length }} ---- </div>
       <div class="scroll-wrap" :class="{'record-scoll-wrap': !bet_flag}">    
 
         <!--未投注就是bet-mix-info组件-->
@@ -36,15 +36,13 @@
           </div>
           <div v-show="is_expend">
             <!--金额输入框-->
-            <template v-for="(item, index) in BetData.bet_s_list">
+            <template v-for="(item, index) in BetData.bet_s_list" :key="item.custom_id">
               <!--2串1以及输入框-->
               <bet-input
                 :index="index"
                 :item="item"
-                :key="item.custom_id"
                 @set_min_max_money="set_min_max_money"
-                v-if="BetViewDataClass.bet_order_success_success && ((BetViewDataClass.bet_order_success_success.length==0 && index>0) || (BetViewDataClass.bet_order_success_success.length>0))"
-                :class="{'bet-mix-input-last': ((index+1)==BetData.bet_s_list.length)}"
+                v-if="index != 0"
               ></bet-input>
             </template>
           </div>
@@ -66,8 +64,9 @@ const bet_flag = ref(true)
 const expend_disable = ref('')
 const is_expend = ref(false)
 
+// 复式连串过关投注 切换
 const mix_toggle_handle = () => {
-
+  is_expend.value = !is_expend.value
 }
 
 </script>

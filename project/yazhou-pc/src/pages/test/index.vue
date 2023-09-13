@@ -103,7 +103,7 @@ const router = useRouter()
       BetViewDataClass.set_bet_order_status(1)
     
       // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
-      let matchType = 2 
+      let matchType = 1 
       if( [1,2].includes(Number(item.ms)) ){
         matchType = 2
       }
@@ -135,6 +135,7 @@ const router = useRouter()
         bet_type: 'common_bet', // 投注类型
         tid_name: item.tnjc,  // 联赛名称
         match_ms: item.ms, // 赛事阶段
+        match_time: item.mgt, // 开赛时间
       }
       console.error('playOptionsId',bet_obj.playOptionsId)
       BetData.set_bet_read_write_refer_obj(bet_obj)

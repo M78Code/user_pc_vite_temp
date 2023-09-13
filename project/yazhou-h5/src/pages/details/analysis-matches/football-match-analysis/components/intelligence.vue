@@ -121,7 +121,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
 <style lang="scss" scoped>
 .intelligence {
-
+  background: var(--q-analysis-matches-color-42);
   height: calc(100% - 0.4rem);
 
   .header {
@@ -129,7 +129,8 @@ import { i18n_t } from "src/boot/i18n.js";
     justify-content: center;
     padding: 0.15rem 0;
     width: 100%;
-
+    border-bottom: 1px solid var(--q-analysis-matches-color-30);
+    background: var(--q-analysis-matches-color-4);
     z-index: 100;
 
     .tab-radio-button {
@@ -138,23 +139,24 @@ import { i18n_t } from "src/boot/i18n.js";
       display: flex;
       justify-content: center;
       align-items: center;
-
+      background-color: var(--q-analysis-matches-color-4);
+      border: 1px solid var(--q-analysis-matches-color-26);
 
       letter-spacing: 0;
       text-align: center;
       font-size: 0.14rem;
 
       .ellipsis {
-
+        color: var(--q-analysis-matches-color-1);
         font-weight: unset;
       }
 
       &.active {
-
+        background: var(--q-analysis-matches-color-43);
         border: unset;
 
         .ellipsis {
-
+          color: var(--q-analysis-matches-color-4);
           font-weight: bold;
         }
       }
@@ -194,6 +196,14 @@ import { i18n_t } from "src/boot/i18n.js";
         border-bottom: none;
       }
     }
+  }
+  .no-list {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: center;
+    padding-top: 0.05rem !important;
+    font-size: 12px;
+    color: var(--q-analysis-matches-color-2);
   }
 }
 </style>

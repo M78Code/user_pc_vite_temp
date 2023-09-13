@@ -63,7 +63,7 @@ import matchResultsStage from 'project_path/src/pages/details/components/details
 import resultsFooter from 'project_path/src/pages/details/components/details-match-results/results-footer.vue' // project\yazhou-h5\src\pages\details\components\details-match-results\results-footer.vue
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRoute } from "vue-router"
-import { computed, onUnmounted, ref, onMounted } from "vue";
+import { computed, onUnmounted, ref, onMounted, inject } from "vue";
 import { i18n_t } from "src/boot/i18n.js";
 import lodash from "lodash"
 
@@ -72,7 +72,7 @@ import lodash from "lodash"
   //   'results-footer': results_footer
   // },
   // 国际化
-
+  const get_detail_data = inject('get_detail_data', {})
   // 图片
   let yellow_img = ref('image/bw3/svg/match-results/yellow.svg')
   let red_img = ref('image/bw3/svg/match-results/red.svg')
@@ -95,7 +95,7 @@ import lodash from "lodash"
     get_list()
   })
   const match_id = computed(() => {
-    return route.params.mid || get_detail_data.mid
+    return route.params.mid || get_detail_data.value.mid
   })
   const imgWidth = computed(() => {
     return function (item) {
@@ -112,12 +112,7 @@ import lodash from "lodash"
         }
       }
   })
-  // computed: {
-  //   ...mapGetters(["get_goto_detail_matchid", 'get_detail_data', 'get_lang']),
-  //   // 赛事id
-  //   match_id() {
-  //     return $route.params.mid || get_detail_data.mid
-  //   },
+  
   //   // 时间线icon
   //   imgWidth() {
 
@@ -127,7 +122,7 @@ import lodash from "lodash"
   const get_list = async () => {
      // {mid: match_id} TODO: 待处理
       try {
-        let reslut = await api_analysis.get_event_result({mid: route.params.mid || get_detail_data.mid})
+        let reslut = await api_analysis.get_event_result({mid: route.params.mid || get_detail_data.value.mid})
         let res = ''
       if (lodash.get(reslut, 'status')) {
         res = reslut.data

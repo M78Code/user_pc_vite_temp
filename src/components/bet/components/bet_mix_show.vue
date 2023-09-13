@@ -35,7 +35,7 @@
             <span class="yb_fontsize22" :class="{ 'red': odds_change == 1, 'green': odds_change == 2 }">
               <template v-if="get_bet_status == 3 && bet_success_obj.oddsValues">{{
                 format_odds(value_show.csid, bet_success_obj.oddsValues) }}</template>
-              <template v-else>{{ odds_value() }}</template>
+              <!-- <template v-else>{{ odds_value() }}</template> -->
             </span>
             <!-- 红升绿降 -->
             <span :class="{ 'red-up': odds_change == 1, 'green-down': odds_change == 2 }" class="odd-change yb_ml4"
@@ -153,8 +153,8 @@
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_odds">
-            <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
-              odds_value(true) }}</div>
+            <!-- <div class="odd_text">{{ (pre_odds ? pre_odds : (pre_odds === 0 || pre_odds === '0' ? '0' : '')) ||
+              odds_value(true) }}</div> -->
             <span class="money-span" ref="money_span"
               :class="{ 'money-span2': !(BetData_H5.active_index == 'pre' + index_) }"></span>
           </div>
@@ -199,9 +199,10 @@ import BetData from "src/core/bet/class/bet-data-class.js";
 import BetData_H5 from "src/core/bet/class/bet-data-class-h5.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 // import { UserCtr } from "src/core/index.js";
-// import { calc_bifen,calc_bifen2 ,format_odds  } from "src/core/index.js";
+import { calc_bifen, format_odds } from "src/core/format/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
-import {compute_value_by_cur_odd_type} from  "src/core/format/module/format-odds-conversion-mixin.js"
+import { compute_value_by_cur_odd_type } from "src/core/format/module/format-odds-conversion-mixin.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 
 import lodash from 'lodash'
@@ -225,14 +226,23 @@ let rq_market_value_min = ref(-10) //让球类玩法最小盘口值
 let market_value_unit = ref(0.25)//盘口变动值，默认足球0.25，篮球是0.5
 let focus_type = ref(0) // 光标聚焦到哪里
 
+const show_pre = ref(false)   //预约投注相关
+
+const bet_mix_detail = ref()  // ref组件
+const money_span = ref()  // ref组件
+const money_span_market = ref()  // ref组件
+
 const score = ref('ssss')
 const view_ctr_obj = ref({})
 const update_tips = BetData.update_tips
 const bet_list = BetData.bet_list
-const  get_is_champion = ref(true)
+const get_is_champion = ref(true)
+
+let timer = null;
+let timer2 = null;
+let timer3 = null;
 
 onMounted(() => {
-  console.error('props',props)
   timer = null;
   timer2 = null;
   timer3 = null;
@@ -258,10 +268,10 @@ onMounted(() => {
     market_value_unit.value = 0.5
   }
   // 初始化预约投注的赔率和盘口
-  if (show_pre) {
-    pre_ov.value = view_ctr_obj[name_].pre_odds
-    low_odds.value = view_ctr_obj[name_].min_odds || bet_obj_ov
-    pre_market_value.value = view_ctr_obj[name_].pre_market_value
+  if (show_pre.value) {
+    pre_ov.value = view_ctr_obj[props.name_].pre_odds
+    low_odds.value = view_ctr_obj[props.name_].min_odds || bet_obj_ov
+    pre_market_value.value = view_ctr_obj[props.name_].pre_market_value
   }
   //设置当前预约投注索引
   if (!has_pre.own_ && has_pre.others) {
@@ -271,7 +281,7 @@ onMounted(() => {
 })
 
 const props = defineProps({
-  name_: String,
+  name_: String | Number,
   index_: Number,
   order_detail_resp_list: {
     type: Array,
@@ -301,7 +311,7 @@ const props = defineProps({
 //   return '36.5'
 //   const ol_obj = lodash.get(value_show.value, 'hps[0].hl[0].ol[0]')
 //   const hps_obj = lodash.get(value_show.value, 'hps[0]')
-//   if (!BetData.bet_is_mix && show_pre && pre_switch.value && new_) {
+//   if (!BetData.bet_is_mix && show_pre.value.value&& pre_switch.value && new_) {
 //     const method_type = ol_obj.ot
 //     const new_arr = new_.replace(/\(/,'').replace(/\)/,'').split('-') || []
 //     if (['Over', 'Under'].includes(method_type) && new_arr.length > 1) {
@@ -331,15 +341,15 @@ const props = defineProps({
 
 // //监控投注项
 // watch(() => view_ctr_obj, (new_) => {
-//   pre_switch.value = new_[name_].pre_switch
-//   if (new_[name_].market_tips == 1) {
-//     pre_market_value.value = new_[name_].pre_market_value
+//   pre_switch.value = new_[props.name_].pre_switch
+//   if (new_[props.name_].market_tips == 1) {
+//     pre_market_value.value = new_[props.name_].pre_market_value
 //     if (BetData.active_index == 'market' + index_) {
 //       send_market_to_keyboard()
 //     }
 //     tips_msg_update(i18n_t('pre_record.market_error_info_low'))
 //     let bet_obj = lodash.cloneDeep(view_ctr_obj)
-//     bet_obj[name_].market_tips = 0
+//     bet_obj[props.name_].market_tips = 0
 //     set_bet_obj(bet_obj)
 //     clearTimeout(timer3)
 //     timer3 = setTimeout(() => {
@@ -347,9 +357,9 @@ const props = defineProps({
 //     }, 3000);
 //     return
 //   }
-//   if (new_[name_].pre_odds && new_[name_].pre_odds > pre_ov.value) {
+//   if (new_[props.name_].pre_odds && new_[props.name_].pre_odds > pre_ov.value) {
 //     pre_odds.value = ''
-//     pre_ov.value = new_[name_].pre_odds
+//     pre_ov.value = new_[props.name_].pre_odds
 //     tips_msg_update(i18n_t('error_msg_info.0400540.client_msg'))
 //     clearTimeout(timer3)
 //     timer3 = setTimeout(() => {
@@ -363,7 +373,7 @@ const props = defineProps({
 // //检测预约赔率变化，更新至投注对象
 // watch(() => pre_ov, (new_) => {
 //   let bet_obj = lodash.cloneDeep(view_ctr_obj)
-//   bet_obj[name_].pre_odds = new_
+//   bet_obj[props.name_].pre_odds = new_
 //   set_bet_obj(bet_obj)
 // })
 
@@ -609,7 +619,7 @@ const show_market_shadow_max = computed(() => {
 })
 //预约投注开关
 const authorityOptionFlag = computed(() => {
-  return (!BetData.bet_is_mix) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre)
+  return (!BetData.bet_is_mix) && pre_switch.value && (!BetData.is_bet_success_status) && authorityFlag && (!show_pre.value)
 })
 //判断该商户是否有权限预约投注
 const authorityFlag = computed(() => {
@@ -633,25 +643,7 @@ const pre_or_bet = computed(() => {
   return status
 })
 const bet_obj_item = computed(() => {
-  // return view_ctr_obj[name_]
-  return {
-    cds:"LS",
-    dfrom:"check_odds_beforebet",
-    hid:"142241294543806611",
-    hpid:"1",
-    hs:0,
-    id_:"143906561595713553",
-    mid:"2726566",
-    ms:0,
-    oid:"143906561595713553",
-    on:"主胜",
-    onb:"主胜",
-    os:2,
-    ot:"1",
-    otd:47,
-    ots:"T1",
-    ov:0
-  }
+  return view_ctr_obj[props.name_]
 })
 //投注对象数据
 const value_show = computed(() => {
@@ -660,9 +652,9 @@ const value_show = computed(() => {
 //判断当前投注项里面是否是预约单
 const has_pre = computed(() => {
   return 'false'
-  const item_name = lodash.findKey(view_ctr_obj, function (o) { return o.show_pre })
+  const item_name = lodash.findKey(view_ctr_obj, function (o) { return o.show_pre.value.value})
   if (item_name) {
-    if (item_name == name_) {
+    if (item_name == props.name_) {
       return {
         own_: false,
         others: true
@@ -724,7 +716,7 @@ const bet_obj_os = computed(() => {
 })
 //是否显示下边线
 const show_border = computed(() => {
-  return BetData.bet_list[BetData.bet_list.length - 1] != name_ && BetData.bet_is_mix
+  return BetData.bet_list[BetData.bet_list.length - 1] != props.name_ && BetData.bet_is_mix
 })
 // 每个投注项赔率和盘口状态是否正常
 const status_normal = computed(() => {
@@ -739,6 +731,8 @@ const status_normal = computed(() => {
     */
 const odds_value = computed(() => {
   console.error('ssss9988', value_show.value)
+  console.error('ssss4444444', props.name_)
+  return '1'
   return (is_pre) => {
     let val = (is_pre ? pre_ov.value : bet_obj_ov) / 100000,
       hsw = value_show.value.hps[0].hsw;
@@ -783,6 +777,11 @@ const hptype = computed(() => {
 /** --------------------------事件开始 ---------------*/
 
 // ...mapMutations(["set_pre_market_data","set_keyboard_show","set_odds_change","set_active_index", "set_bet_status", "set_change_list", "set_invalid_ids", "set_order_ing", "set_order_los", "set_money_total"]),
+// 格式化比分
+const calc_bifen2 = (value) => {
+  return '(' + String(value).replace(':', '-') + ')';
+}
+
 const calc_mixcount = () => {
   console.error(111)
 }
@@ -852,7 +851,7 @@ const focus_market = () => {
   if (value_show.value.csid == 2) {
     market_value_unit.value = 1
     set_keyboard_show(true)
-    let ele = $refs.bet_mix_detail
+    let ele = bet_mix_detail.value
     ele && ele.scrollIntoView({ block: "nearest" })
     if (BetData.active_index == 'market' + index_) { return }
     send_market_to_keyboard()
@@ -863,7 +862,7 @@ const focus_market = () => {
 const focus_odds = () => {
   market_value_unit.value = 0
   set_keyboard_show(true)
-  let ele = $refs.bet_mix_detail
+  let ele = bet_mix_detail.value
   ele && ele.scrollIntoView({ block: "nearest" })
   if (BetData.active_index == 'pre' + index_) { return }
   send_odds_to_keyboard()
@@ -872,7 +871,7 @@ const focus_odds = () => {
 const flicker_ = () => {    //光标闪动，animation有兼容问题，用函数替代
   clearInterval(flicker_timer.value)
   flicker_timer.value = setInterval(() => {
-    let ele = !market_value_unit.value ? $refs.money_span : $refs.money_span_market
+    let ele = !market_value_unit.value ? money_span.value : money_span_market.value
 
     if (ele) {
       ele.classList.toggle('money-span3')
@@ -901,10 +900,10 @@ const remove_ = (id_) => {
  */
 const handlePre = (del) => {
   //将预约状态更新至投注项缓存
-  if (show_pre && del) { return }
+  if (show_pre.value.value&& del) { return }
   let bet_obj = lodash.cloneDeep(view_ctr_obj)
   pre_odds.value = ''
-  bet_obj[name_].show_pre = del
+  bet_obj[props.name_].show_pre.value.value= del
   if (del) {
     fetch_pre_limit_money_and_odd_info()
     pre_ov.value = Number(bet_obj_ov)
@@ -912,7 +911,7 @@ const handlePre = (del) => {
     pre_market_value.value = bet_obj_hv
     // 清空单关多项其他金额以及总金额
     Object.keys(bet_obj).map((key) => {
-      if (key != name_) {
+      if (key != props.name_) {
         bet_obj[key].money = 0
         bet_obj[key].full_bet = 0
       } else {
@@ -922,9 +921,9 @@ const handlePre = (del) => {
     })
   } else {
     fetch_limit_money_and_odd_info()
-    delete bet_obj[name_].pre_odds
-    delete bet_obj[name_].pre_market_value
-    delete bet_obj[name_].min_odds
+    delete bet_obj[props.name_].pre_odds
+    delete bet_obj[props.name_].pre_market_value
+    delete bet_obj[props.name_].min_odds
     set_pre_market_data([])
   }
   set_bet_obj(bet_obj)
@@ -1217,22 +1216,22 @@ const clear_timer = () => {
 /** --------------------------事件结束 ---------------*/
 
 
-onUnmounted(() => {
-  clear_timer()
+// onUnmounted(() => {
+//   clear_timer()
 
 
 
 
 
-  for (const key in $data) {
-    $data[key] = null
-  }
+//   for (const key in $data) {
+//     $data[key] = null
+//   }
 
-  //移除相应监听事件 //视图销毁钩子函数内执行
-  if (emitters_off) { emitters_off() }
+//   //移除相应监听事件 //视图销毁钩子函数内执行
+//   if (emitters_off) { emitters_off() }
 
 
-})
+// })
 
 
 </script>

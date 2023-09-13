@@ -18,7 +18,7 @@
  * @Date 2019/12/21 15:15:50
  */
 import mathjs from "./mathjs"
- import BetCountJointNumber from ".bet-countjoint-number.js"
+ import { BetCountJointNumber } from "src/core/bet/common-helper/index.js"
 export function get_max_win_money(bet_list, bet_obj, bet_s_list, series_values, bet_amount, that) {
   if(isNaN(bet_amount) || bet_amount == 0)
   {

@@ -73,7 +73,6 @@ import { defineComponent } from "vue";
 import { i18n_t } from "src/core/index.js";
 import store from "src/store-redux/index.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
-import { MenuWapper } from "src/components/menu";
 
 export default defineComponent({
   beforeRouteEnter(to, from, next) {
@@ -94,9 +93,9 @@ export default defineComponent({
           // vm.set_current_esport_csid(vm.prev_export_csid);
 
           //新手版或专业版在其他页面被改变,需要重新计算列表赛事dom 赛事列表是专业版，跳到虚拟体育被手动改新手版rn 重新计算dom r
-          if (vm.standard_edition_type != vm.get_newer_standard_edition) {
+          if (vm.standard_edition_type != vm.newer_standard_edition.value) {
             MatchListCard.run_process_when_need_recompute_container_list_when_first_load_list();
-            vm.standard_edition_type = vm.get_newer_standard_edition;
+            vm.standard_edition_type = vm.newer_standard_edition.value;
           }
         }
         //赛果精选赛事列表与赛事列表是同一个组件,所以滚动逻辑有影响
@@ -141,6 +140,7 @@ import { computed, onBeforeMount, onUnmounted, onMounted, watch, onDeactivated, 
 import { useRoute, useRouter } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
+import { MenuWapper } from "src/components/menu";
 import store from "src/store-redux/index.js";
 import { utils } from "src/core/index.js";
 
@@ -149,10 +149,11 @@ import { utils } from "src/core/index.js";
 import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
-import { MenuData, score_switch_handle } from "src/core/index.js";
 import matchList from "./components/match-list.vue";
+import PageSourceData from "src/core/page-source/page-source.js";
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
+import { MenuData, score_switch_handle } from "src/core/index.js";
 
 import 'project_path/src/css/pages/match-main.scss'
 
@@ -200,6 +201,9 @@ const timer_super6 = ref(null);
 const timer_super9 = ref(null);
 const subscription_timer1 = ref(null);
 
+//新手版标准版 1 2
+const newer_standard_edition = ref(PageSourceData.newer_standard_edition);
+
 const get_uid = ref(store_state.get_uid);
 
 const get_bet_status = ref(store_state.get_bet_status);
@@ -208,14 +212,10 @@ const show_favorite_list = ref(store_state.show_favorite_list);
 // 显示筛选頁面
 const get_show_match_filter = ref(store_state.get_show_match_filter);
 
-//新手版标准版 1 2
-const get_newer_standard_edition = ref(store_state.get_newer_standard_edition);
 // 详情页的数据
 const get_detail_data = ref(store_state.get_detail_data);
 // 改变了收藏状态
-const get_details_changing_favorite = ref(
-  store_state.get_details_changing_favorite
-);
+const get_details_changing_favorite = ref(store_state.get_details_changing_favorite);
 // 右侧设置菜单显示时 , 不显示骨架屏
 const get_is_show_menu = ref(store_state.get_is_show_menu);
 // 次要玩法展开映射
@@ -232,14 +232,12 @@ onBeforeMount(() => {
 onMounted(() => {
   page_style.value = compute_css_variables({ category: 'component', module: 'match' })
 
-  console.log(page_style.value)
-
   if (props.invok_source) {
     ws_invoke_key.value = props.invok_source;
   }
   // 初始化赛事列表操作工具类
-  standard_edition_type.value = get_newer_standard_edition;
-  if (get_newer_standard_edition == 2) {
+  standard_edition_type.value = newer_standard_edition.value;
+  if (newer_standard_edition.value == 2) {
     newer_standard_changing.value = true;
   } else {
     MatchListCard.sliding_can_trigger_process_distance = 500;
@@ -339,7 +337,7 @@ watch( () => MenuData.footer_sub_menu_id, () => {
 );
 
 // 新手版标准版切换
-watch( () => get_newer_standard_edition.value, () => {
+watch( () => newer_standard_edition.value, () => {
     if (MenuData.current_menu == 900) {
       //虚拟体育
       return;
@@ -348,7 +346,7 @@ watch( () => get_newer_standard_edition.value, () => {
     if (n == 1) {
       MatchListCard.sliding_can_trigger_process_distance = 500;
     }
-    standard_edition_type.value = get_newer_standard_edition;
+    standard_edition_type.value = newer_standard_edition.value;
     run_process_when_need_recompute_container_list_when_scroll(false, {
       update_type: "standard_simple_change",
     });
@@ -544,7 +542,6 @@ const update_state = () => {
   get_bet_status.value = new_state.get_bet_status;
   show_favorite_list.value = new_state.show_favorite_list;
   get_show_match_filter.value = new_state.get_show_match_filter;
-  get_newer_standard_edition.value = new_state.get_newer_standard_edition;
   get_detail_data.value = new_state.get_detail_data;
   get_details_changing_favorite.value = new_state.get_details_changing_favorite;
   get_is_show_menu.value = new_state.get_is_show_menu;
@@ -568,41 +565,15 @@ const clear_timer = () => {
 // 绑定相关事件监听
 const on_listeners = () => {
   emitters.value = {
-    emitter_1: useMittOn(
-      MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD,
-      () => MatchPage.footer_event
-    ).off,
-    emitter_2: useMittOn(
-      MITT_TYPES.EMIT_MAIN_MENU_CHANGE,
-      () => MatchPage.main_menu_change
-    ).off,
-    emitter_3: useMittOn(
-      MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE,
-      () => MatchPage.before_load_third_menu_handle
-    ).off,
-    emitter_4: useMittOn(
-      MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,
-      special_hps_load_handle
-    ).off,
-    emitter_5: useMittOn(
-      MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED,
-      () => MatchPage.counting_down_start_ended_on
-    ).off,
-    emitter_6: useMittOn(
-      MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE,
-      () => MatchPage.bet_odd_synchronize_handle
-    ).off,
-    emitter_7: useMittOn(
-      MITT_TYPES.EMIT_MATCH_LIST_SCROLLING,
-      () => MatchListCard.match_list_scroll_handle
-    ).off,
-    emitter_8: useMittOn(
-      MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE,
-      MatchListCard.secondary_play_unfold_change_handle
-    ).off,
-    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () =>
-      MatchListCard.tab_changing_handle()
-    ).off,
+    emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, () => MatchPage.footer_event).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, () => MatchPage.main_menu_change).off,
+    emitter_3: useMittOn(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE, () => MatchPage.before_load_third_menu_handle).off,
+    emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
+    emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on).off,
+    emitter_6: useMittOn(MITT_TYPES.EMIT_BET_ODD_SYNCHRONIZE, () => MatchPage.bet_odd_synchronize_handle).off,
+    emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle).off,
+    emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
+    emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle).off,
   };
 };
 // 移除相关事件监听
@@ -628,6 +599,7 @@ onUnmounted(() => {
 defineExpose({
   event_init,
   destroy_handle,
+  newer_standard_edition
 });
 </script>
 <style scoped lang="scss">

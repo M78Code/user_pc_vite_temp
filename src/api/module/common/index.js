@@ -30,8 +30,8 @@ export const post_match_full_list = (params) => {
   if(params.query){
     url += params.query;
   }
-  // const queryParams = {"cuid":"507622831280100011","euid":"40203","type":3,"sort":1,"device":"v2_h5_st","hpsFlag":0}
-  const queryParams = {"cuid":"507915205315200008","euid":"40303","type":4,"sort":1,"device":"v2_h5_st","category":1,"md":"","hpsFlag":0}
+  const queryParams = {"cuid":"508169450736300035","euid":"40003","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
+  // const queryParams = {"cuid":"508169450736300035","euid":"40003,40004,40006,40007,40008,40009,40012,40010,40015,40016,40017,40020,40021,40022,40011,40013","type":1,"sort":2,"device":"v2_h5_st","hpsFlag":0}
   return http.post(`${prefix_job}${url}`, queryParams, {axios_debounce_cache_key:'post_match_full_list',type:2});
 };
 
@@ -262,7 +262,7 @@ export const post_menu_play_count = (params, config={}, url = "/v2/w/menu/queryP
 
  
 //从服务器获取时间戳
-export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix}${url}`, params, config);
+export const get_server_time = (params, config={}, url = "/v1/getSystemTime/currentTimeMillis") => http.get(`${prefix_job}${url}`, params, config);
 
 // 根据赛事IDs，获取赛事事件
 export const match_event = (params, config={}, url = "/v1/matchevent") => http.post(`${prefix}${url}`, params, config);

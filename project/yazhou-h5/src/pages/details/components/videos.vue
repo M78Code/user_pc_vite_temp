@@ -22,7 +22,7 @@
             </div>
             <div class="row" style="margin-right:0.1rem;max-width:2.43rem;">
               <div class="col title-text-style">{{title.mhn}}</div>
-              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
+              <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
               <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
               <div class="col title-text-style">{{title.man}}</div>
             </div>
@@ -51,7 +51,7 @@
           <img  src="image/bw3/svg/video_reload.svg" :class="[rotate ? 'rotate_2': 'rotate_1']">
         </div>
         <div style="padding: 0.1rem;color:#6D7075;">
-          {{t("video.sorry")}}
+          {{i18n_t("video.sorry")}}
         </div>
       </div>
 
@@ -63,13 +63,13 @@
         <div class="floating-layer" v-if="first_login" @click.self.stop="first_login = false">
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/one-click.svg" alt="">
-            <span>{{t("video.click_on")}}</span>
-            <p>{{t("video.show_hide")}}</p>
+            <span>{{i18n_t("video.click_on")}}</span>
+            <p>{{i18n_t("video.show_hide")}}</p>
           </div>
           <div>
             <img class="animate-bounce-up" src="image/wwwassets/bw3/svg/double-click.svg" alt="">
-            <span>{{t("video.double_click")}}</span>
-            <p>{{t("video.full_screen_play")}}</p>
+            <span>{{i18n_t("video.double_click")}}</span>
+            <p>{{i18n_t("video.full_screen_play")}}</p>
           </div>
         </div>
 
@@ -89,7 +89,7 @@
         ></iframe>
         <div class="load-error-mask" v-show="is_replay_load_error">
           <div><img src="image/bw3/svg/details/reconnect.svg" /></div>
-          <div>{{ t('highlights.reconnect') }}</div>
+          <div>{{ i18n_t('highlights.reconnect') }}</div>
         </div>
 
         <template v-if="is_playing_replay">
@@ -125,7 +125,7 @@
             <!--（精彩/收起）回放 -->
             <div v-if="events_list.length" class="toggle-replay-video-wrap hairline-border" :class="{'move-up': is_expand_video_list}" @click="toggle_slider_btn">
               <img src="image/bw3/svg/details/replay_toggle.svg" />
-              <span>{{ !is_expand_video_list ? t('highlights.title') : t('highlights.collapse_replay') }}</span>
+              <span>{{ !is_expand_video_list ? i18n_t('highlights.title') : i18n_t('highlights.collapse_replay') }}</span>
             </div>
 
             <!-- 关闭回放视频 -->
@@ -158,7 +158,7 @@
 
         <!-- 长时间未操作 -->
         <div v-if="is_show_no_handle" class="no-handle information-score">
-          <div class="text text-center">{{t('video.nohandle')}}</div>
+          <div class="text text-center">{{i18n_t('video.nohandle')}}</div>
           <div class="collect-icon" @click="is_show_no_handle = false"></div>
         </div>
         <!-- 动画背景遮罩层 -->
@@ -194,7 +194,7 @@
               <!-- 动画不显示对阵信息 -->
               <div v-if="get_video_url.active == 'muUrl'" class="col-10 row" style="max-width: 2.43rem;">
                 <div class="col title-text-style">{{title.mhn}}</div>
-                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
+                <div class="col title-text-style eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
                 <div v-else :style="{visibility: get_detail_data.ms == 110 ? 'hidden':'visible'}" class="col title-text-style">{{title.msc}}</div>
                 <div class="col title-text-style">{{title.man}}</div>
               </div>
@@ -248,7 +248,7 @@
           class="description-popup"
         >
           <span class="font_color" @click="show_HD_SD" v-if="get_detail_data.lvs != -1 && _.get(get_detail_data,'lss') ==  1&& get_video_url.active == 'lvs'">
-            {{get_hd_sd == 1 ? t("common.HD"): t("common.SD")}}
+            {{get_hd_sd == 1 ? i18n_t("common.HD"): i18n_t("common.SD")}}
           </span>
           <div class="img-wrap">
             <img :src="tips ? tips_act :tips_def" @click="change_info"/>
@@ -258,7 +258,7 @@
     </div>
     <div class="tips details_bg6 details_t_color1" v-if="tips && video_iframe_status != 'error'">
       <div class="tips_content details_t_color3">
-        {{t("video.msg")}}
+        {{i18n_t("video.msg")}}
       </div>
     </div>
     <div v-if="(get_is_hengping && get_analyze_show)"  :class="{'analyze-show':(get_is_hengping && get_analyze_show)}">
@@ -288,8 +288,9 @@ import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { video_info } from "./videos.js";
 import { defineComponent, reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
-import { t } from "src/boot/i18n.js";
-import UserCtr from "src/core/user-config/user-ctr.js";;
+import { i18n_t } from "src/boot/i18n.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+const get_detail_data = inject('get_detail_data', {})
 
 //国际化
 
@@ -366,10 +367,10 @@ export default defineComponent({
       is_expand_video_list: false,
       // 事件类型菜单选项
       tab_list:[
-        {title: t('footer_menu.all')},
-        {title:t('match_result.goal')},
-        {title:t('match_result.corner_kick')},
-        {title:t('football_playing_way.penalty_cards')},
+        {title: i18n_t('footer_menu.all')},
+        {title:i18n_t('match_result.goal')},
+        {title:i18n_t('match_result.corner_kick')},
+        {title:i18n_t('football_playing_way.penalty_cards')},
       ],
       // 当前播放视频信息
       current_event_video: {
@@ -411,7 +412,7 @@ export default defineComponent({
     // 详情页的数据
     const get_detail_data = computed(() => {
       return ""
-    });
+    })
     // // 用户令牌信息
     // const get_user_token = computed(() => {
     //   return ""
@@ -472,7 +473,7 @@ export default defineComponent({
     });
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return get_detail_data.lvs != -1 && get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+      return get_detail_data.value.lvs != -1 && get_video_url.active != 'lvs' && ['string', 'number'].includes(typeof _.get(get_detail_data.value,'lss')) && ['zh','tw'].includes(get_lang)
     });
     // 判断此商户是否属于乐天
     const is_letian = computed(() => {
@@ -489,11 +490,11 @@ export default defineComponent({
     });
     // 动画下显示tips icon
     const show_animation = computed(() => {
-      return get_detail_data.mvs > -1 && get_video_url.active == 'animationUrl'
+      return get_detail_data.value.mvs > -1 && get_video_url.active == 'animationUrl'
     });
     // 媒体类型
     const media_type = computed(() => {
-      const {lss} = get_detail_data
+      const {lss} = get_detail_data.value
       const {active} = get_video_url
 
       // 专题视频，mp4等带有可控制进度条
@@ -506,7 +507,7 @@ export default defineComponent({
     });
     // 赛事id
     const match_id = computed(() => {
-      return $route.params.mid || get_detail_data.mid
+      return $route.params.mid || get_detail_data.value.mid
     });
     // 赛事id
     const score = computed(() => {
@@ -653,7 +654,7 @@ export default defineComponent({
       () => get_video_url.value,
       (new_value, old_value) => {
         if(new_value.active == 'muUrl'){
-          if ([100,101,102,103].includes(+get_detail_data.csid)){
+          if ([100,101,102,103].includes(+get_detail_data.value.csid)){
             iframe_src = new_value.media_src + dj_http_fix(new_value.media_src) +'controls=1'
           } else {
             iframe_src = new_value.media_src + '&controls=1'
@@ -671,7 +672,7 @@ export default defineComponent({
         }
         else{
           if (new_value.referUrl && new_value[new_value.active]) {
-            if ([100,101,102,103].includes(+get_detail_data.csid)){
+            if ([100,101,102,103].includes(+get_detail_data.value.csid)){
               iframe_src = new_value[new_value.active] + dj_http_fix(new_value[new_value.active]) +'controls=1'
             } else {
               iframe_src = new_value[new_value.active] + '&controls=1'
@@ -714,7 +715,7 @@ export default defineComponent({
       (new_value) => {
         if(new_value == -1 && get_video_url.active == 'animationUrl'){
           set_toast({
-            txt: t("video.close_1"),
+            txt: i18n_t("video.close_1"),
           });
           close_video()
         }
@@ -727,7 +728,7 @@ export default defineComponent({
         if(new_value != 2 && get_video_url.active == 'muUrl'){
           close_video()
           set_toast({
-            txt: t("video.close_2"),
+            txt: i18n_t("video.close_2"),
           });
         }
       }

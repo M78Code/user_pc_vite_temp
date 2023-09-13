@@ -89,6 +89,7 @@ import { utils } from 'src/core/index.js'
 import {MenuData } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
+import oddListWrap from './odd-list-wrap.vue';
 
  // TODO: 其他模块得 store  待添加
  // mixins:[match_list_mixin],

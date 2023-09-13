@@ -50,33 +50,31 @@ import footballStandings from "project_path/src/pages/details/analysis-matches/c
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
 import historyEngagement from "project_path/src/pages/details/analysis-matches/components/history-engagement.vue"
 // 详情页  足球赛事分析 战绩 模块里边的 历史交战
-// import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
+import recentRecord from "project_path/src/pages/details/analysis-matches/components/recent-record.vue"
 // 详情页 或者 赛果  足球
-// import futureSchedule from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
+import futureSchedule from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/future-schedule.vue"
 // 伤停情况
-// import injurySituation from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
+import injurySituation from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/injury-situation.vue"
 // 技术面
-// import standingsTechnical from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
+import standingsTechnical from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-technical.vue"
 // 盘面
-// import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
+import standingsDisk from "project_path/src/pages/details/analysis-matches/football-match-analysis/components/standings-disk.vue"
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
  // 加载中
 // import loading from "project_path/src/components/common/loading.vue";
-import { computed, ref, nextTick, onUnmounted, onMounted } from 'vue'
+import { computed, ref, nextTick, onUnmounted, onMounted, inject } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import { useRoute } from 'vue-router'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
+
+const get_detail_data = inject('get_detail_data', {})
 // TODO: 临时用
-let get_detail_data = ref({
-  mid: '1',
-  csid: '1',
-  cds: ''
-})
+
     let get_event_list = ref([])
-    let get_lang = ref('zh')
     let get_analyze_show = ref(false)
   // components: {
   //   "football-standings": football_standings,
@@ -90,44 +88,44 @@ let get_detail_data = ref({
   // },
   // 国际化
 
-  let tab_list = ref([
-        {name: t('analysis_football_matches.Fundamentals')},
-        {name: t('analysis_football_matches.Disk')},
-        {name: t('analysis_football_matches.Technical_side')}
+  const tab_list = ref([
+        {name: i18n_t('analysis_football_matches.Fundamentals')},
+        {name: i18n_t('analysis_football_matches.Disk')},
+        {name: i18n_t('analysis_football_matches.Technical_side')}
       ])
-  let tabIndex = ref(0)
+  const tabIndex = ref(0)
   // 基本面的数据
-  let future_schedule_data = ref({})
+  const future_schedule_data = ref({})
   // 伤停情况
-  let injury_situation_data = ref({init: null})
+  const injury_situation_data = ref({init: null})
   // 盘面的数据
-  let matchHistory_battle_dto_map = ref({init: null})
+  const matchHistory_battle_dto_map = ref({init: null})
   // 技术面的数据
-  let homeAwayGoal_and_coach_map = ref({init: null})
-  let loading = ref(false)
+  const homeAwayGoal_and_coach_map = ref({init: null})
+  const loading = ref(false)
   const route = useRoute()
 
   onMounted(() => {
     //   // 添加监听 赛事分析刷新事件
     useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
 
-    if(get_detail_data.csid == 1) {
+    if(get_detail_data.value.csid == 1) {
       get_data_list()
     }
   })
 
   const match_id =  computed(() => {
     // TODO: 后续修改调整 'get_detail_data'
-        return route.params.mid || get_detail_data.mid
+        return route.params.mid || get_detail_data.value.mid
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
     useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
 
     tab_list.value = ref([
-        {name: t('analysis_football_matches.Fundamentals')},
-        {name: t('analysis_football_matches.Disk')},
-        {name: t('analysis_football_matches.Technical_side')}
+        {name: i18n_t('analysis_football_matches.Fundamentals')},
+        {name: i18n_t('analysis_football_matches.Disk')},
+        {name: i18n_t('analysis_football_matches.Technical_side')}
       ])
   })
   const get_data_list = async() => {
@@ -135,17 +133,11 @@ let get_detail_data = ref({
         loading.value = true
         let parameter = {
            //2274159, //2274159 ,//2079863足球测试id
-          standardMatchId: match_id,
+          standardMatchId: match_id.value,
           parentMenuId: 2,
           sonMenuId: tabIndex.value + 1
         }
-        let results = await api_analysis.get_match_analysise_data(parameter)
-        let res = {}
-        if (results.status) {
-          res = results.data
-        } else {
-          res = results
-        }
+        let res = await api_analysis.get_match_analysise_data(parameter)
         let {code , data} = res
         loading.value = false
         if(code == 200 && Object.keys(data).length > 0) {
@@ -167,7 +159,7 @@ let get_detail_data = ref({
         matchHistory_battle_dto_map.value = {init: null}
         homeAwayGoal_and_coach_map.value = {init: null}
         // TODO: 后续修改调整 'get_detail_data'
-        if(get_detail_data.csid == 1) {
+        if(get_detail_data.value.csid == 1) {
           get_data_list()
         }
     }
@@ -183,12 +175,14 @@ let get_detail_data = ref({
 </script>
 
 <style lang="scss" scoped>
-.heade-wrapper {
+.standings {
+  background: var(--q-analysis-matches-color-42);
+  .heade-wrapper {
   width: 100%;
   height: auto;
   z-index: 100;
   margin: 0 auto;
-
+  background: var(--q-analysis-matches-color-42);
   position: sticky;
   top: 1.21rem;
   padding: 0.15rem 0.48rem;
@@ -199,14 +193,14 @@ let get_detail_data = ref({
     justify-content: center;
     align-items: center;
     border-radius: 0.08rem;
-
+    background-color: var(--q-analysis-matches-color-4);
     &::after {
       content: "";
       pointer-events: none;
       position: absolute;
       left: 0;
       top: 0;
-      border: 1px solid var(--q-color-border-color-25);
+      border: 1px solid var(--q-analysis-matches-color-26);
       border-radius: 0.16rem;
       width: 200%;
       height: 200%;
@@ -225,7 +219,8 @@ let get_detail_data = ref({
       font-size: 0.14rem;
       border-radius: 0.08rem;
       padding: 0 .15rem;
-
+      background: var(--q-analysis-matches-color-4);
+      color: var(--q-analysis-matches-color-1);
       &:nth-child(2) {
         position: relative;
 
@@ -236,6 +231,7 @@ let get_detail_data = ref({
           position: absolute;
           left: 0;
           top: 0.08rem;
+          background: var(--q-analysis-matches-color-35);
         }
 
         &:after {
@@ -245,12 +241,14 @@ let get_detail_data = ref({
           position: absolute;
           right: 0;
           top: 0.08rem;
+          background: var(--q-analysis-matches-color-35);
         }
       }
 
       &.is-active {
         height: 0.29rem;
-
+        background: var(--q-analysis-matches-color-43);
+        color: var(--q-analysis-matches-color-4);
         &:nth-child(2) {
           &:before, &:after {
             display: none;
@@ -262,4 +260,6 @@ let get_detail_data = ref({
     }
   }
 }
+}
+
 </style>

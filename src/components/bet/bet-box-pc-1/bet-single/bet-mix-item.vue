@@ -3,14 +3,14 @@
    <!-- active 1 开盘 4 锁盘-->
   <q-card flat class="relative-position bet-mix-item-card"
     :class="{ 'bet-no-effect': !(ref_data.active == 1 || ref_data.active == 4) || !(ref_data.is_serial && ref_data.serial_type) || ref_data.match_update }">
-    <div >1-1--1-1- {{ BetData.bet_data_class_version }} </div>
+    <div style="display: none;">{{ BetData.bet_data_class_version }} </div>
     <!--玩法,提示及删除区域-->
     <q-card-section>
       <!--不是冠军-->
       <div class="row" v-if="ref_data.match_type != 3">
         <div class="col bet-league-name">
           <!--联赛名称-->
-          {{ item.league_name }}
+          {{ item.tid_name }}
         </div>
         <div class="col-auto">
           <!--删除按钮-->
@@ -27,17 +27,19 @@
             <!--主队v客队-->
             <span class="home-vs-away">
               <!--主客队队名-->
-              {{ item.home }}<span class='bet-pk'>v</span>{{ item.away }}
+              {{ item.home }}<span class='bet-pk'> v </span>{{ item.away }} 
             </span>
             <!--足,蓝,棒,乒,排-->
             <span v-if="[1, 2, 3, 8, 9].includes(item.sport_id * 1) && ref_data.timerly_basic_score">({{ ref_data.timerly_basic_score }})</span>
           </template>
         </div>
       </div>
-      <div class="row" v-if="ref_data.timerly_basic_score != 0">
+     
+      <!-- ms的值，0:未开赛 1:滚球阶段 2:暂停 3:结束 4:关闭 5:取消 6:比赛放弃 7:延迟 8:未知 9:延期 10:比赛中断 110:即将开赛 -->
+      <div class="row" v-if="item.match_ms == 0">
         <div class="col match-time">
           <!--赛事时间-->
-          {{ item.match_time }}
+          {{ formatTime(item.match_time, "mm月DD日 HH:MM") }}
         </div>
       </div>
       <div class="bet-content">
@@ -45,15 +47,15 @@
           <div class="col bet-play-game">
             <!--盘口类型，盘口名称，比分的显示 ref_data.timerly_basic_score 0 滚球-->
             <label class="bet-play-text">
-              <template v-if="ref_data.timerly_basic_score === 0">
+              <template v-if="ref_data.match_ms == 1">
                 <label class="bet-match-playing">{{ $t('menu.match_playing') }}</label>
               </template>
-              {{ item.play_name }}
+              {{ item.playName }}
               <template v-if="item.basic_score">
                 ({{ item.basic_score }})
               </template>
               <label class="bet-handicap-name">
-                {{ item.handicap_name }}
+                [{{ $t(`odds.${item.marketTypeFinally}`) }}]
               </label>
             </label>
           </div>
@@ -105,7 +107,7 @@
 <script setup>
 import { ref, reactive } from "vue"
 import lodash from 'lodash'
-import { format_odds } from 'src/core/index.js'
+import { format_odds,formatTime } from 'src/core/index.js'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 

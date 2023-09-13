@@ -86,17 +86,11 @@
 <script setup>
 import { computed } from "vue";
 import lodash from 'lodash'
-import EMITTER from  "src/global/mitt.js"
-import { defineComponent } from 'vue'
 import { i18n_t} from 'src/core/index.js'
-// import msc from '/mixins/common/msc.js';
-// import odd_convert from "/mixins/odds_conversion/odds_conversion.js";
-// import bettings from "src/project/mixins/betting/betting";
-// import common from "src/project/mixins/constant";
 import store from "src/store-redux/index.js";
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin.js";
-import {MenuData } from "src/core/index.js"
-import oddItemChampion from "src/project/pages/match-list/components/odd_item_champion.vue";
+import { MenuData } from "src/core/index.js"
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
+import oddItemChampion from "./odd-item-champion.vue";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 const props = defineProps({
   // 当前组件的赛事数据对应列表的赛事
@@ -118,7 +112,6 @@ const get_collapse_csid_map = ref(store_state.get_collapse_csid_map)
 const get_collapse_all_ball = ref(store_state.get_collapse_all_ball)
 const get_lang = ref(store_state.get_lang)
 const get_theme = ref(store_state.get_theme)
-const GlobalAccessConfig = ref(store_state.GlobalAccessConfig())
 
 const unsubscribe = store.subscribe(() => {
   update_state()
@@ -133,7 +126,6 @@ const update_state = () => {
   get_collapse_all_ball.value = new_state.get_collapse_all_ball
   get_lang.value = new_state.get_lang
   get_theme.value = new_state.get_theme
-  GlobalAccessConfig.value = new_state.GlobalAccessConfig()
 }
 
 // TODO: 其他模块得 store  待添加
@@ -317,7 +309,7 @@ const toggle_collect = (match) => {
     type:'tf',
     type2:true,
   };
-  EMITTER.emit('toggle_collect_league',param);
+  useMittEmit(MITT_TYPES.TOGGLE_COLLECT_LEAGUE,param);
 }
 
 onUnmounted(() => {

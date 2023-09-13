@@ -9,8 +9,7 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    
-    <div style="display:none;" >{{ BetData.bet_data_class_version }}</div>
+    <!-- <div>{{ BetData.bet_data_class_version }}</div> -->
 
     <q-card-section>
       <!--不是冠军-->
@@ -58,19 +57,19 @@
           <div class="col bet-play-game">
             <!--market_type: 0:滚球 若有比分是显示比分 以及盘口名称-->
             <label class="bet-play-text">
-              <template v-if="ref_data.market_type == 0">
+              <template v-if="ref_data.match_ms == 1">
                 <label class="bet-match-playing">[{{ $t('menu.match_playing') }}]</label>
               </template>
               {{ item.playName }} 
               <label v-if="ref_data.basic_score" class="score">({{ ref_data.basic_score }})</label>
-              <label class="bet-handicap-name">[{{ odds_type_name[item.marketTypeFinally] }}] </label>
+              <label class="bet-handicap-name">[{{ $t(`odds.${item.marketTypeFinally}`) }}] </label>
             </label>
           </div>
         </div>
         <!--队名及盘口区域-->
        
-        <template v-if="!ref_data.appoint">
-          <div class="row">
+         
+          <div>
             <div class="col bet-odds-value" :class="{
               'up-red': ref_data.odds_change_up,
               'down-green': ref_data.odds_change_down
@@ -86,7 +85,6 @@
               </span>
             </div>
           </div>
-        </template>
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row bet-single-input">

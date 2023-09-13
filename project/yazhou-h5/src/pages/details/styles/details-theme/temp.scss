@@ -338,7 +338,7 @@
     }
     .active-play {
       color:var(--q-color-com-fs-color-8) ;
-      background-color: var(--q-color-page-bg-color-108) !important;
+      background-color: var(--q-color-page-bg-color-10) !important;
 
     }
   }
@@ -503,7 +503,7 @@
 
     /*************** 每项odds结束 *************** -E*/
     .team-odds2 {
-      background-color: var(--q-color-page-bg-color-13);
+      background-color: var(--q-color-page-bg-color-1);
       color:var(--q-color-com-fs-color-8);
     }
   }
@@ -527,7 +527,7 @@
       }
     }
     .champion-item2 {
-      background-color: var(--q-color-page-bg-color-13);
+      background-color: var(--q-color-page-bg-color-1);
       .temp9-name,
       .temp9-ov {
         color:var(--q-color-com-fs-color-8) !important;
@@ -566,7 +566,7 @@
       border-right: 1px solid  var(--q-color-border-color-56);
     }
     .blue-color {
-      background: var(--q-color-page-bg-color-13);
+      background: var(--q-color-page-bg-color-1);
       .odds-style {
         color:var(--q-color-com-fs-color-8) !important;
       }
@@ -607,7 +607,7 @@
       border-right: 1px solid  var(--q-color-border-color-56);
     }
     .blue-color {
-      background: var(--q-color-page-bg-color-13);
+      background: var(--q-color-page-bg-color-1);
       .odds-style {
         color:var(--q-color-com-fs-color-8) !important;
       }
@@ -637,7 +637,7 @@
       color:var(--q-color-fs-color-6);
     }
     .bet-click {
-      background-color: var(--q-color-page-bg-color-13) !important;
+      background-color: var(--q-color-page-bg-color-1) !important;
       .on-color {
         color:var(--q-color-com-fs-color-8) !important;
       }
@@ -745,7 +745,7 @@
       color: var(--q-color-fs-color-50);
     }
     .active {
-      background: var(--q-color-page-bg-color-108) !important;
+      background: var(--q-color-page-bg-color-10) !important;
       .remark {
         color:var(--q-color-com-fs-color-8);
         span {
@@ -785,7 +785,7 @@
     }
     .active-play {
       color:var(--q-color-com-fs-color-8);
-      background-color: var(--q-color-page-bg-color-108) !important;
+      background-color: var(--q-color-page-bg-color-10) !important;
       & > div {
         color:var(--q-color-com-fs-color-8);
       }

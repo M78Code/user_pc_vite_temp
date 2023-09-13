@@ -1,8 +1,9 @@
 <template>
   <div class="standings_technical football_standings recent_record">
-    <template v-if="false">
+    <!-- TODO: 此代码待确认 -->
+    <!-- <template v-if="false">
       <div class="title">
-        {{ t('analysis_football_matches.Turning_trend') }}
+        {{ i18n_t('analysis_football_matches.Turning_trend') }}
       </div>
       <div class="standings-technical-home" v-for="(item, index) in 2" :key="index+'title'">
         <div class="technical-home">
@@ -23,7 +24,7 @@
             </div>
             <div class="group-item">
               <div class="team-item" v-for="(item,index) in 3" :key="index+'score'">
-                <div class="col1 flex_start">{{ t('analysis_football_matches.total_all') }}</div>
+                <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.total_all') }}</div>
                 <div class="col2 ellipsis">24</div>
                 <div class="col1">29</div>
                 <div class="col1">21</div>
@@ -35,9 +36,9 @@
           </div>
         </div>
       </div>
-    </template>
+    </template> -->
     <div class="title">
-      {{ t('analysis_football_matches.Coach_data') }}
+      {{ i18n_t('analysis_football_matches.Coach_data') }}
     </div>
     <div class="standings-technical-home" v-for="(item, index) in homeAwayGoal_and_coach_map" :key="index+'h'">
       <!-- 主队客队的 图标 及 名称 -->
@@ -57,10 +58,10 @@
       <div>
         <div class="table-score">
           <div class="standings_technical_header">
-            <div class="col1 flex_start">{{ t('analysis_football_matches.age') }}</div>
-            <div class="col1">{{ t('analysis_football_matches.Tactical_division') }}</div>
-            <div class="col1">{{ t('analysis_football_matches.Points_per_game') }}</div>
-            <div class="col-go-war">{{ t('analysis_football_matches.Go_to_war') }}</div>
+            <div class="col1 flex_start">{{ i18n_t('analysis_football_matches.age') }}</div>
+            <div class="col1">{{ i18n_t('analysis_football_matches.Tactical_division') }}</div>
+            <div class="col1">{{ i18n_t('analysis_football_matches.Points_per_game') }}</div>
+            <div class="col-go-war">{{ i18n_t('analysis_football_matches.Go_to_war') }}</div>
           </div>
           <div class="group-item">
             <div class="team-item" v-for="(content,index) in item" :key="index+'team'">
@@ -68,27 +69,26 @@
               <div class="col1">{{ content.coachStyle|| '-' }}</div>
               <div class="col1">{{ content.score|| '-' }}</div>
               <div class="col-go-war" v-if="content.coachGameCount">{{ content.coachGameCount }} (胜{{content.winCount}}平{{content.drawCount}}负{{content.loseCount}})</div>
-              <div class="col-go-war" v-else> {{ t('common.no_data') }} </div>
+              <div class="col-go-war" v-else> {{ i18n_t('common.no_data') }} </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="Object.keys(homeAwayGoal_and_coach_map).length <= 0" class="no-list">{{ t('common.no_data') }}</div>
+    <div v-if="Object.keys(homeAwayGoal_and_coach_map).length <= 0" class="no-list">{{ i18n_t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
 // import {mapGetters} from "vuex";
 // 详情页蓝色背景上的大型字母图标
-import teamImg from "src/project/components/details/team-img";
-import { t } from "src/boot/i18n.js";;
+import teamImg from "project_path/src/components/details/team-img.vue";
+import { i18n_t } from "src/boot/i18n.js";;
 //国际化
-
 
   const props = defineProps({
     homeAwayGoal_and_coach_map: {
-      type: Object | Array,
+      type: Object,
     }
   })
   // components: {
@@ -112,124 +112,145 @@ import { t } from "src/boot/i18n.js";;
 </script>
 
 <style lang="scss" scoped>
-.title {
-  height: 0.4rem;
-  line-height: 0.45rem;
-  padding-left: 0.24rem;
-  font-size: 0.14rem;
-  letter-spacing: 0;
-  font-weight: bold;
-  position: relative;
+.standings_technical.football_standings {
+  background-color: var(--q-analysis-matches-color-4);
+    .title {
+    height: 0.4rem;
+    line-height: 0.45rem;
+    padding-left: 0.24rem;
+    font-size: 0.14rem;
+    letter-spacing: 0;
+    font-weight: bold;
+    position: relative;
+    color: var(--q-analysis-matches-color-9);
+    border-bottom: 1px solid var(--q-analysis-matches-color-27);
+    background-color: var(--q-analysis-matches-color-4);
 
-  &:before {
-    content: '';
-    width: 0.03rem;
-    height: 0.12rem;
-    position: absolute;
-    left: 0.16rem;
-    top: 0.15rem;
-    border-radius: 1.5px;
+    &:before {
+      content: '';
+      width: 0.03rem;
+      height: 0.12rem;
+      position: absolute;
+      left: 0.16rem;
+      top: 0.15rem;
+      border-radius: 1.5px;
+      background: var(--q-analysis-matches-color-45);
+    }
   }
-}
 
-.standings_technical {
-  .standings-technical-home {
-    .technical-home {
-      height: 0.4rem;
+  .standings_technical {
+    .standings-technical-home {
+      .technical-home {
+        height: 0.4rem;
+        background-color: var(--q-analysis-matches-color-4)!important;
+        display: flex;
+        align-items: center;
+        padding-left: 0.1rem;
 
-      display: flex;
-      align-items: center;
-      padding-left: 0.1rem;
-
-      ::v-deep .team-img {
-        width: 0.2rem;
-        height: 0.2rem;
-        margin: 0.05rem;
-
-        img {
+        :deep(.team-img) {
           width: 0.2rem;
           height: 0.2rem;
-          position: relative;
-          border-radius: 50%;
+          margin: 0.05rem;
+
+          img {
+            width: 0.2rem;
+            height: 0.2rem;
+            position: relative;
+            border-radius: 50%;
+          }
+        }
+
+        .team-name {
+          font-size: 0.12rem;
+          color: var(--q-color-fs-color-3);
+          font-weight: bold;
+          line-height: 0.12rem;
+        }
+      }
+    }
+
+    .table-score {
+      position: relative;
+      background-color: var(--q-analysis-matches-color-4);
+      .standings_technical_header {
+        height: 0.32rem;
+        display: flex;
+        text-align: center;
+        line-height: 0.32rem;
+        padding: 0 0.1rem;
+        background-color: var(--q-analysis-matches-color-4);
+        color: var(--q-analysis-matches-color-46);
+        border-bottom: 1px solid var(--q-analysis-matches-color-29);
+        border-top: 1px solid var(--q-analysis-matches-color-29);
+      }
+
+      .team-item {
+        display: flex;
+        align-items: center;
+        padding: 0 0.1rem;
+        font-size: 0.12rem;
+        height: 0.48rem;
+        text-align: center;
+
+        div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.12rem;
+          color: var(--q-color-com-fs-color-26) !important;
         }
       }
 
-      .team-name {
-        font-size: 0.12rem;
-        color: var(--q-color-fs-color-3);
-        font-weight: bold;
-        line-height: 0.12rem;
+      .col1 {
+        flex: 1;
+        justify-content: center !important;
+
+        &.flex_start {
+          flex: unset;
+          width: 0.35rem;
+        }
       }
+
+      .col2 {
+        flex: 1;
+      }
+
+      .col3 {
+        width: 0.4rem;
+      }
+
+      .col4 {
+        width: 0.4rem;
+      }
+
+      .col5 {
+        flex: 1;
+      }
+
+      .col-go-war {
+        flex: 1.3;
+      }
+    }
+
+    .no-list {
+      height: 0.6rem;
+      line-height: 0.6rem;
+      text-align: center;
+      padding-top: 0.05rem !important;
+
+
+      font-size: 12px;
     }
   }
-
-  .table-score {
-    position: relative;
-
-    .standings_technical_header {
-      height: 0.32rem;
-      display: flex;
-      text-align: center;
-      line-height: 0.32rem;
-      padding: 0 0.1rem;
-    }
-
-    .team-item {
-      display: flex;
-      align-items: center;
-      padding: 0 0.1rem;
-      font-size: 0.12rem;
-      height: 0.48rem;
-      text-align: center;
-
-      div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.12rem;
-        color: var(--q-color-com-fs-color-26) !important;
-      }
-    }
-
-    .col1 {
-      flex: 1;
-      justify-content: center !important;
-
-      &.flex_start {
-        flex: unset;
-        width: 0.35rem;
-      }
-    }
-
-    .col2 {
-      flex: 1;
-    }
-
-    .col3 {
-      width: 0.4rem;
-    }
-
-    .col4 {
-      width: 0.4rem;
-    }
-
-    .col5 {
-      flex: 1;
-    }
-
-    .col-go-war {
-      flex: 1.3;
-    }
-  }
-
   .no-list {
     height: 0.6rem;
     line-height: 0.6rem;
     text-align: center;
     padding-top: 0.05rem !important;
-
-
     font-size: 12px;
+    background-color: var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-matches-color-2);
   }
 }
+
 </style>

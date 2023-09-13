@@ -17,6 +17,7 @@
 import { ref, watch, nextTick, onMounted, defineAsyncComponent, inject } from 'vue';
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/index.js"
 import { i18n_t } from "src/boot/i18n.js";
+import {utils } from 'src/core/index.js'
 import UserCtr from "src/core/user-config/user-ctr.js";
 // 文章页
 import articleMain from "project_path/src/pages/details/analysis-matches/article/article-main.vue"
@@ -77,7 +78,7 @@ const get_detail_data = inject('get_detail_data', {})
   //   ])
   // },
   // 详情顶部切换赛事后 更新相应赛事数据
-  watch(() => get_detail_data.mid, () => {
+  watch(() => get_detail_data.value.mid, () => {
     const clone_currentCont = currentContent.value
       currentContent.value = ''
       nextTick(() => {
