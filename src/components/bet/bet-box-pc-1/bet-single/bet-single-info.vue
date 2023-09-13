@@ -9,7 +9,6 @@
     <!-- <div class="cathectic-ref_data.appoint"
       v-if="!_.isEmpty(BetData.bet_appoint_obj) && BetData.bet_appoint_obj.bet_appoint_id != id"></div> -->
     <!--玩法,提示及删除区域-->
-    
     <!-- <div>{{ BetData.bet_data_class_version }}</div> -->
 
     <q-card-section>
@@ -69,8 +68,8 @@
         </div>
         <!--队名及盘口区域-->
        
-        <template v-if="!ref_data.appoint">
-          <div class="row">
+         
+          <div>
             <div class="col bet-odds-value" :class="{
               'up-red': ref_data.odds_change_up,
               'down-green': ref_data.odds_change_down
@@ -86,7 +85,6 @@
               </span>
             </div>
           </div>
-        </template>
       </div>
       <!--金额输入区域 'pr32': is_show_keyboard, 'input-focus':is_show_keyboard,-->
       <div class="row bet-single-input">

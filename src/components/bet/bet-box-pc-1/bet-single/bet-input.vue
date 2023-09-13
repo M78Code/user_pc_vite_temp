@@ -23,7 +23,7 @@
                     {{ $t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.win_money) }}</div>
+                <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.money * (item.oddFinally || ref_data.seriesOdds) - ref_data.money ) }}</div>
             </div>
 
             <!--键盘区域-->
@@ -142,7 +142,7 @@ const set_win_money = () => {
         BetViewDataClass.set_input_money_state(1)
     }
     // 计算最高可赢金额
-    ref_data.win_money = ref_data.money * props.item.oddFinally
+    // ref_data.win_money = ref_data.money * props.item.oddFinally
 }
 </script>
 
