@@ -6,6 +6,7 @@
  */
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js' 
+console.log(i18n_t,'i18n_t');
 export default {
 
   data() {
@@ -98,6 +99,7 @@ export default {
     }
   },
   created() {
+      console.error(2122222222);
     // 从链接获取 id
     let { playId } = this.$route.query;
     this.play_id = playId;

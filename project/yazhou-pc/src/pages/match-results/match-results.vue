@@ -21,7 +21,7 @@
       <!-- 筛选条件 E-->
 
       <!-- 各球类赛果表格 S-->
-      <!-- <results
+      <rusult-type
         :sportType="sport_id"
         :load_data_state="load_data_state"
         :details_load="details_load"
@@ -35,7 +35,7 @@
         @change_playback_type="change_playback_type"
         versions="yabo"
         ref="result_ref"
-      /> -->
+      />
       <!-- 各球类赛果表格 E-->
     </div>
     <!-- 中间内容 E-->
@@ -62,7 +62,7 @@
 
 import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "src/components/match-results/results-config.js";
-// import results from "src/components/match-results/components/results.vue";
+import {RusultType} from "src/components/match-results/rusult-type/index";
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";

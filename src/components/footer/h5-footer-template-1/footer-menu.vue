@@ -836,13 +836,12 @@ watch(
     // topMenuReducer.curr_third_menu_id //三级菜单变化
   ],
   () => {
-    virtual_disable_follow_filter();
-    if (menu_h5_data.sport_all_selected) {
+    if (get_sport_all_selected.value) {
       /**
        * 滚球菜单是否选中全部菜单变化
        */
       // 简版时滚球菜单选中全部菜单时
-       // 值为 1简版 2标准版
+      // 值为 1简版 2标准版
       if (
         topMenuReducer.newer_standard_edition == 1 &&
         val &&
@@ -851,32 +850,28 @@ watch(
         let sub_menu = footer_sub_m_list.value[sub_footer_menu_i.value];
         if (lodash.get(sub_menu, "id") == 114) {
           // 当时菜单是角球时设置菜单为独赢
-          sub_menu_changed(footer_sub_m_list[0], 0);
+          sub_menu_changed(footer_sub_m_list.value[0], 0);
         }
       }
     }
+    //以前是二级二级菜单变化执行 =》 其实哪一级菜单变化不执行呢？ 1级变了难道 234级不变？
+    // if (menu_h5_data.current_lv_2_menu_i) {
+    init_play_way_selected();
+    // 32014 确定每次点击菜单 都重置为独赢
+    // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){
+    //赛马 摩托车 泥地摩托车强制改为独赢
+    let p_i = 0;
+    sub_menu_changed(footer_sub_m_list.value[p_i], p_i);
+    // }
+    set_footer_menulist();
+    // }
+    virtual_disable_follow_filter();
   }
 );
 watch(
   () => UserCtr.lang,
   () => {
     set_footer_menulist();
-  }
-);
-
-//二级菜单变化
-watch(
-  () => menu_h5_data.get_current_sub_menuid(),
-  (new_v) => {
-    init_play_way_selected();
-    // 32014 确定每次点击菜单 都重置为独赢
-    // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){
-    //赛马 摩托车 泥地摩托车强制改为独赢
-    let p_i = 0;
-    sub_menu_changed(footer_sub_m_list[p_i], p_i);
-    // }
-    set_footer_menulist();
-    virtual_disable_follow_filter();
   }
 );
 //投注栏弹层显示非0否则0

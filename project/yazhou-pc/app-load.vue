@@ -21,8 +21,7 @@ import store from "src/store-redux/index.js";
 // import { set_remote_server_time } from "./src/store/module/global";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
-import wsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
-
+import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
 const router = useRouter();
@@ -174,7 +173,7 @@ const scroll_mitt = useMittOn(
 );
 onMounted(() => {
   // 启动WS操作对象
-  wsMan.run();
+  WsMan.run();
 });
 onBeforeMount(() => {
   // 释放日志功能对象
@@ -193,7 +192,7 @@ onBeforeMount(() => {
 });
 onUnmounted(() => {
   // 销毁WS操作对象
-  wsMan.destroyed();
+  WsMan.destroyed();
 });
 </script>
 <style scoped>

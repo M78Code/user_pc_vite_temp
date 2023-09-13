@@ -355,7 +355,7 @@ class MenuData {
     // }
     // //默认黑色版还是白色版
     // return UserCtr.theme.includes("theme02") ? "focus-d" : "";
-    return 'focus-d'
+    return "focus-d";
   }
 
   //菜单名称
@@ -675,11 +675,17 @@ class MenuData {
           this.set_cache_class({
             menu_lv3: res.data,
           });
-          if (this.menu_lv3.length) {
+          if (
+            type == "init" &&
+            this.menu_lv3.length &&
+            this.current_lv_3_menu
+          ) {
             this.set_current_lv3_menu(
-              type == "init" ? this.current_lv_3_menu : res.data[0],
-              type == "init" ? this.current_lv_3_menu_i : 0
+              this.current_lv_3_menu,
+              this.current_lv_3_menu_i
             );
+          } else {
+            this.set_current_lv3_menu(this.menu_lv3[0], 0);
           }
         }
       } catch (error) {
@@ -688,15 +694,18 @@ class MenuData {
         });
       }
     } else if ([28].includes(menu_type)) {
+      console.error(this.current_lv_2_menu.subList)
       // 如果是赛果
       this.set_cache_class({
         menu_lv3: this.current_lv_2_menu.subList,
       });
-      if (this.menu_lv3.length) {
+      if (type == "init" && this.menu_lv3.length && this.current_lv_3_menu) {
         this.set_current_lv3_menu(
-          type == "init" ? this.current_lv_3_menu : res.data[0],
-          type == "init" ? this.current_lv_3_menu_i : 0
+          this.current_lv_3_menu,
+          this.current_lv_3_menu_i
         );
+      } else {
+        this.set_current_lv3_menu(this.menu_lv3[0], 0);
       }
       // this.date_menu_list = this.current_lv_2_menu.subList;
       // // 设置日期选中项 调用三级菜单点击事件，默认第一个
@@ -818,6 +827,8 @@ class MenuData {
     this.set_cache_class({
       current_lv_2_menu,
       current_lv_2_menu_i,
+      previous_lv_2_menu_i: this.previous_lv_2_menu_i,
+      previous_lv_2_menu: this.previous_lv_2_menu,
     });
     if (!current_lv_2_menu) {
       //2级菜单为空 3级也滞空

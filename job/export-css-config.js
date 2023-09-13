@@ -26,7 +26,7 @@ let write_folder = "./job/output/css/";
 let file_path = write_folder + `${PROJECT_NAME}.js`;
 
 //本地scss目录
-let scss_folder = `./project/${PROJECT_NAME}/src/css/`;
+let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -72,7 +72,7 @@ const get_css_config = async (css_params = {}) => {
       `export default  ` + JSON.stringify(obj)
     );
   } catch (error) {
-    console.log("css文件错误");
+    console.log("css文件错误",error);
   }
 };
 /**对比文档如果和服务器的配置不一样就结束进程*/
@@ -80,11 +80,14 @@ const diff_css_local = async () => {
   const all_global_scss = getAllFile(scss_folder + "global");
   const all_component_scss = getAllFile(scss_folder + "component");
   const obj = {
-    global: [],
+    global: {},
+    component: {},
   };
   const globals = all_global_scss.map((file_path) => {
     return import("../" + file_path.replace(/\\/g, "/")).then((res) => {
-      if (res.default) obj.global.push(...Object.keys(res.default));
+      const file_name = file_path.split(/[\\/]/).pop().replace(".js", "");
+
+      if (res.default) obj.global[file_name] = Object.keys(res.default);
       // if (!lodash.hasIn(merchant_css_config.global, Object.keys(res.default))) {
       //   process.emit(1);
       // }
@@ -93,9 +96,8 @@ const diff_css_local = async () => {
   const components = all_component_scss.map((file_path) => {
     return import("../" + file_path.replace(/\\/g, "/")).then((res) => {
       const file_name = file_path.split(/[\\/]/).pop().replace(".js", "");
-      console.log(file_name);
       if (res.default) {
-        obj[file_name] = Object.keys(res.default);
+        obj.component[file_name] = Object.keys(res.default);
       }
     });
     // if (
