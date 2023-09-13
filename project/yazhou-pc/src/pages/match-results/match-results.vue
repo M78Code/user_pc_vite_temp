@@ -17,7 +17,7 @@
     <!-- 中间内容 S-->
     <div class="main_wrap">
       <!-- 筛选条件 S-->
-    <result-header :sport_type="sport_type"></result-header>
+    <result-header :sport_type="sport_type" :sport="sport" :current_sport_id="current_sport_id"></result-header>
       <!-- 筛选条件 E-->
 
       <!-- 各球类赛果表格 S-->
@@ -61,14 +61,17 @@
 <script setup>
 
 import { i18n_t} from "src/boot/i18n.js";
-import { useGetResultConfig } from "./results.config.js";
+import { useGetResultConfig } from "src/components/match-results/results-config.js";
 // import results from "src/components/match-results/components/results.vue";
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
 import {   ResultHeader} from 'src/components/match-results/result-header/index.js'
+import { onMounted } from "vue";
   const {
     //变量
+    current_sport_id,
+    sport,
     sport_type,
     refresh_finish,
     results_data,
@@ -88,8 +91,12 @@ import {   ResultHeader} from 'src/components/match-results/result-header/index.
     get_tr_detail,
     change_sort,
     change_playback_type,
-    changePage
+    changePage,
+    get_serverTime
 } = useGetResultConfig();
+onMounted(()=>{
+  get_serverTime()
+})
 </script>
 
 <style lang="scss" scoped>

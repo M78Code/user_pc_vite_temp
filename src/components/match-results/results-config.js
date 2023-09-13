@@ -167,6 +167,8 @@ export const useGetResultConfig = () => {
     paramsVideo: {}, //精彩回放参数
   });
 
+  const test = ref(100)
+
   onMounted(() => {
     // 从链接获取参数
     let { csid, matchEnd } = route.query;
@@ -176,13 +178,13 @@ export const useGetResultConfig = () => {
     }
     // 是否选中滚球 matchEnd: false 选中滚球
     if (!lodash.isUndefined(matchEnd) && !JSON.parse(matchEnd)) {
-      state.input_radio();
+      input_radio();
     }
     state.is_first_load = true;
-    get_serverTime(); //获取服务器时间
+    // get_serverTime(); //获取服务器时间
   });
 
-  onMounted(() => {
+  onUnmounted(() => {
     //移除相应监听事件 //视图销毁钩子函数内执行
     /**清除定时器 */
     clearTimeout(state.timer);
@@ -381,6 +383,7 @@ export const useGetResultConfig = () => {
           // 添加【全部】选项
           state.champion_sport_type.unshift(i18n_t("select.all"));
           state.api_sport_type = data;
+          console.log(state.api_sport_type,'state.api_sport_type');
           const _name = i18n_t("select.all");
           // 如果求种id存在，则显示对应的求种id
           if (state.sport_id) {
@@ -928,7 +931,7 @@ export const useGetResultConfig = () => {
     state.pournament_params.tournamentId = "";
     state.pournament_params.nameStr = "";
     state.init = true; //查询赛事
-    state.get_pournament(1); //联动调取联赛数据
+   get_pournament(1); //联动调取联赛数据
   };
 
   /**
@@ -964,7 +967,7 @@ export const useGetResultConfig = () => {
    */
   const search_hot = (data) => {
     state.pournament_params.hot = data;
-    state.get_pournament(0);
+    get_pournament(0);
   };
 
   /**
@@ -974,7 +977,7 @@ export const useGetResultConfig = () => {
   const ipt_search = (data) => {
     state.pournament_params.nameStr = data[0];
     state.pournament_params.hot = data[1];
-    state.get_pournament(2);
+   get_pournament(2);
   };
   /**
    * @description: 开始日期选择
@@ -992,7 +995,7 @@ export const useGetResultConfig = () => {
     }
     state.startTimeShow = !state.startTimeShow;
     if (state.startTimeShow == true) {
-      useMittEmit("hideSportSelect", "close");
+      useMittEmit(MITT_TYPES.EMIT_HIDE_SPORT_SElECT, "close");
     }
   };
   /**
@@ -1039,7 +1042,6 @@ export const useGetResultConfig = () => {
    * @description: 搜索
    */
   const sub_search = () => {
-    debugger
     state.cancel = new Date().getTime();
     if (!test_time()) {
       return;
@@ -1172,6 +1174,7 @@ export const useGetResultConfig = () => {
    * 修改当前选中的赛种名字
    */
   const setSport = ({ currentItem, isChampion }) => {
+    console.log(state.api_sport_type,'state.api_sport_type22');
     state.is_highlights = false;
     if (state.results_params.sportType == "1" && state.is_highlights) {
       state.results_params.isPlayBack = 1;
@@ -1189,7 +1192,7 @@ export const useGetResultConfig = () => {
   //生成事件监听
   const { emitters_off } = useMittEmitterGenerator([
     // 球种下拉框更新选中球种
-    { type: MITT_TYPES.EMIT_CHANGE_SPORT, callback: setSport },
+    { type: MITT_TYPES.EMIT_CHANGE_SPORT, callback: setSport},
     // 下拉框选择球种
     { type: MITT_TYPES.EMIT_SElECT_SPORT, callback: choose_sport },
     // 监听是否关闭日期选择器
@@ -1206,5 +1209,7 @@ export const useGetResultConfig = () => {
   };
   return {
     ...toRefs(state),
+    get_serverTime,
+    test
   };
 };

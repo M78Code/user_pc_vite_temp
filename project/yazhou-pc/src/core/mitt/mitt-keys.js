@@ -366,4 +366,9 @@ export const EMIT_SET_HANDICAP_THIS = 'EMIT_SET_HANDICAP_THIS'
  export const EMIT_SElECT_SPORT = 'EMIT_SElECT_SPORT'
  /**  监听是否关闭日期选择器 */
  export const EMIT_STARTTIME_SHOWFUNC = 'EMIT_STARTTIME_SHOWFUNC'
+ /**  隐藏球类选择器*/
+ export const EMIT_HIDE_SPORT_SElECT = 'EMIT_HIDE_SPORT_SElECT'
+
+/**   站点 tab 休眠状态转激活 */
+ export const EMIT_VISIBILITYCHANGE_EVENT = 'EMIT_VISIBILITYCHANGE_EVENT'
 
