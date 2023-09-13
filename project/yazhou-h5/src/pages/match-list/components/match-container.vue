@@ -466,7 +466,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import countingDownSecond from 'project_path/src/components/common/counting-down.vue';
 import countingDownStart from 'project_path/src/components/common/counting-down-start.vue';
-import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import scoreList from './score-list.vue';
 import oddListWrap from './odd-list-wrap.vue';
 import matchOvertimePen from './match-overtime-pen.vue'

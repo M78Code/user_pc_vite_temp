@@ -26,6 +26,7 @@ import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 
+import './src/css/pages/app.scss'
 import './src/css/pages/public.scss'
 import './src/css/pages/main-layout.scss'
 

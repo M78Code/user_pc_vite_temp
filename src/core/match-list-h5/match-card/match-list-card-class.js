@@ -322,7 +322,6 @@ class MatchListCard {
   secondary_play_unfold_change_handle(data) {
     this.run_process_when_need_recompute_container_list(true, data);
   }
-
   /**
    * 像素值转为rem
    */
@@ -395,9 +394,7 @@ class MatchListCard {
    */
   run_process_when_need_recompute_container_list_when_coolspace_tournament(need_pre_process = true, invoke_type) {
     //  更新 赛事列表 进程 综合 控制方法
-    this.run_process_when_need_recompute_container_list(need_pre_process, {
-      update_type: invoke_type,
-    });
+    this.run_process_when_need_recompute_container_list(need_pre_process, { update_type: invoke_type });
   }
 
   // 赛事数据源去重，数组 相同的mid 去重

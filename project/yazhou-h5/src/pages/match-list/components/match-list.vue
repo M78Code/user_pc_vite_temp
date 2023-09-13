@@ -18,7 +18,7 @@
         </v-match-container>
         <div class="data_mid" v-else> <!--此data-mid用于分频订阅赛事,请勿修改-->
           <!--真实体育赛果 -->
-          <match_container_result
+          <match-container-result
             v-if="menu_type ==28 && 100 == get_curr_sub_menu_type"
             :match_of_list="match_item"
             :matchCtr="matchCtr"
@@ -43,7 +43,7 @@
             @toggle_collect_match="toggle_collect">
           </match-container>
           <!--冠军玩法-->
-          <match_container_champion
+          <match-container-champion
             :match_of_list="match_item"
             :matchCtr="matchCtr"
             :i="index"
@@ -51,7 +51,7 @@
             :key="index"
             @toggle_collect_league="toggle_collect"
             v-if="is_champion">
-          </match_container_champion>
+          </match-container-champion>
         </div>
       </template>
     </scroll-wrapper>
@@ -95,8 +95,8 @@
       </div>
     </div>
 
-    <no_data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no_data>
-    <no_data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no_data>
+    <no-data class="data-get-empty1" v-if='data_get_empty && !get_show_favorite_list' which='noMatch' height='400'></no-data>
+    <no-data class="data-get-empty2" v-if='data_get_empty && get_show_favorite_list' :which='menu_type === 28 ? "noMatch" : "collect"' height='400'></no-data>
 
   </div>
 </template>
@@ -111,11 +111,11 @@ import { utils } from 'src/core/index.js'
 import {add_or_cancel_tournament, add_or_cancel_match} from 'src/api/module/common/index.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import matchContainer from "./match-container.vue";  // 赛事组件，用于赛事列表展示赛事信息
-import v_match_container from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
-// import match_container_champion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
-// import match_container_result from "./match-container-result.vue" // 赛果冠军
+import vMatchContainer from "./virtual-match-container.vue";  // 虚拟体育赛狗赛马赛果项
+import matchContainerChampion from "./match-container-champion.vue";    // 冠军赛事组件，用于赛事列表展示赛事信息
+import matchContainerResult from "./match-container-result.vue" // 赛果冠军
 import scrollWrapper from 'project_path/src/components/scroll-wraper/scroll-wrapper.vue';    // 滚动操作处理
-import no_data from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
+import noData from "project_path/src/components/common/no-data.vue"; // 无网络展示组件
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import PageSourceData from "src/core/page-source/page-source.js";
 import { MenuData } from "src/core/index.js"

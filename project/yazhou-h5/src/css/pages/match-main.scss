@@ -65,12 +65,12 @@
             .tab-m-o-w {
               .tab-item-h {
                 background: var(--q-color-page-bg-color-10);
-                color: var(--q-color-fs-color-155);
+                color: var(--q-color-fs-color-15);
 
                 &.collapsed {
                   color:var(--q-color-fs-color-135);
                   background-image:  var(--q-color-linear-gradient-bg-10);
-                  border: 0.5px solid  var(--q-color-border-color-3);
+                  border: 0.5px solid  var(--q-color-fs-color-135);
 
                 }
               }
@@ -115,7 +115,7 @@
                 }
               }
               .odd-column-item2 {
-                background: var(--q-color-page-bg-color-13) !important;
+                background: var(--q-color-page-bg-color-1) !important;
                 &:after {
                   background-color: transparent;
                 }
@@ -368,7 +368,7 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-color-page-bg-color-108) !important;
+              background: var(--q-color-page-bg-color-10) !important;
               &:after {
                 background-color: transparent;
               }
@@ -499,7 +499,7 @@
       }
     }
     .odd-column-item2 {
-      background: var(--q-color-page-bg-color-108) !important;
+      background: var(--q-color-page-bg-color-10) !important;
       &:after {
         background-color: transparent;
       }
