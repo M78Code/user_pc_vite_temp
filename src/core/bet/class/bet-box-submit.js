@@ -33,11 +33,21 @@ const set_min_max_money = (bet_list, is_single, is_merge) => {
             "userId": UserCtr.user_info ? UserCtr.user_info.userId : UserCtr.get_uid()
         }
         // 串关没有 这个字段 
-        if (is_single) {
+        if (!is_single) {
             obj.openMiltSingle = is_merge ? 1 : 0 //是否开启 多单关投注模式，1：是，非1（0或者其他）：否
+            
         }
         return obj
     }) || []
+
+    if (!is_single) {
+        // 获取串关 参数显示
+        getSeriesCountJointNumber((code, data) => {
+            if (code == 200) {
+                BetViewDataClass.set_bet_special_series(data)
+            }
+        })
+    }
     return order_min_max_money
 }
 
@@ -49,13 +59,6 @@ const set_bet_order_list = (bet_list, is_single) => {
     let order_list = [], single_bet = BetViewDataClass.bet_special_series
     // 串关
     if (!is_single) {
-        // 获取串关和填写的 金额
-        getSeriesCountJointNumber((code, data) => {
-            if (code == 200) {
-                BetViewDataClass.set_bet_special_series(data)
-                single_bet = data
-            }
-        })
         order_list = single_bet.map(obj => {
             let bet_s_list = []
             bet_list.forEach(item => {
