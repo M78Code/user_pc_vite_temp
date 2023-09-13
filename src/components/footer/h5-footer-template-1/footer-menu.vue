@@ -121,7 +121,7 @@
           v-show="
             (menu_h5_data.get_current_sub_menuid() == 5 || sub_m.id != 114) &&
             !([8, 7].includes(menu_type) && sub_m.id == 114) &&
-            !(get_sport_all_selected && menu_type == 1 && sub_m.id == 114)
+            !(get_sport_all_selected && sub_m.id == 114)
           "
           :data-sid="sub_m.id"
           :data-mtype="menu_h5_data.get_current_sub_menuid()"
@@ -168,7 +168,7 @@ import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 
 const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState();
 // import { Platform } from 'quasar'
-const { menu_type, update_time } = menu_h5_data;
+const { menu_type, update_time, get_sport_all_selected } = menu_h5_data;
 // mixins:[common],
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
@@ -254,6 +254,7 @@ onBeforeUnmount(() => {
   clear_timer();
   useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED, update_first_menu).off;
 });
+
 // ...mapMutations([
 //   'set_goto_list_top', // 设置赛事列表回到顶部
 //   'set_toast',          // 设置提示信息
@@ -320,6 +321,7 @@ const jump = () => {
 const close_banner = () => {
   set_resources_obj({ is_show: false });
 };
+
 /**
  * 隐藏页脚二级菜单
  */
@@ -825,7 +827,7 @@ watch(
   }
 );
 watch(
-  () => [
+  [
     menu_type, //一级菜单变化
     update_time, //菜单变化
     // topMenuReducer.current_main_menu.menuId, //二级菜单变化
@@ -833,7 +835,6 @@ watch(
   ],
   () => {
     virtual_disable_follow_filter();
-
     if (menu_h5_data.sport_all_selected) {
       /**
        * 滚球菜单是否选中全部菜单变化

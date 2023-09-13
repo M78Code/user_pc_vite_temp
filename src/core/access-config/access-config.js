@@ -4,48 +4,50 @@
  * 代码内  开关地方用  GlobalAccessConfig.get_activitySwitch()
  *
  * 这个 后面会加上 本地开关 ，用户个人设置 ，以及 一起其他乱七八糟的算法
- * 
+ *
  * 会加上 日志 开关 等乱七八糟的 开关
  *
  */
 
-
 import { api_common } from "src/api/index.js";
+const default_value = {
+  activitySwitch: true,
+  collectSwitch: true,
+  filterSwitch: true,
+  handicapNum: true,
+  hotMatchNum: true,
+  hotRecommend: true,
+  multiColumn: true,
+  playAllShow: true,
+  recentSwitch: true,
+  searchSwitch: true,
+  sortCut: true,
+  statisticsSwitch: true,
+};
 class GlobalAccessConfig {
   constructor() {
-    this.config = "";
-    this.config_default = {
-      activitySwitch: true,
-      collectSwitch: true,
-      filterSwitch: true,
-      handicapNum: true,
-      hotMatchNum: true,
-      hotRecommend: true,
-      multiColumn: true,
-      playAllShow: true,
-      recentSwitch: true,
-      searchSwitch: true,
-      sortCut: true,
-      statisticsSwitch: true,
+    this.config = {
+      ...default_value
     };
   }
   async init() {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let res = await api_common.get_access_config();
       let data = res?.data?.data || "";
       if (data) {
-        this.config = Object.assign({}, this.config_default, data);
+        this.config = Object.assign({}, default_value, data);
       } else {
         this.config = {
-          ...this.config_default,
+          ...default_value,
         };
       }
-      resolve()
-    }).catch(() => {
+      resolve();
+    }).catch((e) => {
       this.config = {
-        ...this.config_default,
+        ...default_value,
       };
-    })
+      resolve();
+    });
   }
   get_activitySwitch() {
     return this.config?.activitySwitch;

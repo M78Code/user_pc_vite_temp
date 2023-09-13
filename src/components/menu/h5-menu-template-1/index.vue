@@ -44,10 +44,9 @@
               v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')"
               @click="select_all_sub_menu_handle"
+              :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()"
             >
-              <!-- :count="all_sport_count_calc()" -->
-
               <span
                 class="sport-icon-wrap"
                 :class="get_sport_icon(get_sport_all_selected)"
@@ -207,7 +206,8 @@ let date_menu_list = ref([]);
 let virtual_sports_results_tab = ref([]);
 const show_selector_sub = ref(false); //展示弹出框
 // 一级菜单mi ref
-const { menu_type, update_time } = menu_h5_data;
+const { menu_type, update_time, get_sport_all_selected, get_sport_icon } =
+  menu_h5_data;
 const esport = computed(() => {
   return menu_type.value == 7;
 });
@@ -217,10 +217,6 @@ const is_show_three_menu = computed(() => {
   return (
     menu_h5_data.get_is_show_three_menu() && date_menu_list.value.length > 0
   );
-});
-//是否选中了全部
-const get_sport_all_selected = computed(() => {
-  return menu_type.value == 1 && menu_h5_data.get_sport_all_selected();
 });
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
@@ -257,17 +253,19 @@ function init() {
 }
 init();
 /**
- * 一级菜单事件
+ * 一级菜单事件 还要执行二级菜单事件哦 因为一级菜单只是展示 没有数据 靠二级菜单以下来数据的
  * item [object]当前点击对象
  * index [number]
  * type [string] click | init
  */
 function set_menu_lv1(item, index, type = "click") {
   show_selector_sub.value = false;
+  current_menu.value=[]//二级菜单先滞空
   menu_h5_data.set_current_lv1_menu(item, index);
   switch (item.mi) {
-    case 1: //滚球下的全部
+    case 1: //滚球第一个是全部
       if (type == "click") {
+        //表示点击的是全部
         menu_h5_data.set_current_lv2_menu(item.sl, -1, type);
       } else {
         current_menu.value = item.sl;
@@ -281,6 +279,50 @@ function set_menu_lv1(item, index, type = "click") {
       current_menu.value = item.sl;
       set_menu_lv2(item.sl[0], 0, type);
   }
+}
+/**
+ * 计算滚球下的全部数量
+ */
+const all_sport_count_calc = computed(() => {
+  //找到滚球
+  if (menu_type.value == 1 && update_time.value) {
+    let data_list = menu_list.value.find((item) => item.mi == 1);
+    //滚球下所有是数量总和
+    return !data_list
+      ? 0
+      : data_list.sl.reduce((sum, item) => {
+          return sum + item.ct;
+        }, 0);
+  }
+  return 0;
+});
+//点击滚球下的全部
+function select_all_sub_menu_handle() {
+  let data_list = menu_list.value.find((item) => item.mi == 1);
+  if (data_list) {
+    set_menu_lv1(data_list, -1, "click");
+  }
+  // let changeSubmenu = null;
+  // this.sub_menu_i = null; // 重置上一次储存二级菜单下标
+  // let selected_sub_menu_i_list = [];
+  // let euid_list = [];
+  // this.set_useid_ievname(0); // 重置上次储存二级菜单muid
+  // // 二级菜单 下标
+  // data_list.forEach((sub_m, sub_i) => {
+  //   if (sub_m.ct) {
+  //     let euid = base_data.get_euid(sub_m.mi);
+  //     euid_list.push(euid);
+  //     selected_sub_menu_i_list.push(sub_i);
+  //   }
+  // });
+  // // 设置 全部二级菜单euid
+  // changeSubmenu = euid_list.join(",");
+  // this.set_current_second_menu(changeSubmenu);
+  // this.set_current_sub_menuid(changeSubmenu);
+  // // 设置 全部二级菜单下index
+  // this.selected_sub_menu_i_list = selected_sub_menu_i_list;
+  // // 设置缓存，代表全部
+  // this.set_sport_all_selected(true);
 }
 /**
  * 二级菜单事件
