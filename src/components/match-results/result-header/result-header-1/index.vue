@@ -3,7 +3,7 @@
     <div class="wrap-select">
       <div class="r-select">
         <!-- 体育 -->
-        <span class="label">{{ $t("results.sport") }}</span>
+        <span class="label">{{ i18n_t("results.sport") }}</span>
         <Select-Wrapper
           :value="sport"
           :options="sport_type"
@@ -28,7 +28,7 @@
       <!-- 日期 -->
       <div class="r-select">
         <div class="label time-search-label">
-          {{ $t("results.date") }}
+          {{ i18n_t("results.date") }}
         </div>
         <div class="search-date-wrapper">
           <div class="date-wrap" @click.stop="startTimeShowFunc">
@@ -57,7 +57,7 @@
       <div class="condition">
         <div class="r-select ml-30" style="margin-right: 5px">
           <!-- 联赛 -->
-          <span class="label">{{ $t("results.league") }}</span>
+          <span class="label">{{ i18n_t("results.league") }}</span>
           <Select-Wrapper
             @to_hide_select="hideSelect"
             :list="api_league_type"
@@ -77,7 +77,7 @@
           v-if="!pournament_params.champion && Number(sport_id) < 17"
         >
           <!-- 赛事 -->
-          <span class="label">{{ $t("results.match") }}</span>
+          <span class="label">{{ i18n_t("results.match") }}</span>
           <!-- 请输入 -->
           <input
             class="ipt"
@@ -96,7 +96,7 @@
           >
             <fliter-checkbox :checked="is_bowls" />
             <!-- 滚球 -->
-            <span>{{ $t("results.roll_ball") }}</span>
+            <span>{{ i18n_t("results.roll_ball") }}</span>
           </div>
           <div
             class="checkbox"
@@ -105,7 +105,7 @@
           >
             <fliter-checkbox :checked="is_highlights" />
             <!-- 精彩回放筛选 -->
-            <span>{{ $t("video.video_event_history") }}</span>
+            <span>{{ i18n_t("video.video_event_history") }}</span>
           </div>
         </div>
       </div>
@@ -113,7 +113,7 @@
         <!-- 提示语 -->
         <q-tooltip v-model="is_show" anchor="top middle" self="bottom middle">
           <template>
-            <div>{{ $t("results.tips") }}</div>
+            <div>{{ i18n_t("results.tips") }}</div>
           </template>
         </q-tooltip>
         <div
@@ -125,17 +125,36 @@
         </div>
         <!-- 搜索 -->
         <div class="search-btn" @click="sub_search">
-          {{ $t("results.search") }}
+          {{ i18n_t("results.search") }}
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-// import ySelect from "src/components/select/y_select";
-// import SelectWrapper from "src/components/selec1";
-// import normalSelect from "src/components/select/normal_select.vue";
-// import normalSelect2 from "src/components/select/normal_select.vue";
+import { reactive, ref } from 'vue';
+import { i18n_t } from "src/boot/i18n.js";
+
+import {SelectWrapper} from "src/components/select";
+const props = defineProps({
+  sport_type: {
+    type: Array,
+    default: () => [],
+  },
+});
+const pournament_params=ref(
+      {
+        //联赛入参
+        sportType: "", //球类id
+        startTime: "", //开始时间,毫秒时间戳
+        endTime: "", //结束时间,毫秒时间戳
+        langType: "zh",
+        nameStr: "",//模糊查询字符串
+        hot: '',//是否热门
+        isVirtualSport: "",
+        champion:""
+      },
+)
 </script >
 
 <style  lang="scss" scoped>
@@ -156,12 +175,10 @@
     }
 
     .r-select {
-      .q-field {
+      :deep(.q-field) {
         height: 28px;
         color: #5a6074;
         font-size: 12px;
-
-        ::v-deep {
           .q-field__control,
           .items-center {
             min-height: 0px;
@@ -210,7 +227,7 @@
           .items-center {
             padding: 0;
           }
-        }
+        
       }
 
       .ball-games-label {
@@ -220,7 +237,7 @@
     }
 
     .ball-games {
-      ::v-deep .q-field__native {
+      :deep(.q-field__native) {
         input {
           position: absolute;
           left: -6px;
@@ -252,13 +269,13 @@
         border-radius: 2px;
         cursor: pointer;
 
-        & ::v-deep .icon-calendar {
+        & :v-deep(.icon-calendar) {
           font-size: 14px;
         }
       }
 
       .date-picker-wrap {
-        ::v-deep .q-date {
+        :deep(.q-date) {
           .q-icon {
             font-size: 12px;
 
@@ -272,12 +289,12 @@
           position: relative;
           z-index: 2;
 
-          ::v-deep .q-date__calendar-item > div {
+          :deep(.q-date__calendar-item > div) {
             width: auto;
           }
 
           /*  星期X 字体颜色正常显示 */
-          ::v-deep .q-date__calendar-weekdays > div {
+          :deep(.q-date__calendar-weekdays > div) {
             opacity: 1;
           }
         }
@@ -296,7 +313,7 @@
           left: 175px;
           border-left: 1px solid transparent;
 
-          ::v-deep .horn {
+          :deep(.horn) {
             display: none !important;
           }
         }

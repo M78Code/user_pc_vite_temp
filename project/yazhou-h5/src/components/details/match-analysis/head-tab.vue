@@ -99,6 +99,8 @@ let get_detail_data = ref({
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid var(--q-analysis-matches-color-30);
+    background: var(--q-analysis-matches-color-4);
 
   position: sticky;
   top: 0.82rem;
@@ -132,7 +134,7 @@ let get_detail_data = ref({
         .tabs-label {
           font-weight: 700;
           position: relative;
-
+          color: var(--q-analysis-matches-color-44);
           &:after {
             content: "";
             display: block;
@@ -142,7 +144,7 @@ let get_detail_data = ref({
             width: 90%;
             text-align: center;
             height: 0.03rem;
-            background-color: var(--q-color-page-bg-color-50);
+            background-color: var(--q-analysis-matches-color-45);
             border-radius: 0.08rem;
           }
         }

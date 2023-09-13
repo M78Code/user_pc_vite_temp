@@ -209,7 +209,8 @@
 </template>
 
 <script setup>
-import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
+// import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
+import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
 import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';

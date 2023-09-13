@@ -48,11 +48,11 @@ import {utils } from 'src/core/index.js'
   const get_analyze_show = ref(false)
 
   // 图片  public/yazhou-h5/image/svg/match-results/yellow.svg
-  const yellow_img = "public/yazhou-h5/image/svg/match-results/yellow.svg"
-  const red_img = "public/yazhou-h5/image/svg/match-results/red.svg"
-  const corner_img = "public/yazhou-h5/image/svg/match-results/corner.svg"
-  const Whistle_img = "public/yazhou-h5/image/svg/match-results/Whistle.svg"
-  const time_out_img = "public/yazhou-h5/image/svg/match-results/time_out.svg"
+  const yellow_img = "/yazhou-h5/image/svg/match-results/yellow.svg"
+  const red_img = "/yazhou-h5/image/svg/match-results/red.svg"
+  const corner_img = "/yazhou-h5/image/svg/match-results/corner.svg"
+  const Whistle_img = "/yazhou-h5/image/svg/match-results/Whistle.svg"
+  const time_out_img = "/yazhou-h5/image/svg/match-results/time_out.svg"
   // 锚点
   const analysis_detail = ref(null)
   // 国际化
@@ -115,7 +115,7 @@ import {utils } from 'src/core/index.js'
 
 <style lang="scss" scoped>
 .match-details {
-  background: var(--q-color-page-bg-color-110);
+  background: var(--q-analysis-matches-color-42);
   padding-bottom: 0.1rem;
 }
 .get_is_hengping {

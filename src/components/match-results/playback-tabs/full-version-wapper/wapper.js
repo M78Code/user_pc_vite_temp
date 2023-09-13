@@ -5,7 +5,7 @@ const all_components_obj = {
 };
 const component_config = {
   registered_component_key: "PlaybackTabs",
-  default_component_key: "PlaybackTabs_1",
+  default_component_key: "PlaybackTabs",
   all_components_obj,
 };
 const wapper_config = compute_component_wapper_config(component_config);

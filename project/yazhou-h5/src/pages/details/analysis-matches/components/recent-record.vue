@@ -48,14 +48,14 @@
         </div>
       </div>
       <!-- // :key='index' -->
-      <public-form :liat_data="item.recent_record_data" :hm_index_name="index == 0 ? get_detail_data.mhn : get_detail_data.man" ></public-form>
+      <public-form :liat_data="item.new_recent_record_data" :hm_index_name="index == 0 ? get_detail_data.mhn : get_detail_data.man"></public-form>
     </template>
   </div>
 </template>
 
 <script setup>
 import {api_analysis} from "src/api/index.js";
-import { onMounted, ref, inject } from "vue";
+import { onMounted, ref, inject, reactive } from "vue";
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
@@ -93,6 +93,7 @@ const get_detail_data = inject('get_detail_data', {})
   const flag = ref(0)
   const cps = ref(5)
   const recent_record_data = ref([])
+  let arr_ = ref([])
   const no_data = ref(false)
   const route = useRoute()
 onMounted(() => {
@@ -146,7 +147,7 @@ onMounted(() => {
       if(code == 200 && data != null) {
         let grouped_collection = [
           {
-            recent_record_data:[],
+            new_recent_record_data:[],
             // TODO: 国际化后续修改调整
             records_list:[
               {success: 0, name: i18n_t('analysis_football_matches.victory')},
@@ -155,24 +156,30 @@ onMounted(() => {
             ]
           },
           {
-            recent_record_data:[],
+            new_recent_record_data:[],
             records_list:[
               {success: 0, name: i18n_t('analysis_football_matches.victory')},
               {flat: 0, name: i18n_t('analysis_football_matches.flat')},
               {lose: 0, name: i18n_t('analysis_football_matches.negative')},
             ]
           }
-        ],  // host_team_id
-        host_team_id = data[0].teamGroup
-        data.forEach( (data_item, index, arr) => {
+        ] // host_team_id
+        let host_team_id = data[0].teamGroup
+        data.map( (data_item) => {
           if(host_team_id == data_item.teamGroup) {
-            grouped_collection[0].recent_record_data.push(data_item)
+            grouped_collection[0].new_recent_record_data.push(data_item)
           }else{
-            grouped_collection[1].recent_record_data.push(data_item)
+            grouped_collection[1].new_recent_record_data.push(data_item)
           }
         })
+        let arr = [
+              {success: 0, name: i18n_t('analysis_football_matches.victory')},
+              {flat: 0, name: i18n_t('analysis_football_matches.flat')},
+              {lose: 0, name: i18n_t('analysis_football_matches.negative')},
+            ]
         processing_score(grouped_collection)
-        recent_record_data.value = grouped_collection
+        recent_record_data.value= grouped_collection
+
         no_data.value = false
       } else {
         no_data.value = true
@@ -185,7 +192,7 @@ onMounted(() => {
     // 加工 胜 平 负的数量
   const processing_score = (data) => {
     data.forEach((main_item)=>{
-      main_item.recent_record_data.forEach((item)=>{
+      main_item.new_recent_record_data.forEach((item)=>{
         if(item.result == 4){
           main_item.records_list[0].success = ++main_item.records_list[0].success
         }else if(item.result == 3){

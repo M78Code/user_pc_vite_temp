@@ -181,7 +181,9 @@ const get_detail_data = inject('get_detail_data', {})
 </script>
 
 <style lang="scss" scoped>
-.heade-wrapper {
+.standings {
+  background: var(--q-analysis-matches-color-42);
+  .heade-wrapper {
   width: 100%;
   height: auto;
   z-index: 100;
@@ -260,4 +262,6 @@ const get_detail_data = inject('get_detail_data', {})
     }
   }
 }
+}
+
 </style>

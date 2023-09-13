@@ -17,7 +17,7 @@
     <!-- 中间内容 S-->
     <div class="main_wrap">
       <!-- 筛选条件 S-->
-    <result-header></result-header>
+    <result-header :sport_type="sport_type"></result-header>
       <!-- 筛选条件 E-->
 
       <!-- 各球类赛果表格 S-->
@@ -66,9 +66,10 @@ import { useGetResultConfig } from "./results.config.js";
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
 // import Pagination from "src/pagination-1/index.vue";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
-import resultHeader from 'src/components/match-results/components/result-header.vue'
+import {   ResultHeader} from 'src/components/match-results/result-header/index.js'
   const {
     //变量
+    sport_type,
     refresh_finish,
     results_data,
     tips,

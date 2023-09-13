@@ -3,9 +3,9 @@
  */
 
 // TODO: get_lang
-
+import lodash from 'lodash'
 import MatchCtr from './match-ctr'
-import { i18n_t} from 'src/core/index.js'
+import { i18n_t } from 'src/core/index.js'
 
 class matchListClass {
   /**
@@ -18,7 +18,7 @@ class matchListClass {
     if (this.is_match_playing(ms) && mmp == 0) {
       mct = "1";
     } else {
-      mct = _.toString(mct);
+      mct = lodash.toString(mct);
     }
 
     let new_num = mct;
@@ -102,9 +102,9 @@ class matchListClass {
   before_ball_folding_handle() {
     const { csid } = this.match_of_list
     // 联赛tid折叠map
-    let map_collapse = _.cloneDeep(this.get_collapse_map_match)
+    let map_collapse = lodash.cloneDeep(this.get_collapse_map_match)
     // 球种csid折叠map
-    let collapse_csid_map = _.cloneDeep(this.get_collapse_csid_map)
+    let collapse_csid_map = lodash.cloneDeep(this.get_collapse_csid_map)
     // 当前操作赛种tid列表
     let cur_cid_arr = MatchCtr.match_list_data_sources.filter(item => item.csid == csid)
     // 当前操作赛种已折叠联赛tid数量
@@ -138,8 +138,8 @@ class matchListClass {
   ball_folding_click(csid) {
     if (utils.is_time_limit(200)) { return }
 
-    let collapse_csid_map = _.cloneDeep(this.get_collapse_csid_map)
-    let collapse_map_match = _.cloneDeep(this.get_collapse_map_match)
+    let collapse_csid_map = lodash.cloneDeep(this.get_collapse_csid_map)
+    let collapse_map_match = lodash.cloneDeep(this.get_collapse_map_match)
 
     // 滚球全部
     if (this.get_sport_all_selected) {
@@ -175,7 +175,7 @@ class matchListClass {
       }
 
       // 如果查找到有 赛事折叠过了，点击则全部展开
-      if (!_.isEmpty(this.get_collapse_map_match) && Object.keys(this.get_collapse_map_match).length == arr_tid.length) {
+      if (!lodash.isEmpty(this.get_collapse_map_match) && Object.keys(this.get_collapse_map_match).length == arr_tid.length) {
         for (let item_value in this.get_collapse_map_match) {
           if (this.get_collapse_map_match[item_value] == 0) {
             is_all_fold = true
@@ -215,7 +215,7 @@ class matchListClass {
 
 
     let cur_cid_arr = MatchCtr.match_list_data_sources.filter(item => item.csid == this.match_of_list.csid)
-    let co_map_match = _.cloneDeep(this.get_collapse_map_match);
+    let co_map_match = lodash.cloneDeep(this.get_collapse_map_match);
     for (let j = 0, cur_len = cur_cid_arr.length; j < cur_len; j++) {
       let d_key = this.gen_collapse_key(cur_cid_arr[j])
       // 1 是全部折叠， 0 是全部展开

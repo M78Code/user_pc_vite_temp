@@ -39,4 +39,13 @@ export default {
 "analysis-matches-color-38": "#CBCED8",
 "analysis-matches-color-39": "#E5E5E5", // rgba(0, 0, 0, 0.1) 转16进制#E5E5E5
 "analysis-matches-color-40": "unset",
+"analysis-matches-color-41": "#c7c7c9",
+"analysis-matches-color-42": "#f7f9fe",
+"analysis-matches-color-43": "linear-gradient(269.95deg, #3D72FA 0.05%, #62B6FF 99.95%)",
+"analysis-matches-color-44": "#4276fb",
+"analysis-matches-color-45": "#4987fb",
+"analysis-matches-color-46": "#6c7ba8",
+"analysis-matches-color-47": "#ff4400",
+"analysis-matches-color-48": "rgba(0, 0, 0, 0.1)",
+"analysis-matches-color-49": "transparent",
 }
