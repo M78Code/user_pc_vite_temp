@@ -346,15 +346,15 @@ class MenuData {
     // if (is_focus) {
     //   //选中情况下的 关注 和 非关注
     //   return favorite
-    //     ? this.get_theme.includes("y0")
+    //     ? UserCtr.theme.includes("y0")
     //       ? "focus-e"
     //       : "focus-c"
-    //     : this.get_theme.includes("y0")
+    //     : UserCtr.theme.includes("y0")
     //     ? "focus-b"
     //     : "focus-a";
     // }
     // //默认黑色版还是白色版
-    // return this.get_theme.includes("theme02") ? "focus-d" : "";
+    // return UserCtr.theme.includes("theme02") ? "focus-d" : "";
     return 'focus-d'
   }
 

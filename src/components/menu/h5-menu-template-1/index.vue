@@ -175,7 +175,7 @@ import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 // "1": "滚球",
 //   "2": "今日",
@@ -188,6 +188,7 @@ import { useRoute } from "vue-router";
 //   "30": "竞足",
 //   "28": "赛果",
 const route = useRoute();
+const router = useRouter();
 const props = defineProps({
   // 菜单配置
   menu_config: {
@@ -204,7 +205,11 @@ let current_menu = ref({});
 let date_menu_list = ref([]);
 // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
 let virtual_sports_results_tab = ref([]);
+
+const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
+const show_favorite_list = ref(false); //是否显示收藏列表
+
 // 一级菜单mi ref
 const { menu_type, update_time, get_sport_all_selected, get_sport_icon } =
   menu_h5_data;
@@ -221,14 +226,12 @@ const is_show_three_menu = computed(() => {
 //是否显示四级菜单
 const is_show_four_menu = computed(() => {
   console.error("是否展示四级", virtual_sports_results_tab.value.length);
-
   return (
     menu_h5_data.is_results_virtual_sports() &&
     virtual_sports_results_tab.value.length > 0
   );
 });
-const pop_main_items = ref([]); //弹出框数据
-const show_favorite_list = ref(false); //是否显示收藏列表
+
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (update_time) => {
   const [lv1, pop] = menu_h5_data.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
@@ -259,14 +262,32 @@ init();
  * type [string] click | init
  */
 function set_menu_lv1(item, index, type = "click") {
+  // "7": "电竞",
+  // "8": "VR",
+  switch (item.mi) {
+    //VR是直接跳 url
+    case 8:
+      router.push({
+        name: "virtual",
+        query: {
+          from: route.name,
+        },
+      });
+      return;
+    //电竞是不要二三四级菜单
+    case 7:
+      //由自己去做
+      set_menu_lv2(); //重置 二三4级菜单为空
+      return;
+  }
   show_selector_sub.value = false;
-  current_menu.value=[]//二级菜单先滞空
+  current_menu.value = []; //二级菜单先滞空
   menu_h5_data.set_current_lv1_menu(item, index);
   switch (item.mi) {
     case 1: //滚球第一个是全部
       if (type == "click") {
         //表示点击的是全部
-        menu_h5_data.set_current_lv2_menu(item.sl, -1, type);
+        set_menu_lv2(item.sl, -1, type);
       } else {
         current_menu.value = item.sl;
         set_menu_lv2(item.sl[0], 0, type);

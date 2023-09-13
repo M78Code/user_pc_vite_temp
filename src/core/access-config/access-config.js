@@ -25,9 +25,12 @@ const default_value = {
   statisticsSwitch: true,
 };
 class GlobalAccessConfig {
+  config = {
+    ...default_value,
+  };
   constructor() {
     this.config = {
-      ...default_value
+      ...default_value,
     };
   }
   async init() {
