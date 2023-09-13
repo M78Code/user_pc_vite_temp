@@ -1,6 +1,6 @@
 <template>
   <!--  v-if="globalAccessConfig.get_searchSwitch()" -->
-  <div class="yb-site-left-width" v-if="globalAccessConfig.config_default.searchSwitch" :class="`${main_menu_toggle}`">
+  <div class="yb-site-left-width" v-if="globalAccessConfig.config.searchSwitch" :class="`${main_menu_toggle}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
     <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
@@ -42,7 +42,7 @@ import icon from "src/components/icon/icon.vue";
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
-
+console.log(globalAccessConfig,'globalAccessConfig');
 const img_search_icon = '/yazhou-pc/image/svg/search-icon.svg'
 const img_search_icon_y0 = '/yazhou-pc/image/svg/y0-search-icon.svg'
 
@@ -84,7 +84,7 @@ const set_search_status = (data) => (store.dispatch({
 /** 展开搜索 */
 function show_search() {
   // if (!globalAccessConfig.get_searchSwitch()) {
-  if (!globalAccessConfig.config_default.searchSwitch) {
+  if (!globalAccessConfig.config.searchSwitch) {
     return useMittEmit(MITT_TYPES.EMIT_SHOW_TOAST_CMD, i18n_t("msg.msg_09"));
   }
   set_search_status(true);
