@@ -15,7 +15,7 @@
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
           <span v-if="cur_state == 'box_opening'" style="font-size: 16px">抽盒中......</span>
-          <span v-else>{{ $t('common.loading')}}</span>
+          <span v-else>{{ i18n_t('common.loading')}}</span>
           <!-- 内容加载中... -->
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div v-if="cur_state=='right_details_loading'" class="loading-wrap right_details_loading" >
         <div class="img-loading custom-format-img-loading"></div>
         <div class="text-center loading-text flex items-end justify-center">
-          <span>{{ $t('common.loading')}}</span>
+          <span>{{ i18n_t('common.loading')}}</span>
           <!-- 右侧详情内容加载中... -->
         </div>
       </div>
@@ -50,13 +50,13 @@
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">
-            {{ $t('common.go_now')}}
+            {{ i18n_t('common.go_now')}}
            </div>
         </div> -->
       </no-data>
       <div class="list_right_empty" v-else-if="['all_empty','new_empty'].includes(cur_state)">
         <div class="img"></div>
-        <span>{{ $t(`common.${cur_state}`)}}</span>
+        <span>{{ i18n_t(`common.${cur_state}`)}}</span>
       </div>
     </div>
     <!-- refresh || 404 -->
@@ -68,16 +68,16 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='refresh'" class="text1">{{ $t('common.no_network2')}}</div>
+        <div v-if="cur_state=='refresh'" class="text1">{{ i18n_t('common.no_network2')}}</div>
         <div
           v-if="cur_state=='404'"
           class="img img404"
           :class="color"
         ></div>
         <!-- 哦豁~页面不见了 -->
-        <div v-if="cur_state=='404'" class="text1">{{ $t('common.page404')}}</div>
-        <div class="text2">{{ $t('common.nervous')}}</div>
-        <div class="btn" @click="refresh">{{ $t('common.refresh')}}</div>
+        <div v-if="cur_state=='404'" class="text1">{{ i18n_t('common.page404')}}</div>
+        <div class="text2">{{ i18n_t('common.nervous')}}</div>
+        <div class="btn" @click="refresh">{{ i18n_t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 用户接口限流提示 -->
@@ -86,12 +86,12 @@
         <div class="img"></div>
         <div class="text1">
           <!-- Hi，真不巧，页面走丢了 -->
-          <span>{{ $t('common.user_api_limited1')}}</span><br>
+          <span>{{ i18n_t('common.user_api_limited1')}}</span><br>
           <!-- 别紧张，点“刷新”马上找回~ -->
-          <span>{{ $t('common.user_api_limited2')}}</span>
+          <span>{{ i18n_t('common.user_api_limited2')}}</span>
         </div>
         <!-- 刷新 -->
-        <div class="btn" @click="refresh">{{ $t('common.refresh')}}</div>
+        <div class="btn" @click="refresh">{{ i18n_t('common.refresh')}}</div>
       </div>
     </div>
     <!-- 接口限流提示 -->
@@ -100,7 +100,7 @@
         <div class="img"></div>
         <div class="text1">
           <!-- 当前访问人数过多，请稍后再试 -->
-          <span>{{ $t('common.limited')}}</span>
+          <span>{{ i18n_t('common.limited')}}</span>
         </div>
       </div>
     </div>
@@ -113,7 +113,7 @@
           :class="color"
         />
         <!-- 网络不给力 -->
-        <div v-if="cur_state=='record_refresh'" class="text1">{{ $t('common.limited')}}</div>
+        <div v-if="cur_state=='record_refresh'" class="text1">{{ i18n_t('common.limited')}}</div>
       </div>
     </div>
   </div>
@@ -122,7 +122,8 @@
 <script>
 import { NoDataWapper as noData } from "src/components/common/no-data";
 import UserCtr from "src/core/user-config/user-ctr.js";
-
+import {i18n_t} from "src/core/index"
+ 
 export default {
   name: "loadData",
 
@@ -175,6 +176,7 @@ export default {
     return {
       // 菜单数据
       // menu_data: $menu.menu_data,
+      i18n_t,
       menu_data: [],
       time_out: false,
       // 用户失效标志位
@@ -188,21 +190,21 @@ export default {
     // this.$root.$on(MITT_TYPES.EMIT_SHOW_ALERT_CMD, this.no_user_event);
   },
 
-  // computed: {
-  //   ...mapGetters({
-  //     // 登录是否失效
+  computed: {
+    // ...mapGetters({
+    //   // 登录是否失效
  
-  //     //获取当前菜单类型
-  //     vx_cur_menu_type: "get_cur_menu_type",
-  //   }),
-  //   //是否电子竞技
-  //   is_eports(){
-  //       return this.$utils.is_eports_csid(+this.$route.params.csid)
-  //   },
-  //   cur_state(){
-  //     return this.state
-  //   }
-  // },
+    //   //获取当前菜单类型
+    //   vx_cur_menu_type: "get_cur_menu_type",
+    // }),
+    //是否电子竞技
+    is_eports(){
+        return this.$utils.is_eports_csid(+this.$route.params.csid)
+    },
+    cur_state(){
+      return this.state
+    }
+  },
 
   methods: {
     refresh() {
