@@ -19,7 +19,7 @@
           <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
             
-            <img class="hot-icon" :src="compute_css('pc-img-hot-match')" alt="" />
+            <img class="hot-icon" :style="compute_css({key:'pc-img-hot-match'})" alt="" />
 
             <div class="col">
               {{ $t("common.betting_record") }}
@@ -96,7 +96,7 @@ import bet_record from "/public/yazhou-pc/image/png/bet-record.png";
 
 onMounted(() => {
   get_unsettle_tickets_count_config();
-  console.error('ssssss',compute_css({key:'pc-img-hot-match'}))
+  // console.error('收拾收拾',compute_css({key:'pc-img-hot-match'}))
 });
 
 const bet_record_count = ref(0)
