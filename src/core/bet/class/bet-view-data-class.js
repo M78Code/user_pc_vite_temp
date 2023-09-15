@@ -74,7 +74,7 @@ class BetViewData {
       //
     };
     // 是否显示全屏下投注弹窗
-    this.bet_show = false
+    this.bet_show = ref(false)
 
     // 限额
     this.bet_min_max_money = {

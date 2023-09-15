@@ -12,7 +12,8 @@
       <p>
         <span>最高可赢</span>
         <span :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }">{{
-          format_money2(max_win_money) }}</span>
+          format_money2(max_win_money) }}
+        </span>
       </p>
     </div>
 
@@ -31,11 +32,9 @@
 
 <script setup>
 // import betting from 'src/project/mixins/betting/betting.js';
-import { ref, onMounted,watch,computed,onUnmounted } from 'vue';
 import lodash from 'lodash'
-
 import BetData from "src/core/bet/class/bet-data-class.js";
-import { UserCtr } from "src/core/index.js";
+import UserCtr from 'src/core/user-config/user-ctr.js'
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
@@ -234,9 +233,9 @@ const obj_bet_money = computed(() => {
    *@return {Undefined} undefined
    */
   const get_money_format = () => {
-    let mi = global_filters.format_money3(min_money.value)
-    let ma = global_filters.format_money3(max_money.value)
-    return licia_format(i18n_t('bet.money_limit2'), mi, ma);
+    let mi = format_money3(min_money.value)
+    let ma = format_money3(max_money.value)
+    // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
   }
   /**
    *@description 光标闪动，animation有兼容问题，用函数替代
