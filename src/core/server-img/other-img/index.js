@@ -20,7 +20,6 @@ Object.keys(modules).forEach((key) => {
  */
 function compute_css({ key    , theme }) {
   let config = all_other_image[key] || {};
-
   console.log(CURRENT_ENV, "CURRENT_ENV");
   //从打包的 环境拿 图片地址
   let url = get(

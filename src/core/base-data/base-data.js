@@ -518,7 +518,7 @@ class BaseData {
 
     let { sl = [] } = obj;
 
-    sl.map((x) => {
+    sl && sl.map((x) => {
       // 计算这个冠军 的 对应额 基础 赛种 mi
 
       let base_mi = "" + (100 + (parseInt(x.mi) - 400));
