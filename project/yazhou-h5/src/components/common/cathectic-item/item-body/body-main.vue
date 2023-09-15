@@ -29,7 +29,8 @@
         <template  v-else-if="type_.seriesType == '3'">{{main.matchName}}</template>
         <template v-else>{{main.matchInfo}}</template>
       </p>
-      <!-- <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{(new Date(format_time_zone_time(+main.beginTime))).Format(i18n_t('time4'))}}</p> -->
+      <!-- .Format(i18n_t('time4')) -->
+      <p class="text-right begintime" v-if="!type_.acCode&&main.beginTime">{{formatTime(+main.beginTime, 'mm/DD HH:MM')}}</p>
     </div>
 
     <!-- 中 -->
@@ -37,24 +38,25 @@
       <p class="col-8">
         <span>
           <!--球类名称 赛前还是滚球 玩法名称-->
-          <!-- {{i18n_data.sport_name}} i18n_data.type-->
+          {{i18n_data.sport_name}}
           <span
             v-if="type_.seriesType != '3' && main.matchType != 4 && main.sportId != 1004">&thinsp;{{'123'}}&ensp;</span>
           <template v-if="(main.sportId == 1001 || main.sportId == 1004) && type_.seriesType != '1'">&ensp;{{main.matchName}}{{main.matchDay}}&ensp;{{main.batchNo}}</template>
           {{main.playName}}
           <!-- 基准分 -->
           <template v-if="main.scoreBenchmark && !is_pre">({{format_score(main.scoreBenchmark)}})</template>&thinsp;
-          <!-- i18n_data.mtype -->
-          <span v-if="!type_.acCode">[{{'i18n_data.mtype'}}]</span>
+          <span v-if="!type_.acCode">[{{i18n_data.mtype}}]</span>
         </span>
       </p>
       <!-- 结算比分存在时显示结算比分 -->
-      <template>
+      <!-- <template> -->
         <p class="col-4 row items-center justify-end text-right">
-          <span style="flex:1"><template v-if="main.settleScore != ''"> {{calc_settle_score}}</template></span>
-         <img src="image/wwwassets/bw3/list/league-collapse-icon.svg" alt="" class="arrow2" v-if="show_arrow">
+          <span style="flex:1">
+            <template v-if="main.settleScore != ''"> {{calc_settle_score}}</template>
+          </span>
+         <img src="/yazhou-h5/image/list/league-collapse-icon.svg" alt="" class="arrow2" v-if="show_arrow">
         </p>
-      </template>
+      <!-- </template> -->
     </div>
 
     <!-- 下 -->
@@ -103,7 +105,7 @@
 // import { mapGetters, mapMutations } from "vuex";
 import { api_common } from "src/api/index.js";
 import {utils } from 'src/core/index.js'
-import { format_time_zone_time, format_odds, format_score } from 'src/core/format'
+import { format_time_zone_time, format_odds, format_score, formatTime } from 'src/core/format'
 import { onUnmounted, ref, computed, onMounted  } from 'vue'
 import { useRoute } from 'vue-router'
 import { i18n_t } from "src/boot/i18n.js";
@@ -364,18 +366,18 @@ const props =defineProps({
 }
 .body-main {
   min-height: 0.76rem;
-  color:  var(--q-cathectic-color-5);
+  color:  var(--q-cathectic-color-33);
   position: relative;
   margin-right: 0.15rem;
   .box-top {
     position: relative;
-    color: var(--q-cathectic-fs-defalut-color);
+    color: var(--q-cathectic-color-1);
     &::before {
       content: "";
       display: block;
       width: 0.03rem;
       height: 0.12rem;
-
+      background-color: var(--q-cathectic-color-29);
       border-radius: 0.02rem;
       position: absolute;
       left: -0.1rem;
@@ -408,6 +410,10 @@ const props =defineProps({
   }
   .box-bottom {
     font-size: 0.14rem;
+    color: var(--q-cathectic-color-1);
+    .oddfinally {
+      color: var(--q-cathectic-color-29);
+    }
   }
   .beif_src {
     display: none;

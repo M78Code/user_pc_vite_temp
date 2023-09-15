@@ -31,10 +31,10 @@
 
 <script setup>
 import betting from 'src/core/bet/common-helper/index.js';
-const licia_format = require('licia/format');
-import store from "src/store-redux/index.js";
+// const licia_format = require('licia/format');
 import BetData from "src/core/bet/class/bet-data-class.js";
-import {UserCtr, format_money3,format_money2,compute_max_win_money } from 'src/core/index.js'
+import { format_money3,format_money2 } from 'src/core/format/index.js'
+
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -258,7 +258,7 @@ const clear_money = () => {
 const get_money_format = () => {
   let mi = global_filters.format_money3(min_money.value)
   let ma = global_filters.format_money3(max_money)
-  return licia_format(i18n_t('bet.money_limit2'), mi, ma);
+  // return licia_format(i18n_t('bet.money_limit2'), mi, ma);
 }
 const flicker_ = () => {    //光标闪动，animation有兼容问题，用函数替代
   flicker_timer = setInterval(() => {

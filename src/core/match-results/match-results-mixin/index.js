@@ -5,12 +5,12 @@
  * @Description: src/public/mixins/results/index
  */
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js' 
-console.log(i18n_t,'i18n_t');
+import { i18n_t,formatTime} from 'src/core/index.js' 
 export default {
-
   data() {
     return {
+      formatTime,
+      i18n_t,
       timer: null,
       show_loading: false,
       snoke_score_data:{

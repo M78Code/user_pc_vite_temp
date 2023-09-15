@@ -9,6 +9,9 @@ import lodash from "lodash";
 
 import { csid_map_concede_points_id } from "src/core/index.js";
 import { MenuData } from "src/core/index.js";
+// 目前环境信息
+const { current_env,NODE_ENV} = window.BUILDIN_CONFIG
+
 // import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
 
 /**
@@ -173,7 +176,7 @@ export const match_init = (match) => {
       return;
     }
     // 当前选中的日期（串关与早盘）
-    let third_menu_type = _.get(this.get_current_menu, "date_menu.menuType");
+    let third_menu_type = lodash.get(this.get_current_menu, "date_menu.menuType");
     if (main_menu_type != 100 && third_menu_type != 100) {
       if (match && match.hps && match.hps.length < 3) {
         // 如果盘口投注项小于3个，则push 进hps
@@ -286,17 +289,16 @@ export const get_now_server = () => {
  * @return {String} csid 球种类型
  */
 export const get_file_path = (path, csid = 0) => {
-  // 目前环境信息
-  const current_env = window.BUILDIN_CONFIG.current_env;
+
   if (!path || path == "undefined") {
     return "";
   }
   // 如果是http开头 直接返回地址
-  if (_.toString(path).indexOf("http") == 0) {
+  if (lodash.toString(path).indexOf("http") == 0) {
     return path;
   }
   // // 电竞菜单下如果type没有传值，默认为2
-  // let _menutype = _.get(window,'vue.$store.getters.get_menu_type')
+  // let _menutype =lodash.get(window,'vue.$store.getters.get_menu_type')
   // if (_menutype == 3000 && !type) {
   //   type = 2
   // }
@@ -314,7 +316,7 @@ export const get_file_path = (path, csid = 0) => {
   }
 
   domain_img_str =
-    window.BUILDIN_CONFIG.domain_img[window.BUILDIN_CONFIG.current_env];
+    window.BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[current_env];
   if (domain_img_str) {
     return `${domain_img_str}/${path}`;
   }
@@ -325,24 +327,24 @@ export const get_file_path = (path, csid = 0) => {
     current_env == "idc_ylcs"
   ) {
     let api_domain =
-      window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0];
+      window.BUILDIN_CONFIG.domain[current_env][0];
     // 试玩环境使用生产api图片
     api_domain = window.BUILDIN_CONFIG.domain["idc_online"][0];
     api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
     return `${api_domain}/${path}`;
   }
-
-  if (window.env.NODE_ENV == "development") {
+  //TODO:
+  if (NODE_ENV == "development") {
     let api_domain =
-      window.BUILDIN_CONFIG.domain[window.BUILDIN_CONFIG.current_env][0];
+      window.BUILDIN_CONFIG.DOMAIN_RESULT
+      .first_one;
     api_domain = api_domain.replace(/\/\/.*?\./, "//image.");
     return `${api_domain}/${path}`;
   }
 
   let arr = location.host.split(".");
-  let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${
-    arr[arr.length - 1]
-  }`;
+  let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]
+    }`;
 
   // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
   return `${api_domain_2}/${path}`;
@@ -352,7 +354,7 @@ export const get_file_path = (path, csid = 0) => {
  * @param {String} fun 函数
  * @return {String} 
  */
-export const  debounce_throttle_cancel=(fun)=> {
+export const debounce_throttle_cancel = (fun) => {
   if (fun && fun.cancel && typeof fun.cancel == "function") {
     fun.cancel();
   }

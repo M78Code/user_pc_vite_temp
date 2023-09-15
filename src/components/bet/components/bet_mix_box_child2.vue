@@ -203,6 +203,12 @@
             <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
           </template>
         </div>
+
+        <div  class="bet-add-box text-bold display_center one_text_color"
+          :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
+          <div class="bet-add-new bet_margin_left">取消</div>
+          <div class="bet_text_left bet-one">投注</div>
+        </div>
       </div>
 
     </div>
@@ -215,7 +221,7 @@ import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
 import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
 // import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
-import betSuccessBar from 'src/components/bet/components/bet_success_bar.vue';
+import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
 import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
 // import ballSpin from 'src/components/bet/components/ball_spin.vue';
