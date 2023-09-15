@@ -6,17 +6,25 @@
 // $bd--search-footer: #e1e4e6;
 
 export default {
-    "yb-border-color5": "#1E1E1E",
-    "yb-border-color9": "#d0d8de",
-    "yb-border-color1": "#282b37",
-    "yb-border-color2": "#d1d1d1",
-    "yb-border-color3": "#0b0b0b",
-    // "yb-border-color6": "rgba(40, 43, 55, 0.5)",
-    "yb-border-color8": "#414655",
-    // "yb-border-color10":" hsla(0,0%,100%,0.1)",
-    "yb-border-color11":" #242B38",
-    "yb-border-color12":" #414655",
-    // "yb-border-color14":" rgba(255, 255, 255, 0.1)",
-    "yb-border-color15":" #3d4152",
-    "yb-border-color81":" #FFB780"
+    {
+        'gb-border-1': '#414655', 
+        'gb-border-2': '#e93d3d', 
+        'gb-border-3': '#14171d', 
+        'gb-border-4': '#ffffff', 
+        'gb-border-5': '#ff7000', 
+        'gb-border-6': '#bfcedd', 
+        'gb-border-7': '#999999', 
+        'gb-border-8': '#C1C1C1', 
+        'gb-border-9': '#d1d1d1', 
+        'gb-border-10': '#d0d8de',
+        'gb-border-11': '#dedfe6',
+        'gb-border-12': '#e4eaff',
+        'gb-border-13': '#eff0f6',
+        'gb-border-14': '#ffb001',
+        'gb-border-15': 'none',   
+        'gb-border-16': '#5a6074',
+        'gb-border-17': '#a5aec8',
+        'gb-border-18': '#ffb479',
+        'gb-border-19': '#fec59e'
+      }
 };

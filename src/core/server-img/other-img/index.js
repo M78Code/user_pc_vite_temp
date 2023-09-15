@@ -12,15 +12,13 @@ Object.keys(modules).forEach((key) => {
   );
 });
 
-
 /**
  * 拿图片地址 和位置
  * @param {*} param0
  * @returns
  */
-function compute_css({ key    , theme }) {
+function compute_css({ key, theme }) {
   let config = all_other_image[key] || {};
-  console.log(CURRENT_ENV, "CURRENT_ENV");
   //从打包的 环境拿 图片地址
   let url = get(
     server_resource,
@@ -28,11 +26,12 @@ function compute_css({ key    , theme }) {
   );
   if (!url) {
     //从本地拿
-    url = get(config, theme);
+    url = get(config, CURRENT_ENV) || get(config, theme);
   }
   return {
     "background-image": `url(${url})`,
     "background-size": "contain",
+    "background-repeat": 'no-repeat'
   };
 }
 

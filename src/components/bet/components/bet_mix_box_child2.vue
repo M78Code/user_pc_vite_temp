@@ -219,12 +219,12 @@
 // import betMixShow from 'src/components/bet/components/bet_mix_show.vue';
 import betMixShow from 'src/components/bet/components/bet_mix_show3.vue';
 // import betMixShow2 from 'src/components/bet/components/bet_mix_show2.vue';
-import betMixDetail from 'src/components/bet/components/bet_mix_detail.vue';
-// import betMixSingleDetail from 'src/components/bet/components/bet_mix_single_detail.vue';
+import betMixDetail from 'src/components/bet/components/bet-mix-detail.vue';
+// import betMixSingleDetail from 'src/components/bet/components/bet-mix-single-detail.vue';
 import betSuccessBar from 'src/components/bet/components/bet-success-bar.vue';
 // import betting from 'src/mixins/betting/betting.js';
 import keyBoard from 'src/components/bet/components/bet-keyboard.vue';
-// import ballSpin from 'src/components/bet/components/ball_spin.vue';
+// import ballSpin from 'src/components/bet/components/ball-spin.vue';
 import betBar from "src/components/bet/components/bet-bar.vue";
 
 // import {utils } from 'src/core/index.js';

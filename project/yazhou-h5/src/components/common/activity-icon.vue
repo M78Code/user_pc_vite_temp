@@ -2,9 +2,10 @@
     <div class="activity-icon" v-if="GlobalAccessConfig.get_activitySwitch() && UserCtr.user_info?.inActivity &&
         get_lang == 'zh'" @click="openActivity">
         <!-- 活动图标 -->
-        <img class="activity-logo animate-bounce-up"
-            :src="get_file_path(UserCtr.user_info?.activityList[0].h5Url) || activity_default" @error="activity_icon_error"
-            alt="">
+        <img v-if="activity_default" class="activity-logo animate-bounce-up"
+            :src="get_file_path(UserCtr.user_info?.activityList[0].h5Url)" @error="activity_icon_error" alt="">
+        <div v-else :style="compute_css({ key: 'h5-activity-entrance' })" class="activity-logo animate-bounce-up"></div>
+
         <!-- 活动图标红点 -->
         <div class="red-dot" v-show="task_list > 0 && UserCtr.user_info?.inActivity &&
             get_lang == 'zh' && !UserCtr.user_info?.maintaining">
@@ -13,11 +14,10 @@
     </div>
 </template>
 <script setup>
-import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
+import { i18n_t, compute_css, UserCtr, get_file_path } from "src/core/index.js";
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { ref } from 'vue'
 import { api_activity } from "src/api";
-
 import lodash from 'lodash'
 import { useRouter } from "vue-router";
 const router = useRouter()
@@ -25,7 +25,7 @@ const get_lang = ref(UserCtr.lang)
 //任务列表
 const task_list = ref(0)
 // 出错时，活动默认图片
-const activity_default = `image/wwwassets/activity/activity_entrance.png`;
+const activity_default = ref(false)
 /**
    * 进入活动页
    */
@@ -41,8 +41,7 @@ function openActivity() {
 }
 function activity_icon_error($event) {
     if ($event.target.src.indexOf(activity_default) > 0) return
-    $event.target.src = activity_default;
-    $event.target.onerror = null
+    activity_default.value = true;
 }
 // 是否有活动可领取的任务数量
 function get_task_list(id = 1) {
