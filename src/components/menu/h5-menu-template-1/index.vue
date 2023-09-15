@@ -2,7 +2,7 @@
   <div class="match-main-menu">
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
-        <slot name="left">
+        <slot name="menu-left">
           <div class="goback-icon-wrapper column justify-center">《</div>
         </slot>
         <div class="main-menu-container">
@@ -11,18 +11,15 @@
               <span @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + item.mi) || item.mi }}
               </span>
-              <span
-                v-if="index == 1"
-                @click="show_selector_sub = !show_selector_sub"
-              >
-                +++</span
-              >
+              <span v-if="index == 1" @click="show_selector_sub = !show_selector_sub">
+                +++</span>
             </div>
           </template>
-
           <!-- 右侧活动和弹出设置 -->
-          <slot name="right"></slot>
+          <activityIcon></activityIcon>
+          <setMenu></setMenu>
         </div>
+
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_type !== 30">
@@ -40,24 +37,14 @@
           <!--   二级菜单 除了‘全部’按钮的其他所有 二级菜单  -->
           <div class="s-menu-container flex">
             <!--  二级菜单 滚球下边的一个按钮   "全部"按钮  -->
-            <sub-menu-specially
-              v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
-              :title="i18n_t('footer_menu.all')"
-              @click="select_all_sub_menu_handle"
-              :count="all_sport_count_calc"
-              v-if="GlobalAccessConfig.get_playAllShow()"
-            >
-              <span
-                class="sport-icon-wrap"
-                :class="get_sport_icon(get_sport_all_selected)"
-              ></span>
+            <sub-menu-specially v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
+              :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
+              v-if="GlobalAccessConfig.get_playAllShow()">
+              <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
             </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
-              <div
-                class="sport-menu-item flex justify-center"
-                v-show="[7, 28].includes(menu_type) ? item.ct > 0 : true"
-                @click="set_menu_lv2(item, index)"
-              >
+              <div class="sport-menu-item flex justify-center" v-show="[7, 28].includes(menu_type) ? item.ct > 0 : true"
+                @click="set_menu_lv2(item, index)">
                 {{ item.mi }}
                 <span>
                   {{
@@ -72,40 +59,24 @@
           </div>
 
           <!-- 三级菜单 日期 (只有 串关，早盘，赛果，电竞，才有) -->
-          <div
-            class="d-c-wrapper"
-            :class="{ esport }"
-            v-if="is_show_three_menu"
-          >
-            <div
-              class="date-container"
-              ref="date_menu_container"
-              :class="{ esport }"
-            >
-              <div
-                class="date-menu-item"
-                :key="date_index"
-                :class="{
-                  focus: date_menu_curr_i === date_index,
-                  'is-favorite': show_favorite_list,
-                  'hidden-champion':
-                    show_favorite_list &&
-                    esport &&
-                    date_menu_item.menuId === '-999',
-                }"
-                @click="set_menu_lv3(date_index, 'date_click')"
-                v-for="(date_menu_item, date_index) of date_menu_list"
-              >
+          <div class="d-c-wrapper" :class="{ esport }" v-if="is_show_three_menu">
+            <div class="date-container" ref="date_menu_container" :class="{ esport }">
+              <div class="date-menu-item" :key="date_index" :class="{
+                focus: date_menu_curr_i === date_index,
+                'is-favorite': show_favorite_list,
+                'hidden-champion':
+                  show_favorite_list &&
+                  esport &&
+                  date_menu_item.menuId === '-999',
+              }" @click="set_menu_lv3(date_index, 'date_click')"
+                v-for="(date_menu_item, date_index) of date_menu_list">
                 <div>
                   <!-- 串关不显示日期菜单后面的数量 -->
                   {{ date_menu_item.menuName }}
-                  <span
-                    v-if="
-                      !show_favorite_list &&
-                      date_menu_item.count &&
-                      ![11, 28].includes(+menu_type)
-                    "
-                  >
+                  <span v-if="!show_favorite_list &&
+                    date_menu_item.count &&
+                    ![11, 28].includes(+menu_type)
+                    ">
                     &nbsp;({{ date_menu_item.count }})
                   </span>
                 </div>
@@ -114,12 +85,8 @@
           </div>
           <!--四级菜单 虚拟体育赛果才有的 联赛tab-->
           <div class="virtual-sports-results" v-if="is_show_four_menu">
-            <div
-              class="tab-item"
-              v-for="(tab_item, i) of virtual_sports_results_tab"
-              :key="i"
-              @click="set_menu_lv4(tab_item, i)"
-            >
+            <div class="tab-item" v-for="(tab_item, i) of virtual_sports_results_tab" :key="i"
+              @click="set_menu_lv4(tab_item, i)">
               {{ tab_item.name }}
             </div>
           </div>
@@ -128,33 +95,20 @@
     </div>
   </div>
   <!--主菜单里边---中间下拉弹框-->
-  <div
-    v-show="show_selector_sub"
-    class="main-m-selector-w"
-    @click="show_selector_sub = false"
-    :class="{
-      'effct-in': show_selector_sub,
-    }"
-    style="background: rgba(0, 0, 0, 0.2)"
-  >
+  <div v-show="show_selector_sub" class="main-m-selector-w" @click="show_selector_sub = false" :class="{
+    'effct-in': show_selector_sub,
+  }" style="background: rgba(0, 0, 0, 0.2)">
     <!-- :class="{ 'effct-in': show_selector_s2 }"
 
     中间下拉弹框内容=》 -->
     <!-- v-show="show_selector_sub" -->
-    <div
-      class="selector-w-inner flex wrap justify-left hairline-border show"
-      :class="{
-        favorite: show_favorite_list,
-        show: show_selector_sub,
-      }"
-      style="background: #fff"
-    >
+    <div class="selector-w-inner flex wrap justify-left hairline-border show" :class="{
+      favorite: show_favorite_list,
+      show: show_selector_sub,
+    }" style="background: #fff">
       <template :key="i_m" v-for="(m_items, i_m) in pop_main_items">
-        <div
-          @click="set_menu_lv1(m_items, i_m)"
-          class="main-m-select-item flex justify-center items-center"
-          v-show="is_menu_show(m_items, i_m)"
-        >
+        <div @click="set_menu_lv1(m_items, i_m)" class="main-m-select-item flex justify-center items-center"
+          v-show="is_menu_show(m_items, i_m)">
           <!-- current -->
           <div class="m-menu-name-m">
             {{ i18n_t(`new_menu.${m_items.mi}`) }}
@@ -169,14 +123,18 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, computed, unref } from "vue";
+import { ref, watch, getCurrentInstance, computed, unref } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-
+import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
+const Instance = getCurrentInstance();
+console.error(Instance.slots
+)
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",
@@ -193,7 +151,7 @@ const props = defineProps({
   // 菜单配置
   menu_config: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -312,8 +270,8 @@ const all_sport_count_calc = computed(() => {
     return !data_list
       ? 0
       : data_list.sl.reduce((sum, item) => {
-          return sum + item.ct;
-        }, 0);
+        return sum + item.ct;
+      }, 0);
   }
   return 0;
 });
@@ -493,11 +451,13 @@ function is_menu_show(item) {
   height: 0.44rem;
   position: relative;
   padding-bottom: 0.01rem;
+
   .m-i-background {
     width: 100%;
     height: 1.35rem;
     background-repeat: no-repeat;
     background-size: cover;
+
     // 使用css变量统一管理，所以废弃这里代码，转为不遍历
     // @each $e-sports in dota, lol, wangzhe, csgo {
     //   &.#{$e-sports} {
@@ -520,6 +480,7 @@ function is_menu_show(item) {
       background-image: var(--q-color-com-img-bg-172);
     }
   }
+
   .main-wrap {
     width: 100%;
     height: 0.44rem;
@@ -531,6 +492,7 @@ function is_menu_show(item) {
     top: 0;
     left: 0;
     z-index: 2;
+
     &.esport {
       background-color: transparent;
     }
@@ -538,14 +500,17 @@ function is_menu_show(item) {
     .goback-icon-wrapper {
       height: 0.2rem;
       padding-left: 0.15rem;
+
       img {
         width: 0.12rem;
         height: 0.2rem;
       }
     }
+
     .goback-icon-wrapper2 {
       visibility: hidden;
     }
+
     .main-menu-container {
       flex: 1;
       height: 0.27rem;
@@ -558,9 +523,11 @@ function is_menu_show(item) {
       padding-top: 1px;
       padding-right: 0.04rem;
       margin-left: 0.15rem;
+
       &.esport {
         background-color: transparent;
       }
+
       .m-menu-item {
         flex: 1;
         max-width: 0.8rem;
@@ -569,9 +536,11 @@ function is_menu_show(item) {
         font-size: 0.16rem;
         display: flex;
         justify-content: center;
+
         &.current {
           .i-title {
             font-weight: bold;
+
             &:after {
               content: " ";
               position: absolute;
@@ -585,16 +554,20 @@ function is_menu_show(item) {
               // background-color: #ffb001;
             }
           }
+
           .m-menu-count {
             font-weight: bold;
           }
+
           &.esport {
+
             .i-title,
             .m-menu-count {
               color: #ffffff;
             }
           }
         }
+
         .i-title {
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -602,16 +575,19 @@ function is_menu_show(item) {
           line-height: 0.2rem;
           position: relative;
         }
+
         &.main_menu_407 {
           &.is_favorite {
             visibility: hidden;
           }
         }
+
         &.main_menu_410 {
           margin-right: 0;
           position: relative;
           left: 0.06rem;
         }
+
         .m-menu-count {
           width: 0.14rem;
           height: 0.18rem;
@@ -622,26 +598,33 @@ function is_menu_show(item) {
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
+
           .count {
             font-size: 0.11rem;
+
             &.is_unit {
               min-width: 15px;
               text-align: center;
             }
           }
         }
+
         &.current {
+
           .i-title,
           .m-menu-count {
             font-weight: bold;
           }
+
           &.esport {
+
             .i-title,
             .m-menu-count {
               color: #ffffff;
             }
           }
         }
+
         .dir-triangle {
           width: 0;
           height: 0;
@@ -653,15 +636,18 @@ function is_menu_show(item) {
           position: absolute;
           top: 0.1rem;
           left: 0.03rem;
+
           &.open {
             transform: rotateZ(180deg);
           }
+
           &.arrow_esport {
             border-top: 0.04rem solid #fff;
           }
         }
       }
     }
+
     .activity-logo {
       display: block;
       width: 0.4rem;
@@ -671,6 +657,7 @@ function is_menu_show(item) {
       position: relative;
       left: -0.05rem;
     }
+
     .red-dot {
       width: 0.05rem;
       height: 0.05rem;
@@ -689,12 +676,15 @@ function is_menu_show(item) {
     left: 0;
     top: 0.44rem;
     transition: transform 0.6s, max-height 0.3s;
+
     &.esport {
       transition: unset !important;
+
       .sport-m-container {
         background-color: transparent;
       }
     }
+
     &.simple {
       transform: translate3d(0, -0.6rem, 0);
 
@@ -702,6 +692,7 @@ function is_menu_show(item) {
         transform: translate3d(0, -0.93rem, 0);
       }
     }
+
     // 二级菜单
     .sport-m-container {
       width: 100%;
@@ -719,17 +710,21 @@ function is_menu_show(item) {
         padding-bottom: 0.05rem;
         flex-wrap: nowrap;
         scrollbar-width: none; // 去除滚动条火狐浏览器兼容性问题
+
         .sport-menu-item {
           width: 0.7rem;
           height: 100%;
           flex-shrink: 0;
+
           &.champion {
             // width: 0.9rem;
           }
+
           &.current {
             .inner-w {
               position: relative;
               font-size: 0.1rem;
+
               &.favorite {
                 &:after {
                   background: rgba(255, 145, 36, 0.08);
@@ -737,22 +732,25 @@ function is_menu_show(item) {
               }
             }
           }
+
           .inner-w {
             height: 0.41rem;
             flex-direction: column;
             flex-wrap: nowrap;
             position: relative;
+
             .sport-w-icon {
               height: 0.27rem;
               position: relative;
+
               .sport-icon-wrap {
                 --per: -0.32rem;
                 display: block;
                 width: auto;
                 height: 0.22rem;
                 width: 0.22rem;
-                background: var(--q-color-com-img-bg-140) no-repeat 0 0 /
-                  0.22rem 18.88rem;
+                background: var(--q-color-com-img-bg-140) no-repeat 0 0 / 0.22rem 18.88rem;
+
                 // 使用css变量统一管理，所以废弃这里代码，转为不遍历
                 // @each $item, $img in (d: '04', c: '03', a: '01', e: 'y0', b: '05') {
                 //   &.focus-#{$item} {
@@ -779,25 +777,80 @@ function is_menu_show(item) {
                   background-image: var(--q-color-com-img-bg-209);
                 }
               }
-              @each $s-number, $y in (s1, 1), (s2, 3), (s3, 28), (s4, 6),
-                (s5, 19), (s6, 4), (s7, 15), (s10, 22), (s11, 13), (s12, 10),
-                (s13, 12), (s8, 7), (s9, 6), (s20, 4), (s17, 6), (s2101, 39),
-                (s2103, 40), (s2102, 41), (s2100, 42), (s16, 14), (s23, 8),
-                (s41, 9), (s44, 10), (s1002, 11), (s45, 12), (s43, 13),
-                (s24, 14), (s14, 20), (s27, 16), (s25, 17), (s39, 18), (s13, 19),
-                (s22, 20), (s26, 21), (s15, 8), (s1011, 23), (s1009, 24),
-                (s30, 26), (s19, 28), (s1001, 29), (s1004, 30), (s29, 31),
-                (s48, 32), (s49, 33), (s50, 34), (s51, 35), (s52, 36), (s53, 38),
-                (s3001, 39), (s3003, 40), (s3004, 41), (s3002, 42), (s20030, 43),
-                (s20031, 44), (s20032, 45), (s20026, 46), (s20027, 47),
-                (s20033, 48), (s20034, 49), (s20035, 50), (s20036, 51),
-                (s20037, 52), (s20038, 53), (s20039, 54), (s100, 55), (s40, 56),
-                (s1010, 57)
-              {
+
+              @each $s-number,
+              $y in (s1, 1),
+              (s2, 3),
+              (s3, 28),
+              (s4, 6),
+              (s5, 19),
+              (s6, 4),
+              (s7, 15),
+              (s10, 22),
+              (s11, 13),
+              (s12, 10),
+              (s13, 12),
+              (s8, 7),
+              (s9, 6),
+              (s20, 4),
+              (s17, 6),
+              (s2101, 39),
+              (s2103, 40),
+              (s2102, 41),
+              (s2100, 42),
+              (s16, 14),
+              (s23, 8),
+              (s41, 9),
+              (s44, 10),
+              (s1002, 11),
+              (s45, 12),
+              (s43, 13),
+              (s24, 14),
+              (s14, 20),
+              (s27, 16),
+              (s25, 17),
+              (s39, 18),
+              (s13, 19),
+              (s22, 20),
+              (s26, 21),
+              (s15, 8),
+              (s1011, 23),
+              (s1009, 24),
+              (s30, 26),
+              (s19, 28),
+              (s1001, 29),
+              (s1004, 30),
+              (s29, 31),
+              (s48, 32),
+              (s49, 33),
+              (s50, 34),
+              (s51, 35),
+              (s52, 36),
+              (s53, 38),
+              (s3001, 39),
+              (s3003, 40),
+              (s3004, 41),
+              (s3002, 42),
+              (s20030, 43),
+              (s20031, 44),
+              (s20032, 45),
+              (s20026, 46),
+              (s20027, 47),
+              (s20033, 48),
+              (s20034, 49),
+              (s20035, 50),
+              (s20036, 51),
+              (s20037, 52),
+              (s20038, 53),
+              (s20039, 54),
+              (s100, 55),
+              (s40, 56),
+              (s1010, 57) {
                 .#{$s-number} {
                   background-position-y: calc(var(--per) * #{$y});
                 }
               }
+
               .sport-icon-wrap2 {
                 position: absolute;
                 bottom: 0;
@@ -805,6 +858,7 @@ function is_menu_show(item) {
                 width: 0.13rem;
                 height: 0.14rem;
               }
+
               .sport-match-count {
                 width: 1px;
                 height: 1px;
@@ -815,6 +869,7 @@ function is_menu_show(item) {
                 font-size: 0.11rem;
               }
             }
+
             .s-w-i-title {
               max-width: 0.7rem;
               font-size: 0.1rem;
@@ -828,6 +883,7 @@ function is_menu_show(item) {
         }
       }
     }
+
     // 三级菜单
     .d-c-wrapper {
       width: 100%;
@@ -844,12 +900,15 @@ function is_menu_show(item) {
       display: flex;
       line-height: 1;
       padding-left: 0.2rem;
+
       &::-webkit-scrollbar {
         display: none;
       }
+
       &.esport {
         background-color: initial !important;
       }
+
       &:after {
         content: " ";
         display: block;
@@ -857,6 +916,7 @@ function is_menu_show(item) {
         height: 0.02rem;
         flex-shrink: 0;
       }
+
       /*****   日期菜单  ******* -S*/
       .date-menu-item {
         height: 0.2rem;
@@ -874,6 +934,7 @@ function is_menu_show(item) {
           width: auto;
           margin-right: 0.1rem;
         }
+
         &.focus {
           font-size: 0.12rem;
 
@@ -891,6 +952,7 @@ function is_menu_show(item) {
         }
       }
     }
+
     /*  联赛菜单 */
     .virtual-sports-results {
       height: 0.42rem;
@@ -910,6 +972,7 @@ function is_menu_show(item) {
       }
     }
   }
+
   /* **************主菜单中间的下拉弹框  容器********************************** -Star*/
   .main-m-selector-w {
     width: 100%;
@@ -920,43 +983,54 @@ function is_menu_show(item) {
     opacity: 0;
     transition: opacity 0.7s;
     overflow: hidden;
+
     &.effct-in {
       opacity: 1;
     }
+
     .selector-w-inner {
       padding: 0.2rem 0 0.09rem 0.17rem;
       transform: translate3d(0, -2.2rem, 0);
       transition: transform 0.35s;
+
       &.show {
         transform: translate3d(0, 0, 0);
       }
+
       .main-m-select-item {
         width: 1.6rem;
         height: 0.48rem;
         border-radius: 0.04rem;
         margin-bottom: 0.15rem;
+
         &:nth-child(odd) {
           margin-right: 0.2rem;
         }
-        & > div {
+
+        &>div {
           height: 0.24rem;
+
           &.m-menu-name-m {
             font-size: 0.16rem;
           }
+
           &.m-count-match {
             line-height: 0.24rem;
             font-size: 0.14rem;
             margin-left: 0.09rem;
           }
         }
+
         &.current {
           &.is-favorite {
             //background-color:#ff9124;
           }
-          & > div {
+
+          &>div {
             &:first-child {
               color: #ffffff;
             }
+
             &:last-child {
               color: #ffffff;
             }
@@ -965,6 +1039,7 @@ function is_menu_show(item) {
       }
     }
   }
+
   /* **************主菜单容器********************************** -End*/
 }
 </style>
@@ -980,43 +1055,54 @@ function is_menu_show(item) {
   transition: opacity 0.7s;
   overflow: hidden;
   z-index: 9;
+
   &.effct-in {
     opacity: 1;
   }
+
   .selector-w-inner {
     padding: 0.2rem 0 0.09rem 0.17rem;
     transform: translate3d(0, -2.2rem, 0);
     transition: transform 0.35s;
+
     &.show {
       transform: translate3d(0, 0, 0);
     }
+
     .main-m-select-item {
       width: 1.6rem;
       height: 0.48rem;
       border-radius: 0.04rem;
       margin-bottom: 0.15rem;
+
       &:nth-child(odd) {
         margin-right: 0.2rem;
       }
-      & > div {
+
+      &>div {
         height: 0.24rem;
+
         &.m-menu-name-m {
           font-size: 0.16rem;
         }
+
         &.m-count-match {
           line-height: 0.24rem;
           font-size: 0.14rem;
           margin-left: 0.09rem;
         }
       }
+
       &.current {
         &.is-favorite {
           //background-color:#ff9124;
         }
-        & > div {
+
+        &>div {
           &:first-child {
             color: #ffffff;
           }
+
           &:last-child {
             color: #ffffff;
           }

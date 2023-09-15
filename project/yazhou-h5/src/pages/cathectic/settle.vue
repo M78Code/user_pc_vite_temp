@@ -43,7 +43,7 @@
                 <p class="tittle-p row justify-between yb_px4" :class="{ 'tittle-p2': index == 0 }"
                   @click="toggle_show(value)">
                   <span>{{ format_M_D(new Date(name).getTime()) }}</span>
-                  <span class="betamount" v-show="store_cathectic.main_item == 1 && value.open">{{
+                  <span class="betamount" v-show="new_main_item == 1 && value.open">{{
                     i18n_t('bet.number_transactions') }}<span class="color-1 yb_m">{{ value.totalOrders }}</span>&emsp;{{
                       i18n_t('bet.betting') }}<span class="color-1">{{ value.betAmount }}</span>&emsp;{{
                         i18n_t('bet_record.bet_no_status03') }}/{{ i18n_t('bet_record.bet_no_status04') }}<span
@@ -92,7 +92,7 @@ import { i18n_t } from "src/boot/i18n.js";
 // mixins: [skt_order]
 const props = defineProps({
   main_item: {
-    type: Number || String
+    type: String
   }
 })
 // 仓库数据
@@ -123,6 +123,7 @@ const is_early = ref(false)
 const is_sort_show = ref(false)
 // 接口是否返回错误码为0401038限频
 const is_limit = ref(false)
+const new_main_item = ref(props.main_item)
 
 // onMounted(() => {
 //   store_cathectic.main_item == 1 && init_data()
@@ -133,6 +134,7 @@ watch(() => props.main_item, (newval) => {
    * @param {undefined} undefined
    * @return {undefined} undefined
    */
+   new_main_item.value = newval
   if (newval == 1) {
     !last_record.value && init_data()
   }
@@ -375,6 +377,10 @@ onUnmounted(() => {
 
     .betamount {
       font-size: 0.11rem;
+      color: var(--q-cathectic-color-35);
+      .color-1 {
+        color: var(--q-cathectic-color-1);
+      }
     }
   }
 
@@ -397,12 +403,14 @@ onUnmounted(() => {
   .time {
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
+    background-color: var(--q-cathectic-color-6);
   }
 
   .sort {
     margin-right: auto;
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
+    background-color: var(--q-cathectic-color-6);
 
     p {
       width: max-content;
@@ -432,18 +440,18 @@ onUnmounted(() => {
 
   .early {
     display: inline-block;
-    background-image: var(--q-color-com-img-bg-69);
+    background: url("public/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;
   }
 
   .early2 {
-    background-image: var(--q-color-com-img-bg-68);
+    background-image: url("public/image/svg/select_a2.svg");
   }
 
   .calendar {
-    background-image: var(--q-color-com-img-bg-75);
+    background-image: url("public/image/record/calendar3.svg");
   }
   /* ************** 排序按钮图标 ************** -S */
 
@@ -460,7 +468,7 @@ onUnmounted(() => {
   }
 
   .sort-2 {
-    background-image: var(--q-color-com-img-bg-79);
+    background-image: url("public/image/record/sort_settled_time3.svg");
   }
 
   .sort-1 {

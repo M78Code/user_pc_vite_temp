@@ -367,7 +367,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-    .pre_record {
+.pre_record {
     height: 100%;
     .filter-button{
         display: flex;
@@ -375,6 +375,9 @@ onUnmounted(() => {
         position: absolute;
         right: 0;
         top: 0.15rem;
+        .select {
+            color: var(--q-cathectic-color-36);
+        }
     }
     .pretype-tabs{
         height: 0.28rem;
@@ -428,13 +431,13 @@ onUnmounted(() => {
 
     .early {
     display: inline-block;
-    background: url("public/yazhou-h5/image/svg/select_b.svg") no-repeat center / contain;
+    background: url("public/image/svg/select_b.svg") no-repeat center / contain;
     vertical-align: text-bottom;
     width: 0.14rem;
     height: 0.14rem;
     }
 
     .early2 {
-    background-image: var(--q-color-com-img-bg-68);
+    background-image: url("public/image/svg/select_a2.svg");
     }
 </style>

@@ -9,15 +9,15 @@
     <div class="table-header">
       <!-- 日期 -->
       <div class="table-col cursor" @click="change_sort">
-        <span>{{$root.$t('results.date')}}</span>
+        <span>{{i18n_t('results.date')}}</span>
         <div class="sort icon" :class="{'up':is_sortUp}" ></div>
       </div>
       <!-- 联赛 -->
-      <div class="table-col">{{$root.$t('results.league')}}</div>
+      <div class="table-col">{{i18n_t('results.league')}}</div>
       <!-- 玩法 -->
-      <div class="table-col">{{$root.$t('list.play')}}</div>
+      <div class="table-col">{{i18n_t('list.play')}}</div>
       <!-- 结果 -->
-      <div class="table-col">{{$root.$t('results.results')}}</div>
+      <div class="table-col">{{i18n_t('results.results')}}</div>
     </div>
     <load-data :state="load_data_state" color="light">
       <q-scroll-area
@@ -26,11 +26,10 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list">
+          <template v-for="(item, index) in results_list" :key="index">
             <div
               class="table-tr-td"
-              :class="{'active':index == activeIndex}"
-              :key="index"
+              :class="{'active':index == activeIndex}"             
             >
               <!-- 日期 -->
               <div class="table-col">
@@ -40,7 +39,7 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[_.get(item,'iconUrl')]" class="tournament-logo" alt="">
+                <img v-img="[lodash.get(item,'iconUrl')]" class="tournament-logo" alt="">
                 <span class="ellipsis-line-2">{{item.tournamentName}}</span>
               </div>
               <!-- 玩法 -->
@@ -52,18 +51,16 @@
                 <span class="ellipsis-line-2">{{item.scoreResult}}</span>
               </div>
             </div>
-            <div v-if="index == activeIndex" class="wrap-load" :key="`details-${index}`">
+            <div v-if="index == activeIndex" class="wrap-load" >
               <load-data :state="details_load" color="light">
-                <template v-for="(list,i) in results_order_list">
-                  <div class="table-tr-detail" v-if="list.posrList.length" :key="i">
+                <template v-for="(list,i) in results_order_list" :key="i">
+                  <div class="table-tr-detail" v-if="list.posrList.length" >
                     <div class="tr-detail-title">{{list.playName}}</div>
                     <div class="tr-detail-item">
-                      <template v-for="(list2, j) in list.posrList">
-                        <div class="item" :key="j">
+                        <div class="item" v-for="(list2, j) in list.posrList" :key="j">
                           <span>{{list2.playOptionName}}</span>
                           <span :class="format_name(list2.scoreResult).class">{{format_name(list2.scoreResult)['name']}}</span>
                         </div>
-                      </template>
                     </div>
                   </div>
                 </template>
@@ -78,8 +75,12 @@
 
 <script>
 import results from "src/public/mixins/results/index";
+import loadData from "src/components/load_data/load_data.vue"
 export default {
-  mixins: [results]
+  mixins: [results],
+  components: {
+    loadData
+  },
 };
 </script>
 
