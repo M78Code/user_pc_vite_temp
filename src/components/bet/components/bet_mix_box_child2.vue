@@ -203,6 +203,12 @@
             <p v-if="btn_show == 4" @click="submit_order" class="yb_fontsize16">{{ $t('bet.agree_change2') }}</p>
           </template>
         </div>
+
+        <div  class="bet-add-box text-bold display_center one_text_color"
+          :class="{ 'add-box3': calc_class }" @click.stop="pack_up(5)">
+          <div class="bet-add-new bet_margin_left">取消</div>
+          <div class="bet_text_left bet-one">投注</div>
+        </div>
       </div>
 
     </div>

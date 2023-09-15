@@ -164,7 +164,6 @@ const props = defineProps({
   right: Boolean,
 });
 ;
-console.log(props,'match_props');
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {

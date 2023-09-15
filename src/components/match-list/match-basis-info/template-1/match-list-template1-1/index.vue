@@ -112,8 +112,6 @@ const props = defineProps({
 })
 
 
-console.log('matchmatchmatchmatch', props.match);
-
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画
 const is_show_home_red = ref(false) // 是否显示主队红牌动画
