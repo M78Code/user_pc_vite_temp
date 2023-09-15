@@ -1,7 +1,7 @@
 <!-- @Description: 简单页面头部  体育规则页面使用 -->
 
 <template>
-  <div class="c-simple-header">
+  <div class="c-simple-header" :style="page_style">
       <div v-if="is_hide_icon" class="icon-layout"></div>
       <div v-else class="rule-logo">
           <div class="img-logo custom-format-img-logo-01"></div>
@@ -25,13 +25,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, useSlots } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router';
 
 import { RefreshWapper as Refresh } from "src/components/common/refresh"
 import { get_remote_time, utc_to_gmt_no_8_ms2 } from "src/core/format/module/format-date.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
 
-console.error('useSlots pc', useSlots());
+
+const page_style = ref('')
+page_style.value = compute_css_variables({ category: 'component', module: 'simple-header' })
+
 const props = defineProps({
   /** 刷新按钮动画开关 */
   data_loaded: {
@@ -101,19 +105,19 @@ function refresh() {
   /*  必须用min-height；兼容IE */
   align-items: center;
   text-transform: uppercase;
-  border-bottom: 1px solid var(--qq--simple-header-border-color1);
-  background: var(--qq--simple-header-bg-color1);
+  border-bottom: 1px solid var(--q-simple-header-color-1);
+  background: var(--q-simple-header-color-2);
 
   .rule-logo {
       margin-right: 33.3px;
       height: 100%;
 
       .rule-title {
-          color: var(--qq--simple-header-text-color1);
+          color: var(--q-simple-header-color-3);
       }
 
       .systime {
-          color: var(--qq--simple-header-text-color2);
+          color: var(--q-simple-header-color-4);
       }
 
       .img-logo {
