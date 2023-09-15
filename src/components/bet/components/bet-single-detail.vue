@@ -8,8 +8,9 @@
   <div class="bet-single-detail yb_px14 row items-center" ref="bet_single_detail">
     <!-- 左 -->
     <div class="yb_fontsize16 content-t">
-      <p>{{ $t('bet.bet') }}</p>
-      <p>{{ $t('bet.total_win2') }}
+      <p>单关</p>
+      <p>
+        <span>最高可赢</span>
         <span :class="{ 'red-color': !(max_win_money == '0.00' || money_ok), 'yellow-color': money_ok && money }">{{
           format_money2(max_win_money) }}</span>
       </p>
@@ -36,10 +37,9 @@ import lodash from 'lodash'
 import BetData from "src/core/bet/class/bet-data-class.js";
 import { UserCtr } from "src/core/index.js";
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue';
-import lodash from 'lodash'
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
-import { format_money3,format_money2 } from 'src/core/index.js'
+import { format_money3,format_money2 } from 'src/core/format/index.js'
 
 const money = ref('')  //输入框金额
 const money_ok = ref(true)   //金额是否合适
@@ -49,12 +49,11 @@ const is_watch = ref(false)    //组件渲染时是否监听money
 const max_money_back = ref(false)   //最高可赢金额的接口是否有返回(不管成功与失败)
 const obj_pre_max_money = ref(null) // 单关预约最高可投注金额
 
-const store_state = store.getState()
 
-const get_cur_odd = ref(store_state.get_cur_odd)
-const get_bet_status = ref(store_state.get_bet_status)
-const get_used_money = ref(store_state.get_used_money)
-const get_money_notok_list2 = ref(store_state.get_money_notok_list2)
+const get_cur_odd = ref()
+const get_bet_status = ref()
+const get_used_money = ref()
+const get_money_notok_list2 = ref()
 
 
 
@@ -68,10 +67,10 @@ onMounted(() => {
 
   money.value = BetData.bet_money_total && view_ctr_obj[name_].money || ''
 
-  // 同步程序走完后再处理逻辑
-  $nextTick(() => {
-    is_watch.value = true;
-  })
+  // // 同步程序走完后再处理逻辑
+  // $nextTick(() => {
+  //   is_watch.value = true;
+  // })
 
   cursor_flashing();
 
