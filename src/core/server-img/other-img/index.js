@@ -11,7 +11,6 @@ Object.keys(modules).forEach((key) => {
     modules[key].default
   );
 });
-console.error("all_other_image", all_other_image)
 
 /**
  * 拿图片地址 和位置
@@ -19,10 +18,7 @@ console.error("all_other_image", all_other_image)
  * @returns
  */
 function compute_css({ key, theme }) {
-  console.error(all_other_image, 'all_other_image')
   let config = all_other_image[key] || {};
-
-  console.log(CURRENT_ENV, "CURRENT_ENV");
   //从打包的 环境拿 图片地址
   let url = get(
     server_resource,
