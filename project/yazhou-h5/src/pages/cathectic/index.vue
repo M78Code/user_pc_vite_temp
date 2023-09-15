@@ -173,16 +173,17 @@ onUnmounted(() => {
   .close {
     position: absolute;
     right: 0;
-
+    width: 0.14rem;
+    height: 0.14rem;
+    padding-right: 0.34rem !important;
     .close-click-padding {
-      padding: 0.08rem 0.04rem;
+      // padding: 0.08rem 0.04rem;
     }
 
-    img {
-      width: 0.24rem;
-      opacity: 0.7;
-      border: 0.06rem solid transparent;
-      transform: translateY(0.02rem);
+    div {
+      width: 0.14rem;
+      height: 0.14rem;
+      background-repeat: no-repeat;
     }
   }
 

@@ -3,7 +3,9 @@
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <slot name="menu-left">
-          <div class="goback-icon-wrapper column justify-center">《</div>
+          <div class="goback-icon-wrapper column justify-center">
+            <div class="img" :style="compute_css({ key: 'h5-go-back-icon', theme: 'local_dev' })"></div>
+          </div>
         </slot>
         <div class="main-menu-container">
           <template v-for="(item, index) in menu_list" :key="item.mi">
@@ -125,7 +127,7 @@
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, getCurrentInstance, computed, unref } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
+import { i18n_t, compute_css, } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
@@ -501,7 +503,7 @@ function is_menu_show(item) {
       height: 0.2rem;
       padding-left: 0.15rem;
 
-      img {
+      .img {
         width: 0.12rem;
         height: 0.2rem;
       }
