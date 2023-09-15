@@ -55,6 +55,7 @@
     "@quasar/extras": "^1.16.5",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "calculatorjs": "^1.1.2",
     "current-device": "^0.10.2",
     "dexie": "^3.2.4",
     "licia": "^1.38.2",
@@ -67,7 +68,8 @@
     "vue-currency-input": "^3.0.5",
     "vue-draggable-resizable": "^2.3.0",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "clipboard": "^2.0.11"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.4.1",

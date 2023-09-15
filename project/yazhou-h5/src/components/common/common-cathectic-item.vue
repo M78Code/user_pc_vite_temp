@@ -120,4 +120,9 @@ onUnmounted(() => {
   height: 0.38rem;
   line-height: 0.34rem;
 }
+.hairline-border {
+  &::after {
+    border: 1px solid var(--q-cathectic-color-31) !important;
+  }
+}
 </style>

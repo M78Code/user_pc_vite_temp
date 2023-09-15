@@ -28,7 +28,10 @@ export default {
 "cathectic-color-28": "transparent",
 "cathectic-color-29": "#4987fb",
 "cathectic-color-30": "#f7f9fe",
-
-
-
+"cathectic-color-31": "#bfcedd",
+"cathectic-color-32": "#e4eaff",
+"cathectic-color-33": "#98a3c2",
+"cathectic-color-34": "linear-gradient(269.95deg, #3D72FA 0.05%, #62B6FF 99.95%)",
+"cathectic-color-35": "#6C7BA8",
+"cathectic-color-36": "#4276FB",
 }

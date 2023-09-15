@@ -16,7 +16,7 @@ import { dianjing_sublist } from "src/core/constant/config/csid.js"
 
 //  1001  1004
 import userCtr  from "src/core/user-config/user-ctr.js";
-import _ from "lodash";
+import lodash_ from "lodash";
 // indexeDb
 import { db } from "src/core/base-data/config/indexedPB.js";
 
@@ -211,8 +211,8 @@ class BaseData {
     // let res = await api_account.get_user_info({token})
 
     // console.warn("init_user_info",res.data)
-    // let user_info = _.get(res,'data.data',{})
-    // let user_info = _.get(res,'data.data',{})
+    // let user_info = lodash_.get(res,'data.data',{})
+    // let user_info = lodash_.get(res,'data.data',{})
     let user_info = userCtr.get_user_info_data()
     if (user_info && Object.keys(user_info).length) {
       // let old_user = JSON.stringify(store.getters.get_user)
@@ -255,7 +255,7 @@ class BaseData {
   async init_base_menu_il8n() {
     let res = await api_base_data.post_base_data_menu_i18n({});
 
-    let menu_i18n = _.get(res, 'data')
+    let menu_i18n = lodash_.get(res, 'data')
 
     this.resolve_menus(menu_i18n);
   }
@@ -345,7 +345,7 @@ class BaseData {
    */
   set_mi_euid_map_res(res) {
     // 接口返回值很多没有p值，也就是euid 值，先注释调用接口的，用默认的，
-    this.mi_euid_map_res = _.get(res, 'data')
+    this.mi_euid_map_res = lodash_.get(res, 'data')
 
     localStorage.setItem("is_session_base_data", JSON.stringify());
     this.resolve_mi_euid_map_res();
@@ -355,7 +355,7 @@ class BaseData {
    */
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
-    let menu_info = _.get(res, 'data')
+    let menu_info = lodash_.get(res, 'data')
 
     let menu_old_or_nem_data_list = [...menu_info];
     this.menu_type_old_or_new = "new";
@@ -483,7 +483,7 @@ class BaseData {
     let res = await api_common.get_virtual_menu({});
     // VR 体育的 配置
 
-    // let mi_300_obj = _.get(res, 'data')
+    // let mi_300_obj = lodash_.get(res, 'data')
 
     // // 重构数据 init接口没有中的 vr 联赛 mi 在 元数据接口中 没有对应的 国际化信息
     // this.vr_mi_config = mi_300_obj.map((item) => {
@@ -553,7 +553,7 @@ class BaseData {
 
   // 设置基础数据  res.data 实体
   set_base_data_res(res) {
-    this.base_data_res = _.get(res, 'data')
+    this.base_data_res = lodash_.get(res, 'data')
     let mids_info = [],
       menus_i18n = [],
       sp_list = [];
@@ -568,13 +568,13 @@ class BaseData {
     });
 
     // 国际化信息 csid对应
-    _.each(Object.keys(data.menus), (item) => {
+    lodash_.each(Object.keys(data.menus), (item) => {
       menus_i18n.push({
         play_id: item,
         play_name: data.menus[item],
       });
     });
-    // _.each(Object.keys(data.matchsList), (item) => {
+    // lodash_.each(Object.keys(data.matchsList), (item) => {
     //   tids_obj.push({
     //     mi: item,
     //     value: data[item],
@@ -654,13 +654,14 @@ class BaseData {
    * 解析  菜单 国际化
    */
   resolve_menus(res) {
+    if(!res) return
     // 获取语言类型
     let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports = i18n.global.messages?.common?.e_sports || "Esports";
+    let esports = lodash_.get(i18n.global.messages,'common.e_sports')
 
     // 菜单 国际化 数据  map
-    res["2000"] = esports;
+    res["2000"] = esports || "Esports";
     this.menus_i18n_map = res;
   }
   /**
@@ -694,10 +695,10 @@ class BaseData {
    * @param {*} res
    */
   set_mi_tid_mids_res(res) {
-    let data = _.get(res, 'data')
+    let data = lodash_.get(res, 'data')
     this.mi_tid_mids_res = data;
     let db_data = [];
-    _.each(Object.keys(data), (item) => {
+    lodash_.each(Object.keys(data), (item) => {
       db_data.push({
         mi: item,
         match_info: data[item],
@@ -891,7 +892,7 @@ class BaseData {
    * 更新   菜单id 到 联赛 id 到 赛事ID 的 映射关系 mi_tid_mids_res
    * @param {*} data
    */
-  update_mi_tid_mids_res_by_mi(data, mi) {
+  update_mi_tid_mids_res_by_mi(data = {}, mi) {
     // 区分 滚球 早盘
     if (data.livedata || data.nolivedata) {
       let { livedata = [], nolivedata = [] } = data;

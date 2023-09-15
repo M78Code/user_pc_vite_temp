@@ -77,11 +77,11 @@ const go_bet = () => {
 .img-s {
   width: 1.65rem;
   height: 1.65rem;
-  background: var(--q-color-com-img-bg-83) no-repeat center / contain;
+  background: url("/yazhou-h5/image/png/no_record.png") no-repeat center / contain;
 }
 
 .img-s2 {
-  background: var(--q-color-com-img-bg-84) no-repeat center / contain;
+  background: url("/yazhou-h5/image/svg/no_record2.svg") no-repeat center / contain;
 }
 
 .text-s {
@@ -89,13 +89,13 @@ const go_bet = () => {
   height: 0.42rem;
   line-height: 0.42rem;
   font-size: 0.14rem;
-  color: var(--q-color-fs-color-146);
+  color: var(--q-cathectic-color-33);
   letter-spacing: 0;
   text-align: center;
 }
 
 .go-bet {
-  background: var(--q-color-linear-gradient-bg-22);
+  background: var(--q-cathectic-color-34);
   border-radius: 4px;
   color: #fff;
   margin-top: 0.1rem;

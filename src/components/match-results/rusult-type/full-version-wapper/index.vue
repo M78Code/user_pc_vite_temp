@@ -1,5 +1,4 @@
 <template>
-  <div>
     <div v-show="is_full_version">
       <div>is_full_version {{ is_full_version }}</div>
       <q-tabs
@@ -16,7 +15,6 @@
       </q-tabs>
     </div>
     <component :is="use_component_key" v-bind="$attrs" />
-  </div>
 </template>
 <script>
 import wapper_config from "./wapper.js";

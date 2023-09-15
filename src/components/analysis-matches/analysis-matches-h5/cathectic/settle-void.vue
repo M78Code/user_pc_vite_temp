@@ -10,7 +10,7 @@
       <div class="text-s">
         <p style="line-height: 0.18rem">{{ calc_text }}</p>
         <p @click="go_bet" class="go-bet">
-          {{ get_main_item == 2 ? t('msg.msg_nodata_19') : t('msg.msg_nodata_05') }}
+          {{ get_main_item == 2 ? i18n_t('msg.msg_nodata_19') : i18n_t('msg.msg_nodata_05') }}
         </p>
       </div>
     </div>
@@ -20,7 +20,7 @@
 <script setup>
 import { computed } from 'vue'
 import store from 'src/store-redux/index.js'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
 import { MITT_TYPES, useMittEmit } from "src/core/mitt/"
 import UserCtr from "src/core/user-config/user-ctr.js";
 let { themeReducer, cathecticReducer } = store.getState()
@@ -41,17 +41,17 @@ const props = defineProps({
 const calc_text = computed(() => {
   if (props.is_limit) {
     // 如果结算图标被选中
-    return 'msg.msg_nodata_22' //t('msg.msg_nodata_22')
+    return 'msg.msg_nodata_22' //i18n_t('msg.msg_nodata_22')
   }
   if (store_cathectic.main_item == 0) {
     // 如果是未结算
-    return props.is_early ? t('msg.msg_nodata_15') : t('msg.msg_nodata_12')
+    return props.is_early ? i18n_t('msg.msg_nodata_15') : i18n_t('msg.msg_nodata_12')
   } else {
     if (props.is_early) {
       // 如果被限频
-      return t('msg.msg_nodata_16')//  t('msg.msg_nodata_16')
+      return i18n_t('msg.msg_nodata_16')//  i18n_t('msg.msg_nodata_16')
     } else {
-      return store_cathectic.main_item == 2 ? t('msg.msg_nodata_18') : t('msg.msg_nodata_13')
+      return store_cathectic.main_item == 2 ? i18n_t('msg.msg_nodata_18') : i18n_t('msg.msg_nodata_13')
     }
   }
 })

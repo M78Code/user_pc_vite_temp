@@ -1,10 +1,11 @@
 /*
  * @Author: 使用自定义方法进行运算,保证精度准确
- * 使用例子(1.13*100000*4): let res = this.$mathjs.multiply(1.13,100000,4);
+ * 使用例子 let res = this.$mathjs.multiply(1.13,100000,4);
+ * 1.13 赔率 , 100000 常量（十万位赔率）, 4 投注金额
  * @Date: 2022-06-14 20:31:51
  * @Description: 
  */
-const calc = require('calculatorjs')
+import calc from "calculatorjs"
 const math = {
   //加减乘除混合运算this.$mathjs.calc('1+1-1*1/2+(1/1)/-1')
   calc(){

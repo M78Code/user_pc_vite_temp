@@ -3,7 +3,8 @@
     <div class="row bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
         <!--金额输入区-->
         <div v-if="!BetData.is_bet_single">
-            {{ special_series.name }} -- {{ special_series.id }}  -  {{ ref_data.seriesOdds }}
+            {{ special_series.name }} -- {{ special_series.id }} - {{ ref_data.seriesOdds }} -- {{ index }} -- {{
+                item.custom_id }}
         </div>
         <!--投注金额输入框-->
         <input v-model="ref_data.money" type="number" @input="set_win_money"
@@ -23,7 +24,7 @@
                     {{ $t('common.maxn_amount_val') }}
                 </div>
                 <!--金额-->
-                <div class="col-auto bet-win-money yb-number-bold">{{ format_currency(ref_data.money * (item.oddFinally || ref_data.seriesOdds) - ref_data.money ) }}</div>
+                <div class="col-auto bet-win-money yb-number-bold">{{ set_bet_money }}</div>
             </div>
 
             <!--键盘区域-->
@@ -41,11 +42,11 @@ import BetKeyboard from "../common/bet-keyboard.vue"
 
 import lodash_ from 'lodash'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
-import { format_odds, format_currency } from "src/core/format/index.js"
+import { format_odds, format_currency, format_currency2 } from "src/core/format/index.js"
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-
+import mathJs from './config/mathjs.js'
 
 const ref_data = reactive({
     DOM_ID_SHOW: false,
@@ -77,6 +78,7 @@ const props = defineProps({
 })
 
 onMounted(() => {
+    console.error( mathJs.divide( mathJs.multiply(2.51 , 100 , 100000),100000) );
     // 监听 限额变化
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
 })
@@ -85,15 +87,28 @@ onUnmounted(() => {
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).off
 })
 
+// 计算最高可赢金额
+const set_bet_money = computed(() => {
+    // 串关使用 限额赔率 = 每一个赛事赔率相乘
+    let money = BetData.is_bet_single ? props.item.oddFinally : ref_data.seriesOdds
+    // 常量 精度值（赔率为+万位）
+    let number = 100000
+    // 最高可赢金额 = 赔率 * 投注金额 - 投注金额 
+    let multiply_money = mathJs.subtract(mathJs.multiply(ref_data.money , money, number), mathJs.multiply(ref_data.money , 1, number))
+    // 最高可赢金额 / 常量
+    let win_money = mathJs.divide(multiply_money,number)
+    // 格式化
+    return format_currency(win_money)
+})
 
 // 限额改变 修改限额内容
 const set_ref_data_bet_money = () => {
     let value = props.item.playOptionsId
-     // 串关获取 复试连串
-     if(!BetData.is_bet_single){
-        
+    // 串关获取 复试连串
+    if (!BetData.is_bet_single) {
+
         // 复式连串关投注
-        const { id,name,count } = BetViewDataClass.bet_special_series[props.index] 
+        const { id, name, count } = BetViewDataClass.bet_special_series[props.index]
         special_series.id = id
         special_series.name = name
         special_series.count = count
@@ -101,7 +116,7 @@ const set_ref_data_bet_money = () => {
         value = id
     }
 
-    const { min_money = 10, max_money = 8888,seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
+    const { min_money = 10, max_money = 8888, seriesOdds } = lodash_.get(BetViewDataClass.bet_min_max_money, `${value}`, {})
     // 最小限额
     ref_data.min_money = min_money
     // 最大限额
@@ -109,8 +124,8 @@ const set_ref_data_bet_money = () => {
     // 复试串关赔率
     ref_data.seriesOdds = seriesOdds
 
-   
-    
+
+
 }
 
 // 快捷金额
@@ -149,15 +164,17 @@ const set_win_money = () => {
 <style scoped lang="scss">
 //谷歌
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {-webkit-appearance: none;
-}//火狐
-input[type="number"]{-moz-appearance: textfield;
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 
-.bet-input{
+//火狐
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.bet-input {
     width: 100%;
     line-height: 40px;
     margin: 10px 0;
-}
-
-</style>
+}</style>
