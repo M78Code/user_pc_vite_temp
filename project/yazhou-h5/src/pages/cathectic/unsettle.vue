@@ -363,6 +363,9 @@ import store from 'src/store-redux/index.js'
     position: absolute;
     right: 0;
     top: 0.15rem;
+    .select {
+      color: var(--q-cathectic-color-36);
+    }
   }
   /**订单标题*/
   .tittle-p {

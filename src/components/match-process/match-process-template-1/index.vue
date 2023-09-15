@@ -128,7 +128,8 @@ import {
   get_match_status,
   utils,
   i18n_t,
-  score_switch_handle
+  score_switch_handle,
+  is_eports_csid
 } from "src/core/index"
 import {get_mmp_name} from "src/core/format/module/format-msc.js"
 import {
@@ -163,7 +164,6 @@ const props = defineProps({
   right: Boolean,
 });
 ;
-console.log(props,'match_props');
 const mmp_time_obj = ref({
   // key: 球种id value: 阶段对应的时间(秒数)
   1: {
@@ -262,7 +262,7 @@ const computed_process_name = computed(() => {
     }
 
     // 电竞
-    if (utils.is_eports_csid(match.csid)) {
+    if (is_eports_csid(match.csid)) {
       process_name = i18n_t("mmp.100.1");
     }
   } else {

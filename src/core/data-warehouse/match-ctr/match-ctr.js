@@ -297,7 +297,6 @@ export default class MatchDataBase
         for (let i = 0; i < list.length; i++) {
           const item = list[i];
           const mid = item.mid;
-          console.log('listlist', mid);
           if(obj.upd[mid]){
           // 需要更新的赛事
           const match = this.quick_query_obj.mid_obj[this.get_format_quick_query_key(mid,mid,'mid')];
@@ -361,7 +360,6 @@ export default class MatchDataBase
         this.assign_with(this.list_to_obj, list_to_obj);
         // 删除list_obj之前的无用赛事
       }
-      console.log('lockie   走完了');
     }
   }
 
