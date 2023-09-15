@@ -8,19 +8,19 @@
   <div class="wrap-table">
     <div class="table-header">
       <div class="table-col cursor" @click="change_sort">
-        <span>{{$root.$t('results.date')}}</span>
+        <span>{{i18n_t('results.date')}}</span>
         <div class="sort icon" :class="{'up':is_sortUp}" ></div>
       </div>
-      <div class="table-col">{{$root.$t('results.league')}}</div>
-      <div class="table-col">{{$root.$t('results.competition')}}</div>
+      <div class="table-col">{{i18n_t('results.league')}}</div>
+      <div class="table-col">{{i18n_t('results.competition')}}</div>
       <!-- 上半场 -->
-      <div class="table-col">{{$root.$t('common.half_')}}</div>
+      <div class="table-col">{{i18n_t('common.half_')}}</div>
       <!-- 全场 -->
-      <div class="table-col">{{$root.$t('icon_tips.overall')}}</div>
+      <div class="table-col">{{i18n_t('icon_tips.overall')}}</div>
       <!-- 加时 -->
-      <div class="table-col">{{$root.$t('results.extra_time')}}</div>
+      <div class="table-col">{{i18n_t('results.extra_time')}}</div>
       <!-- 点球大战 -->
-      <div class="table-col">{{$root.$t('icon_tips.penalty_shootout')}}</div>
+      <div class="table-col">{{i18n_t('icon_tips.penalty_shootout')}}</div>
     </div>
     <load-data :state="load_data_state" color="light">
       <q-scroll-area
@@ -48,7 +48,7 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[_.get(item,'iconUrl')]" class="tournament-logo" alt="">
+                <img v-img="[lodash.get(item,'iconUrl')]" class="tournament-logo" alt="">
                 <span class="ellipsis-line-2">{{item.tournamentName}}</span>
               </div>
               <!-- 赛事 -->
@@ -58,23 +58,23 @@
               </div>
               <!-- 上半场 -->
               <div class="table-col color-highlight">
-                <div>{{_.get(item, "scoreResult.S2.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S2.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S2.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S2.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 全场 -->
               <div class="table-col color-highlight">
-                <div>{{_.get(item, "scoreResult.S1.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S1.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S1.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S1.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 加时 -->
               <div class="table-col">
-                <div>{{_.get(item, "scoreResult.S7.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S7.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S7.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S7.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 点球大战 -->
               <div class="table-col">
-                <div>{{_.get(item, "scoreResult.S170.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S170.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S170.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S170.away", item.matchStatus==1?'':'-')}}</div>
               </div>
             </div>
             <div v-if="index == activeIndex" class="wrap-load" :key="`details-${index}`">
@@ -105,10 +105,12 @@
 <script>
 import results from "src/public/mixins/results/index";
 import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
+import loadData from "src/components/load_data/load_data.vue"
 export default {
   mixins: [results],
   components:{
-    resizeObserver
+    resizeObserver,
+    loadData
   },
   data(){
     return {
