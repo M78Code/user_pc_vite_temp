@@ -11,14 +11,15 @@ Object.keys(modules).forEach((key) => {
     modules[key].default
   );
 });
-
+console.error("all_other_image", all_other_image)
 
 /**
  * 拿图片地址 和位置
  * @param {*} param0
  * @returns
  */
-function compute_css({ key    , theme }) {
+function compute_css({ key, theme }) {
+  console.error(all_other_image, 'all_other_image')
   let config = all_other_image[key] || {};
 
   console.log(CURRENT_ENV, "CURRENT_ENV");
@@ -29,11 +30,12 @@ function compute_css({ key    , theme }) {
   );
   if (!url) {
     //从本地拿
-    url = get(config, theme);
+    url = get(config, CURRENT_ENV) || get(config, theme);
   }
   return {
     "background-image": `url(${url})`,
     "background-size": "contain",
+    "background-repeat": 'no-repeat'
   };
 }
 
