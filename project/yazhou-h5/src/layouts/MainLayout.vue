@@ -8,30 +8,23 @@
       <q-page-container class="page_container">
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
+        <activityIcon />
+
+        <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
+
+        </MenuWapper>
         <router-view />
         <betMixBox />
         <!--页脚-->
-        <FooterWapper
-          class="m-layout"
-          v-if="['sport_menu', 'matchList', 'sport_menu'].includes(route.name)"
-        >
+        <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
         </FooterWapper>
 
         <!-- 投注记录弹层 -->
-        <div
-          v-if="record_show"
-          :class="settle_dialog_bool && 'shadow-box2'"
-          class="shadow-box"
-          @click="change_settle_status(false)"
-          @touchmove.prevent
-        ></div>
+        <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
+          @click="change_settle_status(false)" @touchmove.prevent></div>
         <!-- 投注记录弹框（已结算+未结算） -->
-        <div
-          class="bet-record-box"
-          v-if="record_show"
-          :class="settle_dialog_bool && 'bet-record-box2'"
-          :style="{ bottom: calc_bottom }"
-        >
+        <div class="bet-record-box" v-if="record_show" :class="settle_dialog_bool && 'bet-record-box2'"
+          :style="{ bottom: calc_bottom }">
           <!-- 结算弹窗 -->
           <settle-dialog></settle-dialog>
         </div>
@@ -51,6 +44,11 @@ import {
 } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { FooterWapper } from "src/components/footer/index.js";
+import { MenuWapper } from "src/components/menu";
+console.error(MenuWapper)
+
+
+
 import { useRoute } from "vue-router";
 import betMixBox from "src/components/bet/components/bet_mix_box.vue";
 import store from "src/store-redux/index.js";
@@ -174,30 +172,37 @@ onUnmounted(() => {
 .layout_container {
   height: 100%;
   overflow: hidden;
+
   .layouts_header {
     height: 50px;
+
     :deep(.q-layout__shadow) {
       display: none;
     }
+
     :deep(.q-drawer-container) {
       .q-drawer__backdrop {
         background-color: rgba(56, 55, 50, 0.6) !important;
         filter: blur(5px);
       }
+
       .q-drawer__opener {
         display: none;
       }
     }
   }
+
   :deep(.q-drawer) {
     width: 260px !important;
   }
+
   .page_container {
     height: calc(100% - 50px);
     overflow: hidden;
     // margin-top: 50px;
     padding-top: 0 !important;
   }
+
   /* ************** 悬浮按钮 ************** -E */
   /* **********注单记录********************* *-S*/
   .shadow-box {
@@ -213,15 +218,19 @@ onUnmounted(() => {
     z-index: 550;
     transition: opacity 0.3s;
   }
+
   .bet-record-box2 {
     bottom: -2px !important;
   }
+
   .shadow-box2 {
     opacity: 1;
   }
-  .bet-record-box2 + .shadow-box {
+
+  .bet-record-box2+.shadow-box {
     opacity: 1;
   }
+
   /* **********注单记录********************* *-S*/
   .bet-record-box {
     width: 100%;
