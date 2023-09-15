@@ -14,7 +14,10 @@
                 {{ i18n_t("new_menu." + item.mi) || item.mi }}
               </span>
               <div class="m-menu-count">
-                <span class="count" style="visibility: visible;">
+                <span class="count" :style="{
+                  visibility: show_favorite_list ||
+                    [7, 8].includes(item.mi) ? 'hidden' : 'visible'
+                }">
                   {{ menu_h5_data.count_menu(item) }}
                 </span><!---->
                 <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle">+</i>
@@ -139,16 +142,16 @@
       favorite: show_favorite_list,
       show: show_selector_sub,
     }" style="background: #fff">
-      <template :key="i_m" v-for="(m_items, i_m) in pop_main_items">
-        <div @click="set_menu_lv1(m_items, i_m)" class="main-m-select-item flex justify-center items-center"
-          v-show="is_menu_show(m_items, i_m)">
-          <!-- current -->
+      <template :key="i_m" v-for="(item, i_m) in pop_main_items">
+        <div @click="set_menu_lv1(item, i_m)" class="main-m-select-item flex justify-center items-center"
+          v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == item.mi }">
+
           <div class="m-menu-name-m">
-            {{ i18n_t(`new_menu.${m_items.mi}`) }}
+            {{ i18n_t(`new_menu.${item.mi}`) }}
           </div>
-          <!-- <div class="m-count-match" v-if="!show_favorite_list">
-            {{ count_menu(m_items) }}
-          </div> -->
+          <div class="m-count-match" v-if="!show_favorite_list">
+            {{ menu_h5_data.count_menu(item) }}
+          </div>
         </div>
       </template>
     </div>
@@ -308,7 +311,6 @@ const all_sport_count_calc = computed(() => {
   //找到滚球
   if (menu_type.value == 1 && update_time.value) {
     let data_list = menu_list.value.find((item) => item.mi == 1);
-    console.error('11111', data_list)
     //滚球下所有是数量总和
     return menu_h5_data.count_menu(data_list)
   }

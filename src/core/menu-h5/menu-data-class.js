@@ -146,8 +146,8 @@ class MenuData {
     //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
     const { sl, mi } = menu_list;
-    if (mi == 28) {
-      console.error(111, mi)
+    console.error(111, mi)
+    if (mi == 30) {
       const data = lodash.find(sl, (item) => {
         //竞足特殊处理
         return item.mi == "50101";
@@ -158,7 +158,7 @@ class MenuData {
     }
     return sl && sl.reduce
       ? sl.reduce((pre, cur) => {
-        return pre + cur.ct;
+        return pre + (cur.ct || cur.count || 0);
       }, 0)
       : 0;
   }
@@ -546,6 +546,7 @@ class MenuData {
           name: item.name || "",
           menuId: item.menuId || item.field1,
           menuType: item.menuType || "",
+          mi: item.mi
         });
       });
       return list;
