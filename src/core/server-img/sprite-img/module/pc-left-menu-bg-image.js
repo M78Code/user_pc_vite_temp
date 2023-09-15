@@ -65,7 +65,7 @@ function compute_css({ position, theme }) {
     url = get(config, UserCtr.theme);
   }
   return {
-    "background-image": `url(${url})`,
+    "background-image": `url(/public/${url})`,
     "background-position": compute_position(position),
   };
 }
