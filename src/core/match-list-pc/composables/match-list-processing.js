@@ -113,7 +113,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		if (backend_run) {
 			// 静默拉取列表 设置数据加载状态
-			load_data_state = "data";
+			load_data_state.value = "data";
 			// 更新可视区域赛事盘口数据
 			show_mids_change();
 		} else {
@@ -148,7 +148,7 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 		}
 		// this.load_data_state = "empty";
 		hot_match_list_timeout = setTimeout(() => {
-			if (this.load_data_state !== "data") {
+			if (load_data_state.value !== "data") {
 				this.get_hot_match_list();
 				clearTimeout(hot_match_list_timeout);
 			}

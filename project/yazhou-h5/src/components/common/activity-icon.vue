@@ -84,17 +84,17 @@ get_task_list()
 .activity-icon {
     width: .4rem;
     height: .3rem;
-}
 
-.activity-logo {
-    position: relative;
-    display: block;
-    width: .4rem;
-    height: .3rem;
-    margin: 0 .1rem 0 0;
-    border: none;
-    position: relative;
-    left: -0.05rem;
+    .activity-logo {
+        position: relative;
+        display: block;
+        width: .4rem;
+        height: .3rem;
+        margin: 0 .1rem 0 0;
+        border: none;
+        position: relative;
+        left: -0.05rem;
+    }
 
     .red-dot {
         width: .05rem;

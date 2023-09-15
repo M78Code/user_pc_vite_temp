@@ -44,12 +44,8 @@
       >
         <!-- icon -->
         <div class="row items-center">
-          <sport-icon
-            :sport_id="BaseData.compute_sport_id(item1)"
-            size="18px"
-            class="icon"
-            status="2"
-          />
+          <img style="width:20px;height:20px;" :style="sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(item1)}`})" alt="" />
+        
         </div>
         <div class="items-right row" style="flex-wrap: wrap">
           <div style="line-height: 1; flex: 1">
@@ -180,11 +176,12 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted,computed } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
 import { MenuData,UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
+import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
 
 import MenuItem from "./menu-item.vue";
 
@@ -200,6 +197,12 @@ const current_lv_2_mi = ref(""); //"101201", // 101301
 const show_menu = ref(false);
 // 首次进入 刷新用
 const first_change = ref(false);
+
+
+onMounted(()=>{
+  console.error('ss', sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(1)}`}))
+})
+
 
 /**
  * @description: 今日 早盘 紧急开关

@@ -4,7 +4,7 @@
    {{perPageNum}}
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
-        {{ i18n_t('bet_record.total_count') }}
+        {{ i18n_t('bet_record.total_count') }}11
         <!-- 总计单数 -->
         ：
         <span class="footer-text">{{ count }}</span>
@@ -33,7 +33,7 @@
       <q-pagination v-model="page" color="#788299" text-color="panda-text-3" :max="max" size="sm" :max-pages="9"
         direction-links ellipses icon-prev="icon-triangle2" icon-next="icon-triangle3" />
       <div class="pagination-select">
-        
+        {{ perPageNum }}
         <q-select class="select" :class="{ 'select-page-input': icon_name == 'icon-triangle' }" outlined
           v-model="perPageNum" :options="perPageNumOptions" popup-content-style="border:1px solid #d0d8de;background:#fff"
           @popup-show="icon_name = 'icon-triangle'" @popup-hide="icon_name = 'icon-triangle1'">
@@ -136,7 +136,7 @@ const { goPage, pagination, perPageNumOptions, pageChangeFlag, page, max } = use
 const emit = defineEmits(['pageChange'])
 
 watch(() => pagination, val => {
-  if (!pageChangeFlag) {
+  if (!pageChangeFlag.value) {
     emit(
       "pageChange",
       agination.limit,
@@ -144,7 +144,7 @@ watch(() => pagination, val => {
       page
     );
   } else {
-    pageChangeFlag = false;
+    pageChangeFlag.value = false;
   }
 
 })
@@ -152,7 +152,7 @@ watch(() => pagination, val => {
  // 跳转页面
 const goToPage = (val) => {
   if (page.value != val && val <= max.value && val > 0) page.value = val;
-  else if (val > max.value || val <= 0) goPage = "";
+  else if (val > max.value || val <= 0) goPage.value = "";
 }
 
 </script>
@@ -184,7 +184,7 @@ const goToPage = (val) => {
     display: flex;
     align-items: center;
     margin: 0 30px 0 18px;
-    ::v-deep .q-field--focused .q-field__control:after {
+    :deep(.q-field--focused .q-field__control:after) {
       transform: scale3d(0, 1, 1);
     }
     .select {
@@ -233,14 +233,14 @@ const goToPage = (val) => {
       }
     }
   }
-  ::v-deep .q-field--auto-height .q-field__native span {
+  :deep(.q-field--auto-height .q-field__native span) {
     margin: 0 auto;
     font-weight: 500;
     font-size: 12px;
   }
 }
 .q-pagination {
-  ::v-deep .q-btn {
+  :deep(.q-btn) {
     margin: 0 3px;
     width: 24px;
     height: 24px;
