@@ -90,7 +90,8 @@ const router = useRouter()
 
     const api_list_dymids = mids => {
       console.error('√',mids)
-      let params = {mids,"cuid":UserCtr.get_uid(),euid,"orpt":"0","sort":1,"pids":"","cos":0}
+      let mid = mids.slice(0,88)
+      let params = {mids:mid,"cuid":UserCtr.get_uid(),euid,"orpt":"0","sort":1,"pids":"","cos":0}
       socket_api.get_match_base_info_by_mids(params).then(res=>{
         let aaa = res.data.data.map(item=>{
           return item

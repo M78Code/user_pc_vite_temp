@@ -55,6 +55,7 @@
     "@quasar/extras": "^1.16.5",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "calculatorjs": "^1.1.2",
     "current-device": "^0.10.2",
     "dexie": "^3.2.4",
     "licia": "^1.38.2",

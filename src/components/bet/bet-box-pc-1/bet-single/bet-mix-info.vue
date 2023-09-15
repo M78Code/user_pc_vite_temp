@@ -29,7 +29,6 @@
           :index="0"
           :item="BetData.bet_s_list[0]"
           :key="`0-${BetData.bet_s_list[0].custom_id}`"
-          v-if="BetData.bet_s_list.length>1"          
         ></bet-input>
       </div>
     </template>

@@ -11,7 +11,7 @@
 
         <!--未投注就是bet-mix-info组件-->
         <bet-mix-info></bet-mix-info>
-        <template v-if="BetData.bet_s_list.length > 0">
+        <template v-if="BetData.bet_s_list.length > 1">
           <!--复式连串过关投注-->
           <div class="row bet-toggle" :class="{'bet-border-radius': BetData.bet_s_list.length==2,'bet-toggle-down':!is_expend, 'bet-toggle-up':is_expend}">
             <div
@@ -35,15 +35,17 @@
             </div>
           </div>
           <div v-show="is_expend">
-            <!--金额输入框-->
-            <template v-for="(item, index) in BetData.bet_s_list" :key="item.custom_id">
-              <!--2串1以及输入框-->
-              <bet-input
-                :index="index"
-                :item="item"
-                @set_min_max_money="set_min_max_money"
-                v-if="index != 0"
-              ></bet-input>
+            <template v-if="BetData.bet_s_list.length > 2">
+              <!--金额输入框-->
+              <template v-for="(item, index) in BetData.bet_s_list" :key="item.custom_id">
+                <!--2串1以及输入框-->
+                <bet-input
+                  :index="index"
+                  :item="item"
+                  :key="item.custom_id"
+                  v-if="index != 0"
+                ></bet-input>
+              </template>
             </template>
           </div>
         </template>
@@ -59,6 +61,7 @@ import BetInput from "./bet-input.vue"; // 下注输入框
 
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
+import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 
 const bet_flag = ref(true)
 const expend_disable = ref('')
@@ -66,7 +69,11 @@ const is_expend = ref(false)
 
 // 复式连串过关投注 切换
 const mix_toggle_handle = () => {
-  is_expend.value = !is_expend.value
+  if(BetData.bet_s_list.length > 2){
+    is_expend.value = !is_expend.value
+    // 通知页面更新 
+    useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
+  }
 }
 
 </script>
