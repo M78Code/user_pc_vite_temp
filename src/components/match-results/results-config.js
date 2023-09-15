@@ -34,7 +34,7 @@ import {
 export const useGetResultConfig = () => {
   const route = useRoute();
   const router = useRouter();
-
+  const  sport =ref(null); //体育下拉框选中项
   const store_state = store.getState();
   const state = reactive({
     model: {
@@ -55,7 +55,6 @@ export const useGetResultConfig = () => {
       padding: "0",
     },
     is_show: false, //显示说明开关
-    sport: null, //体育下拉框选中项
     sport_type: [], //体育下拉框选项名称
     api_sport_type: [], //联赛下拉框请求数据
     league: null, //联赛下拉框选中项
@@ -391,7 +390,7 @@ export const useGetResultConfig = () => {
               data,
               (item) => item.id == state.sport_id
             );
-            state.sport = sport_obj.name;
+            sport.value = sport_obj.name;
             state.champion_sport = _name;
             // 冠军赛种默认查询全部赛种
             if (state.sport_id == "0") {
@@ -402,7 +401,7 @@ export const useGetResultConfig = () => {
               state.results_params.sportType = state.sport_id;
             }
           } else {
-            state.sport = data[0].name;
+            sport.value = data[0].name;
             state.champion_sport = data[data.length - 1].name;
             // 冠军赛种默认查询全部赛种
             if (state.champion_sport == _name) {
@@ -868,7 +867,7 @@ export const useGetResultConfig = () => {
       _name = i18n_t("select.all"); // 全部
     // 0体育下拉框 1冠军球种下拉框
     if (n == 0) {
-      index = state.sport_type.indexOf(state.sport);
+      index = state.sport_type.indexOf(sport.value);
       // 记录体育下拉框当前的选项 id
       state.current_sport_id = state.api_sport_type[index].id;
       // 如果当前体育下拉框选项为冠军，就用冠军球种 id 去查询
@@ -1184,7 +1183,7 @@ export const useGetResultConfig = () => {
     if (isChampion == 1) {
       state.champion_sport = currentItem;
     } else {
-      state.sport = currentItem;
+      sport.value = currentItem;
       let index = state.sport_type.indexOf(currentItem);
       state.current_sport_id = state.api_sport_type[index].id;
     }
@@ -1209,6 +1208,7 @@ export const useGetResultConfig = () => {
   };
   return {
     ...toRefs(state),
+    sport,
     get_serverTime,
     test
   };

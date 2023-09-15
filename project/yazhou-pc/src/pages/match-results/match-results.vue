@@ -45,13 +45,13 @@
       class="table-footer"
       v-if="results_data.total && load_data_state != 'empty'"
     >
-      <Pagination
+      <pagination-wrapper
         :count="results_data.total"
         @pageChange="changePage(arguments)"
         :is_bet_record="false"
         :results_table="results_table_style"
         :reset_pagination="reset_pagination"
-      ></Pagination>
+      ></pagination-wrapper>
     </div>
     <!-- 底部分页条 E-->
     <div class="tips" v-if="tips.statu">{{ tips.message }}</div>
@@ -64,7 +64,7 @@ import { i18n_t} from "src/boot/i18n.js";
 import { useGetResultConfig } from "src/components/match-results/results-config.js";
 import {RusultType} from "src/components/match-results/rusult-type/index";
 import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
-// import Pagination from "src/pagination-1/index.vue";
+import {PaginationWrapper} from "src/components/pagination/index";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
 import {   ResultHeader} from 'src/components/match-results/result-header/index.js'
 import { onMounted } from "vue";
