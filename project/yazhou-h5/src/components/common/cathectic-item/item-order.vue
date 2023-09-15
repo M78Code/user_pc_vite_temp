@@ -5,11 +5,13 @@
 <template>
   <div class="item-order row mx-16 justify-between">
     <!-- 订单号 -->
-    <div class="text-left ellipsis"  @click="copy">{{t('bet.order_no')}}&thinsp;<span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
-      <img  src="image/wwwassets/bw3/svg/copy.svg" alt=""  style="width:0.1rem" />
+    <div class="text-left ellipsis"  @click="copy">
+      {{i18n_t('bet.order_no')}}&thinsp;
+      <span class="yb_mr4 orderno">{{data_o.orderNo}}</span>
+      <img  src="/yazhou-h5/image/svg/copy.svg" alt=""  style="width:0.1rem" />
     </div>
-    <!-- 时间 t('bet_record.bet_time')   .Format(t('time4'))-->
-    <div class="text-right">{{t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
+    <!-- 时间 i18n_t('bet_record.bet_time')   .Format(i18n_t('time4'))-->
+    <div class="text-right">{{i18n_t('bet_record.bet_time')}}<span class="orderno">&thinsp;{{formatTime(+data_o.betTime, 'mm/DD HH:MM')}}</span></div>
   </div>
 </template>
 
@@ -19,7 +21,8 @@ import ClipboardJS from "clipboard";
 import { Platform } from "quasar";
 import { ref, onUnmounted } from 'vue'
 import { formatTime } from 'src/core/format/index.js'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";
+import store from "src/store-redux/index.js";
 //国际化
 
 
@@ -45,13 +48,15 @@ import { t } from "src/boot/i18n.js";;
      *@param {Object} evt 事件对象
      */
   const copy = (evt) => {
-      let orderno = data_o.orderNo
-      const clipboard = new ClipboardJS(evt.target, {
+    console.error(evt.target);
+      let orderno = props.data_o.orderNo
+      const clipboard = new ClipboardJS(".text-left", {
         text: () => orderno
       })
       clipboard.on('success', () => {
-        set_toast({
-          txt: t("bet_record.copy_suc"),
+        store.dispatch({
+          type: "SET_TEXT",
+          data: i18n_t('bet_record.copy_suc'),
         });
 
         // h5嵌入时Safari阻止弹窗

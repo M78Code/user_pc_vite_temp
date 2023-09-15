@@ -35,6 +35,8 @@
           <!-- 结算弹窗 -->
           <settle-dialog></settle-dialog>
         </div>
+        <!-- 吐司提示框 v-if="toast_show" -->
+      <toast></toast>
       </q-page-container>
     </q-layout>
   </div>
@@ -57,7 +59,10 @@ import store from "src/store-redux/index.js";
 const settleDialog = defineAsyncComponent(() =>
   import("project_path/src/pages/cathectic/index.vue")
 );
-import BetData from "src/core/bet/class/bet-data-class.js";// import { i18n } from "src/boot/i18n.js";
+const toast = defineAsyncComponent(() =>
+  import("project_path/src/components/common/toast.vue")
+);
+import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
 

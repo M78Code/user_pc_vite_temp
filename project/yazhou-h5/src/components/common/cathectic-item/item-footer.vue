@@ -7,7 +7,7 @@
   <div class="item-footer yb_mx10 yb_px14 yb_mt10 yb_pt8 row yb_fontsize12">
     <!-- 左 -->
     <div class="col-4">
-      <p class="top-p">{{ is_pre ?  t('pre_record.book_bet_amount') : t('bet_record.bet_val2') }}</p>
+      <p class="top-p">{{ is_pre ?  i18n_t('pre_record.book_bet_amount') : i18n_t('bet_record.bet_val2') }}</p>
       <p class="yb_fontsize14 money-p" v-if="data_f.orderAmountTotal">{{format_money2(data_f.orderAmountTotal)}}</p>
     </div>
 
@@ -16,7 +16,7 @@
     <div v-if="get_main_item == 0 || get_main_item == 2">
       <!-- 订单状态orderStatus(0:未结算,1:已结算,2:注单无效,3:确认中,4:投注失败) -->
       <template v-if="data_f.orderStatus == 1 || data_f.orderStatus == 2 || data_f.orderStatus == 4">
-        <p class="top-p">{{t('bet_record.go_back')}}</p>
+        <p class="top-p">{{i18n_t('bet_record.go_back')}}</p>
         <!-- 有返还金额取返还金额，没有返还金额取投注金额 -->
         <p class="yb_fontsize14 money-p" :class="is_win && 'red'">
           <template v-if="data_f.backAmount !== null">{{format_money2(data_f.backAmount)}}</template>
@@ -25,9 +25,9 @@
       </template>
       <template v-else>
         <p class="top-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
-          <!-- {{t('bet_record.bet_refund')}} -->
+          <!-- {{i18n_t('bet_record.bet_refund')}} -->
         </p>
-        <p class="top-p" v-else>{{t('bet_record.bet_max_win')}}</p>
+        <p class="top-p" v-else>{{i18n_t('bet_record.bet_max_win')}}</p>
         <p class="yb_fontsize14 money-p" v-if="[2,3].includes(data_f.preOrderStatus)||data_f.preOrderStatus == 4">
           <!-- 留空处理 -->
           <!-- <template v-if="data_f.acCode">- -</template> -->
@@ -44,7 +44,7 @@
     </div>
     <!-- 已结算页面 -->
     <div v-else>
-      <p class="top-p">{{ t('bet_record.go_back') }}</p>
+      <p class="top-p">{{ i18n_t('bet_record.go_back') }}</p>
       <p class="yb_fontsize14 money-p" :class="is_win && 'red'">{{format_money2(data_f.backAmount)}}</p>
     </div>
 
@@ -62,7 +62,7 @@
 // import { mapGetters } from "vuex";
 import { format_money2 } from "src/core/format/index.js"
 import { ref, onUnmounted, computed } from 'vue'
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 
   const props = defineProps({
     data_f: {
@@ -76,57 +76,57 @@ import { t } from "src/boot/i18n.js";
   const class_foter = ref('')
   const bet_result = ref({
     //'未结算',
-    "0": t("bet_record.bet_no_status00"),
+    "0": i18n_t("bet_record.bet_no_status00"),
     //'走水',
-    "2": t("bet_record.bet_no_status02"),
+    "2": i18n_t("bet_record.bet_no_status02"),
     //  //'输',
-    "3": t("bet_record.bet_no_status03"),
+    "3": i18n_t("bet_record.bet_no_status03"),
     // //'赢',
-    "4": t("bet_record.bet_no_status04"),
+    "4": i18n_t("bet_record.bet_no_status04"),
     // //'赢半',
-    "5": t("bet_record.bet_no_status05"),
+    "5": i18n_t("bet_record.bet_no_status05"),
     // //'输半',
-    "6": t("bet_record.bet_no_status06"),
+    "6": i18n_t("bet_record.bet_no_status06"),
     // //'比赛取消',
-    "7": t("bet_record.bet_no_status07"),
+    "7": i18n_t("bet_record.bet_no_status07"),
     // //'比赛延期',
-    "8": t("bet_record.bet_no_status08"),
+    "8": i18n_t("bet_record.bet_no_status08"),
     // // '比赛延迟',
-    "11": t("bet_record.bet_no_status11"),
+    "11": i18n_t("bet_record.bet_no_status11"),
     // // '比赛中断',
-    "12": t("bet_record.bet_no_status12"),
+    "12": i18n_t("bet_record.bet_no_status12"),
     // // '比赛放弃'
-    "15": t("bet_record.bet_no_status15"),
+    "15": i18n_t("bet_record.bet_no_status15"),
   })
   const outcome = ref({
     // //'走水',
-    "2": t("bet_record.bet_no_status02"),
+    "2": i18n_t("bet_record.bet_no_status02"),
     // //'输',
-    "3": t("bet_record.bet_no_status03"),
+    "3": i18n_t("bet_record.bet_no_status03"),
     // //'赢',
-    "4": t("bet_record.bet_no_status04"),
+    "4": i18n_t("bet_record.bet_no_status04"),
     // //'赢半',
-    "5": t("bet_record.bet_no_status05"),
+    "5": i18n_t("bet_record.bet_no_status05"),
     // //'输半',
-    "6": t("bet_record.bet_no_status06"),
+    "6": i18n_t("bet_record.bet_no_status06"),
   })
   const bet_result_1 = ref({
-    "7": t("bet_record.bet_no_status07"),
-    "8": t("bet_record.bet_no_status08"),
-    "11": t("bet_record.bet_no_status11"),
-    "12": t("bet_record.bet_no_status12"),
-    "15": t("bet_record.bet_no_status15")
+    "7": i18n_t("bet_record.bet_no_status07"),
+    "8": i18n_t("bet_record.bet_no_status08"),
+    "11": i18n_t("bet_record.bet_no_status11"),
+    "12": i18n_t("bet_record.bet_no_status12"),
+    "15": i18n_t("bet_record.bet_no_status15")
   })
   //手动取消订单的原因展示
   const bet_result_3 = ref({
-    "1": t("bet_record.cancel_type_1"),
-    "2": t("bet_record.cancel_type_2"),
-    "3": t("bet_record.cancel_type_3"),
-    "4": t("bet_record.cancel_type_4"),
-    "5": t("bet_record.cancel_type_5"),
-    "6": t("bet_record.cancel_type_6"),
-    "17": t("bet_record.cancel_type_17"),
-    "20": t("bet_record.cancel_type_20"),
+    "1": i18n_t("bet_record.cancel_type_1"),
+    "2": i18n_t("bet_record.cancel_type_2"),
+    "3": i18n_t("bet_record.cancel_type_3"),
+    "4": i18n_t("bet_record.cancel_type_4"),
+    "5": i18n_t("bet_record.cancel_type_5"),
+    "6": i18n_t("bet_record.cancel_type_6"),
+    "17": i18n_t("bet_record.cancel_type_17"),
+    "20": i18n_t("bet_record.cancel_type_20"),
   })
   //这一单是否赢钱了
   const is_win = ref(false)
@@ -166,7 +166,7 @@ import { t } from "src/boot/i18n.js";
       switch (props.data_f.orderStatus) {
         case '0':
           class_foter.value = 'green'
-          res = t('bet_record.successful_betting')
+          res = i18n_t('bet_record.successful_betting')
           break;
         case '1':
           class_foter.value = 'black'
@@ -191,7 +191,7 @@ import { t } from "src/boot/i18n.js";
             }
             let betresult = props.data_f.orderVOS[0].betResult
             if (betresult == 13 || betresult == 16) {
-              res = t('bet_record.invalid');
+              res = i18n_t('bet_record.invalid');
             } else {
               if (betresult == 4 || betresult == 5) {
                 class_foter.value = 'red'
@@ -205,20 +205,20 @@ import { t } from "src/boot/i18n.js";
               class_foter.value = 'red'
               is_win.value = true
             }
-            res = outcome[props.data_f.outcome] || t('bet_record.successful_betting')
+            res = outcome[props.data_f.outcome] || i18n_t('bet_record.successful_betting')
           }
           break;
         case '2':
           class_foter.value = 'black'
-          res = t('bet_record.invalid_bet')
+          res = i18n_t('bet_record.invalid_bet')
           break;
         case '3':
           class_foter.value = 'orange'
-          res = t('bet_record.confirming')
+          res = i18n_t('bet_record.confirming')
           break;
         case '4':
           class_foter.value = 'red'
-          res = t('bet.bet_err')
+          res = i18n_t('bet.bet_err')
           break;
         default:
           res = ''
@@ -232,6 +232,8 @@ import { t } from "src/boot/i18n.js";
 .item-footer {
   height: 0.5rem;
   border-radius: 0.04rem;
+  color: var(--q-cathectic-color-33);
+  background: var(--q-cathectic-color-17);
   .result-p {
     line-height: 0.12rem;
   }
@@ -239,5 +241,24 @@ import { t } from "src/boot/i18n.js";
     margin-bottom: -0.02rem;
     min-height: 0.18rem;
   }
+  .money-p {
+    color: var(--q-cathectic-color-1);
+  }
+  .green {
+    color: var(--q-cathectic-color-10);
+  }
+
+  .gray {
+      color:  var(--q-cathectic-color-11);
+    }
+    .orange {
+      color:  var(--q-cathectic-color-29);
+    }
+    .red {
+      color:  var(--q-cathectic-color-2);
+    }
+    .black {
+      color: var(--q-cathectic-color-1);
+    }
 }
 </style>

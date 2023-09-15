@@ -11,30 +11,30 @@
         <span v-else-if="top_.sportId == 100" style="--num:42"></span>
         <span v-else-if="top_.sportId == 103" style="--num:40"></span>
         <span v-else-if="top_.sportId == 102" style="--num:41"></span>
-        {{store_data.theme}}
-        <!-- <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else> -->
-        <!-- <img v-if="store_data.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src"> -->
-        <!-- <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src"> -->
+        <!-- {{store_data.theme}} -->
+        <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else>
+        <img v-if="UserCtr.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
+        <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
       </p>
       <p class="col league-title-w ellipsis">
         <template v-if="top_.sportName">{{top_.matchName}}</template>
         <template v-if="top_.sportId == 1001 || top_.sportId == 1004">&ensp;{{top_.matchDay}}&ensp;{{top_.batchNo}}</template>
       </p>
       <p class="pre-wrapper" v-if="[0,2,3,4].includes(pre_order_status)">
-        <span v-if="[2,3].includes(pre_order_status)">{{t('pre_record.booked_fail')}}</span>
-        <span v-else-if="pre_order_status == 4 || user_operation_done">{{t('pre_record.canceled')}}</span>
-        <span v-else class="pre-button">{{t('pre_record.booking')}}
+        <span v-if="[2,3].includes(pre_order_status)">{{i18n_t('pre_record.booked_fail')}}</span>
+        <span v-else-if="pre_order_status == 4 || user_operation_done">{{i18n_t('pre_record.canceled')}}</span>
+        <span v-else class="pre-button">{{i18n_t('pre_record.booking')}}
           <span class="pre-cancle-button" @click="cancleOrder()">
             <!-- 取消 -->
-            <template v-if="!cancleFlag">{{t('common.cancel')}}</template>
+            <template v-if="!cancleFlag">{{i18n_t('common.cancel')}}</template>
             <!-- 确认取消 -->
-            <template v-if="cancleFlag && !cancled">{{t('pre_record.confirm_cancle')}}</template>
+            <template v-if="cancleFlag && !cancled">{{i18n_t('pre_record.confirm_cancle')}}</template>
             <!-- 确认中 -->
-            <template v-if="cancleFlag && cancled">{{t('early.btn4')}}</template>
+            <template v-if="cancleFlag && cancled">{{i18n_t('early.btn4')}}</template>
           </span></span>
       </p>
       <p class="pre-wrapper" v-if="preOrder">
-        {{t('pre_record.book')}}
+        {{i18n_t('pre_record.book')}}
       </p>
   </div>
 </template>
@@ -46,7 +46,8 @@ import {useMittOn, MITT_TYPES} from  "src/core/mitt/"
 import { get_file_path } from "src/core/file-path/file-path.js";
 // import { mapGetters } from "vuex";
 import store from 'src/store-redux'
-import { t } from "src/boot/i18n.js";;
+import { i18n_t } from "src/boot/i18n.js";;
+import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
 
@@ -97,6 +98,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .body-top {
   height: 0.38rem;
+  color: var(--q-cathectic-color-1);
   .league-title-w {
     height: 0.2rem;
     line-height: 0.22rem;
@@ -104,7 +106,7 @@ const props = defineProps({
 }
 .half-border-bottom {
   &::after{
-    border-bottom: 1px solid var(--q-color-border-color-58);
+    border-bottom: 1px solid var(--q-cathectic-color-32);
   }
 }
 .p1 {
@@ -136,6 +138,7 @@ const props = defineProps({
 .pre-wrapper{
   font-weight: 500;
   font-size: 12px;
+  color: var(--q-cathectic-color-29);
   .pre-button{
     display: flex;
     align-items: center;
