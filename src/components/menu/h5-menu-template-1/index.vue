@@ -166,8 +166,11 @@ import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
+// import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+// import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
+const Instance = getCurrentInstance();
+console.error(Instance.slots
+)
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",

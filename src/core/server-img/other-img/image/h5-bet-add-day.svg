@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状结合</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="接受赔率未选中备份" transform="translate(-35.000000, -758.000000)" fill="rgba(255,145,36,0.50)">
+            <g id="编组-63备份" transform="translate(0.000000, 324.000000)">
+                <g id="编组-10" transform="translate(0.000000, 366.000000)">
+                    <g id="编组-42" transform="translate(15.000000, 38.000000)">
+                        <path d="M25,30 C25.5522847,30 26,30.4477153 26,31 L26,34 L29,34 C29.5522847,34 30,34.4477153 30,35 C30,35.5522847 29.5522847,36 29,36 L25.999,36 L26,39 C26,39.5522847 25.5522847,40 25,40 C24.4477153,40 24,39.5522847 24,39 L23.999,36 L21,36 C20.4477153,36 20,35.5522847 20,35 C20,34.4477153 20.4477153,34 21,34 L24,34 L24,31 C24,30.4477153 24.4477153,30 25,30 Z" id="形状结合"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

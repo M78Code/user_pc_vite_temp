@@ -2,6 +2,7 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 import server_resource from "app/job/output/merchant/server-resource.json";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
@@ -17,8 +18,17 @@ const config = {
 };
 // x y 
 const item = {
-  item_0_8: [0,8], //下标从0开始
-  item_1: 0,
+  item_0: 0, //下标从0开始
+  item_1: 1,
+  item_2: 3,
+  item_3: 28,
+  item_4: 2,
+  item_5: 19,
+  item_6: 4,
+  item_7: 15,
+  item_8: 7,
+  item_9: 6,
+  item_10: 22,
 };
 
 /**
@@ -49,13 +59,13 @@ function compute_position(position) {
  */
 function compute_css({ position, theme }) {
   //从打包的 环境拿 图片地址
-  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
+  let url = get(server_resource, `${config[CURRENT_ENV] || config['default']}.${UserCtr.theme}`);
   if (!url) {
     //从本地拿
-    url = get(config, theme);
+    url = get(config, UserCtr.theme);
   }
   return {
-    "background-image": `url(${url})`,
+    "background-image": `url(/public/${url})`,
     "background-position": compute_position(position),
   };
 }
