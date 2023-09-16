@@ -1,6 +1,6 @@
 
 
-import final_css_config from "app/job/output/css/index.js"
+import final_css_config from "app/job/output/css/index.json"
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 

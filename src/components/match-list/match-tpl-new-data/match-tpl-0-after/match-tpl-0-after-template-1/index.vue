@@ -16,7 +16,6 @@
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
-        {{ match }}
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match.main_handicap_list" :match="match" />
 
@@ -130,6 +129,7 @@ const props = defineProps({
 const play_name_list = ref([]);
 const match_style_obj = ref(lodash.get(MatchListCardData.get_match_all_card_obj(), `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
+console.log('MATCH_LIST_TEMPLATE_CONFIG', MATCH_LIST_TEMPLATE_CONFIG['template_1_config']);
 const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
 const is_mounted = ref(false);
 
