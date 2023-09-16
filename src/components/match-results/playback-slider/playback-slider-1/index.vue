@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
+import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
 import { mapGetters} from "vuex";
 export default {
   name: "drag-scroll",
@@ -218,7 +218,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     height: 100%;
-    ::v-deep img {
+    :deep(img) {
       pointer-events: none;
     }
   }
