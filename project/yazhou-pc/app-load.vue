@@ -70,7 +70,6 @@ onMounted(() => {
 })
 // 公共全局主题色
 const global_color_obj = () => {
-  debugger
   // 背景色
   let bg = compute_css_variables({ category: 'global', module: 'background' })
   // 边框色
