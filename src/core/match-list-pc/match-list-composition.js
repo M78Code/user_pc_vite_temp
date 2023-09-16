@@ -46,11 +46,11 @@ const is_show_hot = ref(false);
 // 是否继续请求
 const is_loading = ref(true);
 // 赛事列表排序 1:按联赛排序 2:按时间排序
-const vx_match_sort = ref(state.filterReducer.show_filter_popup);
+const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 筛选是否全选
-const vx_filter_checked_all = ref(state.filterReducer.show_filter_popup);
+const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
 // 上次筛选选中的数据
-const vx_pre_filter_select_obj = ref(state.filterReducer.show_filter_popup);
+const vx_pre_filter_select_obj = ref(state.filterReducer?.show_filter_popup);
 // 左侧详情参数
 const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态

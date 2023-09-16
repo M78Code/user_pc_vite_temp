@@ -177,8 +177,8 @@ console.error(model);
     top: -200px;
   }
   :deep(.c-simple-header) {
-    border-bottom: 1px solid var(--q-bet-record-color-20);
-    background: var(--q-bet-record-color-26);
+    border-bottom: 1px solid var(--q-bet-record-color-9);
+    background: var(--q-gb-bg-c-14);
   }
 }
 /** 表格头部分 */
@@ -190,8 +190,8 @@ console.error(model);
   box-sizing: border-box;
   padding: 0 20px;
   font-size: 12px;
-  color: var(--q-bet-record-color-16);
-  background: var(--qq--re-bg-color1);
+  color: var(--q-gb-t-c-5);
+  background: var(--q-gb-bg-c-11);
   .title-wrap {
     display: flex;
     justify-content: space-between;

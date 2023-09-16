@@ -218,8 +218,6 @@ watch(
 </script>
   
 <style lang="scss" scoped>
-$hover-color: #FF7000;
-
 .result-wrap {
     width: 100%;
     height: 100%;
@@ -289,7 +287,7 @@ $hover-color: #FF7000;
             }
 
             .type-name {
-                color: #fff;
+                color: var(--q--gb-t-c-18);
                 position: relative;
 
                 .tip-direct {
@@ -305,7 +303,7 @@ $hover-color: #FF7000;
                     }
 
                     &:before {
-                        color: #fff;
+                        color: var(--q--gb-t-c-18);
                     }
                 }
             }
@@ -352,7 +350,7 @@ $hover-color: #FF7000;
                     align-items: center;
 
                     .league-name {
-                        color: #fff;
+                        color: var(--q--gb-t-c-18);
                         padding-right: 10px;
                         font-weight: 600;
                     }
