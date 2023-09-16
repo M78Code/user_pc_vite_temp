@@ -22,7 +22,7 @@
 </template>
 <script>
 
-// import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
+// import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
 // import {mapGetters,mapActions} from 'vuex'
 // import { store } from "src/store/index.js"
 export default {

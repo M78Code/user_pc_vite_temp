@@ -1,7 +1,15 @@
+<!--
+ * @Author: lowen pmtylowen@itcom888.com
+ * @Date: 2023-09-08 10:43:37
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-09-16 17:00:36
+ * @FilePath: /user-pc-vite/src/components/match-results/select/full-version-wapper/index.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
-  <div>
     <component :is="use_component_key" v-bind="$attrs" />
-  </div>
 </template>
 <script>
 import wapper_config from "./wapper.js";

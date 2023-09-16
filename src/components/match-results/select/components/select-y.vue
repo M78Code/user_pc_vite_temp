@@ -72,9 +72,10 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch, computed } from "vue";
 import { i18n_t } from "src/core/index";
 // import { mapGetters } from "vuex";
+import BUILDIN_CONFIG from "app/job/output/env/final.js";
 import {
   useMittOn,
   useMittEmitterGenerator,
@@ -102,7 +103,6 @@ const selectedIds = ref([]); // 已选中的联赛
 const initSport = ref(0); // 当前更新是否是切换球种
 const isAllSelect = ref(1); // 1 全选 0反选
 const itemAllSelect = ref("all"); // 针对选项的判断 all 全部选中  part 部分选中
-
 const props = defineProps({
   list: {
     //下拉框子项
@@ -119,6 +119,7 @@ const emit = defineEmits([
   "confirm",
   "ipt_search",
   "select_submit",
+  "search_hot",
 ]);
 /**
  * @description: input获取焦点
@@ -184,8 +185,8 @@ const ipt_change = () => {
  */
 const checkAll = () => {
   emit("confirm", 0);
-  list.value &&
-    list.value.forEach((item) => {
+  props.list &&
+    props.list.forEach((item) => {
       if (!active_tournament.value.includes(item.id)) {
         active_tournament.value.push(item.id);
       }
@@ -201,10 +202,10 @@ const checkAll = () => {
  */
 const checkInvert = () => {
   // 如果当前选中状态是反选并且没有联赛就不予处理
-  if (menu.value == "invert" && !list.value) return false;
+  if (menu.value == "invert" && !props.list) return false;
   emit("confirm", 0);
-  list.value &&
-    list.value.forEach((item) => {
+  props.list &&
+    props.list.forEach((item) => {
       if (!active_tournament.value.includes(item.id)) {
         active_tournament.value.push(item.id);
       } else {
@@ -237,7 +238,7 @@ const checkHot = (n) => {
   } else {
     init.value = false;
     is_hot.value = !is_hot;
-    $emit("search_hot", Number(is_hot.value));
+    emit("search_hot", Number(is_hot.value));
   }
 };
 const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
@@ -293,7 +294,8 @@ const confrim = () => {
   } else {
     // 点击筛选确认按钮时，如果输入框值为空（全部）则查询全部
     if (
-      active_tournament.value.length == (list.value ? list.value.length : 0) &&
+      active_tournament.value.length ==
+        (props.list.value ? props.list.length : 0) &&
       !is_hot.value
     ) {
       is_select.value = false;
@@ -315,14 +317,14 @@ const confrim = () => {
   });
 };
 const versions_class = computed(() => {
-  return `versions-${window.env.config.DEFAULT_VERSION_NAME}`;
+  return `versions-${BUILDIN_CONFIG.htmlVariables.versionName}`;
 });
 
 onMounted(() => {
   input_val.value = i18n_t("select.all");
 });
 watch(
-  list,
+  props.list,
   (res) => {
     let _no_active = active_tournament.value.length == 0;
     // 当前是不是反选
@@ -409,27 +411,27 @@ watch(
   },
   { immediate: true }
 );
-watch(sport_id, (res) => {
+watch(props.sport_id, (res) => {
   is_select.value = false;
   menu.value = "all";
   input_val.value = i18n_t("select.all"); //全部
 });
-watch(hideSelect, (res) => {
+watch(props.hideSelect, (res) => {
   isShow.value = false;
 });
 // 全局点击事件
-watch(get_global_click, (res) => {
-  isShow.value = false;
-});
+// watch(get_global_click, (res) => {
+//   isShow.value = false;
+// });
 
 watch(
   active_tournament,
   (arr) => {
-    let allSelect = list.every((item) => arr.includes(item.id));
+    let allSelect = props.list.every((item) => arr.includes(item.id));
     // 热门全部选中和部分选中要区分开来
     if (is_hot.value) {
       itemAllSelect.value = allSelect
-        ? list.length == arr.length
+        ? props.list.length == arr.length
           ? "all"
           : "part"
         : "part";
