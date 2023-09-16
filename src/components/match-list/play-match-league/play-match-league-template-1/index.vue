@@ -5,6 +5,8 @@
     <!-- 第一行 -->
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
+      {{ match_list_tpl_size }}
+
       <div class="leagues-wrap" :class="tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <!-- 箭头 -->
@@ -119,8 +121,9 @@ const props = defineProps({
   },
 })
 
-const tpl_id = ref(menu_config.get_match_tpl_number())
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template' + tpl_id.value+'_config'] || {});
+const tpl_id = ref(menu_config.get_match_tpl_number() || 1)
+console.log('MATCH_LIST_TEMPLATE_CONFIG', MATCH_LIST_TEMPLATE_CONFIG, 'template_' + 1+'_config');
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_' + tpl_id.value+'_config'] || {});
 // 获取菜单类型
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
   useMittEmit(MITT_TYPES.EMIT_FETCH_MATCH_LIST, true)
@@ -193,6 +196,7 @@ const bet_col = computed(() => {
 */
 const bet_title = computed(() => {
   let bet_col = get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id.value}.title2`, props.card_style_obj.league_obj.csid)
+  console.log('bet_colbet_col', bet_col);
   return bet_col
 })
 

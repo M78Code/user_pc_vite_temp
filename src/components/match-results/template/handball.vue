@@ -1,6 +1,6 @@
 <!--
  * @Date: 2021-07-17 23:44:21
- * @FilePath: /user-pc1/src/public/components/results/template/handball.vue
+ * @FilePath: /user-pc-vite/src/components/match-results/template/handball.vue
  * @Description: 手球
  * @Author: Echo
 -->
@@ -29,12 +29,12 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list">
+          <template v-for="(item, index) in results_list"     :key="index">
             <div
               class="table-tr-td"
               :class="{'active':index == activeIndex}"
               @click="get_tr_detail(item, index)"
-               :key="index"
+           
             >
               <!-- 日期 -->
               <div class="table-col">
@@ -77,14 +77,14 @@
                 <div>{{lodash.get(item, "scoreResult.S170.away", item.matchStatus==1?'':'-')}}</div>
               </div>
             </div>
-            <div v-if="index == activeIndex" class="wrap-load" :key="`details-${index}`">
+            <div v-if="index == activeIndex" class="wrap-load" >
               <load-data :state="details_load" color="light">
-                <template v-for="(list,i) in results_order_list">
-                  <div class="table-tr-detail" v-if="list.posrList.length" :key="i">
+                <template v-for="(list,i) in results_order_list" :key="i">
+                  <div class="table-tr-detail" v-if="list.posrList.length" >
                     <div class="tr-detail-title">{{list.playName}}</div>
                     <div class="tr-detail-item">
-                      <template v-for="(list2, j) in list.posrList">
-                        <div class="item" :key="j">
+                      <template v-for="(list2, j) in list.posrList" :key="j">
+                        <div class="item" >
                           <span>{{list2.playOptionName}}</span>
                           <span :class="format_name(list2.scoreResult).class">{{format_name(list2.scoreResult)['name']}}</span>
                         </div>
@@ -103,7 +103,7 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
+import results from "src/core/match-results/match-results-mixin/index";
 import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
 import loadData from "src/components/load_data/load_data.vue"
 export default {

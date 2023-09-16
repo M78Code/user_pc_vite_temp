@@ -8,20 +8,20 @@
   <div class="wrap-table">
     <div class="table-header">
       <div class="table-col cursor" @click="change_sort">
-        <span>{{$root.$t('results.date')}}</span>
+        <span>{{i18n_t('results.date')}}</span>
         <div class="sort icon" :class="{'up':is_sortUp}" ></div>
       </div>
       <!-- 联赛 -->
-      <div class="table-col">{{$root.$t('results.league')}}</div>
+      <div class="table-col">{{i18n_t('results.league')}}</div>
       <!-- 赛事 -->
-      <div class="table-col">{{$root.$t('results.competition')}}</div>
+      <div class="table-col">{{i18n_t('results.competition')}}</div>
       <div class="table-col">1</div>
       <div class="table-col">2</div>
       <div class="table-col">3</div>
       <!-- 总分 -->
-      <div class="table-col">{{$root.$t('results.total_points')}}</div>
+      <div class="table-col">{{i18n_t('results.total_points')}}</div>
       <!-- 局比分 -->
-      <div class="table-col">{{$root.$t('results.bureau_score')}}</div>
+      <div class="table-col">{{i18n_t('results.bureau_score')}}</div>
     </div>
     <load-data :state="load_data_state" color="light">
       <q-scroll-area
@@ -30,12 +30,11 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list">
+          <template v-for="(item, index) in results_list"  :key="index">
             <div
               class="table-tr-td"
               :class="{'active':index == activeIndex}"
-              @click="get_tr_detail(item, index)"
-               :key="index"
+              @click="get_tr_detail(item, index)"         
             >
               <!-- 日期 -->
               <div class="table-col">
@@ -49,7 +48,7 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[_.get(item,'iconUrl')]" class="tournament-logo" alt="">
+                <img v-img="[lodash.get(item,'iconUrl')]" class="tournament-logo" alt="">
                 <span class="ellipsis-line-2">{{item.tournamentName}}</span>
               </div>
               <!-- 赛事 -->
@@ -59,39 +58,39 @@
               </div>
               <!-- 1 -->
               <div class="table-col">
-                <div>{{_.get(item, "scoreResult.S120.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S120.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S120.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S120.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 2 -->
               <div class="table-col">
-                <div>{{_.get(item, "scoreResult.S121.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S121.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S121.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S121.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 3 -->
               <div class="table-col">
-                <div>{{_.get(item, "scoreResult.S122.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S122.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S122.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S122.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 总分 -->
               <div class="table-col color-highlight">
-                <div>{{_.get(item, "score_total.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "score_total.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "score_total.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "score_total.away", item.matchStatus==1?'':'-')}}</div>
               </div>
               <!-- 局 -->
               <div class="table-col color-highlight">
-                <div>{{_.get(item, "scoreResult.S1.home", item.matchStatus==1?'':'-')}}</div>
-                <div>{{_.get(item, "scoreResult.S1.away", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S1.home", item.matchStatus==1?'':'-')}}</div>
+                <div>{{lodash.get(item, "scoreResult.S1.away", item.matchStatus==1?'':'-')}}</div>
               </div>
             </div>
             <!-- 赛果详情 -->
-            <div v-if="index == activeIndex" class="wrap-load" :key="`details-${index}`">
+            <div v-if="index == activeIndex" class="wrap-load" >
               <load-data :state="details_load" color="light">
-                <template v-for="(list,i) in results_order_list">
-                  <div class="table-tr-detail" v-if="list.posrList.length" :key="i">
+                <template v-for="(list,i) in results_order_list" :key="i">
+                  <div class="table-tr-detail" v-if="list.posrList.length" >
                     <div class="tr-detail-title">{{list.playName}}</div>
                     <div class="tr-detail-item">
-                      <template v-for="(list2, j) in list.posrList">
-                        <div class="item" :key="j">
+                      <template v-for="(list2, j) in list.posrList" :key="j">
+                        <div class="item" >
                           <span>{{list2.playOptionName}}</span>
                           <span :class="format_name(list2.scoreResult).class">{{format_name(list2.scoreResult)['name']}}</span>
                         </div>
@@ -109,9 +108,13 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
+import results from "src/core/match-results/match-results-mixin/index";
+import loadData from "src/components/load_data/load_data.vue"
 export default {
   mixins: [results],
+  components: {
+    loadData
+  },
   watch:{
     results_list:{
       handler(res){
@@ -120,13 +123,13 @@ export default {
         res.forEach(item => {
           let obj = { home: 0, away: 0 }
           if(item.scoreResult != ""){
-            obj.home = parseInt(_.get(item, "scoreResult.S120.home")||0) + 
-                        parseInt(_.get(item, "scoreResult.S121.home")||0) + 
-                        parseInt(_.get(item, "scoreResult.S122.home")||0)
+            obj.home = parseInt(lodash.get(item, "scoreResult.S120.home")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S121.home")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S122.home")||0)
 
-            obj.away = parseInt(_.get(item, "scoreResult.S120.away")||0) + 
-                        parseInt(_.get(item, "scoreResult.S121.away")||0) + 
-                        parseInt(_.get(item, "scoreResult.S122.away")||0)
+            obj.away = parseInt(lodash.get(item, "scoreResult.S120.away")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S121.away")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S122.away")||0)
           }
           item.score_total = obj
         })

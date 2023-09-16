@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
+import results from "src/core/match-results/match-results-mixin/index";
 import loadData from "src/components/load_data/load_data.vue"
 export default {
   mixins: [results],

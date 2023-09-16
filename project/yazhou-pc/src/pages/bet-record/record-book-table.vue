@@ -640,10 +640,10 @@ onMounted(() => {
     // 提示弹出窗
     const toast_tips = (msg) => {
       toast_msg.value = msg
-      toast = true;
+      toast.value = true;
       clearTimeout(timeout_toast.value);
       timeout_toast.value = setTimeout(() => {
-        toast = false;
+        toast.value = false;
       }, 1500);
     }
     /**
