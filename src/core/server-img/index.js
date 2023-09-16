@@ -21,7 +21,7 @@ const compute_css = (_key, _position) => {
     }
   }
 };
-export { compute_css };
+// export { compute_css };
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， position 是 精灵图内 item 单个元素的 位置 标识键
  * 调用示例： compute_css(key,position) || compute_css({key,position}) 
@@ -29,3 +29,5 @@ export { compute_css };
  * 调用示例：   compute_css(key) || compute_css({key})// 单图
  */
 
+
+export * from 'project_path/src/css/server-img/'
