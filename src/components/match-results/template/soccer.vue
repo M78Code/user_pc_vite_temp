@@ -501,7 +501,6 @@
             <div
               v-if="index == activeIndex"
               class="wrap-load"
-              :key="`details-${index}`"
             >
               <div class="tab_change_content"  v-if="item.playBack&&show_play_back">
                 <tabs
@@ -547,11 +546,11 @@
                 </div>
               </div>
               <load-data :state="details_load" color="light">
-                <template v-for="(list, i) in results_order_list">
+                <template v-for="(list, i) in results_order_list" :key="i">
                   <div
                     class="table-tr-detail"
                     v-if="list.posrList.length"
-                    :key="i"
+                    
                   >
                     <div class="tr-detail-title">{{ list.playName }}</div>
                     <div class="tr-detail-item">

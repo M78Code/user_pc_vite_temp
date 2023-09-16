@@ -1,6 +1,6 @@
 <!--
  * @Date: 2021-04-28 19:44:43
- * @FilePath: /user-pc1/src/public/components/results/template/virtual_soccer.vue
+ * @FilePath: /user-pc-vite/src/components/match-results/template/virtual_soccer.vue
  * @Description: 虚拟足球模板
  * @Author: Echo
 -->
@@ -9,16 +9,16 @@
   <div class="wrap-table" :class="{'football':sportType=='1001'}">
     <div class="table-header">
       <div class="table-col cursor" @click="change_sort">
-        <span>{{$root.$t('results.date')}}</span>
+        <span>{{i18n_t('results.date')}}</span>
         <div class="sort icon" :class="{'up':is_sortUp}" ></div>
       </div>
-      <div class="table-col">{{$root.$t('results.league')}}</div>
-      <div class="table-col">{{$root.$t(`results.${sportType=='1001'?'round':'number'}`)}}</div>
-      <div class="table-col">{{$root.$t('results.competition')}}</div>
+      <div class="table-col">{{i18n_t('results.league')}}</div>
+      <div class="table-col">{{i18n_t(`results.${sportType=='1001'?'round':'number'}`)}}</div>
+      <div class="table-col">{{i18n_t('results.competition')}}</div>
       <!-- 总分 -->
-      <div class="table-col">{{$root.$t('msc.S1')}}</div>
+      <div class="table-col">{{i18n_t('msc.S1')}}</div>
       <!-- 点球比分 -->
-      <div  v-if="sportType=='1001'" class="table-col">{{$root.$t('msc.S10')}}</div>
+      <div  v-if="sportType=='1001'" class="table-col">{{i18n_t('msc.S10')}}</div>
     </div>
     <load-data :state="load_data_state" color="light">
       <q-scroll-area
@@ -27,11 +27,10 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list">
+          <template v-for="(item, index) in results_list" :key="index">
             <div
               class="table-tr-td"
-              :class="{'active':index == activeIndex}"
-              :key="index"
+              :class="{'active':index == activeIndex}"             
             >
               <!-- 日期 -->
               <div class="table-col">
@@ -41,7 +40,7 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[_.get(item,'iconUrl')]" class="tournament-logo" alt="">
+                <img v-img="[lodash.get(item,'iconUrl')]" class="tournament-logo" alt="">
                 <span class="ellipsis-line-2">{{item.tournamentName}}</span>
               </div>
               <!-- 全场比分 -->
@@ -49,7 +48,7 @@
                 <template v-if="sportType=='1001'">
                   <div v-if="item.teamGroup === 'GROUPS'">{{format_i18n_num('round1', item.matchDay)}}&nbsp;&nbsp;&nbsp;{{format_i18n_num('legOrder', item.legOrder)}}</div>
                   <!-- 'INGAME', 'PREGAME' 新增的值，没有同步到前端，导致控制台报 warning ，先规避一下 -->
-                  <div v-if="!['GROUPS', 'INGAME', 'PREGAME'].includes(item.teamGroup) && item.teamGroup != ''">{{$root.$t('results.' + item.teamGroup)}}&nbsp;&nbsp;&nbsp;{{format_i18n_num('legOrder', item.legOrder)}}</div>
+                  <div v-if="!['GROUPS', 'INGAME', 'PREGAME'].includes(item.teamGroup) && item.teamGroup != ''">{{i18n_t('results.' + item.teamGroup)}}&nbsp;&nbsp;&nbsp;{{format_i18n_num('legOrder', item.legOrder)}}</div>
                   <div v-if="item.teamGroup == ''">{{format_i18n_num('round1', item.matchDay)}}</div>
                 </template>
                 <template v-else>
@@ -82,17 +81,21 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
+import results from "src/core/match-results/match-results-mixin/index";
+import loadData from "src/components/load_data/load_data.vue"
 export default {
   name: 'virtual_soccer',
+  components: {
+    loadData
+  },
   mixins: [results],
   methods:{
     format_i18n_num(i18n, num) {
       let string;
       if (i18n === 'legOrder') {
-        string = this.$root.$t('results.legOrder');
+        string = this.i18n_t('results.legOrder');
       } else if (i18n === 'round1') {
-        string = this.$root.$t('results.round1')
+        string = this.i18n_t('results.round1')
       }
       let finalStr = string.replace('%s', num);
       return finalStr;
@@ -106,17 +109,17 @@ export default {
             res.forEach(item => {
               let obj = { home: 0, away: 0 }
               if(item.scoreResult != ""){
-                obj.home = parseInt(_.get(item, "scoreResult.S120.home")||0) + 
-                        parseInt(_.get(item, "scoreResult.S121.home")||0) + 
-                        parseInt(_.get(item, "scoreResult.S122.home")||0) +
-                        parseInt(_.get(item, "scoreResult.S123.home")||0) +
-                        parseInt(_.get(item, "scoreResult.S124.home")||0)
+                obj.home = parseInt(lodash.get(item, "scoreResult.S120.home")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S121.home")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S122.home")||0) +
+                        parseInt(lodash.get(item, "scoreResult.S123.home")||0) +
+                        parseInt(lodash.get(item, "scoreResult.S124.home")||0)
 
-                obj.away = parseInt(_.get(item, "scoreResult.S120.away")||0) + 
-                        parseInt(_.get(item, "scoreResult.S121.away")||0) + 
-                        parseInt(_.get(item, "scoreResult.S122.away")||0) +
-                        parseInt(_.get(item, "scoreResult.S123.away")||0) +
-                        parseInt(_.get(item, "scoreResult.S124.away")||0)
+                obj.away = parseInt(lodash.get(item, "scoreResult.S120.away")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S121.away")||0) + 
+                        parseInt(lodash.get(item, "scoreResult.S122.away")||0) +
+                        parseInt(lodash.get(item, "scoreResult.S123.away")||0) +
+                        parseInt(lodash.get(item, "scoreResult.S124.away")||0)
               }
               item.score_total = obj
             })
