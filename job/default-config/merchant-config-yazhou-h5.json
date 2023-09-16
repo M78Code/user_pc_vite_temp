@@ -31,15 +31,28 @@
     }
   },
   "assets": {
-    "left-menu-bg-image": {
+    "h5-left-menu-bg-image": {
       "day": "日间版素材地址",
       "night": "夜间版素材地址"
     },
-    "img-bet-record-close": {
+    "h5-img-bet-record-close": {
       "day": "yazhou-h5/image/activity/activity_entrance.png",
       "night": "夜间版素材地址"
- 
-  
+    },
+    "h5-go-back-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/svg/go-back-icon-theme02.svg"
+    },
+    "h5-activity-entrance": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/activity/activity_entrance.png"
+    },
+    "h5-menu-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/setting-menu-icon-theme02.svg"
+    },
+    "h5-close-icon": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_close.svg"
+    },
+    "h5-set-switch": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_switch.svg"
     }
   }
 }

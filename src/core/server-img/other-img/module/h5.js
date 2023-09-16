@@ -3,7 +3,7 @@
 
 export default {
   'h5-img-bet-record-close': {
-    default: "h5-img-bet-record-close",
+    default: "img-bet-record-close",
     local_dev: "/src/core/server-img/other-img/image/h5-img-bet-record-close-day.svg",
 
   },
@@ -14,22 +14,14 @@ export default {
   },
   'h5-go-back-icon': {
     default: "h5-go-back-icon",
-    local_dev: "/src/core/server-img/other-img/image/h5-go-back-icon.svg",
-    local_test: "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/svg/go-back-icon-theme02.svg",
   },
   'h5-activity-entrance': {
-    default: "h5-go-back-icon",
-    local_dev: "/src/core/server-img/other-img/image/h5-activity-entrance.png",
-    local_test: "/src/core/server-img/other-img/image/h5-activity-entrance.png",
+    default: "h5-activity-entrance",
   },
   'h5-menu-icon': {
-    default: "h5-go-back-icon",
-    local_dev: "/src/core/server-img/other-img/image/h5-activity-entrance.png",
-    local_test: "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/setting-menu-icon-theme02.svg",
+    default: "h5-menu-icon",
   },
   'h5-close-icon': {
-    default: "h5-go-back-icon",
-    local_dev: "/src/core/server-img/other-img/image/h5-activity-entrance.png",
-    local_test: "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_close.svg",
+    default: "h5-close-icon",
   },
 }
