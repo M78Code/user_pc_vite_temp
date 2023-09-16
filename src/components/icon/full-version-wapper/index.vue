@@ -6,7 +6,6 @@
 </template>
 <script>
 import wapper_config from "./wapper.js";
-
 let {
   all_components,
   is_full_version,
@@ -16,6 +15,7 @@ let {
 } = wapper_config;
 export default {
   inheritAttrs: false,
+  //   components:  wapper_config.all_components,
   components: all_components,
   data() {
     return {
@@ -24,6 +24,8 @@ export default {
       components_keys,
       registered_component_key,
     };
+  },
+  methods: {
   },
 };
 </script>
