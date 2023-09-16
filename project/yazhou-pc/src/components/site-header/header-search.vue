@@ -6,7 +6,7 @@
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
         {{ search_hot_push.hot_push_name || i18n_t("common.search") }}
       </div>
-      <icon class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme)
+      <icon-wapper class="icon" :name="!['theme01_y0', 'theme02_y0'].includes(UserCtr.theme)
         ? `img:${img_search_icon}`
         : `img:${img_search_icon_y0}`
         " size="14px" />
@@ -38,7 +38,7 @@ import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { tooltip_style } from "src/core/config/global-component-style.js";
 import { utils } from 'src/core/index.js';
 
-import icon from "src/components/icon/icon.vue";
+import { IconWapper } from 'src/components/icon'
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 import globalAccessConfig from "src/core/access-config/access-config.js"
