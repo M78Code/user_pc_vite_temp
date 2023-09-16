@@ -75,7 +75,11 @@
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { i18n_t } from "src/core/index";
 // import { mapGetters } from "vuex";
-
+import {
+  useMittOn,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js";
 const option = ref(null); //选中项
 const isShow = ref(false); // 是否展示联赛列表
 const active = ref(null); //选择的下标
@@ -98,6 +102,7 @@ const selectedIds = ref([]); // 已选中的联赛
 const initSport = ref(0); // 当前更新是否是切换球种
 const isAllSelect = ref(1); // 1 全选 0反选
 const itemAllSelect = ref("all"); // 针对选项的判断 all 全部选中  part 部分选中
+
 const props = defineProps({
   list: {
     //下拉框子项
@@ -235,6 +240,10 @@ const checkHot = (n) => {
     $emit("search_hot", Number(is_hot.value));
   }
 };
+const { off: offInit } = useMittOn(MITT_TYPES.EMIT_INIT_SELECT, () => {
+  checkHot();
+});
+onUnmounted(offInit);
 /**
  * @description: 展开联赛下拉框
  * @return {undefined} undefined
@@ -268,6 +277,11 @@ const cancel = () => {
   emit("confirm", 0);
   isShow.value = false;
 };
+const { off } = useMittOn(MITT_TYPES.EMIT_SHOW_SELECT, (e) => {
+  cancel(e);
+});
+onUnmounted(off);
+
 /**
  * @description: 确认
  */
@@ -303,11 +317,9 @@ const confrim = () => {
 const versions_class = computed(() => {
   return `versions-${window.env.config.DEFAULT_VERSION_NAME}`;
 });
+
 onMounted(() => {
-  input_val = i18n_t("select.all");
-  //todo
-  //   $root.$on("show_select", cancel);
-  //   $root.$on("init_select", checkHot);
+  input_val.value = i18n_t("select.all");
 });
 watch(
   list,
@@ -429,9 +441,6 @@ watch(
 );
 
 onUnmounted(() => {
-  //todo
-  //   $root.$off("show_select", cancel);
-  //   $root.$off("init_select", checkHot);
   clearTimeout(timer);
   active_tournament.value = null;
 });
@@ -550,7 +559,7 @@ onUnmounted(() => {
       border-right: 1px solid #d0d8de;
     }
   }
-  ::v-deep .q-scrollarea__thumb {
+  :deep(.q-scrollarea__thumb) {
     background-color: rgba(60, 63, 76, 0.3) !important;
     width: 8px;
     border-radius: 4px;

@@ -150,7 +150,7 @@
 
 <script setup>
 import { ref, reactive, onMounted,watch,onUnmounted, nextTick, inject, computed } from "vue";
-// import icon from "project_path/src/components/icon/icon.vue";
+// import { IconWapper } from 'src/components/icon'
 import { FilterRadioFullVersionWapper } from "src/components/match-list/filter-radio/index.js";
 import { FilterCheckboxFullVersionWapper } from "src/components/match-list/filter-checkbox/index.js";
 import { formatTime } from "src/core/format/index.js";

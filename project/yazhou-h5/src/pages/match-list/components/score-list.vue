@@ -45,7 +45,7 @@
                 <!--角球图标-->
                 <img class="kk-icon" alt=""
                   v-if="match.csid == 1 && score[0] == 'S5' && score[4]"
-                  src="image/wwwassets/bw3/list/m-list-jiaoqiu.svg" />
+                  src="public/image/list/m-list-jiaoqiu.svg" />
                 <!--HT(半场)或FT(全场)或OT-->
                 <span class="f-ht-ot" style="margin-right:.02rem"
                   :score="`${match.csid}-${score[4]}`"

@@ -320,7 +320,7 @@ class MatchListCard {
    * @param {Object} param 展开的次要玩法信息
    */
   secondary_play_unfold_change_handle(data) {
-    this.run_process_when_need_recompute_container_list(true, data);
+    this && this.run_process_when_need_recompute_container_list && this.run_process_when_need_recompute_container_list(true, data);
   }
   /**
    * 像素值转为rem

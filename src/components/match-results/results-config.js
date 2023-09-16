@@ -982,7 +982,8 @@ export const useGetResultConfig = () => {
    * @description: 开始日期选择
    */
   const startTimeShowFunc = (type) => {
-    useMittEmit("show_select");
+    debugger
+    useMittEmit(MITT_TYPES.EMIT_SHOW_SELECT);
     // 体育下拉框展开时判断日期选择框是否展开
     if (type == "close") {
       if (state.startTimeShow == true) {
@@ -1162,6 +1163,7 @@ export const useGetResultConfig = () => {
    *  new_ 1确认 0取消
    */
   const isSelectConfirm = (new_) => {
+    debugger
     state.isSelectConfirmed = new_;
     if (new_ == 1) {
       if (!test_time()) {
@@ -1210,6 +1212,9 @@ export const useGetResultConfig = () => {
     ...toRefs(state),
     sport,
     get_serverTime,
-    test
+    test,
+    startTimeShowFunc,
+    isSelectConfirm,
+    ipt_search
   };
 };
