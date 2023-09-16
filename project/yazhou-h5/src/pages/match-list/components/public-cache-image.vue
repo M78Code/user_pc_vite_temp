@@ -3,17 +3,16 @@
 -->
 <template v-if="show_image">
   <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" />
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error" />
 </template>
  
 <script setup>
 import lodash from 'lodash'
-import { compute_local_image } from "src/core/server-img/other-img/index.js"
 import { onMounted, ref, watch, nextTick } from "vue";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { get_file_path } from "src/core/file-path/file-path.js";
 // 默认联赛图标
-import { none_league_icon, none_league_icon_black, default_league_icon, home_default_avatar, away_default_avatar } from 'project_path/src/boot/local-image'
+import { none_league_icon, none_league_icon_black, default_league_icon, home_default_avatar, away_default_avatar } from 'project_path/src/core/utils/local-image'
 
 const props = defineProps({
   // 赛种 id
@@ -59,7 +58,7 @@ watch(() => props.path, () => {
  * @param {Object} $event 错误事件对象
  */
 const league_icon_error = ($event) => {
-  $event.target.src = load_img_default_by_type(props.type);
+  image_src.value = load_img_default_by_type(props.type);
   $event.target.onerror = null
 }
 //  设置主题
@@ -67,7 +66,7 @@ const set_default_icon = (val = "theme02") => {
   // 主题
   theme.value = val;
   // 默认联赛图标
-  default_league_img.value = theme == "theme02" ? none_league_icon_black : none_league_icon;
+  image_src.value = theme == "theme02" ? none_league_icon_black : none_league_icon;
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素

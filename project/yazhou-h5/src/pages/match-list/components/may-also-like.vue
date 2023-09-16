@@ -26,7 +26,7 @@
                 u_like
               />
               <!-- 视频直播图标 -->
-              <img v-if="item.mms == 2"  src="image/wwwassets/bw3/common/video.svg"/>
+              <img v-if="item.mms == 2"  src="public/image/common/video.svg"/>
             </div>
           </div>
           <div class="card-content">
@@ -48,7 +48,7 @@
                   <span v-html="handicap_ov(item, 0)"></span>
                 </template>
                 <template v-else>
-                  <img src="image/wwwassets/bw3/common/match-icon-lock.svg">
+                  <img src="public/image/common/match-icon-lock.svg">
                 </template>
               </div>
             </div>
@@ -71,7 +71,7 @@
                 </template>
                 <template v-else>
                   <!-- 封盘图标 -->
-                  <img src="image/wwwassets/bw3/common/match-icon-lock.svg">
+                  <img src="public/image/common/match-icon-lock.svg">
                 </template>
               </div>
             </div>

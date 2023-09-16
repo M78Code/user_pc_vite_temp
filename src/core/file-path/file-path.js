@@ -53,8 +53,6 @@ const letter_num = {
  * @return {String} csid 球种类型
  */
 const get_file_path = (path, csid = 0) => {
-  console.log(window.BUILDIN_CONFIG)
-  debugger
   // 目前环境信息
   // const current_env = config.current_env;
   const current_env = "idc_online";

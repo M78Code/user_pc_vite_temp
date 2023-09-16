@@ -304,13 +304,13 @@
                       <div class="column justify-center yb_px4"
                       v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
-                        <img src="image/bw3/svg/match_analysis.svg" alt="" style="width:0.12rem"
+                        <img :src="match_analysis" alt="" style="width:0.12rem"
                           v-if="global_theme.includes('theme01')">
-                        <img src="image/bw3/svg/match_analysis2.svg" alt="" style="width:0.12rem" v-else>
+                        <img :src="match_analysis2" alt="" style="width:0.12rem" v-else>
                       </div>
                       <!-- 此赛事支持提前结算 -->
                       <div class="column justify-center yb_px2" v-if="match_of_list.mearlys == 1">
-                        <img src="image/wwwassets/bw3/list/mearlys.png" alt="" style="width:0.2rem">
+                        <img :src="mearlys_icon" alt="" style="width:0.2rem">
                       </div>
 
                       <!--玩法数量-->
@@ -344,7 +344,7 @@
                         {{ $t('list.go_to_details') }}
                       </div>
                       <div>
-                        <img class="go-to-d-icon" src="image/wwwassets/bw3/list/m-list-way-more.svg" />
+                        <img class="go-to-d-icon" src="public/image/list/m-list-way-more.svg" />
                       </div>
                     </div>
                   </div>
@@ -478,7 +478,8 @@ import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { format_time_zone, format_time_zone_time, format_how_many_days, format_week } from "src/core/format/index.js"
 
 import { normal_img_not_favorite_white, normal_img_not_favorite_black, normal_img_is_favorite, y0_img_favorite_black, lvs_icon_theme01, lvs_icon_theme02, animationUrl_icon_theme01,
-  animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black } from 'project_path/src/boot/local-image'
+  animationUrl_icon_theme02, muUrl_theme01, muUrl_theme01_y0, muUrl_theme02, muUrl_theme02_y0, none_league_icon, none_league_icon_black, match_analysis, match_analysis2, 
+  mearlys_icon } from 'project_path/src/core/utils/local-image.js'
 
 // TODO: 其他模块得 store  待添加
 // mixins: [formatmixin, odd_convert, bettings, match_list_mixin, msc_bw3, common],

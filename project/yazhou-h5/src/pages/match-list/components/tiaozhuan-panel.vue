@@ -6,7 +6,7 @@
     'tiaozhuan-panel2':!show_banner2,
     'show-b2':!(show_banner2 && carousel_src.length)
     }">
-    <img  src="image/wwwassets/bw3/common/close.svg" class="delete" @click.self="show_banner = false" v-show="show_banner2 && carousel_src.length">
+    <img  src="public/image/common/close.svg" class="delete" @click.self="show_banner = false" v-show="show_banner2 && carousel_src.length">
     <!-- 轮播图组件 -->
     <q-carousel swipeable animated v-model="slide" infinite :autoplay="7000" transition-prev="slide-right" transition-next="slide-left" width="100%" v-show="show_banner2 && carousel_src.length" class="panel2">
       <template v-for="(item,index) in carousel_src" :key="index" >
