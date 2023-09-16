@@ -1,15 +1,16 @@
 import sprite_compute from "./sprite-img/index";
 import other_compute from "./other-img/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { isNull, isUndefined } from 'lodash'
 // import
 const compute_css = ({ key, position }) => {
-    if(position){
-      if(sprite_compute[key]){
-        return  sprite_compute[key]({  position, theme: UserCtr.theme})
-      }
-    }else{
-      return  other_compute({key,theme: UserCtr.theme })
+  if (!isNull(position) && !isUndefined(position)) {
+    if (sprite_compute[key]) {
+      return sprite_compute[key]({ position, theme: UserCtr.theme })
     }
+  } else {
+    return other_compute({ key, theme: UserCtr.theme })
+  }
 };
 export { compute_css };
 //

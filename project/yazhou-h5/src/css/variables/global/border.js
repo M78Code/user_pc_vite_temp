@@ -1,9 +1,18 @@
 
-export default {
-    "bd-menu-mini": "#bfcedd",
-    "bd-check-wrap": "#d1d5d8",
-    "bd-filter-btn-close": "rgba(216,222,234,0.5)",
-    "bd-filter-btn-dis": "#e6ebf2",
-    "bd-wrap-title": "#bfcedd",
-    "bd--search-footer": "#e1e4e6",
-}
+ 
+ export default    {
+        'gb-bd-c-1': '#000000',    
+        'gb-bd-c-2': '#414655',    
+        'gb-bd-c-3': '#bfcedd',    
+        'gb-bd-c-4': '#d0d0d0',    
+        'gb-bd-c-5': '#e4ebf1',    
+        'gb-bd-c-6': '#eeeeee',    
+        'gb-bd-c-7': '#f7f7f7',    
+        'gb-bd-c-8': '#ff7000',    
+        'gb-bd-c-9': '#ff9124',    
+        'gb-bd-c-10': '#ffb001',   
+        'gb-bd-c-11': '#ffd9bc',   
+        'gb-bd-c-12': '#ffffff',   
+        'gb-bd-c-13': 'transparent'
+      }
+ 

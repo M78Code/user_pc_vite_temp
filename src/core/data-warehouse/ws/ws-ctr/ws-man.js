@@ -29,12 +29,14 @@ export default class WsMan {
     console.log('启动ws:'+url);
     // 初始化ws  url=wss://api.mjpu9qew.com/yewuws2/push
     WsMan.ws = new Ws(url);
-    WsMan.ws.ws_status_call = (status) => {
-      // 设置ws状态
-      // WsMan.ws.set_socket_status(status);
+    WsMan.ws.ws_status_call = (ws_status, ws_status_old) => {
+      let data =  {ws_status:ws_status || 0, ws_status_old:ws_status_old || 0};
+      // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
+      window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
     }
     WsMan.ws.connect();
   }
+  
 
    /**
    * @Description:增加接收ws内部通信监听
@@ -62,6 +64,8 @@ export default class WsMan {
    */
   static destroyed() {
     if (WsMan.ws) {
+      // 通知服务器ws关闭
+      WsMan.ws.send_msg({cmd:"C00"});
       WsMan.ws.destroy();
     }
     WsMan.ws = null;

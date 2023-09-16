@@ -1,7 +1,7 @@
 <template>
   <div class="radio-wrap">
     <div v-for="(item, index) in check_list" class="check-radio" :key="index" @click="check_change(item.value)">
-      <div class="check-wrap relative-position" :class="item.value==value && 'active'" :style="checkbox_style">
+      <div class="check-wrap relative-position" :class="item.value==check_value && 'active'" :style="checkbox_style">
       </div>
       <span class="mr-20">{{ item.label }}</span>
     </div>
@@ -39,6 +39,7 @@ check_value.value = props.default_value || '';
 // console.error(check_list);
 const check_change = (value) => {
   check_value.value = value
+  debugger
   useMittEmit(MITT_TYPES.EMIT_CHANGE_CHECK, check_value.value)
 }
 

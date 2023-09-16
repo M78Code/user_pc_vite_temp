@@ -20,6 +20,7 @@ const props = defineProps({
     default: () => {},
   }
 })
+console.error(props);
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
 

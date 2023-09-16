@@ -4,7 +4,8 @@
 <template>
   <div class="m-o-p-wrapper" v-show="show_tab_by_data">
     <span v-if="wsl_flag" class="wsl_flag_777">
-      {{ 'csid:' + match_info.csid + '---mid:' + match_info.mid + '---tid:' + match_info.tid }}---{{ get_secondary_unfold_map[match_info.mid] }}
+      {{ 'csid:' + match_info.csid + '---mid:' + match_info.mid + '---tid:' + match_info.tid }}---{{
+        get_secondary_unfold_map[match_info.mid] }}
     </span>
     <!--次要玩法 标题主名称-->
     <div class="tab-m-o-w row items-center" ref="sub_play_scroller">
@@ -81,23 +82,23 @@ import { useRouter, useRoute } from 'vue-router'
 import { play_title } from 'src/core/utils/module/play-title.js'
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
-import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
+import { i18n_t } from 'src/core/index.js'
+import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt"
 import { format_msc } from "src/core/format/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { utils } from 'src/core/index.js'
-import {MenuData } from "src/core/index.js"
+import { MenuData } from "src/core/index.js"
 import matchListClass from 'src/core/match-list-h5/match-class/match-list.js'
 import { api_common } from "src/api/index.js";
 import oddListWrap from './odd-list-wrap.vue';
 
- // TODO: 其他模块得 store  待添加
- // mixins:[match_list_mixin],
+// TODO: 其他模块得 store  待添加
+// mixins:[match_list_mixin],
 
 const props = defineProps({
-  main_source:String,   //数据源
-  matchCtr:Object,      //数据仓库数据
-  i:Number,   //所在位置
+  main_source: String,   //数据源
+  matchCtr: Object,      //数据仓库数据
+  i: Number,   //所在位置
 })
 
 const route = useRoute()
@@ -115,8 +116,8 @@ const show_tips = ref(false)
 const any_unfold = ref(false)
 // 当前的次要玩法 item 内容
 const current_tab_item = ref({
-  hps:[ {hl:[{}]} ],
-  title:'',
+  hps: [{ hl: [{}] }],
+  title: '',
   id: 18,
 })
 // 玩法 key （如：hpsAdd, hps15Minutes）
@@ -126,9 +127,9 @@ const tab_list = ref(play_title())
 // 当前打开的玩法名称
 const mmp_map_title = ref('')
 // 波胆玩法数据
-const bold_all_list = ref([{hl:[{}]},{hl:[{}]}])
- // 5分钟玩法数据
-const five_minutes_all_list = ref({hl:[{}]})
+const bold_all_list = ref([{ hl: [{}] }, { hl: [{}] }])
+// 5分钟玩法数据
+const five_minutes_all_list = ref({ hl: [{}] })
 const bold_gaodu_css = ref(3)
 const init_tab_timer = ref(null)
 const compute_list_dom_time = ref(null)
@@ -159,7 +160,7 @@ const update_state = () => {
 }
 
 onMounted(() => {
-  if(["virtual_sports","category"].includes(route.name)){
+  if (["virtual_sports", "category"].includes(route.name)) {
     return;
   }
   // mmp映射赛事阶段名，国际化语言
@@ -178,103 +179,103 @@ onMounted(() => {
 /**
  * 异步初始化次要玩法tab显示1
  */
- const init_tab_async_show = () => {
+const init_tab_async_show = () => {
   clearTimeout(init_tab_timer.value);
   init_tab_timer.value = setTimeout(() => {
     init_tab_show();
-  },200);
+  }, 200);
 }
 
 // 滚动列表时,组件赛事变化异步还原赛事次要玩法的显示状态
 const match_info = computed(() => {
   let match = props.matchCtr.list[props.i];
-  if(match){
+  if (match) {
     init_tab_async_show();
-    if(current_hps_key.value){
+    if (current_hps_key.value) {
       let hps_ = lodash.cloneDeep(match[current_hps_key.value])
       current_tab_item.value.hps = hps_
       // 如果是波胆 和 5分钟玩法
-      if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
+      if ([18].includes(+ lodash.get(current_tab_item.value, 'id'))) {
         // 波胆玩法 数据加工处理
-        bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match )
-      }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
+        bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value, 'hps'), match)
+      } else if ([19].includes(+ lodash.get(current_tab_item.value, 'id'))) {
         // 5分钟 玩法 数据加工处理
-        five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match )
+        five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value, 'hps'), match)
       }
     }
   }
   return match || {};
 })
 
-watch(() => match_info.value, (c_m,o_m) => {
-  if(c_m.mid == o_m.mid){
+watch(() => match_info.value, (c_m, o_m) => {
+  if (c_m.mid == o_m.mid) {
     return;
   }
   init_tab_show(true); // 加载tab
   // 如果当场的赛事位置，换成了其他赛事了，则隐藏（折叠）当前的赛事
-  if(c_m.mid in get_secondary_unfold_map.value){
-    let [id, status, special]= get_secondary_unfold_map.value[c_m.mid] && get_secondary_unfold_map.value[c_m.mid].split('-');
+  if (c_m.mid in get_secondary_unfold_map.value) {
+    let [id, status, special] = get_secondary_unfold_map.value[c_m.mid] && get_secondary_unfold_map.value[c_m.mid].split('-');
     let unfold_map = {};
     // 如果是波胆玩法 或者 5分钟玩法
-    if(special>0){
+    if (special > 0) {
       unfold_map[c_m.mid] = `${id}-0-0`;
-    }else{
+    } else {
       unfold_map[c_m.mid] = `${id}-0`;
     }
-    store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload:unfold_map })
+    store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map })
     // 通知列表页重新计算dom高度
     clearTimeout(compute_list_dom_time.value);
     compute_list_dom_time.value = setTimeout(() => {
       useMittEmit(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE);
-    },200);
+    }, 200);
   }
 })
 
 watch(() => get_c303_data_change.value, (curr) => {
-  if(curr){
+  if (curr) {
     let splited = curr.split('-');
     let mid = splited[0];
     let hpid = splited[1];
     // 匹配mid
-    if(mid && hpid && mid == match_info.mid){
+    if (mid && hpid && mid == match_info.mid) {
       // 指定页面屏蔽该功能
-      if(['category','virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type()){
+      if (['category', 'virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type()) {
         return;
       }
       // 检测是否有子tab打开状态
       let found = tab_list.value.filter(tab_item => {
         return tab_item && tab_item.unfold;
       });
-      let item = lodash.get(found,'[0]');
-      if(item){
+      let item = lodash.get(found, '[0]');
+      if (item) {
         let o_hps_key = get_hps_key_by(item);
         let params = {
           mids: match_info.mid,
           cuid: get_uid,
-          pids:item.pids,
-          playId:item.play_id,
-          device: 'v2_h5_st' ,
-          sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
+          pids: item.pids,
+          playId: item.play_id,
+          device: 'v2_h5_st',
+          sort: 1,//排序	 int 类型 1 按热门排序 2 按时间排序
           inner_param: 'is_by_mids'
         };
         params.is_user = 'ws-user';
-        let fun_temp = ()=>{
+        let fun_temp = () => {
           api_common.get_match_base_info_by_mids(params).then(res => {
-            if(res.data && res.data[0] && res.data[0][o_hps_key]){
+            if (res.data && res.data[0] && res.data[0][o_hps_key]) {
               // 根据业务需求，修改冠军小节玩法  1585 单对应
-              Object.assign(match_info.value,res.data[0]);
+              Object.assign(match_info.value, res.data[0]);
               props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
               // if(operate_type == 'is-user'){
               //   // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
               //   useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
               // }
               current_tab_item.value.hps = match_info.value[o_hps_key];
-              if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
+              if ([18].includes(+ lodash.get(current_tab_item.value, 'id'))) {
                 // 波胆玩法 数据加工处理
-                bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match_info.value )
-              }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
+                bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value, 'hps'), match_info.value)
+              } else if ([19].includes(+ lodash.get(current_tab_item.value, 'id'))) {
                 // 5分钟 玩法 数据加工处理
-                five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match_info.value )
+                five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value, 'hps'), match_info.value)
               }
               // current_hps_key.value = o_hps_key;
             }
@@ -298,53 +299,53 @@ watch(() => get_c303_data_change.value, (curr) => {
 watch(() => any_unfold, () => {
   let any_unfold = 0;
   let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-  if(match_info.mid in unfold_map){
+  if (match_info.mid in unfold_map) {
     let u_status = unfold_map[match_info.mid] && unfold_map[match_info.mid].split('-')[1];
     any_unfold = +u_status;
-  } else{
+  } else {
     any_unfold = +any_unfold.value;
   }
   change_status_by_any_unfold(any_unfold);
 })
 // 次要玩法开关,该事件主要从ws中推送中来
 watch(() => get_corner_oc_change.value, (curr) => {
-  if(curr){
+  if (curr) {
     let splited = curr.split('-');
     let mid = splited[0];
-    if(mid == match_info.mid){
+    if (mid == match_info.mid) {
       let tab_id = splited[2];
       let f_hps_key = tab_list.value.filter(t => t.id == tab_id)[0].hps_key;
       let displayStatus = splited[1];
-      if(displayStatus == 'N'){ // 不展示
-        if(current_hps_key.value == f_hps_key){
+      if (displayStatus == 'N') { // 不展示
+        if (current_hps_key.value == f_hps_key) {
           any_unfold.value = false;
           let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
           // 如果传进来的是关闭状态 且当前的id 与传进来的id一样 ,则对当前的id进行折叠操作
-          if((match_info.mid in unfold_map)&& tab_id==current_tab_item.value.id){
+          if ((match_info.mid in unfold_map) && tab_id == current_tab_item.value.id) {
             // 当前match折叠状态 所有的折叠状态设置为收起
-            overtime_tab_handle(current_tab_item.value,0,'is-auto');
+            overtime_tab_handle(current_tab_item.value, 0, 'is-auto');
             tab_list.value.filter(t => t.id == tab_id)[0].unfold = 0;
           }
 
         }
-        tab_list.value.forEach((t,i)=>{
-        if (t.id == tab_id){
-          tab_list.value[i].show_tab=false;
-          tab_list.value[i].unfold=0;
-        }
+        tab_list.value.forEach((t, i) => {
+          if (t.id == tab_id) {
+            tab_list.value[i].show_tab = false;
+            tab_list.value[i].unfold = 0;
+          }
         });
-      }else if(displayStatus == 'Y'){ // 展示
+      } else if (displayStatus == 'Y') { // 展示
         any_unfold.value = true;
         tab_list.value.filter(t => t.id == tab_id)[0].show_tab = true;
       }
-      if(!any_unfold.value){
+      if (!any_unfold.value) {
         let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-        if(match_info.mid in unfold_map){
+        if (match_info.mid in unfold_map) {
           let id = unfold_map[match_info.mid] && unfold_map[match_info.mid].split('-')[0];
           let status = unfold_map[match_info.mid] && unfold_map[match_info.mid].split('-')[1];
           unfold_map[match_info.mid] = `${id}-${status}`;
         }
-        store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map })
+        store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map })
       }
     }
   }
@@ -354,7 +355,7 @@ watch(() => match_info.value.mmp, () => {
   //足球进行到加时赛及以后阶段不显示加时赛玩法
   not_show_overtime_play()
   //篮球赛事阶段变化处理
-  basketball_mmp_change(curr);
+  basketball_mmp_change();
   matchListClass.match_period_map(match_info.value, 'replace');
 })
 // 15分钟 次要玩法模块  左下角的 小标
@@ -381,20 +382,20 @@ watch(() => mmp_map_title, (value) => {
 // 判断是否显示tab栏
 const show_tab_by_data = computed(() => {
   let flag = false;
-  let{cosCorner,cosOvertime,cosBold,cosPenalty,cosPromotion, cosOutright ,cosPunish,hpsAdd,cos15Minutes,cos5Minutes} = match_info.value;
-  flag = cos15Minutes || cos5Minutes || cosCorner || cosOvertime|| cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || (hpsAdd && hpsAdd.length > 0)
+  let { cosCorner, cosOvertime, cosBold, cosPenalty, cosPromotion, cosOutright, cosPunish, hpsAdd, cos15Minutes, cos5Minutes } = match_info.value;
+  flag = cos15Minutes || cos5Minutes || cosCorner || cosOvertime || cosBold || cosPenalty || cosPromotion || cosOutright || cosPunish || (hpsAdd && hpsAdd.length > 0)
   // 如果没有 玩法时
-  if(!flag ){
+  if (!flag) {
     let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
     let status_id = '';
-    if(unfold_map && match_info.value.mid in unfold_map){
+    if (unfold_map && match_info.value.mid in unfold_map) {
       status_id = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[0];
       unfold_map[match_info.value.mid] = `${status_id}-0`;
       // 如果没有 玩法时,则隐藏次要玩法整个模块
-      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map })
+      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map })
     }
-  } else{  // 如果有 玩法时， 初始化次要玩法tab显示
-    init_tab_show(false,'show-tab-by-data');
+  } else {  // 如果有 玩法时， 初始化次要玩法tab显示
+    init_tab_show(false, 'show-tab-by-data');
   }
   return flag;
 })
@@ -406,22 +407,22 @@ const home_score = computed(() => get_score_second(1))
 const away_score = computed(() => get_score_second(2))
 
 // 是否进行到加时赛及以后的阶段
-const is_overtimeed = computed(() => [32,33,34,41,42,50,80,90,100,110,120,999].includes(+match_info.value.mmp))
+const is_overtimeed = computed(() => [32, 33, 34, 41, 42, 50, 80, 90, 100, 110, 120, 999].includes(+match_info.value.mmp))
 
 // 获取赛事次要玩法的让球方
 const current_tab_handicap_index = computed(() => {
   let result = 0;
-  const hps_add=current_tab_item.value.hps;
-  if(match_info.value && hps_add && hps_add[1]){
-    let hp_item =hps_add[1];// 小节 或者角球等玩法 永远取第二个值 是让球数据
-    if(hp_item){
-        let hl_item = hp_item.hl[0];
-      if(hl_item && hl_item.ol){
+  const hps_add = current_tab_item.value.hps;
+  if (match_info.value && hps_add && hps_add[1]) {
+    let hp_item = hps_add[1];// 小节 或者角球等玩法 永远取第二个值 是让球数据
+    if (hp_item) {
+      let hl_item = hp_item.hl[0];
+      if (hl_item && hl_item.ol) {
         let found_i = 0;
-        hl_item.ol.forEach((ol_item,i) => {
-          if(ol_item.on){
+        hl_item.ol.forEach((ol_item, i) => {
+          if (ol_item.on) {
             let on_str = String(ol_item.on);
-            if(on_str[0] == '-'){
+            if (on_str[0] == '-') {
               found_i = (i + 1);
             }
           }
@@ -435,17 +436,17 @@ const current_tab_handicap_index = computed(() => {
 
 // 足球进行到加时赛及以后阶段不显示加时赛玩法，折叠起来
 const not_show_overtime_play = () => {
-  if(is_overtimeed){
+  if (is_overtimeed) {
     tab_list.value.filter(t => t.id == 4)[0].show_tab = false;
-    if(current_hps_key.value == 'hpsOvertime'){
+    if (current_hps_key.value == 'hpsOvertime') {
       any_unfold.value = false;
       let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-      if(unfold_map && match_info.value.mid in unfold_map){
+      if (unfold_map && match_info.value.mid in unfold_map) {
         let id = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[0];
         let status = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[1];
         unfold_map[match_info.value.mid] = `${id}-${status}`;
       }
-      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map })
+      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map })
       tab_list.value.filter(t => t.id == 4)[0].unfold = false;
     }
   }
@@ -454,15 +455,15 @@ const not_show_overtime_play = () => {
 const c105_handle = (skt_data) => {
   // console.error(skt_data);
   // hls 判断为undefined 执行下次循环
-  if(!skt_data.hls) return;
-  if(match_info.value.mid == skt_data.mid){
+  if (!skt_data.hls) return;
+  if (match_info.value.mid == skt_data.mid) {
     skt_data = lodash.cloneDeep(skt_data)
     skt_data.hls.forEach(hl_ws => {
       // 更新盘口级别hs
       lodash.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
-        if(match_hp.hl){
+        if (match_hp.hl) {
           match_hp.hl.forEach(hl => {
-            if(hl.hid == hl_ws.hid){
+            if (hl.hid == hl_ws.hid) {
               hl.hs = hl_ws.hs
               if (hl.hv && hl_ws.hv) {
                 hl.hv = hl_ws.hv
@@ -470,36 +471,36 @@ const c105_handle = (skt_data) => {
             }
           });
         }
-        else{
-          if(match_hp.hid == hl_ws.hid){
+        else {
+          if (match_hp.hid == hl_ws.hid) {
             match_hp.hs = hl_ws.hs
           }
         }
       });
 
       // 更新投注项级别ol
-      if(hl_ws.ol) {
+      if (hl_ws.ol) {
         hl_ws.ol.forEach(ol_ws => {
           lodash.size(current_tab_item.value.hps) && current_tab_item.value.hps.forEach(match_hp => {
-            if(match_hp.hl){
+            if (match_hp.hl) {
               match_hp.hl.forEach(hl => {
-                if(!hl.ol) return;
+                if (!hl.ol) return;
                 hl.ol.forEach(ol_item => {
-                  if(ol_ws.oid == ol_item.oid){
+                  if (ol_ws.oid == ol_item.oid) {
                     if (ol_item.onb && ol_item.on && ol_ws.on && !ol_ws.onb) {  //queryLatestMarketInfo 接口模拟触发需要跟新 on 值
-                      ol_ws.onb = ol_item.onb.replace(/\d+\.?\d*/,ol_ws.on)
-                      ol_ws.on = ol_item.on.replace(/\d+\.?\d*/,ol_ws.on)
+                      ol_ws.onb = ol_item.onb.replace(/\d+\.?\d*/, ol_ws.on)
+                      ol_ws.on = ol_item.on.replace(/\d+\.?\d*/, ol_ws.on)
                     }
-                    Object.assign(ol_item,ol_ws);
+                    Object.assign(ol_item, ol_ws);
                   }
                 });
               });
             }
-            else{
+            else {
               let ol_list = match_hp.hl ? match_hp.hl.ol : match_hp.ol;
               ol_list.forEach(ol_item => {
-                if(ol_ws.oid == ol_item.oid){
-                  Object.assign(ol_item,ol_ws);
+                if (ol_ws.oid == ol_item.oid) {
+                  Object.assign(ol_item, ol_ws);
                 }
               });
             }
@@ -518,33 +519,33 @@ const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_li
   let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value) || {};
   unfold_map[match_info.value.mid] = `${item.id}-${item.unfold}`;
   // 如果是波胆玩法开
-  if(item.id == 18){
+  if (item.id == 18) {
     // 最终 的波胆列表长度     波胆的高度      默认三行
-    let finall = [], bold_gaodu = 3, ol_list = [{placeholder:1},{placeholder:1},{placeholder:1}];
-    if( lodash.size(bold_list) ){
-      for (let m =0, hps_length = bold_list.length; m < hps_length; m++){
-        if(lodash.get(bold_list[m], 'hl[0].ol')) {
+    let finall = [], bold_gaodu = 3, ol_list = [{ placeholder: 1 }, { placeholder: 1 }, { placeholder: 1 }];
+    if (lodash.size(bold_list)) {
+      for (let m = 0, hps_length = bold_list.length; m < hps_length; m++) {
+        if (lodash.get(bold_list[m], 'hl[0].ol')) {
           ol_list = bold_list[m].hl[0].ol
           finall.push(ol_list.filter(tab => tab.otd == 1).length)
           finall.push(ol_list.filter(tab => tab.otd == 0).length)
           finall.push(ol_list.filter(tab => tab.otd == 2).length)
         }
       }
-      if(lodash.size(finall)){
+      if (lodash.size(finall)) {
         // 波胆 动态高度
         bold_gaodu = Math.max(...finall) + 1
       }
     }
-    if(bold_gaodu > 3){
+    if (bold_gaodu > 3) {
       bold_gaodu_css.value = bold_gaodu
-    }else{
+    } else {
       bold_gaodu_css.value = 3
     }
     unfold_map[match_info.value.mid] = `${item.id}-${item.unfold}-${bold_gaodu}`;
   }// 如果是5分钟玩法
-  else if (item.id == 19){
-    let five_height = 3, ol_list = [{placeholder:1}];
-    if(lodash.get(five_minutes_list, 'hl[0].ol')) {
+  else if (item.id == 19) {
+    let five_height = 3, ol_list = [{ placeholder: 1 }];
+    if (lodash.get(five_minutes_list, 'hl[0].ol')) {
       const mst = +match_info.value.mst
       /**
        * 25分钟前显示4行，25分钟(包含)后显示3行
@@ -558,7 +559,7 @@ const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_li
     }
     unfold_map[match_info.value.mid] = `${item.id}-${item.unfold}-${five_height}`;
   }
-  store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map });
+  store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map });
 }
 /**
  * 初始化展开玩法
@@ -566,21 +567,21 @@ const save_second_play_mid_map_unfold_status = (item, bold_list, five_minutes_li
  */
 const init_unfold_play_way = (type_way = 'is-auto') => {
   //足球
-  if(match_info.value.csid == 1){
+  if (match_info.value.csid == 1) {
     let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-    if(unfold_map && match_info.value.mid in unfold_map){
-      let [id,status] = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-');
+    if (unfold_map && match_info.value.mid in unfold_map) {
+      let [id, status] = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-');
       unfold_map[match_info.value.mid] = `${id}-${status}`;
       let second_hps = tab_list.value.filter(tab => tab.id == id)[0];
-      overtime_tab_handle(second_hps,status,type_way);
+      overtime_tab_handle(second_hps, status, type_way);
     }
   }
   // 非足球展开默认
-  if(match_info.value.csid != 1){
+  if (match_info.value.csid != 1) {
     let tab_id = get_tabid_by_csid(), init_und = 0;
     let quater = tab_list.value.filter(t => t.id == tab_id)[0];
-    if(quater && quater.show_tab){
-      overtime_tab_handle(quater,init_und,type_way);
+    if (quater && quater.show_tab) {
+      overtime_tab_handle(quater, init_und, type_way);
     }
   }
 }
@@ -588,18 +589,18 @@ const init_unfold_play_way = (type_way = 'is-auto') => {
 const get_hps_key_by = (item) => {
   let o_hps_key = '';
   let tab_id_map_hps_key = {
-    1:"hpsCorner",
-    2:"hpsPenalty",
-    3:"hpsPromotion",
-    4:"hpsOvertime",
-    5:"hpsPunish",
-    17:"hps15Minutes",
-    19:"hps5Minutes",
-    18:"hpsBold",
-    30:"hpsOutright",
+    1: "hpsCorner",
+    2: "hpsPenalty",
+    3: "hpsPromotion",
+    4: "hpsOvertime",
+    5: "hpsPunish",
+    17: "hps15Minutes",
+    19: "hps5Minutes",
+    18: "hpsBold",
+    30: "hpsOutright",
   };
   o_hps_key = tab_id_map_hps_key[item.id];
-  if(!o_hps_key && [6,7,8,9].includes(+item.id)){
+  if (!o_hps_key && [6, 7, 8, 9].includes(+item.id)) {
     o_hps_key = 'hpsAdd';
   }
   return o_hps_key;
@@ -613,85 +614,85 @@ const get_hps_key_by = (item) => {
  * @return {Undefined}
  */
 const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
-  if(['category','virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type() || !item){
+  if (['category', 'virtual_sports'].includes(route.name) || 900 == MenuData.get_menu_type() || !item) {
     return;
   }
 
   // 滚动次要玩法选中项到屏幕显示区域
-  nextTick (()=>{
+  nextTick(() => {
     utils.tab_move(sub_i, sub_play_scroller.value, sub_play_scroll_item.value)
   })
 
-  if(item && item.title && item.id && operate_type !=='is-auto') {   // 解决bug 24153
+  if (item && item.title && item.id && operate_type !== 'is-auto') {   // 解决bug 24153
     current_tab_item.value.title = item.title
     current_tab_item.value.id = item.id
   }
   //改变折叠tab选项
-  tab_list.value.forEach((t,i) => {
-    if(item.id != t.id){
+  tab_list.value.forEach((t, i) => {
+    if (item.id != t.id) {
       tab_list.value[i].unfold = 0;
     }
   });
-  if(typeof unfold != 'undefined'){
+  if (typeof unfold != 'undefined') {
     item.unfold = unfold;
-  } else{
+  } else {
     item.unfold = !item.unfold ? 1 : 0;
   }
   //检测到当前赛事无展开的次要玩法时移除vuex中的赛事/展开状态映射key
   any_unfold.value = tab_list.value.filter(t => t.unfold == 1).length;
   //  如果没有展开的选项，则所有都折叠
-  if(!any_unfold.value){
+  if (!any_unfold.value) {
     let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-    if(unfold_map && match_info.value.mid in unfold_map){
+    if (unfold_map && match_info.value.mid in unfold_map) {
       let id = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[0];
       let status = 0;
       unfold_map[match_info.value.mid] = `${id}-${status}`;
     }
-    store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map });
+    store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map });
   }
   //隐藏次要玩法描述弹层
-  useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK,null);
+  useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, null);
   //先用本地数据填充次要玩法投注项,避免拉取接口过程中的模板不完整， 获取 key （如：hpsAdd, hps15Minutes）
   let o_hps_key = get_hps_key_by(item);
   // if(! operate_type == 'is-user' ){
   //   set_local_hps_by_key(item,o_hps_key);
   // }
   // 展开次要玩法
-  if(item.unfold == 1){
+  if (item.unfold == 1) {
     let params = {
       mids: match_info.value.mid,
       cuid: get_uid,
-      pids:item.pids,
-      playId:item.play_id,
-      device: 'v2_h5_st' ,
-      sort:1,//排序	 int 类型 1 按热门排序 2 按时间排序
+      pids: item.pids,
+      playId: item.play_id,
+      device: 'v2_h5_st',
+      sort: 1,//排序	 int 类型 1 按热门排序 2 按时间排序
       inner_param: 'is_by_mids'
     };
     //自动展开次要玩法无需拉取新数据
-    if(operate_type == 'is-auto') {
+    if (operate_type == 'is-auto') {
       save_second_play_mid_map_unfold_status(item);
       return;
     }
     //拉接口更新数据
-    if(operate_type == 'is-user' || operate_type == 'mounted'){
+    if (operate_type == 'is-user' || operate_type == 'mounted') {
       params.is_user = operate_type;
-      let fun_temp = ()=>{
+      let fun_temp = () => {
         api_common.get_match_base_info_by_mids(params).then(res => {
-          if(res.data && res.data[0] && res.data[0][o_hps_key]){
+          if (res.data && res.data[0] && res.data[0][o_hps_key]) {
             // 根据业务需求，修改冠军小节玩法  1585 单对应
-            Object.assign(match_info.value,res.data[0]);
+            Object.assign(match_info.value, res.data[0]);
             props.matchCtr.updMatchInfo(res.data[0]); // 更新赛事盘口数据
-            if(operate_type == 'is-user'){
+            if (operate_type == 'is-user') {
               // 次要玩法展开加载数据  订阅指定玩法赛事(C8)  status 1订阅赛事推送  0退订赛事推送
-              useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED,res.data[0],o_hps_key);
+              useMittEmit(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, res.data[0], o_hps_key);
             }
             current_tab_item.value.hps = match_info.value[o_hps_key];
-            if([18].includes(+ lodash.get(current_tab_item.value, 'id'))){
+            if ([18].includes(+ lodash.get(current_tab_item.value, 'id'))) {
               // 波胆玩法 数据加工处理
-              bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value,'hps'), match_info.value )
-            }else if([19].includes(+ lodash.get(current_tab_item.value, 'id'))){
+              bold_all_list.value = corrective_action_data_processing(lodash.get(current_tab_item.value, 'hps'), match_info.value)
+            } else if ([19].includes(+ lodash.get(current_tab_item.value, 'id'))) {
               // 5分钟 玩法 数据加工处理
-              five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value,'hps'), match_info.value )
+              five_minutes_all_list.value = five_minutes_gameplay_data_processing(lodash.get(current_tab_item.value, 'hps'), match_info.value)
             }
             current_hps_key.value = o_hps_key;
           }
@@ -699,7 +700,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
           // 波胆玩法，5分钟玩法 其他次要玩法 展开显示， 波胆和5分钟，虚拟滚高度计算
           save_second_play_mid_map_unfold_status(item, bold_all_list.value, five_minutes_all_list.value);
           //次要玩法展开或者关闭通知列表页重新计算dom高度
-          if(item.id==17){
+          if (item.id == 17) {
             apply_15min_title(); // 15分钟 次要玩法模块  左下角的 小标题
           }
           //次要玩法展开或者关闭通知列表页重新计算dom高度
@@ -719,7 +720,7 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
     utils.zhuge_event_send('TY_H5_足球_玩法分类导航_点击', UserCtr, zhugeObj)
   }
   save_second_play_mid_map_unfold_status(item);
-  if(item.id==17){
+  if (item.id == 17) {
     apply_15min_title();// 15分钟 次要玩法模块  左下角的 小标题
   }
   //次要玩法展开或者关闭通知列表页重新计算dom高度
@@ -744,27 +745,27 @@ const overtime_tab_handle = (item, unfold, operate_type, sub_i) => {
 // },
 //玩法说明图标点击
 // $event 时间对象 mid 赛事id
-const info_icon_click = ($event,mid) => {
-  useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK,$event,mid,current_tab_item.value);
+const info_icon_click = ($event, mid) => {
+  useMittEmit(MITT_TYPES.EMIT_INFO_ICON_CLICK, $event, mid, current_tab_item.value);
 }
 // 足球之外调用此方法， 获取要展开的tab项  获取次要玩法 id
 const get_tabid_auto_unfold = () => {
   //获取vuex中的选中tab对象
   let unfold_map = get_secondary_unfold_map.value;
   let t_itemid = null
-  if(unfold_map && match_info.value.mid in unfold_map){
+  if (unfold_map && match_info.value.mid in unfold_map) {
     let item_status = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-');
     t_itemid = item_status[0];
   }
   //vuex中无tab对象 获取赛事默认要展开的tab对象
-  if(!t_itemid){
-    if(match_info.value.csid == 2){
+  if (!t_itemid) {
+    if (match_info.value.csid == 2) {
       t_itemid = 6
-    }else if(match_info.value.csid == 5){
+    } else if (match_info.value.csid == 5) {
       t_itemid = 7
-    }else if(match_info.value.csid == 8){
+    } else if (match_info.value.csid == 8) {
       t_itemid = 8
-    }else if(match_info.value.csid == 7){
+    } else if (match_info.value.csid == 7) {
       t_itemid = 9
     }
   }
@@ -776,15 +777,15 @@ const get_tabid_auto_unfold = () => {
  */
 const get_tabid_by_csid = () => {
   let tab_id = '';
-  if(match_info.value.csid == 1){
+  if (match_info.value.csid == 1) {
     //足球可以展开多个tab
-  }else if(match_info.value.csid == 2){
+  } else if (match_info.value.csid == 2) {
     tab_id = 6;
-  }else if(match_info.value.csid == 5){
+  } else if (match_info.value.csid == 5) {
     tab_id = 7;
-  }else if(match_info.value.csid == 8){
+  } else if (match_info.value.csid == 8) {
     tab_id = 8;
-  }else if(match_info.value.csid == 7){
+  } else if (match_info.value.csid == 7) {
     tab_id = 9;
   }
   return tab_id;
@@ -796,8 +797,8 @@ const get_tabid_by_csid = () => {
  *  2. any_unfold.value  次要玩法 整块区域是否展开
  * @param {Boolean} is_change_match 有值时， 收起所有tab
  */
-const init_tab_show = (is_change_match,show_tab_by_data) => {
-  if(is_change_match){
+const init_tab_show = (is_change_match, show_tab_by_data) => {
+  if (is_change_match) {
     tab_list.value.forEach(t => {
       t.show_tab = false;
       t.unfold = 0;
@@ -807,23 +808,23 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
   }
   //找出要显示的次要玩法tab
   //足球
-  if(match_info.value.csid == 1){
+  if (match_info.value.csid == 1) {
     let id_show_map = {
-      '1':match_info.value.cosCorner,
-      '2':match_info.value.cosPenalty,
-      '3':match_info.value.cosPromotion,
-      '30':match_info.value.cosOutright,
-      '17':match_info.value.cos15Minutes,
-      '19':match_info.value.cos5Minutes,
-      '4':match_info.value.cosOvertime,
-      '18':match_info.value.cosBold,
-      '5':match_info.value.cosPunish
+      '1': match_info.value.cosCorner,
+      '2': match_info.value.cosPenalty,
+      '3': match_info.value.cosPromotion,
+      '30': match_info.value.cosOutright,
+      '17': match_info.value.cos15Minutes,
+      '19': match_info.value.cos5Minutes,
+      '4': match_info.value.cosOvertime,
+      '18': match_info.value.cosBold,
+      '5': match_info.value.cosPunish
     };
-    tab_list.value.forEach((tab,i) => {
+    tab_list.value.forEach((tab, i) => {
       // 5分钟赛前阶段，小节名称：5分钟
       // 滚球阶段，小节名称：下一个进球
       if (tab.id === 19) {
-        if ([1,2,7,10].includes(+match_info.value.ms)) {
+        if ([1, 2, 7, 10].includes(+match_info.value.ms)) {
           tab_list.value[i].title = i18n_t('football_playing_way.hps_next_goal')
         } else {
           tab_list.value[i].title = i18n_t('football_playing_way.hps5Minutes')
@@ -831,34 +832,34 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
       }
       tab_list.value[i].show_tab = id_show_map[tab.id];
     });
-  }else
-  //篮球
-  if(match_info.value.csid == 2){
-    tab_list.value.filter(t => t.id == 6)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
-  }else
-  //网球
-  if(match_info.value.csid == 5){
-    tab_list.value.filter(t => t.id == 7)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
-  }else
-  //乒乓球
-  if(match_info.value.csid == 8){
-    tab_list.value.filter(t => t.id == 8)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
-  }else
-  //斯诺克
-  if(match_info.value.csid == 7){
-    tab_list.value.filter(t => t.id == 9)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
-  }
+  } else
+    //篮球
+    if (match_info.value.csid == 2) {
+      tab_list.value.filter(t => t.id == 6)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
+    } else
+      //网球
+      if (match_info.value.csid == 5) {
+        tab_list.value.filter(t => t.id == 7)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
+      } else
+        //乒乓球
+        if (match_info.value.csid == 8) {
+          tab_list.value.filter(t => t.id == 8)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
+        } else
+          //斯诺克
+          if (match_info.value.csid == 7) {
+            tab_list.value.filter(t => t.id == 9)[0].show_tab = match_info.value.hpsAdd && match_info.value.hpsAdd.length > 0;
+          }
   matchListClass.match_period_map(match_info.value, 'replace');
-  if(match_info.value.csid != 1){
+  if (match_info.value.csid != 1) {
     tab_list.value.forEach(tab => {
-      if([6,7,8,9].includes(+tab.id)){
+      if ([6, 7, 8, 9].includes(+tab.id)) {
         matchListClass.match_period_map(match_info.value, 'replace');
         tab.title = mmp_map_title.value;
       }
     });
   }
   //检测到有一个tab是展开的,就显示次要玩法投注项
-  if(!show_tab_by_data){
+  if (!show_tab_by_data) {
     any_unfold.value = tab_list.value.filter(t => t.unfold == 1).length;
   }
 }
@@ -869,20 +870,20 @@ const init_tab_show = (is_change_match,show_tab_by_data) => {
  * 否则显示为"小节"
  */
 const basketball_mmp_change = (mmp) => {
-  if(match_info.value.csid == 2){
+  if (match_info.value.csid == 2) {
     let get_data = false;
     let quater_tab_item = tab_list.value.filter(tab => tab.id == 6)[0];
 
     //篮球进入上半场,小节显示为半场
-    if(mmp == 1 || mmp == 14){
+    if (mmp == 1 || mmp == 14) {
       get_data = true;
       //上半场
-      if(mmp == 1){
+      if (mmp == 1) {
         quater_tab_item.pids = '43,19,18';
         quater_tab_item.play_id = '2001';
       }
       //第二节
-      else if(mmp == 14){
+      else if (mmp == 14) {
         quater_tab_item.pids = '54,52,51';
         quater_tab_item.play_id = '2004';
       }
@@ -890,22 +891,22 @@ const basketball_mmp_change = (mmp) => {
     }
     //当收到302（第二节休息）时，小节玩法更新为 第三节独赢，第三节让分，第三节大小 玩法赔率
     //变为第三节
-    else if(mmp == 302){
+    else if (mmp == 302) {
       get_data = true;
       quater_tab_item.pids = '60,58,57';
       quater_tab_item.play_id = '2005';
       // quater_tab_item.title = i18n_t('basketball_playing_way.quarter');
     }
     //当收到16阶段(第四节)时，移除‘小节’玩法TAB以及对应的玩法赔率行，仅展示全场玩法数据
-    else if([31,16,100,1001,1002].includes(+mmp)){
+    else if ([31, 16, 100, 1001, 1002].includes(+mmp)) {
       quater_tab_item.show_tab = false;
       any_unfold.value = false;
       let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-      if(unfold_map && match_info.value.mid in unfold_map){
+      if (unfold_map && match_info.value.mid in unfold_map) {
         let id = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[0];
         unfold_map[match_info.value.mid] = `${id}-0`;
       }
-      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: unfold_map });
+      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: unfold_map });
     }
 
     //#region 参数说明
@@ -924,8 +925,8 @@ const basketball_mmp_change = (mmp) => {
     //#endregion
 
     //展开次要玩法需要调用接口
-    if(get_data){
-      overtime_tab_handle(quater_tab_item, 0,'is-mmp-change');
+    if (get_data) {
+      overtime_tab_handle(quater_tab_item, 0, 'is-mmp-change');
     }
 
   }
@@ -937,51 +938,50 @@ const basketball_mmp_change = (mmp) => {
 const get_score_second = (index) => {
   let r = 0;
   let split = 'S5|';
-  if(current_tab_item.value.id == 1){ //角球
+  if (current_tab_item.value.id == 1) { //角球
     split = 'S5|';
   }
-  else if(current_tab_item.value.id == 5){ //罚牌
+  else if (current_tab_item.value.id == 5) { //罚牌
     split = 'S10102|';
   }
-  if(match_info.value.csid == 5){//网球
-    split = ['S23|','S39|','S55|','S71|','S87|'];
+  if (match_info.value.csid == 5) {//网球
+    split = ['S23|', 'S39|', 'S55|', 'S71|', 'S87|'];
   }//羽毛球、乒乓球、斯洛克，排球，冰球，棒球，沙滩排球
-  else if(match_info.value.csid == 7 || match_info.value.csid == 8){
+  else if (match_info.value.csid == 7 || match_info.value.csid == 8) {
     split = [];
     //比分S120到S160(不含)
-    for(let min = 120;min < 160;min++){
+    for (let min = 120; min < 160; min++) {
       split.push(`S${min}|`);
     }
   }
 
-  if(match_info.value.msc && match_info.value.msc.length){
+  if (match_info.value.msc && match_info.value.msc.length) {
     // 网  斯  乒
-    if([5,7,8].includes(+match_info.value.csid)){
+    if ([5, 7, 8].includes(+match_info.value.csid)) {
       let found_score_list = [];
       match_info.value.msc.forEach(f_score => {
         split.forEach(spl_str => {
-          if(f_score.indexOf(spl_str) > -1){
+          if (f_score.indexOf(spl_str) > -1) {
             let sliced = format_msc(f_score);
             found_score_list.push(sliced);
           }
         });
       });
-      if(found_score_list && found_score_list.length){
+      if (found_score_list && found_score_list.length) {
         r = found_score_list[found_score_list.length - 1][index];
       }
     }
-    else
-    {
+    else {
       match_info.value.msc.forEach(f_score => {
-        if(f_score.indexOf(split) > -1){
+        if (f_score.indexOf(split) > -1) {
           let sliced = format_msc(f_score);
           r = sliced[index];
         }
       });
     }
   }
-  if(current_tab_item.value.id == 5){
-    if(is_overtimeed){
+  if (current_tab_item.value.id == 5) {
+    if (is_overtimeed) {
       r = '';
     }
   }
@@ -990,31 +990,31 @@ const get_score_second = (index) => {
 //  足球之外调用此方法，通过折叠状态
 const change_status_by_any_unfold = (c_v) => {
   let tab_id = get_tabid_by_csid();
-  if(!tab_id && match_info.value.csid == 1 || !match_info.value.mid) {
+  if (!tab_id && match_info.value.csid == 1 || !match_info.value.mid) {
     return;
   }
-  if(![2,5,7,8].includes(+match_info.value.csid)){
+  if (![2, 5, 7, 8].includes(+match_info.value.csid)) {
     any_unfold.value = 0;
   }
   let quater = tab_list.value.filter(t => t.id == tab_id)[0];
   let hps_list = [];
-  if(quater){
+  if (quater) {
     hps_list = match_info.value[quater.hps_key];
-  } else{
+  } else {
     hps_list = null;
   }
-  if(!c_v || !hps_list || !hps_list.length){
+  if (!c_v || !hps_list || !hps_list.length) {
     // 获取次要玩法 id
     let tab_id = get_tabid_auto_unfold();
-    if(tab_id){
+    if (tab_id) {
       let set_dict = {};
       set_dict[match_info.value.mid] = `${tab_id}-0`;
-      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map',  payload: set_dict })
+      store.dispatch({ type: 'matchReducer/set_secondary_unfold_map', payload: set_dict })
 
-    } else{
+    } else {
       let v_k = {};
       let unfold_map = lodash.cloneDeep(get_secondary_unfold_map.value);
-      if(unfold_map && match_info.value.mid in unfold_map){
+      if (unfold_map && match_info.value.mid in unfold_map) {
         let id = unfold_map[match_info.value.mid] && unfold_map[match_info.value.mid].split('-')[0];
         v_k[match_info.value.mid] = `${id}-0`;
       }
@@ -1024,19 +1024,19 @@ const change_status_by_any_unfold = (c_v) => {
 }
 // 15分钟 次要玩法模块  左下角的 小标题
 const apply_15min_title = () => {
-  if(current_tab_item.value.id==17){
+  if (current_tab_item.value.id == 17) {
     // 如果是15分钟玩法下展示玩法时段 ,如果没有滑动取最小值(因为在更新时已经进行了排序因此第一个为最小值),如果滑动到第二个tab取+1值
-    let hSpecial=lodash.get(match_info.value.hps15Minutes,'[0].hSpecial',1) - 1;
-    if(get_standard_odd_status.value==1 && lodash.get(match_info.value,'hps15Minutes',[]).length == 6){ // 翻转后取第二个值
-      hSpecial=lodash.get(match_info.value.hps15Minutes,'[3].hSpecial',1)-1;
+    let hSpecial = lodash.get(match_info.value.hps15Minutes, '[0].hSpecial', 1) - 1;
+    if (get_standard_odd_status.value == 1 && lodash.get(match_info.value, 'hps15Minutes', []).length == 6) { // 翻转后取第二个值
+      hSpecial = lodash.get(match_info.value.hps15Minutes, '[3].hSpecial', 1) - 1;
     }
-    if(hSpecial>4){
-      hSpecial=4; //容错 下标不能大于4 最大特5
+    if (hSpecial > 4) {
+      hSpecial = 4; //容错 下标不能大于4 最大特5
     }
-    if(hSpecial<0){
+    if (hSpecial < 0) {
       hSpecial = 0
     }
-    current_tab_item.value.title =  i18n_t(`football_playing_way.hps15_title[${hSpecial}]`)
+    current_tab_item.value.title = i18n_t(`football_playing_way.hps15_title[${hSpecial}]`)
   }
 }
 // 批量清除定时器
@@ -1054,49 +1054,49 @@ const clear_timer = () => {
 // 波胆玩法 数据加工处理
 const corrective_action_data_processing = (data, match_obj) => {
   let arr = []
-  if(data && match_obj){
-    arr.push( ...data.filter((x,i) =>  x.hpid == 7))
+  if (data && match_obj) {
+    arr.push(...data.filter((x, i) => x.hpid == 7))
     // 如果是上半场，就取上半场的数据         先取  341    再取  20
-    if(match_obj['mmp'] <= 6){
-        let first_half1 = data.filter((x,i) =>  x.hpid == 341), first_half = data.filter((x,i) => x.hpid == 20)
-        // 如果 玩法id 341 没数据，再取 hpid 20 的
-        if(lodash.get(first_half1,'[0].hl[0].ol')){
-          arr.push(...first_half1)
-        }else if (lodash.get(first_half,'[0].hl[0].ol')){
-          arr.push(...first_half)
-        }else{
-          arr.push({hl:[{}]})
-        }
-    }else{    // 如果是下半场，就取下半场的数据           先取 342         再取  74
-      let second_half1 = data.filter((x,i) =>  x.hpid == 342), second_half = data.filter((x,i) => x.hpid == 74)
+    if (match_obj['mmp'] <= 6) {
+      let first_half1 = data.filter((x, i) => x.hpid == 341), first_half = data.filter((x, i) => x.hpid == 20)
       // 如果 玩法id 341 没数据，再取 hpid 20 的
-      if(lodash.get(second_half1,'[0].hl[0].ol')){
+      if (lodash.get(first_half1, '[0].hl[0].ol')) {
+        arr.push(...first_half1)
+      } else if (lodash.get(first_half, '[0].hl[0].ol')) {
+        arr.push(...first_half)
+      } else {
+        arr.push({ hl: [{}] })
+      }
+    } else {    // 如果是下半场，就取下半场的数据           先取 342         再取  74
+      let second_half1 = data.filter((x, i) => x.hpid == 342), second_half = data.filter((x, i) => x.hpid == 74)
+      // 如果 玩法id 341 没数据，再取 hpid 20 的
+      if (lodash.get(second_half1, '[0].hl[0].ol')) {
         arr.push(...second_half1)
-      }else if (lodash.get(second_half,'[0].hl[0].ol')){
+      } else if (lodash.get(second_half, '[0].hl[0].ol')) {
         arr.push(...second_half)
-      }else{
-        arr.push({hl:[{}]})
+      } else {
+        arr.push({ hl: [{}] })
       }
     }
   }
-  if(lodash.size(arr) < 2){
-    arr = [{hl:[{}]},{hl:[{}]}]
+  if (lodash.size(arr) < 2) {
+    arr = [{ hl: [{}] }, { hl: [{}] }]
   }
   return arr
 }
 // 5分钟玩法 数据加工处理
 const five_minutes_gameplay_data_processing = (data, match_obj) => {
   let arr = []
-  if(data && match_obj){
+  if (data && match_obj) {
     // 如果是滚球，则取 362
-    if([1,2,7,10].includes(+match_obj['ms'])){
-      arr.push( ...data.filter((x,i) =>  x.hpid == 362))
-    }else{  // 如果是早盘 ，则取 361
-      arr.push( ...data.filter((x,i) =>  x.hpid == 361))
+    if ([1, 2, 7, 10].includes(+match_obj['ms'])) {
+      arr.push(...data.filter((x, i) => x.hpid == 362))
+    } else {  // 如果是早盘 ，则取 361
+      arr.push(...data.filter((x, i) => x.hpid == 361))
     }
   }
-  if(!lodash.size(arr)){
-    arr = [{hl:[{}]}]
+  if (!lodash.size(arr)) {
+    arr = [{ hl: [{}] }]
   }
   return arr[0]
 }
@@ -1109,7 +1109,7 @@ const on_listeners = () => {
   emitters.value = {
     // 封盘事件
     emitter_1: useMittOn(MITT_TYPES.EMIT_FAPAI_WAY_TIPS_STATUS_CHANGE, fapai_way_tips_status_change_h).off,
-     // c105更新
+    // c105更新
     emitter_2: useMittOn(MITT_TYPES.EMIT_C105_CMD_NOTICE, c105_handle).off,
   }
 }
@@ -1131,5 +1131,5 @@ onDeactivated(() => {
 </script>
 
 <style scoped lang="scss">
-  @import "../styles/match-overtime-pen";
+@import "../styles/match-overtime-pen";
 </style>

@@ -18,7 +18,7 @@
       @focus="showOption"
     />
     <div v-else class="select-value ellipsis" @click.stop="showOption">
-      {{ sport }}
+      {{ sportType }}
     </div>
     <div class="opitons-wrap" v-if="optionsIsShow">
       <q-scroll-area
@@ -61,13 +61,17 @@ const props = defineProps({
     default: 0,
   },
 });
+console.log(props.options,'sportType');
 const optionsIsShow = ref(false);
 const sport = ref(props.sportType);
 const { off } = useMittOn("EMIT_HIDE_SPORT_SElECT", ()=>{
   showOption()
 });
 onUnmounted(off);
-
+watch(props.sportType,(val)=>{
+  console.log(val,'val');
+}
+)
 
 // 全局点击事件
 // get_global_click(){

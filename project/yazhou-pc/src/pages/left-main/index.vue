@@ -18,7 +18,9 @@
           <!-- 投注记录 入口 -->
           <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
-            <img class="hot-icon" :src="bet_record" />
+            
+            <img class="hot-icon" :style="compute_css({key:'pc-img-hot-match'})" alt="" />
+
             <div class="col">
               {{ $t("common.betting_record") }}
             </div>
@@ -88,10 +90,13 @@ import { MenuData } from "src/core/index.js";
 import { api_betting } from "src/api/index.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 
+import { compute_css } from 'src/core/server-img/index.js'
+
 import bet_record from "/public/yazhou-pc/image/png/bet-record.png";
 
 onMounted(() => {
   get_unsettle_tickets_count_config();
+  // console.error('收拾收拾',compute_css({key:'pc-img-hot-match'}))
 });
 
 const bet_record_count = ref(0)

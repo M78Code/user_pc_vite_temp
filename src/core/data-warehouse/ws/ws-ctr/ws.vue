@@ -1,62 +1,60 @@
 /*
- * @Author: Sword
- * @Date: 2020-08-04 17:13:55
- * @Description: websocket数据页面数据接入 ---- 公共使用
+ * @Author: hanmar
+ * @Date: 2023-09-15 17:13:55
+ * @Description: websocket 组件(包括测试功能)
  */
-// import { WsSend } from "src/public/utils/ws/wsCtr.js";
-// import Ws from "src/public/utils/ws/ws.js";
-// import { mapGetters, mapActions } from "vuex";
-// import http from "src/public/utils/http/axios_warpper.js";
-// import odds_conversion_mixin from "src/public/mixins/odds_conversion/odds_conversion_mixin";
-// import { api_account} from "src/public/api/index.js";
-// import { uid } from 'quasar';
-import WsMan from './ws-man.js';
-export default {
-  // mixins: [odds_conversion_mixin],
-  data() {
-    return {
-      // websocket是否正常连接
-      websocketStatus: false,
-      // 网页休眠timer
-      timer: null,
-      // 最后次ws断开时间
-      lase_socket_close_time: new Date().getTime(),
-      // ws操作对应
-      ws:null,
-    }
-  },
-  computed: {
-    ...mapGetters({
-      // socke接收数据集合
-      socket_data: 'get_socket_obj',
-      // 获取ws连接状态(0-断开,1-连接,2-断网续连状态)
-      socket_status: 'get_socket_status',
 
+<template>
+  <div></div>
+</template>
+<script>
+import WsMan from './ws-man.js';
+import UserCtr from "src/core/user-config/user-ctr.js";
+// 页面 失去 焦点后  WS 断开时间
+const DOCUMENT_HIDDEN_WS_CLOSE_TIME = 5 * 60 * 1000;
+export default {
+  computed: {
+    get_uid(){
       // 用户登录信息
-      vx_get_uid: 'get_uid',
-      // 获取用户信息
-      vx_get_user: "get_user",
-      // 获取用户id
-      uuid: "get_uuid",
-      // 串关是否正在处理
-      get_is_handle: "get_is_handle",
-      // 监听页面是否转入休眠状态
-      get_vue_hidden_run: "get_vue_hidden_run",
-    }),
+      return UserCtr.get_uid();
+    }
   },
   watch: {
     /**
-     * @description: 监听投注列表的变化
+     * @description: 监听用户信息变化,变化后重新订阅C3,C4,C5
      * @param {undefined} undefined
      * @return {undefined} undefined
      */
-    bet_list: {
-      // 监听投注列表变化
-      handler(new_) {
-        if(new_.length) {
-          this.SCMD_C2();
-        }
-      }
+    get_uid() {
+      this.SCMD_C3();
+      this.SCMD_C4();
+      this.SCMD_C5();
+    },
+  },
+  created() {
+    // 最后次ws断开时间
+    this.lase_socket_close_time = new Date().getTime();
+    window.addEventListener("message", this.rev_event_msg);
+    // 监听页面是否转入休眠状态
+    document.addEventListener('visibilitychange', this.event_listener_visibilitychange);
+    document.addEventListener('pagehide', this.event_listener_visibilitychange);
+    // 启动WS操作对象
+    WsMan.run();
+  },
+  beforeUnmount() {
+    window.removeEventListener("message", this.rev_event_msg);
+    document.removeEventListener('visibilitychange', this.event_listener_visibilitychange);
+    document.removeEventListener('pagehide', this.event_listener_visibilitychange);
+    clearTimeout(this.timer);
+    // 销毁WS操作对象
+    WsMan.destroyed();
+  },
+  methods: {
+    /**
+     * @description: visibilitychange事件监听
+     */
+    event_listener_visibilitychange(){
+      this.get_vue_hidden_run();
     },
     /**
      * @description: 监听页面是否转入休眠状态
@@ -71,33 +69,23 @@ export default {
         }
         this.timer = setTimeout(() => {
           if (document.visibilityState == 'hidden') {
-            this.set_socket_status(0);
-            // console.log(`-----------------------socket_status:${this.socket_status}`);
+            let data =  {ws_status:0, ws_status_old:this.ws_status || 0};
+            // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
+            window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
             // console.log('---未在当前网站--关闭WS---',_.get(window.ws,'ws.url'));
-            window.ws.retInitData(true);
+            WsMan.ws && window.ws.retInitData(true);
           }
-        }, http.DOCUMENT_HIDDEN_WS_CLOSE_TIME);
+        }, DOCUMENT_HIDDEN_WS_CLOSE_TIME);
       } else {
-        // console.log(`-----------------------socket_status:${this.socket_status}`);
         // console.log(`---进入当前网站--开启WS---222222222222`)
-        // if (!this.socket_status) {
-          this.set_socket_status(2);
+        // if (!this./) {
+          let data =  {ws_status:2, ws_status_old:this.ws_status || 0};
+          // 发送ws连接状态(0-断开,1-连接,2-断网续连状态)
+          window.postMessage({event: 'WS', cmd:`WS_STATUS_CHANGE_EVENT`, data},'*');
           // console.log('---进入当前网站--开启WS---',_.get(window.ws,'ws.url'));
-          if (window.ws) {
-            window.ws.connect('vue_hidden_to_show');
-          }
+           WsMan.ws && WsMan.ws.connect('vue_hidden_to_show');
         // }
       }
-    },
-    /**
-     * @description: 监听用户信息变化,变化后重新订阅C3,C4,C5
-     * @param {undefined} undefined
-     * @return {undefined} undefined
-     */
-    vx_get_uid() {
-      this.SCMD_C3();
-      this.SCMD_C4();
-      this.SCMD_C5();
     },
     /**
      * @description: 监控socket状态是否变化,如果断链以后启用重新连接
@@ -105,6 +93,8 @@ export default {
      * @return {undefined} undefined
      */
     socket_status(status, old_status) {
+      //缓存变量
+      this.ws_status = status;
       if (status) {
         if ((new Date().getTime() - this.lase_socket_close_time) > (1 * 1000)) {
           this.set_socket_status(2);
@@ -134,48 +124,35 @@ export default {
           this.SCMD_C7();
         }, 600);
       }
-    }
-  },
-  created() {
-    this.set_socket_status(0);
-    // 启动websocket服务
-    //console.log('-----------------启动websocket服务--------------------------')
-    // websocket.Reconnect(this);
-    // var url = api_prefix.replace('http', 'ws') + '/push';
-    var url = http.getWsUrl();
-    // var url = 'ws://localhost:8081';
-    window.ws = new Ws(this, url);
-    this.ws = window.ws
-    window.ws.wsStatusCall = (status) => {
-      this.set_socket_status(status);
-    }
-    window.ws.connect();
-    window.ws.addQueueViewObj('websocket', this);
-    this.$root.$on(this.emit_cmd.EMIT_SCMD_C2_CMD, this.SCMD_C2);
-    this.SCMD_C51 = this.throttle(this.SCMD_C51, 2000);
-  },
-  beforeUnmount() {
-    this.$root.$off(this.emit_cmd.EMIT_SCMD_C2_CMD, this.SCMD_C2);
-    // websocket.del();
-    if (window.ws) {
-      window.ws.sendMsg({cmd:"C00"});
-      window.ws.removeQueueViewObj('websocket');
-      window.ws.destroy();
-    }
-    this.ws = null;
-  },
-  methods: {
-    ...mapActions({
-      // 设置websocket连接状态
-      set_socket_status: 'set_socket_status',
-      // 监听页面是否转入休眠状态
-      set_vue_hidden_run: 'set_vue_hidden_run',
-      // 设置用户信息
-      vx_set_user: "set_user",
-      vx_set_user_balance: "set_user_balance",
-      //设置全局开关
-      set_global_switch: 'set_global_switch',
-    }),
+    },
+    /**
+   * @Description:接收ws内部通信事件
+   * @param: event 事件消息对象
+   * @return:
+   */
+    rev_event_msg(event) {
+      if(event && event.data && event.data.event == 'WS'){
+        switch (event.data.cmd) {
+          case 'WS_STATUS_CHANGE_EVENT': // ws链接状态变化 (0-断开,1-连接,2-断网续连状态)
+            let ws_status = lodash.get(event,'ws_status');
+            let ws_status_old = lodash.get(event,'ws_status_old');
+            this.socket_status(ws_status, ws_status_old);
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    // ...mapActions({
+    //   // 设置websocket连接状态
+    //   set_socket_status: 'set_socket_status',
+    //   // 监听页面是否转入休眠状态
+    //   set_vue_hidden_run: 'set_vue_hidden_run',
+    //   //设置全局开关
+    //   set_global_switch: 'set_global_switch',
+    // }),
+    set_socket_status(){},
+    set_vue_hidden_run(){},
     /**
      * @description: 赛事订阅(C2)-盘口/投注项(C106)
      * @param {undefined} undefined
@@ -192,7 +169,7 @@ export default {
      */
     SCMD_C3() {
       let obj = {};
-      obj.cuid = this.vx_get_uid;
+      obj.cuid = UserCtr.get_uid();
       WsMan.skt_send_order(window.ws, obj);
     },
     /**
@@ -294,7 +271,7 @@ export default {
       for (const key in cur_obj) {
           if (cur_obj[key] === 1) {  delete cur_obj[key] }
       }
-      this.set_global_switch(cur_obj)
+      // TODO hanmar 设置全局开关 
    },
     /**
      * @description: 菜单栏目
@@ -360,7 +337,7 @@ export default {
         return;
       }
       let skt_data = obj.cd;
-      if (this.vx_get_user && this.vx_get_user.uid && skt_data.cuid == this.vx_get_user.uid) {
+      if (this.get_uid && skt_data.cuid == this.get_uid) {
         this.get_balance();
       }
     },
@@ -408,7 +385,7 @@ export default {
       // console.log('get_balance====',JSON.stringify(gcuuid));
 
       api_account
-        .check_balance({ uid: this.vx_get_user.uid, t: new Date().getTime(), gcuuid:gcuuid })
+        .check_balance({ uid: UserCtr.get_uid(), t: new Date().getTime(), gcuuid:gcuuid })
         .then((res) => {
         // console.log('get_balance====res===', this.send_gcuuid == res.config.gcuuid);
         // if(this.send_gcuuid != res.config.gcuuid) return;
@@ -422,9 +399,10 @@ export default {
           const result = _.get(res, "data.data");
           const code = _.get(res, "data.code");
           if (code == 200) {
-            this.vx_set_user_balance(result.amount);
+            // TODO hanmar 通知更新用户金额
           }
       });
     }
   }
 }
+</script>
