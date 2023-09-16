@@ -4,7 +4,7 @@
       <div class="main-wrap flex">
         <slot name="menu-left">
           <div class="goback-icon-wrapper column justify-center">
-            <div class="img" :style="compute_css({ key: 'h5-go-back-icon', theme: 'local_dev' })"></div>
+            <div class="img" :style="compute_css('h5-go-back-icon')"></div>
           </div>
         </slot>
         <div class="main-menu-container">

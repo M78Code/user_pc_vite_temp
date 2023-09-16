@@ -6,7 +6,7 @@
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div class="img" :style="compute_css({ key: 'h5-menu-icon' })" v-if="8 != menu_type"></div>
+      <div class="img" :style="compute_css('h5-menu-icon')" v-if="8 != menu_type"></div>
       <div class="img esports" v-if="8 == menu_type"></div>
     </div>
     <!--
@@ -19,7 +19,7 @@
       <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, background: '#fff' }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
-          <div :style="compute_css({ key: 'h5-close-icon' })" class="img" @click="is_show_menu = false"></div>
+          <div :style="compute_css('h5-close-icon')" class="img" @click="is_show_menu = false"></div>
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
@@ -28,7 +28,7 @@
             <div class="balance yb_mr4" @click="get_balance">
               {{ format_money2(UserCtr.user_info.balance) }}
             </div>
-            <div class="refesh" :style="compute_css({ key: 'h5-refesh' })" :class="{ rotate: is_loading_balance }"
+            <div class="refesh" :style="compute_css('h5-refesh')" :class="{ rotate: is_loading_balance }"
               @click="get_balance"></div>
           </div>
         </div>
@@ -38,7 +38,7 @@
           route.name != 'virtual_sports_details' &&
           menu_type !== 3000
           ">
-          <div class="icon set-icon-1" :style="compute_css({ key: 'h5-left-menu-image', position: 1 })"></div>
+          <div class="icon set-icon-1" :style="compute_css('h5-left-menu-image', 1)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_sort") }}</div>
           <div class="option" @click="sort_type_changed">
             <div class="op-item active">
@@ -46,7 +46,7 @@
                 sort_type == 2 ? $t("footer_menu.time2") : $t("footer_menu.hot2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css({ key: 'h5-set-switch' })"></div>
+            <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
                 sort_type == 2 ? $t("footer_menu.hot2") : $t("footer_menu.time2")
@@ -56,7 +56,7 @@
         </div>
         <!-- 盘口 -->
         <div class="set-item">
-          <div class="icon set-icon-2" :style="compute_css({ key: 'h5-left-menu-image', position: 2 })"></div>
+          <div class="icon set-icon-2" :style="compute_css('h5-left-menu-image', 2)"></div>
           <div class="name">{{ $t("setting_menu.handicap") }}</div>
           <div class="option" @click="change_odd">
             <div class="op-item active">
@@ -66,7 +66,7 @@
                 : $t("setting_menu.odd_hong_kong2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css({ key: 'h5-set-switch' })"></div>
+            <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
                 get_cur_odd == "EU"
@@ -78,7 +78,7 @@
         </div>
         <!-- 赔率 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-4" :style="compute_css({ key: 'h5-left-menu-image', position: 4 })"></div>
+          <div class="icon set-icon-4" :style="compute_css('h5-left-menu-image', 4)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_odds") }}</div>
           <div class="option" @click="set_is_accept">
             <div class="op-item active">
@@ -88,7 +88,7 @@
                 : $t("setting_menu.odd_optimal2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css({ key: 'h5-set-switch' })"></div>
+            <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
                 BetData.bet_is_accept == 2
@@ -101,7 +101,7 @@
         <div class="line"></div>
         <!-- 版本 -->
         <div class="set-item">
-          <div class="icon set-icon-3" :style="compute_css({ key: 'h5-left-menu-image', position: 3 })"></div>
+          <div class="icon set-icon-3" :style="compute_css('h5-left-menu-image', 3)"></div>
           <div class="name">{{ $t("setting_menu.version") }}</div>
           <div class="option" @click="change_edition">
             <div class="op-item active">
@@ -111,7 +111,7 @@
                 : $t("setting_menu.concise")
               }}
             </div>
-            <div class="op-icon" :style="compute_css({ key: 'h5-set-switch' })"></div>
+            <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
                 get_newer_standard_edition == 2
@@ -123,11 +123,11 @@
         </div>
         <!-- 语言 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-5" :style="compute_css({ key: 'h5-left-menu-image', position: 5 })"></div>
+          <div class="icon set-icon-5" :style="compute_css('h5-left-menu-image', 5)"></div>
           <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
           <div class="option option3" @click="is_show_lang = !is_show_lang">
             <i class="lang-icon yb_mr4" :style="compute_css('h5-lang', 1)" :class="`lang-${get_lang}`"></i>
-            <div class="op-icon op-icon2" :style="compute_css({ key: 'h5-set-sort' })"></div>
+            <div class="op-icon op-icon2" :style="compute_css('h5-set-sort')"></div>
             <div class="op-item active" style="font-size: 0.14rem">
               {{ $t("setting_menu.lang") }}
             </div>
@@ -145,7 +145,7 @@
         <div class="line"></div>
         <!-- 规则说明 -->
         <div class="set-item no-border" @click="go_description">
-          <div class="icon set-icon-6" :style="compute_css({ key: 'h5-left-menu-image', position: 6 })"></div>
+          <div class="icon set-icon-6" :style="compute_css('h5-left-menu-image', 6)"></div>
           <div class="name">{{ $t("setting_menu.rule_description") }}</div>
           <div class="option option2">
             <div class="yb-icon-arrow right"></div>
@@ -154,7 +154,7 @@
         <div class="line"></div>
         <!-- 换肤 -->
         <div class="set-item">
-          <div class="icon set-icon-7" :style="compute_css({ key: 'h5-left-menu-image', position: 7 })"></div>
+          <div class="icon set-icon-7" :style="compute_css('h5-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" :style="compute_css('h5-theme-skin1')" @click="handle_set_theme('theme01')">
