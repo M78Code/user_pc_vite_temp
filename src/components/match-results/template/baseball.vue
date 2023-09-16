@@ -199,11 +199,14 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
-import { i18n_t } from "src/core/index"
-import lodash from "lodash"
+
+import results from "src/core/match-results/match-results-mixin/index";
+import loadData from "src/components/load_data/load_data.vue"
 export default {
   mixins: [results],
+  components: {
+    loadData
+  },
   data() {
     return {
       lang_results:{},

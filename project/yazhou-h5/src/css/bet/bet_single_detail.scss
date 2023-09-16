@@ -1,0 +1,48 @@
+/*
+ * @Author: router
+ * @Description: H5新版单关组件（输入框） 白色版样式
+ */
+[class*=theme0] {
+  .bet-single-detail {
+    color: var(--q-color-fs-color-7);
+    background:  var(--q-color-page-bg-color-70);
+    .yellow-color {
+      color:  var(--q-color-fs-color-116);
+    }
+    .red-color {
+      color:var(--q-color-com-fs-color-9) !important;
+      border-color: var(--q-color-com-border-color-14) !important;
+    }
+    .content-b {
+      border: 1px solid var(--q-color-border-color-3);
+      color: var(--q-color-fs-color-3);
+      background:var(--q-color-page-bg-color-114);
+    }
+    .content-b2 {
+      border: 1px solid  var(--q-color-border-color-13);
+    }
+    .set-opacity {
+      opacity: 0.2;
+    }
+    .money-span {
+      background:var(--q-color-page-bg-color-50);
+    }
+    .money-span3 {
+      background: transparent;
+    }
+    .content-t {
+      p:nth-child(1) {
+        &::after {
+          background:var(--q-color-page-bg-color-50);
+        }
+      }
+
+      p:nth-child(2) {
+        color: var(--q-color-fs-color-8);
+      }
+    }
+    .limit-txt {
+      color:  var(--q-color-fs-color-17);
+    }
+  }
+}

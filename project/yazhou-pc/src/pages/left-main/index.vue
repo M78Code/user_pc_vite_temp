@@ -18,8 +18,8 @@
           <!-- 投注记录 入口 -->
           <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
-            
-            <img class="hot-icon" :style="compute_css({key:'pc-img-hot-match'})" alt="" />
+
+            <img class="hot-icon" :style="compute_css('pc-img-hot-match')" alt="" />
 
             <div class="col">
               {{ $t("common.betting_record") }}
@@ -611,4 +611,5 @@ const get_unsettle_tickets_count_config = () => {
   color: #ffffff;
   border-radius: 2px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
-}</style>
+}
+</style>

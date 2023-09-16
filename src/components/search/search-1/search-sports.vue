@@ -72,8 +72,8 @@ const set_search_status = (data) => store.dispatch({ type: 'set_search_status', 
         cursor: pointer;
 
         &:hover {
-            background-color: #262933;
-            color: #FF7000;
+            background-color: var(--q-header-search-color-1);
+            color: var(--q-header-search-color-4);
         }
     }
 }

@@ -3,7 +3,7 @@
 <template>
     <div class="wrap-input" @click.stop>
         <div class="search-icon-container">
-            <icon class="search-icon" color="#ABBAC8" name="icon-search" size="14px" />
+            <icon-wapper class="search-icon" color="#ABBAC8" name="icon-search" size="14px" />
         </div>
         <div class="input-wrap col">
             <!-- 搜索输入框 -->
@@ -12,7 +12,7 @@
                 @click="input_click" :key="'search-input-0001'" :placeholder="i18n_t('common.search')" />
             <!-- 清空输入框按钮 -->
             <span class="clear_input" @click="clear_input">
-                <icon class="cursor-pointer clear_input_btn" name="icon-failure" v-if="keyword != ''" size="12px" />
+                <icon-wapper class="cursor-pointer clear_input_btn" name="icon-failure" v-if="keyword != ''" size="12px" />
             </span>
         </div>
         <!-- 关闭搜索 -->
@@ -23,10 +23,13 @@
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { IconWapper } from 'src/components/icon'
+
 import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import search from "src/core/search-class/search.js"
 
+console.error('IconWapper', IconWapper);
 
 export default defineComponent({
     name: "search_input",
@@ -249,9 +252,9 @@ export default defineComponent({
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: var(--qq--search-bg-color3);
-    border-top: 1px solid var(--qq--search-border-color4);
-    border-bottom: 1px solid var(--qq--search-border-color3);
+    background-color: var(--q-gb-bg-c-11);
+    border-top: 1px solid var(--q-header-search-color-3);
+    border-bottom: 1px solid var(--q-header-search-color-3);
     margin-bottom: 5px;
 
     .search-icon-container {
@@ -273,7 +276,7 @@ export default defineComponent({
             outline: none;
             background: none;
             border: none;
-            color: var(--qq--search-text-color8);
+            color: var(--q-header-search-color-1);
             font-size: 12px;
             caret-color: #999999;
 
@@ -305,12 +308,12 @@ export default defineComponent({
         height: 18px;
         line-height: 18px;
         cursor: pointer;
-        border-left: 1px solid var(--qq--search-border-color5);
+        border-left: 1px solid var(--q-gb-bd-c-4); // #999999
         padding-left: 10px;
-        color: var(--qq--search-text-color3);
+        color: var(--q-gb-t-c-10); // #888888
 
         &:hover {
-            color: var(--qq--search-text-color6);
+            color: var(--q-gb-t-c-6); // #555555
         }
     }
 }

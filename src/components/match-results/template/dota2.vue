@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
-import resizeObserver from "src/public/components/resize_observer/resize_observer.vue"
+import results from "src/core/match-results/match-results-mixin/index";
+import resizeObserver from "src/components/match-results/resize-observer/resize-observer.vue"
 import loadData from "src/components/load_data/load_data.vue"
 export default {
   mixins: [results],

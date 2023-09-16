@@ -211,43 +211,41 @@
 
 <script>
 import { is_eports_csid } from 'src/core/index.js'
-import soccer from "../../template/soccer.vue";
-// console.log(soccer,'soccer');
-import basketball from "../../template/basketball.vue";
-// import tennis from "../../template/tennis";
-// import badminton from "../../template/badminton";
-// import snooker from "../../template/snooker";
-// import pingpang from "../../template/pingpang";
-// import baseball from "../../template/baseball";
-// import hockey from "../../template/hockey";
-// import usa_football from "../../template/usa_football";
-// import volleyball from "../../template/volleyball";
-// import handball from "../../template/handball";
-// import champion from "../../template/champion"
+import soccer from  "src/components/match-results/template/soccer.vue";
+import basketball from "src/components/match-results/template/basketball.vue";
+import tennis from "src/components/match-results/template/tennis.vue";
+import badminton from "src/components/match-results/template/badminton.vue";
+import snooker from "src/components/match-results/template/snooker.vue";
+import pingpang from "src/components/match-results/template/pingpang.vue";
+import baseball from "src/components/match-results/template/baseball.vue";
+import hockey from "src/components/match-results/template/hockey.vue";
+import usaFootball from "src/components/match-results/template/usa_football.vue";
+import volleyball from "src/components/match-results/template/volleyball.vue";
+import handball from "src/components/match-results/template/handball.vue";
+import champion from "src/components/match-results/template/champion.vue"
+import virtual_soccer from "src/components/match-results/template/virtual_soccer.vue";
+import virtual_race_dog from "src/components/match-results/template/virtual_race_dog.vue";
+import virtualBasketball from "src/components/match-results/template/virtual_soccer.vue";
 
-// import virtual_soccer from "../../template/virtual_soccer";
-// import virtual_race_dog from "../../template/virtual_race_dog";
-// import virtualBasketball from "../../template/virtual_soccer";
-
-// import dota2 from "../../template/dota2";
+import dota2 from "src/components/match-results/template/dota2.vue";
 export default {
   components: {
     soccer,
     basketball,
-    // tennis,
-    // badminton,
-    // snooker,
-    // pingpang,
-    // baseball,
-    // "usa-football": usa_football,
-    // hockey,
-    // volleyball,
-    // "virtual-soccer": virtual_soccer,
-    // "virtual-race-dog": virtual_race_dog,
-    // virtualBasketball,
-    // handball,
-    // champion,
-    // dota2,
+    tennis,
+    badminton,
+    snooker,
+    pingpang,
+    baseball,
+    usaFootball,
+    hockey,
+    volleyball,
+    "virtual-soccer": virtual_soccer,
+    "virtual-race-dog": virtual_race_dog,
+    virtualBasketball,
+    handball,
+    champion,
+    dota2,
   },
   props:{
     sportType: {//球类id

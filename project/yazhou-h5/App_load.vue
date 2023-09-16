@@ -9,6 +9,7 @@
     :class="['bw3', { rightMenu: right_menu_show }]"
     @click.stop="appclick($event)"
   >
+  <ws/>
   <!-- 页面路由开始 页面路由开始 页面路由开始 -->
     <div v-if="time_str" class="time-show">
       <div>{{ server_env }}-{{ time_str }}</div>
@@ -22,7 +23,7 @@
 <script>
 // import { mapGetters, mapActions, mapMutations } from "vuex";
 // websocket Log文件
-
+import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 
@@ -35,6 +36,9 @@ const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 const { CURRENT_ENV_NAME } = BUILDIN_CONFIG;
 export default {
   name: "AppLoad",
+  components: {
+    ws,
+  },
   data() {
     return {
       vue_hidden_run_flg: false,
@@ -101,9 +105,6 @@ export default {
 
       document.head.appendChild(script);
     }
-
-    // 启动WS操作对象
-    WsMan.run();
   },
   methods: {
     // ...mapMutations(["set_global_click_count"]),
@@ -234,9 +235,6 @@ export default {
     this.timer2 = null;
 
     this.off_listeners();
-
-    // 销毁WS操作对象
-    WsMan.destroyed();
   },
 };
 </script>

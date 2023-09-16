@@ -3,7 +3,7 @@
   <div
     class="c-match-card relative-position"
     :id="DOM_ID_SHOW && `list-mid-${mid}`"
-    :style="`height:${match_style_obj.total_height}px  !important;width:1920px  !important;`"
+    :style="`height:300px  !important;width:1920px  !important;`"
   >
     <!-- <component
       v-if="is_mounted && [1,2].includes(match_style_obj.show_level)"

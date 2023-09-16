@@ -361,7 +361,7 @@ const fold_tab_play = () => {
     justify-content: flex-start;
     position: relative;
     .tab-wrap {
-      ::v-deep .item-wrap {
+      :deep(.item-wrap) {
         .tab-item {
           padding: 0 10px;
         }

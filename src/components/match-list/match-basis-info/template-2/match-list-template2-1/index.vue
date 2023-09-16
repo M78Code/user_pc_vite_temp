@@ -65,7 +65,7 @@
         <i aria-hidden="true" class="icon-star q-icon c-icon" :class="(match.mf==1 || match.mf==true) && 'active'"></i>
       </span>
       <!-- 统计分析 -->
-      <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="$utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
+      <div class="sr-link-icon-w" v-tooltip="{content:t('common.analysis')}" v-if="utils.is_show_sr_flg(match)" @click.stop='sr_click_handle(match)'>
         <i aria-hidden="true" class="icon-signal q-icon c-icon"></i>
       </div>
       <!-- 玩法数量 -->

@@ -1,6 +1,6 @@
 <!--
  * @Date: 2021-04-28 20:38:27
- * @FilePath: /user-pc1/src/public/components/results/template/virtual_race_dog.vue
+ * @FilePath: /user-pc-vite/src/components/match-results/template/virtual_race_dog.vue
  * @Description: 虚拟赛马和赛狗
  * @Author: Echo
 -->
@@ -9,18 +9,18 @@
   <div class="wrap-table">
     <div class="table-header">
       <div class="table-col cursor" @click="change_sort">
-        <span>{{$root.$t('results.date')}}</span>
+        <span>{{i18n_t('results.date')}}</span>
         <div class="sort icon" :class="{'up':is_sortUp}" ></div>
       </div>
-      <div class="table-col">{{$root.$t('results.league')}}</div>
+      <div class="table-col">{{i18n_t('results.league')}}</div>
       <!-- 期号 -->
-      <div class="table-col">{{$root.$t('results.number')}}</div>
+      <div class="table-col">{{i18n_t('results.number')}}</div>
       <!-- 第一名 -->
-      <div class="table-col">{{$root.$t('results.first')}}</div>
+      <div class="table-col">{{i18n_t('results.first')}}</div>
       <!-- 第二名 -->
-      <div class="table-col">{{$root.$t('results.second')}}</div>
+      <div class="table-col">{{i18n_t('results.second')}}</div>
       <!-- 第三名 -->
-      <div class="table-col">{{$root.$t('results.third')}}</div>
+      <div class="table-col">{{i18n_t('results.third')}}</div>
     </div>
     <load-data :state="load_data_state" color="light">
       <q-scroll-area
@@ -29,11 +29,10 @@
         :style="{height: '100%'}"
       >
         <div class="tbale-body">
-          <template v-for="(item, index) in results_list">
+          <template v-for="(item, index) in results_list"  :key="index">
             <div
               class="table-tr-td"
-              :class="{'active':index == activeIndex}"
-              :key="index"
+              :class="{'active':index == activeIndex}"            
             >
               <!-- 日期 -->
               <div class="table-col">
@@ -43,12 +42,12 @@
               </div>
               <!-- 联赛 -->
               <div class="table-col">
-                <img v-img="[_.get(item,'iconUrl')]" class="tournament-logo" alt="">
+                <img v-img="[lodash.get(item,'iconUrl')]" class="tournament-logo" alt="">
                 <span class="ellipsis-line-2">{{item.tournamentName}}</span>
               </div>
               <!-- 期号 -->
               <div class="table-col">
-                <div>{{item.batchNo + ' ' + $root.$t('bet_record.periods')}}</div>
+                <div>{{item.batchNo + ' ' + i18n_t('bet_record.periods')}}</div>
               </div>
               <!-- 第一名-第三名 -->
               <template v-if="item.teamsTop">
@@ -84,9 +83,13 @@
 </template>
 
 <script>
-import results from "src/public/mixins/results/index";
+import results from "src/core/match-results/match-results-mixin/index";
+import loadData from "src/components/load_data/load_data.vue"
 export default {
   name: 'virtual_race_dog',
+  components: {
+    loadData
+  },
   mixins: [results],
   props: {
     sportType: {

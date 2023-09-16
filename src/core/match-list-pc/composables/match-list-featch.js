@@ -18,9 +18,9 @@ let state = store.getState();
 
 const { page_source } = PageSourceData;
 // 赛事列表排序 1:按联赛排序 2:按时间排序
-// const vx_match_sort = ref(state.filterReducer.show_filter_popup);
+const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 是否展开多列玩法
-// const get_unfold_multi_column = ref(state.filterReducer.show_filter_popup);
+const get_unfold_multi_column = ref(state.filterReducer?.show_filter_popup);
 
 const route = useRoute() || {};
 

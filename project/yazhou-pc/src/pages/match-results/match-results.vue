@@ -9,7 +9,11 @@
     <!-- 视频画中画组件 -->
     <!-- <moveVideo></moveVideo> -->
     <p class="font_match_results">12222</p>
-    <simple-header @refresh="sub_search" :data_loaded="refresh_finish" :title="i18n_t('common.amidithion')">1
+    <simple-header
+      @refresh="sub_search"
+      :data_loaded="refresh_finish"
+      :title="i18n_t('common.amidithion')"
+      >1
       <!-- 赛果 -->
       <!-- <span>{{ i18n_t("common.amidithion") }}</span> -->
     </simple-header>
@@ -17,7 +21,17 @@
     <!-- 中间内容 S-->
     <div class="main_wrap">
       <!-- 筛选条件 S-->
-    <result-header :sport_type="sport_type" :sport="sport" :current_sport_id="current_sport_id"></result-header>
+      <result-header
+        :sport_type="sport_type"
+        :sport="sport"
+        :startTimeShowFunc="startTimeShowFunc"
+        :current_sport_id="current_sport_id"
+        :startTimeShow="startTimeShow"
+        :showSelectTime="showSelectTime"
+        :isSelectConfirm="isSelectConfirm"
+        v-model:dateValue="model"
+        :ipt_search="ipt_search"
+      ></result-header>
       <!-- 筛选条件 E-->
 
       <!-- 各球类赛果表格 S-->
@@ -59,44 +73,49 @@
 </template>
 
 <script setup>
-
-import { i18n_t} from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import { useGetResultConfig } from "src/components/match-results/results-config.js";
-import {RusultType} from "src/components/match-results/rusult-type/index";
-import { SimpleHeaderWapper as simpleHeader} from "src/components/common/simple-header/index.js";
-import {PaginationWrapper} from "src/components/pagination/index";
+import { RusultType } from "src/components/match-results/rusult-type/index";
+import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple-header/index.js";
+import { PaginationWrapper } from "src/components/pagination/index";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
-import {   ResultHeader} from 'src/components/match-results/result-header/index.js'
+import { ResultHeader } from "src/components/match-results/result-header/index.js";
 import { onMounted } from "vue";
-  const {
-    //变量
-    current_sport_id,
-    sport,
-    sport_type,
-    refresh_finish,
-    results_data,
-    tips,
-    results_table_style,
-    sport_id,
-    load_data_state,
-    details_load,
-    results_list,
-    results_order_list,
-    results_playback_list,
-    is_sortUp,
-    activeIndex,
-    reset_pagination,
-    sub_search,
-    //函数
-    get_tr_detail,
-    change_sort,
-    change_playback_type,
-    changePage,
-    get_serverTime
+const {
+  //变量
+  current_sport_id,
+  sport,
+  sport_type,
+  refresh_finish,
+  results_data,
+  tips,
+  results_table_style,
+  sport_id,
+  load_data_state,
+  details_load,
+  results_list,
+  results_order_list,
+  results_playback_list,
+  is_sortUp,
+  activeIndex,
+  reset_pagination,
+  sub_search,
+  startTimeShow,
+  showSelectTime,
+  model,
+  //函数
+  get_tr_detail,
+  change_sort,
+  change_playback_type,
+  changePage,
+  get_serverTime,
+  startTimeShowFunc,
+  isSelectConfirm,
+  ipt_search
 } = useGetResultConfig();
-onMounted(()=>{
-  get_serverTime()
-})
+onMounted(() => {
+  get_serverTime();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -107,11 +126,11 @@ onMounted(()=>{
   src: url("~public/lib/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
     format("woff2");
 }
-@import './index.scss'
+@import "./index.scss";
 </style>
 
-<style lang="scss" >
- div.q-menu {
+<style lang="scss">
+div.q-menu {
   border: 0 none !important;
 }
 
