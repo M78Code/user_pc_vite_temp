@@ -574,7 +574,7 @@ onMounted(() => {
   clear_timer();
   run_new_init_timer();
   score_value();
-  matchListClass.match_period_map(props.match_of_list);
+ 
   media_button_button_type_check()
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_SET_SCROLL_TOP, set_scroll_top).off,
@@ -1497,7 +1497,7 @@ const clear_timer = () => {
 
 watch(() => props.match_of_list, (c_match) => {
   media_button_button_type_check()
-  matchListClass.match_period_map(c_match);
+  mmp_map_title.value = matchListClass.match_period_map(props.match_of_list);
 }, { deep: true })
 
 watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
@@ -1511,7 +1511,7 @@ watch(() => props.match_of_list.mid, (mid_new,mid_old) => {
     match_change_timer.value = setTimeout(() => {
       match_changing.value = false;
     }, 300);
-    matchListClass.match_period_map(props.match_of_list);
+    mmp_map_title.value = matchListClass.match_period_map(props.match_of_list);
   }
 })
 
@@ -1572,7 +1572,7 @@ watch(() => props.match_of_list.msc, () => {
 })
 
 watch(() => props.match_of_list.mmp, () => {
-  matchListClass.match_period_map(props.match_of_list);
+  mmp_map_title.value = matchListClass.match_period_map(props.match_of_list);
 })
 
 // 监听客队红牌比分变化

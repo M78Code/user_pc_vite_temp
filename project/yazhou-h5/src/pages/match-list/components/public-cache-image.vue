@@ -8,6 +8,7 @@
  
 <script setup>
 import lodash from 'lodash'
+import { compute_local_image } from "src/core/server-img/other-img/index.js"
 import { onMounted, ref, watch, nextTick } from "vue";
 import UserCtr from 'src/core/user-config/user-ctr.js'
 import { get_file_path } from "src/core/file-path/file-path.js";
@@ -39,15 +40,18 @@ const img_error_map = ref({})
 
 const default_league_img = ref('')
 
+const oss_img_http = window.BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[0]
 
 onMounted(() => {
   //设置 默认 图片
   set_default_icon();
   // check_image_load();
+  image_src.value = `${oss_img_http}/${props.path}`
 })
 
 watch(() => props.path, () => {
   // check_image_load();
+  image_src.value = `${oss_img_http}/${props.path}`
 })
 
 /**
@@ -67,7 +71,7 @@ const set_default_icon = (val = "theme02") => {
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素
-  let path = lodash.isArray(props.path)?lodash.get(path,'[0]'):props.path;
+  let path = lodash.isArray(props.path)?lodash.get(props.path,'[0]'):props.path;
   let params = { key: path, csid: props.csid, type: props.type };
   // 检查是否 加载 过 是否 ok  { 0: 第一次加载, 1:加载过 而且成功, -1: 加载过但是已确认 出错 }
   let status = check_if_loaded_img(params);

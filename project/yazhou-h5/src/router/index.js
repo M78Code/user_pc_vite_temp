@@ -23,11 +23,11 @@ const router = createRouter({
             name: "home",
             component: () => import("project_path/src/pages/home/home-index.vue")
           },
-          {
-            path: "/activity_task",
-            name: "activity_task",
-            component: () => import("project_path/src/pages/activity-page/activity-task/index.vue")
-          },
+          // {
+          //   path: "/activity_task",
+          //   name: "activity_task",
+          //   component: () => import("project_path/src/pages/activity-page/activity-task/index.vue")
+          // },
         {
           path: "/virtual",
           name: "virtual_sports",
