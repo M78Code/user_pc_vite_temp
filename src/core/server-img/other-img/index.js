@@ -1,4 +1,4 @@
-import server_resource from "app/job/output/merchant/server-resource.json";
+import server_resource from "app/job/output/assets/index.js";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -19,7 +19,7 @@ Object.keys(modules).forEach((key) => {
  * @returns 
  */
 function compute_css({ key, theme }) {
-  console.error('sss',all_other_image)
+  console.log(all_other_image,11111111)
   let config = all_other_image[key] || {};
   //从打包的 环境拿 图片地址
   let url = get(
@@ -28,7 +28,7 @@ function compute_css({ key, theme }) {
   );
   if (!url) {
     //从本地拿
-    url = get(config, CURRENT_ENV) || get(config, UserCtr.theme);
+    url = get(config, UserCtr.theme);
   }
   return {
     "background-image": `url(${url})`,

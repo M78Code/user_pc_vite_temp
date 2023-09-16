@@ -159,18 +159,15 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, getCurrentInstance, computed, unref } from "vue";
+import { ref, watch, computed, } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, compute_css, } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-// import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-// import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
-const Instance = getCurrentInstance();
-console.error(Instance.slots
-)
+import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",

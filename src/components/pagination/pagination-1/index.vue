@@ -69,7 +69,7 @@
 //-------------------- 对接参数 prop 注册  开始  -------------------- 
 import { useRegistPropsHelper} from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
-import { useGetValue } from './use-value'
+import { useGetValue } from './use-value.js'
 import { watch } from 'vue'
 import { i18n_t } from "src/boot/i18n.js"
 import { format_balance  } from "src/core/index.js";

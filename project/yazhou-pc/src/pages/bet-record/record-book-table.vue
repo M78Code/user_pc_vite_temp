@@ -264,7 +264,7 @@
     </div>
     <template v-if="parseInt(recordData.total)">
       <!--分页组件-->
-      <pagination-wapper
+      <pagination-wrapper
         class="record-pagination"
         :count="recordData.total"
         :betTotalAmount="recordData.betTotalAmount"
@@ -273,7 +273,7 @@
         :toolSelected="tool_selected"
         :random="random"
         @pageChange="changePage(arguments)"
-      ></pagination-wapper>
+      ></pagination-wrapper>
     </template>
     <!--复制样式 已复制-->
     <div class="toast fit-center" v-if="toast">{{toast_msg}}</div>
@@ -303,7 +303,7 @@
 
 // import formatmixin from "src/public/mixins/common/time_format";
 // import Pagination from "project_path/src/components/bet_record/Pagination.vue";
-import { PaginationWapper } from "src/components/pagination/index.js";
+import { PaginationWrapper } from "src/components/pagination/index.js";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 // import VueSlider from 'vue-slider-component'
 // import 'vue-slider-component/theme/default.css'
