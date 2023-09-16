@@ -64,7 +64,7 @@
             {{current_way_name}}
           </div>
           <img class='close-o-info-icon' @click="close_other_w_info"
-            :src="(`${ $g_image_preffix }/image/wwwassets/bw3/menu/set_close_${get_theme && get_theme.includes('theme01')?'theme01':'theme02'}.svg`)" />
+            :src="(`${ $g_image_preffix }/public/image/menu/set_close_${get_theme && get_theme.includes('theme01')?'theme01':'theme02'}.svg`)" />
         </div>
 
           <!-- 次要玩法如果是数组 例如15分钟展开 -->

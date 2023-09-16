@@ -125,7 +125,7 @@ class AxiosHttp {
    */
   set_root_domain() {
     // 新逻辑这里只会有一个
-    let api_domain = BUILDIN_CONFIG.DOMAIN_RESULT.first_one;
+    let api_domain = BUILDIN_CONFIG.DOMAIN_RESUL && BUILDIN_CONFIG.DOMAIN_RESULT.first_one;
     // if (window.env.NODE_ENV != "development") {
     //   this.axios_instance.defaults.baseURL = api_domain;
     // }

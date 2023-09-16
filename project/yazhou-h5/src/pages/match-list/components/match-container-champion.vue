@@ -9,8 +9,8 @@
         {{match_of_list.csna}}
       </span>
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src=" image/wwwassets/bw3/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-if="get_sport_show(i)">
-        <img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-else>
+        <img class="icon-down-arrow" src=" public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-if="get_sport_show(i)">
+        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-else>
       </div>
     </div>
     <div
@@ -35,8 +35,8 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('theme01')">
-        <img class="icon-down-arrow" src="image/wwwassets/bw3/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else>
+        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('theme01')">
+        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else>
       </div>
     </div>
 
