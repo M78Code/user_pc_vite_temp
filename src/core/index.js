@@ -1,6 +1,6 @@
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
 
- 
+
 const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME;
 
 //通用
@@ -180,8 +180,12 @@ import { reactive } from "vue";
 /**
  * CSS 变量
  */
-import  { compute_css_variables }  from  "src/core/css-var/index.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
 
+/**
+ * img 变量
+ */
+import { compute_css } from "src/core/server-img/";
 /**
  *
  * 所有的用法 都一样
@@ -226,5 +230,6 @@ export {
   MatchDataWarehouse_H5_List_Jingxuan,
   MatchDataWarehouse_H5_Detail_Jingxuan,
   LayOutMain_pc,
-  compute_css_variables
+  compute_css_variables,
+  compute_css
 };
