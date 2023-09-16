@@ -6,7 +6,7 @@
 
 <template>
   <!-- 记录弹窗 -->
-  <div class="records-dialog">
+  <div class="records-dialog" :style="page_style">
     <!-- 字体记录弹窗 -->
     <p class="font_records-dialog">1</p>
     <!-- 注单历史 以及时间  注单历史头 -->
@@ -90,6 +90,13 @@ import { i18n_t } from "src/boot/i18n.js"
 import { onMounted, ref, watch } from "vue";
 import { useConfig } from "./use-config.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+
+const page_style = ref('')
+
+page_style.value = compute_css_variables({ category: 'component', module: 'bet-record' })
+console.error(compute_css_variables({ category: 'component', module: 'bet-record' }));
 
   const {
   params,
@@ -169,6 +176,10 @@ console.error(model);
     position: absolute;
     top: -200px;
   }
+  :deep(.c-simple-header) {
+    border-bottom: 1px solid var(--q-bet-record-color-20);
+    background: var(--q-bet-record-color-26);
+  }
 }
 /** 表格头部分 */
 .wrap-records {
@@ -179,6 +190,8 @@ console.error(model);
   box-sizing: border-box;
   padding: 0 20px;
   font-size: 12px;
+  color: var(--q-bet-record-color-16);
+  background: var(--qq--re-bg-color1);
   .title-wrap {
     display: flex;
     justify-content: space-between;
@@ -354,6 +367,9 @@ console.error(model);
     margin-bottom: 5px;
     justify-content: flex-start;
     align-items: center;
+    .check-wrap.active {
+      background-color: var(--q-bet-record-color-30);
+    }
   }
 }
 /**选择时间的提示*/
