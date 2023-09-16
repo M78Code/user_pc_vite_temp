@@ -158,7 +158,7 @@ import store from "src/store-redux/index.js"
 import lodash from 'lodash'
 import { i18n_t} from 'src/core/index.js'
 import oddColumnItem from "./odd-column-item.vue";
-import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/boot/local-image'
+import { img1, img2, img3, img4, Y0_img_white } from 'project_path/src/core/utils/local-image'
 import { useMittOn, useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { MenuData } from "src/core/index.js"
 import UserCtr from 'src/core/user-config/user-ctr.js'

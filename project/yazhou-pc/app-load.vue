@@ -1,8 +1,9 @@
 <template>
-  <div class="full-height" @click="set_global_click">
+  <div class="full-height" @click="set_global_click"  :style="page_style">
     <div v-if="_data.is_ws_run" class="timeShow" @click="copyToken()">
       {{ _data.current_env }}
     </div>
+    <ws/>
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ get_error_data }}</div>
@@ -22,6 +23,8 @@ import store from "src/store-redux/index.js";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
+import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
 const router = useRouter();
@@ -33,6 +36,7 @@ const _data = reactive({
   parent_doc_element: null,
 });
 const get_error_data = ref({});
+const page_style = ref('')
 // 检查内嵌版的逻辑处理动作
 iframe_check();
 //设置错误数据
@@ -60,6 +64,22 @@ store.dispatch({
       new Vconsole(); */
 //重置即将开赛筛选
 // this.$store.state.filter.open_select_time = null;
+
+onMounted(() => {
+  page_style.value = global_color_obj()
+})
+// 公共全局主题色
+const global_color_obj = () => {
+  // 背景色
+  let bg = compute_css_variables({ category: 'global', module: 'background' })
+  // 边框色
+  let bd = compute_css_variables({ category: 'global', module: 'border' })
+  // 字体色
+  let tc = compute_css_variables({ category: 'global', module: 'color' })
+  // 渐变色
+  let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
+  return {...bg, ...bd, ...tc, ...lg}
+}
 /**
  * 监听路由变化设置全局路由信息  来源和目标
  */
@@ -172,8 +192,6 @@ const scroll_mitt = useMittOn(
   }
 );
 onMounted(() => {
-  // 启动WS操作对象
-  WsMan.run();
 });
 onBeforeMount(() => {
   // 释放日志功能对象
@@ -191,8 +209,6 @@ onBeforeMount(() => {
   // remove_message();
 });
 onUnmounted(() => {
-  // 销毁WS操作对象
-  WsMan.destroyed();
 });
 </script>
 <style scoped>

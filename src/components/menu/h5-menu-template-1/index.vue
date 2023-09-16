@@ -4,7 +4,7 @@
       <div class="main-wrap flex">
         <slot name="menu-left">
           <div class="goback-icon-wrapper column justify-center">
-            <div class="img" :style="compute_css({ key: 'h5-go-back-icon', theme: 'local_dev' })"></div>
+            <div class="img" :style="compute_css('h5-go-back-icon')"></div>
           </div>
         </slot>
         <div class="main-menu-container">
@@ -26,10 +26,10 @@
             </div>
           </template>
           <!-- 右侧活动和弹出设置 -->
-          <activityIcon></activityIcon>
-          <setMenu></setMenu>
-        </div>
 
+        </div>
+        <activityIcon></activityIcon>
+        <setMenu></setMenu>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_type !== 30">
@@ -50,11 +50,11 @@
             <sub-menu-specially v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css({
-                key: current_lv2 == -1 ?
+              <span class="sport-icon-wrap" :style="compute_css(
+                current_lv2 == -1 ?
                   'h5-sport-active-image' : 'h5-sport-icon-image'
-                , position: 0
-              })"></span>
+                , 0
+              )"></span>
             </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
               <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
@@ -62,8 +62,8 @@
 
                 <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
                   <div class="sport-w-icon">
-                    <span class="sport-icon-wrap"
-                      :style="compute_css({ key: current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image', position: format_type(item) })"></span>
+                    <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
+                      :style="compute_css(current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image')"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
@@ -159,18 +159,15 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, getCurrentInstance, computed, unref } from "vue";
+import { ref, watch, computed, } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, compute_css, } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-// import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-// import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
-const Instance = getCurrentInstance();
-console.error(Instance.slots
-)
+import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",

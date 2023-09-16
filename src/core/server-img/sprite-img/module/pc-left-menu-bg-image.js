@@ -2,7 +2,8 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 
-import server_resource from "app/job/output/assets/index.js";
+// import server_resource from "app/job/output/assets/index.js";
+const server_resource = {}
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 import { get } from "lodash";
@@ -31,6 +32,50 @@ const item = {
   item_8: 7,
   item_9: 6,
   item_10: 22,
+  item_11: 13,
+  item_12: 10,
+  item_13: 12,
+  item_14: 20,
+  item_15: 8,
+  item_16: 14,
+  item_17: 17,
+  item_18: 26,
+  item_19: 21,
+  item_20: 16,
+  item_21: 18,
+  item_23: 29,
+  item_24: 30,
+  item_25: 31,
+  item_28: 33,
+  item_29: 32,
+  item_40: 35,
+  item_50: 9,
+  item_100: 41,
+  item_101: 38,
+  item_102: 40,
+  item_103: 39,
+  item_10001: 36,
+  item_10002: 37,
+  item_10003: 38,
+  item_30: 42,
+  item_31: 43,
+  item_32: 44,
+  item_26: 45,
+  item_27: 46,
+  item_33: 47,
+  item_34: 48,
+  item_35: 49,
+  item_36: 50,
+  item_37: 51,
+  item_38: 52,
+  item_39: 53,
+  item_22: 55,
+  item_1010: 56,
+  item_1002: 11,
+  item_1001: 36,
+  item_1004: 37,
+  item_1011: 23,
+  item_1009: 24,
 };
 
 /**

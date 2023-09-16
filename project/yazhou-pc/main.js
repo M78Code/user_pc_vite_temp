@@ -1,3 +1,13 @@
+/*
+ * @Author: lowen pmtylowen@itcom888.com
+ * @Date: 2023-09-12 13:25:47
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-09-16 15:47:59
+ * @FilePath: /user-pc-vite/project/yazhou-pc/main.js
+ * @Description: 
+ * 
+ * Copyright (c) 2023 by ${git_name_email}, All Rights Reserved. 
+ */
 import { createApp } from "vue";
 import { Quasar } from "quasar";
 // Import icon libraries
@@ -11,6 +21,8 @@ import "quasar/src/css/index.sass";
 import { LocalStorage, SessionStorage  } from "src/core/utils/index.js";
 import { i18n } from "src/core/index.js";
 import router from './src/router/index.js'
+//引入全局初始化样式
+import "./src/css/app.scss"
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 //引入自定义指令

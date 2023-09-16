@@ -20,6 +20,7 @@ import store from "../../store-redux/";
 import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
+import { uid } from 'quasar';
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
@@ -45,7 +46,8 @@ class UserCtr {
     // getUserInfo 原始数据备份 备份数据
     this.getuserinfo_res_backup = null;
     // uid
-    this.uid = "";
+    this.uid = this.init_uid();
+    
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
 
@@ -92,6 +94,21 @@ class UserCtr {
     // 用户信息版本
     this.user_version = ref('0')
     this.callbackUrl = ''
+  }
+  /**
+   * 获取初始化uid
+   * @return {String} uid
+   */
+  init_uid(){
+    let res='';
+    let unique = localStorage.getItem("unique_uuid");
+    if (unique) {
+      res = unique;
+    } else {
+      res = uid().replace(/-/g, "");
+      localStorage.setItem("unique_uuid", res);
+    }
+    return res;
   }
   /**
    * 用户 id
@@ -159,7 +176,10 @@ class UserCtr {
     this.activity = { ...activity }
   }
   clear_user({ commit }) {
-    this.user_info = "";
+    // this.user_info = "";
+    for (const key in this.user_info) {
+      delete this.user_info[key];
+    }
     this.is_invalid = true;
   }
   //设置用户是否长时间未操作

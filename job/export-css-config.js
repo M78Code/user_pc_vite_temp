@@ -23,10 +23,11 @@ console.log("process.argv----------------------3---");
 
 // 商户配置 输出目录
 let write_folder = "./job/output/css/";
-let file_path = write_folder + `${PROJECT_NAME}.js`;
+let file_path = write_folder + `${PROJECT_NAME}.json`;
 
 //本地scss目录
-let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
+// let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
+let scss_folder = `./project/${PROJECT_NAME}/src/css/`;
 
 //确保配置 输出目录存在
 ensure_write_folder_exist(write_folder);
@@ -65,11 +66,11 @@ const get_css_config = async (css_params = {}) => {
 
     write_file(
       file_path,
-      `export default  ` + JSON.stringify(merchant_css_config)
+      JSON.stringify(merchant_css_config)
     );
     write_file(
-      write_folder + "index.js",
-      `export default  ` + JSON.stringify(obj)
+      write_folder + "index.json",
+      JSON.stringify(obj)
     );
   } catch (error) {
     console.log("css文件错误",error);

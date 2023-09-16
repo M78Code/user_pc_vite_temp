@@ -41,9 +41,9 @@
                 chevron_left: 'icon-arrow-left',
                 chevron_right: 'icon-arrow-right',
               }"
-              v-model="model"
+              v-model="date"
               @click.stop
-              @range-end="useMittEmit('init_select', 1)"
+              @range-end="confirmDate"
               range
               v-if="startTimeShow"
               minimal
@@ -52,13 +52,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>  
     <div class="wrap-handel">
       <div class="condition">
         <div class="r-select ml-30" style="margin-right: 5px">
           <!-- 联赛 -->
           <span class="label">{{ i18n_t("results.league") }}</span>
-          <Select-Wrapper
+          <select-y
             @to_hide_select="hideSelect"
             :list="api_league_type"
             :sport_id="sport_id"
@@ -69,8 +69,7 @@
             @confirm="isSelectConfirm"
             :hideSelect="cancel"
             :isTimeChanged="timeChanged"
-            use_component_key="Select_y"
-          ></Select-Wrapper>
+          ></select-y>
         </div>
         <div
           class="search relative-position"
@@ -132,18 +131,42 @@
   </div>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
-import { i18n_t } from "src/boot/i18n.js";
-import { useGetResultConfig } from "../../results-config.js";
+import {  ref } from 'vue';
 import {SelectWrapper} from "src/components/match-results/select";
+import selectY from "src/components/match-results/select/components/select-y.vue"
+import {
+  i18n_t,
+  useMittEmit,
+  useMittEmitterGenerator,
+  MITT_TYPES,
+} from "src/core/index.js";
 const props = defineProps({
+  dateValue:{
+    type:Object
+  },
   sport_type: {
     type: Array,
     default: () => [],
   },
   sport:{
     type:String
-  }
+  },
+  startTimeShowFunc:{
+    type: Function,
+  },
+  ipt_search:{
+    type: Function,
+  },
+  isSelectConfirm:{
+    type: Function,
+  },
+  startTimeShow:{
+    type: Boolean,
+    default:false
+  }, //日历开始时间
+  showSelectTime:{
+    default:null // 日期选择框内计算后的日期
+  } 
 });
 const pournament_params=ref(
       {
@@ -158,6 +181,11 @@ const pournament_params=ref(
         champion:""
       },
 )
+const confirmDate=()=>{
+  props.dateValue.value = date.value
+  useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
+}
+const  date = ref(props.dateValue)
 </script >
 
 <style  lang="scss" scoped>

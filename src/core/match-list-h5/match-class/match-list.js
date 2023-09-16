@@ -5,7 +5,7 @@
 // TODO: get_lang
 import lodash from 'lodash'
 import MatchCtr from './match-ctr'
-import { i18n_t } from 'src/core/index.js'
+import { i18n_t } from "src/boot/i18n.js";
 
 class matchListClass {
   /**
@@ -46,10 +46,11 @@ class matchListClass {
    */
   match_period_map(match, has_replace) {
     let { mmp, csid, ms } = match;
+    let mmp_map_title = ''
     let r = '';
     if ([110].includes(+ms)) { // ms == 110: 代表 即将开赛
       r = i18n_t(`ms[${ms}]`);
-      this.mmp_map_title = r;
+      mmp_map_title = r;
       return r;
     }
     try {
@@ -69,15 +70,14 @@ class matchListClass {
       }
       // 斯诺克7局显示处理
       if (csid == 7) {
-        r = this.mmp_map_title = this.covert_mct(match);
+        r = mmp_map_title = this.covert_mct(match);
         return r;
       }
-      let sport_mmp = i18n_t('mmp')[csid];
-      if (sport_mmp) {
-        r = sport_mmp[mmp];
+      if (i18n_t('mmp')[csid]) {
+        r = i18n_t(`mmp.${csid}.${mmp}`);
         // 如果是篮球的  小节玩法，则转成 上半场
         if ([14, 301].includes(+mmp) && has_replace && csid == 2) {
-          r = sport_mmp[1];
+          r = i18n_t(`mmp.${csid}.1`);
         }
       }
     } catch (e) { console.error(e) }
@@ -86,7 +86,7 @@ class matchListClass {
       r = i18n_t('mmp.2.21');
     }
 
-    this.mmp_map_title = r;
+    mmp_map_title = r;
     return r;
   }
   /**

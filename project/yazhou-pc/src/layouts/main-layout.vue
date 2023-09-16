@@ -307,15 +307,18 @@ import { t } from "src/core/index.js";;
 import { api_account, api_common } from "src/api/";
 import { get_file_path } from "src/core/file-path/file-path.js";
 import { pre_load_iframe } from "src/core/pre-load";
+
 /**组件*/
 import LayoutLeft from "./layout-left.vue";
 import layoutHeader from "project_path/src/layouts/layout-header.vue"; //报错
+
 // import moveVideo from '../components/video/video.vue'//报错
 // const search=defineAsyncComponent(() => import( "../pages/search/search.vue")),
 // const matchDetails = defineAsyncComponent(() =>
 //   import("../pages/match-details/match-details.vue")
 // );
 
+console.error(compute_css_variables({ category: 'component', module: 'bet-record' }));
 ;
 const route = useRoute();
 
@@ -468,6 +471,7 @@ const unsubscribe = store.subscribe(() => {
   //全局开关
   computed_data.get_global_switch = globalReducer.global_switch;
 });
+
 
 //是不是可以显示内嵌框
 const show_bet_zone = computed(() => {

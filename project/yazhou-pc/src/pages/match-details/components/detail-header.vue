@@ -10,7 +10,7 @@
     <div class="wrap-title" ref="wrap_title">
       <!-- 返回按钮 -->
       <div class="group-back cursor-pointer" @click.stop="back_to">
-        <icon name="icon-back" class="back" color="#ABBAC8" />
+        <icon-wapper name="icon-back" class="back" color="#ABBAC8" />
       </div>
       <!-- 联赛标题 -->
       <div class="title ellipsis allow-user-select">
@@ -28,7 +28,7 @@
           @click.stop="sr_click_handle(match_infoData, 'details')"
           v-tooltip="{ content: i18n_t('common.analysis') }"
         >
-          <icon name="icon-signal" color="#ABBAC8" />
+          <icon-wapper name="icon-signal" color="#ABBAC8" />
         </div>
         <!-- 刷新按钮 -->
         <div class="refresh">
@@ -92,7 +92,7 @@ import info from 'src/components/match-detail/match_info/info.vue'
 import handicapTabsBar from "src/components/match-detail/match_info/handicap_tabs_bar.vue";
 import { useRoute, useRouter } from "vue-router";
 // import { useMittEmit, MITT_TYPES } from "src/core/mitt/";
-import icon from "src/components/icon/icon.vue";
+import { IconWapper } from 'src/components/icon'
 import store from "src/store-redux/index.js";
 
 const props = defineProps({
