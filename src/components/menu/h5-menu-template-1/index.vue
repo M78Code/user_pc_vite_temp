@@ -3,16 +3,26 @@
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <slot name="menu-left">
-          <div class="goback-icon-wrapper column justify-center">《</div>
+          <div class="goback-icon-wrapper column justify-center">
+            <div class="img" :style="compute_css({ key: 'h5-go-back-icon', theme: 'local_dev' })"></div>
+          </div>
         </slot>
         <div class="main-menu-container">
           <template v-for="(item, index) in menu_list" :key="item.mi">
-            <div class="m-menu-item" v-show="show_dianjing(item, index)">
-              <span @click="set_menu_lv1(item, index)">
+            <div class="m-menu-item" :class="{ current: item.mi == menu_type }" v-show="show_dianjing(item, index)">
+              <span class="i-title" @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + item.mi) || item.mi }}
               </span>
-              <span v-if="index == 1" @click="show_selector_sub = !show_selector_sub">
-                +++</span>
+              <div class="m-menu-count">
+                <span class="count" :style="{
+                  visibility: show_favorite_list ||
+                    [7, 8].includes(item.mi) ? 'hidden' : 'visible'
+                }">
+                  {{ menu_h5_data.count_menu(item) }}
+                </span><!---->
+                <i v-if="index == 1" @click="show_selector_sub = !show_selector_sub" class="dir-triangle">+</i>
+              </div>
+
             </div>
           </template>
           <!-- 右侧活动和弹出设置 -->
@@ -40,11 +50,37 @@
             <sub-menu-specially v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :class="get_sport_icon(get_sport_all_selected)"></span>
+              <span class="sport-icon-wrap" :style="compute_css({
+                key: current_lv2 == -1 ?
+                  'h5-sport-active-image' : 'h5-sport-icon-image'
+                , position: 0
+              })"></span>
             </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
-              <div class="sport-menu-item flex justify-center" v-show="[7, 28].includes(menu_type) ? item.ct > 0 : true"
+              <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
+
+                <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
+                  <div class="sport-w-icon">
+                    <span class="sport-icon-wrap"
+                      :style="compute_css({ key: current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image', position: format_type(item) })"></span>
+                    <!-- :data-type="format_menu_type(sub)" -->
+                    <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
+
+                    <div class="sport-match-count" v-show="two_menu_show(item)">
+                      {{ show_favorite_list ? '' : item.ct ? item.ct : 0 }}
+                    </div>
+                  </div>
+                  <div class="s-w-i-title" :class="{
+                    esport,
+                    'din-regular': esport
+                  }">
+                    {{ item.name || menu_h5_data.get_menus_i18n_map(
+                      menu_h5_data.recombine_menu_desc(item.mi)
+                    ) }}
+                  </div>
+                </div>
+                <!--                 
                 {{ item.mi }}
                 <span>
                   {{
@@ -53,7 +89,7 @@
                       menu_h5_data.recombine_menu_desc(item.mi)
                     )
                   }}<i>{{ item.ct }}</i>
-                </span>
+                </span> -->
               </div>
             </template>
           </div>
@@ -106,16 +142,16 @@
       favorite: show_favorite_list,
       show: show_selector_sub,
     }" style="background: #fff">
-      <template :key="i_m" v-for="(m_items, i_m) in pop_main_items">
-        <div @click="set_menu_lv1(m_items, i_m)" class="main-m-select-item flex justify-center items-center"
-          v-show="is_menu_show(m_items, i_m)">
-          <!-- current -->
+      <template :key="i_m" v-for="(item, i_m) in pop_main_items">
+        <div @click="set_menu_lv1(item, i_m)" class="main-m-select-item flex justify-center items-center"
+          v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == item.mi }">
+
           <div class="m-menu-name-m">
-            {{ i18n_t(`new_menu.${m_items.mi}`) }}
+            {{ i18n_t(`new_menu.${item.mi}`) }}
           </div>
-          <!-- <div class="m-count-match" v-if="!show_favorite_list">
-            {{ count_menu(m_items) }}
-          </div> -->
+          <div class="m-count-match" v-if="!show_favorite_list">
+            {{ menu_h5_data.count_menu(item) }}
+          </div>
         </div>
       </template>
     </div>
@@ -125,13 +161,13 @@
 import subMenuSpecially from "./sub-menu-specially.vue";
 import { ref, watch, getCurrentInstance, computed, unref } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { i18n_t, utils, UserCtr, get_file_path } from "src/core/index.js";
+import { i18n_t, compute_css, } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
+// import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+// import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 const Instance = getCurrentInstance();
 console.error(Instance.slots
 )
@@ -163,13 +199,13 @@ let current_menu = ref({});
 let date_menu_list = ref([]);
 // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
 let virtual_sports_results_tab = ref([]);
-
+const current_lv2 = ref(0)//二级菜单选中
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
 const show_favorite_list = ref(false); //是否显示收藏列表
 
 // 一级菜单mi ref
-const { menu_type, update_time, get_sport_all_selected, get_sport_icon } =
+const { menu_type, update_time, } =
   menu_h5_data;
 const esport = computed(() => {
   return menu_type.value == 7;
@@ -189,7 +225,18 @@ const is_show_four_menu = computed(() => {
     virtual_sports_results_tab.value.length > 0
   );
 });
-
+/**
+    * 二级菜单数量 是否展示
+    * @param {Number} sub  赛种item
+    */
+const two_menu_show = (sub) => {
+  if (menu_type.value == 28) {
+    return false
+  }
+  // 滚球下足球处理 1011足球
+  let mi_list = menu_type.value == 1 ? [1001, 1002, 1004, 1010] : [1001, 1002, 1004, 1011, 1010]
+  return ![7, 8, 28].includes(menu_type.value) && !mi_list.includes(+sub.mi)
+}
 // 获取主菜单列表  main_select_items 弹出的一级 菜单数据   main_menu_list_items 一级菜单数据
 watch(update_time, (update_time) => {
   const [lv1, pop] = menu_h5_data.get_sport_menu(); //获取体育菜单 【一级菜单，弹出框菜单】
@@ -199,6 +246,7 @@ watch(update_time, (update_time) => {
   current_menu.value = menu_h5_data.menu_lv2; //2级
   date_menu_list.value = menu_h5_data.menu_lv3; //三级
   virtual_sports_results_tab.value = menu_h5_data.menu_lv4; //4级
+  current_lv2.value = menu_h5_data.current_lv_2_menu_i
 });
 
 //初始化菜单
@@ -267,11 +315,7 @@ const all_sport_count_calc = computed(() => {
   if (menu_type.value == 1 && update_time.value) {
     let data_list = menu_list.value.find((item) => item.mi == 1);
     //滚球下所有是数量总和
-    return !data_list
-      ? 0
-      : data_list.sl.reduce((sum, item) => {
-        return sum + item.ct;
-      }, 0);
+    return menu_h5_data.count_menu(data_list)
   }
   return 0;
 });
@@ -366,6 +410,32 @@ const show_dianjing = (item, index) => {
     return ![2, 3, 6, 7].includes(index);
   }
 };
+/**
+     * @description: 球类id转化背景
+     * @param {String} id 球类id
+     * @return {}
+     */
+const format_type = (id) => {
+  if (menu_type.value == 28) {
+    let type = +id?.menuId
+    // 赛果电竞图标
+    if ([100, 101, 103, 102].includes(type)) {
+      type += 2000
+    }
+    // 赛果 我的投注
+    if (id?.menuType && id.menuType == 29) {
+      type = id.menuType
+    }
+    // 赛果冠军
+    if (type == 10000) {
+      type = 100
+    }
+    return type
+  }
+  //电竞背景处理
+  if ([2100, 2101, 2103, 2102].includes(+id?.mi)) return +id?.mi
+  return menu_h5_data.recombine_menu_bg(id, true)
+}
 //弹出框 是否展示
 function is_menu_show(item) {
   if (item.mi == 28 && show_favorite_list.value) {
@@ -501,7 +571,7 @@ function is_menu_show(item) {
       height: 0.2rem;
       padding-left: 0.15rem;
 
-      img {
+      .img {
         width: 0.12rem;
         height: 0.2rem;
       }
@@ -749,7 +819,8 @@ function is_menu_show(item) {
                 width: auto;
                 height: 0.22rem;
                 width: 0.22rem;
-                background: var(--q-color-com-img-bg-140) no-repeat 0 0 / 0.22rem 18.88rem;
+                background-position: 0 0;
+                background-size: 0.22rem 18.88rem;
 
                 // 使用css变量统一管理，所以废弃这里代码，转为不遍历
                 // @each $item, $img in (d: '04', c: '03', a: '01', e: 'y0', b: '05') {

@@ -99,7 +99,7 @@ import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
 import { get_remote_time } from 'src/core/utils/module/match-list-utils.js';
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import {MenuData, serialized_score } from "src/core/index.js"
+import {MenuData } from "src/core/index.js"
 
 import { t } from "src/core/index.js";
 
@@ -111,8 +111,6 @@ const props = defineProps({
   }
 })
 
-
-console.log('matchmatchmatchmatch', props.match);
 
 const is_show_home_goal = ref(false) // 是否显示主队进球动画
 const is_show_away_goal = ref(false) // 是否显示客队进球动画

@@ -142,25 +142,24 @@ class MenuData {
     }
   }
   //=============================
-  count_menu(menu_list = [], list) {
-    //传入sl eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
+  count_menu(menu_list = { sl: [] }, list) {
+    //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
-    if (menu_list && menu_list[0]?.mi == 500) {
-      const data = lodash.findIndex(menu_list[0].sl, (item) => {
+    const { sl, mi } = menu_list;
+    console.error(111, mi)
+    if (mi == 30) {
+      const data = lodash.find(sl, (item) => {
         //竞足特殊处理
         return item.mi == "50101";
       });
-      try {
-        return menu_list[0]?.sl[data].ct || "";
-      } catch (error) {
-        console.log(error);
-        return 0;
-      }
+      if (data)
+        return data.ct || data.count || 0
+      return 0;
     }
-    return menu_list && menu_list.reduce
-      ? menu_list.reduce((pre, cur) => {
-          return pre + cur.ct;
-        }, 0)
+    return sl && sl.reduce
+      ? sl.reduce((pre, cur) => {
+        return pre + (cur.ct || cur.count || 0);
+      }, 0)
       : 0;
   }
   //获取match菜单
@@ -264,7 +263,7 @@ class MenuData {
     if (!lodash.isEmpty(data)) {
       let db_data = [];
       lodash.each(Object.keys(data), (item) => {
-        if (data[item].sl && this.count_menu(data[item].sl) > 0) {
+        if (data[item].sl && this.count_menu(data[item]) > 0) {
           //过滤没有赛事数据球类
           db_data.push({
             mi: item,
@@ -547,6 +546,7 @@ class MenuData {
           name: item.name || "",
           menuId: item.menuId || item.field1,
           menuType: item.menuType || "",
+          mi: item.mi
         });
       });
       return list;
@@ -620,7 +620,6 @@ class MenuData {
   }
   // 赛果二级菜单  数据（名称） 特殊处理 成 menuName
   result_sub_menu_api_handle(res_data, type = "click") {
-    console.error(res_data);
     // 赛果二级菜单  name 特殊处理 成 menuName
     res_data.forEach((sub_menu) => {
       sub_menu.menuName = sub_menu.name;

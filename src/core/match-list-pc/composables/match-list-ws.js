@@ -2,7 +2,6 @@ import { ref } from "vue";
 // import MatchListData from "src/core/match-list-pc/match-data/match-list-data-class.js";
 import use_featch_fn from "./match-list-featch.js";
 import {utils } from 'src/core/index.js';
-
 //  订阅所需 赛事ID
 
 const skt_mid = ref({});

@@ -145,7 +145,6 @@ const props = defineProps({
     type:String
   }
 });
-
 const pournament_params=ref(
       {
         //联赛入参

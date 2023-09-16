@@ -31,9 +31,15 @@
     }
   },
   "assets": {
-    "pc-left-menu-bg-image": {
+    "left-menu-bg-image": {
       "day": "日间版素材地址",
       "night": "夜间版素材地址"
+    },
+    "img-bet-record-close": {
+      "day": "yazhou-h5/image/activity/activity_entrance.png",
+      "night": "夜间版素材地址"
+ 
+  
     }
   }
 }

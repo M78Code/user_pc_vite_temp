@@ -24,4 +24,9 @@ export default {
  "bet-record-color-23": "#ffffff",
  "bet-record-color-24": "#5a6074",
  "bet-record-color-25": "linear-gradient(360deg,#FFD780, #FEFBF4 99%)",  // rgba(255,176,1,0.5) 转16进制#FFD780  rgba(255,176,1,0.04)  转16进制#FEFBF4
+ "bet-record-color-26": "#f6f7fa",
+ "bet-record-color-27": "#d0d8de",
+ "bet-record-color-28": "#000000",
+ "bet-record-color-29": "#e7eaee",
+ "bet-record-color-30": "#0086f3",
 }

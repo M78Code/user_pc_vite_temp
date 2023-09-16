@@ -3,42 +3,23 @@
  * @Date:
  * @Description: 设置菜单
 -->
-
 <template>
   <div class="set-menu yb_fontsize12" @click.stop="change_show_status">
     <div class="filter-icon-wrapper yb-flex-center">
-      <div
-        class="img"
-        v-if="UserCtr.theme.includes('theme01') && 3000 != menu_type"
-      ></div>
-      <div
-        class="img theme2"
-        v-if="UserCtr.theme.includes('theme02') && 3000 != menu_type"
-      ></div>
-      <div class="img esports" v-if="3000 == menu_type"></div>
-      菜
+      <div class="img" :style="compute_css({ key: 'h5-menu-icon' })" v-if="8 != menu_type"></div>
+      <div class="img esports" v-if="8 == menu_type"></div>
     </div>
     <!--
       移除原有quasar侧边栏组件,因为quasar会强制将body改为绝对定位,影响赛事列表滚动数据
       @click.stop=""内部div阻止冒泡到容器div ,因为外部容器div被点击时会隐藏设置菜单
     -->
     <div class="filter-css-5" v-show="is_show_menu"></div>
-    <div
-      class="c-set-menu"
-      @click.stop="is_show_menu = false"
-      v-show="is_show_menu"
-      :class="{ show: is_show_menu, effect: wrapper_effect }"
-      :style="{ right: `-3.77rem` }"
-
-    >
-      <div
-        class="menu-inner"
-        @click.stop=""
-        :style="{ width: `${calc_width}px`,background:'#fff' }"
-      >
+    <div class="c-set-menu" @click.stop="is_show_menu = false" v-show="is_show_menu"
+      :class="{ show: is_show_menu, effect: wrapper_effect }" :style="{ right: `-3.77rem` }">
+      <div class="menu-inner" @click.stop="" :style="{ width: `${calc_width}px`, background: '#fff' }">
         <!-- 关闭按钮 -->
         <div class="close-wrap">
-          <div class="img" @click="is_show_menu = false"></div>
+          <div :style="compute_css({ key: 'h5-close-icon' })" class="img" @click="is_show_menu = false"></div>
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
@@ -47,23 +28,15 @@
             <div class="balance yb_mr4" @click="get_balance">
               {{ format_money2(UserCtr.user_info.balance) }}
             </div>
-            <div
-              class="refesh"
-              :class="{ rotate: is_loading_balance }"
-              @click="get_balance"
-            ></div>
+            <div class="refesh" :class="{ rotate: is_loading_balance }" @click="get_balance"></div>
           </div>
         </div>
         <!-- 排序 -->
-        <div
-          class="set-item"
-          v-if="
-            GlobalAccessConfig.get_sortCut() &&
-            route.name != 'virtual_sports' &&
-            route.name != 'virtual_sports_details' &&
-            menu_type !== 3000
-          "
-        >
+        <div class="set-item" v-if="GlobalAccessConfig.get_sortCut() &&
+          route.name != 'virtual_sports' &&
+          route.name != 'virtual_sports_details' &&
+          menu_type !== 3000
+          ">
           <div class="icon set-icon-1"></div>
           <div class="name">{{ $t("setting_menu.footer_t_sort") }}</div>
           <div class="option" @click="sort_type_changed">
@@ -88,16 +61,16 @@
             <div class="op-item active">
               {{
                 get_cur_odd == "EU"
-                  ? $t("setting_menu.odd_europe2")
-                  : $t("setting_menu.odd_hong_kong2")
+                ? $t("setting_menu.odd_europe2")
+                : $t("setting_menu.odd_hong_kong2")
               }}
             </div>
             <div class="op-icon"></div>
             <div class="op-item">
               {{
                 get_cur_odd == "EU"
-                  ? $t("setting_menu.odd_hong_kong2")
-                  : $t("setting_menu.odd_europe2")
+                ? $t("setting_menu.odd_hong_kong2")
+                : $t("setting_menu.odd_europe2")
               }}
             </div>
           </div>
@@ -110,16 +83,16 @@
             <div class="op-item active">
               {{
                 BetData.bet_is_accept == 2
-                  ? $t("setting_menu.odd_any2")
-                  : $t("setting_menu.odd_optimal2")
+                ? $t("setting_menu.odd_any2")
+                : $t("setting_menu.odd_optimal2")
               }}
             </div>
             <div class="op-icon"></div>
             <div class="op-item">
               {{
                 BetData.bet_is_accept == 2
-                  ? $t("setting_menu.odd_optimal2")
-                  : $t("setting_menu.odd_any2")
+                ? $t("setting_menu.odd_optimal2")
+                : $t("setting_menu.odd_any2")
               }}
             </div>
           </div>
@@ -133,16 +106,16 @@
             <div class="op-item active">
               {{
                 get_newer_standard_edition == 2
-                  ? $t("setting_menu.standard")
-                  : $t("setting_menu.concise")
+                ? $t("setting_menu.standard")
+                : $t("setting_menu.concise")
               }}
             </div>
             <div class="op-icon"></div>
             <div class="op-item">
               {{
                 get_newer_standard_edition == 2
-                  ? $t("setting_menu.concise")
-                  : $t("setting_menu.standard")
+                ? $t("setting_menu.concise")
+                : $t("setting_menu.standard")
               }}
             </div>
           </div>
@@ -161,11 +134,7 @@
         </div>
         <div class="lang-wrap" :class="{ active: is_show_lang }">
           <template v-for="(item, index) in lang_obj" :key="index">
-            <div
-              class="lang-item"
-              :class="{ active: get_lang == index }"
-              @click="setting_language_handle(index)"
-            >
+            <div class="lang-item" :class="{ active: get_lang == index }" @click="setting_language_handle(index)">
               <i class="lang-icon yb_mr4" :class="`lang-${index}`"></i>
               <div class="col">{{ item }}</div>
               <div class="icon"></div>
@@ -187,14 +156,8 @@
           <div class="icon set-icon-7"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
           <div class="skin-wrap">
-            <div
-              class="skin-icon skin-icon1"
-              @click="handle_set_theme('theme01')"
-            ></div>
-            <div
-              class="skin-icon skin-icon2"
-              @click="handle_set_theme('theme02')"
-            ></div>
+            <div class="skin-icon skin-icon1" @click="handle_set_theme('theme01')"></div>
+            <div class="skin-icon skin-icon2" @click="handle_set_theme('theme02')"></div>
           </div>
         </div>
       </div>
@@ -210,7 +173,7 @@ import { api_betting } from "src/api/index";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_money2 } from "src/core/format/index.js";
 import { debounce } from "lodash";
-import { i18n, loadLanguageAsync } from "src/core/index.js";
+import { loadLanguageAsync, compute_css } from "src/core/index.js";
 import { computed, onUnmounted, watch } from "vue";
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { useRoute, useRouter } from "vue-router";
@@ -289,7 +252,7 @@ const get_is_champion2 = computed(() => {
 /**
  *@description 窗口宽度改变事件处理
  */
- const window_resize_handle = () => {
+const window_resize_handle = () => {
   calc_width = (2.6 * window.innerWidth) / 3.75;
 };
 //刷新金额loading时钟
@@ -524,6 +487,7 @@ const get_balance = () => {
     padding-top: 0.1rem;
     overflow: auto;
   }
+
   // 关闭按钮
   .close-wrap {
     height: 0.3rem;
@@ -535,11 +499,12 @@ const get_balance = () => {
       bottom: -10px;
       width: 0.4rem;
       height: 100%;
-      background-size: 0.1rem;
+      background-size: 0.1rem !important;
       background-repeat: no-repeat;
       background-position: center;
     }
   }
+
   // 用户信息
   .user-info {
     position: relative;
@@ -559,6 +524,7 @@ const get_balance = () => {
       0% {
         transform: rotate(0deg);
       }
+
       100% {
         transform: rotate(360deg);
       }
@@ -615,7 +581,9 @@ const get_balance = () => {
         .set-icon-#{$item} {
           background-position-y: calc(var(--per) * #{$item}) !important;
         }
-      } @else if $item > 5 {
+      }
+
+      @else if $item >5 {
         .set-icon-#{$item} {
           background-position-y: calc(var(--per) * #{$item - 1}) !important;
         }
@@ -672,10 +640,12 @@ const get_balance = () => {
         min-width: 0.4rem;
       }
     }
+
     .option3 {
       flex-direction: row;
       align-items: center;
     }
+
     // 换肤
     .skin-wrap {
       display: flex;
@@ -693,6 +663,7 @@ const get_balance = () => {
       }
     }
   }
+
   // 语言包
   .lang-wrap {
     max-height: 0px;
@@ -729,6 +700,7 @@ const get_balance = () => {
     }
   }
 }
+
 /* ************** 切换语言前面的图标 ************** -S */
 .lang-icon {
   width: 0.16rem;
@@ -740,24 +712,21 @@ const get_balance = () => {
 
 /*语言国旗图标*/
 @each $code,
-  $index
-    in (
-      en: 1,
-      tw: 2,
-      vi: 3,
-      th: 5,
-      ms: 4,
-      ad: 6,
-      mya: 7,
-      ry: 8,
-      pt: 9,
-      ko: 10,
-      es: 11
-    )
-{
+$index in (en: 1,
+  tw: 2,
+  vi: 3,
+  th: 5,
+  ms: 4,
+  ad: 6,
+  mya: 7,
+  ry: 8,
+  pt: 9,
+  ko: 10,
+  es: 11) {
   .lang-#{$code} {
     background-position-y: calc(var(--per) * #{$index});
   }
 }
+
 /* ************** 切换语言前面的图标 ************** -E */
 </style>

@@ -26,11 +26,11 @@
             </p> -->
           </div>
           <div>
-            <!-- 提前结算 -->
-            <span class="yb_fontsize12" @click.stop="change_early"
-              :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
-              {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
-            </span>
+          <!-- 提前结算 -->
+          <span class="yb_fontsize12" @click.stop="change_early"
+            :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
+            {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
+          </span>
           </div>
         </div>
         <template v-if="no_data">
@@ -387,7 +387,9 @@ onUnmounted(() => {
   .edit {
     height: 0.44rem;
     margin-bottom: -0.14rem;
-
+    .select {
+      color: var(--q-cathectic-color-36);
+    }
     i {
       display: inline-block;
       background-repeat: no-repeat;

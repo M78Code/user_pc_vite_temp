@@ -448,4 +448,76 @@ onUnmounted(() => {
 
 
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bet-mix-detail {
+  .content-box2 {
+    min-height: 0.56rem;
+    position: relative;
+  }
+  .content-b {
+    width: 1.6rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: right;
+    border-radius: 4px;
+    font-size: 0.16rem;
+    overflow: hidden;
+    padding-left: 0.1rem;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .set-opacity {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+  .money-number{
+    margin-top: 1px;
+  }
+  .money-span {
+    width: 0.02rem;
+    height: 0.16rem;
+    margin: 0 1px;
+  }
+  .money-close{
+    position: absolute;
+    top: 50%;
+    right: 0.08rem;
+    width: 0.15rem;
+    height: 0.15rem;
+    line-height: 0.15rem;
+    text-align: center;
+    margin-top: -0.09rem;
+    background: gray;
+    color: #FFFFFF;
+    border-radius: 50%;
+    font-size: 13px;
+}
+  /* ************** 左边元素相关样式 ************** -S */
+  .content-t {
+    padding-left: 0.12rem;
+    margin-right: auto;
+
+    p:nth-child(1) {
+      position: relative;
+      &::after {
+        content: "";
+        width: 3px;
+        height: 0.12rem;
+        border-radius: 2px;
+        position: absolute;
+        left: -0.08rem;
+        top: 50%;
+        transform: translateY(-58%);
+      }
+    }
+
+    p:nth-child(2) {
+      font-size: 0.12rem;
+      line-height: 0.14rem;
+    }
+  }
+  /* ************** 左边元素相关样式 ************** -E */
+}
+</style>
