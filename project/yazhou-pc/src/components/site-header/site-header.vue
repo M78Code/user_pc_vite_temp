@@ -99,7 +99,7 @@ import { api_account } from "src/api/index.js";
 import { compute_css_variables } from "src/core/css-var/index.js"
 
 const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'header-search' })
+page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
 const emit = defineEmits(['navigate'])
 
