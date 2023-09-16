@@ -3,6 +3,7 @@
     <div v-if="_data.is_ws_run" class="timeShow" @click="copyToken()">
       {{ _data.current_env }}
     </div>
+    <ws/>
     <!-- 页面路由开始 -->
     <router-view />
     <div class="error-data">{{ get_error_data }}</div>
@@ -22,6 +23,7 @@ import store from "src/store-redux/index.js";
 import { t } from "src/core/index.js";
 import { useRouter } from "vue-router";
 import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 const { NODE_ENV, CURRENT_ENV, DEFAULT_VERSION_NAME } = window.BUILDIN_CONFIG;
 const urlparams = GetUrlParams();
 const router = useRouter();
