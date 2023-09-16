@@ -1,4 +1,4 @@
-import server_resource from "app/job/output/assets/index.js";
+import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 import UserCtr from "src/core/user-config/user-ctr.js";

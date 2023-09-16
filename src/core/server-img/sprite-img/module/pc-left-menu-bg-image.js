@@ -2,7 +2,7 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 
-// import server_resource from "app/job/output/assets/index.js";
+// import server_resource from "app/job/output/assets/index.json";
 const server_resource = {}
 import UserCtr from "src/core/user-config/user-ctr.js";
 
