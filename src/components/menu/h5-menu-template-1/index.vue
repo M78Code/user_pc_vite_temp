@@ -50,11 +50,11 @@
             <sub-menu-specially v-show="GlobalAccessConfig.get_playAllShow() && menu_type == 1"
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
-              <span class="sport-icon-wrap" :style="compute_css({
-                key: current_lv2 == -1 ?
+              <span class="sport-icon-wrap" :style="compute_css(
+                current_lv2 == -1 ?
                   'h5-sport-active-image' : 'h5-sport-icon-image'
-                , position: 0
-              })"></span>
+                , 0
+              )"></span>
             </sub-menu-specially>
             <template v-for="(item, index) in current_menu" :key="item.mi">
               <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
@@ -62,8 +62,8 @@
 
                 <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
                   <div class="sport-w-icon">
-                    <span class="sport-icon-wrap"
-                      :style="compute_css({ key: current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image', position: format_type(item) })"></span>
+                    <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
+                      :style="compute_css(current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image')"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
