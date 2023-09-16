@@ -24,6 +24,7 @@ console.log("process.argv----------------------3---");
 // 商户配置 输出目录
 let write_folder = "./job/output/css/";
 let file_path = write_folder + `index.json`;
+let project_path = write_folder + `keys.json`;
 
 //本地scss目录
 let scss_folder = `./project/${PROJECT_NAME}/src/css/variables/`;
@@ -58,11 +59,14 @@ const getAllFile = function (dir) {
  */
 const get_css_config = async (css_params = {}) => {
   try {
-    let merchant_css_config = {};
-    const obj = await diff_css_local(css_params);
+    const [obj, keys] = await diff_css_local(css_params);
     write_file(
       file_path,
       JSON.stringify(obj)
+    );
+    write_file(
+      project_path,
+      JSON.stringify(keys)
     );
   } catch (error) {
     console.log("css文件错误", error);
@@ -76,14 +80,20 @@ const diff_css_local = async (css_params) => {
     global: {},
     component: {},
   };
+  const obj_keys = {
+    global: {},
+    component: {},
+  };
   function red_path_keys(file_path, key) {
     return import("../" + file_path.replace(/\\/g, "/")).then((res) => {
       const file_name = file_path.split(/[\\/]/).pop().replace(".js", "");
-      if (res.default) obj[key][file_name] = Object.keys(res.default).reduce((sum, cur) => {
-        sum[cur] = css_params[cur] || { day: '', night: '' }
-        console.log(cur, sum[cur])
-        return sum;
-      }, {});
+      if (res.default) {
+        obj_keys[key][file_name] = Object.keys(res.default);
+        obj[key][file_name] = Object.keys(res.default).reduce((sum, cur) => {
+          sum[cur] = css_params[cur] || { day: '', night: '' }
+          return sum;
+        }, {});
+      }
       // if (!lodash.hasIn(merchant_css_config.global, Object.keys(res.default))) {
       //   process.emit(1);
       // }
@@ -94,7 +104,7 @@ const diff_css_local = async (css_params) => {
   //component
   const components = all_component_scss.map(v => red_path_keys(v, "component"));
   await Promise.all(globals.concat(components));
-  return obj;
+  return [obj, obj_keys];
 };
 
 
