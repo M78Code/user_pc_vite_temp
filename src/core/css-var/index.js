@@ -4,67 +4,21 @@ import final_css_config from "app/job/output/css/index.json"
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME;
-// const IS_PC = PROJECT_NAME.includes("pc");
-
-
-// 处理  演示代码 
 // 全局的   
-// const modules = import.meta.globEager("./module/*.js");
-// const global_modules =import.meta.glob([`../../../project/${PROJECT_NAME}/src/css/variables/global/*js`]);
-// const component_modules = import(`../../../project/${PROJECT_NAME}/src/css/variables/component/*js`);
-const IS_PC = PROJECT_NAME.includes("pc");
-
-
-// 处理  演示代码 
-// 全局的   
-// const modules = import.meta.globEager("./module/*.js");
-const global_modules_h5 = import.meta.glob(`../../../project/yazhou-h5/src/css/variables/global/*js`, { eager: true });
-const component_modules_h5 = import.meta.glob(`../../../project/yazhou-h5/src/css/variables/component/*js`, { eager: true });
-const global_modules_pc = import.meta.glob(`../../../project/yazhou-pc/src/css/variables/global/*js`, { eager: true });
-const component_modules_pc = import.meta.glob(`../../../project/yazhou-pc/src/css/variables/component/*js`, { eager: true });
-
-const global_modules = IS_PC ? global_modules_pc : global_modules_h5
-const component_modules = IS_PC ? component_modules_pc : component_modules_h5
-
-
-const conmpute_css_obj = (_modules) => {
-  let css_obj = {}
-  Object.keys(_modules).forEach((path) => {
-    let arr = path.split("/")
-    let key = arr[arr.length - 1]
-    key = key.substring(0, key.length - 3)
-    // var module = await _modules[path]()
-    css_obj[key] = _modules[path].default;
-  });
-  return css_obj
-}
-
-const all_css = {
-  global: conmpute_css_obj(global_modules),
-  component: conmpute_css_obj(component_modules)
-};
-
 /**
  * @param {*} category  :     global   /  component
  * @param {*} module   :    css 目录下 ：  global   /  component  目录下 ：文件名字  ： 例如  background
  */
-
 export const compute_css_variables = ({ category, module }) => {
   console.log(category, module)
-  let css_obj = all_css[category][module] || {}
+  let css_obj = final_css_config[category][module] || {}
   let keys = Object.keys(css_obj)
-
   let final_obj = {}
-
   for (let key in css_obj) {
     // output final_css_config 输出格式不对，先注释
     // final_obj[`--q-${key}`] = final_css_config[category][module][UserCtr.theme]
-    final_obj[`--q-${key}`] = css_obj[key]
+    final_obj[`--q-${key}`] = css_obj[key][UserCtr.theme]
   }
-
   return final_obj
-
 }
 
