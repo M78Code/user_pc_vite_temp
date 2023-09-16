@@ -282,6 +282,45 @@ export default class MatchDataBase
   }
 
   /**
+   * @description: 格式化比分数组(数组转对象)
+   * @param {Object} msc 比分数据列表
+   */
+  serialized_score_obj(msc){
+    let score_obj = {}
+      // 遍历接口比分数据 转成比分对象
+      lodash.each(msc, score_str => {
+        let [key,value] = score_str.split('|')
+        if(value){
+          let [home,away] = value.split(':')
+          score_obj[key] = {home,away}
+        }
+      })
+      return  score_obj
+  }
+  /**
+   * @description: 格式化列表比分(比分数组转对象)
+   * @param {Object} list 所有列表数据
+   */
+  list_serialized_score_obj(list){
+    if(lodash.get(list,'length')){
+      // 格式化比分信息
+      list.forEach(match => {
+        const score_obj = lodash.get(match, 'msc_obj');
+        const msc = lodash.get(match, 'msc',[]);
+        // 转换比分
+        const msc_obj = this.serialized_score_obj(msc);
+        // 数据赋值和合并逻辑
+        if(score_obj){
+          this.assign_with(score_obj, msc_obj)
+        } else {
+          match.msc_obj = msc_obj;
+        }
+      });
+    }
+  }
+  
+
+  /**
    * @description: 设置所有列表数据
    * @param {Object} list 所有列表数据
    * @param {Boolean} is_merge 是否进行合并数据同步(保证地址不变)
@@ -290,6 +329,8 @@ export default class MatchDataBase
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'list';
+      // 格式化列表比分(比分数组转对象)
+      this.list_serialized_score_obj(list);
       let obj = this.list_comparison(this.list,list);
       if(is_merge){
         // {add:{}, del:{}, upd:{}}
@@ -640,6 +681,8 @@ export default class MatchDataBase
     if(match_details){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'match';
+      // 格式化列表比分(比分数组转对象)
+      this.list_serialized_score_obj([match_details]);
       if(is_merge){
         // 合并模式时,获取赛事信息
         const match=lodash.get(this.list,'[0]');
