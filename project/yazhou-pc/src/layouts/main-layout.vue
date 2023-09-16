@@ -298,7 +298,6 @@ import store from "src/store-redux/index.js";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import base_data from "src/core/base-data/base-data.js";
 import matchlist from "src/core/match-list-pc/match-scroll.js";
-import match_list_tpl_size from "src/core/match-list/data-class-ctr/match-list-tpl-size.js";
 import new_menu from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt";
 import { useEventListener } from "src/core/utils/event-hook";
@@ -997,7 +996,7 @@ function resize() {
   } else {
     list_content_width -= 14;
   }
-  // match_list_tpl_size.set_template_width(list_content_width);
+  MATCH_LIST_TEMPLATE_CONFIG.new_menu.set_template_width(list_content_width);
   methods_map_store["SET_LAYOUT_SIZE"]({
     inner_width,
     inner_height,
