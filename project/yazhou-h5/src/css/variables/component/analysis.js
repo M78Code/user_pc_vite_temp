@@ -1,6 +1,6 @@
 
 export default {
-  "analysis-bg-color-1": "#fff",
+  "analysis-bg-color-1": "#ffffff",
   "analysis-bg-color-2": "#d0d8de",
   "analysis-bg-color-3": "#e7eaee",
   "analysis-bg-color-5": "#f8f9fa",
@@ -21,14 +21,13 @@ export default {
   "analysis-text-color-7": "#71c866",
   "analysis-text-color-8": "#5ab6f7",
   "analysis-text-color-9": "#afb3bb",
-  "analysis-text-color-10": "#333",
+  "analysis-text-color-10": "#333333",
   "analysis-text-color-11": "#B6B9C6",
   "analysis-text-color-12": "#83838a",
   "analysis-text-color-13": "#ffffff",
   "analysis-text-color-14": "#999999",
   "analysis-bd-color-1": "#e7eaee",
   "analysis-bd-color-2": "#d0d8de",
-  "analysis-bd-color-3": "#ffffff",
   "analysis-bd-color-4": "#dce0e5",
   "analysis-bg-gradient-1": "linear-gradient(180deg, #fff 21%, #f0f3f7 100%)",
   "analysis-bg-gradient-4": "linear-gradient(180deg, #FFFFFF 21%, #F0F3F7 100%), linear-gradient(180deg, #FFFFFF 21%, #F0F3F7 100%)",
