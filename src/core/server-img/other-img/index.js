@@ -19,7 +19,6 @@ Object.keys(modules).forEach((key) => {
  * @returns 
  */
 function compute_css({ key, theme }) {
-  console.log(server_resource, 11111111)
   //先从商户配置拿 再从本地拿 
   let config = server_resource[key] || all_other_image[key] || {};
   //从打包的 环境拿 图片地址
