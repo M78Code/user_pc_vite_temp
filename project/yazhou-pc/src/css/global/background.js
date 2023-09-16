@@ -22,4 +22,3 @@ export default {
     'gb-bg-c-21': 'transparent'
   }
 
-  // "#f6f7fa"

@@ -1,7 +1,6 @@
  
 <template>
   <div>
-   {{perPageNum}}
     <div class="table-footer-bar" v-if="is_bet_record">
       <span>
         {{ i18n_t('bet_record.total_count') }}11
@@ -30,15 +29,15 @@
       </template>
     </div>
     <div class="pagination-wrap" :style="results_table">
+      {{"page+++" + page}}
       <q-pagination v-model="page" color="#788299" text-color="panda-text-3" :max="max" size="sm" :max-pages="9"
         direction-links ellipses icon-prev="icon-triangle2" icon-next="icon-triangle3" />
       <div class="pagination-select">
-        {{ perPageNum }}
+        {{ 'perPageNum---' + perPageNum }}
         <q-select class="select" :class="{ 'select-page-input': icon_name == 'icon-triangle' }" outlined
           v-model="perPageNum" :options="perPageNumOptions" popup-content-style="border:1px solid #d0d8de;background:#fff"
           @popup-show="icon_name = 'icon-triangle'" @popup-hide="icon_name = 'icon-triangle1'">
           <template v-slot:option="scope">
-            {{ scope}}
             <div class="select-item" v-bind="scope.itemProps" v-on="scope.itemEvents">{{ scope.opt.value }}</div>
           </template>
           <template v-slot:append>
@@ -126,7 +125,7 @@ const props = defineProps(
 //-------------------- 对接参数 prop 注册  结束  -------------------- 
 
 //-------------------- 组件内ref  -------------------- 
-const { goPage, pagination, perPageNumOptions, pageChangeFlag, page, max } = useGetValue(props)
+const { goPage, pagination, perPageNumOptions, pageChangeFlag, page, max, perPageNum } = useGetValue(props)
 
 
 
@@ -166,9 +165,11 @@ const goToPage = (val) => {
   padding-right: 20px;
   height: 36px;
   font-size: 14px;
-
+  color: var(--q-gb-t-c-6);
+  background: var(--q-gb-bg-c-14);
   span {
     margin-left: 20px;
+    color: var(--q-gb-t-c-6);
     .footer-text {
       margin: 0;
       font-weight: 500;
@@ -180,6 +181,8 @@ const goToPage = (val) => {
   justify-content: center;
   height: 60px;
   font-size: 12px;
+  background-color: transparent;
+  color: var(--q-gb-t-c-10);
   .pagination-select {
     display: flex;
     align-items: center;
@@ -247,6 +250,7 @@ const goToPage = (val) => {
     line-height: 1;
     .q-btn__wrapper {
       min-height: 0px;
+      background-color: var(--q-gb-bg-c-3);
       &:before {
         box-shadow: none;
       }

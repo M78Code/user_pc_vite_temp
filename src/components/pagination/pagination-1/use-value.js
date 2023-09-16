@@ -1,4 +1,6 @@
 import { ref, reactive, toRefs, computed ,onMounted} from "vue";
+import lodash from "lodash"
+
 export const useGetValue = ({ count }) => {
   const state = reactive({
     goPage: 1,
@@ -33,21 +35,23 @@ export const useGetValue = ({ count }) => {
       if (count === 0) {
         return 0;
       }
+      console.error(state);
       // 偏移量/每页显示数量 向下取整 + 1
-      return Math.floor(state.pagination.offset / state.pagination.limit) + 1;
+      return Math.floor(parseInt((state.pagination.offset || 0) ) / parseInt(state.pagination.limit || 1)) + 1;
     },
     set: function (val) {
       // 页码改变动态的更新偏移量
-      state.pagination.offset = (val - 1) * perPageNum;
+      state.pagination.offset = (val - 1) * perPageNum.value;
     },
   });
   const perPageNum = computed({
     get: function () {
+      console.error(state);
       return state.pagination.limit;
     },
     set: function (val) {
-      if (val !== perPageNum) {
-        state.pagination.limit = val.value;
+      if (val !== perPageNum.value) {
+        state.pagination.limit = val
         // 进行每页显示数量切换时，判断当前偏移量是否大于改变后的偏移量，如果是，则不触发limit改变的事件，因为偏移量的改变也会触发
         if (
           state.pagination.offset >
@@ -59,8 +63,9 @@ export const useGetValue = ({ count }) => {
     },
   });
   const max = computed(() => {
+    console.error(perPageNum.value);
     // 最大页数，总数/每页显示数量，向上取整
-    return Math.ceil(count / perPageNum);
+    return Math.ceil(count / perPageNum.value);
   });
 
    /**
@@ -84,6 +89,7 @@ export const useGetValue = ({ count }) => {
   return {
     ...toRefs(state),
     page,
-    max
+    max,
+    perPageNum
   };
 };

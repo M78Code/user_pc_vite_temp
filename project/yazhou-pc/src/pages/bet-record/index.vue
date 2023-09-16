@@ -363,12 +363,15 @@ console.error(model);
     }
   }
   /**勾选框*/
-  .checkbox {
+  :deep(.checkbox) {
     margin-bottom: 5px;
     justify-content: flex-start;
     align-items: center;
     .check-wrap.active {
-      background-color: var(--q-bet-record-color-30);
+      background-color: var(--q-gb-bg-c-3);
+    }
+    span {
+      color: var(--q-gb-t-c-6);
     }
   }
 }
