@@ -105,9 +105,6 @@ export default {
 
       document.head.appendChild(script);
     }
-
-    // 启动WS操作对象
-    WsMan.run();
   },
   methods: {
     // ...mapMutations(["set_global_click_count"]),
@@ -238,9 +235,6 @@ export default {
     this.timer2 = null;
 
     this.off_listeners();
-
-    // 销毁WS操作对象
-    WsMan.destroyed();
   },
 };
 </script>
