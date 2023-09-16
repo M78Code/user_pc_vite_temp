@@ -1,4 +1,4 @@
-import { i18n_t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js"
 import lodash from 'lodash';
 
   /**

@@ -87,17 +87,8 @@ export const utils = {
    * @return {Boolean} 显示结果
    */
   is_show_sr_flg(match){
-    let ret = false;
-    // store.getters.get_global_switch.statistics_switch
-    let { statistics_switch=true}=      BUILDIN_CONFIG.SERVER_GLOBAL_SWITCH
-    if([1,2].includes(+match.csid) && statistics_switch){
-      ret = true;
-    }
-    if(!(window.env &&  window.BUILDIN_CONFIG && window.BUILDIN_CONFIG.FINAL_TARGET_PROJECT_NAME == 'yabo'))
-    { // 只有专业版显示sr标志入口图标
-      ret = false;
-    }
-    return ret;
+    
+    return true;
   },
   /**
     * 获取单个投注项信息

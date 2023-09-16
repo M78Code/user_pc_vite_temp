@@ -131,7 +131,7 @@ import {
   score_switch_handle,
   is_eports_csid
 } from "src/core/index"
-import {get_mmp_name} from "src/core/format/module/format-msc.js"
+import { get_mmp_name } from "src/core/format/module/format-msc.js"
 import {
   useRegistPropsHelper,
 } from "src/composables/regist-props/index.js";
@@ -214,7 +214,7 @@ init_fill_time();
 // 获取阶段名称
 const computed_process_name = computed(() => {
   let { match } = props.match_props;
-  let process_name =get_mmp_name(match.csid, match.mmp) || "";
+  let process_name = get_mmp_name(match.csid, match.mmp) || "";
   // 即将开赛
   if (match.ms == 110) {
     process_name = i18n_t("common.match_soon");
@@ -276,6 +276,7 @@ const computed_process_name = computed(() => {
       process_name = covert_mct(match);
     }
   }
+
   // 篮球3X3滚球时显示"全场"
   if (match.csid == 2 && match.mle == 73 && get_match_status(match.ms)) {
     process_name = i18n_t("mmp.2.21");
@@ -306,7 +307,7 @@ const computed_show_date = computed(() => {
   // 电竞赛事未开赛也展示赛事日期
   else if (
     [1, 2, 4, 6, 11, 12, 13, 14, 15, 16].includes(csid) ||
-    utils.is_eports_csid(csid)
+    is_eports_csid(csid)
   ) {
     show = true;
 

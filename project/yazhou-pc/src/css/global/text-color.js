@@ -1,5 +1,4 @@
 export default {
-    {
         'gb-text-color-1': '#414655', 
         'gb-text-color-2': '#999999', 
         'gb-text-color-3': '#666666', 
@@ -43,5 +42,4 @@ export default {
         'gb-text-color-41': '#1d1d1d',
         'gb-text-color-42': '#C31337',
         'gb-text-color-43': '#f7f8fa'
-      }
 };

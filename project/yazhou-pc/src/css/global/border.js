@@ -6,7 +6,6 @@
 // $bd--search-footer: #e1e4e6;
 
 export default {
-    {
         'gb-border-1': '#414655', 
         'gb-border-2': '#e93d3d', 
         'gb-border-3': '#14171d', 
@@ -26,5 +25,4 @@ export default {
         'gb-border-17': '#a5aec8',
         'gb-border-18': '#ffb479',
         'gb-border-19': '#fec59e'
-      }
 };
