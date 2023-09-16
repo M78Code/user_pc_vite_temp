@@ -9,7 +9,6 @@ const compute_css = (_key, _position) => {
     _position = _key.position
     _key = _key.key;
   }
-  console.error("_position", _position, _key)
   //没有位置就是单图
   if (isNull(_position) || isUndefined(_position)) {
     return other_compute({ key: _key, theme: UserCtr.theme })
