@@ -192,8 +192,6 @@ const scroll_mitt = useMittOn(
   }
 );
 onMounted(() => {
-  // 启动WS操作对象
-  WsMan.run();
 });
 onBeforeMount(() => {
   // 释放日志功能对象
@@ -211,8 +209,6 @@ onBeforeMount(() => {
   // remove_message();
 });
 onUnmounted(() => {
-  // 销毁WS操作对象
-  WsMan.destroyed();
 });
 </script>
 <style scoped>
