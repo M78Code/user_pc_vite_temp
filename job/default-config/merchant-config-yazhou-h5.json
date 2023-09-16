@@ -57,8 +57,26 @@
     "h5-sport-icon-image": {
       "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/sport_menu_02.png"
     },
-    "h5-sport-active-image":{
-      "day":"https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/sport_menu_01.png"
+    "h5-sport-active-image": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/sport_menu_01.png"
+    },
+    "h5-set-sort": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/set_sort.svg"
+    },
+    "h5-refesh": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/refesh.svg"
+    },
+    "h5-left-menu-image": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/bw3/menu/left_menubj.png"
+    },
+    "h5-theme-skin1": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/skin1.svg"
+    },
+    "h5-theme-skin2": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/skin2.svg"
+    },
+    "h5-lang": {
+      "day": "https://user-h5-bw3.sportxxx278gwf4.com/2023-09-09-17-11-50/image/wwwassets/bw3/menu/lang.png"
     }
   }
 }

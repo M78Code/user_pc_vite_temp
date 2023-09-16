@@ -26,10 +26,10 @@
             </div>
           </template>
           <!-- 右侧活动和弹出设置 -->
-          <activityIcon></activityIcon>
-          <setMenu></setMenu>
-        </div>
 
+        </div>
+        <activityIcon></activityIcon>
+        <setMenu></setMenu>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_type !== 30">

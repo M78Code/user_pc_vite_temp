@@ -6,7 +6,7 @@ import server_resource from "app/job/output/assets/index.js";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-    default: "h5-left-menu-image",
+    default: "h5-lang",
     // local_dev: "pc-left-menu-bg-image",
     // local_test: "",
     // local_ylcs: "pc-left-menu-bg-image",
@@ -14,7 +14,6 @@ const config = {
     // idc_sandbox: "pc-left-menu-bg-image",
     // idc_lspre: "pc-left-menu-bg-image",
     // idc_online: "pc-left-menu-bg-image",
-
 };
 /**
  * 拿图片地址 和位置
@@ -33,5 +32,4 @@ function compute_css({ position, theme }) {
         "background-position-y": `calc(var(--per)*${position})`,
     };
 }
-
 export { compute_css };

@@ -3,6 +3,7 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 import server_resource from "app/job/output/assets/index.js";
+
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
