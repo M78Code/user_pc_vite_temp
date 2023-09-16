@@ -13,47 +13,34 @@ import { useMittEmit, MITT_TYPES } from 'src/core/mitt/index.js'
 import store from 'src/store-redux/index.js'
 import { mapGetters} from "vuex"
 let state = store.getState();
-;
 
+const handicap_num = computed(() => {
+  if(GlobalAccessConfig.get_handicapNum()){
+    return `+${ props.match.mc || 0}`
+  }else{
+    return t('match_info.more')
+  }
+})
 
-export default {
-  props: {  
-    match: {
-      type: Object,
-      default: () => {}
-    },
-  },
-  setup(props) {
-    
-    const handicap_num = computed(() => {
-      if(GlobalAccessConfig.get_handicapNum()){
-        return `+${ props.match.mc || 0}`
-      }else{
-        return t('match_info.more')
-      }
-    })
+/**
+ * @description 跳转至详情
+ */
+const on_go_detail = () => {
+  if(is_eports_csid(props.match.csid)){
+    props.match.go_detail_type = 'no_switch'
+  }
+  details.on_go_detail(props.match);
+}
+/**
+ * @Description 赛事收藏 
+ * @param {undefined} undefined
+*/
+const collect = () => {
+  useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH,props.match)
+}
 
-    /**
-     * @description 跳转至详情
-     */
-    const on_go_detail = () => {
-      if(is_eports_csid(props.match.csid)){
-        props.match.go_detail_type = 'no_switch'
-      }
-      details.on_go_detail(props.match);
-    }
-    /**
-     * @Description 赛事收藏 
-     * @param {undefined} undefined
-    */
-    const collect = () => {
-      useMittEmit(MITT_TYPES.EMIT_MX_COLLECT_MATCH,props.match)
-    }
-
-    return {
-      handicap_num,
-      collect,
-      on_go_detail
-    }
-  },
-};
+return {
+  handicap_num,
+  collect,
+  on_go_detail
+}

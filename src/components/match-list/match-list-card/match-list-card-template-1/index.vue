@@ -5,8 +5,11 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:300px  !important;width:1920px  !important;${card_style}`"
+    :style="`height:300px !important;width:1920px  !important;${card_style}`"
+
   >
+  <!-- :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`" -->
+  
   <div
       v-if="is_mounted"
       :class="{'list-card-inner':!MatchListCardData.is_champion}"

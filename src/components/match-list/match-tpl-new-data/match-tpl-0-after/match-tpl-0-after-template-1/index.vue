@@ -5,11 +5,9 @@
       <!--热门赛事显示hot标识-->
       <img class="match-hot" src="~public/image/common/svg/hot.svg" v-if="match.is_hot" />
       <!-- 比赛进程 -->
-      {{ is_mounted , match.api_update_time != 0 }}
       <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
         show_page="match-list" :rows="2" :match_list_data="match_list_data" />
     </div>
-    {{ is_mounted }}
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
       <!-- 主盘 -->
@@ -18,7 +16,7 @@
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
-
+        {{ match }}
         <!-- 赛事盘口投注项 -->
         <match-handicap :handicap_list="match.main_handicap_list" :match="match" />
 
