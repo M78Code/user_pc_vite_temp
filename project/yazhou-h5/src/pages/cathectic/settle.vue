@@ -377,7 +377,7 @@ onUnmounted(() => {
 
     .betamount {
       font-size: 0.11rem;
-      color: var(--q-cathectic-color-35);
+      color: var(--q-cathectic-color-4);
       .color-1 {
         color: var(--q-cathectic-color-1);
       }
@@ -388,7 +388,7 @@ onUnmounted(() => {
     height: 0.44rem;
     margin-bottom: -0.14rem;
     .select {
-      color: var(--q-cathectic-color-36);
+      color: var(--q-cathectic-color-5);
     }
     i {
       display: inline-block;
@@ -405,14 +405,14 @@ onUnmounted(() => {
   .time {
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
-    background-color: var(--q-cathectic-color-6);
+    background-color: var(--q-cathectic-color-3);
   }
 
   .sort {
     margin-right: auto;
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
-    background-color: var(--q-cathectic-color-6);
+    background-color: var(--q-cathectic-color-3);
 
     p {
       width: max-content;

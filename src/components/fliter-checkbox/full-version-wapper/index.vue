@@ -24,13 +24,6 @@ export default {
     };
   },
   methods: {
-    handle_test_emit(params) {
-      console.log("emit 事件收到 ");
-      console.log(
-        "组件包装器  组件内  收到 emit 事件  ，携带  数据 ： ",
-        params
-      );
-    },
   },
 };
 </script>

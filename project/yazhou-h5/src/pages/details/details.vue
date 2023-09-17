@@ -145,7 +145,7 @@ import detailsTab from "project_path/src/pages/details/components/details-tab.vu
 // import info_rules from "project_path/src/pages/details/components/info-rules.vue"  // 视频info说明弹框
 // // import SDetails from "src/project/components/skeleton/skeleton-details.vue"  // 详情骨架屏
 import analysisMatches from './analysis-matches/index.vue';
-// import category from "project_path/src/pages/details/children/category.vue";
+import category from "project_path/src/pages/details/children/category.vue";
 // import chatroom from "project_path/src/pages/details/components/chatroom/chatroom.vue"
 import { useRouter, useRoute } from "vue-router";
 import store from "src/store-redux/index.js";

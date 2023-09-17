@@ -8,6 +8,7 @@
   <div
     :class="['bw3', { rightMenu: right_menu_show }]"
     @click.stop="appclick($event)"
+    :style="page_style"
   >
   <ws/>
   <!-- 页面路由开始 页面路由开始 页面路由开始 -->
@@ -26,7 +27,7 @@
 import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
-
+import { compute_css_variables } from "src/core/css-var/index.js"
 import {  PageSourceData  } from "src/core/index.js";
 import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
 window.wslog = wslog;
@@ -47,6 +48,8 @@ export default {
       server_env: CURRENT_ENV_NAME,
       buried_time: 0, // 代表今日足球下边距离触发埋点的时间
       right_menu_show: false,
+      // 公共主题色
+      page_style: {},
     };
   },
 
@@ -67,7 +70,8 @@ export default {
 
     // this.init_version_name();
     this.on_listeners();
-
+      // 公共主题色
+      this.page_style = this.global_color_obj()
     // 初始化启动日志系统--开发模式时日志打开
     // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
 
@@ -112,6 +116,20 @@ export default {
     //   init_version_name: "init_version_name",
     //   set_vue_hidden_run: "set_vue_hidden_run",
     // }),
+
+// 公共全局主题色
+  global_color_obj() {
+    // 背景色
+    let bg = compute_css_variables({ category: 'global', module: 'background' })
+    // 边框色
+    let bd = compute_css_variables({ category: 'global', module: 'border' })
+    // 字体色
+    let tc = compute_css_variables({ category: 'global', module: 'color' })
+    // 渐变色
+    let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
+    return {...bg, ...bd, ...tc, ...lg}
+  },
+
     /**
      *@description 事件preventDefault函数执行体
      */

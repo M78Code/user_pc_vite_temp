@@ -110,7 +110,7 @@
       </div>
       <div class="match-resultstips-wrap">
         <!-- 提示语 -->
-        <q-tooltip v-model="is_show" anchor="top middle" self="bottom middle">
+        <q-tooltip v-model="showBtn" anchor="top middle" self="bottom middle">
           <template>
             <div>{{ i18n_t("results.tips") }}</div>
           </template>
@@ -124,24 +124,33 @@
         </div>
         <!-- 搜索 -->
         <div class="search-btn" @click="sub_search">
-          {{ i18n_t("results.search") }}
+          {{ i18n_t("results.search") }}11
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import {  ref } from 'vue';
+import {  ref,computed } from 'vue';
 import {SelectWrapper} from "src/components/match-results/select";
+import {FliterCheckbox} from "src/components/fliter-checkbox";
 import selectY from "src/components/match-results/select/components/select-y.vue"
+import UserCtr from "src/core/user-config/user-ctr.js";
 import {
   i18n_t,
   useMittEmit,
   useMittEmitterGenerator,
   MITT_TYPES,
 } from "src/core/index.js";
+import lodash from "lodash"
 const props = defineProps({
   dateValue:{
+    type:Object
+  },
+  is_show:{
+    type:Boolean
+  },
+  results_params:{
     type:Object
   },
   sport_type: {
@@ -151,10 +160,23 @@ const props = defineProps({
   sport:{
     type:String
   },
+  is_bowls:{
+    type:Boolean,
+    default:false
+  },
   startTimeShowFunc:{
     type: Function,
   },
+  select_submit:{
+    type: Function,
+  },
   ipt_search:{
+    type: Function,
+  },
+  input_radio:{
+    type: Function,
+  },
+  hideSelect:{
     type: Function,
   },
   isSelectConfirm:{
@@ -166,29 +188,31 @@ const props = defineProps({
   }, //日历开始时间
   showSelectTime:{
     default:null // 日期选择框内计算后的日期
-  } 
+  },
+  api_league_type:{
+    type:Array,
+    default:()=>[]
+  },
+  pournament_params:{
+    type:Object
+  },
+  sport_id:{
+    type:String
+  }
 });
-const pournament_params=ref(
-      {
-        //联赛入参
-        sportType: "", //球类id
-        startTime: "", //开始时间,毫秒时间戳
-        endTime: "", //结束时间,毫秒时间戳
-        langType: "zh",
-        nameStr: "",//模糊查询字符串
-        hot: '',//是否热门
-        isVirtualSport: "",
-        champion:""
-      },
-)
+const show_play_back=   computed(()=>{
+  return !!(lodash.get(UserCtr,"user_info.merchantEventSwitchVO") && lodash.get(UserCtr,"user_info.merchantEventSwitchVO.eventSwitch"))
+})
 const confirmDate=()=>{
   props.dateValue.value = date.value
   useMittEmit(MITT_TYPES.EMIT_INIT_SELECT, 1)
 }
 const  date = ref(props.dateValue)
+const  showBtn = ref(props.is_show)
 </script >
 
 <style  lang="scss" scoped>
+@import "./result-header.scss";
 /* ************** 筛选条件 *************** -S */
 .search-header {
   display: flex;

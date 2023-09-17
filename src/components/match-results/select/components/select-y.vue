@@ -73,6 +73,9 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref, watch, computed } from "vue";
+import { useRoute } from "vue-router";
+const route = useRoute();
+
 import { i18n_t } from "src/core/index";
 // import { mapGetters } from "vuex";
 import BUILDIN_CONFIG from "app/job/output/env/final.js";
@@ -265,7 +268,7 @@ const choose = (item, index) => {
     active_tournament.value.push(item.id);
   }
   // 是否全部选中
-  let allSelect = list.every((item) =>
+  let allSelect = props.list.every((item) =>
     active_tournament.value.includes(item.id)
   );
   menu.value = allSelect ? "all" : "";
@@ -340,7 +343,7 @@ watch(
       selectedIds.value.length = 0;
     }
     let tournamentName,
-      { tid } = $route.query;
+      { tid } = route.query;
     let active_item = null;
     if (res && res.length) {
       // 如果条件有变，就清空已选中id

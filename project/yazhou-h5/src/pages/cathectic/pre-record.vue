@@ -376,7 +376,7 @@ onUnmounted(() => {
         right: 0;
         top: 0.15rem;
         .select {
-            color: var(--q-cathectic-color-36);
+            color: var(--q-cathectic-color-5);
         }
     }
     .pretype-tabs{
