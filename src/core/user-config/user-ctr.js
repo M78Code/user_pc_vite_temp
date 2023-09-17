@@ -24,6 +24,7 @@ import { uid } from 'quasar';
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
+
   constructor() {
     this.init();
   }
@@ -74,8 +75,10 @@ class UserCtr {
       // 当前赔率
       cur_odds: "EU",
     },
-      // 用户 token 失效
-      this.is_invalid = false;
+      //排序	 int 类型 1 按热门排序 2 按时间排序
+      this.sort_type = 1
+    // 用户 token 失效
+    this.is_invalid = false;
     // 用户 余额
     this.balance = 0;
     //  用户余额是否展示状态
@@ -126,6 +129,17 @@ class UserCtr {
     return this.uid;
   }
   /**
+   * 排序变化      //排序	 int 类型 1 按热门排序 2 按时间排序
+  */
+  set_sort_type(data) {
+    this.sort_type = data;
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "sortRules",
+      data,
+    });
+    this.update()
+  }
+  /**
    * 设置语言变化
   */
   set_lang(data) {
@@ -134,6 +148,9 @@ class UserCtr {
     useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
     this.update()
   }
+  /**
+  * 设置主题变化
+ */
   set_theme(theme) {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);

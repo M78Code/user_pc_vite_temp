@@ -78,7 +78,7 @@ function get_date_format() {
 const SERVER_CONFIG_FILE_PATH = `http://api-doc-server-new.sportxxxw1box.com/public/upload/json/${get_date_format()}/${final_version}-1.json`;
 // console.log(get_date_format(),'get_date_formatget_date_format');
 // console.log(final_version,'final_versionfinal_version');
-console.log(SERVER_CONFIG_FILE_PATH, 'SERVER_CONFIG_FILE_PATH', DEV_TARGET_VERSION);
+console.log(SERVER_CONFIG_FILE_PATH, 'SERVER_CONFIG_FILE_PATH');
 
 
 
@@ -106,7 +106,6 @@ const merge_and_output_final_config = (scg) => {
     project: PROJECT_NAME,
     write_file_date: Date.now(),
   };
-  console.log(add_obj, 'add_objadd_obj');
   MERCHANT_CONFIG_INFO = merge_merchant_config(scg, add_obj);
   write_file(file_path, JSON.stringify(MERCHANT_CONFIG_INFO));
   // // 写入本地对应的商户配置
@@ -120,9 +119,7 @@ const get_config_info = async () => {
   try {
     let res = await axios.get(SERVER_CONFIG_FILE_PATH);
     let { data } = res;
-    console.log(222222, data)
     if (data) {
-      console.log(222222, data)
       merge_and_output_final_config(data);
     }
   } catch (error) {

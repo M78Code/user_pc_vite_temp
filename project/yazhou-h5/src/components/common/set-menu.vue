@@ -203,7 +203,7 @@ const cur_odd = ref(BetData.cur_odd)// 盘口
 const lang_obj = ref(get_lang_list())//语言列表
 const { menu_type } = MenuData; //菜单选中项
 const is_champion = ref(BetData.get_is_champion())//是否冠军玩法
-const sort_type = ref(1)// 2时间排序 1热门排序
+const sort_type = ref(UserCtr.sort_type)// 2时间排序 1热门排序
 
 
 /**
@@ -214,6 +214,7 @@ watch(UserCtr.user_version, () => {
   get_theme.value = UserCtr.theme;
   standard_edition.value = UserCtr.standard_edition//标准版本2  简易版1
   lang_obj.value = get_lang_list() //获取语言列联表
+  sort_type.value = UserCtr.sort_type// 2时间排序 1热门排序
 })
 /**
  * 监听投注信息改变
@@ -357,7 +358,7 @@ const sort_type_changed = () => {
   // set_collapse_csid_map({});
   // set_collapse_map_match({});
   //TODO 等列表变化
-  // set_sort_type(status);
+  UserCtr.set_sort_type(status);
   useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
     text: "sortRules",
   });
