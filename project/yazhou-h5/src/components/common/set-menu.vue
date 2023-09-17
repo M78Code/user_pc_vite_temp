@@ -290,11 +290,13 @@ watch(is_champion,
     let old_odd = "";
     if (split_new) {
       old_odd = cur_odd;
-      UserCtr.set_cur_odds("EU");
+      BetData.set_cur_odd("EU"); //bet有一个
+      UserCtr.set_cur_odds("EU");//userctr也有一个
     }
     // 从冠军切到其他
     if (old && old_odd) {
-      UserCtr.set_cur_odds(old_odd);
+      BetData.set_cur_odd(old_odd); //bet有一个
+      UserCtr.set_cur_odds(old_odd);//userctr也有一个
     }
   }
 );

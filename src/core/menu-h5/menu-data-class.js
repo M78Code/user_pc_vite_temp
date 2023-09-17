@@ -148,7 +148,6 @@ class MenuData {
     //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
     const { sl, mi } = menu_list;
-    console.error(111, mi)
     if (mi == 30) {
       const data = lodash.find(sl, (item) => {
         //竞足特殊处理
