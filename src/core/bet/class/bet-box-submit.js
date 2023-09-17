@@ -6,6 +6,15 @@ import UserCtr from "src/core/user-config/user-ctr.js"
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { getSeriesCountJointNumber } from "src/core/bet/common-helper/module/bet-single-config.js"
 
+const play_id = {
+    '1':"全场独赢",
+    '4':"全场让球",
+    '2':"全场大小",
+    '17':"半场独赢",
+    '19':"半场让球",
+    '18':"半场大小",
+  }
+
 // 获取限额请求数据
 // bet_list 投注列表
 // is_single 是否单关/串关 
@@ -234,18 +243,67 @@ const submit_handle = type => {
 
         if (res.code == 200) {
             setTimeout(() => {
-                BetViewDataClass.set_bet_order_status(3)
+                // 投注成功 更新余额
+                UserCtr.get_balance()
+              
             }, 1000);
-            // 投注成功 更新余额
-            UserCtr.get_balance()
-            BetData.set
             // 通知页面更新 
             // useMittEmit(MITT_TYPES.EMIT_REF_DATA_BET_MONEY)
-        } else {
-            BetViewDataClass.set_bet_order_status(4)
-        }
-
+        } 
+        // 设置投注 code 码
+        BetViewDataClass.set_bet_error_code(res)
     })
+}
+
+// 选择投注项数据 
+// item 列表层 
+// obj_hp 玩法层 hpdata
+// obj_hl 盘口层 
+// obj_ol 赔率层
+const set_bet_obj_config = (item,obj_hp,obj_hl,obj_ol) =>{
+    // 切换投注状态
+    BetViewDataClass.set_bet_order_status(1)
+    
+    // 1 ：早盘赛事 ，2： 滚球盘赛事，3：冠军，4：虚拟赛事，5：电竞赛事")
+    let matchType = 1 
+    if( [1,2].includes(Number(item.ms)) ){
+      matchType = 2
+    }
+    const bet_obj = {
+      sportId: item.csid, // 球种id
+      matchId: item.mid,  // 赛事id
+      tournamentId: item.tid,  // 联赛id
+      scoreBenchmark: item.msc[0],  //比分
+      marketId: obj_hl.hid, //盘口ID
+      marketValue: obj_hl.hv,
+      playOptionsId: obj_ol.oid, //投注项id
+      marketTypeFinally: 'EU',  // 欧洲版默认是欧洲盘 HK代表香港盘
+      odds: obj_ol.ov,  //十万位赔率
+      oddFinally: compute_value_by_cur_odd_type(obj_ol.ov,'','',item.csid), //最终赔率
+      sportName: item.csna, //球种名称
+      matchType,  //赛事类型
+      matchName: item.tn, //赛事名称
+      playOptionName: obj_ol.on, // 投注项名称
+      playOptions: obj_ol.on,   // 投注项
+      tournamentLevel: item.tlev, //联赛级别
+      playId: obj_hp.hpid, //玩法ID
+      playName: play_id[obj_hp.hpid], //玩法名称
+      dataSource: item.cds, //数据源
+      home: item.mhn, //主队名称
+      away: item.man, //客队名称
+      ot: obj_ol.ot, //投注項类型
+      placeNum: null, //盘口坑位
+      // 以下为 投注显示或者逻辑计算用到的参数
+      bet_type: 'common_bet', // 投注类型
+      tid_name: item.tnjc,  // 联赛名称
+      match_ms: item.ms, // 赛事阶段
+      match_time: item.mgt, // 开赛时间
+    }
+    console.error('playOptionsId',bet_obj.playOptionsId)
+    BetData.set_bet_read_write_refer_obj(bet_obj)
+
+    // 获取限额 常规
+    get_query_bet_amount_common(bet_obj)
 }
 
 
@@ -255,4 +313,5 @@ export {
     get_query_bet_amount_pre,
     get_query_bet_amount_esports_or_vr,
     submit_handle,
+    set_bet_obj_config,
 }

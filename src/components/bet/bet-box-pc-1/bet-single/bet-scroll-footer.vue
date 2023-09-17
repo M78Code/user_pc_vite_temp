@@ -5,7 +5,8 @@
   <div class="bet-menu-wrap" :class="{ 'bet-menu-wrap-mix': !BetData.is_bet_single }">
     <div v-if="BetViewDataClass.bet_order_status == 2">投注中</div>
     <div v-if="BetViewDataClass.bet_order_status == 3">投注成功</div>
-    <div v-if="BetViewDataClass.bet_order_status == 4">投注失败</div>
+    <div v-if="BetViewDataClass.bet_order_status == 4">{{ BetViewDataClass.error_message }}</div>
+
 
     <div class="full-width cursor-pointer bet-submit" @click.stop="submit_handle('submit')">
       <template
@@ -19,7 +20,9 @@
       </template>
     </div>
 
-    <div style="margin-top:20px">{{ BetViewDataClass.bet_view_version }} -- {{ BetViewDataClass.bet_order_status }}</div>
+    
+
+    <div style="margin-top:20px">{{ BetViewDataClass.bet_view_version }} -- {{ BetViewDataClass.bet_order_status }} -- {{ BetViewDataClass.error_code }}</div>
 
   </div>
 </template>

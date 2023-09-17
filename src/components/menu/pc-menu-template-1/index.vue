@@ -44,7 +44,7 @@
       >
         <!-- icon -->
         <div class="row items-center">
-          <img style="width:20px;height:20px;" :style="sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(item1)}`})" alt="" />
+          <span class="soprts_id_icon" :style="sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(item1)}`})" :alt="BaseData.menus_i18n_map[item1]" ></span>
         
         </div>
         <div class="items-right row" style="flex-wrap: wrap">
@@ -956,4 +956,9 @@ const handle_click_jinri_zaopan = (val) => {
   }
 }
 
+.soprts_id_icon{
+  width: 18px;
+  height: 18px;
+  background-size: 100% auto;
+}
 </style>

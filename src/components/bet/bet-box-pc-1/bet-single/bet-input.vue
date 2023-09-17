@@ -78,7 +78,6 @@ const props = defineProps({
 })
 
 onMounted(() => {
-    console.error( mathJs.divide( mathJs.multiply(2.51 , 100 , 100000),100000) );
     // 监听 限额变化
     useMittOn(MITT_TYPES.EMIT_REF_DATA_BET_MONEY, set_ref_data_bet_money).on
 })
@@ -123,9 +122,8 @@ const set_ref_data_bet_money = () => {
     ref_data.max_money = max_money
     // 复试串关赔率
     ref_data.seriesOdds = seriesOdds
-
-
-
+    // 限额改变 重置投注金额
+    ref_data.money = ''
 }
 
 // 快捷金额

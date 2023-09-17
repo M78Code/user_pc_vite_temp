@@ -23,13 +23,13 @@
 <script>
 import { defineComponent, ref, nextTick, watch, onUnmounted, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { IconWapper } from 'src/components/icon'
+// import { IconWapper } from 'src/components/icon'
 
 import { i18n_t } from "src/boot/i18n.js"
 import store from "src/store-redux/index.js";
 import search from "src/core/search-class/search.js"
 
-console.error('IconWapper', IconWapper);
+// console.error('IconWapper', IconWapper);
 
 export default defineComponent({
     name: "search_input",
