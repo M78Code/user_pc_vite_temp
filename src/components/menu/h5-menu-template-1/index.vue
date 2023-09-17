@@ -29,8 +29,8 @@
           <!-- 右侧活动和弹出设置 -->
 
         </div>
-        <activityIcon></activityIcon>
-        <setMenu></setMenu>
+        <slot name="menu-right">
+        </slot>
       </div>
       <!--二级菜单, 三级菜单，上下滑动 隐藏显示 , 竞彩足球 (get_menu_type:30 不显示二级菜单) -->
       <div class="sub-menu-date-w" v-if="menu_type !== 30">
@@ -81,16 +81,7 @@
                     ) }}
                   </div>
                 </div>
-                <!--                 
-                {{ item.mi }}
-                <span>
-                  {{
-                    item.name ||
-                    MenuData.get_menus_i18n_map(
-                      MenuData.recombine_menu_desc(item.mi)
-                    )
-                  }}<i>{{ item.ct }}</i>
-                </span> -->
+
               </div>
             </template>
           </div>
@@ -164,10 +155,7 @@ import { ref, watch, computed, } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, compute_css, compute_css_variables, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
-import { cloneDeep, findIndex } from "lodash";
 import { useRoute, useRouter } from "vue-router";
-// import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
-// import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 // import 'project_path/src/css/pages/menu.scss'
 // "1": "滚球",
 //   "2": "今日",
@@ -266,24 +254,6 @@ init();
  * type [string] click | init
  */
 function set_menu_lv1(item, index, type = "click") {
-  // "7": "电竞",
-  // "8": "VR",
-  switch (item.mi) {
-    //VR是直接跳 url
-    case 8:
-      router.push({
-        name: "virtual",
-        query: {
-          from: route.name,
-        },
-      });
-      return;
-    //电竞是不要二三四级菜单
-    case 7:
-      //由自己去做
-      set_menu_lv2(); //重置 二三4级菜单为空
-      return;
-  }
   show_selector_sub.value = false;
   current_menu.value = []; //二级菜单先滞空
   MenuData.set_current_lv1_menu(item, index);
@@ -297,8 +267,17 @@ function set_menu_lv1(item, index, type = "click") {
         set_menu_lv2(item.sl[0], 0, type);
       }
       break;
+    case 7:  // "7": "电竞",
     case 28: //赛果
-      MenuData.get_results_menu();
+      break;
+    //VR是直接跳 url
+    case 8:  // "8": "VR",
+      router.push({
+        name: "virtual",
+        query: {
+          from: route.name,
+        },
+      });
       break;
     default:
       current_menu.value = item.sl;

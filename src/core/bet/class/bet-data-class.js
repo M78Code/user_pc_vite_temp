@@ -191,29 +191,14 @@ this.bet_appoint_ball_head= null */
   */
   set_bet_is_accept(value) {
     value = Number(value)
-    console.error(value)
     if (isNaN(value)) {
-      console.error(value)
       this.bet_is_accept = !this.bet_is_accept
     } else {
       this.bet_is_accept = value;
     }
     this.set_bet_data_class_version()
   }
-  /**
-   * 设置 是否接受更好赔率
-  */
-  set_bet_is_accept(value) {
-    value = Number(value)
-    console.error(value)
-    if (isNaN(value)) {
-      console.error(value)
-      this.bet_is_accept = !this.bet_is_accept
-    } else {
-      this.bet_is_accept = value;
-    }
-    this.set_bet_data_class_version()
-  }
+
   /**
    *
    * 管道负责 读写 衔接  使用对象引用类型的 原理

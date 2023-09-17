@@ -220,7 +220,6 @@ watch(UserCtr.user_version, () => {
  * 监听投注信息改变
 */
 watch(BetData.bet_data_class_version, () => {
-  console.error(BetData.bet_is_accept)
   bet_is_accept.value = BetData.bet_is_accept//是否介绍任何赔率
   is_champion.value = BetData.get_is_champion()//是否冠军玩法
   cur_odd.value = BetData.cur_odd//盘口
@@ -359,9 +358,6 @@ const sort_type_changed = () => {
   // set_collapse_map_match({});
   //TODO 等列表变化
   UserCtr.set_sort_type(status);
-  useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-    text: "sortRules",
-  });
 };
 /**
  * @Description 切换盘口

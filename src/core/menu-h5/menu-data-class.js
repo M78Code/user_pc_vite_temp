@@ -19,7 +19,7 @@ class MenuData {
     //通知数据变化 防止调用多次 20毫秒再更新
     this.update = lodash.debounce(() => {
       that.update_time.value = Date.now();
-    }, 20);
+    }, 10);
     // "1": "滚球",
     // "2": "今日",
     // "3": "早盘",
@@ -810,12 +810,22 @@ class MenuData {
       current_lv_1_menu_i,
       menu_type: current_lv_1_menu.mi, //设置一级菜单menutype
     });
-    //设置二级菜单
-    if (current_lv_1_menu.mi != 28) {
-      this.set_cache_class({
-        menu_lv2: current_lv_1_menu.sl || [],
-      });
+    //设置二级菜单 賽果和電機是不需要設置二級菜單的
+    switch (current_lv_1_menu.mi) {
+
+      case 28:
+        this.get_results_menu();
+        break;
+      default:
+        this.set_cache_class({
+          menu_lv2: current_lv_1_menu.sl || [],
+        });
     }
+
+    if (![7, 28].includes(current_lv_1_menu.mi)) {
+
+    }
+
   }
   /**
    * 选中二级menu
@@ -832,10 +842,15 @@ class MenuData {
     });
     if (!current_lv_2_menu) {
       //2级菜单为空 3级也滞空
+      this.set_cache_class({
+        menu_lv2: [],
+      });
       this.set_current_lv3_menu();
     }
-    // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
-    this.get_date_menu_api_when_subchange(type);
+    else {
+      // 早盘,串关,电竞拉取接口更新日期菜单 3,6,7
+      this.get_date_menu_api_when_subchange(type);
+    }
   }
 
   /**
@@ -853,10 +868,13 @@ class MenuData {
       //三级菜单为空 4级也滞空
       this.set_current_lv4_menu();
     }
-    if (this.is_results_virtual_sports()) {
+    else if (this.is_results_virtual_sports()) {
       // 如果有三级菜单
       // 赛果下边的 虚拟体育 的四级菜单 数据
       if (this.current_lv_3_menu) {
+        this.set_cache_class({
+          menu_lv3: [],
+        });
         this.set_cache_class({
           menu_lv4: lodash.get(this.current_lv_3_menu, "subList"),
         });
@@ -890,6 +908,7 @@ class MenuData {
       current_lv_4_menu,
       current_lv_4_menu_i,
     });
+    this.update()
   }
   //根据一级菜单筛选二级菜单列表
   get_current_lv_2_menu_list() {
