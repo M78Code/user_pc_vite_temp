@@ -158,17 +158,17 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
   // TODO: 临时调试
-  background:var(--q-cathectic-color-6);
+  background:var(--q-cathectic-color-3);
   color: var(--q-cathectic-color-1);
   .content-m {
-      background: var(--q-cathectic-color-30);
+      background: var(--q-cathectic-color-7);
     }
 }
 
 .head-top {
   height: 0.5rem;
   position: relative;
-  border-bottom: 1px solid var(--q-cathectic-color-28);
+  border-bottom: 1px solid var(--q-cathectic-color-9);
 
   .close {
     position: absolute;
@@ -209,10 +209,10 @@ onUnmounted(() => {
 
     &.active-p {
       font-weight: 600;
-      color: var(--q-cathectic-color-29);
+      color: var(--q-cathectic-color-6);
       span {
-        border-color: var(--q-cathectic-color-29);
-        background: var(--q-cathectic-color-29);
+        border-color: var(--q-cathectic-color-6);
+        background: var(--q-cathectic-color-6);
       }
     }
   }
