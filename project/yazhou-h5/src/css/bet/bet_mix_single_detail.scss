@@ -4,10 +4,10 @@
  */
 [class*=theme0] {
   .bet_mix_single_detail{
-    color: var(--q-color-fs-color-7);
+    color: var(--q-gb-t-c-3);
     border-bottom: 1px solid  var(--q-color-border-color-15);
     .locked-shadow {
-      background:  var(--q-color-page-bg-color-23);
+      background:  var(--q-gb-bd-c-2);
     }
     &.bet-mix-detail2{
       border-bottom: none !important;;
@@ -51,7 +51,7 @@
         }
       }
       p:nth-child(2){
-        color: var(--q-color-fs-color-8);
+        color: var(--q-gb-t-c-6);
       }
     }
     //限额字体颜色

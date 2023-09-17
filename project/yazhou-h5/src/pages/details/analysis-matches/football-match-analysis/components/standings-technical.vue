@@ -162,7 +162,7 @@ import { i18n_t } from "src/boot/i18n.js";;
 
         .team-name {
           font-size: 0.12rem;
-          color: var(--q-color-fs-color-3);
+          color: var(--q-gb-t-c-4);
           font-weight: bold;
           line-height: 0.12rem;
         }
