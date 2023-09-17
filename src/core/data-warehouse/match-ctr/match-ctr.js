@@ -298,10 +298,10 @@ export default class MatchDataBase
       return  score_obj
   }
   /**
-   * @description: 格式化列表比分(比分数组转对象)
+   * @description: 格式化列表数据(比分数组转对象)
    * @param {Object} list 所有列表数据
    */
-  list_serialized_score_obj(list){
+  list_serialized_match_obj(list){
     if(lodash.get(list,'length')){
       // 格式化比分信息
       list.forEach(match => {
@@ -315,6 +315,20 @@ export default class MatchDataBase
         } else {
           match.msc_obj = msc_obj;
         }
+
+        // 转换玩法
+        const hps_pns_obj = lodash.get(match, 'hps_pns_obj');
+        const hps_pns_arr = lodash.get(match, 'hpsPns',[]);
+        const hps_pns_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
+                                  return o.hpid;
+                                });
+        // 数据赋值和合并逻辑
+        if(hps_pns_obj){
+          this.assign_with(hps_pns_obj, hps_pns_obj_temp)
+        } else {
+          match.hps_pns_obj = hps_pns_obj_temp;
+        }
+
       });
     }
   }
@@ -329,8 +343,8 @@ export default class MatchDataBase
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'list';
-      // 格式化列表比分(比分数组转对象)
-      this.list_serialized_score_obj(list);
+      // 格式化列表赛事(部分数组转对象)
+      this.list_serialized_match_obj(list);
       let obj = this.list_comparison(this.list,list);
       if(is_merge){
         // {add:{}, del:{}, upd:{}}
@@ -681,8 +695,8 @@ export default class MatchDataBase
     if(match_details){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'match';
-      // 格式化列表比分(比分数组转对象)
-      this.list_serialized_score_obj([match_details]);
+      // 格式化列表赛事(部分数组转对象)
+      this.list_serialized_match_obj([match_details]);
       if(is_merge){
         // 合并模式时,获取赛事信息
         const match=lodash.get(this.list,'[0]');

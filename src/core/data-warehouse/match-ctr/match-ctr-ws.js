@@ -228,8 +228,8 @@ export default class MatchDataBaseWS
       if(match){
         // 数据同步逻辑
         this.match_ctr.assign_with(match, cd_obj);
-        // 格式化列表比分(比分数组转对象)
-        this.match_ctr.list_serialized_score_obj([match]);
+        // 格式化列表赛事(部分数组转对象)
+        this.match_ctr.list_serialized_match_obj([match]);
       }
     }
   }
@@ -659,8 +659,8 @@ export default class MatchDataBaseWS
         if(match){
           // 数据同步逻辑
           this.match_ctr.assign_with(match, cd_obj);
-          // 格式化列表比分(比分数组转对象)
-          this.match_ctr.list_serialized_score_obj([match]);
+          // 格式化列表赛事(部分数组转对象)
+          this.match_ctr.list_serialized_match_obj([match]);
           // 同步更新快速查询对象中的赛事状态
           this.match_ctr.upd_match_all_status({mid:mid, mhs:cd_obj.mhs});
         }
