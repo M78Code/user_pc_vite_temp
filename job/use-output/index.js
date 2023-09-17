@@ -3,7 +3,7 @@ import merchant_config from "../output/merchant/config.json";
 import full_version_config from "../output/version/full-version-config.js"
 // 是否是全量版本 
 const { is_full_version = false } = full_version_config
-const { component } = merchant_config;
+const { component = {} } = merchant_config;
 /**
  * 获取使用的 组件
  * @param {*} params
