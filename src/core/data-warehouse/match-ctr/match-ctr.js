@@ -328,6 +328,8 @@ export default class MatchDataBase
         } else {
           match.hps_pns_obj = hps_pns_obj_temp;
         }
+        // 赛事数据格式化
+        match && this.list_to_many_obj([match]);
 
       });
     }
@@ -580,6 +582,9 @@ export default class MatchDataBase
             if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
+                if(!lodash.get(item2,'hsw')){
+                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
                   // 遍历盘口数据
@@ -612,7 +617,9 @@ export default class MatchDataBase
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
                             _hid: item3.hid,
-                            _hn
+                            _hn,
+                            _hsw:item2.hsw,
+                            _hipo:item3.hipo,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_format_quick_query_key(item.mid,item4.oid,'ol')] = item4;
@@ -632,6 +639,9 @@ export default class MatchDataBase
             if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
+                if(!lodash.get(item2,'hsw')){
+                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length')) {
                   // if(item2.hl.ol.forEach(item3 => {
@@ -665,7 +675,9 @@ export default class MatchDataBase
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
                             _hid: item3.hid,
-                            _hn
+                            _hn,
+                            _hsw:item2.hsw,
+                            _hipo:item3.hipo,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_format_quick_query_key(item.mid,item4.oid,'ol')] = item4;
@@ -743,6 +755,7 @@ export default class MatchDataBase
   /**
    * @description: 将list格式化成多个obj对象
    * @param {Array} list 赛事列表
+   * @param {Number} timestap 时间戳
    * @return {Object} 将赛事列表转成成对象,提高检索速度
    */
   list_to_many_obj(list, timestap){
