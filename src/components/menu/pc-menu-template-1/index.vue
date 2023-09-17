@@ -1,5 +1,5 @@
 <template>
-  <div class="c-menu-sports menu-border">
+  <div class="c-menu-sports menu-border" :style="{'background':compute_css_variables({category:'global',module:'background'})['--q-gb-bg-c-2']}">
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
@@ -182,6 +182,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { MenuData,UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
+import { compute_css_variables } from "src/core/css-var/index.js"
 
 import MenuItem from "./menu-item.vue";
 
@@ -201,6 +202,8 @@ const first_change = ref(false);
 
 onMounted(()=>{
   console.error('ss', sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(1)}`}))
+
+  console.error('sss',compute_css_variables({category:'global',module:"background"})['--q-gb-bg-c-2'])
 })
 
 
