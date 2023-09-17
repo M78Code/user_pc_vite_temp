@@ -31,6 +31,15 @@
         :isSelectConfirm="isSelectConfirm"
         v-model:dateValue="model"
         :ipt_search="ipt_search"
+        :api_league_type="api_league_type"
+        :select_submit="select_submit"
+        :hideSelect="hideSelect"
+        :pournament_params="pournament_params"
+        :sport_id="sport_id"
+        :results_params="results_params"
+        :input_radio="input_radio"
+        :is_bowls="is_bowls"
+        v-model:is_show="is_show"
       ></result-header>
       <!-- 筛选条件 E-->
 
@@ -61,7 +70,7 @@
     >
       <pagination-wrapper
         :count="results_data.total"
-        @pageChange="changePage(arguments)"
+        @pageChange="changePage"
         :is_bet_record="false"
         :results_table="results_table_style"
         :reset_pagination="reset_pagination"
@@ -80,7 +89,7 @@ import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple
 import { PaginationWrapper } from "src/components/pagination/index";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
 import { ResultHeader } from "src/components/match-results/result-header/index.js";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 const {
   //变量
   current_sport_id,
@@ -103,6 +112,11 @@ const {
   startTimeShow,
   showSelectTime,
   model,
+  api_league_type,
+  pournament_params,
+  results_params,
+  is_bowls,
+  is_show,
   //函数
   get_tr_detail,
   change_sort,
@@ -111,11 +125,15 @@ const {
   get_serverTime,
   startTimeShowFunc,
   isSelectConfirm,
-  ipt_search
+  ipt_search,
+  select_submit,
+  input_radio
 } = useGetResultConfig();
+
 onMounted(() => {
   get_serverTime();
 });
+
 </script>
 
 <style lang="scss" scoped>
@@ -126,6 +144,7 @@ onMounted(() => {
   src: url("~public/lib/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
     format("woff2");
 }
+@import "./match_results.scss";
 @import "./index.scss";
 </style>
 

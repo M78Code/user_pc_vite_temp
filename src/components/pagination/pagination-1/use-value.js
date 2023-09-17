@@ -1,6 +1,5 @@
-import { ref, reactive, toRefs, computed ,onMounted} from "vue";
-import lodash from "lodash"
-
+import { ref, reactive, toRefs, computed, onMounted, onUnmounted } from "vue";
+import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 export const useGetValue = ({ count }) => {
   const state = reactive({
     goPage: 1,
@@ -35,9 +34,8 @@ export const useGetValue = ({ count }) => {
       if (count === 0) {
         return 0;
       }
-      console.error(state);
       // 偏移量/每页显示数量 向下取整 + 1
-      return Math.floor(parseInt((state.pagination.offset || 0) ) / parseInt(state.pagination.limit || 1)) + 1;
+      return Math.floor(state.pagination.offset / state.pagination.limit) + 1;
     },
     set: function (val) {
       // 页码改变动态的更新偏移量
@@ -46,12 +44,12 @@ export const useGetValue = ({ count }) => {
   });
   const perPageNum = computed({
     get: function () {
-      console.error(state);
+      // console.error(state);
       return state.pagination.limit;
     },
     set: function (val) {
       if (val !== perPageNum.value) {
-        state.pagination.limit = val
+        state.pagination.limit = val;
         // 进行每页显示数量切换时，判断当前偏移量是否大于改变后的偏移量，如果是，则不触发limit改变的事件，因为偏移量的改变也会触发
         if (
           state.pagination.offset >
@@ -63,33 +61,34 @@ export const useGetValue = ({ count }) => {
     },
   });
   const max = computed(() => {
-    console.error(perPageNum.value);
     // 最大页数，总数/每页显示数量，向上取整
     return Math.ceil(count / perPageNum.value);
   });
 
-   /**
-     * @重置分页条
-     * @param
-     */
-  const setInitPage = ()=> {
+  /**
+   * @重置分页条
+   * @param
+   */
+  const setInitPage = () => {
     page.value = 1; //当前第一页
     state.goPage = 1; //跳转第一页
-  }
- const setPageSize=(val)=> {
+  };
+  const setPageSize = (val) => {
     state.pagination.limit = val;
-  }
-
-  onMounted(()=>{
-    setInitPage()
-    setPageSize()
-  })
-
+  };
+  const { off } = useMittOn(MITT_TYPES.EMIT_RECODES_QUERY_BUT_CMD, setInitPage);
+  const { off: offSize } = useMittOn(
+    MITT_TYPES.EMIT_RECORD_CHANGE_PAGE_SIZE_CMD,
+    setPageSize
+  );
+  onUnmounted(off);
+  onUnmounted(offSize);
+  onMounted(() => {});
 
   return {
     ...toRefs(state),
     page,
     max,
-    perPageNum
+    perPageNum,
   };
 };
