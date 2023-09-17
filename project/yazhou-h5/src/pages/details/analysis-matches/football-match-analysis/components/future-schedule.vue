@@ -4,12 +4,12 @@
  * @Description: 详情页 或者 赛果  足球
 -->
 <template>
-  <div class="future-schedule football_standings recent_record" v-if="Object.keys(future_schedule_data).length > 0">
+  <div class="future-schedule football_standings recent_record" v-if="Object.keys(data_).length > 0">
     <div class="title">
-      {{ t('analysis_football_matches.Future_schedule') }}
+      {{ i18n_t('analysis_football_matches.Future_schedule') }}
     </div>
 
-    <template v-for="(item, index) in future_schedule_data" :key="index">
+    <template v-for="(item, key, index) in data_" :key="index">
       <div class="technical-home team-recent">
         <template v-if="index == 1">
           <!-- 左侧双打图标 type 0 表示主队,mhlu 主队的url -->
@@ -38,26 +38,30 @@
 </template>
 
 <script setup>
-import { defineComponent, ref, inject } from 'vue'
+import { defineComponent, ref, inject, onMounted } from 'vue'
 // 详情页蓝色背景上的大型字母图标
 import teamImg from "project_path/src/components/details/team-img.vue";
 // TODO: 后续修改调整
 // import {mapGetters} from "vuex";
 // 详情页  足球赛事分析 战绩 模块里边的 公共列表
 import publicForm from "project_path/src/pages/details/analysis-matches/components/public-form.vue";
+import { i18n_t } from "src/boot/i18n.js"
 const get_detail_data = inject('get_detail_data', {})
 
   // components: {
   //   "team-img": team_img,
   //   "public-form": public_form,
   // },
+  const data_ = ref({})
   const props = defineProps({
     // 基本面的数据
     future_schedule_data: {
       type: Object,
-      default: null,
-      require: true
+      default: () => {},
     },
+  })
+  onMounted(() => {
+    data_.value = props.future_schedule_data
   })
   // TODO: 后续修改调整
   // computed: {

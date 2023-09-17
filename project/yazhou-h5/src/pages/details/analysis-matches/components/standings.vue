@@ -23,7 +23,7 @@
       <history-engagement/>
       <!-- 近期战绩 -->
       <recent-record/>
-      <!-- 未来赛程  只有 足球才有-->
+      <!-- 未来赛程  只有 足球才有 -->
       <future-schedule :future_schedule_data="future_schedule_data" v-if="get_detail_data.csid == 1"/>
       <!-- 伤停情况 只有 足球才有 -->
       <injury-situation :injury_situation_data="injury_situation_data" v-if="get_detail_data.csid == 1"/>
@@ -40,7 +40,7 @@
     />
 
     <!-- 加载中icon -->
-    <loading v-if="loading && get_detail_data.csid == 1" top="58%" @touchmove.prevent></loading>
+    <loading-page v-if="loading && get_detail_data.csid == 1" top="58%" @touchmove.prevent></loading-page>
   </div>
 </template>
 
@@ -63,7 +63,7 @@ import standingsDisk from "project_path/src/pages/details/analysis-matches/footb
 // import {mapGetters} from "vuex";
 import {api_analysis} from "src/api/index.js";
  // 加载中
-// import loading from "project_path/src/components/common/loading.vue";
+import loadingPage from "project_path/src/components/common/loading.vue" // project/yazhou-h5/src/components/common/loading.vue
 import { computed, ref, nextTick, onUnmounted, onMounted, inject } from 'vue'
 import lodash from 'lodash'
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
@@ -72,10 +72,6 @@ import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 const get_detail_data = inject('get_detail_data', {})
-// TODO: 临时用
-
-    let get_event_list = ref([])
-    let get_analyze_show = ref(false)
   // components: {
   //   "football-standings": football_standings,
   //   "history-engagement": history_engagement,
@@ -105,10 +101,11 @@ const get_detail_data = inject('get_detail_data', {})
   const loading = ref(false)
   const route = useRoute()
 
+  //   // 添加监听 赛事分析刷新事件
+  let off_ = () => {}
   onMounted(() => {
-    //   // 添加监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
-
+    let { off } = useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis)
+    off_ = off
     if(get_detail_data.value.csid == 1) {
       get_data_list()
     }
@@ -120,8 +117,7 @@ const get_detail_data = inject('get_detail_data', {})
   })
   onUnmounted(() => {
     // 移除监听 赛事分析刷新事件
-    useMittOn(MITT_TYPES.EMIT_REFRESH_MATCH_ANALYSIS, refresh_match_analysis).off
-
+    off_()
     tab_list.value = ref([
         {name: i18n_t('analysis_football_matches.Fundamentals')},
         {name: i18n_t('analysis_football_matches.Disk')},
@@ -130,7 +126,7 @@ const get_detail_data = inject('get_detail_data', {})
   })
   const get_data_list = async() => {
       try {
-        loading.value = true
+        // loading.value = true
         let parameter = {
            //2274159, //2274159 ,//2079863足球测试id
           standardMatchId: match_id.value,
@@ -139,8 +135,9 @@ const get_detail_data = inject('get_detail_data', {})
         }
         let res = await api_analysis.get_match_analysise_data(parameter)
         let {code , data} = res
-        loading.value = false
+        // loading.value = false
         if(code == 200 && Object.keys(data).length > 0) {
+          console.error(lodash.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {}));
           future_schedule_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchFutureStatisticsDTOMap', {})
           injury_situation_data.value = lodash.get(data, 'basicInfoMap.sThirdMatchSidelinedDTOMap', {})
           matchHistory_battle_dto_map.value = lodash.get(data, 'matchHistoryBattleDTOMap', {})

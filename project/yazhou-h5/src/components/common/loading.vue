@@ -4,8 +4,8 @@
  * @Description: 加载中
 -->
 <template>
-  <div class="loading">
-    <div class="la-line-scale">
+  <div class="loading" :style="`top:${top}`">
+    <div class="la-line-scale" :class="{'y0_bg': UserCtr.theme.includes('y0')}">
       <div></div>
       <div></div>
       <div></div>
@@ -17,14 +17,10 @@
 
 <script setup>
 import UserCtr from "src/core/user-config/user-ctr.js";;
-import { ref } from "vue"
-// TODO: 临时
-const UserCtr.theme = ref('y0')
-
   const props = defineProps({
     top: {
       type: String,
-      default: '46%',
+      default: () => '46%',
     },
   })
 </script>
@@ -44,7 +40,7 @@ const UserCtr.theme = ref('y0')
 .la-line-scale,
 .la-line-scale > div {
   position: relative;
-  @include webkit(box-sizing, border-box);
+  // @include webkit(box-sizing, border-box);
 }
 .la-line-scale {
   display: block;
@@ -74,14 +70,14 @@ const UserCtr.theme = ref('y0')
   margin-top: 0;
   margin-bottom: 0;
   border-radius: 0;
-  @include webkit(animation, line-scale 1.2s infinite ease);
+  // @include webkit(animation, line-scale 1.2s infinite ease);
 }
 
-@for $item from 1 through 5 {
-  .la-line-scale > div:nth-child(#{$item}) {
-    @include webkit(animation-delay, #{-1.3 + $item * 0.1}s)
-  }
-}
+// @for $item from 1 through 5 {
+//   .la-line-scale > div:nth-child(#{$item}) {
+//     // @include webkit(animation-delay, #{-1.3 + $item * 0.1}s)
+//   }
+// }
 
 .la-line-scale.la-sm {
   width: 20px;
@@ -120,14 +116,14 @@ const UserCtr.theme = ref('y0')
 /*
  * Animation
  */
-@include keyframes(line-scale) {
-  0%,
-  40%,
-  100% {
-    @include webkit(transform, scaleY(0.4));
-  }
-  20% {
-    @include webkit(transform, scaleY(1));
-  }
-}
+// @include keyframes(line-scale) {
+//   0%,
+//   40%,
+//   100% {
+//     @include webkit(transform, scaleY(0.4));
+//   }
+//   20% {
+//     @include webkit(transform, scaleY(1));
+//   }
+// }
 </style>
