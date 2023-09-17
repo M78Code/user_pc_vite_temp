@@ -47,10 +47,11 @@ function loadLanguageAsync(lang) {
     /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`
   ).then((langfile) => {
     LocalStorage.set("lang", lang),
-    // 动态加载对应的语言包
-    // let langFile = langfile.default || langfile;
-    // 设置语言信息
-    i18n.global.setLocaleMessage(lang, langfile);
+      // 动态加载对应的语言包
+      // let langFile = langfile.default || langfile;
+      // 设置语言信息
+      i18n.global.setLocaleMessage(lang, langfile);
+    i18n.global.locale = lang;
     // 设置语种
     i18n.locale = lang;
     return lang;
