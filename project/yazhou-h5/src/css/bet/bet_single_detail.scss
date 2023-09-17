@@ -4,8 +4,8 @@
  */
 [class*=theme0] {
   .bet-single-detail {
-    color: var(--q-color-fs-color-7);
-    background:  var(--q-color-page-bg-color-70);
+    color: var(--q-gb-t-c-3);
+    background:  var(--q-gb-bd-c-6);
     .yellow-color {
       color:  var(--q-color-fs-color-116);
     }
@@ -15,7 +15,7 @@
     }
     .content-b {
       border: 1px solid var(--q-color-border-color-3);
-      color: var(--q-color-fs-color-3);
+      color: var(--q-gb-t-c-4);
       background:var(--q-gb-bd-c-15);
     }
     .content-b2 {
@@ -38,7 +38,7 @@
       }
 
       p:nth-child(2) {
-        color: var(--q-color-fs-color-8);
+        color: var(--q-gb-t-c-6);
       }
     }
     .limit-txt {

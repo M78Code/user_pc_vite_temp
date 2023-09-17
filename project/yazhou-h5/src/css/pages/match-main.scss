@@ -47,9 +47,9 @@
             border-left: 0.01rem var(--q-color-border-color-11) solid;
           }
           .score-row {
-            color:var(--q-color-fs-color-1);
+            color:var(--q-gb-t-c-3);
             &.win-way {
-              color:var(--q-color-fs-color-6);
+              color:var(--q-gb-t-c-13);
             }
           }
           .go-to-d-detail-w {
@@ -79,7 +79,7 @@
               //border-top: 0.01rem solid var(--q-color-border-color-1);
             }
             .team-t-title-w {
-              color: var(--q-color-fs-color-3);
+              color: var(--q-gb-t-c-4);
             }
             .odd-wrap-min {
               background-color: var(--q-color-page-bg-color-9);
@@ -98,7 +98,7 @@
                   color: var(--q-color-fs-color-154);
                 }
                 .odd-value {
-                  color: var(--q-color-fs-color-3);
+                  color: var(--q-gb-t-c-4);
                   &.orange {
                     color: var(--q-color-com-fs-color-18);
                   }
@@ -167,30 +167,30 @@
             }
           }
           .counting-down-up-container {
-            color: var(--q-color-fs-color-7);
+            color: var(--q-gb-t-c-3);
           }
           .counting-down-wrap {
-            color: var(--q-color-fs-color-7);
+            color: var(--q-gb-t-c-3);
           }
           .l {
             .counting-down-up-container {
                //background:var(--q-color-page-bg-color-2);
               .counting-down-wrap {
                 .counting {
-                  color: var(--q-color-fs-color-7);
+                  color: var(--q-gb-t-c-3);
                 }
               }
             }
             .timer-wrapper-c {
               .coming-soon {
-                color: var(--q-color-fs-color-7);
+                color: var(--q-gb-t-c-3);
               }
               .date-time {
                 color: var(--q-color-fs-color-30);
               }
               &.esports {
                 .date-time {
-                  color: var(--q-color-fs-color-4);
+                  color: var(--q-gb-t-c-4);
                 }
               }
             }
@@ -207,7 +207,7 @@
           .mfo-title {
             color: var(--q-color-fs-color-30);
             &.is-ms1 {
-              color: var(--q-color-fs-color-7);
+              color: var(--q-gb-t-c-3);
             }
           }
           .start-counting-down {
@@ -225,7 +225,7 @@
                   color:var(--q-color-fs-color-127);
                 }
                 .score-l-total2 {
-                  color: var(--q-color-fs-color-3) !important;
+                  color: var(--q-gb-t-c-4) !important;
                 }
               }
             }
@@ -243,20 +243,20 @@
           }
           .team-title-container {
             .team-t-title-w {
-              color: var(--q-color-fs-color-3);
+              color: var(--q-gb-t-c-4);
               &.name {
-                color: var(--q-color-fs-color-4);
+                color: var(--q-gb-t-c-4);
                 font-size: 0.12rem !important;
               }
               &.is-handicap {
                 color: var(--q-color-fs-color-31);
               }
               &.is-handicap-1 {
-                color: var(--q-color-fs-color-4);
+                color: var(--q-gb-t-c-4);
               }
             }
             .score {
-              color: var(--q-color-fs-color-3);
+              color: var(--q-gb-t-c-4);
             }
           }
           // .serving-party {
@@ -281,7 +281,7 @@
               background-color: var(--q-color-page-bg-color-9);
               .odd-column-item {
                 &:after {
-                  background-color:  var(--q-color-page-bg-color-25);
+                  background-color:  var(--q-gb-bd-c-8);
                 }
                &.odd-column-item2{
                  &:after{
@@ -293,7 +293,7 @@
                   color: var(--q-color-fs-color-13);
                 }
                 .odd-value {
-                  color: var(--q-color-fs-color-3);
+                  color: var(--q-gb-t-c-4);
                   &.orange {
                     color: var(--q-color-com-fs-color-18);
                   }
@@ -352,7 +352,7 @@
               color: var(--q-color-fs-color-154);
             }
             .odd-value {
-              color: var(--q-color-fs-color-3);
+              color: var(--q-gb-t-c-4);
               &.orange {
                 color: var(--q-color-com-fs-color-18);
               }
@@ -388,7 +388,7 @@
             .block {
               background:  var(--q-color-page-bg-color-31);
               &.selected {
-                background: var(--q-color-page-bg-color-19);
+                background: var(--q-gb-bd-c-13);
               }
             }
           }
@@ -396,12 +396,12 @@
             background-color: var(--q-color-page-bg-color-2);
           }
           .m-result-time {
-            color: var(--q-color-fs-color-7);
+            color: var(--q-gb-t-c-3);
           }
           .score-value {
             &.jiaoqiu-score-value,
             &.orange {
-              color:var(--q-color-fs-color-6);
+              color:var(--q-gb-t-c-13);
             }
           }
           .triangle-wrapper {
@@ -420,7 +420,7 @@
           .block {
             background:  var(--q-color-page-bg-color-31);
             &.selected {
-              background:  var(--q-color-page-bg-color-19);
+              background:  var(--q-gb-bd-c-13);
             }
           }
         }
@@ -429,12 +429,12 @@
         }
         .team-title-container {
           .team-t-title-w {
-            color: var(--q-color-fs-color-3);
+            color: var(--q-gb-t-c-4);
             &.is-handicap {
               color: var(--q-color-fs-color-31);
             }
             &.is-handicap-1 {
-              color: var(--q-color-fs-color-4);
+              color: var(--q-gb-t-c-4);
             }
             &.fight-type {
               color:var(--q-color-fs-color-127);
@@ -464,7 +464,7 @@
           }
           .score-fle-container-1 {
             .last-color {
-              color:var(--q-color-fs-color-6);
+              color:var(--q-gb-t-c-13);
             }
             .basket-ball {
               &:last-child {
@@ -474,16 +474,16 @@
             &.result {
               .score {
                 &:last-child {
-                  color: var(--q-color-fs-color-7) !important;
+                  color: var(--q-gb-t-c-3) !important;
                 }
               }
             }
           }
         }
         .score {
-          color: var(--q-color-fs-color-7);
+          color: var(--q-gb-t-c-3);
           .jiaoqiu-score-value, .orange {
-            color:var(--q-color-fs-color-6);
+            color:var(--q-gb-t-c-13);
           }
           .f-ht-ot{
             color:var(--q-color-fs-color-126);
@@ -491,7 +491,7 @@
         }
       }
       .score-important {
-        color:var(--q-color-fs-color-6) !important;
+        color:var(--q-gb-t-c-13) !important;
       }
       .score-important2 {
         color: var(--q-color-com-fs-color-14) !important;

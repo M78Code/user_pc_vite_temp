@@ -107,7 +107,7 @@ const get_detail_data = inject('get_detail_data', {})
 
     .team-name {
       font-size: 0.12rem;
-      color: var(--q-color-fs-color-3);
+      color: var(--q-gb-t-c-4);
       font-weight: bold;
       line-height: 0.12rem;
     }

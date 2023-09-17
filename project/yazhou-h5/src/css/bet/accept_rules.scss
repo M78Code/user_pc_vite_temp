@@ -9,13 +9,13 @@
        background-color:var(--q-gb-bd-c-15);
     }
     .content-box > p {
-      color: var(--q-color-fs-color-7);
+      color: var(--q-gb-t-c-3);
     }
     .content-box > header {
       color:  var(--q-color-fs-color-14);
     }
     .content-box > footer {
-      color:var(--q-color-fs-color-6);
+      color:var(--q-gb-t-c-13);
     }
 
     p > span:not(.chu) {
@@ -23,7 +23,7 @@
       background-color: var(--q-gb-bd-c-13);
     }
     .chu {
-      color: var(--q-color-fs-color-3);
+      color: var(--q-gb-t-c-4);
     }
   }
   .combine-tips {
@@ -33,7 +33,7 @@
         color: var(--q-color-fs-color-14);
       }
       p {
-        color: var(--q-color-fs-color-7);
+        color: var(--q-gb-t-c-3);
       }
       footer {
         color:var(--q-color-fs-color-149);

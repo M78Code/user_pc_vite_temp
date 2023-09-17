@@ -5,9 +5,9 @@
 [class*=theme0] {
   .keyboard {
      background-color:var(--q-color-page-bg-color-2);
-    color: var(--q-color-fs-color-3);
+    color: var(--q-gb-t-c-4);
     .shouqi {
-      color: var(--q-color-fs-color-7);
+      color: var(--q-gb-t-c-3);
     }
     .key-cell {
       flex: 1;
@@ -17,7 +17,7 @@
     }
     .key-cell {
       &:first-child {
-        color: var(--q-color-fs-color-7);
+        color: var(--q-gb-t-c-3);
         background-color:  var(--q-color-page-bg-color-28);
       }
     }
