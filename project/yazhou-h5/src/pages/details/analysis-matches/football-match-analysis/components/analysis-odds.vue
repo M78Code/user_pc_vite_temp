@@ -60,9 +60,9 @@
             </span>
           </div>
           <div class="t4 column justify-center">
-            <span>{{item.handicapOddsDTOList[0]}}</span>
+            <span>{{item.handicapOddsDTOList[0].value}}</span>
             <span :class="{'red':item.handicapOddsDTOList[1].directions == 1,'green':item.handicapOddsDTOList[1].directions == -1}">
-              {{item.handicapOddsDTOList[1]}}
+              {{item.handicapOddsDTOList[1].value}}
               <i class="odd yb_ml4"></i>
             </span>
           </div>
