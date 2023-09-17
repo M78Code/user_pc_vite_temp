@@ -1,6 +1,6 @@
-import {  PageSourceData,fileds_map_common  } from "src/core/index.js";
+import { PageSourceData, fileds_map_common } from "src/core/index.js";
 import MenuData from "src/core/menu-pc/menu-data-class.js";
-import UserCtr from  "src/core/user-config/user-ctr.js";
+import UserCtr from "src/core/user-config/user-ctr.js";
 import { ref } from "vue"
 import lodash_ from "lodash"
 
@@ -27,7 +27,7 @@ class BetData {
     // 单关串关切换 保留原值
     this.single_list_copy = []
     // true= 单关投注 false= 串关投注
-    this.is_bet_single = true; 
+    this.is_bet_single = true;
     // 是否正在处理投注
     this.is_handle = false;
     // 单关 是否正在处理投注
@@ -42,7 +42,7 @@ class BetData {
     this.is_virtual_bet = false;
     // 虚拟投注是否正在进行
     this.is_virtual_handle = false;
-  // 处于活动的投注项子项
+    // 处于活动的投注项子项
     this.active_index = 0
 
     //==============================================投注之前 无注单ID=============
@@ -171,8 +171,49 @@ this.bet_appoint_ball_head= null */
     let obj = fileds_map_common
     return obj
   }
+  get_is_champion() {
 
-
+  }
+  //  /**
+  //    * @description 是否是冠军
+  //    * @param {Object} state 当前state
+  //    * @param {Object} getters 
+  //    * @return {Boolean} 是否是冠军
+  //    */
+  get_is_champion(state, getters) {
+    return false;
+    // let flag = getters.get_menu_type == 100 && ['matchList'].includes(val.$route.name)
+    //   || getters.get_menu_type == 3000 && val.$route.name == 'matchList' && _.get(getters, 'get_current_menu.date_menu.menuType') == 100
+    // return flag
+  }
+  /**
+   * 设置 是否接受更好赔率
+  */
+  set_bet_is_accept(value) {
+    value = Number(value)
+    console.error(value)
+    if (isNaN(value)) {
+      console.error(value)
+      this.bet_is_accept = !this.bet_is_accept
+    } else {
+      this.bet_is_accept = value;
+    }
+    this.set_bet_data_class_version()
+  }
+  /**
+   * 设置 是否接受更好赔率
+  */
+  set_bet_is_accept(value) {
+    value = Number(value)
+    console.error(value)
+    if (isNaN(value)) {
+      console.error(value)
+      this.bet_is_accept = !this.bet_is_accept
+    } else {
+      this.bet_is_accept = value;
+    }
+    this.set_bet_data_class_version()
+  }
   /**
    *
    * 管道负责 读写 衔接  使用对象引用类型的 原理
@@ -252,26 +293,26 @@ this.bet_appoint_ball_head= null */
     // 是否虚拟投注
     let is_virtual_bet = false
     // 根据投注类型 设置投注分类
-    switch(obj.bet_type){
+    switch (obj.bet_type) {
       // vr
-      case 'vr_bet' :
-        this.set_vrtual_bet_obj({custom_id,...obj})
+      case 'vr_bet':
+        this.set_vrtual_bet_obj({ custom_id, ...obj })
         bet_refer_obj.is_vr = true
         is_virtual_bet = true
         break;
       // 常规体育
-      case 'common_bet' :
-        this.set_common_bet_obj({custom_id,...obj})
+      case 'common_bet':
+        this.set_common_bet_obj({ custom_id, ...obj })
         bet_refer_obj.is_common = true
         break;
       // 冠军  
-      case 'guanjun_bet' :
-        this.set_guanjun_bet_obj({custom_id,...obj})
+      case 'guanjun_bet':
+        this.set_guanjun_bet_obj({ custom_id, ...obj })
         bet_refer_obj.is_guanjun = true
         break;
       // 电竞
-      case 'esports_bet' :
-        this.set_dianjing_bet_obj({custom_id,...obj})
+      case 'esports_bet':
+        this.set_dianjing_bet_obj({ custom_id, ...obj })
         bet_refer_obj.is_dianjing = true
         break;
     }
@@ -281,48 +322,48 @@ this.bet_appoint_ball_head= null */
     // 设置 投注内容
     this.bet_read_write_refer_obj[custom_id] = bet_refer_obj
 
-    
+
     // 单关/串关 投注
-    if(this.is_bet_single ){
+    if (this.is_bet_single) {
       // 单关 不合并 只有一条 
       // 单关 合并 多条
-      if(this.is_bet_merge){
+      if (this.is_bet_merge) {
         this.bet_single_list.push(bet_refer_obj)
-      }else{
+      } else {
         this.bet_single_list = [bet_refer_obj]
       }
       // 单关数据收集器
       this.single_list_copy.push(bet_refer_obj)
-    }else{
+    } else {
       // 串关
       // 串关逻辑 TODO
       // 同场赛事不能串 部分数据源赛事不能串 
-      if(this.bet_s_list.length){
-        let obj = this.bet_s_list.find(item=> item.matchId == bet_refer_obj.matchId) || {}
+      if (this.bet_s_list.length) {
+        let obj = this.bet_s_list.find(item => item.matchId == bet_refer_obj.matchId) || {}
         // 判断是否选择的同赛事投注项
-        if(obj.matchId){
-          let bet_s_list = this.bet_s_list.map(item => { 
-            if(item.matchId == obj.matchId){
-             return {
+        if (obj.matchId) {
+          let bet_s_list = this.bet_s_list.map(item => {
+            if (item.matchId == obj.matchId) {
+              return {
                 ...item,
                 ...bet_refer_obj
               }
-            }else{
+            } else {
               return item
             }
           })
           this.bet_s_list = bet_s_list
-        }else{
+        } else {
           this.bet_s_list.push(bet_refer_obj)
         }
-      }else{
+      } else {
         this.bet_s_list.push(bet_refer_obj)
       }
     }
-    
+
     // 显示 投注信息窗口
     MenuData.set_layout_left_show('bet_list')
-    
+
     this.set_bet_data_class_version()
   }
 
@@ -337,15 +378,15 @@ this.bet_appoint_ball_head= null */
   设置 常规 投注分类
   */
   set_common_bet_obj(obj) {
-    console.error('sssss',obj.custom_id)
+    console.error('sssss', obj.custom_id)
     this.common_bet_obj[obj.custom_id] = obj
   }
 
-    /*
+  /*
   设置 冠军 投注分类
   */
   set_guanjun_bet_obj(obj) {
-  this.guanjun_bet_obj[obj.custom_id] = obj
+    this.guanjun_bet_obj[obj.custom_id] = obj
   }
 
   /*
@@ -354,7 +395,7 @@ this.bet_appoint_ball_head= null */
   set_dianjing_bet_obj(obj) {
     this.dianjing_bet_obj[obj.custom_id] = obj
   }
-   /*
+  /*
   设置 是否接受更好赔率
   */
   set_is_accept(value) {
@@ -366,53 +407,54 @@ this.bet_appoint_ball_head= null */
     }
     this.set_bet_data_class_version()
   }
-   /*
+  /*
   设置 赔率类型
   */
   set_cur_odd(cur_odd) {
     this.cur_odd = cur_odd;
+    this.set_bet_data_class_version()
   }
 
   // 设置单关 串关 投注状态
-  set_is_single_handle(val){
+  set_is_single_handle(val) {
     this.is_single_handle = val
   }
 
   // 设置 切换单关/串关切换
-  set_is_bet_single(){
+  set_is_bet_single() {
     // true 单关 false 串关
     this.is_bet_single = !this.is_bet_single
     // 单关 切换到串关 / 
-    if(!this.is_bet_single){
+    if (!this.is_bet_single) {
       // 串关数据 == 单关数据 // 同赛事不能大于一个投注项
-      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list) 
+      this.bet_s_list = lodash_.cloneDeep(this.bet_single_list)
     }
     this.set_bet_data_class_version()
   }
 
   // 设置单关/单关合并 切换
-  set_is_bet_merge(){
+  set_is_bet_merge() {
     this.is_bet_merge = !this.is_bet_merge
     // 设置 投注内容数据
-    if(!this.is_bet_merge){
-       // 不合并的状态下 取最后合并的最后一条数据作为投注内容
+    if (!this.is_bet_merge) {
+      // 不合并的状态下 取最后合并的最后一条数据作为投注内容
       this.bet_single_list = [this.bet_single_list.pop()]
     }
     this.set_bet_data_class_version()
   }
   // 设置 投注版本
-  set_bet_data_class_version(){
+  set_bet_data_class_version = lodash_.debounce(() => {
     this.bet_data_class_version.value = Date.now()
-  }
+  }, 50)
 
   // 投注成功后 不保留投注项 需要清空投注数据 
-  set_clear_bet_info(){
+  set_clear_bet_info() {
     this.bet_s_list = []
     this.single_list_copy = []
     this.bet_single_list = []
     this.bet_read_write_refer_obj = {}
   }
-  
+
   /**
    * 通过前端 自定义 投注ID 获取视图控制对象 BetViewData
    */
@@ -491,70 +533,70 @@ this.bet_appoint_ball_head= null */
    * @param {*}win_money 存储字段
    * @param {*} value 需要存储的值
    */
-  set_bet_s_obj(win_money,value){
+  set_bet_s_obj(win_money, value) {
     this.bet_s_obj[win_money] = value
   }
   /**
- * @description: 存储 赔率转换表
- * @param {*} value 需要存储的值
- */
-  set_odds_coversion_map(value){
+  * @description: 存储 赔率转换表
+  * @param {*} value 需要存储的值
+  */
+  set_odds_coversion_map(value) {
     this.odds_coversion_map = value
   }
 
-    /**
- * @description: 根据oid或者坑位id获取投注项id
- * @param {String} okid oid或者坑位id
- * @return {String} 投注项id
- */
- get_id(okid) {
-}
-/**
- * @description: 根据投注项id获取投注项的oid
- * @param {String} id 投注项id
- * @return {String} 投注项oid
- */
-get_oid(id) {
-}
-/**
- * @description: 根据投注项id获取投注项的坑位id(kid)
- * @param {String} id 投注项id
- * @return {String} 投注项坑位id(kid)
- */
-get_kid(id){
-}
-/**
- * @description: 根据投注项id,获取投注项对象
- * @param {String} id 投注项id
- * @return {Object} 投注项
- */
-get_bet_obj(id) {
+  /**
+  * @description: 根据oid或者坑位id获取投注项id
+  * @param {String} okid oid或者坑位id
+  * @return {String} 投注项id
+  */
+  get_id(okid) {
+  }
+  /**
+   * @description: 根据投注项id获取投注项的oid
+   * @param {String} id 投注项id
+   * @return {String} 投注项oid
+   */
+  get_oid(id) {
+  }
+  /**
+   * @description: 根据投注项id获取投注项的坑位id(kid)
+   * @param {String} id 投注项id
+   * @return {String} 投注项坑位id(kid)
+   */
+  get_kid(id) {
+  }
+  /**
+   * @description: 根据投注项id,获取投注项对象
+   * @param {String} id 投注项id
+   * @return {Object} 投注项
+   */
+  get_bet_obj(id) {
 
-}
-/**
- * @description: 获取玩法id
- * @return {String} 玩法名称
- */
-get_play_id() {
+  }
+  /**
+   * @description: 获取玩法id
+   * @return {String} 玩法名称
+   */
+  get_play_id() {
 
-}
-/**
- * @description: 获取玩法名称
- * @return {String} 玩法名称
- */
-get_play_name() {
- 
-}
+  }
+  /**
+   * @description: 获取玩法名称
+   * @return {String} 玩法名称
+   */
+  get_play_name() {
 
-/**
- * @description: 设置设备类型
- * @return {String} 设备类型
- */
-set_device_type(val) {
-  // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
-  this.deviceType = val
-}
+  }
 
-  
+  /**
+   * @description: 设置设备类型
+   * @return {String} 设备类型
+   */
+  set_device_type(val) {
+    // 设备类型 "设备类型 1:H5，2：PC,3:Android,4:IOS,5:其他设备"
+    this.deviceType = val
+  }
+
+
 }
 export default new BetData();

@@ -17,7 +17,7 @@ import _ from "lodash";
 import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";
 import { useRouter } from "vue-router";
-import STANDARD_KEY from "src/core/standard-key";
+import STANDARD_KEY from "src/core/standard-key"; 
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { onMounted } from "vue";
 

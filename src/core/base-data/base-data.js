@@ -3,7 +3,7 @@
 // 电竞球种 menu_id 规则 ：2000  +对应球种 id   csid  2000 + 100   =2100   英雄联盟
 // 虚拟球种 menu_id 规则 ：30000 +对应球种 id   csid  30000 + 1001 =31001   VR足球
 // 冠军    menu_id  规则 :400   +对应球种 id    csid  400 +1  = 401 冠军 足球
-import { i18n_t, i18n} from "src/boot/i18n.js";
+import { i18n_t, i18n } from "src/boot/i18n.js";
 import { ref } from "vue";
 import { dianjing_sublist } from "src/core/constant/config/csid.js"
 
@@ -15,7 +15,7 @@ import { dianjing_sublist } from "src/core/constant/config/csid.js"
 // 30000  虚拟赛事 VR
 
 //  1001  1004
-import userCtr  from "src/core/user-config/user-ctr.js";
+import userCtr from "src/core/user-config/user-ctr.js";
 import lodash_ from "lodash";
 // indexeDb
 import { db } from "src/core/base-data/config/indexedPB.js";
@@ -382,7 +382,7 @@ class BaseData {
   /**
    * 旧菜单改变数据结构
    */
-  menu_type_old_or_new() {}
+  menu_type_old_or_new() { }
 
   /**
    * 计算 左侧菜单数据
@@ -654,11 +654,11 @@ class BaseData {
    * 解析  菜单 国际化
    */
   resolve_menus(res) {
-    if(!res) return
+    if (!res) return
     // 获取语言类型
     let locale = i18n.global.locale || "zh";
     // 设置 语言变量
-    let esports = lodash_.get(i18n.global.messages,'common.e_sports')
+    let esports = lodash_.get(i18n.global.messages, 'common.e_sports')
 
     // 菜单 国际化 数据  map
     res["2000"] = esports || "Esports";
@@ -695,7 +695,7 @@ class BaseData {
    * @param {*} res
    */
   set_mi_tid_mids_res(res) {
-    let data = lodash_.get(res, 'data')
+    let data = lodash_.get(res, 'data', {})
     this.mi_tid_mids_res = data;
     let db_data = [];
     lodash_.each(Object.keys(data), (item) => {

@@ -99,7 +99,9 @@ class MenuData {
     this.init();
   }
   init() {
-    base_data_instance.init(); //初始化菜单数据
+    setTimeout(() => {
+      base_data_instance.init(); //初始化菜单数据
+    }, 0);
     //菜单数据有变化
     watch(
       base_data_instance.base_data_version,

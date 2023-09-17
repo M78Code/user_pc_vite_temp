@@ -4,7 +4,7 @@ import final_css_config from "app/job/output/css/index.json"
 
 import UserCtr from "src/core/user-config/user-ctr.js";
 
-// 全局的   
+
 /**
  * @param {*} category  :     global   /  component
  * @param {*} module   :    css 目录下 ：  global   /  component  目录下 ：文件名字  ： 例如  background
