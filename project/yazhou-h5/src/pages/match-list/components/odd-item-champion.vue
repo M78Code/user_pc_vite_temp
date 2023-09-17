@@ -12,9 +12,9 @@
     <!--封盘-->
     <div class="icon-lock-wrapper" v-if="odd_status === 2">
       <img class="icon-lock" v-if="get_theme.includes('theme01')"
-         src="image/wwwassets/bw3/common/match-icon-lock.svg" />
+         src="public/image/common/match-icon-lock.svg" />
       <img class="icon-lock" v-if="get_theme.includes('theme02')"
-         src="image/wwwassets/bw3/common/match-icon-lock-theme02.svg" />
+         src="public/image/common/match-icon-lock-theme02.svg" />
 
     </div>
     <!--开盘|锁盘-->

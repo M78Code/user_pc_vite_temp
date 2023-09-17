@@ -6,34 +6,34 @@
 [class*=theme0] {
   .accept-rules {
     .content-box {
-       background-color:var(--q-color-page-bg-color-114);
+       background-color:var(--q-gb-bd-c-15);
     }
     .content-box > p {
-      color: var(--q-color-fs-color-7);
+      color: var(--q-gb-t-c-3);
     }
     .content-box > header {
       color:  var(--q-color-fs-color-14);
     }
     .content-box > footer {
-      color:var(--q-color-fs-color-6);
+      color:var(--q-gb-t-c-13);
     }
 
     p > span:not(.chu) {
       color:var(--q-color-com-fs-color-8);
-      background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bd-c-13);
     }
     .chu {
-      color: var(--q-color-fs-color-3);
+      color: var(--q-gb-t-c-4);
     }
   }
   .combine-tips {
     .main-box {
-      background:var(--q-color-page-bg-color-114);
+      background:var(--q-gb-bd-c-15);
       header {
         color: var(--q-color-fs-color-14);
       }
       p {
-        color: var(--q-color-fs-color-7);
+        color: var(--q-gb-t-c-3);
       }
       footer {
         color:var(--q-color-fs-color-149);

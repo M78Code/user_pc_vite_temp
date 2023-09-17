@@ -154,7 +154,7 @@ export default defineComponent({
 
       // &.is-active {
       //   background: var(--q-color-page-bg-color-9);
-      //   color: var(--q-color-fs-color-6);
+      //   color: var(--q-gb-t-c-13);
 
       // }
     }

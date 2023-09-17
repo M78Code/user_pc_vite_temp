@@ -9,7 +9,6 @@ const compute_css = (_key, _position) => {
     _position = _key.position
     _key = _key.key;
   }
-  console.error("_position", _position, _key)
   //没有位置就是单图
   if (isNull(_position) || isUndefined(_position)) {
     return other_compute({ key: _key, theme: UserCtr.theme })
@@ -21,7 +20,7 @@ const compute_css = (_key, _position) => {
     }
   }
 };
-export { compute_css };
+// export { compute_css };
 /**
  * 对于 精灵图  key 是文件名字也是 单个素材资源的 标识键   ， position 是 精灵图内 item 单个元素的 位置 标识键
  * 调用示例： compute_css(key,position) || compute_css({key,position}) 
@@ -29,3 +28,5 @@ export { compute_css };
  * 调用示例：   compute_css(key) || compute_css({key})// 单图
  */
 
+
+export * from 'project_path/src/css/server-img/'

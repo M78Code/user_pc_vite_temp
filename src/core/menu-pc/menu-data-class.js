@@ -1,4 +1,6 @@
 import base_data_instance from "src/core/base-data/base-data.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
+
 import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
 
@@ -72,7 +74,7 @@ class MenuData {
     this.match_list_api_config = {
       match_list: {
         //lockie
-        params: {"apiType":1,"cuid":"508069110042000059","euid":"3020101","orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
+        params: {"apiType":1,"cuid":"508173877382400101","euid":"3020101","orpt":"0","pids":"","sort":1,"tid":"","selectionHour":null}
       },
       bymids: {},
     };
@@ -627,6 +629,8 @@ class MenuData {
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
     match_list_api_config.version = Date.now();
+    // const {  } = match_list_api_config;
+    // MATCH_LIST_TEMPLATE_CONFIG.
     console.error(
       "set_match_list_api_config-------列表结构AP参数的------",
       JSON.stringify(match_list_api_config)

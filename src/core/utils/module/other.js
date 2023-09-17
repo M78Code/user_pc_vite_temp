@@ -12,7 +12,7 @@ import { MenuData } from "src/core/index.js";
 // 目前环境信息
 const { current_env,NODE_ENV} = window.BUILDIN_CONFIG
 
-// import { image_panda_placeholder } from 'project_path/src/boot/local-image.js'
+// import { image_panda_placeholder } from 'project_path/src/core/utils/local-image.js'
 
 /**
  * 获取url参数的方法 默认返回全部 {name:value}

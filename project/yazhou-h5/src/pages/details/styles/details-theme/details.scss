@@ -20,7 +20,7 @@
       background: var(--q-color-page-bg-color-9);
     }
     .details-f {
-      background: var(--q-color-page-bg-color-1);
+      background: var(--q-gb-bd-c-9);
     }
   }
   .details {
@@ -37,14 +37,14 @@
   .t_color {
     color:var(--q-color-fs-color-37) !important;
     &:after {
-      background: var(--q-color-page-bg-color-50);
+      background: var(--q-gb-bd-c-13);
     }
   }
 
   .baseball-poi-w {
     .poi {
       &.p {
-        background: var(--q-color-page-bg-color-50) !important;
+        background: var(--q-gb-bd-c-13) !important;
       }
     }
   }
@@ -82,7 +82,7 @@
 
   .activeText,
   .active-text {
-    color: var(--q-color-fs-color-6) !important;
+    color: var(--q-gb-t-c-13) !important;
   }
 
   // .rules-wet {

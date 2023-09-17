@@ -298,10 +298,10 @@ export default class MatchDataBase
       return  score_obj
   }
   /**
-   * @description: 格式化列表比分(比分数组转对象)
+   * @description: 格式化列表数据(比分数组转对象)
    * @param {Object} list 所有列表数据
    */
-  list_serialized_score_obj(list){
+  list_serialized_match_obj(list){
     if(lodash.get(list,'length')){
       // 格式化比分信息
       list.forEach(match => {
@@ -315,6 +315,22 @@ export default class MatchDataBase
         } else {
           match.msc_obj = msc_obj;
         }
+
+        // 转换玩法
+        const hps_pns_obj = lodash.get(match, 'hps_pns_obj');
+        const hps_pns_arr = lodash.get(match, 'hpsPns',[]);
+        const hps_pns_obj_temp = lodash.keyBy(hps_pns_arr, function(o) {
+                                  return o.hpid;
+                                });
+        // 数据赋值和合并逻辑
+        if(hps_pns_obj){
+          this.assign_with(hps_pns_obj, hps_pns_obj_temp)
+        } else {
+          match.hps_pns_obj = hps_pns_obj_temp;
+        }
+        // 赛事数据格式化
+        match && this.list_to_many_obj([match]);
+
       });
     }
   }
@@ -329,8 +345,8 @@ export default class MatchDataBase
     if(list){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'list';
-      // 格式化列表比分(比分数组转对象)
-      this.list_serialized_score_obj(list);
+      // 格式化列表赛事(部分数组转对象)
+      this.list_serialized_match_obj(list);
       let obj = this.list_comparison(this.list,list);
       if(is_merge){
         // {add:{}, del:{}, upd:{}}
@@ -566,6 +582,9 @@ export default class MatchDataBase
             if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
+                if(!lodash.get(item2,'hsw')){
+                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.length')) {
                   // 遍历盘口数据
@@ -598,7 +617,9 @@ export default class MatchDataBase
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
                             _hid: item3.hid,
-                            _hn
+                            _hn,
+                            _hsw:item2.hsw,
+                            _hipo:item3.hipo,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_format_quick_query_key(item.mid,item4.oid,'ol')] = item4;
@@ -618,6 +639,9 @@ export default class MatchDataBase
             if (lodash.get(hps_data_arr, 'length') && Array.isArray(hps_data_arr)) {
               // 遍历玩法数据
               hps_data_arr.forEach(item2 => {
+                if(!lodash.get(item2,'hsw')){
+                  item2.hsw = lodash.get(item,`hps_pns_obj.${item2.hpid}.hsw`);
+                }
                 // 检查是否有盘口数据
                 if (lodash.get(item2,'hl.ol.length')) {
                   // if(item2.hl.ol.forEach(item3 => {
@@ -651,7 +675,9 @@ export default class MatchDataBase
                             _mhs: (item.mhs ? item.mhs : 0),
                             _mid: item.mid,
                             _hid: item3.hid,
-                            _hn
+                            _hn,
+                            _hsw:item2.hsw,
+                            _hipo:item3.hipo,
                           });
                           // 快速查询对象ol_obj增加数据
                           many_obj.ol_obj[this.get_format_quick_query_key(item.mid,item4.oid,'ol')] = item4;
@@ -681,8 +707,8 @@ export default class MatchDataBase
     if(match_details){
       // 设置使用类型:类表-list,赛事详情-match
       this.type = 'match';
-      // 格式化列表比分(比分数组转对象)
-      this.list_serialized_score_obj([match_details]);
+      // 格式化列表赛事(部分数组转对象)
+      this.list_serialized_match_obj([match_details]);
       if(is_merge){
         // 合并模式时,获取赛事信息
         const match=lodash.get(this.list,'[0]');
@@ -729,6 +755,7 @@ export default class MatchDataBase
   /**
    * @description: 将list格式化成多个obj对象
    * @param {Array} list 赛事列表
+   * @param {Number} timestap 时间戳
    * @return {Object} 将赛事列表转成成对象,提高检索速度
    */
   list_to_many_obj(list, timestap){

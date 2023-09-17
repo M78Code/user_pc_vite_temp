@@ -1,7 +1,8 @@
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
 // 
-import server_resource from "app/job/output/assets/index.js";
+// import server_resource from "app/job/output/assets/index.json";
+const server_resource = {}
 import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;

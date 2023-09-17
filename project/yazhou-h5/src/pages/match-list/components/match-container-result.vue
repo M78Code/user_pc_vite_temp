@@ -42,12 +42,8 @@
           </span>
           <!--箭头 -->
           <template v-if="!['detail_match_list','home_hot_page_schedule'].includes(main_source)">
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}"
-              v-if="get_theme.includes('theme01')"
-              src='~public/image/wwwassets/bw3/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}"
-              v-if="get_theme.includes('theme02')"
-              src='~public/image/wwwassets/bw3/list/league-collapse-icon-black.svg' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('theme01')" :src='league_icon' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('theme02')" :src='league_icon_back' />
           </template>
         </div>
       </div>
@@ -130,6 +126,8 @@ import { i18n_t} from 'src/core/index.js'
 import ImageCacheLoad from "./public-cache-image.vue";
 import { format_time_zone_time } from "src/core/format/index.js"
 import {MenuData } from "src/core/index.js"
+import { league_icon, league_icon_back } from 'project_path/src/core/utils/local-image.js'
+
 
 const props = defineProps({
   match_of_list: Object,

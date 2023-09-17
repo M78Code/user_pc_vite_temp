@@ -351,7 +351,7 @@ export default defineComponent({
     background-color: #999999;
 
     &.active {
-      background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bd-c-13);
     }
   }
 
@@ -362,7 +362,7 @@ export default defineComponent({
 
     .inner-line {
       height: 100%;
-      background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bd-c-13);
     }
   }
 }

@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100%;
   font-size: 12px;
+  color: var(--q-gb-t-c-6);
   //无数据
   &.no-record-data {
     padding-bottom: 0 !important;
@@ -29,33 +30,45 @@
     //表单内容
     .data-table-content {
       flex: 1;
-      ::v-deep {
-        .full-width {
+      color: var(--q-gb-t-c-14);
+      background: var(--q-gb-bg-c-11);
+        // :deep(.full-width) {
           //表单内容
-          .r-table {
+          :deep(.r-table) {
             width: 100%;
             height: 100%;
+            >div {
+              border-bottom: 1px solid var(--q-gb-bd-c-7);
+            }
+            
             .load-data-wrap {
               height: 100%;
             }
-          }
-        }
+          // }
       }
     }
     .row {
+      color: var(--q-gb-t-c-6);
       //标题
       &.head {
         padding: 0;
         height: 30px;
+        color: var(--q-gb-t-c-6);
+        background: var(--q-gb-bg-lg-22);
+        border: 1px solid var(--q-gb-bd-c-7);
         .ceil {
           padding: 0 0 0 20px !important;
           border: none;
           height: 100%;
+          color: var(--q-gb-t-c-1);
           &:first-child,
           &:last-child {
             display: flex;
             justify-content: center;
             padding: 0 !important;
+          }
+          &:first-child {
+            border: 0!important;
           }
         }
       }
@@ -66,11 +79,20 @@
         padding: 12px 0 12px 20px;
         border-top: none;
         border-left: none;
+        color: var(--q-gb-t-c-1);
+        border-right: 1px solid var(--q-gb-bd-c-7);
+        :deep(.row) {
+          color: var(--q-gb-t-c-6);
+          .col:first-child {
+            color: var(--q-gb-t-c-1);
+          }
+        }
         //第一个子元素
         &:nth-child(1) {
           align-items: center;
           padding-left: 0;
           width: 50px;
+          border-left: 1px solid var(--q-gb-bd-c-7)!important;
         }
         //第二个子元素
         &:nth-child(2) {
@@ -87,6 +109,14 @@
           flex: 1;
           flex-flow: column;
           align-items: flex-start;
+          :deep(.match-name-wrap) {
+            .market_value {
+              color: var(--q-gb-t-c-5);
+            }
+            .market-value-text {
+              color: var(--q-bet-record-color-1);
+            }
+          }
         }
         //第五个子元素
         &:nth-child(5) {
@@ -176,13 +206,15 @@
     }
   }
 
-  ::v-deep .load-data-wrap {
+  :deep(.load-data-wrap) {
+    color: var(--q-gb-t-c-1);
     .refresh {
       padding-top: 5%;
     }
   }
 }
-.play-type {
+:deep(.play-type) {
+  color: var(--q-gb-t-c-1);
   & > span {
     margin-right: 10px;
     &:last-child {

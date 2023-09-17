@@ -17,7 +17,7 @@
         </div>
         <!--折叠得箭头图标-->
         <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :src="(`${$g_image_preffix}/image/wwwassets/bw3/list/league-collapse-icon${UserCtr.theme.includes('theme02') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
+          :src="(`/public/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('theme02') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
@@ -61,8 +61,8 @@
           <div class="team-t-title-w fight-type" v-if="[1, 3, 5, 7, 8, 9].includes(+match_info.csid)"> <!--csid 7斯诺克-->
             <!--csid 1足球-->
             <img v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
-              :src="show_tips ? (UserCtr.theme.includes('y0') ? `${$g_image_preffix}/image/bw3/svg/match-list/information-icon_y0.svg` : `${$g_image_preffix}/image/bw3/svg/match-list/information-icon.svg`) :
-                (UserCtr.theme.includes('theme01') ? `${$g_image_preffix}/image/bw3/svg/match-list/information-icon-gray.svg` : `${$g_image_preffix}/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
+              :src="show_tips ? (UserCtr.theme.includes('y0') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon_y0.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon.svg`) :
+                (UserCtr.theme.includes('theme01') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>

@@ -13,6 +13,7 @@
       :class="{ 'hide-search': show_type == 'none', 'mini': main_menu_toggle == 'mini', 'iframe': is_iframe }"
     >
       <search-input v-model:show_type="show_type" />
+      <!-- 遮罩层样式.bottom-wrap -->
       <div class="bottom-wrap col search-result relative-position">
         <!-- 球类导航 -->
         <div
@@ -252,10 +253,10 @@ export default defineComponent({
 
   .bottom-wrap {
     top: -1px;
-    background: var(--qq--theme-bg-search-mask);
+    background: var(--q-header-search-color-2);
 
     ::v-deep .serach-background {
-      background-color: var(--qq--theme-bg-search-match);
+      background-color: var(--q-gb-bg-c-11);
       min-height: 400px;
       overflow: hidden;
     }
@@ -269,8 +270,8 @@ export default defineComponent({
       padding: 10px 0 0 30px;
       z-index: 999;
       /* 修改此值  需注意是否被滚球倒计时遮挡 */
-      background-color: var(--qq--theme-bg-search-match);
-      border-bottom: 1px solid var(--qq--theme-bd-color-search-pnl);
+      background-color: var(--q-gb-bg-c-11);
+      border-bottom: 1px solid var(--q-header-search-color-5);
 
       .tab-item {
         height: 38px;

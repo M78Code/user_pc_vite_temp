@@ -44,14 +44,14 @@ import PageSourceData from "src/core/page-source/page-source.js";
 // pc
 
 import MenuData_PC from "src/core/menu-pc/menu-data-class.js";
-import MatchListCard_PC from "src/core/match-list-h5/match-card/match-list-card-class.js";
-import MatchListCardData_PC from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
+import MatchListCard_PC from "src/core/match-list-pc/match-card/match-list-card-class.js";
+import MatchListCardData_PC from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 
 // h5
 
 import MenuData_H5 from "src/core/menu-h5/menu-data-class.js";
-import MatchListCard_H5 from "src/core/match-list-pc/match-card/match-list-card-class.js";
-import MatchListCardData_H5 from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
+import MatchListCard_H5 from "src/core/match-list-h5/match-card/match-list-card-class.js";
+import MatchListCardData_H5 from "src/core/match-list-h5/match-card/module/match-list-card-data-class.js";
 
 const IS_PC = PROJECT_NAME.includes("pc");
 const MenuData = IS_PC ? MenuData_PC : MenuData_H5;

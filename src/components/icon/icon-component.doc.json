@@ -5,14 +5,14 @@
         "sonName": "PC-icon组件"
     },
     "category": "component",
-    "component-name": "IconComponent",
+    "component-name": "Icon",
     "support-customization": "1",
     "descriptions": [
         "icon组件"
     ],
     "optional-component": [
         {
-            "component-name": "IconComponent_1",
+            "component-name": "Icon_1",
             "descriptions": [
                 "icon组件-版本1"
             ]

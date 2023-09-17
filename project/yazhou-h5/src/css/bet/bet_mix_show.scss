@@ -6,12 +6,12 @@
   .bet-mix-show {
     position: relative;
     word-break: break-all;
-    color: var(--q-color-fs-color-3);
+    color: var(--q-gb-t-c-4);
     .bet-mix-show2 {
       background-color:  var(--q-color-page-bg-color-22);
     }
     .locked-shadow {
-      background:  var(--q-color-page-bg-color-23);
+      background:  var(--q-gb-bd-c-2);
     }
     .content-t {
       line-height: 0.2rem;
@@ -30,15 +30,15 @@
       background-color: transparent;
     }
     .pre-text{
-      color:var(--q-color-fs-color-6);
+      color:var(--q-gb-t-c-13);
     }
     .invalid-span,
     .invalid-span2 {
       color:var(--q-color-com-fs-color-8);
-      background: var(--q-color-page-bg-color-24);
+      background: var(--q-gb-bd-c-8);
     }
     .xia {
-      color: var(--q-color-fs-color-7);
+      color: var(--q-gb-t-c-3);
     }
     /* ************** 投注完成后的颜色展示 ************** -S */
     .color0 {
@@ -50,7 +50,7 @@
       color:  var(--q-color-com-fs-color-20);
     }
     .color2 {
-      color:var(--q-color-fs-color-6);
+      color:var(--q-gb-t-c-13);
     }
     .color3 {
       color:var(--q-color-com-fs-color-9);
@@ -67,7 +67,7 @@
 
     /* ************** 红升绿降 ************** -E */
     .line {
-      background-color:  var(--q-color-page-bg-color-25);
+      background-color:  var(--q-gb-bd-c-8);
     }
     .subscribe-button{
       background: var(--q-color-page-bg-color-112);
@@ -75,7 +75,7 @@
     }
     .subscribe-wrap{
       .money-span {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
       .money-span2 {
         background: transparent !important;
@@ -88,16 +88,16 @@
           border-bottom: 1px solid  var(--q-color-border-color-15);
         }
         .label{
-          color:var(--q-color-fs-color-6);
+          color:var(--q-gb-t-c-13);
         }
         .operation{
-          background:var(--q-color-page-bg-color-114);
+          background:var(--q-gb-bd-c-15);
           border: 0.5px solid  var(--q-color-border-color-16);
           .odd{
-            color: var(--q-color-fs-color-3);
+            color: var(--q-gb-t-c-4);
           }
           .reduce,.add{
-            background: var(--q-color-page-bg-color-1);
+            background: var(--q-gb-bd-c-9);
           }
           .reduce{
             border-right: 0.5px solid  var(--q-color-border-color-17);

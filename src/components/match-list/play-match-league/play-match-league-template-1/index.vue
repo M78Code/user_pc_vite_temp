@@ -5,8 +5,6 @@
     <!-- 第一行 -->
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
-      {{ match_list_tpl_size }}
-
       <div class="leagues-wrap" :class="tpl_id == 12 && 'jingcai'"
         :style="`width:${match_list_tpl_size.process_team_width}px !important;`">
         <!-- 箭头 -->

@@ -16,15 +16,15 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
-          <!-- <span
-            v-show="(match.score_obj || {}).S11.home > 0"
+          <span
+            v-show="lodash.get(match, 'msc_obj.S11.home')> 0"
             class="red-ball"
             :class="{flash:is_show_home_red}"
-          >{{match.score_obj.S11.home}}</span> -->
+          >{{lodash.get(match, 'msc_obj.S11.home')}}</span>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.home`) : match.home_score}}</div>
+      <div class="score" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{  play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.home`) : match.home_score}}</div>
     </div>
     <!-- 客队信息 -->
     <div class="row-item team-item">
@@ -40,18 +40,16 @@
             <div class="gif-text">{{i18n_t('common.goal')}}</div>
           </div>
           <!-- 红牌数 -->
-          <!-- <span
-            v-show="match.score_obj.S11.away > 0"
+          <span
+            v-show="lodash.get(match, 'msc_obj.S11.away') > 0"
             class="red-ball"
             :class="{flash:is_show_away_red}"
-          >{{match.score_obj.S11.away}}</span> -->
+          >{{lodash.get(match, 'msc_obj.S11.away')}}</span>
         </div>
       </div>
       <!-- 主比分 -->
-      <div class="score" :key="match.mid" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{play_name_obj.score_key ?  lodash.get(match,`score_obj.${play_name_obj.score_key}.away`) :  match.away_score}}</div>
+      <div class="score" :key="match.mid" v-if="show_type == 'all'" v-tooltip="{content: is_15min ? i18n_t('list.15min_stage'):'' ,overflow:1}">{{play_name_obj.score_key ?  lodash.get(match,`msc_obj.${play_name_obj.score_key}.away`) :  match.away_score}}</div>
     </div>
-
-
     <!-- 中立场、盘口数 -->
     <div class="row-item match-icon" v-if="show_type == 'all' ">
        <!-- 提前结算 -->

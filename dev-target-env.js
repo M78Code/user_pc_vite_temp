@@ -13,7 +13,7 @@ DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
-// DEV_TARGET_ENV = "idc_sandbox";
+DEV_TARGET_ENV = "idc_sandbox";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境
@@ -38,6 +38,7 @@ let DEV_PROJECT_NAME = "yazhou-pc";
 let  DEV_TARGET_VERSION = ''
 //代码内配置死的    构建 zip 版本参数    ，一般是 本地测试 打包指定版本用 ，也可以支持 打包流程 
 // DEV_TARGET_VERSION ="project_4-36304ea0499e11ee8848ada2b8a1d739-1693720827442-shiwan";
+
 
 // 打包 亚洲版 PC（新版)   试玩环境  
 DEV_TARGET_VERSION ="project_4-36304ea0499e11ee8848ada2b8a1d739-1694942162566-shiwan";

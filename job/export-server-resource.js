@@ -22,11 +22,11 @@ console.log("process.argv----------------------3---");
 
 // 商户配置 输出目录
 let write_folder = "./job/output/assets";
-let file_path = `${write_folder}/index.js`;
+let file_path = `${write_folder}/index.json`;
 
 // 图片输出到项目的 目录
 let img_folder = `./public/${PROJECT_NAME}/server-resource/`;
-let project_path = `/public/${PROJECT_NAME}/server-resource/`;//项目index.html 访问图片的路径
+let project_path = `/${PROJECT_NAME}/server-resource/`;//项目index.html 访问图片的路径
 
 
 //确保配置 输出目录存在
@@ -56,7 +56,7 @@ const download_file_to_local = async (srcs = {}) => {
       });
     });
     //素材配置写入本地 
-    let str = `export default  ${JSON.stringify(img_url_theme_map)}`
+    let str = JSON.stringify(img_url_theme_map)
     write_file(file_path, str);
   } catch (error) {
     console.log("下载文件错误");

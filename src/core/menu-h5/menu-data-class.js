@@ -99,7 +99,9 @@ class MenuData {
     this.init();
   }
   init() {
-    base_data_instance.init(); //初始化菜单数据
+    setTimeout(() => {
+      base_data_instance.init(); //初始化菜单数据
+    }, 0);
     //菜单数据有变化
     watch(
       base_data_instance.base_data_version,
@@ -146,7 +148,6 @@ class MenuData {
     //传入sl mi eg: sl:[{"ct":0,"mi":"1011","st":1},{"ct":0,"mi":"1015","st":2}]
     //计算数量
     const { sl, mi } = menu_list;
-    console.error(111, mi)
     if (mi == 30) {
       const data = lodash.find(sl, (item) => {
         //竞足特殊处理
