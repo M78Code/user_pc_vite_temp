@@ -10,7 +10,7 @@ import default_merchant_config_ouzhou_h5 from "./default-config/merchant-config-
 import default_merchant_config_ouzhou_pc from "./default-config/merchant-config-ouzhou-pc.json"  assert { type: "json" };
 import default_merchant_config_yazhou_h5 from "./default-config/merchant-config-yazhou-h5.json"  assert { type: "json" };
 import default_merchant_config_yazhou_pc from "./default-config/merchant-config-yazhou-pc.json"  assert { type: "json" };
-
+import lodash from 'lodash'
 //商户配置的详细信息
 
 /**
@@ -24,13 +24,12 @@ import default_merchant_config_yazhou_pc from "./default-config/merchant-config-
 
 const merge_merchant_config_inner = (scg, add_obj) => {
   let config = {};
-
   let { project } = add_obj;
-
   if (project == "yazhou-h5") {
-    config = Object.assign({}, default_merchant_config_yazhou_h5, scg, add_obj);
+    lodash.merge(config, default_merchant_config_yazhou_h5, scg, add_obj);
+
   } else if (project == "yazhou-pc") {
-    config = Object.assign({}, default_merchant_config_yazhou_pc, scg, add_obj);
+    lodash.merge(config, default_merchant_config_yazhou_pc, scg, add_obj);
   }
 
   if (!project) {
@@ -47,7 +46,6 @@ const merge_merchant_config_inner = (scg, add_obj) => {
  */
 export const merge_merchant_config = (scg, add_obj) => {
   // final_config.version= add_obj.MERCHANT_CONFIG_VERSION
-  console.log(11111, scg, add_obj)
   let final_config = merge_merchant_config_inner(scg, add_obj);
 
   return final_config;
