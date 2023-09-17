@@ -10,7 +10,7 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
       </div>
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width }">
@@ -66,6 +66,7 @@ const mitt_offs = [
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: var(--q-gb-bg-c-10);
   .video_page {
     position: fixed;
     top: 0;
@@ -75,5 +76,10 @@ const mitt_offs = [
     width: 100% !important;
     height: 100% !important;
   }
+}
+
+.layout_main_left {
+  border: 1px solid var(--q-gb-bd-c-8);
+  border-radius: 0 8px 0 0;
 }
 </style>

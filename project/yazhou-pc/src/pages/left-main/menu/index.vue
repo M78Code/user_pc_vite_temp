@@ -139,3 +139,10 @@ const set_route_url = () => {
   useMittEmit(MITT_TYPES.EMIT_LAYOUT_LIST_TYPE, "match");
 };
 </script>
+
+<style scoped>
+.menu-wrap {
+ 
+}
+
+</style>

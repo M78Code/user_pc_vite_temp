@@ -1,5 +1,5 @@
 <template>
-  <div class="c-menu-sports menu-border" :style="{'background':compute_css_variables({category:'global',module:'background'})['--q-gb-bg-c-2']}">
+  <div class="c-menu-sports menu-border" >
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
@@ -941,6 +941,7 @@ const handle_click_jinri_zaopan = (val) => {
 <style lang="scss" scoped>
 /* 体育菜单 */
 .c-menu-sports {
+ 
   /* 体育菜单标题 */
   .menu-item-title {
     height: 32px !important;
