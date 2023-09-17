@@ -75,7 +75,7 @@
     }
     .subscribe-wrap{
       .money-span {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
       .money-span2 {
         background: transparent !important;
@@ -91,13 +91,13 @@
           color:var(--q-color-fs-color-6);
         }
         .operation{
-          background:var(--q-color-page-bg-color-114);
+          background:var(--q-gb-bd-c-15);
           border: 0.5px solid  var(--q-color-border-color-16);
           .odd{
             color: var(--q-color-fs-color-3);
           }
           .reduce,.add{
-            background: var(--q-color-page-bg-color-1);
+            background: var(--q-gb-bd-c-9);
           }
           .reduce{
             border-right: 0.5px solid  var(--q-color-border-color-17);

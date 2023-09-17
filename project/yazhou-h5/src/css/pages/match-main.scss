@@ -1,11 +1,11 @@
 [class*=theme0] {
   .match-list-container,
   .loading-more-container {
-    background: var(--q-color-page-bg-color-1);
+    background: var(--q-gb-bd-c-9);
     .scroll-wrapper {
-      background: var(--q-color-page-bg-color-1);
+      background: var(--q-gb-bd-c-9);
       .s-w-item {
-        background: var(--q-color-page-bg-color-1);
+        background: var(--q-gb-bd-c-9);
       }
       .match-container {
         // .odd-list.match-indent.simple {
@@ -39,7 +39,7 @@
           }
         }
         .match-inner-container {
-          background: var(--q-color-page-bg-color-1);
+          background: var(--q-gb-bd-c-9);
           .odd-item-wrap-borer-top {
             background-color: var(--q-color-border-color-11);
           }
@@ -285,7 +285,7 @@
                 }
                &.odd-column-item2{
                  &:after{
-                  //  background:var(--q-color-page-bg-color-50);
+                  //  background:var(--q-gb-bd-c-13);
                   background-color: transparent;
                  }
                }
@@ -311,7 +311,7 @@
               background: var(--q-color-img-bg-36) no-repeat  center / cover;
               /* ************** 新手版投注项选择样式 ************** -S */
               .odd-column-item2 {
-                background:var(--q-color-page-bg-color-50) !important;
+                background:var(--q-gb-bd-c-13) !important;
                 &:after {
                   background-color: transparent;
                 }

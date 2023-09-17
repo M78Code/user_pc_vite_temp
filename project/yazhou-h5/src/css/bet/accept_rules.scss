@@ -6,7 +6,7 @@
 [class*=theme0] {
   .accept-rules {
     .content-box {
-       background-color:var(--q-color-page-bg-color-114);
+       background-color:var(--q-gb-bd-c-15);
     }
     .content-box > p {
       color: var(--q-color-fs-color-7);
@@ -20,7 +20,7 @@
 
     p > span:not(.chu) {
       color:var(--q-color-com-fs-color-8);
-      background-color: var(--q-color-page-bg-color-50);
+      background-color: var(--q-gb-bd-c-13);
     }
     .chu {
       color: var(--q-color-fs-color-3);
@@ -28,7 +28,7 @@
   }
   .combine-tips {
     .main-box {
-      background:var(--q-color-page-bg-color-114);
+      background:var(--q-gb-bd-c-15);
       header {
         color: var(--q-color-fs-color-14);
       }

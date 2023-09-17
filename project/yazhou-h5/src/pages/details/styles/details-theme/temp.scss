@@ -7,12 +7,12 @@
   }
   .category {
     .match-recommend-wrapper {
-      background: var(--q-color-page-bg-color-1);
+      background: var(--q-gb-bd-c-9);
     }
 
     /* ************** 单项玩法集合 *************** -S */
     .tournament-play-outer {
-      background: var(--q-color-page-bg-color-1) !important;
+      background: var(--q-gb-bd-c-9) !important;
     }
 
     /* ************** 单项玩法集合 *************** -E */
@@ -42,17 +42,17 @@
     }
     .base-font-weg {
       &:after {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
     }
     .corner-ball-weg {
       &:after {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
     }
     .fat-sty {
       &:after {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
     }
     .basic-score {
@@ -173,7 +173,7 @@
     }
     .active_play {
       color:var(--q-color-com-fs-color-8);
-      background-color: var(--q-color-page-bg-color-50) !important;
+      background-color: var(--q-gb-bd-c-13) !important;
       .size-color {
         color:var(--q-color-com-fs-color-8);
       }
@@ -300,7 +300,7 @@
     }
     .first-rad {
       &:after {
-        background: var(--q-color-page-bg-color-50);
+        background: var(--q-gb-bd-c-13);
       }
     }
     .fam {
@@ -503,7 +503,7 @@
 
     /*************** 每项odds结束 *************** -E*/
     .team-odds2 {
-      background-color: var(--q-color-page-bg-color-1);
+      background-color: var(--q-gb-bd-c-9);
       color:var(--q-color-com-fs-color-8);
     }
   }
@@ -527,7 +527,7 @@
       }
     }
     .champion-item2 {
-      background-color: var(--q-color-page-bg-color-1);
+      background-color: var(--q-gb-bd-c-9);
       .temp9-name,
       .temp9-ov {
         color:var(--q-color-com-fs-color-8) !important;
@@ -541,7 +541,7 @@
 
   /*************** temp10开始 *************** -S*/
   .temp10 {
-    background: var(--q-color-page-bg-color-1);
+    background: var(--q-gb-bd-c-9);
     .virtual-bet-wrapper {
       // background:var(--q-color-page-bg-color-2);
       background:var(--q-color-page-bg-color-104);
@@ -549,7 +549,7 @@
         background: var(--q-color-page-bg-color-9);
       }
       .blue-color {
-        background-color: var(--q-color-page-bg-color-50);
+        background-color: var(--q-gb-bd-c-13);
       }
     }
     /*************** 白色下分割线开始 *************** -S*/
@@ -566,7 +566,7 @@
       border-right: 1px solid  var(--q-color-border-color-56);
     }
     .blue-color {
-      background: var(--q-color-page-bg-color-1);
+      background: var(--q-gb-bd-c-9);
       .odds-style {
         color:var(--q-color-com-fs-color-8) !important;
       }
@@ -588,7 +588,7 @@
         background: var(--q-color-page-bg-color-9);
       }
       .blue-color {
-        background-color: var(--q-color-page-bg-color-50);
+        background-color: var(--q-gb-bd-c-13);
       }
     }
     /*************** 白色下分割线开始 *************** -S*/
@@ -607,7 +607,7 @@
       border-right: 1px solid  var(--q-color-border-color-56);
     }
     .blue-color {
-      background: var(--q-color-page-bg-color-1);
+      background: var(--q-gb-bd-c-9);
       .odds-style {
         color:var(--q-color-com-fs-color-8) !important;
       }
@@ -637,7 +637,7 @@
       color:var(--q-color-fs-color-6);
     }
     .bet-click {
-      background-color: var(--q-color-page-bg-color-1) !important;
+      background-color: var(--q-gb-bd-c-9) !important;
       .on-color {
         color:var(--q-color-com-fs-color-8) !important;
       }

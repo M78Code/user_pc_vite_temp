@@ -25,13 +25,13 @@
     }
     .content-b {
       border: 1px solid var(--q-color-border-color-3);
-      background:var(--q-color-page-bg-color-114);
+      background:var(--q-gb-bd-c-15);
     }
     .set-opacity {
       opacity: 0.2;
     }
     .money-span {
-      background: var(--q-color-page-bg-color-50);
+      background: var(--q-gb-bd-c-13);
     }
     .money-span2 {
       background: transparent !important;
@@ -39,7 +39,7 @@
     .content-t {
       p:nth-child(1) {
         &::after {
-          background:var(--q-color-page-bg-color-50);
+          background:var(--q-gb-bd-c-13);
         }
       }
 

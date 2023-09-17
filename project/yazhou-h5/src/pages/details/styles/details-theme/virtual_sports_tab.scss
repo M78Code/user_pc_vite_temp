@@ -13,7 +13,7 @@
     .t_color {
       color:var(--q-color-fs-color-114) !important;
       &:after {
-        background:var(--q-color-page-bg-color-50);
+        background:var(--q-gb-bd-c-13);
       }
     }
 
@@ -33,7 +33,7 @@
     color: var(--q-color-fs-color-3);
     border-bottom: 1px solid  var(--q-color-border-color-27);
     &:after {
-      background:var(--q-color-page-bg-color-50);
+      background:var(--q-gb-bd-c-13);
     }
   }
   .c-match-startistic {
@@ -49,7 +49,7 @@
             color: var(--q-color-fs-color-7);
           }
           .line {
-            background:var(--q-color-page-bg-color-50);
+            background:var(--q-gb-bd-c-13);
           }
           &.away {
             .line {
@@ -84,7 +84,7 @@
 
   /*************** 灰色分割线开始 *************** -S*/
   .border-gray {
-    background:var(--q-color-page-bg-color-114);
+    background:var(--q-gb-bd-c-15);
     &::after {
       border-color: var(--q-color-border-color-36) !important;
     }
