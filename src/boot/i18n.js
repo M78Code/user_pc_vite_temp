@@ -10,11 +10,12 @@ import BUILDIN_CONFIG from "app/job/output/env/final.js";
 const PROJECT_NAME = BUILDIN_CONFIG.TARGET_PROJECT_NAME
 
 const IS_PC = PROJECT_NAME.includes('pc')
+const locale = LocalStorage.get("lang", "zh"); //緩存的值
 // 所有语中使用到的公共的国际化字符串
 // import * as other from 'src/i18n/common-lang'
 const i18n = createI18n({
-  locale: LocalStorage.get("lang", "en"),
-  fallbackLocale: "en",
+  locale: locale,
+  fallbackLocale: "zh",
   // 增加所有语中使用到的公共的国际化字符串
   messages: {},
   legacy: true,
@@ -38,10 +39,11 @@ const map_lang = {
 };
 /**
  * @description: 异步获取国际化数据,并设置
- * @param {*} lang
+ * @param {*} lang 如果沒有穿入就是用緩存的
  * @return {*}
  */
 function loadLanguageAsync(lang) {
+  lang = lang || locale
   // 语言映射路径
   return import(
     /* webpackChunkName: "lang-[request]" */ `../i18n/${IS_PC ? 'pc' : 'h5'}/${map_lang[lang]}/index.json`
