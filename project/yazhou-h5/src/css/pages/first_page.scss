@@ -79,7 +79,7 @@
       }
     }
     .wrap-marquee {
-      background: var(--q-color-page-bg-color-81);
+      background: var(--q-gb-bd-c-15);
       .marquee-icon {
         background: var(--q-color-page-bg-color-120);
         .icon-notice {
@@ -121,13 +121,13 @@
         --per: -1.0272rem;
         .item-info {
           .match-type {
-            color: var(--q-color-fs-color-45);
+            color: var(--q-gb-t-c-3);
           }
           .match-num {
-            color: var(--q-color-fs-color-46);
+            color: var(--q-gb-t-c-3);
           }
           .match-label {
-            color: var(--q-color-fs-color-47);
+            color: var(--q-gb-t-c-4);
             &:before,
             &:after {
               background: rgba(153, 153, 153, 0.3);

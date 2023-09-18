@@ -26,9 +26,9 @@
               <div class="item-info" :class="{ 'is-english': get_lang == 'en' }">
                 <div class="column items-center">
                   <!-- <span class="match-type">{{t(`menu_list.${filter_meunu_desc(item.mi)}`) }}</span> -->
-                  <span class="match-type">{{
-                    MenuData.get_menus_i18n_map(item.mi)
-                  }}</span>
+                  <span class="match-type">{{ item.name || MenuData.get_menus_i18n_map(
+                      MenuData.recombine_menu_desc(item.mi)
+                    ) }}</span>
                   <span class="match-num ellipsis">{{ item.ct || 0 }}</span>
                   <span class="match-label ellipsis-2-lines">{{
                     $t("home.can_bet")

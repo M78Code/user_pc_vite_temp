@@ -10,7 +10,7 @@
     <div class="wrap-notice">
       <div class="money-wrap" @click="get_balance">
         <div class="balance-wrap">
-          <i class="icon-balance"></i>
+          <i class="icon-balance" :style="compute_css('icon-balance')"></i>
           <span class="balance">{{ t("common.money") }}</span>
         </div>
         <div class="money">
@@ -22,7 +22,7 @@
       <div class="wrap-marquee">
         <div class="marquee-left-wrap">
           <div class="marquee-icon">
-            <i class="icon-notice"></i>
+            <i class="icon-notice" :style="compute_css('icon-notice')"></i>
           </div>
         </div>
         <marquee></marquee>
@@ -36,12 +36,6 @@
 <script setup>
 import { api_home } from "src/api/index.js";
 import { ref, watch, onMounted, computed, onUnmounted, reactive } from "vue";
-import {
-  format_time_zone_time,
-  format_balance,
-  DateForMat,
-  format_total_score,
-} from "src/core/format/index.js";
 import home_menu from "./components/menu.vue";
 import carousel from "./components/carousel.vue";
 // TODO:后续修改调整
@@ -49,7 +43,7 @@ import carousel from "./components/carousel.vue";
 // bw3版首页websocket逻辑处理
 // import skt_home_bw3 from "project_path/src/mixins/websocket/data/skt_home_bw3.js";
 // 公告栏跑马灯
-// import marquee from 'project_path/src/components/marquee/marquee.vue'
+import marquee from 'project_path/src/components/marquee/marquee.vue'
 // 无网络展示组件
 // import no_data from "project_path/src/components/common/no-data.vue";
 // 赛事进行中每秒变化的计时器
@@ -60,7 +54,8 @@ import carousel from "./components/carousel.vue";
 import ListMap from "src/core/match-list-h5/match-class/list-map.js";
 // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
 // import match_list_mixin from "project_path/src/mixins/match_list/match_list_mixin";
-import { utils } from "src/core/utils/index.js";
+import { compute_css } from "src/core/";
+
 import base_data from "src/core/menu-h5/menu-data-class.js";
 
 //  一二级菜单 本地化假数据
