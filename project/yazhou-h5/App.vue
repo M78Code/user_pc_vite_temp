@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div id="q-app" class="theme0">
+  <div id="q-app" class="theme0" >
     <appload v-if="init_load"></appload>
   </div>
 </template>

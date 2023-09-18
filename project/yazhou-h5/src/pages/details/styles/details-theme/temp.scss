@@ -7,12 +7,12 @@
   }
   .category {
     .match-recommend-wrapper {
-      background: var(--q-gb-bd-c-9);
+      background: var(--q-gb-bg-c-17);
     }
 
     /* ************** 单项玩法集合 *************** -S */
     .tournament-play-outer {
-      background: var(--q-gb-bd-c-9) !important;
+      background: var(--q-gb-bg-c-17) !important;
     }
 
     /* ************** 单项玩法集合 *************** -E */
@@ -503,7 +503,7 @@
 
     /*************** 每项odds结束 *************** -E*/
     .team-odds2 {
-      background-color: var(--q-gb-bd-c-9);
+      background-color: var(--q-gb-bg-c-17);
       color:var(--q-gb-bd-c-2);
     }
   }
@@ -527,7 +527,7 @@
       }
     }
     .champion-item2 {
-      background-color: var(--q-gb-bd-c-9);
+      background-color: var(--q-gb-bg-c-17);
       .temp9-name,
       .temp9-ov {
         color:var(--q-gb-bd-c-2) !important;
@@ -541,7 +541,7 @@
 
   /*************** temp10开始 *************** -S*/
   .temp10 {
-    background: var(--q-gb-bd-c-9);
+    background: var(--q-gb-bg-c-17);
     .virtual-bet-wrapper {
       // background:var(--q-color-page-bg-color-2);
       background:var(--q-match-page-bg-color-104);
@@ -566,7 +566,7 @@
       border-right: 1px solid  var(--q-gb-bd-c-36);
     }
     .blue-color {
-      background: var(--q-gb-bd-c-9);
+      background: var(--q-gb-bg-c-17);
       .odds-style {
         color:var(--q-gb-bd-c-2) !important;
       }
@@ -607,7 +607,7 @@
       border-right: 1px solid  var(--q-gb-bd-c-36);
     }
     .blue-color {
-      background: var(--q-gb-bd-c-9);
+      background: var(--q-gb-bg-c-17);
       .odds-style {
         color:var(--q-gb-bd-c-2) !important;
       }
@@ -637,7 +637,7 @@
       color:var(--q-gb-t-c-13);
     }
     .bet-click {
-      background-color: var(--q-gb-bd-c-9) !important;
+      background-color: var(--q-gb-bg-c-17) !important;
       .on-color {
         color:var(--q-gb-bd-c-2) !important;
       }
