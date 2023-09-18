@@ -14,8 +14,8 @@
         <span v-else-if="main.sportId == 103" style="--num:40"></span>
         <span v-else-if="main.sportId == 102" style="--num:41"></span>
         <img :src="get_file_path(main.tournamentPic,main.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="UserCtr.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
-        <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
+        <img v-if="UserCtr.theme.includes('theme01')"  src="/public/yazhou-h5/image/common/match_cup.svg" class="beif_src">
+        <img v-else  src="/public/yazhou-h5/image/common/match_cup2.svg" class="beif_src">
       </p>
       <p class="col-9" :style="{'font-weight':$q.platform.is.ios ? '500':'bold'}">
         <!-- 冠军趣味玩法特殊对应 -->
@@ -366,7 +366,7 @@ const props =defineProps({
 }
 .body-main {
   min-height: 0.76rem;
-  color:  var(--q-cathectic-color-33);
+  color:  var(--q-gb-t-c-3);
   position: relative;
   margin-right: 0.15rem;
   .box-top {
@@ -377,7 +377,7 @@ const props =defineProps({
       display: block;
       width: 0.03rem;
       height: 0.12rem;
-      background-color: var(--q-cathectic-color-29);
+      background-color: var(--q-gb-bd-c-13);
       border-radius: 0.02rem;
       position: absolute;
       left: -0.1rem;
@@ -412,7 +412,7 @@ const props =defineProps({
     font-size: 0.14rem;
     color: var(--q-cathectic-color-1);
     .oddfinally {
-      color: var(--q-cathectic-color-29);
+      color: var(--q-gb-t-c-12);
     }
   }
   .beif_src {

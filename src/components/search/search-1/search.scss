@@ -1,7 +1,7 @@
   :deep(.serach-wrap) {
     .init-wrap .init-row .line,
     .type-item .type-wrap .line {
-      background-color: var(--q-header-search-color-4);
+      background-color: var(--q-gb-bg-c-17);
     }
 
 
@@ -95,10 +95,10 @@
 
           &:hover {
             background-color: var(--q-header-search-color-5);
-            color: var(--q-header-search-color-4);
+            color: var(--q-gb-t-c-16);
 
             .ellipsis {
-              color: var(--q-header-search-color-4);
+              color: var(--q-gb-t-c-16);
             }
 
             .search_deleteIcon {
@@ -124,7 +124,7 @@
             }
 
             .score {
-              color: var(--q-header-search-color-4);
+              color: var(--q-gb-t-c-16);
             }
 
             .timer-layout {
@@ -139,7 +139,7 @@
                   color: var(--q-header-search-color-1); //var(--q-gb-t-c-8);
 
                   &:hover {
-                    color: var(--q-header-search-color-4);
+                    color: var(--q-gb-t-c-16);
                   }
                 }
 
@@ -154,7 +154,7 @@
                 color: var(--q-gb-t-c-8); //var(--q-header-search-color-1);
 
                 &:hover {
-                  color: var(--q-header-search-color-4);
+                  color: var(--q-gb-t-c-16);
                 }
               }
 
@@ -175,11 +175,11 @@
           color: var(--q-gb-t-c-8);
 
           .highlight {
-            color: var(--q-header-search-color-4);
+            color: var(--q-gb-t-c-16);
           }
 
           &:hover {
-            color: var(--q-header-search-color-4);
+            color: var(--q-gb-t-c-16);
           }
         }
       }

@@ -8,7 +8,7 @@
         <SRecord v-if="is_loading" />
         <scroll ref="myScroll" :on-pull="onPull" v-else>
             <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
-                <!-- 已失效按钮 -->
+                <!-- 已失效按钮 TODO: 主题色背景色 -->
                 <i class="yb_fontsize12" @click.stop="show_cancle_order" :class="{ 'select': selected_expired }">
                     {{ i18n_t('pre_record.expired') }}
                     <i class="early yb_ml4" :class="{ 'early2': selected_expired }"></i>
@@ -376,7 +376,7 @@ onUnmounted(() => {
         right: 0;
         top: 0.15rem;
         .select {
-            color: var(--q-cathectic-color-5);
+            color: var(--q-gb-t-c-12);
         }
     }
     .pretype-tabs{

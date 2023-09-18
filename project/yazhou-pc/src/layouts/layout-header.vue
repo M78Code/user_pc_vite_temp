@@ -39,6 +39,8 @@ import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
 
+import gift_package from '/public/yazhou-pc/image/common/activity_banner/gift_package.png'
+
 const props = defineProps({
   /** 
    * 是否有小红点提示
@@ -310,7 +312,7 @@ function init_site_header(type = null) {
     }
     imgUrl = get_file_path(imgUrl);
     // 活动入口的图片，如果接口未返回就用默认图片
-    tab.img_src = imgUrl || require('project_path/image/activity_imgs/imgs/gift_package.png');
+    tab.img_src = imgUrl || gift_package;
     nav_list.push(tab);
     activityList.forEach(item => {
       activityIds.value += item.activityId + ',';

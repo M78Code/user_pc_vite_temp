@@ -5,7 +5,7 @@
  * @Description: 赛果
 -->
 <template>
-  <div class="wrap match_results">
+  <div class="wrap match_results" :style="page_style">
     <!-- 视频画中画组件 -->
     <!-- <moveVideo></moveVideo> -->
     <p class="font_match_results">12222</p>
@@ -89,7 +89,11 @@ import { SimpleHeaderWapper as simpleHeader } from "src/components/common/simple
 import { PaginationWrapper } from "src/components/pagination/index";
 import moveVideo from "project_path/src/components/video-replay/move-video.vue";
 import { ResultHeader } from "src/components/match-results/result-header/index.js";
-import { onMounted, watch } from "vue";
+import { onMounted,ref } from "vue";
+//引入组件样式
+import { compute_css_variables } from "src/core/css-var/index.js"
+const page_style = ref(null)
+page_style.value = compute_css_variables({ category: 'component', module: 'match-results' })
 const {
   //变量
   current_sport_id,
@@ -141,14 +145,15 @@ onMounted(() => {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url("~public/lib/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
+  src: url("~public/font/roboto/v20/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2")
     format("woff2");
 }
-@import "./match_results.scss";
+
 @import "./index.scss";
 </style>
 
 <style lang="scss">
+@import "./match_results.scss";
 div.q-menu {
   border: 0 none !important;
 }

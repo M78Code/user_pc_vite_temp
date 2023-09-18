@@ -91,7 +91,7 @@ export default defineComponent({
     span {
       letter-spacing: 0;
       font-size: 0.16rem;
-      color: var(--q-color-com-fs-color-8);
+      color: var(--q-gb-bd-c-2);
 
       &:nth-child(2) {
         min-width: 0.5rem;
@@ -107,7 +107,7 @@ export default defineComponent({
     bottom: 0.11rem;
 
     font-size: 0.12rem;
-    color: var(--q-color-com-fs-color-8);
+    color: var(--q-gb-bd-c-2);
 
     &.baseball {
       bottom: 0.28rem;

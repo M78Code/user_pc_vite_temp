@@ -1,0 +1,285 @@
+[class*=theme0] {
+  .home-page {
+    background: var(--q-gb-bd-c-17);
+    &.white-background {
+      background:var(--q-match-page-bg-color-105);
+    }
+    &.white-font {
+      li {
+        &.is-active {
+          color:var(--q-gb-bd-c-2);
+          .tabs-label {
+            color:var(--q-gb-bd-c-2);
+          }
+        }
+        .tabs-label {
+          color:var(--q-gb-bd-c-2);
+        }
+      }
+    }
+    &.live-bg {
+      background:var(--q-color-page-bg-color-116);
+    }
+    .slide {
+      box-shadow: var(--q-color-box-shadow-color-1) !important;
+    }
+    ul {
+      li {
+        &.is-active {
+          .tabs-label {
+            color: var(--q-color-fs-color-41);
+          }
+        }
+        .tabs-label {
+          color: var(--q-color-fs-color-3);
+        }
+      }
+      .tabs-active-bar {
+        background-color: var(--q-color-page-bg-color-50);
+      }
+    }
+    .icon-lang-day {
+      ul {
+         background-color:var(--q-color-page-bg-color-2);
+        color: var(--q-color-fs-color-3);
+        &::before {
+          border-bottom: 0.08rem solid  var(--q-color-com-border-color-13);
+        }
+      }
+      .curr-lang {
+        color:var(--q-color-fs-color-50);
+      }
+    }
+    .icon-lang-dark {
+      ul {
+        background: var(--q-match-page-bg-color-10);
+        color: var(--q-color-fs-color-45);
+        &::before {
+          border-bottom: 0.08rem solid var(--q-color-com-border-color-3);
+        }
+      }
+      .curr-lang {
+        color:var(--q-color-fs-color-50);
+      }
+    }
+  }
+  .wrap-notice {
+
+    .money-wrap {
+      .balance-wrap {
+        .icon-balance {
+          background: var(--q-color-img-bg-5) no-repeat  center / cover;
+        }
+        .balance {
+          color: var(--q-color-fs-color-4);
+        }
+      }
+      .money {
+        color: var(--q-color-fs-color-5);
+      }
+    }
+    .wrap-marquee {
+      background: var(--q-gb-bd-c-15);
+      .marquee-icon {
+        background: var(--q-color-page-bg-color-120);
+        .icon-notice {
+          background: var(--q-color-img-bg-6) no-repeat  center / cover;
+        }
+      }
+      .marquee {
+        color: var(--q-color-fs-color-5);
+      }
+      .user-list {
+        li {
+
+          color: var(--q-color-fs-color-7);
+        }
+      }
+    }
+  }
+  .main-content-match {
+    .left-menu {
+      .item {
+        background-image: var(--q-gb-bg-lg-8);
+        .label {
+          color: var(--q-gb-t-c-3);
+        }
+        .num {
+          color: var(--q-gb-t-c-4);
+        }
+        &.active {
+          background-image: var(--q-gb-bg-lg-6);
+          .label,
+          .num {
+            color:  var(--q-gb-t-c-14);
+          }
+        }
+      }
+    }
+    .match-content {
+      .item {
+        --per: -1.0272rem;
+        .item-info {
+          .match-type {
+            color: var(--q-gb-t-c-3);
+          }
+          .match-num {
+            color: var(--q-gb-t-c-3);
+          }
+          .match-label {
+            color: var(--q-gb-t-c-4);
+            &:before,
+            &:after {
+              background: rgba(153, 153, 153, 0.3);
+            }
+          }
+        }
+        .item-bg{
+          &.football,&.basketball,&.badminton,&.pingpang,
+          &.baseball,&.ice_hockey,&.boxing,&.handball,&.beach_volleyball,
+          &.hockey,&.funny,&.gaoerfu,&.huachuan,&.feibiao,
+          &.banqiu,&.binghu,&.fanchuan,&.jijian,&.juzhong,
+          &.kongshoudao,&.qita,&.quwei{
+            background-size: 2.67rem 22.6rem;
+            background-position-x: center;
+            background-image:  var(--q-color-img-bg-7);
+          }
+          &.tennis,&.snoke,&.volleyball,&.water_polo,&.rugby_union,
+          &.usa_football,&.saiche,&.shatanzuqiu,&.shejian,&.shuaijiao,
+          &.taiquandao,&.tianjing,&.tiaoshui,&.ticao,&.youyong,
+          &.zixingche,&.sheji,&.roudao,&.roudao, &.saima,&.saigou {
+            background-size: 2.67rem 20.55rem;
+            background-position-x: center;
+            background-image:  var(--q-color-img-bg-2);
+          }
+          &.football{
+            background-position-y:  calc(var(--per) * 12);
+          }
+          &.basketball {
+            background-position-y: calc(var(--per) * 18);
+          }
+          &.tennis {
+            background-position-y: calc(var(--per) * 8);
+          }
+          &.badminton {
+            background-position-y: calc(var(--per) * 21);
+          }
+          &.snoke {
+            background-position-y: calc(var(--per) * 10);
+          }
+          &.pingpang {
+            background-position-y: calc(var(--per) * 2);
+          }
+          &.baseball {
+            background-position-y: calc(var(--per) * 19);
+          }
+          &.ice_hockey {
+            background-position-y: calc(var(--per) * 6);
+          }
+          &.usa_football {
+            background-position-y: calc(var(--per) * 4);
+          }
+          &.volleyball {
+            background-position-y: calc(var(--per) * 3);
+          }
+          &.funny {
+            background-position-y: calc(var(--per) * 11);
+          }
+          &.rugby_union {
+            background-position-y: calc(var(--per) * 18);
+          }
+          &.boxing {
+            background-position-y:  calc(var(--per) * 15);
+          }
+          &.beach_volleyball {
+            background-position-y:  calc(var(--per) * 17);
+          }
+          &.handball {
+            background-position-y:  calc(var(--per) * 9);
+          }
+          &.water_polo {
+            background-position-y:  calc(var(--per) * 2);
+          }
+          &.hockey {
+            background-position-y:  calc(var(--per) * 8);
+          }
+          &.banqiu {
+            background-position-y:  calc(var(--per) * 20);
+          }
+          &.binghu {
+            background-position-y:  calc(var(--per) * 17);
+          }
+          &.fanchuan {
+            background-position-y:  calc(var(--per) * 14);
+          }
+          &.feibiao {
+            background-position-y:  calc(var(--per) * 13);
+          }
+          &.gaoerfu {
+            background-position-y:  calc(var(--per) * 10);
+          }
+          &.huachuan {
+            background-position-y:  calc(var(--per) * 7);
+          }
+          &.jijian {
+            background-position-y:  calc(var(--per) * 5);
+          }
+          &.juzhong {
+            background-position-y:  calc(var(--per) * 4);
+          }
+          &.kongshoudao {
+            background-position-y:  calc(var(--per) * 3);
+          }
+          &.qita {
+            background-position-y:  calc(var(--per) * 1);
+          }
+          &.saiche {
+            background-position-y:  calc(var(--per) * 17);
+          }
+          &.shatanzuqiu {
+            background-position-y:  calc(var(--per) * 14);
+          }
+          &.shejian {
+            background-position-y:  calc(var(--per) * 12);
+          }
+          &.shuaijiao {
+            background-position-y:  calc(var(--per) * 11);
+          }
+          &.taiquandao {
+            background-position-y:  calc(var(--per) * 9);
+          }
+          &.tianjing {
+            background-position-y:  calc(var(--per) * 7);
+          }
+          &.tiaoshui {
+            background-position-y:  calc(var(--per) * 6);
+          }
+          &.ticao {
+            background-position-y:  calc(var(--per) * 5);
+          }
+          &.youyong {
+            background-position-y:  calc(var(--per) * 1);
+          }
+          &.zixingche {
+            background-position-y: 0;
+          }
+          &.sheji {
+            background-position-y:  calc(var(--per) * 13);
+          }
+          &.roudao {
+            background-position-y:  calc(var(--per) * 19);
+          }
+          &.saima {
+            background-position-y:  calc(var(--per) * 15);
+          }
+          &.saigou {
+            background-position-y:  calc(var(--per) * 16);
+          }
+          &.quwei {
+            background-position-y:  0;
+          }
+        }
+      }
+    }
+  }
+}

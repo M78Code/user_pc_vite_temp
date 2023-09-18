@@ -46,7 +46,7 @@ import { ref } from "vue"
   display: flex;
   align-items: center;
   height: .2rem;
-  color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-bd-c-2);
   background: var(--q-color-com-bg-color-32);
   backdrop-filter: blur(2px);
   &.hairline-border {
@@ -83,7 +83,7 @@ import { ref } from "vue"
       font-weight: bold;
       &.hairline-border {
         &::after {
-          border: 1px solid var(--q-color-fs-color-135) !important;
+          border: 1px solid var(--q-match-fs-color-135) !important;
         }
       }
     }

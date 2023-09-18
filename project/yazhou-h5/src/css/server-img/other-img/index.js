@@ -2,17 +2,7 @@ import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 import UserCtr from "src/core/user-config/user-ctr.js";
-
-const modules = import.meta.globEager("./module/*.js");
-let all_other_image = {};
-Object.keys(modules).forEach((key) => {
-  // const module_name = key.replace("./module/", "").replace(".js", "");
-  all_other_image = Object.assign(
-    all_other_image,
-    modules[key].default
-  );
-});
-
+import all_other_image from "./module/h5.js";
 /**
  * 拿图片地址 和位置
  * @param {*} param0 

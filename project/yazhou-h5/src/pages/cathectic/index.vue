@@ -17,12 +17,12 @@
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
           <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')">
-            <!-- <img src="image/wwwassets/bw3/svg/bet_close2.svg"> -->
-            <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div>
+            <img :src="icompute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
+            <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
             </template>
           <template v-else>
-            <!-- <img src="image/wwwassets/bw3/svg/bet_close3.svg"> -->
-            <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div>
+            <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
+            <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
           </template>
         </span>
       </div>
@@ -157,8 +157,7 @@ onUnmounted(() => {
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
-  // TODO: 临时调试
-  background:var(--q-cathectic-color-3);
+  background:var(--q-gb-bd-c-15);
   color: var(--q-cathectic-color-1);
   .content-m {
       background: var(--q-cathectic-color-7);
@@ -168,7 +167,7 @@ onUnmounted(() => {
 .head-top {
   height: 0.5rem;
   position: relative;
-  border-bottom: 1px solid var(--q-cathectic-color-9);
+  border-bottom: 1px solid var(--q-gb-bd-c-16);
 
   .close {
     position: absolute;
@@ -209,10 +208,10 @@ onUnmounted(() => {
 
     &.active-p {
       font-weight: 600;
-      color: var(--q-cathectic-color-6);
+      color: inherit;
       span {
-        border-color: var(--q-cathectic-color-6);
-        background: var(--q-cathectic-color-6);
+        border-color: var(--q-gb-bd-c-10);
+        background: var(--q-gb-bd-c-13);
       }
     }
   }
