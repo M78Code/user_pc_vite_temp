@@ -14,12 +14,12 @@
 
         <div style="display:none;"> {{ MenuData.menu_data_version }} --- {{ BetData.bet_data_class_version }} </div>
 
-        <div class="menu-wrap scroll-fixed-bg relative-position bet_history">
+        <div class="menu-wrap scroll-fixed-bg relative-position bet_history border-bottom">
           <!-- 投注记录 入口 -->
           <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
-            <span class="hot-icon" :style="compute_css('pc-img-hot-match')" alt="" ></span>
+            <span class="record-icon" :style="compute_css('pc-img-hot-match')" alt="" ></span>
 
             <div class="col">
               {{ $t("common.betting_record") }}
@@ -188,7 +188,7 @@ const get_unsettle_tickets_count_config = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .c-main-menu {
   font-size: 13px;
   /* *** 头部 ************ -S */
@@ -207,6 +207,7 @@ const get_unsettle_tickets_count_config = () => {
     font-size: 13px;
 
     .menu-item {
+      
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
@@ -571,5 +572,14 @@ const get_unsettle_tickets_count_config = () => {
   color: #ffffff;
   border-radius: 2px;
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+}
+.record-icon{
+  background-size: 100% 100%;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+}
+.border-bottom{
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
 }
 </style>
