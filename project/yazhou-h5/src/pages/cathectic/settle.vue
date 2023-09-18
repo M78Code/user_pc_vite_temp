@@ -10,10 +10,12 @@
       <scroll ref="myScroll" :on-pull="onPull" v-else>
         <div class="edit row items-center yb_fontsize12">
           <div class="time yb_mr6 relative-position" @click="change_date">
+            <!-- TODO: 主题色背景色 -->
             <i class="calendar"></i><span>{{ date_limit == 7 ? i18n_t('bet_record.7day') :
               i18n_t('bet_record.30day') }}</span>
           </div>
           <div class="sort relative-position" @click.stop="change_sort($event)">
+            <!-- TODO: 主题色背景色 -->
             <i :class="'sort-'+sort_active"></i>
             <span>{{sort_active == 2 ? i18n_t('bet_record.sort0') : sort_active == 1 ? i18n_t('bet_record.sort1') : i18n_t('bet_record.sort2')}}</span><span></span>
             <!-- 默認排序 -->
@@ -26,7 +28,7 @@
             </p> -->
           </div>
           <div>
-          <!-- 提前结算 -->
+          <!-- 提前结算 TODO: 主题色背景色-->
           <span class="yb_fontsize12" @click.stop="change_early"
             :class="{ 'select': is_early, 'is-show': UserCtr.user_info.settleSwitch != 1 }">
             {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{ 'early2': is_early }"></i>
@@ -388,7 +390,7 @@ onUnmounted(() => {
     height: 0.44rem;
     margin-bottom: -0.14rem;
     .select {
-      color: var(--q-cathectic-color-5);
+      color: var(--q-gb-t-c-12);
     }
     i {
       display: inline-block;
