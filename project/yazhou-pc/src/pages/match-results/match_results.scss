@@ -85,9 +85,9 @@ body {
             height: 12px !important;
             background-size: 100%;
             background-repeat: no-repeat;
-            background-image: var(--qq--bg-image-url35); //`url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
+            background-image: var(--qq--bg-image-url35); //todo `url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
             &.del {
-              background-image: var(--qq--bg-image-url36); //`url(${preffix}/image/yabo/svg/theme01_del.svg)`
+              background-image: var(--qq--bg-image-url36); //todo `url(${preffix}/image/yabo/svg/theme01_del.svg)`
             }
           }
         }
@@ -139,7 +139,7 @@ body {
           &:before {
             border-color: var(--q-match-result-boreder-1);
             &:hover {
-              border-color: var(--q-gb-t-c-16);
+              border-color: var(--q-gb-bd-c-11);
             }
           }
           .q-field__native {
@@ -171,7 +171,7 @@ body {
             border: 1px solid var(--q-match-result-boreder-1);
             color: var(--q-match-result-text-color-1);
             &:hover {
-              border: 1px solid var(--q-gb-t-c-16);
+              border: 1px solid var(--q-gb-bd-c-11);
             }
           }
         }

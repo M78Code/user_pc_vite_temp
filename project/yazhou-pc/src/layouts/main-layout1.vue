@@ -45,7 +45,7 @@ import "./main-layout.js"; //初始化数据
 import { SearchWapper } from 'src/components/search'
 import layoutHeader from "./layout-header.vue";
 import layoutLeft from "./layout-left.vue";
-// import layoutRight from "./layout-right.vue";
+import layoutRight from "./layout-right.vue";
 import toastComponents from "project_path/src/components/toast/toast.vue";
 import alertComponents from "project_path/src/components/toast/alert.vue";
 import confirmComponents from "project_path/src/components/toast/confirm.vue";
