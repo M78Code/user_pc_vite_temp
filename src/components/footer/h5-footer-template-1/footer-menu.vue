@@ -158,7 +158,7 @@ const router = useRouter();
 /**
  * 是否显示菜单
 */
-function get_is_hidden(item) {
+function get_is_hidden(item, k) {
   return (is_sub_first_hidden.value && k == 0) ||
     (!GlobalAccessConfig.get_collectSwitch() && item.id == 1) ||
     (!GlobalAccessConfig.get_filterSwitch() &&

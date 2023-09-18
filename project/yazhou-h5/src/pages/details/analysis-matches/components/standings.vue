@@ -173,13 +173,13 @@ const get_detail_data = inject('get_detail_data', {})
 
 <style lang="scss" scoped>
 .standings {
-  background: var(--q-analysis-matches-color-42);
+  background: var(--q-analysis-text-color-19);
   .heade-wrapper {
   width: 100%;
   height: auto;
   z-index: 100;
   margin: 0 auto;
-  background: var(--q-analysis-matches-color-42);
+  background: var(--q-analysis-text-color-19);
   position: sticky;
   top: 1.21rem;
   padding: 0.15rem 0.48rem;
@@ -190,14 +190,14 @@ const get_detail_data = inject('get_detail_data', {})
     justify-content: center;
     align-items: center;
     border-radius: 0.08rem;
-    background-color: var(--q-analysis-matches-color-4);
+    background-color: var(--q-analysis-bg-color-1);
     &::after {
       content: "";
       pointer-events: none;
       position: absolute;
       left: 0;
       top: 0;
-      border: 1px solid var(--q-analysis-matches-color-26);
+      border: 1px solid var(--q-analysis-bd-color-5);
       border-radius: 0.16rem;
       width: 200%;
       height: 200%;
@@ -216,8 +216,8 @@ const get_detail_data = inject('get_detail_data', {})
       font-size: 0.14rem;
       border-radius: 0.08rem;
       padding: 0 .15rem;
-      background: var(--q-analysis-matches-color-4);
-      color: var(--q-analysis-matches-color-1);
+      background: var(--q-analysis-bg-color-1);
+      color: var(--q-analysis-text-color-20);
       &:nth-child(2) {
         position: relative;
 
@@ -228,7 +228,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           left: 0;
           top: 0.08rem;
-          background: var(--q-analysis-matches-color-35);
+          background: var(--q-analysis-bg-color-18);
         }
 
         &:after {
@@ -238,14 +238,14 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           right: 0;
           top: 0.08rem;
-          background: var(--q-analysis-matches-color-35);
+          background: var(--q-analysis-bg-color-18);
         }
       }
 
       &.is-active {
         height: 0.29rem;
-        background: var(--q-analysis-matches-color-43);
-        color: var(--q-analysis-matches-color-4);
+        background: var(--q-analysis-text-color-16);
+        color: var(--q-analysis-bg-color-1);
         &:nth-child(2) {
           &:before, &:after {
             display: none;

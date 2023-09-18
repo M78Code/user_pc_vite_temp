@@ -105,7 +105,7 @@
           color: var(--q-gb-t-c-3);
         }
         .num {
-          color: var(--q-gb-t-c-4);
+          color: var(--q-match-fs-color-1);
         }
         &.active {
           background-image: var(--q-gb-bg-lg-6);
@@ -127,7 +127,7 @@
             color: var(--q-gb-t-c-3);
           }
           .match-label {
-            color: var(--q-gb-t-c-4);
+            color: var(--q-match-fs-color-1);
             &:before,
             &:after {
               background: rgba(153, 153, 153, 0.3);
