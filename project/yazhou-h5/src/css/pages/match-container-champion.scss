@@ -1,7 +1,7 @@
 [class*=theme0] {
   .champion-wrap {
     .league-container {
-      background:var(--q-color-page-bg-color-96);
+      background:var(--q-match-page-bg-color-96);
       .league-wrapper {
         .league-title {
           color:  var(--q-color-fs-color-14);
@@ -18,7 +18,7 @@
       }
     }
     .hps-wrap {
-      background:var(--q-color-page-bg-color-95);
+      background:var(--q-gb-bg-c-15);
       .match-title {
         &:before {
           background:var(--q-gb-bd-c-13);
@@ -36,7 +36,7 @@
         .ol-li-item {
           background-color: var(--q-color-page-bg-color-9);
           .on {
-            color:var(--q-color-fs-color-154);
+            color:var(--q-match-fs-color-154);
 
           }
           .odds {
@@ -49,7 +49,7 @@
   .active-item {
     .on,
     .odds {
-      color:var(--q-color-com-fs-color-8) !important;
+      color:var(--q-gb-bd-c-2) !important;
     }
   }
 }

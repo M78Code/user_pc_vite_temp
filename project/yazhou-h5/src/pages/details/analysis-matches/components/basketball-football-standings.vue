@@ -279,7 +279,7 @@ const get_detail_data = inject('get_detail_data', {})
 
     .group-item {
       .team-item {
-        border-bottom: 1px solid var(--q-color-border-color-56);
+        border-bottom: 1px solid var(--q-gb-bd-c-36);
 
         &:last-child {
           border-bottom: 0;

@@ -4,7 +4,7 @@
 [class*=theme0] {
   .details_t_color7 {
     // color:  var(--q-color-fs-color-124) !important;
-    color:  var(--q-color-fs-color-13) !important;
+    color:  var(--q-match-fs-color-13) !important;
   }
   .win {
     background-color: var(--q-color-page-bg-color-11) !important;
@@ -20,7 +20,7 @@
       background: var(--q-color-page-bg-color-9);
     }
     .details-f {
-      background: var(--q-gb-bd-c-9);
+      background: var(--q-gb-bg-c-17);
     }
   }
   .details {
@@ -28,11 +28,11 @@
   }
   .details-tab {
     // margin-top: -1px;
-    background:var(--q-color-page-bg-color-103);
-    border-bottom: 0.01rem solid  var(--q-color-border-color-51);
+    background:var(--q-match-page-bg-color-103);
+    border-bottom: 0.01rem solid  var(--q-gb-bd-c-31);
   }
   .menu-item {
-    color: var(--q-color-fs-color-139);
+    color: var(--q-match-fs-color-139);
   }
   .t_color {
     color:var(--q-color-fs-color-37) !important;
@@ -109,11 +109,11 @@
      background-color:var(--q-color-page-bg-color-2);
   }
   .bg-tabs {
-    background: var(--q-color-page-bg-color-106);
+    background: var(--q-match-page-bg-color-106);
   }
   .q-tab {
     .q-tab__label {
-      color: var(--q-color-fs-color-13);
+      color: var(--q-match-fs-color-13);
 
     }
   }
@@ -123,7 +123,7 @@
     }
   }
   .bg-active-tab {
-     background-color:var(--q-color-page-bg-color-105);
+     background-color:var(--q-match-page-bg-color-105);
   }
   .q-tab--inactive {
     border-bottom: 1px solid  var(--q-color-border-color-23);
@@ -149,7 +149,7 @@
   .tabs-wrapper {
     .item {
       &.active {
-        color: var(--q-color-fs-color-152);
+        color: var(--q-match-fs-color-152);
       }
     }
   }

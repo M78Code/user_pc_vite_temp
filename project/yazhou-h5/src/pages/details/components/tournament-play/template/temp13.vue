@@ -484,7 +484,7 @@ export default defineComponent({
 
   .bor-style {
     // margin-bottom: 1px;
-    border-bottom: 1px solid  var(--q-color-border-color-56);
+    border-bottom: 1px solid  var(--q-gb-bd-c-36);
   }
   .bor-style2 {
     border-bottom: none !important;
@@ -577,7 +577,7 @@ export default defineComponent({
     line-height: 0.52rem;
     padding: 0 0.075rem;
     // margin-right: 1px;
-    border-right: 1px solid  var(--q-color-border-color-56);
+    border-right: 1px solid  var(--q-gb-bd-c-36);
 
 
     text-align: center;

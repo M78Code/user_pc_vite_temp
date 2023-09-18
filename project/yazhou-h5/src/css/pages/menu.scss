@@ -1,7 +1,7 @@
 /* **************主菜单容器********************************** -S*/
 .main-wrap {
     color: var(--q-color-fs-color-7);
-    background: var(--q-color-page-bg-color-95);
+    background: var(--q-gb-bg-c-15);
     .goback-icon-wrapper {
         [class*=theme0] {
             display: block;
@@ -19,7 +19,7 @@
     }
 
     .main-menu-container {
-        background: var(--q-color-page-bg-color-95);
+        background: var(--q-gb-bg-c-15);
 
         .cursor {
             background: var(--q-color-page-bg-color-50);
@@ -78,14 +78,14 @@
 }
 
 .sport-m-container {
-    background: var(--q-color-page-bg-color-95);
+    background: var(--q-gb-bg-c-15);
 
     .virtual-sports-results {
         background-color: var(--q-color-page-bg-color-2);
 
         .tab-item {
-            color: var(--q-color-fs-color-13);
-            background-color: var(--q-color-page-bg-color-10);
+            color: var(--q-match-fs-color-13);
+            background-color: var(--q-match-page-bg-color-10);
             border: 1px solid var(--q-color-border-color-29);
 
             &.active {
@@ -123,7 +123,7 @@
 
                     // font-weight: 700;
                     &.esport {
-                        color: var(--q-color-com-fs-color-8);
+                        color: var(--q-gb-bd-c-2);
                     }
                 }
             }
@@ -134,7 +134,7 @@
                 color: var(--q-color-fs-color-129);
 
                 &.esport {
-                    color: var(--q-color-fs-color-133);
+                    color: var(--q-match-fs-color-133);
                 }
             }
 
@@ -163,7 +163,7 @@
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
 
     .selector-w-inner {
-        background: var(--q-color-page-bg-color-95);
+        background: var(--q-gb-bg-c-15);
         backdrop-filter: blur(5px);
 
         &.hairline-border {
@@ -184,7 +184,7 @@
                 }
 
                 &.m-count-match {
-                    color: var(--q-color-fs-color-131);
+                    color: var(--q-match-fs-color-131);
                 }
             }
 
@@ -197,11 +197,11 @@
 
                 &>div {
                     &:first-child {
-                        color: var(--q-color-com-fs-color-8);
+                        color: var(--q-gb-bd-c-2);
                     }
 
                     &:last-child {
-                        color: var(--q-color-com-fs-color-8);
+                        color: var(--q-gb-bd-c-2);
                     }
                 }
             }

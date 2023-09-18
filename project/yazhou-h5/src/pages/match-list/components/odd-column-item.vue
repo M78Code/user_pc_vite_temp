@@ -333,7 +333,7 @@ const transfer_on = (odd_item) => {
       // color = '#414141';
     }
   } else{
-    color = 'var(--qq-color-fs-color-13)';
+    color = 'var(--qq-match-fs-color-13)';
   }
   let replaced = on
   if(![18].includes(+lodash.get(props.current_tab_item, 'id'))){

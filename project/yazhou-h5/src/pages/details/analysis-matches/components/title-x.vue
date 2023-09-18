@@ -60,7 +60,7 @@ const get_detail_data = inject('get_detail_data', {})
   left: 0;
   width: 100%;
   height: 0.44rem;
-  color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-bd-c-2);
   box-shadow: var(--q-color-com-box-shadow-11);
   z-index: 100000;
   .hengping-title {

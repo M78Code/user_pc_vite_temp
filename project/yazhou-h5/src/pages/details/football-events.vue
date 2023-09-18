@@ -101,7 +101,7 @@ export default defineComponent({
   width: 25vw;
   width: max-content;
   max-width: 50vw;
-  color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-bd-c-2);
   margin-top: 0.44rem;
   display: none;
 }

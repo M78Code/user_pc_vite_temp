@@ -52,7 +52,7 @@
   .item-wrapper {
     display: flex;
     &.active {
-      border: 1px solid var(--q-color-fs-color-135);
+      border: 1px solid var(--q-match-fs-color-135);
     }
     &.bg-default {
       background: var(--q-color-com-bg-color-34) !important;

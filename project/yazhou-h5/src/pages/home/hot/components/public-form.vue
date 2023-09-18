@@ -199,7 +199,7 @@ let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
         position: absolute;
         left: 0;
         top: 0;
-        border: 1px solid var(--q-color-border-color-5) !important;
+        border: 1px solid var(--q-gb-bd-c-3) !important;
         border-radius: 0.08rem;
         width: 200%;
         height: 200%;
@@ -227,7 +227,7 @@ let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
         left: 0;
         bottom: 0;
         height: 1px;
-        border-bottom: 1px solid var(--q-color-border-color-5);
+        border-bottom: 1px solid var(--q-gb-bd-c-3);
         width: 100%;
         transform: scaleY(0.5);
         transform-origin: 0 0;
@@ -247,7 +247,7 @@ let none_league_icon_black =  ref("image/bw3/png/home_page/Avatar_black.png")
         left: 0;
         bottom: 0;
         height: 1px;
-        border-bottom: 1px solid var(--q-color-border-color-5);
+        border-bottom: 1px solid var(--q-gb-bd-c-3);
         width: 100%;
         transform: scaleY(0.5);
         transform-origin: 0 0;

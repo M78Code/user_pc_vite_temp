@@ -174,7 +174,7 @@ export default defineComponent({
   background: var(--q-gb-bd-c-13);
 
   .odds-style {
-    color: var(--q-color-com-fs-color-8) !important;
+    color: var(--q-gb-bd-c-2) !important;
   }
 
   .virtual-count {
