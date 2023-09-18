@@ -649,7 +649,6 @@ const get_detail_data = ref({})
             console.error(state_data.category);
             const flag = state_data.get_category_list_req_count ? "hide_loading" : "";
             // $refs['category'].initEvent(flag, init_req).then(() => {
-              debugger
               state_data.category.initEvent(flag, init_req).then((res) => {
               if (!data.get_category_list_req_count) {
                 state_data.get_category_list_req_count = 1;

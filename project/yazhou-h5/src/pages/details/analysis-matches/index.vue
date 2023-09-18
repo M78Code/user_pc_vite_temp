@@ -13,7 +13,7 @@
     import { compute_css_variables } from "src/core/css-var/index.js"
     const page_style = ref('')
 
-    page_style.value = compute_css_variables({ category: 'component', module: 'analysis-matches' })
+    page_style.value = compute_css_variables({ category: 'component', module: 'analysis' })
     const get_detail_data = inject('get_detail_data', {})
 </script>
 

@@ -208,8 +208,8 @@ const get_detail_data = inject('get_detail_data', {})
     line-height: 0.45rem;
     padding-left: 0.24rem;
     color: var(--q-analysis-matches-color-9);
-    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
-    background-color:var(--q-analysis-matches-color-4);
+    border-bottom: 1px solid  var(--q-analysis-bd-color-3);
+    background-color:var(--q-analysis-text-color-17);
     font-size: 0.14rem;
 
     letter-spacing: 0;
@@ -224,7 +224,7 @@ const get_detail_data = inject('get_detail_data', {})
       position: absolute;
       left: 0.16rem;
       top: 0.15rem;
-      background: var(--q-analysis-matches-color-45);
+      background: var(--q-analysis-text-color-16);
       border-radius: 1.5px;
     }
   }

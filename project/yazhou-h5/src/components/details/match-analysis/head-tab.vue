@@ -134,7 +134,7 @@ let get_detail_data = inject("get_detail_data", {})
         .tabs-label {
           font-weight: 700;
           position: relative;
-          color: var(--q-analysis-matches-color-44);
+          color: var(--q-analysis-text-color-16);
           &:after {
             content: "";
             display: block;
@@ -144,7 +144,7 @@ let get_detail_data = inject("get_detail_data", {})
             width: 90%;
             text-align: center;
             height: 0.03rem;
-            background-color: var(--q-analysis-matches-color-45);
+            background-color: var(--q-analysis-text-color-16);
             border-radius: 0.08rem;
           }
         }
@@ -156,6 +156,7 @@ let get_detail_data = inject("get_detail_data", {})
         position: relative;
         height: 0.4rem;
         line-height: .4rem;
+        color: var(--q-analysis-text-color-15);
       }
     }
   }

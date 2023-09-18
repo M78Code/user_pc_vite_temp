@@ -226,7 +226,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           left: 0.01rem;
           top: 0.14rem;
-          background: var(--q-analysis-matches-color-14);
+          background: var(--q-analysis-bg-color-17);
         }
       }
 
@@ -242,7 +242,7 @@ const get_detail_data = inject('get_detail_data', {})
           position: absolute;
           right: 0.01rem;
           top: 0.14rem;
-          background: var(--q-analysis-matches-color-12);
+          background: var(--q-analysis-text-color-16);
         }
       }
     }
@@ -281,7 +281,7 @@ const get_detail_data = inject('get_detail_data', {})
           margin: 0 0.04rem;
         }
 
-        ::v-deep(.text-span) {
+        :deep(.text-span) {
 
           font-size: 0.12rem;
 
@@ -416,7 +416,7 @@ const get_detail_data = inject('get_detail_data', {})
           margin-right: unset;
         }
 
-        ::v-deep(.q-linear-progress__track--light) {
+        :deep(.q-linear-progress__track--light) {
           background: var(--q-analysis-matches-color-45);
 
           &.q-linear-progress__track {
@@ -449,32 +449,33 @@ const get_detail_data = inject('get_detail_data', {})
     }
   }
 
-  ::v-deep(.text-orange) {
-    color: var(--q-analysis-matches-color-15) !important;
+  :deep(.text-orange) {
+    color: var(--q-analysis-text-color-18) !important;
   }
 
-  ::v-deep(.text-blue) {
-    color: var(--q-analysis-matches-color-15) !important;
+  :deep(.text-blue) {
+    color: var(--q-analysis-text-color-18) !important;
   }
 
-  ::v-deep(.q-linear-progress) {
+  :deep(.q-linear-progress) {
     color: var(--q-color-com-fs-color-12) !important;
     &.progress-blue {
+      color: var(--q-analysis-bg-color-17);
         .q-linear-progress__track--light {
-          background: var(--q-analysis-matches-color-15) !important;
+          background: var(--q-analysis-text-color-18) !important;
         }
       }
     &.progress-orange {
-      color: var(--q-analysis-matches-color-15) !important;
+      color: var(--q-analysis-text-color-16) !important;
       .q-linear-progress__model {
-          background: var(--q-analysis-matches-color-15) !important;
+          background: var(--q-analysis-text-color-18) !important;
         }
     }
   }
   .ring-zero-css {
       .text-orange,
       .text-blue {
-        color:  var(--q-analysis-matches-color-15) !important;
+        color:  var(--q-analysis-text-color-18) !important;
       }
     }
   &.analyze-show {
