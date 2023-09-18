@@ -10,7 +10,7 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }">
         <layout-left />
       </div>
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width }">
