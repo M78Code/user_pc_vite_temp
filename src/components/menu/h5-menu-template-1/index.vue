@@ -52,7 +52,7 @@
               :title="i18n_t('footer_menu.all')" @click="select_all_sub_menu_handle" :count="all_sport_count_calc"
               v-if="GlobalAccessConfig.get_playAllShow()">
               <span class="sport-icon-wrap" :style="compute_css(
-                current_lv2 == -1 ?
+                !(current_lv2.mi) ?
                   'menu-sport-active-image' : 'menu-sport-icon-image'
                 , 0
               )"></span>
@@ -60,11 +60,13 @@
             <template v-for="(item, index) in current_menu" :key="item.mi">
               <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
-
-                <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
+                <div class="inner-w flex justify-between items-center" :class="{
+                  favorite: show_favorite_list,
+                  current: current_lv2?.mi == item.mi
+                }">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
-                      :style="compute_css(current_lv2 == index ? 'menu-sport-active-image' : 'menu-sport-icon-image')"></span>
+                      :style="compute_css(current_lv2?.mi == item.mi ? 'menu-sport-active-image' : 'menu-sport-icon-image')"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
@@ -184,7 +186,7 @@ let current_menu = ref({});
 let date_menu_list = ref([]);
 // 如果是赛果，并且是 虚拟体育, 即 是  四级菜单
 let virtual_sports_results_tab = ref([]);
-const current_lv2 = ref(0)//二级菜单选中
+const current_lv2 = ref({})//二级菜单选中
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
 const show_favorite_list = ref(false); //是否显示收藏列表
@@ -231,7 +233,7 @@ watch(update_time, (update_time) => {
   current_menu.value = MenuData.menu_lv2; //2级
   date_menu_list.value = MenuData.menu_lv3; //三级
   virtual_sports_results_tab.value = MenuData.menu_lv4; //4级
-  current_lv2.value = MenuData.current_lv_2_menu_i
+  current_lv2.value = MenuData.current_lv_2_menu
 });
 
 //初始化菜单

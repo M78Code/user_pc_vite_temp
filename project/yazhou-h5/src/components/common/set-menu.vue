@@ -23,10 +23,10 @@
         </div>
         <!-- 用户信息 -->
         <div class="user-info border-bottom">
-          <div class="user-name">Hi,{{ UserCtr.user_info.userName }}</div>
+          <div class="user-name">Hi,{{ user_info.userName }}</div>
           <div class="balance-wrap">
             <div class="balance yb_mr4" @click="get_balance">
-              {{ format_money2(UserCtr.user_info.balance) }}
+              {{ format_money2(user_info.balance) }}
             </div>
             <div class="refesh" :style="compute_css('menu-refesh')" :class="{ rotate: is_loading_balance }"
               @click="get_balance"></div>
@@ -56,7 +56,7 @@
         </div>
         <!-- 盘口 -->
         <div class="set-item">
-          <div class="icon set-icon-2" :style="compute_css('left-menu-image', 2)"></div>
+          <div class="icon set-icon-2" :style="compute_css('menu-left-menu-image', 2)"></div>
           <div class="name">{{ $t("setting_menu.handicap") }}</div>
           <div class="option" @click="change_odd">
             <div class="op-item active">
@@ -78,7 +78,7 @@
         </div>
         <!-- 赔率 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-4" :style="compute_css('left-menu-image', 4)"></div>
+          <div class="icon set-icon-4" :style="compute_css('menu-left-menu-image', 4)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_odds") }}</div>
           <div class="option" @click="BetData.set_bet_is_accept">
             <div class="op-item active">
@@ -88,7 +88,7 @@
                 : $t("setting_menu.odd_optimal2")
               }}
             </div>
-            <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
+            <div class="op-icon" :style="compute_css('set-switch')"></div>
             <div class="op-item">
               {{
                 bet_is_accept
@@ -101,7 +101,7 @@
         <div class="line"></div>
         <!-- 版本 -->
         <div class="set-item">
-          <div class="icon set-icon-3" :style="compute_css('left-menu-image', 3)"></div>
+          <div class="icon set-icon-3" :style="compute_css('menu-left-menu-image', 3)"></div>
           <div class="name">{{ $t("setting_menu.version") }}</div>
           <div class="option" @click="UserCtr.set_standard_edition">
             <div class="op-item active">
@@ -123,7 +123,7 @@
         </div>
         <!-- 语言 -->
         <div class="set-item no-border">
-          <div class="icon set-icon-5" :style="compute_css('left-menu-image', 5)"></div>
+          <div class="icon set-icon-5" :style="compute_css('menu-left-menu-image', 5)"></div>
           <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
 
           <div class="option option3" @click="is_show_lang = !is_show_lang">
@@ -147,7 +147,7 @@
         <div class="line"></div>
         <!-- 规则说明 -->
         <div class="set-item no-border" @click="go_description">
-          <div class="icon set-icon-6" :style="compute_css('left-menu-image', 6)"></div>
+          <div class="icon set-icon-6" :style="compute_css('menu-left-menu-image', 6)"></div>
           <div class="name">{{ $t("setting_menu.rule_description") }}</div>
           <div class="option option2">
             <div class="yb-icon-arrow right"></div>
@@ -156,13 +156,14 @@
         <div class="line"></div>
         <!-- 换肤 -->
         <div class="set-item">
-          <div class="icon set-icon-7" :style="compute_css('left-menu-image', 7)"></div>
+          <div class="icon set-icon-7" :style="compute_css('menu-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
           {{ get_theme }}
           <div class="skin-wrap">
             <div class="skin-icon skin-icon1" :style="compute_css('menu-theme-skin1')" @click="UserCtr.set_theme('day')">
             </div>
-            <div class="skin-icon skin-icon2" :style="compute_css('menu-theme-skin2')" @click="UserCtr.set_theme('night')">
+            <div class="skin-icon skin-icon2" :style="compute_css('menu-theme-skin2')"
+              @click="UserCtr.set_theme('night')">
             </div>
           </div>
         </div>
@@ -184,6 +185,8 @@ import { useRoute, useRouter } from "vue-router";
 
 let route = useRoute();
 let router = useRouter();
+
+const user_info = ref(UserCtr.user_info)
 
 // 是否显示设置菜单
 let is_show_menu = ref(false);
@@ -211,6 +214,7 @@ const sort_type = ref(UserCtr.sort_type)// 2时间排序 1热门排序
 */
 watch(UserCtr.user_version, () => {
   get_lang.value = UserCtr.lang//用户语言
+  user_info.value = UserCtr.user_info;
   get_theme.value = UserCtr.theme;
   standard_edition.value = UserCtr.standard_edition//标准版本2  简易版1
   lang_obj.value = get_lang_list() //获取语言列联表
@@ -251,6 +255,8 @@ function get_lang_list() {
           obj2[item] = obj[item];
         }
       });
+    } else {
+      return obj;
     }
   } catch (error) {
     // 若网络错误则默认展示所有可切换语种
