@@ -108,7 +108,7 @@ onUnmounted(() => {
   width: 3.55rem;
   margin: 0.04rem auto;
   border-radius: 0.08rem;
-  background: var(--q-cathectic-color-6);
+  background: var(--q-gb-bd-c-15);
 }
 .common-cathectic-item2 {
   margin-top: 0;
@@ -122,7 +122,7 @@ onUnmounted(() => {
 }
 .hairline-border {
   &::after {
-    border: 1px solid var(--q-cathectic-color-31) !important;
+    border: 1px solid var(--q-gb-bd-c-3) !important;
   }
 }
 </style>
