@@ -367,7 +367,7 @@ class MatchPage {
       mids: Array.isArray(mid) ? mid.join(',') : mid,
       cuid: this.get_uid,
       euid: this.get_current_sub_menuid == '409' ? "" : this.get_current_sub_menuid,
-      device: this.get_newer_standard_edition == 2 ? 'v2_h5_st' : 'v2_h5',
+      device: UserCtr.standard_edition == 2 ? 'v2_h5_st' : 'v2_h5',
       //排序	 int 类型 1 按热门排序 2 按时间排序
       sort: this.sort_type
     };
@@ -777,7 +777,7 @@ class MatchPage {
       //排序	 int 类型 1 按热门排序 2 按时间排序
       sort: this.sort_type,
       //标准版和简版 1为新手版  2为标准版
-      device: ['', 'v2_h5', 'v2_h5_st'][this.get_newer_standard_edition]
+      device: ['', 'v2_h5', 'v2_h5_st'][UserCtr.standard_edition]
     };
   }
 

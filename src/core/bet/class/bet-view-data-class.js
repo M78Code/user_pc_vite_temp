@@ -141,13 +141,24 @@ class BetViewData {
   // 1-投注状态,2-投注中状态,3-投注成功状态(主要控制完成按钮),4-投注失败状态,5-投注项失效
   set_bet_order_status(code){
     this.bet_order_status = code
+    // 更新页面
     this.set_bet_view_version()
   }
   // 设置提示信息 
   // code code码
-  // status 成功失败
-  set_bet_error_code({code,status}){
+  // msg 提示信息
+  set_bet_error_code({code,message}){
     
+    this.error_message = message
+    this.error_code = code
+
+    if(code == 200){
+      // 3-投注成功状态(主要控制完成按钮)
+      this.set_bet_order_status(3)
+    }else{
+      // 4-投注失败状态 显示错误信息
+      this.set_bet_order_status(4)
+    }
   }
 
   // 串关专用参数

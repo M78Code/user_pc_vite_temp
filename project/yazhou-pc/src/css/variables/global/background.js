@@ -19,7 +19,8 @@ export default {
     'gb-bg-c-18': '#ffb633',
     'gb-bg-c-19': '#ffe9c7',
     'gb-bg-c-20': 'none',
-    'gb-bg-c-21': 'transparent'
+    'gb-bg-c-21': 'transparent',
+    'gb-bg-c-22': '#f0f6ff',
+    
   }
 
-  // "#f6f7fa"

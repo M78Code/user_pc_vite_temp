@@ -13,15 +13,15 @@
 
 
 
-import _ from  "lodash";
+import _ from "lodash";
 import appload from "./App_load.vue";
 import apiDomain from "./apiDomain.js";
 import { useRouter } from "vue-router";
-import STANDARD_KEY from "src/core/standard-key";
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
+import STANDARD_KEY from "src/core/standard-key"; 
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import { onMounted } from "vue";
 
-import { enter_params } from "src/core/index.js";
+import { enter_params, compute_css_variables } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
@@ -29,7 +29,6 @@ import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
 import './src/css/pages/app.scss'
 import './src/css/pages/public.scss'
 import './src/css/pages/main-layout.scss'
-
 const token_key = STANDARD_KEY.get("token"); //token键
 export default {
   name: 'App',
@@ -37,7 +36,7 @@ export default {
     appload,
   },
   mixins: [apiDomain],
-   data() {
+  data() {
     return {
       init_load: false
     };
@@ -50,9 +49,8 @@ export default {
     enter_params()
 
     // 检测目前的系统类型ios,android,h5
-    window.platform_type = (this.$q.platform.is.ios?'ios':'') || (this.$q.platform.is.android?'android':'') || 'h5';
+    window.platform_type = (this.$q.platform.is.ios ? 'ios' : '') || (this.$q.platform.is.android ? 'android' : '') || 'h5';
   },
 }
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

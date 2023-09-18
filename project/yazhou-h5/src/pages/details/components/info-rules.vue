@@ -86,7 +86,7 @@ export default defineComponent({
 
 /*************** 内容父盒子开始 *************** -S*/
 .content-box {
-  background-color: var(--q-color-page-bg-color-114);
+  background-color: var(--q-gb-bd-c-15);
   color:var(--q-color-fs-color-38);
   border-radius: 0.16rem;
   width: 3.2rem;
@@ -138,7 +138,7 @@ export default defineComponent({
   width: 0.16rem;
   height: 0.16rem;
   line-height: 0.18rem;
-  background-color: var(--q-color-page-bg-color-50);
+  background-color: var(--q-gb-bd-c-13);
   border-radius: 8px 0 8px 0;
 }
 

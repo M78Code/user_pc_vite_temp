@@ -61,7 +61,7 @@
           <div class="option" @click="change_odd">
             <div class="op-item active">
               {{
-                get_cur_odd == "EU"
+                cur_odd == "EU"
                 ? $t("setting_menu.odd_europe2")
                 : $t("setting_menu.odd_hong_kong2")
               }}
@@ -69,7 +69,7 @@
             <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
-                get_cur_odd == "EU"
+                cur_odd == "EU"
                 ? $t("setting_menu.odd_hong_kong2")
                 : $t("setting_menu.odd_europe2")
               }}
@@ -80,10 +80,10 @@
         <div class="set-item no-border">
           <div class="icon set-icon-4" :style="compute_css('h5-left-menu-image', 4)"></div>
           <div class="name">{{ $t("setting_menu.footer_t_odds") }}</div>
-          <div class="option" @click="set_is_accept">
+          <div class="option" @click="BetData.set_bet_is_accept">
             <div class="op-item active">
               {{
-                BetData.bet_is_accept == 2
+                bet_is_accept
                 ? $t("setting_menu.odd_any2")
                 : $t("setting_menu.odd_optimal2")
               }}
@@ -91,7 +91,7 @@
             <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
-                BetData.bet_is_accept == 2
+                bet_is_accept
                 ? $t("setting_menu.odd_optimal2")
                 : $t("setting_menu.odd_any2")
               }}
@@ -103,10 +103,10 @@
         <div class="set-item">
           <div class="icon set-icon-3" :style="compute_css('h5-left-menu-image', 3)"></div>
           <div class="name">{{ $t("setting_menu.version") }}</div>
-          <div class="option" @click="change_edition">
+          <div class="option" @click="UserCtr.set_standard_edition">
             <div class="op-item active">
               {{
-                get_newer_standard_edition == 2
+                standard_edition == 2
                 ? $t("setting_menu.standard")
                 : $t("setting_menu.concise")
               }}
@@ -114,7 +114,7 @@
             <div class="op-icon" :style="compute_css('h5-set-switch')"></div>
             <div class="op-item">
               {{
-                get_newer_standard_edition == 2
+                standard_edition == 2
                 ? $t("setting_menu.concise")
                 : $t("setting_menu.standard")
               }}
@@ -125,18 +125,20 @@
         <div class="set-item no-border">
           <div class="icon set-icon-5" :style="compute_css('h5-left-menu-image', 5)"></div>
           <div class="name">{{ $t("setting_menu.chan_lan") }}</div>
+
           <div class="option option3" @click="is_show_lang = !is_show_lang">
-            <i class="lang-icon yb_mr4" :style="compute_css('h5-lang', 1)" :class="`lang-${get_lang}`"></i>
+            <i class="lang-icon yb_mr4" :style="compute_css('h5-lang')" :class="`lang-${get_lang}`"></i>
             <div class="op-icon op-icon2" :style="compute_css('h5-set-sort')"></div>
             <div class="op-item active" style="font-size: 0.14rem">
-              {{ $t("setting_menu.lang") }}
+              <!-- {{ $t("setting_menu.lang") }} -->
+              {{ lang_obj[get_lang] }}
             </div>
           </div>
         </div>
         <div class="lang-wrap" :class="{ active: is_show_lang }">
           <template v-for="(   item, index   ) in    lang_obj   " :key="index">
             <div class="lang-item" :class="{ active: get_lang == index }" @click="setting_language_handle(index)">
-              <i class="lang-icon yb_mr4" :class="`lang-${index}`"></i>
+              <i class="lang-icon yb_mr4" :style="compute_css('h5-lang')" :class="`lang-${index}`"></i>
               <div class="col">{{ item }}</div>
               <div class="icon"></div>
             </div>
@@ -156,10 +158,11 @@
         <div class="set-item">
           <div class="icon set-icon-7" :style="compute_css('h5-left-menu-image', 7)"></div>
           <div class="name">{{ $t("setting_menu.skin") }}</div>
+          {{ get_theme }}
           <div class="skin-wrap">
-            <div class="skin-icon skin-icon1" :style="compute_css('h5-theme-skin1')" @click="handle_set_theme('theme01')">
+            <div class="skin-icon skin-icon1" :style="compute_css('h5-theme-skin1')" @click="UserCtr.set_theme('day')">
             </div>
-            <div class="skin-icon skin-icon2" :style="compute_css('h5-theme-skin2')" @click="handle_set_theme('theme02')">
+            <div class="skin-icon skin-icon2" :style="compute_css('h5-theme-skin2')" @click="UserCtr.set_theme('night')">
             </div>
           </div>
         </div>
@@ -169,46 +172,61 @@
 </template>
 
 <script setup>
-// import {mapGetters, mapMutations, mapActions} from "vuex";
-import { ref } from "vue";
+import { ref, computed, onUnmounted, watch } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { api_betting } from "src/api/index";
-import UserCtr from "src/core/user-config/user-ctr.js";
 import { format_money2 } from "src/core/format/index.js";
 import { debounce } from "lodash";
-import { loadLanguageAsync, compute_css } from "src/core/index.js";
-import { computed, onUnmounted, watch } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
-import { useRoute, useRouter } from "vue-router";
 import BetData from "src/core/bet/class/bet-data-class.js";
+import { loadLanguageAsync, compute_css, useMittOn, MITT_TYPES, MenuData, UserCtr } from "src/core/index.js";
+import { useRoute, useRouter } from "vue-router";
+
 
 let route = useRoute();
 let router = useRouter();
+
 // 是否显示设置菜单
 let is_show_menu = ref(false);
 // 是否显示设置语言
 let is_show_lang = ref(false);
 // 余额是否加载中
 let is_loading_balance = ref(false);
+
 //弹出菜单宽度
 let calc_width = ref(260);
 let wrapper_effect = ref(true);
-const get_lang = ref(UserCtr.lang)
-// ...mapGetters({
-//   menu_type: "get_menu_type",           // 获取当前主菜单的menu_type
-//   sort_type: 'get_sort_type',            // 排序 2 时间排序  1  热门排序
-//   BetData.bet_is_accept:'BetData.bet_is_accept',         // 1最佳赔率  2任何赔率
-//   get_newer_standard_edition:'get_newer_standard_edition',// 1新手版 2标准版
-//   get_lang:"get_lang",
-//   get_cur_odd:"get_cur_odd",
-//   get_virtual_data_loading:"get_virtual_data_loading",
-//   get_is_show_menu:"get_is_show_menu",
-//   get_is_champion:'get_is_champion',
-//   get_v_pre_menu_type:'get_v_pre_menu_type',
-//   get_secondary_unfold_map:'get_secondary_unfold_map',
-// }),
+const get_lang = ref(UserCtr.lang)// 语言
+const get_theme = ref(UserCtr.theme)// 语言
+const standard_edition = ref(UserCtr.standard_edition)//标准版本2  简易版1
+const bet_is_accept = ref(BetData.bet_is_accept)// 赔率
+const cur_odd = ref(BetData.cur_odd)// 盘口
+const lang_obj = ref(get_lang_list())//语言列表
+const { menu_type } = MenuData; //菜单选中项
+const is_champion = ref(BetData.get_is_champion())//是否冠军玩法
+const sort_type = ref(UserCtr.sort_type)// 2时间排序 1热门排序
+
+
+/**
+ * 监听用户信息改变
+*/
+watch(UserCtr.user_version, () => {
+  get_lang.value = UserCtr.lang//用户语言
+  get_theme.value = UserCtr.theme;
+  standard_edition.value = UserCtr.standard_edition//标准版本2  简易版1
+  lang_obj.value = get_lang_list() //获取语言列联表
+  sort_type.value = UserCtr.sort_type// 2时间排序 1热门排序
+})
+/**
+ * 监听投注信息改变
+*/
+watch(BetData.bet_data_class_version, () => {
+  bet_is_accept.value = BetData.bet_is_accept//是否介绍任何赔率
+  is_champion.value = BetData.get_is_champion()//是否冠军玩法
+  cur_odd.value = BetData.cur_odd//盘口
+})
+
 // 语言选项
-const lang_obj = computed(() => {
+function get_lang_list() {
   let obj = {
     zh: "简体中文",
     tw: "繁體中文",
@@ -239,19 +257,14 @@ const lang_obj = computed(() => {
     return obj;
   }
   return obj2;
-});
-let balance_timer;
+};
 /**
  * @Description 取消余额loading
  * @param {undefined} undefined
  */
 let cancel_loading_balance = () => {
-  is_loading_balance = false;
+  is_loading_balance.value = false;
 };
-const get_is_champion2 = computed(() => {
-  // TODO: this
-  // return get_is_champion()
-});
 /**
  *@description 窗口宽度改变事件处理
  */
@@ -259,59 +272,35 @@ const window_resize_handle = () => {
   calc_width = (2.6 * window.innerWidth) / 3.75;
 };
 //刷新金额loading时钟
-balance_timer = 0;
+let balance_timer = 0;
 cancel_loading_balance = debounce(cancel_loading_balance, 200);
 calc_width = (window.innerWidth * 100 * 2.6) / 375;
-// set_is_show_menu(false)
 useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle).on;
 onUnmounted(() => {
   clearTimeout(balance_timer);
   balance_timer = null;
-
   useMittOn(MITT_TYPES.EMIT_WINDOW_RESIZE, window_resize_handle).off;
   // debounce_throttle_cancel(cancel_loading_balance);
 });
-watch(
-  () => is_show_menu,
-  (newValue) => {
-    // 将菜单的显示与隐藏放到全局
-    set_is_show_menu(newValue);
-  }
-);
-watch(
-  () => get_is_champion2,
+
+// 冠军玩法只支持欧洲盘
+watch(is_champion,
   (split_new, old) => {
     // 冠军玩法只支持欧洲盘
     let old_odd = "";
     if (split_new) {
-      old_odd = get_cur_odd;
-      set_cur_odd("EU");
+      old_odd = cur_odd;
+      BetData.set_cur_odd("EU"); //bet有一个
+      UserCtr.set_cur_odds("EU");//userctr也有一个
     }
     // 从冠军切到其他
     if (old && old_odd) {
-      set_cur_odd(old_odd);
+      BetData.set_cur_odd(old_odd); //bet有一个
+      UserCtr.set_cur_odds(old_odd);//userctr也有一个
     }
   }
 );
 
-// ...mapActions([
-//   'get_balance',
-//   'set_theme',
-// ]),
-// ...mapMutations({
-//   set_cur_odd:"set_cur_odd",
-//   set_sort_type: 'set_sort_type',
-//   set_is_accept:'set_is_accept',
-//   set_newer_standard_edition:'set_newer_standard_edition',
-//   set_secondary_unfold_map:'set_secondary_unfold_map',
-//   set_lang:'set_lang',  //设置语言
-//   set_is_show_menu:'set_is_show_menu',
-//   set_user:'set_user',
-//   set_is_language_changing:'set_is_language_changing',
-//   set_collapse_csid_map:'set_collapse_csid_map',
-//   set_collapse_map_match:'set_collapse_map_match',
-//   set_global_route_menu_param:'set_global_route_menu_param',
-// }),
 const go_description = () => {
   const query = route.query;
   router.push({ path: `/rule_description/${route.name}`, query });
@@ -322,39 +311,29 @@ const setting_language_handle = (key) => {
     // 这几个语言还没有做
     return;
   }
-  document.getElementById("loading-root-ele").style.visibility = "initial";
+  // document.getElementById("loading-root-ele").style.visibility = "initial";
   // 异步获取国际化数据,并设置
   loadLanguageAsync(key)
     .then((res) => {
       // 切换语言时，清空赛果接口缓存
       // sessionStorage.result_sub_menu_cache = ''
       // 清除相应对象状态
-      set_global_route_menu_param({});
-      set_user({ languageName: key });
-      set_lang(key);
-      $i18n.local = key;
-      is_show_lang = false;
+      // set_global_route_menu_param({});
 
+      // 会设置{ languageName: key }
+      UserCtr.set_lang(key);
+      // $i18n.local = key;
+      is_show_lang.value = false;
       // 更新网站title
-      const web_site_title = UserCtr.get_web_title(key);
-      document.title = web_site_title;
+      document.title = UserCtr.get_web_title(key);
     })
     .catch((err) => {
-      $toast(t("pre_record.cancle_fail_tips"), 2000);
+      console.error(err)
+      // $toast(t("pre_record.cancle_fail_tips"), 2000);
     })
     .finally((res) => {
-      document.getElementById("loading-root-ele").style.visibility = "hidden";
+      // document.getElementById("loading-root-ele").style.visibility = "hidden";
     });
-};
-// 设置主题
-const handle_set_theme = (theme) => {
-  const curr_theme = UserCtr.theme;
-
-  if (curr_theme.includes("y0")) {
-    set_theme(theme + "_y0");
-  } else {
-    set_theme(theme);
-  }
 };
 /**
  * 改变显示状态
@@ -372,61 +351,42 @@ const sort_type_changed = () => {
     $toast(t(`common.temporarily_unavailable`), 2000);
     return;
   }
-  let status = sort_type == 1 ? 2 : 1;
-
+  let status = sort_type.value == 1 ? 2 : 1;
+  sort_type.value = status
   // 排序类型改变前需清空赛事一键折叠map折叠状态
-  set_collapse_csid_map({});
-  set_collapse_map_match({});
-
-  set_sort_type(status);
-  useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-    text: "sortRules",
-  });
+  // set_collapse_csid_map({});
+  // set_collapse_map_match({});
+  //TODO 等列表变化
+  UserCtr.set_sort_type(status);
 };
 /**
  * @Description 切换盘口
  * @param {undefined} undefined
  */
 const change_odd = () => {
-  if (get_is_champion()) return; //冠军玩法点不动
-  let odd = get_cur_odd == "EU" ? "HK" : "EU";
+  if (is_champion.value) return; //冠军玩法点不动
+  let odd = cur_odd.value == "EU" ? "HK" : "EU";
+  BetData.set_cur_odd(odd); //bet有一个
+  UserCtr.set_cur_odds(odd);//userctr也有一个
+  UserCtr.set_user_base_info({ userMarketPrefer: odd });
   // 将盘口偏好记录到服务端
   api_betting
     .record_user_preference({ userMarketPrefer: odd })
     .then()
     .catch((err) => console.error(err));
-  set_cur_odd(odd);
-  set_user({ userMarketPrefer: odd });
-};
-/**
- * @Description 切换版本
- * @param {undefined} undefined
- */
-const change_edition = () => {
-  let edition = get_newer_standard_edition == 2 ? 1 : 2;
-
-  set_newer_standard_edition(edition);
-  set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
-  // 发送埋点
-  let zhuge_obj = {
-    版本类型: edition == 1 ? "简易" : "标准",
-  };
-  $utils.zhuge_event_send("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
 };
 /**
  * @description 获取用户余额
  * @return {undefined} undefined
  */
 const get_balance = () => {
-  is_loading_balance = true;
+  is_loading_balance.value = true;
   clearTimeout(balance_timer);
   balance_timer = setTimeout(() => {
     cancel_loading_balance();
   }, 500);
-  get_balance();
+  UserCtr.get_balance();
 };
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -710,7 +670,8 @@ const get_balance = () => {
   height: 0.125rem;
   --per: -0.154rem;
   transform: translateY(-1px);
-  background: var(--q-color-com-img-bg-136) no-repeat 0 0 / 0.16rem 1.82rem;
+  background-repeat: no-repeat;
+  background-size: 0.16rem 1.82rem;
 }
 
 /*语言国旗图标*/

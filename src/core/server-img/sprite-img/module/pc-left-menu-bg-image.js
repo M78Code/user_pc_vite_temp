@@ -2,8 +2,7 @@
 // img-bg-menu-live 对应输出的css名称
 // 
 
-// import server_resource from "app/job/output/assets/index.js";
-const server_resource = {}
+import server_resource from "app/job/output/assets/index.json";
 import UserCtr from "src/core/user-config/user-ctr.js";
 
 import { get } from "lodash";
@@ -89,8 +88,8 @@ function compute_position(position) {
   const width = 0; //表示是 横 向
   const x_space = 0; //每张图的间距 x
 
-  const height = 40; //表示是 纵 向
-  const y_space = 10; //每张图的间距 y
+  const height = 25; //表示是 纵 向
+  const y_space = 0.5; //每张图的间距 y
   const _v = item[position];
   if (_v > -1) {
     const x = x_space * _v + _v * width + left;
@@ -112,7 +111,7 @@ function compute_css({ position, theme }) {
     url = get(config, UserCtr.theme);
   }
   return {
-    "background-image": `url(/public/${url})`,
+    "background-image": `url(${url})`,
     "background-position": compute_position(position),
   };
 }

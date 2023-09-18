@@ -20,7 +20,10 @@ export default {
   'pc-img-play-match': {
     default: "pc-img-play-match",
   },
-
+  // layout-deader
+  'pc-img-layout-header': {
+    default: "pc-img-layout-header",
+  }
 
 }
 

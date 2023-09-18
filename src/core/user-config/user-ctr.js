@@ -24,6 +24,7 @@ import { uid } from 'quasar';
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
+
   constructor() {
     this.init();
   }
@@ -47,7 +48,7 @@ class UserCtr {
     this.getuserinfo_res_backup = null;
     // uid
     this.uid = this.init_uid();
-    
+
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
 
@@ -74,13 +75,16 @@ class UserCtr {
       // 当前赔率
       cur_odds: "EU",
     },
-      // 用户 token 失效
-      this.is_invalid = false;
+      //排序	 int 类型 1 按热门排序 2 按时间排序
+      this.sort_type = 1
+    // 用户 token 失效
+    this.is_invalid = false;
     // 用户 余额
     this.balance = 0;
     //  用户余额是否展示状态
     this.show_balance = false;
-
+    //用户版本 移动端有简版 1 和标准版 2
+    this.standard_edition = 1
     //登录弹窗状态
     this.show_login_popup = false;
     // 是否首次登录
@@ -93,14 +97,17 @@ class UserCtr {
     }
     // 用户信息版本
     this.user_version = ref('0')
+    this.update = (v) => {
+      this.user_version.value = v || Date.now()
+    }
     this.callbackUrl = ''
   }
   /**
    * 获取初始化uid
    * @return {String} uid
    */
-  init_uid(){
-    let res='';
+  init_uid() {
+    let res = '';
     let unique = localStorage.getItem("unique_uuid");
     if (unique) {
       res = unique;
@@ -121,17 +128,39 @@ class UserCtr {
   get_cuid() {
     return this.uid;
   }
+  /**
+   * 排序变化      //排序	 int 类型 1 按热门排序 2 按时间排序
+  */
+  set_sort_type(data) {
+    this.sort_type = data;
+    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+      text: "sortRules",
+      data,
+    });
+    this.update()
+  }
+  /**
+   * 设置语言变化
+  */
   set_lang(data) {
     this.lang = data;
     this.user_info.languageName = data;
+    useMittEmit(MITT_TYPES.EMIT_LANG_CHANGE, data);
+    this.update()
   }
+  /**
+  * 设置主题变化
+ */
   set_theme(theme) {
     this.theme = theme;
+    useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
+    this.update()
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
   set_cur_odds(odd) {
-    this.odds.cur_odds = odd
+    this.set_pre_odds(this.odds.cur_odds)
+    this.odds.cur_odds = odd;
   }
   set_pre_odds(odd) {
     this.odds.pre_odds = odd
@@ -191,11 +220,11 @@ class UserCtr {
     let res = await api_account.get_user_info({
       token,
     });
-    let obj = lodash.get(res,'data',{});
+    let obj = lodash.get(res, 'data', {});
     console.error("obj", obj);
     this.set_user_token(token);
     this.set_user_info(obj);
-    this.user_version.value = Date.now()
+    this.update()
     this.get_balance()
   }
 
@@ -213,11 +242,25 @@ class UserCtr {
         console.error(err);
       });
   }
-
+  /**
+   * 设置版本 简易版还是 标准版
+   * 2标准 1简易
+  */
+  set_standard_edition() {
+    let edition = this.standard_edition == 2 ? 1 : 2;
+    this.standard_edition = edition;
+    this.update()
+    // set_newer_standard_edition(edition);
+    // set_secondary_unfold_map({}); // 清空次要玩法折叠的记录，收起来
+    // // 发送埋点
+    // let zhuge_obj = {
+    //   版本类型: edition == 1 ? "简易" : "标准",
+    // };
+    // $utils.zhuge_event_send("TY_H5_菜单_版本_点击", UserCtr.user_info, zhuge_obj);
+  }
   set_balance(balance) {
-    
     this.balance = 1 * balance;
-    this.user_version.value = Date.now()
+    this.update()
   }
   /**
    * 获取  和 调用 getuserinfo 接口 data 实体 数据

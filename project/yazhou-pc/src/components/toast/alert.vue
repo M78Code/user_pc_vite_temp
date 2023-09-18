@@ -78,10 +78,7 @@ const is_domain_error = ref(false)
  * 语言
  */
 const lang = ref(UserCtr.lang)
-function lang_change(data) {
-  lang.value = data
-  UserCtr.set_lang(data)
-}
+
 /** 
  * 判断是否是登录状态 default: false
  */
@@ -106,13 +103,7 @@ const { emitters_off } = useMittEmitterGenerator([
     /* 域名错误弹窗 */
     type: MITT_TYPES.EMIT_DOMAIN_ERROR_ALERT,
     callback: domain_error_alert
-  },
-  {
-    /* 语言变化 */
-    type: MITT_TYPES.EMIT_LANG_CHANGE,
-    callback: lang_change
   }
-
 ])
 /* 销毁mitt */
 onUnmounted(emitters_off)

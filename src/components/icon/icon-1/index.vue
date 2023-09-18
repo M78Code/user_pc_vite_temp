@@ -17,10 +17,19 @@
 </template>
 <script setup>
 import { defineComponent, computed } from "vue";
-//-------------------- 对接参数 prop 注册  开始  --------------------
-import { need_register_props } from "../config/index.js";
-const props = defineProps(need_register_props);
-//-------------------- 对接参数 prop 注册  结束  --------------------
+//-------------------- 对接参数 prop 注册  开始  -------------------- 
+import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
+import { component_symbol, need_register_props } from "src/components/search/config/index.js"
+useRegistPropsHelper(component_symbol, need_register_props)
+const props = defineProps({
+  name: String,
+  color: String,
+  size: String
+})
+// const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
+// const tableClass_computed = useComputed.tableClass_computed(props)
+// const title_computed = useComputed.title_computed(props)
+//-------------------- 对接参数 prop 注册  结束  -------------------- 
 console.error('icon props', props);
 const emit = defineEmits(['click'])
 

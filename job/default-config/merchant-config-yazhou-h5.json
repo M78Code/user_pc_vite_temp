@@ -13,12 +13,6 @@
       }
     }
   },
-  "Menu": {
-    "use_component": "H5MenuTemplate1",
-    "params": {
-      "tableClass": "bg-deep-purple-14"
-    }
-  },
   "server_resource": {},
   "css": {
     "cathectic-text-color-4": {

@@ -45,13 +45,15 @@ const get_detail_data = inject('get_detail_data', {})
   //   "team-img": team_img,
   //   "injury-form": injury_form,
   // },
+  
   const props = defineProps({
     // 伤停情况的数据
     injury_situation_data: {
       type: Object,
-      default: () => ({}),
+      default: () => {},
     }
   })
+  
   // TODO: 后续修改调整
   // computed: {
   //   ...mapGetters(['get_detail_data'])
@@ -107,7 +109,7 @@ const get_detail_data = inject('get_detail_data', {})
 
     .team-name {
       font-size: 0.12rem;
-      color: var(--q-color-fs-color-3);
+      color: var(--q-gb-t-c-4);
       font-weight: bold;
       line-height: 0.12rem;
     }

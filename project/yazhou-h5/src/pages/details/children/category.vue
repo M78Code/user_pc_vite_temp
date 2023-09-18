@@ -344,7 +344,7 @@ export default defineComponent({
 
     .h-recommend-head {
       font-size: 0.14rem;
-      color: var(--q-color-fs-color-1);
+      color: var(--q-gb-t-c-3);
       line-height: 1;
       flex-wrap: nowrap;
       justify-content: center;

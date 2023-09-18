@@ -159,7 +159,7 @@ export default defineComponent({
 }
 
 .blue-color {
-  background: var(--q-color-page-bg-color-50);
+  background: var(--q-gb-bd-c-13);
 
   .odds-style {
     color: var(--q-color-com-fs-color-8) !important;

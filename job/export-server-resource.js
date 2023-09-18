@@ -26,7 +26,7 @@ let file_path = `${write_folder}/index.json`;
 
 // 图片输出到项目的 目录
 let img_folder = `./public/${PROJECT_NAME}/server-resource/`;
-let project_path = `${PROJECT_NAME}/server-resource/`;//项目index.html 访问图片的路径
+let project_path = `/${PROJECT_NAME}/server-resource/`;//项目index.html 访问图片的路径
 
 
 //确保配置 输出目录存在

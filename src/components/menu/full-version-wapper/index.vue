@@ -4,6 +4,7 @@
   </div>
 </template>
 <script>
+
 import wapper_config from "./wapper.js";
 
 let {
@@ -24,6 +25,9 @@ export default {
       components_keys,
       registered_component_key,
     };
+  },
+  mounted() {
+    console.log(this.$slots, '1111111')
   },
   methods: {
   },

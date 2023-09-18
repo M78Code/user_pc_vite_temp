@@ -89,13 +89,13 @@ const go_bet = () => {
   height: 0.42rem;
   line-height: 0.42rem;
   font-size: 0.14rem;
-  color: var(--q-cathectic-color-33);
+  color: var(--q-cathectic-color-8);
   letter-spacing: 0;
   text-align: center;
 }
 
 .go-bet {
-  background: var(--q-cathectic-color-34);
+  background: var(--q-cathectic-color-10);
   border-radius: 4px;
   color: #fff;
   margin-top: 0.1rem;

@@ -97,8 +97,8 @@ const toolClicked = (f) => {
   align-items: center;
   margin-top: 15px;
   margin-bottom: 10px;
-  color: var(--q-bet-record-color-14);
-  border-bottom: 1px solid var(--q-bet-record-color-27);
+  color: var(--q-gb-t-c-5);
+  border-bottom: 1px solid var(--q-bet-record-color-8);
   height: 30px;
   /**未结算已结算预约注单按钮tab*/
   .btn-wrap {
@@ -110,16 +110,16 @@ const toolClicked = (f) => {
     /**按钮样式*/
     .btn {
       margin-right: 5px;
-      border: 1px solid var(--q-bet-record-color-29);
-      background: var(--q-bet-record-color-29);
-      color: var(--q-bet-record-color-14);
+      border: 1px solid var(--q-gb-bd-c-7);
+      background: var(--q-gb-bg-c-10);
+      color: var(--q-gb-t-c-5);
       height: 100%;
       text-align: center;
       line-height: 30px;
       cursor: pointer;
       padding: 0 10px;
       &.active {
-        border: 1px solid var(--q-bet-record-color-27);
+        border: 1px solid var(--q-gb-bd-c-7);
         border-bottom: none;
         background: var(--q-bet-record-color-23);
         color: var(--q-bet-record-color-28);
@@ -130,14 +130,14 @@ const toolClicked = (f) => {
   .bet-desc {
     display: flex;
     align-items: center;
-    color: var(--q-bet-record-color-28);
+    color: var(--q-gb-t-c-1);
     /**文字前面的点*/
     .point {
       margin-right: 5px;
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background-color: var(--q-bet-record-color-28);
+      background-color: var(--q-bet-record-color-0);
     }
   }
 }

@@ -1,0 +1,215 @@
+.search-header {
+    // background: var(--qq--y0-bg-color1);
+    color: var(--qq--yb-text-color3);
+    .wrap-select {
+      .label {
+        color: var(--qq--yb-text-color3);
+      }
+      .e-select {
+        .select-value {
+          color: var(--qq--yb-text-color3);
+        //   background-color: var(--qq--yb-bg-color5);
+          border: 1px solid var(--qq--yb-border-color10);
+          border-radius: 2px;
+          &:hover {
+            border: 1px solid var(--qq--y0-text-color1);
+            .q-icon {
+              color: var(--qq--y0-text-color1);
+            }
+          }
+        }
+        .opitons-wrap {
+          border-color: var(--qq--y0-text-color0);
+          background: var(--qq--y0-bg-color2);
+          .rule-scroll-area {
+            .item {
+              color: var(--qq--theme-color-rule-area);
+              border-color: var(--qq--y0-text-color0);
+              &:hover {
+                background: var(--qq--y0-bg-color13);
+                
+              }
+            }
+            .active {
+              background: var(--qq--y0-bg-color13);
+            }
+          }
+        }
+      }
+    }
+    .wrap-handel {
+      // 联赛选择框
+      .y-select {
+        .y-field-control {
+          color: var(--qq--yb-text-color3);
+          border: 1px solid var(--qq--yb-border-color10);
+        //   background-color: var(--qq--yb-bg-color5);
+          &:hover {
+            border: 1px solid var(--qq--y0-text-color1);
+            color: var(--qq--y0-text-color9);
+            .q-icon {
+              color: var(--qq--y0-text-color1) !important;
+            }
+          }
+        }
+        .select-content {
+          background: var(--qq--yb-bg-color5);
+          color: var(--qq--y0-text-color5);
+          .top-btn {
+            color: var(--qq--y0-text-color5);
+            border-color: var(--qq--theme-bd-top-btn);
+            border-bottom: 1 solid var(--qq--theme-bd-top-bt-btn);
+            position: relative;
+            .checkbox span {
+                color: var(--qq--y0-text-color5);
+            }
+            &:after {
+              content: '';
+              display: inline-block;
+              width: 100%;
+              height: 1px;
+              background: var(--qq--yb-border-color1);
+              position: absolute;
+              bottom: 0;
+              left: 0;
+            }
+            .btn-item  {
+              .radio-checked {
+                // background-image: none;
+                border: var(--qq--theme-bd-r-checked);
+                border-radius: 50%;
+              }
+            }
+          }
+          .y-checkbox {
+            // background-image: none;
+            border: var(--qq--theme-bd-y-checkbox);
+            border-radius: 2px;
+          }
+          .q-scrollarea {
+            border-left: var(--qq--theme-bd-scrollarea);
+            border-right: var(--qq--theme-bd-scrollarea);
+          }
+          .wrap-item {
+            // border: none;
+            &:hover {
+              background: rgba(86,159,253, 0.3);
+            }
+            .select-item {
+              color: var(--qq--yb-text-active-color1);
+            }
+          }
+          .btn-confrim {
+            border: 1px solid var(--qq--theme-bd-btn-confrim);
+            border-top: 1px solid var(--qq--theme-bd-top-btn-confrim);
+            background: var(--qq--y0-bg-color2);
+            color: var(--qq--yb-text-color28);
+            .cancel {
+              border-color: var(--qq--yb-border-color1);
+            }
+          }
+        }
+      }
+      // 赛事搜索框
+      .search {
+        .ipt {
+          border-color: var(--qq--yb-border-color10) !important;
+          background-color: var(--qq--yb-bg-color5) !important;
+          &:hover,
+          &:focus {
+            border-color: var(--qq--y0-text-color1) !important;
+          }
+        }
+      }
+      // 滚球
+      .checkbox {
+        span {
+          color: #999;
+        }
+        .check-wrap {
+          background:#fff ; // var(--qq--bg-check-wrap)
+          border: 1px solid  #d1d5d8 ; //var(--qq--bd-check-wrap)
+          &:hover {
+            border-color: var(--qq--y0-text-color1) !important;
+          }
+          &.active {
+            background-color: var(--qq--y0-text-color1);
+            border: none;
+            &:before {
+              border-color: #ffffff;
+            }
+          }
+        }
+      }
+      // 搜索按钮
+      .search-btn {
+        background: var(--qq--theme-bg-results-search-btn);
+        color: var(--qq--color-result-btn-page);
+        &:hover {
+          background: var(--qq--y0-btn-hover);
+        }
+      }
+    }
+    // 日期选择框
+    .search-date-wrapper {
+      .date-picker-wrap {
+        .q-date {
+          background: var(--qq--y0-bg-color2);
+        //   color: var(--qq--yb-text-color2);
+          border: 1px solid var(--qq--y0-text-color0);
+          .q-btn--unelevated {
+            background: var(--qq--y0-btn-hover) !important;
+          }
+          .q-date__range-from,
+          .q-date__range,
+          .q-date__range-to {
+            &::before {
+              background-color: var(--qq--y0-btn-hover);
+              opacity: 0.15;
+            }
+            .q-date__range {
+              button.text-white {
+                color: var(--qq--yb-bg-color13) !important;
+              }
+            }
+          }
+          .q-date__edit-range-from,
+          .q-date__edit-range-to,
+          .q-date__edit-range,
+          .q-date__edit-range-from-to {
+            color: var(--qq--y0-text-color1) !important;
+            button {
+              color: var(--qq--y0-text-color1) !important;
+            }
+          }
+          .q-date__edit-range,
+          .q-date__edit-range-to {
+            button.text-white {
+              color: var(--qq--yb-text-active-color1) !important;
+            }
+          }
+        }
+        // .q-date__calendar-days {
+        //   color: #fff;
+        // }
+      }
+      .date-wrap {
+        border: 1px solid var(--qq--yb-border-color10);
+        // background-color: var(--qq--yb-bg-color5);
+        &:hover {
+          border: 1px solid var(--qq--y0-text-color1);
+          color: var(--qq--yb-text-color3);
+          .icon-calendar {
+            &:before {
+              color: var(--qq--y0-text-color1);
+            }
+          }
+        }
+        .icon-calendar {
+          &:before {
+            color: var(--qq--yb-text-color3);
+          }
+        }
+      }
+    }
+  }

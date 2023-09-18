@@ -45,7 +45,7 @@ const thumbStyle = ref({
   top: 0.45rem;
   display: flex;
   flex-direction: column;
-  background: var(--q-color-page-bg-color-1);
+  background: var(--q-gb-bd-c-9);
 }
 
 .top {

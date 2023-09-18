@@ -11,7 +11,10 @@
         <activityIcon />
 
         <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
-
+          <template #menu-right>
+            <activityIcon />
+            <setMenu />
+          </template>
         </MenuWapper>
         <router-view />
         <betMixBox />
@@ -29,7 +32,7 @@
           <settle-dialog></settle-dialog>
         </div>
         <!-- 吐司提示框 v-if="toast_show" -->
-      <toast></toast>
+        <toast></toast>
       </q-page-container>
     </q-layout>
   </div>
@@ -47,7 +50,8 @@ import {
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
-console.error(MenuWapper)
+import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
+import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
 
 
 

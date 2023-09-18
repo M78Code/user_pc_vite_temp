@@ -146,7 +146,7 @@ export default {
             width: 90%;
             text-align: center;
             height: 0.03rem;
-            background-color: var(--q-color-page-bg-color-50);
+            background-color: var(--q-gb-bd-c-13);
             border-radius: 0.08rem;
           }
         }
