@@ -172,7 +172,7 @@ export default defineComponent({
 
     .msg_text {
       background-color: var(--q-color-com-bg-color-24) !important;
-      color: var(--q-color-com-fs-color-8) !important;
+      color: var(--q-gb-bd-c-2) !important;
 
       &::before {
         border-width: 0rem;

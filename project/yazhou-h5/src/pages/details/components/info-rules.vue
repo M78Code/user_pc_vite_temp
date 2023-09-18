@@ -132,7 +132,7 @@ export default defineComponent({
 <style lang="scss">
 /*************** 矩形叶开始 *************** -S*/
 .rules-wet {
-  color: var(--q-color-com-fs-color-8);
+  color: var(--q-gb-bd-c-2);
   text-align: center;
   display: inline-block;
   width: 0.16rem;

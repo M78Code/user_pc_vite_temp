@@ -73,7 +73,7 @@ const set_search_status = (data) => store.dispatch({ type: 'set_search_status', 
 
         &:hover {
             background-color: var(--q-header-search-color-1);
-            color: var(--q-header-search-color-4);
+            color: var(--q-gb-t-c-16);
         }
     }
 }

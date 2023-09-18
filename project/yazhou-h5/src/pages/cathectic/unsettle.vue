@@ -9,7 +9,7 @@
     <scroll ref="myScroll" :on-pull="onPull" v-else>
       <template v-if="no_data">
         <div class="filter-button" v-if="UserCtr.user_info.settleSwitch == 1">
-          <!-- 提前结算筛选按钮 -->
+          <!-- 提前结算筛选按钮 TODO: 主题色背景图 -->
           <i class="yb_fontsize12" @click.stop="change_early" :class="{'select':is_early}">
             {{ i18n_t('early.btn2') }}<i class="early yb_ml4" :class="{'early2': is_early}"></i>
           </i>
@@ -364,7 +364,7 @@ import store from 'src/store-redux/index.js'
     right: 0;
     top: 0.15rem;
     .select {
-      color: var(--q-cathectic-color-5);
+      color: var(--q-gb-t-c-12);
     }
   }
   /**订单标题*/

@@ -356,7 +356,7 @@ const normal_ = computed(() => {
 
       .counting {
         // color: var(--q-color-com-fs-color-38);
-        color: var(--q-color-com-fs-color-8);
+        color: var(--q-gb-bd-c-2);
         margin-left: 0.05rem;
       }
 
@@ -376,7 +376,7 @@ const normal_ = computed(() => {
     }
 
     :deep(.special) {
-      color: var(--q-color-com-fs-color-8);
+      color: var(--q-gb-bd-c-2);
       padding-top: 1px;
     }
   }

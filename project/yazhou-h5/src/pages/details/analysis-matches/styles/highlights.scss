@@ -257,7 +257,7 @@
               width: 6.57rem;
               padding-right: .5rem;
               gap: .04rem;
-              color: var(--q-color-com-fs-color-8);
+              color: var(--q-gb-bd-c-2);
               transform: translate3d(100vw, 0, 0);
               transition: transform .2s ease-out;
               overflow-x: auto;
@@ -383,7 +383,7 @@
           position: absolute;
           width: calc(100% - 0.1rem);
           height: 1.85rem;
-          color: var(--q-color-com-fs-color-8);
+          color: var(--q-gb-bd-c-2);
         }
   
         .event-title-wrapper {
@@ -391,7 +391,7 @@
           top: 0;
           width: calc(100% - 0.1rem);
           height: 0.44rem;
-          color: var(--q-color-com-fs-color-8);
+          color: var(--q-gb-bd-c-2);
           z-index: 9;
           box-shadow: var(--q-color-com-box-shadow-11);
           &.is-full-screen {
@@ -402,14 +402,14 @@
           position: absolute;
           top: .08rem;
           left: .24rem;
-          color: var(--q-color-com-fs-color-8);
+          color: var(--q-gb-bd-c-2);
           font-size: .12rem;
         }
         .home-away-score-wrapper {
           position: absolute;
           top: .08rem;
           right: .14rem;
-          color: var(--q-color-com-fs-color-8);
+          color: var(--q-gb-bd-c-2);
           font-size: .12rem;
           display: flex;
           align-items: center;
