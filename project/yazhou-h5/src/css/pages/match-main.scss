@@ -1,11 +1,11 @@
 [class*=theme0] {
   .match-list-container,
   .loading-more-container {
-    background: var(--q-gb-bd-c-9);
+    background: var(--q-gb-bg-c-17);
     .scroll-wrapper {
-      background: var(--q-gb-bd-c-9);
+      background: var(--q-gb-bg-c-17);
       .s-w-item {
-        background: var(--q-gb-bd-c-9);
+        background: var(--q-gb-bg-c-17);
       }
       .match-container {
         // .odd-list.match-indent.simple {
@@ -39,7 +39,7 @@
           }
         }
         .match-inner-container {
-          background: var(--q-gb-bd-c-9);
+          background: var(--q-gb-bg-c-17);
           .odd-item-wrap-borer-top {
             background-color: var(--q-color-border-color-11);
           }
@@ -56,7 +56,7 @@
             color: var(--q-color-fs-color-33);
           }
           .m-o-p-wrapper {
-             background:var(--q-color-page-bg-color-95);
+             background:var(--q-gb-bg-c-15);
             .odd-list-wrap {
               .odd-list-container {
                 background-color: var(--q-color-page-bg-color-9);
@@ -79,7 +79,7 @@
               //border-top: 0.01rem solid var(--q-color-border-color-1);
             }
             .team-t-title-w {
-              color: var(--q-gb-t-c-4);
+              color: var(--q-match-fs-color-1);
             }
             .odd-wrap-min {
               background-color: var(--q-color-page-bg-color-9);
@@ -98,7 +98,7 @@
                   color: var(--q-match-fs-color-154);
                 }
                 .odd-value {
-                  color: var(--q-gb-t-c-4);
+                  color: var(--q-match-fs-color-1);
                   &.orange {
                     color: var(--q-color-com-fs-color-18);
                   }
@@ -149,7 +149,7 @@
           }
         }
         .date-container {
-           background:var(--q-color-page-bg-color-95);
+           background:var(--q-gb-bg-c-15);
           &.simple {
             .title-space-1 {
               color: var(--q-match-fs-color-137);
@@ -190,7 +190,7 @@
               }
               &.esports {
                 .date-time {
-                  color: var(--q-gb-t-c-4);
+                  color: var(--q-match-fs-color-1);
                 }
               }
             }
@@ -225,7 +225,7 @@
                   color:var(--q-match-fs-color-127);
                 }
                 .score-l-total2 {
-                  color: var(--q-gb-t-c-4) !important;
+                  color: var(--q-match-fs-color-1) !important;
                 }
               }
             }
@@ -237,26 +237,26 @@
           }
         }
         .odd-list {
-           background:var(--q-color-page-bg-color-95);;
+           background:var(--q-gb-bg-c-15);;
           &.result {
             border-color: var(--q-gb-bd-c-3);
           }
           .team-title-container {
             .team-t-title-w {
-              color: var(--q-gb-t-c-4);
+              color: var(--q-match-fs-color-1);
               &.name {
-                color: var(--q-gb-t-c-4);
+                color: var(--q-match-fs-color-1);
                 font-size: 0.12rem !important;
               }
               &.is-handicap {
                 color: var(--q-color-fs-color-31);
               }
               &.is-handicap-1 {
-                color: var(--q-gb-t-c-4);
+                color: var(--q-match-fs-color-1);
               }
             }
             .score {
-              color: var(--q-gb-t-c-4);
+              color: var(--q-match-fs-color-1);
             }
           }
           // .serving-party {
@@ -293,7 +293,7 @@
                   color: var(--q-match-fs-color-13);
                 }
                 .odd-value {
-                  color: var(--q-gb-t-c-4);
+                  color: var(--q-match-fs-color-1);
                   &.orange {
                     color: var(--q-color-com-fs-color-18);
                   }
@@ -352,7 +352,7 @@
               color: var(--q-match-fs-color-154);
             }
             .odd-value {
-              color: var(--q-gb-t-c-4);
+              color: var(--q-match-fs-color-1);
               &.orange {
                 color: var(--q-color-com-fs-color-18);
               }
@@ -429,12 +429,12 @@
         }
         .team-title-container {
           .team-t-title-w {
-            color: var(--q-gb-t-c-4);
+            color: var(--q-match-fs-color-1);
             &.is-handicap {
               color: var(--q-color-fs-color-31);
             }
             &.is-handicap-1 {
-              color: var(--q-gb-t-c-4);
+              color: var(--q-match-fs-color-1);
             }
             &.fight-type {
               color:var(--q-match-fs-color-127);

@@ -1,7 +1,7 @@
 /* **************主菜单容器********************************** -S*/
 .main-wrap {
     color: var(--q-color-fs-color-7);
-    background: var(--q-color-page-bg-color-95);
+    background: var(--q-gb-bg-c-15);
     .goback-icon-wrapper {
         [class*=theme0] {
             display: block;
@@ -19,7 +19,7 @@
     }
 
     .main-menu-container {
-        background: var(--q-color-page-bg-color-95);
+        background: var(--q-gb-bg-c-15);
 
         .cursor {
             background: var(--q-color-page-bg-color-50);
@@ -78,7 +78,7 @@
 }
 
 .sport-m-container {
-    background: var(--q-color-page-bg-color-95);
+    background: var(--q-gb-bg-c-15);
 
     .virtual-sports-results {
         background-color: var(--q-color-page-bg-color-2);
@@ -163,7 +163,7 @@
     backdrop-filter: var(--q-color-backdrop-filter-bg-1);
 
     .selector-w-inner {
-        background: var(--q-color-page-bg-color-95);
+        background: var(--q-gb-bg-c-15);
         backdrop-filter: blur(5px);
 
         &.hairline-border {

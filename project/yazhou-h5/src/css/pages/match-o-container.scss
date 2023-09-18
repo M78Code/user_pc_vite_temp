@@ -20,21 +20,21 @@
         background-color: var(--q-color-page-bg-color-2);
       }
       .team-title {
-        color: var(--q-gb-t-c-4);
+        color: var(--q-match-fs-color-1);
       }
       .match-time,
       .match-type {
-        color: var(--q-gb-t-c-4);
+        color: var(--q-match-fs-color-1);
       }
       .t-score {
-        color: var(--q-gb-t-c-4);
+        color: var(--q-match-fs-color-1);
         &.winner {
           color:var(--q-color-fs-color-50);
         }
       }
       .data-title-w,
       .data-item-w {
-        color: var(--q-gb-t-c-4);
+        color: var(--q-match-fs-color-1);
       }
       .data-title-w {
         border-bottom: 0.01rem solid var(--q-color-border-color-1);
@@ -44,9 +44,9 @@
           border-bottom: 0.01rem solid var(--q-color-border-color-1);
         }
         .date-number {
-          color: var(--q-gb-t-c-4);
+          color: var(--q-match-fs-color-1);
           &:first-child {
-            color: var(--q-gb-t-c-4);
+            color: var(--q-match-fs-color-1);
           }
         }
       }

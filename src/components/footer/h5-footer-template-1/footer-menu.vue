@@ -4,143 +4,76 @@
  * @Description: 赛事列表页 底部菜单
 -->
 <template>
-  <div
-    class="container-menu-w"
-    :class="{
-      black2: UserCtr.theme.includes('theme02'),
-      'scrolling-up': scroll_dir > 0,
-      'scrolling-down': scroll_dir < 0,
-    }"
-  >
+  <div class="container-menu-w" :class="{
+    black2: UserCtr.theme.includes('theme02'),
+    'scrolling-up': scroll_dir > 0,
+    'scrolling-down': scroll_dir < 0,
+  }">
     <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar>
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
-      <img
-        :src="calc_resources_obj.img_src"
-        alt=""
-        class="banner"
-        @click="jump"
-      />
-      <img
-        src="image/wwwassets/bw3/svg/close9.svg"
-        alt=""
-        class="close"
-        @click.self="close_banner"
-      />
+      <img :src="calc_resources_obj.img_src" alt="" class="banner" @click="jump" />
+      <img src="/yazhou-h5/image/svg/close9.svg" alt="" class="close" @click.self="close_banner" />
     </div>
     <div class="floating-menu">
-      <div
-        class="footer-menu-item"
-        @click="menu_item_click(item, k)"
-        v-for="(item, k) of footer_menulist"
-        :key="k"
-        v-show="bottom_option_show(item)"
-        :class="{
+      <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
+        v-show="bottom_option_show(item)" ::class="{
           'f-disabled-m': k == 0 && menu_type == 100,
           'sub-menu-first': k == 0,
-          'is-hidden':
-            (is_sub_first_hidden && k == 0) ||
-            (!lodash.get(get_access_config, 'collectSwitch') && item.id == 1) ||
-            (!lodash.get(get_access_config, 'filterSwitch') &&
-              !lodash.get(get_access_config, 'searchSwitch') &&
-              item.id == 3),
+          'is-hidden': get_is_hidden(item, k),
           'effect-show': is_sub_first_effect && k == 0,
           disabled: item.is_disabled,
           'is-follow': footerMenuReducer.show_favorite_list && item.id == 1,
-        }"
-      >
+        }">
         <div class="m-item-inner">
-          <div
-            class="item-img-wrapper"
-            :class="{
-              effected: item.id == 4 && is_effecting_ref,
-              'rotate-clock-wise': is_refreshing,
-            }"
-          >
-            <span
-              class="menu-item-img"
-              :class="[
-                item.icon.slice(0, -4),
-                menu_item_img(item),
-                lodash.get(get_user, 'favoriteButton') ? 'favoriteButton' : '',
-              ]"
-            ></span>
+          <div class="item-img-wrapper" :class="{
+            effected: item.id == 4 && is_effecting_ref,
+            'rotate-clock-wise': is_refreshing,
+          }">
+            <span class="menu-item-img" :class="[
+              item.icon.slice(0, -4),
+              menu_item_img(item),
+              lodash.get(get_user, 'favoriteButton') ? 'favoriteButton' : '',
+            ]" :style="compute_css('foot-menu-icon', 0)"></span>
           </div>
-          <div
-            class="menu-item-title"
-            :class="{
-              'theme02-focus':
-                footerMenuReducer.show_favorite_list &&
-                UserCtr.theme.includes('theme02') &&
-                item.id == 1,
-            }"
-            v-show="item.id != 5"
-          >
+          <div class="menu-item-title" :class="{
+            'theme02-focus':
+              footerMenuReducer.show_favorite_list &&
+              UserCtr.theme.includes('theme02') &&
+              item.id == 1,
+          }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
               {{ item.title }}
             </span>
-            <span
-              v-if="item.title1"
-              :class="item.title1 ? 'title-p2' : 'title-p1'"
-            >
+            <span v-if="item.title1" :class="item.title1 ? 'title-p2' : 'title-p1'">
               {{ item.title1 }}
             </span>
           </div>
-          <img
-            v-if="item.id == 0 && UserCtr.theme.includes('y0')"
-            class="play-w-change-icon"
-            src="image/wwwassets/bw3/common/f-icon-pay-change-y0.svg"
-          />
-          <img
-            v-else-if="item.id == 0"
-            class="play-w-change-icon"
-            src="image/wwwassets/bw3/common/f-icon-pay-change.svg"
-          />
+          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')" ></div>
         </div>
       </div>
     </div>
 
     <!--玩法菜单-->
-    <div
-      class="sub-background"
-      v-if="sub_menu_l_show"
-      :class="{ 'show-slow': sub_menu_l_show_slow }"
-      @touchstart.prevent="hide_sub_menu_l_p"
-      @click="hide_sub_menu_l_p"
-    >
-      <div
-        class="sub-m-menu flex justify-around items-center"
-        @click.stop=""
-        :class="{ 'show-slow': sub_menu_l_show_slow }"
-      >
-        <div
-          v-for="(sub_m, sub_i) of footer_sub_m_list"
-          :key="sub_i"
-          @touchstart.prevent.stop="sub_menu_changed(sub_m, sub_i)"
-          class="wrapper column justify-center items-center"
-          v-show="
-            (menu_h5_data.get_current_sub_menuid() == 5 || sub_m.id != 114) &&
+    <div class="sub-background" v-if="sub_menu_l_show" :class="{ 'show-slow': sub_menu_l_show_slow }"
+      @touchstart.prevent="hide_sub_menu_l_p" @click="hide_sub_menu_l_p">
+      <div class="sub-m-menu flex justify-around items-center" @click.stop=""
+        :class="{ 'show-slow': sub_menu_l_show_slow }">
+        <div v-for="(sub_m, sub_i) of footer_sub_m_list" :key="sub_i"
+          @touchstart.prevent.stop="sub_menu_changed(sub_m, sub_i)" class="wrapper column justify-center items-center"
+          v-show="(MenuData.get_current_sub_menuid() == 5 || sub_m.id != 114) &&
             !([8, 7].includes(menu_type) && sub_m.id == 114) &&
             !(get_sport_all_selected && sub_m.id == 114)
-          "
-          :data-sid="sub_m.id"
-          :data-mtype="menu_h5_data.get_current_sub_menuid()"
-          :data-cmtype="menu_type"
-          :class="{
-            current_sub_menu: sub_i == sub_footer_menu_i,
-            'is-favorite': footerMenuReducer.show_favorite_list,
-            'no-display':
-              menu_h5_data.get_current_sub_menuid() == 44 && sub_m.id == 4,
-          }"
-        >
+            " :data-sid="sub_m.id" :data-mtype="MenuData.get_current_sub_menuid()" :data-cmtype="menu_type" :class="{
+    current_sub_menu: sub_i == sub_footer_menu_i,
+    'is-favorite': footerMenuReducer.show_favorite_list,
+    'no-display':
+      MenuData.get_current_sub_menuid() == 44 && sub_m.id == 4,
+  }">
           <div class="wrapper-inner column items-center justify-center">
-            <div
-              class="play-icon-wrap relative-position"
-              :class="sub_m.icon"
-            ></div>
+            <div class="play-icon-wrap relative-position" :class="sub_m.icon"></div>
             <div class="title-contain relative-position row">
-              <span>{{ sub_m.title }}</span
-              >&nbsp;<span class="title0">{{ sub_m.title1 }}</span>
+              <span>{{ sub_m.title }}</span>&nbsp;<span class="title0">{{ sub_m.title1 }}</span>
             </div>
           </div>
         </div>
@@ -151,25 +84,20 @@
 
 <script setup>
 // TODO: 后续修改调整
-// import { mapGetters, mapMutations} from "vuex";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
 // import common from "project_path/project/mixins/constant";
 // import betBar from 'src/components/bet/bet-bar.vue';  // 投注栏收起后的底部条
 import { utils, SessionStorage } from "src/core/index.js";
 import { ref, computed, onBeforeUnmount, onMounted, watch } from "vue";
-import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/";
 import lodash from "lodash";
 import { useRoute, useRouter } from "vue-router";
 import store from "src/store-redux/index.js";
-import { UserCtr } from "src/core/index.js";
+import { UserCtr, i18n_t, compute_css, useMittOn, useMittEmit, MITT_TYPES, MenuData } from "src/core/index.js";
 import BetDataCtr from "src/core/bet/class/bet-data-class-h5.js";
-import { i18n_t } from "src/boot/i18n.js";
-import menu_h5_data from "src/core/menu-h5/menu-data-class.js";
 
 const { topMenuReducer, matchReducer, footerMenuReducer } = store.getState();
-// import { Platform } from 'quasar'
-const { menu_type, update_time, get_sport_all_selected } = menu_h5_data;
-// mixins:[common],
+const { menu_type, update_time, get_sport_all_selected } = MenuData;
+
 const is_effecting_ref = ref(true);
 const is_refreshing = ref(false);
 // 子菜单是否显示
@@ -227,7 +155,16 @@ const timer_super10 = ref(null);
 // 路由
 const route = useRoute();
 const router = useRouter();
-
+/**
+ * 是否显示菜单
+*/
+function get_is_hidden(item, k) {
+  return (is_sub_first_hidden.value && k == 0) ||
+    (!GlobalAccessConfig.get_collectSwitch() && item.id == 1) ||
+    (!GlobalAccessConfig.get_filterSwitch() &&
+      !GlobalAccessConfig.get_searchSwitch() &&
+      item.id == 3)
+}
 onMounted(() => {
   set_footer_menulist();
   // set_show_match_filter(false)
@@ -380,7 +317,7 @@ const sub_menu_changed = (sub_menu, i) => {
   // TODO:后续修改调整
   SessionStorage.set(prev_floating_sub, i);
   // 非足球选择角球时,选中独赢
-  const sub_menu_id = menu_h5_data.get_current_sub_menuid();
+  const sub_menu_id = MenuData.get_current_sub_menuid();
 
   if (
     (sub_menu_id != 5 && sub_menu?.id == 114) ||
@@ -442,7 +379,7 @@ const menu_item_click = (item, i) => {
   if (item.id === 0) {
     //赛马,摩托车,泥地摩托车不能切换玩法
     if (
-      [1002, 1011, 1010, 1009].includes(menu_h5_data.get_current_sub_menuid())
+      [1002, 1011, 1010, 1009].includes(MenuData.get_current_sub_menuid())
     ) {
       return;
     }
@@ -523,7 +460,7 @@ const virtual_disable_follow_filter = () => {
   if (28 == menu_type.value) {
     footer_menulist.value.forEach((f_m) => {
       // 赛果 二级菜单 10000也不知道是什么
-      if (f_m.id == 3 && menu_h5_data.get_current_sub_menuid() == 10000) {
+      if (f_m.id == 3 && MenuData.get_current_sub_menuid() == 10000) {
         f_m.is_disabled = true;
       } else {
         f_m.is_disabled = false;
@@ -534,7 +471,7 @@ const virtual_disable_follow_filter = () => {
       }
     });
     //是赛果 并且是虚拟体育  暂时注释代码
-    if (menu_h5_data.is_results_virtual_sports()) {
+    if (MenuData.is_results_virtual_sports()) {
       footer_menulist.value.forEach((f_m) => {
         if (f_m.id == 1) {
           f_m.is_disabled = true;
@@ -542,7 +479,7 @@ const virtual_disable_follow_filter = () => {
       });
     }
     // 赛果 二级菜单 100是 gz/国足?
-    if ([100].includes(menu_h5_data.get_current_sub_menuid())) {
+    if ([100].includes(MenuData.get_current_sub_menuid())) {
       footer_menulist.value.forEach((f_m) => {
         if (f_m.id == 3) {
           f_m.is_disabled = true;
@@ -555,7 +492,7 @@ const virtual_disable_follow_filter = () => {
       if (
         f_m.id === 1 &&
         menu_type.value === 7 &&
-        lodash.get(menu_h5_data.current_lv_2_menu, "date_menu.menuType") == 100
+        lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100
       ) {
         f_m.is_disabled = true;
       } else {
@@ -579,12 +516,12 @@ const virtual_disable_follow_filter = () => {
  *@param init_footer_menulist_data 是否重置footer_menulist数据
  */
 const set_footer_menulist = (init_footer_menulist_data = true) => {
-  let is_virtual = menu_h5_data.is_virtual_sport(); //虚拟体育
+  let is_virtual = MenuData.is_virtual_sport(); //虚拟体育
   // 赛果虚拟体育
-  let is_result_virtual = menu_h5_data.is_results_virtual_sports();
+  let is_result_virtual = MenuData.is_results_virtual_sports();
   let is_saiguo_gz =
     menu_type.value == 28 &&
-    [100].includes(menu_h5_data.get_current_sub_menuid());
+    [100].includes(MenuData.get_current_sub_menuid());
   let is_electronicSports = menu_type.value == 7; // 电竞
   if (init_footer_menulist_data) {
     footer_menulist.value = [
@@ -707,7 +644,7 @@ const bottom_option_show = computed(() => {
   return function (item) {
     return !(
       menu_type.value == 7 &&
-      lodash.get(menu_h5_data.current_lv_2_menu, "date_menu.menuType") == 100 &&
+      lodash.get(MenuData.current_lv_2_menu, "date_menu.menuType") == 100 &&
       item.id == 0
     );
   };
@@ -855,7 +792,7 @@ watch(
       }
     }
     //以前是二级二级菜单变化执行 =》 其实哪一级菜单变化不执行呢？ 1级变了难道 234级不变？
-    // if (menu_h5_data.current_lv_2_menu_i) {
+    // if (MenuData.current_lv_2_menu_i) {
     init_play_way_selected();
     // 32014 确定每次点击菜单 都重置为独赢
     // if(1 || [1002, 1011, 1010, 1009].includes(+new_v)){
@@ -890,4 +827,5 @@ watch(
 </script>
 <style lang="scss" scoped>
 @import url(./footer.scss);
+@import url(./footer_menu.scss);
 </style>
