@@ -1,37 +1,37 @@
 .search-header {
     // background: var(--qq--y0-bg-color1);
-    color: var(--qq--yb-text-color3);
+    color: var(--q-gb-t-c-18);
     .wrap-select {
       .label {
-        color: var(--qq--yb-text-color3);
+        color: var(--q-gb-t-c-18);
       }
       .e-select {
         .select-value {
-          color: var(--qq--yb-text-color3);
+          color: var(--q-gb-t-c-18);
         //   background-color: var(--qq--yb-bg-color5);
-          border: 1px solid var(--qq--yb-border-color10);
+          border: 1px solid var(--q-match-result-boreder-1);
           border-radius: 2px;
           &:hover {
-            border: 1px solid var(--qq--y0-text-color1);
+            border: 1px solid var(--q-gb-bd-c-13);
             .q-icon {
-              color: var(--qq--y0-text-color1);
+              color: var(--q-gb-t-c-18);
             }
           }
         }
         .opitons-wrap {
-          border-color: var(--qq--y0-text-color0);
-          background: var(--qq--y0-bg-color2);
+          border-color: var(--q-gb-bd-c-11);
+          background: var(--q-gb-bg-c-11);
           .rule-scroll-area {
             .item {
-              color: var(--qq--theme-color-rule-area);
-              border-color: var(--qq--y0-text-color0);
+              color: var(--q-match-result-text-color-4);
+              border-color: var(--q-gb-bd-c-11);
               &:hover {
-                background: var(--qq--y0-bg-color13);
+                background: var(--q-match-result-bg-color-1);
                 
               }
             }
             .active {
-              background: var(--qq--y0-bg-color13);
+              background: var(--q-match-result-bg-color-1);
             }
           }
         }
@@ -41,34 +41,34 @@
       // 联赛选择框
       .y-select {
         .y-field-control {
-          color: var(--qq--yb-text-color3);
-          border: 1px solid var(--qq--yb-border-color10);
+          color: var(--q-gb-t-c-18);
+          border: 1px solid var(--q-match-result-boreder-1);
         //   background-color: var(--qq--yb-bg-color5);
           &:hover {
-            border: 1px solid var(--qq--y0-text-color1);
-            color: var(--qq--y0-text-color9);
+            border: 1px solid var(--q-gb-bd-c-11);
+            color: var(--q-match-result-text-color-5);
             .q-icon {
-              color: var(--qq--y0-text-color1) !important;
+              color: var(--q-gb-t-c-18) !important;
             }
           }
         }
         .select-content {
-          background: var(--qq--yb-bg-color5);
-          color: var(--qq--y0-text-color5);
+          background: var(--q-gb-bg-c-11);
+          color: var(--q-gb-t-c-5);
           .top-btn {
-            color: var(--qq--y0-text-color5);
-            border-color: var(--qq--theme-bd-top-btn);
-            border-bottom: 1 solid var(--qq--theme-bd-top-bt-btn);
+            color: var(--q-gb-t-c-5);
+            border-color: var(--q-match-result-boreder-1);
+            border-bottom: 1 solid var(--q-match-result-boreder-1);
             position: relative;
             .checkbox span {
-                color: var(--qq--y0-text-color5);
+                color: var(--q-gb-t-c-5);
             }
             &:after {
               content: '';
               display: inline-block;
               width: 100%;
               height: 1px;
-              background: var(--qq--yb-border-color1);
+              background: var(--q-match-result-bg-color-1);
               position: absolute;
               bottom: 0;
               left: 0;
@@ -76,19 +76,19 @@
             .btn-item  {
               .radio-checked {
                 // background-image: none;
-                border: var(--qq--theme-bd-r-checked);
+                border: var(--q-match-result-boreder-2);
                 border-radius: 50%;
               }
             }
           }
           .y-checkbox {
             // background-image: none;
-            border: var(--qq--theme-bd-y-checkbox);
+            border: var(--q-match-result-boreder-2);
             border-radius: 2px;
           }
           .q-scrollarea {
-            border-left: var(--qq--theme-bd-scrollarea);
-            border-right: var(--qq--theme-bd-scrollarea);
+            border-left: var(--q-match-result-boreder-2);
+            border-right: var(--q-match-result-boreder-2);
           }
           .wrap-item {
             // border: none;
@@ -96,16 +96,16 @@
               background: rgba(86,159,253, 0.3);
             }
             .select-item {
-              color: var(--qq--yb-text-active-color1);
+              color: var(--q-match-result-text-color-1);
             }
           }
           .btn-confrim {
-            border: 1px solid var(--qq--theme-bd-btn-confrim);
-            border-top: 1px solid var(--qq--theme-bd-top-btn-confrim);
-            background: var(--qq--y0-bg-color2);
-            color: var(--qq--yb-text-color28);
+            border: 1px solid var(--q-match-result-boreder-1);
+            border-top: 1px solid var( --q-match-result-boreder-1-confrim);
+            background: var(--q-gb-bg-c-11);
+            color: var(--q-gb-t-c-4);
             .cancel {
-              border-color: var(--qq--yb-border-color1);
+              border-color: var(--q-match-result-boreder-3);
             }
           }
         }
@@ -113,11 +113,11 @@
       // 赛事搜索框
       .search {
         .ipt {
-          border-color: var(--qq--yb-border-color10) !important;
-          background-color: var(--qq--yb-bg-color5) !important;
+          border-color: var(--q-match-result-boreder-1) !important;
+          background-color: var(--q-gb-bg-c-11) !important;
           &:hover,
           &:focus {
-            border-color: var(--qq--y0-text-color1) !important;
+            border-color: var(--q-gb-bd-c-13) !important;
           }
         }
       }
@@ -130,10 +130,10 @@
           background:#fff ; // var(--qq--bg-check-wrap)
           border: 1px solid  #d1d5d8 ; //var(--qq--bd-check-wrap)
           &:hover {
-            border-color: var(--qq--y0-text-color1) !important;
+            border-color: var(--q-gb-bd-c-13) !important;
           }
           &.active {
-            background-color: var(--qq--y0-text-color1);
+            background-color: var(--q-gb-bg-c-11);
             border: none;
             &:before {
               border-color: #ffffff;
@@ -143,10 +143,10 @@
       }
       // 搜索按钮
       .search-btn {
-        background: var(--qq--theme-bg-results-search-btn);
-        color: var(--qq--color-result-btn-page);
+        background: var(--q-gb-bg-lg-12);
+        color: var(--q-gb-t-c-18);
         &:hover {
-          background: var(--qq--y0-btn-hover);
+          background: var(--q-gb-bg-c-18);
         }
       }
     }
@@ -154,22 +154,22 @@
     .search-date-wrapper {
       .date-picker-wrap {
         .q-date {
-          background: var(--qq--y0-bg-color2);
+          background: var(--q-gb-bg-c-11);
         //   color: var(--qq--yb-text-color2);
-          border: 1px solid var(--qq--y0-text-color0);
+          border: 1px solid var(--q-gb-bd-c-11);
           .q-btn--unelevated {
-            background: var(--qq--y0-btn-hover) !important;
+            background: var(--q-gb-bg-c-18) !important;
           }
           .q-date__range-from,
           .q-date__range,
           .q-date__range-to {
             &::before {
-              background-color: var(--qq--y0-btn-hover);
+              background-color: var(--q-gb-bg-c-18);
               opacity: 0.15;
             }
             .q-date__range {
               button.text-white {
-                color: var(--qq--yb-bg-color13) !important;
+                color: var(--q-gb-t-c-1) !important;
               }
             }
           }
@@ -177,15 +177,15 @@
           .q-date__edit-range-to,
           .q-date__edit-range,
           .q-date__edit-range-from-to {
-            color: var(--qq--y0-text-color1) !important;
+            color: var(--q-gb-t-c-18) !important;
             button {
-              color: var(--qq--y0-text-color1) !important;
+              color: var(--q-gb-t-c-18) !important;
             }
           }
           .q-date__edit-range,
           .q-date__edit-range-to {
             button.text-white {
-              color: var(--qq--yb-text-active-color1) !important;
+              color: var(--q-match-result-text-color-1) !important;
             }
           }
         }
@@ -194,22 +194,75 @@
         // }
       }
       .date-wrap {
-        border: 1px solid var(--qq--yb-border-color10);
-        // background-color: var(--qq--yb-bg-color5);
+        border: 1px solid var(--q-match-result-boreder-1); 
         &:hover {
-          border: 1px solid var(--qq--y0-text-color1);
-          color: var(--qq--yb-text-color3);
+          border: 1px solid var(--q-gb-bd-c-11);
+          color: var(--q-gb-t-c-18);
           .icon-calendar {
             &:before {
-              color: var(--qq--y0-text-color1);
+              color: var(--q-gb-t-c-18)
             }
           }
         }
         .icon-calendar {
           &:before {
-            color: var(--qq--yb-text-color3);
+            color: var(--q-gb-t-c-18);
           }
         }
       }
     }
+      /* ************** 备注说明 *************** -S */
+  .match-resultstips-wrap {
+    min-width: 122px;
+  }
+
+  .match-resultstips-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 14px;
+
+    & > span {
+      display: block;
+      width: 18px;
+      height: 18px;
+      background-image: var(--qq--results-bg-image-url45);//todo `url(${preffix}/image/yabo/theme01/img/svg/result_info.svg)`,
+
+      &:hover {
+        background-image: var(--qq--results-bg-image-url45-hover);//todo `url(${preffix}/image/yabo/theme01/img/svg/result_info_hover.svg)`,
+      }
+    }
+
+    .results-tips {
+      position: absolute;
+      // width: 100vw;
+      text-align: right;
+      top: -38px;
+      left: -100px;
+
+      div {
+        background: #666666;
+        border-radius: 6px;
+        white-space: nowrap;
+        color: #ffffff;
+        padding: 4px 6px;
+        transition: all 0.3s linear;
+      }
+    }
+
+    .match-resultstip-box {
+      position: relative;
+    }
+
+    .results-arrow {
+      position: absolute;
+      bottom: 16px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      border: 7px solid transparent;
+      z-index: 100;
+      transform: rotate(180deg);
+      border-bottom: 7px solid #666666;
+    }
+  }
   }
