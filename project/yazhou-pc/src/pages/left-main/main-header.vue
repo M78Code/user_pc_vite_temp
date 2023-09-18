@@ -15,7 +15,7 @@
           {{ format_balance(UserCtr.balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->
-        <icon-wapper class="icon balance-btn-eye cursor-pointer" @click="UserCtr.set_show_balance(!UserCtr.show_balance)" :name="UserCtr.show_balance ? 'icon-eye_show' : 'icon-eye_hide'" size="14px" />
+        <icon-wapper class="icon balance-btn-eye cursor-pointer" name="icon-eye_show" size="14px" />
       </div>
       <!-- 刷新余额按钮 -->
       <refresh-balance

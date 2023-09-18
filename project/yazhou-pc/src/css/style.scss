@@ -1,0 +1,817 @@
+@import "variables";
+
+@font-face {
+  font-family: 'q_yazhou_pc';
+  src:
+    url('./font/icomoon.woff2?kc1pcm') format('woff2'),
+    url('./font/icomoon.ttf?kc1pcm') format('truetype'),
+    url('./font/icomoon.woff?kc1pcm') format('woff'),
+    url('./font/icomoon.svg?kc1pcm#q_yazhou_pc') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'q_yazhou_pc' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-delete {
+  &:before {
+    content: $icon-delete;     
+    color: #999;
+  }
+}
+.icon-arrow {
+  &:before {
+    content: $icon-arrow;     
+    color: #2cb2ff;
+  }
+}
+.icon-neutral .path1 {
+  &:before {
+    content: $icon-neutral-path1;  
+    color: rgb(81, 183, 181);
+  }
+}
+.icon-neutral .path2 {
+  &:before {
+    content: $icon-neutral-path2;  
+    margin-left: -1em;  
+    color: rgb(255, 255, 255);
+  }
+}
+.icon-sort_settle_time {
+  &:before {
+    content: $icon-sort_settle_time;     
+    color: #c1c4c7;
+  }
+}
+.icon-sort_match_time {
+  &:before {
+    content: $icon-sort_match_time;     
+    color: #c1c4c7;
+  }
+}
+.icon-sort_bet_time {
+  &:before {
+    content: $icon-sort_bet_time;     
+    color: #c1c4c7;
+  }
+}
+.icon-bet_pre {
+  &:before {
+    content: $icon-bet_pre;     
+    // color: #5a6074;
+  }
+}
+.icon-balance_refresh .path1 {
+  &:before {
+    content: $icon-balance_refresh-path1;  
+    color: rgb(216, 216, 216);  
+    opacity: 0.0500;
+  }
+}
+.icon-balance_refresh .path2 {
+  &:before {
+    content: $icon-balance_refresh-path2;  
+    margin-left: -1em;  
+    color: rgb(153, 153, 153);
+  }
+}
+.icon-balance_refresh .path3 {
+  &:before {
+    content: $icon-balance_refresh-path3;  
+    margin-left: -1em;  
+    color: rgb(153, 153, 153);
+  }
+}
+.icon-eye_hide2 {
+  &:before {
+    content: $icon-eye_hide2;     
+    color: #999;
+  }
+}
+.icon-menu_show_normal {
+  &:before {
+    content: $icon-menu_show_normal;     
+    color: #999;
+  }
+}
+.icon-play {
+  &:before {
+    content: $icon-play; 
+  }
+}
+.icon-timer {
+  &:before {
+    content: $icon-timer;     
+    color: #fa6400;
+  }
+}
+.icon-whistle {
+  &:before {
+    content: $icon-whistle;     
+    color: #99a3b1;
+  }
+}
+.icon-match_over {
+  &:before {
+    content: $icon-match_over;     
+    color: #6d7278;
+  }
+}
+.icon-match_pause .path1 {
+  &:before {
+    content: $icon-match_pause-path1;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-match_pause .path2 {
+  &:before {
+    content: $icon-match_pause-path2;  
+    margin-left: -1.0478515625em;  
+    color: rgb(255, 42, 42);
+  }
+}
+.icon-match_pause .path3 {
+  &:before {
+    content: $icon-match_pause-path3;  
+    margin-left: -1.0478515625em;  
+    color: rgb(255, 42, 42);
+  }
+}
+.icon-match_playing .path1 {
+  &:before {
+    content: $icon-match_playing-path1;  
+    color: rgb(109, 212, 0);
+  }
+}
+.icon-match_playing .path2 {
+  &:before {
+    content: $icon-match_playing-path2;  
+    margin-left: -1.0478515625em;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-cup_day {
+  &:before {
+    content: $icon-cup_day;     
+    color: #d1d1d1;
+  }
+}
+.icon-cup_night {
+  &:before {
+    content: $icon-cup_night; 
+  }
+}
+.icon-triangle_solid {
+  &:before {
+    content: $icon-triangle_solid; 
+  }
+}
+.icon-radio-checked {
+  &:before {
+    content: $icon-radio-checked; 
+  }
+}
+.icon-checkbox {
+  &:before {
+    content: $icon-checkbox; 
+  }
+}
+.icon-checkbox-checked .path1 {
+  &:before {
+    content: $icon-checkbox-checked-path1;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-checkbox-checked .path2 {
+  &:before {
+    content: $icon-checkbox-checked-path2;  
+    margin-left: -1em;  
+    color: rgb(255, 255, 255);
+  }
+}
+.icon-radio {
+  &:before {
+    content: $icon-radio; 
+  }
+}
+.icon-lock {
+  &:before {
+    content: $icon-lock;     
+    color: #bcbcbe;
+  }
+}
+.icon-rs_huang {
+  &:before {
+    content: $icon-rs_huang;     
+    color: #ffb001;
+  }
+}
+.icon-on_base3 {
+  &:before {
+    content: $icon-on_base3;     
+    color: #ffb001;
+  }
+}
+.icon-on_base0 {
+  &:before {
+    content: $icon-on_base0;     
+    color: #5a6074;
+  }
+}
+.icon-on_base1 .path1 {
+  &:before {
+    content: $icon-on_base1-path1;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-on_base1 .path2 {
+  &:before {
+    content: $icon-on_base1-path2;  
+    margin-left: -1em;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-on_base1 .path3 {
+  &:before {
+    content: $icon-on_base1-path3;  
+    margin-left: -1em;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-on_base2 .path1 {
+  &:before {
+    content: $icon-on_base2-path1;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-on_base2 .path2 {
+  &:before {
+    content: $icon-on_base2-path2;  
+    margin-left: -1em;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-on_base2 .path3 {
+  &:before {
+    content: $icon-on_base2-path3;  
+    margin-left: -1em;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-tips4 {
+  &:before {
+    content: $icon-tips4;     
+    color: #fff;
+  }
+}
+.icon-list1 {
+  &:before {
+    content: $icon-list1;     
+    color: #fff;
+  }
+}
+.icon-list2 {
+  &:before {
+    content: $icon-list2;     
+    color: #fff;
+  }
+}
+.icon-small {
+  &:before {
+    content: $icon-small;     
+    color: #abbac8;
+  }
+}
+.icon-big {
+  &:before {
+    content: $icon-big;     
+    color: #fff;
+  }
+}
+.icon-icon_copy {
+  &:before {
+    content: $icon-icon_copy;     
+    color: #99a3b1;
+  }
+}
+.icon-star {
+  &:before {
+    content: $icon-star;     
+    color: #efcc6e;
+  }
+}
+.icon-live_box {
+  &:before {
+    content: $icon-live_box;     
+    color: #ffb001;
+  }
+}
+.icon-animation2 {
+  &:before {
+    content: $icon-animation2;     
+    color: #5a6074;
+  }
+}
+.icon-signal {
+  &:before {
+    content: $icon-signal;     
+    color: #5a6074;
+  }
+}
+.icon-statistics {
+  &:before {
+    content: $icon-statistics;     
+    color: #08d764;
+  }
+}
+.icon-sports_iceball {
+  &:before {
+    content: $icon-sports_iceball;     
+    color: #adadad;
+  }
+}
+.icon-sports_baseball {
+  &:before {
+    content: $icon-sports_baseball;     
+    color: #adadad;
+  }
+}
+.icon-sports_americaball {
+  &:before {
+    content: $icon-sports_americaball;     
+    color: #adadad;
+  }
+}
+.icon-sports_volleyball {
+  &:before {
+    content: $icon-sports_volleyball;     
+    color: #adadad;
+  }
+}
+.icon-sports_badminton {
+  &:before {
+    content: $icon-sports_badminton;     
+    color: #adadad;
+  }
+}
+.icon-sports_basketball {
+  &:before {
+    content: $icon-sports_basketball;     
+    color: #adadad;
+  }
+}
+.icon-sports_pingpong {
+  &:before {
+    content: $icon-sports_pingpong;     
+    color: #adadad;
+  }
+}
+.icon-sports_snooker {
+  &:before {
+    content: $icon-sports_snooker;     
+    color: #adadad;
+  }
+}
+.icon-sports_soccer {
+  &:before {
+    content: $icon-sports_soccer;     
+    color: #adadad;
+  }
+}
+.icon-sports_tennis {
+  &:before {
+    content: $icon-sports_tennis;     
+    color: #adadad;
+  }
+}
+.icon-arrow-left {
+  &:before {
+    content: $icon-arrow-left;     
+    color: #5a6074;
+  }
+}
+.icon-arrow-right {
+  &:before {
+    content: $icon-arrow-right;     
+    color: #ffb001;
+  }
+}
+.icon-live_text .path1 {
+  &:before {
+    content: $icon-live_text-path1;  
+    color: rgb(0, 0, 0);
+  }
+}
+.icon-live_text .path2 {
+  &:before {
+    content: $icon-live_text-path2;  
+    margin-left: -2.1669921875em;  
+    color: rgb(255, 255, 255);
+  }
+}
+.icon-rs_hong {
+  &:before {
+    content: $icon-rs_hong;     
+    color: #ff4a4a;
+  }
+}
+.icon-rs_dian .path1 {
+  &:before {
+    content: $icon-rs_dian-path1;  
+    color: rgb(90, 96, 116);
+  }
+}
+.icon-rs_dian .path2 {
+  &:before {
+    content: $icon-rs_dian-path2;  
+    margin-left: -1em;  
+    color: rgb(171, 186, 200);
+  }
+}
+.icon-jin-jia {
+  &:before {
+    content: $icon-jin-jia;     
+    color: #08d764;
+  }
+}
+.icon-jia-dian {
+  &:before {
+    content: $icon-jia-dian;     
+    color: #9ea5b4;
+  }
+}
+.icon-sort-down .path1 {
+  &:before {
+    content: $icon-sort-down-path1;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-sort-down .path2 {
+  &:before {
+    content: $icon-sort-down-path2;  
+    margin-left: -1em;  
+    color: rgb(153, 163, 177);
+  }
+}
+.icon-sort-up .path1 {
+  &:before {
+    content: $icon-sort-up-path1;  
+    color: rgb(255, 176, 1);
+  }
+}
+.icon-sort-up .path2 {
+  &:before {
+    content: $icon-sort-up-path2;  
+    margin-left: -1em;  
+    color: rgb(153, 163, 177);
+  }
+}
+.icon-rs_jiao_quan .path1 {
+  &:before {
+    content: $icon-rs_jiao_quan-path1;  
+    color: rgb(255, 74, 74);
+  }
+}
+.icon-rs_jiao_quan .path2 {
+  &:before {
+    content: $icon-rs_jiao_quan-path2;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_quan .path3 {
+  &:before {
+    content: $icon-rs_jiao_quan-path3;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_quan .path4 {
+  &:before {
+    content: $icon-rs_jiao_quan-path4;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_shang .path1 {
+  &:before {
+    content: $icon-rs_jiao_shang-path1;  
+    color: rgb(255, 74, 74);
+  }
+}
+.icon-rs_jiao_shang .path2 {
+  &:before {
+    content: $icon-rs_jiao_shang-path2;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_shang .path3 {
+  &:before {
+    content: $icon-rs_jiao_shang-path3;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_xia .path1 {
+  &:before {
+    content: $icon-rs_jiao_xia-path1;  
+    color: rgb(255, 74, 74);
+  }
+}
+.icon-rs_jiao_xia .path2 {
+  &:before {
+    content: $icon-rs_jiao_xia-path2;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jiao_xia .path3 {
+  &:before {
+    content: $icon-rs_jiao_xia-path3;  
+    margin-left: -1em;  
+    color: rgb(90, 169, 97);
+  }
+}
+.icon-rs_jin_quan {
+  &:before {
+    content: $icon-rs_jin_quan;     
+    color: #08d764;
+  }
+}
+.icon-jin-shang {
+  &:before {
+    content: $icon-jin-shang;     
+    color: #08d764;
+  }
+}
+.icon-jin-xia {
+  &:before {
+    content: $icon-jin-xia;     
+    color: #08d764;
+  }
+}
+.icon-calendar {
+  &:before {
+    content: $icon-calendar; 
+  }
+}
+.icon-refresh {
+  &:before {
+    content: $icon-refresh;     
+    color: #abbac8;
+  }
+}
+.icon-sports_gaming {
+  &:before {
+    content: $icon-sports_gaming;     
+    color: #6d7278;
+  }
+}
+.icon-eye_hide {
+  &:before {
+    content: $icon-eye_hide;     
+    color: #a5aec8;
+  }
+}
+.icon-eye_show {
+  &:before {
+    content: $icon-eye_show;     
+    color: #5a6074;
+  }
+}
+.icon-go_top {
+  &:before {
+    content: $icon-go_top;     
+    color: #5a6074;
+  }
+}
+.icon-del {
+  &:before {
+    content: $icon-del;     
+    color: #99a3b1;
+  }
+}
+.icon-close {
+  &:before {
+    content: $icon-close;     
+    color: #6d7278;
+  }
+}
+.icon-triangle2 {
+  &:before {
+    content: $icon-triangle2;     
+    color: #d1d1d1;
+  }
+}
+.icon-triangle3 {
+  &:before {
+    content: $icon-triangle3;     
+    color: #d1d1d1;
+  }
+}
+.icon-triangle {
+  &:before {
+    content: $icon-triangle;     
+    color: #d1d1d1;
+  }
+}
+.icon-triangle1 {
+  &:before {
+    content: $icon-triangle1;     
+    color: #d1d1d1;
+  }
+}
+.icon-media_switch {
+  &:before {
+    content: $icon-media_switch;     
+    color: #5a6074;
+  }
+}
+.icon-sort_league {
+  &:before {
+    content: $icon-sort_league;     
+    color: #abbac8;
+  }
+}
+.icon-tips3 {
+  &:before {
+    content: $icon-tips3;     
+    color: #5a6074;
+  }
+}
+.icon-tips {
+  &:before {
+    content: $icon-tips;     
+    color: #99a3b1;
+  }
+}
+.icon-success {
+  &:before {
+    content: $icon-success;     
+    color: #1fa686;
+  }
+}
+.icon-failure {
+  &:before {
+    content: $icon-failure;     
+    color: #ee4848;
+  }
+}
+.icon-plus {
+  &:before {
+    content: $icon-plus;     
+    color: #fff;
+  }
+}
+.icon-search {
+  &:before {
+    content: $icon-search;     
+    color: #5a6074;
+  }
+}
+.icon-sort {
+  &:before {
+    content: $icon-sort; 
+  }
+}
+.icon-rs_dian_jia {
+  &:before {
+    content: $icon-rs_dian_jia;     
+    color: #9ea5b4;
+  }
+}
+.icon-rs_jia_shi {
+  &:before {
+    content: $icon-rs_jia_shi;     
+    color: #9ea5b4;
+  }
+}
+.icon-rs_jin_quan1 {
+  &:before {
+    content: $icon-rs_jin_quan1;     
+    color: #00a997;
+  }
+}
+.icon-rs_jin_shang {
+  &:before {
+    content: $icon-rs_jin_shang;     
+    color: #00a997;
+  }
+}
+.icon-rs_jin_xia {
+  &:before {
+    content: $icon-rs_jin_xia;     
+    color: #00a997;
+  }
+}
+.icon-rs_hong1 {
+  &:before {
+    content: $icon-rs_hong1;     
+    color: #ff4a4a;
+  }
+}
+.icon-rs_huang1 {
+  &:before {
+    content: $icon-rs_huang1;     
+    color: #efcc6e;
+  }
+}
+.icon-triangle4 {
+  &:before {
+    content: $icon-triangle4;     
+    color: #d1d1d1;
+  }
+}
+.icon-circle {
+  &:before {
+    content: $icon-circle; 
+  }
+}
+.icon-del1 {
+  &:before {
+    content: $icon-del1;     
+    color: #99a3b1;
+  }
+}
+.icon-set_top1 {
+  &:before {
+    content: $icon-set_top1;     
+    color: #9ea5b4;
+  }
+}
+.icon-football {
+  &:before {
+    content: $icon-football;     
+    color: #fff;
+  }
+}
+.icon-circle1 {
+  &:before {
+    content: $icon-circle1; 
+  }
+}
+.icon-flame {
+  &:before {
+    content: $icon-flame;     
+    color: #08d764;
+  }
+}
+.icon-open {
+  &:before {
+    content: $icon-open;     
+    color: #5a6074;
+  }
+}
+.icon-hide {
+  &:before {
+    content: $icon-hide;     
+    color: #5a6074;
+  }
+}
+.icon-play_pause {
+  &:before {
+    content: $icon-play_pause;     
+    color: #ffb001;
+  }
+}
+.icon-play_stop {
+  &:before {
+    content: $icon-play_stop;     
+    color: #5a6074;
+  }
+}
+.icon-set_top {
+  &:before {
+    content: $icon-set_top;     
+    color: #ffb001;
+  }
+}
+.icon-sort_date {
+  &:before {
+    content: $icon-sort_date;     
+    color: #08d764;
+  }
+}
+.icon-back {
+  &:before {
+    content: $icon-back;     
+    color: #abbac8;
+  }
+}
+

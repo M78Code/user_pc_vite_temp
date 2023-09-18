@@ -1,19 +1,19 @@
 [class*=theme0] {
   .home-page {
-    background: var(--q-color-page-bg-color-1);
+    background: var(--q-gb-bd-c-17);
     &.white-background {
-      background:var(--q-color-page-bg-color-105);
+      background:var(--q-match-page-bg-color-105);
     }
     &.white-font {
       li {
         &.is-active {
-          color:var(--q-color-com-fs-color-8);
+          color:var(--q-gb-bd-c-2);
           .tabs-label {
-            color:var(--q-color-com-fs-color-8);
+            color:var(--q-gb-bd-c-2);
           }
         }
         .tabs-label {
-          color:var(--q-color-com-fs-color-8);
+          color:var(--q-gb-bd-c-2);
         }
       }
     }
@@ -52,7 +52,7 @@
     }
     .icon-lang-dark {
       ul {
-        background: var(--q-color-page-bg-color-10);
+        background: var(--q-match-page-bg-color-10);
         color: var(--q-color-fs-color-45);
         &::before {
           border-bottom: 0.08rem solid var(--q-color-com-border-color-3);

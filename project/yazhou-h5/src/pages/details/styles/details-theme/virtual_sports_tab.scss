@@ -3,10 +3,10 @@
  */
 [class*=theme0] {
   .vir-details-tab {
-    background:var(--q-color-page-bg-color-105);
+    background:var(--q-match-page-bg-color-105);
     border-bottom: 0.01rem solid  var(--q-color-border-color-35);
     .menu-item {
-      color: var(--q-color-fs-color-139);
+      color: var(--q-match-fs-color-139);
     }
 
     /*************** 选中的玩法集 *************** -S*/
@@ -24,7 +24,7 @@
       }
     }
     .icon-style {
-      background:var(--q-color-page-bg-color-105);
+      background:var(--q-match-page-bg-color-105);
       box-shadow: var(--q-color-box-shadow-color-13);
       // box-shadow: -0.05rem 0 0.1rem -0.01rem rgba(0, 0, 0, 0.08);
     }
@@ -40,7 +40,7 @@
      background-color:var(--q-color-page-bg-color-2);
     color: var(--q-gb-t-c-3);
     &::after {
-      border-color: var(--q-color-border-color-5) !important;
+      border-color: var(--q-gb-bd-c-3) !important;
     }
     .score-list {
       .score-item {
@@ -68,7 +68,7 @@
         .result-list {
           .result-item {
             background: var(--q-gb-t-c-6);
-            color:var(--q-color-com-fs-color-8);
+            color:var(--q-gb-bd-c-2);
             &.item-W {
               background: var(--q-color-com-bg-color-13);
             }
@@ -100,7 +100,7 @@
   /*************** 白色分割线结束 *************** -E*/
   /*************** 马类编号开始 *************** -S*/
   .virtual-num {
-    color:var(--q-color-com-fs-color-8);
+    color:var(--q-gb-bd-c-2);
   }
 
   /*************** 马类编号结束 *************** -E*/
@@ -115,12 +115,12 @@
     color: var(--q-gb-t-c-3);
     background:  var(--q-color-page-bg-color-88);
     &::after {
-      border-color: var(--q-color-border-color-5) !important;
+      border-color: var(--q-gb-bd-c-3) !important;
     }
   }
   .dynamic-l-item {
     &::after {
-      border-color: var(--q-color-border-color-5) !important;
+      border-color: var(--q-gb-bd-c-3) !important;
     }
   }
 }

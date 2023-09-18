@@ -15,5 +15,6 @@ export default {
     'gb-bd-c-13': '#ffb001',
     'gb-bd-c-14': '#ffe8e8',
     'gb-bd-c-15': '#ffffff',
+    'gb-bd-c-17': '#f7f9fe',
     'gb-bd-c-16': 'tranparent'
   }

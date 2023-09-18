@@ -192,7 +192,7 @@ export default defineComponent({
     border-radius: 0.08rem;
     overflow: hidden;
     .border-style{
-      border-right: 1px solid var(--q-color-border-color-56);
+      border-right: 1px solid var(--q-gb-bd-c-36);
     }
   }
 

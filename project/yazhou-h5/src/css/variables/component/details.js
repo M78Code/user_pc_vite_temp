@@ -61,22 +61,22 @@ export default {
   "details-tournament-play-new-mat-info-after-left": "",
   // var(--q-color-border-color-24);
   "details-tournament-play-new-play-name-after-bd-color": "#cfcfcf",
-  // var(--q-color-page-bg-color-107);
+  // var(--q-match-page-bg-color-107);
   "details-tournament-play-new-rad-style-bg-color": "#F7F9FE",
   // var(--q-color-page-bg-color-14);
   "details-tournament-play-new-win-bg-color": "#f9efef",
-  // var(--q-color-page-bg-color-105);
+  // var(--q-match-page-bg-color-105);
   "details-tournament-play-new-title-style-bg-color": "#ffffff",
-  // var(--q-color-border-color-56);
+  // var(--q-gb-bd-c-36);
   "details-tournament-play-new-bor-style-bd-color": "#F7F7F7",
   // var(--q-color-com-fs-color-11);
   "details-tournament-play-new-details_t_color6-text-color": "#999999",
-  // var(--q-color-page-bg-color-105);
+  // var(--q-match-page-bg-color-105);
   "details-tournament-play-new-head-bg-color": "#ffffff",
-  // var(--q-color-border-color-56);
+  // var(--q-gb-bd-c-36);
   "details-tournament-play-new-play-box-style-bd-color": "#F7F7F7",
-  // var(--q-color-page-bg-color-104);
+  // var(--q-match-page-bg-color-104);
   "details-tournament-play-new-many-item-border-bg-color": "#ffffff",
-  // var(--q-color-page-bg-color-104);
+  // var(--q-match-page-bg-color-104);
   "details-tournament-play-new-row-bet-wrapper-bg-color": "#ffffff",
 };
