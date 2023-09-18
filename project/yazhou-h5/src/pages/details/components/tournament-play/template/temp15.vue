@@ -193,7 +193,7 @@ export default defineComponent({
     flex-basis: 25%;
 
     // &:nth-child(n+5){
-    //   border-bottom: 1px solid var(--q-color-border-color-56);
+    //   border-bottom: 1px solid var(--q-gb-bd-c-36);
     // }
 
     &:nth-child(2), &:nth-child(3) {
@@ -220,7 +220,7 @@ export default defineComponent({
   .play-box {
     // margin-bottom: 0.01rem;
     padding: 0.06rem 0.05rem 0;
-    // border-bottom:1px solid  var(--q-color-border-color-56);
+    // border-bottom:1px solid  var(--q-gb-bd-c-36);
 
     height: 0.52rem;
 

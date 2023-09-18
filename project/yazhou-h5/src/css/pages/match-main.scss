@@ -10,7 +10,7 @@
       .match-container {
         // .odd-list.match-indent.simple {
         //   .odd-title {
-        //     color: var(--q-color-fs-color-13);
+        //     color: var(--q-match-fs-color-13);
         //   }
         // }
         .hot_time_change {
@@ -26,7 +26,7 @@
         }
         .sport-title {
           .score-inner-span{
-            color: var(--q-color-fs-color-153);
+            color: var(--q-match-fs-color-153);
           }
           .ball_img {
             background-color:var(--q-color-page-bg-color-2);
@@ -35,7 +35,7 @@
             }
           }
           &.football_text {
-            color: var(--q-color-fs-color-13);
+            color: var(--q-match-fs-color-13);
           }
         }
         .match-inner-container {
@@ -64,13 +64,13 @@
             }
             .tab-m-o-w {
               .tab-item-h {
-                background: var(--q-color-page-bg-color-10);
-                color: var(--q-color-fs-color-15);
+                background: var(--q-match-page-bg-color-10);
+                color: var(--q-match-fs-color-15);
 
                 &.collapsed {
-                  color:var(--q-color-fs-color-135);
-                  background-image:  var(--q-color-linear-gradient-bg-10);
-                  border: 0.5px solid  var(--q-color-fs-color-135);
+                  color:var(--q-match-fs-color-135);
+                  background-image:  var(--q-match-linear-gradient-bg-10);
+                  border: 0.5px solid  var(--q-match-fs-color-135);
 
                 }
               }
@@ -95,7 +95,7 @@
                   border-radius: 2px;
                 }
                 .odd-title {
-                  color: var(--q-color-fs-color-154);
+                  color: var(--q-match-fs-color-154);
                 }
                 .odd-value {
                   color: var(--q-gb-t-c-4);
@@ -115,7 +115,7 @@
                 }
               }
               .odd-column-item2 {
-                background: var(--q-color-page-bg-color-10) !important;
+                background: var(--q-match-page-bg-color-10) !important;
                 &:after {
                   background-color: transparent;
                 }
@@ -126,15 +126,15 @@
                   }
                 }
                 .odd-value {
-                  color:var(--q-color-com-fs-color-8);
+                  color:var(--q-gb-bd-c-2);
                 }
               }
             }
           }
         }
         .league {
-          background:var(--q-color-page-bg-color-96);
-          border-color: var(--q-color-border-color-5);
+          background:var(--q-match-page-bg-color-96);
+          border-color: var(--q-gb-bd-c-3);
 
           .league-title-text {
             color: var(--q-color-fs-color-34);
@@ -152,13 +152,13 @@
            background:var(--q-color-page-bg-color-95);
           &.simple {
             .title-space-1 {
-              color: var(--q-color-fs-color-137);
+              color: var(--q-match-fs-color-137);
             }
             .counting {
-              color: var(--q-color-fs-color-13) !important;
+              color: var(--q-match-fs-color-13) !important;
             }
             .date-time {
-              color: var(--q-color-fs-color-13) !important;
+              color: var(--q-match-fs-color-13) !important;
             }
           }
           &.n-s-edition {
@@ -195,10 +195,10 @@
               }
             }
             .count_span {
-              color: var(--q-color-fs-color-13);
+              color: var(--q-match-fs-color-13);
             }
             .week-mcid {
-              color:var(--q-color-fs-color-127);
+              color:var(--q-match-fs-color-127);
             }
             .live-icon-play-btn {
               background: var(--q-color-img-bg-83) no-repeat center / 90%;
@@ -222,7 +222,7 @@
               .score {
                 .jiaoqiu-score-value,
                 .orange {
-                  color:var(--q-color-fs-color-127);
+                  color:var(--q-match-fs-color-127);
                 }
                 .score-l-total2 {
                   color: var(--q-gb-t-c-4) !important;
@@ -232,14 +232,14 @@
           }
           .flag-chuan {
             background: var(--q-color-linear-gradient-bg-25);
-            color: var(--q-color-fs-color-157);
-            border: .01rem solid var(--q-color-border-color-57);
+            color: var(--q-match-fs-color-157);
+            border: .01rem solid var(--q-gb-bd-c-37);
           }
         }
         .odd-list {
            background:var(--q-color-page-bg-color-95);;
           &.result {
-            border-color: var(--q-color-border-color-5);
+            border-color: var(--q-gb-bd-c-3);
           }
           .team-title-container {
             .team-t-title-w {
@@ -269,7 +269,7 @@
           .go-container-w {
             .goto-detail {
               .count_span {
-                color: var(--q-color-fs-color-13);
+                color: var(--q-match-fs-color-13);
               }
             }
             .live-icon-play-btn {
@@ -290,7 +290,7 @@
                  }
                }
                 .odd-title {
-                  color: var(--q-color-fs-color-13);
+                  color: var(--q-match-fs-color-13);
                 }
                 .odd-value {
                   color: var(--q-gb-t-c-4);
@@ -322,7 +322,7 @@
                   }
                 }
                 .odd-value {
-                  color:var(--q-color-com-fs-color-8);
+                  color:var(--q-gb-bd-c-2);
                 }
               }
               /* ************** 新手版投注项选择样式 ************** -E */
@@ -349,7 +349,7 @@
               }
             }
             .odd-title {
-              color: var(--q-color-fs-color-154);
+              color: var(--q-match-fs-color-154);
             }
             .odd-value {
               color: var(--q-gb-t-c-4);
@@ -368,7 +368,7 @@
             }
             /* ************** 标准版投注项选择样式 ************** -S */
             .odd-column-item2 {
-              background: var(--q-color-page-bg-color-10) !important;
+              background: var(--q-match-page-bg-color-10) !important;
               &:after {
                 background-color: transparent;
               }
@@ -379,7 +379,7 @@
                 }
               }
               .odd-value {
-                color:var(--q-color-com-fs-color-8);
+                color:var(--q-gb-bd-c-2);
               }
             }
             /* ************** 标准版投注项选择样式 ************** -E */
@@ -437,7 +437,7 @@
               color: var(--q-gb-t-c-4);
             }
             &.fight-type {
-              color:var(--q-color-fs-color-127);
+              color:var(--q-match-fs-color-127);
               font-size: 0.12rem;
             }
           }
@@ -454,12 +454,12 @@
       .score-se-inner {
         .score-se-inner2 {
           .basket-ball {
-            color: var(--q-color-fs-color-13);
+            color: var(--q-match-fs-color-13);
             &.important-color-number {
-              color:var(--q-color-fs-color-127);
+              color:var(--q-match-fs-color-127);
             }
             .important-color-number {
-              color:var(--q-color-fs-color-127);
+              color:var(--q-match-fs-color-127);
             }
           }
           .score-fle-container-1 {
@@ -468,7 +468,7 @@
             }
             .basket-ball {
               &:last-child {
-                color:var(--q-color-fs-color-127);
+                color:var(--q-match-fs-color-127);
               }
             }
             &.result {
@@ -499,14 +499,14 @@
       }
     }
     .odd-column-item2 {
-      background: var(--q-color-page-bg-color-10) !important;
+      background: var(--q-match-page-bg-color-10) !important;
       &:after {
         background-color: transparent;
       }
       .odd-title {
-        color:  var(--q-color-fs-color-62) !important;
+        color:  var(--q-match-fs-color-62) !important;
         span {
-          color:  var(--q-color-fs-color-62) !important;
+          color:  var(--q-match-fs-color-62) !important;
         }
       }
       .odd-value {

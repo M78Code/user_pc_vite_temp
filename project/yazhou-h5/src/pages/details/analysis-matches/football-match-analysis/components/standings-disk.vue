@@ -209,7 +209,7 @@ const get_detail_data = inject('get_detail_data', {})
         align-items: center;
 
 
-        border-bottom: 1px solid var(--q-color-border-color-56);
+        border-bottom: 1px solid var(--q-gb-bd-c-36);
         padding: 0 0.1rem;
 
         > span {
@@ -244,7 +244,7 @@ const get_detail_data = inject('get_detail_data', {})
         font-size: 0.12rem;
         height: 0.48rem;
         text-align: center;
-        border-bottom: 1px solid var(--q-color-border-color-56);
+        border-bottom: 1px solid var(--q-gb-bd-c-36);
 
         div {
           display: flex;
@@ -296,8 +296,8 @@ const get_detail_data = inject('get_detail_data', {})
     }
 
     .item-2nd {
-      border-left: 1px solid var(--q-color-border-color-56);
-      border-right: 1px solid var(--q-color-border-color-56);
+      border-left: 1px solid var(--q-gb-bd-c-36);
+      border-right: 1px solid var(--q-gb-bd-c-36);
       padding: 0 0.05rem;
     }
 

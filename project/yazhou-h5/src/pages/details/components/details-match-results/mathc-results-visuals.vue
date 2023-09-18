@@ -486,7 +486,7 @@ const get_detail_data = inject('get_detail_data', {})
     .designation {
       border-bottom: 1px solid rgba(225,225,225, 0.2);
       margin-bottom: 0.02rem;
-      color: var(--q-color-com-fs-color-8);
+      color: var(--q-gb-bd-c-2);
     }
     .visuals {
       .linellae {
@@ -497,7 +497,7 @@ const get_detail_data = inject('get_detail_data', {})
         .circle {
           margin-top: 0.15rem;
           .number {
-            color: var(--q-color-com-fs-color-8);
+            color: var(--q-gb-bd-c-2);
           }
           .text-span {
             font-size: 0.1rem;
@@ -515,12 +515,12 @@ const get_detail_data = inject('get_detail_data', {})
         }
         .progress-left {
           span {
-            color: var(--q-color-com-fs-color-8);
+            color: var(--q-gb-bd-c-2);
           }
         }
         .progress-right {
           span {
-            color: var(--q-color-com-fs-color-8);
+            color: var(--q-gb-bd-c-2);
           }
         }
       }
@@ -532,7 +532,7 @@ const get_detail_data = inject('get_detail_data', {})
             font-size: 0.1rem;
           }
           .score {
-            color: var(--q-color-com-fs-color-8);
+            color: var(--q-gb-bd-c-2);
           }
         }
         div:nth-child(2) {
