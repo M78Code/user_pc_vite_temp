@@ -69,7 +69,7 @@ const props = defineProps({
   }
 })
 // 赛事模板宽度
-const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'].width_config)
 
 // 组件是否已挂载
 const is_mounted = ref(false)
