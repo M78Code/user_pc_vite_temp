@@ -66,7 +66,7 @@ const mitt_offs = [
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: var(--q-gb-bg-c-10);
+  background: var(--q-gb-bg-c-22);
   .video_page {
     position: fixed;
     top: 0;
@@ -79,7 +79,7 @@ const mitt_offs = [
 }
 
 .layout_main_left {
-  border: 1px solid var(--q-gb-bd-c-8);
+  border: 1px solid var(--q-gb-bd-c);
   border-radius: 0 8px 0 0;
 }
 </style>
