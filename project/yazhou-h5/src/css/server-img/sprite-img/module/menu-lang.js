@@ -6,7 +6,7 @@ import server_resource from "app/job/output/assets/index.json";
 import { get } from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
-    default: "h5-lang",
+    default: "menu-lang",
     // local_dev: "pc-left-menu-bg-image",
     // local_test: "",
     // local_ylcs: "pc-left-menu-bg-image",

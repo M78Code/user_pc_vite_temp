@@ -8,23 +8,10 @@
     <!-- 轮播 -->
     <div class="slide">
       <!-- 猜你喜欢赛事轮播 -->
-      <q-carousel
-        animated
-        swipeable
-        v-model="slide"
-        transition-prev="slide-right"
-        transition-next="slide-left"
-        infinite
-        v-if="lodash.get(carousel_data, 'list.length')"
-        :autoplay="7000"
-      >
-        <q-carousel-slide
-          :name="index"
-          v-for="(item, index) in carousel_data.list"
-          :key="index"
-          @click="to_details(item)"
-          :class="{ 'act-banner': !item.mhn }"
-        >
+      <q-carousel animated swipeable v-model="slide" transition-prev="slide-right" transition-next="slide-left" infinite
+        v-if="lodash.get(carousel_data, 'list.length')" :autoplay="7000">
+        <q-carousel-slide :name="index" v-for="(item, index) in carousel_data.list" :key="index" @click="to_details(item)"
+          :class="{ 'act-banner': !item.mhn }">
           <!-- 是赛事数据的轮播 -->
           <div class="info" v-if="item.mhn">
             <!-- 赛种图标和联赛名称 -->
@@ -37,35 +24,24 @@
               <!-- 左 -->
               <div class="home">
                 <div class="wrap-logo">
-                  <img
-                    v-img="[
-                      lodash.get(item, 'mhlu[0]'),
-                      lodash.get(item, 'frmhn[0]'),
-                      lodash.get(item, 'csid'),
-                      { data: item, name: '_t11_img' },
-                    ]"
-                    alt
-                  />
-                  <img
-                    v-if="lodash.get(item, 'mhlu').length > 1"
-                    v-img="[
-                      lodash.get(item, 'mhlu[1]'),
-                      lodash.get(item, 'frmhn[1]'),
-                      lodash.get(item, 'csid'),
-                      { data: item, name: '_t12_img' },
-                    ]"
-                    alt
-                    class="logo-double"
-                  />
+                  <img v-img="[
+                    lodash.get(item, 'mhlu[0]'),
+                    lodash.get(item, 'frmhn[0]'),
+                    lodash.get(item, 'csid'),
+                    { data: item, name: '_t11_img' },
+                  ]" alt />
+                  <img v-if="lodash.get(item, 'mhlu').length > 1" v-img="[
+                    lodash.get(item, 'mhlu[1]'),
+                    lodash.get(item, 'frmhn[1]'),
+                    lodash.get(item, 'csid'),
+                    { data: item, name: '_t12_img' },
+                  ]" alt class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.mhn }}</div>
               </div>
               <!-- 中 -->
               <div class="socre">
-                <div
-                  class="vs-wrap"
-                  v-if="item.ms != 110 && show_counting_down(item)"
-                >
+                <div class="vs-wrap" v-if="item.ms != 110 && show_counting_down(item)">
                   <div class="score-wrap">
                     <span class="both-score">{{
                       format_total_score(
@@ -82,40 +58,28 @@
                     }}</span>
                   </div>
                 </div>
-                <div
-                  class="both-timer relative-position"
-                  :style="{
-                    height:
-                      item.ms != 110 && show_counting_down(item)
-                        ? 'auto'
-                        : '100%',
-                  }"
-                >
+                <div class="both-timer relative-position" :style="{
+                      height:
+                        item.ms != 110 && show_counting_down(item)
+                          ? 'auto'
+                          : '100%',
+                    }">
                   <!--即将开赛 ms = 110-->
                   <template v-if="item.ms == 110">
                     <div>{{ t(`ms[${item.ms}]`) }}</div>
                   </template>
 
                   <!--一小时内开赛 -->
-                  <template
-                    v-if="item.ms != 110 && show_start_counting_down(item)"
-                  >
-                    <counting-down-start
-                      :match="item"
-                      :index="index"
-                      :mgt_time="item.mgt"
-                    >
+                  <template v-if="item.ms != 110 && show_start_counting_down(item)">
+                    <counting-down-start :match="item" :index="index" :mgt_time="item.mgt">
                     </counting-down-start>
                   </template>
 
                   <!--开赛日期(早盘) ms != 110 (不为即将开赛)  subMenuType = 13网球(进行中不显示，赛前需要显示)-->
-                  <template
-                    v-if="
-                      item.ms != 110 &&
-                      !show_start_counting_down(item) &&
-                      !show_counting_down(item)
-                    "
-                  >
+                  <template v-if="item.ms != 110 &&
+                    !show_start_counting_down(item) &&
+                    !show_counting_down(item)
+                    ">
                     <div>{{ t("list.match_no_start") }}</div>
                     <div>
                       <!-- .Format(t('time4')) -->
@@ -125,47 +89,28 @@
 
                   <!--倒计时或正计时-->
                   <template v-if="item.ms != 110 && show_counting_down(item)">
-                    <counting-down-second
-                      :title="
-                        item.ms == 0
-                          ? t('list.match_no_start')
-                          : match_period_map(item)
-                      "
-                      :mmp="item.mmp"
-                      :m_id="item.mid"
-                      :second="item.mst"
-                      :match="item"
-                      :is_add="
-                        [1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)
-                      "
-                      home
-                    />
+                    <counting-down-second :title="item.ms == 0
+                      ? t('list.match_no_start')
+                      : match_period_map(item)
+                      " :mmp="item.mmp" :m_id="item.mid" :second="item.mst" :match="item" :is_add="[1, 4, 11, 14, 100, 101, 102, 103].includes(+item.csid)
+    " home />
                   </template>
                 </div>
               </div>
               <!-- 右 -->
               <div class="away">
                 <div class="wrap-logo">
-                  <img
-                    v-img="[
-                      lodash.get(item, 'malu[0]'),
-                      lodash.get(item, 'frman[0]'),
-                      lodash.get(item, 'csid'),
-                      { data: item, name: '_t21_img' },
-                    ]"
-                    alt
-                  />
-                  <img
-                    v-if="lodash.get(item, 'malu').length > 1"
-                    v-img="
-                      (lodash.get(item, 'malu[1]'),
-                      lodash.get(item, 'frman[1]'),
-                      lodash.get(item, 'csid'),
-                      { data: item, name: '_t22_img' })
-                    "
-                    alt
-                    class="logo-double"
-                  />
+                  <img v-img="[
+                    lodash.get(item, 'malu[0]'),
+                    lodash.get(item, 'frman[0]'),
+                    lodash.get(item, 'csid'),
+                    { data: item, name: '_t21_img' },
+                  ]" alt />
+                  <img v-if="lodash.get(item, 'malu').length > 1" v-img="(lodash.get(item, 'malu[1]'),
+                    lodash.get(item, 'frman[1]'),
+                    lodash.get(item, 'csid'),
+                    { data: item, name: '_t22_img' })
+                    " alt class="logo-double" />
                 </div>
                 <div class="both-item">{{ item.man }}</div>
               </div>
@@ -173,36 +118,21 @@
           </div>
           <!-- 是活动或者跳转的轮播 -->
           <div v-else style="height: 100%" @click.stop="confirm(item)">
-            <img
-              :src="item.imgUrl"
-              style="height: 100%; pointer-events: none"
-              @error="league_icon_error"
-            />
+            <img :src="item.imgUrl" style="height: 100%; pointer-events: none" @error="league_icon_error" />
           </div>
         </q-carousel-slide>
         <template v-slot:control v-if="carousel_data.list.length > 1">
           <q-carousel-control position="bottom">
             <div class="control">
-              <span
-                v-for="(list, i) in carousel_data.list"
-                :key="i"
-                class="control-item"
-                :class="{ active: i == slide }"
-                @click="slide = i"
-              ></span>
+              <span v-for="(list, i) in carousel_data.list" :key="i" class="control-item" :class="{ active: i == slide }"
+                @click="slide = i"></span>
             </div>
           </q-carousel-control>
         </template>
       </q-carousel>
       <!-- 默认背景图 -->
-      <img
-        v-else
-        :src="banner_bg"
-        :hidden="!defaultBannerShow"
-        @load="showDefaultBanner"
-        @error="handleBannerError"
-        class="carousel_bg"
-      />
+      <img v-else :src="banner_bg" :hidden="!defaultBannerShow" @load="showDefaultBanner" @error="handleBannerError"
+        class="carousel_bg" />
     </div>
     <!-- 轮播 -->
     <!-- 跑马灯、余额 -->
@@ -314,8 +244,8 @@ let thumbStyle = ref({
 //轮播背景图片,
 let banner_bg = ref(
   localStorage.getItem("home_banner_default") ||
-    sessionStorage.getItem("banner_bg") ||
-    ""
+  sessionStorage.getItem("banner_bg") ||
+  ""
 );
 //右边内容默认高度
 let el_height = ref(window.innerHeight - 2.7 * (window.innerWidth / 3.75));
@@ -511,7 +441,7 @@ const get_carousel = (callback) => {
         }
       }
     })
-    .catch((err) => {})
+    .catch((err) => { })
     .finally(() => {
       //添加活动banner图
       if (lodash.get(get_banner_obj, "type1")) {
@@ -748,9 +678,8 @@ const get_banner_url = () => {
   if (url) {
     banner_bg = get_file_path(url);
   } else {
-    banner_bg = `image/bw3/png/home_carousel_bg_${
-      UserCtr.theme.includes("y0") ? "y0_" : ""
-    }${get_lang}.png`;
+    banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes("y0") ? "y0_" : ""
+      }${get_lang}.png`;
   }
   sessionStorage.setItem("banner_bg", banner_bg);
 };
@@ -760,9 +689,8 @@ const showDefaultBanner = (e) => {
 };
 // 若线上图片加载错误，则使用本地默认banner
 const handleBannerError = (e) => {
-  banner_bg = `image/bw3/png/home_carousel_bg_${
-    UserCtr.theme.includes("y0") ? "y0_" : ""
-  }${get_lang}.png`;
+  banner_bg = `image/bw3/png/home_carousel_bg_${UserCtr.theme.includes("y0") ? "y0_" : ""
+    }${get_lang}.png`;
 };
 const banner_loading_url = computed(() => {
   if (UserCtr.theme.includes("y0")) {
@@ -816,16 +744,7 @@ useMittOn(MITT_TYPES.EMIT_SHOW_DEFAULT_BANNER_EVENT, clear_carousel_data);
 get_list();
 get_lang_v3();
 </script>
-
-<style lang="scss" scoped>
-// @import "./index.scss";
-</style>
-
-
 <style lang="scss">
-.left-menu {
-  .scroll {
-    width: 0.7rem !important;
-  }
-}
+@import "project_path/src/css/pages/first_page.scss";
+@import "./index.scss";
 </style>

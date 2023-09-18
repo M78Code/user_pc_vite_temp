@@ -8,8 +8,6 @@
       <q-page-container class="page_container">
         <!-- <layout-header /> -->
         <!-- <layout-conent /> -->
-        <activityIcon />
-
         <MenuWapper v-if="['sport_menu', 'matchList'].includes(route.name)">
           <template #menu-right>
             <activityIcon />
@@ -47,13 +45,11 @@ import {
   defineAsyncComponent,
   nextTick,
 } from "vue";
-import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js";
+import { useMittOn, MITT_TYPES, compute_css_variables } from "src/core/";
 import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
 import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
-
-
 
 import { useRoute } from "vue-router";
 import betMixBox from "src/components/bet/components/bet_mix_box.vue";
@@ -176,7 +172,9 @@ onUnmounted(() => {
   unsubscribe();
 });
 </script>
-
+<style lang="scss" >
+@import 'project_path/src/css/pages/menu.scss';
+</style>
 <style lang="scss" scoped>
 .layout_container {
   height: 100%;
