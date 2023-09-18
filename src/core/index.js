@@ -194,7 +194,7 @@ import { compute_css } from "src/core/server-img/";
  * import { is_eports_csid  } from "src/core/index.js";
  *
  */
-
+import ServerTime from './server-time/server-time'
 export {
   //
   http,
@@ -202,6 +202,7 @@ export {
   infoUpload,
   zhuge,
   AllDomain,
+  ServerTime,
   // 国际化相关
   i18n,
   loadLanguageAsync,

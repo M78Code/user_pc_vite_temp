@@ -13,7 +13,7 @@
 import { defineComponent, ref, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 // TODO: 
-import { api_home } from "src/project/api/index";
+import { api_home } from "src/api/index";
 export default defineComponent({
     name: "marquee",
     setup() {
@@ -98,11 +98,10 @@ export default defineComponent({
 }
 
 
-@include keyframes(seamless-scrolling) {
+@keyframes seamless-scrolling {
     0% {
         transform: translateX(0px);
     }
-
     100% {
         transform: translateX(-50%);
         /* Q2 */

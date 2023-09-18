@@ -43,3 +43,9 @@ onBeforeUnmount(() => {
 
 
 </script>
+
+<style scoped lang="scss">
+.layout-left {
+ 
+}
+</style>

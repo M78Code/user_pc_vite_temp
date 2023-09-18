@@ -10,7 +10,7 @@
     <div style="display: none;"> {{ LayOutMain_pc.layout_version }}</div>
     <div class="flex">
       <!-- 左侧 菜单 -->
-      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }">
+      <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_left_width }" class="layout_main_left">
         <layout-left />
       </div>
       <div :style="{ height: LayOutMain_pc.layout_content_height , width:LayOutMain_pc.layout_content_width }">
@@ -44,7 +44,7 @@ import "./main-layout.js"; //初始化数据
 /**组件*/
 import { SearchWapper } from 'src/components/search'
 import layoutHeader from "./layout-header.vue";
-import layoutLeft from "./layout-left.vue";
+// import layoutLeft from "./layout-left.vue";
 // import layoutRight from "./layout-right.vue";
 import toastComponents from "project_path/src/components/toast/toast.vue";
 import alertComponents from "project_path/src/components/toast/alert.vue";
@@ -66,6 +66,7 @@ const mitt_offs = [
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: var(--q-gb-bg-c-22);
   .video_page {
     position: fixed;
     top: 0;
@@ -75,5 +76,9 @@ const mitt_offs = [
     width: 100% !important;
     height: 100% !important;
   }
+}
+
+.layout_main_left {
+  padding-top: 5px;
 }
 </style>

@@ -1213,6 +1213,20 @@ class UserCtr {
   set_user_token(token) {
     this.user_token = token
   }
+  /**
+   * 设置用户余额显示隐藏
+   * state 状态 true flase
+   */
+  set_show_balance(state){
+    this.show_balance = state
+    this.set_user_version()
+  }
+ /**
+   * 更新用户信息版本 显示
+   */
+  set_user_version(){
+    this.user_version.value = Date.now()
+  }
 }
 
 const instance = new UserCtr();

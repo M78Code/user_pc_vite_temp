@@ -1,10 +1,10 @@
 <template>
-  <div class="match-main-menu" :style="compute_css_variables({ category: 'component', module: 'menu' })">
+  <div class="match-main-menu">
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <slot name="menu-left">
           <div class="goback-icon-wrapper column justify-center">
-            <div class="img" :style="compute_css('h5-go-back-icon')"></div>
+            <div class="img" :style="compute_css('menu-go-back-icon')"></div>
           </div>
         </slot>
         <div class="main-menu-container">
@@ -53,7 +53,7 @@
               v-if="GlobalAccessConfig.get_playAllShow()">
               <span class="sport-icon-wrap" :style="compute_css(
                 current_lv2 == -1 ?
-                  'h5-sport-active-image' : 'h5-sport-icon-image'
+                  'menu-sport-active-image' : 'menu-sport-icon-image'
                 , 0
               )"></span>
             </sub-menu-specially>
@@ -64,7 +64,7 @@
                 <div class="inner-w flex justify-between items-center" :class="{ favorite: show_favorite_list }">
                   <div class="sport-w-icon">
                     <span class="sport-icon-wrap" :class="`${'s' + format_type(item)}`"
-                      :style="compute_css(current_lv2 == index ? 'h5-sport-active-image' : 'h5-sport-icon-image')"></span>
+                      :style="compute_css(current_lv2 == index ? 'menu-sport-active-image' : 'menu-sport-icon-image')"></span>
                     <!-- :data-type="format_menu_type(sub)" -->
                     <!-- :class="[get_sport_icon(selected_sub_menu_i_list.includes(sub_i)), `${'s' + format_type(sub)}`]" -->
 
@@ -156,7 +156,6 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, compute_css, compute_css_variables, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
-// import 'project_path/src/css/pages/menu.scss'
 // "1": "滚球",
 //   "2": "今日",
 //   "3": "早盘",
