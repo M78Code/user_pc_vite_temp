@@ -232,8 +232,8 @@ import { i18n_t } from "src/boot/i18n.js";
 .item-footer {
   height: 0.5rem;
   border-radius: 0.04rem;
-  color: var(--q-cathectic-color-33);
-  background: var(--q-cathectic-color-17);
+  color: var(--q-gb-t-c-3);
+  background: var(--q-cathectic-color-7);
   .result-p {
     line-height: 0.12rem;
   }
@@ -245,14 +245,14 @@ import { i18n_t } from "src/boot/i18n.js";
     color: var(--q-cathectic-color-1);
   }
   .green {
-    color: var(--q-cathectic-color-10);
+    color: var(--q-gb-t-c-2);
   }
 
   .gray {
-      color:  var(--q-cathectic-color-11);
+      color:  var(--q-cathectic-color-8);
     }
     .orange {
-      color:  var(--q-cathectic-color-29);
+      color:  var(--q-gb-t-c-11);
     }
     .red {
       color:  var(--q-cathectic-color-2);

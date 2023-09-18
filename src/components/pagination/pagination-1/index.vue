@@ -29,10 +29,10 @@
       </template>
     </div>
     <div class="pagination-wrap" :style="results_table">
-      <q-pagination v-model="page" color="#788299" text-color="panda-text-3" :max="max" size="sm" :max-pages="9"
+            <q-pagination v-model="page" color="#788299" text-color="panda-text-3" :max="max" size="sm" :max-pages="9"
         direction-links ellipses icon-prev="icon-triangle2" icon-next="icon-triangle3" />
       <div class="pagination-select">
-        <q-select class="select" :class="{ 'select-page-input': icon_name == 'icon-triangle' }" outlined
+                <q-select class="select" :class="{ 'select-page-input': icon_name == 'icon-triangle' }" outlined
           v-model="perPageNum" :options="perPageNumOptions" popup-content-style="border:1px solid #d0d8de;background:#fff"
           @popup-show="icon_name = 'icon-triangle'" @popup-hide="icon_name = 'icon-triangle1'">
           <template v-slot:option="scope">
@@ -125,24 +125,26 @@ const props = defineProps(
 //-------------------- 组件内ref  -------------------- 
 const { goPage, pagination, perPageNumOptions, pageChangeFlag, page, max, perPageNum } = useGetValue(props)
 
+
+
+
+
 //-------------------- 对外事件  -------------------- 
 const emit = defineEmits(['pageChange'])
-watch(pagination.value, val => {
-  console.log(  pagination.value.limit,
-      pagination.value.offset,
-      page.value,'aaa');
+
+watch(() => pagination, val => {
   if (!pageChangeFlag.value) {
     emit(
       "pageChange",
-    [  pagination.value.limit,
-      pagination.value.offset,
-      page.value]
+      agination.limit,
+      pagination.offset,
+      page
     );
   } else {
     pageChangeFlag.value = false;
   }
 
-},{ deep:true })
+})
 
  // 跳转页面
 const goToPage = (val) => {

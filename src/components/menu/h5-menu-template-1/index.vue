@@ -8,15 +8,15 @@
           </div>
         </slot>
         <div class="main-menu-container">
-          <template v-for="(item, index) in menu_list" :key="item.mi">
-            <div class="m-menu-item" :class="{ current: item.mi == menu_type }" v-show="show_dianjing(item, index)">
+          <template v-for="(item, index) in menu_list" :key="lodash.get(item, 'mi')">
+            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type }" v-show="show_dianjing(item, index)">
               <span class="i-title" @click="set_menu_lv1(item, index)">
-                {{ i18n_t("new_menu." + item.mi) || item.mi }}
+                {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
               </span>
               <div class="m-menu-count">
                 <span class="count" :style="{
                   visibility: show_favorite_list ||
-                    [7, 8].includes(item.mi) ? 'hidden' : 'visible'
+                    [7, 8].includes(lodash.get(item, 'mi')) ? 'hidden' : 'visible'
                 }">
                   {{ MenuData.count_menu(item) }}
                 </span><!---->
@@ -57,7 +57,7 @@
                 , 0
               )"></span>
             </sub-menu-specially>
-            <template v-for="(item, index) in current_menu" :key="item.mi">
+            <template v-for="(item, index) in current_menu" :key="lodash.get(item, 'mi')">
               <div class="sport-menu-item flex justify-center" v-show="![7, 28].includes(menu_type) ? item.ct > 0 : true"
                 @click="set_menu_lv2(item, index)">
 
@@ -77,7 +77,7 @@
                     'din-regular': esport
                   }">
                     {{ item.name || MenuData.get_menus_i18n_map(
-                      MenuData.recombine_menu_desc(item.mi)
+                      MenuData.recombine_menu_desc(lodash.get(item, 'mi'))
                     ) }}
                   </div>
                 </div>
@@ -136,10 +136,10 @@
     }" style="background: #fff">
       <template :key="i_m" v-for="(item, i_m) in pop_main_items">
         <div @click="set_menu_lv1(item, i_m)" class="main-m-select-item flex justify-center items-center"
-          v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == item.mi }">
+          v-show="is_menu_show(item, i_m)" :class="{ current: menu_type == lodash.get(item, 'mi') }">
 
           <div class="m-menu-name-m">
-            {{ i18n_t(`new_menu.${item.mi}`) }}
+            {{ i18n_t(`new_menu.${lodash.get(item, 'mi')}`) }}
           </div>
           <div class="m-count-match" v-if="!show_favorite_list">
             {{ MenuData.count_menu(item) }}
@@ -156,6 +156,7 @@ import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { i18n_t, compute_css, compute_css_variables, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
+import lodash from "lodash"
 // import 'project_path/src/css/pages/menu.scss'
 // "1": "滚球",
 //   "2": "今日",
@@ -257,7 +258,7 @@ function set_menu_lv1(item, index, type = "click") {
   show_selector_sub.value = false;
   current_menu.value = []; //二级菜单先滞空
   MenuData.set_current_lv1_menu(item, index);
-  switch (item.mi) {
+  switch (lodash.get(item, 'mi')) {
     case 1: //滚球第一个是全部
       if (type == "click") {
         //表示点击的是全部
@@ -290,7 +291,7 @@ function set_menu_lv1(item, index, type = "click") {
 const all_sport_count_calc = computed(() => {
   //找到滚球
   if (menu_type.value == 1 && update_time.value) {
-    let data_list = menu_list.value.find((item) => item.mi == 1);
+    let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
     //滚球下所有是数量总和
     return MenuData.count_menu(data_list)
   }
@@ -298,7 +299,7 @@ const all_sport_count_calc = computed(() => {
 });
 //点击滚球下的全部
 function select_all_sub_menu_handle() {
-  let data_list = menu_list.value.find((item) => item.mi == 1);
+  let data_list = menu_list.value.find((item) => lodash.get(item, 'mi') == 1);
   if (data_list) {
     set_menu_lv1(data_list, -1, "click");
   }
@@ -382,8 +383,8 @@ function set_menu_lv4(item, index, type = "click") {
 //判断后台是否展示 VR / 电竞
 const show_dianjing = (item, index) => {
   if (item?.mi) {
-    if (item.mi == 7) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
-    if (item.mi == 8) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
+    if (lodash.get(item, 'mi') == 7) return base_data.is_mi_2000_open; // 电竞tob后台关闭隐藏
+    if (lodash.get(item, 'mi') == 8) return base_data.is_mi_300_open; // VRtob后台关闭隐藏
     return ![2, 3, 6, 7].includes(index);
   }
 };
@@ -415,11 +416,11 @@ const format_type = (id) => {
 }
 //弹出框 是否展示
 function is_menu_show(item) {
-  if (item.mi == 28 && show_favorite_list.value) {
+  if (lodash.get(item, 'mi') == 28 && show_favorite_list.value) {
     return false;
   }
   let reslut = true;
-  if ([2, 3, 4, 30].includes(+item.mi)) {
+  if ([2, 3, 4, 30].includes(+lodash.get(item, 'mi'))) {
     if (item.ct <= 0) {
       reslut = false;
     }
@@ -446,7 +447,7 @@ function is_menu_show(item) {
 //     this.pop_main_select_items = _.filter(
 //       this.new_main_menu_list_items,
 //       (item) => {
-//         return ![1, 7, 8].includes(item.mi);
+//         return ![1, 7, 8].includes(lodash.get(item, 'mi'));
 //       }
 //     );
 //     // 数据替换
@@ -454,7 +455,7 @@ function is_menu_show(item) {
 //       let m_selected = this.pop_main_select_items[this.get_selector_w_m_i];
 //       let new_menu1 = this.new_main_menu_list_items;
 //       new_menu1.forEach((item, index) => {
-//         if (item.mi == m_selected.mi) {
+//         if (lodash.get(item, 'mi') == m_selected.mi) {
 //           [new_menu1[1], new_menu1[index]] = [new_menu1[index], new_menu1[1]];
 //           this.new_main_menu_list_items = new_menu1;
 //         }
