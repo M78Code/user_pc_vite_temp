@@ -30,7 +30,7 @@
 
   .menu-item-img,
   .play-icon-wrap {
-    background: var(--q-color-img-bg-13) no-repeat 0 0 / 0.2rem 2.77rem;
+    background: transparent no-repeat 0 0 / 0.2rem 2.77rem;
   }
 
   &.black2 {
@@ -265,6 +265,8 @@
         position: absolute;
         right: 0;
         top: unset; /*  联想S5手机自带浏览器不支持该关键字,导致图标往下掉 */
+        width: 0.09rem;
+        height: 0.09rem;
       }
     }
 

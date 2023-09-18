@@ -3,7 +3,7 @@
     <div class="menu-inner-wrap">
       <div class="main-wrap flex">
         <slot name="menu-left">
-          <div class="goback-icon-wrapper column justify-center">
+          <div class="goback-icon-wrapper column justify-center" @click="router.back()">
             <div class="img" :style="compute_css('menu-go-back-icon')"></div>
           </div>
         </slot>
