@@ -4,11 +4,11 @@
     <div class="item-wrap relative-position" ref="item_wrap" :style="{ left: item_wrap_left + 'px' }" :key="key">
       <div class="tab-item yb-flex-center" :class="[{ active: currentIndex == index }, val.class]"
         v-for="(val, index) in list" :key="index" @click.stop="onclick(index, val)" @mouseenter="tabs_enter(index)"
-        @mouseleave="tabs_leave(index)" :id="DOM_ID_SHOW && `top-menu-ids-${val.id}`">
-        <!-- TODO: v-check-img 还没有注册 -->
-        <img v-if="val.img_src" :src="val.img_src" alt="" srcset="" />
-        <!-- <img v-if="val.img_src"
-          v-check-img="{ src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png` }" /> -->
+        @mouseleave="tabs_leave(index)" :id="BUILDIN_CONFIG.DOM_ID_SHOW && `top-menu-ids-${val.id}`">
+        <!-- BUILDIN_CONFIG.DOM_ID_SHOW 显示部分dom ID -->
+        <img v-if="val.img_src"
+          v-check-img="{ src: val.img_src, default: `${$g_image_preffix}/image/common/activity_banner/gift_package.png` }" />
+        <!-- <div :class="val.class" :style="compute_css('gift-package')"></div> -->
         {{ val[tab_name_key] }}
         <!-- 早盘||串关 主列表顶部日期后显示赛事数量 -->
         <span v-if="is_list_top_menu" class="match-count">({{ val.count }})</span>
@@ -42,6 +42,8 @@ import lodash from 'lodash'
 import store from 'src/store-redux'
 /** utils 工具类 */
 // import { get_refs_info } from 'src/core/bet/common-helper/common-sport.js'
+import BUILDIN_CONFIG from "app/job/output/env/final.js";
+import { compute_css } from 'src/core/server-img/index.js'
 
 const props = defineProps({
   /** tab列表 */
@@ -114,8 +116,7 @@ const item_wrap_left = ref(0)
 const item_wrap_width = ref(0)
 /** 所有item的宽度 */
 const item_total_width = ref(0)
-/** 显示部分dom ID */
-const DOM_ID_SHOW = ref()
+
 /** 鼠标是否按下 */
 const is_mousedown = ref(false)
 
@@ -171,7 +172,6 @@ function init_func() {
 }
 
 onMounted(() => {
-  DOM_ID_SHOW.value = lodash.get(window, 'env.config.DOM_ID_SHOW')
   is_mousedown.value = false
 })
 /**
@@ -388,6 +388,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import './tab.scss';
 .tab-wrap {
   overflow: hidden;
 

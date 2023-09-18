@@ -405,14 +405,14 @@ onUnmounted(() => {
   .time {
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
-    background-color: var(--q-cathectic-color-3);
+    background-color: var(--q-gb-bd-c-15);
   }
 
   .sort {
     margin-right: auto;
     border-radius: 0.12rem;
     padding: 0.04rem 0.24rem 0.04rem 0.04rem;
-    background-color: var(--q-cathectic-color-3);
+    background-color: var(--q-gb-bd-c-15);
 
     p {
       width: max-content;

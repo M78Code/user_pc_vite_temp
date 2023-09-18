@@ -13,8 +13,8 @@
         <span v-else-if="top_.sportId == 102" style="--num:41"></span>
         <!-- {{store_data.theme}} -->
         <img :src="get_file_path(top_.tournamentPic,top_.sportId)" @error="handle_img_load_error" v-else>
-        <img v-if="UserCtr.theme.includes('theme01')"  src="image/wwwassets/bw3/common/match_cup.svg" class="beif_src">
-        <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
+        <img v-if="UserCtr.theme.includes('theme01')"  src="/public/yazhou-h5/image/common/match_cup.svg" class="beif_src">
+        <img v-else  src="/public/yazhou-h5/image/common/match_cup2.svg" class="beif_src">
       </p>
       <p class="col league-title-w ellipsis">
         <template v-if="top_.sportName">{{top_.matchName}}</template>
@@ -138,7 +138,7 @@ const props = defineProps({
 .pre-wrapper{
   font-weight: 500;
   font-size: 12px;
-  color: var(--q-cathectic-color-29);
+  color: var(--q-gb-t-c-12);
   .pre-button{
     display: flex;
     align-items: center;

@@ -1,7 +1,7 @@
 <template>
   <!-- 昵称、余额 -->
   <div class="header-wrap scroll-fixed-bg" :class="UserCtr.is_invalid && 'invalid'">
-    <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'token')}`" :user-version="UserCtr.user_version">
+    <div class="user-info" :token="`?token=${get(UserCtr.user_info, 'token')}`" >
       <!-- 昵称 -->
       <div style="display: none;"> {{ UserCtr.user_version }}</div>
       <div class="ellipsis">Hi, {{ get(UserCtr.get_user_info_data(), "nickName") }}</div>
@@ -15,15 +15,10 @@
           {{ format_balance(UserCtr.balance) }}
         </div>
         <!-- 余额是否隐藏图标 -->
-        <icon
-          :name="UserCtr.show_balance ? 'icon-eye_show' : 'icon-eye_hide'"
-          size="14px"
-          class="balance-btn-eye cursor-pointer"
-          @click="UserCtr.set_show_balance(!UserCtr.show_balance)"
-        />
+        <icon-wapper class="icon balance-btn-eye cursor-pointer" @click="UserCtr.set_show_balance(!UserCtr.show_balance)" :name="UserCtr.show_balance ? 'icon-eye_show' : 'icon-eye_hide'" size="14px" />
       </div>
       <!-- 刷新余额按钮 -->
-      <refresh
+      <refresh-balance
         v-show="UserCtr.show_balance"
         class="refresh-btn"
         :other_icon="true"
@@ -41,6 +36,8 @@ import { ref, onBeforeUnmount, computed, onMounted, reactive } from "vue";
 import { get } from "lodash";
 import { UserCtr,format_balance  } from "src/core/index.js";
 import { useMittOn, MITT_TYPES } from "src/core/mitt";
+import { IconWapper } from 'src/components/icon'
+import RefrechBlance from "./refrech.vue"
 
 
 // 是否已加载
@@ -61,3 +58,59 @@ onBeforeUnmount(() => {
   off();
 });
 </script>
+
+<style scoped lang="scss">
+.header-wrap {
+  padding: 4px 10px 4px 15px;
+  height: 40px;
+  font-weight: 500;
+  line-height: 1.3;
+  border-top: 1px solid var(--q-gb-bd-c-6);
+  border-right: 1px solid var(--q-gb-bd-c-6);
+  border-radius: 0 6px 0 0;
+  background: var(--q-gb-bg-c-14);
+
+  /*  用户信息 */
+  .user-info {
+    padding-right: 10px;
+    font-size: 12px;
+    .ellipsis{
+      color: var(--q-gb-t-c-3);
+    }
+  }
+
+  /*  用户余额 */
+  .balance-wrap {
+    width: 100%;
+    height: 15px;
+    font-size: 14px;
+    .balance-text-show {
+      color: var(--q-gb-t-c-19);
+      font-weight: 700;
+    }
+
+    /*  用户余额隐藏 */
+    .balance-text-hide {
+      font-size: 16px; // color: var(--qq--theme-color-icon-eye);
+      /* 是否显示余额图标 */
+    }
+
+    .balance-btn-eye {
+      margin-left: 10px;
+    }
+
+    /*  刷新余额按钮 */
+    .refresh-btn {
+      position: absolute;
+      top: -8px;
+      right: 10px;
+      bottom: 11px;
+      width: auto !important;
+
+      .icon-refresh:before {
+        font-size: 14px;
+      }
+    }
+  }
+}
+</style>

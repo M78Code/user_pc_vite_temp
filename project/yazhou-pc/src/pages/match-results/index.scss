@@ -10,7 +10,7 @@
     top: -200px;
   }
 
-  ::v-deep .material-icons {
+  :deep(.material-icons) {
     font-family: "Material Icons";
     font-weight: normal;
     font-style: normal;
@@ -38,66 +38,13 @@
     margin-left: 10px;
   }
 
-  /* ************** 备注说明 *************** -S */
-  .match-resultstips-wrap {
-    min-width: 122px;
-  }
 
-  .match-resultstips-icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 14px;
-
-    & > span {
-      display: block;
-      width: 18px;
-      height: 18px;
-      background-image: var(--qq--results-bg-image-url45);
-
-      &:hover {
-        background-image: var(--qq--results-bg-image-url45-hover);
-      }
-    }
-
-    .results-tips {
-      position: absolute;
-      // width: 100vw;
-      text-align: right;
-      top: -38px;
-      left: -100px;
-
-      div {
-        background: #666666;
-        border-radius: 6px;
-        white-space: nowrap;
-        color: #ffffff;
-        padding: 4px 6px;
-        transition: all 0.3s linear;
-      }
-    }
-
-    .match-resultstip-box {
-      position: relative;
-    }
-
-    .results-arrow {
-      position: absolute;
-      bottom: 16px;
-      left: 2px;
-      width: 14px;
-      height: 14px;
-      border: 7px solid transparent;
-      z-index: 100;
-      transform: rotate(180deg);
-      border-bottom: 7px solid #666666;
-    }
-  }
 
   /* ************** 备注说明 *************** -E */
 
   /* ************** 表格穿透样式 *************** -S */
-  ::v-deep {
-    .wrap-table {
+
+   :deep(.wrap-table) {
       display: flex;
       flex: 1;
       flex-flow: column;
@@ -114,18 +61,18 @@
       }
     }
 
-    .table-header {
+    :deep(.table-header) {
       display: flex;
       justify-content: space-between;
       align-items: center;
       height: 30px;
       color: #000;
     }
-  }
+  
 
   /* ************** 表格穿透样式 *************** -E */
 
-  ::v-deep .e-select {
+  :deep(.e-select) {
     .opitons-wrap {
       z-index: 2;
     }
@@ -138,11 +85,11 @@
   border-top: 1px solid #d0d8de;
   overflow: hidden;
 
-  ::v-deep {
-    .q-pagination > div {
+ 
+    :deep(.q-pagination > div) {
       color: #17191d;
     }
-  }
+  
 }
 
 /* ************** 分页 *************** -E */

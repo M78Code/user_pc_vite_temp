@@ -117,7 +117,7 @@ function refresh() {
       }
 
       .systime {
-          color: var(--q-simple-header-color-4);
+          color: var(--q-gb-t-c-10);
       }
 
       .img-logo {

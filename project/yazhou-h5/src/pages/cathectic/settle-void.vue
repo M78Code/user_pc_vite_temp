@@ -95,7 +95,7 @@ const go_bet = () => {
 }
 
 .go-bet {
-  background: var(--q-cathectic-color-10);
+  background: var(--q-gb-bg-lg-22);
   border-radius: 4px;
   color: #fff;
   margin-top: 0.1rem;

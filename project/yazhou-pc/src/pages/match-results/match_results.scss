@@ -1,28 +1,28 @@
 
 body {
   .match_results {
-    background: var(--qq--theme-bg-match_results);
+    background: var(--q-gb-bg-c-11);
     .main_wrap {
    
     }
     .wrap-table {
       .table-header {
-        background: var(--qq--background-gradient-13);
+        background: var(--q-gb-bg-lg-22);
         // color: var(--qq--yb-text-color3);
-        color: var(--qq--yb-text-active-color1);
-        border: 1px solid var(--qq--yb-border-color13);
+        color: var(--q-match-result-text-color-1);
+        border: 1px solid var(--q-gb-bd-c-7); //#dce0e5
         .icon {
           background-repeat: no-repeat;
-          background-image: url("~public/image/common/png/sports_play_icon.png");
+          background-image: url("/yazhou-pc/image/common/png/sports_play_icon.png");
         }
         .sort {
           width: 12px;
           height: 12px;
           background-size: 100%;
           background-repeat: no-repeat;
-          background-position: 0 var(--qq--img-bg-position-sort);
+          background-position: 0 var(--q-match-result-position-1);
           &.up {
-            background-position: 0 var(--qq--img-bg-position-sort-up);
+            background-position: 0 var(--q-match-result-position-2);
           }
         }
         // 足球比分 icon
@@ -73,10 +73,10 @@ body {
         }
       }
       .tbale-body {
-        color: var(--qq--yb-text-active-color1);
-        background: var(--qq--y0-bg-color2);
+        color: var(--q-match-result-text-color-1);
+        background: var(--q-gb-bg-c-11);
         .color-highlight {
-          color: var(--qq--y0-text-color1);
+          color: var(--q-gb-t-c-16);
         }
         .table-col {
           .browser {
@@ -85,66 +85,66 @@ body {
             height: 12px !important;
             background-size: 100%;
             background-repeat: no-repeat;
-            background-image: var(--qq--bg-image-url35);
+            background-image: var(--qq--bg-image-url35); //`url(${preffix}/image/yabo/svg/theme01_plus.svg)`,
             &.del {
-              background-image: var(--qq--bg-image-url36);
+              background-image: var(--qq--bg-image-url36); //`url(${preffix}/image/yabo/svg/theme01_del.svg)`
             }
           }
         }
         .table-tr-td {
-          border-bottom: 1px solid var(--qq--yb-border-color7);
-          border-left: 1px solid var(--qq--yb-border-color7);
+          border-bottom: 1px solid var(--q-match-result-boreder-1);//#d0d8de
+          border-left: 1px solid var(--q-match-result-boreder-1);
           &:hover {
             // background-color: #2C2D34;
-            background: var(--qq--y0-bg-color20);
+            background: var(--q-gb-bg-c-110);
           }
           .table-col {
-            border-right: 1px solid var(--qq--yb-border-color7);
+            border-right: 1px solid var(--q-match-result-boreder-1);
           }
         }
         .active {
         //   background-color: #2C2D34;
-          background: var(--qq--y0-bg-color20);
+          background: var(--q-gb-bg-c-110);
         }
         .wrap-load {
-          background-color: var(--qq--y0-bg-color7);
-          border-bottom: 1px solid var(--qq--yb-border-color7);
+          background-color: var(--q-gb-bg-c-15);
+          border-bottom: 1px solid var(--q-match-result-boreder-1);
         }
         .table-tr-detail {
-          background-color: var(--qq--y0-bg-color7);
-          border-left: 1px solid var(--qq--yb-border-color7);
+          background-color: var(--q-gb-bg-c-15);
+          border-left: 1px solid var(--q-match-result-boreder-1);
           .tr-detail-item {
             .item {
-              border-right: 1px solid var(--qq--yb-border-color7);
-              border-bottom: 1px solid var(--qq--yb-border-color7);
+              border-right: 1px solid var(--q-match-result-boreder-1);
+              border-bottom: 1px solid var(--q-match-result-boreder-1);
             }
           }
           .tr-detail-title {
-            border-right: 1px solid var(--qq--yb-border-color7);
-            border-bottom: 1px solid var(--qq--yb-border-color7);
-            color: var(--qq--yb-text-color3);
+            border-right: 1px solid var(--q-match-result-boreder-1);
+            border-bottom: 1px solid var(--q-match-result-boreder-1);
+            color: var(--q-match-result-text-color-2);
           }
         }
       }
     }
     .table-footer {
-      border-top: 1px solid var(--qq--yb-border-color7);
+      border-top: 1px solid var(--q-match-result-boreder-1);
     //   background: var(--qq--y0-bg-color8);
       .q-pagination > div {
-        color: var(--qq--y0-text-color7);
+        color: var(--q-match-result-text-color-3);
       }
       .q-field--outlined {
         .q-field__control {
         //   background-color: var(--qq--y0-bg-color8);
           &:before {
-            border-color: var(--qq--yb-border-color11);
+            border-color: var(--q-match-result-boreder-1);
             &:hover {
-              border-color: var(--qq--y0-text-color1);
+              border-color: var(--q-gb-t-c-16);
             }
           }
           .q-field__native {
             span {
-              color: var(--qq--yb-text-active-color1);
+              color: var(--q-match-result-text-color-1);
             }
           }
         }
@@ -153,31 +153,31 @@ body {
       .pagination-wrap {
         .q-pagination {
           .row {
-            color: var(--qq--y0-text-color7);
+            color: var(--q-match-result-text-color-3);
           }
         }
         .q-btn--standard {
-          background-color: var(--qq--y0-btn-hover);
+          background-color: var(--q-gb-bg-c-18);//#ffb001
           .row {
-            color: var(--qq--color-result-btn-page);
+            color: var(--q-gb-t-c-18);
           }
         }
         .pagination-link {
           span {
-            color: var(--qq--y0-text-color7);
+            color: var(--q-match-result-text-color-3);
           }
           input {
-            background: var(--qq--yb-bg-color3);
-            border: 1px solid var(--qq--yb-border-color11);
-            color: var(--qq--yb-text-active-color1);
+            background: var(--q-gb-bg-c-11);
+            border: 1px solid var(--q-match-result-boreder-1);
+            color: var(--q-match-result-text-color-1);
             &:hover {
-              border: 1px solid var(--qq--y0-text-color1);
+              border: 1px solid var(--q-gb-t-c-16);
             }
           }
         }
         .pagination-select {
           span {
-            color: var(--qq--y0-text-color7);
+            color: var(--q-match-result-text-color-3);
           }
         }
       }
