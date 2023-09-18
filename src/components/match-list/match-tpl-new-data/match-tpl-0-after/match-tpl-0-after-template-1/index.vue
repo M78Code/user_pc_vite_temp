@@ -16,8 +16,9 @@
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
+        {{ match_list_tpl_size.template_0_main }}
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match.main_handicap_list" :match="match" />
+        <match-handicap :handicap_list="match_list_tpl_size.template_0_main" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
