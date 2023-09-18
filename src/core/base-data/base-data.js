@@ -355,9 +355,9 @@ class BaseData {
    */
   async init_mew_menu_list() {
     let res = await api_base_data.get_base_data_menu_init({});
-    let menu_info = lodash_.get(res, 'data')
+    let menu_info = lodash_.get(res, 'data', [])
 
-    let menu_old_or_nem_data_list = [...menu_info];
+    let menu_old_or_nem_data_list = menu_info ? [...menu_info] : [];
     this.menu_type_old_or_new = "new";
     // 判断新旧菜单
     // menuId 旧菜单才有
