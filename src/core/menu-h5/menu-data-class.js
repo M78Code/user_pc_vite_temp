@@ -180,9 +180,9 @@ class MenuData {
       const mid_item = pop_main_items.find((item) => {
         return this.current_lv_1_menu && this.current_lv_1_menu.mi == item.mi;
       });
-      menu_list.splice(1, 0, mid_item || this.menu_lv1[1] || pop_main_items[0]);
+      menu_list.splice(1, 0, mid_item || this.menu_lv1[1] || pop_main_items[0] || {});
     } else {
-      menu_list.splice(1, 0, pop_main_items[0]);
+      menu_list.splice(1, 0, pop_main_items[0], {});
     }
     this.menu_lv1 = menu_list;
     //如果没有设定过1级菜单
@@ -363,6 +363,11 @@ class MenuData {
     return base_data_instance.menus_i18n_map[item];
   }
 
+  // /**
+  //  * @description: 球类id转化背景
+  //  * @param {String} id 球类id
+  //  * @return {}
+  //  */
   /**
    * @description: 球类id
    * @param {String} id 球类id
@@ -374,8 +379,136 @@ class MenuData {
     }
     let bg_mi = parseInt(this.recombine_menu_desc(item?.mi));
     let id = parseInt(bg_mi - 100);
-    return id;
+    if (get_ball_id) return id;
+    let type = "";
+    switch (String(id)) {
+      case "1":
+        type = "football";
+        break;
+      case "2":
+        type = "basketball";
+        break;
+      case "3":
+        type = "baseball";
+        break;
+      case "4":
+        type = "ice_hockey";
+        break;
+      case "5":
+        type = "tennis";
+        break;
+      case "6":
+        type = "usa_football";
+        break;
+      case "7":
+        type = "snoke";
+        break;
+      case "8":
+        type = "pingpang";
+        break;
+      case "9":
+        type = "volleyball";
+        break;
+      case "10":
+        type = "badminton";
+        break;
+      case "11":
+        type = "handball";
+        break;
+      case "12":
+        type = "boxing";
+        break;
+      case "13":
+        type = "beach_volleyball";
+        break;
+      case "14":
+        type = "rugby_union";
+        break;
+      case "15":
+        type = "hockey";
+        break;
+      case "16":
+        type = "water_polo";
+        break;
+      case "18":
+        type = "funny";
+        break;
+      case "37":
+        type = "banqiu";
+        break;
+      case "26":
+        type = "binghu";
+        break;
+      case "31":
+        type = "fanchuan";
+        break;
+      case "38":
+        type = "feibiao";
+        break;
+      case "28":
+        type = "gaoerfu";
+        break;
+      case "32":
+        type = "huachuan";
+        break;
+      case "25":
+        type = "jijian";
+        break;
+      case "23":
+        type = "juzhong";
+        break;
+      case "35":
+        type = "kongshoudao";
+        break;
+      case "40":
+        type = "qita";
+        break;
+      case "33":
+        type = "saiche";
+        break;
+      case "39":
+        type = "shatanzuqiu";
+        break;
+      case "24":
+        type = "shejian";
+        break;
+      case "36":
+        type = "shuaijiao";
+        break;
+      case "27":
+        type = "taiquandao";
+        break;
+      case "17":
+        type = "tianjing";
+        break;
+      case "21":
+        type = "tiaoshui";
+        break;
+      case "20":
+        type = "ticao";
+        break;
+      case "19":
+        type = "youyong";
+        break;
+      case "29":
+        type = "zixingche";
+        break;
+      case "22":
+        type = "sheji";
+        break;
+      case "34":
+        type = "roudao";
+        break;
+      case "30":
+        type = "saima";
+        break;
+      case "50":
+        type = "quwei";
+        break;
+    }
+    return type;
   }
+
   // 是否展示二级菜单 图标
   show_secondary_menu_icon(item) {
     if (!this.show_favorite_list) return true;

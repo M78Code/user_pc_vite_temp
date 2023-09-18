@@ -1,0 +1,329 @@
+<template>
+  <div
+    v-if="is_mounted && odds_state != 'close'"
+    class="c-bet-item yb-flex-center relative-position yb-family-odds"
+    :class="[
+      ol_data.class,
+      odds_state,
+      `csid${ol_data.csid}`,
+      odds_lift,
+      { 'show-odds-icon': odds_state != 'seal' },
+    ]"
+    @click.stop="bet_click"
+    :id="`list-${ol_data.oid}`"
+  >
+    <!-- 盘口 -->
+    <div
+      :class="[
+        'handicap-value',
+        {
+          'color-highlight': ol_data.handicap_highlight,
+          style2: ol_data.onbl && ol_data.csid == 2,
+          left_cell: utils.is_iframe,
+          'injury-time-goal': ol_data.ot === 'ClutchGoal',
+          nogoal: ol_data.ot === 'NoGoal',
+        },
+      ]"
+    >
+      <span class="handicap-more" v-show="ol_data.onbl"
+        >{{ ol_data.onbl }}&nbsp;</span
+      >
+      <div class="handicap-value-text">{{ score }} {{ ol_data.onb }}</div>
+    </div>
+
+    <!-- 赔率 -->
+    <div
+      class="odds"
+      :style="
+        [1, 32, 17, 111, 119, 310, 311, 126, 129, 333, 20001, 20013].includes(
+          +ol_data._hpid
+        ) && utils.is_iframe
+          ? 'flex:1.5'
+          : ''
+      "
+    >
+      <div v-if="odds_state == 'seal'" class="lock" />
+      <span v-else>
+        {{ match_odds }}
+      </span>
+      <div
+        class="odds-arrows-wrap"
+        v-if="odds_state != 'seal' && !menu_config.is_virtual_sport"
+      >
+        <!-- 红升、绿降 -->
+        <div class="odds-icon odds-up"></div>
+        <div class="odds-icon odds-down"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// import bet_item_mixin  from "src/public/components/bet_item/bet_item_list_new_data_mixin.js";
+import { onMounted, ref, defineProps, onUnmounted, computed } from "vue";
+
+import { get_odds_active, utils, MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/index.js";
+import menu_config from "src/core/menu-pc/menu-data-class.js";
+
+
+const is_mounted = ref(false);
+// 盘口状态 active:选中 lock:锁盘 seal:封盘 close:关盘
+const odds_state = ref("");
+// 赔率值
+const match_odds = ref("");
+// 赔率升降 up:上升 down:下降
+const odds_lift = ref("");
+// 是否红升绿降中
+const odds_lift_show = ref(false);
+
+// 定时器对象
+let timer_obj = {};
+
+const props = defineProps({
+  ol_data: {
+    type: [Object, Array],
+    default: () => {},
+  },
+});
+
+//玩法比分
+const score = computed(() => {
+  let score = "";
+  let { _hpid: hpid, ot = "", on } = props.ol_data;
+  // 比分玩法的显示
+  if ([7, 20, 74, 341, 342].includes(+hpid) && !_.isEmpty(ot)) {
+    if (ot.includes(":")) {
+      score = ot.replace(":", "-");
+    } else if (_.toLower(ot) == "other") {
+      score = on;
+    }
+  }
+  return score;
+});
+
+onMounted(() => {
+  // 异步设置组件是否挂载完成
+  setTimeout(() => {
+    is_mounted.value = true;
+  });
+});
+
+/**
+ * 设置赔率升降
+ * @param  {number} cur - 当前赔率值
+ * @param  {number} old - 上次赔率值
+ * @return {undefined} undefined
+ */
+const set_odds_lift = (cur, old) => {
+  let _odds_lift = "";
+
+  if (
+    odds_state.value != "lock" &&
+    odds_state.value != "seal" &&
+    old &&
+    !is_odds_seal()
+  ) {
+    if (cur > old) {
+      _odds_lift = "up";
+    } else if (cur < old) {
+      _odds_lift = "down";
+    }
+
+    if (_odds_lift && !odds_lift_show.value) {
+      /**清除定时器 */
+      if (timer_obj["odds_lift"]) {
+        clearTimeout(timer_obj["odds_lift"]);
+        timer_obj["odds_lift"] = null;
+      }
+      odds_lift_show.value = true;
+      odds_lift.value = _odds_lift;
+
+      timer_obj["odds_lift"] = setTimeout(() => {
+        odds_lift.value = "";
+        odds_lift_show.value = false;
+      }, 3000);
+    }
+  }
+};
+
+/**
+ * 取消赔率升降
+ */
+const clear_odds_lift = () => {
+  odds_lift.value = "";
+};
+
+/**
+ * 当赔率对应的欧赔小于1.01时，强制转换成封盘的状态 对盘口加锁
+ * @return {boolean}
+ */
+const is_odds_seal = () => {
+  let ov = _.get(props.ol_data, "ov");
+  let obv = _.get(props.ol_data, "obv");
+  let _odds = ov || obv;
+  return _odds < 101000;
+};
+
+/**
+ * @description 获得最新的盘口状态
+ * @param  {number} mhs  赛事级 0：开 1：封 2：关 11：锁
+ * @param  {number} hs   盘口级 0：开 1：封 2：关 11：锁
+ * @param  {number} os  投注项级 1：开 2：封 3：关 4：锁
+ * @return {undefined} undefined
+ */
+const get_odds_state = (mhs, hs, os) => {
+  let _active = get_odds_active(mhs, hs, os);
+  let id = _.get(props.ol_data, "_hn") || _.get(props.ol_data, "oid");
+  let state = "";
+  const STATE = {
+    // 封盘
+    2: "seal",
+    // 关盘
+    3: "close",
+  };
+  if (!id) {
+    state = "disable";
+  } else if (STATE[_active]) {
+    state = STATE[_active];
+  } else {
+    let selected_class;
+    if (this.vx_get_is_virtual_bet) {
+      selected_class = this.virtual_bet_item_select(id);
+    } else {
+      selected_class = this.bet_item_select(id);
+    }
+    state = selected_class ? "active" : "normal";
+  }
+  // 当赔率对应的欧赔小于1.01时 ！！！！！！！！！！！！！！！！并且当前不在关盘状态，强制转换成封盘的状态 对盘口加锁
+  return is_odds_seal() && _active !== 3 ? "seal" : state;
+};
+
+/**
+ * @description 投注项点击
+ * @return {undefined} undefined  组装投注项的数据
+ */
+const bet_click = () => {
+  console.log(1111);
+};
+
+onUnmounted(() => {
+  // 清除定时器
+  for (const key in timer_obj) {
+    clearTimeout(timer_obj[key]);
+    timer_obj[key] = null;
+  }
+});
+</script>
+
+<style lang="scss" scoped>
+.show-odds-icon {
+  &.up {
+    .odds-up {
+      display: block;
+    }
+  }
+}
+.show-odds-icon {
+  &.down {
+    .odds-down {
+      display: block;
+    }
+  }
+}
+.odds-arrows-wrap {
+  position: relative;
+}
+.odds-icon {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  left: -1px;
+  top: -6px;
+  overflow: hidden;
+  display: none;
+}
+.odds-up {
+  background: url("~public/image/wwwassets/yabo/svg/up.svg") no-repeat 100%;
+}
+.odds-down {
+  background: url("~public/image/wwwassets/yabo/svg/down.svg") no-repeat 100%;
+}
+.lock {
+  width: 12px;
+  height: 12px;
+}
+.has-hv {
+  .handicap-value {
+    display: none !important;
+  }
+}
+
+/*  盘口样式 */
+.handicap-value {
+  line-height: 34px;
+  flex: 1;
+  text-align: right;
+  height: 34px;
+  white-space: nowrap;
+  &.style2 {
+    min-width: 57%;
+    .handicap-value-text {
+      min-width: 30px;
+    }
+  }
+  &.left_cell.nogoal {
+    flex: 1.5;
+  }
+  &.injury-time-goal {
+    flex: 1.7;
+    &.left_cell {
+      flex: 2.3;
+    }
+  }
+}
+
+/*  赔率样式 */
+.odds {
+  flex: 1;
+}
+.odds.hv {
+  justify-content: flex-start !important;
+}
+.no-handicap,
+.no-handi,
+.null-handicap {
+  .handicap-value {
+    display: none;
+  }
+  .odds {
+    justify-content: center;
+    margin-left: 0;
+  }
+}
+.null-handicap {
+  .handicap-value {
+    display: none;
+  }
+  .odds {
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+.handicap-value-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+.vertical {
+  flex-direction: column;
+  .handicap-value {
+    line-height: 30px;
+    height: 26px;
+  }
+  .odds {
+    margin: 0;
+  }
+}
+.left_cell {
+  text-align: left !important;
+}
+</style>

@@ -124,7 +124,7 @@
         </div>
         <!-- 搜索 -->
         <div class="search-btn" @click="sub_search">
-          {{ i18n_t("results.search") }}11
+          {{ i18n_t("results.search") }}
         </div>
       </div>
     </div>
@@ -324,7 +324,7 @@ const  showBtn = ref(props.is_show)
         border-radius: 2px;
         cursor: pointer;
 
-        & :v-deep(.icon-calendar) {
+        & :deep(.icon-calendar) {
           font-size: 14px;
         }
       }

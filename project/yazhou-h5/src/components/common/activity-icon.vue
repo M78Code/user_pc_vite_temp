@@ -4,7 +4,7 @@
         <!-- 活动图标 -->
         <img v-if="activity_default" class="activity-logo animate-bounce-up"
             :src="get_file_path(UserCtr.user_info?.activityList[0].h5Url)" @error="activity_icon_error" alt="">
-        <div v-else :style="compute_css('h5-activity-entrance')" class="activity-logo animate-bounce-up"></div>
+        <div v-else :style="compute_css('menu-activity-entrance')" class="activity-logo animate-bounce-up"></div>
 
         <!-- 活动图标红点 -->
         <div class="red-dot" v-show="task_list > 0 && UserCtr.user_info?.inActivity &&

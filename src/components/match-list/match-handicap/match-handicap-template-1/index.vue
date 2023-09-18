@@ -13,7 +13,7 @@
           :key="ol_index">
           <!-- 投注项组件 -->
           <template v-if="match.tpl_id != 'esports' || (match.tpl_id == 'esports' && getCurState(ol_data._hipo))">
-            <bet-item v-if="is_mounted && ol_data.oid" :ol_data="ol_data" />
+            <bet-item v-if="is_mounted && ol_data._hpid" :ol_data="ol_data" />
           </template>
         </div>
       </div>
@@ -34,7 +34,7 @@ import { utils_info } from 'src/core/utils/module/match-list-utils.js';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import { get_match_status } from 'src/core/utils/index'
-// import betItem from "src/public/components/bet_item/bet_item_list_new_data.vue"
+import betItem from "src/components/bet-item/bet-item-list-new-data.vue"
 import { MatchFooterScoreFullVersionWapper as MatchFooterScore } from "src/components/match-list/match-footer-score/index.js"
 import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template/index.js'
 import BetData from 'src/core/bet/class/bet-data-class.js'
@@ -42,15 +42,34 @@ import BetData from 'src/core/bet/class/bet-data-class.js'
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 const props = defineProps({
+  // 盘口列表
+  handicap_list: {
+    type: Array,
+    default: () => [],
+  },
   // 赛事
   match: {
     type: Object,
     default: () => {},
   },
+  // 是否显示比分
+  is_show_score: {
+    type: Boolean,
+    default: () => false,
+  },
+  // 是否显示比分内容
+  is_show_score_content: {
+    type: Boolean,
+    default: () => false,
+  },
+  // 是否主球次要玩法
+  other_play: {
+    type: Boolean,
+    default: () => false,
+  }
 })
-
 // 赛事模板宽度
-const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template' + props.match.tpl_id]
+const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_1_config'])
 
 // 组件是否已挂载
 const is_mounted = ref(false)
@@ -88,7 +107,8 @@ const get_5min_classname = () => {
  * @return {Number}  bet_width 投注项宽度 
  */
 const get_bet_width = (index, other_class = '') => {
-  let { bet_width } = match_list_tpl_size.value
+  // let { bet_width } = match_list_tpl_size.value
+  let bet_width = 110;
   let { tpl_id } = props.match
   if (other_class.includes('col1.5')) {
     bet_width *= 1.5

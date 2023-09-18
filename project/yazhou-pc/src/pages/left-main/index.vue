@@ -40,6 +40,7 @@
 
       </template>
 
+      <div class="ssssss">
       <!-- 滚动：内容 --------------------------------->
       <!-- 菜单项 -->
       <template v-if="MenuData.layout_left_show == 'menu'">
@@ -55,7 +56,7 @@
       <template v-if="MenuData.layout_left_show == 'bet_history'">
         <bet-record-view @set_scroll_this="set_scroll_this" />
       </template>
-
+      </div>
     </v-scroll-area>
     <!--提示区域-->
     <q-tooltip content-class="bet-bg-tooltip" anchor="bottom left" self="top left" :offset="[181, 10]"
@@ -194,48 +195,7 @@ const get_unsettle_tickets_count_config = () => {
   z-index: 211;
   width: 100%;
 
-  .header-wrap {
-    padding: 4px 10px 4px 15px;
-    height: 40px;
-    font-weight: 500;
-    line-height: 1.3;
 
-    /*  用户信息 */
-    .user-info {
-      padding-right: 10px;
-      font-size: 12px;
-    }
-
-    /*  用户余额 */
-    .balance-wrap {
-      width: 100%;
-      height: 15px;
-      font-size: 14px;
-
-      /*  用户余额隐藏 */
-      .balance-text-hide {
-        font-size: 16px; // color: var(--qq--theme-color-icon-eye);
-        /* 是否显示余额图标 */
-      }
-
-      .balance-btn-eye {
-        margin-left: 10px;
-      }
-
-      /*  刷新余额按钮 */
-      .refresh-btn {
-        position: absolute;
-        top: -8px;
-        right: 10px;
-        bottom: 11px;
-        width: auto !important;
-
-        .icon-refresh:before {
-          font-size: 14px;
-        }
-      }
-    }
-  }
 
   /* *** 头部 ************ -E */
   .scroll-inner-wrap {
