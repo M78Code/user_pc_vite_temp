@@ -639,12 +639,10 @@
           color: var(--q-site-header-color-3);
         }
         .icon-balance_refresh {
-            // TODO: 改用server-img/other
-          background-image: url('public/yazhou-pc/image/theme01/balance_refresh.svg');
+          background-image: url('yazhou-pc/image/theme02/balance_refresh.svg');
           background-position: center;
           &:hover {
-            // TODO: 改用server-img/other
-            background-image: url('public/yazhou-pc/image/theme01/balance_refresh_hover.svg');
+            background-image: url('yazhou-pc/image/theme02/balance_refresh_hover.svg');
           }
         }
       }
