@@ -21,6 +21,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
+
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
@@ -157,6 +158,9 @@ class UserCtr {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     this.update()
+    // 替换body上className
+    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'theme01' ? 'theme02' : 'theme01';
+    document.getElementById('ty-body').classList.replace(old_theme, theme)
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -263,7 +267,7 @@ class UserCtr {
    * 设置版本 简易版还是 标准版
    * 2标准 1简易
   */
-  set_standard_edition() {
+  set_standard_edition(v) {
     let edition = this.standard_edition == 2 ? 1 : 2;
     this.standard_edition = edition;
     this.update()
