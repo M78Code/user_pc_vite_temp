@@ -65,9 +65,8 @@ function compute_css({ position, theme }) {
   }
    //如果有服务器图片，使用cdn图片
   if(position[0]){
-    console.log(position,'position',get_file_path(position[0]));
     return {
-      "background-image": `url(${position[0]})`,
+      "background-image": `url(${get_file_path(position[0])})`,
       "background-position": "0 0",
       "background-size": "100%",
      " background-repeat":"no-repeat"

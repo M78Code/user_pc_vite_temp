@@ -1,13 +1,13 @@
 /*
  * @Author         : lane jstylane@itcom888.com
  * @Date           : 2023-07-30 19:59:10
- * @LastEditors    : lane jstylane@itcom888.com
- * @LastEditTime   : 2023-07-30 20:03:55
+ * @LastEditors: lowen pmtylowen@itcom888.com
+ * @LastEditTime: 2023-09-19 14:49:07
  * @FilePath       : \user-pc-vite\src\core\file-path\file-path.js
  * @Description    : 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 // 电竞赛种csid
-import _ from 'lodash'
+import lodash from 'lodash'
 
 const NODE_ENV = process.env.NODE_ENV
 const e_sport_csids = [101, 100, 102, 103];
@@ -60,7 +60,7 @@ const get_file_path = (path, csid = 0) => {
     return '';
   }
   // 如果是http开头 直接返回地址
-  if (_.toString(path).indexOf('http') == 0) {
+  if (lodash.toString(path).indexOf('http') == 0) {
     return path
   }
   // // 电竞菜单下如果type没有传值，默认为2
@@ -82,7 +82,7 @@ const get_file_path = (path, csid = 0) => {
   }
 
   domain_img_str = config.domain_img[current_env];
-  if (domain_img_str) {
+  if (!lodash.isEmpty(domain_img_str) ) {
     return `${domain_img_str}/${path}`;
   }
 
@@ -95,11 +95,13 @@ const get_file_path = (path, csid = 0) => {
   }
 
   if ((NODE_ENV == 'development')) {
-    let api_domain = config.domain[current_env][0];
+    console.log(window.BUILDIN_CONFIG,'window.BUILDIN_CONFIG');
+    // let api_domain = config.domain[current_env][0]; //config没有赋值domain 从老项目迁移
+    let api_domain = lodash.get(window,"BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[0]","")
+    // let api_domain = window.BUILDIN_CONFIG [current_env][0];
     api_domain = api_domain.replace(/\/\/.*?\./, '//image.');
     return `${api_domain}/${path}`;
   }
-
   let arr = location.host.split(".");
   let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]}`;
 

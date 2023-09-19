@@ -13,12 +13,12 @@
             <div class="item-wrap">
                 <div class="triangle"></div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme01' }"
-                    @click="handle_set_theme('theme01')">
+                    @click="handle_set_theme('day')">
                     {{ i18n_t('set.day_') }}
                     <!-- 日间版 -->
                 </div>
                 <div class="item ellipsis" :class="{ active: handicap_theme == 'theme02' }"
-                    @click="handle_set_theme('theme02')">
+                    @click="handle_set_theme('night')">
                     {{ i18n_t('set.night_') }}
                     <!-- 夜间版 -->
                 </div>
@@ -63,7 +63,7 @@ onUnmounted(unsubscribe)
 
 /** 日间或夜间版 */
 const handicap_theme = computed(() => {
-    return theme.value === 'theme02' ? 'theme02' : 'theme01'
+    return theme.value === 'day' ? 'theme01' : 'theme02'
 })
 
 /**

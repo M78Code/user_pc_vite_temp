@@ -21,6 +21,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
+
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
@@ -51,7 +52,6 @@ class UserCtr {
 
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
-
     // 用户详情
     this.user_info = {};
     // 登录用户的id
@@ -64,9 +64,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = langReducer.lang;
+    this.lang = 'zh';
     // 用户主题  日间版本 ，夜间版本
-    this.theme = themeReducer.theme;
+    this.theme = 'day';
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds = {
@@ -74,9 +74,12 @@ class UserCtr {
       pre_odds: "EU",
       // 当前赔率
       cur_odds: "EU",
-    },
-      //排序	 int 类型 1 按热门排序 2 按时间排序
-      this.sort_type = 1
+    };
+    //排序	 int 类型 1 按热门排序 2 按时间排序
+    this.sort_type = 1;
+    //收藏/关注	true/false
+    this.show_favorite_list = false;
+
     // 用户 token 失效
     this.is_invalid = false;
     // 用户 余额
@@ -155,6 +158,9 @@ class UserCtr {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     this.update()
+    // 替换body上className
+    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    document.getElementById('ty-body').classList.replace(old_theme, theme == 'day' ? 'theme01' : 'theme02')
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -190,6 +196,8 @@ class UserCtr {
       return;
     }
     if (user_obj.balance === null) delete user_obj.balance;
+    // 获取历史uid
+    const uid_ = this.get_uid();
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {
@@ -200,9 +208,22 @@ class UserCtr {
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
+    // 判断是不是新用户登录
+    if(uid_ && uid_!= user_obj.userId){
+      // 发送订阅ws公共命令
+      window.postMessage({event: 'WS', cmd:`WS_RESEND_SCMD_EVENT`, data:{user_id : user_obj.userId}},'*');
+    }
   }
   set_user_activity(activity) {
     this.activity = { ...activity }
+  }
+  /**
+   * 设置是否 显示、收藏
+   * */
+  set_show_favorite_list(v) {
+    this.show_favorite_list = !!v;
+    //通知收藏变化了
+    useMittEmit(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, this.show_favorite_list)
   }
   clear_user({ commit }) {
     // this.user_info = "";
@@ -246,7 +267,7 @@ class UserCtr {
    * 设置版本 简易版还是 标准版
    * 2标准 1简易
   */
-  set_standard_edition() {
+  set_standard_edition(v) {
     let edition = this.standard_edition == 2 ? 1 : 2;
     this.standard_edition = edition;
     this.update()
@@ -260,6 +281,8 @@ class UserCtr {
   }
   set_balance(balance) {
     this.balance = 1 * balance;
+    //通知余额变化
+    useMittEmit(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, this.balance)
     this.update()
   }
   /**
@@ -1217,14 +1240,14 @@ class UserCtr {
    * 设置用户余额显示隐藏
    * state 状态 true flase
    */
-  set_show_balance(state){
+  set_show_balance(state) {
     this.show_balance = state
     this.set_user_version()
   }
- /**
-   * 更新用户信息版本 显示
-   */
-  set_user_version(){
+  /**
+    * 更新用户信息版本 显示
+    */
+  set_user_version() {
     this.user_version.value = Date.now()
   }
 }
