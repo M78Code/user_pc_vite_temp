@@ -12,7 +12,7 @@
             <div v-if="is_hide_icon || is_iframe" class="icon-layout"></div>
             <!-- 当前是日间版并且有日间版配图就展示日间版图片，夜间版也一样 -->
             <a v-else class="row items-center  img-logo-wrap"
-                :style="{ 'background-image': UserCtr.theme.includes('theme01') && pcDaytimeLink ? `url(${pcDaytimeLink})` : UserCtr.theme.includes('theme02') && pcNightLink ? `url(${pcNightLink})` : 'none' }">
+                :style="{ 'background-image': is_day && pcDaytimeLink ? `url(${pcDaytimeLink})` : !is_day && pcNightLink ? `url(${pcNightLink})` : 'none' }">
                 <div class="img-logo custom-format-img-logo-01"></div>
             </a>
             <!-- 运营位专题页 -->
@@ -62,9 +62,9 @@
             </div>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(UserCtr.theme.includes('theme01') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(is_day && dayClickType.typeL) || (!is_day && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (UserCtr.theme.includes('theme01') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (is_day && dayClickType.urlL) || (!is_day && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </div>
 
@@ -152,6 +152,8 @@ const nightClickType = reactive({ typeL: 0, urlL: null })
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)
 
+/** 是否日间版 */
+const is_day = computed(() => UserCtr.theme == 'theme01')
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()

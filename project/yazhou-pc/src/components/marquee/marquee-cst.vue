@@ -164,7 +164,7 @@ onUnmounted(unsubscribe)
 * 用户余额是否展示状态 default: theme01
 * 路径: project_path/src/store/module/theme.js
 */
-const theme = ref(themeReducer.theme)
+const theme = ref(themeReducer.theme || 'theme01')
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
