@@ -172,9 +172,6 @@ onUnmounted(() => {
   unsubscribe();
 });
 </script>
-<style lang="scss" >
-@import 'project_path/src/css/pages/menu.scss';
-</style>
 <style lang="scss" scoped>
 .layout_container {
   height: 100%;

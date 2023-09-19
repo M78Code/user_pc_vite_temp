@@ -440,6 +440,8 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
+@import url(./menu.scss);
+
 .menu-inner-wrap {
   width: 100%;
   height: 0.44rem;
@@ -967,77 +969,11 @@ onBeforeUnmount(() => {
     }
   }
 
-  /* **************主菜单中间的下拉弹框  容器********************************** -Star*/
-  .main-m-selector-w {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0.44rem;
-    left: 0;
-    opacity: 0;
-    transition: opacity 0.7s;
-    overflow: hidden;
 
-    &.effct-in {
-      opacity: 1;
-    }
-
-    .selector-w-inner {
-      padding: 0.2rem 0 0.09rem 0.17rem;
-      transform: translate3d(0, -2.2rem, 0);
-      transition: transform 0.35s;
-
-      &.show {
-        transform: translate3d(0, 0, 0);
-      }
-
-      .main-m-select-item {
-        width: 1.6rem;
-        height: 0.48rem;
-        border-radius: 0.04rem;
-        margin-bottom: 0.15rem;
-
-        &:nth-child(odd) {
-          margin-right: 0.2rem;
-        }
-
-        &>div {
-          height: 0.24rem;
-
-          &.m-menu-name-m {
-            font-size: 0.16rem;
-          }
-
-          &.m-count-match {
-            line-height: 0.24rem;
-            font-size: 0.14rem;
-            margin-left: 0.09rem;
-          }
-        }
-
-        &.current {
-          &.is-favorite {
-            //background-color:#ff9124;
-          }
-
-          &>div {
-            &:first-child {
-              color: #ffffff;
-            }
-
-            &:last-child {
-              color: #ffffff;
-            }
-          }
-        }
-      }
-    }
-  }
 
   /* **************主菜单容器********************************** -End*/
 }
-</style>
-<style lang="scss" scoped>
+
 /* **************主菜单中间的下拉弹框  容器********************************** -Star*/
 .main-m-selector-w {
   width: 100%;
@@ -1048,7 +984,6 @@ onBeforeUnmount(() => {
   opacity: 0;
   transition: opacity 0.7s;
   overflow: hidden;
-  z-index: 9;
 
   &.effct-in {
     opacity: 1;
