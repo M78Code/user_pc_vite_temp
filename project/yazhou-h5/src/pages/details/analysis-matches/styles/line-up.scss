@@ -1,12 +1,12 @@
 .line-up {
 
     padding-bottom: 0.2rem;
-    background: var(--q-analysis-matches-color-30);
+    background: var(--q-analysis-text-color-25);
     > .header {
       display: flex;
       justify-content: center;
       padding: 0.15rem 0;
-      background: var(--q-analysis-matches-color-42);
+      background: var(--q-analysis-text-color-19);
       position: sticky;
       top: 1.21rem;
       width: 100%;
@@ -19,7 +19,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid var(--q-analysis-matches-color-26);
+        border: 1px solid var(--q-analysis-bd-color-5);
   
         letter-spacing: 0;
         text-align: center;
@@ -27,16 +27,16 @@
         font-size: 0.14rem;
   
         .ellipsis {
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
           font-weight: unset;
         }
   
         &.active {
-          background: var(--q-analysis-matches-color-43);
+          background: var(--q-analysis-text-color-16);
           border: unset;
   
           .ellipsis {
-            color:  var(--q-analysis-matches-color-4);
+            color:  var(--q-analysis-bg-color-1);
             font-weight: bold;
           }
         }
@@ -142,8 +142,8 @@
         > div {
           width: 0.36rem;
           height: 0.36rem;
-          background: var(--q-analysis-matches-color-33) !important;
-          border: 1px solid  var(--q-analysis-matches-color-4);
+          background: var(--q-analysis-bg-gradient-2) !important;
+          border: 1px solid  var(--q-analysis-text-color-1);
           border-radius: 50%;
   
           display: flex;
@@ -153,7 +153,7 @@
           > span {
   
             font-size: 0.2rem;
-            color: var(--q-analysis-matches-color-4);
+            color: var(--q-analysis-text-color-1);
             text-align: center;
           }
         }
@@ -161,7 +161,7 @@
         > span {
   
           font-size: 0.12rem;
-          color: var(--q-analysis-matches-color-4);
+          color: var(--q-analysis-text-color-1);
           margin-top: 0.02rem;
         }
       }
@@ -184,7 +184,7 @@
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         font-size: 0.26667rem;
-        color: var(--q-analysis-matches-color-4);
+        color: var(--q-analysis-text-color-1);
         text-align: center;
         max-width: unset;
         margin: unset;
@@ -278,19 +278,19 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          background: var(--q-analysis-matches-color-33) !important;
-          border: 1px solid  var(--q-analysis-matches-color-4);
+          background: var(--q-analysis-bg-gradient-2) !important;
+          border: 1px solid  var(--q-analysis-text-color-1);
   
           > span {
   
             font-size: 0.2rem;
-            color: var(--q-analysis-matches-color-4);
+            color: var(--q-analysis-text-color-1);
             text-align: center;
           }
         }
   
         > .ellipsis {
-          color: var(--q-analysis-matches-color-4);
+          color: var(--q-analysis-text-color-1);
           font-weight: bold;
         }
       }
@@ -300,9 +300,9 @@
       height: 0.4rem;
       line-height: 0.4rem;
       padding-left: 0.24rem;
-      color: var(--q-analysis-matches-color-9);
+      color: var(--q-analysis-text-color-15);
       font-size: 0.14rem;
-      background-color:var(--q-analysis-matches-color-4);
+      background-color:var(--q-analysis-text-color-1);
       letter-spacing: 0;
   
       font-weight: bold;
@@ -315,7 +315,7 @@
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background:var(--q-analysis-matches-color-45);
+        background:var(--q-analysis-text-color-31);
         border-radius: 1.5px;
       }
     }
@@ -323,7 +323,7 @@
     .public_form {
       position: relative;
       margin-bottom: 0.1rem;
-      background-color:var(--q-analysis-matches-color-4);
+      background-color:var(--q-analysis-text-color-1);
       /*  头部 */
       .header {
         height: 0.3rem;
@@ -331,12 +331,12 @@
         text-align: center;
         line-height: 0.32rem;
         padding: 0 0.1rem;
-        background-color: var(--q-analysis-matches-color-4);
-        color:  var(--q-analysis-matches-color-10);
-        border-bottom: 1px solid  var(--q-analysis-matches-color-31);
-        border-top: 1px solid var(--q-analysis-matches-color-31);
+        background-color: var(--q-analysis-text-color-1);
+        color:  var(--q-analysis-text-color-22);
+        border-bottom: 1px solid  var(--q-analysis-text-color-26);
+        border-top: 1px solid var(--q-analysis-text-color-26);
         > div {
-          color: var(--q-analysis-matches-color-2);
+          color: var(--q-analysis-text-color-14);
           font-size: 0.1rem;
         }
       }
@@ -348,9 +348,9 @@
         font-size: 0.13rem;
         height: 0.48rem;
         text-align: center;
-        border-bottom: 1px solid  var(--q-analysis-matches-color-29);
+        border-bottom: 1px solid  var(--q-analysis-text-color-24);
         &:nth-child(odd) {
-          background:  var(--q-analysis-matches-color-36);
+          background:  var(--q-analysis-text-color-27);
         }
   
         div {
@@ -358,7 +358,7 @@
           align-items: center;
           justify-content: center;
           font-size: 0.12rem;
-          color: var(--q-analysis-matches-color-41) !important;
+          color: var(--q-analysis-text-color-29) !important;
         }
       }
   
