@@ -23,7 +23,7 @@ import { i18n } from "src/core/index.js";
 import router from './src/router/index.js'
 //引入全局初始化样式
 import "./src/css/app.scss"
-import "./src/css/style.scss"
+import "./src/css/style.css"
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
 //引入自定义指令
