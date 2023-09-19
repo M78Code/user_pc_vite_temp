@@ -19,7 +19,7 @@
       <template v-if="is_it_popular">
         <div v-if="main_source == 'home_hot_page_schedule' && lodash.get(get_hot_tab_item, 'index') == 0" class="ball_img">
           <img
-            :src="global_theme.includes('theme01') ? `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite.png` : `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite_theme02.png`"
+            :src="global_theme.includes('day') ? `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite.png` : `${$g_image_preffix}/image/bw3/png/home_page/polular_spirite_theme02.png`"
             alt="" :style="{ objectPosition: `0 ${calculate_ball_type_picture()}rem` }">
 
           <span>
@@ -35,8 +35,8 @@
       <!-- v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed" -->
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme01')" src='public/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme02')" src='public/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')" src='public/image/list/league-collapse-icon.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')" src='public/image/list/league-collapse-icon-black.svg' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -97,9 +97,9 @@
             </div>
           </span>
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme01')"
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')"
               src='public/image/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme02')"
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')"
               src='public/image/list/league-collapse-icon-black.svg' />
           </template>
         </div>
@@ -305,7 +305,7 @@
                       v-if="[1, 2].includes(+match.csid) && GlobalAccessConfig.get_statisticsSwitch()"
                         @click='goto_details(match, 1)'>
                         <img :src="match_analysis" alt="" style="width:0.12rem"
-                          v-if="global_theme.includes('theme01')">
+                          v-if="global_theme.includes('day')">
                         <img :src="match_analysis2" alt="" style="width:0.12rem" v-else>
                       </div>
                       <!-- 此赛事支持提前结算 -->
@@ -594,8 +594,8 @@ const is_replay_switch = computed(() => {
 })
 //  动画按钮
 const animationUrl_icon = computed(() => {
-  let is_theme01 = global_theme.includes('theme01')
-  // let is_theme02 = global_theme.includes('theme02')
+  let is_theme01 = global_theme.includes('day')
+  // let is_theme02 = global_theme.includes('night')
   // let is_y0 = global_theme.includes('y0')
 
   let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
@@ -604,8 +604,8 @@ const animationUrl_icon = computed(() => {
 })
 //  视频按钮
 const muUrl_icon = computed(() => {
-  let is_theme01 = global_theme.includes('theme01')
-  // let is_theme02 = global_theme.includes('theme02')
+  let is_theme01 = global_theme.includes('day')
+  // let is_theme02 = global_theme.includes('night')
   let is_y0 = global_theme.includes('y0')
 
   let muUrl_icon = ''
@@ -657,7 +657,7 @@ const favorited_computing_icon = computed(() => {
  // 显示未收藏 图标
 const not_favorited_computing_icon = computed(() => {
   let flag = null
-  if (global_theme.includes('theme01')) {
+  if (global_theme.includes('day')) {
     flag = normal_img_not_favorite_white
   } else {
     flag = normal_img_not_favorite_black
@@ -700,7 +700,7 @@ const no_start_total = computed(() => {
 
 // 默认联赛图标
 const default_league_icon = computed(() => {
-  return global_theme.includes('theme02') ? none_league_icon_black : none_league_icon
+  return global_theme.includes('night') ? none_league_icon_black : none_league_icon
 })
 
 const show_newer_edition = computed(() => {
@@ -1014,7 +1014,7 @@ const need_scroll_height_handle = (tid) => {
   // 联赛及相应间隔高度，需在最终计算中减去
   let league_height_spacing = 0.48,
     sport_type_space = 0
-
+ b
   // 计算同联赛进行中的赛事dom高度
   for (let i in match_height_map_list) {
     if (started_index_arr.includes(i)) {

@@ -33,7 +33,7 @@
                     <span :class="{ 'auto-text': BetData.bet_is_accept == 2, 'ac-rules': BetData.bet_list.length > 1 }" class="yb_mx4"
                         style="max-width:1.6rem" @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
                     <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
-                        v-if="UserCtr.theme.includes('theme01')" />
+                        v-if="UserCtr.theme.includes('day')" />
                     <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
                     <!-- 右 -->
                     <span v-if="BetData.bet_list.length == 1">

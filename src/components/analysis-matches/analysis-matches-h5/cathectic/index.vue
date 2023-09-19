@@ -16,7 +16,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')"><img
+          <template v-if="lodash.get(UserCtr, 'theme').includes('day')"><img
               src="image/wwwassets/bw3/svg/bet_close2.svg"></template>
           <template v-else><img src="image/wwwassets/bw3/svg/bet_close3.svg"></template>
         </span>

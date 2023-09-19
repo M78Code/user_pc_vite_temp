@@ -80,6 +80,7 @@
         :color="color"
         class="empty-wrap"
         :class="{ filter_img: filter_store.open_select_time }"
+        which="noMatch"
       >
       </no-data-wapper>
       <no-data-wapper
@@ -177,7 +178,7 @@
 
 <script setup>
 import { NoDataWapper} from "src/components/common/no-data/index";
-import { onMounted,computed,ref,onUnmounted } from 'vue'
+import { onMounted,computed,ref,onUnmounted, watch } from 'vue'
 import store from "src/store-redux/index.js";
 import { useMittEmit, useMittOn, MITT_TYPES } from "src/core/mitt/";
 import UserCtr from "src/core/user-config/user-ctr.js";
@@ -242,6 +243,7 @@ onMounted(() => {
   no_user.value = is_invalid.value;
   // 绑定接收用户失效事件
   useMittOn(MITT_TYPES.EMIT_SHOW_ALERT_CMD,no_user_event)
+  console.error("+-+-+-+-+-+-+-+-+-",props);
 })
 
 onUnmounted(()=>{
@@ -249,6 +251,7 @@ onUnmounted(()=>{
 })
 
 const cur_state = computed(()=>{
+  console.error(props);
   return props.state
 })
 

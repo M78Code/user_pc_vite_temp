@@ -7,6 +7,7 @@ import MatchCtr from '../match-class/match-ctr'
 import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
 import { get_template_config } from "./template/template-config.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from "./template";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -439,18 +440,17 @@ class MatchListCard {
       //赛事与dom高度的映射
       this.mid_dom_height_dict = {};
       // 每一个赛事的高度
-      this.match_height_map_list = MatchCtr.match_list_data_sources.map(
-        (match, i) => {
-          let obj = get_match_dom_show_property(i);
-          let r = get_template_config(obj);
-          // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
-          if (location.hash.includes("match") && i == 0) {
-            r.odd_list_height -= 0.11;
-          }
-          this.mid_dom_height_dict[r.mid] = r;
-          return r; //每个赛事占的dom高度和mid映射r
+      this.match_height_map_list = MatchCtr.match_list_data_sources.map((match, i) => {
+        let obj = get_match_dom_show_property(i);
+        let r = get_template_config(obj);
+        // console.log(MATCH_LIST_TEMPLATE_CONFIG[`template_${match.csid}_config`])
+        // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
+        if (location.hash.includes("match") && i == 0) {
+          r.odd_list_height -= 0.11;
         }
-      );
+        this.mid_dom_height_dict[r.mid] = r;
+        return r; //每个赛事占的dom高度和mid映射r
+      });
       // 计算每个赛事容器的高度，累加 = 总高度
       let total_height = this.match_height_map_list.reduce((total, map_obj) => {
         let p_total = 0;

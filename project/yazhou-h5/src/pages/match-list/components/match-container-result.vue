@@ -42,8 +42,8 @@
           </span>
           <!--箭头 -->
           <template v-if="!['detail_match_list','home_hot_page_schedule'].includes(main_source)">
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('theme01')" :src='league_icon' />
-            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('theme02')" :src='league_icon_back' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('day')" :src='league_icon' />
+            <img class="league-collapse-dir" :class="{'collapsed':collapsed}" v-if="get_theme.includes('night')" :src='league_icon_back' />
           </template>
         </div>
       </div>

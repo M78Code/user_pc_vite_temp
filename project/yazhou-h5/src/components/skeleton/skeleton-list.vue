@@ -10,7 +10,7 @@
       </div>
 
       <!-- 标准版 -->
-      <div class="version_biaozhun" v-if="get_newer_standard_edition == 2">
+      <div class="version_biaozhun" v-if="PageSourceData.newer_standard_edition == 2">
         <div v-for="(item, index) in 4" :key="index" class="item">
           <div class="title">
             <skeleton :width="0.2" :height="0.2" :radius="50" />
@@ -49,7 +49,7 @@
       </div>
 
       <!-- 简版 -->
-      <div class="version_jian" v-if="get_newer_standard_edition == 1">
+      <div class="version_jian" v-if="PageSourceData.newer_standard_edition == 1">
         <div v-for="(item, index) in 4" :key="index" class="item">
           <div class="title">
             <skeleton :width="0.2" :height="0.2" :radius="50" />
@@ -83,24 +83,22 @@
 </template>
 
 <script setup>
-import skeleton from './index.vue'
 import { computed } from "vue"
+import skeleton from './index.vue'
+import { MenuData } from "src/core/index.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 const props = defineProps({
   loading_body: Boolean
 })
 
-// ...mapGetters({
-//   get_menu_type: 'get_menu_type',
-//   get_newer_standard_edition: 'get_newer_standard_edition',
-// }),
 const poisition_top = computed(() => {
-  const menu_type = get_menu_type
+  const menu_type = MenuData.current_menu
 
   if ([4, 11, 3000].includes(menu_type)) {
     return '1.33rem';
   }
 
-  if (loading_body) {
+  if (props.loading_body) {
     // 赛果
     if (menu_type === 28) {
       return '1.4rem';

@@ -5,12 +5,12 @@
 
     <template v-if="['暂无,此处逻辑产品暂时说放弃'].includes(which)">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
+        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatchNew.url})` : `url(${arr.noMatchNew.url2})` }">
       </div>
-      <p class="title" :style="{ color: UserCtr.theme.includes('theme01') ? '#666666' : ' #B9B9B9' }">{{
+      <p class="title" :style="{ color: UserCtr.theme.includes('day') ? '#666666' : ' #B9B9B9' }">{{
         arr.noMatchNew.txt[0]
       }}</p>
-      <p class="title-tint" :style="{ color: UserCtr.theme.includes('theme01') ? '#999999' : ' #999999' }">{{
+      <p class="title-tint" :style="{ color: UserCtr.theme.includes('day') ? '#999999' : ' #999999' }">{{
         arr.noMatchNew.txt[1] }}</p>
       <p>
         <span class="btn" @click="refresh_data"
@@ -21,21 +21,22 @@
 
     <template v-if="['noMatch', 'noWifi', 'noMessage'].includes(which)">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
+        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
       </div>
-      <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt : arr.noMatch.txt }}</p>
+      {{arr.noMatch}}
+      <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt || msg : arr.noMatch.txt || msg}}</p>
     </template>
 
     <template v-if="which === 'nolive'">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
+        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.nolive.url})` : `url(${arr.nolive.url2})` }">
       </div>
       <p style="color:#A5A9B3;"> {{ arr.nolive.txt }} </p>
     </template>
 
     <template v-if="which === 'collect'">
       <div class="empty-favorite-bg"
-        :style="{ backgroundImage: UserCtr.theme.includes('theme01') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
+        :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.collect.url})` : `url(${arr.collect.url2})` }">
       </div>
       <p style="color:#A5A9B3;">{{ arr.collect.txt }}</p>
     </template>
@@ -53,7 +54,7 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 
-
+console.error('nodata++++',props);
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {
@@ -63,6 +64,27 @@ const props = defineProps({
   height: {
     required: true
   },
+  msg: {
+    type: String,
+  },
+  type_name: {
+    type: String,
+  },
+  marginBottom: {
+    type: String,
+  },
+  width: {
+    type: String,
+  },
+  height: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+  class: {
+    type: String,
+  }
 })
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
@@ -80,7 +102,7 @@ const arr_const = {
     txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
-    url: "image/bw3/svg/noMatch.svg",
+    url: "public/image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
     txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
   },

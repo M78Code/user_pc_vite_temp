@@ -193,7 +193,7 @@ const get_detail_data = ref({})
       return "";
     }
     // 主题后缀
-    const suffix_theme = UserCtr.theme.includes("theme02") ? "2" : "";
+    const suffix_theme = UserCtr.theme.includes("night") ? "2" : "";
     // y0后缀
     const suffix_y0 = UserCtr.theme.includes("_y0") ? "_y0" : "";
 // img:${$g_image_preffix}/image/bw3/svg/details/replay${suffix_theme}${suffix_y0}.svg

@@ -5,17 +5,10 @@
   <div class="match-main no-padding-bottom" :style="page_style" ref="match_main">
     <!--赛事列表-->
     <div class="match-list-container" ref="match_list_container" :class="{
-      zaopan:
-        [4, 11, 28, 3000].includes(+MenuData.current_menu) &&
-        invok_source != 'home_hot_page_schedule',
+      zaopan: [4, 11, 28, 3000].includes(+MenuData.current_menu) && invok_source != 'home_hot_page_schedule',
       guanjun: [100].includes(+MenuData.current_menu),
-      level_four_menu:
-        MenuData.current_menu == 28 &&
-        [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
-      detail_match_list: [
-        'detail_match_list',
-        'home_hot_page_schedule',
-      ].includes(invok_source),
+      level_four_menu: MenuData.current_menu == 28 && [1001, 1002, 1004, 1011, 1010, 1009].includes(get_curr_sub_menu_type),
+      detail_match_list: ['detail_match_list', 'home_hot_page_schedule', ].includes(invok_source),
       jingzu: MenuData.current_menu == 30,
       jinri: MenuData.current_menu == 3,
       esport: 3000 == MenuData.current_menu,
@@ -26,7 +19,7 @@
       <!-- 跳转到其他场馆的banner图 和猜你喜欢-->
       <tiaozhuan-panel v-if="calc_show"></tiaozhuan-panel>
       <!-- 列表骨架屏 -->
-      <SList v-if="show_skeleton_screen" :loading_body="true" />
+      <!-- <SList v-if="show_skeleton_screen" :loading_body="true" /> -->
       <!-- 列表页主内容 -->
       <match-list ref="match_list" :matchCtr="matchCtr" :menu_type="MenuData.current_menu"
         :data_get_empty="match_is_empty" :source="invok_source ? invok_source : 'match_main'"
@@ -122,18 +115,19 @@ import { useRoute, useRouter } from "vue-router";
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt";
 import lodash from "lodash";
 import store from "src/store-redux/index.js";
-import { utils } from "src/core/index.js";
 
 // import use_router_scroll from 'src/core/match-list-h5/use-hooks/router-scroll.js'
 // import use_websocket_store from 'src/core/match-list-h5/websocket/skt_data_list.js'
+import tiaozhuanPanel from "./components/tiaozhuan-panel.vue";    //  跳转banner图和猜你喜欢
 import MatchCtrClass from "src/core/match-list-h5/match-class/match-ctr.js";
 import MatchListCard from "src/core/match-list-h5/match-card/match-list-card-class";
 import MatchPage from "src/core/match-list-h5/match-class/match-page.js";
 import matchList from "./components/match-list.vue";
 import PageSourceData from "src/core/page-source/page-source.js";
+import SList from "project_path/src/components/skeleton/skeleton-list.vue"   // 赛事列表骨架屏
 import scrollTop from "project_path/src/components/common/record-scroll/scroll-top.vue";
 import { compute_css_variables } from "src/core/css-var/index.js"
-import { MenuData, score_switch_handle } from "src/core/index.js";
+import { MenuData, score_switch_handle, utils } from "src/core/index.js";
 
 import 'project_path/src/css/pages/match-main.scss'
 
