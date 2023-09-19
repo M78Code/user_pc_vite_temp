@@ -51,12 +51,13 @@
 <script>
   import {mapGetters, mapMutations} from "vuex"
   import {get_fetch_search_history, get_remove_search_history, get_fetch_hot_search, get_hotselect3} from 'src/project/api/module/search/search_api.js'
-  import searchTop from 'src/project/pages/search/components/search_top.vue'
-  import searchHot from 'src/project/pages/search/components/search_hot.vue'
-  import searchHistory from 'src/project/pages/search/components/search_history.vue'
-  import iSuggestion from 'src/project/pages/search/components/i_suggestion.vue'
-  import noData from 'src/project/components/common/no_data.vue'
-  import SSearch from "src/project/components/skeleton/search"
+  import searchTop from './components/search_top.vue'
+  import searchHot from './components/search_hot.vue'
+  import searchHistory from './components/search_history.vue'
+  import iSuggestion from './components/i_suggestion.vue'
+  import noData from 'project_path/src/components/common/no-data.vue'
+  import SSearch from "project_path/src/components/skeleton/search"
+  
   export default {
     name: 'search',
     computed: {

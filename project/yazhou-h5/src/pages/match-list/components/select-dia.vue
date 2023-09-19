@@ -16,8 +16,9 @@
       </div>
     </div>
     <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
-      <filter_old v-if="lodash.get(get_current_menu, 'main.menuType') == 1 && get_sport_all_selected" />
-      <filter_new v-else />
+      <!-- <filter_old v-if="lodash.get(get_current_menu, 'main.menuType') == 1 && get_sport_all_selected" /> -->
+      <!-- v-else -->
+      <filter_new />
     </template>
     <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
@@ -25,9 +26,9 @@
  
 <script setup>
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
-// import filter_new from '../../match-filter/index.vue'
+import filter_new from '../../match-filter/index.vue'
 // import filter_old from '../../match-filter/index_old.vue'
-// import search from 'src/project/pages/search/search_.vue'
+//  import search from '../../search/search_.vue'
 
 import { computed, onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
@@ -128,6 +129,7 @@ const is_search_hide = (i) => {
  
 <style scoped lang="scss">
 @import url("project_path/src/css/pages/select-dia.scss");
+
 .select-dia {
   width: 100%;
   max-width: unset !important;

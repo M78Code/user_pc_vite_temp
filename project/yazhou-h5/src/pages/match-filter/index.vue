@@ -93,7 +93,7 @@ import noData from "project_path/src/components/common/no-data.vue";
         none_league_icon_black: "image/bw3/svg/match_cup_black.svg",
         list: [], //数据列表整个赛事
         type: undefined,  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
-        anchor_arr: [this.$root.$t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], //右边字母数组
+        anchor_arr: [this.$t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], //右边字母数组
         active_index: "",   //活动的下标
         active_index_position: "",   // 活动的下标对应的position，在右侧字母的时候，scroll 不支持传float，这个值用于记录
         is_show: false, //悬浮图标是否展示
