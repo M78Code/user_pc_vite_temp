@@ -404,6 +404,8 @@ const menu_item_click = (item, i) => {
       return;
     }
     //TODO
+    // 监听搜索框状态
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, true)
     // set_show_match_filter(true);
   }
   //刷新
