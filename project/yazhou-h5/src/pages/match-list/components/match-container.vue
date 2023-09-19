@@ -36,7 +36,7 @@
       <!-- 折叠收起不用消失 -->
       <div v-if="main_source!='home_hot_page_schedule'">
         <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')" src='public/image/list/league-collapse-icon.svg' />
-        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme02')" src='public/image/list/league-collapse-icon-black.svg' />
+        <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')" src='public/image/list/league-collapse-icon-black.svg' />
       </div>
     </div>
     <!-- 未开赛标题  -->
@@ -99,7 +99,7 @@
           <template v-if="(!['detail_match_list', 'home_hot_page_schedule'].includes(main_source)) && collapsed">
             <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('day')"
               src='public/image/list/league-collapse-icon.svg' />
-            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('theme02')"
+            <img class="league-collapse-dir" :class="{ 'collapsed': collapsed }" v-if="global_theme.includes('night')"
               src='public/image/list/league-collapse-icon-black.svg' />
           </template>
         </div>
@@ -595,7 +595,7 @@ const is_replay_switch = computed(() => {
 //  动画按钮
 const animationUrl_icon = computed(() => {
   let is_theme01 = global_theme.includes('day')
-  // let is_theme02 = global_theme.includes('theme02')
+  // let is_theme02 = global_theme.includes('night')
   // let is_y0 = global_theme.includes('y0')
 
   let animationUrl_icon = is_theme01 ? animationUrl_icon_theme01 : animationUrl_icon_theme02
@@ -605,7 +605,7 @@ const animationUrl_icon = computed(() => {
 //  视频按钮
 const muUrl_icon = computed(() => {
   let is_theme01 = global_theme.includes('day')
-  // let is_theme02 = global_theme.includes('theme02')
+  // let is_theme02 = global_theme.includes('night')
   let is_y0 = global_theme.includes('y0')
 
   let muUrl_icon = ''
@@ -700,7 +700,7 @@ const no_start_total = computed(() => {
 
 // 默认联赛图标
 const default_league_icon = computed(() => {
-  return global_theme.includes('theme02') ? none_league_icon_black : none_league_icon
+  return global_theme.includes('night') ? none_league_icon_black : none_league_icon
 })
 
 const show_newer_edition = computed(() => {

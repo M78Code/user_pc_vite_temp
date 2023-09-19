@@ -68,7 +68,7 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="UserCtr.theme.includes('theme02')">
+      <template v-if="UserCtr.theme.includes('night')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>

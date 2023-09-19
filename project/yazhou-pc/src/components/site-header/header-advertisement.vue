@@ -18,7 +18,7 @@
                 <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
             </p>
-            <p v-if="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+            <p v-if="theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                 <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
             </p>

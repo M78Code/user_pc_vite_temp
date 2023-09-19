@@ -17,7 +17,7 @@
         </div>
         <!--折叠得箭头图标-->
         <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :src="(`/public/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('theme02') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
+          :src="(`/public/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('night') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->

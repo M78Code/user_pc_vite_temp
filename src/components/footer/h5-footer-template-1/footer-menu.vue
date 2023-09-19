@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="container-menu-w" :class="{
-    black2: UserCtr.theme.includes('theme02'),
+    black2: UserCtr.theme.includes('night'),
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
@@ -40,7 +40,7 @@
           <div class="menu-item-title" :class="{
             'theme02-focus':
               show_favorite_list &&
-              UserCtr.theme.includes('theme02') &&
+              UserCtr.theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
@@ -713,7 +713,7 @@ watch(show_favorite_list,
     } else {
       if (UserCtr.theme.includes("day")) {
         item.icon = item.icon0;
-      } else if (UserCtr.theme.includes("theme02")) {
+      } else if (UserCtr.theme.includes("night")) {
         item.icon_black = item.icon2;
       }
     }

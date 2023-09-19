@@ -61,11 +61,11 @@ const league_icon_error = ($event) => {
   $event.target.onerror = null
 }
 //  设置主题
-const set_default_icon = (val = "theme02") => {
+const set_default_icon = (val = "night") => {
   // 主题
   theme.value = val;
   // 默认联赛图标
-  image_src.value = theme == "theme02" ? none_league_icon_black : none_league_icon;
+  image_src.value = theme == "night" ? none_league_icon_black : none_league_icon;
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素

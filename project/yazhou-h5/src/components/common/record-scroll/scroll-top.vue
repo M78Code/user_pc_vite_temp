@@ -51,7 +51,7 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
         //  if(UserCtr.theme.includes('day')){
         //     suffix='01'
         //  }
-        //  if(UserCtr.theme.includes('theme02')){
+        //  if(UserCtr.theme.includes('night')){
         //     suffix='02'
         //  }
         //  if(UserCtr.theme.includes('y0')){
@@ -90,7 +90,7 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
   //        if(UserCtr.theme.includes('day')){
   //           suffix='01'
   //        }
-  //        if(UserCtr.theme.includes('theme02')){
+  //        if(UserCtr.theme.includes('night')){
   //           suffix='02'
   //        }
   //        if(UserCtr.theme.includes('y0')){

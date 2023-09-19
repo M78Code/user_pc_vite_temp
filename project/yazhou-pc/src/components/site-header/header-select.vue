@@ -22,7 +22,7 @@
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
-                    <p v-show="UserCtr.theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+                    <p v-show="UserCtr.theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                         <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
@@ -53,9 +53,9 @@
             </template>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(UserCtr.theme.includes('day') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(UserCtr.theme.includes('day') && dayClickType.typeL) || (UserCtr.theme.includes('night') && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (UserCtr.theme.includes('day') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (UserCtr.theme.includes('day') && dayClickType.urlL) || (UserCtr.theme.includes('night') && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </template>
 
@@ -248,7 +248,7 @@ function getFestivalBanner() {
         //     if (UserCtr.theme.includes('day') && daySwipper.length > 0) {
         //         currentSwipperArr = daySwipper;
         //     }
-        //     if (UserCtr.theme.includes('theme02') && nightSwipper.length > 0) {
+        //     if (UserCtr.theme.includes('night') && nightSwipper.length > 0) {
         //         currentSwipperArr = nightSwipper;
         //     }
         //     // 图片大于一张的时候触发轮播

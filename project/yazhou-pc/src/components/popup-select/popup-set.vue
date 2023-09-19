@@ -17,7 +17,7 @@
                     {{ i18n_t('set.day_') }}
                     <!-- 日间版 -->
                 </div>
-                <div class="item ellipsis" :class="{ active: theme == 'theme02' }"
+                <div class="item ellipsis" :class="{ active: theme == 'night' }"
                     @click="handle_set_theme('night')">
                     {{ i18n_t('set.night_') }}
                     <!-- 夜间版 -->

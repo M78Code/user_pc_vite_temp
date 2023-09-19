@@ -282,7 +282,7 @@ function on_click_lang(lang_) {
  */
 function change_theme() {
     if (UserCtr.theme.includes('day')) {
-        handle_set_theme('theme02')
+        handle_set_theme('night')
     } else {
         handle_set_theme('day')
     }
