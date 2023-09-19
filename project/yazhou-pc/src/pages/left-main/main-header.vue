@@ -86,7 +86,7 @@ onBeforeUnmount(() => {
     height: 15px;
     font-size: 14px;
     .balance-text-show {
-      color: var(--q-gb-t-c-19);
+      color: var(--q-gb-t-c-16);
       font-weight: 700;
     }
 

@@ -19,7 +19,7 @@
           <div v-show="MenuData.layout_left_show != 'bet_history'" @click="change_left_menu('bet_history')"
             class="menu-item menu-top menu-border item" :class="[bet_count > 0 ? 'justify-end' : 'justify-start']">
 
-            <span class="record-icon" :style="compute_css('pc-img-hot-match')" alt="" ></span>
+            <span class="record-icon" :style="compute_css('pc-img-bet-record')" alt="" ></span>
 
             <div class="col">
               {{ $t("common.betting_record") }}

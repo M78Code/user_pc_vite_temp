@@ -387,8 +387,8 @@ watch(
           params.gcuuid = send_gcuuid;
           // 预加载动画所需资源文件
           api_common.videoAnimationUrl(params).then((res) => {
-            const { data } = res;
-            if (send_gcuuid != res.gcuuid) return;
+            const { data } = res || {};
+            if (res && send_gcuuid != res.gcuuid) return;
             if (!lodash.get(data, "animationUrl")) {
               return;
             }

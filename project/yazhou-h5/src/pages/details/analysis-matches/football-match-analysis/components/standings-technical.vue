@@ -113,7 +113,7 @@ import { i18n_t } from "src/boot/i18n.js";;
 
 <style lang="scss" scoped>
 .standings_technical.football_standings {
-  background-color: var(--q-analysis-matches-color-4);
+  background-color: var(--q-analysis-bg-color-1);
     .title {
     height: 0.4rem;
     line-height: 0.45rem;
@@ -122,9 +122,9 @@ import { i18n_t } from "src/boot/i18n.js";;
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-matches-color-9);
-    border-bottom: 1px solid var(--q-analysis-matches-color-27);
-    background-color: var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-text-color-15);
+    border-bottom: 1px solid var(--q-analysis-bd-color-3);
+    background-color: var(--q-analysis-bg-color-1);
 
     &:before {
       content: '';
@@ -134,7 +134,7 @@ import { i18n_t } from "src/boot/i18n.js";;
       left: 0.16rem;
       top: 0.15rem;
       border-radius: 1.5px;
-      background: var(--q-analysis-matches-color-45);
+      background: var(--q-analysis-text-color-16);
     }
   }
 
@@ -142,7 +142,7 @@ import { i18n_t } from "src/boot/i18n.js";;
     .standings-technical-home {
       .technical-home {
         height: 0.4rem;
-        background-color: var(--q-analysis-matches-color-4)!important;
+        background-color: var(--q-analysis-text-color-1)!important;
         display: flex;
         align-items: center;
         padding-left: 0.1rem;
@@ -171,17 +171,17 @@ import { i18n_t } from "src/boot/i18n.js";;
 
     .table-score {
       position: relative;
-      background-color: var(--q-analysis-matches-color-4);
+      background-color: var(--q-analysis-text-color-1);
       .standings_technical_header {
         height: 0.32rem;
         display: flex;
         text-align: center;
         line-height: 0.32rem;
         padding: 0 0.1rem;
-        background-color: var(--q-analysis-matches-color-4);
-        color: var(--q-analysis-matches-color-46);
-        border-bottom: 1px solid var(--q-analysis-matches-color-29);
-        border-top: 1px solid var(--q-analysis-matches-color-29);
+        background-color: var(--q-analysis-text-color-1);
+        color: var(--q-analysis-text-color-32);
+        border-bottom: 1px solid var(--q-analysis-text-color-24);
+        border-top: 1px solid var(--q-analysis-text-color-24);
       }
 
       .team-item {
@@ -248,8 +248,8 @@ import { i18n_t } from "src/boot/i18n.js";;
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    background-color: var(--q-analysis-matches-color-4);
-    color: var(--q-analysis-matches-color-2);
+    background-color: var(--q-analysis-bg-color-1);
+    color: var(--q-analysis-text-color-14);
   }
 }
 

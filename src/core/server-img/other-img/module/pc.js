@@ -23,7 +23,14 @@ export default {
   // layout-deader
   'pc-img-layout-header': {
     default: "pc-img-layout-header",
-  }
-
+  },
+  // 今日早盘背景
+  'today_menu_bg_1': {
+    default: "today_menu_bg_1",
+  },
+  // 今日早盘选中
+ 'today_menu_bg_1_active': {
+  default: "today_menu_bg_1_active",
+},
 }
 

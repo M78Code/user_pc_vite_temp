@@ -9,7 +9,8 @@
         </slot>
         <div class="main-menu-container">
           <template v-for="(item, index) in menu_list" :key="lodash.get(item, 'mi')">
-            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type }" v-show="show_dianjing(item, index)">
+            <div class="m-menu-item" :class="{ current: lodash.get(item, 'mi') == menu_type }"
+              v-show="show_dianjing(item, index)">
               <span class="i-title" @click="set_menu_lv1(item, index)">
                 {{ i18n_t("new_menu." + lodash.get(item, 'mi')) || lodash.get(item, 'mi') }}
               </span>
@@ -153,9 +154,9 @@
 </template>
 <script setup>
 import subMenuSpecially from "./sub-menu-specially.vue";
-import { ref, watch, computed, } from "vue";
+import { ref, watch, computed, onBeforeUnmount, } from "vue";
 import GlobalAccessConfig from "src/core/access-config/access-config.js";
-import { i18n_t, compute_css, compute_css_variables, MenuData } from "src/core/index.js";
+import { i18n_t, compute_css, useMittOn, MITT_TYPES, UserCtr, MenuData } from "src/core/index.js";
 import base_data from "src/core/base-data/base-data.js";
 import { useRoute, useRouter } from "vue-router";
 import lodash from "lodash"
@@ -191,8 +192,7 @@ let virtual_sports_results_tab = ref([]);
 const current_lv2 = ref({})//二级菜单选中
 const pop_main_items = ref([]); //弹出框数据
 const show_selector_sub = ref(false); //展示弹出框
-const show_favorite_list = ref(false); //是否显示收藏列表
-
+const show_favorite_list = ref(UserCtr.show_favorite_list); //是否显示收藏列表
 // 一级菜单mi ref
 const { menu_type, update_time, } =
   MenuData;
@@ -429,70 +429,14 @@ function is_menu_show(item) {
   }
   return reslut;
 }
-// // 初始化菜单数据
-// async function initialize_menu_data(type) {
-//   if (this.new_main_menu_index != 1 || type == "matchBack") {
-//     this.prev_main_menu_i = -1;
-//   }
-//   // 如果所有菜单数据 有缓存，则走缓存
-//   // 如果有get_home_data 数据，则走缓存, 更快的渲染，或者菜单出错时，可以走得通
-//   if (this.get_home_data.length > 0) {
-//     await this.get_results_menu();
-//     // await base_data.get_load_lang_v3()
-//     let new_menu = base_data.recombine_menu(
-//       this.get_home_data,
-//       "sort",
-//       this.sub_menu_list
-//     );
-//     [new_menu[0], new_menu[1]] = [new_menu[1], new_menu[0]];
-//     this.new_main_menu_list_items = new_menu;
-//     this.pop_main_select_items = _.filter(
-//       this.new_main_menu_list_items,
-//       (item) => {
-//         return ![1, 7, 8].includes(lodash.get(item, 'mi'));
-//       }
-//     );
-//     // 数据替换
-//     if (this.get_selector_w_m_i) {
-//       let m_selected = this.pop_main_select_items[this.get_selector_w_m_i];
-//       let new_menu1 = this.new_main_menu_list_items;
-//       new_menu1.forEach((item, index) => {
-//         if (lodash.get(item, 'mi') == m_selected.mi) {
-//           [new_menu1[1], new_menu1[index]] = [new_menu1[index], new_menu1[1]];
-//           this.new_main_menu_list_items = new_menu1;
-//         }
-//       });
-//     }
-//   }
-//   let menu_2 = this.get_new_two_menu;
-//   this.sub_menu_changed(menu_2);
-//   // 调用接口，更新菜单数据
-//   this.call_the_interface_to_update_the_menu_data();
-//   //初始化 默认选中第一个
-// }
-// // 菜单首次加载，一级菜单，二级菜单 数据，都在这里赋值
-// function menu_first_load(res_data, type) {
-//   // 主菜单列表数据, 进行数据操作用的, 不是 真正渲染到 页面的数据
-//   this.main_menu_list = base_data.recombine_menu(res_data, "sort");
-//   // 获取主菜单列表
-//   this.get_main_menu_init_data();
-//   return;
-//   // 二级菜单 list渲染数据
-//   this.sub_menu_list =
-//     this.main_menu_list_items[this.get_main_menu_dom_i].subList;
-//   this.show_one_menu_index = true;
-//   // 更新二级菜单  全部菜单 赛事数量
-//   this.update_gunqiu_count(res_data);
-//   //  如果是首页跳转过来的，则跳转到对应的 id 菜单
-//   if (type == "first_load") {
-//     // 获取一级菜单，二级菜单id,跳转到对应的 菜单
-//     this.get_the_first_and_second_level_menu_id();
-//   } else {
-//     // 代表点击一级菜单
-//     // 一级菜单点击事件
-//     this.main_item_clicked(this.get_main_menu_dom_i, type || "init_data");
-//   }
-// }
+const mitt_list = [
+  useMittOn(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, (v, old) => {
+    show_favorite_list.value = v
+  }).off
+]
+onBeforeUnmount(() => {
+  mitt_list.forEach(i => i())
+})
 </script>
 
 <style scoped lang="scss">

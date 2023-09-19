@@ -12,7 +12,7 @@ export const EMIT_SKT1_R_CMD = 'SKT1_RCMD';
 /** 发送菜单变化命令 */
 export const EMIT_MENU_CHANGE_CMD = 'MENU_CHANGE_SCMD';
 /** 发送底部菜单变化命令 */
-export const EMIT_MENU_CHANGE_FOOTER_CMD = 'MENU_CHANGE_FOOTER_SCMD';
+export const EMIT_MENU_CHANGE_FOOTER_CMD = 'EMIT_MENU_CHANGE_FOOTER_CMD';
 /** 押注成功通知消息命令 */
 export const EMIT_BATTING_SUCCESS_CMD = 'BATTING_SUCCESS_CMD';
 /** 押注功能滚动条上滚命令 */
