@@ -184,9 +184,11 @@ const props = defineProps({
   dateChanged: {
     type: Function
   },
+  toolIndex: {
+    type: String
+  },
   });
 const reload = inject('reload')
-console.error(props);
 
 // 日历多语言配置
 const locale = {
@@ -429,7 +431,7 @@ const time_sort = (sort) => {
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 10px;
-    ::v-deep .material-icons {
+    :deep(.material-icons) {
       font-family: "Material Icons";
       font-weight: normal;
       font-style: normal;
@@ -452,6 +454,20 @@ const time_sort = (sort) => {
         height: 28px;
         line-height: 26px;
         cursor: pointer;
+        color: var(--q-gb-t-c-6);
+        background: var(--q-gb-bg-c-11);
+        border-top: 1px solid var(--q-gb-bd-c-8);
+        border-bottom: 1px solid var(--q-gb-bd-c-8);
+        &:first-child{
+          border-left: 1px solid var(--q-gb-bd-c-8);
+        }
+        &:last-child{
+          border-right: 1px solid var(--q-gb-bd-c-8);
+        }
+      }
+      .current {
+        background-color: var(--q-bet-record-color-13);
+        color: var(--q-gb-t-c-5);
       }
     }
     .sort-content {
@@ -465,16 +481,22 @@ const time_sort = (sort) => {
         width: 150px;
         border-radius: 2px;
         cursor: pointer;
-        position relative {
-          &.sort-btn {
-            .yb-hover-bg {
-              padding: 0 5px 0 8px;
-            }
-            .icon-sort {
-              margin-left: 3px;
-            }
-          }
+        border: 1px solid var(--q-gb-bd-c-8);
+        background: var(--q-gb-bg-c-11);
+        .icon_left {
+          color: var(--q-gb-t-c-17);
         }
+        // TODO: 对比旧版 此处代码不生效 待确认后删除
+        // position relative {
+        //   &.sort-btn {
+        //     .yb-hover-bg {
+        //       padding: 0 5px 0 8px;
+        //     }
+        //     .icon-sort {
+        //       margin-left: 3px;
+        //     }
+        //   }
+        // }
         .yb-hover-bg {
           justify-content: space-between;
           padding: 0 8px;

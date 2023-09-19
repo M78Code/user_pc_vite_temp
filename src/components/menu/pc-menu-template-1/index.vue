@@ -8,11 +8,11 @@
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div class="item yb-flex-center" :class="jinri_zaopan_ == 2 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="jinri_zaopan_ == 2 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 2 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
           {{ $t("menu.match_today") }}
         </div>
-        <div class="item yb-flex-center" :class="jinri_zaopan_ == 3 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="jinri_zaopan_ == 3 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 3 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(3)">
           {{ $t("menu.match_early") }}
         </div>
@@ -130,6 +130,7 @@ import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
 import sprite_img from "src/core/server-img/sprite-img/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
+import { compute_css } from 'src/core/server-img/index.js'
 
 import MenuItem from "./menu-item.vue";
 
@@ -909,16 +910,18 @@ const handle_click_jinri_zaopan = (val) => {
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
-        padding: 10px 4px;
+        padding: 0px;
 
         .item {
-          height: 30px;
           border-radius: 8px;
           margin-right: 10px;
-          flex: 1;
           white-space: nowrap;
-          max-width: 95px;
-
+          margin-right: 0!important;
+          height: 38px!important;
+          background-size: 100% 100%;
+          min-width: 98px;
+          padding-bottom: 4px;
+          box-shadow: none!important;
           &:last-child {
             margin-right: 0;
           }
@@ -926,6 +929,7 @@ const handle_click_jinri_zaopan = (val) => {
           &.active {
             font-weight: 600;
             font-size: 14px;
+            color: var(--q-gb-t-c-18);
           }
 
           &.active1 {
@@ -987,7 +991,6 @@ const handle_click_jinri_zaopan = (val) => {
       &.menu-top {
         padding: 0 15px 0 16px;
         height: 40px;
-        border-right: 2px solid transparent;
 
         .match-count {
           padding-right: 0;
@@ -1272,5 +1275,10 @@ const handle_click_jinri_zaopan = (val) => {
   width: 18px;
   height: 18px;
   background-size: 100% auto;
+}
+.menu-item-title{
+  height: 32px!important;
+  margin-bottom: 2px;
+  font-size: 12px;
 }
 </style>

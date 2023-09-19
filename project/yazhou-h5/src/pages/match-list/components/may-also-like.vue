@@ -84,13 +84,8 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, onUnmounted, ref, watch } from "vue"
-import match_list_mixin from "src/project/mixins/match_list/match_list_mixin";  // 为赛事列表(专业版和新手版)提供逻辑方法，拆分组件复杂度
-import counting_down from "src/project/components/common/counting-down";  // 赛事进行中每秒变化的计时器
-import team_img from "src/project/components/details/team_img";   // 详情页蓝色背景上的大型字母图标
-import betting from "src/project/mixins/betting/betting.js";    // 押注动作相关的所有方法写到这里
-import {mapMutations, mapGetters} from "vuex";
 import { format_total_score } from "src/core/format/index.js"
-import {api_home} from "src/project/api";
+import { api_home } from "src/api/index.js";
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
 import { useRouter } from 'vue-router'

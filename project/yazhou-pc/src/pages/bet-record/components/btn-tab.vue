@@ -130,14 +130,14 @@ const toolClicked = (f) => {
   .bet-desc {
     display: flex;
     align-items: center;
-    color: var(--q-gb-t-c-1);
+    color: var(--q-gb-t-c-11);
     /**文字前面的点*/
     .point {
       margin-right: 5px;
       width: 4px;
       height: 4px;
       border-radius: 50%;
-      background-color: var(--q-bet-record-color-0);
+      background-color: var(--q-gb-t-c-11);
     }
   }
 }

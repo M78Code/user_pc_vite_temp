@@ -1014,7 +1014,7 @@ const need_scroll_height_handle = (tid) => {
   // 联赛及相应间隔高度，需在最终计算中减去
   let league_height_spacing = 0.48,
     sport_type_space = 0
-
+ b
   // 计算同联赛进行中的赛事dom高度
   for (let i in match_height_map_list) {
     if (started_index_arr.includes(i)) {

@@ -7,6 +7,7 @@ import MatchCtr from '../match-class/match-ctr'
 import MatchPage from '../match-class/match-page'
 import store from "src/store-redux/index.js";
 import { get_template_config } from "./template/template-config.js";
+import { MATCH_LIST_TEMPLATE_CONFIG } from "./template";
 import { get_match_dom_show_property } from "./module/match-show-property.js";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import UserCtr from 'src/core/user-config/user-ctr.js'
@@ -443,6 +444,7 @@ class MatchListCard {
         (match, i) => {
           let obj = get_match_dom_show_property(i);
           let r = get_template_config(obj);
+          console.log(MATCH_LIST_TEMPLATE_CONFIG)
           // 在列表下,第一个元素的偏移量减去0.09rem 因为第一个元素没有玩法标题padingtop
           if (location.hash.includes("match") && i == 0) {
             r.odd_list_height -= 0.11;

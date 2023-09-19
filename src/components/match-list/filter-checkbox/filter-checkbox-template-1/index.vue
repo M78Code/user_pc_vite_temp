@@ -5,9 +5,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-import { defineProps } from 'vue';
+import { defineProps, watch, watchEffect } from 'vue';
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 const props = defineProps({
@@ -20,6 +20,7 @@ const props = defineProps({
     default: () => {},
   }
 })
+
 console.error(props);
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 
