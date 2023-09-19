@@ -196,6 +196,8 @@ class UserCtr {
       return;
     }
     if (user_obj.balance === null) delete user_obj.balance;
+    // 获取历史uid
+    const uid_ = this.get_uid();
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {
@@ -206,6 +208,11 @@ class UserCtr {
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
+    // 判断是不是新用户登录
+    if(uid_ && uid_!= user_obj.userId){
+      // 发送订阅ws公共命令
+      window.postMessage({event: 'WS', cmd:`WS_RESEND_SCMD_EVENT`, data:{user_id : user_obj.userId}},'*');
+    }
   }
   set_user_activity(activity) {
     this.activity = { ...activity }
