@@ -260,7 +260,7 @@ class UserCtr {
    * 设置版本 简易版还是 标准版
    * 2标准 1简易
   */
-  set_standard_edition() {
+  set_standard_edition(v) {
     let edition = this.standard_edition == 2 ? 1 : 2;
     this.standard_edition = edition;
     this.update()
