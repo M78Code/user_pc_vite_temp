@@ -71,7 +71,7 @@
             </div>
             <div v-if="index != math_list_data.length-1" class="new-dialog-item-line details-border1-bottom"></div>
 
-            <img v-if="show_lvs(item)" :src="UserCtr.theme.includes('theme01') ? icon_video :
+            <img v-if="show_lvs(item)" :src="UserCtr.theme.includes('day') ? icon_video :
             icon_video_black" alt=""
                  class="icon-style">
           </div>

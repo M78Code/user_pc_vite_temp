@@ -153,7 +153,7 @@ const nightClickType = reactive({ typeL: 0, urlL: null })
 const currentSwipperIndex = ref(0)
 
 /** 是否日间版 */
-const is_day = computed(() => UserCtr.theme == 'theme01')
+const is_day = computed(() => UserCtr.theme == 'day')
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()
@@ -456,7 +456,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(UserCtr.theme)) {
+    if (['day'].includes(UserCtr.theme)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL

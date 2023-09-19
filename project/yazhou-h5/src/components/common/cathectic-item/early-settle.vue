@@ -51,7 +51,7 @@
             <img  src="image/wwwassets/bw3/record/set.svg" alt="" v-else>
           </template>
           <template v-else>
-            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('theme01')"  alt="">
+            <img  src="image/wwwassets/bw3/record/set2.svg"  v-if="UserCtr.theme.includes('day')"  alt="">
             <img  src="image/wwwassets/bw3/record/set3.svg" v-else alt="">
           </template>
 

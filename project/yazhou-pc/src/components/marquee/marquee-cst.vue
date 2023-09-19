@@ -160,9 +160,9 @@ const unsubscribe = store.subscribe(() => {
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 /** 
-* 用户余额是否展示状态 default: theme01
+* 用户余额是否展示状态 default: day
 */
-const theme = ref(UserCtr.theme || 'theme01')
+const theme = ref(UserCtr.theme || 'day')
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js

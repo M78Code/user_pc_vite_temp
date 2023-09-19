@@ -62,7 +62,7 @@
             <!--csid 1足球-->
             <img v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
               :src="show_tips ? (UserCtr.theme.includes('y0') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon_y0.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon.svg`) :
-                (UserCtr.theme.includes('theme01') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
+                (UserCtr.theme.includes('day') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>

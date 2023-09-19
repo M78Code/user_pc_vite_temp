@@ -18,7 +18,7 @@
                     :class="{ mini: main_menu_toggle == 'mini' }" @mouseenter="stop" @mouseleave="go"
                     @click="menu_change('R')" ref="adv_box"
                     :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-                    <p v-show="UserCtr.theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+                    <p v-show="UserCtr.theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                         <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                         <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
                     </p>
@@ -53,9 +53,9 @@
             </template>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(UserCtr.theme.includes('theme01') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(UserCtr.theme.includes('day') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (UserCtr.theme.includes('theme01') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (UserCtr.theme.includes('day') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </template>
 
@@ -149,7 +149,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(UserCtr.theme)) {
+    if (['day', 'theme01_y0'].includes(UserCtr.theme)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL
@@ -245,7 +245,7 @@ function getFestivalBanner() {
         //         nightSwipper.push({ img: proxy.get_file_path(img10), imgType: img10Type, imgUrl: img10Url, isClick: img10Type != 0 && img10Url })
         //     }
         //     // 根据日间或者夜间来判断用哪个数据
-        //     if (UserCtr.theme.includes('theme01') && daySwipper.length > 0) {
+        //     if (UserCtr.theme.includes('day') && daySwipper.length > 0) {
         //         currentSwipperArr = daySwipper;
         //     }
         //     if (UserCtr.theme.includes('theme02') && nightSwipper.length > 0) {

@@ -317,7 +317,7 @@ const update_first_menu = () => {
   footer_menulist.value[0].title = sub_menu.title;
   footer_menulist.value[0].title1 = sub_menu.title1;
   footer_menulist.value[0].icon = sub_menu.icon;
-  footer_menulist.value[0].icon_black = UserCtr.theme.includes("theme01")
+  footer_menulist.value[0].icon_black = UserCtr.theme.includes("day")
     ? sub_menu.icon
     : sub_menu.icon1;
   store.dispatch({
@@ -597,10 +597,10 @@ const isshow_bottom_banner = computed(() => {
 });
 
 const calc_resources_obj = computed(() => {
-  if (UserCtr.theme.includes("theme01")) {
-    return get_resources_obj.theme01;
+  if (UserCtr.theme.includes("day")) {
+    return get_resources_obj.day;
   } else {
-    return get_resources_obj.theme02;
+    return get_resources_obj.night;
   }
 });
 // 是否展示 底部菜单 选项
@@ -711,7 +711,7 @@ watch(show_favorite_list,
       item.icon = item.icon1;
       item.icon_black = item.icon1;
     } else {
-      if (UserCtr.theme.includes("theme01")) {
+      if (UserCtr.theme.includes("day")) {
         item.icon = item.icon0;
       } else if (UserCtr.theme.includes("theme02")) {
         item.icon_black = item.icon2;

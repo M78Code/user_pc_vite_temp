@@ -32,7 +32,7 @@ const default_url = ref("")
 // 图片 全路径
 const full_path = ref("")
 // 主题
-const theme = ref("theme01")
+const theme = ref("day")
 
 //图标出错 与 记录
 const img_error_map = ref({})
