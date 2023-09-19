@@ -5,20 +5,20 @@
 <template>
     <div class="popup-wrap" :class="{ active: is_active }">
         <div class="text-wrap" @click="on_popup">
-            <div class="popup-text" :class="{ active: is_active }">{{ i18n_t(`set.${handicap_theme == 'theme01' ?
+            <div class="popup-text" :class="{ active: is_active }">{{ i18n_t(`set.${theme == 'day' ?
                 'day_' : 'night_'}`) }}</div>
             <div class="yb-icon-arrow"></div>
         </div>
         <div class="relative-position">
             <div class="item-wrap">
                 <div class="triangle"></div>
-                <div class="item ellipsis" :class="{ active: handicap_theme == 'theme01' }"
-                    @click="handle_set_theme('theme01')">
+                <div class="item ellipsis" :class="{ active: theme == 'day' }"
+                    @click="handle_set_theme('day')">
                     {{ i18n_t('set.day_') }}
                     <!-- 日间版 -->
                 </div>
-                <div class="item ellipsis" :class="{ active: handicap_theme == 'theme02' }"
-                    @click="handle_set_theme('theme02')">
+                <div class="item ellipsis" :class="{ active: theme == 'night' }"
+                    @click="handle_set_theme('night')">
                     {{ i18n_t('set.night_') }}
                     <!-- 夜间版 -->
                 </div>
@@ -51,7 +51,7 @@ const { globalReducer } = store.getState()
 */
 const global_click = ref(globalReducer.global_click)
 /** 
-* 用户余额是否展示状态 default: theme01
+* 用户余额是否展示状态 default: day
 */
 const theme = ref(UserCtr.theme)
 const unsubscribe = store.subscribe(() => {
@@ -60,11 +60,6 @@ const unsubscribe = store.subscribe(() => {
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
-
-/** 日间或夜间版 */
-const handicap_theme = computed(() => {
-    return theme.value === 'theme02' ? 'theme02' : 'theme01'
-})
 
 /**
  * @Description:显示设置弹层

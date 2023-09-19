@@ -1,7 +1,7 @@
 /**
  * 11号模板 (羽毛球 || 乒乓球 || 沙滩排球 || 排球 || 斯诺克)-让球与大小
  */
-import * as TemplateCommon from "./template-common.js"
+import * as TemplateCommon from "../template-common.js"
 
 
 

@@ -1,0 +1,556 @@
+@font-face {
+  font-family: 'icomoon';
+  src:
+    url('fonts/icomoon.woff2?kc1pcm') format('woff2'),
+    url('fonts/icomoon.ttf?kc1pcm') format('truetype'),
+    url('fonts/icomoon.woff?kc1pcm') format('woff'),
+    url('fonts/icomoon.svg?kc1pcm#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-delete:before {
+  content: "\e980";
+  color: #999;
+}
+.icon-arrow:before {
+  content: "\e97f";
+  color: #2cb2ff;
+}
+.icon-neutral .path1:before {
+  content: "\e92f";
+  color: rgb(81, 183, 181);
+}
+.icon-neutral .path2:before {
+  content: "\e97e";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-sort_settle_time:before {
+  content: "\e97b";
+  color: #c1c4c7;
+}
+.icon-sort_match_time:before {
+  content: "\e97c";
+  color: #c1c4c7;
+}
+.icon-sort_bet_time:before {
+  content: "\e97d";
+  color: #c1c4c7;
+}
+.icon-bet_pre:before {
+  content: "\e97a";
+  color: #5a6074;
+}
+.icon-balance_refresh .path1:before {
+  content: "\e977";
+  color: rgb(216, 216, 216);
+  opacity: 0.0500;
+}
+.icon-balance_refresh .path2:before {
+  content: "\e978";
+  margin-left: -1em;
+  color: rgb(153, 153, 153);
+}
+.icon-balance_refresh .path3:before {
+  content: "\e979";
+  margin-left: -1em;
+  color: rgb(153, 153, 153);
+}
+.icon-eye_hide2:before {
+  content: "\e976";
+  color: #999;
+}
+.icon-menu_show_normal:before {
+  content: "\e975";
+  color: #999;
+}
+.icon-play:before {
+  content: "\e971";
+}
+.icon-timer:before {
+  content: "\e968";
+  color: #fa6400;
+}
+.icon-whistle:before {
+  content: "\e969";
+  color: #99a3b1;
+}
+.icon-match_over:before {
+  content: "\e96a";
+  color: #6d7278;
+}
+.icon-match_pause .path1:before {
+  content: "\e96b";
+  color: rgb(90, 96, 116);
+}
+.icon-match_pause .path2:before {
+  content: "\e96c";
+  margin-left: -1.0478515625em;
+  color: rgb(255, 42, 42);
+}
+.icon-match_pause .path3:before {
+  content: "\e96d";
+  margin-left: -1.0478515625em;
+  color: rgb(255, 42, 42);
+}
+.icon-match_playing .path1:before {
+  content: "\e96e";
+  color: rgb(109, 212, 0);
+}
+.icon-match_playing .path2:before {
+  content: "\e96f";
+  margin-left: -1.0478515625em;
+  color: rgb(90, 96, 116);
+}
+.icon-cup_day:before {
+  content: "\e972";
+  color: #d1d1d1;
+}
+.icon-cup_night:before {
+  content: "\e974";
+}
+.icon-triangle_solid:before {
+  content: "\e967";
+}
+.icon-radio-checked:before {
+  content: "\e92a";
+}
+.icon-checkbox:before {
+  content: "\e960";
+}
+.icon-checkbox-checked .path1:before {
+  content: "\e961";
+  color: rgb(255, 176, 1);
+}
+.icon-checkbox-checked .path2:before {
+  content: "\e962";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-radio:before {
+  content: "\e963";
+}
+.icon-lock:before {
+  content: "\e900";
+  color: #bcbcbe;
+}
+.icon-rs_huang:before {
+  content: "\e950";
+  color: #ffb001;
+}
+.icon-on_base3:before {
+  content: "\e953";
+  color: #ffb001;
+}
+.icon-on_base0:before {
+  content: "\e955";
+  color: #5a6074;
+}
+.icon-on_base1 .path1:before {
+  content: "\e956";
+  color: rgb(90, 96, 116);
+}
+.icon-on_base1 .path2:before {
+  content: "\e957";
+  margin-left: -1em;
+  color: rgb(255, 176, 1);
+}
+.icon-on_base1 .path3:before {
+  content: "\e958";
+  margin-left: -1em;
+  color: rgb(90, 96, 116);
+}
+.icon-on_base2 .path1:before {
+  content: "\e95b";
+  color: rgb(255, 176, 1);
+}
+.icon-on_base2 .path2:before {
+  content: "\e95c";
+  margin-left: -1em;
+  color: rgb(255, 176, 1);
+}
+.icon-on_base2 .path3:before {
+  content: "\e95d";
+  margin-left: -1em;
+  color: rgb(90, 96, 116);
+}
+.icon-tips4:before {
+  content: "\e924";
+  color: #fff;
+}
+.icon-list1:before {
+  content: "\e925";
+  color: #fff;
+}
+.icon-list2:before {
+  content: "\e94d";
+  color: #fff;
+}
+.icon-small:before {
+  content: "\e951";
+  color: #abbac8;
+}
+.icon-big:before {
+  content: "\e952";
+  color: #fff;
+}
+.icon-icon_copy:before {
+  content: "\e923";
+  color: #99a3b1;
+}
+.icon-star:before {
+  content: "\e922";
+  color: #efcc6e;
+}
+.icon-live_box:before {
+  content: "\e903";
+  color: #ffb001;
+}
+.icon-animation2:before {
+  content: "\e905";
+  color: #5a6074;
+}
+.icon-signal:before {
+  content: "\e921";
+  color: #5a6074;
+}
+.icon-statistics:before {
+  content: "\e920";
+  color: #08d764;
+}
+.icon-sports_iceball:before {
+  content: "\e95e";
+  color: #adadad;
+}
+.icon-sports_baseball:before {
+  content: "\e95f";
+  color: #adadad;
+}
+.icon-sports_americaball:before {
+  content: "\e964";
+  color: #adadad;
+}
+.icon-sports_volleyball:before {
+  content: "\e970";
+  color: #adadad;
+}
+.icon-sports_badminton:before {
+  content: "\e919";
+  color: #adadad;
+}
+.icon-sports_basketball:before {
+  content: "\e91a";
+  color: #adadad;
+}
+.icon-sports_pingpong:before {
+  content: "\e91b";
+  color: #adadad;
+}
+.icon-sports_snooker:before {
+  content: "\e91d";
+  color: #adadad;
+}
+.icon-sports_soccer:before {
+  content: "\e91e";
+  color: #adadad;
+}
+.icon-sports_tennis:before {
+  content: "\e91f";
+  color: #adadad;
+}
+.icon-arrow-left:before {
+  content: "\e917";
+  color: #5a6074;
+}
+.icon-arrow-right:before {
+  content: "\e918";
+  color: #ffb001;
+}
+.icon-live_text .path1:before {
+  content: "\e915";
+  color: rgb(0, 0, 0);
+}
+.icon-live_text .path2:before {
+  content: "\e916";
+  margin-left: -2.1669921875em;
+  color: rgb(255, 255, 255);
+}
+.icon-rs_hong:before {
+  content: "\e94f";
+  color: #ff4a4a;
+}
+.icon-rs_dian .path1:before {
+  content: "\e92e";
+  color: rgb(90, 96, 116);
+}
+.icon-rs_dian .path2:before {
+  content: "\e930";
+  margin-left: -1em;
+  color: rgb(171, 186, 200);
+}
+.icon-jin-jia:before {
+  content: "\e931";
+  color: #08d764;
+}
+.icon-jia-dian:before {
+  content: "\e932";
+  color: #9ea5b4;
+}
+.icon-sort-down .path1:before {
+  content: "\e933";
+  color: rgb(255, 176, 1);
+}
+.icon-sort-down .path2:before {
+  content: "\e934";
+  margin-left: -1em;
+  color: rgb(153, 163, 177);
+}
+.icon-sort-up .path1:before {
+  content: "\e945";
+  color: rgb(255, 176, 1);
+}
+.icon-sort-up .path2:before {
+  content: "\e947";
+  margin-left: -1em;
+  color: rgb(153, 163, 177);
+}
+.icon-rs_jiao_quan .path1:before {
+  content: "\e935";
+  color: rgb(255, 74, 74);
+}
+.icon-rs_jiao_quan .path2:before {
+  content: "\e936";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_quan .path3:before {
+  content: "\e938";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_quan .path4:before {
+  content: "\e939";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_shang .path1:before {
+  content: "\e93f";
+  color: rgb(255, 74, 74);
+}
+.icon-rs_jiao_shang .path2:before {
+  content: "\e940";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_shang .path3:before {
+  content: "\e944";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_xia .path1:before {
+  content: "\e949";
+  color: rgb(255, 74, 74);
+}
+.icon-rs_jiao_xia .path2:before {
+  content: "\e94a";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jiao_xia .path3:before {
+  content: "\e94b";
+  margin-left: -1em;
+  color: rgb(90, 169, 97);
+}
+.icon-rs_jin_quan:before {
+  content: "\e94c";
+  color: #08d764;
+}
+.icon-jin-shang:before {
+  content: "\e93e";
+  color: #08d764;
+}
+.icon-jin-xia:before {
+  content: "\e948";
+  color: #08d764;
+}
+.icon-calendar:before {
+  content: "\e909";
+}
+.icon-refresh:before {
+  content: "\e914";
+  color: #abbac8;
+}
+.icon-sports_gaming:before {
+  content: "\e966";
+  color: #6d7278;
+}
+.icon-eye_hide:before {
+  content: "\e901";
+  color: #5a6074;
+}
+.icon-eye_show:before {
+  content: "\e902";
+  color: #5a6074;
+}
+.icon-go_top:before {
+  content: "\e912";
+  color: #5a6074;
+}
+.icon-del:before {
+  content: "\e90c";
+  color: #99a3b1;
+}
+.icon-close:before {
+  content: "\e90d";
+  color: #6d7278;
+}
+.icon-triangle2:before {
+  content: "\e959";
+  color: #d1d1d1;
+}
+.icon-triangle3:before {
+  content: "\e973";
+  color: #d1d1d1;
+}
+.icon-triangle:before {
+  content: "\e954";
+  color: #d1d1d1;
+}
+.icon-triangle1:before {
+  content: "\e95a";
+  color: #d1d1d1;
+}
+.icon-media_switch:before {
+  content: "\e92d";
+  color: #5a6074;
+}
+.icon-sort_league:before {
+  content: "\e90a";
+  color: #abbac8;
+}
+.icon-tips3:before {
+  content: "\e92b";
+  color: #5a6074;
+}
+.icon-tips:before {
+  content: "\e906";
+  color: #99a3b1;
+}
+.icon-success:before {
+  content: "\e94e";
+  color: #1fa686;
+}
+.icon-failure:before {
+  content: "\e91c";
+  color: #ee4848;
+}
+.icon-plus:before {
+  content: "\e937";
+  color: #fff;
+}
+.icon-search:before {
+  content: "\e90e";
+  color: #5a6074;
+}
+.icon-sort:before {
+  content: "\e926";
+}
+.icon-rs_dian_jia:before {
+  content: "\e93a";
+  color: #9ea5b4;
+}
+.icon-rs_jia_shi:before {
+  content: "\e93d";
+  color: #9ea5b4;
+}
+.icon-rs_jin_quan1:before {
+  content: "\e941";
+  color: #00a997;
+}
+.icon-rs_jin_shang:before {
+  content: "\e942";
+  color: #00a997;
+}
+.icon-rs_jin_xia:before {
+  content: "\e943";
+  color: #00a997;
+}
+.icon-rs_hong1:before {
+  content: "\e93b";
+  color: #ff4a4a;
+}
+.icon-rs_huang1:before {
+  content: "\e93c";
+  color: #efcc6e;
+}
+.icon-triangle4:before {
+  content: "\e927";
+  color: #d1d1d1;
+}
+.icon-circle:before {
+  content: "\e928";
+}
+.icon-del1:before {
+  content: "\e929";
+  color: #99a3b1;
+}
+.icon-set_top1:before {
+  content: "\e946";
+  color: #9ea5b4;
+}
+.icon-football:before {
+  content: "\e965";
+  color: #fff;
+}
+.icon-circle1:before {
+  content: "\e92c";
+}
+.icon-flame:before {
+  content: "\e913";
+  color: #08d764;
+}
+.icon-open:before {
+  content: "\e908";
+  color: #5a6074;
+}
+.icon-hide:before {
+  content: "\e911";
+  color: #5a6074;
+}
+.icon-play_pause:before {
+  content: "\e90f";
+  color: #ffb001;
+}
+.icon-play_stop:before {
+  content: "\e910";
+  color: #5a6074;
+}
+.icon-set_top:before {
+  content: "\e907";
+  color: #ffb001;
+}
+.icon-sort_date:before {
+  content: "\e90b";
+  color: #08d764;
+}
+.icon-back:before {
+  content: "\e904";
+  color: #abbac8;
+}

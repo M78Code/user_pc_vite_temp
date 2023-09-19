@@ -5,7 +5,6 @@
  *   源名字：  template_1002  template1002
  */
 
-import * as TemplateCommon from "./template-common.js"
 
 
 

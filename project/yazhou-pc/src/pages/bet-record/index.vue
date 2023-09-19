@@ -30,6 +30,7 @@
           :endDateSearch="endDateSearch"
           v-mdel:model="model"
           :settleSwitch="UserCtr.user_info.settleSwitch"
+          :toolIndex="toolIndex"
           :submit="submit"
           @search_pre_record="search_pre_record"
           @chooseTime="chooseTime"
@@ -368,7 +369,10 @@ console.error(model);
     justify-content: flex-start;
     align-items: center;
     .check-wrap.active {
-      background-color: var(--q-gb-bg-c-3);
+      background-color: var(--q-gb-bg-c-17);
+      &:before{
+        border-color: var(--q-gb-bd-c-13);
+      }
     }
     span {
       color: var(--q-gb-t-c-6);

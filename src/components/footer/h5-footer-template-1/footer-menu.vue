@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="container-menu-w" :class="{
-    black2: UserCtr.theme.includes('theme02'),
+    black2: UserCtr.theme.includes('night'),
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
@@ -40,7 +40,7 @@
           <div class="menu-item-title" :class="{
             'theme02-focus':
               show_favorite_list &&
-              UserCtr.theme.includes('theme02') &&
+              UserCtr.theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
@@ -317,7 +317,7 @@ const update_first_menu = () => {
   footer_menulist.value[0].title = sub_menu.title;
   footer_menulist.value[0].title1 = sub_menu.title1;
   footer_menulist.value[0].icon = sub_menu.icon;
-  footer_menulist.value[0].icon_black = UserCtr.theme.includes("theme01")
+  footer_menulist.value[0].icon_black = UserCtr.theme.includes("day")
     ? sub_menu.icon
     : sub_menu.icon1;
   store.dispatch({
@@ -599,10 +599,10 @@ const isshow_bottom_banner = computed(() => {
 });
 
 const calc_resources_obj = computed(() => {
-  if (UserCtr.theme.includes("theme01")) {
-    return get_resources_obj.theme01;
+  if (UserCtr.theme.includes("day")) {
+    return get_resources_obj.day;
   } else {
-    return get_resources_obj.theme02;
+    return get_resources_obj.night;
   }
 });
 // 是否展示 底部菜单 选项
@@ -713,9 +713,9 @@ watch(show_favorite_list,
       item.icon = item.icon1;
       item.icon_black = item.icon1;
     } else {
-      if (UserCtr.theme.includes("theme01")) {
+      if (UserCtr.theme.includes("day")) {
         item.icon = item.icon0;
-      } else if (UserCtr.theme.includes("theme02")) {
+      } else if (UserCtr.theme.includes("night")) {
         item.icon_black = item.icon2;
       }
     }

@@ -17,7 +17,7 @@
                             <!-- 设置项 图标 -->
                             <q-item-section avatar>
                                 <i class="icon settings-icon"
-                                    :style="`background: url('${UserCtr.theme.includes('theme01') ? settings.icon.day : settings.icon.night}') no-repeat center`"></i>
+                                    :style="`background: url('${UserCtr.theme.includes('day') ? settings.icon.day : settings.icon.night}') no-repeat center`"></i>
                             </q-item-section>
 
                             <!-- 设置项 名称 -->
@@ -281,10 +281,10 @@ function on_click_lang(lang_) {
  * @return {undefined} undefined
  */
 function change_theme() {
-    if (UserCtr.theme.includes('theme01')) {
-        handle_set_theme('theme02')
+    if (UserCtr.theme.includes('day')) {
+        handle_set_theme('night')
     } else {
-        handle_set_theme('theme01')
+        handle_set_theme('day')
     }
 
     emit('auto_close')

@@ -2,7 +2,7 @@
 /**
  * 19号模板 拳击-让球与大小
  */
-import * as TemplateCommon from "./template-common.js"
+import * as TemplateCommon from "../template-common.js"
 
 
 

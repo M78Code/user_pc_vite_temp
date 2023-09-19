@@ -14,11 +14,11 @@
         <div v-if="currentSwipperArr.length > 0" class="adv-box-r" :class="{ mini: main_menu_toggle == 'mini' }"
             @mouseenter="stop" @mouseleave="go" @click="menu_change('R')" ref="adv_box"
             :style="{ 'cursor': lodash.get(currentSwipperArr, `[${currentSwipperIndex}].isClick`) ? 'pointer' : 'unset' }">
-            <p v-if="theme.includes('theme01') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
+            <p v-if="theme.includes('day') && currentSwipperArr.length > 1 && showArrow" class="day_arrow">
                 <img :src="day_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="day_right" alt="" @click.stop="boxMouseup('next')">
             </p>
-            <p v-if="theme.includes('theme02') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
+            <p v-if="theme.includes('night') && currentSwipperArr.length > 1 && showArrow" class="night_arrow">
                 <img :src="night_left" alt="" @click.stop="boxMouseup('pre')">
                 <img :src="night_right" alt="" @click.stop="boxMouseup('next')">
             </p>
@@ -49,7 +49,7 @@ onUnmounted(unsubscribe)
 const main_menu_toggle = ref(menuReducer.main_menu_toggle)
 
 /** 
-* 用户余额是否展示状态 default: theme01
+* 用户余额是否展示状态 default: day
 * 路径: project_path/src/store/module/theme.js
 */
 const theme = ref(themeReducer.theme)
@@ -62,7 +62,7 @@ watch(
     (o) => {
         clearInterval(showBannerSwipperTimer.value);
         currentSwipperArr = []
-        if (o && o.includes('theme01')) {
+        if (o && o.includes('day')) {
             if (daySwipper.length > 0) {
                 currentSwipperArr = daySwipper;
             }

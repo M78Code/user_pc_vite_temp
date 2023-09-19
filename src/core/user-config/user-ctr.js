@@ -21,6 +21,7 @@ import lodash from "lodash";
 // #TODO 使用axios，等正式开发组件时候 npm install axios
 import axios from "axios";
 import { uid } from 'quasar';
+
 const axios_instance = axios.create();
 const { htmlVariables = {} } = window.BUILDIN_CONFIG;
 class UserCtr {
@@ -63,9 +64,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = langReducer.lang;
+    this.lang = 'zh';
     // 用户主题  日间版本 ，夜间版本
-    this.theme = themeReducer.theme;
+    this.theme = 'day';
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds = {
@@ -157,6 +158,9 @@ class UserCtr {
     this.theme = theme;
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     this.update()
+    // 替换body上className
+    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    document.getElementById('ty-body').classList.replace(old_theme, theme == 'day' ? 'theme01' : 'theme02')
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }
@@ -192,6 +196,8 @@ class UserCtr {
       return;
     }
     if (user_obj.balance === null) delete user_obj.balance;
+    // 获取历史uid
+    const uid_ = this.get_uid();
     if (this.user_info) {
       Object.assign(this.user_info, user_obj);
     } else {
@@ -202,6 +208,11 @@ class UserCtr {
     this.set_user_base_info(this.user_info);
     this.is_invalid = false;
     this.user_logined_id = user_obj.userId
+    // 判断是不是新用户登录
+    if(uid_ && uid_!= user_obj.userId){
+      // 发送订阅ws公共命令
+      window.postMessage({event: 'WS', cmd:`WS_RESEND_SCMD_EVENT`, data:{user_id : user_obj.userId}},'*');
+    }
   }
   set_user_activity(activity) {
     this.activity = { ...activity }

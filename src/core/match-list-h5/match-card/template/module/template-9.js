@@ -5,7 +5,6 @@
  *      main_handicap_list_1009
  */
 
-import * as TemplateCommon from "./template-common.js"
 
 
 

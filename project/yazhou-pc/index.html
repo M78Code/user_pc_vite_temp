@@ -28,10 +28,10 @@
       type="image/png"
       href="%VITE_APP_BUILD_VERSION%/image/common/favicon.ico"
     />
-    <!-- <link
+    <link
       rel="stylesheet"
       href="%VITE_APP_BUILD_VERSION%/lib/font/font-roboto.min.css"
-    /> -->
+    />
     <script src="%VITE_APP_BUILD_VERSION%/lib/js/crypto-js.min.js"></script>
     <style>
       /* 取消默认选中样式 */
@@ -495,7 +495,8 @@
       }
     </script>
   </head>
-  <body class="custom-format-<%=com%">
+  <!-- <body class="custom-format-<%=com%"> -->
+  <body id="ty-body" class="custom-format-com1">
     <!-- DO NOT touch the following DIV -->
     <div id="ty-app" class="full-height"></div>
     <!--loading 动画-->
@@ -526,26 +527,27 @@
       //这里 除非 后面对接  theme 参数 否则 严禁 theme 写入 session ,session 在 root_layout 内进行纠正
       // 不去考虑所谓的  弹出窗口后 主页面再更改 主题 , 弹窗页面刷新不同步问题
       // 主题设置
-      let current_theme =
-        sessionStorage.getItem("theme") || url_search.get("theme") || "";
-
+      let current_theme = sessionStorage.getItem("theme") || url_search.get("theme") || "theme01";
+      // 默认日间版
+      document.getElementById('ty-body').classList.add(current_theme)
       // 如果 主题  未知
-      if (!current_theme) {
+      // TODO: 没有yo
+      // if (!current_theme) {
         //首次加载
         // 添加蓝色加载中
         // 如果  url 内有 stm 参数 并且是 blue 或者  merchant_style 是 y0 这里只管 商户级别
-        if (
-          url_search.get("stm") == "blue" ||
-          localStorage.getItem("merchant_style") == "y0"
-        ) {
-          current_theme = "theme01_y0";
-          localStorage.setItem("merchant_style", "y0");
-        } else {
-          //其他 所有情况下 都是默认的主题色   通用版 白色
-          current_theme = "theme01";
-          localStorage.setItem("merchant_style", "common");
-        }
-      }
+        // if (
+        //   url_search.get("stm") == "blue" ||
+        //   localStorage.getItem("merchant_style") == "y0"
+        // ) {
+        //   current_theme = "theme01_y0";
+        //   localStorage.setItem("merchant_style", "y0");
+        // } else {
+        //   //其他 所有情况下 都是默认的主题色   通用版 白色
+        //   current_theme = "theme01";
+        //   localStorage.setItem("merchant_style", "common");
+        // }
+      // }
       //类名拼接
       current_theme = current_theme + "-root-loading";
       //根据 主题 设置节点 类名

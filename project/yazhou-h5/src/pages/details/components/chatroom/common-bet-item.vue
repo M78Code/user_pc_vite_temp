@@ -10,7 +10,7 @@
       <div class="item-body" :key="index" v-for="(item,index) in detailList">
         <div class="row items-center body-top yb_fontsize12 mx-12 body_top">
           <p class="p1 yb_mr4">
-            <img v-if="UserCtr.theme.includes('theme01')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
+            <img v-if="UserCtr.theme.includes('day')"  :src="$utils.compute_img_tag_src('/image/wwwassets/bw3/common/match_cup.svg')"
               class="beif_src">
             <img v-else  src="image/wwwassets/bw3/common/match_cup2.svg" class="beif_src">
           </p>

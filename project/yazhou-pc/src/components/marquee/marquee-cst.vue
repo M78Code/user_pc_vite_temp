@@ -152,19 +152,17 @@ const settings_items = [
 const show_g_settings = ref(false)
 
 /** stroe仓库 */
-const { globalReducer, menuReducer, themeReducer } = store.getState()
+const { globalReducer, menuReducer } = store.getState()
 const unsubscribe = store.subscribe(() => {
-    theme.value = themeReducer.theme
     menu_collapse_status.value = menuReducer.menu_collapse_status
     global_click.value = globalReducer.global_click
 })
 /** 销毁监听 */
 onUnmounted(unsubscribe)
 /** 
-* 用户余额是否展示状态 default: theme01
-* 路径: project_path/src/store/module/theme.js
+* 用户余额是否展示状态 default: day
 */
-const theme = ref(themeReducer.theme)
+const theme = ref(UserCtr.theme || 'day')
 /** 
  * 获取菜单收起状态 default: false
  * 路径: project_path\src\store\module\menu.js
