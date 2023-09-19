@@ -126,7 +126,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(3)"
             :class="show_market_shadow ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_market">
@@ -136,7 +136,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(4)"
             :class="show_market_shadow_max ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>
@@ -149,7 +149,7 @@
         <div class="operation">
           <span class="reduce" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(1)"
             :class="pre_shadow_flag ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/reduce_black.png" />
+            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/reduce_black.png" />
             <img v-else src="image/wwwassets/bw3/common/reduce_white.png" />
           </span>
           <div class="odd" @click.stop="focus_odds">
@@ -160,7 +160,7 @@
           </div>
           <span class="add" v-touch-repeat:0:300:200.mouse.enter.space.72.104="gtouchstart(2)"
             :class="pre_shadow_max_flag ? 'shadow-show' : null">
-            <img v-if="UserCtr.theme.includes('theme01')" src="image/wwwassets/bw3/common/add_black.png" />
+            <img v-if="UserCtr.theme.includes('day')" src="image/wwwassets/bw3/common/add_black.png" />
             <img v-else src="image/wwwassets/bw3/common/add_white.png" />
           </span>
         </div>

@@ -32,7 +32,7 @@ const default_url = ref("")
 // 图片 全路径
 const full_path = ref("")
 // 主题
-const theme = ref("theme01")
+const theme = ref("day")
 
 //图标出错 与 记录
 const img_error_map = ref({})
@@ -59,11 +59,11 @@ const league_icon_error = ($event) => {
   $event.target.onerror = null
 }
 //  设置主题
-const set_default_icon = (val = "theme02") => {
+const set_default_icon = (val = "night") => {
   // 主题
   theme.value = val;
   // 默认联赛图标
-  image_src.value = theme == "theme02" ? none_league_icon_black : none_league_icon;
+  image_src.value = theme == "night" ? none_league_icon_black : none_league_icon;
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素
