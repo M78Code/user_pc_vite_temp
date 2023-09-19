@@ -3,7 +3,7 @@
 -->
 <template v-if="show_image">
   <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error"  />
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error" />
 </template>
  
 <script setup>
@@ -43,13 +43,11 @@ const oss_img_http = window.BUILDIN_CONFIG.DOMAIN_RESULT.first_one
 onMounted(() => {
   //设置 默认 图片
   set_default_icon();
-  // check_image_load();
-  image_src.value = `${oss_img_http}/${props.path ? props.path[0] : ''}`
+  check_image_load();
 })
 
 watch(() => props.path, () => {
-  // check_image_load();
-  image_src.value = `${oss_img_http}/${props.path}`
+  check_image_load();
 })
 
 /**
@@ -118,7 +116,7 @@ const load_image_first_time = (params) => {
       myImage = null;
     });
   };
-  myImage.src = full_path;
+  myImage.src = full_path.value;
 }
 /**
  * 根据类型 返回默认图片
