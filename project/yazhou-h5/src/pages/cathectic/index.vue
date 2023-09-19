@@ -157,7 +157,7 @@ onUnmounted(() => {
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
-  background:var(--q-gb-bd-c-15);
+  background:var(--q-gb-bg-c-15);
   color: var(--q-cathectic-color-1);
   .content-m {
       background: var(--q-cathectic-color-7);
@@ -167,13 +167,13 @@ onUnmounted(() => {
 .head-top {
   height: 0.5rem;
   position: relative;
-  border-bottom: 1px solid var(--q-gb-bd-c-16);
+  border-bottom: 1px solid var(--q-gb-bd-c-13);
 
   .close {
     position: absolute;
     right: 0;
-    width: 0.14rem;
-    height: 0.14rem;
+    // width: 0.14rem;
+    // height: 0.14rem;
     padding-right: 0.34rem !important;
     .close-click-padding {
       // padding: 0.08rem 0.04rem;
