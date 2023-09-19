@@ -1,7 +1,7 @@
 /**
  *  9号模板 网球-让球与大小
  */
-import * as TemplateCommon from "./template-common.js"
+import * as TemplateCommon from "../template-common.js"
 
 l
 
