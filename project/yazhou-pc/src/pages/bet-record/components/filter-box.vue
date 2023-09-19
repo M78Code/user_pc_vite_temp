@@ -58,7 +58,7 @@
             class="full-height full-width yb-flex-center yb-hover-bg"
             @click.stop="selectSortShowFunc"
           >
-            <icon
+            <q-icon
               :name="time_sort_record_item.icon"
               size="14px"
               color="#569ffd"
@@ -67,7 +67,7 @@
             <span class="text_check">{{
               i18n_t(time_sort_record_item.check_name)
             }}</span>
-            <icon
+            <q-icon
               name="icon-sort"
               size="12px"
               class="icon_right"
@@ -356,6 +356,7 @@ const time_sort = (sort) => {
   .search-date-wrapper {
     width: 185px;
     height: 28px;
+    background-color: var(--q-gb-bg-c-11);
     .date-wrap {
       display: flex;
       justify-content: space-between;
@@ -365,12 +366,17 @@ const time_sort = (sort) => {
       height: 100%;
       border-radius: 2px;
       cursor: pointer;
-      & ::v-deep .icon-calendar {
+      border: 1px solid var(--q-gb-bd-c-8);
+      color: var(--qq--yb-text-color3);
+      &:deep(.icon-calendar) {
         font-size: 14px;
+        &::before {
+          color: var(--q-gb-t-c-17);
+        }
       }
     }
     .date-picker-wrap {
-      ::v-deep .q-date {
+      :deep(.q-date) {
         .q-icon {
           font-size: 12px;
           &::before {
@@ -413,7 +419,8 @@ const time_sort = (sort) => {
     border-radius: 2px;
     text-align: center;
     line-height: 28px;
-    color: var(--qq--theme-color-tool-btn);
+    color: var(--q-gb-t-c-9);
+    background-color: var(--q-bet-record-color-13);
     cursor: pointer;
   }
 }

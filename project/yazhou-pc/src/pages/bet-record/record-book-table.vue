@@ -307,6 +307,7 @@ import { PaginationWrapper } from "src/components/pagination/index.js";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 // import VueSlider from 'vue-slider-component'
 // import 'vue-slider-component/theme/default.css'
+import loadData from "project_path/src/components/load-data/load-data.vue"
 import lodash from "lodash";
 import { format_score ,format_odds,formatTime  } from "src/core/format/index.js";
 import { i18n_t } from "src/boot/i18n.js"
@@ -737,6 +738,7 @@ onMounted(() => {
   flex-direction: column;
   width: 100%;
   font-size: 12px;
+  color: var(--q-gb-t-c-6);
   &.no-record-data {
     padding-bottom: 0!important;
   }
@@ -761,8 +763,9 @@ onMounted(() => {
     /* *表单内容* */
     .data-table-content {
       flex: 1;
-      ::v-deep {
-        .full-width {
+      color: var(--q-bet-record-color-8);
+      background: var(--q-gb-bg-c-11);
+        :deep(.full-width) {
           /* *表格内容样式* */
           .r-table {
             width: 100%;
@@ -772,13 +775,15 @@ onMounted(() => {
             }
           }
         }
-      }
     }
     .row {
       /* *表单头部标题* */
       &.head {
         padding: 0;
         height: 30px;
+        color: var(--q-gb-t-c-6);
+        background: var(--q-gb-bg-lg-19);
+        border: 1px solid var(--q-gb-bd-c-8);
         /* *列* */
         .ceil {
           padding: 0 0 0 20px !important;
