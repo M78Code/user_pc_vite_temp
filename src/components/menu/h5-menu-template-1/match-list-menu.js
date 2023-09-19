@@ -519,7 +519,7 @@ export default {
           : "focus-a";
       }
       //默认黑色版还是白色版
-      return this.get_theme.includes("theme02") ? "focus-d" : "";
+      return this.get_theme.includes("night") ? "focus-d" : "";
     },
     // 是否展示二级菜单 图标
     show_secondary_menu_icon(item) {

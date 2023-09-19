@@ -357,7 +357,7 @@
                   </div>
                   <div class="bet-pre-right" v-if="data.bet_confirm">
                     <template
-                      v-if="['theme01'   ].includes(UserCtr.get_theme)"
+                      v-if="['day'].includes(UserCtr.get_theme)"
                     >
                       <img
                         :src="`${$g_image_preffix}/image/wwwassets/yabo/gif/${UserCtr.get_theme}/${UserCtr.get_theme}_confirming.gif`"

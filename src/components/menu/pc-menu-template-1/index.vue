@@ -1,51 +1,37 @@
 <template>
-  <div class="c-menu-sports menu-border" >
+  <div class="c-menu-sports menu-border">
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
-        <!-- {{ $t('common.menu_title') }} -->
-        体育菜单
+        {{ $t('common.menu_title') }}
         <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div
-          class="item yb-flex-center"
-          :class="jinri_zaopan_ == 2 ? 'active' : ''"
-          @click="handle_click_jinri_zaopan(2)"
-        >
-          今日
-          <!-- {{ $t("menu.match_today") }} -->
+        <div class="item yb-flex-center" :style="jinri_zaopan_ == 2 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 2 ? 'active' : ''"
+          @click="handle_click_jinri_zaopan(2)">
+          {{ $t("menu.match_today") }}
         </div>
-        <div
-          class="item yb-flex-center"
-          :class="jinri_zaopan_ == 3 ? 'active' : ''"
-          @click="handle_click_jinri_zaopan(3)"
-        >
-          早盘
-          <!-- {{ $t("menu.match_early") }} -->
+        <div class="item yb-flex-center" :style="jinri_zaopan_ == 3 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 3 ? 'active' : ''"
+          @click="handle_click_jinri_zaopan(3)">
+          {{ $t("menu.match_early") }}
         </div>
       </div>
     </div>
 
     <div style="display: none;">{{ BaseData.BaseData_version }}</div>
-    <div
-      v-for="item1 in BaseData.left_menu_base_mi_arr"
-      :key="`${jinri_zaopan}_${item1}`"
-      :class="BaseData.is_mi_300_open && item1 == 400 ? 'menu-border' : ''"
-    >
+    <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
+      :class="BaseData.is_mi_300_open && item1 == 400 ? 'menu-border' : ''">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item1) }} -->
-      <div
-        v-if="item1 == 300 || lv_1_num(item1)"
-        class="menu-item menu-fold1 search"
-        :class="current_lv_1_mi == item1 ? 'y-active' : ''"
-        @click="lev_1_click(item1)"
-      >
+      <div v-if="item1 == 300 || lv_1_num(item1)" class="menu-item menu-fold1 search"
+        :class="current_lv_1_mi == item1 ? 'y-active' : ''" @click="lev_1_click(item1)">
         <!-- icon -->
         <div class="row items-center">
-          <span class="soprts_id_icon" :style="sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(item1)}`})" :alt="BaseData.menus_i18n_map[item1]" ></span>
-        
+          <span class="soprts_id_icon"
+            :style="sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(item1)}` })"
+            :alt="BaseData.menus_i18n_map[item1]"></span>
+
         </div>
         <div class="items-right row" style="flex-wrap: wrap">
           <div style="line-height: 1; flex: 1">
@@ -55,21 +41,9 @@
             </span>
           </div>
           <!-- 数字 显示    有些赛种不显示 -->
-          <div
-            class="col-right"
-            style="min-width: 40px"
-            v-if="BaseData.menus_i18n_map[item1]"
-          >
+          <div class="col-right" style="min-width: 40px" v-if="BaseData.menus_i18n_map[item1]">
             <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
-
-            <div
-              class="live-text"
-              v-if="
-                jinri_zaopan == 2 &&
-                lv_1_num(item1) &&
-                BaseData.mi_gunqiu.includes(item1)
-              "
-            />
+            <div class="live-text" :style="compute_css('live_text')" v-if="jinri_zaopan_ == 2 && lv_1_num(item1) && BaseData.mi_gunqiu.includes(item1)" />
             <span class="match-count yb-family-odds" v-if="item1 != 300">{{
               lv_1_num(item1)
             }}</span>
@@ -80,24 +54,15 @@
       <!--  子菜单  ，  开始    -->
       <!--  子菜单  ， 冠军 不显示子菜单  -->
       <!--  常规体育 含 娱乐     子菜单  开始    -->
-      <div
-        v-if="![400, 2000, 300].includes(item1)"
-        class="menu-fold2-wrap"
-        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''"
-      >
+      <div v-if="![400, 2000, 300].includes(item1)" class="menu-fold2-wrap"
+        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''">
         <!-- :class="current_lv_1_mi == item1 ? '' : ''" -->
         <template v-for="item2 in compute_item1_sublist_mi_100(item1)">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-          <div
-            :key="`${jinri_zaopan}_${item1}_${item2.mi}_100`"
-            @click.stop="
-              lv_2_click_wapper_1({ lv1_mi: item1, lv2_mi: item2.mi })
-            "
-            v-if="item1 != 118"
-            v-show="item2['ct']"
-            :class="current_lv_2_mi == item2.mi ? 'active' : ''"
-            class="menu-item menu-fold2"
-          >
+          <div :key="`${jinri_zaopan_}_${item1}_${item2.mi}_100`" @click.stop="
+            lv_2_click_wapper_1({ lv1_mi: item1, lv2_mi: item2.mi })
+            " v-if="item1 != 118" v-show="item2['ct']" :class="current_lv_2_mi == item2.mi ? 'active' : ''"
+            class="menu-item menu-fold2">
             <div class="row items-center relative-position">
               <span class="menu-point"></span>
               <span class="menu-text ellipsis">
@@ -107,26 +72,19 @@
             </div>
             <div class="col-right relative-position" style="min-width: 40px">
               <span class="match-count yb-family-odds" v-if="item1 != 2000">
-                {{ item2["ct"] }}</span
-              >
+                {{ item2["ct"] }}</span>
             </div>
           </div>
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
         </template>
         <!-- 常规赛种   （含娱乐）  增补  冠军玩法    开始 -->
-        <div
-          :key="`${jinri_zaopan}_${item1}_guanjun_1`"
-          @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
+        <div :key="`${jinri_zaopan_}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
           v-if="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]"
-          v-show="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['ct']"
-          :class="
-            current_lv_2_mi ==
-            BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['mi']
+          v-show="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['ct']" :class="current_lv_2_mi ==
+              BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['mi']
               ? 'active'
               : ''
-          "
-          class="menu-item menu-fold2"
-        >
+            " class="menu-item menu-fold2">
           <div class="row items-center relative-position">
             <span class="menu-point"></span>
             <span class="menu-text ellipsis">
@@ -136,39 +94,24 @@
           </div>
           <div class="col-right relative-position" style="min-width: 40px">
             <span class="match-count yb-family-odds">
-              {{ BaseData.commn_sport_guanjun_obj[`mi_${item1}`]["ct"] }}</span
-            >
+              {{ BaseData.commn_sport_guanjun_obj[`mi_${item1}`]["ct"] }}</span>
           </div>
         </div>
         <!-- 常规赛种   （含娱乐）  增补  冠军玩法      结束  -->
       </div>
       <!--  常规体育 含 娱乐    子菜单  结束     -->
       <!--  电竞    子菜单  开始    -->
-      <div
-        v-if="item1 == 2000"
-        class="menu-fold2-wrap"
-        :data-id="show_menu"
-        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''"
-      >
-        <MenuItem
-          :menu_list="compute_item1_sublist_mi_2000(item1)"
-          :base_data="BaseData"
-          :current_lv_2_mi="current_lv_2_mi"
-        />
+      <div v-if="item1 == 2000" class="menu-fold2-wrap" :data-id="show_menu"
+        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''">
+        <MenuItem :menu_list="compute_item1_sublist_mi_2000(item1)" :base_data="BaseData"
+          :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  电竞    子菜单   结束     -->
       <!--  VR    子菜单   开始     -->
-      <div
-        v-if="item1 == 300"
-        class="menu-fold2-wrap"
-        :data-id="show_menu"
-        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''"
-      >
-        <MenuItem
-          :menu_list="compute_item1_sublist_mi_300(item1)"
-          :base_data="BaseData"
-          :current_lv_2_mi="current_lv_2_mi"
-        />
+      <div v-if="item1 == 300" class="menu-fold2-wrap" :data-id="show_menu"
+        :class="current_lv_1_mi == item1 && !show_menu ? 'open' : ''">
+        <MenuItem :menu_list="compute_item1_sublist_mi_300(item1)" :base_data="BaseData"
+          :current_lv_2_mi="current_lv_2_mi" />
       </div>
       <!--  VR    子菜单   结束     -->
       <!--  子菜单  ，  结束     -->
@@ -176,13 +119,14 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted,computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from 'vue-router'
 // 菜单配置
-import { MenuData,UserCtr } from "src/core/index.js"
+import { MenuData, UserCtr } from "src/core/index.js"
 import BaseData from "src/core/base-data/base-data.js"
-import  sprite_img  from   "src/core/server-img/sprite-img/index.js"
+import sprite_img from "src/core/server-img/sprite-img/index.js"
 import { compute_css_variables } from "src/core/css-var/index.js"
+import { compute_css } from 'src/core/server-img/index.js'
 
 import MenuItem from "./menu-item.vue";
 
@@ -200,10 +144,11 @@ const show_menu = ref(false);
 const first_change = ref(false);
 
 
-onMounted(()=>{
-  console.error('ss', sprite_img['pc-left-menu-bg-image']({position:`item_${BaseData.compute_sport_id(1)}`}))
+onMounted(() => {
+  console.error('ss', sprite_img['pc-left-menu-bg-image']({ position: `item_${BaseData.compute_sport_id(1)}` }))
 
-  console.error('sss',compute_css_variables({category:'global',module:"background"})['--q-gb-bg-c-2'])
+  console.error('sss', compute_css_variables({ category: 'global', module: "background" })['--q-gb-bg-c-2'])
+  handle_click_jinri_zaopan(2)
 })
 
 
@@ -406,7 +351,7 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
     return false;
   }
   if (jinri_zaopan) {
-    jinri_zaopan_.value = jinri_zaopan 
+    jinri_zaopan_.value = jinri_zaopan
   }
   // jinri_zaopan_.value  = jinri_zaopan ? jinri_zaopan : jinri_zaopan_;
   current_lv_1_mi.value = mi;
@@ -957,20 +902,24 @@ const handle_click_jinri_zaopan = (val) => {
     font-size: 13px;
 
     .menu-item {
-      
+
+     
+
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
-        padding: 10px 4px;
+        padding: 0px;
 
         .item {
-          height: 30px;
           border-radius: 8px;
           margin-right: 10px;
-          flex: 1;
           white-space: nowrap;
-          max-width: 95px;
-
+          margin-right: 0!important;
+          height: 38px!important;
+          background-size: 100% 100%;
+          min-width: 98px;
+          padding-bottom: 4px;
+          box-shadow: none!important;
           &:last-child {
             margin-right: 0;
           }
@@ -978,6 +927,7 @@ const handle_click_jinri_zaopan = (val) => {
           &.active {
             font-weight: 600;
             font-size: 14px;
+            color: var(--q-gb-t-c-18);
           }
 
           &.active1 {
@@ -985,6 +935,21 @@ const handle_click_jinri_zaopan = (val) => {
           }
         }
       }
+      &.menu-fold1{
+        &.y-active{
+          background: var(--q-gb-bg-lg-8);
+          color: var(--q-gb-t-c-15); 
+        }
+        &:hover{
+          background: var(--q-gb-bg-lg-9);
+        }
+      }
+      &.menu-fold2 {
+        &.active{
+          color: var(--q-gb-t-c-15); 
+        }
+      }
+
     }
   }
 
@@ -1039,7 +1004,6 @@ const handle_click_jinri_zaopan = (val) => {
       &.menu-top {
         padding: 0 15px 0 16px;
         height: 40px;
-        border-right: 2px solid transparent;
 
         .match-count {
           padding-right: 0;
@@ -1314,15 +1278,20 @@ const handle_click_jinri_zaopan = (val) => {
 }
 
 // 后续删掉
-.yb-flex-center{
-  .active{
+.yb-flex-center {
+  .active {
     color: #ff0000;
   }
 }
 
-.soprts_id_icon{
+.soprts_id_icon {
   width: 18px;
   height: 18px;
   background-size: 100% auto;
+}
+.menu-item-title{
+  height: 32px!important;
+  margin-bottom: 2px;
+  font-size: 12px;
 }
 </style>

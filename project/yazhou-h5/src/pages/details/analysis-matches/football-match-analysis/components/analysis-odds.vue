@@ -202,14 +202,14 @@ const route = useRoute()
 
 <style lang="scss" scoped>
 .analysis-odds {
-  background: var(--q-analysis-matches-color-42);
+  background: var(--q-analysis-text-color-19);
   height: calc(100% - 0.5rem);
 
   .heade-wrapper {
     width: 100%;
     height: auto;
     margin: 0 auto;
-    background: var(--q-analysis-matches-color-42);
+    background: var(--q-analysis-text-color-19);
     position: sticky;
     top: 1.21rem;
     padding: 0.15rem 0.48rem;
@@ -217,7 +217,7 @@ const route = useRoute()
 
     .heade {
       position: relative;
-      background-color: var(--q-analysis-matches-color-4);
+      background-color: var(--q-analysis-bg-color-1);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -229,7 +229,7 @@ const route = useRoute()
         position: absolute;
         left: 0;
         top: 0;
-        border: 1px solid var(--q-analysis-matches-color-26);
+        border: 1px solid var(--q-analysis-bd-color-18);
         border-radius: 0.16rem;
         width: 200%;
         height: 200%;
@@ -247,8 +247,8 @@ const route = useRoute()
         text-align: center;
         font-size: 0.14rem;
         border-radius: 0.08rem;
-        background: var(--q-analysis-matches-color-4);
-        color: var(--q-analysis-matches-color-1);
+        background: var(--q-analysis-bg-color-1);
+        color: var(--q-analysis-text-color-20);
         &:nth-child(2) {
           position: relative;
 
@@ -259,7 +259,7 @@ const route = useRoute()
             position: absolute;
             left: 0;
             top: 0.08rem;
-            background: var(--q-analysis-matches-color-35);
+            background: var(--q-analysis-bg-color-18);
           }
 
           &:after {
@@ -269,14 +269,14 @@ const route = useRoute()
             position: absolute;
             right: 0;
             top: 0.08rem;
-            background: var(--q-analysis-matches-color-35);
+            background: var(--q-analysis-bg-color-18);
           }
         }
 
         &.is-active {
           height: 0.29rem;
-          background: var(--q-analysis-matches-color-43);
-          color: var(--q-analysis-matches-color-4);
+          background: var(--q-analysis-text-color-16);
+          color: var(--q-analysis-bg-color-1);
           &:nth-child(2) {
             &:before, &:after {
               display: none;
@@ -290,13 +290,13 @@ const route = useRoute()
   }
 
   .content {
-    color: var(--q-analysis-matches-color-1);
+    color: var(--q-analysis-text-color-20);
     .tittle {
       position: sticky;
       top: 1.81rem;
       padding: 0 0.05rem 0.1rem 0.2rem;
       z-index: 80;
-      background: var(--q-analysis-matches-color-42);
+      background: var(--q-analysis-text-color-19);
       i {
         font-style: normal;
         flex: 1;
@@ -370,7 +370,7 @@ const route = useRoute()
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    color: var(--q-analysis-matches-color-2);
+    color: var(--q-analysis-text-color-14);
   }
 }
 

@@ -2,7 +2,7 @@
  * @Description: 站点页眉
 -->
 <template>
-    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }" :style="page_style">
+    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
         <!-- 系统将在30分钟后进入维护，造成不便，深表歉意！ -->
         <maintenance-tip></maintenance-tip>
 
@@ -12,7 +12,7 @@
             <div v-if="is_hide_icon || is_iframe" class="icon-layout"></div>
             <!-- 当前是日间版并且有日间版配图就展示日间版图片，夜间版也一样 -->
             <a v-else class="row items-center  img-logo-wrap"
-                :style="{ 'background-image': UserCtr.theme.includes('theme01') && pcDaytimeLink ? `url(${pcDaytimeLink})` : UserCtr.theme.includes('theme02') && pcNightLink ? `url(${pcNightLink})` : 'none' }">
+                :style="{ 'background-image': is_day && pcDaytimeLink ? `url(${pcDaytimeLink})` : !is_day && pcNightLink ? `url(${pcNightLink})` : 'none' }">
                 <div class="img-logo custom-format-img-logo-01"></div>
             </a>
             <!-- 运营位专题页 -->
@@ -62,9 +62,9 @@
             </div>
             <!-- 左边运营广告图 点击占位盒子 -->
             <div class="adv-box-l"
-                v-if="(UserCtr.theme.includes('theme01') && dayClickType.typeL) || (UserCtr.theme.includes('theme02') && nightClickType.typeL)"
+                v-if="(is_day && dayClickType.typeL) || (!is_day && nightClickType.typeL)"
                 @click="menu_change('L')"
-                :style="{ 'cursor': (UserCtr.theme.includes('theme01') && dayClickType.urlL) || (UserCtr.theme.includes('theme02') && nightClickType.urlL) ? 'pointer' : 'unset' }">
+                :style="{ 'cursor': (is_day && dayClickType.urlL) || (!is_day && nightClickType.urlL) ? 'pointer' : 'unset' }">
             </div>
         </div>
 
@@ -96,10 +96,6 @@ import { format_money2 } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
-import { compute_css_variables } from "src/core/css-var/index.js"
-
-const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
 const emit = defineEmits(['navigate'])
 
@@ -156,6 +152,8 @@ const nightClickType = reactive({ typeL: 0, urlL: null })
 /** 当前轮播图索引 */
 const currentSwipperIndex = ref(0)
 
+/** 是否日间版 */
+const is_day = computed(() => UserCtr.theme == 'day')
 
 /** stroe仓库 */
 const { menuReducer } = store.getState()
@@ -458,7 +456,7 @@ function menu_change(side) {
     // _type      1 跳转赛事菜单 2打开弹窗 0不跳转
     let _type, _url = '';
     // 日间版/夜间版  左边还是右边
-    if (['theme01', 'theme01_y0'].includes(UserCtr.theme)) {
+    if (['day'].includes(UserCtr.theme)) {
         if (side == 'L') {
             _type = dayClickType.value.typeL
             _url = dayClickType.value.urlL

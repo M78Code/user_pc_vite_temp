@@ -16,7 +16,7 @@
       </div>
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
-          <template v-if="lodash.get(UserCtr, 'theme').includes('theme01')">
+          <template v-if="lodash.get(UserCtr, 'theme').includes('day')">
             <img :src="icompute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
             <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
             </template>
@@ -157,7 +157,7 @@ onUnmounted(() => {
   border-radius: 16px 16px 0 0;
   position: relative;
   overflow: hidden;
-  background:var(--q-gb-bd-c-15);
+  background:var(--q-gb-bg-c-15);
   color: var(--q-cathectic-color-1);
   .content-m {
       background: var(--q-cathectic-color-7);
@@ -167,13 +167,13 @@ onUnmounted(() => {
 .head-top {
   height: 0.5rem;
   position: relative;
-  border-bottom: 1px solid var(--q-gb-bd-c-16);
+  border-bottom: 1px solid var(--q-gb-bd-c-13);
 
   .close {
     position: absolute;
     right: 0;
-    width: 0.14rem;
-    height: 0.14rem;
+    // width: 0.14rem;
+    // height: 0.14rem;
     padding-right: 0.34rem !important;
     .close-click-padding {
       // padding: 0.08rem 0.04rem;

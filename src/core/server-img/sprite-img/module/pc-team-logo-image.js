@@ -1,14 +1,14 @@
 // label/key 对应后台 id/name名字
 // img-bg-menu-live 对应输出的css名称
 // 
-// import server_resource from "app/job/output/assets/index.json";
-const server_resource = {}
+import server_resource from "app/job/output/assets/index.json";
+// const server_resource = {}
 import { get_file_path } from "src/core/file-path/file-path.js";
 import lodash from "lodash";
 const { CURRENT_ENV } = window.BUILDIN_CONFIG;
 const config = {
   locationUrl:"/src/core/server-img/sprite-img/image/pc-team-logo-day.png",
-  default:"pc-team-logo-day",
+  default:"pc-team-logo",
   // local_dev: "pc-left-menu-bg-image",
   // local_test: "pc-left-menu-bg-image",
   // local_ylcs: "pc-left-menu-bg-image",
@@ -56,18 +56,19 @@ function compute_position(position) {
  */
 function compute_css({ position, theme }) {
  
-  // debugger
+
+  console.log(server_resource,'server_resource',theme,'theme');
   //从打包的 环境拿 图片地址
   let url = lodash.get(server_resource, `${config[CURRENT_ENV] || config['default']}.${theme}`);
+  console.log(url,'url');
   if (!url) {
     //从本地拿
       url = lodash.get(config, 'locationUrl');
   }
    //如果有服务器图片，使用cdn图片
   if(position[0]){
-    console.log(position,'position',get_file_path(position[0]));
     return {
-      "background-image": `url(${position[0]})`,
+      "background-image": `url(${get_file_path(position[0])})`,
       "background-position": "0 0",
       "background-size": "100%",
      " background-repeat":"no-repeat"

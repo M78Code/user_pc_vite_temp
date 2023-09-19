@@ -279,6 +279,8 @@ class MenuData {
 
     // 设置全屏
     this.set_multi_column();
+
+    this.set_menu_data_version()
   }
   /**
    * 中间菜单显示配置 默认的

@@ -581,10 +581,10 @@ class AllDomain {
     //   new_get_api_obj_arr.push(format_api_to_obj(x));
     // });
 
-    getuserinfo_oss_api.map((x) => {
+    getuserinfo_oss_api && getuserinfo_oss_api.map((x) => {
       new_get_api_obj_arr.push(format_api_to_obj(x, this.GETUSERINFO_OSS.gr));
     });
-    oss_file_api.map((x) => {
+    oss_file_api && oss_file_api.map((x) => {
       new_get_api_obj_arr.push(format_api_to_obj(x));
     });
     new_get_api_obj_arr = lodash.uniqBy(new_get_api_obj_arr, "api");

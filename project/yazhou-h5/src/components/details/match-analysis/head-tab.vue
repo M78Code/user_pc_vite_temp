@@ -99,8 +99,8 @@ let get_detail_data = inject("get_detail_data", {})
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid var(--q-analysis-matches-color-30);
-    background: var(--q-analysis-matches-color-4);
+  border-bottom: 1px solid var(--q-analysis-text-color-25);
+  background: var(--q-analysis-bg-color-1);
 
   position: sticky;
   top: 0.82rem;

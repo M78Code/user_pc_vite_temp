@@ -362,7 +362,7 @@ class BaseData {
     // 判断新旧菜单
     // menuId 旧菜单才有
     // console.error(menu_info,"menu_info")
-    if ((menu_info.length && menu_info[0].menuId) || "") {
+    if ((menu_info && menu_info[0].menuId) || "") {
       this.menu_type_old_or_new = "old";
       menu_old_or_nem_data_list = this.set_menu_old_change_list(menu_info);
     }
@@ -545,7 +545,7 @@ class BaseData {
   async init_base_data() {
     try {
       let res = await api_base_data.get_base_data({});
-      this.set_base_data_res(res);
+      res && this.set_base_data_res(res);
     } catch (error) {
       console.log("获取 元数据接口 error", error);
     }
@@ -698,7 +698,7 @@ class BaseData {
     let data = lodash_.get(res, 'data', {})
     this.mi_tid_mids_res = data;
     let db_data = [];
-    lodash_.each(Object.keys(data), (item) => {
+    data && lodash_.each(Object.keys(data), (item) => {
       db_data.push({
         mi: item,
         match_info: data[item],

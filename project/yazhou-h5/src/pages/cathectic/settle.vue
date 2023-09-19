@@ -451,11 +451,11 @@ onUnmounted(() => {
   }
 
   .early2 {
-    background-image: url("public/image/svg/select_a2.svg");
+    background-image: url("public/image/svg/select_a.svg");
   }
 
   .calendar {
-    background-image: url("public/image/record/calendar3.svg");
+    background-image: url("public/image/record/calendar2.svg");  //public/yazhou-h5/image/record/calendar2.svg
   }
   /* ************** 排序按钮图标 ************** -S */
 
@@ -472,7 +472,7 @@ onUnmounted(() => {
   }
 
   .sort-2 {
-    background-image: url("public/image/record/sort_settled_time3.svg");
+    background-image: url("public/image/record/sort_settled_time2.svg");
   }
 
   .sort-1 {

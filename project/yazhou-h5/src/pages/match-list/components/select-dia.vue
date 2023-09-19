@@ -6,37 +6,36 @@
     <div style="height:.5rem">
       <div class="select-box">
         <div class="row items-center justify-center composite">
-          <div class="filter-trn"
-               v-for="(item_name,index) in search_tab"
-               :key="index"
-               @click="change_record(index)"
-               v-show="index == 0 || index != 0 && get_menu_type != 100"
-               :class="get_search_for_choose == index ? 't_color':''"
-               :style="{visibility:`${is_search_hide(index)?'hidden':'visible'}`}"
-          >
-            {{item_name}}
+          <div class="filter-trn" v-for="(item_name, index) in search_tab" :key="index" @click="change_record(index)"
+            v-show="index == 0 || index != 0 && get_menu_type != 100"
+            :class="get_search_for_choose == index ? 't_color' : ''"
+            :style="{ visibility: `${is_search_hide(index) ? 'hidden' : 'visible'}` }">
+            {{ item_name }}
           </div>
         </div>
       </div>
     </div>
     <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
-      <filter_old v-if="lodash.get(get_current_menu,'main.menuType')==1 && get_sport_all_selected"/>
-      <filter_new v-else/>
+      <!-- <filter_old v-if="lodash.get(get_current_menu, 'main.menuType') == 1 && get_sport_all_selected" /> -->
+      <!-- v-else -->
+      <filter_new />
     </template>
     <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
 </template>
  
 <script setup>
-import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { computed, onMounted, onUnmounted } from "vue"
+import GlobalAccessConfig from "src/core/access-config/access-config.js"
+import filter_new from '../../match-filter/index.vue'
+// import filter_old from '../../match-filter/index_old.vue'
+//  import search from '../../search/search_.vue'
+
+import { computed, onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
 import lodash from 'lodash'
-import { i18n_t} from 'src/core/index.js'
-import {MenuData } from "src/core/index.js"
+import { i18n_t, MenuData } from 'src/core/index.js'
 
 const props = defineProps(['detail_data'])
-
 const get_menu_type = MenuData.get_menu_type()
 const store_state = store.getState()
 const change_show = ref(true)
@@ -44,65 +43,71 @@ const search_tab = ref([i18n_t('footer_menu.filter'), i18n_t('search.search_titl
 
 const get_search_for_choose = ref(store_state.get_search_for_choose)
 const get_search_term = ref(store_state.get_search_term)
-const get_current_menu = MenuData.current_menu
-const get_curr_sub_menu_type = MenuData.current_lv_2_menu.type
+const get_current_menu = MenuData.current_lv_1_menu
+const get_curr_sub_menu_type = MenuData.current_lv_2_menu?.type
 const get_sport_all_selected = ref(store_state.get_sport_all_selected)
 const get_access_config = ref(store_state.get_access_config)
 
-const unsubscribe = store.subscribe(() => {
-  const new_state = store.getState()
-  get_search_for_choose.value = new_state.get_search_for_choose
-  get_search_term.value = new_state.get_search_term
-  get_access_config.value = new_state.get_access_config
-  get_sport_all_selected.value = new_state.get_sport_all_selected
-  get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
-})
+//外层用的 v-if 要什么subscribe？？？？
+// const unsubscribe = store.subscribe(() => {
+//   const new_state = store.getState()
+//   get_search_for_choose.value = new_state.get_search_for_choose
+//   get_search_term.value = new_state.get_search_term
+//   get_access_config.value = new_state.get_access_config
+//   get_sport_all_selected.value = new_state.get_sport_all_selected
+//   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
+// })
 
 onMounted(() => {
   // 默认选中筛选
   change_record(get_search_for_choose)
   // 如果是冠军，则默认展示筛选
-  if(get_current_menu && get_current_menu.main && get_current_menu.main.menuType == 100) {
+  if (get_current_menu && get_current_menu.main && get_current_menu.main.menuType == 100) {
     change_record(0)
   }
   // 如果是赛果虚拟体育赛事，则显示 筛选
-  if(results_of_the_virtual_display){
+  if (results_of_the_virtual_display) {
     search_tab.value = [i18n_t('search.search_title')]
     change_show.value = false
   }
   // 筛选
-  if(!GlobalAccessConfig.get_filterSwitch()) {
+  if (!GlobalAccessConfig.get_filterSwitch()) {
     search_tab.value = [i18n_t('search.search_title')]
     change_show.value = false
   }
   // 搜索
-  if(!GlobalAccessConfig.get_searchSwitch()) {
+  if (!GlobalAccessConfig.get_searchSwitch()) {
     search_tab.value = [i18n_t('footer_menu.filter')]
     change_show.value = true
   }
+
+  if (get_curr_sub_menu_type) {
+    if ([1001, 1002, 1004, 1010, 1011, 1009].includes(get_curr_sub_menu_type) && get_menu_type == 28) {
+      change_record(0)
+    }
+  }
 })
 
-// 监听 get_curr_sub_menu_type，如果 是在赛果下边的 虚拟赛事，就默认是 筛选弹出
-watch(() => get_curr_sub_menu_type, () => {
-  if([1001,1002,1004,1010,1011,1009].includes(+n) && get_menu_type.value == 28){
-    change_record(0)
-  }
-}, {immediate: true, deep: true})
+//外层用的 v-if拿来的watch
+// // 监听 get_curr_sub_menu_type，如果 是在赛果下边的 虚拟赛事，就默认是 筛选弹出
+// watch(() => get_curr_sub_menu_type, (n) => {
+//   if ([1001, 1002, 1004, 1010, 1011, 1009].includes(+n) && get_menu_type == 28) {
+//     change_record(0)
+//   }
+// }, { immediate: true, deep: true })
 
 // 弹框的高度
-const bounced_high = computed(() => {
-  let rem_1 = window.innerWidth * 100 / 375;
-  return {height : window.innerHeight - rem_1 + 50 + 'px !important'}
-})
+let rem_1 = window.innerWidth * 100 / 375;
+const bounced_high = { height: window.innerHeight - rem_1 + 50 + 'px !important' }
 
 // 是赛果虚拟体育赛事
-const results_of_the_virtual_display = computed(() => ([1001,1002,1004,1010,1011,1009].includes(get_curr_sub_menu_type) && get_menu_type.value == 28))
+const results_of_the_virtual_display = MenuData.is_results_virtual_sports()
 
 const change_record = (key) => {
   // 搜索返回时，保持搜索原来的页面
-  key == 0 && get_search_term && store.dispatch({ type: 'matchReducer/set_search_term',  payload: '' });
-  store.dispatch({ type: 'matchReducer/set_search_for_choose',  payload: key });
-  if(key === 1) {// 赛事搜索页
+  key == 0 && get_search_term && store.dispatch({ type: 'matchReducer/set_search_term', payload: '' });
+  store.dispatch({ type: 'matchReducer/set_search_for_choose', payload: key });
+  if (key === 1) {// 赛事搜索页
     change_show.value = false
   } else {
     change_show.value = true
@@ -110,20 +115,21 @@ const change_record = (key) => {
 }
 const is_search_hide = (i) => {
   let f = false;
-  if(i == 1){
-    if([1001,1002,1011,1004,1010,1009].includes(get_curr_sub_menu_type)){
+  if (i == 1) {
+    if ([1001, 1002, 1011, 1004, 1010, 1009].includes(get_curr_sub_menu_type)) {
       f = true;
     }
   }
   return f;
 }
-
-onUnmounted(() => {
-  unsubscribe()
-})
+// onUnmounted(() => {
+//   unsubscribe()
+// })
 </script>
  
 <style scoped lang="scss">
+@import url("project_path/src/css/pages/select-dia.scss");
+
 .select-dia {
   width: 100%;
   max-width: unset !important;
@@ -173,5 +179,5 @@ onUnmounted(() => {
       }
     }
   }
-} 
+}
 </style>

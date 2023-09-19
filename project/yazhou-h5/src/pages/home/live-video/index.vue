@@ -182,7 +182,7 @@ import UserCtr from "src/core/user-config/user-ctr.js";;
      * @param {Object} $event 错误事件对象
      */
     const league_icon_error = ($event) =>{
-      if(UserCtr.theme.includes('theme02')){
+      if(UserCtr.theme.includes('night')){
         $event.target.src = 'image/bw3/svg/match_cup_black.svg'
       } else {
         $event.target.src = 'image/bw3/svg/match_cup.svg'

@@ -5,10 +5,11 @@
 -->
 <template>
   <div class="container-menu-w" :class="{
-    black2: UserCtr.theme.includes('theme02'),
+    black2: UserCtr.theme.includes('night'),
     'scrolling-up': scroll_dir > 0,
     'scrolling-down': scroll_dir < 0,
   }">
+
     <bet-bar v-if="get_betbar_show && route.name == 'matchList'"></bet-bar>
     <!-- 底部菜单资源配置图片 -->
     <div v-if="isshow_bottom_banner" class="bottom-banner">
@@ -23,7 +24,7 @@
           'is-hidden': get_is_hidden(item, k),
           'effect-show': is_sub_first_effect && k == 0,
           disabled: item.is_disabled,
-          'is-follow': footerMenuReducer.show_favorite_list && item.id == 1,
+          'is-follow': show_favorite_list && item.id == 1,
         }">
         <div class="m-item-inner">
           <div class="item-img-wrapper" :class="{
@@ -38,8 +39,8 @@
           </div>
           <div class="menu-item-title" :class="{
             'theme02-focus':
-              footerMenuReducer.show_favorite_list &&
-              UserCtr.theme.includes('theme02') &&
+              show_favorite_list &&
+              UserCtr.theme.includes('night') &&
               item.id == 1,
           }" v-show="item.id != 5">
             <span class="title-p1" :class="{ 'title-p2': item.title1 }">
@@ -49,7 +50,7 @@
               {{ item.title1 }}
             </span>
           </div>
-          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')" ></div>
+          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')"></div>
         </div>
       </div>
     </div>
@@ -66,7 +67,7 @@
             !(get_sport_all_selected && sub_m.id == 114)
             " :data-sid="sub_m.id" :data-mtype="MenuData.get_current_sub_menuid()" :data-cmtype="menu_type" :class="{
     current_sub_menu: sub_i == sub_footer_menu_i,
-    'is-favorite': footerMenuReducer.show_favorite_list,
+    'is-favorite': show_favorite_list,
     'no-display':
       MenuData.get_current_sub_menuid() == 44 && sub_m.id == 4,
   }">
@@ -128,7 +129,7 @@ const scroll_prev_dir = ref(-1);
 const prev_frame_poi = ref(0);
 //处理中
 const footer_clicked_handleing = ref(false);
-//上一次的
+//上一次的key
 const prev_floating_sub = "prev-floating-sub-i";
 //页脚数据
 const footer_menulist = ref([]);
@@ -140,18 +141,19 @@ const is_sub_first_hidden = ref(false);
 const local_bet_status = ref(0);
 //小于0显示页脚,大于0隐藏页脚
 const scroll_dir = ref(0);
-const timer1_ = ref(null);
-const timer2_ = ref(null);
-const timer3_ = ref(null);
-const timer4_ = ref(null);
-const timer5_ = ref(null);
-const timer6_ = ref(null);
-const timer7_ = ref(null);
-//第一个页脚菜单更新相关逻辑
-const timer_super9 = ref(null);
-//简版足球角球图标分割线相关
-const timer_super10 = ref(null);
 
+let timer1_,
+  timer2_,
+  timer3_,
+  timer4_,
+  timer5_,
+  timer6_,
+  timer7_;
+//第一个页脚菜单更新相关逻辑
+let timer_super9;
+//简版足球角球图标分割线相关
+let timer_super10;
+const show_favorite_list = ref(UserCtr.show_favorite_list)
 // 路由
 const route = useRoute();
 const router = useRouter();
@@ -165,32 +167,7 @@ function get_is_hidden(item, k) {
       !GlobalAccessConfig.get_searchSwitch() &&
       item.id == 3)
 }
-onMounted(() => {
-  set_footer_menulist();
-  // set_show_match_filter(false)
-  store.dispatch({
-    type: "SET_SHOW_MATCH_FILTER",
-    data: false,
-  });
-  // 监听赛事列表数据获取事件
-  useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED, update_first_menu).on;
 
-  // 初始化关注按钮显示状态
-  init_follow_icon_style();
-  init_play_way_selected();
-
-  virtual_disable_follow_filter();
-  update_first_menu();
-
-  first_sub_menu_changed();
-});
-/**
- * @description: 销毁前回调函数
- */
-onBeforeUnmount(() => {
-  clear_timer();
-  useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED, update_first_menu).off;
-});
 
 // ...mapMutations([
 //   'set_goto_list_top', // 设置赛事列表回到顶部
@@ -264,7 +241,7 @@ const close_banner = () => {
  */
 const hide_sub_menu_l_p = () => {
   sub_menu_l_show_slow.value = false;
-  timer1_.value = setTimeout(() => {
+  timer1_ = setTimeout(() => {
     sub_menu_l_show.value = false;
   }, 300);
 };
@@ -285,12 +262,12 @@ const first_sub_menu_changed = () => {
   let ed = topMenuReducer.newer_standard_edition;
   if (ed == 2) {
     is_sub_first_effect.value = false;
-    timer2_.value = setTimeout(() => {
+    timer2_ = setTimeout(() => {
       is_sub_first_hidden.value = true;
     }, 210);
   } else {
     is_sub_first_hidden.value = false;
-    timer3_.value = setTimeout(() => {
+    timer3_ = setTimeout(() => {
       is_sub_first_effect.value = true;
     }, 10);
   }
@@ -300,7 +277,7 @@ const first_sub_menu_changed = () => {
  */
 const init_follow_icon_style = () => {
   let item = footer_menulist.value.filter((f_item) => f_item.id === 1)[0] || {};
-  let is_follow = footerMenuReducer.show_favorite_list;
+  let is_follow = show_favorite_list.value;
   if (is_follow) {
     item.icon = lodash.get(item, "icon1");
   } else {
@@ -340,7 +317,7 @@ const update_first_menu = () => {
   footer_menulist.value[0].title = sub_menu.title;
   footer_menulist.value[0].title1 = sub_menu.title1;
   footer_menulist.value[0].icon = sub_menu.icon;
-  footer_menulist.value[0].icon_black = UserCtr.theme.includes("theme01")
+  footer_menulist.value[0].icon_black = UserCtr.theme.includes("day")
     ? sub_menu.icon
     : sub_menu.icon1;
   store.dispatch({
@@ -351,14 +328,14 @@ const update_first_menu = () => {
     type: "SET_FOOTER_SUB_IDCHANGING",
     data: true,
   });
-  clearTimeout(timer_super9.value);
-  timer_super9.value = setTimeout(() => {
+  clearTimeout(timer_super9);
+  timer_super9 = setTimeout(() => {
     store.dispatch({
       type: "SET_FOOTER_SUB_IDCHANGING",
       data: false,
     });
   }, 800);
-  timer4_.value = setTimeout(() => {
+  timer4_ = setTimeout(() => {
     useMittEmit(
       MITT_TYPES.EMIT_FOOTER_SUB_MENU_ID_CHANGED,
       lodash.get(sub_menu, "id")
@@ -374,7 +351,6 @@ const update_first_menu = () => {
 const menu_item_click = (item, i) => {
   if (item.is_disabled) return;
   if (menu_type.value == 100 && i == 0) return;
-
   //独赢
   if (item.id === 0) {
     //赛马,摩托车,泥地摩托车不能切换玩法
@@ -384,7 +360,7 @@ const menu_item_click = (item, i) => {
       return;
     }
     sub_menu_l_show.value = true;
-    clearTimeout(timer_super10.value);
+    clearTimeout(timer_super10);
     timer_super10.value = setTimeout(() => {
       sub_menu_l_show_slow.value = true;
     }, 50);
@@ -395,24 +371,24 @@ const menu_item_click = (item, i) => {
       !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
     )
       return;
+
     if (footer_clicked_handleing.value) return;
-    timer5_.value = setTimeout(() => {
+
+    timer5_ = setTimeout(() => {
       footer_clicked_handleing.value = false;
     }, 800);
-    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-      text: "footer-follow",
-      before_status: footerMenuReducer.show_favorite_list,
-    });
-    let is_follow = !footerMenuReducer.show_favorite_list;
+    // useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+    //   text: "footer-follow",
+    //   before_status: UserCtr.show_favorite_list,
+    // });
+    let is_follow = !UserCtr.show_favorite_list;
     if (is_follow) {
       item.icon = item.icon1;
     } else {
       item.icon = item.icon0;
     }
-    store.dispatch({
-      type: "SET_SHOW_FAVORITE_LIST",
-      data: is_follow,
-    });
+    show_favorite_list.value = is_follow;
+    UserCtr.set_show_favorite_list(is_follow)
   }
   //注单
   else if (item.id === 2) {
@@ -427,14 +403,17 @@ const menu_item_click = (item, i) => {
       $toast(i18n_t(`common.temporarily_unavailable`), 2000);
       return;
     }
-    set_show_match_filter(true);
+    //TODO
+    // 监听搜索框状态
+    useMittEmit(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, true)
+    // set_show_match_filter(true);
   }
   //刷新
   else if (item.id === 4) {
     if (is_refreshing.value) return;
     is_effecting_ref.value = true;
     is_refreshing.value = true;
-    timer6_.value = setTimeout(() => {
+    timer6_ = setTimeout(() => {
       is_effecting_ref.value = false;
       is_refreshing.value = false;
     }, 1000);
@@ -450,7 +429,7 @@ const menu_item_click = (item, i) => {
  */
 const change_to_simple_handle = () => {
   store.dispatch({});
-  set_newer_standard_edition(1);
+  UserCtr.set_standard_edition(1)
 };
 /**
  * 虚拟体育禁用关注和筛选
@@ -496,7 +475,7 @@ const virtual_disable_follow_filter = () => {
       ) {
         f_m.is_disabled = true;
       } else {
-        if (f_m.id == 3 && footerMenuReducer.show_favorite_list) {
+        if (f_m.id == 3 && show_favorite_list.value) {
         } else {
           f_m.is_disabled = false;
         }
@@ -538,7 +517,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
       {
         title: i18n_t("footer_menu.follow"),
         icon0: "f-icon-follow.svg",
-        icon: footerMenuReducer.show_favorite_list
+        icon: show_favorite_list.value
           ? "f-icon-follow1.svg"
           : "f-icon-follow.svg",
         icon1: "f-icon-follow1.svg",
@@ -565,7 +544,7 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
         is_disabled:
           is_virtual ||
           is_saiguo_gz ||
-          footerMenuReducer.show_favorite_list ||
+          show_favorite_list.value ||
           is_electronicSports,
       },
       // 刷新
@@ -581,32 +560,19 @@ const set_footer_menulist = (init_footer_menulist_data = true) => {
   // 强制更新组件
   // $forceUpdate()
 };
-// 批量清除定时器
-const clear_timer = () => {
-  let timeout_timer_arr = [
-    "timer1_.value",
-    "timer2_.value",
-    "timer3_.value",
-    "timer4_.value",
-    "timer5_.value",
-    "timer6_.value",
-    "timer7_.value",
-    "timer_super9.value",
-    "timer_super10.value",
-  ];
 
-  for (let timer of timeout_timer_arr) {
-    clearTimeout(timer);
-    timer = null;
-  }
-};
+const get_user = ref(UserCtr.user_info);
+watch(UserCtr.user_version, () => {
+  console.error(UserCtr.user_info, 11111)
+  get_user.value = UserCtr.user_info
+})
 // computed:{
 // ...mapGetters([
 //   "get_user",
 //   "get_bet_list",
 //   "get_settle_dialog_bool",
 //   "get_curr_sub_menu_type",
-//   "footerMenuReducer.show_favorite_list",
+//   "show_favorite_list.value",
 //   "get_current_main_menu",
 //   "get_filter_list",
 //   "get_current_menu",
@@ -633,10 +599,10 @@ const isshow_bottom_banner = computed(() => {
 });
 
 const calc_resources_obj = computed(() => {
-  if (UserCtr.theme.includes("theme01")) {
-    return get_resources_obj.theme01;
+  if (UserCtr.theme.includes("day")) {
+    return get_resources_obj.day;
   } else {
-    return get_resources_obj.theme02;
+    return get_resources_obj.night;
   }
 });
 // 是否展示 底部菜单 选项
@@ -740,17 +706,16 @@ watch(
     }
   }
 );
-watch(
-  () => footerMenuReducer.show_favorite_list,
+watch(show_favorite_list,
   (is_fav) => {
     let item = footer_menulist.value.filter((f_item) => f_item.id === 1)[0];
     if (is_fav) {
       item.icon = item.icon1;
       item.icon_black = item.icon1;
     } else {
-      if (UserCtr.theme.includes("theme01")) {
+      if (UserCtr.theme.includes("day")) {
         item.icon = item.icon0;
-      } else if (UserCtr.theme.includes("theme02")) {
+      } else if (UserCtr.theme.includes("night")) {
         item.icon_black = item.icon2;
       }
     }
@@ -805,18 +770,14 @@ watch(
     virtual_disable_follow_filter();
   }
 );
-watch(
-  () => UserCtr.lang,
-  () => {
-    set_footer_menulist();
-  }
-);
+
+
 //投注栏弹层显示非0否则0
 watch(
   () => BetDataCtr.bet_status,
   (c_status) => {
     if (c_status == 0) {
-      timer7_.value = setTimeout(() => {
+      timer7_ = setTimeout(() => {
         local_bet_status.value = c_status;
       }, 400);
     } else {
@@ -824,6 +785,45 @@ watch(
     }
   }
 );
+const mitt_list = [
+  useMittOn(MITT_TYPES.EMIT_MATCH_LIST_DATA_TAKED, update_first_menu).off,
+  useMittOn(MITT_TYPES.EMIT_LANG_CHANGE, set_footer_menulist).off
+]
+onMounted(() => {
+  set_footer_menulist();
+  // set_show_match_filter(false)
+  store.dispatch({
+    type: "SET_SHOW_MATCH_FILTER",
+    data: false,
+  });
+  // 监听赛事列表数据获取事件
+  // 初始化关注按钮显示状态
+  init_follow_icon_style();
+  init_play_way_selected();
+  virtual_disable_follow_filter();
+  update_first_menu();
+  first_sub_menu_changed();
+});
+/**
+ * @description: 销毁前回调函数
+ */
+onBeforeUnmount(() => {
+  // 批量清除定时器
+  [
+    timer1_,
+    timer2_,
+    timer3_,
+    timer4_,
+    timer5_,
+    timer6_,
+    timer7_,
+    timer_super9,
+    timer_super10,
+  ].forEach(i => {
+    clearTimeout(i);
+  });
+  mitt_list.forEach(i => i())
+});
 </script>
 <style lang="scss" scoped>
 @import url(./footer.scss);

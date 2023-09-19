@@ -868,7 +868,7 @@ const getBookList = (callback) => {
         const data = lodash.get(res, "data");
         // data.orderStatus = params.orderStatus;
         let record_list = data.records;
-        if (!record_list) {
+        if (lodash.isEmpty(record_list)) {
           clear_timer_get_book();
           state.data_state.load_data_state = "empty";
           return;

@@ -10,4 +10,8 @@ export const EMIT_USER_AMOUNT_CHAUNGE = "EMIT_USER_AMOUNT_CHAUNGE";
 export const EMIT_THEME_CHANGE = "EMIT_THEME_CHANGE";
 // 语言变化
 export const EMIT_LANG_CHANGE = "EMIT_LANG_CHANGE";
+
+// 是否显示收藏 变化
+export const EMIT_FAVORITE_CHANGE_CMD = "EMIT_FAVORITE_CHANGE_CMD";
+
 //------------------------------------------------------------------命令定义-E-------------------------------------------------------------------------------------

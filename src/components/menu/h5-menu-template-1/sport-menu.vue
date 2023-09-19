@@ -10,9 +10,9 @@
       <div class="main-wrap flex" :class="{esport:menu_1_type == 7}">
         <!--  返回按鈕  -->
         <div class="goback-icon-wrapper column justify-center" @click="go_home" :class="get_golistpage && 'goback-icon-wrapper2'">
-          <img class="theme01" v-if="UserCtr.theme.includes('theme01') && menu_1_type != 7"
+          <img class="theme01" v-if="UserCtr.theme.includes('day') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon-theme02.svg"  />
-          <img class="theme02" v-if="UserCtr.theme.includes('theme02') && menu_1_type != 7"
+          <img class="theme02" v-if="UserCtr.theme.includes('night') && menu_1_type != 7"
                src="image/wwwassets/bw3/svg/go-back-icon.svg"  />
           <img class="esport" v-if="menu_1_type == 7"
                src="image/wwwassets/bw3/svg/go-back-icon-esport.svg"  />

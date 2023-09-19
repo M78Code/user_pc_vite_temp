@@ -4,7 +4,6 @@
  *    源名字： template_1004  template1004
  */
 
-import * as TemplateCommon from "./template-common.js"
 
 
 

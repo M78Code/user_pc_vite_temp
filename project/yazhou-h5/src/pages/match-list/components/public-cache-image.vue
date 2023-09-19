@@ -3,7 +3,7 @@
 -->
 <template v-if="show_image">
   <!-- 有缓存图片优先使用缓存图片 @error="league_icon_error" -->
-  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error"  />
+  <img class="team-icon row no-wrap" loading="lazy" decoding="async" :src="image_src" @error="league_icon_error" />
 </template>
  
 <script setup>
@@ -32,7 +32,7 @@ const default_url = ref("")
 // 图片 全路径
 const full_path = ref("")
 // 主题
-const theme = ref("theme01")
+const theme = ref("day")
 
 //图标出错 与 记录
 const img_error_map = ref({})
@@ -43,13 +43,11 @@ const oss_img_http = window.BUILDIN_CONFIG.DOMAIN_RESULT.first_one
 onMounted(() => {
   //设置 默认 图片
   set_default_icon();
-  // check_image_load();
-  image_src.value = `${oss_img_http}/${props.path ? props.path[0] : ''}`
+  check_image_load();
 })
 
 watch(() => props.path, () => {
-  // check_image_load();
-  image_src.value = `${oss_img_http}/${props.path}`
+  check_image_load();
 })
 
 /**
@@ -61,11 +59,11 @@ const league_icon_error = ($event) => {
   $event.target.onerror = null
 }
 //  设置主题
-const set_default_icon = (val = "theme02") => {
+const set_default_icon = (val = "night") => {
   // 主题
   theme.value = val;
   // 默认联赛图标
-  image_src.value = theme == "theme02" ? none_league_icon_black : none_league_icon;
+  image_src.value = theme == "night" ? none_league_icon_black : none_league_icon;
 }
 const check_image_load = () => {
   // 当是数组时显示数组第一个元素
@@ -118,7 +116,7 @@ const load_image_first_time = (params) => {
       myImage = null;
     });
   };
-  myImage.src = full_path;
+  myImage.src = full_path.value;
 }
 /**
  * 根据类型 返回默认图片

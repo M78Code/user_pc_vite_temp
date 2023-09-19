@@ -2,7 +2,7 @@
  *   1号模板 足球让球与大小
  * 
  */
-import * as TemplateCommon from "./template-common.js"
+import * as TemplateCommon from "../template-common.js"
 
 const hps_15_minute = TemplateCommon.hps_15_minute
 // 1号模板  模板主盘 -- 玩法模板
@@ -392,6 +392,53 @@ export const template_1 = {
       ]
     },
   ],
+  // 特色组合玩法
+  hpsCompose: [
+    {
+      ols: [
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+        {  _hpid: 13, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球大小' },
+      ]
+    },
+    {
+      ols: [
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+        {  _hpid: 101, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 两队都进球' },
+      ]
+    },
+    {
+      ols: [
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+        {  _hpid: 345, ot: '1-5', other_class: "col1.5", hpnb: '独赢 & 进球 大/小 - 上半场' },
+      ]
+    },
+    {
+      ols: [
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+        {  _hpid: 105, ot: '1-5', other_class: "col1.5", hpnb: '上半场独赢 & 上半场两队都进球' },
+      ]
+    }
+  ]
 }
 
 

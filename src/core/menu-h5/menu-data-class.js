@@ -354,7 +354,7 @@ class MenuData {
     //     : "focus-a";
     // }
     // //默认黑色版还是白色版
-    // return UserCtr.theme.includes("theme02") ? "focus-d" : "";
+    // return UserCtr.theme.includes("night") ? "focus-d" : "";
     return "focus-d";
   }
 
