@@ -109,13 +109,10 @@ function socket_status(status, old_status) {
     // 发送注单信息命令
     clearTimeout(timer);
     timer = setTimeout(() => {
-      if(this.bet_list.length || this.bet_single_list.length) {
-        SCMD_C2();
-      }
-      SCMD_C3();
-      SCMD_C4();
-      SCMD_C5();
-      SCMD_C7();
+      scmd_c3();
+      scmd_c4();
+      scmd_c5();
+      scmd_c7();
     }, 600);
   }
 }
@@ -132,26 +129,28 @@ function rev_event_msg(event) {
         let ws_status_old = lodash.get(event,'ws_status_old');
         socket_status(ws_status, ws_status_old);
         break;
+      case 'WS_RESEND_SCMD_EVENT': // 重新定义所以赛事事件
+        scmd_all();
+        break;
       default:
         break;
     }
-  }
+  } 
 }
 /**
  * @description: 赛事订阅(C2)-盘口/投注项(C106)
  * @param {undefined} undefined
  * @return {undefined} undefined
  */
-function SCMD_C2() {
+function scmd_c2() {
   let obj = {};
   WsMan.skt_send_bat_handicap_odds(obj);
 }
 /**
  * @description: 订单订阅(C3)-未结算订单数(C202)
- * @param {undefined} undefined
  * @return {undefined} undefined
  */
-function SCMD_C3() {
+function scmd_c3() {
   let obj = {};
   obj.cuid = UserCtr.get_uid();
   WsMan.skt_send_order(obj);
@@ -160,37 +159,47 @@ function SCMD_C3() {
  *  C4推送数据
  * `copen` 1:打开 2:关闭
  * @description: 辅助订阅C4-滚球新赛事通知(C302)
- * @param {undefined} undefined
  * @return {undefined} undefined
  */
-function SCMD_C4() {
+function scmd_c4() {
   let obj = { copen: 1 };
   WsMan.skt_send_initiative_push(obj);
 }
 /**
  * @description: 菜单订阅C5-菜单栏目统计(C301)
- * @param {undefined} undefined
  * @return {undefined} undefined
  */
-function SCMD_C5() {
+function scmd_c5() {
   let obj = {};
   obj.cdt = "4";
   WsMan.skt_send_menu(obj);
 }
 /**
  * @description: 全局开关
- * @param {Object} obj 推送的消息体
  * @return {undefined} undefined
  */
-function SCMD_C7() {
+function scmd_c7() {
   WsMan.skt_send_switch();
 }
+
+/**
+ * @description: 重新订阅所有公共订阅命令
+ * @return {undefined} undefined
+ */
+ function scmd_all() {
+  scmd_c3();
+  scmd_c4();
+  scmd_c5();
+  scmd_c7();
+}
+
+
 /**
  * @description: 菜单订阅C51菜单栏目统计(C501)
  * @param {Object} obj 推送的消息体
  * @return {undefined} undefined
  */
-function SCMD_C51(obj) {
+function scmd_c51(obj) {
   WsMan.skt_send_menu2(obj);
 }
 /**
@@ -399,9 +408,9 @@ watch(
     get_uid, //单关
   ],
   () => {
-    SCMD_C3();
-    SCMD_C4();
-    SCMD_C5();
+    scmd_c3();
+    scmd_c4();
+    scmd_c5();
   },
   {
     immediate: true,

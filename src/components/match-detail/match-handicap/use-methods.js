@@ -171,7 +171,6 @@ export const useMethods = ({ props,emit }) => {
   //  ============================methods===================
 
   const change_detail = (res) => {
-    console.log(res,'change_detail');
     const obj = {
       1: 2,
       2: 3,

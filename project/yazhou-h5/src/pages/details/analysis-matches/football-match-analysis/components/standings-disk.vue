@@ -147,7 +147,7 @@ const get_detail_data = inject('get_detail_data', {})
 
 <style lang="scss" scoped>
 .football_standings.recent_record {
-  background-color: var(--q-analysis-matches-color-4);
+  background-color: var(--q-analysis-bg-color-1);
   .title {
     height: 0.4rem;
     line-height: 0.45rem;
@@ -156,9 +156,9 @@ const get_detail_data = inject('get_detail_data', {})
     letter-spacing: 0;
     font-weight: bold;
     position: relative;
-    color: var(--q-analysis-matches-color-9);
-    border-bottom: 1px solid var(--q-analysis-matches-color-27);
-    background-color: var(--q-analysis-matches-color-4);
+    color: var(--q-analysis-text-color-15);
+    border-bottom: 1px solid var(--q-analysis-bd-color-3);
+    background-color: var(--q-analysis-bg-color-1);
 
     &:before {
       content: '';
@@ -168,7 +168,7 @@ const get_detail_data = inject('get_detail_data', {})
       left: 0.16rem;
       top: 0.15rem;
       border-radius: 1.5px;
-      background: var(--q-analysis-matches-color-45);
+      background: var(--q-analysis-text-color-16);
     }
   }
 
@@ -324,8 +324,8 @@ const get_detail_data = inject('get_detail_data', {})
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    background-color: var(--q-analysis-matches-color-4);
-    color: var(--q-analysis-matches-color-2);
+    background-color: var(--q-analysis-bg-color-1);
+    color: var(--q-analysis-text-color-14);
   }
 }
 

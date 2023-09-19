@@ -10,11 +10,11 @@ export default {
   "analysis-bg-color-9": "#ff9323",
   "analysis-bg-color-12": "#ff7000",
   "analysis-bg-color-13": "#546bec",
-  "analysis-bg-color-14": "#f7f8f9", // 
+  "analysis-bg-color-14": "#f7f8f9", 
   "analysis-bg-color-16": "#e4ebf1",
   "analysis-bg-color-17": "#006eff",
   "analysis-bg-color-18": "#eff0f4",
-  "analysis-text-color-1": "#2d2d2d", //#000000
+  "analysis-text-color-1": "#2d2d2d", 
   "analysis-text-color-2": "#666666",
   "analysis-text-color-3": "#5b6175",
   "analysis-text-color-4": "#000000",
@@ -28,18 +28,35 @@ export default {
   "analysis-text-color-12": "#83838a",
   "analysis-text-color-13": "#ffffff",
   "analysis-text-color-14": "#999999",
-  "analysis-text-color-15": "#000000", // TODO:未上传
-  "analysis-text-color-16": "#ffb001", // TODO:未上传
-  "analysis-text-color-17": "unset", // TODO:未上传
-  "analysis-text-color-18": "#d8d8d8", // TODO:未上传
-  "analysis-text-color-19": "#f5f5f5", // TODO:未上传
-  "analysis-text-color-20": "#414655", // TODO:未上传
+  "analysis-text-color-15": "#000000", 
+  "analysis-text-color-16": "#ffb001", 
+  "analysis-text-color-17": "unset", 
+  "analysis-text-color-18": "#d8d8d8", 
+  "analysis-text-color-19": "#f5f5f5", 
+  "analysis-text-color-20": "#414655", 
+  "analysis-text-color-21": "#213b5b", 
+  "analysis-text-color-22": "#6b737d", 
+  "analysis-text-color-23": "#f2f3f7", 
+  "analysis-text-color-24": "#f7f7f7", 
+  "analysis-text-color-25": "#f5f7fa", 
+  "analysis-text-color-26": "#f5f6f9", 
+  "analysis-text-color-27": "#fcfefe", 
+  "analysis-text-color-28": "#cbced8", 
+  "analysis-text-color-29": "#c7c7c9", 
+  "analysis-text-color-30": "#f7f9fe", 
+  "analysis-text-color-31": "#4987fb", 
+  "analysis-text-color-32": "#6c7ba8", 
+  "analysis-text-color-33": "#ff4400", 
   "analysis-bd-color-1": "#e7eaee",
   "analysis-bd-color-2": "#d0d8de",
-  "analysis-bd-color-3": "#edeef1", // TODO:未上传
+  "analysis-bd-color-3": "#edeef1", 
   "analysis-bd-color-4": "#dce0e5",
-  "analysis-bd-color-5": "#e0e2ea", // TODO:未上传
+  "analysis-bd-color-5": "#e0e2ea", 
+  "analysis-bd-color-6": "#e5e5e5", 
+  "analysis-bd-color-7": "transparent", 
   "analysis-bg-gradient-1": "linear-gradient(180deg, #ffffff 21%, #f0f3f7 100%)",
+  "analysis-bg-gradient-2": "linear-gradient(#ffb001, #ffb001)",  
+  "analysis-bg-gradient-3": "linear-gradient(269.95deg, #3D72FA 0.05%, #62B6FF 99.95%)",  
   "analysis-bg-gradient-4": "linear-gradient(180deg, #ffffff 21%, #f0f3f7 100%), linear-gradient(180deg, #ffffff 21%, #f0f3f7 100%)",
 
 }

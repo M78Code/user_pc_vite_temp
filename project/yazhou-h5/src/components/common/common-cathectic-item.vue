@@ -83,11 +83,11 @@ const mix_odds_sum = computed(() => {
   }
   return ''
 })
+// 监听 重载注单页面
+let off_ = () => {}
 onMounted(() => {
   is_show_early_settle.value = props.item_data.is_show_early_settle
-
-  // 监听 重载注单页面
-  useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).on
+  let { off: off_} =useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet)
 })
 
 // 重载注单页面
@@ -98,7 +98,7 @@ const reload_note_sheet = () => {
   })
 }
 onUnmounted(() => {
-  useMittOn(MITT_TYPES.EMIT_RELOAD_NOTE_SHEET, reload_note_sheet).off
+  off_()
 })
 
 </script>
@@ -108,7 +108,7 @@ onUnmounted(() => {
   width: 3.55rem;
   margin: 0.04rem auto;
   border-radius: 0.08rem;
-  background: var(--q-gb-bd-c-15);
+  background: var(--q-gb-bg-c-15);
 }
 .common-cathectic-item2 {
   margin-top: 0;

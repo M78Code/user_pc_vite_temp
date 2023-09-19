@@ -143,7 +143,11 @@ const router = useRouter();
 
 //轮播图数据，init是数据加载中的标识
 let carousel_data = ref({ list: [], obj: {} });
-const banner_bg = ref("")
+let banner_bg = ref(//轮播背景图片,
+    localStorage.getItem("home_banner_default") ||
+    sessionStorage.getItem("banner_bg") ||
+    ""
+);
 const show_banner_loading = ref(true)
 const defaultBannerShow = ref(false)
 const slide = ref(0)

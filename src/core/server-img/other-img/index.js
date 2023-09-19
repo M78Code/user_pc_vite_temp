@@ -18,7 +18,7 @@ Object.keys(modules).forEach((key) => {
  * @param {*} param0 
  * @returns 
  */
-function compute_css({ key, theme, type }) {
+function compute_css({ key, theme, type='' }) {
   //先从商户配置拿 再从本地拿 
   let config = server_resource[key] || all_other_image[key] || {};
   //从打包的 环境拿 图片地址
@@ -30,7 +30,7 @@ function compute_css({ key, theme, type }) {
     //从本地拿
     url = get(config, UserCtr.theme);
   }
-  return {
+  return type ? url : {
     "background-image": `url(${url})`,
     "background-repeat": 'no-repeat'
   };

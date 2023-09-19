@@ -175,14 +175,14 @@ const get_detail_data = inject('get_detail_data', {})
 <style lang="scss" scoped>
 .mathc_results_visuals {
   padding-bottom: 0.31rem;
-  border-bottom: 1px solid  var(--q-analysis-matches-color-27);
+  border-bottom: 1px solid  var(--q-analysis-bd-color-3);
   .title {
     height: 0.4rem;
     line-height: 0.4rem;
     padding-left: 0.24rem;
-    color: var(--q-analysis-matches-color-1);
-    border-bottom: 1px solid  var(--q-analysis-matches-color-27);
-    background:  var(--q-analysis-matches-color-40);
+    color: var(--q-analysis-text-color-20);
+    border-bottom: 1px solid  var(--q-analysis-bd-color-3);
+    background:  var(--q-analysis-text-color-17);
     font-size: 0.14rem;
     letter-spacing: 0;
     font-weight: bold;
@@ -195,7 +195,7 @@ const get_detail_data = inject('get_detail_data', {})
       position: absolute;
       left: 0.16rem;
       top: 0.14rem;
-      background: var(--q-analysis-matches-color-45);
+      background: var(--q-analysis-text-color-16);
       border-radius: 1.5px;
     }
   }
@@ -204,7 +204,7 @@ const get_detail_data = inject('get_detail_data', {})
     height: 0.34rem;
     line-height: 0.34rem;
     padding-left: 0.15rem;
-    color: var(--q-analysis-matches-color-1);
+    color: var(--q-analysis-text-color-20);
 
     font-weight: bold;
     font-size: 0.12rem;
@@ -265,7 +265,7 @@ const get_detail_data = inject('get_detail_data', {})
         position: relative;
 
         .number {
-          color: var(--q-analysis-matches-color-3);
+          color: var(--q-analysis-text-color-21);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -274,7 +274,7 @@ const get_detail_data = inject('get_detail_data', {})
           line-height: 0.12rem;
         }
         .text-span {
-            color: var(--q-analysis-matches-color-13);
+            color: var(--q-analysis-text-color-5);
           }
 
         .knob-img {
@@ -290,7 +290,7 @@ const get_detail_data = inject('get_detail_data', {})
           line-height: 0.12rem;
           position: absolute;
           top: -0.19rem;
-          color: var(--q-analysis-matches-color-13);
+          color: var(--q-analysis-text-color-5);
           &.vi-top {
             top: -0.28rem;
           }
@@ -316,7 +316,7 @@ const get_detail_data = inject('get_detail_data', {})
         }
 
         .card-title {
-          color: var(--q-analysis-matches-color-13);
+          color: var(--q-analysis-text-color-5);
           font-size: 0.12rem;
 
           letter-spacing: 0;
@@ -328,16 +328,16 @@ const get_detail_data = inject('get_detail_data', {})
         .score {
           display: flex;
           align-items: center;
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
           > span {
             &:nth-child(1) {
               margin-right: 0.13rem;
-              color: var(--q-analysis-matches-color-1);
+              color: var(--q-analysis-text-color-20);
             }
 
             &:last-child {
               margin-left: 0.13rem;
-              color: var(--q-analysis-matches-color-1);
+              color: var(--q-analysis-text-color-20);
             }
           }
 
@@ -350,7 +350,7 @@ const get_detail_data = inject('get_detail_data', {})
     }
 
     .linellae {
-      background:  var(--q-analysis-matches-color-42);
+      background:  var(--q-analysis-text-color-30);
       height: 0.01rem;
       margin: 0 0.15rem 0.25rem;
     }
@@ -363,7 +363,7 @@ const get_detail_data = inject('get_detail_data', {})
       position: relative;
 
       .progress-text {
-        color: var(--q-analysis-matches-color-13);
+        color: var(--q-analysis-text-color-5);
         font-size: 0.12rem;
 
         letter-spacing: 0;
@@ -389,7 +389,7 @@ const get_detail_data = inject('get_detail_data', {})
         justify-content: flex-end;
 
         span {
-          color: var(--q-analysis-matches-color-3);
+          color: var(--q-analysis-text-color-21);
           font-size: 0.12rem;
 
           text-align: center;
@@ -417,7 +417,7 @@ const get_detail_data = inject('get_detail_data', {})
         }
 
         :deep(.q-linear-progress__track--light) {
-          background: var(--q-analysis-matches-color-45);
+          background: var(--q-analysis-text-color-31);
 
           &.q-linear-progress__track {
             opacity: 1;
@@ -429,7 +429,7 @@ const get_detail_data = inject('get_detail_data', {})
         display: flex;
         align-items: center;
         width: 0.2rem;
-        color: var(--q-analysis-matches-color-3);
+        color: var(--q-analysis-text-color-21);
         span {
 
           font-size: 0.12rem;

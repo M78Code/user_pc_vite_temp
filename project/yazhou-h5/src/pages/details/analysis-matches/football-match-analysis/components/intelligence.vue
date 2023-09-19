@@ -121,7 +121,7 @@ import { i18n_t } from "src/boot/i18n.js";
 
 <style lang="scss" scoped>
 .intelligence {
-  background: var(--q-analysis-matches-color-42);
+  background: var(--q-analysis-text-color-19);
   height: calc(100% - 0.4rem);
 
   .header {
@@ -129,8 +129,8 @@ import { i18n_t } from "src/boot/i18n.js";
     justify-content: center;
     padding: 0.15rem 0;
     width: 100%;
-    border-bottom: 1px solid var(--q-analysis-matches-color-30);
-    background: var(--q-analysis-matches-color-4);
+    border-bottom: 1px solid var(--q-analysis-text-color-25);
+    background: var(--q-analysis-bg-color-1);
     z-index: 100;
 
     .tab-radio-button {
@@ -139,24 +139,24 @@ import { i18n_t } from "src/boot/i18n.js";
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: var(--q-analysis-matches-color-4);
-      border: 1px solid var(--q-analysis-matches-color-26);
+      background-color: var(--q-analysis-bg-color-1);
+      border: 1px solid var(--q-analysis-bd-color-5);
 
       letter-spacing: 0;
       text-align: center;
       font-size: 0.14rem;
 
       .ellipsis {
-        color: var(--q-analysis-matches-color-1);
+        color: var(--q-analysis-text-color-20);
         font-weight: unset;
       }
 
       &.active {
-        background: var(--q-analysis-matches-color-43);
+        background: var(--q-analysis-text-color-16);
         border: unset;
 
         .ellipsis {
-          color: var(--q-analysis-matches-color-4);
+          color: var(--q-analysis-bg-color-1);
           font-weight: bold;
         }
       }
@@ -203,7 +203,7 @@ import { i18n_t } from "src/boot/i18n.js";
     text-align: center;
     padding-top: 0.05rem !important;
     font-size: 12px;
-    color: var(--q-analysis-matches-color-2);
+    color: var(--q-analysis-text-color-14);
   }
 }
 </style>

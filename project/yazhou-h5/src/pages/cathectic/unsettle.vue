@@ -408,6 +408,6 @@ import store from 'src/store-redux/index.js'
 }
 /**提前结算*/
 .early2 {
-  background-image: url("public/image/svg/select_a2.svg");
+  background-image: url("public/image/svg/select_a.svg");
 }
 </style>

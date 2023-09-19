@@ -1,8 +1,8 @@
 <template>
   <!--  v-if="globalAccessConfig.get_searchSwitch()" -->
-  <div class="yb-site-left-width" v-if="globalAccessConfig.config.searchSwitch" :class="`${main_menu_toggle}`">
+  <div class="yb-site-left-width" v-if="globalAccessConfig.config.searchSwitch" :class="`${main_menu_toggle || 'normal'}`">
     <!-- TODO: @click.stop="search_hot_push.go_to_details()" -->
-    <div v-show="!search_isShow" class="search-wrap" :class="main_menu_toggle">
+    <div v-show="!search_isShow" class="search-wrap" :class="`${main_menu_toggle || 'normal'}`">
       <div v-show="main_menu_toggle !== 'mini'" class="ellipsis" @click.stop="show_search">
         {{ search_hot_push.hot_push_name || i18n_t("common.search") }}
       </div>
