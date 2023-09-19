@@ -17,7 +17,7 @@
     </div>
     <div class="floating-menu">
       <div class="footer-menu-item" @click="menu_item_click(item, k)" v-for="(item, k) of footer_menulist" :key="k"
-        v-show="bottom_option_show(item)" ::class="{
+        v-show="bottom_option_show(item)" :class="{
           'f-disabled-m': k == 0 && menu_type == 100,
           'sub-menu-first': k == 0,
           'is-hidden': get_is_hidden(item, k),

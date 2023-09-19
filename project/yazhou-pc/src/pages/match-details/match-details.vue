@@ -5,7 +5,7 @@
 -->
 
 <template>
-  <div class="details relative-position">
+  <div class="details relative-position" :style="page_style">
     <!-- 加载中，无数据等显示模板 -->
     <load-data
       v-show="load_detail_statu != 'data'"
@@ -92,6 +92,11 @@ import detailHeader from "./components/detail-header.vue";
 import matchHandicap from "src/components/match-detail/match-handicap/match-handicap.vue";
 import matchListHot from "project_path/src/pages/match-list/match-list-hot.vue";
 import { useGetConfig } from "./detail.config";
+//引入组件样式
+import { compute_css_variables } from "src/core/css-var/index.js"
+import { ref } from "vue";
+const page_style = ref(null)
+page_style.value = compute_css_variables({ category: 'component', module: 'match-details' })
 const {
   load_detail_statu,
   match_infoData,
@@ -214,16 +219,16 @@ const {
 }
 .theme01 {
   .esports-head-info-101 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_01_101.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_101.jpg") !important;
   }
   .esports-head-info-100 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_01_100.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_100.jpg") !important;
   }
   .esports-head-info-103 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_01_103.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_103.jpg") !important;
   }
   .esports-head-info-102 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_01_102.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_01_102.jpg") !important;
   }
   .details_loading {
     background-color: rgba(255, 255, 255, 0.8);
@@ -236,16 +241,16 @@ const {
 }
 .theme02 {
   .esports-head-info-101 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_02_101.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_101.jpg") !important;
   }
   .esports-head-info-100 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_02_100.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_100.jpg") !important;
   }
   .esports-head-info-103 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_02_103.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_103.jpg") !important;
   }
   .esports-head-info-102 {
-    background-image: url("~public/image/yabo/jpg/sports_bg_02_102.jpg") !important;
+    background-image: url("/yazhou-pc/image/jpg/sports_bg_02_102.jpg") !important;
   }
   .details_loading {
     background-color: rgba(39, 42, 51, 0.5);
@@ -256,4 +261,7 @@ const {
     }
   }
 }
+</style>
+<style lang="scss">
+@import "./match-details.scss";
 </style>
