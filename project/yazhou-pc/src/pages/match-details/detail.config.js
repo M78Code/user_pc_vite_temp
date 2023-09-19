@@ -215,6 +215,7 @@ export const useGetConfig = () => {
 
     clearTimeout(state.back_to_timer);
     state.back_to_timer = setTimeout(() => {
+      debugger
       // 退出页面时清空用户操作状态
       window.sessionStorage.setItem("handle_state", JSON.stringify([]));
       // 如果是从搜索结果进来的
@@ -325,8 +326,8 @@ export const useGetConfig = () => {
             // 设置赛事信息
             console.log(data,'data.msc ');
             MatchDataWarehouseInstance.value.set_list_from_match_details(data )  
-            // state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj.mid_obj;
-            state.match_infoData = MatchDataWarehouseInstance.value.quick_query_obj?.mid_obj[state.mid+'_'];
+            state.match_infoData = data;
+            // state.match_infoData = lodash.get(MatchDataWarehouseInstance.value,`quick_query_obj.mid_obj[${state.mid}+'_']`);
             console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据

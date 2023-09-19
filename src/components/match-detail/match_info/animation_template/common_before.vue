@@ -4,7 +4,7 @@
  * @Description: 公共赛前组件
 -->
 <template>
-  <div class="before" v-if="isRouterAlive">
+  <div class="before" v-if="isRouterAlive">{{ UserCtr }}
     <div
       class="content"
       :style="{
@@ -42,7 +42,7 @@
                     lodash.get(match_info, 'frmhn[0]'),
                     lodash.get(match_info, 'csid'),
                   ],
-                  theme: 'locationUrl',
+                  theme: lodash.get(UserCtr,'theme'),
                 })
               "
               class="team_logo"
@@ -67,7 +67,7 @@
                     lodash.get(match_info, 'frmhn[1]'),
                     lodash.get(match_info, 'csid'),
                   ],
-                  theme: 'locationUrl',
+                  theme: lodash.get(UserCtr,'theme'),
                 })
               "
               class="team_logo logo-double"
@@ -110,7 +110,7 @@
                     lodash.get(match_info, 'frman[0]'),
                     lodash.get(match_info, 'csid'),
                   ],
-                  theme: 'locationUrl',
+                  theme: lodash.get(UserCtr,'theme'),
                 })
               "
               class="team_logo"
@@ -143,7 +143,7 @@
                     lodash.get(match_info, 'frman[1]'),
                     lodash.get(match_info, 'csid'),
                   ],
-                  theme: 'locationUrl',
+                  theme: lodash.get(UserCtr,'theme'),
                 })
               "
               class="team_logo logo-double"
@@ -166,6 +166,8 @@
 <script>
 import sprite_img from "src/core/server-img/sprite-img/index.js";
 import common_before from "./common_before";
+import UserCtr from "src/core/user-config/user-ctr.js";;
+console.log(UserCtr,'UserCtr');
 export default {
   mixins: [common_before],
   data() {

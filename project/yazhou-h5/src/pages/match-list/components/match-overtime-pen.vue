@@ -213,7 +213,7 @@ watch(() => match_info.value, (c_m, o_m) => {
   }
   init_tab_show(true); // 加载tab
   // 如果当场的赛事位置，换成了其他赛事了，则隐藏（折叠）当前的赛事
-  if (c_m.mid in get_secondary_unfold_map.value) {
+  if (typeof get_secondary_unfold_map.value === 'object' && c_m.mid in get_secondary_unfold_map.value) {
     let [id, status, special] = get_secondary_unfold_map.value[c_m.mid] && get_secondary_unfold_map.value[c_m.mid].split('-');
     let unfold_map = {};
     // 如果是波胆玩法 或者 5分钟玩法

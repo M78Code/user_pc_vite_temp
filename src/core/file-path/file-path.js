@@ -95,7 +95,7 @@ const get_file_path = (path, csid = 0) => {
   }
 
   if ((NODE_ENV == 'development')) {
-    console.log(window.BUILDIN_CONFIG,'window.BUILDIN_CONFIG');
+    // console.log(window.BUILDIN_CONFIG,'window.BUILDIN_CONFIG');
     // let api_domain = config.domain[current_env][0]; //config没有赋值domain 从老项目迁移
     let api_domain = lodash.get(window,"BUILDIN_CONFIG.DOMAIN_RESULT.img_domains[0]","")
     // let api_domain = window.BUILDIN_CONFIG [current_env][0];
@@ -104,7 +104,6 @@ const get_file_path = (path, csid = 0) => {
   }
   let arr = location.host.split(".");
   let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]}`;
-
   // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
   return `${api_domain_2}/${path}`;
 }

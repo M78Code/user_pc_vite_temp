@@ -145,7 +145,6 @@ console.error(compute_css_variables({ category: 'component', module: 'bet-record
   submit,
   dateChanged,
 } = useConfig();
-console.error(model);
 
 </script>
 

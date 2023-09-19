@@ -23,7 +23,8 @@
       <div class="empty-favorite-bg"
         :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
       </div>
-      <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt : arr.noMatch.txt }}</p>
+      {{arr.noMatch}}
+      <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt || msg : arr.noMatch.txt || msg}}</p>
     </template>
 
     <template v-if="which === 'nolive'">
@@ -53,7 +54,7 @@ import UserCtr from 'src/core/user-config/user-ctr.js'
 import { useRegistPropsHelper } from "src/composables/regist-props/index.js"
 import { component_symbol, need_register_props } from "../config/index.js"
 
-
+console.error('nodata++++',props);
 useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {
@@ -63,6 +64,27 @@ const props = defineProps({
   height: {
     required: true
   },
+  msg: {
+    type: String,
+  },
+  type_name: {
+    type: String,
+  },
+  marginBottom: {
+    type: String,
+  },
+  width: {
+    type: String,
+  },
+  height: {
+    type: String,
+  },
+  color: {
+    type: String,
+  },
+  class: {
+    type: String,
+  }
 })
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
 // const tableClass_computed = useComputed.tableClass_computed(props)
@@ -80,7 +102,7 @@ const arr_const = {
     txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
-    url: "image/bw3/svg/noMatch.svg",
+    url: "public/image/bw3/svg/noMatch.svg",
     url2: "image/bw3/png/noMatch2.png",
     txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
   },

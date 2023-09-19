@@ -3,7 +3,7 @@
     <div class="header relative-position">
       <!--   体育菜单-->
       <div class="menu-item menu-top menu-item-title disable-hover">
-        {{ $t('common.menu_title') }} -- {{ MenuData.menu_root }}
+        {{ $t('common.menu_title') }}
         <!-- <span @click="send_user">user</span> <span @click="send_vr">vr</span> <span @click="send_menu">菜单</span> -->
       </div>
       <!--   今日、早盘、 -->
@@ -20,7 +20,7 @@
     </div>
 
     <div style="display: none;">{{ BaseData.BaseData_version }}</div>
-    <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan}_${item1}`"
+    <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
       :class="BaseData.is_mi_300_open && item1 == 400 ? 'menu-border' : ''">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item1) }} -->
@@ -43,11 +43,7 @@
           <!-- 数字 显示    有些赛种不显示 -->
           <div class="col-right" style="min-width: 40px" v-if="BaseData.menus_i18n_map[item1]">
             <!-- 有滚球赛事  hl 今日&&存在滚球赛事时  展示live图标 -->
-
-            <div class="live-text" v-if="jinri_zaopan == 2 &&
-              lv_1_num(item1) &&
-              BaseData.mi_gunqiu.includes(item1)
-              " />
+            <div class="live-text" :style="compute_css('live_text')" v-if="jinri_zaopan_ == 2 && lv_1_num(item1) && BaseData.mi_gunqiu.includes(item1)" />
             <span class="match-count yb-family-odds" v-if="item1 != 300">{{
               lv_1_num(item1)
             }}</span>
@@ -63,7 +59,7 @@
         <!-- :class="current_lv_1_mi == item1 ? '' : ''" -->
         <template v-for="item2 in compute_item1_sublist_mi_100(item1)">
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        开始   -->
-          <div :key="`${jinri_zaopan}_${item1}_${item2.mi}_100`" @click.stop="
+          <div :key="`${jinri_zaopan_}_${item1}_${item2.mi}_100`" @click.stop="
             lv_2_click_wapper_1({ lv1_mi: item1, lv2_mi: item2.mi })
             " v-if="item1 != 118" v-show="item2['ct']" :class="current_lv_2_mi == item2.mi ? 'active' : ''"
             class="menu-item menu-fold2">
@@ -82,7 +78,7 @@
           <!--  常规赛种 （不含娱乐）  下的  玩法 （ 不含冠军 ）        结束    -->
         </template>
         <!-- 常规赛种   （含娱乐）  增补  冠军玩法    开始 -->
-        <div :key="`${jinri_zaopan}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
+        <div :key="`${jinri_zaopan_}_${item1}_guanjun_1`" @click.stop="lv_2_click_wapper_2({ lv1_mi: item1 })"
           v-if="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]"
           v-show="BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['ct']" :class="current_lv_2_mi ==
               BaseData.commn_sport_guanjun_obj[`mi_${item1}`]['mi']
@@ -907,6 +903,8 @@ const handle_click_jinri_zaopan = (val) => {
 
     .menu-item {
 
+     
+
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
@@ -937,6 +935,21 @@ const handle_click_jinri_zaopan = (val) => {
           }
         }
       }
+      &.menu-fold1{
+        &.y-active{
+          background: var(--q-gb-bg-lg-8);
+          color: var(--q-gb-t-c-15); 
+        }
+        &:hover{
+          background: var(--q-gb-bg-lg-9);
+        }
+      }
+      &.menu-fold2 {
+        &.active{
+          color: var(--q-gb-t-c-15); 
+        }
+      }
+
     }
   }
 
