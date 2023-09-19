@@ -3,7 +3,7 @@
  *  13号模板 足球 13列玩法 
  */
 import * as TemplateCommon from "./template-common.js"
-import { template_0 } from './template-0.js'
+import { template_1 } from './template-0.js'
 
 let hps_15_minute = TemplateCommon.hps_15_minute
 import lodash from  "lodash"
@@ -187,7 +187,7 @@ const set_tpl_13_config = (template_left, template_right) => {
 
   // 13号模板 足球 13列玩法 
   export const template_13 = {
-    ...set_tpl_13_config(template_0,template_right),
+    ...set_tpl_13_config(template_1,template_right),
     // 15分钟玩法
     hps15Minutes: [
       ...TemplateCommon.clone_arr(hps_15_minute),

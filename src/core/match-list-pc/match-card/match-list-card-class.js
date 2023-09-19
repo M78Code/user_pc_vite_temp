@@ -79,7 +79,8 @@ import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from "vue";
 
 class MatchListCardInfo {
-  constructor() {}
+  constructor() {
+  }
   /**
    * @Description 设置联赛容器卡片赛事数据加载状态
    * @param {object} league_title_card_obj 卡片对象
@@ -167,22 +168,6 @@ class MatchListCardInfo {
     fold_all_league();
   }
 
-  get_match_list_card_key_arr() {
-    return MatchListCardData.match_list_card_key_arr    
-  }
-
-  get_match_all_card_obj() {
-    return MatchListCardData.all_card_obj || {}
-  }
-
-  get_match_mid_obj() {
-    return MatchListCardData.mid_obj || {}
-  }
-
-  get_match_card_sticky_top() {
-    return MatchListCardData.sticky_top
-  }
-
   /**
    *   other_params  其他 附加参数
    * @Description 打印数据  调试用
@@ -245,5 +230,5 @@ class MatchListCardInfo {
     remove_league(remove_tid);
   }
 }
-let MatchListCard = ref(new MatchListCardInfo()).value;
-export default MatchListCard;
+
+export default new MatchListCardInfo();

@@ -6,7 +6,7 @@ import * as TemplateCommon from "./template-common.js";
 
 let hps_15_minute = TemplateCommon.hps_15_minute;
 //0号模板  模板主盘
-export const template_0_main = [
+export const template_1_main = [
   {
     ols: [
       { _hpid: 1, ot: "1" },
@@ -35,9 +35,9 @@ export const template_0_main = [
   },
 ];
 // 0号模板
-export const template_0 = {
+export const template_1 = {
   //主盘
-  main_handicap_list: [...template_0_main],
+  main_handicap_list: [...template_1_main],
   // 美足 主盘口列表
   main_handicap_list_6: [
     {
@@ -75,7 +75,7 @@ export const template_0 = {
       ],
     },
   ],
-  add_handicap_list: TemplateCommon.created_add_temp_config(template_0_main),
+  add_handicap_list: TemplateCommon.created_add_temp_config(template_1_main),
   // 角球投注项模板
   hpsCorner: [
     {

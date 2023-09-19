@@ -3,6 +3,7 @@
     :class="[{ 'match-tpl0-bg': tpl_id == 0 }, card_style_obj.is_league_fold ? 'leagues-pack' : `match-tpl${tpl_id}`]"
     v-if="lodash.get(card_style_obj, 'league_obj.csid')">
     <!-- 第一行 -->
+    <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <div class="tr-match-head" @click="set_fold">
       <!-- 联赛信息 -->
       <div class="leagues-wrap" :class="tpl_id == 12 && 'jingcai'"
@@ -120,7 +121,6 @@ const props = defineProps({
 })
 
 const tpl_id = ref(menu_config.get_match_tpl_number() || 1)
-console.log('MATCH_LIST_TEMPLATE_CONFIG', MATCH_LIST_TEMPLATE_CONFIG, 'template_' + 1+'_config');
 const match_list_tpl_size = ref(MATCH_LIST_TEMPLATE_CONFIG['template_' + tpl_id.value+'_config'] || {});
 // 获取菜单类型
 if (!lodash.get( 'card_style_obj.league_obj.csid') && ['1', '500'].includes(menu_config.menu_root)) {
@@ -154,7 +154,7 @@ const bet_col = computed(() => {
   }
   bet_col = [...get_match_tpl_title(`list.match_tpl_title.tpl${tpl_id.value}.${title_name}`, csid), ...bet_col]
 
-  let mft = lodash.get(MatchListCardData.get_match_mid_obj(), `mid_${props.card_style_obj.mid}.mft`)
+  let mft = lodash.get(MatchListCardData.match_mid_obj, `mid_${props.card_style_obj.mid}.mft`)
 
   // 模板10
   if (tpl_id.value == 10) {

@@ -379,7 +379,7 @@ class MatchListDataClass {
 		//  15分钟主盘口列表
 		else if (tpl_id == 24 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				MATCH_LIST_TEMPLATE_CONFIG.template_0_config.hps15Minutes
+				MATCH_LIST_TEMPLATE_CONFIG.template_1_config.hps15Minutes
 			);
 			type = 4;
 			this.set_min15(match, match.mst);
@@ -387,7 +387,7 @@ class MatchListDataClass {
 		//  罚牌主盘口列表
 		else if (tpl_id == 25 && csid == 1) {
 			main_handicap_list = this.clone_arr(
-				MATCH_LIST_TEMPLATE_CONFIG.template_0_config.hpsPunish
+				MATCH_LIST_TEMPLATE_CONFIG.template_1_config.hpsPunish
 			);
 		}
 		match.main_handicap_list = this.merge_template_data({

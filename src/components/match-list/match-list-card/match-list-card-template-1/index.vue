@@ -5,11 +5,10 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:300px !important;width:1920px  !important;${card_style}`"
+    :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`"
 
   >
-  <!-- :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`" -->
-  
+  <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div
       v-if="is_mounted"
       :class="{'list-card-inner':!MatchListCardData.is_champion}"
@@ -77,6 +76,7 @@ import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from 'src/compone
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from 'src/components/match-list/match-type-champion/index.js'
 import { MatchCardFullVersionWapper as MatchCard } from "src/components/match-list/match-card/index.js";
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
@@ -89,16 +89,12 @@ const props = defineProps({
   }
 })
 // 卡片样式对象
-const card_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.card_key] || {})
+const card_style_obj = ref(MatchListCardDataClass.all_card_obj[props.card_key] || {})
 
 let sticky_top = ref(null)
 // 组件是否加载完成
 let is_mounted = ref(false);
 let vx_get_layout_size = ref(state.layoutReducer.layout_size)
-// setTimeout(() => {
-//   card_style_obj = MatchListCardData.get_match_all_card_obj()[props.card_key] || ''
-//   sticky_top.value = MatchListCardData.get_match_card_sticky_top();
-// }, 1000)
 /**
  * @Description 设置卡片样式
  * @param {undefined} undefined
