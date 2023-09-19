@@ -26,10 +26,8 @@ function use_get_sdk_config() {
       if (modular_type === "css_modular") {
         let theme_style_content = "";
         const themeKeys = {
-          theme01: "day",
-          theme02: "night",
-          theme01_y0: "day",
-          theme02_y0: "night",
+          day: "day",
+          night: "night",
         };
         let local_list = sessionStorage.getItem("pc_css_key")
           ? JSON.parse(sessionStorage.getItem("pc_css_key"))

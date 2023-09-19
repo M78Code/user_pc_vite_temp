@@ -48,10 +48,10 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
         // 没获取到的情况
       let suffix="__";
       // TODO: 待调整
-        //  if(UserCtr.theme.includes('theme01')){
+        //  if(UserCtr.theme.includes('day')){
         //     suffix='01'
         //  }
-        //  if(UserCtr.theme.includes('theme02')){
+        //  if(UserCtr.theme.includes('night')){
         //     suffix='02'
         //  }
         //  if(UserCtr.theme.includes('y0')){
@@ -87,10 +87,10 @@ import { defineComponent, ref, watch, computed, onDeactivated, onUnmounted } fro
   //   // 获取图片主题图标
   //   scroll_img(){
   //     let suffix="__"; // 没获取到的情况
-  //        if(UserCtr.theme.includes('theme01')){
+  //        if(UserCtr.theme.includes('day')){
   //           suffix='01'
   //        }
-  //        if(UserCtr.theme.includes('theme02')){
+  //        if(UserCtr.theme.includes('night')){
   //           suffix='02'
   //        }
   //        if(UserCtr.theme.includes('y0')){

@@ -35,7 +35,7 @@
         </div>
 
       <div class="collapse-dire">
-        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('theme01')">
+        <img class="icon-down-arrow" src="public/image/list/league-collapse-icon.svg" :class="{collapsed:collapsed}" alt="" v-if="get_theme.includes('day')">
         <img class="icon-down-arrow" src="public/image/list/league-collapse-icon-black.svg" :class="{collapsed:collapsed}" alt="" v-else>
       </div>
     </div>

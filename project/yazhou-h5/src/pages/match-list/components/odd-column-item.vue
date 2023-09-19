@@ -326,7 +326,7 @@ const transfer_on = (odd_item) => {
   }
   let color = ''
   if(is_fengpan(odd_s) || get_obv_is_lock(odd_item)){
-    if(UserCtr.theme.includes('theme01')){
+    if(UserCtr.theme.includes('day')){
       // color = '#d1d1d1';
     }
     else{

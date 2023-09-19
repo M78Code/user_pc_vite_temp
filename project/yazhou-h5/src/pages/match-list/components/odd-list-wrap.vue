@@ -19,7 +19,7 @@
         <!--角球未选中标志1白色版3黑色版-->
       <img class="icon-jiaoqiu"
         :style="{display:match.csid == 1 && MenuData.footer_sub_menu_id == 114 ? 'block':'none'}"
-        :src="UserCtr.theme.includes('theme01')?img1:img3" />
+        :src="UserCtr.theme.includes('day')?img1:img3" />
       <odd-column-item
         v-for="(ol_item,i) of ol_list"
         :key="i"
@@ -68,11 +68,11 @@
         <div class="block" :class="{selected:standard_odd_status == 1}"></div>
       </div>
       <!--标准版 才有的样式  动态图方向箭头-->
-      <template v-if="UserCtr.theme.includes('theme02')">
+      <template v-if="UserCtr.theme.includes('night')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
-      <template v-if="UserCtr.theme.includes('theme01')">
+      <template v-if="UserCtr.theme.includes('day')">
         <i class="slide_icon slide_icon_l animate-effect" v-if="is_show_scroll_dir(0)"></i>
         <i class="slide_icon slide_icon_r animate-effect-r" v-if="is_show_scroll_dir(1)"></i>
       </template>
@@ -280,7 +280,7 @@ const calculate_color = computed(() => {
   if (UserCtr.theme.includes("y0")) {
     flag = Y0_img_white;
   } else {
-    UserCtr.theme.includes("theme01")
+    UserCtr.theme.includes("day")
       ? (flag = img2)
       : (flag = img4);
   }

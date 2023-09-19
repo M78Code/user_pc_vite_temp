@@ -23,7 +23,7 @@
           <span :class="{ 'auto-text': BetData.bet_is_accept == 2 }" class="yb_mx4 err-msg2" style="max-width:2.1rem"
             @click="toggle_accept">{{ $t("ac_rules.auto") }}</span>
           <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_accept" class="img1"
-            v-if="UserCtr.theme.includes('theme01')" />
+            v-if="UserCtr.theme.includes('day')" />
           <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_accept" class="img1" v-else />
         </span>
       </div>
@@ -123,7 +123,7 @@
               <span class="yb_mx4" :class="{ 'auto-text': !view_ctr_obj.bet_is_combine }" @click="change_is_combine">{{
                 i18n_t("tips.msg1") }}</span>
               <img src="image/wwwassets/bw3/svg/rules2.svg" @click="change_tips_show" class="img1"
-                v-if="UserCtr.theme.includes('theme01')" />
+                v-if="UserCtr.theme.includes('day')" />
               <img src="image/wwwassets/bw3/svg/rules3.svg" @click="change_tips_show" class="img1" v-else />
             </span>
             <!-- 右 -->

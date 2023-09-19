@@ -1,5 +1,5 @@
 <template>
-    <div class="description-main" :class="{ black_bg: UserCtr.theme == 'theme02' }">
+    <div class="description-main" :class="{ black_bg: UserCtr.theme == 'night' }">
         <simple-header :title="i18n_t('common.sports_betting_rules')" use_component_key="SimpleHeader_H5">
             <!-- {{ i18n_t('common.rule_description') }} -->
         </simple-header>
