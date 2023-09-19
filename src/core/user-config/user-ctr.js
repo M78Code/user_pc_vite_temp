@@ -51,7 +51,6 @@ class UserCtr {
 
     // 数据持久化使用到的key值
     this.local_storage_key = "h5_user_base_info";
-
     // 用户详情
     this.user_info = {};
     // 登录用户的id
@@ -74,9 +73,12 @@ class UserCtr {
       pre_odds: "EU",
       // 当前赔率
       cur_odds: "EU",
-    },
-      //排序	 int 类型 1 按热门排序 2 按时间排序
-      this.sort_type = 1
+    };
+    //排序	 int 类型 1 按热门排序 2 按时间排序
+    this.sort_type = 1;
+    //收藏/关注	true/false
+    this.show_favorite_list = false;
+
     // 用户 token 失效
     this.is_invalid = false;
     // 用户 余额
@@ -204,6 +206,14 @@ class UserCtr {
   set_user_activity(activity) {
     this.activity = { ...activity }
   }
+  /**
+   * 设置是否 显示、收藏
+   * */
+  set_show_favorite_list(v) {
+    this.show_favorite_list = !!v;
+    //通知收藏变化了
+    useMittEmit(MITT_TYPES.EMIT_FAVORITE_CHANGE_CMD, this.show_favorite_list)
+  }
   clear_user({ commit }) {
     // this.user_info = "";
     for (const key in this.user_info) {
@@ -260,6 +270,8 @@ class UserCtr {
   }
   set_balance(balance) {
     this.balance = 1 * balance;
+    //通知余额变化
+    useMittEmit(MITT_TYPES.EMIT_USER_AMOUNT_CHAUNGE, this.balance)
     this.update()
   }
   /**
@@ -1217,14 +1229,14 @@ class UserCtr {
    * 设置用户余额显示隐藏
    * state 状态 true flase
    */
-  set_show_balance(state){
+  set_show_balance(state) {
     this.show_balance = state
     this.set_user_version()
   }
- /**
-   * 更新用户信息版本 显示
-   */
-  set_user_version(){
+  /**
+    * 更新用户信息版本 显示
+    */
+  set_user_version() {
     this.user_version.value = Date.now()
   }
 }

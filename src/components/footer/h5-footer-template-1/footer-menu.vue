@@ -49,7 +49,7 @@
               {{ item.title1 }}
             </span>
           </div>
-          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')" ></div>
+          <div v-if="item.id == 0" class="play-w-change-icon" :style="compute_css('menu-set-switch')"></div>
         </div>
       </div>
     </div>
@@ -395,24 +395,23 @@ const menu_item_click = (item, i) => {
       !utils.judge_collectSwitch(GlobalAccessConfig.get_collectSwitch(), this)
     )
       return;
+
     if (footer_clicked_handleing.value) return;
+
     timer5_.value = setTimeout(() => {
       footer_clicked_handleing.value = false;
     }, 800);
-    useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
-      text: "footer-follow",
-      before_status: footerMenuReducer.show_favorite_list,
-    });
-    let is_follow = !footerMenuReducer.show_favorite_list;
+    // useMittEmit(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, {
+    //   text: "footer-follow",
+    //   before_status: UserCtr.show_favorite_list,
+    // });
+    let is_follow = !UserCtr.show_favorite_list;
     if (is_follow) {
       item.icon = item.icon1;
     } else {
       item.icon = item.icon0;
     }
-    store.dispatch({
-      type: "SET_SHOW_FAVORITE_LIST",
-      data: is_follow,
-    });
+    UserCtr.set_show_favorite_list(is_follow)
   }
   //注单
   else if (item.id === 2) {
