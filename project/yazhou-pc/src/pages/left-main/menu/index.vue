@@ -2,54 +2,43 @@
   <!-- 菜单项 -->
   <div v-show="MenuData.layout_left_show == 'menu'" class="menu-wrap">
     <!-- 现场滚球盘 -->
-    <div
-      @click="new_menu_click(1)"
-      class="menu-item menu-top menu-roll menu-border"
-      style="margin-bottom: 0px"
-      :class="MenuData.menu_root == 1 && 'active'"
-    >
+    <div @click="new_menu_click(1)" class="menu-item menu-top menu-roll menu-border border-bottom" style="margin-bottom: 0px"
+      :class="MenuData.menu_root == 1 && 'active'">
       <!-- 现场滚球盘 -->
-      <img class="hot-icon" :src="play_match" />
+      <span class="record-icon" :style="compute_css('pc-img-play-match')"></span>
       <div class="col">
-        现场滚球盘
-        <!-- {{ $t("common.in_plays") }} -->
+        {{ $t("common.in_plays") }}
       </div>
 
       <div class="col-right">
-        <span class="match-count yb-family-odds">{{
-          MenuData.menu_root_count.mi_1
-        }}</span>
+        <span class="match-count yb-family-odds">
+          {{ MenuData.menu_root_count.mi_1 }}
+        </span>
       </div>
     </div>
 
+    <div style="display:none;"> {{ MenuData.menu_data_version }}  </div>
+
     <!-- 热门赛事 -->
-    <div
-      @click="new_menu_click(500)"
-      class="menu-item menu-top menu-play menu-border"
+    <div @click="new_menu_click(500)" class="menu-item menu-top menu-play menu-border border-bottom"
       :class="MenuData.menu_root == 500 && 'active'"
-      :id="DOM_ID_SHOW && `menu-${MenuData.add_mi_introduce.mi_500.label}`"
-    >
+      :id="DOM_ID_SHOW && `menu-${MenuData.add_mi_introduce.mi_500.label}`">
       <!-- 热门赛事图标 -->
-      <img class="hot-icon" :src="hot_svg" />
+      <span class="record-icon" :style="compute_css('pc-img-hot-match')"></span>
       <div class="col">
-        热门赛事
-        <!-- {{ $t("menu.match_hot") }} -->
+        {{ $t("menu.match_hot") }}
       </div>
       <div class="col-right">
         <!-- 热门赛事数量 -->
         <span class="match-count yb-family-odds">
-          {{ MenuData.menu_root_count.mi_500 }}</span
-        >
+          {{ MenuData.menu_root_count.mi_500 }}</span>
       </div>
     </div>
 
     <div style="display: none">{{ base_data_instance.base_data_version }}</div>
     <!-- 体育菜单 -->
-    <menu-wapper
-      use_component_key="PcMenuTemplate1"
-      :base_data="base_data_instance"
-      :version="base_data_instance.base_data_version"
-    ></menu-wapper>
+    <menu-wapper use_component_key="PcMenuTemplate1" :base_data="base_data_instance"
+      :version="base_data_instance.base_data_version"></menu-wapper>
   </div>
 </template>
 
@@ -59,11 +48,8 @@ import { useRouter } from "vue-router";
 
 import base_data_instance from "src/core/base-data/base-data.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
-import GlobalAccessConfig from "src/core/access-config/access-config.js";
 import { MenuData } from "src/core/index.js";
-
-import play_match from "/public/yazhou-pc/image/png/play-match.png";
-import hot_svg from "/public/yazhou-pc/image/svg/hot.svg";
+import { compute_css } from 'src/core/server-img/index.js'
 
 import { MenuWapper } from "src/components/menu/index.js";
 
@@ -159,7 +145,7 @@ const set_route_url = () => {
     font-size: 13px;
 
     .menu-item {
-      
+
       &.menu-tab {
         font-size: 13px;
         justify-content: space-around;
@@ -212,6 +198,11 @@ const set_route_url = () => {
       &.active {
         font-weight: 700;
         border-bottom: 0;
+        background-image: var(--q-gb-bg-lg-23);
+        border-right: 0;
+        position: relative;
+        border-width: 0;
+        color: var(--q-gb-t-c-15); 
       }
 
       .hot-icon {
@@ -515,4 +506,13 @@ const set_route_url = () => {
   /* *** 公共 ************ -E */
 }
 
+.record-icon{
+  background-size: 100% 100%;
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+}
+.border-bottom{
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
+}
 </style>

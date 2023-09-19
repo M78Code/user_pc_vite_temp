@@ -207,19 +207,19 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .recent_record {
-  background-color: var(--q-analysis-matches-color-4);
+  background-color: var(--q-analysis-text-color-1);
   margin-top: 0.1rem;
 
   .header {
     height: 0.4rem;
     padding-left: 0.24rem;
-    border-top: 1px solid var(--q-analysis-matches-color-27);
-    border-bottom: 1px solid var(--q-analysis-matches-color-27);
+    border-top: 1px solid var(--q-analysis-bd-color-3);
+    border-bottom: 1px solid var(--q-analysis-bd-color-3);
     position: relative;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: var(--q-analysis-matches-color-4) !important;
+    background-color: var(--q-analysis-text-color-1) !important;
 
     .title {
 
@@ -229,7 +229,7 @@ onMounted(() => {
       letter-spacing: 0;
       width: 0.985rem;
       font-weight: bold;
-      color: var(--q-analysis-matches-color-1);
+      color: var(--q-analysis-text-color-20);
       &:before {
         content: '';
         width: 0.03rem;
@@ -237,7 +237,7 @@ onMounted(() => {
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background-color: var(--q-analysis-matches-color-45);
+        background-color: var(--q-analysis-text-color-31);
         border-radius: 1.5px;
       }
     }
@@ -249,9 +249,9 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: var(--q-analysis-matches-color-4);
-      border: 1px solid var(--q-analysis-matches-color-26);
-      color: var(--q-analysis-matches-color-46);
+      background: var(--q-analysis-text-color-1);
+      border: 1px solid var(--q-analysis-bd-color-5);
+      color: var(--q-analysis-text-color-32);
 
       border-radius: 0.04rem;
 
@@ -262,8 +262,8 @@ onMounted(() => {
       margin-right: 0.1rem;
 
       &.active, &.progress_bar {
-        background: var(--q-analysis-matches-color-45);
-        color: var(--q-analysis-matches-color-4);
+        background: var(--q-analysis-text-color-31);
+        color: var(--q-analysis-text-color-1);
         border: unset;
       }
     }
@@ -281,13 +281,13 @@ onMounted(() => {
 
       letter-spacing: 0;
       text-align: center;
-      background: var(--q-analysis-matches-color-4);
-      color: var(--q-analysis-matches-color-2);
-      border: 1px solid var(--q-analysis-matches-color-26)!important;
+      background: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-text-color-14);
+      border: 1px solid var(--q-analysis-bd-color-5)!important;
       &.active {
-        background: var(--q-analysis-matches-color-45);
-        color: var(--q-analysis-matches-color-4);
-        border: 1px solid var(--q-analysis-matches-color-49)!important;
+        background: var(--q-analysis-text-color-31);
+        color: var(--q-analysis-text-color-1);
+        border: 1px solid var(--q-analysis-bd-color-7)!important;
       }
 
       &.tab-radio-button0 {
@@ -308,7 +308,7 @@ onMounted(() => {
     height: 0.4rem;
     align-items: center;
     padding: 0 0.15rem;
-    background: var(--q-analysis-matches-color-36);
+    background: var(--q-analysis-text-color-27);
     :deep(.team-img) {
       width: 0.2rem;
       height: 0.2rem;
@@ -332,7 +332,7 @@ onMounted(() => {
       letter-spacing: 0;
       line-height: 0.12rem;
       font-weight: bold;
-      color: var(--q-analysis-matches-color-1);
+      color: var(--q-analysis-text-color-20);
       &:nth-child(1) {
         display: flex;
         align-items: center;
@@ -348,46 +348,46 @@ onMounted(() => {
     }
   }
   :deep(.public_form) {
-    background-color: var(--q-analysis-matches-color-4);
+    background-color: var(--q-analysis-text-color-1);
     .header {
       > div {
-        color: var(--q-analysis-matches-color-2);
+        color: var(--q-analysis-text-color-14);
       }
     }
     .team-item {
-      border-bottom: 1px solid var(--q-analysis-matches-color-29);
-      background-color: var(--q-analysis-matches-color-4);
+      border-bottom: 1px solid var(--q-analysis-text-color-24);
+      background-color: var(--q-analysis-text-color-1);
       div {
-        color: var(--q-analysis-matches-color-1);
+        color: var(--q-analysis-text-color-20);
       }
       .col3 {
         .home.add_bold {
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
         }
         .away.add_bold {
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
         }
         .home {
-          color: var(--q-analysis-matches-color-46);
+          color: var(--q-analysis-text-color-32);
         }
       }
       .col4.end-btn {
         >span.results {
-          color: var(--q-analysis-matches-color-4);
+          color: var(--q-analysis-text-color-1);
         }
         >span.results.results_win {
-          color: var(--q-analysis-matches-color-19);
+          color: var(--q-analysis-text-color-6);
         }
         >span.results.results_flat {
-          color: var(--q-analysis-matches-color-17);
+          color: var(--q-analysis-text-color-8);
         }
         >span.results.results_lose {
-          color: var(--q-analysis-matches-color-18);
+          color: var(--q-analysis-text-color-7);
         }
       }
     }
     .team-item:nth-child(odd) {
-      background-color: var(--q-analysis-matches-color-36);
+      background-color: var(--q-analysis-text-color-27);
     }
   }
 }

@@ -2,7 +2,8 @@
 <template>
   <!-- v-show="route.params.video_size != 1" -->
   <div class="yb-layout-margin-header c-site-header relative-position"
-    :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }">
+    :class="{ 'activity_bonus': has_bonus_type, 'is-iframe': is_iframe }"
+    :style="page_style">
     <site-header v-bind="site_header_data" @navigate="navigate" />
     <!-- 第二行 -->
     <div :class="['header-item item2 row items-center', { 'search-off': !globalAccessConfig.get_activitySwitch() }]"
@@ -38,8 +39,11 @@ import headerSearch from 'project_path/src/components/site-header/header-search.
 import marqueeCst from "project_path/src/components/marquee/marquee-cst.vue";
 import headerSelect from 'project_path/src/components/site-header/header-select.vue'
 // import timer from "project_path/src/components/site-header/timer.vue"
-
 import gift_package from '/public/yazhou-pc/image/common/activity_banner/gift_package.png'
+import { compute_css_variables } from "src/core/css-var/index.js"
+
+const page_style = ref('')
+page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
 const props = defineProps({
   /** 
