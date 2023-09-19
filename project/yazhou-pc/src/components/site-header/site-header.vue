@@ -2,7 +2,7 @@
  * @Description: 站点页眉
 -->
 <template>
-    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }" :style="page_style">
+    <div class="c-site-header relative-position" :class="{ 'is-iframe': is_iframe }">
         <!-- 系统将在30分钟后进入维护，造成不便，深表歉意！ -->
         <maintenance-tip></maintenance-tip>
 
@@ -96,10 +96,6 @@ import { format_money2 } from "src/core/format/index.js"
 import { i18n_t } from "src/boot/i18n.js"
 /** api */
 import { api_account } from "src/api/index.js";
-import { compute_css_variables } from "src/core/css-var/index.js"
-
-const page_style = ref('')
-page_style.value = compute_css_variables({ category: 'component', module: 'site-header' })
 
 const emit = defineEmits(['navigate'])
 
