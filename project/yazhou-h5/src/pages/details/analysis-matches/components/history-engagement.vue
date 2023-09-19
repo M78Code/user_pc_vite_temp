@@ -186,7 +186,7 @@ const get_detail_data = inject('get_detail_data', {})
 
 <style lang="scss" scoped>
 .history_engagement {
-  background-color: var(--q-analysis-matches-color-4);
+  background-color: var(--q-analysis-text-color-1);
   .header {
     height: 0.4rem;
     padding-left: 0.24rem;
@@ -194,7 +194,7 @@ const get_detail_data = inject('get_detail_data', {})
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    background-color: var(--q-analysis-matches-color-4);
+    background-color: var(--q-analysis-text-color-1);
     .title {
       font-size: 0.14rem;
       height: 0.2rem;
@@ -202,7 +202,7 @@ const get_detail_data = inject('get_detail_data', {})
       letter-spacing: 0;
       font-weight: bold;
       width: 0.985rem;
-      color: var(--q-analysis-matches-color-1);
+      color: var(--q-analysis-text-color-20);
       &:before {
         content: '';
         width: 0.03rem;
@@ -210,7 +210,7 @@ const get_detail_data = inject('get_detail_data', {})
         position: absolute;
         left: 0.16rem;
         top: 0.14rem;
-        background-color: var(--q-analysis-matches-color-45);
+        background-color: var(--q-analysis-text-color-31);
         border-radius: 1.5px;
       }
     }
@@ -226,13 +226,13 @@ const get_detail_data = inject('get_detail_data', {})
       letter-spacing: 0;
       text-align: center;
       margin-right: 0.1rem;
-      background: var(--q-analysis-matches-color-4);
-      border: 1px solid var(--q-analysis-matches-color-26);
-      color: var(--q-analysis-matches-color-2);
+      background: var(--q-analysis-text-color-1);
+      border: 1px solid var(--q-analysis-bd-color-5);
+      color: var(--q-analysis-text-color-14);
       &.active {
-        background: var(--q-analysis-matches-color-45);
-        color: var(--q-analysis-matches-color-4);
-        border: 1px solid var(--q-analysis-matches-color-49)!important;
+        background: var(--q-analysis-text-color-31);
+        color: var(--q-analysis-text-color-1);
+        border: 1px solid var(--q-analysis-bd-color-7)!important;
       }
       &.active, &.progress_bar {
         border: unset;
@@ -248,13 +248,13 @@ const get_detail_data = inject('get_detail_data', {})
       font-size: 0.1rem;
       letter-spacing: 0;
       text-align: center;
-      background: var(--q-analysis-matches-color-4);
-      color: var(--q-analysis-matches-color-2);
-      border: 1px solid var(--q-analysis-matches-color-26)!important;
+      background: var(--q-analysis-text-color-1);
+      color: var(--q-analysis-text-color-14);
+      border: 1px solid var(--q-analysis-bd-color-5)!important;
       &.active {
-        background: var(--q-analysis-matches-color-45);
-        color: var(--q-analysis-matches-color-4);
-        border: 1px solid var(--q-analysis-matches-color-49)!important;
+        background: var(--q-analysis-text-color-31);
+        color: var(--q-analysis-text-color-1);
+        border: 1px solid var(--q-analysis-bd-color-7)!important;
       }
       &.tab-radio-button0 {
         border-right: unset;
@@ -268,43 +268,43 @@ const get_detail_data = inject('get_detail_data', {})
     }
   }
   :deep(.public_form) {
-    background-color: var(--q-analysis-matches-color-4);
+    background-color: var(--q-analysis-text-color-1);
     .header {
       > div {
-        color: var(--q-analysis-matches-color-2);
+        color: var(--q-analysis-text-color-14);
       }
     }
     .team-item {
-      border-bottom: 1px solid var(--q-analysis-matches-color-29);
-      background-color: var(--q-analysis-matches-color-4);
+      border-bottom: 1px solid var(--q-analysis-text-color-24);
+      background-color: var(--q-analysis-text-color-1);
       div {
-        color: var(--q-analysis-matches-color-1);
+        color: var(--q-analysis-text-color-20);
       }
       .col3 {
         .home.add_bold {
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
         }
         .away.add_bold {
-          color: var(--q-analysis-matches-color-1);
+          color: var(--q-analysis-text-color-20);
         }
         .home {
-          color: var(--q-analysis-matches-color-46);
+          color: var(--q-analysis-text-color-32);
         }
       }
       .col4.end-btn {
         >span.results {
-          color: var(--q-analysis-matches-color-4);
+          color: var(--q-analysis-text-color-1);
         }
         >span.results.results_win {
-          color: var(--q-analysis-matches-color-19);
+          color: var(--q-analysis-text-color-6);
         }
         >span.results.results_lose {
-          color: var(--q-analysis-matches-color-18);
+          color: var(--q-analysis-text-color-7);
         }
       }
     }
     .team-item:nth-child(odd) {
-      background-color: var(--q-analysis-matches-color-36);
+      background-color: var(--q-analysis-text-color-27);
     }
   }
 }

@@ -104,7 +104,6 @@ const get_file_path = (path, csid = 0) => {
   let api_domain_2 = `${location.protocol}//image.${arr[arr.length - 2]}.${arr[arr.length - 1]}`;
 
   // api_domain = api_domain.replace(/\/\/.*?\./,'//image.');
-  debugger
   return `${api_domain_2}/${path}`;
 }
 

@@ -115,7 +115,7 @@ import {utils } from 'src/core/index.js'
 
 <style lang="scss" scoped>
 .match-details {
-  background: var(--q-analysis-matches-color-42);
+  background: var(--q-analysis-text-color-17);
   padding-bottom: 0.1rem;
 }
 .get_is_hengping {
