@@ -21,104 +21,113 @@
   </div>
 </template>
 
-<script>
-// import { mapGetters, mapActions, mapMutations } from "vuex";
+<script setup>
 // websocket Log文件
 import ws from  "src/core/data-warehouse/ws/ws-ctr/ws.vue"
 import { wslog } from "src/core/log/";
 import { useMittEmit, MITT_TYPES } from  "src/core/mitt"
 import { compute_css_variables } from "src/core/css-var/index.js"
 import {  PageSourceData  } from "src/core/index.js";
-import WsMan from  "src/core/data-warehouse/ws/ws-ctr/ws-man.js"
+import { reactive, onBeforeMount, onMounted, onUnmounted,ref, watch } from "vue";
+import { useRoute } from "vue-router";
 window.wslog = wslog;
-
 const BUILDIN_CONFIG = window.BUILDIN_CONFIG;
-
 const { CURRENT_ENV_NAME } = BUILDIN_CONFIG;
-export default {
-  name: "AppLoad",
-  components: {
-    ws,
+
+const time_str = ref('');
+const server_env = ref(CURRENT_ENV_NAME);
+const right_menu_show = ref(false);
+// 公共主题色
+const page_style = reactive({});
+
+let vue_hidden_run_flg = false;
+let background_run_time = "";
+
+// 代表今日足球下边距离触发埋点的时间
+let buried_time = 0;
+
+let timer,timer2;
+
+const route = useRoute();
+
+watch(
+  () => route.name,
+  () => {
+    PageSourceData.set_route_name(route.name)
   },
-  data() {
-    return {
-      vue_hidden_run_flg: false,
-      background_run_time: "",
-      time_str: "",
-      server_env: CURRENT_ENV_NAME,
-      buried_time: 0, // 代表今日足球下边距离触发埋点的时间
-      right_menu_show: false,
-      // 公共主题色
-      page_style: {},
+  { immediate: true }
+);
+
+
+
+onBeforeMount(() => {
+  // 定时器
+  timer = null;
+  timer2 = null;
+  // 设置商户样式
+
+  // this.init_version_name();
+  on_listeners();
+    // 公共主题色
+    // page_style = global_color_obj()
+    Object.assign(page_style,global_color_obj());
+  // 初始化启动日志系统--开发模式时日志打开
+  // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
+
+  if (window.wslog.wsRun) {
+    timer = setInterval(() => {
+      time_str.value = new Date().Format("yyyy-MM-dd hh:mm:ss.S");
+    }, 100);
+  }
+  // 发送日志
+  // window.wslog.sendMsg('xxx');
+  // set_vue_hidden_run(false);
+  timer2 = setTimeout(() => {
+    vue_hidden_run_flg = true;
+  }, 4000);
+
+  let url_search = new URLSearchParams(location.search);
+  let vlg = url_search.get("vlg");
+  if (vlg) {
+    sessionStorage.setItem("vlg", vlg);
+  }
+
+  // 移动端设备下 url参数 vlg=1 开启vconsole调试
+  if (sessionStorage.getItem("vlg")) {
+    const script = document.createElement("script");
+    let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
+
+    script.src = `${
+      BUILD_VERSION ? "/" + BUILD_VERSION : ""
+    }/lib/js/vconsole.min.js`;
+    script.async = false;
+
+    script.onload = function () {
+      new VConsole();
     };
-  },
+    document.head.appendChild(script);
+  }
+});
 
-  watch: {
-    '$route.name': {
-      handler () {
-        PageSourceData.set_route_name(this.$route.name)
-      },
-      immediate: true,
-    }
-  },
 
-  created() {
-    // 定时器
-    this.timer = null;
-    this.timer2 = null;
-    // 设置商户样式
+onUnmounted(() => {
+  // 释放日志功能对象
+  if (window.wslog && window.wslog.destroyed) {
+    window.wslog.beforeUnmount();
+  }
+  window.wslog = null;
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+  clearTimeout(timer2);
+  timer2 = null;
+  off_listeners();
+});
 
-    // this.init_version_name();
-    this.on_listeners();
-      // 公共主题色
-      this.page_style = this.global_color_obj()
-    // 初始化启动日志系统--开发模式时日志打开
-    // window.wslog = new WsLog(window.env.NODE_ENV === 'development');
-
-    if (window.wslog.wsRun) {
-      this.timer = setInterval(() => {
-        this.time_str = new Date().Format("yyyy-MM-dd hh:mm:ss.S");
-      }, 100);
-    }
-    // 发送日志
-    // window.wslog.sendMsg('xxx');
-    // this.set_vue_hidden_run(false);
-    this.timer2 = setTimeout(() => {
-      this.vue_hidden_run_flg = true;
-    }, 4000);
-
-    let url_search = new URLSearchParams(location.search);
-    let vlg = url_search.get("vlg");
-    if (vlg) {
-      sessionStorage.setItem("vlg", vlg);
-    }
-
-    // 移动端设备下 url参数 vlg=1 开启vconsole调试
-    if (sessionStorage.getItem("vlg")) {
-      const script = document.createElement("script");
-      let BUILD_VERSION = window.BUILDIN_CONFIG.BUILD_VERSION;
-
-      script.src = `${
-        BUILD_VERSION ? "/" + BUILD_VERSION : ""
-      }/lib/js/vconsole.min.js`;
-      script.async = false;
-
-      script.onload = function () {
-        new VConsole();
-      };
-
-      document.head.appendChild(script);
-    }
-  },
-  methods: {
-    // ...mapMutations(["set_global_click_count"]),
-    // ...mapActions({
-    //   init_version_name: "init_version_name",
-    //   set_vue_hidden_run: "set_vue_hidden_run",
-    // }),
 
 // 公共全局主题色
-  global_color_obj() {
+function global_color_obj() {
     // 背景色
     let bg = compute_css_variables({ category: 'global', module: 'background' })
     // 边框色
@@ -128,20 +137,20 @@ export default {
     // 渐变色
     let lg = compute_css_variables({ category: 'global', module: 'linear-gradient' })
     return {...bg, ...bd, ...tc, ...lg}
-  },
+  }
 
     /**
      *@description 事件preventDefault函数执行体
      */
-    event_listener_preventDefault(event) {
+     function event_listener_preventDefault(event) {
       event.preventDefault();
-    },
+    }
 
     /**
      *@description 页面可见性变化的处理函数
      */
-    visibilitychange_handle() {
-      if (!this.vue_hidden_run_flg) {
+     function visibilitychange_handle() {
+      if (!vue_hidden_run_flg) {
         return false;
       }
       let is_hidden = document.visibilityState == "hidden";
@@ -153,11 +162,11 @@ export default {
         window.DOCUMENT_HIDDEN = "";
       }
       // 设置当前页面是否后台运行中状态
-      // this.set_vue_hidden_run(is_hidden);
+      // set_vue_hidden_run(is_hidden);
 
       //页面失去焦点 ，隐藏   后台运行
       if (is_hidden) {
-        this.background_run_time = new Date().getTime();
+        background_run_time = new Date().getTime();
         // 在后台运行超过 over_timer 分钟后才广播刷新数据指令
       } else {
         // 页面 唤起  这里流程分 二种：
@@ -167,7 +176,7 @@ export default {
         let over_timer = 30 * (60 * 1000);
         let now_time = new Date().getTime();
         // 在后台共运行了多少时间
-        let run_time = now_time - this.background_run_time;
+        let run_time = now_time - background_run_time;
         // 页面需要 重载刷新
         let need_reload = run_time > over_timer;
         //如果需要 重载刷新
@@ -179,82 +188,65 @@ export default {
           useMittEmit(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT);
         }
       }
-    },
+    }
     /**
      * @Description 阻止双击放大
      * @param {undefined} undefined
      */
-    appclick(e) {
+     function appclick(e) {
       e.preventDefault();
       // 全局点击次数+1
-      // this.set_global_click_count();
-    },
+      // set_global_click_count();
+    }
     // 添加相应监听事件
-    on_listeners() {
+    function on_listeners() {
       // 监听页面是否转入休眠状态
       document.addEventListener(
         "visibilitychange",
-        this.visibilitychange_handle
+        visibilitychange_handle
       );
-      document.addEventListener("pagehide", this.visibilitychange_handle);
+      document.addEventListener("pagehide", visibilitychange_handle);
       document.addEventListener(
         "gesturestart",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
       document.addEventListener(
         "gesturechange",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
       document.addEventListener(
         "gestureend",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
 
       // 阻止双击变大
       document.addEventListener(
         "click",
-        this.event_listener_preventDefault,
+        event_listener_preventDefault,
         true
       );
-    },
+    }
     // 移除相应监听事件
-    off_listeners() {
+    function off_listeners() {
       document.removeEventListener(
         "visibilitychange",
-        this.visibilitychange_handle
+        visibilitychange_handle
       );
-      document.removeEventListener("pagehide", this.visibilitychange_handle);
+      document.removeEventListener("pagehide", visibilitychange_handle);
       document.removeEventListener(
         "gesturestart",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
       document.removeEventListener(
         "gesturechange",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
       document.removeEventListener(
         "gestureend",
-        this.event_listener_preventDefault
+        event_listener_preventDefault
       );
-      document.removeEventListener("click", this.event_listener_preventDefault);
-    },
-  },
-  beforeUnmount() {
-    // 释放日志功能对象
-    if (window.wslog && window.wslog.destroyed) {
-      window.wslog.beforeUnmount();
+      document.removeEventListener("click", event_listener_preventDefault);
     }
-    window.wslog = null;
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
-    clearTimeout(this.timer2);
-    this.timer2 = null;
-
-    this.off_listeners();
-  },
-};
 </script>
 
 <style lang="scss">
