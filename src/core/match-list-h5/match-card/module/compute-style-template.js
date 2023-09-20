@@ -43,7 +43,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from "../list-template/index.js"
 */
 const get_tab_play_height = (mid) => {
   let { play_current_key, other_handicap_list = [] } = MatchListData.list_to_obj.mid_obj['mid_' + mid] || {}
-  let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_0_config`]['match_template_config'] || {}
+  let { tab_play_handicap_height: handicap_height } = MATCH_LIST_TEMPLATE_CONFIG[`template_1_config`]['match_template_config'] || {}
   let length = lodash.get(other_handicap_list, '0.ols.length', 3)
   //5分钟      波胆
   if (['hps5Minutes', 'hpsBold'].includes(play_current_key)) {

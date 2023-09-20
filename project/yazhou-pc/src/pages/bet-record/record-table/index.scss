@@ -79,8 +79,8 @@
         padding: 12px 0 12px 20px;
         border-top: none;
         border-left: none;
-        color: var(--q-gb-t-c-1);
-        border-right: 1px solid var(--q-gb-bd-c-7);
+        color: var(--q-gb-t-c-4);
+        border-right: 1px solid var(--q-gb-bd-c-8);
         :deep(.row) {
           color: var(--q-gb-t-c-6);
           .col:first-child {
@@ -114,7 +114,7 @@
               color: var(--q-gb-t-c-5);
             }
             .market-value-text {
-              color: var(--q-bet-record-color-1);
+              color: var(--q-gb-t-c-16);
             }
           }
         }
@@ -214,7 +214,7 @@
   }
 }
 :deep(.play-type) {
-  color: var(--q-gb-t-c-1);
+  color: var(--q-gb-t-c-11);
   & > span {
     margin-right: 10px;
     &:last-child {

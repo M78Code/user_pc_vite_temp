@@ -17,7 +17,7 @@
         </div>
         <!--折叠得箭头图标-->
         <img class="league-collapse-dir" :class="{ 'collapsed': t_item.unfold == 1 }"
-          :src="(`/public/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('theme02') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
+          :src="(`/public/yazhou-h5/image/list/league-collapse-icon${UserCtr.theme.includes('night') ? '-black' : ''}${t_item.unfold == 1 ? (UserCtr.theme.includes('y0') ? '-collapse-y0' : '-collapse') : ''}.svg`)" />
       </div>
     </div>
     <!-- 次要玩法   1. 左边队伍名标题   2. 右边 盘口组件  模块 -->
@@ -62,7 +62,7 @@
             <!--csid 1足球-->
             <img v-if="[2, 5, 17].includes(+current_tab_item.id)" @click="info_icon_click($event, match_info.mid)"
               :src="show_tips ? (UserCtr.theme.includes('y0') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon_y0.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon.svg`) :
-                (UserCtr.theme.includes('theme01') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
+                (UserCtr.theme.includes('day') ? `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray.svg` : `/public/yazhou-h5/image/bw3/svg/match-list/information-icon-gray2.svg`)" alt="">
             {{ match_info.csid == 1 ? current_tab_item.title : mmp_map_title }}
           </div>
         </div>
@@ -213,7 +213,7 @@ watch(() => match_info.value, (c_m, o_m) => {
   }
   init_tab_show(true); // 加载tab
   // 如果当场的赛事位置，换成了其他赛事了，则隐藏（折叠）当前的赛事
-  if (c_m.mid in get_secondary_unfold_map.value) {
+  if (typeof get_secondary_unfold_map.value === 'object' && c_m.mid in get_secondary_unfold_map.value) {
     let [id, status, special] = get_secondary_unfold_map.value[c_m.mid] && get_secondary_unfold_map.value[c_m.mid].split('-');
     let unfold_map = {};
     // 如果是波胆玩法 或者 5分钟玩法

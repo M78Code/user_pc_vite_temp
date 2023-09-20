@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 /**
  * 列表表征数据存放实例
@@ -14,6 +14,7 @@ class MatchListCardDataClass {
     this.all_card_obj = {
       // 'card_key':{}
     };
+    this.list_version = ref('123')
     //当前列表的卡片key列表  不包含赛事卡片
     this.match_list_card_key_arr = [
       // 'card_key'
@@ -64,6 +65,9 @@ class MatchListCardDataClass {
   set_scroll_top(scroll_top) {
     this.scroll_top = scroll_top;
   }
+
+  set_list_version() {
+    this.list_version.value = new Date().getTime();
+  }
 }
-let MatchListCardData = reactive(new MatchListCardDataClass())
-export default MatchListCardData;
+export default new MatchListCardDataClass();

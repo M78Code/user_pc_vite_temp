@@ -4,7 +4,7 @@
  *    源名字： template_1001   template1001
  */
 
-import * as TemplateCommon from "./template-common.js"
+import * as TemplateCommon from "../template-common.js"
 
 
 
@@ -54,4 +54,13 @@ export const template_6 = {
       ],
     },
   ],
+}
+
+// 赛事模板配置
+export const match_template_config = {
+  ...TemplateCommon.match_style_template,
+  // 当前局玩法高度
+  cur_handicap_height: 70,
+  // 是否需要动态计算高度
+  is_dynamic_compute_height: true,
 }

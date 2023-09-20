@@ -64,9 +64,9 @@ class UserCtr {
     this.user_info_data = "";
 
     // 用户语言
-    this.lang = langReducer.lang;
+    this.lang = 'zh';
     // 用户主题  日间版本 ，夜间版本
-    this.theme = themeReducer.theme;
+    this.theme = 'day';
 
     // 当前 选择的 赔率 ，有些赛种只有港赔理论上和这里无关
     this.odds = {
@@ -159,8 +159,8 @@ class UserCtr {
     useMittEmit(MITT_TYPES.EMIT_THEME_CHANGE, theme);
     this.update()
     // 替换body上className
-    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'theme01' ? 'theme02' : 'theme01';
-    document.getElementById('ty-body').classList.replace(old_theme, theme)
+    const old_theme = localStorage.getItem("theme") || sessionStorage.getItem("theme") || theme == 'day' ? 'theme02' : 'theme01';
+    document.getElementById('ty-body').classList.replace(old_theme, theme == 'day' ? 'theme01' : 'theme02')
     // store.dispatch({ type: "SET_THEME", data });
     // loadLanguageAsync(lang);//加载语言
   }

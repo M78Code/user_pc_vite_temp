@@ -8,6 +8,7 @@
       <match-process v-if="is_mounted" :match_props="{ match, source: 'match_list' }"
         show_page="match-list" :rows="2" :match_list_data="match_list_data" />
     </div>
+    <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- 盘口 -->
     <div class="match-handicap-item-wrap">
       <!-- 主盘 -->
@@ -16,9 +17,9 @@
         <div class="basic-col" :style="`width:${match_list_tpl_size.team_width}px !important;height:105px !important;`">
           <basis-info1 v-if="is_mounted" :match="match" show_type="all" />
         </div>
-        {{ match_list_tpl_size.template_0_main }}
+        {{ match_list_tpl_size.template_1_main }}
         <!-- 赛事盘口投注项 -->
-        <match-handicap :handicap_list="match_list_tpl_size.template_0_main" :match="match" />
+        <match-handicap :handicap_list="match_list_tpl_size.template_1_main" :match="match" />
 
         <!-- 视频按钮 -->
         <div class="media-col">
@@ -128,9 +129,9 @@ const props = defineProps({
 })
 
 const play_name_list = ref([]);
-const match_style_obj = ref(lodash.get(MatchListCardData.get_match_all_card_obj(), `all_card_obj.mid_${props.mid}`, {}));
+const match_style_obj = ref(lodash.get(MatchListCardData.match_all_card_obj, `all_card_obj.mid_${props.mid}`, {}));
 const match_list_tpl_size = MATCH_LIST_TEMPLATE_CONFIG['template_1_config']
-console.log('MATCH_LIST_TEMPLATE_CONFIG', MATCH_LIST_TEMPLATE_CONFIG['template_1_config']);
+const quick_list = MatchListData.quick_query_list;
 const match = reactive(MatchListData.list_to_obj.mid_obj[props.mid+'_'] || {});
 const is_mounted = ref(false);
 

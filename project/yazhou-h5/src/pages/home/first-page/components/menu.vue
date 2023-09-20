@@ -54,10 +54,10 @@ import { MenuData, UserCtr, compute_css } from "src/core/";
 import lodash from "lodash";
 import { useRouter } from "vue-router";
 import { DateForMat } from "src/core/format/index.js";
+// import menu_data  from "project_path/src/config/menu_new_data.js" //  api1.5 菜单 本地化假数据
 //初始化数据
 const router = useRouter();
 const menu_list = ref(MenuData.menu_list || []); //菜单列表
-
 const menu_index = ref(0); ////左侧菜单选中项单
 const list_area = ref(null); //dom
 const content = ref(null); //dom
@@ -227,95 +227,26 @@ const calc_show2 = (item) => {
   }
 };
 
-// 去除串关
-const remove_crosstalk = (data) => {
-  for (let i = data.length - 1; i >= 0; i--) {
-    // 如果是串关去除串关
-    if (data[i].menuType == 11) {
-      data.splice(i, 1);
-    }
-  }
-};
+// // 去除串关
+// const remove_crosstalk = (data) => {
+//   for (let i = data.length - 1; i >= 0; i--) {
+//     // 如果是串关去除串关
+//     if (data[i].menuType == 11) {
+//       data.splice(i, 1);
+//     }
+//   }
+// };
 
 
-/**
- * @description: 获取列表数据
- * @return {}
- */
-const get_list = async () => {
-  loading_done.value = false;
-  //获取indexDB menu数据
-  // let menuBuldata = await db.menus_info.bulkGet()
-  // if(buldata.length>0){
-  //     // res.data = buldata
-  //     console.error(menuBuldata,"parammenu_data======")
-  // }
-  // if (!get_home_data && get_home_data.length) {
-  //   console.error(get_home_data,"parammenu_data======333")
-  //   menu_data_loaded(get_home_data);  // 先用缓存数据
-  // }
-  let params = {
-    cuid: uid ? uid() : "0", //用户ID/或UUid
-    sys: 7, //1 panda 体育 ;3 188体育
-  };
-  const send_gcuuid = uid();
-  params.gcuuid = send_gcuuid;
-  let obj_ = {
-    // axios api对象
-    axios_api: api_home.get_menu_init,
-    // axios api对象参数
-    params: params,
-    // axios中then回调方法
-    fun_then: (res) => {
-      if (res && send_gcuuid != res.gcuuid) return;
-      let code = lodash.get(res, "code");
-      if (code == 200) {
-        let data = lodash.get(res, "data");
-        remove_crosstalk(data);
-        loading_done.value = true;
-        //DB插入数据 缓存menu数据
-        if (!lodash.isEmpty(data)) {
-          //mi 作为主键
-          db.menus_info.bulkAdd(data, "mi");
-          loading_done.value = true;
-        }
-        menu_data_loaded(data);
-        //URL地址带token认定是首次进入，所以首页列表数据加载完后要删除掉
-        if (!location.search.includes("keep_url")) {
-          history.replaceState(
-            null,
-            "",
-            `${location.pathname}${location.hash}`
-          );
-        }
-      } else {
-        menu_data_loaded(menu_data);
-        noMenu.value = true;
-        no_menu_txt.value = "noMatch";
-      }
-    },
-    // axios中catch回调方法
-    fun_catch: (err) => {
-      noMenu.value = true;
-      no_menu_txt.value = "noMatch";
-      loading_done.value = false;
-    },
-    // 最大循环调用次数(异常时会循环调用),默认3次
-    max_loop: 2,
-    // 异常调用时延时时间,毫秒数,默认1000
-    timers: 1000,
-  };
-  // axios_api轮询调用方法
-  const res = await axios_loop(obj_);
-};
+
 // 主内容 菜单数据处理
-const menu_data_loaded = (data) => {
-  data = lodash.cloneDeep(data);
-  let newData = base_data.recombine_menu(data);
-  // save_home_data(data)
-  menu_data_config(newData);
-  return;
-};
+// const menu_data_loaded = (data) => {
+//   data = lodash.cloneDeep(data);
+//   let newData = base_data.recombine_menu(data);
+//   // save_home_data(data)
+//   menu_data_config(newData);
+//   return;
+// };
 /**
  * @description: 菜单推送
  * @param {Object} skt_data 推送数据
@@ -352,5 +283,75 @@ useMittOn(MITT_TYPES.EMIT_MENU_MATCH_COUNT_CHANGE, ws_change_menu);
 // 保证赛事框初始高度正确
 window_resize_on();
 
-get_list()
+/**
+ * @description: 获取列表数据
+ * @return {}
+ */
+//  const get_list = async () => {
+//   loading_done.value = false;
+//   //获取indexDB menu数据
+//   // let menuBuldata = await db.menus_info.bulkGet()
+//   // if(buldata.length>0){
+//   //     // res.data = buldata
+//   //     console.error(menuBuldata,"parammenu_data======")
+//   // }
+//   // if (!get_home_data && get_home_data.length) {
+//   //   console.error(get_home_data,"parammenu_data======333")
+//   //   menu_data_loaded(get_home_data);  // 先用缓存数据
+//   // }
+//   let params = {
+//     cuid: uid ? uid() : "0", //用户ID/或UUid
+//     sys: 7, //1 panda 体育 ;3 188体育
+//   };
+//   const send_gcuuid = uid();
+//   params.gcuuid = send_gcuuid;
+//   let obj_ = {
+//     // axios api对象
+//     axios_api: api_home.get_menu_init,
+//     // axios api对象参数
+//     params: params,
+//     // axios中then回调方法
+//     fun_then: (res) => {
+//       if (res && send_gcuuid != res.gcuuid) return;
+//       let code = lodash.get(res, "code");
+//       if (code == 200) {
+//         let data = lodash.get(res, "data");
+//         remove_crosstalk(data);
+//         loading_done.value = true;
+//         //DB插入数据 缓存menu数据
+//         if (!lodash.isEmpty(data)) {
+//           //mi 作为主键
+//           db.menus_info.bulkAdd(data, "mi");
+//           loading_done.value = true;
+//         }
+//         menu_data_loaded(data);
+//         //URL地址带token认定是首次进入，所以首页列表数据加载完后要删除掉
+//         if (!location.search.includes("keep_url")) {
+//           history.replaceState(
+//             null,
+//             "",
+//             `${location.pathname}${location.hash}`
+//           );
+//         }
+//       } else {
+//         menu_data_loaded(menu_data);
+//         noMenu.value = true;
+//         no_menu_txt.value = "noMatch";
+//       }
+//     },
+//     // axios中catch回调方法
+//     fun_catch: (err) => {
+//       noMenu.value = true;
+//       no_menu_txt.value = "noMatch";
+//       loading_done.value = false;
+//     },
+//     // 最大循环调用次数(异常时会循环调用),默认3次
+//     max_loop: 2,
+//     // 异常调用时延时时间,毫秒数,默认1000
+//     timers: 1000,
+//   };
+//   // axios_api轮询调用方法
+//   const res = await axios_loop(obj_);
+// };
+// get_list()
 </script>

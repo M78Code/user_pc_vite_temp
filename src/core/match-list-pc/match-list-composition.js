@@ -607,11 +607,7 @@ const get_hot_match_list = (backend_run = false) => {
 					match_list,
 					true
 				);
-				// 计算赛事卡片
-				MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
-					match_list,
-					backend_run
-				);
+				
 				if (!backend_run) {
 					// 调用bymids接口
 					api_bymids({ is_first_load: true });
@@ -628,6 +624,11 @@ const get_hot_match_list = (backend_run = false) => {
 					// 更新可视区域赛事盘口数据
 					show_mids_change();
 				}
+				// 计算赛事卡片
+				MatchListCardClass.compute_match_list_style_obj_and_match_list_mapping_relation_obj(
+					match_list,
+					backend_run
+				);
 				load_data_state.value = "data";
 			} else if (!backend_run) {
 				load_data_state.value = "empty";

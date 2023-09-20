@@ -11,9 +11,9 @@
 
     <!--封盘-->
     <div class="icon-lock-wrapper" v-if="odd_status === 2">
-      <img class="icon-lock" v-if="get_theme.includes('theme01')"
+      <img class="icon-lock" v-if="get_theme.includes('day')"
          src="public/image/common/match-icon-lock.svg" />
-      <img class="icon-lock" v-if="get_theme.includes('theme02')"
+      <img class="icon-lock" v-if="get_theme.includes('night')"
          src="public/image/common/match-icon-lock-theme02.svg" />
 
     </div>

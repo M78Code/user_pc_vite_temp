@@ -5,6 +5,7 @@
     :id="DOM_ID_SHOW && `list-mid-${mid}`"
     :style="`height:300px  !important;width:1920px  !important;`"
   >
+  <div v-show="false">{{ MatchListCardData.list_version }}</div>
     <!-- <component
       v-if="is_mounted && [1,2].includes(match_style_obj.show_level)"
       :is="match_components_name"
@@ -20,6 +21,7 @@
 <script setup>
 import { computed, defineProps, ref, onMounted, onUnmounted, shallowRef } from 'vue';
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
+import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"
 import {component_symbol ,need_register_props} from "../config/index.js"
 import store from 'src/store-redux/index.js'
@@ -57,10 +59,7 @@ const props = defineProps({
   },
 })
 // 赛事样式对象
-const match_style_obj = ref(MatchListCardData.get_match_all_card_obj()[props.mid+'_'] || {})
-setTimeout(() => {
-  match_style_obj.value = MatchListCardData.get_match_all_card_obj()[props.mid+'_']
-}, 1000)
+const match_style_obj = ref(MatchListCardDataClass.all_card_obj[props.mid+'_'] || {})
 // 是否显示调试信息
 const test = ref(sessionStorage.getItem('wsl'))
 // 组件是否加载完成

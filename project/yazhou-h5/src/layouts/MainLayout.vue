@@ -20,6 +20,13 @@
         <FooterWapper class="m-layout" v-if="['sport_menu', 'matchList'].includes(route.name)">
         </FooterWapper>
 
+        <!-- 筛选+搜索   已脱离文档流-->
+        <div v-if="select_dialog" position="bottom" class="select-mask" :style="`height:${inner_height}px`">
+          <div style="height:100%;width: 100%" @click="select_dialog = false" />
+          <!-- 筛选弹窗 -->
+          <select-dia />
+        </div>
+
         <!-- 投注记录弹层 -->
         <div v-if="record_show" :class="settle_dialog_bool && 'shadow-box2'" class="shadow-box"
           @click="change_settle_status(false)" @touchmove.prevent></div>
@@ -50,27 +57,31 @@ import { FooterWapper } from "src/components/footer/index.js";
 import { MenuWapper } from "src/components/menu";
 import activityIcon from "project_path/src/components/common/activity-icon.vue"; // 设置
 import setMenu from "project_path/src/components/common/set-menu.vue"; // 设置
-
+import selectDia from "../pages/match-list/components/select-dia.vue"
 import { useRoute } from "vue-router";
 import betMixBox from "src/components/bet/components/bet_mix_box.vue";
 import store from "src/store-redux/index.js";
 const settleDialog = defineAsyncComponent(() =>
-  import("project_path/src/pages/cathectic/index.vue")
+  import("../pages/cathectic/index.vue")
 );
 const toast = defineAsyncComponent(() =>
-  import("project_path/src/components/common/toast.vue")
+  import("../components/common/toast.vue")
 );
+// const selectDia = defineAsyncComponent(() =>
+//   import("../pages/match-list/components/select-dia.vue")
+// );
+
 import BetData from "src/core/bet/class/bet-data-class.js";// project/yazhou-h5/src/components/common/toast.vue
 // import layoutHeader from "./layout-header.vue";
 // import layoutConent from "./layout-content.vue";
-
+const inner_height = window.innerHeight;  // 视口高度
 const { footerMenuReducer } = store.getState();
 const route = useRoute();
 const get_accept_show = ref(false); // 接受更好赔率变化 弹窗
 const get_combine_tips_show = ref(false); // 合并投注项提示弹框 弹窗
 const record_show = ref(false);
 const lastTouchEnd = ref(0);
-
+const select_dialog = ref(false)//暂时筛选窗口
 const timer_3 = ref(null);
 // 开启注单历史弹窗及遮罩
 const settle_dialog_bool = ref(footerMenuReducer.settle_dialog_bool);
@@ -164,15 +175,34 @@ onMounted(() => {
   // 设置设备类型
   BetData.set_device_type(1)
 });
+const mitt_list = [
+  // 监听搜索框状态
+  useMittOn(MITT_TYPES.EMIT_CHANGE_SELECT_DIALOG, function (value) {
+    // this.select_cleck = type
+    //   this.select_dialog = val
+    select_dialog.value = value
+  })
+]
+// 监听搜索弹框是否展示
+
 onUnmounted(() => {
   document.removeEventListener("touchstart", touchstart_event_fun);
   document.removeEventListener("touchend", touchend_event_fun);
   document.removeEventListener("gesturestart", gesturestart_event_fun);
   timer_3.value = null;
   unsubscribe();
+  mitt_list.map(i => i())
 });
 </script>
 <style lang="scss" scoped>
+.select-mask{
+  position: fixed;
+  width: 100vw;
+  background: rgba(0,0,0,0.4);
+    top: 0;
+    z-index:2000;
+    left: 0
+}
 .layout_container {
   height: 100%;
   overflow: hidden;

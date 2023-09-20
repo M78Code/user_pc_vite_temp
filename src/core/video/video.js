@@ -921,7 +921,7 @@ export default {
       let animationUrl = ''
       //足篮棒网使用3.0动画  其他使用2.0
       if([1,2,3,5].includes(match.csid*1)){
-        let style = store.getters.get_theme.includes('theme01') ? 'day' : 'night'
+        let style = store.getters.get_theme.includes('day') ? 'theme01' : 'theme02'
         let animation3Url = _.get(res, "data.data.animation3Url") || []
         animation3Url.forEach( item =>{
           if(item.styleName.indexOf(style) >= 0){
