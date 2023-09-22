@@ -1,7 +1,9 @@
 import NoData_1 from "../no-data-1/index.vue";
+import NoData_h5 from "../no-data-h5/index.vue";
 import { compute_component_wapper_config } from "app/job/use-output/index.js";
 const all_components_obj = {
   NoData_1,
+  NoData_h5
 };
 const component_config = {
   registered_component_key: "NoData",

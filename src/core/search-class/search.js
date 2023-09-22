@@ -245,7 +245,7 @@ export default {
       cuid:UserCtr.get_uid()
     }
     api_search.get_delete_history_search(params).then( res => {
-      let code = lodash.get(res, "data.code");
+      let code = lodash.get(res, "code");
       if (code == 200) {
         callback()
       }
