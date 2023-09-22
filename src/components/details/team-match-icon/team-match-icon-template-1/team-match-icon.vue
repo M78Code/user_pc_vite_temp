@@ -36,8 +36,8 @@
 // #TODO vuex
 // import {mapGetters, mapMutations} from "vuex"
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import { api_common } from "src/project/api/index.js";
-import match_icon from "src/project/components/details/match_icon/match_icon.vue"  // 赛事icon操作
+import { api_common } from "src/api/index.js";
+import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
 import {utils } from 'src/core/index.js'
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
 export default defineComponent({

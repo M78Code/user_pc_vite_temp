@@ -153,7 +153,7 @@ function on_click_lang(lang_) {
     }
     if (lang.value != lang_) {
         api_account.set_user_lang({ token: UserCtr.get_user_token(), languageName: lang_ }).then(res => {
-            let code = lodash.get(res, 'data.code');
+            let code = lodash.get(res, 'code');
             if (code == 200) {
                 UserCtr.set_lang(lang_);
                 lang.value = lang_
