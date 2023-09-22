@@ -112,6 +112,10 @@ const props = defineProps({
   show_type: {
     type: String,
     default: () => ''
+  },
+  is_15min:{
+    type:Boolean,
+    default:false
   }
 })
 

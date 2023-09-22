@@ -598,6 +598,8 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
+    // 重新调用表征类里的计算表征方法 
+    // MatchListCard.update_match_style(this.quick_query_obj.mid_obj)
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载

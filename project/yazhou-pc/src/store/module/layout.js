@@ -50,8 +50,6 @@ const initialState = {
     list_content_width: 1920,
     // // 主内容高度（菜单、列表、详情、右侧）
     content_height: 900,
-    // 列表实际内容宽度，除去边框间距等等
-    list_content_width: 0,
   },
 };
 

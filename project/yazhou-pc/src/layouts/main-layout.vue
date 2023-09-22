@@ -996,7 +996,7 @@ function resize() {
   } else {
     list_content_width -= 14;
   }
-  MATCH_LIST_TEMPLATE_CONFIG.new_menu.set_template_width(list_content_width);
+  // MATCH_LIST_TEMPLATE_CONFIG.new_menu.set_template_width(list_content_width);
   methods_map_store["SET_LAYOUT_SIZE"]({
     inner_width,
     inner_height,

@@ -49,8 +49,7 @@ const is_loading = ref(true);
 const vx_match_sort = ref(state.filterReducer?.show_filter_popup);
 // 筛选是否全选
 const vx_filter_checked_all = ref(state.filterReducer?.show_filter_popup);
-// 上次筛选选中的数据
-const vx_pre_filter_select_obj = ref(state.filterReducer?.show_filter_popup);
+
 // 左侧详情参数
 const vx_detail_params = ref(state.filterReducer.show_filter_popup);
 // 获取联赛筛选框显示状态
@@ -560,6 +559,7 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
 		mx_list_res(data, is_socket, cut, collect);
+		// mx_list_res(data, is_socket, cut, collect);
 	} else {
 		//  mx_use_list_res
 		// 滚球单页 下所有
@@ -619,7 +619,7 @@ const get_hot_match_list = (backend_run = false) => {
 						tid: first_match.tid,
 						sportId: first_match.csid,
 					};
-					this.regular_events_set_match_details_params(null, params);
+					// this.regular_events_set_match_details_params(null, params);
 				} else {
 					// 更新可视区域赛事盘口数据
 					show_mids_change();
@@ -643,35 +643,7 @@ const get_hot_match_list = (backend_run = false) => {
 		});
 };
 
-/**
- * @Description 合并连续相同的联赛
- * @param {undefined} undefined
- */
-const merge_same_league = (league_obj) => {
-	let new_data = {
-		livedata: [],
-		nolivedata: [],
-	};
-	let new_league = {};
-	// 上一个联赛
-	let pre_league = {};
-	// 遍历所有联赛列表
-	lodash.each(["livedata", "nolivedata"], (type) => {
-		pre_league = {};
-		lodash.each(league_obj[type], (league) => {
-			// 联赛ID相同 合并赛事ID
-			if (league.tid == pre_league.tid) {
-				new_league.mids += "," + league.mids;
-			} else {
-				// 联赛ID不同 添加到新联赛数据
-				new_league = league;
-				new_data[type].push(new_league);
-			}
-			pre_league = league;
-		});
-	});
-	return new_data;
-};
+
 /**
  * @description 返回顶部
  * @return {undefined} undefined
@@ -806,10 +778,8 @@ const useMatchListMx = () => {
 		match_list,
 		is_loading,
 		vx_filter_checked_all,
-		vx_pre_filter_select_obj,
 		vx_show_filter_popup,
 		match_tpl_component,
-		merge_same_league,
 		on_go_top,
 		on_refresh,
 		remove_match_data,
