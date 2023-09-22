@@ -3,44 +3,44 @@
 -->
 <template>
   <div class="bet-scorll-header">
-    <div class="row bet-back-btn yb-flex-between" :class="{ 'free-style': !LayOutMain_pc.is_iframe }"
-      @click="set_menu_back('menu')">
+
+    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
+
+    <div class="row bet-back-btn yb-flex-between" :class="{ 'free-style': LayOutMain_pc.is_iframe }">
       <!-- 返回菜单（投注记录、单/串关投注栏） -->
-      <div class="col yb-flex cursor-pointer" v-if="LayOutMain_pc.is_iframe">
+      <div class="col yb-flex cursor-pointer" v-if="LayOutMain_pc.is_iframe" @click="set_menu_back('menu')">
         <!--箭头图标-->
-        <icon name="icon-back" size="14px" />
+        <icon-wapper name="icon-back" size="14px" />
         <!--返回菜单-->
         <div class="back-text ellipsis" v-if="BetData.is_bet_single">返回 {{ $t('common.return_sports') }}</div>
         <div class="back-text2 ellipsis"
           v-tooltip="{ content: '&nbsp;' + i18n_t('common.return_spo r ts')+'&nbsp;' ,   overflow:1}" v-else>
           {{ $t('common.return_sports') }}</div>
       </div>
-      <div v-else>
+      <div v-else  @click="set_menu_back('menu')">
         <!--bet-zone-head-width虚拟体育投注框宽度-->
         <div class="bet-zone-head justify-between align-items center cursor-pointer"
           :class="{ 'bet-zone-head-width': BetData.is_virtual_bet }">
           <!--箭头图标-->
-          <icon name="icon-back" size="14px" />
+          <icon-wapper name="icon-back" size="14px" />
           <!--返回菜单-->
           <div class="back-text ellipsis">{{ $t('common.return_sports') }}</div>
         </div>
       </div>
+
+       <!--右边的单关或者复式串关按钮-->
+      <template v-if="!BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
+        <div class="bet-series-box" @click="set_change_bet_single">
+          <span class="bet-series-text" :class="!BetData.is_bet_single ? 'actions':'' ">{{$t('bet.bet_series')}}</span>
+            <!--复式串关已改为串关-->
+          <div class="bet-series-switch" :class="!BetData.is_bet_single ? 'actions':'' ">
+            <div class="bet-series-ok" :class="!BetData.is_bet_single ? 'actions':'' "></div>
+          </div>
+        </div>
+      </template>
+
     </div>
 
-    <div style="display: none;"> {{ BetData.bet_data_class_version }} </div>
-
-    <!--右边的单关或者复式串关按钮-->
-    <template v-if="!BetData.is_virtual_bet && (MenuData.layout_left_show != 'bet_history')">
-      <div class="col-auto bet-series yb-flex-between" @click="set_change_bet_single">
-        <!--复式串关已改为串关-->
-        <span class="series_style" :class="{ 'vi_th_series_style': ['vi', 'th', 'ad'].includes(UserCtr.lang) }">
-          {{$t('bet.bet_series') }}
-        </span>
-        <span v-if="BetData.is_bet_single">已关闭</span>
-        <span v-else>已开启</span>
-        <span>+</span>
-      </div>
-    </template>
 
     <div class="row bg-white"></div>
     <!-- 供投注项定位时 获取头部定位 -->
@@ -52,11 +52,10 @@
 <script setup>
 import { computed, onMounted } from "vue"
 import LayOutMain_pc from "src/core/layout/index.js";
-import UserCtr from "src/core/user-config/user-ctr.js"
 import MenuData from "src/core/menu-pc/menu-data-class.js"
 import BetData from "src/core/bet/class/bet-data-class.js";
 
-import lodash from 'lodash'
+import { IconWapper } from 'src/components/icon'
 
 /**
  * @description:投注数量  默认是单关数量
@@ -106,6 +105,8 @@ const set_change_bet_single = () => {
   padding-left: 15px;
   height: 34px;
   cursor: pointer;
+  background: var(--q-gb-bg-c-14);
+  border-bottom: 1px solid var(--q-gb-bd-c-8);
 
   /**返回菜单文字样式*/
   .back-text {
@@ -122,10 +123,7 @@ const set_change_bet_single = () => {
   .bet-zone-head {
     display: flex;
     align-items: center;
-    padding: 0 15px;
-    height: 44px;
-    line-height: 44px;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   /**虚拟体育投注框宽度*/
@@ -202,5 +200,45 @@ const set_change_bet_single = () => {
 
 .vi_th_series_style {
   padding-left: 5px
+}
+.bet-series-box {
+  display: flex;
+  align-items: center;
+  .bet-series-text{
+    color: var(--q-gb-t-c-10) ;
+    &.actions{
+      color: var(--q-gb-t-c-16);
+    }
+  }
+  .bet-series-switch{
+    position: relative;
+    display: flex;
+    min-width: 36px;
+    height: 18px;
+    border-radius: 18px;
+    margin-left: 4px;
+    margin-right: 5px;
+    transition: .3s;
+    background: var(--q-gb-t-c-18);
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    &.actions{
+      background: var(--q-gb-t-c-16);
+    }
+    
+    .bet-series-ok{
+      width: 14px;
+      height: 14px;
+      position: absolute;
+      background: var(--q-gb-t-c-11);
+      border-radius: 50%;
+      top: 1px;
+      left: 2px;
+      transition: .3s;
+      &.actions{
+        background: var(--q-gb-t-c-18);
+        left: 19px;
+      }
+    }
+  }
 }
 </style>
