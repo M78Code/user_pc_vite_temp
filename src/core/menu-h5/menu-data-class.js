@@ -200,7 +200,6 @@ class MenuData {
   }
   // 当前选中的菜单type
   get_menu_type() {
-    console.error(this);
     return this.current_lv_1_menu?.mi;
   }
   async get_db_mids(mi) {

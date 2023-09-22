@@ -498,6 +498,15 @@ const match_detail_m_list_init = () => {
   // TODO: 逻辑待添加
   MatchPage.get_match_data_list();
 };
+/**
+ * @description: 赛事列表为空通知事件函数
+ */
+const upd_match_is_empty = (obj) => {
+  // 当是赛果菜单,三级菜单数据没有时,发送列表赛事数据为空消息,收到消息后页面显示为空页面
+  if(lodash.get(obj,'type') == 'result' && lodash.get(obj,'event.cmd') == 'list_empty'){
+    match_is_empty.value = true;
+  }
+}
 const destroy_handle = () => {
   // websocket_store.sendSocketCloseCmd();
   MatchPage.del();
@@ -507,6 +516,7 @@ const destroy_handle = () => {
   clear_timer();
   off_listeners();
 };
+
 const unsubscribe = store.subscribe(() => {
   update_state();
 });
@@ -548,6 +558,8 @@ const on_listeners = () => {
     emitter_7: useMittOn(MITT_TYPES.EMIT_MATCH_LIST_SCROLLING, () => MatchListCard.match_list_scroll_handle).off,
     emitter_8: useMittOn(MITT_TYPES.EMIT_SECONDARY_PLAY_UNFOLD_CHANGE, MatchListCard.secondary_play_unfold_change_handle).off,
     emitter_9: useMittOn(MITT_TYPES.EMIT_TAB_HOT_CHANGING, () => MatchListCard.tab_changing_handle).off,
+    emitter_10: useMittOn(MITT_TYPES.EMIT_MAIN_LIST_MATCH_IS_EMPTY, () => upd_match_is_empty).off,
+
   };
 };
 // 移除相关事件监听

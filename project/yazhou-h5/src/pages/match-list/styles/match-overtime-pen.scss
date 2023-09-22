@@ -27,6 +27,7 @@
       margin-bottom: 0.12rem;
       flex-wrap: nowrap;
       white-space: nowrap;
+      flex-shrink: 0;
 
       &:last-child {
         margin-right: 0;
