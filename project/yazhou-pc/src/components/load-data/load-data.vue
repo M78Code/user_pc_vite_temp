@@ -81,6 +81,7 @@
         class="empty-wrap"
         :class="{ filter_img: filter_store.open_select_time }"
         which="noMatch"
+        url="/yazhou-pc/image/png/no_data_01.png"
       >
       </no-data-wapper>
       <no-data-wapper
@@ -92,6 +93,7 @@
         height="180px"
         :color="color"
         class="empty-wrap esports"
+        which="noMatch"
       >
         <!-- <div class="empty-btn-wrap" >
           <div class="empty-btn" @click="journey">

@@ -3,9 +3,9 @@
  */
 import { ref } from 'vue'
 import lodash from 'lodash'
-import { i18n_t } from  "src/boot/i18n.js";
-import MenuData from  "src/core/menu-h5/menu-data-class.js";
-import PageSourceData  from  "src/core/page-source/page-source.js";
+import { i18n_t } from "src/boot/i18n.js";
+import MenuData from "src/core/menu-h5/menu-data-class.js";
+import PageSourceData from "src/core/page-source/page-source.js";
 
 // TODO: 待替换菜单模块 store
 const get_current_menu = ref(MenuData.current_menu)
@@ -712,8 +712,8 @@ export const foot_ball_score_handle = (match) => {
   if (match.msc_s_format) {
     let sorted = [];
     msc_dict.forEach(key => {
-      let r = match.msc_s_format.filter(msc_s => key === msc_s[0])[0];
-      sorted.push(r);
+      let r = match.msc_s_format.filter(msc_s => key === msc_s[0]);
+      r && r.length && sorted.push(r[0]);
     });
     match.msc_s_format = sorted;
   } else {
@@ -735,7 +735,7 @@ export const baseball_score_handle = (match) => {
   msc_dict = ['S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132',
     'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142',
     'S143', 'S144', 'S145', 'S146'];
-// H5使用了这个方法
+  // H5使用了这个方法
   // full_msc(match, msc_dict);
   let msc_list = [], dict_msc_list = [];
 
@@ -1227,11 +1227,11 @@ export const score_switch_handle = (match) => {
   }
   return res;
 }
- /**
- *@description msc比分数组转化为对象
-  *@param {Undefined}  val 赛事对象
-  *@return {Undefined} undefined
-  */
+/**
+*@description msc比分数组转化为对象
+ *@param {Undefined}  val 赛事对象
+ *@return {Undefined} undefined
+ */
 export const transform_score = (val) => {
   if (!val.msc) return;
   try {

@@ -15,7 +15,7 @@
           <div class="bg-f6f7f8" ref="bg_f6f7f8" v-if="item1.title">{{ item1.title }}</div>
           <!-- 联赛国家Tab栏目 -->
           <div class="row justify-between tittle_text items-center half-border-bottom" ref="tittle_text"
-            v-if="item1.title !== $root.$t('search.hot_league')" @click.stop.prevent="is_hide(item1, index)">
+            v-if="item1.title !==$t('search.hot_league')" @click.stop.prevent="is_hide(item1, index)">
             <!-- 左边联赛箭头及名称  -->
             <span>
               <img class="arrow_up" :class="{ collapse: !item1.hide }"
@@ -64,9 +64,9 @@
     <!-- 右边字母切换按钮 quasar提供的平移上下左右操作v-touch-pan.-->
     <ul class="right-side" v-touch-pan.vertical.prevent="handler" v-show="!no_find_content && !list_data_loading">
       <li @click.stop.prevent="bar_click(item)"
-        :class="{ actived: active_index == item, hot: item == $root.$t('search.hot') }"
+        :class="{ actived: active_index == item, hot: item ==$t('search.hot') }"
         v-for="(item, index) in anchor_arr" :key="index + 'letter'">
-        <template v-if="item == $root.$t('search.hot')">
+        <template v-if="item ==$t('search.hot')">
           <img style="width: 28px;"
             :src="`${$g_image_preffix}/image/bw3/svg/match-list/match_filter${active_index == item ? '_select' : ''}${on_suffix}.svg`"
             alt="">
@@ -90,13 +90,13 @@
           <img v-if="all_checked" class="icon-search" @click="all_checked_click"
             :src="`${$g_image_preffix}/image/bw3/svg/check_circle_outline-24px${on_suffix}.svg`" />
           <img src="image/wwwassets/bw3/svg/selected-no.svg" alt="" class="icon-search" @click="all_checked_click" v-else>
-          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{ $root.$t('common.all_select') }}</span>
+          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{$t('common.all_select') }}</span>
         </template>
-        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $root.$t('filter.reverse_election') }}</span>
+        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{$t('filter.reverse_election') }}</span>
       </div>
       <!-- 确定选择按钮 -->
       <div class="right-box" @click="search_btn">
-        <p class="confirm">{{ $root.$t('common.ok') }}</p>
+        <p class="confirm">{{$t('common.ok') }}</p>
         <p class="round-box">{{ select_num }}</p>
       </div>
     </div>
@@ -127,7 +127,7 @@ export default {
       list: [], //数据列表整个赛事
       type: undefined,  //筛选类型 1-滚球 3-今日  4-早盘  100-冠军 28 赛果
       all_checked: false, //是否全选
-      anchor_arr: [this.$root.$t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], //右边字母数组
+      anchor_arr: [this.$t('search.hot'), "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], //右边字母数组
       active_index: "",   //活动的下标
       active_index_position: "",   // 活动的下标对应的position，在右侧字母的时候，scroll 不支持传float，这个值用于记录
       is_show: false, //悬浮图标是否展示
@@ -240,7 +240,7 @@ export default {
      */
     default_selected() {
       // 如果选中的是全部
-      if (this.selected == this.$root.$t('footer_menu.all')) {
+      if (this.selected == this.$t('footer_menu.all')) {
         this.all_checked = true;
         this.list.length > 0 && this.list.forEach((item, index) => {
           if (((this.type == 1 && this.get_sport_all_selected == true) || (this.type == 28 && this.get_curr_sub_menu_type == 29)) || this.type == 2) {
@@ -373,7 +373,7 @@ export default {
             // scrollY += this.dom_.scroll_area1 && this.dom_.scroll_area1[index2] && this.dom_.scroll_area1[index2].offsetHeight
             scrollY += this.dom_.scroll_area1 && this.dom_.scroll_area1[index2] && (+window.getComputedStyle(this.dom_.scroll_area1[index2], null).height.split('px')[0])
           }
-          let index = item.spell == "HOT" ? this.$root.$t('search.hot') : (item.spell ? item.spell[0] : item.nameText[0]);
+          let index = item.spell == "HOT" ? this.$t('search.hot') : (item.spell ? item.spell[0] : item.nameText[0]);
           // toFixed 存在精度问题，因为不是特别长的列表，所以暂时不会出现滚动到差异的地方。
           this.scroll_obj[index] = +scrollY.toFixed(2);
         });
@@ -426,7 +426,7 @@ export default {
         }
       }
       if (Y < distance) {
-        this.active_index = this.$root.$t('search.hot');
+        this.active_index = this.$t('search.hot');
       }
     },
     /**
@@ -435,12 +435,12 @@ export default {
      */
     search_btn() {
       if (this.select_num == 0) {
-        this.$toast(this.$root.$t('filter.please_select_league'), 2000)
+        this.$toast(this.$t('filter.please_select_league'), 2000)
         return
       }
       let data = {};
       if (this.all_checked) {
-        data = this.$root.$t('footer_menu.all');
+        data = this.$t('footer_menu.all');
       } else {
         if (this.list && this.list.length) {
           this.list.map(item => {
@@ -745,7 +745,7 @@ export default {
       for (let i = 0; i < arr.length; i++) {
         // 如果数组只有一个的话
         if (arr.length == 1) {
-          arr[i].spell === 'HOT' ? arr[i].title = this.$root.$t('search.hot_league') : arr[i].title = arr[i].spell[0]
+          arr[i].spell === 'HOT' ? arr[i].title = this.$t('search.hot_league') : arr[i].title = arr[i].spell[0]
           return arr[i].title
         } else {
           // 如果数组大于一个以上
@@ -757,7 +757,7 @@ export default {
                 arr[i].title = arr[i].spell[0]
               }
             } else { // 代表第0个元素，
-              arr[i].spell === 'HOT' ? arr[i].title = this.$root.$t('search.hot_league') :
+              arr[i].spell === 'HOT' ? arr[i].title = this.$t('search.hot_league') :
                 arr[i].title = arr[i].spell[0]
             }
           }
@@ -769,8 +769,8 @@ export default {
       try {
         let arr_initials = []
         arr.forEach((item) => {
-          if (item.title == this.$root.$t('search.hot_league')) {
-            arr_initials.push(this.$root.$t('search.hot'))
+          if (item.title == this.$t('search.hot_league')) {
+            arr_initials.push(this.$t('search.hot'))
           } else if (item.title) {
             arr_initials.push(item.title)
           }

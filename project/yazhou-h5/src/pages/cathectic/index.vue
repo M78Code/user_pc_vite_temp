@@ -17,7 +17,7 @@
       <div class="col-2 close">
         <span class="close-click-padding" @click="close_show">
           <template v-if="lodash.get(UserCtr, 'theme').includes('day')">
-            <img :src="icompute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
+            <img :src="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev', type: 'img'})">
             <!-- <div :style="compute_css({key: 'h5-img-bet-record-close', theme: 'local_dev'})"></div> -->
             </template>
           <template v-else>
