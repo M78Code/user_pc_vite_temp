@@ -121,7 +121,7 @@ const toolClicked = (f) => {
       &.active {
         border: 1px solid var(--q-gb-bd-c-7);
         border-bottom: none;
-        background: var(--q-bet-record-color-23);
+        background: var(--q-gb-bg-c-11);
         color: var(--q-bet-record-color-28);
       }
     }

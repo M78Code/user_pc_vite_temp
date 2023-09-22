@@ -33,13 +33,11 @@ const props = defineProps({
 })
 
 // const props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
-console.error(props);
 const check_value = ref('');
 check_value.value = props.default_value || '';
 // console.error(check_list);
 const check_change = (value) => {
   check_value.value = value
-  debugger
   useMittEmit(MITT_TYPES.EMIT_CHANGE_CHECK, check_value.value)
 }
 

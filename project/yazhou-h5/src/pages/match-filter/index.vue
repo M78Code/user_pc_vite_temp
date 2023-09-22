@@ -38,8 +38,8 @@
 
     <!-- 右边字母切换按钮 quasar提供的平移上下左右操作v-touch-pan.-->
     <ul class="right-side" v-touch-pan.vertical.prevent="handler" v-show="!no_find_content && !list_data_loading">
-      <li @click.stop.prevent="bar_click(item)" :class="{ actived :active_index == item ,hot:item == $root.$t('search.hot') }" v-for="(item, index) in anchor_arr" :key="index+'letter'" >
-        <template v-if="item == $root.$t('search.hot')">
+      <li @click.stop.prevent="bar_click(item)" :class="{ actived :active_index == item ,hot:item ==$t('search.hot') }" v-for="(item, index) in anchor_arr" :key="index+'letter'" >
+        <template v-if="item ==$t('search.hot')">
           <img  style="width: 28px;" :src="`${ $g_image_preffix }/image/bw3/svg/match-list/match_filter${active_index == item? '_select' : ''}${on_suffix}.svg`" alt="">
         </template>
         <div class="t-wrap" v-else>{{item}}</div>
@@ -59,13 +59,13 @@
           <img v-if="all_checked" class="icon-search" @click="all_checked_click"
                :src="`${ $g_image_preffix }/image/bw3/svg/check_circle_outline-24px${on_suffix}.svg`" />
           <img :src="`image/wwwassets/bw3/svg/selected-no${get_theme.includes('02') ? '-2' : get_theme.includes('y0') ? '_y0' : ''}.svg`" alt="" class="icon-search" @click="all_checked_click" v-else>
-          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{$root.$t('common.all_select')}}</span>
+          <span class="txt ellipsis-2-lines" @click="all_checked_click">{{$t('common.all_select')}}</span>
         </template>
-        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{ $root.$t('filter.reverse_election') }}</span>
+        <span class="txt ellipsis-3-lines" @click="select_btn_click">{{$t('filter.reverse_election') }}</span>
       </div>
       <!-- 确定选择按钮 -->
       <div class="right-box" @click="search_btn">
-        <p class="confirm">{{ $root.$t('common.ok') }}</p>
+        <p class="confirm">{{$t('common.ok') }}</p>
         <p class="round-box">{{select_num}}</p>
       </div>
     </div>
@@ -264,7 +264,7 @@ import noData from "project_path/src/components/common/no-data.vue";
               scrollY += this.dom_.scroll_area1 && this.dom_.scroll_area1[index2] && (+window.getComputedStyle(this.dom_.scroll_area1[index2], null).height.split('px')[0])
               // console.log(scrollY,"scrollY");
             }
-            let index = item.spell == "HOT" ? this.$root.$t('search.hot') : (item.spell ? item.spell[0] : item.nameText[0]);
+            let index = item.spell == "HOT" ? this.$t('search.hot') : (item.spell ? item.spell[0] : item.nameText[0]);
             // toFixed 存在精度问题，因为不是特别长的列表，所以暂时不会出现滚动到差异的地方。
             this.scroll_obj[index] = +scrollY.toFixed(2);
           });
@@ -316,7 +316,7 @@ import noData from "project_path/src/components/common/no-data.vue";
           }
         }
         if(Y < distance) {
-          this.active_index = this.$root.$t('search.hot');
+          this.active_index = this.$t('search.hot');
         }
       },
       /**
@@ -325,12 +325,12 @@ import noData from "project_path/src/components/common/no-data.vue";
        */
       search_btn() {
         if(this.list.filter(i=>i.select).length == 0){
-          this.$toast(this.$root.$t('filter.please_select_league'), 2000)
+          this.$toast(this.$t('filter.please_select_league'), 2000)
           return
         }
         let data = {};
         if (this.all_checked) {
-          data = this.$root.$t('footer_menu.all');
+          data = this.$t('footer_menu.all');
         } else {
           if (this.list && this.list.length) {
             this.list.map(item => {
@@ -548,7 +548,7 @@ import noData from "project_path/src/components/common/no-data.vue";
         for (let i =0; i < arr.length; i++) {
           // 如果数组只有一个的话
           if(arr.length == 1) {
-            arr[i].spell=="HOT" ? arr[i].title = this.$root.$t('search.hot_league') : arr[i].title = arr[i].spell[0]
+            arr[i].spell=="HOT" ? arr[i].title = this.$t('search.hot_league') : arr[i].title = arr[i].spell[0]
             return arr[i].title
           }else{
             // 如果数组大于一个以上
@@ -560,7 +560,7 @@ import noData from "project_path/src/components/common/no-data.vue";
                   arr[i].title = arr[i].spell
                 }
               } else { // 代表第0个元素，
-                 arr[i].title =arr[i].spell=="HOT" ? this.$root.$t('search.hot_league') :
+                 arr[i].title =arr[i].spell=="HOT" ? this.$t('search.hot_league') :
                         arr[i].title = arr[i].spell[0]
               }
             }
@@ -573,8 +573,8 @@ import noData from "project_path/src/components/common/no-data.vue";
         try {
           let arr_initials = []
           arr.forEach( (item) => {
-            if(item.title== this.$root.$t('search.hot_league') ){
-              arr_initials.push(this.$root.$t('search.hot'))
+            if(item.title== this.$t('search.hot_league') ){
+              arr_initials.push(this.$t('search.hot'))
             }else if(item.title) {
               arr_initials.push(item.title)
             }

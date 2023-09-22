@@ -185,8 +185,11 @@ const goToPage = (val) => {
     display: flex;
     align-items: center;
     margin: 0 30px 0 18px;
-    :deep(.q-field--focused .q-field__control:after) {
-      transform: scale3d(0, 1, 1);
+    :deep(.q-field--focused) {
+      .q-field__control:after {
+        transform: scale3d(0, 1, 1);
+      }
+      
     }
     .select {
       margin-right: 5px;
@@ -210,9 +213,11 @@ const goToPage = (val) => {
       font-weight: 500;
       font-size: 12px;
       outline: medium;
+      color: var(--q-gb-t-c-6);
+      border: 1px solid var(--q-gb-bd-c-7);
     }
   }
-  ::v-deep .q-field--auto-height {
+  :deep(.q-field--auto-height) {
     .q-field__control {
       padding: 0;
       min-height: 0px;
@@ -223,6 +228,7 @@ const goToPage = (val) => {
       .q-field__native {
         padding: 0;
         min-height: 0px;
+        color: var(--q-gb-t-c-6);
       }
       .q-field__marginal {
         margin-right: 6px;
@@ -230,6 +236,11 @@ const goToPage = (val) => {
         height: auto;
         &.q-anchor--skip {
           display: none;
+        }
+      }
+      &:hover {
+        &::before {
+          border-color: var(--q-gb-bd-c-11);
         }
       }
     }
@@ -240,18 +251,26 @@ const goToPage = (val) => {
     font-size: 12px;
   }
 }
-.q-pagination {
-  :deep(.q-btn) {
+:deep(.q-pagination) {
+  .q-btn {
     margin: 0 3px;
     width: 24px;
     height: 24px;
     line-height: 1;
+    
     .q-btn__wrapper {
       min-height: 0px;
       background-color: var(--q-gb-bg-c-3);
       &:before {
         box-shadow: none;
       }
+    }
+  }
+  .q-pagination__middle {
+    color: var(--q-gb-t-c-4);
+    .q-btn-item.q-btn--standard {
+      background-color: var(--q-gb-bg-c-18);
+      color: var(--q-gb-t-c-18);
     }
   }
 }
