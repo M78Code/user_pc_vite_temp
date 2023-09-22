@@ -110,13 +110,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['get_menu_type', 'get_current_menu', 'get_details_tabs_list']),
+    // ...mapGetters(['get_menu_type', 'get_current_menu', 'get_details_tabs_list']),
     is_match_result(){
       return ['result_details', 'match_result'].includes(route.name)
     }
   },
   methods: {
-    ...mapMutations(["set_goto_detail_matchid", "set_details_item", 'set_event_list']),
+    // ...mapMutations(["set_goto_detail_matchid", "set_details_item", 'set_event_list']),
     /**
      *@description 赛果进来时，这里直接取S1比分
      *@param {Object} val 赛事详情对象

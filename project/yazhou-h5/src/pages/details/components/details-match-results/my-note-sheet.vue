@@ -41,7 +41,7 @@ export default {
     tcontainer_height = innerHeight - trem(1.68);
   },
   computed: {
-    ...mapGetters(["get_note_sheet_records_data"])// 待确认中的提前结算订单
+    // ...mapGetters(["get_note_sheet_records_data"])// 待确认中的提前结算订单
   },
 };
 </script>

@@ -15,7 +15,7 @@
 // import msc from "src/public/mixins/common/msc.js";
 
 export default {
-  mixins: [msc],
+  // mixins: [msc],
   name: 'stage_child_12',
   data(){
     return {

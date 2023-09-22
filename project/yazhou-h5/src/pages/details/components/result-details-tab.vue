@@ -77,7 +77,7 @@ export default {
   //   ...mapGetters({ matchid: "get_goto_detail_matchid" }),
   // },
   methods:{
-    ...mapMutations(['set_fewer','set_note_sheet_records_data']),
+    // ...mapMutations(['set_fewer','set_note_sheet_records_data']),
     /**
      * 标签数据初始化
      */
