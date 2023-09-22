@@ -74,6 +74,7 @@ import {
   remove_match,
   remove_league,
 } from "./module/add-and-remove.js";
+import { update_match_style } from './module/update-match-style.js'
 import MenuData from "src/core/menu-pc/menu-data-class.js";
 import { useMittEmit, MITT_TYPES } from "src/core/mitt/index.js";
 import { ref } from "vue";
@@ -81,6 +82,7 @@ import { ref } from "vue";
 class MatchListCardInfo {
   constructor() {
   }
+
   /**
    * @Description 设置联赛容器卡片赛事数据加载状态
    * @param {object} league_title_card_obj 卡片对象
@@ -137,6 +139,17 @@ class MatchListCardInfo {
    */
   set_match_basic_data(league_title_card_obj) {
     set_match_basic_data(league_title_card_obj);
+  }
+
+  /**
+   * 
+   * @param {Object} mids 
+   * @description 更新需要重新计算表征的数据
+   */
+  update_match_style(mids) {
+    let current_match_info = update_match_style(mids);
+    console.log('current_match_info', current_match_info);
+    MatchListCardData.set_match_list_style_info(current_match_info)
   }
 
   /**

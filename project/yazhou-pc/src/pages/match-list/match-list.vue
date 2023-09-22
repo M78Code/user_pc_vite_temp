@@ -40,7 +40,7 @@ import { MatchDataWarehouse_PC_List_Common as MatchListData } from "src/core/ind
 import "./match_list.scss";
 
 const { mounted_fn } = useMatchListMx();
-
+console.log('MatchListCardDataClass', MatchListCardDataClass);
 export default {
   components: {
     LeagueTab,

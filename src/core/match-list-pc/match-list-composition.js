@@ -559,7 +559,8 @@ const handle_match_list_request_when_ok = (data, is_socket, cut, collect) => {
 		//       mx_list_res
 		//    今日早盘   常规球种下的  常规 玩法
 		//    电竞 单页  所有玩法
-		mx_list_res(data, is_socket, cut, collect);
+		mx_use_list_res(data, is_socket, cut, collect);
+		// mx_list_res(data, is_socket, cut, collect);
 	} else {
 		//  mx_use_list_res
 		// 滚球单页 下所有
