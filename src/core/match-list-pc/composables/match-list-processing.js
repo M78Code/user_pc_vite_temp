@@ -78,7 +78,7 @@ const deal_with_list_data = (data) => {
       mid_arr.push(mid_info)
     })
   })
-  console.log('mid_arrmid_arrmid_arr', mid_arr);
+  MatchListData.set_list(mid_arr)
 }
 /**
  * @description 专业处理服务器返回的 列表 数据---联赛结构
@@ -92,13 +92,13 @@ const mx_list_res = (data, backend_run, cut, collect) => {
 	let code = lodash.get(data, "code");
 	let res_data = lodash.get(data, "data");
   // 将全量数据接口 切割成含有mid元素的对象数组
-  deal_with_list_data(res_data);
 	let callback_func = null;
 	clearTimeout(virtual_list_timeout_id);
 	// 所有联赛列表
 	let all_league_list = [];
 	all_league_list.push(...lodash.get(res_data, "livedata", []));
 	all_league_list.push(...lodash.get(res_data, "nolivedata", []));
+  deal_with_list_data(all_league_list);
 	if (code == 200 && all_league_list.length > 0) {
 		is_show_hot.value = false;
 		// 设置收藏数量

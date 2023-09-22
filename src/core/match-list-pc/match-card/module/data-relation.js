@@ -132,7 +132,6 @@ const MenuData ={
 
   export const  compute_match_list_style_obj_and_match_list_mapping_relation_obj=(match_list,is_ws_call,is_remove_call)=>{
 
-    console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------0----', match_list);
     // 虚拟体育 不走卡片逻辑
     if(MenuData.menu_data.is_virtual_sport && window.vue.$route.name !=='search'){
         MatchListCardData.is_run_card_function = false
@@ -151,7 +150,6 @@ const MenuData ={
       // 重置 赛事模板配置  结束
       reset_all_card_data()
     }
-    console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------1----', MatchListCardData.match_list_mapping_relation_obj_type);
     /**
      * 哪种列表类型
      * 1. 列表数据类型为联赛列表   有未开赛 已开赛
