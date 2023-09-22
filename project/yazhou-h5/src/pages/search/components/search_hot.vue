@@ -10,7 +10,7 @@
     <div class="q-mx-md">
       <div class="text-bol half-border-bottom">
         <!-- 热门搜索 -->
-        {{$root.$t('search.search_hot')}}
+        {{$t('search.search_hot')}}
       </div>
       <!-- 热门内容 -->
       <div class="row">

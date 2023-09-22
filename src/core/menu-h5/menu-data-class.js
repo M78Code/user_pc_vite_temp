@@ -1060,6 +1060,7 @@ class MenuData {
   get_level_four_menu() {
     return "";
   }
+
   get_current_lv_2_menu_type() {
     return "0";
   }
@@ -1097,7 +1098,7 @@ class MenuData {
     if (this.get_sport_all_selected.value) {
       return this.current_lv_2_menu.map((item) => {
         return item.mi || item.menuId;
-      });
+      }).join(',');
     } else {
       return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
     }

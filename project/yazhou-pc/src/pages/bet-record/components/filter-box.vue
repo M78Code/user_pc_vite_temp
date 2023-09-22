@@ -367,7 +367,10 @@ const time_sort = (sort) => {
       border-radius: 2px;
       cursor: pointer;
       border: 1px solid var(--q-gb-bd-c-8);
-      color: var(--qq--yb-text-color3);
+      color: var(--q-gb-t-c-10);
+      &:hover {
+        border-color: var(--q-gb-bd-c-12);
+      }
       &:deep(.icon-calendar) {
         font-size: 14px;
         &::before {
@@ -471,11 +474,15 @@ const time_sort = (sort) => {
         &:last-child{
           border-right: 1px solid var(--q-gb-bd-c-8);
         }
+        &:hover {
+        color: var(--q-gb-t-c-16);
+      }
       }
       .current {
         background-color: var(--q-bet-record-color-13);
         color: var(--q-gb-t-c-5);
       }
+      
     }
     .sort-content {
       flex: 1;
@@ -490,8 +497,14 @@ const time_sort = (sort) => {
         cursor: pointer;
         border: 1px solid var(--q-gb-bd-c-8);
         background: var(--q-gb-bg-c-11);
+        &:hover {
+          border-color: var(--q-gb-bd-c-12);
+          color: var(--q-gb-t-c-3);
+        }
         .icon_left {
-          color: var(--q-gb-t-c-17);
+          &:before {
+            color: var(--q-gb-t-c-17);
+          } 
         }
         // TODO: 对比旧版 此处代码不生效 待确认后删除
         // position relative {
