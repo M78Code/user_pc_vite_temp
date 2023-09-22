@@ -35,7 +35,7 @@ export const useGetConfig = () => {
   const router = useRouter();
 
   const store_state = store.getState();
-  const MatchDataWarehouseInstance = ref(MatchDataWarehouse_PC_Detail_Common)
+  const MatchDataWarehouseInstance =reactive(MatchDataWarehouse_PC_Detail_Common)
   const state = reactive({
     // 菜单数据
     // menu_data: $menu.menu_data,
@@ -215,7 +215,7 @@ export const useGetConfig = () => {
 
     clearTimeout(state.back_to_timer);
     state.back_to_timer = setTimeout(() => {
-      debugger
+      
       // 退出页面时清空用户操作状态
       window.sessionStorage.setItem("handle_state", JSON.stringify([]));
       // 如果是从搜索结果进来的
@@ -325,9 +325,12 @@ export const useGetConfig = () => {
             data.msc = details.build_msc(data);
             // 设置赛事信息
             console.log(data,'data.msc ');
-            MatchDataWarehouseInstance.value.set_list_from_match_details(data )  
+            MatchDataWarehouseInstance.set_list_from_match_details(data)  
+            // MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data)  
+            
+            console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance');
             state.match_infoData = data;
-            // state.match_infoData = lodash.get(MatchDataWarehouseInstance.value,`quick_query_obj.mid_obj[${state.mid}+'_']`);
+            // state.match_infoData = lodash.get(MatchDataWarehouseInstance,`quick_query_obj.mid_obj[${state.mid}+'_']`);
             console.log(state.match_infoData,'match_infoData');
           } else {
             // 处理报错，置换替补数据
@@ -539,6 +542,7 @@ export const useGetConfig = () => {
       });
 
       // 处理当前玩法集数据
+  
       handle_match_details_data(data, timestap);
       /** 设置语言变化 */
       UserCtr.set_lang(false);
@@ -546,6 +550,9 @@ export const useGetConfig = () => {
       //   type: "set_lang_change",
       //   data: false,
       // });
+      
+      MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data)
+      console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance222');
     } else {
       const tabs_active_data_cache =
         get_details_data_cache.value[`${state.mid}-${tabs_active_index.value}`];
@@ -559,6 +566,7 @@ export const useGetConfig = () => {
         set_handicap_state("empty");
       }
     }
+  
     // 将当前玩法盘口信息记为上次玩法数据
     const last_tab_data_index =
       detail_header.value["handicap_tabs_bar"].currentIndex || 0;
@@ -661,7 +669,7 @@ export const useGetConfig = () => {
       fun_then: (res) => {
         
         console.log(res,'get_category_list');
-        if (!MatchDataWarehouseInstance.value) {
+        if (!MatchDataWarehouseInstance) {
           return;
         }
         // const code = lodash.get(res, "code");
@@ -755,9 +763,9 @@ export const useGetConfig = () => {
    */
   const handle_match_details_data = (data, timestap) => {
     // 初始化赛事控制类玩法数据
-    MatchDataWarehouseInstance.value.set_quick_query_list_from_match_details(data);
-    console.log(MatchDataWarehouseInstance.value.list,'quick_query_obj');
-    match_details_data_set(MatchDataWarehouseInstance.value.quick_query_list);
+    MatchDataWarehouseInstance.set_quick_query_list_from_match_details(data);
+    console.log(MatchDataWarehouseInstance.list,'quick_query_obj');
+    match_details_data_set(MatchDataWarehouseInstance.quick_query_list);
     state.handicap_state = "data";
     // 同步投注项
     if (!get_lang_change.value) {
@@ -993,7 +1001,7 @@ export const useGetConfig = () => {
     useMittOn(MITT_TYPES.EMIT_SITE_TAB_ACTIVE, emit_site_tab_active).off;
 
     // 销毁前清空数据
-    MatchDataWarehouseInstance.value.destroy();
+    MatchDataWarehouseInstance.destroy();
     state.match_infoData = null;
     state.category_list = null;
     state.match_details = null;
@@ -1011,5 +1019,6 @@ export const useGetConfig = () => {
     set_handicap_state,
     get_mattch_details,
     change_loading_state,
+    MatchDataWarehouseInstance
   };
 };

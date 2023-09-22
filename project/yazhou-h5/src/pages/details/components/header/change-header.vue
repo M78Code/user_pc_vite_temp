@@ -17,7 +17,7 @@
           <div class="col text-center base-header-font">
             <!-- <match-stage :detail_data="detail_data" v-if="show_match_stage"></match-stage> -->
           </div>
-          <div class="col eports_scoring_tip" v-if="eports_scoring">{{t('mmp.eports_scoring')}}</div>
+          <div class="col eports_scoring_tip" v-if="eports_scoring">{{i18n_t('mmp.eports_scoring')}}</div>
           <!-- 右边的比分 -->
           <div class="col-2 text-center header-font" v-show="is_show_score && !eports_scoring">{{score.away}}</div>
         </div>
@@ -31,10 +31,11 @@
 // import { mapGetters} from "vuex";
 // import global_filters from 'src/boot/global-filters.js'
 // import match_stage from 'src/project/components/match/match_other_stage.vue';   // 详情页上推后置顶的赛事具体状态(1.未开赛显示2.开赛时间小于1小时显示分钟)
-import base64 from "src/core/match-detail-h5/until/details-bg.js"; // 球类背景图base64路径集合
+// 球类背景图base64路径集合
+import base64 from "src/core/match-detail/match-detail-h5/config/details-bg.js"; 
 import lodash from "lodash";
 import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import { format_total_score } from "src/core/format/index.js"
 //国际化
 

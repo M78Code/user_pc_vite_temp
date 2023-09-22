@@ -153,7 +153,7 @@ const bet_col = computed(() => {
     }
     // 波胆
   } else if (play_current_key == 'hpsBold') {
-    let { mhn, man } = this.match
+    let { mhn, man } = match
     let [draw, ht_draw] = t('list.match_tpl_title.tpl0.bold_bet_col')
     bet_col = [mhn, draw, man, mhn, ht_draw, man]
     if (multi_column) {
@@ -161,30 +161,30 @@ const bet_col = computed(() => {
     }
     // 15分钟玩法
   } else if (play_current_key == 'hps15Minutes') {
-    let start = this.match.hSpecial - 1,
-      end = this.match.hSpecial + (multi_column ? 3 : 1);
+    let start = match.hSpecial - 1,
+      end = match.hSpecial + (multi_column ? 3 : 1);
     bet_col = [...t('list.match_tpl_title.tpl0.15minutes_bet_col')]
-    if (this.match.hSpecial > 3) {
+    if (match.hSpecial > 3) {
       start -= 1
       end -= 1
     }
-    if (this.match.hSpecial > 1) {
+    if (match.hSpecial > 1) {
       bet_col.splice(2, 1)
     }
     bet_col = bet_col.slice(start, end)
     if (multi_column) {
-      if (this.match.hSpecial > 1) {
+      if (match.hSpecial > 1) {
         bet_col[bet_col.length - 1] = ''
       }
-      if ([3, 4].includes(this.match.hSpecial)) {
+      if ([3, 4].includes(match.hSpecial)) {
         bet_col.push(...[''])
       }
-      if (this.match.hSpecial == 5) {
+      if (match.hSpecial == 5) {
         bet_col.push(...['', ''])
       }
       bet_col.push(...[''])
     } else {
-      if (this.match.hSpecial == 5) {
+      if (match.hSpecial == 5) {
         bet_col[bet_col.length - 1] = ''
       }
     }
@@ -331,20 +331,20 @@ const get_bet_width = (index, length) => {
 */
 const play_tab_click = (obj) => {
   // 当前已选中
-  if(this.match.play_current_index == obj.index){
+  if(match.play_current_index == obj.index){
     return
   }
   let play_key = play_name_list.value[obj.index].field
   // 切换玩法
-  this.match_list_data.switch_other_play(this.match.mid,play_key)
-  if (this.match.csid == 1) {
+  this.match_list_data.switch_other_play(match.mid,play_key)
+  if (match.csid == 1) {
     let zhugeObj = {
       "玩法集名称": play_name_list.value[obj.index].play_name,
       "玩法集ID": '',
       "区域位置": "主列表"
     }
   }
-  MatchListCardData && MatchListCardData.update_match_cur_card_style(this.match.mid,play_key)
+  MatchListCardData && MatchListCardData.update_match_cur_card_style(match.mid,play_key)
 }
 
 /**
@@ -352,7 +352,7 @@ const play_tab_click = (obj) => {
  * @param {undefined} undefined
 */
 const fold_tab_play = () => {
-  MatchListCardData && MatchListCardData.fold_tab_play(this.match.mid)
+  MatchListCardData && MatchListCardData.fold_tab_play(match.mid)
 }
 
 onMounted(() => {

@@ -3,6 +3,7 @@ import { MATCH_LIST_TEMPLATE_CONFIG } from 'src/core/match-list-pc/list-template
 
 import {utils} from "src/core/index.js";
 import store from "src/store-redux/index.js";
+import { compute_sport_id  } from 'src/core/constant/index.js'
 
 import { ref } from "vue";
 
@@ -265,6 +266,8 @@ class MenuData {
       "set_left_menu_result--------定义左侧菜单-----",
       JSON.stringify(this.left_menu_result)
     );
+    const { lv1_mi } = this.left_menu_result;
+    MATCH_LIST_TEMPLATE_CONFIG[`template_${compute_sport_id(lv1_mi)}_config`].set_template_width(state.layoutReducer.layout_size.list_content_width)
     if ([2, 3].includes(Number(obj.root))) {
       // 角球
       if ([101210, 101310].includes(+obj.lv2_mi)) {
@@ -631,8 +634,6 @@ class MenuData {
   set_match_list_api_config(config) {
     let match_list_api_config = JSON.parse(JSON.stringify(config));
     match_list_api_config.version = Date.now();
-    // const {  } = match_list_api_config;
-    // MATCH_LIST_TEMPLATE_CONFIG.
     console.error(
       "set_match_list_api_config-------列表结构AP参数的------",
       JSON.stringify(match_list_api_config)

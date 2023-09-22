@@ -118,7 +118,7 @@ function set_user_preference(curr_odd) {
         UserCtr.set_cur_odds(curr_odd);
         // 设置用户偏好    
         api_betting.record_user_preference({ userMarketPrefer: curr_odd }).then((res) => {
-            let code = lodash.get(res, 'data.code');
+            let code = lodash.get(res, 'code');
             if (code != 200) {
                 UserCtr.set_pre_odds(pre_odd.value);
                 UserCtr.set_cur_odds(cur_odd.value);

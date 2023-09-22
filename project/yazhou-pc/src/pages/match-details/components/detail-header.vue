@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-
+    {{  }}
     <!-- 赛事基本信息 start -->
     <template v-if="toggle_panel">
       <div
