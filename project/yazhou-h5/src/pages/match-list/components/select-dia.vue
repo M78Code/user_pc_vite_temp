@@ -7,8 +7,7 @@
       <div class="select-box">
         <div class="row items-center justify-center composite">
           <div class="filter-trn" v-for="(item_name, index) in search_tab" :key="index" @click="change_record(index)"
-            v-show="index == 0 || index != 0 && get_menu_type != 100"
-            :class="get_search_for_choose == index ? 't_color' : ''"
+            v-show="index == 0 || index != 0 && menu_type != 100" :class="get_search_for_choose == index ? 't_color' : ''"
             :style="{ visibility: `${is_search_hide(index) ? 'hidden' : 'visible'}` }">
             {{ item_name }}
           </div>
@@ -16,9 +15,9 @@
       </div>
     </div>
     <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
-      <!-- <filter_old v-if="lodash.get(get_current_menu, 'main.menuType') == 1 && get_sport_all_selected" /> -->
-      <!-- v-else -->
-      <filter_new />
+      <filter_old />
+      <!-- v-if="menu_type == 1 && get_sport_all_selected"  -->
+      <!-- <filter_new v-else /> -->
     </template>
     <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
@@ -27,25 +26,24 @@
 <script setup>
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import filter_new from '../../match-filter/index.vue'
-// import filter_old from '../../match-filter/index_old.vue'
+import filter_old from '../../match-filter/index_old.vue'
 //  import search from '../../search/search_.vue'
 
 import { computed, onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
-import lodash from 'lodash'
 import { i18n_t, MenuData } from 'src/core/index.js'
 
 const props = defineProps(['detail_data'])
-const get_menu_type = MenuData.get_menu_type()
+const { menu_type, get_sport_all_selected } = MenuData;
 const store_state = store.getState()
 const change_show = ref(true)
 const search_tab = ref([i18n_t('footer_menu.filter'), i18n_t('search.search_title')])
 
-const get_search_for_choose = ref(store_state.get_search_for_choose)
+
+//TODO
+const get_search_for_choose = ref(store_state.get_search_for_choose || 0)
 const get_search_term = ref(store_state.get_search_term)
-const get_current_menu = MenuData.current_lv_1_menu
 const get_curr_sub_menu_type = MenuData.current_lv_2_menu?.type
-const get_sport_all_selected = ref(store_state.get_sport_all_selected)
 const get_access_config = ref(store_state.get_access_config)
 
 //外层用的 v-if 要什么subscribe？？？？
@@ -62,7 +60,7 @@ onMounted(() => {
   // 默认选中筛选
   change_record(get_search_for_choose)
   // 如果是冠军，则默认展示筛选
-  if (get_current_menu && get_current_menu.main && get_current_menu.main.menuType == 100) {
+  if (menu_type.value == 100) {
     change_record(0)
   }
   // 如果是赛果虚拟体育赛事，则显示 筛选
@@ -82,7 +80,7 @@ onMounted(() => {
   }
 
   if (get_curr_sub_menu_type) {
-    if ([1001, 1002, 1004, 1010, 1011, 1009].includes(get_curr_sub_menu_type) && get_menu_type == 28) {
+    if ([1001, 1002, 1004, 1010, 1011, 1009].includes(get_curr_sub_menu_type) && menu_type.value == 28) {
       change_record(0)
     }
   }
@@ -104,7 +102,9 @@ const bounced_high = { height: window.innerHeight - rem_1 + 50 + 'px !important'
 const results_of_the_virtual_display = MenuData.is_results_virtual_sports()
 
 const change_record = (key) => {
-  // 搜索返回时，保持搜索原来的页面
+
+  //TODO  搜索返回时，保持搜索原来的页面
+  get_search_for_choose.value = key;
   key == 0 && get_search_term && store.dispatch({ type: 'matchReducer/set_search_term', payload: '' });
   store.dispatch({ type: 'matchReducer/set_search_for_choose', payload: key });
   if (key === 1) {// 赛事搜索页
