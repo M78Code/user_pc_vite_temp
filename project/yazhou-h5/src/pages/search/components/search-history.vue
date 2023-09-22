@@ -1,8 +1,3 @@
-<!--
- * @Author: ledron
- * @Date: 2020-08-20 18:35:53
- * @Description: 搜索历史
--->
 <template>
   <div class='searchHistory'>
     <div class="q-mx-md">
@@ -28,7 +23,7 @@
 </template>
 
 <script>
-
+import { SearchData } from "src/core/";
 export default {
   name: 'searchHistory',
   props: {
@@ -40,11 +35,10 @@ export default {
   },
 
   methods: {
-    // ...mapMutations(['set_search_txt']),
     // 点击调用模糊搜索接口，
     item_click(val) {
       //TODO
-      // this.set_search_txt(val);
+      SearchData.set_cur_csid(val);
       this.$emit('get_search_result', true);
     },
     // 去除当前点击的历史记录

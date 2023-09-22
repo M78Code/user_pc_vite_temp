@@ -13,7 +13,7 @@ let DEV_TARGET_ENV = "local_test";
 // IDC  预发布
 // DEV_TARGET_ENV = 'idc_pre'
 // IDC 试玩环境
-// DEV_TARGET_ENV = "idc_sandbox";
+DEV_TARGET_ENV = "idc_sandbox";
 // IDC  隔离预发布
 // DEV_TARGET_ENV = 'idc_lspre'
 // IDC  生产环境
@@ -28,8 +28,8 @@ DEV_TARGET_ENV = 'idc_online'
 
  
 //本地开发 目标项目
-let DEV_PROJECT_NAME = "yazhou-pc";
-// let DEV_PROJECT_NAME = "yazhou-h5";
+// let DEV_PROJECT_NAME = "yazhou-pc";
+let DEV_PROJECT_NAME = "yazhou-h5";
 
 
 

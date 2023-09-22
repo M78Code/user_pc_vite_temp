@@ -1,6 +1,6 @@
 <template>
     <!--金额输入区域包括键盘 -->
-    <div class="row bet-mix-input" :data-check-money="BetViewDataClass.input_money_state">
+    <div class="row bet-single-input" :data-check-money="BetViewDataClass.input_money_state">
         <!--金额输入区-->
         <div v-if="!BetData.is_bet_single">
             {{ special_series.name }} -- {{ special_series.id }} - {{ ref_data.seriesOdds }} -- {{ index }} -- {{
@@ -8,8 +8,7 @@
         </div>
         <!--投注金额输入框-->
         <input v-model="ref_data.money" type="number" @input="set_win_money"
-            :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11"
-            class="bet-input input-border" />
+            :placeholder="`${$t('bet.money_range')} ${ref_data.min_money} ~ ${ref_data.max_money}`" maxLength="11" />
         <!--清除输入金额按钮-->
         <div class="bet-input-close" @click.stop="bet_clear_handle">
             <icon name="icon-failure" size="12px" />
@@ -17,7 +16,7 @@
 
         <!-- <div> {{ special_series }} </div> -->
 
-        <div v-show="ref_data.keyborard">
+        <div v-show="ref_data.keyborard" class="bet-win-key">
             <div class="row bet-win yb-fontsize12">
                 <div class="col df-jb">
                     <!--最高可赢额-->
@@ -28,7 +27,7 @@
             </div>
 
             <!--键盘区域-->
-            <div class="row bet-keyboard bet-keyboard-content">
+            <div class="row bet-keyboard bet-keyboard-zone">
                 <bet-keyboard ref="bet-keyboard" @keypress_handle="set_click_keybord" :input_max_money="ref_data.max_money"
                     :status="ref_data.active"></bet-keyboard>
             </div>
@@ -93,9 +92,9 @@ const set_bet_money = computed(() => {
     // 常量 精度值（赔率为+万位）
     let number = 100000
     // 最高可赢金额 = 赔率 * 投注金额 - 投注金额 
-    let multiply_money = mathJs.subtract(mathJs.multiply(ref_data.money , money, number), mathJs.multiply(ref_data.money , 1, number))
+    let multiply_money = mathJs.subtract(mathJs.multiply(ref_data.money, money, number), mathJs.multiply(ref_data.money, 1, number))
     // 最高可赢金额 / 常量
-    let win_money = mathJs.divide(multiply_money,number)
+    let win_money = mathJs.divide(multiply_money, number)
     // 格式化
     return format_currency(win_money)
 })
@@ -171,8 +170,85 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.bet-input {
-    width: 100%;
-    line-height: 40px;
-    margin: 10px 0;
+/**单关金额输入框**/
+.bet-single-input {
+    margin-top: 8px;
+
+    input {
+        width: 100%;
+        padding: 4px 6px;
+        margin-top: 2px;
+        height: 32px;
+        line-height: 18px;
+        outline: none;
+        border-radius: 4px;
+        font-size: 16px;
+        background: var(--q-gb-bg-c-11);
+        border: 0.5px solid var(--q-gb-bd-c-7);
+        border-radius: 6px;
+        color: var(--q-gb-t-c-6);
+        caret-color: var(--qq--y0-text-color1);
+
+        // 输入金额时的样式
+        &.bet-input-money {
+            outline: none;
+        }
+    }
+
+    // .input-border {
+    //   &:focus {
+    //     border: 0.5px solid rgba(44,178,255,1);
+    //   }
+    // }
+    input::-webkit-input-placeholder {
+        font-size: 14px;
+        color: rgba(108, 123, 168, 0.4);
+    }
+
+    input::-moz-placeholder {
+        font-size: 14px;
+        color: rgba(108, 123, 168, 0.4);
+    }
+
+    input:-moz-placeholder {
+        font-size: 14px;
+        color: rgba(108, 123, 168, 0.4);
+    }
+
+    input:-ms-input-placeholder {
+        font-size: 14px;
+        color: rgba(108, 123, 168, 0.4);
+    }
+
+    .bet-input-close {
+        .icon-failure:before {
+            color: var(--q-gb-t-c-18);
+        }
+
+        &:hover {
+            .icon-failure:before {
+                color: var(--qq--y0-text-color1);
+            }
+        }
+    }
+
+    .bet-input-close {
+        position: absolute;
+        top: 13px;
+        right: 5px;
+        cursor: pointer;
+        width: auto;
+        height: auto;
+    }
+    .bet-win-key{
+        margin-top: 10px;
+    }
+    /*  投注键盘区域 */
+.bet-keyboard-zone {
+    padding-top: 8px !important;
+    margin-left: -10px !important;
+    margin-right: -10px !important;
+  
+   
+  }
 }</style>

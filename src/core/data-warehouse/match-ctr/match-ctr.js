@@ -666,6 +666,7 @@ export default class MatchDataBase
       // this.hn_obj_assign(this.quick_query_obj.hn_obj, many_obj.hn_obj);
       // this.hl_obj_assign(this.quick_query_obj.hl_obj, many_obj.hl_obj);
     }
+    console.error('this.quick_query_obj',this.quick_query_obj)
   }
   /**
    * @description: 获取快速查询的key值

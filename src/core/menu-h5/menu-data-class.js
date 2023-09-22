@@ -5,7 +5,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
@@ -514,6 +514,7 @@ class MenuData {
     if (!this.show_favorite_list) return true;
     let flag = true;
     // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
+    //TODO  menuType?? 新接口好像变了
     if (
       this.menu_type.value == 28 &&
       [1001, 1002, 1011, 1004, 1010].includes(+item.menuType)
@@ -958,7 +959,7 @@ class MenuData {
     if (![7, 28].includes(current_lv_1_menu.mi)) {
 
     }
-
+    useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
   }
   /**
    * 选中二级menu
@@ -1100,7 +1101,7 @@ class MenuData {
         return item.mi || item.menuId;
       }).join(',');
     } else {
-      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
+      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "40003";
     }
   }
   /**

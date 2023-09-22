@@ -540,7 +540,7 @@ const clear_timer = () => {
 const on_listeners = () => {
   emitters.value = {
     emitter_1: useMittOn(MITT_TYPES.EMIT_MENU_CHANGE_FOOTER_CMD, () => MatchPage.footer_event).off,
-    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, () => MatchPage.main_menu_change).off,
+    emitter_2: useMittOn(MITT_TYPES.EMIT_MAIN_MENU_CHANGE, () => MatchPage.main_menu_change()).off,
     emitter_3: useMittOn(MITT_TYPES.EMIT_BEFORE_LOAD_THIRD_MENU_HANDLE, () => MatchPage.before_load_third_menu_handle).off,
     emitter_4: useMittOn(MITT_TYPES.EMIT_SPECIAL_HPS_LOADED, special_hps_load_handle).off,
     emitter_5: useMittOn(MITT_TYPES.EMIT_COUNTING_DOWN_START_ENDED, () => MatchPage.counting_down_start_ended_on).off,

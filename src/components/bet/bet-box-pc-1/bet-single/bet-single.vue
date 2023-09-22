@@ -28,14 +28,9 @@
 import { ref,onMounted,computed } from "vue"
 import BetData from "src/core/bet/class/bet-data-class.js";
 import BetViewDataClass from "src/core/bet/class/bet-view-data-class.js";
-// 单关混入js
-// import bet_single from "src/public/mixins/bet/bet_single.js";
 // 单关投注信息
 import BetSingleInfo from "./bet-single-info.vue";
-// 多项单关
-import BetMultiple from "./bet-multiple.vue";
-// 单关投注记录
-import BetSingleRecord from "./bet-single-record.vue";
+
 
 const get_lock_index = (val) =>{
   console.error('sa',val)

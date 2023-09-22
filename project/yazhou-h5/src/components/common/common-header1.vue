@@ -23,10 +23,10 @@
         <div
           class="collect-icon"
           :class="{active:get_detail_data.mf}"
-          v-if="GlobalAccessConfig.get_collectSwitch()&& is_DJ_show && get_menu_type !== 28"
+          v-if="GlobalAccessConfig.get_collectSwitch()&& is_DJ_show && MenuData.get_menu_type() !== 28"
           @click="details_collect(get_detail_data)"
         ></div>
-        <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': get_menu_type !== 3000}" @click="details_refresh"></div>
+        <div class="det-ref" :class="{'refreshing':refreshing,'refreshing-common': MenuData.get_menu_type() !== 3000}" @click="details_refresh"></div>
         <!--<div class="analysis_new" v-if="(get_detail_data.csid == 1 || get_detail_data.csid == 2)" @click="analysis_show(get_detail_data)"></div>-->
       </div>
     </div>
@@ -35,6 +35,7 @@
 
 <script>
 // import { mapMutations, mapGetters } from "vuex";
+import lodash from 'lodash'
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import seamlessMarquee from './seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
 import {api_common} from "src/api/index.js";
@@ -42,7 +43,7 @@ import {utils } from 'src/core/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js";
 import { useRoute } from "vue-router"
-
+import { MenuData } from "src/core/index.js";
 
 const route = useRoute()
 export default {
@@ -55,17 +56,19 @@ export default {
       refreshing:false,
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
+      // 延时器
+      timer1_: null,
+      timer2_: null,
+      GlobalAccessConfig,
+      MenuData
     };
   },
   created() {
-    // 延时器
-    timer1_ = null;
-    timer2_ = null;
-    cancel_ref = debounce(cancel_ref,200)
+    lodash.debounce(this.cancel_ref,200)
 
-    go_to_back = debounce(go_to_back, 500, {leading: true})
+    lodash.debounce(this.go_to_back, 500, {leading: true})
 
-    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).on
+    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh).on
   },
   // 接受父组件传递的数据
   props: {
@@ -114,19 +117,19 @@ export default {
     // ]),
     // 是否是电竞
     is_DJ_show() {
-      return get_menu_type == 3000 || (get_menu_type == 28 && [100,101,102,103,104].includes(+get_detail_data.csid))
+      return MenuData.get_menu_type() == 3000 || (MenuData.get_menu_type() == 28 && [100,101,102,103,104].includes(+get_detail_data.csid))
     }
   },
   beforeUnmount() {
     // 恢复默认的注单icon
     set_is_show_settle_tab(false)
-    debounce_throttle_cancel(cancel_ref);
-    debounce_throttle_cancel(go_to_back);
+    debounce_throttle_cancel(this.cancel_ref);
+    debounce_throttle_cancel(this.go_to_back);
 
-    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, details_refresh).off
+    useMittOn(MITT_TYPES.EMIT_VISIBILITYCHANGE_EVENT, this.details_refresh).off
 
-    clearTimeout(timer1_)
-    timer1_ = null
+    clearTimeout(this.timer1_)
+    this.timer1_ = null
 
     clearTimeout(timer2_)
     timer2_ = null
@@ -208,8 +211,8 @@ export default {
 
       // useMittEmit(MITT_TYPES.EMIT_REFRESH_DETAILS)
       refreshing = true;
-      clearTimeout(timer1_)
-      timer1_ = setTimeout(() => {
+      clearTimeout(this.timer1_)
+      this.timer1_ = setTimeout(() => {
         // 取消刷新 已做节流
         cancel_ref();
       },700);
@@ -237,7 +240,7 @@ export default {
     },
     // 返回列表页亦或是返回上一级
     go_to_back() {
-      $common.go_where({back_to: 'go_to_back'})
+      // $common.go_where({back_to: 'go_to_back'})
     },
     // 点击下拉三角加载联赛列表
     show_dialog(){
