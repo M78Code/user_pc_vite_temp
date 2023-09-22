@@ -5,7 +5,7 @@
 import { api_common, api_analysis } from "src/api";
 import lodash from "lodash";
 import { computed, ref, watch } from "vue";
-import { SessionStorage } from "src/core/";
+import { SessionStorage, useMittEmit, MITT_TYPES } from "src/core/";
 import base_data_instance from "src/core/base-data/base-data.js";
 const Cache_key = {
   CACHE_CRRENT_MEN_KEY: "CACHE_CRRENT_MEN_KEY", //缓存当前菜单的key
@@ -958,7 +958,7 @@ class MenuData {
     if (![7, 28].includes(current_lv_1_menu.mi)) {
 
     }
-
+    useMittEmit(MITT_TYPES.EMIT_MAIN_MENU_CHANGE);
   }
   /**
    * 选中二级menu
@@ -1100,7 +1100,7 @@ class MenuData {
         return item.mi || item.menuId;
       }).join(',');
     } else {
-      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "";
+      return this.current_lv_2_menu?.mi || this.current_lv_2_menu?.menuId || "40003";
     }
   }
   /**
