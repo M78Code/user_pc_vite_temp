@@ -25,7 +25,7 @@
         </match-icon>
       </template>
       <!-- 收藏按钮 -->
-      <div v-if="GlobalAccessConfig.collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
+      <div v-if="GlobalAccessConfig.get_collectSwitch()" class="match-icon match-icon-single" @click="details_collect(get_detail_data)">
         <div class="collect-icon" :class="{active:get_detail_data.mf}"></div>
         <div class="text">{{ $t('footer_menu.collect')}}</div>
       </div>
@@ -51,6 +51,7 @@ export default defineComponent({
       // 收藏|取消收藏是否请求中
       favorite_loading: false,
     });
+    const get_detail_data = reactive({})
     // #TODO vuex
     // computed:{
     // ...mapGetters([
@@ -63,23 +64,24 @@ export default defineComponent({
     // ]),
     // 展示lvs 图标
     const show_lvs = computed(() => {
-      return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
+      return ''
+      // return get_detail_data.lvs && get_detail_data.lvs != -1 && ['string', 'number'].includes(typeof _.get(get_detail_data,'lss')) && ['zh','tw'].includes(get_lang)
     });
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
-    watch(
-      () => get_match_id_bet_success,
-      (bet_curr) => {
-        let m_detail_data = _.cloneDeep(get_detail_data);
-        let bet_mf = bet_curr.split('-')[1];
-        if(bet_mf == 1 || bet_mf == 0){
-          m_detail_data.mf = bet_mf == 1;
-        }
-        else{
-          m_detail_data.mf = true;
-        }
-        set_detail_data(m_detail_data);
-      }
-    );
+    // watch(
+    //   () => get_match_id_bet_success,
+    //   (bet_curr) => {
+    //     let m_detail_data = _.cloneDeep(get_detail_data);
+    //     let bet_mf = bet_curr.split('-')[1];
+    //     if(bet_mf == 1 || bet_mf == 0){
+    //       m_detail_data.mf = bet_mf == 1;
+    //     }
+    //     else{
+    //       m_detail_data.mf = true;
+    //     }
+    //     set_detail_data(m_detail_data);
+    //   }
+    // );
     // #TODO vuex
     // methods: {
     // ...mapMutations([
@@ -95,7 +97,7 @@ export default defineComponent({
      * @return {String}
      */
     const details_collect = (match_obj) => {
-      if( !utils.judge_collectSwitch( GlobalAccessConfig.collectSwitch(),this ) ) return
+      if( !utils.judge_collectSwitch( GlobalAccessConfig.get_collectSwitch(),this ) ) return
 
       // 如果还在请求中则return
       if ( favorite_loading ) return;
@@ -137,7 +139,9 @@ export default defineComponent({
     return {
       ...toRefs(data),
       show_lvs,
-      details_collect
+      details_collect,
+      get_detail_data,
+      GlobalAccessConfig
     }
   }
 })

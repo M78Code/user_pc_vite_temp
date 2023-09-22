@@ -70,17 +70,17 @@ export default {
   },
   watch:{
     // 监听是否投注成功，或者列表页是否点击收藏，同步更新 收藏按钮
-    get_match_id_bet_success(bet_curr){
-      let m_detail_data = _.cloneDeep(this.get_detail_data);
-      let bet_mf = bet_curr.splii18n_t('-')[1];
-      if(bet_mf == 1 || bet_mf == 0){
-        m_detail_data.mf = bet_mf == 1;
-      }
-      else{
-        m_detail_data.mf = true;
-      }
-      this.set_detail_data(m_detail_data);
-    }
+    // get_match_id_bet_success(bet_curr){
+    //   let m_detail_data = _.cloneDeep(this.get_detail_data);
+    //   let bet_mf = bet_curr.splii18n_t('-')[1];
+    //   if(bet_mf == 1 || bet_mf == 0){
+    //     m_detail_data.mf = bet_mf == 1;
+    //   }
+    //   else{
+    //     m_detail_data.mf = true;
+    //   }
+    //   this.set_detail_data(m_detail_data);
+    // }
   },
   methods: {
     // ...mapMutations([
