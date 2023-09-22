@@ -514,6 +514,7 @@ class MenuData {
     if (!this.show_favorite_list) return true;
     let flag = true;
     // 一级菜单赛果 选中关注 不显示虚拟体育的icon (1001:虚拟足球 1002:赛狗 1011:赛马 1004:虚拟篮球 1010:虚拟摩托车)
+    //TODO  menuType?? 新接口好像变了
     if (
       this.menu_type.value == 28 &&
       [1001, 1002, 1011, 1004, 1010].includes(+item.menuType)
