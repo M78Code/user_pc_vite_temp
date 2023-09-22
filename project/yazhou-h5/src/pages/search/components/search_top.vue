@@ -18,9 +18,9 @@
               :input-class="{ 'search-keyword-input': true }"
               type="search"
               @keydown.stop="key_down($event)"
-              :placeholder="show_tab=='saiguo_xunitiyu' ? $root.$t('search.search_qihao') :(details_search && details_search.word ?
+              :placeholder="show_tab=='saiguo_xunitiyu' ?$t('search.search_qihao') :(details_search && details_search.word ?
               details_search.word :
-              $root.$t('search.search_title_bw3'))"
+             $t('search.search_title_bw3'))"
               @keyup.enter="changeStr"
               @focus="search_input_focus_or_blur($event, true)"
               @blur="search_input_focus_or_blur"
@@ -32,7 +32,7 @@
             </template>
           </q-input>
           <!--取消按钮 -->
-          <span class="cancleBtn" @click="cancle_btn()">{{$root.$t('common.cancel')}}</span>
+          <span class="cancleBtn" @click="cancle_btn()">{{$t('common.cancel')}}</span>
         </div>
       </div>
       <!-- 球类tab 选项卡 -->
