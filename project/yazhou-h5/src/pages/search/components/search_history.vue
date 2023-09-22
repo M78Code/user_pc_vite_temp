@@ -10,7 +10,7 @@
         class="text-bol half-border-bottom"
       >
         <!-- 搜索历史 -->
-        {{$root.$t('search.search_history')}}
+        {{$t('search.search_history')}}
       </div>
       <!-- h5的搜索历史记录只显示3个，做兜底处理，免得后台返回多了，样式错乱，编辑器报错不用管 -->
       <div
@@ -30,7 +30,7 @@
         @click="remove_history_item('')"
       >
         <!-- 清除搜索记录 -->
-        {{$root.$t('search.clear_search_history')}}
+        {{$t('search.clear_search_history')}}
       </div>
     </div>
   </div>

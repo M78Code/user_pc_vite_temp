@@ -164,7 +164,7 @@
       get_search_result(skt_upd){
         // 如果没有搜索文字，则弹框
         if(!this.get_search_txt || !this.get_search_txt.trim()){
-          this.set_toast({ 'txt': this.$root.$t('search.keyword_is_empty'), hide_time:3000 });
+          this.set_toast({ 'txt': this.$t('search.keyword_is_empty'), hide_time:3000 });
           return;
         }
         // 代表的是 点击 历史搜索 和 热门搜索的模块
