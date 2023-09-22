@@ -29,14 +29,14 @@
       </div>
       <no-data
         v-else-if="['empty','notice-empty','code_empty'].includes(cur_state)"
-        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?i18n_t('common.code_empty'):(($store.state.filter.open_select_time?i18n_t('filter.empty'):i18n_t('common.no_data'))))"
+        :msg="no_data_msg?no_data_msg:('code_empty' == cur_state?i18n_t('common.code_empty'):((store_data.filterReducer.open_select_time?i18n_t('filter.empty'):i18n_t('common.no_data'))))"
         :msg2="no_data_msg2"
         :marginBottom="'0px'"
         width="180px"
         height="180px"
         :color="color"
         class="empty-wrap"
-        :class="{filter_img:$store.state.filter.open_select_time}"
+        :class="{filter_img: store_data.filterReducer.open_select_time}"
       >
       </no-data>
       <no-data v-else-if="['all_empty','new_empty'].includes(cur_state) &&is_eports"
@@ -119,11 +119,18 @@
   </div>
 </template>
 
+<script setup>
+
+</script>
+
 <script>
 import { NoDataWapper as noData } from "src/components/common/no-data";
 import UserCtr from "src/core/user-config/user-ctr.js";
 import {i18n_t} from "src/core/index"
+import { is_eports_csid } from 'src/core/index.js'
+import store from "src/store-redux/index.js";
  
+const store_data = store.getState();
 export default {
   name: "loadData",
 
@@ -181,6 +188,7 @@ export default {
       time_out: false,
       // 用户失效标志位
       no_user:false,
+      store_data
     };
   },
   created () {
@@ -199,7 +207,7 @@ export default {
     // }),
     //是否电子竞技
     is_eports(){
-        return this.$utils.is_eports_csid(+this.$route.params.csid)
+        return is_eports_csid(+this.$route.params.csid)
     },
     cur_state(){
       return this.state

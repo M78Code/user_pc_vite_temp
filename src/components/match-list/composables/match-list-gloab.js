@@ -169,7 +169,8 @@ const gloab_composable_fn = () => {
   return {
     // sr 分析数据点击跳转
     sr_click_handle,
-		get_full_sr_url,
+	get_full_sr_url,
+	mx_autoset_active_match
   }
 }
 

@@ -5,9 +5,9 @@
       'sticky-wrap':['sport_title','play_title','no_start_title','league_title','champion_league_title'].includes(card_style_obj.card_type),
       'matc-type-card':['sport_title','play_title','no_start_title'].includes(card_style_obj.card_type)
     }"
-    :style="`height:${card_style_obj.card_total_height}px  !important;width:1920px  !important;${card_style}`"
-
+    :style="`height:200px  !important;width:1920px  !important;${card_style}`"
   >
+  <!-- lockie  ${card_style_obj.card_total_height} -->
   <div v-show="false">{{ MatchListCardDataClass.list_version }}</div>
   <div
       v-if="is_mounted"
@@ -52,7 +52,7 @@
         <load-data
           v-if="card_style_obj.load_data_status != 'loaded'"
           :state="card_style_obj.load_data_status"
-          @refresh="refresh_league"
+          @refresh="MatchListCardData.refresh_league"
           load_type="league_fold"
         />
         <!-- 赛事列表 -->
@@ -75,6 +75,7 @@ import { PlayMatchTypeFullVersionWapper as PlayMatchType } from 'src/components/
 import { PlayMatchLeagueFullVersionWapper as PlayMatchLeague } from 'src/components/match-list/play-match-league/index.js'
 import { MatchTypeChampionFullVersionWapper as MatchTypeChampion } from 'src/components/match-list/match-type-champion/index.js'
 import { MatchCardFullVersionWapper as MatchCard } from "src/components/match-list/match-card/index.js";
+import LoadData from 'project_path/src/components/load-data/load-data.vue'
 import MatchListCardData from 'src/core/match-list-pc/match-card/match-list-card-class.js'
 import MatchListCardDataClass from "src/core/match-list-pc/match-card/module/match-list-card-data-class.js";
 import  { useRegistPropsHelper  } from "src/composables/regist-props/index.js"

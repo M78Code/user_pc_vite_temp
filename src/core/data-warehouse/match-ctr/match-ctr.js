@@ -362,6 +362,31 @@ export default class MatchDataBase
       });
     }
   }
+
+  /**
+   * @Description 获取其他玩法tab标题
+   * @param {object} match 赛事对象
+  */
+  get_tab_play_keys(match) {
+
+    let tab_play_keys = []
+    let play_keys = Object.keys(other_play_name_to_playid)
+    lodash.each(play_keys,key=>{
+      let status_key = 'cos'+key.slice(3)
+      let status =  match[status_key]
+      //15分钟次要玩法前端强制关闭
+      let cos15min_status = !(status_key === 'cos15Minutes' && match.hSpecial == 6)
+      //5分钟次要玩法前端强制关闭状态
+      let cos5min_status = !(status_key === 'cos5Minutes' && match.hSpecial5min == 6)
+      if( status && cos15min_status  && cos5min_status){
+          tab_play_keys.push(key)
+      }
+    })
+    // match.tab_play_keys = tab_play_keys.join(',')
+    // // 是否有其他玩法
+    // match.has_other_play = tab_play_keys.length > 0
+    return  tab_play_keys.join(',');
+  }
   
 
    /**
@@ -376,25 +401,27 @@ export default class MatchDataBase
     match.has_add1 = false
     // 是否有附加盘2
     match.has_add2 = false
-    // 设置是否显示当前局玩法
+    // 设置是否显示当前局玩法 // 组件显示时,组件内进行设置
     match.is_show_cur_handicap = false
     // 主客队名称后面是否显示上半场字符串
-    match.up_half_text = ''
+    match.up_half_text = '' // 组件显示时,组件内进行设置
     // 当前局盘口列表
-    match.cur_handicap_list = []
+    match.cur_handicap_list = [] // 特定模版才会使用(模版7)
     // 足球角球玩法tab
-    match.tab_play_keys = ''
+    // match.tab_play_keys = this.get_tab_play_keys(match);
+    // 是否有其他玩法
+    match.has_other_play = ((match.tab_play_keys || '').split(',')).length > 0; // 该值设置取决于match.tab_play_keys字段,可以删除
     // 默认比分数据
     // match.score_obj = utils.serialized_score([],true)
-    // 当前局比分
-    match.cur_score = {
+    // 当前局比分 
+    match.cur_score = { // 组件显示时,组件内进行设置
       home:'',
       away:''
     }
     // 主队比分
-    match.home_score = ''
+    match.home_score = '' // 组件显示时,组件内进行设置
     // 客队比分
-    match.away_score = ''
+    match.away_score = '' // 组件显示时,组件内进行设置
     // 历史比分列表
     match.score_list = []
     // 赛事比分总分
@@ -411,22 +438,38 @@ export default class MatchDataBase
     // all_ol_data={} // 坑位数据操作使用 可以移除
     // all_hids="" // 快速修改数据时使用 可以移除
     
-    // main_handicap_list = []
-    // has_other_play = false;
+    // main_handicap_list = [] // 赛事显示时自行根据模版进行逻辑动态设置显示
+    
+    
     // play_current_index = 0
     // play_current_key = ''
     // other_handicap_list = []
     // add1_handicap_list = []
     // add2_handicap_list = []
+    // 让球方
     // team_let_ball = ""
     // other_team_let_ball=""
-    // match_logo = {}
+    // 设置赛事logo
+    match.match_logo = {
+      home_1_logo:lodash.get(match,'mhlu[0]'),
+      home_1_letter:lodash.get(match,'frmhn[0]'),
+      home_2_logo:lodash.get(match,'mhlu[1]'),
+      home_2_letter:lodash.get(match,'frmhn[1]'),
+      away_1_logo:lodash.get(match,'malu[0]'),
+      away_1_letter:lodash.get(match,'frman[0]'),
+      away_2_logo:lodash.get(match,'malu[1]'),
+      away_2_letter:lodash.get(match,'frman[1]'),
+      is_double:lodash.get(match,'mhlu.length') > 1
+    }
+
+    // 历史比分处理(在各自组建显示时设置)
     // home_red_score = ""
     // away_red_score = ""
     // home_yellow_score = ""
     // away_yellow_score = ""
-    // msc_format = []
-    // send = ""
+
+    // msc_format = [] // 代码中只有设置的地方,没有使用的地方,可以删除
+    // send = "" //自定义属性send取值为my_self表示有用户模拟发送的指令, 可以删除
 
   }
 
@@ -555,6 +598,8 @@ export default class MatchDataBase
     this.syn_del_quick_query_obj();
     // ws命令赛事订阅
     this.ws_ctr.scmd_c8();
+    // 重新调用表征类里的计算表征方法 
+    // MatchListCard.update_match_style(this.quick_query_obj.mid_obj)
   }
   /**
    * @description: 同步清除赛事快捷操作对象中的无用赛事数据挂载
@@ -614,7 +659,6 @@ export default class MatchDataBase
         Object.assign(this.quick_query_list, list);
       }
       const many_obj = this.list_to_many_obj(list, timestap);
-
       // 快速检索对象数据合并
       this._quick_query_obj_assign(this.quick_query_obj, many_obj);
       // this.match_assign(this.quick_query_obj.mid_obj, many_obj.mid_obj);

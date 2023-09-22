@@ -15,9 +15,9 @@
       </div>
     </div>
     <template v-if="change_show && GlobalAccessConfig.get_filterSwitch()">
-      <filter_old />
-      <!-- v-if="menu_type == 1 && get_sport_all_selected"  -->
-      <!-- <filter_new v-else /> -->
+
+      <filter_old v-if="menu_type == 1 && get_sport_all_selected" />
+      <filter_new v-else />
     </template>
     <search v-if="!change_show && GlobalAccessConfig.get_searchSwitch()"></search>
   </div>
@@ -27,12 +27,11 @@
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import filter_new from '../../match-filter/index.vue'
 import filter_old from '../../match-filter/index_old.vue'
-//  import search from '../../search/search_.vue'
+ import search from '../../search/search_.vue'
 
 import { computed, onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
 import { i18n_t, MenuData } from 'src/core/index.js'
-
 const props = defineProps(['detail_data'])
 const { menu_type, get_sport_all_selected } = MenuData;
 const store_state = store.getState()
@@ -58,7 +57,7 @@ const get_access_config = ref(store_state.get_access_config)
 
 onMounted(() => {
   // 默认选中筛选
-  change_record(get_search_for_choose)
+  // change_record(get_search_for_choose)
   // 如果是冠军，则默认展示筛选
   if (menu_type.value == 100) {
     change_record(0)

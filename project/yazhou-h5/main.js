@@ -16,6 +16,8 @@ window.BUILDIN_CONFIG = BUILDIN_CONFIG;
 
 // Assumes your root component is App.vue
 // and placed in same folder as main.js
+//引入自定义指令
+import useDirective from "src/directives/index.js"
 import App from "./App.vue";
 import router from './src/router/index'
 import lodash from "lodash";
@@ -29,5 +31,6 @@ app.use(Quasar, {
 
 import { i18n } from "src/boot/i18n.js";
 app.use(i18n).use(router);
-
+// 使用自定义指令
+useDirective(app)
 app.mount("#ty-app");

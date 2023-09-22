@@ -36,8 +36,8 @@
 <script>
 // import { mapMutations, mapGetters } from "vuex";
 import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
-import seamlessMarquee from 'src/project/components/common/seamless_marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
-import {api_common} from "src/project/api";
+import seamlessMarquee from './seamless-marquee.vue'  // 详情页头部联赛名文字超出隐藏无缝滚动
+import {api_common} from "src/api/index.js";
 import {utils } from 'src/core/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { t } from "src/boot/i18n.js";
