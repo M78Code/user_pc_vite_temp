@@ -394,6 +394,7 @@ const fetch_match_list = (is_socket = false, cut) => {
 				if ((route.name == "details" && page_source != "details") || _params.euid != match_api.params.euid) return;
 				api_error_count.value = 0;
 				if (res.code == 200) {
+					console.log('objectobjectobject', res);
 					//处理服务器返回的 列表 数据   fetch_match_list
 					handle_match_list_request_when_ok(
 						JSON.parse(JSON.stringify(res)),
