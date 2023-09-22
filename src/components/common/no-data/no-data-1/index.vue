@@ -23,7 +23,6 @@
       <div class="empty-favorite-bg"
         :style="{ backgroundImage: UserCtr.theme.includes('day') ? `url(${arr.noMatch.url})` : `url(${arr.noMatch.url2})` }">
       </div>
-      {{arr.noMatch}}
       <p style="color:#A5A9B3;">{{ which === 'noMessage' ? arr.noMessage.txt || msg : arr.noMatch.txt || msg}}</p>
     </template>
 
@@ -59,6 +58,7 @@ useRegistPropsHelper(component_symbol, need_register_props)
 const props = defineProps({
   which: {
     type: String,
+    default: '',
     required: true
   },
   height: {
@@ -66,24 +66,36 @@ const props = defineProps({
   },
   msg: {
     type: String,
+    default: '',
   },
   type_name: {
     type: String,
+    default: '',
   },
   marginBottom: {
     type: String,
+    default: '',
   },
   width: {
     type: String,
+    default: '',
   },
   height: {
     type: String,
+    default: '',
   },
   color: {
     type: String,
+    default: '',
   },
   class: {
     type: String,
+    default: '',
+  },
+  // 图片路径
+  url: {
+    type: String,
+    default: '',
   }
 })
 // const computed_props = useRegistPropsHelper(component_symbol, defineProps(need_register_props));
@@ -93,33 +105,33 @@ const props = defineProps({
 
 const arr_const = {
   collect: {
-    url: "image/bw3/svg/no_shouc.svg",
-    url2: "image/bw3/svg/no_shouc2.svg",
-    txt: i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
+    url: props.url ? props.url : "image/bw3/svg/no_shouc.svg",
+    url2: props.url ? props.url : "image/bw3/svg/no_shouc2.svg",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_08'),// '暂无关注的赛事哦',
   },
   noWifi: {
-    url: "image/bw3/svg/nowifi.svg",
-    txt: i18n_t('msg.msg_nodata_09'),//'网络不给力',
+    url: props.url ? props.url : "image/bw3/svg/nowifi.svg",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_09'),//'网络不给力',
   },
   noMatch: {
-    url: "public/image/bw3/svg/noMatch.svg",
-    url2: "image/bw3/png/noMatch2.png",
-    txt: i18n_t('msg.msg_nodata_02'),//'空空如也~',
+    url: props.url ? props.url : "image/bw3/svg/noMatch.svg",
+    url2: props.url ? props.url : "image/bw3/png/noMatch2.png",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_02'),//'空空如也~',
   },
   noMatchNew: {
-    url: "image/bw3/png/noMatch_new.png",
-    url2: "image/bw3/png/noMatch2_new.png",
-    txt: i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
+    url: props.url ? props.url : "image/bw3/png/noMatch_new.png",
+    url2: props.url ? props.url : "image/bw3/png/noMatch2_new.png",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_02_new'),//'数组 对应 标题 提示文字 刷新',
   },
   noMessage: {
-    url: "image/bw3/svg/noMatch.svg",
-    url2: "image/bw3/png/noMatch2.png",
-    txt: i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
+    url: props.url ? props.url : "image/bw3/svg/noMatch.svg",
+    url2: props.url ? props.url : "image/bw3/png/noMatch2.png",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_17'),//'暂无消息记录~',
   },
   nolive: {
-    url: "image/bw3/svg/no_livedata.svg",
-    url2: "image/bw3/svg/no_livedata2.svg",
-    txt: i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
+    url: props.url ? props.url : "image/bw3/svg/no_livedata.svg",
+    url2: props.url ? props.url : "image/bw3/svg/no_livedata2.svg",
+    txt: props.msg ? props.msg : i18n_t('msg.msg_nodata_14'),//'暂无直播的赛事哦',
   }
 }
 
