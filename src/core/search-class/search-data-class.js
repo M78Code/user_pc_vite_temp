@@ -5,7 +5,7 @@ const history_key = 'SearchHistory'
 class SearchClass {
     search_txt = ''; // 上一次搜索文本
     cur_csid = '1'; // 联赛的id
-    search_term = SessionStorage.get(history_key, []) // 搜索 去到 详情页的记录
+    search_term = SessionStorage.get(history_key, '') // 搜索 去到 详情页的记录
     update_time = ref(Date.now())
     update = debounce(() => {
         this.update_time = Date.now()

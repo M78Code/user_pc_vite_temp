@@ -25,7 +25,7 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import searchTop from './components/search-top.vue'// 搜索头部组件
 import searchHot from './components/search-hot.vue'// 搜索热门
 import searchHistory from './components/search-history.vue' // 搜索历史
@@ -43,7 +43,9 @@ const hot_list = ref([]);  //热门搜索列表
 const loading = ref(true); // 加载动画
 // ...mapGetters([
 const get_uid = ref(UserCtr.get_uid()); // userId
-const get_cur_csid = ref(SearchData.cur_csid); // 联赛的id
+
+
+
 // const get_current_menu = ref(); // 当前选中的一级菜单, 二级菜单, 三级菜单
 const menu_type = MenuData.menu_type;// 当前选中的主菜单菜单menu_type
 const get_newer_standard_edition = UserCtr.standard_edition// 1新手版 2标准版
@@ -115,7 +117,7 @@ function get_suggestion_list(evt) {
   show_suggestion.value = true
   params.keyword = get_search_txt;
   // 增加参数：分球类搜索
-  params.searchSportType = get_cur_csid.value;
+  params.searchSportType = SearchData.cur_csid;  // 联赛的id
   // 如果是赛果 增加参数：分球类搜索
   if (menu_type.value == 28) { params.from = 2; }
   get_hotselect3(params).then(({ code, data }) => {
