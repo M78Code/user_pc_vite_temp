@@ -72,12 +72,8 @@ let cancleTimer, event_handle_timer, timer00, fun;
 // ...mapGetters([
 const get_search_txt = ref('')
 const get_search_term = ref(SearchData.search_term)
-
-
-//   'get_current_menu',
-const get_cur_csid = ref("")
 const get_useid_ievname = ref()
-// ]),
+
 // 是赛果虚拟体育赛事
 const results_of_the_virtual_display = MenuData.is_results_virtual_sports();
 
@@ -119,12 +115,12 @@ function List_econdary_menu(data) {
   if (get_current_menu_sub) {
     // 赛果使用get_current_menu中二级菜单数据，其他则使用get_useid_ievname
     let usid_type = menu_type.value == 28 ? get_current_menu_sub : Math.abs(get_useid_ievname.value)
-    if (get_search_term.value && get_cur_csid.value) {
+    if (get_search_term.value && SearchData.cur_csid) {
       data.forEach((item, index, arr) => {
-        if (get_cur_csid.value == item.id) {
+        if (SearchData.cur_csid == item.id) {
           index_num.value = index
           // 存储列表页二级菜单 球类id
-          SearchData.set_cur_csid(get_cur_csid.value);
+          SearchData.set_cur_csid(SearchData.cur_csid);
           nextTick(() => {
             utils.tab_move2(index, scrollBox.value, true)
           })

@@ -116,12 +116,18 @@
     let cus_tid = ''
     // 遍历所有赛事数据
     let match_status_type_arr = ['livedata','nolivedata']
+    console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------9----1', MatchListData);
+    console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------9----2', JSON.stringify(MatchListData));
+    
     match_status_type_arr.forEach(match_status_type => {
       // 已开赛、未开赛的赛事数量计算
       let match_status_type_match_count = 0
 
       // 遍历联赛列表
       let league_list = lodash.get(all_league_obj,match_status_type,[])
+      console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------10----', match_status_type);
+      console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------11----', league_list.length);
+
       league_list.forEach( (league_obj,league_index) => {
         league_repeat_count_obj[league_obj.tid] = league_repeat_count_obj[league_obj.tid] || 0
         // 生成自定义联赛ID
@@ -130,6 +136,7 @@
 
         // 赛事ID数组
         let mids_arr = league_obj.mids.split(',')
+        console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------12----', mids_arr );
 
         match_status_type_match_count += mids_arr.length
 
@@ -219,9 +226,11 @@
         mids_arr.forEach( mid => {
           unfold_match_count++
           // 赛事表征数据
-          let match = MatchListData.quick_query_obj.mid_obj[mid+'_']
+          let match = MatchListData.list_to_obj.mid_obj[mid+'_']
           console.log('matchmatchmatch', match);
           let match_style_obj = compute_style_template_by_matchinfo(match, template_id)
+
+          // console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------13---',mid ,  match_style_obj);
           all_card_obj[mid+'_'] = match_style_obj
           league_card_total_height += match_style_obj.total_height
           // 设置父级卡片key
@@ -304,6 +313,8 @@
         league_title_card_obj.card_total_height = 0
       }
     })
+
+    console.error('compute_match_list_style_obj_and_match_list_mapping_relation_obj------2----',MatchListCardData);
     // 如果是ws调用
     if(is_ws_call){
       // 设置新增球种标题卡片折叠数据

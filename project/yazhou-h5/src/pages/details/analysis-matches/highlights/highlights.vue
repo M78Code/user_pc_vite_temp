@@ -214,7 +214,7 @@ import {api_common, api_analysis} from "src/api/index.js";
 import {useMittOn, useMittEmit, MITT_TYPES} from  "src/core/mitt/"
 import store from "src/store-redux/index.js"
 import UserCtr from "src/core/user-config/user-ctr.js";
-import { load_player_js } from "src/core/pre-load/index.js"
+import { pre_load_video } from "src/core/pre-load/index.js"
 import {utils } from 'src/core/index.js'
 import { format_mgt_time, format_total_score } from "src/core/format/index.js"
 import { t } from "src/boot/i18n.js";;
@@ -308,7 +308,7 @@ let iframe_rdm = ref('')
 
 onMounted(() => {
   // TODO: $utils.load_player_js() 后续修改调整
-  load_player_js()
+  pre_load_video.load_player_js()
   store.dispatch({
     type: 'SET_EVENT_LIST',
     data: []

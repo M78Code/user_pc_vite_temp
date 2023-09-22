@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps({
   content: {

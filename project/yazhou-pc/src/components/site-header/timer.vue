@@ -33,7 +33,7 @@ onBeforeUnmount(clear_timer)
 function init() {
     // 全局一秒钟定时器
     if (is_test.value) {
-        timer.value = setInterval(set_time_str, 100);
+        // timer.value = setInterval(set_time_str, 100);
     }
 }
 onMounted(init)
