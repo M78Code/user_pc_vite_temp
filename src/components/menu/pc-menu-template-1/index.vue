@@ -8,11 +8,11 @@
       </div>
       <!--   今日、早盘、 -->
       <div class="menu-item menu-tab disable-hover double">
-        <div class="item yb-flex-center" :style="jinri_zaopan_ == 2 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 2 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css(`today_menu_bg_1${jinri_zaopan_ == 2 ? '_active' : ''}`)" :class="jinri_zaopan_ == 2 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(2)">
           {{ $t("menu.match_today") }}
         </div>
-        <div class="item yb-flex-center" :style="jinri_zaopan_ == 3 ?compute_css('today_menu_bg_1_active') : compute_css('today_menu_bg_1')" :class="jinri_zaopan_ == 3 ? 'active' : ''"
+        <div class="item yb-flex-center" :style="compute_css(`today_menu_bg_1${jinri_zaopan_ == 3 ? '_active' : ''}`)" :class="jinri_zaopan_ == 3 ? 'active' : ''"
           @click="handle_click_jinri_zaopan(3)">
           {{ $t("menu.match_early") }}
         </div>
@@ -20,8 +20,9 @@
     </div>
 
     <div style="display: none;">{{ BaseData.BaseData_version }}</div>
+
     <div v-for="item1 in BaseData.left_menu_base_mi_arr" :key="`${jinri_zaopan_}_${item1}`"
-      :class="BaseData.is_mi_300_open && item1 == 400 ? 'menu-border' : ''">
+      :class="set_vr_or_guanjun_border(item1)">
       <!--   赛种-->
       <!-- {{ BaseData.filterSport_arr }} -- {{ BaseData.compute_sport_id(item1) }} -->
       <div v-if="item1 == 300 || lv_1_num(item1)" class="menu-item menu-fold1 search"
@@ -139,7 +140,7 @@ const current_lv_1_mi = ref(""); //"101",
 // 当前的二级菜单ID
 const current_lv_2_mi = ref(""); //"101201", // 101301
 // 当前赛种是否收起 状态
-const show_menu = ref(false);
+const show_menu = ref(true);
 // 首次进入 刷新用
 const first_change = ref(false);
 
@@ -151,6 +152,23 @@ onMounted(() => {
   handle_click_jinri_zaopan(2)
 })
 
+
+/**
+ * @description: 冠军 vr border 样式
+ * @param {item} 赛种id
+ * @return {undefined} undefined
+ */
+const set_vr_or_guanjun_border = computed(()=> item =>{
+  if(item == 300){
+    console.error('300 item',item)
+    return 'menu-b-border'
+  }
+  if(item == 400){
+    console.error('400 item',item)
+    return 'menu-y-border'
+  }
+  
+})
 
 /**
  * @description: 今日 早盘 紧急开关
@@ -335,7 +353,6 @@ const lev_1_click = (mi, jinri_zaopan, lv2) => {
   // show_menu 展开或者收起  收起是 true  展开是false
   // current_lv_1_mi 选中按钮  选中的情况下 点击一级菜单 收起或者展开
   // 收起的情况下 再次回来 还是收起 / 展开的情况下 再次回来还是展开
-
   if (!jinri_zaopan) {
     // 点击一级菜单
     if (current_lv_1_mi.value == mi) {
@@ -936,6 +953,7 @@ const handle_click_jinri_zaopan = (val) => {
         }
       }
       &.menu-fold1{
+
         &.y-active{
           background: var(--q-gb-bg-lg-8);
           color: var(--q-gb-t-c-15); 
@@ -950,6 +968,26 @@ const handle_click_jinri_zaopan = (val) => {
         }
       }
 
+    }
+    .menu-y-border{
+      .menu-fold1{
+        border-top:1px solid var(--q-gb-bd-c-8);
+        border-bottom:1px solid var(--q-gb-bd-c-8);
+        &.y-active{
+          border: none;
+        }
+      }
+     
+      
+    }
+    .menu-b-border{
+      .menu-fold1{
+        border-bottom:1px solid var(--q-gb-bd-c-8);
+        &.y-active{
+          border: none;
+        }
+      }
+     
     }
   }
 
