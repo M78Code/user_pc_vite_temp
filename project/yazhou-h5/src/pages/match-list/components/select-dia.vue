@@ -27,37 +27,28 @@
 import GlobalAccessConfig from "src/core/access-config/access-config.js"
 import filter_new from '../../match-filter/index.vue'
 import filter_old from '../../match-filter/index_old.vue'
- import search from '../../search/search_.vue'
+import search from '../../search/search.vue'
 
-import { computed, onMounted, onUnmounted, ref, watch } from "vue"
+import { onMounted, onUnmounted, ref, watch } from "vue"
 import store from "src/store-redux/index.js";
-import { i18n_t, MenuData } from 'src/core/index.js'
+import { i18n_t, MenuData, SearchData } from 'src/core/index.js'
 const props = defineProps(['detail_data'])
 const { menu_type, get_sport_all_selected } = MenuData;
-const store_state = store.getState()
 const change_show = ref(true)
 const search_tab = ref([i18n_t('footer_menu.filter'), i18n_t('search.search_title')])
+const get_search_for_choose = SearchData.search_for_choose;//0筛选 1搜索
+const get_curr_sub_menu_type = MenuData.get_current_sub_menuid() //二级菜单id
+// 弹框的高度
+let rem_1 = window.innerWidth * 100 / 375;
+const bounced_high = { height: window.innerHeight - rem_1 + 50 + 'px !important' }
 
+// 是赛果虚拟体育赛事
+const results_of_the_virtual_display = MenuData.is_results_virtual_sports()
 
-//TODO
-const get_search_for_choose = ref(store_state.get_search_for_choose || 0)
-const get_search_term = ref(store_state.get_search_term)
-const get_curr_sub_menu_type = MenuData.current_lv_2_menu?.type
-const get_access_config = ref(store_state.get_access_config)
-
-//外层用的 v-if 要什么subscribe？？？？
-// const unsubscribe = store.subscribe(() => {
-//   const new_state = store.getState()
-//   get_search_for_choose.value = new_state.get_search_for_choose
-//   get_search_term.value = new_state.get_search_term
-//   get_access_config.value = new_state.get_access_config
-//   get_sport_all_selected.value = new_state.get_sport_all_selected
-//   get_curr_sub_menu_type.value = new_state.get_curr_sub_menu_type
-// })
 
 onMounted(() => {
   // 默认选中筛选
-  // change_record(get_search_for_choose)
+  change_record(get_search_for_choose)
   // 如果是冠军，则默认展示筛选
   if (menu_type.value == 100) {
     change_record(0)
@@ -77,35 +68,12 @@ onMounted(() => {
     search_tab.value = [i18n_t('footer_menu.filter')]
     change_show.value = true
   }
-
-  if (get_curr_sub_menu_type) {
-    if ([1001, 1002, 1004, 1010, 1011, 1009].includes(get_curr_sub_menu_type) && menu_type.value == 28) {
-      change_record(0)
-    }
-  }
 })
-
-//外层用的 v-if拿来的watch
-// // 监听 get_curr_sub_menu_type，如果 是在赛果下边的 虚拟赛事，就默认是 筛选弹出
-// watch(() => get_curr_sub_menu_type, (n) => {
-//   if ([1001, 1002, 1004, 1010, 1011, 1009].includes(+n) && get_menu_type == 28) {
-//     change_record(0)
-//   }
-// }, { immediate: true, deep: true })
-
-// 弹框的高度
-let rem_1 = window.innerWidth * 100 / 375;
-const bounced_high = { height: window.innerHeight - rem_1 + 50 + 'px !important' }
-
-// 是赛果虚拟体育赛事
-const results_of_the_virtual_display = MenuData.is_results_virtual_sports()
-
 const change_record = (key) => {
-
-  //TODO  搜索返回时，保持搜索原来的页面
+  //搜索返回时，保持搜索原来的页面
+  key == 0 && SearchData.search_term && SearchData.set_search_term('')
   get_search_for_choose.value = key;
-  key == 0 && get_search_term && store.dispatch({ type: 'matchReducer/set_search_term', payload: '' });
-  store.dispatch({ type: 'matchReducer/set_search_for_choose', payload: key });
+  SearchData.set_search_for_choose(key);
   if (key === 1) {// 赛事搜索页
     change_show.value = false
   } else {
@@ -121,9 +89,6 @@ const is_search_hide = (i) => {
   }
   return f;
 }
-// onUnmounted(() => {
-//   unsubscribe()
-// })
 </script>
  
 <style scoped lang="scss">
