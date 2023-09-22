@@ -6,7 +6,7 @@
 <template>
   <div
     class="result-header"
-    :style="(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid)) ? URL.gaming_type[result_detail_data.csid] : _.get(URL.sporting_type,`${ballType}.B`)"
+    :style="(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid)) ? URL.gaming_type[result_detail_data.csid] : lodash.get(URL.sporting_type,`${ballType}.B`)"
     :class="{baseball: result_detail_data.csid == '3'}"
   >
     <!-- 头部联赛名返回区域 -->
@@ -22,46 +22,36 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // import { mapGetters } from "vuex";
 import commonHeader from "project_path/src/components/common/common-header1.vue";
 import headerTop from "project_path/src/pages/details/components/header/header-top.vue";
 import headerBottom from "project_path/src/pages/details/components/header/header-bottom.vue";
 import matchResultsHeaderTop from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";
 import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
-export default {
-  name: "result-header",
-  data() {
-    return {
-      // 背景图
-      URL:detail_csid_config,
-    };
-  },
-  props:{
+import { ref } from "vue"
+import lodash from "lodash"
+  
+  // 背景图
+  const URL = ref(detail_csid_config)
+const props = defineProps({
     // 详情Details接口的数据
-    result_detail_data: Object,
-  },
-  computed: {
+    result_detail_data: {
+      type: Object,
+    } 
+  })
     // ...mapGetters([
     //   "get_menu_type",
     //   "get_current_menu",
     // ]),
-    ballType() {
-      if(result_detail_data.csid){
-        return result_detail_data.csid - 1;
+  const ballType = () => {
+      if(props.result_detail_data.csid){
+        return props.result_detail_data.csid - 1;
       }else{
         // 这里999 目的是让图片的下标不符合data里面的值
         return 999
       }
     }
-  },
-  components: {
-    commonHeader,
-    headerTop,
-    headerBottom,
-    matchResultsHeaderTop,
-  },
-};
 </script>
 
 <style lang="scss" scoped>

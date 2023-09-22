@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import counting_down from 'src/project/components/common/counting-down'
+import counting_down from 'project_path/src/components/common/counting-down.vue'
 export default {
   name: "stage_child_101",
   data() {

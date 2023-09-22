@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import msc from "src/public/mixins/common/msc.js";
+// import msc from "src/public/mixins/common/msc.js";
 
 export default {
-  mixins: [msc],
+  // mixins: [msc],
   name: 'stage_child_3',
   props: ["detail_data"],
   computed:{

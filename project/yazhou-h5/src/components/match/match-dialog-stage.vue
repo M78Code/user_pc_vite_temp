@@ -25,8 +25,8 @@
 <script>
 // import { mapGetters} from "vuex";
 import { utils } from 'src/core/utils/index.js';
-import stage_child_1 from "src/project/components/match/dialogStage/dialogStage-1.vue";  // 详情点击下拉-足球联赛-显示当前赛事的时间
-import stage_child_2 from "src/project/components/match/dialogStage/dialogStage-2.vue";  // 详情点击下拉-篮球联赛-显示当前赛事的时间
+import stage_child_1 from "project_path/src/components/match/dialogStage/dialogStage-1.vue";  // 详情点击下拉-足球联赛-显示当前赛事的时间
+import stage_child_2 from "project_path/src/components/match/dialogStage/dialogStage-2.vue";  // 详情点击下拉-篮球联赛-显示当前赛事的时间
 
 export default {
   name: "match_dialog_stage",

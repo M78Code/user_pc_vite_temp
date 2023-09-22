@@ -39,7 +39,8 @@ import GlobalAccessConfig  from  "src/core/access-config/access-config.js"
 import { api_common } from "src/api/index.js";
 import match_icon from "project_path/src/components/details/match-icon/match-icon.vue"  // 赛事icon操作
 import {utils } from 'src/core/index.js'
-import { reactive, computed, onMounted, onUnmounted, toRefs, watch } from "vue";
+import { reactive, computed, onMounted, onUnmounted, toRefs, watch, defineComponent } from "vue";
+
 export default defineComponent({
   name: "team_match_icon",
   components: {
