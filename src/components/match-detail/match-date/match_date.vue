@@ -14,12 +14,10 @@
         !get_match_status(match_props.match.ms)
       "
     >
-      <template>
         <span style="min-width: 60px"
           >{{ computed_today_early_date[0] }}<br
         /></span>
         <span>{{ computed_today_early_date[1] }}</span>
-      </template>
     </template>
     <!-- 1小时内开赛(mcg:2) && !1小时内开赛超时-->
     <template v-if="match_props.match.mcg == 2 && !before_timeout">
