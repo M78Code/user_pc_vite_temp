@@ -351,6 +351,7 @@ const update_first_menu = () => {
 const menu_item_click = (item, i) => {
   if (item.is_disabled) return;
   if (menu_type.value == 100 && i == 0) return;
+  MenuData.set_footer_sub_menu_id(item.id)
   //独赢
   if (item.id === 0) {
     //赛马,摩托车,泥地摩托车不能切换玩法
