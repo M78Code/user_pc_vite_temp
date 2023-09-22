@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import { mapGetters,mapMutations } from "vuex"
-import {api_betting, api_analysis} from 'src/project/api/index.js'
+// import { mapGetters,mapMutations } from "vuex"
+import {api_betting, api_analysis} from 'src/api/index.js'
 import { useMittOn, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router"
 import lodash from "lodash"
-import { t } from "src/boot/i18n.js";
+import { i18n_t } from "src/boot/i18n.js";
 import UserCtr from "src/core/user-config/user-ctr.js";
 //国际化
 
@@ -45,9 +45,9 @@ export default {
       item_index:0,
       tab_item_list:[
         // 所有赛果
-        {id:1, text: t('match_info.all_result')},
+        {id:1, text: i18n_t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: t('match_info.select_event')}
+        {id:2, text: i18n_t('match_info.select_event')}
       ],
       list_data: [],
     }
@@ -84,14 +84,14 @@ export default {
     tab_data_init(){
       tab_item_list =[
         // 所有赛果
-        {id:1, text: t('match_info.all_result')},
+        {id:1, text: i18n_t('match_info.all_result')},
         // 精选赛事
-        {id:2, text: t('match_info.select_event')}
+        {id:2, text: i18n_t('match_info.select_event')}
       ];
       if(get_menu_type == 28 && [100,101,102,103,104].includes(+result_detail_data.csid))  {
         tab_item_list =[
           // 所有赛果
-          {id:1, text: t('match_info.all_result')}
+          {id:1, text: i18n_t('match_info.all_result')}
         ];
       }
     },
@@ -137,7 +137,7 @@ export default {
               tab_item_list.push({
                 id:3,
                 // 我的注单
-                text: t('match_info.my_bets')
+                text: i18n_t('match_info.my_bets')
               });
             }
 
@@ -174,7 +174,7 @@ export default {
               tab_item_list.push({
                 id: 4,
                 // 精彩回放
-                text: t('highlights.title')
+                text: i18n_t('highlights.title')
               });
             }
           })

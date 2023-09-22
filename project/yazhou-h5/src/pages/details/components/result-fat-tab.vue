@@ -17,10 +17,14 @@
 </template>
 <script>
 // import { mapGetters } from "vuex";
-import category from 'project_path/src/pages/details/children/category.vue' // 所有赛果
-import detailMatchList from 'project_path/src/pages/details/components/detail_match_list.vue' // 精选赛事
-import myNoteSheet from 'project_path/src/pages/details/components/details_match_results/my_note_sheet.vue' // 我的注单
-import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';   // 精彩回放
+// 所有赛果
+import category from 'project_path/src/pages/details/children/category.vue' 
+// 精选赛事
+import detailMatchList from 'project_path/src/pages/details/components/detail-match-list.vue' 
+// 我的注单
+import myNoteSheet from 'project_path/src/pages/details/components/details-match-results/my-note-sheet.vue' 
+// 精彩回放
+import highlights from 'project_path/src/pages/details/analysis-matches/highlights/highlights.vue';   
 import { useRoute, useRouter } from "vue-router"
 
 const route = useRoute()

@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import commonCathecticItem from "src/project/components/common/common_cathectic_item";
-import {mapGetters} from "vuex";
-import settleVoid from "src/project/pages/cathectic/settle_void";
-import common from "src/project/mixins/constant/module/common.js"
+import commonCathecticItem from "project_path/src/components/common/common-cathectic-item.vue";
+// import {mapGetters} from "vuex";
+import settleVoid from "project_path/src/pages/cathectic/settle-void.vue";
+// import common from "project_path/src/mixins/constant/module/common.js"
 
 export default {
-  mixins:[common],
+  // mixins:[common],
   name: "",
   components: {
     commonCathecticItem,

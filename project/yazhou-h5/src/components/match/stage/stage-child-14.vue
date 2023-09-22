@@ -1,0 +1,161 @@
+<!--
+ * @Author: Supermark
+ * @Date: 2020-06-07 10:59:08
+ * @Description: 详情页橄榄球赛事阶段+赛事时间
+-->
+<template>
+  <!-- 橄榄球 -->
+  <span class='stage_child_14'>
+    <span v-if="match_result_state">
+      {{i18n_t('match_info.match_over')}}
+    </span>
+    <span v-else>
+      {{i18n_t('mmp')[14][detail_data.mmp]}}
+      <!-- 计时器 -->
+      <span  v-if="mmp_arr.includes(detail_data.mmp) && showTime != 0">&nbsp;{{ showTime | format_mgt_time }}</span>
+      <span  v-if="detail_data.mmp == '0'">&nbsp;&nbsp;00:00</span>
+    </span>
+  </span>
+</template>
+
+<script>
+// import { mapGetters } from "vuex"
+// import msc from "src/public/mixins/common/msc.js";
+import { format_mgt_time } from "src/core/format/index.js"
+
+export default {
+  // mixins: [msc],
+  name: 'stage_child_14',
+  data(){
+    // 详细描述请参考国际化文件:/user-h5/src/i18n/zh-cn/index.js
+    return {
+      // 显示比赛时间
+      mmp_arr:['6','7','41','42'],
+      // 时间
+      showTime: '',
+      // 上下半场
+      mmp_arr1:["31", "33"],
+    }
+  },
+  watch: {
+    detail_data:{
+      handler(n, o){
+        if( mmp_arr.includes(n.mmp) ){ // 比赛的时候，更新mst时间;
+          let num = 0;
+          if(n.c_time){ num = (new Date().getTime() - n.c_time) / 1000 }
+          initRestTime(num);
+        }else{
+          initRestTime(0);
+        }
+      },
+      deep: true,
+    }
+  },
+  computed: {
+    // ...mapGetters(['get_menu_type']),
+    match_result_state(){
+      return detail_data.ms == 3 || detail_data.ms == 4 || detail_data.mo == 1
+    }
+  },
+  props: ['detail_data',"dialog"],
+  created(){
+    // 时间延时器
+    showTimeInterval = 0;
+    initEvent();
+    $root.$on(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+  },
+  destroyed(){
+    clearTimeObj();
+    $root.$off(emit_cmd.EMIT_UPDATE_GAME_TIME, initEvent);
+  },
+  methods: {
+    /**
+     *@description 判断赛事状态:暂停||开始
+     *@param {Undefined}
+     *@return {Undefined}
+     */
+    initEvent(){
+      // mess 0:暂停 1:开始
+      if(detail_data.mess == 0 && !mmp_arr1.includes(detail_data.mmp)){
+        showTime = Number(detail_data.mst);
+        savePageTime();
+      }else{
+        initRestTime(0);
+      }
+    },
+    /**
+     *@description 重置时间
+     *@param {Number} 赛事进行时间
+     *@return {Undefined}
+     */
+    initRestTime(num){
+      // 清除相关倒计时;
+      if(showTimeInterval){ clearInterval(showTimeInterval) }
+      // 比赛进行时; 6, 上半场， 7，下半场, 41 加时赛上半场， 42 加时下半场；
+      if(detail_data.mmp == '6' || detail_data.mmp == '7' || detail_data.mmp == '41' || detail_data.mmp == '42'){
+        // 根据mle字段 0、2 代表正计时  1 代表倒计时
+        if(detail_data.mle == '0' || detail_data.mle == '2'){
+          calculagraph_forward(num);
+        }else{
+          calculagraph_inversion(num);
+        }
+      }
+    },
+    /**
+     *@description 时间正计时
+     *@param {Number} 赛事进行时间
+     *@return {Undefined}
+     */
+    calculagraph_forward(num){
+      showTime = Number(detail_data.mst) + Number(num);
+      savePageTime();
+      clearInterval(showTimeInterval)
+      showTimeInterval = setInterval(() => {
+        showTime += 1;
+        savePageTime();
+      }, 1000);
+    },
+    /**
+     *@description 时间倒计时
+     *@param {Number} 赛事进行时间
+     *@return {Undefined}
+     */
+    calculagraph_inversion(num){
+      showTime = Number(detail_data.mst) - Number(num);
+      savePageTime();
+      clearInterval(showTimeInterval)
+      showTimeInterval = setInterval(() => {
+        if(showTime <= 0){
+          clearInterval(showTimeInterval);
+          showTime = 0;
+        }else{
+          showTime -= 1;
+        }
+        savePageTime();
+      }, 1000);
+    },
+    /**
+     *@description 保存当前比赛时间
+     *@param {Undefined}
+     *@return {Undefined}
+     */
+    savePageTime(){
+      if(dialog) return;
+      $root.$emit(emit_cmd.EMIT_SET_MATCH_TIME, Number(showTime));
+    },
+    /**
+     *@description 清除计时器
+     *@param {Undefined}
+     *@return {Undefined}
+     */
+    clearTimeObj(){
+      if(!!showTimeInterval){
+        clearInterval(showTimeInterval)
+        showTimeInterval = null
+      }
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped></style>

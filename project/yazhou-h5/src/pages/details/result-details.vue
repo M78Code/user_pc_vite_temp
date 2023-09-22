@@ -42,14 +42,15 @@
 
 <script>
 // import { mapGetters, mapMutations } from "vuex";
-import { api_common } from "src/project/api/index.js";
-import resultHeader from "project_path/src/pages/details/components/result_header.vue";
-import resultDetailsTab from "project_path/src/pages/details/components/result_details_tab.vue";
-import resultDetailsDialog from "src/project/components/details/result_details_dialog.vue";
-import noData from "src/project/components/common/no_data.vue";
-import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football_match_analysis/analysis_football_matches";
-import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball_match_analysis/basketball_match_analysis";
-import SResult from "src/project/components/skeleton/match-result" // 赛果详情骨架屏
+import { api_common } from "src/api/index.js";
+import resultHeader from "project_path/src/pages/details/components/result-header.vue";
+import resultDetailsTab from "project_path/src/pages/details/components/result-details-tab.vue";
+import resultDetailsDialog from "project_path/src/components/details/result-details-dialog.vue";
+import noData from "project_path/src/components/common/no-data.vue";
+import analysis_football_matches from "project_path/src/pages/details/analysis-matches/football-match-analysis/analysis-football-matches.vue";
+import basketball_match_analysis from "project_path/src/pages/details/analysis-matches/basketball-match-analysis/basketball-match-analysis.vue";
+// 赛果详情骨架屏
+import SResult from "project_path/src/components/skeleton/match-result.vue" 
 import { useMittOn, useMittEmit, MITT_TYPES } from "src/core/mitt/index.js"
 import { useRouter, useRoute } from "vue-router";
 import lodash from "lodash";

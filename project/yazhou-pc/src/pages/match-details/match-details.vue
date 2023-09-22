@@ -118,7 +118,9 @@ const {
   set_handicap_state,
   get_mattch_details,
   change_loading_state,
+  MatchDataWarehouseInstance
 } = useGetConfig();
+console.log(MatchDataWarehouseInstance,'MatchDataWarehouseInstance');
 </script>
 
 <style lang="scss" scoped>

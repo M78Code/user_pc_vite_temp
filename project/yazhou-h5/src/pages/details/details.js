@@ -646,21 +646,20 @@ const get_detail_data = ref({})
           // if ($refs['category']) {
           if (state_data.category) {
             // 初次进入详情，请求赔率信息需显示loading，其他情况触发玩法集更新，走到这里，请求赔率信息则不显示loading
-            console.error(state_data.category);
             const flag = state_data.get_category_list_req_count ? "hide_loading" : "";
             // $refs['category'].initEvent(flag, init_req).then(() => {
-              state_data.category.initEvent(flag, init_req).then((res) => {
-              if (!data.get_category_list_req_count) {
-                state_data.get_category_list_req_count = 1;
-              } else {
-                state_data.get_category_list_req_count++;
-              }
+            //   state_data.category.initEvent(flag, init_req).then((res) => {
+            //   if (!data.get_category_list_req_count) {
+            //     state_data.get_category_list_req_count = 1;
+            //   } else {
+            //     state_data.get_category_list_req_count++;
+            //   }
 
-              // 获取赛果数据后，滑动到顶部
-              if (state_data.get_menu_type === 28 && route.name === "match_result") {
-                document.querySelector(".match-header-result").scrollTop = 0;
-              }
-            }).catch(err=> console.error(err));
+            //   // 获取赛果数据后，滑动到顶部
+            //   if (state_data.get_menu_type === 28 && route.name === "match_result") {
+            //     document.querySelector(".match-header-result").scrollTop = 0;
+            //   }
+            // }).catch(err=> console.error(err));
           }
         });
     };

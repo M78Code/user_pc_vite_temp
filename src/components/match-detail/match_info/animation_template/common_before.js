@@ -5,12 +5,12 @@
  */
 import {utils,formatTime,is_eports_csid,i18n_t } from 'src/core/index.js';
 import lodash from 'lodash'
-import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
+// import {MatchProcessFullVersionWapper} from "src/components/match-process/index.js";
 // const licia_format = require('licia/format');
 import licia_format from 'licia/format'
 export default {
   components: {
-    "match-date": MatchProcessFullVersionWapper
+    // "match-date": MatchProcessFullVersionWapper
   },
   name: "football_before",
   data() {

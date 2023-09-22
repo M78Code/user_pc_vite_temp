@@ -24,17 +24,17 @@
 
 <script>
 // import { mapGetters } from "vuex";
-import commonHeader from "src/project/components/common/common_header1.vue";
-import headerTop from "project_path/src/pages/details/components/header/header_top.vue";
-import headerBottom from "project_path/src/pages/details/components/header/header_bottom.vue";
-import matchResultsHeaderTop from "project_path/src/pages/details/components/details_match_results/match_results_header_top.vue";
-import base64 from "src/core/utils/base64.js";
+import commonHeader from "project_path/src/components/common/common-header1.vue";
+import headerTop from "project_path/src/pages/details/components/header/header-top.vue";
+import headerBottom from "project_path/src/pages/details/components/header/header-bottom.vue";
+import matchResultsHeaderTop from "project_path/src/pages/details/components/details-match-results/match-results-header-top.vue";
+import { detail_csid_config } from "src/core/match-detail/match-detail-h5/config/details-bg.js";
 export default {
   name: "result-header",
   data() {
     return {
       // 背景图
-      URL:base64,
+      URL:detail_csid_config,
     };
   },
   props:{
