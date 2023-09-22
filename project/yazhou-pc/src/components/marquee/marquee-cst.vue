@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, watch, onMounted, onUnmounted, watchEffect } from 'vue'
 import { useQuasar } from 'quasar'
 import lodash from 'lodash'
 import { i18n_t } from "src/boot/i18n.js"
@@ -64,7 +64,7 @@ import { i18n_t } from "src/boot/i18n.js"
 import { api_announce } from "src/api/index";
 import gSettings from 'project_path/src/components/settings/index.vue';
 import langs from "src/i18n/pc/langs/index.mjs";
-import { utils, LocalStorage } from 'src/core/index.js'
+import { utils } from 'src/core/index.js'
 import zhugeTag from "src/core/http/zhuge-tag.js"
 import gtagTag from 'src/core/http/gtag-tag.js'
 import store from "src/store-redux/index.js";
@@ -195,7 +195,7 @@ const wrapRef = ref(null)
 /** 初始化 */
 function init() {
     is_destroy.value = false
-    const announceData = LocalStorage.get("announceData") || 'false'
+    const announceData = localStorage.getItem("announceData") || 'false'
     let today = new Date().getTime()
     let saveTime = 0
     if (JSON.parse(announceData)) {
@@ -340,6 +340,7 @@ function animation_pause() {
 function animation_start() {
     notice_info.pause = false
 }
+
 /**
  * @Description:获取公告栏数据
  * @return {undefined} undefined
@@ -347,14 +348,14 @@ function animation_start() {
 function get_marquee_data() {
     notice_info.data = ""
     api_announce.post_marquee_data().then(res => {
-        if (res && res.data && res.data.code == 200 && res.data.data) {
-            lodash.each(lodash.get(res, 'data.data'), (item, index) => {
+        const { code, data, } = res
+        if (code == 200) {
+            lodash.each(data, (item, index) => {
                 if (index != 0) {
                     notice_info.data += '&ensp;&ensp;&ensp;&ensp;'
                 }
                 notice_info.data += item.context
             })
-
             let obj = {
                 text: notice_info.data,
                 time: new Date()
